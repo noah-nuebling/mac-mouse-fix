@@ -7,6 +7,8 @@
 // --------------------------------------------------------------------------
 //
 
+/// Not sure if this is necessary. Built for automatic resizing of the action table
+
 import Cocoa
 
 class MFClipView: NSClipView {

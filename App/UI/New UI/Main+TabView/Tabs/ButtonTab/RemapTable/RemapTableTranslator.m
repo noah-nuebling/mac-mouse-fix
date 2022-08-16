@@ -51,17 +51,17 @@ NSTableView *_tableView;
 }
 
 #pragma mark Define Effects Tables
-// ^ Effects tables are one-to-one mappings between UI stirngs and effect dicts. The effect dicts encode the exact effect in a way the helper can read
-// They are used to generate the popup button menus and relate between the data model (which contains effectDicts) and the UI (which contains UI stirngs)
-// Effects tables are arrays of dictionaries called effect table entries. Table entries currently support the folling keys:
-//  "ui" - The main UI string of the effect. This will be the title of the popupbutton-menu-item for the effect
-//  "tool" - Tooltip of the popupbutton-menu-item
-//  "dict" - The effect dict
-//  "alternate" - If set to @YES, this entry will revealed by pressing a modifier key in the popupbutton menu
-// TODO: ? Create constants for these keys
-// There are also separatorTableEntry()s which become a separator in the popupbutton-menu generated from the effectsTable
-// There are 3 different effectsTables for 3 different types of triggers
-// Noah from future: an 'effectsTable' should probably be called an 'effectButtonMenuModel' or 'effectsMenuModel' or 'effectOptionsModel' or something else that's more descriptive and less close to 'remapsTable'
+/// ^ Effects tables are one-to-one mappings between UI stirngs and effect dicts. The effect dicts encode the exact effect in a way the helper can read
+/// They are used to generate the popup button menus and relate between the data model (which contains effectDicts) and the UI (which contains UI stirngs)
+/// Effects tables are arrays of dictionaries called effect table entries. Table entries currently support the folling keys:
+///  "ui" - The main UI string of the effect. This will be the title of the popupbutton-menu-item for the effect
+///  "tool" - Tooltip of the popupbutton-menu-item
+///  "dict" - The effect dict
+///  "alternate" - If set to @YES, this entry will revealed by pressing a modifier key in the popupbutton menu
+/// TODO: ? Create constants for these keys
+/// There are also separatorTableEntry()s which become a separator in the popupbutton-menu generated from the effectsTable
+/// There are 3 different effectsTables for 3 different types of triggers
+/// Noah from future: an 'effectsTable' should probably be called an 'effectButtonMenuModel' or 'effectsMenuModel' or 'effectOptionsModel' or something else that's more descriptive and less close to 'remapsTable'
 
 static NSDictionary *separatorEffectsTableEntry() {
     return @{@"isSeparator": @YES};
@@ -71,31 +71,31 @@ static NSDictionary *separatorEffectsTableEntry() {
 //}
 static NSArray *getScrollEffectsTable() {
     NSArray *scrollEffectsTable = @[
-        @{@"ui": @"Desktop & Launchpad", @"tool": @"Scroll up for Launchpad and down to show the Desktop \n \nWorks like Pinching with 4 fingers on an Apple Trackpad", @"dict": @{
+        @{@"ui": NSLocalizedString(@"scroll-effect.4-pinch", @"First draft: Desktop & Launchpad") , @"tool": NSLocalizedString(@"scroll-effect.4-pinch.hint", @"First draft: Scroll up for Launchpad and down to show the Desktop \n \nWorks like Pinching with 4 fingers on an Apple Trackpad"), @"dict": @{
             kMFModifiedScrollDictKeyEffectModificationType: kMFModifiedScrollEffectModificationTypeFourFingerPinch
         }},
 //        @{@"ui": @"Move between Spaces", @"tool": @"Scroll up to move left a Space and down to move Right a Space \n \nWorks like Swiping horizontally with 3 fingers on an Apple Trackpad", @"dict": @{
 //            kMFModifiedScrollDictKeyEffectModificationType: kMFModifiedScrollEffectModificationTypeThreeFingerSwipeHorizontal
 //        }},
         separatorEffectsTableEntry(),
-        @{@"ui": @"Zoom in or out", @"tool": @"Zoom in or out in Safari, Maps, and other apps \n \nWorks like Pinch to Zoom on an Apple Trackpad" , @"dict": @{
+        @{@"ui": NSLocalizedString(@"scroll-effect.zoom", @"First draft: Zoom in or out"), @"tool": NSLocalizedString(@"scroll-effect.zoom.hint", @"First draft: Zoom in or out in Safari, Maps, and other apps \n \nWorks like Pinch to Zoom on an Apple Trackpad") , @"dict": @{
             kMFModifiedScrollDictKeyEffectModificationType: kMFModifiedScrollEffectModificationTypeZoom
         }},
-        @{@"ui": @"Horizontal Scroll", @"tool": @"Scroll horizontally \nNavigate pages in Safari, delete messages in Mail, and more \n \nWorks like swiping horizontally with 2 fingers on an Apple Trackpad" , @"dict": @{
+        @{@"ui": NSLocalizedString(@"scroll-effect.horizontal", @"First draft: Horizontal Scroll"), @"tool": NSLocalizedString(@"scroll-effect.horizontal.hint", @"First draft: Scroll horizontally \nNavigate pages in Safari, delete messages in Mail, and more \n \nWorks like swiping horizontally with 2 fingers on an Apple Trackpad"), @"dict": @{
             kMFModifiedScrollDictKeyEffectModificationType: kMFModifiedScrollEffectModificationTypeHorizontalScroll
         }},
 //        @{@"ui": @"Rotate", @"hideable": @NO, @"tool": @"Rotate in Maps and other apps \n \nWorks like Twisting with 2 fingers on an Apple Trackpad", @"dict": @{
 //            kMFModifiedScrollDictKeyEffectModificationType: kMFModifiedScrollEffectModificationTypeRotate
 //        }},
         separatorEffectsTableEntry(),
-        @{@"ui": @"Swift Scroll", @"tool": @"Scroll long distances with minimal effort", @"dict": @{
+        @{@"ui": NSLocalizedString(@"scroll-effect.swift", @"First draft: Swift Scroll"), @"tool": NSLocalizedString(@"scroll-effect.swift.hint", @"Scroll long distances with minimal effort"), @"dict": @{
             kMFModifiedScrollDictKeyInputModificationType: kMFModifiedScrollInputModificationTypeQuickScroll
         }},
-        @{@"ui": @"Precise Scroll", @"tool": @"Scroll small distances and use sensitive UI elements with precision.", @"dict": @{
+        @{@"ui": NSLocalizedString(@"scroll-effect.precise", @"First draft: Precise Scroll"), @"tool": NSLocalizedString(@"scroll-effect.precise.hint", @"First draft: Scroll small distances and use sensitive UI elements with precision."), @"dict": @{
             kMFModifiedScrollDictKeyInputModificationType: kMFModifiedScrollInputModificationTypePrecisionScroll
         }},
         separatorEffectsTableEntry(),
-        @{@"ui": @"App Switcher", @"tool": @"Quickly switch between open apps \n \nWorks like holding Command (⌘) and then pressing Tab (⇥) on your keyboard", @"dict": @{
+        @{@"ui": NSLocalizedString(@"scroll-effect.app-switcher", @"First draft: App Switcher"), @"tool": NSLocalizedString(@"scroll-effect.app-switcher.hint", @"First draft: Quickly switch between open apps \n \nWorks like holding Command (⌘) and then pressing Tab (⇥) on your keyboard"), @"dict": @{
             kMFModifiedScrollDictKeyEffectModificationType: kMFModifiedScrollEffectModificationTypeCommandTab
         }},
         
@@ -104,10 +104,10 @@ static NSArray *getScrollEffectsTable() {
 }
 static NSArray *getDragEffectsTable() {
     NSArray *dragEffectsTable = @[
-        @{@"ui": @"Mission Control & Spaces", @"tool": @"Move your mouse: \n - Up to show Mission Control \n - Down to show Application Windows \n - Left or Right to move between Spaces\n \nWorks like swiping with 3 fingers on an Apple Trackpad" , @"dict": @{
+        @{@"ui": NSLocalizedString(@"drag-effect.dock-swipe", @"First draft: Mission Control & Spaces"), @"tool": NSLocalizedString(@"drag-effect.dock-swipe.hint", @"First draft: Move your mouse: \n - Up to show Mission Control \n - Down to show Application Windows \n - Left or Right to move between Spaces\n \nWorks like swiping with 3 fingers on an Apple Trackpad") , @"dict": @{
                   kMFModifiedDragDictKeyType: kMFModifiedDragTypeThreeFingerSwipe,
         }},
-        @{@"ui": @"Scroll & Navigate", @"tool": @"Scroll freely by moving your mouse in any direction \n \nNavigate between pages in Safari, delete messages in Mail and more by moving your mouse left and right \n \nWorks like swiping with 2 fingers on an Apple Trackpad" , @"dict": @{
+        @{@"ui": NSLocalizedString(@"drag-effect.scroll-swipe", @"First draft: Scroll & Navigate"), @"tool": NSLocalizedString(@"drag-effect.scroll-swipe.hint", @"First draft: Scroll freely by moving your mouse in any direction \n \nNavigate between pages in Safari, delete messages in Mail and more by moving your mouse left and right \n \nWorks like swiping with 2 fingers on an Apple Trackpad") , @"dict": @{
                   kMFModifiedDragDictKeyType: kMFModifiedDragTypeTwoFingerSwipe,
         }},
 //        separatorEffectsTableEntry(),
@@ -130,17 +130,17 @@ static NSArray *getOneShotEffectsTable(NSDictionary *rowDict) {
     NSDictionary *effectDict = rowDict[kMFRemapsKeyEffect];
     
     NSMutableArray *oneShotEffectsTable = @[
-        @{@"ui": @"Look Up", @"tool": @"Look up words in the Dictionary, Quick Look files in Finder, and more. \n \nWorks like Force Touch on an Apple Trackpad.", @"dict": @{
+        @{@"ui": NSLocalizedString(@"effect.look-up", @"First draft: Look Up"), @"tool": NSLocalizedString(@"effect.look-up.hint", @"First draft: Look up words in the Dictionary, Quick Look files in Finder, and more. \n \nWorks like Force Touch on an Apple Trackpad."), @"dict": @{
                   kMFActionDictKeyType: kMFActionDictTypeSymbolicHotkey,
                   kMFActionDictKeyGenericVariant: @(kMFSHLookUp)
         }},
-        @{@"ui": @"Smart Zoom", @"tool": @"Zoom in or out in Safari and other apps. \n \nWorks like a two-finger double tap on an Apple Trackpad.", @"dict": @{
+        @{@"ui": NSLocalizedString(@"effect.smart-zoom", @"First draft: Smart Zoom"), @"tool": NSLocalizedString(@"effect.smart-zoom.hint", @"First draft: Zoom in or out in Safari and other apps. \n \nWorks like a two-finger double tap on an Apple Trackpad."), @"dict": @{
                   kMFActionDictKeyType: kMFActionDictTypeSmartZoom,
         }},
         
         separatorEffectsTableEntry(),
-        @{@"ui": stringf(@"Middle Click"),
-          @"tool": [NSString stringWithFormat:@"Open links in a new tab, paste text in the Terminal, and more. \n \nWorks like clicking %@ on a standard mouse.", [UIStrings getButtonStringToolTip:3]],
+        @{@"ui": NSLocalizedString(@"effect.middle-click", @"First draft: Middle Click"),
+          @"tool": stringf(NSLocalizedString(@"effect.middle-click.hint", @"First draft: Open links in a new tab, paste text in the Terminal, and more. \n \nWorks like clicking %@ on a standard mouse."), [UIStrings getButtonStringToolTip:3]),
           @"dict": @{
               kMFActionDictKeyType: kMFActionDictTypeMouseButtonClicks,
               kMFActionDictKeyMouseButtonClicksVariantButtonNumber: @3,
@@ -148,52 +148,53 @@ static NSArray *getOneShotEffectsTable(NSDictionary *rowDict) {
           }
         },
         separatorEffectsTableEntry(),
-        @{@"ui": @"Mission Control", @"tool": @"Show Mission Control", @"dict": @{
+        @{@"ui": NSLocalizedString(@"effect.mission-control", @"First draft: Mission Control"), @"tool": NSLocalizedString(@"effect.mission-control.hint", @"First draft: Show Mission Control"), @"dict": @{
                   kMFActionDictKeyType: kMFActionDictTypeSymbolicHotkey,
                   kMFActionDictKeyGenericVariant: @(kMFSHMissionControl)
         }},
-        @{@"ui": @"App Exposé", @"tool": @"Show all windows of the active app", @"dict": @{
+        @{@"ui": NSLocalizedString(@"effect.app-expose", @"First draft: Application Windows"), @"tool": NSLocalizedString(@"effect.app-expose.hint", @"First draft: Show all windows of the active app"), @"dict": @{
                   kMFActionDictKeyType: kMFActionDictTypeSymbolicHotkey,
                   kMFActionDictKeyGenericVariant: @(kMFSHAppExpose)
         }},
         separatorEffectsTableEntry(),
-        @{@"ui": @"Desktop", @"tool": @"Show the desktop", @"dict": @{
+        @{@"ui": NSLocalizedString(@"effect.desktop", @"First draft: Show Desktop"), @"tool": NSLocalizedString(@"effect.desktop.hint", @"First draft: Show the desktop"), @"dict": @{
                   kMFActionDictKeyType: kMFActionDictTypeSymbolicHotkey,
                   kMFActionDictKeyGenericVariant: @(kMFSHShowDesktop)
         }},
-        @{@"ui": @"Launchpad", @"tool": @"Open Launchpad", @"dict": @{
+        @{@"ui": NSLocalizedString(@"effect.launchpad", @"First draft: Launchpad"), @"tool": NSLocalizedString(@"effect.launchpad.hint", @"First draft: Open Launchpad"), @"dict": @{
                   kMFActionDictKeyType: kMFActionDictTypeSymbolicHotkey,
                   kMFActionDictKeyGenericVariant: @(kMFSHLaunchpad)
         }},
         separatorEffectsTableEntry(),
-        @{@"ui": @"Move Left a Space", @"tool": @"Move one Space to the left", @"dict": @{
+        @{@"ui": NSLocalizedString(@"effect.left-space", @"First draft: Move Left a Space"), @"tool": NSLocalizedString(@"effect.left-space.hint", @"First draft: Move one Space to the left"), @"dict": @{
                   kMFActionDictKeyType: kMFActionDictTypeSymbolicHotkey,
                   kMFActionDictKeyGenericVariant: @(kMFSHMoveLeftASpace)
         }},
-        @{@"ui": @"Move Right a Space", @"tool": @"Move one Space to the right", @"dict": @{
+        @{@"ui": NSLocalizedString(@"effect.right-space", @"First draft: Move Right a Space"), @"tool": NSLocalizedString(@"effect.right-space.hint", @"First draft: Move one Space to the right"), @"dict": @{
                   kMFActionDictKeyType: kMFActionDictTypeSymbolicHotkey,
                   kMFActionDictKeyGenericVariant: @(kMFSHMoveRightASpace)
         }},
         separatorEffectsTableEntry(),
-        @{@"ui": @"Keyboard Shortcut...", @"tool": @"Type a keyboard shortcut, then use it from your mouse", @"keyCaptureEntry": @YES},
+        @{@"ui": NSLocalizedString(@"effect.record-shortcut", @"First draft: Keyboard Shortcut..."), @"tool": NSLocalizedString(@"effect.record-shortcut.hint", @"First draft: Type a keyboard shortcut, then use it from your mouse"), @"keyCaptureEntry": @YES},
     ].mutableCopy;
     
     /// Insert button specific entry
+    ///     Disabling this for now because I don't want to translate it and noone uses it.
     
-    if (buttonNumber != 3) { /// We already have the "Open Link in New Tab" / "Middle Click" entry for button 3
-        NSDictionary *buttonClickEntry = @{
-            @"ui": [NSString stringWithFormat:@"%@ Click", [UIStrings getButtonString:buttonNumber]],
-            @"tool": [NSString stringWithFormat:@"Simulate Clicking %@", [UIStrings getButtonStringToolTip:buttonNumber]],
-            @"hideable": @NO,
-            @"alternate": @YES,
-            @"dict": @{
-                    kMFActionDictKeyType: kMFActionDictTypeMouseButtonClicks,
-                    kMFActionDictKeyMouseButtonClicksVariantButtonNumber: @(buttonNumber),
-                    kMFActionDictKeyMouseButtonClicksVariantNumberOfClicks: @1,
-            }
-        };
-        [oneShotEffectsTable insertObject:buttonClickEntry atIndex:10];
-    }
+//    if (buttonNumber != 3) { /// We already have the "Open Link in New Tab" / "Middle Click" entry for button 3
+//        NSDictionary *buttonClickEntry = @{
+//            @"ui": [NSString stringWithFormat:@"%@ Click", [UIStrings getButtonString:buttonNumber]],
+//            @"tool": [NSString stringWithFormat:@"Simulate Clicking %@", [UIStrings getButtonStringToolTip:buttonNumber]],
+//            @"hideable": @NO,
+//            @"alternate": @YES,
+//            @"dict": @{
+//                    kMFActionDictKeyType: kMFActionDictTypeMouseButtonClicks,
+//                    kMFActionDictKeyMouseButtonClicksVariantButtonNumber: @(buttonNumber),
+//                    kMFActionDictKeyMouseButtonClicksVariantNumberOfClicks: @1,
+//            }
+//        };
+//        [oneShotEffectsTable insertObject:buttonClickEntry atIndex:10];
+//    }
     
     /// Insert entry for keyboard shortcut effect
     
@@ -223,7 +224,7 @@ static NSArray *getOneShotEffectsTable(NSDictionary *rowDict) {
         /// Create and insert new entry
         [oneShotEffectsTable insertObject:@{
             @"uiAttributed": shortcutString,
-            @"tool": stringf(@"Works like pressing '%@' on your keyboard", shortcutStringRaw),
+            @"tool": stringf(NSLocalizedString(@"effect.shortcut.hint", @"First draft: Works like pressing '%@' on your keyboard"), shortcutStringRaw),
             @"dict": effectDict,
             @"indentation": @1,
         } atIndex:shortcutIndex];
@@ -265,15 +266,15 @@ static NSArray *getOneShotEffectsTable(NSDictionary *rowDict) {
             NSString *shortcutStringRaw = [shortcutString stringWithAttachmentDescriptions];
             [submenu addObject:@{
                 @"uiAttributed": shortcutString,
-                @"tool": stringf(@"Works like pressing '%@' on an Apple keyboard", shortcutStringRaw),
+                @"tool": stringf(NSLocalizedString(@"effect.apple-shortcut.hint", @"First draft: Works like pressing '%@' on an Apple keyboard"), shortcutStringRaw),
                 @"dict": actionDict
             }];
         }
     }
     
     [oneShotEffectsTable insertObject:@{
-        @"ui": @" Exclusive Keys",
-        @"tool": @"Choose keys that are only available on Apple keyboards.",
+        @"ui": NSLocalizedString(@"effect.apple-keys-submenu", @"First draft:  Exclusive Keys"),
+        @"tool": NSLocalizedString(@"effect.apple-keys-submenu.hint", @"First draft: Choose keys that are only available on Apple keyboards."),
         @"alternate": @YES,
         @"submenu": submenu
     } atIndex:keyCaptureIndex+1];

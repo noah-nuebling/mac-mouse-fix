@@ -126,6 +126,7 @@ import CocoaLumberjackSwift
         ///     This is reallly just quarternaryLabelColor but without transparency.
         ///     I couldn't find a nicer way to remove transparency except hardcoding it. Our solidColor methods from NSColor+Additions.m didn't work properly. I suspect it's because the NSColor objects can represent different colors depending on which context they are drawn in.
         ///     Possible nicer solution: I think the only dynamic way to remove transparency that will be reliable is to somehow render the view in the background and then take a screenhot
+        ///     Other possible solution: We really want to do this so we don't see the NSShadow behind the view. Maybe we could clip the drawing of the shadow, then we wouldn't have to remove transparency at all.
         
         if isDarkMode {
             addField.fillColor = NSColor(red: 57/255, green: 57/255, blue: 57/255, alpha: 1.0)
@@ -335,7 +336,7 @@ import CocoaLumberjackSwift
                     Animate.with(CASpringAnimation(speed: 3.5, damping: 1.0)) {
                         plusIconView.reactiveAnimator().contentTintColor.set(NSColor.controlAccentColor)
                     } onComplete: {
-                        DispatchQueue.main.asyncAfter(deadline: .now() + 1.5, execute: {
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 1.5, execute: { /// This 'timer' is not terminated when unhover is triggered some other way, leading to slightly weird behaviour
                             Animate.with(CASpringAnimation(speed: 3.5, damping: 1.3)) {
                                 self.plusIconView.reactiveAnimator().contentTintColor.set(NSColor.gray)
                             }

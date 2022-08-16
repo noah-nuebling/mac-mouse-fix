@@ -24,3 +24,123 @@
 
 /* First draft: Scroll precisely by moving the scroll wheel slowly */
 "precise-scrolling-hint" = "Scrolle präzise indem du das Scroll-Rad langsam bewegst";
+
+/* First draft: Mission Control & Spaces */
+"drag-effect.dock-swipe" = "";
+
+/* First draft: Move your mouse: \n - Up to show Mission Control \n - Down to show Application Windows \n - Left or Right to move between Spaces\n \nWorks like swiping with 3 fingers on an Apple Trackpad */
+"drag-effect.dock-swipe.hint" = "";
+
+/* First draft: Scroll & Navigate */
+"drag-effect.scroll-swipe" = "";
+
+/* First draft: Scroll freely by moving your mouse in any direction \n \nNavigate between pages in Safari, delete messages in Mail and more by moving your mouse left and right \n \nWorks like swiping with 2 fingers on an Apple Trackpad */
+"drag-effect.scroll-swipe.hint" = "";
+
+/* First draft: Application Windows */
+"effect.app-expose" = "";
+
+/* First draft: Show all windows of the active app */
+"effect.app-expose.hint" = "";
+
+/* First draft:  Exclusive Keys */
+"effect.apple-keys-submenu" = "";
+
+/* First draft: Choose keys that are only available on Apple keyboards. */
+"effect.apple-keys-submenu.hint" = "";
+
+/* First draft: Works like pressing '%@' on an Apple keyboard */
+"effect.apple-shortcut.hint" = "";
+
+/* First draft: Show Desktop */
+"effect.desktop" = "";
+
+/* First draft: Show the desktop */
+"effect.desktop.hint" = "";
+
+/* First draft: Launchpad */
+"effect.launchpad" = "";
+
+/* First draft: Open Launchpad */
+"effect.launchpad.hint" = "";
+
+/* First draft: Move Left a Space */
+"effect.left-space" = "";
+
+/* First draft: Move one Space to the left */
+"effect.left-space.hint" = "";
+
+/* First draft: Look Up */
+"effect.look-up" = "";
+
+/* First draft: Look up words in the Dictionary, Quick Look files in Finder, and more. \n \nWorks like Force Touch on an Apple Trackpad. */
+"effect.look-up.hint" = "";
+
+/* First draft: Middle Click */
+"effect.middle-click" = "";
+
+/* First draft: Open links in a new tab, paste text in the Terminal, and more. \n \nWorks like clicking %@ on a standard mouse. */
+"effect.middle-click.hint" = "";
+
+/* First draft: Mission Control */
+"effect.mission-control" = "";
+
+/* First draft: Show Mission Control */
+"effect.mission-control.hint" = "";
+
+/* First draft: Keyboard Shortcut... */
+"effect.record-shortcut" = "";
+
+/* First draft: Type a keyboard shortcut, then use it from your mouse */
+"effect.record-shortcut.hint" = "";
+
+/* First draft: Move Right a Space */
+"effect.right-space" = "";
+
+/* First draft: Move one Space to the right */
+"effect.right-space.hint" = "";
+
+/* First draft: Works like pressing '%@' on your keyboard */
+"effect.shortcut.hint" = "";
+
+/* First draft: Smart Zoom */
+"effect.smart-zoom" = "";
+
+/* First draft: Zoom in or out in Safari and other apps. \n \nWorks like a two-finger double tap on an Apple Trackpad. */
+"effect.smart-zoom.hint" = "";
+
+/* First draft: Desktop & Launchpad */
+"scroll-effect.4-pinch" = "";
+
+/* First draft: Scroll up for Launchpad and down to show the Desktop \n \nWorks like Pinching with 4 fingers on an Apple Trackpad */
+"scroll-effect.4-pinch.hint" = "";
+
+/* First draft: App Switcher */
+"scroll-effect.app-switcher" = "";
+
+/* First draft: Quickly switch between open apps \n \nWorks like holding Command (⌘) and then pressing Tab (⇥) on your keyboard */
+"scroll-effect.app-switcher.hint" = "";
+
+/* First draft: Horizontal Scroll */
+"scroll-effect.horizontal" = "";
+
+/* First draft: Scroll horizontally \nNavigate pages in Safari, delete messages in Mail, and more \n \nWorks like swiping horizontally with 2 fingers on an Apple Trackpad */
+"scroll-effect.horizontal.hint" = "";
+
+/* First draft: Precise Scroll */
+"scroll-effect.precise" = "";
+
+/* First draft: Scroll small distances and use sensitive UI elements with precision. */
+"scroll-effect.precise.hint" = "";
+
+/* First draft: Swift Scroll */
+"scroll-effect.swift" = "";
+
+/* Scroll long distances with minimal effort */
+"scroll-effect.swift.hint" = "";
+
+/* First draft: Zoom in or out */
+"scroll-effect.zoom" = "";
+
+/* First draft: Zoom in or out in Safari, Maps, and other apps \n \nWorks like Pinch to Zoom on an Apple Trackpad */
+"scroll-effect.zoom.hint" = "";
