@@ -51,7 +51,9 @@ func transferSuperViewConstraints(fromView srcView: NSView, toView dstView: NSVi
     var dstConstraints: [NSLayoutConstraint] = []
     for (cnst, srcIndex) in srcConstraints {
         if !transferSizeConstraints && (cnst.firstAttribute == .width || cnst.firstAttribute == .height) {
+            /// I don't understand how `iterateSuperViewConstraintsOn` would ever give back height constraints?
 //            assert(false)
+            continue
         }
         let newFirst = srcIndex == .firstItem ? dstView : cnst.firstItem
         let newSecond = srcIndex == .secondItem ? dstView : cnst.secondItem
@@ -64,7 +66,7 @@ func transferSuperViewConstraints(fromView srcView: NSView, toView dstView: NSVi
         }
     }
     
-    return dstConstraints
+    return dstConstraints /// Shouldn't this function just assign the dstConstrains to the dstView instead of returning them?
 }
 
 enum MFLayoutConstraintIndex {

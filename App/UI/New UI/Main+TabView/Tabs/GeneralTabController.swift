@@ -49,7 +49,7 @@ class GeneralTabController: NSViewController {
         
         /// Replace enable checkBox with NSSwitch on newer macOS versions
         var usingSwitch = false
-        if #available(macOS 10.15, *) {
+        if #available(macOS 10.15, *), false {
             
             usingSwitch = true
 
@@ -59,11 +59,12 @@ class GeneralTabController: NSViewController {
             
             let superView = enableToggle.superview as! NSStackView
             superView.replaceSubview(enableToggle, with: switchView)
+            switchView.addConstraints(transferSuperViewConstraints(fromView: enableToggle, toView: switchView, transferSizeConstraints: false)) /// Doesn't seem to make a difference currently
+            switchView.setContentCompressionResistancePriority(.required, for: .vertical)
+            
             self.enableToggle = switchView
 
             self.enableToggle.setValue(state, forKey: "state")
-            
-            switchView.setContentCompressionResistancePriority(.required, for: .vertical)
         }
         
         /// Declare signals
