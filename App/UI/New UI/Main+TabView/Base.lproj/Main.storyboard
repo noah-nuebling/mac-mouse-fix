@@ -262,10 +262,10 @@
                                     <stackView distribution="fill" orientation="horizontal" alignment="centerY" horizontalStackHuggingPriority="999" verticalStackHuggingPriority="1000" horizontalHuggingPriority="999" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="0BS-nv-t3O" userLabel="Enable section">
                                         <rect key="frame" x="0.0" y="181" width="293" height="50"/>
                                         <subviews>
-                                            <customView horizontalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="D4U-Df-iCp" userLabel="Text center">
+                                            <customView horizontalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="D4U-Df-iCp" userLabel="Text center">
                                                 <rect key="frame" x="0.0" y="0.0" width="211" height="50"/>
                                                 <subviews>
-                                                    <textField horizontalHuggingPriority="1000" verticalHuggingPriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="jTe-ie-zgb">
+                                                    <textField horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="jTe-ie-zgb">
                                                         <rect key="frame" x="-2" y="17" width="156" height="17"/>
                                                         <textFieldCell key="cell" controlSize="large" title="Enable Mac Mouse Fix" id="RV9-5T-rvb">
                                                             <font key="font" metaFont="systemBold" size="14"/>
@@ -278,8 +278,11 @@
                                                     </textField>
                                                 </subviews>
                                                 <constraints>
+                                                    <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="jTe-ie-zgb" secondAttribute="trailing" id="DDb-uI-N13"/>
                                                     <constraint firstItem="jTe-ie-zgb" firstAttribute="leading" secondItem="D4U-Df-iCp" secondAttribute="leading" id="Ix0-KA-VUt"/>
                                                     <constraint firstAttribute="width" constant="211" id="JrY-6M-6zF"/>
+                                                    <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="jTe-ie-zgb" secondAttribute="bottom" id="M4u-q5-wc2"/>
+                                                    <constraint firstItem="jTe-ie-zgb" firstAttribute="top" relation="greaterThanOrEqual" secondItem="D4U-Df-iCp" secondAttribute="top" id="gK5-ND-Zpb"/>
                                                     <constraint firstItem="jTe-ie-zgb" firstAttribute="centerY" secondItem="D4U-Df-iCp" secondAttribute="centerY" id="uGN-Ra-aee"/>
                                                 </constraints>
                                             </customView>
