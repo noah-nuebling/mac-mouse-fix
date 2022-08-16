@@ -1,5 +1,5 @@
 /* First draft: Mac Mouse Fix will stay enabled after you close it */
-"enabled-toggle.hint" = "Mac Mouse Fix bleibt eingeschaltet nachdem du es beendest";
+"enabled-toggle.hint" = "Mac Mouse Fix bleibt eingeschaltet nachdem du\nes beendest";
 
 /* First draft: Lets you quickly disable Scroll Enhancements and other features */
 "menu-bar-toggle.hint" = "<Noch nicht verwendet>";
