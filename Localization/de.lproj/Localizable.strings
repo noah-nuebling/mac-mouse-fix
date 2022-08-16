@@ -26,121 +26,217 @@
 "precise-scrolling-hint" = "Scrolle präzise indem du das Scroll-Rad langsam bewegst";
 
 /* First draft: Mission Control & Spaces */
-"drag-effect.dock-swipe" = "";
+"drag-effect.dock-swipe" = "Mission Control & Spaces";
 
 /* First draft: Move your mouse: \n - Up to show Mission Control \n - Down to show Application Windows \n - Left or Right to move between Spaces\n \nWorks like swiping with 3 fingers on an Apple Trackpad */
-"drag-effect.dock-swipe.hint" = "";
+"drag-effect.dock-swipe.hint" = "Bewege deine Maus nach: \n - Oben um Mission Control zu öffnen \n - Unten um Programmfenster zu zeigen \n - Links oder rechts um zwischen Spaces zu wechseln\n \n Funktioniert wie Streichen mit 3 Fingern auf einem Apple Trackpad";
 
 /* First draft: Scroll & Navigate */
-"drag-effect.scroll-swipe" = "";
+"drag-effect.scroll-swipe" = "Scrollen & Navigieren";
 
 /* First draft: Scroll freely by moving your mouse in any direction \n \nNavigate between pages in Safari, delete messages in Mail and more by moving your mouse left and right \n \nWorks like swiping with 2 fingers on an Apple Trackpad */
-"drag-effect.scroll-swipe.hint" = "";
+"drag-effect.scroll-swipe.hint" = "Scrolle frei indem du deine Maus in eine beliebige Richtung bewegst \n \nBlättere zwischen Seiten in Safari, lösche Nachrichten in Mail, und mehr, indem du deine Maus nach links oder rechts bewegst \n \nFunktioniert wie Streichen mit 2 Fingern auf einem Apple Trackpad ";
 
 /* First draft: Application Windows */
-"effect.app-expose" = "";
+"effect.app-expose" = "Programmfenster zeigen";
 
 /* First draft: Show all windows of the active app */
-"effect.app-expose.hint" = "";
+"effect.app-expose.hint" = "Zeige alle Fenster der aktiven App";
 
 /* First draft:  Exclusive Keys */
-"effect.apple-keys-submenu" = "";
+"effect.apple-keys-submenu" = "-Exklusive Tasten";
 
 /* First draft: Choose keys that are only available on Apple keyboards. */
-"effect.apple-keys-submenu.hint" = "";
+"effect.apple-keys-submenu.hint" = "Wähle Tasten, die nur auf Apple Tastaturen vorhanden sind";
 
 /* First draft: Works like pressing '%@' on an Apple keyboard */
-"effect.apple-shortcut.hint" = "";
+"effect.apple-shortcut.hint" = "Funktioniert so, als würdest du '%@' auf einer Apple Tastatur drücken";
 
 /* First draft: Show Desktop */
-"effect.desktop" = "";
+"effect.desktop" = "Schreibtisch zeigen";
 
 /* First draft: Show the desktop */
-"effect.desktop.hint" = "";
+"effect.desktop.hint" = "Zeige den Schreibtisch";
 
 /* First draft: Launchpad */
-"effect.launchpad" = "";
+"effect.launchpad" = "Launchpad";
 
 /* First draft: Open Launchpad */
-"effect.launchpad.hint" = "";
+"effect.launchpad.hint" = "Öffne Launchpad";
 
 /* First draft: Move Left a Space */
-"effect.left-space" = "";
+"effect.left-space" = "Einen Space nach links wechseln";
 
 /* First draft: Move one Space to the left */
-"effect.left-space.hint" = "";
+"effect.left-space.hint" = "Wechsle einen Space nach links";
 
 /* First draft: Look Up */
-"effect.look-up" = "";
+"effect.look-up" = "Nachschlagen & Quick Look";
 
 /* First draft: Look up words in the Dictionary, Quick Look files in Finder, and more. \n \nWorks like Force Touch on an Apple Trackpad. */
-"effect.look-up.hint" = "";
+"effect.look-up.hint" = "Schlage Wörter im Wörterbuch nach, werfe einen schnellen Blick auf Dateien im Finder, und mehr \n \nFunktioniert wie ein kräftiger Klick auf einem Apple Trackpad";
 
 /* First draft: Middle Click */
-"effect.middle-click" = "";
+"effect.middle-click" = "Mittel-Klick";
 
 /* First draft: Open links in a new tab, paste text in the Terminal, and more. \n \nWorks like clicking %@ on a standard mouse. */
-"effect.middle-click.hint" = "";
+"effect.middle-click.hint" = "Öffne Links in einem neuen Tab, setze Text im Terminal ein, und mehr \n \nFunktioniert wie klicken von %@ bei einer Standard-Maus";
 
 /* First draft: Mission Control */
-"effect.mission-control" = "";
+"effect.mission-control" = "Mission Control";
 
 /* First draft: Show Mission Control */
-"effect.mission-control.hint" = "";
+"effect.mission-control.hint" = "Zeige Mission Control";
 
 /* First draft: Keyboard Shortcut... */
-"effect.record-shortcut" = "";
+"effect.record-shortcut" = "Tastatur-Kurzbefehl...";
 
 /* First draft: Type a keyboard shortcut, then use it from your mouse */
-"effect.record-shortcut.hint" = "";
+"effect.record-shortcut.hint" = "Tippe einen Tastatur-Kurzbefehl, dann benutze ihn direkt von deiner Maus!";
 
 /* First draft: Move Right a Space */
-"effect.right-space" = "";
+"effect.right-space" = "Einen Space nach rechts wechseln";
 
 /* First draft: Move one Space to the right */
-"effect.right-space.hint" = "";
+"effect.right-space.hint" = "Wechsle einen Space nach rechts";
 
 /* First draft: Works like pressing '%@' on your keyboard */
-"effect.shortcut.hint" = "";
+"effect.shortcut.hint" = "Funktioniert wie drücken von '%@' auf deiner Tastatur";
 
 /* First draft: Smart Zoom */
-"effect.smart-zoom" = "";
+"effect.smart-zoom" = "Smart Zoom";
 
 /* First draft: Zoom in or out in Safari and other apps. \n \nWorks like a two-finger double tap on an Apple Trackpad. */
-"effect.smart-zoom.hint" = "";
+"effect.smart-zoom.hint" = "Zoome rein und raus in Safari und anderen Apps \n \nFunktioniert wie mit zwei Fingern doppelt tippen auf einem Apple Trackpad";
 
 /* First draft: Desktop & Launchpad */
-"scroll-effect.4-pinch" = "";
+"scroll-effect.4-pinch" = "Schreibtisch & Launchpad";
 
 /* First draft: Scroll up for Launchpad and down to show the Desktop \n \nWorks like Pinching with 4 fingers on an Apple Trackpad */
-"scroll-effect.4-pinch.hint" = "";
+"scroll-effect.4-pinch.hint" = "Scrolle nach: \n - Oben für Launchpad \n - Unten um den Desktop zu zeigen \n \nFunktioniert wie aufziehen mit 4 Fingern auf einem Apple Trackpad";
 
 /* First draft: App Switcher */
-"scroll-effect.app-switcher" = "";
+"scroll-effect.app-switcher" = "App Switcher";
 
 /* First draft: Quickly switch between open apps \n \nWorks like holding Command (⌘) and then pressing Tab (⇥) on your keyboard */
-"scroll-effect.app-switcher.hint" = "";
+"scroll-effect.app-switcher.hint" = "Wechsle schnell zischen offenen Apps \n \nFunktioniert wie auf deiner Tastatur die Befehlstaste (⌘) zu halten und dann Tab (⇥) zu drücken";
 
 /* First draft: Horizontal Scroll */
-"scroll-effect.horizontal" = "";
+"scroll-effect.horizontal" = "Horizontales Scrollen";
 
 /* First draft: Scroll horizontally \nNavigate pages in Safari, delete messages in Mail, and more \n \nWorks like swiping horizontally with 2 fingers on an Apple Trackpad */
-"scroll-effect.horizontal.hint" = "";
+"scroll-effect.horizontal.hint" = "Scrolle nach links und rechts, blättere zwischen Seiten in Safari, lösche Nachrichten in Mail, und mehr \n \nFunktioniert wie horizontales Wischen mit 2 Fingern auf einem Apple Trackpad";
 
 /* First draft: Precise Scroll */
-"scroll-effect.precise" = "";
+"scroll-effect.precise" = "Präzises Scrollen";
 
 /* First draft: Scroll small distances and use sensitive UI elements with precision. */
-"scroll-effect.precise.hint" = "";
+"scroll-effect.precise.hint" = "Scrolle kleine Distanzen und benutze empfindliche Bedienelemente mit Präzision";
 
 /* First draft: Swift Scroll */
-"scroll-effect.swift" = "";
+"scroll-effect.swift" = "Flottes scrollen";
 
 /* Scroll long distances with minimal effort */
-"scroll-effect.swift.hint" = "";
+"scroll-effect.swift.hint" = "Scrolle große Distanzen mit minimalem Aufwand";
 
 /* First draft: Zoom in or out */
-"scroll-effect.zoom" = "";
+"scroll-effect.zoom" = "Rein- und rauszoomen";
 
 /* First draft: Zoom in or out in Safari, Maps, and other apps \n \nWorks like Pinch to Zoom on an Apple Trackpad */
-"scroll-effect.zoom.hint" = "";
+"scroll-effect.zoom.hint" = "Zoome rein und raus in Safari, Maps, und anderen Apps \n \nFunktioniert wie aufziehen mit 2 Fingern auf einem Apple Trackpad";
+
+/* First draft: Type a Keyboard Shortcut */
+"type-shortcut-prompt" = "Tippe einen Tastatur-Kurzbefehl";
+
+/* First draft: <Rewind key> */
+"apple-key.backward" = "<Rückspultaste>";
+
+/* First draft: ⇪ */
+"apple-key.capslock" = "⇪";
+
+/* First draft: <Fast-Forward key> */
+"apple-key.forward" = "<Vorspultaste>";
+
+/* First draft: <Emoji Picker key> */
+"apple-key.globe" = "Emoji-Taste";
+
+/* First draft: <Increase Keyboard Brightness key> */
+"apple-key.light.max" = "<Tastaturhelligkeit erhöhen Taste>";
+
+/* First draft: <Decrease Keyboard Brightness key> */
+"apple-key.light.min" = "<Tastaturhelligkeit verringern Taste>";
+
+/* First draft: <Spotlight key> */
+"apple-key.magnifyingglass" = "<Spotlight Taste>";
+
+/* First draft: <Dictation key> */
+"apple-key.mic" = "<Diktiertaste>";
+
+/* First draft: <Do Not Disturb key> */
+"apple-key.moon" = "<Bitte nicht stören Taste>";
+
+/* First draft: <Play or Pause key> */
+"apple-key.playpause" = "<Abspielen und anhalten Taste>";
+
+/* First draft: <Power key> */
+"apple-key.power" = "<Aus- und Anschalttaste>";
+
+/* First draft: <Mission Control key> */
+"apple-key.rectangle.3.group" = "<Mission Control Taste>";
+
+/* First draft: <Mute key> */
+"apple-key.speaker" = "<Lautlos Taste>";
+
+/* First draft: <Decrease Volume key> */
+"apple-key.speaker.wave.1" = "<Lautstärke verringern Taste>";
+
+/* First draft: <Increase Volume key> */
+"apple-key.speaker.wave.3" = "<Lautstärke erhöhen Taste>";
+
+/* First draft: <Launchpad key> */
+"apple-key.square.grid.3x2" = "<Launchpad Taste>";
+
+/* First draft: <Increase Brightness key> */
+"apple-key.sun.max" = "<Helligkeit erhöhen Taste>";
+
+/* First draft: <Decrease Brightness key> */
+"apple-key.sun.min" = "<Helligkeit verringern Taste>";
+
+/* First draft: Middle Button */
+"button-string.middle" = "Mittlere Taste";
+
+/* First Draft: Button %@ */
+"button-string.numbered" = "Taste %@";
+
+/* First draft: Primary Button */
+"button-string.primary" = "Primäre Taste";
+
+/* First draft: Secondary Button */
+"button-string.secondary" = "Sekundäre Taste";
+
+/* First draft: the Middle Mouse Button (also called the Scroll Wheel Button or Mouse Button 3) */
+"button-string.tool.middle" = "die mittlere Maustaste (auch genannt die Scrollradtaste oder Maustaste 3)";
+
+/* First draft: Mouse Button %@ */
+"button-string.tool.numbered" = "Maustaste %@";
+
+/* First draft: the Primary Mouse Button (also called the Left Mouse Button or Mouse Button 1) */
+"button-string.tool.primary" = "die primäre Maustaste (auch genannt die linke Maustaste oder Maustaste 1)";
+
+/* First draft: the Secondary Mouse Button (also called the Right Mouse Button or Mouse Button 2) */
+"button-string.tool.secondary" = "die sekundäre Maustaste (auch genannt die rechte Maustaste oder Maustaste 2)";
+
+/* First draft: <Key without description> */
+"keyboard-key-without-description" = "<Taste ohne Beschreibung>";
+
+/* First draft: Command (⌘)- */
+"modifer-key.tool.command" = "Befehlstaste (⌘)-";
+
+/* First draft: Control (^)- */
+"modifer-key.tool.control" = "Steuerungstaste (^)-";
+
+/* First draft: Option (⌥)- */
+"modifer-key.tool.option" = "Wahltaste (⌥)-";
+
+/* First draft: Shift (⇧)- */
+"modifer-key.tool.shift" = "Umschalttaste (⇧)-";

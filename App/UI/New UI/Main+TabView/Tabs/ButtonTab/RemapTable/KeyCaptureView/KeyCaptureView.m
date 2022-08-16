@@ -72,7 +72,7 @@
 
 - (void)drawEmptyAppearance { // Not really drawing in the NSFillRect sense, probably a bad name
     
-    self.coolString = @"Type a Keyboard Shortcut";
+    self.coolString = NSLocalizedString(@"type-shortcut-prompt", @"First draft: Type a Keyboard Shortcut");
     self.textColor = NSColor.placeholderTextColor;
     
     [self selectAll:nil];

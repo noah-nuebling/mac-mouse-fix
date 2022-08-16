@@ -31,26 +31,26 @@
 
 + (NSString *)getButtonString:(MFMouseButtonNumber)buttonNumber {
     NSDictionary *buttonNumberToUIString = @{
-        @1: @"Primary Button",
-        @2: @"Secondary Button",
-        @3: @"Middle Button",
+        @1: NSLocalizedString(@"button-string.primary", @"First draft: Primary Button"),
+        @2: NSLocalizedString(@"button-string.secondary", @"First draft: Secondary Button"),
+        @3: NSLocalizedString(@"button-string.middle", @"First draft: Middle Button"),
     };
     NSString *buttonStr = buttonNumberToUIString[@(buttonNumber)];
     if (!buttonStr) {
-        buttonStr = [NSString stringWithFormat:@"Button %@", @(buttonNumber)];
+        buttonStr = stringf(NSLocalizedString(@"button-string.numbered", @"First Draft: Button %@"), @(buttonNumber));
     }
     return buttonStr;
 }
 
 + (NSString *)getButtonStringToolTip:(MFMouseButtonNumber)buttonNumber {
     NSDictionary *buttonNumberToUIString = @{
-        @1: @"the Primary Mouse Button (also called the Left Mouse Button or Mouse Button 1)",
-        @2: @"the Secondary Mouse Button (also called the Right Mouse Button or Mouse Button 2)",
-        @3: @"the Middle Mouse Button (also called the Scroll Wheel Button or Mouse Button 3)",
+        @1: NSLocalizedString(@"button-string.tool.primary",   @"First draft: the Primary Mouse Button (also called the Left Mouse Button or Mouse Button 1)"),
+        @2: NSLocalizedString(@"button-string.tool.secondary", @"First draft: the Secondary Mouse Button (also called the Right Mouse Button or Mouse Button 2)"),
+        @3: NSLocalizedString(@"button-string.tool.middle",    @"First draft: the Middle Mouse Button (also called the Scroll Wheel Button or Mouse Button 3)"),
     };
     NSString *buttonStr = buttonNumberToUIString[@(buttonNumber)];
     if (!buttonStr) {
-        buttonStr = [NSString stringWithFormat:@"Mouse Button %@", @(buttonNumber)];
+        buttonStr = stringf(NSLocalizedString(@"button-string.tool.numbered", @"First draft: Mouse Button %@"), @(buttonNumber));
     }
     return buttonStr;
 }
@@ -70,10 +70,10 @@
     NSString *kb = @"";
     CGEventFlags f = flags;
     kb = [NSString stringWithFormat:@"%@%@%@%@",
-          (f & kCGEventFlagMaskControl ?    @"Control (^)-" : @""),
-          (f & kCGEventFlagMaskAlternate ?  @"Option (⌥)-" : @""),
-          (f & kCGEventFlagMaskShift ?      @"Shift (⇧)-" : @""),
-          (f & kCGEventFlagMaskCommand ?    @"Command (⌘)-" : @"")];
+          (f & kCGEventFlagMaskControl ?    NSLocalizedString(@"modifer-key.tool.control", @"First draft: Control (^)-")    : @""),
+          (f & kCGEventFlagMaskAlternate ?  NSLocalizedString(@"modifer-key.tool.option", @"First draft: Option (⌥)-")      : @""),
+          (f & kCGEventFlagMaskShift ?      NSLocalizedString(@"modifer-key.tool.shift", @"First draft: Shift (⇧)-")        : @""),
+          (f & kCGEventFlagMaskCommand ?    NSLocalizedString(@"modifer-key.tool.command", @"First draft: Command (⌘)-")    : @"")];
     if (kb.length > 0) {
         kb = [kb substringToIndex:kb.length-1]; /// Delete trailing dash
         NSArray *stringArray = [kb componentsSeparatedByString:@"-"];
@@ -91,40 +91,40 @@
     
     if (type == kMFSystemEventTypeBrightnessDown) {
         symbolName = @"sun.min";
-        stringFallback = @"<Decrease Brightness key>";
+        stringFallback = NSLocalizedString(@"apple-key.sun.min", @"First draft: <Decrease Brightness key>");
     } else if (type == kMFSystemEventTypeBrightnessUp) {
         symbolName = @"sun.max";
-        stringFallback = @"<Increase Brightness key>";
+        stringFallback = NSLocalizedString(@"apple-key.sun.max" , @"First draft: <Increase Brightness key>");
     } else if (type == kMFSystemEventTypeMediaBack) {
         symbolName = @"backward";
-        stringFallback = @"<Rewind key>";
+        stringFallback = NSLocalizedString(@"apple-key.backward" , @"First draft: <Rewind key>");
     } else if (type == kMFSystemEventTypeMediaPlayPause) {
         symbolName = @"playpause";
-        stringFallback = @"<Play or Pause key>";
+        stringFallback = NSLocalizedString(@"apple-key.playpause" , @"First draft: <Play or Pause key>");
     } else if (type == kMFSystemEventTypeMediaForward) {
         symbolName = @"forward";
-        stringFallback = @"<Fast-Forward key>";
+        stringFallback = NSLocalizedString(@"apple-key.forward" , @"First draft: <Fast-Forward key>");
     } else if (type == kMFSystemEventTypeVolumeMute) {
         symbolName = @"speaker";
-        stringFallback = @"<Mute key>";
+        stringFallback = NSLocalizedString(@"apple-key.speaker" , @"First draft: <Mute key>");
     } else if (type == kMFSystemEventTypeVolumeDown) {
         symbolName = @"speaker.wave.1";
-        stringFallback = @"<Decrease Volume key>";
+        stringFallback = NSLocalizedString(@"apple-key.speaker.wave.1" , @"First draft: <Decrease Volume key>");
     } else if (type == kMFSystemEventTypeVolumeUp) {
         symbolName = @"speaker.wave.3";
-        stringFallback = @"<Increase Volume key>";
+        stringFallback = NSLocalizedString(@"apple-key.speaker.wave.3" , @"First draft: <Increase Volume key>");
     } else if (type == kMFSystemEventTypeKeyboardBacklightDown) {
         symbolName = @"light.min";
-        stringFallback = @"<Decrease Keyboard Brightness key>";
+        stringFallback = NSLocalizedString(@"apple-key.light.min" , @"First draft: <Decrease Keyboard Brightness key>");
     } else if (type == kMFSystemEventTypeKeyboardBacklightUp) {
         symbolName = @"light.max";
-        stringFallback = @"<Increase Keyboard Brightness key>";
+        stringFallback = NSLocalizedString(@"apple-key.light.max" , @"First draft: <Increase Keyboard Brightness key>");
     } else if (type == kMFSystemEventTypePower) {
         symbolName = @"power";
-        stringFallback = @"<Power key>";
+        stringFallback = NSLocalizedString(@"apple-key.power" , @"First draft: <Power key>");
     } else if (type == kMFSystemEventTypeCapsLock) {
         symbolName = @"capslock";
-        stringFallback = @"⇪";
+        stringFallback = NSLocalizedString(@"apple-key.capslock" , @"First draft: ⇪");
     }
         
     /// Validate
@@ -212,26 +212,26 @@ static CGSSymbolicHotKey _highestSymbolicHotKeyInCache = 0;
             CGSSymbolicHotKey shk = (CGSSymbolicHotKey)symbolicHotkey.integerValue;
             
             NSString *symbolName = @"questionmark.square";
-            NSString *stringFallback = @"<Key without description>";
+            NSString *stringFallback = NSLocalizedString(@"keyboard-key-without-description", @"First draft: <Key without description>");
             
             if (shk == kMFFunctionKeySHKMissionControl) {
                 symbolName = @"rectangle.3.group";
-                stringFallback = @"<Mission Control key>";
+                stringFallback = NSLocalizedString(@"apple-key.rectangle.3.group", @"First draft: <Mission Control key>");
             } else if (shk == kMFFunctionKeySHKDictation) {
                 symbolName = @"mic";
-                stringFallback = @"<Dictation key>";
+                stringFallback = NSLocalizedString(@"apple-key.mic", @"First draft: <Dictation key>");
             } else if (shk == kMFFunctionKeySHKSpotlight) {
                 symbolName = @"magnifyingglass";
-                stringFallback = @"<Spotlight key>";
+                stringFallback = NSLocalizedString(@"apple-key.magnifyingglass", @"First draft: <Spotlight key>");
             } else if (shk == kMFFunctionKeySHKDoNotDisturb) {
                 symbolName = @"moon";
-                stringFallback = @"<Do Not Disturb key>";
+                stringFallback = NSLocalizedString(@"apple-key.moon", @"First draft: <Do Not Disturb key>");
             } else if (shk == kMFFunctionKeySHKSwitchKeyboard) {
                 symbolName = @"globe";
-                stringFallback = @"<Emoji Picker key>";
+                stringFallback = NSLocalizedString(@"apple-key.globe", @"First draft: <Emoji Picker key>");
             } else if (shk == kMFFunctionKeySHKLaunchpad) {
                 symbolName = @"square.grid.3x2";
-                stringFallback = @"<Launchpad key>";
+                stringFallback = NSLocalizedString(@"apple-key.square.grid.3x2", @"First draft: <Launchpad key>");
             }
             
             /// Get symbol and attach it to keyStr
