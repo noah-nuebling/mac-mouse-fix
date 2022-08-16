@@ -19,7 +19,7 @@
 	<key>CFBundleShortVersionString</key>
 	<string>$(MARKETING_VERSION)</string>
 	<key>CFBundleVersion</key>
-	<string>16118</string>
+	<string>16136</string>
 	<key>LSApplicationCategoryType</key>
 	<string>public.app-category.utilities</string>
 	<key>NSHumanReadableCopyright</key>

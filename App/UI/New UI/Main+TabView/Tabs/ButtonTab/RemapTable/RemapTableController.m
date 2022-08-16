@@ -440,13 +440,13 @@ static void setBorderColor(RemapTableController *object) {
             break;
         }
     }
-    if (!buttonIsStillTriggerInDataModel) { // Yes, we want to remove a group row, too
+    if (!buttonIsStillTriggerInDataModel) { /// Yes, we want to remove a group row, too
         [rowsToRemoveWithAnimation addIndex:rowToRemove-1];
         
     }
     
     /// Do remove rows with animation
-    [self.tableView removeRowsAtIndexes:rowsToRemoveWithAnimation withAnimation:NSTableViewAnimationEffectNone/*NSTableViewAnimationSlideUp*/];
+    [self.tableView removeRowsAtIndexes:rowsToRemoveWithAnimation withAnimation:/*NSTableViewAnimationEffectNone*/NSTableViewAnimationSlideUp];
     
     /// Capture notifs
     NSSet *capturedButtonsAfter = [RemapTableUtility getCapturedButtons];
@@ -506,7 +506,7 @@ static void setBorderColor(RemapTableController *object) {
             [toInsertWithAnimationIndexSet addIndex:insertedIndex-1];
         }
         /// Do insert with animation
-        [self.tableView insertRowsAtIndexes:toInsertWithAnimationIndexSet withAnimation:NSTableViewAnimationEffectNone/*NSTableViewAnimationEffectSlideDown*/];
+        [self.tableView insertRowsAtIndexes:toInsertWithAnimationIndexSet withAnimation:/*NSTableViewAnimationEffectNone*/NSTableViewAnimationSlideDown];
         
         /// Update table size
         [(RemapTableView *)self.tableView updateSizeWithAnimation];
@@ -534,7 +534,7 @@ static void setBorderColor(RemapTableController *object) {
     NSUInteger openPopupRow = toHighlightIndexSet.firstIndex;
     NSTableView *tv = self.tableView;
     NSPopUpButton * popUpButton = [RemapTableUtility getPopUpButtonAtRow:openPopupRow fromTableView:tv];
-    double delay = existingIndexes.count == 1 ? 0.0 : /*0.2*/0.0;
+    double delay = existingIndexes.count == 1 ? 0.0 : 0.2;
     [popUpButton performSelector:@selector(performClick:) withObject:nil afterDelay:delay];
     
     /// Capture notifs

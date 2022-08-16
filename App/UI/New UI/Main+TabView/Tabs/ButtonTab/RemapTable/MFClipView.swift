@@ -20,10 +20,12 @@ class MFClipView: NSClipView {
     override func viewBoundsChanged(_ notification: Notification) {
         self.translatesAutoresizingMaskIntoConstraints = false
         self.documentView?.translatesAutoresizingMaskIntoConstraints = false
+        super.viewBoundsChanged(notification)
     }
     
     override func viewFrameChanged(_ notification: Notification) {
         self.translatesAutoresizingMaskIntoConstraints = false
         self.documentView?.translatesAutoresizingMaskIntoConstraints = false
+        super.viewFrameChanged(notification)
     }
 }

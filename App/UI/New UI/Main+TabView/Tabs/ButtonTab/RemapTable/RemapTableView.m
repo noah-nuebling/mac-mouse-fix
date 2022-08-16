@@ -111,18 +111,27 @@
 }
 
 - (void)updateSizeWithAnimation {
+
+    int rowHeight = 30;
+    
+    [self setFrameSize:self.intrinsicContentSize]; /// THIS FIXES EVERYTHING I'M AN APE IN FRONT OF A TYPEWRITER
+    
+//    NSRect oldBounds = self.enclosingScrollView.contentView.bounds;
+//    self.enclosingScrollView.contentView.bounds = NSMakeRect(oldBounds.origin.x, oldBounds.origin.y - rowHeight, oldBounds.size.width, oldBounds.size.height);
+    
+//    [((NSClipView *)self.enclosingScrollView.contentView) scroll
     
     /// Should be called by controller when adding / removing a row. We can't use didAddRow and didRemoveRow, because they are called all the time when views are being recycled and stuff
-    
-//    [NSAnimationContext runAnimationGroup:^(NSAnimationContext * _Nonnull context) {
-//        context.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionDefault];
-//        context.duration = 0.25;
+
+    [NSAnimationContext runAnimationGroup:^(NSAnimationContext * _Nonnull context) {
+        context.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionDefault];
+        context.duration = 0.25;
 //        context.duration = 2.0;
-//        [self heightConstraint].animator.constant = self.intrinsicContentSize.height;
-//        
-//    }];
-    
-    [self heightConstraint].constant = self.intrinsicContentSize.height;
+        [self heightConstraint].animator.constant = self.intrinsicContentSize.height;
+
+    }];
+
+//    [self heightConstraint].constant = self.intrinsicContentSize.height;
     
     /// Debug
     
