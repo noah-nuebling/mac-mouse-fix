@@ -1056,8 +1056,8 @@ You can also Double Click, Click and Drag, and more.</string>
                                         <rect key="frame" x="0.0" y="0.0" width="350" height="170"/>
                                         <subviews>
                                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Vaa-uM-Yko">
-                                                <rect key="frame" x="-2" y="86" width="122" height="84"/>
-                                                <textFieldCell key="cell" lineBreakMode="clipping" title="Keyboard Modifers:" id="vbN-zN-z2V">
+                                                <rect key="frame" x="-2" y="86" width="126" height="84"/>
+                                                <textFieldCell key="cell" lineBreakMode="clipping" title="Keyboard Modifiers:" id="vbN-zN-z2V">
                                                     <font key="font" metaFont="system"/>
                                                     <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -1073,8 +1073,8 @@ You can also Double Click, Click and Drag, and more.</string>
                                                     <font key="font" metaFont="system"/>
                                                 </buttonCell>
                                             </button>
-                                            <gridView horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" xPlacement="leading" yPlacement="bottom" rowAlignment="none" rowSpacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="93c-HE-afM">
-                                                <rect key="frame" x="72" y="0.0" width="206" height="70"/>
+                                            <gridView horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" ambiguous="YES" xPlacement="none" yPlacement="none" rowAlignment="none" rowSpacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="93c-HE-afM">
+                                                <rect key="frame" x="59" y="0.0" width="232" height="70"/>
                                                 <rows>
                                                     <gridRow id="Ntm-Z4-RP1"/>
                                                     <gridRow id="sPl-WB-CmO"/>
@@ -1085,12 +1085,12 @@ You can also Double Click, Click and Drag, and more.</string>
                                                 </columns>
                                                 <gridCells>
                                                     <gridCell row="Ntm-Z4-RP1" column="LBV-m0-nHq" xPlacement="center" yPlacement="center" id="St7-HA-GjL">
-                                                        <customView key="contentView" horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="RRB-hh-SGX" userLabel="Mod Capture Layout">
-                                                            <rect key="frame" x="0.0" y="40" width="100" height="30"/>
+                                                        <customView key="contentView" horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Six-Ec-wMk" userLabel="Mod Capture Layout">
+                                                            <rect key="frame" x="0.0" y="40" width="113" height="30"/>
                                                             <subviews>
-                                                                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="rFm-Yw-4A5">
-                                                                    <rect key="frame" x="0.0" y="16" width="100" height="14"/>
-                                                                    <textFieldCell key="cell" lineBreakMode="clipping" title="Scroll Horizontally" id="Jds-wI-1h1">
+                                                                <textField horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="AeU-6d-NTc">
+                                                                    <rect key="frame" x="8" y="16" width="97" height="14"/>
+                                                                    <textFieldCell key="cell" lineBreakMode="clipping" title="Scroll Horizontally" id="6Nj-Ed-W5T">
                                                                         <font key="font" metaFont="smallSystem"/>
                                                                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                                                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -1099,46 +1099,52 @@ You can also Double Click, Click and Drag, and more.</string>
                                                                         <fragment content="Scrolling &gt; Keyboard Modifiers &gt; Scroll Horizontally Label"/>
                                                                     </attributedString>
                                                                 </textField>
-                                                                <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="QF5-am-Af9" customClass="ModCaptureTextField" customModule="Mac_Mouse_Fix" customModuleProvider="target">
-                                                                    <rect key="frame" x="13" y="5" width="75" height="5"/>
+                                                                <textField verticalHuggingPriority="750" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="PpE-2r-BrM" customClass="ModCaptureTextField" customModule="Mac_Mouse_Fix" customModuleProvider="target">
+                                                                    <rect key="frame" x="19" y="5" width="75" height="5"/>
                                                                     <constraints>
-                                                                        <constraint firstAttribute="width" constant="75" id="gol-0r-D1D"/>
+                                                                        <constraint firstAttribute="width" constant="75" id="b7R-NV-XE1"/>
                                                                     </constraints>
-                                                                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" drawsBackground="YES" id="aBE-A4-Ozi">
+                                                                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" drawsBackground="YES" id="NYE-x1-Sfd">
                                                                         <font key="font" metaFont="system"/>
                                                                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                                                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                                     </textFieldCell>
                                                                 </textField>
-                                                                <button translatesAutoresizingMaskIntoConstraints="NO" id="aST-ae-80H" customClass="ModCaptureDeleteButton" customModule="Mac_Mouse_Fix" customModuleProvider="target">
-                                                                    <rect key="frame" x="0.0" y="0.0" width="9" height="15"/>
-                                                                    <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="xmark.circle.fill" catalog="system" imagePosition="only" alignment="center" imageScaling="proportionallyUpOrDown" inset="2" id="Q7w-xW-wZs">
+                                                                <button ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="GIU-sd-HRi" customClass="ModCaptureDeleteButton" customModule="Mac_Mouse_Fix" customModuleProvider="target">
+                                                                    <rect key="frame" x="0.0" y="0.0" width="15" height="15"/>
+                                                                    <constraints>
+                                                                        <constraint firstAttribute="width" constant="15" id="L74-tb-pwa"/>
+                                                                        <constraint firstAttribute="height" constant="9" id="YbZ-a5-I5s"/>
+                                                                    </constraints>
+                                                                    <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="xmark.circle.fill" catalog="system" imagePosition="only" alignment="center" imageScaling="proportionallyUpOrDown" inset="2" id="J1k-ON-bhd">
                                                                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                                                         <font key="font" metaFont="system"/>
                                                                     </buttonCell>
                                                                     <connections>
-                                                                        <outlet property="parentTextField" destination="QF5-am-Af9" id="AGE-6f-TnJ"/>
+                                                                        <outlet property="parentTextField" destination="PpE-2r-BrM" id="NcM-dA-5K9"/>
                                                                     </connections>
                                                                 </button>
                                                             </subviews>
                                                             <constraints>
-                                                                <constraint firstItem="rFm-Yw-4A5" firstAttribute="centerX" secondItem="RRB-hh-SGX" secondAttribute="centerX" id="2vX-YS-Wh7"/>
-                                                                <constraint firstItem="QF5-am-Af9" firstAttribute="centerX" secondItem="RRB-hh-SGX" secondAttribute="centerX" id="90v-dQ-NNV"/>
-                                                                <constraint firstItem="rFm-Yw-4A5" firstAttribute="top" secondItem="RRB-hh-SGX" secondAttribute="top" id="H4w-id-mgm"/>
-                                                                <constraint firstItem="aST-ae-80H" firstAttribute="trailing" secondItem="QF5-am-Af9" secondAttribute="leading" constant="-4" id="L8d-FH-xBm"/>
-                                                                <constraint firstItem="aST-ae-80H" firstAttribute="leading" secondItem="RRB-hh-SGX" secondAttribute="leading" id="N0O-B9-jc1"/>
-                                                                <constraint firstItem="aST-ae-80H" firstAttribute="centerY" secondItem="QF5-am-Af9" secondAttribute="centerY" id="gum-Ca-Zom"/>
-                                                                <constraint firstAttribute="bottom" secondItem="QF5-am-Af9" secondAttribute="bottom" constant="5" id="srr-du-nb1"/>
-                                                                <constraint firstItem="QF5-am-Af9" firstAttribute="top" secondItem="rFm-Yw-4A5" secondAttribute="bottom" constant="6" id="uxD-VZ-Xao"/>
+                                                                <constraint firstItem="GIU-sd-HRi" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="Six-Ec-wMk" secondAttribute="leading" id="AQk-OX-k4Q"/>
+                                                                <constraint firstItem="PpE-2r-BrM" firstAttribute="centerX" secondItem="Six-Ec-wMk" secondAttribute="centerX" id="EIi-1S-JGX"/>
+                                                                <constraint firstItem="AeU-6d-NTc" firstAttribute="centerX" secondItem="Six-Ec-wMk" secondAttribute="centerX" id="GgT-Ue-MLf"/>
+                                                                <constraint firstItem="PpE-2r-BrM" firstAttribute="top" secondItem="AeU-6d-NTc" secondAttribute="bottom" constant="6" id="MBO-TV-kcg"/>
+                                                                <constraint firstItem="AeU-6d-NTc" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="Six-Ec-wMk" secondAttribute="leading" constant="10" id="WDV-OW-yQc"/>
+                                                                <constraint firstAttribute="bottom" secondItem="PpE-2r-BrM" secondAttribute="bottom" constant="5" id="bSg-Ew-OD8"/>
+                                                                <constraint firstItem="AeU-6d-NTc" firstAttribute="top" secondItem="Six-Ec-wMk" secondAttribute="top" id="nRY-ez-2RA"/>
+                                                                <constraint firstItem="GIU-sd-HRi" firstAttribute="trailing" secondItem="PpE-2r-BrM" secondAttribute="leading" constant="-4" id="nZp-2g-rzn"/>
+                                                                <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="AeU-6d-NTc" secondAttribute="trailing" constant="10" id="rcU-VM-MBs"/>
+                                                                <constraint firstItem="GIU-sd-HRi" firstAttribute="centerY" secondItem="PpE-2r-BrM" secondAttribute="centerY" id="uBp-JW-4Hs"/>
                                                             </constraints>
                                                         </customView>
                                                     </gridCell>
                                                     <gridCell row="Ntm-Z4-RP1" column="FzS-n2-Mpi" id="zJJ-cS-kkb">
-                                                        <customView key="contentView" horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="Oos-ni-ewS" userLabel="Mod Capture Layout">
-                                                            <rect key="frame" x="106" y="40" width="100" height="30"/>
+                                                        <customView key="contentView" horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Oos-ni-ewS" userLabel="Mod Capture Layout">
+                                                            <rect key="frame" x="119" y="40" width="113" height="30"/>
                                                             <subviews>
-                                                                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="xXa-Kc-t6I">
-                                                                    <rect key="frame" x="9" y="30" width="83" height="0.0"/>
+                                                                <textField horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="xXa-Kc-t6I">
+                                                                    <rect key="frame" x="15" y="16" width="83" height="14"/>
                                                                     <textFieldCell key="cell" lineBreakMode="clipping" title="Zoom In or Out" id="H4T-Rp-t33">
                                                                         <font key="font" metaFont="smallSystem"/>
                                                                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -1148,8 +1154,8 @@ You can also Double Click, Click and Drag, and more.</string>
                                                                         <fragment content="Scrolling &gt; Keyboard Modifiers &gt; Zoom In or Out Label"/>
                                                                     </attributedString>
                                                                 </textField>
-                                                                <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="HZF-jc-NcN" customClass="ModCaptureTextField" customModule="Mac_Mouse_Fix" customModuleProvider="target">
-                                                                    <rect key="frame" x="13" y="5" width="75" height="19"/>
+                                                                <textField verticalHuggingPriority="750" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="HZF-jc-NcN" customClass="ModCaptureTextField" customModule="Mac_Mouse_Fix" customModuleProvider="target">
+                                                                    <rect key="frame" x="19" y="5" width="75" height="5"/>
                                                                     <constraints>
                                                                         <constraint firstAttribute="width" constant="75" id="GzZ-q9-Ejv"/>
                                                                     </constraints>
@@ -1159,8 +1165,12 @@ You can also Double Click, Click and Drag, and more.</string>
                                                                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                                     </textFieldCell>
                                                                 </textField>
-                                                                <button translatesAutoresizingMaskIntoConstraints="NO" id="Qpy-8X-Aos" customClass="ModCaptureDeleteButton" customModule="Mac_Mouse_Fix" customModuleProvider="target">
-                                                                    <rect key="frame" x="0.0" y="7" width="9" height="15"/>
+                                                                <button ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Qpy-8X-Aos" customClass="ModCaptureDeleteButton" customModule="Mac_Mouse_Fix" customModuleProvider="target">
+                                                                    <rect key="frame" x="0.0" y="0.0" width="15" height="15"/>
+                                                                    <constraints>
+                                                                        <constraint firstAttribute="height" constant="9" id="MUB-7x-WAm"/>
+                                                                        <constraint firstAttribute="width" constant="15" id="aun-Mq-zJZ"/>
+                                                                    </constraints>
                                                                     <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="xmark.circle.fill" catalog="system" imagePosition="only" alignment="center" imageScaling="proportionallyUpOrDown" inset="2" id="TWb-x1-c1U">
                                                                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                                                         <font key="font" metaFont="system"/>
@@ -1171,23 +1181,25 @@ You can also Double Click, Click and Drag, and more.</string>
                                                                 </button>
                                                             </subviews>
                                                             <constraints>
-                                                                <constraint firstItem="Qpy-8X-Aos" firstAttribute="leading" secondItem="Oos-ni-ewS" secondAttribute="leading" id="6mN-R8-IYH"/>
+                                                                <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="xXa-Kc-t6I" secondAttribute="trailing" constant="10" id="0RU-fd-93c"/>
                                                                 <constraint firstAttribute="bottom" secondItem="HZF-jc-NcN" secondAttribute="bottom" constant="5" id="Frz-yG-Tmw"/>
                                                                 <constraint firstItem="HZF-jc-NcN" firstAttribute="centerX" secondItem="Oos-ni-ewS" secondAttribute="centerX" id="H1F-AM-sKr"/>
                                                                 <constraint firstItem="Qpy-8X-Aos" firstAttribute="trailing" secondItem="HZF-jc-NcN" secondAttribute="leading" constant="-4" id="N7S-lZ-BPN"/>
                                                                 <constraint firstItem="HZF-jc-NcN" firstAttribute="top" secondItem="xXa-Kc-t6I" secondAttribute="bottom" constant="6" id="PRV-D1-3FH"/>
+                                                                <constraint firstItem="Qpy-8X-Aos" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="Oos-ni-ewS" secondAttribute="leading" id="YnU-Qr-vWJ"/>
                                                                 <constraint firstItem="xXa-Kc-t6I" firstAttribute="centerX" secondItem="Oos-ni-ewS" secondAttribute="centerX" id="eB8-5T-90C"/>
                                                                 <constraint firstItem="Qpy-8X-Aos" firstAttribute="centerY" secondItem="HZF-jc-NcN" secondAttribute="centerY" id="iC6-76-ogu"/>
                                                                 <constraint firstItem="xXa-Kc-t6I" firstAttribute="top" secondItem="Oos-ni-ewS" secondAttribute="top" id="u2C-BG-Koc"/>
+                                                                <constraint firstItem="xXa-Kc-t6I" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="Oos-ni-ewS" secondAttribute="leading" constant="10" id="yfw-kl-g52"/>
                                                             </constraints>
                                                         </customView>
                                                     </gridCell>
                                                     <gridCell row="sPl-WB-CmO" column="LBV-m0-nHq" id="Ib4-ES-BGq">
-                                                        <customView key="contentView" horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="Jp2-3z-uFa" userLabel="Mod Capture Layout">
-                                                            <rect key="frame" x="0.0" y="0.0" width="100" height="30"/>
+                                                        <customView key="contentView" horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Jp2-3z-uFa" userLabel="Mod Capture Layout">
+                                                            <rect key="frame" x="0.0" y="0.0" width="113" height="30"/>
                                                             <subviews>
-                                                                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="PDK-GT-YZg">
-                                                                    <rect key="frame" x="14" y="30" width="73" height="0.0"/>
+                                                                <textField horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="PDK-GT-YZg">
+                                                                    <rect key="frame" x="20" y="16" width="73" height="14"/>
                                                                     <textFieldCell key="cell" lineBreakMode="clipping" title="Scroll Swiftly" id="ENz-Ny-4ax">
                                                                         <font key="font" metaFont="smallSystem"/>
                                                                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -1197,8 +1209,8 @@ You can also Double Click, Click and Drag, and more.</string>
                                                                         <fragment content="Scrolling &gt; Keyboard Modifiers &gt; Scroll Swiftly Label"/>
                                                                     </attributedString>
                                                                 </textField>
-                                                                <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Abk-fb-uRV" customClass="ModCaptureTextField" customModule="Mac_Mouse_Fix" customModuleProvider="target">
-                                                                    <rect key="frame" x="13" y="5" width="75" height="19"/>
+                                                                <textField verticalHuggingPriority="750" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Abk-fb-uRV" customClass="ModCaptureTextField" customModule="Mac_Mouse_Fix" customModuleProvider="target">
+                                                                    <rect key="frame" x="19" y="5" width="75" height="5"/>
                                                                     <constraints>
                                                                         <constraint firstAttribute="width" constant="75" id="Mio-SG-K5e"/>
                                                                     </constraints>
@@ -1208,8 +1220,12 @@ You can also Double Click, Click and Drag, and more.</string>
                                                                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                                     </textFieldCell>
                                                                 </textField>
-                                                                <button translatesAutoresizingMaskIntoConstraints="NO" id="I3L-q5-tw4" customClass="ModCaptureDeleteButton" customModule="Mac_Mouse_Fix" customModuleProvider="target">
-                                                                    <rect key="frame" x="0.0" y="7" width="9" height="15"/>
+                                                                <button ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="I3L-q5-tw4" customClass="ModCaptureDeleteButton" customModule="Mac_Mouse_Fix" customModuleProvider="target">
+                                                                    <rect key="frame" x="0.0" y="0.0" width="15" height="15"/>
+                                                                    <constraints>
+                                                                        <constraint firstAttribute="width" constant="15" id="P8R-kp-5Sh"/>
+                                                                        <constraint firstAttribute="height" constant="9" id="Vo9-Dz-DSa"/>
+                                                                    </constraints>
                                                                     <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="xmark.circle.fill" catalog="system" imagePosition="only" alignment="center" imageScaling="proportionallyUpOrDown" inset="2" id="lem-6u-EIQ">
                                                                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                                                         <font key="font" metaFont="system"/>
@@ -1220,23 +1236,25 @@ You can also Double Click, Click and Drag, and more.</string>
                                                                 </button>
                                                             </subviews>
                                                             <constraints>
-                                                                <constraint firstItem="I3L-q5-tw4" firstAttribute="leading" secondItem="Jp2-3z-uFa" secondAttribute="leading" id="EMt-af-7Za"/>
                                                                 <constraint firstItem="I3L-q5-tw4" firstAttribute="trailing" secondItem="Abk-fb-uRV" secondAttribute="leading" constant="-4" id="Ns0-Ax-W3s"/>
                                                                 <constraint firstItem="PDK-GT-YZg" firstAttribute="centerX" secondItem="Jp2-3z-uFa" secondAttribute="centerX" id="PJ6-aX-TKm"/>
                                                                 <constraint firstItem="Abk-fb-uRV" firstAttribute="centerX" secondItem="Jp2-3z-uFa" secondAttribute="centerX" id="RF5-z7-C8q"/>
                                                                 <constraint firstItem="PDK-GT-YZg" firstAttribute="top" secondItem="Jp2-3z-uFa" secondAttribute="top" id="S1C-Fi-C3v"/>
                                                                 <constraint firstAttribute="bottom" secondItem="Abk-fb-uRV" secondAttribute="bottom" constant="5" id="SXV-er-Y0q"/>
+                                                                <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="PDK-GT-YZg" secondAttribute="trailing" constant="10" id="c0t-ri-UMD"/>
+                                                                <constraint firstItem="PDK-GT-YZg" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="Jp2-3z-uFa" secondAttribute="leading" constant="10" id="e0f-gq-KC7"/>
                                                                 <constraint firstItem="Abk-fb-uRV" firstAttribute="top" secondItem="PDK-GT-YZg" secondAttribute="bottom" constant="6" id="euk-IU-0fM"/>
+                                                                <constraint firstItem="I3L-q5-tw4" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="Jp2-3z-uFa" secondAttribute="leading" id="pai-PB-IoL"/>
                                                                 <constraint firstItem="I3L-q5-tw4" firstAttribute="centerY" secondItem="Abk-fb-uRV" secondAttribute="centerY" id="sLw-pD-i3h"/>
                                                             </constraints>
                                                         </customView>
                                                     </gridCell>
                                                     <gridCell row="sPl-WB-CmO" column="FzS-n2-Mpi" id="6NV-IL-ql6">
-                                                        <customView key="contentView" horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="0nj-L8-QVU" userLabel="Mod Capture Layout">
-                                                            <rect key="frame" x="106" y="0.0" width="100" height="30"/>
+                                                        <customView key="contentView" horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="0nj-L8-QVU" userLabel="Mod Capture Layout">
+                                                            <rect key="frame" x="119" y="0.0" width="113" height="30"/>
                                                             <subviews>
-                                                                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="ZTR-Oj-cl0">
-                                                                    <rect key="frame" x="8" y="30" width="85" height="0.0"/>
+                                                                <textField horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ZTR-Oj-cl0">
+                                                                    <rect key="frame" x="14" y="16" width="85" height="14"/>
                                                                     <textFieldCell key="cell" lineBreakMode="clipping" title="Scroll Precisely" id="A6t-UZ-2DE">
                                                                         <font key="font" metaFont="smallSystem"/>
                                                                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -1246,8 +1264,8 @@ You can also Double Click, Click and Drag, and more.</string>
                                                                         <fragment content="Scrolling &gt; Keyboard Modifiers &gt; Scroll Precisely Label"/>
                                                                     </attributedString>
                                                                 </textField>
-                                                                <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="gqo-T2-Nmz" customClass="ModCaptureTextField" customModule="Mac_Mouse_Fix" customModuleProvider="target">
-                                                                    <rect key="frame" x="13" y="5" width="75" height="19"/>
+                                                                <textField verticalHuggingPriority="750" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="gqo-T2-Nmz" customClass="ModCaptureTextField" customModule="Mac_Mouse_Fix" customModuleProvider="target">
+                                                                    <rect key="frame" x="19" y="5" width="75" height="5"/>
                                                                     <constraints>
                                                                         <constraint firstAttribute="width" constant="75" id="5Wt-UR-yRQ"/>
                                                                     </constraints>
@@ -1257,8 +1275,12 @@ You can also Double Click, Click and Drag, and more.</string>
                                                                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                                     </textFieldCell>
                                                                 </textField>
-                                                                <button translatesAutoresizingMaskIntoConstraints="NO" id="VJe-D7-Rvn" customClass="ModCaptureDeleteButton" customModule="Mac_Mouse_Fix" customModuleProvider="target">
-                                                                    <rect key="frame" x="0.0" y="7" width="9" height="15"/>
+                                                                <button ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="VJe-D7-Rvn" customClass="ModCaptureDeleteButton" customModule="Mac_Mouse_Fix" customModuleProvider="target">
+                                                                    <rect key="frame" x="0.0" y="0.0" width="15" height="15"/>
+                                                                    <constraints>
+                                                                        <constraint firstAttribute="height" constant="9" id="Gi3-5j-KxL"/>
+                                                                        <constraint firstAttribute="width" constant="15" id="zM8-6y-HZ8"/>
+                                                                    </constraints>
                                                                     <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="xmark.circle.fill" catalog="system" imagePosition="only" alignment="center" imageScaling="proportionallyUpOrDown" inset="2" id="8Xu-e9-OwA">
                                                                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                                                         <font key="font" metaFont="system"/>
@@ -1271,12 +1293,14 @@ You can also Double Click, Click and Drag, and more.</string>
                                                             <constraints>
                                                                 <constraint firstItem="ZTR-Oj-cl0" firstAttribute="top" secondItem="0nj-L8-QVU" secondAttribute="top" id="581-5L-hAi"/>
                                                                 <constraint firstItem="gqo-T2-Nmz" firstAttribute="top" secondItem="ZTR-Oj-cl0" secondAttribute="bottom" constant="6" id="Cxx-VK-u8c"/>
+                                                                <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="ZTR-Oj-cl0" secondAttribute="trailing" constant="10" id="DQn-eH-2Ak"/>
                                                                 <constraint firstItem="gqo-T2-Nmz" firstAttribute="centerX" secondItem="0nj-L8-QVU" secondAttribute="centerX" id="Qva-PW-Gbu"/>
                                                                 <constraint firstItem="VJe-D7-Rvn" firstAttribute="centerY" secondItem="gqo-T2-Nmz" secondAttribute="centerY" id="TqV-KX-lT2"/>
                                                                 <constraint firstItem="VJe-D7-Rvn" firstAttribute="trailing" secondItem="gqo-T2-Nmz" secondAttribute="leading" constant="-4" id="dHp-fj-cCd"/>
-                                                                <constraint firstItem="VJe-D7-Rvn" firstAttribute="leading" secondItem="0nj-L8-QVU" secondAttribute="leading" id="g1o-YZ-ycV"/>
                                                                 <constraint firstItem="ZTR-Oj-cl0" firstAttribute="centerX" secondItem="0nj-L8-QVU" secondAttribute="centerX" id="kJ1-Sl-gAQ"/>
                                                                 <constraint firstAttribute="bottom" secondItem="gqo-T2-Nmz" secondAttribute="bottom" constant="5" id="lMC-xd-fNq"/>
+                                                                <constraint firstItem="ZTR-Oj-cl0" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="0nj-L8-QVU" secondAttribute="leading" constant="10" id="rtk-LZ-TbL"/>
+                                                                <constraint firstItem="VJe-D7-Rvn" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="0nj-L8-QVU" secondAttribute="leading" id="seC-li-h1F"/>
                                                             </constraints>
                                                         </customView>
                                                     </gridCell>
@@ -1334,7 +1358,7 @@ You can also Double Click, Click and Drag, and more.</string>
                         <fragment content="Scrolling Tab Title"/>
                     </attributedString>
                     <connections>
-                        <outlet property="horizontalModField" destination="QF5-am-Af9" id="dcY-ky-8EN"/>
+                        <outlet property="horizontalModField" destination="PpE-2r-BrM" id="sxE-uX-0zf"/>
                         <outlet property="inertiaSection" destination="enY-m0-Esm" id="Bgf-CS-IP4"/>
                         <outlet property="inertiaToggle" destination="BaB-SW-lek" id="TyK-xD-IEc"/>
                         <outlet property="masterStack" destination="N4F-RB-d7a" id="l0H-83-1J7"/>

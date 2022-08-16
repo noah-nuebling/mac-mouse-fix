@@ -166,9 +166,6 @@
 /* Class = "NSMenu"; title = "Window"; ObjectID = "InY-TB-ky6"; */
 "InY-TB-ky6.title" = "Fenster";
 
-/* Class = "NSTextFieldCell"; title = "Scroll Horizontally"; ObjectID = "Jds-wI-1h1"; Note = "Scrolling > Keyboard Modifiers > Scroll Horizontally Label"; */
-"Jds-wI-1h1.title" = "Horizontal scrollen";
-
 /* Class = "NSMenuItem"; title = "<Click and Drag Button 3>"; ObjectID = "kK6-b5-Rfd"; */
 "kK6-b5-Rfd.title" = "<>";
 
@@ -238,7 +235,7 @@
 /* Class = "NSMenuItem"; title = "Quit Mac Mouse Fix"; ObjectID = "UeD-ND-tYj"; */
 "UeD-ND-tYj.title" = "Mac Mouse Fix beenden";
 
-/* Class = "NSTextFieldCell"; title = "Keyboard Modifers:"; ObjectID = "vbN-zN-z2V"; Note = "Scrolling > Keyboard Modifiers Label"; */
+/* Class = "NSTextFieldCell"; title = "Keyboard Modifiers:"; ObjectID = "vbN-zN-z2V"; Note = "Scrolling > Keyboard Modifiers Label"; */
 "vbN-zN-z2V.title" = "Sondertasten:";
 
 /* Class = "NSTextFieldCell"; title = "<Text Cell>"; ObjectID = "WiZ-l0-Th5"; */
@@ -261,3 +258,6 @@
 
 /* Class = "NSViewController"; title = "Pointer"; ObjectID = "1dS-BH-DIv"; Note = "Pointer Tab Title"; */
 "1dS-BH-DIv.title" = "Zeiger";
+
+/* Class = "NSTextFieldCell"; title = "Scroll Horizontally"; ObjectID = "6Nj-Ed-W5T"; Note = "Scrolling > Keyboard Modifiers > Scroll Horizontally Label"; */
+"6Nj-Ed-W5T.title" = "Horizontal Scrollen";
