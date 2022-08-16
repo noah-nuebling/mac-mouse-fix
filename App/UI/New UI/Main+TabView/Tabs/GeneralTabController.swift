@@ -49,7 +49,7 @@ class GeneralTabController: NSViewController {
         
         /// Replace enable checkBox with NSSwitch on newer macOS versions
         var usingSwitch = false
-        if #available(macOS 10.15, *), false {
+        if #available(macOS 10.15, *) {
             
             usingSwitch = true
 
