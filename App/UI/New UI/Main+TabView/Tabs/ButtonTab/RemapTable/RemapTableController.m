@@ -399,8 +399,13 @@ static void setBorderColor(RemapTableController *object) {
     
     /// Remove row
     if (result != -1) {
-        [self removeRow:result];
+        [self coolRemoveRow:result];
     }
+}
+
+- (void)coolRemoveRow:(NSInteger)row {
+    [self removeRow:row];
+    [(RemapTableView *)self.tableView updateSizeWithAnimation];
 }
 
 - (void)removeRow:(NSInteger)rowToRemove {
@@ -441,7 +446,7 @@ static void setBorderColor(RemapTableController *object) {
     }
     
     /// Do remove rows with animation
-    [self.tableView removeRowsAtIndexes:rowsToRemoveWithAnimation withAnimation:NSTableViewAnimationSlideUp];
+    [self.tableView removeRowsAtIndexes:rowsToRemoveWithAnimation withAnimation:NSTableViewAnimationEffectNone/*NSTableViewAnimationSlideUp*/];
     
     /// Capture notifs
     NSSet *capturedButtonsAfter = [RemapTableUtility getCapturedButtons];
@@ -464,6 +469,7 @@ static void setBorderColor(RemapTableController *object) {
     
     NSMutableDictionary *rowDictToAdd = payload.mutableCopy;
     /// ((Check if payload is valid tableEntry))
+    
     /// Check if already in table
     NSIndexSet *existingIndexes = [self.groupedDataModel indexesOfObjectsPassingTest:^BOOL(NSDictionary * _Nonnull tableEntry, NSUInteger idx, BOOL * _Nonnull stop) {
         BOOL triggerMatches = [tableEntry[kMFRemapsKeyTrigger] isEqualTo:rowDictToAdd[kMFRemapsKeyTrigger]];
@@ -500,7 +506,10 @@ static void setBorderColor(RemapTableController *object) {
             [toInsertWithAnimationIndexSet addIndex:insertedIndex-1];
         }
         /// Do insert with animation
-        [self.tableView insertRowsAtIndexes:toInsertWithAnimationIndexSet withAnimation:NSTableViewAnimationSlideDown];
+        [self.tableView insertRowsAtIndexes:toInsertWithAnimationIndexSet withAnimation:NSTableViewAnimationEffectNone/*NSTableViewAnimationEffectSlideDown*/];
+        
+        /// Update table size
+        [(RemapTableView *)self.tableView updateSizeWithAnimation];
         
         /// Write new row to file (to make behaviour appropriate when user doesn't choose any effect)
         [self writeToConfig];
@@ -525,7 +534,7 @@ static void setBorderColor(RemapTableController *object) {
     NSUInteger openPopupRow = toHighlightIndexSet.firstIndex;
     NSTableView *tv = self.tableView;
     NSPopUpButton * popUpButton = [RemapTableUtility getPopUpButtonAtRow:openPopupRow fromTableView:tv];
-    double delay = existingIndexes.count == 1 ? 0.0 : 0.2;
+    double delay = existingIndexes.count == 1 ? 0.0 : /*0.2*/0.0;
     [popUpButton performSelector:@selector(performClick:) withObject:nil afterDelay:delay];
     
     /// Capture notifs

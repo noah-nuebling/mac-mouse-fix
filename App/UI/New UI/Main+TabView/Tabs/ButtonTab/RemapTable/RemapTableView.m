@@ -8,28 +8,61 @@
 //
 
 #import "RemapTableView.h"
+#import "Mac_Mouse_Fix-Swift.h"
 
-@implementation RemapTableView
+@implementation RemapTableView {
+    NSLayoutConstraint *_heightConstraint;
+}
 
 - (instancetype)init {
     
+    /// This is seemingly never called
+    
     if (self = [super init]) {
+        
         self.intercellSpacing = NSMakeSize(20,20);
 
     }
     return self;
 }
 
-// (?) Need this to make keystroke capture field first responder
-// See https://stackoverflow.com/questions/29986224/editable-nstextfield-in-nstableview
-//- (BOOL)validateProposedFirstResponder:(NSResponder *)responder forEvent:(NSEvent *)event {
-//    return YES;
-//}
+- (instancetype)initWithCoder:(NSCoder *)coder {
+    
+    /// This is seemingly called before the view has loaded it's rows
+    
+    if (self = [super initWithCoder:coder]) {
 
-//- (void)drawGridInClipRect:(NSRect)clipRect {
-//    [NSColor.redColor setFill];
-//    NSRectFill(clipRect);
-//}
+        
+        
+    }
+    return self;
+}
+
+
+- (NSLayoutConstraint *)heightConstraint {
+    
+    /// Can't find an init function that is called after the rows have been loaded , so we're using this instead.
+    
+    if (_heightConstraint ==  nil) {
+        _heightConstraint = [self.heightAnchor constraintEqualToConstant:self.intrinsicContentSize.height];
+        _heightConstraint.priority = 1000;
+        [_heightConstraint setActive:YES];
+    }
+    
+    return _heightConstraint;
+}
+
+
+/// (?) Need this to make keystroke capture field first responder
+/// See https://stackoverflow.com/questions/29986224/editable-nstextfield-in-nstableview
+///- (BOOL)validateProposedFirstResponder:(NSResponder *)responder forEvent:(NSEvent *)event {
+///    return YES;
+///}
+
+///- (void)drawGridInClipRect:(NSRect)clipRect {
+///    [NSColor.redColor setFill];
+///    NSRectFill(clipRect);
+///}
 
 - (NSMenu *)menuForEvent:(NSEvent *)event {
     
@@ -75,6 +108,25 @@
 //    NSInteger clickedRow = [self rowAtPoint:clickedPoint];
     
 //    [super mouseDown:event];
+}
+
+- (void)updateSizeWithAnimation {
+    
+    /// Should be called by controller when adding / removing a row. We can't use didAddRow and didRemoveRow, because they are called all the time when views are being recycled and stuff
+    
+//    [NSAnimationContext runAnimationGroup:^(NSAnimationContext * _Nonnull context) {
+//        context.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionDefault];
+//        context.duration = 0.25;
+//        context.duration = 2.0;
+//        [self heightConstraint].animator.constant = self.intrinsicContentSize.height;
+//        
+//    }];
+    
+    [self heightConstraint].constant = self.intrinsicContentSize.height;
+    
+    /// Debug
+    
+    DDLogDebug(@"UPDATE SIZE WITH ANIMATMION");
 }
 
 @end

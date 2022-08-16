@@ -80,13 +80,12 @@
             ReferencedContainer = "container:Mouse Fix.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
-      <EnvironmentVariables>
-         <EnvironmentVariable
-            key = "NSConstraintBasedLayoutVisualizeMutuallyExclusiveConstraints"
-            value = "1"
+      <CommandLineArguments>
+         <CommandLineArgument
+            argument = "-NSConstraintBasedLayoutVisualizeMutuallyExclusiveConstraints YES"
             isEnabled = "YES">
-         </EnvironmentVariable>
-      </EnvironmentVariables>
+         </CommandLineArgument>
+      </CommandLineArguments>
    </LaunchAction>
    <ProfileAction
       buildConfiguration = "Release"

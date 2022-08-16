@@ -488,10 +488,10 @@
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
                             <stackView distribution="fill" orientation="vertical" alignment="centerX" horizontalStackHuggingPriority="1000" verticalStackHuggingPriority="1000" horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Qu8-7l-RFn">
-                                <rect key="frame" x="23" y="0.0" width="541" height="542"/>
+                                <rect key="frame" x="23" y="0.0" width="541" height="479"/>
                                 <subviews>
                                     <box identifier="addField" boxType="custom" borderType="line" cornerRadius="6" title="&lt;Box&gt;" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="Pxm-4w-iO7" userLabel="AddBox">
-                                        <rect key="frame" x="0.0" y="372" width="541" height="170"/>
+                                        <rect key="frame" x="0.0" y="309" width="541" height="170"/>
                                         <view key="contentView" id="B6d-Fk-sWp">
                                             <rect key="frame" x="1" y="1" width="539" height="168"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -512,7 +512,7 @@
                                         <color key="fillColor" name="quaternaryLabelColor" catalog="System" colorSpace="catalog"/>
                                     </box>
                                     <customView horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="OIq-v6-9Zy" userLabel="HintWrap">
-                                        <rect key="frame" x="0.0" y="314" width="541" height="50"/>
+                                        <rect key="frame" x="0.0" y="251" width="541" height="50"/>
                                         <subviews>
                                             <textField horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="7En-Ho-Dyb">
                                                 <rect key="frame" x="-2" y="12" width="545" height="38"/>
@@ -534,15 +534,13 @@
                                             <constraint firstAttribute="bottom" secondItem="7En-Ho-Dyb" secondAttribute="bottom" constant="12" id="z3y-EJ-BnU"/>
                                         </constraints>
                                     </customView>
-                                    <scrollView verticalHuggingPriority="1000" verticalCompressionResistancePriority="1000" borderType="none" autohidesScrollers="YES" horizontalLineScroll="39" horizontalPageScroll="10" verticalLineScroll="39" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OGV-uF-BjJ" userLabel="TableScrollView" customClass="MFScrollView">
-                                        <rect key="frame" x="0.0" y="45" width="541" height="261"/>
-                                        <clipView key="contentView" drawsBackground="NO" id="Fkp-gm-SVn">
-                                            <rect key="frame" x="0.0" y="0.0" width="541" height="261"/>
-                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                    <scrollView horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" borderType="none" autohidesScrollers="YES" horizontalLineScroll="39" horizontalPageScroll="10" verticalLineScroll="39" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OGV-uF-BjJ" userLabel="TableScrollView" customClass="MFScrollView">
+                                        <rect key="frame" x="0.0" y="45" width="541" height="198"/>
+                                        <clipView key="contentView" autoresizesSubviews="NO" ambiguous="YES" drawsBackground="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Fkp-gm-SVn" customClass="MFClipView" customModule="Mac_Mouse_Fix" customModuleProvider="target">
+                                            <rect key="frame" x="0.0" y="0.0" width="541" height="198"/>
                                             <subviews>
-                                                <tableView identifier="remapTable" verticalHuggingPriority="750" misplaced="YES" allowsExpansionToolTips="YES" tableStyle="plain" columnReordering="NO" columnResizing="NO" multipleSelection="NO" autosaveColumns="NO" rowHeight="39" rowSizeStyle="automatic" viewBased="YES" floatsGroupRows="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JEf-5U-AJf" customClass="RemapTableView">
-                                                    <rect key="frame" x="0.0" y="0.0" width="541" height="261"/>
-                                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                                <tableView identifier="remapTable" horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" ambiguous="YES" allowsExpansionToolTips="YES" tableStyle="plain" columnReordering="NO" columnResizing="NO" multipleSelection="NO" autosaveColumns="NO" rowHeight="39" rowSizeStyle="automatic" viewBased="YES" floatsGroupRows="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JEf-5U-AJf" customClass="RemapTableView">
+                                                    <rect key="frame" x="0.0" y="0.0" width="541" height="198"/>
                                                     <size key="intercellSpacing" width="17" height="0.0"/>
                                                     <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                     <tableViewGridLines key="gridStyleMask" vertical="YES" horizontal="YES"/>
@@ -689,7 +687,7 @@
                                                                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                                                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                                                                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                                                                        <size key="minSize" width="210" height="19"/>
+                                                                                        <size key="minSize" width="208" height="19"/>
                                                                                         <size key="maxSize" width="302" height="10000000"/>
                                                                                         <attributedString key="textStorage">
                                                                                             <fragment content="Text go here">
@@ -735,11 +733,18 @@
                                                     </connections>
                                                 </tableView>
                                             </subviews>
+                                            <constraints>
+                                                <constraint firstItem="JEf-5U-AJf" firstAttribute="height" relation="greaterThanOrEqual" secondItem="Fkp-gm-SVn" secondAttribute="height" id="BGE-oV-KCj"/>
+                                                <constraint firstAttribute="trailing" secondItem="JEf-5U-AJf" secondAttribute="trailing" id="C6b-pp-4ee"/>
+                                                <constraint firstItem="JEf-5U-AJf" firstAttribute="leading" secondItem="Fkp-gm-SVn" secondAttribute="leading" id="Sug-Q7-DTy"/>
+                                                <constraint firstItem="JEf-5U-AJf" firstAttribute="height" secondItem="Fkp-gm-SVn" secondAttribute="height" priority="999" id="Zhq-v1-h0n"/>
+                                                <constraint firstAttribute="top" secondItem="JEf-5U-AJf" secondAttribute="top" id="b7I-7O-3CU"/>
+                                            </constraints>
                                             <nil key="backgroundColor"/>
                                             <edgeInsets key="contentInsets" left="0.0" right="0.0" top="0.0" bottom="0.0"/>
                                         </clipView>
                                         <constraints>
-                                            <constraint firstAttribute="height" relation="lessThanOrEqual" constant="450" id="Pd9-cJ-ARn"/>
+                                            <constraint firstAttribute="height" relation="lessThanOrEqual" constant="500" id="lgg-Lp-QGT"/>
                                         </constraints>
                                         <scroller key="horizontalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" horizontal="YES" id="mCT-ys-LqY">
                                             <rect key="frame" x="0.0" y="354" width="350" height="16"/>
@@ -785,6 +790,12 @@
                                         </customSpacing>
                                     </stackView>
                                 </subviews>
+                                <constraints>
+                                    <constraint firstItem="Fkp-gm-SVn" firstAttribute="bottom" secondItem="OGV-uF-BjJ" secondAttribute="bottom" id="11d-EZ-XB4"/>
+                                    <constraint firstItem="Fkp-gm-SVn" firstAttribute="trailing" secondItem="OGV-uF-BjJ" secondAttribute="trailing" id="1Gy-Na-J1I"/>
+                                    <constraint firstItem="Fkp-gm-SVn" firstAttribute="top" secondItem="OGV-uF-BjJ" secondAttribute="top" id="3HQ-aH-MNB"/>
+                                    <constraint firstItem="Fkp-gm-SVn" firstAttribute="leading" secondItem="OGV-uF-BjJ" secondAttribute="trailing" id="uTS-6R-GFk"/>
+                                </constraints>
                                 <visibilityPriorities>
                                     <integer value="1000"/>
                                     <integer value="1000"/>

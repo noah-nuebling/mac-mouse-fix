@@ -8,7 +8,7 @@
 import Foundation
 import QuartzCore
 
-extension CABasicAnimation {
+@objc extension CABasicAnimation {
     
     convenience init(name: CAMediaTimingFunctionName, duration: CFTimeInterval) {
         self.init()
@@ -28,7 +28,7 @@ extension CABasicAnimation {
     }
 }
 
-extension CASpringAnimation {
+@objc extension CASpringAnimation {
     
     convenience init(speed f: Double, damping z: Double, mass m: Double = 1, distance d: Double = 0, initialVelocity v0: Double = 0) {
         

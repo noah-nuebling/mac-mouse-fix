@@ -54,4 +54,23 @@
 //    [NSGraphicsContext restoreGraphicsState];
 }
 
+- (void)awakeFromNib {
+    self.translatesAutoresizingMaskIntoConstraints = false;
+    self.contentView.translatesAutoresizingMaskIntoConstraints = false;
+}
+
+- (instancetype)init
+{
+    self = [super init];
+    if (self) {
+        
+        
+        /// Turn off autoresizing masks, so we can handle everything in IB with constraints
+        
+        self.translatesAutoresizingMaskIntoConstraints = false;
+        self.contentView.translatesAutoresizingMaskIntoConstraints = false;
+    }
+    return self;
+}
+
 @end
