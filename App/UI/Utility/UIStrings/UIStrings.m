@@ -70,10 +70,10 @@
     NSString *kb = @"";
     CGEventFlags f = flags;
     kb = [NSString stringWithFormat:@"%@%@%@%@",
-          (f & kCGEventFlagMaskControl ?    NSLocalizedString(@"modifer-key.tool.control", @"First draft: Control (^)-")    : @""),
-          (f & kCGEventFlagMaskAlternate ?  NSLocalizedString(@"modifer-key.tool.option", @"First draft: Option (⌥)-")      : @""),
-          (f & kCGEventFlagMaskShift ?      NSLocalizedString(@"modifer-key.tool.shift", @"First draft: Shift (⇧)-")        : @""),
-          (f & kCGEventFlagMaskCommand ?    NSLocalizedString(@"modifer-key.tool.command", @"First draft: Command (⌘)-")    : @"")];
+          (f & kCGEventFlagMaskControl ?    [NSLocalizedString(@"modifer-key.tool.control",  @"First draft: Control (^)") stringByAppendingString:@"-"] : @""),
+          (f & kCGEventFlagMaskAlternate ?  [NSLocalizedString(@"modifer-key.tool.option",   @"First draft: Option (⌥)") stringByAppendingString:@"-"]  : @""),
+          (f & kCGEventFlagMaskShift ?      [NSLocalizedString(@"modifer-key.tool.shift",    @"First draft: Shift (⇧)") stringByAppendingString:@"-"]   : @""),
+          (f & kCGEventFlagMaskCommand ?    [NSLocalizedString(@"modifer-key.tool.command",  @"First draft: Command (⌘)") stringByAppendingString:@"-"] : @"")];
     if (kb.length > 0) {
         kb = [kb substringToIndex:kb.length-1]; /// Delete trailing dash
         NSArray *stringArray = [kb componentsSeparatedByString:@"-"];

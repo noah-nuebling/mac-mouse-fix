@@ -74,7 +74,7 @@
 "effect.look-up" = "Nachschlagen & Quick Look";
 
 /* First draft: Look up words in the Dictionary, Quick Look files in Finder, and more. \n \nWorks like Force Touch on an Apple Trackpad. */
-"effect.look-up.hint" = "Schlage Wörter im Wörterbuch nach, werfe einen schnellen Blick auf Dateien im Finder, und mehr \n \nFunktioniert wie ein kräftiger Klick auf einem Apple Trackpad";
+"effect.look-up.hint" = "Schlage Wörter im Wörterbuch nach, werfe einen schnellen Blick auf Dateien im Finder, und mehr \n \nFunktioniert wie ein kräftiger Klick bei einem Apple Trackpad";
 
 /* First draft: Middle Click */
 "effect.middle-click" = "Mittel-Klick";
@@ -158,7 +158,7 @@
 "apple-key.forward" = "<Vorspultaste>";
 
 /* First draft: <Emoji Picker key> */
-"apple-key.globe" = "Emoji-Taste";
+"apple-key.globe" = "<Emoji-Taste>";
 
 /* First draft: <Increase Keyboard Brightness key> */
 "apple-key.light.max" = "<Tastaturhelligkeit erhöhen Taste>";
@@ -229,14 +229,14 @@
 /* First draft: <Key without description> */
 "keyboard-key-without-description" = "<Taste ohne Beschreibung>";
 
-/* First draft: Command (⌘)- */
-"modifer-key.tool.command" = "Befehlstaste (⌘)-";
+/* First draft: Command (⌘) */
+"modifer-key.tool.command" = "Befehlstaste (⌘)";
 
-/* First draft: Control (^)- */
-"modifer-key.tool.control" = "Steuerungstaste (^)-";
+/* First draft: Control (^) */
+"modifer-key.tool.control" = "Steuerungstaste (^)";
 
-/* First draft: Option (⌥)- */
-"modifer-key.tool.option" = "Wahltaste (⌥)-";
+/* First draft: Option (⌥) */
+"modifer-key.tool.option" = "Wahltaste (⌥)";
 
-/* First draft: Shift (⇧)- */
-"modifer-key.tool.shift" = "Umschalttaste (⇧)-";
+/* First draft: Shift (⇧) */
+"modifer-key.tool.shift" = "Umschalttaste (⇧)";
