@@ -185,7 +185,7 @@
 "N65-aN-Hxp.title" = "mit Nachlauf";
 
 /* Class = "NSTextFieldCell"; title = "Move the mouse pointer inside the '+' field, then click a mouse button to assign an action to it.  You can also Double Click, Click and Drag, and more."; ObjectID = "N7H-9j-DIr"; Note = "Buttons > Add Field Hint"; */
-"N7H-9j-DIr.title" = "Bewege den Maus-Zeiger in das '+'-Feld, dann klicke eine Maus-Taste um ihr eine Aktion zuzuweisen.\n Du kannst auch doppelt klicken, klicken und ziehen, und mehr.";
+"N7H-9j-DIr.title" = "Bewege den Maus-Zeiger in das '+'-Feld, dann klicke eine Maus-Taste um ihr eine Aktion zuzuweisen.\n Du kannst auch doppelklicken, klicken und ziehen, und mehr.";
 
 /* Class = "NSMenuItem"; title = "Minimize"; ObjectID = "NdF-Gb-mOK"; */
 "NdF-Gb-mOK.title" = "Minimieren";

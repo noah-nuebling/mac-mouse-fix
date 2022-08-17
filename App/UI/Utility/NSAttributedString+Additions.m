@@ -34,7 +34,7 @@
     NSCharacterSet *whitespace = NSCharacterSet.whitespaceCharacterSet;
     
     /// Loop
-    NSRange lastWhitespaceRange = NSMakeRange(NSNotFound, 0);
+    NSRange lastWhitespace = NSMakeRange(NSNotFound, 0);
     NSRange searchRange = NSMakeRange(0, s.length);
     while (true) {
         
@@ -46,22 +46,19 @@
             break;
         }
         
-        /// Flip range
-        ///     Because we did backwards search or sth
-//        whitespaceRange = NSMakeRange(whitespaceRange.location - whitespaceRange.length, whitespaceRange.length); /// Flip
-        
         /// Delete things
         
         BOOL doUpdateSearchRange = YES;
         BOOL didDeleteWhitespace = YES;
         
-        if (whitespaceRange.location + 1 == lastWhitespaceRange.location) {
+        if (whitespaceRange.location + 1 == lastWhitespace.location) {
             
             /// Delete consecutive
-            [s deleteCharactersInRange:lastWhitespaceRange];
+            [s deleteCharactersInRange:lastWhitespace];
             
-            /// Don't update search range
+            /// Set flags
             doUpdateSearchRange = NO;
+            didDeleteWhitespace = NO;
             
         } else if (NSMaxRange(whitespaceRange) == s.length - 1) {
             
@@ -85,9 +82,9 @@
         
         /// Update last
         if (didDeleteWhitespace) {
-            lastWhitespaceRange = NSMakeRange(NSNotFound, 0);
+            lastWhitespace = NSMakeRange(NSNotFound, 0);
         } else {
-            lastWhitespaceRange = whitespaceRange;
+            lastWhitespace = whitespaceRange;
         }
     }
     

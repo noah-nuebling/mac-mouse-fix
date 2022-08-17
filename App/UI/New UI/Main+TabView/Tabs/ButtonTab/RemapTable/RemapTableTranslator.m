@@ -737,10 +737,10 @@ static NSString *effectNameForRowDict(NSDictionary * _Nonnull rowDict) {
     
     NSMutableArray *buttonPressSequence = rowDict[kMFRemapsKeyModificationPrecondition][kMFModificationPreconditionKeyButtons];
     NSMutableArray *buttonModifierStrings = [NSMutableArray array];
+    
     for (NSDictionary *buttonPress in buttonPressSequence) {
         NSNumber *btn = buttonPress[kMFButtonModificationPreconditionKeyButtonNumber];
         NSNumber *lvl = buttonPress[kMFButtonModificationPreconditionKeyClickLevel];
-        NSString *levelStr;
         NSString *buttonStr;
         buttonStr = [UIStrings getButtonString:btn.intValue];
         
@@ -754,7 +754,8 @@ static NSString *effectNameForRowDict(NSDictionary * _Nonnull rowDict) {
         } else {
             @throw [NSException exceptionWithName:@"Invalid click level" reason:@"Modification precondition contains undisplayable click level" userInfo:@{@"Trigger dict containing invalid value": triggerGeneric}];
         }
-        [buttonModifierStrings addObject:buttonModString.firstCapitalized];
+        buttonModString = buttonModString.firstCapitalized; /// Capitalize each button mod string.
+        [buttonModifierStrings addObject:buttonModString];
     }
     if (buttonModifierStrings.count > 0) {
         btnMod = [buttonModifierStrings componentsJoinedByString:@""];
@@ -791,7 +792,10 @@ static NSString *effectNameForRowDict(NSDictionary * _Nonnull rowDict) {
     
     
     /// Capitalize trigger string
-    ///     (The button mod strings are capitalized further up)
+    ///     (The button mod string is already capitalized further up)
+    ///     Need to trim whitespace because if the main button isn't displayed, there's a space at the start in German.
+    ///     Hopefully this capitalization stuff is universal and doesn't break in some languages. It makes things look much better in German and English.
+    
     tr = [tr attributedStringByTrimmingWhitespace];
     tr = [tr attributedStringByCapitalizingFirst];
     

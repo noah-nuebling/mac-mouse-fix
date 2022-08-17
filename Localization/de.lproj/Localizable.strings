@@ -188,7 +188,7 @@
 "apple-key-fallback.backward" = "<Rückspultaste>";
 
 /* First draft: ⇪ */
-"apple-key-fallback.capslock" = "<Feststelltaste>";
+"apple-key-fallback.capslock" = "⇪";
 
 /* First draft: <Fast-Forward key> */
 "apple-key-fallback.forward" = "<Vorspultaste>";
@@ -295,5 +295,5 @@
 /* First draft: and Scroll || Example: ⌥⌘ and Scroll */
 "trigger.scroll.flags" = "und scrollen";
 
-/* First draft: and Drag || Note: This will be used for Drag Actions that only need keyboard modifiers to be activated. Not mouse buttons || Example: ⌥⌘ and Drag */
+/* First draft: and Drag || Note: This will be used for Drag Actions that only need keyboard modifiers to be activated - not mouse buttons || Example: ⌥⌘ and Drag */
 "trigger.drag.flags" = "und ziehen";
