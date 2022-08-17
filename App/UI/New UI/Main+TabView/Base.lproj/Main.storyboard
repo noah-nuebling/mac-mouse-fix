@@ -488,16 +488,16 @@
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
                             <stackView distribution="fill" orientation="vertical" alignment="centerX" horizontalStackHuggingPriority="1000" verticalStackHuggingPriority="1000" horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Qu8-7l-RFn">
-                                <rect key="frame" x="23" y="0.0" width="541" height="478"/>
+                                <rect key="frame" x="23" y="0.0" width="541" height="476"/>
                                 <subviews>
                                     <box identifier="addField" boxType="custom" borderType="line" cornerRadius="6" title="&lt;Box&gt;" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="Pxm-4w-iO7" userLabel="AddBox">
-                                        <rect key="frame" x="0.0" y="308" width="541" height="170"/>
+                                        <rect key="frame" x="0.0" y="306" width="541" height="170"/>
                                         <view key="contentView" id="B6d-Fk-sWp">
                                             <rect key="frame" x="1" y="1" width="539" height="168"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <subviews>
                                                 <imageView identifier="PlusIcon" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Jod-JU-J5j">
-                                                    <rect key="frame" x="239" y="47.5" width="60" height="66.5"/>
+                                                    <rect key="frame" x="238" y="47.5" width="60" height="66.5"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                                     <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyUpOrDown" image="plus" catalog="system" id="EyU-is-YRF"/>
                                                     <color key="contentTintColor" name="systemGrayColor" catalog="System" colorSpace="catalog"/>
@@ -512,7 +512,7 @@
                                         <color key="fillColor" name="quaternaryLabelColor" catalog="System" colorSpace="catalog"/>
                                     </box>
                                     <customView horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="OIq-v6-9Zy" userLabel="HintWrap">
-                                        <rect key="frame" x="0.0" y="250" width="541" height="50"/>
+                                        <rect key="frame" x="0.0" y="248" width="541" height="50"/>
                                         <subviews>
                                             <textField horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="7En-Ho-Dyb">
                                                 <rect key="frame" x="-2" y="12" width="545" height="38"/>
@@ -535,12 +535,12 @@
                                         </constraints>
                                     </customView>
                                     <scrollView horizontalHuggingPriority="999" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" borderType="none" autohidesScrollers="YES" horizontalLineScroll="39" horizontalPageScroll="10" verticalLineScroll="39" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OGV-uF-BjJ" userLabel="TableScrollView" customClass="MFScrollView">
-                                        <rect key="frame" x="0.0" y="45" width="541" height="197"/>
-                                        <clipView key="contentView" autoresizesSubviews="NO" ambiguous="YES" drawsBackground="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Fkp-gm-SVn" customClass="MFClipView" customModule="Mac_Mouse_Fix" customModuleProvider="target">
-                                            <rect key="frame" x="0.0" y="0.0" width="541" height="197"/>
+                                        <rect key="frame" x="0.0" y="45" width="541" height="195"/>
+                                        <clipView key="contentView" autoresizesSubviews="NO" drawsBackground="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Fkp-gm-SVn" customClass="MFClipView" customModule="Mac_Mouse_Fix" customModuleProvider="target">
+                                            <rect key="frame" x="0.0" y="0.0" width="541" height="195"/>
                                             <subviews>
-                                                <tableView identifier="remapTable" horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" ambiguous="YES" allowsExpansionToolTips="YES" tableStyle="plain" columnReordering="NO" columnResizing="NO" multipleSelection="NO" autosaveColumns="NO" rowHeight="39" rowSizeStyle="automatic" viewBased="YES" floatsGroupRows="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JEf-5U-AJf" customClass="RemapTableView">
-                                                    <rect key="frame" x="0.0" y="0.0" width="541" height="197"/>
+                                                <tableView identifier="remapTable" horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" allowsExpansionToolTips="YES" tableStyle="plain" columnReordering="NO" columnResizing="NO" multipleSelection="NO" autosaveColumns="NO" rowHeight="39" rowSizeStyle="automatic" viewBased="YES" floatsGroupRows="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JEf-5U-AJf" customClass="RemapTableView">
+                                                    <rect key="frame" x="0.0" y="0.0" width="541" height="195"/>
                                                     <size key="intercellSpacing" width="17" height="0.0"/>
                                                     <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                     <tableViewGridLines key="gridStyleMask" vertical="YES" horizontal="YES"/>
@@ -634,10 +634,10 @@
                                                             <tableColumnResizingMask key="resizingMask" resizeWithTable="YES"/>
                                                             <prototypeCellViews>
                                                                 <tableCellView identifier="effectCell" translatesAutoresizingMaskIntoConstraints="NO" id="Epw-SW-Ew3" customClass="RemapTableCellView" customModule="Mac_Mouse_Fix" customModuleProvider="target">
-                                                                    <rect key="frame" x="312" y="0.0" width="222" height="39"/>
+                                                                    <rect key="frame" x="312.5" y="0.0" width="223" height="39"/>
                                                                     <subviews>
                                                                         <popUpButton verticalHuggingPriority="750" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="Pw9-ZH-Tb7">
-                                                                            <rect key="frame" x="0.0" y="6" width="223" height="25"/>
+                                                                            <rect key="frame" x="0.0" y="6" width="224" height="25"/>
                                                                             <popUpButtonCell key="cell" type="push" title="&lt;Mission Control and Spaces&gt;" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" autoenablesItems="NO" selectedItem="4Cx-DN-qX3" id="Bar-EF-HdH">
                                                                                 <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                                                                 <font key="font" metaFont="menu"/>
@@ -661,29 +661,28 @@
                                                                         <constraint firstItem="Pw9-ZH-Tb7" firstAttribute="leading" secondItem="Epw-SW-Ew3" secondAttribute="leading" constant="3" id="wyb-SL-X6X"/>
                                                                     </constraints>
                                                                 </tableCellView>
-                                                                <tableCellView identifier="keyCaptureCell" id="MzR-b1-853">
-                                                                    <rect key="frame" x="312" y="39" width="220" height="39"/>
-                                                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                                                <tableCellView identifier="keyCaptureCell" translatesAutoresizingMaskIntoConstraints="NO" id="MzR-b1-853" customClass="RemapTableCellView" customModule="Mac_Mouse_Fix" customModuleProvider="target">
+                                                                    <rect key="frame" x="312.5" y="39" width="220" height="39"/>
                                                                     <subviews>
-                                                                        <button hidden="YES" focusRingType="exterior" verticalHuggingPriority="750" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="psy-Jg-KLq">
-                                                                            <rect key="frame" x="-4" y="3" width="227" height="32"/>
+                                                                        <button hidden="YES" focusRingType="exterior" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="psy-Jg-KLq">
+                                                                            <rect key="frame" x="-4" y="3" width="228" height="32"/>
                                                                             <buttonCell key="cell" type="push" bezelStyle="rounded" alignment="center" state="on" borderStyle="border" focusRingType="exterior" imageScaling="proportionallyDown" inset="2" id="GlI-fZ-rlc">
                                                                                 <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                                                                 <font key="font" metaFont="system"/>
                                                                             </buttonCell>
                                                                         </button>
-                                                                        <scrollView focusRingType="exterior" misplaced="YES" borderType="none" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" hasVerticalScroller="NO" horizontalScrollElasticity="none" verticalScrollElasticity="none" translatesAutoresizingMaskIntoConstraints="NO" id="Smf-ho-S4B" customClass="KeyCaptureScrollView">
-                                                                            <rect key="frame" x="3" y="10" width="213" height="20"/>
+                                                                        <scrollView focusRingType="exterior" borderType="none" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" hasVerticalScroller="NO" horizontalScrollElasticity="none" verticalScrollElasticity="none" translatesAutoresizingMaskIntoConstraints="NO" id="Smf-ho-S4B" customClass="KeyCaptureScrollView">
+                                                                            <rect key="frame" x="3" y="10" width="214" height="20"/>
                                                                             <clipView key="contentView" focusRingType="exterior" drawsBackground="NO" id="KlB-Im-8jc">
-                                                                                <rect key="frame" x="0.0" y="0.0" width="213" height="20"/>
+                                                                                <rect key="frame" x="0.0" y="0.0" width="214" height="20"/>
                                                                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                                                 <subviews>
                                                                                     <textView identifier="keyCaptureView" focusRingType="exterior" editable="NO" drawsBackground="NO" importsGraphics="NO" richText="NO" verticallyResizable="NO" allowsCharacterPickerTouchBarItem="NO" textCompletion="NO" spellingCorrection="YES" id="piW-Ox-vLv" customClass="KeyCaptureView">
-                                                                                        <rect key="frame" x="0.0" y="0.0" width="208" height="19"/>
+                                                                                        <rect key="frame" x="0.0" y="0.0" width="209" height="19"/>
                                                                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                                                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                                                                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                                                                        <size key="minSize" width="208" height="19"/>
+                                                                                        <size key="minSize" width="211" height="19"/>
                                                                                         <size key="maxSize" width="302" height="10000000"/>
                                                                                         <attributedString key="textStorage">
                                                                                             <fragment content="Text go here">
@@ -712,12 +711,12 @@
                                                                     </subviews>
                                                                     <constraints>
                                                                         <constraint firstItem="Smf-ho-S4B" firstAttribute="leading" secondItem="psy-Jg-KLq" secondAttribute="leading" id="2Ur-gP-hfC"/>
-                                                                        <constraint firstItem="Smf-ho-S4B" firstAttribute="centerX" secondItem="MzR-b1-853" secondAttribute="centerX" id="6GA-aq-LpD"/>
                                                                         <constraint firstItem="Smf-ho-S4B" firstAttribute="leading" secondItem="MzR-b1-853" secondAttribute="leading" constant="3" id="Bae-AK-7xx"/>
                                                                         <constraint firstItem="Smf-ho-S4B" firstAttribute="bottom" secondItem="psy-Jg-KLq" secondAttribute="bottom" id="BpJ-iA-4lU"/>
                                                                         <constraint firstItem="psy-Jg-KLq" firstAttribute="top" secondItem="Smf-ho-S4B" secondAttribute="top" id="Q2a-G4-Ekw"/>
                                                                         <constraint firstItem="Smf-ho-S4B" firstAttribute="centerY" secondItem="MzR-b1-853" secondAttribute="centerY" id="gMX-3w-ooC"/>
                                                                         <constraint firstItem="psy-Jg-KLq" firstAttribute="trailing" secondItem="Smf-ho-S4B" secondAttribute="trailing" id="taB-th-TT1"/>
+                                                                        <constraint firstAttribute="trailing" secondItem="Smf-ho-S4B" secondAttribute="trailing" constant="3" id="v4N-rn-656"/>
                                                                     </constraints>
                                                                 </tableCellView>
                                                             </prototypeCellViews>
