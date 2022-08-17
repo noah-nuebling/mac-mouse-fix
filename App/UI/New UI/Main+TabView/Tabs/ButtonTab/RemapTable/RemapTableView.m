@@ -40,15 +40,8 @@
     return self;
 }
 
-- (void)didAddRowView:(NSTableRowView *)rowView forRow:(NSInteger)row {
-        
-    BOOL isGroupRow = rowView.subviews.count == 1;
-    
-    if (!isGroupRow) {
-        [(RemapTableCellView *)[rowView viewAtColumn:0] coolInitAsTriggerCell];
-        [(RemapTableCellView *)[rowView viewAtColumn:1] coolInitAsEffectCell];
-    }
-}
+double triggerColumWidth = -1;
+double effectColumnWidth = -1;
 
 - (void)coolDidLoad {
  
@@ -67,9 +60,6 @@
     /// Calculate width
     
     double tableWidth = 0;
-        
-    double triggerColumWidth = 0;
-    double effectColumnWidth = 0;
     
     for (int c = 0; c < self.numberOfColumns; c++) {
         
@@ -119,8 +109,20 @@
     /// Set table column divider
     [self sizeLastColumnToFit];
     NSTableColumn *effectColumn = self.tableColumns[1];
-    effectColumn.width = effectColumnWidth + 3*columnPadding;
+    effectColumn.width = effectColumnWidth + 3*columnPadding; /// `This just doesn't grow beyond a certain size. Idk. Still looks fine.
     
+}
+
+- (void)didAddRowView:(NSTableRowView *)rowView forRow:(NSInteger)row {
+        
+    BOOL isGroupRow = rowView.subviews.count == 1;
+    
+    if (!isGroupRow) {
+        RemapTableCellView *leftCell = [rowView viewAtColumn:0];
+        RemapTableCellView *rightCell = [rowView viewAtColumn:1];
+        [leftCell coolInitAsTriggerCellWithColumnWidth:triggerColumWidth];
+        [rightCell coolInitAsEffectCellWithColumnWidth:effectColumnWidth];
+    }
 }
 
 /// (?) Need this to make keystroke capture field first responder
