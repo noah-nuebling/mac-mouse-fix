@@ -82,7 +82,7 @@
 /* First draft: <Key without description> */
 "apple-key-fallback.unknown-key" = "";
 
-/* First draft: Click %@ + || Example: ⌥⌘ Click Button 4 + Click and Drag Button 5 */
+/* First draft: Click %@ + || Note: %@ will be a button name || Example where %@ is 'Button 4': Click Button 4 + Double Click and Drag Button 5 */
 "button-modifier.1" = "";
 
 /* First draft: Double Click %@ +  */
@@ -114,6 +114,12 @@
 
 /* First draft: the Secondary Mouse Button (also called the Right Mouse Button or Mouse Button 2) */
 "button-string.tool.secondary" = "";
+
+/* No comment provided by engineer. */
+"capture-toast" = "";
+
+/* First draft: Learn More */
+"capture-toast.link" = "";
 
 /* First draft: Mission Control & Spaces */
 "drag-effect.dock-swipe" = "";
@@ -199,6 +205,18 @@
 /* First draft: Zoom in or out in Safari and other apps. \n \nWorks like a two-finger double tap on an Apple Trackpad. */
 "effect.smart-zoom.hint" = "";
 
+/* First draft: **Primary Mouse Button** can't be used.\nPlease try another button */
+"forbidden-capture-toast.1" = "";
+
+/* First draft: **Secondary Mouse Button** can't be used.\nPlease try another button */
+"forbidden-capture-toast.2" = "";
+
+/* First draft: , || Note: This string joins elements in a list except the second last and last one. */
+"join-list" = "";
+
+/* First draft: %@ & %@ || Note: This format string joins the last element of a list of items with the preceding ones */
+"join-list.last" = "";
+
 /* First draft: Command (⌘) */
 "modifer-key.tool.command" = "";
 
@@ -268,7 +286,7 @@
 /* First draft: Triple Click and Drag %@ */
 "trigger.drag.3" = "";
 
-/* First draft: and Drag || Example: ⌥⌘ and Drag */
+/* First draft: and Drag || Note: This will be used for Drag Actions that only need keyboard modifiers to be activated - not mouse buttons || Example: ⌥⌘ and Drag */
 "trigger.drag.flags" = "";
 
 /* First draft: Hold %@ */
@@ -297,6 +315,3 @@
 
 /* First draft: Type a Keyboard Shortcut */
 "type-shortcut-prompt" = "";
-
-/* First draft: **%@** can't be used.\nPlease try another button || Note: %@ will be replaced by a button name */
-"forbidden-capture-toast" = "";

@@ -23,51 +23,59 @@
 + (void)showButtonCaptureNotificationWithBeforeSet:(NSSet<NSNumber *> *)beforeSet afterSet:(NSSet<NSNumber *> *)afterSet {
     
     
+    /// Get captured and uncaptured buttons
+    
     NSMutableSet *newlyUncapturedButtons = beforeSet.mutableCopy;
     [newlyUncapturedButtons minusSet:afterSet];
     NSMutableSet *newlyCapturedButtons = afterSet.mutableCopy;
     [newlyCapturedButtons minusSet:beforeSet];
     
+    /// Sort buttons
+    
     NSArray *uncapturedArray = [newlyUncapturedButtons sortedArrayUsingDescriptors:@[[NSSortDescriptor sortDescriptorWithKey:@"" ascending:YES]]];
     NSArray *capturedArray = [newlyCapturedButtons sortedArrayUsingDescriptors:@[[NSSortDescriptor sortDescriptorWithKey:@"" ascending:YES]]];
+    
+    /// Get count
+    
+    NSInteger uncapturedCount = uncapturedArray.count;
+    NSInteger capturedCount = capturedArray.count;
+    
+    /// Create natural language string from button list
     
     NSString *uncapturedButtonString = buttonStringFromButtonNumberArray(uncapturedArray);
     NSString *capturedButtonString = buttonStringFromButtonNumberArray(capturedArray);
     
-    NSArray<NSString *> *uncapturedButtonStringArray = buttonStringArrayFromButtonNumberArray(uncapturedArray); // Only need these for adding bold to the button strings
+    /// Get array of strings
+    ///     Only need these for adding bold to the button strings
+    
+    NSArray<NSString *> *uncapturedButtonStringArray = buttonStringArrayFromButtonNumberArray(uncapturedArray);
     NSArray<NSString *> *capturedButtonStringArray = buttonStringArrayFromButtonNumberArray(capturedArray);
     
-    NSString *linkString = @"Learn More";
+    /// Define learn more string
     
-    NSString *uncapString = @"";
-    if (newlyUncapturedButtons.count > 0) {
-        NSString *uncapPluralString = uncapturedArray.count == 1 ? @"is" : @"are";
-//        NSString *buttonPluralString = uncapturedArray.count == 1 ? @"it" : @"them";
-        
-        uncapString = [uncapturedButtonString stringByAppendingFormat:@" %@ no longer captured by Mac Mouse Fix.", uncapPluralString];
-    }
-    NSString *capString = @"";
-    if (newlyCapturedButtons.count > 0) {
-        NSString *pluralString = capturedArray.count == 1 ? @"has" : @"have";
-        NSString *buttonPluralString = capturedArray.count == 1 ? @"it" : @"them";
-//        NSString *buttonPluralString2 = capturedArray.count == 1 ? @"this button" : @"these buttons";
-//        linkString = stringf(@"I want to use %@ with other apps", buttonPluralString2);
-        
-        capString = [capturedButtonString stringByAppendingFormat:@" %@ been captured by Mac Mouse Fix.\nOther apps can't see %@ anymore. ", pluralString, buttonPluralString];
-    }
+    NSString *linkString = NSLocalizedString(@"capture-toast.link", @"First draft: Learn More");
     
-    if (newlyUncapturedButtons.count > 0 || newlyCapturedButtons.count > 0) {
+    /// Create string describing uncaptured and captured
+    
+    NSString *buttonString = stringf(NSLocalizedString(@"capture-toast", nil), capturedButtonString, capturedCount, uncapturedButtonString, uncapturedCount);
+    
+    if (uncapturedCount > 0 || capturedCount > 0) {
         
-        NSString *notifString = [NSString stringWithFormat:@"%@%@\n\n%@", capString, uncapString, linkString];
-//        NSString *notifString = [NSString stringWithFormat:@"%@%@", capString, uncapString];
+        /// Build complete notification String
+        NSString *notifString = stringf(@"%@\n\n%@", buttonString, linkString);
         NSAttributedString *attrNotifString = [[NSAttributedString alloc] initWithString:notifString];
-        /// Add link to linkString
+        
+        /// Add link
         attrNotifString = [attrNotifString attributedStringByAddingLinkWithURL:[NSURL URLWithString:@"https://github.com/noah-nuebling/mac-mouse-fix/discussions/112"] forSubstring:linkString];
         
-        /// Add bold for button strings
+        /// Add bold
         for (NSString *buttonString in [uncapturedButtonStringArray arrayByAddingObjectsFromArray:capturedButtonStringArray]) {
             attrNotifString = [attrNotifString attributedStringByAddingBoldForSubstring:buttonString];
         }
+        
+        /// Trim & Capitalize
+        attrNotifString = [attrNotifString attributedStringByTrimmingWhitespace];
+        attrNotifString = [attrNotifString attributedStringByCapitalizingFirst];
         
         [ToastNotificationController attachNotificationWithMessage:attrNotifString toWindow:MainAppState.shared.window forDuration:-1];
     }

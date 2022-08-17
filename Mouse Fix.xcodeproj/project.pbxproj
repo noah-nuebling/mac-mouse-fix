@@ -40,6 +40,7 @@
 		4F5F3EEE2756DB0A00C350C0 /* RemapsOverrider_old_.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F5F3EED2756DB0A00C350C0 /* RemapsOverrider_old_.swift */; };
 		4F5F3EF12756EC0400C350C0 /* RemapSwizzler.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F5F3EF02756EC0400C350C0 /* RemapSwizzler.m */; };
 		4F5F3EF32756F1DB00C350C0 /* ScrollModifiers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F5F3EF22756F1DB00C350C0 /* ScrollModifiers.swift */; };
+		4F6B02C028AD9E4400B5BA93 /* Localizable.stringsdict in Resources */ = {isa = PBXBuildFile; fileRef = 4F6B02C228AD9E4400B5BA93 /* Localizable.stringsdict */; };
 		4F6F67A028A8141800C6C40F /* ButtonTabController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F6F679F28A8141800C6C40F /* ButtonTabController.swift */; };
 		4F70ECAE267E442D00325A76 /* PointerSpeedExperiments2.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F70ECAD267E442D00325A76 /* PointerSpeedExperiments2.m */; };
 		4F70ECB7267E810900325A76 /* IOUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F70ECB6267E810900325A76 /* IOUtility.m */; };
@@ -439,6 +440,8 @@
 		4F5F3EF02756EC0400C350C0 /* RemapSwizzler.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RemapSwizzler.m; sourceTree = "<group>"; };
 		4F5F3EF22756F1DB00C350C0 /* ScrollModifiers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrollModifiers.swift; sourceTree = "<group>"; };
 		4F616D6027BDCD56004A6A72 /* ScrollConfigTesting.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = ScrollConfigTesting.md; sourceTree = "<group>"; };
+		4F6B02C128AD9E4400B5BA93 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.stringsdict; name = en; path = en.lproj/Localizable.stringsdict; sourceTree = "<group>"; };
+		4F6B02C428ADA50700B5BA93 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.stringsdict; name = de; path = de.lproj/Localizable.stringsdict; sourceTree = "<group>"; };
 		4F6F679F28A8141800C6C40F /* ButtonTabController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonTabController.swift; sourceTree = "<group>"; };
 		4F70ECAC267E442D00325A76 /* PointerSpeedExperiments2.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PointerSpeedExperiments2.h; sourceTree = "<group>"; };
 		4F70ECAD267E442D00325A76 /* PointerSpeedExperiments2.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PointerSpeedExperiments2.m; sourceTree = "<group>"; };
@@ -1205,6 +1208,7 @@
 			isa = PBXGroup;
 			children = (
 				4F909D1728A0C3D2009349A2 /* Localizable.strings */,
+				4F6B02C228AD9E4400B5BA93 /* Localizable.stringsdict */,
 				4F909D1928A0C3D2009349A2 /* Localization How To.md */,
 			);
 			path = Localization;
@@ -2286,6 +2290,7 @@
 				4FF665F725F2C92700689B77 /* Assets.xcassets in Resources */,
 				4F909D3928A0C3D2009349A2 /* Localizable.strings in Resources */,
 				4FD148D828AA444100FE688C /* MouseFix.xib in Resources */,
+				4F6B02C028AD9E4400B5BA93 /* Localizable.stringsdict in Resources */,
 				4F909D3328A0C3D2009349A2 /* Animating Constraints.md in Resources */,
 				4FA1FD7F28A847BF00D1C8EE /* DeletableTableCellView.xib in Resources */,
 				4FF665EF25F2C92700689B77 /* ScrollOverridePanel.xib in Resources */,
@@ -2768,6 +2773,15 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
+		4F6B02C228AD9E4400B5BA93 /* Localizable.stringsdict */ = {
+			isa = PBXVariantGroup;
+			children = (
+				4F6B02C128AD9E4400B5BA93 /* en */,
+				4F6B02C428ADA50700B5BA93 /* de */,
+			);
+			name = Localizable.stringsdict;
+			sourceTree = "<group>";
+		};
 		4F909CFC28A0C3D2009349A2 /* Main.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (

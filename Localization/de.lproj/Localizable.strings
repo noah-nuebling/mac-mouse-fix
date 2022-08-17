@@ -298,5 +298,20 @@
 /* First draft: and Drag || Note: This will be used for Drag Actions that only need keyboard modifiers to be activated - not mouse buttons || Example: ⌥⌘ and Drag */
 "trigger.drag.flags" = "und ziehen";
 
-/* First draft: **%@** can't be used.\nPlease try another button || Note: %@ will be replaced by a button name */
-"forbidden-capture-toast" = "";
+/* No comment provided by engineer. */
+"capture-toast" = "";
+
+/* First draft: **Primary Mouse Button** can't be used.\nPlease try another button */
+"forbidden-capture-toast.1" = "**Primäre Maustaste** kann nicht verwendet werden\nBitte versuche eine andere Taste";
+
+/* First draft: **Secondary Mouse Button** can't be used.\nPlease try another button */
+"forbidden-capture-toast.2" = "**Sekundäre Maustaste** kann nicht verwendet werden\nBitte versuche eine andere Taste";
+
+/* First draft: Learn More */
+"capture-toast.link" = "Erfahre mehr";
+
+/* First draft: , || Note: This string joins elements in a list except the second last and last one. */
+"join-list" = ", ";
+
+/* First draft: %@ & %@ || Note: This format string joins the last element of a list of items with the preceding ones */
+"join-list.last" = " %@ und %@";

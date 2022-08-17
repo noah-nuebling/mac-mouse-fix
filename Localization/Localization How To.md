@@ -4,6 +4,10 @@
 
 - NotePlan [[MMF - i18n]]
 
+## Tips for Localizers
+
+- Enter a linebreak in .stringsdict using option + enter. '\n' doesn't work.
+
 ## Memory helpers
 
 - Don't change the keys for NSLocalizedString()! Otherwise all the existing translations will be deleted.

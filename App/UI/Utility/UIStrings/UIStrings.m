@@ -290,6 +290,10 @@ static NSMutableAttributedString *symbolStringWithModifierPrefix(NSString *flags
 
 + (NSString *)naturalLanguageListFromStringArray:(NSArray<NSString *> *)stringArray {
     
+    /// See:
+    /// - https://developer.apple.com/forums/thread/91225
+    /// - Locale.current.groupingSeparator
+    
     NSMutableArray<NSString *> *sa = stringArray.mutableCopy;
     
     NSString *outString;
@@ -309,7 +313,10 @@ static NSMutableAttributedString *symbolStringWithModifierPrefix(NSString *flags
         
         NSArray *firstStrings = sa;
         
-        outString = [[firstStrings componentsJoinedByString:@", "] stringByAppendingFormat:@" and %@", lastString];
+        NSString *join = NSLocalizedString(@"join-list", @"First draft: , || Note: This string joins elements in a list except the second last and last one.");
+        NSString *joinLast = NSLocalizedString(@"join-list.last", @"First draft: %@ & %@ || Note: This format string joins the last element of a list of items with the preceding ones");
+        
+        outString = stringf(joinLast, [firstStrings componentsJoinedByString:join], lastString);
     }
     
     return outString;
