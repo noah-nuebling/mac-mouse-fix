@@ -40,14 +40,52 @@
     return self;
 }
 
+- (void)didAddRowView:(NSTableRowView *)rowView forRow:(NSInteger)row {
+        
+    BOOL isGroupRow = rowView.subviews.count == 1;
+    
+    if (!isGroupRow) {
+        [(RemapTableCellView *)[rowView viewAtColumn:0] coolInitAsTriggerCell];
+        [(RemapTableCellView *)[rowView viewAtColumn:1] coolInitAsEffectCell];
+    }
+}
+
 - (void)coolDidLoad {
  
     /// This is called after the table has loaded all it's rows for the first time.
+    ///     Edit: it seemingly won't have created the actual tableCellViews, yet though.
     
     /// Init height constraint
     _heightConstraint = [self.heightAnchor constraintEqualToConstant:self.intrinsicContentSize.height];
     _heightConstraint.priority = 1000;
     [_heightConstraint setActive:YES];
+    
+    /// Calculate width
+    
+    
+    double tableWidth = 0;
+    for (int r = 0; r < self.numberOfRows; r++) {
+        
+        double rowWidth = 0;
+        
+        for (int c = 0; c < self.numberOfColumns; c++) {
+            NSTableCellView *v = [self viewAtColumn:c row:r makeIfNecessary:YES];
+            rowWidth += v.fittingSize.width;
+        }
+        tableWidth = MAX(tableWidth, rowWidth);
+    }
+    
+    /// Set width constraint
+    
+    NSLayoutConstraint *c = [self.widthAnchor constraintEqualToConstant:tableWidth];
+    
+    c.priority = 999;
+    [c setActive:YES];
+    
+    NSLayoutConstraint *c2 = [self.widthAnchor constraintLessThanOrEqualToConstant:tableWidth];
+    c2.priority = 1000;
+    [c2 setActive:YES];
+    
 }
 
 /// (?) Need this to make keystroke capture field first responder

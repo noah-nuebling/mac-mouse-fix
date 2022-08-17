@@ -811,7 +811,11 @@ static NSString *effectNameForRowDict(NSDictionary * _Nonnull rowDict) {
     #pragma mark --- Create view ---
     
     /// Create view
-    NSTableCellView *triggerCell = [self.tableView makeViewWithIdentifier:@"triggerCell" owner:nil];
+    RemapTableCellView *triggerCell = [self.tableView makeViewWithIdentifier:@"triggerCell" owner:nil];
+
+    /// Do cool custom stuff
+    ///     We have to do this 
+//    [triggerCell coolInit];
     
     /// Set string
     triggerCell.textField.attributedStringValue = fullTriggerCellString;

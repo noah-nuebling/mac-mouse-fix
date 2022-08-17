@@ -166,6 +166,7 @@
 		4FC8A7D328AAF900007DB982 /* Markdown in Frameworks */ = {isa = PBXBuildFile; productRef = 4FC8A7D228AAF900007DB982 /* Markdown */; };
 		4FC8A7D528ABDEFE007DB982 /* MFClipView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FC8A7D428ABDEFD007DB982 /* MFClipView.swift */; };
 		4FC8A7D728ACEB7B007DB982 /* NSString+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FC8A7D628ACEB7B007DB982 /* NSString+Extensions.swift */; };
+		4FC8A7D928AD3FC7007DB982 /* RemapTableCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FC8A7D828AD3FC7007DB982 /* RemapTableCellView.swift */; };
 		4FCA07D625F3129B00BFE209 /* RemapTableController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FCA07D525F3129B00BFE209 /* RemapTableController.m */; };
 		4FCC03352757B181002E5A57 /* ScreenDrawer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FCC03322757A50C002E5A57 /* ScreenDrawer.swift */; };
 		4FD0A71127B295F600FFCD12 /* OtherConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FD0A71027B295F600FFCD12 /* OtherConfig.swift */; };
@@ -585,6 +586,7 @@
 		4FC8A7CC28AAF1BC007DB982 /* MarkdownParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarkdownParser.swift; sourceTree = "<group>"; };
 		4FC8A7D428ABDEFD007DB982 /* MFClipView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MFClipView.swift; sourceTree = "<group>"; };
 		4FC8A7D628ACEB7B007DB982 /* NSString+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSString+Extensions.swift"; sourceTree = "<group>"; };
+		4FC8A7D828AD3FC7007DB982 /* RemapTableCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemapTableCellView.swift; sourceTree = "<group>"; };
 		4FCA07D425F3129B00BFE209 /* RemapTableController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RemapTableController.h; sourceTree = "<group>"; };
 		4FCA07D525F3129B00BFE209 /* RemapTableController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RemapTableController.m; sourceTree = "<group>"; };
 		4FCC03322757A50C002E5A57 /* ScreenDrawer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScreenDrawer.swift; sourceTree = "<group>"; };
@@ -1346,6 +1348,7 @@
 				4F79C2E9260976950067B381 /* RemapTableTranslator.m */,
 				4F92A706260F4BF000529D1F /* RemapTableView.h */,
 				4F92A707260F4BF000529D1F /* RemapTableView.m */,
+				4FC8A7D828AD3FC7007DB982 /* RemapTableCellView.swift */,
 				4FB5FE8A27AE563F0092C9B4 /* MFScrollView.h */,
 				4F37FAD725FDFDC4004C34C4 /* MFScrollView.m */,
 				4FC8A7D428ABDEFD007DB982 /* MFClipView.swift */,
@@ -2527,6 +2530,7 @@
 				4FF665FE25F2C92700689B77 /* main.m in Sources */,
 				4F909D2528A0C3D2009349A2 /* TabViewController.swift in Sources */,
 				4F1B832D26081A5500AEAF37 /* CaptureNotificationCreator.m in Sources */,
+				4FC8A7D928AD3FC7007DB982 /* RemapTableCellView.swift in Sources */,
 				4F909D3628A0C3D2009349A2 /* Collapse.swift in Sources */,
 				4F909D4128A0C412009349A2 /* SwiftUITest.swift in Sources */,
 				4FD82DDB260575B100664D6F /* ToastNotificationLabel.m in Sources */,
