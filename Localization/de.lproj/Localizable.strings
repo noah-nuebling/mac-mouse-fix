@@ -297,3 +297,6 @@
 
 /* First draft: and Drag || Note: This will be used for Drag Actions that only need keyboard modifiers to be activated - not mouse buttons || Example: ⌥⌘ and Drag */
 "trigger.drag.flags" = "und ziehen";
+
+/* First draft: **%@** can't be used.\nPlease try another button || Note: %@ will be replaced by a button name */
+"forbidden-capture-toast" = "";

@@ -221,14 +221,18 @@ import CocoaLumberjackSwift
 
     override func mouseUp(with event: NSEvent) {
         if !pointerIsInsideAddField { return }
-        var message = NSAttributedString(string: "Primary Mouse Button can't be used. \nPlease try another button.")
-        message = message.addingBold(forSubstring: "Primary Mouse Button")
+        
+        var messageRaw = NSLocalizedString("forbidden-capture-toast.1", comment: "First draft: **Primary Mouse Button** can't be used.\nPlease try another button")
+        let message = NSAttributedString(coolMarkdown: messageRaw)!;
+        
         ToastNotificationController.attachNotification(withMessage: message, to: MainAppState.shared.window!, forDuration: -1)
     }
     override func rightMouseUp(with event: NSEvent) {
         if !pointerIsInsideAddField { return }
-        var message = NSAttributedString(string: "Secondary Mouse Button can't be used. \nPlease try another button.")
-        message = message.addingBold(forSubstring: "Secondary Mouse Button")
+        
+        var messageRaw = NSLocalizedString("forbidden-capture-toast.2", comment: "First draft: **Secondary Mouse Button** can't be used.\nPlease try another button")
+        let message = NSAttributedString(coolMarkdown: messageRaw)!;
+        
         ToastNotificationController.attachNotification(withMessage: message, to: MainAppState.shared.window!, forDuration: -1)
     }
     

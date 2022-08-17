@@ -888,7 +888,7 @@
 			path = MenuBarItem;
 			sourceTree = "<group>";
 		};
-		4F2A1FA726042ACB0067691A /* Notifications */ = {
+		4F2A1FA726042ACB0067691A /* Toasts */ = {
 			isa = PBXGroup;
 			children = (
 				4F79A81A2604317200076A7E /* ToastNotificationController.h */,
@@ -901,7 +901,7 @@
 				4F1B832B26081A5400AEAF37 /* CaptureNotificationCreator.h */,
 				4F1B832C26081A5500AEAF37 /* CaptureNotificationCreator.m */,
 			);
-			path = Notifications;
+			path = Toasts;
 			sourceTree = "<group>";
 		};
 		4F2FDF312315662500C7BE14 /* Accomplice */ = {
@@ -1011,7 +1011,7 @@
 			isa = PBXGroup;
 			children = (
 				4F909CF128A0C3D2009349A2 /* New UI */,
-				4F2A1FA726042ACB0067691A /* Notifications */,
+				4F2A1FA726042ACB0067691A /* Toasts */,
 				4FF665C625F2C92700689B77 /* Update */,
 				4FF665BF25F2C92700689B77 /* Overrides */,
 				4F7A1A71289F2533007D5B30 /* Utility */,

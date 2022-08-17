@@ -297,3 +297,6 @@
 
 /* First draft: Type a Keyboard Shortcut */
 "type-shortcut-prompt" = "";
+
+/* First draft: **%@** can't be used.\nPlease try another button || Note: %@ will be replaced by a button name */
+"forbidden-capture-toast" = "";
