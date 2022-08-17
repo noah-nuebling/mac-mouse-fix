@@ -566,19 +566,33 @@ static void setBorderColor(RemapTableController *object) {
     
     if ([rowDict isEqual:RemapTableUtility.buttonGroupRowDict]) {
         
+        ///
+        /// Group row
+        ///
+        
+        /// Hack: If we link the textField to the buttonGroupCell via the .textField property, the tableView will override our text styling, so we're linking to it via the nextKeyView prop
+        /// Hack: We're adding 2 spaces in front of the Button string to make it position correclty
+        
         MFMouseButtonNumber groupButtonNumber = [RemapTableUtility triggerButtonForRow:self.groupedDataModel[row+1]];
         NSTableCellView *buttonGroupCell = [self.tableView makeViewWithIdentifier:@"buttonGroupCell" owner:self];
-//        NSTextField *groupTextField = buttonGroupCell.textField; // If we link the textField via the textField prop, the tableView will override our text styling, so we're linking to it via the nextKeyView prop
         NSTextField *groupTextField = (NSTextField *)buttonGroupCell.nextKeyView;
-        groupTextField.stringValue = stringf(@"  %@", [UIStrings getButtonString:groupButtonNumber]);
+        groupTextField.stringValue = stringf(@"  %@", [UIStrings getButtonString:groupButtonNumber].firstCapitalized);
         return buttonGroupCell;
         
     } else if ([tableColumn.identifier isEqualToString:@"trigger"]) {
+        
+        ///
+        /// Trigger cell
+        ///
         
         /// The trigger column should display the trigger as well as the modification precondition
         return [RemapTableTranslator getTriggerCellWithRowDict:rowDict row:row];
         
     } else if ([tableColumn.identifier isEqualToString:@"effect"]) {
+        
+        ///
+        /// Effect cell
+        ///
         
         return [RemapTableTranslator getEffectCellWithRowDict:rowDict row:row tableViewEnabled:tableView.enabled];
         

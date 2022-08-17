@@ -14,4 +14,11 @@ import Foundation
     @objc func attributed() -> NSAttributedString {
         return NSAttributedString(string: self as String)
     }
+    
+    @objc func firstCapitalized() -> NSString {
+        let firstChar = self.substring(to: 1)
+        let rest = self.substring(from: 1)
+        
+        return firstChar.localizedCapitalized.appending(rest) as NSString
+    }
 }

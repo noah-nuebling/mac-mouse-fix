@@ -149,16 +149,16 @@
 "type-shortcut-prompt" = "Tippe einen Tastatur-Kurzbefehl";
 
 /* First draft: Middle Button */
-"button-string.middle" = "Mittlere Taste";
+"button-string.middle" = "mittlere Taste";
 
 /* First Draft: Button %@ */
 "button-string.numbered" = "Taste %@";
 
 /* First draft: Primary Button */
-"button-string.primary" = "Primäre Taste";
+"button-string.primary" = "primäre Taste";
 
 /* First draft: Secondary Button */
-"button-string.secondary" = "Sekundäre Taste";
+"button-string.secondary" = "sekundäre Taste";
 
 /* First draft: the Middle Mouse Button (also called the Scroll Wheel Button or Mouse Button 3) */
 "button-string.tool.middle" = "die mittlere Maustaste (auch genannt die Scrollradtaste oder Maustaste 3)";
@@ -241,59 +241,59 @@
 /* First draft: <Key without description> */
 "apple-key-fallback.unknown-key" = "<Taste ohne Beschreibung>";
 
-/* First draft: Click %@ +  */
-"button-modifier.1" = "";
+/* First draft: Click %@ + || Note: %@ will be a button name || Example where %@ is 'Button 4': Click Button 4 + Double Click and Drag Button 5 */
+"button-modifier.1" = "%@ klicken + ";
 
 /* First draft: Double Click %@ +  */
-"button-modifier.2" = "";
+"button-modifier.2" = "%@ doppelklicken + ";
 
 /* First draft: Triple Click %@ +  */
-"button-modifier.3" = "";
+"button-modifier.3" = "%@ dreifach klicken + ";
 
-/* First draft: Click %@ */
-"trigger.click.1" = "";
+/* First draft: Click %@ || Note: %@ will be a button name || Example where %@ is 'Button 5': ⌥⌘ Double Click Button 4 + Click Button 5 */
+"trigger.click.1" = "%@ klicken";
 
 /* First draft: Double Click %@ */
-"trigger.click.2" = "";
+"trigger.click.2" = "%@ doppelklicken";
 
 /* First draft: Triple Click %@ */
-"trigger.click.3" = "";
+"trigger.click.3" = "%@ dreifach klicken";
 
-/* First draft: Drag || This substring will be emphasized in trigger strings like 'Double Click and Drag %@' */
-"trigger.drag-particle" = "";
+/* First draft: Drag || Note: This substring will be emphasized in drag trigger strings like 'Double Click and Drag %@' */
+"trigger.drag-particle" = "ziehen";
 
-/* First draft: Click and Drag %@ */
-"trigger.drag.1" = "";
+/* First draft: Click and Drag %@ || Note: %@ will be a button name || example where %@ is 'Button 5': ⌥⌘ Triple Click Button 4 + Click and Drag Button 5 */
+"trigger.drag.1" = "%@ klicken und ziehen";
 
 /* First draft: Double Click and Drag %@ */
-"trigger.drag.2" = "";
+"trigger.drag.2" = "%@ doppelklicken und ziehen";
 
 /* First draft: Triple Click and Drag %@ */
-"trigger.drag.3" = "";
-
-/* First draft: and Drag || Example: ⌥⌘ and Drag */
-"trigger.drag.flags" = "";
+"trigger.drag.3" = "%@ dreifach klicken und ziehen";
 
 /* First draft: Hold %@ */
-"trigger.hold.1" = "";
+"trigger.hold.1" = "%@ halten";
 
 /* First draft: Double Click and Hold %@ */
-"trigger.hold.2" = "";
+"trigger.hold.2" = "%@ doppelklicken und halten";
 
 /* First draft: Triple Click and Hold %@ */
-"trigger.hold.3" = "";
+"trigger.hold.3" = "%@ dreifach klicken und halten";
 
-/* First draft: Scroll || This substring will be emphasized in trigger strings like 'Triple Click and Scroll %@' */
-"trigger.scroll-particle" = "";
+/* First draft: Scroll || Note: This substring will be emphasized in scroll trigger strings like 'Triple Click and Scroll %@' */
+"trigger.scroll-particle" = "scrollen";
 
 /* First draft: Click and Scroll %@ */
-"trigger.scroll.1" = "";
+"trigger.scroll.1" = "%@ klicken und scrollen";
 
 /* First draft: Double Click and Scroll %@ */
-"trigger.scroll.2" = "";
+"trigger.scroll.2" = "%@ doppelklicken und scrollen";
 
 /* First draft: Triple Click and Scroll %@ */
-"trigger.scroll.3" = "";
+"trigger.scroll.3" = "%2 dreifach klicken und scrollen";
 
 /* First draft: and Scroll || Example: ⌥⌘ and Scroll */
-"trigger.scroll.flags" = "";
+"trigger.scroll.flags" = "und scrollen";
+
+/* First draft: and Drag || Note: This will be used for Drag Actions that only need keyboard modifiers to be activated. Not mouse buttons || Example: ⌥⌘ and Drag */
+"trigger.drag.flags" = "und ziehen";

@@ -598,12 +598,12 @@ static NSString *effectNameForRowDict(NSDictionary * _Nonnull rowDict) {
         @throw [NSException exceptionWithName:@"Invalid trigger value type" reason:@"The value for the trigger key is not a String and not a dictionary" userInfo:@{@"Trigger value": triggerGeneric}];
     }
     
-    /// Get addition trigger info
+    /// Get additional trigger info
         
     NSNumber *btn;
     NSNumber *lvl;
     NSString *dur; /// Only used for button trigger
-    NSNumber *flags; /// Only used for non-button triggers, that only have keyboard mods but no buttons as precondition. This is currently unreachable in the UI.
+    BOOL flagsOnlyPrecond = NO;
     
     if ([triggerType isEqual: @"_button"]) {
         
@@ -631,11 +631,8 @@ static NSString *effectNameForRowDict(NSDictionary * _Nonnull rowDict) {
             
         } else if (rowDict[kMFRemapsKeyModificationPrecondition][kMFModificationPreconditionKeyKeyboard] != nil) {
             
-            /// Extract keyboard modifiers for trigger string as fallback
-            flags = rowDict[kMFRemapsKeyModificationPrecondition][kMFModificationPreconditionKeyKeyboard];
-            
-            /// Remove keyboard modifiers from modification precondition
-            rowDict[kMFRemapsKeyModificationPrecondition][kMFModificationPreconditionKeyKeyboard] = nil;
+            /// There are no button preconds but there are keyboard modifier preconds - we can deal with it
+            flagsOnlyPrecond = YES;
             
         } else {
             @throw [NSException exceptionWithName:@"No precondition" reason:@"Modified drag or scroll has no preconditions" userInfo:@{@"Precond dict": (rowDict[kMFRemapsKeyModificationPrecondition])}];
@@ -660,7 +657,7 @@ static NSString *effectNameForRowDict(NSDictionary * _Nonnull rowDict) {
         /// Declare map
         
         NSDictionary *map = @{
-            @[@(1), @"click"]:  NSLocalizedString(@"trigger.click.1",   @"First draft: Click %@"),
+            @[@(1), @"click"]:  NSLocalizedString(@"trigger.click.1",   @"First draft: Click %@ || Note: %@ will be a button name || Example where %@ is 'Button 5': ⌥⌘ Double Click Button 4 + Click Button 5"),
             @[@(2), @"click"]:  NSLocalizedString(@"trigger.click.2",   @"First draft: Double Click %@"),
             @[@(3), @"click"]:  NSLocalizedString(@"trigger.click.3",   @"First draft: Triple Click %@"),
             @[@(1), @"hold"]:   NSLocalizedString(@"trigger.hold.1",    @"First draft: Hold %@"),
@@ -693,7 +690,7 @@ static NSString *effectNameForRowDict(NSDictionary * _Nonnull rowDict) {
         /// Define maps
         
         NSDictionary *map = @{
-            @[@(1), @"_drag"]:      NSLocalizedString(@"trigger.drag.1",    @"First draft: Click and Drag %@"),
+            @[@(1), @"_drag"]:      NSLocalizedString(@"trigger.drag.1",    @"First draft: Click and Drag %@ || Note: %@ will be a button name || example where %@ is 'Button 5': ⌥⌘ Triple Click Button 4 + Click and Drag Button 5"),
             @[@(2), @"_drag"]:      NSLocalizedString(@"trigger.drag.2",    @"First draft: Double Click and Drag %@"),
             @[@(3), @"_drag"]:      NSLocalizedString(@"trigger.drag.3",    @"First draft: Triple Click and Drag %@"),
             @[@(1), @"_scroll"]:    NSLocalizedString(@"trigger.scroll.1",  @"First draft: Click and Scroll %@"),
@@ -702,7 +699,7 @@ static NSString *effectNameForRowDict(NSDictionary * _Nonnull rowDict) {
         };
         
         NSDictionary *onlyFlagsMap = @{
-            @"_drag":   NSLocalizedString(@"trigger.drag.flags", @"First draft: and Drag || Example: ⌥⌘ and Drag"),
+            @"_drag":   NSLocalizedString(@"trigger.drag.flags", @"First draft: and Drag || Note: This will be used for Drag Actions that only need keyboard modifiers to be activated - not mouse buttons || Example: ⌥⌘ and Drag"),
             @"_scroll": NSLocalizedString(@"trigger.scroll.flags", @"First draft: and Scroll || Example: ⌥⌘ and Scroll"),
         };
         
@@ -713,8 +710,8 @@ static NSString *effectNameForRowDict(NSDictionary * _Nonnull rowDict) {
         if (btn != nil) {
             tr_ = map[@[lvl, triggerType]];
         } else {
-            assert(flags != nil); /// If there are no buttons we need at least keyboard modifiers in the precondition
-            tr_ = stringf(onlyFlagsMap[triggerType], flags);
+            assert(flagsOnlyPrecond); /// If there are no buttons we need at least keyboard modifiers in the precondition
+            tr_ = onlyFlagsMap[triggerType];
         }
         
         /// Make attributed
@@ -723,8 +720,8 @@ static NSString *effectNameForRowDict(NSDictionary * _Nonnull rowDict) {
         
         /// Slighly emphasize `Drag` and `Scroll` for better legibility
         
-        NSString *dragParticle =    NSLocalizedString(@"trigger.drag-particle",  @"First draft: Drag || This substring will be emphasized in trigger strings like 'Double Click and Drag %@'");
-        NSString *scrollParticle =  NSLocalizedString(@"trigger.scroll-particle", @"First draft: Scroll || This substring will be emphasized in trigger strings like 'Triple Click and Scroll %@'");
+        NSString *dragParticle =    NSLocalizedString(@"trigger.drag-particle",  @"First draft: Drag || Note: This substring will be emphasized in drag trigger strings like 'Double Click and Drag %@'");
+        NSString *scrollParticle =  NSLocalizedString(@"trigger.scroll-particle", @"First draft: Scroll || Note: This substring will be emphasized in scroll trigger strings like 'Triple Click and Scroll %@'");
         
         tr = [tr attributedStringByAddingSemiBoldForSubstring:dragParticle];
         tr = [tr attributedStringByAddingSemiBoldForSubstring:scrollParticle];
@@ -749,7 +746,7 @@ static NSString *effectNameForRowDict(NSDictionary * _Nonnull rowDict) {
         
         NSString *buttonModString;
         if (lvl.intValue == 1) {
-            buttonModString = stringf(NSLocalizedString(@"button-modifier.1", @"First draft: Click %@ + "), buttonStr);
+            buttonModString = stringf(NSLocalizedString(@"button-modifier.1", @"First draft: Click %@ + || Note: %@ will be a button name || Example where %@ is 'Button 4': Click Button 4 + Double Click and Drag Button 5"), buttonStr);
         } else if (lvl.intValue == 2) {
             buttonModString = stringf(NSLocalizedString(@"button-modifier.2", @"First draft: Double Click %@ + "), buttonStr);
         } else if (lvl.intValue == 3) {
@@ -757,15 +754,20 @@ static NSString *effectNameForRowDict(NSDictionary * _Nonnull rowDict) {
         } else {
             @throw [NSException exceptionWithName:@"Invalid click level" reason:@"Modification precondition contains undisplayable click level" userInfo:@{@"Trigger dict containing invalid value": triggerGeneric}];
         }
-        [buttonModifierStrings addObject:buttonModString];
+        [buttonModifierStrings addObject:buttonModString.firstCapitalized];
     }
-    btnMod = [buttonModifierStrings componentsJoinedByString:@""];
+    if (buttonModifierStrings.count > 0) {
+        btnMod = [buttonModifierStrings componentsJoinedByString:@""];
+    } else {
+        btnMod = @"";
+    }
     
     
     ///
     /// Build keyboad modifier string
     ///
     
+    NSNumber *flags = rowDict[kMFRemapsKeyModificationPrecondition][kMFModificationPreconditionKeyKeyboard];
     NSString *kbMod = [UIStrings getKeyboardModifierString:flags.unsignedIntegerValue];
     
     ///
@@ -787,15 +789,19 @@ static NSString *effectNameForRowDict(NSDictionary * _Nonnull rowDict) {
         tr = [NSAttributedString stringWithAttributedFormat:tr args:@[@"".attributed]];
     }
     
+    
+    /// Capitalize trigger string
+    ///     (The button mod strings are capitalized further up)
+    tr = [tr attributedStringByTrimmingWhitespace];
+    tr = [tr attributedStringByCapitalizingFirst];
+    
     ///
     /// Join all substrings to get result
     ///
     
-    /// Note that for this to work right the white space must follow these rules:
-    ///     - `kbMod` and `btnMod` must have a trailing whitespace if they are not empty, else they must be completely empty
-    ///     - `tr` must have no trailing or leading whitespaces.
-    
     NSAttributedString *fullTriggerCellString = [NSAttributedString stringWithAttributedFormat:@"%@ %@ %@".attributed args:@[kbMod.attributed, btnMod.attributed, tr]];
+    
+    /// Clean up string
     fullTriggerCellString = [fullTriggerCellString attributedStringByTrimmingWhitespace];
     
     #pragma mark --- Create view ---
