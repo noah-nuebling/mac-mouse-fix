@@ -11,6 +11,8 @@ import Foundation
 
 @objc class RemapTableCellView: NSTableCellView {
     
+    let columnPadding = 8.0;
+    
     @objc func coolInitAsTriggerCell() {
         
         /// Make it use autolayout.
@@ -22,9 +24,9 @@ import Foundation
         ///     Tried to add these in IB like the other constraints but I couldn't find a way
         ///     The superview is the rowView, so we don't want to attach to the trailing edge
         
-        self.trailingAnchor.constraint(equalTo: self.superview!.trailingAnchor).isActive = false
+        self.trailingAnchor.constraint(equalTo: self.superview!.trailingAnchor, constant: -columnPadding).isActive = false
         
-        self.leadingAnchor.constraint(equalTo: self.superview!.leadingAnchor, constant: 8.0).isActive = true
+        self.leadingAnchor.constraint(equalTo: self.superview!.leadingAnchor, constant: columnPadding).isActive = true
         self.topAnchor.constraint(equalTo: self.superview!.topAnchor).isActive = true
         self.bottomAnchor.constraint(equalTo: self.superview!.bottomAnchor).isActive = true
     }
@@ -38,9 +40,9 @@ import Foundation
         
         /// Superview is rowView so we don't want to attach the leading edge
         
-        self.leadingAnchor.constraint(equalTo: self.superview!.leadingAnchor, constant: 8.0).isActive = false
+        self.leadingAnchor.constraint(equalTo: self.superview!.leadingAnchor, constant: columnPadding).isActive = false
         
-        self.trailingAnchor.constraint(equalTo: self.superview!.trailingAnchor).isActive = true
+        self.trailingAnchor.constraint(equalTo: self.superview!.trailingAnchor, constant: -columnPadding).isActive = true
         self.topAnchor.constraint(equalTo: self.superview!.topAnchor).isActive = true
         self.bottomAnchor.constraint(equalTo: self.superview!.bottomAnchor).isActive = true
     }

@@ -60,31 +60,66 @@
     _heightConstraint.priority = 1000;
     [_heightConstraint setActive:YES];
     
+    /// Define constant
+    ///     Also see RemapTableCellView > columnPadding for context
+    double columnPadding = 8.0;
+    
     /// Calculate width
     
-    
     double tableWidth = 0;
-    for (int r = 0; r < self.numberOfRows; r++) {
         
-        double rowWidth = 0;
+    double triggerColumWidth = 0;
+    double effectColumnWidth = 0;
+    
+    for (int c = 0; c < self.numberOfColumns; c++) {
         
-        for (int c = 0; c < self.numberOfColumns; c++) {
+        /// Get columnWidth
+        
+        double columnWidth = 0;
+        
+        for (int r = 0; r < self.numberOfRows; r++) {
+        
             NSTableCellView *v = [self viewAtColumn:c row:r makeIfNecessary:YES];
-            rowWidth += v.fittingSize.width;
+            columnWidth = MAX(columnWidth, v.fittingSize.width);
         }
-        tableWidth = MAX(tableWidth, rowWidth);
+        
+        /// Set all tableCells equal columnWidth
+        ///     Need to set priority 999 because some mysterious `UIView-Encapsulated-Layout-Width` constraints are being added by the tableView and break our constraints. It doesn't seem to make a difference so far though.
+        for (int r = 0; r < self.numberOfRows; r++) {
+            NSTableCellView *v = [self viewAtColumn:c row:r makeIfNecessary:YES];
+            if ([v.identifier isEqual:@"buttonGroupCell"]) continue;
+            NSLayoutConstraint *c = [v.widthAnchor constraintEqualToConstant:columnWidth];
+            c.priority = 999;
+            [c setActive:YES];
+        }
+        
+        /// Store columnWidth
+        if (c == 0) {
+            triggerColumWidth = columnWidth;
+        } else if (c == 1) {
+            effectColumnWidth = columnWidth;
+        } else {
+            assert(false);
+        }
     }
     
-    /// Set width constraint
+    /// Add padding between columns
+    tableWidth += triggerColumWidth + 2*columnPadding + effectColumnWidth;
     
-    NSLayoutConstraint *c = [self.widthAnchor constraintEqualToConstant:tableWidth];
+    /// Set preferred tableWidth
+    ///     Not sure if this is necessary since we really want the tableWidth to be determined by the rest of the layout.
+    ///     If the triggerCells are superwide we just want them to wrap, not make the table super wide
+    ///         I think we'll just set a minimum width in IB and then let it grow beyond that based on the addField hint.
+    ///     You can only set this on the enclosing scrollView, not the tableView itself!. Even though they are just set to have the exact same size. Not sure why. Autolayout is weird.
     
+    NSLayoutConstraint *c = [self.enclosingScrollView.widthAnchor constraintGreaterThanOrEqualToConstant:tableWidth];
     c.priority = 999;
     [c setActive:YES];
     
-    NSLayoutConstraint *c2 = [self.widthAnchor constraintLessThanOrEqualToConstant:tableWidth];
-    c2.priority = 1000;
-    [c2 setActive:YES];
+    /// Set table column divider
+    [self sizeLastColumnToFit];
+    NSTableColumn *effectColumn = self.tableColumns[1];
+    effectColumn.width = effectColumnWidth + 3*columnPadding;
     
 }
 
