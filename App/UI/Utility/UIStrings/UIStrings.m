@@ -43,6 +43,7 @@
 }
 
 + (NSString *)getButtonStringToolTip:(MFMouseButtonNumber)buttonNumber {
+    
     NSDictionary *buttonNumberToUIString = @{
         @1: NSLocalizedString(@"button-string.tool.primary",   @"First draft: the Primary Mouse Button (also called the Left Mouse Button or Mouse Button 1)"),
         @2: NSLocalizedString(@"button-string.tool.secondary", @"First draft: the Secondary Mouse Button (also called the Right Mouse Button or Mouse Button 2)"),
@@ -67,6 +68,11 @@
     return kb;
 }
 + (NSString *)getKeyboardModifierStringToolTip:(CGEventFlags)flags {
+    
+    /// Unused. See `getButtonStringToolTip:`
+    
+    assert(false);
+    
     NSString *kb = @"";
     CGEventFlags f = flags;
     kb = [NSString stringWithFormat:@"%@%@%@%@",

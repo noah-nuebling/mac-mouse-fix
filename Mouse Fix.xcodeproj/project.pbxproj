@@ -165,6 +165,7 @@
 		4FC8A7D128AAF2EA007DB982 /* Markdown in Frameworks */ = {isa = PBXBuildFile; productRef = 4FC8A7D028AAF2EA007DB982 /* Markdown */; };
 		4FC8A7D328AAF900007DB982 /* Markdown in Frameworks */ = {isa = PBXBuildFile; productRef = 4FC8A7D228AAF900007DB982 /* Markdown */; };
 		4FC8A7D528ABDEFE007DB982 /* MFClipView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FC8A7D428ABDEFD007DB982 /* MFClipView.swift */; };
+		4FC8A7D728ACEB7B007DB982 /* NSString+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FC8A7D628ACEB7B007DB982 /* NSString+Extensions.swift */; };
 		4FCA07D625F3129B00BFE209 /* RemapTableController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FCA07D525F3129B00BFE209 /* RemapTableController.m */; };
 		4FCC03352757B181002E5A57 /* ScreenDrawer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FCC03322757A50C002E5A57 /* ScreenDrawer.swift */; };
 		4FD0A71127B295F600FFCD12 /* OtherConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FD0A71027B295F600FFCD12 /* OtherConfig.swift */; };
@@ -583,6 +584,7 @@
 		4FC55E2F285E6BF800F2FCCF /* GlobalDefaults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlobalDefaults.swift; sourceTree = "<group>"; };
 		4FC8A7CC28AAF1BC007DB982 /* MarkdownParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarkdownParser.swift; sourceTree = "<group>"; };
 		4FC8A7D428ABDEFD007DB982 /* MFClipView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MFClipView.swift; sourceTree = "<group>"; };
+		4FC8A7D628ACEB7B007DB982 /* NSString+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSString+Extensions.swift"; sourceTree = "<group>"; };
 		4FCA07D425F3129B00BFE209 /* RemapTableController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RemapTableController.h; sourceTree = "<group>"; };
 		4FCA07D525F3129B00BFE209 /* RemapTableController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RemapTableController.m; sourceTree = "<group>"; };
 		4FCC03322757A50C002E5A57 /* ScreenDrawer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScreenDrawer.swift; sourceTree = "<group>"; };
@@ -1021,6 +1023,7 @@
 				4F7AB0522606692C0008055E /* UIStrings */,
 				4F79A8292605074000076A7E /* NSAttributedString+Additions.h */,
 				4F79A82A2605074000076A7E /* NSAttributedString+Additions.m */,
+				4FC8A7D628ACEB7B007DB982 /* NSString+Extensions.swift */,
 				4FC8A7CC28AAF1BC007DB982 /* MarkdownParser.swift */,
 				4FF665C425F2C92700689B77 /* MFSegmentedControl.h */,
 				4FF665C125F2C92700689B77 /* MFSegmentedControl.m */,
@@ -2575,6 +2578,7 @@
 				4F92A708260F4BF000529D1F /* RemapTableView.m in Sources */,
 				4FA40D0528A0D0D000499E53 /* PolyFit.cpp in Sources */,
 				4FA40CF928A0CCCA00499E53 /* Bezier.swift in Sources */,
+				4FC8A7D728ACEB7B007DB982 /* NSString+Extensions.swift in Sources */,
 				4FC8A7CD28AAF1BC007DB982 /* MarkdownParser.swift in Sources */,
 				4F909D3E28A0C3D2009349A2 /* SensitivityDisplay.swift in Sources */,
 				4F909D4528A0C4C2009349A2 /* NSArray+Extensions.swift in Sources */,

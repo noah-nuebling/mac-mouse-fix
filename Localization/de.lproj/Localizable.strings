@@ -240,3 +240,60 @@
 
 /* First draft: <Key without description> */
 "apple-key-fallback.unknown-key" = "<Taste ohne Beschreibung>";
+
+/* First draft: Click %@ +  */
+"button-modifier.1" = "";
+
+/* First draft: Double Click %@ +  */
+"button-modifier.2" = "";
+
+/* First draft: Triple Click %@ +  */
+"button-modifier.3" = "";
+
+/* First draft: Click %@ */
+"trigger.click.1" = "";
+
+/* First draft: Double Click %@ */
+"trigger.click.2" = "";
+
+/* First draft: Triple Click %@ */
+"trigger.click.3" = "";
+
+/* First draft: Drag || This substring will be emphasized in trigger strings like 'Double Click and Drag %@' */
+"trigger.drag-particle" = "";
+
+/* First draft: Click and Drag %@ */
+"trigger.drag.1" = "";
+
+/* First draft: Double Click and Drag %@ */
+"trigger.drag.2" = "";
+
+/* First draft: Triple Click and Drag %@ */
+"trigger.drag.3" = "";
+
+/* First draft: and Drag || Example: ⌥⌘ and Drag */
+"trigger.drag.flags" = "";
+
+/* First draft: Hold %@ */
+"trigger.hold.1" = "";
+
+/* First draft: Double Click and Hold %@ */
+"trigger.hold.2" = "";
+
+/* First draft: Triple Click and Hold %@ */
+"trigger.hold.3" = "";
+
+/* First draft: Scroll || This substring will be emphasized in trigger strings like 'Triple Click and Scroll %@' */
+"trigger.scroll-particle" = "";
+
+/* First draft: Click and Scroll %@ */
+"trigger.scroll.1" = "";
+
+/* First draft: Double Click and Scroll %@ */
+"trigger.scroll.2" = "";
+
+/* First draft: Triple Click and Scroll %@ */
+"trigger.scroll.3" = "";
+
+/* First draft: and Scroll || Example: ⌥⌘ and Scroll */
+"trigger.scroll.flags" = "";

@@ -13,6 +13,59 @@
 
 @implementation NSAttributedString (Additions)
 
+#pragma mark Trim whitespace
+
+- (NSAttributedString *)attributedStringByTrimmingWhitespace {
+    
+    /// Deletes leading, trailing, and duplicate whitespace from a string.
+    
+    /// Mutable copy
+    NSMutableAttributedString *s = self.mutableCopy;
+    
+    /// Declare chars to trim
+    NSCharacterSet *whitespace = NSCharacterSet.whitespaceCharacterSet;
+    
+    /// Loop
+    NSRange lastWhitespaceRange = NSMakeRange(NSNotFound, 0);
+    while (true) {
+        
+        /// Get next range
+        NSRange whitespaceRange = [s.string rangeOfCharacterFromSet:whitespace options:NSBackwardsSearch];
+        
+        /// Break
+        if (whitespaceRange.location == NSNotFound) {
+            break;
+        }
+        
+        /// Flip range
+        ///     Because we did backwards search or sth
+        whitespaceRange = NSMakeRange(whitespaceRange.location - whitespaceRange.length, whitespaceRange.length); /// Flip
+        
+        /// Delete things
+        if (NSMaxRange(whitespaceRange) == self.length - 1) {
+            
+            /// Delete trailing
+            [s deleteCharactersInRange:whitespaceRange];
+            
+        } else if (whitespaceRange.location == 0) {
+            
+            /// Delete leading
+            [s deleteCharactersInRange:whitespaceRange];
+            
+        } else if (whitespaceRange.location + 1 == lastWhitespaceRange.location) {
+            
+            /// Delete duplicates
+            [s deleteCharactersInRange:lastWhitespaceRange];
+        }
+        
+        /// Update last
+        lastWhitespaceRange = whitespaceRange;
+    }
+    
+    /// Return
+    return s;
+}
+
 #pragma mark Replace substring
 
 + (NSAttributedString *)stringWithFormat:(NSString *)format args:(NSArray<NSAttributedString *> *)args {
@@ -31,6 +84,8 @@
     
     /// Early return
     if (args.count == 0) return format;
+    
+    
     
     /// Get mutable copy
     NSMutableAttributedString *mutableFormat = format.mutableCopy;
