@@ -57,9 +57,7 @@ double effectColumnWidth = -1;
     ///     Also see RemapTableCellView > columnPadding for context
     double columnPadding = 8.0;
     
-    /// Calculate width
-    
-    double tableWidth = 0;
+    /// Calculate column widths
     
     for (int c = 0; c < self.numberOfColumns; c++) {
         
@@ -98,23 +96,36 @@ double effectColumnWidth = -1;
         }
     }
     
-    /// Add padding between columns
-    tableWidth += triggerColumWidth + 2*columnPadding + effectColumnWidth;
+    /// Guard no width
+    ///     If the table is loaded with no rows, then the effectColumnWidth will be almost 0 which breaks things
+    ///     So we fallback to this
+    ///     Note: It makes sense to just use frame.size since self has already been layed out at this point
+    if (effectColumnWidth < 20) {
+        effectColumnWidth = self.frame.size.width / 2.0;
+    }
     
-    /// Set preferred tableWidth
+    /// Set min tableWidth based on content
     ///     Not sure if this is necessary since we really want the tableWidth to be determined by the rest of the layout.
     ///     If the triggerCells are superwide we just want them to wrap, not make the table super wide
     ///         I think we'll just set a minimum width in IB and then let it grow beyond that based on the addField hint.
     ///     You can only set this on the enclosing scrollView, not the tableView itself!. Even though they are just set to have the exact same size. Not sure why. Autolayout is weird.
+    /// This doesn't work, the effectCell popupButtons' text can still be cut off.
+    ///     Edit: Fixed it I think with [effectColumn setMinWidth:]
     
-    NSLayoutConstraint *c = [self.enclosingScrollView.widthAnchor constraintGreaterThanOrEqualToConstant:tableWidth];
-    c.priority = 999;
+    double minTableWidth = effectColumnWidth * 2 + 4*columnPadding;
+    
+    NSLayoutConstraint *c = [self.enclosingScrollView.widthAnchor constraintGreaterThanOrEqualToConstant:minTableWidth];
     [c setActive:YES];
+    NSLayoutConstraint *c2 = [self.enclosingScrollView.widthAnchor constraintEqualToConstant:minTableWidth];
+    c2.priority = 999.0;
+    [c2 setActive:YES];
     
-    /// Set table column divider
-    [self sizeLastColumnToFit];
+    /// Set effect column width
+    /// Notes: Setting the column width higher does seem to make it wider but not linearly? And at some point it just stops growing?
+//    [self sizeLastColumnToFit];
     NSTableColumn *effectColumn = self.tableColumns[1];
-    effectColumn.width = effectColumnWidth + 3*columnPadding; /// `This just doesn't grow beyond a certain size. Idk. Still looks fine.
+    [effectColumn setMinWidth:effectColumnWidth]; /// Don't don't I'm desparate. TF this works!! ... story of AppKit programming. Actually it just makes both colums equal sized. Weird. Edit; Also setting maxWidth it works!
+    [effectColumn setMaxWidth:effectColumnWidth];
     
 }
 

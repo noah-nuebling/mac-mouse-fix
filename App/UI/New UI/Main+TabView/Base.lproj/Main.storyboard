@@ -488,16 +488,16 @@
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
                             <stackView distribution="fill" orientation="vertical" alignment="centerX" horizontalStackHuggingPriority="1000" verticalStackHuggingPriority="1000" horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Qu8-7l-RFn">
-                                <rect key="frame" x="23" y="0.0" width="541" height="476"/>
+                                <rect key="frame" x="23" y="0.0" width="541" height="456"/>
                                 <subviews>
                                     <box identifier="addField" boxType="custom" borderType="line" cornerRadius="6" title="&lt;Box&gt;" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="Pxm-4w-iO7" userLabel="AddBox">
-                                        <rect key="frame" x="0.0" y="306" width="541" height="170"/>
+                                        <rect key="frame" x="0.0" y="306" width="541" height="150"/>
                                         <view key="contentView" id="B6d-Fk-sWp">
-                                            <rect key="frame" x="1" y="1" width="539" height="168"/>
+                                            <rect key="frame" x="1" y="1" width="539" height="148"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <subviews>
                                                 <imageView identifier="PlusIcon" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Jod-JU-J5j">
-                                                    <rect key="frame" x="237" y="47.5" width="60" height="66.5"/>
+                                                    <rect key="frame" x="238" y="38.5" width="60" height="66.5"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                                     <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyUpOrDown" image="plus" catalog="system" id="EyU-is-YRF"/>
                                                     <color key="contentTintColor" name="systemGrayColor" catalog="System" colorSpace="catalog"/>
@@ -506,7 +506,7 @@
                                             </subviews>
                                         </view>
                                         <constraints>
-                                            <constraint firstAttribute="height" constant="170" id="asZ-jV-KrP"/>
+                                            <constraint firstAttribute="height" constant="150" id="asZ-jV-KrP"/>
                                         </constraints>
                                         <color key="borderColor" name="separatorColor" catalog="System" colorSpace="catalog"/>
                                         <color key="fillColor" name="quaternaryLabelColor" catalog="System" colorSpace="catalog"/>
@@ -559,7 +559,7 @@
                                                             <tableColumnResizingMask key="resizingMask" resizeWithTable="YES"/>
                                                             <prototypeCellViews>
                                                                 <tableCellView identifier="triggerCell" horizontalHuggingPriority="1000" verticalHuggingPriority="750" verticalCompressionResistancePriority="1000" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="nsw-iK-CJt" userLabel="TriggerCell" customClass="RemapTableCellView" customModule="Mac_Mouse_Fix" customModuleProvider="target">
-                                                                    <rect key="frame" x="8" y="0.0" width="287" height="39"/>
+                                                                    <rect key="frame" x="8" y="0.0" width="288" height="39"/>
                                                                     <subviews>
                                                                         <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" horizontalCompressionResistancePriority="999" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="QCK-nA-0gO">
                                                                             <rect key="frame" x="22" y="12" width="266" height="16"/>
@@ -595,11 +595,11 @@
                                                                     </connections>
                                                                 </tableCellView>
                                                                 <tableCellView identifier="buttonGroupCell" id="pxf-x1-gL5" userLabel="ButtonGroupCell">
-                                                                    <rect key="frame" x="8" y="39" width="287" height="22"/>
+                                                                    <rect key="frame" x="8" y="39" width="288" height="22"/>
                                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                                     <subviews>
                                                                         <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="AHZ-Kd-4Xf">
-                                                                            <rect key="frame" x="-8" y="3" width="294" height="16"/>
+                                                                            <rect key="frame" x="-8" y="3" width="295" height="16"/>
                                                                             <constraints>
                                                                                 <constraint firstAttribute="height" constant="16" id="iEl-dG-QM5"/>
                                                                             </constraints>
@@ -740,6 +740,7 @@
                                         </clipView>
                                         <constraints>
                                             <constraint firstAttribute="height" relation="lessThanOrEqual" constant="500" id="lgg-Lp-QGT"/>
+                                            <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="300" id="oIt-mA-DPV"/>
                                         </constraints>
                                         <scroller key="horizontalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" horizontal="YES" id="mCT-ys-LqY">
                                             <rect key="frame" x="0.0" y="354" width="350" height="16"/>
@@ -1603,9 +1604,25 @@ System Preferences &gt; Mouse &gt; Tracking speed </string>
         <scene sceneID="3NB-Tm-GfZ">
             <objects>
                 <viewController title="About" id="buH-zX-xXu" userLabel="About View Controller" sceneMemberID="viewController">
-                    <view key="view" id="YQs-BI-EjP">
-                        <rect key="frame" x="0.0" y="0.0" width="450" height="300"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                    <view key="view" misplaced="YES" id="ajM-sr-oMv">
+                        <rect key="frame" x="0.0" y="0.0" width="410" height="456"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <subviews>
+                            <stackView distribution="fill" orientation="vertical" alignment="leading" horizontalStackHuggingPriority="999" verticalStackHuggingPriority="249.99998474121094" horizontalHuggingPriority="999" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ugH-B2-Fh0" userLabel="Master Stack" customClass="CollapsingStackView" customModule="Mac_Mouse_Fix" customModuleProvider="target">
+                                <rect key="frame" x="30" y="20" width="0.0" height="416"/>
+                            </stackView>
+                            <customView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="i8B-ur-x37">
+                                <rect key="frame" x="123" y="180" width="163" height="96"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                            </customView>
+                        </subviews>
+                        <constraints>
+                            <constraint firstAttribute="bottom" secondItem="ugH-B2-Fh0" secondAttribute="bottom" constant="20" id="AEx-na-9sW"/>
+                            <constraint firstItem="ugH-B2-Fh0" firstAttribute="centerX" secondItem="ajM-sr-oMv" secondAttribute="centerX" id="H4Q-sg-igP"/>
+                            <constraint firstItem="ugH-B2-Fh0" firstAttribute="leading" secondItem="ajM-sr-oMv" secondAttribute="leading" constant="30" id="rG6-ZS-xnQ"/>
+                            <constraint firstItem="ugH-B2-Fh0" firstAttribute="top" secondItem="ajM-sr-oMv" secondAttribute="top" constant="20" id="w1v-QC-OH8"/>
+                            <constraint firstAttribute="trailing" secondItem="ugH-B2-Fh0" secondAttribute="trailing" constant="30" id="xNG-m7-QyK"/>
+                        </constraints>
                     </view>
                     <attributedString key="userComments">
                         <fragment content="About Tab Title"/>

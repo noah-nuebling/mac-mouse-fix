@@ -26,19 +26,19 @@
 "precise-scrolling-hint" = "Scrolle präzise indem du das Scroll-Rad langsam bewegst";
 
 /* First draft: Mission Control & Spaces */
-"drag-effect.dock-swipe" = "Mission Control & Spaces";
+"drag-effect.dock-swipe" = "Spaces & Mission Control";
 
 /* First draft: Move your mouse: \n - Up to show Mission Control \n - Down to show Application Windows \n - Left or Right to move between Spaces\n \nWorks like swiping with 3 fingers on an Apple Trackpad */
-"drag-effect.dock-swipe.hint" = "Bewege deine Maus nach: \n - Oben um Mission Control zu öffnen \n - Unten um Programmfenster zu zeigen \n - Links oder rechts um zwischen Spaces zu wechseln\n \n Funktioniert wie Streichen mit 3 Fingern auf einem Apple Trackpad";
+"drag-effect.dock-swipe.hint" = "Bewege deine Maus nach: \n - Oben um Mission Control zu öffnen \n - Unten um App Exposé aufzurufen \n - Links oder rechts um zwischen Spaces zu wechseln\n \nFunktioniert wie Streichen mit 3 Fingern auf einem Apple Trackpad";
 
 /* First draft: Scroll & Navigate */
 "drag-effect.scroll-swipe" = "Scrollen & Navigieren";
 
 /* First draft: Scroll freely by moving your mouse in any direction \n \nNavigate between pages in Safari, delete messages in Mail and more by moving your mouse left and right \n \nWorks like swiping with 2 fingers on an Apple Trackpad */
-"drag-effect.scroll-swipe.hint" = "Scrolle frei indem du deine Maus in eine beliebige Richtung bewegst \n \nBlättere zwischen Seiten in Safari, lösche Nachrichten in Mail, und mehr, indem du deine Maus nach links oder rechts bewegst \n \nFunktioniert wie Streichen mit 2 Fingern auf einem Apple Trackpad ";
+"drag-effect.scroll-swipe.hint" = "Scrolle frei indem du deine Maus in eine beliebige Richtung bewegst\n \nBlättere zwischen Seiten in Safari, lösche Nachrichten in Mail, und mehr, indem du deine Maus nach links oder rechts bewegst\n \nFunktioniert wie Streichen mit 2 Fingern auf einem Apple Trackpad ";
 
 /* First draft: Application Windows */
-"effect.app-expose" = "Programmfenster zeigen";
+"effect.app-expose" = "App Exposé";
 
 /* First draft: Show all windows of the active app */
 "effect.app-expose.hint" = "Zeige alle Fenster der aktiven App";
@@ -65,19 +65,19 @@
 "effect.launchpad.hint" = "Öffne Launchpad";
 
 /* First draft: Move Left a Space */
-"effect.left-space" = "Einen Space nach links wechseln";
+"effect.left-space" = "Space nach links wechseln";
 
 /* First draft: Move one Space to the left */
 "effect.left-space.hint" = "Wechsle einen Space nach links";
 
 /* First draft: Look Up */
-"effect.look-up" = "Nachschlagen & Quick Look";
+"effect.look-up" = "Quick Look & Nachschlagen";
 
 /* First draft: Look up words in the Dictionary, Quick Look files in Finder, and more. \n \nWorks like Force Touch on an Apple Trackpad. */
 "effect.look-up.hint" = "Schlage Wörter im Wörterbuch nach, werfe einen schnellen Blick auf Dateien im Finder, und mehr \n \nFunktioniert wie ein kräftiger Klick bei einem Apple Trackpad";
 
 /* First draft: Middle Click */
-"effect.middle-click" = "Mittel-Klick";
+"effect.middle-click" = "Mittelklick";
 
 /* First draft: Open links in a new tab, paste text in the Terminal, and more. \n \nWorks like clicking %@ on a standard mouse. */
 "effect.middle-click.hint" = "Öffne Links in einem neuen Tab, setze Text im Terminal ein, und mehr \n \nFunktioniert wie klicken von %@ bei einer Standard-Maus";
@@ -95,7 +95,7 @@
 "effect.record-shortcut.hint" = "Tippe einen Tastatur-Kurzbefehl, dann benutze ihn direkt von deiner Maus!";
 
 /* First draft: Move Right a Space */
-"effect.right-space" = "Einen Space nach rechts wechseln";
+"effect.right-space" = "Space nach rechts wechseln";
 
 /* First draft: Move one Space to the right */
 "effect.right-space.hint" = "Wechsle einen Space nach rechts";
@@ -110,10 +110,10 @@
 "effect.smart-zoom.hint" = "Zoome rein und raus in Safari und anderen Apps \n \nFunktioniert wie mit zwei Fingern doppelt tippen auf einem Apple Trackpad";
 
 /* First draft: Desktop & Launchpad */
-"scroll-effect.4-pinch" = "Schreibtisch & Launchpad";
+"scroll-effect.4-pinch" = "Launchpad & Schreibtisch";
 
 /* First draft: Scroll up for Launchpad and down to show the Desktop \n \nWorks like Pinching with 4 fingers on an Apple Trackpad */
-"scroll-effect.4-pinch.hint" = "Scrolle nach: \n - Oben für Launchpad \n - Unten um den Desktop zu zeigen \n \nFunktioniert wie aufziehen mit 4 Fingern auf einem Apple Trackpad";
+"scroll-effect.4-pinch.hint" = "Scrolle nach: \n - Oben für Launchpad \n - Unten um den Schreibtisch zu zeigen \n \nFunktioniert wie aufziehen mit 4 Fingern auf einem Apple Trackpad";
 
 /* First draft: App Switcher */
 "scroll-effect.app-switcher" = "App Switcher";
@@ -134,7 +134,7 @@
 "scroll-effect.precise.hint" = "Scrolle kleine Distanzen und benutze empfindliche Bedienelemente mit Präzision";
 
 /* First draft: Swift Scroll */
-"scroll-effect.swift" = "Flottes scrollen";
+"scroll-effect.swift" = "Flottes Scrollen";
 
 /* Scroll long distances with minimal effort */
 "scroll-effect.swift.hint" = "Scrolle große Distanzen mit minimalem Aufwand";
