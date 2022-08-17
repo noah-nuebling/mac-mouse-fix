@@ -266,7 +266,7 @@
     scrollView.contentInsets = NSEdgeInsetsMake(1, 1, 1, 1); /// Insets so the content doesn't overlap with the border
     
     
-    setBorderColor(self);
+    updateBorderColor(self);
     
     /// Load table data from config
     [self loadDataModelFromConfig];
@@ -282,10 +282,10 @@
     /// In MMF3, the table doesn't overlap with the box border anymore. So we don't need to remove transparency. So we don't need to update the color manually when darkmode toggles. So we don't need this functions.
     ///     TODO: Remove keyValue observation! Not setBorderColor() though
     
-//    if (@available(macOS 10.14, *)) {
-//        [self observeValueForKeyPath:@"effectiveAppearance" ofObject:NSApp change:nil context:nil];
-//        [NSApp addObserver:self forKeyPath:@"effectiveAppearance" options:NSKeyValueObservingOptionNew context:nil];
-//    }
+    if (@available(macOS 10.14, *)) {
+        [self observeValueForKeyPath:@"effectiveAppearance" ofObject:NSApp change:nil context:nil];
+        [NSApp addObserver:self forKeyPath:@"effectiveAppearance" options:NSKeyValueObservingOptionNew context:nil];
+    }
     
     /// Init addRemoveControl state
     [self updateAddRemoveControl];
@@ -294,17 +294,33 @@
     [(RemapTableView *)self.tableView coolDidLoad];
 }
 
-static void setBorderColor(RemapTableController *object) {
+static void updateBorderColor(RemapTableController *object) {
     
+    /// We want the border to be non-transparent because it looks weird. The only way to achieve this is to hardcode the colors.
+    /// Also see ButtonTabController > updateColors() for more explanations
+    /// Note: NSColor.separatorColor doesn't update properly when tolggling darkmode even though it's a system color. So that's another plus
     
-    
-    if (@available(macOS 10.14, *)) {
-        /// Helper for viewDidLoad
+
         
-        object.scrollView.layer.borderColor = NSColor.separatorColor.CGColor; /// This doesn't update properly when tolggling darkmode even though it's a system color. Could hardcode correct colors but not worth it
-    } else {
-        object.scrollView.layer.borderColor = NSColor.gridColor.CGColor;
+        /// Check darkmode
+    BOOL isDarkMode = NO;
+    if (@available(macOS 10.14, *)) {
+        isDarkMode = NSApp.effectiveAppearance.name == NSAppearanceNameDarkAqua;
     }
+        
+    /// Update borderColor
+    ///     This is really just .separatorColor without transparency
+    ///     This is copied from ButtonTabController > updateColors()
+    
+    if (isDarkMode) {
+        object.scrollView.layer.borderColor = [NSColor colorWithRed:57.0/255.0 green:57.0/255.0 blue:57.0/255.0 alpha:1.0].CGColor;
+    } else {
+        object.scrollView.layer.borderColor = [NSColor colorWithRed:227.0/255.0 green:227.0/255.0 blue:227.0/255.0 alpha:1.0].CGColor;
+    }
+    
+    ///
+//    object.scrollView.layer.borderColor = NSColor.separatorColor.CGColor;
+    
 }
 
 
@@ -361,13 +377,7 @@ static void setBorderColor(RemapTableController *object) {
             initialAppearance = self.tableView.effectiveAppearance.name;
         } else {
             
-            NSAppearance *newAppearance = change[@"new"];
-            
-            if ([newAppearance.name isEqual:initialAppearance]) {
-                setBorderColor(self);
-            } else {
-                self.scrollView.layer.borderColor = NSColor.clearColor.CGColor; /// `setBorderColor()` doesn't work right. This makes scrollView borders disappear completely which is better.
-            }
+            updateBorderColor(self);
             
             [self.tableView updateLayer];
             [self.tableView reloadData];
