@@ -73,6 +73,11 @@ double effectColumnWidth = -1;
             columnWidth = MAX(columnWidth, v.fittingSize.width);
         }
         
+        /// Weird hacky stuff
+        ///     Makes the effectRow wider so the text in the buttons isn't as crammed.
+        ///     Idk why or how any of this works
+        columnWidth += 10;
+        
         /// Set all tableCells equal columnWidth
         ///     Need to set priority 999 because some mysterious `UIView-Encapsulated-Layout-Width` constraints are being added by the tableView and break our constraints. It doesn't seem to make a difference so far though.
         for (int r = 0; r < self.numberOfRows; r++) {

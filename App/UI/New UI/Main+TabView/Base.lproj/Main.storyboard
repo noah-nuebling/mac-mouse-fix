@@ -497,7 +497,7 @@
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <subviews>
                                                 <imageView identifier="PlusIcon" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Jod-JU-J5j">
-                                                    <rect key="frame" x="238" y="47.5" width="60" height="66.5"/>
+                                                    <rect key="frame" x="237" y="47.5" width="60" height="66.5"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                                     <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyUpOrDown" image="plus" catalog="system" id="EyU-is-YRF"/>
                                                     <color key="contentTintColor" name="systemGrayColor" catalog="System" colorSpace="catalog"/>
@@ -561,7 +561,7 @@
                                                                 <tableCellView identifier="triggerCell" horizontalHuggingPriority="1000" verticalHuggingPriority="750" verticalCompressionResistancePriority="1000" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="nsw-iK-CJt" userLabel="TriggerCell" customClass="RemapTableCellView" customModule="Mac_Mouse_Fix" customModuleProvider="target">
                                                                     <rect key="frame" x="8" y="0.0" width="287" height="39"/>
                                                                     <subviews>
-                                                                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="QCK-nA-0gO">
+                                                                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" horizontalCompressionResistancePriority="999" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="QCK-nA-0gO">
                                                                             <rect key="frame" x="22" y="12" width="266" height="16"/>
                                                                             <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="left" title="&lt;⌘⇧⌥⌃ + Triple Click and Drag Button 3&gt;" id="QKM-im-bk9">
                                                                                 <font key="font" metaFont="system"/>
@@ -682,7 +682,7 @@
                                                                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                                                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                                                                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                                                                        <size key="minSize" width="211" height="19"/>
+                                                                                        <size key="minSize" width="209" height="19"/>
                                                                                         <size key="maxSize" width="302" height="10000000"/>
                                                                                         <attributedString key="textStorage">
                                                                                             <fragment content="Text go here">

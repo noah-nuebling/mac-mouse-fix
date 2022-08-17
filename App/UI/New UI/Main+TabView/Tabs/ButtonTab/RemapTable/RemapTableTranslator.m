@@ -330,8 +330,8 @@ static NSAttributedString *getShortcutString(NSDictionary *effectDict, BOOL isKe
 
 + (NSArray *)getEffectsTableForRemapsTableEntry:(NSDictionary *)rowDict {
     
-    // Get info about what kind of trigger we're dealing with
-    NSString *triggerType = @""; // Options "oneShot", "drag", "scroll"
+    /// Get info about what kind of trigger we're dealing with
+    NSString *triggerType = @""; /// Options "oneShot", "drag", "scroll"
     id triggerValue = rowDict[kMFRemapsKeyTrigger];
     if ([triggerValue isKindOfClass:NSDictionary.class]) {
         triggerType = @"button";
@@ -349,7 +349,7 @@ static NSAttributedString *getShortcutString(NSDictionary *effectDict, BOOL isKe
     NSArray *effectsTable;
     if ([triggerType isEqualToString:@"button"]) {
         /// We determined that trigger value is a dict -> convert to dict
-        NSDictionary *buttonTriggerDict = (NSDictionary *)triggerValue;
+//        NSDictionary *buttonTriggerDict = (NSDictionary *)triggerValue;
         effectsTable = getOneShotEffectsTable(rowDict);
     } else if ([triggerType isEqualToString:@"drag"]) {
         effectsTable = getDragEffectsTable();
@@ -501,10 +501,10 @@ static NSString *effectNameForRowDict(NSDictionary * _Nonnull rowDict) {
             
             if (keyCodeValid) {
                 newEffectDict = @{
-                kMFActionDictKeyType: kMFActionDictTypeKeyboardShortcut,
-                kMFActionDictKeyKeyboardShortcutVariantKeycode: @(keyCode),
-                kMFActionDictKeyKeyboardShortcutVariantModifierFlags: @(flags),
-            };
+                    kMFActionDictKeyType: kMFActionDictTypeKeyboardShortcut,
+                    kMFActionDictKeyKeyboardShortcutVariantKeycode: @(keyCode),
+                    kMFActionDictKeyKeyboardShortcutVariantModifierFlags: @(flags),
+                };
             } else {
                 newEffectDict = @{
                     kMFActionDictKeyType: kMFActionDictTypeSystemDefinedEvent,
@@ -552,6 +552,7 @@ static NSString *effectNameForRowDict(NSDictionary * _Nonnull rowDict) {
         }
         
         /// Disable popupbutton, if tableView is disabled
+        ///     TODO: This shouldn't be necessary in MMF3. Remove code for disabling the tableView
         popupButton.enabled = tableViewEnabled;
        
     }

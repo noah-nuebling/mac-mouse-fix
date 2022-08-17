@@ -78,6 +78,8 @@
     self.dataModel = store;
 }
 
+#pragma mark React to user input
+
 - (IBAction)handleKeystrokeMenuItemSelected:(id)sender {
     
     /// Find table row for sender
@@ -116,14 +118,15 @@
 - (void)storeEffectsFromUIInDataModel {
     
     /// Set each rows effect content to datamodel
-    NSInteger row = 0; // Index for trueDataModel
-    for (NSInteger rowGrouped = 0; rowGrouped < self.groupedDataModel.count; rowGrouped++) { // rowGrouped is index for groupedDataModel
+    NSInteger row = 0; /// Index for trueDataModel
+    for (NSInteger rowGrouped = 0; rowGrouped < self.groupedDataModel.count; rowGrouped++) { /// rowGrouped is index for groupedDataModel
         
         if ([self.groupedDataModel[rowGrouped] isEqual:RemapTableUtility.buttonGroupRowDict]) {
             continue;
         }
         
         /// Get effect dicts
+        /// Note: We're passing in `self.dataModel[row]` which still contains the old effect. (We're trying to update the datamodel with the new effect). This doesn't really make sense. Does it break anything?
         NSTableCellView *cell = [self.tableView viewAtColumn:1 row:rowGrouped makeIfNecessary:YES];
         if ([cell.identifier isEqual:@"effectCell"]) {
             NSPopUpButton *pb = cell.subviews[0];
@@ -153,13 +156,13 @@
     ///  - Trigger-cell tooltips update to newly chosen effect
     ///  - NSMenus update to remove keyboard shortcuts that are unselected
     ///  It's super inefficient to update everything but computer fast (We should pass this a specific row to update)
-    
+    /// Note: Shouldn't we first update UI and then write the UI to config? Not sure it matters
     [self writeToConfig];
     
     if ([sender isKindOfClass:RemapTableMenuItem.class]) {
         NSTableCellView *host = ((RemapTableMenuItem *)sender).host;
         NSInteger row = [RemapTableUtility rowOfCell:host inTableView:self.tableView];
-        [self.tableView reloadDataForRowIndexes:[NSIndexSet indexSetWithIndex:row] columnIndexes:[NSIndexSet indexSetWithIndexesInRange:NSMakeRange(0, 1)]]; /// Some docs recommended `setNeedsDisplayInRect:` but this seems more robust
+        [self.tableView reloadDataForRowIndexes:[NSIndexSet indexSetWithIndex:row] columnIndexes:[NSIndexSet indexSetWithIndexesInRange:NSMakeRange(0, 2)]]; /// Some docs recommended `setNeedsDisplayInRect:` but this seems more robust
     } else {
         [self.tableView reloadData];
     }
