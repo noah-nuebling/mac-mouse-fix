@@ -6,6 +6,7 @@
 
 ## Memory helpers
 
+- Don't change the keys for NSLocalizedString()! Otherwise all the existing translations will be deleted.
 - Use `bartycrouch update -v` and `bartycrouch lint` from Terminal. These are also executed by a build script.
 - To test layout
     - In build scheme, set argument `-NSConstraintBasedLayoutVisualizeMutuallyExclusiveConstraints YES`

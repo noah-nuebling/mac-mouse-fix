@@ -148,60 +148,6 @@
 /* First draft: Type a Keyboard Shortcut */
 "type-shortcut-prompt" = "";
 
-/* First draft: <Rewind key> */
-"apple-key.backward" = "";
-
-/* First draft: ⇪ */
-"apple-key.capslock" = "";
-
-/* First draft: <Fast-Forward key> */
-"apple-key.forward" = "";
-
-/* First draft: <Emoji Picker key> */
-"apple-key.globe" = "";
-
-/* First draft: <Increase Keyboard Brightness key> */
-"apple-key.light.max" = "";
-
-/* First draft: <Decrease Keyboard Brightness key> */
-"apple-key.light.min" = "";
-
-/* First draft: <Spotlight key> */
-"apple-key.magnifyingglass" = "";
-
-/* First draft: <Dictation key> */
-"apple-key.mic" = "";
-
-/* First draft: <Do Not Disturb key> */
-"apple-key.moon" = "";
-
-/* First draft: <Play or Pause key> */
-"apple-key.playpause" = "";
-
-/* First draft: <Power key> */
-"apple-key.power" = "";
-
-/* First draft: <Mission Control key> */
-"apple-key.rectangle.3.group" = "";
-
-/* First draft: <Mute key> */
-"apple-key.speaker" = "";
-
-/* First draft: <Decrease Volume key> */
-"apple-key.speaker.wave.1" = "";
-
-/* First draft: <Increase Volume key> */
-"apple-key.speaker.wave.3" = "";
-
-/* First draft: <Launchpad key> */
-"apple-key.square.grid.3x2" = "";
-
-/* First draft: <Increase Brightness key> */
-"apple-key.sun.max" = "";
-
-/* First draft: <Decrease Brightness key> */
-"apple-key.sun.min" = "";
-
 /* First draft: Middle Button */
 "button-string.middle" = "";
 
@@ -226,9 +172,6 @@
 /* First draft: the Secondary Mouse Button (also called the Right Mouse Button or Mouse Button 2) */
 "button-string.tool.secondary" = "";
 
-/* First draft: <Key without description> */
-"keyboard-key-without-description" = "";
-
 /* First draft: Command (⌘)- */
 "modifer-key.tool.command" = "";
 
@@ -240,3 +183,60 @@
 
 /* First draft: Shift (⇧)- */
 "modifer-key.tool.shift" = "";
+
+/* First draft: <Rewind key> */
+"apple-key-fallback.backward" = "";
+
+/* First draft: ⇪ */
+"apple-key-fallback.capslock" = "";
+
+/* First draft: <Fast-Forward key> */
+"apple-key-fallback.forward" = "";
+
+/* First draft: <Emoji Picker key> */
+"apple-key-fallback.globe" = "";
+
+/* First draft: <Increase Keyboard Brightness key> */
+"apple-key-fallback.light.max" = "";
+
+/* First draft: <Decrease Keyboard Brightness key> */
+"apple-key-fallback.light.min" = "";
+
+/* First draft: <Spotlight key> */
+"apple-key-fallback.magnifyingglass" = "";
+
+/* First draft: <Dictation key> */
+"apple-key-fallback.mic" = "";
+
+/* First draft: <Do Not Disturb key> */
+"apple-key-fallback.moon" = "";
+
+/* First draft: <Play or Pause key> */
+"apple-key-fallback.playpause" = "";
+
+/* First draft: <Power key> */
+"apple-key-fallback.power" = "";
+
+/* First draft: <Mission Control key> */
+"apple-key-fallback.rectangle.3.group" = "";
+
+/* First draft: <Mute key> */
+"apple-key-fallback.speaker" = "";
+
+/* First draft: <Decrease Volume key> */
+"apple-key-fallback.speaker.wave.1" = "";
+
+/* First draft: <Increase Volume key> */
+"apple-key-fallback.speaker.wave.3" = "";
+
+/* First draft: <Launchpad key> */
+"apple-key-fallback.square.grid.3x2" = "";
+
+/* First draft: <Increase Brightness key> */
+"apple-key-fallback.sun.max" = "";
+
+/* First draft: <Decrease Brightness key> */
+"apple-key-fallback.sun.min" = "";
+
+/* First draft: <Key without description> */
+"apple-key-fallback.unknown-key" = "";

@@ -148,60 +148,6 @@
 /* First draft: Type a Keyboard Shortcut */
 "type-shortcut-prompt" = "Tippe einen Tastatur-Kurzbefehl";
 
-/* First draft: <Rewind key> */
-"apple-key.backward" = "<Rückspultaste>";
-
-/* First draft: ⇪ */
-"apple-key.capslock" = "⇪";
-
-/* First draft: <Fast-Forward key> */
-"apple-key.forward" = "<Vorspultaste>";
-
-/* First draft: <Emoji Picker key> */
-"apple-key.globe" = "<Emoji-Taste>";
-
-/* First draft: <Increase Keyboard Brightness key> */
-"apple-key.light.max" = "<Tastaturhelligkeit erhöhen Taste>";
-
-/* First draft: <Decrease Keyboard Brightness key> */
-"apple-key.light.min" = "<Tastaturhelligkeit verringern Taste>";
-
-/* First draft: <Spotlight key> */
-"apple-key.magnifyingglass" = "<Spotlight Taste>";
-
-/* First draft: <Dictation key> */
-"apple-key.mic" = "<Diktiertaste>";
-
-/* First draft: <Do Not Disturb key> */
-"apple-key.moon" = "<Bitte nicht stören Taste>";
-
-/* First draft: <Play or Pause key> */
-"apple-key.playpause" = "<Abspielen und anhalten Taste>";
-
-/* First draft: <Power key> */
-"apple-key.power" = "<Aus- und Anschalttaste>";
-
-/* First draft: <Mission Control key> */
-"apple-key.rectangle.3.group" = "<Mission Control Taste>";
-
-/* First draft: <Mute key> */
-"apple-key.speaker" = "<Lautlos Taste>";
-
-/* First draft: <Decrease Volume key> */
-"apple-key.speaker.wave.1" = "<Lautstärke verringern Taste>";
-
-/* First draft: <Increase Volume key> */
-"apple-key.speaker.wave.3" = "<Lautstärke erhöhen Taste>";
-
-/* First draft: <Launchpad key> */
-"apple-key.square.grid.3x2" = "<Launchpad Taste>";
-
-/* First draft: <Increase Brightness key> */
-"apple-key.sun.max" = "<Helligkeit erhöhen Taste>";
-
-/* First draft: <Decrease Brightness key> */
-"apple-key.sun.min" = "<Helligkeit verringern Taste>";
-
 /* First draft: Middle Button */
 "button-string.middle" = "Mittlere Taste";
 
@@ -226,9 +172,6 @@
 /* First draft: the Secondary Mouse Button (also called the Right Mouse Button or Mouse Button 2) */
 "button-string.tool.secondary" = "die sekundäre Maustaste (auch genannt die rechte Maustaste oder Maustaste 2)";
 
-/* First draft: <Key without description> */
-"keyboard-key-without-description" = "<Taste ohne Beschreibung>";
-
 /* First draft: Command (⌘) */
 "modifer-key.tool.command" = "Befehlstaste (⌘)";
 
@@ -240,3 +183,60 @@
 
 /* First draft: Shift (⇧) */
 "modifer-key.tool.shift" = "Umschalttaste (⇧)";
+
+/* First draft: <Rewind key> */
+"apple-key-fallback.backward" = "<Rückspultaste>";
+
+/* First draft: ⇪ */
+"apple-key-fallback.capslock" = "<Feststelltaste>";
+
+/* First draft: <Fast-Forward key> */
+"apple-key-fallback.forward" = "<Vorspultaste>";
+
+/* First draft: <Emoji Picker key> */
+"apple-key-fallback.globe" = "<Emojitaste>";
+
+/* First draft: <Increase Keyboard Brightness key> */
+"apple-key-fallback.light.max" = "<Tastaturhelligkeit erhöhen Taste>";
+
+/* First draft: <Decrease Keyboard Brightness key> */
+"apple-key-fallback.light.min" = "<Tastaturhelligkeit verringern Taste>";
+
+/* First draft: <Spotlight key> */
+"apple-key-fallback.magnifyingglass" = "<Spotlight Taste>";
+
+/* First draft: <Dictation key> */
+"apple-key-fallback.mic" = "<Diktiertaste>";
+
+/* First draft: <Do Not Disturb key> */
+"apple-key-fallback.moon" = "<Bitte nicht stören Taste>";
+
+/* First draft: <Play or Pause key> */
+"apple-key-fallback.playpause" = "<Abspielen und anhalten Taste>";
+
+/* First draft: <Power key> */
+"apple-key-fallback.power" = "<An- und Ausschalttaste>";
+
+/* First draft: <Mission Control key> */
+"apple-key-fallback.rectangle.3.group" = "<Mission Control Taste>";
+
+/* First draft: <Mute key> */
+"apple-key-fallback.speaker" = "<Lautlos Taste>";
+
+/* First draft: <Decrease Volume key> */
+"apple-key-fallback.speaker.wave.1" = "<Lautstärke verringern Taste>";
+
+/* First draft: <Increase Volume key> */
+"apple-key-fallback.speaker.wave.3" = "<Lautstärke erhöhen Taste>";
+
+/* First draft: <Launchpad key> */
+"apple-key-fallback.square.grid.3x2" = "<Launchpad Taste>";
+
+/* First draft: <Increase Brightness key> */
+"apple-key-fallback.sun.max" = "<Helligkeit erhöhen Taste>";
+
+/* First draft: <Decrease Brightness key> */
+"apple-key-fallback.sun.min" = "<Helligkeit verringern Taste>";
+
+/* First draft: <Key without description> */
+"apple-key-fallback.unknown-key" = "<Taste ohne Beschreibung>";
