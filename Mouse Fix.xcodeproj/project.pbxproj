@@ -50,6 +50,7 @@
 		4F79A83626051E4A00076A7E /* ToastNotification.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F79A83526051E4A00076A7E /* ToastNotification.m */; };
 		4F79C2EA260976950067B381 /* RemapTableTranslator.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F79C2E9260976950067B381 /* RemapTableTranslator.m */; };
 		4F7AB0552606698A0008055E /* UIStrings.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F7AB0542606698A0008055E /* UIStrings.m */; };
+		4F7D97A328AEB04D00C11E79 /* Westfalia-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 4F7D97A228AEB04D00C11E79 /* Westfalia-Regular.otf */; };
 		4F7F47C528A5A01600290BBD /* ReactiveConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FDC127528A2C6160076972E /* ReactiveConfig.swift */; };
 		4F7F47CB28A5A03100290BBD /* ReactiveConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FDC127528A2C6160076972E /* ReactiveConfig.swift */; };
 		4F7F47CE28A5B5EC00290BBD /* ReactiveSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 4F7F47CD28A5B5EC00290BBD /* ReactiveSwift */; };
@@ -459,6 +460,8 @@
 		4F79C2E9260976950067B381 /* RemapTableTranslator.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RemapTableTranslator.m; sourceTree = "<group>"; };
 		4F7AB0532606698A0008055E /* UIStrings.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UIStrings.h; sourceTree = "<group>"; };
 		4F7AB0542606698A0008055E /* UIStrings.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = UIStrings.m; sourceTree = "<group>"; };
+		4F7D97A228AEB04D00C11E79 /* Westfalia-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Westfalia-Regular.otf"; sourceTree = "<group>"; };
+		4F7D97A428AEB14A00C11E79 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		4F7F47D228A6EFC800290BBD /* SharedAssets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = SharedAssets.xcassets; sourceTree = "<group>"; };
 		4F7F47D628A6F00300290BBD /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		4F854D7A2789146900B46E9D /* NSMenu+NSMenu_Additions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSMenu+NSMenu_Additions.h"; sourceTree = "<group>"; };
@@ -1665,6 +1668,8 @@
 		4FF665D425F2C92700689B77 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				4F7D97A428AEB14A00C11E79 /* README.md */,
+				4F7D97A228AEB04D00C11E79 /* Westfalia-Regular.otf */,
 				4FF665D525F2C92700689B77 /* Assets.xcassets */,
 				4F854D7D2789266A00B46E9D /* sfsymbols.xcassets */,
 			);
@@ -2293,6 +2298,7 @@
 				4F6B02C028AD9E4400B5BA93 /* Localizable.stringsdict in Resources */,
 				4F909D3328A0C3D2009349A2 /* Animating Constraints.md in Resources */,
 				4FA1FD7F28A847BF00D1C8EE /* DeletableTableCellView.xib in Resources */,
+				4F7D97A328AEB04D00C11E79 /* Westfalia-Regular.otf in Resources */,
 				4FF665EF25F2C92700689B77 /* ScrollOverridePanel.xib in Resources */,
 				4F909D2F28A0C3D2009349A2 /* MyTitlebarAccessoryViewController.xib in Resources */,
 				4F909D3A28A0C3D2009349A2 /* Localization How To.md in Resources */,
