@@ -261,3 +261,9 @@
 
 /* Class = "NSTextFieldCell"; title = "Scroll Horizontally"; ObjectID = "6Nj-Ed-W5T"; Note = "Scrolling > Keyboard Modifiers > Scroll Horizontally Label"; */
 "6Nj-Ed-W5T.title" = "Horizontal scrollen";
+
+/* Class = "NSTextFieldCell"; title = "Check it out on GitHub"; ObjectID = "5yb-g8-Kcg"; */
+"5yb-g8-Kcg.title" = "Schau dir das GitHub an";
+
+/* Class = "NSTextFieldCell"; title = "Check it out on GitHub"; ObjectID = "Qim-mT-9oS"; */
+"Qim-mT-9oS.title" = ";jkf;alj;ladjsf;";

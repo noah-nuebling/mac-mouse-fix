@@ -110,10 +110,10 @@
     
     /// Early return
     if (args.count == 0) return format;
-    
-    
+    if ([format.string isEqual:@""]) return format;
     
     /// Get mutable copy
+    ///     On Ventura Beta, `format.mutableCopy` returns creates unreadable data, if format is an empty string.
     NSMutableAttributedString *mutableFormat = format.mutableCopy;
     
     /// Loop
@@ -121,7 +121,8 @@
     while (true) {
         
         /// Update replace range
-        NSRange replaceRange = [mutableFormat.string localizedStandardRangeOfString:@"%@"]; /// Not sure if the localized is necessary here?
+        ///     Not sure if the localized is necessary/good here?
+        NSRange replaceRange = [mutableFormat.string localizedStandardRangeOfString:@"%@"];
         if (replaceRange.location == NSNotFound) break;
         
         /// Replace

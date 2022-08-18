@@ -1604,21 +1604,110 @@ System Preferences &gt; Mouse &gt; Tracking speed </string>
         <scene sceneID="3NB-Tm-GfZ">
             <objects>
                 <viewController title="About" id="buH-zX-xXu" userLabel="About View Controller" sceneMemberID="viewController">
-                    <view key="view" misplaced="YES" id="ajM-sr-oMv">
-                        <rect key="frame" x="0.0" y="0.0" width="410" height="456"/>
-                        <autoresizingMask key="autoresizingMask"/>
+                    <view key="view" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ajM-sr-oMv">
+                        <rect key="frame" x="0.0" y="0.0" width="384" height="90"/>
                         <subviews>
                             <stackView distribution="fill" orientation="vertical" alignment="leading" horizontalStackHuggingPriority="999" verticalStackHuggingPriority="249.99998474121094" horizontalHuggingPriority="999" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ugH-B2-Fh0" userLabel="Master Stack" customClass="CollapsingStackView" customModule="Mac_Mouse_Fix" customModuleProvider="target">
-                                <rect key="frame" x="30" y="20" width="0.0" height="416"/>
+                                <rect key="frame" x="30" y="20" width="324" height="50"/>
+                                <subviews>
+                                    <stackView distribution="fillEqually" orientation="horizontal" alignment="centerY" horizontalStackHuggingPriority="1000" verticalStackHuggingPriority="1000" horizontalHuggingPriority="500" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="IWI-9f-fef">
+                                        <rect key="frame" x="0.0" y="0.0" width="324" height="50"/>
+                                        <subviews>
+                                            <customView horizontalHuggingPriority="500" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="22V-s2-cbh" userLabel="Link Cell">
+                                                <rect key="frame" x="0.0" y="0.0" width="158" height="50"/>
+                                                <subviews>
+                                                    <imageView horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="qKl-We-pTD">
+                                                        <rect key="frame" x="0.0" y="18.5" width="15" height="14"/>
+                                                        <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="arrow.triangle.branch" catalog="system" id="a3K-g3-5Cx"/>
+                                                        <color key="contentTintColor" name="linkColor" catalog="System" colorSpace="catalog"/>
+                                                    </imageView>
+                                                    <textField horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="upZ-gK-UV4" customClass="Hyperlink">
+                                                        <rect key="frame" x="18" y="17" width="142" height="16"/>
+                                                        <textFieldCell key="cell" alignment="right" title="Check it out on GitHub" id="5yb-g8-Kcg">
+                                                            <font key="font" metaFont="system"/>
+                                                            <color key="textColor" name="linkColor" catalog="System" colorSpace="catalog"/>
+                                                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                                        </textFieldCell>
+                                                        <userDefinedRuntimeAttributes>
+                                                            <userDefinedRuntimeAttribute type="string" keyPath="href" value="https://github.com/noah-nuebling/mac-mouse-fix"/>
+                                                            <userDefinedRuntimeAttribute type="number" keyPath="rMrgn">
+                                                                <integer key="value" value="25"/>
+                                                            </userDefinedRuntimeAttribute>
+                                                        </userDefinedRuntimeAttributes>
+                                                    </textField>
+                                                </subviews>
+                                                <constraints>
+                                                    <constraint firstAttribute="bottom" secondItem="qKl-We-pTD" secondAttribute="bottom" priority="999" id="4Kh-6C-uHD"/>
+                                                    <constraint firstItem="upZ-gK-UV4" firstAttribute="top" secondItem="22V-s2-cbh" secondAttribute="top" priority="999" id="AOf-d6-sVf"/>
+                                                    <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="qKl-We-pTD" secondAttribute="bottom" id="Dch-mq-dC2"/>
+                                                    <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="upZ-gK-UV4" secondAttribute="bottom" id="Fc4-EM-n5E"/>
+                                                    <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="upZ-gK-UV4" secondAttribute="trailing" id="Hnh-fr-C2f"/>
+                                                    <constraint firstAttribute="bottom" secondItem="upZ-gK-UV4" secondAttribute="bottom" priority="999" id="U1n-uS-pGN"/>
+                                                    <constraint firstItem="upZ-gK-UV4" firstAttribute="centerY" secondItem="22V-s2-cbh" secondAttribute="centerY" id="adN-tf-V77"/>
+                                                    <constraint firstItem="qKl-We-pTD" firstAttribute="leading" secondItem="22V-s2-cbh" secondAttribute="leading" id="bcr-kC-4i8"/>
+                                                    <constraint firstItem="qKl-We-pTD" firstAttribute="centerY" secondItem="22V-s2-cbh" secondAttribute="centerY" id="cyY-en-UhE"/>
+                                                    <constraint firstItem="upZ-gK-UV4" firstAttribute="leading" secondItem="qKl-We-pTD" secondAttribute="trailing" constant="5" id="qfq-Vl-O6U"/>
+                                                    <constraint firstItem="upZ-gK-UV4" firstAttribute="top" relation="greaterThanOrEqual" secondItem="22V-s2-cbh" secondAttribute="top" id="weg-oA-wyi"/>
+                                                </constraints>
+                                            </customView>
+                                            <customView horizontalHuggingPriority="500" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="Vay-7n-tSF" userLabel="Link Cell">
+                                                <rect key="frame" x="166" y="0.0" width="158" height="50"/>
+                                                <subviews>
+                                                    <imageView horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="KFr-YA-n8P">
+                                                        <rect key="frame" x="0.0" y="18.5" width="15" height="14"/>
+                                                        <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="arrow.triangle.branch" catalog="system" id="ofa-ar-lh0"/>
+                                                        <color key="contentTintColor" name="linkColor" catalog="System" colorSpace="catalog"/>
+                                                    </imageView>
+                                                    <textField horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="nxO-zI-2RI" customClass="Hyperlink">
+                                                        <rect key="frame" x="18" y="17" width="142" height="16"/>
+                                                        <textFieldCell key="cell" alignment="right" title="Check it out on GitHub" id="Qim-mT-9oS">
+                                                            <font key="font" metaFont="system"/>
+                                                            <color key="textColor" name="linkColor" catalog="System" colorSpace="catalog"/>
+                                                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                                        </textFieldCell>
+                                                        <userDefinedRuntimeAttributes>
+                                                            <userDefinedRuntimeAttribute type="string" keyPath="href" value="https://github.com/noah-nuebling/mac-mouse-fix"/>
+                                                            <userDefinedRuntimeAttribute type="number" keyPath="rMrgn">
+                                                                <integer key="value" value="25"/>
+                                                            </userDefinedRuntimeAttribute>
+                                                        </userDefinedRuntimeAttributes>
+                                                    </textField>
+                                                </subviews>
+                                                <constraints>
+                                                    <constraint firstAttribute="bottom" secondItem="nxO-zI-2RI" secondAttribute="bottom" priority="999" id="2bk-oc-5ca"/>
+                                                    <constraint firstItem="nxO-zI-2RI" firstAttribute="top" secondItem="Vay-7n-tSF" secondAttribute="top" priority="999" id="Hbn-BK-jOR"/>
+                                                    <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="KFr-YA-n8P" secondAttribute="bottom" id="HeE-Ml-QJC"/>
+                                                    <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="nxO-zI-2RI" secondAttribute="trailing" id="MzD-7h-3fH"/>
+                                                    <constraint firstItem="KFr-YA-n8P" firstAttribute="centerY" secondItem="Vay-7n-tSF" secondAttribute="centerY" id="S1D-bz-eGc"/>
+                                                    <constraint firstItem="nxO-zI-2RI" firstAttribute="top" relation="greaterThanOrEqual" secondItem="Vay-7n-tSF" secondAttribute="top" id="XKN-V5-RYo"/>
+                                                    <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="nxO-zI-2RI" secondAttribute="bottom" id="mW2-lV-9PR"/>
+                                                    <constraint firstItem="KFr-YA-n8P" firstAttribute="leading" secondItem="Vay-7n-tSF" secondAttribute="leading" id="rO2-dD-9Pq"/>
+                                                    <constraint firstItem="nxO-zI-2RI" firstAttribute="leading" secondItem="KFr-YA-n8P" secondAttribute="trailing" constant="5" id="ru9-vj-djS"/>
+                                                    <constraint firstItem="nxO-zI-2RI" firstAttribute="centerY" secondItem="Vay-7n-tSF" secondAttribute="centerY" id="tTI-dg-RyH"/>
+                                                    <constraint firstAttribute="bottom" secondItem="KFr-YA-n8P" secondAttribute="bottom" priority="999" id="xst-mC-Bc4"/>
+                                                </constraints>
+                                            </customView>
+                                        </subviews>
+                                        <visibilityPriorities>
+                                            <integer value="1000"/>
+                                            <integer value="1000"/>
+                                        </visibilityPriorities>
+                                        <customSpacing>
+                                            <real value="3.4028234663852886e+38"/>
+                                            <real value="3.4028234663852886e+38"/>
+                                        </customSpacing>
+                                    </stackView>
+                                </subviews>
+                                <visibilityPriorities>
+                                    <integer value="1000"/>
+                                </visibilityPriorities>
+                                <customSpacing>
+                                    <real value="3.4028234663852886e+38"/>
+                                </customSpacing>
                             </stackView>
-                            <customView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="i8B-ur-x37">
-                                <rect key="frame" x="123" y="180" width="163" height="96"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                            </customView>
                         </subviews>
                         <constraints>
                             <constraint firstAttribute="bottom" secondItem="ugH-B2-Fh0" secondAttribute="bottom" constant="20" id="AEx-na-9sW"/>
-                            <constraint firstItem="ugH-B2-Fh0" firstAttribute="centerX" secondItem="ajM-sr-oMv" secondAttribute="centerX" id="H4Q-sg-igP"/>
                             <constraint firstItem="ugH-B2-Fh0" firstAttribute="leading" secondItem="ajM-sr-oMv" secondAttribute="leading" constant="30" id="rG6-ZS-xnQ"/>
                             <constraint firstItem="ugH-B2-Fh0" firstAttribute="top" secondItem="ajM-sr-oMv" secondAttribute="top" constant="20" id="w1v-QC-OH8"/>
                             <constraint firstAttribute="trailing" secondItem="ugH-B2-Fh0" secondAttribute="trailing" constant="30" id="xNG-m7-QyK"/>
@@ -1630,7 +1719,7 @@ System Preferences &gt; Mouse &gt; Tracking speed </string>
                 </viewController>
                 <customObject id="xN7-0P-7Zw" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1116" y="1605.5"/>
+            <point key="canvasLocation" x="1116" y="1605"/>
         </scene>
         <!--<Initial Tab Controller>-->
         <scene sceneID="R82-b2-ukC">
@@ -1658,6 +1747,7 @@ System Preferences &gt; Mouse &gt; Tracking speed </string>
         </scene>
     </scenes>
     <resources>
+        <image name="arrow.triangle.branch" catalog="system" width="15" height="14"/>
         <image name="arrow.up.and.down" catalog="system" width="11" height="15"/>
         <image name="arrow.uturn.backward.circle.fill" catalog="system" width="15" height="15"/>
         <image name="cursorarrow" catalog="system" width="11" height="16"/>

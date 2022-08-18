@@ -645,9 +645,8 @@ static NSString *effectNameForRowDict(NSDictionary * _Nonnull rowDict) {
     
     /// Build main trigger string
     ///     (Naming is confusing since we call three different things the "trigger string")
-    ///     Also we
     
-    NSAttributedString *tr;
+    NSAttributedString *tr = nil;
     
     if ([triggerType isEqual: @"_button"]) {
             
@@ -729,6 +728,10 @@ static NSString *effectNameForRowDict(NSDictionary * _Nonnull rowDict) {
         tr = [tr attributedStringBySettingSemiBoldColorForSubstring:dragParticle];
         tr = [tr attributedStringBySettingSemiBoldColorForSubstring:scrollParticle];
     }
+    
+    /// Validate
+    
+    NSAssert(![tr.string isEqual:@""], @"Trigger string is empty. This is probably because there are missing translations. Translate strings starting with trigger. to fix this.");
     
     ///
     /// Build button modifier string
