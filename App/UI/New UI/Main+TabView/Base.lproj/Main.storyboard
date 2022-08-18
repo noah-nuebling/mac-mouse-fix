@@ -498,7 +498,7 @@
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <subviews>
                                                 <imageView identifier="PlusIcon" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Jod-JU-J5j">
-                                                    <rect key="frame" x="238" y="38.5" width="60" height="66.5"/>
+                                                    <rect key="frame" x="237" y="38.5" width="60" height="66.5"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                                     <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyUpOrDown" image="plus" catalog="system" id="EyU-is-YRF"/>
                                                     <color key="contentTintColor" name="systemGrayColor" catalog="System" colorSpace="catalog"/>
@@ -560,7 +560,7 @@
                                                             <tableColumnResizingMask key="resizingMask" resizeWithTable="YES"/>
                                                             <prototypeCellViews>
                                                                 <tableCellView identifier="triggerCell" horizontalHuggingPriority="1000" verticalHuggingPriority="750" verticalCompressionResistancePriority="1000" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="nsw-iK-CJt" userLabel="TriggerCell" customClass="RemapTableCellView" customModule="Mac_Mouse_Fix" customModuleProvider="target">
-                                                                    <rect key="frame" x="8" y="0.0" width="288" height="39"/>
+                                                                    <rect key="frame" x="8" y="0.0" width="287" height="39"/>
                                                                     <subviews>
                                                                         <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" horizontalCompressionResistancePriority="999" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="QCK-nA-0gO">
                                                                             <rect key="frame" x="22" y="12" width="266" height="16"/>
@@ -596,7 +596,7 @@
                                                                     </connections>
                                                                 </tableCellView>
                                                                 <tableCellView identifier="buttonGroupCell" id="pxf-x1-gL5" userLabel="ButtonGroupCell">
-                                                                    <rect key="frame" x="8" y="39" width="288" height="22"/>
+                                                                    <rect key="frame" x="8" y="39" width="287" height="22"/>
                                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                                     <subviews>
                                                                         <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="AHZ-Kd-4Xf">
@@ -1604,7 +1604,7 @@ System Preferences &gt; Mouse &gt; Tracking speed </string>
         <!--About View Controller-->
         <scene sceneID="3NB-Tm-GfZ">
             <objects>
-                <viewController title="About" id="buH-zX-xXu" userLabel="About View Controller" sceneMemberID="viewController">
+                <viewController title="About" id="buH-zX-xXu" userLabel="About View Controller" customClass="AboutTabController" customModule="Mac_Mouse_Fix" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ajM-sr-oMv" userLabel="ContentView">
                         <rect key="frame" x="0.0" y="0.0" width="2258" height="567"/>
                         <subviews>
@@ -1698,7 +1698,7 @@ System Preferences &gt; Mouse &gt; Tracking speed </string>
                                                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                         </textFieldCell>
                                                         <userDefinedRuntimeAttributes>
-                                                            <userDefinedRuntimeAttribute type="string" keyPath="href" value="https://github.com/noah-nuebling/mac-mouse-fix"/>
+                                                            <userDefinedRuntimeAttribute type="string" keyPath="href" value="https://noah-nuebling.github.io/mac-mouse-fix-feedback-assistant/?type=bug-report"/>
                                                             <userDefinedRuntimeAttribute type="number" keyPath="leftPadding">
                                                                 <integer key="value" value="30"/>
                                                             </userDefinedRuntimeAttribute>
@@ -1805,7 +1805,7 @@ System Preferences &gt; Mouse &gt; Tracking speed </string>
                                                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                         </textFieldCell>
                                                         <userDefinedRuntimeAttributes>
-                                                            <userDefinedRuntimeAttribute type="string" keyPath="href" value="https://github.com/noah-nuebling/mac-mouse-fix"/>
+                                                            <userDefinedRuntimeAttribute type="string" keyPath="href" value="https://noah-nuebling.github.io/mac-mouse-fix-feedback-assistant/?type=feature-request"/>
                                                             <userDefinedRuntimeAttribute type="number" keyPath="leftPadding">
                                                                 <integer key="value" value="30"/>
                                                             </userDefinedRuntimeAttribute>
@@ -1849,7 +1849,7 @@ System Preferences &gt; Mouse &gt; Tracking speed </string>
                                                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                         </textFieldCell>
                                                         <userDefinedRuntimeAttributes>
-                                                            <userDefinedRuntimeAttribute type="string" keyPath="href" value="https://github.com/noah-nuebling/mac-mouse-fix"/>
+                                                            <userDefinedRuntimeAttribute type="string" keyPath="href" value="https://mousefix.org/"/>
                                                             <userDefinedRuntimeAttribute type="number" keyPath="leftPadding">
                                                                 <integer key="value" value="30"/>
                                                             </userDefinedRuntimeAttribute>
@@ -1912,7 +1912,7 @@ System Preferences &gt; Mouse &gt; Tracking speed </string>
                                                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                         </textFieldCell>
                                                         <userDefinedRuntimeAttributes>
-                                                            <userDefinedRuntimeAttribute type="string" keyPath="href" value="https://github.com/noah-nuebling/mac-mouse-fix"/>
+                                                            <userDefinedRuntimeAttribute type="string" keyPath="href" value="mailto:noah.n.public@gmail.com"/>
                                                             <userDefinedRuntimeAttribute type="number" keyPath="leftPadding">
                                                                 <integer key="value" value="30"/>
                                                             </userDefinedRuntimeAttribute>
@@ -1956,7 +1956,7 @@ System Preferences &gt; Mouse &gt; Tracking speed </string>
                                                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                         </textFieldCell>
                                                         <userDefinedRuntimeAttributes>
-                                                            <userDefinedRuntimeAttribute type="string" keyPath="href" value="https://github.com/noah-nuebling/mac-mouse-fix"/>
+                                                            <userDefinedRuntimeAttribute type="string" keyPath="href" value="https://github.com/noah-nuebling/mac-mouse-fix/discussions/categories/guides"/>
                                                             <userDefinedRuntimeAttribute type="number" keyPath="leftPadding">
                                                                 <integer key="value" value="30"/>
                                                             </userDefinedRuntimeAttribute>
@@ -2033,21 +2033,12 @@ System Preferences &gt; Mouse &gt; Tracking speed </string>
                                                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                         </textFieldCell>
                                                         <userDefinedRuntimeAttributes>
-                                                            <userDefinedRuntimeAttribute type="string" keyPath="href" value="https://github.com/noah-nuebling/mac-mouse-fix"/>
+                                                            <userDefinedRuntimeAttribute type="string" keyPath="href" value="https://google.com"/>
                                                             <userDefinedRuntimeAttribute type="number" keyPath="leftPadding">
                                                                 <integer key="value" value="30"/>
                                                             </userDefinedRuntimeAttribute>
                                                         </userDefinedRuntimeAttributes>
                                                     </textField>
-                                                    <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="eNG-91-lw0">
-                                                        <rect key="frame" x="638" y="9" width="159" height="32"/>
-                                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                                        <buttonCell key="cell" type="push" title="BUY ME A MILKSHAKE :)" bezelStyle="rounded" image="LittleMilkshake" imagePosition="leading" alignment="left" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="m7N-Rl-AU6">
-                                                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                                            <font key="font" size="13" name="Westfalia-Regular"/>
-                                                        </buttonCell>
-                                                        <color key="bezelColor" name="systemOrangeColor" catalog="System" colorSpace="catalog"/>
-                                                    </button>
                                                 </subviews>
                                                 <constraints>
                                                     <constraint firstItem="gmk-QZ-E3o" firstAttribute="centerY" secondItem="xa1-b3-cbf" secondAttribute="centerY" id="4kG-gI-nHw"/>
@@ -2089,7 +2080,7 @@ System Preferences &gt; Mouse &gt; Tracking speed </string>
                                                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                         </textFieldCell>
                                                         <userDefinedRuntimeAttributes>
-                                                            <userDefinedRuntimeAttribute type="string" keyPath="href" value="https://github.com/noah-nuebling/mac-mouse-fix"/>
+                                                            <userDefinedRuntimeAttribute type="string" keyPath="href" value="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&amp;hosted_button_id=ARSTVR6KFB524&amp;source=url&amp;lc=en_US"/>
                                                             <userDefinedRuntimeAttribute type="number" keyPath="leftPadding">
                                                                 <integer key="value" value="30"/>
                                                             </userDefinedRuntimeAttribute>
@@ -2161,6 +2152,9 @@ System Preferences &gt; Mouse &gt; Tracking speed </string>
                     <attributedString key="userComments">
                         <fragment content="About Tab Title"/>
                     </attributedString>
+                    <connections>
+                        <outlet property="versionField" destination="7TJ-vr-aAK" id="Jw9-cl-KD9"/>
+                    </connections>
                 </viewController>
                 <customObject id="xN7-0P-7Zw" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -2193,7 +2187,6 @@ System Preferences &gt; Mouse &gt; Tracking speed </string>
     </scenes>
     <resources>
         <image name="AppIconRoundFromHelper-deleteThis" width="128" height="128"/>
-        <image name="LittleMilkshake" width="70" height="86"/>
         <image name="LittleMilkshakeOutlines" width="116" height="128"/>
         <image name="arrow.triangle.branch" catalog="system" width="20" height="18"/>
         <image name="arrow.up.and.down" catalog="system" width="11" height="15"/>

@@ -51,6 +51,7 @@
 		4F79C2EA260976950067B381 /* RemapTableTranslator.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F79C2E9260976950067B381 /* RemapTableTranslator.m */; };
 		4F7AB0552606698A0008055E /* UIStrings.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F7AB0542606698A0008055E /* UIStrings.m */; };
 		4F7D97A328AEB04D00C11E79 /* Westfalia-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 4F7D97A228AEB04D00C11E79 /* Westfalia-Regular.otf */; };
+		4F7D97A628AEB2EE00C11E79 /* AboutTabController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F7D97A528AEB2EE00C11E79 /* AboutTabController.swift */; };
 		4F7F47C528A5A01600290BBD /* ReactiveConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FDC127528A2C6160076972E /* ReactiveConfig.swift */; };
 		4F7F47CB28A5A03100290BBD /* ReactiveConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FDC127528A2C6160076972E /* ReactiveConfig.swift */; };
 		4F7F47CE28A5B5EC00290BBD /* ReactiveSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 4F7F47CD28A5B5EC00290BBD /* ReactiveSwift */; };
@@ -462,6 +463,7 @@
 		4F7AB0542606698A0008055E /* UIStrings.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = UIStrings.m; sourceTree = "<group>"; };
 		4F7D97A228AEB04D00C11E79 /* Westfalia-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Westfalia-Regular.otf"; sourceTree = "<group>"; };
 		4F7D97A428AEB14A00C11E79 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		4F7D97A528AEB2EE00C11E79 /* AboutTabController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutTabController.swift; sourceTree = "<group>"; };
 		4F7F47D228A6EFC800290BBD /* SharedAssets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = SharedAssets.xcassets; sourceTree = "<group>"; };
 		4F7F47D628A6F00300290BBD /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		4F854D7A2789146900B46E9D /* NSMenu+NSMenu_Additions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSMenu+NSMenu_Additions.h"; sourceTree = "<group>"; };
@@ -1151,6 +1153,7 @@
 				4F6F67A128A8188000C6C40F /* ButtonTab */,
 				4F909CF728A0C3D2009349A2 /* ScrollTabController.swift */,
 				4F909CF828A0C3D2009349A2 /* PointerTabController.swift */,
+				4F7D97A528AEB2EE00C11E79 /* AboutTabController.swift */,
 			);
 			path = Tabs;
 			sourceTree = "<group>";
@@ -2565,6 +2568,7 @@
 				4F3E067E26A2F97D000C9E06 /* URLMenuItem.m in Sources */,
 				4FA40D0128A0CCDF00499E53 /* PolyFitObjC.m in Sources */,
 				4FF6660225F2C92700689B77 /* ClickableImageView.m in Sources */,
+				4F7D97A628AEB2EE00C11E79 /* AboutTabController.swift in Sources */,
 				4F79A81C2604317200076A7E /* ToastNotificationController.m in Sources */,
 				4F909D2E28A0C3D2009349A2 /* NSControl+Extensions.swift in Sources */,
 				4F39BC3B263AF2B000FDF692 /* SparkleUpdaterController.m in Sources */,
