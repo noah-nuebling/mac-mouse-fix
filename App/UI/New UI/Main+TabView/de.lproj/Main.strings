@@ -277,8 +277,8 @@
 /* Class = "NSTextFieldCell"; title = "Acknoledgements"; ObjectID = "8pi-FV-zYE"; */
 "8pi-FV-zYE.title" = "Anerkennungen";
 
-/* Class = "NSTextFieldCell"; title = "BUY ME A MILKSHAKE :)"; ObjectID = "TrI-uu-DEN"; */
-"TrI-uu-DEN.title" = "KAUF MIR NEN MILCHSHAKE :)";
+/* Class = "NSTextFieldCell"; title = "Buy me a Milkshake :)"; ObjectID = "TrI-uu-DEN"; */
+"TrI-uu-DEN.title" = "Kauf mir nen Milchshake :)"; /// "KAUF MIR NEN MILCHSHAKE :)";
 
 /* Class = "NSTextFieldCell"; title = "Send me an Email"; ObjectID = "QaW-cc-uzc"; */
 "QaW-cc-uzc.title" = "Sende mir eine Email";

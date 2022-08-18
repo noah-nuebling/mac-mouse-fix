@@ -2073,9 +2073,9 @@ System Preferences &gt; Mouse &gt; Tracking speed </string>
                                                         </userDefinedRuntimeAttributes>
                                                     </imageView>
                                                     <textField horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="X0k-mF-gia" customClass="Hyperlink">
-                                                        <rect key="frame" x="28" y="16" width="109" height="15"/>
-                                                        <textFieldCell key="cell" alignment="left" title="BUY ME A MILKSHAKE :)" usesSingleLineMode="YES" id="TrI-uu-DEN">
-                                                            <font key="font" size="13" name="Westfalia-Regular"/>
+                                                        <rect key="frame" x="28" y="17" width="136" height="16"/>
+                                                        <textFieldCell key="cell" alignment="left" title="Buy me a Milkshake :)" usesSingleLineMode="YES" id="TrI-uu-DEN">
+                                                            <font key="font" metaFont="system"/>
                                                             <color key="textColor" name="linkColor" catalog="System" colorSpace="catalog"/>
                                                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                         </textFieldCell>
@@ -2090,7 +2090,7 @@ System Preferences &gt; Mouse &gt; Tracking speed </string>
                                                 <constraints>
                                                     <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="X0k-mF-gia" secondAttribute="bottom" id="7kL-hU-kWo"/>
                                                     <constraint firstItem="dnN-4Q-oW6" firstAttribute="centerY" secondItem="15g-eT-Sq8" secondAttribute="centerY" id="B33-wt-1Sm"/>
-                                                    <constraint firstItem="X0k-mF-gia" firstAttribute="centerY" secondItem="15g-eT-Sq8" secondAttribute="centerY" constant="2" id="CRa-71-OBn"/>
+                                                    <constraint firstItem="X0k-mF-gia" firstAttribute="centerY" secondItem="15g-eT-Sq8" secondAttribute="centerY" id="CRa-71-OBn"/>
                                                     <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="X0k-mF-gia" secondAttribute="trailing" id="Efz-BV-Dev"/>
                                                     <constraint firstAttribute="trailing" secondItem="X0k-mF-gia" secondAttribute="trailing" priority="999" id="IP4-Pd-8tU"/>
                                                     <constraint firstItem="X0k-mF-gia" firstAttribute="top" relation="greaterThanOrEqual" secondItem="15g-eT-Sq8" secondAttribute="top" id="JLM-xY-v0L"/>
