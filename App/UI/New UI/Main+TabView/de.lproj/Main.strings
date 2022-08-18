@@ -277,8 +277,8 @@
 /* Class = "NSTextFieldCell"; title = "Acknoledgements"; ObjectID = "8pi-FV-zYE"; */
 "8pi-FV-zYE.title" = "Anerkennungen";
 
-/* Class = "NSTextFieldCell"; title = "Buy me a Milkshake :)"; ObjectID = "TrI-uu-DEN"; */
-"TrI-uu-DEN.title" = "Kauf mir nen Milchshake :)";
+/* Class = "NSTextFieldCell"; title = "BUY ME A MILKSHAKE :)"; ObjectID = "TrI-uu-DEN"; */
+"TrI-uu-DEN.title" = "KAUF MIR NEN MILCHSHAKE :)";
 
 /* Class = "NSTextFieldCell"; title = "Send me an Email"; ObjectID = "QaW-cc-uzc"; */
 "QaW-cc-uzc.title" = "Sende mir eine Email";
@@ -294,3 +294,6 @@
 
 /* Class = "NSTextFieldCell"; title = "Created by Noah Nuebling"; ObjectID = "pMz-a0-1UQ"; */
 "pMz-a0-1UQ.title" = "Gemacht von Noah Nübling";
+
+/* Class = "NSButtonCell"; title = "BUY ME A MILKSHAKE :)"; ObjectID = "m7N-Rl-AU6"; */
+"m7N-Rl-AU6.title" = "";

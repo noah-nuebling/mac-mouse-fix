@@ -635,7 +635,7 @@
                                                             <tableColumnResizingMask key="resizingMask" resizeWithTable="YES"/>
                                                             <prototypeCellViews>
                                                                 <tableCellView identifier="effectCell" translatesAutoresizingMaskIntoConstraints="NO" id="Epw-SW-Ew3" customClass="RemapTableCellView" customModule="Mac_Mouse_Fix" customModuleProvider="target">
-                                                                    <rect key="frame" x="313" y="0.0" width="223" height="39"/>
+                                                                    <rect key="frame" x="312.5" y="0.0" width="223" height="39"/>
                                                                     <subviews>
                                                                         <popUpButton verticalHuggingPriority="750" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="Pw9-ZH-Tb7">
                                                                             <rect key="frame" x="0.0" y="6" width="224" height="25"/>
@@ -663,7 +663,7 @@
                                                                     </constraints>
                                                                 </tableCellView>
                                                                 <tableCellView identifier="keyCaptureCell" translatesAutoresizingMaskIntoConstraints="NO" id="MzR-b1-853" customClass="RemapTableCellView" customModule="Mac_Mouse_Fix" customModuleProvider="target">
-                                                                    <rect key="frame" x="313" y="39" width="220" height="39"/>
+                                                                    <rect key="frame" x="312.5" y="39" width="220" height="39"/>
                                                                     <subviews>
                                                                         <button hidden="YES" focusRingType="exterior" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="psy-Jg-KLq">
                                                                             <rect key="frame" x="-4" y="3" width="228" height="32"/>
@@ -2020,7 +2020,7 @@ System Preferences &gt; Mouse &gt; Tracking speed </string>
                                                 <subviews>
                                                     <imageView horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="dMC-Ih-72R">
                                                         <rect key="frame" x="2" y="13.5" width="23" height="25"/>
-                                                        <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" id="vYQ-bb-0Rj">
+                                                        <imageCell key="cell" refusesFirstResponder="YES" alignment="left" id="vYQ-bb-0Rj">
                                                             <imageReference key="image" image="hands.sparkles" catalog="system" symbolScale="large"/>
                                                         </imageCell>
                                                         <color key="contentTintColor" name="linkColor" catalog="System" colorSpace="catalog"/>
@@ -2039,6 +2039,15 @@ System Preferences &gt; Mouse &gt; Tracking speed </string>
                                                             </userDefinedRuntimeAttribute>
                                                         </userDefinedRuntimeAttributes>
                                                     </textField>
+                                                    <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="eNG-91-lw0">
+                                                        <rect key="frame" x="638" y="9" width="159" height="32"/>
+                                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                                        <buttonCell key="cell" type="push" title="BUY ME A MILKSHAKE :)" bezelStyle="rounded" image="LittleMilkshake" imagePosition="leading" alignment="left" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="m7N-Rl-AU6">
+                                                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                                            <font key="font" size="13" name="Westfalia-Regular"/>
+                                                        </buttonCell>
+                                                        <color key="bezelColor" name="systemOrangeColor" catalog="System" colorSpace="catalog"/>
+                                                    </button>
                                                 </subviews>
                                                 <constraints>
                                                     <constraint firstItem="gmk-QZ-E3o" firstAttribute="centerY" secondItem="xa1-b3-cbf" secondAttribute="centerY" id="4kG-gI-nHw"/>
@@ -2061,16 +2070,21 @@ System Preferences &gt; Mouse &gt; Tracking speed </string>
                                                 <rect key="frame" x="1270" y="0.0" width="706" height="50"/>
                                                 <subviews>
                                                     <imageView horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="dnN-4Q-oW6">
-                                                        <rect key="frame" x="3" y="16" width="20" height="20"/>
+                                                        <rect key="frame" x="-45" y="-39" width="116" height="128"/>
                                                         <imageCell key="cell" refusesFirstResponder="YES" alignment="left" id="EPb-wV-EZa">
-                                                            <imageReference key="image" image="smiley" catalog="system" symbolScale="large"/>
+                                                            <imageReference key="image" image="LittleMilkshakeOutlines" symbolScale="large"/>
                                                         </imageCell>
                                                         <color key="contentTintColor" name="linkColor" catalog="System" colorSpace="catalog"/>
+                                                        <userDefinedRuntimeAttributes>
+                                                            <userDefinedRuntimeAttribute type="size" keyPath="image.size">
+                                                                <size key="value" width="25" height="28"/>
+                                                            </userDefinedRuntimeAttribute>
+                                                        </userDefinedRuntimeAttributes>
                                                     </imageView>
                                                     <textField horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="X0k-mF-gia" customClass="Hyperlink">
-                                                        <rect key="frame" x="28" y="17" width="136" height="16"/>
-                                                        <textFieldCell key="cell" alignment="left" title="Buy me a Milkshake :)" usesSingleLineMode="YES" id="TrI-uu-DEN">
-                                                            <font key="font" metaFont="system"/>
+                                                        <rect key="frame" x="28" y="16" width="109" height="15"/>
+                                                        <textFieldCell key="cell" alignment="left" title="BUY ME A MILKSHAKE :)" usesSingleLineMode="YES" id="TrI-uu-DEN">
+                                                            <font key="font" size="13" name="Westfalia-Regular"/>
                                                             <color key="textColor" name="linkColor" catalog="System" colorSpace="catalog"/>
                                                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                         </textFieldCell>
@@ -2085,13 +2099,11 @@ System Preferences &gt; Mouse &gt; Tracking speed </string>
                                                 <constraints>
                                                     <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="X0k-mF-gia" secondAttribute="bottom" id="7kL-hU-kWo"/>
                                                     <constraint firstItem="dnN-4Q-oW6" firstAttribute="centerY" secondItem="15g-eT-Sq8" secondAttribute="centerY" id="B33-wt-1Sm"/>
-                                                    <constraint firstItem="X0k-mF-gia" firstAttribute="centerY" secondItem="15g-eT-Sq8" secondAttribute="centerY" id="CRa-71-OBn"/>
+                                                    <constraint firstItem="X0k-mF-gia" firstAttribute="centerY" secondItem="15g-eT-Sq8" secondAttribute="centerY" constant="2" id="CRa-71-OBn"/>
                                                     <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="X0k-mF-gia" secondAttribute="trailing" id="Efz-BV-Dev"/>
                                                     <constraint firstAttribute="trailing" secondItem="X0k-mF-gia" secondAttribute="trailing" priority="999" id="IP4-Pd-8tU"/>
                                                     <constraint firstItem="X0k-mF-gia" firstAttribute="top" relation="greaterThanOrEqual" secondItem="15g-eT-Sq8" secondAttribute="top" id="JLM-xY-v0L"/>
                                                     <constraint firstAttribute="bottom" secondItem="X0k-mF-gia" secondAttribute="bottom" priority="999" id="ihI-v9-k8o"/>
-                                                    <constraint firstAttribute="bottom" secondItem="dnN-4Q-oW6" secondAttribute="bottom" priority="999" id="jJ5-70-A1e"/>
-                                                    <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="dnN-4Q-oW6" secondAttribute="bottom" id="kV4-hM-ShS"/>
                                                     <constraint firstItem="X0k-mF-gia" firstAttribute="leading" secondItem="15g-eT-Sq8" secondAttribute="leading" constant="30" id="o9P-yb-3pt"/>
                                                     <constraint firstItem="dnN-4Q-oW6" firstAttribute="centerX" secondItem="15g-eT-Sq8" secondAttribute="leading" constant="13" id="tX0-8s-hX9"/>
                                                     <constraint firstItem="X0k-mF-gia" firstAttribute="top" secondItem="15g-eT-Sq8" secondAttribute="top" priority="999" id="wfA-cg-wWj"/>
@@ -2181,6 +2193,8 @@ System Preferences &gt; Mouse &gt; Tracking speed </string>
     </scenes>
     <resources>
         <image name="AppIconRoundFromHelper-deleteThis" width="128" height="128"/>
+        <image name="LittleMilkshake" width="70" height="86"/>
+        <image name="LittleMilkshakeOutlines" width="116" height="128"/>
         <image name="arrow.triangle.branch" catalog="system" width="20" height="18"/>
         <image name="arrow.up.and.down" catalog="system" width="11" height="15"/>
         <image name="arrow.uturn.backward.circle.fill" catalog="system" width="15" height="15"/>
@@ -2196,7 +2210,6 @@ System Preferences &gt; Mouse &gt; Tracking speed </string>
         <image name="rectangle" catalog="system" width="18" height="14"/>
         <image name="rectangle.3.group.bubble.left" catalog="system" width="22" height="20"/>
         <image name="safari" catalog="system" width="20" height="20"/>
-        <image name="smiley" catalog="system" width="20" height="20"/>
         <image name="xmark.circle.fill" catalog="system" width="15" height="15"/>
     </resources>
 </document>
