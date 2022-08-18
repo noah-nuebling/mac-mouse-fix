@@ -498,7 +498,7 @@
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <subviews>
                                                 <imageView identifier="PlusIcon" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Jod-JU-J5j">
-                                                    <rect key="frame" x="237" y="38.5" width="60" height="66.5"/>
+                                                    <rect key="frame" x="238" y="38.5" width="60" height="66.5"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                                     <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyUpOrDown" image="plus" catalog="system" id="EyU-is-YRF"/>
                                                     <color key="contentTintColor" name="systemGrayColor" catalog="System" colorSpace="catalog"/>
@@ -560,7 +560,7 @@
                                                             <tableColumnResizingMask key="resizingMask" resizeWithTable="YES"/>
                                                             <prototypeCellViews>
                                                                 <tableCellView identifier="triggerCell" horizontalHuggingPriority="1000" verticalHuggingPriority="750" verticalCompressionResistancePriority="1000" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="nsw-iK-CJt" userLabel="TriggerCell" customClass="RemapTableCellView" customModule="Mac_Mouse_Fix" customModuleProvider="target">
-                                                                    <rect key="frame" x="8" y="0.0" width="287" height="39"/>
+                                                                    <rect key="frame" x="8" y="0.0" width="288" height="39"/>
                                                                     <subviews>
                                                                         <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" horizontalCompressionResistancePriority="999" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="QCK-nA-0gO">
                                                                             <rect key="frame" x="22" y="12" width="266" height="16"/>
@@ -596,7 +596,7 @@
                                                                     </connections>
                                                                 </tableCellView>
                                                                 <tableCellView identifier="buttonGroupCell" id="pxf-x1-gL5" userLabel="ButtonGroupCell">
-                                                                    <rect key="frame" x="8" y="39" width="287" height="22"/>
+                                                                    <rect key="frame" x="8" y="39" width="288" height="22"/>
                                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                                     <subviews>
                                                                         <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="AHZ-Kd-4Xf">
@@ -635,7 +635,7 @@
                                                             <tableColumnResizingMask key="resizingMask" resizeWithTable="YES"/>
                                                             <prototypeCellViews>
                                                                 <tableCellView identifier="effectCell" translatesAutoresizingMaskIntoConstraints="NO" id="Epw-SW-Ew3" customClass="RemapTableCellView" customModule="Mac_Mouse_Fix" customModuleProvider="target">
-                                                                    <rect key="frame" x="312" y="0.0" width="223" height="39"/>
+                                                                    <rect key="frame" x="313" y="0.0" width="223" height="39"/>
                                                                     <subviews>
                                                                         <popUpButton verticalHuggingPriority="750" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="Pw9-ZH-Tb7">
                                                                             <rect key="frame" x="0.0" y="6" width="224" height="25"/>
@@ -663,7 +663,7 @@
                                                                     </constraints>
                                                                 </tableCellView>
                                                                 <tableCellView identifier="keyCaptureCell" translatesAutoresizingMaskIntoConstraints="NO" id="MzR-b1-853" customClass="RemapTableCellView" customModule="Mac_Mouse_Fix" customModuleProvider="target">
-                                                                    <rect key="frame" x="312" y="39" width="220" height="39"/>
+                                                                    <rect key="frame" x="313" y="39" width="220" height="39"/>
                                                                     <subviews>
                                                                         <button hidden="YES" focusRingType="exterior" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="psy-Jg-KLq">
                                                                             <rect key="frame" x="-4" y="3" width="228" height="32"/>
@@ -1609,13 +1609,13 @@ System Preferences &gt; Mouse &gt; Tracking speed </string>
                         <rect key="frame" x="0.0" y="0.0" width="2258" height="567"/>
                         <subviews>
                             <stackView distribution="fill" orientation="vertical" alignment="leading" spacing="20" horizontalStackHuggingPriority="1000" verticalStackHuggingPriority="250" horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="ugH-B2-Fh0" userLabel="Master Stack" customClass="CollapsingStackView" customModule="Mac_Mouse_Fix" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="0.0" width="2258" height="565"/>
+                                <rect key="frame" x="0.0" y="0.0" width="2258" height="581"/>
                                 <subviews>
                                     <customView horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="AJO-pr-dqg" userLabel="Header">
-                                        <rect key="frame" x="0.0" y="420" width="2258" height="127"/>
+                                        <rect key="frame" x="0.0" y="452" width="2258" height="111"/>
                                         <subviews>
                                             <textField horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="7TJ-vr-aAK">
-                                                <rect key="frame" x="1080" y="20" width="99" height="32"/>
+                                                <rect key="frame" x="1080" y="20" width="99" height="16"/>
                                                 <textFieldCell key="cell" selectable="YES" alignment="center" title="&lt;Version - (-)&gt;" id="79J-Zg-ebA">
                                                     <font key="font" metaFont="system"/>
                                                     <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -1623,7 +1623,7 @@ System Preferences &gt; Mouse &gt; Tracking speed </string>
                                                 </textFieldCell>
                                             </textField>
                                             <textField horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="awa-V4-n7n">
-                                                <rect key="frame" x="1077" y="57" width="104" height="16"/>
+                                                <rect key="frame" x="1077" y="41" width="104" height="16"/>
                                                 <textFieldCell key="cell" lineBreakMode="clipping" alignment="center" title="Mac Mouse Fix" id="bGk-tB-fcH">
                                                     <font key="font" metaFont="systemBold"/>
                                                     <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -1631,7 +1631,7 @@ System Preferences &gt; Mouse &gt; Tracking speed </string>
                                                 </textFieldCell>
                                             </textField>
                                             <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="mWQ-i7-vza" customClass="ClickableImageView">
-                                                <rect key="frame" x="1104" y="81" width="50" height="50"/>
+                                                <rect key="frame" x="1104" y="65" width="50" height="50"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="50" id="D2j-Hr-mtG"/>
                                                     <constraint firstAttribute="height" constant="50" id="XlS-Hw-sSd"/>
@@ -1664,7 +1664,7 @@ System Preferences &gt; Mouse &gt; Tracking speed </string>
                                         </constraints>
                                     </customView>
                                     <customView verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="gOr-MF-leI" userLabel="Divider">
-                                        <rect key="frame" x="0.0" y="350" width="2258" height="50"/>
+                                        <rect key="frame" x="0.0" y="382" width="2258" height="50"/>
                                         <subviews>
                                             <box horizontalHuggingPriority="1000" verticalHuggingPriority="750" boxType="separator" translatesAutoresizingMaskIntoConstraints="NO" id="zpt-1r-D4W">
                                                 <rect key="frame" x="0.0" y="6" width="2258" height="38"/>
@@ -1678,7 +1678,7 @@ System Preferences &gt; Mouse &gt; Tracking speed </string>
                                         </constraints>
                                     </customView>
                                     <customView horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="Jyh-ef-PJ5" userLabel="LinkRow">
-                                        <rect key="frame" x="0.0" y="280" width="2258" height="50"/>
+                                        <rect key="frame" x="0.0" y="312" width="2258" height="50"/>
                                         <subviews>
                                             <customView horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="jY6-2V-Ysa" userLabel="Link Cell">
                                                 <rect key="frame" x="282" y="0.0" width="847" height="50"/>
@@ -1699,8 +1699,8 @@ System Preferences &gt; Mouse &gt; Tracking speed </string>
                                                         </textFieldCell>
                                                         <userDefinedRuntimeAttributes>
                                                             <userDefinedRuntimeAttribute type="string" keyPath="href" value="https://github.com/noah-nuebling/mac-mouse-fix"/>
-                                                            <userDefinedRuntimeAttribute type="number" keyPath="rMrgn">
-                                                                <integer key="value" value="25"/>
+                                                            <userDefinedRuntimeAttribute type="number" keyPath="leftPadding">
+                                                                <integer key="value" value="30"/>
                                                             </userDefinedRuntimeAttribute>
                                                         </userDefinedRuntimeAttributes>
                                                     </textField>
@@ -1719,6 +1719,10 @@ System Preferences &gt; Mouse &gt; Tracking speed </string>
                                                     <constraint firstItem="AQF-Nj-tDx" firstAttribute="top" secondItem="jY6-2V-Ysa" secondAttribute="top" priority="999" id="wcr-Qh-Dc7"/>
                                                     <constraint firstItem="tsR-bT-Bpt" firstAttribute="centerY" secondItem="jY6-2V-Ysa" secondAttribute="centerY" id="yte-zK-jcQ"/>
                                                 </constraints>
+                                                <userDefinedRuntimeAttributes>
+                                                    <userDefinedRuntimeAttribute type="boolean" keyPath="wantsLayer" value="YES"/>
+                                                    <userDefinedRuntimeAttribute type="boolean" keyPath="layer.masksToBounds" value="NO"/>
+                                                </userDefinedRuntimeAttributes>
                                             </customView>
                                             <customView horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="Icv-9b-kng" userLabel="Link Cell">
                                                 <rect key="frame" x="1270" y="0.0" width="706" height="50"/>
@@ -1739,8 +1743,8 @@ System Preferences &gt; Mouse &gt; Tracking speed </string>
                                                         </textFieldCell>
                                                         <userDefinedRuntimeAttributes>
                                                             <userDefinedRuntimeAttribute type="string" keyPath="href" value="https://github.com/noah-nuebling/mac-mouse-fix"/>
-                                                            <userDefinedRuntimeAttribute type="number" keyPath="rMrgn">
-                                                                <integer key="value" value="25"/>
+                                                            <userDefinedRuntimeAttribute type="number" keyPath="leftPadding">
+                                                                <integer key="value" value="30"/>
                                                             </userDefinedRuntimeAttribute>
                                                         </userDefinedRuntimeAttributes>
                                                     </textField>
@@ -1759,6 +1763,10 @@ System Preferences &gt; Mouse &gt; Tracking speed </string>
                                                     <constraint firstItem="LTq-8K-saI" firstAttribute="leading" secondItem="Icv-9b-kng" secondAttribute="leading" constant="30" id="z4J-Ms-ZBZ"/>
                                                     <constraint firstItem="LTq-8K-saI" firstAttribute="top" relation="greaterThanOrEqual" secondItem="Icv-9b-kng" secondAttribute="top" id="zUZ-mb-IZ5"/>
                                                 </constraints>
+                                                <userDefinedRuntimeAttributes>
+                                                    <userDefinedRuntimeAttribute type="boolean" keyPath="wantsLayer" value="YES"/>
+                                                    <userDefinedRuntimeAttribute type="boolean" keyPath="layer.masksToBounds" value="NO"/>
+                                                </userDefinedRuntimeAttributes>
                                             </customView>
                                         </subviews>
                                         <constraints>
@@ -1771,9 +1779,13 @@ System Preferences &gt; Mouse &gt; Tracking speed </string>
                                             <constraint firstItem="jY6-2V-Ysa" firstAttribute="leading" secondItem="Jyh-ef-PJ5" secondAttribute="centerX" multiplier="0.25" id="rzD-da-iKx"/>
                                             <constraint firstItem="jY6-2V-Ysa" firstAttribute="centerY" secondItem="Jyh-ef-PJ5" secondAttribute="centerY" id="y0C-Ke-QFY"/>
                                         </constraints>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="boolean" keyPath="wantsLayer" value="YES"/>
+                                            <userDefinedRuntimeAttribute type="boolean" keyPath="layer.masksToBounds" value="NO"/>
+                                        </userDefinedRuntimeAttributes>
                                     </customView>
                                     <customView horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="M9b-sb-c3F" userLabel="LinkRow">
-                                        <rect key="frame" x="0.0" y="210" width="2258" height="50"/>
+                                        <rect key="frame" x="0.0" y="242" width="2258" height="50"/>
                                         <subviews>
                                             <customView horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="22V-s2-cbh" userLabel="Link Cell">
                                                 <rect key="frame" x="282" y="0.0" width="847" height="50"/>
@@ -1794,8 +1806,8 @@ System Preferences &gt; Mouse &gt; Tracking speed </string>
                                                         </textFieldCell>
                                                         <userDefinedRuntimeAttributes>
                                                             <userDefinedRuntimeAttribute type="string" keyPath="href" value="https://github.com/noah-nuebling/mac-mouse-fix"/>
-                                                            <userDefinedRuntimeAttribute type="number" keyPath="rMrgn">
-                                                                <integer key="value" value="25"/>
+                                                            <userDefinedRuntimeAttribute type="number" keyPath="leftPadding">
+                                                                <integer key="value" value="30"/>
                                                             </userDefinedRuntimeAttribute>
                                                         </userDefinedRuntimeAttributes>
                                                     </textField>
@@ -1814,6 +1826,10 @@ System Preferences &gt; Mouse &gt; Tracking speed </string>
                                                     <constraint firstAttribute="trailing" secondItem="upZ-gK-UV4" secondAttribute="trailing" priority="999" id="m4C-Vf-Wb7"/>
                                                     <constraint firstItem="upZ-gK-UV4" firstAttribute="top" relation="greaterThanOrEqual" secondItem="22V-s2-cbh" secondAttribute="top" id="weg-oA-wyi"/>
                                                 </constraints>
+                                                <userDefinedRuntimeAttributes>
+                                                    <userDefinedRuntimeAttribute type="boolean" keyPath="wantsLayer" value="YES"/>
+                                                    <userDefinedRuntimeAttribute type="boolean" keyPath="layer.masksToBounds" value="NO"/>
+                                                </userDefinedRuntimeAttributes>
                                             </customView>
                                             <customView horizontalHuggingPriority="500" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="zPw-Ef-QQ2" userLabel="Link Cell">
                                                 <rect key="frame" x="1270" y="0.0" width="706" height="50"/>
@@ -1834,8 +1850,8 @@ System Preferences &gt; Mouse &gt; Tracking speed </string>
                                                         </textFieldCell>
                                                         <userDefinedRuntimeAttributes>
                                                             <userDefinedRuntimeAttribute type="string" keyPath="href" value="https://github.com/noah-nuebling/mac-mouse-fix"/>
-                                                            <userDefinedRuntimeAttribute type="number" keyPath="rMrgn">
-                                                                <integer key="value" value="25"/>
+                                                            <userDefinedRuntimeAttribute type="number" keyPath="leftPadding">
+                                                                <integer key="value" value="30"/>
                                                             </userDefinedRuntimeAttribute>
                                                         </userDefinedRuntimeAttributes>
                                                     </textField>
@@ -1854,6 +1870,10 @@ System Preferences &gt; Mouse &gt; Tracking speed </string>
                                                     <constraint firstItem="hg9-F7-AIO" firstAttribute="centerX" secondItem="zPw-Ef-QQ2" secondAttribute="leading" constant="13" id="hkq-MB-YWh"/>
                                                     <constraint firstAttribute="bottom" secondItem="0lK-Xb-h2V" secondAttribute="bottom" priority="999" id="qS8-vz-3KQ"/>
                                                 </constraints>
+                                                <userDefinedRuntimeAttributes>
+                                                    <userDefinedRuntimeAttribute type="boolean" keyPath="wantsLayer" value="YES"/>
+                                                    <userDefinedRuntimeAttribute type="boolean" keyPath="layer.masksToBounds" value="NO"/>
+                                                </userDefinedRuntimeAttributes>
                                             </customView>
                                         </subviews>
                                         <constraints>
@@ -1866,9 +1886,13 @@ System Preferences &gt; Mouse &gt; Tracking speed </string>
                                             <constraint firstItem="zPw-Ef-QQ2" firstAttribute="centerY" secondItem="M9b-sb-c3F" secondAttribute="centerY" id="sbm-Hc-YyG"/>
                                             <constraint firstItem="zPw-Ef-QQ2" firstAttribute="top" secondItem="M9b-sb-c3F" secondAttribute="top" id="tsK-Iv-rML"/>
                                         </constraints>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="boolean" keyPath="wantsLayer" value="YES"/>
+                                            <userDefinedRuntimeAttribute type="boolean" keyPath="layer.masksToBounds" value="NO"/>
+                                        </userDefinedRuntimeAttributes>
                                     </customView>
                                     <customView horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="ib3-Le-o7r" userLabel="LinkRow">
-                                        <rect key="frame" x="0.0" y="140" width="2258" height="50"/>
+                                        <rect key="frame" x="0.0" y="172" width="2258" height="50"/>
                                         <subviews>
                                             <customView horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="g5D-rr-G3j" userLabel="Link Cell">
                                                 <rect key="frame" x="282" y="0.0" width="847" height="50"/>
@@ -1889,8 +1913,8 @@ System Preferences &gt; Mouse &gt; Tracking speed </string>
                                                         </textFieldCell>
                                                         <userDefinedRuntimeAttributes>
                                                             <userDefinedRuntimeAttribute type="string" keyPath="href" value="https://github.com/noah-nuebling/mac-mouse-fix"/>
-                                                            <userDefinedRuntimeAttribute type="number" keyPath="rMrgn">
-                                                                <integer key="value" value="25"/>
+                                                            <userDefinedRuntimeAttribute type="number" keyPath="leftPadding">
+                                                                <integer key="value" value="30"/>
                                                             </userDefinedRuntimeAttribute>
                                                         </userDefinedRuntimeAttributes>
                                                     </textField>
@@ -1909,6 +1933,10 @@ System Preferences &gt; Mouse &gt; Tracking speed </string>
                                                     <constraint firstItem="3kI-Zl-8kF" firstAttribute="centerY" secondItem="g5D-rr-G3j" secondAttribute="centerY" id="xDi-hH-GoH"/>
                                                     <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="3kI-Zl-8kF" secondAttribute="trailing" id="z1B-eR-m3f"/>
                                                 </constraints>
+                                                <userDefinedRuntimeAttributes>
+                                                    <userDefinedRuntimeAttribute type="boolean" keyPath="wantsLayer" value="YES"/>
+                                                    <userDefinedRuntimeAttribute type="boolean" keyPath="layer.masksToBounds" value="NO"/>
+                                                </userDefinedRuntimeAttributes>
                                             </customView>
                                             <customView horizontalHuggingPriority="500" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="ku4-D8-fec" userLabel="Link Cell">
                                                 <rect key="frame" x="1270" y="0.0" width="706" height="50"/>
@@ -1929,8 +1957,8 @@ System Preferences &gt; Mouse &gt; Tracking speed </string>
                                                         </textFieldCell>
                                                         <userDefinedRuntimeAttributes>
                                                             <userDefinedRuntimeAttribute type="string" keyPath="href" value="https://github.com/noah-nuebling/mac-mouse-fix"/>
-                                                            <userDefinedRuntimeAttribute type="number" keyPath="rMrgn">
-                                                                <integer key="value" value="25"/>
+                                                            <userDefinedRuntimeAttribute type="number" keyPath="leftPadding">
+                                                                <integer key="value" value="30"/>
                                                             </userDefinedRuntimeAttribute>
                                                         </userDefinedRuntimeAttributes>
                                                     </textField>
@@ -1949,6 +1977,10 @@ System Preferences &gt; Mouse &gt; Tracking speed </string>
                                                     <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="Tl2-TE-5Rb" secondAttribute="trailing" id="ip3-Wi-qwm"/>
                                                     <constraint firstAttribute="bottom" secondItem="Tl2-TE-5Rb" secondAttribute="bottom" priority="999" id="rBD-9i-Tof"/>
                                                 </constraints>
+                                                <userDefinedRuntimeAttributes>
+                                                    <userDefinedRuntimeAttribute type="boolean" keyPath="wantsLayer" value="YES"/>
+                                                    <userDefinedRuntimeAttribute type="boolean" keyPath="layer.masksToBounds" value="NO"/>
+                                                </userDefinedRuntimeAttributes>
                                             </customView>
                                         </subviews>
                                         <constraints>
@@ -1961,9 +1993,13 @@ System Preferences &gt; Mouse &gt; Tracking speed </string>
                                             <constraint firstItem="g5D-rr-G3j" firstAttribute="leading" secondItem="ib3-Le-o7r" secondAttribute="centerX" multiplier="0.25" id="kDr-ry-Ylv"/>
                                             <constraint firstItem="g5D-rr-G3j" firstAttribute="centerY" secondItem="ib3-Le-o7r" secondAttribute="centerY" id="tNE-M0-BdH"/>
                                         </constraints>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="boolean" keyPath="wantsLayer" value="YES"/>
+                                            <userDefinedRuntimeAttribute type="boolean" keyPath="layer.masksToBounds" value="NO"/>
+                                        </userDefinedRuntimeAttributes>
                                     </customView>
                                     <customView verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="TN3-hD-sQd" userLabel="Divider">
-                                        <rect key="frame" x="0.0" y="70" width="2258" height="50"/>
+                                        <rect key="frame" x="0.0" y="102" width="2258" height="50"/>
                                         <subviews>
                                             <box horizontalHuggingPriority="1000" verticalHuggingPriority="750" boxType="separator" translatesAutoresizingMaskIntoConstraints="NO" id="axq-tM-YoN">
                                                 <rect key="frame" x="0.0" y="6" width="2258" height="38"/>
@@ -1977,14 +2013,14 @@ System Preferences &gt; Mouse &gt; Tracking speed </string>
                                         </constraints>
                                     </customView>
                                     <customView horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="Zad-e1-jFI" userLabel="LinkRow">
-                                        <rect key="frame" x="0.0" y="0.0" width="2258" height="50"/>
+                                        <rect key="frame" x="0.0" y="32" width="2258" height="50"/>
                                         <subviews>
                                             <customView horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="xa1-b3-cbf" userLabel="Link Cell">
                                                 <rect key="frame" x="282" y="0.0" width="847" height="50"/>
                                                 <subviews>
                                                     <imageView horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="dMC-Ih-72R">
                                                         <rect key="frame" x="2" y="13.5" width="23" height="25"/>
-                                                        <imageCell key="cell" refusesFirstResponder="YES" alignment="left" id="vYQ-bb-0Rj">
+                                                        <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" id="vYQ-bb-0Rj">
                                                             <imageReference key="image" image="hands.sparkles" catalog="system" symbolScale="large"/>
                                                         </imageCell>
                                                         <color key="contentTintColor" name="linkColor" catalog="System" colorSpace="catalog"/>
@@ -1998,8 +2034,8 @@ System Preferences &gt; Mouse &gt; Tracking speed </string>
                                                         </textFieldCell>
                                                         <userDefinedRuntimeAttributes>
                                                             <userDefinedRuntimeAttribute type="string" keyPath="href" value="https://github.com/noah-nuebling/mac-mouse-fix"/>
-                                                            <userDefinedRuntimeAttribute type="number" keyPath="rMrgn">
-                                                                <integer key="value" value="25"/>
+                                                            <userDefinedRuntimeAttribute type="number" keyPath="leftPadding">
+                                                                <integer key="value" value="30"/>
                                                             </userDefinedRuntimeAttribute>
                                                         </userDefinedRuntimeAttributes>
                                                     </textField>
@@ -2014,10 +2050,12 @@ System Preferences &gt; Mouse &gt; Tracking speed </string>
                                                     <constraint firstItem="gmk-QZ-E3o" firstAttribute="leading" secondItem="xa1-b3-cbf" secondAttribute="leading" constant="30" id="UZZ-RW-b2U"/>
                                                     <constraint firstAttribute="bottom" secondItem="gmk-QZ-E3o" secondAttribute="bottom" priority="999" id="ag0-wV-U6A"/>
                                                     <constraint firstItem="dMC-Ih-72R" firstAttribute="centerY" secondItem="xa1-b3-cbf" secondAttribute="centerY" id="d78-mY-fE3"/>
-                                                    <constraint firstItem="gmk-QZ-E3o" firstAttribute="top" relation="greaterThanOrEqual" secondItem="xa1-b3-cbf" secondAttribute="top" id="rw3-BX-5Qg"/>
-                                                    <constraint firstItem="gmk-QZ-E3o" firstAttribute="top" secondItem="xa1-b3-cbf" secondAttribute="top" priority="999" id="suo-CB-1oc"/>
                                                     <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="gmk-QZ-E3o" secondAttribute="trailing" id="tA5-0H-dUZ"/>
                                                 </constraints>
+                                                <userDefinedRuntimeAttributes>
+                                                    <userDefinedRuntimeAttribute type="boolean" keyPath="wantsLayer" value="YES"/>
+                                                    <userDefinedRuntimeAttribute type="boolean" keyPath="layer.masksToBounds" value="NO"/>
+                                                </userDefinedRuntimeAttributes>
                                             </customView>
                                             <customView horizontalHuggingPriority="500" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="15g-eT-Sq8" userLabel="Link Cell">
                                                 <rect key="frame" x="1270" y="0.0" width="706" height="50"/>
@@ -2038,8 +2076,8 @@ System Preferences &gt; Mouse &gt; Tracking speed </string>
                                                         </textFieldCell>
                                                         <userDefinedRuntimeAttributes>
                                                             <userDefinedRuntimeAttribute type="string" keyPath="href" value="https://github.com/noah-nuebling/mac-mouse-fix"/>
-                                                            <userDefinedRuntimeAttribute type="number" keyPath="rMrgn">
-                                                                <integer key="value" value="25"/>
+                                                            <userDefinedRuntimeAttribute type="number" keyPath="leftPadding">
+                                                                <integer key="value" value="30"/>
                                                             </userDefinedRuntimeAttribute>
                                                         </userDefinedRuntimeAttributes>
                                                     </textField>
@@ -2058,6 +2096,10 @@ System Preferences &gt; Mouse &gt; Tracking speed </string>
                                                     <constraint firstItem="dnN-4Q-oW6" firstAttribute="centerX" secondItem="15g-eT-Sq8" secondAttribute="leading" constant="13" id="tX0-8s-hX9"/>
                                                     <constraint firstItem="X0k-mF-gia" firstAttribute="top" secondItem="15g-eT-Sq8" secondAttribute="top" priority="999" id="wfA-cg-wWj"/>
                                                 </constraints>
+                                                <userDefinedRuntimeAttributes>
+                                                    <userDefinedRuntimeAttribute type="boolean" keyPath="wantsLayer" value="YES"/>
+                                                    <userDefinedRuntimeAttribute type="boolean" keyPath="layer.masksToBounds" value="NO"/>
+                                                </userDefinedRuntimeAttributes>
                                             </customView>
                                         </subviews>
                                         <constraints>
@@ -2070,9 +2112,13 @@ System Preferences &gt; Mouse &gt; Tracking speed </string>
                                             <constraint firstItem="15g-eT-Sq8" firstAttribute="centerY" secondItem="Zad-e1-jFI" secondAttribute="centerY" id="pro-cc-lpj"/>
                                             <constraint firstItem="xa1-b3-cbf" firstAttribute="centerY" secondItem="Zad-e1-jFI" secondAttribute="centerY" id="wWP-Hi-1Sg"/>
                                         </constraints>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="boolean" keyPath="wantsLayer" value="YES"/>
+                                            <userDefinedRuntimeAttribute type="boolean" keyPath="layer.masksToBounds" value="NO"/>
+                                        </userDefinedRuntimeAttributes>
                                     </customView>
                                 </subviews>
-                                <edgeInsets key="edgeInsets" left="0.0" right="0.0" top="18" bottom="0.0"/>
+                                <edgeInsets key="edgeInsets" left="0.0" right="0.0" top="18" bottom="32"/>
                                 <visibilityPriorities>
                                     <integer value="1000"/>
                                     <integer value="1000"/>

@@ -17,24 +17,27 @@ IB_DESIGNABLE
 
 @property (nonatomic) IBInspectable NSString *href;
 
-@property IBInspectable NSNumber *tMrgn; // Top tracking margin
-@property IBInspectable NSNumber *rMrgn; // Right tracking margin
-@property IBInspectable NSNumber *bMrgn; // Bottom tracking margin
-@property IBInspectable NSNumber *lMrgn; // Left tracking margin
+/// TrackingArea padding
+///     Extends the area that can be clicked to open the link beyond the frame of the link text.
+///     Used to make neighboring icons clickable as well.
+@property (nonatomic, assign) IBInspectable int topPadding;
+@property (nonatomic, assign) IBInspectable int rightPadding;
+@property (nonatomic, assign) IBInspectable int bottomPadding;
+@property (nonatomic, assign) IBInspectable int leftPadding;
 
 @end
 
 @implementation Hyperlink {
     BOOL _mouseIsOverSelf;
     BOOL _mouseDownOverSelf;
-    NSRect _trackingRect;
+    NSRect _trackingRect; /// Do we need to store this?
+    NSTrackingArea *_trackingArea;
 }
 
 - (void)awakeFromNib {
     
-    _mouseIsOverSelf = NO;
-    _mouseDownOverSelf = NO;
-        
+    /// Register mouse clicked callbacks
+    
     [NSEvent addLocalMonitorForEventsMatchingMask:NSEventMaskLeftMouseDown handler:^NSEvent * _Nullable(NSEvent * _Nonnull event) {
         [self mouseDown:event];
         return event;
@@ -43,48 +46,46 @@ IB_DESIGNABLE
         [self mouseUp:event];
         return event;
     }];
+}
+
+- (void)updateTrackingAreas {
     
-    // Set IBInspectible default values
+    [super updateTrackingAreas];
     
-    NSNumber *zeroNS = [NSNumber numberWithInt:0.0];
-    if (_tMrgn == nil) {
-        _tMrgn = zeroNS;
-    }
-    if (_rMrgn == nil) {
-        _rMrgn = zeroNS;
-    }
-    if (_bMrgn == nil) {
-        _bMrgn = zeroNS;
-    }
-    if (_lMrgn == nil) {
-        _lMrgn = zeroNS;
-    }
+    _mouseIsOverSelf = NO;
+    _mouseDownOverSelf = NO;
     
-    // Setup tracking area
+    /// Remove old tracking area
     
-    // Options
-    NSTrackingAreaOptions trackingAreaOptions =  NSTrackingMouseEnteredAndExited | NSTrackingActiveAlways | NSTrackingEnabledDuringMouseDrag;
+    [self removeTrackingArea:_trackingArea];
+    
+    /// Setup new tracking area
+    
+    /// Options
+    NSTrackingAreaOptions trackingAreaOptions =  NSTrackingMouseEnteredAndExited | NSTrackingActiveInKeyWindow | NSTrackingEnabledDuringMouseDrag;
+    
     _trackingRect = self.bounds;
     
-    // Make area larger according to IBInspectable tracking margins
-    // Top
-    _trackingRect.origin.y -= _tMrgn.doubleValue;
-    _trackingRect.size.height += _tMrgn.doubleValue;
-    // Bottom
-    _trackingRect.size.height += _bMrgn.doubleValue;
-    // Left
-    _trackingRect.origin.x -= _lMrgn.doubleValue;
-    _trackingRect.size.width += _lMrgn.doubleValue;
-    // Right
-    _trackingRect.size.width += _rMrgn.doubleValue;
+    /// Make area larger according to IBInspectable tracking margins
+    /// Top
+    _trackingRect.origin.y -= (double)_topPadding;
+    _trackingRect.size.height += (double)_topPadding;
+    /// Bottom
+    _trackingRect.size.height += (double)_bottomPadding;
+    /// Left
+    _trackingRect.origin.x -= (double)_leftPadding;
+    _trackingRect.size.width += (double)_leftPadding;
+    /// Right
+    _trackingRect.size.width += (double)_rightPadding;
     
-    // Add tracking area
-    NSTrackingArea * area = [[NSTrackingArea alloc] initWithRect:_trackingRect
+    /// Add tracking area
+    _trackingArea = [[NSTrackingArea alloc] initWithRect:_trackingRect
                                                          options:trackingAreaOptions
                                                            owner:self
                                                         userInfo:nil];
-    [self addTrackingArea:area];
+    [self addTrackingArea:_trackingArea];
 }
+
 - (void)mouseEntered:(NSEvent *)event {
     
     _mouseIsOverSelf = YES;
@@ -120,10 +121,10 @@ IB_DESIGNABLE
     _mouseDownOverSelf = NO;
 }
 - (void) reactToClick {
-    // Open URL defined in Interface Builder
+    /// Open URL defined in Interface Builder
     DDLogInfo(@"Opening: %@",_href);
     [[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:_href]];
-    // Send IBAction
+    /// Send IBAction
     [self sendAction:self.action to:self.target];
 }
 
