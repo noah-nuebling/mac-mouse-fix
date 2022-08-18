@@ -3,6 +3,7 @@
     <dependencies>
         <deployment identifier="macosx"/>
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="21223"/>
+        <capability name="Image references" minToolsVersion="12.0"/>
         <capability name="System colors introduced in macOS 10.14" minToolsVersion="10.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -497,7 +498,7 @@
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <subviews>
                                                 <imageView identifier="PlusIcon" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Jod-JU-J5j">
-                                                    <rect key="frame" x="238" y="38.5" width="60" height="66.5"/>
+                                                    <rect key="frame" x="237" y="38.5" width="60" height="66.5"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                                     <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyUpOrDown" image="plus" catalog="system" id="EyU-is-YRF"/>
                                                     <color key="contentTintColor" name="systemGrayColor" catalog="System" colorSpace="catalog"/>
@@ -559,7 +560,7 @@
                                                             <tableColumnResizingMask key="resizingMask" resizeWithTable="YES"/>
                                                             <prototypeCellViews>
                                                                 <tableCellView identifier="triggerCell" horizontalHuggingPriority="1000" verticalHuggingPriority="750" verticalCompressionResistancePriority="1000" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="nsw-iK-CJt" userLabel="TriggerCell" customClass="RemapTableCellView" customModule="Mac_Mouse_Fix" customModuleProvider="target">
-                                                                    <rect key="frame" x="8" y="0.0" width="288" height="39"/>
+                                                                    <rect key="frame" x="8" y="0.0" width="287" height="39"/>
                                                                     <subviews>
                                                                         <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" horizontalCompressionResistancePriority="999" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="QCK-nA-0gO">
                                                                             <rect key="frame" x="22" y="12" width="266" height="16"/>
@@ -595,7 +596,7 @@
                                                                     </connections>
                                                                 </tableCellView>
                                                                 <tableCellView identifier="buttonGroupCell" id="pxf-x1-gL5" userLabel="ButtonGroupCell">
-                                                                    <rect key="frame" x="8" y="39" width="288" height="22"/>
+                                                                    <rect key="frame" x="8" y="39" width="287" height="22"/>
                                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                                     <subviews>
                                                                         <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="AHZ-Kd-4Xf">
@@ -634,7 +635,7 @@
                                                             <tableColumnResizingMask key="resizingMask" resizeWithTable="YES"/>
                                                             <prototypeCellViews>
                                                                 <tableCellView identifier="effectCell" translatesAutoresizingMaskIntoConstraints="NO" id="Epw-SW-Ew3" customClass="RemapTableCellView" customModule="Mac_Mouse_Fix" customModuleProvider="target">
-                                                                    <rect key="frame" x="312.5" y="0.0" width="223" height="39"/>
+                                                                    <rect key="frame" x="312" y="0.0" width="223" height="39"/>
                                                                     <subviews>
                                                                         <popUpButton verticalHuggingPriority="750" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="Pw9-ZH-Tb7">
                                                                             <rect key="frame" x="0.0" y="6" width="224" height="25"/>
@@ -662,7 +663,7 @@
                                                                     </constraints>
                                                                 </tableCellView>
                                                                 <tableCellView identifier="keyCaptureCell" translatesAutoresizingMaskIntoConstraints="NO" id="MzR-b1-853" customClass="RemapTableCellView" customModule="Mac_Mouse_Fix" customModuleProvider="target">
-                                                                    <rect key="frame" x="312.5" y="39" width="220" height="39"/>
+                                                                    <rect key="frame" x="312" y="39" width="220" height="39"/>
                                                                     <subviews>
                                                                         <button hidden="YES" focusRingType="exterior" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="psy-Jg-KLq">
                                                                             <rect key="frame" x="-4" y="3" width="228" height="32"/>
@@ -1604,26 +1605,189 @@ System Preferences &gt; Mouse &gt; Tracking speed </string>
         <scene sceneID="3NB-Tm-GfZ">
             <objects>
                 <viewController title="About" id="buH-zX-xXu" userLabel="About View Controller" sceneMemberID="viewController">
-                    <view key="view" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ajM-sr-oMv">
-                        <rect key="frame" x="0.0" y="0.0" width="384" height="90"/>
+                    <view key="view" horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ajM-sr-oMv" userLabel="ContentView">
+                        <rect key="frame" x="0.0" y="0.0" width="2258" height="567"/>
                         <subviews>
-                            <stackView distribution="fill" orientation="vertical" alignment="leading" horizontalStackHuggingPriority="999" verticalStackHuggingPriority="249.99998474121094" horizontalHuggingPriority="999" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ugH-B2-Fh0" userLabel="Master Stack" customClass="CollapsingStackView" customModule="Mac_Mouse_Fix" customModuleProvider="target">
-                                <rect key="frame" x="30" y="20" width="324" height="50"/>
+                            <stackView distribution="fill" orientation="vertical" alignment="leading" spacing="20" horizontalStackHuggingPriority="1000" verticalStackHuggingPriority="250" horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="ugH-B2-Fh0" userLabel="Master Stack" customClass="CollapsingStackView" customModule="Mac_Mouse_Fix" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="0.0" width="2258" height="565"/>
                                 <subviews>
-                                    <stackView distribution="fillEqually" orientation="horizontal" alignment="centerY" horizontalStackHuggingPriority="1000" verticalStackHuggingPriority="1000" horizontalHuggingPriority="500" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="IWI-9f-fef">
-                                        <rect key="frame" x="0.0" y="0.0" width="324" height="50"/>
+                                    <customView horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="AJO-pr-dqg" userLabel="Header">
+                                        <rect key="frame" x="0.0" y="420" width="2258" height="127"/>
                                         <subviews>
-                                            <customView horizontalHuggingPriority="500" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="22V-s2-cbh" userLabel="Link Cell">
-                                                <rect key="frame" x="0.0" y="0.0" width="158" height="50"/>
+                                            <textField horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="7TJ-vr-aAK">
+                                                <rect key="frame" x="1080" y="20" width="99" height="32"/>
+                                                <textFieldCell key="cell" selectable="YES" alignment="center" title="&lt;Version - (-)&gt;" id="79J-Zg-ebA">
+                                                    <font key="font" metaFont="system"/>
+                                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                                </textFieldCell>
+                                            </textField>
+                                            <textField horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="awa-V4-n7n">
+                                                <rect key="frame" x="1077" y="57" width="104" height="16"/>
+                                                <textFieldCell key="cell" lineBreakMode="clipping" alignment="center" title="Mac Mouse Fix" id="bGk-tB-fcH">
+                                                    <font key="font" metaFont="systemBold"/>
+                                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                                </textFieldCell>
+                                            </textField>
+                                            <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="mWQ-i7-vza" customClass="ClickableImageView">
+                                                <rect key="frame" x="1104" y="81" width="50" height="50"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" constant="50" id="D2j-Hr-mtG"/>
+                                                    <constraint firstAttribute="height" constant="50" id="XlS-Hw-sSd"/>
+                                                </constraints>
+                                                <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="AppIconRoundFromHelper-deleteThis" id="3wF-XB-bvL"/>
+                                                <userDefinedRuntimeAttributes>
+                                                    <userDefinedRuntimeAttribute type="string" keyPath="modifiers" value="command, shift"/>
+                                                    <userDefinedRuntimeAttribute type="string" keyPath="actionString" value="reveal-config"/>
+                                                </userDefinedRuntimeAttributes>
+                                            </imageView>
+                                            <textField horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="5x2-rm-Zzf">
+                                                <rect key="frame" x="1056" y="0.0" width="147" height="14"/>
+                                                <textFieldCell key="cell" lineBreakMode="clipping" alignment="center" title="Created by Noah Nuebling" id="pMz-a0-1UQ">
+                                                    <font key="font" metaFont="menu" size="11"/>
+                                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                                </textFieldCell>
+                                            </textField>
+                                        </subviews>
+                                        <constraints>
+                                            <constraint firstAttribute="bottom" secondItem="5x2-rm-Zzf" secondAttribute="bottom" id="AaK-kM-1De"/>
+                                            <constraint firstItem="mWQ-i7-vza" firstAttribute="centerX" secondItem="AJO-pr-dqg" secondAttribute="centerX" id="Bzt-z5-ehG"/>
+                                            <constraint firstItem="7TJ-vr-aAK" firstAttribute="top" secondItem="awa-V4-n7n" secondAttribute="bottom" constant="5" id="GhS-ss-v6l"/>
+                                            <constraint firstItem="5x2-rm-Zzf" firstAttribute="top" secondItem="7TJ-vr-aAK" secondAttribute="bottom" constant="6" id="Mjc-s7-WPh"/>
+                                            <constraint firstItem="7TJ-vr-aAK" firstAttribute="centerX" secondItem="AJO-pr-dqg" secondAttribute="centerX" id="PRk-at-jIg"/>
+                                            <constraint firstItem="mWQ-i7-vza" firstAttribute="top" secondItem="AJO-pr-dqg" secondAttribute="top" constant="-4" id="QVf-09-u6W"/>
+                                            <constraint firstItem="5x2-rm-Zzf" firstAttribute="centerX" secondItem="AJO-pr-dqg" secondAttribute="centerX" id="dIH-Hf-NGe"/>
+                                            <constraint firstItem="awa-V4-n7n" firstAttribute="top" secondItem="mWQ-i7-vza" secondAttribute="bottom" constant="8" id="dif-k8-bym"/>
+                                            <constraint firstItem="awa-V4-n7n" firstAttribute="centerX" secondItem="AJO-pr-dqg" secondAttribute="centerX" id="oZW-2J-hbb"/>
+                                        </constraints>
+                                    </customView>
+                                    <customView verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="gOr-MF-leI" userLabel="Divider">
+                                        <rect key="frame" x="0.0" y="350" width="2258" height="50"/>
+                                        <subviews>
+                                            <box horizontalHuggingPriority="1000" verticalHuggingPriority="750" boxType="separator" translatesAutoresizingMaskIntoConstraints="NO" id="zpt-1r-D4W">
+                                                <rect key="frame" x="0.0" y="6" width="2258" height="38"/>
+                                            </box>
+                                        </subviews>
+                                        <constraints>
+                                            <constraint firstAttribute="bottom" secondItem="zpt-1r-D4W" secondAttribute="bottom" constant="8" id="5ud-cW-gk8"/>
+                                            <constraint firstItem="zpt-1r-D4W" firstAttribute="top" secondItem="gOr-MF-leI" secondAttribute="top" constant="8" id="EiJ-jD-Mzc"/>
+                                            <constraint firstAttribute="trailing" secondItem="zpt-1r-D4W" secondAttribute="trailing" id="dZd-pb-Vfd"/>
+                                            <constraint firstItem="zpt-1r-D4W" firstAttribute="leading" secondItem="gOr-MF-leI" secondAttribute="leading" id="eBs-aS-MQZ"/>
+                                        </constraints>
+                                    </customView>
+                                    <customView horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="Jyh-ef-PJ5" userLabel="LinkRow">
+                                        <rect key="frame" x="0.0" y="280" width="2258" height="50"/>
+                                        <subviews>
+                                            <customView horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="jY6-2V-Ysa" userLabel="Link Cell">
+                                                <rect key="frame" x="282" y="0.0" width="847" height="50"/>
+                                                <subviews>
+                                                    <imageView horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="tsR-bT-Bpt">
+                                                        <rect key="frame" x="3" y="15.5" width="20.5" height="20"/>
+                                                        <imageCell key="cell" refusesFirstResponder="YES" alignment="left" id="yRU-7Y-mLd">
+                                                            <imageReference key="image" image="exclamationmark.shield" catalog="system" symbolScale="large"/>
+                                                        </imageCell>
+                                                        <color key="contentTintColor" name="linkColor" catalog="System" colorSpace="catalog"/>
+                                                    </imageView>
+                                                    <textField horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="AQF-Nj-tDx" customClass="Hyperlink">
+                                                        <rect key="frame" x="28" y="17" width="104" height="16"/>
+                                                        <textFieldCell key="cell" alignment="left" title="File a bug report" usesSingleLineMode="YES" id="bQf-qv-mvB">
+                                                            <font key="font" metaFont="system"/>
+                                                            <color key="textColor" name="linkColor" catalog="System" colorSpace="catalog"/>
+                                                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                                        </textFieldCell>
+                                                        <userDefinedRuntimeAttributes>
+                                                            <userDefinedRuntimeAttribute type="string" keyPath="href" value="https://github.com/noah-nuebling/mac-mouse-fix"/>
+                                                            <userDefinedRuntimeAttribute type="number" keyPath="rMrgn">
+                                                                <integer key="value" value="25"/>
+                                                            </userDefinedRuntimeAttribute>
+                                                        </userDefinedRuntimeAttributes>
+                                                    </textField>
+                                                </subviews>
+                                                <constraints>
+                                                    <constraint firstItem="AQF-Nj-tDx" firstAttribute="top" relation="greaterThanOrEqual" secondItem="jY6-2V-Ysa" secondAttribute="top" id="FX7-TB-pkG"/>
+                                                    <constraint firstAttribute="trailing" secondItem="AQF-Nj-tDx" secondAttribute="trailing" priority="999" id="FtI-Wz-2MF"/>
+                                                    <constraint firstAttribute="bottom" secondItem="AQF-Nj-tDx" secondAttribute="bottom" priority="999" id="GY4-WN-MtK"/>
+                                                    <constraint firstItem="AQF-Nj-tDx" firstAttribute="leading" secondItem="jY6-2V-Ysa" secondAttribute="leading" constant="30" id="Je8-Sh-RIc"/>
+                                                    <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="AQF-Nj-tDx" secondAttribute="bottom" id="NE3-2X-1C3"/>
+                                                    <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="tsR-bT-Bpt" secondAttribute="bottom" id="aZV-zK-bmx"/>
+                                                    <constraint firstItem="tsR-bT-Bpt" firstAttribute="centerX" secondItem="jY6-2V-Ysa" secondAttribute="leading" constant="13" id="n4I-cd-BP5"/>
+                                                    <constraint firstItem="AQF-Nj-tDx" firstAttribute="centerY" secondItem="jY6-2V-Ysa" secondAttribute="centerY" id="nKr-jk-9rM"/>
+                                                    <constraint firstAttribute="bottom" secondItem="tsR-bT-Bpt" secondAttribute="bottom" priority="999" id="rGI-0i-dPS"/>
+                                                    <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="AQF-Nj-tDx" secondAttribute="trailing" id="rIg-a2-mNI"/>
+                                                    <constraint firstItem="AQF-Nj-tDx" firstAttribute="top" secondItem="jY6-2V-Ysa" secondAttribute="top" priority="999" id="wcr-Qh-Dc7"/>
+                                                    <constraint firstItem="tsR-bT-Bpt" firstAttribute="centerY" secondItem="jY6-2V-Ysa" secondAttribute="centerY" id="yte-zK-jcQ"/>
+                                                </constraints>
+                                            </customView>
+                                            <customView horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="Icv-9b-kng" userLabel="Link Cell">
+                                                <rect key="frame" x="1270" y="0.0" width="706" height="50"/>
+                                                <subviews>
+                                                    <imageView horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="FUu-Vm-nqE">
+                                                        <rect key="frame" x="3" y="16" width="20.5" height="18"/>
+                                                        <imageCell key="cell" refusesFirstResponder="YES" alignment="left" id="Upm-7C-ya2">
+                                                            <imageReference key="image" image="arrow.triangle.branch" catalog="system" symbolScale="large"/>
+                                                        </imageCell>
+                                                        <color key="contentTintColor" name="linkColor" catalog="System" colorSpace="catalog"/>
+                                                    </imageView>
+                                                    <textField horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="LTq-8K-saI" customClass="Hyperlink">
+                                                        <rect key="frame" x="28" y="17" width="142" height="16"/>
+                                                        <textFieldCell key="cell" alignment="left" title="Check it out on GitHub" usesSingleLineMode="YES" id="ZMA-p0-2lf">
+                                                            <font key="font" metaFont="system"/>
+                                                            <color key="textColor" name="linkColor" catalog="System" colorSpace="catalog"/>
+                                                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                                        </textFieldCell>
+                                                        <userDefinedRuntimeAttributes>
+                                                            <userDefinedRuntimeAttribute type="string" keyPath="href" value="https://github.com/noah-nuebling/mac-mouse-fix"/>
+                                                            <userDefinedRuntimeAttribute type="number" keyPath="rMrgn">
+                                                                <integer key="value" value="25"/>
+                                                            </userDefinedRuntimeAttribute>
+                                                        </userDefinedRuntimeAttributes>
+                                                    </textField>
+                                                </subviews>
+                                                <constraints>
+                                                    <constraint firstAttribute="bottom" secondItem="FUu-Vm-nqE" secondAttribute="bottom" priority="999" id="3rW-Wp-ubt"/>
+                                                    <constraint firstItem="LTq-8K-saI" firstAttribute="centerY" secondItem="Icv-9b-kng" secondAttribute="centerY" id="4A6-wt-X3R"/>
+                                                    <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="LTq-8K-saI" secondAttribute="trailing" id="C5M-wF-zmg"/>
+                                                    <constraint firstItem="LTq-8K-saI" firstAttribute="top" secondItem="Icv-9b-kng" secondAttribute="top" priority="999" id="KPA-AE-qpP"/>
+                                                    <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="LTq-8K-saI" secondAttribute="bottom" id="NgD-nu-69x"/>
+                                                    <constraint firstAttribute="bottom" secondItem="LTq-8K-saI" secondAttribute="bottom" priority="999" id="g6u-XD-lQ0"/>
+                                                    <constraint firstItem="FUu-Vm-nqE" firstAttribute="centerY" secondItem="Icv-9b-kng" secondAttribute="centerY" id="jiQ-b5-YYu"/>
+                                                    <constraint firstAttribute="trailing" secondItem="LTq-8K-saI" secondAttribute="trailing" priority="999" id="mDg-Gv-uUM"/>
+                                                    <constraint firstItem="FUu-Vm-nqE" firstAttribute="centerX" secondItem="Icv-9b-kng" secondAttribute="leading" constant="13" id="pr6-Dl-38O"/>
+                                                    <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="FUu-Vm-nqE" secondAttribute="bottom" id="vLt-s8-YE1"/>
+                                                    <constraint firstItem="LTq-8K-saI" firstAttribute="leading" secondItem="Icv-9b-kng" secondAttribute="leading" constant="30" id="z4J-Ms-ZBZ"/>
+                                                    <constraint firstItem="LTq-8K-saI" firstAttribute="top" relation="greaterThanOrEqual" secondItem="Icv-9b-kng" secondAttribute="top" id="zUZ-mb-IZ5"/>
+                                                </constraints>
+                                            </customView>
+                                        </subviews>
+                                        <constraints>
+                                            <constraint firstItem="Icv-9b-kng" firstAttribute="top" secondItem="Jyh-ef-PJ5" secondAttribute="top" id="2gm-PZ-GxT"/>
+                                            <constraint firstItem="jY6-2V-Ysa" firstAttribute="top" secondItem="Jyh-ef-PJ5" secondAttribute="top" id="8Fo-vU-73o"/>
+                                            <constraint firstAttribute="centerX" secondItem="jY6-2V-Ysa" secondAttribute="trailing" id="9si-za-ITs"/>
+                                            <constraint firstItem="Icv-9b-kng" firstAttribute="centerY" secondItem="Jyh-ef-PJ5" secondAttribute="centerY" id="HT0-nB-v0G"/>
+                                            <constraint firstItem="Icv-9b-kng" firstAttribute="leading" secondItem="Jyh-ef-PJ5" secondAttribute="centerX" multiplier="1.125" id="IjC-VB-iY9"/>
+                                            <constraint firstItem="Icv-9b-kng" firstAttribute="trailing" secondItem="Jyh-ef-PJ5" secondAttribute="centerX" multiplier="1.75" id="WDw-0h-kWE"/>
+                                            <constraint firstItem="jY6-2V-Ysa" firstAttribute="leading" secondItem="Jyh-ef-PJ5" secondAttribute="centerX" multiplier="0.25" id="rzD-da-iKx"/>
+                                            <constraint firstItem="jY6-2V-Ysa" firstAttribute="centerY" secondItem="Jyh-ef-PJ5" secondAttribute="centerY" id="y0C-Ke-QFY"/>
+                                        </constraints>
+                                    </customView>
+                                    <customView horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="M9b-sb-c3F" userLabel="LinkRow">
+                                        <rect key="frame" x="0.0" y="210" width="2258" height="50"/>
+                                        <subviews>
+                                            <customView horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="22V-s2-cbh" userLabel="Link Cell">
+                                                <rect key="frame" x="282" y="0.0" width="847" height="50"/>
                                                 <subviews>
                                                     <imageView horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="qKl-We-pTD">
-                                                        <rect key="frame" x="0.0" y="18.5" width="15" height="14"/>
-                                                        <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="arrow.triangle.branch" catalog="system" id="a3K-g3-5Cx"/>
+                                                        <rect key="frame" x="2" y="15" width="22" height="20"/>
+                                                        <imageCell key="cell" refusesFirstResponder="YES" alignment="left" id="a3K-g3-5Cx">
+                                                            <imageReference key="image" image="rectangle.3.group.bubble.left" catalog="system" symbolScale="large"/>
+                                                        </imageCell>
                                                         <color key="contentTintColor" name="linkColor" catalog="System" colorSpace="catalog"/>
                                                     </imageView>
                                                     <textField horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="upZ-gK-UV4" customClass="Hyperlink">
-                                                        <rect key="frame" x="18" y="17" width="142" height="16"/>
-                                                        <textFieldCell key="cell" alignment="right" title="Check it out on GitHub" id="5yb-g8-Kcg">
+                                                        <rect key="frame" x="28" y="17" width="143" height="16"/>
+                                                        <textFieldCell key="cell" alignment="left" title="Write a feature request" usesSingleLineMode="YES" id="5yb-g8-Kcg">
                                                             <font key="font" metaFont="system"/>
                                                             <color key="textColor" name="linkColor" catalog="System" colorSpace="catalog"/>
                                                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -1642,25 +1806,28 @@ System Preferences &gt; Mouse &gt; Tracking speed </string>
                                                     <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="qKl-We-pTD" secondAttribute="bottom" id="Dch-mq-dC2"/>
                                                     <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="upZ-gK-UV4" secondAttribute="bottom" id="Fc4-EM-n5E"/>
                                                     <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="upZ-gK-UV4" secondAttribute="trailing" id="Hnh-fr-C2f"/>
+                                                    <constraint firstItem="upZ-gK-UV4" firstAttribute="leading" secondItem="22V-s2-cbh" secondAttribute="leading" constant="30" id="OHH-bB-8OV"/>
                                                     <constraint firstAttribute="bottom" secondItem="upZ-gK-UV4" secondAttribute="bottom" priority="999" id="U1n-uS-pGN"/>
                                                     <constraint firstItem="upZ-gK-UV4" firstAttribute="centerY" secondItem="22V-s2-cbh" secondAttribute="centerY" id="adN-tf-V77"/>
-                                                    <constraint firstItem="qKl-We-pTD" firstAttribute="leading" secondItem="22V-s2-cbh" secondAttribute="leading" id="bcr-kC-4i8"/>
+                                                    <constraint firstItem="qKl-We-pTD" firstAttribute="centerX" secondItem="22V-s2-cbh" secondAttribute="leading" constant="13" id="bcr-kC-4i8"/>
                                                     <constraint firstItem="qKl-We-pTD" firstAttribute="centerY" secondItem="22V-s2-cbh" secondAttribute="centerY" id="cyY-en-UhE"/>
-                                                    <constraint firstItem="upZ-gK-UV4" firstAttribute="leading" secondItem="qKl-We-pTD" secondAttribute="trailing" constant="5" id="qfq-Vl-O6U"/>
+                                                    <constraint firstAttribute="trailing" secondItem="upZ-gK-UV4" secondAttribute="trailing" priority="999" id="m4C-Vf-Wb7"/>
                                                     <constraint firstItem="upZ-gK-UV4" firstAttribute="top" relation="greaterThanOrEqual" secondItem="22V-s2-cbh" secondAttribute="top" id="weg-oA-wyi"/>
                                                 </constraints>
                                             </customView>
-                                            <customView horizontalHuggingPriority="500" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="Vay-7n-tSF" userLabel="Link Cell">
-                                                <rect key="frame" x="166" y="0.0" width="158" height="50"/>
+                                            <customView horizontalHuggingPriority="500" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="zPw-Ef-QQ2" userLabel="Link Cell">
+                                                <rect key="frame" x="1270" y="0.0" width="706" height="50"/>
                                                 <subviews>
-                                                    <imageView horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="KFr-YA-n8P">
-                                                        <rect key="frame" x="0.0" y="18.5" width="15" height="14"/>
-                                                        <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="arrow.triangle.branch" catalog="system" id="ofa-ar-lh0"/>
+                                                    <imageView horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="hg9-F7-AIO">
+                                                        <rect key="frame" x="3" y="16" width="20" height="20"/>
+                                                        <imageCell key="cell" refusesFirstResponder="YES" alignment="left" id="mRY-c2-9LL">
+                                                            <imageReference key="image" image="safari" catalog="system" symbolScale="large"/>
+                                                        </imageCell>
                                                         <color key="contentTintColor" name="linkColor" catalog="System" colorSpace="catalog"/>
                                                     </imageView>
-                                                    <textField horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="nxO-zI-2RI" customClass="Hyperlink">
-                                                        <rect key="frame" x="18" y="17" width="142" height="16"/>
-                                                        <textFieldCell key="cell" alignment="right" title="Check it out on GitHub" id="Qim-mT-9oS">
+                                                    <textField horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="0lK-Xb-h2V" customClass="Hyperlink">
+                                                        <rect key="frame" x="28" y="17" width="106" height="16"/>
+                                                        <textFieldCell key="cell" alignment="left" title="Visit the Website" usesSingleLineMode="YES" id="Ozk-o9-C4a">
                                                             <font key="font" metaFont="system"/>
                                                             <color key="textColor" name="linkColor" catalog="System" colorSpace="catalog"/>
                                                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -1674,43 +1841,263 @@ System Preferences &gt; Mouse &gt; Tracking speed </string>
                                                     </textField>
                                                 </subviews>
                                                 <constraints>
-                                                    <constraint firstAttribute="bottom" secondItem="nxO-zI-2RI" secondAttribute="bottom" priority="999" id="2bk-oc-5ca"/>
-                                                    <constraint firstItem="nxO-zI-2RI" firstAttribute="top" secondItem="Vay-7n-tSF" secondAttribute="top" priority="999" id="Hbn-BK-jOR"/>
-                                                    <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="KFr-YA-n8P" secondAttribute="bottom" id="HeE-Ml-QJC"/>
-                                                    <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="nxO-zI-2RI" secondAttribute="trailing" id="MzD-7h-3fH"/>
-                                                    <constraint firstItem="KFr-YA-n8P" firstAttribute="centerY" secondItem="Vay-7n-tSF" secondAttribute="centerY" id="S1D-bz-eGc"/>
-                                                    <constraint firstItem="nxO-zI-2RI" firstAttribute="top" relation="greaterThanOrEqual" secondItem="Vay-7n-tSF" secondAttribute="top" id="XKN-V5-RYo"/>
-                                                    <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="nxO-zI-2RI" secondAttribute="bottom" id="mW2-lV-9PR"/>
-                                                    <constraint firstItem="KFr-YA-n8P" firstAttribute="leading" secondItem="Vay-7n-tSF" secondAttribute="leading" id="rO2-dD-9Pq"/>
-                                                    <constraint firstItem="nxO-zI-2RI" firstAttribute="leading" secondItem="KFr-YA-n8P" secondAttribute="trailing" constant="5" id="ru9-vj-djS"/>
-                                                    <constraint firstItem="nxO-zI-2RI" firstAttribute="centerY" secondItem="Vay-7n-tSF" secondAttribute="centerY" id="tTI-dg-RyH"/>
-                                                    <constraint firstAttribute="bottom" secondItem="KFr-YA-n8P" secondAttribute="bottom" priority="999" id="xst-mC-Bc4"/>
+                                                    <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="hg9-F7-AIO" secondAttribute="bottom" id="8SM-nl-0NI"/>
+                                                    <constraint firstItem="hg9-F7-AIO" firstAttribute="centerY" secondItem="zPw-Ef-QQ2" secondAttribute="centerY" id="9a2-ap-W4W"/>
+                                                    <constraint firstItem="0lK-Xb-h2V" firstAttribute="leading" secondItem="zPw-Ef-QQ2" secondAttribute="leading" constant="30" id="IRT-88-uZL"/>
+                                                    <constraint firstItem="0lK-Xb-h2V" firstAttribute="top" secondItem="zPw-Ef-QQ2" secondAttribute="top" priority="999" id="JlA-V8-VZ2"/>
+                                                    <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="0lK-Xb-h2V" secondAttribute="bottom" id="Lbc-Jo-a8P"/>
+                                                    <constraint firstItem="0lK-Xb-h2V" firstAttribute="centerY" secondItem="zPw-Ef-QQ2" secondAttribute="centerY" id="MDf-g1-zQN"/>
+                                                    <constraint firstItem="0lK-Xb-h2V" firstAttribute="top" relation="greaterThanOrEqual" secondItem="zPw-Ef-QQ2" secondAttribute="top" id="QiM-gv-mng"/>
+                                                    <constraint firstAttribute="bottom" secondItem="hg9-F7-AIO" secondAttribute="bottom" priority="999" id="Shv-Tc-dhQ"/>
+                                                    <constraint firstAttribute="trailing" secondItem="0lK-Xb-h2V" secondAttribute="trailing" priority="999" id="W6G-kg-ARR"/>
+                                                    <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="0lK-Xb-h2V" secondAttribute="trailing" id="WoK-oe-vWr"/>
+                                                    <constraint firstItem="hg9-F7-AIO" firstAttribute="centerX" secondItem="zPw-Ef-QQ2" secondAttribute="leading" constant="13" id="hkq-MB-YWh"/>
+                                                    <constraint firstAttribute="bottom" secondItem="0lK-Xb-h2V" secondAttribute="bottom" priority="999" id="qS8-vz-3KQ"/>
                                                 </constraints>
                                             </customView>
                                         </subviews>
-                                        <visibilityPriorities>
-                                            <integer value="1000"/>
-                                            <integer value="1000"/>
-                                        </visibilityPriorities>
-                                        <customSpacing>
-                                            <real value="3.4028234663852886e+38"/>
-                                            <real value="3.4028234663852886e+38"/>
-                                        </customSpacing>
-                                    </stackView>
+                                        <constraints>
+                                            <constraint firstItem="22V-s2-cbh" firstAttribute="centerY" secondItem="M9b-sb-c3F" secondAttribute="centerY" id="1AD-dJ-oNU"/>
+                                            <constraint firstItem="22V-s2-cbh" firstAttribute="top" secondItem="M9b-sb-c3F" secondAttribute="top" id="4xb-jo-xdf"/>
+                                            <constraint firstItem="zPw-Ef-QQ2" firstAttribute="trailing" secondItem="M9b-sb-c3F" secondAttribute="centerX" multiplier="1.75" id="BLX-yR-BfO"/>
+                                            <constraint firstItem="22V-s2-cbh" firstAttribute="leading" secondItem="M9b-sb-c3F" secondAttribute="centerX" multiplier="0.25" id="IT2-ks-oRf"/>
+                                            <constraint firstAttribute="centerX" secondItem="22V-s2-cbh" secondAttribute="trailing" id="Ix4-SL-I7f"/>
+                                            <constraint firstItem="zPw-Ef-QQ2" firstAttribute="leading" secondItem="M9b-sb-c3F" secondAttribute="centerX" multiplier="1.125" id="fNG-Mi-Rjy"/>
+                                            <constraint firstItem="zPw-Ef-QQ2" firstAttribute="centerY" secondItem="M9b-sb-c3F" secondAttribute="centerY" id="sbm-Hc-YyG"/>
+                                            <constraint firstItem="zPw-Ef-QQ2" firstAttribute="top" secondItem="M9b-sb-c3F" secondAttribute="top" id="tsK-Iv-rML"/>
+                                        </constraints>
+                                    </customView>
+                                    <customView horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="ib3-Le-o7r" userLabel="LinkRow">
+                                        <rect key="frame" x="0.0" y="140" width="2258" height="50"/>
+                                        <subviews>
+                                            <customView horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="g5D-rr-G3j" userLabel="Link Cell">
+                                                <rect key="frame" x="282" y="0.0" width="847" height="50"/>
+                                                <subviews>
+                                                    <imageView horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="0K0-uH-MRf">
+                                                        <rect key="frame" x="4" y="16.5" width="19" height="18"/>
+                                                        <imageCell key="cell" refusesFirstResponder="YES" alignment="left" id="vQT-JM-cWN">
+                                                            <imageReference key="image" image="heart.text.square" catalog="system" symbolScale="large"/>
+                                                        </imageCell>
+                                                        <color key="contentTintColor" name="linkColor" catalog="System" colorSpace="catalog"/>
+                                                    </imageView>
+                                                    <textField horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="3kI-Zl-8kF" customClass="Hyperlink">
+                                                        <rect key="frame" x="28" y="17" width="112" height="16"/>
+                                                        <textFieldCell key="cell" alignment="left" title="Send me an Email" usesSingleLineMode="YES" id="QaW-cc-uzc">
+                                                            <font key="font" metaFont="system"/>
+                                                            <color key="textColor" name="linkColor" catalog="System" colorSpace="catalog"/>
+                                                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                                        </textFieldCell>
+                                                        <userDefinedRuntimeAttributes>
+                                                            <userDefinedRuntimeAttribute type="string" keyPath="href" value="https://github.com/noah-nuebling/mac-mouse-fix"/>
+                                                            <userDefinedRuntimeAttribute type="number" keyPath="rMrgn">
+                                                                <integer key="value" value="25"/>
+                                                            </userDefinedRuntimeAttribute>
+                                                        </userDefinedRuntimeAttributes>
+                                                    </textField>
+                                                </subviews>
+                                                <constraints>
+                                                    <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="3kI-Zl-8kF" secondAttribute="bottom" id="3rS-wo-oWe"/>
+                                                    <constraint firstAttribute="trailing" secondItem="3kI-Zl-8kF" secondAttribute="trailing" priority="999" id="7DH-kj-Msb"/>
+                                                    <constraint firstItem="0K0-uH-MRf" firstAttribute="centerX" secondItem="g5D-rr-G3j" secondAttribute="leading" constant="13" id="Bat-h1-alB"/>
+                                                    <constraint firstItem="3kI-Zl-8kF" firstAttribute="leading" secondItem="g5D-rr-G3j" secondAttribute="leading" constant="30" id="ElA-Xr-auw"/>
+                                                    <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="0K0-uH-MRf" secondAttribute="bottom" id="Lt5-oe-GZx"/>
+                                                    <constraint firstItem="0K0-uH-MRf" firstAttribute="centerY" secondItem="g5D-rr-G3j" secondAttribute="centerY" id="XaO-TD-w2e"/>
+                                                    <constraint firstAttribute="bottom" secondItem="3kI-Zl-8kF" secondAttribute="bottom" priority="999" id="d5G-sH-lML"/>
+                                                    <constraint firstAttribute="bottom" secondItem="0K0-uH-MRf" secondAttribute="bottom" priority="999" id="ll7-VQ-zaj"/>
+                                                    <constraint firstItem="3kI-Zl-8kF" firstAttribute="top" relation="greaterThanOrEqual" secondItem="g5D-rr-G3j" secondAttribute="top" id="lxH-hY-5s2"/>
+                                                    <constraint firstItem="3kI-Zl-8kF" firstAttribute="top" secondItem="g5D-rr-G3j" secondAttribute="top" priority="999" id="mWm-XV-PK9"/>
+                                                    <constraint firstItem="3kI-Zl-8kF" firstAttribute="centerY" secondItem="g5D-rr-G3j" secondAttribute="centerY" id="xDi-hH-GoH"/>
+                                                    <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="3kI-Zl-8kF" secondAttribute="trailing" id="z1B-eR-m3f"/>
+                                                </constraints>
+                                            </customView>
+                                            <customView horizontalHuggingPriority="500" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="ku4-D8-fec" userLabel="Link Cell">
+                                                <rect key="frame" x="1270" y="0.0" width="706" height="50"/>
+                                                <subviews>
+                                                    <imageView horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="BDB-tM-gQU">
+                                                        <rect key="frame" x="7" y="16" width="13" height="19"/>
+                                                        <imageCell key="cell" refusesFirstResponder="YES" alignment="left" id="B37-zq-ffR">
+                                                            <imageReference key="image" image="questionmark" catalog="system" symbolScale="large"/>
+                                                        </imageCell>
+                                                        <color key="contentTintColor" name="linkColor" catalog="System" colorSpace="catalog"/>
+                                                    </imageView>
+                                                    <textField horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="Tl2-TE-5Rb" customClass="Hyperlink">
+                                                        <rect key="frame" x="28" y="17" width="58" height="16"/>
+                                                        <textFieldCell key="cell" alignment="left" title="Get Help" usesSingleLineMode="YES" id="eVc-l9-Z0h">
+                                                            <font key="font" metaFont="system"/>
+                                                            <color key="textColor" name="linkColor" catalog="System" colorSpace="catalog"/>
+                                                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                                        </textFieldCell>
+                                                        <userDefinedRuntimeAttributes>
+                                                            <userDefinedRuntimeAttribute type="string" keyPath="href" value="https://github.com/noah-nuebling/mac-mouse-fix"/>
+                                                            <userDefinedRuntimeAttribute type="number" keyPath="rMrgn">
+                                                                <integer key="value" value="25"/>
+                                                            </userDefinedRuntimeAttribute>
+                                                        </userDefinedRuntimeAttributes>
+                                                    </textField>
+                                                </subviews>
+                                                <constraints>
+                                                    <constraint firstAttribute="bottom" secondItem="BDB-tM-gQU" secondAttribute="bottom" priority="999" id="7S9-t6-3In"/>
+                                                    <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="BDB-tM-gQU" secondAttribute="bottom" id="ALp-57-chd"/>
+                                                    <constraint firstItem="BDB-tM-gQU" firstAttribute="centerY" secondItem="ku4-D8-fec" secondAttribute="centerY" id="JIW-eD-Bug"/>
+                                                    <constraint firstItem="Tl2-TE-5Rb" firstAttribute="top" relation="greaterThanOrEqual" secondItem="ku4-D8-fec" secondAttribute="top" id="NGS-jj-XhY"/>
+                                                    <constraint firstAttribute="trailing" secondItem="Tl2-TE-5Rb" secondAttribute="trailing" priority="999" id="Nep-TF-m5u"/>
+                                                    <constraint firstItem="Tl2-TE-5Rb" firstAttribute="centerY" secondItem="ku4-D8-fec" secondAttribute="centerY" id="Ovi-Sk-hH9"/>
+                                                    <constraint firstItem="BDB-tM-gQU" firstAttribute="centerX" secondItem="ku4-D8-fec" secondAttribute="leading" constant="13" id="SDq-xY-sPU"/>
+                                                    <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="Tl2-TE-5Rb" secondAttribute="bottom" id="V6t-HV-84T"/>
+                                                    <constraint firstItem="Tl2-TE-5Rb" firstAttribute="top" secondItem="ku4-D8-fec" secondAttribute="top" priority="999" id="Xaj-Kp-QYh"/>
+                                                    <constraint firstItem="Tl2-TE-5Rb" firstAttribute="leading" secondItem="ku4-D8-fec" secondAttribute="leading" constant="30" id="goK-9g-VAw"/>
+                                                    <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="Tl2-TE-5Rb" secondAttribute="trailing" id="ip3-Wi-qwm"/>
+                                                    <constraint firstAttribute="bottom" secondItem="Tl2-TE-5Rb" secondAttribute="bottom" priority="999" id="rBD-9i-Tof"/>
+                                                </constraints>
+                                            </customView>
+                                        </subviews>
+                                        <constraints>
+                                            <constraint firstItem="ku4-D8-fec" firstAttribute="centerY" secondItem="ib3-Le-o7r" secondAttribute="centerY" id="89P-hq-Bzc"/>
+                                            <constraint firstItem="ku4-D8-fec" firstAttribute="top" secondItem="ib3-Le-o7r" secondAttribute="top" id="GV7-RO-i5w"/>
+                                            <constraint firstItem="ku4-D8-fec" firstAttribute="leading" secondItem="ib3-Le-o7r" secondAttribute="centerX" multiplier="1.125" id="Lwo-eg-lF5"/>
+                                            <constraint firstAttribute="centerX" secondItem="g5D-rr-G3j" secondAttribute="trailing" id="NxX-kC-Kmm"/>
+                                            <constraint firstItem="g5D-rr-G3j" firstAttribute="top" secondItem="ib3-Le-o7r" secondAttribute="top" id="Q1v-Up-x0k"/>
+                                            <constraint firstItem="ku4-D8-fec" firstAttribute="trailing" secondItem="ib3-Le-o7r" secondAttribute="centerX" multiplier="1.75" id="ceT-Je-3Lu"/>
+                                            <constraint firstItem="g5D-rr-G3j" firstAttribute="leading" secondItem="ib3-Le-o7r" secondAttribute="centerX" multiplier="0.25" id="kDr-ry-Ylv"/>
+                                            <constraint firstItem="g5D-rr-G3j" firstAttribute="centerY" secondItem="ib3-Le-o7r" secondAttribute="centerY" id="tNE-M0-BdH"/>
+                                        </constraints>
+                                    </customView>
+                                    <customView verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="TN3-hD-sQd" userLabel="Divider">
+                                        <rect key="frame" x="0.0" y="70" width="2258" height="50"/>
+                                        <subviews>
+                                            <box horizontalHuggingPriority="1000" verticalHuggingPriority="750" boxType="separator" translatesAutoresizingMaskIntoConstraints="NO" id="axq-tM-YoN">
+                                                <rect key="frame" x="0.0" y="6" width="2258" height="38"/>
+                                            </box>
+                                        </subviews>
+                                        <constraints>
+                                            <constraint firstItem="axq-tM-YoN" firstAttribute="top" secondItem="TN3-hD-sQd" secondAttribute="top" constant="8" id="7gP-FH-mfa"/>
+                                            <constraint firstItem="axq-tM-YoN" firstAttribute="leading" secondItem="TN3-hD-sQd" secondAttribute="leading" id="inj-mX-jfD"/>
+                                            <constraint firstAttribute="trailing" secondItem="axq-tM-YoN" secondAttribute="trailing" id="jN8-zx-7kn"/>
+                                            <constraint firstAttribute="bottom" secondItem="axq-tM-YoN" secondAttribute="bottom" constant="8" id="krK-EJ-DJq"/>
+                                        </constraints>
+                                    </customView>
+                                    <customView horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="Zad-e1-jFI" userLabel="LinkRow">
+                                        <rect key="frame" x="0.0" y="0.0" width="2258" height="50"/>
+                                        <subviews>
+                                            <customView horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="xa1-b3-cbf" userLabel="Link Cell">
+                                                <rect key="frame" x="282" y="0.0" width="847" height="50"/>
+                                                <subviews>
+                                                    <imageView horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="dMC-Ih-72R">
+                                                        <rect key="frame" x="2" y="13.5" width="23" height="25"/>
+                                                        <imageCell key="cell" refusesFirstResponder="YES" alignment="left" id="vYQ-bb-0Rj">
+                                                            <imageReference key="image" image="hands.sparkles" catalog="system" symbolScale="large"/>
+                                                        </imageCell>
+                                                        <color key="contentTintColor" name="linkColor" catalog="System" colorSpace="catalog"/>
+                                                    </imageView>
+                                                    <textField horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="gmk-QZ-E3o" customClass="Hyperlink">
+                                                        <rect key="frame" x="28" y="17" width="113" height="16"/>
+                                                        <textFieldCell key="cell" alignment="left" title="Acknoledgements" usesSingleLineMode="YES" id="8pi-FV-zYE">
+                                                            <font key="font" metaFont="system"/>
+                                                            <color key="textColor" name="linkColor" catalog="System" colorSpace="catalog"/>
+                                                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                                        </textFieldCell>
+                                                        <userDefinedRuntimeAttributes>
+                                                            <userDefinedRuntimeAttribute type="string" keyPath="href" value="https://github.com/noah-nuebling/mac-mouse-fix"/>
+                                                            <userDefinedRuntimeAttribute type="number" keyPath="rMrgn">
+                                                                <integer key="value" value="25"/>
+                                                            </userDefinedRuntimeAttribute>
+                                                        </userDefinedRuntimeAttributes>
+                                                    </textField>
+                                                </subviews>
+                                                <constraints>
+                                                    <constraint firstItem="gmk-QZ-E3o" firstAttribute="centerY" secondItem="xa1-b3-cbf" secondAttribute="centerY" id="4kG-gI-nHw"/>
+                                                    <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="gmk-QZ-E3o" secondAttribute="bottom" id="DJG-JZ-G8o"/>
+                                                    <constraint firstAttribute="trailing" secondItem="gmk-QZ-E3o" secondAttribute="trailing" priority="999" id="E09-pj-vEB"/>
+                                                    <constraint firstItem="dMC-Ih-72R" firstAttribute="centerX" secondItem="xa1-b3-cbf" secondAttribute="leading" constant="13" id="Laa-eW-5Rh"/>
+                                                    <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="dMC-Ih-72R" secondAttribute="bottom" id="OaW-v0-F5b"/>
+                                                    <constraint firstAttribute="bottom" secondItem="dMC-Ih-72R" secondAttribute="bottom" priority="999" id="TZD-uY-RkO"/>
+                                                    <constraint firstItem="gmk-QZ-E3o" firstAttribute="leading" secondItem="xa1-b3-cbf" secondAttribute="leading" constant="30" id="UZZ-RW-b2U"/>
+                                                    <constraint firstAttribute="bottom" secondItem="gmk-QZ-E3o" secondAttribute="bottom" priority="999" id="ag0-wV-U6A"/>
+                                                    <constraint firstItem="dMC-Ih-72R" firstAttribute="centerY" secondItem="xa1-b3-cbf" secondAttribute="centerY" id="d78-mY-fE3"/>
+                                                    <constraint firstItem="gmk-QZ-E3o" firstAttribute="top" relation="greaterThanOrEqual" secondItem="xa1-b3-cbf" secondAttribute="top" id="rw3-BX-5Qg"/>
+                                                    <constraint firstItem="gmk-QZ-E3o" firstAttribute="top" secondItem="xa1-b3-cbf" secondAttribute="top" priority="999" id="suo-CB-1oc"/>
+                                                    <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="gmk-QZ-E3o" secondAttribute="trailing" id="tA5-0H-dUZ"/>
+                                                </constraints>
+                                            </customView>
+                                            <customView horizontalHuggingPriority="500" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="15g-eT-Sq8" userLabel="Link Cell">
+                                                <rect key="frame" x="1270" y="0.0" width="706" height="50"/>
+                                                <subviews>
+                                                    <imageView horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="dnN-4Q-oW6">
+                                                        <rect key="frame" x="3" y="16" width="20" height="20"/>
+                                                        <imageCell key="cell" refusesFirstResponder="YES" alignment="left" id="EPb-wV-EZa">
+                                                            <imageReference key="image" image="smiley" catalog="system" symbolScale="large"/>
+                                                        </imageCell>
+                                                        <color key="contentTintColor" name="linkColor" catalog="System" colorSpace="catalog"/>
+                                                    </imageView>
+                                                    <textField horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="X0k-mF-gia" customClass="Hyperlink">
+                                                        <rect key="frame" x="28" y="17" width="136" height="16"/>
+                                                        <textFieldCell key="cell" alignment="left" title="Buy me a Milkshake :)" usesSingleLineMode="YES" id="TrI-uu-DEN">
+                                                            <font key="font" metaFont="system"/>
+                                                            <color key="textColor" name="linkColor" catalog="System" colorSpace="catalog"/>
+                                                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                                        </textFieldCell>
+                                                        <userDefinedRuntimeAttributes>
+                                                            <userDefinedRuntimeAttribute type="string" keyPath="href" value="https://github.com/noah-nuebling/mac-mouse-fix"/>
+                                                            <userDefinedRuntimeAttribute type="number" keyPath="rMrgn">
+                                                                <integer key="value" value="25"/>
+                                                            </userDefinedRuntimeAttribute>
+                                                        </userDefinedRuntimeAttributes>
+                                                    </textField>
+                                                </subviews>
+                                                <constraints>
+                                                    <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="X0k-mF-gia" secondAttribute="bottom" id="7kL-hU-kWo"/>
+                                                    <constraint firstItem="dnN-4Q-oW6" firstAttribute="centerY" secondItem="15g-eT-Sq8" secondAttribute="centerY" id="B33-wt-1Sm"/>
+                                                    <constraint firstItem="X0k-mF-gia" firstAttribute="centerY" secondItem="15g-eT-Sq8" secondAttribute="centerY" id="CRa-71-OBn"/>
+                                                    <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="X0k-mF-gia" secondAttribute="trailing" id="Efz-BV-Dev"/>
+                                                    <constraint firstAttribute="trailing" secondItem="X0k-mF-gia" secondAttribute="trailing" priority="999" id="IP4-Pd-8tU"/>
+                                                    <constraint firstItem="X0k-mF-gia" firstAttribute="top" relation="greaterThanOrEqual" secondItem="15g-eT-Sq8" secondAttribute="top" id="JLM-xY-v0L"/>
+                                                    <constraint firstAttribute="bottom" secondItem="X0k-mF-gia" secondAttribute="bottom" priority="999" id="ihI-v9-k8o"/>
+                                                    <constraint firstAttribute="bottom" secondItem="dnN-4Q-oW6" secondAttribute="bottom" priority="999" id="jJ5-70-A1e"/>
+                                                    <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="dnN-4Q-oW6" secondAttribute="bottom" id="kV4-hM-ShS"/>
+                                                    <constraint firstItem="X0k-mF-gia" firstAttribute="leading" secondItem="15g-eT-Sq8" secondAttribute="leading" constant="30" id="o9P-yb-3pt"/>
+                                                    <constraint firstItem="dnN-4Q-oW6" firstAttribute="centerX" secondItem="15g-eT-Sq8" secondAttribute="leading" constant="13" id="tX0-8s-hX9"/>
+                                                    <constraint firstItem="X0k-mF-gia" firstAttribute="top" secondItem="15g-eT-Sq8" secondAttribute="top" priority="999" id="wfA-cg-wWj"/>
+                                                </constraints>
+                                            </customView>
+                                        </subviews>
+                                        <constraints>
+                                            <constraint firstItem="xa1-b3-cbf" firstAttribute="top" secondItem="Zad-e1-jFI" secondAttribute="top" id="00x-nd-Lu2"/>
+                                            <constraint firstItem="15g-eT-Sq8" firstAttribute="leading" secondItem="Zad-e1-jFI" secondAttribute="centerX" multiplier="1.125" id="4HE-hd-ZBV"/>
+                                            <constraint firstAttribute="centerX" secondItem="xa1-b3-cbf" secondAttribute="trailing" id="A9P-JA-XrM"/>
+                                            <constraint firstItem="15g-eT-Sq8" firstAttribute="top" secondItem="Zad-e1-jFI" secondAttribute="top" id="JuY-bT-LB5"/>
+                                            <constraint firstItem="15g-eT-Sq8" firstAttribute="trailing" secondItem="Zad-e1-jFI" secondAttribute="centerX" multiplier="1.75" id="Omc-xB-uZP"/>
+                                            <constraint firstItem="xa1-b3-cbf" firstAttribute="leading" secondItem="Zad-e1-jFI" secondAttribute="centerX" multiplier="0.25" id="PUE-nE-acc"/>
+                                            <constraint firstItem="15g-eT-Sq8" firstAttribute="centerY" secondItem="Zad-e1-jFI" secondAttribute="centerY" id="pro-cc-lpj"/>
+                                            <constraint firstItem="xa1-b3-cbf" firstAttribute="centerY" secondItem="Zad-e1-jFI" secondAttribute="centerY" id="wWP-Hi-1Sg"/>
+                                        </constraints>
+                                    </customView>
                                 </subviews>
+                                <edgeInsets key="edgeInsets" left="0.0" right="0.0" top="18" bottom="0.0"/>
                                 <visibilityPriorities>
+                                    <integer value="1000"/>
+                                    <integer value="1000"/>
+                                    <integer value="1000"/>
+                                    <integer value="1000"/>
+                                    <integer value="1000"/>
+                                    <integer value="1000"/>
                                     <integer value="1000"/>
                                 </visibilityPriorities>
                                 <customSpacing>
+                                    <real value="3.4028234663852886e+38"/>
+                                    <real value="3.4028234663852886e+38"/>
+                                    <real value="3.4028234663852886e+38"/>
+                                    <real value="3.4028234663852886e+38"/>
+                                    <real value="3.4028234663852886e+38"/>
+                                    <real value="3.4028234663852886e+38"/>
                                     <real value="3.4028234663852886e+38"/>
                                 </customSpacing>
                             </stackView>
                         </subviews>
                         <constraints>
-                            <constraint firstAttribute="bottom" secondItem="ugH-B2-Fh0" secondAttribute="bottom" constant="20" id="AEx-na-9sW"/>
-                            <constraint firstItem="ugH-B2-Fh0" firstAttribute="leading" secondItem="ajM-sr-oMv" secondAttribute="leading" constant="30" id="rG6-ZS-xnQ"/>
-                            <constraint firstItem="ugH-B2-Fh0" firstAttribute="top" secondItem="ajM-sr-oMv" secondAttribute="top" constant="20" id="w1v-QC-OH8"/>
-                            <constraint firstAttribute="trailing" secondItem="ugH-B2-Fh0" secondAttribute="trailing" constant="30" id="xNG-m7-QyK"/>
+                            <constraint firstAttribute="bottom" secondItem="ugH-B2-Fh0" secondAttribute="bottom" id="AEx-na-9sW"/>
+                            <constraint firstAttribute="trailing" secondItem="ugH-B2-Fh0" secondAttribute="trailing" id="Cdw-WP-Qdy"/>
+                            <constraint firstItem="ugH-B2-Fh0" firstAttribute="leading" secondItem="ajM-sr-oMv" secondAttribute="leading" id="rG6-ZS-xnQ"/>
+                            <constraint firstItem="ugH-B2-Fh0" firstAttribute="top" secondItem="ajM-sr-oMv" secondAttribute="top" id="w1v-QC-OH8"/>
                         </constraints>
                     </view>
                     <attributedString key="userComments">
@@ -1719,7 +2106,7 @@ System Preferences &gt; Mouse &gt; Tracking speed </string>
                 </viewController>
                 <customObject id="xN7-0P-7Zw" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1116" y="1605"/>
+            <point key="canvasLocation" x="1116" y="1604.5"/>
         </scene>
         <!--<Initial Tab Controller>-->
         <scene sceneID="R82-b2-ukC">
@@ -1747,15 +2134,23 @@ System Preferences &gt; Mouse &gt; Tracking speed </string>
         </scene>
     </scenes>
     <resources>
-        <image name="arrow.triangle.branch" catalog="system" width="15" height="14"/>
+        <image name="AppIconRoundFromHelper-deleteThis" width="128" height="128"/>
+        <image name="arrow.triangle.branch" catalog="system" width="20" height="18"/>
         <image name="arrow.up.and.down" catalog="system" width="11" height="15"/>
         <image name="arrow.uturn.backward.circle.fill" catalog="system" width="15" height="15"/>
         <image name="cursorarrow" catalog="system" width="11" height="16"/>
+        <image name="exclamationmark.shield" catalog="system" width="20" height="20"/>
         <image name="gearshape" catalog="system" width="16" height="16"/>
+        <image name="hands.sparkles" catalog="system" width="23" height="25"/>
+        <image name="heart.text.square" catalog="system" width="19" height="18"/>
         <image name="info.circle" catalog="system" width="15" height="15"/>
         <image name="minus" catalog="system" width="14" height="4"/>
         <image name="plus" catalog="system" width="14" height="13"/>
+        <image name="questionmark" catalog="system" width="13" height="19"/>
         <image name="rectangle" catalog="system" width="18" height="14"/>
+        <image name="rectangle.3.group.bubble.left" catalog="system" width="22" height="20"/>
+        <image name="safari" catalog="system" width="20" height="20"/>
+        <image name="smiley" catalog="system" width="20" height="20"/>
         <image name="xmark.circle.fill" catalog="system" width="15" height="15"/>
     </resources>
 </document>

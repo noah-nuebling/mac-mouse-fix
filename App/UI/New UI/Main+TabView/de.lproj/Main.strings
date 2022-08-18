@@ -262,8 +262,35 @@
 /* Class = "NSTextFieldCell"; title = "Scroll Horizontally"; ObjectID = "6Nj-Ed-W5T"; Note = "Scrolling > Keyboard Modifiers > Scroll Horizontally Label"; */
 "6Nj-Ed-W5T.title" = "Horizontal scrollen";
 
-/* Class = "NSTextFieldCell"; title = "Check it out on GitHub"; ObjectID = "5yb-g8-Kcg"; */
-"5yb-g8-Kcg.title" = "Schau dir das GitHub an";
+/* Class = "NSTextFieldCell"; title = "Write a feature request"; ObjectID = "5yb-g8-Kcg"; */
+"5yb-g8-Kcg.title" = "Schlage ein Feature vor";
 
-/* Class = "NSTextFieldCell"; title = "Check it out on GitHub"; ObjectID = "Qim-mT-9oS"; */
-"Qim-mT-9oS.title" = ";jkf;alj;ladjsf;";
+/* Class = "NSTextFieldCell"; title = "Visit the Website"; ObjectID = "Ozk-o9-C4a"; */
+"Ozk-o9-C4a.title" = "Besuche die Webseite";
+
+/* Class = "NSTextFieldCell"; title = "Check it out on GitHub"; ObjectID = "ZMA-p0-2lf"; */
+"ZMA-p0-2lf.title" = "Schau dir das GitHub an";
+
+/* Class = "NSTextFieldCell"; title = "File a bug report"; ObjectID = "bQf-qv-mvB"; */
+"bQf-qv-mvB.title" = "Erstatte einen Fehlerbericht";
+
+/* Class = "NSTextFieldCell"; title = "Acknoledgements"; ObjectID = "8pi-FV-zYE"; */
+"8pi-FV-zYE.title" = "Anerkennungen";
+
+/* Class = "NSTextFieldCell"; title = "Buy me a Milkshake :)"; ObjectID = "TrI-uu-DEN"; */
+"TrI-uu-DEN.title" = "Kauf mir nen Milchshake :)";
+
+/* Class = "NSTextFieldCell"; title = "Send me an Email"; ObjectID = "QaW-cc-uzc"; */
+"QaW-cc-uzc.title" = "Sende mir eine Email";
+
+/* Class = "NSTextFieldCell"; title = "Get Help"; ObjectID = "eVc-l9-Z0h"; */
+"eVc-l9-Z0h.title" = "Hilfe bekommen";
+
+/* Class = "NSTextFieldCell"; title = "<Version - (-)>"; ObjectID = "79J-Zg-ebA"; */
+"79J-Zg-ebA.title" = "Version 2.0.0 Beta 4 (5842)";
+
+/* Class = "NSTextFieldCell"; title = "Mac Mouse Fix"; ObjectID = "bGk-tB-fcH"; */
+"bGk-tB-fcH.title" = "Mac Mouse Fix";
+
+/* Class = "NSTextFieldCell"; title = "Created by Noah Nuebling"; ObjectID = "pMz-a0-1UQ"; */
+"pMz-a0-1UQ.title" = "Gemacht von Noah Nübling";
