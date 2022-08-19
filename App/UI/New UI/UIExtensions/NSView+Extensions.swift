@@ -114,7 +114,7 @@ extension NSView {
     // MARK: Set Anchor Point
     
     /// Stolen from some SO post
-    func setAnchorPoint (anchorPoint:CGPoint) {
+    func coolSetAnchorPoint (anchorPoint:CGPoint) {
         if let layer = self.layer {
             var newPoint = CGPoint(x: self.bounds.size.width * anchorPoint.x, y: self.bounds.size.height * anchorPoint.y)
             var oldPoint = CGPoint(x: self.bounds.size.width * layer.anchorPoint.x, y: self.bounds.size.height * layer.anchorPoint.y)
@@ -176,7 +176,7 @@ extension NSView {
         scaleAnimation.isRemovedOnCompletion = false
 
         /// Set anchor point to center
-        view.setAnchorPoint(anchorPoint: .init(x: 0.5, y: 0.5))
+        view.coolSetAnchorPoint(anchorPoint: .init(x: 0.5, y: 0.5))
         
         CATransaction.begin()
         

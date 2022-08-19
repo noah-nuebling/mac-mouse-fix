@@ -22,8 +22,8 @@
 /* First draft: Content tracks finger movement */
 "natural-scrolling-hint" = "Content tracks finger movement";
 
-/* First draft: Scroll precisely by moving the scroll wheel slowly */
-"precise-scrolling-hint" = "Scroll precisely by moving the scroll wheel slowly";
+/* First draft: Scroll precisely without a modifier key by\nmoving the scroll wheel slowly */
+"precise-scrolling-hint" = "Scroll precisely without a modifier key\nby moving the scroll wheel slowly";
 
 /* First draft: <Rewind key> */
 "apple-key-fallback.backward" = "";

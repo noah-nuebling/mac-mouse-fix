@@ -22,8 +22,8 @@
 /* First draft: Content tracks finger movement */
 "natural-scrolling-hint" = "Inhalte folgen Finger-Bewegung";
 
-/* First draft: Scroll precisely by moving the scroll wheel slowly */
-"precise-scrolling-hint" = "Scrolle präzise indem du das Scroll-Rad langsam bewegst";
+/* First draft: Scroll precisely without a modifier key by\nmoving the scroll wheel slowly */
+"precise-scrolling-hint" = "Scrolle auch ohne Sondertaste präzise indem du das\nScrollrad langsam bewegst";
 
 /* First draft: Mission Control & Spaces */
 "drag-effect.dock-swipe" = "Spaces & Mission Control";

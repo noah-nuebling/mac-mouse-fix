@@ -230,6 +230,9 @@ class TabViewController: NSTabViewController {
         /// Resize window and stuff
         ///     Doing this here in didSelect instead of in willSelect makes the animation smoother for some reason
         var resizeDuration = self.resizeWindowToFit(tabViewItem: tabViewItem)
+        
+        /// Do fade animations
+        
         resizeDuration *= 0.9 /// Because spring animations take long to settle
         let fadeDuration = resizeDuration /* max(0.135, resizeDuration) */
         
@@ -251,6 +254,15 @@ class TabViewController: NSTabViewController {
                 /// If we don't remove this ModCaptureTextFields that are under the invisible image view won't react to clicks. Not sure why.
                 self.unselectedTabImageView.removeFromSuperview()
             }
+            /// Zoom out
+            ///     This doesn't seem to do anything. Not sure why.
+//            unselectedTabImageView.imageScaling = .scaleProportionallyDown
+//            unselectedTabImageView.coolSetAnchorPoint(anchorPoint: .init(x: 0.5, y: 0.5))
+//            Animate.with(CABasicAnimation(name: .default, duration: fadeDuration)) {
+//                unselectedTabImageView.reactiveAnimator().layer.transform.set(CATransform3DMakeScale(0.0, 0.0, 1.0))
+//            } onComplete: {
+//                self.unselectedTabImageView.layer!.transform = CATransform3DIdentity
+//            }
             
         }
         
@@ -328,7 +340,7 @@ class TabViewController: NSTabViewController {
         var animation: CASpringAnimation? = CASpringAnimation(speed: springSpeed, damping: springDamping)
         
         /// Do special animation when app first starts)
-        ///     This doesn't work right when the debugger is attached. Instead the first real, user-initiated tab switch will have this animation
+        ///     This doesn't work right when the debugger is attached. Instead the first real, user-initiated tab switch will have this animation. Edit: I think we changed things so it does work with debugger now? Or we prevent animations on initial tab switch during app start some other way. Not sure.
         
         if !initialTabSwitchWasPerformed {
             
@@ -342,8 +354,9 @@ class TabViewController: NSTabViewController {
         }
         
         /// Get durations
-        /// Note: fromValue and toValue don't affect duration
-        ///     Before spring animations we used to use window.animationResizeTime(newFrame)
+        /// Notes:
+        /// - fromValue and toValue don't affect duration
+        /// - Before spring animations we used to use window.animationResizeTime(newFrame)
         
         let duration = animation?.settlingDuration ?? 0.0
         var fadeDuration = duration * 1.0 /* 0.75 */
@@ -356,7 +369,8 @@ class TabViewController: NSTabViewController {
             windowResizeTimer!.invalidate()
             windowResizeTimer = nil
         }
-        windowResizeTimer = Timer.scheduledTimer(withTimeInterval: duration, repeats: false, block: { (timer) in
+        windowResizeTimer = Timer.scheduledTimer(withTimeInterval: duration+0.1, repeats: false, block: { (timer) in
+            /// Note: Adding 0.1 to duration avoids occasional jank. I guess the springAnimation.settlingDuration is sometimes underestimated.
             
             /// After the resize animation, we can add the constraints back in
             self.restoreConstraintsAfterWindowResizing()

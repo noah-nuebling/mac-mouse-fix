@@ -57,7 +57,7 @@
     
     /// Create string describing uncaptured and captured
     
-    NSString *buttonString = stringf(NSLocalizedString(@"capture-toast", nil), capturedButtonString, capturedCount, uncapturedButtonString, uncapturedCount);
+    NSString *buttonString = stringf(NSLocalizedString(@"capture-toast", @"Key defined in .stringsdict"), capturedButtonString, capturedCount, uncapturedButtonString, uncapturedCount);
     
     if (uncapturedCount > 0 || capturedCount > 0) {
         

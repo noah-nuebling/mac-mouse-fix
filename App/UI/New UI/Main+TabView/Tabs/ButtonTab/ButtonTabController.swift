@@ -313,7 +313,7 @@ import CocoaLumberjackSwift
         /// Init
         addField.wantsLayer = true
         addField.layer?.transform = CATransform3DIdentity
-        addField.setAnchorPoint(anchorPoint: .init(x: 0.5, y: 0.5))
+        addField.coolSetAnchorPoint(anchorPoint: .init(x: 0.5, y: 0.5))
         
         if !enable {
             

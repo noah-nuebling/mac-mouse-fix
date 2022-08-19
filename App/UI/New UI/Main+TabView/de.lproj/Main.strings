@@ -278,13 +278,13 @@
 "8pi-FV-zYE.title" = "Anerkennungen";
 
 /* Class = "NSTextFieldCell"; title = "Buy me a Milkshake :)"; ObjectID = "TrI-uu-DEN"; */
-"TrI-uu-DEN.title" = "Kauf mir nen Milchshake :)"; /// "KAUF MIR NEN MILCHSHAKE :)";
+"TrI-uu-DEN.title" = "Spendier mir nen Milchshake! :)"; /// "KAUF MIR NEN MILCHSHAKE :)";
 
 /* Class = "NSTextFieldCell"; title = "Send me an Email"; ObjectID = "QaW-cc-uzc"; */
 "QaW-cc-uzc.title" = "Sende mir eine Email";
 
 /* Class = "NSTextFieldCell"; title = "Get Help"; ObjectID = "eVc-l9-Z0h"; */
-"eVc-l9-Z0h.title" = "Hilfe bekommen";
+"eVc-l9-Z0h.title" = "Bekomme Hilfe";
 
 /* Class = "NSTextFieldCell"; title = "<Version - (-)>"; ObjectID = "79J-Zg-ebA"; */
 "79J-Zg-ebA.title" = "Version 2.0.0 Beta 4 (5842)";

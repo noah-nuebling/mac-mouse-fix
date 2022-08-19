@@ -313,8 +313,8 @@ static NSMutableAttributedString *symbolStringWithModifierPrefix(NSString *flags
         
         NSArray *firstStrings = sa;
         
-        NSString *join = NSLocalizedString(@"join-list", @"First draft: , || Note: This string joins elements in a list except the second last and last one.");
-        NSString *joinLast = NSLocalizedString(@"join-list.last", @"First draft: %@ & %@ || Note: This format string joins the last element of a list of items with the preceding ones");
+        NSString *join = NSLocalizedString(@"join-list", @"First draft: , || Note: This string joins elements in a list except the second-to-last and last one.");
+        NSString *joinLast = NSLocalizedString(@"join-list.last", @"First draft: %@ & %@ || Note: This format string joins the second-to-last element and the last elements in a list of items");
         
         outString = stringf(joinLast, [firstStrings componentsJoinedByString:join], lastString);
     }

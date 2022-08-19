@@ -20,7 +20,7 @@
     if (payload) {
         messageDict = @{
             kMFMessageKeyMessage: message,
-            kMFMessageKeyPayload: payload, // This crashes if payload is nil for some reason
+            kMFMessageKeyPayload: payload, /// This crashes if payload is nil for some reason
         };
     } else {
         messageDict = @{

@@ -59,6 +59,7 @@ class ScrollTabController: NSViewController {
             /// Turn off killSwitch
             setConfig("Other.scrollKillSwitch", false as NSObject)
             commitConfig()
+            
             /// Show message to user
             if #available(macOS 13, *) {
                 
@@ -113,7 +114,7 @@ class ScrollTabController: NSViewController {
         /// Precise
         precise.bindingTarget <~ preciseToggle.reactive.boolValues
         preciseToggle.reactive.boolValue <~ precise.producer
-        preciseHint.stringValue = NSLocalizedString("precise-scrolling-hint", comment: "First draft: Scroll precisely by moving the scroll wheel slowly")
+        preciseHint.stringValue = NSLocalizedString("precise-scrolling-hint", comment: "First draft: Scroll precisely without a modifier key by\nmoving the scroll wheel slowly")
         
         /// Installl the macOSHint.
         ///     We manually make the macOSHint width equal the preciseSection width, because if the width changes the window resizes from the left edge which looks crappy.
