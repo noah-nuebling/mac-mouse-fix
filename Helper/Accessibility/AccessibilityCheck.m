@@ -96,13 +96,12 @@ CGEventRef _Nullable testCallback(CGEventTapProxy proxy, CGEventType type, CGEve
     
     /// Testing & Debug
     
-    [Licensing checkLicense:@"aldfadslfjadf"
-        incrementUsageCount:NO
-          completionHandler:^(BOOL licenseIsValid, NSError * _Nullable error, NSDictionary<NSString *,id> * _Nullable response) {
-        
-        /// Debug
-        ///     Is the response dict safe to just print out? Sensitive info?
-        DDLogDebug(@"License check result - success: %d, error: %@, response: %@", licenseIsValid, error, response);
+    NSString *license = @"A26BC3A7-4FA345B1-A430DBDD-50786D63";
+    NSString *email = @"noah.nuebling@gmail.com";
+    
+    [Licensing checkLicense:license email:email completionHandler:^(BOOL isValidKeyAndEmail, NSDictionary<NSString *,id> * _Nullable serverResponse, NSError * _Nullable error, NSURLResponse * _Nullable urlResponse) {
+            
+            DDLogDebug(@"License check result - isValidKeyAndEmail: %d, error: %@", isValidKeyAndEmail, error);
     }];
     
 //    [GlobalDefaults applyDoubleClickThreshold];

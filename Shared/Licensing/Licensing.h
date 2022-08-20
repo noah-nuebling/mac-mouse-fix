@@ -21,11 +21,14 @@
 //#define kMFLicenseStateInvalid @"licenseIsInvalid"
 //#define kMFLicenseStateUnknown @"licenseCouldNotBeChecked" /// Throw error instead
 
-/// Define cutsom errors
-///     Edit: Unused. Delete
+/// Define custom errors
+///     Not using enum because Swift is annoying about those
 
-typedef enum {
-    kMFLicensingErrorCodeUnknown,
-} MFLicensingErrorCode;
+#define MFLicensingErrorDomain @"MFLicensingErrorDomain"
+
+#define kMFLicensingErrorCodeMismatchedEmails 1
+#define kMFLicensingErrorCodeInvalidNumberOfActivations 2
+#define kMFLicensingErrorCodeGumroadServerResponseError 3
+
 
 #endif /* Licensing_h */

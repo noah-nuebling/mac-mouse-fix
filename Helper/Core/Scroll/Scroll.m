@@ -171,10 +171,10 @@ static CGEventRef eventTapCallback(CGEventTapProxy proxy, CGEventType type, CGEv
     if (type == kCGEventTapDisabledByTimeout || type == kCGEventTapDisabledByUserInput) {
         
         if (type == kCGEventTapDisabledByUserInput) {
-            DDLogInfo(@"ScrollControl eventTap was disabled by timeout. Re-enabling");
+            DDLogInfo(@"Scroll.m eventTap was disabled by timeout. Re-enabling");
             CGEventTapEnable(_eventTap, true);
         } else if (type == kCGEventTapDisabledByUserInput) {
-            DDLogInfo(@"ScrollControl eventTap was disabled by user input.");
+            DDLogInfo(@"Scroll.m eventTap was disabled by user input.");
         }
         
         return event;
