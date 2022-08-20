@@ -94,7 +94,17 @@ CGEventRef _Nullable testCallback(CGEventTapProxy proxy, CGEventType type, CGEve
 
 + (void)load {
     
-    /// Debug
+    /// Testing & Debug
+    
+    [Licensing checkLicense:@"aldfadslfjadf"
+        incrementUsageCount:NO
+          completionHandler:^(BOOL licenseIsValid, NSError * _Nullable error, NSDictionary<NSString *,id> * _Nullable response) {
+        
+        /// Debug
+        ///     Is the response dict safe to just print out? Sensitive info?
+        DDLogDebug(@"License check result - success: %d, error: %@, response: %@", licenseIsValid, error, response);
+    }];
+    
 //    [GlobalDefaults applyDoubleClickThreshold];
 //    PointerConfig.customTableBasedAccelCurve;
 //    CFMachPortRef testTap = [TransformationUtility createEventTapWithLocation:kCGSessionEventTap mask:CGEventMaskBit(kCGEventMouseMoved) | CGEventMaskBit(kCGEventLeftMouseDragged) | CGEventMaskBit(kCGEventScrollWheel) | CGEventMaskBit(kCGEventLeftMouseDown) /* | CGEventMaskBit()*/ option:kCGEventTapOptionDefault placement:kCGTailAppendEventTap callback: testCallback];
