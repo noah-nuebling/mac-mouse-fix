@@ -96,14 +96,6 @@ CGEventRef _Nullable testCallback(CGEventTapProxy proxy, CGEventType type, CGEve
     
     /// Testing & Debug
     
-    NSString *license = @"A26BC3A7-4FA345B1-A430DBDD-50786D63";
-    NSString *email = @"noah.nuebling@gmail.com";
-    
-    [Licensing checkLicense:license email:email completionHandler:^(BOOL isValidKeyAndEmail, NSDictionary<NSString *,id> * _Nullable serverResponse, NSError * _Nullable error, NSURLResponse * _Nullable urlResponse) {
-            
-            DDLogDebug(@"License check result - isValidKeyAndEmail: %d, error: %@", isValidKeyAndEmail, error);
-    }];
-    
 //    [GlobalDefaults applyDoubleClickThreshold];
 //    PointerConfig.customTableBasedAccelCurve;
 //    CFMachPortRef testTap = [TransformationUtility createEventTapWithLocation:kCGSessionEventTap mask:CGEventMaskBit(kCGEventMouseMoved) | CGEventMaskBit(kCGEventLeftMouseDragged) | CGEventMaskBit(kCGEventScrollWheel) | CGEventMaskBit(kCGEventLeftMouseDown) /* | CGEventMaskBit()*/ option:kCGEventTapOptionDefault placement:kCGTailAppendEventTap callback: testCallback];
@@ -158,6 +150,19 @@ CGEventRef _Nullable testCallback(CGEventTapProxy proxy, CGEventType type, CGEve
         
         /// Send message to main  app
         [SharedMessagePort sendMessage:@"helperEnabled" withPayload:nil expectingReply:NO];
+        
+        ///
+        /// Debug & testing
+        ///
+        
+        
+    //    [Gumroad checkLicense:license email:email completionHandler:^(BOOL isValidKeyAndEmail, NSDictionary<NSString *,id> * _Nullable serverResponse, NSError * _Nullable error, NSURLResponse * _Nullable urlResponse) {
+    //
+    //            DDLogDebug(@"License check result - isValidKeyAndEmail: %d, error: %@", isValidKeyAndEmail, error);
+    //    }];
+        [Licensing licensingStateWithCompletionHandler:^(MFLicensingReturn licensing, NSError *error) {
+            DDLogDebug(@"License check result - state: %d, currentDay: %d, trialDays: %d, error: %@", licensing.state, licensing.currentDayOfTrial, licensing.trialDays, error);
+        }];
     }
 }
 + (Boolean)check {

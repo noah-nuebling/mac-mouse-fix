@@ -26,6 +26,15 @@
 		<key>speed</key>
 		<string>medium</string>
 	</dict>
+	<key>License</key>
+	<dict>
+		<key>key</key>
+		<string>A26BC3A7-4FA345B1-A430DBDD-50786D63</string>
+		<key>email</key>
+		<string>noah.nuebling@gmail.com</string>
+		<key>isLicensedCache</key>
+		<false/>
+	</dict>
 	<key>AppOverrides</key>
 	<dict>
 		<key>com.adobe.Photoshop</key>
@@ -207,7 +216,7 @@
 		<key>checkForUpdates</key>
 		<true/>
 		<key>configVersion</key>
-		<integer>14</integer>
+		<integer>15</integer>
 		<key>launchesOverall</key>
 		<string>0</string>
 		<key>lastLaunchedBundleVersion</key>

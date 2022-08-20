@@ -28,8 +28,9 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)loadConfigFromFile;
 
 /// Read and write
-NSObject *config(NSString *keyPath);
+NSObject * _Nullable config(NSString *keyPath);
 void setConfig(NSString *keyPath, NSObject *value);
+void removeFromConfig(NSString *keyPath);
 void commitConfig(void);
 
 /// Repair

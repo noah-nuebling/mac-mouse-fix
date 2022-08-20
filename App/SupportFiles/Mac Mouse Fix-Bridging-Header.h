@@ -36,5 +36,6 @@
 #import "MFScrollView.h"
 #import "NSColor+Additions.h"
 #import "Utility_App.h"
+#import "Licensing.h"
 
 #endif /* Mac_Mouse_Fix_Bridging_Header_h */

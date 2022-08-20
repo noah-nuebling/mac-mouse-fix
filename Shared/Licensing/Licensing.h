@@ -12,23 +12,34 @@
 #ifndef Licensing_h
 #define Licensing_h
 
-/// Define MFLicenseState
-///     We couldn't defined this as an enum, because Swift doesn't let you return enum values from throwing objc funcs. No idea why.
-///     Edit: Using a completion handler and just using bools instead. Delete this.
+typedef enum {
+    kMFLicensingStateLicensed = 0,
+    kMFLicensingStateUnlicensed = 1,
+    kMFLicensingStateCachedLicensed = 2,
+    kMFLicensingStateCachedUnlicended = 3,
+} MFLicensingState;
 
-//typedef NSString * MFLicenseState;
-//#define kMFLicenseStateValid @"licenseIsValid"
-//#define kMFLicenseStateInvalid @"licenseIsInvalid"
-//#define kMFLicenseStateUnknown @"licenseCouldNotBeChecked" /// Throw error instead
+typedef struct {
+    MFLicensingState state;
+    int currentDayOfTrial;
+    int trialDays;
+} MFLicensingReturn;
 
 /// Define custom errors
-///     Not using enum because Swift is annoying about those
+///     Notes:
+///     - Not using enum because Swift is annoying about those
+///     - Most of these are thrown in Gumroad.swift, but `kMFLicensingErrorCodeNoInternetAndNoCache` and `kMFLicensingErrorCodeEmailAndKeyNotFound` are thrown in Licensing.swift.
+///     - Overall these should cover everything that can go wrong. With the `kMFLicensingErrorCodeGumroadServerResponseError` catching all the weird edge cases like a refunded license.
+///     - The `kMFLicensingErrorCodeGumroadServerResponseError` also catches the case when a user just enters a wrong license.
+///     - These could be used to inform the user about what's wrong.
 
 #define MFLicensingErrorDomain @"MFLicensingErrorDomain"
 
 #define kMFLicensingErrorCodeMismatchedEmails 1
 #define kMFLicensingErrorCodeInvalidNumberOfActivations 2
 #define kMFLicensingErrorCodeGumroadServerResponseError 3
+#define kMFLicensingErrorCodeEmailOrKeyNotFound 4
+#define kMFLicensingErrorCodeNoInternetAndNoCache 5
 
 
 #endif /* Licensing_h */

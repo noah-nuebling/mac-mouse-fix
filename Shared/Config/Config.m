@@ -62,7 +62,6 @@
         /// Load config
         [Config handleConfigFileChange];
     }
-    
 }
 
 static Config *_instance;
@@ -87,7 +86,7 @@ static Config *_instance;
 
 #pragma mark - Convenience
 
-NSObject *config(NSString *keyPath) {
+NSObject * _Nullable config(NSString *keyPath) {
     /// Convenience function for accessing config
     NSMutableDictionary *config = Config.shared.config;
     NSObject *result = [config valueForKeyPath:keyPath];
@@ -95,8 +94,12 @@ NSObject *config(NSString *keyPath) {
 }
 void setConfig(NSString *keyPath, NSObject *value) {
     /// Convenience function for modifying config
-    /// This doesn't write to file
-    return [Config.shared.config setValue:value forKeyPath:keyPath];
+    /// Note: This doesn't write to file. Use commitConfig() for that
+    [Config.shared.config setValue:value forKeyPath:keyPath];
+}
+void removeFromConfig(NSString *keyPath) {
+    /// Not sure this works
+    [Config.shared.config setValue:nil forKeyPath:keyPath];
 }
 
 void commitConfig() {
@@ -290,7 +293,9 @@ void Handle_FSEventStreamCallback (ConstFSEventStreamRef streamRef, void *client
     /// Load data from plist file at `_configURL` into `_config` class variable
     /// This only really needs to be called when `ConfigFileInterface_App` is loaded, but I use it in other places as well, to make the program behave better, when I manually edit the config file.
     
+#if IS_MAIN_APP
     [self repairConfigWithProblem:kMFConfigProblemNone info:nil];
+#endif
     
     NSData *configData = [NSData dataWithContentsOfURL:Objects.configURL];
     NSError *readErr;
@@ -338,7 +343,9 @@ void Handle_FSEventStreamCallback (ConstFSEventStreamRef streamRef, void *client
     /// Checks config for errors / incompatibilty and repairs it if necessary.
     /// TODO: Test if this still works
     /// TODO: Check whether all default (as opposed to override) values exist in config file. If they don't, then everything breaks. Maybe do this by comparing with default_config. Edit: Not sure this is feasible, also the comparing with default_config breaks if we want to have keys that are optional.
-    /// TODO: Consider moving/copying this function to helper, so it can repair stuff as well.
+    /// TODO: Consider porting this to Helper
+    
+    assert(SharedUtility.runningMainApp);
     
     /// Create config file if none exists
     
