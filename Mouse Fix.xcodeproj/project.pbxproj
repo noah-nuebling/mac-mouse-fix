@@ -188,6 +188,8 @@
 		4FDE759A28B1401400662314 /* Licensing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FDE759928B1401400662314 /* Licensing.swift */; };
 		4FDE759B28B1401400662314 /* Licensing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FDE759928B1401400662314 /* Licensing.swift */; };
 		4FDE759C28B1401A00662314 /* Gumroad.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FDE757A28B0E35100662314 /* Gumroad.swift */; };
+		4FDE759E28B174E700662314 /* Trial.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FDE759D28B174E700662314 /* Trial.swift */; };
+		4FDE759F28B174E700662314 /* Trial.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FDE759D28B174E700662314 /* Trial.swift */; };
 		4FDECCD928A3A37800DDEE91 /* ZipArchive.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4FDECCD628A3A37800DDEE91 /* ZipArchive.framework */; };
 		4FDECCDA28A3A37800DDEE91 /* Sparkle.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4FDECCD728A3A37800DDEE91 /* Sparkle.framework */; };
 		4FDECCDB28A3A37800DDEE91 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 4FDECCD828A3A37800DDEE91 /* README.md */; };
@@ -633,6 +635,7 @@
 		4FDE757A28B0E35100662314 /* Gumroad.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Gumroad.swift; sourceTree = "<group>"; };
 		4FDE757D28B0E66900662314 /* Licensing.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Licensing.h; sourceTree = "<group>"; };
 		4FDE759928B1401400662314 /* Licensing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Licensing.swift; sourceTree = "<group>"; };
+		4FDE759D28B174E700662314 /* Trial.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Trial.swift; sourceTree = "<group>"; };
 		4FDECCD628A3A37800DDEE91 /* ZipArchive.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = ZipArchive.framework; sourceTree = "<group>"; };
 		4FDECCD728A3A37800DDEE91 /* Sparkle.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Sparkle.framework; sourceTree = "<group>"; };
 		4FDECCD828A3A37800DDEE91 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
@@ -1508,6 +1511,7 @@
 			children = (
 				4FDE757D28B0E66900662314 /* Licensing.h */,
 				4FDE759928B1401400662314 /* Licensing.swift */,
+				4FDE759D28B174E700662314 /* Trial.swift */,
 				4FDE757A28B0E35100662314 /* Gumroad.swift */,
 			);
 			path = Licensing;
@@ -2601,6 +2605,7 @@
 				4F909D2B28A0C3D2009349A2 /* NSPopUpButton+Extensions.swift in Sources */,
 				4F7F47D128A5B86900290BBD /* Config.m in Sources */,
 				4FF6655025F2C7B000689B77 /* NSArray+Additions.m in Sources */,
+				4FDE759E28B174E700662314 /* Trial.swift in Sources */,
 				4F909D2328A0C3D2009349A2 /* PointerTabController.swift in Sources */,
 				4FCA07D625F3129B00BFE209 /* RemapTableController.m in Sources */,
 				4F44FF052606D73D00926A5E /* SharedMessagePort.m in Sources */,
@@ -2763,6 +2768,7 @@
 				4FF6654325F2C7B000689B77 /* HelperServices.m in Sources */,
 				4FA994BE26678AC90007F003 /* ScrollAnalyzer.m in Sources */,
 				4F9C9B60268A29FE0083DED0 /* Smoother.swift in Sources */,
+				4FDE759F28B174E700662314 /* Trial.swift in Sources */,
 				4FA83A29268271E200F3A31B /* PointerSpeed.m in Sources */,
 				4FF6654B25F2C7B000689B77 /* Queue.m in Sources */,
 				4F9C9B6B268A2D6F0083DED0 /* CircularBuffer.m in Sources */,

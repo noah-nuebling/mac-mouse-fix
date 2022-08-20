@@ -8,6 +8,7 @@
 //
 
 /// Make block-based timer available for macOS versions before 10.12
+///     Edit: This is obsolete now since we're dropping support for 10.12 and earlier with MMF 2.2.1
 
 import Cocoa
 

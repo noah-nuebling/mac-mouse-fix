@@ -11,7 +11,59 @@ import Cocoa
 
 @objc class Licensing: NSObject {
     
+    // MARK: Interface
+    
+    @objc static func runCheckAndDisplayUI(triggeredByUser: Bool) {
+        
+        /// Run check should be called when
+        
+        /// Get licensing state
+        
+        licensingState { licensing, error in
+            
+            if licensing.state == kMFLicensingStateLicensed || licensing.state == kMFLicensingStateCachedLicensed {
+                 
+                /// Do nothing if licensed
+                return
+                
+            } else {
+                
+                /// Not licensed -> check trial
+                if licensing.daysOfUse <= licensing.trialDays {
+                    
+                    /// Trial still active -> do nothing
+                    ///     Note: Maybe display small reminder after half of trial is over?
+                    
+                } else {
+                    
+                    /// Trial has expired -> show UI
+                    
+                    if triggeredByUser {
+                        
+                        /// Display more complex UI
+                        /// ...
+                        assert(SharedUtility.runningMainApp())
+                        
+                        
+                    } else {
+                        
+                        /// Not triggered by user -> the users workflow is disruped -> make it as short as possible
+                        /// ...
+                        assert(SharedUtility.runningHelper())
+                        
+                    }
+                    
+                }
+                
+            }
+            
+        }
+    }
+    
     @objc static func licensingState(completionHandler: @escaping (_ licensing: MFLicensingReturn, _ error: NSError?) -> ()) {
+        
+        /// Define constants
+        let trialDays = 14
         
         /// Check license
         checkLicense { state, error in
@@ -27,14 +79,16 @@ import Cocoa
             }
             
             /// Check trial
-            
+            let daysOfUse = Trial.daysOfUse
             
             /// Return
-            let result = MFLicensingReturn(state: state, currentDayOfTrial: -1, trialDays: -1)
+            let result = MFLicensingReturn(state: state, daysOfUse: Int32(daysOfUse), trialDays: Int32(trialDays))
             completionHandler(result, error)
         }
         
     }
+    
+    // MARK: Core
     
     fileprivate static func checkLicense(completionHandler: @escaping (MFLicensingState, NSError?) -> ()) {
         

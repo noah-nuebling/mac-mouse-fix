@@ -34,6 +34,13 @@
 		<string>noah.nuebling@gmail.com</string>
 		<key>isLicensedCache</key>
 		<false/>
+		<key>trial</key>
+		<dict>
+			<key>daysOfUse</key>
+			<integer>0</integer>
+			<key>lastUseDate</key>
+			<date>2022-08-20T20:19:52Z</date>
+		</dict>
 	</dict>
 	<key>AppOverrides</key>
 	<dict>

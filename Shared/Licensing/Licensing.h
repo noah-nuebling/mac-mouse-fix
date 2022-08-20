@@ -21,7 +21,7 @@ typedef enum {
 
 typedef struct {
     MFLicensingState state;
-    int currentDayOfTrial;
+    int daysOfUse;
     int trialDays;
 } MFLicensingReturn;
 
