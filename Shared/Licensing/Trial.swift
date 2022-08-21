@@ -100,7 +100,7 @@ import Cocoa
         }
     }
     
-    /// Interface
+    /// Interface for Helper
     @objc func handleUse() {
         
         /// Guard not running helper

@@ -294,3 +294,6 @@
 
 /* Class = "NSTextFieldCell"; title = "Created by Noah Nuebling"; ObjectID = "pMz-a0-1UQ"; */
 "pMz-a0-1UQ.title" = "Gemacht von Noah Nübling";
+
+/* Class = "NSTextFieldCell"; title = "<Thanks for buying Mac Mouse Fix!>"; ObjectID = "cul-5Z-iUo"; */
+"cul-5Z-iUo.title" = "<Danke, dass du Mac Mouse Fix gekauft hast!>";
