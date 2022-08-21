@@ -48,6 +48,7 @@ class AboutTabController: NSViewController {
                 ///
                     
                 /// Randomly select 1 out of 25+1 messages
+                ///     Note: If you want to test one of the rare ones, increase its `weight`
                 
                 let (emoji, message) = Randomizer.select(from: [
                     
@@ -67,13 +68,13 @@ class AboutTabController: NSViewController {
                     (("👽", NSLocalizedString("thanks.09", comment: "First draft: Share it with your Spacebook friends!")), weight: 0.05),
                     
                     /// Extremely rare
-                    (("🏂", NSLocalizedString("thanks.10", comment: "First draft: Duckgang for life!")), weight: 0.01),
+                    (("🏂", NSLocalizedString("thanks.10", comment: "First draft: Duckgang for life! || Note: A lot of these are personal, feel free to change them and leave your own messages!")), weight: 0.01),
                     (("🚜", NSLocalizedString("thanks.11", comment: "First draft: Watch where you're going :P || Note: In the context of driving a Tractor")), weight: 0.01),
                     (("🐁", NSLocalizedString("thanks.12", comment: "First draft: Not these mice, mom!")), weight: 0.01),
                     (("🐹", NSLocalizedString("thanks.13", comment: "First draft: We should get him a bow tie.")), weight: 0.01),
                     (("🇹🇷", "Ey Kanka, tebrikler tebrikler!"), weight: 0.01),
                     (("🥛", NSLocalizedString("thanks.15", comment: "First draft: Whole milk of course! It's your birthday after all.")), weight: 0.01),
-                    (("🎸", NSLocalizedString("thanks.16", comment: "First draft: Not John Mayer. Nonetheless mayor of hearts.")), weight: 0.01),
+                    (("🎸", NSLocalizedString("thanks.16", comment: "First draft: Not John Mayer. Nevertheless mayor of hearts.")), weight: 0.01),
                     (("💃", "1NEIN8NEIN"), weight: 0.01),
                     (("🦋", NSLocalizedString("thanks.18", comment: "First draft: Give me a call when you saved the world. :)")), weight: 0.01),
                     (("🏜️", "Dankeschön, meine Frau..."), weight: 0.01),
