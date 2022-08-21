@@ -52,38 +52,38 @@ class AboutTabController: NSViewController {
                 let (emoji, message) = Randomizer.select(from: [
                     
                     /// Common
-                    (("💫", "Thank you for buying Mac Mouse Fix!"), weight: 1),
-                    (("🌟", "Thanks for purchasing Mac Mouse Fix!"), weight: 1),
-                    (("🚀", "Thanks for supporting Mac Mouse Fix!"), weight: 1),
-                    (("🙏", "Thank you for buying Mac Mouse Fix!"), weight: 1),
-                    (("🧠", "Great purchasing decisions ;)"), weight: 1),
+                    (("💫", NSLocalizedString("thanks.01", comment: "First draft: Thank you for buying Mac Mouse Fix!")), weight: 1),
+                    (("🌟", NSLocalizedString("thanks.02", comment: "First draft: Thanks for purchasing Mac Mouse Fix!")), weight: 1),
+                    (("🚀", NSLocalizedString("thanks.03", comment: "First draft: Thanks for supporting Mac Mouse Fix!")), weight: 1),
+                    (("🙏", NSLocalizedString("thanks.04", comment: "First draft: Thank you for buying Mac Mouse Fix!")), weight: 1),
+                    (("🧠", NSLocalizedString("thanks.05", comment: "First draft: Great purchasing decisions ;)")), weight: 1),
                     
                     /// Rare
-                    (("🔥", "Awesome taste in mouse fixing software ;)"), weight: 0.1),
+                    (("🔥", NSLocalizedString("thanks.06", comment: "First draft: Awesome taste in mouse fixing software ;)")), weight: 0.1),
                     (("💙", ""), weight: 0.1),
-                    ((":)", "<- My face when I saw you bought Mac Mouse Fix"), weight: 0.1),
+                    ((":)", NSLocalizedString("thanks.08", comment: "First draft: <- My face when I saw you bought Mac Mouse Fix")), weight: 0.1),
                     
                     /// Very rare
-                    (("👽", "Share it with your Spacebook friends!"), weight: 0.05),
+                    (("👽", NSLocalizedString("thanks.09", comment: "First draft: Share it with your Spacebook friends!")), weight: 0.05),
                     
                     /// Extremely rare
-                    (("🏂", "Entengang for life."), weight: 0.01),
-                    (("🚜", "Pass auf wo du hinfährst :P"), weight: 0.01),
-                    (("🐁", "Not these mice, mom!"), weight: 0.01),
-                    (("🐹", "We should get him a bow tie."), weight: 0.01),
+                    (("🏂", NSLocalizedString("thanks.10", comment: "First draft: Duckgang for life!")), weight: 0.01),
+                    (("🚜", NSLocalizedString("thanks.11", comment: "First draft: Watch where you're going :P || Note: In the context of driving a Tractor")), weight: 0.01),
+                    (("🐁", NSLocalizedString("thanks.12", comment: "First draft: Not these mice, mom!")), weight: 0.01),
+                    (("🐹", NSLocalizedString("thanks.13", comment: "First draft: We should get him a bow tie.")), weight: 0.01),
                     (("🇹🇷", "Ey Kanka, tebrikler tebrikler!"), weight: 0.01),
-                    (("🥛", "Whole milk of course! It's your birthday after all."), weight: 0.01),
-                    (("🎸", "Not John Mayer, nonetheless mayor of hearts!"), weight: 0.01),
+                    (("🥛", NSLocalizedString("thanks.15", comment: "First draft: Whole milk of course! It's your birthday after all.")), weight: 0.01),
+                    (("🎸", NSLocalizedString("thanks.16", comment: "First draft: Not John Mayer. Nonetheless mayor of hearts.")), weight: 0.01),
                     (("💃", "1NEIN8NEIN"), weight: 0.01),
-                    (("🦋", "Give me a call when you saved the world."), weight: 0.01),
-                    (("🇺🇸", "Dankeschön, meine Frau..."), weight: 0.01),
-                    (("🌍", "Universal studios is probably not that great anyways... :)"), weight: 0.01),
-                    (("🐠", "Cuter than a Reaper Leviathan."), weight: 0.01),
+                    (("🦋", NSLocalizedString("thanks.18", comment: "First draft: Give me a call when you saved the world. :)")), weight: 0.01),
+                    (("🏜️", "Dankeschön, meine Frau..."), weight: 0.01),
+                    (("🌍", NSLocalizedString("thanks.20", comment: "First draft: Universal Studios is probably not that great anyways... :)")), weight: 0.01),
+                    (("🐠", NSLocalizedString("thanks.21", comment: "First draft: Cuter than a Reaper Leviathan.")), weight: 0.01),
                     (("🖤", ""), weight: 0.01),
                     (("🤍", ""), weight: 0.01),
-//                    (("🤏", "Peepee size of Mac Mouse Fix haters!"), weight: 0.01),
-                    (("😎", "Oh you're using Mac Mouse Fix? You must be pretty cool."), weight: 0.01),
-                    (("🌏", "First the mice, then the world!! >:)"), weight: 0.01),
+                    (("😎", NSLocalizedString("thanks.24", comment: "First draft: Oh you're using Mac Mouse Fix? You must be pretty cool.")), weight: 0.01),
+                    (("🌏", NSLocalizedString("thanks.25", comment: "First draft: First the mice, then the world!! >:)")), weight: 0.01),
+//                    (("🤏", "Peepee size of Mac Mouse Fix haters!"), weight: 0.01), /// Too weird
                     
                     /// Mom
                     (("💖❤️❤️❤️", "Für Beate, meine Lieblingsperson :)"), weight: 0.005),
@@ -112,7 +112,8 @@ class AboutTabController: NSViewController {
                 
                 /// Set content string
                 
-                self.trialCellText.attributedStringValue = NSAttributedString(coolMarkdown: "Day **\(Trial.daysOfUse)/\(Trial.trialDays)** of your test period")!
+                let string = String(format: NSLocalizedString("trial-counter", comment: "First draft: Day **%@/%@** of your test period"), Trial.daysOfUse, Trial.trialDays)
+                self.trialCellText.attributedStringValue = NSAttributedString(coolMarkdown: string)!
                 
                 /// Set textfield height
                 ///     Necessary for y centering. Not sure why

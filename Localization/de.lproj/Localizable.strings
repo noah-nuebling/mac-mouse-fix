@@ -315,3 +315,63 @@
 
 /* First draft: %@ & %@ || Note: This format string joins the last element of a list of items with the preceding ones */
 "join-list.last" = " %@ und %@";
+
+/* First draft: Thank you for buying Mac Mouse Fix! */
+"thanks.01" = "Danke, dass du Mac Mouse Fix gekauft hast!";
+
+/* First draft: Thanks for purchasing Mac Mouse Fix! */
+"thanks.02" = "Dankeschön, dass du Mac Mouse Fix gekauft hast!";
+
+/* First draft: Thanks for supporting Mac Mouse Fix! */
+"thanks.03" = "Danke, dass du Mac Mouse Fix unterstützt!";
+
+/* First draft: Thank you for buying Mac Mouse Fix! */
+"thanks.04" = "Danke dir, dass du Mac Mouse Fix gekauft hast!";
+
+/* First draft: Great purchasing decisions ;) */
+"thanks.05" = "Großartige Kaufentscheidung ;)";
+
+/* First draft: Awesome taste in mouse fixing software ;) */
+"thanks.06" = "Super geschmack was Maus-Fixing-Software angeht ;)";
+
+/* First draft: <- My face when I saw you bought Mac Mouse Fix */
+"thanks.08" = "<- Mein Gesicht, als ich gesehen habe, dass du Mac Mouse Fix gekauft hast";
+
+/* First draft: Share it with your Spacebook friends! */
+"thanks.09" = "Teile es mit deinen Spacebook Freunden!";
+
+/* First draft: Duckgang for life! */
+"thanks.10" = "Entengang fürs Leben!";
+
+/* First draft: Watch where you're going :P || Note: In the context of driving a Tractor */
+"thanks.11" = "Pass auf wo du hinfährst :P";
+
+/* First draft: Not these mice, mom! */
+"thanks.12" = "Nicht diese Art von Mäusen, Mama!";
+
+/* First draft: We should get him a bow tie. */
+"thanks.13" = "Wir sollte ihm eine Krawatte besorgen.";
+
+/* First draft: Whole milk of course! It's your birthday after all. */
+"thanks.15" = "Vollmilch natürlich! Es ist schließlich dein Geburtstag.";
+
+/* First draft: Not John Mayer. Nonetheless mayor of hearts. */
+"thanks.16" = "Nicht John Mayer. Trotzdem Bürgermeister der Herzen.";
+
+/* First draft: Give me a call when you saved the world. :) */
+"thanks.18" = "Ruf mich mal an wenn du die Welt gerettet hast. :)";
+
+/* First draft: Universal Studios is probably not that great anyways... :) */
+"thanks.20" = "Universal Studios ist wahrscheinlich sowieso nicht so toll... :)";
+
+/* First draft: Cuter than a Reaper Leviathan. */
+"thanks.21" = "Süßer als ein Cheliceratops.";
+
+/* First draft: Oh you're using Mac Mouse Fix? You must be pretty cool. */
+"thanks.24" = "Oh du benutzt Mac Mouse Fix? Du musst ziemlich cool sein.";
+
+/* First draft: First the mice, then the world!! >:) */
+"thanks.25" = "Erst die Mäuse, dann die Welt!! >:)";
+
+/* First draft: Day **%@/%@** of your test period */
+"trial-counter" = "Tag **%@/%@** deiner Testphase";
