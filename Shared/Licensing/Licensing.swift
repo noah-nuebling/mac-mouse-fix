@@ -62,9 +62,6 @@ import Cocoa
     
     @objc static func licensingState(completionHandler: @escaping (_ licensing: MFLicensingReturn, _ error: NSError?) -> ()) {
         
-        /// Define constants
-        let trialDays = 14
-        
         /// Check license
         checkLicense { state, error in
             
@@ -82,7 +79,7 @@ import Cocoa
             let daysOfUse = Trial.daysOfUse
             
             /// Return
-            let result = MFLicensingReturn(state: state, daysOfUse: Int32(daysOfUse), trialDays: Int32(trialDays))
+            let result = MFLicensingReturn(state: state, daysOfUse: Int32(daysOfUse), trialDays: Int32(Trial.trialDays))
             completionHandler(result, error)
         }
         

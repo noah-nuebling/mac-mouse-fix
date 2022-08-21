@@ -498,7 +498,7 @@
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <subviews>
                                                 <imageView identifier="PlusIcon" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Jod-JU-J5j">
-                                                    <rect key="frame" x="236" y="38.5" width="60" height="66.5"/>
+                                                    <rect key="frame" x="235" y="38.5" width="60" height="66.5"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                                     <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyUpOrDown" image="plus" catalog="system" id="EyU-is-YRF"/>
                                                     <color key="contentTintColor" name="systemGrayColor" catalog="System" colorSpace="catalog"/>
@@ -1609,10 +1609,10 @@ System Preferences &gt; Mouse &gt; Tracking speed </string>
                         <rect key="frame" x="0.0" y="0.0" width="2258" height="567"/>
                         <subviews>
                             <stackView distribution="fill" orientation="vertical" alignment="leading" spacing="20" horizontalStackHuggingPriority="1000" verticalStackHuggingPriority="250" horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="ugH-B2-Fh0" userLabel="Master Stack" customClass="CollapsingStackView" customModule="Mac_Mouse_Fix" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="0.0" width="2258" height="679"/>
+                                <rect key="frame" x="0.0" y="0.0" width="2258" height="842"/>
                                 <subviews>
                                     <customView horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="AJO-pr-dqg" userLabel="Header">
-                                        <rect key="frame" x="0.0" y="550" width="2258" height="111"/>
+                                        <rect key="frame" x="0.0" y="713" width="2258" height="111"/>
                                         <subviews>
                                             <textField horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="7TJ-vr-aAK">
                                                 <rect key="frame" x="1080" y="20" width="99" height="16"/>
@@ -1664,7 +1664,7 @@ System Preferences &gt; Mouse &gt; Tracking speed </string>
                                         </constraints>
                                     </customView>
                                     <customView verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="gOr-MF-leI" userLabel="Divider">
-                                        <rect key="frame" x="0.0" y="480" width="2258" height="50"/>
+                                        <rect key="frame" x="0.0" y="643" width="2258" height="50"/>
                                         <subviews>
                                             <box horizontalHuggingPriority="1000" verticalHuggingPriority="750" boxType="separator" translatesAutoresizingMaskIntoConstraints="NO" id="zpt-1r-D4W">
                                                 <rect key="frame" x="0.0" y="6" width="2258" height="38"/>
@@ -1678,7 +1678,7 @@ System Preferences &gt; Mouse &gt; Tracking speed </string>
                                         </constraints>
                                     </customView>
                                     <customView horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="Jyh-ef-PJ5" userLabel="LinkRow">
-                                        <rect key="frame" x="0.0" y="410" width="2258" height="50"/>
+                                        <rect key="frame" x="0.0" y="573" width="2258" height="50"/>
                                         <subviews>
                                             <customView horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="jY6-2V-Ysa" userLabel="Link Cell">
                                                 <rect key="frame" x="282" y="0.0" width="847" height="50"/>
@@ -1785,7 +1785,7 @@ System Preferences &gt; Mouse &gt; Tracking speed </string>
                                         </userDefinedRuntimeAttributes>
                                     </customView>
                                     <customView horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="M9b-sb-c3F" userLabel="LinkRow">
-                                        <rect key="frame" x="0.0" y="340" width="2258" height="50"/>
+                                        <rect key="frame" x="0.0" y="503" width="2258" height="50"/>
                                         <subviews>
                                             <customView horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="22V-s2-cbh" userLabel="Link Cell">
                                                 <rect key="frame" x="282" y="0.0" width="847" height="50"/>
@@ -1892,7 +1892,7 @@ System Preferences &gt; Mouse &gt; Tracking speed </string>
                                         </userDefinedRuntimeAttributes>
                                     </customView>
                                     <customView horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="ib3-Le-o7r" userLabel="LinkRow">
-                                        <rect key="frame" x="0.0" y="270" width="2258" height="50"/>
+                                        <rect key="frame" x="0.0" y="433" width="2258" height="50"/>
                                         <subviews>
                                             <customView horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="g5D-rr-G3j" userLabel="Link Cell">
                                                 <rect key="frame" x="282" y="0.0" width="847" height="50"/>
@@ -1999,7 +1999,7 @@ System Preferences &gt; Mouse &gt; Tracking speed </string>
                                         </userDefinedRuntimeAttributes>
                                     </customView>
                                     <customView verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="TN3-hD-sQd" userLabel="Divider">
-                                        <rect key="frame" x="0.0" y="200" width="2258" height="50"/>
+                                        <rect key="frame" x="0.0" y="363" width="2258" height="50"/>
                                         <subviews>
                                             <box horizontalHuggingPriority="1000" verticalHuggingPriority="750" boxType="separator" translatesAutoresizingMaskIntoConstraints="NO" id="axq-tM-YoN">
                                                 <rect key="frame" x="0.0" y="6" width="2258" height="38"/>
@@ -2013,7 +2013,7 @@ System Preferences &gt; Mouse &gt; Tracking speed </string>
                                         </constraints>
                                     </customView>
                                     <customView horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="Zad-e1-jFI" userLabel="LinkRow">
-                                        <rect key="frame" x="0.0" y="130" width="2258" height="50"/>
+                                        <rect key="frame" x="0.0" y="293" width="2258" height="50"/>
                                         <subviews>
                                             <customView horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="xa1-b3-cbf" userLabel="Link Cell">
                                                 <rect key="frame" x="282" y="0.0" width="847" height="50"/>
@@ -2057,7 +2057,7 @@ System Preferences &gt; Mouse &gt; Tracking speed </string>
                                                     <userDefinedRuntimeAttribute type="boolean" keyPath="layer.masksToBounds" value="NO"/>
                                                 </userDefinedRuntimeAttributes>
                                             </customView>
-                                            <customView horizontalHuggingPriority="500" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="15g-eT-Sq8" userLabel="Link Cell">
+                                            <customView horizontalHuggingPriority="500" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="15g-eT-Sq8" userLabel="MoneyCell">
                                                 <rect key="frame" x="1270" y="0.0" width="706" height="50"/>
                                                 <subviews>
                                                     <imageView horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="dnN-4Q-oW6">
@@ -2121,10 +2121,10 @@ System Preferences &gt; Mouse &gt; Tracking speed </string>
                                         </userDefinedRuntimeAttributes>
                                     </customView>
                                     <stackView distribution="fill" orientation="vertical" alignment="leading" spacing="0.0" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="oVK-8K-0DC" userLabel="BottomStack">
-                                        <rect key="frame" x="0.0" y="0.0" width="2258" height="110"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="2258" height="273"/>
                                         <subviews>
                                             <customView verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="L1E-qb-2j6" userLabel="Small divider">
-                                                <rect key="frame" x="0.0" y="52" width="2258" height="50"/>
+                                                <rect key="frame" x="0.0" y="215" width="2258" height="50"/>
                                                 <subviews>
                                                     <box horizontalHuggingPriority="1000" verticalHuggingPriority="750" boxType="separator" translatesAutoresizingMaskIntoConstraints="NO" id="W3g-3J-FGr">
                                                         <rect key="frame" x="0.0" y="-2" width="2258" height="54"/>
@@ -2138,31 +2138,29 @@ System Preferences &gt; Mouse &gt; Tracking speed </string>
                                                 </constraints>
                                             </customView>
                                             <customView horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="3dR-uI-bFa" userLabel="BottomRow">
-                                                <rect key="frame" x="0.0" y="2" width="2258" height="50"/>
+                                                <rect key="frame" x="0.0" y="2" width="2258" height="213"/>
                                                 <subviews>
-                                                    <customView horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="VXa-4N-Q6J" userLabel="Link Cell">
-                                                        <rect key="frame" x="1003" y="12" width="253" height="26"/>
+                                                    <customView horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="VXa-4N-Q6J" userLabel="Trial cell">
+                                                        <rect key="frame" x="1020" y="12" width="219" height="189"/>
                                                         <subviews>
                                                             <imageView horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="Qse-14-whX">
-                                                                <rect key="frame" x="2" y="3.5" width="21.5" height="20"/>
+                                                                <rect key="frame" x="2" y="84.5" width="21.5" height="20"/>
                                                                 <imageCell key="cell" refusesFirstResponder="YES" alignment="left" id="CYC-bB-BzD">
                                                                     <imageReference key="image" image="testtube.2" catalog="system" symbolScale="large"/>
                                                                 </imageCell>
                                                                 <color key="contentTintColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                                                <userDefinedRuntimeAttributes>
+                                                                    <userDefinedRuntimeAttribute type="boolean" keyPath="wantsLayer" value="YES"/>
+                                                                    <userDefinedRuntimeAttribute type="boolean" keyPath="layer.masksToBounds" value="NO"/>
+                                                                </userDefinedRuntimeAttributes>
                                                             </imageView>
-                                                            <textField horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="pEg-Ae-guC" customClass="Hyperlink">
-                                                                <rect key="frame" x="28" y="5" width="227" height="16"/>
-                                                                <textFieldCell key="cell" alignment="left" title="&lt;Thanks for buying Mac Mouse Fix!&gt;" usesSingleLineMode="YES" id="cul-5Z-iUo">
+                                                            <textField horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="pEg-Ae-guC">
+                                                                <rect key="frame" x="28" y="87" width="193" height="16"/>
+                                                                <textFieldCell key="cell" alignment="center" title="&lt;Day 2/14 of your test period&gt;" usesSingleLineMode="YES" id="cul-5Z-iUo">
                                                                     <font key="font" metaFont="system"/>
                                                                     <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                                 </textFieldCell>
-                                                                <userDefinedRuntimeAttributes>
-                                                                    <userDefinedRuntimeAttribute type="string" keyPath="href" value="https://google.com"/>
-                                                                    <userDefinedRuntimeAttribute type="number" keyPath="leftPadding">
-                                                                        <integer key="value" value="30"/>
-                                                                    </userDefinedRuntimeAttribute>
-                                                                </userDefinedRuntimeAttributes>
                                                             </textField>
                                                         </subviews>
                                                         <constraints>
@@ -2203,6 +2201,10 @@ System Preferences &gt; Mouse &gt; Tracking speed </string>
                                             <real value="3.4028234663852886e+38"/>
                                             <real value="3.4028234663852886e+38"/>
                                         </customSpacing>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="boolean" keyPath="wantsLayer" value="YES"/>
+                                            <userDefinedRuntimeAttribute type="boolean" keyPath="layer.masksToBounds" value="NO"/>
+                                        </userDefinedRuntimeAttributes>
                                     </stackView>
                                 </subviews>
                                 <edgeInsets key="edgeInsets" left="0.0" right="0.0" top="18" bottom="0.0"/>
@@ -2226,6 +2228,10 @@ System Preferences &gt; Mouse &gt; Tracking speed </string>
                                     <real value="3.4028234663852886e+38"/>
                                     <real value="3.4028234663852886e+38"/>
                                 </customSpacing>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="boolean" keyPath="wantsLayer" value="YES"/>
+                                    <userDefinedRuntimeAttribute type="boolean" keyPath="layer.masksToBounds" value="NO"/>
+                                </userDefinedRuntimeAttributes>
                             </stackView>
                         </subviews>
                         <constraints>
@@ -2239,6 +2245,12 @@ System Preferences &gt; Mouse &gt; Tracking speed </string>
                         <fragment content="About Tab Title"/>
                     </attributedString>
                     <connections>
+                        <outlet property="moneyCell" destination="15g-eT-Sq8" id="zZ1-w3-fe4"/>
+                        <outlet property="moneyCellImage" destination="dnN-4Q-oW6" id="Wfc-ft-E3q"/>
+                        <outlet property="moneyCellLink" destination="X0k-mF-gia" id="Rnt-tA-JLe"/>
+                        <outlet property="trialCell" destination="VXa-4N-Q6J" id="zqX-mC-UEW"/>
+                        <outlet property="trialCellImage" destination="Qse-14-whX" id="2Ba-pN-scT"/>
+                        <outlet property="trialCellText" destination="pEg-Ae-guC" id="c6N-zm-m1h"/>
                         <outlet property="versionField" destination="7TJ-vr-aAK" id="Jw9-cl-KD9"/>
                     </connections>
                 </viewController>

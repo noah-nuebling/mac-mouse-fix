@@ -190,6 +190,12 @@
 		4FDE759C28B1401A00662314 /* Gumroad.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FDE757A28B0E35100662314 /* Gumroad.swift */; };
 		4FDE759E28B174E700662314 /* Trial.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FDE759D28B174E700662314 /* Trial.swift */; };
 		4FDE759F28B174E700662314 /* Trial.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FDE759D28B174E700662314 /* Trial.swift */; };
+		4FDE75A128B2397600662314 /* PayButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FDE75A028B2397600662314 /* PayButton.swift */; };
+		4FDE75A228B2397600662314 /* PayButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FDE75A028B2397600662314 /* PayButton.swift */; };
+		4FDE75A428B25E1A00662314 /* String+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FDE75A328B25E1A00662314 /* String+Extensions.swift */; };
+		4FDE75A728B25FB300662314 /* NSAttributedString+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FDE75A628B25FB300662314 /* NSAttributedString+Extensions.swift */; };
+		4FDE75A928B269AE00662314 /* Randomizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FDE75A828B269AE00662314 /* Randomizer.swift */; };
+		4FDE75AA28B269AE00662314 /* Randomizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FDE75A828B269AE00662314 /* Randomizer.swift */; };
 		4FDECCD928A3A37800DDEE91 /* ZipArchive.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4FDECCD628A3A37800DDEE91 /* ZipArchive.framework */; };
 		4FDECCDA28A3A37800DDEE91 /* Sparkle.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4FDECCD728A3A37800DDEE91 /* Sparkle.framework */; };
 		4FDECCDB28A3A37800DDEE91 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 4FDECCD828A3A37800DDEE91 /* README.md */; };
@@ -636,6 +642,10 @@
 		4FDE757D28B0E66900662314 /* Licensing.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Licensing.h; sourceTree = "<group>"; };
 		4FDE759928B1401400662314 /* Licensing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Licensing.swift; sourceTree = "<group>"; };
 		4FDE759D28B174E700662314 /* Trial.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Trial.swift; sourceTree = "<group>"; };
+		4FDE75A028B2397600662314 /* PayButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PayButton.swift; sourceTree = "<group>"; };
+		4FDE75A328B25E1A00662314 /* String+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Extensions.swift"; sourceTree = "<group>"; };
+		4FDE75A628B25FB300662314 /* NSAttributedString+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSAttributedString+Extensions.swift"; sourceTree = "<group>"; };
+		4FDE75A828B269AE00662314 /* Randomizer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Randomizer.swift; sourceTree = "<group>"; };
 		4FDECCD628A3A37800DDEE91 /* ZipArchive.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = ZipArchive.framework; sourceTree = "<group>"; };
 		4FDECCD728A3A37800DDEE91 /* Sparkle.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Sparkle.framework; sourceTree = "<group>"; };
 		4FDECCD828A3A37800DDEE91 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
@@ -1042,6 +1052,8 @@
 			children = (
 				4F7AB0522606692C0008055E /* UIStrings */,
 				4F79A8292605074000076A7E /* NSAttributedString+Additions.h */,
+				4FDE75A628B25FB300662314 /* NSAttributedString+Extensions.swift */,
+				4FDE75A328B25E1A00662314 /* String+Extensions.swift */,
 				4F79A82A2605074000076A7E /* NSAttributedString+Additions.m */,
 				4FC8A7D628ACEB7B007DB982 /* NSString+Extensions.swift */,
 				4FC8A7CC28AAF1BC007DB982 /* MarkdownParser.swift */,
@@ -1233,6 +1245,7 @@
 		4F909D1A28A0C3D2009349A2 /* CustomUIElements */ = {
 			isa = PBXGroup;
 			children = (
+				4FDE75A028B2397600662314 /* PayButton.swift */,
 				4F909D1B28A0C3D2009349A2 /* ModifierCaptureField */,
 				4F909D1F28A0C3D2009349A2 /* SensitivityDisplay.swift */,
 			);
@@ -2043,6 +2056,7 @@
 			children = (
 				4FF0BD5D266ADFE5003935EA /* MathObjc.h */,
 				4FF0BD50266AC10C003935EA /* Math.swift */,
+				4FDE75A828B269AE00662314 /* Randomizer.swift */,
 				4FF0BD56266ACE32003935EA /* VectorUtility.h */,
 				4FF0BD57266ACE32003935EA /* VectorUtility.m */,
 				4FF937552669B043003A52EA /* Curves */,
@@ -2548,6 +2562,7 @@
 				4F909D2828A0C3D2009349A2 /* ResizingTabWindow.swift in Sources */,
 				4FA40CF728A0CCCA00499E53 /* Curve.swift in Sources */,
 				4FF6655225F2C7B000689B77 /* NSMutableDictionary+Additions.m in Sources */,
+				4FDE75A728B25FB300662314 /* NSAttributedString+Extensions.swift in Sources */,
 				4FA40D0F28A0D8EF00499E53 /* SubPixelator.m in Sources */,
 				4F39BC4A263B179200FDF692 /* AppState.m in Sources */,
 				4FBC943B260F8AA60062F186 /* MASShortcut.m in Sources */,
@@ -2581,6 +2596,7 @@
 				4FA40CF628A0CCC600499E53 /* Math.swift in Sources */,
 				4FF6660025F2C92700689B77 /* Hyperlink.m in Sources */,
 				4F909D2428A0C3D2009349A2 /* TabItemControllerProtocol.swift in Sources */,
+				4FDE75A428B25E1A00662314 /* String+Extensions.swift in Sources */,
 				4FF6654C25F2C7B000689B77 /* Queue.m in Sources */,
 				4FF8C89E28955DC4007EC31F /* CoolTimer.swift in Sources */,
 				4F909D3428A0C3D2009349A2 /* Replace.swift in Sources */,
@@ -2607,6 +2623,7 @@
 				4FF6655025F2C7B000689B77 /* NSArray+Additions.m in Sources */,
 				4FDE759E28B174E700662314 /* Trial.swift in Sources */,
 				4F909D2328A0C3D2009349A2 /* PointerTabController.swift in Sources */,
+				4FDE75A128B2397600662314 /* PayButton.swift in Sources */,
 				4FCA07D625F3129B00BFE209 /* RemapTableController.m in Sources */,
 				4F44FF052606D73D00926A5E /* SharedMessagePort.m in Sources */,
 				4FA40D0B28A0D87200499E53 /* DisplayLink.m in Sources */,
@@ -2642,6 +2659,7 @@
 				4F909D3728A0C3D2009349A2 /* ConstraintUtility.swift in Sources */,
 				4FF6660125F2C92700689B77 /* Utility_App.m in Sources */,
 				4F79A83626051E4A00076A7E /* ToastNotification.m in Sources */,
+				4FDE75A928B269AE00662314 /* Randomizer.swift in Sources */,
 				4F909D2D28A0C3D2009349A2 /* CoolNSTextField.swift in Sources */,
 				4F79C2EA260976950067B381 /* RemapTableTranslator.m in Sources */,
 				4F909D2128A0C3D2009349A2 /* GeneralTabController.swift in Sources */,
@@ -2742,6 +2760,7 @@
 				4F8A8DAD287EEF6200786BCC /* IOHIDAccelerationTableBridge.mm in Sources */,
 				4F3A40CB266C44D100436821 /* DisplayLink.m in Sources */,
 				4FF6669925F2C93A00689B77 /* VectorSubPixelator.m in Sources */,
+				4FDE75AA28B269AE00662314 /* Randomizer.swift in Sources */,
 				4FF0BD4B266A8B7E003935EA /* Bezier.swift in Sources */,
 				4FF6668125F2C93A00689B77 /* FileMonitor.m in Sources */,
 				4F1AFE972670EBA900ECA424 /* DragCurve.swift in Sources */,
@@ -2749,6 +2768,7 @@
 				4FF666A825F2C93A00689B77 /* DeviceManager.m in Sources */,
 				4FF8C89F28955DC4007EC31F /* CoolTimer.swift in Sources */,
 				4FF6669B25F2C93A00689B77 /* AppDelegate.m in Sources */,
+				4FDE75A228B2397600662314 /* PayButton.swift in Sources */,
 				4F9E78D02685E30C002C2309 /* GestureScrollSimulator.m in Sources */,
 				4FD66E0827BB553800F67559 /* CGEventHIDEventBridge.m in Sources */,
 				4FF0BD58266ACE32003935EA /* VectorUtility.m in Sources */,

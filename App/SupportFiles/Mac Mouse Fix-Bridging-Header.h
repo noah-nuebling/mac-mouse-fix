@@ -37,5 +37,6 @@
 #import "NSColor+Additions.h"
 #import "Utility_App.h"
 #import "Licensing.h"
+#import "Hyperlink.h"
 
 #endif /* Mac_Mouse_Fix_Bridging_Header_h */

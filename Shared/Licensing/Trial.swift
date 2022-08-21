@@ -81,22 +81,24 @@ import Cocoa
         }
     }
     
-    /// Convenience functions
+    /// Vars
     ///     Storing in UserDefaults instead of config to make it a little more annoying to reset? Probably very unnecessary.
-    @objc static var lastUseDate: Date? {
-        get {
-            UserDefaults.standard.value(forKeyPath: "License.trial.lastUseDate") as? Date
-        }
-        set {
-            UserDefaults.standard.setValue(newValue, forKeyPath: "License.trial.lastUseDate")
-        }
-    }
+    
+    @objc static let trialDays = 14
     @objc static var daysOfUse: Int {
         get {
             UserDefaults.standard.value(forKeyPath: "License.trial.daysOfUse") as? Int ?? -1
         }
         set {
             UserDefaults.standard.setValue(newValue, forKeyPath: "License.trial.daysOfUse")
+        }
+    }
+    @objc static var lastUseDate: Date? {
+        get {
+            UserDefaults.standard.value(forKeyPath: "License.trial.lastUseDate") as? Date
+        }
+        set {
+            UserDefaults.standard.setValue(newValue, forKeyPath: "License.trial.lastUseDate")
         }
     }
     
