@@ -12,7 +12,7 @@
 import Cocoa
 import CocoaLumberjackSwift
 
-class PayButton: NSButton {
+@IBDesignable class PayButton: NSButton {
 
     /// Interface builder
     

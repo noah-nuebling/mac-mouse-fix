@@ -46,7 +46,7 @@
     return NO;
 }
 
-- (void)mouseDown:(NSEvent *)event { // Is never never called
+- (void)mouseDown:(NSEvent *)event { /// Is never never called
     [ToastNotificationController closeNotificationWithFadeOut];
 }
 

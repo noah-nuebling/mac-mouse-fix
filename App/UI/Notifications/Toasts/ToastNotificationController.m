@@ -7,11 +7,9 @@
 // --------------------------------------------------------------------------
 //
 
-// Medium article on views with rounded corners and shadows:
-//      https://medium.com/swifty-tim/views-with-rounded-corners-and-shadows-c3adc0085182
-//      -> Using overlay window instead
-
-// This is really the same thing as a "toast" or a "snackbar"
+/// Medium article on views with rounded corners and shadows:
+///      https://medium.com/swifty-tim/views-with-rounded-corners-and-shadows-c3adc0085182
+///      -> Using overlay window instead
 
 #import "ToastNotificationController.h"
 #import "AppDelegate.h"
@@ -38,10 +36,10 @@ static id _localEventMonitor;
     
     if (self == [ToastNotificationController class]) {
         
-        // Setup window closing notification
+        /// Setup window closing notification
         [NSNotificationCenter.defaultCenter addObserver:self selector:@selector(windowResignKey:) name:NSWindowDidResignKeyNotification object:nil];
         
-        // Setup notfication window
+        /// Setup notfication window
         _instance = [[ToastNotificationController alloc] initWithWindowNibName:@"ToastNotification"];
         
         NSPanel *w = (NSPanel *)_instance.window;
@@ -51,7 +49,7 @@ static id _localEventMonitor;
         w.titleVisibility             =   NSWindowTitleHidden;
         w.movable = NO;
         
-        // Remove scrollView edge insets, because those are nothing but trouble (cause links to be not clickable and stuff)
+        /// Remove scrollView edge insets, because those are nothing but trouble (cause links to be not clickable and stuff)
         NSScrollView *scrollView = (NSScrollView *)_instance.label.superview.superview;
         scrollView.automaticallyAdjustsContentInsets = NO; // Doesn't remove insets // Probably calling this too late
         scrollView.contentInsets = NSEdgeInsetsMake(0, 0, 0, 0);
@@ -59,7 +57,7 @@ static id _localEventMonitor;
         scrollView.verticalScrollElasticity = NSScrollElasticityNone;
         scrollView.horizontalScrollElasticity = NSScrollElasticityNone;
         
-        // Get default label text attributes
+        /// Get default label text attributes
         _labelAttributesFromIB = [_instance.label.attributedString attributesAtIndex:0 effectiveRange:nil];
     }
 }
@@ -68,7 +66,7 @@ static double _animationDurationFadeIn = 0.3;
 static double _animationDurationFadeOut = 0.2;
 static double _toastAnimationOffset = 20;
 
-// Convenience function
+/// Convenience function
 + (void)attachNotificationWithMessage:(NSAttributedString *)message toWindow:(NSWindow *)window forDuration:(NSTimeInterval)showDuration {
     
     [self attachNotificationWithMessage:message toWindow:window forDuration:showDuration alignment:kToastNotificationAlignmentTopMiddle];

@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="21223" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+    <dependencies>
+        <deployment identifier="macosx"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="21223"/>
+        <capability name="Image references" minToolsVersion="12.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <customObject id="-2" userLabel="File's Owner" customClass="TrialNotificationController" customModule="Mac_Mouse_Fix" customModuleProvider="target">
+            <connections>
+                <outlet property="window" destination="F0z-JX-Cv5" id="gIp-Ho-8D9"/>
+            </connections>
+        </customObject>
+        <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
+        <customObject id="-3" userLabel="Application" customClass="NSObject"/>
+        <window title="Window" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" restorable="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" animationBehavior="default" titlebarAppearsTransparent="YES" titleVisibility="hidden" id="F0z-JX-Cv5" customClass="NSPanel">
+            <windowStyleMask key="styleMask" titled="YES" fullSizeContentView="YES"/>
+            <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
+            <rect key="contentRect" x="196" y="240" width="382" height="149"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="1920" height="1055"/>
+            <view key="contentView" id="se5-gp-TjO">
+                <rect key="frame" x="0.0" y="0.0" width="382" height="179"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="8Mx-7q-zeA">
+                        <rect key="frame" x="12" y="109" width="58" height="58"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="58" id="4TA-cd-zXP"/>
+                            <constraint firstAttribute="height" constant="58" id="nJ4-lr-wem"/>
+                        </constraints>
+                        <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="AppIconRoundFromHelper-deleteThis" id="v18-c0-Fut"/>
+                    </imageView>
+                    <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="Ifx-r4-k2G">
+                        <rect key="frame" x="80" y="75" width="284" height="80"/>
+                        <textFieldCell key="cell" selectable="YES" id="kCN-HL-h6o">
+                            <font key="font" metaFont="system"/>
+                            <string key="title">&lt;Hi! You've been using Mac Mouse Fix for 1 month now. I hope you're enjoying it!
+
+If you want to keep using Mac Mouse Fix, you can buy it now.&gt;</string>
+                            <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                        </textFieldCell>
+                    </textField>
+                    <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="yP0-SZ-Yzd">
+                        <rect key="frame" x="20" y="14.5" width="21.5" height="21"/>
+                        <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" id="AmN-iK-1Qh">
+                            <imageReference key="image" image="testtube.2" catalog="system" symbolScale="large"/>
+                        </imageCell>
+                        <color key="contentTintColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                    </imageView>
+                    <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="Pkf-ky-K1B">
+                        <rect key="frame" x="44" y="17" width="132" height="16"/>
+                        <textFieldCell key="cell" selectable="YES" title="&lt;Test period is over&gt;" id="MLf-Ko-XPe">
+                            <font key="font" metaFont="system"/>
+                            <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                        </textFieldCell>
+                    </textField>
+                    <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="EPy-bD-5do" customClass="PayButton" customModule="Mac_Mouse_Fix" customModuleProvider="target">
+                        <rect key="frame" x="285" y="8" width="84" height="32"/>
+                        <buttonCell key="cell" type="push" title="&lt;$1.99&gt;" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="6FQ-gC-c0Z">
+                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                            <font key="font" metaFont="system"/>
+                        </buttonCell>
+                    </button>
+                    <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="dws-t5-lGs">
+                        <rect key="frame" x="268" y="16.5" width="19.5" height="20"/>
+                        <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" id="flZ-Uz-gOX">
+                            <imageReference key="image" image="bag" catalog="system" symbolScale="large"/>
+                        </imageCell>
+                        <color key="contentTintColor" name="systemBlueColor" catalog="System" colorSpace="catalog"/>
+                    </imageView>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="EPy-bD-5do" firstAttribute="top" secondItem="Ifx-r4-k2G" secondAttribute="bottom" constant="40" id="0x2-JI-yUX"/>
+                    <constraint firstItem="8Mx-7q-zeA" firstAttribute="leading" secondItem="se5-gp-TjO" secondAttribute="leading" constant="12" id="32q-8M-uJB"/>
+                    <constraint firstItem="EPy-bD-5do" firstAttribute="centerY" secondItem="Pkf-ky-K1B" secondAttribute="centerY" id="FqM-N7-n8O"/>
+                    <constraint firstItem="Pkf-ky-K1B" firstAttribute="leading" secondItem="yP0-SZ-Yzd" secondAttribute="trailing" constant="5" id="Fwq-V9-SX5"/>
+                    <constraint firstItem="Ifx-r4-k2G" firstAttribute="top" secondItem="se5-gp-TjO" secondAttribute="top" constant="24" id="PDT-h0-lCr"/>
+                    <constraint firstItem="8Mx-7q-zeA" firstAttribute="top" secondItem="se5-gp-TjO" secondAttribute="top" constant="12" id="Vsp-xe-vz7"/>
+                    <constraint firstItem="dws-t5-lGs" firstAttribute="centerY" secondItem="EPy-bD-5do" secondAttribute="centerY" id="cen-iW-2Ep"/>
+                    <constraint firstAttribute="trailing" secondItem="Ifx-r4-k2G" secondAttribute="trailing" constant="20" symbolic="YES" id="d7M-GY-fST"/>
+                    <constraint firstAttribute="bottom" secondItem="yP0-SZ-Yzd" secondAttribute="bottom" constant="20" symbolic="YES" id="f7u-Gb-WuS"/>
+                    <constraint firstItem="EPy-bD-5do" firstAttribute="leading" secondItem="dws-t5-lGs" secondAttribute="trailing" constant="5" id="ghn-pe-uHf"/>
+                    <constraint firstAttribute="trailing" secondItem="EPy-bD-5do" secondAttribute="trailing" constant="20" symbolic="YES" id="uDu-9b-YP8"/>
+                    <constraint firstItem="Pkf-ky-K1B" firstAttribute="centerY" secondItem="yP0-SZ-Yzd" secondAttribute="centerY" id="uIu-Yn-y0q"/>
+                    <constraint firstItem="yP0-SZ-Yzd" firstAttribute="leading" secondItem="se5-gp-TjO" secondAttribute="leading" constant="20" symbolic="YES" id="w0n-x7-2ME"/>
+                    <constraint firstItem="Ifx-r4-k2G" firstAttribute="leading" secondItem="8Mx-7q-zeA" secondAttribute="trailing" constant="12" id="ydz-4H-llI"/>
+                </constraints>
+            </view>
+            <connections>
+                <outlet property="delegate" destination="-2" id="0bl-1N-AYu"/>
+            </connections>
+            <point key="canvasLocation" x="76" y="-124.5"/>
+        </window>
+    </objects>
+    <resources>
+        <image name="AppIconRoundFromHelper-deleteThis" width="128" height="128"/>
+        <image name="bag" catalog="system" width="19" height="20"/>
+        <image name="testtube.2" catalog="system" width="21" height="20"/>
+    </resources>
+</document>
