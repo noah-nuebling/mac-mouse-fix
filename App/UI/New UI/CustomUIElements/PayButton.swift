@@ -36,23 +36,42 @@ import CocoaLumberjackSwift
         }
     }
     
-    /// Draw higher than frame
+    /// Draw thicker than frame
     override var alignmentRectInsets: NSEdgeInsets { .init(top: 4, left: 0, bottom: 4, right: 0) }
     
-    /// Don't hug width too much
+    /// Add padding around text
     override var intrinsicContentSize: NSSize {
         let s = super.intrinsicContentSize
-        return NSSize(width: s.width + 11, height: s.height)
+        return NSSize(width: s.width + 11, height: s.height + 9)
     }
     
     /// Init
     
     init() {
-        /// awakeFromNib doesn't work because we're creating these from code
+        /// For init from code
+        
+        /// Super init
+        ///     Can't just call super.init() because swift is weird
+        super.init(frame: NSRect.zero)
+        
+        /// Real init
+        realInit()
+    }
+    
+    required init?(coder: NSCoder) {
+        /// For init from interface builder
 
         /// Super init
         ///     We have to call some designated initializer from the immediate superclass I think. But NSButton doesn't have any designated initializers. No idea why this works.
-        super.init(frame: NSRect.zero)
+        super.init(coder: coder)
+        
+        /// Real init
+        realInit()
+    }
+    
+    private func realInit() {
+        
+        /// awakeFromNib doesn't work because we're creating these from code
         
         /// Basic setup
         translatesAutoresizingMaskIntoConstraints = false
@@ -63,6 +82,9 @@ import CocoaLumberjackSwift
         layer?.cornerRadius = frame.height/2
         bezelStyle = .texturedSquare /// .rounded
         isBordered = false
+        
+        /// Don't clip
+        self.layer?.masksToBounds = false
         
         if #available(macOS 10.14, *) {
             
@@ -86,10 +108,6 @@ import CocoaLumberjackSwift
         /// Wrap content
         self.setContentHuggingPriority(.required, for: .horizontal)
 //        self.setContentHuggingPriority(.required, for: .vertical)
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
     }
     
 }

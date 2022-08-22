@@ -373,5 +373,5 @@
 /* First draft: First the mice, then the world!! >:) */
 "thanks.25" = "Erst die Mäuse, dann die Welt!! >:)";
 
-/* First draft: Day **%@/%@** of your test period */
-"trial-counter" = "Tag **%@/%@** deiner Testphase";
+/* First draft: Day **%d/%d** of your test period */
+"trial-counter" = "Tag **%d/%d** deiner Testphase";

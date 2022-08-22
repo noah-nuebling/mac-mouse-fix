@@ -11,6 +11,8 @@
 ///      https://medium.com/swifty-tim/views-with-rounded-corners-and-shadows-c3adc0085182
 ///      -> Using overlay window instead
 
+/// Also see `TrialNotificationController.swift`
+
 #import "ToastNotificationController.h"
 #import "AppDelegate.h"
 #import "Utility_App.h"

@@ -41,7 +41,7 @@ class AboutTabController: NSViewController {
         
         isLicensed.producer.startWithValues { isLicensed in
             
-            if isLicensed || true {
+            if isLicensed /*|| true*/ {
                 
                 ///
                 /// Replace trial section with thank you section
@@ -113,8 +113,9 @@ class AboutTabController: NSViewController {
                 
                 /// Set content string
                 
-                let string = String(format: NSLocalizedString("trial-counter", comment: "First draft: Day **%@/%@** of your test period"), Trial.daysOfUse, Trial.trialDays)
-                self.trialCellText.attributedStringValue = NSAttributedString(coolMarkdown: string)!
+                let string = NSLocalizedString("trial-counter", comment: "First draft: Day **%d/%d** of your test period")
+                let formattedString = String(format: string, Trial.daysOfUse, Trial.trialDays)
+                self.trialCellText.attributedStringValue = NSAttributedString(coolMarkdown: formattedString)!
                 
                 /// Set textfield height
                 ///     Necessary for y centering. Not sure why

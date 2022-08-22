@@ -161,6 +161,7 @@ CGEventRef _Nullable testCallback(CGEventTapProxy proxy, CGEventType type, CGEve
         /// Debug & testing
         ///
         
+        [TrialNotificationController.shared openWithDaysOfUse:4 trialDays:14 userInitiated:YES];
         
     //    [Gumroad checkLicense:license email:email completionHandler:^(BOOL isValidKeyAndEmail, NSDictionary<NSString *,id> * _Nullable serverResponse, NSError * _Nullable error, NSURLResponse * _Nullable urlResponse) {
     //

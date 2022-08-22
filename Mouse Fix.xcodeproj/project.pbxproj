@@ -127,6 +127,10 @@
 		4F9E78E3268663B1002C2309 /* ExponentialSmoother.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F9E78E2268663B1002C2309 /* ExponentialSmoother.swift */; };
 		4FA13FBD28B39423005C68FC /* TrialNotificationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FA13FBB28B39423005C68FC /* TrialNotificationController.swift */; };
 		4FA13FBE28B39423005C68FC /* TrialNotificationController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4FA13FBC28B39423005C68FC /* TrialNotificationController.xib */; };
+		4FA13FC128B3A2D3005C68FC /* TrialNotificationWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FA13FC028B3A2D3005C68FC /* TrialNotificationWindow.swift */; };
+		4FA13FC228B3A2D3005C68FC /* TrialNotificationWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FA13FC028B3A2D3005C68FC /* TrialNotificationWindow.swift */; };
+		4FA13FC328B3A2DB005C68FC /* TrialNotificationController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4FA13FBC28B39423005C68FC /* TrialNotificationController.xib */; };
+		4FA13FC428B3A2E0005C68FC /* TrialNotificationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FA13FBB28B39423005C68FC /* TrialNotificationController.swift */; };
 		4FA1FD7F28A847BF00D1C8EE /* DeletableTableCellView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4FA1FD7E28A847BF00D1C8EE /* DeletableTableCellView.xib */; };
 		4FA1FD8128A85FD100D1C8EE /* RemapTableElements.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FA1FD8028A85FD100D1C8EE /* RemapTableElements.swift */; };
 		4FA1FD8328A916B600D1C8EE /* NSShadow+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FA1FD8228A916B600D1C8EE /* NSShadow+Extensions.swift */; };
@@ -583,7 +587,7 @@
 		4F9E78E2268663B1002C2309 /* ExponentialSmoother.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExponentialSmoother.swift; sourceTree = "<group>"; };
 		4FA13FBB28B39423005C68FC /* TrialNotificationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrialNotificationController.swift; sourceTree = "<group>"; };
 		4FA13FBC28B39423005C68FC /* TrialNotificationController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TrialNotificationController.xib; sourceTree = "<group>"; };
-		4FA13FBF28B39443005C68FC /* MFNotificationOverlayController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = MFNotificationOverlayController.h; path = App/UI/Notifications/MFNotificationOverlayController.h; sourceTree = SOURCE_ROOT; };
+		4FA13FC028B3A2D3005C68FC /* TrialNotificationWindow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrialNotificationWindow.swift; sourceTree = "<group>"; };
 		4FA1FD7E28A847BF00D1C8EE /* DeletableTableCellView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DeletableTableCellView.xib; sourceTree = "<group>"; };
 		4FA1FD8028A85FD100D1C8EE /* RemapTableElements.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemapTableElements.swift; sourceTree = "<group>"; };
 		4FA1FD8228A916B600D1C8EE /* NSShadow+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSShadow+Extensions.swift"; sourceTree = "<group>"; };
@@ -921,14 +925,14 @@
 			path = MenuBarItem;
 			sourceTree = "<group>";
 		};
-		4F2A1FA726042ACB0067691A /* Notifications */ = {
+		4F2A1FA726042ACB0067691A /* TrialNotifications */ = {
 			isa = PBXGroup;
 			children = (
-				4FA13FBB28B39423005C68FC /* TrialNotificationController.swift */,
 				4FA13FBC28B39423005C68FC /* TrialNotificationController.xib */,
-				4FA13FBA28B393B0005C68FC /* Toasts */,
+				4FA13FBB28B39423005C68FC /* TrialNotificationController.swift */,
+				4FA13FC028B3A2D3005C68FC /* TrialNotificationWindow.swift */,
 			);
-			path = Notifications;
+			path = TrialNotifications;
 			sourceTree = "<group>";
 		};
 		4F2FDF312315662500C7BE14 /* Accomplice */ = {
@@ -1038,7 +1042,7 @@
 			isa = PBXGroup;
 			children = (
 				4F909CF128A0C3D2009349A2 /* New UI */,
-				4F2A1FA726042ACB0067691A /* Notifications */,
+				4FA13FBA28B393B0005C68FC /* Toasts */,
 				4FF665C625F2C92700689B77 /* Update */,
 				4FF665BF25F2C92700689B77 /* Overrides */,
 				4F7A1A71289F2533007D5B30 /* Utility */,
@@ -1336,7 +1340,6 @@
 		4FA13FBA28B393B0005C68FC /* Toasts */ = {
 			isa = PBXGroup;
 			children = (
-				4FA13FBF28B39443005C68FC /* MFNotificationOverlayController.h */,
 				4F1B832B26081A5400AEAF37 /* CaptureNotificationCreator.h */,
 				4F1B832C26081A5500AEAF37 /* CaptureNotificationCreator.m */,
 				4F79A81A2604317200076A7E /* ToastNotificationController.h */,
@@ -1629,6 +1632,7 @@
 				4FF9305C28805FC40007CCA7 /* Math */,
 				4F909D4228A0C4C2009349A2 /* Extensions */,
 				4FA40D1128A0D9FB00499E53 /* External */,
+				4F2A1FA726042ACB0067691A /* TrialNotifications */,
 				4F7F47D528A6EFCF00290BBD /* Resources */,
 			);
 			path = Shared;
@@ -2383,6 +2387,7 @@
 				4FF6668325F2C93A00689B77 /* Assets.xcassets in Resources */,
 				4FF6668A25F2C93A00689B77 /* SmoothScroll.m (old) in Resources */,
 				4FF6654125F2C7B000689B77 /* default_launchd.plist in Resources */,
+				4FA13FC328B3A2DB005C68FC /* TrialNotificationController.xib in Resources */,
 				4F7F47D428A6EFC800290BBD /* SharedAssets.xcassets in Resources */,
 				4FD148C728AA416700FE688C /* MenuBarItem.xib in Resources */,
 				4FD148D628AA43E900FE688C /* MainMenu.xib in Resources */,
@@ -2635,6 +2640,7 @@
 				4F909D3128A0C3D2009349A2 /* CAAnimation+Extensions.swift in Sources */,
 				4FA40CFB28A0CCCB00499E53 /* Line.swift in Sources */,
 				4FE40B96283A49DD00880BEF /* SharedUtilitySwift.swift in Sources */,
+				4FA13FC128B3A2D3005C68FC /* TrialNotificationWindow.swift in Sources */,
 				4F909D3828A0C3D2009349A2 /* ReactiveFlags.swift in Sources */,
 				4F909D2B28A0C3D2009349A2 /* NSPopUpButton+Extensions.swift in Sources */,
 				4F7F47D128A5B86900290BBD /* Config.m in Sources */,
@@ -2747,6 +2753,7 @@
 				4F1D58192881D880002EB119 /* CombinedLinearCurve.swift in Sources */,
 				4FF6669A25F2C93A00689B77 /* TransformationUtility.m in Sources */,
 				4FF6669D25F2C93A00689B77 /* AccessibilityCheck.m in Sources */,
+				4FA13FC428B3A2E0005C68FC /* TrialNotificationController.swift in Sources */,
 				4FF0255F27B013A100923107 /* PointerFreeze.m in Sources */,
 				4FF666A725F2C93A00689B77 /* Device.m in Sources */,
 				4FF6669C25F2C93A00689B77 /* PointerSpeedExperiments.m in Sources */,
@@ -2780,6 +2787,7 @@
 				4FF6669925F2C93A00689B77 /* VectorSubPixelator.m in Sources */,
 				4FDE75AA28B269AE00662314 /* Randomizer.swift in Sources */,
 				4FF0BD4B266A8B7E003935EA /* Bezier.swift in Sources */,
+				4FA13FC228B3A2D3005C68FC /* TrialNotificationWindow.swift in Sources */,
 				4FF6668125F2C93A00689B77 /* FileMonitor.m in Sources */,
 				4F1AFE972670EBA900ECA424 /* DragCurve.swift in Sources */,
 				4FF6669125F2C93A00689B77 /* ScrollUtility.m in Sources */,
