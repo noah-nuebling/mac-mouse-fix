@@ -9,6 +9,8 @@
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="TrialNotificationController" customModule="Mac_Mouse_Fix" customModuleProvider="target">
             <connections>
+                <outlet property="body" destination="Ifx-r4-k2G" id="0d9-1x-MYs"/>
+                <outlet property="closeButton" destination="G5r-ur-mKW" id="Tzq-FK-zxN"/>
                 <outlet property="window" destination="F0z-JX-Cv5" id="gIp-Ho-8D9"/>
             </connections>
         </customObject>
@@ -34,6 +36,9 @@
                             <font key="font" metaFont="system"/>
                             <imageReference key="image" image="xmark.circle.fill" catalog="system" symbolScale="large"/>
                         </buttonCell>
+                        <connections>
+                            <action selector="closeButtonClick:" target="-2" id="kz5-1X-lpT"/>
+                        </connections>
                     </button>
                     <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="8Mx-7q-zeA">
                         <rect key="frame" x="21" y="109" width="58" height="58"/>

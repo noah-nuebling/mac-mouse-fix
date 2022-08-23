@@ -100,6 +100,7 @@ import CocoaLumberjackSwift
         queue = displayLink.dispatchQueue
         pixelator = VectorSubPixelator.biased()
         stopCallback = nil
+        
         /// State
         target = 0
         x0 = 0
@@ -108,8 +109,10 @@ import CocoaLumberjackSwift
         t0 = 0
         isFirstCallback = false
         pixelator.reset()
+        
         /// Init super
         super.init()
+        
         /// Reset state
         resetState()
     }
@@ -128,9 +131,12 @@ import CocoaLumberjackSwift
         }
     }
     
-    @objc func start(distance: Double, callback: @escaping UIAnimatorCallback) {
+    @objc func start(distance: Double, callback: @escaping UIAnimatorCallback, onComplete: (() -> ())? = nil) {
         
         queue.async {
+            
+            /// Store stopCallback
+            self.stopCallback = onComplete
             
             /// Normalize displacement
             ///     So the values don't grow to infinity and overflow

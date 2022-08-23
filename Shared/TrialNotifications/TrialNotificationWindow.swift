@@ -16,5 +16,9 @@
 import Cocoa
 
 class TrialNotificationWindow: NSWindow {
-
+    
+    override var canBecomeKey: Bool {
+        /// This is so the shadow doesn't change when you click on it
+        false
+    }
 }
