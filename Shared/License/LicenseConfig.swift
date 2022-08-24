@@ -122,6 +122,23 @@ import CocoaLumberjackSwift
         }
     }
     
+    /// Equatability
+    
+//    static public func == (lhs: LicenseConfig, rhs: LicenseConfig) -> Bool {
+//
+//
+//    }
+    override func isEqual(to object: Any?) -> Bool {
+        
+        /// Notes:
+        ///    - We don't check freshness because it makes sense
+        ///    - Overriding == directly doesn't work for some reason. Use isEqual to compare instead of ==
+        
+        let object = object as! LicenseConfig
+        let result = self.maxActivations == object.maxActivations && self.trialDays == object.trialDays && self.price == object.price && self.payLink == object.payLink && self.quickPayLink == object.quickPayLink
+        return result
+    }
+    
     /// Base vars
     
     /// Define max activations

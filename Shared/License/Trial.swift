@@ -46,7 +46,7 @@ import Cocoa
             /// Check licensing state
             License.licenseState(licenseConfig: licenseConfig) { license, error in
                 
-                if license.state == kMFLicenseStateLicensed || license.state == kMFLicenseStateCachedLicensed {
+                if license.state == kMFLicenseStateLicensed {
                     
                     /// Do nothing if licensed
                     

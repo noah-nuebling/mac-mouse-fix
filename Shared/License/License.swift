@@ -9,6 +9,17 @@
 
 import Cocoa
 
+// MARK: - License.h extensions
+
+extension MFLicenseReturn: Equatable {
+    public static func == (lhs: MFLicenseReturn, rhs: MFLicenseReturn) -> Bool {
+        /// Note: We don't check for freshness because it makes sense.
+        lhs.state == rhs.state && lhs.daysOfUse == rhs.daysOfUse && lhs.trialDays == rhs.trialDays
+    }
+}
+
+// MARK: - License definition
+
 @objc class License: NSObject {
     
     // MARK: Interface
@@ -19,7 +30,7 @@ import Cocoa
         
         licenseState(licenseConfig: licenseConfig) { license, error in
             
-            if license.state == kMFLicenseStateLicensed || license.state == kMFLicenseStateCachedLicensed {
+            if license.state == kMFLicenseStateLicensed {
                  
                 /// Do nothing if licensed
                 return
@@ -58,13 +69,26 @@ import Cocoa
         }
     }
     
+    @objc static func cachedLicenseState(licenseConfig: LicenseConfig) -> MFLicenseReturn {
+        
+        /// Get cache
+        ///     Note: Here, we fall back to false and don't throw errors if there is no cache, but in `licenseState(licenseConfig:)` we do throw an error. Does this have a reason?
+        let cache = config("License.isLicensedCache") as? Bool ?? false
+        let state = cache ? kMFLicenseStateLicensed : kMFLicenseStateUnlicensed
+        
+        /// Return
+        let result = MFLicenseReturn(state: state, freshness: kMFValueFreshnessCached, daysOfUse: Int32(Trial.daysOfUse), trialDays: Int32(licenseConfig.trialDays))
+        return result
+        
+    }
+    
     @objc static func licenseState(licenseConfig: LicenseConfig, completionHandler: @escaping (_ license: MFLicenseReturn, _ error: NSError?) -> ()) {
         
         /// At the time of writing, we only use licenseConfig to get the maxActivations.
         ///     Since we get licenseConfig via the internet this might be worth rethinking if it's necessary. We made a similar comment somewhere else but I forgot where.
         
         /// Check license
-        checkLicense(licenseConfig: licenseConfig) { state, error in
+        checkLicense(licenseConfig: licenseConfig) { state, freshness, error in
             
             /// Write to cache
             ///     Might be cleaner to do this in `checkLicense`?
@@ -75,25 +99,17 @@ import Cocoa
                 setConfig("License.isLicensedCache", false as NSObject)
                 commitConfig()
             }
-            
-            /// Check trial
-            let daysOfUse = Trial.daysOfUse
-            
-            /// Check licenseConfig
-            LicenseConfig.get { licenseConfig in
                 
-                /// Return
-                let result = MFLicenseReturn(state: state, daysOfUse: Int32(daysOfUse), trialDays: Int32(licenseConfig.trialDays))
-                
-                completionHandler(result, error)
-            }
+            /// Return
+            let result = MFLicenseReturn(state: state, freshness: freshness, daysOfUse: Int32(Trial.daysOfUse), trialDays: Int32(licenseConfig.trialDays))
+            completionHandler(result, error)
         }
         
     }
     
     // MARK: Core
     
-    fileprivate static func checkLicense(licenseConfig: LicenseConfig, completionHandler: @escaping (MFLicenseState, NSError?) -> ()) {
+    fileprivate static func checkLicense(licenseConfig: LicenseConfig, completionHandler: @escaping (MFLicenseState, MFValueFreshness, NSError?) -> ()) {
         
         /// Get email and license from config file
         
@@ -104,7 +120,7 @@ import Cocoa
             
             /// Return unlicensed
             let error = NSError(domain: MFLicenseErrorDomain, code: Int(kMFLicenseErrorCodeEmailOrKeyNotFound))
-            completionHandler(kMFLicenseStateUnlicensed, error)
+            completionHandler(kMFLicenseStateUnlicensed, kMFValueFreshnessFresh, error)
             return
         }
         
@@ -118,7 +134,7 @@ import Cocoa
             if isValidKeyAndEmail {
                 
                 /// Is licensed!
-                completionHandler(kMFLicenseStateLicensed, nil)
+                completionHandler(kMFLicenseStateLicensed, kMFValueFreshnessFresh, nil)
                 return
             }
             
@@ -132,20 +148,20 @@ import Cocoa
                 if let cache = config("License.isLicensedCache") as? Bool {
                     
                     /// Fall back to cache
-                    completionHandler(cache ? kMFLicenseStateCachedLicensed : kMFLicenseStateCachedUnlicended, nil)
+                    completionHandler(cache ? kMFLicenseStateLicensed : kMFLicenseStateUnlicensed, kMFValueFreshnessCached, nil)
                     return
                     
                 } else {
                     
                     /// There's no cache
                     let error = NSError(domain: MFLicenseErrorDomain, code: Int(kMFLicenseErrorCodeNoInternetAndNoCache))
-                    completionHandler(kMFLicenseStateUnlicensed, error)
+                    completionHandler(kMFLicenseStateUnlicensed, kMFValueFreshnessFallback, error)
                     return
                 }
             } else {
                 
                 /// Failed despite good internet connection -> Is actually unlicensed
-                completionHandler(kMFLicenseStateUnlicensed, error) /// Pass through the error from Gumroad.swift
+                completionHandler(kMFLicenseStateUnlicensed, kMFValueFreshnessFresh, error) /// Pass through the error from Gumroad.swift
                 return
             }
         }

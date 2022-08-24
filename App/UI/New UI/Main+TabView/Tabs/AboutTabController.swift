@@ -11,7 +11,7 @@ import Cocoa
 
 class AboutTabController: NSViewController {
 
-    var isLicensed = ConfigValue<Bool>(configPath: "License.isLicensedCache")
+//    var isLicensed = ConfigValue<Bool>(configPath: "License.isLicensedCache")
     
     @IBOutlet weak var versionField: NSTextField!
     
@@ -19,12 +19,15 @@ class AboutTabController: NSViewController {
     @IBOutlet weak var moneyCellLink: Hyperlink!
     @IBOutlet weak var moneyCellImage: NSImageView!
     
-    
     @IBOutlet weak var trialCell: NSView!
     @IBOutlet weak var trialCellText: NSTextField!
     @IBOutlet weak var trialCellImage: NSImageView!
     
+    var payButtonWrapper: NSView? = nil
     var payButtonwrapperConstraints: [NSLayoutConstraint] = []
+    
+    var currentLicenseConfig: LicenseConfig? = nil
+    var currentLicense: MFLicenseReturn? = nil
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -37,18 +40,49 @@ class AboutTabController: NSViewController {
         ///     Notes:
         ///     - Not using the completionHandler of `Licensing.licensingState` here since it's asynchronous. However, calling `licensingState()` will update isLicensed and then the UI will update. We could also have separated ConfigValue for the daysOfUse config value, but I don't think it'll be noticable if that doesn't update totally correctl
         
+        /// 1. Get cache synchronously and set UI to that
+        
+        let cachedLicenseConfig = LicenseConfig.getCached()
+        let cachedLicense = License.cachedLicenseState(licenseConfig: cachedLicenseConfig)
+        
+        updateUI(licenseConfig: cachedLicenseConfig, license: cachedLicense)
+        
+        /// 2. Get real values and update UI again
+        
         LicenseConfig.get { licenseConfig in
-            License.licenseState(licenseConfig: licenseConfig, completionHandler: { licensing, error in })
+            License.licenseState(licenseConfig: licenseConfig, completionHandler: { license, error in
+                
+                self.updateUI(licenseConfig: licenseConfig, license: license)
+                
+            })
         }
         
-        isLicensed.producer.startWithValues { isLicensed in
+    }
+    
+    func updateUI(licenseConfig: LicenseConfig, license: MFLicenseReturn) {
+        
+        /// Guard no change
+        if currentLicenseConfig?.isEqual(to: licenseConfig) ?? false && currentLicense == license { return }
+        currentLicenseConfig = licenseConfig; currentLicense = license
+        
+        DispatchQueue.main.async {
+            /// Dispatch to main, because all the drawing and layout stuff needs to be on main
             
-            if isLicensed {
+            if license.state == kMFLicenseStateLicensed {
+                
+                ///
+                /// Replace payButton with milkshake link
+                ///
+                
+                /// Note: This only does something if the UI was first updated in the unlicensed state and now it's going back to licensed state. Otherwise the payButtonWrapper will just be nil and the moneyCellLink unhidden loading straight from interface builder.
+                
+                self.payButtonWrapper?.isHidden = true
+                self.moneyCellLink.isHidden = false
                 
                 ///
                 /// Replace trial section with thank you section
                 ///
-                    
+                
                 /// Randomly select 1 out of 25+1 messages
                 ///     Note: If you want to test one of the rare ones, increase its `weight`
                 
@@ -86,12 +120,12 @@ class AboutTabController: NSViewController {
                     (("🤍", ""), weight: 0.01),
                     (("😎", NSLocalizedString("thanks.24", comment: "First draft: Oh you're using Mac Mouse Fix? You must be pretty cool.")), weight: 0.01),
                     (("🌏", NSLocalizedString("thanks.25", comment: "First draft: First the mice, then the world!! >:)")), weight: 0.01),
-//                    (("🤏", "Peepee size of Mac Mouse Fix haters!"), weight: 0.01), /// Too weird
+                    //                    (("🤏", "Peepee size of Mac Mouse Fix haters!"), weight: 0.01), /// Too weird
                     
                     /// Mom
                     (("💖❤️❤️❤️", "Für Beate, meine Lieblingsperson :)"), weight: 0.005),
                 ])
-
+                
                 
                 /// Replace text
                 self.trialCellText.stringValue = message
@@ -112,10 +146,6 @@ class AboutTabController: NSViewController {
                 ///
                 /// Setup trial section
                 ///
-                
-                /// Get licenseConfig
-                
-                let licenseConfig = LicenseConfig.getCached()
                 
                 /// Set content string
                 
@@ -152,30 +182,30 @@ class AboutTabController: NSViewController {
                 
                 /// Insert payButton into wrapper
                 
-                let payButtonWrapper = NSView()
-                payButtonWrapper.translatesAutoresizingMaskIntoConstraints = false
-                payButtonWrapper.wantsLayer = true
-                payButtonWrapper.layer?.masksToBounds = false
+                self.payButtonWrapper = NSView()
+                self.payButtonWrapper!.translatesAutoresizingMaskIntoConstraints = false
+                self.payButtonWrapper!.wantsLayer = true
+                self.payButtonWrapper!.layer?.masksToBounds = false
                 
-                payButtonWrapper.addSubview(payButton)
-                payButtonWrapper.snp.makeConstraints { make in
+                self.payButtonWrapper!.addSubview(payButton)
+                self.payButtonWrapper!.snp.makeConstraints { make in
                     make.top.equalTo(payButton.snp.top)
                     make.centerY.equalTo(payButton.snp.centerY)
                     make.leading.equalTo(payButton.snp.leading)
                 }
                 
                 /// Insert wrapper into UI
-                self.payButtonwrapperConstraints = transferSuperViewConstraints(fromView: self.moneyCellLink, toView: payButtonWrapper, transferSizeConstraints: false)
-                self.moneyCell.replaceSubview(self.moneyCellLink, with: payButtonWrapper)
+                self.payButtonwrapperConstraints = transferSuperViewConstraints(fromView: self.moneyCellLink, toView: self.payButtonWrapper!, transferSizeConstraints: false)
+                self.moneyCell.addSubview(self.payButtonWrapper!)
                 for c in self.payButtonwrapperConstraints {
                     c.isActive = true
                 }
                 
+                /// Hide link
+                self.moneyCellLink.isHidden = true
+                
             }
-            
         }
     }
-    
-    
     
 }

@@ -22,12 +22,13 @@ typedef enum {
 typedef enum {
     kMFLicenseStateLicensed = 0,
     kMFLicenseStateUnlicensed = 1,
-    kMFLicenseStateCachedLicensed = 2,
-    kMFLicenseStateCachedUnlicended = 3,
+//    kMFLicenseStateCachedLicensed = 2,
+//    kMFLicenseStateCachedUnlicended = 3,
 } MFLicenseState;
 
 typedef struct {
     MFLicenseState state;
+    MFValueFreshness freshness;
     int daysOfUse;
     int trialDays;
 } MFLicenseReturn;
