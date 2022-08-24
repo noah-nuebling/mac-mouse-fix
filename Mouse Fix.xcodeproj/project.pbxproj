@@ -194,8 +194,8 @@
 		4FD860AA266EC24E004F76C8 /* DerivedProperty.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FD860A9266EC24E004F76C8 /* DerivedProperty.swift */; };
 		4FD860CC266EF55A004F76C8 /* ScrollConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FD860CB266EF55A004F76C8 /* ScrollConfig.swift */; };
 		4FDE757B28B0E35100662314 /* Gumroad.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FDE757A28B0E35100662314 /* Gumroad.swift */; };
-		4FDE759A28B1401400662314 /* Licensing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FDE759928B1401400662314 /* Licensing.swift */; };
-		4FDE759B28B1401400662314 /* Licensing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FDE759928B1401400662314 /* Licensing.swift */; };
+		4FDE759A28B1401400662314 /* License.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FDE759928B1401400662314 /* License.swift */; };
+		4FDE759B28B1401400662314 /* License.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FDE759928B1401400662314 /* License.swift */; };
 		4FDE759C28B1401A00662314 /* Gumroad.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FDE757A28B0E35100662314 /* Gumroad.swift */; };
 		4FDE759E28B174E700662314 /* Trial.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FDE759D28B174E700662314 /* Trial.swift */; };
 		4FDE759F28B174E700662314 /* Trial.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FDE759D28B174E700662314 /* Trial.swift */; };
@@ -653,7 +653,7 @@
 		4FDC127528A2C6160076972E /* ReactiveConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReactiveConfig.swift; sourceTree = "<group>"; };
 		4FDE757A28B0E35100662314 /* Gumroad.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Gumroad.swift; sourceTree = "<group>"; };
 		4FDE757D28B0E66900662314 /* License.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = License.h; sourceTree = "<group>"; };
-		4FDE759928B1401400662314 /* Licensing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Licensing.swift; sourceTree = "<group>"; };
+		4FDE759928B1401400662314 /* License.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = License.swift; sourceTree = "<group>"; };
 		4FDE759D28B174E700662314 /* Trial.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Trial.swift; sourceTree = "<group>"; };
 		4FDE75A028B2397600662314 /* PayButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PayButton.swift; sourceTree = "<group>"; };
 		4FDE75A328B25E1A00662314 /* String+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Extensions.swift"; sourceTree = "<group>"; };
@@ -1546,7 +1546,7 @@
 			isa = PBXGroup;
 			children = (
 				4FDE757D28B0E66900662314 /* License.h */,
-				4FDE759928B1401400662314 /* Licensing.swift */,
+				4FDE759928B1401400662314 /* License.swift */,
 				4FDE759D28B174E700662314 /* Trial.swift */,
 				4FDE757A28B0E35100662314 /* Gumroad.swift */,
 				4F2A1FA726042ACB0067691A /* TrialNotifications */,
@@ -2615,7 +2615,7 @@
 				4FD82DDB260575B100664D6F /* ToastNotificationLabel.m in Sources */,
 				4FA13FBD28B39423005C68FC /* TrialNotificationController.swift in Sources */,
 				4F909D2C28A0C3D2009349A2 /* NSView+Extensions.swift in Sources */,
-				4FDE759A28B1401400662314 /* Licensing.swift in Sources */,
+				4FDE759A28B1401400662314 /* License.swift in Sources */,
 				4FA1FD8328A916B600D1C8EE /* NSShadow+Extensions.swift in Sources */,
 				4FF665FA25F2C92700689B77 /* AppDelegate.m in Sources */,
 				4FF665F325F2C92700689B77 /* MoreSheet.m in Sources */,
@@ -2812,7 +2812,7 @@
 				4F5F3EF12756EC0400C350C0 /* RemapSwizzler.m in Sources */,
 				4FD66E0B27BB9BAE00F67559 /* EventUtility.m in Sources */,
 				4FF666A925F2C93A00689B77 /* HelperUtility.m in Sources */,
-				4FDE759B28B1401400662314 /* Licensing.swift in Sources */,
+				4FDE759B28B1401400662314 /* License.swift in Sources */,
 				4FCC03352757B181002E5A57 /* ScreenDrawer.swift in Sources */,
 				4FF6668B25F2C93A00689B77 /* CubicUnitBezier.m in Sources */,
 				4F909D4628A0C4C2009349A2 /* NSArray+Extensions.swift in Sources */,

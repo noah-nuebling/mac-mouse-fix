@@ -1,6 +1,6 @@
 //
 // --------------------------------------------------------------------------
-// Licensing.swift
+// License.swift
 // Created for Mac Mouse Fix (https://github.com/noah-nuebling/mac-mouse-fix)
 // Created by Noah Nuebling in 2022
 // Licensed under MIT
@@ -17,7 +17,7 @@ import CocoaLumberjackSwift
     //
     
     /// Interface
-    ///     Use Licensing.swift instead of using this directly
+    ///     Use License.swift instead of using this directly
     
     @objc static func activateLicense(_ key: String, email: String, completionHandler: @escaping (_ isValidKeyAndEmail: Bool, _ serverResponse: [String: Any]?, _ error: NSError?, _ urlResponse: URLResponse?) -> ()) {
         
@@ -61,7 +61,7 @@ import CocoaLumberjackSwift
             
             if email != emailForKey {
                 
-                let error = NSError(domain: MFLicensingErrorDomain, code: Int(kMFLicensingErrorCodeMismatchedEmails), userInfo: ["enteredEmail": email, "emailForKey": emailForKey ?? "<invalid>"])
+                let error = NSError(domain: MFLicenseErrorDomain, code: Int(kMFLicenseErrorCodeMismatchedEmails), userInfo: ["enteredEmail": email, "emailForKey": emailForKey ?? "<invalid>"])
 
                 completionHandler(false, serverResponse, error, urlResponse)
                 return
@@ -71,7 +71,7 @@ import CocoaLumberjackSwift
             
             guard let a = nOfActivations, a <= maxActivations else {
                 
-                let error = NSError(domain: MFLicensingErrorDomain, code: Int(kMFLicensingErrorCodeInvalidNumberOfActivations), userInfo: ["nOfActivations": nOfActivations ?? -1, "maxActivations": maxActivations])
+                let error = NSError(domain: MFLicenseErrorDomain, code: Int(kMFLicenseErrorCodeInvalidNumberOfActivations), userInfo: ["nOfActivations": nOfActivations ?? -1, "maxActivations": maxActivations])
                 
                 completionHandler(false, serverResponse, error, urlResponse)
                 return
@@ -184,7 +184,7 @@ import CocoaLumberjackSwift
                 
                 /// Map non-success response to error
                 guard let s = dict["success"], s is Bool, s as! Bool == true else {
-                    let error = NSError(domain: MFLicensingErrorDomain, code: Int(kMFLicensingErrorCodeGumroadServerResponseError), userInfo: dict)
+                    let error = NSError(domain: MFLicenseErrorDomain, code: Int(kMFLicenseErrorCodeGumroadServerResponseError), userInfo: dict)
                     completionHandler(dict, error, urlResponse)
                     return
                 }

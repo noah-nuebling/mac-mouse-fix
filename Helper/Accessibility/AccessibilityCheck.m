@@ -155,7 +155,7 @@ CGEventRef _Nullable testCallback(CGEventTapProxy proxy, CGEventType type, CGEve
         ///     `TriggeredByUser:YES` might be a lie if the helper starts at system boot or after a crash.
         ///         TODO: Think this through again.
     ///             Edit: First idea: We should handle the triggeredByUser case in the main app, set to NO here
-        [Licensing runCheckAndDisplayUIWithTriggeredByUser:NO];
+        [License runCheckAndDisplayUIWithTriggeredByUser:NO];
         
         ///
         /// Debug & testing
@@ -177,7 +177,7 @@ CGEventRef _Nullable testCallback(CGEventTapProxy proxy, CGEventType type, CGEve
     //
     //            DDLogDebug(@"License check result - isValidKeyAndEmail: %d, error: %@", isValidKeyAndEmail, error);
     //    }];
-//        [Licensing licensingStateWithCompletionHandler:^(MFLicensingReturn licensing, NSError *error) {
+//        [Licensing licensingStateWithCompletionHandler:^(MFLicenseReturn licensing, NSError *error) {
 //            DDLogDebug(@"License check result - state: %d, currentDay: %d, trialDays: %d, error: %@", licensing.state, licensing.daysOfUse, licensing.trialDays, error);
 //        }];
     }

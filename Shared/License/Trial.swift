@@ -37,13 +37,13 @@ import Cocoa
         /// Real init
         
         /// Check licensing state
-        Licensing.licensingState { licensing, error in
+        License.licenseState { license, error in
             
-            if licensing.state == kMFLicensingStateLicensed || licensing.state == kMFLicensingStateCachedLicensed {
+            if license.state == kMFLicenseStateLicensed || license.state == kMFLicenseStateCachedLicensed {
                 
                 /// Do nothing if licensed
                 
-            } else if licensing.daysOfUse > licensing.trialDays {
+            } else if license.daysOfUse > license.trialDays {
                 
                 /// Not licensed and trial expired -> do nothing
                 ///     Trial expired UI is handeled by Licensing.swift
@@ -117,6 +117,6 @@ import Cocoa
         Trial.daysOfUse += 1
         
         /// Display UI
-        Licensing.runCheckAndDisplayUI(triggeredByUser: false)
+        License.runCheckAndDisplayUI(triggeredByUser: false)
     }
 }

@@ -37,7 +37,7 @@ class AboutTabController: NSViewController {
         ///     Not using the completionHandler of `Licensing.licensingState` here since it's asynchronous.
         ///     However, calling `licensingState()` will update isLicensed and then the UI will update
         ///     We could also have separated ConfigValue for the daysOfUse config value, but I don't think it'll be noticable if that doesn't update totally correctly
-        Licensing.licensingState(completionHandler: { licensing, error in })
+        License.licenseState(completionHandler: { licensing, error in })
         
         isLicensed.producer.startWithValues { isLicensed in
             
