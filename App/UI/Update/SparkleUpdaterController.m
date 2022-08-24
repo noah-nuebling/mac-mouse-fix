@@ -10,7 +10,7 @@
 #import "SparkleUpdaterController.h"
 #import "AppDelegate.h"
 #import "SharedUtility.h"
-#import "Objects.h"
+#import "Locator.h"
 
 // See https://sparkle-project.org/documentation/customization/
 
@@ -52,7 +52,7 @@
     // This is untested but it's copied over from the old Updating mechanism, so I trust that it works in this context, too.
     BOOL helperNeutralized = NO;
     for (NSRunningApplication *app in [NSRunningApplication runningApplicationsWithBundleIdentifier:kMFBundleIDHelper]) {
-        if ([app.bundleURL isEqualTo: Objects.helperOriginalBundle.bundleURL]) {
+        if ([app.bundleURL isEqualTo: Locator.helperOriginalBundle.bundleURL]) {
             [app terminate];
             helperNeutralized = YES;
             break;

@@ -9,7 +9,7 @@
 
 #import "FileMonitor.h"
 #import "HelperServices.h"
-#import "Objects.h"
+#import "Locator.h"
 #import <AppKit/AppKit.h>
 #import <Foundation/Foundation.h>
 #import "Constants.h"
@@ -35,7 +35,7 @@ static void setStreamToCurrentInstallLoc() {
         FSEventStreamInvalidate(_stream);
     }
     // v Need to monitor the enclosing folder for callbacks to work
-    NSURL *mainAppURL = [Objects.mainAppBundle.bundleURL URLByDeletingLastPathComponent];
+    NSURL *mainAppURL = [Locator.mainAppBundle.bundleURL URLByDeletingLastPathComponent];
     _stream = FSEventStreamCreate(kCFAllocatorDefault, Handle_FSCallback, NULL, (__bridge CFArrayRef) @[mainAppURL.path], kFSEventStreamEventIdSinceNow, 1, kFSEventStreamCreateFlagIgnoreSelf ^ kFSEventStreamCreateFlagUseCFTypes);
     FSEventStreamScheduleWithRunLoop(_stream, CFRunLoopGetMain(), kCFRunLoopDefaultMode);
     FSEventStreamStart(_stream);
@@ -53,7 +53,7 @@ void Handle_FSCallback(ConstFSEventStreamRef streamRef, void *clientCallBackInfo
         DDLogInfo(@"Mac Mouse Fix cannot be found on the system anymore");
         uninstallCompletely();
     } else {
-        NSURL *helperURL = Objects.helperBundle.bundleURL;
+        NSURL *helperURL = Locator.helperBundle.bundleURL;
         NSURL *helperURLOld = NSBundle.mainBundle.bundleURL;
         BOOL isInOldLocation = [helperURL isEqualTo:helperURLOld];
         if (isInOldLocation) {
@@ -61,7 +61,7 @@ void Handle_FSCallback(ConstFSEventStreamRef streamRef, void *clientCallBackInfo
             return;
         }
         DDLogInfo(@"Mac Mouse Fix Helper was launched at: %@ but is now at: %@", helperURLOld, helperURL);
-        NSBundle *appBundle = Objects.mainAppBundle;
+        NSBundle *appBundle = Locator.mainAppBundle;
         BOOL isInTrash = [appBundle.bundleURL.URLByDeletingLastPathComponent.lastPathComponent isEqualToString:trashFolderName()];
         BOOL isRemoved = appBundle == nil;
         BOOL workspaceURLIsInTrash = [installedBundleURLFromWorkspace.URLByDeletingLastPathComponent.lastPathComponent isEqualToString:trashFolderName()];
@@ -93,7 +93,7 @@ void handleRelocation() {
     // We have to use a separate executable to restart the helper
     
     DDLogInfo(@"Asking Accomplice to restart Helper");
-    NSURL *accompliceURL = [Objects.mainAppBundle.bundleURL URLByAppendingPathComponent:kMFRelativeAccomplicePath];
+    NSURL *accompliceURL = [Locator.mainAppBundle.bundleURL URLByAppendingPathComponent:kMFRelativeAccomplicePath];
     NSArray *args = @[kMFAccompliceModeReloadHelper];
     [SharedUtility launchCLT:accompliceURL withArgs:args];
 }
@@ -105,9 +105,9 @@ void uninstallCompletely(void) {
 void removeResidue(void) {
     DDLogInfo(@"Removing Mac Mouse Fix resdiue");
     // Delete Application Support Folder
-    [NSFileManager.defaultManager trashItemAtURL:Objects.MFApplicationSupportFolderURL resultingItemURL:nil error:nil];
+    [NSFileManager.defaultManager trashItemAtURL:Locator.MFApplicationSupportFolderURL resultingItemURL:nil error:nil];
     // Delete launchd plist
-    [NSFileManager.defaultManager trashItemAtURL:Objects.launchdPlistURL resultingItemURL:nil error:nil];
+    [NSFileManager.defaultManager trashItemAtURL:Locator.launchdPlistURL resultingItemURL:nil error:nil];
     // Delete logging folder // TODO: Test if this works
     DDFileLogger *fileLogger = [[DDFileLogger alloc] init];
     NSString *logsDirectoryPath = fileLogger.logFileManager.logsDirectory;

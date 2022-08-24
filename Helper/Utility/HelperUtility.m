@@ -12,13 +12,13 @@
 #import "Constants.h"
 #import "TransformationUtility.h"
 #import "WannabePrefixHeader.h"
-#import "Objects.h"
+#import "Locator.h"
 
 @implementation HelperUtility
 
 + (void)openMainApp {
     
-    NSURL *bundleURL = Objects.mainAppBundle.bundleURL;
+    NSURL *bundleURL = Locator.mainAppBundle.bundleURL;
     [NSWorkspace.sharedWorkspace openURL:bundleURL];
     
     return;

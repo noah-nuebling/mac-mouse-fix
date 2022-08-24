@@ -11,7 +11,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface Objects : NSObject /// Maybe rename to `Locator`
+@interface Locator : NSObject
 + (NSBundle *)mainAppBundle;
 + (NSBundle *)helperBundle;
 + (NSBundle *)mainAppOriginalBundle;

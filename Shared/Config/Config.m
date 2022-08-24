@@ -22,7 +22,7 @@
 #import "TransformationUtility.h"
 #import "HelperUtility.h"
 #import "SharedMessagePort.h"
-#import "Objects.h"
+#import "Locator.h"
 
 #if IS_HELPER
 #import "Mac_Mouse_Fix_Helper-Swift.h"
@@ -34,7 +34,7 @@
 
 @implementation Config {
     
-    NSString*_configFilePath; /// Should probably use `Objects.m` to find config and defaultConfig
+    NSString*_configFilePath; /// Should probably use `Locator.m` to find config and defaultConfig
     NSURL *_defaultConfigURL; /// `default_config` used to be known as `backup_config`
     NSString *_bundleIDOfAppWhichCausesAppOverride;
 //    NSDictionary *_stringToEventFlagMask; /// Delete this
@@ -79,7 +79,7 @@ static Config *_instance;
         
         /// Get default config url
         NSString *defaultConfigPathRelative = @"Contents/Resources/default_config.plist";
-        _defaultConfigURL = [Objects.mainAppBundle.bundleURL URLByAppendingPathComponent:defaultConfigPathRelative];
+        _defaultConfigURL = [Locator.mainAppBundle.bundleURL URLByAppendingPathComponent:defaultConfigPathRelative];
     }
     return self;
 }
@@ -281,7 +281,7 @@ void Handle_FSEventStreamCallback (ConstFSEventStreamRef streamRef, void *client
         DDLogInfo(@"ERROR serializing configDictFromFile: %@", serializeErr);
     }
     NSError *writeErr;
-    [configData writeToURL:Objects.configURL options:NSDataWritingAtomic error:&writeErr];
+    [configData writeToURL:Locator.configURL options:NSDataWritingAtomic error:&writeErr];
     if (writeErr) {
         DDLogInfo(@"ERROR writing configDictFromFile to file: %@", writeErr);
     }
@@ -297,7 +297,7 @@ void Handle_FSEventStreamCallback (ConstFSEventStreamRef streamRef, void *client
     [self repairConfigWithProblem:kMFConfigProblemNone info:nil];
 #endif
     
-    NSData *configData = [NSData dataWithContentsOfURL:Objects.configURL];
+    NSData *configData = [NSData dataWithContentsOfURL:Locator.configURL];
     NSError *readErr;
     NSMutableDictionary *configDict = [NSPropertyListSerialization propertyListWithData:configData options:NSPropertyListMutableContainersAndLeaves format:nil error:&readErr];
     if (readErr) {
@@ -349,14 +349,14 @@ void Handle_FSEventStreamCallback (ConstFSEventStreamRef streamRef, void *client
     
     /// Create config file if none exists
     
-    if (![NSFileManager.defaultManager fileExistsAtPath:Objects.configURL.path]) {
-        [NSFileManager.defaultManager createDirectoryAtURL:Objects.configURL.URLByDeletingLastPathComponent withIntermediateDirectories:YES attributes:nil error:nil];
+    if (![NSFileManager.defaultManager fileExistsAtPath:Locator.configURL.path]) {
+        [NSFileManager.defaultManager createDirectoryAtURL:Locator.configURL.URLByDeletingLastPathComponent withIntermediateDirectories:YES attributes:nil error:nil];
         [self replaceCurrentConfigWithDefaultConfig];
     }
     
     /// Check if config version matches, if not, replace with default.
     
-    NSNumber *currentConfigVersion = [[NSDictionary dictionaryWithContentsOfURL:Objects.configURL] valueForKeyPath:@"Other.configVersion"];
+    NSNumber *currentConfigVersion = [[NSDictionary dictionaryWithContentsOfURL:Locator.configURL] valueForKeyPath:@"Other.configVersion"];
     NSNumber *defaultConfigVersion = [[NSDictionary dictionaryWithContentsOfURL:_defaultConfigURL] valueForKeyPath:@"Other.configVersion"];
     if (currentConfigVersion.intValue != defaultConfigVersion.intValue) {
         [self replaceCurrentConfigWithDefaultConfig];
@@ -391,7 +391,7 @@ void Handle_FSEventStreamCallback (ConstFSEventStreamRef streamRef, void *client
     
     /// Overwrite `config.plist` with `default_config.plist`
     NSData *defaultData = [NSData dataWithContentsOfURL:_defaultConfigURL];
-    [defaultData writeToURL:Objects.configURL atomically:YES];
+    [defaultData writeToURL:Locator.configURL atomically:YES];
     
     /// Update helper
     ///     Why aren't we just sending a configFileChanged message?

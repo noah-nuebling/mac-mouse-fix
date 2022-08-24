@@ -8,7 +8,7 @@
 //
 
 #import "SharedUtility.h"
-#import "Objects.h"
+#import "Locator.h"
 #import "Config.h"
 #import "Config.h"
 #import "SharedUtility.h"
@@ -241,7 +241,7 @@ static void iteratePropertiesOn(id obj, void(^callback)(objc_property_t property
 }
 
 #pragma mark - Check which executable is running
-/// TODO: Maybe move this to `Objects.m`
+/// TODO: Maybe move this to `Locator.m`
 
 /// Return YES if called by main app
 + (BOOL)runningMainApp {
