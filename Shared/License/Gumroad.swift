@@ -19,30 +19,21 @@ import CocoaLumberjackSwift
     /// Interface
     ///     Use License.swift instead of using this directly
     
-    @objc static func activateLicense(_ key: String, email: String, completionHandler: @escaping (_ isValidKeyAndEmail: Bool, _ serverResponse: [String: Any]?, _ error: NSError?, _ urlResponse: URLResponse?) -> ()) {
+    @objc static func activateLicense(_ key: String, email: String, maxActivations: Int, completionHandler: @escaping (_ isValidKeyAndEmail: Bool, _ serverResponse: [String: Any]?, _ error: NSError?, _ urlResponse: URLResponse?) -> ()) {
         
-        _checkLicense(key, email: email, incrementUsageCount: true, completionHandler: completionHandler)
+        _checkLicense(key, email: email, maxActivations: maxActivations, incrementUsageCount: true, completionHandler: completionHandler)
     }
     
-    @objc static func checkLicense(_ key: String, email: String, completionHandler: @escaping (_ isValidKeyAndEmail: Bool, _ serverResponse: [String: Any]?, _ error: NSError?, _ urlResponse: URLResponse?) -> ()) {
+    @objc static func checkLicense(_ key: String, email: String, maxActivations: Int, completionHandler: @escaping (_ isValidKeyAndEmail: Bool, _ serverResponse: [String: Any]?, _ error: NSError?, _ urlResponse: URLResponse?) -> ()) {
         
-        _checkLicense(key, email: email, incrementUsageCount: false, completionHandler: completionHandler)
+        _checkLicense(key, email: email, maxActivations: maxActivations, incrementUsageCount: false, completionHandler: completionHandler)
     }
     
     //
     // MARK: Core - lvl 2
     //
     
-    /// Constants
-    
-    /// Define max activations
-    ///     I want people to activate MMF on as many of their machines  as they'd like.
-    ///     This is just so you can't just share one email address + license key combination on some forum and have everyone use that forever. This is probably totally unnecessary.
-    private static let maxActivations = 100
-    
-    /// Functions
-    
-    private static func _checkLicense(_ key: String, email: String, incrementUsageCount: Bool, completionHandler: @escaping (_ isValidKeyAndEmail: Bool, _ serverResponse: [String: Any]?, _ error: NSError?, _ urlResponse: URLResponse?) -> ()) {
+    private static func _checkLicense(_ key: String, email: String, maxActivations: Int, incrementUsageCount: Bool, completionHandler: @escaping (_ isValidKeyAndEmail: Bool, _ serverResponse: [String: Any]?, _ error: NSError?, _ urlResponse: URLResponse?) -> ()) {
         
         getLicenseInfo(key, incrementUsageCount: incrementUsageCount) { isValidKey, emailForKey, nOfActivations, serverResponse, error, urlResponse in
             

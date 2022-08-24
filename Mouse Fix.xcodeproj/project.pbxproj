@@ -1569,9 +1569,7 @@
 			isa = PBXGroup;
 			children = (
 				4F46EAA625FB770D0003423A /* AddWindow(old) */,
-				4FF665C525F2C92700689B77 /* AppDelegate.h */,
 				4FD148D728AA444100FE688C /* MouseFix.xib */,
-				4FF665DB25F2C92700689B77 /* AppDelegate.m */,
 				4FF665CC25F2C92700689B77 /* MoreSheet */,
 			);
 			path = OldReference;
@@ -1685,6 +1683,8 @@
 		4FF665BE25F2C92700689B77 /* App */ = {
 			isa = PBXGroup;
 			children = (
+				4FF665C525F2C92700689B77 /* AppDelegate.h */,
+				4FF665DB25F2C92700689B77 /* AppDelegate.m */,
 				4F39BC48263B179200FDF692 /* AppState.h */,
 				4F39BC49263B179200FDF692 /* AppState.m */,
 				4F909CEF28A0C3B6009349A2 /* MainAppState.swift */,

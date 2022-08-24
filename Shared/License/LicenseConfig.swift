@@ -77,6 +77,7 @@ import CocoaLumberjackSwift
         /// Fallback to hardcoded if no cache
         
         if !instance.isFilled {
+            instance.maxActivations = 100
             instance.trialDays = 14
             instance.price = 199
             instance.payLink = "https://noahnuebling.gumroad.com/l/mmfinapp"
@@ -95,6 +96,7 @@ import CocoaLumberjackSwift
         
         /// Don't use this directly! Use the static `get()` funcs instead
         /// Init to garbage
+        maxActivations = -1
         trialDays = -1
         price = 99999999
         payLink = ""
@@ -122,6 +124,10 @@ import CocoaLumberjackSwift
     
     /// Base vars
     
+    /// Define max activations
+    ///     I want people to activate MMF on as many of their machines  as they'd like.
+    ///     This is just so you can't just share one email address + license key combination on some forum and have everyone use that forever. This is probably totally unnecessary.
+    @objc var maxActivations: Int
     @objc var trialDays: Int
     @objc var price: Int
     @objc var payLink: String
@@ -159,7 +165,8 @@ import CocoaLumberjackSwift
         
         /// Get values from dict
         
-        guard let trialDays = config?["trialDays"] as? Int,
+        guard let maxActivations = config?["maxActivations"] as? Int,
+              let trialDays = config?["trialDays"] as? Int,
               let price = config?["price"] as? Int,
               let payLink = config?["payLink"] as? String,
               let quickPayLink = config?["quickPayLink"] as? String
@@ -169,6 +176,7 @@ import CocoaLumberjackSwift
         
         /// Fill instance from dict values
         
+        instance.maxActivations = maxActivations
         instance.trialDays = trialDays
         instance.price = price
         instance.payLink = payLink

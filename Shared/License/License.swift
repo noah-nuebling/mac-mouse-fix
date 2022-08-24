@@ -13,13 +13,13 @@ import Cocoa
     
     // MARK: Interface
     
-    @objc static func runCheckAndDisplayUI(triggeredByUser: Bool) {
+    @objc static func runCheckAndDisplayUI(licenseConfig: LicenseConfig, triggeredByUser: Bool) {
         
         /// Run check should be called when
         
         /// Get licensing state
         
-        licenseState { license, error in
+        licenseState(licenseConfig: licenseConfig) { license, error in
             
             if license.state == kMFLicenseStateLicensed || license.state == kMFLicenseStateCachedLicensed {
                  
@@ -60,10 +60,10 @@ import Cocoa
         }
     }
     
-    @objc static func licenseState(completionHandler: @escaping (_ license: MFLicenseReturn, _ error: NSError?) -> ()) {
+    @objc static func licenseState(licenseConfig: LicenseConfig, completionHandler: @escaping (_ license: MFLicenseReturn, _ error: NSError?) -> ()) {
         
         /// Check license
-        checkLicense { state, error in
+        checkLicense(licenseConfig: licenseConfig) { state, error in
             
             /// Write to cache
             ///     Might be cleaner to do this in `checkLicense`?
@@ -92,7 +92,7 @@ import Cocoa
     
     // MARK: Core
     
-    fileprivate static func checkLicense(completionHandler: @escaping (MFLicenseState, NSError?) -> ()) {
+    fileprivate static func checkLicense(licenseConfig: LicenseConfig, completionHandler: @escaping (MFLicenseState, NSError?) -> ()) {
         
         /// Get email and license from config file
         
@@ -107,8 +107,12 @@ import Cocoa
             return
         }
         
+        /// Get maxActivations from licenseConfig
+        
+        let maxActivations = licenseConfig.maxActivations
+        
         /// Ask gumroad to verify
-        Gumroad.checkLicense(key, email: email) { isValidKeyAndEmail, serverResponse, error, urlResponse in
+        Gumroad.checkLicense(key, email: email, maxActivations: maxActivations) { isValidKeyAndEmail, serverResponse, error, urlResponse in
             
             if isValidKeyAndEmail {
                 
