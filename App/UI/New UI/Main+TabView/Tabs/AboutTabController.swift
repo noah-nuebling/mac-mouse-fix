@@ -74,7 +74,7 @@ class AboutTabController: NSViewController {
                 /// Replace payButton with milkshake link
                 ///
                 
-                /// Note: This only does something if the UI was first updated in the unlicensed state and now it's going back to licensed state. Otherwise the payButtonWrapper will just be nil and the moneyCellLink unhidden loading straight from interface builder.
+                /// Note: This only does something if the UI was first updated in the unlicensed state and now it's going back to licensed state. When we hit this straight after loading from IB, the payButtonWrapper will just be nil and the moneyCellLink will be unhidden, so this won't do anything.
                 
                 self.payButtonWrapper?.isHidden = true
                 self.moneyCellLink.isHidden = false
