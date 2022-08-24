@@ -243,16 +243,20 @@ static void iteratePropertiesOn(id obj, void(^callback)(objc_property_t property
 #pragma mark - Check which executable is running
 /// TODO: Maybe move this to `Locator.m`
 
-/// Return YES if called by main app
 + (BOOL)runningMainApp {
+    
+    /// Return YES if called by main app
+    ///     Note: Could also use compiler flags `IS_MAIN_APP` and `IS_HELPER` to speed this up.
     return [NSBundle.mainBundle.bundleIdentifier isEqual:kMFBundleIDApp];
 }
-/// Return YES if called by helper app
 + (BOOL)runningHelper {
+    
+    /// Return YES if called by helper app
     return [NSBundle.mainBundle.bundleIdentifier isEqual:kMFBundleIDHelper];
 }
-/// Return YES if called by accomplice
 + (BOOL)runningAccomplice {
+    
+    /// Return YES if called by accomplice
     return [NSFileManager.defaultManager isExecutableFileAtPath:[NSBundle.mainBundle.bundlePath stringByAppendingPathComponent:kMFAccompliceName]];
 }
 

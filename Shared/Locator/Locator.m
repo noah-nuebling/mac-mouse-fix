@@ -14,6 +14,8 @@
 
 @implementation Locator
 
+#pragma mark - Interface
+
 + (NSBundle *)helperBundle {
     NSBundle *hhh;
     NSBundle *helperBundle;
@@ -57,6 +59,20 @@ static NSURL *_configURL;
     NSURL *userLibURL = [NSFileManager.defaultManager URLsForDirectory:NSLibraryDirectory inDomains:NSUserDomainMask][0];
     return  [userLibURL URLByAppendingPathComponent:launchdPlistRelativePathFromLibrary];
 }
++ (NSUserDefaults *)defaults {
+    
+    /// This allows both the helper and the main app to write into the same user defaults
+    
+    if (SharedUtility.runningMainApp) {
+        return NSUserDefaults.standardUserDefaults;
+    } else if (SharedUtility.runningHelper) {
+        return [[NSUserDefaults alloc] initWithSuiteName:kMFBundleIDApp];
+    } else {
+        assert(false);
+    }
+}
+
+#pragma mark - Init
 
 + (void)initialize {
     
@@ -67,6 +83,8 @@ static NSURL *_configURL;
         _configURL = [_MFApplicationSupportFolderURL URLByAppendingPathComponent:@"config.plist"];
     }
 }
+
+#pragma mark - Core
 
 /// This gets bundles at locations at which they were launched. These locations are incorrect if the app was moved while it or the helper is open
 /// To get (best estimate of) up-to-date bundles, use `getBundlesForMainApp:helper`

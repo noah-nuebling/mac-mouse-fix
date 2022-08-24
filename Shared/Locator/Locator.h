@@ -20,6 +20,7 @@ NS_ASSUME_NONNULL_BEGIN
 + (NSURL *)MFApplicationSupportFolderURL;
 + (NSURL *)configURL;
 + (NSURL *)launchdPlistURL;
++ (NSUserDefaults *)defaults;
 @end
 
 NS_ASSUME_NONNULL_END

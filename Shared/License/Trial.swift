@@ -87,18 +87,18 @@ import Cocoa
     
     @objc static var daysOfUse: Int {
         get {
-            UserDefaults(suiteName: kMFBundleIDApp)!.value(forKey: "License-trial-daysOfUse") as? Int ?? -1
+            Locator.defaults().value(forKey: "License-trial-daysOfUse") as? Int ?? -1
         }
         set {
-            UserDefaults(suiteName: kMFBundleIDApp)!.setValue(newValue, forKey: "License-trial-daysOfUse")
+            Locator.defaults().setValue(newValue, forKey: "License-trial-daysOfUse")
         }
     }
     @objc static var lastUseDate: Date? {
         get {
-            UserDefaults(suiteName: kMFBundleIDApp)!.value(forKey: "License-trial-lastUseDate") as? Date
+            Locator.defaults().value(forKey: "License-trial-lastUseDate") as? Date
         }
         set {
-            UserDefaults(suiteName: kMFBundleIDApp)!.setValue(newValue, forKey: "License-trial-lastUseDate")
+            Locator.defaults().setValue(newValue, forKey: "License-trial-lastUseDate")
         }
     }
     

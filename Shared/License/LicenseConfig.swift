@@ -109,11 +109,14 @@ import CocoaLumberjackSwift
     fileprivate static var configCache: [String: Any]? {
         
         /// Cache for the JSON config file we download from the website
+        ///     Don't think there's a good reason we store this in userDefaults instead of config.plist. (There is a decent reason in Trial.swift)
+        ///     -> TODO: Move this to config.
+        
         set {
-            UserDefaults(suiteName: kMFBundleIDApp)!.setValue(newValue, forKey: "License-config")
+            Locator.defaults().setValue(newValue, forKey: "License-config")
         }
         get {
-            UserDefaults(suiteName: kMFBundleIDApp)!.value(forKey: "License-config") as? [String: Any]
+            Locator.defaults().value(forKey: "License-config") as? [String: Any]
         }
     }
     
