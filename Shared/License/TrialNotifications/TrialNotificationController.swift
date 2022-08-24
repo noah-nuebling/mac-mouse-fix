@@ -136,7 +136,6 @@ class TrialNotificationController: NSWindowController {
     }
     
     @objc override func close() {
-//        super.close()
         
         /// Unwrap window and screen
         guard
@@ -157,8 +156,10 @@ class TrialNotificationController: NSWindowController {
     /// Helper stuff
     
     fileprivate func setFrameWithCoolAnimation(_ animStartFrame: NSRect, _ newFrame: NSRect, _ window: NSWindow, onComplete: (() -> ())? = nil) {
+        
         /// Animate window in
         ///     Note: We're doing the same thing in ResizingTabWindow. -> Think about abstracting this away
+        
         let animation = CASpringAnimation(speed: 3.5, damping: 1.0)
         let animator = DynamicSystemAnimator(fromAnimation: animation, stopTolerance: 0.1)
         animator.start(distance: 1.0, callback: { value in

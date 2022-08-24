@@ -13,6 +13,13 @@
 #define Licensing_h
 
 typedef enum {
+    kMFValueFreshnessNone,
+    kMFValueFreshnessFresh,
+    kMFValueFreshnessCached,
+    kMFValueFreshnessFallback,
+} MFValueFreshness;
+
+typedef enum {
     kMFLicensingStateLicensed = 0,
     kMFLicensingStateUnlicensed = 1,
     kMFLicensingStateCachedLicensed = 2,
@@ -40,6 +47,9 @@ typedef struct {
 #define kMFLicensingErrorCodeGumroadServerResponseError 3
 #define kMFLicensingErrorCodeEmailOrKeyNotFound 4
 #define kMFLicensingErrorCodeNoInternetAndNoCache 5
+
+#define MFLicenseConfigErrorDomain @"MFLicenseConfigErrorDomain"
+#define kMFLicenseConfigErrorCodeInvalidDict 1
 
 
 #endif /* Licensing_h */

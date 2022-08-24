@@ -35,6 +35,8 @@
 		4F3A40DA266C5BDF00436821 /* NSScreen+Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F3A40D9266C5BDF00436821 /* NSScreen+Additions.m */; };
 		4F3E067E26A2F97D000C9E06 /* URLMenuItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F3E067D26A2F97D000C9E06 /* URLMenuItem.m */; };
 		4F44794328B55F6300AD1979 /* CAAnimation+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F909D0C28A0C3D2009349A2 /* CAAnimation+Extensions.swift */; };
+		4F44794528B62FA400AD1979 /* LicenseConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F44794428B62FA400AD1979 /* LicenseConfig.swift */; };
+		4F44794628B62FA400AD1979 /* LicenseConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F44794428B62FA400AD1979 /* LicenseConfig.swift */; };
 		4F44FF042606D73D00926A5E /* SharedMessagePort.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F44FF032606D73D00926A5E /* SharedMessagePort.m */; };
 		4F44FF052606D73D00926A5E /* SharedMessagePort.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F44FF032606D73D00926A5E /* SharedMessagePort.m */; };
 		4F5C2F802885C5D0001B9B8A /* State.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F5C2F7F2885C5D0001B9B8A /* State.swift */; };
@@ -453,6 +455,7 @@
 		4F3CDB272837D889000E28F0 /* ScrollNotes.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = ScrollNotes.md; sourceTree = "<group>"; };
 		4F3E067C26A2F97D000C9E06 /* URLMenuItem.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = URLMenuItem.h; sourceTree = "<group>"; };
 		4F3E067D26A2F97D000C9E06 /* URLMenuItem.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = URLMenuItem.m; sourceTree = "<group>"; };
+		4F44794428B62FA400AD1979 /* LicenseConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LicenseConfig.swift; sourceTree = "<group>"; };
 		4F44FF022606D73D00926A5E /* SharedMessagePort.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SharedMessagePort.h; sourceTree = "<group>"; };
 		4F44FF032606D73D00926A5E /* SharedMessagePort.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SharedMessagePort.m; sourceTree = "<group>"; };
 		4F5C2F7F2885C5D0001B9B8A /* State.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = State.swift; sourceTree = "<group>"; };
@@ -649,7 +652,7 @@
 		4FDBC59A234F80C500A46517 /* Accomplice.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Accomplice.entitlements; sourceTree = "<group>"; };
 		4FDC127528A2C6160076972E /* ReactiveConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReactiveConfig.swift; sourceTree = "<group>"; };
 		4FDE757A28B0E35100662314 /* Gumroad.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Gumroad.swift; sourceTree = "<group>"; };
-		4FDE757D28B0E66900662314 /* Licensing.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Licensing.h; sourceTree = "<group>"; };
+		4FDE757D28B0E66900662314 /* License.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = License.h; sourceTree = "<group>"; };
 		4FDE759928B1401400662314 /* Licensing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Licensing.swift; sourceTree = "<group>"; };
 		4FDE759D28B174E700662314 /* Trial.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Trial.swift; sourceTree = "<group>"; };
 		4FDE75A028B2397600662314 /* PayButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PayButton.swift; sourceTree = "<group>"; };
@@ -1539,15 +1542,17 @@
 			path = Unused;
 			sourceTree = "<group>";
 		};
-		4FDE757C28B0E35E00662314 /* Licensing */ = {
+		4FDE757C28B0E35E00662314 /* License */ = {
 			isa = PBXGroup;
 			children = (
-				4FDE757D28B0E66900662314 /* Licensing.h */,
+				4FDE757D28B0E66900662314 /* License.h */,
 				4FDE759928B1401400662314 /* Licensing.swift */,
 				4FDE759D28B174E700662314 /* Trial.swift */,
 				4FDE757A28B0E35100662314 /* Gumroad.swift */,
+				4F2A1FA726042ACB0067691A /* TrialNotifications */,
+				4F44794428B62FA400AD1979 /* LicenseConfig.swift */,
 			);
-			path = Licensing;
+			path = License;
 			sourceTree = "<group>";
 		};
 		4FDECCD528A3A37800DDEE91 /* Frameworks */ = {
@@ -1624,7 +1629,7 @@
 				4FFBC56E2667DC76001D389B /* PrefixHeader */,
 				4F44FF012606D6FD00926A5E /* MessagePort */,
 				4FF6652C25F2C7B000689B77 /* HelperServices */,
-				4FDE757C28B0E35E00662314 /* Licensing */,
+				4FDE757C28B0E35E00662314 /* License */,
 				4FF6653025F2C7B000689B77 /* Objects */,
 				4F9E78BD26855B9B002C2309 /* SwiftConcurrency */,
 				4FF6653625F2C7B000689B77 /* Utility */,
@@ -1633,7 +1638,6 @@
 				4FF9305C28805FC40007CCA7 /* Math */,
 				4F909D4228A0C4C2009349A2 /* Extensions */,
 				4FA40D1128A0D9FB00499E53 /* External */,
-				4F2A1FA726042ACB0067691A /* TrialNotifications */,
 				4F7F47D528A6EFCF00290BBD /* Resources */,
 			);
 			path = Shared;
@@ -2587,6 +2591,7 @@
 				4FF6655225F2C7B000689B77 /* NSMutableDictionary+Additions.m in Sources */,
 				4FDE75A728B25FB300662314 /* NSAttributedString+Extensions.swift in Sources */,
 				4FA40D0F28A0D8EF00499E53 /* SubPixelator.m in Sources */,
+				4F44794528B62FA400AD1979 /* LicenseConfig.swift in Sources */,
 				4F39BC4A263B179200FDF692 /* AppState.m in Sources */,
 				4FBC943B260F8AA60062F186 /* MASShortcut.m in Sources */,
 				4F909D3B28A0C3D2009349A2 /* ModCaptureDeleteButton.swift in Sources */,
@@ -2723,6 +2728,7 @@
 			files = (
 				4F09BF58288355170080A5F8 /* PollingRateMeasurer.swift in Sources */,
 				4F9C9B58268A29B70083DED0 /* RollingAverage.swift in Sources */,
+				4F44794628B62FA400AD1979 /* LicenseConfig.swift in Sources */,
 				4FDE757B28B0E35100662314 /* Gumroad.swift in Sources */,
 				4FF0255727B0091700923107 /* ModifiedDragOutputAddMode.m in Sources */,
 				4FF0255127B0033000923107 /* ModifiedDragOutputTwoFingerSwipe.m in Sources */,

@@ -161,15 +161,25 @@ CGEventRef _Nullable testCallback(CGEventTapProxy proxy, CGEventType type, CGEve
         /// Debug & testing
         ///
         
-        [TrialNotificationController.shared openWithDaysOfUse:4 trialDays:14 userInitiated:YES];
+//        LicenseConfig *c = [LicenseConfig getCached];
+        
+        [LicenseConfig getOnComplete:^(LicenseConfig * _Nonnull c) {
+           
+            
+            LicenseConfig *d = [LicenseConfig getCached];
+            
+            DDLogDebug(@"CachedLicenseConfig: %@", d);
+        }];
+        
+//        [TrialNotificationController.shared openWithDaysOfUse:4 trialDays:14 userInitiated:YES];
         
     //    [Gumroad checkLicense:license email:email completionHandler:^(BOOL isValidKeyAndEmail, NSDictionary<NSString *,id> * _Nullable serverResponse, NSError * _Nullable error, NSURLResponse * _Nullable urlResponse) {
     //
     //            DDLogDebug(@"License check result - isValidKeyAndEmail: %d, error: %@", isValidKeyAndEmail, error);
     //    }];
-        [Licensing licensingStateWithCompletionHandler:^(MFLicensingReturn licensing, NSError *error) {
-            DDLogDebug(@"License check result - state: %d, currentDay: %d, trialDays: %d, error: %@", licensing.state, licensing.daysOfUse, licensing.trialDays, error);
-        }];
+//        [Licensing licensingStateWithCompletionHandler:^(MFLicensingReturn licensing, NSError *error) {
+//            DDLogDebug(@"License check result - state: %d, currentDay: %d, trialDays: %d, error: %@", licensing.state, licensing.daysOfUse, licensing.trialDays, error);
+//        }];
     }
 }
 + (Boolean)check {

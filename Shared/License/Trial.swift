@@ -83,22 +83,23 @@ import Cocoa
     
     /// Vars
     ///     Storing in UserDefaults instead of config to make it a little more annoying to reset? Probably very unnecessary.
+    ///     Note: `setValue(forKeyPath:)` doesn't work on UserDefaults, so we're using `setValue(forKey:)` instead, and `-` instead of `.`.
     
     @objc static let trialDays = 14
     @objc static var daysOfUse: Int {
         get {
-            UserDefaults.standard.value(forKeyPath: "License.trial.daysOfUse") as? Int ?? -1
+            UserDefaults(suiteName: kMFBundleIDApp)!.value(forKey: "License-trial-daysOfUse") as? Int ?? -1
         }
         set {
-            UserDefaults.standard.setValue(newValue, forKeyPath: "License.trial.daysOfUse")
+            UserDefaults(suiteName: kMFBundleIDApp)!.setValue(newValue, forKey: "License-trial-daysOfUse")
         }
     }
     @objc static var lastUseDate: Date? {
         get {
-            UserDefaults.standard.value(forKeyPath: "License.trial.lastUseDate") as? Date
+            UserDefaults(suiteName: kMFBundleIDApp)!.value(forKey: "License-trial-lastUseDate") as? Date
         }
         set {
-            UserDefaults.standard.setValue(newValue, forKeyPath: "License.trial.lastUseDate")
+            UserDefaults(suiteName: kMFBundleIDApp)!.setValue(newValue, forKey: "License-trial-lastUseDate")
         }
     }
     
