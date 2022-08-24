@@ -78,9 +78,14 @@ import Cocoa
             /// Check trial
             let daysOfUse = Trial.daysOfUse
             
-            /// Return
-            let result = MFLicensingReturn(state: state, daysOfUse: Int32(daysOfUse), trialDays: Int32(Trial.trialDays))
-            completionHandler(result, error)
+            /// Check licenseConfig
+            LicenseConfig.get { licenseConfig in
+                
+                /// Return
+                let result = MFLicensingReturn(state: state, daysOfUse: Int32(daysOfUse), trialDays: Int32(licenseConfig.trialDays))
+                
+                completionHandler(result, error)
+            }
         }
         
     }

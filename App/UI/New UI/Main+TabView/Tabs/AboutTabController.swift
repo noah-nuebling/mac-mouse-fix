@@ -114,7 +114,7 @@ class AboutTabController: NSViewController {
                 /// Set content string
                 
                 let string = NSLocalizedString("trial-counter", comment: "First draft: Day **%d/%d** of your test period")
-                let formattedString = String(format: string, Trial.daysOfUse, Trial.trialDays)
+                let formattedString = String(format: string, Trial.daysOfUse, LicenseConfig.getCached().trialDays)
                 self.trialCellText.attributedStringValue = NSAttributedString(coolMarkdown: formattedString)!
                 
                 /// Set textfield height

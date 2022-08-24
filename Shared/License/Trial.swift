@@ -85,7 +85,6 @@ import Cocoa
     ///     Storing in UserDefaults instead of config to make it a little more annoying to reset? Probably very unnecessary.
     ///     Note: `setValue(forKeyPath:)` doesn't work on UserDefaults, so we're using `setValue(forKey:)` instead, and `-` instead of `.`.
     
-    @objc static let trialDays = 14
     @objc static var daysOfUse: Int {
         get {
             UserDefaults(suiteName: kMFBundleIDApp)!.value(forKey: "License-trial-daysOfUse") as? Int ?? -1
