@@ -151,11 +151,15 @@ CGEventRef _Nullable testCallback(CGEventTapProxy proxy, CGEventType type, CGEve
         /// Send message to main  app
         [SharedMessagePort sendMessage:@"helperEnabled" withPayload:nil expectingReply:NO];
         
-        /// Run license check
-        ///     `TriggeredByUser:YES` might be a lie if the helper starts at system boot or after a crash.
-        ///         TODO: Think this through again.
-    ///             Edit: First idea: We should handle the triggeredByUser case in the main app, set to NO here
-        [License runCheckAndDisplayUIWithTriggeredByUser:NO];
+        /// Get licenseConfig
+        [LicenseConfig getOnComplete:^(LicenseConfig * _Nonnull licenseConfig) {
+            /// Run license check
+            ///     `TriggeredByUser:YES` might be a lie if the helper starts at system boot or after a crash.
+            ///         TODO: Think this through again.
+            ///             Edit: First idea: We should handle the triggeredByUser case in the main app, set to NO here
+            
+            [License runCheckAndDisplayUIWithLicenseConfig:licenseConfig triggeredByUser:NO];
+        }];
         
         ///
         /// Debug & testing

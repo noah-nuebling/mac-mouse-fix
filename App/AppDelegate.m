@@ -92,9 +92,9 @@ static NSDictionary *sideButtonActions;
     }
     
     /// Update licenseConfig
-    ///     So we can get the licenseConfig synchronously using `[LicenseConfig getCached]` in the about tab
+    ///     We only update once on startup and then use`[LicenseConfig getCached]` anywhere else in the main app. (Currrently only the about tab.)
     ///     Notes:
-    ///     - If the user launches the app directly into the aboutTab, or switches to it super quickly, then the displayed info won't be up to date, but that should rarely ever be a problem
+    ///     - If the user launches the app directly into the aboutTab, or switches to it super quickly, then the displayed info won't be up to date, but that's a very minor problem
     ///     - We don't need a similar mechanism in Helper, because it doesn't need to display licenseConfig immediately after user input
     
     [LicenseConfig getOnComplete:^(LicenseConfig * _Nonnull config) { }];
