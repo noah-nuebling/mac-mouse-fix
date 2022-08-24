@@ -34,14 +34,16 @@ class AboutTabController: NSViewController {
         versionField.stringValue = "\(Utility_App.bundleVersionShort()) (\(Utility_App.bundleVersion()))"
         
         /// Get licensing info
-        ///     Not using the completionHandler of `Licensing.licensingState` here since it's asynchronous.
-        ///     However, calling `licensingState()` will update isLicensed and then the UI will update
-        ///     We could also have separated ConfigValue for the daysOfUse config value, but I don't think it'll be noticable if that doesn't update totally correctly
-        License.licenseState(completionHandler: { licensing, error in })
+        ///     Notes:
+        ///     - Not using the completionHandler of `Licensing.licensingState` here since it's asynchronous. However, calling `licensingState()` will update isLicensed and then the UI will update. We could also have separated ConfigValue for the daysOfUse config value, but I don't think it'll be noticable if that doesn't update totally correctl
+        
+        LicenseConfig.get { licenseConfig in
+            License.licenseState(licenseConfig: licenseConfig, completionHandler: { licensing, error in })
+        }
         
         isLicensed.producer.startWithValues { isLicensed in
             
-            if isLicensed /*|| true*/ {
+            if isLicensed {
                 
                 ///
                 /// Replace trial section with thank you section
@@ -99,8 +101,8 @@ class AboutTabController: NSViewController {
                 ///     - I think we'd like to have the image view be as tall as the text next to it and then have the image spill out vertically. That's how it works with the sfsymbols next to the links. But idk how to do that. The image always resize everything.
                 ///     - Shifting the alignment rect x is a hack. We really want the image and the text to be closer, but we're too lazy to adjust the layoutConstraints from interface builder. Just shifting the alignment x makes everything slighly off center, but I don't think it's noticable. Edit: we turned the alignment x shift off for now, it looks fine.
                 
-                var image = emoji.image(fontSize: 14)
-                var r = image.alignmentRect
+                let image = emoji.image(fontSize: 14)
+                let r = image.alignmentRect
                 image.alignmentRect = NSRect(x: r.minX + (r.maxX - r.midX) - 12, y: r.minY - 1, width: r.width, height: r.height)
                 self.trialCellImage.image = image
                 
@@ -111,10 +113,14 @@ class AboutTabController: NSViewController {
                 /// Setup trial section
                 ///
                 
+                /// Get licenseConfig
+                
+                let licenseConfig = LicenseConfig.getCached()
+                
                 /// Set content string
                 
                 let string = NSLocalizedString("trial-counter", comment: "First draft: Day **%d/%d** of your test period")
-                let formattedString = String(format: string, Trial.daysOfUse, LicenseConfig.getCached().trialDays)
+                let formattedString = String(format: string, Trial.daysOfUse, licenseConfig.trialDays)
                 self.trialCellText.attributedStringValue = NSAttributedString(coolMarkdown: formattedString)!
                 
                 /// Set textfield height
@@ -139,8 +145,10 @@ class AboutTabController: NSViewController {
                 
                 /// Create paybutton
                 
-                let payButton = PayButton()
-                payButton.title = "$1.99"
+                let payButton = PayButton(title: licenseConfig.formattedPrice) {
+                    guard let url = URL(string: licenseConfig.quickPayLink) else { return }
+                    NSWorkspace.shared.open(url)
+                }
                 
                 /// Insert payButton into wrapper
                 

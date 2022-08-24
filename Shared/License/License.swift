@@ -15,8 +15,6 @@ import Cocoa
     
     @objc static func runCheckAndDisplayUI(licenseConfig: LicenseConfig, triggeredByUser: Bool) {
         
-        /// Run check should be called when
-        
         /// Get licensing state
         
         licenseState(licenseConfig: licenseConfig) { license, error in
@@ -61,6 +59,9 @@ import Cocoa
     }
     
     @objc static func licenseState(licenseConfig: LicenseConfig, completionHandler: @escaping (_ license: MFLicenseReturn, _ error: NSError?) -> ()) {
+        
+        /// At the time of writing, we only use licenseConfig to get the maxActivations.
+        ///     Since we get licenseConfig via the internet this might be worth rethinking if it's necessary. We made a similar comment somewhere else but I forgot where.
         
         /// Check license
         checkLicense(licenseConfig: licenseConfig) { state, error in

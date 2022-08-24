@@ -96,8 +96,9 @@ static NSDictionary *sideButtonActions;
     ///     Notes:
     ///     - If the user launches the app directly into the aboutTab, or switches to it super quickly, then the displayed info won't be up to date, but that's a very minor problem
     ///     - We don't need a similar mechanism in Helper, because it doesn't need to display licenseConfig immediately after user input
+    ///     Edit: Turning this off for now because we don't need it.
     
-    [LicenseConfig getOnComplete:^(LicenseConfig * _Nonnull config) { }];
+//    [LicenseConfig getOnComplete:^(LicenseConfig * _Nonnull config) { }];
     
 #pragma mark Init Sparkle
     

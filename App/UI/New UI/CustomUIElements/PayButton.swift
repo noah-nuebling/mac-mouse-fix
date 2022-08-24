@@ -12,11 +12,17 @@
 import Cocoa
 import CocoaLumberjackSwift
 
-@IBDesignable class PayButton: NSButton {
+@IBDesignable @objc class PayButton: NSButton {
 
-    /// Interface builder
+    /// Vars
     
     @IBInspectable var backgroundColor: NSColor = .green
+    var coolAction: () -> () = { }
+    
+    /// Action helper
+    @objc func doCoolAction() {
+        self.coolAction()
+    }
     
     /// Drawing
     
@@ -47,7 +53,7 @@ import CocoaLumberjackSwift
     
     /// Init
     
-    init() {
+    init(title: String, action: @escaping () -> ()) {
         /// For init from code
         
         /// Super init
@@ -55,23 +61,31 @@ import CocoaLumberjackSwift
         super.init(frame: NSRect.zero)
         
         /// Real init
-        realInit()
+        realInit(title: title, coolAction: action)
     }
     
     required init?(coder: NSCoder) {
         /// For init from interface builder
+        ///     Call realInit() from code after this
 
         /// Super init
         ///     We have to call some designated initializer from the immediate superclass I think. But NSButton doesn't have any designated initializers. No idea why this works.
         super.init(coder: coder)
-        
-        /// Real init
-        realInit()
     }
     
-    private func realInit() {
+    func realInit(title: String, coolAction: @escaping () -> ()) {
         
         /// awakeFromNib doesn't work because we're creating these from code
+        
+        /// Set title
+        self.title = title
+        
+        /// Store action
+        self.coolAction = coolAction
+        
+        /// Set action
+        target = self
+        action = #selector(doCoolAction)
         
         /// Basic setup
         translatesAutoresizingMaskIntoConstraints = false
@@ -109,5 +123,4 @@ import CocoaLumberjackSwift
         self.setContentHuggingPriority(.required, for: .horizontal)
 //        self.setContentHuggingPriority(.required, for: .vertical)
     }
-    
 }
