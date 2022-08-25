@@ -24,7 +24,11 @@ class TrialNotificationController: NSWindowController {
     
     @IBOutlet weak var payButton: PayButton!
     @IBOutlet weak var trialTextField: NSTextFieldCell!
+    @IBOutlet weak var activateLicenseButton: NSTextField!
     
+    @IBAction func activateLicense(_ sender: Any) {
+        NSWorkspace.shared.open(URL(string: "google.com")!)
+    }
     @IBAction func closeButtonClick(_ sender: Any) {
         self.close()
     }
@@ -79,6 +83,10 @@ class TrialNotificationController: NSWindowController {
                 NSWorkspace.shared.open(URL(string: licenseConfig.quickPayLink)!)
             }
             
+            /// Set activateLicense text
+            
+            activateLicenseButton.stringValue = NSLocalizedString("activate-license", comment: "First draft: Activate License")
+            
             /// Set the trialString
             trialTextField.attributedStringValue = LicenseUtility.trialCounterString(licenseConfig: licenseConfig, license: license)
             
@@ -89,15 +97,24 @@ class TrialNotificationController: NSWindowController {
             let bodyMarkdown = NSAttributedString(coolMarkdown: bodyFormatted)!
             body.textStorage?.setAttributedString(bodyMarkdown)
             
-            /// Set scrollView size
+            /// Layout contentView
+            ///     So the width is up to date for the scrollView height calculation
+            window.contentView?.needsLayout = true
+            window.contentView?.layoutSubtreeIfNeeded()
+            
+            /// Set scrollView height
             ///     Note: Can't do this with autolayout ugh. Also can't use NSTextField, which would support autolayout, because it doesn't support links.
             ///     With body.frame.width we use the width from IB
             let size = bodyMarkdown.size(atMaxWidth: body.frame.width)
             bodyScrollView.heightAnchor.constraint(equalToConstant: size.height).isActive = true
             
-            /// Create effectView
+            /// TESTING: Set contentView width
+//            window.contentView?.setFrameSize(NSSize(width: 1000, height: 600))
             
-            let windowFrame = window.frame
+            /// Create effectView
+            ///     HACK: Using contentView.frame instead of window.frame here. Not sure why works.
+            
+            let windowFrame = window.contentView!.frame
             let effect = NSVisualEffectView(frame: windowFrame)
             effect.blendingMode = .behindWindow
             effect.state = .active

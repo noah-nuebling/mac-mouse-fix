@@ -381,3 +381,6 @@
 
 /* First draft: Hi! You've been using Mac Mouse Fix for **%d days** now. I hope you're enjoying it!\n\nIf you want to keep using Mac Mouse Fix, you can [buy it now](%@). */
 "trial-notification" = "Hi! Du verwendest Mac Mouse Fix jetzt seit **%d Tagen**. Ich hoffe, es gefällt dir!\n\nWenn du Mac Mouse Fix auch weiter verwenden willst, kannst du es dir [jetzt kaufen](%@).";
+
+/* First draft: Activate License */
+"activate-license" = "Lizenz aktivieren";
