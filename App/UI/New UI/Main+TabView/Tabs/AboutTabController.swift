@@ -194,7 +194,7 @@ class AboutTabController: NSViewController {
                 }
                 
                 /// Insert wrapper into UI
-                self.payButtonwrapperConstraints = transferSuperViewConstraints(fromView: self.moneyCellLink, toView: self.payButtonWrapper!, transferSizeConstraints: false)
+                self.payButtonwrapperConstraints = transferredSuperViewConstraints(fromView: self.moneyCellLink, toView: self.payButtonWrapper!, transferSizeConstraints: false)
                 self.moneyCell.addSubview(self.payButtonWrapper!)
                 for c in self.payButtonwrapperConstraints {
                     c.isActive = true

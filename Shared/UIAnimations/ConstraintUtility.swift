@@ -41,7 +41,26 @@ func iterateSuperViewConstraintsOn(view: NSView, callback: (NSLayoutConstraint, 
     }
 }
 
-func transferSuperViewConstraints(fromView srcView: NSView, toView dstView: NSView, transferSizeConstraints: Bool) -> [NSLayoutConstraint] {
+func replaceViewTransferringConstraints(_ srcView: NSView, replacement dstView: NSView, transferSize: Bool) {
+    
+    /// Get superview
+    guard let sup = srcView.superview else {
+        assert(false)
+    }
+    
+    /// Get transferred constraints
+    let const = transferredSuperViewConstraints(fromView: srcView, toView: dstView, transferSizeConstraints: transferSize)
+    
+    /// Replace
+    sup.replaceSubview(srcView, with: dstView)
+    
+    /// Activate constraints
+    for c in const {
+        c.isActive = true
+    }
+}
+
+func transferredSuperViewConstraints(fromView srcView: NSView, toView dstView: NSView, transferSizeConstraints: Bool) -> [NSLayoutConstraint] {
 
     var srcConstraints: [(NSLayoutConstraint, MFLayoutConstraintIndex)] = []
     iterateSuperViewConstraintsOn(view: srcView, callback: { cnst, srcIndex in

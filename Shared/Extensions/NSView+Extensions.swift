@@ -32,6 +32,12 @@ extension NSView {
         return frame.size
     }
     
+    @objc func alignedSize() -> NSSize {
+        let s = size()
+        let n = alignmentRectInsets
+        return NSSize(width: s.width - n.left - n.right, height: s.height - n.top - n.bottom)
+    }
+    
     // MARK: Screenshots
     
     func imageWithoutWindowBackground() -> NSImage? {

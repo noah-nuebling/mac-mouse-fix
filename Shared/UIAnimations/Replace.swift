@@ -90,7 +90,9 @@ class ReplaceAnimations {
         ogView.superview?.needsLayout = true
         ogView.superview?.layoutSubtreeIfNeeded()
         
-        let ogSize = ogView.size()
+        let ogSize = ogView.alignedSize()
+        let ogSizeUnaligned = ogView.size()
+        
         
         /// Debug
         
@@ -108,7 +110,7 @@ class ReplaceAnimations {
         ///
         /// Measure replaceView size in layout
         ///
-        let replaceConstraints = transferSuperViewConstraints(fromView: ogView, toView: replaceView, transferSizeConstraints: false)
+        let replaceConstraints = transferredSuperViewConstraints(fromView: ogView, toView: replaceView, transferSizeConstraints: false)
         ogView.superview?.replaceSubview(ogView, with: replaceView)
         for cnst in replaceConstraints {
             cnst.isActive = true
@@ -116,7 +118,8 @@ class ReplaceAnimations {
         replaceView.superview?.needsLayout = true
         replaceView.superview?.layoutSubtreeIfNeeded()
         
-        let replaceSize = replaceView.size()
+        let replaceSize = replaceView.alignedSize()
+        let replaceSizeUnaligned = replaceView.size()
         
         ///
         /// Store image of replaceView
@@ -140,7 +143,7 @@ class ReplaceAnimations {
         wrapperView.translatesAutoresizingMaskIntoConstraints = false
         wrapperView.wantsLayer = true
         wrapperView.layer?.masksToBounds = false /// Don't think is necessary for NoClipWrapper()
-        var wrapperConstraints = transferSuperViewConstraints(fromView: replaceView, toView: wrapperView, transferSizeConstraints: false)
+        var wrapperConstraints = transferredSuperViewConstraints(fromView: replaceView, toView: wrapperView, transferSizeConstraints: false)
         let wrapperWidthConst = wrapperView.widthAnchor.constraint(equalToConstant: ogSize.width)
         let wrapperHeightConst = wrapperView.heightAnchor.constraint(equalToConstant: ogSize.height)
         wrapperConstraints.append(wrapperWidthConst)
@@ -154,20 +157,24 @@ class ReplaceAnimations {
         /// Create before / after image views for animating
         ///
         let ogImageView = NSImageView()
+        ogImageView.wantsLayer = true
+        ogImageView.layer?.masksToBounds = false
         ogImageView.translatesAutoresizingMaskIntoConstraints = false
         ogImageView.imageScaling = .scaleNone
         
         ogImageView.image = ogImage
-        ogImageView.widthAnchor.constraint(equalToConstant: ogSize.width).isActive = true
-        ogImageView.heightAnchor.constraint(equalToConstant: ogSize.height).isActive = true
+        ogImageView.widthAnchor.constraint(equalToConstant: ogSizeUnaligned.width).isActive = true
+        ogImageView.heightAnchor.constraint(equalToConstant: ogSizeUnaligned.height).isActive = true
         
         let replaceImageView = NSImageView()
+        replaceImageView.wantsLayer = true
+        replaceImageView.layer?.masksToBounds = false
         replaceImageView.translatesAutoresizingMaskIntoConstraints = false
         replaceImageView.imageScaling = .scaleNone
         
         replaceImageView.image = replaceImage
-        replaceImageView.widthAnchor.constraint(equalToConstant: replaceSize.width).isActive = true
-        replaceImageView.heightAnchor.constraint(equalToConstant: replaceSize.height).isActive = true
+        replaceImageView.widthAnchor.constraint(equalToConstant: replaceSizeUnaligned.width).isActive = true
+        replaceImageView.heightAnchor.constraint(equalToConstant: replaceSizeUnaligned.height).isActive = true
         
         ///
         /// Add in both imageViews into wrapperView and add constraints

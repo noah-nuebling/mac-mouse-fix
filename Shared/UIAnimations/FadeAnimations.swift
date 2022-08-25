@@ -45,7 +45,7 @@ private func doubleFadePropertyChange<P>(_ view: NSView,
     }
     
     /// Replace view with copiedView
-    let copyConstraints = transferSuperViewConstraints(fromView: view, toView: copiedView, transferSizeConstraints: false)
+    let copyConstraints = transferredSuperViewConstraints(fromView: view, toView: copiedView, transferSizeConstraints: false)
     view.superview?.replaceSubview(view, with: copiedView)
     for c in copyConstraints {
         c.isActive = true
