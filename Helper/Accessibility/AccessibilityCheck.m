@@ -149,6 +149,7 @@ CGEventRef _Nullable testCallback(CGEventTapProxy proxy, CGEventType type, CGEve
         [MenuBarItem load_Manual];
         
         /// Send message to main  app
+        ///     Note: We could improve responsivity of the enableToggle in mainApp by sending the message before doing all the initialization. But only slightly.
         [SharedMessagePort sendMessage:@"helperEnabled" withPayload:nil expectingReply:NO];
         
         /// Get licenseConfig
@@ -173,9 +174,20 @@ CGEventRef _Nullable testCallback(CGEventTapProxy proxy, CGEventType type, CGEve
             LicenseConfig *d = [LicenseConfig getCached];
             
             DDLogDebug(@"CachedLicenseConfig: %@", d);
+            
         }];
         
-//        [TrialNotificationController.shared openWithDaysOfUse:4 trialDays:14 userInitiated:YES];
+        
+        [LicenseConfig getOnComplete:^(LicenseConfig * _Nonnull licenseConfig) {
+        
+            [License licenseStateWithLicenseConfig:licenseConfig completionHandler:^(MFLicenseReturn license, NSError * _Nullable error) {
+                
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    
+                    [TrialNotificationController.shared openWithLicenseConfig:licenseConfig license:license];
+                });
+            }];
+        }];
         
     //    [Gumroad checkLicense:license email:email completionHandler:^(BOOL isValidKeyAndEmail, NSDictionary<NSString *,id> * _Nullable serverResponse, NSError * _Nullable error, NSURLResponse * _Nullable urlResponse) {
     //

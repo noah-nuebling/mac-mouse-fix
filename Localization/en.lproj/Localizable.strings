@@ -1,30 +1,3 @@
-/* First draft: Mac Mouse Fix will stay enabled after you close it */
-"enabled-toggle.hint" = "Mac Mouse Fix will stay enabled after you close it";
-
-/* First draft: Lets you quickly disable Scroll Enhancements and other features */
-"menu-bar-toggle.hint" = "<so far unused>";
-
-/* First draft: You'll see new updates when you open this window */
-"updates-toggle.hint" = "You'll see new updates when you open this window";
-
-/* First draft: Mac Mouse Fix was **disabled** in System Settings.\nTo enable Mac Mouse Fix:\n\n1. Go to [Login Items Settings](x-apple.systempreferences:com.apple.LoginItems-Settings.extension)\n2. Switch on \'Mac Mouse Fix.app\' */
-"is-disabled-toast" = "Mac Mouse Fix was **disabled** in System Settings.\nTo enable Mac Mouse Fix:\n\n1. Go to [Login Items Settings](x-apple.systempreferences:com.apple.LoginItems-Settings.extension)\n2. Switch on \'Mac Mouse Fix.app\'";
-
-/* First draft: __Enabled__ Mac Mouse Fix for __Buttons__.\nIt had been disabled from the Menu Bar %@ || %@ will be replaced by the menubar icon */
-"button-revive-toast" = "__Enabled__ Mac Mouse Fix for __Buttons__.\nIt had been disabled from the Menu Bar %@";
-
-/* First draft: Enabled Mac Mouse Fix for __Scrolling__.\nIt had been disabled from the Menu Bar %@ || Where %@ will be replaced by the menubar icon. */
-"scroll-revive-toast" = "Enabled Mac Mouse Fix for __Scrolling__.\nIt had been disabled from the Menu Bar %@";
-
-/* First draft: Set Scroll Speed at\nSystem Settings > Mouse > Scroll Speed */
-"macos-scroll-speed-hint" = "Set Scroll Speed at\nSystem Settings > Mouse > Scroll Speed";
-
-/* First draft: Content tracks finger movement */
-"natural-scrolling-hint" = "Content tracks finger movement";
-
-/* First draft: Scroll precisely without a modifier key by\nmoving the scroll wheel slowly */
-"precise-scrolling-hint" = "Scroll precisely without a modifier key\nby moving the scroll wheel slowly";
-
 /* First draft: <Rewind key> */
 "apple-key-fallback.backward" = "";
 
@@ -91,6 +64,9 @@
 /* First draft: Triple Click %@ +  */
 "button-modifier.3" = "";
 
+/* First draft: __Enabled__ Mac Mouse Fix for __Buttons__.\nIt had been disabled from the Menu Bar %@ || %@ will be replaced by the menubar icon */
+"button-revive-toast" = "";
+
 /* First draft: Middle Button */
 "button-string.middle" = "";
 
@@ -115,7 +91,7 @@
 /* First draft: the Secondary Mouse Button (also called the Right Mouse Button or Mouse Button 2) */
 "button-string.tool.secondary" = "";
 
-/* No comment provided by engineer. */
+/* Key defined in .stringsdict */
 "capture-toast" = "";
 
 /* First draft: Learn More */
@@ -205,17 +181,29 @@
 /* First draft: Zoom in or out in Safari and other apps. \n \nWorks like a two-finger double tap on an Apple Trackpad. */
 "effect.smart-zoom.hint" = "";
 
+/* First draft: Mac Mouse Fix will stay enabled after you close it */
+"enabled-toggle.hint" = "";
+
 /* First draft: **Primary Mouse Button** can't be used.\nPlease try another button */
 "forbidden-capture-toast.1" = "";
 
 /* First draft: **Secondary Mouse Button** can't be used.\nPlease try another button */
 "forbidden-capture-toast.2" = "";
 
-/* First draft: , || Note: This string joins elements in a list except the second last and last one. */
+/* First draft: Mac Mouse Fix was **disabled** in System Settings.\nTo enable Mac Mouse Fix:\n\n1. Go to [Login Items Settings](x-apple.systempreferences:com.apple.LoginItems-Settings.extension)\n2. Switch on \'Mac Mouse Fix.app\' */
+"is-disabled-toast" = "";
+
+/* First draft: , || Note: This string joins elements in a list except the second-to-last and last one. */
 "join-list" = "";
 
-/* First draft: %@ & %@ || Note: This format string joins the last element of a list of items with the preceding ones */
+/* First draft: %@ & %@ || Note: This format string joins the second-to-last element and the last elements in a list of items */
 "join-list.last" = "";
+
+/* First draft: Set Scroll Speed at\nSystem Settings > Mouse > Scroll Speed */
+"macos-scroll-speed-hint" = "";
+
+/* First draft: Lets you quickly disable Scroll Enhancements and other features */
+"menu-bar-toggle.hint" = "";
 
 /* First draft: Command (⌘) */
 "modifer-key.tool.command" = "";
@@ -228,6 +216,12 @@
 
 /* First draft: Shift (⇧) */
 "modifer-key.tool.shift" = "";
+
+/* First draft: Content tracks finger movement */
+"natural-scrolling-hint" = "";
+
+/* First draft: Scroll precisely without a modifier key by\nmoving the scroll wheel slowly */
+"precise-scrolling-hint" = "";
 
 /* First draft: Desktop & Launchpad */
 "scroll-effect.4-pinch" = "";
@@ -264,6 +258,66 @@
 
 /* First draft: Zoom in or out in Safari, Maps, and other apps \n \nWorks like Pinch to Zoom on an Apple Trackpad */
 "scroll-effect.zoom.hint" = "";
+
+/* First draft: Enabled Mac Mouse Fix for __Scrolling__.\nIt had been disabled from the Menu Bar %@ || Where %@ will be replaced by the menubar icon. */
+"scroll-revive-toast" = "";
+
+/* First draft: Thank you for buying Mac Mouse Fix! */
+"thanks.01" = "";
+
+/* First draft: Thanks for purchasing Mac Mouse Fix! */
+"thanks.02" = "";
+
+/* First draft: Thanks for supporting Mac Mouse Fix! */
+"thanks.03" = "";
+
+/* First draft: Thank you for buying Mac Mouse Fix! */
+"thanks.04" = "";
+
+/* First draft: Great purchasing decisions ;) */
+"thanks.05" = "";
+
+/* First draft: Awesome taste in mouse fixing software ;) */
+"thanks.06" = "";
+
+/* First draft: <- My face when I saw you bought Mac Mouse Fix */
+"thanks.08" = "";
+
+/* First draft: Share it with your Spacebook friends! */
+"thanks.09" = "";
+
+/* First draft: Duckgang for life! || Note: A lot of these are personal, feel free to change them and leave your own messages! */
+"thanks.10" = "";
+
+/* First draft: Watch where you're going :P || Note: In the context of driving a Tractor */
+"thanks.11" = "";
+
+/* First draft: Not these mice, mom! */
+"thanks.12" = "";
+
+/* First draft: We should get him a bow tie. */
+"thanks.13" = "";
+
+/* First draft: Whole milk of course! It's your birthday after all. */
+"thanks.15" = "";
+
+/* First draft: Not John Mayer. Nevertheless mayor of hearts. */
+"thanks.16" = "";
+
+/* First draft: Give me a call when you saved the world. :) */
+"thanks.18" = "";
+
+/* First draft: Universal Studios is probably not that great anyways... :) */
+"thanks.20" = "";
+
+/* First draft: Cuter than a Reaper Leviathan. */
+"thanks.21" = "";
+
+/* First draft: Oh you're using Mac Mouse Fix? You must be pretty cool. */
+"thanks.24" = "";
+
+/* First draft: First the mice, then the world!! >:) */
+"thanks.25" = "";
 
 /* First draft: Click %@ || Note: %@ will be a button name || Example where %@ is 'Button 5': ⌥⌘ Double Click Button 4 + Click Button 5 */
 "trigger.click.1" = "";
@@ -316,62 +370,5 @@
 /* First draft: Type a Keyboard Shortcut */
 "type-shortcut-prompt" = "";
 
-/* First draft: Thank you for buying Mac Mouse Fix! */
-"thanks.01" = "";
-
-/* First draft: Thanks for purchasing Mac Mouse Fix! */
-"thanks.02" = "";
-
-/* First draft: Thanks for supporting Mac Mouse Fix! */
-"thanks.03" = "";
-
-/* First draft: Thank you for buying Mac Mouse Fix! */
-"thanks.04" = "";
-
-/* First draft: Great purchasing decisions ;) */
-"thanks.05" = "";
-
-/* First draft: Awesome taste in mouse fixing software ;) */
-"thanks.06" = "";
-
-/* First draft: <- My face when I saw you bought Mac Mouse Fix */
-"thanks.08" = "";
-
-/* First draft: Share it with your Spacebook friends! */
-"thanks.09" = "";
-
-/* First draft: Duckgang for life. */
-"thanks.10" = "";
-
-/* First draft: Watch where you're going :P */
-"thanks.11" = "";
-
-/* First draft: Not these mice, mom! */
-"thanks.12" = "";
-
-/* First draft: We should get him a bow tie. */
-"thanks.13" = "";
-
-/* First draft: Whole milk of course! It's your birthday after all. */
-"thanks.15" = "";
-
-/* First draft: Not John Mayer, nonetheless mayor of hearts! */
-"thanks.16" = "";
-
-/* First draft: Give me a call when you saved the world. */
-"thanks.18" = "";
-
-/* First draft: Universal studios is probably not that great anyways... :) */
-"thanks.20" = "";
-
-/* First draft: Cuter than a Reaper Leviathan. */
-"thanks.21" = "";
-
-/* First draft: Oh you're using Mac Mouse Fix? You must be pretty cool. */
-"thanks.24" = "";
-
-/* First draft: First the mice, then the world!! >:) */
-"thanks.25" = "";
-
-/* First draft: Day **%@/%@** of your test period */
-"trial-counter" = "";
+/* First draft: You'll see new updates when you open this window */
+"updates-toggle.hint" = "";

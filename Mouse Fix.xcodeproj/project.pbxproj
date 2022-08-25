@@ -293,6 +293,12 @@
 		4FF93059288026FC0007CCA7 /* PolynomialCappedAccelerationCurve.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FF93058288026FC0007CCA7 /* PolynomialCappedAccelerationCurve.swift */; };
 		4FF9306228806E4F0007CCA7 /* PolyFitObjC.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF9306128806E4F0007CCA7 /* PolyFitObjC.m */; };
 		4FF93063288076600007CCA7 /* PolyFit.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4FF9305D288060100007CCA7 /* PolyFit.cpp */; };
+		4FFA4E3528B795F30062A1FE /* LicenseUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FFA4E3428B795F30062A1FE /* LicenseUtility.swift */; };
+		4FFA4E3628B795F30062A1FE /* LicenseUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FFA4E3428B795F30062A1FE /* LicenseUtility.swift */; };
+		4FFA4E3828B79D410062A1FE /* NSAttributedString+Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F79A82A2605074000076A7E /* NSAttributedString+Additions.m */; };
+		4FFA4E3A28B79D960062A1FE /* NSString+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FC8A7D628ACEB7B007DB982 /* NSString+Extensions.swift */; };
+		4FFA4E3B28B79D980062A1FE /* String+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FDE75A328B25E1A00662314 /* String+Extensions.swift */; };
+		4FFA4E3C28B79D9B0062A1FE /* NSAttributedString+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FDE75A628B25FB300662314 /* NSAttributedString+Extensions.swift */; };
 		4FFBC5A8266977CA001D389B /* DoubleExponentialSmoother.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FFBC5A7266977CA001D389B /* DoubleExponentialSmoother.swift */; };
 		80457D1CE643F8D503131D96 /* Pods_Mac_Mouse_Fix_Helper.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5E09D0DF45AFAF30A568B97D /* Pods_Mac_Mouse_Fix_Helper.framework */; };
 		B6D5363E56CF13634EB5BD57 /* Pods_Mac_Mouse_Fix_Mac_Mouse_FixUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D8699EFC1F3CB6B37A1522D /* Pods_Mac_Mouse_Fix_Mac_Mouse_FixUITests.framework */; };
@@ -818,6 +824,7 @@
 		4FF9305E288060100007CCA7 /* PolyFit.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = PolyFit.hpp; sourceTree = "<group>"; };
 		4FF9306028806E4F0007CCA7 /* PolyFitObjC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PolyFitObjC.h; sourceTree = "<group>"; };
 		4FF9306128806E4F0007CCA7 /* PolyFitObjC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PolyFitObjC.m; sourceTree = "<group>"; };
+		4FFA4E3428B795F30062A1FE /* LicenseUtility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LicenseUtility.swift; sourceTree = "<group>"; };
 		4FFAD8EF28677F94005DD496 /* PointerConfigObjC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PointerConfigObjC.h; sourceTree = "<group>"; };
 		4FFBC5732667DCE4001D389B /* PrefixHeader.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PrefixHeader.pch; sourceTree = "<group>"; };
 		4FFBC5A6266977CA001D389B /* Mac Mouse Fix Helper-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Mac Mouse Fix Helper-Bridging-Header.h"; sourceTree = "<group>"; };
@@ -1059,12 +1066,6 @@
 			isa = PBXGroup;
 			children = (
 				4F7AB0522606692C0008055E /* UIStrings */,
-				4F79A8292605074000076A7E /* NSAttributedString+Additions.h */,
-				4FDE75A628B25FB300662314 /* NSAttributedString+Extensions.swift */,
-				4FDE75A328B25E1A00662314 /* String+Extensions.swift */,
-				4F79A82A2605074000076A7E /* NSAttributedString+Additions.m */,
-				4FC8A7D628ACEB7B007DB982 /* NSString+Extensions.swift */,
-				4FC8A7CC28AAF1BC007DB982 /* MarkdownParser.swift */,
 				4FF665C425F2C92700689B77 /* MFSegmentedControl.h */,
 				4FF665C125F2C92700689B77 /* MFSegmentedControl.m */,
 				4FF665E625F2C92700689B77 /* ClickableImageView.h */,
@@ -1280,6 +1281,7 @@
 		4F909D4228A0C4C2009349A2 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				4FFA4E3928B79D8D0062A1FE /* Strings */,
 				4F3A40D8266C5BDF00436821 /* NSScreen+Additions.h */,
 				4F3A40D9266C5BDF00436821 /* NSScreen+Additions.m */,
 				4FF6653825F2C7B000689B77 /* NSArray+Additions.h */,
@@ -1551,6 +1553,7 @@
 				4FDE757A28B0E35100662314 /* Gumroad.swift */,
 				4F2A1FA726042ACB0067691A /* TrialNotifications */,
 				4F44794428B62FA400AD1979 /* LicenseConfig.swift */,
+				4FFA4E3428B795F30062A1FE /* LicenseUtility.swift */,
 			);
 			path = License;
 			sourceTree = "<group>";
@@ -2108,6 +2111,19 @@
 			path = Curves;
 			sourceTree = "<group>";
 		};
+		4FFA4E3928B79D8D0062A1FE /* Strings */ = {
+			isa = PBXGroup;
+			children = (
+				4F79A8292605074000076A7E /* NSAttributedString+Additions.h */,
+				4F79A82A2605074000076A7E /* NSAttributedString+Additions.m */,
+				4FDE75A628B25FB300662314 /* NSAttributedString+Extensions.swift */,
+				4FDE75A328B25E1A00662314 /* String+Extensions.swift */,
+				4FC8A7D628ACEB7B007DB982 /* NSString+Extensions.swift */,
+				4FC8A7CC28AAF1BC007DB982 /* MarkdownParser.swift */,
+			);
+			path = Strings;
+			sourceTree = "<group>";
+		};
 		4FFBC56E2667DC76001D389B /* PrefixHeader */ = {
 			isa = PBXGroup;
 			children = (
@@ -2634,6 +2650,7 @@
 				4FA40CFA28A0CCCA00499E53 /* PolynomialCappedAccelerationCurve.swift in Sources */,
 				4F7F47CB28A5A03100290BBD /* ReactiveConfig.swift in Sources */,
 				4F909D3C28A0C3D2009349A2 /* ModCaptureFieldEditor.swift in Sources */,
+				4FFA4E3528B795F30062A1FE /* LicenseUtility.swift in Sources */,
 				4F3E067E26A2F97D000C9E06 /* URLMenuItem.m in Sources */,
 				4FA40D0128A0CCDF00499E53 /* PolyFitObjC.m in Sources */,
 				4FF6660225F2C92700689B77 /* ClickableImageView.m in Sources */,
@@ -2743,6 +2760,7 @@
 				4F44FF042606D73D00926A5E /* SharedMessagePort.m in Sources */,
 				4F1D7F4728A4639800253407 /* MenuBarItem.swift in Sources */,
 				4F8CF95728686C0100BF5E55 /* PolynomialRegression.m in Sources */,
+				4FFA4E3628B795F30062A1FE /* LicenseUtility.swift in Sources */,
 				4F5F3EEE2756DB0A00C350C0 /* RemapsOverrider_old_.swift in Sources */,
 				4F8B7E6727B4E32600598B65 /* TouchAnimatorBase.swift in Sources */,
 				4FF6669325F2C93A00689B77 /* TouchSimulator.m in Sources */,
@@ -2765,6 +2783,7 @@
 				4FF666A725F2C93A00689B77 /* Device.m in Sources */,
 				4FF6669C25F2C93A00689B77 /* PointerSpeedExperiments.m in Sources */,
 				4F3A40B1266BBC5000436821 /* Curve.swift in Sources */,
+				4FFA4E3A28B79D960062A1FE /* NSString+Extensions.swift in Sources */,
 				4FF6668425F2C93A00689B77 /* MessagePort_Helper.m in Sources */,
 				4FF6669225F2C93A00689B77 /* RoughScroll_old_.m in Sources */,
 				4FBDA14F27B241CE0030E4EA /* GlobalEventTapThread.m in Sources */,
@@ -2794,6 +2813,7 @@
 				4F3A40CB266C44D100436821 /* DisplayLink.m in Sources */,
 				4FF6669925F2C93A00689B77 /* VectorSubPixelator.m in Sources */,
 				4FDE75AA28B269AE00662314 /* Randomizer.swift in Sources */,
+				4FFA4E3B28B79D980062A1FE /* String+Extensions.swift in Sources */,
 				4FF0BD4B266A8B7E003935EA /* Bezier.swift in Sources */,
 				4FA13FC228B3A2D3005C68FC /* TrialNotificationWindow.swift in Sources */,
 				4FF6668125F2C93A00689B77 /* FileMonitor.m in Sources */,
@@ -2811,6 +2831,7 @@
 				4FF6654525F2C7B000689B77 /* Locator.m in Sources */,
 				4F5F3EF12756EC0400C350C0 /* RemapSwizzler.m in Sources */,
 				4FD66E0B27BB9BAE00F67559 /* EventUtility.m in Sources */,
+				4FFA4E3C28B79D9B0062A1FE /* NSAttributedString+Extensions.swift in Sources */,
 				4FF666A925F2C93A00689B77 /* HelperUtility.m in Sources */,
 				4FDE759B28B1401400662314 /* License.swift in Sources */,
 				4FCC03352757B181002E5A57 /* ScreenDrawer.swift in Sources */,
@@ -2824,6 +2845,7 @@
 				4F9C9B60268A29FE0083DED0 /* Smoother.swift in Sources */,
 				4FDE759F28B174E700662314 /* Trial.swift in Sources */,
 				4FA83A29268271E200F3A31B /* PointerSpeed.m in Sources */,
+				4FFA4E3828B79D410062A1FE /* NSAttributedString+Additions.m in Sources */,
 				4FF6654B25F2C7B000689B77 /* Queue.m in Sources */,
 				4F9C9B6B268A2D6F0083DED0 /* CircularBuffer.m in Sources */,
 				4FF8C8A32895AACB007EC31F /* Buttons.swift in Sources */,

@@ -9,7 +9,14 @@
 
 #import "NSAttributedString+Additions.h"
 #import <Cocoa/Cocoa.h>
+
+#if IS_MAIN_APP
 #import "Mac_Mouse_Fix-Swift.h"
+#endif
+
+#if IS_HELPER
+#import "Mac_Mouse_Fix_Helper-Swift.h"
+#endif
 
 @implementation NSAttributedString (Additions)
 

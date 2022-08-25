@@ -149,9 +149,8 @@ class AboutTabController: NSViewController {
                 
                 /// Set content string
                 
-                let string = NSLocalizedString("trial-counter", comment: "First draft: Day **%d/%d** of your test period")
-                let formattedString = String(format: string, Trial.daysOfUse, licenseConfig.trialDays)
-                self.trialCellText.attributedStringValue = NSAttributedString(coolMarkdown: formattedString)!
+                let string = LicenseUtility.trialCounterString(licenseConfig: licenseConfig, license: license)
+                self.trialCellText.attributedStringValue = string
                 
                 /// Set textfield height
                 ///     Necessary for y centering. Not sure why

@@ -11,6 +11,8 @@
             <connections>
                 <outlet property="body" destination="Ifx-r4-k2G" id="0d9-1x-MYs"/>
                 <outlet property="closeButton" destination="G5r-ur-mKW" id="Tzq-FK-zxN"/>
+                <outlet property="payButton" destination="EPy-bD-5do" id="nuv-78-kEx"/>
+                <outlet property="trialTextField" destination="MLf-Ko-XPe" id="Uwu-mC-G8k"/>
                 <outlet property="window" destination="F0z-JX-Cv5" id="gIp-Ho-8D9"/>
             </connections>
         </customObject>

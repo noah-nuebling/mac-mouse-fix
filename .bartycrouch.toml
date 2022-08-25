@@ -2,7 +2,7 @@
 tasks = ["interfaces", "code", "normalize"]
 
 [update.interfaces]
-paths = ["app", "helper", "accomplice"]
+paths = ["shared", "app", "helper", "accomplice"]
 subpathsToIgnore = [".git", "carthage", "pods", "build", ".build", "docs", "frameworks", "tests", "*/external", "*/SupportFiles", "*/iOS-Polynomial-Regression-master"]
 defaultToBase = false
 ignoreEmptyStrings = false
@@ -10,7 +10,7 @@ unstripped = false
 ignoreKeys = ["#bartycrouch-ignore!", "#bc-ignore!", "#i!"]
 
 [update.code]
-codePaths = ["app", "helper", "accomplice"]
+codePaths = ["shared", "app", "helper", "accomplice"]
 subpathsToIgnore = [".git", "carthage", "pods", "build", ".build", "docs", "frameworks", "tests", "*/external", "*/SupportFiles", "*/iOS-Polynomial-Regression-master"]
 localizablePaths = ["./Localization"]
 defaultToKeys = false
@@ -20,7 +20,7 @@ plistArguments = true
 ignoreKeys = ["#bartycrouch-ignore!", "#bc-ignore!", "#i!"]
 
 [update.transform]
-codePaths = ["app", "helper", "accomplice"]
+codePaths = ["shared", "app", "helper", "accomplice"]
 subpathsToIgnore = [".git", "carthage", "pods", "build", ".build", "docs", "frameworks", "tests", "*/external", "*/SupportFiles", "*/iOS-Polynomial-Regression-master"]
 localizablePaths = ["./Localization"]
 transformer = "foundation"
@@ -30,7 +30,7 @@ translateMethodName = "translate"
 separateWithEmptyLine = true
 
 [update.normalize]
-paths = ["app", "helper", "accomplice"]
+paths = ["shared", "app", "helper", "accomplice"]
 subpathsToIgnore = [".git", "carthage", "pods", "build", ".build", "docs", "frameworks", "tests", "*/external", "*/SupportFiles", "*/iOS-Polynomial-Regression-master"]
 sourceLocale = "en"
 harmonizeWithSource = true
@@ -38,7 +38,7 @@ sortByKeys = true
 separateWithEmptyLine = true
 
 [lint]
-paths = ["app", "helper", "accomplice"]
+paths = ["shared", "app", "helper", "accomplice"]
 subpathsToIgnore = [".git", "carthage", "pods", "build", ".build", "docs", "frameworks", "tests", "*/external", "*/SupportFiles", "*/iOS-Polynomial-Regression-master"]
 duplicateKeys = true
 emptyValues = true

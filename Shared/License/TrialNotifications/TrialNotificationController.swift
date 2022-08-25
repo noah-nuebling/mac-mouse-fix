@@ -20,6 +20,8 @@ class TrialNotificationController: NSWindowController {
     /// Outlets & actions
     
     @IBOutlet weak var body: NSTextField!
+    @IBOutlet weak var payButton: PayButton!
+    @IBOutlet weak var trialTextField: NSTextFieldCell!
     
     @IBAction func closeButtonClick(_ sender: Any) {
         self.close()
@@ -57,7 +59,7 @@ class TrialNotificationController: NSWindowController {
     
     var firstAppearance = true
     
-    @objc func open(daysOfUse: Int, trialDays: Int, userInitiated: Bool) {
+    @objc func open(licenseConfig: LicenseConfig, license: MFLicenseReturn) {
         
         /// Unwrap window
         
@@ -69,17 +71,29 @@ class TrialNotificationController: NSWindowController {
 
         if firstAppearance {
             
+            /// Init the payButton
+            /// May be more elegant to do this from IB directly but whatever
+            payButton.realInit(title: licenseConfig.formattedPrice) {
+                NSWorkspace.shared.open(URL(string: licenseConfig.quickPayLink)!)
+            }
+            
+            /// Set the trialString
+            trialTextField.attributedStringValue = LicenseUtility.trialCounterString(licenseConfig: licenseConfig, license: license)
+            
+            /// Set the bodyString
+            
+            let bodyBase = NSLocalizedString("trial-notification", comment: "First draft: Hi! You've been using Mac Mouse Fix for **%d days** now. I hope you're enjoying it!\n\nIf you want to keep using Mac Mouse Fix, you can [buy it now](%s)")
+            let bodyFormatted = String(format: bodyBase, licenseConfig.quickPayLink)
+            let bodyMarkdown = NSAttributedString(coolMarkdown: bodyFormatted)!
+            body.attributedStringValue = bodyMarkdown
+            
             /// Create effectView
             
             let windowFrame = window.frame
             let effect = NSVisualEffectView(frame: windowFrame)
             effect.blendingMode = .behindWindow
             effect.state = .active
-            if #available(OSX 10.14, *) {
-                effect.material = .popover /**.underWindowBackground*/
-            } else {
-                effect.material = .dark
-            }
+            effect.material = .popover /**.underWindowBackground*/
             effect.wantsLayer = true
 //            effect.layer?.borderColor = .clear
             
