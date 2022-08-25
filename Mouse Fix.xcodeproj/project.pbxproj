@@ -189,7 +189,7 @@
 		4FD148D828AA444100FE688C /* MouseFix.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4FD148D728AA444100FE688C /* MouseFix.xib */; };
 		4FD66E0827BB553800F67559 /* CGEventHIDEventBridge.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FD66E0727BB553800F67559 /* CGEventHIDEventBridge.m */; };
 		4FD66E0B27BB9BAE00F67559 /* EventUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FD66E0A27BB9BAE00F67559 /* EventUtility.m */; };
-		4FD82DDB260575B100664D6F /* ToastNotificationLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FD82DDA260575B100664D6F /* ToastNotificationLabel.m */; };
+		4FD82DDB260575B100664D6F /* NotificationLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FD82DDA260575B100664D6F /* NotificationLabel.m */; };
 		4FD86089266E819A004F76C8 /* Pointers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FD86088266E819A004F76C8 /* Pointers.swift */; };
 		4FD860AA266EC24E004F76C8 /* DerivedProperty.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FD860A9266EC24E004F76C8 /* DerivedProperty.swift */; };
 		4FD860CC266EF55A004F76C8 /* ScrollConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FD860CB266EF55A004F76C8 /* ScrollConfig.swift */; };
@@ -300,6 +300,7 @@
 		4FFA4E3B28B79D980062A1FE /* String+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FDE75A328B25E1A00662314 /* String+Extensions.swift */; };
 		4FFA4E3C28B79D9B0062A1FE /* NSAttributedString+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FDE75A628B25FB300662314 /* NSAttributedString+Extensions.swift */; };
 		4FFA4E3D28B7A4310062A1FE /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4F909D1728A0C3D2009349A2 /* Localizable.strings */; };
+		4FFA4E3E28B7AA250062A1FE /* NotificationLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FD82DDA260575B100664D6F /* NotificationLabel.m */; };
 		4FFBC5A8266977CA001D389B /* DoubleExponentialSmoother.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FFBC5A7266977CA001D389B /* DoubleExponentialSmoother.swift */; };
 		80457D1CE643F8D503131D96 /* Pods_Mac_Mouse_Fix_Helper.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5E09D0DF45AFAF30A568B97D /* Pods_Mac_Mouse_Fix_Helper.framework */; };
 		B6D5363E56CF13634EB5BD57 /* Pods_Mac_Mouse_Fix_Mac_Mouse_FixUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D8699EFC1F3CB6B37A1522D /* Pods_Mac_Mouse_Fix_Mac_Mouse_FixUITests.framework */; };
@@ -646,8 +647,8 @@
 		4FD66E0727BB553800F67559 /* CGEventHIDEventBridge.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CGEventHIDEventBridge.m; sourceTree = "<group>"; };
 		4FD66E0927BB9BAD00F67559 /* EventUtility.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EventUtility.h; sourceTree = "<group>"; };
 		4FD66E0A27BB9BAE00F67559 /* EventUtility.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = EventUtility.m; sourceTree = "<group>"; };
-		4FD82DD9260575B100664D6F /* ToastNotificationLabel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ToastNotificationLabel.h; sourceTree = "<group>"; };
-		4FD82DDA260575B100664D6F /* ToastNotificationLabel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ToastNotificationLabel.m; sourceTree = "<group>"; };
+		4FD82DD9260575B100664D6F /* NotificationLabel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NotificationLabel.h; sourceTree = "<group>"; };
+		4FD82DDA260575B100664D6F /* NotificationLabel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NotificationLabel.m; sourceTree = "<group>"; };
 		4FD86058266DBF96004F76C8 /* AnimatorDeclarations.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AnimatorDeclarations.h; sourceTree = "<group>"; };
 		4FD8607B266E65E9004F76C8 /* DerivedValueGenerator.swift old */ = {isa = PBXFileReference; lastKnownFileType = text; path = "DerivedValueGenerator.swift old"; sourceTree = "<group>"; };
 		4FD86081266E71A5004F76C8 /* DerivedValueGeneratorObjC.h old */ = {isa = PBXFileReference; lastKnownFileType = text; path = "DerivedValueGeneratorObjC.h old"; sourceTree = "<group>"; };
@@ -943,6 +944,8 @@
 				4FA13FBC28B39423005C68FC /* TrialNotificationController.xib */,
 				4FA13FBB28B39423005C68FC /* TrialNotificationController.swift */,
 				4FA13FC028B3A2D3005C68FC /* TrialNotificationWindow.swift */,
+				4FD82DD9260575B100664D6F /* NotificationLabel.h */,
+				4FD82DDA260575B100664D6F /* NotificationLabel.m */,
 			);
 			path = TrialNotifications;
 			sourceTree = "<group>";
@@ -1352,8 +1355,6 @@
 				4F79A81B2604317200076A7E /* ToastNotificationController.m */,
 				4F79A83426051E4A00076A7E /* ToastNotification.h */,
 				4F79A83526051E4A00076A7E /* ToastNotification.m */,
-				4FD82DD9260575B100664D6F /* ToastNotificationLabel.h */,
-				4FD82DDA260575B100664D6F /* ToastNotificationLabel.m */,
 				4F79A7EE26042E2E00076A7E /* ToastNotification.xib */,
 			);
 			path = Toasts;
@@ -2622,7 +2623,7 @@
 				4FC8A7D928AD3FC7007DB982 /* RemapTableCellView.swift in Sources */,
 				4F909D3628A0C3D2009349A2 /* Collapse.swift in Sources */,
 				4F909D4128A0C412009349A2 /* SwiftUITest.swift in Sources */,
-				4FD82DDB260575B100664D6F /* ToastNotificationLabel.m in Sources */,
+				4FD82DDB260575B100664D6F /* NotificationLabel.m in Sources */,
 				4FA13FBD28B39423005C68FC /* TrialNotificationController.swift in Sources */,
 				4F909D2C28A0C3D2009349A2 /* NSView+Extensions.swift in Sources */,
 				4FDE759A28B1401400662314 /* License.swift in Sources */,
@@ -2770,6 +2771,7 @@
 				4F70ECB7267E810900325A76 /* IOUtility.m in Sources */,
 				4FD0A71127B295F600FFCD12 /* OtherConfig.swift in Sources */,
 				4F1D58192881D880002EB119 /* CombinedLinearCurve.swift in Sources */,
+				4FFA4E3E28B7AA250062A1FE /* NotificationLabel.m in Sources */,
 				4FF6669A25F2C93A00689B77 /* TransformationUtility.m in Sources */,
 				4FF6669D25F2C93A00689B77 /* AccessibilityCheck.m in Sources */,
 				4FA13FC428B3A2E0005C68FC /* TrialNotificationController.swift in Sources */,

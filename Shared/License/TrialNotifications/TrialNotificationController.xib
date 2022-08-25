@@ -9,7 +9,8 @@
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="TrialNotificationController" customModule="Mac_Mouse_Fix" customModuleProvider="target">
             <connections>
-                <outlet property="body" destination="Ifx-r4-k2G" id="0d9-1x-MYs"/>
+                <outlet property="body" destination="00n-VL-rU4" id="vyA-3q-2I5"/>
+                <outlet property="bodyScrollView" destination="XPn-15-YCK" id="fQd-Bn-lt0"/>
                 <outlet property="closeButton" destination="G5r-ur-mKW" id="Tzq-FK-zxN"/>
                 <outlet property="payButton" destination="EPy-bD-5do" id="nuv-78-kEx"/>
                 <outlet property="trialTextField" destination="MLf-Ko-XPe" id="Uwu-mC-G8k"/>
@@ -50,25 +51,55 @@
                         </constraints>
                         <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="AppIconRoundFromHelper-deleteThis" id="v18-c0-Fut"/>
                     </imageView>
-                    <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="Ifx-r4-k2G">
-                        <rect key="frame" x="89" y="75" width="282" height="80"/>
-                        <textFieldCell key="cell" id="kCN-HL-h6o">
-                            <font key="font" metaFont="system"/>
-                            <string key="title">&lt;Hi! You've been using Mac Mouse Fix for 1 month now. I hope you're enjoying it!
+                    <scrollView horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" borderType="none" autohidesScrollers="YES" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" hasVerticalScroller="NO" horizontalScrollElasticity="none" verticalScrollElasticity="none" translatesAutoresizingMaskIntoConstraints="NO" id="XPn-15-YCK">
+                        <rect key="frame" x="91" y="75" width="278" height="80"/>
+                        <clipView key="contentView" drawsBackground="NO" copiesOnScroll="NO" id="aac-rJ-jky">
+                            <rect key="frame" x="0.0" y="0.0" width="278" height="80"/>
+                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                            <subviews>
+                                <textView wantsLayer="YES" editable="NO" drawsBackground="NO" importsGraphics="NO" richText="NO" verticallyResizable="YES" allowsCharacterPickerTouchBarItem="NO" textCompletion="NO" id="00n-VL-rU4" customClass="NotificationLabel">
+                                    <rect key="frame" x="0.0" y="0.0" width="278" height="80"/>
+                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                    <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                    <size key="minSize" width="278" height="80"/>
+                                    <size key="maxSize" width="357" height="10000000"/>
+                                    <attributedString key="textStorage">
+                                        <fragment>
+                                            <string key="content">&lt;Hi! You've been using Mac Mouse Fix for 1 month now. I hope you're enjoying it!
 
 If you want to keep using Mac Mouse Fix, you can buy it now.&gt;</string>
-                            <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
-                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                        </textFieldCell>
-                    </textField>
+                                            <attributes>
+                                                <color key="NSColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                                                <font key="NSFont" metaFont="system"/>
+                                                <font key="NSOriginalFont" size="12" name="Helvetica"/>
+                                                <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
+                                            </attributes>
+                                        </fragment>
+                                    </attributedString>
+                                    <color key="insertionPointColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                                </textView>
+                            </subviews>
+                            <color key="backgroundColor" red="1" green="1" blue="1" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
+                        </clipView>
+                        <edgeInsets key="contentInsets" left="0.0" right="0.0" top="0.0" bottom="0.0"/>
+                        <scroller key="horizontalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" horizontal="YES" id="Qjj-8H-Sty">
+                            <rect key="frame" x="-100" y="-100" width="240" height="16"/>
+                            <autoresizingMask key="autoresizingMask"/>
+                        </scroller>
+                        <scroller key="verticalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" horizontal="NO" id="YV4-ev-97E">
+                            <rect key="frame" x="-100" y="-100" width="16" height="80"/>
+                            <autoresizingMask key="autoresizingMask"/>
+                        </scroller>
+                    </scrollView>
                     <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="yP0-SZ-Yzd">
-                        <rect key="frame" x="20" y="14.5" width="21.5" height="21"/>
+                        <rect key="frame" x="20" y="14.5" width="21.5" height="20"/>
                         <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="testtube.2" catalog="system" id="AmN-iK-1Qh"/>
                         <color key="contentTintColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                         <symbolConfiguration key="symbolConfiguration" scale="large"/>
                     </imageView>
                     <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="Pkf-ky-K1B">
-                        <rect key="frame" x="44" y="18" width="124" height="15"/>
+                        <rect key="frame" x="44" y="17" width="124" height="15"/>
                         <textFieldCell key="cell" title="&lt;Test period is over&gt;" id="MLf-Ko-XPe">
                             <font key="font" metaFont="cellTitle"/>
                             <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -83,29 +114,29 @@ If you want to keep using Mac Mouse Fix, you can buy it now.&gt;</string>
                         </buttonCell>
                     </button>
                     <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="dws-t5-lGs">
-                        <rect key="frame" x="291" y="16.5" width="19" height="20"/>
+                        <rect key="frame" x="291" y="15.5" width="19" height="20"/>
                         <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="bag" catalog="system" id="flZ-Uz-gOX"/>
                         <color key="contentTintColor" name="systemBlueColor" catalog="System" colorSpace="catalog"/>
                         <symbolConfiguration key="symbolConfiguration" scale="large" weight="medium"/>
                     </imageView>
                 </subviews>
                 <constraints>
-                    <constraint firstItem="EPy-bD-5do" firstAttribute="top" secondItem="Ifx-r4-k2G" secondAttribute="bottom" constant="40" id="0x2-JI-yUX"/>
                     <constraint firstItem="8Mx-7q-zeA" firstAttribute="leading" secondItem="se5-gp-TjO" secondAttribute="leading" constant="21" id="32q-8M-uJB"/>
                     <constraint firstItem="EPy-bD-5do" firstAttribute="centerY" secondItem="Pkf-ky-K1B" secondAttribute="centerY" id="FqM-N7-n8O"/>
                     <constraint firstItem="Pkf-ky-K1B" firstAttribute="leading" secondItem="yP0-SZ-Yzd" secondAttribute="trailing" constant="5" id="Fwq-V9-SX5"/>
-                    <constraint firstItem="Ifx-r4-k2G" firstAttribute="top" secondItem="se5-gp-TjO" secondAttribute="top" constant="24" id="PDT-h0-lCr"/>
+                    <constraint firstItem="EPy-bD-5do" firstAttribute="top" secondItem="XPn-15-YCK" secondAttribute="bottom" constant="40" id="KmB-28-RTj"/>
+                    <constraint firstItem="XPn-15-YCK" firstAttribute="leading" secondItem="8Mx-7q-zeA" secondAttribute="trailing" constant="12" id="SQs-Z0-cON"/>
+                    <constraint firstItem="XPn-15-YCK" firstAttribute="top" secondItem="se5-gp-TjO" secondAttribute="top" constant="24" id="SXp-80-4kT"/>
                     <constraint firstItem="G5r-ur-mKW" firstAttribute="top" secondItem="se5-gp-TjO" secondAttribute="top" constant="7" id="UMH-sI-YBW"/>
                     <constraint firstItem="8Mx-7q-zeA" firstAttribute="top" secondItem="se5-gp-TjO" secondAttribute="top" constant="12" id="Vsp-xe-vz7"/>
                     <constraint firstItem="dws-t5-lGs" firstAttribute="centerY" secondItem="EPy-bD-5do" secondAttribute="centerY" id="cen-iW-2Ep"/>
-                    <constraint firstAttribute="trailing" secondItem="Ifx-r4-k2G" secondAttribute="trailing" constant="20" symbolic="YES" id="d7M-GY-fST"/>
                     <constraint firstItem="G5r-ur-mKW" firstAttribute="leading" secondItem="se5-gp-TjO" secondAttribute="leading" constant="8" id="eif-zF-PXO"/>
                     <constraint firstAttribute="bottom" secondItem="yP0-SZ-Yzd" secondAttribute="bottom" constant="20" symbolic="YES" id="f7u-Gb-WuS"/>
+                    <constraint firstAttribute="trailing" secondItem="XPn-15-YCK" secondAttribute="trailing" constant="20" symbolic="YES" id="gdX-pr-ltj"/>
                     <constraint firstItem="EPy-bD-5do" firstAttribute="leading" secondItem="dws-t5-lGs" secondAttribute="trailing" constant="5" id="ghn-pe-uHf"/>
                     <constraint firstAttribute="trailing" secondItem="EPy-bD-5do" secondAttribute="trailing" constant="20" symbolic="YES" id="uDu-9b-YP8"/>
                     <constraint firstItem="Pkf-ky-K1B" firstAttribute="centerY" secondItem="yP0-SZ-Yzd" secondAttribute="centerY" id="uIu-Yn-y0q"/>
                     <constraint firstItem="yP0-SZ-Yzd" firstAttribute="leading" secondItem="se5-gp-TjO" secondAttribute="leading" constant="20" symbolic="YES" id="w0n-x7-2ME"/>
-                    <constraint firstItem="Ifx-r4-k2G" firstAttribute="leading" secondItem="8Mx-7q-zeA" secondAttribute="trailing" constant="12" id="ydz-4H-llI"/>
                 </constraints>
             </view>
             <connections>

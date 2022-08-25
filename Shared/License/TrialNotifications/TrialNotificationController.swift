@@ -19,7 +19,9 @@ class TrialNotificationController: NSWindowController {
     
     /// Outlets & actions
     
-    @IBOutlet weak var body: NSTextField!
+    @IBOutlet var body: NSTextView!
+    @IBOutlet weak var bodyScrollView: NSScrollView!
+    
     @IBOutlet weak var payButton: PayButton!
     @IBOutlet weak var trialTextField: NSTextFieldCell!
     
@@ -85,7 +87,13 @@ class TrialNotificationController: NSWindowController {
             let bodyBase = NSLocalizedString("trial-notification", comment: "First draft: Hi! You've been using Mac Mouse Fix for **%d days** now. I hope you're enjoying it!\n\nIf you want to keep using Mac Mouse Fix, you can [buy it now](%@).")
             let bodyFormatted = String(format: bodyBase, license.daysOfUse, licenseConfig.quickPayLink)
             let bodyMarkdown = NSAttributedString(coolMarkdown: bodyFormatted)!
-            body.attributedStringValue = bodyMarkdown
+            body.textStorage?.setAttributedString(bodyMarkdown)
+            
+            /// Set scrollView size
+            ///     Note: Can't do this with autolayout ugh. Also can't use NSTextField, which would support autolayout, because it doesn't support links.
+            ///     With body.frame.width we use the width from IB
+            let size = bodyMarkdown.size(atMaxWidth: body.frame.width)
+            bodyScrollView.heightAnchor.constraint(equalToConstant: size.height).isActive = true
             
             /// Create effectView
             

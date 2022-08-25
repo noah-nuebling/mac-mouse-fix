@@ -18,13 +18,13 @@
 #import "Utility_App.h"
 #import "ToastNotification.h"
 //#import "NSTextField+Additions.h"
-#import "ToastNotificationLabel.h"
+#import "NotificationLabel.h"
 #import "NSAttributedString+Additions.h"
 #import "WannabePrefixHeader.h"
 #import "Mac_Mouse_Fix-Swift.h"
 
 @interface ToastNotificationController ()
-@property (unsafe_unretained) IBOutlet ToastNotificationLabel *label;
+@property (unsafe_unretained) IBOutlet NotificationLabel *label;
 @end
 
 @implementation ToastNotificationController {
@@ -126,7 +126,7 @@ static double _toastAnimationOffset = 20;
     /// Calc size to fit content
     NSRect newNotifFrame = w.frame;
     /// Get insets around label
-    ToastNotificationLabel *label = _instance.label;
+    NotificationLabel *label = _instance.label;
     NSRect notifFrame = w.frame;
 #if DEBUG
     CGFloat sh = label.superview.superview.superview.frame.size.height;

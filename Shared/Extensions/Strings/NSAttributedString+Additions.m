@@ -240,7 +240,7 @@
         NSAttributedString *result = [[NSAttributedString alloc] initWithMarkdownString:md options:options baseURL:[NSURL URLWithString:@""] error:nil];
         
         /// Return result
-        return result;
+        return [result attributedStringByFillingOutBase];
         
     } else {
         
@@ -550,7 +550,7 @@
 
 #pragma mark Determine size
 
-// Copied from here https://stackoverflow.com/a/33903242/10601702
+/// Copied from here https://stackoverflow.com/a/33903242/10601702
 - (NSSize)sizeAtMaxWidth:(CGFloat)maxWidth {
     
     NSTextContainer *textContainer = [[NSTextContainer alloc] initWithSize:CGSizeMake(maxWidth, CGFLOAT_MAX)];
