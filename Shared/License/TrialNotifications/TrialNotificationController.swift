@@ -10,6 +10,7 @@
 /// Also see ToastNotifications in the mainApp. They work similarly.
 
 import Cocoa
+import CocoaLumberjackSwift
 
 class TrialNotificationController: NSWindowController {
 
@@ -24,8 +25,8 @@ class TrialNotificationController: NSWindowController {
     
     @IBOutlet weak var payButton: PayButton!
     
-    @IBOutlet weak var trialTextField: NSTextField!
-    @IBOutlet weak var trialImage: NSImageView!
+    @IBOutlet weak var trialSection: TrialSection!
+    
     @IBAction func closeButtonClick(_ sender: Any) {
         self.close()
     }
@@ -94,7 +95,7 @@ class TrialNotificationController: NSWindowController {
 //            activateLicenseButton.stringValue = NSLocalizedString("activate-license", comment: "First draft: Activate License")
             
             /// Set the trialString
-            trialTextField.attributedStringValue = LicenseUtility.trialCounterString(licenseConfig: licenseConfig, license: license)
+            trialSection.textField?.attributedStringValue = LicenseUtility.trialCounterString(licenseConfig: licenseConfig, license: license)
             
             /// Set the bodyString
             
@@ -198,16 +199,126 @@ class TrialNotificationController: NSWindowController {
         })
     }
     
-    /// Mouse tracking
+    /// Swap trialSection -> activate license on hover
+    ///     This code is a little convoluted. mouseEntered and mouseExited are almost copy-pasted.
+    
+    var isReplacing = false
+    var isInside = false
+    var queuedReplace: (() -> ())? = nil
     
     override func mouseEntered(with event: NSEvent) {
-        trialImage.reactiveFadeAnimator().image.set(NSImage(named: .init("bag"))!)
-        trialTextField.reactiveFadeAnimator().stringValue.set("Day x/y of your trial!!")
+        
+        DispatchQueue.main.async {
+            
+            let workload = {
+                
+                do {
+                    
+                    DDLogDebug("triall enter")
+                    
+                    if self.isInside {
+                        if let r = self.queuedReplace {
+                            self.queuedReplace = nil
+                            r()
+                        } else {
+                            self.isReplacing = false
+                        }
+                        return
+                    }
+                    self.isInside = true
+                    
+                    self.isReplacing = true
+                    
+                    let ogSection = self.trialSection!
+                    let newSection = try SharedUtilitySwift.insecureCopy(of: self.trialSection)
+                    
+                    newSection.imageView?.image = NSImage(named: .init("bag"))
+                    newSection.textField?.attributedStringValue = NSAttributedString(string: "ahahaah haha")
+                    
+                    ReplaceAnimations.animate(ogView: ogSection, replaceView: newSection, hAnchor: .center, vAnchor: .center, doAnimate: true) {
+                        
+                        DDLogDebug("triall enter finish")
+                        
+                        self.trialSection = newSection
+                        
+                        if let r = self.queuedReplace {
+                            self.queuedReplace = nil
+                            r()
+                        } else {
+                            self.isReplacing = false
+                        }
+                    }
+                } catch {
+                    DDLogError("Failed to swap out trialSection on notification with error: \(error)")
+                    assert(false)
+                }
+            }
+            
+            if self.isReplacing {
+                DDLogDebug("triall queue enter")
+                self.queuedReplace = workload
+            } else {
+                workload()
+            }
+        }
     }
-    
+
     override func mouseExited(with event: NSEvent) {
-        trialImage.reactiveFadeAnimator().image.set(NSImage(named: .init("testtube.2"))!)
-        trialTextField.reactiveFadeAnimator().stringValue.set("ahhhhh")
+            
+        DispatchQueue.main.async {
+            
+            let workload = {
+                
+                do {
+                    
+                    DDLogDebug("triall exit")
+                    
+                    if !self.isInside {
+                        if let r = self.queuedReplace {
+                            self.queuedReplace = nil
+                            r()
+                        } else {
+                            self.isReplacing = false
+                        }
+                        return
+                    }
+                    self.isInside = false
+                    
+                    self.isReplacing = true
+                    
+                    let ogSection = self.trialSection!
+                    let newSection = try SharedUtilitySwift.insecureCopy(of: self.trialSection)
+                    
+                    newSection.imageView?.image = NSImage(named: .init("testtube.2"))!
+                    newSection.textField?.stringValue = "ahhhhhhh"
+                    
+                    ReplaceAnimations.animate(ogView: ogSection, replaceView: newSection, hAnchor: .center, vAnchor: .center, doAnimate: true) {
+                        
+                        DDLogDebug("triall exit finish")
+                        
+                        self.trialSection = newSection
+                        
+                        if let r = self.queuedReplace {
+                            self.queuedReplace = nil
+                            r()
+                        } else {
+                            self.isReplacing = false
+                        }
+                    }
+                    
+                } catch {
+                    DDLogError("Failed to swap out trialSection on notification with error: \(error)")
+                    assert(false)
+                }
+            }
+            
+            if self.isReplacing {
+                DDLogDebug("triall queue exit")
+                self.queuedReplace = workload
+            } else {
+                workload()
+            }
+        }
     }
     
     /// Helper stuff

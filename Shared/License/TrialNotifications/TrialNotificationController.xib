@@ -13,8 +13,7 @@
                 <outlet property="bodyScrollView" destination="XPn-15-YCK" id="fQd-Bn-lt0"/>
                 <outlet property="closeButton" destination="G5r-ur-mKW" id="Tzq-FK-zxN"/>
                 <outlet property="payButton" destination="EPy-bD-5do" id="nuv-78-kEx"/>
-                <outlet property="trialImage" destination="yP0-SZ-Yzd" id="rYS-fR-bmo"/>
-                <outlet property="trialTextField" destination="Pkf-ky-K1B" id="Oab-hP-QKG"/>
+                <outlet property="trialSection" destination="Dyl-L2-EVr" id="MAm-ib-nbN"/>
                 <outlet property="window" destination="F0z-JX-Cv5" id="gIp-Ho-8D9"/>
             </connections>
         </customObject>
@@ -23,13 +22,13 @@
         <window title="Window" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" restorable="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" animationBehavior="default" titlebarAppearsTransparent="YES" titleVisibility="hidden" id="F0z-JX-Cv5" customClass="TrialNotificationWindow" customModule="Mac_Mouse_Fix" customModuleProvider="target">
             <windowStyleMask key="styleMask" titled="YES" fullSizeContentView="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
-            <rect key="contentRect" x="196" y="240" width="448" height="179"/>
+            <rect key="contentRect" x="196" y="240" width="495" height="185"/>
             <rect key="screenRect" x="0.0" y="0.0" width="1920" height="1055"/>
-            <view key="contentView" horizontalCompressionResistancePriority="1000" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="se5-gp-TjO">
-                <rect key="frame" x="0.0" y="0.0" width="441" height="179"/>
+            <view key="contentView" horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="se5-gp-TjO">
+                <rect key="frame" x="0.0" y="0.0" width="391" height="182"/>
                 <subviews>
                     <button translatesAutoresizingMaskIntoConstraints="NO" id="G5r-ur-mKW">
-                        <rect key="frame" x="8" y="146" width="21" height="32"/>
+                        <rect key="frame" x="8" y="149" width="21" height="32"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="21" id="oeg-mC-Djd"/>
                             <constraint firstAttribute="height" constant="21" id="vXa-wf-59f"/>
@@ -44,7 +43,7 @@
                         </connections>
                     </button>
                     <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="8Mx-7q-zeA">
-                        <rect key="frame" x="21" y="109" width="58" height="58"/>
+                        <rect key="frame" x="21" y="112" width="58" height="58"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="58" id="4TA-cd-zXP"/>
                             <constraint firstAttribute="height" constant="58" id="nJ4-lr-wem"/>
@@ -52,17 +51,17 @@
                         <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="AppIconRoundFromHelper-deleteThis" id="v18-c0-Fut"/>
                     </imageView>
                     <scrollView horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" borderType="none" autohidesScrollers="YES" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" hasVerticalScroller="NO" horizontalScrollElasticity="none" verticalScrollElasticity="none" translatesAutoresizingMaskIntoConstraints="NO" id="XPn-15-YCK">
-                        <rect key="frame" x="91" y="75" width="330" height="80"/>
+                        <rect key="frame" x="91" y="78" width="280" height="80"/>
                         <clipView key="contentView" drawsBackground="NO" copiesOnScroll="NO" id="aac-rJ-jky">
-                            <rect key="frame" x="0.0" y="0.0" width="330" height="80"/>
+                            <rect key="frame" x="0.0" y="0.0" width="280" height="80"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             <subviews>
                                 <textView wantsLayer="YES" editable="NO" drawsBackground="NO" importsGraphics="NO" richText="NO" verticallyResizable="YES" allowsCharacterPickerTouchBarItem="NO" textCompletion="NO" id="00n-VL-rU4" customClass="NotificationLabel">
-                                    <rect key="frame" x="0.0" y="0.0" width="330" height="80"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="280" height="80"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                    <size key="minSize" width="330" height="80"/>
+                                    <size key="minSize" width="280" height="80"/>
                                     <size key="maxSize" width="357" height="10000000"/>
                                     <attributedString key="textStorage">
                                         <fragment>
@@ -83,8 +82,8 @@ If you want to keep using Mac Mouse Fix, you can buy it now.&gt;</string>
                             <color key="backgroundColor" red="1" green="1" blue="1" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
                         </clipView>
                         <constraints>
-                            <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="330" id="1TO-j2-Xnx"/>
-                            <constraint firstAttribute="width" priority="999" constant="330" id="Lse-NT-Yva"/>
+                            <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="280" id="1TO-j2-Xnx"/>
+                            <constraint firstAttribute="width" priority="999" constant="280" id="Lse-NT-Yva"/>
                             <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="80" id="e1U-Gq-mRm"/>
                             <constraint firstAttribute="height" priority="999" constant="80" id="t3s-Ew-hMY"/>
                         </constraints>
@@ -98,33 +97,62 @@ If you want to keep using Mac Mouse Fix, you can buy it now.&gt;</string>
                             <autoresizingMask key="autoresizingMask"/>
                         </scroller>
                     </scrollView>
-                    <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="yP0-SZ-Yzd">
-                        <rect key="frame" x="20" y="14.5" width="21.5" height="20"/>
+                    <customView horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="Dyl-L2-EVr" userLabel="TrialWrapper" customClass="TrialSection" customModule="Mac_Mouse_Fix" customModuleProvider="target">
+                        <rect key="frame" x="20" y="20" width="146" height="15"/>
+                        <subviews>
+                            <imageView horizontalHuggingPriority="1000" verticalHuggingPriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="yP0-SZ-Yzd">
+                                <rect key="frame" x="0.0" y="-2.5" width="21.5" height="20"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="9" id="DfL-em-umM"/>
+                                    <constraint firstAttribute="width" constant="21" id="Gne-yP-n3L"/>
+                                </constraints>
+                                <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="testtube.2" catalog="system" id="AmN-iK-1Qh"/>
+                                <color key="contentTintColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                <symbolConfiguration key="symbolConfiguration" scale="large"/>
+                            </imageView>
+                            <textField horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="Pkf-ky-K1B">
+                                <rect key="frame" x="24" y="0.0" width="124" height="15"/>
+                                <textFieldCell key="cell" title="&lt;Test period is over&gt;" id="MLf-Ko-XPe">
+                                    <font key="font" metaFont="cellTitle"/>
+                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
+                        </subviews>
                         <constraints>
-                            <constraint firstAttribute="height" constant="9" id="DfL-em-umM"/>
-                            <constraint firstAttribute="width" constant="21" id="Gne-yP-n3L"/>
+                            <constraint firstItem="yP0-SZ-Yzd" firstAttribute="leading" secondItem="Dyl-L2-EVr" secondAttribute="leading" id="2sV-mh-bkB"/>
+                            <constraint firstAttribute="bottom" secondItem="yP0-SZ-Yzd" secondAttribute="bottom" priority="999" id="5tR-fX-Emv"/>
+                            <constraint firstAttribute="trailing" secondItem="Pkf-ky-K1B" secondAttribute="trailing" id="6uT-im-tzs"/>
+                            <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="yP0-SZ-Yzd" secondAttribute="bottom" id="G0h-9a-CcC"/>
+                            <constraint firstItem="Pkf-ky-K1B" firstAttribute="leading" secondItem="yP0-SZ-Yzd" secondAttribute="trailing" constant="5" id="ZSx-Ku-Chr"/>
+                            <constraint firstItem="Pkf-ky-K1B" firstAttribute="centerY" secondItem="yP0-SZ-Yzd" secondAttribute="centerY" id="gG8-Gv-ILS"/>
+                            <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="Pkf-ky-K1B" secondAttribute="bottom" id="mUi-CP-b5y"/>
+                            <constraint firstAttribute="bottom" secondItem="Pkf-ky-K1B" secondAttribute="bottom" priority="999" id="muy-lv-vU3"/>
+                            <constraint firstItem="Pkf-ky-K1B" firstAttribute="centerY" secondItem="Dyl-L2-EVr" secondAttribute="centerY" id="pmJ-Df-vky"/>
+                            <constraint firstItem="yP0-SZ-Yzd" firstAttribute="centerY" secondItem="Dyl-L2-EVr" secondAttribute="centerY" id="zao-DR-7J7"/>
                         </constraints>
-                        <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="testtube.2" catalog="system" id="AmN-iK-1Qh"/>
-                        <color key="contentTintColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                        <symbolConfiguration key="symbolConfiguration" scale="large"/>
-                    </imageView>
-                    <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="Pkf-ky-K1B">
-                        <rect key="frame" x="44" y="17" width="124" height="15"/>
-                        <textFieldCell key="cell" title="&lt;Test period is over&gt;" id="MLf-Ko-XPe">
-                            <font key="font" metaFont="cellTitle"/>
-                            <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                        </textFieldCell>
-                    </textField>
-                    <button verticalHuggingPriority="750" horizontalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="EPy-bD-5do" customClass="PayButton" customModule="Mac_Mouse_Fix" customModuleProvider="target">
-                        <rect key="frame" x="360" y="8" width="68" height="32"/>
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="boolean" keyPath="wantsLayer" value="YES"/>
+                            <userDefinedRuntimeAttribute type="boolean" keyPath="layer.masksToBounds" value="NO"/>
+                        </userDefinedRuntimeAttributes>
+                        <connections>
+                            <outlet property="imageView" destination="yP0-SZ-Yzd" id="A4S-w8-Kn9"/>
+                            <outlet property="textField" destination="Pkf-ky-K1B" id="2s7-AZ-vtL"/>
+                        </connections>
+                    </customView>
+                    <button horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="EPy-bD-5do" customClass="PayButton" customModule="Mac_Mouse_Fix" customModuleProvider="target">
+                        <rect key="frame" x="310" y="11" width="68" height="32"/>
                         <buttonCell key="cell" type="push" title="$1.99" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="6FQ-gC-c0Z">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="system"/>
                         </buttonCell>
                     </button>
-                    <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="dws-t5-lGs">
-                        <rect key="frame" x="343" y="15.5" width="19" height="20"/>
+                    <imageView horizontalHuggingPriority="1000" verticalHuggingPriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="dws-t5-lGs">
+                        <rect key="frame" x="291" y="18.5" width="21" height="20"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="21" id="CTU-7R-biq"/>
+                            <constraint firstAttribute="height" constant="9" id="yLb-LD-UYT"/>
+                        </constraints>
                         <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="bag" catalog="system" id="flZ-Uz-gOX"/>
                         <color key="contentTintColor" name="systemBlueColor" catalog="System" colorSpace="catalog"/>
                         <symbolConfiguration key="symbolConfiguration" scale="large" weight="medium"/>
@@ -132,28 +160,26 @@ If you want to keep using Mac Mouse Fix, you can buy it now.&gt;</string>
                 </subviews>
                 <constraints>
                     <constraint firstItem="8Mx-7q-zeA" firstAttribute="leading" secondItem="se5-gp-TjO" secondAttribute="leading" constant="21" id="32q-8M-uJB"/>
-                    <constraint firstItem="dws-t5-lGs" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="Pkf-ky-K1B" secondAttribute="trailing" constant="30" id="8d6-12-U89"/>
-                    <constraint firstItem="EPy-bD-5do" firstAttribute="centerY" secondItem="Pkf-ky-K1B" secondAttribute="centerY" id="FqM-N7-n8O"/>
-                    <constraint firstItem="Pkf-ky-K1B" firstAttribute="leading" secondItem="yP0-SZ-Yzd" secondAttribute="trailing" constant="5" id="Fwq-V9-SX5"/>
+                    <constraint firstItem="EPy-bD-5do" firstAttribute="centerY" secondItem="Dyl-L2-EVr" secondAttribute="centerY" id="BUe-FG-iRW"/>
                     <constraint firstItem="EPy-bD-5do" firstAttribute="top" secondItem="XPn-15-YCK" secondAttribute="bottom" constant="40" id="KmB-28-RTj"/>
+                    <constraint firstAttribute="bottom" secondItem="Dyl-L2-EVr" secondAttribute="bottom" constant="20" id="Qpi-fW-DBh"/>
                     <constraint firstItem="XPn-15-YCK" firstAttribute="leading" secondItem="8Mx-7q-zeA" secondAttribute="trailing" constant="12" id="SQs-Z0-cON"/>
                     <constraint firstItem="XPn-15-YCK" firstAttribute="top" secondItem="se5-gp-TjO" secondAttribute="top" constant="24" id="SXp-80-4kT"/>
                     <constraint firstItem="G5r-ur-mKW" firstAttribute="top" secondItem="se5-gp-TjO" secondAttribute="top" constant="7" id="UMH-sI-YBW"/>
                     <constraint firstItem="8Mx-7q-zeA" firstAttribute="top" secondItem="se5-gp-TjO" secondAttribute="top" constant="12" id="Vsp-xe-vz7"/>
-                    <constraint firstItem="dws-t5-lGs" firstAttribute="centerY" secondItem="EPy-bD-5do" secondAttribute="centerY" id="cen-iW-2Ep"/>
+                    <constraint firstItem="Dyl-L2-EVr" firstAttribute="leading" secondItem="se5-gp-TjO" secondAttribute="leading" constant="20" symbolic="YES" id="b8s-tY-h1q"/>
                     <constraint firstItem="G5r-ur-mKW" firstAttribute="leading" secondItem="se5-gp-TjO" secondAttribute="leading" constant="8" id="eif-zF-PXO"/>
-                    <constraint firstAttribute="bottom" secondItem="yP0-SZ-Yzd" secondAttribute="bottom" constant="20" symbolic="YES" id="f7u-Gb-WuS"/>
                     <constraint firstAttribute="trailing" secondItem="XPn-15-YCK" secondAttribute="trailing" constant="20" symbolic="YES" id="gdX-pr-ltj"/>
                     <constraint firstItem="EPy-bD-5do" firstAttribute="leading" secondItem="dws-t5-lGs" secondAttribute="trailing" constant="5" id="ghn-pe-uHf"/>
+                    <constraint firstItem="dws-t5-lGs" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="Dyl-L2-EVr" secondAttribute="trailing" constant="30" id="nD5-ck-26i"/>
+                    <constraint firstItem="dws-t5-lGs" firstAttribute="centerY" secondItem="Dyl-L2-EVr" secondAttribute="centerY" id="qu3-J6-Gof"/>
                     <constraint firstAttribute="trailing" secondItem="EPy-bD-5do" secondAttribute="trailing" constant="20" symbolic="YES" id="uDu-9b-YP8"/>
-                    <constraint firstItem="Pkf-ky-K1B" firstAttribute="centerY" secondItem="yP0-SZ-Yzd" secondAttribute="centerY" id="uIu-Yn-y0q"/>
-                    <constraint firstItem="yP0-SZ-Yzd" firstAttribute="leading" secondItem="se5-gp-TjO" secondAttribute="leading" constant="20" symbolic="YES" id="w0n-x7-2ME"/>
                 </constraints>
             </view>
             <connections>
                 <outlet property="delegate" destination="-2" id="0bl-1N-AYu"/>
             </connections>
-            <point key="canvasLocation" x="-35" y="-156.5"/>
+            <point key="canvasLocation" x="3" y="-7"/>
         </window>
     </objects>
     <resources>
