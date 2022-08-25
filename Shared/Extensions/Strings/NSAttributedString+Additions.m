@@ -550,8 +550,8 @@
 
 #pragma mark Determine size
 
-/// Copied from here https://stackoverflow.com/a/33903242/10601702
 - (NSSize)sizeAtMaxWidth:(CGFloat)maxWidth {
+    /// Copied from here https://stackoverflow.com/a/33903242/10601702
     
     NSTextContainer *textContainer = [[NSTextContainer alloc] initWithSize:CGSizeMake(maxWidth, CGFLOAT_MAX)];
     NSLayoutManager *layoutManager = [[NSLayoutManager alloc] init];
@@ -566,9 +566,9 @@
     return size;
 }
 
-/// Old function for getting size at some max width. Cleaner than the new one in principle becuase it reuses other functions. b
-/// Unfortunately it doesn't work properly because we can't get self.preferredWidth to work properly.
 - (NSSize)sizeAtMaxWidthOld:(CGFloat)maxWidth {
+    /// Old function for getting size at some max width. Cleaner than the new one in principle becuase it reuses other functions. b
+    /// Unfortunately it doesn't work properly because we can't get self.preferredWidth to work properly.
     
     CGFloat preferredWidth = self.preferredWidth;
     
@@ -578,10 +578,10 @@
     return NSMakeSize(width, height);
 }
 
-/// Derived from sizeAtMaxWidth
 - (CGFloat)heightAtWidth:(CGFloat)width {
+    /// Derived from sizeAtMaxWidth
     
-    // Method 1
+    /// Method 1
     NSTextStorage *textStorage = [[NSTextStorage alloc] initWithAttributedString:self];
     NSTextContainer *textContainer = [[NSTextContainer alloc] initWithContainerSize:NSMakeSize(width, FLT_MAX)];
     NSLayoutManager *layoutManager = [[NSLayoutManager alloc] init];
@@ -590,7 +590,7 @@
     [layoutManager glyphRangeForTextContainer:textContainer];
     CGFloat result1 = [layoutManager usedRectForTextContainer:textContainer].size.height;
         
-    // Method 2
+    /// Method 2
     NSRect bounds = [self boundingRectWithSize:NSMakeSize(width, FLT_MAX) options:NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading];
     CGFloat result2 = bounds.size.height; //CGRectIntegral(bounds).size.height;
     
@@ -601,10 +601,12 @@
     //      > `result1` seems to be slightly too small
 }
 
-/// Width of the string if we don't introduce any extra line breaks.
-/// Can't get this to work properly
+
 - (CGFloat)preferredWidth {
-    // Method 1
+    /// Width of the string if we don't introduce any extra line breaks.
+    /// Can't get this to work properly
+    
+    /// Method 1
     NSTextStorage *textStorage = [[NSTextStorage alloc] initWithAttributedString:self];
     NSTextContainer *textContainer = [[NSTextContainer alloc] initWithContainerSize:NSMakeSize(FLT_MAX, FLT_MAX)];
     NSLayoutManager *layoutManager = [[NSLayoutManager alloc] init];
@@ -613,7 +615,7 @@
     [layoutManager glyphRangeForTextContainer:textContainer];
     CGFloat result1 = [layoutManager usedRectForTextContainer:textContainer].size.width;
     
-    // Method 2
+    /// Method 2
     NSRect bounds = [self boundingRectWithSize:NSMakeSize(FLT_MAX, FLT_MAX) options:NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading];
     bounds = NSIntegralRect(bounds);
     CGFloat result2 = bounds.size.width; //CGRectIntegral(bounds).size.height;
@@ -621,8 +623,8 @@
 //    return floor(result1); // Need this for sizeAtMaxWidth: to work on short "Primary Button can't be used" notifications. Using result2, we'll underestimate the width needed, leading to a line break we didn't expect, leading to our calculated height to be incorrect, leading to clipping the last line.
     
     return result2 + 0;
-    // Underestimates preferred width for short lines.
-    // Need this for sizeAtMaxWidth: to work properly for some button capture notifications with long lines which need to be broken. Using result1, sometimes the returned line width is too wide and we end up clipping the last line because sizeAtMaxWidth doesn't get that there needs to be a line break. (That's my theory at least)
+    /// Underestimates preferred width for short lines.
+    /// Need this for sizeAtMaxWidth: to work properly for some button capture notifications with long lines which need to be broken. Using result1, sometimes the returned line width is too wide and we end up clipping the last line because sizeAtMaxWidth doesn't get that there needs to be a line break. (That's my theory at least)
 }
 
 #pragma mark Fill out default attributes (to make size code work)
@@ -668,8 +670,8 @@
     return str;
 }
 
-/// Copy-pasted this from somewhere
 + (NSAttributedString *)hyperlinkFromString:(NSString *)inString withURL:(NSURL *)aURL {
+    /// Copy-pasted this from somewhere
     
     NSMutableAttributedString *attrString = [[NSMutableAttributedString alloc] initWithString:inString.mutableCopy];
     NSRange range = NSMakeRange(0, attrString.length);
