@@ -250,9 +250,11 @@ class ReplaceAnimations {
         }, onComplete: {
             /// Replace wrapper (and imageViews) with replaceView
             wrapperView.superview?.replaceSubview(wrapperView, with: replaceView)
+                
             for const in replaceConstraints {
                 const.isActive = true
             }
+            
             /// Call onComplete
             onComplete()
         })

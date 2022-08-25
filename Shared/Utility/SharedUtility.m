@@ -17,6 +17,24 @@
 
 @implementation SharedUtility
 
+#pragma mark - Catch NSException in Swift
+
+NSException * _Nullable tryCatch(void (^tryBlock)(void)) {
+    /// Src: https://stackoverflow.com/a/32991585/10601702
+    ///     Haven't tested this.
+    
+    NSException *e = nil;
+    @try {
+        tryBlock();
+    }
+    @catch (NSException *exception) {
+        e = exception;
+    }
+    @finally {
+        return e;
+    }
+}
+
 #pragma mark - Get display under pointer
 
 + (CVReturn)displayUnderMousePointer:(CGDirectDisplayID *)dspID withEvent:(CGEventRef _Nullable)event {

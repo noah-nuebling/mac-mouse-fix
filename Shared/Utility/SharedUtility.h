@@ -29,7 +29,10 @@ NS_ASSUME_NONNULL_BEGIN
 
 typedef void(*MFCTLCallback)(NSTask *task, NSPipe *output, NSError *error);
 
+NSException * _Nullable tryCatch(void (^tryBlock)(void));
+
 void *offsetPointer(void *ptr, int byteOffset);
+
 + (BOOL)runningPreRelease;
 
 + (BOOL)runningMainApp;

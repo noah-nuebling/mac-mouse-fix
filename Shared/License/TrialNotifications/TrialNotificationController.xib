@@ -14,7 +14,7 @@
                 <outlet property="closeButton" destination="G5r-ur-mKW" id="Tzq-FK-zxN"/>
                 <outlet property="payButton" destination="EPy-bD-5do" id="nuv-78-kEx"/>
                 <outlet property="trialImage" destination="yP0-SZ-Yzd" id="rYS-fR-bmo"/>
-                <outlet property="trialTextField" destination="MLf-Ko-XPe" id="Uwu-mC-G8k"/>
+                <outlet property="trialTextField" destination="Pkf-ky-K1B" id="Oab-hP-QKG"/>
                 <outlet property="window" destination="F0z-JX-Cv5" id="gIp-Ho-8D9"/>
             </connections>
         </customObject>

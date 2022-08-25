@@ -23,7 +23,8 @@ class TrialNotificationController: NSWindowController {
     @IBOutlet weak var bodyScrollView: NSScrollView!
     
     @IBOutlet weak var payButton: PayButton!
-    @IBOutlet weak var trialTextField: NSTextFieldCell!
+    
+    @IBOutlet weak var trialTextField: NSTextField!
     @IBOutlet weak var trialImage: NSImageView!
     @IBAction func closeButtonClick(_ sender: Any) {
         self.close()
@@ -201,10 +202,12 @@ class TrialNotificationController: NSWindowController {
     
     override func mouseEntered(with event: NSEvent) {
         trialImage.reactiveFadeAnimator().image.set(NSImage(named: .init("bag"))!)
+        trialTextField.reactiveFadeAnimator().stringValue.set("Day x/y of your trial!!")
     }
     
     override func mouseExited(with event: NSEvent) {
         trialImage.reactiveFadeAnimator().image.set(NSImage(named: .init("testtube.2"))!)
+        trialTextField.reactiveFadeAnimator().stringValue.set("ahhhhh")
     }
     
     /// Helper stuff
