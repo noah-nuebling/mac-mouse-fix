@@ -91,7 +91,6 @@ class ReplaceAnimations {
         ogView.superview?.layoutSubtreeIfNeeded()
         
         let ogSize = ogView.alignedSize()
-        let ogSizeUnaligned = ogView.size()
         
         
         /// Debug
@@ -119,7 +118,6 @@ class ReplaceAnimations {
         replaceView.superview?.layoutSubtreeIfNeeded()
         
         let replaceSize = replaceView.alignedSize()
-        let replaceSizeUnaligned = replaceView.size()
         
         ///
         /// Store image of replaceView
@@ -163,8 +161,8 @@ class ReplaceAnimations {
         ogImageView.imageScaling = .scaleNone
         
         ogImageView.image = ogImage
-        ogImageView.widthAnchor.constraint(equalToConstant: ogSizeUnaligned.width).isActive = true
-        ogImageView.heightAnchor.constraint(equalToConstant: ogSizeUnaligned.height).isActive = true
+        ogImageView.widthAnchor.constraint(equalToConstant: ogSize.width).isActive = true
+        ogImageView.heightAnchor.constraint(equalToConstant: ogSize.height).isActive = true
         
         let replaceImageView = NSImageView()
         replaceImageView.wantsLayer = true
@@ -173,8 +171,8 @@ class ReplaceAnimations {
         replaceImageView.imageScaling = .scaleNone
         
         replaceImageView.image = replaceImage
-        replaceImageView.widthAnchor.constraint(equalToConstant: replaceSizeUnaligned.width).isActive = true
-        replaceImageView.heightAnchor.constraint(equalToConstant: replaceSizeUnaligned.height).isActive = true
+        replaceImageView.widthAnchor.constraint(equalToConstant: replaceSize.width).isActive = true
+        replaceImageView.heightAnchor.constraint(equalToConstant: replaceSize.height).isActive = true
         
         ///
         /// Add in both imageViews into wrapperView and add constraints
@@ -182,27 +180,32 @@ class ReplaceAnimations {
         wrapperView.addSubview(ogImageView)
         wrapperView.addSubview(replaceImageView)
         
+        let hOffsetOG = alignmentOffset(ogView, hAnchor: hAnchor)
+        let hOffsetReplace = alignmentOffset(replaceView, hAnchor: hAnchor)
+        let vOffsetOG = alignmentOffset(ogView, vAnchor: vAnchor)
+        let vOffsetReplace = alignmentOffset(replaceView, vAnchor: vAnchor)
+        
         switch hAnchor {
         case .leading:
-            ogImageView.leadingAnchor.constraint(equalTo: wrapperView.leadingAnchor).isActive = true
-            replaceImageView.leadingAnchor.constraint(equalTo: wrapperView.leadingAnchor).isActive = true
+            ogImageView.leadingAnchor.constraint(equalTo: wrapperView.leadingAnchor, constant: hOffsetOG).isActive = true
+            replaceImageView.leadingAnchor.constraint(equalTo: wrapperView.leadingAnchor, constant: hOffsetReplace).isActive = true
         case .center:
-            ogImageView.centerXAnchor.constraint(equalTo: wrapperView.centerXAnchor).isActive = true
-            replaceImageView.centerXAnchor.constraint(equalTo: wrapperView.centerXAnchor).isActive = true
+            ogImageView.centerXAnchor.constraint(equalTo: wrapperView.centerXAnchor, constant: hOffsetOG).isActive = true
+            replaceImageView.centerXAnchor.constraint(equalTo: wrapperView.centerXAnchor, constant: hOffsetReplace).isActive = true
         case .trailing:
-            ogImageView.trailingAnchor.constraint(equalTo: wrapperView.trailingAnchor).isActive = true
-            replaceImageView.trailingAnchor.constraint(equalTo: wrapperView.trailingAnchor).isActive = true
+            ogImageView.trailingAnchor.constraint(equalTo: wrapperView.trailingAnchor, constant: hOffsetOG).isActive = true
+            replaceImageView.trailingAnchor.constraint(equalTo: wrapperView.trailingAnchor, constant: hOffsetReplace).isActive = true
         }
         switch vAnchor {
         case .top:
-            ogImageView.topAnchor.constraint(equalTo: wrapperView.topAnchor).isActive = true
-            replaceImageView.topAnchor.constraint(equalTo: wrapperView.topAnchor).isActive = true
+            ogImageView.topAnchor.constraint(equalTo: wrapperView.topAnchor, constant: vOffsetOG).isActive = true
+            replaceImageView.topAnchor.constraint(equalTo: wrapperView.topAnchor, constant: vOffsetReplace).isActive = true
         case .center:
-            ogImageView.centerYAnchor.constraint(equalTo: wrapperView.centerYAnchor).isActive = true
-            replaceImageView.centerYAnchor.constraint(equalTo: wrapperView.centerYAnchor).isActive = true
+            ogImageView.centerYAnchor.constraint(equalTo: wrapperView.centerYAnchor, constant: vOffsetOG).isActive = true
+            replaceImageView.centerYAnchor.constraint(equalTo: wrapperView.centerYAnchor, constant: vOffsetReplace).isActive = true
         case .bottom:
-            ogImageView.bottomAnchor.constraint(equalTo: wrapperView.bottomAnchor).isActive = true
-            replaceImageView.bottomAnchor.constraint(equalTo: wrapperView.bottomAnchor).isActive = true
+            ogImageView.bottomAnchor.constraint(equalTo: wrapperView.bottomAnchor, constant: vOffsetOG).isActive = true
+            replaceImageView.bottomAnchor.constraint(equalTo: wrapperView.bottomAnchor, constant: vOffsetReplace).isActive = true
         }
         
         ///
@@ -271,5 +274,54 @@ class ReplaceAnimations {
         let duration = (1-normalizationFactor) * proportionalDuration + (normalizationFactor) * baseDuration
         
         return duration
+    }
+    
+    /// Alignment offsets
+    ///     These functions return the difference between some anchor in a view's frame vs the same anchor in the view's alignmentRect
+    
+    fileprivate static func alignmentOffset(_ view: NSView, vAnchor: MFVAnchor) -> Double {
+        
+        /// Get universally useful values
+        let h = view.frame.height
+        let n = view.alignmentRectInsets
+        
+        /// Get the offset
+        switch vAnchor {
+        case .top:
+            let alignmentTop = h - n.top
+            let frameTop = h
+            return alignmentTop - frameTop
+        case .center:
+            let alignmentCenter = (n.bottom + (h - n.top))/2
+            let frameCenter = h/2.0
+            return alignmentCenter - frameCenter
+        case .bottom:
+            let alignmentBottom = n.bottom
+            let frameBottom = 0.0
+            return alignmentBottom - frameBottom
+        }
+    }
+    
+    fileprivate static func alignmentOffset(_ view: NSView, hAnchor: MFHAnchor) -> Double {
+        
+        /// Get universally useful values
+        let w = view.frame.width
+        let n = view.alignmentRectInsets
+        
+        /// Get the offset
+        switch hAnchor {
+        case .leading:
+            let alignmentLeading = n.left /// Note: Is it okay, we're equating left with leading here?
+            let frameLeading = 0.0
+            return alignmentLeading - frameLeading
+        case .center:
+            let alignmentCenter = (n.left + (w - n.right))/2
+            let frameCenter = w/2.0
+            return alignmentCenter - frameCenter
+        case .trailing:
+            let alignmentTrailing = w - n.right
+            let frameTrailing = w
+            return alignmentTrailing - frameTrailing
+        }
     }
 }

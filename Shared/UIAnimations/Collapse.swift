@@ -26,10 +26,19 @@ class NoClippingLayer: CALayer {
 
 public class NoClipWrapper: NSView {
     
+    /// Wrap view
     var wrappedView: NSView {
         return self.subviews[0]
     }
+    
+    /// Turn off clipping
     public override func makeBackingLayer() -> CALayer { NoClippingLayer() } /// Disable clipping subviews
+    
+    /// Make alignmentRectInsets settable
+    var coolAlignmentRectInsets = NSEdgeInsetsZero
+    override public var alignmentRectInsets: NSEdgeInsets {
+        return coolAlignmentRectInsets
+    }
 }
 
 // MARK: - Convenience Interface
