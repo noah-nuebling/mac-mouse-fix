@@ -91,6 +91,7 @@ class ReplaceAnimations {
         ogView.superview?.layoutSubtreeIfNeeded()
         
         let ogSize = ogView.alignedSize()
+        let ogSizeUnaligned = ogView.size()
         
         
         /// Debug
@@ -118,6 +119,7 @@ class ReplaceAnimations {
         replaceView.superview?.layoutSubtreeIfNeeded()
         
         let replaceSize = replaceView.alignedSize()
+        let replaceSizeUnaligned = replaceView.size()
         
         ///
         /// Store image of replaceView
@@ -161,8 +163,8 @@ class ReplaceAnimations {
         ogImageView.imageScaling = .scaleNone
         
         ogImageView.image = ogImage
-        ogImageView.widthAnchor.constraint(equalToConstant: ogSize.width).isActive = true
-        ogImageView.heightAnchor.constraint(equalToConstant: ogSize.height).isActive = true
+        ogImageView.widthAnchor.constraint(equalToConstant: ogSizeUnaligned.width).isActive = true
+        ogImageView.heightAnchor.constraint(equalToConstant: ogSizeUnaligned.height).isActive = true
         
         let replaceImageView = NSImageView()
         replaceImageView.wantsLayer = true
@@ -171,19 +173,36 @@ class ReplaceAnimations {
         replaceImageView.imageScaling = .scaleNone
         
         replaceImageView.image = replaceImage
-        replaceImageView.widthAnchor.constraint(equalToConstant: replaceSize.width).isActive = true
-        replaceImageView.heightAnchor.constraint(equalToConstant: replaceSize.height).isActive = true
+        replaceImageView.widthAnchor.constraint(equalToConstant: replaceSizeUnaligned.width).isActive = true
+        replaceImageView.heightAnchor.constraint(equalToConstant: replaceSizeUnaligned.height).isActive = true
         
         ///
         /// Add in both imageViews into wrapperView and add constraints
         ///
+        
         wrapperView.addSubview(ogImageView)
         wrapperView.addSubview(replaceImageView)
         
-        let hOffsetOG = alignmentOffset(ogView, hAnchor: hAnchor)
-        let hOffsetReplace = alignmentOffset(replaceView, hAnchor: hAnchor)
-        let vOffsetOG = alignmentOffset(ogView, vAnchor: vAnchor)
-        let vOffsetReplace = alignmentOffset(replaceView, vAnchor: vAnchor)
+        ///
+        /// Add constraints for the 2 imageViews
+        ///
+        
+        /// Get alignmentRect offsets
+        
+        var hOffsetOG = alignmentOffset(ogView, hAnchor: hAnchor)
+        var hOffsetReplace = alignmentOffset(replaceView, hAnchor: hAnchor)
+        var vOffsetOG = alignmentOffset(ogView, vAnchor: vAnchor)
+        var vOffsetReplace = alignmentOffset(replaceView, vAnchor: vAnchor)
+        
+        /// Round alignmentRect offsets
+        ///     I don't know why this works.
+        
+        hOffsetOG = round(hOffsetOG)
+        hOffsetReplace = round(hOffsetReplace)
+        vOffsetOG = round(vOffsetOG)
+        vOffsetReplace = round(vOffsetReplace)
+        
+        /// Create & activate constraints
         
         switch hAnchor {
         case .leading:
