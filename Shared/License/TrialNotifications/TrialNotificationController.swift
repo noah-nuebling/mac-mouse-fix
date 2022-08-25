@@ -24,14 +24,14 @@ class TrialNotificationController: NSWindowController {
     
     @IBOutlet weak var payButton: PayButton!
     @IBOutlet weak var trialTextField: NSTextFieldCell!
-    @IBOutlet weak var activateLicenseButton: NSTextField!
-    
-    @IBAction func activateLicense(_ sender: Any) {
-        NSWorkspace.shared.open(URL(string: "google.com")!)
-    }
+    @IBOutlet weak var trialImage: NSImageView!
     @IBAction func closeButtonClick(_ sender: Any) {
         self.close()
     }
+    
+    /// Vars
+    var trackingArea: NSTrackingArea? = nil
+    
     /// Init
     override init(window: NSWindow?) {
         
@@ -77,6 +77,11 @@ class TrialNotificationController: NSWindowController {
 
         if firstAppearance {
             
+            /// Setup tracking area
+            
+            trackingArea = NSTrackingArea(rect: window.contentView!.frame, options: [.activeAlways, .mouseEnteredAndExited], owner: self)
+            window.contentView!.addTrackingArea(trackingArea!)
+            
             /// Init the payButton
             /// May be more elegant to do this from IB directly but whatever
             payButton.realInit(title: licenseConfig.formattedPrice) {
@@ -85,7 +90,7 @@ class TrialNotificationController: NSWindowController {
             
             /// Set activateLicense text
             
-            activateLicenseButton.stringValue = NSLocalizedString("activate-license", comment: "First draft: Activate License")
+//            activateLicenseButton.stringValue = NSLocalizedString("activate-license", comment: "First draft: Activate License")
             
             /// Set the trialString
             trialTextField.attributedStringValue = LicenseUtility.trialCounterString(licenseConfig: licenseConfig, license: license)
@@ -192,6 +197,16 @@ class TrialNotificationController: NSWindowController {
         })
     }
     
+    /// Mouse tracking
+    
+    override func mouseEntered(with event: NSEvent) {
+        trialImage.reactiveFadeAnimator().image.set(NSImage(named: .init("bag"))!)
+    }
+    
+    override func mouseExited(with event: NSEvent) {
+        trialImage.image = NSImage(named: .init("testtube.2"))
+    }
+    
     /// Helper stuff
     
     fileprivate func setFrameWithCoolAnimation(_ animStartFrame: NSRect, _ newFrame: NSRect, _ window: NSWindow, onComplete: (() -> ())? = nil) {
@@ -204,7 +219,9 @@ class TrialNotificationController: NSWindowController {
         animator.start(distance: 1.0, callback: { value in
             var f = SharedUtilitySwift.interpolateRects(value, animStartFrame, newFrame)
             f = NSIntegralRectWithOptions(f, .alignAllEdgesNearest)
-            window.setValue(f, forKey: "frame")
+            DispatchQueue.main.sync {
+                window.setValue(f, forKey: "frame")
+            }
         }, onComplete: {
             onComplete?()
         })

@@ -120,7 +120,7 @@ IB_DESIGNABLE
     }
     _mouseDownOverSelf = NO;
 }
-- (void) reactToClick {
+- (void)reactToClick {
     /// Open URL defined in Interface Builder
     DDLogInfo(@"Opening: %@",_href);
     [[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:_href]];

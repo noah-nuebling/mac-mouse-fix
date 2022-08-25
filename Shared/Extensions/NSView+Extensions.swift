@@ -96,6 +96,7 @@ extension NSView {
     ///     Src: https://developer.apple.com/forums/thread/88315
     
     @objc func image() -> NSImage? {
+        /// Note: The name image() collides with NSImageViews image property I think.
         
         let imgSize = bounds.size
 

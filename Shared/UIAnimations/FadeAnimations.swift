@@ -39,10 +39,16 @@ private func doubleFadePropertyChange<P>(_ view: NSView,
     
     /// Write new newValue
     if let keyPath = keyPath as? String {
-        copiedView.setValue(newValue, forKey: keyPath)
+        copiedView.setValue(newValue, forKeyPath: keyPath)
     } else { /// I tried using Swift KeyPaths here, but I deleted it to purge the world of this demonic evil
         fatalError()
     }
-    /// Replace
+    /// Replace with animation
     ReplaceAnimations.animate(ogView: view, replaceView: copiedView, hAnchor: .center, vAnchor: .center, doAnimate: true)
+    
+    /// Set value on ogView
+    view.setValue(newValue, forKeyPath: keyPath as! String)
+    
+    /// Replace back
+    copiedView.superview?.replaceSubview(copiedView, with: view)
 }

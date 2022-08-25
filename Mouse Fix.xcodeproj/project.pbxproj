@@ -63,7 +63,7 @@
 		4F7F47D328A6EFC800290BBD /* SharedAssets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4F7F47D228A6EFC800290BBD /* SharedAssets.xcassets */; };
 		4F7F47D428A6EFC800290BBD /* SharedAssets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4F7F47D228A6EFC800290BBD /* SharedAssets.xcassets */; };
 		4F854D7C2789146900B46E9D /* NSMenu+NSMenu_Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F854D7B2789146900B46E9D /* NSMenu+NSMenu_Additions.m */; };
-		4F854D7E2789266A00B46E9D /* sfsymbols.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4F854D7D2789266A00B46E9D /* sfsymbols.xcassets */; };
+		4F854D7E2789266A00B46E9D /* SFSymbols.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4F854D7D2789266A00B46E9D /* SFSymbols.xcassets */; };
 		4F8A8DAD287EEF6200786BCC /* IOHIDAccelerationTableBridge.mm in Sources */ = {isa = PBXBuildFile; fileRef = 4F8A8DAC287EEF6200786BCC /* IOHIDAccelerationTableBridge.mm */; };
 		4F8A8DBD287F203D00786BCC /* IOHIDAccelerationTable.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4F8A8DBC287F203D00786BCC /* IOHIDAccelerationTable.cpp */; };
 		4F8A8DBF287F7BBA00786BCC /* NaturalAccelerationCurve.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F8A8DBE287F7BBA00786BCC /* NaturalAccelerationCurve.swift */; };
@@ -301,6 +301,17 @@
 		4FFA4E3C28B79D9B0062A1FE /* NSAttributedString+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FDE75A628B25FB300662314 /* NSAttributedString+Extensions.swift */; };
 		4FFA4E3D28B7A4310062A1FE /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4F909D1728A0C3D2009349A2 /* Localizable.strings */; };
 		4FFA4E3E28B7AA250062A1FE /* NotificationLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FD82DDA260575B100664D6F /* NotificationLabel.m */; };
+		4FFA4E4028B7D0610062A1FE /* SharedSFSymbols.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4FFA4E3F28B7D0120062A1FE /* SharedSFSymbols.xcassets */; };
+		4FFA4E4128B7D0610062A1FE /* SharedSFSymbols.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4FFA4E3F28B7D0120062A1FE /* SharedSFSymbols.xcassets */; };
+		4FFA4E4228B7D2890062A1FE /* FadeAnimations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F909D0D28A0C3D2009349A2 /* FadeAnimations.swift */; };
+		4FFA4E4328B7D28C0062A1FE /* ReactiveAnimatorProxy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F909D0A28A0C3D2009349A2 /* ReactiveAnimatorProxy.swift */; };
+		4FFA4E4428B7D28E0062A1FE /* ConstraintUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F909D1228A0C3D2009349A2 /* ConstraintUtility.swift */; };
+		4FFA4E4528B7D2940062A1FE /* Collapse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F909D1128A0C3D2009349A2 /* Collapse.swift */; };
+		4FFA4E4628B7D2960062A1FE /* Replace.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F909D0F28A0C3D2009349A2 /* Replace.swift */; };
+		4FFA4E4728B7D2980062A1FE /* Animate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F909D1028A0C3D2009349A2 /* Animate.swift */; };
+		4FFA4E4828B7D2E40062A1FE /* NSShadow+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FA1FD8228A916B600D1C8EE /* NSShadow+Extensions.swift */; };
+		4FFA4E4928B7D3750062A1FE /* NSView+Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F92A72C260F6C7800529D1F /* NSView+Additions.m */; };
+		4FFA4E4A28B7D3750062A1FE /* NSView+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F909D0428A0C3D2009349A2 /* NSView+Extensions.swift */; };
 		4FFBC5A8266977CA001D389B /* DoubleExponentialSmoother.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FFBC5A7266977CA001D389B /* DoubleExponentialSmoother.swift */; };
 		80457D1CE643F8D503131D96 /* Pods_Mac_Mouse_Fix_Helper.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5E09D0DF45AFAF30A568B97D /* Pods_Mac_Mouse_Fix_Helper.framework */; };
 		B6D5363E56CF13634EB5BD57 /* Pods_Mac_Mouse_Fix_Mac_Mouse_FixUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D8699EFC1F3CB6B37A1522D /* Pods_Mac_Mouse_Fix_Mac_Mouse_FixUITests.framework */; };
@@ -498,7 +509,7 @@
 		4F7F47D628A6F00300290BBD /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		4F854D7A2789146900B46E9D /* NSMenu+NSMenu_Additions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSMenu+NSMenu_Additions.h"; sourceTree = "<group>"; };
 		4F854D7B2789146900B46E9D /* NSMenu+NSMenu_Additions.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSMenu+NSMenu_Additions.m"; sourceTree = "<group>"; };
-		4F854D7D2789266A00B46E9D /* sfsymbols.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = sfsymbols.xcassets; sourceTree = "<group>"; };
+		4F854D7D2789266A00B46E9D /* SFSymbols.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = SFSymbols.xcassets; sourceTree = "<group>"; };
 		4F8A8DAC287EEF6200786BCC /* IOHIDAccelerationTableBridge.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = IOHIDAccelerationTableBridge.mm; sourceTree = "<group>"; };
 		4F8A8DB0287EEF9B00786BCC /* IOHIDAccelerationTableBridge.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = IOHIDAccelerationTableBridge.hpp; sourceTree = "<group>"; };
 		4F8A8DB4287EF65800786BCC /* Metal.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Metal.framework; path = System/Library/Frameworks/Metal.framework; sourceTree = SDKROOT; };
@@ -827,6 +838,7 @@
 		4FF9306028806E4F0007CCA7 /* PolyFitObjC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PolyFitObjC.h; sourceTree = "<group>"; };
 		4FF9306128806E4F0007CCA7 /* PolyFitObjC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PolyFitObjC.m; sourceTree = "<group>"; };
 		4FFA4E3428B795F30062A1FE /* LicenseUtility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LicenseUtility.swift; sourceTree = "<group>"; };
+		4FFA4E3F28B7D0120062A1FE /* SharedSFSymbols.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = SharedSFSymbols.xcassets; sourceTree = "<group>"; };
 		4FFAD8EF28677F94005DD496 /* PointerConfigObjC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PointerConfigObjC.h; sourceTree = "<group>"; };
 		4FFBC5732667DCE4001D389B /* PrefixHeader.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PrefixHeader.pch; sourceTree = "<group>"; };
 		4FFBC5A6266977CA001D389B /* Mac Mouse Fix Helper-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Mac Mouse Fix Helper-Bridging-Header.h"; sourceTree = "<group>"; };
@@ -1105,6 +1117,7 @@
 			isa = PBXGroup;
 			children = (
 				4F7F47D228A6EFC800290BBD /* SharedAssets.xcassets */,
+				4FFA4E3F28B7D0120062A1FE /* SharedSFSymbols.xcassets */,
 				4F7F47D628A6F00300290BBD /* README.md */,
 			);
 			path = Resources;
@@ -1157,7 +1170,6 @@
 				4FF665DC25F2C92700689B77 /* Accessibility */,
 				4F909D0228A0C3D2009349A2 /* UIExtensions */,
 				4F909D0728A0C3D2009349A2 /* AppSpecific */,
-				4F909D0928A0C3D2009349A2 /* UIAnimations */,
 				4F909D1328A0C3D2009349A2 /* CustomDataTypes */,
 				4F909D1A28A0C3D2009349A2 /* CustomUIElements */,
 			);
@@ -1198,10 +1210,6 @@
 				4F909D0328A0C3D2009349A2 /* NSPopUpButton+Extensions.swift */,
 				4F909D0528A0C3D2009349A2 /* CoolNSTextField.swift */,
 				4F909D0628A0C3D2009349A2 /* NSControl+Extensions.swift */,
-				4F909D0428A0C3D2009349A2 /* NSView+Extensions.swift */,
-				4FA1FD8228A916B600D1C8EE /* NSShadow+Extensions.swift */,
-				4F92A72B260F6C7800529D1F /* NSView+Additions.h */,
-				4F92A72C260F6C7800529D1F /* NSView+Additions.m */,
 				4FEC9666278BBDC600548604 /* NSColor+Additions.h */,
 				4FEC9667278BBDC600548604 /* NSColor+Additions.m */,
 				4F854D7A2789146900B46E9D /* NSMenu+NSMenu_Additions.h */,
@@ -1284,6 +1292,10 @@
 		4F909D4228A0C4C2009349A2 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				4F909D0428A0C3D2009349A2 /* NSView+Extensions.swift */,
+				4F92A72B260F6C7800529D1F /* NSView+Additions.h */,
+				4F92A72C260F6C7800529D1F /* NSView+Additions.m */,
+				4FA1FD8228A916B600D1C8EE /* NSShadow+Extensions.swift */,
 				4FFA4E3928B79D8D0062A1FE /* Strings */,
 				4F3A40D8266C5BDF00436821 /* NSScreen+Additions.h */,
 				4F3A40D9266C5BDF00436821 /* NSScreen+Additions.m */,
@@ -1545,9 +1557,9 @@
 				4FDE759928B1401400662314 /* License.swift */,
 				4FDE759D28B174E700662314 /* Trial.swift */,
 				4FDE757A28B0E35100662314 /* Gumroad.swift */,
-				4F2A1FA726042ACB0067691A /* TrialNotifications */,
 				4F44794428B62FA400AD1979 /* LicenseConfig.swift */,
 				4FFA4E3428B795F30062A1FE /* LicenseUtility.swift */,
+				4F2A1FA726042ACB0067691A /* TrialNotifications */,
 			);
 			path = License;
 			sourceTree = "<group>";
@@ -1628,6 +1640,7 @@
 				4FF6653025F2C7B000689B77 /* Locator */,
 				4F9E78BD26855B9B002C2309 /* SwiftConcurrency */,
 				4FF6653625F2C7B000689B77 /* Utility */,
+				4F909D0928A0C3D2009349A2 /* UIAnimations */,
 				4F7F47C828A5A01C00290BBD /* Config */,
 				4F3A40C8266C448500436821 /* Animation */,
 				4FF9305C28805FC40007CCA7 /* Math */,
@@ -1731,7 +1744,7 @@
 				4F7D97A428AEB14A00C11E79 /* README.md */,
 				4F7D97A228AEB04D00C11E79 /* Westfalia-Regular.otf */,
 				4FF665D525F2C92700689B77 /* Assets.xcassets */,
-				4F854D7D2789266A00B46E9D /* sfsymbols.xcassets */,
+				4F854D7D2789266A00B46E9D /* SFSymbols.xcassets */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -2364,7 +2377,7 @@
 				4FA13FBE28B39423005C68FC /* TrialNotificationController.xib in Resources */,
 				4FDECCDB28A3A37800DDEE91 /* README.md in Resources */,
 				4F79A7EF26042E2E00076A7E /* ToastNotification.xib in Resources */,
-				4F854D7E2789266A00B46E9D /* sfsymbols.xcassets in Resources */,
+				4F854D7E2789266A00B46E9D /* SFSymbols.xcassets in Resources */,
 				4F2F5DB225FB723D0037660A /* AddWindow.xib in Resources */,
 				4F7F47D328A6EFC800290BBD /* SharedAssets.xcassets in Resources */,
 				4FF665F725F2C92700689B77 /* Assets.xcassets in Resources */,
@@ -2375,6 +2388,7 @@
 				4FA1FD7F28A847BF00D1C8EE /* DeletableTableCellView.xib in Resources */,
 				4F7D97A328AEB04D00C11E79 /* Westfalia-Regular.otf in Resources */,
 				4FF665EF25F2C92700689B77 /* ScrollOverridePanel.xib in Resources */,
+				4FFA4E4028B7D0610062A1FE /* SharedSFSymbols.xcassets in Resources */,
 				4F909D2F28A0C3D2009349A2 /* MyTitlebarAccessoryViewController.xib in Resources */,
 				4F909D3A28A0C3D2009349A2 /* Localization How To.md in Resources */,
 				4FD148D128AA428000FE688C /* ButtonOptionsViewController.xib in Resources */,
@@ -2406,6 +2420,7 @@
 				4F7F47D428A6EFC800290BBD /* SharedAssets.xcassets in Resources */,
 				4FFA4E3D28B7A4310062A1FE /* Localizable.strings in Resources */,
 				4FD148C728AA416700FE688C /* MenuBarItem.xib in Resources */,
+				4FFA4E4128B7D0610062A1FE /* SharedSFSymbols.xcassets in Resources */,
 				4FD148D628AA43E900FE688C /* MainMenu.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -2742,6 +2757,7 @@
 				4F9C9B58268A29B70083DED0 /* RollingAverage.swift in Sources */,
 				4F44794628B62FA400AD1979 /* LicenseConfig.swift in Sources */,
 				4FDE757B28B0E35100662314 /* Gumroad.swift in Sources */,
+				4FFA4E4428B7D28E0062A1FE /* ConstraintUtility.swift in Sources */,
 				4FF0255727B0091700923107 /* ModifiedDragOutputAddMode.m in Sources */,
 				4FF0255127B0033000923107 /* ModifiedDragOutputTwoFingerSwipe.m in Sources */,
 				4FC8A7CE28AAF1BC007DB982 /* MarkdownParser.swift in Sources */,
@@ -2759,6 +2775,7 @@
 				4F5F3EEE2756DB0A00C350C0 /* RemapsOverrider_old_.swift in Sources */,
 				4F8B7E6727B4E32600598B65 /* TouchAnimatorBase.swift in Sources */,
 				4FF6669325F2C93A00689B77 /* TouchSimulator.m in Sources */,
+				4FFA4E4A28B7D3750062A1FE /* NSView+Extensions.swift in Sources */,
 				4F9E78E3268663B1002C2309 /* ExponentialSmoother.swift in Sources */,
 				4F3A40AB266BBB6200436821 /* AccelerationBezier.swift in Sources */,
 				4FF93063288076600007CCA7 /* PolyFit.cpp in Sources */,
@@ -2789,19 +2806,23 @@
 				4F8A8DC2287F967000786BCC /* TestAccelerationCurve.swift in Sources */,
 				4FF0BD51266AC10C003935EA /* Math.swift in Sources */,
 				4F8CF95B28686EA200BF5E55 /* DoublesMatrix.m in Sources */,
+				4FFA4E4528B7D2940062A1FE /* Collapse.swift in Sources */,
 				4F2CC58927B8DA8B0084AACE /* Line.swift in Sources */,
 				4FF6669F25F2C93A00689B77 /* main.m in Sources */,
+				4FFA4E4928B7D3750062A1FE /* NSView+Additions.m in Sources */,
 				4FF6668925F2C93A00689B77 /* Scroll.m in Sources */,
 				4F70ECAE267E442D00325A76 /* PointerSpeedExperiments2.m in Sources */,
 				4FC55E31285E6F1F00F2FCCF /* GlobalDefaults.swift in Sources */,
 				4FF6669525F2C93A00689B77 /* ModifiedDrag.m in Sources */,
 				4FD86089266E819A004F76C8 /* Pointers.swift in Sources */,
+				4FFA4E4628B7D2960062A1FE /* Replace.swift in Sources */,
 				4FF6668825F2C93A00689B77 /* ButtonInputReceiver.m in Sources */,
 				4FF6669025F2C93A00689B77 /* ScrollModifiers_old_.m in Sources */,
 				4FF6655125F2C7B000689B77 /* NSMutableDictionary+Additions.m in Sources */,
 				4FF6668525F2C93A00689B77 /* ModifierManager.m in Sources */,
 				4FD860CC266EF55A004F76C8 /* ScrollConfig.swift in Sources */,
 				4F8FC140275DC81900887A0C /* PrefixSwift.swift in Sources */,
+				4FFA4E4828B7D2E40062A1FE /* NSShadow+Extensions.swift in Sources */,
 				4F2CC58727B8D2300084AACE /* HybridCurves.swift in Sources */,
 				4F02C71D2899448900ED0AA8 /* OutputCoordinator.swift in Sources */,
 				4F5C2F802885C5D0001B9B8A /* State.swift in Sources */,
@@ -2818,12 +2839,14 @@
 				4FF666A825F2C93A00689B77 /* DeviceManager.m in Sources */,
 				4FF8C89F28955DC4007EC31F /* CoolTimer.swift in Sources */,
 				4FF6669B25F2C93A00689B77 /* AppDelegate.m in Sources */,
+				4FFA4E4728B7D2980062A1FE /* Animate.swift in Sources */,
 				4FDE75A228B2397600662314 /* PayButton.swift in Sources */,
 				4F9E78D02685E30C002C2309 /* GestureScrollSimulator.m in Sources */,
 				4FD66E0827BB553800F67559 /* CGEventHIDEventBridge.m in Sources */,
 				4FF0BD58266ACE32003935EA /* VectorUtility.m in Sources */,
 				4F96060F27B4F92F004D6F6D /* TouchAnimator.swift in Sources */,
 				4FF6654F25F2C7B000689B77 /* NSArray+Additions.m in Sources */,
+				4FFA4E4328B7D28C0062A1FE /* ReactiveAnimatorProxy.swift in Sources */,
 				4FF6654525F2C7B000689B77 /* Locator.m in Sources */,
 				4F5F3EF12756EC0400C350C0 /* RemapSwizzler.m in Sources */,
 				4FD66E0B27BB9BAE00F67559 /* EventUtility.m in Sources */,
@@ -2842,6 +2865,7 @@
 				4FDE759F28B174E700662314 /* Trial.swift in Sources */,
 				4FA83A29268271E200F3A31B /* PointerSpeed.m in Sources */,
 				4FFA4E3828B79D410062A1FE /* NSAttributedString+Additions.m in Sources */,
+				4FFA4E4228B7D2890062A1FE /* FadeAnimations.swift in Sources */,
 				4FF6654B25F2C7B000689B77 /* Queue.m in Sources */,
 				4F9C9B6B268A2D6F0083DED0 /* CircularBuffer.m in Sources */,
 				4FF8C8A32895AACB007EC31F /* Buttons.swift in Sources */,
