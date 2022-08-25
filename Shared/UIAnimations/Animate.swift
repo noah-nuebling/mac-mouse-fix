@@ -35,13 +35,13 @@ import QuartzCore
         animation.fillMode = .forwards
         
         /// Do changes
-//        CATransaction.lock() /// Not sure if necessary
-        CATransaction.setCompletionBlock(onComplete)
+        CATransaction.lock() /// Not sure if necessary
         CATransaction.begin()
+        CATransaction.setCompletionBlock(onComplete)
         CATransaction.setValue(animation, forKey: "reactiveAnimatorPayload")
         changes()
         CATransaction.setValue(nil, forKey: "reactiveAnimatorPayload")
         CATransaction.commit()
-//        CATransaction.unlock()
+        CATransaction.unlock()
     }
 }

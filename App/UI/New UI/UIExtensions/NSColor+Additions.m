@@ -25,7 +25,7 @@
 - (NSColor *)solidColorAtX:(NSInteger)x y:(NSInteger)y {
     /// Not sure this is useful
     
-    CGImageRef image = (__bridge CGImageRef)[self image];
+    CGImageRef image = (__bridge CGImageRef)[self takeImage];
     NSBitmapImageRep *bitmap = [[NSBitmapImageRep alloc] initWithCGImage:image];
     NSColor *color = [bitmap colorAtX:x y:y];
     

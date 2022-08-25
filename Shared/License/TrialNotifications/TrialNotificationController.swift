@@ -204,7 +204,7 @@ class TrialNotificationController: NSWindowController {
     }
     
     override func mouseExited(with event: NSEvent) {
-        trialImage.image = NSImage(named: .init("testtube.2"))
+        trialImage.reactiveFadeAnimator().image.set(NSImage(named: .init("testtube.2"))!)
     }
     
     /// Helper stuff

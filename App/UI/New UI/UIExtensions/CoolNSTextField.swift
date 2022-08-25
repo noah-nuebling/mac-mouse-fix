@@ -21,7 +21,7 @@ class CoolNSTextField: NSTextField {
     
     // MARK: - Screenshots
     
-    override func image() -> NSImage? {
+    override func takeImage() -> NSImage? {
         
         /// Find the original implementation of `image()` in `NSView+Extensions.swift`
         
@@ -46,7 +46,7 @@ class CoolNSTextField: NSTextField {
         self.needsLayout = true
         self.layoutSubtreeIfNeeded()
         
-        let image = super.image()
+        let image = super.takeImage()
 
         fittingWidthConst.isActive = false
         fittingHeightConst.isActive = false

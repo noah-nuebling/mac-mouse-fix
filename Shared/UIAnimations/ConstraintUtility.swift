@@ -50,17 +50,25 @@ func transferSuperViewConstraints(fromView srcView: NSView, toView dstView: NSVi
     
     var dstConstraints: [NSLayoutConstraint] = []
     for (cnst, srcIndex) in srcConstraints {
+        
+        /// Skip size constraints
         if !transferSizeConstraints && (cnst.firstAttribute == .width || cnst.firstAttribute == .height) {
             /// I don't understand how `iterateSuperViewConstraintsOn` would ever give back height constraints?
 //            assert(false)
             continue
         }
+        
+        /// Skip inactive constraints
+        if !cnst.isActive { continue }
+        
+        /// Construct new constraint
         let newFirst = srcIndex == .firstItem ? dstView : cnst.firstItem
         let newSecond = srcIndex == .secondItem ? dstView : cnst.secondItem
         guard let newFirst = newFirst as? NSView, let newSecond = newSecond as? NSView? else { continue }
         let newConstraint = NSLayoutConstraint(item: newFirst, attribute: cnst.firstAttribute, relatedBy: cnst.relation, toItem: newSecond, attribute: cnst.secondAttribute, multiplier: cnst.multiplier, constant: cnst.constant)
         dstConstraints.append(newConstraint)
         
+        /// Validate
         if (newFirst == srcView && newSecond == dstView) || (newFirst == dstView && newSecond == srcView) {
             assert(false)
         }

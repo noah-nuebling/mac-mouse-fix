@@ -46,7 +46,7 @@ class ReplaceAnimations {
     
     /// Core function
 
-    static func animate(ogView: NSView, replaceView: NSView, hAnchor: MFHAnchor, vAnchor: MFVAnchor, doAnimate: Bool){
+    static func animate(ogView: NSView, replaceView: NSView, hAnchor: MFHAnchor, vAnchor: MFVAnchor, doAnimate: Bool, onComplete: @escaping () -> () = { }){
         
         /// Parameter explanation:
         ///     The animation produces the following changes:
@@ -87,6 +87,9 @@ class ReplaceAnimations {
         /// Store size of ogView
         ///
         
+        ogView.superview?.needsLayout = true
+        ogView.superview?.layoutSubtreeIfNeeded()
+        
         let ogSize = ogView.size()
         
         /// Debug
@@ -100,7 +103,7 @@ class ReplaceAnimations {
         ///
         /// Store image of ogView
         ///
-        let ogImage = ogView.image()
+        let ogImage = ogView.takeImage()
         
         ///
         /// Measure replaceView size in layout
@@ -118,7 +121,7 @@ class ReplaceAnimations {
         ///
         /// Store image of replaceView
         ///
-        let replaceImage = replaceView.image()
+        let replaceImage = replaceView.takeImage()
         
         ///
         /// Get animationDuration
@@ -198,6 +201,7 @@ class ReplaceAnimations {
         ///
         /// Force layout to initial animation state (Probably not necessary)
         ///
+        
         wrapperView.superview?.needsLayout = true
         wrapperView.superview?.layoutSubtreeIfNeeded()
         
@@ -220,6 +224,8 @@ class ReplaceAnimations {
             for const in replaceConstraints {
                 const.isActive = true
             }
+            /// Call onComplete
+            onComplete()
         })
         
         ///

@@ -37,18 +37,20 @@ private func doubleFadePropertyChange<P>(_ view: NSView,
     /// Copy view
     let copiedView = try SharedUtilitySwift.insecureCopy(of: view)
     
-    /// Write new newValue
+    /// Write newValue to ogView
     if let keyPath = keyPath as? String {
-        copiedView.setValue(newValue, forKeyPath: keyPath)
+        view.setValue(newValue, forKeyPath: keyPath)
     } else { /// I tried using Swift KeyPaths here, but I deleted it to purge the world of this demonic evil
         fatalError()
     }
-    /// Replace with animation
-    ReplaceAnimations.animate(ogView: view, replaceView: copiedView, hAnchor: .center, vAnchor: .center, doAnimate: true)
     
-    /// Set value on ogView
-    view.setValue(newValue, forKeyPath: keyPath as! String)
+    /// Replace view with copiedView
+    let copyConstraints = transferSuperViewConstraints(fromView: view, toView: copiedView, transferSizeConstraints: false)
+    view.superview?.replaceSubview(view, with: copiedView)
+    for c in copyConstraints {
+        c.isActive = true
+    }
     
-    /// Replace back
-    copiedView.superview?.replaceSubview(copiedView, with: view)
+    /// Replace copiedView -> view with animation
+    ReplaceAnimations.animate(ogView: copiedView, replaceView: view, hAnchor: .center, vAnchor: .center, doAnimate: true)
 }
