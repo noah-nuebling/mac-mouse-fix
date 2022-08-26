@@ -21,10 +21,16 @@
                                         <menuItem title="About Mac Mouse Fix" id="u9F-yq-WC3">
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                             <connections>
-                                                <action selector="openAboutTab:" target="Voe-Tx-rLC" id="XFM-YO-YxB"/>
+                                                <action selector="openAboutTab:" target="Voe-Tx-rLC" id="HWV-dp-GPx"/>
                                             </connections>
                                         </menuItem>
                                         <menuItem isSeparatorItem="YES" id="EZF-ln-4YN"/>
+                                        <menuItem title="Activate License..." id="YBT-Ar-F4S">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <action selector="activateLicense:" target="Voe-Tx-rLC" id="zHH-gf-IUB"/>
+                                            </connections>
+                                        </menuItem>
                                         <menuItem title="Check for Updates..." id="3pt-ka-lxV">
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                             <connections>

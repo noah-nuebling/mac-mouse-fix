@@ -32,6 +32,15 @@
 
 @implementation AppDelegate
 
+#pragma mark - IBActions
+
+- (IBAction)openAboutTab:(id)sender {
+}
+
+- (IBAction)activateLicense:(id)sender {
+    [LicenseSheetController add];
+}
+
 #pragma mark - Interface funcs
 
 /// TODO: Remove these in favor of MainAppState.swift

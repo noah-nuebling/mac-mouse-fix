@@ -297,3 +297,6 @@
 
 /* Class = "NSTextFieldCell"; title = "<Day 2/14 of your test period>"; ObjectID = "cul-5Z-iUo"; */
 "cul-5Z-iUo.title" = "<Danke, dass du Mac Mouse Fix gekauft hast!>";
+
+/* Class = "NSMenuItem"; title = "Activate License..."; ObjectID = "YBT-Ar-F4S"; */
+"YBT-Ar-F4S.title" = "Lizenz aktivieren...";

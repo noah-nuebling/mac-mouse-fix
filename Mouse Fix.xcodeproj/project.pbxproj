@@ -13,6 +13,8 @@
 		4F09283F28B8101600BDC2FF /* TrialSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F09283E28B8101600BDC2FF /* TrialSection.swift */; };
 		4F09284028B8101600BDC2FF /* TrialSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F09283E28B8101600BDC2FF /* TrialSection.swift */; };
 		4F09284228B8C71C00BDC2FF /* Hyperlink.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF665E725F2C92700689B77 /* Hyperlink.m */; };
+		4F09284528B8E82B00BDC2FF /* LicenseSheetController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F09284328B8E82B00BDC2FF /* LicenseSheetController.swift */; };
+		4F09284828B8EE7200BDC2FF /* LicenseSheetController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4F09284A28B8EE7200BDC2FF /* LicenseSheetController.xib */; };
 		4F09BF58288355170080A5F8 /* PollingRateMeasurer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F09BF57288355170080A5F8 /* PollingRateMeasurer.swift */; };
 		4F1793A925EEC92000E8309B /* ZipArchive.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4F1793A825EEC90900E8309B /* ZipArchive.framework */; };
 		4F1793AA25EEC92000E8309B /* ZipArchive.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 4F1793A825EEC90900E8309B /* ZipArchive.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -430,6 +432,9 @@
 		4F02C71C2899448900ED0AA8 /* OutputCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OutputCoordinator.swift; sourceTree = "<group>"; };
 		4F02C7202899453200ED0AA8 /* OutputCoordinator.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OutputCoordinator.h; sourceTree = "<group>"; };
 		4F09283E28B8101600BDC2FF /* TrialSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrialSection.swift; sourceTree = "<group>"; };
+		4F09284328B8E82B00BDC2FF /* LicenseSheetController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LicenseSheetController.swift; sourceTree = "<group>"; };
+		4F09284928B8EE7200BDC2FF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LicenseSheetController.xib; sourceTree = "<group>"; };
+		4F09284C28B8EE7600BDC2FF /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/LicenseSheetController.strings; sourceTree = "<group>"; };
 		4F09BF57288355170080A5F8 /* PollingRateMeasurer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PollingRateMeasurer.swift; sourceTree = "<group>"; };
 		4F15C0C12666779D000337FF /* MainApp.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = MainApp.xcconfig; sourceTree = "<group>"; };
 		4F15C0C22666781F000337FF /* Helper.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Helper.xcconfig; sourceTree = "<group>"; };
@@ -950,6 +955,15 @@
 			path = UI;
 			sourceTree = "<group>";
 		};
+		4F09284728B8E83400BDC2FF /* LicenseSheet */ = {
+			isa = PBXGroup;
+			children = (
+				4F09284328B8E82B00BDC2FF /* LicenseSheetController.swift */,
+				4F09284A28B8EE7200BDC2FF /* LicenseSheetController.xib */,
+			);
+			path = LicenseSheet;
+			sourceTree = "<group>";
+		};
 		4F1793A725EEC8E500E8309B /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -1183,13 +1197,13 @@
 		4F909CF128A0C3D2009349A2 /* New UI */ = {
 			isa = PBXGroup;
 			children = (
-				4FE83F4028A7A66A00C5FC09 /* OldReference */,
 				4F909CF228A0C3D2009349A2 /* Main+TabView */,
 				4FF665DC25F2C92700689B77 /* Accessibility */,
 				4F909D0228A0C3D2009349A2 /* UIExtensions */,
 				4F909D0728A0C3D2009349A2 /* AppSpecific */,
 				4F909D1328A0C3D2009349A2 /* CustomDataTypes */,
 				4F909D1A28A0C3D2009349A2 /* CustomUIElements */,
+				4FE83F4028A7A66A00C5FC09 /* OldReference */,
 			);
 			path = "New UI";
 			sourceTree = "<group>";
@@ -1206,6 +1220,7 @@
 				4F909CF928A0C3D2009349A2 /* TabItemControllerProtocol.swift */,
 				4F909CFE28A0C3D2009349A2 /* ResizingTabWindow.swift */,
 				4F909D0028A0C3D2009349A2 /* ResizingTabWindowController.swift */,
+				4F09284728B8E83400BDC2FF /* LicenseSheet */,
 			);
 			path = "Main+TabView";
 			sourceTree = "<group>";
@@ -2385,6 +2400,7 @@
 				4FF6654225F2C7B000689B77 /* default_launchd.plist in Resources */,
 				4FF665F425F2C92700689B77 /* MoreSheet.xib in Resources */,
 				4F909D2728A0C3D2009349A2 /* Main.storyboard in Resources */,
+				4F09284828B8EE7200BDC2FF /* LicenseSheetController.xib in Resources */,
 				4F9E59972672A67F004E75F7 /* default_config.plist in Resources */,
 				4FD148CC28AA423F00FE688C /* AuthorizeAccessibilityView.xib in Resources */,
 				4FA13FBE28B39423005C68FC /* TrialNotificationController.xib in Resources */,
@@ -2712,6 +2728,7 @@
 				4FA40CF928A0CCCA00499E53 /* Bezier.swift in Sources */,
 				4FC8A7D728ACEB7B007DB982 /* NSString+Extensions.swift in Sources */,
 				4FC8A7CD28AAF1BC007DB982 /* MarkdownParser.swift in Sources */,
+				4F09284528B8E82B00BDC2FF /* LicenseSheetController.swift in Sources */,
 				4F909D3E28A0C3D2009349A2 /* SensitivityDisplay.swift in Sources */,
 				4F909D4528A0C4C2009349A2 /* NSArray+Extensions.swift in Sources */,
 				4FA8A30A28A9508C001E740F /* ButtonOptionsViewController.swift in Sources */,
@@ -2923,6 +2940,15 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
+		4F09284A28B8EE7200BDC2FF /* LicenseSheetController.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				4F09284928B8EE7200BDC2FF /* Base */,
+				4F09284C28B8EE7600BDC2FF /* de */,
+			);
+			name = LicenseSheetController.xib;
+			sourceTree = "<group>";
+		};
 		4F6B02C228AD9E4400B5BA93 /* Localizable.stringsdict */ = {
 			isa = PBXVariantGroup;
 			children = (
