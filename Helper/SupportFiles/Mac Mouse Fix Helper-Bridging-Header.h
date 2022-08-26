@@ -38,5 +38,6 @@
 #import "License.h"
 #import "Locator.h"
 #import "NSAnimationManager.h"
+#import "Hyperlink.h"
 
 //#import <CocoaLumberjack/CocoaLumberjack.h> /// Importing CocoaLumberjack/Swift with CocoaPods breaks my project. Can't use macros when importing this.

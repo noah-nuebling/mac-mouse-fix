@@ -12,6 +12,7 @@
 		4F02C71D2899448900ED0AA8 /* OutputCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F02C71C2899448900ED0AA8 /* OutputCoordinator.swift */; };
 		4F09283F28B8101600BDC2FF /* TrialSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F09283E28B8101600BDC2FF /* TrialSection.swift */; };
 		4F09284028B8101600BDC2FF /* TrialSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F09283E28B8101600BDC2FF /* TrialSection.swift */; };
+		4F09284228B8C71C00BDC2FF /* Hyperlink.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF665E725F2C92700689B77 /* Hyperlink.m */; };
 		4F09BF58288355170080A5F8 /* PollingRateMeasurer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F09BF57288355170080A5F8 /* PollingRateMeasurer.swift */; };
 		4F1793A925EEC92000E8309B /* ZipArchive.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4F1793A825EEC90900E8309B /* ZipArchive.framework */; };
 		4F1793AA25EEC92000E8309B /* ZipArchive.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 4F1793A825EEC90900E8309B /* ZipArchive.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -934,6 +935,21 @@
 			path = Pods;
 			sourceTree = "<group>";
 		};
+		4F09284128B8C71000BDC2FF /* UI */ = {
+			isa = PBXGroup;
+			children = (
+				4FF665EA25F2C92700689B77 /* Hyperlink.h */,
+				4FF665E725F2C92700689B77 /* Hyperlink.m */,
+				4F92A72B260F6C7800529D1F /* NSView+Additions.h */,
+				4F92A72C260F6C7800529D1F /* NSView+Additions.m */,
+				4F909D0428A0C3D2009349A2 /* NSView+Extensions.swift */,
+				4FA1FD8228A916B600D1C8EE /* NSShadow+Extensions.swift */,
+				4F909D0928A0C3D2009349A2 /* UIAnimations */,
+				4FFA4E3928B79D8D0062A1FE /* Strings */,
+			);
+			path = UI;
+			sourceTree = "<group>";
+		};
 		4F1793A725EEC8E500E8309B /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -1089,8 +1105,6 @@
 				4FF665C125F2C92700689B77 /* MFSegmentedControl.m */,
 				4FF665E625F2C92700689B77 /* ClickableImageView.h */,
 				4FF665EB25F2C92700689B77 /* ClickableImageView.m */,
-				4FF665EA25F2C92700689B77 /* Hyperlink.h */,
-				4FF665E725F2C92700689B77 /* Hyperlink.m */,
 				4F3E067C26A2F97D000C9E06 /* URLMenuItem.h */,
 				4F3E067D26A2F97D000C9E06 /* URLMenuItem.m */,
 			);
@@ -1296,11 +1310,6 @@
 		4F909D4228A0C4C2009349A2 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
-				4F909D0428A0C3D2009349A2 /* NSView+Extensions.swift */,
-				4F92A72B260F6C7800529D1F /* NSView+Additions.h */,
-				4F92A72C260F6C7800529D1F /* NSView+Additions.m */,
-				4FA1FD8228A916B600D1C8EE /* NSShadow+Extensions.swift */,
-				4FFA4E3928B79D8D0062A1FE /* Strings */,
 				4F3A40D8266C5BDF00436821 /* NSScreen+Additions.h */,
 				4F3A40D9266C5BDF00436821 /* NSScreen+Additions.m */,
 				4FF6653825F2C7B000689B77 /* NSArray+Additions.h */,
@@ -1645,9 +1654,9 @@
 				4F9E78BD26855B9B002C2309 /* SwiftConcurrency */,
 				4FF6653625F2C7B000689B77 /* Utility */,
 				4F7F47C828A5A01C00290BBD /* Config */,
-				4F909D0928A0C3D2009349A2 /* UIAnimations */,
 				4F3A40C8266C448500436821 /* Animation */,
 				4FF9305C28805FC40007CCA7 /* Math */,
+				4F09284128B8C71000BDC2FF /* UI */,
 				4F909D4228A0C4C2009349A2 /* Extensions */,
 				4FA40D1128A0D9FB00499E53 /* External */,
 				4F7F47D528A6EFCF00290BBD /* Resources */,
@@ -2847,6 +2856,7 @@
 				4FF6669B25F2C93A00689B77 /* AppDelegate.m in Sources */,
 				4FFA4E4728B7D2980062A1FE /* Animate.swift in Sources */,
 				4FDE75A228B2397600662314 /* PayButton.swift in Sources */,
+				4F09284228B8C71C00BDC2FF /* Hyperlink.m in Sources */,
 				4F9E78D02685E30C002C2309 /* GestureScrollSimulator.m in Sources */,
 				4FD66E0827BB553800F67559 /* CGEventHIDEventBridge.m in Sources */,
 				4FF0BD58266ACE32003935EA /* VectorUtility.m in Sources */,

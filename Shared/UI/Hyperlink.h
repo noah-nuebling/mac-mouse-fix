@@ -12,4 +12,6 @@
 
 @interface Hyperlink : NSTextField
 
++ (instancetype)hyperlinkWithTitle:(NSString *)title url:(NSString *)href alwaysTracking:(BOOL)alwaysTracking leftPadding:(int)leftPadding;
+
 @end

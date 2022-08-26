@@ -383,4 +383,4 @@
 "trial-notification" = "Hi! Du verwendest Mac Mouse Fix jetzt seit **%d Tagen**. Ich hoffe, es gefällt dir!\n\nWenn du Mac Mouse Fix auch weiter verwenden willst, kannst du es dir [jetzt kaufen](%@).";
 
 /* First draft: Activate License */
-"activate-license" = "Lizenz aktivieren";
+"activate-license-button" = "Lizenz aktivieren";

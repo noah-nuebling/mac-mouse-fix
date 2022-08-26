@@ -32,12 +32,36 @@ IB_DESIGNABLE
     BOOL _mouseDownOverSelf;
     NSRect _trackingRect; /// Do we need to store this?
     NSTrackingArea *_trackingArea;
+    BOOL _alwaysTracking;
 }
 
 - (void)awakeFromNib {
     
+    /// Init from IB
+    
     /// Register mouse clicked callbacks
     
+    _alwaysTracking = NO;
+    [self startTracking];
+}
+
++ (instancetype)hyperlinkWithTitle:(NSString *)title url:(NSString *)href alwaysTracking:(BOOL)alwaysTracking leftPadding:(int)leftPadding {
+    
+    /// Init from code
+    
+    Hyperlink *link = [Hyperlink labelWithString:title];
+    link.textColor = [NSColor linkColor];
+    link.font = [NSFont systemFontOfSize:NSFont.systemFontSize];
+    link.href = href;
+    link.leftPadding = leftPadding;
+    
+    link->_alwaysTracking = alwaysTracking;
+    [link startTracking];
+    
+    return link;
+}
+
+- (void)startTracking {
     [NSEvent addLocalMonitorForEventsMatchingMask:NSEventMaskLeftMouseDown handler:^NSEvent * _Nullable(NSEvent * _Nonnull event) {
         [self mouseDown:event];
         return event;
@@ -62,7 +86,8 @@ IB_DESIGNABLE
     /// Setup new tracking area
     
     /// Options
-    NSTrackingAreaOptions trackingAreaOptions =  NSTrackingMouseEnteredAndExited | NSTrackingActiveInKeyWindow | NSTrackingEnabledDuringMouseDrag;
+    NSTrackingAreaOptions trackingAreaOptions =  NSTrackingMouseEnteredAndExited | NSTrackingEnabledDuringMouseDrag;
+    trackingAreaOptions |= _alwaysTracking ? NSTrackingActiveAlways : NSTrackingActiveInKeyWindow;
     
     _trackingRect = self.bounds;
     
