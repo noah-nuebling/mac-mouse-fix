@@ -1103,6 +1103,7 @@
 			isa = PBXGroup;
 			children = (
 				4F909CF128A0C3D2009349A2 /* New UI */,
+				4F09284728B8E83400BDC2FF /* LicenseSheet */,
 				4FA13FBA28B393B0005C68FC /* Toasts */,
 				4FF665C625F2C92700689B77 /* Update */,
 				4FF665BF25F2C92700689B77 /* Overrides */,
@@ -1220,7 +1221,6 @@
 				4F909CF928A0C3D2009349A2 /* TabItemControllerProtocol.swift */,
 				4F909CFE28A0C3D2009349A2 /* ResizingTabWindow.swift */,
 				4F909D0028A0C3D2009349A2 /* ResizingTabWindowController.swift */,
-				4F09284728B8E83400BDC2FF /* LicenseSheet */,
 			);
 			path = "Main+TabView";
 			sourceTree = "<group>";

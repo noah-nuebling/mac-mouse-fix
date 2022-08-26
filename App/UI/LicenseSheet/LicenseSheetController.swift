@@ -29,7 +29,8 @@ import Cocoa
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        /// Do view setup here.
+        
+        /// Load existing key into licenseField
     }
     
     /// Interface
