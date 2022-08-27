@@ -7,6 +7,10 @@
 // --------------------------------------------------------------------------
 //
 
+/// This is a thin wrapper / collection of convenience functions around Trial.swift and Gumroad.swift.
+/// One of the more interesting things it does is It adds offline caching to Gumroad.swift and automatically gathers parameters for it.
+/// It was meant to be an Interface for Gumroad.swift, so that Gumroad.swift wouldn't be used except by License.swift, but for the LicenseSheet it made sense to use Gumroad.swift directly, because we don't want any caching when activating the license.
+
 import Cocoa
 
 // MARK: - License.h extensions
@@ -107,21 +111,21 @@ extension MFLicenseReturn: Equatable {
         
     }
     
-    @objc static func activateLicense(license: String, licenseConfig: LicenseConfig, completionHandler: @escaping (_ success: Bool, _ error: NSError?) -> ()) {
-        
-        Gumroad.activateLicense(license, email: "", maxActivations: licenseConfig.maxActivations) { isValidKeyAndEmail, serverResponse, error, urlResponse in
-            
-            if isValidKeyAndEmail {
-                SecureStorage.set("License.key", value: license)
-            }
-            
-            completionHandler(isValidKeyAndEmail, error)
-        }
-    }
-    
-    @objc static func currentLicense() -> String? {
-        SecureStorage.get("License.key") as! String?
-    }
+//    @objc static func activateLicense(license: String, licenseConfig: LicenseConfig, completionHandler: @escaping (_ success: Bool, _ error: NSError?) -> ()) {
+//
+//        Gumroad.activateLicense(license, email: "", maxActivations: licenseConfig.maxActivations) { isValidKeyAndEmail, serverResponse, error, urlResponse in
+//
+//            if isValidKeyAndEmail {
+//                SecureStorage.set("License.key", value: license)
+//            }
+//
+//            completionHandler(isValidKeyAndEmail, error)
+//        }
+//    }
+//
+//    @objc static func currentLicense() -> String? {
+//        SecureStorage.get("License.key") as! String?
+//    }
     
     // MARK: Core
     
@@ -130,7 +134,7 @@ extension MFLicenseReturn: Equatable {
         /// Get email and license from config file
         
         guard
-            let key = currentLicense(),
+            let key = SecureStorage.get("License.key") as! String?,
             let email = SecureStorage.get("License.email") as? String
         else {
             

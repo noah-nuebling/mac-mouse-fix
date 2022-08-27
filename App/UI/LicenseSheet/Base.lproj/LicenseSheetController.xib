@@ -34,8 +34,8 @@
                     </connections>
                 </textField>
                 <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Rh6-eR-W0F">
-                    <rect key="frame" x="243" y="13" width="134" height="32"/>
-                    <buttonCell key="cell" type="push" title="Activate License" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="IK8-Rj-beO">
+                    <rect key="frame" x="227" y="13" width="150" height="32"/>
+                    <buttonCell key="cell" type="push" title="&lt;Activate License&gt;" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="IK8-Rj-beO">
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                         <font key="font" metaFont="system"/>
                         <string key="keyEquivalent" base64-UTF8="YES">
@@ -47,7 +47,7 @@ DQ
                     </connections>
                 </button>
                 <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="q7O-s8-Ufb">
-                    <rect key="frame" x="181" y="13" width="64" height="32"/>
+                    <rect key="frame" x="165" y="13" width="64" height="32"/>
                     <buttonCell key="cell" type="push" title="Back" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="7yY-kF-Q7q">
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                         <font key="font" metaFont="system"/>
