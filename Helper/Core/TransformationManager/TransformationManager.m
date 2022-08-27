@@ -15,7 +15,7 @@
 #import "ModifierManager.h"
 #import "ModifiedDrag.h"
 #import "NSArray+Additions.h"
-#import "NSMutableDictionary+Additions.h"
+#import "NSDictionary+Additions.h"
 #import "Constants.h"
 #import "Config.h"
 #import "SharedMessagePort.h"

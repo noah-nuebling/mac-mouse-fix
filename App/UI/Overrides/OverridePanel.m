@@ -21,7 +21,7 @@
 #import "OverridePanel.h"
 #import "Config.h"
 #import "Utility_App.h"
-#import "NSMutableDictionary+Additions.h"
+#import "NSDictionary+Additions.h"
 #import <Foundation/Foundation.h>
 #import "MoreSheet.h"
 #import "AppDelegate.h"

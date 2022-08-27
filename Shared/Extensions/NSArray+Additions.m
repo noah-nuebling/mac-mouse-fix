@@ -8,7 +8,7 @@
 //
 
 #import "NSArray+Additions.h"
-#import "NSMutableDictionary+Additions.h"
+#import "NSDictionary+Additions.h"
 
 @implementation NSArray (Additions)
 

@@ -7,35 +7,45 @@
 // --------------------------------------------------------------------------
 //
 
-/// This is a wrapper around the keychain so we can store and retrieve values with simple keypath-based syntax.
-/// All settings are stored in a dictionary inside a single keychain item.
-/// vs storing in config.plist, this has the advantage that the keychain is synced to all the users devices.
-/// It also isn't automatically deleted on uninstall by apps like AppCleaner by FreeMacSoft. This makes it a little more annoying to reset the trial period.
-/// Special entitlements on the mainApp and Helper let both access the same keychain item.
-/// See the great Apple documentation for more info: https://developer.apple.com/documentation/security/keychain_services/keychain_items?language=objc
+/// Discussion:
+/// - This is a wrapper around the keychain so we can store and retrieve values with simple keypath-based syntax.
+/// - All settings are stored in a dictionary inside a single keychain item labeled 'MFSecureStorage'.
+/// - vs storing in config.plist, this has the advantage that the keychain is synced to all the users devices.
+/// - It also isn't automatically deleted on uninstall by apps like AppCleaner by FreeMacSoft. This makes it a little more annoying to reset the trial period.
+/// - Special entitlements on the mainApp and Helper let both access the same keychain item.
+/// - See the great Apple documentation for more info:
+///     - https://developer.apple.com/documentation/security/keychain_services/keychain_items?language=objc
+
+/// TODO: Implement cleanup function. See Notes in NSDictionary+Additions.m for details.
 
 import Foundation
 
 @objc class SecureStorage: NSObject {
     
+    /// Surface lvl 2
+    
+    @objc static func delete(_ keyPath: String){
+        set(keyPath, value: nil)
+    }
+    
     /// Surface
     
-    @objc func get(_ keyPath: String) -> Any? {
+    @objc static func get(_ keyPath: String) -> Any? {
         
         do {
             let dict = try readDict()
-            return dict.value(forKeyPath: keyPath)
+            return dict.object(forCoolKeyPath: keyPath)
             
         } catch {
             return nil
         }
     }
     
-    @objc func set(_ keyPath: String, _ value: Any) {
+    @objc static func set(_ keyPath: String, value: Any?) {
         
         do {
-            let dict = try readDict()
-            dict.setValue(value, forKeyPath: keyPath)
+            var dict = try readDict().mutableCopy() as! NSMutableDictionary
+            dict.setObject((value as! NSObject?), forCoolKeyPath: keyPath)
             
             try replaceDict(dict)
         
@@ -43,7 +53,7 @@ import Foundation
             
             do {
                 try createItem(dict: [:])
-                set(keyPath, value)
+                set(keyPath, value: value)
                 
             } catch {
                 assert(false)
@@ -56,23 +66,26 @@ import Foundation
     
     /// Core lvl 2
     
-    private func readDict() throws -> NSDictionary {
+    private static func readDict() throws -> NSDictionary {
         
         let data = try readItem()
+        
+        /// Under Ventura, this gives me strange warnings about how it 'will be disallowed in the future' to use this for unarchiving dictionaries, but there is no documentation for the replacement functions and I don't know how to use them. Putting assert(false) so we notice when this becomes deprecated.
         guard let dict = try NSKeyedUnarchiver.unarchivedObject(ofClass: NSDictionary.self, from: data as Data) else {
+            assert(false)
             throw KeychainError.invalidItemData
         }
         
         return dict
     }
     
-    private func replaceDict(_ dict: NSDictionary) throws {
+    private static func replaceDict(_ dict: NSDictionary) throws {
         
         let data = try NSKeyedArchiver.archivedData(withRootObject: dict, requiringSecureCoding: false)
         try updateItem(data: data as CFData)
     }
     
-    private func createItem(dict: NSDictionary) throws {
+    private static func createItem(dict: NSDictionary) throws {
         
         let data = try NSKeyedArchiver.archivedData(withRootObject: dict, requiringSecureCoding: false)
         try createItem(data: data as CFData)
@@ -80,24 +93,22 @@ import Foundation
     
     /// Core lvl 1
     
-    private let label = "MFSecureStorage"
-    
-    private func createItem(data: CFData) throws {
+    private static func createItem(data: CFData) throws {
         
         var query = baseQuery()
-        query[kSecValueData] = data
+        query[kSecValueData as String] = data
         
         let status = SecItemAdd(query as CFDictionary, nil)
 
         guard status == errSecSuccess else { throw KeychainError.unhandledError(status: status) }
     }
     
-    private func updateItem(data: CFData) throws {
+    private static func updateItem(data: CFData) throws {
         
         let query = baseQuery()
         
         let updates = [
-            kSecValueData: data
+            kSecValueData as String: data
         ]
         
         let status = SecItemUpdate(query as CFDictionary, updates as CFDictionary)
@@ -106,10 +117,10 @@ import Foundation
         guard status == errSecSuccess else { throw KeychainError.unhandledError(status: status) }
     }
     
-    private func readItem() throws -> CFData {
+    private static func readItem() throws -> CFData {
         
         var query = baseQuery()
-        query[kSecReturnData] = kCFBooleanTrue!
+        query[kSecReturnData as String] = kCFBooleanTrue!
         
         var item: CFTypeRef?
         let status = SecItemCopyMatching(query as CFDictionary, &item)
@@ -129,12 +140,14 @@ import Foundation
     
     /// Core lvl 0
     
-    private func baseQuery() -> [CFString: Any] {
+    private static let label = "MFSecureStorage"
+    
+    private static func baseQuery() -> [String: Any] {
         
-        let query: [CFString: Any] = [
-            kSecAttrSynchronizable: kCFBooleanTrue!,
-            kSecClass: kSecClassGenericPassword,
-            kSecAttrLabel: label,
+        let query: [String: Any] = [
+            kSecAttrSynchronizable as String: kCFBooleanTrue!,
+            kSecClass as String: kSecClassGenericPassword,
+            kSecAttrLabel as String: label,
         ]
         
         return query
@@ -142,7 +155,7 @@ import Foundation
     
     /// Define errors
     
-    enum KeychainError: Error {
+    private enum KeychainError: Error {
         case unhandledError(status: OSStatus)
         case itemNotFound
         case invalidItemData

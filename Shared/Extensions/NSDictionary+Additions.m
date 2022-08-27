@@ -7,7 +7,14 @@
 // --------------------------------------------------------------------------
 //
 
-#import "NSMutableDictionary+Additions.h"
+/// TODO: Implement cleanup method
+///     - Should delete paths in the dictionary that don't have any leaves
+///     - This should work on nested data structures made up of dictionaries and arrays and leaves
+///     - We're doing somewhat similar stuff (recursing over nested array + dictionary structures) in [SharedUtility + deepMutableCopyOf:]
+///     - I think we might have already implemented a dictionary cleanup function somewhere for AppOverridePanel or the config.
+///     - This should be useful whereever we store data. So for the config, the SecureStorage.swift, and NSUserDefaults (if we use that)
+
+#import "NSDictionary+Additions.h"
 #import "NSArray+Additions.h"
 
 #pragma mark - Utiliy

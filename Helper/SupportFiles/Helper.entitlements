@@ -6,5 +6,9 @@
 	<false/>
 	<key>com.apple.security.get-task-allow</key>
 	<true/>
+	<key>keychain-access-groups</key>
+	<array>
+		<string>$(AppIdentifierPrefix)com.nuebling.mac-mouse-fix.secure-storage</string>
+	</array>
 </dict>
 </plist>

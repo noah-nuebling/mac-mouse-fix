@@ -33,7 +33,7 @@
 #import "Actions.h"
 #import "OutputCoordinator.h"
 #import "GestureScrollSimulator.h"
-#import "NSMutableDictionary+Additions.h"
+#import "NSDictionary+Additions.h"
 #import "NSAttributedString+Additions.h"
 #import "License.h"
 #import "Locator.h"

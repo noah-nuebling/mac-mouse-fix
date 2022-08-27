@@ -521,7 +521,7 @@ static void iteratePropertiesOn(id obj, void(^callback)(objc_property_t property
         NSObject *dstVal = dst[key];
         NSObject *srcVal = src[key];
         if ([srcVal isKindOfClass:[NSDictionary class]] || [srcVal isKindOfClass:[NSMutableDictionary class]]) { // Not sure if checking for mutable dict AND dict is necessary
-            // Nested dictionary found. Recursing.
+            /// Nested dictionary found. Recursing.
             NSDictionary *recursionResult = [self dictionaryWithOverridesAppliedFrom:(NSDictionary *)srcVal to:(NSDictionary *)dstVal];
             dstMutable[key] = recursionResult;
         } else {

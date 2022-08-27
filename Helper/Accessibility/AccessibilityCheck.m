@@ -166,17 +166,10 @@ CGEventRef _Nullable testCallback(CGEventTapProxy proxy, CGEventType type, CGEve
         /// Debug & testing
         ///
         
-//        LicenseConfig *c = [LicenseConfig getCached];
+        [SecureStorage set:@"hi.im.groot" value:@"what's your name? Hghhhh?"];
+        NSString *secure = [SecureStorage get:@"hi.im.groot"];
         
-        [LicenseConfig getOnComplete:^(LicenseConfig * _Nonnull c) {
-           
-            
-            LicenseConfig *d = [LicenseConfig getCached];
-            
-            DDLogDebug(@"CachedLicenseConfig: %@", d);
-            
-        }];
-        
+        DDLogDebug(@"Value from secure storage: %@", secure);
         
         [LicenseConfig getOnComplete:^(LicenseConfig * _Nonnull licenseConfig) {
         

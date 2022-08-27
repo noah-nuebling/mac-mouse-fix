@@ -26,7 +26,7 @@
 #import "NSAttributedString+Additions.h"
 #import "ToastNotificationController.h"
 #import "Config.h"
-#import "NSMutableDictionary+Additions.h"
+#import "NSDictionary+Additions.h"
 #import "SparkleUpdaterController.h"
 #import "AppDelegate.h"
 #import "SharedMessagePort.h"
