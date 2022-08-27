@@ -22,13 +22,13 @@
         <window title="Window" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" restorable="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" animationBehavior="default" titlebarAppearsTransparent="YES" titleVisibility="hidden" id="F0z-JX-Cv5" customClass="TrialNotificationWindow" customModule="Mac_Mouse_Fix" customModuleProvider="target">
             <windowStyleMask key="styleMask" titled="YES" fullSizeContentView="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
-            <rect key="contentRect" x="196" y="240" width="495" height="185"/>
-            <rect key="screenRect" x="0.0" y="0.0" width="1440" height="875"/>
+            <rect key="contentRect" x="196" y="240" width="391" height="164"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="1920" height="1055"/>
             <view key="contentView" horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="se5-gp-TjO">
-                <rect key="frame" x="0.0" y="0.0" width="391" height="182"/>
+                <rect key="frame" x="0.0" y="0.0" width="394" height="176"/>
                 <subviews>
                     <button translatesAutoresizingMaskIntoConstraints="NO" id="G5r-ur-mKW">
-                        <rect key="frame" x="8" y="149" width="21" height="32"/>
+                        <rect key="frame" x="8" y="143" width="21" height="32"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="21" id="oeg-mC-Djd"/>
                             <constraint firstAttribute="height" constant="21" id="vXa-wf-59f"/>
@@ -43,7 +43,7 @@
                         </connections>
                     </button>
                     <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="8Mx-7q-zeA">
-                        <rect key="frame" x="21" y="112" width="58" height="58"/>
+                        <rect key="frame" x="12" y="87" width="58" height="58"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="58" id="4TA-cd-zXP"/>
                             <constraint firstAttribute="height" constant="58" id="nJ4-lr-wem"/>
@@ -51,17 +51,17 @@
                         <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="AppIconRoundFromHelper-deleteThis" id="v18-c0-Fut"/>
                     </imageView>
                     <scrollView horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" borderType="none" autohidesScrollers="YES" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" hasVerticalScroller="NO" horizontalScrollElasticity="none" verticalScrollElasticity="none" translatesAutoresizingMaskIntoConstraints="NO" id="XPn-15-YCK">
-                        <rect key="frame" x="91" y="78" width="280" height="80"/>
+                        <rect key="frame" x="74" y="76" width="300" height="80"/>
                         <clipView key="contentView" drawsBackground="NO" copiesOnScroll="NO" id="aac-rJ-jky">
-                            <rect key="frame" x="0.0" y="0.0" width="280" height="80"/>
+                            <rect key="frame" x="0.0" y="0.0" width="300" height="80"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             <subviews>
                                 <textView wantsLayer="YES" editable="NO" drawsBackground="NO" importsGraphics="NO" richText="NO" verticallyResizable="YES" allowsCharacterPickerTouchBarItem="NO" textCompletion="NO" id="00n-VL-rU4" customClass="NotificationLabel">
-                                    <rect key="frame" x="0.0" y="0.0" width="280" height="80"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="300" height="80"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                    <size key="minSize" width="280" height="80"/>
+                                    <size key="minSize" width="300" height="80"/>
                                     <size key="maxSize" width="357" height="10000000"/>
                                     <attributedString key="textStorage">
                                         <fragment>
@@ -70,7 +70,7 @@
 If you want to keep using Mac Mouse Fix, you can buy it now.&gt;</string>
                                             <attributes>
                                                 <color key="NSColor" name="textColor" catalog="System" colorSpace="catalog"/>
-                                                <font key="NSFont" metaFont="systemMedium" size="13"/>
+                                                <font key="NSFont" metaFont="system"/>
                                                 <font key="NSOriginalFont" size="12" name="Helvetica"/>
                                                 <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
                                             </attributes>
@@ -83,7 +83,7 @@ If you want to keep using Mac Mouse Fix, you can buy it now.&gt;</string>
                         </clipView>
                         <constraints>
                             <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="280" id="1TO-j2-Xnx"/>
-                            <constraint firstAttribute="width" priority="999" constant="280" id="Lse-NT-Yva"/>
+                            <constraint firstAttribute="width" priority="999" constant="300" id="Lse-NT-Yva"/>
                             <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="80" id="e1U-Gq-mRm"/>
                             <constraint firstAttribute="height" priority="999" constant="80" id="t3s-Ew-hMY"/>
                         </constraints>
@@ -97,6 +97,9 @@ If you want to keep using Mac Mouse Fix, you can buy it now.&gt;</string>
                             <autoresizingMask key="autoresizingMask"/>
                         </scroller>
                     </scrollView>
+                    <box verticalHuggingPriority="750" boxType="separator" translatesAutoresizingMaskIntoConstraints="NO" id="Peb-Yr-Hpf">
+                        <rect key="frame" x="20" y="53" width="354" height="5"/>
+                    </box>
                     <customView horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="Dyl-L2-EVr" userLabel="TrialWrapper" customClass="TrialSection" customModule="Mac_Mouse_Fix" customModuleProvider="target">
                         <rect key="frame" x="20" y="20" width="146" height="15"/>
                         <subviews>
@@ -113,7 +116,7 @@ If you want to keep using Mac Mouse Fix, you can buy it now.&gt;</string>
                             <textField horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="Pkf-ky-K1B">
                                 <rect key="frame" x="24" y="0.0" width="124" height="15"/>
                                 <textFieldCell key="cell" title="&lt;Test period is over&gt;" id="MLf-Ko-XPe">
-                                    <font key="font" metaFont="system" size="12"/>
+                                    <font key="font" metaFont="cellTitle"/>
                                     <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
@@ -141,14 +144,14 @@ If you want to keep using Mac Mouse Fix, you can buy it now.&gt;</string>
                         </connections>
                     </customView>
                     <button horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="EPy-bD-5do" customClass="PayButton" customModule="Mac_Mouse_Fix" customModuleProvider="target">
-                        <rect key="frame" x="310" y="11" width="68" height="32"/>
+                        <rect key="frame" x="313" y="11" width="68" height="32"/>
                         <buttonCell key="cell" type="push" title="$1.99" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="6FQ-gC-c0Z">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="system"/>
                         </buttonCell>
                     </button>
                     <imageView horizontalHuggingPriority="1000" verticalHuggingPriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="dws-t5-lGs">
-                        <rect key="frame" x="291" y="18.5" width="21" height="20"/>
+                        <rect key="frame" x="294" y="18.5" width="21" height="20"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="21" id="CTU-7R-biq"/>
                             <constraint firstAttribute="height" constant="9" id="yLb-LD-UYT"/>
@@ -159,19 +162,22 @@ If you want to keep using Mac Mouse Fix, you can buy it now.&gt;</string>
                     </imageView>
                 </subviews>
                 <constraints>
-                    <constraint firstItem="8Mx-7q-zeA" firstAttribute="leading" secondItem="se5-gp-TjO" secondAttribute="leading" constant="21" id="32q-8M-uJB"/>
+                    <constraint firstItem="8Mx-7q-zeA" firstAttribute="leading" secondItem="se5-gp-TjO" secondAttribute="leading" constant="12" id="32q-8M-uJB"/>
                     <constraint firstItem="EPy-bD-5do" firstAttribute="centerY" secondItem="Dyl-L2-EVr" secondAttribute="centerY" id="BUe-FG-iRW"/>
-                    <constraint firstItem="EPy-bD-5do" firstAttribute="top" secondItem="XPn-15-YCK" secondAttribute="bottom" constant="40" id="KmB-28-RTj"/>
-                    <constraint firstAttribute="bottom" secondItem="Dyl-L2-EVr" secondAttribute="bottom" constant="20" id="Qpi-fW-DBh"/>
-                    <constraint firstItem="XPn-15-YCK" firstAttribute="leading" secondItem="8Mx-7q-zeA" secondAttribute="trailing" constant="12" id="SQs-Z0-cON"/>
-                    <constraint firstItem="XPn-15-YCK" firstAttribute="top" secondItem="se5-gp-TjO" secondAttribute="top" constant="24" id="SXp-80-4kT"/>
+                    <constraint firstItem="Dyl-L2-EVr" firstAttribute="top" secondItem="Peb-Yr-Hpf" secondAttribute="bottom" constant="20" id="LPp-rv-5Ze"/>
+                    <constraint firstAttribute="bottom" secondItem="Dyl-L2-EVr" secondAttribute="bottom" constant="20" symbolic="YES" id="Qpi-fW-DBh"/>
+                    <constraint firstAttribute="trailing" secondItem="Peb-Yr-Hpf" secondAttribute="trailing" constant="20" id="RnA-te-Moj"/>
+                    <constraint firstItem="XPn-15-YCK" firstAttribute="leading" secondItem="8Mx-7q-zeA" secondAttribute="trailing" constant="4" id="SQs-Z0-cON"/>
+                    <constraint firstItem="XPn-15-YCK" firstAttribute="top" secondItem="se5-gp-TjO" secondAttribute="top" constant="20" symbolic="YES" id="SXp-80-4kT"/>
                     <constraint firstItem="G5r-ur-mKW" firstAttribute="top" secondItem="se5-gp-TjO" secondAttribute="top" constant="7" id="UMH-sI-YBW"/>
-                    <constraint firstItem="8Mx-7q-zeA" firstAttribute="top" secondItem="se5-gp-TjO" secondAttribute="top" constant="12" id="Vsp-xe-vz7"/>
+                    <constraint firstItem="Peb-Yr-Hpf" firstAttribute="leading" secondItem="se5-gp-TjO" secondAttribute="leading" constant="20" id="Wdo-Sa-PyX"/>
+                    <constraint firstItem="Peb-Yr-Hpf" firstAttribute="top" secondItem="XPn-15-YCK" secondAttribute="bottom" constant="20" id="ZoG-fT-Xop"/>
                     <constraint firstItem="Dyl-L2-EVr" firstAttribute="leading" secondItem="se5-gp-TjO" secondAttribute="leading" constant="20" symbolic="YES" id="b8s-tY-h1q"/>
                     <constraint firstItem="G5r-ur-mKW" firstAttribute="leading" secondItem="se5-gp-TjO" secondAttribute="leading" constant="8" id="eif-zF-PXO"/>
                     <constraint firstAttribute="trailing" secondItem="XPn-15-YCK" secondAttribute="trailing" constant="20" symbolic="YES" id="gdX-pr-ltj"/>
                     <constraint firstItem="EPy-bD-5do" firstAttribute="leading" secondItem="dws-t5-lGs" secondAttribute="trailing" constant="5" id="ghn-pe-uHf"/>
                     <constraint firstItem="dws-t5-lGs" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="Dyl-L2-EVr" secondAttribute="trailing" constant="30" id="nD5-ck-26i"/>
+                    <constraint firstItem="8Mx-7q-zeA" firstAttribute="centerY" secondItem="00n-VL-rU4" secondAttribute="centerY" id="qnX-UI-Kiw"/>
                     <constraint firstItem="dws-t5-lGs" firstAttribute="centerY" secondItem="Dyl-L2-EVr" secondAttribute="centerY" id="qu3-J6-Gof"/>
                     <constraint firstAttribute="trailing" secondItem="EPy-bD-5do" secondAttribute="trailing" constant="20" symbolic="YES" id="uDu-9b-YP8"/>
                 </constraints>
@@ -179,7 +185,7 @@ If you want to keep using Mac Mouse Fix, you can buy it now.&gt;</string>
             <connections>
                 <outlet property="delegate" destination="-2" id="0bl-1N-AYu"/>
             </connections>
-            <point key="canvasLocation" x="3" y="-7"/>
+            <point key="canvasLocation" x="2.5" y="-43"/>
         </window>
     </objects>
     <resources>
