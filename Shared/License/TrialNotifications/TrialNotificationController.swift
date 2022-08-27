@@ -95,7 +95,7 @@ class TrialNotificationController: NSWindowController {
             
             /// Set the bodyString
             
-            let bodyBase = NSLocalizedString("trial-notification", comment: "First draft: Hi! You've been using Mac Mouse Fix for **%d days** now. I hope you're enjoying it!\n\nIf you want to keep using Mac Mouse Fix, you can [buy it now](%@).")
+            let bodyBase = NSLocalizedString("trial-notif.body", comment: "First draft: Hi! You've been using Mac Mouse Fix for **%d days** now. I hope you're enjoying it!\n\nIf you want to keep using Mac Mouse Fix, you can [buy it now](%@).")
             let bodyFormatted = String(format: bodyBase, license.daysOfUse, licenseConfig.quickPayLink)
             let bodyMarkdown = NSAttributedString(coolMarkdown: bodyFormatted)!
             body.textStorage?.setAttributedString(bodyMarkdown)
@@ -261,7 +261,7 @@ class TrialNotificationController: NSWindowController {
                     
                     /// Setup hyperlink
                     
-                    let linkTitle = NSLocalizedString("activate-license-button", comment: "First draft: Activate License")
+                    let linkTitle = NSLocalizedString("trial-notif.activate-license-button", comment: "First draft: Activate License")
                     let linkAddress = "https://google.com"
                     let link = Hyperlink(title: linkTitle, url: linkAddress, alwaysTracking: true, leftPadding: 30)
                     link?.font = NSFont.systemFont(ofSize: 13, weight: .regular)

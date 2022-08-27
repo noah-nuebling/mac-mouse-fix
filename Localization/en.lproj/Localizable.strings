@@ -390,3 +390,42 @@
 
 /* First draft: Activate License */
 "activate-license-button" = "";
+
+/* First draft: Activate License */
+"license-button.activate" = "";
+
+/* First draft: Deactivate License */
+"license-button.deactivate" = "";
+
+/* First draft: Your license has been **activated**!\n\nThanks for buying Mac Mouse Fix! :) */
+"license-toast.activate" = "";
+
+/* First draft: This license has been activated **%d** times. The maximum is **%d**.\n\nBecause of this, the license has been invalidated. This is to prevent piracy. If you have other reasons for activating the license this many times, please excuse the inconvenience.\n\nJust [reach out](mailto:noah.n.public@gmail.com) and I will provide you with a new license. Thanks for understanding. */
+"license-toast.activation-overload" = "";
+
+/* First draft: This license is **already activated**!\n\nHope you're enjoying Mac Mouse Fix! :) */
+"license-toast.already-active" = "";
+
+/* First draft: Your license has been **deactivated**. */
+"license-toast.deactivate" = "";
+
+/* First draft: **An error with the licensing server occured**\n\nIt says:\n\n%@ */
+"license-toast.gumroad-error" = "";
+
+/* First draft: **There is no connection to the internet**\n\nTry activating your license again when your computer is online. */
+"license-toast.no-internet" = "";
+
+/* First draft: **An unknown error occurred**\n\nIt says:\n\n%@ */
+"license-toast.unknown-error" = "";
+
+/* First draft: The license key **'%@'** is unknown.\n\nPlease try another license key. */
+"license-toast.unknown-key" = "";
+
+/* First draft: Activating your license failed for **unknown reasons**!\n\nPlease write a **Bug Report** [here](https://noah-nuebling.github.io/mac-mouse-fix-feedback-assistant/?type=bug-report). */
+"license-toast.unknown-reason" = "";
+
+/* First draft: Activate License */
+"trial-notif.activate-license-button" = "";
+
+/* First draft: Hi! You've been using Mac Mouse Fix for **%d days** now. I hope you're enjoying it!\n\nIf you want to keep using Mac Mouse Fix, you can [buy it now](%@). */
+"trial-notif.body" = "";

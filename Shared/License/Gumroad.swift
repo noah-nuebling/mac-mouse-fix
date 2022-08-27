@@ -35,6 +35,8 @@ import CocoaLumberjackSwift
     
     private static func _checkLicense(_ key: String, email: String, maxActivations: Int, incrementUsageCount: Bool, completionHandler: @escaping (_ isValidKeyAndEmail: Bool, _ serverResponse: [String: Any]?, _ error: NSError?, _ urlResponse: URLResponse?) -> ()) {
         
+        /// TODO: We're not using the email parameter in Gumroad.swift and we're just ignoring it. -> Remove it
+        
         getLicenseInfo(key, incrementUsageCount: incrementUsageCount) { isValidKey, emailForKey, nOfActivations, serverResponse, error, urlResponse in
             
             /// Guard error
@@ -51,7 +53,7 @@ import CocoaLumberjackSwift
             /// Guard wrong email
             
 //            if email != emailForKey {
-//                
+//
 //                let error = NSError(domain: MFLicenseErrorDomain, code: Int(kMFLicenseErrorCodeMismatchedEmails), userInfo: ["enteredEmail": email, "emailForKey": emailForKey ?? "<invalid>"])
 //
 //                completionHandler(false, serverResponse, error, urlResponse)
@@ -228,7 +230,7 @@ import CocoaLumberjackSwift
 }
 
 // MARK: URL handling helper stuff
-//  Src: https://stackoverflow.com/a/26365148/10601702
+///  Src: https://stackoverflow.com/a/26365148/10601702
 
 extension Dictionary {
     func percentEncoded() -> Data? {
