@@ -50,13 +50,13 @@ import CocoaLumberjackSwift
             
             /// Guard wrong email
             
-            if email != emailForKey {
-                
-                let error = NSError(domain: MFLicenseErrorDomain, code: Int(kMFLicenseErrorCodeMismatchedEmails), userInfo: ["enteredEmail": email, "emailForKey": emailForKey ?? "<invalid>"])
-
-                completionHandler(false, serverResponse, error, urlResponse)
-                return
-            }
+//            if email != emailForKey {
+//                
+//                let error = NSError(domain: MFLicenseErrorDomain, code: Int(kMFLicenseErrorCodeMismatchedEmails), userInfo: ["enteredEmail": email, "emailForKey": emailForKey ?? "<invalid>"])
+//
+//                completionHandler(false, serverResponse, error, urlResponse)
+//                return
+//            }
             
             /// Guard too many activations
             

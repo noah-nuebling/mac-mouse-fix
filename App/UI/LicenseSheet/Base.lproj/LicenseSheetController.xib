@@ -8,13 +8,14 @@
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="LicenseSheetController" customModule="Mac_Mouse_Fix" customModuleProvider="target">
             <connections>
+                <outlet property="activateLicenseButton" destination="Rh6-eR-W0F" id="Smo-yx-vE4"/>
                 <outlet property="licenseField" destination="4av-16-Pt8" id="iQ2-uN-pwa"/>
                 <outlet property="view" destination="Hz6-mo-xeY" id="0bl-1N-x8E"/>
             </connections>
         </customObject>
         <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
         <customObject id="-3" userLabel="Application" customClass="NSObject"/>
-        <customView misplaced="YES" id="Hz6-mo-xeY">
+        <customView id="Hz6-mo-xeY">
             <rect key="frame" x="0.0" y="0.0" width="390" height="102"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
             <subviews>
@@ -28,6 +29,9 @@
                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
+                    <connections>
+                        <outlet property="delegate" destination="-2" id="ks0-Gg-uZF"/>
+                    </connections>
                 </textField>
                 <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Rh6-eR-W0F">
                     <rect key="frame" x="243" y="13" width="134" height="32"/>

@@ -107,6 +107,22 @@ extension MFLicenseReturn: Equatable {
         
     }
     
+    @objc static func activateLicense(license: String, licenseConfig: LicenseConfig, completionHandler: @escaping (_ success: Bool, _ error: NSError?) -> ()) {
+        
+        Gumroad.activateLicense(license, email: "", maxActivations: licenseConfig.maxActivations) { isValidKeyAndEmail, serverResponse, error, urlResponse in
+            
+            if isValidKeyAndEmail {
+                SecureStorage.set("License.key", value: license)
+            }
+            
+            completionHandler(isValidKeyAndEmail, error)
+        }
+    }
+    
+    @objc static func currentLicense() -> String? {
+        SecureStorage.get("License.key") as! String?
+    }
+    
     // MARK: Core
     
     fileprivate static func checkLicense(licenseConfig: LicenseConfig, completionHandler: @escaping (MFLicenseState, MFValueFreshness, NSError?) -> ()) {
@@ -114,7 +130,7 @@ extension MFLicenseReturn: Equatable {
         /// Get email and license from config file
         
         guard
-            let key = SecureStorage.get("License.key") as? String,
+            let key = currentLicense(),
             let email = SecureStorage.get("License.email") as? String
         else {
             
