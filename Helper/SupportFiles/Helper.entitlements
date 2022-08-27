@@ -8,7 +8,7 @@
 	<true/>
 	<key>keychain-access-groups</key>
 	<array>
-		<string>$(AppIdentifierPrefix)com.nuebling.mac-mouse-fix.secure-storage</string>
+		<string>$(AppIdentifierPrefix)com.nuebling.mac-mouse-fix.keychain-group</string>
 	</array>
 </dict>
 </plist>

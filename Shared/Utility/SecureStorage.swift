@@ -28,6 +28,15 @@ import Foundation
         set(keyPath, value: nil)
     }
     
+    @objc static func getAll() -> NSDictionary? {
+        do {
+            let dict = try readDict()
+            return dict
+        } catch {
+            return nil
+        }
+    }
+    
     /// Surface
     
     @objc static func get(_ keyPath: String) -> Any? {
@@ -140,7 +149,7 @@ import Foundation
     
     /// Core lvl 0
     
-    private static let label = "MFSecureStorage"
+    private static let label = "com.nuebling.mac-mouse-fix.secure-storage"
     
     private static func baseQuery() -> [String: Any] {
         

@@ -171,6 +171,8 @@ CGEventRef _Nullable testCallback(CGEventTapProxy proxy, CGEventType type, CGEve
         
         DDLogDebug(@"Value from secure storage: %@", secure);
         
+        DDLogDebug(@"Entire secure storage: %@", [SecureStorage getAll]);
+        
         [LicenseConfig getOnComplete:^(LicenseConfig * _Nonnull licenseConfig) {
         
             [License licenseStateWithLicenseConfig:licenseConfig completionHandler:^(MFLicenseReturn license, NSError * _Nullable error) {
