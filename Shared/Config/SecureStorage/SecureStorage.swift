@@ -9,12 +9,27 @@
 
 /// Discussion:
 /// - This is a wrapper around the keychain so we can store and retrieve values with simple keypath-based syntax.
-/// - All settings are stored in a dictionary inside a single keychain item labeled 'MFSecureStorage'.
+/// - All settings are stored in a dictionary inside a single keychain item labeled 'com.nuebling.mac-mouse-fix.secure-storage'.
 /// - vs storing in config.plist, this has the advantage that the keychain is synced to all the users devices.
 /// - It also isn't automatically deleted on uninstall by apps like AppCleaner by FreeMacSoft. This makes it a little more annoying to reset the trial period.
 /// - Special entitlements on the mainApp and Helper let both access the same keychain item.
 /// - See the great Apple documentation for more info:
 ///     - https://developer.apple.com/documentation/security/keychain_services/keychain_items?language=objc
+
+/// In the same folder as this file, there's `default_secureStorage.plist`. At the time of writing, this is unused. It's never actually installed like the `default_config.plist` is. It serves a note on the structure of the secureStorage.
+
+/// - When to use this?
+///     - ... when losing the information could have negative consequences for the user.
+///         - E.g. license key.
+///         - Note: Currently this isn't that important since our maxNumberOfActivations is very high and most people will be able to retrieve the key from their email if they lose it .
+///     - ... when manipulating the information allows you to use the app for free, AND there's no external source of truth like a server (So the value isn't just a cache that gets updated when there's internet)
+///         - E.g. daysOfUse counter during trial period
+///     - ... when the data shouldn't be deleted after uninstalling MMF
+///         - E.g. license key, daysOfUse counter during trial
+/// - When __not__ to use this?
+///     - In all other cases, just use config to store data. I assume it's faster and it's more accessible to users for debugging or deleting after uninstall.
+/// - Do we user __UserDefaults__?
+///     - No. config fills the same roll.
 
 /// TODO: Implement cleanup function. See Notes in NSDictionary+Additions.m for details.
 

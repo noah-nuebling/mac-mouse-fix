@@ -114,8 +114,8 @@ extension MFLicenseReturn: Equatable {
         /// Get email and license from config file
         
         guard
-            let key = config("License.key") as? String,
-            let email = config("License.email") as? String
+            let key = SecureStorage.get("License.key") as? String,
+            let email = SecureStorage.get("License.email") as? String
         else {
             
             /// Return unlicensed

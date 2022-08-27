@@ -111,14 +111,13 @@ import CocoaLumberjackSwift
     fileprivate static var configCache: [String: Any]? {
         
         /// Cache for the JSON config file we download from the website
-        ///     Don't think there's a good reason we store this in userDefaults instead of config.plist. (There is a decent reason in Trial.swift)
-        ///     -> TODO: Move this to config.
         
         set {
-            Locator.defaults().setValue(newValue, forKey: "License-config")
+            setConfig("License.configCache", newValue! as NSObject)
+            commitConfig()
         }
         get {
-            Locator.defaults().value(forKey: "License-config") as? [String: Any]
+            config("License.configCache") as? [String: Any]
         }
     }
     

@@ -28,16 +28,23 @@
 	</dict>
 	<key>License</key>
 	<dict>
-		<key>key</key>
-		<string></string>
-		<key>email</key>
-		<string></string>
+		<key>configCache</key>
+		<dict>
+			<key>maxActivations</key>
+			<integer>100</integer>
+			<key>payLink</key>
+			<string>https://noahnuebling.gumroad.com/l/mmfinapp</string>
+			<key>price</key>
+			<integer>199</integer>
+			<key>quickPayLink</key>
+			<string>https://noahnuebling.gumroad.com/l/mmfinapp?wanted=true</string>
+			<key>trialDays</key>
+			<integer>14</integer>
+		</dict>
 		<key>isLicensedCache</key>
 		<false/>
 		<key>trial</key>
 		<dict>
-			<key>daysOfUse</key>
-			<integer>0</integer>
 			<key>lastUseDate</key>
 			<date>2022-08-20T20:19:52Z</date>
 		</dict>
@@ -212,6 +219,8 @@
 	</dict>
 	<key>Other</key>
 	<dict>
+		<key>autosave_tabID</key>
+		<string>general</string>
 		<key>showMenuBarItem</key>
 		<false/>
 		<key>buttonKillSwitch</key>

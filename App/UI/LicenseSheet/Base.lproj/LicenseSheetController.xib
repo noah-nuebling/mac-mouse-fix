@@ -14,7 +14,7 @@
         </customObject>
         <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
         <customObject id="-3" userLabel="Application" customClass="NSObject"/>
-        <customView id="Hz6-mo-xeY">
+        <customView misplaced="YES" id="Hz6-mo-xeY">
             <rect key="frame" x="0.0" y="0.0" width="390" height="102"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
             <subviews>
@@ -23,7 +23,7 @@
                     <constraints>
                         <constraint firstAttribute="width" constant="350" id="MP5-Kh-NL5"/>
                     </constraints>
-                    <textFieldCell key="cell" lineBreakMode="truncatingTail" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" alignment="center" placeholderString="Enter your License" bezelStyle="round" id="JJv-GH-7io">
+                    <textFieldCell key="cell" lineBreakMode="truncatingTail" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" alignment="center" placeholderString="Enter your License Key" bezelStyle="round" id="JJv-GH-7io">
                         <font key="font" metaFont="system"/>
                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -58,7 +58,7 @@ DQ
                 <constraint firstItem="Rh6-eR-W0F" firstAttribute="leading" secondItem="q7O-s8-Ufb" secondAttribute="trailing" constant="12" symbolic="YES" id="PH8-pI-EeB"/>
                 <constraint firstItem="4av-16-Pt8" firstAttribute="leading" secondItem="Hz6-mo-xeY" secondAttribute="leading" constant="20" symbolic="YES" id="TKE-FZ-E5U"/>
                 <constraint firstItem="q7O-s8-Ufb" firstAttribute="centerY" secondItem="Rh6-eR-W0F" secondAttribute="centerY" id="Vwh-iT-GQH"/>
-                <constraint firstItem="Rh6-eR-W0F" firstAttribute="top" secondItem="4av-16-Pt8" secondAttribute="bottom" constant="20" id="eSd-Iq-XbT"/>
+                <constraint firstItem="Rh6-eR-W0F" firstAttribute="top" secondItem="4av-16-Pt8" secondAttribute="bottom" constant="20" symbolic="YES" id="eSd-Iq-XbT"/>
                 <constraint firstAttribute="bottom" secondItem="Rh6-eR-W0F" secondAttribute="bottom" constant="20" symbolic="YES" id="jSD-SO-Eko"/>
                 <constraint firstAttribute="trailing" secondItem="4av-16-Pt8" secondAttribute="trailing" constant="20" symbolic="YES" id="v84-Pg-2Zf"/>
                 <constraint firstItem="4av-16-Pt8" firstAttribute="top" secondItem="Hz6-mo-xeY" secondAttribute="top" constant="20" id="yXP-1x-lch"/>

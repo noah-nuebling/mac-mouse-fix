@@ -63,6 +63,9 @@ static NSURL *_configURL;
     
     /// This allows both the helper and the main app to write into the same user defaults
     
+    /// Use config instead of defaults. There's no good reason to use defaults
+    assert(false);
+    
     if (SharedUtility.runningMainApp) {
         return NSUserDefaults.standardUserDefaults;
     } else if (SharedUtility.runningHelper) {

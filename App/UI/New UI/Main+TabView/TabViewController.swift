@@ -123,7 +123,7 @@ class TabViewController: NSTabViewController {
     override func viewDidAppear() {
         coolHideTab(identifier: "initial", window: self.window)
         
-        if let lastID = UserDefaults.standard.value(forKey: "autosave_tabID") as! String?, lastID != "initial" {
+        if let lastID = config("Other.autosave_tabID") as! String?, lastID != "initial" {
 //            tabView.selectTabViewItem(withIdentifier: lastID)
             coolSelectTab(identifier: lastID, window: self.window)
         } else {
@@ -133,8 +133,12 @@ class TabViewController: NSTabViewController {
     }
     
     override func viewWillDisappear() {
-        let lastID = identifierOfSelectedTab()
-        UserDefaults.standard.setValue(lastID, forKey: "autosave_tabID")
+        
+        if let lastID = identifierOfSelectedTab() {
+                
+            setConfig("Other.autosave_tabID", lastID as NSObject)
+            commitConfig()
+        }
     }
     
     override func tabView(_ tabView: NSTabView, shouldSelect tabViewItem: NSTabViewItem?) -> Bool {

@@ -176,8 +176,6 @@
 		4FBA3152261758C1006C20F3 /* SharedUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF6653B25F2C7B000689B77 /* SharedUtility.m */; };
 		4FBC943B260F8AA60062F186 /* MASShortcut.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FBC9434260F8AA60062F186 /* MASShortcut.m */; };
 		4FBDA14F27B241CE0030E4EA /* GlobalEventTapThread.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FBDA14E27B241CE0030E4EA /* GlobalEventTapThread.m */; };
-		4FBE09EE28B9836400F15A70 /* SecureStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FBE09ED28B9836400F15A70 /* SecureStorage.swift */; };
-		4FBE09EF28B9836400F15A70 /* SecureStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FBE09ED28B9836400F15A70 /* SecureStorage.swift */; };
 		4FC55E31285E6F1F00F2FCCF /* GlobalDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FC55E2F285E6BF800F2FCCF /* GlobalDefaults.swift */; };
 		4FC8A7CD28AAF1BC007DB982 /* MarkdownParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FC8A7CC28AAF1BC007DB982 /* MarkdownParser.swift */; };
 		4FC8A7CE28AAF1BC007DB982 /* MarkdownParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FC8A7CC28AAF1BC007DB982 /* MarkdownParser.swift */; };
@@ -200,6 +198,8 @@
 		4FD86089266E819A004F76C8 /* Pointers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FD86088266E819A004F76C8 /* Pointers.swift */; };
 		4FD860AA266EC24E004F76C8 /* DerivedProperty.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FD860A9266EC24E004F76C8 /* DerivedProperty.swift */; };
 		4FD860CC266EF55A004F76C8 /* ScrollConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FD860CB266EF55A004F76C8 /* ScrollConfig.swift */; };
+		4FD9A7D128BA2A810006DF4B /* SecureStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FD9A7D028BA2A810006DF4B /* SecureStorage.swift */; };
+		4FD9A7D228BA2A8A0006DF4B /* SecureStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FD9A7D028BA2A810006DF4B /* SecureStorage.swift */; };
 		4FDE757B28B0E35100662314 /* Gumroad.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FDE757A28B0E35100662314 /* Gumroad.swift */; };
 		4FDE759A28B1401400662314 /* License.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FDE759928B1401400662314 /* License.swift */; };
 		4FDE759B28B1401400662314 /* License.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FDE759928B1401400662314 /* License.swift */; };
@@ -644,7 +644,6 @@
 		4FBC9439260F8AA60062F186 /* MASKeyCodes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MASKeyCodes.h; sourceTree = "<group>"; };
 		4FBDA14D27B241CE0030E4EA /* GlobalEventTapThread.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GlobalEventTapThread.h; sourceTree = "<group>"; };
 		4FBDA14E27B241CE0030E4EA /* GlobalEventTapThread.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GlobalEventTapThread.m; sourceTree = "<group>"; };
-		4FBE09ED28B9836400F15A70 /* SecureStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SecureStorage.swift; path = Shared/Utility/SecureStorage.swift; sourceTree = SOURCE_ROOT; };
 		4FBE18BA2666EC4A002A6771 /* WannabePrefixHeader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WannabePrefixHeader.h; sourceTree = "<group>"; };
 		4FC55E2F285E6BF800F2FCCF /* GlobalDefaults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlobalDefaults.swift; sourceTree = "<group>"; };
 		4FC8A7CC28AAF1BC007DB982 /* MarkdownParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarkdownParser.swift; sourceTree = "<group>"; };
@@ -680,6 +679,8 @@
 		4FD860A9266EC24E004F76C8 /* DerivedProperty.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DerivedProperty.swift; sourceTree = "<group>"; };
 		4FD860CB266EF55A004F76C8 /* ScrollConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrollConfig.swift; sourceTree = "<group>"; };
 		4FD860DA266EFD64004F76C8 /* ScrollConfigObjC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScrollConfigObjC.h; sourceTree = "<group>"; };
+		4FD9A7CE28BA29CB0006DF4B /* default_secureStorage.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = default_secureStorage.plist; sourceTree = "<group>"; };
+		4FD9A7D028BA2A810006DF4B /* SecureStorage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SecureStorage.swift; sourceTree = "<group>"; };
 		4FDBC59A234F80C500A46517 /* Accomplice.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Accomplice.entitlements; sourceTree = "<group>"; };
 		4FDC127528A2C6160076972E /* ReactiveConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReactiveConfig.swift; sourceTree = "<group>"; };
 		4FDE757A28B0E35100662314 /* Gumroad.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Gumroad.swift; sourceTree = "<group>"; };
@@ -1145,6 +1146,7 @@
 				4FF6660D25F2C93A00689B77 /* Config.h */,
 				4FF6660E25F2C93A00689B77 /* Config.m */,
 				4FDC127528A2C6160076972E /* ReactiveConfig.swift */,
+				4FD9A7CF28BA2A650006DF4B /* SecureStorage */,
 			);
 			path = Config;
 			sourceTree = "<group>";
@@ -1581,6 +1583,15 @@
 			path = Unused;
 			sourceTree = "<group>";
 		};
+		4FD9A7CF28BA2A650006DF4B /* SecureStorage */ = {
+			isa = PBXGroup;
+			children = (
+				4FD9A7D028BA2A810006DF4B /* SecureStorage.swift */,
+				4FD9A7CE28BA29CB0006DF4B /* default_secureStorage.plist */,
+			);
+			path = SecureStorage;
+			sourceTree = "<group>";
+		};
 		4FDE757C28B0E35E00662314 /* License */ = {
 			isa = PBXGroup;
 			children = (
@@ -1705,7 +1716,6 @@
 		4FF6653625F2C7B000689B77 /* Utility */ = {
 			isa = PBXGroup;
 			children = (
-				4FBE09ED28B9836400F15A70 /* SecureStorage.swift */,
 				4F8A8DC0287F885D00786BCC /* Shorthands.h */,
 				4FE40B95283A49DD00880BEF /* SharedUtilitySwift.swift */,
 				4FF6653E25F2C7B000689B77 /* SharedUtility.h */,
@@ -2656,7 +2666,6 @@
 				4F909D3B28A0C3D2009349A2 /* ModCaptureDeleteButton.swift in Sources */,
 				4FA40D0428A0D0C000499E53 /* DoublesMatrix.m in Sources */,
 				4FA40CFC28A0CCCB00499E53 /* NaturalAccelerationCurve.swift in Sources */,
-				4FBE09EE28B9836400F15A70 /* SecureStorage.swift in Sources */,
 				4FF6654625F2C7B000689B77 /* Locator.m in Sources */,
 				4F909D2A28A0C3D2009349A2 /* ResizingTabWindowController.swift in Sources */,
 				4FF665EE25F2C92700689B77 /* OverridePanel.m in Sources */,
@@ -2747,6 +2756,7 @@
 				4F909D3228A0C3D2009349A2 /* FadeAnimations.swift in Sources */,
 				4FA1FD8128A85FD100D1C8EE /* RemapTableElements.swift in Sources */,
 				4F7AB0552606698A0008055E /* UIStrings.m in Sources */,
+				4FD9A7D128BA2A810006DF4B /* SecureStorage.swift in Sources */,
 				4F909D3028A0C3D2009349A2 /* ReactiveAnimatorProxy.swift in Sources */,
 				4FA40CF828A0CCCA00499E53 /* TestAccelerationCurve.swift in Sources */,
 				4F909D3728A0C3D2009349A2 /* ConstraintUtility.swift in Sources */,
@@ -2831,7 +2841,7 @@
 				4FF0255F27B013A100923107 /* PointerFreeze.m in Sources */,
 				4FF666A725F2C93A00689B77 /* Device.m in Sources */,
 				4FF6669C25F2C93A00689B77 /* PointerSpeedExperiments.m in Sources */,
-				4FBE09EF28B9836400F15A70 /* SecureStorage.swift in Sources */,
+				4FD9A7D228BA2A8A0006DF4B /* SecureStorage.swift in Sources */,
 				4F3A40B1266BBC5000436821 /* Curve.swift in Sources */,
 				4FFA4E3A28B79D960062A1FE /* NSString+Extensions.swift in Sources */,
 				4F09284028B8101600BDC2FF /* TrialSection.swift in Sources */,

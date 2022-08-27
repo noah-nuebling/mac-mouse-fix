@@ -93,23 +93,23 @@ import Cocoa
     }
     
     /// Vars
-    ///     Storing in UserDefaults instead of config to make it a little more annoying to reset? Probably very unnecessary.
-    ///     Note: `setValue(forKeyPath:)` doesn't work on UserDefaults, so we're using `setValue(forKey:)` instead, and `-` instead of `.`.
+    ///     Storing the daysOfUse in SecureStorage so it doesn't get reset on uninstall by apps like AppCleaner by Freemacsoft.
     
     @objc static var daysOfUse: Int {
         get {
-            Locator.defaults().value(forKey: "License-trial-daysOfUse") as? Int ?? -1
+            SecureStorage.get("License.trial.daysOfUse") as? Int ?? -1
         }
         set {
-            Locator.defaults().setValue(newValue, forKey: "License-trial-daysOfUse")
+            SecureStorage.set("License.trial.daysOfUse", value: newValue)
         }
     }
     @objc static var lastUseDate: Date? {
         get {
-            Locator.defaults().value(forKey: "License-trial-lastUseDate") as? Date
+            config("License.trial.lastUseDate") as? Date
         }
         set {
-            Locator.defaults().setValue(newValue, forKey: "License-trial-lastUseDate")
+            setConfig("License.trial.lastUseDate", newValue! as NSObject)
+            commitConfig()
         }
     }
     
