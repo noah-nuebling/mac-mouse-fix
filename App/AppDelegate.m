@@ -52,6 +52,28 @@
     return self.instance.window;
 }
 
+#pragma mark - Handle URLs
+
+- (void)handleURLWithEvent:(NSAppleEventDescriptor *)event reply:(NSAppleEventDescriptor *)reply {
+    
+    DDLogDebug(@"Handling URL: %@", event.description);
+    NSString *address = [[event paramDescriptorForKeyword:keyDirectObject] stringValue];
+    NSURL *url = [NSURL URLWithString:address];
+    
+    NSURLComponents *components = [NSURLComponents componentsWithURL:url resolvingAgainstBaseURL:YES];
+    assert([components.scheme isEqual:@"macmousefix"]); /// Assert because we should only receive URLs with this scheme
+    
+    NSString *path = components.path;
+    
+    if ([path isEqual:@"activate"]) {
+        
+        [LicenseSheetController add];
+        
+    } else {
+        DDLogWarn(@"Received URL with unknown path: %@", address);
+    }
+}
+
 #pragma mark - Init and Lifecycle
 
 /// Define Globals
@@ -80,6 +102,21 @@ static NSDictionary *sideButtonActions;
         ///     Edit: What?? That doesn't make sense to me.
         [Config load_Manual];
     }
+    
+}
+
+- (instancetype)init
+{
+    self = [super init];
+    if (self) {
+        /// Init URL handling
+        ///     Doesn't work if done in applicationDidFinishLaunching or + initialize
+        [NSAppleEventManager.sharedAppleEventManager setEventHandler:self andSelector:@selector(handleURLWithEvent:reply:) forEventClass:kInternetEventClass andEventID:kAEGetURL];
+    }
+    return self;
+}
+
+- (void)applicationWillFinishLaunching:(NSNotification *)notification {
     
 }
 

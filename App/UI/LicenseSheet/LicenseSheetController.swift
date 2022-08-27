@@ -243,6 +243,7 @@ import Cocoa
     
     @objc static func add() {
         
+        if openInstance != nil { return }
         openInstance = LicenseSheetController()
         MainAppState.shared.tabViewController.presentAsSheet(openInstance!)
     }
@@ -250,6 +251,7 @@ import Cocoa
     @objc static func remove() {
         
         MainAppState.shared.tabViewController.dismiss(openInstance!)
+        openInstance = nil
     }
     
     /// Define errors
