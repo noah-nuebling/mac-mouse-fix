@@ -69,14 +69,56 @@ import Cocoa
                             LicenseSheetController.remove()
                             
                             /// Show message
-                            let message = NSAttributedString(string: "It workeddd")
+                            let message = NSAttributedString(coolMarkdown: "Your license has been **activated**!\n\nThanks for buying Mac Mouse Fix! :)")!
                             ToastNotificationController.attachNotification(withMessage: message, to: MainAppState.shared.window!, forDuration: -1)
                             
                         } else /** failed to activate */{
-                            
-                            
+                                
                             /// Show message
-                            let message = NSAttributedString(string: "Error – \(String(describing: error))")
+                            var message: NSAttributedString = NSAttributedString(string: "")
+                            
+                            if let error = error {
+                                
+                                if error.domain == NSURLErrorDomain {
+                                    message = NSAttributedString(coolMarkdown: "**There is no connection to the internet**\n\nTry activating your license again when your computer is online.")!
+                                } else if error.domain == MFLicenseErrorDomain {
+                                    
+                                    switch Int32(error.code) {
+                                        
+                                    case kMFLicenseErrorCodeInvalidNumberOfActivations:
+                                        
+                                        let nOfActivations = error.userInfo["nOfActivations"] as! Int
+                                        let maxActivations = error.userInfo["maxActivations"] as! Int
+                                        message = NSAttributedString(coolMarkdown: "This license has been activated **\(nOfActivations)** times. The maximum is **\(maxActivations)**.\n\nBecause of this, the license has been invalidated. This is to prevent piracy. If you have other reasons for activating the license this many times, please excuse the inconvenience.\n\nJust [reach out](mailto:noah.n.public@gmail.com) and I will provide you with a new license. Thanks for understanding.")!
+                                        
+                                    case kMFLicenseErrorCodeGumroadServerResponseError:
+                                        
+                                        if let gumroadMessage = error.userInfo["message"] as! String? {
+                                            
+                                            switch gumroadMessage {
+                                            case "That license does not exist for the provided product.":
+                                                message = NSAttributedString(coolMarkdown: "The license key **'\(key)'** is unknown.\n\nPlease try another license key.")!
+                                            default:
+                                                message = NSAttributedString(coolMarkdown: "**An error with the licensing server occured**\n\nIt says:\n\n\(gumroadMessage)")!
+                                            }
+                                        }
+                                        
+                                    default:
+                                        assert(false)
+                                    }
+                                    
+                                } else {
+                                    message = NSAttributedString(string: "**An Unknown Error occurred**\n\nIt says:\n\n\(error.description)")
+                                }
+                                
+                            } else {
+                                
+                                message = NSAttributedString(string: "Activating your license failed for **unknown reasons**!\n\nPlease write a **Bug Report** [here](https://noah-nuebling.github.io/mac-mouse-fix-feedback-assistant/?type=bug-report).")
+                                
+                            }
+                            
+                            assert(message.string != "")
+                            
                             ToastNotificationController.attachNotification(withMessage: message, to: self.view.window!, forDuration: -1)
                             
                         }
