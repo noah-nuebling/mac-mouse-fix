@@ -34,6 +34,7 @@ class TrialNotificationController: NSWindowController {
     
     /// Vars
     var trackingArea: NSTrackingArea? = nil
+    var darkModeObservation: Any? = nil
     
     /// Init
     override init(window: NSWindow?) {
@@ -127,8 +128,31 @@ class TrialNotificationController: NSWindowController {
             effect.state = .active
             effect.material = .popover /**.underWindowBackground*/
             effect.wantsLayer = true
-//            effect.layer?.borderColor = .clear
             
+            /// Set effectView border
+            ///     This is trying to emulate the border that NSWindows have in darkmode under Ventura. Little hacky and ugly because we're hardcoding the color. Nicer solution might be to somehow change the borderRadius on the NSWindow and then use the NSWindow background directly, instead of making the window background invisible and using the effectView as a background.
+            
+            if #available(macOS 10.14, *) {
+                
+                let updateBorder = {
+                    
+                    let isDarkMode = NSApp.effectiveAppearance.name == .darkAqua
+                    if isDarkMode {
+                        effect.layer!.borderWidth = 1.0
+                        effect.layer!.borderColor = NSColor(deviceRed: 140/255, green: 140/255, blue: 140/255, alpha: 0.5).cgColor
+                    } else {
+                        effect.layer!.borderColor = .clear
+                    }
+                    
+                }
+                
+                updateBorder()
+                
+                darkModeObservation = NSApp.observe(\.effectiveAppearance) { app, change in
+                    updateBorder()
+                }
+            }
+
             /// Set corner radius
             /// Notes:
             /// - 16 matches system notifications on Ventura
