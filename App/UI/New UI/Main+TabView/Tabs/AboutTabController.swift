@@ -201,7 +201,7 @@ class AboutTabController: NSViewController {
             
             self.moneyCellImage.imageScaling = .scaleNone
             if #available(macOS 11.0, *) {
-                self.moneyCellImage.symbolConfiguration = .init(scale: .large)
+                self.moneyCellImage.symbolConfiguration = .init(pointSize: 13, weight: .medium, scale: .large)
             }
             self.moneyCellImage.image = NSImage(named: .init("bag"))
             
