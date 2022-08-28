@@ -9,6 +9,7 @@
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="TrialNotificationController" customModule="Mac_Mouse_Fix" customModuleProvider="target">
             <connections>
+                <outlet property="applePayBadge" destination="Y7I-VS-5IK" id="3gF-r2-6SB"/>
                 <outlet property="body" destination="00n-VL-rU4" id="vyA-3q-2I5"/>
                 <outlet property="bodyScrollView" destination="XPn-15-YCK" id="fQd-Bn-lt0"/>
                 <outlet property="closeButton" destination="G5r-ur-mKW" id="Tzq-FK-zxN"/>
@@ -143,6 +144,15 @@ If you want to keep using Mac Mouse Fix, you can buy it now.&gt;</string>
                             <outlet property="textField" destination="Pkf-ky-K1B" id="2s7-AZ-vtL"/>
                         </connections>
                     </customView>
+                    <imageView horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="Y7I-VS-5IK" userLabel="ApplePay">
+                        <rect key="frame" x="337" y="43" width="20" height="13"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="20" id="Gay-MP-S1X"/>
+                            <constraint firstAttribute="height" constant="13" id="Iwg-CR-4kw"/>
+                        </constraints>
+                        <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="ApplePay" id="k44-bO-HHV"/>
+                        <color key="contentTintColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                    </imageView>
                     <button horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="EPy-bD-5do" customClass="PayButton" customModule="Mac_Mouse_Fix" customModuleProvider="target">
                         <rect key="frame" x="313" y="11" width="68" height="32"/>
                         <buttonCell key="cell" type="push" title="$1.99" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="6FQ-gC-c0Z">
@@ -173,9 +183,11 @@ If you want to keep using Mac Mouse Fix, you can buy it now.&gt;</string>
                     <constraint firstItem="Peb-Yr-Hpf" firstAttribute="leading" secondItem="se5-gp-TjO" secondAttribute="leading" constant="20" id="Wdo-Sa-PyX"/>
                     <constraint firstItem="Peb-Yr-Hpf" firstAttribute="top" secondItem="XPn-15-YCK" secondAttribute="bottom" constant="20" id="ZoG-fT-Xop"/>
                     <constraint firstItem="Dyl-L2-EVr" firstAttribute="leading" secondItem="se5-gp-TjO" secondAttribute="leading" constant="20" symbolic="YES" id="b8s-tY-h1q"/>
+                    <constraint firstItem="EPy-bD-5do" firstAttribute="top" secondItem="Y7I-VS-5IK" secondAttribute="bottom" constant="5" id="bG0-AG-Brb"/>
                     <constraint firstItem="G5r-ur-mKW" firstAttribute="leading" secondItem="se5-gp-TjO" secondAttribute="leading" constant="8" id="eif-zF-PXO"/>
                     <constraint firstAttribute="trailing" secondItem="XPn-15-YCK" secondAttribute="trailing" constant="20" symbolic="YES" id="gdX-pr-ltj"/>
                     <constraint firstItem="EPy-bD-5do" firstAttribute="leading" secondItem="dws-t5-lGs" secondAttribute="trailing" constant="5" id="ghn-pe-uHf"/>
+                    <constraint firstItem="Y7I-VS-5IK" firstAttribute="centerX" secondItem="EPy-bD-5do" secondAttribute="centerX" id="m73-eM-NcF"/>
                     <constraint firstItem="dws-t5-lGs" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="Dyl-L2-EVr" secondAttribute="trailing" constant="30" id="nD5-ck-26i"/>
                     <constraint firstItem="8Mx-7q-zeA" firstAttribute="centerY" secondItem="00n-VL-rU4" secondAttribute="centerY" id="qnX-UI-Kiw"/>
                     <constraint firstItem="dws-t5-lGs" firstAttribute="centerY" secondItem="Dyl-L2-EVr" secondAttribute="centerY" id="qu3-J6-Gof"/>
@@ -185,11 +197,12 @@ If you want to keep using Mac Mouse Fix, you can buy it now.&gt;</string>
             <connections>
                 <outlet property="delegate" destination="-2" id="0bl-1N-AYu"/>
             </connections>
-            <point key="canvasLocation" x="2.5" y="-43"/>
+            <point key="canvasLocation" x="2" y="-43"/>
         </window>
     </objects>
     <resources>
         <image name="AppIconRoundFromHelper-deleteThis" width="128" height="128"/>
+        <image name="ApplePay" width="512" height="210.19999694824219"/>
         <image name="bag" catalog="system" width="15" height="15"/>
         <image name="testtube.2" catalog="system" width="16" height="16"/>
         <image name="xmark.circle.fill" catalog="system" width="20" height="20"/>

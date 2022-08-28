@@ -215,18 +215,11 @@ class AboutTabController: NSViewController {
             }
             
             /// Create Apple Pay badge
-            ///     The minification filter and rasterization turn on anti aliasing.
-            ///     Setting minificationFilterBias to -1 is placebo I'm pretty sure.
-            ///     We might want to also apply this technique to other images in the app
             
             let image = NSImage(named: "ApplePay")!
             let badge = NSImageView(image: image)
             
-            badge.wantsLayer = true
-            badge.layer!.minificationFilter = .trilinear
-            badge.layer!.minificationFilterBias = -1
-            badge.layer!.shouldRasterize = true
-            badge.layer!.rasterizationScale = 4.0
+            badge.enableAntiAliasing()
 
             if #available(macOS 10.14, *) {
                 badge.contentTintColor = .labelColor

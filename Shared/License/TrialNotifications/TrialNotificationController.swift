@@ -23,6 +23,7 @@ class TrialNotificationController: NSWindowController {
     @IBOutlet var body: NSTextView!
     @IBOutlet weak var bodyScrollView: NSScrollView!
     
+    @IBOutlet weak var applePayBadge: NSImageView!
     @IBOutlet weak var payButton: PayButton!
     
     @IBOutlet weak var trialSection: TrialSection!
@@ -78,6 +79,9 @@ class TrialNotificationController: NSWindowController {
         ///     Note: Should probably do this in some init func like viewDidLoad.
 
         if firstAppearance {
+            
+            /// Enable antialiasing on the ApplePayBadge
+            applePayBadge.enableAntiAliasing()
             
             /// Setup tracking area
             
