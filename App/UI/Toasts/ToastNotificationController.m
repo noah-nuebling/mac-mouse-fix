@@ -124,60 +124,67 @@ static double _toastAnimationOffset = 20;
     /// Set notification frame
     
     /// Calc size to fit content
-    NSRect newNotifFrame = w.frame;
+    NSRect newWindowFrame = w.frame;
+    
     /// Get insets around label
+    ///     We used to implement the insets by just having an actual margin between the scrollView and the windowFrame. But this cut off emojis a little bit, so we are now setting the insets via textContainerInsets instead. We changed a few things for this.
+    ///     Last commit before the change: 47d97be6482df3c37898c3c6cd5c21c6be02ab4a
+    
     NotificationLabel *label = _instance.label;
     NSRect notifFrame = w.frame;
-#if DEBUG
-    CGFloat sh = label.superview.superview.superview.frame.size.height;
-    CGFloat sw = label.superview.superview.superview.frame.size.width;
-    CGFloat nh = notifFrame.size.height;
-    CGFloat nw = notifFrame.size.width;
-    assert(sh == nh && sw == nw);
-#endif
-    NSRect labelFrame = label.superview.superview.frame;
-    CGFloat bottomInset = labelFrame.origin.y;
-    CGFloat topInset = notifFrame.size.height - (labelFrame.size.height + bottomInset);
-    CGFloat leftInset = labelFrame.origin.x;
-    CGFloat rightInset = notifFrame.size.width - (labelFrame.size.width + leftInset);
-    assert(leftInset == rightInset);
-    /// Calculate new label size
-    CGFloat maxLabelWidth = mainW.frame.size.width - 2*sideMargin - leftInset - rightInset;
-    NSSize newLabelSize = [label.attributedString sizeAtMaxWidth:maxLabelWidth];
+    
+    NSRect scrollViewFrame = label.superview.superview.frame; /// Label is embedded in clipView and ScrollView
+    
+    /// Old method
+//    CGFloat bottomInset = scrollViewFrame.origin.y;
+//    CGFloat topInset = notifFrame.size.height - (scrollViewFrame.size.height + bottomInset);
+//    CGFloat leftInset = scrollViewFrame.origin.x;
+//    CGFloat rightInset = notifFrame.size.width - (scrollViewFrame.size.width + leftInset);
+//    assert(leftInset == rightInset);
+    
+    /// New method
+    CGFloat bottomInset = label.textContainerInset.height;
+    CGFloat topInset = label.textContainerInset.height;
+    CGFloat leftInset = label.textContainerInset.width;
+    CGFloat rightInset = label.textContainerInset.width;
+    
+    /// Calculate new text size
+    CGFloat maxTextWidth = mainW.frame.size.width - 2*sideMargin - leftInset - rightInset;
+    NSSize newTextSize = [label.attributedString sizeAtMaxWidth:maxTextWidth];
     
     /// Setting actual width for newLabelSize. See https://stackoverflow.com/questions/13621084/boundingrectwithsize-for-nsattributedstring-returning-wrong-size
     ///  ... Actually this breaks short "Primary Mouse Button can't be used" notifications.
 //    CGFloat padding = label.textContainer.lineFragmentPadding;
 //    newLabelSize.width -= padding * 2;
     
-    /// Calculate new notification window frame
-    NSSize newNotifSize = NSMakeSize(newLabelSize.width + leftInset + rightInset, newLabelSize.height + topInset + bottomInset);
-    newNotifFrame.size = newNotifSize;
+    /// Calculate new window frame
+    NSSize newWindowSize = NSMakeSize(newTextSize.width + leftInset + rightInset, newTextSize.height + topInset + bottomInset);
+    newWindowFrame.size = newWindowSize;
     
     /// Calc Position
     
     if (alignment == kToastNotificationAlignmentTopMiddle) {
         /// Top middle alignment
-        newNotifFrame.origin.x = NSMidX(mainW.frame) - (newNotifSize.width / 2);
-        newNotifFrame.origin.y = (mainW.frame.origin.y + mainW.frame.size.height - (mainWindowTitleBarHeight + topEdgeMargin)) - newNotifSize.height;
+        newWindowFrame.origin.x = NSMidX(mainW.frame) - (newWindowSize.width / 2);
+        newWindowFrame.origin.y = (mainW.frame.origin.y + mainW.frame.size.height - (mainWindowTitleBarHeight + topEdgeMargin)) - newWindowSize.height;
     } else if (alignment == kToastNotificationAlignmentBottomRight) {
         /// Bottom right alignment
-        newNotifFrame.origin.x = mainW.frame.origin.x + mainW.frame.size.width - newNotifFrame.size.width - sideMargin;
-        newNotifFrame.origin.y = mainW.frame.origin.y + bottomMargin;
+        newWindowFrame.origin.x = mainW.frame.origin.x + mainW.frame.size.width - newWindowFrame.size.width - sideMargin;
+        newWindowFrame.origin.y = mainW.frame.origin.y + bottomMargin;
     } else if (alignment == kToastNotificationAlignmentBottomMiddle) {
-        newNotifFrame.origin.x = NSMidX(mainW.frame) - (newNotifSize.width / 2);
-        newNotifFrame.origin.y = mainW.frame.origin.y + bottomMargin;
+        newWindowFrame.origin.x = NSMidX(mainW.frame) - (newWindowSize.width / 2);
+        newWindowFrame.origin.y = mainW.frame.origin.y + bottomMargin;
     } else assert(false);
     
     /// Set new notification frame
-    [w setFrame:newNotifFrame display:YES];
+    [w setFrame:newWindowFrame display:YES];
     
     /// Set label frame (Don't actually need this if we set autoresizing for the label in IB, which we do)
-    NSRect newLabelFrame = label.superview.superview.frame;
-    newLabelFrame.size = newLabelSize;
-    newLabelFrame.origin.x = NSMidX(label.superview.bounds) - (newLabelSize.width / 2);
-    newLabelFrame.origin.y = NSMidY(label.superview.bounds) - (newLabelSize.height / 2);
-    [label setFrame:newLabelFrame];
+//    NSRect newLabelFrame = label.superview.superview.frame;
+//    newLabelFrame.size = newTextSize;
+//    newLabelFrame.origin.x = NSMidX(label.superview.bounds) - (newTextSize.width / 2);
+//    newLabelFrame.origin.y = NSMidY(label.superview.bounds) - (newTextSize.height / 2);
+//    [label setFrame:newLabelFrame];
     
     /// Attach notif as child window to attachWindow
     [attachWindow addChildWindow:w ordered:NSWindowAbove];

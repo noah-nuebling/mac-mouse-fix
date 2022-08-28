@@ -28,18 +28,18 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <scrollView fixedFrame="YES" borderType="none" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" hasVerticalScroller="NO" horizontalScrollElasticity="none" verticalScrollElasticity="none" translatesAutoresizingMaskIntoConstraints="NO" id="5lV-bX-8UE">
-                                <rect key="frame" x="10" y="10" width="182" height="18"/>
+                                <rect key="frame" x="0.0" y="0.0" width="202" height="38"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <clipView key="contentView" drawsBackground="NO" id="cXg-GO-OZi">
-                                    <rect key="frame" x="0.0" y="0.0" width="182" height="18"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="202" height="38"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
                                         <textView editable="NO" drawsBackground="NO" importsGraphics="NO" richText="NO" verticallyResizable="NO" allowsCharacterPickerTouchBarItem="NO" textCompletion="NO" id="DKZ-39-jMI" customClass="NotificationLabel">
-                                            <rect key="frame" x="0.0" y="0.0" width="182" height="18"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="202" height="38"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
                                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                            <size key="minSize" width="182" height="18"/>
+                                            <size key="minSize" width="202" height="38"/>
                                             <size key="maxSize" width="240" height="10000000"/>
                                             <attributedString key="textStorage">
                                                 <fragment content="Welcome to Mac Mouse Fix!">
@@ -51,6 +51,11 @@
                                                 </fragment>
                                             </attributedString>
                                             <color key="insertionPointColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                                            <userDefinedRuntimeAttributes>
+                                                <userDefinedRuntimeAttribute type="size" keyPath="textContainerInset">
+                                                    <size key="value" width="10" height="10"/>
+                                                </userDefinedRuntimeAttribute>
+                                            </userDefinedRuntimeAttributes>
                                             <connections>
                                                 <outlet property="delegate" destination="Hm0-rM-QPq" id="kCZ-4R-Ui8"/>
                                             </connections>

@@ -138,7 +138,7 @@ import Cocoa
             /// Show message
             let message: String
             if userChangedKey {
-                message = NSLocalizedString("license-toast.activate", comment: "First draft: Your license has been **activated**!\n\nThanks for buying Mac Mouse Fix! :)")
+                message = NSLocalizedString("license-toast.activate", comment: "First draft: Your license has been **activated**! 🎉")
             } else {
                 message = NSLocalizedString("license-toast.already-active", comment: "First draft: This license is **already activated**!\n\nHope you're enjoying Mac Mouse Fix! :)")
             }
@@ -170,7 +170,7 @@ import Cocoa
                             
                             switch gumroadMessage {
                             case "That license does not exist for the provided product.":
-                                let messageFormat = NSLocalizedString("license-toast.unknown-key", comment: "First draft: The license key **'%@'** is unknown.\n\nPlease try another license key.")
+                                let messageFormat = NSLocalizedString("license-toast.unknown-key", comment: "First draft: **'%@'** is not a known license key\nPlease try another one")
                                 message = String(format: messageFormat, key)
                             default:
                                 let messageFormat = NSLocalizedString("license-toast.gumroad-error", comment: "First draft: **An error with the licensing server occured**\n\nIt says:\n\n%@")
