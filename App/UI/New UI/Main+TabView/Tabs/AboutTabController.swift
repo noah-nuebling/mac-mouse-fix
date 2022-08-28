@@ -28,9 +28,13 @@ class AboutTabController: NSViewController {
     
     var currentLicenseConfig: LicenseConfig? = nil
     var currentLicense: MFLicenseReturn? = nil
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        /// Store self in MainAppState for global access
+        
+        MainAppState.shared.aboutTabController = self
         
         /// Set up versionField
         
@@ -46,8 +50,16 @@ class AboutTabController: NSViewController {
         let cachedLicense = License.cachedLicenseState(licenseConfig: cachedLicenseConfig)
         
         updateUI(licenseConfig: cachedLicenseConfig, license: cachedLicense)
-        
+            
         /// 2. Get real values and update UI again
+        updateUIToCurrentLicense()
+        
+    }
+    
+    func updateUIToCurrentLicense() {
+            
+        /// This is called on load and when the user activates/deactivates their license.
+        /// - It would be cleaner and prettier if we used a reactive architecture where you have some global master license state that all the UI that depends on it subscribes to. Buttt we really only have UI that depends on the license state here on the about tab, so that would be overengineering. On the other hand we need to store the AboutTabController instance in MainAppState for global access if we don't use th reactive architecture which is also a little ugly.
         
         LicenseConfig.get { licenseConfig in
             License.licenseState(licenseConfig: licenseConfig, completionHandler: { license, error in
@@ -58,7 +70,6 @@ class AboutTabController: NSViewController {
                 
             })
         }
-        
     }
     
     func updateUI(licenseConfig: LicenseConfig, license: MFLicenseReturn) {

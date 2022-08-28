@@ -29,11 +29,18 @@ import Cocoa
     
     @IBAction func activateLicense(_ sender: Any) {
         
+        /// Define onComplete actions
+        
         /// Set flag
         ///     To prevent race conditions
         
         if isProcessing { return }
         isProcessing = true
+        
+        let onComplete = {
+            self.isProcessing = false
+            MainAppState.shared.aboutTabController?.updateUIToCurrentLicense() /// Would much more efficient to pass in the license here
+        }
         
         /// Gather info
         
@@ -63,6 +70,9 @@ import Cocoa
             let message = NSAttributedString(coolMarkdown: messageRaw)!
             ToastNotificationController.attachNotification(withMessage: message, to: MainAppState.shared.window!, forDuration: -1)
             
+            /// Wrap up
+            onComplete()
+            
             /// Return
             return
         }
@@ -84,19 +94,19 @@ import Cocoa
             if isDifferent {
                 Gumroad.activateLicense(key, maxActivations: licenseConfig.maxActivations) { success, serverResponse, error, urlResponse in
                     
+                    /// Store new licenseKey
+                    if success {
+                        SecureStorage.set("License.key", value: key)
+                    }
+                    
                     /// Dispatch to main because UI stuff needs to be controlled by main
                     DispatchQueue.main.async {
                         
                         /// Display user feedback
                         self.displayUserFeedback(success: success, error: error, key: key, userChangedKey: isDifferent)
                         
-                        /// Reset isProcessing flag
-                        self.isProcessing = false
-                    }
-                    
-                    /// Store new licenseKey
-                    if success {
-                        SecureStorage.set("License.key", value: key)
+                        /// Wrap up
+                        onComplete()
                     }
                 }
             } else {
@@ -107,8 +117,8 @@ import Cocoa
                         /// Display user feedback
                         self.displayUserFeedback(success: success, error: error, key: key, userChangedKey: isDifferent)
                         
-                        /// Reset isProcessing flag
-                        self.isProcessing = false
+                        /// Wrap up
+                        onComplete()
                     }
                 }
             }

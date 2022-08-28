@@ -19,15 +19,15 @@ import ReactiveSwift
 
     /// References
     
-    @objc var tabViewController: TabViewController {
-        let controller = NSApp.mainWindow?.contentViewController as! TabViewController
-        return controller
+    @objc var window: ResizingTabWindow? {
+        return NSApp.mainWindow as? ResizingTabWindow
     }
     @objc var appDelegate: AppDelegate {
         return NSApp.delegate as! AppDelegate
     }
-    @objc var window: ResizingTabWindow? {
-        return NSApp.mainWindow as? ResizingTabWindow
+    @objc var tabViewController: TabViewController {
+        let controller = NSApp.mainWindow?.contentViewController as! TabViewController
+        return controller
     }
     
     /// References to specific views
@@ -35,6 +35,7 @@ import ReactiveSwift
     @objc var remapTableController: RemapTableController? = nil
     @objc var remapTable: RemapTableView? { remapTableController?.view as? RemapTableView }
     @objc var buttonTabController: ButtonTabController? = nil
+    @objc var aboutTabController: AboutTabController? = nil
 }
 
 // MARK: Helper enabled state
