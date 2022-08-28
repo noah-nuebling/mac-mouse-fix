@@ -84,10 +84,21 @@ class AboutTabController: NSViewController {
             /// Replace payButton with milkshake link
             ///
             
-            /// Note: This only does something if the UI was first updated in the unlicensed state and now it's going back to licensed state. When we hit this straight after loading from IB, the payButtonWrapper will just be nil and the moneyCellLink will be unhidden, so this won't do anything.
+            /// Note: This only does something if the UI was first updated in the unlicensed state and now it's going back to licensed state. When we hit this straight after loading from IB, the payButtonWrapper will just be nil and the moneyCellLink will be unhidden already, and the moneyCellImage will be the milkshake already, so this won't do anything.
+            
+            /// Show link and hide payButton
             
             self.payButtonWrapper?.isHidden = true
             self.moneyCellLink.isHidden = false
+            
+            /// Swap shopping bag image for milkshake image
+            ///     Not sure if the scaling and symbol config is necessary here?
+            
+            self.moneyCellImage.imageScaling = .scaleNone
+            if #available(macOS 11.0, *) {
+                self.moneyCellImage.symbolConfiguration = .init(scale: .large)
+            }
+            self.moneyCellImage.image = NSImage(named: .init("LittleMilkshakeOutlines"))
             
             ///
             /// Replace trial section with thank you section
