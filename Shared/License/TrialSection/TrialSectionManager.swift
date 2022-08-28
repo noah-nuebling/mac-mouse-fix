@@ -159,7 +159,7 @@ class TrialSectionManager {
                 /// Setup hyperlink
                 
                 let linkTitle = NSLocalizedString("trial-notif.activate-license-button", comment: "First draft: Activate License")
-                let linkAddress = "https://google.com"
+                let linkAddress = "macmousefix:activate"
                 let link = Hyperlink(title: linkTitle, url: linkAddress, alwaysTracking: true, leftPadding: 30)
                 link?.font = NSFont.systemFont(ofSize: 13, weight: .regular)
                 
