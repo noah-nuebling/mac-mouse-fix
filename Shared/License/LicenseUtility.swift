@@ -28,12 +28,12 @@ import Cocoa
         if daysOfUse > trialDays {
             /// Trial expired
             
-            base = NSLocalizedString("trial-counter.expired", comment: "First draft: Test period is over")
+            base = NSLocalizedString("trial-counter.expired", comment: "First draft: Free days are used up")
             
         } else {
             /// Trial still active
                 
-            let b = NSLocalizedString("trial-counter.active", comment: "First draft: Day **%d/%d** of your test period")
+            let b = NSLocalizedString("trial-counter.active", comment: "First draft: Free day **%d/%d**")
             base = String(format: b, daysOfUse, trialDays)
         }
         

@@ -19,9 +19,8 @@ class AboutTabController: NSViewController {
     @IBOutlet weak var moneyCellLink: Hyperlink!
     @IBOutlet weak var moneyCellImage: NSImageView!
     
-    @IBOutlet weak var trialCell: NSView!
-    @IBOutlet weak var trialCellText: NSTextField!
-    @IBOutlet weak var trialCellImage: NSImageView!
+    var trialSectionManager: TrialSectionManager?
+    @IBOutlet weak var trialCell: TrialSection! /// TODO: Rename to trialSection
     
     var payButtonWrapper: NSView? = nil
     var payButtonwrapperConstraints: [NSLayoutConstraint] = []
@@ -29,6 +28,8 @@ class AboutTabController: NSViewController {
     var currentLicenseConfig: LicenseConfig? = nil
     var currentLicense: MFLicenseReturn? = nil
 
+    var trackingArea: NSTrackingArea? = nil
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -85,6 +86,11 @@ class AboutTabController: NSViewController {
             ///
             
             /// Note: This only does something if the UI was first updated in the unlicensed state and now it's going back to licensed state. When we hit this straight after loading from IB, the payButtonWrapper will just be nil and the moneyCellLink will be unhidden already, and the moneyCellImage will be the milkshake already, so this won't do anything.
+            
+            /// Deactivate tracking area
+            if let trackingArea = self.trackingArea {
+                self.view.removeTrackingArea(trackingArea)
+            }
             
             /// Show link and hide payButton
             
@@ -149,7 +155,7 @@ class AboutTabController: NSViewController {
             
             
             /// Replace text
-            self.trialCellText.stringValue = message
+            trialCell.textField!.stringValue = message
             
             /// Replace image
             /// Notes:
@@ -159,7 +165,7 @@ class AboutTabController: NSViewController {
             let image = emoji.image(fontSize: 14)
             let r = image.alignmentRect
             image.alignmentRect = NSRect(x: r.minX + (r.maxX - r.midX) - 12, y: r.minY - 1, width: r.width, height: r.height)
-            self.trialCellImage.image = image
+            trialCell.imageView!.image = image
             
             
         } else /** not licensed */ {
@@ -168,15 +174,22 @@ class AboutTabController: NSViewController {
             /// Setup trial section
             ///
             
-            /// Set content string
-            
-            let string = LicenseUtility.trialCounterString(licenseConfig: licenseConfig, license: license)
-            self.trialCellText.attributedStringValue = string
-            
             /// Set textfield height
             ///     Necessary for y centering. Not sure why
             
-            self.trialCellText.heightAnchor.constraint(equalToConstant: 20).isActive = true
+            trialCell.textField!.heightAnchor.constraint(equalToConstant: 20).isActive = true
+            
+            /// Init manager
+            
+            trialSectionManager = TrialSectionManager(trialCell, licenseConfig: licenseConfig, license: license)
+            
+//            let string = LicenseUtility.trialCounterString(licenseConfig: licenseConfig, license: license)
+//            self.trialCellText.attributedStringValue = string
+
+            /// Setup tracking area
+            
+            trackingArea = NSTrackingArea(rect: self.view.frame, options: [.activeInKeyWindow, .mouseEnteredAndExited], owner: self)
+            self.view.addTrackingArea(trackingArea!) 
             
             ///
             /// Set up money section
@@ -184,6 +197,7 @@ class AboutTabController: NSViewController {
             
             /// Swap out milkshake -> shopping bag
             ///     Don't know how to set scale pre macOS 11.0 Big Sur. So it'll just look a little crappy.
+            ///     Alt idea for the symbol: "tag"
             
             self.moneyCellImage.imageScaling = .scaleNone
             if #available(macOS 11.0, *) {
@@ -247,4 +261,12 @@ class AboutTabController: NSViewController {
         }
     }
     
+    /// Tracking area calllbacks
+    
+    override func mouseEntered(with event: NSEvent) {
+        trialSectionManager?.showActivate()
+    }
+    override func mouseExited(with event: NSEvent) {
+        trialSectionManager?.showTrial()
+    }
 }

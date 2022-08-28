@@ -26,8 +26,17 @@ class TrialSectionManager {
     
     init(_ trialSection: TrialSection, licenseConfig: LicenseConfig, license: MFLicenseReturn) {
         
+        /// Store trial section
         self.trialSection = trialSection
-        trialSection.textField?.attributedStringValue = LicenseUtility.trialCounterString(licenseConfig: licenseConfig, license: license)
+        
+        /// Set string
+        trialSection.textField!.attributedStringValue = LicenseUtility.trialCounterString(licenseConfig: licenseConfig, license: license)
+        
+        /// Setup image
+        if #available(macOS 11.0, *) {
+            trialSection.imageView!.symbolConfiguration = .init(pointSize: 13, weight: .regular, scale: .large)
+        }
+        trialSection.imageView!.image = NSImage(named: "calendar")
     }
     
     /// Interface

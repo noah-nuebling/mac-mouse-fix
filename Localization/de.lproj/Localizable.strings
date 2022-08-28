@@ -373,11 +373,11 @@
 /* First draft: First the mice, then the world!! >:) */
 "thanks.25" = "Erst die Mäuse, dann die Welt!! >:)";
 
-/* First draft: Day **%d/%d** of your test period */
-"trial-counter.active" = "Tag **%d/%d** deiner Testphase";
+/* First draft: Free day **%d/%d** */
+"trial-counter.active" = "Kostenloser Tag **%d/%d**";
 
-/* First draft: Test period is over */
-"trial-counter.expired" = "Testphase ist vorbei";
+/* First draft: Free days are used up */
+"trial-counter.expired" = "Kostenlose Tage sind aufgebraucht";
 
 /* First draft: Activate License */
 "license-button.activate" = "Lizenz aktivieren";
