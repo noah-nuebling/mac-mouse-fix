@@ -71,6 +71,8 @@
 		4F854D7E2789266A00B46E9D /* SFSymbols.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4F854D7D2789266A00B46E9D /* SFSymbols.xcassets */; };
 		4F85C05028BBDBDC00E96E9C /* NSImageView+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F85C04F28BBDBDC00E96E9C /* NSImageView+Extensions.swift */; };
 		4F85C05128BBDBDC00E96E9C /* NSImageView+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F85C04F28BBDBDC00E96E9C /* NSImageView+Extensions.swift */; };
+		4F85C05428BBE6FA00E96E9C /* TrialSectionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F85C05328BBE6FA00E96E9C /* TrialSectionManager.swift */; };
+		4F85C05528BBE6FA00E96E9C /* TrialSectionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F85C05328BBE6FA00E96E9C /* TrialSectionManager.swift */; };
 		4F8A8DAD287EEF6200786BCC /* IOHIDAccelerationTableBridge.mm in Sources */ = {isa = PBXBuildFile; fileRef = 4F8A8DAC287EEF6200786BCC /* IOHIDAccelerationTableBridge.mm */; };
 		4F8A8DBD287F203D00786BCC /* IOHIDAccelerationTable.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4F8A8DBC287F203D00786BCC /* IOHIDAccelerationTable.cpp */; };
 		4F8A8DBF287F7BBA00786BCC /* NaturalAccelerationCurve.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F8A8DBE287F7BBA00786BCC /* NaturalAccelerationCurve.swift */; };
@@ -524,6 +526,7 @@
 		4F854D7B2789146900B46E9D /* NSMenu+NSMenu_Additions.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSMenu+NSMenu_Additions.m"; sourceTree = "<group>"; };
 		4F854D7D2789266A00B46E9D /* SFSymbols.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = SFSymbols.xcassets; sourceTree = "<group>"; };
 		4F85C04F28BBDBDC00E96E9C /* NSImageView+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSImageView+Extensions.swift"; sourceTree = "<group>"; };
+		4F85C05328BBE6FA00E96E9C /* TrialSectionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrialSectionManager.swift; sourceTree = "<group>"; };
 		4F8A8DAC287EEF6200786BCC /* IOHIDAccelerationTableBridge.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = IOHIDAccelerationTableBridge.mm; sourceTree = "<group>"; };
 		4F8A8DB0287EEF9B00786BCC /* IOHIDAccelerationTableBridge.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = IOHIDAccelerationTableBridge.hpp; sourceTree = "<group>"; };
 		4F8A8DB4287EF65800786BCC /* Metal.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Metal.framework; path = System/Library/Frameworks/Metal.framework; sourceTree = SDKROOT; };
@@ -996,7 +999,6 @@
 				4FA13FBC28B39423005C68FC /* TrialNotificationController.xib */,
 				4FA13FBB28B39423005C68FC /* TrialNotificationController.swift */,
 				4FA13FC028B3A2D3005C68FC /* TrialNotificationWindow.swift */,
-				4F09283E28B8101600BDC2FF /* TrialSection.swift */,
 				4FD82DD9260575B100664D6F /* NotificationLabel.h */,
 				4FD82DDA260575B100664D6F /* NotificationLabel.m */,
 			);
@@ -1162,6 +1164,15 @@
 				4F7F47D628A6F00300290BBD /* README.md */,
 			);
 			path = Resources;
+			sourceTree = "<group>";
+		};
+		4F85C05228BBE6D500E96E9C /* TrialSection */ = {
+			isa = PBXGroup;
+			children = (
+				4F09283E28B8101600BDC2FF /* TrialSection.swift */,
+				4F85C05328BBE6FA00E96E9C /* TrialSectionManager.swift */,
+			);
+			path = TrialSection;
 			sourceTree = "<group>";
 		};
 		4F8A8DBB287EFB4D00786BCC /* Extern */ = {
@@ -1605,6 +1616,7 @@
 				4FDE757A28B0E35100662314 /* Gumroad.swift */,
 				4F44794428B62FA400AD1979 /* LicenseConfig.swift */,
 				4FFA4E3428B795F30062A1FE /* LicenseUtility.swift */,
+				4F85C05228BBE6D500E96E9C /* TrialSection */,
 				4F2A1FA726042ACB0067691A /* TrialNotifications */,
 			);
 			path = License;
@@ -2716,6 +2728,7 @@
 				4F909D2E28A0C3D2009349A2 /* NSControl+Extensions.swift in Sources */,
 				4F39BC3B263AF2B000FDF692 /* SparkleUpdaterController.m in Sources */,
 				4FA40D0028A0CCCB00499E53 /* CombinedLinearCurve.swift in Sources */,
+				4F85C05428BBE6FA00E96E9C /* TrialSectionManager.swift in Sources */,
 				4F1C51DA260543DD007F4930 /* NSTextField+Additions.m in Sources */,
 				4F09283F28B8101600BDC2FF /* TrialSection.swift in Sources */,
 				4F909D3128A0C3D2009349A2 /* CAAnimation+Extensions.swift in Sources */,
@@ -2816,6 +2829,7 @@
 				4FF6668225F2C93A00689B77 /* Config.m in Sources */,
 				4FFBC5A8266977CA001D389B /* DoubleExponentialSmoother.swift in Sources */,
 				4FF8C8A128956DDD007EC31F /* ButtonModifiers.swift in Sources */,
+				4F85C05528BBE6FA00E96E9C /* TrialSectionManager.swift in Sources */,
 				4F909D4828A0C4C2009349A2 /* Collection+Extensions.swift in Sources */,
 				4FF6669625F2C93A00689B77 /* Actions.m in Sources */,
 				4FF0254E27AFF90800923107 /* ModifiedDragOutputThreeFingerSwipe.m in Sources */,

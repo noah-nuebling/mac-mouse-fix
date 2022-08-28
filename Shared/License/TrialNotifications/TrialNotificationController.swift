@@ -35,6 +35,7 @@ class TrialNotificationController: NSWindowController {
     /// Vars
     var trackingArea: NSTrackingArea? = nil
     var darkModeObservation: Any? = nil
+    var trialSectionManager: TrialSectionManager! = nil
     
     /// Init
     override init(window: NSWindow?) {
@@ -95,8 +96,8 @@ class TrialNotificationController: NSWindowController {
                 NSWorkspace.shared.open(URL(string: licenseConfig.quickPayLink)!)
             }
             
-            /// Set the trialString
-            trialSection.textField?.attributedStringValue = LicenseUtility.trialCounterString(licenseConfig: licenseConfig, license: license)
+            /// Init the trialSection
+            trialSectionManager = TrialSectionManager(self.trialSection, licenseConfig: licenseConfig, license: license)
             
             /// Set the bodyString
             
@@ -225,159 +226,16 @@ class TrialNotificationController: NSWindowController {
     }
     
     /// Swap trialSection -> activate license on hover
-    ///     This code is a little convoluted. mouseEntered and mouseExited are almost copy-pasted, except for setting up in newSection in mouseEntered.
-    
-    var isReplacing = false
-    var isInside = false
-    var queuedReplace: (() -> ())? = nil
-    var ogSection: TrialSection? = nil
+
     
     override func mouseEntered(with event: NSEvent) {
         
-        DispatchQueue.main.async {
-            
-            let workload = {
-                
-                do {
-                    
-                    DDLogDebug("triall enter")
-                    
-                    if self.isInside {
-                        if let r = self.queuedReplace {
-                            self.queuedReplace = nil
-                            r()
-                        } else {
-                            self.isReplacing = false
-                        }
-                        return
-                    }
-                    self.isInside = true
-                    
-                    self.isReplacing = true
-                    
-                    let ogSection = self.trialSection!
-                    let newSection = try SharedUtilitySwift.insecureCopy(of: self.trialSection)
-                    
-                    ///
-                    /// Store original trialSection for easy restoration on mouseExit
-                    ///
-                    
-                    if self.ogSection == nil {
-                        self.ogSection = try SharedUtilitySwift.insecureCopy(of: self.trialSection!)
-                    }
-                    
-                    ///
-                    /// Setup newSection
-                    ///
-                    
-                    /// Setup Image
-                    
-                    /// Create image
-                    let image: NSImage
-                    if #available(macOS 11.0, *) {
-                        image = NSImage(systemSymbolName: "lock.open", accessibilityDescription: nil)!
-                    } else {
-                        image = NSImage(named: "lock.open")!
-                    }
-                    
-                    /// Configure image
-                    if #available(macOS 11, *) { newSection.imageView?.symbolConfiguration = .init(pointSize: 13, weight: .medium, scale: .large) }
-                    if #available(macOS 10.14, *) { newSection.imageView?.contentTintColor = .linkColor }
-                    
-                    /// Set image
-                    newSection.imageView?.image = image
-                    
-                    /// Setup hyperlink
-                    
-                    let linkTitle = NSLocalizedString("trial-notif.activate-license-button", comment: "First draft: Activate License")
-                    let linkAddress = "https://google.com"
-                    let link = Hyperlink(title: linkTitle, url: linkAddress, alwaysTracking: true, leftPadding: 30)
-                    link?.font = NSFont.systemFont(ofSize: 13, weight: .regular)
-                    
-                    link?.translatesAutoresizingMaskIntoConstraints = false
-                    link?.heightAnchor.constraint(equalToConstant: link!.fittingSize.height).isActive = true
-                    link?.widthAnchor.constraint(equalToConstant: link!.fittingSize.width).isActive = true
-                    
-                    newSection.textField = link
-                    
-                    ///
-                    /// Done setting up newSection
-                    ///
-                    
-                    ReplaceAnimations.animate(ogView: ogSection, replaceView: newSection, hAnchor: .center, vAnchor: .center, doAnimate: true) {
-                        
-                        DDLogDebug("triall enter finish")
-                        
-                        self.trialSection = newSection
-                        
-                        if let r = self.queuedReplace {
-                            self.queuedReplace = nil
-                            r()
-                        } else {
-                            self.isReplacing = false
-                        }
-                    }
-                } catch {
-                    DDLogError("Failed to swap out trialSection on notification with error: \(error)")
-                    assert(false)
-                }
-            }
-            
-            if self.isReplacing {
-                DDLogDebug("triall queue enter")
-                self.queuedReplace = workload
-            } else {
-                workload()
-            }
-        }
+        trialSectionManager.showActivate()
     }
 
     override func mouseExited(with event: NSEvent) {
-        
-        DispatchQueue.main.async {
             
-            let workload = {
-                    
-                DDLogDebug("triall exit")
-                
-                if !self.isInside {
-                    if let r = self.queuedReplace {
-                        self.queuedReplace = nil
-                        r()
-                    } else {
-                        self.isReplacing = false
-                    }
-                    return
-                }
-                self.isInside = false
-                
-                self.isReplacing = true
-                
-                let ogSection = self.trialSection!
-                let newSection = self.ogSection!
-                
-                ReplaceAnimations.animate(ogView: ogSection, replaceView: newSection, hAnchor: .center, vAnchor: .center, doAnimate: true) {
-                    
-                    DDLogDebug("triall exit finish")
-                    
-                    self.trialSection = newSection
-                    
-                    if let r = self.queuedReplace {
-                        self.queuedReplace = nil
-                        r()
-                    } else {
-                        self.isReplacing = false
-                    }
-                }
-            }
-            
-            if self.isReplacing {
-                DDLogDebug("triall queue exit")
-                self.queuedReplace = workload
-            } else {
-                workload()
-            }
-        }
+        trialSectionManager.showTrial()
     }
     
     /// Helper stuff
