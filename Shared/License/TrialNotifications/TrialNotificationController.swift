@@ -97,7 +97,8 @@ class TrialNotificationController: NSWindowController {
             }
             
             /// Init the trialSection
-            trialSectionManager = TrialSectionManager(self.trialSection, licenseConfig: licenseConfig, license: license)
+            trialSectionManager = TrialSectionManager(self.trialSection)
+            trialSectionManager.startManaging(licenseConfig: licenseConfig, license: license)
             
             /// Set the bodyString
             
@@ -230,12 +231,16 @@ class TrialNotificationController: NSWindowController {
     
     override func mouseEntered(with event: NSEvent) {
         
-        trialSectionManager.showActivate()
+        DispatchQueue.main.async {
+            self.trialSectionManager.showActivate()
+        }
     }
 
     override func mouseExited(with event: NSEvent) {
             
-        trialSectionManager.showTrial()
+        DispatchQueue.main.async {
+            self.trialSectionManager.showTrial()
+        }
     }
     
     /// Helper stuff

@@ -46,7 +46,7 @@ class ReplaceAnimations {
     
     /// Core function
 
-    static func animate(ogView: NSView, replaceView: NSView, hAnchor: MFHAnchor, vAnchor: MFVAnchor, doAnimate: Bool, onComplete: @escaping () -> () = { }){
+    @discardableResult static func animate(ogView: NSView, replaceView: NSView, hAnchor: MFHAnchor, vAnchor: MFVAnchor, doAnimate: Bool, onComplete: @escaping () -> () = { }) -> (() -> ()){
         
         /// Parameter explanation:
         ///     The animation produces the following changes:
@@ -54,6 +54,7 @@ class ReplaceAnimations {
         ///         2. Fade out of `ogView` / Fade in of `replaceView` -> The 'feel' is controlled by `fadeOverlap`
         ///     `duration` controls the duration of all changes that the animation makes
         ///     `hAnchor` and `vAnchor` determine how the ogView and replaceView are aligned with the wrapperView during resizing. If the size doesn't change this doesn't have an effect
+        ///     `return` value is a closure that interrupts the animation when invoked
         
         /// The `replaceView` may have width and height constraints but it shouldn't have any constraints to a superview I think (It will take over the superview constraints from `ogView`)
         
@@ -278,6 +279,16 @@ class ReplaceAnimations {
         /// Fade in view
         Animate.with(CABasicAnimation(curve: fadeInCurve, duration: duration)) {
             replaceImageView.reactiveAnimator().alphaValue.set(1.0)
+        }
+        
+        /// Return interruptor
+        ///     If we need this in more places, maybe we should make this a functionality of reactiveAnimator somehow.
+        return {
+            let manager = NSAnimationManager.current()
+            manager?.removeAllAnimations(for: wrapperWidthConst)
+            manager?.removeAllAnimations(for: wrapperHeightConst)
+            manager?.removeAllAnimations(for: ogImageView)
+            manager?.removeAllAnimations(for: replaceImageView)
         }
     }
     

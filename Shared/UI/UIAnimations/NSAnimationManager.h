@@ -46,9 +46,9 @@
 - (void)interruptAnimationsForObject:(id)arg1 keyPath:(id)arg2;
 
 /// Remove
-- (void)removeAllAnimationsForObject:(id)arg1;
-- (void)removeAnimationsForObject:(id)arg1 keyPath:(id)arg2;
-- (void)removeAnimationsForObject:(id)arg1 keyPath:(id)arg2 finished:(BOOL)arg3;
+- (void)removeAllAnimationsForObject:(id)object;
+- (void)removeAnimationsForObject:(id)object keyPath:(NSString *)keyPath;
+- (void)removeAnimationsForObject:(id)object keyPath:(id)keyPath finished:(BOOL)finished;
 
 /// Dealloc
 - (void)dealloc;

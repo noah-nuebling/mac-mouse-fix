@@ -45,6 +45,16 @@ IB_DESIGNABLE
     [self startTracking];
 }
 
+//- (instancetype)initWithCoder:(NSCoder *)coder
+//{
+//    self = [super initWithCoder:coder];
+//    if (self) {
+//        
+//        
+//    }
+//    return self;
+//}
+
 + (instancetype)hyperlinkWithTitle:(NSString *)title url:(NSString *)href alwaysTracking:(BOOL)alwaysTracking leftPadding:(int)leftPadding {
     
     /// Init from code

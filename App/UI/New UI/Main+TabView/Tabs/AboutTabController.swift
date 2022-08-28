@@ -30,6 +30,8 @@ class AboutTabController: NSViewController {
 
     var trackingArea: NSTrackingArea? = nil
     
+    /// Init
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -41,21 +43,27 @@ class AboutTabController: NSViewController {
         
         versionField.stringValue = "\(Utility_App.bundleVersionShort()) (\(Utility_App.bundleVersion()))"
         
+        /// Init trialSectionManager
+        ///     The manager swaps out the trialSection and stuff, so always access the trialSection through the manager!
+        trialSectionManager = TrialSectionManager(trialCell)
+        
         /// Get licensing info
         ///     Notes:
         ///     - Not using the completionHandler of `Licensing.licensingState` here since it's asynchronous. However, calling `licensingState()` will update isLicensed and then the UI will update. We could also have separated ConfigValue for the daysOfUse config value, but I don't think it'll be noticable if that doesn't update totally correctl
         
-        /// 1. Get cache synchronously and set UI to that
-        
+        /// Get cache
         let cachedLicenseConfig = LicenseConfig.getCached()
         let cachedLicense = License.cachedLicenseState(licenseConfig: cachedLicenseConfig)
         
+        /// 1. Set UI to cache
         updateUI(licenseConfig: cachedLicenseConfig, license: cachedLicense)
             
         /// 2. Get real values and update UI again
         updateUIToCurrentLicense()
         
     }
+    
+    /// Update UI
     
     func updateUIToCurrentLicense() {
             
@@ -110,6 +118,18 @@ class AboutTabController: NSViewController {
             /// Replace trial section with thank you section
             ///
             
+            /// Stop managing
+            trialSectionManager?.stopManaging()
+            
+            /// HACK: Turn of clipping
+            ///     The fact that this is necessary, means there's something I don't understand.
+            ///     Explanation:
+            ///         - The clipping is originally turned off via User Defined Runtime Attributes in IB. Then the view is saved, swapped out with animations on mouse hover, and restored by trialSectionManager. We know it's restored at this point because we just called trialSectionManager.stopManaging(). But still the clipping is reset somehow.
+            ///     Ideas:
+            ///         - Maybe we're not correctly swapping back to the original view from interface builder.
+            ///         - Maybe the clipping settings are not saved when trialSectionManager serializes the view to save it.
+            trialSectionManager?.currentSection.imageView?.layer?.masksToBounds = false
+            
             /// Randomly select 1 out of 25+1 messages
             ///     Note: If you want to test one of the rare ones, increase its `weight`
             
@@ -155,7 +175,7 @@ class AboutTabController: NSViewController {
             
             
             /// Replace text
-            trialCell.textField!.stringValue = message
+            trialSectionManager!.currentSection.textField!.stringValue = message
             
             /// Replace image
             /// Notes:
@@ -163,9 +183,9 @@ class AboutTabController: NSViewController {
             ///     - Shifting the alignment rect x is a hack. We really want the image and the text to be closer, but we're too lazy to adjust the layoutConstraints from interface builder. Just shifting the alignment x makes everything slighly off center, but I don't think it's noticable. Edit: we turned the alignment x shift off for now, it looks fine.
             
             let image = emoji.image(fontSize: 14)
-            let r = image.alignmentRect
-            image.alignmentRect = NSRect(x: r.minX + (r.maxX - r.midX) - 12, y: r.minY - 1, width: r.width, height: r.height)
-            trialCell.imageView!.image = image
+//            let r = image.alignmentRect
+//            image.alignmentRect = NSRect(x: r.minX + (r.maxX - r.midX) - 12, y: r.minY - 1, width: r.width, height: r.height)
+            trialSectionManager!.currentSection.imageView!.image = image
             
             
         } else /** not licensed */ {
@@ -174,17 +194,13 @@ class AboutTabController: NSViewController {
             /// Setup trial section
             ///
             
+            /// Begin managing
+            trialSectionManager?.startManaging(licenseConfig: licenseConfig, license: license)
+            
             /// Set textfield height
             ///     Necessary for y centering. Not sure why
             
-            trialCell.textField!.heightAnchor.constraint(equalToConstant: 20).isActive = true
-            
-            /// Init manager
-            
-            trialSectionManager = TrialSectionManager(trialCell, licenseConfig: licenseConfig, license: license)
-            
-//            let string = LicenseUtility.trialCounterString(licenseConfig: licenseConfig, license: license)
-//            self.trialCellText.attributedStringValue = string
+//            trialSectionManager!.trialSection.textField!.heightAnchor.constraint(equalToConstant: 20).isActive = true
 
             /// Setup tracking area
             
@@ -264,9 +280,15 @@ class AboutTabController: NSViewController {
     /// Tracking area calllbacks
     
     override func mouseEntered(with event: NSEvent) {
-        trialSectionManager?.showActivate()
+        
+        DispatchQueue.main.async {
+            self.trialSectionManager?.showActivate()
+        }
     }
     override func mouseExited(with event: NSEvent) {
-        trialSectionManager?.showTrial()
+        
+        DispatchQueue.main.async {
+            self.trialSectionManager?.showTrial()
+        }
     }
 }
