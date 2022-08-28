@@ -48,7 +48,7 @@ import CocoaLumberjackSwift
     
     let displayLink: DisplayLink
     let queue: DispatchQueue
-    var stopCallback: (() -> ())?
+    private var stopCallback: (() -> ())?
     
     /// Params
     

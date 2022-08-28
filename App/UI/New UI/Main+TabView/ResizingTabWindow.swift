@@ -21,8 +21,22 @@ import CocoaLumberjackSwift
     
     // MARK: Ivars
     
-    @objc public var tabSwitchIsInProgress: Bool = false
-    /// ^ This is set by TabViewController
+    private var _tabSwitchIsInProgress: Bool = false
+    @objc public var tabSwitchIsInProgress: Bool { /// This is set by TabViewController
+        get {
+            _tabSwitchIsInProgress
+        } set {
+            _tabSwitchIsInProgress = newValue
+            
+            /// HACK:
+            ///     `self.isMovable` is computed based on `_tabSwitchIsInProgress`. However, sometimes, something in the system fails to register when isMovable turns true again after a tabSwitch, which then makes the window permanently immovable to the user. To get the system to reliably register when self.isMovable turns on again after a tabSwitch, we need to toggle super.isMovable back and forth.
+            if !_tabSwitchIsInProgress {
+                super.isMovable = !super.isMovable
+                super.isMovable = !super.isMovable
+            }
+            
+        }
+    }
     
     // MARK: Resizing interface
     
@@ -40,18 +54,15 @@ import CocoaLumberjackSwift
         
         /// Debug
         let ogTime = CACurrentMediaTime()
-        animator.stopCallback = {
+        let stopCallback = {
             let stopTime = CACurrentMediaTime()
-            DDLogDebug("Actual window settling time: \(stopTime - ogTime)")
+            DDLogDebug("actual settling time: \(stopTime - ogTime)")
         }
         
-//        Animate.with(animation) {
-//            self.reactiveAnimator().frame.set(newFrame)
-//        }
-
         /// Start animator
+        ///     Note: Why aren't we using Animate.with()?
         let ogFrame = self.frame
-        animator.start(distance: 1.0) { value in
+        animator.start(distance: 1.0, callback: { value in
 
             /// Debug
             DDLogDebug("springAnimationValue: \(value)")
@@ -59,61 +70,13 @@ import CocoaLumberjackSwift
             /// Interpolate
             var result = SharedUtilitySwift.interpolateRects(value, ogFrame, newFrame);
             
-            /// Remove jitter
-            ///     Nothing works. These ideas assume that the window frame coords are being rounded before being displayed, and that this rounding shifts the center of the window. But none of these approaches work. I think the jittering might come from somewhere else.
-            
-            /// Kill jitter attempt1
-//            let xRoundsDown = round(result.minX) < result.minX
-//            let minX: Double
-//            let maxX: Double
-//            let minY: Double
-//            let maxY: Double
-//            if xRoundsDown  {
-//                minX = floor(result.origin.x)
-//                maxX = ceil(result.maxX)
-//            } else {
-//                minX = ceil(result.origin.x)
-//                maxX = floor(result.maxX)
-//            }
-//            let yRoundsDown = round(result.minY) < result.minY
-//            if yRoundsDown {
-//                minY = floor(result.minY)
-//                maxY = ceil(result.maxY)
-//            } else {
-//                minY = ceil(result.minY)
-//                maxY = floor(result.maxY)
-//            }
-//            result = NSRect(x: minX, y: minY, width: maxX - minX, height: maxY - minY)
-            
-            /// Kill jitter attempt3
-//            let ogIntegral = NSIntegralRectWithOptions(ogFrame, .alignAllEdgesNearest)
-//            let dPeriod = result.width.remainder(dividingBy: 2) != ogIntegral.width.remainder(dividingBy: 2)
-//            if dPeriod {
-//                let roundedUp = resultIntegral.width > result.width
-//                let roundedDown = resultIntegral.width < result.width
-//                result = resultIntegral
-//                if roundedUp {
-//                    result = NSRect(x: result.minX, y: result.minY, width: result.width - 1, height: result.height)
-//                } else if roundedDown {
-//                    result = NSRect(x: result.minX, y: result.minY, width: result.width + 1, height: result.height)
-//                }
-//            }
-            
-            /// Kill jitter attempt2
-//            let dx = result.midX - ogFrame.midX
-//            let dy = result.midY - ogFrame.midY
-//            result.origin.x -= dx
-//            result.origin.y -= dy
-            
-            /// Round rect
-            ///     Prevents moving around at end of animation
-            result = NSIntegralRectWithOptions(result, .alignAllEdgesNearest)
-    
             /// Set frame (on main thread)
             DispatchQueue.main.async {
                 self.setValue(result, forKey: "frame") /// This seems faster than `self.setFrame(display:animate:)`
             }
-        }
+        }, onComplete: {
+            stopCallback()
+        })
                                             
     }
     
@@ -126,8 +89,12 @@ import CocoaLumberjackSwift
     // MARK: Overrides
     
     override var isMovable: Bool {
-        get { super.isMovable && !tabSwitchIsInProgress }
-        set { super.isMovable = newValue }
+        get {
+            super.isMovable && !tabSwitchIsInProgress
+        }
+        set {
+            super.isMovable = newValue
+        }
     }
     
     override func zoom(_ sender: Any?) {
