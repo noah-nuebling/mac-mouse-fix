@@ -33,27 +33,22 @@ IB_DESIGNABLE
     NSRect _trackingRect; /// Do we need to store this?
     NSTrackingArea *_trackingArea;
     BOOL _alwaysTracking;
+    id _eventMonitor;
 }
 
-- (void)awakeFromNib {
-    
-    /// Init from IB
-    
-    /// Register mouse clicked callbacks
-    
-    _alwaysTracking = NO;
-    [self startTracking];
+- (instancetype)initWithCoder:(NSCoder *)coder
+{
+    self = [super initWithCoder:coder];
+    if (self) {
+        
+        /// Init from IB
+        ///     Don't use awakeFromNib because that's sometimes called more than once.
+        
+        /// Register mouse clicked callbacks
+        _alwaysTracking = NO;
+    }
+    return self;
 }
-
-//- (instancetype)initWithCoder:(NSCoder *)coder
-//{
-//    self = [super initWithCoder:coder];
-//    if (self) {
-//        
-//        
-//    }
-//    return self;
-//}
 
 + (instancetype)hyperlinkWithTitle:(NSString *)title url:(NSString *)href alwaysTracking:(BOOL)alwaysTracking leftPadding:(int)leftPadding {
     
@@ -66,21 +61,47 @@ IB_DESIGNABLE
     link.leftPadding = leftPadding;
     
     link->_alwaysTracking = alwaysTracking;
-    [link startTracking];
     
     return link;
 }
 
+- (void)dealloc {
+    [self stopTracking];
+}
+
 - (void)startTracking {
-    [NSEvent addLocalMonitorForEventsMatchingMask:NSEventMaskLeftMouseDown handler:^NSEvent * _Nullable(NSEvent * _Nonnull event) {
-        [self mouseDown:event];
-        return event;
-    }];
-    [NSEvent addLocalMonitorForEventsMatchingMask:NSEventMaskLeftMouseUp handler:^NSEvent * _Nullable(NSEvent * _Nonnull event) {
-        [self mouseUp:event];
+    
+    _eventMonitor = [NSEvent addLocalMonitorForEventsMatchingMask:NSEventMaskLeftMouseDown|NSEventMaskLeftMouseUp handler:^NSEvent * _Nullable(NSEvent * _Nonnull event) {
+        
+        if (event.type == NSEventTypeLeftMouseDown) {
+            [self mouseDown:event];
+        } else if (event.type == NSEventTypeLeftMouseUp) {
+            [self mouseUp:event];
+        } else assert(false);
+        
         return event;
     }];
 }
+
+- (void)stopTracking {
+    [NSEvent removeMonitor:_eventMonitor];
+}
+
+- (void)viewDidMoveToWindow {
+    
+    /// Toggle tracking depending on whether view is displaying or not
+    ///     Fixes bugs when view is removed from superView while tracking
+    
+    if (self.window != nil) {
+        [self startTracking];
+    } else {
+        [self stopTracking];
+        if (_mouseIsOverSelf) {
+            [self mouseExited:[[NSEvent alloc] init]];
+        }
+    }
+}
+
 
 - (void)updateTrackingAreas {
     
@@ -96,6 +117,7 @@ IB_DESIGNABLE
     /// Setup new tracking area
     
     /// Options
+    
     NSTrackingAreaOptions trackingAreaOptions =  NSTrackingMouseEnteredAndExited | NSTrackingEnabledDuringMouseDrag;
     trackingAreaOptions |= _alwaysTracking ? NSTrackingActiveAlways : NSTrackingActiveInKeyWindow;
     
@@ -123,6 +145,8 @@ IB_DESIGNABLE
 
 - (void)mouseEntered:(NSEvent *)event {
     
+    DDLogDebug(@"MOUSEE enter");
+    
     _mouseIsOverSelf = YES;
     
     NSMutableAttributedString *underlinedString = [[NSMutableAttributedString alloc] initWithAttributedString: self.attributedStringValue];
@@ -133,6 +157,8 @@ IB_DESIGNABLE
 //    [NSCursor.pointingHandCursor push]; // This is maybe a little tacky, cause nothing else in the UI does this
 }
 - (void)mouseExited:(NSEvent *)event {
+    
+    DDLogDebug(@"MOUSEE exit");
     
     _mouseIsOverSelf = NO;
     
@@ -145,20 +171,24 @@ IB_DESIGNABLE
 //    [NSCursor.pointingHandCursor pop];
 }
 - (void)mouseDown:(NSEvent *)event {
+    
     if (_mouseIsOverSelf) {
         _mouseDownOverSelf = YES;
     }
 }
 - (void)mouseUp:(NSEvent *)event {
+    
     if (_mouseDownOverSelf && _mouseIsOverSelf) {
         [self reactToClick];
     }
     _mouseDownOverSelf = NO;
 }
 - (void)reactToClick {
+    
     /// Open URL defined in Interface Builder
     DDLogInfo(@"Opening: %@",_href);
     [[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:_href]];
+    
     /// Send IBAction
     [self sendAction:self.action to:self.target];
 }
