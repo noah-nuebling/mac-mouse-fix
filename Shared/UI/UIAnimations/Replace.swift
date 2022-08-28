@@ -10,6 +10,7 @@
 
 import Foundation
 import Cocoa
+import CocoaLumberjackSwift
 
 extension NSView {
     
@@ -46,7 +47,7 @@ class ReplaceAnimations {
     
     /// Core function
 
-    @discardableResult static func animate(ogView: NSView, replaceView: NSView, hAnchor: MFHAnchor, vAnchor: MFVAnchor, doAnimate: Bool, onComplete: @escaping () -> () = { }) -> (() -> ()){
+    @discardableResult static func animate(ogView: NSView, replaceView: NSView, hAnchor: MFHAnchor = .center, vAnchor: MFVAnchor = .center, doAnimate: Bool = true, expectingSizeChanges: Bool = true, onComplete: @escaping () -> () = { }) -> (() -> ()){
         
         /// Parameter explanation:
         ///     The animation produces the following changes:
@@ -239,7 +240,10 @@ class ReplaceAnimations {
         /// Animate size of wrapperView
         ///
         let animation: CAAnimation
-        if doAnimate {
+        
+        if !expectingSizeChanges {
+            animation = CABasicAnimation(name: .linear, duration: 0.22)
+        } else if doAnimate {
             animation = CASpringAnimation(speed: 3.7, damping: 1.0)
         } else {
             animation = CABasicAnimation(name: .linear, duration: 0.0)
@@ -256,6 +260,8 @@ class ReplaceAnimations {
                 const.isActive = true
             }
             
+            DDLogDebug("Finished replacing")
+            
             /// Call onComplete
             onComplete()
         })
@@ -265,7 +271,7 @@ class ReplaceAnimations {
         ///
         
         /// Override duration because we're using spring animation now (clean this up)
-        duration = max(animation.duration * 0.55, 0.18)
+        duration = 0.22 /*max(animation.duration * 0.55, 0.18)*/
         
         /// Set initial opacities
         ogImageView.alphaValue = 1.0

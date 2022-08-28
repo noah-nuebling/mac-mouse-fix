@@ -77,7 +77,7 @@ class TrialSectionManager {
             
             assert(self.animationInterruptor == nil)
             
-            self.animationInterruptor = ReplaceAnimations.animate(ogView: ogSection, replaceView: newSection, hAnchor: .center, vAnchor: .center, doAnimate: animate) {
+            self.animationInterruptor = ReplaceAnimations.animate(ogView: ogSection, replaceView: newSection, doAnimate: animate) {
                 
                 DDLogDebug("triall exit finish")
                 
@@ -175,7 +175,7 @@ class TrialSectionManager {
                 
                 assert(self.animationInterruptor == nil)
                 
-                self.animationInterruptor = ReplaceAnimations.animate(ogView: ogSection, replaceView: newSection, hAnchor: .center, vAnchor: .center, doAnimate: true) {
+                self.animationInterruptor = ReplaceAnimations.animate(ogView: ogSection, replaceView: newSection) {
                     
                     DDLogDebug("triall enter finish")
                     

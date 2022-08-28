@@ -14,12 +14,13 @@ import QuartzCore
         self.init()
         let f = CAMediaTimingFunction(name: name)
         self.timingFunction = f
-        
+        self.duration = duration
     }
     convenience init(points c1x: Double, _ c1y: Double, _ c2x: Double, c2y: Double, duration: CFTimeInterval) {
         self.init()
         let f = CAMediaTimingFunction(controlPoints: Float(c1x), Float(c1y), Float(c2x), Float(c2y))
         self.timingFunction = f
+        self.duration = duration
     }
     convenience init(curve: CAMediaTimingFunction, duration: CFTimeInterval) {
         self.init()
@@ -30,7 +31,7 @@ import QuartzCore
 
 @objc extension CASpringAnimation {
     
-    convenience init(speed f: Double, damping z: Double, mass m: Double = 1, distance d: Double = 0, initialVelocity v0: Double = 0) {
+    convenience init(speed f: Double, damping z: Double, mass m: Double = 1, distance d: Double = 1.0, initialVelocity v0: Double = 0) {
         
         /// Like below but with `mass` and `distance` params. Not sure this works.
     
