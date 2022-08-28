@@ -113,13 +113,13 @@ extension MFLicenseReturn: Equatable {
     
 //    @objc static func activateLicense(license: String, licenseConfig: LicenseConfig, completionHandler: @escaping (_ success: Bool, _ error: NSError?) -> ()) {
 //
-//        Gumroad.activateLicense(license, email: "", maxActivations: licenseConfig.maxActivations) { isValidKeyAndEmail, serverResponse, error, urlResponse in
+//        Gumroad.activateLicense(license, email: "", maxActivations: licenseConfig.maxActivations) { isValidKey, serverResponse, error, urlResponse in
 //
-//            if isValidKeyAndEmail {
+//            if isValidKey {
 //                SecureStorage.set("License.key", value: license)
 //            }
 //
-//            completionHandler(isValidKeyAndEmail, error)
+//            completionHandler(isValidKey, error)
 //        }
 //    }
 //
@@ -134,12 +134,11 @@ extension MFLicenseReturn: Equatable {
         /// Get email and license from config file
         
         guard
-            let key = SecureStorage.get("License.key") as! String?,
-            let email = SecureStorage.get("License.email") as? String
+            let key = SecureStorage.get("License.key") as! String?
         else {
             
             /// Return unlicensed
-            let error = NSError(domain: MFLicenseErrorDomain, code: Int(kMFLicenseErrorCodeEmailOrKeyNotFound))
+            let error = NSError(domain: MFLicenseErrorDomain, code: Int(kMFLicenseErrorCodeKeyNotFound))
             completionHandler(kMFLicenseStateUnlicensed, kMFValueFreshnessFresh, error)
             return
         }
@@ -149,9 +148,9 @@ extension MFLicenseReturn: Equatable {
         let maxActivations = licenseConfig.maxActivations
         
         /// Ask gumroad to verify
-        Gumroad.checkLicense(key, email: email, maxActivations: maxActivations) { isValidKeyAndEmail, serverResponse, error, urlResponse in
+        Gumroad.checkLicense(key, maxActivations: maxActivations) { isValidKey, serverResponse, error, urlResponse in
             
-            if isValidKeyAndEmail {
+            if isValidKey {
                 
                 /// Is licensed!
                 completionHandler(kMFLicenseStateLicensed, kMFValueFreshnessFresh, nil)

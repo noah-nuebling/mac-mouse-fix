@@ -43,10 +43,10 @@ typedef struct {
 
 #define MFLicenseErrorDomain @"MFLicenseErrorDomain"
 
-#define kMFLicenseErrorCodeMismatchedEmails 1
+//#define kMFLicenseErrorCodeMismatchedEmails 1 /// Not using emails for authentication anymore. Just licenseKeys
 #define kMFLicenseErrorCodeInvalidNumberOfActivations 2
 #define kMFLicenseErrorCodeGumroadServerResponseError 3
-#define kMFLicenseErrorCodeEmailOrKeyNotFound 4
+#define kMFLicenseErrorCodeKeyNotFound 4
 #define kMFLicenseErrorCodeNoInternetAndNoCache 5
 
 #define MFLicenseConfigErrorDomain @"MFLicenseConfigErrorDomain"

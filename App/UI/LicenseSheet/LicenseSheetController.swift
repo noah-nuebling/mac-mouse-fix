@@ -82,7 +82,7 @@ import Cocoa
         LicenseConfig.get { licenseConfig in
             
             if isDifferent {
-                Gumroad.activateLicense(key, email: "", maxActivations: licenseConfig.maxActivations) { success, serverResponse, error, urlResponse in
+                Gumroad.activateLicense(key, maxActivations: licenseConfig.maxActivations) { success, serverResponse, error, urlResponse in
                     
                     /// Dispatch to main because UI stuff needs to be controlled by main
                     DispatchQueue.main.async {
@@ -100,7 +100,7 @@ import Cocoa
                     }
                 }
             } else {
-                Gumroad.checkLicense(key, email: "", maxActivations: licenseConfig.maxActivations) { success, serverResponse, error, urlResponse in
+                Gumroad.checkLicense(key, maxActivations: licenseConfig.maxActivations) { success, serverResponse, error, urlResponse in
                     
                     DispatchQueue.main.async {
                         

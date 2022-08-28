@@ -184,9 +184,9 @@ CGEventRef _Nullable testCallback(CGEventTapProxy proxy, CGEventType type, CGEve
             }];
         }];
         
-    //    [Gumroad checkLicense:license email:email completionHandler:^(BOOL isValidKeyAndEmail, NSDictionary<NSString *,id> * _Nullable serverResponse, NSError * _Nullable error, NSURLResponse * _Nullable urlResponse) {
+    //    [Gumroad checkLicense:license email:email completionHandler:^(BOOL isValidKey, NSDictionary<NSString *,id> * _Nullable serverResponse, NSError * _Nullable error, NSURLResponse * _Nullable urlResponse) {
     //
-    //            DDLogDebug(@"License check result - isValidKeyAndEmail: %d, error: %@", isValidKeyAndEmail, error);
+    //            DDLogDebug(@"License check result - isValidKey: %d, error: %@", isValidKey, error);
     //    }];
 //        [Licensing licensingStateWithCompletionHandler:^(MFLicenseReturn licensing, NSError *error) {
 //            DDLogDebug(@"License check result - state: %d, currentDay: %d, trialDays: %d, error: %@", licensing.state, licensing.daysOfUse, licensing.trialDays, error);

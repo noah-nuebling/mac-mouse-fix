@@ -19,21 +19,21 @@ import CocoaLumberjackSwift
     /// Interface
     ///     Use License.swift instead of using this directly
     
-    @objc static func activateLicense(_ key: String, email: String, maxActivations: Int, completionHandler: @escaping (_ isValidKeyAndEmail: Bool, _ serverResponse: [String: Any]?, _ error: NSError?, _ urlResponse: URLResponse?) -> ()) {
+    @objc static func activateLicense(_ key: String, maxActivations: Int, completionHandler: @escaping (_ isValidKey: Bool, _ serverResponse: [String: Any]?, _ error: NSError?, _ urlResponse: URLResponse?) -> ()) {
         
-        _checkLicense(key, email: email, maxActivations: maxActivations, incrementUsageCount: true, completionHandler: completionHandler)
+        _checkLicense(key, maxActivations: maxActivations, incrementUsageCount: true, completionHandler: completionHandler)
     }
     
-    @objc static func checkLicense(_ key: String, email: String, maxActivations: Int, completionHandler: @escaping (_ isValidKeyAndEmail: Bool, _ serverResponse: [String: Any]?, _ error: NSError?, _ urlResponse: URLResponse?) -> ()) {
+    @objc static func checkLicense(_ key: String, maxActivations: Int, completionHandler: @escaping (_ isValidKey: Bool, _ serverResponse: [String: Any]?, _ error: NSError?, _ urlResponse: URLResponse?) -> ()) {
         
-        _checkLicense(key, email: email, maxActivations: maxActivations, incrementUsageCount: false, completionHandler: completionHandler)
+        _checkLicense(key, maxActivations: maxActivations, incrementUsageCount: false, completionHandler: completionHandler)
     }
     
     //
     // MARK: Core - lvl 2
     //
     
-    private static func _checkLicense(_ key: String, email: String, maxActivations: Int, incrementUsageCount: Bool, completionHandler: @escaping (_ isValidKeyAndEmail: Bool, _ serverResponse: [String: Any]?, _ error: NSError?, _ urlResponse: URLResponse?) -> ()) {
+    private static func _checkLicense(_ key: String, maxActivations: Int, incrementUsageCount: Bool, completionHandler: @escaping (_ isValidKey: Bool, _ serverResponse: [String: Any]?, _ error: NSError?, _ urlResponse: URLResponse?) -> ()) {
         
         /// TODO: We're not using the email parameter in Gumroad.swift and we're just ignoring it. -> Remove it
         
@@ -51,6 +51,8 @@ import CocoaLumberjackSwift
             assert(isValidKey == (error == nil))
             
             /// Guard wrong email
+            ///     Not using emails anymore because it's a little annoying to the user and doesn't really do anything to prevent piracy I think
+            ///     -> Remove this. (The emailForKey param in the getLicenseInfo callback can also be removed)
             
 //            if email != emailForKey {
 //
