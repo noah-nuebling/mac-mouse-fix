@@ -214,6 +214,33 @@ class AboutTabController: NSViewController {
                 make.leading.equalTo(payButton.snp.leading)
             }
             
+            /// Create Apple Pay badge
+            ///     The minification filter and rasterization turn on anti aliasing.
+            ///     Setting minificationFilterBias to -1 is placebo I'm pretty sure.
+            ///     We might want to also apply this technique to other images in the app
+            
+            let image = NSImage(named: "ApplePay")!
+            let badge = NSImageView(image: image)
+            
+            badge.wantsLayer = true
+            badge.layer!.minificationFilter = .trilinear
+            badge.layer!.minificationFilterBias = -1
+            badge.layer!.shouldRasterize = true
+            badge.layer!.rasterizationScale = 4.0
+
+            if #available(macOS 10.14, *) {
+                badge.contentTintColor = .labelColor
+            }
+            
+            
+            /// Insert Apple Pay badge into wrapper
+            self.payButtonWrapper!.addSubview(badge)
+            badge.snp.makeConstraints { make in
+                make.centerY.equalTo(payButton.snp.centerY)
+                make.leading.equalTo(payButton.snp.trailing).offset(9)
+                make.width.equalTo(20)
+            }
+            
             /// Insert wrapper into UI
             self.payButtonwrapperConstraints = transferredSuperViewConstraints(fromView: self.moneyCellLink, toView: self.payButtonWrapper!, transferSizeConstraints: false)
             self.moneyCell.addSubview(self.payButtonWrapper!)
