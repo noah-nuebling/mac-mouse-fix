@@ -28,5 +28,6 @@ class Randomizer: NSObject {
         }
         
         assert(false)
+        fatalError()
     }
 }

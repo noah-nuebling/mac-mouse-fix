@@ -46,6 +46,7 @@ func replaceViewTransferringConstraints(_ srcView: NSView, replacement dstView: 
     /// Get superview
     guard let sup = srcView.superview else {
         assert(false)
+        return
     }
     
     /// Get transferred constraints
