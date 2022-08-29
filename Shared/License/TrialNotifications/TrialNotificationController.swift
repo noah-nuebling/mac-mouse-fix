@@ -34,8 +34,9 @@ class TrialNotificationController: NSWindowController {
     
     /// Vars
     var trackingArea: NSTrackingArea? = nil
-    var darkModeObservation: Any? = nil
+    var darkModeObservation: NSKeyValueObservation? = nil
     var trialSectionManager: TrialSectionManager! = nil
+    var spaceSwitchObservation: Any? = nil
     
     /// Init
     override init(window: NSWindow?) {
@@ -68,6 +69,12 @@ class TrialNotificationController: NSWindowController {
         /// Implement this method to handle any initialization after your window controller's window has been loaded from its nib file.
     }
     
+    deinit {
+        if let obs = self.spaceSwitchObservation {
+            NSWorkspace.shared.notificationCenter.removeObserver(obs)
+        }
+    }
+    
     /// Interface
     
     var firstAppearance = true
@@ -95,8 +102,9 @@ class TrialNotificationController: NSWindowController {
             trialSection.superview!.layoutSubtreeIfNeeded()
             
             /// Setup tracking area
-            ///     It's in the bottom section below the horizontal line. 20 is the padding around the trialSection.
-            ///     It's in the left half of the window. So where the trial section is. Not in the right half where the pay button is.
+            ///     Explanation for the width and height calculations:
+            ///     - It's in the bottom section below the horizontal line. 20 is the padding around the trialSection.
+            ///     - It's in the left half of the window. So where the trial section is. Not in the right half where the pay button is.
             ///
             
             let trackingRect = NSRect(x: 0, y: 0, width: window.frame.width / 2.0, height: 20 + trialSection.frame.height + 20)
@@ -149,6 +157,18 @@ class TrialNotificationController: NSWindowController {
             effect.wantsLayer = true
             effect.state = .active
             
+            /// HACK:
+            ///     Observe space switches, and then do some random update on the effectView.
+            ///     When the space begins to switch, the effectView loses its translucency. This doesn't happen for Calendar.app popovers, so there must be a way to turn this off. Edit: Actually the Calendar.app popovers don't follow you to the current space and this problem only started occuring when we made the window follow you to the current space. So it's not quite comparable.
+            ///     Our hack solution is to observe space switches and then do some random update on the effectView because that seems to enable the translucency again.
+            ///     This is not quite perfect because __during__ the space switch, the translucency will still be disabled. But it's barely noticably.
+            self.spaceSwitchObservation = NSWorkspace.shared.notificationCenter.addObserver(forName: NSWorkspace.activeSpaceDidChangeNotification, object: nil, queue: OperationQueue.main) { notification in
+                
+                DDLogError("Space did change")
+                effect.state = .inactive
+                effect.state = .active
+            }
+            
             /// Set effectView border
             ///     This is trying to emulate the border that NSWindows have in darkmode under Ventura. Little hacky and ugly because we're hardcoding the color. Nicer solution might be to somehow change the borderRadius on the NSWindow and then use the NSWindow background directly, instead of making the window background invisible and using the effectView as a background.
             
@@ -168,9 +188,9 @@ class TrialNotificationController: NSWindowController {
                 
                 updateBorder()
                 
-                darkModeObservation = NSApp.observe(\.effectiveAppearance) { app, change in
+                darkModeObservation = NSApp.observe(\.effectiveAppearance, changeHandler: { app, change in
                     updateBorder()
-                }
+                })
             }
 
             /// Set corner radius
@@ -240,7 +260,9 @@ class TrialNotificationController: NSWindowController {
         
         /// Animate
         setFrameWithCoolAnimation(start, end, window, onComplete: {
-            super.close()
+            DispatchQueue.main.async {
+                super.close()
+            }
         })
     }
     
