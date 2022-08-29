@@ -34,6 +34,8 @@ class TrialSectionManager {
     
     func startManaging(licenseConfig: LicenseConfig, license: MFLicenseReturn) {
         
+        /// Init trial section
+        
         /// Setup image
         if #available(macOS 11.0, *) {
             currentSection.imageView!.symbolConfiguration = .init(pointSize: 13, weight: .regular, scale: .large)

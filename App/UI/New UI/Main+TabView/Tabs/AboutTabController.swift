@@ -93,7 +93,7 @@ class AboutTabController: NSViewController {
             /// Replace payButton with milkshake link
             ///
             
-            /// Note: This only does something if the UI was first updated in the unlicensed state and now it's going back to licensed state. When we hit this straight after loading from IB, the payButtonWrapper will just be nil and the moneyCellLink will be unhidden already, and the moneyCellImage will be the milkshake already, so this won't do anything.
+            /// Note: This only does something if the UI was first updated in the unlicensed state and now it's going back to licensed state. When we hit this straight after loading from IB, the payButtonWrapper will just be nil and the moneyCellLink will be unhidden already, and the moneyCellImage will be the milkshake already, and the trackingArea will be nil (I think?), so this won't do anything.
             
             /// Deactivate tracking area
             if let trackingArea = self.trackingArea {
@@ -101,7 +101,6 @@ class AboutTabController: NSViewController {
             }
             
             /// Show link and hide payButton
-            
             self.payButtonWrapper?.isHidden = true
             self.moneyCellLink.isHidden = false
             
@@ -118,16 +117,17 @@ class AboutTabController: NSViewController {
             /// Replace trial section with thank you section
             ///
             
-            /// Stop managing
+            /// Stop managing trial section
+            ///     So we can do manual manipulations
             trialSectionManager?.stopManaging()
             
             /// HACK: Turn of clipping
             ///     The fact that this is necessary, means there's something I don't understand.
             ///     Explanation:
             ///         - The clipping is originally turned off via User Defined Runtime Attributes in IB. Then the view is saved, swapped out with animations on mouse hover, and restored by trialSectionManager. We know it's restored at this point because we just called trialSectionManager.stopManaging(). But still the clipping is reset somehow.
-            ///     Ideas:
+            ///     Ideas for why this might be necessary:
             ///         - Maybe we're not correctly swapping back to the original view from interface builder.
-            ///         - Maybe the clipping settings are not saved when trialSectionManager serializes the view to save it.
+            ///         - Maybe the clipping settings are not saved when trialSectionManager serializes the view to save and restore it.
             trialSectionManager?.currentSection.imageView?.layer?.masksToBounds = false
             
             /// Randomly select 1 out of 25+1 messages
@@ -145,7 +145,7 @@ class AboutTabController: NSViewController {
                 /// Rare
                 (("🔥", NSLocalizedString("thanks.06", comment: "First draft: Awesome taste in mouse fixing software ;)")), weight: 0.1),
                 (("💙", ""), weight: 0.1),
-                ((":)", NSLocalizedString("thanks.08", comment: "First draft: <- My face when I saw you bought Mac Mouse Fix")), weight: 0.1),
+                ((":)", NSLocalizedString("thanks.08", comment: "First draft: <- My face when I saw you bought Mac Mouse Fix")), weight: 0.1), ///  TODO: The smiley is black in darkmode
                 
                 /// Very rare
                 (("👽", NSLocalizedString("thanks.09", comment: "First draft: Share it with your Spacebook friends!")), weight: 0.05),
@@ -167,7 +167,7 @@ class AboutTabController: NSViewController {
                 (("🤍", ""), weight: 0.01),
                 (("😎", NSLocalizedString("thanks.24", comment: "First draft: Oh you're using Mac Mouse Fix? You must be pretty cool.")), weight: 0.01),
                 (("🌏", NSLocalizedString("thanks.25", comment: "First draft: First the mice, then the world!! >:)")), weight: 0.01),
-                //                    (("🤏", "Peepee size of Mac Mouse Fix haters!"), weight: 0.01), /// Too weird
+//                    (("🤏", "Peepee size of Mac Mouse Fix haters!"), weight: 0.01),
                 
                 /// Mom
                 (("💖❤️❤️❤️", "Für Beate, meine Lieblingsperson :)"), weight: 0.005),
@@ -199,13 +199,20 @@ class AboutTabController: NSViewController {
             
             /// Set textfield height
             ///     Necessary for y centering. Not sure why
+            ///     Edit: Not necessary anymore since we're using the trialSectionManager. Not sure why.
             
 //            trialSectionManager!.trialSection.textField!.heightAnchor.constraint(equalToConstant: 20).isActive = true
 
-            /// Setup tracking area
             
-            trackingArea = NSTrackingArea(rect: self.view.frame, options: [.activeInKeyWindow, .mouseEnteredAndExited], owner: self)
-            self.view.addTrackingArea(trackingArea!) 
+            /// Update layout
+            ///     So tracking area frames / bounds are correct
+            trialSectionManager?.currentSection.needsLayout = true
+            trialSectionManager?.currentSection.superview?.needsLayout = true
+            trialSectionManager?.currentSection.superview?.layoutSubtreeIfNeeded()
+            
+            /// Setup tracking area
+            trackingArea = NSTrackingArea(rect: trialSectionManager!.currentSection.superview!.bounds, options: [.activeInKeyWindow, .mouseEnteredAndExited], owner: self)
+            trialSectionManager!.currentSection.superview!.addTrackingArea(trackingArea!)
             
             ///
             /// Set up money section
@@ -225,12 +232,14 @@ class AboutTabController: NSViewController {
             
             /// Create paybutton
             
-            let payButton = PayButton(title: licenseConfig.formattedPrice) {
-                guard let url = URL(string: licenseConfig.quickPayLink) else { return }
+            let payButton = PayButton(title: licenseConfig.formattedPrice, action: {
+                
+                guard let url = URL(string: licenseConfig.payLink) else { return }
                 NSWorkspace.shared.open(url)
-            }
+            })
             
             /// Insert payButton into wrapper
+            ///     We need a wrapper because the superView wants its subview to be full width, But we want the payButton to be left-aligned
             
             self.payButtonWrapper = NSView()
             self.payButtonWrapper!.translatesAutoresizingMaskIntoConstraints = false
@@ -245,7 +254,6 @@ class AboutTabController: NSViewController {
             }
             
             /// Create Apple Pay badge
-            
             let image = NSImage(named: "ApplePay")!
             let badge = NSImageView(image: image)
             
@@ -254,7 +262,6 @@ class AboutTabController: NSViewController {
             if #available(macOS 10.14, *) {
                 badge.contentTintColor = .labelColor
             }
-            
             
             /// Insert Apple Pay badge into wrapper
             self.payButtonWrapper!.addSubview(badge)

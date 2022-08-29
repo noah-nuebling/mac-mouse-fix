@@ -87,10 +87,21 @@ class TrialNotificationController: NSWindowController {
             /// Enable antialiasing on the ApplePayBadge
             applePayBadge.enableAntiAliasing()
             
-            /// Setup tracking area
+            /// Update layout
+            ///     So the tracking areas are correct
             
-            trackingArea = NSTrackingArea(rect: window.contentView!.frame, options: [.activeAlways, .mouseEnteredAndExited], owner: self)
-            window.contentView!.addTrackingArea(trackingArea!)
+            trialSection.needsLayout = true
+            trialSection.superview!.needsLayout = true
+            trialSection.superview!.layoutSubtreeIfNeeded()
+            
+            /// Setup tracking area
+            ///     It's in the bottom section below the horizontal line. 20 is the padding around the trialSection.
+            ///     It's in the left half of the window. So where the trial section is. Not in the right half where the pay button is.
+            ///
+            
+            let trackingRect = NSRect(x: 0, y: 0, width: window.frame.width / 2.0, height: 20 + trialSection.frame.height + 20)
+            trackingArea = NSTrackingArea(rect: trackingRect, options: [.activeAlways, .mouseEnteredAndExited], owner: self)
+            trialSection.superview!.addTrackingArea(trackingArea!)
             
             /// Init the payButton
             /// May be more elegant to do this from IB directly but whatever

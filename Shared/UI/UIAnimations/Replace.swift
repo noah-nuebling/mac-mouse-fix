@@ -49,6 +49,13 @@ class ReplaceAnimations {
 
     @discardableResult static func animate(ogView: NSView, replaceView: NSView, hAnchor: MFHAnchor = .center, vAnchor: MFVAnchor = .center, doAnimate: Bool = true, expectingSizeChanges: Bool = true, onComplete: @escaping () -> () = { }) -> (() -> ()){
         
+        /// Before you use ReplaceAnimations in any further places:
+        /// __! Make this integrate into StackViews !__
+        ///     It was a big hassle making this work in AboutTab and TrialNotification having to TrialSectionManager and TrialSection.
+        ///     Making this part of StackViews would:
+        ///     - Remove the restriction of only one ReplaceAnimation at a time in a group of views that have constraints between each other. That's because we wouldn't have to search and manipulate all the constraints that act on the view that's swapped out, and instead we would only care about our size and the stackViiew would manage the rest.
+        ///     - Preventing raceConditions & managing the storage of the views to swap out &  interrupting animations would only have to be solved once and then you could use a simple interface everywhere else.
+        
         /// Parameter explanation:
         ///     The animation produces the following changes:
         ///         1. Size change -> The 'feel' is controlled by `animationCurve`
@@ -112,6 +119,7 @@ class ReplaceAnimations {
         ///
         /// Measure replaceView size in layout
         ///
+        
         let replaceConstraints = transferredSuperViewConstraints(fromView: ogView, toView: replaceView, transferSizeConstraints: false)
         ogView.superview?.replaceSubview(ogView, with: replaceView)
         for cnst in replaceConstraints {
