@@ -51,6 +51,8 @@ class TrialNotificationController: NSWindowController {
                 self.window = topLevelObjects![1] as! NSWindow
             }
             
+            self.window?.collectionBehavior = .canJoinAllSpaces
+            
         } else {
             super.init(window: window)
         }
