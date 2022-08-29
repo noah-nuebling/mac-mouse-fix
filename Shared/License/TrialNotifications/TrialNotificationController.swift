@@ -136,13 +136,18 @@ class TrialNotificationController: NSWindowController {
             
             /// Create effectView
             ///     HACK: Using contentView.frame instead of window.frame here. Not sure why works.
+            ///     Material .popover matches real notifications and looks great, but in darkmode it makes our links unreadable over a bright background. Calendar.app also uses the .popover material and it displays links. It fixes this issue by using a much brighter link color. But we're just using a darker, less translucent matrial as and easy fix.
             
             let windowFrame = window.contentView!.frame
             let effect = NSVisualEffectView(frame: windowFrame)
             effect.blendingMode = .behindWindow
-            effect.state = .active
-            effect.material = .popover /**.underWindowBackground*/
+            if #available(macOS 10.14, *) {
+                effect.material = .underWindowBackground
+            } else {
+                effect.material = .popover /**.underWindowBackground*/
+            }
             effect.wantsLayer = true
+            effect.state = .active
             
             /// Set effectView border
             ///     This is trying to emulate the border that NSWindows have in darkmode under Ventura. Little hacky and ugly because we're hardcoding the color. Nicer solution might be to somehow change the borderRadius on the NSWindow and then use the NSWindow background directly, instead of making the window background invisible and using the effectView as a background.

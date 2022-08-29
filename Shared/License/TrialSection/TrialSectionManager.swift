@@ -12,6 +12,10 @@ import CocoaLumberjackSwift
 
 class TrialSectionManager {
     
+    /// Constants
+    
+    
+    
     /// Vars
     
     var currentSection: TrialSection
