@@ -8,18 +8,24 @@
 //
 
 /// Testing checklist
-/// - `[x]` Increments daysOfUse when __scrolling__ after setting system to new date
-/// - `[ ]` Increments daysOfUse using __modifiedScroll__ with kb mods after deleting lastUseDate
-/// - `[ ]` Increments daysOfUse using __modifiedScroll__ with button mods after deleting lastUseDate
-/// - `[ ]` Increments daysOfUse when __clicking, holding and clicking with a doubleClick action set up__ after deleting lastUseDate
+/// - `[x]` Increments daysOfUse using __normal scrolling__ after deleting lastUseDate
+/// - `[x]` Increments daysOfUse using __modifiedScroll with kb mods__ after deleting lastUseDate
+/// - `[x]` Increments daysOfUse using __modifiedScroll with button mods__ after deleting lastUseDate
+/// - `[ ]` Increments daysOfUse when using simple actions after deleting lastUseDate
+///     - `[x]`  clicking
+///     - `[x]` holding
+///     - `[x]` clicking when a doubleClick action is set up
+///         -> All of these seems to only work the second time after startup (on 01.09.)
 /// - `[ ]` Increments daysOfUse when clicking and __dragging__ after deleting lastUseDate
-/// - `[x]` Increments daysOfUse when scrolling after deleting lastUseDate
-/// - `[x]` Doesn't update daysOfUse more than once if you don't change the date
-/// - `[ ]` Increments daysOfUse when the day changes without restarting the app
+/// - `[x]` Increments daysOfUse when scrolling after setting system to __new date__
+/// - `[x]` Increments daysOfUse when scrolling after __deleting lastUseDate__
+/// - `[x]` Doesn't update daysOfUse more than once if you __don't change the date__
+/// - `[ ]` Increments daysOfUse when the __day changes__ without restarting the app
 
 /// - `[ ]` Doesn't increment daysOfUse when using Trackpad
 
 import Cocoa
+import CocoaLumberjackSwift
 
 @objc class Trial: NSObject {
     
@@ -32,7 +38,12 @@ import Cocoa
     private var trialIsActive: Bool
     
     /// Init
-    override init() {
+    
+    @objc static func load_Manual() {
+        /// Need to use loadManual() because the initialization does network calls and is async. So we need initialization to be done way before handleUse() is called for the first time, because otherwise the trialIsActive and hasBeenUsedToday flags will be wrong.
+        let _ = Trial.shared
+    }
+    @objc override init() {
         
         /// Garbage init
         daily = Timer()
@@ -106,6 +117,7 @@ import Cocoa
     
     /// Vars
     ///     Storing the daysOfUse in SecureStorage so it doesn't get reset on uninstall by apps like AppCleaner by Freemacsoft.
+    ///     At the time of writing, this is the ony part of Trial.swift that is meant to be used by the mainApp.
     
     @objc static var daysOfUse: Int {
         get {
@@ -127,6 +139,9 @@ import Cocoa
     
     /// Interface for Helper
     @objc func handleUse() {
+        
+        /// Debug
+        DDLogDebug("handling use in trial")
         
         /// Guard not running helper
         assert(SharedUtility.runningHelper())
