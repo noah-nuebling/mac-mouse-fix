@@ -24,7 +24,7 @@
             <windowStyleMask key="styleMask" titled="YES" fullSizeContentView="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
             <rect key="contentRect" x="196" y="240" width="391" height="164"/>
-            <rect key="screenRect" x="0.0" y="0.0" width="2560" height="1415"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="1440" height="875"/>
             <view key="contentView" horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="se5-gp-TjO">
                 <rect key="frame" x="0.0" y="0.0" width="394" height="176"/>
                 <subviews>
@@ -66,7 +66,7 @@
                                     <size key="maxSize" width="357" height="10000000"/>
                                     <attributedString key="textStorage">
                                         <fragment>
-                                            <string key="content">&lt;Hi! You've been using Mac Mouse Fix for 1 month now. I hope you're enjoying it!
+                                            <string key="content">&lt;You've been using Mac Mouse Fix for 1 month now. I hope you're enjoying it!
 
 If you want to keep using Mac Mouse Fix, you can buy it now.&gt;</string>
                                             <attributes>
