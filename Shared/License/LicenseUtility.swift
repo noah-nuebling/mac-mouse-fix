@@ -28,7 +28,7 @@ import Cocoa
         if daysOfUse > trialDays {
             /// Trial expired
             
-            base = NSLocalizedString("trial-counter.expired", comment: "First draft: Free days are used up")
+            base = NSLocalizedString("trial-counter.expired", comment: "First draft: Free days are **used up**")
             
         } else {
             /// Trial still active

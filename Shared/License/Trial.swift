@@ -11,18 +11,17 @@
 /// - `[x]` Increments daysOfUse using __normal scrolling__ after deleting lastUseDate
 /// - `[x]` Increments daysOfUse using __modifiedScroll with kb mods__ after deleting lastUseDate
 /// - `[x]` Increments daysOfUse using __modifiedScroll with button mods__ after deleting lastUseDate
-/// - `[ ]` Increments daysOfUse when using simple actions after deleting lastUseDate
+/// - `[x]` Increments daysOfUse when using simple actions after deleting lastUseDate
 ///     - `[x]`  clicking
 ///     - `[x]` holding
 ///     - `[x]` clicking when a doubleClick action is set up
-///         -> All of these seems to only work the second time after startup (on 01.09.)
-/// - `[ ]` Increments daysOfUse when clicking and __dragging__ after deleting lastUseDate
+/// - `[x]` Increments daysOfUse when clicking and __dragging__ after deleting lastUseDate
 /// - `[x]` Increments daysOfUse when scrolling after setting system to __new date__
-/// - `[x]` Increments daysOfUse when scrolling after __deleting lastUseDate__
 /// - `[x]` Doesn't update daysOfUse more than once if you __don't change the date__
-/// - `[ ]` Increments daysOfUse when the __day changes__ without restarting the app
+/// - `[x]` Increments daysOfUse when the __day changes__ without restarting the app
+///     -> We tested this by setting the daily timer to 60 seconds. That successfully incremented the counter. Also tested by starting the helper before 00:00 and then using it after 00:00. That worked as well!
 
-/// - `[ ]` Doesn't increment daysOfUse when using Trackpad
+/// - `[x]` Doesn't increment daysOfUse when using Trackpad
 
 import Cocoa
 import CocoaLumberjackSwift
@@ -99,11 +98,14 @@ import CocoaLumberjackSwift
                     
                     /// Init daily timer
                     ///     Notes:
-                    ///     - Is fired in 24 hours and then in 24 hour intervals after
-                    ///     - Might be smart to fire at 00:00 when the days change? But probably doesn't matter.
+                    ///     - Is fired at 00:00 on the next day, and in 24 hour periods after that. We could also just do 24 hour periods without making sure it's always fired at 00:00. But I think it's a little nicer and more consistent from a user experience standpoint to have it reset at 00:00.
+                    ///     - When the computer sleeps the timer is not fired. But it's fired after it wakes up. This shouldn't cause any problems.
                     ///
-                    let secondsPerDay = 1*24*60*60
-                    self.daily = Timer(timeInterval: TimeInterval(secondsPerDay), repeats: true) { timer in
+                    let secondsPerDay = 24*60*60
+                    let nextDay = Date(timeIntervalSinceNow: TimeInterval(secondsPerDay))
+                    let nextDayBreak = Calendar.current.startOfDay(for: nextDay)
+                    self.daily = Timer(fire: nextDayBreak, interval: TimeInterval(secondsPerDay), repeats: true) { timer in
+                        DDLogInfo("Daily trial timer fired")
                         self.hasBeenUsedToday = false
                     }
                     
@@ -153,6 +155,7 @@ import CocoaLumberjackSwift
         if hasBeenUsedToday { return }
         
         /// Update state
+        ///     Should we check whether the date has actually changed?
         hasBeenUsedToday = true
         Trial.lastUseDate = Date(timeIntervalSinceNow: 0)
         Trial.daysOfUse += 1

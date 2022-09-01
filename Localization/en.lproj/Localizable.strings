@@ -379,7 +379,7 @@
 /* First draft: Day **%d/%d** of your test period */
 "trial-counter.active" = "";
 
-/* First draft: Test period is over */
+/* First draft: Free days are **used up** */
 "trial-counter.expired" = "";
 
 /* First draft: Activate License */
