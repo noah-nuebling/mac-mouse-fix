@@ -28,7 +28,11 @@ extension MFLicenseReturn: Equatable {
     
     // MARK: Interface
     
-    @objc static func runCheckAndDisplayUI(licenseConfig: LicenseConfig, triggeredByUser: Bool) {
+    @objc static func runCheckAndReact(licenseConfig: LicenseConfig, triggeredByUser: Bool) {
+        /// This runs a check and then if necessary it:
+        /// - ... shows some feedback about the licensing state to the user
+        /// - ... locks down the helper
+        
         
         /// Get licensing state
         
@@ -54,15 +58,29 @@ extension MFLicenseReturn: Equatable {
                     if triggeredByUser {
                         
                         /// Display more complex UI
-                        /// ...
+                        ///     This is unused so far
+                        
+                        /// Validate
                         assert(SharedUtility.runningMainApp())
+                        
                         
                         
                     } else {
                         
                         /// Not triggered by user -> the users workflow is disruped -> make it as short as possible
-                        /// ...
+                        
+                        /// Validate
                         assert(SharedUtility.runningHelper())
+                        
+                        #if IS_HELPER
+                        
+                        /// Show trialNotification
+                        TrialNotificationController.shared.open(licenseConfig: licenseConfig, license: license, triggeredByUser: triggeredByUser)
+                        
+                        /// Lock helper
+                        HelperState.lockDown()
+                        
+                        #endif
                         
                     }
                     

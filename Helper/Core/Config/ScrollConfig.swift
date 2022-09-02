@@ -50,8 +50,10 @@ import CocoaLumberjackSwift
     // MARK: General
     
     
-    @objc lazy var u_smoothEnabled: Bool = { c("smooth") as! Bool && !u_killSwitch }()
+    @objc lazy var u_smoothEnabled: Bool = { c("smooth") as! Bool && !killSwitch }()
+    
     @objc private var u_killSwitch: Bool { config("Other.scrollKillSwitch") as? Bool ?? false } /// Not cached cause it's just used to calc the other vars
+    @objc private var killSwitch: Bool { u_killSwitch || HelperState.isLockedDown }
     
     // MARK: Invert Direction
     
@@ -287,7 +289,7 @@ import CocoaLumberjackSwift
     @objc lazy var u_precise: Bool = { c("precise") as! Bool }()
     
     @objc lazy var useAppleAcceleration: Bool = {
-        u_speed == "system" || u_killSwitch
+        u_speed == "system" || killSwitch
     }() /// Ignore MMF acceleration algorithm and use values provided by macOS
     
     @objc lazy var scrollSensitivity: MFScrollSensitivity = {

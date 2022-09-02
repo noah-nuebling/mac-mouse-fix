@@ -28,7 +28,7 @@ import CocoaLumberjackSwift
         
         /// Get currently active scroll remaps
         
-        let modifyingDevice: Device = State.activeDevice!;
+        let modifyingDevice: Device = HelperState.activeDevice!;
         let activeModifiers = ModifierManager.getActiveModifiers(for: modifyingDevice, event: event)
         let baseRemaps = TransformationManager.remaps();
         

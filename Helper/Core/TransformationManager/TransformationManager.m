@@ -19,6 +19,7 @@
 #import "Constants.h"
 #import "Config.h"
 #import "SharedMessagePort.h"
+#import "Mac_Mouse_Fix_Helper-Swift.h"
 
 @implementation TransformationManager
 
@@ -116,7 +117,9 @@ static NSDictionary *_remaps;
     /// Get values from action table (button remaps)
     ///
     
-    if ([(id)config(@"Other.buttonKillSwitch") boolValue]) {
+    BOOL killSwitch = [(id)config(@"Other.buttonKillSwitch") boolValue] || HelperState.isLockedDown;
+    
+    if (killSwitch) {
         /// TODO: Turn off button interception completely (generally when the remaps dict is empty)
     } else {
         

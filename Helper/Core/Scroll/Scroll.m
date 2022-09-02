@@ -120,7 +120,7 @@ void resetState_Unsafe(void) {
     /// Whether to enable or enable scrolling interception
     ///     Call this whenever a value which the decision depends on changes
     
-    BOOL disableAll = !DeviceManager.devicesAreAttached /*|| _scrollConfig.killSwitch*/; /// We decide we still want to invert scroll direction when `killSwitch` is active
+    BOOL disableAll = !DeviceManager.devicesAreAttached /*|| _scrollConfig.killSwitch*/; /// We decided we still want to invert scroll direction when `killSwitch` is active
     
     if (disableAll) {
         /// Disable scroll interception
@@ -285,7 +285,7 @@ static void heavyProcessing(CGEventRef event, int64_t scrollDeltaAxis1, int64_t 
         [Trial.shared handleUse];
         
         /// Update active device
-        [State updateActiveDeviceWithEvent:event];
+        [HelperState updateActiveDeviceWithEvent:event];
         
         /// Update application Overrides
         [ScrollUtility updateMouseDidMoveWithEvent:event];

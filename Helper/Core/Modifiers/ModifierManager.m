@@ -116,7 +116,7 @@ static void toggleModifierEventTapBasedOnRemaps(NSDictionary *remaps) {
 CGEventRef _Nullable handleKeyboardModifiersHaveChanged(CGEventTapProxy proxy, CGEventType type, CGEventRef event, void *userInfo) {
 
     /// Get mouse
-    Device *activeDevice = State.activeDevice;
+    Device *activeDevice = HelperState.activeDevice;
     
     /// Get activeModifiers
     ///     Need to pass in event here as source for keyboard modifers, otherwise the returned kb-modifiers won't be up-to-date.

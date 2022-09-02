@@ -50,11 +50,11 @@ import CocoaLumberjackSwift
         if mouseDown && !clickCycleIsActive {
             
             /// Update active device
-            State.updateActiveDevice(event: event)
+            HelperState.updateActiveDevice(event: event)
             
             /// Update modifications
             let remaps = TransformationManager.remaps() /// This is apparently incredibly slow because Swift needs to convert the dict.
-            self.modifiers = ModifierManager.getActiveModifiers(for: State.activeDevice!, event: event) /// Why aren't we just using `device` here?
+            self.modifiers = ModifierManager.getActiveModifiers(for: HelperState.activeDevice!, event: event) /// Why aren't we just using `device` here?
             self.modifications = RemapSwizzler.swizzleRemaps(remaps, activeModifiers: modifiers)
             
             /// Get max clickLevel

@@ -75,7 +75,7 @@ import CocoaLumberjackSwift
                 } else if license.daysOfUse > license.trialDays {
                     
                     /// Not licensed and trial expired -> do nothing
-                    ///     Trial expired UI is handeled by Licensing.swift
+                    ///     In this case AccessibilityCheck.m will perform the lockDown, by calling `License.runCheckAndReact()`
                     
                 } else {
                     
@@ -157,14 +157,14 @@ import CocoaLumberjackSwift
         /// Update state
         ///     Should we check whether the date has actually changed?
         hasBeenUsedToday = true
-        Trial.lastUseDate = Date(timeIntervalSinceNow: 0)
+        Trial.lastUseDate = Date(timeIntervalSinceNow: 0.0)
         Trial.daysOfUse += 1
         
         /// Get updated licenseConfig
         LicenseConfig.get { licenseConfig in
             
-            /// Display UI
-            License.runCheckAndDisplayUI(licenseConfig: licenseConfig, triggeredByUser: false)
+            /// Display UI & lock down helper if necessary
+            License.runCheckAndReact(licenseConfig: licenseConfig, triggeredByUser: false)
         }
     }
 }

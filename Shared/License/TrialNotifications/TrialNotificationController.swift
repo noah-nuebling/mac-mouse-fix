@@ -79,7 +79,7 @@ class TrialNotificationController: NSWindowController {
     
     var firstAppearance = true
     
-    @objc func open(licenseConfig: LicenseConfig, license: MFLicenseReturn) {
+    @objc func open(licenseConfig: LicenseConfig, license: MFLicenseReturn, triggeredByUser: Bool) {
         
         /// Unwrap window
         
@@ -113,8 +113,10 @@ class TrialNotificationController: NSWindowController {
             
             /// Init the payButton
             /// May be more elegant to do this from IB directly but whatever
+            ///     Use the quickPayLink for ASAP checkout if the users' flow has been interrupted
             payButton.realInit(title: licenseConfig.formattedPrice) {
-                NSWorkspace.shared.open(URL(string: licenseConfig.quickPayLink)!)
+                let link = triggeredByUser ? licenseConfig.payLink : licenseConfig.quickPayLink
+                NSWorkspace.shared.open(URL(string: link)!)
             }
             
             /// Init the trialSection

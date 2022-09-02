@@ -94,7 +94,9 @@ CGEventRef _Nullable testCallback(CGEventTapProxy proxy, CGEventType type, CGEve
 
 + (void)load {
     
+    ///
     /// Testing & Debug
+    ///
     
 //    [GlobalDefaults applyDoubleClickThreshold];
 //    PointerConfig.customTableBasedAccelCurve;
@@ -102,7 +104,10 @@ CGEventRef _Nullable testCallback(CGEventTapProxy proxy, CGEventType type, CGEve
 //    CGEventTapEnable(testTap, true);
     
     
+    ///
     /// Setup termination handler
+    ///
+    
     struct sigaction action = {
         .sa_flags = SA_SIGINFO,
         .sa_mask = 0,
@@ -120,19 +125,37 @@ CGEventRef _Nullable testCallback(CGEventTapProxy proxy, CGEventType type, CGEve
     ///
     /// __Pre-check init__
     ///
+    
     [PrefixSwift initGlobalStuff];
     [MessagePort_Helper load_Manual];
     [Trial load_Manual];
     
+    /// Check license and lock down if necessary
+//    [LicenseConfig getOnComplete:^(LicenseConfig * _Nonnull licenseConfig) {
+//        /// Run license check
+//        ///     `TriggeredByUser:YES` might be a lie if the helper starts at system boot or after a crash.
+//        ///         TODO: Think this through again.
+//        ///             Edit: First idea: We should handle the triggeredByUser case in the main app, set to NO here
+//        
+//        [License runCheckAndReactWithLicenseConfig:licenseConfig triggeredByUser:NO];
+//    }];
+    
+    ///
     /// Do the accessibility check
+    ///
     Boolean accessibilityEnabled = [self check];
     if (!accessibilityEnabled) {
         
         DDLogInfo(@"Accessibility Access Disabled");
         
+        /// Send 'accessibility is disabled' message to mainApp
+        ///  Notes:
+        ///  - I think we only send this once, because the mainApp will ask for this information if it needs it afterwards by sending 'check accessibility' messages to the helper.
+        ///  - Why the 0.5s delay?
         [NSTimer scheduledTimerWithTimeInterval:0.5 target:self selector:@selector(sendAccessibilityMessageToMainApp) userInfo:NULL repeats:NO];
         
-        _openMainAppTimer = [NSTimer scheduledTimerWithTimeInterval:0.5 target:self selector:@selector(openMainApp) userInfo:NULL repeats:YES];
+        /// Check accessibility every 0.5s. Once the accessibility is enabled, restart the helper and notify the mainApp.
+        _openMainAppTimer = [NSTimer scheduledTimerWithTimeInterval:0.5 target:self selector:@selector(openMainAppAndRestart) userInfo:NULL repeats:YES];
             
     } else {
         
@@ -153,41 +176,31 @@ CGEventRef _Nullable testCallback(CGEventTapProxy proxy, CGEventType type, CGEve
         
         [MenuBarItem load_Manual];
         
-        /// Send message to main  app
+        /// Send 'started' message to mainApp
         ///     Note: We could improve responsivity of the enableToggle in mainApp by sending the message before doing all the initialization. But only slightly.
         [SharedMessagePort sendMessage:@"helperEnabled" withPayload:nil expectingReply:NO];
-        
-        /// Get licenseConfig
-        [LicenseConfig getOnComplete:^(LicenseConfig * _Nonnull licenseConfig) {
-            /// Run license check
-            ///     `TriggeredByUser:YES` might be a lie if the helper starts at system boot or after a crash.
-            ///         TODO: Think this through again.
-            ///             Edit: First idea: We should handle the triggeredByUser case in the main app, set to NO here
-            
-            [License runCheckAndDisplayUIWithLicenseConfig:licenseConfig triggeredByUser:NO];
-        }];
         
         ///
         /// Debug & testing
         ///
-        
-        [SecureStorage set:@"hi.im.groot" value:@"what's your name? Hghhhh?"];
-        NSString *secure = [SecureStorage get:@"hi.im.groot"];
-        
-        DDLogDebug(@"Value from secure storage: %@", secure);
-        
-        DDLogDebug(@"Entire secure storage: %@", [SecureStorage getAll]);
-        
-        [LicenseConfig getOnComplete:^(LicenseConfig * _Nonnull licenseConfig) {
-        
-            [License licenseStateWithLicenseConfig:licenseConfig completionHandler:^(MFLicenseReturn license, NSError * _Nullable error) {
-                
-                dispatch_async(dispatch_get_main_queue(), ^{
-                    
-                    [TrialNotificationController.shared openWithLicenseConfig:licenseConfig license:license];
-                });
-            }];
-        }];
+//
+//        [SecureStorage set:@"hi.im.groot" value:@"what's your name? Hghhhh?"];
+//        NSString *secure = [SecureStorage get:@"hi.im.groot"];
+//
+//        DDLogDebug(@"Value from secure storage: %@", secure);
+//
+//        DDLogDebug(@"Entire secure storage: %@", [SecureStorage getAll]);
+//
+//        [LicenseConfig getOnComplete:^(LicenseConfig * _Nonnull licenseConfig) {
+//
+//            [License licenseStateWithLicenseConfig:licenseConfig completionHandler:^(MFLicenseReturn license, NSError * _Nullable error) {
+//
+//                dispatch_async(dispatch_get_main_queue(), ^{
+//
+//                    [TrialNotificationController.shared openWithLicenseConfig:licenseConfig license:license triggeredByUser:NO];
+//                });
+//            }];
+//        }];
         
     //    [Gumroad checkLicense:license email:email completionHandler:^(BOOL isValidKey, NSDictionary<NSString *,id> * _Nullable serverResponse, NSError * _Nullable error, NSURLResponse * _Nullable urlResponse) {
     //
@@ -198,6 +211,7 @@ CGEventRef _Nullable testCallback(CGEventTapProxy proxy, CGEventType type, CGEve
 //        }];
     }
 }
+
 + (Boolean)check {
     CFMutableDictionaryRef options = CFDictionaryCreateMutable(kCFAllocatorDefault, 1, NULL, NULL);
     CFDictionaryAddValue(options, kAXTrustedCheckOptionPrompt, kCFBooleanFalse);
@@ -214,16 +228,20 @@ CGEventRef _Nullable testCallback(CGEventTapProxy proxy, CGEventType type, CGEve
     [SharedMessagePort sendMessage:@"accessibilityDisabled" withPayload:nil expectingReply:NO];
 }
 
-+ (void)openMainApp {
++ (void)openMainAppAndRestart {
     
     if ([self check]) {
         
-        /// Open app
-        [self openMainApp];
-        /// Close this app (Will be restarted immediately by launchd)
+        /// Open mainApp
+        ///     Edit: What? Doesn't this cause an infinite loop?
+        [self openMainAppAndRestart];
+        
+        /// Close helperApp (Will be restarted immediately by launchd)
         [NSApp terminate:nil];
-//        [self load]; /// TESTING - to make button capture notification work
-//        [_openMainAppTimer invalidate]; /// TESTING
+        
+        /// Testing
+//        [self load]; /// To make button capture notification work
+//        [_openMainAppTimer invalidate];
     }
 }
 
