@@ -129,19 +129,6 @@ CGEventRef _Nullable testCallback(CGEventTapProxy proxy, CGEventType type, CGEve
     [PrefixSwift initGlobalStuff];
     [MessagePort_Helper load_Manual];
     
-
-    /// License init
-//    [Trial load_Manual];
-    
-//    [LicenseConfig getOnComplete:^(LicenseConfig * _Nonnull licenseConfig) {
-//        /// Run license check
-//        ///     `TriggeredByUser:YES` might be a lie if the helper starts at system boot or after a crash.
-//        ///         TODO: Think this through again.
-//        ///             Edit: First idea: We should handle the triggeredByUser case in the main app, set to NO here
-//        
-//        [License runCheckAndReactWithLicenseConfig:licenseConfig triggeredByUser:NO];
-//    }];
-    
     ///
     /// Do the accessibility check
     ///
@@ -181,6 +168,19 @@ CGEventRef _Nullable testCallback(CGEventTapProxy proxy, CGEventType type, CGEve
         /// Send 'started' message to mainApp
         ///     Note: We could improve responsivity of the enableToggle in mainApp by sending the message before doing all the initialization. But only slightly.
         [SharedMessagePort sendMessage:@"helperEnabled" withPayload:nil expectingReply:NO];
+        
+        ///
+        /// License init
+        ///
+        /// Note:
+        /// - It would make sense to do this before the accessibility check, but calling this before the Post-check init crashes because of some stupid stuff. The stupid stuff is I I think the [Trial load_Manual] calls some other stuff that writes the isLicensed state to config and then when the config is commited that tries to updates the scroll module but it isn't initialized, yet so it crashes. If we structured things better we could do this before Post-check init but it's not important enough.
+        /// - If the helper is started because the user flipped the switch (not because the computer just started or something), then `triggeredByUser` should probably be `YES`. But it's currently unused anyways.
+        
+        [Trial load_Manual];
+        
+        [LicenseConfig getOnComplete:^(LicenseConfig * _Nonnull licenseConfig) {
+            [License runCheckAndReactWithLicenseConfig:licenseConfig triggeredByUser:NO];
+        }];
         
         ///
         /// Debug & testing
