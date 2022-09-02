@@ -128,9 +128,11 @@ CGEventRef _Nullable testCallback(CGEventTapProxy proxy, CGEventType type, CGEve
     
     [PrefixSwift initGlobalStuff];
     [MessagePort_Helper load_Manual];
-    [Trial load_Manual];
     
-    /// Check license and lock down if necessary
+
+    /// License init
+//    [Trial load_Manual];
+    
 //    [LicenseConfig getOnComplete:^(LicenseConfig * _Nonnull licenseConfig) {
 //        /// Run license check
 //        ///     `TriggeredByUser:YES` might be a lie if the helper starts at system boot or after a crash.
@@ -233,8 +235,8 @@ CGEventRef _Nullable testCallback(CGEventTapProxy proxy, CGEventType type, CGEve
     if ([self check]) {
         
         /// Open mainApp
-        ///     Edit: What? Doesn't this cause an infinite loop?
-        [self openMainAppAndRestart];
+        ///     Edit: What? Why are we calling `[self openMainAppAndRestart]` again here? Doesn't this cause an infinite loop? We'll change this to call `[HelperUtility openMainApp]`.
+        [HelperUtility openMainApp];
         
         /// Close helperApp (Will be restarted immediately by launchd)
         [NSApp terminate:nil];
