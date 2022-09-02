@@ -85,7 +85,7 @@ AuthorizeAccessibilityView *_accViewController;
         _accViewController = [[AuthorizeAccessibilityView alloc] initWithNibName:@"AuthorizeAccessibilityView" bundle:[NSBundle bundleForClass:[self class]]];
     }
     if ([MainAppState.shared.tabViewController.presentedViewControllers containsObject:_accViewController]) return;
-    [MainAppState.shared.tabViewController presentViewControllerAsSheet:_accViewController];
+    [MainAppState.shared.tabViewController presentViewControllerAsSheet:_accViewController]; /// Under Ventura Beta 6 this stopped animating. Same things with the options sheet in the buttons tab. Hopefully it'll come back.
     
     ///
     /// Old overlay method for MMF 2.0
