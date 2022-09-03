@@ -12,10 +12,6 @@ import CocoaLumberjackSwift
 
 class TrialSectionManager {
     
-    /// Constants
-    
-    
-    
     /// Vars
     
     var currentSection: TrialSection
@@ -41,10 +37,13 @@ class TrialSectionManager {
         /// Init trial section
         
         /// Setup image
+
+        let imageName = license.trialIsActive.boolValue ? "calendar" : "calendar"/*"hourglass.tophalf.filled"*/
+        
         if #available(macOS 11.0, *) {
             currentSection.imageView!.symbolConfiguration = .init(pointSize: 13, weight: .regular, scale: .large)
         }
-        currentSection.imageView!.image = NSImage(named: "calendar")
+        currentSection.imageView!.image = NSImage(named: imageName)
         
         /// Set string
         currentSection.textField!.attributedStringValue = LicenseUtility.trialCounterString(licenseConfig: licenseConfig, license: license)

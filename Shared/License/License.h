@@ -31,6 +31,7 @@ typedef struct {
     MFValueFreshness freshness;
     int daysOfUse;
     int trialDays;
+    BOOL trialIsActive;
 } MFLicenseReturn;
 
 /// Define custom errors

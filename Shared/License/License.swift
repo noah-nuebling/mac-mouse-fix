@@ -17,7 +17,9 @@ import Cocoa
 
 extension MFLicenseReturn: Equatable {
     public static func == (lhs: MFLicenseReturn, rhs: MFLicenseReturn) -> Bool {
-        /// Note: We don't check for freshness because it makes sense.
+        /// Note:
+        /// - We don't check for freshness because it makes sense.
+        /// - We also don't check for trialIsOver directly, because it's derived from trialDays and daysOfUse
         lhs.state == rhs.state && lhs.daysOfUse == rhs.daysOfUse && lhs.trialDays == rhs.trialDays
     }
 }
@@ -46,7 +48,7 @@ extension MFLicenseReturn: Equatable {
             } else {
                 
                 /// Not licensed -> check trial
-                if license.daysOfUse <= license.trialDays {
+                if license.trialIsActive.boolValue {
                     
                     /// Trial still active -> do nothing
                     ///     Note: Maybe display small reminder after half of trial is over?
@@ -75,7 +77,9 @@ extension MFLicenseReturn: Equatable {
                         #if IS_HELPER
                         
                         /// Show trialNotification
-                        TrialNotificationController.shared.open(licenseConfig: licenseConfig, license: license, triggeredByUser: triggeredByUser)
+                        DispatchQueue.main.async {
+                            TrialNotificationController.shared.open(licenseConfig: licenseConfig, license: license, triggeredByUser: triggeredByUser)
+                        }
                         
                         /// Lock helper
                         HelperState.lockDown()
@@ -98,8 +102,13 @@ extension MFLicenseReturn: Equatable {
         let cache = config("License.isLicensedCache") as? Bool ?? false
         let state = cache ? kMFLicenseStateLicensed : kMFLicenseStateUnlicensed
         
+        /// Get trial info
+        let daysOfUse = Trial.daysOfUse
+        let trialDays = licenseConfig.trialDays
+        let trialIsActive = daysOfUse <= trialDays
+        
         /// Return
-        let result = MFLicenseReturn(state: state, freshness: kMFValueFreshnessCached, daysOfUse: Int32(Trial.daysOfUse), trialDays: Int32(licenseConfig.trialDays))
+        let result = MFLicenseReturn(state: state, freshness: kMFValueFreshnessCached, daysOfUse: Int32(daysOfUse), trialDays: Int32(trialDays), trialIsActive: ObjCBool(trialIsActive))
         return result
         
     }
@@ -121,9 +130,14 @@ extension MFLicenseReturn: Equatable {
                 setConfig("License.isLicensedCache", false as NSObject)
                 commitConfig()
             }
+            
+            /// Get trial info
+            let daysOfUse = Trial.daysOfUse
+            let trialDays = licenseConfig.trialDays
+            let trialIsActive = daysOfUse <= trialDays
                 
             /// Return
-            let result = MFLicenseReturn(state: state, freshness: freshness, daysOfUse: Int32(Trial.daysOfUse), trialDays: Int32(licenseConfig.trialDays))
+            let result = MFLicenseReturn(state: state, freshness: freshness, daysOfUse: Int32(daysOfUse), trialDays: Int32(trialDays), trialIsActive: ObjCBool(trialIsActive))
             completionHandler(result, error)
         }
         

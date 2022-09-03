@@ -25,10 +25,10 @@ import Cocoa
         /// Build base string
         
         let base: String
-        if daysOfUse > trialDays {
+        if !license.trialIsActive.boolValue {
             /// Trial expired
             
-            base = NSLocalizedString("trial-counter.expired", comment: "First draft: Free days are **used up**")
+            base = NSLocalizedString("trial-counter.expired", comment: "First draft: Free days **used up**")
             
         } else {
             /// Trial still active

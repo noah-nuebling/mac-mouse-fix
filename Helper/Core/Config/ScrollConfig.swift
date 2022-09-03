@@ -60,6 +60,8 @@ import CocoaLumberjackSwift
     @objc func scrollInvert(event: CGEvent) -> MFScrollInversion {
         /// This can be used as a factor to invert things. kMFScrollInversionInverted is -1.
         
+        if HelperState.isLockedDown { return kMFScrollInversionNonInverted }
+        
         if self.u_direction == self.semanticScrollInvertSystem(event) {
             return kMFScrollInversionNonInverted
         } else {

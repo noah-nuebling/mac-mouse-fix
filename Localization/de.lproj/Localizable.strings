@@ -376,8 +376,8 @@
 /* First draft: Free day **%d/%d** */
 "trial-counter.active" = "Kostenloser Tag **%d/%d**";
 
-/* First draft: Free days are **used up** */
-"trial-counter.expired" = "Kostenlose Tage sind **aufgebraucht**";
+/* First draft: Free days **used up** */
+"trial-counter.expired" = "Kostenlose Tage **aufgebraucht**";
 
 /* First draft: Activate License */
 "license-button.activate" = "Lizenz aktivieren";
@@ -416,4 +416,4 @@
 "trial-notif.activate-license-button" = "Lizenz aktivieren";
 
 /* First draft: Hey there! You've been using Mac Mouse Fix for **%d days** now. I hope you're enjoying it!\n\nIf you want to keep using Mac Mouse Fix, you can [buy it now](%@). */
-"trial-notif.body" = "Hey! Du verwendest Mac Mouse Fix jetzt seit **%d Tagen**. Ich hoffe, es gefällt dir!\n\nWenn du Mac Mouse Fix auch weiter verwenden willst, kannst du es dir [jetzt kaufen](%@).";
+"trial-notif.body" = "Hi! Du verwendest Mac Mouse Fix jetzt seit **%d Tagen**. Ich hoffe, es gefällt dir!\n\nWenn du Mac Mouse Fix auch weiter verwenden willst, kannst du es dir [jetzt kaufen](%@).";

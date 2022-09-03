@@ -72,7 +72,7 @@ import CocoaLumberjackSwift
                     
                     /// Do nothing if licensed
                     
-                } else if license.daysOfUse > license.trialDays {
+                } else if !license.trialIsActive.boolValue {
                     
                     /// Not licensed and trial expired -> do nothing
                     ///     In this case AccessibilityCheck.m will perform the lockDown, by calling `License.runCheckAndReact()`
