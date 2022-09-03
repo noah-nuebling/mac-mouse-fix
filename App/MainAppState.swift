@@ -84,5 +84,8 @@ import ReactiveSwift
     @objc func reactToDidBecomeEnabled() {
         observer.send(value: true)
     }
+    @objc func reactToDidBecomeDisabled() {
+        observer.send(value: false)
+    }
     
 }

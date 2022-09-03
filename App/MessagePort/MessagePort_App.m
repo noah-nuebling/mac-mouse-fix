@@ -79,8 +79,10 @@ static CFDataRef didReceiveMessage(CFMessagePortRef port, SInt32 messageID, CFDa
     } else if ([message isEqualToString:@"keyCaptureModeFeedbackWithSystemEvent"]) {
         [KeyCaptureView handleKeyCaptureModeFeedbackWithPayload:(NSDictionary *)payload isSystemDefinedEvent:YES];
     } else if ([message isEqualToString:@"helperEnabled"]) {
-//        [AppDelegate handleHelperEnabledMessage]; /// Old MMF2 stuff
+        //        [AppDelegate handleHelperEnabledMessage]; /// Old MMF2 stuff
         [EnabledState.shared reactToDidBecomeEnabled];
+    } else if ([message isEqualToString:@"helperDisabled"]) {
+        [EnabledState.shared reactToDidBecomeDisabled];
     } else if ([message isEqualToString:@"configFileChanged"]) {
         [Config handleConfigFileChange];
     }

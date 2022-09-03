@@ -39,6 +39,9 @@
     /// Validate
     assert(SharedUtility.runningHelper);
     
+    /// Notify mainApp
+    [SharedMessagePort sendMessage:@"helperDisabled" withPayload:nil expectingReply:NO];
+    
     /// Remove helper
     [self removeHelperFromLaunchd];
 }

@@ -29,8 +29,16 @@ class TrialNotificationController: NSWindowController {
     @IBOutlet weak var trialSection: TrialSection!
     
     @IBAction func closeButtonClick(_ sender: Any) {
-        HelperServices.disableHelperFromHelper()
+        
+        /// Close notification
         self.close()
+        
+        /// Wait for close animation to finish
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5, execute: {
+                
+            /// Disable helper
+            HelperServices.disableHelperFromHelper()
+        })
     }
     
     /// Vars
