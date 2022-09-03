@@ -11,6 +11,7 @@ import Foundation
 import ReactiveSwift
 import QuartzCore
 import AppKit
+import CocoaLumberjackSwift
 
 // MARK: - Helper stuff
 
@@ -53,9 +54,13 @@ extension Reactive where Base : NSView {
     var isCollapsed: BindingTarget<Bool> {
         return BindingTarget(lifetime: base.reactive.lifetime) { shouldCollapse in
             
+            /// Don't play animation under certain conditions
+            /// - Don't play it the first time. This is so that when this is bound to a UI toggle, the initial value doesn't cause an animation.
+            /// - Don't play if invisible. This is to prevent issues when the app is disabled while the user is on a different tab. And I guess for efficiency.
             var inited = objc_getAssociatedObject(base, &AssociatedKeysForReactive.collapseIsInitialized) as? Bool ?? false
+            var visible = base.window != nil
             
-            if !(inited) { /// Don't play animation the first time. This is so that when this is bound to a UI toggle, the initial value doesn't cause an animation.
+            if !inited || !visible {
                 base.setCollapsedWithoutAnimation(shouldCollapse)
                 objc_setAssociatedObject(base, &AssociatedKeysForReactive.collapseIsInitialized, true, .OBJC_ASSOCIATION_RETAIN)
             } else {
@@ -188,6 +193,14 @@ class CollapsingStackView: NSStackView {
         /// Validate that v is subview
         assert(arrangedSubviews.contains(v))
         
+        /// Debug
+        
+        DDLogDebug("\(collapse ? "Collapsing" : "Uncollapsing") view: \(v). Animate: \(animate)")
+        
+        /// Constants
+                   
+        let nullAnimation = CABasicAnimation(name: .linear, duration: 0.0)
+        
         /// Init
         v.wantsLayer = true /// Not sure if necessary
         v.translatesAutoresizingMaskIntoConstraints = false /// Not sure if necessary
@@ -242,7 +255,7 @@ class CollapsingStackView: NSStackView {
             /// Animate height of wrapper
 //            let animation = CABasicAnimation(curve: collapseHeightCurve, duration: duration)
 //            let animation = CASpringAnimation(speed: 5, damping: 1.0)
-            let animation = CASpringAnimation(speed: 4.25, damping: 1.0)
+            let animation = animate ? CASpringAnimation(speed: 4.25, damping: 1.0) : nullAnimation
             Animate.with(animation) {
                 state.wrapperHeightConstraint?.reactiveAnimator().constant.set(targetHeight)
             }
@@ -257,7 +270,7 @@ class CollapsingStackView: NSStackView {
             /// Animate height of wrapper
 //            let animation = CABasicAnimation(curve: expandHeightCurve, duration: duration)
 //            let animation = CASpringAnimation(stiffness: 600, damping: 30)
-            let animation = CASpringAnimation(speed: 3.75, damping: 1.0)
+            let animation = animate ? CASpringAnimation(speed: 3.75, damping: 1.0) : nullAnimation
             let animationFromConstraint = state.wrapperHeightConstraint?.animation(forKey: "constant") as! CAAnimation /// This one doesn't jitter!! - I investigated what the difference might be in `InvestigateLayoutAnimations.xcproj`, but I couldn't find anything besides `roundsToInteger`. (which does make things better but not entirely) Very mysterious.
             Animate.with(animation) {
                 state.wrapperHeightConstraint!.reactiveAnimator().constant.set(targetHeight)

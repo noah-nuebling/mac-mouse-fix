@@ -121,8 +121,28 @@ class TabViewController: NSTabViewController {
     }
     
     override func viewDidAppear() {
-        coolHideTab(identifier: "initial", window: self.window)
         
+        ///
+        /// Change to general tab, when app is disabled
+        ///
+        
+        EnabledState.shared.signal.observeValues { isEnabled in
+            if !isEnabled {
+                guard let currentTab = self.identifierOfSelectedTab() else { return }
+                let currentTabWillBeDisabled = !alwaysEnabledTabs.contains(currentTab)
+                if currentTabWillBeDisabled {
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.01, execute: {
+                        self.coolSelectTab(identifier: "general", window: self.window)
+                    })
+                }
+            }
+        }
+        
+        ///
+        /// Set initial tab and stuff
+        ///
+        
+        coolHideTab(identifier: "initial", window: self.window)
         if let lastID = config("Other.autosave_tabID") as! String?, lastID != "initial" {
 //            tabView.selectTabViewItem(withIdentifier: lastID)
             coolSelectTab(identifier: lastID, window: self.window)
@@ -279,18 +299,27 @@ class TabViewController: NSTabViewController {
     ///     Resizes such that center x stays the same
     private func resizeWindowToFit(tabViewItem: NSTabViewItem) -> TimeInterval {
         
+        /// Get the stored size of the tab we're switching to
+        ///     Note: The size of the general tab can change while we're in another tab (if the helper gets disabled), so we're always recalculating its size!
         var size: NSSize? = tabViewSizes[tabViewItem]
-        if size == nil {
+        if size == nil || (tabViewItem.identifier as? String) == "general" {
+            
+            /// Manually calculate the size of the tab
+            
             let view = tabViewItem.view
             view?.needsLayout = true
             view?.layoutSubtreeIfNeeded() /// Seems like it's not needed sure if needed
             size = view?.frame.size
         }
         
+        /// Setup constraints for resizing
         self.adjustConstraintsForWindowResizing(tabViewItem, size!)
         
+        /// Update layout
         tabViewItem.view?.needsLayout = true
         tabViewItem.view?.layoutSubtreeIfNeeded()
+        
+        /// Guard window and tabSize exist
         
         /* let tabView = self.tabView */ /// This is sometimes nil when switching to general tab. Weird.
         let window = self.window /* tabView.window */

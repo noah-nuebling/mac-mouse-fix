@@ -9,6 +9,8 @@ import Foundation
 import ReactiveSwift
 import ReactiveCocoa
 
+var alwaysEnabledTabs = ["general", "about"]
+
 extension TabViewController {
     
     override func toolbarWillAddItem(_ notification: Notification) {
@@ -17,8 +19,7 @@ extension TabViewController {
         let id = item.itemIdentifier.rawValue
         
         /// Sync the isEnabled state of all tabs (except general and about) with the isEnabled state of the app
-        if !(id == "general"
-            || id == "about") {
+        if !(alwaysEnabledTabs.contains(id)) {
             
             item.autovalidates = false
             EnabledState.shared.producer.startWithValues { appIsEnabled in

@@ -90,10 +90,11 @@ class GeneralTabController: NSViewController {
                         }
                     }
                 }
-            } else {
+            } else { /// !doEnabled
                 EnabledState.shared.disable()
             }
         }
+        
         if usingSwitch, #available(macOS 10.15, *) {
             (enableToggle as? NSSwitcherino)?.reactive.boolValues.skip(first: 1).startWithValues(onToggle)
         } else {
