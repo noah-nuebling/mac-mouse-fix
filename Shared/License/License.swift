@@ -11,6 +11,11 @@
 /// One of the more interesting things it does is It adds offline caching to Gumroad.swift and automatically gathers parameters for it.
 /// It was meant to be an Interface for Gumroad.swift, so that Gumroad.swift wouldn't be used except by License.swift, but for the LicenseSheet it made sense to use Gumroad.swift directly, because we don't want any caching when activating the license.
 
+/// There are some Swift __Active Compilation Conditions__ you can set in the build settings for testing:
+/// - `FORCE_EXPIRED` Makes all the trial days be used up
+/// - `FORCE_NOT_EXPIRED` Makes the trial days be __not__ used up
+/// - `FORCE_LICENSED` Makes the app accept any license key. (This is implemented in Gumroad.swift)
+
 import Cocoa
 
 // MARK: - License.h extensions
@@ -135,8 +140,10 @@ extension MFLicenseReturn: Equatable {
             /// Get trial info
 #if FORCE_EXPIRED
             let daysOfUse = licenseConfig.trialDays + 1
+#elseif FORCE_NOT_EXPIRED
+            let daysOfUse = 0
 #else
-            let daysOfUse = TrialCounter.daysOfUse    
+            let daysOfUse = TrialCounter.daysOfUse
 #endif
             let trialDays = licenseConfig.trialDays
             let trialIsActive = daysOfUse <= trialDays

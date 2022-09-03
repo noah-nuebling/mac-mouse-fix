@@ -95,6 +95,14 @@ import CocoaLumberjackSwift
                               completionHandler: { data, error, urlResponse in
             
             
+            /// Implement `FORCE_LICENSED` flag
+            ///     See License.swift comments for more info
+                        
+#if FORCE_LICENSED
+            completionHandler(true, "fake@email.com", 1, ["info": "this license is considered valid due to the FORCE_LICENSED flag"], nil, nil)
+            return
+#endif
+            
             /// Guard error
             
             if error != nil {
