@@ -16,6 +16,8 @@
 
 + (NSAttributedString *)attributedStringWithMarkdown:(NSString *)md API_AVAILABLE(macos(13.0)) {
     
+    /// Note: We've replaced this with a backwards compatible method in MMF3, but in MMF2 we only need this on macOS 13 and later.
+    
     /// Create options object
     NSAttributedStringMarkdownParsingOptions *options = [[NSAttributedStringMarkdownParsingOptions alloc] init];
     
