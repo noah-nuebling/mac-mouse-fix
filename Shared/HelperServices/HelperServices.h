@@ -12,9 +12,11 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface HelperServices : NSObject
+
 + (void)enableHelperAsUserAgent:(BOOL)enable error:(NSError *_Nullable*_Nullable)error;
 + (BOOL)helperIsActive;
 
++ (void)disableHelperFromHelper;
 @end
 
 NS_ASSUME_NONNULL_END

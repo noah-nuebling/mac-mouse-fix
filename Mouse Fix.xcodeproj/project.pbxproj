@@ -137,9 +137,6 @@
 		4F9E78C026855BCF002C2309 /* Concurrency.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F9E78BE26855BCF002C2309 /* Concurrency.swift */; };
 		4F9E78D02685E30C002C2309 /* GestureScrollSimulator.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F9E78CE2685E30B002C2309 /* GestureScrollSimulator.m */; };
 		4F9E78E3268663B1002C2309 /* ExponentialSmoother.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F9E78E2268663B1002C2309 /* ExponentialSmoother.swift */; };
-		4FA13FBD28B39423005C68FC /* TrialNotificationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FA13FBB28B39423005C68FC /* TrialNotificationController.swift */; };
-		4FA13FBE28B39423005C68FC /* TrialNotificationController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4FA13FBC28B39423005C68FC /* TrialNotificationController.xib */; };
-		4FA13FC128B3A2D3005C68FC /* TrialNotificationWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FA13FC028B3A2D3005C68FC /* TrialNotificationWindow.swift */; };
 		4FA13FC228B3A2D3005C68FC /* TrialNotificationWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FA13FC028B3A2D3005C68FC /* TrialNotificationWindow.swift */; };
 		4FA13FC328B3A2DB005C68FC /* TrialNotificationController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4FA13FBC28B39423005C68FC /* TrialNotificationController.xib */; };
 		4FA13FC428B3A2E0005C68FC /* TrialNotificationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FA13FBB28B39423005C68FC /* TrialNotificationController.swift */; };
@@ -198,7 +195,6 @@
 		4FD148D828AA444100FE688C /* MouseFix.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4FD148D728AA444100FE688C /* MouseFix.xib */; };
 		4FD66E0827BB553800F67559 /* CGEventHIDEventBridge.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FD66E0727BB553800F67559 /* CGEventHIDEventBridge.m */; };
 		4FD66E0B27BB9BAE00F67559 /* EventUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FD66E0A27BB9BAE00F67559 /* EventUtility.m */; };
-		4FD82DDB260575B100664D6F /* NotificationLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FD82DDA260575B100664D6F /* NotificationLabel.m */; };
 		4FD86089266E819A004F76C8 /* Pointers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FD86088266E819A004F76C8 /* Pointers.swift */; };
 		4FD860AA266EC24E004F76C8 /* DerivedProperty.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FD860A9266EC24E004F76C8 /* DerivedProperty.swift */; };
 		4FD860CC266EF55A004F76C8 /* ScrollConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FD860CB266EF55A004F76C8 /* ScrollConfig.swift */; };
@@ -1597,7 +1593,6 @@
 				4F44794428B62FA400AD1979 /* LicenseConfig.swift */,
 				4FFA4E3428B795F30062A1FE /* LicenseUtility.swift */,
 				4F85C05228BBE6D500E96E9C /* TrialSection */,
-				4F2A1FA726042ACB0067691A /* TrialNotifications */,
 			);
 			path = License;
 			sourceTree = "<group>";
@@ -1838,6 +1833,7 @@
 				4FF6661425F2C93A00689B77 /* Core */,
 				4FF6663F25F2C93A00689B77 /* Utility */,
 				4F1D7F4528A45FEA00253407 /* MenuBarItem */,
+				4F2A1FA726042ACB0067691A /* TrialNotifications */,
 				4FF6660F25F2C93A00689B77 /* Resources */,
 				4FF6664D25F2C93A00689B77 /* SupportFiles */,
 			);
@@ -2412,7 +2408,6 @@
 				4F09284828B8EE7200BDC2FF /* LicenseSheetController.xib in Resources */,
 				4F9E59972672A67F004E75F7 /* default_config.plist in Resources */,
 				4FD148CC28AA423F00FE688C /* AuthorizeAccessibilityView.xib in Resources */,
-				4FA13FBE28B39423005C68FC /* TrialNotificationController.xib in Resources */,
 				4FDECCDB28A3A37800DDEE91 /* README.md in Resources */,
 				4F79A7EF26042E2E00076A7E /* ToastNotification.xib in Resources */,
 				4F854D7E2789266A00B46E9D /* SFSymbols.xcassets in Resources */,
@@ -2676,8 +2671,6 @@
 				4FC8A7D928AD3FC7007DB982 /* RemapTableCellView.swift in Sources */,
 				4F909D3628A0C3D2009349A2 /* Collapse.swift in Sources */,
 				4F909D4128A0C412009349A2 /* SwiftUITest.swift in Sources */,
-				4FD82DDB260575B100664D6F /* NotificationLabel.m in Sources */,
-				4FA13FBD28B39423005C68FC /* TrialNotificationController.swift in Sources */,
 				4F909D2C28A0C3D2009349A2 /* NSView+Extensions.swift in Sources */,
 				4FDE759A28B1401400662314 /* License.swift in Sources */,
 				4FA1FD8328A916B600D1C8EE /* NSShadow+Extensions.swift in Sources */,
@@ -2713,7 +2706,6 @@
 				4F909D3128A0C3D2009349A2 /* CAAnimation+Extensions.swift in Sources */,
 				4FA40CFB28A0CCCB00499E53 /* Line.swift in Sources */,
 				4FE40B96283A49DD00880BEF /* SharedUtilitySwift.swift in Sources */,
-				4FA13FC128B3A2D3005C68FC /* TrialNotificationWindow.swift in Sources */,
 				4F909D3828A0C3D2009349A2 /* ReactiveFlags.swift in Sources */,
 				4F909D2B28A0C3D2009349A2 /* NSPopUpButton+Extensions.swift in Sources */,
 				4F7F47D128A5B86900290BBD /* Config.m in Sources */,

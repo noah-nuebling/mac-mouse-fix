@@ -29,7 +29,7 @@ class TrialNotificationController: NSWindowController {
     @IBOutlet weak var trialSection: TrialSection!
     
     @IBAction func closeButtonClick(_ sender: Any) {
-        HelperServices.enableHelper(asUserAgent: false, error: nil)
+        HelperServices.disableHelperFromHelper()
         self.close()
     }
     

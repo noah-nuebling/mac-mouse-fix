@@ -32,6 +32,17 @@
 
 @implementation HelperServices
 
+#pragma mark - Helper interface
+
++ (void)disableHelperFromHelper {
+    
+    /// Validate
+    assert(SharedUtility.runningHelper);
+    
+    /// Remove helper
+    [self removeHelperFromLaunchd];
+}
+
 #pragma mark - Main interface
 
 + (BOOL)helperIsActive {
@@ -44,9 +55,9 @@
 
 + (void)enableHelperAsUserAgent:(BOOL)enable error:(NSError *_Nullable*_Nullable)error {
     
-    /// Validate
-    
-    assert(!SharedUtility.runningHelper);
+    /// Guard running main app
+    ///     Before using the SM APIs we could call this from anywhere, but the SM stuff will only work from the mainApp afaik.
+    assert(SharedUtility.runningMainApp);
     
     /// Register/unregister the helper as a User Agent with launchd so it runs in the background - also launches/terminates helper
     
@@ -135,7 +146,6 @@ static BOOL helperIsActive_PList() {
     /// TODO: Dispatch this stuff to another thread. Xcode analysis on `registerAndReturnError:` says "This method should not be called on the main thread as it may lead to UI unresponsiveness"
 
     if (@available(macos 13.0, *)) {
-        
         /// Create error so that `*error` doesn't crash
         if (error == NULL) {
             NSError *e1 = [[NSError alloc] init];
@@ -144,7 +154,9 @@ static BOOL helperIsActive_PList() {
         }
         
         /// Do the core (un)registering
-        ///     `loginItemServiceWithIdentifier:` would be easiest but it breaks with multiple copies of the app installed.
+        ///     Edit:
+        ///     - `loginItemServiceWithIdentifier:` would be easier than `registerAndReturnError:`, but it breaks with multiple copies of the app installed.
+        ///     - Edit: Actually, `registerAndReturnError:` also breaks with several versions installed, but maybe it'll be fixed in the future. Also `registerAndReturnError:` allows us to specify 'nice = -10' which makes the scrolling fps and other things better
         SMAppService *service = [SMAppService agentServiceWithPlistName:@"sm_launchd.plist"];
         if (enable) {
             BOOL success = [service registerAndReturnError:error];
@@ -160,6 +172,8 @@ static BOOL helperIsActive_PList() {
             } else {
                 NSLog(@"Unregistered Helper.");
             }
+            
+            
         }
     } /// End `if @available`
 }
@@ -495,13 +509,22 @@ static NSError *makeWritable(NSString *itemPath) {
 /// From my testing this does the same as the `bootout` command, but it doesn't rely on a valid launchd.plist file to exist in the library, so it should be more robust.
 + (void)removeHelperFromLaunchd {
     
-    DDLogInfo(@"Removing Helper from launchd");
+    /// Remove pre-service management helper
+    removeServiceWithIdentifier(kMFLaunchdHelperIdentifier);
+    
+    /// Remove helper installed with service management
+    removeServiceWithIdentifier(kMFLaunchdHelperIdentifierSM);
+}
+
+static void removeServiceWithIdentifier(NSString *identifier) {
+    
+    DDLogInfo(@"Removing service %@ from launchd", identifier);
     
     NSURL *launchctlURL = [NSURL fileURLWithPath:kMFLaunchctlPath];
     NSError *err;
-    [SharedUtility launchCLT:launchctlURL withArguments:@[@"remove", kMFLaunchdHelperIdentifier] error:&err];
+    [SharedUtility launchCLT:launchctlURL withArguments:@[@"remove", identifier] error:&err];
     if (err != nil) {
-        DDLogError(@"Error removing Helper from launchd: %@", err);
+        DDLogError(@"Error removing service %@ from launchd: %@", identifier, err);
     }
 }
 

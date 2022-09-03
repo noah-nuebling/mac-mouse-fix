@@ -7,7 +7,7 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
-        <customObject id="-2" userLabel="File's Owner" customClass="TrialNotificationController" customModule="Mac_Mouse_Fix" customModuleProvider="target">
+        <customObject id="-2" userLabel="File's Owner" customClass="TrialNotificationController" customModule="Mac_Mouse_Fix_Helper" customModuleProvider="target">
             <connections>
                 <outlet property="applePayBadge" destination="Y7I-VS-5IK" id="3gF-r2-6SB"/>
                 <outlet property="body" destination="00n-VL-rU4" id="vyA-3q-2I5"/>
@@ -20,7 +20,7 @@
         </customObject>
         <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
         <customObject id="-3" userLabel="Application" customClass="NSObject"/>
-        <window title="Window" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" restorable="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" animationBehavior="default" titlebarAppearsTransparent="YES" titleVisibility="hidden" id="F0z-JX-Cv5" customClass="TrialNotificationWindow" customModule="Mac_Mouse_Fix" customModuleProvider="target">
+        <window title="Window" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" restorable="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" animationBehavior="default" titlebarAppearsTransparent="YES" titleVisibility="hidden" id="F0z-JX-Cv5" customClass="TrialNotificationWindow" customModule="Mac_Mouse_Fix_Helper" customModuleProvider="target">
             <windowStyleMask key="styleMask" titled="YES" fullSizeContentView="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
             <rect key="contentRect" x="196" y="240" width="391" height="164"/>
@@ -101,7 +101,7 @@ If you want to keep using Mac Mouse Fix, you can buy it now.&gt;</string>
                     <box verticalHuggingPriority="750" boxType="separator" translatesAutoresizingMaskIntoConstraints="NO" id="Peb-Yr-Hpf">
                         <rect key="frame" x="20" y="53" width="354" height="5"/>
                     </box>
-                    <customView horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="Dyl-L2-EVr" userLabel="TrialWrapper" customClass="TrialSection" customModule="Mac_Mouse_Fix" customModuleProvider="target">
+                    <customView horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="Dyl-L2-EVr" userLabel="TrialWrapper" customClass="TrialSection" customModule="Mac_Mouse_Fix_Helper" customModuleProvider="target">
                         <rect key="frame" x="20" y="20" width="146" height="15"/>
                         <subviews>
                             <imageView horizontalHuggingPriority="1000" verticalHuggingPriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="yP0-SZ-Yzd">
@@ -153,7 +153,7 @@ If you want to keep using Mac Mouse Fix, you can buy it now.&gt;</string>
                         <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="ApplePay" id="k44-bO-HHV"/>
                         <color key="contentTintColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                     </imageView>
-                    <button horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="EPy-bD-5do" customClass="PayButton" customModule="Mac_Mouse_Fix" customModuleProvider="target">
+                    <button horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="EPy-bD-5do" customClass="PayButton" customModule="Mac_Mouse_Fix_Helper" customModuleProvider="target">
                         <rect key="frame" x="313" y="11" width="68" height="32"/>
                         <buttonCell key="cell" type="push" title="$1.99" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="6FQ-gC-c0Z">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
