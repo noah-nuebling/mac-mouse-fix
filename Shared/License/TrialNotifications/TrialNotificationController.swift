@@ -130,7 +130,7 @@ class TrialNotificationController: NSWindowController {
             /// Set the bodyString
             
             let bodyBase = NSLocalizedString("trial-notif.body", comment: "First draft: Hi there! You've been using Mac Mouse Fix for **%d days** now. I hope you're enjoying it!\n\nIf you want to keep using Mac Mouse Fix, you can [buy it now](%@).")
-            let bodyFormatted = String(format: bodyBase, license.daysOfUse, licenseConfig.quickPayLink)
+            let bodyFormatted = String(format: bodyBase, license.daysOfUseUI, licenseConfig.quickPayLink)
             let bodyMarkdown = NSAttributedString(coolMarkdown: bodyFormatted)!
             body.textStorage?.setAttributedString(bodyMarkdown)
             

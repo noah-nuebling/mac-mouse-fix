@@ -106,9 +106,10 @@ extension MFLicenseReturn: Equatable {
         let daysOfUse = Trial.daysOfUse
         let trialDays = licenseConfig.trialDays
         let trialIsActive = daysOfUse <= trialDays
+        let daysOfUseUI = SharedUtilitySwift.clip(daysOfUse, betweenLow: 1, high: trialDays)
         
         /// Return
-        let result = MFLicenseReturn(state: state, freshness: kMFValueFreshnessCached, daysOfUse: Int32(daysOfUse), trialDays: Int32(trialDays), trialIsActive: ObjCBool(trialIsActive))
+        let result = MFLicenseReturn(state: state, freshness: kMFValueFreshnessCached, daysOfUse: Int32(daysOfUse), daysOfUseUI: Int32(daysOfUseUI), trialDays: Int32(trialDays), trialIsActive: ObjCBool(trialIsActive))
         return result
         
     }
@@ -135,9 +136,10 @@ extension MFLicenseReturn: Equatable {
             let daysOfUse = Trial.daysOfUse
             let trialDays = licenseConfig.trialDays
             let trialIsActive = daysOfUse <= trialDays
-                
+            let daysOfUseUI = SharedUtilitySwift.clip(daysOfUse, betweenLow: 1, high: trialDays)
+            
             /// Return
-            let result = MFLicenseReturn(state: state, freshness: freshness, daysOfUse: Int32(daysOfUse), trialDays: Int32(trialDays), trialIsActive: ObjCBool(trialIsActive))
+            let result = MFLicenseReturn(state: state, freshness: freshness, daysOfUse: Int32(daysOfUse), daysOfUseUI: Int32(daysOfUseUI), trialDays: Int32(trialDays), trialIsActive: ObjCBool(trialIsActive))
             completionHandler(result, error)
         }
         

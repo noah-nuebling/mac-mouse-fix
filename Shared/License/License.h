@@ -30,6 +30,7 @@ typedef struct {
     MFLicenseState state;
     MFValueFreshness freshness;
     int daysOfUse;
+    int daysOfUseUI;
     int trialDays;
     BOOL trialIsActive;
 } MFLicenseReturn;

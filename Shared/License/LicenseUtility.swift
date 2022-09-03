@@ -20,7 +20,7 @@ import Cocoa
         /// Get trial state
         ///     We can also get `trialDays` from MFLicenseReturn, which is sort of redundant`
         let trialDays = Int(licenseConfig.trialDays)
-        let daysOfUse = Int(license.daysOfUse)
+        let daysOfUse = Int(license.daysOfUseUI)
         
         /// Build base string
         
