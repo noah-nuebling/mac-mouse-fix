@@ -1,6 +1,6 @@
 //
 // --------------------------------------------------------------------------
-// Trial.swift
+// TrialCounter.swift
 // Created for Mac Mouse Fix (https://github.com/noah-nuebling/mac-mouse-fix)
 // Created by Noah Nuebling in 2022
 // Licensed under MIT
@@ -26,10 +26,10 @@
 import Cocoa
 import CocoaLumberjackSwift
 
-@objc class Trial: NSObject {
+@objc class TrialCounter: NSObject {
     
     /// Singleton
-    @objc static let shared = Trial()
+    @objc static let shared = TrialCounter()
     
     /// Vars
     private var daily: Timer
@@ -40,7 +40,7 @@ import CocoaLumberjackSwift
     
     @objc static func load_Manual() {
         /// Need to use loadManual() because the initialization does network calls and is async. So we need initialization to be done way before handleUse() is called for the first time, because otherwise the trialIsActive and hasBeenUsedToday flags will be wrong.
-        let _ = Trial.shared
+        let _ = TrialCounter.shared
     }
     @objc override init() {
         
@@ -86,7 +86,7 @@ import CocoaLumberjackSwift
                     
                     /// Init hasBeeUsedToday
                     self.hasBeenUsedToday = false
-                    if let lastUseDate = Trial.lastUseDate as? NSDate {
+                    if let lastUseDate = TrialCounter.lastUseDate as? NSDate {
                         let now = Date.init(timeIntervalSinceNow: 0)
                         let a = Calendar.current.dateComponents([.day, .month, .year], from: lastUseDate as Date)
                         let b = Calendar.current.dateComponents([.day, .month, .year], from: now)
@@ -119,7 +119,7 @@ import CocoaLumberjackSwift
     
     /// Vars
     ///     Storing the daysOfUse in SecureStorage so it doesn't get reset on uninstall by apps like AppCleaner by Freemacsoft.
-    ///     At the time of writing, this is the ony part of Trial.swift that is meant to be used by the mainApp.
+    ///     At the time of writing, this is the ony part of TrialCounter.swift that is meant to be used by the mainApp.
     
     @objc static var daysOfUse: Int {
         get {
@@ -157,8 +157,8 @@ import CocoaLumberjackSwift
         /// Update state
         ///     Should we check whether the date has actually changed?
         hasBeenUsedToday = true
-        Trial.lastUseDate = Date(timeIntervalSinceNow: 0.0)
-        Trial.daysOfUse += 1
+        TrialCounter.lastUseDate = Date(timeIntervalSinceNow: 0.0)
+        TrialCounter.daysOfUse += 1
         
         /// Get updated licenseConfig
         LicenseConfig.get { licenseConfig in

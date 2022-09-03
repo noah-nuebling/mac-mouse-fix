@@ -106,7 +106,7 @@ import CocoaLumberjackSwift
     }
     
     /// Static vars / convenience
-    ///     Note: See `Trial.swift` for notes on UserDefaults.
+    ///     Note: See `TrialCounter.swift` for notes on UserDefaults.
     
     fileprivate static var configCache: [String: Any]? {
         

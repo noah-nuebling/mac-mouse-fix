@@ -208,8 +208,8 @@
 		4FDE759A28B1401400662314 /* License.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FDE759928B1401400662314 /* License.swift */; };
 		4FDE759B28B1401400662314 /* License.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FDE759928B1401400662314 /* License.swift */; };
 		4FDE759C28B1401A00662314 /* Gumroad.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FDE757A28B0E35100662314 /* Gumroad.swift */; };
-		4FDE759E28B174E700662314 /* Trial.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FDE759D28B174E700662314 /* Trial.swift */; };
-		4FDE759F28B174E700662314 /* Trial.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FDE759D28B174E700662314 /* Trial.swift */; };
+		4FDE759E28B174E700662314 /* TrialCounter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FDE759D28B174E700662314 /* TrialCounter.swift */; };
+		4FDE759F28B174E700662314 /* TrialCounter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FDE759D28B174E700662314 /* TrialCounter.swift */; };
 		4FDE75A128B2397600662314 /* PayButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FDE75A028B2397600662314 /* PayButton.swift */; };
 		4FDE75A228B2397600662314 /* PayButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FDE75A028B2397600662314 /* PayButton.swift */; };
 		4FDE75A428B25E1A00662314 /* String+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FDE75A328B25E1A00662314 /* String+Extensions.swift */; };
@@ -692,7 +692,7 @@
 		4FDE757A28B0E35100662314 /* Gumroad.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Gumroad.swift; sourceTree = "<group>"; };
 		4FDE757D28B0E66900662314 /* License.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = License.h; sourceTree = "<group>"; };
 		4FDE759928B1401400662314 /* License.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = License.swift; sourceTree = "<group>"; };
-		4FDE759D28B174E700662314 /* Trial.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Trial.swift; sourceTree = "<group>"; };
+		4FDE759D28B174E700662314 /* TrialCounter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrialCounter.swift; sourceTree = "<group>"; };
 		4FDE75A028B2397600662314 /* PayButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PayButton.swift; sourceTree = "<group>"; };
 		4FDE75A328B25E1A00662314 /* String+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Extensions.swift"; sourceTree = "<group>"; };
 		4FDE75A628B25FB300662314 /* NSAttributedString+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSAttributedString+Extensions.swift"; sourceTree = "<group>"; };
@@ -1612,7 +1612,7 @@
 			children = (
 				4FDE757D28B0E66900662314 /* License.h */,
 				4FDE759928B1401400662314 /* License.swift */,
-				4FDE759D28B174E700662314 /* Trial.swift */,
+				4FDE759D28B174E700662314 /* TrialCounter.swift */,
 				4FDE757A28B0E35100662314 /* Gumroad.swift */,
 				4F44794428B62FA400AD1979 /* LicenseConfig.swift */,
 				4FFA4E3428B795F30062A1FE /* LicenseUtility.swift */,
@@ -2738,7 +2738,7 @@
 				4F909D2B28A0C3D2009349A2 /* NSPopUpButton+Extensions.swift in Sources */,
 				4F7F47D128A5B86900290BBD /* Config.m in Sources */,
 				4FF6655025F2C7B000689B77 /* NSArray+Additions.m in Sources */,
-				4FDE759E28B174E700662314 /* Trial.swift in Sources */,
+				4FDE759E28B174E700662314 /* TrialCounter.swift in Sources */,
 				4F909D2328A0C3D2009349A2 /* PointerTabController.swift in Sources */,
 				4FDE75A128B2397600662314 /* PayButton.swift in Sources */,
 				4FCA07D625F3129B00BFE209 /* RemapTableController.m in Sources */,
@@ -2930,7 +2930,7 @@
 				4FF6654325F2C7B000689B77 /* HelperServices.m in Sources */,
 				4FA994BE26678AC90007F003 /* ScrollAnalyzer.m in Sources */,
 				4F9C9B60268A29FE0083DED0 /* Smoother.swift in Sources */,
-				4FDE759F28B174E700662314 /* Trial.swift in Sources */,
+				4FDE759F28B174E700662314 /* TrialCounter.swift in Sources */,
 				4FA83A29268271E200F3A31B /* PointerSpeed.m in Sources */,
 				4FFA4E3828B79D410062A1FE /* NSAttributedString+Additions.m in Sources */,
 				4FFA4E4228B7D2890062A1FE /* FadeAnimations.swift in Sources */,
@@ -3343,7 +3343,7 @@
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = macosx;
-				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG FORCE_EXPIRED";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				USER_HEADER_SEARCH_PATHS = "";
@@ -3408,6 +3408,7 @@
 				MTL_ENABLE_DEBUG_INFO = NO;
 				ONLY_ACTIVE_ARCH = NO;
 				SDKROOT = macosx;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "";
 				SWIFT_COMPILATION_MODE = wholemodule;
 				SWIFT_OPTIMIZATION_LEVEL = "-O";
 				SWIFT_VERSION = 5.0;

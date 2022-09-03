@@ -284,8 +284,8 @@ static void handleMouseInputWhileInitialized(int64_t deltaX, int64_t deltaY, CGE
         /// Notify output plugin
         [_drag.outputPlugin handleBecameInUse];
         
-        /// Notify Trial.swift
-        [Trial.shared handleUse];
+        /// Notify TrialCounter.swift
+        [TrialCounter.shared handleUse];
         
         /// Notify other modules
         [ModifierManager handleModificationHasBeenUsedWithDevice:_drag.modifiedDevice];

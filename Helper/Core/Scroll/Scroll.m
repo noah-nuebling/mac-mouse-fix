@@ -281,8 +281,8 @@ static void heavyProcessing(CGEventRef event, int64_t scrollDeltaAxis1, int64_t 
         /// Disable suspension
         _isSuspended = NO;
         
-        /// Notify Trial.swift
-        [Trial.shared handleUse];
+        /// Notify TrialCounter.swift
+        [TrialCounter.shared handleUse];
         
         /// Update active device
         [HelperState updateActiveDeviceWithEvent:event];

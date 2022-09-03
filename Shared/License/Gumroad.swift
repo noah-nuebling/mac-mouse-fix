@@ -94,6 +94,7 @@ import CocoaLumberjackSwift
                               args: ["product_permalink": productPermalink, "license_key": key, "increment_uses_count": incrementUsageCount ? "true" : "false"],
                               completionHandler: { data, error, urlResponse in
             
+            
             /// Guard error
             
             if error != nil {

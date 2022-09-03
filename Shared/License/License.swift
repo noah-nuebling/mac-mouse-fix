@@ -7,7 +7,7 @@
 // --------------------------------------------------------------------------
 //
 
-/// This is a thin wrapper / collection of convenience functions around Trial.swift and Gumroad.swift.
+/// This is a thin wrapper / collection of convenience functions around TrialCounter.swift and Gumroad.swift.
 /// One of the more interesting things it does is It adds offline caching to Gumroad.swift and automatically gathers parameters for it.
 /// It was meant to be an Interface for Gumroad.swift, so that Gumroad.swift wouldn't be used except by License.swift, but for the LicenseSheet it made sense to use Gumroad.swift directly, because we don't want any caching when activating the license.
 
@@ -103,7 +103,7 @@ extension MFLicenseReturn: Equatable {
         let state = cache ? kMFLicenseStateLicensed : kMFLicenseStateUnlicensed
         
         /// Get trial info
-        let daysOfUse = Trial.daysOfUse
+        let daysOfUse = TrialCounter.daysOfUse
         let trialDays = licenseConfig.trialDays
         let trialIsActive = daysOfUse <= trialDays
         let daysOfUseUI = SharedUtilitySwift.clip(daysOfUse, betweenLow: 1, high: trialDays)
@@ -133,7 +133,7 @@ extension MFLicenseReturn: Equatable {
             }
             
             /// Get trial info
-            let daysOfUse = Trial.daysOfUse
+            let daysOfUse = TrialCounter.daysOfUse
             let trialDays = licenseConfig.trialDays
             let trialIsActive = daysOfUse <= trialDays
             let daysOfUseUI = SharedUtilitySwift.clip(daysOfUse, betweenLow: 1, high: trialDays)

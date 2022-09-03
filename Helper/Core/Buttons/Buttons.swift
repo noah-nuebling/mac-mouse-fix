@@ -140,8 +140,8 @@ import CocoaLumberjackSwift
 //                actionArray[0][kMFRemapsKeyModificationPrecondition] = self.modifiers
 //            }
             
-            /// Notify Trial.swift
-            Trial.shared.handleUse()
+            /// Notify TrialCounter.swift
+            TrialCounter.shared.handleUse()
             
             /// Execute actionArray
             if startOrEnd == kMFActionPhaseCombined {
