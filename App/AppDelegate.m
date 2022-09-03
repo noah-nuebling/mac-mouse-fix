@@ -34,48 +34,7 @@
 
 #pragma mark - IBActions
 
-<<<<<<< HEAD
 - (IBAction)openAboutTab:(id)sender {
-=======
-- (IBAction)enableCheckBox:(NSButton *)sender {
-    
-    BOOL beingEnabled = sender.state;
-    sender.state = !sender.state; /// Prevent user from changing checkbox state directly. Instead, we'll do that through the `enableUI` method.
-    
-    if (beingEnabled) {
-        /// We won't enable the UI here directly. Instead, we'll do that from the `handleHelperEnabledMessage` method
-    } else { /// Being disabled
-        [self enableUI:NO];
-    }
-    
-    NSError *error;
-    [HelperServices enableHelperAsUserAgent:beingEnabled error:&error];
-    /// ^ We enable/disable the helper.
-    ///  After enabling, the helper will send a message to the main app confirming that it has been enabled (received by `AppDelegate + handleHelperEnabledMessage`). Only when that message is received, will we change the state of the checkbox and the rest of the UI to enabled.
-    ///  This should make the checkbox state more accurately reflect what's going on when something goes wrong with enabling the helper, making things less confusing to users who experience issues enabling MMF.
-    ///  We only do this for enabling and not for disabling, because disabling always seems to work. Another reason we're not applying this for disabling is that it could lead to issues if the helper just crashes and doesn't send an "I'm being disabled" message before quitting. In that case the checkbox would just stay enabled.
-    
-    
-    /// Give user feedback if MMF is disabled in settings
-    if (@available(macos 13.0, *)) {
-        if (error.code == 1) { /// Operation not permitted error
-            NSAttributedString *message = [NSAttributedString attributedStringWithMarkdown:@"Mac Mouse Fix was **disabled** in System Settings.\nTo enable Mac Mouse Fix:\n\n1. Go to [Login Items Settings](x-apple.systempreferences:com.apple.LoginItems-Settings.extension)\n2. Switch on \'Mac Mouse Fix.app\'"];
-            [MFNotificationController attachNotificationWithMessage:message toWindow:self.window forDuration:0.0];
-            
-        }
-    }
-}
-+ (void)handleHelperEnabledMessage {
-    
-    if (self.instance.UIDisabled) {
-        /// Enable UI
-        [self.instance enableUI:YES];
-        /// Flash Notification
-//        NSAttributedString *message = [[NSAttributedString alloc] initWithString:@"Mac Mouse Fix will stay enabled after you restart your Mac"];
-//        message = [message attributedStringBySettingFontSize:NSFont.smallSystemFontSize];
-//        [MFNotificationController attachNotificationWithMessage:message toWindow:AppDelegate.mainWindow forDuration:-1 alignment:kMFNotificationAlignmentBottomMiddle];
-    }
->>>>>>> master
 }
 
 - (IBAction)activateLicense:(id)sender {
@@ -176,12 +135,6 @@ static NSDictionary *sideButtonActions;
         NSTitlebarAccessoryViewController *viewController = [[NSTitlebarAccessoryViewController alloc] initWithNibName:@"MyTitlebarAccessoryViewController" bundle:nil];
         viewController.layoutAttribute = NSLayoutAttributeRight;
         [NSApp.mainWindow addTitlebarAccessoryViewController:viewController];
-        
-    /// Do weird tweaks for Ventura
-    ///     It seems that NSBox adds horizontal padding of 1 px around its contentView in Ventura (Beta). Here we compensate for that.
-    ///     Pre-big sur also looks weird but in a different way. See https://github.com/noah-nuebling/mac-mouse-fix/issues/269
-    if (@available(macos 13.0, *)) {
-        self.preferenceBox.contentViewMargins = NSMakeSize(-1, 0);
     }
     
     /// Update licenseConfig

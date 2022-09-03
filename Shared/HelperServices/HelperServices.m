@@ -129,17 +129,13 @@ static BOOL helperIsActive_PList() {
 }
 
 + (void)enableHelper_SM:(BOOL)enable error:(NSError * _Nullable * _Nullable)error API_AVAILABLE(macos(13.0)) {
+    
     /// TODO: Don't call `registerAndReturnError:`. Xcode complains about it.
     
-<<<<<<< HEAD
     /// TODO: Dispatch this stuff to another thread. Xcode analysis on `registerAndReturnError:` says "This method should not be called on the main thread as it may lead to UI unresponsiveness"
-    
-    if (@available(macOS 13, *)) {
 
-=======
     if (@available(macos 13.0, *)) {
         
->>>>>>> master
         /// Create error so that `*error` doesn't crash
         if (error == NULL) {
             NSError *e1 = [[NSError alloc] init];
