@@ -133,7 +133,11 @@ extension MFLicenseReturn: Equatable {
             }
             
             /// Get trial info
-            let daysOfUse = TrialCounter.daysOfUse
+#if FORCE_EXPIRED
+            let daysOfUse = licenseConfig.trialDays + 1
+#else
+            let daysOfUse = TrialCounter.daysOfUse    
+#endif
             let trialDays = licenseConfig.trialDays
             let trialIsActive = daysOfUse <= trialDays
             let daysOfUseUI = SharedUtilitySwift.clip(daysOfUse, betweenLow: 1, high: trialDays)

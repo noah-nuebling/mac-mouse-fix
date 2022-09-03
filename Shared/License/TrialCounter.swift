@@ -118,8 +118,10 @@ import CocoaLumberjackSwift
     }
     
     /// Vars
-    ///     Storing the daysOfUse in SecureStorage so it doesn't get reset on uninstall by apps like AppCleaner by Freemacsoft.
-    ///     At the time of writing, this is the ony part of TrialCounter.swift that is meant to be used by the mainApp.
+    /// Notes:
+    /// - Storing the daysOfUse in SecureStorage so it doesn't get reset on uninstall by apps like AppCleaner by Freemacsoft.
+    /// - At the time of writing, this is the ony part of TrialCounter.swift that is meant to be used by the mainApp.
+    /// - At the time of writing, this is only accessed by License.swift. We will use this assumption when implementing the test flags like `FORCE_EXPIRED`. Accessing this from elsewhere might break the testing flags.
     
     @objc static var daysOfUse: Int {
         get {

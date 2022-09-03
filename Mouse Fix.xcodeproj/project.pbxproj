@@ -442,8 +442,6 @@
 		4F09284928B8EE7200BDC2FF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LicenseSheetController.xib; sourceTree = "<group>"; };
 		4F09284C28B8EE7600BDC2FF /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/LicenseSheetController.strings; sourceTree = "<group>"; };
 		4F09BF57288355170080A5F8 /* PollingRateMeasurer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PollingRateMeasurer.swift; sourceTree = "<group>"; };
-		4F15C0C12666779D000337FF /* MainApp.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = MainApp.xcconfig; sourceTree = "<group>"; };
-		4F15C0C22666781F000337FF /* Helper.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Helper.xcconfig; sourceTree = "<group>"; };
 		4F1793A825EEC90900E8309B /* ZipArchive.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = ZipArchive.framework; sourceTree = "<group>"; };
 		4F18A85727BF6E0200A5703B /* IOHIDEvent-Reconstructed.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "IOHIDEvent-Reconstructed.h"; sourceTree = "<group>"; };
 		4F1AFE962670EBA900ECA424 /* DragCurve.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DragCurve.swift; sourceTree = "<group>"; };
@@ -470,14 +468,6 @@
 		4F39BC3A263AF2B000FDF692 /* SparkleUpdaterController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SparkleUpdaterController.m; sourceTree = "<group>"; };
 		4F39BC48263B179200FDF692 /* AppState.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppState.h; sourceTree = "<group>"; };
 		4F39BC49263B179200FDF692 /* AppState.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppState.m; sourceTree = "<group>"; };
-		4F39BC89263B692100FDF692 /* Base.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Base.xcconfig; sourceTree = "<group>"; };
-		4F39BC8A263B693300FDF692 /* MainAppRelease.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = MainAppRelease.xcconfig; sourceTree = "<group>"; };
-		4F39BC8B263B697200FDF692 /* HelperRelease.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = HelperRelease.xcconfig; sourceTree = "<group>"; };
-		4F39BC8C263B6A8800FDF692 /* Release.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Release.xcconfig; sourceTree = "<group>"; };
-		4F39BC8D263B6A9100FDF692 /* Debug.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Debug.xcconfig; sourceTree = "<group>"; };
-		4F39BCA4263B6DC200FDF692 /* MainAppDebug.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = MainAppDebug.xcconfig; sourceTree = "<group>"; };
-		4F39BCA5263B6DDA00FDF692 /* HelperDebug.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = HelperDebug.xcconfig; sourceTree = "<group>"; };
-		4F39BCA6263B6E8000FDF692 /* Accomplice.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Accomplice.xcconfig; sourceTree = "<group>"; };
 		4F39BCD3263B713400FDF692 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		4F39BCE8263B7B1500FDF692 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		4F3A40AA266BBB6200436821 /* AccelerationBezier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccelerationBezier.swift; sourceTree = "<group>"; };
@@ -1017,16 +1007,6 @@
 		4F39BC88263B68F400FDF692 /* xcconfig */ = {
 			isa = PBXGroup;
 			children = (
-				4F39BC89263B692100FDF692 /* Base.xcconfig */,
-				4F39BC8C263B6A8800FDF692 /* Release.xcconfig */,
-				4F39BC8D263B6A9100FDF692 /* Debug.xcconfig */,
-				4F15C0C12666779D000337FF /* MainApp.xcconfig */,
-				4F15C0C22666781F000337FF /* Helper.xcconfig */,
-				4F39BC8A263B693300FDF692 /* MainAppRelease.xcconfig */,
-				4F39BCA4263B6DC200FDF692 /* MainAppDebug.xcconfig */,
-				4F39BC8B263B697200FDF692 /* HelperRelease.xcconfig */,
-				4F39BCA5263B6DDA00FDF692 /* HelperDebug.xcconfig */,
-				4F39BCA6263B6E8000FDF692 /* Accomplice.xcconfig */,
 				4F39BCD3263B713400FDF692 /* README.md */,
 			);
 			path = xcconfig;
@@ -3043,7 +3023,7 @@
 /* Begin XCBuildConfiguration section */
 		4F2FDF352315662500C7BE14 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 4F39BCA6263B6E8000FDF692 /* Accomplice.xcconfig */;
+			baseConfigurationReference = 5F3794C77F51E425DA194652 /* Pods-Mac Mouse Fix Accomplice.debug.xcconfig */;
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_WEAK = YES;
@@ -3075,7 +3055,7 @@
 		};
 		4F2FDF362315662500C7BE14 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 4F39BCA6263B6E8000FDF692 /* Accomplice.xcconfig */;
+			baseConfigurationReference = B46C8B4489AC5B58EAA64F23 /* Pods-Mac Mouse Fix Accomplice.release.xcconfig */;
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_WEAK = YES;
@@ -3105,7 +3085,7 @@
 		};
 		4F94F61325E5EC2800D9F24A /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 4F39BCA4263B6DC200FDF692 /* MainAppDebug.xcconfig */;
+			baseConfigurationReference = 403031DA0EB25C7C3CABCA58 /* Pods-Mac Mouse Fix.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -3145,7 +3125,7 @@
 		};
 		4F94F61425E5EC2800D9F24A /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 4F39BC8A263B693300FDF692 /* MainAppRelease.xcconfig */;
+			baseConfigurationReference = 557A2F6039C60FD4D3EA2641 /* Pods-Mac Mouse Fix.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -3339,6 +3319,8 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				HEADER_SEARCH_PATHS = "$(inherited)";
+				INFOPLIST_FILE_HELPER = Helper/SupportFiles/Info.plist;
+				INFOPLIST_FILE_MAINAPP = App/SupportFiles/Info.plist;
 				MACOSX_DEPLOYMENT_TARGET = 10.13;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -3404,6 +3386,8 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				HEADER_SEARCH_PATHS = "$(inherited)";
+				INFOPLIST_FILE_HELPER = Helper/SupportFiles/Info.plist;
+				INFOPLIST_FILE_MAINAPP = App/SupportFiles/Info.plist;
 				MACOSX_DEPLOYMENT_TARGET = 10.13;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				ONLY_ACTIVE_ARCH = NO;
@@ -3418,7 +3402,7 @@
 		};
 		4FCECDA821092354001F1078 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 4F39BCA5263B6DDA00FDF692 /* HelperDebug.xcconfig */;
+			baseConfigurationReference = 0D9BE06E61FEE777A76EEE5A /* Pods-Mac Mouse Fix Helper.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIconRound;
 				CLANG_ENABLE_MODULES = YES;
@@ -3463,7 +3447,7 @@
 		};
 		4FCECDA921092354001F1078 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 4F39BC8B263B697200FDF692 /* HelperRelease.xcconfig */;
+			baseConfigurationReference = 287623BA43DEEFBB97312539 /* Pods-Mac Mouse Fix Helper.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIconRound;
 				CLANG_ENABLE_MODULES = YES;
