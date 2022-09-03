@@ -15,6 +15,8 @@
 /// - `FORCE_EXPIRED` Makes all the trial days be used up
 /// - `FORCE_NOT_EXPIRED` Makes the trial days be __not__ used up
 /// - `FORCE_LICENSED` Makes the app accept any license key. (This is implemented in Gumroad.swift)
+///
+/// Note: It seems you need to __clean the build folder__ after changing the flags for them to take effect. (Under Ventura Beta)
 
 import Cocoa
 
@@ -108,7 +110,13 @@ extension MFLicenseReturn: Equatable {
         let state = cache ? kMFLicenseStateLicensed : kMFLicenseStateUnlicensed
         
         /// Get trial info
+#if FORCE_EXPIRED
+        let daysOfUse = licenseConfig.trialDays + 1
+#elseif FORCE_NOT_EXPIRED
+        let daysOfUse = 0
+#else
         let daysOfUse = TrialCounter.daysOfUse
+#endif
         let trialDays = licenseConfig.trialDays
         let trialIsActive = daysOfUse <= trialDays
         let daysOfUseUI = SharedUtilitySwift.clip(daysOfUse, betweenLow: 1, high: trialDays)

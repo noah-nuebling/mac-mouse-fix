@@ -204,15 +204,23 @@ class AboutTabController: NSViewController {
 //            trialSectionManager!.trialSection.textField!.heightAnchor.constraint(equalToConstant: 20).isActive = true
 
             
-            /// Update layout
-            ///     So tracking area frames / bounds are correct
-            trialSectionManager?.currentSection.needsLayout = true
-            trialSectionManager?.currentSection.superview?.needsLayout = true
-            trialSectionManager?.currentSection.superview?.layoutSubtreeIfNeeded()
-            
-            /// Setup tracking area
-            trackingArea = NSTrackingArea(rect: trialSectionManager!.currentSection.superview!.bounds, options: [.activeInKeyWindow, .mouseEnteredAndExited], owner: self)
-            trialSectionManager!.currentSection.superview!.addTrackingArea(trackingArea!)
+            if license.trialIsActive.boolValue {
+                
+                /// Update layout
+                ///     So tracking area frames / bounds are correct
+                trialSectionManager?.currentSection.needsLayout = true
+                trialSectionManager?.currentSection.superview?.needsLayout = true
+                trialSectionManager?.currentSection.superview?.layoutSubtreeIfNeeded()
+                
+                /// Setup tracking area
+                trackingArea = NSTrackingArea(rect: trialSectionManager!.currentSection.superview!.bounds, options: [.activeInKeyWindow, .mouseEnteredAndExited], owner: self)
+                trialSectionManager!.currentSection.superview!.addTrackingArea(trackingArea!)
+                
+            } else { /// Trial has expired
+                
+                /// Always show activate button
+                trialSectionManager?.showActivate()
+            }
             
             ///
             /// Set up money section
