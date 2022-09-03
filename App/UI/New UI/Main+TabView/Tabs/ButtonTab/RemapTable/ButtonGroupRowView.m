@@ -51,7 +51,7 @@
     /// Undo clipping
     [NSGraphicsContext restoreGraphicsState];
     
-    if (@available(macOS 13, *)) {
+    if (@available(macos 13.0, *)) {
         /// Before Ventura, we just made the tableView have a "Horizontal Grid" in IB and that drew a line under the groupRow.
         /// But in Ventura Beta, that doesn't seem to work anymore. There's no more line under the groupRow.
         /// So now we're drawing the bottom border manually!

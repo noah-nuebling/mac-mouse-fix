@@ -355,7 +355,9 @@ static void updateBorderColor(RemapTableController *object) {
             NSTableViewRowAction *deleteAction = [NSTableViewRowAction rowActionWithStyle:NSTableViewRowActionStyleDestructive title:@"Delete" handler:^(NSTableViewRowAction * _Nonnull action, NSInteger row) {
                 [self removeRow:row];
             }];
-            deleteAction.image = [NSImage imageWithSystemSymbolName:@"trash.fill" accessibilityDescription:@"Delete"];
+            if (@available(macOS 11.0, *)) {
+                deleteAction.image = [NSImage imageWithSystemSymbolName:@"trash.fill" accessibilityDescription:@"Delete"];
+            }
             
             [result addObject:deleteAction];
         }

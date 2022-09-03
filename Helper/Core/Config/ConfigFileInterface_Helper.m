@@ -205,7 +205,7 @@ static void setupFSEventStreamCallback() {
     
     CFArrayRef pathsToWatch;
     void *callbackInfo = NULL; /// Could put stream-specific data here.
-    if (@available(macOS 13, *)) { /// The old code causes a crash on Ventura (specifically trying to log the cfPath using DDLogInfo)
+    if (@available(macos 13.0, *)) { /// The old code causes a crash on Ventura (specifically trying to log the cfPath using DDLogInfo)
         NSArray *pathsToWatchNS = @[_configFilePath];
         pathsToWatch = (__bridge_retained CFArrayRef)pathsToWatchNS; /// `__bridge_retained` -> we need to release this manually
     } else {

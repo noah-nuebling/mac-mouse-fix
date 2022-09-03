@@ -33,7 +33,7 @@
 - (void)drawFocusRingMask {
     
     int cornerRadius;
-    if (@available(macOS 11, *)) {
+    if (@available(macOS 11.0, *)) {
         cornerRadius = 4.0; // Not sure if 4 or 5
     } else {
         cornerRadius = 3.0; // I hope that's correct, can't test right now.
