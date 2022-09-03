@@ -7,6 +7,11 @@
 
 /// Embed views in a `CollapsingStackView` to show and hide them with a nice animation using the `.reactive.isCollapsed` binding target.
 
+/// ISSUE: Sometimes the uncollapse animation on the general tab when enabling the app is broken.
+///     \discussion: Investigation shows that this occurs when the preceding collapse of the view has either taken too long or too little time. This actually happens in the edge case where the app is disabled through the trial notification while the general tab is not visible, and then the user switches to the general tab and enables the app again. In this case the preceding collapse has a duration of 0 seconds, because the view was not visible when the collapse was triggered, so the uncollapse animation is broken. I have no clue what may be causing this at the moment.
+///     The thing that's going wrong is that there seems to be a clipping layer animated above the enable switch and the "Enable Mac Mouse Fix" label. But this clipping layer doesn't show up when enabling "Show View Frames" and "Show Alignment Rectangles" under View Debugging. Also the problem disappears when we make the __uncollapse__ animation slower. So I don't know how to investigate this further. Maybe if we could pause the animation mid way through and then investigate the view hierarchy.
+
+
 import Foundation
 import ReactiveSwift
 import QuartzCore
@@ -228,14 +233,24 @@ class CollapsingStackView: NSStackView {
             targetHeight = getFullHeight(wrapper, state: state)
         }
         
-        /// Get animation duration
-        let duration: CFTimeInterval
+        /// Get animation
         
-        if animate {
-            duration = getAnimationDuration(animationDistance: targetHeight - currentHeight)
+        let animation: CABasicAnimation
+        
+        if !animate {
+            animation = nullAnimation
         } else {
-            duration = 0.0
+            if collapse {
+                animation = CASpringAnimation(speed: 4.25, damping: 1.0)
+            } else {
+                animation = CASpringAnimation(speed: 3.75, damping: 1.0)
+            }
         }
+        
+        /// Get animation duration
+        ///     Only using the old getAnimationDuration() func for fade animations now because we're using spring animations now.
+        let duration = animation.duration
+        let fadeDuration = animate ? getAnimationDuration(animationDistance: targetHeight - currentHeight) : 0.0
          
         /// Invalidate animation timer
         
@@ -253,31 +268,25 @@ class CollapsingStackView: NSStackView {
             state.bottomConstraint!.isActive = false
             
             /// Animate height of wrapper
-//            let animation = CABasicAnimation(curve: collapseHeightCurve, duration: duration)
-//            let animation = CASpringAnimation(speed: 5, damping: 1.0)
-            let animation = animate ? CASpringAnimation(speed: 4.25, damping: 1.0) : nullAnimation
             Animate.with(animation) {
                 state.wrapperHeightConstraint?.reactiveAnimator().constant.set(targetHeight)
             }
 
             /// Animate opacity
-            Animate.with(CABasicAnimation(curve: collapseAlphaCurve, duration: duration)) {
+            Animate.with(CABasicAnimation(curve: collapseAlphaCurve, duration: fadeDuration)) {
                 wrapper.reactiveAnimator().alphaValue.set(0.0)
             }
             
         } else if !collapse { /// Basically do same thing as `collapse` code just in reverse
             
             /// Animate height of wrapper
-//            let animation = CABasicAnimation(curve: expandHeightCurve, duration: duration)
-//            let animation = CASpringAnimation(stiffness: 600, damping: 30)
-            let animation = animate ? CASpringAnimation(speed: 3.75, damping: 1.0) : nullAnimation
             let animationFromConstraint = state.wrapperHeightConstraint?.animation(forKey: "constant") as! CAAnimation /// This one doesn't jitter!! - I investigated what the difference might be in `InvestigateLayoutAnimations.xcproj`, but I couldn't find anything besides `roundsToInteger`. (which does make things better but not entirely) Very mysterious.
             Animate.with(animation) {
                 state.wrapperHeightConstraint!.reactiveAnimator().constant.set(targetHeight)
             }
             
             /// Animate opacity
-            Animate.with(CABasicAnimation(curve: expandAlphaCurve, duration: duration)) {
+            Animate.with(CABasicAnimation(curve: expandAlphaCurve, duration: fadeDuration)) {
                 wrapper.reactiveAnimator().alphaValue.set(1.0)
             }
             
@@ -442,6 +451,8 @@ class CollapsingStackView: NSStackView {
 
     private func getAnimationDuration(animationDistance: Double) -> CFTimeInterval {
         
+        /// This is unused now since we're using SpringAnimations
+        
         /// Slow down large animations a little for consistent feel
         let baseDuration = 0.25
         let speed = 180 /// px per second. Duration can be based on this. For some reasons large animations were way too slow with this
@@ -452,9 +463,14 @@ class CollapsingStackView: NSStackView {
         return duration
     }
 
+    /// Define collapse animation curves
+    ///     This is unused now since we're using SpringAnimations
+    
     private let collapseHeightCurve = CAMediaTimingFunction(name: .default)
     private let expandHeightCurve = CAMediaTimingFunction(name: .default)
 
+    /// Define fade animation curves
+    
     private let collapseAlphaCurve = CAMediaTimingFunction(controlPoints: 0, 1, 0.5, 1)
     private let expandAlphaCurve = CAMediaTimingFunction(controlPoints: 1, 0, 0.5, 1)
     /// ^ Use different animation curve than the height animation (below). The goal is to keep the opacity low for most of the animation to hide jankyness, while still maintaining a nice fresh "easeOut feel" to them
