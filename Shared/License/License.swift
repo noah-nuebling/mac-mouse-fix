@@ -10,6 +10,7 @@
 /// This is a thin wrapper / collection of convenience functions around TrialCounter.swift and Gumroad.swift.
 /// One of the more interesting things it does is It adds offline caching to Gumroad.swift and automatically gathers parameters for it.
 /// It was meant to be an Interface for Gumroad.swift, so that Gumroad.swift wouldn't be used except by License.swift, but for the LicenseSheet it made sense to use Gumroad.swift directly, because we don't want any caching when activating the license.
+/// At the time of writing it is an interface for TrialCounter.swift, which is not used by anything else except by the inputModules which report being used through the `handleUse()` function
 
 /// There are some Swift __Active Compilation Conditions__ you can set in the build settings for testing:
 /// - `FORCE_EXPIRED` Makes all the trial days be used up
@@ -17,6 +18,12 @@
 /// - `FORCE_LICENSED` Makes the app accept any license key. (This is implemented in Gumroad.swift)
 ///
 /// Note: It seems you need to __clean the build folder__ after changing the flags for them to take effect. (Under Ventura Beta)
+
+/// # __ Problems with the current architecture__ surrounding License.swift
+/// Currently, when we want to get the licensing state, we always use two functions in tandem: LicenseConfig.get() and License.licenseState() (which takes the licenseConfig as input). Each of the 2 functions get their info asynchronously from some server and we need to call them both in a nested async call to get the full state. Both modules also provide "cached" versions of these functions whose perk is that they return synchronously, so we can use them, when we need to quickly draw a UI that the user has requested. The problem is, that we call the async functions in several different places in the app where we could be reusing information, and also we need to do some manual "hey update yourself since the licensing has changed" calls to keep everything in sync. This also leads us to just reload the about tab whenever it is opened which is kind of unnecessary, and it still breaks when you have the about tab open while the trial expires.
+///
+/// So here's a __better idea__ for the architecture:
+///     There is a currentLicenseState var held by License.swift. It's a reactive signal provider, and all the UI that depends on it simply subscribes to it. We init the currentLicenseState to the cache. We update it on app start and when we know it changed due the trial expiring or the user activating their license or something. This should more efficient and much cleaner and should behave better in edge cases. But right now it's not worth implementing because it won't make much of a practical difference to the user.
 
 import Cocoa
 
@@ -81,6 +88,7 @@ extension MFLicenseReturn: Equatable {
                         /// Validate
                         assert(SharedUtility.runningHelper())
                         
+                        /// Only compile if helper (Otherwise there are linker errors)
                         #if IS_HELPER
                         
                         /// Show trialNotification

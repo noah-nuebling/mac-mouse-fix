@@ -59,8 +59,15 @@ class AboutTabController: NSViewController {
         updateUI(licenseConfig: cachedLicenseConfig, license: cachedLicense)
             
         /// 2. Get real values and update UI again
-        updateUIToCurrentLicense()
+//        updateUIToCurrentLicense()
         
+    }
+    
+    /// Did appear
+    
+    override func viewDidAppear() {
+        /// 2. Get real values and update UI
+        updateUIToCurrentLicense()
     }
     
     /// Update UI
@@ -87,6 +94,11 @@ class AboutTabController: NSViewController {
         if currentLicenseConfig?.isEqual(to: licenseConfig) ?? false && currentLicense == license { return }
         currentLicenseConfig = licenseConfig; currentLicense = license
         
+        /// Deactivate tracking area
+        if let trackingArea = self.trackingArea {
+            self.view.removeTrackingArea(trackingArea)
+        }
+        
         if license.state == kMFLicenseStateLicensed {
             
             ///
@@ -94,11 +106,6 @@ class AboutTabController: NSViewController {
             ///
             
             /// Note: This only does something if the UI was first updated in the unlicensed state and now it's going back to licensed state. When we hit this straight after loading from IB, the payButtonWrapper will just be nil and the moneyCellLink will be unhidden already, and the moneyCellImage will be the milkshake already, and the trackingArea will be nil (I think?), so this won't do anything.
-            
-            /// Deactivate tracking area
-            if let trackingArea = self.trackingArea {
-                self.view.removeTrackingArea(trackingArea)
-            }
             
             /// Show link and hide payButton
             self.payButtonWrapper?.isHidden = true
@@ -127,7 +134,7 @@ class AboutTabController: NSViewController {
             ///         - The clipping is originally turned off via User Defined Runtime Attributes in IB. Then the view is saved, swapped out with animations on mouse hover, and restored by trialSectionManager. We know it's restored at this point because we just called trialSectionManager.stopManaging(). But still the clipping is reset somehow.
             ///     Ideas for why this might be necessary:
             ///         - Maybe we're not correctly swapping back to the original view from interface builder.
-            ///         - Maybe the clipping settings are not saved when trialSectionManager serializes the view to save and restore it.
+            ///         - Maybe the clipping settings are not saved when trialSectionManager saves and restores the view from IB
             trialSectionManager?.currentSection.imageView?.layer?.masksToBounds = false
             
             /// Randomly select 1 out of 25+1 messages

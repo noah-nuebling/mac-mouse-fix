@@ -43,7 +43,14 @@
     [SharedMessagePort sendMessage:@"helperDisabled" withPayload:nil expectingReply:NO];
     
     /// Remove helper
-    [self removeHelperFromLaunchd];
+    ///     We can't just do `[self removeHelperFromLaunchd]`, because
+    ///     - On macOS 13.0 and above, SMAppService will still show the helper as enabled
+    ///     - On macOS 12.0 and below the launchd.plist will still be in the library and restart the helper on the next login
+    ///     So instead we need to use `enableHelperAsUserAgent:`. The problem is, that, using SMAppService, it doesn't seem possible to make the method work when it's called from somewhere other than the mainApp. Will file a ticket with Apple.
+    
+    SMAppService *helperService = SMAppService.mainAppService;
+    
+    [self enableHelperAsUserAgent:NO error:nil];
 }
 
 #pragma mark - Main interface

@@ -119,10 +119,13 @@ class TrialNotificationController: NSWindowController {
             ///     - It's in the bottom section below the horizontal line. 20 is the padding around the trialSection.
             ///     - It's in the left half of the window. So where the trial section is. Not in the right half where the pay button is.
             ///
+  
+            /// Edit: I don't like it! So we're disabling the switching on hover now.
+            ///     This means we're not really using the main functionality of the trialSectionManager anywhere right now. It still works fine but maybe refactor?
             
-            let trackingRect = NSRect(x: 0, y: 0, width: window.frame.width / 2.0, height: 20 + trialSection.frame.height + 20)
-            trackingArea = NSTrackingArea(rect: trackingRect, options: [.activeAlways, .mouseEnteredAndExited], owner: self)
-            trialSection.superview!.addTrackingArea(trackingArea!)
+//            let trackingRect = NSRect(x: 0, y: 0, width: window.frame.width / 2.0, height: 20 + trialSection.frame.height + 20)
+//            trackingArea = NSTrackingArea(rect: trackingRect, options: [.activeAlways, .mouseEnteredAndExited], owner: self)
+//            trialSection.superview!.addTrackingArea(trackingArea!)
             
             /// Init the payButton
             /// May be more elegant to do this from IB directly but whatever
@@ -159,7 +162,7 @@ class TrialNotificationController: NSWindowController {
             
             /// Create effectView
             ///     HACK: Using contentView.frame instead of window.frame here. Not sure why works.
-            ///     Material .popover matches real notifications and looks great, but in darkmode it makes our links unreadable over a bright background. Calendar.app also uses the .popover material and it displays links. It fixes this issue by using a much brighter link color. But we're just using a darker, less translucent matrial as and easy fix.
+            ///     Material .popover matches real notifications and looks great, but in darkmode it makes our links unreadable over a bright background. Calendar.app also uses the .popover material and it displays links. It fixes this issue by using a much brighter link color. But we're just using a darker, less translucent material (.underWindowBackground) as and easy fix.
             
             let windowFrame = window.contentView!.frame
             let effect = NSVisualEffectView(frame: windowFrame)
