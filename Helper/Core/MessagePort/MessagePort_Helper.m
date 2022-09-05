@@ -72,7 +72,7 @@ static CFDataRef didReceiveMessage(CFMessagePortRef port, SInt32 messageID, CFDa
     if ([message isEqualToString:@"configFileChanged"]) {
         [Config handleConfigFileChange];
     } else if ([message isEqualToString:@"terminate"]) {
-        [NSApp.delegate applicationWillTerminate:[[NSNotification alloc] init]];
+//        [NSApp.delegate applicationWillTerminate:[[NSNotification alloc] init]]; /// This creates an infinite loop or something? The statement below is never executed.
         [NSApp terminate:NULL];
     } else if ([message isEqualToString:@"checkAccessibility"]) {
         if (![AccessibilityCheck check]) {

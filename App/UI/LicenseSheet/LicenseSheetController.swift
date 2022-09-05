@@ -40,6 +40,7 @@ import Cocoa
         let onComplete = {
             self.isProcessing = false
             MainAppState.shared.aboutTabController?.updateUIToCurrentLicense() /// Would much more efficient to pass in the license here
+            SharedMessagePort.sendMessage("terminate", withPayload: nil, expectingReply: false) /// Restart helper
         }
         
         /// Gather info
