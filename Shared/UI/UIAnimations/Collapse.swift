@@ -10,6 +10,7 @@
 /// ISSUE: Sometimes the uncollapse animation on the general tab when enabling the app is broken.
 ///     \discussion: Investigation shows that this occurs when the preceding collapse of the view has either taken too long or too little time. This actually happens in the edge case where the app is disabled through the trial notification while the general tab is not visible, and then the user switches to the general tab and enables the app again. In this case the preceding collapse has a duration of 0 seconds, because the view was not visible when the collapse was triggered, so the uncollapse animation is broken. I have no clue what may be causing this at the moment.
 ///     The thing that's going wrong is that there seems to be a clipping layer animated above the enable switch and the "Enable Mac Mouse Fix" label. But this clipping layer doesn't show up when enabling "Show View Frames" and "Show Alignment Rectangles" under View Debugging. Also the problem disappears when we make the __uncollapse__ animation slower. So I don't know how to investigate this further. Maybe if we could pause the animation mid way through and then investigate the view hierarchy.
+///     Edit: This now (commit 3735ae46e3ad5e1c5e62fe31749e86f38137448e) seems to always occur when switching the general tab while it's disabled and then enabling it. I don't think this used to be a problem. Not sure when it started occuring.
 
 
 import Foundation
