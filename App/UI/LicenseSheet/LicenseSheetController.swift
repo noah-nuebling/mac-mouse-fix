@@ -67,7 +67,7 @@ import Cocoa
             LicenseSheetController.remove()
             
             /// Show message
-            let messageRaw = NSLocalizedString("license-toast.deactivate", comment: "First draft: Your license has been **deactivated**.")
+            let messageRaw = NSLocalizedString("license-toast.deactivate", comment: "First draft: Your license has been **deactivated**")
             let message = NSAttributedString(coolMarkdown: messageRaw)!
             ToastNotificationController.attachNotification(withMessage: message, to: MainAppState.shared.window!, forDuration: -1)
             
@@ -141,7 +141,7 @@ import Cocoa
             if userChangedKey {
                 message = NSLocalizedString("license-toast.activate", comment: "First draft: Your license has been **activated**! 🎉")
             } else {
-                message = NSLocalizedString("license-toast.already-active", comment: "First draft: This license is **already activated**!\n\nHope you're enjoying Mac Mouse Fix! :)")
+                message = NSLocalizedString("license-toast.already-active", comment: "First draft: This license is **already activated**!")
             }
             ToastNotificationController.attachNotification(withMessage: NSAttributedString(coolMarkdown: message)!, to: MainAppState.shared.window!, forDuration: -1)
             
@@ -189,7 +189,7 @@ import Cocoa
                 }
                 
             } else {
-                message = NSLocalizedString("license-toast.unknown-reason", comment: "First draft: Activating your license failed for **unknown reasons**.\n\nPlease write a **Bug Report** [here](https://noah-nuebling.github.io/mac-mouse-fix-feedback-assistant/?type=bug-report).")
+                message = NSLocalizedString("license-toast.unknown-reason", comment: "First draft: Activating your license failed for **unknown reasons**\n\nPlease write a **Bug Report** [here](https://noah-nuebling.github.io/mac-mouse-fix-feedback-assistant/?type=bug-report)")
             }
             
             assert(message != "")

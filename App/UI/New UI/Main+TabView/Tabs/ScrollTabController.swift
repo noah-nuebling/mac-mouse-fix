@@ -65,7 +65,7 @@ class ScrollTabController: NSViewController {
                 
                 /// Build string
                 
-                var messageRaw = NSLocalizedString("scroll-revive-toast", comment: "First draft: Enabled Mac Mouse Fix for __Scrolling__.\nIt had been disabled from the Menu Bar %@ || Where %@ will be replaced by the menubar icon.")
+                var messageRaw = NSLocalizedString("scroll-revive-toast", comment: "First draft: Enabled Mac Mouse Fix for __Scrolling__\nIt had been disabled from the Menu Bar %@ || Note: Where %@ will be replaced by the menubar icon")
                 var message = NSAttributedString(coolMarkdown: messageRaw)!
                 let symbolString = NSAttributedString(symbol: "CoolMenuBarIcon", hPadding: 0.0, vOffset: -6, fallback: "<Mac Mouse Fix Menu Bar Item>")
                 message = NSAttributedString(attributedFormat: message, args: [symbolString])
@@ -114,7 +114,7 @@ class ScrollTabController: NSViewController {
         /// Precise
         precise.bindingTarget <~ preciseToggle.reactive.boolValues
         preciseToggle.reactive.boolValue <~ precise.producer
-        preciseHint.stringValue = NSLocalizedString("precise-scrolling-hint", comment: "First draft: Scroll precisely without a modifier key by\nmoving the scroll wheel slowly")
+        preciseHint.stringValue = NSLocalizedString("precise-scrolling-hint", comment: "First draft: Scroll precisely even without a keyboard modifier by\nmoving the scroll wheel slowly || Note: The line break (\n) is there so the layout of the Scroll tab doesn't become too wide which looks weird. You can set it to your own taste.")
         
         /// Installl the macOSHint.
         ///     We manually make the macOSHint width equal the preciseSection width, because if the width changes the window resizes from the left edge which looks crappy.

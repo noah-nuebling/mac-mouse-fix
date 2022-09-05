@@ -184,8 +184,8 @@
 /* Class = "NSButtonCell"; title = "with Inertia"; ObjectID = "N65-aN-Hxp"; Note = "Scrolling > with Inertia Toggle (See what Apple uses for Trackpad marketing in your Language)"; */
 "N65-aN-Hxp.title" = "mit Nachlauf";
 
-/* Class = "NSTextFieldCell"; title = "Move the mouse pointer inside the '+' field, then click a mouse button to assign an action to it.  You can also Double Click, Click and Drag, and more."; ObjectID = "N7H-9j-DIr"; Note = "Buttons > Add Field Hint"; */
-"N7H-9j-DIr.title" = "Bewege den Mauszeiger in das '+' Feld, dann klicke eine Maustaste um ihr eine Aktion zuzuweisen.\n Du kannst auch doppelklicken, klicken und ziehen und mehr.";
+/* Class = "NSTextFieldCell"; title = "Move the mouse pointer inside the '+' field, then click a mouse button to assign an action to it.  You can also Double Click, Click and Drag and more."; ObjectID = "N7H-9j-DIr"; Note = "Buttons > Add Field Hint"; */
+"N7H-9j-DIr.title" = "Bewege den Mauszeiger in das '+' Feld, dann klicke eine Maustaste, um ihr eine Aktion zuzuweisen.\nDu kannst auch doppelklicken, klicken und ziehen, und mehr.";
 
 /* Class = "NSMenuItem"; title = "Minimize"; ObjectID = "NdF-Gb-mOK"; */
 "NdF-Gb-mOK.title" = "Minimieren";
@@ -274,7 +274,7 @@
 /* Class = "NSTextFieldCell"; title = "File a bug report"; ObjectID = "bQf-qv-mvB"; */
 "bQf-qv-mvB.title" = "Erstatte einen Fehlerbericht";
 
-/* Class = "NSTextFieldCell"; title = "Acknoledgements"; ObjectID = "8pi-FV-zYE"; */
+/* Class = "NSTextFieldCell"; title = "Acknowledgements"; ObjectID = "8pi-FV-zYE"; */
 "8pi-FV-zYE.title" = "Anerkennungen";
 
 /* Class = "NSTextFieldCell"; title = "Buy me a Milkshake :)"; ObjectID = "TrI-uu-DEN"; */
