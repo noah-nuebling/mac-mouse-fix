@@ -122,26 +122,41 @@ import CocoaLumberjackSwift
             isDarkMode = (NSApp.effectiveAppearance == .init(named: .darkAqua)!)
         }
         
+        /// Get baseColor
+        
+        let baseColor: NSColor = isDarkMode ? .black : .white
+        
+        /// Define baseColor blending fractions
+        
+        let fillFraction = isDarkMode ? 0.1 : 0.25
+        let borderFraction = isDarkMode ? 0.1 : 0.25
+        
         /// Update fillColor
-        ///     This is reallly just quarternaryLabelColor but without transparency.
+        ///     This is reallly just quarternaryLabelColor but without transparency. Edit: We're making it a little lighter actually.
         ///     I couldn't find a nicer way to remove transparency except hardcoding it. Our solidColor methods from NSColor+Additions.m didn't work properly. I suspect it's because the NSColor objects can represent different colors depending on which context they are drawn in.
         ///     Possible nicer solution: I think the only dynamic way to remove transparency that will be reliable is to somehow render the view in the background and then take a screenhot
         ///     Other possible solution: We really want to do this so we don't see the NSShadow behind the view. Maybe we could clip the drawing of the shadow, then we wouldn't have to remove transparency at all.
         
+        let quarternayLabelColor: NSColor
         if isDarkMode {
-            addField.fillColor = NSColor(red: 57/255, green: 57/255, blue: 57/255, alpha: 1.0)
+            quarternayLabelColor = NSColor(red: 57/255, green: 57/255, blue: 57/255, alpha: 1.0)
         } else {
-            addField.fillColor = NSColor(red: 227/255, green: 227/255, blue: 227/255, alpha: 1.0)
+            quarternayLabelColor = NSColor(red: 227/255, green: 227/255, blue: 227/255, alpha: 1.0)
         }
+        
+        addField.fillColor = quarternayLabelColor.blended(withFraction: fillFraction, of: baseColor)!
         
         /// Update borderColor
         ///     This is really just .separatorColor without transparency
         
+        let separatorColor: NSColor
         if isDarkMode {
-            addField.borderColor = NSColor(red: 77/255, green: 77/255, blue: 77/255, alpha: 1.0)
+            separatorColor = NSColor(red: 77/255, green: 77/255, blue: 77/255, alpha: 1.0)
         } else {
-            addField.borderColor = NSColor(red: 198/255, green: 198/255, blue: 198/255, alpha: 1.0)
+            separatorColor = NSColor(red: 198/255, green: 198/255, blue: 198/255, alpha: 1.0)
         }
+        
+        addField.borderColor = separatorColor.blended(withFraction: borderFraction, of: baseColor)!
     }
     
     override func viewDidAppear() {
