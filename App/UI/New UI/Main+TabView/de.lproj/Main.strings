@@ -113,7 +113,7 @@
 "E0q-4e-axc.title" = "Mittel";
 
 /* Class = "NSTextFieldCell"; title = "Scroll Swiftly"; ObjectID = "ENz-Ny-4ax"; Note = "Scrolling > Keyboard Modifiers > Scroll Swiftly Label"; */
-"ENz-Ny-4ax.title" = "Flott scrollen";
+"ENz-Ny-4ax.title" = "Schnell scrollen";
 
 /* Class = "NSMenuItem"; title = "Show All"; ObjectID = "fGs-UI-L0d"; */
 "fGs-UI-L0d.title" = "Alle einblenden";
@@ -146,7 +146,7 @@
 "Gr8-qh-oGd.title" = "Dienste";
 
 /* Class = "NSTextFieldCell"; title = "Zoom In or Out"; ObjectID = "H4T-Rp-t33"; Note = "Scrolling > Keyboard Modifiers > Zoom In or Out Label"; */
-"H4T-Rp-t33.title" = "Rein- und rauszoomen";
+"H4T-Rp-t33.title" = "Rein- oder rauszoomen";
 
 /* Class = "NSMenuItem"; title = "Mac Mouse Fix"; ObjectID = "hSC-BE-EZJ"; */
 "hSC-BE-EZJ.title" = "Mac Mouse Fix";

@@ -162,7 +162,7 @@ import Cocoa
                         
                         let nOfActivations = error.userInfo["nOfActivations"] as! Int
                         let maxActivations = error.userInfo["maxActivations"] as! Int
-                        let messageFormat = NSLocalizedString("license-toast.activation-overload", comment: "First draft: This license has been activated **%d** times. The maximum is **%d**.\n\nBecause of this, the license has been invalidated. This is to prevent piracy. If you have other reasons for activating the license this many times, please excuse the inconvenience.\n\nJust [reach out](mailto:noah.n.public@gmail.com) and I will provide you with a new license. Thanks for understanding.")
+                        let messageFormat = NSLocalizedString("license-toast.activation-overload", comment: "First draft: This license has been activated **%d** times. The maximum is **%d**.\n\nBecause of this, the license has been invalidated. This is to prevent piracy. If you have other reasons for activating the license this many times, please excuse the inconvenience.\n\nJust [reach out](mailto:noah.n.public@gmail.com) and I will provide you with a new license! Thanks for understanding.")
                         message = String(format: messageFormat, nOfActivations, maxActivations)
                         
                     case kMFLicenseErrorCodeGumroadServerResponseError:

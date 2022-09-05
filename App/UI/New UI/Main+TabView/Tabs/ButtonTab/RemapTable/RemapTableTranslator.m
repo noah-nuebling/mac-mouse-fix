@@ -130,7 +130,7 @@ static NSArray *getOneShotEffectsTable(NSDictionary *rowDict) {
     NSDictionary *effectDict = rowDict[kMFRemapsKeyEffect];
     
     NSMutableArray *oneShotEffectsTable = @[
-        @{@"ui": NSLocalizedString(@"effect.look-up", @"First draft: Look Up"), @"tool": NSLocalizedString(@"effect.look-up.hint", @"First draft: Look up words in the Dictionary, Quick Look files in Finder, and more. \n \nWorks like Force Touch on an Apple Trackpad."), @"dict": @{
+        @{@"ui": NSLocalizedString(@"effect.look-up", @"First draft: Look Up & Quick Look"), @"tool": NSLocalizedString(@"effect.look-up.hint", @"First draft: Look up words in the Dictionary, Quick Look files in Finder, and more. \n \nWorks like Force Touch on an Apple Trackpad."), @"dict": @{
                   kMFActionDictKeyType: kMFActionDictTypeSymbolicHotkey,
                   kMFActionDictKeyGenericVariant: @(kMFSHLookUp)
         }},
@@ -667,7 +667,7 @@ static NSString *effectNameForRowDict(NSDictionary * _Nonnull rowDict) {
         /// Declare map
         
         NSDictionary *map = @{
-            @[@(1), @"click"]:  NSLocalizedString(@"trigger.click.1",   @"First draft: Click %@ || Note: %@ will be a button name || Example where %@ is 'Button 5': ⌥⌘ Double Click Button 4 + Click Button 5"),
+            @[@(1), @"click"]:  NSLocalizedString(@"trigger.click.1",   @"First draft: Click %@ || Note: %@ will be a button name || Example where %@ is 'Button 5': ⌥⌘ Double Click Button 4 + Click Button 5 || Note: Most of the Action Table Strings are capitalized in English because we're using title case. In your language, you might not want to capitalize them."),
             @[@(2), @"click"]:  NSLocalizedString(@"trigger.click.2",   @"First draft: Double Click %@"),
             @[@(3), @"click"]:  NSLocalizedString(@"trigger.click.3",   @"First draft: Triple Click %@"),
             @[@(1), @"hold"]:   NSLocalizedString(@"trigger.hold.1",    @"First draft: Hold %@"),

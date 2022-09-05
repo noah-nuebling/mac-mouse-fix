@@ -265,7 +265,7 @@
 /* First draft: Zoom in or out in Safari, Maps, and other apps \n \nWorks like Pinch to Zoom on an Apple Trackpad */
 "scroll-effect.zoom.hint" = "";
 
-/* First draft: Click %@ || Note: %@ will be a button name || Example where %@ is 'Button 5': ⌥⌘ Double Click Button 4 + Click Button 5 */
+/* First draft: Click %@ || Note: %@ will be a button name || Example where %@ is 'Button 5': ⌥⌘ Double Click Button 4 + Click Button 5 || Note: Most of the Action Table Strings are capitalized in English because we're using title case. In your language, you might not want to capitalize them. */
 "trigger.click.1" = "";
 
 /* First draft: Double Click %@ */
