@@ -123,6 +123,16 @@ class TabViewController: NSTabViewController {
     override func viewDidAppear() {
         
         ///
+        /// Hide Pointer tab (because it's unfinished and unused)
+        ///
+        /// (Under Ventura Beta) For some reason, `removeTabViewItem(pointerTab)` (and `tabView.removeTabViewItem()`) crashes here saying the item is not in the tabView. This doesn't make sense since it is found in the array `self.tabViewItems`. So instead we use the hacky coolHideTab().
+        
+        if let _ = tabViewItem(identifier: "pointer") {
+            coolHideTab(identifier: "pointer", window: self.window)
+        }
+        
+        
+        ///
         /// Change to general tab, when app is disabled
         ///
         
@@ -521,5 +531,17 @@ class TabViewController: NSTabViewController {
         default:
             return false
         }
+    }
+    
+    func tabViewItem(identifier: String) -> NSTabViewItem? {
+        
+        for item in tabViewItems {
+            
+            if item.identifier as? String == identifier {
+                return item
+            }
+        }
+        
+        return nil
     }
 }
