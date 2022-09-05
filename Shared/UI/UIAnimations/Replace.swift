@@ -18,9 +18,6 @@ extension NSView {
     
     func animatedReplace(with view: NSView) {
         
-        /// Copy over all constraints from self to the new view
-        ///    (Except height and width)
-        
         ReplaceAnimations.animate(ogView: self, replaceView: view, hAnchor: .leading, vAnchor: .center, doAnimate: true)
     }
     
@@ -176,6 +173,9 @@ class ReplaceAnimations {
         ///
         /// Create before / after image views for animating
         ///
+        /// Edit: I just replaced the replaceImageView with the replaceView. This is better because the replaceView is already responsive to user input during the animation. This seems to work great. I don't know why we were using imageViews to begin with. Maybe we should remove the ogImageView as well. Last commit with the old version: 0219777f8044e854c9b49a1e284ff7cd24d53273
+        ///     TODO: Clean this up. Remove the replaceImage and replaceImageView stuff. 
+        
         let ogImageView = NSImageView()
         ogImageView.wantsLayer = true
         ogImageView.layer?.masksToBounds = false
@@ -186,22 +186,22 @@ class ReplaceAnimations {
         ogImageView.widthAnchor.constraint(equalToConstant: ogSizeUnaligned.width).isActive = true
         ogImageView.heightAnchor.constraint(equalToConstant: ogSizeUnaligned.height).isActive = true
         
-        let replaceImageView = NSImageView()
-        replaceImageView.wantsLayer = true
-        replaceImageView.layer?.masksToBounds = false
-        replaceImageView.translatesAutoresizingMaskIntoConstraints = false
-        replaceImageView.imageScaling = .scaleNone
-        
-        replaceImageView.image = replaceImage
-        replaceImageView.widthAnchor.constraint(equalToConstant: replaceSizeUnaligned.width).isActive = true
-        replaceImageView.heightAnchor.constraint(equalToConstant: replaceSizeUnaligned.height).isActive = true
+//        let replaceView = NSImageView()
+//        replaceView.wantsLayer = true
+//        replaceView.layer?.masksToBounds = false
+//        replaceView.translatesAutoresizingMaskIntoConstraints = false
+//        replaceView.imageScaling = .scaleNone
+//
+//        replaceView.image = replaceImage
+//        replaceView.widthAnchor.constraint(equalToConstant: replaceSizeUnaligned.width).isActive = true
+//        replaceView.heightAnchor.constraint(equalToConstant: replaceSizeUnaligned.height).isActive = true
         
         ///
         /// Add in both imageViews into wrapperView and add constraints
         ///
         
         wrapperView.addSubview(ogImageView)
-        wrapperView.addSubview(replaceImageView)
+        wrapperView.addSubview(replaceView)
         
         ///
         /// Add constraints for the 2 imageViews
@@ -227,24 +227,24 @@ class ReplaceAnimations {
         switch hAnchor {
         case .leading:
             ogImageView.leadingAnchor.constraint(equalTo: wrapperView.leadingAnchor, constant: hOffsetOG).isActive = true
-            replaceImageView.leadingAnchor.constraint(equalTo: wrapperView.leadingAnchor, constant: hOffsetReplace).isActive = true
+            replaceView.leadingAnchor.constraint(equalTo: wrapperView.leadingAnchor, constant: hOffsetReplace).isActive = true
         case .center:
             ogImageView.centerXAnchor.constraint(equalTo: wrapperView.centerXAnchor, constant: hOffsetOG).isActive = true
-            replaceImageView.centerXAnchor.constraint(equalTo: wrapperView.centerXAnchor, constant: hOffsetReplace).isActive = true
+            replaceView.centerXAnchor.constraint(equalTo: wrapperView.centerXAnchor, constant: hOffsetReplace).isActive = true
         case .trailing:
             ogImageView.trailingAnchor.constraint(equalTo: wrapperView.trailingAnchor, constant: hOffsetOG).isActive = true
-            replaceImageView.trailingAnchor.constraint(equalTo: wrapperView.trailingAnchor, constant: hOffsetReplace).isActive = true
+            replaceView.trailingAnchor.constraint(equalTo: wrapperView.trailingAnchor, constant: hOffsetReplace).isActive = true
         }
         switch vAnchor {
         case .top:
             ogImageView.topAnchor.constraint(equalTo: wrapperView.topAnchor, constant: vOffsetOG).isActive = true
-            replaceImageView.topAnchor.constraint(equalTo: wrapperView.topAnchor, constant: vOffsetReplace).isActive = true
+            replaceView.topAnchor.constraint(equalTo: wrapperView.topAnchor, constant: vOffsetReplace).isActive = true
         case .center:
             ogImageView.centerYAnchor.constraint(equalTo: wrapperView.centerYAnchor, constant: vOffsetOG).isActive = true
-            replaceImageView.centerYAnchor.constraint(equalTo: wrapperView.centerYAnchor, constant: vOffsetReplace).isActive = true
+            replaceView.centerYAnchor.constraint(equalTo: wrapperView.centerYAnchor, constant: vOffsetReplace).isActive = true
         case .bottom:
             ogImageView.bottomAnchor.constraint(equalTo: wrapperView.bottomAnchor, constant: vOffsetOG).isActive = true
-            replaceImageView.bottomAnchor.constraint(equalTo: wrapperView.bottomAnchor, constant: vOffsetReplace).isActive = true
+            replaceView.bottomAnchor.constraint(equalTo: wrapperView.bottomAnchor, constant: vOffsetReplace).isActive = true
         }
         
         ///
@@ -293,7 +293,7 @@ class ReplaceAnimations {
         
         /// Set initial opacities
         ogImageView.alphaValue = 1.0
-        replaceImageView.alphaValue = 0.0
+        replaceView.alphaValue = 0.0
         
         /// Fade out view
         Animate.with(CABasicAnimation(curve: fadeOutCurve, duration: duration)) {
@@ -302,7 +302,7 @@ class ReplaceAnimations {
         
         /// Fade in view
         Animate.with(CABasicAnimation(curve: fadeInCurve, duration: duration)) {
-            replaceImageView.reactiveAnimator().alphaValue.set(1.0)
+            replaceView.reactiveAnimator().alphaValue.set(1.0)
         }
         
         /// Return interruptor
@@ -312,7 +312,7 @@ class ReplaceAnimations {
             manager?.removeAllAnimations(for: wrapperWidthConst)
             manager?.removeAllAnimations(for: wrapperHeightConst)
             manager?.removeAllAnimations(for: ogImageView)
-            manager?.removeAllAnimations(for: replaceImageView)
+            manager?.removeAllAnimations(for: replaceView)
             onComplete()
         }
     }
