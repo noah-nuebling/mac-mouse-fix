@@ -426,3 +426,15 @@
 
 /* First draft: Hi there! You've been using Mac Mouse Fix for **%d days** now. I hope you're enjoying it!\n\nIf you want to keep using Mac Mouse Fix, you can [buy it now](%@). */
 "trial-notif.body" = "";
+
+/* First draft: Back */
+"effect.back" = "";
+
+/* First draft: Go back one page in Safari and other apps */
+"effect.back.hint" = "";
+
+/* First draft: Forward */
+"effect.forward" = "";
+
+/* First draft: Go forward one page in Safari and other apps */
+"effect.forward.hint" = "";

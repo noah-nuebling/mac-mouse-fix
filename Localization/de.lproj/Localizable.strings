@@ -417,3 +417,15 @@
 
 /* First draft: Hey there! You've been using Mac Mouse Fix for **%d days** now. I hope you're enjoying it!\n\nIf you want to keep using Mac Mouse Fix, you can [buy it now](%@). */
 "trial-notif.body" = "Hi! Du verwendest Mac Mouse Fix jetzt seit **%d Tagen**. Ich hoffe, es gefällt dir!\n\nWenn du Mac Mouse Fix auch weiter verwenden willst, kannst du es dir [jetzt kaufen](%@).";
+
+/* First draft: Back */
+"effect.back" = "Zurück";
+
+/* First draft: Go back one page in Safari and other apps */
+"effect.back.hint" = "Gehe eine Seite zurück in Safari und anderen Apps";
+
+/* First draft: Forward */
+"effect.forward" = "Vorwärts";
+
+/* First draft: Go forward one page in Safari and other apps */
+"effect.forward.hint" = "Gehe eine Seite vorwärts in Safari und anderen Apps";

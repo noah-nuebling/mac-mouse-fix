@@ -156,14 +156,24 @@ static NSArray *getOneShotEffectsTable(NSDictionary *rowDict) {
                   kMFActionDictKeyType: kMFActionDictTypeSymbolicHotkey,
                   kMFActionDictKeyGenericVariant: @(kMFSHAppExpose)
         }},
-        separatorEffectsTableEntry(),
         @{@"ui": NSLocalizedString(@"effect.desktop", @"First draft: Show Desktop"), @"tool": NSLocalizedString(@"effect.desktop.hint", @"First draft: Show the desktop"), @"dict": @{
                   kMFActionDictKeyType: kMFActionDictTypeSymbolicHotkey,
                   kMFActionDictKeyGenericVariant: @(kMFSHShowDesktop)
         }},
+        separatorEffectsTableEntry(),
         @{@"ui": NSLocalizedString(@"effect.launchpad", @"First draft: Launchpad"), @"tool": NSLocalizedString(@"effect.launchpad.hint", @"First draft: Open Launchpad"), @"dict": @{
                   kMFActionDictKeyType: kMFActionDictTypeSymbolicHotkey,
                   kMFActionDictKeyGenericVariant: @(kMFSHLaunchpad)
+        }},
+        
+        separatorEffectsTableEntry(),
+        @{@"ui": NSLocalizedString(@"effect.back", @"First draft: Back"), @"tool": NSLocalizedString(@"effect.back.hint", @"First draft: Go back one page in Safari and other apps"), @"dict": @{
+                  kMFActionDictKeyType: kMFActionDictTypeNavigationSwipe,
+                  kMFActionDictKeyGenericVariant: kMFNavigationSwipeVariantLeft
+        }},
+        @{@"ui": NSLocalizedString(@"effect.forward", @"First draft: Forward"), @"tool": NSLocalizedString(@"effect.forward.hint", @"First draft: Go forward one page in Safari and other apps"), @"dict": @{
+                  kMFActionDictKeyType: kMFActionDictTypeNavigationSwipe,
+                  kMFActionDictKeyGenericVariant: kMFNavigationSwipeVariantRight
         }},
         separatorEffectsTableEntry(),
         @{@"ui": NSLocalizedString(@"effect.left-space", @"First draft: Move Left a Space"), @"tool": NSLocalizedString(@"effect.left-space.hint", @"First draft: Move one Space to the left"), @"dict": @{
