@@ -67,8 +67,35 @@
     
     if ([path isEqual:@"activate"]) {
         
+        /// Open the license activation UI
+        
         [LicenseSheetController add];
         
+    } else if ([path isEqual:@"disable"]) {
+        
+        /// Switch to the general tab and then disable the helper
+        
+        /// Gather info
+        NSString *currentTab = MainAppState.shared.tabViewController.identifierOfSelectedTab;
+        BOOL willSwitch = ![currentTab isEqual:@"general"];
+        BOOL windowExists = self.window != nil;
+        
+        /// Get delays
+        double preSwitchDelay = willSwitch && !windowExists ? 0.1 : 0.0; /// Wait until the window exists so the switch works
+        double postSwitchDelay = willSwitch ? 0.5 : 0.0; /// Wait until the tab switch animation is done before disabling the helper
+        
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, NSEC_PER_SEC * preSwitchDelay), dispatch_get_main_queue(), ^{
+                
+            if (willSwitch) {
+                [MainAppState.shared.tabViewController coolSelectTabWithIdentifier:@"general" window:self.window];
+            }
+            
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, NSEC_PER_SEC * postSwitchDelay), dispatch_get_main_queue(), ^{
+                
+                [EnabledState.shared disable];
+            });
+        });
+
     } else {
         DDLogWarn(@"Received URL with unknown path: %@", address);
     }

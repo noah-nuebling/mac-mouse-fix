@@ -67,12 +67,12 @@ import ReactiveSwift
     
     /// Main interface
     
-    func enable() throws {
+    @objc func enable() throws {
         var error: NSError?
         HelperServices.enableHelper(asUserAgent: true, error: &error)
         if error != nil { throw error! }
     }
-    func disable() {
+    @objc func disable() {
         HelperServices.enableHelper(asUserAgent: false, error: nil)
         observer.send(value: false)
     }

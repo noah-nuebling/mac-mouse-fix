@@ -411,16 +411,6 @@
 			name = "Copy Accomplice";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		4F9E5F0726742A20004E75F7 /* Embed Frameworks */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "";
-			dstSubfolderSpec = 10;
-			files = (
-			);
-			name = "Embed Frameworks";
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
@@ -2306,13 +2296,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 4FCECDA721092354001F1078 /* Build configuration list for PBXNativeTarget "Mac Mouse Fix Helper" */;
 			buildPhases = (
-				4FD148D928AA45FE00FE688C /* BartyCrouch */,
 				93EAFCB2E5A3B8110B03FE4A /* [CP] Check Pods Manifest.lock */,
+				4FD148D928AA45FE00FE688C /* BartyCrouch */,
 				4FCECD7C21092354001F1078 /* Sources */,
 				4FCECD7D21092354001F1078 /* Frameworks */,
 				4FCECD7E21092354001F1078 /* Resources */,
 				4FEEEC53263C164000C50193 /* Copy Version from Main App */,
-				4F9E5F0726742A20004E75F7 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);

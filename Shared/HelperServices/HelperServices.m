@@ -39,16 +39,24 @@
     /// Validate
     assert(SharedUtility.runningHelper);
     
+    /// HACK (?)
+    ///     Our original approach (below) doesn't work with the new SMAppService API under Ventura Beta, so we're disabling this for now. See below for more info.
+    ///     Instead, we'll open the mainApp and have it disable the helper
+    [NSWorkspace.sharedWorkspace openURL:[NSURL URLWithString:@"macmousefix:disable"]];
+    
+    return;
+    
     /// Notify mainApp
     [SharedMessagePort sendMessage:@"helperDisabled" withPayload:nil expectingReply:NO];
     
-    /// Remove helper
+    /// Disable helper
     ///     We can't just do `[self removeHelperFromLaunchd]`, because
     ///     - On macOS 13.0 and above, SMAppService will still show the helper as enabled
     ///     - On macOS 12.0 and below the launchd.plist will still be in the library and restart the helper on the next login
-    ///     So instead we need to use `enableHelperAsUserAgent:`. The problem is, that, using SMAppService, it doesn't seem possible to make the method work when it's called from somewhere other than the mainApp. Will file a ticket with Apple.
-    
-    SMAppService *helperService = SMAppService.mainAppService;
+    ///     So instead we need to use `enableHelperAsUserAgent:`. The problem is, that, using SMAppService, it doesn't seem possible to make the method work when it's called from somewhere other than the mainApp.
+    ///     I just tried to create a separate launchd.plist file for embedding inside the helper, but it's not picked up as the same service.
+    ///     Just filed a ticket Apple.
+    ///     For now we'll just turn this functionality off. If it never gets resolved by Apple, we can use weird hacks. Basically, could set a disabledByHelper flag in the config.plist, and then use use `launchctl remove` now to kill the helper and whenever it tries to start up again. Then the next time we start the mainApp, we'll actually properly unregister the helper.
     
     [self enableHelperAsUserAgent:NO error:nil];
 }
