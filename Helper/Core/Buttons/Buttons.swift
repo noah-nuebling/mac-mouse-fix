@@ -110,7 +110,7 @@ import CocoaLumberjackSwift
                     map[.levelExpired]          = ("click", kMFActionPhaseCombined)
                 } else if effectForMouseDownStateOfThisLevelExists.boolValue {
                     map[.release]               = ("click", kMFActionPhaseCombined)
-                    map[.releaseFromHold]       = ("click", kMFActionPhaseCombined)
+//                    map[.releaseFromHold]       = ("click", kMFActionPhaseCombined)
                 } else {
                     map[.press]                 = ("click", kMFActionPhaseStart)
                 }
