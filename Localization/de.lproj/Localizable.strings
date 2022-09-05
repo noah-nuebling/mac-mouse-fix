@@ -17,7 +17,7 @@
 "scroll-revive-toast" = "Mac Mouse Fix __aktiviert__ für __Scrollen__.\nEs war in der Menüleiste %@ deakiviert worden.";
 
 /* First draft: Set Scroll Speed at\nSystem Settings > Mouse > Scroll Speed */
-"macos-scroll-speed-hint" = "Stelle die Scroll-Geschwindigkeit ein unter\nSystemeinstellungen > Maus > Scrolltempo";
+"macos-scroll-speed-hint" = "Stelle das Scrolltempo ein unter\nSystemeinstellungen > Maus > Scrolltempo";
 
 /* First draft: Content tracks finger movement */
 "natural-scrolling-hint" = "Inhalte folgen Finger-Bewegung";

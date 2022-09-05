@@ -137,7 +137,7 @@
 "g9N-Za-8Ss.label" = "<>";
 
 /* Class = "NSButtonCell"; title = "Natural Scroll Direction"; ObjectID = "gK0-1z-Pjv"; Note = "Scrolling > Natural Scroll Direction Toggle"; */
-"gK0-1z-Pjv.title" = "Natürliche Scroll-Richtung";
+"gK0-1z-Pjv.title" = "Natürliche Scrollrichtung";
 
 /* Class = "NSTableColumn"; headerCell.title = "<Effect>"; ObjectID = "gOt-GR-IbE"; */
 "gOt-GR-IbE.headerCell.title" = "<>";
@@ -170,7 +170,7 @@
 "kK6-b5-Rfd.title" = "<>";
 
 /* Class = "NSTextFieldCell"; title = "Scroll Speed:"; ObjectID = "l7d-al-Y14"; Note = "Scrolling > Scroll Speed Label"; */
-"l7d-al-Y14.title" = "Scroll-Geschwindigkeit:";
+"l7d-al-Y14.title" = "Scrolltempo:";
 
 /* Class = "NSButtonCell"; title = "Restore Default..."; ObjectID = "lrw-Lp-nQ4"; */
 "lrw-Lp-nQ4.title" = "Standard wiederherstellen...";
