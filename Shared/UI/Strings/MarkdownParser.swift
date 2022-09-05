@@ -8,7 +8,7 @@
 //
 
 /// I want to create simple NSAttributed strings with bold and links defined by markup so they can be localized.
-/// In macOS 13 there's a great standard lib method for this, but we also want this on older versions of macOS.
+/// In macOS 13.0 there's a great standard lib method for this, but we also want this on older versions of macOS.
 /// We found the library Down. but it's complicated to set up and doesn't end up looking like a native label string just with some bold and links added.
 /// Sooo we're bulding our own parser. Wish me luck.
 /// Edit: Works perfectly! Wasn't even that bad.

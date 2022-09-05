@@ -183,7 +183,7 @@ import CocoaLumberjackSwift
             commitConfig()
             
             /// Show message to user
-            if #available(macOS 13, *) {
+            if #available(macOS 13.0, *) {
                 
                 /// Build string
                 var messageRaw = NSLocalizedString("button-revive-toast", comment: "First draft: __Enabled__ Mac Mouse Fix for __Buttons__.\nIt had been disabled from the Menu Bar %@ || %@ will be replaced by the menubar icon")

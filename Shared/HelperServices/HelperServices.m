@@ -8,7 +8,7 @@
 //
 
 /// Notes on availability
-///     HelperServices uses a new API for registering the Helper as UserAgent under macOS 13 Ventura. It's called `SMAppService`. It's not available pre-Ventura. To handle this we use Apple's availability APIs.
+///     HelperServices uses a new API for registering the Helper as UserAgent under macOS 13.0 Ventura. It's called `SMAppService`. It's not available pre-Ventura. To handle this we use Apple's availability APIs.
 ///     Unfortunately there have been problems with the availability APIs. See https://github.com/noah-nuebling/mac-mouse-fix/issues/241.
 ///     Below you can find my notes / stream of consciousness on trying to figure this out.
 ///
@@ -98,7 +98,7 @@
 
 
 /// helperIsActive_SM from version-3. Merge updates from version-2 and git said that "both modified". Doesn't look like both modified. But I'll leave this here for reference in case something breaks.
-// static BOOL helperIsActive_SM() __API_AVAILABLE(macos(13)) {
+// static BOOL helperIsActive_SM() __API_AVAILABLE(macos(13.0)) {
     // SMAppService *service = [SMAppService agentServiceWithPlistName:@"sm_launchd.plist"];
     // BOOL result = service.status == SMAppServiceStatusEnabled;
     // if (result) {
@@ -123,7 +123,7 @@
 #endif
         return result;
     } else {
-        /// Not running macOS 13
+        /// Not running macOS 13.0
         ///     This can never happen. Just crashing here so the compiler doesn't complain about missing returns.
         exit(1);
     }

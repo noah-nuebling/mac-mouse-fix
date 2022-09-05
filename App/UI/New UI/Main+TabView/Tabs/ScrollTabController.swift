@@ -61,7 +61,7 @@ class ScrollTabController: NSViewController {
             commitConfig()
             
             /// Show message to user
-            if #available(macOS 13, *) {
+            if #available(macOS 13.0, *) {
                 
                 /// Build string
                 

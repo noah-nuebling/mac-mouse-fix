@@ -77,7 +77,7 @@ class GeneralTabController: NSViewController {
                 do {
                     try EnabledState.shared.enable()
                 } catch {
-                    if #available(macOS 13, *) {
+                    if #available(macOS 13.0, *) {
                         if (error as NSError).code == 1 {
                             do {
                                 let messageRaw = NSLocalizedString("is-disabled-toast", comment: "First draft: Mac Mouse Fix was **disabled** in System Settings.\nTo enable Mac Mouse Fix:\n\n1. Go to [Login Items Settings](x-apple.systempreferences:com.apple.LoginItems-Settings.extension)\n2. Switch on \'Mac Mouse Fix.app\'")
