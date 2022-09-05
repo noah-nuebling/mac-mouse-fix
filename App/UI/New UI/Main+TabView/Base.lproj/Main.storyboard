@@ -507,7 +507,7 @@
                                                     <rect key="frame" x="232" y="38.5" width="60" height="66.5"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                                     <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyUpOrDown" image="plus" catalog="system" id="EyU-is-YRF"/>
-                                                    <color key="contentTintColor" name="systemGrayColor" catalog="System" colorSpace="catalog"/>
+                                                    <color key="contentTintColor" name="placeholderTextColor" catalog="System" colorSpace="catalog"/>
                                                     <symbolConfiguration key="symbolConfiguration" configurationType="pointSize" pointSize="15" scale="small" weight="regular"/>
                                                 </imageView>
                                             </subviews>

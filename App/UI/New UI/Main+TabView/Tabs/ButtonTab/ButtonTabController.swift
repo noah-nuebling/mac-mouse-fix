@@ -111,19 +111,19 @@ import CocoaLumberjackSwift
     }
     
     func updateColors() {
-        addField.wantsLayer = true
         
+        ///
+        /// Update addField
+        ///
         /// We use non-transparent colors so the shadows don't bleed through
         
-        /// Check darkmode
+        /// Init
+        addField.wantsLayer = true
         
-        var isDarkMode: Bool = false
-        if #available(macOS 10.14, *) {
-            isDarkMode = (NSApp.effectiveAppearance == .init(named: .darkAqua)!)
-        }
+        /// Check darkmode
+        let isDarkMode = isDarkMode()
         
         /// Get baseColor
-        
         let baseColor: NSColor = isDarkMode ? .black : .white
         
         /// Define baseColor blending fractions
@@ -157,6 +157,11 @@ import CocoaLumberjackSwift
         }
         
         addField.borderColor = separatorColor.blended(withFraction: borderFraction, of: baseColor)!
+        
+        /// Update plusIcon color
+        if #available(macOS 10.14, *) {
+            plusIconView.contentTintColor = plusIconViewBaseColor()
+        }
     }
     
     override func viewDidAppear() {
@@ -357,13 +362,13 @@ import CocoaLumberjackSwift
                     } onComplete: {
                         DispatchQueue.main.asyncAfter(deadline: .now() + 1.5, execute: { /// This 'timer' is not terminated when unhover is triggered some other way, leading to slightly weird behaviour
                             Animate.with(CASpringAnimation(speed: 3.5, damping: 1.3)) {
-                                self.plusIconView.reactiveAnimator().contentTintColor.set(NSColor.gray)
+                                self.plusIconView.reactiveAnimator().contentTintColor.set(self.plusIconViewBaseColor())
                             }
                         })
                     }
                 } else { /// Normal un-hovering
                     Animate.with(CASpringAnimation(speed: 3.5, damping: 1.3)) {
-                        self.plusIconView.reactiveAnimator().contentTintColor.set(NSColor.gray)
+                        self.plusIconView.reactiveAnimator().contentTintColor.set(self.plusIconViewBaseColor())
                     }
                 }
             }
@@ -416,4 +421,17 @@ import CocoaLumberjackSwift
         
     }
     
+    private func plusIconViewBaseColor() -> NSColor {
+        
+        return NSColor.systemGray
+    }
+    
+    private func isDarkMode() -> Bool {
+        
+        if #available(macOS 10.14, *) {
+            let isDarkMode = (NSApp.effectiveAppearance == .init(named: .darkAqua)!)
+            return isDarkMode
+        }
+        return false
+    }
 }
