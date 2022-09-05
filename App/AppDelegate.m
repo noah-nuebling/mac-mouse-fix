@@ -35,6 +35,7 @@
 #pragma mark - IBActions
 
 - (IBAction)openAboutTab:(id)sender {
+    [MainAppState.shared.tabViewController coolSelectTabWithIdentifier:@"about" window:nil];
 }
 
 - (IBAction)activateLicense:(id)sender {

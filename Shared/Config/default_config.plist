@@ -24,7 +24,7 @@
 		<key>smooth</key>
 		<true/>
 		<key>speed</key>
-		<string>medium</string>
+		<string>high</string>
 	</dict>
 	<key>License</key>
 	<dict>
