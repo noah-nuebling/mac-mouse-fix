@@ -62,7 +62,7 @@ class TrialSectionManager {
             
         let workload = {
             
-            DDLogDebug("triall exit")
+            DDLogDebug("triall enter begin")
             
             if !self.shouldShowActivate {
                 if let r = self.queuedReplace {
@@ -84,7 +84,7 @@ class TrialSectionManager {
             
             self.animationInterruptor = ReplaceAnimations.animate(ogView: ogSection, replaceView: newSection, doAnimate: animate) {
                 
-                DDLogDebug("triall exit finish")
+                DDLogDebug("triall enter finish")
                 
                 self.animationInterruptor = nil
                 
@@ -100,7 +100,7 @@ class TrialSectionManager {
         }
         
         if self.isReplacing {
-            DDLogDebug("triall queue exit")
+            DDLogDebug("triall enter queue")
             self.queuedReplace = workload
         } else {
             workload()
@@ -114,7 +114,7 @@ class TrialSectionManager {
             
             do {
                 
-                DDLogDebug("triall enter")
+                DDLogDebug("triall exit begin")
                 
                 if self.shouldShowActivate {
                     if let r = self.queuedReplace {
@@ -182,7 +182,7 @@ class TrialSectionManager {
                 
                 self.animationInterruptor = ReplaceAnimations.animate(ogView: ogSection, replaceView: newSection) {
                     
-                    DDLogDebug("triall enter finish")
+                    DDLogDebug("triall exit finish")
                     
                     self.animationInterruptor = nil
                     
@@ -202,7 +202,7 @@ class TrialSectionManager {
         }
         
         if self.isReplacing {
-            DDLogDebug("triall queue enter")
+            DDLogDebug("triall exit queue")
             self.queuedReplace = workload
         } else {
             workload()

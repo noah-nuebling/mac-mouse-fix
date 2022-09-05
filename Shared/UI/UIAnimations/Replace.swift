@@ -47,7 +47,7 @@ class ReplaceAnimations {
     
     /// Core function
 
-    @discardableResult static func animate(ogView: NSView, replaceView: NSView, hAnchor: MFHAnchor = .center, vAnchor: MFVAnchor = .center, doAnimate: Bool = true, expectingSizeChanges: Bool = true, onComplete: @escaping () -> () = { }) -> (() -> ()){
+    @discardableResult static func animate(ogView: NSView, replaceView: NSView, hAnchor: MFHAnchor = .center, vAnchor: MFVAnchor = .center, doAnimate: Bool = true, expectingSizeChanges: Bool = true, onComplete onCompleteArg: @escaping () -> () = { }) -> (() -> ())? {
         
         /// Before you use ReplaceAnimations in any further places:
         /// __! Make this integrate into StackViews !__
@@ -62,7 +62,7 @@ class ReplaceAnimations {
         ///         2. Fade out of `ogView` / Fade in of `replaceView` -> The 'feel' is controlled by `fadeOverlap`
         ///     `duration` controls the duration of all changes that the animation makes
         ///     `hAnchor` and `vAnchor` determine how the ogView and replaceView are aligned with the wrapperView during resizing. If the size doesn't change this doesn't have an effect
-        ///     `return` value is a closure that interrupts the animation when invoked
+        ///     `return` value is a closure that interrupts the animation when invoked. It's nil if doAnimate is false
         
         /// The `replaceView` may have width and height constraints but it shouldn't have any constraints to a superview I think (It will take over the superview constraints from `ogView`)
         
@@ -72,6 +72,16 @@ class ReplaceAnimations {
         /// Validate
         assert(!ogView.translatesAutoresizingMaskIntoConstraints)
         assert(!replaceView.translatesAutoresizingMaskIntoConstraints)
+        
+        /// Wrap the completionBlock
+        ///     So it's only called once, even if it's interrupted first
+        
+        var hasBeenInvoked = false
+        let onComplete = {
+            if hasBeenInvoked { return }
+            onCompleteArg()
+            hasBeenInvoked = true
+        }
         
         /// Constants
         
@@ -297,12 +307,13 @@ class ReplaceAnimations {
         
         /// Return interruptor
         ///     If we need this in more places, maybe we should make this a functionality of reactiveAnimator somehow.
-        return {
+        return !doAnimate ? nil : {
             let manager = NSAnimationManager.current()
             manager?.removeAllAnimations(for: wrapperWidthConst)
             manager?.removeAllAnimations(for: wrapperHeightConst)
             manager?.removeAllAnimations(for: ogImageView)
             manager?.removeAllAnimations(for: replaceImageView)
+            onComplete()
         }
     }
     

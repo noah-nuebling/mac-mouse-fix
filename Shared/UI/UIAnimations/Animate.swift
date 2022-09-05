@@ -34,13 +34,22 @@ import QuartzCore
         animation.isRemovedOnCompletion = false
         animation.fillMode = .forwards
         
+        /// Guard animationDuration == 0.0
+        
+
+        
         /// Do changes
         CATransaction.lock() /// Not sure if necessary
         CATransaction.begin()
-        CATransaction.setCompletionBlock(onComplete)
+        if animation.duration != 0 {
+            CATransaction.setCompletionBlock(onComplete) /// Need to set this before making changes to work
+        }
         CATransaction.setValue(animation, forKey: "reactiveAnimatorPayload")
         changes()
         CATransaction.setValue(nil, forKey: "reactiveAnimatorPayload")
+        if animation.duration == 0 {
+            onComplete?() /// Do onComplete synchronously if no animation
+        }
         CATransaction.commit()
         CATransaction.unlock()
     }
