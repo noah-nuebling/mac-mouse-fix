@@ -37,17 +37,19 @@ import Foundation
     @objc static func load_Manual() {
         instance = MenuBarItem()
         Bundle.main.loadNibNamed(NSNib.Name("MenuBarItem"), owner: instance, topLevelObjects: &(instance!.topLevelObjects))
+        instance?.load_Manual()
     }
     
-    override func awakeFromNib() {
+    func load_Manual() {
         
         /// Setup statusbar item
         statusItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.variableLength)
-        statusItem?.button?.title = "Mac Mouse Fix"
+        statusItem?.autosaveName = "MMFMenuBarItem" /// Probably unnecessary
+        statusItem?.button?.title = ""
         let image = NSImage(named: NSImage.Name("CoolMenuBarIcon"))
         statusItem?.button?.image = image
         statusItem?.menu = menu
-        statusItem?.isVisible = false
+//        statusItem?.isVisible = false /// This makes the item forget its position when restarting the computer
         
         /// Setup group menu item
         /// `.indentationLevel` doesn't work. Do indentation in IB autolayout instead
@@ -82,6 +84,7 @@ import Foundation
             instance?.scrollEnabledItem.state = !scrollKilled ? .on : .off
             
             return
+            
         } else {
             
             /// Disable all settings from the menuItem, if the menuItem is disabled
