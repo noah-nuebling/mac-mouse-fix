@@ -32,11 +32,11 @@
 
 #pragma mark - Check which executable is running
 
-// Return YES if called by main app
+/// Return YES if called by main app
 + (BOOL)runningMainApp {
     return [NSBundle.mainBundle.bundleIdentifier isEqual:kMFBundleIDApp];
 }
-// Return YES if called by helper app
+/// Return YES if called by helper app
 + (BOOL)runningHelper {
     return [NSBundle.mainBundle.bundleIdentifier isEqual:kMFBundleIDHelper];
 }
