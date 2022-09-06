@@ -14,6 +14,7 @@
 #import "Utility_App.h"
 #import <Sparkle/Sparkle.h>
 #import "SparkleUpdaterController.h"
+#import "Objects.h"
 
 
 @interface MoreSheet ()
@@ -102,13 +103,13 @@ static MoreSheet *_instance;
 
 - (void)updateUI {
     
-    // Load version label
+    /// Load version label
     NSString *versionString = [NSString stringWithFormat:@"Version %@ (%ld)",
-                               (NSString *)Utility_App.bundleVersionShort,
-                               (long)Utility_App.bundleVersion];
+                               (NSString *)Objects.bundleVersionShort,
+                               (long)Objects.bundleVersion];
     [self.versionLabel setStringValue:versionString];
     
-    // Load checkbox state
+    /// Load checkbox state
     self.checkForUpdateCheckBox.state = [config(@"Other.checkForUpdates") boolValue];
     self.prereleaseCheckBox.state = [config(@"Other.checkForPrereleases") boolValue];
     

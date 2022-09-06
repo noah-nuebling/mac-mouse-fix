@@ -14,6 +14,13 @@
 
 @implementation Objects
 
++ (NSInteger)bundleVersion {
+    return [[self.mainAppBundle objectForInfoDictionaryKey:@"CFBundleVersion"] integerValue];
+}
++ (NSString *)bundleVersionShort {
+    return (NSString *)[self.mainAppBundle objectForInfoDictionaryKey:@"CFBundleShortVersionString"];
+}
+
 + (NSBundle *)helperBundle {
     NSBundle *hhh;
     NSBundle *helperBundle;
@@ -27,7 +34,7 @@
     return mainAppBundle;
 }
 /// Return bundle at the location at which the app was launched - even after the app has been moved while running
-+ (NSBundle *)helperOriginalBundle { // Get pre-move location if moved while running
++ (NSBundle *)helperOriginalBundle { /// Get pre-move location if moved while running
     NSBundle *hhh;
     NSBundle *helperBundle;
     [self getOriginalBundlesForMainApp:&hhh helper:&helperBundle];

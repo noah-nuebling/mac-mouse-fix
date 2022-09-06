@@ -24,6 +24,7 @@
 #import <Sparkle/Sparkle.h>
 #import "SparkleUpdaterController.h"
 #import "NSAttributedString+Additions.h"
+#import "Objects.h"
 
 @interface AppDelegate ()
 
@@ -173,7 +174,7 @@ static NSDictionary *sideButtonActions;
     launchesOverall = [config(@"Other.launchesOverall") integerValue];
     launchesOfCurrentBundleVersion = [config(@"Other.launchesOfCurrentBundleVersion") integerValue];
     NSInteger lastLaunchedBundleVersion = [config(@"Other.lastLaunchedBundleVersion") integerValue];
-    NSInteger currentBundleVersion = Utility_App.bundleVersion;
+    NSInteger currentBundleVersion = Objects.bundleVersion;
     
     launchesOverall += 1;
     
