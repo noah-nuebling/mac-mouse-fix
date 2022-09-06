@@ -155,7 +155,7 @@
   </style>
 </head>
 <body>
-<h3 id="compatibily-with-older-macos-versions-more">Compatibily with older macOS versions &amp; more</h3>
+<p>Mac Mouse Fix <strong>2.2.1 Beta 3</strong> brings back compatibily with older macOS versions &amp; more</p>
 <ul>
 <li>Fixed crash on launch under older macOS versions. Should resolve Issue <a href="https://github.com/noah-nuebling/mac-mouse-fix/issues/327">#327</a>.</li>
 <li>Fixed a crash when trying to add apps that don’t have an app name to App-Specific Settings. Should resolve Issue <a href="https://github.com/noah-nuebling/mac-mouse-fix/issues/241">#241</a>. Special thanks to <span class="citation" data-cites="jeongtae">[@jeongtae]</span>(https://github.com/jeongtae) who was very helpful in figuring out the problem!</li>
