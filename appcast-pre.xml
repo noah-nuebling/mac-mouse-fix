@@ -6,6 +6,175 @@
     <description>Prereleases of Mac Mouse Fix</description>
     <language>en</language>
         <item>
+        <title>2.2.1 Beta 3 available!</title>
+        <pubDate>2022-09-06T13:53:14Z</pubDate>
+        <sparkle:minimumSystemVersion>10.13</sparkle:minimumSystemVersion>
+        <description><![CDATA[
+            <!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>-</title>
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    span.underline{text-decoration: underline;}
+    div.column{display: inline-block; vertical-align: top; width: 50%;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+  </style>
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
+  
+
+  <style>
+
+      /* Following this tutorial: https://devilgate.org/blog/2012/07/02/tip-using-pandoc-to-create-truly-standalone-html-files/ */
+
+      :root {
+          font-size: 10px; /* 1 rem is this much */
+          padding: 0 0 0 0;
+      }
+
+      body {
+          background-color: transparent;
+          margin: 0 1.2rem 2.0rem 1.2rem;
+          padding: 0;
+          font-family: -apple-system;
+          font-size: 1.3rem;
+
+          line-height: 1.15em;
+      }
+
+      h1, h2, h3, h4, h5, h6 {
+          line-height: 1.15em;
+      }
+
+      h1:after, h2:after {
+          content:' ';
+          display: block;
+          border: 0.5px solid rgba(0, 0, 0, 0.12);
+      }
+      h1:after {
+          margin: 0.6rem 0 0 0;
+      }
+      h2:after {
+          margin: 0.4rem 0 0 0;
+      }
+
+      h1 {
+          font-size: 2.2rem;
+          margin: 2.2rem 0 1.3rem -0.0rem;
+      }
+
+      h2 {
+          font-size: 1.7rem;
+          margin: 2.0rem 0 1.7rem -0.0rem;
+      }
+
+      h3 {
+          font-size: 1.3rem;
+          margin: 1.5rem 0 0.0rem -0.0rem;
+      }
+
+      p {
+          margin: 1.1rem 0 1.1rem 0;
+          font-size: 1.1rem;
+      }
+
+      ul {
+          padding: 0 0 0 1.5rem;
+          margin: 1.0rem 0 1.0rem 0.5rem;
+      }
+      ul ul {
+          margin: 0.6rem 0 -0.6rem 0;
+          padding: 0 0 0 2.1rem;
+      }
+
+      li {
+          padding: 0 0 0.6rem 0;
+
+          font-size: 1.1rem;
+      }
+      .annotation {
+          font-size: 1.1rem;
+      }
+      img {
+          max-width: 100%;
+          height: auto;
+          
+          border-radius: 1.0rem;
+          box-shadow: 0 0.2rem 0.4rem 0.0rem rgba(0, 0, 0, 0.15), 0 0.2rem 1.7rem 0.0rem rgba(0, 0, 0, 0.15);
+
+          display: block;
+          margin: 1.4rem auto 1.8rem auto;
+      }
+
+      hr {
+          height: 0px;
+          border: none;
+          border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+          border-color:rgba(0, 0, 0, 0.12);
+
+          margin: 1.7rem 0 1.7rem 0;
+      }
+
+      @media (prefers-color-scheme: light) {
+
+          h1 {
+              color: #272727;
+          }
+
+          a {
+              color: #0948be;
+          }
+      }
+
+      @media (prefers-color-scheme: dark) {
+
+          body {
+              background-color: #1e1e1e; 
+              /* ^ Sparkle background is still bright when we have `background-color: transparent` even with darkmode active. 
+                  This is the color of the text field background in Apple Mail on macOS 11 BigSur */
+
+              color: #D9D9D9; /* For headers */
+          }
+
+          li, p {
+              color:#FFFFFF;
+          }
+          a {
+              color: #3586FF;
+          }
+      }
+
+  </style>
+</head>
+<body>
+<h3 id="compatibily-with-older-macos-versions-more">Compatibily with older macOS versions &amp; more</h3>
+<ul>
+<li>Fixed crash on launch under older macOS versions. Should resolve Issue <a href="https://github.com/noah-nuebling/mac-mouse-fix/issues/327">#327</a>.</li>
+<li>Fixed a crash when trying to add apps that don’t have an app name to App-Specific Settings. Should resolve Issue <a href="https://github.com/noah-nuebling/mac-mouse-fix/issues/241">#241</a>. Special thanks to <span class="citation" data-cites="jeongtae">[@jeongtae]</span>(https://github.com/jeongtae) who was very helpful in figuring out the problem!</li>
+<li>More small bug fixes and under-the-hood improvements.</li>
+</ul>
+</body>
+</html>
+
+        ]]>
+        </description>
+        <enclosure
+            url="https://github.com/noah-nuebling/mac-mouse-fix/releases/download/2.2.1-Beta-3/MacMouseFixApp.zip"
+            sparkle:version="7302"
+            sparkle:shortVersionString="2.2.1 Beta 3"
+            sparkle:edSignature="DjyHMQ/Tj6SVOjUnh34f58haaYD/B23SpZZNfgqih1VjsTjXglK7tBWVgAecY3AOleJ9QgxhYmWn2yHg2iZ2DQ==" length="3222672"
+            type="application/octet-stream"
+        />
+    </item>
+    <item>
         <title>2.2.1 Beta 2 available!</title>
         <pubDate>2022-08-07T17:04:24Z</pubDate>
         <sparkle:minimumSystemVersion>10.11</sparkle:minimumSystemVersion>
@@ -327,7 +496,7 @@
 </head>
 <body>
 <h3 id="ventura-support">Ventura support!</h3>
-<p>Mac Mouse Fix now fully supports macOS 13 Ventura. Special thanks to <a href="https://github.com/chamburr">chamburr</a> who helped with Ventura support in GitHub Issue <a href="https://github.com/noah-nuebling/mac-mouse-fix/issues/297">#297</a>.</p>
+<p>Mac Mouse Fix now fully supports macOS 13 Ventura. Special thanks to <span class="citation" data-cites="chamburr">[@chamburr]</span>(https://github.com/chamburr) who helped with Ventura support in GitHub Issue <a href="https://github.com/noah-nuebling/mac-mouse-fix/issues/297">#297</a>.</p>
 <h3 id="dropped-support-for-older-macos-versions">Dropped support for older macOS versions</h3>
 <p>Unfortunately, Apple only lets you develop <em>for</em> macOS 10.13 <strong>High Sierra and later</strong> when developing <em>from</em> macOS 13 Ventura.</p>
 <p>So the <strong>minimum supported version</strong> has increased from 10.11 El Capitan to 10.13 High Sierra.</p>
