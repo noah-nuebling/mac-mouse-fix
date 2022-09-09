@@ -186,6 +186,30 @@ static void handleInput(void *context, IOReturn result, void *sender, IOHIDValue
     
 }
 
+- (int)nOfButtons {
+    
+    /// TODO: Test how well this works.
+    
+    /// Get button elements
+    IOHIDDeviceRef device = self.iohidDevice;
+    NSDictionary *match = @{
+        @(kIOHIDElementUsagePageKey): @(kHIDPage_Button)
+    };
+    NSArray *elements = (__bridge_transfer NSArray *)IOHIDDeviceCopyMatchingElements(device, (__bridge CFDictionaryRef)match, 0);
+    
+    /// Get max button number
+    ///     Could proabably also just count the number of button elements instead of this. But this might be more robust.
+    int maxButtonNumber = 0;
+    for (id e in elements) { /// e is of the private type `HIDElement *` which is bridged with `IOHIDElementRef`
+        IOHIDElementRef element = (__bridge IOHIDElementRef)e;
+        int buttonNumber = IOHIDElementGetUsage(element);
+        maxButtonNumber = MAX(maxButtonNumber, buttonNumber);
+    }
+    
+    /// Return
+    return maxButtonNumber;
+}
+
 - (NSString *)description {
     
     @try {
@@ -201,11 +225,13 @@ static void handleInput(void *context, IOReturn result, void *sender, IOHIDValue
         NSString *outString = [NSString stringWithFormat:@"Device Info:\n"
                                "    Product: %@\n"
                                "    Manufacturer: %@\n"
+                               "    nOfButtons: %d\n"
                                "    UsagePairs: %@\n"
                                "    ProductID: %@\n"
                                "    VendorID: %@\n",
                                product,
                                manufacturer,
+                               [self nOfButtons],
                                usagePairs,
                                productID,
                                vendorID];
@@ -225,7 +251,7 @@ static void handleInput(void *context, IOReturn result, void *sender, IOHIDValue
 /// -> Now unused after we're not seizing devices anymore
 typedef struct __IOHIDDevice
 {
-    CFRuntimeBase                   cfBase;   // base CFType information
+    CFRuntimeBase                   cfBase;   /// base CFType information
 
     io_service_t                    service;
     IOHIDDeviceDeviceInterface**    deviceInterface;

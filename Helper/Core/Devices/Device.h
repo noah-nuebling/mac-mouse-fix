@@ -24,6 +24,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (NSNumber *)uniqueID;
 - (BOOL)wrapsIOHIDDevice:(IOHIDDeviceRef)iohidDevice;
 - (NSString *)name;
+- (int)nOfButtons;
 - (NSString *)description;
 
 
