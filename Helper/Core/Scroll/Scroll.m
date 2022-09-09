@@ -295,9 +295,12 @@ static void heavyProcessing(CGEventRef event, int64_t scrollDeltaAxis1, int64_t 
         }
         
         if (ScrollUtility.mouseDidMove || ScrollUtility.frontMostAppDidChange) {
+            
             /// Set app overrides
-            BOOL didChange = [Config.shared loadOverridesForAppUnderMousePointer];
+            DDLogDebug(@"Frontmost app did change. Reloading config overrides.");
+            BOOL didChange = [Config.shared loadOverridesForAppUnderMousePointerWithEvent:event];
             if (didChange) {
+                DDLogDebug(@"Config did change. Resetting state.");
                 resetState_Unsafe();
             }
         }
@@ -524,6 +527,7 @@ static void heavyProcessing(CGEventRef event, int64_t scrollDeltaAxis1, int64_t 
         sendScroll(pxToScrollForThisTick, scrollDirection, NO, kMFAnimationCallbackPhaseNone, kMFMomentumHintNone, _scrollConfig);
         
     } else {
+        
         /// Send scroll events through animator, spread out over time.
         
         /// Create config-copy for animation-callback-block

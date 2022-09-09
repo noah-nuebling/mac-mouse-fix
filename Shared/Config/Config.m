@@ -149,7 +149,12 @@ void commitConfig() {
 
 #pragma mark - Overrides
 
-- (BOOL)loadOverridesForAppUnderMousePointer {
+- (BOOL)loadOverridesForAppUnderMousePointerWithEvent:(CGEventRef)event {
+    
+    /// Unused in MMF 3
+    ///     Reactivate when we reimplement app-specific settings.
+    return NO;
+    
     /// Returns yes when it's made a change
     /// TODO: Add compatibility for command line executables
     /// TODO: Look into using kCGMouseEventWindowUnderMousePointer to get the window under the mouse pointer
@@ -160,20 +165,40 @@ void commitConfig() {
     
 #if IS_HELPER
     
-    /// Get app under mouse pointer
-        
-    CGPoint mouseLocation = getPointerLocation();
-
-    AXUIElementRef elementUnderMousePointer;
-    AXUIElementCopyElementAtPosition(Scroll.systemWideAXUIElement, mouseLocation.x, mouseLocation.y, &elementUnderMousePointer);
-    pid_t elementUnderMousePointerPID;
-    AXUIElementGetPid(elementUnderMousePointer, &elementUnderMousePointerPID);
-    NSRunningApplication *appUnderMousePointer = [NSRunningApplication runningApplicationWithProcessIdentifier:elementUnderMousePointerPID];
+    ///
+    /// Get PID under mouse pointer
+    /// 
     
-    if (elementUnderMousePointer != nil) {
-        CFRelease(elementUnderMousePointer); /// Using `@try { ... }` instead of `if (x != nil) { ... }` here results in a crash if elementUnderMousePointer is nil for some reason (Might be because it was running in debug configureation or something, or probably I just don't know how `@try` really works)
+    pid_t pidUnderPointer = -1; /// I hope -1 is actually unused?
+    
+    /// v New version. Should be a lot faster!
+    
+    NSPoint pointerLoc = getFlippedPointerLocationWithEvent(event);
+    NSInteger windowNumber = [NSWindow windowNumberAtPoint:pointerLoc belowWindowWithWindowNumber:0];
+    NSArray *windowInfo = (__bridge_transfer NSDictionary *)CGWindowListCopyWindowInfo(kCGWindowListOptionIncludingWindow, windowNumber);
+    if (windowInfo.count > 0) {
+        pidUnderPointer = [windowInfo[0][(__bridge NSString *)kCGWindowOwnerPID] integerValue];
     }
+    
+    if ((NO)) {
+        
+        /// v Old version. Uses AXUI API. Inspired by MOS' approach. AXUIElementCopyElementAtPosition() was incredibly slow sometimes. Right now it takes a second to return when scrolling on new Reddit in Safari on M1 Ventura Beta. On other windows and websites it's not noticably slow but still very slow in code terms.
+        
+        CGPoint mouseLocation = getPointerLocation();
+        AXUIElementRef elementUnderMousePointer;
+        AXUIElementCopyElementAtPosition(Scroll.systemWideAXUIElement, mouseLocation.x, mouseLocation.y, &elementUnderMousePointer);
+        if (elementUnderMousePointer != nil) {
+            AXUIElementGetPid(elementUnderMousePointer, &pidUnderPointer);
+            CFRelease(elementUnderMousePointer);
+        }
+    }
+    
+    /// Get bundleID from pid
+    NSRunningApplication *appUnderMousePointer = [NSRunningApplication runningApplicationWithProcessIdentifier:pidUnderPointer];
     NSString *bundleID = appUnderMousePointer.bundleIdentifier;
+    
+    /// Debug
+    DDLogDebug(@"Loading overrides for app %@", bundleID);
     
     /// Set internal state
     if (![_bundleIDOfAppWhichCausesAppOverride isEqual:bundleID]) {

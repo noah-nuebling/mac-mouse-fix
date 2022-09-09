@@ -24,6 +24,8 @@ CGEventFlags getModifierFlagsWithEvent(CGEventRef flagEvent);
 /// Get current pointer location
 CGPoint getPointerLocation(void);
 CGPoint getPointerLocationWithEvent(CGEventRef locEvent);
+NSPoint getFlippedPointerLocation(void);
+NSPoint getFlippedPointerLocationWithEvent(CGEventRef locEvent);
 
 @end
 

@@ -8,6 +8,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <CoreGraphics/CoreGraphics.h>
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -45,7 +46,7 @@ typedef enum {
 #pragma mark - For Helper
 
 /// Overrides
-- (BOOL)loadOverridesForAppUnderMousePointer;
+- (BOOL)loadOverridesForAppUnderMousePointerWithEvent:(CGEventRef)event;
 @property (strong, nonatomic, readonly) NSMutableDictionary *configWithAppOverridesApplied;
 
 /// React

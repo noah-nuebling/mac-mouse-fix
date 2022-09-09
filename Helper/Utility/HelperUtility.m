@@ -13,6 +13,7 @@
 #import "TransformationUtility.h"
 #import "WannabePrefixHeader.h"
 #import "Locator.h"
+#import "SharedUtility.h"
 
 @implementation HelperUtility
 
@@ -80,7 +81,7 @@ CGEventFlags getModifierFlagsWithEvent(CGEventRef flagEvent) {
 
 /// Get pointer location
 
-CGPoint getPointerLocation() {
+CGPoint getPointerLocation(void) {
     CGEventRef locEvent = CGEventCreate(NULL);
     CGPoint mouseLoc = CGEventGetLocation(locEvent);
     CFRelease(locEvent);
@@ -93,6 +94,16 @@ CGPoint getPointerLocationWithEvent(CGEventRef locEvent) {
     
     CGPoint mouseLoc = CGEventGetLocation(locEvent);
     return mouseLoc;
+}
+
+NSPoint getFlippedPointerLocation(void) {
+    CGPoint p = getPointerLocation();
+    return [SharedUtility quartzToCocoaScreenSpace_Point:p];
+}
+
+NSPoint getFlippedPointerLocationWithEvent(CGEventRef locEvent) {
+    CGPoint p = getPointerLocationWithEvent(locEvent);
+    return [SharedUtility quartzToCocoaScreenSpace_Point:p];
 }
 
 /**

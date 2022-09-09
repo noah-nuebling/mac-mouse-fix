@@ -48,6 +48,8 @@ void *offsetPointer(void *ptr, int byteOffset);
 + (void)launchCLT:(NSURL *)commandLineTool withArgs:(NSArray <NSString *> *)arguments;
 + (FSEventStreamRef)scheduleFSEventStreamOnPaths:(NSArray<NSString *> *)urls withCallback:(FSEventStreamCallback)callback;
 + (void)destroyFSEventStream:(FSEventStreamRef)stream;
++ (NSPoint)quartzToCocoaScreenSpace_Point:(CGPoint)quartzPoint;
++ (CGPoint)cocoaToQuartzScreenSpace_Point:(NSPoint)cocoaPoint;
 + (NSRect)quartzToCocoaScreenSpace:(CGRect)quartzFrame;
 + (CGRect)cocoaToQuartzScreenSpace:(NSRect)cocoaFrame;
 + (id)deepMutableCopyOf:(id)object;

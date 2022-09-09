@@ -355,7 +355,7 @@ static void iteratePropertiesOn(id obj, void(^callback)(objc_property_t property
     return dispatch_get_current_queue().description;
 }
 
-// For debugging.
+/// For debugging.
 + (void)printInvocationCountWithId:(NSString *)strId {
     
     static NSMutableDictionary<NSString *, NSNumber *> *ids;
@@ -431,6 +431,14 @@ static void iteratePropertiesOn(id obj, void(^callback)(objc_property_t property
 /// I've tried to write conversion functions before (Find them in HelperUtility) but I don't think they worked. I'll give it one more try:
 
 /// Convenience wrappers
+
++ (NSPoint)quartzToCocoaScreenSpace_Point:(CGPoint)quartzPoint {
+    return [self quartzToCocoaScreenSpace:CGRectMake(quartzPoint.x, quartzPoint.y, 0, 0)].origin;
+}
+
++ (CGPoint)cocoaToQuartzScreenSpace_Point:(NSPoint)cocoaPoint {
+    return [self cocoaToQuartzScreenSpace:NSMakeRect(cocoaPoint.x, cocoaPoint.y, 0, 0)].origin;
+}
 
 + (NSRect)quartzToCocoaScreenSpace:(CGRect)quartzFrame {
     return [self cocoaToQuartzScreenSpaceConversionWithOriginFrame:quartzFrame destinationIsCocoa:YES];
