@@ -175,7 +175,7 @@ void commitConfig() {
     
     NSPoint pointerLoc = getFlippedPointerLocationWithEvent(event);
     NSInteger windowNumber = [NSWindow windowNumberAtPoint:pointerLoc belowWindowWithWindowNumber:0];
-    NSArray *windowInfo = (__bridge_transfer NSDictionary *)CGWindowListCopyWindowInfo(kCGWindowListOptionIncludingWindow, windowNumber);
+    NSArray *windowInfo = (__bridge_transfer NSArray *)CGWindowListCopyWindowInfo(kCGWindowListOptionIncludingWindow, windowNumber);
     if (windowInfo.count > 0) {
         pidUnderPointer = [windowInfo[0][(__bridge NSString *)kCGWindowOwnerPID] integerValue];
     }
