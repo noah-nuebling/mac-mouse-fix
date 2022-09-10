@@ -67,8 +67,8 @@
 /* Class = "NSMenuItem"; title = "<Mission Control and Spaces>"; ObjectID = "4Cx-DN-qX3"; */
 "4Cx-DN-qX3.title" = "<> ";
 
-/* Class = "NSButtonCell"; title = "Precise Scrolling"; ObjectID = "4hf-tQ-y76"; Note = "Scrolling > Precise Scrolling Toggle"; */
-"4hf-tQ-y76.title" = "Präzises Scrollen";
+/* Class = "NSButtonCell"; title = "Always-On Precise Scrolling"; ObjectID = "4hf-tQ-y76"; Note = "Scrolling > Precise Scrolling Toggle"; */
+"4hf-tQ-y76.title" = "Präzises Scrollen immer einschalten";
 
 /* Class = "NSMenuItem"; title = "Delete"; ObjectID = "6es-it-kDs"; */
 "6es-it-kDs.title" = "Löschen";
@@ -268,7 +268,7 @@
 /* Class = "NSTextFieldCell"; title = "Visit the Website"; ObjectID = "Ozk-o9-C4a"; */
 "Ozk-o9-C4a.title" = "Besuche die Webseite";
 
-/* Class = "NSTextFieldCell"; title = "Check it out on GitHub"; ObjectID = "ZMA-p0-2lf"; */
+/* Class = "NSTextFieldCell"; title = "Share MMF 3 Feedback & Ideas"; ObjectID = "ZMA-p0-2lf"; */
 "ZMA-p0-2lf.title" = "Schau dir das GitHub an";
 
 /* Class = "NSTextFieldCell"; title = "File a bug report"; ObjectID = "bQf-qv-mvB"; */
