@@ -12,12 +12,14 @@ files (from here on referred to as the "MMF Source"), with the following restric
   "Your Source"), and if Your Source includes files or source code copied or derived 
   from the MMF Source, then you may only publish Your Program under the following 
   conditions:
-	- Your Source features substantial additions to the MMF Source, such that 
-	  Your Source should be considered its own, derivative work, separate from 
-	  the MMF Source.
-	- You don't publish Your Program under the name "Mac Mouse Fix" or a similar 
-	  name that is easily confused with "Mac Mouse Fix".
-	- Your Program does not contain any malware or hidden malicious content.
+  	- Your Program does not contain any malware or hidden malicious content.
+	- If the licensing mechanism found in Your Program is not present or differs 
+	  from the one found in Mac Mouse Fix in any way then the following must hold:
+		- Your Source features substantial additions to the MMF Source, such 
+		that Your Source should be considered its own, derivative work, 
+		separate from the MMF Source.
+        	- You don't publish Your Program under the name "Mac Mouse Fix" or a 
+		similar name that is easily confused with "Mac Mouse Fix".
 
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, 
 INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A 
