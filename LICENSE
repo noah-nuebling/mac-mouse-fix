@@ -41,8 +41,7 @@ I designed it with 2 main goals in mind:
    contains malware, or an app that is just like MMF except that when you buy a license 
    someone other than me gets paid.
 2. To allow everyone else who doesn't have malicious intentions to do anything they 
-   like with the MMF source code, including reusing it in their own projects, and 
-   monetizing it however they like.
+   like with the MMF source code, including reusing it in their own free and monetized projects.
 
 I want it to be Open Source in spirit but with some protections against bad actors, 
 which I think might be important now that MMF is monetized.
