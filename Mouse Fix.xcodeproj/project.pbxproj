@@ -465,6 +465,7 @@
 		4F3CDB272837D889000E28F0 /* ScrollNotes.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = ScrollNotes.md; sourceTree = "<group>"; };
 		4F3E067C26A2F97D000C9E06 /* URLMenuItem.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = URLMenuItem.h; sourceTree = "<group>"; };
 		4F3E067D26A2F97D000C9E06 /* URLMenuItem.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = URLMenuItem.m; sourceTree = "<group>"; };
+		4F42304628CE6C1C003A41D3 /* LICENSE */ = {isa = PBXFileReference; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
 		4F44794428B62FA400AD1979 /* LicenseConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LicenseConfig.swift; sourceTree = "<group>"; };
 		4F44FF022606D73D00926A5E /* SharedMessagePort.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SharedMessagePort.h; sourceTree = "<group>"; };
 		4F44FF032606D73D00926A5E /* SharedMessagePort.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SharedMessagePort.m; sourceTree = "<group>"; };
@@ -1013,6 +1014,7 @@
 		4F422EF023469B2B00AA6E22 /* Other */ = {
 			isa = PBXGroup;
 			children = (
+				4F42304628CE6C1C003A41D3 /* LICENSE */,
 				4F909D1528A0C3D2009349A2 /* Localization */,
 				4FAABC9F28A9AF8E0043ADD7 /* .bartycrouch.toml */,
 				4F1793A725EEC8E500E8309B /* Frameworks */,

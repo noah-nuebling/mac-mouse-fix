@@ -19,9 +19,6 @@ files (from here on referred to as the "MMF Source"), with the following restric
 	  name that is easily confused with "Mac Mouse Fix".
 	- Your Program does not contain any malware or hidden malicious content.
 
-The above copyright notice and this permission notice shall be included in all 
-copies or substantial portions of the Software.
-
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, 
 INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A 
 PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT 
@@ -48,3 +45,5 @@ which I think might be important now that MMF is monetized.
 
 If you know something about copyright, I'd love to hear your feedback on whether 
 the license as I formulated it fullfills these goals.
+
+TODO: MMF currently contains the KingIsulgard/iOS-Polynomial-Regression source code licensed under GPL. GPL doesn't allow other licenses to be used. I asked the author for permission here: https://github.com/KingIsulgard/iOS-Polynomial-Regression/issues/6. If they don't give permission, removed the library.
