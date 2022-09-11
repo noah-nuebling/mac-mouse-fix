@@ -1743,15 +1743,18 @@ System Preferences &gt; Mouse &gt; Tracking speed </string>
                                                         <symbolConfiguration key="symbolConfiguration" scale="large" weight="medium"/>
                                                     </imageView>
                                                     <textField horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="LTq-8K-saI" customClass="Hyperlink">
-                                                        <rect key="frame" x="28" y="17" width="196" height="16"/>
+                                                        <rect key="frame" x="28" y="17" width="178" height="16"/>
                                                         <textFieldCell key="cell" alignment="left" usesSingleLineMode="YES" id="ZMA-p0-2lf">
                                                             <font key="font" metaFont="system"/>
                                                             <string key="title" base64-UTF8="YES">
-U2hhcmUgTU1GIDMgEEZlZWRiYWNrICYgSWRlYXM
+TU1GIDMgEEZlZWRiYWNrIERpc2N1c3Npb24
 </string>
                                                             <color key="textColor" name="linkColor" catalog="System" colorSpace="catalog"/>
                                                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                         </textFieldCell>
+                                                        <attributedString key="userComments">
+                                                            <fragment content="After the MMF 3 Beta I plan to change this to &quot;GitHub&quot;"/>
+                                                        </attributedString>
                                                         <userDefinedRuntimeAttributes>
                                                             <userDefinedRuntimeAttribute type="string" keyPath="href" value="https://github.com/noah-nuebling/mac-mouse-fix/discussions/366"/>
                                                             <userDefinedRuntimeAttribute type="number" keyPath="leftPadding">
@@ -1854,9 +1857,9 @@ U2hhcmUgTU1GIDMgEEZlZWRiYWNrICYgSWRlYXM
                                                         <color key="contentTintColor" name="linkColor" catalog="System" colorSpace="catalog"/>
                                                         <symbolConfiguration key="symbolConfiguration" scale="large" weight="medium"/>
                                                     </imageView>
-                                                    <textField horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="0lK-Xb-h2V" customClass="Hyperlink">
-                                                        <rect key="frame" x="28" y="17" width="106" height="16"/>
-                                                        <textFieldCell key="cell" alignment="left" title="Visit the Website" usesSingleLineMode="YES" id="Ozk-o9-C4a">
+                                                    <textField horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="0lK-Xb-h2V" userLabel="Website" customClass="Hyperlink">
+                                                        <rect key="frame" x="28" y="17" width="53" height="16"/>
+                                                        <textFieldCell key="cell" alignment="left" title="Website" usesSingleLineMode="YES" id="Ozk-o9-C4a">
                                                             <font key="font" metaFont="system"/>
                                                             <color key="textColor" name="linkColor" catalog="System" colorSpace="catalog"/>
                                                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -1964,8 +1967,8 @@ U2hhcmUgTU1GIDMgEEZlZWRiYWNrICYgSWRlYXM
                                                         <symbolConfiguration key="symbolConfiguration" scale="large" weight="medium"/>
                                                     </imageView>
                                                     <textField horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="Tl2-TE-5Rb" customClass="Hyperlink">
-                                                        <rect key="frame" x="28" y="17" width="58" height="16"/>
-                                                        <textFieldCell key="cell" alignment="left" title="Get Help" usesSingleLineMode="YES" id="eVc-l9-Z0h">
+                                                        <rect key="frame" x="28" y="17" width="32" height="16"/>
+                                                        <textFieldCell key="cell" alignment="left" title="Help" usesSingleLineMode="YES" id="eVc-l9-Z0h">
                                                             <font key="font" metaFont="system"/>
                                                             <color key="textColor" name="linkColor" catalog="System" colorSpace="catalog"/>
                                                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>

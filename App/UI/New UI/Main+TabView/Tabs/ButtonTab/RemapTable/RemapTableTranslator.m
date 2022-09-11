@@ -130,15 +130,13 @@ static NSArray *getOneShotEffectsTable(NSDictionary *rowDict) {
     NSDictionary *effectDict = rowDict[kMFRemapsKeyEffect];
     
     NSMutableArray *oneShotEffectsTable = @[
+        @{@"ui": NSLocalizedString(@"effect.smart-zoom", @"First draft: Smart Zoom"), @"tool": NSLocalizedString(@"effect.smart-zoom.hint", @"First draft: Zoom in or out in Safari and other apps.\n \nWorks like a two-finger double tap on an Apple Trackpad."), @"dict": @{
+                  kMFActionDictKeyType: kMFActionDictTypeSmartZoom,
+        }},
         @{@"ui": NSLocalizedString(@"effect.look-up", @"First draft: Look Up & Quick Look"), @"tool": NSLocalizedString(@"effect.look-up.hint", @"First draft: Look up words in the Dictionary, Quick Look files in Finder, and more.\n \nWorks like Force Touch on an Apple Trackpad."), @"dict": @{
                   kMFActionDictKeyType: kMFActionDictTypeSymbolicHotkey,
                   kMFActionDictKeyGenericVariant: @(kMFSHLookUp)
         }},
-        @{@"ui": NSLocalizedString(@"effect.smart-zoom", @"First draft: Smart Zoom"), @"tool": NSLocalizedString(@"effect.smart-zoom.hint", @"First draft: Zoom in or out in Safari and other apps.\n \nWorks like a two-finger double tap on an Apple Trackpad."), @"dict": @{
-                  kMFActionDictKeyType: kMFActionDictTypeSmartZoom,
-        }},
-        
-        separatorEffectsTableEntry(),
         @{@"ui": NSLocalizedString(@"effect.middle-click", @"First draft: Middle Click"),
           @"tool": stringf(NSLocalizedString(@"effect.middle-click.hint", @"First draft: Open links in a new tab, paste text in the Terminal, and more.\n \nWorks like clicking %@ on a standard mouse."), [UIStrings getButtonStringToolTip:3]),
           @"dict": @{
@@ -147,6 +145,15 @@ static NSArray *getOneShotEffectsTable(NSDictionary *rowDict) {
               kMFActionDictKeyMouseButtonClicksVariantNumberOfClicks: @1,
           }
         },
+        separatorEffectsTableEntry(),
+        @{@"ui": NSLocalizedString(@"effect.back", @"First draft: Back"), @"tool": NSLocalizedString(@"effect.back.hint", @"First draft: Go back one page in Safari and other apps"), @"dict": @{
+                  kMFActionDictKeyType: kMFActionDictTypeNavigationSwipe,
+                  kMFActionDictKeyGenericVariant: kMFNavigationSwipeVariantLeft
+        }},
+        @{@"ui": NSLocalizedString(@"effect.forward", @"First draft: Forward"), @"tool": NSLocalizedString(@"effect.forward.hint", @"First draft: Go forward one page in Safari and other apps"), @"dict": @{
+                  kMFActionDictKeyType: kMFActionDictTypeNavigationSwipe,
+                  kMFActionDictKeyGenericVariant: kMFNavigationSwipeVariantRight
+        }},
         separatorEffectsTableEntry(),
         @{@"ui": NSLocalizedString(@"effect.mission-control", @"First draft: Mission Control"), @"tool": NSLocalizedString(@"effect.mission-control.hint", @"First draft: Show Mission Control"), @"dict": @{
                   kMFActionDictKeyType: kMFActionDictTypeSymbolicHotkey,
@@ -164,16 +171,6 @@ static NSArray *getOneShotEffectsTable(NSDictionary *rowDict) {
         @{@"ui": NSLocalizedString(@"effect.launchpad", @"First draft: Launchpad"), @"tool": NSLocalizedString(@"effect.launchpad.hint", @"First draft: Open Launchpad"), @"dict": @{
                   kMFActionDictKeyType: kMFActionDictTypeSymbolicHotkey,
                   kMFActionDictKeyGenericVariant: @(kMFSHLaunchpad)
-        }},
-        
-        separatorEffectsTableEntry(),
-        @{@"ui": NSLocalizedString(@"effect.back", @"First draft: Back"), @"tool": NSLocalizedString(@"effect.back.hint", @"First draft: Go back one page in Safari and other apps"), @"dict": @{
-                  kMFActionDictKeyType: kMFActionDictTypeNavigationSwipe,
-                  kMFActionDictKeyGenericVariant: kMFNavigationSwipeVariantLeft
-        }},
-        @{@"ui": NSLocalizedString(@"effect.forward", @"First draft: Forward"), @"tool": NSLocalizedString(@"effect.forward.hint", @"First draft: Go forward one page in Safari and other apps"), @"dict": @{
-                  kMFActionDictKeyType: kMFActionDictTypeNavigationSwipe,
-                  kMFActionDictKeyGenericVariant: kMFNavigationSwipeVariantRight
         }},
         separatorEffectsTableEntry(),
         @{@"ui": NSLocalizedString(@"effect.left-space", @"First draft: Move Left a Space"), @"tool": NSLocalizedString(@"effect.left-space.hint", @"First draft: Move one Space to the left"), @"dict": @{
