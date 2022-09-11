@@ -46,6 +46,11 @@ which I think might be important now that MMF is monetized.
 If you know something about copyright, I'd love to hear your feedback on whether 
 the license as I formulated it fullfills these goals.
 
-Note: I just noticed that the way that the license is currently formulated it might disallow people from sharing small bug fixes or positive tweaks they made to Mac Mouse Fix. I don't know how to reformulate it to cover this case though. Basically just act in good faith and you're good.
+Note: I just noticed that the way that the license is currently formulated it might disallow 
+people from sharing small bug fixes or positive tweaks they made to Mac Mouse Fix. I don't know 
+how to reformulate it to cover this case though. Basically just act in good faith and you're good.
 
-TODO: The version-3 branch currently contains the KingIsulgard/iOS-Polynomial-Regression source code licensed under GPL. GPL doesn't allow other licenses to be used. I asked the author for permission here: https://github.com/KingIsulgard/iOS-Polynomial-Regression/issues/6. If they don't give permission, removed the library.
+TODO: The version-3 branch currently contains the KingIsulgard/iOS-Polynomial-Regression source 
+code licensed under GPL. GPL doesn't allow other licenses to be used. I asked the author for 
+permission here: https://github.com/KingIsulgard/iOS-Polynomial-Regression/issues/6. If they don't 
+give permission, removed the library.
