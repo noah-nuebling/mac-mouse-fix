@@ -71,7 +71,7 @@
     }
 }
 
-+ (void)enableHelperAsUserAgent:(BOOL)enable error:(NSError *_Nullable*_Nullable)error {
++ (void)enableHelperAsUserAgent:(BOOL)enable onComplete:(void (^ _Nullable)(NSError * _Nullable error))onComplete {
     
     /// Guard running main app
     ///     Before using the SM APIs we could call this from anywhere, but the SM stuff will only work from the mainApp afaik.
@@ -80,14 +80,22 @@
     /// Register/unregister the helper as a User Agent with launchd so it runs in the background - also launches/terminates helper
     
     if (@available(macos 13.0, *)) {
+        
         /// Disable and clean up legacy versions
         [self runPreviousVersionCleanup];
         [self removeHelperFromLaunchd];
         removeLaunchdPlist();
+        
         /// Call core
-        [self enableHelper_SM:enable error:error];
+        ///    Do this on some global queue. Xcode complains if you do this on mainThread because it can lead to unresponsive UI.
+        dispatch_async(dispatch_get_global_queue(QOS_CLASS_USER_INTERACTIVE, 0), ^{
+            NSError *error = [self enableHelper_SM:enable];
+            if (onComplete != nil) onComplete(error);
+        });
+        
     } else {
         enableHelper_PList(enable);
+        if (onComplete != nil) onComplete(nil);
     }
 }
 
@@ -114,6 +122,7 @@
         
         SMAppService *service = [SMAppService agentServiceWithPlistName:@"sm_launchd.plist"];
         BOOL result = service.status == SMAppServiceStatusEnabled;
+        
 #if DEBUG
         if (result) {
             NSLog(@"Helper found to be active");
@@ -157,43 +166,42 @@ static BOOL helperIsActive_PList() {
     }
 }
 
-+ (void)enableHelper_SM:(BOOL)enable error:(NSError * _Nullable * _Nullable)error API_AVAILABLE(macos(13.0)) {
-    
-    /// TODO: Don't call `registerAndReturnError:`. Xcode complains about it.
++ (NSError *_Nullable)enableHelper_SM:(BOOL)enable API_AVAILABLE(macos(13.0)) {
     
     /// TODO: Dispatch this stuff to another thread. Xcode analysis on `registerAndReturnError:` says "This method should not be called on the main thread as it may lead to UI unresponsiveness"
 
     if (@available(macos 13.0, *)) {
-        /// Create error so that `*error` doesn't crash
-        if (error == NULL) {
-            NSError *e1 = [[NSError alloc] init];
-            NSError *__autoreleasing e2 = e1;
-            error = &e2;
-        }
+            
+        /// Create error
         
+        NSError *error = nil;
+
         /// Do the core (un)registering
-        ///     Edit:
-        ///     - `loginItemServiceWithIdentifier:` would be easier than `registerAndReturnError:`, but it breaks with multiple copies of the app installed.
-        ///     - Edit: Actually, `registerAndReturnError:` also breaks with several versions installed, but maybe it'll be fixed in the future. Also `registerAndReturnError:` allows us to specify 'nice = -10' which makes the scrolling fps and other things better
+        ///     `loginItemServiceWithIdentifier:` would be easiest but it breaks with multiple copies of the app installed. Also, it doesn't allow for setting niceness and other stuff. So using an agent is better.
+        
         SMAppService *service = [SMAppService agentServiceWithPlistName:@"sm_launchd.plist"];
         if (enable) {
-            BOOL success = [service registerAndReturnError:error];
+            BOOL success = [service registerAndReturnError:&error];
             if (!success){
-                NSLog(@"Failed to register Helper with error: %@", *error);
+                NSLog(@"Failed to register Helper with error: %@", error);
             } else {
                 NSLog(@"Registered Helper!");
             }
         } else {
-            BOOL success = [service unregisterAndReturnError:error];
+            BOOL success = [service unregisterAndReturnError:&error];
             if (!success){
-                NSLog(@"Failed to UNregister Helper with error: %@", *error);
+                NSLog(@"Failed to UNregister Helper with error: %@", error);
             } else {
                 NSLog(@"Unregistered Helper.");
             }
             
             
         }
+        
+        return error;
     } /// End `if @available`
+    
+    exit(1);
 }
 
 static void enableHelper_PList(BOOL enable) {

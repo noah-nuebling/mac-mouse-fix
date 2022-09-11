@@ -12,6 +12,8 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface Locator : NSObject
++ (NSInteger)bundleVersion;
++ (NSString *)bundleVersionShort;
 + (NSBundle *)mainAppBundle;
 + (NSBundle *)helperBundle;
 + (NSBundle *)mainAppOriginalBundle;

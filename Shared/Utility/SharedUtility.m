@@ -14,6 +14,8 @@
 #import "SharedUtility.h"
 @import AppKit.NSScreen;
 #import <objc/runtime.h>
+// #import "ConfigFileInterface_App.h"
+// #import "ConfigFileInterface_Helper.h"
 
 @implementation SharedUtility
 
@@ -246,14 +248,27 @@ static void iteratePropertiesOn(id obj, void(^callback)(objc_property_t property
 
 + (BOOL)runningPreRelease {
     
-    BOOL runningPrerelease;
+    BOOL runningPrerelease = NO;
     
-    /// This is a pretty crude way of checking whether this is a pre-release, but it should work for now
+    /// Check debug configuration
+
 #if DEBUG 
     runningPrerelease = YES;
-#else
-    runningPrerelease = NO;
 #endif
+    
+    /// Check app name for 'beta' or 'alpha'
+    ///     We've started shipping release builds as betas because under MMF 3 using Swift, the debug builds are very very slow.
+    ///     Notes:
+    ///     - Why are we using the 'localized' search? What does that do?
+    ///     - Attention! This makes the version names magic. Make sure you always include 'beta' or 'alpha' in the prerelease version names!
+    
+    if (!runningPrerelease) {
+        
+        NSString *versionName = Locator.bundleVersionShort;
+        if ([versionName localizedCaseInsensitiveContainsString:@"beta"] || [versionName localizedCaseInsensitiveContainsString:@"alpha"]) {
+            runningPrerelease = YES;
+        }
+    }
     
     return runningPrerelease;
 }

@@ -23,6 +23,7 @@
 #import "SparkleUpdaterController.h"
 #import "NSAttributedString+Additions.h"
 #import "Mac_Mouse_Fix-Swift.h"
+#import "Locator.h"
 
 @interface AppDelegate ()
 
@@ -181,10 +182,10 @@ static NSDictionary *sideButtonActions;
     NSInteger launchesOverall;
     NSInteger launchesOfCurrentBundleVersion;
     
-    launchesOverall = [(id)config(@"Other.launchesOverall") integerValue];
-    launchesOfCurrentBundleVersion = [(id)config(@"Other.launchesOfCurrentBundleVersion") integerValue];
-    NSInteger lastLaunchedBundleVersion = [(id)config(@"Other.lastLaunchedBundleVersion") integerValue];
-    NSInteger currentBundleVersion = Utility_App.bundleVersion;
+    launchesOverall = [config(@"Other.launchesOverall") integerValue];
+    launchesOfCurrentBundleVersion = [config(@"Other.launchesOfCurrentBundleVersion") integerValue];
+    NSInteger lastLaunchedBundleVersion = [config(@"Other.lastLaunchedBundleVersion") integerValue];
+    NSInteger currentBundleVersion = Locator.bundleVersion;
     
     launchesOverall += 1;
     

@@ -15,6 +15,8 @@
 #import <Sparkle/Sparkle.h>
 #import "SparkleUpdaterController.h"
 #import "WannabePrefixHeader.h"
+#import "Locator.h"
+
 
 @interface MoreSheet ()
 @property (strong) IBOutlet NSPanel *sheetPanel; // TODO: Remove. This should be the same as the automatically generated _window property.
@@ -109,14 +111,14 @@ static MoreSheet *_instance;
     
     /// Load version label
     NSString *versionString = [NSString stringWithFormat:@"Version %@ (%ld)",
-                               (NSString *)Utility_App.bundleVersionShort,
-                               (long)Utility_App.bundleVersion];
-    
+                               (NSString *)Locator.bundleVersionShort,
+                               (long)Locator.bundleVersion];
+                               
     [self.versionLabel setStringValue:versionString];
     
     /// Load checkbox state
-    self.checkForUpdateCheckBox.state = [(id)config(@"Other.checkForUpdates") boolValue];
-    self.prereleaseCheckBox.state = [(id)config(@"Other.checkForPrereleases") boolValue];
+    self.checkForUpdateCheckBox.state = [config(@"Other.checkForUpdates") boolValue];
+    self.prereleaseCheckBox.state = [config(@"Other.checkForPrereleases") boolValue];
     
     self.prereleaseCheckBox.enabled = self.checkForUpdateCheckBox.state;
 }

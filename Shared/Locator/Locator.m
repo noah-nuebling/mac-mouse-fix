@@ -15,7 +15,12 @@
 @implementation Locator
 
 #pragma mark - Interface
-
++ (NSInteger)bundleVersion {
+    return [[self.mainAppBundle objectForInfoDictionaryKey:@"CFBundleVersion"] integerValue];
+}
++ (NSString *)bundleVersionShort {
+    return (NSString *)[self.mainAppBundle objectForInfoDictionaryKey:@"CFBundleShortVersionString"];
+}
 + (NSBundle *)helperBundle {
     NSBundle *hhh;
     NSBundle *helperBundle;
@@ -29,7 +34,7 @@
     return mainAppBundle;
 }
 /// Return bundle at the location at which the app was launched - even after the app has been moved while running
-+ (NSBundle *)helperOriginalBundle { // Get pre-move location if moved while running
++ (NSBundle *)helperOriginalBundle { /// Get pre-move location if moved while running
     NSBundle *hhh;
     NSBundle *helperBundle;
     [self getOriginalBundlesForMainApp:&hhh helper:&helperBundle];
@@ -82,7 +87,7 @@ static NSURL *_configURL;
     if (self == Locator.class) {
         /// Get appSupportURL & configURL
         NSURL *applicationSupportURL = [NSFileManager.defaultManager URLForDirectory:NSApplicationSupportDirectory inDomain:NSUserDomainMask appropriateForURL:NULL create:YES error:nil];
-        _MFApplicationSupportFolderURL = [applicationSupportURL URLByAppendingPathComponent:self.mainAppBundle.bundleIdentifier];
+        _MFApplicationSupportFolderURL = [applicationSupportURL URLByAppendingPathComponent:kMFBundleIDApp];
         _configURL = [_MFApplicationSupportFolderURL URLByAppendingPathComponent:@"config.plist"];
     }
 }
@@ -103,7 +108,7 @@ static NSURL *_configURL;
         *mainAppBundle = [NSBundle bundleWithPath:mainAppPath];
         *helperBundle = thisBundle;
     } else if (SharedUtility.runningAccomplice) {
-        // Accomplice bundle doesn't have url only bundle path
+        /// Accomplice bundle doesn't have url only bundle path
         NSString *mainAppPath =  [thisBundle.bundlePath stringByAppendingPathComponent:kMFRelativeMainAppPathFromAccompliceFolder];
         NSString *helperPath = [mainAppPath stringByAppendingPathComponent:kMFRelativeHelperAppPath];
         *mainAppBundle = [NSBundle bundleWithPath:mainAppPath];
@@ -121,21 +126,43 @@ static NSURL *_lastValidHelperFRURL;
      /// ^ I thought this would be very robust, but this stuff fails after moving the app.
       /// NSBundle.mainBundle.bundleURL will still report the pre-move location for some reason.
     
+    /// Validate bundles
+    
+    if ((*mainAppBundle).executableURL == nil) {
+        *mainAppBundle = nil;
+    }
+    if ((*helperBundle).executableURL == nil) {
+        *helperBundle = nil;
+    }
+    
     /// v Attempt to fix
     ///  Store file reference URLs and fall back on last valid one if
     ///  the bundle obtained through the default method is invalid (that happens after the app is moved while helper is open)
+    
     NSURL *mainAppFRURL = (*mainAppBundle).bundleURL.fileReferenceURL;
-    NSURL *helperFRURL = (*helperBundle).bundleURL.fileReferenceURL;
-    if (!mainAppFRURL || !helperFRURL) {
-        mainAppFRURL = _lastValidMainAppFRURL;
-        helperFRURL = _lastValidHelperFRURL;
-        DDLogInfo(@"((Found that app bundles are invalid while retrieving app bundles. Resorting to last valid fileReferenceURLs to obtain bundles. This probably means the app moved.))");
+    
+    if (mainAppFRURL == nil) {
+     
+        if (_lastValidMainAppFRURL != nil) {
+            *mainAppBundle = [NSBundle bundleWithURL:_lastValidMainAppFRURL];
+        }
+        
+        NSLog(@"((Found that mainApp bundle is invalid while retrieving app bundles. Resorting to last valid fileReferenceURLs to obtain bundle. This might mean the app moved or the helper is not embedded in a mainApp.))");
     } else {
         _lastValidMainAppFRURL = mainAppFRURL;
+    }
+    
+    NSURL *helperFRURL = (*helperBundle).bundleURL.fileReferenceURL;
+    if (helperFRURL == nil) {
+     
+        if (_lastValidHelperFRURL != nil) {
+            *helperBundle = [NSBundle bundleWithURL:_lastValidHelperFRURL];
+        }
+        
+        NSLog(@"((Found that helper bundle is invalid while retrieving app bundles. Resorting to last valid fileReferenceURLs to obtain bundle. This might mean the app moved.))");
+    } else {
         _lastValidHelperFRURL = helperFRURL;
     }
-    *mainAppBundle = [NSBundle bundleWithURL:mainAppFRURL];
-    *helperBundle = [NSBundle bundleWithURL:helperFRURL];
 }
 
 @end

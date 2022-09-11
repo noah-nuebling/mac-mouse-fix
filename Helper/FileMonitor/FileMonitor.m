@@ -28,19 +28,29 @@
 FSEventStreamRef _stream;
 static void setStreamToCurrentInstallLoc() {
     
-    // v This stuff doesn't work after the app has been moved because NSBundle BundleForClass:self reports the old location
+    /// Note: This stuff doesn't work after the app has been moved because NSBundle BundleForClass:self reports the old location
     
     if (_stream != NULL) {
         FSEventStreamStop(_stream);
         FSEventStreamInvalidate(_stream);
     }
-    // v Need to monitor the enclosing folder for callbacks to work
-    NSURL *mainAppURL = [Locator.mainAppBundle.bundleURL URLByDeletingLastPathComponent];
-    _stream = FSEventStreamCreate(kCFAllocatorDefault, Handle_FSCallback, NULL, (__bridge CFArrayRef) @[mainAppURL.path], kFSEventStreamEventIdSinceNow, 1, kFSEventStreamCreateFlagIgnoreSelf ^ kFSEventStreamCreateFlagUseCFTypes);
-    FSEventStreamScheduleWithRunLoop(_stream, CFRunLoopGetMain(), kCFRunLoopDefaultMode);
-    FSEventStreamStart(_stream);
+    /// Start monitor
+    /// Notes:
+    /// - Need to monitor the enclosing folder for callbacks to work
+    /// - The mainApp url shouldn't ever be nil except if we're running the helper standalone for debugging. Maybe we should just crash here?
     
-    DDLogInfo(@"Set file monitoring to: %@ App location accoring to NSWorkspace: %@", mainAppURL.path, [NSWorkspace.sharedWorkspace URLForApplicationWithBundleIdentifier:kMFBundleIDApp].path);
+    NSURL *mainApp = Locator.mainAppBundle.bundleURL;
+    
+    if (mainApp != nil) {
+        
+        NSURL *enclosing = [mainApp URLByDeletingLastPathComponent];
+        
+        _stream = FSEventStreamCreate(kCFAllocatorDefault, Handle_FSCallback, NULL, (__bridge CFArrayRef) @[enclosing.path], kFSEventStreamEventIdSinceNow, 1, kFSEventStreamCreateFlagIgnoreSelf ^ kFSEventStreamCreateFlagUseCFTypes);
+        FSEventStreamScheduleWithRunLoop(_stream, CFRunLoopGetMain(), kCFRunLoopDefaultMode);
+        FSEventStreamStart(_stream);
+        
+        DDLogInfo(@"Set file monitoring to: %@ App location accoring to NSWorkspace: %@", enclosing.path, [NSWorkspace.sharedWorkspace URLForApplicationWithBundleIdentifier:kMFBundleIDApp].path);
+    }
 }
 
 void Handle_FSCallback(ConstFSEventStreamRef streamRef, void *clientCallBackInfo, size_t numEvents, void *eventPaths, const FSEventStreamEventFlags *eventFlags, const FSEventStreamEventId *eventIds) {
