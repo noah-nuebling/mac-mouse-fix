@@ -13,11 +13,11 @@ files (from here on referred to as the "MMF Source"), with the following restric
   from the MMF Source, then you may only publish Your Program under the following 
   conditions:
 	- Your Program does not contain any malware or hidden malicious content.
-	- Your Source must contain the licensing, trial period tracking, and payment 
-	  systems present in the MMF Source without any changes, unless Your Source 
-	  features substantial improvements or additions to the MMF Source, such that Your Source 
-	  should be considered its own, derivative work, separate from the 
-	  MMF Source.
+	- Your Source must contain the monetization systems, including the licensing, 
+          trial period tracking, and payment system present in the MMF Source without 
+	  any changes, unless Your Source features substantial improvements or 
+	  additions to the MMF Source, such that Your Source should be considered its 
+	  own, derivative work, separate from the MMF Source.
 
 THE MMF SOURCE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, 
 INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A 
@@ -45,10 +45,6 @@ which I think might be important now that MMF is monetized.
 
 If you know something about copyright, I'd love to hear your feedback on whether 
 the license as I formulated it fullfills these goals.
-
-Note: I just noticed that the way that the license is currently formulated it might disallow 
-people from sharing small bug fixes or positive tweaks they made to Mac Mouse Fix. I don't know 
-how to reformulate it to cover this case though. Basically just act in good faith and you're good.
 
 TODO: The version-3 branch currently contains the KingIsulgard/iOS-Polynomial-Regression source 
 code licensed under GPL. GPL doesn't allow other licenses to be used. I asked the author for 
