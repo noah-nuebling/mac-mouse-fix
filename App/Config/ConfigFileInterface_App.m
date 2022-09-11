@@ -13,7 +13,7 @@
 #import "SharedMessagePort.h"
 #import "NSMutableDictionary+Additions.h"
 #import "Utility_App.h"
-#import "Objects.h"
+#import "Locator.h"
 #import "Constants.h"
 
 @implementation ConfigFileInterface_App
@@ -44,7 +44,7 @@ static NSURL *_defaultConfigURL; // default_config aka backup_config
     
     // Get backup config url
     NSString *defaultConfigPathRelative = @"Contents/Resources/default_config.plist";
-    _defaultConfigURL = [Objects.mainAppBundle.bundleURL URLByAppendingPathComponent:defaultConfigPathRelative];
+    _defaultConfigURL = [Locator.mainAppBundle.bundleURL URLByAppendingPathComponent:defaultConfigPathRelative];
     
     // Load config
     [self loadConfigFromFile];
@@ -70,7 +70,7 @@ static NSURL *_defaultConfigURL; // default_config aka backup_config
     //        NSLog(@"ERROR writing configDictFromFile to file");
     //    }
     NSError *writeErr;
-    [configData writeToURL:Objects.configURL options:NSDataWritingAtomic error:&writeErr];
+    [configData writeToURL:Locator.configURL options:NSDataWritingAtomic error:&writeErr];
     if (writeErr) {
         NSLog(@"ERROR writing configDictFromFile to file: %@", writeErr);
     }
@@ -85,7 +85,7 @@ static NSURL *_defaultConfigURL; // default_config aka backup_config
     
     [self repairConfigWithProblem:kMFConfigProblemNone info:nil];
     
-    NSData *configData = [NSData dataWithContentsOfURL:Objects.configURL];
+    NSData *configData = [NSData dataWithContentsOfURL:Locator.configURL];
     NSError *readErr;
     NSMutableDictionary *configDict = [NSPropertyListSerialization propertyListWithData:configData options:NSPropertyListMutableContainersAndLeaves format:nil error:&readErr];
     if (readErr) {
@@ -106,8 +106,8 @@ static NSURL *_defaultConfigURL; // default_config aka backup_config
     
     // Create config file if none exists
     
-    if (![NSFileManager.defaultManager fileExistsAtPath:Objects.configURL.path]) {
-        [NSFileManager.defaultManager createDirectoryAtURL:Objects.configURL.URLByDeletingLastPathComponent withIntermediateDirectories:YES attributes:nil error:nil];
+    if (![NSFileManager.defaultManager fileExistsAtPath:Locator.configURL.path]) {
+        [NSFileManager.defaultManager createDirectoryAtURL:Locator.configURL.URLByDeletingLastPathComponent withIntermediateDirectories:YES attributes:nil error:nil];
         [self replaceCurrentConfigWithDefaultConfig];
     }
     
@@ -116,7 +116,7 @@ static NSURL *_defaultConfigURL; // default_config aka backup_config
     
     // Check if config version matches, if not, replace with default.
     
-    NSNumber *currentConfigVersion = [[NSDictionary dictionaryWithContentsOfURL:Objects.configURL] valueForKeyPath:@"Other.configVersion"];
+    NSNumber *currentConfigVersion = [[NSDictionary dictionaryWithContentsOfURL:Locator.configURL] valueForKeyPath:@"Other.configVersion"];
     NSNumber *defaultConfigVersion = [[NSDictionary dictionaryWithContentsOfURL:_defaultConfigURL] valueForKeyPath:@"Other.configVersion"];
     if (currentConfigVersion.intValue != defaultConfigVersion.intValue) {
         [self replaceCurrentConfigWithDefaultConfig];
@@ -161,7 +161,7 @@ static NSURL *_defaultConfigURL; // default_config aka backup_config
 /// Replaces the current config file which the helper app is reading from with the backup one and then terminates the helper. (Helper will restart automatically because of the KeepAlive attribute in its user agent config file.)
 + (void)replaceCurrentConfigWithDefaultConfig {
     NSData *defaultData = [NSData dataWithContentsOfURL:_defaultConfigURL];
-    [defaultData writeToURL:Objects.configURL atomically:YES];
+    [defaultData writeToURL:Locator.configURL atomically:YES];
     [SharedMessagePort sendMessage:@"terminate" withPayload:nil expectingReply:NO];
     [self loadConfigFromFile];
 }

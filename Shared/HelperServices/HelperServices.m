@@ -25,7 +25,7 @@
 #import <AppKit/AppKit.h>
 #import "HelperServices.h"
 #import "Constants.h"
-#import "Objects.h"
+#import "Locator.h"
 #import "SharedUtility.h"
 #import <ServiceManagement/ServiceManagement.h>
 
@@ -187,7 +187,7 @@ static void enableHelper_PList(BOOL enable) {
         task.executableURL = [NSURL fileURLWithPath: kMFLaunchctlPath];
         NSString *GUIDomainArgument = [NSString stringWithFormat:@"gui/%d", geteuid()];
         NSString *OnOffArgument = (enable) ? @"bootstrap": @"bootout";
-        NSString *launchdPlistPathArgument = Objects.launchdPlistURL.path;
+        NSString *launchdPlistPathArgument = Locator.launchdPlistURL.path;
         task.arguments = @[OnOffArgument, GUIDomainArgument, launchdPlistPathArgument];
         NSPipe *pipe = NSPipe.pipe;
         task.standardError = pipe;
@@ -203,15 +203,15 @@ static void enableHelper_PList(BOOL enable) {
         
     } else { /// Fallback on earlier versions
         NSString *OnOffArgumentOld = (enable) ? @"load": @"unload";
-        [NSTask launchedTaskWithLaunchPath: kMFLaunchctlPath arguments: @[OnOffArgumentOld, Objects.launchdPlistURL.path]]; /// Can't clean up here easily cause there's no termination handler
+        [NSTask launchedTaskWithLaunchPath: kMFLaunchctlPath arguments: @[OnOffArgumentOld, Locator.launchdPlistURL.path]]; /// Can't clean up here easily cause there's no termination handler
     }
 }
 
 static void removeLaunchdPlist() {
     NSError *error;
-    [NSFileManager.defaultManager removeItemAtURL:Objects.launchdPlistURL error:&error];
+    [NSFileManager.defaultManager removeItemAtURL:Locator.launchdPlistURL error:&error];
     if (error != nil) {
-        NSLog(@"Failed to delete launchd.plist file. The helper will likely be re-enabled on startup. Delete the file at \"%@\" to prevent this.", Objects.launchdPlistURL.path); /// TODO: Make this a DDLogError() statement
+        NSLog(@"Failed to delete launchd.plist file. The helper will likely be re-enabled on startup. Delete the file at \"%@\" to prevent this.", Locator.launchdPlistURL.path); /// TODO: Make this a DDLogError() statement
     }
 }
 
@@ -242,12 +242,12 @@ static void removeLaunchdPlist() {
         NSError *error;
         
         /// Get helper executable path
-        NSBundle *helperBundle = Objects.helperBundle;
-        NSBundle *mainAppBundle = Objects.mainAppBundle;
+        NSBundle *helperBundle = Locator.helperBundle;
+        NSBundle *mainAppBundle = Locator.mainAppBundle;
         NSString *helperExecutablePath = helperBundle.executablePath;
         
         /// Get path to launch agent config file (aka launchdPlist)
-        NSString *launchdPlist_path = Objects.launchdPlistURL.path;
+        NSString *launchdPlist_path = Locator.launchdPlistURL.path;
         
         /// Create file manager
         
@@ -450,11 +450,11 @@ static NSError *makeWritable(NSString *itemPath) {
     NSString *launchdPath = [self helperExecutablePathFromLaunchd];
     BOOL launchdPathExists = launchdPath.length != 0;
     
-    BOOL launchdPathIsBundlePath = [Objects.helperBundle.executablePath isEqual:launchdPath];
+    BOOL launchdPathIsBundlePath = [Locator.helperBundle.executablePath isEqual:launchdPath];
     
     if (!launchdPathIsBundlePath && launchdPathExists) {
         
-        NSLog(@"Strange helper: found at: %@ \nbundleExecutable at: %@", launchdPath, Objects.helperBundle.executablePath);
+        NSLog(@"Strange helper: found at: %@ \nbundleExecutable at: %@", launchdPath, Locator.helperBundle.executablePath);
         return YES;
     }
     

@@ -8,7 +8,7 @@
 //
 
 #import "SharedUtility.h"
-#import "Objects.h"
+#import "Locator.h"
 #import "ConfigFileInterface_App.h"
 #import "ConfigFileInterface_Helper.h"
 
@@ -34,7 +34,7 @@
     
     if (!runningPrerelease) {
         
-        NSString *versionName = Objects.bundleVersionShort;
+        NSString *versionName = Locator.bundleVersionShort;
         if ([versionName localizedCaseInsensitiveContainsString:@"beta"] || [versionName localizedCaseInsensitiveContainsString:@"alpha"]) {
             runningPrerelease = YES;
         }
@@ -105,7 +105,7 @@
     
     if (@available(macOS 10.13, *)) {
         
-        NSLog(@"Launching CLT at: %@, with args: %@, from bundle at: %@, from thread: %@", commandLineTool, args, Objects.mainAppBundle.bundleURL, NSThread.currentThread);
+        NSLog(@"Launching CLT at: %@, with args: %@, from bundle at: %@, from thread: %@", commandLineTool, args, Locator.mainAppBundle.bundleURL, NSThread.currentThread);
         
 //        NSTask *task = [[NSTask alloc] init];
 //        task.executableURL = commandLineTool;

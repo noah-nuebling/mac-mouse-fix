@@ -54,8 +54,8 @@
 		4FF6654225F2C7B000689B77 /* default_launchd.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4FF6652E25F2C7B000689B77 /* default_launchd.plist */; };
 		4FF6654325F2C7B000689B77 /* HelperServices.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF6652F25F2C7B000689B77 /* HelperServices.m */; };
 		4FF6654425F2C7B000689B77 /* HelperServices.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF6652F25F2C7B000689B77 /* HelperServices.m */; };
-		4FF6654525F2C7B000689B77 /* Objects.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF6653225F2C7B000689B77 /* Objects.m */; };
-		4FF6654625F2C7B000689B77 /* Objects.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF6653225F2C7B000689B77 /* Objects.m */; };
+		4FF6654525F2C7B000689B77 /* Locator.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF6653225F2C7B000689B77 /* Locator.m */; };
+		4FF6654625F2C7B000689B77 /* Locator.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF6653225F2C7B000689B77 /* Locator.m */; };
 		4FF6654B25F2C7B000689B77 /* MFQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF6653A25F2C7B000689B77 /* MFQueue.m */; };
 		4FF6654C25F2C7B000689B77 /* MFQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF6653A25F2C7B000689B77 /* MFQueue.m */; };
 		4FF6654D25F2C7B000689B77 /* SharedUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF6653B25F2C7B000689B77 /* SharedUtility.m */; };
@@ -65,7 +65,7 @@
 		4FF6655125F2C7B000689B77 /* NSMutableDictionary+Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF6654025F2C7B000689B77 /* NSMutableDictionary+Additions.m */; };
 		4FF6655225F2C7B000689B77 /* NSMutableDictionary+Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF6654025F2C7B000689B77 /* NSMutableDictionary+Additions.m */; };
 		4FF6655725F2C7CA00689B77 /* HelperServices.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF6652F25F2C7B000689B77 /* HelperServices.m */; };
-		4FF6655C25F2C7D500689B77 /* Objects.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF6653225F2C7B000689B77 /* Objects.m */; };
+		4FF6655C25F2C7D500689B77 /* Locator.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF6653225F2C7B000689B77 /* Locator.m */; };
 		4FF665ED25F2C92700689B77 /* MFSegmentedControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF665C125F2C92700689B77 /* MFSegmentedControl.m */; };
 		4FF665EE25F2C92700689B77 /* OverridePanel.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF665C225F2C92700689B77 /* OverridePanel.m */; };
 		4FF665EF25F2C92700689B77 /* ScrollOverridePanel.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4FF665C325F2C92700689B77 /* ScrollOverridePanel.xib */; };
@@ -299,8 +299,8 @@
 		4FF6652D25F2C7B000689B77 /* HelperServices.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HelperServices.h; sourceTree = "<group>"; };
 		4FF6652E25F2C7B000689B77 /* default_launchd.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = default_launchd.plist; sourceTree = "<group>"; };
 		4FF6652F25F2C7B000689B77 /* HelperServices.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HelperServices.m; sourceTree = "<group>"; };
-		4FF6653125F2C7B000689B77 /* Objects.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Objects.h; sourceTree = "<group>"; };
-		4FF6653225F2C7B000689B77 /* Objects.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Objects.m; sourceTree = "<group>"; };
+		4FF6653125F2C7B000689B77 /* Locator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Locator.h; sourceTree = "<group>"; };
+		4FF6653225F2C7B000689B77 /* Locator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Locator.m; sourceTree = "<group>"; };
 		4FF6653325F2C7B000689B77 /* Constants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Constants.h; sourceTree = "<group>"; };
 		4FF6653825F2C7B000689B77 /* NSArray+Additions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSArray+Additions.h"; sourceTree = "<group>"; };
 		4FF6653925F2C7B000689B77 /* NSMutableDictionary+Additions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSMutableDictionary+Additions.h"; sourceTree = "<group>"; };
@@ -728,8 +728,8 @@
 		4FF6653025F2C7B000689B77 /* Objects */ = {
 			isa = PBXGroup;
 			children = (
-				4FF6653125F2C7B000689B77 /* Objects.h */,
-				4FF6653225F2C7B000689B77 /* Objects.m */,
+				4FF6653125F2C7B000689B77 /* Locator.h */,
+				4FF6653225F2C7B000689B77 /* Locator.m */,
 			);
 			path = Objects;
 			sourceTree = "<group>";
@@ -1432,7 +1432,7 @@
 				4F2FDF332315662500C7BE14 /* main.m in Sources */,
 				4FBA3152261758C1006C20F3 /* SharedUtility.m in Sources */,
 				4FF6655725F2C7CA00689B77 /* HelperServices.m in Sources */,
-				4FF6655C25F2C7D500689B77 /* Objects.m in Sources */,
+				4FF6655C25F2C7D500689B77 /* Locator.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1443,7 +1443,7 @@
 				4FF6655225F2C7B000689B77 /* NSMutableDictionary+Additions.m in Sources */,
 				4F39BC4A263B179200FDF692 /* AppState.m in Sources */,
 				4FBC943B260F8AA60062F186 /* MASShortcut.m in Sources */,
-				4FF6654625F2C7B000689B77 /* Objects.m in Sources */,
+				4FF6654625F2C7B000689B77 /* Locator.m in Sources */,
 				4FF665EE25F2C92700689B77 /* OverridePanel.m in Sources */,
 				4FF665F525F2C92700689B77 /* ConfigFileInterface_App.m in Sources */,
 				4FF6654E25F2C7B000689B77 /* SharedUtility.m in Sources */,
@@ -1535,7 +1535,7 @@
 				4FF666A825F2C93A00689B77 /* DeviceManager.m in Sources */,
 				4FF6669B25F2C93A00689B77 /* AppDelegate.m in Sources */,
 				4FF6654F25F2C7B000689B77 /* NSArray+Additions.m in Sources */,
-				4FF6654525F2C7B000689B77 /* Objects.m in Sources */,
+				4FF6654525F2C7B000689B77 /* Locator.m in Sources */,
 				4FF666A925F2C93A00689B77 /* Utility_Helper.m in Sources */,
 				4FF6668B25F2C93A00689B77 /* AnimationCurve.m in Sources */,
 				4FF6654325F2C7B000689B77 /* HelperServices.m in Sources */,

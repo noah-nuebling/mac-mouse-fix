@@ -14,7 +14,7 @@
 #import "Utility_App.h"
 #import <Sparkle/Sparkle.h>
 #import "SparkleUpdaterController.h"
-#import "Objects.h"
+#import "Locator.h"
 
 
 @interface MoreSheet ()
@@ -105,8 +105,8 @@ static MoreSheet *_instance;
     
     /// Load version label
     NSString *versionString = [NSString stringWithFormat:@"Version %@ (%ld)",
-                               (NSString *)Objects.bundleVersionShort,
-                               (long)Objects.bundleVersion];
+                               (NSString *)Locator.bundleVersionShort,
+                               (long)Locator.bundleVersion];
     [self.versionLabel setStringValue:versionString];
     
     /// Load checkbox state

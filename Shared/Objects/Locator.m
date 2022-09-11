@@ -1,18 +1,18 @@
 //
 // --------------------------------------------------------------------------
-// Objects.m
+// Locator.m
 // Created for Mac Mouse Fix (https://github.com/noah-nuebling/mac-mouse-fix)
 // Created by Noah Nuebling in 2021
 // Licensed under MIT
 // --------------------------------------------------------------------------
 //
 
-#import "Objects.h"
+#import "Locator.h"
 #import "Constants.h"
 #import <Cocoa/Cocoa.h>
 #import "SharedUtility.h"
 
-@implementation Objects
+@implementation Locator
 
 + (NSInteger)bundleVersion {
     return [[self.mainAppBundle objectForInfoDictionaryKey:@"CFBundleVersion"] integerValue];
@@ -67,7 +67,7 @@ static NSURL *_configURL;
 
 + (void)initialize {
     
-    if (self == Objects.class) {
+    if (self == Locator.class) {
         /// Get appSupportURL & configURL
         NSURL *applicationSupportURL = [NSFileManager.defaultManager URLForDirectory:NSApplicationSupportDirectory inDomain:NSUserDomainMask appropriateForURL:NULL create:YES error:nil];
         _MFApplicationSupportFolderURL = [applicationSupportURL URLByAppendingPathComponent:kMFBundleIDApp];

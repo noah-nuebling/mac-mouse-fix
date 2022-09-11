@@ -11,7 +11,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface Objects : NSObject
+@interface Locator : NSObject
 + (NSInteger)bundleVersion;
 + (NSString *)bundleVersionShort;
 + (NSBundle *)mainAppBundle;

@@ -11,7 +11,7 @@
 #import <AppKit/AppKit.h>
 #import "Constants.h"
 #import "HelperServices.h"
-#import "Objects.h"
+#import "Locator.h"
 
 static int update(const char *installScript) {
     /// This is unused now because we're using Sparkle for updates
@@ -34,7 +34,7 @@ static int update(const char *installScript) {
     // Find main app
     NSRunningApplication *mainApp;
     for (NSRunningApplication *app in [NSRunningApplication runningApplicationsWithBundleIdentifier:kMFBundleIDApp]) {
-        if ([app.bundleURL isEqualTo:Objects.mainAppOriginalBundle.bundleURL]) { // Not sure if have to use `helperOriginalBundle` or `helperBundle`
+        if ([app.bundleURL isEqualTo:Locator.mainAppOriginalBundle.bundleURL]) { // Not sure if have to use `helperOriginalBundle` or `helperBundle`
             mainApp = app;
             break;
         }
@@ -57,7 +57,7 @@ static int update(const char *installScript) {
     // Find and kill helper
     // The updated helper application will subsequently be launched by launchd due to the keepAlive attribute in Mac Mouse Fix Helper's launchd.plist
     for (NSRunningApplication *app in [NSRunningApplication runningApplicationsWithBundleIdentifier:kMFBundleIDHelper]) {
-        if ([app.bundleURL isEqualTo: Objects.helperOriginalBundle.bundleURL]) {
+        if ([app.bundleURL isEqualTo: Locator.helperOriginalBundle.bundleURL]) {
             [app terminate];
             NSLog(@"Helper neutralized");
             break;
@@ -65,7 +65,7 @@ static int update(const char *installScript) {
     }
     
     // Open the newly installed main app
-    NSURL *mainAppURL = [[Objects.currentExecutableURL URLByAppendingPathComponent:kMFRelativeMainAppPathFromAccomplice] URLByStandardizingPath];
+    NSURL *mainAppURL = [[Locator.currentExecutableURL URLByAppendingPathComponent:kMFRelativeMainAppPathFromAccomplice] URLByStandardizingPath];
     NSLog(@"Opening updated app at: %@", mainAppURL);
     [NSWorkspace.sharedWorkspace openURL:mainAppURL];
     
