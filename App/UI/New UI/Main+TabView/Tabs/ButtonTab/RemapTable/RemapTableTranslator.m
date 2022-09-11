@@ -66,6 +66,9 @@ NSTableView *_tableView;
 static NSDictionary *separatorEffectsTableEntry() {
     return @{@"isSeparator": @YES};
 }
+static NSDictionary *bigSeparatorEffectsTableEntry() {
+    return @{@"isBigSeparator": @YES};
+}
 //static NSDictionary *hideableSeparatorEffectsTableEntry() {
 //    return @{@"isSeparator": @YES, @"hideable": @YES}; /// This doesn't work ;/
 //}
@@ -423,6 +426,12 @@ static NSString *effectNameForRowDict(NSDictionary * _Nonnull rowDict) {
     if ([itemModel[@"isSeparator"] isEqual: @YES]) {
         
         i = (RemapTableMenuItem *)RemapTableMenuItem.separatorItem;
+        
+    } else if ([itemModel[@"isBigSeparator"] isEqual: @YES]) {
+        
+        i = (RemapTableMenuItem *)RemapTableMenuItem.separatorItem;
+        
+        /// TODO: Implement. Make taller and darker color or sth.
         
     } else {
         
