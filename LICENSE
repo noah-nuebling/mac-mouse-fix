@@ -1,0 +1,24 @@
+# MMF License
+
+Copyright 2022 Noah Nuebling
+
+You may do whatever you want with the Mac Mouse Fix source code and other source files (from here on referred to as the "MMF Source"), with the following restrictions:
+
+- If you publish any work derived from the MMF Source, you must make it apparent in some way that it is derived from the MMF Source.
+- If you have created an executable program (from here on called "Your Program") compiled from some source code and/or other source files (from here on called "Your Source"), and if Your Source includes files or source code copied or derived from the MMF Source, then you may only publish Your Program under the following conditions:
+	- Your Source features substantial additions to the MMF Source, such that Your Source should be considered its own, derivative work, separate from the MMF Source.
+	- You don't publish Your Program under the name "Mac Mouse Fix" or a similar name that is easily confused with "Mac Mouse Fix".
+	- Your Program does not contain any malware or hidden malicious content.
+
+The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+## Notes on the MMF License
+The MMF License is a license that I wrote based on the MIT and DBAD licenses.
+I designed it with 2 main goals in mind:
+
+- To prevent people from publishing slightly altered versions of MMF, that are the exact same except that they are being payed instead of me or something like that.
+- To allow everyone else to do anything they want with the source code, including reusing it in their own projects, and monetizing it however they like.
+
+If you know something about copyright, I'd love to hear your feedback on whether the license as I formulated it fullfills these goals.
