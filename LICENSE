@@ -36,10 +36,16 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 The MMF License is a license that I wrote based on the MIT and DBAD licenses.
 I designed it with 2 main goals in mind:
 
-- To prevent people from publishing slightly altered versions of MMF, that are the 
-  exact same except that they are being payed instead of me or something like that.
-- To allow everyone else to do anything they want with the source code, including 
-  reusing it in their own projects, and monetizing it however they like.
+1. To prevent people with malicious intentions or who are just trying to make a quick 
+   buck from publishing apps based on MMF. For example an app that looks like MMF but 
+   contains malware, or an app that is just like MMF except that when you buy a license 
+   someone other than me gets paid.
+2. To allow everyone else who doesn't have malicious intentions to do anything they 
+   like with the MMF source code, including reusing it in their own projects, and 
+   monetizing it however they like.
+
+I want it to be Open Source in spirit but with some protections against bad actors, 
+which I think might be important now that MMF is monetized.
 
 If you know something about copyright, I'd love to hear your feedback on whether 
 the license as I formulated it fullfills these goals.
