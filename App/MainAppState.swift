@@ -67,13 +67,13 @@ import ReactiveSwift
     
     /// Main interface
     
-    @objc func enable() throws {
-        var error: NSError?
-        HelperServices.enableHelper(asUserAgent: true, error: &error)
-        if error != nil { throw error! }
+    @objc func enable(onComplete: ((NSError?) -> Void)?) {
+        HelperServices.enableHelperAsUserAgent(true) { swiftError in
+            onComplete?(swiftError as NSError?) /// Swift converts the NSError that `.enableHelperAsUserAgent` returns to it's onComplete arg to some weird abstract Swift error, so we have to cast it back here. Swift is sooooo annoying I swear to god.
+        }
     }
     @objc func disable() {
-        HelperServices.enableHelper(asUserAgent: false, error: nil)
+        HelperServices.enableHelperAsUserAgent(false, onComplete: nil)
         observer.send(value: false)
     }
     func isEnabled() -> Bool {

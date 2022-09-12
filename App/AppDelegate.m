@@ -182,9 +182,9 @@ static NSDictionary *sideButtonActions;
     NSInteger launchesOverall;
     NSInteger launchesOfCurrentBundleVersion;
     
-    launchesOverall = [config(@"Other.launchesOverall") integerValue];
-    launchesOfCurrentBundleVersion = [config(@"Other.launchesOfCurrentBundleVersion") integerValue];
-    NSInteger lastLaunchedBundleVersion = [config(@"Other.lastLaunchedBundleVersion") integerValue];
+    launchesOverall = [(id)config(@"Other.launchesOverall") integerValue];
+    launchesOfCurrentBundleVersion = [(id)config(@"Other.launchesOfCurrentBundleVersion") integerValue];
+    NSInteger lastLaunchedBundleVersion = [(id)config(@"Other.lastLaunchedBundleVersion") integerValue];
     NSInteger currentBundleVersion = Locator.bundleVersion;
     
     launchesOverall += 1;

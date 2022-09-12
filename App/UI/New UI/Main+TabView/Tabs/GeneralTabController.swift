@@ -74,22 +74,25 @@ class GeneralTabController: NSViewController {
         let onToggle = { doEnable in
             self.enableToggle.intValue = self.enableToggle.intValue == 0 ? 1 : 0
             if doEnable {
-                do {
-                    try EnabledState.shared.enable()
-                } catch {
+                
+                EnabledState.shared.enable(onComplete: { error in
+                    
+                    guard let error = error else { return }
+                    
                     if #available(macOS 13.0, *) {
                         if (error as NSError).code == 1 {
-                            do {
-                                let messageRaw = NSLocalizedString("is-disabled-toast", comment: "First draft: Mac Mouse Fix was **disabled** in System Settings.\nTo enable Mac Mouse Fix:\n\n1. Go to [Login Items Settings](x-apple.systempreferences:com.apple.LoginItems-Settings.extension)\n2. Switch on \'Mac Mouse Fix.app\'")
-                                let message = NSMutableAttributedString(coolMarkdown: messageRaw)
-                                
+                            let messageRaw = NSLocalizedString("is-disabled-toast", comment: "First draft: Mac Mouse Fix was **disabled** in System Settings.\nTo enable Mac Mouse Fix:\n\n1. Go to [Login Items Settings](x-apple.systempreferences:com.apple.LoginItems-Settings.extension)\n2. Switch on \'Mac Mouse Fix.app\'")
+                            let message = NSMutableAttributedString(coolMarkdown: messageRaw)
+                            
+                            DispatchQueue.main.async { /// UI stuff needs to be called from the main thread
                                 if let window = NSApp.mainWindow, let message = message {
                                     ToastNotificationController.attachNotification(withMessage: message, to: window, forDuration: -1.0)
                                 }
-                            } catch {}
+                            }
                         }
                     }
-                }
+                })
+                
             } else { /// !doEnabled
                 EnabledState.shared.disable()
             }

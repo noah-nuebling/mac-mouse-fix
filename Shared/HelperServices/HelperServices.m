@@ -58,7 +58,7 @@
     ///     Just filed a ticket Apple.
     ///     For now we'll just turn this functionality off. If it never gets resolved by Apple, we can use weird hacks. Basically, could set a disabledByHelper flag in the config.plist, and then use use `launchctl remove` now to kill the helper and whenever it tries to start up again. Then the next time we start the mainApp, we'll actually properly unregister the helper.
     
-    [self enableHelperAsUserAgent:NO error:nil];
+    [self enableHelperAsUserAgent:NO onComplete:nil];
 }
 
 #pragma mark - Main interface

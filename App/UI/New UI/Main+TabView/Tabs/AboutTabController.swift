@@ -41,7 +41,7 @@ class AboutTabController: NSViewController {
         
         /// Set up versionField
         
-        versionField.stringValue = "\(Utility_App.bundleVersionShort()) (\(Utility_App.bundleVersion()))"
+        versionField.stringValue = "\(Locator.bundleVersionShort()) (\(Locator.bundleVersion()))"
         
         /// Init trialSectionManager
         ///     The manager swaps out the trialSection and stuff, so always access the trialSection through the manager!
