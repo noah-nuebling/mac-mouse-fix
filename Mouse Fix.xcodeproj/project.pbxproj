@@ -7,8 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		160FE96502E6611153781AD3 /* Pods_Mac_Mouse_Fix.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F4A368D25EEB295D9EEF4059 /* Pods_Mac_Mouse_Fix.framework */; };
+		21ACBC0538C824969457D2C8 /* libPods-Mac Mouse Fix Accomplice.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AEDA4A9E543963C3C6671303 /* libPods-Mac Mouse Fix Accomplice.a */; };
 		26741110F3F9E2DAEDD3279A /* libPods-Mac Mouse Fix Accomplice.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9035471CA1531768F940DEFA /* libPods-Mac Mouse Fix Accomplice.a */; };
 		2D937827717D64CDBCC2C443 /* Pods_Mac_Mouse_Fix.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 24A19E04F97ECEF36516F04A /* Pods_Mac_Mouse_Fix.framework */; };
+		3D4961AD668EC4AC52F3298C /* Pods_Mac_Mouse_Fix_Helper.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7E1D2916B54B23970D6884EC /* Pods_Mac_Mouse_Fix_Helper.framework */; };
 		4F02C71D2899448900ED0AA8 /* OutputCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F02C71C2899448900ED0AA8 /* OutputCoordinator.swift */; };
 		4F09283F28B8101600BDC2FF /* TrialSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F09283E28B8101600BDC2FF /* TrialSection.swift */; };
 		4F09284028B8101600BDC2FF /* TrialSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F09283E28B8101600BDC2FF /* TrialSection.swift */; };
@@ -321,6 +324,8 @@
 		4FFA4E4A28B7D3750062A1FE /* NSView+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F909D0428A0C3D2009349A2 /* NSView+Extensions.swift */; };
 		4FFBC5A8266977CA001D389B /* DoubleExponentialSmoother.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FFBC5A7266977CA001D389B /* DoubleExponentialSmoother.swift */; };
 		80457D1CE643F8D503131D96 /* Pods_Mac_Mouse_Fix_Helper.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5E09D0DF45AFAF30A568B97D /* Pods_Mac_Mouse_Fix_Helper.framework */; };
+		814D2D82A61503E2442EC77B /* Pods_Mac_Mouse_FixTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 01612C2A171C1FCC68BC27F4 /* Pods_Mac_Mouse_FixTests.framework */; };
+		ABF9F23623C56873C58F1868 /* Pods_Mac_Mouse_Fix_Mac_Mouse_FixUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 12F34CDA62B242A51B9469F0 /* Pods_Mac_Mouse_Fix_Mac_Mouse_FixUITests.framework */; };
 		B6D5363E56CF13634EB5BD57 /* Pods_Mac_Mouse_Fix_Mac_Mouse_FixUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D8699EFC1F3CB6B37A1522D /* Pods_Mac_Mouse_Fix_Mac_Mouse_FixUITests.framework */; };
 		DFE8DFB9E6824183882FB0DB /* Pods_Mac_Mouse_FixTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4954E06256CFC3F8A8310EEA /* Pods_Mac_Mouse_FixTests.framework */; };
 /* End PBXBuildFile section */
@@ -414,7 +419,9 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		01612C2A171C1FCC68BC27F4 /* Pods_Mac_Mouse_FixTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Mac_Mouse_FixTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		0D9BE06E61FEE777A76EEE5A /* Pods-Mac Mouse Fix Helper.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Mac Mouse Fix Helper.debug.xcconfig"; path = "Target Support Files/Pods-Mac Mouse Fix Helper/Pods-Mac Mouse Fix Helper.debug.xcconfig"; sourceTree = "<group>"; };
+		12F34CDA62B242A51B9469F0 /* Pods_Mac_Mouse_Fix_Mac_Mouse_FixUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Mac_Mouse_Fix_Mac_Mouse_FixUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		1D8699EFC1F3CB6B37A1522D /* Pods_Mac_Mouse_Fix_Mac_Mouse_FixUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Mac_Mouse_Fix_Mac_Mouse_FixUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		24A19E04F97ECEF36516F04A /* Pods_Mac_Mouse_Fix.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Mac_Mouse_Fix.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		287623BA43DEEFBB97312539 /* Pods-Mac Mouse Fix Helper.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Mac Mouse Fix Helper.release.xcconfig"; path = "Target Support Files/Pods-Mac Mouse Fix Helper/Pods-Mac Mouse Fix Helper.release.xcconfig"; sourceTree = "<group>"; };
@@ -844,9 +851,12 @@
 		5E09D0DF45AFAF30A568B97D /* Pods_Mac_Mouse_Fix_Helper.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Mac_Mouse_Fix_Helper.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		5F3794C77F51E425DA194652 /* Pods-Mac Mouse Fix Accomplice.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Mac Mouse Fix Accomplice.debug.xcconfig"; path = "Target Support Files/Pods-Mac Mouse Fix Accomplice/Pods-Mac Mouse Fix Accomplice.debug.xcconfig"; sourceTree = "<group>"; };
 		62C21AA942E45207518BDA62 /* Pods-Mac Mouse Fix-Mac Mouse FixUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Mac Mouse Fix-Mac Mouse FixUITests.release.xcconfig"; path = "Target Support Files/Pods-Mac Mouse Fix-Mac Mouse FixUITests/Pods-Mac Mouse Fix-Mac Mouse FixUITests.release.xcconfig"; sourceTree = "<group>"; };
+		7E1D2916B54B23970D6884EC /* Pods_Mac_Mouse_Fix_Helper.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Mac_Mouse_Fix_Helper.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		9035471CA1531768F940DEFA /* libPods-Mac Mouse Fix Accomplice.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Mac Mouse Fix Accomplice.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		AEDA4A9E543963C3C6671303 /* libPods-Mac Mouse Fix Accomplice.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Mac Mouse Fix Accomplice.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		B46C8B4489AC5B58EAA64F23 /* Pods-Mac Mouse Fix Accomplice.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Mac Mouse Fix Accomplice.release.xcconfig"; path = "Target Support Files/Pods-Mac Mouse Fix Accomplice/Pods-Mac Mouse Fix Accomplice.release.xcconfig"; sourceTree = "<group>"; };
 		EB486BF75A524261E2826AD5 /* Pods-Mac Mouse Fix-Mac Mouse FixUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Mac Mouse Fix-Mac Mouse FixUITests.debug.xcconfig"; path = "Target Support Files/Pods-Mac Mouse Fix-Mac Mouse FixUITests/Pods-Mac Mouse Fix-Mac Mouse FixUITests.debug.xcconfig"; sourceTree = "<group>"; };
+		F4A368D25EEB295D9EEF4059 /* Pods_Mac_Mouse_Fix.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Mac_Mouse_Fix.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -857,6 +867,7 @@
 				4FEB660B279350F900E6A111 /* CocoaLumberjack in Frameworks */,
 				26741110F3F9E2DAEDD3279A /* libPods-Mac Mouse Fix Accomplice.a in Frameworks */,
 				4FEB660D279350FD00E6A111 /* CocoaLumberjackSwift in Frameworks */,
+				21ACBC0538C824969457D2C8 /* libPods-Mac Mouse Fix Accomplice.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -875,6 +886,7 @@
 				4FDECCDA28A3A37800DDEE91 /* Sparkle.framework in Frameworks */,
 				2D937827717D64CDBCC2C443 /* Pods_Mac_Mouse_Fix.framework in Frameworks */,
 				4FEB66152793510F00E6A111 /* CocoaLumberjackSwift in Frameworks */,
+				160FE96502E6611153781AD3 /* Pods_Mac_Mouse_Fix.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -883,6 +895,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				DFE8DFB9E6824183882FB0DB /* Pods_Mac_Mouse_FixTests.framework in Frameworks */,
+				814D2D82A61503E2442EC77B /* Pods_Mac_Mouse_FixTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -891,6 +904,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				B6D5363E56CF13634EB5BD57 /* Pods_Mac_Mouse_Fix_Mac_Mouse_FixUITests.framework in Frameworks */,
+				ABF9F23623C56873C58F1868 /* Pods_Mac_Mouse_Fix_Mac_Mouse_FixUITests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -904,6 +918,7 @@
 				4F7F47CE28A5B5EC00290BBD /* ReactiveSwift in Frameworks */,
 				80457D1CE643F8D503131D96 /* Pods_Mac_Mouse_Fix_Helper.framework in Frameworks */,
 				4FEB66112793510800E6A111 /* CocoaLumberjackSwift in Frameworks */,
+				3D4961AD668EC4AC52F3298C /* Pods_Mac_Mouse_Fix_Helper.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1595,6 +1610,11 @@
 				4FDECCD628A3A37800DDEE91 /* ZipArchive.framework */,
 				4FDECCD728A3A37800DDEE91 /* Sparkle.framework */,
 				4FDECCD828A3A37800DDEE91 /* README.md */,
+				F4A368D25EEB295D9EEF4059 /* Pods_Mac_Mouse_Fix.framework */,
+				AEDA4A9E543963C3C6671303 /* libPods-Mac Mouse Fix Accomplice.a */,
+				7E1D2916B54B23970D6884EC /* Pods_Mac_Mouse_Fix_Helper.framework */,
+				12F34CDA62B242A51B9469F0 /* Pods_Mac_Mouse_Fix_Mac_Mouse_FixUITests.framework */,
+				01612C2A171C1FCC68BC27F4 /* Pods_Mac_Mouse_FixTests.framework */,
 			);
 			path = Frameworks;
 			sourceTree = "<group>";
@@ -2369,7 +2389,7 @@
 			);
 			mainGroup = 4FCECD7721092354001F1078;
 			packageReferences = (
-				4F1757BB2675955B009FCB47 /* XCRemoteSwiftPackageReference "CocoaLumberjack" */,
+				4F1757BB2675955B009FCB47 /* XCRemoteSwiftPackageReference "CocoaLumberjack.git" */,
 				4F909D4F28A0C6F3009349A2 /* XCRemoteSwiftPackageReference "SnapKit" */,
 				4FA40CED28A0CA0A00499E53 /* XCRemoteSwiftPackageReference "ReactiveSwift" */,
 				4FA40CF028A0CA3900499E53 /* XCRemoteSwiftPackageReference "ReactiveCocoa" */,
@@ -3533,7 +3553,7 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		4F1757BB2675955B009FCB47 /* XCRemoteSwiftPackageReference "CocoaLumberjack" */ = {
+		4F1757BB2675955B009FCB47 /* XCRemoteSwiftPackageReference "CocoaLumberjack.git" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/CocoaLumberjack/CocoaLumberjack.git";
 			requirement = {
@@ -3613,32 +3633,32 @@
 		};
 		4FEB660A279350F900E6A111 /* CocoaLumberjack */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 4F1757BB2675955B009FCB47 /* XCRemoteSwiftPackageReference "CocoaLumberjack" */;
+			package = 4F1757BB2675955B009FCB47 /* XCRemoteSwiftPackageReference "CocoaLumberjack.git" */;
 			productName = CocoaLumberjack;
 		};
 		4FEB660C279350FD00E6A111 /* CocoaLumberjackSwift */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 4F1757BB2675955B009FCB47 /* XCRemoteSwiftPackageReference "CocoaLumberjack" */;
+			package = 4F1757BB2675955B009FCB47 /* XCRemoteSwiftPackageReference "CocoaLumberjack.git" */;
 			productName = CocoaLumberjackSwift;
 		};
 		4FEB660E2793510300E6A111 /* CocoaLumberjack */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 4F1757BB2675955B009FCB47 /* XCRemoteSwiftPackageReference "CocoaLumberjack" */;
+			package = 4F1757BB2675955B009FCB47 /* XCRemoteSwiftPackageReference "CocoaLumberjack.git" */;
 			productName = CocoaLumberjack;
 		};
 		4FEB66102793510800E6A111 /* CocoaLumberjackSwift */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 4F1757BB2675955B009FCB47 /* XCRemoteSwiftPackageReference "CocoaLumberjack" */;
+			package = 4F1757BB2675955B009FCB47 /* XCRemoteSwiftPackageReference "CocoaLumberjack.git" */;
 			productName = CocoaLumberjackSwift;
 		};
 		4FEB66122793510C00E6A111 /* CocoaLumberjack */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 4F1757BB2675955B009FCB47 /* XCRemoteSwiftPackageReference "CocoaLumberjack" */;
+			package = 4F1757BB2675955B009FCB47 /* XCRemoteSwiftPackageReference "CocoaLumberjack.git" */;
 			productName = CocoaLumberjack;
 		};
 		4FEB66142793510F00E6A111 /* CocoaLumberjackSwift */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 4F1757BB2675955B009FCB47 /* XCRemoteSwiftPackageReference "CocoaLumberjack" */;
+			package = 4F1757BB2675955B009FCB47 /* XCRemoteSwiftPackageReference "CocoaLumberjack.git" */;
 			productName = CocoaLumberjackSwift;
 		};
 /* End XCSwiftPackageProductDependency section */
