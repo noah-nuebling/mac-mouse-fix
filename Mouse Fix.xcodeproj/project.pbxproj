@@ -2389,7 +2389,7 @@
 			);
 			mainGroup = 4FCECD7721092354001F1078;
 			packageReferences = (
-				4F1757BB2675955B009FCB47 /* XCRemoteSwiftPackageReference "CocoaLumberjack.git" */,
+				4F1757BB2675955B009FCB47 /* XCRemoteSwiftPackageReference "CocoaLumberjack" */,
 				4F909D4F28A0C6F3009349A2 /* XCRemoteSwiftPackageReference "SnapKit" */,
 				4FA40CED28A0CA0A00499E53 /* XCRemoteSwiftPackageReference "ReactiveSwift" */,
 				4FA40CF028A0CA3900499E53 /* XCRemoteSwiftPackageReference "ReactiveCocoa" */,
@@ -3049,8 +3049,9 @@
 				MACOSX_DEPLOYMENT_TARGET = 10.13;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.nuebling.mac-mouse-fix.accomplice";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.nuebling.mac-mouse-fixxx.accomplice";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 			};
@@ -3080,8 +3081,9 @@
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.13;
 				MTL_FAST_MATH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.nuebling.mac-mouse-fix.accomplice";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.nuebling.mac-mouse-fixxx.accomplice";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
 				SWIFT_VERSION = 5.0;
 			};
 			name = Release;
@@ -3118,7 +3120,7 @@
 				MARKETING_VERSION = "3.0.0 Beta 1";
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.nuebling.mac-mouse-fix";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.nuebling.mac-mouse-fixxx";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) IS_MAIN_APP";
@@ -3157,7 +3159,7 @@
 				MACOSX_DEPLOYMENT_TARGET = 10.13;
 				MARKETING_VERSION = "3.0.0 Beta 1";
 				MTL_FAST_MATH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.nuebling.mac-mouse-fix";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.nuebling.mac-mouse-fixxx";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) IS_MAIN_APP";
@@ -3438,9 +3440,10 @@
 					"$(PROJECT_DIR)/Helper/Utility/Math/PolynomialRegression/numpy/random/lib",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.13;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.nuebling.mac-mouse-fix.helper";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.nuebling.mac-mouse-fixxx.helper";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
+				SKIP_INSTALL = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) IS_HELPER";
 				SWIFT_OBJC_BRIDGING_HEADER = "Helper/SupportFiles/Mac Mouse Fix Helper-Bridging-Header.h";
 				SWIFT_PRECOMPILE_BRIDGING_HEADER = YES;
@@ -3483,9 +3486,10 @@
 					"$(PROJECT_DIR)/Helper/Utility/Math/PolynomialRegression/numpy/random/lib",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.13;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.nuebling.mac-mouse-fix.helper";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.nuebling.mac-mouse-fixxx.helper";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
+				SKIP_INSTALL = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) IS_HELPER";
 				SWIFT_OBJC_BRIDGING_HEADER = "Helper/SupportFiles/Mac Mouse Fix Helper-Bridging-Header.h";
 				SWIFT_PRECOMPILE_BRIDGING_HEADER = YES;
@@ -3553,7 +3557,7 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		4F1757BB2675955B009FCB47 /* XCRemoteSwiftPackageReference "CocoaLumberjack.git" */ = {
+		4F1757BB2675955B009FCB47 /* XCRemoteSwiftPackageReference "CocoaLumberjack" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/CocoaLumberjack/CocoaLumberjack.git";
 			requirement = {
@@ -3633,32 +3637,32 @@
 		};
 		4FEB660A279350F900E6A111 /* CocoaLumberjack */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 4F1757BB2675955B009FCB47 /* XCRemoteSwiftPackageReference "CocoaLumberjack.git" */;
+			package = 4F1757BB2675955B009FCB47 /* XCRemoteSwiftPackageReference "CocoaLumberjack" */;
 			productName = CocoaLumberjack;
 		};
 		4FEB660C279350FD00E6A111 /* CocoaLumberjackSwift */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 4F1757BB2675955B009FCB47 /* XCRemoteSwiftPackageReference "CocoaLumberjack.git" */;
+			package = 4F1757BB2675955B009FCB47 /* XCRemoteSwiftPackageReference "CocoaLumberjack" */;
 			productName = CocoaLumberjackSwift;
 		};
 		4FEB660E2793510300E6A111 /* CocoaLumberjack */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 4F1757BB2675955B009FCB47 /* XCRemoteSwiftPackageReference "CocoaLumberjack.git" */;
+			package = 4F1757BB2675955B009FCB47 /* XCRemoteSwiftPackageReference "CocoaLumberjack" */;
 			productName = CocoaLumberjack;
 		};
 		4FEB66102793510800E6A111 /* CocoaLumberjackSwift */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 4F1757BB2675955B009FCB47 /* XCRemoteSwiftPackageReference "CocoaLumberjack.git" */;
+			package = 4F1757BB2675955B009FCB47 /* XCRemoteSwiftPackageReference "CocoaLumberjack" */;
 			productName = CocoaLumberjackSwift;
 		};
 		4FEB66122793510C00E6A111 /* CocoaLumberjack */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 4F1757BB2675955B009FCB47 /* XCRemoteSwiftPackageReference "CocoaLumberjack.git" */;
+			package = 4F1757BB2675955B009FCB47 /* XCRemoteSwiftPackageReference "CocoaLumberjack" */;
 			productName = CocoaLumberjack;
 		};
 		4FEB66142793510F00E6A111 /* CocoaLumberjackSwift */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 4F1757BB2675955B009FCB47 /* XCRemoteSwiftPackageReference "CocoaLumberjack.git" */;
+			package = 4F1757BB2675955B009FCB47 /* XCRemoteSwiftPackageReference "CocoaLumberjack" */;
 			productName = CocoaLumberjackSwift;
 		};
 /* End XCSwiftPackageProductDependency section */
