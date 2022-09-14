@@ -53,7 +53,5 @@ on publishing apps compiled from the source code.
 If you know something about copyright, I'd love to hear your feedback on whether 
 the license as I formulated it fullfills these goals or how to improve it!
 
-TODO: The version-3 branch currently contains the KingIsulgard/iOS-Polynomial-Regression source 
-      code licensed under GPL. GPL doesn't allow other licenses to be used. I asked the author for 
-      permission here: https://github.com/KingIsulgard/iOS-Polynomial-Regression/issues/6. If they don't 
-      give permission, removed the library.
+TODO: The version-3 branch contains the KingIsulgard/iOS-Polynomial-Regression source 
+      code licensed under GPL. GPL doesn't allow other licenses to be used. But the author gave me permission here https://github.com/KingIsulgard/iOS-Polynomial-Regression/issues/6.
