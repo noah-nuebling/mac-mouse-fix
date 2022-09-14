@@ -6,6 +6,175 @@
     <description>Prereleases of Mac Mouse Fix</description>
     <language>en</language>
         <item>
+        <title>3.0.0 Beta 2 available!</title>
+        <pubDate>2022-09-14T12:19:48Z</pubDate>
+        <sparkle:minimumSystemVersion>10.13</sparkle:minimumSystemVersion>
+        <description><![CDATA[
+            <!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>-</title>
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    span.underline{text-decoration: underline;}
+    div.column{display: inline-block; vertical-align: top; width: 50%;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+  </style>
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
+  
+
+  <style>
+
+      /* Following this tutorial: https://devilgate.org/blog/2012/07/02/tip-using-pandoc-to-create-truly-standalone-html-files/ */
+
+      :root {
+          font-size: 10px; /* 1 rem is this much */
+          padding: 0 0 0 0;
+      }
+
+      body {
+          background-color: transparent;
+          margin: 0 1.2rem 2.0rem 1.2rem;
+          padding: 0;
+          font-family: -apple-system;
+          font-size: 1.3rem;
+
+          line-height: 1.15em;
+      }
+
+      h1, h2, h3, h4, h5, h6 {
+          line-height: 1.15em;
+      }
+
+      h1:after, h2:after {
+          content:' ';
+          display: block;
+          border: 0.5px solid rgba(0, 0, 0, 0.12);
+      }
+      h1:after {
+          margin: 0.6rem 0 0 0;
+      }
+      h2:after {
+          margin: 0.4rem 0 0 0;
+      }
+
+      h1 {
+          font-size: 2.2rem;
+          margin: 2.2rem 0 1.3rem -0.0rem;
+      }
+
+      h2 {
+          font-size: 1.7rem;
+          margin: 2.0rem 0 1.7rem -0.0rem;
+      }
+
+      h3 {
+          font-size: 1.3rem;
+          margin: 1.5rem 0 0.0rem -0.0rem;
+      }
+
+      p {
+          margin: 1.1rem 0 1.1rem 0;
+          font-size: 1.1rem;
+      }
+
+      ul {
+          padding: 0 0 0 1.5rem;
+          margin: 1.0rem 0 1.0rem 0.5rem;
+      }
+      ul ul {
+          margin: 0.6rem 0 -0.6rem 0;
+          padding: 0 0 0 2.1rem;
+      }
+
+      li {
+          padding: 0 0 0.6rem 0;
+
+          font-size: 1.1rem;
+      }
+      .annotation {
+          font-size: 1.1rem;
+      }
+      img {
+          max-width: 100%;
+          height: auto;
+          
+          border-radius: 1.0rem;
+          box-shadow: 0 0.2rem 0.4rem 0.0rem rgba(0, 0, 0, 0.15), 0 0.2rem 1.7rem 0.0rem rgba(0, 0, 0, 0.15);
+
+          display: block;
+          margin: 1.4rem auto 1.8rem auto;
+      }
+
+      hr {
+          height: 0px;
+          border: none;
+          border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+          border-color:rgba(0, 0, 0, 0.12);
+
+          margin: 1.7rem 0 1.7rem 0;
+      }
+
+      @media (prefers-color-scheme: light) {
+
+          h1 {
+              color: #272727;
+          }
+
+          a {
+              color: #0948be;
+          }
+      }
+
+      @media (prefers-color-scheme: dark) {
+
+          body {
+              background-color: #1e1e1e; 
+              /* ^ Sparkle background is still bright when we have `background-color: transparent` even with darkmode active. 
+                  This is the color of the text field background in Apple Mail on macOS 11 BigSur */
+
+              color: #D9D9D9; /* For headers */
+          }
+
+          li, p {
+              color:#FFFFFF;
+          }
+          a {
+              color: #3586FF;
+          }
+      }
+
+  </style>
+</head>
+<body>
+<p>Also check out the <strong>cool stuff</strong> introduced in <a href="https://github.com/noah-nuebling/mac-mouse-fix/releases/tag/3.0.0-Beta-1">Beta 1</a>!</p>
+<hr />
+<h3 id="changes-in-beta-2">Changes in Beta 2</h3>
+<ul>
+<li>Fixed an issue where Mac Mouse Fix wouldn’t open on most computers due to some issues with Apple’s Security Mechanisms. Should fix Issue <a href="https://github.com/noah-nuebling/mac-mouse-fix/issues/369">#369</a>.</li>
+</ul>
+</body>
+</html>
+
+        ]]>
+        </description>
+        <enclosure
+            url="https://github.com/noah-nuebling/mac-mouse-fix/releases/download/3.0.0-Beta-2/MacMouseFixApp.zip"
+            sparkle:version="18409"
+            sparkle:shortVersionString="3.0.0 Beta 2"
+            sparkle:edSignature="6tFDOMU6Vl7Mu7QtCXvWP3hL4m/p8dWYOIqEuJ4H8n3p3se6FcNDLpKzhld4X/3DjrS5XbpMmHtKlBfEH6RHDg==" length="14354123"
+            type="application/octet-stream"
+        />
+    </item>
+    <item>
         <title>3.0.0 Beta 1 available!</title>
         <pubDate>2022-09-12T00:26:44Z</pubDate>
         <sparkle:minimumSystemVersion>10.13</sparkle:minimumSystemVersion>
@@ -156,8 +325,8 @@
 </head>
 <body>
 <p><strong>3.0.0</strong> is the <strong>biggest update</strong> to Mac Mouse Fix so far!</p>
-<p>Bringing together many features that I’ve worked on for a long time to finally deliver this <strong>incredible value proposal</strong>:</p>
-<p><strong>Make your $10 mouse as good as an Apple Trackpad!</strong></p>
+<p>Bringing together many features that I’ve worked on for a long time to finally deliver this awesome <strong>value proposal</strong>:</p>
+<p><strong>Make your $10 mouse as good as an Apple Trackpad.</strong></p>
 <p>And you can <strong>test it now</strong>! I’m really excited to hear your guys’ feedback!</p>
 <p>Here is <strong>everything that’s new</strong>:</p>
 <h2 id="click-and-drag-to-scroll">1. Click and Drag to Scroll</h2>
@@ -190,7 +359,7 @@
 <li><strong>Always-On Precise Scrolling</strong> lets you scroll precisely even without holding down a modifier key by moving the scroll wheel slowly.</li>
 <li><strong>Horizontal Scroll Input</strong> from your mouse is no longer ignored, but instead it’s smoothed and inverted just like normal vertical scroll input. If your mouse has a <strong>tilt wheel</strong> or a <strong>horizontal scroll wheel</strong> it should feel much nicer now.</li>
 <li>The <strong>Scroll Direction Invert Settings</strong> are now independent of the System Settings allowing for a less complicated UI.</li>
-<li><strong>Scroll settings</strong> can now be <strong>combined</strong> more freely. For example, you can use <strong>Mac Mouse Fix’s</strong> Scroll Speed even when Smooth Scrolling is <strong>disabled</strong>. Or you can use <strong>macOS’s</strong> Scroll Speed when Smooth Scrolling is <strong>enabled</strong>. (Note: I think macOS’ Scroll Speed is quite bad and I can’t think of reasons why anyone would prefer it. So if you do prefer it I’d be very interested to learn more about your experience! You can reach out through the “<strong>ⓘ About</strong>” Tab.)</li>
+<li><strong>Scroll settings</strong> can now be <strong>combined</strong> more freely. For example, you can use <strong>Mac Mouse Fix’s</strong> Scroll Speed even when Smooth Scrolling is <strong>disabled</strong>. Or you can use <strong>macOS’s</strong> Scroll Speed when Smooth Scrolling is <strong>enabled</strong>. (Note: I personally don’t like macOS’ Scroll Speed at all and I can’t think of reasons why anyone would prefer it. So if you do prefer it I’d be very interested to learn more about your experience! You can reach out through the “<strong>ⓘ About</strong>” Tab.)</li>
 </ol>
 <h2 id="menu-bar-item">5. Menu Bar Item</h2>
 <p>Mac Mouse Fix now has a <strong>Menu Bar Item</strong> so you can always see when it’s enabled!</p>
@@ -205,7 +374,7 @@
 <li>App-Specific Settings had many limitations like they didn’t allow you to <strong>turn off buttons</strong> entirely, which was a problem for many gamers.</li>
 </ul>
 <p>Another thing to consider is that the old App-Specific Settings were originally <strong>designed as a bandaid</strong> for some apps being incompatible with the old scrolling system. But now, with the new scrolling system precisely emulating Touch Scrolls coming from an Apple Trackpad, most of these incompatibilities should be <strong>fixed anyways</strong>! So there should be less of a need for what the old App-Specific Settings were best at.</p>
-<p>I hope that makes sense. Let me know your <strong>thoughts</strong>!</p>
+<p>I hope everone is okay with that! Let me know your <strong>thoughts</strong>!</p>
 <h2 id="ui-overhaul">7. UI Overhaul</h2>
 <p>I’ve completely <strong>rewritten the UI</strong> to be more <strong>beautiful</strong> and <strong>powerful</strong> while still retaining the <strong>simplicity</strong> and <strong>ease of use</strong> that people love about Mac Mouse Fix.</p>
 <p>Here’s what’s new:</p>
@@ -234,7 +403,7 @@
 <p><strong>Will Mac Mouse Fix still be Open Source?</strong></p>
 <p>Yes. Mac Mouse Fix will still be open source, and I don’t plan to change that at any point.</p>
 <p>This also means you <em>can</em> use Mac Mouse Fix for free by building it from source and disabling the licensing checks. That’s perfectly fine, I just discourage sharing these cracked versions online. And of course, on the next update, you’ll get a non-cracked version which means you’ll have to do this again for every update. (Or just pay $1.99 for the greatest mouse driver ever! :)</p>
-<p>Anyone will also still be able to use source code from Mac Mouse Fix in their free and commercial products as long as they don’t just copy Mac Mouse Fix without adding their own contribution.</p>
+<p>Anyone will also still be able to use source code from Mac Mouse Fix in their free and commercial products as long as they don’t just sell a copy of Mac Mouse Fix without adding their own contribution.</p>
 <p>Learn about the details in the new <a href="https://github.com/noah-nuebling/mac-mouse-fix/blob/version-3/LICENSE">MMF License</a> which MMF 3 will be licensed under.</p>
 <p><strong>Will I have to pay to use the Mac Mouse Fix 3 Beta?</strong></p>
 <p>No. You can just use your 30 free days. The free day counter probably won’t reset when the stable version of Mac Mouse Fix 3 releases, since that would be extra stuff to design and implement and I don’t think anyone will care too much. (Let me know if you do). But I will extend the number of free days if the beta goes on for more than 30 days.</p>
