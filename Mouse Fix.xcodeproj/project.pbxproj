@@ -3112,12 +3112,13 @@
 					"IS_MAIN_APP=1",
 				);
 				INFOPLIST_FILE = App/SupportFiles/Info.plist;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.13;
-				MARKETING_VERSION = "3.0.0 Beta 1";
+				MARKETING_VERSION = "3.0.0 Beta 2";
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.nuebling.mac-mouse-fixxx";
@@ -3152,12 +3153,13 @@
 					"IS_MAIN_APP=1",
 				);
 				INFOPLIST_FILE = App/SupportFiles/Info.plist;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.13;
-				MARKETING_VERSION = "3.0.0 Beta 1";
+				MARKETING_VERSION = "3.0.0 Beta 2";
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.nuebling.mac-mouse-fixxx";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -3429,6 +3431,7 @@
 					"IS_HELPER=1",
 				);
 				INFOPLIST_FILE = Helper/SupportFiles/Info.plist;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
@@ -3475,6 +3478,7 @@
 					"IS_HELPER=1",
 				);
 				INFOPLIST_FILE = Helper/SupportFiles/Info.plist;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
