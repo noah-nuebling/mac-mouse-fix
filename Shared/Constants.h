@@ -13,7 +13,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface Constants : NSObject
 
-// Input processing
+/// Input processing
 
 typedef enum {
     kMFAxisNone,
@@ -21,10 +21,11 @@ typedef enum {
     kMFAxisVertical,
 } MFAxis;
 
-// Bundles and Bezelservices
+/// Bundles and Bezelservices
 
-#define kMFBundleIDApp      @"com.nuebling.mac-mouse-fix"
-#define kMFBundleIDHelper   @"com.nuebling.mac-mouse-fix.helper"
+/// Added some x's to the bundleID. See notes.md for context.
+#define kMFBundleIDApp      @"com.nuebling.mac-mouse-fixxx"
+#define kMFBundleIDHelper   @"com.nuebling.mac-mouse-fixxx.helper"
 
 #define kMFRelativeAccomplicePath           @"Contents/Library/LaunchServices/Mac Mouse Fix Accomplice"
 #define kMFRelativeHelperAppPath            @"Contents/Library/LoginItems/Mac Mouse Fix Helper.app"
@@ -40,53 +41,53 @@ typedef enum {
 
 #define kMFLaunchdHelperIdentifier  @"mouse.fix.helper" /// Should rename to `kMFLaunchdHelperLabel`
 /// ^ Keep this in sync with `Label` value in `default_launchd.plist`
-/// ^ The old value @"mouse.fix.helper" was also used with the old prefpane version which could lead to conflicts. See Mail beginning with 'I attached the system log. Happening with this version too'. Edit: We moved back to the old `mouse.fix.helper` label for the app version of Mac Mouse Fix. Reasoning:
+/// ^ The old value "mouse.fix.helper" was also used with the old prefpane version which could lead to conflicts. See Mail beginning with 'I attached the system log. Happening with this version too'. Edit: We moved back to the old `mouse.fix.helper` label for the app version of Mac Mouse Fix. Reasoning:
 ///      We meant to move the launchd label over to a new one to avoid conlicts when upgrading from the old prefpane, but I think it can actually lead to more complications. Also we'd fragment things, because the first few versions of the app version already shipped with the old "mouse.fix.helper" label.
 
 #define kMFLaunchdHelperIdentifierSM  @"com.nuebling.mac-mouse-fix.helper"
-///      We finally moved to this new label when moving to the new Service Management API for enabling the Helper as background task for Ventura.
-///      We experienced strange issues when using the old label, so we're giving this new one a try.
-///      Keep this in sync with `sm_launchd.plist`.
+/// ^ Keep this in sync with `sm_launchd.plist`
+/// ^ We finally moved to this new label when moving to the new Service Management API for enabling the Helper as background task for Ventura.
+/// We experienced strange issues when using the old label, so we're giving this new one a try.
 
 #define kMFLaunchctlPath            @"/bin/launchctl"
 #define kMFXattrPath                @"/usr/bin/xattr"
 #define kMFOpenCLTPath              @"/usr/bin/open"
 
 
-// Accomplice Arguments
+/// Accomplice Arguments
 
 #define kMFAccompliceModeUpdate         @"update"
 #define kMFAccompliceModeReloadHelper   @"reloadHelper"
 
-// Message dict keys
+/// Message dict keys
 
 #define kMFMessageKeyMessage    @"message"
 #define kMFMessageKeyPayload    @"payload"
 
-// Other AddMode keys (more below)
+/// Other AddMode keys (more below)
 #define kMFAddModeModificationPrecondition  @"addModeModifier"
 
-// Website
+/// Website
 
-#define kMFWebsiteAddress  @"https://noah-nuebling.github.io/mac-mouse-fix-website" //@"https://mousefix.org"
+#define kMFWebsiteAddress  @"https://noah-nuebling.github.io/mac-mouse-fix-website"
 #define kMFWebsiteRepoAddressRaw @"https://raw.githubusercontent.com/noah-nuebling/mac-mouse-fix-website/gh-pages"
 
 #define kMFUpdateFeedRepoAddressRaw @"https://raw.githubusercontent.com/noah-nuebling/mac-mouse-fix/update-feed"
 
-// Sparkle
+/// Sparkle
 
-// Only the main app deals with Sparkle, so maybe we shouldn't put these constants in this shared class
+/// Only the main app deals with Sparkle, so maybe we shouldn't put these constants in this shared class
 
-// Public encryption key for signing Sparkle Updates
-//  Also found in Info.plist
+/// Public encryption key for signing Sparkle Updates
+///  Also found in Info.plist
 #define kSUPublicEDKey ZC69ciDfGYN4t3kwRiPc2SC7J4hchv9w+FfVv59r4+U=
 
-// Sub-URLs that, when appended to kMFWebsiteAddress, will point to an RSS Feed (.xml file) describing Sparkle Updates.
-//  SUFeedURL is also found in Info.plist. Also see https://sparkle-project.org/documentation/customization/.
+/// Sub-URLs that, when appended to kMFWebsiteAddress, will point to an RSS Feed (.xml file) describing Sparkle Updates.
+///  SUFeedURL is also found in Info.plist. Also see https://sparkle-project.org/documentation/customization/.
 #define kSUFeedURLSub @"appcast.xml"
 #define kSUFeedURLSubBeta @"appcast-pre.xml"
 
-// Remapping dictionary keywords
+/// Remapping dictionary keywords
 
 typedef NSString*                                                       MFStringConstant; // Not sure if this is useful
 
