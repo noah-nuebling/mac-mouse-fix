@@ -66,7 +66,9 @@ struct ToAttributed: MarkupWalker {
     }
     mutating func visitParagraph(_ paragraph: Paragraph) -> () {
         descendInto(paragraph)
-        if paragraph.parent is Document {
+        let isLast = paragraph.indexInParent == (paragraph.parent?.childCount ?? 0) - 1 
+        let isTopLevel = paragraph.parent is Document
+        if isTopLevel && !isLast {
             string.append(NSAttributedString(string: "\n"))
         }
     }

@@ -47,6 +47,13 @@ class TrialSectionManager {
         
         /// Set string
         currentSection.textField!.attributedStringValue = LicenseUtility.trialCounterString(licenseConfig: licenseConfig, license: license)
+        
+        /// Set height
+        ///     This wasn't necessary under Ventura but under Monterey the textField is too high otherwise
+        ///     Edit: The problem is with a linebreak that our custom fallback markdown parser puts at the end! So using coolFittingSize or even fittingSize should be unnecessary.
+        if let fittingHeight: CGFloat = currentSection.textField?.coolFittingSize().height {
+            currentSection.textField?.heightAnchor.constraint(equalToConstant: fittingHeight).isActive = true
+        }
     }
     
     func stopManaging() {

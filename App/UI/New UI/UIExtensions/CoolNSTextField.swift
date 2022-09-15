@@ -69,33 +69,7 @@ class CoolNSTextField: NSTextField {
     }
     
     override var fittingSize: NSSize {
-        
-        /// `super.fittingSize` is sometimes *larger* than the explicit height and width constraints. This doesn't make any sense to me and breaks some of my layout code. This function fixes this weird behaviour.
-        
-        let f = super.fittingSize
-        var fittingWidth = f.width
-        var fittingHeight = f.height
-        
-        
-        var widthConst: (width: CGFloat, priority: NSLayoutConstraint.Priority) = (.infinity, .init(-1))
-        var heightConst: (height: CGFloat, priority: NSLayoutConstraint.Priority) = (.infinity, .init(-1))
-        for const in self.constraints {
-            if const.firstAttribute == .width && const.priority > widthConst.priority{
-                widthConst = (width: const.constant, priority: const.priority)
-            }
-            if const.firstAttribute == .height && const.priority > heightConst.priority {
-                heightConst = (height: const.constant, priority: const.priority)
-            }
-        }
-        
-        if widthConst.width < fittingWidth {
-            fittingWidth = widthConst.width
-        }
-        if heightConst.height < fittingHeight {
-            fittingHeight = heightConst.height
-        }
-        
-        return NSSize(width: fittingWidth, height: fittingHeight)
+        return super.coolFittingSize()
     }
     
     // MARK: - First responder status
