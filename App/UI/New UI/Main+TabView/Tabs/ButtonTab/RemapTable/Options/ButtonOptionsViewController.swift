@@ -47,13 +47,15 @@ class ButtonOptionsViewController: NSViewController {
         instance = ButtonOptionsViewController(nibName: "ButtonOptionsViewController", bundle: Bundle.main)
         
         /// Open sheet
-        MainAppState.shared.tabViewController.presentAsSheet(instance!)
+        guard let tabViewController = MainAppState.shared.tabViewController else { assert(false) }
+        tabViewController.presentAsSheet(instance!)
     }
     
     @objc static func remove() {
         
         /// Close sheet
-        MainAppState.shared.tabViewController.dismiss(instance!)
+        guard let tabViewController = MainAppState.shared.tabViewController else { assert(false) }
+        tabViewController.dismiss(instance!)
     }
     
     

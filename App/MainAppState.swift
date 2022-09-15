@@ -25,8 +25,8 @@ import ReactiveSwift
     @objc var appDelegate: AppDelegate {
         return NSApp.delegate as! AppDelegate
     }
-    @objc var tabViewController: TabViewController {
-        let controller = NSApp.mainWindow?.contentViewController as! TabViewController
+    @objc var tabViewController: TabViewController? {
+        let controller = NSApp.mainWindow?.contentViewController as! TabViewController?
         return controller
     }
     
