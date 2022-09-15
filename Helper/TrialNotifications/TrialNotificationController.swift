@@ -152,10 +152,14 @@ class TrialNotificationController: NSWindowController {
             window.contentView?.layoutSubtreeIfNeeded()
             
             /// Set scrollView height
-            ///     Note: Can't do this with autolayout ugh. Also can't use NSTextField, which would support autolayout, because it doesn't support links.
-            ///     With body.frame.width we use the width from IB
+            /// Notes:
+            /// - Can't do this with autolayout ugh. Also can't use NSTextField, which would support autolayout, because it doesn't support links.
+            /// - With body.frame.width we use the width from IB
+            /// - By setting priority to 999 we give priority to the min height from IB. That's so the MMF Icon which is centered to the textField doesn't get too close to the the dismiss button.
             let size = bodyMarkdown.size(atMaxWidth: body.frame.width)
-            bodyScrollView.heightAnchor.constraint(equalToConstant: size.height).isActive = true
+            let bodyHeight = bodyScrollView.heightAnchor.constraint(equalToConstant: size.height)
+            bodyHeight.priority = .init(999) /// Give the min height from IB priority
+            bodyHeight.isActive = true
             
             /// TESTING: Set contentView width
 //            window.contentView?.setFrameSize(NSSize(width: 1000, height: 600))
@@ -219,7 +223,9 @@ class TrialNotificationController: NSWindowController {
             effect.layer?.cornerRadius = 20.0
             
             /// Swap out contentView -> effectView
+            ///     Under macOS 12 (originally wrote this under macOS 13 Beta) the effectView's subviews just disappear as soon as we set it as contentView? Setting window.contentView = nil in between fixes it. Not sure why.
             let ogContent = self.window!.contentView!
+            window.contentView = nil
             effect.addSubview(ogContent)
             window.contentView = effect
             

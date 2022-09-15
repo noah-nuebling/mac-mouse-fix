@@ -10,8 +10,8 @@
         <customObject id="-2" userLabel="File's Owner" customClass="TrialNotificationController" customModule="Mac_Mouse_Fix_Helper" customModuleProvider="target">
             <connections>
                 <outlet property="applePayBadge" destination="Y7I-VS-5IK" id="3gF-r2-6SB"/>
-                <outlet property="body" destination="00n-VL-rU4" id="vyA-3q-2I5"/>
-                <outlet property="bodyScrollView" destination="XPn-15-YCK" id="fQd-Bn-lt0"/>
+                <outlet property="body" destination="ZG7-Ud-9A9" id="oh9-2p-BQf"/>
+                <outlet property="bodyScrollView" destination="8VW-b0-Vd1" id="2PF-1B-iCy"/>
                 <outlet property="closeButton" destination="G5r-ur-mKW" id="Tzq-FK-zxN"/>
                 <outlet property="payButton" destination="EPy-bD-5do" id="nuv-78-kEx"/>
                 <outlet property="trialSection" destination="Dyl-L2-EVr" id="MAm-ib-nbN"/>
@@ -23,7 +23,7 @@
         <window title="Window" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" restorable="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" animationBehavior="default" titlebarAppearsTransparent="YES" titleVisibility="hidden" id="F0z-JX-Cv5" customClass="TrialNotificationWindow" customModule="Mac_Mouse_Fix_Helper" customModuleProvider="target">
             <windowStyleMask key="styleMask" titled="YES" fullSizeContentView="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
-            <rect key="contentRect" x="196" y="240" width="391" height="164"/>
+            <rect key="contentRect" x="196" y="240" width="394" height="142"/>
             <rect key="screenRect" x="0.0" y="0.0" width="1920" height="1055"/>
             <view key="contentView" horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="se5-gp-TjO">
                 <rect key="frame" x="0.0" y="0.0" width="394" height="176"/>
@@ -51,50 +51,46 @@
                         </constraints>
                         <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="AppIconRoundFromHelper-deleteThis" id="v18-c0-Fut"/>
                     </imageView>
-                    <scrollView horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" borderType="none" autohidesScrollers="YES" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" hasVerticalScroller="NO" horizontalScrollElasticity="none" verticalScrollElasticity="none" translatesAutoresizingMaskIntoConstraints="NO" id="XPn-15-YCK">
+                    <scrollView borderType="none" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" hasVerticalScroller="NO" horizontalScrollElasticity="none" verticalScrollElasticity="none" translatesAutoresizingMaskIntoConstraints="NO" id="8VW-b0-Vd1">
                         <rect key="frame" x="74" y="76" width="300" height="80"/>
-                        <clipView key="contentView" drawsBackground="NO" copiesOnScroll="NO" id="aac-rJ-jky">
+                        <clipView key="contentView" drawsBackground="NO" copiesOnScroll="NO" id="p7V-wU-Jyx">
                             <rect key="frame" x="0.0" y="0.0" width="300" height="80"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             <subviews>
-                                <textView wantsLayer="YES" editable="NO" drawsBackground="NO" importsGraphics="NO" richText="NO" verticallyResizable="YES" allowsCharacterPickerTouchBarItem="NO" textCompletion="NO" id="00n-VL-rU4" customClass="NotificationLabel">
+                                <textView editable="NO" drawsBackground="NO" importsGraphics="NO" richText="NO" verticallyResizable="YES" allowsCharacterPickerTouchBarItem="NO" textCompletion="NO" id="ZG7-Ud-9A9" customClass="NotificationLabel">
                                     <rect key="frame" x="0.0" y="0.0" width="300" height="80"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                     <size key="minSize" width="300" height="80"/>
-                                    <size key="maxSize" width="357" height="10000000"/>
+                                    <size key="maxSize" width="300" height="10000000"/>
                                     <attributedString key="textStorage">
                                         <fragment>
-                                            <string key="content">&lt;You've been using Mac Mouse Fix for 1 month now. I hope you're enjoying it!
-
-If you want to keep using Mac Mouse Fix, you can buy it now.&gt;</string>
+                                            <string key="content">Hi there! You've been using Mac Mouse Fix for **%d days** now. I hope you're enjoying it!\n\nIf you want to keep using Mac Mouse Fix, you can [buy it now](%@).</string>
                                             <attributes>
                                                 <color key="NSColor" name="textColor" catalog="System" colorSpace="catalog"/>
                                                 <font key="NSFont" metaFont="system"/>
-                                                <font key="NSOriginalFont" size="12" name="Helvetica"/>
-                                                <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
+                                                <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0" allowsDefaultTighteningForTruncation="NO"/>
                                             </attributes>
                                         </fragment>
                                     </attributedString>
                                     <color key="insertionPointColor" name="textColor" catalog="System" colorSpace="catalog"/>
                                 </textView>
                             </subviews>
-                            <color key="backgroundColor" red="1" green="1" blue="1" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
                         </clipView>
                         <constraints>
-                            <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="280" id="1TO-j2-Xnx"/>
-                            <constraint firstAttribute="width" priority="999" constant="300" id="Lse-NT-Yva"/>
-                            <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="80" id="e1U-Gq-mRm"/>
-                            <constraint firstAttribute="height" priority="999" constant="80" id="t3s-Ew-hMY"/>
+                            <constraint firstAttribute="width" priority="999" constant="300" id="Fyn-l1-k6o"/>
+                            <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="80" id="QA9-pq-vcQ"/>
+                            <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="280" id="YCT-Ne-mix"/>
+                            <constraint firstAttribute="height" priority="500" constant="80" id="eIZ-7g-Hmq"/>
                         </constraints>
                         <edgeInsets key="contentInsets" left="0.0" right="0.0" top="0.0" bottom="0.0"/>
-                        <scroller key="horizontalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" horizontal="YES" id="Qjj-8H-Sty">
-                            <rect key="frame" x="-100" y="-100" width="240" height="16"/>
+                        <scroller key="horizontalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="YES" id="Oge-aT-UV9">
+                            <rect key="frame" x="-100" y="-100" width="225" height="15"/>
                             <autoresizingMask key="autoresizingMask"/>
                         </scroller>
-                        <scroller key="verticalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" horizontal="NO" id="YV4-ev-97E">
-                            <rect key="frame" x="-100" y="-100" width="16" height="80"/>
+                        <scroller key="verticalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="NO" id="kuD-K5-V1a">
+                            <rect key="frame" x="-100" y="-100" width="15" height="80"/>
                             <autoresizingMask key="autoresizingMask"/>
                         </scroller>
                     </scrollView>
@@ -172,32 +168,32 @@ If you want to keep using Mac Mouse Fix, you can buy it now.&gt;</string>
                     </imageView>
                 </subviews>
                 <constraints>
+                    <constraint firstAttribute="trailing" secondItem="8VW-b0-Vd1" secondAttribute="trailing" constant="20" symbolic="YES" id="2MX-Um-JYx"/>
                     <constraint firstItem="8Mx-7q-zeA" firstAttribute="leading" secondItem="se5-gp-TjO" secondAttribute="leading" constant="12" id="32q-8M-uJB"/>
                     <constraint firstItem="EPy-bD-5do" firstAttribute="centerY" secondItem="Dyl-L2-EVr" secondAttribute="centerY" id="BUe-FG-iRW"/>
+                    <constraint firstItem="Peb-Yr-Hpf" firstAttribute="top" secondItem="8VW-b0-Vd1" secondAttribute="bottom" constant="20" id="CKt-dZ-KPR"/>
                     <constraint firstItem="Dyl-L2-EVr" firstAttribute="top" secondItem="Peb-Yr-Hpf" secondAttribute="bottom" constant="20" id="LPp-rv-5Ze"/>
                     <constraint firstAttribute="bottom" secondItem="Dyl-L2-EVr" secondAttribute="bottom" constant="20" symbolic="YES" id="Qpi-fW-DBh"/>
                     <constraint firstAttribute="trailing" secondItem="Peb-Yr-Hpf" secondAttribute="trailing" constant="20" id="RnA-te-Moj"/>
-                    <constraint firstItem="XPn-15-YCK" firstAttribute="leading" secondItem="8Mx-7q-zeA" secondAttribute="trailing" constant="4" id="SQs-Z0-cON"/>
-                    <constraint firstItem="XPn-15-YCK" firstAttribute="top" secondItem="se5-gp-TjO" secondAttribute="top" constant="20" symbolic="YES" id="SXp-80-4kT"/>
                     <constraint firstItem="G5r-ur-mKW" firstAttribute="top" secondItem="se5-gp-TjO" secondAttribute="top" constant="7" id="UMH-sI-YBW"/>
                     <constraint firstItem="Peb-Yr-Hpf" firstAttribute="leading" secondItem="se5-gp-TjO" secondAttribute="leading" constant="20" id="Wdo-Sa-PyX"/>
-                    <constraint firstItem="Peb-Yr-Hpf" firstAttribute="top" secondItem="XPn-15-YCK" secondAttribute="bottom" constant="20" id="ZoG-fT-Xop"/>
                     <constraint firstItem="Dyl-L2-EVr" firstAttribute="leading" secondItem="se5-gp-TjO" secondAttribute="leading" constant="20" symbolic="YES" id="b8s-tY-h1q"/>
                     <constraint firstItem="EPy-bD-5do" firstAttribute="top" secondItem="Y7I-VS-5IK" secondAttribute="bottom" constant="5" id="bG0-AG-Brb"/>
+                    <constraint firstItem="ZG7-Ud-9A9" firstAttribute="centerY" secondItem="8Mx-7q-zeA" secondAttribute="centerY" id="dj2-T0-Ehe"/>
                     <constraint firstItem="G5r-ur-mKW" firstAttribute="leading" secondItem="se5-gp-TjO" secondAttribute="leading" constant="8" id="eif-zF-PXO"/>
-                    <constraint firstAttribute="trailing" secondItem="XPn-15-YCK" secondAttribute="trailing" constant="20" symbolic="YES" id="gdX-pr-ltj"/>
                     <constraint firstItem="EPy-bD-5do" firstAttribute="leading" secondItem="dws-t5-lGs" secondAttribute="trailing" constant="5" id="ghn-pe-uHf"/>
+                    <constraint firstItem="8VW-b0-Vd1" firstAttribute="leading" secondItem="8Mx-7q-zeA" secondAttribute="trailing" constant="4" id="lq9-WX-xx5"/>
                     <constraint firstItem="Y7I-VS-5IK" firstAttribute="centerX" secondItem="EPy-bD-5do" secondAttribute="centerX" id="m73-eM-NcF"/>
                     <constraint firstItem="dws-t5-lGs" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="Dyl-L2-EVr" secondAttribute="trailing" constant="30" id="nD5-ck-26i"/>
-                    <constraint firstItem="8Mx-7q-zeA" firstAttribute="centerY" secondItem="00n-VL-rU4" secondAttribute="centerY" id="qnX-UI-Kiw"/>
                     <constraint firstItem="dws-t5-lGs" firstAttribute="centerY" secondItem="Dyl-L2-EVr" secondAttribute="centerY" id="qu3-J6-Gof"/>
                     <constraint firstAttribute="trailing" secondItem="EPy-bD-5do" secondAttribute="trailing" constant="20" symbolic="YES" id="uDu-9b-YP8"/>
+                    <constraint firstItem="8VW-b0-Vd1" firstAttribute="top" secondItem="se5-gp-TjO" secondAttribute="top" constant="20" symbolic="YES" id="x01-Se-9AA"/>
                 </constraints>
             </view>
             <connections>
                 <outlet property="delegate" destination="-2" id="0bl-1N-AYu"/>
             </connections>
-            <point key="canvasLocation" x="2" y="-43"/>
+            <point key="canvasLocation" x="2" y="0.0"/>
         </window>
     </objects>
     <resources>
