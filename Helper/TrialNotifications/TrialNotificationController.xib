@@ -26,10 +26,10 @@
             <rect key="contentRect" x="196" y="240" width="394" height="142"/>
             <rect key="screenRect" x="0.0" y="0.0" width="1920" height="1055"/>
             <view key="contentView" horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="se5-gp-TjO">
-                <rect key="frame" x="0.0" y="0.0" width="394" height="176"/>
+                <rect key="frame" x="0.0" y="0.0" width="394" height="166"/>
                 <subviews>
                     <button translatesAutoresizingMaskIntoConstraints="NO" id="G5r-ur-mKW">
-                        <rect key="frame" x="8" y="143" width="21" height="32"/>
+                        <rect key="frame" x="8" y="133" width="21" height="32"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="21" id="oeg-mC-Djd"/>
                             <constraint firstAttribute="height" constant="21" id="vXa-wf-59f"/>
@@ -44,7 +44,7 @@
                         </connections>
                     </button>
                     <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="8Mx-7q-zeA">
-                        <rect key="frame" x="12" y="87" width="58" height="58"/>
+                        <rect key="frame" x="12" y="82" width="58" height="58"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="58" id="4TA-cd-zXP"/>
                             <constraint firstAttribute="height" constant="58" id="nJ4-lr-wem"/>
@@ -52,17 +52,17 @@
                         <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="AppIconRoundFromHelper-deleteThis" id="v18-c0-Fut"/>
                     </imageView>
                     <scrollView borderType="none" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" hasVerticalScroller="NO" horizontalScrollElasticity="none" verticalScrollElasticity="none" translatesAutoresizingMaskIntoConstraints="NO" id="8VW-b0-Vd1">
-                        <rect key="frame" x="74" y="76" width="300" height="80"/>
+                        <rect key="frame" x="74" y="76" width="300" height="70"/>
                         <clipView key="contentView" drawsBackground="NO" copiesOnScroll="NO" id="p7V-wU-Jyx">
-                            <rect key="frame" x="0.0" y="0.0" width="300" height="80"/>
+                            <rect key="frame" x="0.0" y="0.0" width="300" height="70"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             <subviews>
                                 <textView editable="NO" drawsBackground="NO" importsGraphics="NO" richText="NO" verticallyResizable="YES" allowsCharacterPickerTouchBarItem="NO" textCompletion="NO" id="ZG7-Ud-9A9" customClass="NotificationLabel">
-                                    <rect key="frame" x="0.0" y="0.0" width="300" height="80"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="300" height="70"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                    <size key="minSize" width="300" height="80"/>
+                                    <size key="minSize" width="300" height="70"/>
                                     <size key="maxSize" width="300" height="10000000"/>
                                     <attributedString key="textStorage">
                                         <fragment>
@@ -80,9 +80,9 @@
                         </clipView>
                         <constraints>
                             <constraint firstAttribute="width" priority="999" constant="300" id="Fyn-l1-k6o"/>
-                            <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="80" id="QA9-pq-vcQ"/>
+                            <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="70" id="QA9-pq-vcQ"/>
                             <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="280" id="YCT-Ne-mix"/>
-                            <constraint firstAttribute="height" priority="500" constant="80" id="eIZ-7g-Hmq"/>
+                            <constraint firstAttribute="height" priority="500" constant="70" id="eIZ-7g-Hmq"/>
                         </constraints>
                         <edgeInsets key="contentInsets" left="0.0" right="0.0" top="0.0" bottom="0.0"/>
                         <scroller key="horizontalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="YES" id="Oge-aT-UV9">

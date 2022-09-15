@@ -69,10 +69,11 @@ struct ToAttributed: MarkupWalker {
         let isLast = paragraph.indexInParent == (paragraph.parent?.childCount ?? 0) - 1 
         let isTopLevel = paragraph.parent is Document
         if isTopLevel && !isLast {
-            string.append(NSAttributedString(string: "\n"))
+            string.append(NSAttributedString(string: "\n\n"))
         }
     }
     mutating func visitLineBreak(_ lineBreak: LineBreak) -> () {
+        /// I've never seen this be called
         string.append(NSAttributedString(string: "\n\n"))
     }
     
