@@ -15,15 +15,15 @@
 
 import Foundation
 import Markdown
+import CocoaLumberjackSwift
 
 @objc class MarkdownParser: NSObject {
  
     @objc static func attributedString(markdown: String) -> NSAttributedString? {
         
         let document = Document(parsing: markdown, source: URL(string: ""), options: [])
-        print("THE DOC: \(document.debugDescription())")
-        
         if document.isEmpty { return nil }
+        print("THE DOC: \(document.debugDescription())")
         
         var walker = ToAttributed()
         walker.visit(document)
