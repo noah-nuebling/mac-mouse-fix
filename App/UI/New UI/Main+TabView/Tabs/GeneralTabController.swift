@@ -174,11 +174,13 @@ extension Reactive where Base: NSSwitcherino {
     
     var signal: Signal<Bool, Never>
     var observer: Signal<Bool, Never>.Observer
+    var eventMonitor: Any?
     
     required init() {
         let (o, i) = Signal<Bool, Never>.pipe()
         signal = o
         observer = i
+        eventMonitor = nil
         super.init(frame: NSZeroRect)
     }
     required init?(coder: NSCoder) {
@@ -187,15 +189,17 @@ extension Reactive where Base: NSSwitcherino {
     
     override func mouseDown(with event: NSEvent) {
         self.isHighlighted = true
-        let monitorPtr: UnsafeMutablePointer<AnyObject?> = UnsafeMutablePointer.allocate(capacity: 1)
-        monitorPtr.pointee = NSEvent.addLocalMonitorForEvents(matching: [.leftMouseUp, .leftMouseDragged]) { event in
+        eventMonitor = NSEvent.addLocalMonitorForEvents(matching: [.leftMouseUp, .leftMouseDragged]) { event in
             if event.type == .leftMouseUp {
                 self.isHighlighted = false
                 if self == self.window?.contentView?.hitTest(event.locationInWindow) {
                     self.state = self.state == .on ? .off : .on
                     self.observer.send(value: (self.state == .on))
                 }
-                NSEvent.removeMonitor(monitorPtr.pointee!)
+                if let monitor = self.eventMonitor {
+                    NSEvent.removeMonitor(monitor)
+                    self.eventMonitor = nil
+                } else { assert(false) }
             } else { /// mouseDragged event
                 if self == self.window?.contentView?.hitTest(event.locationInWindow) {
                     self.isHighlighted = true
