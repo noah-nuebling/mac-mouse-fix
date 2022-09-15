@@ -159,7 +159,7 @@
 <hr />
 <h3 id="new-in-3.0.0-beta-3">New in 3.0.0 Beta 3</h3>
 <p>3.0.0 Beta 3 should now <strong>work properly</strong> on macOS 12 <strong>Monterey</strong>!</p>
-<p>Beta 2 used to crash most of the time when clicking the “Enable Mac Mouse Fix” toggle and it had some visual glitches.</p>
+<p>When running Beta 2 under Monterey, it used to crash most of the time when clicking the “Enable Mac Mouse Fix” toggle and it had some visual glitches.</p>
 </body>
 </html>
 
