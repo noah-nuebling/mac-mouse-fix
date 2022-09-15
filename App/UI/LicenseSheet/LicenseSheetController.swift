@@ -257,13 +257,13 @@ import Cocoa
         if openInstance != nil { return }
         openInstance = LicenseSheetController()
         
-        guard let tabViewController = MainAppState.shared.tabViewController else { assert(false) }
+        guard let tabViewController = MainAppState.shared.tabViewController else { assert(false); return }
         tabViewController.presentAsSheet(openInstance!)
     }
     
     @objc static func remove() {
         
-        guard let tabViewController = MainAppState.shared.tabViewController else { assert(false) }
+        guard let tabViewController = MainAppState.shared.tabViewController else { assert(false); return }
         tabViewController.dismiss(openInstance!)
         
         openInstance = nil
