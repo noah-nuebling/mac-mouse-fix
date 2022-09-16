@@ -2,13 +2,15 @@
 
 ## On changing Bundle ID to com.nuebling.mac-mouse-fixxx
 
-On 13.09.2020, right after publishing MMF 3.0.0 Beta 1, I started seeing weird errors saying "Change your bundle identifier to a unique string to try again". I thought I might be able to fix this by enrolling in the Developer Program, so I did, but it didn't help. Tried other solutions from SO but nothing helped. The only fix was to change the Bundle ID. So I changed it from com.nuebling.mac-mouse-fix -> com.nuebling.mac-mouse-fixxx. I also changed the Helper and Accomplice Bundle IDs accordingly.
+On 13.09.2022, right after publishing MMF 3.0.0 Beta 1, I started seeing weird errors saying "Change your bundle identifier to a unique string to try again". I thought I might be able to fix this by enrolling in the Developer Program, so I did, but it didn't help. Tried other solutions from SO but nothing helped. The only fix was to change the Bundle ID. So I changed it from com.nuebling.mac-mouse-fix -> com.nuebling.mac-mouse-fixxx. I also changed the Helper and Accomplice Bundle IDs accordingly.
+
+Edit: On 16.09.2022, I changed it back to com.nuebling.mac-mouse-fix and it works! The weird Apple errors are gone. This is great because the change did break some of the previous-version-cleanup stuff in HelperServices 
 
 Also see NotePlan note [[MMF - Scraps - Distribution through Developer Program]]
 
 ## On Code Signing Certificates
 
-Edit: We enrolled noah.n.developer@gmail.com in the Apple Developer Program on 13.09.2022 which might change how we need to handle all of this!
+Edit: We enrolled noah.n.developer@gmail.com in the Apple Developer Program on 13.09.2022 which might change how we need to handle this! But I think it's still a really good idea to import the code signing assets from the Apple Note "noah.n.developer - Apple ID and Code Signing Assets Export (05.08.2022)" before building and signing the app 
 
 Edit: I saved the code signing identity in the Apple Note "noah.n.developer - Apple ID and Code Signing Assets Export (05.08.2022)"
  

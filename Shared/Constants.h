@@ -24,8 +24,8 @@ typedef enum {
 /// Bundles and Bezelservices
 
 /// Added some x's to the bundleID. See notes.md for context.
-#define kMFBundleIDApp      @"com.nuebling.mac-mouse-fixxx"
-#define kMFBundleIDHelper   @"com.nuebling.mac-mouse-fixxx.helper"
+#define kMFBundleIDApp      @"com.nuebling.mac-mouse-fix"
+#define kMFBundleIDHelper   @"com.nuebling.mac-mouse-fix.helper"
 
 #define kMFRelativeAccomplicePath           @"Contents/Library/LaunchServices/Mac Mouse Fix Accomplice"
 #define kMFRelativeHelperAppPath            @"Contents/Library/LoginItems/Mac Mouse Fix Helper.app"
