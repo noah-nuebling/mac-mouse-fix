@@ -27,11 +27,14 @@ import CocoaLumberjackSwift
     /// Init
     
     @objc func load_Manual() {
-        /// Using load_Manual instead of init. See PointerFreeze -> load_Manual for explanation
+        
+        /// Using  `load_Manual` instead of `init`. See PointerFreeze -> `load_Manual` for explanation
+        
+        /// Create canvas window
         
         canvas = NSWindow.init(contentRect: NSRect.zero, styleMask: .borderless, backing: .buffered, defer: false, screen: nil)
         
-//        guard let canvas = canvas else { fatalError() }
+        /// Configure canvas window
 
         canvas.backgroundColor = .clear
         canvas.isOpaque = false /// Make window transparent but content visible
@@ -40,7 +43,15 @@ import CocoaLumberjackSwift
         canvas.ignoresMouseEvents = true /// Mouse events should pass through
         canvas.collectionBehavior = [.stationary, .moveToActiveSpace] /// Make unaffected by Mission Control and Exposé
 
-//        canvas.makeKeyAndOrderFront(nil) /// We already call this in draw()
+        /// Set contentView
+        canvas.contentView = CanvasContent()
+        
+        /// Attempts to fix issue where moving pointer causes CPU load when the canvas is displaying (Ventura Beta)
+        ///     -> Doesn't work
+        ///     If we fix this, we might also want to update `PointerFreeze.drawPuppetCursor()` to use the "efficient undraw" method
+        
+        canvas.acceptsMouseMovedEvents = false
+        canvas.disableCursorRects()
         
         /// Optimization
         ///  Setting frame on canvas.contentView subview is really slow for some reason. Here are attempts at fixing that.
@@ -55,9 +66,7 @@ import CocoaLumberjackSwift
     
     @objc func draw(view: NSView, atFrame frameInScreen: NSRect, onScreen screen: NSScreen) {
         
-//        guard let canvas = canvas else { fatalError() }
-        
-        /// Set props on view to (hopefully) optimize
+        /// Optimization
 //        view.translatesAutoresizingMaskIntoConstraints = false
 //        view.autoresizingMask = .none
 //        view.removeConstraints(view.constraints)
@@ -83,6 +92,7 @@ import CocoaLumberjackSwift
         
         /// Put canvas window on top or sth
         ///     This is necessary after switching spaces
+        ///     Now that we're actually closing the window and not using the "efficient undraw" method, I saw some crashes with this. Might help to do this before the other stuff? TODO: Remove this comment if everything works.
         canvas.orderFront(nil)
         
         /// Commit transaction
@@ -122,23 +132,43 @@ import CocoaLumberjackSwift
     
     @objc func undraw(view: NSView) {
         
-//        guard let canvas = canvas else { fatalError() }
-        
-//        DDLogDebug("Superview: \(view), canvas: \(canvas)")
-        
-        if view.superview!.isEqual(to: canvas.contentView) {
-            view.removeFromSuperview()
-//            canvas.displayIfNeeded() /// Probs not necessary
-        } else {
+        /// Guard view is drawn
+        guard view.superview!.isEqual(to: canvas.contentView) else {
             fatalError("Idk dude Swift value semantics or sth uchh")
         }
+        
+        /// Debug
+//        DDLogDebug("Superview: \(view), canvas: \(canvas)")
+        
+        /// Remove view
+        ///     Maybe we should just make it invisible instead?
+        view.removeFromSuperview()
+        
+        /// Remove canvas
+        ///     Also see other comments in this file containing "efficient undraw"
+        canvas.isReleasedWhenClosed = false
+        canvas.close()
+        
+        /// Update Canvas
+        ///     Not necessary
+//            canvas.displayIfNeeded()
+            
     }
     
     @objc func flush() {
 //        guard let canvas = canvas else { fatalError() }
 //        canvas.orderOut(nil);
-        canvas.contentView = NSView()
+        canvas.contentView = CanvasContent()
     }
     
     
+}
+
+fileprivate class CanvasContent: NSView {
+    
+    @objc override func hitTest(_ point: NSPoint) -> NSView? {
+        /// Trying to remove CPU load when moving the pointer over canvas.
+        ///     -> Doesn't work.
+        return nil
+    }
 }

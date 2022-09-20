@@ -333,12 +333,14 @@ void setSuppressionIntervalWithTimeInterval(CFTimeInterval interval) {
 
 + (void)drawPuppetCursor:(BOOL)draw fresh:(BOOL)fresh {
     
-    if (!draw) {
-        dispatch_async(dispatch_get_main_queue(), ^{
-            _puppetCursorView.alphaValue = 0; /// Make the puppetCursor invisible
-        });
-        return;
-    }
+    /// Efficient undraw
+    ///     -> Just make transparent
+//    if (!draw) {
+//        dispatch_async(dispatch_get_main_queue(), ^{
+//            _puppetCursorView.alphaValue = 0; /// Make the puppetCursor invisible
+//        });
+//        return;
+//    }
     
     /// Get loc
     CGPoint loc = _puppetCursorPosition;
@@ -366,6 +368,14 @@ void setSuppressionIntervalWithTimeInterval(CFTimeInterval interval) {
     /// Define mainthread workload
     
     void (^workload)(void) = ^{
+        
+        /// Normal undraw
+        ///     We need to use normal undraw instead of "efficient undraw" (see above) because (at least under Ventura Beta) mouseMoved causes CPU usage as long as the ScreenDrawers `canvas` window is open.
+        ///     We might be able to somehow fix this when setting up the canvas in `ScreenDrawer.load_Manual()`
+        if (!draw) {
+            [ScreenDrawer.shared undrawWithView:_puppetCursorView];
+            return;
+        }
         
         /// Store image of cursor into puppetView
         if (fresh) {
