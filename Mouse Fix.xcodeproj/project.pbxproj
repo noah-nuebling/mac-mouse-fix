@@ -3046,11 +3046,7 @@
 					"$(PROJECT_DIR)/Frameworks",
 				);
 				HEADER_SEARCH_PATHS = "$(inherited)";
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/../Frameworks",
-					"@loader_path/../Frameworks",
-				);
+				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 10.13;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
@@ -3080,11 +3076,7 @@
 					"$(PROJECT_DIR)/Frameworks",
 				);
 				HEADER_SEARCH_PATHS = "$(inherited)";
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/../Frameworks",
-					"@loader_path/../Frameworks",
-				);
+				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 10.13;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.nuebling.mac-mouse-fix.accomplice";
@@ -3120,10 +3112,6 @@
 				);
 				INFOPLIST_FILE = App/SupportFiles/Info.plist;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/../Frameworks",
-				);
 				MACOSX_DEPLOYMENT_TARGET = 10.13;
 				MARKETING_VERSION = "3.0.0 Beta 3";
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
@@ -3161,10 +3149,6 @@
 				);
 				INFOPLIST_FILE = App/SupportFiles/Info.plist;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/../Frameworks",
-				);
 				MACOSX_DEPLOYMENT_TARGET = 10.13;
 				MARKETING_VERSION = "3.0.0 Beta 3";
 				MTL_FAST_MATH = YES;
@@ -3276,7 +3260,7 @@
 		4FCECDA521092354001F1078 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = "$(inherited)";
 				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
@@ -3335,10 +3319,12 @@
 				HEADER_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE_HELPER = Helper/SupportFiles/Info.plist;
 				INFOPLIST_FILE_MAINAPP = App/SupportFiles/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "@executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 10.13;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = macosx;
+				STRIP_SWIFT_SYMBOLS = NO;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
@@ -3349,7 +3335,7 @@
 		4FCECDA621092354001F1078 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = "$(inherited)";
 				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
@@ -3402,6 +3388,7 @@
 				HEADER_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE_HELPER = Helper/SupportFiles/Info.plist;
 				INFOPLIST_FILE_MAINAPP = App/SupportFiles/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "@executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 10.13;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				ONLY_ACTIVE_ARCH = NO;
@@ -3439,10 +3426,6 @@
 				);
 				INFOPLIST_FILE = Helper/SupportFiles/Info.plist;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/../Frameworks",
-				);
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Helper/Utility/Math/PolynomialRegression/numpy/core/lib",
@@ -3486,10 +3469,6 @@
 				);
 				INFOPLIST_FILE = Helper/SupportFiles/Info.plist;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/../Frameworks",
-				);
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Helper/Utility/Math/PolynomialRegression/numpy/core/lib",

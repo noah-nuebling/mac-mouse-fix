@@ -42,7 +42,7 @@
       "location" : "https://github.com/apple/swift-cmark.git",
       "state" : {
         "branch" : "gfm",
-        "revision" : "476f7b4fcf12eba381b4aaed8987006fd8fcec9c"
+        "revision" : "eb9a6a357b6816c68f4b194eaa5b67f3cd1fa5c3"
       }
     },
     {
