@@ -1,6 +1,0 @@
-framework module Pods_Mac_Mouse_Fix_Mac_Mouse_FixUITests {
-  umbrella header "Pods-Mac Mouse Fix-Mac Mouse FixUITests-umbrella.h"
-
-  export *
-  module * { export * }
-}

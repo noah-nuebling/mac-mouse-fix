@@ -7,11 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		160FE96502E6611153781AD3 /* Pods_Mac_Mouse_Fix.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F4A368D25EEB295D9EEF4059 /* Pods_Mac_Mouse_Fix.framework */; };
-		21ACBC0538C824969457D2C8 /* libPods-Mac Mouse Fix Accomplice.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AEDA4A9E543963C3C6671303 /* libPods-Mac Mouse Fix Accomplice.a */; };
-		26741110F3F9E2DAEDD3279A /* libPods-Mac Mouse Fix Accomplice.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9035471CA1531768F940DEFA /* libPods-Mac Mouse Fix Accomplice.a */; };
-		2D937827717D64CDBCC2C443 /* Pods_Mac_Mouse_Fix.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 24A19E04F97ECEF36516F04A /* Pods_Mac_Mouse_Fix.framework */; };
-		3D4961AD668EC4AC52F3298C /* Pods_Mac_Mouse_Fix_Helper.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7E1D2916B54B23970D6884EC /* Pods_Mac_Mouse_Fix_Helper.framework */; };
 		4F02C71D2899448900ED0AA8 /* OutputCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F02C71C2899448900ED0AA8 /* OutputCoordinator.swift */; };
 		4F09283F28B8101600BDC2FF /* TrialSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F09283E28B8101600BDC2FF /* TrialSection.swift */; };
 		4F09284028B8101600BDC2FF /* TrialSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F09283E28B8101600BDC2FF /* TrialSection.swift */; };
@@ -325,11 +320,6 @@
 		4FFA4E4928B7D3750062A1FE /* NSView+Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F92A72C260F6C7800529D1F /* NSView+Additions.m */; };
 		4FFA4E4A28B7D3750062A1FE /* NSView+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F909D0428A0C3D2009349A2 /* NSView+Extensions.swift */; };
 		4FFBC5A8266977CA001D389B /* DoubleExponentialSmoother.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FFBC5A7266977CA001D389B /* DoubleExponentialSmoother.swift */; };
-		80457D1CE643F8D503131D96 /* Pods_Mac_Mouse_Fix_Helper.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5E09D0DF45AFAF30A568B97D /* Pods_Mac_Mouse_Fix_Helper.framework */; };
-		814D2D82A61503E2442EC77B /* Pods_Mac_Mouse_FixTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 01612C2A171C1FCC68BC27F4 /* Pods_Mac_Mouse_FixTests.framework */; };
-		ABF9F23623C56873C58F1868 /* Pods_Mac_Mouse_Fix_Mac_Mouse_FixUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 12F34CDA62B242A51B9469F0 /* Pods_Mac_Mouse_Fix_Mac_Mouse_FixUITests.framework */; };
-		B6D5363E56CF13634EB5BD57 /* Pods_Mac_Mouse_Fix_Mac_Mouse_FixUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D8699EFC1F3CB6B37A1522D /* Pods_Mac_Mouse_Fix_Mac_Mouse_FixUITests.framework */; };
-		DFE8DFB9E6824183882FB0DB /* Pods_Mac_Mouse_FixTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4954E06256CFC3F8A8310EEA /* Pods_Mac_Mouse_FixTests.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -421,15 +411,6 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		01612C2A171C1FCC68BC27F4 /* Pods_Mac_Mouse_FixTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Mac_Mouse_FixTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		0D9BE06E61FEE777A76EEE5A /* Pods-Mac Mouse Fix Helper.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Mac Mouse Fix Helper.debug.xcconfig"; path = "Target Support Files/Pods-Mac Mouse Fix Helper/Pods-Mac Mouse Fix Helper.debug.xcconfig"; sourceTree = "<group>"; };
-		12F34CDA62B242A51B9469F0 /* Pods_Mac_Mouse_Fix_Mac_Mouse_FixUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Mac_Mouse_Fix_Mac_Mouse_FixUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		1D8699EFC1F3CB6B37A1522D /* Pods_Mac_Mouse_Fix_Mac_Mouse_FixUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Mac_Mouse_Fix_Mac_Mouse_FixUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		24A19E04F97ECEF36516F04A /* Pods_Mac_Mouse_Fix.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Mac_Mouse_Fix.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		287623BA43DEEFBB97312539 /* Pods-Mac Mouse Fix Helper.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Mac Mouse Fix Helper.release.xcconfig"; path = "Target Support Files/Pods-Mac Mouse Fix Helper/Pods-Mac Mouse Fix Helper.release.xcconfig"; sourceTree = "<group>"; };
-		403031DA0EB25C7C3CABCA58 /* Pods-Mac Mouse Fix.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Mac Mouse Fix.debug.xcconfig"; path = "Target Support Files/Pods-Mac Mouse Fix/Pods-Mac Mouse Fix.debug.xcconfig"; sourceTree = "<group>"; };
-		4954E06256CFC3F8A8310EEA /* Pods_Mac_Mouse_FixTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Mac_Mouse_FixTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		49BE22BB51446F44DE9045AA /* Pods-Mac Mouse FixTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Mac Mouse FixTests.debug.xcconfig"; path = "Target Support Files/Pods-Mac Mouse FixTests/Pods-Mac Mouse FixTests.debug.xcconfig"; sourceTree = "<group>"; };
 		4F02C71C2899448900ED0AA8 /* OutputCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OutputCoordinator.swift; sourceTree = "<group>"; };
 		4F02C7202899453200ED0AA8 /* OutputCoordinator.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OutputCoordinator.h; sourceTree = "<group>"; };
 		4F09283E28B8101600BDC2FF /* TrialSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrialSection.swift; sourceTree = "<group>"; };
@@ -849,17 +830,6 @@
 		4FFBC5732667DCE4001D389B /* PrefixHeader.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PrefixHeader.pch; sourceTree = "<group>"; };
 		4FFBC5A6266977CA001D389B /* Mac Mouse Fix Helper-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Mac Mouse Fix Helper-Bridging-Header.h"; sourceTree = "<group>"; };
 		4FFBC5A7266977CA001D389B /* DoubleExponentialSmoother.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DoubleExponentialSmoother.swift; sourceTree = "<group>"; };
-		557A2F6039C60FD4D3EA2641 /* Pods-Mac Mouse Fix.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Mac Mouse Fix.release.xcconfig"; path = "Target Support Files/Pods-Mac Mouse Fix/Pods-Mac Mouse Fix.release.xcconfig"; sourceTree = "<group>"; };
-		5C99A82594B344E00F0863AE /* Pods-Mac Mouse FixTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Mac Mouse FixTests.release.xcconfig"; path = "Target Support Files/Pods-Mac Mouse FixTests/Pods-Mac Mouse FixTests.release.xcconfig"; sourceTree = "<group>"; };
-		5E09D0DF45AFAF30A568B97D /* Pods_Mac_Mouse_Fix_Helper.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Mac_Mouse_Fix_Helper.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		5F3794C77F51E425DA194652 /* Pods-Mac Mouse Fix Accomplice.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Mac Mouse Fix Accomplice.debug.xcconfig"; path = "Target Support Files/Pods-Mac Mouse Fix Accomplice/Pods-Mac Mouse Fix Accomplice.debug.xcconfig"; sourceTree = "<group>"; };
-		62C21AA942E45207518BDA62 /* Pods-Mac Mouse Fix-Mac Mouse FixUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Mac Mouse Fix-Mac Mouse FixUITests.release.xcconfig"; path = "Target Support Files/Pods-Mac Mouse Fix-Mac Mouse FixUITests/Pods-Mac Mouse Fix-Mac Mouse FixUITests.release.xcconfig"; sourceTree = "<group>"; };
-		7E1D2916B54B23970D6884EC /* Pods_Mac_Mouse_Fix_Helper.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Mac_Mouse_Fix_Helper.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		9035471CA1531768F940DEFA /* libPods-Mac Mouse Fix Accomplice.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Mac Mouse Fix Accomplice.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		AEDA4A9E543963C3C6671303 /* libPods-Mac Mouse Fix Accomplice.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Mac Mouse Fix Accomplice.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		B46C8B4489AC5B58EAA64F23 /* Pods-Mac Mouse Fix Accomplice.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Mac Mouse Fix Accomplice.release.xcconfig"; path = "Target Support Files/Pods-Mac Mouse Fix Accomplice/Pods-Mac Mouse Fix Accomplice.release.xcconfig"; sourceTree = "<group>"; };
-		EB486BF75A524261E2826AD5 /* Pods-Mac Mouse Fix-Mac Mouse FixUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Mac Mouse Fix-Mac Mouse FixUITests.debug.xcconfig"; path = "Target Support Files/Pods-Mac Mouse Fix-Mac Mouse FixUITests/Pods-Mac Mouse Fix-Mac Mouse FixUITests.debug.xcconfig"; sourceTree = "<group>"; };
-		F4A368D25EEB295D9EEF4059 /* Pods_Mac_Mouse_Fix.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Mac_Mouse_Fix.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -868,9 +838,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				4FEB660B279350F900E6A111 /* CocoaLumberjack in Frameworks */,
-				26741110F3F9E2DAEDD3279A /* libPods-Mac Mouse Fix Accomplice.a in Frameworks */,
 				4FEB660D279350FD00E6A111 /* CocoaLumberjackSwift in Frameworks */,
-				21ACBC0538C824969457D2C8 /* libPods-Mac Mouse Fix Accomplice.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -887,9 +855,7 @@
 				4F39BC26263AC31600FDF692 /* Sparkle.framework in Frameworks */,
 				4FA40CEF28A0CA0A00499E53 /* ReactiveSwift in Frameworks */,
 				4FDECCDA28A3A37800DDEE91 /* Sparkle.framework in Frameworks */,
-				2D937827717D64CDBCC2C443 /* Pods_Mac_Mouse_Fix.framework in Frameworks */,
 				4FEB66152793510F00E6A111 /* CocoaLumberjackSwift in Frameworks */,
-				160FE96502E6611153781AD3 /* Pods_Mac_Mouse_Fix.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -897,8 +863,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				DFE8DFB9E6824183882FB0DB /* Pods_Mac_Mouse_FixTests.framework in Frameworks */,
-				814D2D82A61503E2442EC77B /* Pods_Mac_Mouse_FixTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -906,8 +870,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B6D5363E56CF13634EB5BD57 /* Pods_Mac_Mouse_Fix_Mac_Mouse_FixUITests.framework in Frameworks */,
-				ABF9F23623C56873C58F1868 /* Pods_Mac_Mouse_Fix_Mac_Mouse_FixUITests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -919,32 +881,13 @@
 				4F7F47D028A5B5F200290BBD /* ReactiveCocoa in Frameworks */,
 				4FC8A7D328AAF900007DB982 /* Markdown in Frameworks */,
 				4F7F47CE28A5B5EC00290BBD /* ReactiveSwift in Frameworks */,
-				80457D1CE643F8D503131D96 /* Pods_Mac_Mouse_Fix_Helper.framework in Frameworks */,
 				4FEB66112793510800E6A111 /* CocoaLumberjackSwift in Frameworks */,
-				3D4961AD668EC4AC52F3298C /* Pods_Mac_Mouse_Fix_Helper.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		239FF8251C9624AB1F44B77F /* Pods */ = {
-			isa = PBXGroup;
-			children = (
-				403031DA0EB25C7C3CABCA58 /* Pods-Mac Mouse Fix.debug.xcconfig */,
-				557A2F6039C60FD4D3EA2641 /* Pods-Mac Mouse Fix.release.xcconfig */,
-				5F3794C77F51E425DA194652 /* Pods-Mac Mouse Fix Accomplice.debug.xcconfig */,
-				B46C8B4489AC5B58EAA64F23 /* Pods-Mac Mouse Fix Accomplice.release.xcconfig */,
-				0D9BE06E61FEE777A76EEE5A /* Pods-Mac Mouse Fix Helper.debug.xcconfig */,
-				287623BA43DEEFBB97312539 /* Pods-Mac Mouse Fix Helper.release.xcconfig */,
-				EB486BF75A524261E2826AD5 /* Pods-Mac Mouse Fix-Mac Mouse FixUITests.debug.xcconfig */,
-				62C21AA942E45207518BDA62 /* Pods-Mac Mouse Fix-Mac Mouse FixUITests.release.xcconfig */,
-				49BE22BB51446F44DE9045AA /* Pods-Mac Mouse FixTests.debug.xcconfig */,
-				5C99A82594B344E00F0863AE /* Pods-Mac Mouse FixTests.release.xcconfig */,
-			);
-			path = Pods;
-			sourceTree = "<group>";
-		};
 		4F09284128B8C71000BDC2FF /* UI */ = {
 			isa = PBXGroup;
 			children = (
@@ -1535,7 +1478,6 @@
 				4FA1ACE025E85904007DB95B /* Tests */,
 				4FCECD8121092354001F1078 /* Products */,
 				4F422EF023469B2B00AA6E22 /* Other */,
-				239FF8251C9624AB1F44B77F /* Pods */,
 				4FDECCD528A3A37800DDEE91 /* Frameworks */,
 				E7721D8AA50A5B47737E0DD5 /* Frameworks */,
 			);
@@ -1614,11 +1556,6 @@
 				4FDECCD628A3A37800DDEE91 /* ZipArchive.framework */,
 				4FDECCD728A3A37800DDEE91 /* Sparkle.framework */,
 				4FDECCD828A3A37800DDEE91 /* README.md */,
-				F4A368D25EEB295D9EEF4059 /* Pods_Mac_Mouse_Fix.framework */,
-				AEDA4A9E543963C3C6671303 /* libPods-Mac Mouse Fix Accomplice.a */,
-				7E1D2916B54B23970D6884EC /* Pods_Mac_Mouse_Fix_Helper.framework */,
-				12F34CDA62B242A51B9469F0 /* Pods_Mac_Mouse_Fix_Mac_Mouse_FixUITests.framework */,
-				01612C2A171C1FCC68BC27F4 /* Pods_Mac_Mouse_FixTests.framework */,
 			);
 			path = Frameworks;
 			sourceTree = "<group>";
@@ -2213,11 +2150,6 @@
 				4F8A8DB8287EF76A00786BCC /* Foundation.framework */,
 				4F8A8DB6287EF76200786BCC /* QuartzCore.framework */,
 				4F8A8DB4287EF65800786BCC /* Metal.framework */,
-				24A19E04F97ECEF36516F04A /* Pods_Mac_Mouse_Fix.framework */,
-				5E09D0DF45AFAF30A568B97D /* Pods_Mac_Mouse_Fix_Helper.framework */,
-				1D8699EFC1F3CB6B37A1522D /* Pods_Mac_Mouse_Fix_Mac_Mouse_FixUITests.framework */,
-				4954E06256CFC3F8A8310EEA /* Pods_Mac_Mouse_FixTests.framework */,
-				9035471CA1531768F940DEFA /* libPods-Mac Mouse Fix Accomplice.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -2229,7 +2161,6 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 4F2FDF342315662500C7BE14 /* Build configuration list for PBXNativeTarget "Mac Mouse Fix Accomplice" */;
 			buildPhases = (
-				5C0D743C980B1EF4789733AC /* [CP] Check Pods Manifest.lock */,
 				4F2FDF2C2315662400C7BE14 /* Sources */,
 				4F2FDF2D2315662400C7BE14 /* Frameworks */,
 				4F2FDF2E2315662400C7BE14 /* CopyFiles */,
@@ -2251,7 +2182,6 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 4F94F61225E5EC2800D9F24A /* Build configuration list for PBXNativeTarget "Mac Mouse Fix" */;
 			buildPhases = (
-				D44E8D3705772A3E8B79E3B7 /* [CP] Check Pods Manifest.lock */,
 				4F94F75125E614D500D9F24A /* Increment Build Number */,
 				4F94F5EA25E5EC2500D9F24A /* Sources */,
 				4F94F5EB25E5EC2500D9F24A /* Frameworks */,
@@ -2284,7 +2214,6 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 4F94F61525E5EC2800D9F24A /* Build configuration list for PBXNativeTarget "Mac Mouse FixTests" */;
 			buildPhases = (
-				D3E1C1124917431911C9AFC6 /* [CP] Check Pods Manifest.lock */,
 				4F94F5FC25E5EC2800D9F24A /* Sources */,
 				4F94F5FD25E5EC2800D9F24A /* Frameworks */,
 				4F94F5FE25E5EC2800D9F24A /* Resources */,
@@ -2303,7 +2232,6 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 4F94F61825E5EC2800D9F24A /* Build configuration list for PBXNativeTarget "Mac Mouse FixUITests" */;
 			buildPhases = (
-				FC8CF78D6940BDFF17A48634 /* [CP] Check Pods Manifest.lock */,
 				4F94F60725E5EC2800D9F24A /* Sources */,
 				4F94F60825E5EC2800D9F24A /* Frameworks */,
 				4F94F60925E5EC2800D9F24A /* Resources */,
@@ -2322,7 +2250,6 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 4FCECDA721092354001F1078 /* Build configuration list for PBXNativeTarget "Mac Mouse Fix Helper" */;
 			buildPhases = (
-				93EAFCB2E5A3B8110B03FE4A /* [CP] Check Pods Manifest.lock */,
 				4FD148D928AA45FE00FE688C /* BartyCrouch */,
 				4FCECD7C21092354001F1078 /* Sources */,
 				4FCECD7D21092354001F1078 /* Frameworks */,
@@ -2529,116 +2456,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "# Versioning on the Helper isn't that important, and this doesn't work properly.\n#   I made this because sometimes I get crashlogs of the Helper which just say -1 for the version. This should be good enough so I get an idea of which version has the issue.\n\n# Get versions from Main App\nversion=$(/usr/libexec/PlistBuddy -c \"Print CFBundleVersion\" \"${PROJECT_DIR}/${INFOPLIST_FILE_MAINAPP}\")\nshortVersion=$(/usr/libexec/PlistBuddy -c \"Print CFBundleShortVersionString\" \"${PROJECT_DIR}/${INFOPLIST_FILE_MAINAPP}\")\n\n$((version++)) \n# ^ Because we'll also be incrementing Main App version when it builds\n#   Can't get any build phase from Main App to run before the Helper is compiled. Otherwise we wouldn't need to do this. We could increment the Main App version and then simply copy it over.\n#   For some reason is not always in sync with the Main App version. I saw it lag one behind. I think it might have to do with Xcode optimizing builds and not always running this if the Helper hasn't changed, but not sure.\n\n# Set versions to Helper\n/usr/libexec/PlistBuddy -c \"Set CFBundleVersion ${version}\" \"${PROJECT_DIR}/${INFOPLIST_FILE_HELPER}\"\n/usr/libexec/PlistBuddy -c \"Set CFBundleShortVersionString ${shortVersion}\" \"${PROJECT_DIR}/${INFOPLIST_FILE_HELPER}\"\n";
-		};
-		5C0D743C980B1EF4789733AC /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-Mac Mouse Fix Accomplice-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		93EAFCB2E5A3B8110B03FE4A /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-Mac Mouse Fix Helper-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		D3E1C1124917431911C9AFC6 /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-Mac Mouse FixTests-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		D44E8D3705772A3E8B79E3B7 /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-Mac Mouse Fix-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		FC8CF78D6940BDFF17A48634 /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-Mac Mouse Fix-Mac Mouse FixUITests-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -3031,7 +2848,6 @@
 /* Begin XCBuildConfiguration section */
 		4F2FDF352315662500C7BE14 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 5F3794C77F51E425DA194652 /* Pods-Mac Mouse Fix Accomplice.debug.xcconfig */;
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_WEAK = YES;
@@ -3061,7 +2877,6 @@
 		};
 		4F2FDF362315662500C7BE14 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = B46C8B4489AC5B58EAA64F23 /* Pods-Mac Mouse Fix Accomplice.release.xcconfig */;
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_WEAK = YES;
@@ -3089,7 +2904,6 @@
 		};
 		4F94F61325E5EC2800D9F24A /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 403031DA0EB25C7C3CABCA58 /* Pods-Mac Mouse Fix.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -3126,7 +2940,6 @@
 		};
 		4F94F61425E5EC2800D9F24A /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 557A2F6039C60FD4D3EA2641 /* Pods-Mac Mouse Fix.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -3162,7 +2975,6 @@
 		};
 		4F94F61625E5EC2800D9F24A /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 49BE22BB51446F44DE9045AA /* Pods-Mac Mouse FixTests.debug.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CLANG_ENABLE_OBJC_WEAK = YES;
@@ -3187,7 +2999,6 @@
 		};
 		4F94F61725E5EC2800D9F24A /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 5C99A82594B344E00F0863AE /* Pods-Mac Mouse FixTests.release.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CLANG_ENABLE_OBJC_WEAK = YES;
@@ -3211,7 +3022,6 @@
 		};
 		4F94F61925E5EC2800D9F24A /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = EB486BF75A524261E2826AD5 /* Pods-Mac Mouse Fix-Mac Mouse FixUITests.debug.xcconfig */;
 			buildSettings = {
 				CLANG_ENABLE_OBJC_WEAK = YES;
 				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = "$(inherited)";
@@ -3236,7 +3046,6 @@
 		};
 		4F94F61A25E5EC2800D9F24A /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 62C21AA942E45207518BDA62 /* Pods-Mac Mouse Fix-Mac Mouse FixUITests.release.xcconfig */;
 			buildSettings = {
 				CLANG_ENABLE_OBJC_WEAK = YES;
 				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = "$(inherited)";
@@ -3401,7 +3210,6 @@
 		};
 		4FCECDA821092354001F1078 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 0D9BE06E61FEE777A76EEE5A /* Pods-Mac Mouse Fix Helper.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIconRound;
 				CLANG_ENABLE_MODULES = YES;
@@ -3444,7 +3252,6 @@
 		};
 		4FCECDA921092354001F1078 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 287623BA43DEEFBB97312539 /* Pods-Mac Mouse Fix Helper.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIconRound;
 				CLANG_ENABLE_MODULES = YES;
