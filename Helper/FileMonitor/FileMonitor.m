@@ -88,24 +88,30 @@ void Handle_FSCallback(ConstFSEventStreamRef streamRef, void *clientCallBackInfo
     }
 }
 
-void handleRelocation() {
+void handleRelocation(void) {
+    
     DDLogInfo(@"Handle Mac Mouse Fix relocation...");
     
-//    [HelperServices enableHelperAsUserAgent:YES];
-//    setStreamToCurrentInstallLoc(); // Remove - this is not needed if we can restart/close the helper which we want to do
-//    [NSApp terminate:nil];
+    /// We want to close the helper
+    ///  If we let the helper running after relocation:
+    ///      - If the helper closes (crashes) it won't be restarted automatically by launchd
+    ///      - Just like the functions for getting current app bundles failed (we fixed it with hax bascially), there might be other stuff that behaves badly after relocation
+    /// Unfortunately, I can't find a way to make launchd restart the helper from within the helper
+    /// We have to use a separate executable to restart the helper
+    /// Edit: We're removing Accomplice in MMF 3, so this will be broken. I hope it's not that bad.
     
-    // We want to close the helper
-    //  If we let the helper running after relocation:
-    //      - If the helper closes (crashes) it won't be restarted automatically by launchd
-    //      - Just like the functions for getting current app bundles failed (we fixed it with hax bascially), there might be other stuff that behaves badly after relocation
-    // Unfortunately, I can't find a way to make launchd restart the helper from within the helper
-    // We have to use a separate executable to restart the helper
+    /// Sol 1:
+    ///     I don't think this works. We had to use Accomplice for proper behaviour pre MMF 3 (put under MMF 3, Accomplice has been removed.)
     
-    DDLogInfo(@"Asking Accomplice to restart Helper");
-    NSURL *accompliceURL = [Locator.mainAppBundle.bundleURL URLByAppendingPathComponent:kMFRelativeAccomplicePath];
-    NSArray *args = @[kMFAccompliceModeReloadHelper];
-    [SharedUtility launchCLT:accompliceURL withArgs:args];
+    [HelperServices enableHelperAsUserAgent:YES onComplete:nil];
+    [NSApp terminate:nil];
+    
+    /// Sol 2:
+    
+//    DDLogInfo(@"Asking Accomplice to restart Helper ... But accomplice has been removed in MMF 3");
+//    NSURL *accompliceURL = [Locator.mainAppBundle.bundleURL URLByAppendingPathComponent:kMFRelativeAccomplicePath];
+//    NSArray *args = @[kMFAccompliceModeReloadHelper];
+//    [SharedUtility launchCLT:accompliceURL withArgs:args];
 }
 void uninstallCompletely(void) {
     DDLogInfo(@"Uninstalling Mac Mouse Fix completely...");

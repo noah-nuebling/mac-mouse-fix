@@ -27,13 +27,13 @@ typedef enum {
 #define kMFBundleIDApp      @"com.nuebling.mac-mouse-fix"
 #define kMFBundleIDHelper   @"com.nuebling.mac-mouse-fix.helper"
 
-#define kMFRelativeAccomplicePath           @"Contents/Library/LaunchServices/Mac Mouse Fix Accomplice"
+//#define kMFRelativeAccomplicePath           @"Contents/Library/LaunchServices/Mac Mouse Fix Accomplice"
 #define kMFRelativeHelperAppPath            @"Contents/Library/LoginItems/Mac Mouse Fix Helper.app"
 #define kMFRelativeHelperExecutablePath     @"Contents/Library/LoginItems/Mac Mouse Fix Helper.app/Contents/MacOS/Mac Mouse Fix Helper"
 
 #define kMFRelativeMainAppPathFromHelperBundle          @"../../../../"
-#define kMFRelativeMainAppPathFromAccomplice            @"../../../../"
-#define kMFRelativeMainAppPathFromAccompliceFolder      @"../../../"
+//#define kMFRelativeMainAppPathFromAccomplice            @"../../../../"
+//#define kMFRelativeMainAppPathFromAccompliceFolder      @"../../../"
 
 #define kMFMainAppName      @"Mac Mouse Fix.app"
 #define kMFAccompliceName   @"Mac Mouse Fix Accomplice"

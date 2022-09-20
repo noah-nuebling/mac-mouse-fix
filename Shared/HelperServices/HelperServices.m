@@ -73,15 +73,15 @@
 
 + (void)enableHelperAsUserAgent:(BOOL)enable onComplete:(void (^ _Nullable)(NSError * _Nullable error))onComplete {
     
-    /// Guard running main app
-    ///     Before using the SM APIs we could call this from anywhere, but the SM stuff will only work from the mainApp afaik.
-    assert(SharedUtility.runningMainApp);
-    
     /// Register/unregister the helper as a User Agent with launchd so it runs in the background - also launches/terminates helper
     
     if (@available(macos 13.0, *)) {
         
         /// Disable and clean up legacy versions
+        ///     Edit: I'm not totally sure what the reason is for the differences between this and what we do pre macOS 13.
+        ///     - Why aren't we terminating other helper instance here?
+        ///     - At the time of writing `runPreviousVersionCleanup` won't work properly, because `strangeHelperIsRegisteredWithLaunchd` only looks at the pre macOS 13 helper. But it doesn't matter since all it does when it finds a strange helper is call. `removeHelperFromLaunchd`, and we're calling that anyways right here. -> Clean this up. Maybe rename `runPreviousVersionCleanup` -> `prefPaneCleanup`, and clearly mark `strangeHelperIsRegisteredWithLaunchd` as only working pre macOS 13 or update it to work with macOS 13. Idea: give `strangeHelperIsRegisteredWithLaunchd` and the helperIsActive function an argument which launchd label they should check for.
+        
         [self runPreviousVersionCleanup];
         [self removeHelperFromLaunchd];
         removeLaunchdPlist();
@@ -94,7 +94,29 @@
         });
         
     } else {
+        
+        /// Repair/generate launchdPlist so that the following code works for sure
+        [HelperServices repairLaunchdPlist];
+        /// If an old version of Mac Mouse Fix is still running and stuff, clean that up to prevent issues
+        [HelperServices runPreviousVersionCleanup];
+        
+        /**
+         Sometimes there's a weird bug where the main app won't recognize the helper as enabled even though it is. The code down below for enabling will then fail, when the user tries to check the enable checkbox.
+         So we're removing the helper from launchd before trying to enable to hopefully fix this. Edit: seems to fix it!
+         I'm pretty sure that if we didn't check for `launchdPathIsBundlePath` in `strangeHelperIsRegisteredWithLaunchd` this issue wouldn't have occured and we wouldn't need this workaround. But I'm not sure anymore why we do that so it's not smart to remove it.
+         Edit: I think the specific issue I saw only happens when there are two instances of MMF open at the same time.
+         */
+        if (enable) {
+            [HelperServices removeHelperFromLaunchd];
+            
+            /// Any Mac Mouse Fix Helper processes that were started by launchd should have been quit by now. But if there are Helpers which weren't started by launchd they will still be running which causes problems. Terminate them now.
+            [HelperServices terminateOtherHelperInstances];
+        }
+        
+        /// Call core
         enableHelper_PList(enable);
+        
+        /// Call onComplete
         if (onComplete != nil) onComplete(nil);
     }
 }
@@ -172,6 +194,13 @@ static BOOL helperIsActive_PList() {
 
     if (@available(macos 13.0, *)) {
             
+        /// Guard running main app
+        ///     Before using the SM APIs we could call this from anywhere, but the SM stuff will only work from the mainApp afaik.
+        if (SharedUtility.runningHelper) {
+            DDLogWarn(@"Calling enableHelper_SM from Helper under Ventura or later. This is does not work.");
+            return [NSError errorWithDomain:MFHelperServicesErrorDomain code:kMFHelperServicesErrorEnableFromHelper userInfo:nil];
+        }
+        
         /// Create error
         
         NSError *error = nil;
@@ -208,30 +237,6 @@ static void enableHelper_PList(BOOL enable) {
     
     /// This is the main function for the 'old method' where we were manually managing a plist file. Under Ventura we switched to a new framework
     
-    /// Repair/generate launchdPlist so that the following code works for sure
-    [HelperServices repairLaunchdPlist];
-    
-    /// If an old version of Mac Mouse Fix is still running and stuff, clean that up to prevent issues
-    [HelperServices runPreviousVersionCleanup];
-    
-    /**
-     Sometimes there's a weird bug where the main app won't recognize the helper as enabled even though it is. The code down below for enabling will then fail, when the user tries to check the enable checkbox.
-     So we're removing the helper from launchd before trying to enable to hopefully fix this. Edit: seems to fix it!
-     I'm pretty sure that if we didn't check for `launchdPathIsBundlePath` in `strangeHelperIsRegisteredWithLaunchd` this issue wouldn't have occured and we wouldn't need this workaround. But I'm not sure anymore why we do that so it's not smart to remove it.
-     Edit: I think the specific issue I saw only happens when there are two instances of MMF open at the same time.
-     */
-    if (enable) {
-        [HelperServices removeHelperFromLaunchd];
-        
-        /// Any Mac Mouse Fix Helper processes that were started by launchd should have been quit by now. But if there are Helpers which weren't started by launchd they will still be running which causes problems. Terminate them now.
-        [HelperServices terminateOtherHelperInstances];
-    }
-    
-    /// Prepare strings for NSTask
-    
-    /// Path for the executable of the launchctl command-line-tool, which we use to control launchd
-    
-    /// Prepare arguments for the launchctl command-line-tool
     if (@available(macOS 10.13, *)) {
         NSTask *task = [[NSTask alloc] init];
         task.executableURL = [NSURL fileURLWithPath: kMFLaunchctlPath];
@@ -251,7 +256,8 @@ static void enableHelper_PList(BOOL enable) {
         };
         [task launchAndReturnError:&error];
         
-    } else { /// Fallback on earlier versions
+    } else {
+        /// Fallback on earlier versions. TODO: Remove  since we don't support macOS pre 10.13 anymore
         NSString *OnOffArgumentOld = (enable) ? @"load": @"unload";
         [NSTask launchedTaskWithLaunchPath: kMFLaunchctlPath arguments: @[OnOffArgumentOld, Locator.launchdPlistURL.path]]; /// Can't clean up here easily cause there's no termination handler
     }
@@ -582,11 +588,11 @@ static void removeServiceWithIdentifier(NSString *identifier) {
 
 + (NSString *)helperExecutablePathFromLaunchd {
     
-    // Using NSTask to ask launchd about helper status
+    /// Using NSTask to ask launchd about helper status
     NSString * launchctlOutput = [self helperInfoFromLaunchd];
     
     NSString *executablePathRegEx = @"(?<=\"Program\" = \").*(?=\";)";
-    //    NSRegularExpression executablePathRegEx =
+    ///    NSRegularExpression executablePathRegEx =
     NSRange executablePathRange = [launchctlOutput rangeOfString:executablePathRegEx options:NSRegularExpressionSearch];
     if (executablePathRange.location == NSNotFound) return @"";
     NSString *executablePath = [launchctlOutput substringWithRange:executablePathRange];

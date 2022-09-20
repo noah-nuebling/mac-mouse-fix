@@ -18,4 +18,9 @@ NS_ASSUME_NONNULL_BEGIN
 + (void)disableHelperFromHelper;
 @end
 
+#define MFHelperServicesErrorDomain @"MFHelperServicesErrorDomain"
+typedef enum {
+    kMFHelperServicesErrorEnableFromHelper
+} MFHelperServicesError;
+
 NS_ASSUME_NONNULL_END

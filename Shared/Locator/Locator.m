@@ -107,12 +107,12 @@ static NSURL *_configURL;
         NSString *mainAppPath = [thisBundle.bundleURL URLByAppendingPathComponent:kMFRelativeMainAppPathFromHelperBundle].path;
         *mainAppBundle = [NSBundle bundleWithPath:mainAppPath];
         *helperBundle = thisBundle;
-    } else if (SharedUtility.runningAccomplice) {
-        /// Accomplice bundle doesn't have url only bundle path
-        NSString *mainAppPath =  [thisBundle.bundlePath stringByAppendingPathComponent:kMFRelativeMainAppPathFromAccompliceFolder];
-        NSString *helperPath = [mainAppPath stringByAppendingPathComponent:kMFRelativeHelperAppPath];
-        *mainAppBundle = [NSBundle bundleWithPath:mainAppPath];
-        *helperBundle = [NSBundle bundleWithPath:helperPath];
+//    } else if (SharedUtility.runningAccomplice) {
+//        /// Accomplice bundle doesn't have url only bundle path
+//        NSString *mainAppPath =  [thisBundle.bundlePath stringByAppendingPathComponent:kMFRelativeMainAppPathFromAccompliceFolder];
+//        NSString *helperPath = [mainAppPath stringByAppendingPathComponent:kMFRelativeHelperAppPath];
+//        *mainAppBundle = [NSBundle bundleWithPath:mainAppPath];
+//        *helperBundle = [NSBundle bundleWithPath:helperPath];
     } else {
         [NSException raise:@"UnknownCallerException" format:@"No handling code for caller at: %@", thisBundle.bundlePath];
     }

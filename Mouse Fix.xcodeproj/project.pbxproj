@@ -25,7 +25,6 @@
 		4F2CC58727B8D2300084AACE /* HybridCurves.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F2CC58627B8D2300084AACE /* HybridCurves.swift */; };
 		4F2CC58927B8DA8B0084AACE /* Line.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F2CC58827B8DA8B0084AACE /* Line.swift */; };
 		4F2F5DB225FB723D0037660A /* AddWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4F2F5DB125FB723D0037660A /* AddWindow.xib */; };
-		4F2FDF332315662500C7BE14 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F2FDF322315662500C7BE14 /* main.m */; };
 		4F319CBB26252A2D004E5F63 /* ButtonGroupRowView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F319CBA26252A2D004E5F63 /* ButtonGroupRowView.m */; };
 		4F37FAD825FDFDC5004C34C4 /* MFScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F37FAD725FDFDC4004C34C4 /* MFScrollView.m */; };
 		4F39BC26263AC31600FDF692 /* Sparkle.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4F39BC24263AC2E800FDF692 /* Sparkle.framework */; };
@@ -125,7 +124,6 @@
 		4F92A73A260F73C600529D1F /* KeyCaptureView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F92A71D260F667F00529D1F /* KeyCaptureView.m */; };
 		4F94F60525E5EC2800D9F24A /* Mac_Mouse_FixTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F94F60425E5EC2800D9F24A /* Mac_Mouse_FixTests.m */; };
 		4F94F61025E5EC2800D9F24A /* Mac_Mouse_FixUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F94F60F25E5EC2800D9F24A /* Mac_Mouse_FixUITests.m */; };
-		4F94F74C25E614B800D9F24A /* Mac Mouse Fix Accomplice in Copy Accomplice */ = {isa = PBXBuildFile; fileRef = 4F2FDF302315662400C7BE14 /* Mac Mouse Fix Accomplice */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		4F96060F27B4F92F004D6F6D /* TouchAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F96060E27B4F92F004D6F6D /* TouchAnimator.swift */; };
 		4F9C9B58268A29B70083DED0 /* RollingAverage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F9C9B57268A29B70083DED0 /* RollingAverage.swift */; };
 		4F9C9B60268A29FE0083DED0 /* Smoother.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F9C9B5F268A29FE0083DED0 /* Smoother.swift */; };
@@ -168,11 +166,9 @@
 		4FA83A2E268288D900F3A31B /* PointerConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FA83A2D268288D900F3A31B /* PointerConfig.swift */; };
 		4FA8A30A28A9508C001E740F /* ButtonOptionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FA8A30828A9508C001E740F /* ButtonOptionsViewController.swift */; };
 		4FA994BE26678AC90007F003 /* ScrollAnalyzer.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FA994BD26678AC90007F003 /* ScrollAnalyzer.m */; };
-		4FA9ABCC287B3B590049DE7D /* SharedMessagePort.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F44FF032606D73D00926A5E /* SharedMessagePort.m */; };
 		4FAD391426702CD4000CF4FA /* DerivedProperty.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FD860A9266EC24E004F76C8 /* DerivedProperty.swift */; };
 		4FB4F9FE260FDBC800806DDD /* RemapTableUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FB4F9FD260FDBC800806DDD /* RemapTableUtility.m */; };
 		4FB4FA202611DD6000806DDD /* KeyCaptureScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FB4FA1F2611DD6000806DDD /* KeyCaptureScrollView.m */; };
-		4FBA3152261758C1006C20F3 /* SharedUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF6653B25F2C7B000689B77 /* SharedUtility.m */; };
 		4FBC943B260F8AA60062F186 /* MASShortcut.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FBC9434260F8AA60062F186 /* MASShortcut.m */; };
 		4FBDA14F27B241CE0030E4EA /* GlobalEventTapThread.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FBDA14E27B241CE0030E4EA /* GlobalEventTapThread.m */; };
 		4FC55E31285E6F1F00F2FCCF /* GlobalDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FC55E2F285E6BF800F2FCCF /* GlobalDefaults.swift */; };
@@ -217,8 +213,6 @@
 		4FE40B96283A49DD00880BEF /* SharedUtilitySwift.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FE40B95283A49DD00880BEF /* SharedUtilitySwift.swift */; };
 		4FE40B97283A49DD00880BEF /* SharedUtilitySwift.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FE40B95283A49DD00880BEF /* SharedUtilitySwift.swift */; };
 		4FE6CBC428987E8B00B3E829 /* DynamicSystemAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FE6CBC328987E8A00B3E829 /* DynamicSystemAnimator.swift */; };
-		4FEB660B279350F900E6A111 /* CocoaLumberjack in Frameworks */ = {isa = PBXBuildFile; productRef = 4FEB660A279350F900E6A111 /* CocoaLumberjack */; };
-		4FEB660D279350FD00E6A111 /* CocoaLumberjackSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 4FEB660C279350FD00E6A111 /* CocoaLumberjackSwift */; };
 		4FEB660F2793510300E6A111 /* CocoaLumberjack in Frameworks */ = {isa = PBXBuildFile; productRef = 4FEB660E2793510300E6A111 /* CocoaLumberjack */; };
 		4FEB66112793510800E6A111 /* CocoaLumberjackSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 4FEB66102793510800E6A111 /* CocoaLumberjackSwift */; };
 		4FEB66132793510C00E6A111 /* CocoaLumberjack in Frameworks */ = {isa = PBXBuildFile; productRef = 4FEB66122793510C00E6A111 /* CocoaLumberjack */; };
@@ -246,8 +240,6 @@
 		4FF6655025F2C7B000689B77 /* NSArray+Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF6653D25F2C7B000689B77 /* NSArray+Additions.m */; };
 		4FF6655125F2C7B000689B77 /* NSDictionary+Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF6654025F2C7B000689B77 /* NSDictionary+Additions.m */; };
 		4FF6655225F2C7B000689B77 /* NSDictionary+Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF6654025F2C7B000689B77 /* NSDictionary+Additions.m */; };
-		4FF6655725F2C7CA00689B77 /* HelperServices.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF6652F25F2C7B000689B77 /* HelperServices.m */; };
-		4FF6655C25F2C7D500689B77 /* Locator.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF6653225F2C7B000689B77 /* Locator.m */; };
 		4FF665ED25F2C92700689B77 /* MFSegmentedControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF665C125F2C92700689B77 /* MFSegmentedControl.m */; };
 		4FF665EE25F2C92700689B77 /* OverridePanel.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF665C225F2C92700689B77 /* OverridePanel.m */; };
 		4FF665EF25F2C92700689B77 /* ScrollOverridePanel.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4FF665C325F2C92700689B77 /* ScrollOverridePanel.xib */; };
@@ -341,25 +333,9 @@
 			remoteGlobalIDString = 4FCECD7F21092354001F1078;
 			remoteInfo = "Mac Mouse Fix Helper";
 		};
-		4F94F73725E6138C00D9F24A /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 4FCECD7821092354001F1078 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 4F2FDF2F2315662400C7BE14;
-			remoteInfo = "Mac Mouse Fix Updater";
-		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
-		4F2FDF2E2315662400C7BE14 /* CopyFiles */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 12;
-			dstPath = usr/share/man/man1;
-			dstSubfolderSpec = 1;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		4F9111F8289FF25D00D2DD8C /* Copy sm_launchd.plist */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
@@ -399,7 +375,6 @@
 			dstPath = Contents/Library/LaunchServices;
 			dstSubfolderSpec = 1;
 			files = (
-				4F94F74C25E614B800D9F24A /* Mac Mouse Fix Accomplice in Copy Accomplice */,
 			);
 			name = "Copy Accomplice";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -431,8 +406,6 @@
 		4F2F5DA625FB6FFD0037660A /* AddWindowController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AddWindowController.h; sourceTree = "<group>"; };
 		4F2F5DA725FB6FFD0037660A /* AddWindowController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AddWindowController.m; sourceTree = "<group>"; };
 		4F2F5DB125FB723D0037660A /* AddWindow.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AddWindow.xib; sourceTree = "<group>"; };
-		4F2FDF302315662400C7BE14 /* Mac Mouse Fix Accomplice */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "Mac Mouse Fix Accomplice"; sourceTree = BUILT_PRODUCTS_DIR; };
-		4F2FDF322315662500C7BE14 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		4F319CB926252A2D004E5F63 /* ButtonGroupRowView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ButtonGroupRowView.h; sourceTree = "<group>"; };
 		4F319CBA26252A2D004E5F63 /* ButtonGroupRowView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ButtonGroupRowView.m; sourceTree = "<group>"; };
 		4F37FAD725FDFDC4004C34C4 /* MFScrollView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MFScrollView.m; sourceTree = "<group>"; };
@@ -645,7 +618,6 @@
 		4FD860DA266EFD64004F76C8 /* ScrollConfigObjC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScrollConfigObjC.h; sourceTree = "<group>"; };
 		4FD9A7CE28BA29CB0006DF4B /* default_secureStorage.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = default_secureStorage.plist; sourceTree = "<group>"; };
 		4FD9A7D028BA2A810006DF4B /* SecureStorage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SecureStorage.swift; sourceTree = "<group>"; };
-		4FDBC59A234F80C500A46517 /* Accomplice.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Accomplice.entitlements; sourceTree = "<group>"; };
 		4FDC127528A2C6160076972E /* ReactiveConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReactiveConfig.swift; sourceTree = "<group>"; };
 		4FDE757A28B0E35100662314 /* Gumroad.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Gumroad.swift; sourceTree = "<group>"; };
 		4FDE757D28B0E66900662314 /* License.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = License.h; sourceTree = "<group>"; };
@@ -822,15 +794,6 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		4F2FDF2D2315662400C7BE14 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				4FEB660B279350F900E6A111 /* CocoaLumberjack in Frameworks */,
-				4FEB660D279350FD00E6A111 /* CocoaLumberjackSwift in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		4F94F5EB25E5EC2500D9F24A /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -929,15 +892,6 @@
 				4FD82DDA260575B100664D6F /* NotificationLabel.m */,
 			);
 			path = TrialNotifications;
-			sourceTree = "<group>";
-		};
-		4F2FDF312315662500C7BE14 /* Accomplice */ = {
-			isa = PBXGroup;
-			children = (
-				4FDBC59A234F80C500A46517 /* Accomplice.entitlements */,
-				4F2FDF322315662500C7BE14 /* main.m */,
-			);
-			path = Accomplice;
 			sourceTree = "<group>";
 		};
 		4F39BC88263B68F400FDF692 /* xcconfig */ = {
@@ -1461,7 +1415,6 @@
 				4FF6652B25F2C7B000689B77 /* Shared */,
 				4FF665BE25F2C92700689B77 /* App */,
 				4FF6660725F2C93A00689B77 /* Helper */,
-				4F2FDF312315662500C7BE14 /* Accomplice */,
 				4FA1ACE025E85904007DB95B /* Tests */,
 				4FCECD8121092354001F1078 /* Products */,
 				4F422EF023469B2B00AA6E22 /* Other */,
@@ -1473,7 +1426,6 @@
 			isa = PBXGroup;
 			children = (
 				4FCECD8021092354001F1078 /* Mac Mouse Fix Helper.app */,
-				4F2FDF302315662400C7BE14 /* Mac Mouse Fix Accomplice */,
 				4F94F5EE25E5EC2500D9F24A /* Mac Mouse Fix.app */,
 				4F94F60025E5EC2800D9F24A /* Mac Mouse FixTests.xctest */,
 				4F94F60B25E5EC2800D9F24A /* Mac Mouse FixUITests.xctest */,
@@ -2129,27 +2081,6 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		4F2FDF2F2315662400C7BE14 /* Mac Mouse Fix Accomplice */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 4F2FDF342315662500C7BE14 /* Build configuration list for PBXNativeTarget "Mac Mouse Fix Accomplice" */;
-			buildPhases = (
-				4F2FDF2C2315662400C7BE14 /* Sources */,
-				4F2FDF2D2315662400C7BE14 /* Frameworks */,
-				4F2FDF2E2315662400C7BE14 /* CopyFiles */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-			);
-			name = "Mac Mouse Fix Accomplice";
-			packageProductDependencies = (
-				4FEB660A279350F900E6A111 /* CocoaLumberjack */,
-				4FEB660C279350FD00E6A111 /* CocoaLumberjackSwift */,
-			);
-			productName = "Mouse Fix Updater";
-			productReference = 4F2FDF302315662400C7BE14 /* Mac Mouse Fix Accomplice */;
-			productType = "com.apple.product-type.tool";
-		};
 		4F94F5ED25E5EC2500D9F24A /* Mac Mouse Fix */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 4F94F61225E5EC2800D9F24A /* Build configuration list for PBXNativeTarget "Mac Mouse Fix" */;
@@ -2166,7 +2097,6 @@
 			buildRules = (
 			);
 			dependencies = (
-				4F94F73825E6138C00D9F24A /* PBXTargetDependency */,
 				4F94F73625E6138800D9F24A /* PBXTargetDependency */,
 			);
 			name = "Mac Mouse Fix";
@@ -2257,10 +2187,6 @@
 				LastUpgradeCheck = 1220;
 				ORGANIZATIONNAME = "Noah Nuebling";
 				TargetAttributes = {
-					4F2FDF2F2315662400C7BE14 = {
-						CreatedOnToolsVersion = 10.3;
-						LastSwiftMigration = 1310;
-					};
 					4F94F5ED25E5EC2500D9F24A = {
 						CreatedOnToolsVersion = 12.2;
 					};
@@ -2303,7 +2229,6 @@
 			targets = (
 				4F94F5ED25E5EC2500D9F24A /* Mac Mouse Fix */,
 				4FCECD7F21092354001F1078 /* Mac Mouse Fix Helper */,
-				4F2FDF2F2315662400C7BE14 /* Mac Mouse Fix Accomplice */,
 				4F94F5FF25E5EC2800D9F24A /* Mac Mouse FixTests */,
 				4F94F60A25E5EC2800D9F24A /* Mac Mouse FixUITests */,
 			);
@@ -2432,18 +2357,6 @@
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
-		4F2FDF2C2315662400C7BE14 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				4F2FDF332315662500C7BE14 /* main.m in Sources */,
-				4FA9ABCC287B3B590049DE7D /* SharedMessagePort.m in Sources */,
-				4FBA3152261758C1006C20F3 /* SharedUtility.m in Sources */,
-				4FF6655725F2C7CA00689B77 /* HelperServices.m in Sources */,
-				4FF6655C25F2C7D500689B77 /* Locator.m in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		4F94F5EA25E5EC2500D9F24A /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -2744,11 +2657,6 @@
 			target = 4FCECD7F21092354001F1078 /* Mac Mouse Fix Helper */;
 			targetProxy = 4F94F73525E6138800D9F24A /* PBXContainerItemProxy */;
 		};
-		4F94F73825E6138C00D9F24A /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 4F2FDF2F2315662400C7BE14 /* Mac Mouse Fix Accomplice */;
-			targetProxy = 4F94F73725E6138C00D9F24A /* PBXContainerItemProxy */;
-		};
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
@@ -2818,62 +2726,6 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
-		4F2FDF352315662500C7BE14 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CLANG_ENABLE_MODULES = YES;
-				CLANG_ENABLE_OBJC_WEAK = YES;
-				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = "$(inherited)";
-				CODE_SIGN_ENTITLEMENTS = Accomplice/Accomplice.entitlements;
-				CODE_SIGN_IDENTITY = "Apple Development";
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = LM5Z78756B;
-				ENABLE_HARDENED_RUNTIME = YES;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/Frameworks",
-				);
-				HEADER_SEARCH_PATHS = "$(inherited)";
-				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../Frameworks";
-				MACOSX_DEPLOYMENT_TARGET = 10.13;
-				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
-				MTL_FAST_MATH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.nuebling.mac-mouse-fix.accomplice";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = "";
-				SKIP_INSTALL = YES;
-				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 5.0;
-			};
-			name = Debug;
-		};
-		4F2FDF362315662500C7BE14 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CLANG_ENABLE_MODULES = YES;
-				CLANG_ENABLE_OBJC_WEAK = YES;
-				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = "$(inherited)";
-				CODE_SIGN_ENTITLEMENTS = Accomplice/Accomplice.entitlements;
-				CODE_SIGN_IDENTITY = "Apple Development";
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = LM5Z78756B;
-				ENABLE_HARDENED_RUNTIME = YES;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/Frameworks",
-				);
-				HEADER_SEARCH_PATHS = "$(inherited)";
-				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../Frameworks";
-				MACOSX_DEPLOYMENT_TARGET = 10.13;
-				MTL_FAST_MATH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.nuebling.mac-mouse-fix.accomplice";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = "";
-				SKIP_INSTALL = YES;
-				SWIFT_VERSION = 5.0;
-			};
-			name = Release;
-		};
 		4F94F61325E5EC2800D9F24A /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -3267,15 +3119,6 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		4F2FDF342315662500C7BE14 /* Build configuration list for PBXNativeTarget "Mac Mouse Fix Accomplice" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				4F2FDF352315662500C7BE14 /* Debug */,
-				4F2FDF362315662500C7BE14 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
 		4F94F61225E5EC2800D9F24A /* Build configuration list for PBXNativeTarget "Mac Mouse Fix" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
@@ -3401,16 +3244,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 4FC8A7CF28AAF2EA007DB982 /* XCRemoteSwiftPackageReference "swift-markdown" */;
 			productName = Markdown;
-		};
-		4FEB660A279350F900E6A111 /* CocoaLumberjack */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 4F1757BB2675955B009FCB47 /* XCRemoteSwiftPackageReference "CocoaLumberjack" */;
-			productName = CocoaLumberjack;
-		};
-		4FEB660C279350FD00E6A111 /* CocoaLumberjackSwift */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 4F1757BB2675955B009FCB47 /* XCRemoteSwiftPackageReference "CocoaLumberjack" */;
-			productName = CocoaLumberjackSwift;
 		};
 		4FEB660E2793510300E6A111 /* CocoaLumberjack */ = {
 			isa = XCSwiftPackageProductDependency;
