@@ -493,9 +493,6 @@
 		4F85C05328BBE6FA00E96E9C /* TrialSectionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrialSectionManager.swift; sourceTree = "<group>"; };
 		4F8A8DAC287EEF6200786BCC /* IOHIDAccelerationTableBridge.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = IOHIDAccelerationTableBridge.mm; sourceTree = "<group>"; };
 		4F8A8DB0287EEF9B00786BCC /* IOHIDAccelerationTableBridge.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = IOHIDAccelerationTableBridge.hpp; sourceTree = "<group>"; };
-		4F8A8DB4287EF65800786BCC /* Metal.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Metal.framework; path = System/Library/Frameworks/Metal.framework; sourceTree = SDKROOT; };
-		4F8A8DB6287EF76200786BCC /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
-		4F8A8DB8287EF76A00786BCC /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		4F8A8DBA287EFB3400786BCC /* IOHIDAccelerationTable.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = IOHIDAccelerationTable.hpp; sourceTree = "<group>"; };
 		4F8A8DBC287F203D00786BCC /* IOHIDAccelerationTable.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = IOHIDAccelerationTable.cpp; sourceTree = "<group>"; };
 		4F8A8DBE287F7BBA00786BCC /* NaturalAccelerationCurve.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NaturalAccelerationCurve.swift; sourceTree = "<group>"; };
@@ -547,9 +544,6 @@
 		4F909D4028A0C411009349A2 /* SwiftUITest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftUITest.swift; sourceTree = "<group>"; };
 		4F909D4328A0C4C2009349A2 /* NSArray+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSArray+Extensions.swift"; sourceTree = "<group>"; };
 		4F909D4428A0C4C2009349A2 /* Collection+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Collection+Extensions.swift"; sourceTree = "<group>"; };
-		4F909D5428A0C818009349A2 /* ReactiveObjC.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = ReactiveObjC.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		4F909D5728A0C81F009349A2 /* ReactiveCocoa.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = ReactiveCocoa.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		4F909D5A28A0C824009349A2 /* ReactiveSwift.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = ReactiveSwift.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		4F9111F4289FF03200D2DD8C /* sm_launchd.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = sm_launchd.plist; sourceTree = "<group>"; };
 		4F92A706260F4BF000529D1F /* RemapTableView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RemapTableView.h; sourceTree = "<group>"; };
 		4F92A707260F4BF000529D1F /* RemapTableView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RemapTableView.m; sourceTree = "<group>"; };
@@ -1472,7 +1466,6 @@
 				4FCECD8121092354001F1078 /* Products */,
 				4F422EF023469B2B00AA6E22 /* Other */,
 				4FDECCD528A3A37800DDEE91 /* Frameworks */,
-				E7721D8AA50A5B47737E0DD5 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -2131,19 +2124,6 @@
 				4F9C9B6A268A2D6F0083DED0 /* CircularBuffer.m */,
 			);
 			path = Smoothing;
-			sourceTree = "<group>";
-		};
-		E7721D8AA50A5B47737E0DD5 /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				4F909D5A28A0C824009349A2 /* ReactiveSwift.framework */,
-				4F909D5728A0C81F009349A2 /* ReactiveCocoa.framework */,
-				4F909D5428A0C818009349A2 /* ReactiveObjC.framework */,
-				4F8A8DB8287EF76A00786BCC /* Foundation.framework */,
-				4F8A8DB6287EF76200786BCC /* QuartzCore.framework */,
-				4F8A8DB4287EF65800786BCC /* Metal.framework */,
-			);
-			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
