@@ -1,6 +1,0 @@
-framework module ZipArchive {
-  umbrella header "ZipArchive.h"
-
-  export *
-  module * { export * }
-}
