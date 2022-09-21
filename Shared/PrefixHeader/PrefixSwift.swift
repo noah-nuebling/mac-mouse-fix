@@ -17,14 +17,16 @@ import CocoaLumberjackSwift
         ///     We'll probably only ever use it for CocoaLumberjack log levels, just like our WannabePrefixHeader
         
         /// Set Log level for CocoaLumberjack in Swift
-        ///     Separate from objc log level
+        ///     Separate from objc log level, which is setup in `WannabePrefixHeader.h`
+        ///     Think about moving to using SharedUtility.runningPrerelease() instead of #if DEBUG
+        ///
         
-        #if DEBUG
+#if DEBUG
         dynamicLogLevel = .debug
-        #else
+#else
         dynamicLogLevel = .info
 //        dynamicLogLevel = .off /// Override for testing
-        #endif
+#endif
         
     }
     

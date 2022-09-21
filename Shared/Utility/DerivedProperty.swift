@@ -71,9 +71,7 @@ fileprivate func getProperties(on owner: AnyObject, at keyPaths: [String]) -> [A
 
 fileprivate func getDerivedValue<S, T>(owner: S, givenProperties: [AnyHashable], compute: () -> T, lastHash: inout Int, lastValue: inout T?) -> T {
     
-    #if DEBUG
-//    print("Getting derived value...")
-    #endif
+//    DDLogDebug("Getting derived value...")
     
     /// Get hash of current property values
     
@@ -83,9 +81,7 @@ fileprivate func getDerivedValue<S, T>(owner: S, givenProperties: [AnyHashable],
     
     if (hash == lastHash) {
         
-        #if DEBUG
-//        print("Given properties haven't changed. Reusing previous value \(String(describing: lastValue))")
-        #endif
+//        DDLogDebug("Given properties haven't changed. Reusing previous value \(String(describing: lastValue))")
         
         return lastValue!
     }

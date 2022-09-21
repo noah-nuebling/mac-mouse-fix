@@ -145,13 +145,11 @@
         SMAppService *service = [SMAppService agentServiceWithPlistName:@"sm_launchd.plist"];
         BOOL result = service.status == SMAppServiceStatusEnabled;
         
-#if DEBUG
         if (result) {
-            NSLog(@"Helper found to be active");
+            DDLogDebug(@"Helper found to be active");
         } else {
-            NSLog(@"Helper found to be inactive. Status: %ld", (long)service.status);
+            DDLogDebug(@"Helper found to be inactive. Status: %ld", (long)service.status);
         }
-#endif
         return result;
     } else {
         /// Not running macOS 13.0
