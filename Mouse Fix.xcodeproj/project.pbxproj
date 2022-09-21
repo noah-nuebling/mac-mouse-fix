@@ -2307,6 +2307,7 @@
 		};
 		4FD148D928AA45FE00FE688C /* BartyCrouch */ = {
 			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
 			buildActionMask = 2147483647;
 			files = (
 			);
