@@ -115,7 +115,7 @@
 ///
 /// Filtering criteria for which attached devices we create an MFDevice for, are setup in  `DeviceManager::setupDeviceMatchingAndRemovalCallbacks()`
 
-static int64_t _previousDeltaY;
+//static int64_t _previousDeltaY;
 
 static void handleInput(void *context, IOReturn result, void *sender, IOHIDValueRef value) {
     
@@ -280,6 +280,9 @@ typedef struct __IOHIDDevice
 
 #pragma mark - Doesn't belong here
 
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wunused-function"
+
 static uint64_t IOHIDDeviceGetRegistryID(IOHIDDeviceRef  _Nonnull device) {
     /// TODO: Put this in some utility class
     io_service_t service = IOHIDDeviceGetService(device);
@@ -287,5 +290,7 @@ static uint64_t IOHIDDeviceGetRegistryID(IOHIDDeviceRef  _Nonnull device) {
     IORegistryEntryGetRegistryEntryID(service, &deviceID);
     return deviceID;
 }
+
+#pragma clang diagnostic pop
 
 @end

@@ -299,7 +299,7 @@ static void startMomentumScroll_Unsafe(double timeSinceLastInput, Vector exitVel
     
     /// Notify other touch drivers
 
-    [OutputCoordinator suspendTouchDriversFromDriver:kTouchDriverGestureScrollSimulator];
+    (void)[OutputCoordinator suspendTouchDriversFromDriver:kTouchDriverGestureScrollSimulator];
     
     /// Init animator
     
