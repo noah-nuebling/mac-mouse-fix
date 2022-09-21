@@ -66,9 +66,6 @@ NSTableView *_tableView;
 static NSDictionary *separatorEffectsTableEntry() {
     return @{@"isSeparator": @YES};
 }
-static NSDictionary *bigSeparatorEffectsTableEntry() {
-    return @{@"isBigSeparator": @YES};
-}
 //static NSDictionary *hideableSeparatorEffectsTableEntry() {
 //    return @{@"isSeparator": @YES, @"hideable": @YES}; /// This doesn't work ;/
 //}
@@ -129,7 +126,8 @@ static NSArray *getDragEffectsTable() {
 }
 static NSArray *getOneShotEffectsTable(NSDictionary *rowDict) {
     
-    MFMouseButtonNumber buttonNumber = ((NSNumber *)rowDict[kMFRemapsKeyTrigger][kMFButtonTriggerKeyButtonNumber]).unsignedIntValue;
+//    MFMouseButtonNumber buttonNumber = ((NSNumber *)rowDict[kMFRemapsKeyTrigger][kMFButtonTriggerKeyButtonNumber]).unsignedIntValue;
+    
     NSDictionary *effectDict = rowDict[kMFRemapsKeyEffect];
     
     NSMutableArray *oneShotEffectsTable = @[
@@ -427,11 +425,7 @@ static NSString *effectNameForRowDict(NSDictionary * _Nonnull rowDict) {
         
         i = (RemapTableMenuItem *)RemapTableMenuItem.separatorItem;
         
-    } else if ([itemModel[@"isBigSeparator"] isEqual: @YES]) {
-        
-        i = (RemapTableMenuItem *)RemapTableMenuItem.separatorItem;
-        
-        /// TODO: Implement. Make taller and darker color or sth.
+        /// IDEA: Add a "bigSeparator" for 2 level grouping and easier visual parsing
         
     } else {
         
