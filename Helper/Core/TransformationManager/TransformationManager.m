@@ -512,7 +512,7 @@ bool keyCaptureModePayloadIsValidWithEvent(NSEvent *e, CGEventFlags flags, MFSys
         /// Option precond
         
         @{
-            kMFModificationPreconditionKeyKeyboard: @(NSAlternateKeyMask)
+            kMFModificationPreconditionKeyKeyboard: @(NSEventModifierFlagOption)
         }: @{
             kMFTriggerScroll: @{
                 kMFModifiedScrollDictKeyInputModificationType: kMFModifiedScrollInputModificationTypeQuickScroll
@@ -522,7 +522,7 @@ bool keyCaptureModePayloadIsValidWithEvent(NSEvent *e, CGEventFlags flags, MFSys
         /// Shift precond
             
         @{
-            kMFModificationPreconditionKeyKeyboard: @(NSShiftKeyMask)
+            kMFModificationPreconditionKeyKeyboard: @(NSEventModifierFlagShift)
         }: @{
             kMFTriggerScroll: @{
                 kMFModifiedScrollDictKeyEffectModificationType: kMFModifiedScrollEffectModificationTypeHorizontalScroll,
@@ -533,7 +533,7 @@ bool keyCaptureModePayloadIsValidWithEvent(NSEvent *e, CGEventFlags flags, MFSys
         /// Option & Shift precond
         
         @{
-            kMFModificationPreconditionKeyKeyboard: @(NSAlternateKeyMask | NSShiftKeyMask)
+            kMFModificationPreconditionKeyKeyboard: @(NSEventModifierFlagOption | NSEventModifierFlagShift)
         }: @{
             kMFTriggerScroll: @{
                 kMFModifiedScrollDictKeyEffectModificationType: kMFModifiedScrollEffectModificationTypeZoom
@@ -553,7 +553,7 @@ bool keyCaptureModePayloadIsValidWithEvent(NSEvent *e, CGEventFlags flags, MFSys
             //                        kMFButtonModificationPreconditionKeyClickLevel: @(1),
             //                    },
             //            ],
-            kMFModificationPreconditionKeyKeyboard: @(NSShiftKeyMask | NSControlKeyMask)
+            kMFModificationPreconditionKeyKeyboard: @(NSEventModifierFlagShift | NSEventModifierFlagControl)
         }: @{
             kMFTriggerDrag: @{
                 kMFModifiedDragDictKeyType: kMFModifiedDragTypeThreeFingerSwipe,
