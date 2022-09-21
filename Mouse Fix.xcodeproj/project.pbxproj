@@ -206,7 +206,6 @@
 		4FDE75A728B25FB300662314 /* NSAttributedString+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FDE75A628B25FB300662314 /* NSAttributedString+Extensions.swift */; };
 		4FDE75A928B269AE00662314 /* Randomizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FDE75A828B269AE00662314 /* Randomizer.swift */; };
 		4FDE75AA28B269AE00662314 /* Randomizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FDE75A828B269AE00662314 /* Randomizer.swift */; };
-		4FDECCDA28A3A37800DDEE91 /* Sparkle.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4FDECCD728A3A37800DDEE91 /* Sparkle.framework */; };
 		4FDECCDB28A3A37800DDEE91 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 4FDECCD828A3A37800DDEE91 /* README.md */; };
 		4FDECCDE28A3E93100DDEE91 /* IsObjC.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FDECCDD28A3E93100DDEE91 /* IsObjC.m */; };
 		4FDECCDF28A3E93100DDEE91 /* IsObjC.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FDECCDD28A3E93100DDEE91 /* IsObjC.m */; };
@@ -803,7 +802,6 @@
 				4F909D5128A0C6F3009349A2 /* SnapKit in Frameworks */,
 				4F39BC26263AC31600FDF692 /* Sparkle.framework in Frameworks */,
 				4FA40CEF28A0CA0A00499E53 /* ReactiveSwift in Frameworks */,
-				4FDECCDA28A3A37800DDEE91 /* Sparkle.framework in Frameworks */,
 				4FEB66152793510F00E6A111 /* CocoaLumberjackSwift in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -2182,7 +2180,7 @@
 				KnownAssetTags = (
 					0,
 				);
-				LastUpgradeCheck = 1220;
+				LastUpgradeCheck = 1400;
 				ORGANIZATIONNAME = "Noah Nuebling";
 				TargetAttributes = {
 					4F94F5ED25E5EC2500D9F24A = {
