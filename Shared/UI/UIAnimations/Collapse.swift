@@ -63,8 +63,8 @@ extension Reactive where Base : NSView {
             /// Don't play animation under certain conditions
             /// - Don't play it the first time. This is so that when this is bound to a UI toggle, the initial value doesn't cause an animation.
             /// - Don't play if invisible. This is to prevent issues when the app is disabled while the user is on a different tab. And I guess for efficiency.
-            var inited = objc_getAssociatedObject(base, &AssociatedKeysForReactive.collapseIsInitialized) as? Bool ?? false
-            var visible = base.window != nil
+            let inited = objc_getAssociatedObject(base, &AssociatedKeysForReactive.collapseIsInitialized) as? Bool ?? false
+            let visible = base.window != nil
             
             if !inited || !visible {
                 base.setCollapsedWithoutAnimation(shouldCollapse)
@@ -281,7 +281,7 @@ class CollapsingStackView: NSStackView {
         } else if !collapse { /// Basically do same thing as `collapse` code just in reverse
             
             /// Animate height of wrapper
-            let animationFromConstraint = state.wrapperHeightConstraint?.animation(forKey: "constant") as! CAAnimation /// This one doesn't jitter!! - I investigated what the difference might be in `InvestigateLayoutAnimations.xcproj`, but I couldn't find anything besides `roundsToInteger`. (which does make things better but not entirely) Very mysterious.
+            // let animationFromConstraint = state.wrapperHeightConstraint?.animation(forKey: "constant") as! CAAnimation /// This one doesn't jitter!! - I investigated what the difference might be in `InvestigateLayoutAnimations.xcproj`, but I couldn't find anything besides `roundsToInteger`. (which does make things better but not entirely) Very mysterious.
             Animate.with(animation) {
                 state.wrapperHeightConstraint!.reactiveAnimator().constant.set(targetHeight)
             }

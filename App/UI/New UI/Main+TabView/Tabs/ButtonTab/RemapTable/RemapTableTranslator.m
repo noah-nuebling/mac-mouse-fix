@@ -84,9 +84,9 @@ static NSArray *getScrollEffectsTable() {
         @{@"ui": NSLocalizedString(@"scroll-effect.horizontal", @"First draft: Horizontal Scroll"), @"tool": NSLocalizedString(@"scroll-effect.horizontal.hint", @"First draft: Scroll left and right, navigate between pages in Safari, delete messages in Mail and more\n \nWorks like swiping horizontally with 2 fingers on an Apple Trackpad"), @"dict": @{
             kMFModifiedScrollDictKeyEffectModificationType: kMFModifiedScrollEffectModificationTypeHorizontalScroll
         }},
-//        @{@"ui": @"Rotate", @"hideable": @NO, @"tool": @"Rotate in Maps and other apps \n \nWorks like Twisting with 2 fingers on an Apple Trackpad", @"dict": @{
-//            kMFModifiedScrollDictKeyEffectModificationType: kMFModifiedScrollEffectModificationTypeRotate
-//        }},
+        @{@"ui": NSLocalizedString(@"scroll-effect.rotate", @"First draft: Rotate"), @"hideable": @NO, @"tool": NSLocalizedString(@"scroll-effect.rotate.hint", @"First draft: Rotate content in Apple Maps and other apps\n \nWorks like twisting with 2 fingers on an Apple Trackpad"), @"dict": @{
+            kMFModifiedScrollDictKeyEffectModificationType: kMFModifiedScrollEffectModificationTypeRotate
+        }},
         separatorEffectsTableEntry(),
         @{@"ui": NSLocalizedString(@"scroll-effect.swift", @"First draft: Swift Scroll"), @"tool": NSLocalizedString(@"scroll-effect.swift.hint", @"Scroll long distances with minimal effort"), @"dict": @{
             kMFModifiedScrollDictKeyInputModificationType: kMFModifiedScrollInputModificationTypeQuickScroll
@@ -94,10 +94,10 @@ static NSArray *getScrollEffectsTable() {
         @{@"ui": NSLocalizedString(@"scroll-effect.precise", @"First draft: Precise Scroll"), @"tool": NSLocalizedString(@"scroll-effect.precise.hint", @"First draft: Scroll small distances and use sensitive UI elements with precision"), @"dict": @{
             kMFModifiedScrollDictKeyInputModificationType: kMFModifiedScrollInputModificationTypePrecisionScroll
         }},
-        separatorEffectsTableEntry(),
-        @{@"ui": NSLocalizedString(@"scroll-effect.app-switcher", @"First draft: App Switcher"), @"tool": NSLocalizedString(@"scroll-effect.app-switcher.hint", @"First draft: Quickly switch between open apps\n \nWorks like holding Command (⌘) and then pressing Tab (⇥) on your keyboard"), @"dict": @{
-            kMFModifiedScrollDictKeyEffectModificationType: kMFModifiedScrollEffectModificationTypeCommandTab
-        }},
+//        separatorEffectsTableEntry(),
+//        @{@"ui": NSLocalizedString(@"scroll-effect.app-switcher", @"First draft: App Switcher"), @"tool": NSLocalizedString(@"scroll-effect.app-switcher.hint", @"First draft: Quickly switch between open apps\n \nWorks like holding Command (⌘) and then pressing Tab (⇥) on your keyboard"), @"dict": @{
+//            kMFModifiedScrollDictKeyEffectModificationType: kMFModifiedScrollEffectModificationTypeCommandTab
+//        }},
         
     ];
     return scrollEffectsTable;

@@ -429,3 +429,9 @@
 
 /* First draft: Go forward one page in Safari and other apps */
 "effect.forward.hint" = "Gehe eine Seite vorwärts in Safari und anderen Apps";
+
+/* First draft: Rotate */
+"scroll-effect.rotate" = "Drehen";
+
+/* First draft: Rotate content in Apple Maps and other apps\n \nWorks like twisting with 2 fingers on an Apple Trackpad */
+"scroll-effect.rotate.hint" = "Drehe den Inhalt in Apple Maps und anderen Apps\n \nFunktioniert wie drehen mit 2 Fingern auf einem Apple Trackpad";

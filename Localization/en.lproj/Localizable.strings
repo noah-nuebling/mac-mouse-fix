@@ -20,7 +20,7 @@
 "apple-key-fallback.globe" = "<Emoji Picker key>";
 
 /* First draft: <Increase Keyboard Brightness key> */
-"apple-key-fallback.light.max" = "";
+"apple-key-fallback.light.max" = "<Increase Keyboard Brightness key>";
 
 /* First draft: <Decrease Keyboard Brightness key> */
 "apple-key-fallback.light.min" = "<Decrease Keyboard Brightness key>";
@@ -101,7 +101,7 @@
 "button-string.tool.secondary" = "the Secondary Mouse Button (also called the Right Mouse Button or Mouse Button 2)";
 
 /* Note: Value for this key is defined in Localizable.stringsdict, not Localizable.strings */
-"capture-toast.body" = "";
+"capture-toast.body" = "<>";
 
 /* First draft: Learn More */
 "capture-toast.link" = "Learn More";
@@ -215,7 +215,7 @@
 "is-disabled-toast" = "Mac Mouse Fix was **disabled** in System Settings.\nTo enable Mac Mouse Fix:\n\n1. Go to [Login Items Settings](x-apple.systempreferences:com.apple.LoginItems-Settings.extension)\n2. Switch on \'Mac Mouse Fix.app\'";
 
 /* First draft: ,  || Note: This string joins elements in a list except the second-to-last and last one. || Note: The first draft contains a space after the comma. */
-"join-list" = "";
+"join-list" = ", ";
 
 /* First draft: %@ and %@ || Note: This format string joins the second-to-last element and the last elements in a list of items */
 "join-list.last" = "%@ and %@";
@@ -416,7 +416,7 @@
 "trigger.scroll.2" = "Double Click and Scroll %@";
 
 /* First draft: Triple Click and Scroll %@ */
-"trigger.scroll.3" = "";
+"trigger.scroll.3" = "Triple Click and Scroll %@";
 
 /* First draft: and Scroll || Example: ⌥⌘ and Scroll */
 "trigger.scroll.flags" = "and Scroll";
@@ -429,3 +429,9 @@
 
 /* First draft: Hi there! You've been using Mac Mouse Fix for **%d days** now. I hope you're enjoying it!\n\nIf you want to keep using Mac Mouse Fix, you can [buy it now](%@). */
 "trial-notif.body" = "Hi there! You've been using Mac Mouse Fix for **%d days** now. I hope you're enjoying it!\n\nIf you want to keep using Mac Mouse Fix, you can [buy it now](%@).";
+
+/* First draft: Rotate */
+"scroll-effect.rotate" = "Rotate";
+
+/* First draft: Rotate content in Apple Maps and other apps\n \nWorks like twisting with 2 fingers on an Apple Trackpad */
+"scroll-effect.rotate.hint" = "Rotate content in Apple Maps and other apps\n \nWorks like twisting with 2 fingers on an Apple Trackpad";

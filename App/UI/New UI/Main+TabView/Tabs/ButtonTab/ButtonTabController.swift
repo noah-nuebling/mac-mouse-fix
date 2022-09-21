@@ -186,7 +186,7 @@ import CocoaLumberjackSwift
             if #available(macOS 13.0, *) {
                 
                 /// Build string
-                var messageRaw = NSLocalizedString("button-revive-toast", comment: "First draft: __Enabled__ Mac Mouse Fix for __Buttons__\nIt had been disabled from the Menu Bar %@ || Note: %@ will be replaced by the menubar icon")
+                let messageRaw = NSLocalizedString("button-revive-toast", comment: "First draft: __Enabled__ Mac Mouse Fix for __Buttons__\nIt had been disabled from the Menu Bar %@ || Note: %@ will be replaced by the menubar icon")
                 var message = NSAttributedString(coolMarkdown: messageRaw)!
                 let symbolString = NSAttributedString(symbol: "CoolMenuBarIcon", hPadding: 0.0, vOffset: -6, fallback: "<Mac Mouse Fix Menu Bar Item>")
                 message = NSAttributedString(attributedFormat: message, args: [symbolString])
@@ -242,7 +242,7 @@ import CocoaLumberjackSwift
     override func mouseUp(with event: NSEvent) {
         if !pointerIsInsideAddField { return }
         
-        var messageRaw = NSLocalizedString("forbidden-capture-toast.1", comment: "First draft: **Primary Mouse Button** can't be used\nPlease try another button")
+        let messageRaw = NSLocalizedString("forbidden-capture-toast.1", comment: "First draft: **Primary Mouse Button** can't be used\nPlease try another button")
         let message = NSAttributedString(coolMarkdown: messageRaw)!;
         
         ToastNotificationController.attachNotification(withMessage: message, to: MainAppState.shared.window!, forDuration: -1)
@@ -250,7 +250,7 @@ import CocoaLumberjackSwift
     override func rightMouseUp(with event: NSEvent) {
         if !pointerIsInsideAddField { return }
         
-        var messageRaw = NSLocalizedString("forbidden-capture-toast.2", comment: "First draft: **Secondary Mouse Button** can't be used\nPlease try another button")
+        let messageRaw = NSLocalizedString("forbidden-capture-toast.2", comment: "First draft: **Secondary Mouse Button** can't be used\nPlease try another button")
         let message = NSAttributedString(coolMarkdown: messageRaw)!;
         
         ToastNotificationController.attachNotification(withMessage: message, to: MainAppState.shared.window!, forDuration: -1)
