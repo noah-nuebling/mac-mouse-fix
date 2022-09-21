@@ -260,7 +260,7 @@
             <objects>
                 <viewController title="General" showSeguePresentationStyle="single" id="eLS-O0-A1x" userLabel="General View Controller" customClass="GeneralTabController" customModule="Mac_Mouse_Fix" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" misplaced="YES" id="As8-gY-gcx">
-                        <rect key="frame" x="0.0" y="0.0" width="295" height="271"/>
+                        <rect key="frame" x="0.0" y="0.0" width="353" height="271"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
                             <stackView distribution="fill" orientation="vertical" alignment="leading" spacing="4" horizontalStackHuggingPriority="1000" verticalStackHuggingPriority="249.99998474121094" horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="6xF-Pl-4RE" userLabel="Master Stack" customClass="CollapsingStackView" customModule="Mac_Mouse_Fix" customModuleProvider="target">
@@ -322,7 +322,7 @@
                                         <rect key="frame" x="0.0" y="0.0" width="293" height="177"/>
                                         <subviews>
                                             <customView translatesAutoresizingMaskIntoConstraints="NO" id="zUc-6f-AlY" userLabel="EnableIndent">
-                                                <rect key="frame" x="0.0" y="159" width="124" height="18"/>
+                                                <rect key="frame" x="0.0" y="159" width="293" height="18"/>
                                                 <subviews>
                                                     <textField horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="0gD-iB-vff">
                                                         <rect key="frame" x="-2" y="0.0" width="78" height="14"/>
@@ -337,7 +337,7 @@
                                                     <constraint firstItem="0gD-iB-vff" firstAttribute="leading" secondItem="zUc-6f-AlY" secondAttribute="leading" id="H0N-YR-2IN"/>
                                                     <constraint firstAttribute="bottom" secondItem="0gD-iB-vff" secondAttribute="bottom" id="Y7s-dv-7ga"/>
                                                     <constraint firstItem="0gD-iB-vff" firstAttribute="top" secondItem="zUc-6f-AlY" secondAttribute="top" constant="4" id="lQp-JO-bqP"/>
-                                                    <constraint firstAttribute="trailing" secondItem="0gD-iB-vff" secondAttribute="trailing" constant="50" id="n91-gE-8Gw"/>
+                                                    <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="0gD-iB-vff" secondAttribute="trailing" constant="50" id="n91-gE-8Gw"/>
                                                 </constraints>
                                             </customView>
                                             <customView verticalHuggingPriority="999" translatesAutoresizingMaskIntoConstraints="NO" id="FgF-8j-kMB" userLabel="Divider">
@@ -491,7 +491,7 @@
             <objects>
                 <viewController title="Buttons" id="d9S-X9-qM1" userLabel="Button View Controller" customClass="ButtonTabController" customModule="Mac_Mouse_Fix" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" misplaced="YES" id="vcE-RL-ceY">
-                        <rect key="frame" x="0.0" y="0.0" width="546" height="565"/>
+                        <rect key="frame" x="0.0" y="0.0" width="587" height="476"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
                             <stackView distribution="fill" orientation="vertical" alignment="centerX" horizontalStackHuggingPriority="1000" verticalStackHuggingPriority="1000" horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Qu8-7l-RFn">
@@ -504,7 +504,7 @@
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <subviews>
                                                 <imageView identifier="PlusIcon" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Jod-JU-J5j">
-                                                    <rect key="frame" x="228" y="38.5" width="60" height="66.5"/>
+                                                    <rect key="frame" x="227" y="38.5" width="60" height="66.5"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                                     <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyUpOrDown" image="plus" catalog="system" id="EyU-is-YRF"/>
                                                     <color key="contentTintColor" name="placeholderTextColor" catalog="System" colorSpace="catalog"/>
@@ -565,8 +565,8 @@
                                                             </textFieldCell>
                                                             <tableColumnResizingMask key="resizingMask" resizeWithTable="YES"/>
                                                             <prototypeCellViews>
-                                                                <tableCellView identifier="triggerCell" horizontalHuggingPriority="1000" verticalHuggingPriority="750" verticalCompressionResistancePriority="1000" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="nsw-iK-CJt" userLabel="TriggerCell" customClass="RemapTableCellView" customModule="Mac_Mouse_Fix" customModuleProvider="target">
-                                                                    <rect key="frame" x="8" y="0.0" width="287" height="39"/>
+                                                                <tableCellView identifier="triggerCell" horizontalHuggingPriority="1000" verticalHuggingPriority="750" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="nsw-iK-CJt" userLabel="TriggerCell" customClass="RemapTableCellView" customModule="Mac_Mouse_Fix" customModuleProvider="target">
+                                                                    <rect key="frame" x="8" y="0.0" width="290" height="38"/>
                                                                     <subviews>
                                                                         <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" horizontalCompressionResistancePriority="999" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="QCK-nA-0gO">
                                                                             <rect key="frame" x="22" y="12" width="266" height="16"/>
@@ -602,7 +602,7 @@
                                                                     </connections>
                                                                 </tableCellView>
                                                                 <tableCellView identifier="buttonGroupCell" id="pxf-x1-gL5" userLabel="ButtonGroupCell">
-                                                                    <rect key="frame" x="8" y="39" width="287" height="22"/>
+                                                                    <rect key="frame" x="8" y="38" width="287" height="22"/>
                                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                                     <subviews>
                                                                         <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="AHZ-Kd-4Xf">
@@ -641,7 +641,7 @@
                                                             <tableColumnResizingMask key="resizingMask" resizeWithTable="YES"/>
                                                             <prototypeCellViews>
                                                                 <tableCellView identifier="effectCell" translatesAutoresizingMaskIntoConstraints="NO" id="Epw-SW-Ew3" customClass="RemapTableCellView" customModule="Mac_Mouse_Fix" customModuleProvider="target">
-                                                                    <rect key="frame" x="312.5" y="0.0" width="223" height="39"/>
+                                                                    <rect key="frame" x="312" y="0.0" width="223" height="39"/>
                                                                     <subviews>
                                                                         <popUpButton verticalHuggingPriority="750" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="Pw9-ZH-Tb7">
                                                                             <rect key="frame" x="0.0" y="6" width="224" height="25"/>
@@ -669,7 +669,7 @@
                                                                     </constraints>
                                                                 </tableCellView>
                                                                 <tableCellView identifier="keyCaptureCell" translatesAutoresizingMaskIntoConstraints="NO" id="MzR-b1-853" customClass="RemapTableCellView" customModule="Mac_Mouse_Fix" customModuleProvider="target">
-                                                                    <rect key="frame" x="312.5" y="39" width="220" height="39"/>
+                                                                    <rect key="frame" x="312" y="39" width="220" height="39"/>
                                                                     <subviews>
                                                                         <button hidden="YES" focusRingType="exterior" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="psy-Jg-KLq">
                                                                             <rect key="frame" x="-4" y="3" width="228" height="32"/>
@@ -856,7 +856,7 @@
             <objects>
                 <viewController title="Scrolling" id="qcW-e9-BqR" userLabel="Scrolling View Controller" customClass="ScrollTabController" customModule="Mac_Mouse_Fix" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" misplaced="YES" id="ApB-fm-Akb">
-                        <rect key="frame" x="0.0" y="0.0" width="419" height="479"/>
+                        <rect key="frame" x="0.0" y="0.0" width="410" height="479"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
                             <stackView distribution="fill" orientation="vertical" alignment="leading" horizontalStackHuggingPriority="999" verticalStackHuggingPriority="249.99998474121094" horizontalHuggingPriority="999" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="N4F-RB-d7a" userLabel="Master Stack" customClass="CollapsingStackView" customModule="Mac_Mouse_Fix" customModuleProvider="target">
@@ -1090,8 +1090,8 @@
                                                     <fragment content="Scrolling &gt; Keyboard Modifiers Label"/>
                                                 </attributedString>
                                             </textField>
-                                            <button misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="4ZD-1f-bbe" userLabel="Restore Defaults button">
-                                                <rect key="frame" x="126" y="146" width="20" height="20"/>
+                                            <button translatesAutoresizingMaskIntoConstraints="NO" id="4ZD-1f-bbe" userLabel="Restore Defaults button">
+                                                <rect key="frame" x="335" y="154" width="15" height="15"/>
                                                 <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="arrow.uturn.backward.circle.fill" catalog="system" imagePosition="only" alignment="center" imageScaling="proportionallyUpOrDown" inset="2" id="GAd-ME-WAX">
                                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                                     <font key="font" metaFont="system"/>
@@ -1336,6 +1336,7 @@
                                             <constraint firstItem="93c-HE-afM" firstAttribute="centerX" secondItem="moZ-WP-cPc" secondAttribute="centerX" id="2p5-ac-5zf"/>
                                             <constraint firstAttribute="trailing" secondItem="4ZD-1f-bbe" secondAttribute="trailing" id="cBl-8s-UyK"/>
                                             <constraint firstItem="Vaa-uM-Yko" firstAttribute="top" secondItem="moZ-WP-cPc" secondAttribute="top" id="elc-So-i3w"/>
+                                            <constraint firstItem="4ZD-1f-bbe" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="Vaa-uM-Yko" secondAttribute="trailing" constant="10" id="emd-90-BS1"/>
                                             <constraint firstItem="93c-HE-afM" firstAttribute="top" secondItem="Vaa-uM-Yko" secondAttribute="bottom" constant="16" id="rqS-zO-eOA"/>
                                             <constraint firstItem="4ZD-1f-bbe" firstAttribute="firstBaseline" secondItem="Vaa-uM-Yko" secondAttribute="firstBaseline" id="sP1-f0-UJt"/>
                                             <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="93c-HE-afM" secondAttribute="trailing" id="t8M-qC-c2b"/>
