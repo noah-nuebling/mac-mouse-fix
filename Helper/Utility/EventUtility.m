@@ -145,7 +145,7 @@ CFTimeInterval CGEventGetTimestampInSeconds(CGEventRef event) {
     
     return tsSeconds;
     
-    if (/* DISABLES CODE */ (NO)) {
+    if (false) {
         
         CFTimeInterval tickTimeCG = (100/2.4)*tsMach/NSEC_PER_SEC;
         /// ^ The docs say that CGEventGetTimestamp() is in nanoseconds, no idea where the extra (100/2.4) factor comes from. But it works, to make it scaled the same as CACurrentMediaTime()

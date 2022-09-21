@@ -562,19 +562,14 @@ int8_t sign(double x) {
     return (0 < x) - (x < 0);
 }
 
-// Start logging to console and to Xcode output
-// Call this at the entry point of an app, so that DDLog statements work.
+/// Start logging to console and to Xcode output
+/// Call this at the entry point of an app, so that DDLog statements work.
 + (void)setupBasicCocoaLumberjackLogging {
+        
+    /// Need to enable Console.app > Action > Include Info Messages & Include Debug Messages to see these messages in Console. See https://stackoverflow.com/questions/65205310/ddoslogger-sharedinstance-logging-only-seems-to-log-error-level-logging-in-conso
+    /// Will have to update instructions on Mac Mouse Fix Feedback Assistant when this releases.
     
-    if (@available(macOS 10.12, *)) {
-        [DDLog addLogger:DDOSLogger.sharedInstance]; // Use os_log // This should log to console and terminal and be faster than the old methods
-            // Need to enable Console.app > Action > Include Info Messages & Include Debug Messages to see these messages in Console. See https://stackoverflow.com/questions/65205310/ddoslogger-sharedinstance-logging-only-seems-to-log-error-level-logging-in-conso
-            // Will have to update instructions on Mac Mouse Fix Feedback Assistant when this releases.
-    } else {
-        // Fallback on earlier versions
-        [DDLog addLogger:DDASLLogger.sharedInstance]; /// Log to Apple System Log (Console.app)
-        [DDLog addLogger:DDTTYLogger.sharedInstance]; /// Log to terminal / Xcode output
-    }
+    [DDLog addLogger:DDOSLogger.sharedInstance]; /// Use os_log // This should log to console and terminal and be faster than the old methods
     
     /// Set logging format
 //    DDOSLogger.sharedInstance.logFormatter = DDLogFormatter.
