@@ -24,7 +24,7 @@
             <windowStyleMask key="styleMask" titled="YES" fullSizeContentView="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
             <rect key="contentRect" x="196" y="240" width="394" height="142"/>
-            <rect key="screenRect" x="0.0" y="0.0" width="1920" height="1055"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="1440" height="875"/>
             <view key="contentView" horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="se5-gp-TjO">
                 <rect key="frame" x="0.0" y="0.0" width="394" height="166"/>
                 <subviews>
@@ -85,11 +85,11 @@
                             <constraint firstAttribute="height" priority="500" constant="70" id="eIZ-7g-Hmq"/>
                         </constraints>
                         <edgeInsets key="contentInsets" left="0.0" right="0.0" top="0.0" bottom="0.0"/>
-                        <scroller key="horizontalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="YES" id="Oge-aT-UV9">
+                        <scroller key="horizontalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" horizontal="YES" id="Oge-aT-UV9">
                             <rect key="frame" x="-100" y="-100" width="225" height="15"/>
                             <autoresizingMask key="autoresizingMask"/>
                         </scroller>
-                        <scroller key="verticalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="NO" id="kuD-K5-V1a">
+                        <scroller key="verticalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" horizontal="NO" id="kuD-K5-V1a">
                             <rect key="frame" x="-100" y="-100" width="15" height="80"/>
                             <autoresizingMask key="autoresizingMask"/>
                         </scroller>
@@ -101,12 +101,12 @@
                         <rect key="frame" x="20" y="20" width="146" height="15"/>
                         <subviews>
                             <imageView horizontalHuggingPriority="1000" verticalHuggingPriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="yP0-SZ-Yzd">
-                                <rect key="frame" x="0.0" y="-2.5" width="21" height="21"/>
+                                <rect key="frame" x="0.0" y="-1.5" width="21" height="19"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="9" id="DfL-em-umM"/>
                                     <constraint firstAttribute="width" constant="21" id="Gne-yP-n3L"/>
                                 </constraints>
-                                <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="testtube.2" catalog="system" id="AmN-iK-1Qh"/>
+                                <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="calendar" catalog="system" id="AmN-iK-1Qh"/>
                                 <color key="contentTintColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                 <symbolConfiguration key="symbolConfiguration" scale="large" weight="medium"/>
                             </imageView>
@@ -200,7 +200,7 @@
         <image name="AppIconRoundFromHelper-deleteThis" width="128" height="128"/>
         <image name="ApplePay" width="512" height="210.19999694824219"/>
         <image name="bag" catalog="system" width="15" height="15"/>
-        <image name="testtube.2" catalog="system" width="16" height="16"/>
+        <image name="calendar" catalog="system" width="16" height="14"/>
         <image name="xmark.circle.fill" catalog="system" width="20" height="20"/>
     </resources>
 </document>
