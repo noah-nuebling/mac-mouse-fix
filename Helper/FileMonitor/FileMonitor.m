@@ -96,49 +96,60 @@ void handleRelocation(void) {
     ///  If we let the helper running after relocation:
     ///      - If the helper closes (crashes) it won't be restarted automatically by launchd
     ///      - Just like the functions for getting current app bundles failed (we fixed it with hax bascially), there might be other stuff that behaves badly after relocation
-    /// Unfortunately, I can't find a way to make launchd restart the helper from within the helper
-    /// We have to use a separate executable to restart the helper
-    /// Edit: We're removing Accomplice in MMF 3, so this will be broken. I hope it's not that bad.
+    /// It's even better when we can automatically restart the helper. So the user doesn't notice anything and things just keep working.
     
-    /// Sol 1:
-    ///     I don't think this works. We had to use Accomplice for proper behaviour pre MMF 3 (put under MMF 3, Accomplice has been removed.)
-    
-    [HelperServices enableHelperAsUserAgent:YES onComplete:nil];
-    [NSApp terminate:nil];
-    
-    /// Sol 2:
+    /// Sol 1: Restart the helper
+    ///     - We used to be able to restart the helper  using the Accomplice. This won't work under Ventura using the new ServiceManagement APIs, since only the main app can enable/disable the helper now (At least in the Ventura Beta), so we're moving to a policy of just disabling the helper instead.
+    ///     - We might also be able to start the mainApp in some sort of invisible stealth mode and have it restart the helper in the background like the accomplice used to do, but I'm not sure. It would be the optimal UX to restart the Helper
+    ///     - Since restarting the Helper was the last thing the Accomplice was used for in MMF 3 (we already moved updating to Sparkle), this change made the Accomplice obsolete. And we deleted it in commit 1eedee69c3e36f0dbbe19480997d98b77668854f
     
 //    DDLogInfo(@"Asking Accomplice to restart Helper ... But accomplice has been removed in MMF 3");
 //    NSURL *accompliceURL = [Locator.mainAppBundle.bundleURL URLByAppendingPathComponent:kMFRelativeAccomplicePath];
 //    NSArray *args = @[kMFAccompliceModeReloadHelper];
 //    [SharedUtility launchCLT:accompliceURL withArgs:args];
+    
+    /// Sol 2: Disable the helper
+    ///     This won't do anything under the macOS Ventura Beta. So it'll just keep running there. It also seems to be restarted under Ventura when it crashes even after being relocated, so I can't think of any bad consequences of this. If we *really* want to kill the helper under Ventura we can use `disableHelper()`. This might be good since I feel when you restart after the relocation it might not work at that point.
+    
+    [HelperServices enableHelperAsUserAgent:NO onComplete:nil];
 }
 void uninstallCompletely(void) {
+    
     DDLogInfo(@"Uninstalling Mac Mouse Fix completely...");
     removeResidue();
     disableHelper();
 }
 void removeResidue(void) {
+    
+    /// Log
     DDLogInfo(@"Removing Mac Mouse Fix resdiue");
-    // Delete Application Support Folder
+    
+    /// Delete Application Support Folder
     [NSFileManager.defaultManager trashItemAtURL:Locator.MFApplicationSupportFolderURL resultingItemURL:nil error:nil];
-    // Delete launchd plist
+    
+    /// Delete launchd plist
     [NSFileManager.defaultManager trashItemAtURL:Locator.launchdPlistURL resultingItemURL:nil error:nil];
-    // Delete logging folder // TODO: Test if this works
+    
+    /// Delete logging folder // TODO: Test if this works
     DDFileLogger *fileLogger = [[DDFileLogger alloc] init];
     NSString *logsDirectoryPath = fileLogger.logFileManager.logsDirectory;
     NSURL *logsDirectoryURL = [NSURL fileURLWithPath:logsDirectoryPath isDirectory:YES];
     [NSFileManager.defaultManager trashItemAtURL:logsDirectoryURL resultingItemURL:nil error:nil];
 }
-void disableHelper(void) { // Kill this process
+void disableHelper(void) {
+    /// Kill this process
+    
+    /// Log
     DDLogInfo(@"Removing helper from launchd (Byeeeee)");
-    // Remove from launchd
-    [SharedUtility launchCLT:[NSURL fileURLWithPath:kMFLaunchctlPath] withArgs:@[@"remove", kMFLaunchdHelperIdentifier]]; // This kills as well I think
-    // Kill self
-//    [NSApp terminate:nil];
+    
+    /// Remove from launchd
+    /// This kills the helper as well
+    /// The launchd.plist file will still be in the library and under Ventura the SM API still has the Helper registered -> Result: If we don't remove this residue, the system will try to start the helper on next login. Idk how to remove the SM residue? I think I read it's automatic when you delete an app.
+    [SharedUtility launchCLT:[NSURL fileURLWithPath:kMFLaunchctlPath] withArgs:@[@"remove", kMFLaunchdHelperIdentifier]];
+    [SharedUtility launchCLT:[NSURL fileURLWithPath:kMFLaunchctlPath] withArgs:@[@"remove", kMFLaunchdHelperIdentifierSM]];
 }
 
-// Util
+/// Util
 
 static NSString *trashFolderName() {
     NSURL *trashURL = [NSFileManager.defaultManager URLForDirectory:NSTrashDirectory inDomain:NSUserDomainMask appropriateForURL:nil create:NO error:nil];
