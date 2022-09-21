@@ -180,24 +180,24 @@ static void iterateIvarsOn(id obj, void(^callback)(Ivar ivar, BOOL *stop)) {
     }
 }
 
-static void iteratePropertyLikeMethods(id obj, void(^callback)(Method method, struct objc_method_description *description, id value, BOOL *stop)) {
-    
-    /// This can cause leaks. See https://stackoverflow.com/questions/7017281/performselector-may-cause-a-leak-because-its-selector-is-unknown
-    ///     -> I think the iterateIvars function can also cause leaks in the same way.
-    
-    iterateMethodsOn(obj, ^(Method method, struct objc_method_description *description, BOOL *stop) {
-        
-        /// Check if last char is `:` to see if method has arguments
-        SEL sel = description->name;
-        const char *name = sel_getName(sel);
-        unsigned long len = strlen(name);
-        char lastChar = name[len-1];
-        if (lastChar == ':') return;
-        id value = [obj performSelector:sel];
-        if (value == nil) return;
-        callback(method, description, value, stop);
-    });
-}
+//static void iteratePropertyLikeMethods(id obj, void(^callback)(Method method, struct objc_method_description *description, id value, BOOL *stop)) {
+//    
+//    /// This can cause leaks. See https://stackoverflow.com/questions/7017281/performselector-may-cause-a-leak-because-its-selector-is-unknown
+//    ///     -> I think the iterateIvars function can also cause leaks in the same way.
+//    
+//    iterateMethodsOn(obj, ^(Method method, struct objc_method_description *description, BOOL *stop) {
+//        
+//        /// Check if last char is `:` to see if method has arguments
+//        SEL sel = description->name;
+//        const char *name = sel_getName(sel);
+//        unsigned long len = strlen(name);
+//        char lastChar = name[len-1];
+//        if (lastChar == ':') return;
+//        id value = [obj performSelector:sel];
+//        if (value == nil) return;
+//        callback(method, description, value, stop);
+//    });
+//}
 
 static void iterateMethodsOn(id obj, void(^callback)(Method method, struct objc_method_description *description, BOOL *stop)) {
     
@@ -572,8 +572,8 @@ int8_t sign(double x) {
             // Will have to update instructions on Mac Mouse Fix Feedback Assistant when this releases.
     } else {
         // Fallback on earlier versions
-        [DDLog addLogger:DDASLLogger.sharedInstance]; // Log to Apple System Log (Console.app)
-        [DDLog addLogger:DDTTYLogger.sharedInstance]; // Log to terminal / Xcode output
+        [DDLog addLogger:DDASLLogger.sharedInstance]; /// Log to Apple System Log (Console.app)
+        [DDLog addLogger:DDTTYLogger.sharedInstance]; /// Log to terminal / Xcode output
     }
     
     /// Set logging format

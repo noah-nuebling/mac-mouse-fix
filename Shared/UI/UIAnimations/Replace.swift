@@ -82,7 +82,7 @@ class ReplaceAnimations {
         
         /// Constants
         
-        let sizeChangeCurve = CAMediaTimingFunction(name: .default)
+//        let sizeChangeCurve = CAMediaTimingFunction(name: .default)
         
         /// These are lifted from TabViewController
         var fadeOutCurve: CAMediaTimingFunction
@@ -136,12 +136,12 @@ class ReplaceAnimations {
         replaceView.superview?.layoutSubtreeIfNeeded()
         
         let replaceSize = replaceView.alignedSize()
-        let replaceSizeUnaligned = replaceView.size()
+//        let replaceSizeUnaligned = replaceView.size()
         
         ///
         /// Store image of replaceView
         ///
-        let replaceImage = replaceView.takeImage()
+//        let replaceImage = replaceView.takeImage()
         
         ///
         /// Get animationDuration

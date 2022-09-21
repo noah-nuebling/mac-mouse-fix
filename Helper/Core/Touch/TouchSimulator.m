@@ -122,7 +122,7 @@ double _dockSwipeLastDelta = 0.0;
     }
     
     CFTimeInterval ts = CACurrentMediaTime();
-    CFTimeInterval timeDiff = ts - _dockSwipeLastTimeStamp;
+//    CFTimeInterval timeDiff = ts - _dockSwipeLastTimeStamp;
     _dockSwipeLastTimeStamp = ts;
     DDLogDebug(@"\nSending dockSwipe with delta: %@,"
 //               @"lastDelta: %@, "

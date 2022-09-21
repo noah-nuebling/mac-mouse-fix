@@ -188,7 +188,7 @@ double invincbeta(double y,double alpha, double beta) {
 // **************************************************************
 double CalculateTValueStudent(const double nu, const double alpha) {
 
-    double precision = 1.e-5;
+//    double precision = 1.e-5;
 
     if (alpha<=0. || alpha >= 1.) return 0.;
 
@@ -1021,7 +1021,7 @@ void simplePolyFit(double *out_coefficients, double *pointsX, double *pointsY, s
     
         // Calculate related values
         // **************************************************************
-        double RSS = CalculateRSS(x,y,coefbeta,Weights,fixed,n,k+1); /// Noah: Should `fixed` be `fixedInter`
+        double RSS = CalculateRSS(x,y,coefbeta,Weights,fixed,n,k+1); /// Noah: Should `fixed` be `fixedInter`?
         double TSS = CalculateTSS(x,y,coefbeta,Weights,fixedinter,n,k+1);
         double R2 = CalculateR2COD(x,y,coefbeta,Weights,fixedinter,n,k+1);
         double R2Adj = CalculateR2Adj(x,y,coefbeta,Weights,fixedinter,n,k+1);

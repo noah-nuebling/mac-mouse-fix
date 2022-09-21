@@ -582,13 +582,13 @@
     /// Derived from sizeAtMaxWidth
     
     /// Method 1
-    NSTextStorage *textStorage = [[NSTextStorage alloc] initWithAttributedString:self];
-    NSTextContainer *textContainer = [[NSTextContainer alloc] initWithContainerSize:NSMakeSize(width, FLT_MAX)];
-    NSLayoutManager *layoutManager = [[NSLayoutManager alloc] init];
-    [layoutManager addTextContainer:textContainer];
-    [textStorage addLayoutManager:layoutManager];
-    [layoutManager glyphRangeForTextContainer:textContainer];
-    CGFloat result1 = [layoutManager usedRectForTextContainer:textContainer].size.height;
+//    NSTextStorage *textStorage = [[NSTextStorage alloc] initWithAttributedString:self];
+//    NSTextContainer *textContainer = [[NSTextContainer alloc] initWithContainerSize:NSMakeSize(width, FLT_MAX)];
+//    NSLayoutManager *layoutManager = [[NSLayoutManager alloc] init];
+//    [layoutManager addTextContainer:textContainer];
+//    [textStorage addLayoutManager:layoutManager];
+//    [layoutManager glyphRangeForTextContainer:textContainer];
+//    CGFloat result1 = [layoutManager usedRectForTextContainer:textContainer].size.height;
         
     /// Method 2
     NSRect bounds = [self boundingRectWithSize:NSMakeSize(width, FLT_MAX) options:NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading];
@@ -607,13 +607,13 @@
     /// Can't get this to work properly
     
     /// Method 1
-    NSTextStorage *textStorage = [[NSTextStorage alloc] initWithAttributedString:self];
-    NSTextContainer *textContainer = [[NSTextContainer alloc] initWithContainerSize:NSMakeSize(FLT_MAX, FLT_MAX)];
-    NSLayoutManager *layoutManager = [[NSLayoutManager alloc] init];
-    [layoutManager addTextContainer:textContainer];
-    [textStorage addLayoutManager:layoutManager];
-    [layoutManager glyphRangeForTextContainer:textContainer];
-    CGFloat result1 = [layoutManager usedRectForTextContainer:textContainer].size.width;
+//    NSTextStorage *textStorage = [[NSTextStorage alloc] initWithAttributedString:self];
+//    NSTextContainer *textContainer = [[NSTextContainer alloc] initWithContainerSize:NSMakeSize(FLT_MAX, FLT_MAX)];
+//    NSLayoutManager *layoutManager = [[NSLayoutManager alloc] init];
+//    [layoutManager addTextContainer:textContainer];
+//    [textStorage addLayoutManager:layoutManager];
+//    [layoutManager glyphRangeForTextContainer:textContainer];
+//    CGFloat result1 = [layoutManager usedRectForTextContainer:textContainer].size.width;
     
     /// Method 2
     NSRect bounds = [self boundingRectWithSize:NSMakeSize(FLT_MAX, FLT_MAX) options:NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading];

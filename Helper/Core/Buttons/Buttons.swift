@@ -36,7 +36,7 @@ import CocoaLumberjackSwift
     
     @objc static func handleInput(device: Device, button: NSNumber, downNotUp mouseDown: Bool, event: CGEvent) -> MFEventPassThroughEvaluation {
         
-        var passThroughEvaluation = kMFEventPassThroughRefusal
+        let passThroughEvaluation = kMFEventPassThroughRefusal
         
             /// Init
         if !isInitialized { coolInitialize() }
@@ -130,7 +130,7 @@ import CocoaLumberjackSwift
                 let m1 = modifications[button] as? [AnyHashable: Any],
                 let m2 = m1[clickLevel as NSNumber] as? [AnyHashable: Any],
                 let m3 = m2[duration],
-                var actionArray = m3 as? [[AnyHashable: Any]] /// Not nil -> a click/hold action does exist for this button + level + duration
+                let actionArray = m3 as? [[AnyHashable: Any]] /// Not nil -> a click/hold action does exist for this button + level + duration
             else {
                 return /// Return if there's no action array to send
             }

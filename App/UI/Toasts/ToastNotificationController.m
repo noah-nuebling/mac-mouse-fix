@@ -131,9 +131,10 @@ static double _toastAnimationOffset = 20;
     ///     Last commit before the change: 47d97be6482df3c37898c3c6cd5c21c6be02ab4a
     
     NotificationLabel *label = _instance.label;
-    NSRect notifFrame = w.frame;
     
-    NSRect scrollViewFrame = label.superview.superview.frame; /// Label is embedded in clipView and ScrollView
+//    NSRect notifFrame = w.frame;
+    
+//    NSRect scrollViewFrame = label.superview.superview.frame; /// Label is embedded in clipView and ScrollView
     
     /// Old method
 //    CGFloat bottomInset = scrollViewFrame.origin.y;

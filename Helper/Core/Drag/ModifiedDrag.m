@@ -289,7 +289,7 @@ static void handleMouseInputWhileInitialized(int64_t deltaX, int64_t deltaY, CGE
         
         /// Notify other modules
         [ModifierManager handleModificationHasBeenUsedWithDevice:_drag.modifiedDevice];
-        [OutputCoordinator suspendTouchDriversFromDriver:kTouchDriverModifiedDrag];
+        (void)[OutputCoordinator suspendTouchDriversFromDriver:kTouchDriverModifiedDrag];
     }
 }
 /// Only passing in event to obtain event location to get slightly better behaviour for fakeDrag

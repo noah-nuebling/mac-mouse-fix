@@ -78,6 +78,9 @@ static NSDictionary *addModeSwizzler(NSDictionary *remaps, NSDictionary *activeM
     return modification;
 }
 
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wunused-function"
+
 static NSDictionary *simpleSwizzler(NSDictionary *remaps, NSDictionary *activeModifiers) {
     /// This is unused now.
     /// Primitive remaps overriding method. Simply takes the base (with an empty modification precondition) remaps and overrides it with the remaps which have a modificationPrecondition of exactly `activeModifiers`
@@ -89,6 +92,7 @@ static NSDictionary *simpleSwizzler(NSDictionary *remaps, NSDictionary *activeMo
     }
     return effectiveRemaps;
 }
+#pragma clang diagnostic pop
 
 static NSDictionary *subsetSwizzler(NSDictionary *remaps, NSDictionary *activeModifiers) {
     

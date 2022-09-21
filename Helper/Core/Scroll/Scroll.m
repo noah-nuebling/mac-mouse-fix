@@ -140,10 +140,13 @@ void resetState_Unsafe(void) {
 
 #pragma mark - Event tap
 
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wunused-function"
+
 static NSString *CGScrollWheelEventDescription(CGEventRef event) {
     
     /// Helper / debugging function
-    /// TODO: Move this to another file
+    /// TODO: Move this to another file (Don't forget the -Wunused-function warning ignore stuff above and below)
     
     double d            = CGEventGetDoubleValueField(event, kCGScrollWheelEventDeltaAxis1);
     double dPoint       = CGEventGetDoubleValueField(event, kCGScrollWheelEventPointDeltaAxis1);
@@ -158,6 +161,8 @@ static NSString *CGScrollWheelEventDescription(CGEventRef event) {
     
     return description;
 }
+
+#pragma clang diagnostic pop
 
 static CGEventRef eventTapCallback(CGEventTapProxy proxy, CGEventType type, CGEventRef event, void *userInfo) {
     

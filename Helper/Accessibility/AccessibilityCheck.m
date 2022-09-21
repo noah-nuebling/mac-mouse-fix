@@ -68,25 +68,6 @@ CGEventRef _Nullable testCallback(CGEventTapProxy proxy, CGEventType type, CGEve
     
     DDLogDebug(@"objcEvent: %@", [objcEvent description]);
     
-    unsigned int nProperties;
-    Class eventClass = [objcEvent class];
-//    objc_property_t *propertyList = class_copyPropertyList(eventClass, &nProperties);
-    
-    unsigned int nIvars;
-//    Ivar *ivarList = class_copyIvarList(eventClass, &nIvars);
-    
-    unsigned int nMethods;
-    Method *methodList = class_copyMethodList(eventClass, &nMethods);
-    
-    DDLogDebug(@"nProps: %u, nIvars: %d, nMethods: %d", nProperties, nIvars, nMethods);
-    
-    for (int i = 0; i < nMethods; i++) {
-        Method m = methodList[i];
-        SEL mSelector = method_getName(m);
-        const char *mName = sel_getName(mSelector);
-        DDLogDebug(@"objcEventMethodName: %s", mName);
-    }
-    
     /// Return
     return event;
 }

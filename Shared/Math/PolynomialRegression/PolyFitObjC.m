@@ -15,7 +15,7 @@
 + (NSArray <NSNumber *>* _Nonnull)fitWithX:(NSArray<NSNumber *> *)x y:(NSArray<NSNumber *> *)y polynomialDegree:(int)polyDegree {
     
     assert(x.count == y.count);
-    int nOfPoints = x.count;
+    int nOfPoints = (int)x.count;
     
     /// Get pure c arrays
     
