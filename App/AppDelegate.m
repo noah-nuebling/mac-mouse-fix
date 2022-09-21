@@ -199,7 +199,7 @@ static NSDictionary *sideButtonActions;
     setConfig(@"Other.lastLaunchedBundleVersion", @(currentBundleVersion));
     
     
-    BOOL firstAppLaunch = launchesOverall == 1; /// App is launched for the first time
+//    BOOL firstAppLaunch = launchesOverall == 1; /// App is launched for the first time
     BOOL firstVersionLaunch = launchesOfCurrentBundleVersion == 1; /// Last time that the app was launched was a different bundle version
     
     /// Configure Sparkle Updater
@@ -243,8 +243,6 @@ static NSDictionary *sideButtonActions;
     /// Check for udates
     
     if (checkForUpdates) {
-        
-        NSString *feedURLString;
         
         [SparkleUpdaterController enablePrereleaseChannel:checkForPrereleases];
         
