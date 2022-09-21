@@ -60,12 +60,12 @@ static NSDictionary *_remaps;
     if ([(id)config(@"Other.scrollKillSwitch") boolValue]) { /// Disable keyboard mods when scrollKillSwitch is on
         
     } else {
-        NSDictionary *modifiers = (NSDictionary *)config(@"Scroll.modifiers");
         
         NSEventModifierFlags horizontal = [(id)config(@"Scroll.modifiers.horizontal") unsignedIntegerValue];
         NSEventModifierFlags zoom = [(id)config(@"Scroll.modifiers.zoom") unsignedIntegerValue];
         NSEventModifierFlags swift = [(id)config(@"Scroll.modifiers.swift") unsignedIntegerValue];
         NSEventModifierFlags precise = [(id)config(@"Scroll.modifiers.precise") unsignedIntegerValue];
+        /// ^ Might be faster to only get Scroll.modifiers once and then query that? Probably not significant
         
         if (horizontal) {
             NSDictionary *precondition = @{

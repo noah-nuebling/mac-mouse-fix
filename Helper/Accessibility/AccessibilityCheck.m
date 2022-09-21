@@ -70,9 +70,10 @@ CGEventRef _Nullable testCallback(CGEventTapProxy proxy, CGEventType type, CGEve
     
     unsigned int nProperties;
     Class eventClass = [objcEvent class];
-    objc_property_t *propertyList = class_copyPropertyList(eventClass, &nProperties);
+//    objc_property_t *propertyList = class_copyPropertyList(eventClass, &nProperties);
+    
     unsigned int nIvars;
-    Ivar *ivarList = class_copyIvarList(eventClass, &nIvars);
+//    Ivar *ivarList = class_copyIvarList(eventClass, &nIvars);
     
     unsigned int nMethods;
     Method *methodList = class_copyMethodList(eventClass, &nMethods);
