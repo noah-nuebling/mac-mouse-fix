@@ -3044,12 +3044,7 @@
 				);
 				INFOPLIST_FILE = Helper/SupportFiles/Info.plist;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/Helper/Utility/Math/PolynomialRegression/numpy/core/lib",
-					"$(PROJECT_DIR)/Helper/Utility/Math/PolynomialRegression/numpy/.dylibs",
-					"$(PROJECT_DIR)/Helper/Utility/Math/PolynomialRegression/numpy/random/lib",
-				);
+				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				MACOSX_DEPLOYMENT_TARGET = 10.13;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.nuebling.mac-mouse-fix.helper";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -3086,12 +3081,7 @@
 				);
 				INFOPLIST_FILE = Helper/SupportFiles/Info.plist;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/Helper/Utility/Math/PolynomialRegression/numpy/core/lib",
-					"$(PROJECT_DIR)/Helper/Utility/Math/PolynomialRegression/numpy/.dylibs",
-					"$(PROJECT_DIR)/Helper/Utility/Math/PolynomialRegression/numpy/random/lib",
-				);
+				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				MACOSX_DEPLOYMENT_TARGET = 10.13;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.nuebling.mac-mouse-fix.helper";
 				PRODUCT_NAME = "$(TARGET_NAME)";
