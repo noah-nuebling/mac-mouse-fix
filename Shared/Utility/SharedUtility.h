@@ -16,14 +16,14 @@
 #import "Shorthands.h"
 #import <CoreVideo/CoreVideo.h>
 
+NS_ASSUME_NONNULL_BEGIN
+
 #define stringf(format, ...) [NSString stringWithFormat:(format), ##__VA_ARGS__]
 
 /// Check if ptr is objc object
 ///     Copied from https://opensource.apple.com/source/CF/CF-635/CFInternal.h
 #define CF_IS_TAGGED_OBJ(PTR)    ((uintptr_t)(PTR) & 0x1)
 extern inline bool _objc_isTaggedPointer(const void *ptr);     /// Copied from https://blog.timac.org/2016/1124-testing-if-an-arbitrary-pointer-is-a-valid-objective-c-object/
-
-NS_ASSUME_NONNULL_BEGIN
 
 @interface SharedUtility : NSObject
 

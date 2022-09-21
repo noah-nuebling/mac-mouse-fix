@@ -46,7 +46,6 @@
 		4F5F3EF32756F1DB00C350C0 /* ScrollModifiers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F5F3EF22756F1DB00C350C0 /* ScrollModifiers.swift */; };
 		4F6B02C028AD9E4400B5BA93 /* Localizable.stringsdict in Resources */ = {isa = PBXBuildFile; fileRef = 4F6B02C228AD9E4400B5BA93 /* Localizable.stringsdict */; };
 		4F6F67A028A8141800C6C40F /* ButtonTabController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F6F679F28A8141800C6C40F /* ButtonTabController.swift */; };
-		4F70ECAE267E442D00325A76 /* PointerSpeedExperiments2.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F70ECAD267E442D00325A76 /* PointerSpeedExperiments2.m */; };
 		4F70ECB7267E810900325A76 /* IOUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F70ECB6267E810900325A76 /* IOUtility.m */; };
 		4F79A7EF26042E2E00076A7E /* ToastNotification.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4F79A7EE26042E2E00076A7E /* ToastNotification.xib */; };
 		4F79A81C2604317200076A7E /* ToastNotificationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F79A81B2604317200076A7E /* ToastNotificationController.m */; };
@@ -270,7 +269,6 @@
 		4FF6669925F2C93A00689B77 /* VectorSubPixelator.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF6664125F2C93A00689B77 /* VectorSubPixelator.m */; };
 		4FF6669A25F2C93A00689B77 /* TransformationUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF6664225F2C93A00689B77 /* TransformationUtility.m */; };
 		4FF6669B25F2C93A00689B77 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF6664625F2C93A00689B77 /* AppDelegate.m */; };
-		4FF6669C25F2C93A00689B77 /* PointerSpeedExperiments.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF6664925F2C93A00689B77 /* PointerSpeedExperiments.m */; };
 		4FF6669D25F2C93A00689B77 /* AccessibilityCheck.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF6664B25F2C93A00689B77 /* AccessibilityCheck.m */; };
 		4FF6669F25F2C93A00689B77 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF6665125F2C93A00689B77 /* main.m */; };
 		4FF666A725F2C93A00689B77 /* Device.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF6667A25F2C93A00689B77 /* Device.m */; };
@@ -2537,7 +2535,6 @@
 				4FA13FC428B3A2E0005C68FC /* TrialNotificationController.swift in Sources */,
 				4FF0255F27B013A100923107 /* PointerFreeze.m in Sources */,
 				4FF666A725F2C93A00689B77 /* Device.m in Sources */,
-				4FF6669C25F2C93A00689B77 /* PointerSpeedExperiments.m in Sources */,
 				4FD9A7D228BA2A8A0006DF4B /* SecureStorage.swift in Sources */,
 				4F3A40B1266BBC5000436821 /* Curve.swift in Sources */,
 				4FFA4E3A28B79D960062A1FE /* NSString+Extensions.swift in Sources */,
@@ -2556,7 +2553,6 @@
 				4FF6669F25F2C93A00689B77 /* main.m in Sources */,
 				4FFA4E4928B7D3750062A1FE /* NSView+Additions.m in Sources */,
 				4FF6668925F2C93A00689B77 /* Scroll.m in Sources */,
-				4F70ECAE267E442D00325A76 /* PointerSpeedExperiments2.m in Sources */,
 				4FC55E31285E6F1F00F2FCCF /* GlobalDefaults.swift in Sources */,
 				4FF6669525F2C93A00689B77 /* ModifiedDrag.m in Sources */,
 				4FD86089266E819A004F76C8 /* Pointers.swift in Sources */,
