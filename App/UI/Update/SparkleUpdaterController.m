@@ -33,7 +33,7 @@
     
     DDLogInfo(@"About to install update");
     
-    [MoreSheet.instance end]; // Close more sheet so it doesn't block popup
+//    [MoreSheet.instance end]; // Close more sheet so it doesn't block popup
 }
 
 - (void)updaterDidRelaunchApplication:(SUUpdater *)updater {

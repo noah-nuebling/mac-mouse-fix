@@ -321,8 +321,8 @@
                                     <stackView distribution="fill" orientation="vertical" alignment="leading" horizontalStackHuggingPriority="1000" verticalStackHuggingPriority="249.99998474121094" horizontalClippingResistancePriority="999" horizontalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="gcq-dN-YnA" userLabel="Main Hidable Section" customClass="CollapsingStackView" customModule="Mac_Mouse_Fix" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="0.0" width="293" height="177"/>
                                         <subviews>
-                                            <customView translatesAutoresizingMaskIntoConstraints="NO" id="zUc-6f-AlY" userLabel="EnableIndent">
-                                                <rect key="frame" x="0.0" y="159" width="293" height="18"/>
+                                            <customView horizontalHuggingPriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="zUc-6f-AlY" userLabel="EnableIndent">
+                                                <rect key="frame" x="0.0" y="159" width="124" height="18"/>
                                                 <subviews>
                                                     <textField horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="0gD-iB-vff">
                                                         <rect key="frame" x="-2" y="0.0" width="78" height="14"/>
@@ -337,7 +337,7 @@
                                                     <constraint firstItem="0gD-iB-vff" firstAttribute="leading" secondItem="zUc-6f-AlY" secondAttribute="leading" id="H0N-YR-2IN"/>
                                                     <constraint firstAttribute="bottom" secondItem="0gD-iB-vff" secondAttribute="bottom" id="Y7s-dv-7ga"/>
                                                     <constraint firstItem="0gD-iB-vff" firstAttribute="top" secondItem="zUc-6f-AlY" secondAttribute="top" constant="4" id="lQp-JO-bqP"/>
-                                                    <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="0gD-iB-vff" secondAttribute="trailing" constant="50" id="n91-gE-8Gw"/>
+                                                    <constraint firstAttribute="trailing" secondItem="0gD-iB-vff" secondAttribute="trailing" constant="50" id="xzN-H4-gtu"/>
                                                 </constraints>
                                             </customView>
                                             <customView verticalHuggingPriority="999" translatesAutoresizingMaskIntoConstraints="NO" id="FgF-8j-kMB" userLabel="Divider">
@@ -641,7 +641,7 @@
                                                             <tableColumnResizingMask key="resizingMask" resizeWithTable="YES"/>
                                                             <prototypeCellViews>
                                                                 <tableCellView identifier="effectCell" translatesAutoresizingMaskIntoConstraints="NO" id="Epw-SW-Ew3" customClass="RemapTableCellView" customModule="Mac_Mouse_Fix" customModuleProvider="target">
-                                                                    <rect key="frame" x="312" y="0.0" width="223" height="39"/>
+                                                                    <rect key="frame" x="312.5" y="0.0" width="223" height="39"/>
                                                                     <subviews>
                                                                         <popUpButton verticalHuggingPriority="750" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="Pw9-ZH-Tb7">
                                                                             <rect key="frame" x="0.0" y="6" width="224" height="25"/>
@@ -669,7 +669,7 @@
                                                                     </constraints>
                                                                 </tableCellView>
                                                                 <tableCellView identifier="keyCaptureCell" translatesAutoresizingMaskIntoConstraints="NO" id="MzR-b1-853" customClass="RemapTableCellView" customModule="Mac_Mouse_Fix" customModuleProvider="target">
-                                                                    <rect key="frame" x="312" y="39" width="220" height="39"/>
+                                                                    <rect key="frame" x="312.5" y="39" width="220" height="39"/>
                                                                     <subviews>
                                                                         <button hidden="YES" focusRingType="exterior" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="psy-Jg-KLq">
                                                                             <rect key="frame" x="-4" y="3" width="228" height="32"/>
