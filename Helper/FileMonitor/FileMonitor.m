@@ -14,6 +14,7 @@
 #import <Foundation/Foundation.h>
 #import "Constants.h"
 #import "SharedUtility.h"
+#import "SharedMessagePort.h"
 
 @implementation FileMonitor
 
@@ -109,9 +110,15 @@ void handleRelocation(void) {
 //    [SharedUtility launchCLT:accompliceURL withArgs:args];
     
     /// Sol 2: Disable the helper
-    ///     This won't do anything under the macOS Ventura Beta. So it'll just keep running there. It also seems to be restarted under Ventura when it crashes even after being relocated, so I can't think of any bad consequences of this. If we *really* want to kill the helper under Ventura we can use `disableHelper()`. This might be good since I feel when you restart after the relocation it might not work at that point.
+    ///     `enableHelperAsUserAgent:NO` won't do anything under the macOS Ventura Beta, so we're also calling `disableHelper()`
+    ///     The Helper also seems to be restarted under Ventura when it crashes even after being relocated, but I think it'll stop working when you restart the computer after the relocation.
+    ///     It would be ideal if we used `[HelperServices disableHelperFromHelper]` here so that we have one unified method for this, but it doesn't work properly when called from here for some reason.
     
+//    [HelperServices disableHelperFromHelper];
+    
+    [SharedMessagePort sendMessage:@"helperDisabled" withPayload:nil expectingReply:NO];
     [HelperServices enableHelperAsUserAgent:NO onComplete:nil];
+    disableHelper();
 }
 void uninstallCompletely(void) {
     

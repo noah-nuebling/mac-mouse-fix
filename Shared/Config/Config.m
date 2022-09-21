@@ -35,7 +35,6 @@
 @implementation Config {
     
     NSString*_configFilePath; /// Should probably use `Locator.m` to find config and defaultConfig
-    NSURL *_defaultConfigURL; /// `default_config` used to be known as `backup_config`
     NSString *_bundleIDOfAppWhichCausesAppOverride;
 //    NSDictionary *_stringToEventFlagMask; /// Delete this
 }
@@ -76,10 +75,6 @@ static Config *_instance;
         NSURL *applicationSupportURL = [NSFileManager.defaultManager URLForDirectory:NSApplicationSupportDirectory inDomain:NSUserDomainMask appropriateForURL:nil create:NO error:nil];
         NSString *configFilePathRelative = [NSString stringWithFormat:@"%@/config.plist", kMFBundleIDApp];
         _configFilePath = [applicationSupportURL URLByAppendingPathComponent:configFilePathRelative].path;
-        
-        /// Get default config url
-        NSString *defaultConfigPathRelative = @"Contents/Resources/default_config.plist";
-        _defaultConfigURL = [Locator.mainAppBundle.bundleURL URLByAppendingPathComponent:defaultConfigPathRelative];
     }
     return self;
 }
@@ -101,6 +96,14 @@ void removeFromConfig(NSString *keyPath) {
     /// Not sure this works
     [Config.shared.config setValue:nil forKeyPath:keyPath];
 }
+
+static NSURL *defaultConfigURL(void) {
+    /// `default_config` used to be known as `backup_config`
+    ///     We used to get this only once on init, but that breaks after the user moves the app while it's open
+    NSString *defaultConfigPathRelative = @"Contents/Resources/default_config.plist";
+    return [Locator.mainAppBundle.bundleURL URLByAppendingPathComponent:defaultConfigPathRelative];
+}
+
 
 void commitConfig() {
     /// Convenience function for notifying other modules of the changed config (and writing to file)
@@ -382,7 +385,11 @@ void Handle_FSEventStreamCallback (ConstFSEventStreamRef streamRef, void *client
     /// Check if config version matches, if not, replace with default.
     
     NSNumber *currentConfigVersion = [[NSDictionary dictionaryWithContentsOfURL:Locator.configURL] valueForKeyPath:@"Other.configVersion"];
-    NSNumber *defaultConfigVersion = [[NSDictionary dictionaryWithContentsOfURL:_defaultConfigURL] valueForKeyPath:@"Other.configVersion"];
+    NSNumber *defaultConfigVersion = [[NSDictionary dictionaryWithContentsOfURL:defaultConfigURL()] valueForKeyPath:@"Other.configVersion"];
+    if (defaultConfigVersion == nil) {
+        DDLogError(@"Couldn't get default config version. Something is wrong.");
+        exit(1);
+    }
     if (currentConfigVersion.intValue != defaultConfigVersion.intValue) {
         [self replaceCurrentConfigWithDefaultConfig];
     }
@@ -415,7 +422,7 @@ void Handle_FSEventStreamCallback (ConstFSEventStreamRef streamRef, void *client
     assert(SharedUtility.runningMainApp);
     
     /// Overwrite `config.plist` with `default_config.plist`
-    NSData *defaultData = [NSData dataWithContentsOfURL:_defaultConfigURL];
+    NSData *defaultData = [NSData dataWithContentsOfURL:defaultConfigURL()];
     [defaultData writeToURL:Locator.configURL atomically:YES];
     
     /// Update helper
