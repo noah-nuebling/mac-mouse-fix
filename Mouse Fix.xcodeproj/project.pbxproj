@@ -150,11 +150,9 @@
 		4FA40CFE28A0CCCB00499E53 /* HybridCurves.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F2CC58627B8D2300084AACE /* HybridCurves.swift */; };
 		4FA40CFF28A0CCCB00499E53 /* DragCurve.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F1AFE962670EBA900ECA424 /* DragCurve.swift */; };
 		4FA40D0028A0CCCB00499E53 /* CombinedLinearCurve.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F1D58182881D880002EB119 /* CombinedLinearCurve.swift */; };
-		4FA40D0128A0CCDF00499E53 /* PolyFitObjC.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF9306128806E4F0007CCA7 /* PolyFitObjC.m */; };
 		4FA40D0228A0CE5B00499E53 /* VectorUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF0BD57266ACE32003935EA /* VectorUtility.m */; };
 		4FA40D0328A0D0BB00499E53 /* PolynomialRegression.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F8CF94328686C0100BF5E55 /* PolynomialRegression.m */; };
 		4FA40D0428A0D0C000499E53 /* DoublesMatrix.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F8CF94528686C0100BF5E55 /* DoublesMatrix.m */; };
-		4FA40D0528A0D0D000499E53 /* PolyFit.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4FF9305D288060100007CCA7 /* PolyFit.cpp */; };
 		4FA40D0B28A0D87200499E53 /* DisplayLink.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F3A40CA266C44D100436821 /* DisplayLink.m */; };
 		4FA40D0E28A0D87200499E53 /* DynamicSystemAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FE6CBC328987E8A00B3E829 /* DynamicSystemAnimator.swift */; };
 		4FA40D0F28A0D8EF00499E53 /* SubPixelator.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF6664025F2C93A00689B77 /* SubPixelator.m */; };
@@ -280,8 +278,6 @@
 		4FF8C8A128956DDD007EC31F /* ButtonModifiers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FF8C8A028956DDD007EC31F /* ButtonModifiers.swift */; };
 		4FF8C8A32895AACB007EC31F /* Buttons.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FF8C8A22895AACB007EC31F /* Buttons.swift */; };
 		4FF93059288026FC0007CCA7 /* PolynomialCappedAccelerationCurve.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FF93058288026FC0007CCA7 /* PolynomialCappedAccelerationCurve.swift */; };
-		4FF9306228806E4F0007CCA7 /* PolyFitObjC.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF9306128806E4F0007CCA7 /* PolyFitObjC.m */; };
-		4FF93063288076600007CCA7 /* PolyFit.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4FF9305D288060100007CCA7 /* PolyFit.cpp */; };
 		4FFA4E3528B795F30062A1FE /* LicenseUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FFA4E3428B795F30062A1FE /* LicenseUtility.swift */; };
 		4FFA4E3628B795F30062A1FE /* LicenseUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FFA4E3428B795F30062A1FE /* LicenseUtility.swift */; };
 		4FFA4E3828B79D410062A1FE /* NSAttributedString+Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F79A82A2605074000076A7E /* NSAttributedString+Additions.m */; };
@@ -960,11 +956,7 @@
 			isa = PBXGroup;
 			children = (
 				4F8CF92F28686C0100BF5E55 /* iOS-Polynomial-Regression-master */,
-				4F77F7C728808DAE00847D0E /* PolyFitNumPy.swift */,
-				4FF9306028806E4F0007CCA7 /* PolyFitObjC.h */,
-				4FF9306128806E4F0007CCA7 /* PolyFitObjC.m */,
-				4FF9305E288060100007CCA7 /* PolyFit.hpp */,
-				4FF9305D288060100007CCA7 /* PolyFit.cpp */,
+				4FD15B5328DB791D001445DD /* FailedExperiments */,
 			);
 			path = PolynomialRegression;
 			sourceTree = "<group>";
@@ -1421,6 +1413,18 @@
 				4F94F60B25E5EC2800D9F24A /* Mac Mouse FixUITests.xctest */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		4FD15B5328DB791D001445DD /* FailedExperiments */ = {
+			isa = PBXGroup;
+			children = (
+				4F77F7C728808DAE00847D0E /* PolyFitNumPy.swift */,
+				4FF9306028806E4F0007CCA7 /* PolyFitObjC.h */,
+				4FF9306128806E4F0007CCA7 /* PolyFitObjC.m */,
+				4FF9305E288060100007CCA7 /* PolyFit.hpp */,
+				4FF9305D288060100007CCA7 /* PolyFit.cpp */,
+			);
+			path = FailedExperiments;
 			sourceTree = "<group>";
 		};
 		4FD66E0C27BBB55200F67559 /* External */ = {
@@ -2397,7 +2401,6 @@
 				4F909D3C28A0C3D2009349A2 /* ModCaptureFieldEditor.swift in Sources */,
 				4FFA4E3528B795F30062A1FE /* LicenseUtility.swift in Sources */,
 				4F3E067E26A2F97D000C9E06 /* URLMenuItem.m in Sources */,
-				4FA40D0128A0CCDF00499E53 /* PolyFitObjC.m in Sources */,
 				4FF6660225F2C92700689B77 /* ClickableImageView.m in Sources */,
 				4F7D97A628AEB2EE00C11E79 /* AboutTabController.swift in Sources */,
 				4F79A81C2604317200076A7E /* ToastNotificationController.m in Sources */,
@@ -2430,7 +2433,6 @@
 				4F909D3D28A0C3D2009349A2 /* ModCaptureTextField.swift in Sources */,
 				4F9E78BF26855BCF002C2309 /* Concurrency.swift in Sources */,
 				4F92A708260F4BF000529D1F /* RemapTableView.m in Sources */,
-				4FA40D0528A0D0D000499E53 /* PolyFit.cpp in Sources */,
 				4FA40CF928A0CCCA00499E53 /* Bezier.swift in Sources */,
 				4F12952028D2D5E1009A49AB /* NSTextField+Extentions.swift in Sources */,
 				4FC8A7D728ACEB7B007DB982 /* NSString+Extensions.swift in Sources */,
@@ -2519,7 +2521,6 @@
 				4FFA4E4A28B7D3750062A1FE /* NSView+Extensions.swift in Sources */,
 				4F9E78E3268663B1002C2309 /* ExponentialSmoother.swift in Sources */,
 				4F3A40AB266BBB6200436821 /* AccelerationBezier.swift in Sources */,
-				4FF93063288076600007CCA7 /* PolyFit.cpp in Sources */,
 				4FD860AA266EC24E004F76C8 /* DerivedProperty.swift in Sources */,
 				4FE6CBC428987E8B00B3E829 /* DynamicSystemAnimator.swift in Sources */,
 				4FF6669725F2C93A00689B77 /* TransformationManager.m in Sources */,
@@ -2615,7 +2616,6 @@
 				4FF0255427B007FC00923107 /* ModifiedDragOutputFakeDrag.m in Sources */,
 				4F7F47C528A5A01600290BBD /* ReactiveConfig.swift in Sources */,
 				4FF8C89A28955491007EC31F /* ClickCycle.swift in Sources */,
-				4FF9306228806E4F0007CCA7 /* PolyFitObjC.m in Sources */,
 				4F12952128D2D738009A49AB /* NSTextField+Extentions.swift in Sources */,
 				4FDECCDF28A3E93100DDEE91 /* IsObjC.m in Sources */,
 				4FA83A2E268288D900F3A31B /* PointerConfig.swift in Sources */,
