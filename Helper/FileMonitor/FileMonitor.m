@@ -91,6 +91,8 @@ void Handle_FSCallback(ConstFSEventStreamRef streamRef, void *clientCallBackInfo
 
 void handleRelocation(void) {
     
+    /// Log
+    
     DDLogInfo(@"Handle Mac Mouse Fix relocation...");
     
     /// We want to close the helper
@@ -112,13 +114,20 @@ void handleRelocation(void) {
     /// Sol 2: Disable the helper
     ///     `enableHelperAsUserAgent:NO` won't do anything under the macOS Ventura Beta, so we're also calling `disableHelper()`
     ///     The Helper also seems to be restarted under Ventura when it crashes even after being relocated, but I think it'll stop working when you restart the computer after the relocation.
-    ///     It would be ideal if we used `[HelperServices disableHelperFromHelper]` here so that we have one unified method for this, but it doesn't work properly when called from here for some reason.
+    ///     It would be ideal if we used `[HelperServices disableHelperFromHelper]` here so that we have one unified method for this, but it doesn't work properly when called from here under macOS 12 for some reason.
+    ///     Under macOS 13 Beta I think the Apple APIs are just broken after relocating. -> Wait until Ventura matures more before spnding more time on this.
+    ///     TODO: ...
+    ///         - Maybe move to using disableHelperFromHelper
+    ///         - Make this work under Ventura
     
-//    [HelperServices disableHelperFromHelper];
-    
-    [SharedMessagePort sendMessage:@"helperDisabled" withPayload:nil expectingReply:NO];
-    [HelperServices enableHelperAsUserAgent:NO onComplete:nil];
-    disableHelper();
+    if (@available(macOS 13.0, *)) {
+        /// If we disable the Helper, it won't be able to be restarted until the whole computer is restarted, so it's better to do nothing. (Under Ventura Beta 7).
+//        [HelperServices disableHelperFromHelper];
+    } else {
+        [SharedMessagePort sendMessage:@"helperDisabled" withPayload:nil expectingReply:NO];
+        [HelperServices enableHelperAsUserAgent:NO onComplete:nil];
+        disableHelper();
+    }
 }
 void uninstallCompletely(void) {
     

@@ -198,7 +198,7 @@ static void handleInput(void *context, IOReturn result, void *sender, IOHIDValue
     NSArray *elements = (__bridge_transfer NSArray *)IOHIDDeviceCopyMatchingElements(device, (__bridge CFDictionaryRef)match, 0);
     
     /// Get max button number
-    ///     Could proabably also just count the number of button elements instead of this. But this might be more robust.
+    ///     Could proabably also just count the number elements instead of this. But this might be more robust.
     int maxButtonNumber = 0;
     for (id e in elements) { /// e is of the private type `HIDElement *` which is bridged with `IOHIDElementRef`
         IOHIDElementRef element = (__bridge IOHIDElementRef)e;
