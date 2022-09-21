@@ -136,6 +136,7 @@ import CocoaLumberjackSwift
             }
             
             /// Add modifiers to actionArray for addMode. See TransformationManager -> AddMode for context
+            ///     Edit: We don't need this anymore now that we're using the addModeSwizzler
 //            if actionArray[0][kMFActionDictKeyType] as! String == kMFActionDictTypeAddModeFeedback {
 //                actionArray[0][kMFRemapsKeyModificationPrecondition] = self.modifiers
 //            }
