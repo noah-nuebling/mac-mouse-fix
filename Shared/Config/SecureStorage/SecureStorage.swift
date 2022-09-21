@@ -68,7 +68,7 @@ import Foundation
     @objc static func set(_ keyPath: String, value: Any?) {
         
         do {
-            var dict = try readDict().mutableCopy() as! NSMutableDictionary
+            let dict = try readDict().mutableCopy() as! NSMutableDictionary
             dict.setObject((value as! NSObject?), forCoolKeyPath: keyPath)
             
             try replaceDict(dict)

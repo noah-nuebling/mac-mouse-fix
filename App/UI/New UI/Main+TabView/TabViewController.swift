@@ -236,7 +236,7 @@ class TabViewController: NSTabViewController {
         
         if let originTabViewItem = tabView.selectedTabViewItem {
             self.tabViewSizes[originTabViewItem] = originTabViewItem.view?.frame.size
-            DDLogDebug("Storing size \(originTabViewItem.view?.frame.size) for tab \(originTabViewItem.identifier!)")
+            DDLogDebug("Storing size \(String(describing: originTabViewItem.view?.frame.size)) for tab \(originTabViewItem.identifier!)")
         }
         
         /// Set alpha on fading in view. Necessary for fadeIn animations to work?
@@ -342,11 +342,11 @@ class TabViewController: NSTabViewController {
         }
 
         /// Get current window frame
-        var currentWindowFrame = window.frame
+        let currentWindowFrame = window.frame
         
         /// Get new window frame
         let targetContentRect = NSRect(x: 0, y: 0, width: size.width, height: size.height)
-        var newFrameRect = window.frameRect(forContentRect: targetContentRect)
+        let newFrameRect = window.frameRect(forContentRect: targetContentRect)
         
         /// Shift newFrame
         let heightDifference = newFrameRect.size.height - currentWindowFrame.size.height
@@ -402,7 +402,7 @@ class TabViewController: NSTabViewController {
         /// - Before spring animations we used to use window.animationResizeTime(newFrame)
         
         let duration = animation?.settlingDuration ?? 0.0
-        var fadeDuration = duration * 1.0 /* 0.75 */
+        let fadeDuration = duration * 1.0 /* 0.75 */
         
         /// Debug
         DDLogDebug("Predicted window settling time: \(duration)")

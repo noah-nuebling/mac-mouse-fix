@@ -93,7 +93,7 @@ class ConfigValue<T: Equatable>: NSObject, BindingTargetProvider, BindingSource 
     
     func set(_ value: T) {
         let oldValue = config(keyPath)
-        if oldValue == value as! NSObject { return }
+        if oldValue == (value as! NSObject) { return }
         setConfig(keyPath, value as! NSObject)
         commitConfig()
     }

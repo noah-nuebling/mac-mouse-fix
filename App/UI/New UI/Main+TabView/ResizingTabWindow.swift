@@ -68,7 +68,7 @@ import CocoaLumberjackSwift
             DDLogDebug("springAnimationValue: \(value)")
 
             /// Interpolate
-            var result = SharedUtilitySwift.interpolateRects(value, ogFrame, newFrame);
+            let result = SharedUtilitySwift.interpolateRects(value, ogFrame, newFrame);
             
             /// Set frame (on main thread)
             DispatchQueue.main.async {
