@@ -46,7 +46,7 @@ static id _localEventMonitor;
         
         NSPanel *w = (NSPanel *)_instance.window;
         
-        w.styleMask =  NSTitledWindowMask | NSFullSizeContentViewWindowMask;
+        w.styleMask =  NSWindowStyleMaskTitled | NSWindowStyleMaskFullSizeContentView;
         w.titlebarAppearsTransparent  =   YES;
         w.titleVisibility             =   NSWindowTitleHidden;
         w.movable = NO;
