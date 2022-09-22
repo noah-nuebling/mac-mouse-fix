@@ -84,8 +84,8 @@ static NSMutableDictionary *_swipeInfo;
     /// Create and post event
     
     CGEventRef event = CGEventCreate(NULL);
-    CGEventSetType(event, 29); // 29 -> NSEventTypeGesture
-    CGEventSetIntegerValueField(event, 110, 8); // 8 -> kIOHIDEventTypeZoom
+    CGEventSetType(event, 29); /// 29 -> NSEventTypeGesture
+    CGEventSetIntegerValueField(event, 110, 8); /// 8 -> kIOHIDEventTypeZoom
     CGEventSetIntegerValueField(event, 132, phase);
     CGEventSetDoubleValueField(event, 113, magnification);
     CGEventPost(kCGHIDEventTap, event);

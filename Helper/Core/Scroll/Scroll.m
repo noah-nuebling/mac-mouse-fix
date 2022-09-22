@@ -954,26 +954,41 @@ static void sendOutputEvents(int64_t dx, int64_t dy, MFScrollOutputType outputTy
         if (dx+dy == 0) return;
         
         /// Create base event
-        /// Mysterious: In the real events, `kCGScrollWheelEventIsContinuous` is false. But we have to set it true (through `kCGScrollEventUnitPixel`) to make the scroll distance match the real events.
-        CGEventRef event = CGEventCreateScrollWheelEvent(NULL, kCGScrollEventUnitPixel, 1, 0);
         
-        /// Make line deltas 1/10 of pixel deltas
-        ///     See CGEventSource pixelsPerLine - it's 10
-        //      TODO: Subpixelate line delta (instead of rounding). Edit: Actually in the real events they just seem to be `floor`ed, so we won't subpixelate
-        int64_t dyLine = dy / 10;
-        int64_t dxLine = dx / 10;
+        /// Sol 1: Use `CGEventCreateScrollWheelEvent()`
+        ///     - Mysterious: In the real events, `kCGScrollWheelEventIsContinuous` is false. But we have to set it true (through `kCGScrollEventUnitPixel`) to make the scroll distance match the real events.
+        ///     - Safari makes the scroll distance larger than the pixels that are specified in lineScrollEvents. But that doesn't work here. Maybe it's becuase we're setting `kCGScrollWheelEventIsContinuous` true? We're just using
+//        CGEventRef event = CGEventCreateScrollWheelEvent(NULL, kCGScrollEventUnitPixel, 1, 0);
         
-        /// Make Line deltas at least 1
-        ///     This seems to be happening in the real events
-        if (llabs(dy) != 0 && llabs(dyLine) == 0) dyLine = sign(dy);
-        if (llabs(dx) != 0 && llabs(dxLine) == 0) dxLine = sign(dx);
+        /// Sol 2: Just use `CGEventCreate`
+        ///     - This is based on analysis of real events
+        CGEventRef event = CGEventCreate(NULL);
+        CGEventSetIntegerValueField(event, 55, 22); /// Set type to `kCGEventScrollWheel`
+        
+        /// Get line deltas
+        ///     Line deltas are 1/10 of pixel deltas. See CGEventSource pixelsPerLine - it's 10
+        double dyLine = ((double)dy) / 10;
+        double dxLine = ((double)dx) / 10;
+        
+        /// Get line deltas as int
+        ///     Int deltas are generally truncated but also rounded up to be at least 1 (or -1). This also happens in real events.
+        int64_t dyLineInt = (int64_t)dyLine;
+        int64_t dxLineInt = (int64_t)dxLine;
+        if (fabs(dyLine) != 0 && llabs(dyLineInt) == 0) dyLineInt = sign(dyLine);
+        if (fabs(dxLine) != 0 && llabs(dxLineInt) == 0) dxLineInt = sign(dxLine);
+        
+        /// Get line deltas as fixed point number
+        ///     We round instead of just truncating because that makes the values look more like real values. Probably doesn't make a difference.
+        int64_t dyLineFixed = (int64_t)roundf(dyLine * pow(2, 16));
+        int64_t dxLineFixed = (int64_t)roundf(dxLine * pow(2, 16));
         
         /// Set fields
-        ///  The fixed point fields are automatically set when we set the other fields
-        CGEventSetIntegerValueField(event, kCGScrollWheelEventDeltaAxis1, dyLine);
+        CGEventSetIntegerValueField(event, kCGScrollWheelEventDeltaAxis1, dyLineInt);
+        CGEventSetIntegerValueField(event, kCGScrollWheelEventFixedPtDeltaAxis1, dyLineFixed);
         CGEventSetIntegerValueField(event, kCGScrollWheelEventPointDeltaAxis1, dy);
         
-        CGEventSetIntegerValueField(event, kCGScrollWheelEventDeltaAxis2, dxLine);
+        CGEventSetIntegerValueField(event, kCGScrollWheelEventDeltaAxis2, dxLineInt);
+        CGEventSetIntegerValueField(event, kCGScrollWheelEventFixedPtDeltaAxis2, dyLineFixed);
         CGEventSetIntegerValueField(event, kCGScrollWheelEventPointDeltaAxis2, dx);
         
         /// Debug
