@@ -504,7 +504,7 @@
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <subviews>
                                                 <imageView identifier="PlusIcon" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Jod-JU-J5j">
-                                                    <rect key="frame" x="227" y="38.5" width="60" height="66.5"/>
+                                                    <rect key="frame" x="226" y="38.5" width="60" height="66.5"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                                     <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyUpOrDown" image="plus" catalog="system" id="EyU-is-YRF"/>
                                                     <color key="contentTintColor" name="placeholderTextColor" catalog="System" colorSpace="catalog"/>
@@ -541,7 +541,7 @@
                                             <constraint firstAttribute="bottom" secondItem="7En-Ho-Dyb" secondAttribute="bottom" constant="12" id="z3y-EJ-BnU"/>
                                         </constraints>
                                     </customView>
-                                    <scrollView horizontalHuggingPriority="999" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" borderType="none" autohidesScrollers="YES" horizontalLineScroll="39" horizontalPageScroll="10" verticalLineScroll="39" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OGV-uF-BjJ" userLabel="TableScrollView" customClass="MFScrollView">
+                                    <scrollView horizontalHuggingPriority="999" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" borderType="none" autohidesScrollers="YES" horizontalLineScroll="39" horizontalPageScroll="10" verticalLineScroll="39" verticalPageScroll="10" hasHorizontalScroller="NO" hasVerticalScroller="NO" horizontalScrollElasticity="none" translatesAutoresizingMaskIntoConstraints="NO" id="OGV-uF-BjJ" userLabel="TableScrollView" customClass="MFScrollView">
                                         <rect key="frame" x="0.0" y="45" width="541" height="195"/>
                                         <clipView key="contentView" autoresizesSubviews="NO" drawsBackground="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Fkp-gm-SVn" customClass="MFClipView" customModule="Mac_Mouse_Fix" customModuleProvider="target">
                                             <rect key="frame" x="0.0" y="0.0" width="541" height="195"/>
@@ -602,7 +602,7 @@
                                                                     </connections>
                                                                 </tableCellView>
                                                                 <tableCellView identifier="buttonGroupCell" id="pxf-x1-gL5" userLabel="ButtonGroupCell">
-                                                                    <rect key="frame" x="8" y="38" width="288" height="22"/>
+                                                                    <rect key="frame" x="8" y="38" width="287" height="22"/>
                                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                                     <subviews>
                                                                         <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="AHZ-Kd-4Xf">
@@ -641,7 +641,7 @@
                                                             <tableColumnResizingMask key="resizingMask" resizeWithTable="YES"/>
                                                             <prototypeCellViews>
                                                                 <tableCellView identifier="effectCell" translatesAutoresizingMaskIntoConstraints="NO" id="Epw-SW-Ew3" customClass="RemapTableCellView" customModule="Mac_Mouse_Fix" customModuleProvider="target">
-                                                                    <rect key="frame" x="313" y="0.0" width="223" height="39"/>
+                                                                    <rect key="frame" x="312.5" y="0.0" width="223" height="39"/>
                                                                     <subviews>
                                                                         <popUpButton verticalHuggingPriority="750" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="Pw9-ZH-Tb7">
                                                                             <rect key="frame" x="0.0" y="6" width="224" height="25"/>
@@ -669,7 +669,7 @@
                                                                     </constraints>
                                                                 </tableCellView>
                                                                 <tableCellView identifier="keyCaptureCell" translatesAutoresizingMaskIntoConstraints="NO" id="MzR-b1-853" customClass="RemapTableCellView" customModule="Mac_Mouse_Fix" customModuleProvider="target">
-                                                                    <rect key="frame" x="313" y="39" width="220" height="39"/>
+                                                                    <rect key="frame" x="312.5" y="39" width="220" height="39"/>
                                                                     <subviews>
                                                                         <button hidden="YES" focusRingType="exterior" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="psy-Jg-KLq">
                                                                             <rect key="frame" x="-4" y="3" width="228" height="32"/>
@@ -750,11 +750,11 @@
                                             <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="300" id="oIt-mA-DPV"/>
                                         </constraints>
                                         <scroller key="horizontalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" horizontal="YES" id="mCT-ys-LqY">
-                                            <rect key="frame" x="0.0" y="354" width="350" height="16"/>
+                                            <rect key="frame" x="-100" y="-100" width="350" height="16"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                         </scroller>
                                         <scroller key="verticalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" horizontal="NO" id="Trw-KD-fLi">
-                                            <rect key="frame" x="224" y="17" width="15" height="102"/>
+                                            <rect key="frame" x="-100" y="-100" width="15" height="102"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                         </scroller>
                                     </scrollView>
