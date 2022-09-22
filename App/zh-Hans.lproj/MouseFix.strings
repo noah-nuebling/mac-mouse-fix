@@ -1,0 +1,162 @@
+/* Class = "NSMenuItem"; title = "Cut"; ObjectID = "2Kl-Ga-ipi"; */
+"2Kl-Ga-ipi.title" = "剪切";
+
+/* Class = "NSMenuItem"; title = "Delete"; ObjectID = "5e7-Bk-rgI"; */
+"5e7-Bk-rgI.title" = "刪除";
+
+/* Class = "NSMenuItem"; title = "Hide Mac Mouse Fix"; ObjectID = "5NF-pE-VIh"; */
+"5NF-pE-VIh.title" = "隐藏Mac Mouse Fix";
+
+/* Class = "NSMenuItem"; title = "Copy"; ObjectID = "6Hk-7O-zX4"; */
+"6Hk-7O-zX4.title" = "拷贝";
+
+/* Class = "NSTextFieldCell"; title = "Scroll speed"; ObjectID = "9F6-l7-3Jh"; */
+"9F6-l7-3Jh.title" = "滚动速度";
+
+/* Class = "NSButton"; ibShadowedToolTip = "Make scrolling animate smoothly\n\nTips: \n- Hold Shift (⇧) to scroll horizontally\n- Hold Command (⌘) and scroll to zoom in or out"; ObjectID = "9lG-eT-nD4"; */
+"9lG-eT-nD4.ibShadowedToolTip" = "使滚动平滑\n\n提示：\n・按住Shift（⇧）来水平滚动\n・按住Command（⌘）并滚动来放大或缩小";
+
+/* Class = "NSButtonCell"; title = "Smooth scrolling"; ObjectID = "aqu-LA-LU4"; */
+"aqu-LA-LU4.title" = "平滑滚动";
+
+/* Class = "NSMenuItem"; title = "Show All"; ObjectID = "bBZ-Ay-p6l"; */
+"bBZ-Ay-p6l.title" = "全部显示";
+
+/* Class = "NSSegmentedCell"; btI-2i-s2J.ibShadowedToolTips[0] = "Add a new Action"; ObjectID = "btI-2i-s2J"; */
+"btI-2i-s2J.ibShadowedToolTips[0]" = "新增操作";
+
+/* Class = "NSSegmentedCell"; btI-2i-s2J.ibShadowedToolTips[1] = "Delete the selected Action"; ObjectID = "btI-2i-s2J"; */
+"btI-2i-s2J.ibShadowedToolTips[1]" = "删除所选操作";
+
+/* Class = "NSMenuItem"; title = "Help"; ObjectID = "cvc-dN-LRF"; */
+"cvc-dN-LRF.title" = "帮助";
+
+/* Class = "NSMenu"; title = "Help"; ObjectID = "d2H-UT-IZe"; */
+"d2H-UT-IZe.title" = "帮助";
+
+/* Class = "NSMenuItem"; title = "About Mac Mouse Fix"; ObjectID = "DGC-Wk-0b9"; */
+"DGC-Wk-0b9.title" = "关于Mac Mouse Fix";
+
+/* Class = "NSMenuItem"; title = "Minimize"; ObjectID = "dhH-6o-5jg"; */
+"dhH-6o-5jg.title" = "最小化";
+
+/* Class = "NSButtonCell"; title = "More..."; ObjectID = "dLd-xI-ix2"; */
+"dLd-xI-ix2.title" = "更多…";
+
+/* Class = "NSMenu"; title = "Main Menu"; ObjectID = "DQZ-tv-r6C"; */
+"DQZ-tv-r6C.title" = "主菜单";
+
+/* Class = "NSTextField"; ibShadowedToolTip = "Scroll fewer pixels per mouse wheel tick."; ObjectID = "dzx-1i-bZ6"; */
+"dzx-1i-bZ6.ibShadowedToolTip" = "鼠标滚轮每刻度滚动更少像素";
+
+/* Class = "NSWindow"; title = "Mac Mouse Fix"; ObjectID = "F0z-JX-Cv5"; */
+"F0z-JX-Cv5.title" = "Mac Mouse Fix";
+
+/* Class = "NSMenuItem"; title = "Mission Control and Spaces"; ObjectID = "Frp-Q3-9xh"; */
+"Frp-Q3-9xh.title" = "调度中心与空间";
+
+/* Class = "NSButtonCell"; title = "Enable Mac Mouse Fix"; ObjectID = "G70-nk-4Vw"; */
+"G70-nk-4Vw.title" = "启用Mac Mouse Fix";
+
+/* Class = "NSMenuItem"; title = "View Guides or Ask the Community..."; ObjectID = "GcC-Bk-h8l"; */
+"GcC-Bk-h8l.title" = "查看帮助或向社区提问…";
+
+/* Class = "NSTextFieldCell"; title = "Slow"; ObjectID = "GKV-Mh-wiX"; */
+"GKV-Mh-wiX.title" = "慢";
+
+/* Class = "NSMenuItem"; title = "Paste"; ObjectID = "Gpn-yw-keG"; */
+"Gpn-yw-keG.title" = "粘贴";
+
+/* Class = "NSTextFieldCell"; title = "⌘⇧⌥⌃ + Triple Click and Drag Button 3"; ObjectID = "hBN-M2-pMi"; */
+"hBN-M2-pMi.title" = "⌘⇧⌥⌃＋连按三次中键并拖移";
+
+/* Class = "NSMenuItem"; title = "Click and Drag Button 3"; ObjectID = "hdW-0g-MyX"; */
+"hdW-0g-MyX.title" = "按一下中键并拖移";
+
+/* Class = "NSMenuItem"; title = "Bring All to Front"; ObjectID = "HeA-aZ-LaQ"; */
+"HeA-aZ-LaQ.title" = "前置全部窗口";
+
+/* Class = "NSTableColumn"; headerCell.title = "Effect"; ObjectID = "hfG-kJ-PIF"; */
+"hfG-kJ-PIF.headerCell.title" = "动态效果";
+
+/* Class = "NSButton"; ibShadowedToolTip = "Reverse mouse scroll direction while leaving trackpad scroll direction as is."; ObjectID = "Ip8-aI-or8"; */
+"Ip8-aI-or8.ibShadowedToolTip" = "反转鼠标的滚动方向，但不改变触控板的滚动方向";
+
+/* Class = "NSMenuItem"; title = "Services"; ObjectID = "iyI-2p-2XX"; */
+"iyI-2p-2XX.title" = "服务";
+
+/* Class = "NSTextFieldCell"; title = "Button X"; ObjectID = "Jbj-n8-l11"; */
+"Jbj-n8-l11.title" = "按钮X";
+
+/* Class = "NSMenuItem"; title = "Undo"; ObjectID = "kIC-0d-1oi"; */
+"kIC-0d-1oi.title" = "撤销";
+
+/* Class = "NSMenuItem"; title = "Redo"; ObjectID = "ldi-RA-oco"; */
+"ldi-RA-oco.title" = "重做";
+
+/* Class = "NSSlider"; ibShadowedToolTip = "How fast you'll scroll"; ObjectID = "mXj-a7-rFw"; */
+"mXj-a7-rFw.ibShadowedToolTip" = "你的滚动速度";
+
+/* Class = "NSMenu"; title = "Services"; ObjectID = "nj2-MI-Hd5"; */
+"nj2-MI-Hd5.title" = "服务";
+
+/* Class = "NSMenu"; title = "Window"; ObjectID = "OYd-NL-OBF"; */
+"OYd-NL-OBF.title" = "窗口";
+
+/* Class = "NSMenuItem"; title = "Hide Others"; ObjectID = "OzC-5Y-Km8"; */
+"OzC-5Y-Km8.title" = "隐藏其他";
+
+/* Class = "NSTextFieldCell"; title = "Text Cell"; ObjectID = "pPw-cq-7Kz"; */
+"pPw-cq-7Kz.title" = "Text Cell";
+
+/* Class = "NSMenuItem"; title = "Close"; ObjectID = "PsB-Kz-IPn"; */
+"PsB-Kz-IPn.title" = "关闭";
+
+/* Class = "NSMenuItem"; title = "Mac Mouse Fix"; ObjectID = "SuP-Uq-2Ln"; */
+"SuP-Uq-2Ln.title" = "Mac Mouse Fix";
+
+/* Class = "NSMenu"; title = "Mac Mouse Fix"; ObjectID = "sWL-bz-rmH"; */
+"sWL-bz-rmH.title" = "Mac Mouse Fix";
+
+/* Class = "NSTextFieldCell"; title = "Text Cell"; ObjectID = "tBF-d9-kCp"; */
+"tBF-d9-kCp.title" = "Text Cell";
+
+/* Class = "NSButtonCell"; title = "Invert direction"; ObjectID = "uNi-ZH-WXu"; */
+"uNi-ZH-WXu.title" = "反转方向";
+
+/* Class = "NSTextField"; ibShadowedToolTip = "Scroll more pixels per mouse wheel tick."; ObjectID = "V4c-hh-3HL"; */
+"V4c-hh-3HL.ibShadowedToolTip" = "鼠标滚轮每刻度滚动更多像素";
+
+/* Class = "NSMenuItem"; title = "Select All"; ObjectID = "VpK-mL-Okh"; */
+"VpK-mL-Okh.title" = "全选";
+
+/* Class = "NSButton"; ibShadowedToolTip = "Enable Mac Mouse Fix for a better mouse experience!\n\nMac Mouse Fix stays enabled even after you quit the app or restart your computer. \n\nTo disable Mac Mouse Fix, uncheck this checkbox or move the app to the Trash."; ObjectID = "vqy-WZ-nG6"; */
+"vqy-WZ-nG6.ibShadowedToolTip" = "启用Mac Mouse Fix以获得更好的鼠标体验！\n即使退出应用程序或重新启动你的电脑，Mac Mouse Fix仍保持启用状态。\n若要停用Mac Mouse Fix，取消勾选这个复选框或将此应用程序移到废纸篓。";
+
+/* Class = "NSMenuItem"; title = "Quit Mac Mouse Fix"; ObjectID = "WaW-d6-1FG"; */
+"WaW-d6-1FG.title" = "退出Mac Mouse Fix";
+
+/* Class = "NSMenuItem"; title = "Edit"; ObjectID = "wI5-zU-9qx"; */
+"wI5-zU-9qx.title" = "编辑";
+
+/* Class = "NSMenuItem"; title = "Delete"; ObjectID = "wkx-a9-yNs"; */
+"wkx-a9-yNs.title" = "删除";
+
+/* Class = "NSMenuItem"; title = "Check for Updates..."; ObjectID = "xgK-bl-zXP"; */
+"xgK-bl-zXP.title" = "检查更新…";
+
+/* Class = "NSTextFieldCell"; title = "Fast"; ObjectID = "xi0-4q-Wib"; */
+"xi0-4q-Wib.title" = "快";
+
+/* Class = "NSMenuItem"; title = "Window"; ObjectID = "Yne-Ze-1LT"; */
+"Yne-Ze-1LT.title" = "窗口";
+
+/* Class = "NSMenu"; title = "Edit"; ObjectID = "Yog-Q2-9zs"; */
+"Yog-Q2-9zs.title" = "编辑";
+
+/* Class = "NSMenuItem"; title = "Zoom"; ObjectID = "z7b-3r-4xX"; */
+"z7b-3r-4xX.title" = "缩放";
+
+/* Class = "NSTableColumn"; headerCell.title = "Trigger"; ObjectID = "zj7-YT-yKp"; */
+"zj7-YT-yKp.headerCell.title" = "触发";
+

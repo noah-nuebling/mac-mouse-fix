@@ -434,6 +434,9 @@
 		4FF6667D25F2C93A00689B77 /* DeviceManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DeviceManager.m; sourceTree = "<group>"; };
 		4FF6667F25F2C93A00689B77 /* Utility_Helper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Utility_Helper.h; sourceTree = "<group>"; };
 		4FF6668025F2C93A00689B77 /* Utility_Helper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Utility_Helper.m; sourceTree = "<group>"; };
+		F449C31E28DC1C1C00136800 /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hant"; path = "zh-Hant.lproj/MouseFix.strings"; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.plist; };
+		F449C32028DC34F100136800 /* zh-HK */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-HK"; path = "zh-HK.lproj/MouseFix.strings"; sourceTree = "<group>"; };
+		F449C32128DC3CE400136800 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/MouseFix.strings"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1314,6 +1317,9 @@
 			knownRegions = (
 				en,
 				Base,
+				"zh-Hant",
+				"zh-HK",
+				"zh-Hans",
 			);
 			mainGroup = 4FCECD7721092354001F1078;
 			packageReferences = (
@@ -1575,6 +1581,9 @@
 			isa = PBXVariantGroup;
 			children = (
 				4FF665DA25F2C92700689B77 /* Base */,
+				F449C31E28DC1C1C00136800 /* zh-Hant */,
+				F449C32028DC34F100136800 /* zh-HK */,
+				F449C32128DC3CE400136800 /* zh-Hans */,
 			);
 			name = MouseFix.xib;
 			sourceTree = "<group>";
