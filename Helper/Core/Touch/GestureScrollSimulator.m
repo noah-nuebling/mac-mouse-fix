@@ -31,10 +31,6 @@ Also see:
 
 @implementation GestureScrollSimulator
 
-#pragma mark - Constants
-
-static double _pixelsPerLine = 10;
-
 #pragma mark - Vars and init
 
 static VectorSubPixelator *_scrollLinePixelator;
@@ -110,7 +106,7 @@ static dispatch_queue_t _momentumQueue;
     /// Timestamps and static vars
 
     static CFTimeInterval lastInputTime;
-    static Vector lastScrollPointVector;
+    static Vector lastScrollVec;
     
     CFTimeInterval now = CACurrentMediaTime();
     CFTimeInterval timeSinceLastInput;
@@ -133,26 +129,23 @@ static dispatch_queue_t _momentumQueue;
         /// Get vectors
         
         Vector vecScrollPoint = (Vector){ .x = dx, .y = dy };
-        Vector vecScrollLine = scrollLineVector_FromScrollPointVector(vecScrollPoint);
-        Vector vecGesture = gestureVector_FromScrollPointVector(vecScrollPoint);
-        
-        /// Subpixelate vector
-        ///     No need to subpixelate the other two vecs because they are integer
-        
-        vecScrollLine = [_scrollLinePixelator intVectorWithDoubleVector:vecScrollLine];
+        Vector vecScrollLine;
+        Vector vecScrollLineInt;
+        Vector vecGesture;
+        getDeltaVectors(vecScrollPoint, _scrollLinePixelator, &vecScrollLine, &vecScrollLineInt, &vecGesture);
         
         /// Record last scroll point vec
         
-        lastScrollPointVector = vecScrollPoint;
+        lastScrollVec = vecScrollPoint;
         
         /// Post events
         
         [GestureScrollSimulator postGestureScrollEventWithGestureVector:vecGesture
                                                        scrollVectorLine:vecScrollLine
+                                                    scrollVectorLineInt:vecScrollLineInt
                                                       scrollVectorPoint:vecScrollPoint
                                                                   phase:phase
-                                                          momentumPhase:kCGMomentumScrollPhaseNone
-                                                               location:getPointerLocation()];
+                                                          momentumPhase:kCGMomentumScrollPhaseNone];
         
         /// Debug
         //        DDLogInfo(@"timeSinceLast: %f scrollVec: %f %f speed: %f", timeSinceLastInput, vecScrollPoint.x, vecScrollPoint.y, vecScrollPoint.y / timeSinceLastInput);
@@ -166,18 +159,18 @@ static dispatch_queue_t _momentumQueue;
         /// Post `ended` event
         [GestureScrollSimulator postGestureScrollEventWithGestureVector:(Vector){}
                                                        scrollVectorLine:(Vector){}
+                                                    scrollVectorLineInt:(Vector){}
                                                       scrollVectorPoint:(Vector){}
                                                                   phase:kIOHIDEventPhaseEnded
-                                                          momentumPhase:0
-                                                               location:getPointerLocation()];
+                                                          momentumPhase:0];
         
         if (autoMomentumScroll) {
         
             /// Get exitSpeed (aka initialSpeed for momentum Scroll)
             
             Vector exitVelocity = (Vector) {
-                .x = lastScrollPointVector.x / timeSinceLastInput,
-                .y = lastScrollPointVector.y / timeSinceLastInput
+                .x = lastScrollVec.x / timeSinceLastInput,
+                .y = lastScrollVec.y / timeSinceLastInput
             };
             
             /// Get momentum scroll params
@@ -207,19 +200,27 @@ static dispatch_queue_t _momentumQueue;
 + (void)postMomentumScrollDirectlyWithDeltaX:(double)dx
                                       deltaY:(double)dy
                                momentumPhase:(CGMomentumScrollPhase)momentumPhase {
-        
-        CGPoint loc = getPointerLocation();
-        
-        Vector zeroVector = (Vector){ .x = 0, .y = 0 };
-        Vector deltaVec = (Vector){ .x = dx, .y = dy };
-        Vector deltaVecLine = (Vector){ .x = dx/10, .y = dy/10 }; /// TODO: Subpixelate this
-        
-        [GestureScrollSimulator postGestureScrollEventWithGestureVector:zeroVector
-                                                       scrollVectorLine:deltaVecLine
-                                                      scrollVectorPoint:deltaVec
-                                                                  phase:kIOHIDEventPhaseUndefined
-                                                          momentumPhase:momentumPhase
-                                                               location:loc];
+    
+    /// Reset subpixelator
+    if (momentumPhase == kCGMomentumScrollPhaseBegin) {
+        [_scrollLinePixelator reset];
+    }
+    
+    /// Declare zero Vec
+    Vector zeroVector = (Vector){0};
+    
+    /// Get deltaVectors
+    Vector vecScrollPoint = (Vector){ .x = dx, .y = dy };
+    Vector vecScrollLine;
+    Vector vecScrollLineInt;
+    getDeltaVectors(vecScrollPoint, _scrollLinePixelator, &vecScrollLine, &vecScrollLineInt, NULL);
+    
+    [GestureScrollSimulator postGestureScrollEventWithGestureVector:zeroVector
+                                                   scrollVectorLine:vecScrollLine
+                                                scrollVectorLineInt:vecScrollLineInt
+                                                  scrollVectorPoint:vecScrollPoint
+                                                              phase:kIOHIDEventPhaseUndefined
+                                                      momentumPhase:momentumPhase];
 }
 
 #pragma mark - Auto momentum scroll
@@ -313,10 +314,7 @@ static void startMomentumScroll_Unsafe(double timeSinceLastInput, Vector exitVel
         NSMutableDictionary *p = [NSMutableDictionary dictionary];
         
         /// Reset subpixelators
-        
-//        [_scrollPointPixelator reset];
         [_scrollLinePixelator reset];
-        /// Don't need to reset _gesturePixelator, because we don't send gesture events during momentum scroll
         
         /// Get animator params
         
@@ -364,12 +362,12 @@ static void startMomentumScroll_Unsafe(double timeSinceLastInput, Vector exitVel
         /// Debug
         DDLogDebug(@"Momentum scrolling - delta: (%f, %f), animationPhase: %d", deltaVec.x, deltaVec.y, animationPhase);
         
-        /// Get line vector and subpixelate
-        Vector directedLineDelta = scrollLineVector_FromScrollPointVector(deltaVec);
-        Vector directedLineDeltaInt = [_scrollLinePixelator intVectorWithDoubleVector:directedLineDelta];
+        /// Get delta vectors
+        Vector vecScrollLine;
+        Vector vecScrollLineInt;
+        getDeltaVectors(deltaVec, _scrollLinePixelator, &vecScrollLine, &vecScrollLineInt, NULL);
         
         /// Call momentumScrollStart callback
-        
         if (animationPhase == kMFAnimationCallbackPhaseStart) {
             if (_momentumScrollCallback != NULL) _momentumScrollCallback();
         }
@@ -395,40 +393,37 @@ static void startMomentumScroll_Unsafe(double timeSinceLastInput, Vector exitVel
             assert(isZeroVector(deltaVec));
         }
         
-        /// Get pointer location for posting event
-        CGPoint postLocation = getPointerLocation();
-        
         /// Post event
         [GestureScrollSimulator postGestureScrollEventWithGestureVector:zeroVector
-                                                       scrollVectorLine:directedLineDeltaInt
+                                                       scrollVectorLine:vecScrollLine
+                                                    scrollVectorLineInt:vecScrollLineInt
                                                       scrollVectorPoint:deltaVec
                                                                   phase:kIOHIDEventPhaseUndefined
-                                                          momentumPhase:momentumPhase
-                                                               location:postLocation];
+                                                          momentumPhase:momentumPhase];
 
     }];
     
 }
 
-#pragma mark - Vector math functions
+#pragma mark - Vectors
 
-static Vector scrollLineVector_FromScrollPointVector(Vector vec) {
-    
-    return scaledVectorWithFunction(vec, ^double(double x) {
-        return x / _pixelsPerLine; /// See CGEventSource.pixelsPerLine - it's 10 by default
-    });
-}
-
-static Vector gestureVector_FromScrollPointVector(Vector vec) {
-    
-    return scaledVectorWithFunction(vec, ^double(double x) {
-//        return 1.35 * x; /// This makes swipe to mark unread in Apple Mail feel really nice
-//        return 1.0 * x; /// This feels better for swiping between pages in Safari
-//        return 1.15 * x; /// I think this is a nice compromise
-//        return 1.0 * x; /// Even 1.15 feels to fast right now. Edit: But why? Swipeing between pages and marking as unread feel to hard to trigger with this.
-        return 1.67 * x; /// This makes click and drag to swipe between pages in Safari appropriately easy to trigger
-    });
-}
+//static Vector scrollLineVector_FromScrollPointVector(Vector vec) {
+//
+//    return scaledVectorWithFunction(vec, ^double(double x) {
+//        return x / _pixelsPerLine; /// See CGEventSource.pixelsPerLine - it's 10 by default
+//    });
+//}
+//
+//static Vector gestureVector_FromScrollPointVector(Vector vec) {
+//
+//    return scaledVectorWithFunction(vec, ^double(double x) {
+////        return 1.35 * x; /// This makes swipe to mark unread in Apple Mail feel really nice
+////        return 1.0 * x; /// This feels better for swiping between pages in Safari
+////        return 1.15 * x; /// I think this is a nice compromise
+////        return 1.0 * x; /// Even 1.15 feels to fast right now. Edit: But why? Swipeing between pages and marking as unread feel to hard to trigger with this.
+//        return 1.67 * x; /// This makes click and drag to swipe between pages in Safari appropriately easy to trigger
+//    });
+//}
 
 static Vector initalMomentumScrollVelocity_FromExitVelocity(Vector exitVelocity) {
     
@@ -438,36 +433,62 @@ static Vector initalMomentumScrollVelocity_FromExitVelocity(Vector exitVelocity)
     });
 }
 
+static void getDeltaVectors(Vector point, VectorSubPixelator *subPixelator, Vector *line, Vector *lineInt, Vector *gesture) {
+    
+    /// `point` and `subPixelator` are the input, all the other vectors are the output.
+    /// You can pass NULL for `gesture` if you don't need it. (You don't need it for momentum scrolls)
+    
+    /// Guard `point` contains int
+    assert(point.x == roundf(point.x) && point.y == roundf(point.y));
+    
+    /// Generate other vectors
+    *line = scaledVector(point, 1/10); /// See CGEventSource.pixelsPerLine - it's 10 by default
+    *lineInt = [subPixelator intVectorWithDoubleVector:*line];
+    if (gesture != NULL) {
+        *gesture = scaledVector(point, 1.67); /// 1.67 makes click and drag to swipe between pages in Safari appropriately easy to trigger
+    }
+}
+
+
 #pragma mark - Post CGEvents
 
-
-/// Post scroll events that behave as if they are coming from an Apple Trackpad or Magic Mouse.
-/// This allows for swiping between pages in apps like Safari or Preview, and it also makes overscroll and inertial scrolling work.
-/// Phases
-///     1. kIOHIDEventPhaseMayBegin - First event. Deltas should be 0.
-///     2. kIOHIDEventPhaseBegan - Second event. At least one of the two deltas should be non-0.
-///     4. kIOHIDEventPhaseChanged - All events in between. At least one of the two deltas should be non-0.
-///     5. kIOHIDEventPhaseEnded - Last event before momentum phase. Deltas should be 0.
-///       - If you stop sending events at this point, scrolling will continue in certain apps like Xcode, but get slower with time until it stops. The initial speed and direction of this "automatic momentum phase" seems to be based on the last kIOHIDEventPhaseChanged event which contained at least one non-zero delta.
-///       - To stop this from happening, either give the last kIOHIDEventPhaseChanged event very small deltas, or send an event with phase kIOHIDEventPhaseUndefined and momentumPhase kCGMomentumScrollPhaseEnd right after this one.
-///     6. kIOHIDEventPhaseUndefined - Use this phase with non-0 momentumPhase values. (0 being kCGMomentumScrollPhaseNone)
-///     7. What about kIOHIDEventPhaseCanceled? It seems to occur when you touch the trackpad (producing MayBegin events) and then lift your fingers off before scrolling. I guess the deltas are always gonna be 0 on that, too, but I'm not sure.
-
 + (void)postGestureScrollEventWithGestureVector:(Vector)vecGesture
-                               scrollVectorLine:(Vector)vecScroll
+                               scrollVectorLine:(Vector)vecScrollLine
+                            scrollVectorLineInt:(Vector)vecScrollLineInt
                               scrollVectorPoint:(Vector)vecScrollPoint
                                           phase:(IOHIDEventPhaseBits)phase
-                                  momentumPhase:(CGMomentumScrollPhase)momentumPhase
-                                       location:(CGPoint)loc {
+                                  momentumPhase:(CGMomentumScrollPhase)momentumPhase {
 
+    /// Post scroll events that behave as if they are coming from an Apple Trackpad or Magic Mouse.
+    /// This allows for swiping between pages in apps like Safari or Preview, and it also makes overscroll and inertial scrolling work.
+    ///
+    /// Notes on the 4 Vectors:
+    /// - The gestureVector and scrollVectorLine are supposed to contain **floats**, the scrollVectorLineInt and scrollVectorPoint are expected to contain **int** values.
+    ///
+    /// Notes on phases:
+    ///     1. kIOHIDEventPhaseMayBegin - First event. Deltas should be 0.
+    ///     2. kIOHIDEventPhaseBegan - Second event. At least one of the two deltas should be non-0.
+    ///     4. kIOHIDEventPhaseChanged - All events in between. At least one of the two deltas should be non-0.
+    ///     5. kIOHIDEventPhaseEnded - Last event before momentum phase. Deltas should be 0.
+    ///       - If you stop sending events at this point, scrolling will continue in certain apps like Xcode, but get slower with time until it stops. The initial speed and direction of this "automatic momentum phase" seems to be based on the last kIOHIDEventPhaseChanged event which contained at least one non-zero delta.
+    ///       - To stop this from happening, either give the last kIOHIDEventPhaseChanged event very small deltas, or send an event with phase kIOHIDEventPhaseUndefined and momentumPhase kCGMomentumScrollPhaseEnd right after this one.
+    ///     6. kIOHIDEventPhaseUndefined - Use this phase with non-0 momentumPhase values. (0 being kCGMomentumScrollPhaseNone)
+    ///     7. What about kIOHIDEventPhaseCanceled? It seems to occur when you touch the trackpad (producing MayBegin events) and then lift your fingers off before scrolling. I guess the deltas are always gonna be 0 on that, too, but I'm not sure.
+    
+    
     /// Debug
     
-    static double tsLast = 0;
-    double ts = CACurrentMediaTime();
-    double timeSinceLast = ts - tsLast;
-    tsLast = ts;
+    if (SharedUtility.runningPreRelease) {
+        
+        static double tsLast = 0;
+        double ts = CACurrentMediaTime();
+        double timeSinceLast = ts - tsLast;
+        tsLast = ts;
+        
+        DDLogDebug(@"\nHNGG Posting: gesture: (%f, %f) \t\t scroll: (%f, %f) \t scrollPt: (%f, %f) \t phases: (%d, %d) \t timeSinceLast: %f \n", vecGesture.x, vecGesture.y, vecScrollLineInt.x, vecScrollLineInt.y, vecScrollPoint.x, vecScrollPoint.y, phase, momentumPhase, timeSinceLast*1000);
+    }
     
-    DDLogDebug(@"\nHNGG Posting: gesture: (%f, %f) \t\t scroll: (%f, %f) \t scrollPt: (%f, %f) \t phases: (%d, %d) \t timeSinceLast: %f \t loc: (%f, %f)\n", vecGesture.x, vecGesture.y, vecScroll.x, vecScroll.y, vecScrollPoint.x, vecScrollPoint.y, phase, momentumPhase, timeSinceLast*1000, loc.x, loc.y);
+    /// Validate
     
     assert((phase == kIOHIDEventPhaseUndefined || momentumPhase == kCGMomentumScrollPhaseNone)); /// At least one of the phases has to be 0
     
@@ -475,7 +496,6 @@ static Vector initalMomentumScrollVelocity_FromExitVelocity(Vector exitVelocity)
     ///  Get stuff we need for both the type 22 and the type 29 event
     ///
     
-    CGPoint eventLocation = loc;
     CGEventTimestamp eventTs = (CACurrentMediaTime() * NSEC_PER_SEC); /// Timestamp doesn't seem to make a difference anywhere. Could also set to 0
     
     ///
@@ -487,34 +507,36 @@ static Vector initalMomentumScrollVelocity_FromExitVelocity(Vector exitVelocity)
     
     /// Set static fields
     
-    CGEventSetDoubleValueField(e22, 55, 22); /// 22 -> NSEventTypeScrollWheel // Setting field 55 is the same as using CGEventSetType(), I'm not sure if that has weird side-effects though, so I'd rather do it this way.
-    CGEventSetDoubleValueField(e22, 88, 1); /// 88 -> kCGScrollWheelEventIsContinuous
-    CGEventSetDoubleValueField(e22, 137, 1); /// Maybe this is NSEvent.directionInvertedFromDevice
+    CGEventSetIntegerValueField(e22, 55, 22); /// 22 -> NSEventTypeScrollWheel // Setting field 55 is the same as using CGEventSetType(), I'm not sure if that has weird side-effects though, so I'd rather do it this way.
+    CGEventSetIntegerValueField(e22, 88, 1); /// 88 -> kCGScrollWheelEventIsContinuous
+    CGEventSetIntegerValueField(e22, 137, 1); /// Maybe this is NSEvent.directionInvertedFromDevice
     
     /// Set dynamic fields
     
     /// Scroll deltas
-    /// We used to round here, but rounding is not necessary, because we make sure that the incoming vectors only contain integers
-    ///      Even if we didn't, I'm not sure rounding would make a difference
-    /// Fixed point deltas are set automatically by setting these deltas IIRC.
+    /// Notes:
+    ///     - Fixed point deltas are set automatically by setting these deltas IIRC. Edit: Under Ventura Beta, the fixed point deltas are not automatically being set. Not sure if this was ever the case. So we're setting it manually now.
+    ///     - Doing similar things in see Scroll.m line-scroll-generation
     
-    CGEventSetDoubleValueField(e22, 11, vecScroll.y); /// 11 -> kCGScrollWheelEventDeltaAxis1
-    CGEventSetDoubleValueField(e22, 96, vecScrollPoint.y); /// 96 -> kCGScrollWheelEventPointDeltaAxis1
+    CGEventSetIntegerValueField(e22, 11, vecScrollLineInt.y); /// 11 -> kCGScrollWheelEventDeltaAxis1
+    CGEventSetIntegerValueField(e22, 96, vecScrollPoint.y); /// 96 -> kCGScrollWheelEventPointDeltaAxis1
+    CGEventSetIntegerValueField(e22, 93, fixedScrollDelta(vecScrollLine.y)); /// 93 -> kCGScrollWheelEventFixedPtDeltaAxis1
     
-    CGEventSetDoubleValueField(e22, 12, vecScroll.x); /// 12 -> kCGScrollWheelEventDeltaAxis2
-    CGEventSetDoubleValueField(e22, 97, vecScrollPoint.x); /// 97 -> kCGScrollWheelEventPointDeltaAxis2
+    CGEventSetIntegerValueField(e22, 12, vecScrollLineInt.x); /// 12 -> kCGScrollWheelEventDeltaAxis2
+    CGEventSetIntegerValueField(e22, 97, vecScrollPoint.x); /// 97 -> kCGScrollWheelEventPointDeltaAxis2
+    CGEventSetIntegerValueField(e22, 94, fixedScrollDelta(vecScrollLine.x)); /// 94 -> kCGScrollWheelEventFixedPtDeltaAxis2
     
     /// Phase
     
-    CGEventSetDoubleValueField(e22, 99, phase);
-    CGEventSetDoubleValueField(e22, 123, momentumPhase);
+    CGEventSetIntegerValueField(e22, 99, phase);
+    CGEventSetIntegerValueField(e22, 123, momentumPhase);
 
     /// Post t22s0 event
     ///     Posting after the t29s6 event because I thought that was close to real trackpad events. But in real trackpad events the order is always different it seems.
     ///     Wow, posting this after the t29s6 events removed the little stutter when swiping between pages, nice!
     
     CGEventSetTimestamp(e22, eventTs);
-    CGEventSetLocation(e22, eventLocation);
+//    CGEventSetLocation(e22, eventLocation);
     CGEventPost(kCGSessionEventTap, e22); /// Needs to be kCGHIDEventTap instead of kCGSessionEventTap to work with Swish, but that will make the events feed back into our scroll event tap. That's not tooo bad, because we ignore continuous events anyways, still bad because CPU use and stuff.
     CFRelease(e22);
     
@@ -527,8 +549,8 @@ static Vector initalMomentumScrollVelocity_FromExitVelocity(Vector exitVelocity)
         
         /// Set static fields
         
-        CGEventSetDoubleValueField(e29, 55, 29); /// 29 -> NSEventTypeGesture // Setting field 55 is the same as using CGEventSetType()
-        CGEventSetDoubleValueField(e29, 110, 6); /// 110 -> subtype // 6 -> kIOHIDEventTypeScroll
+        CGEventSetIntegerValueField(e29, 55, 29); /// 29 -> NSEventTypeGesture // Setting field 55 is the same as using CGEventSetType()
+        CGEventSetIntegerValueField(e29, 110, 6); /// 110 -> subtype // 6 -> kIOHIDEventTypeScroll
         
         /// Set dynamic fields
         
@@ -545,7 +567,7 @@ static Vector initalMomentumScrollVelocity_FromExitVelocity(Vector exitVelocity)
         
         /// Post t29s6 events
         CGEventSetTimestamp(e29, eventTs);
-        CGEventSetLocation(e29, eventLocation);
+//        CGEventSetLocation(e29, eventLocation);
         CGEventPost(kCGSessionEventTap, e29);
         CFRelease(e29);
     }

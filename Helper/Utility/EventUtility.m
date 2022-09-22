@@ -19,6 +19,13 @@
 
 extern CFTimeInterval CATimeWithHostTime(UInt64 mach_absolute_time); /// I saw this in assembly but linking failed I think -> remove
 
+#pragma mark - Scroll Events
+
+int64_t fixedScrollDelta(double scrollDelta) {
+    /// We round instead of just truncating because that makes the values look more like real scrollWheel values. Probably doesn't make a difference.
+    return (int64_t)roundf(scrollDelta * pow(2, 16));
+}
+
 #pragma mark - Sending device
 
 NSMutableDictionary *_hidDeviceCache = nil;

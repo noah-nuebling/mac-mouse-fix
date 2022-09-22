@@ -978,9 +978,8 @@ static void sendOutputEvents(int64_t dx, int64_t dy, MFScrollOutputType outputTy
         if (fabs(dxLine) != 0 && llabs(dxLineInt) == 0) dxLineInt = sign(dxLine);
         
         /// Get line deltas as fixed point number
-        ///     We round instead of just truncating because that makes the values look more like real values. Probably doesn't make a difference.
-        int64_t dyLineFixed = (int64_t)roundf(dyLine * pow(2, 16));
-        int64_t dxLineFixed = (int64_t)roundf(dxLine * pow(2, 16));
+        int64_t dyLineFixed = fixedScrollDelta(dyLine);
+        int64_t dxLineFixed = fixedScrollDelta(dyLine);
         
         /// Set fields
         ///     We used to have a comment here saying that the `FixedPtDelta`s were automatically being set when setting the `PointDelta`s. But under the Ventura Beta this doesn't seem to be true, so we're setting it manually.
@@ -991,7 +990,7 @@ static void sendOutputEvents(int64_t dx, int64_t dy, MFScrollOutputType outputTy
         
         CGEventSetIntegerValueField(event, kCGScrollWheelEventDeltaAxis2, dxLineInt);
         CGEventSetIntegerValueField(event, kCGScrollWheelEventPointDeltaAxis2, dx);
-        CGEventSetIntegerValueField(event, kCGScrollWheelEventFixedPtDeltaAxis2, dyLineFixed);
+        CGEventSetIntegerValueField(event, kCGScrollWheelEventFixedPtDeltaAxis2, dxLineFixed);
         
         /// Debug
 //        DDLogDebug(@"SCROOOL OVONT – %@", CGScrollWheelEventDescription(event));
