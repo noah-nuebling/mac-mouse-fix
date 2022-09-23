@@ -854,7 +854,7 @@ static void sendOutputEvents(int64_t dx, int64_t dy, MFScrollOutputType outputTy
                     /// Using `containsString` to also catch other release channels like "com.google.Chrome.canary".
                     /// TODO: Add other Chromium browsers with the same behaviour.
                     /// Notes:
-                    /// - Blisk (org.blisk.Blisk) and Colibri (co.opqr.colibri) doen't seem to support pinch to zoom.
+                    /// - Blisk (org.blisk.Blisk) and Colibri (co.opqr.colibri) don't seem to support pinch to zoom.
                     
                     [TouchSimulator postMagnificationEventWithMagnification:eventDelta phase:kIOHIDEventPhaseBegan]; /// First delta seems to be ignored
                     eventPhase = kIOHIDEventPhaseChanged;
