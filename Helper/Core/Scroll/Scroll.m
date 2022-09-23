@@ -834,11 +834,40 @@ static void sendOutputEvents(int64_t dx, int64_t dy, MFScrollOutputType outputTy
         
         /// --- Zoom ---
         
-        /// Debug
-//        [GestureScrollSimulator postGestureScrollEventWithDeltaX:dx deltaY:dy phase:kIOHIDEventPhaseEnded];
-//        [GestureScrollSimulator stopMomentumScroll];
-        
         double eventDelta = (dx + dy)/800.0; /// This works because, if dx != 0 -> dy == 0, and the other way around.
+        
+        /// HACK:
+        ///     Chromium browsers need a ton of zooming deltas before they actually start zooming. So we send a bunch of deltas right away to make things more responsive.
+        ///     Another way to combat this would be to only send the `end` event when the user releases the modifier.
+        if (eventPhase == kIOHIDEventPhaseBegan) {
+            
+            NSString *bundleID = [HelperUtility appUnderMousePointerWithEvent:NULL].bundleIdentifier;
+            
+            if (bundleID != nil) {
+                if ([bundleID containsString:@"com.google.Chrome"]
+                    || [bundleID containsString:@"org.chromium.Chromium"]
+                    || [bundleID containsString:@"com.operasoftware.Opera"]
+                    || [bundleID containsString:@"com.microsoft.edgemac"]
+                    || [bundleID containsString:@"com.vivaldi.Vivaldi"]
+                    || [bundleID containsString:@"com.brave.Browser"]) {
+                    
+                    /// Using `containsString` to also catch other release channels like "com.google.Chrome.canary".
+                    /// TODO: Add other Chromium browsers with the same behaviour.
+                    /// Notes:
+                    /// - Blisk (org.blisk.Blisk) and Colibri (co.opqr.colibri) doen't seem to support pinch to zoom.
+                    
+                    [TouchSimulator postMagnificationEventWithMagnification:eventDelta phase:kIOHIDEventPhaseBegan]; /// First delta seems to be ignored
+                    eventPhase = kIOHIDEventPhaseChanged;
+                    
+                    assert(eventDelta != 0);
+                    if (sign(eventDelta) > 0) {
+                        eventDelta += 380/800.0;
+                    } else {
+                        eventDelta -= 250/800.0;
+                    }
+                }
+            }
+        }
         
         [TouchSimulator postMagnificationEventWithMagnification:eventDelta phase:eventPhase];
         

@@ -10,9 +10,17 @@
 #import <Foundation/Foundation.h>
 @import CoreVideo;
 
+NS_ASSUME_NONNULL_BEGIN
+
 @interface HelperUtility : NSObject
 
+/// App under mouse pointer
++ (NSRunningApplication * _Nullable)appUnderMousePointerWithEvent:(CGEventRef _Nullable)event;
+
+/// Open main app
 + (void)openMainApp;
+
+/// Display data
 //+ (CGEventRef)createEventWithValuesFromEvent:(CGEventRef)event;
 + (void)printEventFieldDifferencesBetween:(CGEventRef)event1 and:(CGEventRef)event2;
 + (NSString *)binaryRepresentation:(int64_t)value;
@@ -29,3 +37,4 @@ NSPoint getFlippedPointerLocationWithEvent(CGEventRef locEvent);
 
 @end
 
+NS_ASSUME_NONNULL_END
