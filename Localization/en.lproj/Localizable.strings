@@ -316,62 +316,80 @@
 /* First draft: Enabled Mac Mouse Fix for __Scrolling__\nIt had been disabled from the Menu Bar %@ || Note: Where %@ will be replaced by the menubar icon */
 "scroll-revive-toast" = "Enabled Mac Mouse Fix for __Scrolling__\nIt had been disabled from the Menu Bar %@";
 
-/* First draft: Thank you for buying Mac Mouse Fix! */
-"thanks.01" = "Thank you for buying Mac Mouse Fix!";
+/* First draft: 💫 Thank you for buying Mac Mouse Fix! */
+"thanks.01" = "💫 Thank you for buying Mac Mouse Fix!";
 
-/* First draft: Thanks for purchasing Mac Mouse Fix! */
-"thanks.02" = "Thanks for purchasing Mac Mouse Fix!";
+/* First draft: 🌟 Thanks for purchasing Mac Mouse Fix! */
+"thanks.02" = "🌟 Thanks for purchasing Mac Mouse Fix!";
 
-/* First draft: Thanks for supporting Mac Mouse Fix! */
-"thanks.03" = "Thanks for supporting Mac Mouse Fix!";
+/* First draft: 🚀 Thanks for supporting Mac Mouse Fix! */
+"thanks.03" = "🚀 Thanks for supporting Mac Mouse Fix!";
 
-/* First draft: Thank you for buying Mac Mouse Fix! */
-"thanks.04" = "Thank you for buying Mac Mouse Fix!";
+/* First draft: 🙏 Thank you for buying Mac Mouse Fix! */
+"thanks.04" = "🙏 Thank you for buying Mac Mouse Fix!";
 
-/* First draft: Great purchasing decisions ;) */
-"thanks.05" = "Great purchasing decisions ;)";
+/* First draft: 🧠 Great purchasing decisions ;) */
+"thanks.05" = "🧠 Great purchasing decisions ;)";
 
-/* First draft: Awesome taste in mouse fixing software ;) */
-"thanks.06" = "Awesome taste in mouse fixing software ;)";
+/* First draft: 🔥 Awesome taste in mouse fixing software ;) */
+"thanks.06" = "🔥 Awesome taste in mouse fixing software ;)";
 
-/* First draft: <- My face when I saw you bought Mac Mouse Fix */
-"thanks.08" = "<- My face when I saw you bought Mac Mouse Fix";
+/* First draft: 💙 */
+"thanks.07" = "💙";
 
-/* First draft: Share it with your Spacebook friends! */
-"thanks.09" = "Share it with your Spacebook friends!";
+/* First draft: :) <- My face when I saw you bought Mac Mouse Fix */
+"thanks.08" = ":) <- My face when I saw you bought Mac Mouse Fix";
 
-/* First draft: Duckgang for life! || Note: A lot of these are personal, feel free to change them and leave your own messages! */
-"thanks.10" = "Duckgang for life!";
+/* First draft: 👽 Share it with your Spacebook friends! */
+"thanks.09" = "👽 Share it with your Spacebook friends!";
 
-/* First draft: Watch where you're going :P || Note: In the context of driving a Tractor */
-"thanks.11" = "Watch where you're going :P";
+/* First draft: 🏂 Duckgang for life! || Note: A lot of these are very personal. And weird. They are also super rare. Feel free to change them to anything you feel like to leave a little easter egg! */
+"thanks.10" = "🏂 Duckgang for life!";
 
-/* First draft: Not these mice, mom! */
-"thanks.12" = "Not these mice, mom!";
+/* First draft: 🚜 Watch where you're going :P */
+"thanks.11" = "🚜 Watch where you're going :P";
 
-/* First draft: We should get him a bow tie. */
-"thanks.13" = "We should get him a bow tie.";
+/* First draft: 🐁 Not these mice, mom! */
+"thanks.12" = "🐁 Not these mice, mom!";
 
-/* First draft: Whole milk of course! It's your birthday after all. */
-"thanks.15" = "Whole milk of course! It's your birthday after all.";
+/* First draft: 🐹 We should get him a bow tie. */
+"thanks.13" = "🐹 We should get him a bow tie.";
 
-/* First draft: Not John Mayer. Nevertheless mayor of hearts. */
-"thanks.16" = "Not John Mayer. Nevertheless mayor of hearts.";
+/* First draft: 🇹🇷 Ey Kanka, tebrikler tebrikler! */
+"thanks.14" = "🇹🇷 Ey Kanka, tebrikler tebrikler!";
 
-/* First draft: Give me a call when you saved the world. :) */
-"thanks.18" = "Give me a call when you saved the world. :)";
+/* First draft: 🥛 Whole milk of course! It's your birthday after all. */
+"thanks.15" = "🥛 Whole milk of course! It's your birthday after all.";
 
-/* First draft: Universal Studios is probably not that great anyways... :) */
-"thanks.20" = "Universal Studios is probably not that great anyways... :)";
+/* First draft: 🎸 Not John Mayer (yet). Nevertheless mayor of hearts. */
+"thanks.16" = "🎸 Not John Mayer (yet). Nevertheless mayor of hearts.";
 
-/* First draft: Cuter than a Reaper Leviathan. */
-"thanks.21" = "Cuter than a Reaper Leviathan.";
+/* First draft: 💃 1NEIN8NEIN */
+"thanks.17" = "💃 1NEIN8NEIN";
 
-/* First draft: Oh you're using Mac Mouse Fix? You must be pretty cool. */
-"thanks.24" = " Oh you're using Mac Mouse Fix? You must be pretty cool.";
+/* First draft: 🦋 Give me a call when you saved the world. :) */
+"thanks.18" = "🦋 Give me a call when you saved the world. :)";
 
-/* First draft: First the mice, then the world!! >:) */
-"thanks.25" = "First the mice, then the world!! >:)";
+/* First draft: 🏜️ Dankeschön, meine Frau... */
+"thanks.19" = "🏜️ Dankeschön, meine Frau...";
+
+/* First draft: 🌍 Universal Studios is probably not that great anyways... :) */
+"thanks.20" = "🌍 Universal Studios is probably not that great anyways... :)";
+
+/* First draft: 🐠 Cuter than a Reaper Leviathan. */
+"thanks.21" = "🐠 Cuter than a Reaper Leviathan.";
+
+/* First draft: 🖤 */
+"thanks.22" = "🖤";
+
+/* First draft: 🤍 */
+"thanks.23" = "🤍";
+
+/* First draft: 😎 Oh you're using Mac Mouse Fix? You must be pretty cool. */
+"thanks.24" = "😎 Oh you're using Mac Mouse Fix? You must be pretty cool.";
+
+/* First draft: 🌏 First the mice, then the world!! >:) */
+"thanks.25" = "🌏 First the mice, then the world!! >:)";
 
 /* First draft: Click %@ || Note: %@ will be a button name || Example where %@ is 'Button 5': ⌥⌘ Double Click Button 4 + Click Button 5 || Note: Most of the substrings that are used to build the Action Table Trigger Strings (this is one of those substrings) are capitalized in English because it's common to use 'title case' there. In your language, 'title case' might not be a thing, and so you might not want to capitalize these strings. The first letter of the trigger string will be programmatically capitalized in any language. */
 "trigger.click.1" = "Click %@";
