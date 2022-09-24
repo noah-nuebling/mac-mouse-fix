@@ -61,7 +61,7 @@
 /* First draft: <Increase Brightness key> */
 "apple-key-fallback.sun.max" = "<Increase Brightness key>";
 
-/* First draft: <Decrease Brightness key> */
+/* First draft: <Decrease Brightness key> || Example usage: Works like pressing '<Decrease Brightness Key>' on an Apple keyboard. || Note: Unlike in the interface builder `.strings` files, in `Localizable.strings`, <> doesn't mean that the text is unused. I think the usage of <> here is a little weird, so let me know if you have a better idea! */
 "apple-key-fallback.sun.min" = "<Decrease Brightness key>";
 
 /* First draft: <Key without description> */
@@ -91,9 +91,6 @@
 /* First draft: Secondary Button */
 "button-string.secondary" = "Secondary Button";
 
-/* First draft: the Middle Mouse Button (also called the Scroll Wheel Button or Mouse Button 3) */
-"button-string.tool.middle" = "the Middle Mouse Button (also called the Scroll Wheel Button or Mouse Button 3)";
-
 /* First draft: Mouse Button %@ */
 "button-string.tool.numbered" = "Mouse Button %@";
 
@@ -102,6 +99,9 @@
 
 /* First draft: the Secondary Mouse Button (also called the Right Mouse Button or Mouse Button 2) */
 "button-string.tool.secondary" = "the Secondary Mouse Button (also called the Right Mouse Button or Mouse Button 2)";
+
+/* First draft: the Middle Mouse Button (also called the Scroll Wheel Button or Mouse Button 3) || Example usage: Open links in a new tab, paste text in the Terminal, and more.\n \nWorks like clicking the Middle Mouse Button (also called the Scroll Wheel Button or Mouse Button 3) on a standard mouse. */
+"button-string.tool.middle" = "the Middle Mouse Button (also called the Scroll Wheel Button or Mouse Button 3)";
 
 /* Note: Value for this key is defined in Localizable.stringsdict, not Localizable.strings */
 "capture-toast.body" = "<>";

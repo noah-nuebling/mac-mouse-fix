@@ -47,7 +47,7 @@
     NSDictionary *buttonNumberToUIString = @{
         @1: NSLocalizedString(@"button-string.tool.primary",   @"First draft: the Primary Mouse Button (also called the Left Mouse Button or Mouse Button 1)"),
         @2: NSLocalizedString(@"button-string.tool.secondary", @"First draft: the Secondary Mouse Button (also called the Right Mouse Button or Mouse Button 2)"),
-        @3: NSLocalizedString(@"button-string.tool.middle",    @"First draft: the Middle Mouse Button (also called the Scroll Wheel Button or Mouse Button 3)"),
+        @3: NSLocalizedString(@"button-string.tool.middle",    @"First draft: the Middle Mouse Button (also called the Scroll Wheel Button or Mouse Button 3) || Example usage: Open links in a new tab, paste text in the Terminal, and more.\n \nWorks like clicking the Middle Mouse Button (also called the Scroll Wheel Button or Mouse Button 3) on a standard mouse."),
     };
     NSString *buttonStr = buttonNumberToUIString[@(buttonNumber)];
     if (!buttonStr) {
@@ -97,7 +97,7 @@
     
     if (type == kMFSystemEventTypeBrightnessDown) {
         symbolName = @"sun.min";
-        stringFallback = NSLocalizedString(@"apple-key-fallback.sun.min", @"First draft: <Decrease Brightness key>");
+        stringFallback = NSLocalizedString(@"apple-key-fallback.sun.min", @"First draft: <Decrease Brightness key> || Example usage: Works like pressing '<Decrease Brightness Key>' on an Apple keyboard. || Note: Unlike in the interface builder `.strings` files, in `Localizable.strings`, <> doesn't mean that the text is unused. I think the usage of <> here is a little weird, so let me know if you have a better idea!");
     } else if (type == kMFSystemEventTypeBrightnessUp) {
         symbolName = @"sun.max";
         stringFallback = NSLocalizedString(@"apple-key-fallback.sun.max" , @"First draft: <Increase Brightness key>");

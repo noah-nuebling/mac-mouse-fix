@@ -2,7 +2,7 @@
 "enabled-toggle.hint" = "Mac Mouse Fix bleibt eingeschaltet nachdem du\nes beendest";
 
 /* First draft: Lets you quickly disable Scroll Enhancements and other features */
-"menu-bar-toggle.hint" = "<Noch nicht verwendet>";
+"menu-bar-toggle.hint" = "[Noch nicht verwendet]";
 
 /* First draft: You'll be notified of updates when you open\nthis window */
 "updates-toggle.hint" = "Du wirst über Updates benachrichtigt werden\nwenn du dieses Fenster öffnest";
@@ -178,9 +178,6 @@
 /* First draft: Secondary Button */
 "button-string.secondary" = "sekundäre Taste";
 
-/* First draft: the Middle Mouse Button (also called the Scroll Wheel Button or Mouse Button 3) */
-"button-string.tool.middle" = "die mittlere Maustaste (auch genannt die Scrollradtaste oder Maustaste 3)";
-
 /* First draft: Mouse Button %@ */
 "button-string.tool.numbered" = "Maustaste %@";
 
@@ -189,6 +186,9 @@
 
 /* First draft: the Secondary Mouse Button (also called the Right Mouse Button or Mouse Button 2) */
 "button-string.tool.secondary" = "die sekundäre Maustaste (auch genannt die rechte Maustaste oder Maustaste 2)";
+
+/* First draft: the Middle Mouse Button (also called the Scroll Wheel Button or Mouse Button 3) || Example usage: Open links in a new tab, paste text in the Terminal, and more.\n \nWorks like clicking the Middle Mouse Button (also called the Scroll Wheel Button or Mouse Button 3) on a standard mouse. */
+"button-string.tool.middle" = "die mittlere Maustaste (auch genannt die Scrollradtaste oder Maustaste 3)";
 
 /* First draft: Command (⌘) */
 "modifer-key.tool.command" = "Befehlstaste (⌘)";
@@ -253,7 +253,7 @@
 /* First draft: <Increase Brightness key> */
 "apple-key-fallback.sun.max" = "<Helligkeit erhöhen Taste>";
 
-/* First draft: <Decrease Brightness key> */
+/* First draft: <Decrease Brightness key> || Example usage: Works like pressing '<Decrease Brightness Key>' on an Apple keyboard. || Note: Unlike in the interface builder `.strings` files, in `Localizable.strings`, <> doesn't mean that the text is unused. I think the usage of <> here is a little weird, so let me know if you have a better idea! */
 "apple-key-fallback.sun.min" = "<Helligkeit verringern Taste>";
 
 /* First draft: <Key without description> */
