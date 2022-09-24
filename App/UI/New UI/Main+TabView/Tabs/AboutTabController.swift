@@ -167,7 +167,7 @@ class AboutTabController: NSViewController {
                 (("", NSLocalizedString("thanks.15", comment: "First draft: 🥛 Whole milk of course! It's your birthday after all.")), weight: 0.01),
                 (("", NSLocalizedString("thanks.16", comment: "First draft: 🎸 Not John Mayer (yet). Nevertheless mayor of hearts.")), weight: 0.01),
                 (("", NSLocalizedString("thanks.17", comment: "First draft: 💃 1NEIN8NEIN")), weight: 0.01),
-                (("", NSLocalizedString("thanks.18", comment: "First draft: 🦋 Give me a call when you saved the world. :)")), weight: 0.01),
+                (("", NSLocalizedString("thanks.18", comment: "First draft: 🦋 Give me a call when you saved the world :)")), weight: 0.01),
                 (("", NSLocalizedString("thanks.19", comment: "First draft: 🏜️ Dankeschön, meine Frau...")), weight: 0.01),
                 (("", NSLocalizedString("thanks.20", comment: "First draft: 🌍 Universal Studios is probably not that great anyways... :)")), weight: 0.01),
                 (("", NSLocalizedString("thanks.21", comment: "First draft: 🐠 Cuter than a Reaper Leviathan.")), weight: 0.01),
