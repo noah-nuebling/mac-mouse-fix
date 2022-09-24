@@ -7,6 +7,9 @@
 /* First draft: Activate License */
 "trial-notif.activate-license-button" = "Activate License";
 
+/* First draft: Hi there! You've been using Mac Mouse Fix for **%d days** now. I hope you're enjoying it!\n\nIf you want to keep using Mac Mouse Fix, you can [buy it now](%@). */
+"trial-notif.body" = "Hi there! You've been using Mac Mouse Fix for **%d days** now. I hope you're enjoying it!\n\nIf you want to keep using Mac Mouse Fix, you can [buy it now](%@).";
+
 /* First draft: <Rewind key> */
 "apple-key-fallback.backward" = "<Rewind key>";
 
@@ -313,6 +316,12 @@
 /* First draft: Zoom in or out in Safari, Maps and other apps\n \nWorks like pinching to zoom on an Apple trackpad */
 "scroll-effect.zoom.hint" = "Zoom in or out in Safari, Maps and other apps\n \nWorks like pinching to zoom on an Apple trackpad";
 
+/* First draft: Rotate */
+"scroll-effect.rotate" = "Rotate";
+
+/* First draft: Rotate content in Apple Maps and other apps\n \nWorks like twisting with 2 fingers on an Apple Trackpad */
+"scroll-effect.rotate.hint" = "Rotate content in Apple Maps and other apps\n \nWorks like twisting with 2 fingers on an Apple Trackpad";
+
 /* First draft: Enabled Mac Mouse Fix for __Scrolling__\nIt had been disabled from the Menu Bar %@ || Note: Where %@ will be replaced by the menubar icon */
 "scroll-revive-toast" = "Enabled Mac Mouse Fix for __Scrolling__\nIt had been disabled from the Menu Bar %@";
 
@@ -444,12 +453,3 @@
 
 /* First draft: You'll be notified of updates when you open\nthis window */
 "updates-toggle.hint" = "You'll be notified of new updates when you open\nthis window";
-
-/* First draft: Hi there! You've been using Mac Mouse Fix for **%d days** now. I hope you're enjoying it!\n\nIf you want to keep using Mac Mouse Fix, you can [buy it now](%@). */
-"trial-notif.body" = "Hi there! You've been using Mac Mouse Fix for **%d days** now. I hope you're enjoying it!\n\nIf you want to keep using Mac Mouse Fix, you can [buy it now](%@).";
-
-/* First draft: Rotate */
-"scroll-effect.rotate" = "Rotate";
-
-/* First draft: Rotate content in Apple Maps and other apps\n \nWorks like twisting with 2 fingers on an Apple Trackpad */
-"scroll-effect.rotate.hint" = "Rotate content in Apple Maps and other apps\n \nWorks like twisting with 2 fingers on an Apple Trackpad";

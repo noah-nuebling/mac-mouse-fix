@@ -109,6 +109,18 @@
 /* First draft: Zoom in or out in Safari and other apps.\n \nWorks like a two-finger double tap on an Apple Trackpad. */
 "effect.smart-zoom.hint" = "Zoome rein oder raus in Safari und anderen Apps \n \nFunktioniert wie mit zwei Fingern doppelt tippen auf einem Apple Trackpad";
 
+/* First draft: Back */
+"effect.back" = "Zurück";
+
+/* First draft: Go back one page in Safari and other apps */
+"effect.back.hint" = "Gehe eine Seite zurück in Safari und anderen Apps";
+
+/* First draft: Forward */
+"effect.forward" = "Vorwärts";
+
+/* First draft: Go forward one page in Safari and other apps */
+"effect.forward.hint" = "Gehe eine Seite vorwärts in Safari und anderen Apps";
+
 /* First draft: Desktop & Launchpad */
 "scroll-effect.4-pinch" = "Launchpad & Schreibtisch";
 
@@ -144,6 +156,12 @@
 
 /* First draft: Zoom in or out in Safari, Maps and other apps\n \nWorks like pinching to zoom on an Apple trackpad */
 "scroll-effect.zoom.hint" = "Zoome rein oder raus in Safari, Maps, und anderen Apps\n \nFunktioniert wie aufziehen mit 2 Fingern bei einem Apple Trackpad";
+
+/* First draft: Rotate */
+"scroll-effect.rotate" = "Drehen";
+
+/* First draft: Rotate content in Apple Maps and other apps\n \nWorks like twisting with 2 fingers on an Apple Trackpad */
+"scroll-effect.rotate.hint" = "Drehe den Inhalt in Apple Maps und anderen Apps\n \nFunktioniert wie drehen mit 2 Fingern auf einem Apple Trackpad";
 
 /* First draft: Type a Keyboard Shortcut */
 "type-shortcut-prompt" = "Tippe einen Tastaturkurzbefehl";
@@ -435,21 +453,3 @@
 
 /* First draft: Hey there! You've been using Mac Mouse Fix for **%d days** now. I hope you're enjoying it!\n\nIf you want to keep using Mac Mouse Fix, you can [buy it now](%@). */
 "trial-notif.body" = "Hi! Du verwendest Mac Mouse Fix jetzt seit **%d Tagen**. Ich hoffe, es gefällt dir!\n\nWenn du Mac Mouse Fix auch weiter verwenden willst, kannst du es dir [jetzt kaufen](%@).";
-
-/* First draft: Back */
-"effect.back" = "Zurück";
-
-/* First draft: Go back one page in Safari and other apps */
-"effect.back.hint" = "Gehe eine Seite zurück in Safari und anderen Apps";
-
-/* First draft: Forward */
-"effect.forward" = "Vorwärts";
-
-/* First draft: Go forward one page in Safari and other apps */
-"effect.forward.hint" = "Gehe eine Seite vorwärts in Safari und anderen Apps";
-
-/* First draft: Rotate */
-"scroll-effect.rotate" = "Drehen";
-
-/* First draft: Rotate content in Apple Maps and other apps\n \nWorks like twisting with 2 fingers on an Apple Trackpad */
-"scroll-effect.rotate.hint" = "Drehe den Inhalt in Apple Maps und anderen Apps\n \nFunktioniert wie drehen mit 2 Fingern auf einem Apple Trackpad";
