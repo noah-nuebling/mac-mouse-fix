@@ -1,0 +1,6 @@
+/* Bundle name */
+"CFBundleName" = "Mac Mouse Fix帮助程序";
+
+/* Copyright (human-readable) */
+"NSHumanReadableCopyright" = "Copyright © 2022 Noah Nuebling (MMF License)";
+
