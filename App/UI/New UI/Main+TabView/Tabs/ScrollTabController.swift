@@ -54,8 +54,17 @@ class ScrollTabController: NSViewController {
     /// Did appear
     
     override func viewDidAppear() {
+        
+        /// Remove focus
+        ///     Sometimes, one of the modifierCapture fields is randomly selected. This hopefully prevents that.
+        
+        MainAppState.shared.window?.makeFirstResponder(nil)
+        
+        /// Turn off killswitch
+        
         let isDisabled = config("Other.scrollKillSwitch") as! Bool /// From the debugger it seems you can only cast NSNumber to bool with as! not with as?. That weird??
         if isDisabled {
+            
             /// Turn off killSwitch
             setConfig("Other.scrollKillSwitch", false as NSObject)
             commitConfig()
