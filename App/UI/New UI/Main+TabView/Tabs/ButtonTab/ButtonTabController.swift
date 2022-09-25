@@ -181,22 +181,15 @@ import CocoaLumberjackSwift
             /// Turn off killSwitch
             setConfig("Other.buttonKillSwitch", false as NSObject)
             commitConfig()
+                
+            /// Build string
+            let messageRaw = NSLocalizedString("button-revive-toast", comment: "First draft: __Enabled__ Mac Mouse Fix for __Buttons__\nIt had been disabled from the Menu Bar %@ || Note: %@ will be replaced by the menubar icon")
+            var message = NSAttributedString(coolMarkdown: messageRaw)!
+            let symbolString = NSAttributedString(symbol: "CoolMenuBarIcon", hPadding: 0.0, vOffset: -6, fallback: "<Mac Mouse Fix Menu Bar Item>")
+            message = NSAttributedString(attributedFormat: message, args: [symbolString])
             
-            /// Show message to user
-            if #available(macOS 13.0, *) {
-                
-                /// Build string
-                let messageRaw = NSLocalizedString("button-revive-toast", comment: "First draft: __Enabled__ Mac Mouse Fix for __Buttons__\nIt had been disabled from the Menu Bar %@ || Note: %@ will be replaced by the menubar icon")
-                var message = NSAttributedString(coolMarkdown: messageRaw)!
-                let symbolString = NSAttributedString(symbol: "CoolMenuBarIcon", hPadding: 0.0, vOffset: -6, fallback: "<Mac Mouse Fix Menu Bar Item>")
-                message = NSAttributedString(attributedFormat: message, args: [symbolString])
-                
-                /// Show message
-                ToastNotificationController.attachNotification(withMessage: message, to: MainAppState.shared.window!, forDuration: -1, alignment: kToastNotificationAlignmentTopMiddle)
-                
-            } else {
-                /// TODO: Make this work on older macOS
-            }
+            /// Show message
+            ToastNotificationController.attachNotification(withMessage: message, to: MainAppState.shared.window!, forDuration: -1, alignment: kToastNotificationAlignmentTopMiddle)
         }
     }
     
