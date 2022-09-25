@@ -262,29 +262,29 @@
 /* Class = "NSTextFieldCell"; title = "Scroll Horizontally"; ObjectID = "6Nj-Ed-W5T"; Note = "Scrolling > Keyboard Modifiers > Scroll Horizontally Label"; */
 "6Nj-Ed-W5T.title" = "Horizontal scrollen";
 
-/* Class = "NSTextFieldCell"; title = "Write a feature request"; ObjectID = "5yb-g8-Kcg"; */
+/* Class = "NSTextFieldCell"; title = "Write a Feature Request"; ObjectID = "5yb-g8-Kcg"; */
 "5yb-g8-Kcg.title" = "Schlage ein Feature vor";
 
-/* Class = "NSTextFieldCell"; title = "Website"; ObjectID = "Ozk-o9-C4a"; */
-"Ozk-o9-C4a.title" = "Webseite";
+/* Class = "NSTextFieldCell"; title = "Visit the Website"; ObjectID = "Ozk-o9-C4a"; */
+"Ozk-o9-C4a.title" = "Besuche die Webseite";
 
-/* Class = "NSTextFieldCell"; title = "MMF 3 Feedback Discussion"; ObjectID = "ZMA-p0-2lf"; Note = "After the MMF 3 Beta I plan to change this to \"GitHub\""; */
-"ZMA-p0-2lf.title" = "GitHub";
+/* Class = "NSTextFieldCell"; title = "Share Your Thoughts on MMF 3"; ObjectID = "ZMA-p0-2lf"; Note = "After the MMF 3 Beta I plan to change this to: Check Out the GitHub"; */
+"ZMA-p0-2lf.title" = "Schau dir das GitHub an";
 
-/* Class = "NSTextFieldCell"; title = "File a bug report"; ObjectID = "bQf-qv-mvB"; */
+/* Class = "NSTextFieldCell"; title = "File a Bug Report"; ObjectID = "bQf-qv-mvB"; */
 "bQf-qv-mvB.title" = "Erstatte einen Fehlerbericht";
 
 /* Class = "NSTextFieldCell"; title = "Acknowledgements"; ObjectID = "8pi-FV-zYE"; */
 "8pi-FV-zYE.title" = "Anerkennungen";
 
-/* Class = "NSTextFieldCell"; title = "Buy me a Milkshake :)"; ObjectID = "TrI-uu-DEN"; */
+/* Class = "NSTextFieldCell"; title = "Buy Me a Milkshake :)"; ObjectID = "TrI-uu-DEN"; */
 "TrI-uu-DEN.title" = "Spendier mir nen Milchshake! :)"; /// "KAUF MIR NEN MILCHSHAKE :)";
 
-/* Class = "NSTextFieldCell"; title = "Send me an Email"; ObjectID = "QaW-cc-uzc"; */
+/* Class = "NSTextFieldCell"; title = "Send Me an Email"; ObjectID = "QaW-cc-uzc"; */
 "QaW-cc-uzc.title" = "Sende mir eine Email";
 
-/* Class = "NSTextFieldCell"; title = "Help"; ObjectID = "eVc-l9-Z0h"; */
-"eVc-l9-Z0h.title" = "Hilfe";
+/* Class = "NSTextFieldCell"; title = "Get Help"; ObjectID = "eVc-l9-Z0h"; */
+"eVc-l9-Z0h.title" = "Bekomme Hilfe";
 
 /* Class = "NSTextFieldCell"; title = "<Version - (-)>"; ObjectID = "79J-Zg-ebA"; */
 "79J-Zg-ebA.title" = "Version 2.0.0 Beta 4 (5842)";

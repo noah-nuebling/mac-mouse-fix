@@ -504,7 +504,7 @@
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <subviews>
                                                 <imageView identifier="PlusIcon" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Jod-JU-J5j">
-                                                    <rect key="frame" x="226" y="38.5" width="60" height="66.5"/>
+                                                    <rect key="frame" x="225" y="38.5" width="60" height="66.5"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                                     <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyUpOrDown" image="plus" catalog="system" id="EyU-is-YRF"/>
                                                     <color key="contentTintColor" name="placeholderTextColor" catalog="System" colorSpace="catalog"/>
@@ -641,7 +641,7 @@
                                                             <tableColumnResizingMask key="resizingMask" resizeWithTable="YES"/>
                                                             <prototypeCellViews>
                                                                 <tableCellView identifier="effectCell" translatesAutoresizingMaskIntoConstraints="NO" id="Epw-SW-Ew3" customClass="RemapTableCellView" customModule="Mac_Mouse_Fix" customModuleProvider="target">
-                                                                    <rect key="frame" x="312.5" y="0.0" width="223" height="39"/>
+                                                                    <rect key="frame" x="312" y="0.0" width="223" height="39"/>
                                                                     <subviews>
                                                                         <popUpButton verticalHuggingPriority="750" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="Pw9-ZH-Tb7">
                                                                             <rect key="frame" x="0.0" y="6" width="224" height="25"/>
@@ -669,7 +669,7 @@
                                                                     </constraints>
                                                                 </tableCellView>
                                                                 <tableCellView identifier="keyCaptureCell" translatesAutoresizingMaskIntoConstraints="NO" id="MzR-b1-853" customClass="RemapTableCellView" customModule="Mac_Mouse_Fix" customModuleProvider="target">
-                                                                    <rect key="frame" x="312.5" y="39" width="220" height="39"/>
+                                                                    <rect key="frame" x="312" y="39" width="220" height="39"/>
                                                                     <subviews>
                                                                         <button hidden="YES" focusRingType="exterior" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="psy-Jg-KLq">
                                                                             <rect key="frame" x="-4" y="3" width="228" height="32"/>
@@ -1699,8 +1699,8 @@ System Preferences &gt; Mouse &gt; Tracking speed </string>
                                                         <symbolConfiguration key="symbolConfiguration" scale="large" weight="medium"/>
                                                     </imageView>
                                                     <textField horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="AQF-Nj-tDx" customClass="Hyperlink">
-                                                        <rect key="frame" x="28" y="17" width="104" height="16"/>
-                                                        <textFieldCell key="cell" alignment="left" title="File a bug report" usesSingleLineMode="YES" id="bQf-qv-mvB">
+                                                        <rect key="frame" x="28" y="17" width="108" height="16"/>
+                                                        <textFieldCell key="cell" alignment="left" title="File a Bug Report" usesSingleLineMode="YES" id="bQf-qv-mvB">
                                                             <font key="font" metaFont="system"/>
                                                             <color key="textColor" name="linkColor" catalog="System" colorSpace="catalog"/>
                                                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -1744,17 +1744,14 @@ System Preferences &gt; Mouse &gt; Tracking speed </string>
                                                         <symbolConfiguration key="symbolConfiguration" scale="large" weight="medium"/>
                                                     </imageView>
                                                     <textField horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="LTq-8K-saI" customClass="Hyperlink">
-                                                        <rect key="frame" x="28" y="17" width="178" height="16"/>
-                                                        <textFieldCell key="cell" alignment="left" usesSingleLineMode="YES" id="ZMA-p0-2lf">
+                                                        <rect key="frame" x="28" y="17" width="195" height="16"/>
+                                                        <textFieldCell key="cell" alignment="left" title="Share Your Thoughts on MMF 3" usesSingleLineMode="YES" id="ZMA-p0-2lf">
                                                             <font key="font" metaFont="system"/>
-                                                            <string key="title" base64-UTF8="YES">
-TU1GIDMgEEZlZWRiYWNrIERpc2N1c3Npb24
-</string>
                                                             <color key="textColor" name="linkColor" catalog="System" colorSpace="catalog"/>
                                                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                         </textFieldCell>
                                                         <attributedString key="userComments">
-                                                            <fragment content="After the MMF 3 Beta I plan to change this to &quot;GitHub&quot;"/>
+                                                            <fragment content="After the MMF 3 Beta I plan to change this to: Check Out the GitHub"/>
                                                         </attributedString>
                                                         <userDefinedRuntimeAttributes>
                                                             <userDefinedRuntimeAttribute type="string" keyPath="href" value="https://github.com/noah-nuebling/mac-mouse-fix/discussions/366"/>
@@ -1814,8 +1811,8 @@ TU1GIDMgEEZlZWRiYWNrIERpc2N1c3Npb24
                                                         <symbolConfiguration key="symbolConfiguration" scale="large" weight="medium"/>
                                                     </imageView>
                                                     <textField horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="upZ-gK-UV4" customClass="Hyperlink">
-                                                        <rect key="frame" x="28" y="17" width="143" height="16"/>
-                                                        <textFieldCell key="cell" alignment="left" title="Write a feature request" usesSingleLineMode="YES" id="5yb-g8-Kcg">
+                                                        <rect key="frame" x="28" y="17" width="150" height="16"/>
+                                                        <textFieldCell key="cell" alignment="left" title="Write a Feature Request" usesSingleLineMode="YES" id="5yb-g8-Kcg">
                                                             <font key="font" metaFont="system"/>
                                                             <color key="textColor" name="linkColor" catalog="System" colorSpace="catalog"/>
                                                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -1859,8 +1856,8 @@ TU1GIDMgEEZlZWRiYWNrIERpc2N1c3Npb24
                                                         <symbolConfiguration key="symbolConfiguration" scale="large" weight="medium"/>
                                                     </imageView>
                                                     <textField horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="0lK-Xb-h2V" userLabel="Website" customClass="Hyperlink">
-                                                        <rect key="frame" x="28" y="17" width="53" height="16"/>
-                                                        <textFieldCell key="cell" alignment="left" title="Website" usesSingleLineMode="YES" id="Ozk-o9-C4a">
+                                                        <rect key="frame" x="28" y="17" width="106" height="16"/>
+                                                        <textFieldCell key="cell" alignment="left" title="Visit the Website" usesSingleLineMode="YES" id="Ozk-o9-C4a">
                                                             <font key="font" metaFont="system"/>
                                                             <color key="textColor" name="linkColor" catalog="System" colorSpace="catalog"/>
                                                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -1924,7 +1921,7 @@ TU1GIDMgEEZlZWRiYWNrIERpc2N1c3Npb24
                                                     </imageView>
                                                     <textField horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="3kI-Zl-8kF" customClass="Hyperlink">
                                                         <rect key="frame" x="28" y="17" width="112" height="16"/>
-                                                        <textFieldCell key="cell" alignment="left" title="Send me an Email" usesSingleLineMode="YES" id="QaW-cc-uzc">
+                                                        <textFieldCell key="cell" alignment="left" title="Send Me an Email" usesSingleLineMode="YES" id="QaW-cc-uzc">
                                                             <font key="font" metaFont="system"/>
                                                             <color key="textColor" name="linkColor" catalog="System" colorSpace="catalog"/>
                                                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -1968,8 +1965,8 @@ TU1GIDMgEEZlZWRiYWNrIERpc2N1c3Npb24
                                                         <symbolConfiguration key="symbolConfiguration" scale="large" weight="medium"/>
                                                     </imageView>
                                                     <textField horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="Tl2-TE-5Rb" customClass="Hyperlink">
-                                                        <rect key="frame" x="28" y="17" width="32" height="16"/>
-                                                        <textFieldCell key="cell" alignment="left" title="Help" usesSingleLineMode="YES" id="eVc-l9-Z0h">
+                                                        <rect key="frame" x="28" y="17" width="58" height="16"/>
+                                                        <textFieldCell key="cell" alignment="left" title="Get Help" usesSingleLineMode="YES" id="eVc-l9-Z0h">
                                                             <font key="font" metaFont="system"/>
                                                             <color key="textColor" name="linkColor" catalog="System" colorSpace="catalog"/>
                                                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -2094,7 +2091,7 @@ TU1GIDMgEEZlZWRiYWNrIERpc2N1c3Npb24
                                                     </imageView>
                                                     <textField horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="X0k-mF-gia" customClass="Hyperlink">
                                                         <rect key="frame" x="28" y="17" width="136" height="16"/>
-                                                        <textFieldCell key="cell" alignment="left" title="Buy me a Milkshake :)" usesSingleLineMode="YES" id="TrI-uu-DEN">
+                                                        <textFieldCell key="cell" alignment="left" title="Buy Me a Milkshake :)" usesSingleLineMode="YES" id="TrI-uu-DEN">
                                                             <font key="font" metaFont="system"/>
                                                             <color key="textColor" name="linkColor" catalog="System" colorSpace="catalog"/>
                                                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
