@@ -1,8 +1,8 @@
 /* First draft: Free day **%d/%d** */
 "trial-counter.active" = "Free day **%d/%d**";
 
-/* First draft: Free days **used up** */
-"trial-counter.expired" = "Free days **used up**";
+/* First draft: Free days are over */
+"trial-counter.expired" = "Free days are over";
 
 /* First draft: Activate License */
 "trial-notif.activate-license-button" = "Activate License";

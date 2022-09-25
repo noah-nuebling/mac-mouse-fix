@@ -412,8 +412,8 @@
 /* First draft: Free day **%d/%d** */
 "trial-counter.active" = "Kostenloser Tag **%d/%d**";
 
-/* First draft: Free days **used up** */
-"trial-counter.expired" = "Kostenlose Tage **aufgebraucht**";
+/* First draft: Free days are over */
+"trial-counter.expired" = "Kostenlose Tage sind vorbei";
 
 /* First draft: Activate License */
 "license-button.activate" = "Lizenz aktivieren";
