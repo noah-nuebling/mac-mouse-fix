@@ -182,6 +182,7 @@ IB_DESIGNABLE
         [self reactToClick];
     }
     _mouseDownOverSelf = NO;
+    _mouseIsOverSelf = NO;
 }
 - (void)reactToClick {
     
