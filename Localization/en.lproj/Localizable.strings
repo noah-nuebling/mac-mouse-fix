@@ -457,7 +457,7 @@
 /* First draft: Back */
 "mail-alert.back" = "Back";
 
-/* First draft: I can't respond to all emails, but I will read and consider your feedback! */
+/* First draft: I can't respond to all emails,\nbut I will read and consider your feedback! */
 "mail-alert.body" = "I can't respond to all emails,\nbut I will read and consider your feedback!";
 
 /* First draft: Write Email */
