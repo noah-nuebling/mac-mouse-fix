@@ -453,3 +453,15 @@
 
 /* First draft: Hey there! You've been using Mac Mouse Fix for **%d days** now. I hope you're enjoying it!\n\nIf you want to keep using Mac Mouse Fix, you can [buy it now](%@). */
 "trial-notif.body" = "Hi! Du verwendest Mac Mouse Fix jetzt seit **%d Tagen**. Ich hoffe, es gefällt dir!\n\nWenn du Mac Mouse Fix auch weiter verwenden willst, kannst du es dir [jetzt kaufen](%@).";
+
+/* First draft: Back */
+"mail-alert.back" = "Zurück";
+
+/* First draft: I can't respond to all emails, but I will read and consider your feedback! */
+"mail-alert.body" = "Ich kann nicht auf alle Emails antworten, aber ich werde dein Feedback lesen und darüber nachdenken!";
+
+/* First draft: Write Email */
+"mail-alert.send" = "Email schreiben";
+
+/* First draft: Write an Email? */
+"mail-alert.title" = "Eine Email schreiben?";

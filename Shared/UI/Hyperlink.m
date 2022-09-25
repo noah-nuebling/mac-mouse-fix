@@ -186,12 +186,20 @@ IB_DESIGNABLE
 }
 - (void)reactToClick {
     
-    /// Open URL defined in Interface Builder
-    DDLogInfo(@"Opening: %@",_href);
-    [[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:_href]];
+    /// Get info
+    BOOL hasAction = self.action != nil;
+    BOOL hasLink = _href != nil && ![_href isEqual:@""];
     
-    /// Send IBAction
-    [self sendAction:self.action to:self.target];
+    /// Validate
+    assert(hasAction || hasLink);
+    assert(!(hasAction && hasLink));
+    
+    /// Send action / open link
+    if (hasAction) {
+        [self sendAction:self.action to:self.target];
+    } else {
+        [[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:_href]];
+    }
 }
 
 @end

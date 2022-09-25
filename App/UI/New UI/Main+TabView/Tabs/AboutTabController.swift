@@ -13,6 +13,8 @@ class AboutTabController: NSViewController {
 
 //    var isLicensed = ConfigValue<Bool>(configPath: "License.isLicensedCache")
     
+    /// Outlets and vars
+    
     @IBOutlet weak var versionField: NSTextField!
     
     @IBOutlet weak var moneyCell: NSView!
@@ -29,6 +31,44 @@ class AboutTabController: NSViewController {
     var currentLicense: MFLicenseReturn? = nil
 
     var trackingArea: NSTrackingArea? = nil
+    
+    /// IBActions
+    
+    @IBAction func sendEmail(_ sender: Any) {
+        
+        /// Create alert
+        
+        let alert = NSAlert()
+        alert.alertStyle = .informational
+        alert.messageText = NSLocalizedString("mail-alert.title", comment: "First draft: Write an Email?")
+        alert.informativeText = NSLocalizedString("mail-alert.body", comment: "First draft: I can't respond to all emails, but I will read and consider your feedback!")
+//        alert.showsSuppressionButton = true
+        alert.addButton(withTitle: NSLocalizedString("mail-alert.send", comment: "First draft: Write Email"))
+        alert.addButton(withTitle: NSLocalizedString("mail-alert.back", comment: "First draft: Back"))
+        
+        /// Set mail icon
+        
+        if let mailURL = NSWorkspace.shared.urlForApplication(toOpen: URL(string: "mailto:noah.n.public@gmail.com")!) {
+            
+            let mailPath: String
+            if #available(macOS 13.0, *) {
+                mailPath = mailURL.path(percentEncoded: false)
+            } else {
+                mailPath = mailURL.path
+            }
+            let mailIcon = NSWorkspace.shared.icon(forFile: mailPath)
+            
+            alert.icon = mailIcon
+        }
+        
+        /// Display alert
+        guard let window = MainAppState.shared.window else { return }
+        alert.beginSheetModal(for: window) { response in
+            if response == .alertFirstButtonReturn {
+                NSWorkspace.shared.open(URL(string: "mailto:noah.n.public@gmail.com")!)
+            }
+        }
+    }
     
     /// Init
     

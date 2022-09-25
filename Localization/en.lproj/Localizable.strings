@@ -453,3 +453,15 @@
 
 /* First draft: You'll be notified of updates when you open\nthis window */
 "updates-toggle.hint" = "You'll be notified of new updates when you open\nthis window";
+
+/* First draft: Back */
+"mail-alert.back" = "Back";
+
+/* First draft: I can't respond to all emails, but I will read and consider your feedback! */
+"mail-alert.body" = "I can't respond to all emails, but I will read and consider your feedback!";
+
+/* First draft: Write Email */
+"mail-alert.send" = "Write Email";
+
+/* First draft: Write an Email? */
+"mail-alert.title" = "Write an Email?";
