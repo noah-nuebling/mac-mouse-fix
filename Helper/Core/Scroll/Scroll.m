@@ -975,7 +975,7 @@ static void sendOutputEvents(int64_t dx, int64_t dy, MFScrollOutputType outputTy
         
         /// Get line deltas as fixed point number
         int64_t dyLineFixed = fixedScrollDelta(dyLine);
-        int64_t dxLineFixed = fixedScrollDelta(dyLine);
+        int64_t dxLineFixed = fixedScrollDelta(dxLine);
         
         /// Set fields
         ///     We used to have a comment here saying that the `FixedPtDelta`s were automatically being set when setting the `PointDelta`s. But under the Ventura Beta this doesn't seem to be true, so we're setting it manually.
@@ -989,7 +989,7 @@ static void sendOutputEvents(int64_t dx, int64_t dy, MFScrollOutputType outputTy
         CGEventSetIntegerValueField(event, kCGScrollWheelEventFixedPtDeltaAxis2, dxLineFixed);
         
         /// Debug
-//        DDLogDebug(@"SCROOOL OVONT – %@", CGScrollWheelEventDescription(event));
+        DDLogDebug(@"SCROOOL OVONT – %@", CGScrollWheelEventDescription(event));
         
         /// Send
         CGEventPost(kCGSessionEventTap, event);
@@ -1008,7 +1008,7 @@ static void sendOutputEvents(int64_t dx, int64_t dy, MFScrollOutputType outputTy
 static BOOL _appSwitcherIsOpen = NO;
 
 + (void)appSwitcherModificationHasBeenDeactivated {
-    /// AppSwitcherModification is aka CommandTab. Should rename to AppSwitcher.
+    
     if (_appSwitcherIsOpen) { /// Not sure if this check is necessary. Should only be called when the appSwitcher is open.
         sendKeyEvent(55, 0, false);
         _appSwitcherIsOpen = NO;
