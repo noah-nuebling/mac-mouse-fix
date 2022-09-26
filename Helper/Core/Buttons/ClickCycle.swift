@@ -148,7 +148,7 @@ class ClickCycle: NSObject {
             state!.clickLevel = Math.intCycle(x: state!.clickLevel + 1, lower: 1, upper: maxClickLevel)
         }
         
-        /// Check: release outside of clickCycle it belongs to
+        /// Guard: NOT release outside of clickCycle it belongs to
         let lonelyRelease = !mouseDown && (state == nil || state!.device != device || state!.button != button)
         
         if !lonelyRelease {
@@ -180,7 +180,7 @@ class ClickCycle: NSObject {
         
             /// Check active clickCycle
             ///     (triggerCallback could've killed it)
-            ///     \note: Sometimes there are raceconditions, and the state only becomes nil after this statement. That's why we simply use state? below instead of state!
+            ///     \note: Sometimes there are raceconditions, and the state only becomes nil after this statement. That's why we simply use `state?` below instead of `state!`
             
             if state == nil { return }
             
@@ -188,9 +188,10 @@ class ClickCycle: NSObject {
             /// Start/reset timers
             ///
             /// Consider using DispatchSourceTimer instead
-            /// We need to start timers from main. Dispatching to main caused race conditions.
+            /// We need to start timers from main. Async dispatching to main caused race conditions.
             
-            SharedUtilitySwift .doOnMain {
+            SharedUtilitySwift.doOnMain {
+                
                 if mouseDown {
                     /// mouseDown
                     state?.upTimer.invalidate()

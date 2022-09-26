@@ -7,6 +7,18 @@
 // --------------------------------------------------------------------------
 //
 
+/// Testing checklist
+/// - `[x]` Increments daysOfUse when __scrolling__ after setting system to new date
+/// - `[ ]` Increments daysOfUse using __modifiedScroll__ with kb mods after deleting lastUseDate
+/// - `[ ]` Increments daysOfUse using __modifiedScroll__ with button mods after deleting lastUseDate
+/// - `[ ]` Increments daysOfUse when __clicking, holding and clicking with a doubleClick action set up__ after deleting lastUseDate
+/// - `[ ]` Increments daysOfUse when clicking and __dragging__ after deleting lastUseDate
+/// - `[x]` Increments daysOfUse when scrolling after deleting lastUseDate
+/// - `[x]` Doesn't update daysOfUse more than once if you don't change the date
+/// - `[ ]` Increments daysOfUse when the day changes without restarting the app
+
+/// - `[ ]` Doesn't increment daysOfUse when using Trackpad
+
 import Cocoa
 
 @objc class Trial: NSObject {
@@ -97,7 +109,7 @@ import Cocoa
     
     @objc static var daysOfUse: Int {
         get {
-            SecureStorage.get("License.trial.daysOfUse") as? Int ?? -1
+            SecureStorage.get("License.trial.daysOfUse") as? Int ?? 0
         }
         set {
             SecureStorage.set("License.trial.daysOfUse", value: newValue)

@@ -41,6 +41,8 @@ import ReactiveSwift
 // MARK: Helper enabled state
 
 @objc class EnabledState: NSObject, BindingSource {
+        
+    /// EnabledState is a reactive interface for enabling the helper.  (The app being enabled/disabled and the helper being enabled/disabled are considered equivalent)
     
     /// Binding source protocol
     var producer: SignalProducer<Bool, Never> {

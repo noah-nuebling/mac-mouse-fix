@@ -54,7 +54,7 @@ import CocoaLumberjackSwift
             
             /// Update modifications
             let remaps = TransformationManager.remaps() /// This is apparently incredibly slow because Swift needs to convert the dict.
-            self.modifiers = ModifierManager.getActiveModifiers(for: State.activeDevice!, event: event)
+            self.modifiers = ModifierManager.getActiveModifiers(for: State.activeDevice!, event: event) /// Why aren't we just using `device` here?
             self.modifications = RemapSwizzler.swizzleRemaps(remaps, activeModifiers: modifiers)
             
             /// Get max clickLevel
@@ -139,6 +139,9 @@ import CocoaLumberjackSwift
 //            if actionArray[0][kMFActionDictKeyType] as! String == kMFActionDictTypeAddModeFeedback {
 //                actionArray[0][kMFRemapsKeyModificationPrecondition] = self.modifiers
 //            }
+            
+            /// Notify Trial.swift
+            Trial.shared.handleUse()
             
             /// Execute actionArray
             if startOrEnd == kMFActionPhaseCombined {

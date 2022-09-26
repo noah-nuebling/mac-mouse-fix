@@ -22,8 +22,8 @@
 ///     The `remaps` dict in Transformation manager is a dict that is defined by the user in the UI and which represents a map from modifiers -> (triggers -> effects).
 ///     Elements of the righthand side of this map, (which are themselves maps from (triggers -> effects)) are also often called a `modification`, and elements of the lefthand side are called the `modificationPrecondition`. The modifiers that the user is currently holding down are also called the `activeModifiers`.
 ///
-///     The remaps dict could be considered a function r(modifiers) = modification.
-///     Now the **RemapSwizzler** provides functions that swizzle up an original remaps function R. They look like r'(R, modifiers) = modification.
+///     The remaps dict could be considered a function r with r(modifiers) = modification.
+///     Now the **RemapSwizzler** provides functions that swizzle up an original remaps function r. They look like r'(r, modifiers) = modification, where r is the remaps dict.
 ///
 ///     Why do we need this? Why not just use the original function that the user defined directly and query the dictionary?
 ///
@@ -33,7 +33,7 @@
 ///         See `subsetSwizzler()` for the implementation of that.
 ///
 ///     But there's a second important usecase:
-///     During **addMode**, we need to change this map from modifiers -> triggers -> effects, such that any combination of trigger T and modifiers M that the user can input, is mapped to `addModeFeedback_T_M`. But this would mean c o m b i n a t o r i c | e x p l o s i o n if we wanted to store that all in the remaps dict in TransformationManger.So we came up with this weird solution:
+///     During **addMode**, we need to change this map from modifiers -> triggers -> effects, such that any combination of trigger T and modifiers M that the user can input, is mapped to `addModeFeedback_T_M`. But this would mean c o m b i n a t o r i c e x p l o s i o n if we wanted to store that all in the remaps dict in TransformationManger. So we came up with this weird solution:
 ///         Basically the TransformationManager creates a map from noModifiers -> anyTrigger -> addModeFeedback, as a dictionary, which isn't that large because there aren't that many triggers, and then we swizzle up that map in **RemapSwizzler** so it becomes the full anyModifier -> anyTrigger -> addModeFeedback map!
 ///         See `addModeSwizzler()` for the implementation of that.
 
@@ -85,7 +85,7 @@ static NSDictionary *simpleSwizzler(NSDictionary *remaps, NSDictionary *activeMo
     NSDictionary *effectiveRemaps = remaps[@{}];
     NSDictionary *remapsForActiveModifiers = remaps[activeModifiers];
     if ([activeModifiers isNotEqualTo:@{}]) {
-        effectiveRemaps = [SharedUtility dictionaryWithOverridesAppliedFrom:[remapsForActiveModifiers copy] to:effectiveRemaps]; // Why do we do ` - copy` here?
+        effectiveRemaps = [SharedUtility dictionaryWithOverridesAppliedFrom:[remapsForActiveModifiers copy] to:effectiveRemaps]; /// Why do we do ` - copy` here?
     }
     return effectiveRemaps;
 }
@@ -297,7 +297,7 @@ BOOL isSubSequence(NSArray *sequence, NSArray *potentialSubSequence) {
     
     for (int index = 0; index < sequence.count; index++) {
         
-        /// This loop is pretty siimple because we know that no button can occor in the sequence more than once
+        /// This loop is pretty simple because we know that no button can occur in the sequence more than once
         ///     Otherwise it would be more involved to determine subsequence
         
         /// Break prematurely
