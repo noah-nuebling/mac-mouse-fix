@@ -325,6 +325,27 @@
 					<key>trigger</key>
 					<string>dragTrigger</string>
 				</dict>
+				<dict>
+					<key>effect</key>
+					<dict>
+						<key>modifiedDragType</key>
+						<string>twoFingerSwipe</string>
+					</dict>
+					<key>modifiers</key>
+					<dict>
+						<key>buttonModifiers</key>
+						<array>
+							<dict>
+								<key>button</key>
+								<integer>3</integer>
+								<key>level</key>
+								<integer>2</integer>
+							</dict>
+						</array>
+					</dict>
+					<key>trigger</key>
+					<string>dragTrigger</string>
+				</dict>
 			</array>
 			<key>fiveButtons</key>
 			<array>
