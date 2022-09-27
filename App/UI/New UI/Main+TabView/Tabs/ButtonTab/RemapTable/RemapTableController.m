@@ -327,14 +327,20 @@ static void updateBorderColor(RemapTableController *object) {
     
     /// Used when resetting to default
     /// Similar to what we do in `- viewDidLoad`
+        
+    NSIndexSet *allRowsOld = [NSIndexSet indexSetWithIndexesInRange:NSMakeRange(0, self.groupedDataModel.count)];
     
     [self loadDataModelFromConfig];
     [self sortDataModel];
-    [self.tableView reloadData];
     
-//    self.tableView reloadDataForRowIndexes:<#(nonnull NSIndexSet *)#> columnIndexes:<#(nonnull NSIndexSet *)#>
-//    self.tableView insertRowsAtIndexes:<#(nonnull NSIndexSet *)#> withAnimation:<#(NSTableViewAnimationOptions)#>
-    [(RemapTableView *)self.tableView updateSizeWithAnimation:NO];
+    NSIndexSet *allRows = [NSIndexSet indexSetWithIndexesInRange:NSMakeRange(0, self.groupedDataModel.count)];
+    
+    /// Replace all rows
+    ///     Using fade animation on removal makes the groupRow color black during the animation. So we turned animation off. Since we don't animate we could also just call `reloadTable` instead of this.
+    [self.tableView removeRowsAtIndexes:allRowsOld withAnimation:NSTableViewAnimationEffectNone];
+    [self.tableView insertRowsAtIndexes:allRows withAnimation:NSTableViewAnimationEffectNone];
+    
+    [(RemapTableView *)self.tableView updateSizeWithAnimation:YES];
 }
 
 #pragma mark - Delegate & Controller

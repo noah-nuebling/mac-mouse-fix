@@ -127,11 +127,15 @@ import CocoaLumberjackSwift
                 if radio1.state == .on {
                     setConfig("Remaps", config("Other.defaultRemaps.threeButtons")!)
                     commitConfig()
-                    self.tableController.reloadAll()
+                    DispatchQueue.main.async { /// Dispatch to main to make animations work after dismissing sheet
+                        self.tableController.reloadAll() /// Maybe reload should be automatically triggered through ReactiveConfig
+                    }
                 } else {
                     setConfig("Remaps", config("Other.defaultRemaps.fiveButtons")!)
                     commitConfig()
-                    self.tableController.reloadAll()
+                    DispatchQueue.main.async {
+                        self.tableController.reloadAll()
+                    }
                 }
                 
             }

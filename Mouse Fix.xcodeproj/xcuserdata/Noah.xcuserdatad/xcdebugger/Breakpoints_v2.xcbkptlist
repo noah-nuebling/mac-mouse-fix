@@ -88,8 +88,8 @@
             filePath = "App/UI/New UI/Main+TabView/Tabs/ButtonTab/ButtonTabController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "132"
-            endingLineNumber = "132"
+            startingLineNumber = "134"
+            endingLineNumber = "134"
             landmarkName = "restoreDefaults(_:)"
             landmarkType = "7">
          </BreakpointContent>
