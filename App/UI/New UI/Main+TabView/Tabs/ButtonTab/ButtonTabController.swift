@@ -110,9 +110,9 @@ import CocoaLumberjackSwift
         ///  Select the radioButton that best matches the activeDevice
         ///
         
-        if deviceButtons == 0 {
+        if deviceButtons == 0 { /// If there is no active device, use 5 button preset as default
             radio2.state = .on
-        } else if deviceButtons <= 3 {
+        } else if deviceButtons == 3 {
             radio1.state = .on
         } else {
             radio2.state = .on
@@ -125,11 +125,31 @@ import CocoaLumberjackSwift
         alert.beginSheetModal(for: window) { response in
             if response == .alertFirstButtonReturn {
                 if radio1.state == .on {
+                    
                     /// Reset to default for 3 buttons
                     DDLogInfo("3 BTNSSS")
+                    
+//                    config("Remaps") = [
+//                        [
+//                            kMFRemapsKeyModificationPrecondition: nil,
+//                            kMFRemapsKeyTrigger: [
+//                                kMFButtonTriggerKeyButtonNumber: 4,
+//                                kMFButtonTriggerKeyDuration: kMFButtonTriggerDurationClick,
+//                                kMFButtonTriggerKeyClickLevel: 1,
+//                            ],
+//                            kMFRemapsKeyEffect: [
+//                                kMFActionDictKeyType: kMFActionDictTypeSymbolicHotkey,
+//                                kMFActionDictKeyGenericVariant: kMFSHLookUp
+//                            ]
+//                        ],
+//
+//                    ]
+                    
                 } else {
                     /// Reset to default for 5 buttons
                     DDLogInfo("5 BTNSSS")
+                    
+//                    config("Remaps") =
                 }
             }
         }
