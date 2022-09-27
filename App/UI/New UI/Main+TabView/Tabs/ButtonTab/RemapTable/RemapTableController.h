@@ -16,15 +16,22 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface RemapTableController :  NSViewController <NSTableViewDelegate>
 
-@property NSArray *dataModel;
-//      ^ Is actually an NSMutableArray I think. Take care not to accidentally corrupt this!
-@property (readonly) NSArray *groupedDataModel;
 
-//- (void)insertRowDict:(NSDictionary *)rowDict intoGroupedDataModelAtIndex:(NSInteger)index;
+///
+/// Interaction with `RemapTableTranslator`
+///     `dataModel` Is actually an NSMutableArray I think. Take care not to accidentally corrupt this!
+@property NSArray *dataModel;
+@property (readonly) NSArray *groupedDataModel;
 
 - (void)addRowWithHelperPayload:(NSDictionary *)payload;
 - (IBAction)handleKeystrokeMenuItemSelected:(id)sender;
 - (IBAction)updateTableAndWriteToConfig:(id _Nullable)sender;
+
+///
+/// Interation with `ButtonTabController`
+///
+- (void)reloadAll;
+
 @end
 
 NS_ASSUME_NONNULL_END

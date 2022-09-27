@@ -65,15 +65,31 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "77F2A4F4-965A-4AB0-9397-E99098DE0B2C"
+            uuid = "4D146073-D6AF-4E8F-A236-EE5B0E5837B4"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "App/UI/New UI/Main+TabView/Tabs/ButtonTab/ButtonTabController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "80"
-            endingLineNumber = "80"
+            startingLineNumber = "129"
+            endingLineNumber = "129"
+            landmarkName = "restoreDefaults(_:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "9840581F-9651-42B2-A9B9-6312C510E65F"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "App/UI/New UI/Main+TabView/Tabs/ButtonTab/ButtonTabController.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "132"
+            endingLineNumber = "132"
             landmarkName = "restoreDefaults(_:)"
             landmarkType = "7">
          </BreakpointContent>

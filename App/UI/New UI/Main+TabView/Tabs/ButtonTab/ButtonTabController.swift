@@ -125,32 +125,15 @@ import CocoaLumberjackSwift
         alert.beginSheetModal(for: window) { response in
             if response == .alertFirstButtonReturn {
                 if radio1.state == .on {
-                    
-                    /// Reset to default for 3 buttons
-                    DDLogInfo("3 BTNSSS")
-                    
-//                    config("Remaps") = [
-//                        [
-//                            kMFRemapsKeyModificationPrecondition: nil,
-//                            kMFRemapsKeyTrigger: [
-//                                kMFButtonTriggerKeyButtonNumber: 4,
-//                                kMFButtonTriggerKeyDuration: kMFButtonTriggerDurationClick,
-//                                kMFButtonTriggerKeyClickLevel: 1,
-//                            ],
-//                            kMFRemapsKeyEffect: [
-//                                kMFActionDictKeyType: kMFActionDictTypeSymbolicHotkey,
-//                                kMFActionDictKeyGenericVariant: kMFSHLookUp
-//                            ]
-//                        ],
-//
-//                    ]
-                    
+                    setConfig("Remaps", config("Other.defaultRemaps.threeButtons")!)
+                    commitConfig()
+                    self.tableController.reloadAll()
                 } else {
-                    /// Reset to default for 5 buttons
-                    DDLogInfo("5 BTNSSS")
-                    
-//                    config("Remaps") =
+                    setConfig("Remaps", config("Other.defaultRemaps.fiveButtons")!)
+                    commitConfig()
+                    self.tableController.reloadAll()
                 }
+                
             }
         }
     }

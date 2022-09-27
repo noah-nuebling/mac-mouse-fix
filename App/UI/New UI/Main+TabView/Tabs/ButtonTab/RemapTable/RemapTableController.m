@@ -74,7 +74,7 @@
     NSArray *store = self.dataModel;
     self.dataModel = tempDataModel;
     [self.tableView reloadData];
-    [self.tableView displayIfNeeded]; // Need to do this because reloadData is async
+    [self.tableView displayIfNeeded]; /// Need to do this because reloadData is async
     self.dataModel = store;
 }
 
@@ -149,8 +149,8 @@
     [self writeDataModelToConfig];
 }
 
-/// Called when user clicks chooses most effects
 - (IBAction)updateTableAndWriteToConfig:(id _Nullable)sender {
+    /// Called when user clicks chooses most effects
 
     /// Reload tableView so that
     ///  - Trigger-cell tooltips update to newly chosen effect
@@ -265,18 +265,7 @@
     scrollView.automaticallyAdjustsContentInsets = NO;
     scrollView.contentInsets = NSEdgeInsetsMake(1, 1, 1, 1); /// Insets so the content doesn't overlap with the border
     
-    
     updateBorderColor(self);
-    
-    /// Load table data from config
-    [self loadDataModelFromConfig];
-    /// Initialize sorting
-    [self initSorting];
-    /// Do first sorting (Not sure where soring and reloading is appropriate but this seems fine)
-    [self sortDataModel];
-    [self.tableView reloadData];
-    
-    [RemapTableTranslator initializeWithTableView:self.tableView];
     
     /// Callback on darkmode toggle
     /// In MMF3, the table doesn't overlap with the box border anymore. So we don't need to remove transparency. So we don't need to update the color manually when darkmode toggles. So we don't need this functions.
@@ -287,11 +276,22 @@
         [NSApp addObserver:self forKeyPath:@"effectiveAppearance" options:NSKeyValueObservingOptionNew context:nil];
     }
     
-    /// Init addRemoveControl state
-    [self updateAddRemoveControl];
+    [RemapTableTranslator initializeWithTableView:self.tableView];
+    
+    /// Initialize sorting
+    [self initSorting];
+    
+    /// Load table data from config
+    [self loadDataModelFromConfig];
+    /// Do first sorting (Not sure where sorting and reloading is appropriate but this seems fine)
+    [self sortDataModel];
+    [self.tableView reloadData];
     
     /// Let the table do further init
     [(RemapTableView *)self.tableView coolDidLoad];
+    
+    /// Init addRemoveControl state
+    [self updateAddRemoveControl];
 }
 
 static void updateBorderColor(RemapTableController *object) {
@@ -323,6 +323,19 @@ static void updateBorderColor(RemapTableController *object) {
     
 }
 
+- (void)reloadAll {
+    
+    /// Used when resetting to default
+    /// Similar to what we do in `- viewDidLoad`
+    
+    [self loadDataModelFromConfig];
+    [self sortDataModel];
+    [self.tableView reloadData];
+    
+//    self.tableView reloadDataForRowIndexes:<#(nonnull NSIndexSet *)#> columnIndexes:<#(nonnull NSIndexSet *)#>
+//    self.tableView insertRowsAtIndexes:<#(nonnull NSIndexSet *)#> withAnimation:<#(NSTableViewAnimationOptions)#>
+    [(RemapTableView *)self.tableView updateSizeWithAnimation:NO];
+}
 
 #pragma mark - Delegate & Controller
 /// Other methods from NSTableViewDelegate and NSTableViewConroller protocols
@@ -509,6 +522,7 @@ static void updateBorderColor(RemapTableController *object) {
         NSUInteger insertedIndex = [self.groupedDataModel indexOfObject:rowDictToAdd];
         NSMutableIndexSet *toInsertWithAnimationIndexSet = [NSMutableIndexSet indexSetWithIndex:insertedIndex];
         toHighlightIndexSet = [NSIndexSet indexSetWithIndex:insertedIndex];
+        
         /// Check if there are new group row we'd like to insert with animation, too
         BOOL buttonIsNewlyTriggerInDataModel = YES;
         MFMouseButtonNumber triggerButtonForAddedRow = [RemapTableUtility triggerButtonForRow:rowDictToAdd];
@@ -523,6 +537,7 @@ static void updateBorderColor(RemapTableController *object) {
         if (buttonIsNewlyTriggerInDataModel) { /// There is a group row to add with animation
             [toInsertWithAnimationIndexSet addIndex:insertedIndex-1];
         }
+        
         /// Do insert with animation
         [self.tableView insertRowsAtIndexes:toInsertWithAnimationIndexSet withAnimation:/*NSTableViewAnimationEffectNone*/NSTableViewAnimationSlideDown];
         
