@@ -481,11 +481,17 @@
 /* First draft: Back */
 "restore-buttons-alert.back" = "Back";
 
-/* First draft: Your MX Master Mouse says it has 16 Buttons */
-"restore-buttons-alert.body" = "for Mouse with …";
+/* First draft: Restore */
+"restore-buttons-alert.commit" = "Restore";
 
-/* First draft: Reset */
-"restore-buttons-alert.send" = "Reset";
+/* First draft: Your __%@ %@__ mouse says it has __%d__ buttons */
+"restore-buttons-alert.hint" = "Your __%@ %@__ mouse says it has __%d__ buttons";
 
-/* First draft: Reset to Defaults for ... */
-"restore-buttons-alert.title" = "Reset Default for ...";
+/* First draft: Mouse with 3 buttons */
+"restore-buttons-alert.radio1" = "Mouse with 3 buttons";
+
+/* First draft: Mouse with 5+ buttons */
+"restore-buttons-alert.radio2" = "Mouse with 5+ buttons";
+
+/* First draft: Restore Default for ... */
+"restore-buttons-alert.title" = "Restore Default for ...";

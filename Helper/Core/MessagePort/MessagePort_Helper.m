@@ -87,13 +87,15 @@ static CFDataRef didReceiveMessage(CFMessagePortRef port, SInt32 messageID, CFDa
         [TransformationManager enableKeyCaptureMode];
     } else if ([message isEqualToString:@"disableKeyCaptureMode"]) {
         [TransformationManager disableKeyCaptureMode];
-    } else if ([message isEqualToString:@"getActiveDevice"]) {
-        IOHIDDeviceRef dev = HelperState.activeDevice.iohidDevice;
+    } else if ([message isEqualToString:@"getActiveDeviceInfo"]) {
+        Device *dev = HelperState.activeDevice;
         if (dev != NULL) {
-            io_service_t service = IOHIDDeviceGetService(dev);
-            if (service != MACH_PORT_NULL) {
-                response = @(service);
-            }
+                
+            response = @{
+                @"name": dev.name,
+                @"manufacturer": dev.manufacturer,
+                @"nOfButtons": @(dev.nOfButtons),
+            };
         }
     } else {
         DDLogInfo(@"Unknown message received: %@", message);

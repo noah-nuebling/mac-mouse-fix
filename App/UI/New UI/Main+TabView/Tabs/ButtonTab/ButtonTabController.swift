@@ -45,55 +45,90 @@ import CocoaLumberjackSwift
         
         let alert = NSAlert()
         alert.alertStyle = .informational
-        alert.messageText = NSLocalizedString("restore-buttons-alert.title", comment: "First draft: Reset to Default for ...")
-//        alert.informativeText = NSLocalizedString("restore-buttons-alert.body", comment: "First draft: Your MX Master Mouse says it has 16 Buttons")
+        alert.messageText = NSLocalizedString("restore-buttons-alert.title", comment: "First draft: Restore Default for ...")
+        alert.informativeText = ""
         
-        alert.addButton(withTitle: NSLocalizedString("restore-buttons-alert.send", comment: "First draft: Reset"))
+        alert.addButton(withTitle: NSLocalizedString("restore-buttons-alert.commit", comment: "First draft: Restore"))
         alert.addButton(withTitle: NSLocalizedString("restore-buttons-alert.back", comment: "First draft: Back"))
         
         ///
         /// Get device info
         ///
         
-        var service = io_service_t(MACH_PORT_NULL)
-        if let serviceNS = SharedMessagePort.sendMessage("getActiveDevice", withPayload: nil, expectingReply: true) as! NSNumber? {
-            service = serviceNS.uint32Value
+        var deviceName: NSString = ""
+        var deviceManufacturer: NSString = ""
+        var deviceButtons = 0
+        
+        if let info = SharedMessagePort.sendMessage("getActiveDeviceInfo", withPayload: nil, expectingReply: true) as! NSDictionary? {
+            
+            deviceName = info["name"] as! NSString
+            deviceManufacturer = info["manufacturer"] as! NSString
+            deviceButtons = (info["nOfButtons"] as! NSNumber).intValue
         }
         
-//        if service != io_service_t(MACH_PORT_NULL), let iohidDevice = IOHIDDeviceCreate(kCFAllocatorDefault, service) {
-//            
-//        }
-        
-        print("WHOOOOOO \(Thread.isMainThread)")
-        
         ///
-        /// Add radioButtons
+        /// Add accessoryView
         ///
         
-        let radio1 = NSButton(radioButtonWithTitle: "Mouse with 3 buttons", target: self, action: #selector(nullAction(sender:)))
-        let radio2 = NSButton(radioButtonWithTitle: "Mouse with 5+ buttons", target: self, action: #selector(nullAction(sender:)))
-        let hintStringRaw = "Your __MX Master 2S__ says it has __16 buttons__"
-        let hintString = NSAttributedString(coolMarkdown: hintStringRaw)!.settingSecondaryLabelColor(forSubstring: nil).settingFontSize(NSFont.smallSystemFontSize).aligningSubstring(nil, alignment: .center)
-        let hint = CoolNSTextField(labelWithAttributedString: hintString)
+        let radio1 = NSButton(radioButtonWithTitle: NSLocalizedString("restore-buttons-alert.radio1", comment: "First draft: Mouse with 3 buttons"), target: self, action: #selector(nullAction(sender:)))
+        let radio2 = NSButton(radioButtonWithTitle: NSLocalizedString("restore-buttons-alert.radio2", comment: "First draft: Mouse with 5+ buttons"), target: self, action: #selector(nullAction(sender:)))
         
-        let radioStack = NSStackView(views: [radio1, radio2, hint])
+        let radioStack = NSStackView(views: [radio1, radio2])
+        
+        var hint: CoolNSTextField? = nil
+        if deviceButtons > 0 {
+            let hintStringRaw = String(format: NSLocalizedString("restore-buttons-alert.hint", comment: "First draft: Your __%@ %@__ mouse says it has __%d__ buttons"), deviceManufacturer, deviceName, deviceButtons)
+            let hintString = NSAttributedString(coolMarkdown: hintStringRaw)?.settingSecondaryLabelColor(forSubstring: nil).settingFontSize(NSFont.smallSystemFontSize).aligningSubstring(nil, alignment: .center).trimmingWhitespace()
+            if let hintString = hintString {
+                hint = CoolNSTextField(labelWithAttributedString: hintString)
+                if hint != nil {
+                    radioStack.addView(hint!, in: .center)
+                }
+            }
+        }
+        
         radioStack.orientation = .vertical
         radioStack.translatesAutoresizingMaskIntoConstraints = true
-        radioStack.setCustomSpacing(5.0, after: radio1) /// Default is 8.0 (Ventura)
-        radioStack.setCustomSpacing(9.0, after: radio2)
         
-        let width = max(radio1.fittingSize.width, radio2.fittingSize.width)
-        let height = (radio1.frame.height + radioStack.customSpacing(after: radio1) + radio2.frame.height + radioStack.customSpacing(after: radio2) + hintString.size(atMaxWidth: width).height)
-        let stackSize = NSSize(width: width as CGFloat, height: height as CGFloat)
-        radioStack.setFrameSize(stackSize)
+        radioStack.setCustomSpacing(5.0, after: radio1) /// Default is 8.0 (Ventura)
+        radioStack.setCustomSpacing(17.0, after: radio2)
+        
+        let width = max(200.0, max(radio1.fittingSize.width, radio2.fittingSize.width))
+        var height = radio1.frame.height + radioStack.customSpacing(after: radio1) + radio2.frame.height
+        if let hint = hint {
+            let hintHeight = hint.attributedStringValue.size(atMaxWidth: width).height
+            height += radioStack.customSpacing(after: radio2) + hintHeight + 5 /// Not sure why `+ 5` is necessary
+        } else {
+            height += 4.0
+        }
+        
+        radioStack.setFrameSize(NSSize(width: width, height: height))
         
         alert.accessoryView = radioStack
         
+        ///
+        ///  Select the radioButton that best matches the activeDevice
+        ///
+        
+        if deviceButtons == 0 {
+            radio2.state = .on
+        } else if deviceButtons <= 3 {
+            radio1.state = .on
+        } else {
+            radio2.state = .on
+        }
+        
         /// Display alert
+        
         guard let window = MainAppState.shared.window else { return }
+        
         alert.beginSheetModal(for: window) { response in
             if response == .alertFirstButtonReturn {
-                NSWorkspace.shared.open(URL(string: "mailto:noah.n.public@gmail.com")!)
+                if radio1.state == .on {
+                    DDLogInfo("3 BTNSSS")
+                } else {
+                    DDLogInfo("5 BTNSSS")
+                }
             }
         }
     }

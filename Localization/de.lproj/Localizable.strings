@@ -479,13 +479,19 @@
 "beta-alert.title" = "Beta-Versionen erhalten?";
 
 /* First draft: Back */
-"restore-buttons-alert.back" = "";
+"restore-buttons-alert.back" = "Zurück";
 
-/* First draft: I can't respond to all emails,\nbut I will read and consider your feedback! */
-"restore-buttons-alert.body" = "";
+/* First draft: Restore */
+"restore-buttons-alert.commit" = "Wiederherstellen";
 
-/* First draft: Write Email */
-"restore-buttons-alert.send" = "";
+/* First draft: Your __%@ %@__ mouse says it has __%d__ buttons */
+"restore-buttons-alert.hint" = "Deine __%@ %@__ Maus sagt dass sie __%d__ Tasten hat";
 
-/* First draft: Write an Email? */
-"restore-buttons-alert.title" = "";
+/* First draft: Mouse with 3 buttons */
+"restore-buttons-alert.radio1" = "Maus mit 3 Tasten";
+
+/* First draft: Mouse with 5+ buttons */
+"restore-buttons-alert.radio2" = "Maus mit 5+ Tasten";
+
+/* First draft: Restore Default for ... */
+"restore-buttons-alert.title" = "Standard wiederherstellen für ...";

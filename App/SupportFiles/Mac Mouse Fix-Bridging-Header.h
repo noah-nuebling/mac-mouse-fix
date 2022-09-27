@@ -39,5 +39,6 @@
 #import "License.h"
 #import "Hyperlink.h"
 #import "Locator.h"
+#import "Device.h"
 
 #endif /* Mac_Mouse_Fix_Bridging_Header_h */
