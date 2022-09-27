@@ -704,13 +704,14 @@ static void getTriggerValues(int *btn1, int *lvl1, NSString **dur1, NSString **t
     }
 }
 - (void)initSorting {
+    
     NSSortDescriptor *sd = [NSSortDescriptor sortDescriptorWithKey:nil ascending:YES comparator:^NSComparisonResult(NSDictionary * _Nonnull tableEntry1, NSDictionary * _Nonnull tableEntry2) {
         
         /// Create mutable deep copies so we don't mess table up accidentally
         NSMutableDictionary *tableEntryMutable1 = (NSMutableDictionary *)[SharedUtility deepMutableCopyOf:tableEntry1];
         NSMutableDictionary *tableEntryMutable2 = (NSMutableDictionary *)[SharedUtility deepMutableCopyOf:tableEntry2];
         
-        // Get trigger info (button and level, duration, type)
+        /// Get trigger info (button and level, duration, type)
         int btn1;
         int lvl1;
         NSString *dur1;
@@ -722,24 +723,25 @@ static void getTriggerValues(int *btn1, int *lvl1, NSString **dur1, NSString **t
         NSString *type2;
         getTriggerValues(&btn2, &lvl2, &dur2, &type2, tableEntryMutable2);
         
-        // 1. Sort by button
-        //  Need to sort by button on top level to make button group rows work
+        /// 1. Sort by button
+        ///  Need to sort by button on top level to make button group rows work
         if (btn1 > btn2) {
             return NSOrderedDescending;
         } else if (btn1 < btn2) {
             return NSOrderedAscending;
         }
         
-        // Get modification precondition info
+        /// Get modification precondition info
         NSDictionary *preconds1 = tableEntryMutable1[kMFRemapsKeyModificationPrecondition];
         NSDictionary *preconds2 = tableEntryMutable2[kMFRemapsKeyModificationPrecondition];
         
-        // 2.1 Sort by button precond
+        /// 2.1 Sort by button precond
         NSArray *buttonSequence1 = preconds1[kMFModificationPreconditionKeyButtons];
         NSArray *buttonSequence2 = preconds2[kMFModificationPreconditionKeyButtons];
         uint64_t iterMax = MIN(buttonSequence1.count, buttonSequence2.count);
         DDLogInfo(@"DEBUG - buttonSequence1: %@, buttonSequence2: %@, iterMax: %@", buttonSequence1, buttonSequence2, @(iterMax));
-        // ^ We sometimes get a "index 0 beyond bounds for empty array" error for the `buttonSequence1[i]` instruction. Seemingly at random.
+        
+        /// ^ We sometimes get a "index 0 beyond bounds for empty array" error for the `buttonSequence1[i]` instruction. Seemingly at random.
         for (int i = 0; i < iterMax; i++) {
             NSDictionary *buttonPress1 = buttonSequence1[i];
             NSDictionary *buttonPress2 = buttonSequence2[i];
@@ -758,13 +760,13 @@ static void getTriggerValues(int *btn1, int *lvl1, NSString **dur1, NSString **t
                 return NSOrderedAscending;
             }
         }
-        // If len is different, but everything up until iterMax is equal, take the shorter one
+        /// If len is different, but everything up until iterMax is equal, take the shorter one
         if (buttonSequence1.count > buttonSequence2.count) {
             return NSOrderedDescending;
         } else if (buttonSequence1.count < buttonSequence2.count) {
             return NSOrderedAscending;
         }
-        // 2.2 Sort by keyboard precond
+        /// 2.2 Sort by keyboard precond
         NSNumber *modifierFlags1 = preconds1[kMFModificationPreconditionKeyKeyboard];
         NSNumber *modifierFlags2 = preconds2[kMFModificationPreconditionKeyKeyboard];
         if (modifierFlags1.integerValue > modifierFlags2.integerValue) {
@@ -773,8 +775,8 @@ static void getTriggerValues(int *btn1, int *lvl1, NSString **dur1, NSString **t
             return NSOrderedAscending;
         }
         
-        // 1.1. Sort by trigger type (drag, scroll, button)
-        NSArray *orderedTypes = @[@"button", @"drag", @"scroll"];
+        /// 1.1. Sort by trigger type (drag, scroll, button)
+        NSArray *orderedTypes = @[@"button", @"scroll", @"drag"];
         NSUInteger typeIndex1 = [orderedTypes indexOfObject:type1];
         NSUInteger typeIndex2 = [orderedTypes indexOfObject:type2];
         if (typeIndex1 > typeIndex2) {
@@ -782,13 +784,13 @@ static void getTriggerValues(int *btn1, int *lvl1, NSString **dur1, NSString **t
         } else if (typeIndex1 < typeIndex2) {
             return NSOrderedAscending;
         }
-        // 1.2 Sort by click level
+        /// 1.2 Sort by click level
         if (lvl1 > lvl2) {
             return NSOrderedDescending;
         } else if (lvl1 < lvl2) {
             return NSOrderedAscending;
         }
-        // 1.3 Sort by duration
+        /// 1.3 Sort by duration
         NSArray *orderedDurations = @[kMFButtonTriggerDurationClick, kMFButtonTriggerDurationHold];
         NSUInteger durationIndex1 = [orderedDurations indexOfObject:dur1];
         NSUInteger durationIndex2 = [orderedDurations indexOfObject:dur2];
@@ -798,6 +800,8 @@ static void getTriggerValues(int *btn1, int *lvl1, NSString **dur1, NSString **t
             return NSOrderedAscending;
         }
         
+        /// Can't order
+        assert(false);
         return NSOrderedSame;
     }];
     [self.tableView setSortDescriptors:@[sd]];
