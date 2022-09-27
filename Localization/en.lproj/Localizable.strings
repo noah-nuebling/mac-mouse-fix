@@ -457,14 +457,14 @@
 /* First draft: Back */
 "mail-alert.back" = "Back";
 
-/* First draft: I can't respond to all emails,\nbut I will read and consider your feedback! */
-"mail-alert.body" = "I can't respond to all emails,\nbut I will read and consider your feedback!";
-
 /* First draft: Write Email */
 "mail-alert.send" = "Write Email";
 
 /* First draft: Write an Email? */
 "mail-alert.title" = "Write an Email?";
+
+/* First draft: I can't respond to all emails\nbut I read and consider all feedback! */
+"mail-alert.body" = "I can't respond to all emails\nbut I read and consider all feedback!";
 
 /* First draft: Cancel */
 "beta-alert.back" = "Cancel";
@@ -478,8 +478,8 @@
 /* First draft: Get Beta Versions? */
 "beta-alert.title" = "Get Beta Versions?";
 
-/* First draft: Back */
-"restore-buttons-alert.back" = "Back";
+/* First draft: Cancel */
+"restore-buttons-alert.back" = "Cancel";
 
 /* First draft: Restore */
 "restore-buttons-alert.commit" = "Restore";

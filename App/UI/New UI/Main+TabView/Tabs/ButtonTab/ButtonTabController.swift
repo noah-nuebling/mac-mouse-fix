@@ -49,7 +49,7 @@ import CocoaLumberjackSwift
         alert.informativeText = ""
         
         alert.addButton(withTitle: NSLocalizedString("restore-buttons-alert.commit", comment: "First draft: Restore"))
-        alert.addButton(withTitle: NSLocalizedString("restore-buttons-alert.back", comment: "First draft: Back"))
+        alert.addButton(withTitle: NSLocalizedString("restore-buttons-alert.back", comment: "First draft: Cancel"))
         
         ///
         /// Get device info
@@ -125,8 +125,10 @@ import CocoaLumberjackSwift
         alert.beginSheetModal(for: window) { response in
             if response == .alertFirstButtonReturn {
                 if radio1.state == .on {
+                    /// Reset to default for 3 buttons
                     DDLogInfo("3 BTNSSS")
                 } else {
+                    /// Reset to default for 5 buttons
                     DDLogInfo("5 BTNSSS")
                 }
             }
@@ -134,9 +136,8 @@ import CocoaLumberjackSwift
     }
     
     @objc func nullAction(sender: AnyObject) {
-        /// Need to set the same
+        /// Need this to make radioButtons to work together (I think)
     }
-
     
     ///
     /// Init & lifecycle
