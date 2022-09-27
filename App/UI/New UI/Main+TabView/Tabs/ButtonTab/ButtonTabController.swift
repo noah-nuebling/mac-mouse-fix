@@ -41,7 +41,67 @@ import CocoaLumberjackSwift
     @IBAction func openOptions(_ sender: Any) {
         ButtonOptionsViewController.add()
     }
+    @IBAction func restoreDefaults(_ sender: Any) {
+        
+        let alert = NSAlert()
+        alert.alertStyle = .informational
+        alert.messageText = NSLocalizedString("restore-buttons-alert.title", comment: "First draft: Reset to Default for ...")
+//        alert.informativeText = NSLocalizedString("restore-buttons-alert.body", comment: "First draft: Your MX Master Mouse says it has 16 Buttons")
+        
+        alert.addButton(withTitle: NSLocalizedString("restore-buttons-alert.send", comment: "First draft: Reset"))
+        alert.addButton(withTitle: NSLocalizedString("restore-buttons-alert.back", comment: "First draft: Back"))
+        
+        ///
+        /// Get device info
+        ///
+        
+        var service = io_service_t(MACH_PORT_NULL)
+        if let serviceNS = SharedMessagePort.sendMessage("getActiveDevice", withPayload: nil, expectingReply: true) as! NSNumber? {
+            service = serviceNS.uint32Value
+        }
+        
+//        if service != io_service_t(MACH_PORT_NULL), let iohidDevice = IOHIDDeviceCreate(kCFAllocatorDefault, service) {
+//            
+//        }
+        
+        print("WHOOOOOO \(Thread.isMainThread)")
+        
+        ///
+        /// Add radioButtons
+        ///
+        
+        let radio1 = NSButton(radioButtonWithTitle: "Mouse with 3 buttons", target: self, action: #selector(nullAction(sender:)))
+        let radio2 = NSButton(radioButtonWithTitle: "Mouse with 5+ buttons", target: self, action: #selector(nullAction(sender:)))
+        let hintStringRaw = "Your __MX Master 2S__ says it has __16 buttons__"
+        let hintString = NSAttributedString(coolMarkdown: hintStringRaw)!.settingSecondaryLabelColor(forSubstring: nil).settingFontSize(NSFont.smallSystemFontSize).aligningSubstring(nil, alignment: .center)
+        let hint = CoolNSTextField(labelWithAttributedString: hintString)
+        
+        let radioStack = NSStackView(views: [radio1, radio2, hint])
+        radioStack.orientation = .vertical
+        radioStack.translatesAutoresizingMaskIntoConstraints = true
+        radioStack.setCustomSpacing(5.0, after: radio1) /// Default is 8.0 (Ventura)
+        radioStack.setCustomSpacing(9.0, after: radio2)
+        
+        let width = max(radio1.fittingSize.width, radio2.fittingSize.width)
+        let height = (radio1.frame.height + radioStack.customSpacing(after: radio1) + radio2.frame.height + radioStack.customSpacing(after: radio2) + hintString.size(atMaxWidth: width).height)
+        let stackSize = NSSize(width: width as CGFloat, height: height as CGFloat)
+        radioStack.setFrameSize(stackSize)
+        
+        alert.accessoryView = radioStack
+        
+        /// Display alert
+        guard let window = MainAppState.shared.window else { return }
+        alert.beginSheetModal(for: window) { response in
+            if response == .alertFirstButtonReturn {
+                NSWorkspace.shared.open(URL(string: "mailto:noah.n.public@gmail.com")!)
+            }
+        }
+    }
     
+    @objc func nullAction(sender: AnyObject) {
+        /// Need to set the same
+    }
+
     
     ///
     /// Init & lifecycle

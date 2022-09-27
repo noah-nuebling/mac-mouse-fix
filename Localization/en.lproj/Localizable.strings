@@ -477,3 +477,15 @@
 
 /* First draft: Get Beta Versions? */
 "beta-alert.title" = "Get Beta Versions?";
+
+/* First draft: Back */
+"restore-buttons-alert.back" = "Back";
+
+/* First draft: Your MX Master Mouse says it has 16 Buttons */
+"restore-buttons-alert.body" = "for Mouse with …";
+
+/* First draft: Reset */
+"restore-buttons-alert.send" = "Reset";
+
+/* First draft: Reset to Defaults for ... */
+"restore-buttons-alert.title" = "Reset Default for ...";

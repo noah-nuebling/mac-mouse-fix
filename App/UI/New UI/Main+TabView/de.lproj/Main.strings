@@ -172,7 +172,7 @@
 /* Class = "NSTextFieldCell"; title = "Scroll Speed:"; ObjectID = "l7d-al-Y14"; Note = "Scrolling > Scroll Speed Label"; */
 "l7d-al-Y14.title" = "Scrolltempo:";
 
-/* Class = "NSButtonCell"; title = "Restore Default..."; ObjectID = "lrw-Lp-nQ4"; */
+/* Class = "NSButtonCell"; title = "Restore Defaults..."; ObjectID = "lrw-Lp-nQ4"; */
 "lrw-Lp-nQ4.title" = "Standard wiederherstellen...";
 
 /* Class = "NSMenu"; title = "Edit"; ObjectID = "LTC-zW-sTp"; */

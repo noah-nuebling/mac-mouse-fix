@@ -39,11 +39,11 @@ NS_ASSUME_NONNULL_BEGIN
 - (NSAttributedString *)attributedStringBySettingSemiBoldColorForSubstring:(NSString *)subStr;
 - (NSAttributedString *)attributedStringByAddingBold;
 - (NSAttributedString *)attributedStringByAddingItalicForSubstring:(NSString *)subStr;
-- (NSAttributedString *)attributedStringByAligningSubstring:(NSString *)subStr alignment:(NSTextAlignment)alignment;
+- (NSAttributedString *)attributedStringByAligningSubstring:(NSString * _Nullable)subStr alignment:(NSTextAlignment)alignment;
 - (NSAttributedString *)attributedStringBySettingWeight:(NSInteger)weight;
 - (NSAttributedString *)attributedStringBySettingThinForSubstring:(NSString *)subStr;
 - (NSAttributedString *)attributedStringBySettingFontSize:(CGFloat)size;
-- (NSAttributedString *)attributedStringBySettingSecondaryLabelColorForSubstring:(NSString *)subStr;
+- (NSAttributedString *)attributedStringBySettingSecondaryLabelColorForSubstring:(NSString * _Nullable)subStr;
 + (NSAttributedString *)hyperlinkFromString:(NSString *)inString withURL:(NSURL *)aURL;
 
 - (NSSize)sizeAtMaxWidth:(CGFloat)maxWidth;

@@ -477,3 +477,15 @@
 
 /* First draft: Get Beta Versions? */
 "beta-alert.title" = "Beta-Versionen erhalten?";
+
+/* First draft: Back */
+"restore-buttons-alert.back" = "";
+
+/* First draft: I can't respond to all emails,\nbut I will read and consider your feedback! */
+"restore-buttons-alert.body" = "";
+
+/* First draft: Write Email */
+"restore-buttons-alert.send" = "";
+
+/* First draft: Write an Email? */
+"restore-buttons-alert.title" = "";

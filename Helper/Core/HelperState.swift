@@ -13,7 +13,19 @@ import Foundation
 
 @objc class HelperState: NSObject {
     
-    @objc static var activeDevice: Device? = nil
+    private static var _activeDevice: Device? = nil
+    @objc static var activeDevice: Device? {
+        set {
+            _activeDevice = newValue
+        }
+        get {
+            if _activeDevice != nil {
+                return _activeDevice
+            } else { /// Just return any attached device as a fallback
+                return DeviceManager.attachedDevices().first
+            }
+        }
+    }
     
     @objc static func updateActiveDevice(event: CGEvent) {
         guard let iohidDevice = CGEventGetSendingDevice(event)?.takeUnretainedValue() else { return }

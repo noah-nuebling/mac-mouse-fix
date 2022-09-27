@@ -442,10 +442,18 @@
 
 #pragma mark Alignment
 
-- (NSAttributedString *)attributedStringByAligningSubstring:(NSString *)subStr alignment:(NSTextAlignment)alignment {
+- (NSAttributedString *)attributedStringByAligningSubstring:(NSString * _Nullable)subStr alignment:(NSTextAlignment)alignment {
+    
+    /// Pass in nil for the subStr for the whole string
     
     NSMutableAttributedString *ret = [[NSMutableAttributedString alloc] initWithAttributedString:self];
-    NSRange subRange = [self.string rangeOfString:subStr];
+    
+    NSRange subRange;
+    if (subStr == nil) {
+        subRange = NSMakeRange(0, self.length);
+    } else {
+        subRange = [self.string rangeOfString:subStr];
+    }
     
     [self enumerateAttribute:NSParagraphStyleAttributeName inRange:subRange options:0 usingBlock:^(id  _Nullable value, NSRange range, BOOL * _Nonnull stop) {
         NSMutableParagraphStyle *newParagraphStyle = ((NSParagraphStyle *)value).mutableCopy;
@@ -538,10 +546,16 @@
 
 #pragma mark Color
 
-- (NSAttributedString *)attributedStringBySettingSecondaryLabelColorForSubstring:(NSString *)subStr {
+- (NSAttributedString *)attributedStringBySettingSecondaryLabelColorForSubstring:(NSString * _Nullable)subStr {
+    /// Pass nil for the substring to set for the whole string
     
     NSMutableAttributedString *ret = self.mutableCopy;
-    NSRange subRange = [self.string  rangeOfString:subStr];
+    NSRange subRange;
+    if (subStr == nil) {
+        subRange = NSMakeRange(0, self.length);
+    } else {
+        subRange = [self.string rangeOfString:subStr];
+    }
     
     [ret addAttribute:NSForegroundColorAttributeName value:NSColor.secondaryLabelColor range:subRange];
     
