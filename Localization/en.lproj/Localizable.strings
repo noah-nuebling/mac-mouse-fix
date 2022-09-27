@@ -495,3 +495,9 @@
 
 /* First draft: Restore Default for ... */
 "restore-buttons-alert.title" = "Restore Default for ...";
+
+/* First draft: You're __already using__ the default setting for mice with __3 buttons__! */
+"already-using-defaults-toast.3" = "You're __already using__ the default setting for mice with __3 buttons__!";
+
+/* First draft: You're __already using__ the default setting for mice with __5 buttons__! */
+"already-using-defaults-toast.5" = "You're __already using__ the default setting for mice with __5 buttons__!";

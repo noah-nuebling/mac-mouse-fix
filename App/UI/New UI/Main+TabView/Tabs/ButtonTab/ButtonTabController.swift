@@ -124,20 +124,42 @@ import CocoaLumberjackSwift
         
         alert.beginSheetModal(for: window) { response in
             if response == .alertFirstButtonReturn {
+                
+                let nOfButtons: Int
                 if radio1.state == .on {
-                    setConfig("Remaps", config("Other.defaultRemaps.threeButtons")!)
-                    commitConfig()
-                    DispatchQueue.main.async { /// Dispatch to main to make animations work after dismissing sheet
-                        self.tableController.reloadAll() /// Maybe reload should be automatically triggered through ReactiveConfig
-                    }
+                    nOfButtons = 3
                 } else {
-                    setConfig("Remaps", config("Other.defaultRemaps.fiveButtons")!)
-                    commitConfig()
-                    DispatchQueue.main.async {
-                        self.tableController.reloadAll()
-                    }
+                    nOfButtons = 5
                 }
                 
+                /// Check change
+                
+                let currentMap = config("Remaps")
+                let defaultMap = config(nOfButtons == 3 ? "Other.defaultRemaps.threeButtons" : "Other.defaultRemaps.fiveButtons")
+                
+                if currentMap == defaultMap {
+                    
+                    let messageRaw: String
+                    if nOfButtons == 3 {
+                        messageRaw = NSLocalizedString("already-using-defaults-toast.3", comment: "First draft: You're __already using__ the default setting for mice with __3 buttons__!")
+                    } else {
+                        messageRaw = NSLocalizedString("already-using-defaults-toast.5", comment: "First draft: You're __already using__ the default setting for mice with __5 buttons__!")
+                    }
+                    let message = NSAttributedString(coolMarkdown: messageRaw)!
+                    DispatchQueue.main.async {
+                        ToastNotificationController.attachNotification(withMessage: message, to: MainAppState.shared.window!, forDuration: -1.0)
+                    }
+                    return
+                }
+                
+                /// Set config
+                setConfig("Remaps", defaultMap!)
+                commitConfig()
+                
+                /// Reload table
+                DispatchQueue.main.async {
+                    self.tableController.reloadAll()
+                }
             }
         }
     }
