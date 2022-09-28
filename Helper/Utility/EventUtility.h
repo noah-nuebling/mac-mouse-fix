@@ -14,6 +14,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface EventUtility : NSObject
 
+int64_t fixedScrollDelta(double scrollDelta);
 IOHIDDeviceRef _Nullable CGEventGetSendingDevice(CGEventRef cgEvent);
 //IOHIDDeviceRef _Nullable HIDEventGetSendingDevice(HIDEvent *event);
 CFTimeInterval CGEventGetTimestampInSeconds(CGEventRef event);

@@ -238,7 +238,10 @@ static double _toastAnimationOffset = 20;
 
 static NSTimer *_closeTimer;
 + (void)closeNotification:(NSTimer *)timer {
-    [self closeNotificationWithFadeOut];
+    
+    dispatch_async(dispatch_get_main_queue(), ^{ /// Necessary under Ventura Beta for animations to work
+        [self closeNotificationWithFadeOut];
+    });
 }
 
 static void removeLocalEventMonitor() {

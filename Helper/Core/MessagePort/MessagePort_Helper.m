@@ -16,6 +16,7 @@
 #import "SharedMessagePort.h"
 #import "ButtonLandscapeAssessor.h"
 #import "DeviceManager.h"
+#import "Mac_Mouse_Fix_Helper-Swift.h"
 
 #import <CoreFoundation/CoreFoundation.h>
 #import "WannabePrefixHeader.h"
@@ -65,7 +66,7 @@ static CFDataRef didReceiveMessage(CFMessagePortRef port, SInt32 messageID, CFDa
     NSString *message = messageDict[kMFMessageKeyMessage];
     NSObject *payload = messageDict[kMFMessageKeyPayload];
     
-    NSData *response = nil;
+    NSObject *response = nil;
     
     DDLogInfo(@"Helper Received Message: %@ with payload: %@", message, payload);
     
@@ -86,11 +87,25 @@ static CFDataRef didReceiveMessage(CFMessagePortRef port, SInt32 messageID, CFDa
         [TransformationManager enableKeyCaptureMode];
     } else if ([message isEqualToString:@"disableKeyCaptureMode"]) {
         [TransformationManager disableKeyCaptureMode];
+    } else if ([message isEqualToString:@"getActiveDeviceInfo"]) {
+        Device *dev = HelperState.activeDevice;
+        if (dev != NULL) {
+                
+            response = @{
+                @"name": dev.name,
+                @"manufacturer": dev.manufacturer,
+                @"nOfButtons": @(dev.nOfButtons),
+            };
+        }
     } else {
         DDLogInfo(@"Unknown message received: %@", message);
     }
     
-    return (__bridge CFDataRef)response;
+    if (response != nil) {
+        return (__bridge_retained CFDataRef)[NSKeyedArchiver archivedDataWithRootObject:response];
+    }
+    
+    return nil;
 }
 
 @end

@@ -15,6 +15,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)coolDidLoad;
 - (void)updateSizeWithAnimation;
+- (void)updateSizeWithAnimation:(BOOL)animate;
 
 @end
 

@@ -13,6 +13,8 @@ class AboutTabController: NSViewController {
 
 //    var isLicensed = ConfigValue<Bool>(configPath: "License.isLicensedCache")
     
+    /// Outlets and vars
+    
     @IBOutlet weak var versionField: NSTextField!
     
     @IBOutlet weak var moneyCell: NSView!
@@ -29,6 +31,44 @@ class AboutTabController: NSViewController {
     var currentLicense: MFLicenseReturn? = nil
 
     var trackingArea: NSTrackingArea? = nil
+    
+    /// IBActions
+    
+    @IBAction func sendEmail(_ sender: Any) {
+        
+        /// Create alert
+        
+        let alert = NSAlert()
+        alert.alertStyle = .informational
+        alert.messageText = NSLocalizedString("mail-alert.title", comment: "First draft: Write an Email?")
+        alert.informativeText = NSLocalizedString("mail-alert.body", comment: "First draft: I can't respond to all emails\nbut I read and consider all feedback!")
+//        alert.showsSuppressionButton = true
+        alert.addButton(withTitle: NSLocalizedString("mail-alert.send", comment: "First draft: Write Email"))
+        alert.addButton(withTitle: NSLocalizedString("mail-alert.back", comment: "First draft: Back"))
+        
+        /// Set mail icon
+        
+        if let mailURL = NSWorkspace.shared.urlForApplication(toOpen: URL(string: "mailto:noah.n.public@gmail.com")!) {
+            
+            let mailPath: String
+            if #available(macOS 13.0, *) {
+                mailPath = mailURL.path(percentEncoded: false)
+            } else {
+                mailPath = mailURL.path
+            }
+            let mailIcon = NSWorkspace.shared.icon(forFile: mailPath)
+            
+            alert.icon = mailIcon
+        }
+        
+        /// Display alert
+        guard let window = MainAppState.shared.window else { return }
+        alert.beginSheetModal(for: window) { response in
+            if response == .alertFirstButtonReturn {
+                NSWorkspace.shared.open(URL(string: "mailto:noah.n.public@gmail.com")!)
+            }
+        }
+    }
     
     /// Init
     
@@ -139,45 +179,45 @@ class AboutTabController: NSViewController {
             
             /// Randomly select 1 out of 25+1 messages
             ///     Note: If you want to test one of the rare ones, increase its `weight`
+            ///     TODO: Remove the code for the emoji text field. (We have 2 text fields, one for the emoji and one for the text. But the emojis are now just inside the textfield)
             
             let (emoji, message) = Randomizer.select(from: [
                 
                 /// Common
-                (("💫", NSLocalizedString("thanks.01", comment: "First draft: Thank you for buying Mac Mouse Fix!")), weight: 1),
-                (("🌟", NSLocalizedString("thanks.02", comment: "First draft: Thanks for purchasing Mac Mouse Fix!")), weight: 1),
-                (("🚀", NSLocalizedString("thanks.03", comment: "First draft: Thanks for supporting Mac Mouse Fix!")), weight: 1),
-                (("🙏", NSLocalizedString("thanks.04", comment: "First draft: Thank you for buying Mac Mouse Fix!")), weight: 1),
-                (("🧠", NSLocalizedString("thanks.05", comment: "First draft: Great purchasing decisions ;)")), weight: 1),
+                (("", NSLocalizedString("thanks.01", comment: "First draft: 💫 Thank you for buying Mac Mouse Fix!")), weight: 1),
+                (("", NSLocalizedString("thanks.02", comment: "First draft: 🌟 Thanks for purchasing Mac Mouse Fix!")), weight: 1),
+                (("", NSLocalizedString("thanks.03", comment: "First draft: 🚀 Thanks for supporting Mac Mouse Fix!")), weight: 1),
+                (("", NSLocalizedString("thanks.04", comment: "First draft: 🙏 Thank you for buying Mac Mouse Fix!")), weight: 1),
+                (("", NSLocalizedString("thanks.05", comment: "First draft: 🧠 Great purchasing decisions ;)")), weight: 1),
                 
                 /// Rare
-                (("🔥", NSLocalizedString("thanks.06", comment: "First draft: Awesome taste in mouse fixing software ;)")), weight: 0.1),
-                (("💙", ""), weight: 0.1),
-                ((":)", NSLocalizedString("thanks.08", comment: "First draft: <- My face when I saw you bought Mac Mouse Fix")), weight: 0.1), ///  TODO: The smiley is black in darkmode
+                (("", NSLocalizedString("thanks.06", comment: "First draft: 🔥 Awesome taste in mouse fixing software ;)")), weight: 0.1),
+                (("", NSLocalizedString("thanks.07", comment: "First draft: 💙")), weight: 0.1),
+                (("", NSLocalizedString("thanks.08", comment: "First draft: :) <- My face when I saw you bought Mac Mouse Fix")), weight: 0.1), ///  TODO: The smiley is black in darkmode
                 
                 /// Very rare
-                (("👽", NSLocalizedString("thanks.09", comment: "First draft: Share it with your Spacebook friends!")), weight: 0.05),
+                (("", NSLocalizedString("thanks.09", comment: "First draft: 👽 Share it with your Spacebook friends!")), weight: 0.05),
                 
                 /// Extremely rare
-                (("🏂", NSLocalizedString("thanks.10", comment: "First draft: Duckgang for life! || Note: A lot of these are personal, feel free to change them and leave your own messages!")), weight: 0.01),
-                (("🚜", NSLocalizedString("thanks.11", comment: "First draft: Watch where you're going :P || Note: In the context of driving a Tractor")), weight: 0.01),
-                (("🐁", NSLocalizedString("thanks.12", comment: "First draft: Not these mice, mom!")), weight: 0.01),
-                (("🐹", NSLocalizedString("thanks.13", comment: "First draft: We should get him a bow tie.")), weight: 0.01),
-                (("🇹🇷", "Ey Kanka, tebrikler tebrikler!"), weight: 0.01),
-                (("🥛", NSLocalizedString("thanks.15", comment: "First draft: Whole milk of course! It's your birthday after all.")), weight: 0.01),
-                (("🎸", NSLocalizedString("thanks.16", comment: "First draft: Not John Mayer. Nevertheless mayor of hearts.")), weight: 0.01),
-                (("💃", "1NEIN8NEIN"), weight: 0.01),
-                (("🦋", NSLocalizedString("thanks.18", comment: "First draft: Give me a call when you saved the world. :)")), weight: 0.01),
-                (("🏜️", "Dankeschön, meine Frau..."), weight: 0.01),
-                (("🌍", NSLocalizedString("thanks.20", comment: "First draft: Universal Studios is probably not that great anyways... :)")), weight: 0.01),
-                (("🐠", NSLocalizedString("thanks.21", comment: "First draft: Cuter than a Reaper Leviathan.")), weight: 0.01),
-                (("🖤", ""), weight: 0.01),
-                (("🤍", ""), weight: 0.01),
-                (("😎", NSLocalizedString("thanks.24", comment: "First draft: Oh you're using Mac Mouse Fix? You must be pretty cool.")), weight: 0.01),
-                (("🌏", NSLocalizedString("thanks.25", comment: "First draft: First the mice, then the world!! >:)")), weight: 0.01),
-//                    (("🤏", "Peepee size of Mac Mouse Fix haters!"), weight: 0.01),
+                (("", NSLocalizedString("thanks.10", comment: "First draft: 🏂 Duckgang for life! || Note: A lot of these are very personal. And weird. They are also super rare. Feel free to change them to anything you feel like to leave a little easter egg!")), weight: 0.01),
+                (("", NSLocalizedString("thanks.11", comment: "First draft: 🚜 Watch where you're going :P")), weight: 0.01),
+                (("", NSLocalizedString("thanks.12", comment: "First draft: 🐁 Not these mice, mom!")), weight: 0.01),
+                (("", NSLocalizedString("thanks.13", comment: "First draft: 🐹 We should get him a bow tie.")), weight: 0.01),
+                (("", NSLocalizedString("thanks.14", comment: "First draft: 🇹🇷 Ey Kanka, tebrikler tebrikler!")), weight: 0.01),
+                (("", NSLocalizedString("thanks.15", comment: "First draft: 🥛 Whole milk of course! It's your birthday after all.")), weight: 0.01),
+                (("", NSLocalizedString("thanks.16", comment: "First draft: 🎸 Not John Mayer (yet). Nevertheless mayor of hearts.")), weight: 0.01),
+                (("", NSLocalizedString("thanks.17", comment: "First draft: 💃 1NEIN8NEIN")), weight: 0.01),
+                (("", NSLocalizedString("thanks.18", comment: "First draft: 🦋 Give me a call when you saved the world :)")), weight: 0.01),
+                (("", NSLocalizedString("thanks.19", comment: "First draft: 🏜️ Dankeschön, meine Frau...")), weight: 0.01),
+                (("", NSLocalizedString("thanks.20", comment: "First draft: 🌍 Universal Studios is probably not that great anyways... :)")), weight: 0.01),
+                (("", NSLocalizedString("thanks.21", comment: "First draft: 🐠 Cuter than a Reaper Leviathan.")), weight: 0.01),
+                (("", NSLocalizedString("thanks.22", comment: "First draft: 🖤")), weight: 0.01),
+                (("", NSLocalizedString("thanks.23", comment: "First draft: 🤍")), weight: 0.01),
+                (("", NSLocalizedString("thanks.24", comment: "First draft: 😎 Oh you're using Mac Mouse Fix? You must be pretty cool.")), weight: 0.01),
+                (("", NSLocalizedString("thanks.25", comment: "First draft: 🌏 First the mice, then the world!! >:)")), weight: 0.01),
                 
                 /// Mom
-                (("💖❤️❤️❤️", "Für Beate, meine Lieblingsperson :)"), weight: 0.005),
+                (("", "💖❤️❤️❤️ Für Beate, meine Lieblingsperson :)"), weight: 0.005),
             ])
             
             

@@ -122,6 +122,37 @@ class GeneralTabController: NSViewController {
         mainHidableSection.reactive.isCollapsed <~ EnabledState.shared.producer.negate()
         updatesExtraSection.reactive.isCollapsed <~ checkForUpdates.producer.negate()
         
+        /// Alert on betaToggle
+        /// Notes:
+        ///     - Disabling this now, because it's kind of unnecessary, and I don't know how this alert will interact, when a beta Version is acutally available and Sparkle wants to present a sheet as well. Ideally, we would want to present this sheet **before** we toggle the betaToggle, but right now we're just toggling it back if the user doesn't want to toggle it, so Sparkle still gets the message that it's been enabled.
+        ///     - The alertStyle should maybe be .warning or sth instead of .informational.
+        ///     - We could also put this info into a toas instead of an alert
+        ///
+        
+//        betaToggle.reactive.boolValues.observeValues { betaGotEnabled in
+//
+//            if betaGotEnabled {
+//
+//                /// Create alert
+//
+//                let alert = NSAlert()
+//                alert.alertStyle = .informational
+//                alert.messageText = NSLocalizedString("beta-alert.title", comment: "First draft: Get Beta Versions?")
+//                alert.informativeText = NSLocalizedString("beta-alert.body", comment: "First draft: Beta versions can have many issues.\nDon't forget to give feedback when you run into one.\nThanks!")
+//                alert.addButton(withTitle: NSLocalizedString("beta-alert.confirm", comment: "First draft: Get Beta Versions"))
+//                alert.addButton(withTitle: NSLocalizedString("beta-alert.back", comment: "First draft: Cancel"))
+//
+//                /// Display alert
+//                guard let window = MainAppState.shared.window else { return }
+//                alert.beginSheetModal(for: window) { response in
+//                    if response != .alertFirstButtonReturn {
+//                        /// Toggle back off
+//                        self.betaToggle.state = .off
+//                    }
+//                }
+//            }
+//        }
+        
         /// Side effects: Sparkle
         ///     See `applicationDidFinishLaunching` for context
         

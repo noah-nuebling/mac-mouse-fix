@@ -37,35 +37,47 @@
         remotePortName = kMFBundleIDApp;
     }
     
-    CFMessagePortRef remotePort = CFMessagePortCreateRemote(kCFAllocatorDefault, (__bridge CFStringRef)remotePortName);
-    if (remotePort == NULL) {
+    static CFMessagePortRef _remotePort = NULL;
+//    if (_remotePort == NULL) { /// Checking for NULL and storing `_remotePort` in a static var  is unnecessary, since `CFMessagePortCreateRemote()` will return the existing instance if invoked several times.
+    _remotePort = CFMessagePortCreateRemote(kCFAllocatorDefault, (__bridge CFStringRef)remotePortName);
+    if (_remotePort == NULL) {
         DDLogInfo(@"Can't send message, because there is no CFMessagePort");
         return nil;
     }
+//    }
     
-    SInt32 messageID = 0x420666; // Arbitrary
+    CFMessagePortSetInvalidationCallBack(_remotePort, invalidationCallback);
+    
+    SInt32 messageID = 0x420666; /// Arbitrary
     CFDataRef messageData = (__bridge CFDataRef)[NSKeyedArchiver archivedDataWithRootObject:messageDict];;
     CFTimeInterval sendTimeout = 0.0;
     CFTimeInterval recieveTimeout = 0.0;
     CFStringRef replyMode = NULL;
-    CFDataRef returnData;
+    CFDataRef returnData = NULL;
     if (replyExpected) {
+//        sendTimeout = 1.0;
         recieveTimeout = 1.0;
         replyMode = kCFRunLoopDefaultMode;
     }
-    SInt32 status = CFMessagePortSendRequest(remotePort, messageID, messageData, sendTimeout, recieveTimeout, replyMode, &returnData);
-    CFRelease(remotePort);
+    SInt32 status = CFMessagePortSendRequest(_remotePort, messageID, messageData, sendTimeout, recieveTimeout, replyMode, &returnData);
+//    CFRelease(remotePort);
     if (status != 0) {
-        DDLogInfo(@"Non-zero CFMessagePortSendRequest status: %d", status);
+        DDLogError(@"Non-zero CFMessagePortSendRequest status: %d", status);
+//        assert(false);
     }
     
     NSObject *returnObject = nil;
-    if (replyExpected && status == 0) {
+    if (returnData != NULL && replyExpected /*&& status == 0*/) {
         returnObject = [NSKeyedUnarchiver unarchiveObjectWithData:(__bridge NSData *)returnData];
     }
     return returnObject;
 }
-//
+
+void invalidationCallback(CFMessagePortRef ms, void *info) {
+    
+    DDLogInfo(@"SharedMessagePort invalidated in %@", SharedUtility.runningHelper ? @"Helper" : @"MainApp");
+}
+
 //+ (CFDataRef _Nullable)sendMessage:(NSString *_Nonnull)message expectingReply:(BOOL)expectingReply {
 //
 //    DDLogInfo(@"Sending message: %@ via message port from bundle: %@", message, NSBundle.mainBundle);

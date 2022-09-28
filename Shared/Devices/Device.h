@@ -19,11 +19,13 @@ NS_ASSUME_NONNULL_BEGIN
 - (instancetype)init NS_UNAVAILABLE;
 + (instancetype)new NS_UNAVAILABLE;
 
++ (Device * _Nullable)deviceWithRegistryID:(uint64_t)registryID;
 + (Device *)deviceWithIOHIDDevice:(IOHIDDeviceRef)IOHIDDevice;
 
 - (NSNumber *)uniqueID;
 - (BOOL)wrapsIOHIDDevice:(IOHIDDeviceRef)iohidDevice;
 - (NSString *)name;
+- (NSString *)manufacturer;
 - (int)nOfButtons;
 - (NSString *)description;
 

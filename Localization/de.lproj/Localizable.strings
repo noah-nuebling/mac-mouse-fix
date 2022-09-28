@@ -2,7 +2,7 @@
 "enabled-toggle.hint" = "Mac Mouse Fix bleibt eingeschaltet nachdem du\nes beendest";
 
 /* First draft: Lets you quickly disable Scroll Enhancements and other features */
-"menu-bar-toggle.hint" = "<Noch nicht verwendet>";
+"menu-bar-toggle.hint" = "[Noch nicht verwendet]";
 
 /* First draft: You'll be notified of updates when you open\nthis window */
 "updates-toggle.hint" = "Du wirst über Updates benachrichtigt werden\nwenn du dieses Fenster öffnest";
@@ -109,6 +109,18 @@
 /* First draft: Zoom in or out in Safari and other apps.\n \nWorks like a two-finger double tap on an Apple Trackpad. */
 "effect.smart-zoom.hint" = "Zoome rein oder raus in Safari und anderen Apps \n \nFunktioniert wie mit zwei Fingern doppelt tippen auf einem Apple Trackpad";
 
+/* First draft: Back */
+"effect.back" = "Zurück";
+
+/* First draft: Go back one page in Safari and other apps */
+"effect.back.hint" = "Gehe eine Seite zurück in Safari und anderen Apps";
+
+/* First draft: Forward */
+"effect.forward" = "Vorwärts";
+
+/* First draft: Go forward one page in Safari and other apps */
+"effect.forward.hint" = "Gehe eine Seite vorwärts in Safari und anderen Apps";
+
 /* First draft: Desktop & Launchpad */
 "scroll-effect.4-pinch" = "Launchpad & Schreibtisch";
 
@@ -145,6 +157,12 @@
 /* First draft: Zoom in or out in Safari, Maps and other apps\n \nWorks like pinching to zoom on an Apple trackpad */
 "scroll-effect.zoom.hint" = "Zoome rein oder raus in Safari, Maps, und anderen Apps\n \nFunktioniert wie aufziehen mit 2 Fingern bei einem Apple Trackpad";
 
+/* First draft: Rotate */
+"scroll-effect.rotate" = "Drehen";
+
+/* First draft: Rotate content in Apple Maps and other apps\n \nWorks like twisting with 2 fingers on an Apple Trackpad */
+"scroll-effect.rotate.hint" = "Drehe den Inhalt in Apple Maps und anderen Apps\n \nFunktioniert wie drehen mit 2 Fingern auf einem Apple Trackpad";
+
 /* First draft: Type a Keyboard Shortcut */
 "type-shortcut-prompt" = "Tippe einen Tastaturkurzbefehl";
 
@@ -160,9 +178,6 @@
 /* First draft: Secondary Button */
 "button-string.secondary" = "sekundäre Taste";
 
-/* First draft: the Middle Mouse Button (also called the Scroll Wheel Button or Mouse Button 3) */
-"button-string.tool.middle" = "die mittlere Maustaste (auch genannt die Scrollradtaste oder Maustaste 3)";
-
 /* First draft: Mouse Button %@ */
 "button-string.tool.numbered" = "Maustaste %@";
 
@@ -171,6 +186,9 @@
 
 /* First draft: the Secondary Mouse Button (also called the Right Mouse Button or Mouse Button 2) */
 "button-string.tool.secondary" = "die sekundäre Maustaste (auch genannt die rechte Maustaste oder Maustaste 2)";
+
+/* First draft: the Middle Mouse Button (also called the Scroll Wheel Button or Mouse Button 3) || Example usage: Open links in a new tab, paste text in the Terminal, and more.\n \nWorks like clicking the Middle Mouse Button (also called the Scroll Wheel Button or Mouse Button 3) on a standard mouse. */
+"button-string.tool.middle" = "die mittlere Maustaste (auch genannt die Scrollradtaste oder Maustaste 3)";
 
 /* First draft: Command (⌘) */
 "modifer-key.tool.command" = "Befehlstaste (⌘)";
@@ -235,7 +253,7 @@
 /* First draft: <Increase Brightness key> */
 "apple-key-fallback.sun.max" = "<Helligkeit erhöhen Taste>";
 
-/* First draft: <Decrease Brightness key> */
+/* First draft: <Decrease Brightness key> || Example usage: Works like pressing '<Decrease Brightness Key>' on an Apple keyboard. || Note: Unlike in the interface builder `.strings` files, in `Localizable.strings`, <> doesn't mean that the text is unused. I think the usage of <> here is a little weird, so let me know if you have a better idea! */
 "apple-key-fallback.sun.min" = "<Helligkeit verringern Taste>";
 
 /* First draft: <Key without description> */
@@ -316,68 +334,86 @@
 /* First draft: %@ and %@ || Note: This format string joins the second-to-last element and the last elements in a list of items */
 "join-list.last" = " %@ und %@";
 
-/* First draft: Thank you for buying Mac Mouse Fix! */
+/* First draft: 💫 Thank you for buying Mac Mouse Fix! */
 "thanks.01" = "Danke, dass du Mac Mouse Fix gekauft hast!";
 
-/* First draft: Thanks for purchasing Mac Mouse Fix! */
-"thanks.02" = "Dankeschön, dass du Mac Mouse Fix gekauft hast!";
+/* First draft: 🌟 Thanks for purchasing Mac Mouse Fix! */
+"thanks.02" = "🌟 Dankeschön, dass du Mac Mouse Fix gekauft hast!";
 
-/* First draft: Thanks for supporting Mac Mouse Fix! */
-"thanks.03" = "Danke, dass du Mac Mouse Fix unterstützt!";
+/* First draft: 🚀 Thanks for supporting Mac Mouse Fix! */
+"thanks.03" = "🚀 Danke, dass du Mac Mouse Fix unterstützt!";
 
-/* First draft: Thank you for buying Mac Mouse Fix! */
-"thanks.04" = "Danke, dass du Mac Mouse Fix gekauft hast!";
+/* First draft: 🙏 Thank you for buying Mac Mouse Fix! */
+"thanks.04" = "🙏 Danke, dass du Mac Mouse Fix gekauft hast!";
 
-/* First draft: Great purchasing decisions ;) */
-"thanks.05" = "Großartige Kaufentscheidung ;)";
+/* First draft: 🧠 Great purchasing decisions ;) */
+"thanks.05" = "🧠 Großartige Kaufentscheidung ;)";
 
-/* First draft: Awesome taste in mouse fixing software ;) */
-"thanks.06" = "Super geschmack was Maus-Fixing-Software angeht ;)";
+/* First draft: 🔥 Awesome taste in mouse fixing software ;) */
+"thanks.06" = "🔥 Super Geschmack was Maus-Fixing-Software angeht ;)";
 
-/* First draft: <- My face when I saw you bought Mac Mouse Fix */
-"thanks.08" = "<- Mein Gesicht, als ich gesehen habe, dass du Mac Mouse Fix gekauft hast";
+/* First draft: 💙 */
+"thanks.07" = "💙";
 
-/* First draft: Share it with your Spacebook friends! */
-"thanks.09" = "Teile es mit deinen Spacebook Freunden!";
+/* First draft: :) <- My face when I saw you bought Mac Mouse Fix */
+"thanks.08" = ":) <- Mein Gesicht, als ich gesehen habe, dass du Mac Mouse Fix gekauft hast";
 
-/* First draft: Duckgang for life! */
-"thanks.10" = "Entengang fürs Leben!";
+/* First draft: 👽 Share it with your Spacebook friends! */
+"thanks.09" = "👽 Teile es mit deinen Spacebook Freunden!";
 
-/* First draft: Watch where you're going :P || Note: In the context of driving a Tractor */
-"thanks.11" = "Pass auf wo du hinfährst :P";
+/* First draft: 🏂 Duckgang for life! || Note: A lot of these are very personal. And weird. They are also super rare. Feel free to change them to anything you feel like to leave a little easter egg! */
+"thanks.10" = "🏂 Entengang fürs Leben!";
 
-/* First draft: Not these mice, mom! */
-"thanks.12" = "Nicht diese Art von Mäusen, Mama!";
+/* First draft: 🚜 Watch where you're going :P */
+"thanks.11" = "🚜 Pass auf wo du hinfährst :P";
 
-/* First draft: We should get him a bow tie. */
-"thanks.13" = "Wir sollten ihm eine Krawatte besorgen.";
+/* First draft: 🐁 Not these mice, mom! */
+"thanks.12" = "🐁 Nicht diese Art von Mäusen, Mama!";
 
-/* First draft: Whole milk of course! It's your birthday after all. */
-"thanks.15" = "Vollmilch natürlich! Es ist schließlich dein Geburtstag.";
+/* First draft: 🐹 We should get him a bow tie. */
+"thanks.13" = "🐹 Wir sollten ihm eine Krawatte besorgen.";
 
-/* First draft: Not John Mayer. Nevertheless mayor of hearts. */
-"thanks.16" = "Nicht John Mayer. Trotzdem Bürgermeister der Herzen.";
+/* First draft: 🇹🇷 Ey Kanka, tebrikler tebrikler! */
+"thanks.14" = "🇹🇷 Ey Kanka, tebrikler tebrikler!";
 
-/* First draft: Give me a call when you saved the world. :) */
-"thanks.18" = "Ruf mich mal an wenn du die Welt gerettet hast. :)";
+/* First draft: 🥛 Whole milk of course! It's your birthday after all. */
+"thanks.15" = "🥛 Vollmilch natürlich! Es ist schließlich dein Geburtstag.";
 
-/* First draft: Universal Studios is probably not that great anyways... :) */
-"thanks.20" = "Universal Studios ist wahrscheinlich sowieso nicht so toll... :)";
+/* First draft: 🎸 Not John Mayer (yet). Nevertheless mayor of hearts. */
+"thanks.16" = "🎸 Nicht John Mayer. Trotzdem Bürgermeister der Herzen.";
 
-/* First draft: Cuter than a Reaper Leviathan. */
-"thanks.21" = "Süßer als ein Cheliceratops.";
+/* First draft: 💃 1NEIN8NEIN */
+"thanks.17" = "💃 1NEIN8NEIN";
 
-/* First draft: Oh you're using Mac Mouse Fix? You must be pretty cool. */
-"thanks.24" = "Oh du benutzt Mac Mouse Fix? Du musst ziemlich cool sein.";
+/* First draft: 🦋 Give me a call when you saved the world. :) */
+"thanks.18" = "🦋 Ruf mich mal an wenn du die Welt gerettet hast. :)";
 
-/* First draft: First the mice, then the world!! >:) */
-"thanks.25" = "Erst die Mäuse, dann die Welt!! >:)";
+/* First draft: 🏜️ Dankeschön, meine Frau... */
+"thanks.19" = "🏜️ Dankeschön, meine Frau...";
+
+/* First draft: 🌍 Universal Studios is probably not that great anyways... :) */
+"thanks.20" = "🌍 Universal Studios ist wahrscheinlich sowieso nicht so toll... :)";
+
+/* First draft: 🐠 Cuter than a Reaper Leviathan. */
+"thanks.21" = "🐠 Süßer als ein Cheliceratops.";
+
+/* First draft: 🖤 */
+"thanks.22" = "🖤";
+
+/* First draft: 🤍 */
+"thanks.23" = "🤍";
+
+/* First draft: 😎 Oh you're using Mac Mouse Fix? You must be pretty cool. */
+"thanks.24" = "😎 Oh du benutzt Mac Mouse Fix? Du musst ziemlich cool sein.";
+
+/* First draft: 🌏 First the mice, then the world!! >:) */
+"thanks.25" = "🌏 Erst die Mäuse, dann die Welt!! >:)";
 
 /* First draft: Free day **%d/%d** */
 "trial-counter.active" = "Kostenloser Tag **%d/%d**";
 
-/* First draft: Free days **used up** */
-"trial-counter.expired" = "Kostenlose Tage **aufgebraucht**";
+/* First draft: Free days are over */
+"trial-counter.expired" = "Kostenlose Tage sind vorbei";
 
 /* First draft: Activate License */
 "license-button.activate" = "Lizenz aktivieren";
@@ -419,19 +455,49 @@
 "trial-notif.body" = "Hi! Du verwendest Mac Mouse Fix jetzt seit **%d Tagen**. Ich hoffe, es gefällt dir!\n\nWenn du Mac Mouse Fix auch weiter verwenden willst, kannst du es dir [jetzt kaufen](%@).";
 
 /* First draft: Back */
-"effect.back" = "Zurück";
+"mail-alert.back" = "Zurück";
 
-/* First draft: Go back one page in Safari and other apps */
-"effect.back.hint" = "Gehe eine Seite zurück in Safari und anderen Apps";
+/* First draft: I can't respond to all emails\nbut I read and consider all feedback! */
+"mail-alert.body" = "Ich kann nicht auf alle Emails antworten\naber ich lese und bedenke alles Feedback!";
 
-/* First draft: Forward */
-"effect.forward" = "Vorwärts";
+/* First draft: Write Email */
+"mail-alert.send" = "Email schreiben";
 
-/* First draft: Go forward one page in Safari and other apps */
-"effect.forward.hint" = "Gehe eine Seite vorwärts in Safari und anderen Apps";
+/* First draft: Write an Email? */
+"mail-alert.title" = "Eine Email schreiben?";
 
-/* First draft: Rotate */
-"scroll-effect.rotate" = "Drehen";
+/* First draft: Cancel */
+"beta-alert.back" = "Abbrechen";
 
-/* First draft: Rotate content in Apple Maps and other apps\n \nWorks like twisting with 2 fingers on an Apple Trackpad */
-"scroll-effect.rotate.hint" = "Drehe den Inhalt in Apple Maps und anderen Apps\n \nFunktioniert wie drehen mit 2 Fingern auf einem Apple Trackpad";
+/* First draft: Beta versions can have many issues. Don't forget to give feedback when you run into one. Thanks! */
+"beta-alert.body" = "Beta Versionen können viele Probleme haben.\nVergiss nicht Feedback zu geben, wenn du auf eins triffst.\nDankeschön!";
+
+/* First draft: Get Beta Versions */
+"beta-alert.confirm" = "Beta-Versionen erhalten";
+
+/* First draft: Get Beta Versions? */
+"beta-alert.title" = "Beta-Versionen erhalten?";
+
+/* First draft: Cancel */
+"restore-buttons-alert.back" = "Abbrechen";
+
+/* First draft: Restore */
+"restore-buttons-alert.commit" = "Wiederherstellen";
+
+/* First draft: Your __%@ %@__ mouse says it has __%d__ buttons */
+"restore-buttons-alert.hint" = "Deine __%@ %@__ Maus sagt dass sie __%d__ Tasten hat";
+
+/* First draft: Mouse with 3 buttons */
+"restore-buttons-alert.radio1" = "Maus mit 3 Tasten";
+
+/* First draft: Mouse with 5+ buttons */
+"restore-buttons-alert.radio2" = "Maus mit 5+ Tasten";
+
+/* First draft: Restore Default for ... */
+"restore-buttons-alert.title" = "Standard wiederherstellen für ...";
+
+/* First draft: You're __already using__ the default setting for mice with __3 buttons__! */
+"already-using-defaults-toast.3" = "Du __verwendest bereits__ die Standard-Einstellung für Mäuse mit __3 Tasten__!";
+
+/* First draft: You're __already using__ the default setting for mice with __5 buttons__! */
+"already-using-defaults-toast.5" = "Du __verwendest bereits__ die Standard-Einstellung für Mäuse mit __5+ Tasten__!";

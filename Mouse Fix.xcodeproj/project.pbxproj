@@ -182,6 +182,7 @@
 		4FD148CC28AA423F00FE688C /* AuthorizeAccessibilityView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4FD148CE28AA423F00FE688C /* AuthorizeAccessibilityView.xib */; };
 		4FD148D128AA428000FE688C /* ButtonOptionsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4FD148D328AA428000FE688C /* ButtonOptionsViewController.xib */; };
 		4FD148D628AA43E900FE688C /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4FD148D528AA43E900FE688C /* MainMenu.xib */; };
+		4FD3250728E2810200256967 /* Device.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF6667A25F2C93A00689B77 /* Device.m */; };
 		4FD66E0827BB553800F67559 /* CGEventHIDEventBridge.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FD66E0727BB553800F67559 /* CGEventHIDEventBridge.m */; };
 		4FD66E0B27BB9BAE00F67559 /* EventUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FD66E0A27BB9BAE00F67559 /* EventUtility.m */; };
 		4FD86089266E819A004F76C8 /* Pointers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FD86088266E819A004F76C8 /* Pointers.swift */; };
@@ -1394,13 +1395,13 @@
 		4FCECD7721092354001F1078 = {
 			isa = PBXGroup;
 			children = (
+				4FF6652B25F2C7B000689B77 /* Shared */,
 				4FF665BE25F2C92700689B77 /* App */,
-				4FDECCD528A3A37800DDEE91 /* Frameworks */,
 				4FF6660725F2C93A00689B77 /* Helper */,
 				4F422EF023469B2B00AA6E22 /* Other */,
-				4FCECD8121092354001F1078 /* Products */,
-				4FF6652B25F2C7B000689B77 /* Shared */,
 				4FA1ACE025E85904007DB95B /* Tests */,
+				4FCECD8121092354001F1078 /* Products */,
+				4FDECCD528A3A37800DDEE91 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -1556,6 +1557,7 @@
 				4FDE757C28B0E35E00662314 /* License */,
 				4FF6653025F2C7B000689B77 /* Locator */,
 				4F9E78BD26855B9B002C2309 /* SwiftConcurrency */,
+				4FF6667925F2C93A00689B77 /* Devices */,
 				4F7F47C828A5A01C00290BBD /* Config */,
 				4F3A40C8266C448500436821 /* Animation */,
 				4FF9305C28805FC40007CCA7 /* Math */,
@@ -1771,7 +1773,6 @@
 				4F5C2F7F2885C5D0001B9B8A /* HelperState.swift */,
 				4FF6660C25F2C93A00689B77 /* Config */,
 				4FF6663C25F2C93A00689B77 /* TransformationManager */,
-				4FF6667925F2C93A00689B77 /* Devices */,
 				4FF6661525F2C93A00689B77 /* Modifiers */,
 				4FF6661825F2C93A00689B77 /* Buttons */,
 				4FF6661F25F2C93A00689B77 /* Scroll */,
@@ -2401,6 +2402,7 @@
 				4F909D3C28A0C3D2009349A2 /* ModCaptureFieldEditor.swift in Sources */,
 				4FFA4E3528B795F30062A1FE /* LicenseUtility.swift in Sources */,
 				4F3E067E26A2F97D000C9E06 /* URLMenuItem.m in Sources */,
+				4FD3250728E2810200256967 /* Device.m in Sources */,
 				4FF6660225F2C92700689B77 /* ClickableImageView.m in Sources */,
 				4F7D97A628AEB2EE00C11E79 /* AboutTabController.swift in Sources */,
 				4F79A81C2604317200076A7E /* ToastNotificationController.m in Sources */,

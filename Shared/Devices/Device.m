@@ -21,34 +21,68 @@
 ///  - There is device specific state scattered around the program (I can think of the the ButtonStates in ButtonTriggerGenerator, as well as the ModifedDragStates in ModiferManager). This state should probably be owned by MFDevice instances instead.
 ///  - This class is cluttered up with code using the IOHID framework, intended to capture mouse moved input while preventing the mouse pointer from moving. This is used for ModifiedDrags which stop the mouse pointer from moving. We should probably move this code to some other class, which MFDevice's can own instances of, to make stuff less cluttered.
 ///  - I've since found another way to stop the mouse pointer (See PointerFreeze class). So most of the stuff in this class is obsolete. Trying to seize the device using IOKit is super buggy and leads to weird crashes and broken mouse down state and many other issues.
-///     TODO: Clean this up and remove all the unused stuff
+
+/// We've moved this to shared to be able to access the device name and button number from the mainApp for the Buttons tabs. But to access the buttonNumber you have to open the device which requires accessibility access. So instead we'll have the mainApp ask the helper for that info instead. The registryEntryID based init's are not used after this removal.
 
 @implementation Device
 
 #pragma mark - Init
 
-/// Create instances with this function
-/// DeviceManager calls this for each relevant device it finds
++ (Device * _Nullable)deviceWithRegistryID:(uint64_t)registryID {
+    Device *device = [[Device alloc] initWithRegistryID:registryID];
+    return device;
+}
+
+- (Device * _Nullable)initWithRegistryID:(uint64_t)registryID {
+    
+    self = [super init];
+    if (self) {
+        CFMutableDictionaryRef match = IORegistryEntryIDMatching(registryID);
+        mach_port_t port;
+        if (@available(macOS 12.0, *)) {
+            port = kIOMainPortDefault;
+        } else {
+            port = kIOMasterPortDefault;
+        }
+        io_service_t service = IOServiceGetMatchingService(port, match);
+        IOHIDDeviceRef iohidDevice = IOHIDDeviceCreate(kCFAllocatorDefault, service);
+        if (iohidDevice == NULL) {
+            return nil;
+        }
+        self = [self initWithIOHIDDevice:iohidDevice];
+        CFRelease(iohidDevice);
+    }
+    return self;
+}
 
 + (Device *)deviceWithIOHIDDevice:(IOHIDDeviceRef)iohidDevice {
+    
+    /// Create instances with this function
+    /// DeviceManager calls this for each relevant device it finds
+    
     Device *device = [[Device alloc] initWithIOHIDDevice:iohidDevice];
     return device;
 }
 
 - (Device *)initWithIOHIDDevice:(IOHIDDeviceRef)IOHIDDevice {
+    
     self = [super init];
     if (self) {
         
-        /// Set state
+        /// Store & retain device
         _iohidDevice = IOHIDDevice;
+        CFRetain(_iohidDevice);
         
         /// Open device
         ///     This seems to be necessary in the Ventura Beta.
         ///     See https://github.com/noah-nuebling/mac-mouse-fix/issues/297. And thanks to @chamburr!!
+        ///     Not sure if this is also necessary in the mainApp
         IOReturn ret = IOHIDDeviceOpen(self.iohidDevice, kIOHIDOptionsTypeNone);
         if (ret) {
             DDLogInfo(@"Error opening device. Code: %x", ret);
         }
+        
+#if IS_HELPER
         
         /// Set values of interest for callback
         NSDictionary *buttonMatchDict = @{ @(kIOHIDElementUsagePageKey): @(kHIDPage_Button) };
@@ -57,8 +91,18 @@
         /// Register callback
         IOHIDDeviceScheduleWithRunLoop(IOHIDDevice, CFRunLoopGetMain(), kCFRunLoopDefaultMode);
         IOHIDDeviceRegisterInputValueCallback(IOHIDDevice, &handleInput, (__bridge void * _Nullable)(self));
+#endif
+        
     }
+    
     return self;
+}
+
+- (void)dealloc {
+    /// Note: `_iohidDevice` shouldn't really ever be NULL, but during the init it happens for some reason
+    if (_iohidDevice != NULL) {
+        CFRelease(_iohidDevice);
+    }
 }
 
 #pragma mark - Input callbacks
@@ -119,6 +163,8 @@
 
 static void handleInput(void *context, IOReturn result, void *sender, IOHIDValueRef value) {
     
+#if IS_HELPER
+    
     Device *sendingDev = (__bridge Device *)context;
     
     /// Get elements
@@ -142,6 +188,9 @@ static void handleInput(void *context, IOReturn result, void *sender, IOHIDValue
     if (button == 1 && pressure != 0) {
         [GestureScrollSimulator stopMomentumScroll];
     }
+    
+#endif
+    
 }
 
 #pragma mark - Properties + override NSObject methods
@@ -180,10 +229,16 @@ static void handleInput(void *context, IOReturn result, void *sender, IOHIDValue
     
     IOHIDDeviceRef device = self.iohidDevice;
     NSString *product = IOHIDDeviceGetProperty(device, CFSTR(kIOHIDProductKey));
+    
+    return product;
+}
+
+- (NSString *)manufacturer {
+    
+    IOHIDDeviceRef device = self.iohidDevice;
     NSString *manufacturer = IOHIDDeviceGetProperty(device, CFSTR(kIOHIDManufacturerKey));
     
-    return [NSString stringWithFormat:@"%@ – %@", product, manufacturer];
-    
+    return manufacturer;
 }
 
 - (int)nOfButtons {

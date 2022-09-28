@@ -28,7 +28,7 @@ import Cocoa
         if !license.trialIsActive.boolValue {
             /// Trial expired
             
-            base = NSLocalizedString("trial-counter.expired", comment: "First draft: Free days **used up**")
+            base = NSLocalizedString("trial-counter.expired", comment: "First draft: Free days are over")
             
         } else {
             /// Trial still active

@@ -168,37 +168,9 @@ void commitConfig() {
     
 #if IS_HELPER
     
-    ///
-    /// Get PID under mouse pointer
-    /// 
-    
-    pid_t pidUnderPointer = -1; /// I hope -1 is actually unused?
-    
-    /// v New version. Should be a lot faster!
-    
-    NSPoint pointerLoc = getFlippedPointerLocationWithEvent(event);
-    NSInteger windowNumber = [NSWindow windowNumberAtPoint:pointerLoc belowWindowWithWindowNumber:0];
-    NSArray *windowInfo = (__bridge_transfer NSArray *)CGWindowListCopyWindowInfo(kCGWindowListOptionIncludingWindow, windowNumber);
-    if (windowInfo.count > 0) {
-        pidUnderPointer = [windowInfo[0][(__bridge NSString *)kCGWindowOwnerPID] integerValue];
-    }
-    
-    if ((NO)) {
-        
-        /// v Old version. Uses AXUI API. Inspired by MOS' approach. AXUIElementCopyElementAtPosition() was incredibly slow sometimes. Right now it takes a second to return when scrolling on new Reddit in Safari on M1 Ventura Beta. On other windows and websites it's not noticably slow but still very slow in code terms.
-        
-        CGPoint mouseLocation = getPointerLocation();
-        AXUIElementRef elementUnderMousePointer;
-        AXUIElementCopyElementAtPosition(Scroll.systemWideAXUIElement, mouseLocation.x, mouseLocation.y, &elementUnderMousePointer);
-        if (elementUnderMousePointer != nil) {
-            AXUIElementGetPid(elementUnderMousePointer, &pidUnderPointer);
-            CFRelease(elementUnderMousePointer);
-        }
-    }
-    
-    /// Get bundleID from pid
-    NSRunningApplication *appUnderMousePointer = [NSRunningApplication runningApplicationWithProcessIdentifier:pidUnderPointer];
-    NSString *bundleID = appUnderMousePointer.bundleIdentifier;
+    /// Get bundleID
+    NSRunningApplication *app = [HelperUtility appUnderMousePointerWithEvent:event];
+    NSString *bundleID = app.bundleIdentifier;
     
     /// Debug
     DDLogDebug(@"Loading overrides for app %@", bundleID);

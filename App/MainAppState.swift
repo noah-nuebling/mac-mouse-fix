@@ -87,5 +87,4 @@ import ReactiveSwift
     @objc func reactToDidBecomeDisabled() {
         observer.send(value: false)
     }
-    
 }

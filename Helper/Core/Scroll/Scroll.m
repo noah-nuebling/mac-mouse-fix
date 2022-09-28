@@ -834,11 +834,40 @@ static void sendOutputEvents(int64_t dx, int64_t dy, MFScrollOutputType outputTy
         
         /// --- Zoom ---
         
-        /// Debug
-//        [GestureScrollSimulator postGestureScrollEventWithDeltaX:dx deltaY:dy phase:kIOHIDEventPhaseEnded];
-//        [GestureScrollSimulator stopMomentumScroll];
-        
         double eventDelta = (dx + dy)/800.0; /// This works because, if dx != 0 -> dy == 0, and the other way around.
+        
+        /// HACK:
+        ///     Chromium browsers need a ton of zooming deltas before they actually start zooming. So we send a bunch of deltas right away to make things more responsive.
+        ///     Another way to combat this would be to only send the `end` event when the user releases the modifier.
+        if (eventPhase == kIOHIDEventPhaseBegan) {
+            
+            NSString *bundleID = [HelperUtility appUnderMousePointerWithEvent:NULL].bundleIdentifier;
+            
+            if (bundleID != nil) {
+                if ([bundleID containsString:@"com.google.Chrome"]
+                    || [bundleID containsString:@"org.chromium.Chromium"]
+                    || [bundleID containsString:@"com.operasoftware.Opera"]
+                    || [bundleID containsString:@"com.microsoft.edgemac"]
+                    || [bundleID containsString:@"com.vivaldi.Vivaldi"]
+                    || [bundleID containsString:@"com.brave.Browser"]) {
+                    
+                    /// Using `containsString` to also catch other release channels like "com.google.Chrome.canary".
+                    /// TODO: Add other Chromium browsers with the same behaviour.
+                    /// Notes:
+                    /// - Blisk (org.blisk.Blisk) and Colibri (co.opqr.colibri) don't seem to support pinch to zoom.
+                    
+                    [TouchSimulator postMagnificationEventWithMagnification:eventDelta phase:kIOHIDEventPhaseBegan]; /// First delta seems to be ignored
+                    eventPhase = kIOHIDEventPhaseChanged;
+                    
+                    assert(eventDelta != 0);
+                    if (sign(eventDelta) > 0) {
+                        eventDelta += 380/800.0;
+                    } else {
+                        eventDelta -= 250/800.0;
+                    }
+                }
+            }
+        }
         
         [TouchSimulator postMagnificationEventWithMagnification:eventDelta phase:eventPhase];
         
@@ -871,39 +900,6 @@ static void sendOutputEvents(int64_t dx, int64_t dy, MFScrollOutputType outputTy
         }
         
         [TouchSimulator postDockSwipeEventWithDelta:eventDelta type:type phase:eventPhase];
-        
-        if (eventPhase == kIOHIDEventPhaseEnded) {
-            
-            /// v Dock swipes will sometimes get stuck when the computer is slow. This can be solved by sending several "end" events in a row with a delay (see "stuck bug" in ModifiedDrag)
-            ///     Edit: Even with sending the event again after 0.2 seconds, the stuck bug still happens a bunch here for some reason. Event though this almost completely eliminates the bug in ModifiedDrag.
-            ///         Hopefully, sending it again after 0.5 seconds works... Edit: Yes, seems to work better but still sometimes happens
-            ///   Edit2: I don't experience the stuck bug anymore here. I'm on an M1 now, maybe that's it.
-            ///     TODO: I should probably move the "sending several end events" code to the postDockSwipeEventWithDelta: function, because otherwise there might be interference when the scroll engine and the drag engine try to send those 'end' events at the same time. We also need further safety measures if several sources try to use postDockSwipeEventWithDelta: at the same time.
-            ///     TODO: We should probably change the "sending several end events" code in ModifiedDrag over to using timers that we can invalidate like here - We should do this to avoid too many 'end' events being sent from old timers.
-            
-            static NSTimer *timer1 = nil;
-            static NSTimer *timer2 = nil;
-            
-            [timer1 invalidate];
-            [timer2 invalidate];
-            
-            double zero = 0.0;
-            
-            IOHIDEventPhaseBits iohidPhase = kIOHIDEventPhaseEnded;
-            
-            SEL selector = @selector(postDockSwipeEventWithDelta:type:phase:);
-            NSMethodSignature *signature = [TouchSimulator methodSignatureForSelector:selector];
-            NSInvocation *invocation = [NSInvocation invocationWithMethodSignature:signature];
-            invocation.target = TouchSimulator.class;
-            invocation.selector = selector;
-            [invocation setArgument:&zero atIndex:2];
-            [invocation setArgument:&type atIndex:3];
-            [invocation setArgument:&iohidPhase atIndex:4];
-            
-//            timer1 = [NSTimer scheduledTimerWithTimeInterval:0.2 invocation:invocation repeats:NO];
-//            timer2 = [NSTimer scheduledTimerWithTimeInterval:0.5 invocation:invocation repeats:NO];
-            
-        }
         
     } else if (outputType == kMFScrollOutputTypeCommandTab) {
         
@@ -954,30 +950,46 @@ static void sendOutputEvents(int64_t dx, int64_t dy, MFScrollOutputType outputTy
         if (dx+dy == 0) return;
         
         /// Create base event
-        /// Mysterious: In the real events, `kCGScrollWheelEventIsContinuous` is false. But we have to set it true (through `kCGScrollEventUnitPixel`) to make the scroll distance match the real events.
-        CGEventRef event = CGEventCreateScrollWheelEvent(NULL, kCGScrollEventUnitPixel, 1, 0);
         
-        /// Make line deltas 1/10 of pixel deltas
-        ///     See CGEventSource pixelsPerLine - it's 10
-        //      TODO: Subpixelate line delta (instead of rounding). Edit: Actually in the real events they just seem to be `floor`ed, so we won't subpixelate
-        int64_t dyLine = dy / 10;
-        int64_t dxLine = dx / 10;
+        /// Sol 1: Use `CGEventCreateScrollWheelEvent()`
+        ///     - Mysterious: In the real events, `kCGScrollWheelEventIsContinuous` is false. But we have to set it true (through `kCGScrollEventUnitPixel`) to make the scroll distance match the real events.
+        ///     - Safari makes the scroll distance larger than the pixels that are specified in lineScrollEvents. But that doesn't work here. Maybe it's becuase we're setting `kCGScrollWheelEventIsContinuous` true? We're just using
+//        CGEventRef event = CGEventCreateScrollWheelEvent(NULL, kCGScrollEventUnitPixel, 1, 0);
         
-        /// Make Line deltas at least 1
-        ///     This seems to be happening in the real events
-        if (llabs(dy) != 0 && llabs(dyLine) == 0) dyLine = sign(dy);
-        if (llabs(dx) != 0 && llabs(dxLine) == 0) dxLine = sign(dx);
+        /// Sol 2: Just use `CGEventCreate`
+        ///     - This is based on analysis of real events
+        CGEventRef event = CGEventCreate(NULL);
+        CGEventSetIntegerValueField(event, 55, 22); /// Set type to `kCGEventScrollWheel`
+        
+        /// Get line deltas
+        ///     Line deltas are 1/10 of pixel deltas. See CGEventSource pixelsPerLine - it's 10
+        double dyLine = ((double)dy) / 10;
+        double dxLine = ((double)dx) / 10;
+        
+        /// Get line deltas as int
+        ///     Int deltas are generally truncated but also rounded up to be at least 1 (or -1). This also happens in real events.
+        int64_t dyLineInt = (int64_t)dyLine;
+        int64_t dxLineInt = (int64_t)dxLine;
+        if (fabs(dyLine) != 0 && llabs(dyLineInt) == 0) dyLineInt = sign(dyLine);
+        if (fabs(dxLine) != 0 && llabs(dxLineInt) == 0) dxLineInt = sign(dxLine);
+        
+        /// Get line deltas as fixed point number
+        int64_t dyLineFixed = fixedScrollDelta(dyLine);
+        int64_t dxLineFixed = fixedScrollDelta(dxLine);
         
         /// Set fields
-        ///  The fixed point fields are automatically set when we set the other fields
-        CGEventSetIntegerValueField(event, kCGScrollWheelEventDeltaAxis1, dyLine);
-        CGEventSetIntegerValueField(event, kCGScrollWheelEventPointDeltaAxis1, dy);
+        ///     We used to have a comment here saying that the `FixedPtDelta`s were automatically being set when setting the `PointDelta`s. But under the Ventura Beta this doesn't seem to be true, so we're setting it manually.
         
-        CGEventSetIntegerValueField(event, kCGScrollWheelEventDeltaAxis2, dxLine);
+        CGEventSetIntegerValueField(event, kCGScrollWheelEventDeltaAxis1, dyLineInt);
+        CGEventSetIntegerValueField(event, kCGScrollWheelEventPointDeltaAxis1, dy);
+        CGEventSetIntegerValueField(event, kCGScrollWheelEventFixedPtDeltaAxis1, dyLineFixed);
+        
+        CGEventSetIntegerValueField(event, kCGScrollWheelEventDeltaAxis2, dxLineInt);
         CGEventSetIntegerValueField(event, kCGScrollWheelEventPointDeltaAxis2, dx);
+        CGEventSetIntegerValueField(event, kCGScrollWheelEventFixedPtDeltaAxis2, dxLineFixed);
         
         /// Debug
-//        DDLogDebug(@"SCROOOL OVONT – %@", CGScrollWheelEventDescription(event));
+        DDLogDebug(@"SCROOOL OVONT – %@", CGScrollWheelEventDescription(event));
         
         /// Send
         CGEventPost(kCGSessionEventTap, event);
@@ -996,7 +1008,7 @@ static void sendOutputEvents(int64_t dx, int64_t dy, MFScrollOutputType outputTy
 static BOOL _appSwitcherIsOpen = NO;
 
 + (void)appSwitcherModificationHasBeenDeactivated {
-    /// AppSwitcherModification is aka CommandTab. Should rename to AppSwitcher.
+    
     if (_appSwitcherIsOpen) { /// Not sure if this check is necessary. Should only be called when the appSwitcher is open.
         sendKeyEvent(55, 0, false);
         _appSwitcherIsOpen = NO;

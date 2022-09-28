@@ -84,33 +84,29 @@ static NSMutableDictionary *_swipeInfo;
     /// Create and post event
     
     CGEventRef event = CGEventCreate(NULL);
-    CGEventSetType(event, 29); // 29 -> NSEventTypeGesture
-    CGEventSetIntegerValueField(event, 110, 8); // 8 -> kIOHIDEventTypeZoom
+    CGEventSetType(event, 29); /// 29 -> NSEventTypeGesture
+    CGEventSetIntegerValueField(event, 110, 8); /// 8 -> kIOHIDEventTypeZoom
     CGEventSetIntegerValueField(event, 132, phase);
     CGEventSetDoubleValueField(event, 113, magnification);
     CGEventPost(kCGHIDEventTap, event);
     CFRelease(event);
 }
 
-CFTimeInterval _dockSwipeLastTimeStamp = 0.0;
-double _dockSwipeOriginOffset = 0.0;
-double _dockSwipeLastDelta = 0.0;
 + (void)postDockSwipeEventWithDelta:(double)d type:(MFDockSwipeType)type phase:(IOHIDEventPhaseBits)phase {
     
-    /// TODO: Clean this up and make it send double events at the end to combat stuck bug. (Before the drivers were doing this but that leads to interference)
+    /// State
     
-    /// Debug
+    static double _dockSwipeOriginOffset = 0.0;
+    static double _dockSwipeLastDelta = 0.0;
+    static NSTimer *_doubleSendTimer;
+    static NSTimer *_tripleSendTimer;
     
-//    DDLogDebug(@"FLAVOR: \n%@\n%@\n%@", [HelperUtility binaryRepresentation:kIOHIDEventFieldDockSwipeFlavor], [HelperUtility binaryRepresentation:123], [HelperUtility binaryRepresentation:165]);
-        
-//    DDLogDebug(@"Request to send dockswipe");
-    
-    if (phase == kIOHIDEventPhaseCancelled) {
-        
-    }
+    /// Constants
     
     int valFor41 = 33231;
     int vertInvert = 1;
+    
+    /// Update originOffset
     
     if (phase == kIOHIDEventPhaseBegan) {
         _dockSwipeOriginOffset = d;
@@ -121,6 +117,9 @@ double _dockSwipeLastDelta = 0.0;
         _dockSwipeOriginOffset += d;
     }
     
+    /// Debug
+    
+    static CFTimeInterval _dockSwipeLastTimeStamp = 0.0;
     CFTimeInterval ts = CACurrentMediaTime();
 //    CFTimeInterval timeDiff = ts - _dockSwipeLastTimeStamp;
     _dockSwipeLastTimeStamp = ts;
@@ -138,40 +137,45 @@ double _dockSwipeLastDelta = 0.0;
 //               ,@(timeDiff)
    );
     
-    // We actually need to send kIOHIDEventPhaseEnded or kIOHIDEventPhaseCancelled depending on situation, but we don't wan't to expose that complexity to the caller
-    // IF phase == kIOHIDEventPhaseEnded then decide ouselves which of the two to send
+    /// Override end phase with canceled phase
+    
     if (phase == kIOHIDEventPhaseEnded) {
         if ([SharedUtility signOf:_dockSwipeLastDelta] == [SharedUtility signOf:_dockSwipeOriginOffset]) {
             phase = kIOHIDEventPhaseEnded;
         } else {
             phase = kIOHIDEventPhaseCancelled;
         }
-//        d = _dockSwipeLastDelta; // Testing // Doesnt help stuck bug
     }
     
-    // Create type 29 (NSEventTypeGesture) event
+    ///
+    /// Create events
+    ///
+    
+    /// Create type 29 (NSEventTypeGesture) event
     
     CGEventRef e29 = CGEventCreate(NULL);
-    CGEventSetDoubleValueField(e29, 55, NSEventTypeGesture); // Set event type
-    CGEventSetDoubleValueField(e29, 41, valFor41); // No idea what this does but it might help. // TODO: Why?
+    CGEventSetDoubleValueField(e29, 55, NSEventTypeGesture); /// Set event type
+    CGEventSetDoubleValueField(e29, 41, valFor41); /// No idea what this does but it might help. // TODO: Why?
     
-    // Create type 30 event
+    /// Create type 30 event
     
     CGEventRef e30 = CGEventCreate(NULL);
     
-    CGEventSetDoubleValueField(e30, 55,  NSEventTypeMagnify); // Set event type (idk why it's magnify but it is...)
-    CGEventSetDoubleValueField(e30, 110, kIOHIDEventTypeDockSwipe); // Set subtype
+    CGEventSetDoubleValueField(e30, 55,  NSEventTypeMagnify); /// Set event type (idk why it's magnify but it is...)
+    CGEventSetDoubleValueField(e30, 110, kIOHIDEventTypeDockSwipe); /// Set subtype
     CGEventSetDoubleValueField(e30, 132, phase);
-    CGEventSetDoubleValueField(e30, 134, phase); // Not sure if necessary
+    CGEventSetDoubleValueField(e30, 134, phase); /// Not sure if necessary
 
-    CGEventSetDoubleValueField(e30, 124, _dockSwipeOriginOffset); // Origin offset
+    CGEventSetDoubleValueField(e30, 124, _dockSwipeOriginOffset); /// Origin offset
     Float32 ofsFloat32 = (Float32)_dockSwipeOriginOffset;
-    uint32_t ofsInt32; // Has to be uint32_t not int32_t!
+    uint32_t ofsInt32; /// Has to be `uint32_t` not `int32_t`!
     memcpy(&ofsInt32, &ofsFloat32, sizeof(ofsFloat32));
     int64_t ofsInt64 = (int64_t)ofsInt32;
-    CGEventSetIntegerValueField(e30, 135, ofsInt64); // Weird ass encoded version of origin offset. It's a 64 bit integer containing the bits for a 32 bit float. No idea why this is necessary, but it is.
+    CGEventSetIntegerValueField(e30, 135, ofsInt64); /// Weird ass encoded version of origin offset. It's a 64 bit integer containing the bits for a 32 bit float. No idea why this is necessary, but it is.
     
-    CGEventSetDoubleValueField(e30, 41, valFor41); // This mighttt help not sure what it do
+    CGEventSetDoubleValueField(e30, 41, valFor41); /// This mighttt help not sure what it do
+    
+    /// The values below are probably an encoded version of the values in MFDockSwipeType. We could probably somehow convert that and put it in here instead of assigning these weird constants
     
     double weirdTypeOrSum = -1;
     if (type == kMFDockSwipeTypeHorizontal) {
@@ -183,41 +187,77 @@ double _dockSwipeLastDelta = 0.0;
     } else {
         assert(false);
     }
-    // ^ These values are probably an encoded version of the values in MFDockSwipeType. We could probably somehow convert that and put it in here instead of assigning these weird constants
     
     CGEventSetDoubleValueField(e30, 119, weirdTypeOrSum);
-    CGEventSetDoubleValueField(e30, 139, weirdTypeOrSum);  // Probs not necessary
+    CGEventSetDoubleValueField(e30, 139, weirdTypeOrSum);  /// Probs not necessary
     
-    CGEventSetDoubleValueField(e30, 123, type); // Horizontal or vertical
-    CGEventSetDoubleValueField(e30, 165, type); // Horizontal or vertical // Probs not necessary
+    CGEventSetDoubleValueField(e30, 123, type); /// Horizontal or vertical
+    CGEventSetDoubleValueField(e30, 165, type); /// Horizontal or vertical // Probs not necessary
     
-    CGEventSetDoubleValueField(e30, 136, vertInvert); // Vertical invert
+    CGEventSetDoubleValueField(e30, 136, vertInvert); /// Vertical invert
     
     if (phase == kIOHIDEventPhaseEnded || phase == kIOHIDEventPhaseCancelled) {
-        DDLogDebug(@"EXIT SPEED: %f, originOffset: %f, phase: %hu", _dockSwipeLastDelta, _dockSwipeOriginOffset, phase);
-        // ^ Debugging of stuck-bug. When the stuck bug occurs, This always seems to be called and in the appropriate order (The fake dockSwipe with the end-phase is always called after all other phases).
-        //      Random observation: I just got it stuck with just the trackpad! Right after getting it stuck with mouse.
-        //      This makes me think the bug is about timing / how slow the events are sent, and not in which order the events are sent or with on which thread the events are sent as I suspected initially.
-        //          Another hint towards this is, that the stuck-bug seems to occur more, the slower and more stuttery the UI is (the longer the computer has been running)
-        // I fixed the stuck-bug now. (See the comment with "This fixed the stuck-bug!" in ModifiedDrag.m) But I still don't know what caused it exactly.
-        CGEventSetDoubleValueField(e30, 129, _dockSwipeLastDelta*100); // 'Exit speed'
-        CGEventSetDoubleValueField(e30, 130, _dockSwipeLastDelta*100); // Probs not necessary
-            // ^ *100 cause that's closer to how the real values look, but it doesn't make a difference
+        
+        /// Set Exit Speed
+        ///     Note: `*100` cause that's closer to how the real values look, but it doesn't make a difference
+        CGEventSetDoubleValueField(e30, 129, _dockSwipeLastDelta*100); /// 'Exit speed'
+        CGEventSetDoubleValueField(e30, 130, _dockSwipeLastDelta*100); /// Probs not necessary
+        
+        /// Debug
+        ///     Debugging of stuck-bug. When the stuck bug occurs, This always seems to be called and in the appropriate order (The fake dockSwipe with the end-phase is always called after all other phases).
+        ///     Random observation: I just got it stuck with just the trackpad! Right after getting it stuck with mouse.
+        ///     This makes me think the bug is about timing / how slow the events are sent, and not in which order the events are sent or with on which thread the events are sent as I suspected initially.
+        ///     Another hint towards this is, that the stuck-bug seems to occur more, the slower and more stuttery the UI is (the longer the computer has been running)
+        /// I fixed the stuck-bug now. (See the comment with "This fixed the stuck-bug!" in ModifiedDrag.m) But I still don't know what caused it exactly.
+//        DDLogDebug(@"EXIT SPEED: %f, originOffset: %f, phase: %hu", _dockSwipeLastDelta, _dockSwipeOriginOffset, phase);
 
     }
     
-    // Send events
-    CGEventPost(kCGSessionEventTap, e30); // Not sure if order matters
+    ///
+    /// Send events
+    ///
+    
+    CGEventPost(kCGSessionEventTap, e30); /// Not sure if order matters
     CGEventPost(kCGSessionEventTap, e29);
     
-    CFRelease(e29);
-    CFRelease(e30);
-    
-    if (phase != kIOHIDEventPhaseEnded) {
-        // Doing this if condition, so we can send identical kIOHIDEventPhaseEnded events twice to combat stuck bug
-        // This is an ugly solution and we should probably just create a separate function which returns a dockSwipeEvent instead of sending it immediately
-        _dockSwipeLastDelta = d;
+    if (phase == kIOHIDEventPhaseEnded || phase == kIOHIDEventPhaseCancelled) {
+        
+        /// Double-send events
+        /// Notes:
+        ///     - The inital dockSwipe event we post will be ignored by the system when it is under load (I called this the "stuck bug" in other places). Sending the event again with a delay of 200ms (0.2s) gets it unstuck almost always. Sending the event twice gives us the best of both responsiveness and reliability.
+        ///     - In Scroll.m, even with sending the event again after 0.2 seconds, the stuck bug still happens a bunch for some reason. Even though this almost completely eliminates the bug in ModifiedDrag. Sending it again after 0.5 seconds works better but still sometimes happens. Edit: Doesn't happen anymore on M1.
+        
+        /// Put the events into a dict
+        ///     Note: Using `__bridge_transfer` should make it so the events are released when the dict is autoreleased, which is when the timer that the dict gets stored in is invalidated.
+        
+        NSDictionary *events = @{@"e30": (__bridge_transfer id)e30, @"e29": (__bridge_transfer id)e29};
+        
+        /// Invalidate existing timers
+        
+        if (_doubleSendTimer != nil) [_doubleSendTimer invalidate];
+        if (_tripleSendTimer != nil) [_tripleSendTimer invalidate];
+        
+        /// Schedule new timers
+        
+        _doubleSendTimer = [NSTimer scheduledTimerWithTimeInterval:0.2 target:self selector:@selector(dockSwipeTimerFired:) userInfo:events repeats:NO];
+        _tripleSendTimer = [NSTimer scheduledTimerWithTimeInterval:0.5 target:self selector:@selector(dockSwipeTimerFired:) userInfo:events repeats:NO];
     }
+    
+    ///
+    /// Update state
+    ///
+    
+    _dockSwipeLastDelta = d;
+}
+
++ (void)dockSwipeTimerFired:(NSTimer *)timer {
+    
+    NSDictionary *events = timer.userInfo;
+    CGEventRef e30 = (__bridge CGEventRef)events[@"e30"];
+    CGEventRef e29 = (__bridge CGEventRef)events[@"e29"];
+    
+    CGEventPost(kCGSessionEventTap, e30);
+    CGEventPost(kCGSessionEventTap, e29);
 }
 
 

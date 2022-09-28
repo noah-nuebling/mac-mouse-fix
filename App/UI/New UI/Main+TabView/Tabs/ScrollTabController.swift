@@ -54,27 +54,32 @@ class ScrollTabController: NSViewController {
     /// Did appear
     
     override func viewDidAppear() {
+        
+        /// Remove focus
+        ///     Sometimes, one of the modifierCapture fields is randomly selected. This hopefully prevents that.
+        
+        MainAppState.shared.window?.makeFirstResponder(nil)
+        
+        /// Turn off killswitch
+        
         let isDisabled = config("Other.scrollKillSwitch") as! Bool /// From the debugger it seems you can only cast NSNumber to bool with as! not with as?. That weird??
         if isDisabled {
+            
             /// Turn off killSwitch
             setConfig("Other.scrollKillSwitch", false as NSObject)
             commitConfig()
             
             /// Show message to user
-            if #available(macOS 13.0, *) {
-                
-                /// Build string
-                
-                let messageRaw = NSLocalizedString("scroll-revive-toast", comment: "First draft: Enabled Mac Mouse Fix for __Scrolling__\nIt had been disabled from the Menu Bar %@ || Note: Where %@ will be replaced by the menubar icon")
-                var message = NSAttributedString(coolMarkdown: messageRaw)!
-                let symbolString = NSAttributedString(symbol: "CoolMenuBarIcon", hPadding: 0.0, vOffset: -6, fallback: "<Mac Mouse Fix Menu Bar Item>")
-                message = NSAttributedString(attributedFormat: message, args: [symbolString])
-                
-                /// Show message
-                ToastNotificationController.attachNotification(withMessage: message, to: MainAppState.shared.window!, forDuration: -1, alignment: kToastNotificationAlignmentTopMiddle)
-            } else {
-                /// TODO: Make this work on older macOS
-            }
+
+            /// Build string
+            
+            let messageRaw = NSLocalizedString("scroll-revive-toast", comment: "First draft: Enabled Mac Mouse Fix for __Scrolling__\nIt had been disabled from the Menu Bar %@ || Note: Where %@ will be replaced by the menubar icon")
+            var message = NSAttributedString(coolMarkdown: messageRaw)!
+            let symbolString = NSAttributedString(symbol: "CoolMenuBarIcon", hPadding: 0.0, vOffset: -6, fallback: "<Mac Mouse Fix Menu Bar Item>")
+            message = NSAttributedString(attributedFormat: message, args: [symbolString])
+            
+            /// Show message
+            ToastNotificationController.attachNotification(withMessage: message, to: MainAppState.shared.window!, forDuration: -1, alignment: kToastNotificationAlignmentTopMiddle)
         }
     }
     
