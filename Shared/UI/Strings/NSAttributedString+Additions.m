@@ -99,18 +99,24 @@
     return s;
 }
 
+#pragma mark Append
+
+- (NSAttributedString *)attributedStringByAppending:(NSAttributedString *)string {
+    return [NSAttributedString attributedStringWithFormat:@"%@%@" args:@[self, string]];
+}
+
 #pragma mark Replace substring
 
-+ (NSAttributedString *)stringWithFormat:(NSString *)format args:(NSArray<NSAttributedString *> *)args {
++ (NSAttributedString *)attributedStringWithFormat:(NSString *)format args:(NSArray<NSAttributedString *> *)args {
         
     /// Convert format to attributed
     NSAttributedString *attributedFormat = [[NSAttributedString alloc] initWithString:format];
 
     /// Call core method
-    return [self stringWithAttributedFormat:attributedFormat args:args];
+    return [self attributedStringWithAttributedFormat:attributedFormat args:args];
 }
 
-+ (NSAttributedString *)stringWithAttributedFormat:(NSAttributedString *)format args:(NSArray<NSAttributedString *> *)args {
++ (NSAttributedString *)attributedStringWithAttributedFormat:(NSAttributedString *)format args:(NSArray<NSAttributedString *> *)args {
     
     /// Replaces occurences of %@ in the attributedString with the args
     ///     Also see lib function `initWithFormat:options:locale:`

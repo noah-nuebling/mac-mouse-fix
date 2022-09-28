@@ -501,3 +501,9 @@
 
 /* First draft: You're __already using__ the default setting for mice with __5 buttons__! */
 "already-using-defaults-toast.5" = "Du __verwendest bereits__ die Standard-Einstellung für Mäuse mit __5+ Tasten__!";
+
+/* Note: Value for this key is defined in Localizable.stringsdict, not Localizable.strings. || Note: The UI strings in .stringsdict have two lines. Only the first line is visible unless you start editing and then use the arrow keys to go to the second line. This is necessary to have linebreaks in .stringsdict since \n doesn't work. Use Option-Enter to insert these linebreaks. */
+"capture-toast.body.captured" = "";
+
+/* Note: Value for this key is defined in Localizable.stringsdict, not Localizable.strings */
+"capture-toast.body.uncaptured" = "";

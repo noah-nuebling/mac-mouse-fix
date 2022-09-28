@@ -22,62 +22,77 @@
 /// Creates notifications to inform the user about newly caputred / uncaptured buttons after the user added a new row to the remapsTable
 + (void)showButtonCaptureNotificationWithBeforeSet:(NSSet<NSNumber *> *)beforeSet afterSet:(NSSet<NSNumber *> *)afterSet {
     
-    
     /// Get captured and uncaptured buttons
     
-    NSMutableSet *newlyUncapturedButtons = beforeSet.mutableCopy;
-    [newlyUncapturedButtons minusSet:afterSet];
-    NSMutableSet *newlyCapturedButtons = afterSet.mutableCopy;
-    [newlyCapturedButtons minusSet:beforeSet];
-    
-    /// Sort buttons
-    
-    NSArray *uncapturedArray = [newlyUncapturedButtons sortedArrayUsingDescriptors:@[[NSSortDescriptor sortDescriptorWithKey:@"" ascending:YES]]];
-    NSArray *capturedArray = [newlyCapturedButtons sortedArrayUsingDescriptors:@[[NSSortDescriptor sortDescriptorWithKey:@"" ascending:YES]]];
+    NSMutableSet *uncapturedSet = beforeSet.mutableCopy;
+    [uncapturedSet minusSet:afterSet];
+    NSMutableSet *capturedSet = afterSet.mutableCopy;
+    [capturedSet minusSet:beforeSet];
     
     /// Get count
     
-    NSInteger uncapturedCount = uncapturedArray.count;
-    NSInteger capturedCount = capturedArray.count;
-    
-    /// Create natural language string from button list
-    
-    NSString *uncapturedButtonString = buttonStringFromButtonNumberArray(uncapturedArray);
-    NSString *capturedButtonString = buttonStringFromButtonNumberArray(capturedArray);
-    
-    /// Get array of strings
-    ///     Only need these for adding bold to the button strings
-    
-    NSArray<NSString *> *uncapturedButtonStringArray = buttonStringArrayFromButtonNumberArray(uncapturedArray);
-    NSArray<NSString *> *capturedButtonStringArray = buttonStringArrayFromButtonNumberArray(capturedArray);
-    
-    /// Define learn more string
-    
-    NSString *linkString = NSLocalizedString(@"capture-toast.link", @"First draft: Learn More");
-    
-    /// Create string describing uncaptured and captured
-    
-    NSString *buttonString = stringf(NSLocalizedString(@"capture-toast.body", @"Note: Value for this key is defined in Localizable.stringsdict, not Localizable.strings"), capturedButtonString, capturedCount, uncapturedButtonString, uncapturedCount);
+    NSInteger uncapturedCount = uncapturedSet.count;
+    NSInteger capturedCount = capturedSet.count;
     
     if (uncapturedCount > 0 || capturedCount > 0) {
         
-        /// Build complete notification String
-        NSString *notifString = stringf(@"%@\n\n%@", buttonString, linkString);
-        NSAttributedString *attrNotifString = [[NSAttributedString alloc] initWithString:notifString];
+        /// Sort buttons
         
-        /// Add link
-        attrNotifString = [attrNotifString attributedStringByAddingLinkWithURL:[NSURL URLWithString:@"https://github.com/noah-nuebling/mac-mouse-fix/discussions/112"] forSubstring:linkString];
+        NSArray *uncapturedArray = [uncapturedSet sortedArrayUsingDescriptors:@[[NSSortDescriptor sortDescriptorWithKey:@"" ascending:YES]]];
+        NSArray *capturedArray = [capturedSet sortedArrayUsingDescriptors:@[[NSSortDescriptor sortDescriptorWithKey:@"" ascending:YES]]];
+        
+        /// Create natural language string from button list
+        
+        NSString *uncapturedButtonString = buttonStringFromButtonNumberArray(uncapturedArray);
+        NSString *capturedButtonString = buttonStringFromButtonNumberArray(capturedArray);
+        
+        /// Get array of strings
+        ///     Only need these for adding bold to the button strings
+        
+        NSArray<NSString *> *uncapturedButtonStringArray = buttonStringArrayFromButtonNumberArray(uncapturedArray);
+        NSArray<NSString *> *capturedButtonStringArray = buttonStringArrayFromButtonNumberArray(capturedArray);
+        
+        /// Define learn more string
+        
+        NSString *linkStringRaw = NSLocalizedString(@"capture-toast.link", @"First draft: Learn More");
+        NSAttributedString *linkString = [linkStringRaw.attributed attributedStringByAddingLinkWithURL:[NSURL URLWithString:@"https://github.com/noah-nuebling/mac-mouse-fix/discussions/112"] forSubstring:linkStringRaw];
+        
+        /// Create string describing uncaptured and captured
+        
+        NSString *buttonStringCaptureRaw = stringf(NSLocalizedString(@"capture-toast.body.captured", @"Note: Value for this key is defined in Localizable.stringsdict, not Localizable.strings. || Note: The UI strings in .stringsdict have two lines. Only the first line is visible unless you start editing and then use the arrow keys to go to the second line. This is necessary to have linebreaks in .stringsdict since \n doesn't work. Use Option-Enter to insert these linebreaks."), capturedButtonString, capturedCount);
+        
+        NSString *buttonStringUncaptureRaw = stringf(NSLocalizedString(@"capture-toast.body.uncaptured", @"Note: Value for this key is defined in Localizable.stringsdict, not Localizable.strings"), uncapturedButtonString, uncapturedCount);
+        
+        NSAttributedString *buttonStringUncapture = buttonStringUncaptureRaw.attributed;
+        NSAttributedString *buttonStringCapture = buttonStringCaptureRaw.attributed;
         
         /// Add bold
-        for (NSString *buttonString in [uncapturedButtonStringArray arrayByAddingObjectsFromArray:capturedButtonStringArray]) {
-            attrNotifString = [attrNotifString attributedStringByAddingBoldForSubstring:buttonString];
+        for (NSString *buttonString in uncapturedButtonStringArray) {
+            buttonStringUncapture = [buttonStringUncapture attributedStringByAddingBoldForSubstring:buttonString];
+        }
+        for (NSString *buttonString in capturedButtonStringArray) {
+            buttonStringCapture = [buttonStringCapture attributedStringByAddingBoldForSubstring:buttonString];
         }
         
-        /// Trim & Capitalize
-        attrNotifString = [attrNotifString attributedStringByTrimmingWhitespace];
-        attrNotifString = [attrNotifString attributedStringByCapitalizingFirst];
+        /// Capitalize buttonStrings
+        buttonStringUncapture = [buttonStringUncapture attributedStringByCapitalizingFirst];
+        buttonStringCapture = [buttonStringCapture attributedStringByCapitalizingFirst];
         
-        [ToastNotificationController attachNotificationWithMessage:attrNotifString toWindow:MainAppState.shared.window forDuration:-1];
+        /// Build complete notification String
+        NSAttributedString *notifString = @"".attributed;
+        if (uncapturedCount > 0) {
+            notifString = [buttonStringUncapture attributedStringByAppending:@"\n\n".attributed];
+        }
+        if (capturedCount > 0) {
+            notifString = [[notifString attributedStringByAppending:buttonStringCapture] attributedStringByAppending:@"\n\n".attributed];
+        }
+        notifString = [notifString attributedStringByAppending:linkString];
+        
+        /// Trim
+        notifString = [notifString attributedStringByTrimmingWhitespace];
+        notifString = [notifString attributedStringByCapitalizingFirst];
+        
+        [ToastNotificationController attachNotificationWithMessage:notifString toWindow:MainAppState.shared.window forDuration:-1];
     }
 }
 

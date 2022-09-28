@@ -113,12 +113,19 @@ import CocoaLumberjackSwift
         alert.beginSheetModal(for: window) { response in
             if response == .alertFirstButtonReturn {
                 
+                /// Get user selection
+                
                 let selectedPreset = radio1.state == .on ? 3 : 5
+                
+                /// Check Change
                 
                 let currentMap = config("Remaps")
                 let defaultMap = config(selectedPreset == 3 ? "Other.defaultRemaps.threeButtons" : "Other.defaultRemaps.fiveButtons")
                 
-                if (currentMap != defaultMap) {
+                if currentMap != defaultMap {
+                    
+                    /// Update remaps
+                    
                     /// Set config
                     setConfig("Remaps", defaultMap!)
                     commitConfig()
@@ -127,9 +134,9 @@ import CocoaLumberjackSwift
                     DispatchQueue.main.async {
                         self.tableController.reloadAll()
                     }
-                }
-                
-                if currentMap == defaultMap {
+                } else { /// currentMap == defaultMap
+                    
+                    /// Display already using notifications
                     
                     let messageRaw: String
                     if selectedPreset == 3 {

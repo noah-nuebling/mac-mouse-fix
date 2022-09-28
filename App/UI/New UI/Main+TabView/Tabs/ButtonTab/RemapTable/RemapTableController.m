@@ -328,19 +328,29 @@ static void updateBorderColor(RemapTableController *object) {
     /// Used when resetting to default
     /// Similar to what we do in `- viewDidLoad`
         
+    /// Capture notifs
+    NSSet<NSNumber *> *capturedButtonsBefore = [RemapTableUtility getCapturedButtons];
+    
+    /// Get old rows
     NSIndexSet *allRowsOld = [NSIndexSet indexSetWithIndexesInRange:NSMakeRange(0, self.groupedDataModel.count)];
     
+    /// Refresh dataModel
     [self loadDataModelFromConfig];
     [self sortDataModel];
     
-    NSIndexSet *allRows = [NSIndexSet indexSetWithIndexesInRange:NSMakeRange(0, self.groupedDataModel.count)];
-    
     /// Replace all rows
-    ///     Using fade animation on removal makes the groupRow color black during the animation. So we turned animation off. Since we don't animate we could also just call `reloadTable` instead of this.
+    /// - Using fade animation on removal makes the groupRow color black during the animation. So we turned animation off.
+    /// - Since we don't animate we could also just call `reloadTable` instead of this.
+    NSIndexSet *allRows = [NSIndexSet indexSetWithIndexesInRange:NSMakeRange(0, self.groupedDataModel.count)];
     [self.tableView removeRowsAtIndexes:allRowsOld withAnimation:NSTableViewAnimationEffectNone];
     [self.tableView insertRowsAtIndexes:allRows withAnimation:NSTableViewAnimationEffectNone];
     
+    /// Update tableView size
     [(RemapTableView *)self.tableView updateSizeWithAnimation:YES];
+    
+    /// Capture notifs
+    NSSet *capturedButtonsAfter = [RemapTableUtility getCapturedButtons];
+    [CaptureNotificationCreator showButtonCaptureNotificationWithBeforeSet:capturedButtonsBefore afterSet:capturedButtonsAfter];
 }
 
 #pragma mark - Delegate & Controller

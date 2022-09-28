@@ -796,13 +796,13 @@ static NSString *effectNameForRowDict(NSDictionary * _Nonnull rowDict) {
         
         NSAttributedString *mainButton = [UIStrings getButtonString:btn.intValue].attributed;
         mainButton = [mainButton attributedStringBySettingSecondaryLabelColorForSubstring:mainButton.string];
-        tr = [NSAttributedString stringWithAttributedFormat:tr args:@[mainButton]];
+        tr = [NSAttributedString attributedStringWithAttributedFormat:tr args:@[mainButton]];
         
     } else {
         
         /// If there are no button modifiers, just remove the `%@` format string
         
-        tr = [NSAttributedString stringWithAttributedFormat:tr args:@[@"".attributed]];
+        tr = [NSAttributedString attributedStringWithAttributedFormat:tr args:@[@"".attributed]];
     }
     
     
@@ -818,7 +818,7 @@ static NSString *effectNameForRowDict(NSDictionary * _Nonnull rowDict) {
     /// Join all substrings to get result
     ///
     
-    NSAttributedString *fullTriggerCellString = [NSAttributedString stringWithAttributedFormat:@"%@ %@ %@".attributed args:@[kbMod.attributed, btnMod.attributed, tr]];
+    NSAttributedString *fullTriggerCellString = [NSAttributedString attributedStringWithAttributedFormat:@"%@ %@ %@".attributed args:@[kbMod.attributed, btnMod.attributed, tr]];
     
     /// Clean up string
     fullTriggerCellString = [fullTriggerCellString attributedStringByTrimmingWhitespace];
