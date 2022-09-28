@@ -779,27 +779,6 @@
 		4FFBC5732667DCE4001D389B /* PrefixHeader.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PrefixHeader.pch; sourceTree = "<group>"; };
 		4FFBC5A6266977CA001D389B /* Mac Mouse Fix Helper-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Mac Mouse Fix Helper-Bridging-Header.h"; sourceTree = "<group>"; };
 		4FFBC5A7266977CA001D389B /* DoubleExponentialSmoother.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DoubleExponentialSmoother.swift; sourceTree = "<group>"; };
-		F449C32228DC555E00136800 /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hant"; path = "zh-Hant.lproj/ButtonOptionsViewController.strings"; sourceTree = "<group>"; };
-		F449C32328DC555E00136800 /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hant"; path = "zh-Hant.lproj/Main.strings"; sourceTree = "<group>"; };
-		F449C32428DC555E00136800 /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hant"; path = "zh-Hant.lproj/AuthorizeAccessibilityView.strings"; sourceTree = "<group>"; };
-		F449C32528DC555E00136800 /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hant"; path = "zh-Hant.lproj/LicenseSheetController.strings"; sourceTree = "<group>"; };
-		F449C32628DC555E00136800 /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hant"; path = "zh-Hant.lproj/MenuBarItem.strings"; sourceTree = "<group>"; };
-		F449C32728DC555E00136800 /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hant"; path = "zh-Hant.lproj/Localizable.strings"; sourceTree = "<group>"; };
-		F449C32828DC555E00136800 /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.stringsdict; name = "zh-Hant"; path = "zh-Hant.lproj/Localizable.stringsdict"; sourceTree = "<group>"; };
-		F4EBD4C028DEBA8D0057D2DE /* zh-HK */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-HK"; path = "zh-HK.lproj/ButtonOptionsViewController.strings"; sourceTree = "<group>"; };
-		F4EBD4C128DEBA8D0057D2DE /* zh-HK */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-HK"; path = "zh-HK.lproj/Main.strings"; sourceTree = "<group>"; };
-		F4EBD4C228DEBA8D0057D2DE /* zh-HK */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-HK"; path = "zh-HK.lproj/AuthorizeAccessibilityView.strings"; sourceTree = "<group>"; };
-		F4EBD4C328DEBA8D0057D2DE /* zh-HK */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-HK"; path = "zh-HK.lproj/LicenseSheetController.strings"; sourceTree = "<group>"; };
-		F4EBD4C428DEBA8D0057D2DE /* zh-HK */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-HK"; path = "zh-HK.lproj/MenuBarItem.strings"; sourceTree = "<group>"; };
-		F4EBD4C528DEBA8D0057D2DE /* zh-HK */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-HK"; path = "zh-HK.lproj/Localizable.strings"; sourceTree = "<group>"; };
-		F4EBD4C628DEBA8D0057D2DE /* zh-HK */ = {isa = PBXFileReference; lastKnownFileType = text.plist.stringsdict; name = "zh-HK"; path = "zh-HK.lproj/Localizable.stringsdict"; sourceTree = "<group>"; };
-		F4EBD4C728DEFC4A0057D2DE /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/ButtonOptionsViewController.strings"; sourceTree = "<group>"; };
-		F4EBD4C828DEFC4A0057D2DE /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Main.strings"; sourceTree = "<group>"; };
-		F4EBD4C928DEFC4A0057D2DE /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/AuthorizeAccessibilityView.strings"; sourceTree = "<group>"; };
-		F4EBD4CA28DEFC4A0057D2DE /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/LicenseSheetController.strings"; sourceTree = "<group>"; };
-		F4EBD4CB28DEFC4A0057D2DE /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/MenuBarItem.strings"; sourceTree = "<group>"; };
-		F4EBD4CC28DEFC4A0057D2DE /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Localizable.strings"; sourceTree = "<group>"; };
-		F4EBD4CD28DEFC4A0057D2DE /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.stringsdict; name = "zh-Hans"; path = "zh-Hans.lproj/Localizable.stringsdict"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -2229,9 +2208,6 @@
 				en,
 				Base,
 				de,
-				"zh-Hant",
-				"zh-HK",
-				"zh-Hans",
 			);
 			mainGroup = 4FCECD7721092354001F1078;
 			packageReferences = (
@@ -2675,9 +2651,6 @@
 			children = (
 				4F09284928B8EE7200BDC2FF /* Base */,
 				4F09284C28B8EE7600BDC2FF /* de */,
-				F449C32528DC555E00136800 /* zh-Hant */,
-				F4EBD4C328DEBA8D0057D2DE /* zh-HK */,
-				F4EBD4CA28DEFC4A0057D2DE /* zh-Hans */,
 			);
 			name = LicenseSheetController.xib;
 			sourceTree = "<group>";
@@ -2687,9 +2660,6 @@
 			children = (
 				4F6B02C128AD9E4400B5BA93 /* en */,
 				4F6B02C428ADA50700B5BA93 /* de */,
-				F449C32828DC555E00136800 /* zh-Hant */,
-				F4EBD4C628DEBA8D0057D2DE /* zh-HK */,
-				F4EBD4CD28DEFC4A0057D2DE /* zh-Hans */,
 			);
 			name = Localizable.stringsdict;
 			sourceTree = "<group>";
@@ -2699,9 +2669,6 @@
 			children = (
 				4F909CFD28A0C3D2009349A2 /* Base */,
 				4FD148C628AA414100FE688C /* de */,
-				F449C32328DC555E00136800 /* zh-Hant */,
-				F4EBD4C128DEBA8D0057D2DE /* zh-HK */,
-				F4EBD4C828DEFC4A0057D2DE /* zh-Hans */,
 			);
 			name = Main.storyboard;
 			sourceTree = "<group>";
@@ -2711,9 +2678,6 @@
 			children = (
 				4F909D1828A0C3D2009349A2 /* de */,
 				4FD148FA28AA962200FE688C /* en */,
-				F449C32728DC555E00136800 /* zh-Hant */,
-				F4EBD4C528DEBA8D0057D2DE /* zh-HK */,
-				F4EBD4CC28DEFC4A0057D2DE /* zh-Hans */,
 			);
 			name = Localizable.strings;
 			sourceTree = "<group>";
@@ -2723,9 +2687,6 @@
 			children = (
 				4FD148C828AA416700FE688C /* Base */,
 				4FD148CB28AA416C00FE688C /* de */,
-				F449C32628DC555E00136800 /* zh-Hant */,
-				F4EBD4C428DEBA8D0057D2DE /* zh-HK */,
-				F4EBD4CB28DEFC4A0057D2DE /* zh-Hans */,
 			);
 			name = MenuBarItem.xib;
 			sourceTree = "<group>";
@@ -2735,9 +2696,6 @@
 			children = (
 				4FD148CD28AA423F00FE688C /* Base */,
 				4FD148D028AA424300FE688C /* de */,
-				F449C32428DC555E00136800 /* zh-Hant */,
-				F4EBD4C228DEBA8D0057D2DE /* zh-HK */,
-				F4EBD4C928DEFC4A0057D2DE /* zh-Hans */,
 			);
 			name = AuthorizeAccessibilityView.xib;
 			sourceTree = "<group>";
@@ -2747,9 +2705,6 @@
 			children = (
 				4FD148D228AA428000FE688C /* Base */,
 				4FD148DF28AA4ED100FE688C /* de */,
-				F449C32228DC555E00136800 /* zh-Hant */,
-				F4EBD4C028DEBA8D0057D2DE /* zh-HK */,
-				F4EBD4C728DEFC4A0057D2DE /* zh-Hans */,
 			);
 			name = ButtonOptionsViewController.xib;
 			sourceTree = "<group>";
