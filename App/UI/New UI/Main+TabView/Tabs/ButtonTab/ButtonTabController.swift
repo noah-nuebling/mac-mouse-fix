@@ -41,6 +41,7 @@ import CocoaLumberjackSwift
     @IBAction func openOptions(_ sender: Any) {
         ButtonOptionsViewController.add()
     }
+    
     @IBAction func restoreDefaults(_ sender: Any) {
         
         let alert = NSAlert()
@@ -55,16 +56,7 @@ import CocoaLumberjackSwift
         /// Get device info
         ///
         
-        var deviceName: NSString = ""
-        var deviceManufacturer: NSString = ""
-        var deviceButtons = 0
-        
-        if let info = SharedMessagePort.sendMessage("getActiveDeviceInfo", withPayload: nil, expectingReply: true) as! NSDictionary? {
-            
-            deviceName = info["name"] as! NSString
-            deviceManufacturer = info["manufacturer"] as! NSString
-            deviceButtons = (info["nOfButtons"] as! NSNumber).intValue
-        }
+        var (deviceName, deviceManufacturer, nOfButtons, bestPresetMatch) =  ButtonTabController.getActiveDeviceInfo() ?? (nil, nil, nil, nil)
         
         ///
         /// Add accessoryView
@@ -76,8 +68,9 @@ import CocoaLumberjackSwift
         let radioStack = NSStackView(views: [radio1, radio2])
         
         var hint: CoolNSTextField? = nil
-        if deviceButtons > 0 {
-            let hintStringRaw = String(format: NSLocalizedString("restore-buttons-alert.hint", comment: "First draft: Your __%@ %@__ mouse says it has __%d__ buttons"), deviceManufacturer, deviceName, deviceButtons)
+        if
+            let nOfButtons = nOfButtons {
+            let hintStringRaw = String(format: NSLocalizedString("restore-buttons-alert.hint", comment: "First draft: Your __%@ %@__ mouse says it has __%d__ buttons"), deviceManufacturer!, deviceName!, nOfButtons)
             let hintString = NSAttributedString(coolMarkdown: hintStringRaw)?.settingSecondaryLabelColor(forSubstring: nil).settingFontSize(NSFont.smallSystemFontSize).aligningSubstring(nil, alignment: .center).trimmingWhitespace()
             if let hintString = hintString {
                 hint = CoolNSTextField(labelWithAttributedString: hintString)
@@ -106,13 +99,8 @@ import CocoaLumberjackSwift
         
         alert.accessoryView = radioStack
         
-        ///
         ///  Select the radioButton that best matches the activeDevice
-        ///
-        
-        if deviceButtons == 0 { /// If there is no active device, use 5 button preset as default
-            radio2.state = .on
-        } else if deviceButtons == 3 {
+        if bestPresetMatch == 3 {
             radio1.state = .on
         } else {
             radio2.state = .on
@@ -125,22 +113,26 @@ import CocoaLumberjackSwift
         alert.beginSheetModal(for: window) { response in
             if response == .alertFirstButtonReturn {
                 
-                let nOfButtons: Int
-                if radio1.state == .on {
-                    nOfButtons = 3
-                } else {
-                    nOfButtons = 5
-                }
-                
-                /// Check change
+                let selectedPreset = radio1.state == .on ? 3 : 5
                 
                 let currentMap = config("Remaps")
-                let defaultMap = config(nOfButtons == 3 ? "Other.defaultRemaps.threeButtons" : "Other.defaultRemaps.fiveButtons")
+                let defaultMap = config(selectedPreset == 3 ? "Other.defaultRemaps.threeButtons" : "Other.defaultRemaps.fiveButtons")
+                
+                if (currentMap != defaultMap) {
+                    /// Set config
+                    setConfig("Remaps", defaultMap!)
+                    commitConfig()
+                    
+                    /// Reload table
+                    DispatchQueue.main.async {
+                        self.tableController.reloadAll()
+                    }
+                }
                 
                 if currentMap == defaultMap {
                     
                     let messageRaw: String
-                    if nOfButtons == 3 {
+                    if selectedPreset == 3 {
                         messageRaw = NSLocalizedString("already-using-defaults-toast.3", comment: "First draft: You're __already using__ the default setting for mice with __3 buttons__!")
                     } else {
                         messageRaw = NSLocalizedString("already-using-defaults-toast.5", comment: "First draft: You're __already using__ the default setting for mice with __5 buttons__!")
@@ -150,15 +142,6 @@ import CocoaLumberjackSwift
                         ToastNotificationController.attachNotification(withMessage: message, to: MainAppState.shared.window!, forDuration: -1.0)
                     }
                     return
-                }
-                
-                /// Set config
-                setConfig("Remaps", defaultMap!)
-                commitConfig()
-                
-                /// Reload table
-                DispatchQueue.main.async {
-                    self.tableController.reloadAll()
                 }
             }
         }
@@ -212,7 +195,16 @@ import CocoaLumberjackSwift
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
+        /// Init remaps when the helper becomes (or already is) enabled
+        ///     This doesn't really belong here. It just needs to be executed on app start (which it is, being here)
+        ///     TODO: Move this. E.g. to   `AppDelegate - applicationDidFinishLaunching`
+        ///
+        
+        EnabledState.shared.producer.startWithValues { enabled in
+            if enabled { ButtonTabController.initRemaps() }
+        }
+        
         /// Add trackingArea
         ///     Do we ever need to remove it?
         trackingArea = NSTrackingArea(rect: self.addField.bounds, options: [.mouseEnteredAndExited, .activeInKeyWindow], owner: self)
@@ -315,6 +307,70 @@ import CocoaLumberjackSwift
             
             /// Show message
             ToastNotificationController.attachNotification(withMessage: message, to: MainAppState.shared.window!, forDuration: -1, alignment: kToastNotificationAlignmentTopMiddle)
+        }
+    }
+    
+    ///
+    /// Helper
+    ///
+    
+    @objc static func initRemaps() {
+        
+        /// This func doesn't clearly belong into `ButtonTabController`
+        ///     Is called when the helper is enabled
+        
+        let hasBeenInited = config("Other.remapsAreInitialized") as! Bool? ?? false
+        
+        if !hasBeenInited {
+            
+            setConfig("Other.remapsAreInitialized", true as NSObject)
+            commitConfig()
+            
+            let (_, _, _, bestPresetMatch) = getActiveDeviceInfo() ?? (nil, nil, nil, nil)
+            
+            /// This is copy-pasted from `restoreDefaults()`
+            
+            let currentMap = config("Remaps")
+            let defaultMap = config(bestPresetMatch == 3 ? "Other.defaultRemaps.threeButtons" : "Other.defaultRemaps.fiveButtons")
+            
+            if (currentMap != defaultMap) {
+                
+                /// Set config
+                setConfig("Remaps", defaultMap!)
+                commitConfig()
+                
+                /// Reload table
+                DispatchQueue.main.async {
+                    MainAppState.shared.remapTableController?.reloadAll()
+                }
+            }
+        }
+    }
+    
+    fileprivate static func getActiveDeviceInfo() -> (deviceName: NSString, deviceManufacturer: NSString, deviceButtons: Int, bestPresetMatch: Int)? {
+        
+        /// This functnion doesn't really belong into `ButtonTabController`
+        
+        var result = (deviceName: ("" as NSString), deviceManufacturer: ("" as NSString), deviceButtons: (-1 as Int), bestPresetMatch: (-1 as Int))
+        
+        if let info = SharedMessagePort.sendMessage("getActiveDeviceInfo", withPayload: nil, expectingReply: true) as! NSDictionary? {
+            
+            result.deviceName = info["name"] as! NSString
+            result.deviceManufacturer = info["manufacturer"] as! NSString
+            result.deviceButtons = (info["nOfButtons"] as! NSNumber).intValue
+            
+            if result.deviceButtons == 0 { /// If there is no active device, use 5 button preset as default
+                result.bestPresetMatch = 5
+            } else if result.deviceButtons == 3 {
+                result.bestPresetMatch = 3
+            } else {
+                result.bestPresetMatch = 5
+            }
+            
+            return result
+            
+        } else {
+            return nil
         }
     }
     
