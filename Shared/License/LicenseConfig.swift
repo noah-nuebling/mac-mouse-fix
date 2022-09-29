@@ -77,8 +77,8 @@ import CocoaLumberjackSwift
         /// Fallback to hardcoded if no cache
         
         if !instance.isFilled {
-            instance.maxActivations = 100
-            instance.trialDays = 14
+            instance.maxActivations = 25
+            instance.trialDays = 30
             instance.price = 199
             instance.payLink = "https://noahnuebling.gumroad.com/l/mmfinapp"
             instance.quickPayLink = "https://noahnuebling.gumroad.com/l/mmfinapp?wanted=true"
