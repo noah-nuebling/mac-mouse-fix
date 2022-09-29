@@ -92,8 +92,8 @@ static CFDataRef didReceiveMessage(CFMessagePortRef port, SInt32 messageID, CFDa
         if (dev != NULL) {
                 
             response = @{
-                @"name": dev.name,
-                @"manufacturer": dev.manufacturer,
+                @"name": dev.name == nil ? @"" : dev.name,
+                @"manufacturer": dev.manufacturer == nil ? @"" : dev.manufacturer,
                 @"nOfButtons": @(dev.nOfButtons),
             };
         }

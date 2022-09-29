@@ -40,7 +40,7 @@
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
             uuid = "98907602-3CF7-4761-A05F-AADEFD0A69C3"
-            shouldBeEnabled = "No"
+            shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Helper/Core/MessagePort/MessagePort_Helper.m"
@@ -72,8 +72,8 @@
             filePath = "App/UI/New UI/Main+TabView/Tabs/ButtonTab/ButtonTabController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "122"
-            endingLineNumber = "122"
+            startingLineNumber = "123"
+            endingLineNumber = "123"
             landmarkName = "restoreDefaults(_:)"
             landmarkType = "7">
          </BreakpointContent>

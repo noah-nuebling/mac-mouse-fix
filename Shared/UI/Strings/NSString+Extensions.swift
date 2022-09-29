@@ -21,4 +21,8 @@ import Foundation
         
         return firstChar.localizedCapitalized.appending(rest) as NSString
     }
+    
+    @objc func stringByTrimmingWhiteSpace() -> NSString {
+        return self.attributed().trimmingWhitespace().string as NSString /// This is pretty inefficient but probably doesn't matter
+    }
 }

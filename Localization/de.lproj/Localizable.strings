@@ -475,8 +475,8 @@
 /* First draft: Restore */
 "restore-buttons-alert.commit" = "Wiederherstellen";
 
-/* First draft: Your __%@ %@__ mouse says it has __%d__ buttons */
-"restore-buttons-alert.hint" = "Deine __%@ %@__ Maus sagt dass sie __%d__ Tasten hat";
+/* First draft: Your __%@__ mouse says it has __%d__ buttons */
+"restore-buttons-alert.hint" = "Deine __%@__ Maus sagt dass sie __%d__ Tasten hat";
 
 /* First draft: Mouse with 3 buttons */
 "restore-buttons-alert.radio1" = "Maus mit 3 Tasten";
