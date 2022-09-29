@@ -205,9 +205,6 @@
 /* First draft: Zoom in or out in Safari and other apps.\n \nWorks like a two-finger double tap on an Apple Trackpad. */
 "effect.smart-zoom.hint" = "Zoom in or out in Safari and other apps.\n \nWorks like a two-finger double tap on an Apple Trackpad.";
 
-/* First draft: Mac Mouse Fix will stay enabled after you close it */
-"enabled-toggle.hint" = "Mac Mouse Fix will stay enabled after you close it";
-
 /* First draft: **Primary Mouse Button** can't be used\nPlease try another button */
 "forbidden-capture-toast.1" = "**Primary Mouse Button** can't be used\nPlease try another button";
 
@@ -256,11 +253,8 @@
 /* First draft: Activating your license failed for **unknown reasons**\n\nPlease write a **Bug Report** [here](https://noah-nuebling.github.io/mac-mouse-fix-feedback-assistant/?type=bug-report) */
 "license-toast.unknown-reason" = "Activating your license failed for **unknown reasons**\n\nPlease write a **Bug Report** [here](https://noah-nuebling.github.io/mac-mouse-fix-feedback-assistant/?type=bug-report)";
 
-/* First draft: Set Scroll Speed at\nSystem Settings > Mouse > Scroll Speed */
-"macos-scroll-speed-hint" = "Set Scroll Speed at\nSystem Settings > Mouse > Scroll Speed";
-
-/* First draft: Lets you quickly disable Scroll Enhancements and other features */
-"menu-bar-toggle.hint" = "Lets you quickly disable Scroll Enhancements and other features";
+/* First draft: Set Scroll Speed under\n__[%@ > Mouse > Scroll speed](%@)__ */
+"macos-scrolling-hint" = "Set Scroll Speed under\n__[%@ > Mouse > Scrolling Speed](%@)__";
 
 /* First draft: Command (⌘) */
 "modifer-key.tool.command" = "Command (⌘)";
@@ -277,8 +271,8 @@
 /* First draft: Content tracks finger movement */
 "natural-scrolling-hint" = "Content tracks finger movement";
 
-/* First draft: Scroll precisely even without a keyboard modifier by\nmoving the scroll wheel slowly || Note: The line break (\n) is there so the layout of the Scroll tab doesn't become too wide which looks weird. You can set it to your own taste. */
-"precise-scrolling-hint" = "Scroll precisely even without a keyboard modifier by\nmoving the scroll wheel slowly";
+/* First draft: Scroll precisely even __without a keyboard modifier__ by\nmoving the __scroll wheel slowly__ || Note: The line break (\n) is there so the layout of the Scroll tab doesn't become too wide which looks weird. You can set it to your own taste. */
+"precise-scrolling-hint" = "Scroll precisely even without a keyboard modifier by\nmoving the __scroll wheel slowly__";
 
 /* First draft: Desktop & Launchpad */
 "scroll-effect.4-pinch" = "Desktop & Launchpad";
@@ -451,9 +445,6 @@
 /* First draft: Type a Keyboard Shortcut */
 "type-shortcut-prompt" = "Type a Keyboard Shortcut";
 
-/* First draft: You'll be notified of updates when you open\nthis window */
-"updates-toggle.hint" = "You'll be notified of new updates when you open\nthis window";
-
 /* First draft: Back */
 "mail-alert.back" = "Back";
 
@@ -503,7 +494,13 @@
 "already-using-defaults-toast.5" = "You're __already using__ the default setting for mice with __5 buttons__!";
 
 /* Note: Value for this key is defined in Localizable.stringsdict, not Localizable.strings. || Note: The UI strings in .stringsdict have two lines. Only the first line is visible unless you start editing and then use the arrow keys to go to the second line. This is necessary to have linebreaks in .stringsdict since \n doesn't work. Use Option-Enter to insert these linebreaks. */
-"capture-toast.body.captured" = "";
+"capture-toast.body.captured" = "<>";
 
 /* Note: Value for this key is defined in Localizable.stringsdict, not Localizable.strings */
-"capture-toast.body.uncaptured" = "";
+"capture-toast.body.uncaptured" = "<>";
+
+/* First draft: System Settings */
+"system-settings-name" = "System Settings";
+
+/* First draft: System Preferences */
+"system-settings-name.pre-ventura" = "System Preferences";

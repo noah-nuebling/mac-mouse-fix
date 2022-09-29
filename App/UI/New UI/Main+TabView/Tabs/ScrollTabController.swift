@@ -43,7 +43,7 @@ class ScrollTabController: NSViewController {
     
     @IBOutlet weak var preciseSection: NSStackView!
     @IBOutlet weak var preciseToggle: NSButton!
-    @IBOutlet weak var preciseHint: NSTextField!
+    @IBOutlet weak var preciseHint: MarkdownTextField!
     
     @IBOutlet weak var horizontalModField: ModCaptureTextField!
     @IBOutlet weak var zoomModField: ModCaptureTextField!
@@ -106,7 +106,6 @@ class ScrollTabController: NSViewController {
         /// Natural direction
         naturalDirection.bindingTarget <~ naturalDirectionToggle.reactive.boolValues
         naturalDirectionToggle.reactive.boolValue <~ naturalDirection.producer
-        naturalDirectionHint.stringValue = NSLocalizedString("natural-scrolling-hint", comment: "First draft: Content tracks finger movement")
         
         /// Scroll speed
         scrollSpeed.bindingTarget <~ scrollSpeedPicker.reactive.selectedIdentifiers.map({ identifier in
@@ -119,13 +118,30 @@ class ScrollTabController: NSViewController {
         /// Precise
         precise.bindingTarget <~ preciseToggle.reactive.boolValues
         preciseToggle.reactive.boolValue <~ precise.producer
-        preciseHint.stringValue = NSLocalizedString("precise-scrolling-hint", comment: "First draft: Scroll precisely even without a keyboard modifier by\nmoving the scroll wheel slowly || Note: The line break (\n) is there so the layout of the Scroll tab doesn't become too wide which looks weird. You can set it to your own taste.")
+        let preciseHintRaw = NSLocalizedString("precise-scrolling-hint", comment: "First draft: Scroll precisely even __without a keyboard modifier__ by\nmoving the __scroll wheel slowly__ || Note: The line break (\n) is there so the layout of the Scroll tab doesn't become too wide which looks weird. You can set it to your own taste.")
+        preciseHint.attributedStringValue = NSAttributedString(coolMarkdown: preciseHintRaw, fillOutBase: false)!.fillingOutBaseAsHint()
         
+        /// Generate macOS hint string
+        ///      - Under Ventura, you can open the mouse prefpane with the URL `x-apple.systempreferences:com.apple.Mouse-Settings.extension`, but it only works when a mouse is attached and otherwise it will give weird errors, so we're not using it now. We might want to use it if  we test whether a mouse is attached beforehand, or if future Ventura Betas give less janky errors
+        ///     - A nice solution was if we had a reactive `activeDevice` class which we could attach to and update this stuff whenever it changes. See `MessagePortUtility_App.getActiveDeviceInfo()`
+        
+        var mouseSettingsURL: NSString
+        if #available(macOS 13.0, *) {
+            
+            mouseSettingsURL = "x-apple.systempreferences:com.apple.Mouse-Settings.extension"
+            mouseSettingsURL = "" /// Disable for now (see above)
+        } else {
+            mouseSettingsURL = "/System/Library/PreferencePanes/Mouse.prefPane"
+        }
+        let macOSHintRaw = String(format: NSLocalizedString("macos-scrolling-hint", comment: "First draft: Set Scroll Speed under\n__[%@ > Mouse > Scrolling Speed](%@)__"), UIStrings.systemSettingsName(), mouseSettingsURL)
+
         /// Installl the macOSHint.
         ///     We manually make the macOSHint width equal the preciseSection width, because if the width changes the window resizes from the left edge which looks crappy.
         ///     This is a really hacky solution. Move this logic into CollapsableStackView (maybe rename to AnimatingStackView or sth).
-        ///         Make a method `register(switchableViews:forArrangedSubview:)` which calculates a size that fits all those views, and then you switch between them with `switchTo(view:)`.
-        let macOSHint = CoolNSTextField(hintWithString: NSLocalizedString("macos-scroll-speed-hint", comment: "First draft: Set Scroll Speed at\nSystem Settings > Mouse > Scroll Speed"))
+        ///         Make a method `register(switchableViews:forArrangedSubview:)` which calculates a size that fits all those views, and then you switch between them with `switchTo(view:)`..
+        
+        let macOSHint = CoolNSTextField(hintWithAttributedString: NSAttributedString(coolMarkdown: macOSHintRaw, fillOutBase: false)!)
+        
         macOSHint.translatesAutoresizingMaskIntoConstraints = false
         macOSHint.setContentHuggingPriority(.required, for: .horizontal)
         macOSHint.setContentHuggingPriority(.required, for: .vertical)

@@ -21,10 +21,8 @@ class MarkdownTextField: CoolNSTextField {
         
         super.init(coder: coder)
         
-        /// Make clickable so links work
-        /// Src: https://developer.apple.com/library/archive/qa/qa1487/_index.html
-        self.allowsEditingTextAttributes = true
-        self.isSelectable = true
+        /// Make clickable
+        makeLinksClickable()
         
         /// Parse md
         guard let md = NSAttributedString(coolMarkdown: self.stringValue, fillOutBase: false) else { return }
@@ -40,9 +38,35 @@ class CoolNSTextField: NSTextField {
     // MARK: Custom init
     
     convenience init(hintWithString hintString: String) { /// Wny is this not in a NSTextField extension?
+        ///
         self.init(labelWithString: hintString)
         self.textColor = .secondaryLabelColor
         self.font = .systemFont(ofSize: NSFont.smallSystemFontSize)
+    }
+    convenience init(hintWithAttributedString hintString: NSAttributedString) { /// Wny is this not in a NSTextField extension?
+        
+        let hintString = hintString.fillingOutBaseAsHint()
+        self.init(labelWithAttributedString: hintString)
+        makeLinksClickable()
+    }
+    
+    // MARK: - Links
+    
+//    override func resetCursorRects() {
+//        /// Keep normal cursor despite setting `isSelectable` true.
+//        ///     Stops working after the field has been clicked
+//
+//        addCursorRect(bounds, cursor: .arrow)
+//    }
+    
+    func makeLinksClickable() {
+        
+        /// Make clickable so links work
+        /// This also makes the cursor an inseration cursor on hover which is weird
+        /// Src: https://developer.apple.com/library/archive/qa/qa1487/_index.html
+        
+        self.allowsEditingTextAttributes = true
+        self.isSelectable = true
     }
     
     // MARK: - Screenshots

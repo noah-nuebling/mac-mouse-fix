@@ -663,13 +663,22 @@
 
     /// Fill out default attributes, because layout code won't work if the string doesn't have a font and a textColor attribute on every character. See https://stackoverflow.com/questions/13621084/boundingrectwithsize-for-nsattributedstring-returning-wrong-size
     
-    NSFont *font = [NSFont systemFontOfSize:NSFont.systemFontSize];
-    NSColor *color = NSColor.labelColor;
-    NSDictionary *attributesDictionary = [NSDictionary dictionaryWithObjectsAndKeys:
-                                          font, NSFontAttributeName,
-                                          @(NSFontWeightMedium), NSFontWeightTrait, /// Just added this 15.08.2022 for MarkdownParser to look exactly like the lib method it's trying to replace. Hope it doesn't break anything else or look worse on older macOS. Shouldn't the default be regular?
-                                          color, NSForegroundColorAttributeName,
-                                          nil];
+    NSDictionary *attributesDictionary = @{
+        NSFontAttributeName: [NSFont systemFontOfSize:NSFont.systemFontSize],
+        NSForegroundColorAttributeName: NSColor.labelColor,
+        NSFontWeightTrait: @(NSFontWeightMedium),
+    };
+    
+    return [self attributedStringByAddingStringAttributesAsBase:attributesDictionary];
+}
+
+- (NSAttributedString *)attributedStringByFillingOutBaseAsHint {
+
+    NSDictionary *attributesDictionary = @{
+        NSFontAttributeName: [NSFont systemFontOfSize:NSFont.smallSystemFontSize],
+        NSForegroundColorAttributeName: NSColor.secondaryLabelColor,
+        NSFontWeightTrait: @(NSFontWeightRegular), /// Not sure whether to use medium or regular here
+    };
     
     return [self attributedStringByAddingStringAttributesAsBase:attributesDictionary];
 }

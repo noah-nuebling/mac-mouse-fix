@@ -19,6 +19,15 @@
 /// Other code for obtaining UI strings found in RemapTableController
 /// Function for getting extended button string for tooltips found in RemapTableController
 
++ (NSString *)systemSettingsName {
+    
+    if (@available(macOS 13.0, *)) {
+        return NSLocalizedString(@"system-settings-name", @"First draft: System Settings");
+    } else {
+        return NSLocalizedString(@"system-settings-name.pre-ventura", @"First draft: System Preferences");
+    }
+}
+
 + (NSString *)stringForKeyCode:(NSInteger)keyCode {
     
     /// Get string from MASShortcut
@@ -31,9 +40,9 @@
 
 + (NSString *)getButtonString:(MFMouseButtonNumber)buttonNumber {
     NSDictionary *buttonNumberToUIString = @{
-        @1: NSLocalizedString(@"button-string.primary", @"First draft: Primary Button"),
-        @2: NSLocalizedString(@"button-string.secondary", @"First draft: Secondary Button"),
-        @3: NSLocalizedString(@"button-string.middle", @"First draft: Middle Button"),
+        @1: NSLocalizedString(@"button-string.primary",     @"First draft: Primary Button"),
+        @2: NSLocalizedString(@"button-string.secondary",   @"First draft: Secondary Button"),
+        @3: NSLocalizedString(@"button-string.middle",      @"First draft: Middle Button"),
     };
     NSString *buttonStr = buttonNumberToUIString[@(buttonNumber)];
     if (!buttonStr) {

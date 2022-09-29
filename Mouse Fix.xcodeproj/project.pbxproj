@@ -24,6 +24,7 @@
 		4F1D7F4728A4639800253407 /* MenuBarItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F1D7F4628A4639800253407 /* MenuBarItem.swift */; };
 		4F2CC58727B8D2300084AACE /* HybridCurves.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F2CC58627B8D2300084AACE /* HybridCurves.swift */; };
 		4F2CC58927B8DA8B0084AACE /* Line.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F2CC58827B8DA8B0084AACE /* Line.swift */; };
+		4F2F0B2B28E6258B00246D59 /* MessagePortUtility_App.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F2F0B2A28E6258B00246D59 /* MessagePortUtility_App.swift */; };
 		4F319CBB26252A2D004E5F63 /* ButtonGroupRowView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F319CBA26252A2D004E5F63 /* ButtonGroupRowView.m */; };
 		4F37FAD825FDFDC5004C34C4 /* MFScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F37FAD725FDFDC4004C34C4 /* MFScrollView.m */; };
 		4F39BC26263AC31600FDF692 /* Sparkle.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4F39BC24263AC2E800FDF692 /* Sparkle.framework */; };
@@ -392,6 +393,7 @@
 		4F1D7F4628A4639800253407 /* MenuBarItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuBarItem.swift; sourceTree = "<group>"; };
 		4F2CC58627B8D2300084AACE /* HybridCurves.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HybridCurves.swift; sourceTree = "<group>"; };
 		4F2CC58827B8DA8B0084AACE /* Line.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Line.swift; sourceTree = "<group>"; };
+		4F2F0B2A28E6258B00246D59 /* MessagePortUtility_App.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessagePortUtility_App.swift; sourceTree = "<group>"; };
 		4F2F5DA625FB6FFD0037660A /* AddWindowController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AddWindowController.h; sourceTree = "<group>"; };
 		4F2F5DA725FB6FFD0037660A /* AddWindowController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AddWindowController.m; sourceTree = "<group>"; };
 		4F2F5DB125FB723D0037660A /* AddWindow.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AddWindow.xib; sourceTree = "<group>"; };
@@ -1673,6 +1675,7 @@
 			children = (
 				4FF665D825F2C92700689B77 /* MessagePort_App.h */,
 				4FF665D725F2C92700689B77 /* MessagePort_App.m */,
+				4F2F0B2A28E6258B00246D59 /* MessagePortUtility_App.swift */,
 			);
 			path = MessagePort;
 			sourceTree = "<group>";
@@ -2464,6 +2467,7 @@
 				4F909D2D28A0C3D2009349A2 /* CoolNSTextField.swift in Sources */,
 				4F79C2EA260976950067B381 /* RemapTableTranslator.m in Sources */,
 				4F909D2128A0C3D2009349A2 /* GeneralTabController.swift in Sources */,
+				4F2F0B2B28E6258B00246D59 /* MessagePortUtility_App.swift in Sources */,
 				4FB4F9FE260FDBC800806DDD /* RemapTableUtility.m in Sources */,
 				4FA40D1228A10E1900499E53 /* NSScreen+Additions.m in Sources */,
 				4FF665FD25F2C92700689B77 /* AuthorizeAccessibilityView.m in Sources */,

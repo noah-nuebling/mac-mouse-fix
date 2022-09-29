@@ -264,10 +264,10 @@
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
                             <stackView distribution="fill" orientation="vertical" alignment="leading" spacing="4" horizontalStackHuggingPriority="1000" verticalStackHuggingPriority="249.99998474121094" horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="6xF-Pl-4RE" userLabel="Master Stack" customClass="CollapsingStackView" customModule="Mac_Mouse_Fix" customModuleProvider="target">
-                                <rect key="frame" x="30" y="20" width="322" height="264"/>
+                                <rect key="frame" x="30" y="20" width="359" height="264"/>
                                 <subviews>
                                     <stackView distribution="fill" orientation="horizontal" alignment="centerY" horizontalStackHuggingPriority="999" verticalStackHuggingPriority="1000" horizontalHuggingPriority="999" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="0BS-nv-t3O" userLabel="Enable section">
-                                        <rect key="frame" x="0.0" y="214" width="322" height="50"/>
+                                        <rect key="frame" x="0.0" y="214" width="359" height="50"/>
                                         <subviews>
                                             <customView horizontalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="D4U-Df-iCp" userLabel="Text center">
                                                 <rect key="frame" x="0.0" y="0.0" width="211" height="50"/>
@@ -294,10 +294,10 @@
                                                 </constraints>
                                             </customView>
                                             <customView horizontalHuggingPriority="1" verticalHuggingPriority="1" horizontalCompressionResistancePriority="1" verticalCompressionResistancePriority="1" translatesAutoresizingMaskIntoConstraints="NO" id="8kp-Dr-8M3">
-                                                <rect key="frame" x="219" y="0.0" width="79" height="50"/>
+                                                <rect key="frame" x="219" y="0.0" width="116" height="50"/>
                                             </customView>
                                             <button horizontalHuggingPriority="1000" verticalHuggingPriority="750" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="sZr-Bl-L7e" userLabel="Enabled Toggle">
-                                                <rect key="frame" x="303" y="-3" width="22" height="56"/>
+                                                <rect key="frame" x="340" y="-3" width="22" height="56"/>
                                                 <buttonCell key="cell" type="check" bezelStyle="regularSquare" imagePosition="left" controlSize="large" state="on" inset="2" id="iOT-qL-bLt">
                                                     <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                     <font key="font" metaFont="system"/>
@@ -319,14 +319,14 @@
                                         </customSpacing>
                                     </stackView>
                                     <stackView distribution="fill" orientation="vertical" alignment="leading" horizontalStackHuggingPriority="1000" verticalStackHuggingPriority="249.99998474121094" horizontalClippingResistancePriority="999" horizontalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="gcq-dN-YnA" userLabel="Main Hidable Section" customClass="CollapsingStackView" customModule="Mac_Mouse_Fix" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="0.0" width="322" height="210"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="359" height="210"/>
                                         <subviews>
                                             <customView horizontalHuggingPriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="zUc-6f-AlY" userLabel="EnableIndent">
-                                                <rect key="frame" x="0.0" y="192" width="310" height="18"/>
+                                                <rect key="frame" x="0.0" y="192" width="359" height="18"/>
                                                 <subviews>
-                                                    <textField horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="0gD-iB-vff">
-                                                        <rect key="frame" x="-2" y="0.0" width="264" height="14"/>
-                                                        <textFieldCell key="cell" controlSize="small" alignment="left" title="Mac Mouse Fix will stay enabled after you close it" id="bew-ni-FnZ">
+                                                    <textField horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="0gD-iB-vff" customClass="MarkdownTextField" customModule="Mac_Mouse_Fix" customModuleProvider="target">
+                                                        <rect key="frame" x="-2" y="0.0" width="313" height="14"/>
+                                                        <textFieldCell key="cell" controlSize="small" alignment="left" title="Mac Mouse Fix will __stay enabled__ after you __close__ it" id="bew-ni-FnZ">
                                                             <font key="font" metaFont="smallSystem"/>
                                                             <color key="textColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
                                                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -341,10 +341,10 @@
                                                 </constraints>
                                             </customView>
                                             <customView verticalHuggingPriority="999" translatesAutoresizingMaskIntoConstraints="NO" id="FgF-8j-kMB" userLabel="Divider">
-                                                <rect key="frame" x="0.0" y="167" width="322" height="17"/>
+                                                <rect key="frame" x="0.0" y="167" width="359" height="17"/>
                                                 <subviews>
                                                     <box horizontalHuggingPriority="1000" verticalHuggingPriority="750" boxType="separator" translatesAutoresizingMaskIntoConstraints="NO" id="3RY-sV-oKD">
-                                                        <rect key="frame" x="0.0" y="6" width="322" height="5"/>
+                                                        <rect key="frame" x="0.0" y="6" width="359" height="5"/>
                                                     </box>
                                                 </subviews>
                                                 <constraints>
@@ -355,7 +355,7 @@
                                                 </constraints>
                                             </customView>
                                             <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="ncd-ap-KlE">
-                                                <rect key="frame" x="-2" y="142" width="324" height="18"/>
+                                                <rect key="frame" x="-2" y="142" width="361" height="18"/>
                                                 <buttonCell key="cell" type="check" title="Show in Menu Bar" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="ILO-GQ-vNk">
                                                     <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                     <font key="font" metaFont="system"/>
@@ -365,14 +365,14 @@
                                                 </attributedString>
                                             </button>
                                             <customView horizontalHuggingPriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="hr6-ym-FE1" userLabel="MenuBarIndent">
-                                                <rect key="frame" x="0.0" y="107" width="260" height="28"/>
+                                                <rect key="frame" x="0.0" y="107" width="234" height="28"/>
                                                 <subviews>
-                                                    <textField horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="7G6-R6-mA8">
-                                                        <rect key="frame" x="18" y="0.0" width="244" height="28"/>
+                                                    <textField horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="7G6-R6-mA8" customClass="MarkdownTextField" customModule="Mac_Mouse_Fix" customModuleProvider="target">
+                                                        <rect key="frame" x="18" y="0.0" width="218" height="28"/>
                                                         <textFieldCell key="cell" controlSize="small" alignment="left" id="AqN-zN-yDS">
                                                             <font key="font" metaFont="smallSystem"/>
-                                                            <string key="title">Lets you quickly disable scroll enhancements 
-and other features</string>
+                                                            <string key="title">Lets you __quickly turn off__ or on scroll
+enhancements and other __features__</string>
                                                             <color key="textColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
                                                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                         </textFieldCell>
@@ -386,10 +386,10 @@ and other features</string>
                                                 </constraints>
                                             </customView>
                                             <customView verticalHuggingPriority="999" translatesAutoresizingMaskIntoConstraints="NO" id="Xec-u6-Sj4" userLabel="Divider">
-                                                <rect key="frame" x="0.0" y="82" width="322" height="17"/>
+                                                <rect key="frame" x="0.0" y="82" width="359" height="17"/>
                                                 <subviews>
                                                     <box horizontalHuggingPriority="1000" verticalHuggingPriority="750" boxType="separator" translatesAutoresizingMaskIntoConstraints="NO" id="nVG-pc-I1x">
-                                                        <rect key="frame" x="0.0" y="6" width="322" height="5"/>
+                                                        <rect key="frame" x="0.0" y="6" width="359" height="5"/>
                                                     </box>
                                                 </subviews>
                                                 <constraints>
@@ -400,7 +400,7 @@ and other features</string>
                                                 </constraints>
                                             </customView>
                                             <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="QDk-6I-X23">
-                                                <rect key="frame" x="-2" y="57" width="324" height="18"/>
+                                                <rect key="frame" x="-2" y="57" width="361" height="18"/>
                                                 <buttonCell key="cell" type="check" title="Check for Updates" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="tdD-8Q-JB2">
                                                     <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                     <font key="font" metaFont="system"/>
@@ -410,10 +410,10 @@ and other features</string>
                                                 </attributedString>
                                             </button>
                                             <customView horizontalHuggingPriority="999" verticalHuggingPriority="999" horizontalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="ojq-7M-UaO" userLabel="Updates extra section">
-                                                <rect key="frame" x="0.0" y="0.0" width="322" height="50"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="381" height="50"/>
                                                 <subviews>
                                                     <stackView distribution="fill" orientation="vertical" alignment="leading" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" horizontalCompressionResistancePriority="1000" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Qge-4e-4FA">
-                                                        <rect key="frame" x="20" y="0.0" width="302" height="50"/>
+                                                        <rect key="frame" x="20" y="0.0" width="361" height="50"/>
                                                         <subviews>
                                                             <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="fB0-6j-bId">
                                                                 <rect key="frame" x="-1" y="35" width="115" height="16"/>
@@ -425,12 +425,12 @@ and other features</string>
                                                                     <fragment content="General &gt; Get Beta Versions Toggle"/>
                                                                 </attributedString>
                                                             </button>
-                                                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="tvD-Xi-viR">
-                                                                <rect key="frame" x="-2" y="0.0" width="234" height="28"/>
+                                                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="tvD-Xi-viR" customClass="MarkdownTextField" customModule="Mac_Mouse_Fix" customModuleProvider="target">
+                                                                <rect key="frame" x="-2" y="0.0" width="284" height="28"/>
                                                                 <textFieldCell key="cell" controlSize="small" alignment="left" id="SaY-fF-d1s">
                                                                     <font key="font" metaFont="smallSystem"/>
-                                                                    <string key="title">You'll be notified of updates when you open
-this window</string>
+                                                                    <string key="title">You'll be __notified of updates__ when you __open__
+Mac Mouse Fix</string>
                                                                     <color key="textColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
                                                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                                 </textFieldCell>
@@ -509,7 +509,7 @@ this window</string>
                 </viewController>
                 <customObject id="Xyx-3e-X6a" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1740" y="1488"/>
+            <point key="canvasLocation" x="-1740.5" y="1487.5"/>
         </scene>
         <!--Button View Controller-->
         <scene sceneID="FLK-3Q-9Mg">
@@ -529,7 +529,7 @@ this window</string>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <subviews>
                                                 <imageView identifier="PlusIcon" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Jod-JU-J5j">
-                                                    <rect key="frame" x="223" y="38.5" width="60" height="66.5"/>
+                                                    <rect key="frame" x="221" y="38.5" width="60" height="66.5"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                                     <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyUpOrDown" image="plus" catalog="system" id="EyU-is-YRF"/>
                                                     <color key="contentTintColor" name="placeholderTextColor" catalog="System" colorSpace="catalog"/>
@@ -631,7 +631,7 @@ this window</string>
                                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                                     <subviews>
                                                                         <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="AHZ-Kd-4Xf">
-                                                                            <rect key="frame" x="-8" y="3" width="295" height="16"/>
+                                                                            <rect key="frame" x="-8" y="3" width="294" height="16"/>
                                                                             <constraints>
                                                                                 <constraint firstAttribute="height" constant="16" id="iEl-dG-QM5"/>
                                                                             </constraints>
@@ -666,7 +666,7 @@ this window</string>
                                                             <tableColumnResizingMask key="resizingMask" resizeWithTable="YES"/>
                                                             <prototypeCellViews>
                                                                 <tableCellView identifier="effectCell" translatesAutoresizingMaskIntoConstraints="NO" id="Epw-SW-Ew3" customClass="RemapTableCellView" customModule="Mac_Mouse_Fix" customModuleProvider="target">
-                                                                    <rect key="frame" x="312.5" y="0.0" width="223" height="39"/>
+                                                                    <rect key="frame" x="312" y="0.0" width="223" height="39"/>
                                                                     <subviews>
                                                                         <popUpButton verticalHuggingPriority="750" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="Pw9-ZH-Tb7">
                                                                             <rect key="frame" x="0.0" y="6" width="224" height="25"/>
@@ -694,7 +694,7 @@ this window</string>
                                                                     </constraints>
                                                                 </tableCellView>
                                                                 <tableCellView identifier="keyCaptureCell" translatesAutoresizingMaskIntoConstraints="NO" id="MzR-b1-853" customClass="RemapTableCellView" customModule="Mac_Mouse_Fix" customModuleProvider="target">
-                                                                    <rect key="frame" x="312.5" y="39" width="220" height="39"/>
+                                                                    <rect key="frame" x="312" y="39" width="220" height="39"/>
                                                                     <subviews>
                                                                         <button hidden="YES" focusRingType="exterior" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="psy-Jg-KLq">
                                                                             <rect key="frame" x="-4" y="3" width="228" height="32"/>
@@ -1054,7 +1054,7 @@ this window</string>
                                                     <customView horizontalHuggingPriority="999" verticalHuggingPriority="999" translatesAutoresizingMaskIntoConstraints="NO" id="WnW-0I-ajJ" userLabel="Indent">
                                                         <rect key="frame" x="0.0" y="0.0" width="293" height="50"/>
                                                         <subviews>
-                                                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="Yn5-ch-Oxi">
+                                                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="Yn5-ch-Oxi" customClass="MarkdownTextField" customModule="Mac_Mouse_Fix" customModuleProvider="target">
                                                                 <rect key="frame" x="18" y="0.0" width="277" height="50"/>
                                                                 <textFieldCell key="cell" controlSize="small" alignment="left" title="&lt;Scroll precisely by moving the scroll wheel slowly&gt;" id="1nK-vb-jNz">
                                                                     <font key="font" metaFont="smallSystem"/>

@@ -1,12 +1,3 @@
-/* First draft: Mac Mouse Fix will stay enabled after you close it */
-"enabled-toggle.hint" = "Mac Mouse Fix bleibt eingeschaltet nachdem du\nes beendest";
-
-/* First draft: Lets you quickly disable Scroll Enhancements and other features */
-"menu-bar-toggle.hint" = "[Noch nicht verwendet]";
-
-/* First draft: You'll be notified of updates when you open\nthis window */
-"updates-toggle.hint" = "Du wirst über Updates benachrichtigt werden\nwenn du dieses Fenster öffnest";
-
 /* First draft: Mac Mouse Fix was **disabled** in System Settings.\nTo enable Mac Mouse Fix:\n\n1. Go to [Login Items Settings](x-apple.systempreferences:com.apple.LoginItems-Settings.extension)\n2. Switch on \'Mac Mouse Fix.app\' */
 "is-disabled-toast" = "Mac Mouse Fix wurde in den Systemeinstellungen **deaktiviert**.\nUm Mac Mouse Fix zu aktivieren:\n\n1. Öffne die [Anmeldeobjekte-Einstellungen](x-apple.systempreferences:com.apple.LoginItems-Settings.extension)\n2. Aktiviere \'Mac Mouse Fix.app\'";
 
@@ -16,14 +7,14 @@
 /* First draft: Enabled Mac Mouse Fix for __Scrolling__\nIt had been disabled from the Menu Bar %@ || Note: Where %@ will be replaced by the menubar icon */
 "scroll-revive-toast" = "Mac Mouse Fix __aktiviert__ für __Scrollen__\nEs war in der Menüleiste %@ deakiviert worden";
 
-/* First draft: Set Scroll Speed at\nSystem Settings > Mouse > Scroll Speed */
-"macos-scroll-speed-hint" = "Stelle das Scrolltempo ein unter\nSystemeinstellungen > Maus > Scrolltempo";
+/* First draft: Set Scroll Speed under\n__[%@ > Mouse > Scrolling Speed](%@)__ */
+"macos-scrolling-hint" = "Stelle das Scrolltempo ein unter\n__[%@ > Maus > Scrolltempo](%@)__";
 
 /* First draft: Content tracks finger movement */
 "natural-scrolling-hint" = "Inhalte folgen Finger-Bewegung";
 
-/* First draft: Scroll precisely even without a keyboard modifier by\nmoving the scroll wheel slowly || Note: The line break (\n) is there so the layout of the Scroll tab doesn't become too wide which looks weird. You can set it to your own taste. */
-"precise-scrolling-hint" = "Scrolle auch ohne Sondertaste präzise indem du das\nScrollrad langsam bewegst";
+/* First draft: Scroll precisely even __without a keyboard modifier__ by\nmoving the __scroll wheel slowly__ || Note: The line break (\n) is there so the layout of the Scroll tab doesn't become too wide which looks weird. You can set it to your own taste. */
+"precise-scrolling-hint" = "Scrolle auch __ohne Sondertaste__ präzise indem du das\n__Scrollrad langsam__ bewegst";
 
 /* First draft: Spaces & Mission Control */
 "drag-effect.dock-swipe" = "Spaces & Mission Control";
@@ -503,7 +494,13 @@
 "already-using-defaults-toast.5" = "Du __verwendest bereits__ die Standard-Einstellung für Mäuse mit __5+ Tasten__!";
 
 /* Note: Value for this key is defined in Localizable.stringsdict, not Localizable.strings. || Note: The UI strings in .stringsdict have two lines. Only the first line is visible unless you start editing and then use the arrow keys to go to the second line. This is necessary to have linebreaks in .stringsdict since \n doesn't work. Use Option-Enter to insert these linebreaks. */
-"capture-toast.body.captured" = "";
+"capture-toast.body.captured" = "<>";
 
 /* Note: Value for this key is defined in Localizable.stringsdict, not Localizable.strings */
-"capture-toast.body.uncaptured" = "";
+"capture-toast.body.uncaptured" = "<>";
+
+/* First draft: System Settings */
+"system-settings-name" = "Systemeinstellungen";
+
+/* First draft: System Preferences */
+"system-settings-name.pre-ventura" = "Systemeinstellungen";

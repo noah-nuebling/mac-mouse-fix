@@ -34,6 +34,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (NSAttributedString *)attributedStringByAddingSymbolicFontTraits:(NSFontDescriptorSymbolicTraits)traits;
 
 - (NSAttributedString *)attributedStringByFillingOutBase;
+- (NSAttributedString *)attributedStringByFillingOutBaseAsHint;
 
 - (NSAttributedString *)attributedStringByAddingStringAttributesAsBase:(NSDictionary<NSAttributedStringKey, id> *)baseAttributes;
 - (NSAttributedString *)attributedStringByAddingLinkWithURL:(NSURL *)linkURL forSubstring:(NSString *)substring;
