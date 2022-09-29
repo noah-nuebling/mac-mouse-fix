@@ -45,29 +45,14 @@ import CocoaLumberjackSwift
         /// It seems theres a solution after all!!
         ///     See https://developer.apple.com/forums/thread/107533
         
-        if #available(macOS 10.13, *) {
+        let data = try NSKeyedArchiver.archivedData(withRootObject: original, requiringSecureCoding: false)
         
-            let data = try NSKeyedArchiver.archivedData(withRootObject: original, requiringSecureCoding: false)
-            
-            let unarchiver = try NSKeyedUnarchiver(forReadingFrom: data)
-            unarchiver.requiresSecureCoding = false
-            
-            let copy = unarchiver.decodeObject(forKey: NSKeyedArchiveRootObjectKey) as! T
-            
-            return copy
-            
-        } else { /// Fallback
-            
-            let data = NSKeyedArchiver.archivedData(withRootObject: original)
-            
-            let unarchiver = NSKeyedUnarchiver(forReadingWith: data)
-            unarchiver.requiresSecureCoding = false
-            
-            let copy = unarchiver.decodeObject(forKey: NSKeyedArchiveRootObjectKey) as! T
-            
-            return copy
-            
-        }
+        let unarchiver = try NSKeyedUnarchiver(forReadingFrom: data)
+        unarchiver.requiresSecureCoding = false
+        
+        let copy = unarchiver.decodeObject(forKey: NSKeyedArchiveRootObjectKey) as! T
+        
+        return copy
     }
     
     @objc static func shallowCopy(of object: NSObject) -> NSObject {

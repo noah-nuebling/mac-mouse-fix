@@ -162,8 +162,8 @@ class TrialSectionManager {
                 }
                 
                 /// Configure image
-                if #available(macOS 11.0, *) { newSection.imageView?.symbolConfiguration = .init(pointSize: 13, weight: .medium, scale: .large) }
                 if #available(macOS 10.14, *) { newSection.imageView?.contentTintColor = .linkColor }
+                if #available(macOS 11.0, *) { newSection.imageView?.symbolConfiguration = .init(pointSize: 13, weight: .medium, scale: .large) }
                 
                 /// Set image
                 newSection.imageView?.image = image

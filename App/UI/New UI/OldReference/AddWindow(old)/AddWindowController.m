@@ -100,7 +100,7 @@ static BOOL _pointerIsInsideAddField;
     // Send payload to RemapTableController
     //      The payload is an almost finished remapsTable (aka RemapTableController.dataModel) entry with the kMFRemapsKeyEffect key missing
     [((RemapTableController *)AppDelegate.instance.remapsTable.delegate) addRowWithHelperPayload:(NSDictionary *)payload];
-    // Reset plus image tint
+    /// Reset plus image tint
     if (@available(macOS 10.14, *)) {
         plusIconViewCopy.alphaValue = 0.0;
         [plusIconViewCopy removeFromSuperview];
@@ -109,7 +109,7 @@ static BOOL _pointerIsInsideAddField;
 }
 
 + (void)enableAddFieldHoverEffect:(BOOL)enable {
-    // None of this works
+    /// None of this works
     NSBox *af = _instance.addField;
     NSView *afSub = _instance.addField.subviews[0];
     if (enable) {

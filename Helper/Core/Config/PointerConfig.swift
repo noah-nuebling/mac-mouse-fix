@@ -395,15 +395,7 @@ class PointerConfig: NSObject {
         let urlToPlist = URL(fileURLWithPath: pathToPlist)
         do {
             
-            var plist: NSDictionary = [:]
-            if #available(macOS 10.13, *) {
-                plist = try NSDictionary(contentsOf: urlToPlist, error: ())
-            } else {
-                guard let _plist = NSDictionary(contentsOf: urlToPlist) else {
-                    throw NSError()
-                }
-                plist = _plist
-            }
+            var plist: NSDictionary = try NSDictionary(contentsOf: urlToPlist, error: ())
             
             guard let _result = plist.value(forKeyPath: "IOKitPersonalities.HID Keyboard Driver.HIDAccelCurves") as? NSArray else {
                 throw NSError()

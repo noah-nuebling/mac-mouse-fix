@@ -299,23 +299,13 @@ static void iteratePropertiesOn(id obj, void(^callback)(objc_property_t property
 + (NSString *)launchCLT:(NSURL *)executableURL withArguments:(NSArray<NSString *> *)arguments error:(NSError ** _Nullable)error {
     
     NSPipe * launchctlOutput = [NSPipe pipe];
+        
+    NSTask *task = [[NSTask alloc] init];
+    [task setExecutableURL: executableURL.absoluteURL];
+    [task setArguments: arguments];
+    [task setStandardOutput: launchctlOutput];
     
-    if (@available(macOS 10.13, *)) { // macOS version 10.13+
-        
-        NSTask *task = [[NSTask alloc] init];
-        [task setExecutableURL: executableURL.absoluteURL];
-        [task setArguments: arguments];
-        [task setStandardOutput: launchctlOutput];
-        
-        [task launchAndReturnError:error];
-    } else { /// Fallback on earlier versions
-        NSTask *task = [[NSTask alloc] init];
-        [task setLaunchPath: executableURL.path];
-        [task setArguments: arguments];
-        [task setStandardOutput: launchctlOutput];
-        
-        [task launch];
-    }
+    [task launchAndReturnError:error];
     
     /// Get output
     
@@ -332,14 +322,8 @@ static void iteratePropertiesOn(id obj, void(^callback)(objc_property_t property
 
 + (void)launchCLT:(NSURL *)commandLineTool
          withArgs:(NSArray <NSString *> *)args {
-    
-    if (@available(macOS 10.13, *)) {
         
-        [NSTask launchedTaskWithExecutableURL:commandLineTool arguments:args error:nil terminationHandler:nil];
-        
-    } else { /// Fallback on earlier versions
-        [NSTask launchedTaskWithLaunchPath:commandLineTool.path arguments: args];
-    }
+    [NSTask launchedTaskWithExecutableURL:commandLineTool arguments:args error:nil terminationHandler:nil];
 }
 
 #pragma mark - Monitor file system

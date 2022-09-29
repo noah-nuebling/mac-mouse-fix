@@ -234,31 +234,23 @@ static BOOL helperIsActive_PList() {
 static void enableHelper_PList(BOOL enable) {
     
     /// This is the main function for the 'old method' where we were manually managing a plist file. Under Ventura we switched to a new framework
-    
-    if (@available(macOS 10.13, *)) {
-        NSTask *task = [[NSTask alloc] init];
-        task.executableURL = [NSURL fileURLWithPath: kMFLaunchctlPath];
-        NSString *GUIDomainArgument = [NSString stringWithFormat:@"gui/%d", geteuid()];
-        NSString *OnOffArgument = (enable) ? @"bootstrap": @"bootout";
-        NSString *launchdPlistPathArgument = Locator.launchdPlistURL.path;
-        task.arguments = @[OnOffArgument, GUIDomainArgument, launchdPlistPathArgument];
-        NSPipe *pipe = NSPipe.pipe;
-        task.standardError = pipe;
-        task.standardOutput = pipe;
-        NSError *error;
-        task.terminationHandler = ^(NSTask *task) {
-            if (enable == NO) { /// Cleanup (delete launchdPlist) file after were done // We can't clean up immediately cause then launchctl will fail
-                removeLaunchdPlist();
-            }
-            DDLogInfo(@"launchctl terminated with stdout/stderr: %@, error: %@", [NSString.alloc initWithData:pipe.fileHandleForReading.readDataToEndOfFile encoding:NSUTF8StringEncoding], error);
-        };
-        [task launchAndReturnError:&error];
-        
-    } else {
-        /// Fallback on earlier versions. TODO: Remove  since we don't support macOS pre 10.13 anymore
-        NSString *OnOffArgumentOld = (enable) ? @"load": @"unload";
-        [NSTask launchedTaskWithLaunchPath: kMFLaunchctlPath arguments: @[OnOffArgumentOld, Locator.launchdPlistURL.path]]; /// Can't clean up here easily cause there's no termination handler
-    }
+    NSTask *task = [[NSTask alloc] init];
+    task.executableURL = [NSURL fileURLWithPath: kMFLaunchctlPath];
+    NSString *GUIDomainArgument = [NSString stringWithFormat:@"gui/%d", geteuid()];
+    NSString *OnOffArgument = (enable) ? @"bootstrap": @"bootout";
+    NSString *launchdPlistPathArgument = Locator.launchdPlistURL.path;
+    task.arguments = @[OnOffArgument, GUIDomainArgument, launchdPlistPathArgument];
+    NSPipe *pipe = NSPipe.pipe;
+    task.standardError = pipe;
+    task.standardOutput = pipe;
+    NSError *error;
+    task.terminationHandler = ^(NSTask *task) {
+        if (enable == NO) { /// Cleanup (delete launchdPlist) file after were done // We can't clean up immediately cause then launchctl will fail
+            removeLaunchdPlist();
+        }
+        DDLogInfo(@"launchctl terminated with stdout/stderr: %@, error: %@", [NSString.alloc initWithData:pipe.fileHandleForReading.readDataToEndOfFile encoding:NSUTF8StringEncoding], error);
+    };
+    [task launchAndReturnError:&error];
 }
 
 static void removeLaunchdPlist() {

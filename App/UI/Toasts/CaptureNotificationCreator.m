@@ -78,21 +78,23 @@
         buttonStringUncapture = [buttonStringUncapture attributedStringByCapitalizingFirst];
         buttonStringCapture = [buttonStringCapture attributedStringByCapitalizingFirst];
         
-        /// Build complete notification String
-        NSAttributedString *notifString = @"".attributed;
-        if (uncapturedCount > 0) {
-            notifString = [buttonStringUncapture attributedStringByAppending:@"\n\n".attributed];
+        /// Build notification body string
+        ///
+        NSAttributedString *body = @"".attributed;
+        
+        if (uncapturedCount > 0) { /// Need to do this despite trimming whitespace due to linebreaks `\n\n`
+            body = [buttonStringUncapture attributedStringByAppending:@"\n\n".attributed];
         }
         if (capturedCount > 0) {
-            notifString = [[notifString attributedStringByAppending:buttonStringCapture] attributedStringByAppending:@"\n\n".attributed];
+            body = [[body attributedStringByAppending:buttonStringCapture] attributedStringByAppending:@"\n\n".attributed];
         }
-        notifString = [notifString attributedStringByAppending:linkString];
+        body = [body attributedStringByAppending:linkString];
         
         /// Trim
-        notifString = [notifString attributedStringByTrimmingWhitespace];
-        notifString = [notifString attributedStringByCapitalizingFirst];
+        body = [body attributedStringByTrimmingWhitespace];
         
-        [ToastNotificationController attachNotificationWithMessage:notifString toWindow:MainAppState.shared.window forDuration:-1];
+        /// Show notification
+        [ToastNotificationController attachNotificationWithMessage:body toWindow:MainAppState.shared.window forDuration:-1];
     }
 }
 
