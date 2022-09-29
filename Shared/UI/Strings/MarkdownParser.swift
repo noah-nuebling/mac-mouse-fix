@@ -30,7 +30,7 @@ import CocoaLumberjackSwift
         
         let walkerResult = walker.string
         
-        return walkerResult.fillingOutBase()
+        return walkerResult /// Remember to fill out base before using this in UI
     }
     
 }

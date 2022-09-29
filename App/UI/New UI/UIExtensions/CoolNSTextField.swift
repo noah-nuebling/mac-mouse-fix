@@ -9,6 +9,32 @@
 
 import Cocoa
 
+class MarkdownTextField: CoolNSTextField {
+    
+    /// This is intended to be used in IB, and it will parse the string set in IB as markdown automatically
+    
+    required init?(coder: NSCoder) {
+        
+        /// Init from IB
+        
+        /// Init super
+        
+        super.init(coder: coder)
+        
+        /// Make clickable so links work
+        /// Src: https://developer.apple.com/library/archive/qa/qa1487/_index.html
+        self.allowsEditingTextAttributes = true
+        self.isSelectable = true
+        
+        /// Parse md
+        guard let md = NSAttributedString(coolMarkdown: self.stringValue, fillOutBase: false) else { return }
+        let oldAttributes = self.attributedStringValue.attributes(at: 0, effectiveRange: nil)
+        let md2 = md.addingStringAttributes(asBase: oldAttributes)
+        self.attributedStringValue = md2
+    }
+    
+}
+
 class CoolNSTextField: NSTextField {
     
     // MARK: Custom init

@@ -228,6 +228,13 @@
 
 + (NSAttributedString * _Nullable)attributedStringWithCoolMarkdown:(NSString *)md {
     
+    return [self attributedStringWithCoolMarkdown:md fillOutBase:YES];
+}
+
++ (NSAttributedString * _Nullable)attributedStringWithCoolMarkdown:(NSString *)md fillOutBase:(BOOL)fillOutBase {
+    
+    NSAttributedString *result = nil;
+    
     if (@available(macOS 13.0, *)) {
         
         /// Use library function
@@ -243,17 +250,20 @@
         options.interpretedSyntax = NSAttributedStringMarkdownInterpretedSyntaxInlineOnlyPreservingWhitespace;
         
         /// Create string
-        NSAttributedString *result = [[NSAttributedString alloc] initWithMarkdownString:md options:options baseURL:[NSURL URLWithString:@""] error:nil];
-        
-        /// Return result
-        return [result attributedStringByFillingOutBase];
+        result = [[NSAttributedString alloc] initWithMarkdownString:md options:options baseURL:[NSURL URLWithString:@""] error:nil];
         
     } else {
         
         /// Fallback to custom function
         
-        return [MarkdownParser attributedStringWithMarkdown:md];
+        result = [MarkdownParser attributedStringWithMarkdown:md];
     }
+    
+    if (fillOutBase) {
+        result = [result attributedStringByFillingOutBase];
+    }
+    
+    return result;
 }
 
 #pragma mark Attributed string attributes

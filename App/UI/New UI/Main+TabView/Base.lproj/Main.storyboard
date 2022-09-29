@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="21223" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="B8D-0N-5wS">
+<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="21506" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="B8D-0N-5wS">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="21223"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="21506"/>
         <capability name="Image references" minToolsVersion="12.0"/>
         <capability name="System colors introduced in macOS 10.14" minToolsVersion="10.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -521,11 +521,11 @@
                                     <customView horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="OIq-v6-9Zy" userLabel="HintWrap">
                                         <rect key="frame" x="0.0" y="248" width="541" height="50"/>
                                         <subviews>
-                                            <textField horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="7En-Ho-Dyb">
+                                            <textField horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="7En-Ho-Dyb" customClass="MarkdownTextField" customModule="Mac_Mouse_Fix" customModuleProvider="target">
                                                 <rect key="frame" x="-2" y="12" width="545" height="38"/>
                                                 <textFieldCell key="cell" alignment="center" id="N7H-9j-DIr">
                                                     <font key="font" metaFont="smallSystem"/>
-                                                    <string key="title">Move the mouse pointer inside the '+' field, then click a mouse button to assign an action to it.  You can also Double Click, Click and Drag and more.</string>
+                                                    <string key="title">Move the mouse pointer inside the '+' field, then click a mouse button to assign an action to it.  You can also __Double Click__, __Click and Drag__ and [more](https://google.com).</string>
                                                     <color key="textColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
                                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                 </textFieldCell>
@@ -602,11 +602,11 @@
                                                                     </connections>
                                                                 </tableCellView>
                                                                 <tableCellView identifier="buttonGroupCell" id="pxf-x1-gL5" userLabel="ButtonGroupCell">
-                                                                    <rect key="frame" x="8" y="38" width="287" height="22"/>
+                                                                    <rect key="frame" x="8" y="38" width="288" height="22"/>
                                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                                     <subviews>
                                                                         <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="AHZ-Kd-4Xf">
-                                                                            <rect key="frame" x="-8" y="3" width="294" height="16"/>
+                                                                            <rect key="frame" x="-8" y="3" width="295" height="16"/>
                                                                             <constraints>
                                                                                 <constraint firstAttribute="height" constant="16" id="iEl-dG-QM5"/>
                                                                             </constraints>
