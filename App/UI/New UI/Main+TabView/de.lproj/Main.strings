@@ -88,7 +88,7 @@
 /* Class = "NSMenuItem"; title = "Bring All to Front"; ObjectID = "aZA-uL-uvx"; */
 "aZA-uL-uvx.title" = "Alle nach vorne bringen";
 
-/* Class = "NSTextFieldCell"; title = "<Enable Hint>"; ObjectID = "bew-ni-FnZ"; */
+/* Class = "NSTextFieldCell"; title = "Mac Mouse Fix will stay enabled after you close it"; ObjectID = "bew-ni-FnZ"; */
 "bew-ni-FnZ.title" = "<>";
 
 /* Class = "NSMenuItem"; title = "High"; ObjectID = "bIE-g7-3St"; Note = "Scrolling > Scroll Speed > High Option"; */
@@ -223,7 +223,7 @@
 /* Class = "NSMenuItem"; title = "Paste"; ObjectID = "S6k-al-LbR"; */
 "S6k-al-LbR.title" = "Einsetzen";
 
-/* Class = "NSTextFieldCell"; title = "<Scroll precisely by moving the scroll wheel slowly>"; ObjectID = "SaY-fF-d1s"; */
+/* Class = "NSTextFieldCell"; title = "You'll be notified of updates when you open\nthis window"; ObjectID = "SaY-fF-d1s"; */
 "SaY-fF-d1s.title" = "<>";
 
 /* Class = "NSButtonCell"; title = "Check for Updates"; ObjectID = "tdD-8Q-JB2"; Note = "General > Check for Updates Toggle"; */
@@ -300,3 +300,6 @@
 
 /* Class = "NSMenuItem"; title = "Activate License..."; ObjectID = "YBT-Ar-F4S"; */
 "YBT-Ar-F4S.title" = "Lizenz aktivieren...";
+
+/* Class = "NSTextFieldCell"; title = "Lets you quickly disable scroll enhancements \nand other features"; ObjectID = "AqN-zN-yDS"; */
+"AqN-zN-yDS.title" = "";

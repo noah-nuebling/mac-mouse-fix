@@ -264,10 +264,10 @@
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
                             <stackView distribution="fill" orientation="vertical" alignment="leading" spacing="4" horizontalStackHuggingPriority="1000" verticalStackHuggingPriority="249.99998474121094" horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="6xF-Pl-4RE" userLabel="Master Stack" customClass="CollapsingStackView" customModule="Mac_Mouse_Fix" customModuleProvider="target">
-                                <rect key="frame" x="30" y="20" width="293" height="231"/>
+                                <rect key="frame" x="30" y="20" width="322" height="264"/>
                                 <subviews>
                                     <stackView distribution="fill" orientation="horizontal" alignment="centerY" horizontalStackHuggingPriority="999" verticalStackHuggingPriority="1000" horizontalHuggingPriority="999" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="0BS-nv-t3O" userLabel="Enable section">
-                                        <rect key="frame" x="0.0" y="181" width="293" height="50"/>
+                                        <rect key="frame" x="0.0" y="214" width="322" height="50"/>
                                         <subviews>
                                             <customView horizontalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="D4U-Df-iCp" userLabel="Text center">
                                                 <rect key="frame" x="0.0" y="0.0" width="211" height="50"/>
@@ -294,10 +294,10 @@
                                                 </constraints>
                                             </customView>
                                             <customView horizontalHuggingPriority="1" verticalHuggingPriority="1" horizontalCompressionResistancePriority="1" verticalCompressionResistancePriority="1" translatesAutoresizingMaskIntoConstraints="NO" id="8kp-Dr-8M3">
-                                                <rect key="frame" x="219" y="0.0" width="50" height="50"/>
+                                                <rect key="frame" x="219" y="0.0" width="79" height="50"/>
                                             </customView>
                                             <button horizontalHuggingPriority="1000" verticalHuggingPriority="750" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="sZr-Bl-L7e" userLabel="Enabled Toggle">
-                                                <rect key="frame" x="274" y="-3" width="22" height="56"/>
+                                                <rect key="frame" x="303" y="-3" width="22" height="56"/>
                                                 <buttonCell key="cell" type="check" bezelStyle="regularSquare" imagePosition="left" controlSize="large" state="on" inset="2" id="iOT-qL-bLt">
                                                     <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                     <font key="font" metaFont="system"/>
@@ -319,14 +319,14 @@
                                         </customSpacing>
                                     </stackView>
                                     <stackView distribution="fill" orientation="vertical" alignment="leading" horizontalStackHuggingPriority="1000" verticalStackHuggingPriority="249.99998474121094" horizontalClippingResistancePriority="999" horizontalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="gcq-dN-YnA" userLabel="Main Hidable Section" customClass="CollapsingStackView" customModule="Mac_Mouse_Fix" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="0.0" width="293" height="177"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="322" height="210"/>
                                         <subviews>
                                             <customView horizontalHuggingPriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="zUc-6f-AlY" userLabel="EnableIndent">
-                                                <rect key="frame" x="0.0" y="159" width="124" height="18"/>
+                                                <rect key="frame" x="0.0" y="192" width="310" height="18"/>
                                                 <subviews>
                                                     <textField horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="0gD-iB-vff">
-                                                        <rect key="frame" x="-2" y="0.0" width="78" height="14"/>
-                                                        <textFieldCell key="cell" controlSize="small" alignment="left" title="&lt;Enable Hint&gt;" id="bew-ni-FnZ">
+                                                        <rect key="frame" x="-2" y="0.0" width="264" height="14"/>
+                                                        <textFieldCell key="cell" controlSize="small" alignment="left" title="Mac Mouse Fix will stay enabled after you close it" id="bew-ni-FnZ">
                                                             <font key="font" metaFont="smallSystem"/>
                                                             <color key="textColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
                                                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -341,10 +341,10 @@
                                                 </constraints>
                                             </customView>
                                             <customView verticalHuggingPriority="999" translatesAutoresizingMaskIntoConstraints="NO" id="FgF-8j-kMB" userLabel="Divider">
-                                                <rect key="frame" x="0.0" y="117" width="293" height="34"/>
+                                                <rect key="frame" x="0.0" y="167" width="322" height="17"/>
                                                 <subviews>
                                                     <box horizontalHuggingPriority="1000" verticalHuggingPriority="750" boxType="separator" translatesAutoresizingMaskIntoConstraints="NO" id="3RY-sV-oKD">
-                                                        <rect key="frame" x="0.0" y="6" width="293" height="22"/>
+                                                        <rect key="frame" x="0.0" y="6" width="322" height="5"/>
                                                     </box>
                                                 </subviews>
                                                 <constraints>
@@ -355,7 +355,7 @@
                                                 </constraints>
                                             </customView>
                                             <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="ncd-ap-KlE">
-                                                <rect key="frame" x="-2" y="92" width="295" height="18"/>
+                                                <rect key="frame" x="-2" y="142" width="324" height="18"/>
                                                 <buttonCell key="cell" type="check" title="Show in Menu Bar" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="ILO-GQ-vNk">
                                                     <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                     <font key="font" metaFont="system"/>
@@ -364,11 +364,32 @@
                                                     <fragment content="General &gt; Show in Menu Bar Toggle"/>
                                                 </attributedString>
                                             </button>
+                                            <customView horizontalHuggingPriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="hr6-ym-FE1" userLabel="MenuBarIndent">
+                                                <rect key="frame" x="0.0" y="107" width="260" height="28"/>
+                                                <subviews>
+                                                    <textField horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="7G6-R6-mA8">
+                                                        <rect key="frame" x="18" y="0.0" width="244" height="28"/>
+                                                        <textFieldCell key="cell" controlSize="small" alignment="left" id="AqN-zN-yDS">
+                                                            <font key="font" metaFont="smallSystem"/>
+                                                            <string key="title">Lets you quickly disable scroll enhancements 
+and other features</string>
+                                                            <color key="textColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
+                                                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                                        </textFieldCell>
+                                                    </textField>
+                                                </subviews>
+                                                <constraints>
+                                                    <constraint firstAttribute="trailing" secondItem="7G6-R6-mA8" secondAttribute="trailing" id="72H-y9-MsX"/>
+                                                    <constraint firstAttribute="bottom" secondItem="7G6-R6-mA8" secondAttribute="bottom" id="8cx-Gq-l99"/>
+                                                    <constraint firstItem="7G6-R6-mA8" firstAttribute="leading" secondItem="hr6-ym-FE1" secondAttribute="leading" constant="20" symbolic="YES" id="UEX-tb-PgM"/>
+                                                    <constraint firstItem="7G6-R6-mA8" firstAttribute="top" secondItem="hr6-ym-FE1" secondAttribute="top" id="xIr-23-mP7"/>
+                                                </constraints>
+                                            </customView>
                                             <customView verticalHuggingPriority="999" translatesAutoresizingMaskIntoConstraints="NO" id="Xec-u6-Sj4" userLabel="Divider">
-                                                <rect key="frame" x="0.0" y="68" width="293" height="17"/>
+                                                <rect key="frame" x="0.0" y="82" width="322" height="17"/>
                                                 <subviews>
                                                     <box horizontalHuggingPriority="1000" verticalHuggingPriority="750" boxType="separator" translatesAutoresizingMaskIntoConstraints="NO" id="nVG-pc-I1x">
-                                                        <rect key="frame" x="0.0" y="6" width="293" height="5"/>
+                                                        <rect key="frame" x="0.0" y="6" width="322" height="5"/>
                                                     </box>
                                                 </subviews>
                                                 <constraints>
@@ -379,7 +400,7 @@
                                                 </constraints>
                                             </customView>
                                             <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="QDk-6I-X23">
-                                                <rect key="frame" x="-2" y="43" width="295" height="18"/>
+                                                <rect key="frame" x="-2" y="57" width="324" height="18"/>
                                                 <buttonCell key="cell" type="check" title="Check for Updates" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="tdD-8Q-JB2">
                                                     <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                     <font key="font" metaFont="system"/>
@@ -389,13 +410,13 @@
                                                 </attributedString>
                                             </button>
                                             <customView horizontalHuggingPriority="999" verticalHuggingPriority="999" horizontalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="ojq-7M-UaO" userLabel="Updates extra section">
-                                                <rect key="frame" x="0.0" y="0.0" width="293" height="36"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="322" height="50"/>
                                                 <subviews>
                                                     <stackView distribution="fill" orientation="vertical" alignment="leading" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" horizontalCompressionResistancePriority="1000" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Qge-4e-4FA">
-                                                        <rect key="frame" x="20" y="0.0" width="273" height="36"/>
+                                                        <rect key="frame" x="20" y="0.0" width="302" height="50"/>
                                                         <subviews>
                                                             <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="fB0-6j-bId">
-                                                                <rect key="frame" x="-1" y="21" width="115" height="16"/>
+                                                                <rect key="frame" x="-1" y="35" width="115" height="16"/>
                                                                 <buttonCell key="cell" type="check" title="Get Beta Versions" bezelStyle="regularSquare" imagePosition="left" controlSize="small" state="on" inset="2" id="Mck-5W-5lv">
                                                                     <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                                     <font key="font" metaFont="smallSystem"/>
@@ -405,9 +426,11 @@
                                                                 </attributedString>
                                                             </button>
                                                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="tvD-Xi-viR">
-                                                                <rect key="frame" x="-2" y="0.0" width="277" height="14"/>
-                                                                <textFieldCell key="cell" controlSize="small" alignment="left" title="&lt;Scroll precisely by moving the scroll wheel slowly&gt;" id="SaY-fF-d1s">
+                                                                <rect key="frame" x="-2" y="0.0" width="234" height="28"/>
+                                                                <textFieldCell key="cell" controlSize="small" alignment="left" id="SaY-fF-d1s">
                                                                     <font key="font" metaFont="smallSystem"/>
+                                                                    <string key="title">You'll be notified of updates when you open
+this window</string>
                                                                     <color key="textColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
                                                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                                 </textFieldCell>
@@ -438,8 +461,10 @@
                                             <integer value="1000"/>
                                             <integer value="1000"/>
                                             <integer value="1000"/>
+                                            <integer value="1000"/>
                                         </visibilityPriorities>
                                         <customSpacing>
+                                            <real value="3.4028234663852886e+38"/>
                                             <real value="3.4028234663852886e+38"/>
                                             <real value="3.4028234663852886e+38"/>
                                             <real value="3.4028234663852886e+38"/>
@@ -484,7 +509,7 @@
                 </viewController>
                 <customObject id="Xyx-3e-X6a" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1629.5" y="1487.5"/>
+            <point key="canvasLocation" x="-1740" y="1488"/>
         </scene>
         <!--Button View Controller-->
         <scene sceneID="FLK-3Q-9Mg">
@@ -504,7 +529,7 @@
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <subviews>
                                                 <imageView identifier="PlusIcon" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Jod-JU-J5j">
-                                                    <rect key="frame" x="224" y="38.5" width="60" height="66.5"/>
+                                                    <rect key="frame" x="223" y="38.5" width="60" height="66.5"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                                     <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyUpOrDown" image="plus" catalog="system" id="EyU-is-YRF"/>
                                                     <color key="contentTintColor" name="placeholderTextColor" catalog="System" colorSpace="catalog"/>
@@ -602,7 +627,7 @@
                                                                     </connections>
                                                                 </tableCellView>
                                                                 <tableCellView identifier="buttonGroupCell" id="pxf-x1-gL5" userLabel="ButtonGroupCell">
-                                                                    <rect key="frame" x="8" y="38" width="288" height="22"/>
+                                                                    <rect key="frame" x="8" y="38" width="287" height="22"/>
                                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                                     <subviews>
                                                                         <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="AHZ-Kd-4Xf">
