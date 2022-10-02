@@ -12,10 +12,10 @@
 			<string>NSStringPluralRuleType</string>
 			<key>NSStringFormatValueTypeKey</key>
 			<string>d</string>
-			<key>zero</key>
-			<string></string>
 			<key>other</key>
 			<string>被Mac Mouse Fix擷取到。</string>
+			<key>zero</key>
+			<string></string>
 		</dict>
 	</dict>
 	<key>capture-toast.body.uncaptured</key>
@@ -28,10 +28,10 @@
 			<string>NSStringPluralRuleType</string>
 			<key>NSStringFormatValueTypeKey</key>
 			<string>d</string>
-			<key>zero</key>
-			<string></string>
 			<key>other</key>
 			<string>不再被Mac Mouse Fix所擷取。</string>
+			<key>zero</key>
+			<string></string>
 		</dict>
 	</dict>
 </dict>

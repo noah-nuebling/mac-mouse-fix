@@ -11,7 +11,7 @@
 "46z-Nd-nh4.title" = "開啟「Mac Mouse Fix輔助程式」";
 
 /* Class = "NSTextFieldCell"; title = "1."; ObjectID = "72q-sS-xMS"; */
-"72q-sS-xMS.title" = "1.";
+"72q-sS-xMS.title" = "⒈";
 
 /* Class = "NSImageView"; ibShadowedToolTip = "Hold Shift (⇧) and click this icon to reveal 'Mac Mouse Fix Helper.app' in Finder"; ObjectID = "fK8-8z-KQn"; */
 "fK8-8z-KQn.ibShadowedToolTip" = "按住Shift（⇧）並按一下此圖像即可於Finder顯示「Mac Mouse Fix Helper.app」";
@@ -20,5 +20,5 @@
 "OSk-Cl-izW.title" = "允許Mac Mouse Fix取用輔助使用";
 
 /* Class = "NSTextFieldCell"; title = "2."; ObjectID = "RIR-VN-l6s"; */
-"RIR-VN-l6s.title" = "2.";
+"RIR-VN-l6s.title" = "⒉";
 

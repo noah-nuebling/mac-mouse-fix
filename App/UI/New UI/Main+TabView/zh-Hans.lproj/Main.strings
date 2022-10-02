@@ -1,11 +1,11 @@
-/* Class = "NSMenuItem"; title = "Undo"; ObjectID = "1TU-wL-skT"; */
-"1TU-wL-skT.title" = "撤销";
-
 /* Class = "NSViewController"; title = "Pointer"; ObjectID = "1dS-BH-DIv"; Note = "Pointer Tab Title"; */
 "1dS-BH-DIv.title" = "指针";
 
 /* Class = "NSTextFieldCell"; title = "<Scroll precisely by moving the scroll wheel slowly>"; ObjectID = "1nK-vb-jNz"; */
 "1nK-vb-jNz.title" = "<Scroll precisely by moving the scroll wheel slowly>";
+
+/* Class = "NSMenuItem"; title = "Undo"; ObjectID = "1TU-wL-skT"; */
+"1TU-wL-skT.title" = "撤销";
 
 /* Class = "NSMenuItem"; title = "View Guides or Ask the Community..."; ObjectID = "2Uv-W7-hzJ"; */
 "2Uv-W7-hzJ.title" = "查看指南或向社区提问…";
@@ -46,14 +46,17 @@
 /* Class = "NSTextFieldCell"; title = "<Content tracks finger movement>"; ObjectID = "AHn-zX-g4d"; Note = "Scrolling > Natural Scroll Direction > Hint"; */
 "AHn-zX-g4d.title" = "<Content tracks finger movement>";
 
+/* Class = "NSTextFieldCell"; title = "Lets you __quickly turn off__ or on scroll\nenhancements and other __features__"; ObjectID = "AqN-zN-yDS"; */
+"AqN-zN-yDS.title" = "让您__快速关闭__或开启滚动增强和其他__功能__";
+
 /* Class = "NSMenu"; title = "Main Menu"; ObjectID = "AYu-sK-qS6"; */
 "AYu-sK-qS6.title" = "主菜单";
 
 /* Class = "NSMenuItem"; title = "Bring All to Front"; ObjectID = "aZA-uL-uvx"; */
 "aZA-uL-uvx.title" = "前置全部窗口";
 
-/* Class = "NSTextFieldCell"; title = "<Enable Hint>"; ObjectID = "bew-ni-FnZ"; */
-"bew-ni-FnZ.title" = "<Enable Hint>";
+/* Class = "NSTextFieldCell"; title = "Mac Mouse Fix will __stay enabled__ after you __close__ it"; ObjectID = "bew-ni-FnZ"; */
+"bew-ni-FnZ.title" = "在您__关闭__Mac Mouse Fix后，它仍会__保持启用状态__";
 
 /* Class = "NSTextFieldCell"; title = "Mac Mouse Fix"; ObjectID = "bGk-tB-fcH"; */
 "bGk-tB-fcH.title" = "Mac Mouse Fix";
@@ -89,7 +92,7 @@
 "DNu-D4-tBY.title" = "低";
 
 /* Class = "NSTextFieldCell"; title = "Set acceleration under \nSystem Preferences > Mouse > Tracking speed "; ObjectID = "DtT-YF-gUn"; Note = "Pointer > Acceleration > macOS Option > Hint"; */
-"DtT-YF-gUn.title" = "若要设置加速，请选择\n系统偏好设置 > 鼠标 > 跟踪速度";
+"DtT-YF-gUn.title" = "设置加速：\n系统偏好设置 > 鼠标 > 跟踪速度";
 
 /* Class = "NSMenu"; title = "Help"; ObjectID = "DVS-lH-VBH"; */
 "DVS-lH-VBH.title" = "帮助";
@@ -187,8 +190,8 @@
 /* Class = "NSTabViewItem"; label = "Buttons"; ObjectID = "Mjk-wy-Z7C"; Note = "Toolbar > Buttons Tab Button"; */
 "Mjk-wy-Z7C.label" = "按钮";
 
-/* Class = "NSTextFieldCell"; title = "Move the mouse pointer inside the '+' field, then click a mouse button to assign an action to it.  You can also Double Click, Click and Drag and more."; ObjectID = "N7H-9j-DIr"; Note = "Buttons > Add Field Hint"; */
-"N7H-9j-DIr.title" = "移动鼠标指针到“+”区域内，然后点按鼠标按钮来指定动作。  您也可以连按、点按并拖移等。";
+/* Class = "NSTextFieldCell"; title = "Move the mouse pointer inside the '+' field, then __Click__ a mouse button to assign an action to it.  You can also __Double Click__, __Click and Drag__ and __[more]()__."; ObjectID = "N7H-9j-DIr"; Note = "Buttons > Add Field Hint"; */
+"N7H-9j-DIr.title" = "移动鼠标指针到“+”区域内，然后__点按__鼠标按钮来指定动作。  您也可以__连按__、__点按并拖移__、执行__[更多]()__操作。";
 
 /* Class = "NSButtonCell"; title = "with Inertia"; ObjectID = "N65-aN-Hxp"; Note = "Scrolling > with Inertia Toggle (See what Apple uses for Trackpad marketing in your Language)"; */
 "N65-aN-Hxp.title" = "带惯性";
@@ -244,8 +247,8 @@
 /* Class = "NSButtonCell"; title = "<0.6x>"; ObjectID = "S55-uf-Xij"; */
 "S55-uf-Xij.title" = "<0.6x>";
 
-/* Class = "NSTextFieldCell"; title = "<Scroll precisely by moving the scroll wheel slowly>"; ObjectID = "SaY-fF-d1s"; */
-"SaY-fF-d1s.title" = "<Scroll precisely by moving the scroll wheel slowly>";
+/* Class = "NSTextFieldCell"; title = "You'll be __notified of updates__ when you __open__\nMac Mouse Fix"; ObjectID = "SaY-fF-d1s"; */
+"SaY-fF-d1s.title" = "当您__打开__Mac Mouse Fix时，您会__收到更新通知__";
 
 /* Class = "NSMenuItem"; title = "High"; ObjectID = "sef-RZ-SeL"; Note = "Pointer > Acceleration > High Option"; */
 "sef-RZ-SeL.title" = "高";
@@ -300,3 +303,4 @@
 
 /* Class = "NSTextFieldCell"; title = "<Text Cell>"; ObjectID = "zwX-Pv-OOK"; */
 "zwX-Pv-OOK.title" = "<Text Cell>";
+

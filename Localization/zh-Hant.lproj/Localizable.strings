@@ -112,6 +112,12 @@
 /* Note: Value for this key is defined in Localizable.stringsdict, not Localizable.strings */
 "capture-toast.body" = "<>";
 
+/* Note: Value for this key is defined in Localizable.stringsdict, not Localizable.strings. || Note: The UI strings in .stringsdict have two lines. Only the first line is visible unless you start editing and then use the arrow keys to go to the second line. This is necessary to have linebreaks in .stringsdict since \n doesn't work. Use Option-Enter to insert these linebreaks. */
+"capture-toast.body.captured" = "<>";
+
+/* Note: Value for this key is defined in Localizable.stringsdict, not Localizable.strings */
+"capture-toast.body.uncaptured" = "<>";
+
 /* First draft: Learn More */
 "capture-toast.link" = "進一步瞭解";
 
@@ -214,9 +220,6 @@
 /* First draft: Zoom in or out in Safari and other apps.\n \nWorks like a two-finger double tap on an Apple Trackpad. */
 "effect.smart-zoom.hint" = "在Safari和其他應用程式中放大或縮小。\n \n作用相當於在Apple觸控式軌跡板上用兩指點兩下";
 
-/* First draft: Mac Mouse Fix will stay enabled after you close it */
-"enabled-toggle.hint" = "在您關閉Mac Mouse Fix後，它仍會保持啟用狀態";
-
 /* First draft: **Primary Mouse Button** can't be used\nPlease try another button */
 "forbidden-capture-toast.1" = "不能使用**主要滑鼠按鈕**\n請換一個按鈕再試";
 
@@ -224,7 +227,7 @@
 "forbidden-capture-toast.2" = "不能使用**輔助滑鼠按鈕**\n請換一個按鈕再試";
 
 /* First draft: Mac Mouse Fix was **disabled** in System Settings.\nTo enable Mac Mouse Fix:\n\n1. Go to [Login Items Settings](x-apple.systempreferences:com.apple.LoginItems-Settings.extension)\n2. Switch on \'Mac Mouse Fix.app\' */
-"is-disabled-toast" = "系統偏好設定中已**禁用**Mac Mouse Fix。\n若要啟用Mac Mouse Fix：\n\n1.選擇[登入項目](x-apple.systempreferences:com.apple.LoginItems-Settings.extension)\n2.開啟'Mac Mouse Fix.app'";
+"is-disabled-toast" = "系統偏好設定中已**禁用**Mac Mouse Fix。\n若要啟用Mac Mouse Fix：\n\n⒈前往[登入項目](x-apple.systempreferences:com.apple.LoginItems-Settings.extension)\n⒉開啟「Mac Mouse Fix.app」";
 
 /* First draft: ,  || Note: This string joins elements in a list except the second-to-last and last one. || Note: The first draft contains a space after the comma. */
 "join-list" = "、";
@@ -265,8 +268,8 @@
 /* First draft: Activating your license failed for **unknown reasons**\n\nPlease write a **Bug Report** [here](https://noah-nuebling.github.io/mac-mouse-fix-feedback-assistant/?type=bug-report) */
 "license-toast.unknown-reason" = "由於**未知的原因**，許可證啟用失敗。\n\n請到[這裡](https://noah-nuebling.github.io/mac-mouse-fix-feedback-assistant/?type=bug-report)回報**錯誤**";
 
-/* First draft: Set Scroll Speed at\nSystem Settings > Mouse > Scroll Speed */
-"macos-scroll-speed-hint" = "若要設定捲動速度，選擇\n系統偏好設定 > 滑鼠 > 捲動速度";
+/* First draft: Set Scroll Speed under\n__[%@ > Mouse > Scroll speed](%@)__ */
+"macos-scrolling-hint" = "設定捲動速度：\n__[%@ > 滑鼠 > 捲動速度](%@)__";
 
 /* First draft: Back */
 "mail-alert.back" = "返回";
@@ -279,9 +282,6 @@
 
 /* First draft: Write an Email? */
 "mail-alert.title" = "編寫郵件？";
-
-/* First draft: Lets you quickly disable Scroll Enhancements and other features */
-"menu-bar-toggle.hint" = "讓您可以快速停用捲動增強和其他功能";
 
 /* First draft: Command (⌘) */
 "modifer-key.tool.command" = "Command（⌘）";
@@ -298,8 +298,8 @@
 /* First draft: Content tracks finger movement */
 "natural-scrolling-hint" = "內容會隨著手指的方向移動";
 
-/* First draft: Scroll precisely even without a keyboard modifier by\nmoving the scroll wheel slowly || Note: The line break (\n) is there so the layout of the Scroll tab doesn't become too wide which looks weird. You can set it to your own taste. */
-"precise-scrolling-hint" = "慢慢滾動滾輪來精確捲動，無需鍵盤變更鍵";
+/* First draft: Scroll precisely even __without a keyboard modifier__ by\nmoving the __scroll wheel slowly__ || Note: The line break (\n) is there so the layout of the Scroll tab doesn't become too wide which looks weird. You can set it to your own taste. */
+"precise-scrolling-hint" = "__慢慢滾動滾輪__來精確捲動，甚至__無需鍵盤變更鍵__";
 
 /* First draft: Cancel */
 "restore-buttons-alert.back" = "取消";
@@ -367,6 +367,12 @@
 /* No comment provided by engineer. */
 "Strawberry" = "草莓";
 
+/* First draft: System Settings */
+"system-settings-name" = "系統設定";
+
+/* First draft: System Preferences */
+"system-settings-name.pre-ventura" = "系統偏好設定";
+
 /* First draft: 💫 Thank you for buying Mac Mouse Fix! */
 "thanks.01" = "💫感謝您購買Mac Mouse Fix！";
 
@@ -384,6 +390,9 @@
 
 /* First draft: 🔥 Awesome taste in mouse fixing software ;) */
 "thanks.06" = "🔥在滑鼠調校軟體上的品味不俗;)";
+
+/* First draft: 💙 */
+"thanks.07" = "💙";
 
 /* First draft: :) <- My face when I saw you bought Mac Mouse Fix */
 "thanks.08" = ":) <-看見你購買Mac Mouse Fix時我的表情";
@@ -426,6 +435,12 @@
 
 /* First draft: 🐠 Cuter than a Reaper Leviathan. */
 "thanks.21" = "🐠比死神利維坦可愛。";
+
+/* First draft: 🖤 */
+"thanks.22" = "🖤";
+
+/* First draft: 🤍 */
+"thanks.23" = "🤍";
 
 /* First draft: 😎 Oh you're using Mac Mouse Fix? You must be pretty cool. */
 "thanks.24" = "😎噢，你在用Mac Mouse Fix？那你一定很酷。";
@@ -496,23 +511,6 @@
 /* First draft: Type a Keyboard Shortcut */
 "type-shortcut-prompt" = "輸入鍵盤快速鍵";
 
-/* First draft: You'll be notified of updates when you open\nthis window */
-"updates-toggle.hint" = "當您打開這個視窗時，若有更新項目，您會收到通知";
-
 /* No comment provided by engineer. */
 "Vanilla" = "香草";
 
-/* Note: Value for this key is defined in Localizable.stringsdict, not Localizable.strings. || Note: The UI strings in .stringsdict have two lines. Only the first line is visible unless you start editing and then use the arrow keys to go to the second line. This is necessary to have linebreaks in .stringsdict since \n doesn't work. Use Option-Enter to insert these linebreaks. */
-"capture-toast.body.captured" = "";
-
-/* Note: Value for this key is defined in Localizable.stringsdict, not Localizable.strings */
-"capture-toast.body.uncaptured" = "";
-
-/* First draft: 💙 */
-"thanks.07" = "";
-
-/* First draft: 🖤 */
-"thanks.22" = "";
-
-/* First draft: 🤍 */
-"thanks.23" = "";
