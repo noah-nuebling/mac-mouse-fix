@@ -307,8 +307,10 @@ import CocoaLumberjackSwift
         ///
         /// Show restoreDefault Popover
         ///
+        ///   Doing this with a delay because it doesn't work if the tab switch animation is still ongoing
         
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5, qos: .userInteractive, flags: [], execute: {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.3, qos: .userInteractive, flags: [], execute: {
+            
             
             ///
             /// Get info

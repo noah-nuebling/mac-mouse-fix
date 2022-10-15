@@ -305,10 +305,10 @@
 "YBT-Ar-F4S.title" = "Lizenz aktivieren...";
 
 /* Class = "NSButtonCell"; title = "Don't remind me again"; ObjectID = "bgk-wr-o8T"; */
-"bgk-wr-o8T.title" = "";
+"bgk-wr-o8T.title" = "Nicht wieder erinnern";
 
 /* Class = "NSTextFieldCell"; title = "<It looks like you don't have any actions set up for the __Side Buttons__ of \nyour __Logitech M720 Triathlon__.>"; ObjectID = "g5F-ZO-vGZ"; */
-"g5F-ZO-vGZ.title" = "";
+"g5F-ZO-vGZ.title" = "<>";
 
-/* Class = "NSTextFieldCell"; title = "Click \"__Restore Defaults...__\" to use the recommended settings"; ObjectID = "JSj-bh-A9Z"; */
-"JSj-bh-A9Z.title" = "";
+/* Class = "NSTextFieldCell"; title = "Click \"__Restore Defaults...__\" to load the recommended settings"; ObjectID = "JSj-bh-A9Z"; */
+"JSj-bh-A9Z.title" = "Klicke \"__Standard wiederherstellen...__\" um die empfohlenen\nEinstellungen zu laden";
