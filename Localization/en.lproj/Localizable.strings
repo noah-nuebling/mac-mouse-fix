@@ -253,8 +253,8 @@
 /* First draft: Activating your license failed for **unknown reasons**\n\nPlease write a **Bug Report** [here](https://noah-nuebling.github.io/mac-mouse-fix-feedback-assistant/?type=bug-report) */
 "license-toast.unknown-reason" = "Activating your license failed for **unknown reasons**\n\nPlease write a **Bug Report** [here](https://noah-nuebling.github.io/mac-mouse-fix-feedback-assistant/?type=bug-report)";
 
-/* First draft: Set Scroll Speed under\n__[%@ > Mouse > Scroll speed](%@)__ */
-"macos-scrolling-hint" = "Set Scroll Speed under\n__[%@ > Mouse > Scrolling Speed](%@)__";
+/* First draft: Set Scroll Speed under\n[%@ > Mouse > Scrolling Speed](%@) */
+"macos-scrolling-hint" = "Set Scroll Speed under\n[%@ > Mouse > Scrolling Speed](%@)";
 
 /* First draft: Command (⌘) */
 "modifer-key.tool.command" = "Command (⌘)";
@@ -271,8 +271,8 @@
 /* First draft: Content tracks finger movement */
 "natural-scrolling-hint" = "Content tracks finger movement";
 
-/* First draft: Scroll precisely even __without a keyboard modifier__ by\nmoving the __scroll wheel slowly__ || Note: The line break (\n) is there so the layout of the Scroll tab doesn't become too wide which looks weird. You can set it to your own taste. */
-"precise-scrolling-hint" = "Scroll precisely even without a keyboard modifier by\nmoving the __scroll wheel slowly__";
+/* First draft: Scroll precisely even without a keyboard modifier by\nmoving the scroll wheel slowly || Note: The line break (\n) is there so the layout of the Scroll tab doesn't become too wide which looks weird. You can set it to your own taste. */
+"precise-scrolling-hint" = "Scroll precisely even without a keyboard modifier by\nmoving the scroll wheel slowly";
 
 /* First draft: Desktop & Launchpad */
 "scroll-effect.4-pinch" = "Desktop & Launchpad";

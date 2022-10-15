@@ -118,7 +118,7 @@ class ScrollTabController: NSViewController {
         /// Precise
         precise.bindingTarget <~ preciseToggle.reactive.boolValues
         preciseToggle.reactive.boolValue <~ precise.producer
-        let preciseHintRaw = NSLocalizedString("precise-scrolling-hint", comment: "First draft: Scroll precisely even __without a keyboard modifier__ by\nmoving the __scroll wheel slowly__ || Note: The line break (\n) is there so the layout of the Scroll tab doesn't become too wide which looks weird. You can set it to your own taste.")
+        let preciseHintRaw = NSLocalizedString("precise-scrolling-hint", comment: "First draft: Scroll precisely even without a keyboard modifier by\nmoving the scroll wheel slowly || Note: The line break (\n) is there so the layout of the Scroll tab doesn't become too wide which looks weird. You can set it to your own taste.")
         preciseHint.attributedStringValue = NSAttributedString(coolMarkdown: preciseHintRaw, fillOutBase: false)!.fillingOutBaseAsHint()
         
         /// Generate macOS hint string
@@ -133,7 +133,7 @@ class ScrollTabController: NSViewController {
         } else {
             mouseSettingsURL = "/System/Library/PreferencePanes/Mouse.prefPane"
         }
-        let macOSHintRaw = String(format: NSLocalizedString("macos-scrolling-hint", comment: "First draft: Set Scroll Speed under\n__[%@ > Mouse > Scrolling Speed](%@)__"), UIStrings.systemSettingsName(), mouseSettingsURL)
+        let macOSHintRaw = String(format: NSLocalizedString("macos-scrolling-hint", comment: "First draft: Set Scroll Speed under\n[%@ > Mouse > Scrolling Speed](%@)"), UIStrings.systemSettingsName(), mouseSettingsURL)
 
         /// Installl the macOSHint.
         ///     We manually make the macOSHint width equal the preciseSection width, because if the width changes the window resizes from the left edge which looks crappy.

@@ -88,13 +88,13 @@
 /* Class = "NSMenuItem"; title = "Bring All to Front"; ObjectID = "aZA-uL-uvx"; */
 "aZA-uL-uvx.title" = "Alle nach vorne bringen";
 
-/* Class = "NSTextFieldCell"; title = "Mac Mouse Fix will __stay enabled__ after you __close__ it"; ObjectID = "bew-ni-FnZ"; */
+/* Class = "NSTextFieldCell"; title = "Mac Mouse Fix will stay enabled after you close it"; ObjectID = "bew-ni-FnZ"; */
 "bew-ni-FnZ.title" = "Mac Mouse Fix bleibt eingeschaltet nachdem du\nes beendest";
 
-/* Class = "NSTextFieldCell"; title = "Lets you __quickly turn off__ or on scroll\nenhancements and other __features__"; ObjectID = "AqN-zN-yDS"; */
-"AqN-zN-yDS.title" = "Lässt dich Scrollverbesserungen und andere\n__Features schnell an- und abschalten__";
+/* Class = "NSTextFieldCell"; title = "Lets you quickly turn off scroll enhancements\nand other features"; ObjectID = "AqN-zN-yDS"; */
+"AqN-zN-yDS.title" = "Lässt dich Scrollverbesserungen und andere\nFeatures schnell an- und abschalten";
 
-/* Class = "NSTextFieldCell"; title = "You'll be __notified of updates__ when you __open__\nMac Mouse Fix"; ObjectID = "SaY-fF-d1s"; */
+/* Class = "NSTextFieldCell"; title = "You'll be notified of updates when you open\nMac Mouse Fix"; ObjectID = "SaY-fF-d1s"; */
 "SaY-fF-d1s.title" = "Du wirst über Updates benachrichtigt werden\nwenn du dieses Fenster öffnest";
 
 /* Class = "NSMenuItem"; title = "High"; ObjectID = "bIE-g7-3St"; Note = "Scrolling > Scroll Speed > High Option"; */
@@ -191,7 +191,7 @@
 "N65-aN-Hxp.title" = "mit Nachlauf";
 
 /* Class = "NSTextFieldCell"; title = "Move the mouse pointer inside the '+' field, then click a mouse button to assign an action to it.  You can also __Double Click__, __Click and Drag__ and [more](https://google.com)."; ObjectID = "N7H-9j-DIr"; Note = "Buttons > Add Field Hint"; */
-"N7H-9j-DIr.title" = "Bewege den Mauszeiger in das '+' Feld, dann __klicke__ eine Maustaste, um ihr eine Aktion zuzuweisen.\nDu kannst auch __doppelklicken__, __klicken und ziehen__, und __[mehr]()__.";
+"N7H-9j-DIr.title" = "Bewege den Mauszeiger in das '+' Feld, dann klicke eine Maustaste, um ihr eine Aktion zuzuweisen.\nDu kannst auch doppelklicken, klicken und ziehen, und [mehr]().";
 
 /* Class = "NSMenuItem"; title = "Minimize"; ObjectID = "NdF-Gb-mOK"; */
 "NdF-Gb-mOK.title" = "Minimieren";
