@@ -159,7 +159,7 @@ import CocoaLumberjackSwift
     @objc func nullAction(sender: AnyObject) {
         /// Need this to make radioButtons to work together (I think)
     }
-    
+     
     ///
     /// Init & lifecycle
     ///
@@ -293,7 +293,7 @@ import CocoaLumberjackSwift
         }
     }
     
-    var popoverObjects: NSArray? = nil
+    var popoverMonitor: Any? = nil
     
     override func viewDidAppear() {
         super.viewDidAppear()
@@ -305,6 +305,30 @@ import CocoaLumberjackSwift
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5, execute: {
             
             self.restoreDefaultPopover.show(relativeTo: NSRect.zero, of: self.restoreDefaultButton, preferredEdge: .minY)
+            
+            /// Close on click
+            self.popoverMonitor = NSEvent.addLocalMonitorForEvents(matching: .leftMouseDown) { event in
+                
+                let clickedOnWindow = self.view.hitTest(event.locationInWindow) != nil
+                
+                let popupView = self.restoreDefaultPopover.contentViewController?.view
+                let locInScreen = NSEvent.mouseLocation
+                let locInPopupWindow = popupView?.window?.convertPoint(fromScreen: locInScreen)
+                var clickedOnPopover = false
+                if let loc = locInPopupWindow {
+                    clickedOnPopover = popupView?.hitTest(loc) != nil
+                }
+                
+                if clickedOnWindow && !clickedOnPopover {
+                    self.restoreDefaultPopover.close()
+                    if self.popoverMonitor != nil {
+                        NSEvent.removeMonitor(self.popoverMonitor!)
+                        self.popoverMonitor = nil
+                    }
+                }
+                
+                return event
+            }
             
         })
         
