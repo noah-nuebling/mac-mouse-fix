@@ -911,8 +911,8 @@ your __Logitech M720 Triathlon__.&gt;</string>
                             </textFieldCell>
                         </textField>
                         <textField horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" misplaced="YES" textCompletion="NO" translatesAutoresizingMaskIntoConstraints="NO" id="unS-po-c19" customClass="MarkdownTextField" customModule="Mac_Mouse_Fix" customModuleProvider="target">
-                            <rect key="frame" x="21" y="53" width="406" height="16"/>
-                            <textFieldCell key="cell" lineBreakMode="clipping" allowsUndo="NO" alignment="center" title="Click &quot;__Restore Defaults...__&quot; to use the recommended settings." id="JSj-bh-A9Z">
+                            <rect key="frame" x="22" y="53" width="402" height="16"/>
+                            <textFieldCell key="cell" lineBreakMode="clipping" allowsUndo="NO" alignment="center" title="Click &quot;__Restore Defaults...__&quot; to use the recommended settings" id="JSj-bh-A9Z">
                                 <font key="font" usesAppearanceFont="YES"/>
                                 <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                 <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>

@@ -505,8 +505,8 @@
 /* First draft: System Preferences */
 "system-settings-name.pre-ventura" = "Systemeinstellungen";
 
-/* First draft: It looks like you don't have any actions set up for the __Middle Button__ of\nyour __%@__ mouse */
-"restore-default-buttons-popover.body1.3" = "";
+/* First draft: You don't have Actions set up for the __Middle Button__of your\n__%@__ mouse || Note: The \n linebreak is so the popover doesn't become too wide. You can set it to your taste. */
+"restore-default-buttons-popover.body1.3" = "Du hast keine Aktionen für die __mittlere Taste__ deiner\n__%@__ Maus eingestellt";
 
-/* First draft: It looks like you don't have any actions set up for the __Side Buttons__ of\nyour __%@__ mouse  */
-"restore-default-buttons-popover.body1.5" = "It looks like you don't have any actions set up for the __Side Buttons__ of\nyour __%@__ mouse";
+/* First draft: You don't have Actions set up for the __Middle Button__of your\n__%@__ mouse */
+"restore-default-buttons-popover.body1.5" = "Du hast keine Aktionen für die __Seitentasten__ deiner\n__%@__ Maus eingestellt";

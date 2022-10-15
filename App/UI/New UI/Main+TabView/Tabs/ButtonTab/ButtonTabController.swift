@@ -373,9 +373,9 @@ import CocoaLumberjackSwift
                 
                 let message: String
                 if show3Button {
-                    message = String(format: NSLocalizedString("restore-default-buttons-popover.body1.3", comment: "First draft: It looks like you don't have any actions set up for the __Middle Button__ of\nyour __%@__ mouse"), deviceName)
+                    message = String(format: NSLocalizedString("restore-default-buttons-popover.body1.3", comment: "First draft: You don't have Actions set up for the __Middle Button__ of your\n__%@__ mouse || Note: The \n linebreak is so the popover doesn't become too wide. You can set it to your taste."), deviceName)
                 } else if show5Button {
-                    message = String(format: NSLocalizedString("restore-default-buttons-popover.body1.5", comment: "First draft: It looks like you don't have any actions set up for the __Side Buttons__ of\nyour __%@__ mouse "), deviceName)
+                    message = String(format: NSLocalizedString("restore-default-buttons-popover.body1.5", comment: "First draft: You don't have Actions set up for the __Middle Button__ of your\n__%@__ mouse"), deviceName)
                 } else {
                     fatalError()
                 }
