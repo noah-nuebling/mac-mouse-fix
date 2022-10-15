@@ -119,7 +119,7 @@
             NSDictionary *trigger = rowDict[kMFRemapsKeyTrigger];
 
             BOOL buttonIsTrigger = NO;
-            if ([trigger isKindOfClass:NSDictionary.class]) { // Trigger is type button
+            if ([trigger isKindOfClass:NSDictionary.class]) { /// Trigger is type button
                 buttonIsTrigger = [trigger[kMFButtonTriggerKeyButtonNumber] isEqual:@(b)];
             }
 

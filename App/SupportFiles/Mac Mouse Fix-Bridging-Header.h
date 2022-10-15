@@ -40,5 +40,6 @@
 #import "Hyperlink.h"
 #import "Locator.h"
 #import "Device.h"
+#import "RemapTableUtility.h"
 
 #endif /* Mac_Mouse_Fix_Bridging_Header_h */

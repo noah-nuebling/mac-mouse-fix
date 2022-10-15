@@ -16,7 +16,12 @@ import CocoaLumberjackSwift
     /// Outlets
     ///
     
+    /// RestoreDefaultPopover
+    
     @IBOutlet var restoreDefaultPopover: NSPopover!
+    @IBOutlet weak var restoreDefaultPopoverLabel1: MarkdownTextField!
+    @IBOutlet weak var restoreDefaultPopoverDontRemindAgainCheckbox: NSButton!
+    
     /// AddField
     
     @IBOutlet weak var addField: NSBox!
@@ -57,7 +62,7 @@ import CocoaLumberjackSwift
         /// Get device info
         ///
         
-        let (deviceName, deviceManufacturer, nOfButtons, bestPresetMatch) =  MessagePortUtility_App.getActiveDeviceInfo() ?? (nil, nil, nil, nil)
+        let (name, nOfButtons, bestPresetMatch) =  MessagePortUtility_App.getActiveDeviceInfo() ?? (nil, nil, nil)
         
         ///
         /// Add accessoryView
@@ -71,8 +76,7 @@ import CocoaLumberjackSwift
         var hint: CoolNSTextField? = nil
         if let nOfButtons = nOfButtons {
             
-            let name = (String(format: "%@ %@", deviceManufacturer!, deviceName!) as NSString).stringByTrimmingWhiteSpace()
-            let hintStringRaw = String(format: NSLocalizedString("restore-buttons-alert.hint", comment: "First draft: Your __%@__ mouse says it has __%d__ buttons"), name, nOfButtons)
+            let hintStringRaw = String(format: NSLocalizedString("restore-buttons-alert.hint", comment: "First draft: Your __%@__ mouse says it has __%d__ buttons"), name!, nOfButtons)
             let hintString = NSAttributedString(coolMarkdown: hintStringRaw)?.settingSecondaryLabelColor(forSubstring: nil).settingFontSize(NSFont.smallSystemFontSize).aligningSubstring(nil, alignment: .center).trimmingWhitespace()
             if let hintString = hintString {
                 hint = CoolNSTextField(labelWithAttributedString: hintString)
@@ -300,36 +304,138 @@ import CocoaLumberjackSwift
         
         /// This is called twice, awakeFromNib as well. Use init() or viewDidLoad() to do things once
         
-        /// Show resetToDefaultPopover
+        ///
+        /// Show restoreDefault Popover
+        ///
         
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5, execute: {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5, qos: .userInteractive, flags: [], execute: {
             
-            self.restoreDefaultPopover.show(relativeTo: NSRect.zero, of: self.restoreDefaultButton, preferredEdge: .minY)
+            ///
+            /// Get info
+            ///
             
-            /// Close on click
-            self.popoverMonitor = NSEvent.addLocalMonitorForEvents(matching: .leftMouseDown) { event in
+            /// Get device info
+            
+            guard let (deviceName, nOfButtons, _) = MessagePortUtility_App.getActiveDeviceInfo() else { return }
+            
+            /// Get actionTable info
+            
+            let usedButtons = RemapTableUtility.getCapturedButtons()
+            
+            /// Put info together
+            
+            var show3Button = false
+            var show5Button = false
+            
+            if usedButtons.isEmpty {
+
+                /// All actions are disabled. The user probably did this on purpose. Reminding them that they are using the "wrong" layout is probably annoying, so we don't do it.
                 
-                let clickedOnWindow = self.view.hitTest(event.locationInWindow) != nil
+            } else if nOfButtons <= 2 {
                 
-                let popupView = self.restoreDefaultPopover.contentViewController?.view
-                let locInScreen = NSEvent.mouseLocation
-                let locInPopupWindow = popupView?.window?.convertPoint(fromScreen: locInScreen)
-                var clickedOnPopover = false
-                if let loc = locInPopupWindow {
-                    clickedOnPopover = popupView?.hitTest(loc) != nil
-                }
+                /// The current mouse has less than 2 buttons, it can't be used with Mac Mouse Fix, since button 3 is the lowest usable button currently.
                 
-                if clickedOnWindow && !clickedOnPopover {
-                    self.restoreDefaultPopover.close()
-                    if self.popoverMonitor != nil {
-                        NSEvent.removeMonitor(self.popoverMonitor!)
-                        self.popoverMonitor = nil
-                    }
-                }
+            } else if 3 == nOfButtons
+                        && !usedButtons.contains(3) {
                 
-                return event
+                /// The recommended layout for this mouse is the 3 button layout, focused around button 3, but the current settings don't map anything to button 3. Since button 3 is the lowest usable button currently, this means that the current settings can't be doing anything for the currently active device. So we give the user a hint.
+                
+                show3Button = true
+                
+            } else if 4 == nOfButtons {
+                
+                /// Never seen a mouse with 4 buttons. Idk what the "recommended" settings should be here, so we just ignore this case
+                
+            } else if 5 <= nOfButtons
+                        && !usedButtons.contains(4) && !usedButtons.contains(5) {
+                
+                /// The recommended layout for this mouse is the 5+ button layout, focused around button 4 and button 5, but the current settings don't map anything to button 4 or 5
+                
+                show5Button = true
             }
+            if config("Other.dontRemindToRestoreDefault3") as? Bool ?? false {
+                show3Button = false
+            }
+            if config("Other.dontRemindToRestoreDefault5") as? Bool ?? false {
+                show5Button = false
+            }
+            assert(!(show3Button && show5Button))
             
+            ///
+            /// Show popover
+            ///
+            
+            if show3Button || show5Button {
+                
+                /// Init UI
+                
+                /// Setup body text
+                
+                let message: String
+                if show3Button {
+                    message = String(format: NSLocalizedString("restore-default-buttons-popover.body1.3", comment: "First draft: It looks like you don't have any actions set up for the __Middle Button__ of\nyour __%@__ mouse"), deviceName)
+                } else if show5Button {
+                    message = String(format: NSLocalizedString("restore-default-buttons-popover.body1.5", comment: "First draft: It looks like you don't have any actions set up for the __Side Buttons__ of\nyour __%@__ mouse "), deviceName)
+                } else {
+                    fatalError()
+                }
+                
+                let ibAttributes = self.restoreDefaultPopoverLabel1.attributedStringValue.attributes(at: 0, effectiveRange: nil)
+                self.restoreDefaultPopoverLabel1.attributedStringValue = NSAttributedString(coolMarkdown: message, fillOutBase: false)!.addingStringAttributes(asBase: ibAttributes) /// It's called "body1" because the second part of the body text is localized in Main.strings
+                
+                /// Turn checkbox off
+                self.restoreDefaultPopoverDontRemindAgainCheckbox.state = .off
+                
+                /// Show
+                self.restoreDefaultPopover.show(relativeTo: NSRect.zero, of: self.restoreDefaultButton, preferredEdge: .minY)
+                
+                /// Close on click
+                ///     By intercepting events
+                self.popoverMonitor = NSEvent.addLocalMonitorForEvents(matching: .leftMouseDown) { event in
+                    
+                    /// Check click on window
+                    let clickedOnWindow = self.view.hitTest(event.locationInWindow) != nil
+                    
+                    /// Check click on popover
+                    let popupView = self.restoreDefaultPopover.contentViewController?.view
+                    let locInScreen = NSEvent.mouseLocation
+                    let locInPopupWindow = popupView?.window?.convertPoint(fromScreen: locInScreen)
+                    var clickedOnPopover = false
+                    if let loc = locInPopupWindow {
+                        clickedOnPopover = popupView?.hitTest(loc) != nil
+                    }
+                    
+                    /// Close popover
+                    if clickedOnWindow && !clickedOnPopover {
+                        
+                        /// Store user choice about not being reminded again
+                        let dontRemind = self.restoreDefaultPopoverDontRemindAgainCheckbox.state == .on
+                        if dontRemind {
+                            if show3Button {
+                                setConfig("Other.dontRemindToRestoreDefault3", true as NSObject)
+                                commitConfig()
+                            } else if show5Button {
+                                setConfig("Other.dontRemindToRestoreDefault5", true as NSObject)
+                                commitConfig()
+                            } else {
+                                assert(false)
+                            }
+                        }
+                        
+                        /// Close popover
+                        self.restoreDefaultPopover.close()
+                        
+                        /// Remove event monitor
+                        if self.popoverMonitor != nil {
+                            NSEvent.removeMonitor(self.popoverMonitor!)
+                            self.popoverMonitor = nil
+                        }
+                    }
+                    
+                    /// Return intercepted event
+                    return event
+                }
+            }
         })
         
         
@@ -374,7 +480,7 @@ import CocoaLumberjackSwift
             setConfig("Other.remapsAreInitialized", true as NSObject)
             commitConfig()
             
-            let (_, _, _, bestPresetMatch) = MessagePortUtility_App.getActiveDeviceInfo() ?? (nil, nil, nil, nil)
+            let (_, _, bestPresetMatch) = MessagePortUtility_App.getActiveDeviceInfo() ?? (nil, nil, nil)
             
             /// This is copy-pasted from `restoreDefaults()`
             

@@ -504,3 +504,9 @@
 
 /* First draft: System Preferences */
 "system-settings-name.pre-ventura" = "Systemeinstellungen";
+
+/* First draft: It looks like you don't have any actions set up for the __Middle Button__ of\nyour __%@__ mouse */
+"restore-default-buttons-popover.body1.3" = "";
+
+/* First draft: It looks like you don't have any actions set up for the __Side Buttons__ of\nyour __%@__ mouse  */
+"restore-default-buttons-popover.body1.5" = "It looks like you don't have any actions set up for the __Side Buttons__ of\nyour __%@__ mouse";
