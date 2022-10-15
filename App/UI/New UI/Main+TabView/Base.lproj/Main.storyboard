@@ -627,7 +627,7 @@ Mac Mouse Fix</string>
                                                                     </connections>
                                                                 </tableCellView>
                                                                 <tableCellView identifier="buttonGroupCell" id="pxf-x1-gL5" userLabel="ButtonGroupCell">
-                                                                    <rect key="frame" x="8" y="38" width="287" height="22"/>
+                                                                    <rect key="frame" x="8" y="38" width="288" height="22"/>
                                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                                     <subviews>
                                                                         <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="AHZ-Kd-4Xf">
@@ -666,7 +666,7 @@ Mac Mouse Fix</string>
                                                             <tableColumnResizingMask key="resizingMask" resizeWithTable="YES"/>
                                                             <prototypeCellViews>
                                                                 <tableCellView identifier="effectCell" translatesAutoresizingMaskIntoConstraints="NO" id="Epw-SW-Ew3" customClass="RemapTableCellView" customModule="Mac_Mouse_Fix" customModuleProvider="target">
-                                                                    <rect key="frame" x="312" y="0.0" width="223" height="39"/>
+                                                                    <rect key="frame" x="312.5" y="0.0" width="223" height="39"/>
                                                                     <subviews>
                                                                         <popUpButton verticalHuggingPriority="750" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="Pw9-ZH-Tb7">
                                                                             <rect key="frame" x="0.0" y="6" width="224" height="25"/>
@@ -694,7 +694,7 @@ Mac Mouse Fix</string>
                                                                     </constraints>
                                                                 </tableCellView>
                                                                 <tableCellView identifier="keyCaptureCell" translatesAutoresizingMaskIntoConstraints="NO" id="MzR-b1-853" customClass="RemapTableCellView" customModule="Mac_Mouse_Fix" customModuleProvider="target">
-                                                                    <rect key="frame" x="312" y="39" width="220" height="39"/>
+                                                                    <rect key="frame" x="312.5" y="39" width="220" height="39"/>
                                                                     <subviews>
                                                                         <button hidden="YES" focusRingType="exterior" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="psy-Jg-KLq">
                                                                             <rect key="frame" x="-4" y="3" width="228" height="32"/>
@@ -858,6 +858,7 @@ Mac Mouse Fix</string>
                         <outlet property="optionsButton" destination="am9-X6-JrT" id="yk5-GW-6RT"/>
                         <outlet property="plusIconView" destination="Jod-JU-J5j" id="7lx-UU-uJJ"/>
                         <outlet property="restoreDefaultButton" destination="JHB-lg-H8e" id="urx-gI-o4v"/>
+                        <outlet property="restoreDefaultPopover" destination="Cts-Zb-d93" id="LMv-Q3-UYM"/>
                         <outlet property="scrollView" destination="OGV-uF-BjJ" id="IuP-Tf-IOQ"/>
                         <outlet property="tableController" destination="sHV-yD-oIc" id="mBf-RE-lbd"/>
                         <outlet property="tableView" destination="JEf-5U-AJf" id="v4Z-zS-YGu"/>
@@ -876,8 +877,63 @@ Mac Mouse Fix</string>
                         <outlet property="view" destination="JEf-5U-AJf" id="jQD-XG-Ikk"/>
                     </connections>
                 </customObject>
+                <popover behavior="t" id="Cts-Zb-d93">
+                    <connections>
+                        <outlet property="contentViewController" destination="f69-0B-qE6" id="8Kp-7C-UKC"/>
+                    </connections>
+                </popover>
+                <viewController id="f69-0B-qE6" userLabel="Popover View Controller">
+                    <connections>
+                        <outlet property="view" destination="FHF-Ki-DbV" id="eZy-xK-tEo"/>
+                    </connections>
+                </viewController>
+                <customView misplaced="YES" id="FHF-Ki-DbV" userLabel="Popover Content">
+                    <rect key="frame" x="0.0" y="0.0" width="447" height="110"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <subviews>
+                        <button horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="PRU-rA-I4Y">
+                            <rect key="frame" x="141" y="11" width="179" height="18"/>
+                            <buttonCell key="cell" type="check" title="&lt;Don't remind me again&gt;" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="bgk-wr-o8T">
+                                <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                <font key="font" metaFont="system"/>
+                            </buttonCell>
+                        </button>
+                        <textField horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="cxd-49-HcJ">
+                            <rect key="frame" x="-13" y="54" width="472" height="48"/>
+                            <textFieldCell key="cell" lineBreakMode="clipping" alignment="center" id="g5F-ZO-vGZ">
+                                <font key="font" usesAppearanceFont="YES"/>
+                                <string key="title">&lt;It looks like you don't have any actions set up for the Side Buttons of 
+your Logitech M720 Triathlon. 
+Click here to use the recommended settings.&gt;</string>
+                                <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                            </textFieldCell>
+                        </textField>
+                        <box verticalHuggingPriority="750" boxType="separator" translatesAutoresizingMaskIntoConstraints="NO" id="3xd-uK-wF3">
+                            <rect key="frame" x="16" y="38" width="430" height="5"/>
+                        </box>
+                    </subviews>
+                    <constraints>
+                        <constraint firstItem="3xd-uK-wF3" firstAttribute="leading" secondItem="FHF-Ki-DbV" secondAttribute="leading" constant="16" id="10n-BM-oam"/>
+                        <constraint firstItem="cxd-49-HcJ" firstAttribute="centerX" secondItem="FHF-Ki-DbV" secondAttribute="centerX" id="CjU-xT-u6x"/>
+                        <constraint firstItem="PRU-rA-I4Y" firstAttribute="top" secondItem="3xd-uK-wF3" secondAttribute="bottom" constant="12" id="N2A-lh-AO3"/>
+                        <constraint firstAttribute="trailing" secondItem="cxd-49-HcJ" secondAttribute="trailing" priority="999" constant="16" id="R48-O7-1PM"/>
+                        <constraint firstItem="PRU-rA-I4Y" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="FHF-Ki-DbV" secondAttribute="leading" constant="20" symbolic="YES" id="YVq-2R-f04"/>
+                        <constraint firstAttribute="bottom" secondItem="PRU-rA-I4Y" secondAttribute="bottom" constant="12" id="bT9-Uc-dsE"/>
+                        <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="PRU-rA-I4Y" secondAttribute="trailing" constant="20" symbolic="YES" id="dwe-qx-tcT"/>
+                        <constraint firstItem="PRU-rA-I4Y" firstAttribute="centerX" secondItem="FHF-Ki-DbV" secondAttribute="centerX" id="eHR-9C-uK5"/>
+                        <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="cxd-49-HcJ" secondAttribute="trailing" constant="16" id="fIS-uE-lNT"/>
+                        <constraint firstItem="cxd-49-HcJ" firstAttribute="leading" secondItem="FHF-Ki-DbV" secondAttribute="leading" priority="999" constant="16" id="gmC-K6-snB"/>
+                        <constraint firstItem="3xd-uK-wF3" firstAttribute="top" secondItem="cxd-49-HcJ" secondAttribute="bottom" constant="16" id="iC8-O1-tkT"/>
+                        <constraint firstItem="PRU-rA-I4Y" firstAttribute="leading" secondItem="FHF-Ki-DbV" secondAttribute="leading" priority="999" constant="20" symbolic="YES" id="lS9-XG-mmA"/>
+                        <constraint firstItem="cxd-49-HcJ" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="FHF-Ki-DbV" secondAttribute="leading" constant="16" id="sIM-cy-utU"/>
+                        <constraint firstItem="cxd-49-HcJ" firstAttribute="top" secondItem="FHF-Ki-DbV" secondAttribute="top" constant="16" id="tTO-0X-cKE"/>
+                        <constraint firstAttribute="trailing" secondItem="PRU-rA-I4Y" secondAttribute="trailing" priority="999" constant="20" symbolic="YES" id="vBu-0i-NRP"/>
+                        <constraint firstAttribute="trailing" secondItem="3xd-uK-wF3" secondAttribute="trailing" constant="16" id="zdc-qz-60B"/>
+                    </constraints>
+                </customView>
             </objects>
-            <point key="canvasLocation" x="-1151" y="1770.5"/>
+            <point key="canvasLocation" x="-1148" y="1927"/>
         </scene>
         <!--Scrolling View Controller-->
         <scene sceneID="Os1-9Q-CwG">

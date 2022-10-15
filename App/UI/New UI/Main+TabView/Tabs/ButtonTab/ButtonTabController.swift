@@ -16,6 +16,7 @@ import CocoaLumberjackSwift
     /// Outlets
     ///
     
+    @IBOutlet var restoreDefaultPopover: NSPopover!
     /// AddField
     
     @IBOutlet weak var addField: NSBox!
@@ -178,6 +179,7 @@ import CocoaLumberjackSwift
         /// Do actual init
         initAddFieldStuff()
     }
+    
     required init?(coder: NSCoder) {
         
         /// Set garbage values
@@ -237,6 +239,8 @@ import CocoaLumberjackSwift
     
     func updateColors() {
         
+        /// This is a helper for `viewDidLoad`
+        
         ///
         /// Update addField
         ///
@@ -289,9 +293,21 @@ import CocoaLumberjackSwift
         }
     }
     
+    var popoverObjects: NSArray? = nil
+    
     override func viewDidAppear() {
         super.viewDidAppear()
+        
         /// This is called twice, awakeFromNib as well. Use init() or viewDidLoad() to do things once
+        
+        /// Show resetToDefaultPopover
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5, execute: {
+            
+            self.restoreDefaultPopover.show(relativeTo: NSRect.zero, of: self.restoreDefaultButton, preferredEdge: .minY)
+            
+        })
+        
         
         ///
         /// Turn off killswitch

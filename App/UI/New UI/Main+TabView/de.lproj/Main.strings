@@ -303,3 +303,9 @@
 
 /* Class = "NSMenuItem"; title = "Activate License..."; ObjectID = "YBT-Ar-F4S"; */
 "YBT-Ar-F4S.title" = "Lizenz aktivieren...";
+
+/* Class = "NSButtonCell"; title = "<Don't remind me again>"; ObjectID = "bgk-wr-o8T"; */
+"bgk-wr-o8T.title" = "";
+
+/* Class = "NSTextFieldCell"; title = "<It looks like you don't have any actions set up for the Side Buttons of \nyour Logitech M720 Triathlon. \nClick here to use the recommended settings.>"; ObjectID = "g5F-ZO-vGZ"; */
+"g5F-ZO-vGZ.title" = "";
