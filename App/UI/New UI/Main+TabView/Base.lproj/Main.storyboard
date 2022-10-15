@@ -877,7 +877,7 @@ Mac Mouse Fix</string>
                         <outlet property="view" destination="JEf-5U-AJf" id="jQD-XG-Ikk"/>
                     </connections>
                 </customObject>
-                <popover behavior="t" id="Cts-Zb-d93">
+                <popover behavior="semitransient" id="Cts-Zb-d93">
                     <connections>
                         <outlet property="contentViewController" destination="f69-0B-qE6" id="8Kp-7C-UKC"/>
                     </connections>
@@ -888,52 +888,59 @@ Mac Mouse Fix</string>
                     </connections>
                 </viewController>
                 <customView misplaced="YES" id="FHF-Ki-DbV" userLabel="Popover Content">
-                    <rect key="frame" x="0.0" y="0.0" width="447" height="110"/>
+                    <rect key="frame" x="0.0" y="0.0" width="447" height="122"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <subviews>
                         <button horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="PRU-rA-I4Y">
-                            <rect key="frame" x="141" y="11" width="179" height="18"/>
-                            <buttonCell key="cell" type="check" title="&lt;Don't remind me again&gt;" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="bgk-wr-o8T">
+                            <rect key="frame" x="159" y="15" width="163" height="18"/>
+                            <buttonCell key="cell" type="check" title="Don't remind me again" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="bgk-wr-o8T">
                                 <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                 <font key="font" metaFont="system"/>
                             </buttonCell>
                         </button>
-                        <textField horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="cxd-49-HcJ">
-                            <rect key="frame" x="-13" y="54" width="472" height="48"/>
-                            <textFieldCell key="cell" lineBreakMode="clipping" alignment="center" id="g5F-ZO-vGZ">
+                        <textField horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" misplaced="YES" textCompletion="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cxd-49-HcJ" customClass="MarkdownTextField" customModule="Mac_Mouse_Fix" customModuleProvider="target">
+                            <rect key="frame" x="-13" y="74" width="472" height="38"/>
+                            <textFieldCell key="cell" lineBreakMode="clipping" allowsUndo="NO" alignment="center" id="g5F-ZO-vGZ">
                                 <font key="font" usesAppearanceFont="YES"/>
-                                <string key="title">&lt;It looks like you don't have any actions set up for the Side Buttons of 
-your Logitech M720 Triathlon. 
-Click here to use the recommended settings.&gt;</string>
+                                <string key="title">It looks like you don't have any actions set up for the __Side Buttons__ of 
+your __Logitech M720 Triathlon__.</string>
                                 <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                 <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                             </textFieldCell>
                         </textField>
-                        <box verticalHuggingPriority="750" boxType="separator" translatesAutoresizingMaskIntoConstraints="NO" id="3xd-uK-wF3">
-                            <rect key="frame" x="16" y="38" width="430" height="5"/>
-                        </box>
+                        <textField horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" misplaced="YES" textCompletion="NO" translatesAutoresizingMaskIntoConstraints="NO" id="unS-po-c19" customClass="MarkdownTextField" customModule="Mac_Mouse_Fix" customModuleProvider="target">
+                            <rect key="frame" x="69" y="53" width="308" height="16"/>
+                            <textFieldCell key="cell" lineBreakMode="clipping" allowsUndo="NO" alignment="center" title="__Click here__ to use the recommended settings." id="JSj-bh-A9Z">
+                                <font key="font" usesAppearanceFont="YES"/>
+                                <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                            </textFieldCell>
+                        </textField>
                     </subviews>
                     <constraints>
-                        <constraint firstItem="3xd-uK-wF3" firstAttribute="leading" secondItem="FHF-Ki-DbV" secondAttribute="leading" constant="16" id="10n-BM-oam"/>
+                        <constraint firstItem="unS-po-c19" firstAttribute="centerX" secondItem="FHF-Ki-DbV" secondAttribute="centerX" id="0d9-Oz-6Zg"/>
+                        <constraint firstItem="unS-po-c19" firstAttribute="top" secondItem="cxd-49-HcJ" secondAttribute="bottom" constant="18" id="Aai-PP-pD0"/>
                         <constraint firstItem="cxd-49-HcJ" firstAttribute="centerX" secondItem="FHF-Ki-DbV" secondAttribute="centerX" id="CjU-xT-u6x"/>
-                        <constraint firstItem="PRU-rA-I4Y" firstAttribute="top" secondItem="3xd-uK-wF3" secondAttribute="bottom" constant="12" id="N2A-lh-AO3"/>
+                        <constraint firstItem="unS-po-c19" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="FHF-Ki-DbV" secondAttribute="leading" constant="16" id="ETh-Nu-nI8"/>
+                        <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="unS-po-c19" secondAttribute="trailing" constant="16" id="FuZ-bX-Pql"/>
+                        <constraint firstAttribute="trailing" secondItem="unS-po-c19" secondAttribute="trailing" priority="999" constant="16" id="IUb-gz-g1G"/>
                         <constraint firstAttribute="trailing" secondItem="cxd-49-HcJ" secondAttribute="trailing" priority="999" constant="16" id="R48-O7-1PM"/>
+                        <constraint firstItem="PRU-rA-I4Y" firstAttribute="top" secondItem="unS-po-c19" secondAttribute="bottom" constant="20" id="XhV-0e-fyD"/>
                         <constraint firstItem="PRU-rA-I4Y" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="FHF-Ki-DbV" secondAttribute="leading" constant="20" symbolic="YES" id="YVq-2R-f04"/>
-                        <constraint firstAttribute="bottom" secondItem="PRU-rA-I4Y" secondAttribute="bottom" constant="12" id="bT9-Uc-dsE"/>
+                        <constraint firstAttribute="bottom" secondItem="PRU-rA-I4Y" secondAttribute="bottom" constant="16" id="bT9-Uc-dsE"/>
+                        <constraint firstItem="unS-po-c19" firstAttribute="leading" secondItem="FHF-Ki-DbV" secondAttribute="leading" priority="999" constant="16" id="bhp-sq-aSw"/>
                         <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="PRU-rA-I4Y" secondAttribute="trailing" constant="20" symbolic="YES" id="dwe-qx-tcT"/>
                         <constraint firstItem="PRU-rA-I4Y" firstAttribute="centerX" secondItem="FHF-Ki-DbV" secondAttribute="centerX" id="eHR-9C-uK5"/>
                         <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="cxd-49-HcJ" secondAttribute="trailing" constant="16" id="fIS-uE-lNT"/>
                         <constraint firstItem="cxd-49-HcJ" firstAttribute="leading" secondItem="FHF-Ki-DbV" secondAttribute="leading" priority="999" constant="16" id="gmC-K6-snB"/>
-                        <constraint firstItem="3xd-uK-wF3" firstAttribute="top" secondItem="cxd-49-HcJ" secondAttribute="bottom" constant="16" id="iC8-O1-tkT"/>
                         <constraint firstItem="PRU-rA-I4Y" firstAttribute="leading" secondItem="FHF-Ki-DbV" secondAttribute="leading" priority="999" constant="20" symbolic="YES" id="lS9-XG-mmA"/>
                         <constraint firstItem="cxd-49-HcJ" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="FHF-Ki-DbV" secondAttribute="leading" constant="16" id="sIM-cy-utU"/>
                         <constraint firstItem="cxd-49-HcJ" firstAttribute="top" secondItem="FHF-Ki-DbV" secondAttribute="top" constant="16" id="tTO-0X-cKE"/>
                         <constraint firstAttribute="trailing" secondItem="PRU-rA-I4Y" secondAttribute="trailing" priority="999" constant="20" symbolic="YES" id="vBu-0i-NRP"/>
-                        <constraint firstAttribute="trailing" secondItem="3xd-uK-wF3" secondAttribute="trailing" constant="16" id="zdc-qz-60B"/>
                     </constraints>
                 </customView>
             </objects>
-            <point key="canvasLocation" x="-1148" y="1927"/>
+            <point key="canvasLocation" x="-1148.5" y="1927"/>
         </scene>
         <!--Scrolling View Controller-->
         <scene sceneID="Os1-9Q-CwG">
