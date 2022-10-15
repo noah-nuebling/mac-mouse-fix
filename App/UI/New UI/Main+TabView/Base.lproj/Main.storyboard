@@ -892,8 +892,8 @@ Mac Mouse Fix</string>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <subviews>
                         <button horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="PRU-rA-I4Y">
-                            <rect key="frame" x="159" y="15" width="163" height="18"/>
-                            <buttonCell key="cell" type="check" title="Don't remind me again" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="bgk-wr-o8T">
+                            <rect key="frame" x="163" y="15" width="163" height="18"/>
+                            <buttonCell key="cell" type="check" title="Don't remind me again" bezelStyle="regularSquare" imagePosition="left" inset="2" id="bgk-wr-o8T">
                                 <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                 <font key="font" metaFont="system"/>
                             </buttonCell>
@@ -902,8 +902,8 @@ Mac Mouse Fix</string>
                             <rect key="frame" x="-13" y="74" width="472" height="38"/>
                             <textFieldCell key="cell" lineBreakMode="clipping" allowsUndo="NO" alignment="center" id="g5F-ZO-vGZ">
                                 <font key="font" usesAppearanceFont="YES"/>
-                                <string key="title">It looks like you don't have any actions set up for the __Side Buttons__ of 
-your __Logitech M720 Triathlon__.</string>
+                                <string key="title">&lt;It looks like you don't have any actions set up for the __Side Buttons__ of 
+your __Logitech M720 Triathlon__.&gt;</string>
                                 <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                 <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                             </textFieldCell>
