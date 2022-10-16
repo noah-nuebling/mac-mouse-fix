@@ -39,60 +39,67 @@
     NSMutableAttributedString *s = self.mutableCopy;
     
     /// Declare chars to trim
-    NSCharacterSet *whitespace = NSCharacterSet.whitespaceCharacterSet; /// I don't think this contains linebreaks? Not sure.
+    NSCharacterSet *whitespaceChars = NSCharacterSet.whitespaceCharacterSet; /// I don't think this contains linebreaks? Not sure.
     
-    /// Loop
+    /// Loop forwards
+    ///     Remove leading
+    
+    while (true) {
+        
+        /// Get next whitespace
+        NSRange whitespace = [s.string rangeOfCharacterFromSet:whitespaceChars];
+        
+        /// Remove whitespace if leading
+        ///     Break if no leading whitespace
+        if (whitespace.location == 0) {
+            [s deleteCharactersInRange: whitespace];
+        } else {
+            break;
+        }
+    }
+    
+    /// Loop backwards
+    ///     Remove trailing and duplicates
+
     NSRange lastWhitespace = NSMakeRange(NSNotFound, 0);
     NSRange searchRange = NSMakeRange(0, s.length);
     while (true) {
         
         /// Get next range
-        NSRange whitespaceRange = [s.string rangeOfCharacterFromSet:whitespace options:NSBackwardsSearch range:searchRange];
+        NSRange whitespace = [s.string rangeOfCharacterFromSet:whitespaceChars options:NSBackwardsSearch range:searchRange];
         
         /// Break
-        if (whitespaceRange.location == NSNotFound) {
+        if (whitespace.location == NSNotFound) {
             break;
         }
         
         /// Delete things
         
-        BOOL doUpdateSearchRange = YES;
-        BOOL didDeleteWhitespace = YES;
+        BOOL deletedWhitespace = YES;
         
-        if (whitespaceRange.location + 1 == lastWhitespace.location) {
-            
-            /// Delete consecutive
-            [s deleteCharactersInRange:lastWhitespace];
-            
-            /// Set flags
-            doUpdateSearchRange = NO;
-            didDeleteWhitespace = NO;
-            
-        } else if (NSMaxRange(whitespaceRange) - 1 == s.length - 1) {
+        if (NSMaxRange(whitespace) - 1 == s.length - 1) {
             
             /// Delete trailing
-            [s deleteCharactersInRange:whitespaceRange];
+            [s deleteCharactersInRange:whitespace];
             
-        } else if (whitespaceRange.location == 0) {
+        } else if (NSMaxRange(whitespace) == lastWhitespace.location) {
             
-            /// Delete leading
-            [s deleteCharactersInRange:whitespaceRange];
-
+            /// Delete consecutive
+            [s deleteCharactersInRange:whitespace];
+        
         } else {
-            didDeleteWhitespace = NO;
+            deletedWhitespace = NO;
         }
         
         /// Update search range
         ///     This makes the new search range go up to, but not include, the whitespace char we just processed
-        if (doUpdateSearchRange) {
-            searchRange = NSMakeRange(searchRange.location, whitespaceRange.location);
-        }
+        searchRange = NSMakeRange(searchRange.location, whitespace.location);
         
         /// Update last
-        if (didDeleteWhitespace) {
-            lastWhitespace = NSMakeRange(NSNotFound, 0);
+        if (!deletedWhitespace) {
+            lastWhitespace = whitespace;
         } else {
-            lastWhitespace = whitespaceRange;
+            lastWhitespace.location -= 1;
         }
     }
     
