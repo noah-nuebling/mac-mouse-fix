@@ -37,7 +37,7 @@ import CocoaLumberjackSwift
         
         /// TODO: We're not using the email parameter in Gumroad.swift and we're just ignoring it. -> Remove it
         
-        getLicenseInfo(key, incrementUsageCount: incrementUsageCount) { isValidKey, emailForKey, nOfActivations, serverResponse, error, urlResponse in
+        getLicenseInfo(key, incrementUsageCount: incrementUsageCount) { isValidKey, nOfActivations, serverResponse, error, urlResponse in
             
             /// Guard error
             
@@ -49,18 +49,6 @@ import CocoaLumberjackSwift
             /// Guard invalid key
             ///     Maybe also check what the URL response is somewhere? I just have no idea what the URL response should be.
             assert(isValidKey == (error == nil))
-            
-            /// Guard wrong email
-            ///     Not using emails anymore because it's a little annoying to the user and doesn't really do anything to prevent piracy I think
-            ///     -> Remove this. (The emailForKey param in the getLicenseInfo callback can also be removed)
-            
-//            if email != emailForKey {
-//
-//                let error = NSError(domain: MFLicenseErrorDomain, code: Int(kMFLicenseErrorCodeMismatchedEmails), userInfo: ["enteredEmail": email, "emailForKey": emailForKey ?? "<invalid>"])
-//
-//                completionHandler(false, serverResponse, error, urlResponse)
-//                return
-//            }
             
             /// Guard too many activations
             
@@ -87,7 +75,7 @@ import CocoaLumberjackSwift
     
     /// Functions
     
-    private static func getLicenseInfo(_ key: String, incrementUsageCount: Bool, completionHandler: @escaping (_ isValidKey: Bool, _ forEmail: String?, _ nOfActivations: Int?, _ serverResponse: [String: Any]?, _ error: NSError?, _ urlResponse: URLResponse?) -> ()) {
+    private static func getLicenseInfo(_ key: String, incrementUsageCount: Bool, completionHandler: @escaping (_ isValidKey: Bool, _ nOfActivations: Int?, _ serverResponse: [String: Any]?, _ error: NSError?, _ urlResponse: URLResponse?) -> ()) {
         
         
         sendGumroadAPIRequest(method: "/licenses/verify",
@@ -99,6 +87,7 @@ import CocoaLumberjackSwift
             
             /// Implement `FORCE_LICENSED` flag
             ///     See License.swift comments for more info
+            ///     Why aren't we implementing this inside of License.swift? I think we should try to make Gumroad.swift a pure and simple wrapper around the Gumroad API without this extra logic. This is going to be annoying when we need to implement the alternative payment method for China and Russia.
                         
 #if FORCE_LICENSED
             completionHandler(true, "fake@email.com", 1, ["info": "this license is considered valid due to the FORCE_LICENSED flag"], nil, nil)
@@ -108,7 +97,7 @@ import CocoaLumberjackSwift
             /// Guard error
             
             if error != nil {
-                completionHandler(false, nil, nil, data, error, urlResponse)
+                completionHandler(false, nil, data, error, urlResponse)
                 return
             }
             
@@ -119,15 +108,9 @@ import CocoaLumberjackSwift
             
             let isValidKey = data?["success"] as? Bool ?? false
             let activations = data?["uses"] as? Int
-            var email: String? = nil
-            if let purchase = data?["purchase"] as? [AnyHashable: Any],
-               let e = purchase["email"] as? String {
-                
-                email = e
-            }
             
             /// Call completions handler
-            completionHandler(isValidKey, email, activations, data, error, urlResponse)
+            completionHandler(isValidKey, activations, data, error, urlResponse)
         })
     }
     
