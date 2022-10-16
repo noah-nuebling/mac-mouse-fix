@@ -91,7 +91,9 @@ import CocoaLumberjackSwift
         
         
         sendGumroadAPIRequest(method: "/licenses/verify",
-                              args: ["product_permalink": productPermalink, "license_key": key, "increment_uses_count": incrementUsageCount ? "true" : "false"],
+                              args: ["product_permalink": productPermalink,
+                                     "license_key": key,
+                                     "increment_uses_count": incrementUsageCount ? "true" : "false"],
                               completionHandler: { data, error, urlResponse in
             
             

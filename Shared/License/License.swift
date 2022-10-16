@@ -114,6 +114,7 @@ extension MFLicenseReturn: Equatable {
         
         /// Get cache
         ///     Note: Here, we fall back to false and don't throw errors if there is no cache, but in `licenseState(licenseConfig:)` we do throw an error. Does this have a reason?
+        
         let cache = config("License.isLicensedCache") as? Bool ?? false
         let state = cache ? kMFLicenseStateLicensed : kMFLicenseStateUnlicensed
         
@@ -161,6 +162,7 @@ extension MFLicenseReturn: Equatable {
 #else
             let daysOfUse = TrialCounter.daysOfUse
 #endif
+            
             let trialDays = licenseConfig.trialDays
             let trialIsActive = daysOfUse <= trialDays
             let daysOfUseUI = SharedUtilitySwift.clip(daysOfUse, betweenLow: 1, high: trialDays)
@@ -192,7 +194,7 @@ extension MFLicenseReturn: Equatable {
     
     fileprivate static func checkLicense(licenseConfig: LicenseConfig, completionHandler: @escaping (MFLicenseState, MFValueFreshness, NSError?) -> ()) {
         
-        /// Get email and license from config file
+        /// Get license from secure storage
         
         guard
             let key = SecureStorage.get("License.key") as! String?
