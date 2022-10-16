@@ -17,6 +17,7 @@ NS_ASSUME_NONNULL_BEGIN
 int64_t fixedScrollDelta(double scrollDelta);
 IOHIDDeviceRef _Nullable CGEventGetSendingDevice(CGEventRef cgEvent);
 //IOHIDDeviceRef _Nullable HIDEventGetSendingDevice(HIDEvent *event);
+IOHIDDeviceRef _Nullable getSendingDeviceWithSenderID(uint64_t senderID);
 CFTimeInterval CGEventGetTimestampInSeconds(CGEventRef event);
 //CFTimeInterval machDeltaToTimeInterval(uint64_t machTime1, uint64_t machTime2);
 

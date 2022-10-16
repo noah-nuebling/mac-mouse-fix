@@ -31,6 +31,10 @@ import Foundation
         guard let iohidDevice = CGEventGetSendingDevice(event)?.takeUnretainedValue() else { return }
         updateActiveDevice(IOHIDDevice: iohidDevice)
     }
+    @objc static func updateActiveDevice(eventSenderID: UInt64) {
+        guard let iohidDevice = getSendingDeviceWithSenderID(eventSenderID)?.takeUnretainedValue() else { return }
+        updateActiveDevice(IOHIDDevice: iohidDevice)
+    }
     @objc static func updateActiveDevice(IOHIDDevice: IOHIDDevice) {
         guard let device = DeviceManager.attachedDevice(with: IOHIDDevice) else { return }
         activeDevice = device

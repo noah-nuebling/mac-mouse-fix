@@ -90,13 +90,20 @@ static CFDataRef didReceiveMessage(CFMessagePortRef port, SInt32 messageID, CFDa
     } else if ([message isEqualToString:@"getActiveDeviceInfo"]) {
         Device *dev = HelperState.activeDevice;
         if (dev != NULL) {
-                
+            
             response = @{
                 @"name": dev.name == nil ? @"" : dev.name,
                 @"manufacturer": dev.manufacturer == nil ? @"" : dev.manufacturer,
                 @"nOfButtons": @(dev.nOfButtons),
             };
         }
+    } else if ([message isEqualToString:@"updateActiveDeviceWithEventSenderID"]) {
+        
+        /// We can't just pass over the CGEvent from the mainApp because the senderID isn't stored when serializing CGEvents
+        
+        uint64_t senderID = [(NSNumber *)payload unsignedIntegerValue];
+        [HelperState updateActiveDeviceWithEventSenderID:senderID];
+        
     } else {
         DDLogInfo(@"Unknown message received: %@", message);
     }

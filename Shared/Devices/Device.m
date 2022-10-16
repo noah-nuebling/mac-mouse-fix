@@ -243,8 +243,6 @@ static void handleInput(void *context, IOReturn result, void *sender, IOHIDValue
 
 - (int)nOfButtons {
     
-    /// TODO: Test how well this works.
-    
     /// Get button elements
     IOHIDDeviceRef device = self.iohidDevice;
     NSDictionary *match = @{

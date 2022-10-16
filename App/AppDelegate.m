@@ -151,11 +151,13 @@ static NSDictionary *sideButtonActions;
 
 - (void)applicationDidFinishLaunching:(NSNotification *)notification {
     
-#pragma mark Entry point of MainApp
+#pragma mark - Entry point of MainApp
     
     /// Log
     
     DDLogInfo(@"Mac Mouse Fix finished launching");
+    
+#pragma mark Experiments
     
     /// Test titlebarAccessory
     ///     Trying to add accessoryView to titlebar. We want this for app specific settings. Doesn't work so far
@@ -174,6 +176,22 @@ static NSDictionary *sideButtonActions;
     ///     Edit: Turning this off for now because we don't need it.
     
 //    [LicenseConfig getOnComplete:^(LicenseConfig * _Nonnull config) { }];
+    
+#pragma mark Update activeDevice onClick
+    
+    static id eventMonitor = nil;
+    assert(eventMonitor == nil);
+    
+    if (eventMonitor == nil) {
+        
+        eventMonitor = [NSEvent addLocalMonitorForEventsMatchingMask:NSEventMaskLeftMouseDown handler:^NSEvent * _Nullable(NSEvent * _Nonnull event) {
+            
+            uint64_t senderID = CGEventGetIntegerValueField(event.CGEvent, kMFCGEventFieldSenderID);
+            [SharedMessagePort sendMessage:@"updateActiveDeviceWithEventSenderID" withPayload:@(senderID) expectingReply:NO];
+            
+            return event;
+        }];
+    }
     
 #pragma mark Init Sparkle
     

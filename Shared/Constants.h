@@ -288,6 +288,18 @@ typedef enum {
 
 #define kMFMaxButtonNumber 32
 
+///
+/// CGEventFields
+///
+
+/// Most CGEventFields we discovered aren't documented here but are indirectly documented in the touchSimulator classes
+
+typedef CF_ENUM(uint32_t, MFCGEventField) {
+    
+    kMFCGEventFieldSenderID = 87,
+    
+};
+
 @end
 
 NS_ASSUME_NONNULL_END

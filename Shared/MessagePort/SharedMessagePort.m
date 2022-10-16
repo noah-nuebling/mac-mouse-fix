@@ -49,7 +49,7 @@
     CFMessagePortSetInvalidationCallBack(_remotePort, invalidationCallback);
     
     SInt32 messageID = 0x420666; /// Arbitrary
-    CFDataRef messageData = (__bridge CFDataRef)[NSKeyedArchiver archivedDataWithRootObject:messageDict];;
+    CFDataRef messageData = (__bridge CFDataRef)[NSKeyedArchiver archivedDataWithRootObject:messageDict];
     CFTimeInterval sendTimeout = 0.0;
     CFTimeInterval recieveTimeout = 0.0;
     CFStringRef replyMode = NULL;
