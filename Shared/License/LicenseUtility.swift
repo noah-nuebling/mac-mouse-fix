@@ -12,13 +12,13 @@ import Cocoa
 @objc class LicenseUtility: NSObject {
 
     
-    @objc static func trialCounterString(licenseConfig: LicenseConfig, license: MFLicenseReturn) -> NSAttributedString {
+    @objc static func trialCounterString(licenseConfig: LicenseConfig, license: MFLicenseState) -> NSAttributedString {
         
         /// Guard unlicensed
-        assert(license.state == kMFLicenseStateUnlicensed)
+        assert(!license.isLicensed.boolValue)
         
         /// Get trial state
-        ///     We can also get `trialDays` from MFLicenseReturn, which is sort of redundant`
+        ///     We can also get `trialDays` from MFLicenseState, which is sort of redundant`
         let trialDays = Int(licenseConfig.trialDays)
         let daysOfUse = Int(license.daysOfUseUI)
         

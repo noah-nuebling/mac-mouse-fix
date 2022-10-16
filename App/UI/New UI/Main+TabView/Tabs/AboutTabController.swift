@@ -28,7 +28,7 @@ class AboutTabController: NSViewController {
     var payButtonwrapperConstraints: [NSLayoutConstraint] = []
     
     var currentLicenseConfig: LicenseConfig? = nil
-    var currentLicense: MFLicenseReturn? = nil
+    var currentLicense: MFLicenseState? = nil
 
     var trackingArea: NSTrackingArea? = nil
     
@@ -128,7 +128,7 @@ class AboutTabController: NSViewController {
         }
     }
     
-    func updateUI(licenseConfig: LicenseConfig, license: MFLicenseReturn) {
+    func updateUI(licenseConfig: LicenseConfig, license: MFLicenseState) {
         
         /// Guard no change
         if currentLicenseConfig?.isEqual(to: licenseConfig) ?? false && currentLicense == license { return }
@@ -139,7 +139,7 @@ class AboutTabController: NSViewController {
             self.view.removeTrackingArea(trackingArea)
         }
         
-        if license.state == kMFLicenseStateLicensed {
+        if license.isLicensed.boolValue {
             
             ///
             /// Replace payButton with milkshake link

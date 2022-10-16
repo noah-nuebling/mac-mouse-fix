@@ -19,21 +19,14 @@ typedef enum {
     kMFValueFreshnessFallback,
 } MFValueFreshness;
 
-typedef enum {
-    kMFLicenseStateLicensed = 0,
-    kMFLicenseStateUnlicensed = 1,
-//    kMFLicenseStateCachedLicensed = 2,
-//    kMFLicenseStateCachedUnlicended = 3,
-} MFLicenseState;
-
 typedef struct {
-    MFLicenseState state;
+    BOOL isLicensed;
     MFValueFreshness freshness;
     int daysOfUse;
     int daysOfUseUI;
     int trialDays;
     BOOL trialIsActive;
-} MFLicenseReturn;
+} MFLicenseState;
 
 /// Define custom errors
 ///     Notes:

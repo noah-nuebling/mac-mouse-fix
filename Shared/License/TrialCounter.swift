@@ -68,7 +68,7 @@ import CocoaLumberjackSwift
             /// Check licensing state
             License.licenseState(licenseConfig: licenseConfig) { license, error in
                 
-                if license.state == kMFLicenseStateLicensed {
+                if license.isLicensed.boolValue {
                     
                     /// Do nothing if licensed
                     

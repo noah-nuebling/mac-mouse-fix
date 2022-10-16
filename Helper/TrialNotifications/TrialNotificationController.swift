@@ -88,7 +88,7 @@ class TrialNotificationController: NSWindowController {
     
     var firstAppearance = true
     
-    @objc func open(licenseConfig: LicenseConfig, license: MFLicenseReturn, triggeredByUser: Bool) {
+    @objc func open(licenseConfig: LicenseConfig, license: MFLicenseState, triggeredByUser: Bool) {
         
         /// Validate
         
