@@ -204,6 +204,9 @@ static void handleInput(void *context, IOReturn result, void *sender, IOHIDValue
     return [self.uniqueID isEqual:otherID];
 }
 - (BOOL)isEqualToDevice:(Device *)device {
+    
+    /// What does this function do? Why do we have 2 equality check functions?
+    
     return CFEqual(self.iohidDevice, device.iohidDevice);
 }
 - (BOOL)isEqual:(Device *)other {

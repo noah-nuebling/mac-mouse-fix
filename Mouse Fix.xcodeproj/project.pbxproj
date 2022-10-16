@@ -831,6 +831,7 @@
 		4F09284128B8C71000BDC2FF /* UI */ = {
 			isa = PBXGroup;
 			children = (
+				4F85C05228BBE6D500E96E9C /* TrialSection */,
 				4FF665EA25F2C92700689B77 /* Hyperlink.h */,
 				4FF665E725F2C92700689B77 /* Hyperlink.m */,
 				4F92A72B260F6C7800529D1F /* NSView+Additions.h */,
@@ -1480,7 +1481,6 @@
 				4FDE757A28B0E35100662314 /* Gumroad.swift */,
 				4F44794428B62FA400AD1979 /* LicenseConfig.swift */,
 				4FFA4E3428B795F30062A1FE /* LicenseUtility.swift */,
-				4F85C05228BBE6D500E96E9C /* TrialSection */,
 			);
 			path = License;
 			sourceTree = "<group>";

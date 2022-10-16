@@ -75,6 +75,9 @@ import CocoaLumberjackSwift
         }
         
         /// Fallback to hardcoded if no cache
+        ///     Why not set these values in init? Should be safer and simpler.
+        
+        // TODO: Add altPaylink stuff here after we implement support for paddle or whatever
         
         if !instance.isFilled {
             instance.maxActivations = 25
@@ -82,6 +85,11 @@ import CocoaLumberjackSwift
             instance.price = 199
             instance.payLink = "https://noahnuebling.gumroad.com/l/mmfinapp"
             instance.quickPayLink = "https://noahnuebling.gumroad.com/l/mmfinapp?wanted=true"
+            instance.altPayLink = ""
+            instance.altQuickPayLink = ""
+            instance.altPayLinkCountries = []
+            instance.freeCountries = []
+            
             instance.isFilled = true
             instance.freshness = kMFValueFreshnessFallback
         }
@@ -101,6 +109,12 @@ import CocoaLumberjackSwift
         price = 99999999
         payLink = ""
         quickPayLink = ""
+        altPayLink = ""
+        altQuickPayLink = ""
+        altPayLinkCountries = []
+        freeCountries = []
+        
+        
         freshness = kMFValueFreshnessNone
         isFilled = false
     }
@@ -123,18 +137,24 @@ import CocoaLumberjackSwift
     
     /// Equatability
     
-//    static public func == (lhs: LicenseConfig, rhs: LicenseConfig) -> Bool {
-//
-//
-//    }
     override func isEqual(to object: Any?) -> Bool {
         
         /// Notes:
-        ///    - We don't check freshness because it makes sense
-        ///    - Overriding == directly doesn't work for some reason. Use isEqual to compare instead of ==
+        ///    - We don't check freshness and isFilled because it makes sense
+        ///    - Overriding == directly doesn't work for some reason. Use isEqual to compare instead of == (unless == maps to isEqual anyways - not sure)
         
         let object = object as! LicenseConfig
-        let result = self.maxActivations == object.maxActivations && self.trialDays == object.trialDays && self.price == object.price && self.payLink == object.payLink && self.quickPayLink == object.quickPayLink
+        
+        let result = self.maxActivations == object.maxActivations
+                        && self.trialDays == object.trialDays
+                        && self.price == object.price
+                        && self.payLink == object.payLink
+                        && self.quickPayLink == object.quickPayLink
+                        && self.altPayLink == object.altPayLink
+                        && self.altQuickPayLink == object.altQuickPayLink
+                        && self.altPayLinkCountries == object.altPayLinkCountries
+                        && self.freeCountries == object.freeCountries
+                    
         return result
     }
     
@@ -148,8 +168,12 @@ import CocoaLumberjackSwift
     @objc var price: Int
     @objc var payLink: String
     @objc var quickPayLink: String
-    @objc var freshness: MFValueFreshness
+    @objc var altPayLink: String
+    @objc var altQuickPayLink: String
+    @objc var altPayLinkCountries: [String]
+    @objc var freeCountries: [String]
     
+    @objc var freshness: MFValueFreshness
     fileprivate var isFilled: Bool
     
     /// Derived vars
@@ -185,7 +209,11 @@ import CocoaLumberjackSwift
               let trialDays = config?["trialDays"] as? Int,
               let price = config?["price"] as? Int,
               let payLink = config?["payLink"] as? String,
-              let quickPayLink = config?["quickPayLink"] as? String
+              let quickPayLink = config?["quickPayLink"] as? String,
+              let altPayLink = config?["altPayLink"] as? String,
+              let altQuickPayLink = config?["altQuickPayLink"] as? String,
+              let altPayLinkCountries = config?["altPayLinkCountries"] as? [String],
+              let freeCountries = config?["freeCountries"] as? [String]
         else {
             throw NSError(domain: MFLicenseConfigErrorDomain, code: Int(kMFLicenseConfigErrorCodeInvalidDict), userInfo: config)
         }
@@ -197,6 +225,11 @@ import CocoaLumberjackSwift
         instance.price = price
         instance.payLink = payLink
         instance.quickPayLink = quickPayLink
+        instance.altPayLink = altPayLink
+        instance.altQuickPayLink = altQuickPayLink
+        instance.altPayLinkCountries = altPayLinkCountries
+        instance.freeCountries = freeCountries
+        
         instance.isFilled = true
     }
 }
