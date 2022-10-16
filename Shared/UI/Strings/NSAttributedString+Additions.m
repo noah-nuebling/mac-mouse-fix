@@ -33,12 +33,13 @@
 - (NSAttributedString *)attributedStringByTrimmingWhitespace {
     
     /// Deletes leading, trailing, and duplicate whitespace from a string.
+    ///     "Trimming" should maybe be "stripping"? Trimming usually only refers to cutting off the leading and trailing.
     
     /// Mutable copy
     NSMutableAttributedString *s = self.mutableCopy;
     
     /// Declare chars to trim
-    NSCharacterSet *whitespace = NSCharacterSet.whitespaceCharacterSet;
+    NSCharacterSet *whitespace = NSCharacterSet.whitespaceCharacterSet; /// I don't think this contains linebreaks? Not sure.
     
     /// Loop
     NSRange lastWhitespace = NSMakeRange(NSNotFound, 0);
@@ -67,7 +68,7 @@
             doUpdateSearchRange = NO;
             didDeleteWhitespace = NO;
             
-        } else if (NSMaxRange(whitespaceRange) == s.length - 1) {
+        } else if (NSMaxRange(whitespaceRange) - 1 == s.length - 1) {
             
             /// Delete trailing
             [s deleteCharactersInRange:whitespaceRange];

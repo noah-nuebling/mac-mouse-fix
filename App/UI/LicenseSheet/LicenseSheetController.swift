@@ -56,7 +56,7 @@ import Cocoa
             assert(isDifferent) /// Otherwise the button should be deactivated
         }
         
-        /// Deactivate
+        /// Deactivate license
         
         if isEmpty && isDifferent {
             
@@ -87,7 +87,7 @@ import Cocoa
         /// Ask server
         /// Notes:
         /// - We could also use cached LicenseConfig, if we update it once on app start.
-        /// - We're totally curcumventint License.swift. It was designed as mainly a wrapper around Gumroad.swift, but we're using Gumroad.swift directly. Not sure why, but it made sense while writing this.
+        /// - We're totally curcumventing License.swift. It was designed as mainly a wrapper around Gumroad.swift, but we're using Gumroad.swift directly. Not sure why, but it made sense while writing this.
         ///     -> Should mayebe overthink what the role of License.swift is.
         
         LicenseConfig.get { licenseConfig in
@@ -203,6 +203,10 @@ import Cocoa
     
     func controlTextDidChange(_ obj: Notification) {
         
+        /// Trim whitespace
+        licenseField.stringValue = (licenseField.stringValue as NSString).stringByTrimmingWhiteSpace() as String
+        
+        /// Update UI
         updateUIToLicenseField()
     }
     
