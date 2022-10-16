@@ -206,48 +206,61 @@ extension MFLicenseState: Equatable {
             return
         }
         
-        /// Get maxActivations from licenseConfig
-        
-        let maxActivations = licenseConfig.maxActivations
-        
         /// Ask gumroad to verify
-        Gumroad.checkLicense(key, maxActivations: maxActivations) { isValidKey, serverResponse, error, urlResponse in
+        Gumroad.checkLicense(key) { isValidKey, nOfActivations, serverResponse, error, urlResponse in
             
             if isValidKey {
                 
+                /// Do extra validation
+                
+                var validActivationCount = false
+                if let a = nOfActivations, a <= licenseConfig.maxActivations {
+                    validActivationCount = true
+                }
+                
+                if !validActivationCount {
+
+                    let error = NSError(domain: MFLicenseErrorDomain, code: Int(kMFLicenseErrorCodeInvalidNumberOfActivations), userInfo: ["nOfActivations": nOfActivations ?? -1, "maxActivations": licenseConfig.maxActivations])
+                    
+                    completionHandler(false, kMFValueFreshnessFresh, error)
+                    return
+                }
+                    
+                    
                 /// Is licensed!
+                
                 completionHandler(true, kMFValueFreshnessFresh, nil)
                 return
-            }
-            
-            /// Gumroad veryfication failed
-            
-            if let error = error,
-               error.domain == NSURLErrorDomain {
                 
-                /// Failed due to internet issues -> try cache
+            } else { /// Gumroad says key is not valid
                 
-                if let isLicensedCache = config("License.isLicensedCache") as? Bool {
+                if let error = error,
+                   error.domain == NSURLErrorDomain {
                     
-                    /// Fall back to cache
-                    completionHandler(isLicensedCache, kMFValueFreshnessCached, nil)
-                    return
+                    /// Failed due to internet issues -> try cache
+                    
+                    if let isLicensedCache = config("License.isLicensedCache") as? Bool {
+                        
+                        /// Fall back to cache
+                        completionHandler(isLicensedCache, kMFValueFreshnessCached, nil)
+                        return
+                        
+                    } else {
+                        
+                        /// There's no cache
+                        let error = NSError(domain: MFLicenseErrorDomain,
+                                            code: Int(kMFLicenseErrorCodeNoInternetAndNoCache))
+                        
+                        completionHandler(false, kMFValueFreshnessFallback, error)
+                        return
+                    }
                     
                 } else {
                     
-                    /// There's no cache
-                    let error = NSError(domain: MFLicenseErrorDomain,
-                                        code: Int(kMFLicenseErrorCodeNoInternetAndNoCache))
-                    
-                    completionHandler(false, kMFValueFreshnessFallback, error)
-                    
+                    /// Failed despite good internet connection -> Is actually unlicensed
+                    completionHandler(false, kMFValueFreshnessFresh, error) /// Pass through the error from Gumroad.swift
                     return
                 }
-            } else {
-                
-                /// Failed despite good internet connection -> Is actually unlicensed
-                completionHandler(false, kMFValueFreshnessFresh, error) /// Pass through the error from Gumroad.swift
-                return
             }
         }
     }

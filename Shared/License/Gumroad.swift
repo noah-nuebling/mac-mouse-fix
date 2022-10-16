@@ -19,30 +19,28 @@ import CocoaLumberjackSwift
     /// Interface
     ///     Use License.swift instead of using this directly
     
-    @objc static func activateLicense(_ key: String, maxActivations: Int, completionHandler: @escaping (_ isValidKey: Bool, _ serverResponse: [String: Any]?, _ error: NSError?, _ urlResponse: URLResponse?) -> ()) {
-        
-        _checkLicense(key, maxActivations: maxActivations, incrementUsageCount: true, completionHandler: completionHandler)
-    }
-    
-    @objc static func checkLicense(_ key: String, maxActivations: Int, completionHandler: @escaping (_ isValidKey: Bool, _ serverResponse: [String: Any]?, _ error: NSError?, _ urlResponse: URLResponse?) -> ()) {
-        
-        _checkLicense(key, maxActivations: maxActivations, incrementUsageCount: false, completionHandler: completionHandler)
-    }
+//    @objc static func activateLicense(_ key: String, maxActivations: Int, completionHandler: @escaping (_ isValidKey: Bool, _ serverResponse: [String: Any]?, _ error: NSError?, _ urlResponse: URLResponse?) -> ()) {
+//
+//        _checkLicense(key, maxActivations: maxActivations, incrementUsageCount: true, completionHandler: completionHandler)
+//    }
+//
+//    @objc static func checkLicense(_ key: String, maxActivations: Int, completionHandler: @escaping (_ isValidKey: Bool, _ serverResponse: [String: Any]?, _ error: NSError?, _ urlResponse: URLResponse?) -> ()) {
+//
+//        _checkLicense(key, maxActivations: maxActivations, incrementUsageCount: false, completionHandler: completionHandler)
+//    }
     
     //
     // MARK: Core - lvl 2
     //
     
-    private static func _checkLicense(_ key: String, maxActivations: Int, incrementUsageCount: Bool, completionHandler: @escaping (_ isValidKey: Bool, _ serverResponse: [String: Any]?, _ error: NSError?, _ urlResponse: URLResponse?) -> ()) {
-        
-        /// TODO: We're not using the email parameter in Gumroad.swift and we're just ignoring it. -> Remove it
+    static func checkLicense(_ key: String, incrementUsageCount: Bool = false, completionHandler: @escaping (_ isValidKey: Bool, _ nOfActivations: Int?, _ serverResponse: [String: Any]?, _ error: NSError?, _ urlResponse: URLResponse?) -> ()) {
         
         getLicenseInfo(key, incrementUsageCount: incrementUsageCount) { isValidKey, nOfActivations, serverResponse, error, urlResponse in
             
             /// Guard error
             
             if let error = error {
-                completionHandler(false, serverResponse, error, urlResponse)
+                completionHandler(false, nOfActivations, serverResponse, error, urlResponse)
                 return
             }
             
@@ -50,18 +48,8 @@ import CocoaLumberjackSwift
             ///     Maybe also check what the URL response is somewhere? I just have no idea what the URL response should be.
             assert(isValidKey == (error == nil))
             
-            /// Guard too many activations
-            
-            guard let a = nOfActivations, a <= maxActivations else {
-                
-                let error = NSError(domain: MFLicenseErrorDomain, code: Int(kMFLicenseErrorCodeInvalidNumberOfActivations), userInfo: ["nOfActivations": nOfActivations ?? -1, "maxActivations": maxActivations])
-                
-                completionHandler(false, serverResponse, error, urlResponse)
-                return
-            }
-            
             /// Success!
-            completionHandler(true, serverResponse, error, urlResponse)
+            completionHandler(true, nOfActivations, serverResponse, error, urlResponse)
         }
     }
     
