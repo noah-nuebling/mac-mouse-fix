@@ -7,9 +7,9 @@
 // --------------------------------------------------------------------------
 //
 
-/// This class abstracts away licensing params like the trialDuration or the price, so we can change it easily and optimize these parameters.
+/// This class abstracts away licensing params like the trialDuration or the price. At the time of writing it loads them all from a GitHub repo. This allows us to easily change parameters like the price displayed in the app for all users.
 
-// "https://noahnuebling.gumroad.com/l/mmfinapp" "https://noahnuebling.gumroad.com/l/mmfinapp?wanted=true"
+/// The altPayLink, altQuickPayLink, and altPayLinkCountries params are meant to be used to provide an alternative payment method for users in China and Russia where Gumroad doesn't work properly at the moment. They are unused at the time of writing. The freeCountries parameter lists countries in which the app should be free. This is meant as a temporary solution until we implemented the alternative payment methods.
 
 import Cocoa
 import CocoaLumberjackSwift

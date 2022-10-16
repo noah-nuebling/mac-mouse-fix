@@ -45,6 +45,7 @@ extension MFLicenseState: Equatable {
     // MARK: Interface
     
     @objc static func runCheckAndReact(licenseConfig: LicenseConfig, triggeredByUser: Bool) {
+        
         /// This runs a check and then if necessary it:
         /// - ... shows some feedback about the licensing state to the user
         /// - ... locks down the helper
