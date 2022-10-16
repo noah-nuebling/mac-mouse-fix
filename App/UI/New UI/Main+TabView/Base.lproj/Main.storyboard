@@ -627,7 +627,7 @@ Mac Mouse Fix</string>
                                                                     </connections>
                                                                 </tableCellView>
                                                                 <tableCellView identifier="buttonGroupCell" id="pxf-x1-gL5" userLabel="ButtonGroupCell">
-                                                                    <rect key="frame" x="8" y="38" width="287" height="22"/>
+                                                                    <rect key="frame" x="8" y="38" width="288" height="22"/>
                                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                                     <subviews>
                                                                         <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="AHZ-Kd-4Xf">
@@ -894,7 +894,7 @@ Mac Mouse Fix</string>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <subviews>
                         <button horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="PRU-rA-I4Y">
-                            <rect key="frame" x="163" y="15" width="163" height="18"/>
+                            <rect key="frame" x="159" y="11" width="163" height="18"/>
                             <buttonCell key="cell" type="check" title="Don't remind me again" bezelStyle="regularSquare" imagePosition="left" inset="2" id="bgk-wr-o8T">
                                 <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                 <font key="font" metaFont="system"/>
@@ -921,24 +921,24 @@ your __Logitech M720 Triathlon__.&gt;</string>
                     </subviews>
                     <constraints>
                         <constraint firstItem="unS-po-c19" firstAttribute="centerX" secondItem="FHF-Ki-DbV" secondAttribute="centerX" id="0d9-Oz-6Zg"/>
-                        <constraint firstItem="unS-po-c19" firstAttribute="top" secondItem="cxd-49-HcJ" secondAttribute="bottom" constant="18" id="Aai-PP-pD0"/>
+                        <constraint firstItem="unS-po-c19" firstAttribute="top" secondItem="cxd-49-HcJ" secondAttribute="bottom" constant="16" id="Aai-PP-pD0"/>
                         <constraint firstItem="cxd-49-HcJ" firstAttribute="centerX" secondItem="FHF-Ki-DbV" secondAttribute="centerX" id="CjU-xT-u6x"/>
-                        <constraint firstItem="unS-po-c19" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="FHF-Ki-DbV" secondAttribute="leading" constant="16" id="ETh-Nu-nI8"/>
-                        <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="unS-po-c19" secondAttribute="trailing" constant="16" id="FuZ-bX-Pql"/>
-                        <constraint firstAttribute="trailing" secondItem="unS-po-c19" secondAttribute="trailing" priority="999" constant="16" id="IUb-gz-g1G"/>
-                        <constraint firstAttribute="trailing" secondItem="cxd-49-HcJ" secondAttribute="trailing" priority="999" constant="16" id="R48-O7-1PM"/>
-                        <constraint firstItem="PRU-rA-I4Y" firstAttribute="top" secondItem="unS-po-c19" secondAttribute="bottom" constant="20" id="XhV-0e-fyD"/>
-                        <constraint firstItem="PRU-rA-I4Y" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="FHF-Ki-DbV" secondAttribute="leading" constant="20" symbolic="YES" id="YVq-2R-f04"/>
-                        <constraint firstAttribute="bottom" secondItem="PRU-rA-I4Y" secondAttribute="bottom" constant="16" id="bT9-Uc-dsE"/>
-                        <constraint firstItem="unS-po-c19" firstAttribute="leading" secondItem="FHF-Ki-DbV" secondAttribute="leading" priority="999" constant="16" id="bhp-sq-aSw"/>
-                        <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="PRU-rA-I4Y" secondAttribute="trailing" constant="20" symbolic="YES" id="dwe-qx-tcT"/>
+                        <constraint firstItem="unS-po-c19" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="FHF-Ki-DbV" secondAttribute="leading" constant="12" id="ETh-Nu-nI8"/>
+                        <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="unS-po-c19" secondAttribute="trailing" constant="12" id="FuZ-bX-Pql"/>
+                        <constraint firstAttribute="trailing" secondItem="unS-po-c19" secondAttribute="trailing" priority="999" constant="12" id="IUb-gz-g1G"/>
+                        <constraint firstAttribute="trailing" secondItem="cxd-49-HcJ" secondAttribute="trailing" priority="999" constant="12" id="R48-O7-1PM"/>
+                        <constraint firstItem="PRU-rA-I4Y" firstAttribute="top" secondItem="unS-po-c19" secondAttribute="bottom" constant="18" id="XhV-0e-fyD"/>
+                        <constraint firstItem="PRU-rA-I4Y" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="FHF-Ki-DbV" secondAttribute="leading" constant="10" id="YVq-2R-f04"/>
+                        <constraint firstAttribute="bottom" secondItem="PRU-rA-I4Y" secondAttribute="bottom" constant="12" id="bT9-Uc-dsE"/>
+                        <constraint firstItem="unS-po-c19" firstAttribute="leading" secondItem="FHF-Ki-DbV" secondAttribute="leading" priority="999" constant="12" id="bhp-sq-aSw"/>
+                        <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="PRU-rA-I4Y" secondAttribute="trailing" constant="10" id="dwe-qx-tcT"/>
                         <constraint firstItem="PRU-rA-I4Y" firstAttribute="centerX" secondItem="FHF-Ki-DbV" secondAttribute="centerX" id="eHR-9C-uK5"/>
-                        <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="cxd-49-HcJ" secondAttribute="trailing" constant="16" id="fIS-uE-lNT"/>
-                        <constraint firstItem="cxd-49-HcJ" firstAttribute="leading" secondItem="FHF-Ki-DbV" secondAttribute="leading" priority="999" constant="16" id="gmC-K6-snB"/>
-                        <constraint firstItem="PRU-rA-I4Y" firstAttribute="leading" secondItem="FHF-Ki-DbV" secondAttribute="leading" priority="999" constant="20" symbolic="YES" id="lS9-XG-mmA"/>
-                        <constraint firstItem="cxd-49-HcJ" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="FHF-Ki-DbV" secondAttribute="leading" constant="16" id="sIM-cy-utU"/>
-                        <constraint firstItem="cxd-49-HcJ" firstAttribute="top" secondItem="FHF-Ki-DbV" secondAttribute="top" constant="16" id="tTO-0X-cKE"/>
-                        <constraint firstAttribute="trailing" secondItem="PRU-rA-I4Y" secondAttribute="trailing" priority="999" constant="20" symbolic="YES" id="vBu-0i-NRP"/>
+                        <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="cxd-49-HcJ" secondAttribute="trailing" constant="12" id="fIS-uE-lNT"/>
+                        <constraint firstItem="cxd-49-HcJ" firstAttribute="leading" secondItem="FHF-Ki-DbV" secondAttribute="leading" priority="999" constant="12" id="gmC-K6-snB"/>
+                        <constraint firstItem="PRU-rA-I4Y" firstAttribute="leading" secondItem="FHF-Ki-DbV" secondAttribute="leading" priority="999" constant="10" id="lS9-XG-mmA"/>
+                        <constraint firstItem="cxd-49-HcJ" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="FHF-Ki-DbV" secondAttribute="leading" constant="12" id="sIM-cy-utU"/>
+                        <constraint firstItem="cxd-49-HcJ" firstAttribute="top" secondItem="FHF-Ki-DbV" secondAttribute="top" constant="12" id="tTO-0X-cKE"/>
+                        <constraint firstAttribute="trailing" secondItem="PRU-rA-I4Y" secondAttribute="trailing" priority="999" constant="10" id="vBu-0i-NRP"/>
                     </constraints>
                 </customView>
             </objects>

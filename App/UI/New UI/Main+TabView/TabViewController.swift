@@ -365,13 +365,13 @@ class TabViewController: NSTabViewController {
             let oldFrame = window.frame
             
             /// Left edge
-            if newFrame.minX < s.minX && oldFrame.minX >= s.minX { newFrame.origin.x = s.minX }
+            if newFrame.minX < s.minX /*&& oldFrame.minX >= s.minX*/ { newFrame.origin.x = s.minX }
             /// Right edge
-            if newFrame.maxX > s.maxX && oldFrame.maxX <= s.maxX { newFrame.origin.x = s.maxX - newFrame.width }
+            if newFrame.maxX > s.maxX /*&& oldFrame.maxX <= s.maxX*/ { newFrame.origin.x = s.maxX - newFrame.width }
             /// Bottom edge
             if newFrame.minY < s.minY /*&& oldFrame.minY >= s.minY*/ { newFrame.origin.y = s.minY }
             /// Top edge
-//            if newFrame.maxY > s.maxY && oldFrame.maxY <= s.maxY { newFrame.origin.y = s.maxY - newFrame.height }
+//            if newFrame.maxY > s.maxY /*&& oldFrame.maxY <= s.maxY*/ { newFrame.origin.y = s.maxY - newFrame.height }
         }
         
         ///

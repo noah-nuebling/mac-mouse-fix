@@ -389,7 +389,7 @@ import CocoaLumberjackSwift
                 self.restoreDefaultPopoverDontRemindAgainCheckbox.state = .off
                 
                 /// Show
-                self.restoreDefaultPopover.show(relativeTo: NSRect.zero, of: self.restoreDefaultButton, preferredEdge: .minY)
+                self.restoreDefaultPopover.show(relativeTo: NSRect.zero, of: self.restoreDefaultButton, preferredEdge: .maxY)
                 
                 /// Close on click
                 ///     By intercepting events

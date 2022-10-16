@@ -186,7 +186,7 @@ static NSDictionary *sideButtonActions;
         
         eventMonitor = [NSEvent addLocalMonitorForEventsMatchingMask:NSEventMaskLeftMouseDown handler:^NSEvent * _Nullable(NSEvent * _Nonnull event) {
             
-            uint64_t senderID = CGEventGetIntegerValueField(event.CGEvent, kMFCGEventFieldSenderID);
+            uint64_t senderID = CGEventGetIntegerValueField(event.CGEvent, (CGEventField)kMFCGEventFieldSenderID);
             [SharedMessagePort sendMessage:@"updateActiveDeviceWithEventSenderID" withPayload:@(senderID) expectingReply:NO];
             
             return event;

@@ -34,7 +34,7 @@ IOHIDDeviceRef _Nullable CGEventGetSendingDevice(CGEventRef cgEvent) {
     /// Sometimes CGEventGetHIDEvent() doesn't work. I observed this in the `PollingRateMeasurer` where it doesn't work for mouseDragged events. (Only mouseMoved). This works for `mouseDragged` events as well! -> Use this instead of `HIDEventGetSendingDevice()` as long as `CGEventGetHIDEvent()` isn't reliable.
     
     /// Main Logic
-    int64_t senderFieldValue = CGEventGetIntegerValueField(cgEvent, kMFCGEventFieldSenderID);
+    int64_t senderFieldValue = CGEventGetIntegerValueField(cgEvent, (CGEventField)kMFCGEventFieldSenderID);
     uint64_t senderID;
     memcpy(&senderID, &senderFieldValue, sizeof(int64_t));
     
