@@ -82,11 +82,11 @@
         ///
         NSAttributedString *body = @"".attributed;
         
-        if (uncapturedCount > 0) { /// Need to do this despite trimming whitespace due to linebreaks `\n\n`
-            body = [buttonStringUncapture attributedStringByAppending:@"\n\n".attributed];
+        if (uncapturedCount > 0) { /// Need to check for 0 despite trimming whitespace because it doesn't trim linebreaks (See `\n\n`). Maybe we should make it trim linebreaks instead?
+            body = [[body attributedStringByAppending:buttonStringCapture] attributedStringByAppending:@"\n\n".attributed];
         }
         if (capturedCount > 0) {
-            body = [[body attributedStringByAppending:buttonStringCapture] attributedStringByAppending:@"\n\n".attributed];
+            body = [[body attributedStringByAppending:buttonStringUncapture] attributedStringByAppending:@"\n\n".attributed];
         }
         body = [body attributedStringByAppending:linkString];
         
