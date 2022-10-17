@@ -19,9 +19,18 @@ typedef enum {
     kMFValueFreshnessFallback,
 } MFValueFreshness;
 
+typedef enum {
+    kMFLicenseReasonUnknown,
+    kMFLicenseReasonNone, /// Unlicensed
+    kMFLicenseReasonValidLicense, /// Normally licensed
+    kMFLicenseReasonForce, /// Licensed due to `FORCE_LICENSED` compilation flag
+    kMFLicenseReasonFreeCountry, /// Licensed since it's used in country like China or Russia where you can't pay for the app
+} MFLicenseReason;
+
 typedef struct {
     BOOL isLicensed;
     MFValueFreshness freshness;
+    MFLicenseReason licenseReason;
     int daysOfUse;
     int daysOfUseUI;
     int trialDays;
@@ -44,8 +53,8 @@ typedef struct {
 #define kMFLicenseErrorCodeKeyNotFound 4
 #define kMFLicenseErrorCodeNoInternetAndNoCache 5
 
-#define kMFLicenseErrorCodeLicensedDueToForceFlag 6
-#define kMFLicenseErrorCodeLicensedDueToFreeCountry 7
+//#define kMFLicenseErrorCodeLicensedDueToForceFlag 6
+//#define kMFLicenseErrorCodeLicensedDueToFreeCountry 7
 
 #define MFLicenseConfigErrorDomain @"MFLicenseConfigErrorDomain"
 #define kMFLicenseConfigErrorCodeInvalidDict 1

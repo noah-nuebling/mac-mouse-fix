@@ -34,6 +34,7 @@ extension MFLicenseAndTrialState: Equatable {
         /// Note:
         /// - We don't check for freshness because it makes sense.
         /// - We also don't check for trialIsOver directly, because it's derived from trialDays and daysOfUse
+        /// - Should we check for licenseReason equality here? I can't remember how this is used.
         lhs.isLicensed.boolValue == rhs.isLicensed.boolValue && lhs.daysOfUse == rhs.daysOfUse && lhs.trialDays == rhs.trialDays
     }
 }
@@ -124,7 +125,8 @@ extension MFLicenseAndTrialState: Equatable {
         /// Get cache
         ///     Note: Here, we fall back to false and don't throw errors if there is no cache, but in `licenseState(licenseConfig:)` we do throw an error. Does this have a reason?
         
-        let isLicensed = config("License.isLicensedCache") as? Bool ?? false
+        let isLicensed = self.isLicensedCache
+        let licenseReason = self.licenseReasonCache
         
         /// Get trial info
 #if FORCE_EXPIRED
@@ -140,7 +142,7 @@ extension MFLicenseAndTrialState: Equatable {
         
         /// Return assmbled license + trial info
         
-        let result = MFLicenseAndTrialState(isLicensed: ObjCBool(isLicensed), freshness: kMFValueFreshnessCached, daysOfUse: Int32(daysOfUse), daysOfUseUI: Int32(daysOfUseUI), trialDays: Int32(trialDays), trialIsActive: ObjCBool(trialIsActive))
+        let result = MFLicenseAndTrialState(isLicensed: ObjCBool(isLicensed), freshness: kMFValueFreshnessCached, licenseReason: licenseReason, daysOfUse: Int32(daysOfUse), daysOfUseUI: Int32(daysOfUseUI), trialDays: Int32(trialDays), trialIsActive: ObjCBool(trialIsActive))
         return result
         
     }
@@ -151,7 +153,7 @@ extension MFLicenseAndTrialState: Equatable {
         ///     Since we get licenseConfig via the internet this might be worth rethinking if it's necessary. We made a similar comment somewhere else but I forgot where.
         
         /// Check license
-        checkLicense(licenseConfig: licenseConfig) { isLicensed, freshness, error in
+        checkLicense(licenseConfig: licenseConfig) { isLicensed, freshness, licenseReason, error in
             
             /// Get trial info
 #if FORCE_EXPIRED
@@ -168,7 +170,8 @@ extension MFLicenseAndTrialState: Equatable {
             
             /// Return assmbled license + trial info
             
-            let result = MFLicenseAndTrialState(isLicensed: ObjCBool(isLicensed), freshness: freshness, daysOfUse: Int32(daysOfUse), daysOfUseUI: Int32(daysOfUseUI), trialDays: Int32(trialDays), trialIsActive: ObjCBool(trialIsActive))
+            let result = MFLicenseAndTrialState(isLicensed: ObjCBool(isLicensed), freshness: freshness, licenseReason: licenseReason, daysOfUse: Int32(daysOfUse), daysOfUseUI: Int32(daysOfUseUI), trialDays: Int32(trialDays), trialIsActive: ObjCBool(trialIsActive))
+            
             completionHandler(result, error)
         }
         
@@ -179,7 +182,7 @@ extension MFLicenseAndTrialState: Equatable {
     /// Wrapper for `_checkLicense` that sets incrementUsageCount to false and automatically retrieves the licenseKey from secure storage
     ///     Meant to be used by the rest of the app except LicenseSheet
     
-    static func checkLicense(licenseConfig: LicenseConfig, completionHandler: @escaping (_ isLicensed: Bool, _ freshness: MFValueFreshness, _ error: NSError?) -> ()) {
+    static func checkLicense(licenseConfig: LicenseConfig, completionHandler: @escaping (_ isLicensed: Bool, _ freshness: MFValueFreshness, _ licenseReason: MFLicenseReason, _ error: NSError?) -> ()) {
         
         /// Setting key to nil so it's retrieved from secureStorage
         _checkLicense(key: nil, licenseConfig: licenseConfig, incrementUsageCount: false, completionHandler: completionHandler)
@@ -188,12 +191,12 @@ extension MFLicenseAndTrialState: Equatable {
     /// Wrappers for `_checkLicense` that set incrementUsageCount to true / false.
     ///     Meant to be used by LicenseSheet
     
-    static func checkLicense(key: String, licenseConfig: LicenseConfig, completionHandler: @escaping (_ isLicensed: Bool, _ freshness: MFValueFreshness, _ error: NSError?) -> ()) {
+    static func checkLicense(key: String, licenseConfig: LicenseConfig, completionHandler: @escaping (_ isLicensed: Bool, _ freshness: MFValueFreshness, _ licenseReason: MFLicenseReason, _ error: NSError?) -> ()) {
         
         _checkLicense(key: key, licenseConfig: licenseConfig, incrementUsageCount: false, completionHandler: completionHandler)
     }
     
-    static func activateLicense(key: String, licenseConfig: LicenseConfig, completionHandler: @escaping (_ isLicensed: Bool, _ freshness: MFValueFreshness, _ error: NSError?) -> ()) {
+    static func activateLicense(key: String, licenseConfig: LicenseConfig, completionHandler: @escaping (_ isLicensed: Bool, _ freshness: MFValueFreshness, _ licenseReason: MFLicenseReason, _ error: NSError?) -> ()) {
         
         _checkLicense(key: key, licenseConfig: licenseConfig, incrementUsageCount: true, completionHandler: completionHandler)
     }
@@ -202,25 +205,97 @@ extension MFLicenseAndTrialState: Equatable {
     
     /// `_checkLicense` is a core function that has as many arguments and returns as much information about the license state as possible. The rest of this class is mostly wrappers for this function
     
-    private static func _checkLicense(key keyArg: String?, licenseConfig: LicenseConfig, incrementUsageCount: Bool, completionHandler: @escaping (_ isLicensed: Bool, _ freshness: MFValueFreshness, _ error: NSError?) -> ()) {
+    private static func _checkLicense(key keyArg: String?, licenseConfig: LicenseConfig, incrementUsageCount: Bool, completionHandler: @escaping (_ isLicensed: Bool, _ freshness: MFValueFreshness, _ licenseReason: MFLicenseReason, _ error: NSError?) -> ()) {
         
         /// Define wrap up workload
         ///     This is called once this function has decided whether the license is valid or not
         
-        let wrapUp = { (isLicensed: Bool, freshness: MFValueFreshness, error: NSError?, completionHandler: (_ isLicensed: Bool, _ freshness: MFValueFreshness, _ error: NSError?) -> ()) -> () in
+        let wrapUp = { (isLicensed: Bool, freshness: MFValueFreshness, error: NSError?, licenseConfig: LicenseConfig, completionHandler: (_ isLicensed: Bool, _ freshness: MFValueFreshness, _ licenseReason: MFLicenseReason, _ error: NSError?) -> ()) -> () in
             
             /// Validate
+            
+            assert(freshness != kMFValueFreshnessNone)
+            
             if freshness == kMFValueFreshnessFresh && isLicensed {
                 assert(error == nil)
             }
             
-            /// Write to cache
-            setConfig("License.isLicensedCache", isLicensed as NSObject)
-            commitConfig()
-
+            /// Create mutable copies of args so we can override them
             
+            var isLicensed = isLicensed
+            var freshness = freshness
+            var error = error
+            
+            var licenseReason = kMFLicenseReasonUnknown
+            
+            if isLicensed {
+                
+                /// Get licenseReason from cache if value isn't fresh
+                
+                if freshness == kMFValueFreshnessFresh {
+                    licenseReason = kMFLicenseReasonValidLicense
+                } else if freshness == kMFValueFreshnessCached {
+                    licenseReason = self.licenseReasonCache
+                } else {
+                    assert(false) /// Don't think this could ever happen, not totally sure though
+                }
+                
+            } else { /// Unlicensed
+                
+                /// Init license reason
+                
+                licenseReason = kMFLicenseReasonNone
+                
+                /// Override isLicensed
+                
+                /// Notes:
+                /// - Instead of using licenseReason, we could also pass that info through the error. That might be better since we'd have one less argument and the the errors can also contain dicts with custom info. Maybe you could think about the error as it's used currently as the "unlicensed reason"
+                /// - We're wrapping the overrideWorkload in a closure just so that we can return out of it and prevent lots of nested if statements. Seems sort of ugly but I don't know how else to achieve this sort of controlFlow without goto statements.
+                
+                let overrideWorkload = {
+
+                    /// Implement `FORCE_LICENSED` flag
+                    ///     See License.swift comments for more info
+                    
+    #if FORCE_LICENSED
+                    isLicensed = true
+                    freshness = kMFValueFreshnessFresh
+                    licenseReason = kMFLicenseReasonForce
+                    return
+    #endif
+                    /// Implement freeCountries
+                    
+                    var isFreeCountry = false
+                    
+                    let regionCode: String?
+                    if #available(macOS 13, *) {
+                        regionCode = Locale.current.language.region?.identifier
+                    } else {
+                        regionCode = Locale.current.regionCode
+                    }
+                    if let code = regionCode {
+                        isFreeCountry = licenseConfig.freeCountries.contains(code)
+                    }
+                    
+                    if isFreeCountry {
+                            
+                        isLicensed = true
+                        freshness = kMFValueFreshnessFresh
+                        licenseReason = kMFLicenseReasonFreeCountry
+                        
+                        return
+                    }
+                }
+                overrideWorkload()
+                
+            }
+            
+            /// Cache stuff
+            self.isLicensedCache = isLicensed
+            self.licenseReasonCache = licenseReason
+
             /// Call completionHandler
-            completionHandler(isLicensed, freshness, error)
+            completionHandler(isLicensed, freshness, licenseReason, error)
         }
         
         /// Get key
@@ -237,7 +312,7 @@ extension MFLicenseAndTrialState: Equatable {
                 
                 /// Return unlicensed
                 let error = NSError(domain: MFLicenseErrorDomain, code: Int(kMFLicenseErrorCodeKeyNotFound))
-                wrapUp(false, kMFValueFreshnessFresh, error, completionHandler)
+                wrapUp(false, kMFValueFreshnessFresh, error, licenseConfig, completionHandler)
                 return
             }
             
@@ -246,18 +321,6 @@ extension MFLicenseAndTrialState: Equatable {
         
         /// Ask gumroad to verify
         Gumroad.getLicenseInfo(key, incrementUsageCount: incrementUsageCount) { isValidKey, nOfActivations, serverResponse, error, urlResponse in
-            
-            /// Implement `FORCE_LICENSED` flag
-            ///     Just override all of the params from the Gumroad class
-            ///     See License.swift comments for more info
-                        
-#if FORCE_LICENSED
-            isLicensed = true
-            nOfActivations = 1
-            serverResponse = nil
-            error = NSError(domain: MFLicenseErrorDomain, code: kMFLicenseErrorCodeLicensedDueToForceFlag)
-            urlResponse = nil
-#endif
             
             if isValidKey { /// Gumroad says the license is valid
                 
@@ -272,14 +335,14 @@ extension MFLicenseAndTrialState: Equatable {
 
                     let error = NSError(domain: MFLicenseErrorDomain, code: Int(kMFLicenseErrorCodeInvalidNumberOfActivations), userInfo: ["nOfActivations": nOfActivations ?? -1, "maxActivations": licenseConfig.maxActivations])
                     
-                    wrapUp(false, kMFValueFreshnessFresh, error, completionHandler)
+                    wrapUp(false, kMFValueFreshnessFresh, error, licenseConfig, completionHandler)
                     return
                 }
                     
                     
                 /// Is licensed!
                 
-                wrapUp(true, kMFValueFreshnessFresh, nil, completionHandler)
+                wrapUp(true, kMFValueFreshnessFresh, nil, licenseConfig, completionHandler)
                 return
                 
             } else { /// Gumroad says key is not valid
@@ -292,7 +355,7 @@ extension MFLicenseAndTrialState: Equatable {
                     if let isLicensedCache = config("License.isLicensedCache") as? Bool {
                         
                         /// Fall back to cache
-                        wrapUp(isLicensedCache, kMFValueFreshnessCached, error, completionHandler)
+                        wrapUp(isLicensedCache, kMFValueFreshnessCached, error, licenseConfig, completionHandler)
                         return
                         
                     } else {
@@ -301,17 +364,45 @@ extension MFLicenseAndTrialState: Equatable {
                         let error = NSError(domain: MFLicenseErrorDomain,
                                             code: Int(kMFLicenseErrorCodeNoInternetAndNoCache))
                         
-                        wrapUp(false, kMFValueFreshnessFallback, error, completionHandler)
+                        wrapUp(false, kMFValueFreshnessFallback, error, licenseConfig, completionHandler)
                         return
                     }
                     
                 } else {
                     
                     /// Failed despite good internet connection -> Is actually unlicensed
-                    wrapUp(false, kMFValueFreshnessFresh, error, completionHandler) /// Pass through the error from Gumroad.swift
+                    wrapUp(false, kMFValueFreshnessFresh, error, licenseConfig, completionHandler) /// Pass through the error from Gumroad.swift
                     return
                 }
             }
+        }
+    }
+    
+    // MARK: Cache interface
+    
+    /// Not totally sure why we're caching these specific things. But it's the info we need to display the UI and so on properly
+    
+    private static var licenseReasonCache: MFLicenseReason {
+        get {
+            if let licenseReasonRaw = config("License.licenseReasonCache") as? UInt32 {
+                return MFLicenseReason(licenseReasonRaw)
+            } else {
+                return kMFLicenseReasonUnknown
+            }
+        }
+        set {
+            let licenseReasonRaw = newValue.rawValue
+            setConfig("License.licenseReasonCache", licenseReasonRaw as NSObject)
+            commitConfig()
+        }
+    }
+    private static var isLicensedCache: Bool {
+        get {
+            return config("License.isLicensedCache") as? Bool ?? false
+        }
+        set {
+            setConfig("License.isLicensedCache", newValue as NSObject)
+            commitConfig()
         }
     }
 }

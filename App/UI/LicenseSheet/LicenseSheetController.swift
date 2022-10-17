@@ -94,7 +94,7 @@ import Cocoa
             
             if isDifferent {
                 
-                License.activateLicense(key: key, licenseConfig: licenseConfig) { isLicensed, freshness, error in
+                License.activateLicense(key: key, licenseConfig: licenseConfig) { isLicensed, freshness, licenseReason, error in
                     
                     /// By checking for valueFreshness we filter out the case where there's no internet but the cache still tells us it's licensed
                     let success = isLicensed && (freshness == kMFValueFreshnessFresh)
@@ -117,7 +117,7 @@ import Cocoa
                 
             } else {
                 
-                License.checkLicense(key: key, licenseConfig: licenseConfig) { isLicensed, freshness, error in
+                License.checkLicense(key: key, licenseConfig: licenseConfig) { isLicensed, freshness, licenseReason, error in
                     
                     /// Should we check for valueFreshness here?
                     let success = isLicensed
