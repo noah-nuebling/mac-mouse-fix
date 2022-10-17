@@ -177,7 +177,7 @@ CGEventRef _Nullable testCallback(CGEventTapProxy proxy, CGEventType type, CGEve
 //
 //        [LicenseConfig getOnComplete:^(LicenseConfig * _Nonnull licenseConfig) {
 //
-//            [License licenseStateWithLicenseConfig:licenseConfig completionHandler:^(MFLicenseState license, NSError * _Nullable error) {
+//            [License licenseStateWithLicenseConfig:licenseConfig completionHandler:^(MFLicenseAndTrialState license, NSError * _Nullable error) {
 //
 //                dispatch_async(dispatch_get_main_queue(), ^{
 //
@@ -190,7 +190,7 @@ CGEventRef _Nullable testCallback(CGEventTapProxy proxy, CGEventType type, CGEve
     //
     //            DDLogDebug(@"License check result - isValidKey: %d, error: %@", isValidKey, error);
     //    }];
-//        [Licensing licensingStateWithCompletionHandler:^(MFLicenseState licensing, NSError *error) {
+//        [Licensing licensingStateWithCompletionHandler:^(MFLicenseAndTrialState licensing, NSError *error) {
 //            DDLogDebug(@"License check result - state: %d, currentDay: %d, trialDays: %d, error: %@", licensing.state, licensing.daysOfUse, licensing.trialDays, error);
 //        }];
     }

@@ -29,8 +29,8 @@ import Cocoa
 
 // MARK: - License.h extensions
 
-extension MFLicenseState: Equatable {
-    public static func == (lhs: MFLicenseState, rhs: MFLicenseState) -> Bool {
+extension MFLicenseAndTrialState: Equatable {
+    public static func == (lhs: MFLicenseAndTrialState, rhs: MFLicenseAndTrialState) -> Bool {
         /// Note:
         /// - We don't check for freshness because it makes sense.
         /// - We also don't check for trialIsOver directly, because it's derived from trialDays and daysOfUse
@@ -38,18 +38,17 @@ extension MFLicenseState: Equatable {
     }
 }
 
-// MARK: - License definition
+// MARK: - Main class
 
 @objc class License: NSObject {
     
-    // MARK: Interface
+    // MARK: Lvl 3
     
     @objc static func runCheckAndReact(licenseConfig: LicenseConfig, triggeredByUser: Bool) {
         
         /// This runs a check and then if necessary it:
         /// - ... shows some feedback about the licensing state to the user
         /// - ... locks down the helper
-        
         
         /// Get licensing state
         
@@ -111,7 +110,18 @@ extension MFLicenseState: Equatable {
         }
     }
     
-    @objc static func cachedLicenseState(licenseConfig: LicenseConfig) -> MFLicenseState {
+    // MARK: Lvl 2
+    
+    /// These functions assemble info about the trial and the license.
+    
+    @objc static func cachedLicenseState(licenseConfig: LicenseConfig) -> MFLicenseAndTrialState {
+        
+        /// This functions sister-function `licenseState(licenseConfig:completionHandler:)` also retrieves info from the cache, but only if it can't get current info from the internet. This function only looks at the cache.
+        
+        /// The reason why we want this is it's guaranteed to return immediately instead since it doesn't load stuff from the internet.
+        ///     We want this in some places where we need some info immediately to display UI to the user.
+        
+        /// The content of this function is largely copy pasted from `licenseState(licenseConfig:completionHandler:)` which is sort of ugly.
         
         /// Get cache
         ///     Note: Here, we fall back to false and don't throw errors if there is no cache, but in `licenseState(licenseConfig:)` we do throw an error. Does this have a reason?
@@ -131,28 +141,18 @@ extension MFLicenseState: Equatable {
         let daysOfUseUI = SharedUtilitySwift.clip(daysOfUse, betweenLow: 1, high: trialDays)
         
         /// Return
-        let result = MFLicenseState(isLicensed: ObjCBool(isLicensed), freshness: kMFValueFreshnessCached, daysOfUse: Int32(daysOfUse), daysOfUseUI: Int32(daysOfUseUI), trialDays: Int32(trialDays), trialIsActive: ObjCBool(trialIsActive))
+        let result = MFLicenseAndTrialState(isLicensed: ObjCBool(isLicensed), freshness: kMFValueFreshnessCached, daysOfUse: Int32(daysOfUse), daysOfUseUI: Int32(daysOfUseUI), trialDays: Int32(trialDays), trialIsActive: ObjCBool(trialIsActive))
         return result
         
     }
     
-    @objc static func licenseState(licenseConfig: LicenseConfig, completionHandler: @escaping (_ license: MFLicenseState, _ error: NSError?) -> ()) {
+    @objc static func licenseState(licenseConfig: LicenseConfig, completionHandler: @escaping (_ license: MFLicenseAndTrialState, _ error: NSError?) -> ()) {
         
         /// At the time of writing, we only use licenseConfig to get the maxActivations.
         ///     Since we get licenseConfig via the internet this might be worth rethinking if it's necessary. We made a similar comment somewhere else but I forgot where.
         
         /// Check license
         checkLicense(licenseConfig: licenseConfig) { isLicensed, freshness, error in
-            
-            /// Write to cache
-            ///     Might be cleaner to do this in `checkLicense`?
-            if isLicensed {
-                setConfig("License.isLicensedCache", true as NSObject)
-                commitConfig()
-            } else {
-                setConfig("License.isLicensedCache", false as NSObject)
-                commitConfig()
-            }
             
             /// Get trial info
 #if FORCE_EXPIRED
@@ -167,34 +167,24 @@ extension MFLicenseState: Equatable {
             let trialIsActive = daysOfUse <= trialDays
             let daysOfUseUI = SharedUtilitySwift.clip(daysOfUse, betweenLow: 1, high: trialDays)
             
-            /// Return
-            let result = MFLicenseState(isLicensed: ObjCBool(isLicensed), freshness: freshness, daysOfUse: Int32(daysOfUse), daysOfUseUI: Int32(daysOfUseUI), trialDays: Int32(trialDays), trialIsActive: ObjCBool(trialIsActive))
+            /// Return assmbled license + trial info
+            
+            let result = MFLicenseAndTrialState(isLicensed: ObjCBool(isLicensed), freshness: freshness, daysOfUse: Int32(daysOfUse), daysOfUseUI: Int32(daysOfUseUI), trialDays: Int32(trialDays), trialIsActive: ObjCBool(trialIsActive))
             completionHandler(result, error)
         }
         
     }
     
-//    @objc static func activateLicense(license: String, licenseConfig: LicenseConfig, completionHandler: @escaping (_ success: Bool, _ error: NSError?) -> ()) {
-//
-//        Gumroad.activateLicense(license, email: "", maxActivations: licenseConfig.maxActivations) { isValidKey, serverResponse, error, urlResponse in
-//
-//            if isValidKey {
-//                SecureStorage.set("License.key", value: license)
-//            }
-//
-//            completionHandler(isValidKey, error)
-//        }
-//    }
-//
-//    @objc static func currentLicense() -> String? {
-//        SecureStorage.get("License.key") as! String?
-//    }
+    // MARK: Lvl 1
     
-    // MARK: Core
+    /// Wrapper for `_checkLicense` that sets incrementUsageCount to false and automatically retrieves the licenseKey from secure storage
+    ///     Meant to be used by the rest of the app except LicenseSheet
     
-    fileprivate static func checkLicense(licenseConfig: LicenseConfig, completionHandler: @escaping (_ isLicensed: Bool, _ freshness: MFValueFreshness, _ error: NSError?) -> ()) {
+    static func checkLicense(licenseConfig: LicenseConfig, completionHandler: @escaping (_ isLicensed: Bool, _ freshness: MFValueFreshness, _ error: NSError?) -> ()) {
         
-        /// Get license from secure storage
+        /// Wrapper for check license that automatically retrieves key from SecureStorage
+        
+        /// Get key
         
         guard
             let key = SecureStorage.get("License.key") as! String?
@@ -202,16 +192,40 @@ extension MFLicenseState: Equatable {
             
             /// Return unlicensed
             let error = NSError(domain: MFLicenseErrorDomain, code: Int(kMFLicenseErrorCodeKeyNotFound))
-            completionHandler(false, kMFValueFreshnessFresh, error)
+            wrapUp(isLicensed: false, freshness: kMFValueFreshnessFresh, error: error, completionHandler: completionHandler)
             return
         }
         
+        /// Call core
+        ///
+        _checkLicense(key: key, licenseConfig: licenseConfig, incrementUsageCount: false, completionHandler: completionHandler)
+    }
+
+    /// Simple wrappers for `_checkLicense` that set incrementUsageCount to true / false.
+    ///     Meant to be used by LicenseSheet
+    
+    static func checkLicense(key: String, licenseConfig: LicenseConfig, completionHandler: @escaping (_ isLicensed: Bool, _ freshness: MFValueFreshness, _ error: NSError?) -> ()) {
+        
+        _checkLicense(key: key, licenseConfig: licenseConfig, incrementUsageCount: false, completionHandler: completionHandler)
+    }
+    
+    static func activateLicense(key: String, licenseConfig: LicenseConfig, completionHandler: @escaping (_ isLicensed: Bool, _ freshness: MFValueFreshness, _ error: NSError?) -> ()) {
+        
+        _checkLicense(key: key, licenseConfig: licenseConfig, incrementUsageCount: true, completionHandler: completionHandler)
+    }
+    
+    // MARK: Lvl 0
+    
+    /// `_checkLicense` is a core function that gathers as much information as possible about the license and it's current state. The rest of this class is mostly interfaces for this function
+    
+    private static func _checkLicense(key: String, licenseConfig: LicenseConfig, incrementUsageCount: Bool, completionHandler: @escaping (_ isLicensed: Bool, _ freshness: MFValueFreshness, _ error: NSError?) -> ()) {
+        
         /// Ask gumroad to verify
-        Gumroad.checkLicense(key) { isValidKey, nOfActivations, serverResponse, error, urlResponse in
+        Gumroad.checkLicense(key, incrementUsageCount: incrementUsageCount) { isValidKey, nOfActivations, serverResponse, error, urlResponse in
             
-            if isValidKey {
+            if isValidKey { /// Gumroad says the license is valid
                 
-                /// Do extra validation
+                /// Validate activation count
                 
                 var validActivationCount = false
                 if let a = nOfActivations, a <= licenseConfig.maxActivations {
@@ -222,14 +236,14 @@ extension MFLicenseState: Equatable {
 
                     let error = NSError(domain: MFLicenseErrorDomain, code: Int(kMFLicenseErrorCodeInvalidNumberOfActivations), userInfo: ["nOfActivations": nOfActivations ?? -1, "maxActivations": licenseConfig.maxActivations])
                     
-                    completionHandler(false, kMFValueFreshnessFresh, error)
+                    wrapUp(isLicensed: false, freshness: kMFValueFreshnessFresh, error: error, completionHandler: completionHandler)
                     return
                 }
                     
                     
                 /// Is licensed!
                 
-                completionHandler(true, kMFValueFreshnessFresh, nil)
+                wrapUp(isLicensed: true, freshness: kMFValueFreshnessFresh, error: nil, completionHandler: completionHandler)
                 return
                 
             } else { /// Gumroad says key is not valid
@@ -242,7 +256,7 @@ extension MFLicenseState: Equatable {
                     if let isLicensedCache = config("License.isLicensedCache") as? Bool {
                         
                         /// Fall back to cache
-                        completionHandler(isLicensedCache, kMFValueFreshnessCached, nil)
+                        wrapUp(isLicensed: isLicensedCache, freshness: kMFValueFreshnessCached, error: error, completionHandler: completionHandler)
                         return
                         
                     } else {
@@ -251,17 +265,255 @@ extension MFLicenseState: Equatable {
                         let error = NSError(domain: MFLicenseErrorDomain,
                                             code: Int(kMFLicenseErrorCodeNoInternetAndNoCache))
                         
-                        completionHandler(false, kMFValueFreshnessFallback, error)
+                        wrapUp(isLicensed: false, freshness: kMFValueFreshnessFallback, error: error, completionHandler: completionHandler)
                         return
                     }
                     
                 } else {
                     
                     /// Failed despite good internet connection -> Is actually unlicensed
-                    completionHandler(false, kMFValueFreshnessFresh, error) /// Pass through the error from Gumroad.swift
+                    wrapUp(isLicensed: false, freshness: kMFValueFreshnessFresh, error: error, completionHandler: completionHandler) /// Pass through the error from Gumroad.swift
                     return
                 }
             }
         }
     }
+    
+    static func wrapUp(isLicensed: Bool, freshness: MFValueFreshness, error: NSError?, completionHandler: (_ isLicensed: Bool, _ freshness: MFValueFreshness, _ error: NSError?) -> ()) {
+        
+        /// Helper function for checkLicense functions
+        
+        /// Validate
+        if freshness == kMFValueFreshnessFresh && isLicensed {
+            assert(error == nil)
+        }
+        
+        /// Write to cache
+        if isLicensed {
+            setConfig("License.isLicensedCache", true as NSObject)
+            commitConfig()
+        } else {
+            setConfig("License.isLicensedCache", false as NSObject)
+            commitConfig()
+        }
+        
+        /// Call completionHandler argument
+        completionHandler(isLicensed, freshness, error)
+    }
+}
+
+// MARK: Gumroad interface class
+
+fileprivate class Gumroad: NSObject {
+    
+    //
+    // MARK: Lvl 2
+    //
+    
+    // TODO: Remove lvl 2
+    
+    static func checkLicense(_ key: String, incrementUsageCount: Bool, completionHandler: @escaping (_ isValidKey: Bool, _ nOfActivations: Int?, _ serverResponse: [String: Any]?, _ error: NSError?, _ urlResponse: URLResponse?) -> ()) {
+        
+        getLicenseInfo(key, incrementUsageCount: incrementUsageCount) { isValidKey, nOfActivations, serverResponse, error, urlResponse in
+            
+            /// Guard error
+            
+            if let error = error {
+                completionHandler(false, nOfActivations, serverResponse, error, urlResponse)
+                return
+            }
+            
+            /// Guard invalid key
+            ///     Maybe also check what the URL response is somewhere? I just have no idea what the URL response should be.
+            assert(isValidKey == (error == nil))
+            
+            /// Success!
+            completionHandler(true, nOfActivations, serverResponse, error, urlResponse)
+        }
+    }
+    
+    //
+    // MARK: Lvl 1
+    //
+    
+    /// Constants
+    
+    private static let productPermalink = "mmfinapp"
+    
+    /// Functions
+    
+    private static func getLicenseInfo(_ key: String, incrementUsageCount: Bool, completionHandler: @escaping (_ isValidKey: Bool, _ nOfActivations: Int?, _ serverResponse: [String: Any]?, _ error: NSError?, _ urlResponse: URLResponse?) -> ()) {
+        
+        
+        sendGumroadAPIRequest(method: "/licenses/verify",
+                              args: ["product_permalink": productPermalink,
+                                     "license_key": key,
+                                     "increment_uses_count": incrementUsageCount ? "true" : "false"],
+                              completionHandler: { data, error, urlResponse in
+            
+            
+            /// Implement `FORCE_LICENSED` flag
+            ///     See License.swift comments for more info
+            ///     Why aren't we implementing this inside of License.swift? I think we should try to make Gumroad.swift a pure and simple wrapper around the Gumroad API without this extra logic. This is going to be annoying when we need to implement the alternative payment method for China and Russia.
+                        
+#if FORCE_LICENSED
+            completionHandler(true, "fake@email.com", 1, ["info": "this license is considered valid due to the FORCE_LICENSED flag"], nil, nil)
+            return
+#endif
+            
+            /// Guard error
+            
+            if error != nil {
+                completionHandler(false, nil, data, error, urlResponse)
+                return
+            }
+            
+            /// Gather info from response dict
+            ///     None of these should be null but we're checking the extracted data one level above.
+            ///     (So it's maybe a little unnecessary that we extract data at all at this level)
+            ///     TODO: Maybe we should consider merging lvl 1 and lvl 2 since lvl 2 really only does the data validation)
+            
+            let isValidKey = data?["success"] as? Bool ?? false
+            let activations = data?["uses"] as? Int
+            
+            /// Call completions handler
+            completionHandler(isValidKey, activations, data, error, urlResponse)
+        })
+    }
+    
+    private static func decrementUsageCount(key: String, accessToken: String, completionHandler: @escaping (_ serverResponse: [String: Any]?, _ error: NSError?, _ urlResponse: URLResponse?) -> ()) {
+        
+        /// Meant to free a use of the license when the user deactivates it
+        /// We won't do this because we'd need to implement oauth and it's not that imporant
+        
+        fatalError()
+        
+        sendGumroadAPIRequest(method: "/licenses/decrement_uses_count",
+                              args: ["access_token": accessToken, "product_permalink": productPermalink,"license_key": key],
+                              completionHandler: completionHandler)
+    }
+    
+    //
+    // MARK: Lvl 0
+    //
+    
+    /// Constants
+    
+    private static let gumroadAPIURL = "https://api.gumroad.com/v2"
+    
+    /// Functions
+    
+    private static func sendGumroadAPIRequest(method: String, args: [String: Any], completionHandler: @escaping (_ serverResponse: [String: Any]?, _ error: NSError?, _ urlResponse: URLResponse?) -> ()) {
+        
+        /// Note: The response data never contains the secret access token, so you can print the return values for debugging
+        
+        /// Create request
+        
+        let request = gumroadAPIRequest(method: method, args: args)
+        
+        
+        /// Send request
+
+        let task = URLSession.shared.dataTask(with: request) { data, urlResponse, error in
+            
+            /// Handle response
+            
+            /// Cast to NSError
+            ///     I think if the error is not an NSError, it just becomes nil instead.
+            ///     Maybe we should handle that case. Note: If you do handle it, don't forget the do catch below.
+            let error = error as NSError?
+            
+            /// Guard null response
+            
+            guard
+                let data = data,
+                let urlResponse = urlResponse,
+                error == nil
+            else {
+                completionHandler(nil, error, urlResponse)
+                return
+            }
+            
+            do {
+                /// Parse response as dict
+                let dict: [String: Any] = try JSONSerialization.jsonObject(with: data) as! [String : Any]
+                
+                /// Map non-success response to error
+                guard let s = dict["success"], s is Bool, s as! Bool == true else {
+                    let error = NSError(domain: MFLicenseErrorDomain, code: Int(kMFLicenseErrorCodeGumroadServerResponseError), userInfo: dict)
+                    completionHandler(dict, error, urlResponse)
+                    return
+                }
+                
+                /// Success!
+                /// Call the callback!
+                completionHandler(dict, error, urlResponse)
+                
+            } catch {
+                
+                /// Cast to NSError
+                let error = error as NSError?
+                
+                /// Guard not convertible to dict
+                completionHandler(nil, error, urlResponse) /// This is the `error` from the catch statement not the closure argument
+            }
+        }
+        
+        task.resume()
+    }
+    
+    private static func gumroadAPIRequest(method: String, args: [String: Any]) -> URLRequest {
+        
+        /// Also see: https://stackoverflow.com/questions/26364914/http-request-in-swift-with-post-method
+        
+        /// Create basic request
+        let requestURL = gumroadAPIURL.appending(method)
+        var request = URLRequest(url: URL(string: requestURL)!, cachePolicy: .reloadIgnoringLocalAndRemoteCacheData, timeoutInterval: 10.0)
+        request.httpMethod = "POST"
+        
+        /// Set header fields
+        ///     Probably unnecessary
+        
+        /// Make it use in-url params
+        request.setValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
+        
+        /// Make it return a dict
+        request.setValue("application/json", forHTTPHeaderField: "Accept")
+        
+        /// Set message body
+        
+        /// Create query string from dict and set to request
+        ///     You can also do this using URLComponents API. but apparently it doesn't correctly escape '+' characters, so not using it that.
+        request.httpBody = args.percentEncoded()
+        
+        /// Return
+        
+        return request
+    }
+}
+
+// MARK: - URL handling helper stuff
+///  Src: https://stackoverflow.com/a/26365148/10601702
+
+extension Dictionary {
+    func percentEncoded() -> Data? {
+        map { key, value in
+            let escapedKey = "\(key)".addingPercentEncoding(withAllowedCharacters: .urlQueryValueAllowed) ?? ""
+            let escapedValue = "\(value)".addingPercentEncoding(withAllowedCharacters: .urlQueryValueAllowed) ?? ""
+            return escapedKey + "=" + escapedValue
+        }
+        .joined(separator: "&")
+        .data(using: .utf8)
+    }
+}
+
+extension CharacterSet {
+    static let urlQueryValueAllowed: CharacterSet = {
+        let generalDelimitersToEncode = ":#[]@" /// does not include "?" or "/" due to RFC 3986 - Section 3.4
+        let subDelimitersToEncode = "!$&'()*+,;="
+        
+        var allowed: CharacterSet = .urlQueryAllowed
+        allowed.remove(charactersIn: "\(generalDelimitersToEncode)\(subDelimitersToEncode)")
+        return allowed
+    }()
 }

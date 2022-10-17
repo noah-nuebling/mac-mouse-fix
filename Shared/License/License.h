@@ -26,7 +26,7 @@ typedef struct {
     int daysOfUseUI;
     int trialDays;
     BOOL trialIsActive;
-} MFLicenseState;
+} MFLicenseAndTrialState;
 
 /// Define custom errors
 ///     Notes:

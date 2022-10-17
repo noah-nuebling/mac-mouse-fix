@@ -32,7 +32,7 @@ class TrialSectionManager {
     
     /// Start and stop
     
-    func startManaging(licenseConfig: LicenseConfig, license: MFLicenseState) {
+    func startManaging(licenseConfig: LicenseConfig, license: MFLicenseAndTrialState) {
         
         /// Init trial section
         

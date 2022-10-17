@@ -191,10 +191,8 @@
 		4FD860CC266EF55A004F76C8 /* ScrollConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FD860CB266EF55A004F76C8 /* ScrollConfig.swift */; };
 		4FD9A7D128BA2A810006DF4B /* SecureStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FD9A7D028BA2A810006DF4B /* SecureStorage.swift */; };
 		4FD9A7D228BA2A8A0006DF4B /* SecureStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FD9A7D028BA2A810006DF4B /* SecureStorage.swift */; };
-		4FDE757B28B0E35100662314 /* Gumroad.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FDE757A28B0E35100662314 /* Gumroad.swift */; };
 		4FDE759A28B1401400662314 /* License.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FDE759928B1401400662314 /* License.swift */; };
 		4FDE759B28B1401400662314 /* License.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FDE759928B1401400662314 /* License.swift */; };
-		4FDE759C28B1401A00662314 /* Gumroad.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FDE757A28B0E35100662314 /* Gumroad.swift */; };
 		4FDE759E28B174E700662314 /* TrialCounter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FDE759D28B174E700662314 /* TrialCounter.swift */; };
 		4FDE759F28B174E700662314 /* TrialCounter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FDE759D28B174E700662314 /* TrialCounter.swift */; };
 		4FDE75A128B2397600662314 /* PayButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FDE75A028B2397600662314 /* PayButton.swift */; };
@@ -610,7 +608,6 @@
 		4FD9A7CE28BA29CB0006DF4B /* default_secureStorage.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = default_secureStorage.plist; sourceTree = "<group>"; };
 		4FD9A7D028BA2A810006DF4B /* SecureStorage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SecureStorage.swift; sourceTree = "<group>"; };
 		4FDC127528A2C6160076972E /* ReactiveConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReactiveConfig.swift; sourceTree = "<group>"; };
-		4FDE757A28B0E35100662314 /* Gumroad.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Gumroad.swift; sourceTree = "<group>"; };
 		4FDE757D28B0E66900662314 /* License.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = License.h; sourceTree = "<group>"; };
 		4FDE759928B1401400662314 /* License.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = License.swift; sourceTree = "<group>"; };
 		4FDE759D28B174E700662314 /* TrialCounter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrialCounter.swift; sourceTree = "<group>"; };
@@ -1478,7 +1475,6 @@
 				4FDE757D28B0E66900662314 /* License.h */,
 				4FDE759928B1401400662314 /* License.swift */,
 				4FDE759D28B174E700662314 /* TrialCounter.swift */,
-				4FDE757A28B0E35100662314 /* Gumroad.swift */,
 				4F44794428B62FA400AD1979 /* LicenseConfig.swift */,
 				4FFA4E3428B795F30062A1FE /* LicenseUtility.swift */,
 			);
@@ -2389,7 +2385,6 @@
 				4FA1FD8328A916B600D1C8EE /* NSShadow+Extensions.swift in Sources */,
 				4FF665FA25F2C92700689B77 /* AppDelegate.m in Sources */,
 				4F909CF028A0C3B7009349A2 /* MainAppState.swift in Sources */,
-				4FDE759C28B1401A00662314 /* Gumroad.swift in Sources */,
 				4FEC9668278BBDC600548604 /* NSColor+Additions.m in Sources */,
 				4FA40CF628A0CCC600499E53 /* Math.swift in Sources */,
 				4FF6660025F2C92700689B77 /* Hyperlink.m in Sources */,
@@ -2504,7 +2499,6 @@
 				4F09BF58288355170080A5F8 /* PollingRateMeasurer.swift in Sources */,
 				4F9C9B58268A29B70083DED0 /* RollingAverage.swift in Sources */,
 				4F44794628B62FA400AD1979 /* LicenseConfig.swift in Sources */,
-				4FDE757B28B0E35100662314 /* Gumroad.swift in Sources */,
 				4FFA4E4428B7D28E0062A1FE /* ConstraintUtility.swift in Sources */,
 				4FF0255727B0091700923107 /* ModifiedDragOutputAddMode.m in Sources */,
 				4FF0255127B0033000923107 /* ModifiedDragOutputTwoFingerSwipe.m in Sources */,

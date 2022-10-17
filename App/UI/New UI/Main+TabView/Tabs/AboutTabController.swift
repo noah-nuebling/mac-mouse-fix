@@ -28,7 +28,7 @@ class AboutTabController: NSViewController {
     var payButtonwrapperConstraints: [NSLayoutConstraint] = []
     
     var currentLicenseConfig: LicenseConfig? = nil
-    var currentLicense: MFLicenseState? = nil
+    var currentLicense: MFLicenseAndTrialState? = nil
 
     var trackingArea: NSTrackingArea? = nil
     
@@ -128,7 +128,7 @@ class AboutTabController: NSViewController {
         }
     }
     
-    func updateUI(licenseConfig: LicenseConfig, license: MFLicenseState) {
+    func updateUI(licenseConfig: LicenseConfig, license: MFLicenseAndTrialState) {
         
         /// Guard no change
         if currentLicenseConfig?.isEqual(to: licenseConfig) ?? false && currentLicense == license { return }

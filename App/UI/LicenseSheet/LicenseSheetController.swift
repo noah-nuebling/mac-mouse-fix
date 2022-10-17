@@ -93,7 +93,11 @@ import Cocoa
         LicenseConfig.get { licenseConfig in
             
             if isDifferent {
-                Gumroad.activateLicense(key, maxActivations: licenseConfig.maxActivations) { success, serverResponse, error, urlResponse in
+                
+                License.activateLicense(key: key, licenseConfig: licenseConfig) { isLicensed, freshness, error in
+                    
+                    /// By checking for valueFreshness we filter out the case where there's no internet but the cache still tells us it's licensed
+                    let success = isLicensed && (freshness == kMFValueFreshnessFresh)
                     
                     /// Store new licenseKey
                     if success {
@@ -110,8 +114,13 @@ import Cocoa
                         onComplete()
                     }
                 }
+                
             } else {
-                Gumroad.checkLicense(key, maxActivations: licenseConfig.maxActivations) { success, serverResponse, error, urlResponse in
+                
+                License.checkLicense(key: key, licenseConfig: licenseConfig) { isLicensed, freshness, error in
+                    
+                    /// Not totally sure it makes sense to check for value freshness here
+                    let success = isLicensed && (freshness == kMFValueFreshnessFresh)
                     
                     DispatchQueue.main.async {
                         
