@@ -44,6 +44,9 @@ typedef struct {
 #define kMFLicenseErrorCodeKeyNotFound 4
 #define kMFLicenseErrorCodeNoInternetAndNoCache 5
 
+#define kMFLicenseErrorCodeLicensedDueToForceFlag 6
+#define kMFLicenseErrorCodeLicensedDueToFreeCountry 7
+
 #define MFLicenseConfigErrorDomain @"MFLicenseConfigErrorDomain"
 #define kMFLicenseConfigErrorCodeInvalidDict 1
 
