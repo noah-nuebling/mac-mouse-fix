@@ -280,6 +280,12 @@
 /* First draft: Scroll up for Launchpad and down to show the Desktop\n \nWorks like Pinching with 4 fingers on an Apple Trackpad */
 "scroll-effect.4-pinch.hint" = "Scroll up for Launchpad and down to show the Desktop\n \nWorks like Pinching with 4 fingers on an Apple Trackpad";
 
+/* First draft: Move Between Spaces */
+"scroll-effect.spaces" = "Move Between Spaces";
+
+/* First draft: Scroll up to move left a Space and scroll down to move right a Space\n \nWorks like swiping horizontally with 3 fingers on an Apple Trackpad */
+"scroll-effect.spaces.hint" = "Scroll up to move left a Space and scroll down to move right a Space\n \nWorks like swiping horizontally with 3 fingers on an Apple Trackpad";
+
 /* First draft: App Switcher */
 "scroll-effect.app-switcher" = "App Switcher";
 
@@ -304,8 +310,8 @@
 /* Scroll long distances with minimal effort */
 "scroll-effect.swift.hint" = "Scroll long distances with minimal effort";
 
-/* First draft: Zoom in or out */
-"scroll-effect.zoom" = "Zoom in or out";
+/* First draft: Zoom In or Out */
+"scroll-effect.zoom" = "Zoom In or Out";
 
 /* First draft: Zoom in or out in Safari, Maps and other apps\n \nWorks like pinching to zoom on an Apple trackpad */
 "scroll-effect.zoom.hint" = "Zoom in or out in Safari, Maps and other apps\n \nWorks like pinching to zoom on an Apple trackpad";

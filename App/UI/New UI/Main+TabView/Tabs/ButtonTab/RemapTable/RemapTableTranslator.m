@@ -74,11 +74,11 @@ static NSArray *getScrollEffectsTable() {
         @{@"ui": NSLocalizedString(@"scroll-effect.4-pinch", @"First draft: Desktop & Launchpad") , @"tool": NSLocalizedString(@"scroll-effect.4-pinch.hint", @"First draft: Scroll up for Launchpad and down to show the Desktop\n \nWorks like Pinching with 4 fingers on an Apple Trackpad"), @"dict": @{
             kMFModifiedScrollDictKeyEffectModificationType: kMFModifiedScrollEffectModificationTypeFourFingerPinch
         }},
-        @{@"ui": @"Move between Spaces", @"tool": @"Scroll up to move left a Space and down to move Right a Space \n \nWorks like Swiping horizontally with 3 fingers on an Apple Trackpad", @"dict": @{
+        @{@"ui": NSLocalizedString(@"scroll-effect.spaces", @"First draft: Move Between Spaces"), @"tool": NSLocalizedString(@"scroll-effect.spaces.hint", @"First draft: Scroll up to move left a Space and scroll down to move right a Space\n \nWorks like swiping horizontally with 3 fingers on an Apple Trackpad"), @"dict": @{
             kMFModifiedScrollDictKeyEffectModificationType: kMFModifiedScrollEffectModificationTypeThreeFingerSwipeHorizontal
         }},
         separatorEffectsTableEntry(),
-        @{@"ui": NSLocalizedString(@"scroll-effect.zoom", @"First draft: Zoom in or out"), @"tool": NSLocalizedString(@"scroll-effect.zoom.hint", @"First draft: Zoom in or out in Safari, Maps and other apps\n \nWorks like pinching to zoom on an Apple trackpad") , @"dict": @{
+        @{@"ui": NSLocalizedString(@"scroll-effect.zoom", @"First draft: Zoom In or Out"), @"tool": NSLocalizedString(@"scroll-effect.zoom.hint", @"First draft: Zoom in or out in Safari, Maps and other apps\n \nWorks like pinching to zoom on an Apple trackpad") , @"dict": @{
             kMFModifiedScrollDictKeyEffectModificationType: kMFModifiedScrollEffectModificationTypeZoom
         }},
         @{@"ui": NSLocalizedString(@"scroll-effect.horizontal", @"First draft: Horizontal Scroll"), @"tool": NSLocalizedString(@"scroll-effect.horizontal.hint", @"First draft: Scroll left and right, navigate between pages in Safari, delete messages in Mail and more\n \nWorks like swiping horizontally with 2 fingers on an Apple Trackpad"), @"dict": @{
