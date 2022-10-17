@@ -119,8 +119,8 @@ import Cocoa
                 
                 License.checkLicense(key: key, licenseConfig: licenseConfig) { isLicensed, freshness, error in
                     
-                    /// Not totally sure it makes sense to check for value freshness here
-                    let success = isLicensed && (freshness == kMFValueFreshnessFresh)
+                    /// Should we check for valueFreshness here?
+                    let success = isLicensed
                     
                     DispatchQueue.main.async {
                         
