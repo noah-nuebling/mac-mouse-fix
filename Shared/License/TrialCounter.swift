@@ -66,7 +66,7 @@ import CocoaLumberjackSwift
         LicenseConfig.get { licenseConfig in
             
             /// Check licensing state
-            License.licenseState(licenseConfig: licenseConfig) { license, error in
+            License.checkLicenseAndTrial(licenseConfig: licenseConfig) { license, error in
                 
                 if license.isLicensed.boolValue {
                     
@@ -166,7 +166,7 @@ import CocoaLumberjackSwift
         LicenseConfig.get { licenseConfig in
             
             /// Display UI & lock down helper if necessary
-            License.runCheckAndReact(licenseConfig: licenseConfig, triggeredByUser: false)
+            License.checkAndReact(licenseConfig: licenseConfig, triggeredByUser: false)
         }
     }
 }

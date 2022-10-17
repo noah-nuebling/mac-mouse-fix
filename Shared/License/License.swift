@@ -44,7 +44,7 @@ extension MFLicenseAndTrialState: Equatable {
     
     // MARK: Lvl 3
     
-    @objc static func runCheckAndReact(licenseConfig: LicenseConfig, triggeredByUser: Bool) {
+    @objc static func checkAndReact(licenseConfig: LicenseConfig, triggeredByUser: Bool) {
         
         /// This runs a check and then if necessary it:
         /// - ... shows some feedback about the licensing state to the user
@@ -52,7 +52,7 @@ extension MFLicenseAndTrialState: Equatable {
         
         /// Get licensing state
         
-        licenseState(licenseConfig: licenseConfig) { license, error in
+        checkLicenseAndTrial(licenseConfig: licenseConfig) { license, error in
             
             if license.isLicensed.boolValue {
                  
@@ -114,7 +114,7 @@ extension MFLicenseAndTrialState: Equatable {
     
     /// These functions assemble info about the trial and the license.
     
-    @objc static func cachedLicenseState(licenseConfig: LicenseConfig) -> MFLicenseAndTrialState {
+    @objc static func checkLicenseAndTrialCached(licenseConfig: LicenseConfig) -> MFLicenseAndTrialState {
         
         /// This functions sister-function `licenseState(licenseConfig:completionHandler:)` also retrieves info from the cache, but only if it can't get current info from the internet. This function only looks at the cache.
         
@@ -146,7 +146,7 @@ extension MFLicenseAndTrialState: Equatable {
         
     }
     
-    @objc static func licenseState(licenseConfig: LicenseConfig, completionHandler: @escaping (_ license: MFLicenseAndTrialState, _ error: NSError?) -> ()) {
+    @objc static func checkLicenseAndTrial(licenseConfig: LicenseConfig, completionHandler: @escaping (_ license: MFLicenseAndTrialState, _ error: NSError?) -> ()) {
         
         /// At the time of writing, we only use licenseConfig to get the maxActivations.
         ///     Since we get licenseConfig via the internet this might be worth rethinking if it's necessary. We made a similar comment somewhere else but I forgot where.
@@ -192,7 +192,7 @@ extension MFLicenseAndTrialState: Equatable {
             
             /// Return unlicensed
             let error = NSError(domain: MFLicenseErrorDomain, code: Int(kMFLicenseErrorCodeKeyNotFound))
-            wrapUp(isLicensed: false, freshness: kMFValueFreshnessFresh, error: error, completionHandler: completionHandler)
+            wrapUpChecks(isLicensed: false, freshness: kMFValueFreshnessFresh, error: error, completionHandler: completionHandler)
             return
         }
         
@@ -216,12 +216,12 @@ extension MFLicenseAndTrialState: Equatable {
     
     // MARK: Lvl 0
     
-    /// `_checkLicense` is a core function that gathers as much information as possible about the license and it's current state. The rest of this class is mostly interfaces for this function
+    /// `_checkLicense` is a core function that gathers as much information as possible about the license and it's current state. The rest of this class is mostly wrappers for this function
     
     private static func _checkLicense(key: String, licenseConfig: LicenseConfig, incrementUsageCount: Bool, completionHandler: @escaping (_ isLicensed: Bool, _ freshness: MFValueFreshness, _ error: NSError?) -> ()) {
         
         /// Ask gumroad to verify
-        Gumroad.checkLicense(key, incrementUsageCount: incrementUsageCount) { isValidKey, nOfActivations, serverResponse, error, urlResponse in
+        Gumroad.getLicenseInfo(key, incrementUsageCount: incrementUsageCount) { isValidKey, nOfActivations, serverResponse, error, urlResponse in
             
             if isValidKey { /// Gumroad says the license is valid
                 
@@ -236,14 +236,14 @@ extension MFLicenseAndTrialState: Equatable {
 
                     let error = NSError(domain: MFLicenseErrorDomain, code: Int(kMFLicenseErrorCodeInvalidNumberOfActivations), userInfo: ["nOfActivations": nOfActivations ?? -1, "maxActivations": licenseConfig.maxActivations])
                     
-                    wrapUp(isLicensed: false, freshness: kMFValueFreshnessFresh, error: error, completionHandler: completionHandler)
+                    wrapUpChecks(isLicensed: false, freshness: kMFValueFreshnessFresh, error: error, completionHandler: completionHandler)
                     return
                 }
                     
                     
                 /// Is licensed!
                 
-                wrapUp(isLicensed: true, freshness: kMFValueFreshnessFresh, error: nil, completionHandler: completionHandler)
+                wrapUpChecks(isLicensed: true, freshness: kMFValueFreshnessFresh, error: nil, completionHandler: completionHandler)
                 return
                 
             } else { /// Gumroad says key is not valid
@@ -256,7 +256,7 @@ extension MFLicenseAndTrialState: Equatable {
                     if let isLicensedCache = config("License.isLicensedCache") as? Bool {
                         
                         /// Fall back to cache
-                        wrapUp(isLicensed: isLicensedCache, freshness: kMFValueFreshnessCached, error: error, completionHandler: completionHandler)
+                        wrapUpChecks(isLicensed: isLicensedCache, freshness: kMFValueFreshnessCached, error: error, completionHandler: completionHandler)
                         return
                         
                     } else {
@@ -265,21 +265,21 @@ extension MFLicenseAndTrialState: Equatable {
                         let error = NSError(domain: MFLicenseErrorDomain,
                                             code: Int(kMFLicenseErrorCodeNoInternetAndNoCache))
                         
-                        wrapUp(isLicensed: false, freshness: kMFValueFreshnessFallback, error: error, completionHandler: completionHandler)
+                        wrapUpChecks(isLicensed: false, freshness: kMFValueFreshnessFallback, error: error, completionHandler: completionHandler)
                         return
                     }
                     
                 } else {
                     
                     /// Failed despite good internet connection -> Is actually unlicensed
-                    wrapUp(isLicensed: false, freshness: kMFValueFreshnessFresh, error: error, completionHandler: completionHandler) /// Pass through the error from Gumroad.swift
+                    wrapUpChecks(isLicensed: false, freshness: kMFValueFreshnessFresh, error: error, completionHandler: completionHandler) /// Pass through the error from Gumroad.swift
                     return
                 }
             }
         }
     }
     
-    static func wrapUp(isLicensed: Bool, freshness: MFValueFreshness, error: NSError?, completionHandler: (_ isLicensed: Bool, _ freshness: MFValueFreshness, _ error: NSError?) -> ()) {
+    static func wrapUpChecks(isLicensed: Bool, freshness: MFValueFreshness, error: NSError?, completionHandler: (_ isLicensed: Bool, _ freshness: MFValueFreshness, _ error: NSError?) -> ()) {
         
         /// Helper function for checkLicense functions
         
@@ -302,36 +302,10 @@ extension MFLicenseAndTrialState: Equatable {
     }
 }
 
-// MARK: Gumroad interface class
+// MARK: Gumroad api wrapper
 
 fileprivate class Gumroad: NSObject {
-    
-    //
-    // MARK: Lvl 2
-    //
-    
-    // TODO: Remove lvl 2
-    
-    static func checkLicense(_ key: String, incrementUsageCount: Bool, completionHandler: @escaping (_ isValidKey: Bool, _ nOfActivations: Int?, _ serverResponse: [String: Any]?, _ error: NSError?, _ urlResponse: URLResponse?) -> ()) {
         
-        getLicenseInfo(key, incrementUsageCount: incrementUsageCount) { isValidKey, nOfActivations, serverResponse, error, urlResponse in
-            
-            /// Guard error
-            
-            if let error = error {
-                completionHandler(false, nOfActivations, serverResponse, error, urlResponse)
-                return
-            }
-            
-            /// Guard invalid key
-            ///     Maybe also check what the URL response is somewhere? I just have no idea what the URL response should be.
-            assert(isValidKey == (error == nil))
-            
-            /// Success!
-            completionHandler(true, nOfActivations, serverResponse, error, urlResponse)
-        }
-    }
-    
     //
     // MARK: Lvl 1
     //
@@ -342,7 +316,7 @@ fileprivate class Gumroad: NSObject {
     
     /// Functions
     
-    private static func getLicenseInfo(_ key: String, incrementUsageCount: Bool, completionHandler: @escaping (_ isValidKey: Bool, _ nOfActivations: Int?, _ serverResponse: [String: Any]?, _ error: NSError?, _ urlResponse: URLResponse?) -> ()) {
+    static func getLicenseInfo(_ key: String, incrementUsageCount: Bool, completionHandler: @escaping (_ isValidKey: Bool, _ nOfActivations: Int?, _ serverResponse: [String: Any]?, _ error: NSError?, _ urlResponse: URLResponse?) -> ()) {
         
         
         sendGumroadAPIRequest(method: "/licenses/verify",

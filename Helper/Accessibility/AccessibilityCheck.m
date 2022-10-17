@@ -161,7 +161,7 @@ CGEventRef _Nullable testCallback(CGEventTapProxy proxy, CGEventType type, CGEve
         [TrialCounter load_Manual];
         
         [LicenseConfig getOnComplete:^(LicenseConfig * _Nonnull licenseConfig) {
-            [License runCheckAndReactWithLicenseConfig:licenseConfig triggeredByUser:NO];
+            [License checkAndReactWithLicenseConfig:licenseConfig triggeredByUser:NO];
         }];
         
         ///

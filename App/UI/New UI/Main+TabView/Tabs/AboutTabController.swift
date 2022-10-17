@@ -93,7 +93,7 @@ class AboutTabController: NSViewController {
         
         /// Get cache
         let cachedLicenseConfig = LicenseConfig.getCached()
-        let cachedLicense = License.cachedLicenseState(licenseConfig: cachedLicenseConfig)
+        let cachedLicense = License.checkLicenseAndTrialCached(licenseConfig: cachedLicenseConfig)
         
         /// 1. Set UI to cache
         updateUI(licenseConfig: cachedLicenseConfig, license: cachedLicense)
@@ -118,7 +118,7 @@ class AboutTabController: NSViewController {
         /// - It would be cleaner and prettier if we used a reactive architecture where you have some global master license state that all the UI that depends on it subscribes to. Buttt we really only have UI that depends on the license state here on the about tab, so that would be overengineering. On the other hand we need to store the AboutTabController instance in MainAppState for global access if we don't use th reactive architecture which is also a little ugly.
         
         LicenseConfig.get { licenseConfig in
-            License.licenseState(licenseConfig: licenseConfig, completionHandler: { license, error in
+            License.checkLicenseAndTrial(licenseConfig: licenseConfig, completionHandler: { license, error in
                 
                 DispatchQueue.main.async {
                     self.updateUI(licenseConfig: licenseConfig, license: license)
