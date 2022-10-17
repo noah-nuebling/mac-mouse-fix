@@ -223,6 +223,18 @@ extension MFLicenseAndTrialState: Equatable {
         /// Ask gumroad to verify
         Gumroad.getLicenseInfo(key, incrementUsageCount: incrementUsageCount) { isValidKey, nOfActivations, serverResponse, error, urlResponse in
             
+            /// Implement `FORCE_LICENSED` flag
+            ///     Just override all of the params from the Gumroad class
+            ///     See License.swift comments for more info
+                        
+#if FORCE_LICENSED
+            isLicensed = true
+            nOfActivations = 1
+            serverResponse = ["info": "this license is considered valid due to the FORCE_LICENSED flag"]
+            error = nil
+            urlResponse = nil
+#endif
+            
             if isValidKey { /// Gumroad says the license is valid
                 
                 /// Validate activation count
@@ -297,7 +309,7 @@ extension MFLicenseAndTrialState: Equatable {
             commitConfig()
         }
         
-        /// Call completionHandler argument
+        /// Call completionHandler
         completionHandler(isLicensed, freshness, error)
     }
 }
@@ -324,16 +336,6 @@ fileprivate class Gumroad: NSObject {
                                      "license_key": key,
                                      "increment_uses_count": incrementUsageCount ? "true" : "false"],
                               completionHandler: { data, error, urlResponse in
-            
-            
-            /// Implement `FORCE_LICENSED` flag
-            ///     See License.swift comments for more info
-            ///     Why aren't we implementing this inside of License.swift? I think we should try to make Gumroad.swift a pure and simple wrapper around the Gumroad API without this extra logic. This is going to be annoying when we need to implement the alternative payment method for China and Russia.
-                        
-#if FORCE_LICENSED
-            completionHandler(true, "fake@email.com", 1, ["info": "this license is considered valid due to the FORCE_LICENSED flag"], nil, nil)
-            return
-#endif
             
             /// Guard error
             
