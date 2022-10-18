@@ -210,7 +210,9 @@ class AboutTabController: NSViewController {
                 
                 /// Assemble message
                 
-                message = String(format: NSLocalizedString("free-country", comment: "First draft: Mac Mouse Fix is currently free in __%@ %@__"), flag, countryName)
+                let countryString = String(format: "%@ %@", flag, countryName)
+                
+                message = String(format: NSLocalizedString("free-country", comment: "First draft: Mac Mouse Fix is currently free in __%@__"), countryString)
                 
             case kMFLicenseReasonForce:
                 message = "The app will appear to be licensed due to the FORCE_LICENSED flag"

@@ -517,5 +517,5 @@
 /* First draft: You don't have Actions set up for the __Middle Button__ of your\n__%@__ mouse */
 "restore-default-buttons-popover.body1.5" = "You don't have Actions set up for the __Side Buttons__ of your\n__%@__ mouse";
 
-/* First draft:  %@ Mac Mouse Fix is free for you since it can't be purchased in %@ */
-"free-country" = "Mac Mouse Fix is currently free in __%@ %@__";
+/* First draft: Mac Mouse Fix is currently free in __%@__ */
+"free-country" = "Mac Mouse Fix is currently free in __%@__";

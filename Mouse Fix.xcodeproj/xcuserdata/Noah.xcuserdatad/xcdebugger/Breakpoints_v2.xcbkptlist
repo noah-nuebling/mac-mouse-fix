@@ -72,8 +72,8 @@
             filePath = "App/UI/New UI/Main+TabView/Tabs/AboutTabController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "213"
-            endingLineNumber = "213"
+            startingLineNumber = "215"
+            endingLineNumber = "215"
             landmarkName = "updateUI(licenseConfig:license:)"
             landmarkType = "7">
          </BreakpointContent>
