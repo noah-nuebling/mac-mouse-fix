@@ -162,6 +162,9 @@ import CocoaLumberjackSwift
     // - MARK: Init & lifecycle
     //
     
+    
+    // MARK: Init
+    
     override init(nibName nibNameOrNil: NSNib.Name?, bundle nibBundleOrNil: Bundle?) {
         
         /// This init is never being called
@@ -291,20 +294,74 @@ import CocoaLumberjackSwift
         }
     }
     
+    // MARK: Did appear
+    
     override func viewDidAppear() {
         super.viewDidAppear()
         
         /// This is called every time the tab is switched to
         /// This is called twice, awakeFromNib as well. Use init() or viewDidLoad() to do things once
         
-        ///
-        /// Show restoreDefault Popover
-        ///
-        ///   Doing this with a delay because it doesn't work if the tab switch animation is still ongoing
+        /// Display extra UI
+        ///     Doing this with a delay because it doesn't work if the tab switch animation is still ongoing
         
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.3, qos: .userInteractive, flags: [], execute: {
             
-            self.showRestoreDefaultPopover()
+            ///
+            /// Get info
+            ///
+            
+            /// Get device info
+            guard let (deviceName, nOfButtons, _) = MessagePortUtility_App.getActiveDeviceInfo() else { return }
+            
+            /// Get actionTable info
+            let usedButtons = RemapTableUtility.getCapturedButtons()
+
+            ///
+            /// Show buyMouseAlert
+            ///
+            /// Notes:
+            /// The idea was to show this under the __conditions__ that
+            ///     - 1. The user is using a 3 button mouse
+            ///     - 2. The alert hasn't been shown before
+            ///     - 3. This isn't the first time opening the buttons tab
+            ///     But I don't like it in it's current form so we're not showing it at all for now
+            ///
+            /// In the future we might __extend/improve__ the alert like this:
+            ///     - 1. Make it prettier / more readable by using custom layout and markdown formatting
+            ///     - 2. Include links to top 3 recommended mice (and maybe a link to a longer list of recommended mice). Maybe get a brand deal with some good mouse manufacturer for promoting their products.
+            ///     - 3. Maybe show a small/unbtrustive toast instead of an alert and have it link to the more complex content / recommendations
+            
+            let showBuyMouseAlert = false
+            
+            if (showBuyMouseAlert) {
+                
+                /// Create alert
+                
+                let alert = NSAlert()
+                alert.alertStyle = .informational
+                alert.messageText = NSLocalizedString("buy-mouse-alert.title", comment: "First draft: Your mouse only has 3 buttons")
+                alert.informativeText = NSLocalizedString("buy-mouse-alert.body", comment: "First draft: Get a mouse with 5+ buttons to unlock the full potential of Mac Mouse Fix!")
+//                alert.showsSuppressionButton = true
+                alert.addButton(withTitle: NSLocalizedString("buy-mouse-alert.ok", comment: "First draft: OK"))
+                
+                /// Display alert
+                guard let window = MainAppState.shared.window else { return }
+                alert.beginSheetModal(for: window) { _ in
+                    
+                    /// Show restoreDefault Popover
+                    ///     after buyMouseAlert is dismissed
+                    self.showRestoreDefaultPopover(deviceName: deviceName as String, nOfButtons: nOfButtons, usedButtons: usedButtons)
+                    
+                }
+            } else {
+                
+                /// Show restoreDefault Popover
+                ///     Immediately if buyMouseAlert is not shown at all
+                
+                self.showRestoreDefaultPopover(deviceName: deviceName as String, nOfButtons: nOfButtons, usedButtons: usedButtons)
+            }
+            
         })
         
         
@@ -371,7 +428,7 @@ import CocoaLumberjackSwift
     }
     
     //
-    // MARK: - restoreDefaultPopover
+    // MARK: - Restore Default Popover
     //
     
     /// Notes:
@@ -405,21 +462,9 @@ import CocoaLumberjackSwift
     
     /// Show popover method
     
-    fileprivate func showRestoreDefaultPopover() {
+    fileprivate func showRestoreDefaultPopover(deviceName: String, nOfButtons: Int, usedButtons: Set<NSNumber>) {
         
         /// This is a helper for `viewDidAppear()`
-        
-        ///
-        /// Get info
-        ///
-        
-        /// Get device info
-        
-        guard let (deviceName, nOfButtons, _) = MessagePortUtility_App.getActiveDeviceInfo() else { return }
-        
-        /// Get actionTable info
-        
-        let usedButtons = RemapTableUtility.getCapturedButtons()
         
         /// Put info together
         

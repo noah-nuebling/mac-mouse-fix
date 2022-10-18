@@ -519,3 +519,12 @@
 
 /* First draft:  __Click here__ to load the recommended settings\nfor your __%@__ mouse || Note: The \n linebreak is so the popover doesn't become too wide. You can set it to your taste. || Note: In English, there needs to be a space at the start of this string otherwise the whole string will be bold. This might be a Ventura Bug */
 "restore-default-buttons-popover.body" = " __Klicke hier__ um die Empfohlenen Einstellungen\nfür deine __%@__ Maus zu laden";
+
+/* First draft: Get a mouse with 5+ buttons to unlock the full potential of Mac Mouse Fix! */
+"buy-mouse-alert.body" = "Verwende eine Maus mit 5+ Tasten um das volle Potential von Mac Mouse Fix freizusetzen!";
+
+/* First draft: Your mouse only has 3 buttons */
+"buy-mouse-alert.title" = "Deine Maus hat nur 3 Tasten";
+
+/* First draft: OK */
+"buy-mouse-alert.ok" = "OK";
