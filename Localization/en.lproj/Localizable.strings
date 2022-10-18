@@ -520,5 +520,5 @@
 /* First draft: Mac Mouse Fix is currently free in __%@__ */
 "free-country" = "Mac Mouse Fix is currently free in __%@__";
 
-/* First draft: This license __could not be activated__ but Mac Mouse Fix is currently __free in your country__ */
-"license-toast.free-country" = "This license __could not be activated__ but Mac Mouse Fix is currently __free in your country__";
+/* First draft: This license __could not be activated__ but Mac Mouse Fix is currently __free in your country__! */
+"license-toast.free-country" = "This license __could not be activated__ but Mac Mouse Fix is currently __free in your country__!";
