@@ -4,7 +4,7 @@
 /* First draft: __Enabled__ Mac Mouse Fix for __Buttons__\nIt had been disabled from the Menu Bar %@ || Note: %@ will be replaced by the menubar icon */
 "button-revive-toast" = "Mac Mouse Fix __aktiviert__ für __Tasten__\nEs war in der Menüleiste %@ deakiviert worden";
 
-/* First draft: Enabled Mac Mouse Fix for __Scrolling__\nIt had been disabled from the Menu Bar %@ || Note: Where %@ will be replaced by the menubar icon */
+/* First draft: __Enabled__ Mac Mouse Fix for __Scrolling__\nIt had been disabled from the Menu Bar %@ || Note: Where %@ will be replaced by the menubar icon */
 "scroll-revive-toast" = "Mac Mouse Fix __aktiviert__ für __Scrollen__\nEs war in der Menüleiste %@ deakiviert worden";
 
 /* First draft: Set Scroll Speed under\n[%@ > Mouse > Scrolling Speed](%@) */
@@ -454,8 +454,8 @@
 /* First draft: Back */
 "mail-alert.back" = "Zurück";
 
-/* First draft: I can't respond to all emails\nbut I read and consider all feedback! */
-"mail-alert.body" = "Ich kann nicht auf alle Emails antworten\naber ich lese und bedenke alles Feedback!";
+/* First draft: I can't respond to all emails but I read and am happy about all feedback! */
+"mail-alert.body" = "Ich kann nicht auf alle Emails antworten aber ich lese und freue mich über alles Feedback!";
 
 /* First draft: Write Email */
 "mail-alert.send" = "Email schreiben";

@@ -34,6 +34,8 @@
 ///
 ///         TODO: ^ Give the caller of the start function the ability to execute on the dispatch queue like in Animator.swift
 ///         TODO: Make stable (see t3ssel8r video)
+///
+///         Edit: For now we're using this for UI animations in some places where we can't use CASpringAnimation. (I think it's just window resizing / repositioning). In these applicaitons we don't have all these super hard constraints around phases and subpixelating values and restarting the animation constantly while it's running like we do for the scroll animator which made it so incredibly hard to make everything race-condition-free
 
 import Foundation
 import CocoaLumberjackSwift

@@ -322,8 +322,8 @@
 /* First draft: Rotate content in Apple Maps and other apps\n \nWorks like twisting with 2 fingers on an Apple Trackpad */
 "scroll-effect.rotate.hint" = "Rotate content in Apple Maps and other apps\n \nWorks like twisting with 2 fingers on an Apple Trackpad";
 
-/* First draft: Enabled Mac Mouse Fix for __Scrolling__\nIt had been disabled from the Menu Bar %@ || Note: Where %@ will be replaced by the menubar icon */
-"scroll-revive-toast" = "Enabled Mac Mouse Fix for __Scrolling__\nIt had been disabled from the Menu Bar %@";
+/* First draft: __Enabled__ Mac Mouse Fix for __Scrolling__\nIt had been disabled from the Menu Bar %@ || Note: Where %@ will be replaced by the menubar icon */
+"scroll-revive-toast" = "__Enabled__ Mac Mouse Fix for __Scrolling__\nIt had been disabled from the Menu Bar %@";
 
 /* First draft: 💫 Thank you for buying Mac Mouse Fix! */
 "thanks.01" = "💫 Thank you for buying Mac Mouse Fix!";
@@ -460,8 +460,8 @@
 /* First draft: Write an Email? */
 "mail-alert.title" = "Write an Email?";
 
-/* First draft: I can't respond to all emails\nbut I read and consider all feedback! */
-"mail-alert.body" = "I can't respond to all emails\nbut I read and consider all feedback!";
+/* First draft: I can't respond to all emails but I read and am happy about all feedback! */
+"mail-alert.body" = "I can't respond to all emails but I read and am happy about all feedback!";
 
 /* First draft: Cancel */
 "beta-alert.back" = "Cancel";

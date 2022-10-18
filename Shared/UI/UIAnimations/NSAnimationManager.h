@@ -4,7 +4,6 @@
 //
 //  Created by Noah Nübling on 03.08.22.
 //
-
 /// This is called when using animation proxy on NSLayoutConstraint.
 /// -> Might allow us to customize the animation used to animate layoutConstraints.
 ///
@@ -31,7 +30,7 @@
 + (NSAnimationManager *)currentAnimationManager;
 
 + (void)observeValueForKeyPath:(id)arg1 ofObject:(id)arg2 change:(id)arg3 context:(void*)arg4;
-+ (void)performAnimations:(NSArray<CAAnimation *> *)animations; /// What is arg? ... not an animationManager instance. Probably CAAnimationsArray?
++ (void)performAnimations:(NSArray<CAAnimation *> *)animations;
 
 /// Start animation
 - (void)setTargetValue:(id)targetValue forObject:(id)object keyPath:(NSString *)keyPath animation:(CAAnimation *)animation;
