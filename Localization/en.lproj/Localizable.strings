@@ -511,8 +511,8 @@
 /* First draft: System Preferences */
 "system-settings-name.pre-ventura" = "System Preferences";
 
-/* First draft: Mac Mouse Fix is currently free in __%@__ */
-"free-country" = "Mac Mouse Fix is currently free in __%@__";
+/* First draft: Mac Mouse Fix is currently free in your country (%@) */
+"free-country" = "Mac Mouse Fix is currently free in your country (%@)";
 
 /* First draft: This license __could not be activated__ but Mac Mouse Fix is currently __free in your country__! */
 "license-toast.free-country" = "This license __could not be activated__ but Mac Mouse Fix is currently __free in your country__!";
