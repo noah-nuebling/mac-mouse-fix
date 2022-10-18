@@ -372,13 +372,13 @@
                                                 </attributedString>
                                             </button>
                                             <customView horizontalHuggingPriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="hr6-ym-FE1" userLabel="MenuBarIndent">
-                                                <rect key="frame" x="0.0" y="107" width="215" height="28"/>
+                                                <rect key="frame" x="0.0" y="107" width="245" height="28"/>
                                                 <subviews>
                                                     <textField horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="7G6-R6-mA8" customClass="MarkdownTextField" customModule="Mac_Mouse_Fix" customModuleProvider="target">
-                                                        <rect key="frame" x="18" y="0.0" width="199" height="28"/>
+                                                        <rect key="frame" x="18" y="0.0" width="229" height="28"/>
                                                         <textFieldCell key="cell" controlSize="small" alignment="left" id="AqN-zN-yDS">
                                                             <font key="font" metaFont="smallSystem"/>
-                                                            <string key="title">Lets you quickly turn off features like
+                                                            <string key="title">Lets you quickly turn off or on features like
 'Smooth Scrolling'</string>
                                                             <color key="textColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
                                                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -536,7 +536,7 @@ Mac Mouse Fix</string>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <subviews>
                                                 <imageView identifier="PlusIcon" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Jod-JU-J5j">
-                                                    <rect key="frame" x="218" y="38.5" width="60" height="66.5"/>
+                                                    <rect key="frame" x="217" y="38.5" width="60" height="66.5"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                                     <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyUpOrDown" image="plus" catalog="system" id="EyU-is-YRF"/>
                                                     <color key="contentTintColor" name="placeholderTextColor" catalog="System" colorSpace="catalog"/>
@@ -634,7 +634,7 @@ Mac Mouse Fix</string>
                                                                     </connections>
                                                                 </tableCellView>
                                                                 <tableCellView identifier="buttonGroupCell" id="pxf-x1-gL5" userLabel="ButtonGroupCell">
-                                                                    <rect key="frame" x="8" y="38" width="288" height="22"/>
+                                                                    <rect key="frame" x="8" y="38" width="287" height="22"/>
                                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                                     <subviews>
                                                                         <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="AHZ-Kd-4Xf">
@@ -867,7 +867,7 @@ Mac Mouse Fix</string>
                         <outlet property="restoreDefaultButton" destination="JHB-lg-H8e" id="urx-gI-o4v"/>
                         <outlet property="restoreDefaultPopover" destination="Cts-Zb-d93" id="LMv-Q3-UYM"/>
                         <outlet property="restoreDefaultPopoverDontRemindAgainCheckbox" destination="PRU-rA-I4Y" id="ekr-di-Qnk"/>
-                        <outlet property="restoreDefaultPopoverLabel1" destination="cxd-49-HcJ" id="2fw-50-dJ9"/>
+                        <outlet property="restoreDefaultPopoverLabel" destination="cxd-49-HcJ" id="2fw-50-dJ9"/>
                         <outlet property="scrollView" destination="OGV-uF-BjJ" id="IuP-Tf-IOQ"/>
                         <outlet property="tableController" destination="sHV-yD-oIc" id="mBf-RE-lbd"/>
                         <outlet property="tableView" destination="JEf-5U-AJf" id="v4Z-zS-YGu"/>
@@ -901,7 +901,7 @@ Mac Mouse Fix</string>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <subviews>
                         <button horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="PRU-rA-I4Y">
-                            <rect key="frame" x="159" y="11" width="163" height="18"/>
+                            <rect key="frame" x="147" y="11" width="163" height="18"/>
                             <buttonCell key="cell" type="check" title="Don't remind me again" bezelStyle="regularSquare" imagePosition="left" inset="2" id="bgk-wr-o8T">
                                 <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                 <font key="font" metaFont="system"/>
@@ -911,33 +911,19 @@ Mac Mouse Fix</string>
                             <rect key="frame" x="-13" y="74" width="472" height="38"/>
                             <textFieldCell key="cell" lineBreakMode="clipping" allowsUndo="NO" alignment="center" id="g5F-ZO-vGZ">
                                 <font key="font" usesAppearanceFont="YES"/>
-                                <string key="title">&lt;It looks like you don't have any actions set up for the __Side Buttons__ of 
+                                <string key="title">&lt;Click "__Restore Defaults...__" to load the recommended settings for 
 your __Logitech M720 Triathlon__.&gt;</string>
-                                <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                                <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                            </textFieldCell>
-                        </textField>
-                        <textField horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" misplaced="YES" textCompletion="NO" translatesAutoresizingMaskIntoConstraints="NO" id="unS-po-c19" customClass="MarkdownTextField" customModule="Mac_Mouse_Fix" customModuleProvider="target">
-                            <rect key="frame" x="20" y="53" width="406" height="16"/>
-                            <textFieldCell key="cell" lineBreakMode="clipping" allowsUndo="NO" alignment="center" title="Click &quot;__Restore Defaults...__&quot; to load the recommended settings" id="JSj-bh-A9Z">
-                                <font key="font" usesAppearanceFont="YES"/>
                                 <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                 <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                             </textFieldCell>
                         </textField>
                     </subviews>
                     <constraints>
-                        <constraint firstItem="unS-po-c19" firstAttribute="centerX" secondItem="FHF-Ki-DbV" secondAttribute="centerX" id="0d9-Oz-6Zg"/>
-                        <constraint firstItem="unS-po-c19" firstAttribute="top" secondItem="cxd-49-HcJ" secondAttribute="bottom" constant="16" id="Aai-PP-pD0"/>
                         <constraint firstItem="cxd-49-HcJ" firstAttribute="centerX" secondItem="FHF-Ki-DbV" secondAttribute="centerX" id="CjU-xT-u6x"/>
-                        <constraint firstItem="unS-po-c19" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="FHF-Ki-DbV" secondAttribute="leading" constant="12" id="ETh-Nu-nI8"/>
-                        <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="unS-po-c19" secondAttribute="trailing" constant="12" id="FuZ-bX-Pql"/>
-                        <constraint firstAttribute="trailing" secondItem="unS-po-c19" secondAttribute="trailing" priority="999" constant="12" id="IUb-gz-g1G"/>
                         <constraint firstAttribute="trailing" secondItem="cxd-49-HcJ" secondAttribute="trailing" priority="999" constant="12" id="R48-O7-1PM"/>
-                        <constraint firstItem="PRU-rA-I4Y" firstAttribute="top" secondItem="unS-po-c19" secondAttribute="bottom" constant="18" id="XhV-0e-fyD"/>
                         <constraint firstItem="PRU-rA-I4Y" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="FHF-Ki-DbV" secondAttribute="leading" constant="10" id="YVq-2R-f04"/>
                         <constraint firstAttribute="bottom" secondItem="PRU-rA-I4Y" secondAttribute="bottom" constant="12" id="bT9-Uc-dsE"/>
-                        <constraint firstItem="unS-po-c19" firstAttribute="leading" secondItem="FHF-Ki-DbV" secondAttribute="leading" priority="999" constant="12" id="bhp-sq-aSw"/>
+                        <constraint firstItem="PRU-rA-I4Y" firstAttribute="top" secondItem="cxd-49-HcJ" secondAttribute="bottom" constant="16" id="dQj-wb-9yo"/>
                         <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="PRU-rA-I4Y" secondAttribute="trailing" constant="10" id="dwe-qx-tcT"/>
                         <constraint firstItem="PRU-rA-I4Y" firstAttribute="centerX" secondItem="FHF-Ki-DbV" secondAttribute="centerX" id="eHR-9C-uK5"/>
                         <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="cxd-49-HcJ" secondAttribute="trailing" constant="12" id="fIS-uE-lNT"/>

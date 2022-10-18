@@ -19,7 +19,7 @@ import CocoaLumberjackSwift
     /// RestoreDefaultPopover
     
     @IBOutlet var restoreDefaultPopover: NSPopover!
-    @IBOutlet weak var restoreDefaultPopoverLabel1: MarkdownTextField!
+    @IBOutlet weak var restoreDefaultPopoverLabel: MarkdownTextField!
     @IBOutlet weak var restoreDefaultPopoverDontRemindAgainCheckbox: NSButton!
     
     /// AddField
@@ -372,24 +372,18 @@ import CocoaLumberjackSwift
                 /// Init UI
                 
                 /// Setup body text
+                ///     There used to be different text based on whether your were using a 3 button or a 5 button mouse, but we've simplified that now
                 
-                let message: String
-                if show3Button {
-                    message = String(format: NSLocalizedString("restore-default-buttons-popover.body1.3", comment: "First draft: You don't have Actions set up for the __Middle Button__ of your\n__%@__ mouse || Note: The \n linebreak is so the popover doesn't become too wide. You can set it to your taste."), deviceName)
-                } else if show5Button {
-                    message = String(format: NSLocalizedString("restore-default-buttons-popover.body1.5", comment: "First draft: You don't have Actions set up for the __Middle Button__ of your\n__%@__ mouse"), deviceName)
-                } else {
-                    fatalError()
-                }
+                let message = String(format: NSLocalizedString("restore-default-buttons-popover.body", comment: "First draft:  __Click here__ to load the recommended settings\nfor your __%@__ mouse || Note: The \n linebreak is so the popover doesn't become too wide. You can set it to your taste. || Note: In English, there needs to be a space at the start of this string otherwise the whole string will be bold. This might be a Ventura Bug"), deviceName)
                 
-                let ibAttributes = self.restoreDefaultPopoverLabel1.attributedStringValue.attributes(at: 0, effectiveRange: nil)
-                self.restoreDefaultPopoverLabel1.attributedStringValue = NSAttributedString(coolMarkdown: message, fillOutBase: false)!.addingStringAttributes(asBase: ibAttributes) /// It's called "body1" because the second part of the body text is localized in Main.strings
+                let ibAttributes = self.restoreDefaultPopoverLabel.attributedStringValue.attributes(at: 0, effectiveRange: nil)
+                self.restoreDefaultPopoverLabel.attributedStringValue = NSAttributedString(coolMarkdown: message, fillOutBase: false)!.addingStringAttributes(asBase: ibAttributes)
                 
                 /// Turn checkbox off
                 self.restoreDefaultPopoverDontRemindAgainCheckbox.state = .off
                 
                 /// Show
-                self.restoreDefaultPopover.show(relativeTo: NSRect.zero, of: self.restoreDefaultButton, preferredEdge: .maxY)
+                self.restoreDefaultPopover.show(relativeTo: NSRect.zero, of: self.restoreDefaultButton, preferredEdge: .minY)
                 
                 /// Close on click
                 ///     By intercepting events
@@ -411,6 +405,8 @@ import CocoaLumberjackSwift
                     if clickedOnWindow && !clickedOnPopover {
                         
                         /// Store user choice about not being reminded again
+                        //  TODO: Now that the UI message doesn't contain info about how many buttons the users mouse has and how that doesn't fit the current settings, it's kind of weird to make the don't remind based on button number. Intuitively it should maybe be based on mouse model? Not sure.
+                        
                         let dontRemind = self.restoreDefaultPopoverDontRemindAgainCheckbox.state == .on
                         if dontRemind {
                             if show3Button {

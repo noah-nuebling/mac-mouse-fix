@@ -91,7 +91,7 @@
 /* Class = "NSTextFieldCell"; title = "Mac Mouse Fix will stay enabled after you close it"; ObjectID = "bew-ni-FnZ"; */
 "bew-ni-FnZ.title" = "Mac Mouse Fix bleibt eingeschaltet nachdem du\nes beendest";
 
-/* Class = "NSTextFieldCell"; title = "Lets you quickly turn off features like\n'Smooth Scrolling'"; ObjectID = "AqN-zN-yDS"; */
+/* Class = "NSTextFieldCell"; title = "Lets you quickly turn off or on features like\n'Smooth Scrolling'"; ObjectID = "AqN-zN-yDS"; */
 "AqN-zN-yDS.title" = "Lässt dich schnell Features wie\n'Flüssiges Scrollen' an- und abschalten";
 
 /* Class = "NSTextFieldCell"; title = "You'll be notified of updates when you open\nMac Mouse Fix"; ObjectID = "SaY-fF-d1s"; */
@@ -307,11 +307,8 @@
 /* Class = "NSButtonCell"; title = "Don't remind me again"; ObjectID = "bgk-wr-o8T"; */
 "bgk-wr-o8T.title" = "Nicht wieder erinnern";
 
-/* Class = "NSTextFieldCell"; title = "<It looks like you don't have any actions set up for the __Side Buttons__ of \nyour __Logitech M720 Triathlon__.>"; ObjectID = "g5F-ZO-vGZ"; */
+/* Class = "NSTextFieldCell"; title = "<Click \"__Restore Defaults...__\" to load the recommended settings for \nyour __Logitech M720 Triathlon__.>"; ObjectID = "g5F-ZO-vGZ"; */
 "g5F-ZO-vGZ.title" = "<>";
-
-/* Class = "NSTextFieldCell"; title = "Click \"__Restore Defaults...__\" to load the recommended settings"; ObjectID = "JSj-bh-A9Z"; */
-"JSj-bh-A9Z.title" = "Klicke \"__Standard wiederherstellen...__\" um die empfohlenen\nEinstellungen zu laden";
 
 /* Class = "NSMenuItem"; title = "Buy Mac Mouse Fix..."; ObjectID = "d0g-07-PaJ"; */
 "d0g-07-PaJ.title" = "Mac Mouse Fix kaufen...";

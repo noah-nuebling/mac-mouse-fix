@@ -511,14 +511,11 @@
 /* First draft: System Preferences */
 "system-settings-name.pre-ventura" = "System Preferences";
 
-/* First draft: You don't have Actions set up for the __Middle Button__ of your\n__%@__ mouse || Note: The \n linebreak is so the popover doesn't become too wide. You can set it to your taste. */
-"restore-default-buttons-popover.body1.3" = "You don't have Actions set up for the __Middle Button__ of your\n__%@__ mouse";
-
-/* First draft: You don't have Actions set up for the __Middle Button__ of your\n__%@__ mouse */
-"restore-default-buttons-popover.body1.5" = "You don't have Actions set up for the __Side Buttons__ of your\n__%@__ mouse";
-
 /* First draft: Mac Mouse Fix is currently free in __%@__ */
 "free-country" = "Mac Mouse Fix is currently free in __%@__";
 
 /* First draft: This license __could not be activated__ but Mac Mouse Fix is currently __free in your country__! */
 "license-toast.free-country" = "This license __could not be activated__ but Mac Mouse Fix is currently __free in your country__!";
+
+/* First draft:  __Click here__ to load the recommended settings\nfor your __%@__ mouse || Note: The \n linebreak is so the popover doesn't become too wide. You can set it to your taste. || Note: In English, there needs to be a space at the start of this string otherwise the whole string will be bold. This might be a Ventura Bug */
+"restore-default-buttons-popover.body" = " __Click here__ to load the recommended settings\nfor your __%@__ mouse";
