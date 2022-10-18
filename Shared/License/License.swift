@@ -34,8 +34,8 @@ extension MFLicenseAndTrialState: Equatable {
         /// Note:
         /// - We don't check for freshness because it makes sense.
         /// - We also don't check for trialIsOver directly, because it's derived from trialDays and daysOfUse
-        /// - Should we check for licenseReason equality here? I can't remember how this is used.
-        lhs.isLicensed.boolValue == rhs.isLicensed.boolValue && lhs.daysOfUse == rhs.daysOfUse && lhs.trialDays == rhs.trialDays
+        /// - Should we check for licenseReason equality here? I can't remember how this is used. Edit: This is used in AboutTabController to check whether to update the UI. So we need to check for licenseReason as well
+        lhs.isLicensed.boolValue == rhs.isLicensed.boolValue && lhs.licenseReason == rhs.licenseReason && lhs.daysOfUse == rhs.daysOfUse && lhs.trialDays == rhs.trialDays
     }
 }
 
