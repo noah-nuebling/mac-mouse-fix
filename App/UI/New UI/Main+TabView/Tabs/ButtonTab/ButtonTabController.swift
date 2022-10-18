@@ -10,17 +10,11 @@
 import Foundation
 import CocoaLumberjackSwift
 
-@objc class ButtonTabController: NSViewController {
+@objc class ButtonTabController: NSViewController, NSPopoverDelegate {
     
-    ///
-    /// Outlets
-    ///
-    
-    /// RestoreDefaultPopover
-    
-    @IBOutlet var restoreDefaultPopover: NSPopover!
-    @IBOutlet weak var restoreDefaultPopoverLabel: MarkdownTextField!
-    @IBOutlet weak var restoreDefaultPopoverDontRemindAgainCheckbox: NSButton!
+    //
+    // MARK: - Outlets
+    //
     
     /// AddField
     
@@ -40,9 +34,9 @@ import CocoaLumberjackSwift
     @IBOutlet weak var optionsButton: NSButton!
     @IBOutlet weak var restoreDefaultButton: NSButton!
     
-    ///
-    /// IBActions
-    ///
+    //
+    // - MARK: IBActions
+    //
     
     @IBAction func openOptions(_ sender: Any) {
         ButtonOptionsViewController.add()
@@ -163,10 +157,10 @@ import CocoaLumberjackSwift
     @objc func nullAction(sender: AnyObject) {
         /// Need this to make radioButtons to work together (I think)
     }
-     
-    ///
-    /// Init & lifecycle
-    ///
+    
+    //
+    // - MARK: Init & lifecycle
+    //
     
     override init(nibName nibNameOrNil: NSNib.Name?, bundle nibBundleOrNil: Bundle?) {
         
@@ -297,11 +291,10 @@ import CocoaLumberjackSwift
         }
     }
     
-    var popoverMonitor: Any? = nil
-    
     override func viewDidAppear() {
         super.viewDidAppear()
         
+        /// This is called every time the tab is switched to
         /// This is called twice, awakeFromNib as well. Use init() or viewDidLoad() to do things once
         
         ///
@@ -311,129 +304,7 @@ import CocoaLumberjackSwift
         
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.3, qos: .userInteractive, flags: [], execute: {
             
-            
-            ///
-            /// Get info
-            ///
-            
-            /// Get device info
-            
-            guard let (deviceName, nOfButtons, _) = MessagePortUtility_App.getActiveDeviceInfo() else { return }
-            
-            /// Get actionTable info
-            
-            let usedButtons = RemapTableUtility.getCapturedButtons()
-            
-            /// Put info together
-            
-            var show3Button = false
-            var show5Button = false
-            
-            if usedButtons.isEmpty {
-
-                /// All actions are disabled. The user probably did this on purpose. Reminding them that they are using the "wrong" layout is probably annoying, so we don't do it.
-                
-            } else if nOfButtons <= 2 {
-                
-                /// The current mouse has less than 2 buttons, it can't be used with Mac Mouse Fix, since button 3 is the lowest usable button currently.
-                
-            } else if 3 == nOfButtons
-                        && !usedButtons.contains(3) {
-                
-                /// The recommended layout for this mouse is the 3 button layout, focused around button 3, but the current settings don't map anything to button 3. Since button 3 is the lowest usable button currently, this means that the current settings can't be doing anything for the currently active device. So we give the user a hint.
-                
-                show3Button = true
-                
-            } else if 4 == nOfButtons {
-                
-                /// Never seen a mouse with 4 buttons. Idk what the "recommended" settings should be here, so we just ignore this case
-                
-            } else if 5 <= nOfButtons
-                        && !usedButtons.contains(4) && !usedButtons.contains(5) {
-                
-                /// The recommended layout for this mouse is the 5+ button layout, focused around button 4 and button 5, but the current settings don't map anything to button 4 or 5
-                
-                show5Button = true
-            }
-            if config("Other.dontRemindToRestoreDefault3") as? Bool ?? false {
-                show3Button = false
-            }
-            if config("Other.dontRemindToRestoreDefault5") as? Bool ?? false {
-                show5Button = false
-            }
-            assert(!(show3Button && show5Button))
-            
-            ///
-            /// Show popover
-            ///
-            
-            if show3Button || show5Button {
-                
-                /// Init UI
-                
-                /// Setup body text
-                ///     There used to be different text based on whether your were using a 3 button or a 5 button mouse, but we've simplified that now
-                
-                let message = String(format: NSLocalizedString("restore-default-buttons-popover.body", comment: "First draft:  __Click here__ to load the recommended settings\nfor your __%@__ mouse || Note: The \n linebreak is so the popover doesn't become too wide. You can set it to your taste. || Note: In English, there needs to be a space at the start of this string otherwise the whole string will be bold. This might be a Ventura Bug"), deviceName)
-                
-                let ibAttributes = self.restoreDefaultPopoverLabel.attributedStringValue.attributes(at: 0, effectiveRange: nil)
-                self.restoreDefaultPopoverLabel.attributedStringValue = NSAttributedString(coolMarkdown: message, fillOutBase: false)!.addingStringAttributes(asBase: ibAttributes)
-                
-                /// Turn checkbox off
-                self.restoreDefaultPopoverDontRemindAgainCheckbox.state = .off
-                
-                /// Show
-                self.restoreDefaultPopover.show(relativeTo: NSRect.zero, of: self.restoreDefaultButton, preferredEdge: .minY)
-                
-                /// Close on click
-                ///     By intercepting events
-                self.popoverMonitor = NSEvent.addLocalMonitorForEvents(matching: .leftMouseDown) { event in
-                    
-                    /// Check click on window
-                    let clickedOnWindow = self.view.hitTest(event.locationInWindow) != nil
-                    
-                    /// Check click on popover
-                    let popupView = self.restoreDefaultPopover.contentViewController?.view
-                    let locInScreen = NSEvent.mouseLocation
-                    let locInPopupWindow = popupView?.window?.convertPoint(fromScreen: locInScreen)
-                    var clickedOnPopover = false
-                    if let loc = locInPopupWindow {
-                        clickedOnPopover = popupView?.hitTest(loc) != nil
-                    }
-                    
-                    /// Close popover
-                    if clickedOnWindow && !clickedOnPopover {
-                        
-                        /// Store user choice about not being reminded again
-                        //  TODO: Now that the UI message doesn't contain info about how many buttons the users mouse has and how that doesn't fit the current settings, it's kind of weird to make the don't remind based on button number. Intuitively it should maybe be based on mouse model? Not sure.
-                        
-                        let dontRemind = self.restoreDefaultPopoverDontRemindAgainCheckbox.state == .on
-                        if dontRemind {
-                            if show3Button {
-                                setConfig("Other.dontRemindToRestoreDefault3", true as NSObject)
-                                commitConfig()
-                            } else if show5Button {
-                                setConfig("Other.dontRemindToRestoreDefault5", true as NSObject)
-                                commitConfig()
-                            } else {
-                                assert(false)
-                            }
-                        }
-                        
-                        /// Close popover
-                        self.restoreDefaultPopover.close()
-                        
-                        /// Remove event monitor
-                        if self.popoverMonitor != nil {
-                            NSEvent.removeMonitor(self.popoverMonitor!)
-                            self.popoverMonitor = nil
-                        }
-                    }
-                    
-                    /// Return intercepted event
-                    return event
-                }
-            }
+            self.showRestoreDefaultPopover()
         })
         
         
@@ -462,9 +333,9 @@ import CocoaLumberjackSwift
         }
     }
     
-    ///
-    /// Helper
-    ///
+    //
+    // MARK: Other
+    //
     
     @objc static func initRemaps() {
         
@@ -499,9 +370,177 @@ import CocoaLumberjackSwift
         }
     }
     
-    ///
-    /// AddView stuff
-    ///
+    //
+    // MARK: - restoreDefaultPopover
+    //
+    
+    /// Notes:
+    ///  - The reason we're monitoring animations is that for some reason the ScrollTab breaks if we're switching from buttonTab to scrollTab while the restoreDefaltPopover is animating in. So we want to disallow tab switches while it's animating as a quick fix. 
+    
+    /// Outlets
+    
+    @IBOutlet var restoreDefaultPopover: NSPopover! /// Why is this one not weak and the other outlets are? Why would an outlet need to be not weak?
+    @IBOutlet weak var restoreDefaultPopoverLabel: MarkdownTextField!
+    @IBOutlet weak var restoreDefaultPopoverDontRemindAgainCheckbox: NSButton!
+    
+    /// Properties
+    
+    var restoreDefaultPopoverIsAnimating = false
+    private var popoverMonitor: Any? = nil
+    
+    /// Delegate methods
+    
+    func popoverWillShow(_ notification: Notification) {
+        restoreDefaultPopoverIsAnimating = true
+    }
+    func popoverDidShow(_ notification: Notification) {
+        restoreDefaultPopoverIsAnimating = false
+    }
+    func popoverWillClose(_ notification: Notification) {
+        restoreDefaultPopoverIsAnimating = true
+    }
+    func popoverDidClose(_ notification: Notification) {
+        restoreDefaultPopoverIsAnimating = false
+    }
+    
+    /// Show popover method
+    
+    fileprivate func showRestoreDefaultPopover() {
+        
+        /// This is a helper for `viewDidAppear()`
+        
+        ///
+        /// Get info
+        ///
+        
+        /// Get device info
+        
+        guard let (deviceName, nOfButtons, _) = MessagePortUtility_App.getActiveDeviceInfo() else { return }
+        
+        /// Get actionTable info
+        
+        let usedButtons = RemapTableUtility.getCapturedButtons()
+        
+        /// Put info together
+        
+        var show3Button = false
+        var show5Button = false
+        
+        if usedButtons.isEmpty {
+            
+            /// All actions are disabled. The user probably did this on purpose. Reminding them that they are using the "wrong" layout is probably annoying, so we don't do it.
+            
+        } else if nOfButtons <= 2 {
+            
+            /// The current mouse has less than 2 buttons, it can't be used with Mac Mouse Fix, since button 3 is the lowest usable button currently.
+            
+        } else if 3 == nOfButtons
+                    && !usedButtons.contains(3) {
+            
+            /// The recommended layout for this mouse is the 3 button layout, focused around button 3, but the current settings don't map anything to button 3. Since button 3 is the lowest usable button currently, this means that the current settings can't be doing anything for the currently active device. So we give the user a hint.
+            
+            show3Button = true
+            
+        } else if 4 == nOfButtons {
+            
+            /// Never seen a mouse with 4 buttons. Idk what the "recommended" settings should be here, so we just ignore this case
+            
+        } else if 5 <= nOfButtons
+                    && !usedButtons.contains(4) && !usedButtons.contains(5) {
+            
+            /// The recommended layout for this mouse is the 5+ button layout, focused around button 4 and button 5, but the current settings don't map anything to button 4 or 5
+            
+            show5Button = true
+        }
+        if config("Other.dontRemindToRestoreDefault3") as? Bool ?? false {
+            show3Button = false
+        }
+        if config("Other.dontRemindToRestoreDefault5") as? Bool ?? false {
+            show5Button = false
+        }
+        assert(!(show3Button && show5Button))
+        
+        ///
+        /// Show popover
+        ///
+        
+        if show3Button || show5Button {
+            
+            ///
+            /// Init popover UI
+            ///
+            
+            /// Assign delegate
+            ///     So we can observe animations
+            self.restoreDefaultPopover.delegate = self
+            
+            /// Setup body text
+            ///     There used to be different text based on whether your were using a 3 button or a 5 button mouse, but we've simplified that now
+            
+            let message = String(format: NSLocalizedString("restore-default-buttons-popover.body", comment: "First draft:  __Click here__ to load the recommended settings\nfor your __%@__ mouse || Note: The \n linebreak is so the popover doesn't become too wide. You can set it to your taste. || Note: In English, there needs to be a space at the start of this string otherwise the whole string will be bold. This might be a Ventura Bug"), deviceName)
+            
+            assignAttributedStringKeepingBase(&self.restoreDefaultPopoverLabel.attributedStringValue, NSAttributedString(coolMarkdown: message, fillOutBase: false)!)
+            
+            /// Turn checkbox off
+            self.restoreDefaultPopoverDontRemindAgainCheckbox.state = .off
+            
+            /// Show
+            self.restoreDefaultPopover.show(relativeTo: NSRect.zero, of: self.restoreDefaultButton, preferredEdge: .minY)
+            
+            /// Close on click
+            ///     By intercepting events
+            self.popoverMonitor = NSEvent.addLocalMonitorForEvents(matching: .leftMouseDown) { event in
+                
+                /// Check click on window
+                let clickedOnWindow = self.view.hitTest(event.locationInWindow) != nil
+                
+                /// Check click on popover
+                let popupView = self.restoreDefaultPopover.contentViewController?.view
+                let locInScreen = NSEvent.mouseLocation
+                let locInPopupWindow = popupView?.window?.convertPoint(fromScreen: locInScreen)
+                var clickedOnPopover = false
+                if let loc = locInPopupWindow {
+                    clickedOnPopover = popupView?.hitTest(loc) != nil
+                }
+                
+                /// Close popover
+                if clickedOnWindow && !clickedOnPopover {
+                    
+                    /// Store user choice about not being reminded again
+                    //  TODO: Now that the UI message doesn't contain info about how many buttons the users mouse has and how that doesn't fit the current settings, it's kind of weird to make the don't remind based on button number. Intuitively it should maybe be based on mouse model? Not sure.
+                    
+                    let dontRemind = self.restoreDefaultPopoverDontRemindAgainCheckbox.state == .on
+                    if dontRemind {
+                        if show3Button {
+                            setConfig("Other.dontRemindToRestoreDefault3", true as NSObject)
+                            commitConfig()
+                        } else if show5Button {
+                            setConfig("Other.dontRemindToRestoreDefault5", true as NSObject)
+                            commitConfig()
+                        } else {
+                            assert(false)
+                        }
+                    }
+                    
+                    /// Close popover
+                    self.restoreDefaultPopover.close()
+                    
+                    /// Remove event monitor
+                    if self.popoverMonitor != nil {
+                        NSEvent.removeMonitor(self.popoverMonitor!)
+                        self.popoverMonitor = nil
+                    }
+                }
+                
+                /// Return intercepted event
+                return event
+            }
+        }
+    }
+    
+    //
+    // MARK: - AddView
+    //
     
     /// Vars
     

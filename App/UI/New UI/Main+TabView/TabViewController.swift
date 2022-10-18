@@ -191,8 +191,11 @@ class TabViewController: NSTabViewController {
         guard let window = window else {
             return true /// Why do we return true here?
         }
-        /// Check resizeInProgress
-        if window.tabSwitchIsInProgress {
+        /// Disable switching tabs animations
+        ///     Layouts break when switching while popover is animating for some reason. Can't remember what happens when switching tabs while tabs are animating
+        let popoverIsAnimating = MainAppState.shared.buttonTabController?.restoreDefaultPopoverIsAnimating ?? false
+        let tabsAreAnimating = window.tabSwitchIsInProgress
+        if tabsAreAnimating || popoverIsAnimating {
             return false
         }
         

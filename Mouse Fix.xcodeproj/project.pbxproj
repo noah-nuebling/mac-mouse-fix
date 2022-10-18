@@ -1085,10 +1085,10 @@
 		4F909CF228A0C3D2009349A2 /* Main+TabView */ = {
 			isa = PBXGroup;
 			children = (
-				4F909CF528A0C3D2009349A2 /* Tabs */,
 				4F909D0128A0C3D2009349A2 /* ViewController.h */,
 				4F909CFB28A0C3D2009349A2 /* ViewController.m */,
 				4F909CFC28A0C3D2009349A2 /* Main.storyboard */,
+				4F909CF528A0C3D2009349A2 /* Tabs */,
 				4F909CFA28A0C3D2009349A2 /* TabViewController.swift */,
 				4F909CFF28A0C3D2009349A2 /* TabViewControllerDisabling.swift */,
 				4F909CF928A0C3D2009349A2 /* TabItemControllerProtocol.swift */,
