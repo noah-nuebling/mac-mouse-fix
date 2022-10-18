@@ -91,8 +91,8 @@
 /* Class = "NSTextFieldCell"; title = "Mac Mouse Fix will stay enabled after you close it"; ObjectID = "bew-ni-FnZ"; */
 "bew-ni-FnZ.title" = "Mac Mouse Fix bleibt eingeschaltet nachdem du\nes beendest";
 
-/* Class = "NSTextFieldCell"; title = "Lets you quickly turn off scroll enhancements\nand other features"; ObjectID = "AqN-zN-yDS"; */
-"AqN-zN-yDS.title" = "Lässt dich Scrollverbesserungen und andere\nFeatures schnell an- und abschalten";
+/* Class = "NSTextFieldCell"; title = "Lets you quickly turn off features like\n'Smooth Scrolling'"; ObjectID = "AqN-zN-yDS"; */
+"AqN-zN-yDS.title" = "Lässt dich schnell Features wie\n'Flüssiges Scrollen' an- und abschalten";
 
 /* Class = "NSTextFieldCell"; title = "You'll be notified of updates when you open\nMac Mouse Fix"; ObjectID = "SaY-fF-d1s"; */
 "SaY-fF-d1s.title" = "Du wirst über Updates benachrichtigt werden\nwenn du dieses Fenster öffnest";
