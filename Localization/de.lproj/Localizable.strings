@@ -116,13 +116,13 @@
 "scroll-effect.4-pinch" = "Launchpad & Schreibtisch";
 
 /* First draft: Scroll up for Launchpad and down to show the Desktop\n \nWorks like Pinching with 4 fingers on an Apple Trackpad */
-"scroll-effect.4-pinch.hint" = "Scrolle nach: \n - Oben für Launchpad \n - Unten um den Schreibtisch zu zeigen \n \nFunktioniert wie aufziehen mit 4 Fingern auf einem Apple Trackpad";
+"scroll-effect.4-pinch.hint" = "Scrolle nach oben für Launchpad und nach unten um den Schreibtisch zu zeigen\n \nFunktioniert wie Aufziehen mit 4 Fingern auf einem Apple Trackpad";
 
 /* First draft: Move Between Spaces */
 "scroll-effect.spaces" = "Zwischen Spaces wechseln";
 
-/* First draft: Scroll up to move left a Space and scroll down to move right a Space\n \nWorks like swiping horizontally with 3 fingers on an Apple Trackpad */
-"scroll-effect.spaces.hint" = "Scrolle nach oben um einen Space nach links zu wechseln und scrolle nach unten um einen Space nach rechts zu wechseln\n \nFunktioniert wie horizontales Wischen mit 3 Fingern auf einem Apple Trackpad";
+/* First draft: Scroll up to move left a Space and down to move right a Space\n \nWorks like swiping horizontally with 3 fingers on an Apple Trackpad */
+"scroll-effect.spaces.hint" = "Scrolle nach oben um einen Space nach links zu wechseln und nach unten um einen Space nach rechts zu wechseln\n \nFunktioniert wie horizontales Wischen mit 3 Fingern auf einem Apple Trackpad";
 
 /* First draft: App Switcher */
 "scroll-effect.app-switcher" = "App Switcher";
@@ -152,13 +152,13 @@
 "scroll-effect.zoom" = "Rein- oder rauszoomen";
 
 /* First draft: Zoom in or out in Safari, Maps and other apps\n \nWorks like pinching to zoom on an Apple trackpad */
-"scroll-effect.zoom.hint" = "Zoome rein oder raus in Safari, Maps, und anderen Apps\n \nFunktioniert wie aufziehen mit 2 Fingern bei einem Apple Trackpad";
+"scroll-effect.zoom.hint" = "Zoome rein oder raus in Safari, Maps, und anderen Apps\n \nFunktioniert wie Aufziehen mit 2 Fingern bei einem Apple Trackpad";
 
 /* First draft: Rotate */
 "scroll-effect.rotate" = "Drehen";
 
 /* First draft: Rotate content in Apple Maps and other apps\n \nWorks like twisting with 2 fingers on an Apple Trackpad */
-"scroll-effect.rotate.hint" = "Drehe den Inhalt in Apple Maps und anderen Apps\n \nFunktioniert wie drehen mit 2 Fingern auf einem Apple Trackpad";
+"scroll-effect.rotate.hint" = "Drehe den Inhalt in Apple Maps und anderen Apps\n \nFunktioniert wie Drehen mit 2 Fingern auf einem Apple Trackpad";
 
 /* First draft: Type a Keyboard Shortcut */
 "type-shortcut-prompt" = "Tippe einen Tastaturkurzbefehl";
@@ -178,14 +178,14 @@
 /* First draft: Mouse Button %@ */
 "button-string.tool.numbered" = "Maustaste %@";
 
-/* First draft: the Primary Mouse Button (also called the Left Mouse Button or Mouse Button 1) */
-"button-string.tool.primary" = "die primäre Maustaste (auch genannt die linke Maustaste oder Maustaste 1)";
+/* First draft: the Primary Mouse Button (also called Left Mouse Button or Mouse Button 1) */
+"button-string.tool.primary" = "die primäre Maustaste (auch genannt linke Maustaste oder Maustaste 1)";
 
-/* First draft: the Secondary Mouse Button (also called the Right Mouse Button or Mouse Button 2) */
-"button-string.tool.secondary" = "die sekundäre Maustaste (auch genannt die rechte Maustaste oder Maustaste 2)";
+/* First draft: the Secondary Mouse Button (also called Right Mouse Button or Mouse Button 2) */
+"button-string.tool.secondary" = "die sekundäre Maustaste (auch genannt rechte Maustaste oder Maustaste 2)";
 
-/* First draft: the Middle Mouse Button (also called the Scroll Wheel Button or Mouse Button 3) || Example usage: Open links in a new tab, paste text in the Terminal, and more.\n \nWorks like clicking the Middle Mouse Button (also called the Scroll Wheel Button or Mouse Button 3) on a standard mouse. */
-"button-string.tool.middle" = "die mittlere Maustaste (auch genannt die Scrollradtaste oder Maustaste 3)";
+/* First draft: Middle Mouse Button (also called Scroll Wheel Button or Mouse Button 3) || Example usage: Open links in a new tab, paste text in the Terminal, and more.\n \nWorks like clicking the Middle Mouse Button (also called the Scroll Wheel Button or Mouse Button 3) on a standard mouse. */
+"button-string.tool.middle" = "mittlere Maustaste (auch genannt Scrollradtaste oder Maustaste 3)";
 
 /* First draft: Command (⌘) */
 "modifer-key.tool.command" = "Befehlstaste (⌘)";

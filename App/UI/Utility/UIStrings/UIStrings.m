@@ -80,9 +80,9 @@
 + (NSString *)getButtonStringToolTip:(MFMouseButtonNumber)buttonNumber {
     
     NSDictionary *buttonNumberToUIString = @{
-        @1: NSLocalizedString(@"button-string.tool.primary",   @"First draft: the Primary Mouse Button (also called the Left Mouse Button or Mouse Button 1)"),
-        @2: NSLocalizedString(@"button-string.tool.secondary", @"First draft: the Secondary Mouse Button (also called the Right Mouse Button or Mouse Button 2)"),
-        @3: NSLocalizedString(@"button-string.tool.middle",    @"First draft: the Middle Mouse Button (also called the Scroll Wheel Button or Mouse Button 3) || Example usage: Open links in a new tab, paste text in the Terminal, and more.\n \nWorks like clicking the Middle Mouse Button (also called the Scroll Wheel Button or Mouse Button 3) on a standard mouse."),
+        @1: NSLocalizedString(@"button-string.tool.primary",   @"First draft: Primary Mouse Button (also called Left Mouse Button or Mouse Button 1)"),
+        @2: NSLocalizedString(@"button-string.tool.secondary", @"First draft: Secondary Mouse Button (also called Right Mouse Button or Mouse Button 2)"),
+        @3: NSLocalizedString(@"button-string.tool.middle",    @"First draft: Middle Mouse Button (also called Scroll Wheel Button or Mouse Button 3) || Example usage: Open links in a new tab, paste text in the Terminal, and more.\n \nWorks like clicking the Middle Mouse Button (also called the Scroll Wheel Button or Mouse Button 3) on a standard mouse."),
     };
     NSString *buttonStr = buttonNumberToUIString[@(buttonNumber)];
     if (!buttonStr) {

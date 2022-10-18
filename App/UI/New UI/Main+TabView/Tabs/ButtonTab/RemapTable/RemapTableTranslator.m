@@ -74,7 +74,7 @@ static NSArray *getScrollEffectsTable() {
         @{@"ui": NSLocalizedString(@"scroll-effect.4-pinch", @"First draft: Desktop & Launchpad") , @"tool": NSLocalizedString(@"scroll-effect.4-pinch.hint", @"First draft: Scroll up for Launchpad and down to show the Desktop\n \nWorks like Pinching with 4 fingers on an Apple Trackpad"), @"dict": @{
             kMFModifiedScrollDictKeyEffectModificationType: kMFModifiedScrollEffectModificationTypeFourFingerPinch
         }},
-        @{@"ui": NSLocalizedString(@"scroll-effect.spaces", @"First draft: Move Between Spaces"), @"tool": NSLocalizedString(@"scroll-effect.spaces.hint", @"First draft: Scroll up to move left a Space and scroll down to move right a Space\n \nWorks like swiping horizontally with 3 fingers on an Apple Trackpad"), @"dict": @{
+        @{@"ui": NSLocalizedString(@"scroll-effect.spaces", @"First draft: Move Between Spaces"), @"tool": NSLocalizedString(@"scroll-effect.spaces.hint", @"First draft: Scroll up to move left a Space and down to move right a Space\n \nWorks like swiping horizontally with 3 fingers on an Apple Trackpad"), @"dict": @{
             kMFModifiedScrollDictKeyEffectModificationType: kMFModifiedScrollEffectModificationTypeThreeFingerSwipeHorizontal
         }},
         separatorEffectsTableEntry(),

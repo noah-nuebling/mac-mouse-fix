@@ -94,14 +94,14 @@
 /* First draft: Mouse Button %@ */
 "button-string.tool.numbered" = "Mouse Button %@";
 
-/* First draft: the Primary Mouse Button (also called the Left Mouse Button or Mouse Button 1) */
-"button-string.tool.primary" = "the Primary Mouse Button (also called the Left Mouse Button or Mouse Button 1)";
+/* First draft: the Primary Mouse Button (also called Left Mouse Button or Mouse Button 1) */
+"button-string.tool.primary" = "the Primary Mouse Button (also called Left Mouse Button or Mouse Button 1)";
 
-/* First draft: the Secondary Mouse Button (also called the Right Mouse Button or Mouse Button 2) */
-"button-string.tool.secondary" = "the Secondary Mouse Button (also called the Right Mouse Button or Mouse Button 2)";
+/* First draft: the Secondary Mouse Button (also called Right Mouse Button or Mouse Button 2) */
+"button-string.tool.secondary" = "the Secondary Mouse Button (also called Right Mouse Button or Mouse Button 2)";
 
-/* First draft: the Middle Mouse Button (also called the Scroll Wheel Button or Mouse Button 3) || Example usage: Open links in a new tab, paste text in the Terminal, and more.\n \nWorks like clicking the Middle Mouse Button (also called the Scroll Wheel Button or Mouse Button 3) on a standard mouse. */
-"button-string.tool.middle" = "the Middle Mouse Button (also called the Scroll Wheel Button or Mouse Button 3)";
+/* First draft: Middle Mouse Button (also called Scroll Wheel Button or Mouse Button 3) || Example usage: Open links in a new tab, paste text in the Terminal, and more.\n \nWorks like clicking the Middle Mouse Button (also called the Scroll Wheel Button or Mouse Button 3) on a standard mouse. */
+"button-string.tool.middle" = "Middle Mouse Button (also called Scroll Wheel Button or Mouse Button 3)";
 
 /* Note: Value for this key is defined in Localizable.stringsdict, not Localizable.strings */
 "capture-toast.body" = "<>";
@@ -283,8 +283,8 @@
 /* First draft: Move Between Spaces */
 "scroll-effect.spaces" = "Move Between Spaces";
 
-/* First draft: Scroll up to move left a Space and scroll down to move right a Space\n \nWorks like swiping horizontally with 3 fingers on an Apple Trackpad */
-"scroll-effect.spaces.hint" = "Scroll up to move left a Space and scroll down to move right a Space\n \nWorks like swiping horizontally with 3 fingers on an Apple Trackpad";
+/* First draft: Scroll up to move left a Space and down to move right a Space\n \nWorks like swiping horizontally with 3 fingers on an Apple Trackpad */
+"scroll-effect.spaces.hint" = "Scroll up to move left a Space and down to move right a Space\n \nWorks like swiping horizontally with 3 fingers on an Apple Trackpad";
 
 /* First draft: App Switcher */
 "scroll-effect.app-switcher" = "App Switcher";
