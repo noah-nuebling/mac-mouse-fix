@@ -97,6 +97,9 @@ import Cocoa
                 License.activateLicense(key: key, licenseConfig: licenseConfig) { isLicensed, freshness, licenseReason, error in
                     
                     /// By checking for valueFreshness we filter out the case where there's no internet but the cache still tells us it's licensed
+                    ///     Note:
+                    ///     The way things are currently set up this leads to weird behaviour when activating a license without internet in freeCountries: If the cache says it's licensed, users will get the no internet error, but if the cache says it's not licensed. Users will get the it's free in your country message. This is because the freeCountry overrides inside activateLicense only take effect if isLicensed is false. This is slightly weird but it's such a small edge case that I don't think it matters. Although it hints that it might be more logical to change the logic for applying the freeCountry overrides.
+                    
                     let success = isLicensed && (freshness == kMFValueFreshnessFresh)
                     
                     /// Store new licenseKey
