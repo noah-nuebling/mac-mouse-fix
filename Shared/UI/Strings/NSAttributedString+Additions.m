@@ -18,6 +18,24 @@
 #import "Mac_Mouse_Fix_Helper-Swift.h"
 #endif
 
+void assignAttributedStringKeepingBase(NSAttributedString *_Nonnull *_Nonnull assignee, NSAttributedString *newValue) {
+    
+    /// This is meant for assigning attributed strings to interface elements whose text has been styled in IB already. And where we want to keep the style from IB as base
+    
+    /// Get old attributes
+    NSAttributedString *s = *assignee;
+    NSDictionary<NSAttributedStringKey, id> *oldAttributes = [s attributesAtIndex:0 effectiveRange:NULL];
+    
+    /// Add old attributes as base
+    newValue = [newValue attributedStringByAddingStringAttributesAsBase:oldAttributes];
+    
+    /// Fill out base with default attributes just to be sure everything is filled out
+    newValue = [newValue attributedStringByFillingOutBase];
+    
+    /// Assign newValue to assignee
+    *assignee = newValue;
+}
+
 @implementation NSAttributedString (Additions)
 
 #pragma mark Trim whitespace

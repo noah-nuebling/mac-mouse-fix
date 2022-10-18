@@ -516,3 +516,6 @@
 
 /* First draft: You don't have Actions set up for the __Middle Button__of your\n__%@__ mouse */
 "restore-default-buttons-popover.body1.5" = "Du hast keine Aktionen für die __Seitentasten__ deiner\n__%@__ Maus eingestellt";
+
+/* First draft: %@ Mac Mouse Fix is free for you since it can't be purchased in %@ */
+"free-country" = "";

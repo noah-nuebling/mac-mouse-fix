@@ -49,64 +49,32 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "67640A51-B936-4BDB-B6F6-EBD42700A991"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Helper/Core/MessagePort/MessagePort_Helper.m"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "79"
-            endingLineNumber = "79"
-            landmarkName = "didReceiveMessage(port, messageID, data, info)"
-            landmarkType = "9">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "E425ED3A-878C-46DE-A927-9B361BD48108"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Helper/Core/MessagePort/MessagePort_Helper.m"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "69"
-            endingLineNumber = "69"
-            landmarkName = "didReceiveMessage(port, messageID, data, info)"
-            landmarkType = "9">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "9AF54796-4969-4571-9DD5-4B9A23040A02"
+            uuid = "CA139CBF-C196-44CD-A099-D08FB3B0B6EA"
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "Helper/Core/MessagePort/MessagePort_Helper.m"
+            filePath = "App/UI/New UI/Main+TabView/Tabs/AboutTabController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "105"
-            endingLineNumber = "105"
-            landmarkName = "didReceiveMessage(port, messageID, data, info)"
-            landmarkType = "9">
+            startingLineNumber = "183"
+            endingLineNumber = "183"
+            landmarkName = "updateUI(licenseConfig:license:)"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "9ED97E35-3F6B-4386-B9FA-760C63B16A68"
+            uuid = "71EFCEC2-B524-4C33-967C-112350E7844A"
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "Shared/License/License.swift"
+            filePath = "App/UI/New UI/Main+TabView/Tabs/AboutTabController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "268"
-            endingLineNumber = "268"
-            landmarkName = "_checkLicense(key:licenseConfig:incrementUsageCount:completionHandler:)"
+            startingLineNumber = "213"
+            endingLineNumber = "213"
+            landmarkName = "updateUI(licenseConfig:license:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

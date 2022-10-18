@@ -14,6 +14,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface NSAttributedString (Additions)
 
+void assignAttributedStringKeepingBase(NSAttributedString *_Nonnull *_Nonnull assignee, NSAttributedString *newValue);
+
 - (NSAttributedString *)attributedStringByCapitalizingFirst;
 - (NSAttributedString *)attributedStringByTrimmingWhitespace;
 

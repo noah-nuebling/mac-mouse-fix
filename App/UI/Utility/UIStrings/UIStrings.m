@@ -16,6 +16,32 @@
 
 @implementation UIStrings
 
+//func flag(country:String) -> String {
+//    let base : UInt32 = 127397
+//    var s = ""
+//    for v in country.unicodeScalars {
+//        s.unicodeScalars.append(UnicodeScalar(base + v.value)!)
+//    }
+//    return String(s)
+//}
+
++ (NSString * _Nullable)flagEmoji:(NSString *)countryCode {
+    
+    /// Src: https://stackoverflow.com/a/34995291
+    
+    int base = 127462 - 65;
+
+    wchar_t bytes[2] = {
+        base + [countryCode characterAtIndex:0],
+        base + [countryCode characterAtIndex:1]
+    };
+
+    return [[NSString alloc] initWithBytes:bytes
+                                    length:countryCode.length * sizeof(wchar_t)
+                                  encoding:NSUTF32LittleEndianStringEncoding];
+}
+
+
 /// Other code for obtaining UI strings found in RemapTableController
 /// Function for getting extended button string for tooltips found in RemapTableController
 

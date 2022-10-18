@@ -16,6 +16,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface UIStrings : NSObject
 
++ (NSString * _Nullable)flagEmoji:(NSString *)countryCode;
 + (NSString *)systemSettingsName;
 + (NSString *)stringForKeyCode:(NSInteger)keyCode;
 + (NSString *)getButtonString:(MFMouseButtonNumber)buttonNumber;

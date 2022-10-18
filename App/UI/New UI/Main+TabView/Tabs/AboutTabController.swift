@@ -179,61 +179,99 @@ class AboutTabController: NSViewController {
             
             /// Randomly select 1 out of 25+1 messages
             ///     Note: If you want to test one of the rare ones, increase its `weight`
-            ///     TODO: Remove the code for the emoji text field. (We have 2 text fields, one for the emoji and one for the text. But the emojis are now just inside the textfield)
             
-            let (emoji, message) = Randomizer.select(from: [
-                
-                /// Common
-                (("", NSLocalizedString("thanks.01", comment: "First draft: 💫 Thank you for buying Mac Mouse Fix!")), weight: 1),
-                (("", NSLocalizedString("thanks.02", comment: "First draft: 🌟 Thanks for purchasing Mac Mouse Fix!")), weight: 1),
-                (("", NSLocalizedString("thanks.03", comment: "First draft: 🚀 Thanks for supporting Mac Mouse Fix!")), weight: 1),
-                (("", NSLocalizedString("thanks.04", comment: "First draft: 🙏 Thank you for buying Mac Mouse Fix!")), weight: 1),
-                (("", NSLocalizedString("thanks.05", comment: "First draft: 🧠 Great purchasing decisions ;)")), weight: 1),
-                
-                /// Rare
-                (("", NSLocalizedString("thanks.06", comment: "First draft: 🔥 Awesome taste in mouse fixing software ;)")), weight: 0.1),
-                (("", NSLocalizedString("thanks.07", comment: "First draft: 💙")), weight: 0.1),
-                (("", NSLocalizedString("thanks.08", comment: "First draft: :) <- My face when I saw you bought Mac Mouse Fix")), weight: 0.1), ///  TODO: The smiley is black in darkmode
-                
-                /// Very rare
-                (("", NSLocalizedString("thanks.09", comment: "First draft: 👽 Share it with your Spacebook friends!")), weight: 0.05),
-                
-                /// Extremely rare
-                (("", NSLocalizedString("thanks.10", comment: "First draft: 🏂 Duckgang for life! || Note: A lot of these are very personal. And weird. They are also super rare. Feel free to change them to anything you feel like to leave a little easter egg!")), weight: 0.01),
-                (("", NSLocalizedString("thanks.11", comment: "First draft: 🚜 Watch where you're going :P")), weight: 0.01),
-                (("", NSLocalizedString("thanks.12", comment: "First draft: 🐁 Not these mice, mom!")), weight: 0.01),
-                (("", NSLocalizedString("thanks.13", comment: "First draft: 🐹 We should get him a bow tie.")), weight: 0.01),
-                (("", NSLocalizedString("thanks.14", comment: "First draft: 🇹🇷 Ey Kanka, tebrikler tebrikler!")), weight: 0.01),
-                (("", NSLocalizedString("thanks.15", comment: "First draft: 🥛 Whole milk of course! It's your birthday after all.")), weight: 0.01),
-                (("", NSLocalizedString("thanks.16", comment: "First draft: 🎸 Not John Mayer (yet). Nevertheless mayor of hearts.")), weight: 0.01),
-                (("", NSLocalizedString("thanks.17", comment: "First draft: 💃 1NEIN8NEIN")), weight: 0.01),
-                (("", NSLocalizedString("thanks.18", comment: "First draft: 🦋 Give me a call when you saved the world :)")), weight: 0.01),
-                (("", NSLocalizedString("thanks.19", comment: "First draft: 🏜️ Dankeschön, meine Frau...")), weight: 0.01),
-                (("", NSLocalizedString("thanks.20", comment: "First draft: 🌍 Universal Studios is probably not that great anyways... :)")), weight: 0.01),
-                (("", NSLocalizedString("thanks.21", comment: "First draft: 🐠 Cuter than a Reaper Leviathan.")), weight: 0.01),
-                (("", NSLocalizedString("thanks.22", comment: "First draft: 🖤")), weight: 0.01),
-                (("", NSLocalizedString("thanks.23", comment: "First draft: 🤍")), weight: 0.01),
-                (("", NSLocalizedString("thanks.24", comment: "First draft: 😎 Oh you're using Mac Mouse Fix? You must be pretty cool.")), weight: 0.01),
-                (("", NSLocalizedString("thanks.25", comment: "First draft: 🌏 First the mice, then the world!! >:)")), weight: 0.01),
-                
-                /// Mom
-                (("", "💖❤️❤️❤️ Für Beate, meine Lieblingsperson :)"), weight: 0.005),
-            ])
+            var message: String = "Something went wrong! You shouldn't be seeing this."
             
+            switch license.licenseReason {
+                
+            case kMFLicenseReasonFreeCountry:
+                
+                /// Get current region
+                let regionCode: String?
+                if #available(macOS 13, *) {
+                    regionCode = Locale.current.region?.identifier
+                } else {
+                    regionCode = Locale.current.regionCode
+                }
+                
+                /// Get localized country name + flag emoji
+                var countryName = "Unknown Country"
+                var flag = "🏁"
+                if let regionCode = regionCode  {
+                    if let n = Locale.current.localizedString(forRegionCode: regionCode) {
+                        countryName = n
+                    }
+                    if let f = UIStrings.flagEmoji(regionCode) {
+                        flag = f
+                    }
+                } else {
+                    assert(false)
+                }
+                
+                /// Assemble message
+                
+                message = String(format: NSLocalizedString("free-country", comment: "First draft: Mac Mouse Fix is currently free in __%@ %@__"), flag, countryName)
+                
+            case kMFLicenseReasonForce:
+                message = "The app will appear to be licensed due to the FORCE_LICENSED flag"
+            case kMFLicenseReasonNone:
+                assert(false)
+                fallthrough
+            case kMFLicenseReasonUnknown:
+                assert(false)
+                fallthrough
+            case kMFLicenseReasonValidLicense:
+                
+                message = Randomizer.select(from: [
+                    
+                    /// Common
+                    (NSLocalizedString("thanks.01", comment: "First draft: 💫 Thank you for buying Mac Mouse Fix!"), weight: 1),
+                    (NSLocalizedString("thanks.02", comment: "First draft: 🌟 Thanks for purchasing Mac Mouse Fix!"), weight: 1),
+                    (NSLocalizedString("thanks.03", comment: "First draft: 🚀 Thanks for supporting Mac Mouse Fix!"), weight: 1),
+                    (NSLocalizedString("thanks.04", comment: "First draft: 🙏 Thank you for buying Mac Mouse Fix!"), weight: 1),
+                    (NSLocalizedString("thanks.05", comment: "First draft: 🧠 Great purchasing decisions ;)"), weight: 1),
+                    
+                    /// Rare
+                    (NSLocalizedString("thanks.06", comment: "First draft: 🔥 Awesome taste in mouse fixing software ;)"), weight: 0.1),
+                    (NSLocalizedString("thanks.07", comment: "First draft: 💙"), weight: 0.1),
+                    (NSLocalizedString("thanks.08", comment: "First draft: :) <- My face when I saw you bought Mac Mouse Fix"), weight: 0.1),
+                    
+                    /// Very rare
+                    (NSLocalizedString("thanks.09", comment: "First draft: 👽 Share it with your Spacebook friends!"), weight: 0.05),
+                    
+                    /// Extremely rare
+                    (NSLocalizedString("thanks.10", comment: "First draft: 🏂 Duckgang for life! || Note: A lot of these are very personal. And weir. They are also super rare. Feel free to change them to anything you feel like to leave a little easter egg!"), weight: 0.01),
+                    (NSLocalizedString("thanks.11", comment: "First draft: 🚜 Watch where you're going :P"), weight: 0.01),
+                    (NSLocalizedString("thanks.12", comment: "First draft: 🐁 Not these mice, mom!"), weight: 0.01),
+                    (NSLocalizedString("thanks.13", comment: "First draft: 🐹 We should get him a bow tie."), weight: 0.01),
+                    (NSLocalizedString("thanks.14", comment: "First draft: 🇹🇷 Ey Kanka, tebrikler tebrikler!"), weight: 0.01),
+                    (NSLocalizedString("thanks.15", comment: "First draft: 🥛 Whole milk of course! It's your birthday after all."), weight: 0.01),
+                    (NSLocalizedString("thanks.16", comment: "First draft: 🎸 Not John Mayer (yet). Nevertheless mayor of hearts."), weight: 0.01),
+                    (NSLocalizedString("thanks.17", comment: "First draft: 💃 1NEIN8NEIN"), weight: 0.01),
+                    (NSLocalizedString("thanks.18", comment: "First draft: 🦋 Give me a call when you saved the world :)"), weight: 0.01),
+                    (NSLocalizedString("thanks.19", comment: "First draft: 🏜️ Dankeschön, meine Frau..."), weight: 0.01),
+                    (NSLocalizedString("thanks.20", comment: "First draft: 🌍 Universal Studios is probably not that great anyways... :)"), weight: 0.01),
+                    (NSLocalizedString("thanks.21", comment: "First draft: 🐠 Cuter than a Reaper Leviathan."), weight: 0.01),
+                    (NSLocalizedString("thanks.22", comment: "First draft: 🖤"), weight: 0.01),
+                    (NSLocalizedString("thanks.23", comment: "First draft: 🤍"), weight: 0.01),
+                    (NSLocalizedString("thanks.24", comment: "First draft: 😎 Oh you're using Mac Mouse Fix? You must be pretty cool."), weight: 0.01),
+                    (NSLocalizedString("thanks.25", comment: "First draft: 🌏 First the mice, then the world!! >:)"), weight: 0.01),
+                    
+                    /// Mom
+                    ("💖❤️❤️❤️ Für Beate, meine Lieblingsperson :)", weight: 0.005),
+                ])
+            default:
+                fatalError()
+            }
+            
+            /// Parse markdown in message
+            let messageAttributed = NSAttributedString(coolMarkdown: message, fillOutBase: false)!
             
             /// Replace text
-            trialSectionManager!.currentSection.textField!.stringValue = message
+            assignAttributedStringKeepingBase(&trialSectionManager!.currentSection.textField!.attributedStringValue, messageAttributed)
             
-            /// Replace image
-            /// Notes:
-            ///     - I think we'd like to have the image view be as tall as the text next to it and then have the image spill out vertically. That's how it works with the sfsymbols next to the links. But idk how to do that. The image always resize everything.
-            ///     - Shifting the alignment rect x is a hack. We really want the image and the text to be closer, but we're too lazy to adjust the layoutConstraints from interface builder. Just shifting the alignment x makes everything slighly off center, but I don't think it's noticable. Edit: we turned the alignment x shift off for now, it looks fine.
-            
-            let image = emoji.image(fontSize: 14)
-//            let r = image.alignmentRect
-//            image.alignmentRect = NSRect(x: r.minX + (r.maxX - r.midX) - 12, y: r.minY - 1, width: r.width, height: r.height)
-            trialSectionManager!.currentSection.imageView!.image = image
-            
+            /// Remove calendar image
+            trialSectionManager!.currentSection.imageView!.image = nil
             
         } else /** not licensed */ {
             
