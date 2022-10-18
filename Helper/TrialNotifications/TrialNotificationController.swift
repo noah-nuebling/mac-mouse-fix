@@ -131,8 +131,9 @@ class TrialNotificationController: NSWindowController {
             /// May be more elegant to do this from IB directly but whatever
             ///     Use the quickPayLink for ASAP checkout if the users' flow has been interrupted
             payButton.realInit(title: licenseConfig.formattedPrice) {
-                let link = triggeredByUser ? licenseConfig.payLink : licenseConfig.quickPayLink
-                NSWorkspace.shared.open(URL(string: link)!)
+                let useQuickLink = !triggeredByUser
+                
+                LicenseUtility.buyMMF(licenseConfig: licenseConfig, locale: Locale.current, useQuickLink: !triggeredByUser)
             }
             
             /// Init the trialSection

@@ -12,6 +12,47 @@ import Cocoa
 @objc class LicenseUtility: NSObject {
 
     
+    @objc static func buyMMF(licenseConfig: LicenseConfig, locale: Locale, useQuickLink: Bool) {
+        
+        /// Originally implemented this in ObjC but lead to weird linker errors
+        
+        /// Check if altPayLink country
+        let countryCode: String?
+        if #available(macOS 13, *) {
+            countryCode = locale.region?.identifier
+        } else {
+            countryCode = locale.regionCode
+        }
+        
+        var isAltCountry = false
+        if let countryCode = countryCode {
+            isAltCountry = licenseConfig.altPayLinkCountries.contains(countryCode)
+        }
+        
+        /// Get paylink
+        var link = ""
+        if isAltCountry {
+            if useQuickLink  {
+                link = licenseConfig.altQuickPayLink
+            } else {
+                link = licenseConfig.altPayLink
+            }
+        } else {
+            if useQuickLink {
+                link = licenseConfig.quickPayLink
+            } else {
+                link = licenseConfig.payLink
+            }
+        }
+        
+        /// Convert to URL
+        if let url = URL(string: link) {
+                
+            /// Open URL
+            NSWorkspace.shared.open(url)
+        }
+    }
+    
     @objc static func trialCounterString(licenseConfig: LicenseConfig, license: MFLicenseAndTrialState) -> NSAttributedString {
         
         /// Guard unlicensed

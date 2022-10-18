@@ -312,3 +312,6 @@
 
 /* Class = "NSTextFieldCell"; title = "Click \"__Restore Defaults...__\" to load the recommended settings"; ObjectID = "JSj-bh-A9Z"; */
 "JSj-bh-A9Z.title" = "Klicke \"__Standard wiederherstellen...__\" um die empfohlenen\nEinstellungen zu laden";
+
+/* Class = "NSMenuItem"; title = "Buy Mac Mouse Fix..."; ObjectID = "d0g-07-PaJ"; */
+"d0g-07-PaJ.title" = "Mac Mouse Fix kaufen...";

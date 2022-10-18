@@ -328,9 +328,7 @@ class AboutTabController: NSViewController {
             /// Create paybutton
             
             let payButton = PayButton(title: licenseConfig.formattedPrice, action: {
-                
-                guard let url = URL(string: licenseConfig.payLink) else { return }
-                NSWorkspace.shared.open(url)
+                LicenseUtility.buyMMF(licenseConfig: licenseConfig, locale: Locale.current, useQuickLink: false)
             })
             
             /// Insert payButton into wrapper

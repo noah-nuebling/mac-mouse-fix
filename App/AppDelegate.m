@@ -43,6 +43,18 @@
     [LicenseSheetController add];
 }
 
+- (IBAction)buyMMF:(id)sender {
+    
+    [LicenseConfig getOnComplete:^(LicenseConfig * _Nonnull licenseConfig) {
+            
+            NSLocale *locale = NSLocale.currentLocale;
+            BOOL useQuickLink = NO;
+            
+            [LicenseUtility buyMMFWithLicenseConfig:licenseConfig locale:locale useQuickLink:useQuickLink];
+    }];
+}
+
+
 #pragma mark - Interface funcs
 
 /// TODO: Remove these in favor of MainAppState.swift
