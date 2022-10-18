@@ -100,7 +100,7 @@ import Cocoa
                     let success = isLicensed && (freshness == kMFValueFreshnessFresh)
                     
                     /// Store new licenseKey
-                    if success {
+                    if success && licenseReason == kMFLicenseReasonValidLicense {
                         SecureStorage.set("License.key", value: key)
                     }
                     
@@ -108,7 +108,7 @@ import Cocoa
                     DispatchQueue.main.async {
                         
                         /// Display user feedback
-                        self.displayUserFeedback(success: success, error: error, key: key, userChangedKey: isDifferent)
+                        self.displayUserFeedback(success: success, licenseReason: licenseReason, error: error, key: key, userChangedKey: isDifferent)
                         
                         /// Wrap up
                         onComplete()
@@ -125,7 +125,7 @@ import Cocoa
                     DispatchQueue.main.async {
                         
                         /// Display user feedback
-                        self.displayUserFeedback(success: success, error: error, key: key, userChangedKey: isDifferent)
+                        self.displayUserFeedback(success: success, licenseReason: licenseReason, error: error, key: key, userChangedKey: isDifferent)
                         
                         /// Wrap up
                         onComplete()
@@ -138,7 +138,7 @@ import Cocoa
     
     /// Helper for activateLicense
     
-    fileprivate func displayUserFeedback(success: Bool, error: NSError?, key: String, userChangedKey: Bool) {
+    fileprivate func displayUserFeedback(success: Bool, licenseReason: MFLicenseReason, error: NSError?, key: String, userChangedKey: Bool) {
         
         if success {
             
@@ -147,14 +147,26 @@ import Cocoa
             
             /// Show message
             let message: String
-            if userChangedKey {
-                message = NSLocalizedString("license-toast.activate", comment: "First draft: Your license has been **activated**! 🎉")
+            
+            if licenseReason == kMFLicenseReasonValidLicense {
+                
+                if userChangedKey {
+                    message = NSLocalizedString("license-toast.activate", comment: "First draft: Your license has been **activated**! 🎉")
+                } else {
+                    message = NSLocalizedString("license-toast.already-active", comment: "First draft: This license is **already activated**!")
+                }
+                
+            } else if licenseReason == kMFLicenseReasonFreeCountry {
+                message = NSLocalizedString("license-toast.free-country", comment: "First draft: This license __could not be activated__ but Mac Mouse Fix is currently __free in your country__")
+            } else if licenseReason == kMFLicenseReasonForce {
+                message = "FORCE_LICENSED flag is active"
             } else {
-                message = NSLocalizedString("license-toast.already-active", comment: "First draft: This license is **already activated**!")
+                fatalError()
             }
+
             ToastNotificationController.attachNotification(withMessage: NSAttributedString(coolMarkdown: message)!, to: MainAppState.shared.window!, forDuration: -1)
             
-        } else /** failed to activate */{
+        } else /** failed to activate */ {
             
             /// Show message
             var message = ""
