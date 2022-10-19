@@ -55,7 +55,7 @@ static id _localEventMonitor;
         NSScrollView *scrollView = (NSScrollView *)_instance.label.superview.superview;
         scrollView.automaticallyAdjustsContentInsets = NO; // Doesn't remove insets // Probably calling this too late
         scrollView.contentInsets = NSEdgeInsetsMake(0, 0, 0, 0);
-        // Disable scrollView elasticity while we're at it to make it seem like it's not even there
+        /// Disable scrollView elasticity while we're at it to make it seem like it's not even there
         scrollView.verticalScrollElasticity = NSScrollElasticityNone;
         scrollView.horizontalScrollElasticity = NSScrollElasticityNone;
         

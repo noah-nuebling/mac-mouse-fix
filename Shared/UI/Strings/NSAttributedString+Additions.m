@@ -22,6 +22,8 @@ void assignAttributedStringKeepingBase(NSAttributedString *_Nonnull *_Nonnull as
     
     /// This is meant for assigning attributed strings to interface elements whose text has been styled in IB already. And where we want to keep the style from IB as base
     
+    /// There are some places where we still do this manually which we could replace with this. Search for "attributesAtIndex:" to find them.
+    
     /// Get old attributes
     NSAttributedString *s = *assignee;
     NSDictionary<NSAttributedStringKey, id> *oldAttributes = [s attributesAtIndex:0 effectiveRange:NULL];

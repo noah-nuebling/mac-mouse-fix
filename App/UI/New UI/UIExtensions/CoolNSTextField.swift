@@ -26,9 +26,9 @@ class MarkdownTextField: CoolNSTextField {
         
         /// Parse md
         guard let md = NSAttributedString(coolMarkdown: self.stringValue, fillOutBase: false) else { return }
-        let oldAttributes = self.attributedStringValue.attributes(at: 0, effectiveRange: nil)
-        let md2 = md.addingStringAttributes(asBase: oldAttributes)
-        self.attributedStringValue = md2
+        
+        /// Assign markdown to self
+        assignAttributedStringKeepingBase(&self.attributedStringValue, md)
     }
     
 }
