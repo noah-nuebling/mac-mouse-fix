@@ -271,7 +271,7 @@
 /* Class = "NSTextFieldCell"; title = "Visit the Website"; ObjectID = "Ozk-o9-C4a"; */
 "Ozk-o9-C4a.title" = "Besuche die Webseite";
 
-/* Class = "NSTextFieldCell"; title = "Share Your Thoughts on MMF 3"; ObjectID = "ZMA-p0-2lf"; Note = "After the MMF 3 Beta I plan to change this to: Check Out the GitHub"; */
+/* Class = "NSTextFieldCell"; title = "Check Out the GitHub"; ObjectID = "ZMA-p0-2lf"; Note = "After the MMF 3 Beta I plan to change this to: Check Out the GitHub"; */
 "ZMA-p0-2lf.title" = "Schau dir das GitHub an";
 
 /* Class = "NSTextFieldCell"; title = "File a Bug Report"; ObjectID = "bQf-qv-mvB"; */
