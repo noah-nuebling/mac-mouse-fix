@@ -313,29 +313,19 @@ fixes</strong>!</p>
 “Buttons” tab now. This allows you to feel even more more
 <strong>comfortable</strong> while <strong>experimenting</strong> with
 settings.</p>
-<p>There are <strong>2 default settings</strong> available:</p>
-<h3 id="default-setting-for-mice-with-5-buttons">Default setting for
-<strong>mice with 5+ buttons</strong></h3>
-<p>The default setting for mice with <strong>5+ buttons</strong> remaps
-<strong>buttons 4</strong> and <strong>5</strong> (aka the side buttons)
-on your mouse to trackpad features. The side buttons tend to be very
-<strong>comfortable to press</strong>. And this lets you do
-<strong>everything you do on a trackpad</strong> with just <strong>one
-hand</strong> in a very simple and <strong>intuitive</strong> way!</p>
-<p>This also <strong>preserves</strong> the <strong>default
-functionality</strong> of the <strong>middle click</strong>. So you can
-easily open links in a new tab or rotate content in Blender and other 3D
-apps.</p>
-<h3 id="default-setting-for-mice-with-3-buttons">Default setting for
-<strong>mice with 3 buttons</strong></h3>
-<p>The default setting for mice with <strong>3 buttons</strong> lets you
-use the most important trackpad features (but not quite all of them)
-from <strong>button 3</strong> (aka the middle button or the scrollwheel
-button). This is not quite as comfortable or powerful as the default
-setting for mice with <strong>5+ buttons</strong> but it will still make
-your mouse so much more useful!</p>
-<h3 id="implementation">Implementation</h3>
-<p>I worked hard to make this feature <strong>smart</strong>:</p>
+<p>There are <strong>2 defaults</strong> available:</p>
+<ol type="1">
+<li>The “Default setting for mice with <strong>5+ buttons</strong>” is
+super powerful and comfortable. In fact It lets you do
+<strong>everything</strong> you do on a <strong>trackpad</strong>. All
+using the 2 <strong>side buttons</strong> that are right where your
+<strong>thumb</strong> rests! But of course it’s only available on mice
+with 5 or more buttons.</li>
+<li>The “Default setting for mice with <strong>3 buttons</strong>” still
+lets you do the <strong>most important</strong> things you do on a
+trackpad - even on a mouse that only has 3 buttons.</li>
+</ol>
+<p>I tried hard to make this feature <strong>smart</strong>:</p>
 <ul>
 <li>When you start MMF for the first time it will <strong>automatically
 select</strong> the preset that <strong>best fits your
@@ -354,7 +344,6 @@ your mouse!</li>
 <strong>simple</strong> and <strong>beautiful</strong>. Loading the
 default settings <strong>animates nicely</strong>.</li>
 </ul>
-<h3 id="feedback">Feedback</h3>
 <p>I hope you find this feature <strong>useful</strong> and
 <strong>simple to use</strong>! But let me know if you have any issues.
 Is something <strong>weird</strong> or <strong>unintuitive</strong>? Do
@@ -371,7 +360,6 @@ method!</p>
 <p>If you’re in one of the free countries, information about this will
 be <strong>displayed</strong> on the <strong>about tab</strong> and when
 <strong>entering a license key</strong></p>
-<h3 id="feedback-1">Feedback</h3>
 <p>If it is <strong>impossible to purchase</strong> Mac Mouse Fix in
 your country, but it’s also <strong>not free</strong> in your country,
 yet - then let me know and I’ll make Mac Mouse Fix free in your country,
@@ -483,8 +471,7 @@ the bundle ID from “com.nuebling.mac-mouse-fixxx” which was used in Beta
 <li>This and future betas will output more detailed debugging info</li>
 <li>Under the hood cleanup and improvments. Removed old pre-10.13 code.
 Cleaned up frameworks and dependencies. The source code is now easier to
-work with, more future-proof and the app size is now slightly
-smaller.</li>
+work with, more future-proof.</li>
 </ul>
 </body>
 </html>
@@ -493,9 +480,9 @@ smaller.</li>
         </description>
         <enclosure
             url="https://github.com/noah-nuebling/mac-mouse-fix/releases/download/3.0.0-Beta-4/MacMouseFixApp.zip"
-            sparkle:version="19382"
+            sparkle:version="19384"
             sparkle:shortVersionString="3.0.0 Beta 4"
-            sparkle:edSignature="7JkYxdGwNiynNM/EhpIMOMFgJZXIoHnhAQET4Yo/ZqCYbMtZwUK+ynrGO1AeeKKO4f+N7cyLH/bb2qe7hvkOBw==" length="14518281"
+            sparkle:edSignature="KsO7xI6ksh9AXh/JbLbYmXwMZU+/qpR8JW8XsxpkGDFFrUdvGGlNv8oGclbiRJUBI030sCOMG9YyCAN+3xi6AQ==" length="19076034"
             type="application/octet-stream"
         />
     </item>
