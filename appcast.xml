@@ -18,17 +18,159 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
   <title>-</title>
   <style>
+    html {
+      line-height: 1.5;
+      font-family: Georgia, serif;
+      font-size: 20px;
+      color: #1a1a1a;
+      background-color: #fdfdfd;
+    }
+    body {
+      margin: 0 auto;
+      max-width: 36em;
+      padding-left: 50px;
+      padding-right: 50px;
+      padding-top: 50px;
+      padding-bottom: 50px;
+      hyphens: auto;
+      overflow-wrap: break-word;
+      text-rendering: optimizeLegibility;
+      font-kerning: normal;
+    }
+    @media (max-width: 600px) {
+      body {
+        font-size: 0.9em;
+        padding: 1em;
+      }
+      h1 {
+        font-size: 1.8em;
+      }
+    }
+    @media print {
+      body {
+        background-color: transparent;
+        color: black;
+        font-size: 12pt;
+      }
+      p, h2, h3 {
+        orphans: 3;
+        widows: 3;
+      }
+      h2, h3, h4 {
+        page-break-after: avoid;
+      }
+    }
+    p {
+      margin: 1em 0;
+    }
+    a {
+      color: #1a1a1a;
+    }
+    a:visited {
+      color: #1a1a1a;
+    }
+    img {
+      max-width: 100%;
+    }
+    h1, h2, h3, h4, h5, h6 {
+      margin-top: 1.4em;
+    }
+    h5, h6 {
+      font-size: 1em;
+      font-style: italic;
+    }
+    h6 {
+      font-weight: normal;
+    }
+    ol, ul {
+      padding-left: 1.7em;
+      margin-top: 1em;
+    }
+    li > ol, li > ul {
+      margin-top: 0;
+    }
+    blockquote {
+      margin: 1em 0 1em 1.7em;
+      padding-left: 1em;
+      border-left: 2px solid #e6e6e6;
+      color: #606060;
+    }
+    code {
+      font-family: Menlo, Monaco, 'Lucida Console', Consolas, monospace;
+      font-size: 85%;
+      margin: 0;
+    }
+    pre {
+      margin: 1em 0;
+      overflow: auto;
+    }
+    pre code {
+      padding: 0;
+      overflow: visible;
+      overflow-wrap: normal;
+    }
+    .sourceCode {
+     background-color: transparent;
+     overflow: visible;
+    }
+    hr {
+      background-color: #1a1a1a;
+      border: none;
+      height: 1px;
+      margin: 1em 0;
+    }
+    table {
+      margin: 1em 0;
+      border-collapse: collapse;
+      width: 100%;
+      overflow-x: auto;
+      display: block;
+      font-variant-numeric: lining-nums tabular-nums;
+    }
+    table caption {
+      margin-bottom: 0.75em;
+    }
+    tbody {
+      margin-top: 0.5em;
+      border-top: 1px solid #1a1a1a;
+      border-bottom: 1px solid #1a1a1a;
+    }
+    th {
+      border-top: 1px solid #1a1a1a;
+      padding: 0.25em 0.5em 0.25em 0.5em;
+    }
+    td {
+      padding: 0.125em 0.5em 0.25em 0.5em;
+    }
+    header {
+      margin-bottom: 4em;
+      text-align: center;
+    }
+    #TOC li {
+      list-style: none;
+    }
+    #TOC ul {
+      padding-left: 1.3em;
+    }
+    #TOC > ul {
+      padding-left: 0;
+    }
+    #TOC a:not(:hover) {
+      text-decoration: none;
+    }
     code{white-space: pre-wrap;}
     span.smallcaps{font-variant: small-caps;}
-    span.underline{text-decoration: underline;}
-    div.column{display: inline-block; vertical-align: top; width: 50%;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
     div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
     ul.task-list{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
     .display.math{display: block; text-align: center; margin: 0.5rem auto;}
   </style>
-  <!--[if lt IE 9]>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
-  <![endif]-->
   
 
   <style>
@@ -153,33 +295,62 @@
       }
 
   </style>
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
 </head>
 <body>
-<p>Also check out the <strong>cool stuff</strong> introduced in <a href="https://github.com/noah-nuebling/mac-mouse-fix/releases/tag/2.0.0">Mac Mouse Fix 2</a>!</p>
+<p>Also check out the <strong>cool stuff</strong> introduced in <a
+href="https://github.com/noah-nuebling/mac-mouse-fix/releases/tag/2.0.0">Mac
+Mouse Fix 2</a>!</p>
 <hr />
-<p>Mac Mouse Fix <strong>2.2.0</strong> features various usability improvements and bug fixes!</p>
-<h3 id="remapping-to-apple-exclusive-function-keys-is-better-now">Remapping to Apple-Exclusive function keys is better now</h3>
-<p>The last update, 2.1.0, introduced a cool new feature that lets you remap your mouse buttons to any key on your keyboard - even function keys that are only found on Apple keyboards. 2.2.0 features further improvements and refinements to that feature:</p>
+<p>Mac Mouse Fix <strong>2.2.0</strong> features various usability
+improvements and bug fixes!</p>
+<h3
+id="remapping-to-apple-exclusive-function-keys-is-better-now">Remapping
+to Apple-Exclusive function keys is better now</h3>
+<p>The last update, 2.1.0, introduced a cool new feature that lets you
+remap your mouse buttons to any key on your keyboard - even function
+keys that are only found on Apple keyboards. 2.2.0 features further
+improvements and refinements to that feature:</p>
 <ul>
-<li>You can now hold Option (⌥) to remap to keys that are only found on Apple keyboards - even if you don’t have an Apple keyboard at hand.</li>
-<li>The function key symbols feature an improved appearance, making them fit in better with other text.</li>
-<li>The ability to remap to Caps Lock has been disabled. It did not work as expected.</li>
+<li>You can now hold Option (⌥) to remap to keys that are only found on
+Apple keyboards - even if you don’t have an Apple keyboard at hand.</li>
+<li>The function key symbols feature an improved appearance, making them
+fit in better with other text.</li>
+<li>The ability to remap to Caps Lock has been disabled. It did not work
+as expected.</li>
 </ul>
-<h3 id="add-remove-actions-more-easily">Add / remove Actions more easily</h3>
-<p>Some users had trouble figuring out that you can add and remove Actions from the Action Table. To make things easier to understand, 2.2.0 features the following changes and new features:</p>
+<h3 id="add-remove-actions-more-easily">Add / remove Actions more
+easily</h3>
+<p>Some users had trouble figuring out that you can add and remove
+Actions from the Action Table. To make things easier to understand,
+2.2.0 features the following changes and new features:</p>
 <ul>
 <li>You can now delete Actions by right-clicking them.
 <ul>
-<li>This should make it easier to discover the option to delete Actions.</li>
-<li>The right-click menu features a symbol of the ‘-’ button. This should help draw attention to the ‘-’ <em>button</em>, which should then draw attention to the ‘+’ button. This hopefully makes the option to <strong>add</strong> Actions more discoverable as well.</li>
+<li>This should make it easier to discover the option to delete
+Actions.</li>
+<li>The right-click menu features a symbol of the ‘-’ button. This
+should help draw attention to the ‘-’ <em>button</em>, which should then
+draw attention to the ‘+’ button. This hopefully makes the option to
+<strong>add</strong> Actions more discoverable as well.</li>
 </ul></li>
-<li>You can now add Actions to the Action Table by right-clicking an empty row.</li>
-<li>The ‘-’ button is now only active when an Action is selected. This should make it clearer that the ‘-’ button deletes the selected Action.</li>
-<li>The default window height has been increased so that there’s a visible empty row which can be right-clicked to add and Action.</li>
+<li>You can now add Actions to the Action Table by right-clicking an
+empty row.</li>
+<li>The ‘-’ button is now only active when an Action is selected. This
+should make it clearer that the ‘-’ button deletes the selected
+Action.</li>
+<li>The default window height has been increased so that there’s a
+visible empty row which can be right-clicked to add and Action.</li>
 <li>The ‘+’ and ‘-’ buttons have tooltips now.</li>
 </ul>
 <h3 id="click-and-drag-improvements">Click and Drag improvements</h3>
-<p>The threshold for activating Click and Drag has been increased from 5 pixels to 7 pixels. This makes it harder to accidentally activate Click and Drag, while still letting users switch Spaces etc. by using small, comfortable flicks. <!-- See [this comment](https://github.com/noah-nuebling/mac-mouse-fix/discussions/114#discussioncomment-1959404). --></p>
+<p>The threshold for activating Click and Drag has been increased from 5
+pixels to 7 pixels. This makes it harder to accidentally activate Click
+and Drag, while still letting users switch Spaces etc. by using small,
+comfortable flicks.
+<!-- See [this comment](https://github.com/noah-nuebling/mac-mouse-fix/discussions/114#discussioncomment-1959404). --></p>
 <h3 id="other-ui-changes">Other UI changes</h3>
 <ul>
 <li>The appearance of the Action Table has been improved.</li>
@@ -187,10 +358,15 @@
 </ul>
 <h3 id="bug-fixes">Bug fixes</h3>
 <ul>
-<li>Fixed an issue where the UI wasn’t greyed out when starting MMF while it was disabled.</li>
+<li>Fixed an issue where the UI wasn’t greyed out when starting MMF
+while it was disabled.</li>
 <li>Removed hidden “Button 3 Click and Drag” option.
 <ul>
-<li>When selecting it, the app would crash. I built this option to make Mac Mouse Fix better compatible with Blender. But in its current form, it is not very useful for Blender users because you can’t combine it with keyboard modifiers. I plan to improve Blender compatibility in a future release.</li>
+<li>When selecting it, the app would crash. I built this option to make
+Mac Mouse Fix better compatible with Blender. But in its current form,
+it is not very useful for Blender users because you can’t combine it
+with keyboard modifiers. I plan to improve Blender compatibility in a
+future release.</li>
 </ul></li>
 </ul>
 </body>
@@ -219,17 +395,159 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
   <title>-</title>
   <style>
+    html {
+      line-height: 1.5;
+      font-family: Georgia, serif;
+      font-size: 20px;
+      color: #1a1a1a;
+      background-color: #fdfdfd;
+    }
+    body {
+      margin: 0 auto;
+      max-width: 36em;
+      padding-left: 50px;
+      padding-right: 50px;
+      padding-top: 50px;
+      padding-bottom: 50px;
+      hyphens: auto;
+      overflow-wrap: break-word;
+      text-rendering: optimizeLegibility;
+      font-kerning: normal;
+    }
+    @media (max-width: 600px) {
+      body {
+        font-size: 0.9em;
+        padding: 1em;
+      }
+      h1 {
+        font-size: 1.8em;
+      }
+    }
+    @media print {
+      body {
+        background-color: transparent;
+        color: black;
+        font-size: 12pt;
+      }
+      p, h2, h3 {
+        orphans: 3;
+        widows: 3;
+      }
+      h2, h3, h4 {
+        page-break-after: avoid;
+      }
+    }
+    p {
+      margin: 1em 0;
+    }
+    a {
+      color: #1a1a1a;
+    }
+    a:visited {
+      color: #1a1a1a;
+    }
+    img {
+      max-width: 100%;
+    }
+    h1, h2, h3, h4, h5, h6 {
+      margin-top: 1.4em;
+    }
+    h5, h6 {
+      font-size: 1em;
+      font-style: italic;
+    }
+    h6 {
+      font-weight: normal;
+    }
+    ol, ul {
+      padding-left: 1.7em;
+      margin-top: 1em;
+    }
+    li > ol, li > ul {
+      margin-top: 0;
+    }
+    blockquote {
+      margin: 1em 0 1em 1.7em;
+      padding-left: 1em;
+      border-left: 2px solid #e6e6e6;
+      color: #606060;
+    }
+    code {
+      font-family: Menlo, Monaco, 'Lucida Console', Consolas, monospace;
+      font-size: 85%;
+      margin: 0;
+    }
+    pre {
+      margin: 1em 0;
+      overflow: auto;
+    }
+    pre code {
+      padding: 0;
+      overflow: visible;
+      overflow-wrap: normal;
+    }
+    .sourceCode {
+     background-color: transparent;
+     overflow: visible;
+    }
+    hr {
+      background-color: #1a1a1a;
+      border: none;
+      height: 1px;
+      margin: 1em 0;
+    }
+    table {
+      margin: 1em 0;
+      border-collapse: collapse;
+      width: 100%;
+      overflow-x: auto;
+      display: block;
+      font-variant-numeric: lining-nums tabular-nums;
+    }
+    table caption {
+      margin-bottom: 0.75em;
+    }
+    tbody {
+      margin-top: 0.5em;
+      border-top: 1px solid #1a1a1a;
+      border-bottom: 1px solid #1a1a1a;
+    }
+    th {
+      border-top: 1px solid #1a1a1a;
+      padding: 0.25em 0.5em 0.25em 0.5em;
+    }
+    td {
+      padding: 0.125em 0.5em 0.25em 0.5em;
+    }
+    header {
+      margin-bottom: 4em;
+      text-align: center;
+    }
+    #TOC li {
+      list-style: none;
+    }
+    #TOC ul {
+      padding-left: 1.3em;
+    }
+    #TOC > ul {
+      padding-left: 0;
+    }
+    #TOC a:not(:hover) {
+      text-decoration: none;
+    }
     code{white-space: pre-wrap;}
     span.smallcaps{font-variant: small-caps;}
-    span.underline{text-decoration: underline;}
-    div.column{display: inline-block; vertical-align: top; width: 50%;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
     div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
     ul.task-list{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
     .display.math{display: block; text-align: center; margin: 0.5rem auto;}
   </style>
-  <!--[if lt IE 9]>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
-  <![endif]-->
   
 
   <style>
@@ -354,14 +672,27 @@
       }
 
   </style>
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
 </head>
 <body>
-<p>Also check out the <strong>cool stuff</strong> introduced in <a href="https://github.com/noah-nuebling/mac-mouse-fix/releases/tag/2.0.0">Mac Mouse Fix 2</a>!</p>
+<p>Also check out the <strong>cool stuff</strong> introduced in <a
+href="https://github.com/noah-nuebling/mac-mouse-fix/releases/tag/2.0.0">Mac
+Mouse Fix 2</a>!</p>
 <hr />
 <h3 id="the-app-works-again.">The app works again.</h3>
-<p>I signed the app with a new certificate. The old certificate was revoked by Apple which renders old versions of Mac Mouse Fix unusable. See <a href="https://github.com/noah-nuebling/mac-mouse-fix/discussions/114">this post</a> for more info.</p>
+<p>I signed the app with a new certificate. The old certificate was
+revoked by Apple which renders old versions of Mac Mouse Fix unusable.
+See <a
+href="https://github.com/noah-nuebling/mac-mouse-fix/discussions/114">this
+post</a> for more info.</p>
 <h3 id="new-feature">New feature!</h3>
-<p>You can now control <strong>Media Playback</strong>, <strong>Speaker Volume</strong>, <strong>Display Brightness</strong> and more right from your mouse! This is possible because Mac Mouse Fix now lets you remap your mouse buttons to any key on your keyboard - even Apple’s proprietary function keys like “Play-Pause” or “Mute Speaker”.</p>
+<p>You can now control <strong>Media Playback</strong>, <strong>Speaker
+Volume</strong>, <strong>Display Brightness</strong> and more right from
+your mouse! This is possible because Mac Mouse Fix now lets you remap
+your mouse buttons to any key on your keyboard - even Apple’s
+proprietary function keys like “Play-Pause” or “Mute Speaker”.</p>
 <p><img width="500px" src="https://user-images.githubusercontent.com/40808343/148666688-f2da6897-a6d2-47cb-86df-59afb3ab8682.gif"></p>
 </body>
 </html>
@@ -389,17 +720,159 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
   <title>-</title>
   <style>
+    html {
+      line-height: 1.5;
+      font-family: Georgia, serif;
+      font-size: 20px;
+      color: #1a1a1a;
+      background-color: #fdfdfd;
+    }
+    body {
+      margin: 0 auto;
+      max-width: 36em;
+      padding-left: 50px;
+      padding-right: 50px;
+      padding-top: 50px;
+      padding-bottom: 50px;
+      hyphens: auto;
+      overflow-wrap: break-word;
+      text-rendering: optimizeLegibility;
+      font-kerning: normal;
+    }
+    @media (max-width: 600px) {
+      body {
+        font-size: 0.9em;
+        padding: 1em;
+      }
+      h1 {
+        font-size: 1.8em;
+      }
+    }
+    @media print {
+      body {
+        background-color: transparent;
+        color: black;
+        font-size: 12pt;
+      }
+      p, h2, h3 {
+        orphans: 3;
+        widows: 3;
+      }
+      h2, h3, h4 {
+        page-break-after: avoid;
+      }
+    }
+    p {
+      margin: 1em 0;
+    }
+    a {
+      color: #1a1a1a;
+    }
+    a:visited {
+      color: #1a1a1a;
+    }
+    img {
+      max-width: 100%;
+    }
+    h1, h2, h3, h4, h5, h6 {
+      margin-top: 1.4em;
+    }
+    h5, h6 {
+      font-size: 1em;
+      font-style: italic;
+    }
+    h6 {
+      font-weight: normal;
+    }
+    ol, ul {
+      padding-left: 1.7em;
+      margin-top: 1em;
+    }
+    li > ol, li > ul {
+      margin-top: 0;
+    }
+    blockquote {
+      margin: 1em 0 1em 1.7em;
+      padding-left: 1em;
+      border-left: 2px solid #e6e6e6;
+      color: #606060;
+    }
+    code {
+      font-family: Menlo, Monaco, 'Lucida Console', Consolas, monospace;
+      font-size: 85%;
+      margin: 0;
+    }
+    pre {
+      margin: 1em 0;
+      overflow: auto;
+    }
+    pre code {
+      padding: 0;
+      overflow: visible;
+      overflow-wrap: normal;
+    }
+    .sourceCode {
+     background-color: transparent;
+     overflow: visible;
+    }
+    hr {
+      background-color: #1a1a1a;
+      border: none;
+      height: 1px;
+      margin: 1em 0;
+    }
+    table {
+      margin: 1em 0;
+      border-collapse: collapse;
+      width: 100%;
+      overflow-x: auto;
+      display: block;
+      font-variant-numeric: lining-nums tabular-nums;
+    }
+    table caption {
+      margin-bottom: 0.75em;
+    }
+    tbody {
+      margin-top: 0.5em;
+      border-top: 1px solid #1a1a1a;
+      border-bottom: 1px solid #1a1a1a;
+    }
+    th {
+      border-top: 1px solid #1a1a1a;
+      padding: 0.25em 0.5em 0.25em 0.5em;
+    }
+    td {
+      padding: 0.125em 0.5em 0.25em 0.5em;
+    }
+    header {
+      margin-bottom: 4em;
+      text-align: center;
+    }
+    #TOC li {
+      list-style: none;
+    }
+    #TOC ul {
+      padding-left: 1.3em;
+    }
+    #TOC > ul {
+      padding-left: 0;
+    }
+    #TOC a:not(:hover) {
+      text-decoration: none;
+    }
     code{white-space: pre-wrap;}
     span.smallcaps{font-variant: small-caps;}
-    span.underline{text-decoration: underline;}
-    div.column{display: inline-block; vertical-align: top; width: 50%;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
     div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
     ul.task-list{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
     .display.math{display: block; text-align: center; margin: 0.5rem auto;}
   </style>
-  <!--[if lt IE 9]>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
-  <![endif]-->
   
 
   <style>
@@ -524,26 +997,46 @@
       }
 
   </style>
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
 </head>
 <body>
-<p>Note: Mac Mouse Fix 2 is <strong>outdated</strong> now. <a href="https://github.com/noah-nuebling/mac-mouse-fix/releases">Get the latest version</a>!</p>
+<p>Note: Mac Mouse Fix 2 is <strong>outdated</strong> now. <a
+href="https://github.com/noah-nuebling/mac-mouse-fix/releases">Get the
+latest version</a>!</p>
 <h1 id="mac-mouse-fix-2-is-here">Mac Mouse Fix 2 is here! 🎉</h1>
 <p>Mac Mouse Fix 2 makes your Mouse even better.</p>
 <h2 id="mouse-gestures-done-right.">Mouse Gestures done right.</h2>
-<p><strong>Click</strong> a Mouse Button <strong>and Drag</strong> in different directions to enter <strong>Mission Control</strong>, <strong>move between Spaces</strong>, or see <strong>all windows of the current app</strong> - all using just a single Button!</p>
-<p>Mac Mouse Fix Gestures feel much more <strong>fluid and responsive</strong> than any other driver on the market. This is possible because Mac Mouse Fix can precisely emulate the output of Apple’s Trackpad driver.</p>
+<p><strong>Click</strong> a Mouse Button <strong>and Drag</strong> in
+different directions to enter <strong>Mission Control</strong>,
+<strong>move between Spaces</strong>, or see <strong>all windows of the
+current app</strong> - all using just a single Button!</p>
+<p>Mac Mouse Fix Gestures feel much more <strong>fluid and
+responsive</strong> than any other driver on the market. This is
+possible because Mac Mouse Fix can precisely emulate the output of
+Apple’s Trackpad driver.</p>
 <p><img width=500px src="https://user-images.githubusercontent.com/40808343/149643011-cc3311f1-af5c-453a-8206-2c6496d73d61.gif"></p>
-<h2 id="with-great-power-comes-great-ease-of-use">With great power comes great … ease of use!</h2>
-<p>With the new <strong>Action Table</strong>, you can set up your Mouse exactly how you want it - in seconds.</p>
-<p>Move the pointer into the “+” field, then simply show Mac Mouse Fix the clicks and drags that you want to assign a new Action to.</p>
+<h2 id="with-great-power-comes-great-ease-of-use">With great power comes
+great … ease of use!</h2>
+<p>With the new <strong>Action Table</strong>, you can set up your Mouse
+exactly how you want it - in seconds.</p>
+<p>Move the pointer into the “+” field, then simply show Mac Mouse Fix
+the clicks and drags that you want to assign a new Action to.</p>
 <!--
 <img width=500px src="https://user-images.githubusercontent.com/40808343/148165599-02a82c4c-8db6-4784-9e61-f8ba1d1915af.gif">
 -->
 <p><img width=500px src="https://user-images.githubusercontent.com/40808343/149642392-d0e25cf9-b49b-4398-b2e9-af2e810c8594.gif"></p>
-<p>Adding an Action for Double-Clicking the Middle Mouse Button is super simple. ^</p>
-<h2 id="a-major-boost-to-your-productivity.">A major boost to your productivity.</h2>
-<p>Mouse Gestures, together with the new Action Table allow you to get <strong>7x more functionality out of a single Button</strong> compared to conventional mouse drivers. All while being so simple and intuitive that you’ll actually use all those features.</p>
-<p>This way anyone can leverage the convenient navigation options that make macOS so powerful - from any mouse. Even the simplest ones.</p>
+<p>Adding an Action for Double-Clicking the Middle Mouse Button is super
+simple. ^</p>
+<h2 id="a-major-boost-to-your-productivity.">A major boost to your
+productivity.</h2>
+<p>Mouse Gestures, together with the new Action Table allow you to get
+<strong>7x more functionality out of a single Button</strong> compared
+to conventional mouse drivers. All while being so simple and intuitive
+that you’ll actually use all those features.</p>
+<p>This way anyone can leverage the convenient navigation options that
+make macOS so powerful - from any mouse. Even the simplest ones.</p>
 <!--
 
 <img width="500px" src="https://user-images.githubusercontent.com/40808343/148170941-417c0821-432a-48da-b3a3-26a8f93342d7.gif">
@@ -551,7 +1044,8 @@
 All of this functionality using just a single Button! ^
 
 -->
-<p>For example, with the default configuration, you can use all these Actions using <strong>just the Middle Mouse Button</strong>:</p>
+<p>For example, with the default configuration, you can use all these
+Actions using <strong>just the Middle Mouse Button</strong>:</p>
 <ul>
 <li>Mission Control</li>
 <li>Move Left a Space</li>
@@ -561,16 +1055,20 @@ All of this functionality using just a single Button! ^
 <li>Launchpad</li>
 <li>Look Up</li>
 </ul>
-<p>And this is right out of the box. Without even tapping into the endless, yet easy-to-use customization options.</p>
+<p>And this is right out of the box. Without even tapping into the
+endless, yet easy-to-use customization options.</p>
 <h2 id="and-a-lot-more">… And a lot more</h2>
 <h3 id="neat-features">Neat features</h3>
 <ul>
-<li><strong>Keyboard Shortcuts</strong> right from your Mouse give you even more flexibility for your workflow.</li>
-<li><strong>Smart zoom</strong> allows you to get a better glance on the web and elsewhere.</li>
+<li><strong>Keyboard Shortcuts</strong> right from your Mouse give you
+even more flexibility for your workflow.</li>
+<li><strong>Smart zoom</strong> allows you to get a better glance on the
+web and elsewhere.</li>
 </ul>
 <h3 id="ui-refinements">UI refinements</h3>
 <ul>
-<li>New <strong>Help and Feedback</strong> options are now easily accessible in the app where you need them.</li>
+<li>New <strong>Help and Feedback</strong> options are now easily
+accessible in the app where you need them.</li>
 <li><strong>Set up</strong> is easier and more streamlined.</li>
 </ul>
 <h3 id="improved-update-experience">Improved update experience</h3>
@@ -579,14 +1077,18 @@ All of this functionality using just a single Button! ^
 <li>is secure against man in the middle attacks.</li>
 <li>lets you test the latest Beta version - hassle-free!</li>
 <li>features an improved UI.</li>
-<li>lets me count downloads without relying on Google Analytics or other frameworks that might compromise your privacy.</li>
+<li>lets me count downloads without relying on Google Analytics or other
+frameworks that might compromise your privacy.</li>
 </ul>
 <h3 id="reliability-enhancements">Reliability enhancements</h3>
 <ul>
 <li>Various bug fixes and stability improvements.</li>
 </ul>
 <hr />
-<p>Mac Mouse Fix started out as a little hobby project to teach myself programming. But due to your support and encouragement, my goal is now to create the <strong>Best Mouse Driver Ever</strong>. Today we came quite a bit closer to that goal. Thank you! 🚀🚀🚀 :)</p>
+<p>Mac Mouse Fix started out as a little hobby project to teach myself
+programming. But due to your support and encouragement, my goal is now
+to create the <strong>Best Mouse Driver Ever</strong>. Today we came
+quite a bit closer to that goal. Thank you! 🚀🚀🚀 :)</p>
 </body>
 </html>
 
@@ -613,17 +1115,159 @@ All of this functionality using just a single Button! ^
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
   <title>-</title>
   <style>
+    html {
+      line-height: 1.5;
+      font-family: Georgia, serif;
+      font-size: 20px;
+      color: #1a1a1a;
+      background-color: #fdfdfd;
+    }
+    body {
+      margin: 0 auto;
+      max-width: 36em;
+      padding-left: 50px;
+      padding-right: 50px;
+      padding-top: 50px;
+      padding-bottom: 50px;
+      hyphens: auto;
+      overflow-wrap: break-word;
+      text-rendering: optimizeLegibility;
+      font-kerning: normal;
+    }
+    @media (max-width: 600px) {
+      body {
+        font-size: 0.9em;
+        padding: 1em;
+      }
+      h1 {
+        font-size: 1.8em;
+      }
+    }
+    @media print {
+      body {
+        background-color: transparent;
+        color: black;
+        font-size: 12pt;
+      }
+      p, h2, h3 {
+        orphans: 3;
+        widows: 3;
+      }
+      h2, h3, h4 {
+        page-break-after: avoid;
+      }
+    }
+    p {
+      margin: 1em 0;
+    }
+    a {
+      color: #1a1a1a;
+    }
+    a:visited {
+      color: #1a1a1a;
+    }
+    img {
+      max-width: 100%;
+    }
+    h1, h2, h3, h4, h5, h6 {
+      margin-top: 1.4em;
+    }
+    h5, h6 {
+      font-size: 1em;
+      font-style: italic;
+    }
+    h6 {
+      font-weight: normal;
+    }
+    ol, ul {
+      padding-left: 1.7em;
+      margin-top: 1em;
+    }
+    li > ol, li > ul {
+      margin-top: 0;
+    }
+    blockquote {
+      margin: 1em 0 1em 1.7em;
+      padding-left: 1em;
+      border-left: 2px solid #e6e6e6;
+      color: #606060;
+    }
+    code {
+      font-family: Menlo, Monaco, 'Lucida Console', Consolas, monospace;
+      font-size: 85%;
+      margin: 0;
+    }
+    pre {
+      margin: 1em 0;
+      overflow: auto;
+    }
+    pre code {
+      padding: 0;
+      overflow: visible;
+      overflow-wrap: normal;
+    }
+    .sourceCode {
+     background-color: transparent;
+     overflow: visible;
+    }
+    hr {
+      background-color: #1a1a1a;
+      border: none;
+      height: 1px;
+      margin: 1em 0;
+    }
+    table {
+      margin: 1em 0;
+      border-collapse: collapse;
+      width: 100%;
+      overflow-x: auto;
+      display: block;
+      font-variant-numeric: lining-nums tabular-nums;
+    }
+    table caption {
+      margin-bottom: 0.75em;
+    }
+    tbody {
+      margin-top: 0.5em;
+      border-top: 1px solid #1a1a1a;
+      border-bottom: 1px solid #1a1a1a;
+    }
+    th {
+      border-top: 1px solid #1a1a1a;
+      padding: 0.25em 0.5em 0.25em 0.5em;
+    }
+    td {
+      padding: 0.125em 0.5em 0.25em 0.5em;
+    }
+    header {
+      margin-bottom: 4em;
+      text-align: center;
+    }
+    #TOC li {
+      list-style: none;
+    }
+    #TOC ul {
+      padding-left: 1.3em;
+    }
+    #TOC > ul {
+      padding-left: 0;
+    }
+    #TOC a:not(:hover) {
+      text-decoration: none;
+    }
     code{white-space: pre-wrap;}
     span.smallcaps{font-variant: small-caps;}
-    span.underline{text-decoration: underline;}
-    div.column{display: inline-block; vertical-align: top; width: 50%;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
     div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
     ul.task-list{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
     .display.math{display: block; text-align: center; margin: 0.5rem auto;}
   </style>
-  <!--[if lt IE 9]>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
-  <![endif]-->
   
 
   <style>
@@ -748,13 +1392,22 @@ All of this functionality using just a single Button! ^
       }
 
   </style>
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
 </head>
 <body>
 <h3 id="changes">Changes</h3>
 <ul>
-<li>Signed the app with a new certificate. The old certificate was revoked which renders old versions of Mac Mouse Fix unusable. See this <a href="https://github.com/noah-nuebling/mac-mouse-fix/issues/95">GitHub Issue</a> for more info.</li>
-<li>Fixed an issue where Mac Mouse Fix wouldn’t work properly when it was launched from the Downloads folder</li>
-<li>Added a help link to the ‘Grant Accessibility Access to Mac Mouse Fix Helper’ screen</li>
+<li>Signed the app with a new certificate. The old certificate was
+revoked which renders old versions of Mac Mouse Fix unusable. See this
+<a
+href="https://github.com/noah-nuebling/mac-mouse-fix/issues/95">GitHub
+Issue</a> for more info.</li>
+<li>Fixed an issue where Mac Mouse Fix wouldn’t work properly when it
+was launched from the Downloads folder</li>
+<li>Added a help link to the ‘Grant Accessibility Access to Mac Mouse
+Fix Helper’ screen</li>
 </ul>
 </body>
 </html>
@@ -782,17 +1435,159 @@ All of this functionality using just a single Button! ^
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
   <title>-</title>
   <style>
+    html {
+      line-height: 1.5;
+      font-family: Georgia, serif;
+      font-size: 20px;
+      color: #1a1a1a;
+      background-color: #fdfdfd;
+    }
+    body {
+      margin: 0 auto;
+      max-width: 36em;
+      padding-left: 50px;
+      padding-right: 50px;
+      padding-top: 50px;
+      padding-bottom: 50px;
+      hyphens: auto;
+      overflow-wrap: break-word;
+      text-rendering: optimizeLegibility;
+      font-kerning: normal;
+    }
+    @media (max-width: 600px) {
+      body {
+        font-size: 0.9em;
+        padding: 1em;
+      }
+      h1 {
+        font-size: 1.8em;
+      }
+    }
+    @media print {
+      body {
+        background-color: transparent;
+        color: black;
+        font-size: 12pt;
+      }
+      p, h2, h3 {
+        orphans: 3;
+        widows: 3;
+      }
+      h2, h3, h4 {
+        page-break-after: avoid;
+      }
+    }
+    p {
+      margin: 1em 0;
+    }
+    a {
+      color: #1a1a1a;
+    }
+    a:visited {
+      color: #1a1a1a;
+    }
+    img {
+      max-width: 100%;
+    }
+    h1, h2, h3, h4, h5, h6 {
+      margin-top: 1.4em;
+    }
+    h5, h6 {
+      font-size: 1em;
+      font-style: italic;
+    }
+    h6 {
+      font-weight: normal;
+    }
+    ol, ul {
+      padding-left: 1.7em;
+      margin-top: 1em;
+    }
+    li > ol, li > ul {
+      margin-top: 0;
+    }
+    blockquote {
+      margin: 1em 0 1em 1.7em;
+      padding-left: 1em;
+      border-left: 2px solid #e6e6e6;
+      color: #606060;
+    }
+    code {
+      font-family: Menlo, Monaco, 'Lucida Console', Consolas, monospace;
+      font-size: 85%;
+      margin: 0;
+    }
+    pre {
+      margin: 1em 0;
+      overflow: auto;
+    }
+    pre code {
+      padding: 0;
+      overflow: visible;
+      overflow-wrap: normal;
+    }
+    .sourceCode {
+     background-color: transparent;
+     overflow: visible;
+    }
+    hr {
+      background-color: #1a1a1a;
+      border: none;
+      height: 1px;
+      margin: 1em 0;
+    }
+    table {
+      margin: 1em 0;
+      border-collapse: collapse;
+      width: 100%;
+      overflow-x: auto;
+      display: block;
+      font-variant-numeric: lining-nums tabular-nums;
+    }
+    table caption {
+      margin-bottom: 0.75em;
+    }
+    tbody {
+      margin-top: 0.5em;
+      border-top: 1px solid #1a1a1a;
+      border-bottom: 1px solid #1a1a1a;
+    }
+    th {
+      border-top: 1px solid #1a1a1a;
+      padding: 0.25em 0.5em 0.25em 0.5em;
+    }
+    td {
+      padding: 0.125em 0.5em 0.25em 0.5em;
+    }
+    header {
+      margin-bottom: 4em;
+      text-align: center;
+    }
+    #TOC li {
+      list-style: none;
+    }
+    #TOC ul {
+      padding-left: 1.3em;
+    }
+    #TOC > ul {
+      padding-left: 0;
+    }
+    #TOC a:not(:hover) {
+      text-decoration: none;
+    }
     code{white-space: pre-wrap;}
     span.smallcaps{font-variant: small-caps;}
-    span.underline{text-decoration: underline;}
-    div.column{display: inline-block; vertical-align: top; width: 50%;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
     div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
     ul.task-list{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
     .display.math{display: block; text-align: center; margin: 0.5rem auto;}
   </style>
-  <!--[if lt IE 9]>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
-  <![endif]-->
   
 
   <style>
@@ -917,12 +1712,18 @@ All of this functionality using just a single Button! ^
       }
 
   </style>
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
 </head>
 <body>
 <h3 id="changes-in-1.0.3">Changes in 1.0.3</h3>
 <ul>
-<li>Fixes an issue where the app-specific settings table would sometimes display its first column super wide after switching to dark mode</li>
-<li>Fixes several issues that would occur when installing the app version of Mac Mouse Fix while the old preference pane version was still running. Resolves #67.</li>
+<li>Fixes an issue where the app-specific settings table would sometimes
+display its first column super wide after switching to dark mode</li>
+<li>Fixes several issues that would occur when installing the app
+version of Mac Mouse Fix while the old preference pane version was still
+running. Resolves #67.</li>
 </ul>
 </body>
 </html>
@@ -950,17 +1751,159 @@ All of this functionality using just a single Button! ^
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
   <title>-</title>
   <style>
+    html {
+      line-height: 1.5;
+      font-family: Georgia, serif;
+      font-size: 20px;
+      color: #1a1a1a;
+      background-color: #fdfdfd;
+    }
+    body {
+      margin: 0 auto;
+      max-width: 36em;
+      padding-left: 50px;
+      padding-right: 50px;
+      padding-top: 50px;
+      padding-bottom: 50px;
+      hyphens: auto;
+      overflow-wrap: break-word;
+      text-rendering: optimizeLegibility;
+      font-kerning: normal;
+    }
+    @media (max-width: 600px) {
+      body {
+        font-size: 0.9em;
+        padding: 1em;
+      }
+      h1 {
+        font-size: 1.8em;
+      }
+    }
+    @media print {
+      body {
+        background-color: transparent;
+        color: black;
+        font-size: 12pt;
+      }
+      p, h2, h3 {
+        orphans: 3;
+        widows: 3;
+      }
+      h2, h3, h4 {
+        page-break-after: avoid;
+      }
+    }
+    p {
+      margin: 1em 0;
+    }
+    a {
+      color: #1a1a1a;
+    }
+    a:visited {
+      color: #1a1a1a;
+    }
+    img {
+      max-width: 100%;
+    }
+    h1, h2, h3, h4, h5, h6 {
+      margin-top: 1.4em;
+    }
+    h5, h6 {
+      font-size: 1em;
+      font-style: italic;
+    }
+    h6 {
+      font-weight: normal;
+    }
+    ol, ul {
+      padding-left: 1.7em;
+      margin-top: 1em;
+    }
+    li > ol, li > ul {
+      margin-top: 0;
+    }
+    blockquote {
+      margin: 1em 0 1em 1.7em;
+      padding-left: 1em;
+      border-left: 2px solid #e6e6e6;
+      color: #606060;
+    }
+    code {
+      font-family: Menlo, Monaco, 'Lucida Console', Consolas, monospace;
+      font-size: 85%;
+      margin: 0;
+    }
+    pre {
+      margin: 1em 0;
+      overflow: auto;
+    }
+    pre code {
+      padding: 0;
+      overflow: visible;
+      overflow-wrap: normal;
+    }
+    .sourceCode {
+     background-color: transparent;
+     overflow: visible;
+    }
+    hr {
+      background-color: #1a1a1a;
+      border: none;
+      height: 1px;
+      margin: 1em 0;
+    }
+    table {
+      margin: 1em 0;
+      border-collapse: collapse;
+      width: 100%;
+      overflow-x: auto;
+      display: block;
+      font-variant-numeric: lining-nums tabular-nums;
+    }
+    table caption {
+      margin-bottom: 0.75em;
+    }
+    tbody {
+      margin-top: 0.5em;
+      border-top: 1px solid #1a1a1a;
+      border-bottom: 1px solid #1a1a1a;
+    }
+    th {
+      border-top: 1px solid #1a1a1a;
+      padding: 0.25em 0.5em 0.25em 0.5em;
+    }
+    td {
+      padding: 0.125em 0.5em 0.25em 0.5em;
+    }
+    header {
+      margin-bottom: 4em;
+      text-align: center;
+    }
+    #TOC li {
+      list-style: none;
+    }
+    #TOC ul {
+      padding-left: 1.3em;
+    }
+    #TOC > ul {
+      padding-left: 0;
+    }
+    #TOC a:not(:hover) {
+      text-decoration: none;
+    }
     code{white-space: pre-wrap;}
     span.smallcaps{font-variant: small-caps;}
-    span.underline{text-decoration: underline;}
-    div.column{display: inline-block; vertical-align: top; width: 50%;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
     div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
     ul.task-list{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
     .display.math{display: block; text-align: center; margin: 0.5rem auto;}
   </style>
-  <!--[if lt IE 9]>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
-  <![endif]-->
   
 
   <style>
@@ -1085,10 +2028,15 @@ All of this functionality using just a single Button! ^
       }
 
   </style>
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
 </head>
 <body>
 <h3 id="changes">Changes</h3>
-<p>This release fixes an issue where the “Invert scrolling direction” option would always re-enable itself after launching the app. (See #68)</p>
+<p>This release fixes an issue where the “Invert scrolling direction”
+option would always re-enable itself after launching the app. (See
+#68)</p>
 </body>
 </html>
 
@@ -1115,17 +2063,159 @@ All of this functionality using just a single Button! ^
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
   <title>-</title>
   <style>
+    html {
+      line-height: 1.5;
+      font-family: Georgia, serif;
+      font-size: 20px;
+      color: #1a1a1a;
+      background-color: #fdfdfd;
+    }
+    body {
+      margin: 0 auto;
+      max-width: 36em;
+      padding-left: 50px;
+      padding-right: 50px;
+      padding-top: 50px;
+      padding-bottom: 50px;
+      hyphens: auto;
+      overflow-wrap: break-word;
+      text-rendering: optimizeLegibility;
+      font-kerning: normal;
+    }
+    @media (max-width: 600px) {
+      body {
+        font-size: 0.9em;
+        padding: 1em;
+      }
+      h1 {
+        font-size: 1.8em;
+      }
+    }
+    @media print {
+      body {
+        background-color: transparent;
+        color: black;
+        font-size: 12pt;
+      }
+      p, h2, h3 {
+        orphans: 3;
+        widows: 3;
+      }
+      h2, h3, h4 {
+        page-break-after: avoid;
+      }
+    }
+    p {
+      margin: 1em 0;
+    }
+    a {
+      color: #1a1a1a;
+    }
+    a:visited {
+      color: #1a1a1a;
+    }
+    img {
+      max-width: 100%;
+    }
+    h1, h2, h3, h4, h5, h6 {
+      margin-top: 1.4em;
+    }
+    h5, h6 {
+      font-size: 1em;
+      font-style: italic;
+    }
+    h6 {
+      font-weight: normal;
+    }
+    ol, ul {
+      padding-left: 1.7em;
+      margin-top: 1em;
+    }
+    li > ol, li > ul {
+      margin-top: 0;
+    }
+    blockquote {
+      margin: 1em 0 1em 1.7em;
+      padding-left: 1em;
+      border-left: 2px solid #e6e6e6;
+      color: #606060;
+    }
+    code {
+      font-family: Menlo, Monaco, 'Lucida Console', Consolas, monospace;
+      font-size: 85%;
+      margin: 0;
+    }
+    pre {
+      margin: 1em 0;
+      overflow: auto;
+    }
+    pre code {
+      padding: 0;
+      overflow: visible;
+      overflow-wrap: normal;
+    }
+    .sourceCode {
+     background-color: transparent;
+     overflow: visible;
+    }
+    hr {
+      background-color: #1a1a1a;
+      border: none;
+      height: 1px;
+      margin: 1em 0;
+    }
+    table {
+      margin: 1em 0;
+      border-collapse: collapse;
+      width: 100%;
+      overflow-x: auto;
+      display: block;
+      font-variant-numeric: lining-nums tabular-nums;
+    }
+    table caption {
+      margin-bottom: 0.75em;
+    }
+    tbody {
+      margin-top: 0.5em;
+      border-top: 1px solid #1a1a1a;
+      border-bottom: 1px solid #1a1a1a;
+    }
+    th {
+      border-top: 1px solid #1a1a1a;
+      padding: 0.25em 0.5em 0.25em 0.5em;
+    }
+    td {
+      padding: 0.125em 0.5em 0.25em 0.5em;
+    }
+    header {
+      margin-bottom: 4em;
+      text-align: center;
+    }
+    #TOC li {
+      list-style: none;
+    }
+    #TOC ul {
+      padding-left: 1.3em;
+    }
+    #TOC > ul {
+      padding-left: 0;
+    }
+    #TOC a:not(:hover) {
+      text-decoration: none;
+    }
     code{white-space: pre-wrap;}
     span.smallcaps{font-variant: small-caps;}
-    span.underline{text-decoration: underline;}
-    div.column{display: inline-block; vertical-align: top; width: 50%;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
     div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
     ul.task-list{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
     .display.math{display: block; text-align: center; margin: 0.5rem auto;}
   </style>
-  <!--[if lt IE 9]>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
-  <![endif]-->
   
 
   <style>
@@ -1250,13 +2340,19 @@ All of this functionality using just a single Button! ^
       }
 
   </style>
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
 </head>
 <body>
 <h3 id="changes">Changes</h3>
 <ul>
-<li>Icons on the ‘More…’ sheet are now displayed properly on older macOS versions.</li>
-<li>Mac Mouse Fix is now a Universal Binary running natively on M1 Macs.</li>
-<li>Improved scrolling behaviour when Smooth Scrolling is turned off. Fixes #61.</li>
+<li>Icons on the ‘More…’ sheet are now displayed properly on older macOS
+versions.</li>
+<li>Mac Mouse Fix is now a Universal Binary running natively on M1
+Macs.</li>
+<li>Improved scrolling behaviour when Smooth Scrolling is turned off.
+Fixes #61.</li>
 </ul>
 </body>
 </html>
@@ -1284,17 +2380,159 @@ All of this functionality using just a single Button! ^
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
   <title>-</title>
   <style>
+    html {
+      line-height: 1.5;
+      font-family: Georgia, serif;
+      font-size: 20px;
+      color: #1a1a1a;
+      background-color: #fdfdfd;
+    }
+    body {
+      margin: 0 auto;
+      max-width: 36em;
+      padding-left: 50px;
+      padding-right: 50px;
+      padding-top: 50px;
+      padding-bottom: 50px;
+      hyphens: auto;
+      overflow-wrap: break-word;
+      text-rendering: optimizeLegibility;
+      font-kerning: normal;
+    }
+    @media (max-width: 600px) {
+      body {
+        font-size: 0.9em;
+        padding: 1em;
+      }
+      h1 {
+        font-size: 1.8em;
+      }
+    }
+    @media print {
+      body {
+        background-color: transparent;
+        color: black;
+        font-size: 12pt;
+      }
+      p, h2, h3 {
+        orphans: 3;
+        widows: 3;
+      }
+      h2, h3, h4 {
+        page-break-after: avoid;
+      }
+    }
+    p {
+      margin: 1em 0;
+    }
+    a {
+      color: #1a1a1a;
+    }
+    a:visited {
+      color: #1a1a1a;
+    }
+    img {
+      max-width: 100%;
+    }
+    h1, h2, h3, h4, h5, h6 {
+      margin-top: 1.4em;
+    }
+    h5, h6 {
+      font-size: 1em;
+      font-style: italic;
+    }
+    h6 {
+      font-weight: normal;
+    }
+    ol, ul {
+      padding-left: 1.7em;
+      margin-top: 1em;
+    }
+    li > ol, li > ul {
+      margin-top: 0;
+    }
+    blockquote {
+      margin: 1em 0 1em 1.7em;
+      padding-left: 1em;
+      border-left: 2px solid #e6e6e6;
+      color: #606060;
+    }
+    code {
+      font-family: Menlo, Monaco, 'Lucida Console', Consolas, monospace;
+      font-size: 85%;
+      margin: 0;
+    }
+    pre {
+      margin: 1em 0;
+      overflow: auto;
+    }
+    pre code {
+      padding: 0;
+      overflow: visible;
+      overflow-wrap: normal;
+    }
+    .sourceCode {
+     background-color: transparent;
+     overflow: visible;
+    }
+    hr {
+      background-color: #1a1a1a;
+      border: none;
+      height: 1px;
+      margin: 1em 0;
+    }
+    table {
+      margin: 1em 0;
+      border-collapse: collapse;
+      width: 100%;
+      overflow-x: auto;
+      display: block;
+      font-variant-numeric: lining-nums tabular-nums;
+    }
+    table caption {
+      margin-bottom: 0.75em;
+    }
+    tbody {
+      margin-top: 0.5em;
+      border-top: 1px solid #1a1a1a;
+      border-bottom: 1px solid #1a1a1a;
+    }
+    th {
+      border-top: 1px solid #1a1a1a;
+      padding: 0.25em 0.5em 0.25em 0.5em;
+    }
+    td {
+      padding: 0.125em 0.5em 0.25em 0.5em;
+    }
+    header {
+      margin-bottom: 4em;
+      text-align: center;
+    }
+    #TOC li {
+      list-style: none;
+    }
+    #TOC ul {
+      padding-left: 1.3em;
+    }
+    #TOC > ul {
+      padding-left: 0;
+    }
+    #TOC a:not(:hover) {
+      text-decoration: none;
+    }
     code{white-space: pre-wrap;}
     span.smallcaps{font-variant: small-caps;}
-    span.underline{text-decoration: underline;}
-    div.column{display: inline-block; vertical-align: top; width: 50%;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
     div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
     ul.task-list{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
     .display.math{display: block; text-align: center; margin: 0.5rem auto;}
   </style>
-  <!--[if lt IE 9]>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
-  <![endif]-->
   
 
   <style>
@@ -1419,6 +2657,9 @@ All of this functionality using just a single Button! ^
       }
 
   </style>
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
 </head>
 <body>
 <pre class="objc"><code>1.0.0 is here! 🚀</code></pre>
@@ -1427,21 +2668,33 @@ All of this functionality using just a single Button! ^
 <li>Mac Mouse Fix is now an App instead of a Preference Pane</li>
 <li>Updated and optimized for macOS 11 BigSur</li>
 <li>Added support for macOS 10.11 El Capitan</li>
-<li>Added compatibilty for many mice including the Logitech MX Master</li>
-<li>You can now swap the side buttons’ functionality if they are inverted on your mouse (Shoutouts to <span class="citation" data-cites="divadretlaw">@divadretlaw</span>!)</li>
-<li>Added Dark Mode support (Thank you <span class="citation" data-cites="stevenguh">@stevenguh</span>!)</li>
-<li>Mac Mouse Fix will now completely uninstall itself automatically after you move it to the trash (Just make sure that ‘Enable Mac Mouse Fix’ is checked before you do so)</li>
-<li>Keyboard modifier interception is now completely disabled when no mice are attached to your computer</li>
-<li>You can now zoom in and out by holding Command (⌘) while scrolling</li>
+<li>Added compatibilty for many mice including the Logitech MX
+Master</li>
+<li>You can now swap the side buttons’ functionality if they are
+inverted on your mouse (Shoutouts to <span class="citation"
+data-cites="divadretlaw">@divadretlaw</span>!)</li>
+<li>Added Dark Mode support (Thank you <span class="citation"
+data-cites="stevenguh">@stevenguh</span>!)</li>
+<li>Mac Mouse Fix will now completely uninstall itself automatically
+after you move it to the trash (Just make sure that ‘Enable Mac Mouse
+Fix’ is checked before you do so)</li>
+<li>Keyboard modifier interception is now completely disabled when no
+mice are attached to your computer</li>
+<li>You can now zoom in and out by holding Command (⌘) while
+scrolling</li>
 <li>Updated App Icon</li>
 <li>You can now disable smooth scrolling for specific apps</li>
-<li>Added ‘Look Up’ and ‘Launchpad’ options, which were removed in 0.9.1, back in</li>
+<li>Added ‘Look Up’ and ‘Launchpad’ options, which were removed in
+0.9.1, back in</li>
 <li>New and improved ‘More…’ screen</li>
-<li>Even more responsive scrolling through use of multi-threading and other techniques</li>
+<li>Even more responsive scrolling through use of multi-threading and
+other techniques</li>
 <li>Various other bug fixes and under-the-hood improvements</li>
 </ul>
 <hr />
-<p>The original 1.0.0 release was set to only run on Big Sur. I then released a tiny update removing that setting. These two versions are both described by this GitHub release</p>
+<p>The original 1.0.0 release was set to only run on Big Sur. I then
+released a tiny update removing that setting. These two versions are
+both described by this GitHub release</p>
 <ul>
 <li>Big Sur only release
 <ul>
