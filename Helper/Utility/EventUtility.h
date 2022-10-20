@@ -20,6 +20,7 @@ IOHIDDeviceRef _Nullable CGEventGetSendingDevice(CGEventRef cgEvent);
 IOHIDDeviceRef _Nullable getSendingDeviceWithSenderID(uint64_t senderID);
 CFTimeInterval CGEventGetTimestampInSeconds(CGEventRef event);
 //CFTimeInterval machDeltaToTimeInterval(uint64_t machTime1, uint64_t machTime2);
+NSString *scrollEventDescription(CGEventRef scrollEvent);
 
 @end
 

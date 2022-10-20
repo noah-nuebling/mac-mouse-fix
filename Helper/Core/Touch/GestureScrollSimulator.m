@@ -441,12 +441,41 @@ static void getDeltaVectors(Vector point, VectorSubPixelator *subPixelator, Vect
     /// Guard `point` contains int
     assert(point.x == roundf(point.x) && point.y == roundf(point.y));
     
-    /// Generate other vectors
-    *line = scaledVector(point, 1/10); /// See CGEventSource.pixelsPerLine - it's 10 by default
-    *lineInt = [subPixelator intVectorWithDoubleVector:*line];
+    /// Configure pixelator threshold
+    
+    /// Notes on pixelationThreshold:
+    ///     - pixelationThreshold will make it so the pixelator will only pixelate if `abs(inputDelta) < threshold`. Otherwise it will just return the input value.
+    ///     - Why do this? It's how the fixedPt line deltas in real trackpad events seem to work. In testing, I don't see a clear benefit to this over just always pixelating, but it's generally better to be as close as possible to the real events.
+    ///     - In testing (with iTerm), I thought it might actually be feeling WORSE than always pixelating. I felt like it made the end of a scroll feel too fast vs the start. Might be placebo though.
+    ///     - If you want to remove this, turn it off by setting the threshold to `INFINITY`
+    ///
+    ///     - There are still lots of differences to the way real events look:
+    ///         - Real trackpad events seem to use around 0.5 threshold for momentumScroll events, and around 0.3 for gesture scroll events. But then they also round up to values like 0.7 (we can only round to integers).
+    ///         - `Description of the "other weirdness"`: The min output size that the Apple Trackpad pixelation produces is not 1 like in our case, but 0.6 or 0.7 (around double the threshold) and both the threshold and the min size are different depending on momentumScroll or gestureScrolls and depending on scrollDirection. I think most of this weirdness is due to sloppy programming in the Apple Trackpad driver though. I don't think it's useful to replicate all of this.
+    ///
+    [subPixelator setPixelationThreshold:1.0];
+    
+    /// Generate line delta
+    *line = scaledVector(point, 1.0/10); /// See CGEventSource.pixelsPerLine - it's 10 by default || Note 1/10 == 0 in C! (integer division)
+    *line = [subPixelator intVectorWithDoubleVector:*line];
+    
+    /// Generate rounded line delta
+    ///     I think this algorithm is exactly how the Apple Trackpad driver gets the rounded line deltas
+    ///     However since we're subpixelating the normal line deltas, (so they are already rounded) this does nothing
+    *lineInt = vectorByApplyingToEachDimension(*line, ^double(double val) {
+        /// Round values between 0 and 1 up and all others down. (Vice-versa for negative values)
+        ///     That's what the real trackpad values look like
+        return fabs(val) <= 1.0 ? signedCeil(val) : signedFloor(val);
+    });
+    
+    /// Generate gesture delta
     if (gesture != NULL) {
         *gesture = scaledVector(point, 1.67); /// 1.67 makes click and drag to swipe between pages in Safari appropriately easy to trigger
     }
+    
+    /// Debug
+    
+    DDLogDebug(@"\nHNGG Constructed deltas - point: %@ \t line: %@ \t lineInt: %@", vectorDescription(point), vectorDescription(*line), vectorDescription(*lineInt));
 }
 
 
@@ -515,7 +544,9 @@ static void getDeltaVectors(Vector point, VectorSubPixelator *subPixelator, Vect
     
     /// Scroll deltas
     /// Notes:
-    ///     - Fixed point deltas are set automatically by setting these deltas IIRC. Edit: Under Ventura Beta, the fixed point deltas are not automatically being set. Not sure if this was ever the case. So we're setting it manually now.
+    ///     - Fixed point deltas are set automatically by setting these deltas IIRC.
+    ///         - Edit: Under Ventura Beta, the fixed point deltas are not automatically being set. Not sure if this was ever the case. So we're setting it manually now. Edit 2: Under a later Ventura Beta they ARE set automatically. The fixedPt delta (kCGScrollWheelEventFixedPtDeltaAxis1) is automatically set to the same value as the "normal" delta (kCGScrollWheelEventDeltaAxis1). But if we look at real trackpad values it's more complicated. So we're setting our own values to be more true to how the trackpad works
+    ///
     ///     - Doing similar things in see Scroll.m line-scroll-generation
     
     CGEventSetIntegerValueField(e22, 11, vecScrollLineInt.y); /// 11 -> kCGScrollWheelEventDeltaAxis1
@@ -525,6 +556,10 @@ static void getDeltaVectors(Vector point, VectorSubPixelator *subPixelator, Vect
     CGEventSetIntegerValueField(e22, 12, vecScrollLineInt.x); /// 12 -> kCGScrollWheelEventDeltaAxis2
     CGEventSetIntegerValueField(e22, 97, vecScrollPoint.x); /// 97 -> kCGScrollWheelEventPointDeltaAxis2
     CGEventSetIntegerValueField(e22, 94, fixedScrollDelta(vecScrollLine.x)); /// 94 -> kCGScrollWheelEventFixedPtDeltaAxis2
+    
+    /// Debug
+    
+    DDLogDebug(@"\nHNGG Sent event: %@ || customIntLineDelta: %@", scrollEventDescription(e22));
     
     /// Phase
     

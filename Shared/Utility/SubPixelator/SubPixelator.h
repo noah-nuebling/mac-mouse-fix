@@ -21,11 +21,13 @@ typedef double (* RoundingFunction)(double);
 + (SubPixelator *)floorPixelator;
 
 - (instancetype)init NS_UNAVAILABLE;
-- (instancetype)initWithRoundingFunction:(RoundingFunction)roundingFunction;
-- (instancetype)initAsBiasedPixelator;
+- (instancetype)initWithRoundingFunction:(double (*)(double))roundingFunction threshold:(double)threshold;
+- (instancetype)initAsBiasedPixelatorWithThreshold:(double)threshold;
 
-- (int64_t)intDeltaWithDoubleDelta:(double)inp;
-- (int64_t)peekIntDeltaWithDoubleDelta:(double)inpDelta;
+- (void)setPixelationThreshold:(double)threshold;
+
+- (double)intDeltaWithDoubleDelta:(double)inp;
+- (double)peekIntDeltaWithDoubleDelta:(double)inpDelta;
 - (void)reset;
 
 @end

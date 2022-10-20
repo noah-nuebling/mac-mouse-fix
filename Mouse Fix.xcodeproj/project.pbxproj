@@ -41,6 +41,8 @@
 		4F44794628B62FA400AD1979 /* LicenseConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F44794428B62FA400AD1979 /* LicenseConfig.swift */; };
 		4F44FF042606D73D00926A5E /* SharedMessagePort.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F44FF032606D73D00926A5E /* SharedMessagePort.m */; };
 		4F44FF052606D73D00926A5E /* SharedMessagePort.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F44FF032606D73D00926A5E /* SharedMessagePort.m */; };
+		4F5971E52901763D00A32656 /* MathObjc.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F5971E42901763D00A32656 /* MathObjc.m */; };
+		4F5971E62901763D00A32656 /* MathObjc.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F5971E42901763D00A32656 /* MathObjc.m */; };
 		4F5C2F802885C5D0001B9B8A /* HelperState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F5C2F7F2885C5D0001B9B8A /* HelperState.swift */; };
 		4F5F3EEE2756DB0A00C350C0 /* RemapsOverrider_old_.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F5F3EED2756DB0A00C350C0 /* RemapsOverrider_old_.swift */; };
 		4F5F3EF12756EC0400C350C0 /* RemapSwizzler.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F5F3EF02756EC0400C350C0 /* RemapSwizzler.m */; };
@@ -418,6 +420,7 @@
 		4F44794428B62FA400AD1979 /* LicenseConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LicenseConfig.swift; sourceTree = "<group>"; };
 		4F44FF022606D73D00926A5E /* SharedMessagePort.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SharedMessagePort.h; sourceTree = "<group>"; };
 		4F44FF032606D73D00926A5E /* SharedMessagePort.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SharedMessagePort.m; sourceTree = "<group>"; };
+		4F5971E42901763D00A32656 /* MathObjc.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MathObjc.m; sourceTree = "<group>"; };
 		4F5C2F7F2885C5D0001B9B8A /* HelperState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelperState.swift; sourceTree = "<group>"; };
 		4F5F3EED2756DB0A00C350C0 /* RemapsOverrider_old_.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemapsOverrider_old_.swift; sourceTree = "<group>"; };
 		4F5F3EEF2756DD1200C350C0 /* RemapSwizzler.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RemapSwizzler.h; sourceTree = "<group>"; };
@@ -2008,6 +2011,7 @@
 			isa = PBXGroup;
 			children = (
 				4FF0BD5D266ADFE5003935EA /* MathObjc.h */,
+				4F5971E42901763D00A32656 /* MathObjc.m */,
 				4FF0BD50266AC10C003935EA /* Math.swift */,
 				4FDE75A828B269AE00662314 /* Randomizer.swift */,
 				4FF0BD56266ACE32003935EA /* VectorUtility.h */,
@@ -2383,6 +2387,7 @@
 				4F909D2C28A0C3D2009349A2 /* NSView+Extensions.swift in Sources */,
 				4FDE759A28B1401400662314 /* License.swift in Sources */,
 				4FA1FD8328A916B600D1C8EE /* NSShadow+Extensions.swift in Sources */,
+				4F5971E52901763D00A32656 /* MathObjc.m in Sources */,
 				4FF665FA25F2C92700689B77 /* AppDelegate.m in Sources */,
 				4F909CF028A0C3B7009349A2 /* MainAppState.swift in Sources */,
 				4FEC9668278BBDC600548604 /* NSColor+Additions.m in Sources */,
@@ -2608,6 +2613,7 @@
 				4F9C9B60268A29FE0083DED0 /* Smoother.swift in Sources */,
 				4FDE759F28B174E700662314 /* TrialCounter.swift in Sources */,
 				4FA83A29268271E200F3A31B /* PointerSpeed.m in Sources */,
+				4F5971E62901763D00A32656 /* MathObjc.m in Sources */,
 				4FFA4E3828B79D410062A1FE /* NSAttributedString+Additions.m in Sources */,
 				4FFA4E4228B7D2890062A1FE /* FadeAnimations.swift in Sources */,
 				4FF6654B25F2C7B000689B77 /* Queue.m in Sources */,

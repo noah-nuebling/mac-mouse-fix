@@ -23,6 +23,13 @@ typedef enum {
     kMFIntervalDirectionNone
 } MFIntervalDirection;
 
+bool equal(double a, double b, double tolerance);
+bool lesserEqual(double a, double b, double tolerance);
+bool greaterEqual(double a, double b, double tolerance);
+
+double signedFloor(double num);
+double signedCeil(double num);
+
 @end
 
 NS_ASSUME_NONNULL_END

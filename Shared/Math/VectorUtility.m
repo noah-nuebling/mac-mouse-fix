@@ -14,9 +14,18 @@
 @implementation VectorUtility
 
 
-Vector scaledVectorWithFunction(Vector vec, VectorScalingFunction f) {
+Vector vectorByApplyingToEachDimension(Vector vec, OneDTransform f) {
+    
+    double newX = f(vec.x);
+    double newY = f(vec.y);
+    
+    return (Vector){ .x = newX, .y = newY };
+}
+
+Vector scaledVectorWithFunction(Vector vec, OneDTransform f) {
+    
     double magIn = magnitudeOfVector(vec);
-    if (magIn == 0) return (Vector){0};  /// To prevent division by 0 from producing nan
+    if (magIn == 0) return (Vector){0};  /// To prevent division by 0 from producing nan.
     double magOut = f(magIn);
     double scale = magOut / magIn;
     return scaledVector(vec, scale);
@@ -110,7 +119,7 @@ NSValue *nsValueFromVector(Vector vector) {
 }
 
 NSString *vectorDescription(Vector vector) {
-    return stringf(@"(%f, %f)", vector.x, vector.y);
+    return stringf(@"(%f, %f)", vector.y, vector.x);
 }
 
 @end

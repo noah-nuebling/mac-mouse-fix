@@ -9,30 +9,34 @@
 
 #import "SubPixelator.h"
 #import "SharedUtility.h"
+#import "MathObjc.h"
 
 @interface SubPixelator ()
 @property (readwrite, assign, atomic) double accumulatedRoundingError;
 @property (readwrite, assign, atomic, nullable) RoundingFunction roundingFunction;
 @property (readwrite, assign, atomic) BOOL isBiasedPixelator;
+@property (readwrite, assign, atomic) double threshold; /// Only start pixelating if `abs(val) < threshold`
 @end
 
 @implementation SubPixelator
 
+/// Convenience init
+
 + (SubPixelator *)ceilPixelator {
-    return [[self alloc] initWithRoundingFunction:ceil];
+    return [[self alloc] initWithRoundingFunction:ceil threshold:INFINITY];
 }
 + (SubPixelator *)roundPixelator {
-    return [[self alloc] initWithRoundingFunction:round];
+    return [[self alloc] initWithRoundingFunction:round threshold:INFINITY];
 }
 + (SubPixelator *)biasedPixelator {
     /// A biased pixelator becomes a floor or a ceil pixelator depending on whether it's first non-zero input is negative (floor) or positive (ceil)
     ///     That means it's first input will always result in a non-zero output.
     ///     We're using this in TouchAnimator. I can't remember why.
     
-    return [[self alloc] initAsBiasedPixelator];
+    return [[self alloc] initAsBiasedPixelatorWithThreshold:INFINITY];
 }
 + (SubPixelator *)floorPixelator {
-    return [[self alloc] initWithRoundingFunction:floor];
+    return [[self alloc] initWithRoundingFunction:floor threshold:INFINITY];
 }
 
 /// Init
@@ -40,20 +44,21 @@
 - (instancetype)init {
     assert(false);
 }
-- (instancetype)initWithRoundingFunction:(double (*)(double))roundingFunction
-{
+- (instancetype)initWithRoundingFunction:(double (*)(double))roundingFunction threshold:(double)threshold {
+    
     self = [super init];
     if (self) {
         self.roundingFunction = roundingFunction;
         self.isBiasedPixelator = NO;
+        self.threshold = threshold;
     }
     return self;
 }
-- (instancetype)initAsBiasedPixelator
-{
+- (instancetype)initAsBiasedPixelatorWithThreshold:(double)threshold {
     self = [super init];
     if (self) {
         self.isBiasedPixelator = true;
+        self.threshold = threshold;
     }
     return self;
 }
@@ -68,9 +73,22 @@ static RoundingFunction getBiasedRoundingFunction(double inpDelta) {
     }
 }
 
+/// Set threshold
+
+- (void)setPixelationThreshold:(double)threshold {
+    
+    /// Notes
+    /// - pixelationThreshold will make it so the pixelator will only pixelate if `abs(inputDelta) < threshold`
+    /// - TODO: Consider removing the "threshold" from all the initializers and just setting it to infinity by default. Since those are never used.
+    /// See GestureScrollSimulator > getDeltaVectors for explanation.
+    ///     That's the only place where this is used at the time of writing
+
+    self.threshold = threshold;
+}
+
 /// Main
 
-- (int64_t)intDeltaWithDoubleDelta:(double)inpDelta {
+- (double)intDeltaWithDoubleDelta:(double)inpDelta {
     
     /// Nothing to round if input is 0
     if (inpDelta == 0) {
@@ -82,25 +100,32 @@ static RoundingFunction getBiasedRoundingFunction(double inpDelta) {
         self.roundingFunction = getBiasedRoundingFunction(inpDelta);
     }
     
-    /// Get roundedDelta
+    /// Get preciseDelta
     double preciseDelta = inpDelta + self.accumulatedRoundingError;
-    int64_t roundedDelta = (int64_t)self.roundingFunction(preciseDelta);
+    
+    /// Get ouputDelta
+    double outputDelta;
+    if (greaterEqual(fabs(preciseDelta), self.threshold, 10e-4)) { 
+        outputDelta = preciseDelta;
+    } else {
+        outputDelta = self.roundingFunction(preciseDelta);
+    }
     
     ///  Debug
     
-    DDLogDebug(@"\nSubpixelator eval with d: %f, oldErr: %f, roundedD: %lld, newErr: %f", inpDelta, self.accumulatedRoundingError, roundedDelta, preciseDelta - roundedDelta);
+    DDLogDebug(@"\nSubpixelator eval with d: %f, oldErr: %f, roundedD: %f, newErr: %f", inpDelta, self.accumulatedRoundingError, outputDelta, preciseDelta - outputDelta);
     
     /// Validate
     assert(self.roundingFunction != NULL);
     
     /// Update roundingError
-    self.accumulatedRoundingError = preciseDelta - roundedDelta;
+    self.accumulatedRoundingError = preciseDelta - outputDelta;
     
     /// Return
-    return roundedDelta;
+    return outputDelta;
 }
 
-- (int64_t)peekIntDeltaWithDoubleDelta:(double)inpDelta {
+- (double)peekIntDeltaWithDoubleDelta:(double)inpDelta {
     /// See what int delta a certain double input would yield without changing the state of the subpixelator
     
     /// Nothing to round if input is 0
@@ -121,15 +146,22 @@ static RoundingFunction getBiasedRoundingFunction(double inpDelta) {
         rf = self.roundingFunction;
     }
     
-    /// Get roundedDelta
+    /// Get preciseDelta
     double preciseDelta = inpDelta + self.accumulatedRoundingError;
-    int64_t roundedDelta = (int64_t)rf(preciseDelta);
+    
+    /// Get ouputDelta
+    double outputDelta;
+    if (greaterEqual(fabs(preciseDelta), self.threshold, 10e-4)) {
+        outputDelta = preciseDelta;
+    } else {
+        outputDelta = rf(preciseDelta);
+    }
     
     ///  Debug
-    DDLogDebug(@"\nSubpixelator PEEK with d: %f, oldErr: %f, roundedD: %lld", inpDelta, self.accumulatedRoundingError, roundedDelta);
+    DDLogDebug(@"\nSubpixelator PEEK with d: %f, oldErr: %f, roundedD: %f", inpDelta, self.accumulatedRoundingError, outputDelta);
     
     /// Return
-    return roundedDelta;
+    return outputDelta;
     
 }
 

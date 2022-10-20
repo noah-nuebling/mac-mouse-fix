@@ -14,14 +14,15 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface VectorUtility : NSObject
 
-typedef double (^VectorScalingFunction)(double);
+typedef double (^OneDTransform)(double);
 
 typedef struct __Vector {
     double x;
     double y;
 } Vector;
 
-Vector scaledVectorWithFunction(Vector vec, VectorScalingFunction f);
+Vector vectorByApplyingToEachDimension(Vector vec, OneDTransform f);
+Vector scaledVectorWithFunction(Vector vec, OneDTransform f);
 double magnitudeOfVector(Vector vec);
 Vector unitVector(Vector vec);
 Vector scaledVector(Vector vec, double scalar);

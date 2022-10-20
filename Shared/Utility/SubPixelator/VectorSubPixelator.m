@@ -16,29 +16,29 @@
 }
 
 + (VectorSubPixelator *)ceilPixelator {
-    return [[self alloc] initWithRoundingFunction:ceil];
+    return [[self alloc] initWithRoundingFunction:ceil threshold:INFINITY];
 }
 + (VectorSubPixelator *)roundPixelator {
-    return [[self alloc] initWithRoundingFunction:round];
+    return [[self alloc] initWithRoundingFunction:round threshold:INFINITY];
 }
 + (VectorSubPixelator *)biasedPixelator {
     return [[self alloc] initAsBiasedPixelator];
 }
 + (VectorSubPixelator *)floorPixelator {
-    return [[self alloc] initWithRoundingFunction:floor];
+    return [[self alloc] initWithRoundingFunction:floor threshold:INFINITY];
 }
 
-- (instancetype)initWithRoundingFunction:(double (*)(double))roundingFunction
-{
+- (instancetype)initWithRoundingFunction:(double (*)(double))roundingFunction threshold:(double)threshold {
+    
     self = [super init];
     if (self) {
-        _spX = [[SubPixelator alloc] initWithRoundingFunction:roundingFunction];
-        _spY = [[SubPixelator alloc] initWithRoundingFunction:roundingFunction];
+        _spX = [[SubPixelator alloc] initWithRoundingFunction:roundingFunction threshold:threshold];
+        _spY = [[SubPixelator alloc] initWithRoundingFunction:roundingFunction threshold:threshold];
     }
     return self;
 }
-- (instancetype)initAsBiasedPixelator
-{
+- (instancetype)initAsBiasedPixelator {
+    
     self = [super init];
     if (self) {
         _spX = [SubPixelator biasedPixelator];
@@ -47,13 +47,20 @@
     return self;
 }
 
+- (void)setPixelationThreshold:(double)threshold {
+    [_spX setPixelationThreshold:threshold];
+    [_spY setPixelationThreshold:threshold];
+}
+
 - (Vector)intVectorWithDoubleVector:(Vector)inpVec {
+    
     inpVec.x = [_spX intDeltaWithDoubleDelta:inpVec.x];
     inpVec.y = [_spY intDeltaWithDoubleDelta:inpVec.y];
     return inpVec;
 }
 
 - (Vector)peekIntVectorWithDoubleVector:(Vector)inpVec {
+    
     inpVec.x = [_spX peekIntDeltaWithDoubleDelta:inpVec.x];
     inpVec.y = [_spY peekIntDeltaWithDoubleDelta:inpVec.y];
     return inpVec;

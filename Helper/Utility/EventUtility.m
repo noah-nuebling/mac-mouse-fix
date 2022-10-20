@@ -14,6 +14,7 @@
 #import "IOUtility.h"
 #import "SharedUtility.h"
 #import "CGEventHIDEventBridge.h"
+#import "VectorUtility.h"
 
 @implementation EventUtility
 
@@ -181,6 +182,36 @@ CFTimeInterval CGEventGetTimestampInSeconds(CGEventRef event) {
         DDLogDebug(@"ticksPerSec: %.3f, CG: %.3f", 1/tickPeriod, 1/tickPeriodCG);
         DDLogDebug(@"tickPeriodSum: %.0f, CG: %.0f, ratio: %.5f", pSum, pSumCG, pSumCG/pSum);
     }
+}
+
+NSString *scrollEventDescription(CGEventRef scrollEvent) {
+    
+    ///
+    /// Gather info
+    ///
+    
+    /// Gather deltas
+    
+    double delta1 = CGEventGetDoubleValueField(scrollEvent, 11); /// 11 -> kCGScrollWheelEventDeltaAxis1
+    double point1 = CGEventGetDoubleValueField(scrollEvent, 96); /// 96 -> kCGScrollWheelEventPointDeltaAxis1
+    double fixedPt1 = CGEventGetDoubleValueField(scrollEvent, 93); /// 93 -> kCGScrollWheelEventFixedPtDeltaAxis1
+    
+    double delta2 = CGEventGetDoubleValueField(scrollEvent, 12); /// 12 -> kCGScrollWheelEventDeltaAxis2
+    double point2 = CGEventGetDoubleValueField(scrollEvent, 97); /// 97 -> kCGScrollWheelEventPointDeltaAxis2
+    double fixedPt2 = CGEventGetDoubleValueField(scrollEvent, 94); /// 94 -> kCGScrollWheelEventFixedPtDeltaAxis2
+    
+    /// Put deltas together
+    
+    Vector delta = (Vector){ .x = delta2, .y = delta1 };
+    Vector point = (Vector){ .x = point2, .y = point1 };
+    Vector fixedPt = (Vector){ .x = fixedPt2, .y = fixedPt1 };
+    
+    /// Gather phases
+    
+    int64_t phase = CGEventGetIntegerValueField(scrollEvent, kCGScrollWheelEventScrollPhase);
+    int64_t momentumPhase = CGEventGetIntegerValueField(scrollEvent, kCGScrollWheelEventMomentumPhase);
+    
+    return stringf(@"delta: %@ \t point: %@ \t fixed: %@, \t phases: (%lld, %lld)", vectorDescription(delta), vectorDescription(point), vectorDescription(fixedPt), phase, momentumPhase);
 }
 
 @end

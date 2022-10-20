@@ -21,8 +21,10 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (instancetype)init NS_UNAVAILABLE;
 
+- (void)setPixelationThreshold:(double)threshold;
 - (Vector)intVectorWithDoubleVector:(Vector)inpVec;
 - (Vector)peekIntVectorWithDoubleVector:(Vector)inpDelta;
+
 - (void)reset;
 
 @end
