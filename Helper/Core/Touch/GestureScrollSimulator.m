@@ -449,7 +449,7 @@ static void getDeltaVectors(Vector point, VectorSubPixelator *subPixelator, Vect
     ///
     /// - There are still lots of differences to the way real events look:
     ///     - Real trackpad events seem to use around 0.5 threshold for momentumScroll events, and around 0.3 for gesture scroll events. But then they also round up to values like 0.7 (we can only round to integers).
-    ///     - `Description of the "other weirdness"`: The min output size that the Apple Trackpad pixelation produces is not 1 like in our case, but 0.6 or 0.7 (around double the threshold) and both the threshold and the min size are different depending on momentumScroll or gestureScrolls and depending on scrollDirection. I think most of this weirdness is due to sloppy programming in the Apple Trackpad driver though. I don't think it's useful to replicate all of this.
+    ///     - The min output size that the Apple Trackpad pixelation produces is not 1 like in our case, but 0.6 or 0.7 (around double the threshold) and both the threshold and the min size are different depending on momentumScroll or gestureScrolls and depending on scrollDirection. I think most of this weirdness is due to sloppy programming in the Apple Trackpad driver though. I don't think it's useful to replicate all of this.
     /// - In testing (with iTerm), I thought it might actually be feeling WORSE than always pixelating. I felt like it made the end of a scroll feel too fast vs the start. This might be placebo but we're turning this off for now (by setting the threshold to `INFINITY`)
     
     [subPixelator setPixelationThreshold:/*1.0*/INFINITY];
