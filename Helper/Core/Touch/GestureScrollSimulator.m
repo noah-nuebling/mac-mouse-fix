@@ -444,16 +444,15 @@ static void getDeltaVectors(Vector point, VectorSubPixelator *subPixelator, Vect
     /// Configure pixelator threshold
     
     /// Notes on pixelationThreshold:
-    ///     - pixelationThreshold will make it so the pixelator will only pixelate if `abs(inputDelta) < threshold`. Otherwise it will just return the input value.
-    ///     - Why do this? It's how the fixedPt line deltas in real trackpad events seem to work. In testing, I don't see a clear benefit to this over just always pixelating, but it's generally better to be as close as possible to the real events.
-    ///     - In testing (with iTerm), I thought it might actually be feeling WORSE than always pixelating. I felt like it made the end of a scroll feel too fast vs the start. Might be placebo though.
-    ///     - If you want to remove this, turn it off by setting the threshold to `INFINITY`
+    /// - pixelationThreshold will make it so the pixelator will only pixelate if `abs(inputDelta) < threshold`. Otherwise it will just return the input value.
+    /// - Why do this? It's how the fixedPt line deltas in real trackpad events seem to work. In testing, I don't see a clear benefit to this over just always pixelating, but it's generally better to be as close as possible to the real events.
     ///
-    ///     - There are still lots of differences to the way real events look:
-    ///         - Real trackpad events seem to use around 0.5 threshold for momentumScroll events, and around 0.3 for gesture scroll events. But then they also round up to values like 0.7 (we can only round to integers).
-    ///         - `Description of the "other weirdness"`: The min output size that the Apple Trackpad pixelation produces is not 1 like in our case, but 0.6 or 0.7 (around double the threshold) and both the threshold and the min size are different depending on momentumScroll or gestureScrolls and depending on scrollDirection. I think most of this weirdness is due to sloppy programming in the Apple Trackpad driver though. I don't think it's useful to replicate all of this.
-    ///
-    [subPixelator setPixelationThreshold:1.0];
+    /// - There are still lots of differences to the way real events look:
+    ///     - Real trackpad events seem to use around 0.5 threshold for momentumScroll events, and around 0.3 for gesture scroll events. But then they also round up to values like 0.7 (we can only round to integers).
+    ///     - `Description of the "other weirdness"`: The min output size that the Apple Trackpad pixelation produces is not 1 like in our case, but 0.6 or 0.7 (around double the threshold) and both the threshold and the min size are different depending on momentumScroll or gestureScrolls and depending on scrollDirection. I think most of this weirdness is due to sloppy programming in the Apple Trackpad driver though. I don't think it's useful to replicate all of this.
+    /// - In testing (with iTerm), I thought it might actually be feeling WORSE than always pixelating. I felt like it made the end of a scroll feel too fast vs the start. This might be placebo but we're turning this off for now (by setting the threshold to `INFINITY`)
+    
+    [subPixelator setPixelationThreshold:/*1.0*/INFINITY];
     
     /// Generate line delta
     *line = scaledVector(point, 1.0/10); /// See CGEventSource.pixelsPerLine - it's 10 by default || Note 1/10 == 0 in C! (integer division)
@@ -461,7 +460,7 @@ static void getDeltaVectors(Vector point, VectorSubPixelator *subPixelator, Vect
     
     /// Generate rounded line delta
     ///     I think this algorithm is exactly how the Apple Trackpad driver gets the rounded line deltas
-    ///     However since we're subpixelating the normal line deltas, (so they are already rounded) this does nothing
+    ///     However if we're subpixelating the normal line deltas, (so they are already rounded) this does nothing
     *lineInt = vectorByApplyingToEachDimension(*line, ^double(double val) {
         /// Round values between 0 and 1 up and all others down. (Vice-versa for negative values)
         ///     That's what the real trackpad values look like
