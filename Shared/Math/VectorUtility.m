@@ -9,6 +9,7 @@
 
 #import "VectorUtility.h"
 #import "WannabePrefixHeader.h"
+#import "SharedUtility.h"
 
 @implementation VectorUtility
 
@@ -106,6 +107,10 @@ Vector vectorFromNSValue(NSValue *value) {
 NSValue *nsValueFromVector(Vector vector) {
     NSValue *result = [NSValue value:&vector withObjCType:@encode(Vector)];
     return result;
+}
+
+NSString *vectorDescription(Vector vector) {
+    return stringf(@"(%f, %f)", vector.x, vector.y);
 }
 
 @end

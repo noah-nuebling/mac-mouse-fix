@@ -33,6 +33,7 @@ bool vectorsAreEqual(Vector vec1, Vector vec2);
 
 Vector vectorFromNSValue(NSValue *value);
 NSValue *nsValueFromVector(Vector vector);
+NSString *vectorDescription(Vector vector);
 
 Vector vectorFromDeltaAndDirection(double delta, MFDirection direction);
 

@@ -485,7 +485,7 @@ static void getDeltaVectors(Vector point, VectorSubPixelator *subPixelator, Vect
         double timeSinceLast = ts - tsLast;
         tsLast = ts;
         
-        DDLogDebug(@"\nHNGG Posting: gesture: (%f, %f) \t\t scroll: (%f, %f) \t scrollPt: (%f, %f) \t phases: (%d, %d) \t timeSinceLast: %f \n", vecGesture.x, vecGesture.y, vecScrollLineInt.x, vecScrollLineInt.y, vecScrollPoint.x, vecScrollPoint.y, phase, momentumPhase, timeSinceLast*1000);
+        DDLogDebug(@"\nHNGG Posting: gesture: %@ \t line: %@, lineInt: %@, point: %@ \t phases: (%d, %d) \t timeSinceLast: %f \n", vectorDescription(vecGesture), vectorDescription(vecScrollLine), vectorDescription(vecScrollLineInt), vectorDescription(vecScrollPoint), phase, momentumPhase, timeSinceLast*1000);
     }
     
     /// Validate
