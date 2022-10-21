@@ -16,7 +16,7 @@
 @implementation AppDelegate
 
 + (void)applicationDidFinishLaunching:(NSNotification *)notification {
-    // The effective entry point of this app is at [AccessibilityCheck load]
+    /// The effective entry point of this app is at [AccessibilityCheck load]
 }
 
 @end

@@ -29,6 +29,27 @@ NSTimer *_openMainAppTimer;
 
 + (void)load {
     
+    /// Check command line args.
+    ///     If there are args, just process them and then exit.
+    
+    NSMutableArray<NSString *> *args = NSProcessInfo.processInfo.arguments.mutableCopy;
+    [args removeObjectAtIndex:0]; /// First argument is just the executable path or sth, we can ignore that.
+    
+    if (args.count > 0) {
+        
+        /// Log
+        NSLog(@"Started helper with command line args: %@", args);
+        
+        /// Process args
+        if ([args[0] isEqual:@"forceUpdateAccessibilitySettings"]) {
+            [self checkAccessibilityAndUpdateSystemSettings];
+        }
+        /// Close helper
+        exit(0);
+    }
+    
+    /// No command line args - start normally
+    
 //    os_log_t MFLog = os_log_create(kMFBundleIDHelper.UTF8String, "status");
 //    os_log(MFLog, "Mac Mouse Fix Helper begins logging excessively...");
     

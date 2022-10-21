@@ -125,6 +125,24 @@
     return possibleRestartTime;
 }
 
++ (NSString *)launchHelperInstanceWithMessage:(NSString *)message {
+    
+    /// Launches a new instance of helper in special mode where it processes the `message` and then quits immediately.
+    ///     This function will wait until the helper has quit
+    
+    /// Define args for the `open` CLT
+    ///     `-W` waits until the app has quit, `-n` spawns a new instance of the app, `-a` specifies the application to open, `--args` specifies the args to pass to the application.
+    NSArray *args = @[@"-W", @"-n", @"-a", Locator.helperBundle.bundlePath, @"--args", message];
+    
+    /// Launch the tool
+    ///     And wait
+    ///     Should probably do some error handing here
+    NSString *response = [SharedUtility launchCTL:[NSURL fileURLWithPath:kMFOpenCLTPath] withArguments:args error:nil];
+    
+    /// Return
+    return response;
+}
+
 
 #pragma mark - Core
 

@@ -19,6 +19,8 @@ NS_ASSUME_NONNULL_BEGIN
 + (void)restartHelper;
 + (NSDate *)possibleRestartTime;
 
++ (NSString *)launchHelperInstanceWithMessage:(NSString *)message;
+
 @end
 
 NS_ASSUME_NONNULL_END
