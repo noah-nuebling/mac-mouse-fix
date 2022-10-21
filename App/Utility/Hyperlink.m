@@ -117,6 +117,7 @@ IB_DESIGNABLE
         [self reactToClick];
     }
     _mouseDownOverSelf = NO;
+    _mouseIsOverSelf = NO; /// See https://github.com/noah-nuebling/mac-mouse-fix/pull/382
 }
 - (void) reactToClick {
     // Open URL defined in Interface Builder
