@@ -73,7 +73,7 @@ static CFDataRef didReceiveMessage(CFMessagePortRef port, SInt32 messageID, CFDa
         [NSApp.delegate applicationWillTerminate:[[NSNotification alloc] init]];
         [NSApp terminate:NULL];
     } else if ([message isEqualToString:@"checkAccessibility"]) {
-        if (![AccessibilityCheck check]) {
+        if (![AccessibilityCheck checkAccessibilityAndUpdateSystemSettings]) {
             [SharedMessagePort sendMessage:@"accessibilityDisabled" withPayload:nil expectingReply:NO];
         }
     } else if ([message isEqualToString:@"enableAddMode"]) {

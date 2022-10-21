@@ -19,6 +19,7 @@
 #import "Constants.h"
 #import "ModifiedDrag.h"
 #import "ModifierManager.h"
+#import "SharedUtility.h"
 
 #import <os/log.h>
 
@@ -33,7 +34,7 @@ NSTimer *_openMainAppTimer;
     
     [MessagePort_Helper load_Manual];
     
-    Boolean accessibilityEnabled = [self check];
+    Boolean accessibilityEnabled = [self checkAccessibilityAndUpdateSystemSettings];
     
     if (!accessibilityEnabled) {
         
@@ -58,16 +59,43 @@ NSTimer *_openMainAppTimer;
         [SharedMessagePort sendMessage:@"helperEnabled" withPayload:nil expectingReply:NO];
     }
 }
-+ (Boolean)check {
++ (Boolean)checkAccessibilityAndUpdateSystemSettings {
+    
+    /// Check if accessibility is enabled.
+    ///     Also adds MMF to the list in System Settings
+    
+    /// Create options
+    /// - Suppresses macOS user prompts with the `kAXTrustedCheckOptionPrompt` parameter.
+    /// - Doesn't seem to work right now. Still prompts if MMF wasn't in the System Settings list before hand. Testing under Ventura RC.
+    /// - TODO: Simplify by moving to NSDictionary and bridging to CFDictionaryRef
     CFMutableDictionaryRef options = CFDictionaryCreateMutable(kCFAllocatorDefault, 1, NULL, NULL);
     CFDictionaryAddValue(options, kAXTrustedCheckOptionPrompt, kCFBooleanFalse);
-    Boolean result = AXIsProcessTrustedWithOptions(options);
+    
+    /// Call core function
+    ///     This also makes the helper show up in System Settings and shows the macOS user prompt
+    Boolean isTrusted = AXIsProcessTrustedWithOptions(options);
+    
+    /// Workaround for macOS bug
+    ///     If there's still and old version of the helper in System Settings, the user won't be able to trust the new helper. So we remove the old helper from System Settings and add the new one again.
+    
+    if (!isTrusted) {
+        
+        /// Remove existing helper from System Settings
+        ///     This will make the system unresponsive if there is still an old helper running that's already tapped into the button event stream!
+        [SharedUtility launchCLT:[NSURL fileURLWithPath:kMFTccutilPath] withArgs:@[@"reset", @"Accessibility", kMFBundleIDHelper]];
+        
+        /// Add the new helper
+        ///     I think adding the helper via`AXIsProcessTrustedWithOptions` can only be done once after the app has started up, so we need to restart the helper.
+        isTrusted = AXIsProcessTrustedWithOptions(options);
+    }
+    
+    /// Release & return
     CFRelease(options);
-    return result;
+    return isTrusted;
 }
 
 
-// Timer Callbacks
+/// Timer Callbacks
 
 + (void)sendAccessibilityMessageToMainApp {
     NSLog(@"Sending accessibilty disabled message to main app");
@@ -76,14 +104,14 @@ NSTimer *_openMainAppTimer;
 
 + (void)openMainApp {
     
-    if ([self check]) {
+    if ([self checkAccessibilityAndUpdateSystemSettings]) {
         
-        // Open app
+        /// Open app
         NSArray<NSRunningApplication *> *apps = [NSRunningApplication runningApplicationsWithBundleIdentifier:kMFBundleIDApp];
         for (NSRunningApplication *app in apps) {
             [app activateWithOptions:NSApplicationActivateIgnoringOtherApps];
         }
-        // Close this app (Will be restarted immediately by launchd)
+        /// Close this app (Will be restarted immediately by launchd)
         [NSApp terminate:NULL];
 //        [self load]; // TESTING - to make button capture notification work
 //        [_openMainAppTimer invalidate]; // TESTING

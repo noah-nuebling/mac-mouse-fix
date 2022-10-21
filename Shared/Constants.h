@@ -42,6 +42,7 @@ NS_ASSUME_NONNULL_BEGIN
 #define kMFLaunchctlPath            @"/bin/launchctl"
 #define kMFXattrPath                @"/usr/bin/xattr"
 #define kMFOpenCLTPath              @"/usr/bin/open"
+#define kMFTccutilPath              @"/usr/bin/tccutil"
 
 
 // Accomplice Arguments

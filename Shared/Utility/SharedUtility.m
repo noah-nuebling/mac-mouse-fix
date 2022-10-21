@@ -65,7 +65,7 @@
     
     NSPipe * launchctlOutput = [NSPipe pipe];
     
-    if (@available(macOS 10.13, *)) { // macOS version 10.13+
+    if (@available(macOS 10.13, *)) { /// macOS version 10.13+
         
         NSTask *task = [[NSTask alloc] init];
         [task setExecutableURL: executableURL.absoluteURL];
@@ -73,7 +73,7 @@
         [task setStandardOutput: launchctlOutput];
         
         [task launchAndReturnError:error];
-    } else { // Fallback on earlier versions
+    } else { /// Fallback on earlier versions
         NSTask *task = [[NSTask alloc] init];
         [task setLaunchPath: executableURL.path];
         [task setArguments: arguments];
@@ -82,7 +82,7 @@
         [task launch];
     }
     
-    // Get output
+    /// Get output
     
     NSFileHandle *output_fileHandle = [launchctlOutput fileHandleForReading];
     NSData *output_data = [output_fileHandle readDataToEndOfFile];
