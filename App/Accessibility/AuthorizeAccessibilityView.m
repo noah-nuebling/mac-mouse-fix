@@ -41,36 +41,6 @@ AuthorizeAccessibilityView *_accViewController;
     [NSWorkspace.sharedWorkspace openURL:[NSURL URLWithString:urlString]];
 }
 
-+ (void)forceUpdateSystemSettings {
-    
-    /// Current solution where we restart the helper is terrible because launchd enforces maximum 1 start of the helper per 10 seconds. So when you enable the app into the non-accessibiliy-authorized state it freezes for 10 seconds. Because the "restartHelper" call takes 10 seconds. Even if we do that call in the background it messes things up because the accessibiltyOverlay will be removed when the helper doesn't respond for that long.
-    ///     For more on the 10 second restriction, see: https://apple.stackexchange.com/questions/63482/can-launchd-run-programs-more-frequently-than-every-10-seconds
-    
-    /// This is a workaround
-    ///     for an Apple bug where the Accessibility toggle for MMF Helper won't work after an update.
-    ///     This bug occured between 2.2.0 and 2.2.1 when I moved the app from a Development Signature to a proper Developer Program Signature.
-    ///     Bug also maybe occurs for 3.0.0 Beta 4. Not sure why. Maybe it's a different bug that just looks similar.
-    /// See
-    /// - https://github.com/noah-nuebling/mac-mouse-fix/issues/415
-    /// - https://github.com/noah-nuebling/mac-mouse-fix/issues/412
-    
-    /// Log
-    
-    NSLog(@"Force update system settings");
-    
-    /// Remove existing helper from System Settings
-    /// - If an old helper exists, the user won't be able to enable the new helper!
-    /// - This will make the system unresponsive if there is still an old helper running that's already tapped into the button event stream!
-    [SharedUtility launchCTL:[NSURL fileURLWithPath:kMFTccutilPath] withArguments:@[@"reset", @"Accessibility", kMFBundleIDHelper] error:nil];
-    
-    /// Kill helper
-    /// - It will then be restarted and then add itself to System Settings
-    /// - We can't just send it a message to add itself to System Settings. Reason: Since the helper told us that accessibility is disabled it must've already called `AXIsProcessTrustedWithOptions()`. `AXIsProcessTrustedWithOptions()` has the side effect of adding the caller to the accessibility list in System Settings. But that seems to only work **once** after the app is launched. So we need to relaunch the helper so can add itself to System Settings via `AXIsProcessTrustedWithOptions()`.
-    
-//        [HelperServices restartHelper];
-    [HelperServices launchHelperInstanceWithMessage:@"forceUpdateAccessibilitySettings"];
-}
-
 ///
 /// Add & Remove
 ///
@@ -95,9 +65,6 @@ AuthorizeAccessibilityView *_accViewController;
     
     /// Log
     NSLog(@"adding AuthorizeAccessibilityView");
-    
-    /// Workaround for Apple bug
-    [self forceUpdateSystemSettings];
     
     /// Find baseView
     NSView *baseView;
