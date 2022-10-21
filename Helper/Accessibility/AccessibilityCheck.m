@@ -72,22 +72,23 @@ NSTimer *_openMainAppTimer;
     CFDictionaryAddValue(options, kAXTrustedCheckOptionPrompt, kCFBooleanFalse);
     
     /// Call core function
-    ///     This also makes the helper show up in System Settings and shows the macOS user prompt
+    ///     This also makes the helper show up in System Settings and shows the macOS user prompt.
+    ///     But it seems that only works once after the helper has been launched.
     Boolean isTrusted = AXIsProcessTrustedWithOptions(options);
     
-    /// Workaround for macOS bug
-    ///     If there's still and old version of the helper in System Settings, the user won't be able to trust the new helper. So we remove the old helper from System Settings and add the new one again.
-    
-    if (!isTrusted) {
-        
-        /// Remove existing helper from System Settings
-        ///     This will make the system unresponsive if there is still an old helper running that's already tapped into the button event stream!
-        [SharedUtility launchCLT:[NSURL fileURLWithPath:kMFTccutilPath] withArgs:@[@"reset", @"Accessibility", kMFBundleIDHelper]];
-        
-        /// Add the new helper
-        ///     I think adding the helper via`AXIsProcessTrustedWithOptions` can only be done once after the app has started up, so we need to restart the helper.
-        isTrusted = AXIsProcessTrustedWithOptions(options);
-    }
+//    /// Workaround for macOS bug
+//    ///     If there's still and old version of the helper in System Settings, the user won't be able to trust the new helper. So we remove the old helper from System Settings and add the new one again.
+//
+//    if (!isTrusted) {
+//
+//        /// Remove existing helper from System Settings
+//        ///     This will make the system unresponsive if there is still an old helper running that's already tapped into the button event stream!
+//        [SharedUtility launchCLT:[NSURL fileURLWithPath:kMFTccutilPath] withArgs:@[@"reset", @"Accessibility", kMFBundleIDHelper]];
+//
+//        /// Add the new helper
+//        ///     I think adding the helper via`AXIsProcessTrustedWithOptions` can only be done once after the app has started up, so we need to restart the helper.
+//        isTrusted = AXIsProcessTrustedWithOptions(options);
+//    }
     
     /// Release & return
     CFRelease(options);

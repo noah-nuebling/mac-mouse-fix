@@ -65,10 +65,42 @@
     }
 }
 
++ (void)killAllHelpers {
+    
+    /// The updated helper application will subsequently be launched by launchd due to the keepAlive attribute in Mac Mouse Fix Helper's launchd.plist
+    /// This is untested but it's copied over from the old Updating mechanism, so I trust that it works in this context, too.
+    
+    BOOL helperNeutralized = NO;
+    for (NSRunningApplication *app in [NSRunningApplication runningApplicationsWithBundleIdentifier:kMFBundleIDHelper]) {
+        if ([app.bundleURL isEqualTo: Locator.helperOriginalBundle.bundleURL]) {
+            [app terminate];
+            helperNeutralized = YES;
+            break;
+        }
+    }
+    
+    if (helperNeutralized) {
+        NSLog(@"Helper has been neutralized");
+    } else {
+        NSLog(@"No helper found to neutralize");
+    }
+}
+
++ (void)restartHelper {
+    NSString *serviceTarget = stringf(@"gui/%u/%@", geteuid(), [self launchdID]);
+    [SharedUtility launchCTL:[NSURL fileURLWithPath:kMFLaunchctlPath] withArguments:@[@"kickstart", @"-k", serviceTarget] error:nil];
+}
 
 
 #pragma mark - Core
 
++ (NSString *)launchdID {
+    if (@available(macos 13.0, *)) {
+        return kMFLaunchdHelperIdentifierSM;
+    } else {
+        return kMFLaunchdHelperIdentifier;
+    }
+}
 
 + (BOOL)helperIsActive_SM API_AVAILABLE(macos(13.0)) {
     
