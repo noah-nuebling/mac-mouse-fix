@@ -17,6 +17,7 @@
 #import "RemapTableUtility.h"
 #import "SharedUtility.h"
 #import "HelperServices.h"
+#import "Locator.h"
 
 @interface AuthorizeAccessibilityView ()
 
@@ -57,22 +58,28 @@ AuthorizeAccessibilityView *_accViewController;
     
     NSLog(@"Force update system settings");
     
-    /// Remove existing helper from System Settings
-    /// - If an old helper exists, the user won't be able to enable the new helper!
-    /// - This will make the system unresponsive if there is still an old helper running that's already tapped into the button event stream!
-    [SharedUtility launchCTL:[NSURL fileURLWithPath:kMFTccutilPath] withArguments:@[@"reset", @"Accessibility", kMFBundleIDHelper] error:nil];
+    NSDate *restartTime = [HelperServices possibleRestartTime];
     
-    /// Kill helper
-    /// - It will then be restarted and then add itself to System Settings
-    /// - We can't just send it a message to add itself to System Settings. Reason: Since the helper told us that accessibility is disabled it must've already called `AXIsProcessTrustedWithOptions()`. `AXIsProcessTrustedWithOptions()` has the side effect of adding the caller to the accessibility list in System Settings. But that seems to only work **once** after the app is launched. So we need to relaunch the helper so can add itself to System Settings via `AXIsProcessTrustedWithOptions()`.
+    NSTimer *restartTimer = [[NSTimer alloc] initWithFireDate:restartTime interval:0.0 repeats:NO block:^(NSTimer * _Nonnull timer) {
+        
+        /// TODO: Invalidate this timer. Otherwise memory leaks (I think).
+        
+        /// Log
+        NSLog(@"Actually force update system settings");
+        
+        /// Remove existing helper from System Settings
+        /// - If an old helper exists, the user won't be able to enable the new helper!
+        /// - This will make the system unresponsive if there is still an old helper running that's already tapped into the button event stream!
+        [SharedUtility launchCTL:[NSURL fileURLWithPath:kMFTccutilPath] withArguments:@[@"reset", @"Accessibility", kMFBundleIDHelper] error:nil];
+        
+        /// Kill helper
+        /// - It will then be restarted and then add itself to System Settings
+        /// - We can't just send it a message to add itself to System Settings. Reason: Since the helper told us that accessibility is disabled it must've already called `AXIsProcessTrustedWithOptions()`. `AXIsProcessTrustedWithOptions()` has the side effect of adding the caller to the accessibility list in System Settings. But that seems to only work **once** after the app is launched. So we need to relaunch the helper so can add itself to System Settings via `AXIsProcessTrustedWithOptions()`.
+        
+        [HelperServices restartHelper];
+    }];
     
-    [HelperServices restartHelper];
-    
-//    dispatch_queue_global_t queue = dispatch_get_global_queue(QOS_CLASS_USER_INTERACTIVE, 0);
-//    dispatch_time_t time = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.0 * NSEC_PER_SEC));
-//    dispatch_after(time, queue, ^{
-//        
-//    });
+    [NSRunLoop.currentRunLoop addTimer:restartTimer forMode:NSRunLoopCommonModes];
 }
 
 ///

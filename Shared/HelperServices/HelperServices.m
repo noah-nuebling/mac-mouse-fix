@@ -28,6 +28,8 @@
 #import "Locator.h"
 #import "SharedUtility.h"
 #import <ServiceManagement/ServiceManagement.h>
+#import <sys/sysctl.h>
+#import <sys/types.h>
 
 @implementation HelperServices
 
@@ -87,8 +89,40 @@
 }
 
 + (void)restartHelper {
+    
+    /// If this function is called before `possibleRestartTime` it will freeze until that time
+    
     NSString *serviceTarget = stringf(@"gui/%u/%@", geteuid(), [self launchdID]);
     [SharedUtility launchCTL:[NSURL fileURLWithPath:kMFLaunchctlPath] withArguments:@[@"kickstart", @"-k", serviceTarget] error:nil];
+}
+
++ (NSDate *)possibleRestartTime {
+    
+    /// Launchd allows at most 1 launch per 10 seconds.
+    ///     This method returns the earliest possible restart of the helper.
+    
+    /// Get helper startTime
+    /// Src: https://stackoverflow.com/a/40677286/10601702
+    
+    NSRunningApplication *helper = [NSRunningApplication runningApplicationsWithBundleIdentifier:Locator.helperBundle.bundleIdentifier][0];
+    pid_t pid = helper.processIdentifier;
+    
+    int mib[4] = { CTL_KERN, KERN_PROC, KERN_PROC_PID, pid };
+    struct kinfo_proc proc;
+    size_t size = sizeof(proc);
+    sysctl(mib, 4, &proc, &size, NULL, 0);
+    
+    NSDate *startTime = [NSDate dateWithTimeIntervalSince1970:proc.kp_proc.p_starttime.tv_sec];
+    
+    /// Get earliest possible restart time
+    
+    NSDate *tenSecs = [startTime dateByAddingTimeInterval:10];
+    NSDate *now = [NSDate date];
+    NSDate *possibleRestartTime = [now laterDate:tenSecs];
+    
+    /// Return
+    
+    return possibleRestartTime;
 }
 
 
