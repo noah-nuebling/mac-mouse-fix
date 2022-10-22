@@ -16,6 +16,12 @@ NS_ASSUME_NONNULL_BEGIN
 + (BOOL)helperIsActive;
 
 + (void)disableHelperFromHelper;
++ (void)killAllHelpers;
++ (void)restartHelper;
++ (NSDate *)possibleRestartTime;
+
++ (NSString *)launchHelperInstanceWithMessage:(NSString *)message;
+
 @end
 
 #define MFHelperServicesErrorDomain @"MFHelperServicesErrorDomain"

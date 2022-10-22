@@ -12,7 +12,7 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface AccessibilityCheck : NSObject
-+ (Boolean)check;
++ (Boolean)checkAccessibilityAndUpdateSystemSettings;
 @end
 
 NS_ASSUME_NONNULL_END

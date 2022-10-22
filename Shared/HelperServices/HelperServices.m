@@ -29,6 +29,8 @@
 #import "SharedUtility.h"
 #import "SharedMessagePort.h"
 #import <ServiceManagement/ServiceManagement.h>
+#import <sys/sysctl.h>
+#import <sys/types.h>
 
 @implementation HelperServices
 
@@ -121,10 +123,92 @@
     }
 }
 
++ (void)killAllHelpers {
+    
+    /// The updated helper application will subsequently be launched by launchd due to the keepAlive attribute in Mac Mouse Fix Helper's launchd.plist
+    /// This is untested but it's copied over from the old Updating mechanism, so I trust that it works in this context, too.
+    
+    BOOL helperNeutralized = NO;
+    for (NSRunningApplication *app in [NSRunningApplication runningApplicationsWithBundleIdentifier:kMFBundleIDHelper]) {
+        if ([app.bundleURL isEqualTo: Locator.helperOriginalBundle.bundleURL]) {
+            [app terminate];
+            helperNeutralized = YES;
+            break;
+        }
+    }
+    
+    if (helperNeutralized) {
+        NSLog(@"Helper has been neutralized");
+    } else {
+        NSLog(@"No helper found to neutralize");
+    }
+}
+
++ (void)restartHelper {
+    
+    /// If this function is called before `possibleRestartTime` it will freeze until that time
+    
+    NSString *serviceTarget = stringf(@"gui/%u/%@", geteuid(), [self launchdID]);
+    [SharedUtility launchCTL:[NSURL fileURLWithPath:kMFLaunchctlPath] withArguments:@[@"kickstart", @"-k", serviceTarget] error:nil];
+}
+
++ (NSDate *)possibleRestartTime {
+    
+    /// Launchd allows at most 1 launch per 10 seconds.
+    ///     This method returns the earliest possible restart of the helper.
+    
+    /// Get helper startTime
+    /// Src: https://stackoverflow.com/a/40677286/10601702
+    
+    NSRunningApplication *helper = [NSRunningApplication runningApplicationsWithBundleIdentifier:Locator.helperBundle.bundleIdentifier][0];
+    pid_t pid = helper.processIdentifier;
+    
+    int mib[4] = { CTL_KERN, KERN_PROC, KERN_PROC_PID, pid };
+    struct kinfo_proc proc;
+    size_t size = sizeof(proc);
+    sysctl(mib, 4, &proc, &size, NULL, 0);
+    
+    NSDate *startTime = [NSDate dateWithTimeIntervalSince1970:proc.kp_proc.p_starttime.tv_sec];
+    
+    /// Get earliest possible restart time
+    
+    NSDate *tenSecs = [startTime dateByAddingTimeInterval:10];
+    NSDate *now = [NSDate date];
+    NSDate *possibleRestartTime = [now laterDate:tenSecs];
+    
+    /// Return
+    
+    return possibleRestartTime;
+}
+
++ (NSString *)launchHelperInstanceWithMessage:(NSString *)message {
+    
+    /// Launches a new instance of helper in special mode where it processes the `message` and then quits immediately.
+    ///     This function will wait until the helper has quit
+    
+    /// Define args for the `open` CLT
+    ///     `-W` waits until the app has quit, `-n` spawns a new instance of the app, `-a` specifies the application to open, `--args` specifies the args to pass to the application.
+    NSArray *args = @[@"-W", @"-n", @"-a", Locator.helperBundle.bundlePath, @"--args", message];
+    
+    /// Launch the tool
+    ///     And wait
+    ///     Should probably do some error handing here
+    NSString *response = [SharedUtility launchCTL:[NSURL fileURLWithPath:kMFOpenCLTPath] withArguments:args error:nil];
+    
+    /// Return
+    return response;
+}
 
 
 #pragma mark - Core
 
++ (NSString *)launchdID {
+    if (@available(macos 13.0, *)) {
+        return kMFLaunchdHelperIdentifierSM;
+    } else {
+        return kMFLaunchdHelperIdentifier;
+    }
+}
 
 
 /// helperIsActive_SM from version-3. Merge updates from version-2 and git said that "both modified". Doesn't look like both modified. But I'll leave this here for reference in case something breaks.

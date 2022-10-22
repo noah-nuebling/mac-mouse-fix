@@ -19,8 +19,9 @@
 #import "Constants.h"
 #import "ModifiedDrag.h"
 #import "ModifierManager.h"
+#import "SharedUtility.h"
+#import "HelperServices.h"
 #import "Mac_Mouse_Fix_Helper-Swift.h"
-#import "PointerFreeze.h"
 
 #import "SharedUtility.h"
 
@@ -76,19 +77,72 @@ CGEventRef _Nullable testCallback(CGEventTapProxy proxy, CGEventType type, CGEve
 
 + (void)load {
     
+    /// This is the main entry point of the app
+    
+    ///
+    /// Check command line args.
+    ///     If there are args, just process them and then exit.
+    
+    NSMutableArray<NSString *> *args = NSProcessInfo.processInfo.arguments.mutableCopy;
+    [args removeObjectAtIndex:0]; /// First argument is just the executable path or sth, we can ignore that.
+    
+    if (args.count > 0) {
+        
+        /// Log
+        NSLog(@"Started helper with command line args: %@", args);
+        
+        ///
+        /// Process args
+        if ([args[0] isEqual:@"forceUpdateAccessibilitySettings"]) {
+            
+            ///
+            /// Force update accessibility settings
+            ///
+            
+            /// This is a workaround
+            ///     for an Apple bug in Ventura (maybe previous versions too?) where the accessibility toggle for MMF Helper won't work after an update.
+            ///     This bug occured between 2.2.0 and 2.2.1 when I moved the app from a Development Signature to a proper Developer Program Signature.
+            ///     Bug also maybe occurs for 3.0.0 Beta 4. Not sure why. Maybe it's a different bug that just looks similar.
+            /// See
+            /// - https://github.com/noah-nuebling/mac-mouse-fix/issues/415
+            /// - https://github.com/noah-nuebling/mac-mouse-fix/issues/412
+            /// - https://github.com/noah-nuebling/mac-mouse-fix/discussions/101 (Accessibility Guide)
+            
+            /// Why do this in such a weird way?
+            /// - We need to launch a new helper instance instead of just using the normal helper instance because `AXIsProcessTrustedWithOptions` will only add the helper to System Settings __once__ after launch. Subsequent calls don't do anything.`AXIsProcessTrustedWithOptions` is also the __only__ way to check if we already have accessibility access. And we need to check if we already have access __before__ deciding to reset the access, because we don't want to reset access if it has already been granted. So therefore we need to do the intial check and the forced system settings update in two different instances of the helper. You would think normally relaunching the helper would solve this but...
+            /// - We can't just relaunch the helper normally through launchd because launchd permits at most 1 start per 10 seconds. So if the helper's just been enabled and there's no accessibility access you have to wait 10 seconds until the helper can be restarted through launchd.
+            
+            /// Log
+            
+            NSLog(@"Force update system settings");
+            
+            /// Remove existing helper from System Settings
+            /// - If an old helper exists, the user won't be able to enable the new helper!
+            /// - This will make the system unresponsive if there is still an old helper running that's already tapped into the button event stream!
+            [SharedUtility launchCTL:[NSURL fileURLWithPath:kMFTccutilPath] withArguments:@[@"reset", @"Accessibility", kMFBundleIDHelper] error:nil];
+            
+            /// Add self to System Settings
+            [self checkAccessibilityAndUpdateSystemSettings];
+        }
+        
+        /// Close helper
+        exit(0);
+    }
+    
+    /// No command line args - start normally
+    
     ///
     /// Testing & Debug
     ///
-    
+
+
 //    [GlobalDefaults applyDoubleClickThreshold];
 //    PointerConfig.customTableBasedAccelCurve;
 //    CFMachPortRef testTap = [TransformationUtility createEventTapWithLocation:kCGSessionEventTap mask:CGEventMaskBit(kCGEventMouseMoved) | CGEventMaskBit(kCGEventLeftMouseDragged) | CGEventMaskBit(kCGEventScrollWheel) | CGEventMaskBit(kCGEventLeftMouseDown) /* | CGEventMaskBit()*/ option:kCGEventTapOptionDefault placement:kCGTailAppendEventTap callback: testCallback];
 //    CGEventTapEnable(testTap, true);
     
     
-    ///
     /// Setup termination handler
-    ///
     
     struct sigaction action = {
         .sa_flags = SA_SIGINFO,
@@ -119,6 +173,11 @@ CGEventRef _Nullable testCallback(CGEventTapProxy proxy, CGEventType type, CGEve
         
         DDLogInfo(@"Accessibility Access Disabled");
         
+        /// Workaround for macOS bug
+        ///     If there's still and old version of the helper in System Settings, the user won't be able to trust the new helper. So we remove the old helper from System Settings and add the new one again.
+
+        [HelperServices launchHelperInstanceWithMessage:@"forceUpdateAccessibilitySettings"];
+
         /// Send 'accessibility is disabled' message to mainApp
         ///  Notes:
         ///  - I think we only send this once, because the mainApp will ask for this information if it needs it afterwards by sending 'check accessibility' messages to the helper.
@@ -196,12 +255,26 @@ CGEventRef _Nullable testCallback(CGEventTapProxy proxy, CGEventType type, CGEve
     }
 }
 
-+ (Boolean)check {
++ (Boolean)checkAccessibilityAndUpdateSystemSettings {
+    
+    /// Check if accessibility is enabled.
+    ///     Also adds MMF to the list in System Settings
+    
+    /// Create options
+    /// - Suppresses macOS user prompts with the `kAXTrustedCheckOptionPrompt` parameter.
+    /// - Doesn't seem to work right now. Still prompts if MMF wasn't in the System Settings list before hand. Testing under Ventura RC.
+    /// - TODO: Simplify by moving to NSDictionary and bridging to CFDictionaryRef
     CFMutableDictionaryRef options = CFDictionaryCreateMutable(kCFAllocatorDefault, 1, NULL, NULL);
     CFDictionaryAddValue(options, kAXTrustedCheckOptionPrompt, kCFBooleanFalse);
-    Boolean result = AXIsProcessTrustedWithOptions(options);
+    
+    /// Call core function
+    ///     This also makes the helper show up in System Settings and shows the macOS user prompt (if we don't suppress the prompt)
+    ///     But it seems making the helper show up in System Settings only works the first time calling this func after the helper has been launched.
+    Boolean isTrusted = AXIsProcessTrustedWithOptions(options);
+    
+    /// Release & return
     CFRelease(options);
-    return result;
+    return isTrusted;
 }
 
 
@@ -214,7 +287,7 @@ CGEventRef _Nullable testCallback(CGEventTapProxy proxy, CGEventType type, CGEve
 
 + (void)openMainAppAndRestart {
     
-    if ([self check]) {
+    if ([self checkAccessibilityAndUpdateSystemSettings]) {
         
         /// Open mainApp
         ///     Edit: What? Why are we calling `[self openMainAppAndRestart]` again here? Doesn't this cause an infinite loop? We'll change this to call `[HelperUtility openMainApp]`.
