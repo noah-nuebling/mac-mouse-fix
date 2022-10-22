@@ -21,6 +21,7 @@
 #import "ModifierManager.h"
 #import "SharedUtility.h"
 #import "HelperServices.h"
+#import "PointerFreeze.h"
 #import "Mac_Mouse_Fix_Helper-Swift.h"
 
 #import "SharedUtility.h"
@@ -119,7 +120,7 @@ CGEventRef _Nullable testCallback(CGEventTapProxy proxy, CGEventType type, CGEve
             /// Remove existing helper from System Settings
             /// - If an old helper exists, the user won't be able to enable the new helper!
             /// - This will make the system unresponsive if there is still an old helper running that's already tapped into the button event stream!
-            [SharedUtility launchCTL:[NSURL fileURLWithPath:kMFTccutilPath] withArguments:@[@"reset", @"Accessibility", kMFBundleIDHelper] error:nil];
+            [SharedUtility launchCLT:[NSURL fileURLWithPath:kMFTccutilPath] withArguments:@[@"reset", @"Accessibility", kMFBundleIDHelper] error:nil];
             
             /// Add self to System Settings
             [self checkAccessibilityAndUpdateSystemSettings];
@@ -168,7 +169,7 @@ CGEventRef _Nullable testCallback(CGEventTapProxy proxy, CGEventType type, CGEve
     ///
     /// Do the accessibility check
     ///
-    Boolean accessibilityEnabled = [self check];
+    Boolean accessibilityEnabled = [self checkAccessibilityAndUpdateSystemSettings];
     if (!accessibilityEnabled) {
         
         DDLogInfo(@"Accessibility Access Disabled");

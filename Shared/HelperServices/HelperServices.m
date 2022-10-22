@@ -149,7 +149,7 @@
     /// If this function is called before `possibleRestartTime` it will freeze until that time
     
     NSString *serviceTarget = stringf(@"gui/%u/%@", geteuid(), [self launchdID]);
-    [SharedUtility launchCTL:[NSURL fileURLWithPath:kMFLaunchctlPath] withArguments:@[@"kickstart", @"-k", serviceTarget] error:nil];
+    [SharedUtility launchCLT:[NSURL fileURLWithPath:kMFLaunchctlPath] withArguments:@[@"kickstart", @"-k", serviceTarget] error:nil];
 }
 
 + (NSDate *)possibleRestartTime {
@@ -193,7 +193,7 @@
     /// Launch the tool
     ///     And wait
     ///     Should probably do some error handing here
-    NSString *response = [SharedUtility launchCTL:[NSURL fileURLWithPath:kMFOpenCLTPath] withArguments:args error:nil];
+    NSString *response = [SharedUtility launchCLT:[NSURL fileURLWithPath:kMFOpenCLTPath] withArguments:args error:nil];
     
     /// Return
     return response;
