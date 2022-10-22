@@ -14,21 +14,7 @@
 
 @implementation SharedMessagePort
 
-+ (NSObject *_Nullable)sendMessage:(NSString * _Nonnull)message withPayload:(NSObject <NSCoding> * _Nullable)payload expectingReply:(BOOL)replyExpected {
-    
-    NSDictionary *messageDict;
-    if (payload) {
-        messageDict = @{
-            kMFMessageKeyMessage: message,
-            kMFMessageKeyPayload: payload, // This crashes if payload is nil for some reason
-        };
-    } else {
-        messageDict = @{
-            kMFMessageKeyMessage: message,
-        };
-    }
-    
-    NSLog(@"Sending message: %@ with payload: %@ from bundle: %@ via message port", message, payload, NSBundle.mainBundle.bundleIdentifier);
+static CFMessagePortRef _Nullable getRemotePort() {
     
     NSString *remotePortName;
     if (SharedUtility.runningMainApp) {
@@ -38,12 +24,32 @@
     }
     
     CFMessagePortRef remotePort = CFMessagePortCreateRemote(kCFAllocatorDefault, (__bridge CFStringRef)remotePortName);
+    return remotePort;
+}
+
++ (NSObject *_Nullable)sendMessage:(NSString * _Nonnull)message withPayload:(NSObject <NSCoding> * _Nullable)payload expectingReply:(BOOL)replyExpected {
+    
+    NSDictionary *messageDict;
+    if (payload) {
+        messageDict = @{
+            kMFMessageKeyMessage: message,
+            kMFMessageKeyPayload: payload, /// This crashes if payload is nil for some reason
+        };
+    } else {
+        messageDict = @{
+            kMFMessageKeyMessage: message,
+        };
+    }
+    
+    NSLog(@"Sending message: %@ with payload: %@ from bundle: %@ via message port", message, payload, NSBundle.mainBundle.bundleIdentifier);
+    
+    CFMessagePortRef remotePort = getRemotePort();
     if (remotePort == NULL) {
         NSLog(@"Can't send message, because there is no CFMessagePort");
         return nil;
     }
     
-    SInt32 messageID = 0x420666; // Arbitrary
+    SInt32 messageID = 0x420666; /// Arbitrary
     CFDataRef messageData = (__bridge CFDataRef)[NSKeyedArchiver archivedDataWithRootObject:messageDict];;
     CFTimeInterval sendTimeout = 0.0;
     CFTimeInterval recieveTimeout = 0.0;

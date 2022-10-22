@@ -30,17 +30,30 @@
 #import <ServiceManagement/ServiceManagement.h>
 #import <sys/sysctl.h>
 #import <sys/types.h>
+#import "SharedMessagePort.h"
 
 @implementation HelperServices
 
 #pragma mark - Main interface
 
 + (BOOL)helperIsActive {
-    if (@available(macos 13.0, *)) {
-        return [self helperIsActive_SM];
-    } else {
-        return helperIsActive_PList();
-    }
+    
+    /// New method
+    ///     Send method to helper to ask if it's active.
+    ///     Also checks that the connected helper's bundle version matches the main app's bundle version and returns that the helper is inactive if not. This circumvents issues where the main app would think it's enabled when being started while an old incompatible helper instance is still running
+    ///     TODO: If an old, incompatible helper is still running - disable it
+    
+    return [self helperIsActive_Message];
+    
+    /// Old method
+    ///     Ask launchd apis whether helper is active.
+    ///     Not as reliable, because sometimes there will be an old version of the helper still active (in that case we wan't to return that the helper is incactive but these APIs returned that it is active) or maybe the launchd APIs have registered the helper job but they're not actually starting anything. This happens under Ventura when trying to start the app from another location.
+    
+//    if (@available(macos 13.0, *)) {
+//        return [self helperIsActive_SM];
+//    } else {
+//        return helperIsActive_PList();
+//    }
 }
 
 + (void)enableHelperAsUserAgent:(BOOL)enable onComplete:(void (^ _Nullable)(NSError * _Nullable error))onComplete {
@@ -154,6 +167,26 @@
     }
 }
 
++ (BOOL)helperIsActive_Message {
+    
+    if (SharedUtility.runningMainApp) {
+        
+        NSNumber *response = (NSNumber *)[SharedMessagePort sendMessage:@"getBundleVersion" withPayload:nil expectingReply:YES];
+        if (response == nil) {
+            return NO;
+        } else {
+            NSNumber *helperVersion = response;
+            NSNumber *mainAppVersion = [NSBundle.mainBundle objectForInfoDictionaryKey:@"CFBundleVersion"];
+            
+            return [helperVersion isEqual: mainAppVersion];
+        }
+    } else {
+        /// Crash
+        assert(false);
+        abort();
+    }
+}
+
 + (BOOL)helperIsActive_SM API_AVAILABLE(macos(13.0)) {
     
     if (@available(macos 13.0, *)) {
@@ -172,7 +205,7 @@
     } else {
         /// Not running macOS 13
         ///     This can never happen. Just crashing here so the compiler doesn't complain about missing returns.
-        exit(1);
+        abort();
     }
 }
 
@@ -235,7 +268,7 @@ static BOOL helperIsActive_PList() {
         return error;
     } /// End `if @available`
     
-    exit(1);
+    abort();
 }
 
 static void enableHelper_PList(BOOL enable) {

@@ -63,7 +63,7 @@ static CFDataRef didReceiveMessage(CFMessagePortRef port, SInt32 messageID, CFDa
     NSString *message = messageDict[kMFMessageKeyMessage];
     NSObject *payload = messageDict[kMFMessageKeyPayload];
     
-    NSData *response = nil;
+    NSObject *response = nil;
     
     NSLog(@"Helper Received Message: %@ with payload: %@", message, payload);
     
@@ -84,11 +84,17 @@ static CFDataRef didReceiveMessage(CFMessagePortRef port, SInt32 messageID, CFDa
         [TransformationManager enableKeyCaptureMode];
     } else if ([message isEqualToString:@"disableKeyCaptureMode"]) {
         [TransformationManager disableKeyCaptureMode];
+    } else if ([message isEqualToString:@"getBundleVersion"]) {
+        response = [NSBundle.mainBundle objectForInfoDictionaryKey:@"CFBundleVersion"];
     } else {
         NSLog(@"Unknown message received: %@", message);
     }
     
-    return (__bridge CFDataRef)response;
+    if (response != nil) {
+        return (__bridge_retained CFDataRef)[NSKeyedArchiver archivedDataWithRootObject:response];
+    }
+    
+    return NULL;
 }
 
 @end
