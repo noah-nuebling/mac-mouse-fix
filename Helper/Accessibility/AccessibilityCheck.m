@@ -72,7 +72,7 @@ NSTimer *_openMainAppTimer;
             /// Remove existing helper from System Settings
             /// - If an old helper exists, the user won't be able to enable the new helper!
             /// - This will make the system unresponsive if there is still an old helper running that's already tapped into the button event stream!
-            [SharedUtility launchCTL:[NSURL fileURLWithPath:kMFTccutilPath] withArguments:@[@"reset", @"Accessibility", kMFBundleIDHelper] error:nil];
+            [SharedUtility launchCLT:[NSURL fileURLWithPath:kMFTccutilPath] withArguments:@[@"reset", @"Accessibility", kMFBundleIDHelper] error:nil];
             
             /// Add self to System Settings
             [self checkAccessibilityAndUpdateSystemSettings];

@@ -93,7 +93,7 @@
     /// If this function is called before `possibleRestartTime` it will freeze until that time
     
     NSString *serviceTarget = stringf(@"gui/%u/%@", geteuid(), [self launchdID]);
-    [SharedUtility launchCTL:[NSURL fileURLWithPath:kMFLaunchctlPath] withArguments:@[@"kickstart", @"-k", serviceTarget] error:nil];
+    [SharedUtility launchCLT:[NSURL fileURLWithPath:kMFLaunchctlPath] withArguments:@[@"kickstart", @"-k", serviceTarget] error:nil];
 }
 
 + (NSDate *)possibleRestartTime {
@@ -137,7 +137,7 @@
     /// Launch the tool
     ///     And wait
     ///     Should probably do some error handing here
-    NSString *response = [SharedUtility launchCTL:[NSURL fileURLWithPath:kMFOpenCLTPath] withArguments:args error:nil];
+    NSString *response = [SharedUtility launchCLT:[NSURL fileURLWithPath:kMFOpenCLTPath] withArguments:args error:nil];
     
     /// Return
     return response;
@@ -510,7 +510,7 @@ static NSError *makeWritable(NSString *itemPath) {
     
     /// Using NSTask to ask launchd about helper status
     NSURL *launchctlURL = [NSURL fileURLWithPath: kMFLaunchctlPath];
-    NSString * launchctlOutput = [SharedUtility launchCTL:launchctlURL withArguments:@[@"list", kMFLaunchdHelperIdentifier] error:nil];
+    NSString * launchctlOutput = [SharedUtility launchCLT:launchctlURL withArguments:@[@"list", kMFLaunchdHelperIdentifier] error:nil];
     return launchctlOutput;
 }
 
@@ -574,7 +574,7 @@ static NSError *makeWritable(NSString *itemPath) {
     
     NSURL *launchctlURL = [NSURL fileURLWithPath:kMFLaunchctlPath];
     NSError *err;
-    [SharedUtility launchCTL:launchctlURL withArguments:@[@"remove", kMFLaunchdHelperIdentifier] error:&err];
+    [SharedUtility launchCLT:launchctlURL withArguments:@[@"remove", kMFLaunchdHelperIdentifier] error:&err];
     if (err != nil) {
         NSLog(@"Error removing Helper from launchd: %@", err);
     }

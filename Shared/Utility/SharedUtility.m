@@ -60,8 +60,8 @@
 
 #pragma mark - Use command-line tools
 
-/// This returns the output of the CLT, in contrast to the `launchCTL` functions further down
-+ (NSString *)launchCTL:(NSURL *)executableURL withArguments:(NSArray<NSString *> *)arguments error:(NSError ** _Nullable)error {
+/// This returns the output of the CLT, in contrast to the `launchCLT` functions further down
++ (NSString *)launchCLT:(NSURL *)executableURL withArguments:(NSArray<NSString *> *)arguments error:(NSError ** _Nullable)error {
     
     NSPipe * launchctlOutput = [NSPipe pipe];
     
