@@ -1256,10 +1256,10 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 4FCECDA721092354001F1078 /* Build configuration list for PBXNativeTarget "Mac Mouse Fix Helper" */;
 			buildPhases = (
+				4FEEEC53263C164000C50193 /* Copy Version From Main App */,
 				4FCECD7C21092354001F1078 /* Sources */,
 				4FCECD7D21092354001F1078 /* Frameworks */,
 				4FCECD7E21092354001F1078 /* Resources */,
-				4FEEEC53263C164000C50193 /* Copy Version from Main App */,
 			);
 			buildRules = (
 			);
@@ -1403,7 +1403,7 @@
 			shellPath = /bin/sh;
 			shellScript = " \nbuildNumber=$(/usr/libexec/PlistBuddy -c \"Print CFBundleVersion\" \"${PROJECT_DIR}/${INFOPLIST_FILE}\")\nbuildNumber=$((buildNumber+1))\n/usr/libexec/PlistBuddy -c \"Set :CFBundleVersion $buildNumber\" \"${PROJECT_DIR}/${INFOPLIST_FILE}\"\n";
 		};
-		4FEEEC53263C164000C50193 /* Copy Version from Main App */ = {
+		4FEEEC53263C164000C50193 /* Copy Version From Main App */ = {
 			isa = PBXShellScriptBuildPhase;
 			alwaysOutOfDate = 1;
 			buildActionMask = 2147483647;
@@ -1413,14 +1413,14 @@
 			);
 			inputPaths = (
 			);
-			name = "Copy Version from Main App";
+			name = "Copy Version From Main App";
 			outputFileListPaths = (
 			);
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "# Versioning on the Helper isn't that important, and this doesn't work properly.\n#   I made this because sometimes I get crashlogs of the Helper which just say -1 for the version. This should be good enough so I get an idea of which version has the issue.\n\n# Get versions from Main App\nversion=$(/usr/libexec/PlistBuddy -c \"Print CFBundleVersion\" \"${PROJECT_DIR}/${INFOPLIST_FILE_MAINAPP}\")\nshortVersion=$(/usr/libexec/PlistBuddy -c \"Print CFBundleShortVersionString\" \"${PROJECT_DIR}/${INFOPLIST_FILE_MAINAPP}\")\n\n$((version++)) \n# ^ Because we'll also be incrementing Main App version when it builds\n#   Can't get any build phase from Main App to run before the Helper is compiled. Otherwise we wouldn't need to do this. We could increment the Main App version and then simply copy it over.\n#   For some reason is not always in sync with the Main App version. I saw it lag one behind. I think it might have to do with Xcode optimizing builds and not always running this if the Helper hasn't changed, but not sure.\n\n# Set versions to Helper\n/usr/libexec/PlistBuddy -c \"Set CFBundleVersion ${version}\" \"${PROJECT_DIR}/${INFOPLIST_FILE_HELPER}\"\n/usr/libexec/PlistBuddy -c \"Set CFBundleShortVersionString ${shortVersion}\" \"${PROJECT_DIR}/${INFOPLIST_FILE_HELPER}\"\n";
+			shellScript = "# Versioning on the Helper isn't that important, and this doesn't work properly.\n#   I made this because sometimes I get crashlogs of the Helper which just say -1 for the version. This should be good enough so I get an idea of which version has the issue.\n\n# Get versions from Main App\nversion=$(/usr/libexec/PlistBuddy -c \"Print CFBundleVersion\" \"${PROJECT_DIR}/${INFOPLIST_FILE_MAINAPP}\")\nshortVersion=$(/usr/libexec/PlistBuddy -c \"Print CFBundleShortVersionString\" \"${PROJECT_DIR}/${INFOPLIST_FILE_MAINAPP}\")\n\n$((version++)) \n# ^ Because we'll also be incrementing Main App version when it builds\n#   Can't get any build phase from Main App to run before the Helper is compiled. Otherwise we wouldn't need to do this. We could increment the Main App version and then simply copy it over.\n#   For some reason is not always in sync with the Main App version. I saw it lag one behind. I think it might have to do with Xcode optimizing builds and not always running this if the Helper hasn't changed, but not sure.\n#   Edit: I think I fixed the bug where the Helper build number is lagging behind the main app build number by simply moving the \"Copy Version From Main App\" build phase up - ergo executing it before other build phases. Previously it was the last build phase that was executed.\n\n# Set versions to Helper\n/usr/libexec/PlistBuddy -c \"Set CFBundleVersion ${version}\" \"${PROJECT_DIR}/${INFOPLIST_FILE_HELPER}\"\n/usr/libexec/PlistBuddy -c \"Set CFBundleShortVersionString ${shortVersion}\" \"${PROJECT_DIR}/${INFOPLIST_FILE_HELPER}\"\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
