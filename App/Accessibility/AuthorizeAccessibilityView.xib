@@ -78,9 +78,9 @@
                     </textFieldCell>
                 </textField>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" verifyAmbiguity="off" translatesAutoresizingMaskIntoConstraints="NO" id="xUD-oJ-hdN" customClass="Hyperlink">
-                    <rect key="frame" x="186" y="127" width="209" height="17"/>
+                    <rect key="frame" x="183" y="127" width="216" height="17"/>
                     <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
-                    <textFieldCell key="cell" lineBreakMode="clipping" alignment="center" title="Open Privacy &amp; Security Settings" id="9qp-gN-SZZ">
+                    <textFieldCell key="cell" lineBreakMode="clipping" alignment="center" title="Open 'Privacy &amp; Security' Settings" id="9qp-gN-SZZ">
                         <font key="font" metaFont="message"/>
                         <color key="textColor" name="linkColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
