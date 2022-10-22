@@ -394,9 +394,6 @@
 		4F2CC58627B8D2300084AACE /* HybridCurves.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HybridCurves.swift; sourceTree = "<group>"; };
 		4F2CC58827B8DA8B0084AACE /* Line.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Line.swift; sourceTree = "<group>"; };
 		4F2F0B2A28E6258B00246D59 /* MessagePortUtility_App.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessagePortUtility_App.swift; sourceTree = "<group>"; };
-		4F2F5DA625FB6FFD0037660A /* AddWindowController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AddWindowController.h; sourceTree = "<group>"; };
-		4F2F5DA725FB6FFD0037660A /* AddWindowController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AddWindowController.m; sourceTree = "<group>"; };
-		4F2F5DB125FB723D0037660A /* AddWindow.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AddWindow.xib; sourceTree = "<group>"; };
 		4F319CB926252A2D004E5F63 /* ButtonGroupRowView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ButtonGroupRowView.h; sourceTree = "<group>"; };
 		4F319CBA26252A2D004E5F63 /* ButtonGroupRowView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ButtonGroupRowView.m; sourceTree = "<group>"; };
 		4F37FAD725FDFDC4004C34C4 /* MFScrollView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MFScrollView.m; sourceTree = "<group>"; };
@@ -591,7 +588,6 @@
 		4FD148D028AA424300FE688C /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/AuthorizeAccessibilityView.strings; sourceTree = "<group>"; };
 		4FD148D228AA428000FE688C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/ButtonOptionsViewController.xib; sourceTree = "<group>"; };
 		4FD148D528AA43E900FE688C /* MainMenu.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MainMenu.xib; sourceTree = "<group>"; };
-		4FD148D728AA444100FE688C /* MouseFix.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MouseFix.xib; sourceTree = "<group>"; };
 		4FD148DF28AA4ED100FE688C /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/ButtonOptionsViewController.strings; sourceTree = "<group>"; };
 		4FD148FA28AA962200FE688C /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		4FD66E0627BB553800F67559 /* CGEventHIDEventBridge.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CGEventHIDEventBridge.h; sourceTree = "<group>"; };
@@ -664,9 +660,6 @@
 		4FF665C325F2C92700689B77 /* ScrollOverridePanel.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ScrollOverridePanel.xib; sourceTree = "<group>"; };
 		4FF665C425F2C92700689B77 /* MFSegmentedControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MFSegmentedControl.h; sourceTree = "<group>"; };
 		4FF665C525F2C92700689B77 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
-		4FF665CD25F2C92700689B77 /* MoreSheet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MoreSheet.m; sourceTree = "<group>"; };
-		4FF665CE25F2C92700689B77 /* MoreSheet.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MoreSheet.xib; sourceTree = "<group>"; };
-		4FF665CF25F2C92700689B77 /* MoreSheet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MoreSheet.h; sourceTree = "<group>"; };
 		4FF665D525F2C92700689B77 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		4FF665D725F2C92700689B77 /* MessagePort_App.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MessagePort_App.m; sourceTree = "<group>"; };
 		4FF665D825F2C92700689B77 /* MessagePort_App.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MessagePort_App.h; sourceTree = "<group>"; };
@@ -926,16 +919,6 @@
 			path = MessagePort;
 			sourceTree = "<group>";
 		};
-		4F46EAA625FB770D0003423A /* AddWindow(old) */ = {
-			isa = PBXGroup;
-			children = (
-				4F2F5DA625FB6FFD0037660A /* AddWindowController.h */,
-				4F2F5DA725FB6FFD0037660A /* AddWindowController.m */,
-				4F2F5DB125FB723D0037660A /* AddWindow.xib */,
-			);
-			path = "AddWindow(old)";
-			sourceTree = "<group>";
-		};
 		4F6F67A128A8188000C6C40F /* ButtonTab */ = {
 			isa = PBXGroup;
 			children = (
@@ -965,15 +948,36 @@
 			path = PolynomialRegression;
 			sourceTree = "<group>";
 		};
+		4F78CEF1290440500030086C /* Unused */ = {
+			isa = PBXGroup;
+			children = (
+				4F909D0728A0C3D2009349A2 /* AppSpecific */,
+				4FF665BF25F2C92700689B77 /* Overrides */,
+			);
+			path = Unused;
+			sourceTree = "<group>";
+		};
+		4F78CEF22904414B0030086C /* UI */ = {
+			isa = PBXGroup;
+			children = (
+				4F1D7F4528A45FEA00253407 /* MenuBarItem */,
+				4F2A1FA726042ACB0067691A /* TrialNotifications */,
+			);
+			path = UI;
+			sourceTree = "<group>";
+		};
 		4F7A1A70289F2517007D5B30 /* UI */ = {
 			isa = PBXGroup;
 			children = (
-				4F909CF128A0C3D2009349A2 /* New UI */,
+				4F909CF228A0C3D2009349A2 /* Main */,
+				4FF665DC25F2C92700689B77 /* Accessibility */,
 				4F09284728B8E83400BDC2FF /* LicenseSheet */,
 				4FA13FBA28B393B0005C68FC /* Toasts */,
-				4FF665C625F2C92700689B77 /* Update */,
-				4FF665BF25F2C92700689B77 /* Overrides */,
+				4F909D0228A0C3D2009349A2 /* UIExtensions */,
+				4F909D1328A0C3D2009349A2 /* CustomDataTypes */,
+				4F909D1A28A0C3D2009349A2 /* CustomUIElements */,
 				4F7A1A71289F2533007D5B30 /* Utility */,
+				4F78CEF1290440500030086C /* Unused */,
 			);
 			path = UI;
 			sourceTree = "<group>";
@@ -1071,34 +1075,20 @@
 			path = PolynomialRegression;
 			sourceTree = "<group>";
 		};
-		4F909CF128A0C3D2009349A2 /* New UI */ = {
-			isa = PBXGroup;
-			children = (
-				4F909CF228A0C3D2009349A2 /* Main+TabView */,
-				4FF665DC25F2C92700689B77 /* Accessibility */,
-				4F909D0228A0C3D2009349A2 /* UIExtensions */,
-				4F909D0728A0C3D2009349A2 /* AppSpecific */,
-				4F909D1328A0C3D2009349A2 /* CustomDataTypes */,
-				4F909D1A28A0C3D2009349A2 /* CustomUIElements */,
-				4FE83F4028A7A66A00C5FC09 /* OldReference */,
-			);
-			path = "New UI";
-			sourceTree = "<group>";
-		};
-		4F909CF228A0C3D2009349A2 /* Main+TabView */ = {
+		4F909CF228A0C3D2009349A2 /* Main */ = {
 			isa = PBXGroup;
 			children = (
 				4F909D0128A0C3D2009349A2 /* ViewController.h */,
 				4F909CFB28A0C3D2009349A2 /* ViewController.m */,
 				4F909CFC28A0C3D2009349A2 /* Main.storyboard */,
-				4F909CF528A0C3D2009349A2 /* Tabs */,
 				4F909CFA28A0C3D2009349A2 /* TabViewController.swift */,
 				4F909CFF28A0C3D2009349A2 /* TabViewControllerDisabling.swift */,
 				4F909CF928A0C3D2009349A2 /* TabItemControllerProtocol.swift */,
 				4F909CFE28A0C3D2009349A2 /* ResizingTabWindow.swift */,
 				4F909D0028A0C3D2009349A2 /* ResizingTabWindowController.swift */,
+				4F909CF528A0C3D2009349A2 /* Tabs */,
 			);
-			path = "Main+TabView";
+			path = Main;
 			sourceTree = "<group>";
 		};
 		4F909CF528A0C3D2009349A2 /* Tabs */ = {
@@ -1174,8 +1164,8 @@
 			isa = PBXGroup;
 			children = (
 				4FDE75A028B2397600662314 /* PayButton.swift */,
-				4F909D1B28A0C3D2009349A2 /* ModifierCaptureField */,
 				4F909D1F28A0C3D2009349A2 /* SensitivityDisplay.swift */,
+				4F909D1B28A0C3D2009349A2 /* ModifierCaptureField */,
 			);
 			path = CustomUIElements;
 			sourceTree = "<group>";
@@ -1492,16 +1482,6 @@
 			path = Frameworks;
 			sourceTree = "<group>";
 		};
-		4FE83F4028A7A66A00C5FC09 /* OldReference */ = {
-			isa = PBXGroup;
-			children = (
-				4F46EAA625FB770D0003423A /* AddWindow(old) */,
-				4FD148D728AA444100FE688C /* MouseFix.xib */,
-				4FF665CC25F2C92700689B77 /* MoreSheet */,
-			);
-			path = OldReference;
-			sourceTree = "<group>";
-		};
 		4FEB6616279376C200E6A111 /* Notes */ = {
 			isa = PBXGroup;
 			children = (
@@ -1562,8 +1542,8 @@
 				4F3A40C8266C448500436821 /* Animation */,
 				4FF9305C28805FC40007CCA7 /* Math */,
 				4F09284128B8C71000BDC2FF /* UI */,
-				4F909D4228A0C4C2009349A2 /* Extensions */,
 				4F9C14B527BAF202008A1479 /* IOKit */,
+				4F909D4228A0C4C2009349A2 /* Extensions */,
 				4FA40D1128A0D9FB00499E53 /* External */,
 				4FF6653625F2C7B000689B77 /* Utility */,
 				4F7F47D528A6EFCF00290BBD /* Resources */,
@@ -1620,6 +1600,7 @@
 				4F909CEF28A0C3B6009349A2 /* MainAppState.swift */,
 				4F7A1A70289F2517007D5B30 /* UI */,
 				4F8CE6FE2617738A00D70A76 /* AppTranslocation */,
+				4FF665C625F2C92700689B77 /* Update */,
 				4FF665D625F2C92700689B77 /* MessagePort */,
 				4FF665E525F2C92700689B77 /* Utility */,
 				4F909D3F28A0C411009349A2 /* Experiments */,
@@ -1646,16 +1627,6 @@
 				4F39BC3A263AF2B000FDF692 /* SparkleUpdaterController.m */,
 			);
 			path = Update;
-			sourceTree = "<group>";
-		};
-		4FF665CC25F2C92700689B77 /* MoreSheet */ = {
-			isa = PBXGroup;
-			children = (
-				4FF665CF25F2C92700689B77 /* MoreSheet.h */,
-				4FF665CD25F2C92700689B77 /* MoreSheet.m */,
-				4FF665CE25F2C92700689B77 /* MoreSheet.xib */,
-			);
-			path = MoreSheet;
 			sourceTree = "<group>";
 		};
 		4FF665D425F2C92700689B77 /* Resources */ = {
@@ -1714,14 +1685,16 @@
 			isa = PBXGroup;
 			children = (
 				4FF6665125F2C93A00689B77 /* main.m */,
+				4F5C2F7F2885C5D0001B9B8A /* HelperState.swift */,
 				4FF6660B25F2C93A00689B77 /* AppDelegate.h */,
 				4FF6664625F2C93A00689B77 /* AppDelegate.m */,
-				4FF6664A25F2C93A00689B77 /* Accessibility */,
-				4FF6660825F2C93A00689B77 /* FileMonitor */,
+				4FF6664C25F2C93A00689B77 /* AccessibilityCheck.h */,
+				4FF6664B25F2C93A00689B77 /* AccessibilityCheck.m */,
 				4FF6661425F2C93A00689B77 /* Core */,
+				4FF6660825F2C93A00689B77 /* FileMonitor */,
+				4FF6661125F2C93A00689B77 /* MessagePort */,
+				4F78CEF22904414B0030086C /* UI */,
 				4FF6663F25F2C93A00689B77 /* Utility */,
-				4F1D7F4528A45FEA00253407 /* MenuBarItem */,
-				4F2A1FA726042ACB0067691A /* TrialNotifications */,
 				4FF6660F25F2C93A00689B77 /* Resources */,
 				4FF6664D25F2C93A00689B77 /* SupportFiles */,
 			);
@@ -1772,7 +1745,6 @@
 		4FF6661425F2C93A00689B77 /* Core */ = {
 			isa = PBXGroup;
 			children = (
-				4F5C2F7F2885C5D0001B9B8A /* HelperState.swift */,
 				4FF6660C25F2C93A00689B77 /* Config */,
 				4FF6663C25F2C93A00689B77 /* TransformationManager */,
 				4FF6661525F2C93A00689B77 /* Modifiers */,
@@ -1783,7 +1755,6 @@
 				4FF6663925F2C93A00689B77 /* Actions */,
 				4FFBC5B126697E8D001D389B /* Smoothing */,
 				4FF6664725F2C93A00689B77 /* PointerSpeed */,
-				4FF6661125F2C93A00689B77 /* MessagePort */,
 			);
 			path = Core;
 			sourceTree = "<group>";
@@ -1925,15 +1896,6 @@
 				4FA83A2026823EE000F3A31B /* Experiments */,
 			);
 			path = PointerSpeed;
-			sourceTree = "<group>";
-		};
-		4FF6664A25F2C93A00689B77 /* Accessibility */ = {
-			isa = PBXGroup;
-			children = (
-				4FF6664C25F2C93A00689B77 /* AccessibilityCheck.h */,
-				4FF6664B25F2C93A00689B77 /* AccessibilityCheck.m */,
-			);
-			path = Accessibility;
 			sourceTree = "<group>";
 		};
 		4FF6664D25F2C93A00689B77 /* SupportFiles */ = {

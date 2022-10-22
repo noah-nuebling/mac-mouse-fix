@@ -287,7 +287,6 @@ extension MFLicenseAndTrialState: Equatable {
                     }
                 }
                 overrideWorkload()
-                
             }
             
             /// Cache stuff
