@@ -228,7 +228,9 @@ static double _toastAnimationOffset = 20;
 static NSTimer *_closeTimer;
 
 + (void)closeNotification:(NSTimer *)timer {
-    [self closeNotificationWithFadeOut];
+    dispatch_async(dispatch_get_main_queue(), ^{ /// Necessary under Ventura for animation to work
+        [self closeNotificationWithFadeOut];
+    });
 }
 
 static void removeLocalEventMonitor() {
@@ -243,26 +245,20 @@ static void removeLocalEventMonitor() {
     removeLocalEventMonitor();
     
     NSPanel *w = (NSPanel *)_instance.window;
-    
-    /// Dispatch to main
-    ///     Need to do that under ventura, otherwise the animations don't work.
-    dispatch_async(dispatch_get_main_queue(), ^{
         
-        [NSAnimationContext runAnimationGroup:^(NSAnimationContext * _Nonnull context) {
-           
-            /// Set duration
-            context.duration = _animationDurationFadeOut;
-            
-            /// Animate opacity
-            w.animator.alphaValue = 0.0;
-            
-            /// Animate position
-            NSRect postAnimFrame = w.frame;
-            postAnimFrame.origin.y += _toastAnimationOffset;
-            [w.animator setFrame:postAnimFrame display:YES];
-        }];
-    });
-
+    [NSAnimationContext runAnimationGroup:^(NSAnimationContext * _Nonnull context) {
+       
+        /// Set duration
+        context.duration = _animationDurationFadeOut;
+        
+        /// Animate opacity
+        w.animator.alphaValue = 0.0;
+        
+        /// Animate position
+        NSRect postAnimFrame = w.frame;
+        postAnimFrame.origin.y += _toastAnimationOffset;
+        [w.animator setFrame:postAnimFrame display:YES];
+    }];
 }
 
 + (void)closeNotificationImmediately {
