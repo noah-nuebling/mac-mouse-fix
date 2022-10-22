@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="21223" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="21506" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="21223"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="21506"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -26,8 +26,8 @@
                     </textFieldCell>
                 </textField>
                 <textField horizontalHuggingPriority="999" verticalHuggingPriority="750" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" verifyAmbiguity="off" translatesAutoresizingMaskIntoConstraints="NO" id="xUD-oJ-hdN" customClass="Hyperlink">
-                    <rect key="frame" x="168" y="98" width="148" height="16"/>
-                    <textFieldCell key="cell" lineBreakMode="clipping" alignment="center" title="Open Security Settings" id="9qp-gN-SZZ">
+                    <rect key="frame" x="134" y="98" width="216" height="16"/>
+                    <textFieldCell key="cell" lineBreakMode="clipping" alignment="center" title="Open 'Security &amp; Privacy' Settings" id="9qp-gN-SZZ">
                         <font key="font" metaFont="message"/>
                         <color key="textColor" name="linkColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -75,7 +75,7 @@
                     </userDefinedRuntimeAttributes>
                 </textField>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="6N2-6y-5iB">
-                    <rect key="frame" x="155" y="98" width="14" height="16"/>
+                    <rect key="frame" x="121" y="98" width="14" height="16"/>
                     <textFieldCell key="cell" lineBreakMode="clipping" alignment="right" title="1." id="72q-sS-xMS">
                         <font key="font" metaFont="system"/>
                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
