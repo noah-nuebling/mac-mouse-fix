@@ -13,7 +13,7 @@
 			<key>NSStringFormatValueTypeKey</key>
 			<string>d</string>
 			<key>other</key>
-			<string>被Mac Mouse Fix擷取到。</string>
+			<string>被Mac Mouse Fix擷取到。</string>
 			<key>zero</key>
 			<string></string>
 		</dict>
@@ -29,7 +29,7 @@
 			<key>NSStringFormatValueTypeKey</key>
 			<string>d</string>
 			<key>other</key>
-			<string>不再被Mac Mouse Fix所擷取。</string>
+			<string>不再被Mac Mouse Fix所擷取。</string>
 			<key>zero</key>
 			<string></string>
 		</dict>

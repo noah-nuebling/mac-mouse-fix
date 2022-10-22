@@ -300,7 +300,6 @@
 		4FFA4E4928B7D3750062A1FE /* NSView+Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F92A72C260F6C7800529D1F /* NSView+Additions.m */; };
 		4FFA4E4A28B7D3750062A1FE /* NSView+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F909D0428A0C3D2009349A2 /* NSView+Extensions.swift */; };
 		4FFBC5A8266977CA001D389B /* DoubleExponentialSmoother.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FFBC5A7266977CA001D389B /* DoubleExponentialSmoother.swift */; };
-		F40628DA28E4EB6200D8B527 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = F40628D828E4EB6200D8B527 /* InfoPlist.strings */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -776,9 +775,6 @@
 		4FFBC5732667DCE4001D389B /* PrefixHeader.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PrefixHeader.pch; sourceTree = "<group>"; };
 		4FFBC5A6266977CA001D389B /* Mac Mouse Fix Helper-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Mac Mouse Fix Helper-Bridging-Header.h"; sourceTree = "<group>"; };
 		4FFBC5A7266977CA001D389B /* DoubleExponentialSmoother.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DoubleExponentialSmoother.swift; sourceTree = "<group>"; };
-		F40628D928E4EB6200D8B527 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
-		F40628DC28E4EB6A00D8B527 /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hant"; path = "zh-Hant.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
-		F40628DE28E4EB7000D8B527 /* zh-HK */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-HK"; path = "zh-HK.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
 		F449C32228DC555E00136800 /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hant"; path = "zh-Hant.lproj/ButtonOptionsViewController.strings"; sourceTree = "<group>"; };
 		F449C32328DC555E00136800 /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hant"; path = "zh-Hant.lproj/Main.strings"; sourceTree = "<group>"; };
 		F449C32428DC555E00136800 /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hant"; path = "zh-Hant.lproj/AuthorizeAccessibilityView.strings"; sourceTree = "<group>"; };
@@ -1931,7 +1927,6 @@
 				4FF6664E25F2C93A00689B77 /* Helper.entitlements */,
 				4FF6665225F2C93A00689B77 /* External */,
 				4FF6667825F2C93A00689B77 /* Info.plist */,
-				F40628D828E4EB6200D8B527 /* InfoPlist.strings */,
 			);
 			path = SupportFiles;
 			sourceTree = "<group>";
@@ -2279,7 +2274,6 @@
 				4FD148C728AA416700FE688C /* MenuBarItem.xib in Resources */,
 				4FFA4E4128B7D0610062A1FE /* SharedSFSymbols.xcassets in Resources */,
 				4FD148D628AA43E900FE688C /* MainMenu.xib in Resources */,
-				F40628DA28E4EB6200D8B527 /* InfoPlist.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2726,16 +2720,6 @@
 				F4EBD4C728DEFC4A0057D2DE /* zh-Hans */,
 			);
 			name = ButtonOptionsViewController.xib;
-			sourceTree = "<group>";
-		};
-		F40628D828E4EB6200D8B527 /* InfoPlist.strings */ = {
-			isa = PBXVariantGroup;
-			children = (
-				F40628D928E4EB6200D8B527 /* zh-Hans */,
-				F40628DC28E4EB6A00D8B527 /* zh-Hant */,
-				F40628DE28E4EB7000D8B527 /* zh-HK */,
-			);
-			name = InfoPlist.strings;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */

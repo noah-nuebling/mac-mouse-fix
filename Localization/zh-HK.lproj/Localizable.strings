@@ -1,8 +1,8 @@
 /* First draft: You're __already using__ the default setting for mice with __3 buttons__! */
-"already-using-defaults-toast.3" = "你__已經在使用__預設的__3按鈕__滑鼠設定！";
+"already-using-defaults-toast.3" = "你__已經在使用__預設的__三鍵__滑鼠設定！";
 
 /* First draft: You're __already using__ the default setting for mice with __5 buttons__! */
-"already-using-defaults-toast.5" = "你__已經在使用__預設的__5按鈕__滑鼠設定！";
+"already-using-defaults-toast.5" = "你__已經在使用__預設的__五鍵__滑鼠設定！";
 
 /* First draft: <Rewind key> */
 "apple-key-fallback.backward" = "􀊉〔回帶鍵〕";
@@ -83,7 +83,7 @@
 "button-modifier.3" = "按三下%@＋";
 
 /* First draft: __Enabled__ Mac Mouse Fix for __Buttons__\nIt had been disabled from the Menu Bar %@ || Note: %@ will be replaced by the menubar icon */
-"button-revive-toast" = "__已啟用__Mac Mouse Fix__按鈕__調校\n此前由選單列%@停用";
+"button-revive-toast" = "__已啟用__Mac Mouse Fix__按鈕__調校\n此前由選單列%@停用";
 
 /* First draft: Middle Button */
 "button-string.middle" = "中間鍵";
@@ -227,7 +227,7 @@
 "forbidden-capture-toast.2" = "不能使用**輔助滑鼠按鈕**\n請換一個按鈕再試";
 
 /* First draft: Mac Mouse Fix was **disabled** in System Settings.\nTo enable Mac Mouse Fix:\n\n1. Go to [Login Items Settings](x-apple.systempreferences:com.apple.LoginItems-Settings.extension)\n2. Switch on \'Mac Mouse Fix.app\' */
-"is-disabled-toast" = "系統偏好設定中已**禁用**Mac Mouse Fix。\n若要啟用Mac Mouse Fix：\n\n⒈前往[登入項目](x-apple.systempreferences:com.apple.LoginItems-Settings.extension)\n⒉開啟「Mac Mouse Fix.app」";
+"is-disabled-toast" = "系統偏好設定中已**禁用**Mac Mouse Fix。\n若要啟用Mac Mouse Fix：\n\n⒈前往[登入項目](x-apple.systempreferences:com.apple.LoginItems-Settings.extension)\n⒉開啟「Mac Mouse Fix.app」";
 
 /* First draft: ,  || Note: This string joins elements in a list except the second-to-last and last one. || Note: The first draft contains a space after the comma. */
 "join-list" = "、";
@@ -268,8 +268,8 @@
 /* First draft: Activating your license failed for **unknown reasons**\n\nPlease write a **Bug Report** [here](https://noah-nuebling.github.io/mac-mouse-fix-feedback-assistant/?type=bug-report) */
 "license-toast.unknown-reason" = "由於**未知的原因**，許可證啟用失敗。\n\n請到[這裏](https://noah-nuebling.github.io/mac-mouse-fix-feedback-assistant/?type=bug-report)報告**錯誤**";
 
-/* First draft: Set Scroll Speed under\n__[%@ > Mouse > Scroll speed](%@)__ */
-"macos-scrolling-hint" = "設定捲動速度：\n__[%@ > 滑鼠 > 捲動速度](%@)__";
+/* First draft: Set Scroll Speed under\n[%@ > Mouse > Scroll speed](%@) */
+"macos-scrolling-hint" = "設定捲動速度：\n[%@ > 滑鼠 > 捲動速度](%@)";
 
 /* First draft: Back */
 "mail-alert.back" = "返回";
@@ -298,8 +298,8 @@
 /* First draft: Content tracks finger movement */
 "natural-scrolling-hint" = "內容會隨着手指的方向移動";
 
-/* First draft: Scroll precisely even __without a keyboard modifier__ by\nmoving the __scroll wheel slowly__ || Note: The line break (\n) is there so the layout of the Scroll tab doesn't become too wide which looks weird. You can set it to your own taste. */
-"precise-scrolling-hint" = "__慢慢滾動滾輪__來精確捲動，甚至__無需鍵盤變更鍵__";
+/* First draft: Scroll precisely even without a keyboard modifier by\nmoving the scroll wheel slowly || Note: The line break (\n) is there so the layout of the Scroll tab doesn't become too wide which looks weird. You can set it to your own taste. */
+"precise-scrolling-hint" = "慢慢滾動滾輪來精確捲動，甚至無需鍵盤變更鍵";
 
 /* First draft: Cancel */
 "restore-buttons-alert.back" = "取消";
@@ -307,14 +307,14 @@
 /* First draft: Restore */
 "restore-buttons-alert.commit" = "還原";
 
-/* First draft: Your __%@ %@__ mouse says it has __%d__ buttons */
-"restore-buttons-alert.hint" = "你的__%@ %@__滑鼠回報了__%d__個按鈕";
+/* First draft: Your __%@__ mouse says it has __%d__ buttons */
+"restore-buttons-alert.hint" = "你的__%@__滑鼠回報了__%d__個按鈕";
 
 /* First draft: Mouse with 3 buttons */
-"restore-buttons-alert.radio1" = "3按鈕滑鼠";
+"restore-buttons-alert.radio1" = "三鍵滑鼠";
 
 /* First draft: Mouse with 5+ buttons */
-"restore-buttons-alert.radio2" = "5+按鈕滑鼠";
+"restore-buttons-alert.radio2" = "五鍵或多鍵滑鼠";
 
 /* First draft: Restore Default for ... */
 "restore-buttons-alert.title" = "還原預設⋯";
@@ -362,7 +362,7 @@
 "scroll-effect.zoom.hint" = "在Safari、地圖和其他應用程式中放大或縮小\n \n效果相當於在Apple觸控板上兩指分開或收合";
 
 /* First draft: Enabled Mac Mouse Fix for __Scrolling__\nIt had been disabled from the Menu Bar %@ || Note: Where %@ will be replaced by the menubar icon */
-"scroll-revive-toast" = "已啟用Mac Mouse Fix__捲動__調校\n此前由選單列%@停用";
+"scroll-revive-toast" = "已啟用Mac Mouse Fix__捲動__調校\n此前由選單列%@停用";
 
 /* No comment provided by engineer. */
 "Strawberry" = "士多啤梨";
@@ -374,16 +374,16 @@
 "system-settings-name.pre-ventura" = "系統偏好設定";
 
 /* First draft: 💫 Thank you for buying Mac Mouse Fix! */
-"thanks.01" = "💫感謝你購買Mac Mouse Fix！";
+"thanks.01" = "💫感謝你購買Mac Mouse Fix！";
 
 /* First draft: 🌟 Thanks for purchasing Mac Mouse Fix! */
-"thanks.02" = "🌟感謝購買Mac Mouse Fix！";
+"thanks.02" = "🌟感謝購買Mac Mouse Fix！";
 
 /* First draft: 🚀 Thanks for supporting Mac Mouse Fix! */
-"thanks.03" = "🚀感謝支持Mac Mouse Fix！";
+"thanks.03" = "🚀感謝支持Mac Mouse Fix！";
 
 /* First draft: 🙏 Thank you for buying Mac Mouse Fix! */
-"thanks.04" = "🙏感謝你購買Mac Mouse Fix！";
+"thanks.04" = "🙏感謝你購買Mac Mouse Fix！";
 
 /* First draft: 🧠 Great purchasing decisions ;) */
 "thanks.05" = "🧠很讚的購買決定;)";
@@ -395,7 +395,7 @@
 "thanks.07" = "💙";
 
 /* First draft: :) <- My face when I saw you bought Mac Mouse Fix */
-"thanks.08" = ":) <-看見你購買Mac Mouse Fix時我的表情";
+"thanks.08" = ":) <-看見你購買Mac Mouse Fix時我的表情";
 
 /* First draft: 👽 Share it with your Spacebook friends! */
 "thanks.09" = "👽分享給你Spacebook上的朋友們！";
@@ -443,7 +443,7 @@
 "thanks.23" = "🤍";
 
 /* First draft: 😎 Oh you're using Mac Mouse Fix? You must be pretty cool. */
-"thanks.24" = "😎Oh，你在用Mac Mouse Fix？那你一定型到爆。";
+"thanks.24" = "😎Oh，你在用Mac Mouse Fix？那你一定型到爆。";
 
 /* First draft: 🌏 First the mice, then the world!! >:) */
 "thanks.25" = "🌏先是滑鼠，然後是世界！！>:)";
@@ -458,7 +458,7 @@
 "trial-notif.activate-license-button" = "啟用許可證";
 
 /* First draft: Hi there! You've been using Mac Mouse Fix for **%d days** now. I hope you're enjoying it!\n\nIf you want to keep using Mac Mouse Fix, you can [buy it now](%@). */
-"trial-notif.body" = "你好！你使用Mac Mouse Fix已經有**%d天**了。希望你喜歡這個軟件！\n\n如果你想要繼續使用Mac Mouse Fix，不妨[即刻購買](%@)。";
+"trial-notif.body" = "你好！你使用Mac Mouse Fix已經有**%d天**了。希望你喜歡這個軟件！\n\n如果你想要繼續使用Mac Mouse Fix，不妨[即刻購買](%@)。";
 
 /* First draft: Click %@ || Note: %@ will be a button name || Example where %@ is 'Button 5': ⌥⌘ Double Click Button 4 + Click Button 5 || Note: Most of the substrings that are used to build the Action Table Trigger Strings (this is one of those substrings) are capitalized in English because it's common to use 'title case' there. In your language, 'title case' might not be a thing, and so you might not want to capitalize these strings. The first letter of the trigger string will be programmatically capitalized in any language. */
 "trigger.click.1" = "按一下%@";
@@ -514,3 +514,26 @@
 /* No comment provided by engineer. */
 "Vanilla" = "香草";
 
+/* First draft: Get a mouse with 5+ buttons to unlock the full potential of Mac Mouse Fix! */
+"buy-mouse-alert.body" = "換一個五鍵或多鍵滑鼠來釋放Mac Mouse Fix的所有潛能";
+
+/* First draft: OK */
+"buy-mouse-alert.ok" = "好";
+
+/* First draft: Your mouse only has 3 buttons */
+"buy-mouse-alert.title" = "你的滑鼠只有三個按鈕";
+
+/* First draft: Mac Mouse Fix is currently free in your country (%@) */
+"free-country" = "Mac Mouse Fix目前在你的國家或地區（%@）免費";
+
+/* First draft: This license __could not be activated__ but Mac Mouse Fix is currently __free in your country__! */
+"license-toast.free-country" = "__無法啟用__此許可證，但Mac Mouse Fix目前__在你的國家或地區免費__！";
+
+/* First draft:  __Click here__ to load the recommended settings\nfor your __%@__ mouse || Note: The \n linebreak is so the popover doesn't become too wide. You can set it to your taste. || Note: In English, there needs to be a space at the start of this string otherwise the whole string will be bold. This might be a Ventura Bug */
+"restore-default-buttons-popover.body" = "__按一下這裏__來載入你的__%@__滑鼠的建議設定";
+
+/* First draft: Move Between Spaces */
+"scroll-effect.spaces" = "切換「空間」";
+
+/* First draft: Scroll up to move left a Space and down to move right a Space\n \nWorks like swiping horizontally with 3 fingers on an Apple Trackpad */
+"scroll-effect.spaces.hint" = "向上捲動來向左移動一個空間，向下捲動來向右移動一個空間\n \n作用相當於在Apple觸控板上用三指左右滑動";

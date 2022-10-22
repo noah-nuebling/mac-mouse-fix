@@ -46,8 +46,8 @@
 /* Class = "NSTextFieldCell"; title = "<Content tracks finger movement>"; ObjectID = "AHn-zX-g4d"; Note = "Scrolling > Natural Scroll Direction > Hint"; */
 "AHn-zX-g4d.title" = "<Content tracks finger movement>";
 
-/* Class = "NSTextFieldCell"; title = "Lets you __quickly turn off__ or on scroll\nenhancements and other __features__"; ObjectID = "AqN-zN-yDS"; */
-"AqN-zN-yDS.title" = "让您__快速关闭__或开启滚动增强和其他__功能__";
+/* Class = "NSTextFieldCell"; title = "Lets you quickly turn off or on features like\n'Smooth Scrolling'"; ObjectID = "AqN-zN-yDS"; */
+"AqN-zN-yDS.title" = "让您快速关闭或开启“平滑滚动”等功能";
 
 /* Class = "NSMenu"; title = "Main Menu"; ObjectID = "AYu-sK-qS6"; */
 "AYu-sK-qS6.title" = "主菜单";
@@ -55,11 +55,11 @@
 /* Class = "NSMenuItem"; title = "Bring All to Front"; ObjectID = "aZA-uL-uvx"; */
 "aZA-uL-uvx.title" = "前置全部窗口";
 
-/* Class = "NSTextFieldCell"; title = "Mac Mouse Fix will __stay enabled__ after you __close__ it"; ObjectID = "bew-ni-FnZ"; */
-"bew-ni-FnZ.title" = "在您__关闭__Mac Mouse Fix后，它仍会__保持启用状态__";
+/* Class = "NSTextFieldCell"; title = "Mac Mouse Fix will stay enabled after you close it"; ObjectID = "bew-ni-FnZ"; */
+"bew-ni-FnZ.title" = "在您关闭Mac Mouse Fix后，它仍会保持启用状态";
 
 /* Class = "NSTextFieldCell"; title = "Mac Mouse Fix"; ObjectID = "bGk-tB-fcH"; */
-"bGk-tB-fcH.title" = "Mac Mouse Fix";
+"bGk-tB-fcH.title" = "Mac Mouse Fix";
 
 /* Class = "NSMenuItem"; title = "High"; ObjectID = "bIE-g7-3St"; Note = "Scrolling > Scroll Speed > High Option"; */
 "bIE-g7-3St.title" = "快";
@@ -68,7 +68,7 @@
 "bJS-hB-0l3.title" = "中";
 
 /* Class = "NSMenuItem"; title = "Hide Mac Mouse Fix"; ObjectID = "Bnm-ze-Mca"; */
-"Bnm-ze-Mca.title" = "隐藏Mac Mouse Fix";
+"Bnm-ze-Mca.title" = "隐藏Mac Mouse Fix";
 
 /* Class = "NSTextFieldCell"; title = "File a Bug Report"; ObjectID = "bQf-qv-mvB"; */
 "bQf-qv-mvB.title" = "提交错误报告";
@@ -146,7 +146,7 @@
 "hmb-DX-idO.title" = "低";
 
 /* Class = "NSMenuItem"; title = "Mac Mouse Fix"; ObjectID = "hSC-BE-EZJ"; */
-"hSC-BE-EZJ.title" = "Mac Mouse Fix";
+"hSC-BE-EZJ.title" = "Mac Mouse Fix";
 
 /* Class = "NSButtonCell"; title = "Options..."; ObjectID = "Hur-83-2a2"; Note = "Buttons > Options... Button"; */
 "Hur-83-2a2.title" = "选项…";
@@ -164,7 +164,7 @@
 "InY-TB-ky6.title" = "窗口";
 
 /* Class = "NSWindow"; title = "Mac Mouse Fix"; ObjectID = "IQv-IB-iLA"; Note = "Mac Mouse Fix Window Title"; */
-"IQv-IB-iLA.title" = "Mac Mouse Fix";
+"IQv-IB-iLA.title" = "Mac Mouse Fix";
 
 /* Class = "NSTabViewItem"; label = "Scrolling"; ObjectID = "jOM-dH-pdc"; Note = "Toolbar > Scrolling Tab Button"; */
 "jOM-dH-pdc.label" = "滚动";
@@ -179,7 +179,7 @@
 "lLu-45-nE3.label" = "指针";
 
 /* Class = "NSButtonCell"; title = "Restore Defaults..."; ObjectID = "lrw-Lp-nQ4"; */
-"lrw-Lp-nQ4.title" = "恢复默认值⋯";
+"lrw-Lp-nQ4.title" = "恢复默认值…";
 
 /* Class = "NSMenu"; title = "Edit"; ObjectID = "LTC-zW-sTp"; */
 "LTC-zW-sTp.title" = "编辑";
@@ -236,7 +236,7 @@
 "Rlr-89-4fc.title" = "隐藏其他";
 
 /* Class = "NSTextFieldCell"; title = "Enable Mac Mouse Fix"; ObjectID = "RV9-5T-rvb"; Note = "General > Enable Mac Mouse Fix Label"; */
-"RV9-5T-rvb.title" = "启用Mac Mouse Fix";
+"RV9-5T-rvb.title" = "启用Mac Mouse Fix";
 
 /* Class = "NSMenuItem"; title = "Close"; ObjectID = "S3S-2l-eNQ"; */
 "S3S-2l-eNQ.title" = "关闭";
@@ -247,8 +247,8 @@
 /* Class = "NSButtonCell"; title = "<0.6x>"; ObjectID = "S55-uf-Xij"; */
 "S55-uf-Xij.title" = "<0.6x>";
 
-/* Class = "NSTextFieldCell"; title = "You'll be __notified of updates__ when you __open__\nMac Mouse Fix"; ObjectID = "SaY-fF-d1s"; */
-"SaY-fF-d1s.title" = "当您__打开__Mac Mouse Fix时，您会__收到更新通知__";
+/* Class = "NSTextFieldCell"; title = "You'll be notified of updates when you open\nMac Mouse Fix"; ObjectID = "SaY-fF-d1s"; */
+"SaY-fF-d1s.title" = "当您打开Mac Mouse Fix时，您会收到更新通知";
 
 /* Class = "NSMenuItem"; title = "High"; ObjectID = "sef-RZ-SeL"; Note = "Pointer > Acceleration > High Option"; */
 "sef-RZ-SeL.title" = "高";
@@ -260,10 +260,10 @@
 "TrI-uu-DEN.title" = "请我喝奶昔:)";
 
 /* Class = "NSMenuItem"; title = "About Mac Mouse Fix"; ObjectID = "u9F-yq-WC3"; */
-"u9F-yq-WC3.title" = "关于Mac Mouse Fix";
+"u9F-yq-WC3.title" = "关于Mac Mouse Fix";
 
 /* Class = "NSMenuItem"; title = "Quit Mac Mouse Fix"; ObjectID = "UeD-ND-tYj"; */
-"UeD-ND-tYj.title" = "退出Mac Mouse Fix";
+"UeD-ND-tYj.title" = "退出Mac Mouse Fix";
 
 /* Class = "NSTextFieldCell"; title = "Keyboard Modifiers:"; ObjectID = "vbN-zN-z2V"; Note = "Scrolling > Keyboard Modifiers Label"; */
 "vbN-zN-z2V.title" = "键盘修饰键：";
@@ -284,19 +284,19 @@
 "XAP-He-hda.title" = "灵敏度：";
 
 /* Class = "NSMenuItem"; title = "Activate License..."; ObjectID = "YBT-Ar-F4S"; */
-"YBT-Ar-F4S.title" = "激活许可证⋯";
+"YBT-Ar-F4S.title" = "激活许可证…";
 
 /* Class = "NSTextFieldCell"; title = "Medium"; ObjectID = "YDr-ez-VKk"; Note = "Pointer > Sensitivity Slider > Medium Label"; */
 "YDr-ez-VKk.title" = "中";
 
 /* Class = "NSMenu"; title = "Mac Mouse Fix"; ObjectID = "Yyg-LD-A1v"; */
-"Yyg-LD-A1v.title" = "Mac Mouse Fix";
+"Yyg-LD-A1v.title" = "Mac Mouse Fix";
 
 /* Class = "NSMenuItem"; title = "Zoom"; ObjectID = "ZfY-xQ-tQl"; */
 "ZfY-xQ-tQl.title" = "缩放";
 
-/* Class = "NSTextFieldCell"; title = "Share Your Thoughts on MMF 3"; ObjectID = "ZMA-p0-2lf"; Note = "After the MMF 3 Beta I plan to change this to: Check Out the GitHub"; */
-"ZMA-p0-2lf.title" = "在MMF 3上分享你的反馈";
+/* Class = "NSTextFieldCell"; title = "Check Out the GitHub"; ObjectID = "ZMA-p0-2lf"; Note = "After the MMF 3 Beta I plan to change this to: Check Out the GitHub"; */
+"ZMA-p0-2lf.title" = "上GitHub看看";
 
 /* Class = "NSTextFieldCell"; title = "<Button X>"; ObjectID = "Zqs-Y4-U4Q"; */
 "Zqs-Y4-U4Q.title" = "<Button X>";
@@ -304,3 +304,11 @@
 /* Class = "NSTextFieldCell"; title = "<Text Cell>"; ObjectID = "zwX-Pv-OOK"; */
 "zwX-Pv-OOK.title" = "<Text Cell>";
 
+/* Class = "NSButtonCell"; title = "Don't remind me again"; ObjectID = "bgk-wr-o8T"; */
+"bgk-wr-o8T.title" = "不要再提醒我";
+
+/* Class = "NSMenuItem"; title = "Buy Mac Mouse Fix..."; ObjectID = "d0g-07-PaJ"; */
+"d0g-07-PaJ.title" = "购买Mac Mouse Fix…";
+
+/* Class = "NSTextFieldCell"; title = "<Click \"__Restore Defaults...__\" to load the recommended settings for \nyour __Logitech M720 Triathlon__.>"; ObjectID = "g5F-ZO-vGZ"; */
+"g5F-ZO-vGZ.title" = "<Click \"__Restore Defaults...__\" to load the recommended settings for \nyour __Logitech M720 Triathlon__.>";
