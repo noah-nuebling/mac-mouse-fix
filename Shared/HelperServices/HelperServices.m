@@ -158,11 +158,45 @@
 }
 
 + (void)restartHelper {
+    [self restartHelperWithDelay:0.0];
+}
+
++ (void)restartHelperWithDelay:(double)delay {
     
+    /// Specify the`delay` between closing and restarting the helper
+    
+    /// 2. Approach
+    ///     Disable and re-enable. This seems to circumvent the 1 launch per 10 seconds restriction. (See possibleRestartTime)
+    
+    if (SharedUtility.runningMainApp) {
+        
+//        assert([self helperIsActive]);
+        
+        [self enableHelperAsUserAgent:NO onComplete:^(NSError * _Nullable error) {
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delay * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                
+                [self enableHelperAsUserAgent:YES onComplete:nil];
+            });
+        }];
+        
+    } else if (SharedUtility.runningHelper) {
+        
+        /// Open the mainApp and then have it call this function
+        
+        [NSWorkspace.sharedWorkspace openURL:[NSURL URLWithString:stringf(@"macmousefix:restarthelper?delay=%@", @(delay))]];
+        
+    } else {
+        abort();
+    }
+    
+    /// 1. Approach
     /// If this function is called before `possibleRestartTime` it will freeze until that time
     
-    NSString *serviceTarget = stringf(@"gui/%u/%@", geteuid(), [self launchdID]);
-    [SharedUtility launchCLT:[NSURL fileURLWithPath:kMFLaunchctlPath] withArguments:@[@"kickstart", @"-k", serviceTarget] error:nil];
+//    NSString *serviceTarget = stringf(@"gui/%u/%@", geteuid(), [self launchdID]);
+//    [SharedUtility launchCLT:[NSURL fileURLWithPath:kMFLaunchctlPath] withArguments:@[@"kickstart", @"-k", serviceTarget] error:nil];
+    
+    
+    
 }
 
 + (NSDate *)possibleRestartTime {
