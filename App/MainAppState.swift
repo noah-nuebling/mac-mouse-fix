@@ -46,7 +46,12 @@ import ReactiveSwift
     
     /// Binding source protocol
     var producer: SignalProducer<Bool, Never> {
-        return signal.producer.prefix(value: isEnabled())
+
+        /// Cache `latest` so isEnabled isn't called over and over, because that slows things down.
+        if latest == nil {
+            latest = isEnabled()
+        }
+        return signal.producer.prefix(value: latest!)
     }
     typealias Error = Never
     typealias Value = Bool
@@ -55,14 +60,22 @@ import ReactiveSwift
     @objc static let shared = EnabledState()
     
     /// Storage
+    var latest: Bool? = nil
     let signal: Signal<Bool, Never>
     let observer: Signal<Bool, Never>.Observer
     
     /// Init
     override init() {
+        
         let (o, i) = Signal<Bool, Never>.pipe()
         signal = o
         observer = i
+        
+        super.init()
+        
+        signal.observeValues { isEnabled in
+            self.latest = isEnabled
+        }
     }
     
     /// Main interface

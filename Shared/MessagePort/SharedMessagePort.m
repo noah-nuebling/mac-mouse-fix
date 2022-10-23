@@ -28,8 +28,10 @@ static CFMessagePortRef _Nullable getRemotePort() {
         }
 
         _remotePort = CFMessagePortCreateRemote(kCFAllocatorDefault, (__bridge CFStringRef)remotePortName);
-
-        CFMessagePortSetInvalidationCallBack(_remotePort, invalidationCallback);
+        
+        if (_remotePort != NULL) {
+            CFMessagePortSetInvalidationCallBack(_remotePort, invalidationCallback);
+        }
     }
 
     return _remotePort;

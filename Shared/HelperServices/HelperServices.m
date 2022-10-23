@@ -228,12 +228,12 @@
 
     if (SharedUtility.runningMainApp) {
         
-        NSNumber *response = (NSNumber *)[SharedMessagePort sendMessage:@"getBundleVersion" withPayload:nil expectingReply:YES];
+        NSString *response = (NSString *)[SharedMessagePort sendMessage:@"getBundleVersion" withPayload:nil expectingReply:YES];
         if (response == nil) {
-            return NO;
+            return NO ;
         } else {
-            NSNumber *helperVersion = response;
-            NSNumber *mainAppVersion = [NSBundle.mainBundle objectForInfoDictionaryKey:@"CFBundleVersion"];
+            NSString *helperVersion = response;
+            NSString *mainAppVersion = [NSBundle.mainBundle objectForInfoDictionaryKey:@"CFBundleVersion"];
             
             return [helperVersion isEqual:mainAppVersion];
         }

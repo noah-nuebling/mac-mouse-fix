@@ -131,7 +131,6 @@ class TabViewController: NSTabViewController {
             coolHideTab(identifier: "pointer", window: self.window)
         }
         
-        
         ///
         /// Change to general tab, when app is disabled
         ///
