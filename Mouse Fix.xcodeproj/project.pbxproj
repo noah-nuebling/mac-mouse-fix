@@ -1593,6 +1593,7 @@
 		4FF665BE25F2C92700689B77 /* App */ = {
 			isa = PBXGroup;
 			children = (
+				4FF665E325F2C92700689B77 /* main.m */,
 				4FF665C525F2C92700689B77 /* AppDelegate.h */,
 				4FF665DB25F2C92700689B77 /* AppDelegate.m */,
 				4F39BC48263B179200FDF692 /* AppState.h */,
@@ -1666,7 +1667,6 @@
 				4FA40CF528A0CBA600499E53 /* Mac Mouse Fix-Bridging-Header.h */,
 				4FBC9442260F8AB10062F186 /* External */,
 				4FF665E225F2C92700689B77 /* App.entitlements */,
-				4FF665E325F2C92700689B77 /* main.m */,
 				4FF665E425F2C92700689B77 /* Info.plist */,
 			);
 			path = SupportFiles;
