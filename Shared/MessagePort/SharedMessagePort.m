@@ -38,7 +38,10 @@ static CFMessagePortRef _Nullable createRemotePort() {
     
     CFMessagePortRef remotePort = createRemotePort();
     if (remotePort == NULL) {
+        
         DDLogInfo(@"Can't send message \'%@\', because there is no CFMessagePort", message);
+        
+        CFRelease(remotePort);
         return nil;
     }
 
