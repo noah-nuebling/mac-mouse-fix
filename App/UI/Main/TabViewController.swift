@@ -92,6 +92,12 @@ class TabViewController: NSTabViewController {
                 lvs.remove(v) /// Extremely hacky. Might break.
             }
         }
+        
+        /// Layout toolbarView
+        /// - Otherwise the removal of the view from the layoutViews will not be reflected and there will be a blank space where the tab was.
+        ///     - This occured only sometimes in MMF 3 beta 4 and below, but after making EnabledState slower in Beta 5 and with it making TabViewController.toolbarWillAddItem() slower too, this started to always happen (Ventura Beta)
+        
+        (tbv as! NSView).needsLayout = true
     }
     
     @objc public func identifierOfSelectedTab() -> String? {
@@ -123,16 +129,6 @@ class TabViewController: NSTabViewController {
     override func viewDidAppear() {
         
         ///
-        /// Hide Pointer tab (because it's unfinished and unused)
-        ///
-        /// (Under Ventura Beta) For some reason, `removeTabViewItem(pointerTab)` (and `tabView.removeTabViewItem()`) crashes here saying the item is not in the tabView. This doesn't make sense since it is found in the array `self.tabViewItems`. So instead we use the hacky coolHideTab().
-        
-        if let _ = tabViewItem(identifier: "pointer") {
-            coolHideTab(identifier: "pointer", window: self.window)
-        }
-        
-        
-        ///
         /// Change to general tab, when app is disabled
         ///
         
@@ -147,6 +143,15 @@ class TabViewController: NSTabViewController {
                 }
             }
         }
+        
+        ///
+        /// Hide Pointer tab (because it's unfinished and unused)
+        ///
+        /// Notes:
+        /// - (Under Ventura Beta) For some reason, `removeTabViewItem(pointerTab)` (and `tabView.removeTabViewItem()`) crashes here saying the item is not in the tabView. This doesn't make sense since it is found in the array `self.tabViewItems`. So instead we use the hacky coolHideTab() instead.
+        /// - Maybe it's better to do this in viewWillAppear?
+        
+        coolHideTab(identifier: "pointer", window: self.window)
         
         ///
         /// Set initial tab and stuff

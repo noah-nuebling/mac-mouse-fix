@@ -211,6 +211,26 @@
 }
 
 
++ (BOOL)helperIsActive_Message {
+
+    if (SharedUtility.runningMainApp) {
+        
+        NSString *response = (NSString *)[SharedMessagePort sendMessage:@"getBundleVersion" withPayload:nil expectingReply:YES];
+        if (response == nil) {
+            return NO ;
+        } else {
+            NSString *helperVersion = response;
+            NSString *mainAppVersion = [NSBundle.mainBundle objectForInfoDictionaryKey:@"CFBundleVersion"];
+            
+            return [helperVersion isEqual:mainAppVersion];
+        }
+    } else {
+        /// Crash
+        assert(false);
+        abort();
+    }
+}
+
 /// helperIsActive_SM from version-3. Merge updates from version-2 and git said that "both modified". Doesn't look like both modified. But I'll leave this here for reference in case something breaks.
 // static BOOL helperIsActive_SM() __API_AVAILABLE(macos(13.0)) {
     // SMAppService *service = [SMAppService agentServiceWithPlistName:@"sm_launchd.plist"];

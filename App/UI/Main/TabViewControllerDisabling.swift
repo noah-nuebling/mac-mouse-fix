@@ -19,14 +19,14 @@ extension TabViewController {
         let id = item.itemIdentifier.rawValue
         
         /// Sync the isEnabled state of all tabs (except general and about) with the isEnabled state of the app
-        if !(alwaysEnabledTabs.contains(id)) {
+        if !alwaysEnabledTabs.contains(id) {
             
             item.autovalidates = false
             EnabledState.shared.producer.startWithValues { appIsEnabled in
                 item.isEnabled = appIsEnabled
             }
         }
-        
+                
         /// Call super
         ///     Not sure if necessary
         super.toolbarWillAddItem(notification)

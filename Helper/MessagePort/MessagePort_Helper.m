@@ -66,7 +66,7 @@ static CFDataRef didReceiveMessage(CFMessagePortRef port, SInt32 messageID, CFDa
     NSString *message = messageDict[kMFMessageKeyMessage];
     NSObject *payload = messageDict[kMFMessageKeyPayload];
     
-    NSObject *response = nil;
+    NSData *response = nil;
     
     DDLogInfo(@"Helper Received Message: %@ with payload: %@", message, payload);
     
@@ -76,7 +76,8 @@ static CFDataRef didReceiveMessage(CFMessagePortRef port, SInt32 messageID, CFDa
 //        [NSApp.delegate applicationWillTerminate:[[NSNotification alloc] init]]; /// This creates an infinite loop or something? The statement below is never executed.
         [NSApp terminate:NULL];
     } else if ([message isEqualToString:@"checkAccessibility"]) {
-        if (![AccessibilityCheck checkAccessibilityAndUpdateSystemSettings]) {
+        BOOL isTrusted = [AccessibilityCheck checkAccessibilityAndUpdateSystemSettings];
+        if (!isTrusted) {
             [SharedMessagePort sendMessage:@"accessibilityDisabled" withPayload:nil expectingReply:NO];
         }
     } else if ([message isEqualToString:@"enableAddMode"]) {
@@ -104,15 +105,13 @@ static CFDataRef didReceiveMessage(CFMessagePortRef port, SInt32 messageID, CFDa
         uint64_t senderID = [(NSNumber *)payload unsignedIntegerValue];
         [HelperState updateActiveDeviceWithEventSenderID:senderID];
         
+    } else if ([message isEqualToString:@"getBundleVersion"]) {
+        response = [NSBundle.mainBundle objectForInfoDictionaryKey:@"CFBundleVersion"];
     } else {
         DDLogInfo(@"Unknown message received: %@", message);
     }
     
-    if (response != nil) {
-        return (__bridge_retained CFDataRef)[NSKeyedArchiver archivedDataWithRootObject:response];
-    }
-    
-    return nil;
+    return (__bridge CFDataRef)response;
 }
 
 @end

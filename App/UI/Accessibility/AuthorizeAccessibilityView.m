@@ -72,6 +72,10 @@ AuthorizeAccessibilityView *_accViewController;
     NSString* urlString = @"x-apple.systempreferences:com.apple.preference.security?Privacy_Accessibility";
     [NSWorkspace.sharedWorkspace openURL:[NSURL URLWithString:urlString]];
 }
+- (IBAction)cancelButton:(NSButton *)sender {
+    [HelperServices enableHelperAsUserAgent:NO onComplete:nil];
+    [AuthorizeAccessibilityView remove];
+}
 
 + (void)add {
     
