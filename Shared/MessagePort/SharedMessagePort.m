@@ -14,7 +14,7 @@
 
 @implementation SharedMessagePort
 
-static CFMessagePortRef _Nullable getRemotePort() {
+static CFMessagePortRef _Nullable createRemotePort() {
     
     NSString *remotePortName;
     if (SharedUtility.runningMainApp) {
@@ -28,6 +28,15 @@ static CFMessagePortRef _Nullable getRemotePort() {
 }
 
 + (NSObject *_Nullable)sendMessage:(NSString * _Nonnull)message withPayload:(NSObject <NSCoding> * _Nullable)payload expectingReply:(BOOL)replyExpected {
+    
+    CFMessagePortRef remotePort = createRemotePort();
+    if (remotePort == NULL) {
+        
+        NSLog(@"Can't send message %@, because there is no CFMessagePort", message);
+        
+        CFRelease(remotePort);
+        return nil;
+    }
     
     NSDictionary *messageDict;
     if (payload) {
@@ -43,12 +52,6 @@ static CFMessagePortRef _Nullable getRemotePort() {
     
     NSLog(@"Sending message: %@ with payload: %@ from bundle: %@ via message port", message, payload, NSBundle.mainBundle.bundleIdentifier);
     
-    CFMessagePortRef remotePort = getRemotePort();
-    if (remotePort == NULL) {
-        NSLog(@"Can't send message, because there is no CFMessagePort");
-        return nil;
-    }
-    
     SInt32 messageID = 0x420666; /// Arbitrary
     CFDataRef messageData = (__bridge CFDataRef)[NSKeyedArchiver archivedDataWithRootObject:messageDict];;
     CFTimeInterval sendTimeout = 0.0;
@@ -60,7 +63,7 @@ static CFMessagePortRef _Nullable getRemotePort() {
         replyMode = kCFRunLoopDefaultMode;
     }
     SInt32 status = CFMessagePortSendRequest(remotePort, messageID, messageData, sendTimeout, recieveTimeout, replyMode, &returnData);
-    CFRelease(remotePort);
+    
     if (status != 0) {
         NSLog(@"Non-zero CFMessagePortSendRequest status: %d", status);
     }
@@ -69,6 +72,8 @@ static CFMessagePortRef _Nullable getRemotePort() {
     if (replyExpected && status == 0) {
         returnObject = [NSKeyedUnarchiver unarchiveObjectWithData:(__bridge NSData *)returnData];
     }
+    
+    CFRelease(remotePort);
     return returnObject;
 }
 //
