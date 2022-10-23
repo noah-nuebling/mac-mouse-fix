@@ -21,3 +21,6 @@
 
 /* Class = "NSTextFieldCell"; title = "2."; ObjectID = "RIR-VN-l6s"; */
 "RIR-VN-l6s.title" = "⒉";
+
+/* Class = "NSButtonCell"; title = "Cancel"; ObjectID = "u9c-up-oQG"; */
+"u9c-up-oQG.title" = "取消";
