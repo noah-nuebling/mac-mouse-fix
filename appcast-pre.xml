@@ -300,6 +300,10 @@
   <![endif]-->
 </head>
 <body>
+<p>The <strong>previous release</strong> <a
+href="https://github.com/noah-nuebling/mac-mouse-fix/releases/tag/2.2.1"><strong>2.2.1</strong></a>
+added support for <strong>macOS 13 Ventura</strong> and more!</p>
+<hr />
 <p>Mac Mouse Fix <strong>2.2.2</strong> brings several <strong>small
 fixes</strong> and improvements.</p>
 <h3 id="accessibility-problems">Accessibility problems</h3>
