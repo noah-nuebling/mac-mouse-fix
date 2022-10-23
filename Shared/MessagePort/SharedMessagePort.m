@@ -14,32 +14,29 @@
 
 @implementation SharedMessagePort
 
-static CFMessagePortRef _Nullable getRemotePort() {
+static CFMessagePortRef _Nullable createRemotePort() {
 
-    static CFMessagePortRef _remotePort = NULL;
-
-    if (_remotePort == NULL) {
-
-        NSString *remotePortName;
-        if (SharedUtility.runningMainApp) {
-            remotePortName = kMFBundleIDHelper;
-        } else if (SharedUtility.runningHelper) {
-            remotePortName = kMFBundleIDApp;
-        }
-
-        _remotePort = CFMessagePortCreateRemote(kCFAllocatorDefault, (__bridge CFStringRef)remotePortName);
-        
-        if (_remotePort != NULL) {
-            CFMessagePortSetInvalidationCallBack(_remotePort, invalidationCallback);
-        }
+    /// Note: We can't just create the port once and cache it, trying to send with that port will yield ``kCFMessagePortIsInvalid``.
+    
+    NSString *remotePortName;
+    if (SharedUtility.runningMainApp) {
+        remotePortName = kMFBundleIDHelper;
+    } else if (SharedUtility.runningHelper) {
+        remotePortName = kMFBundleIDApp;
     }
 
-    return _remotePort;
+    CFMessagePortRef remotePort = CFMessagePortCreateRemote(kCFAllocatorDefault, (__bridge CFStringRef)remotePortName);
+    
+    if (remotePort != NULL) {
+        CFMessagePortSetInvalidationCallBack(remotePort, invalidationCallback);
+    }
+
+    return remotePort;
 }
 
 + (NSObject *_Nullable)sendMessage:(NSString * _Nonnull)message withPayload:(NSObject <NSCoding> * _Nullable)payload expectingReply:(BOOL)replyExpected { // TODO: Consider renaming last arg to `expectingReturn`
     
-    CFMessagePortRef remotePort = getRemotePort();
+    CFMessagePortRef remotePort = createRemotePort();
     if (remotePort == NULL) {
         DDLogInfo(@"Can't send message \'%@\', because there is no CFMessagePort", message);
         return nil;
@@ -72,7 +69,8 @@ static CFMessagePortRef _Nullable getRemotePort() {
     }
 
     SInt32 status = CFMessagePortSendRequest(remotePort, messageID, messageData, sendTimeout, recieveTimeout, replyMode, &returnData);
-
+    CFRelease(remotePort);
+    
     if (status != 0) {
         DDLogError(@"Non-zero CFMessagePortSendRequest status: %d", status);
         return nil;

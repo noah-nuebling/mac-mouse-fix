@@ -76,7 +76,8 @@ static CFDataRef didReceiveMessage(CFMessagePortRef port, SInt32 messageID, CFDa
 //        [NSApp.delegate applicationWillTerminate:[[NSNotification alloc] init]]; /// This creates an infinite loop or something? The statement below is never executed.
         [NSApp terminate:NULL];
     } else if ([message isEqualToString:@"checkAccessibility"]) {
-        if (![AccessibilityCheck checkAccessibilityAndUpdateSystemSettings]) {
+        BOOL isTrusted = [AccessibilityCheck checkAccessibilityAndUpdateSystemSettings];
+        if (!isTrusted) {
             [SharedMessagePort sendMessage:@"accessibilityDisabled" withPayload:nil expectingReply:NO];
         }
     } else if ([message isEqualToString:@"enableAddMode"]) {
