@@ -104,6 +104,8 @@ static CFDataRef didReceiveMessage(CFMessagePortRef port, SInt32 messageID, CFDa
         uint64_t senderID = [(NSNumber *)payload unsignedIntegerValue];
         [HelperState updateActiveDeviceWithEventSenderID:senderID];
         
+    } else if ([message isEqualToString:@"getBundleVersion"]) {
+        response = [NSBundle.mainBundle objectForInfoDictionaryKey:@"CFBundleVersion"];
     } else {
         DDLogInfo(@"Unknown message received: %@", message);
     }
@@ -112,7 +114,7 @@ static CFDataRef didReceiveMessage(CFMessagePortRef port, SInt32 messageID, CFDa
         return (__bridge_retained CFDataRef)[NSKeyedArchiver archivedDataWithRootObject:response];
     }
     
-    return nil;
+    return NULL;
 }
 
 @end

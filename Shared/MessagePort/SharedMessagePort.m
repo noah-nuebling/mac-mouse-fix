@@ -14,8 +14,35 @@
 
 @implementation SharedMessagePort
 
+static CFMessagePortRef _Nullable getRemotePort() {
+
+    static CFMessagePortRef _remotePort = NULL;
+
+    if (_remotePort == NULL) {
+
+        NSString *remotePortName;
+        if (SharedUtility.runningMainApp) {
+            remotePortName = kMFBundleIDHelper;
+        } else if (SharedUtility.runningHelper) {
+            remotePortName = kMFBundleIDApp;
+        }
+
+        _remotePort = CFMessagePortCreateRemote(kCFAllocatorDefault, (__bridge CFStringRef)remotePortName);
+
+        CFMessagePortSetInvalidationCallBack(_remotePort, invalidationCallback);
+    }
+
+    return _remotePort;
+}
+
 + (NSObject *_Nullable)sendMessage:(NSString * _Nonnull)message withPayload:(NSObject <NSCoding> * _Nullable)payload expectingReply:(BOOL)replyExpected { // TODO: Consider renaming last arg to `expectingReturn`
     
+    CFMessagePortRef remotePort = getRemotePort();
+    if (remotePort == NULL) {
+        DDLogInfo(@"Can't send message \'%@\', because there is no CFMessagePort", message);
+        return nil;
+    }
+
     NSDictionary *messageDict;
     if (payload) {
         messageDict = @{
@@ -30,24 +57,6 @@
     
     DDLogInfo(@"Sending message: %@ with payload: %@ from bundle: %@ via message port", message, payload, NSBundle.mainBundle.bundleIdentifier);
     
-    NSString *remotePortName;
-    if (SharedUtility.runningMainApp) {
-        remotePortName = kMFBundleIDHelper;
-    } else if (SharedUtility.runningHelper) {
-        remotePortName = kMFBundleIDApp;
-    }
-    
-    static CFMessagePortRef _remotePort = NULL;
-//    if (_remotePort == NULL) { /// Checking for NULL and storing `_remotePort` in a static var  is unnecessary, since `CFMessagePortCreateRemote()` will return the existing instance if invoked several times.
-    _remotePort = CFMessagePortCreateRemote(kCFAllocatorDefault, (__bridge CFStringRef)remotePortName);
-    if (_remotePort == NULL) {
-        DDLogInfo(@"Can't send message, because there is no CFMessagePort");
-        return nil;
-    }
-//    }
-    
-    CFMessagePortSetInvalidationCallBack(_remotePort, invalidationCallback);
-    
     SInt32 messageID = 0x420666; /// Arbitrary
     CFDataRef messageData = (__bridge CFDataRef)[NSKeyedArchiver archivedDataWithRootObject:messageDict];
     CFTimeInterval sendTimeout = 0.0;
@@ -59,17 +68,19 @@
         recieveTimeout = 1.0;
         replyMode = kCFRunLoopDefaultMode;
     }
-    SInt32 status = CFMessagePortSendRequest(_remotePort, messageID, messageData, sendTimeout, recieveTimeout, replyMode, &returnData);
-//    CFRelease(remotePort);
+
+    SInt32 status = CFMessagePortSendRequest(remotePort, messageID, messageData, sendTimeout, recieveTimeout, replyMode, &returnData);
+
     if (status != 0) {
         DDLogError(@"Non-zero CFMessagePortSendRequest status: %d", status);
-//        assert(false);
+        return nil;
     }
     
     NSObject *returnObject = nil;
     if (returnData != NULL && replyExpected /*&& status == 0*/) {
         returnObject = [NSKeyedUnarchiver unarchiveObjectWithData:(__bridge NSData *)returnData];
     }
+    
     return returnObject;
 }
 
