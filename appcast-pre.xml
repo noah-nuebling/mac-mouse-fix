@@ -313,8 +313,8 @@ href="https://github.com/noah-nuebling/mac-mouse-fix/issues/412">#412</a>.</p>
 abruptly instead of fading out with an animation under macOS
 Ventura</li>
 <li>Fixed bug where <strong>links</strong> on the “More…” screen and the
-“Grant Accessibiliy Access” screen would sometimes open when clicking
-somewhere else in the Mac Mouse Fix window</li>
+“Grant Accessibiliy Access” screen would sometimes open over and over
+again when clicking anywhere in the Mac Mouse Fix window</li>
 </ul>
 <h3 id="other-improvements">Other improvements</h3>
 <ul>
