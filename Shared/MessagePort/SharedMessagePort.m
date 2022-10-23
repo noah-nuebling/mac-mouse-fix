@@ -33,8 +33,6 @@ static CFMessagePortRef _Nullable createRemotePort() {
     if (remotePort == NULL) {
         
         NSLog(@"Can't send message %@, because there is no CFMessagePort", message);
-        
-        CFRelease(remotePort);
         return nil;
     }
     
@@ -63,6 +61,7 @@ static CFMessagePortRef _Nullable createRemotePort() {
         replyMode = kCFRunLoopDefaultMode;
     }
     SInt32 status = CFMessagePortSendRequest(remotePort, messageID, messageData, sendTimeout, recieveTimeout, replyMode, &returnData);
+    CFRelease(remotePort);
     
     if (status != 0) {
         NSLog(@"Non-zero CFMessagePortSendRequest status: %d", status);
@@ -73,7 +72,6 @@ static CFMessagePortRef _Nullable createRemotePort() {
         returnObject = [NSKeyedUnarchiver unarchiveObjectWithData:(__bridge NSData *)returnData];
     }
     
-    CFRelease(remotePort);
     return returnObject;
 }
 //
