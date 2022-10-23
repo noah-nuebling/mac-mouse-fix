@@ -81,8 +81,7 @@ static CFDataRef didReceiveMessage(CFMessagePortRef port, SInt32 messageID, CFDa
         [AppDelegate handleHelperEnabledMessage];
     }
     
-    NSData *response = NULL;
-    return (__bridge CFDataRef)response;
+    return NULL;
 }
 
 @end

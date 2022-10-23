@@ -56,14 +56,12 @@
     }
 }
 
-static CFDataRef didReceiveMessage(CFMessagePortRef port, SInt32 messageID, CFDataRef data, void *info) {
+static CFDataRef _Nullable didReceiveMessage(CFMessagePortRef port, SInt32 messageID, CFDataRef data, void *info) {
     
     NSDictionary *messageDict = [NSKeyedUnarchiver unarchiveObjectWithData:(__bridge NSData *)data];
     
     NSString *message = messageDict[kMFMessageKeyMessage];
     NSObject *payload = messageDict[kMFMessageKeyPayload];
-    
-    NSData *response = nil;
     
     NSLog(@"Helper Received Message: %@ with payload: %@", message, payload);
     
@@ -88,7 +86,7 @@ static CFDataRef didReceiveMessage(CFMessagePortRef port, SInt32 messageID, CFDa
         NSLog(@"Unknown message received: %@", message);
     }
     
-    return (__bridge CFDataRef)response;
+    return NULL;
 }
 
 @end
