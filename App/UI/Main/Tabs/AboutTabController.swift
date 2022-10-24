@@ -253,7 +253,7 @@ class AboutTabController: NSViewController {
                     (NSLocalizedString("thanks.18", comment: "First draft: 🦋 Give me a call when you saved the world :)"), weight: 0.01),
                     (NSLocalizedString("thanks.19", comment: "First draft: 🏜️ Dankeschön, meine Frau..."), weight: 0.01),
                     (NSLocalizedString("thanks.20", comment: "First draft: 🌍 Universal Studios is probably not that great anyways... :)"), weight: 0.01),
-                    (NSLocalizedString("thanks.21", comment: "First draft: 🐠 Cuter than a Reaper Leviathan."), weight: 0.01),
+                    (NSLocalizedString("thanks.21", comment: "First draft: 🐠 What... are... you?"), weight: 0.01),
                     (NSLocalizedString("thanks.22", comment: "First draft: 🖤"), weight: 0.01),
                     (NSLocalizedString("thanks.23", comment: "First draft: 🤍"), weight: 0.01),
                     (NSLocalizedString("thanks.24", comment: "First draft: 😎 Oh you're using Mac Mouse Fix? You must be pretty cool."), weight: 0.01),
