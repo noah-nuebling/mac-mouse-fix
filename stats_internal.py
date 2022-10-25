@@ -254,11 +254,14 @@ def load_releases():
     result = []
     
     while True:
-        # per_page=100 is the maximum. Setting it high decreases number of requests. Should make things faster
+        
+        print(f'Loading releases page {page}...')
+    
+        # Using `?per_page=100` should decrease the number of requests and make things faster. But it doesn't work.
         #    See: https://stackoverflow.com/a/30656830/10601702
-        request = urllib.request.urlopen(releases_api_url + '&per_page=100' + '?page=' + str(page))
+        request = urllib.request.urlopen(releases_api_url + '?page=' + str(page))
         releases = json.load(request)
-        print(releases)
+        
         if releases == []:
             break
         result += releases
