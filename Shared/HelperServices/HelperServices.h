@@ -18,6 +18,7 @@ NS_ASSUME_NONNULL_BEGIN
 + (void)disableHelperFromHelper;
 + (void)killAllHelpers;
 + (void)restartHelper;
++ (void)restartHelperWithDelay:(double)delay;
 + (NSDate *)possibleRestartTime;
 
 + (NSString *)launchHelperInstanceWithMessage:(NSString *)message;

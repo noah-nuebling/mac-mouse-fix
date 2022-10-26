@@ -127,11 +127,17 @@ import CocoaLumberjackSwift
         /// Cache for the JSON config file we download from the website
         
         set {
+            
+            DDLogDebug("Store config cache")
+            
             setConfig("License.configCache", newValue! as NSObject)
             commitConfig()
         }
         get {
-            config("License.configCache") as? [String: Any]
+            
+            DDLogDebug("Retrieve config cache")
+            
+            return config("License.configCache") as? [String: Any]
         }
     }
     

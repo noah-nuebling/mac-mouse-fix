@@ -382,6 +382,7 @@
 		4F09BF57288355170080A5F8 /* PollingRateMeasurer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PollingRateMeasurer.swift; sourceTree = "<group>"; };
 		4F12951F28D2D5E1009A49AB /* NSTextField+Extentions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSTextField+Extentions.swift"; sourceTree = "<group>"; };
 		4F18A85727BF6E0200A5703B /* IOHIDEvent-Reconstructed.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "IOHIDEvent-Reconstructed.h"; sourceTree = "<group>"; };
+		4F19F65E2906BB98007DE4CD /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		4F1AFE962670EBA900ECA424 /* DragCurve.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DragCurve.swift; sourceTree = "<group>"; };
 		4F1B83042606E68300AEAF37 /* ButtonLandscapeAssessor.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ButtonLandscapeAssessor.h; sourceTree = "<group>"; };
 		4F1B83052606E68300AEAF37 /* ButtonLandscapeAssessor.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ButtonLandscapeAssessor.m; sourceTree = "<group>"; };
@@ -1030,6 +1031,7 @@
 			isa = PBXGroup;
 			children = (
 				4F9E59962672A67E004E75F7 /* default_config.plist */,
+				4F19F65E2906BB98007DE4CD /* README.md */,
 				4FF6660D25F2C93A00689B77 /* Config.h */,
 				4FF6660E25F2C93A00689B77 /* Config.m */,
 				4FDC127528A2C6160076972E /* ReactiveConfig.swift */,
@@ -1614,6 +1616,7 @@
 		4FF665BE25F2C92700689B77 /* App */ = {
 			isa = PBXGroup;
 			children = (
+				4FF665E325F2C92700689B77 /* main.m */,
 				4FF665C525F2C92700689B77 /* AppDelegate.h */,
 				4FF665DB25F2C92700689B77 /* AppDelegate.m */,
 				4F39BC48263B179200FDF692 /* AppState.h */,
@@ -1687,7 +1690,6 @@
 				4FA40CF528A0CBA600499E53 /* Mac Mouse Fix-Bridging-Header.h */,
 				4FBC9442260F8AB10062F186 /* External */,
 				4FF665E225F2C92700689B77 /* App.entitlements */,
-				4FF665E325F2C92700689B77 /* main.m */,
 				4FF665E425F2C92700689B77 /* Info.plist */,
 			);
 			path = SupportFiles;

@@ -360,7 +360,7 @@ void Handle_FSEventStreamCallback (ConstFSEventStreamRef streamRef, void *client
     NSNumber *defaultConfigVersion = [[NSDictionary dictionaryWithContentsOfURL:defaultConfigURL()] valueForKeyPath:@"Other.configVersion"];
     if (defaultConfigVersion == nil) {
         DDLogError(@"Couldn't get default config version. Something is wrong.");
-        exit(1);
+        abort();
     }
     if (currentConfigVersion.intValue != defaultConfigVersion.intValue) {
         [self replaceCurrentConfigWithDefaultConfig];

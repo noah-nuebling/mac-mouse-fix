@@ -27,28 +27,7 @@
 		<string>high</string>
 	</dict>
 	<key>License</key>
-	<dict>
-		<key>configCache</key>
-		<dict>
-			<key>maxActivations</key>
-			<integer>100</integer>
-			<key>payLink</key>
-			<string>https://noahnuebling.gumroad.com/l/mmfinapp</string>
-			<key>price</key>
-			<integer>199</integer>
-			<key>quickPayLink</key>
-			<string>https://noahnuebling.gumroad.com/l/mmfinapp?wanted=true</string>
-			<key>trialDays</key>
-			<integer>30</integer>
-		</dict>
-		<key>isLicensedCache</key>
-		<false/>
-		<key>trial</key>
-		<dict>
-			<key>lastUseDate</key>
-			<date>2022-08-20T20:19:52Z</date>
-		</dict>
-	</dict>
+	<dict/>
 	<key>AppOverrides</key>
 	<dict>
 		<key>com.adobe.Photoshop</key>

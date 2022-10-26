@@ -70,14 +70,26 @@
 
 - (void)handleURLWithEvent:(NSAppleEventDescriptor *)event reply:(NSAppleEventDescriptor *)reply {
     
+    /// Log
     DDLogDebug(@"Handling URL: %@", event.description);
+    
+    /// Get URL
     NSString *address = [[event paramDescriptorForKeyword:keyDirectObject] stringValue];
     NSURL *url = [NSURL URLWithString:address];
     
+    /// Get URL components
     NSURLComponents *components = [NSURLComponents componentsWithURL:url resolvingAgainstBaseURL:YES];
     assert([components.scheme isEqual:@"macmousefix"]); /// Assert because we should only receive URLs with this scheme
     
+    /// Get path from components
     NSString *path = components.path;
+    
+    /// Get query dict from components
+    NSArray<NSURLQueryItem *> *queryItemArray = components.queryItems;
+    NSMutableDictionary *queryItems = [NSMutableDictionary dictionary];
+    for (NSURLQueryItem *item in queryItemArray) {
+        queryItems[item.name] = item.value;
+    }
     
     if ([path isEqual:@"activate"]) {
         
@@ -99,7 +111,7 @@
         double postSwitchDelay = willSwitch ? 0.5 : 0.0; /// Wait until the tab switch animation is done before disabling the helper
         
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, NSEC_PER_SEC * preSwitchDelay), dispatch_get_main_queue(), ^{
-                
+            
             if (willSwitch) {
                 [MainAppState.shared.tabViewController coolSelectTabWithIdentifier:@"general" window:self.window];
             }
@@ -109,7 +121,12 @@
                 [EnabledState.shared disable];
             });
         });
-
+        
+    } else if ([path isEqual:@"restarthelper"]) {
+        
+        NSString *delay = queryItems[@"delay"];
+        [HelperServices restartHelperWithDelay:delay.doubleValue];
+        
     } else {
         DDLogWarn(@"Received URL with unknown path: %@", address);
     }

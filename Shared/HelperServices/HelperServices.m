@@ -66,18 +66,31 @@
 #pragma mark - Main interface
 
 + (BOOL)helperIsActive {
-    if (@available(macos 13.0, *)) {
-        return [self helperIsActive_SM];
-    } else {
-        return helperIsActive_PList();
-    }
+    
+    
+    /// New method
+    ///     Send method to helper to ask if it's active.
+    ///     Also checks that the connected helper's bundle version matches the main app's bundle version and returns that the helper is inactive if not. This circumvents issues where the main app would think it's enabled when being started while an old incompatible helper instance is still running
+    ///     TODO: If an old, incompatible helper is still running - disable it
+
+    return [self helperIsActive_Message];
+
+    /// Old method
+    ///     Ask launchd apis whether helper is active.
+    ///     Not as reliable, because sometimes there will be an old version of the helper still active (in that case we wan't to return that the helper is incactive but these APIs returned that it is active) or maybe the launchd APIs have registered the helper job but they're not actually starting anything. This happens under Ventura when trying to start the app from another location.
+
+//    if (@available(macos 13.0, *)) {
+//        return [self helperIsActive_SM];
+//    } else {
+//        return helperIsActive_PList();
+//    }
 }
 
 + (void)enableHelperAsUserAgent:(BOOL)enable onComplete:(void (^ _Nullable)(NSError * _Nullable error))onComplete {
     
     /// Register/unregister the helper as a User Agent with launchd so it runs in the background - also launches/terminates helper
     
-    if (@available(macos 13.0, *)) {
+    if (@available(macOS 13.0, *)) {
         
         /// Disable and clean up legacy versions
         ///     Edit: I'm not totally sure what the reason is for the differences between this and what we do pre macOS 13.
@@ -145,11 +158,45 @@
 }
 
 + (void)restartHelper {
+    [self restartHelperWithDelay:0.0];
+}
+
++ (void)restartHelperWithDelay:(double)delay {
     
+    /// Specify the`delay` between closing and restarting the helper
+    
+    /// 2. Approach
+    ///     Disable and re-enable. This seems to circumvent the 1 launch per 10 seconds restriction. (See possibleRestartTime)
+    
+    if (SharedUtility.runningMainApp) {
+        
+//        assert([self helperIsActive]);
+        
+        [self enableHelperAsUserAgent:NO onComplete:^(NSError * _Nullable error) {
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delay * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                
+                [self enableHelperAsUserAgent:YES onComplete:nil];
+            });
+        }];
+        
+    } else if (SharedUtility.runningHelper) {
+        
+        /// Open the mainApp and then have it call this function
+        
+        [NSWorkspace.sharedWorkspace openURL:[NSURL URLWithString:stringf(@"macmousefix:restarthelper?delay=%@", @(delay))]];
+        
+    } else {
+        abort();
+    }
+    
+    /// 1. Approach
     /// If this function is called before `possibleRestartTime` it will freeze until that time
     
-    NSString *serviceTarget = stringf(@"gui/%u/%@", geteuid(), [self launchdID]);
-    [SharedUtility launchCLT:[NSURL fileURLWithPath:kMFLaunchctlPath] withArguments:@[@"kickstart", @"-k", serviceTarget] error:nil];
+//    NSString *serviceTarget = stringf(@"gui/%u/%@", geteuid(), [self launchdID]);
+//    [SharedUtility launchCLT:[NSURL fileURLWithPath:kMFLaunchctlPath] withArguments:@[@"kickstart", @"-k", serviceTarget] error:nil];
+    
+    
+    
 }
 
 + (NSDate *)possibleRestartTime {
@@ -203,7 +250,7 @@
 #pragma mark - Core
 
 + (NSString *)launchdID {
-    if (@available(macos 13.0, *)) {
+    if (@available(macOS 13.0, *)) {
         return kMFLaunchdHelperIdentifierSM;
     } else {
         return kMFLaunchdHelperIdentifier;
@@ -244,7 +291,7 @@
 
 + (BOOL)helperIsActive_SM API_AVAILABLE(macos(13.0)) {
     
-    if (@available(macos 13.0, *)) {
+    if (@available(macOS 13.0, *)) {
         
         SMAppService *service = [SMAppService agentServiceWithPlistName:@"sm_launchd.plist"];
         BOOL result = service.status == SMAppServiceStatusEnabled;
@@ -258,7 +305,7 @@
     } else {
         /// Not running macOS 13.0
         ///     This can never happen. Just crashing here so the compiler doesn't complain about missing returns.
-        exit(1);
+        abort();
     }
 }
 
@@ -294,7 +341,7 @@ static BOOL helperIsActive_PList() {
     
     /// TODO: Dispatch this stuff to another thread. Xcode analysis on `registerAndReturnError:` says "This method should not be called on the main thread as it may lead to UI unresponsiveness"
 
-    if (@available(macos 13.0, *)) {
+    if (@available(macOS 13.0, *)) {
             
         /// Guard running main app
         ///     Before using the SM APIs we could call this from anywhere, but the SM stuff will only work from the mainApp afaik.
@@ -332,7 +379,7 @@ static BOOL helperIsActive_PList() {
         return error;
     } /// End `if @available`
     
-    exit(1);
+    abort();
 }
 
 static void enableHelper_PList(BOOL enable) {

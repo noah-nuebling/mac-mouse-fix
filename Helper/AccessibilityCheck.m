@@ -294,8 +294,9 @@ CGEventRef _Nullable testCallback(CGEventTapProxy proxy, CGEventType type, CGEve
         ///     Edit: What? Why are we calling `[self openMainAppAndRestart]` again here? Doesn't this cause an infinite loop? We'll change this to call `[HelperUtility openMainApp]`.
         [HelperUtility openMainApp];
         
-        /// Close helperApp (Will be restarted immediately by launchd)
-        [NSApp terminate:nil];
+        /// Restart helper
+        ///     Use a 0.5s delay so the accessibilitySheet can first animate out before the mainApp's UI activates. Without the delay there is slight visual jank.
+        [HelperServices restartHelperWithDelay:0.5];
         
         /// Testing
 //        [self load]; /// To make button capture notification work
