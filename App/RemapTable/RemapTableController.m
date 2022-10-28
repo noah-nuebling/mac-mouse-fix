@@ -73,13 +73,19 @@
     NSArray *store = self.dataModel;
     self.dataModel = tempDataModel;
     [self.tableView reloadData];
-    [self.tableView displayIfNeeded]; // Need to do this because reloadData is async
+    [self.tableView displayIfNeeded]; /// Force data to reload immediately
+    if (@available(macOS 10.14, *)) { } else {
+        /// Use layout to force data reload under 10.13
+        ///     For some reason, under 10.13, `displayIfNeeded` doesn't do anything
+        self.tableView.needsLayout = YES;
+        [self.tableView layoutSubtreeIfNeeded];
+    }
     self.dataModel = store;
 }
 
 - (IBAction)handleKeystrokeMenuItemSelected:(id)sender {
     
-    // Find table row for sender
+    /// Find table row for sender
     NSInteger rowOfSender = -1;
     
     NSMenuItem *item = (NSMenuItem *)sender;
@@ -230,9 +236,22 @@
     
     NSScrollView * scrollView = self.scrollView;
     
+    /// Get corner radius
+    ///     The cornerRadius of the Action Table should be equal to cornerRadius of surrounding NSBox
+    ///     Ideally we would access the cornerradius of the NSBox directly, but I don't know how
+    
     CGFloat cr = 5.0;
-    /// ^ Should be equal to cornerRadius of surrounding NSBox
-    ///   Hardcoding this might lead to bad visuals on pre-BigSur macOS versions with lower corner radius, but idk how to access the NSBox's effective cornerRadius
+    
+    if (@available(macOS 11.0, *)) { } else {
+        cr = 4.0;
+    }
+    
+    /// Shrink Action Table pre-Big Sur
+    ///     Otherwise it spills out of the surrounding NSBox. Not sure why
+    
+    if (@available(macOS 11.0, *)) { } else {
+        scrollView.frame = NSInsetRect(scrollView.frame, 2, 2);
+    }
     
     scrollView.borderType = NSNoBorder;
     scrollView.wantsLayer = YES;
@@ -504,12 +523,21 @@ static void setBorderColor(RemapTableController *object) {
     rowDict = (NSDictionary *)[SharedUtility deepCopyOf:rowDict];
     
     if ([rowDict isEqual:RemapTableUtility.buttonGroupRowDict]) {
+        
         MFMouseButtonNumber groupButtonNumber = [RemapTableUtility triggerButtonForRow:self.groupedDataModel[row+1]];
         NSTableCellView *buttonGroupCell = [self.tableView makeViewWithIdentifier:@"buttonGroupCell" owner:self];
 //        NSTextField *groupTextField = buttonGroupCell.textField; // If we link the textField via the textField prop, the tableView will override our text styling, so we're linking to it via the nextKeyView prop
         NSTextField *groupTextField = (NSTextField *)buttonGroupCell.nextKeyView;
         groupTextField.stringValue = stringf(@"  %@", [UIStrings getButtonString:groupButtonNumber]);
+        
+        if (@available(macOS 11.0, *)) { } else {
+            /// Fix groupRow text being too far left pre-Big Sur
+            NSRect f = groupTextField.frame;
+            groupTextField.frame = NSMakeRect(f.origin.x + 6.0, f.origin.y, f.size.width - 6.0, f.size.height);
+        }
+        
         return buttonGroupCell;
+        
     } else if ([tableColumn.identifier isEqualToString:@"trigger"]) { // The trigger column should display the trigger as well as the modification precondition
         return [RemapTableTranslator getTriggerCellWithRowDict:rowDict];
     } else if ([tableColumn.identifier isEqualToString:@"effect"]) {

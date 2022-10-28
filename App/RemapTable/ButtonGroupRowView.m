@@ -26,14 +26,18 @@
     /// Get background color
     NSColor *backgroundColor;
     if (@available(macOS 10.14, *)) {
+        
         backgroundColor = NSColor.alternatingContentBackgroundColors[1];
+        
+        CGFloat alpha = backgroundColor.alphaComponent;
+        if ([NSAppearance.currentAppearance.name isEqual:NSAppearanceNameAqua]) {
+            alpha = alpha / 3;
+            backgroundColor = [backgroundColor colorWithAlphaComponent:alpha];
+        }
+        
     } else {
         backgroundColor = NSColor.controlAlternatingRowBackgroundColors[1];
-    }
-    CGFloat alpha = backgroundColor.alphaComponent;
-    if ([NSAppearance.currentAppearance.name isEqual:NSAppearanceNameAqua]) {
-        alpha = alpha / 3;
-        backgroundColor = [backgroundColor colorWithAlphaComponent:alpha];
+        backgroundColor = [backgroundColor blendedColorWithFraction:0.4 ofColor:NSColor.whiteColor];
     }
     
     /// Draw background
