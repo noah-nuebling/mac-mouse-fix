@@ -424,7 +424,6 @@ static void setBorderColor(RemapTableController *object) {
     }
     if (!buttonIsStillTriggerInDataModel) { // Yes, we want to remove a group row, too
         [rowsToRemoveWithAnimation addIndex:rowToRemove-1];
-        
     }
     
     // Do remove rows with animation
