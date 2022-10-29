@@ -84,10 +84,11 @@
 //    NSRectFill(dirtyRect);
 //}
 //
-//- (void)awakeFromNib {
-//    // v Doesn't work
+- (void)awakeFromNib {
+    /// Set backgroundColor
+    ///     Doesn't work. We transitioned to overriding `drawRect:` instead
 //    self.wantsLayer = YES;
 //    self.layer.backgroundColor = (__bridge CGColorRef)NSColor.redColor;
-//}
+}
 
 @end

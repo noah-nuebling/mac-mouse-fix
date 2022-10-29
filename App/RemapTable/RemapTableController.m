@@ -246,10 +246,10 @@
         cr = 4.0;
     }
     
-    /// Shrink Action Table pre-Big Sur
+    /// Shrink Action Table pre-Mojave
     ///     Otherwise it spills out of the surrounding NSBox. Not sure why
     
-    if (@available(macOS 11.0, *)) { } else {
+    if (@available(macOS 10.14, *)) { } else {
         scrollView.frame = NSInsetRect(scrollView.frame, 2, 2);
     }
     
