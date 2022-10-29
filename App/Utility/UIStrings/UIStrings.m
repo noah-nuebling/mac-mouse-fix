@@ -251,11 +251,20 @@ static CGSSymbolicHotKey _highestSymbolicHotKeyInCache = 0;
 }
 
 static NSMutableAttributedString *symbolStringWithModifierPrefix(NSString *flagsStr, NSAttributedString *symbolStr) {
+    
+    if (flagsStr == nil) {
+        flagsStr = @"";
+    }
+    if (symbolStr == nil) {
+        symbolStr = [[NSAttributedString alloc] initWithString:@""];
+    }
+    
     NSMutableAttributedString *result = [[NSMutableAttributedString alloc] initWithString:flagsStr];
     [result appendAttributedString:symbolStr];
+    
     return result;
 }
-static NSAttributedString * _Nullable stringWithSymbol(NSString *symbolName, NSString *fallbackString, NSFont *font) {
+static NSAttributedString *stringWithSymbol(NSString *symbolName, NSString *fallbackString, NSFont *font) {
 
     /// Image
     /// Try to get SFSymbol first, fall back to bundled image
@@ -264,26 +273,28 @@ static NSAttributedString * _Nullable stringWithSymbol(NSString *symbolName, NSS
     if (@available(macOS 11.0, *)) {
         sfSymbol = [NSImage imageWithSystemSymbolName:symbolName accessibilityDescription:@""];
     }
-    BOOL useFallback = sfSymbol == nil; // arc4random_uniform(2) == 0; // YES; //sfSymbol == nil;
+    BOOL useBundledImage = sfSymbol == nil; // arc4random_uniform(2) == 0; // YES; //sfSymbol == nil;
     
     NSImage *symbol = nil;
-    if (useFallback) { /// Fallback to bundled image
+    if (useBundledImage) { /// Fallback to bundled image
         symbol = [NSImage imageNamed:symbolName];
     } else {
         symbol = sfSymbol;
     }
     
     /// Early return
+    ///     If no symbol is found anywhere, just return the fallback string.
     if (symbol == nil) {
-        return nil;
+        return [[NSAttributedString alloc] initWithString:fallbackString];
     }
     
     /// Fix fallback tint
-    if (useFallback) {
+    if (useBundledImage) {
         symbol = [symbol coolTintedImage:symbol color:NSColor.textColor];
     }
     
     /// Store fallback
+    ///     This is read in `[NSAttributedString coolString]`. Maybe elsewhere
     ///     Storing in `accessibilityDescription` is kind of hacky
     symbol.accessibilityDescription = fallbackString;
     
@@ -293,7 +304,7 @@ static NSAttributedString * _Nullable stringWithSymbol(NSString *symbolName, NSS
 
     /// Fix fallback alignment
     
-    if (useFallback) {
+    if (useBundledImage) {
         
         /// Fix alignmentRect centering
         ///     - I don't think this makes any sense
@@ -304,7 +315,7 @@ static NSAttributedString * _Nullable stringWithSymbol(NSString *symbolName, NSS
         double alignmentOffsetX = 0.0;
         double alignmentOffsetY = 0.0;
 
-        if (useFallback) {
+        if (useBundledImage) {
 
             double centerX1 = symbol.alignmentRect.origin.x + symbol.alignmentRect.size.width/2.0;
             double centerY1 = symbol.alignmentRect.origin.y + symbol.alignmentRect.size.height/2.0;
