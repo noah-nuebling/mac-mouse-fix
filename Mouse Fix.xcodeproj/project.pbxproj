@@ -49,6 +49,7 @@
 		4FBC943B260F8AA60062F186 /* MASShortcut.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FBC9434260F8AA60062F186 /* MASShortcut.m */; };
 		4FCA07D625F3129B00BFE209 /* RemapTableController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FCA07D525F3129B00BFE209 /* RemapTableController.m */; };
 		4FD82DDB260575B100664D6F /* MFNotificationLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FD82DDA260575B100664D6F /* MFNotificationLabel.m */; };
+		4FEB91A5290D4648002BCFF2 /* NSImage+Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FEB91A4290D4648002BCFF2 /* NSImage+Additions.m */; };
 		4FEC9668278BBDC600548604 /* NSColor+Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FEC9667278BBDC600548604 /* NSColor+Additions.m */; };
 		4FF6654125F2C7B000689B77 /* default_launchd.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4FF6652E25F2C7B000689B77 /* default_launchd.plist */; };
 		4FF6654225F2C7B000689B77 /* default_launchd.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4FF6652E25F2C7B000689B77 /* default_launchd.plist */; };
@@ -294,6 +295,8 @@
 		4FDBC59A234F80C500A46517 /* Accomplice.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Accomplice.entitlements; sourceTree = "<group>"; };
 		4FEB6617279376C200E6A111 /* SymbolicHotKeys Reference.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = "SymbolicHotKeys Reference.txt"; sourceTree = "<group>"; };
 		4FEB6618279376C200E6A111 /* notes.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = notes.md; sourceTree = "<group>"; };
+		4FEB91A3290D4648002BCFF2 /* NSImage+Additions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSImage+Additions.h"; sourceTree = "<group>"; };
+		4FEB91A4290D4648002BCFF2 /* NSImage+Additions.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSImage+Additions.m"; sourceTree = "<group>"; };
 		4FEC9666278BBDC600548604 /* NSColor+Additions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSColor+Additions.h"; sourceTree = "<group>"; };
 		4FEC9667278BBDC600548604 /* NSColor+Additions.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSColor+Additions.m"; sourceTree = "<group>"; };
 		4FF6652D25F2C7B000689B77 /* HelperServices.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HelperServices.h; sourceTree = "<group>"; };
@@ -878,6 +881,8 @@
 				4F854D7B2789146900B46E9D /* NSMenu+NSMenu_Additions.m */,
 				4FEC9666278BBDC600548604 /* NSColor+Additions.h */,
 				4FEC9667278BBDC600548604 /* NSColor+Additions.m */,
+				4FEB91A3290D4648002BCFF2 /* NSImage+Additions.h */,
+				4FEB91A4290D4648002BCFF2 /* NSImage+Additions.m */,
 			);
 			path = Utility;
 			sourceTree = "<group>";
@@ -1460,6 +1465,7 @@
 				4FF665ED25F2C92700689B77 /* MFSegmentedControl.m in Sources */,
 				4FF6660225F2C92700689B77 /* ClickableImageView.m in Sources */,
 				4F79A81C2604317200076A7E /* MFNotificationController.m in Sources */,
+				4FEB91A5290D4648002BCFF2 /* NSImage+Additions.m in Sources */,
 				4F39BC3B263AF2B000FDF692 /* SparkleUpdaterController.m in Sources */,
 				4F1C51DA260543DD007F4930 /* NSTextField+Additions.m in Sources */,
 				4F2F5DA825FB6FFD0037660A /* AddWindowController.m in Sources */,

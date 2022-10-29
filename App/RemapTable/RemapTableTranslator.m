@@ -200,7 +200,7 @@ static NSArray *getOneShotEffectsTable(NSDictionary *rowDict) {
         
         /// Get  strings
         
-        NSAttributedString *shortcutString = getShortcutString(effectDict, isKeyShortcut);
+        NSAttributedString *shortcutString = getShortcutString(effectDict, isKeyShortcut, [NSFont systemFontOfSize:NSFont.systemFontSize]);
 
         NSString *shortcutStringRaw = [shortcutString coolString];
         
@@ -245,7 +245,7 @@ static NSArray *getOneShotEffectsTable(NSDictionary *rowDict) {
                 kMFActionDictKeySystemDefinedEventVariantModifierFlags: @(0),
             };
             
-            NSAttributedString *shortcutString = getShortcutString(actionDict, NO);
+            NSAttributedString *shortcutString = getShortcutString(actionDict, NO, [NSFont systemFontOfSize:NSFont.systemFontSize]);
             NSString *shortcutStringRaw = [shortcutString coolString];
             [submenu addObject:@{
                 @"uiAttributed": shortcutString,
@@ -267,21 +267,21 @@ static NSArray *getOneShotEffectsTable(NSDictionary *rowDict) {
 
 /// Helper for getEffectsTable
 
-static NSAttributedString *getShortcutString(NSDictionary *effectDict, BOOL isKeyShortcut) {
+static NSAttributedString *getShortcutString(NSDictionary *effectDict, BOOL isKeyShortcut, NSFont *font) {
     
     if (isKeyShortcut) {
         
         CGKeyCode keyCode = ((NSNumber *)effectDict[kMFActionDictKeyKeyboardShortcutVariantKeycode]).unsignedShortValue;
         CGEventFlags flags = ((NSNumber *)effectDict[kMFActionDictKeyKeyboardShortcutVariantModifierFlags]).unsignedLongValue;
         
-        return [UIStrings getStringForKeyCode:keyCode flags:flags];
+        return [UIStrings getStringForKeyCode:keyCode flags:flags font:font];
         
     } else { /// Is systemEventShortcut
         
         MFSystemDefinedEventType type = ((NSNumber *)effectDict[kMFActionDictKeySystemDefinedEventVariantType]).unsignedIntValue;
         CGEventFlags flags = ((NSNumber *)effectDict[kMFActionDictKeySystemDefinedEventVariantModifierFlags]).unsignedLongValue;
         
-        return [UIStrings getStringForSystemDefinedEvent:type flags:flags];
+        return [UIStrings getStringForSystemDefinedEvent:type flags:flags font:font];
     }
 }
 

@@ -9,6 +9,7 @@
 
 #import <CoreGraphics/CoreGraphics.h>
 //#import <Foundation/Foundation.h>
+#import <Cocoa/Cocoa.h>
 
 #import "Constants.h"
 
@@ -21,9 +22,10 @@ NS_ASSUME_NONNULL_BEGIN
 + (NSString *)getButtonStringToolTip:(MFMouseButtonNumber)buttonNumber;
 + (NSString *)getKeyboardModifierString:(CGEventFlags)flags;
 + (NSString *)getKeyboardModifierStringToolTip:(CGEventFlags)flags;
-+ (NSAttributedString *)getStringForKeyCode:(CGKeyCode)keyCode flags:(CGEventFlags)flags;
-+ (NSAttributedString *)getStringForSystemDefinedEvent:(MFSystemDefinedEventType)type flags:(CGEventFlags)flags;
++ (NSAttributedString *)getStringForKeyCode:(CGKeyCode)keyCode flags:(CGEventFlags)flags font:(NSFont *)font;
++ (NSAttributedString *)getStringForSystemDefinedEvent:(MFSystemDefinedEventType)type flags:(CGEventFlags)flags font:(NSFont *)font;
 + (NSString *)naturalLanguageListFromStringArray:(NSArray<NSString *> *)stringArray;
++ (void)centerImageAttachment:(NSTextAttachment *)attachment image:(NSImage *)image font:(NSFont *)font;
 
 @end
 
