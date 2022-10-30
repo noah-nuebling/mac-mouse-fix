@@ -308,6 +308,7 @@ older macOS versions, but I’m really <strong>glad</strong> I did since I
 wanted to make sure that Mac Mouse Fix 2.2 - the last
 <strong>free</strong> version of Mac Mouse Fix - feels really nice and
 polished for <strong>everyone</strong>!</p>
+<p>(Mac Mouse Fix 3 will be free for 30 days and then cost $1.99)</p>
 <h3 id="whats-changed">What’s changed</h3>
 <ul>
 <li>Fixed a bug where the ‘Keyboard Shortcut…’ option wouldn’t do
@@ -329,14 +330,14 @@ margins on macOS versions before macOS 11 Big Sur</li>
 <h3 id="notes">Notes</h3>
 <ul>
 <li>If you’re still experiencing any <strong>issues</strong> on older
-macOS versions please let me know in a <a
+macOS versions, please <strong>let me know</strong> in a <a
 href="https://noah-nuebling.github.io/mac-mouse-fix-feedback-assistant/?type=bug-report">Bug
 Report</a>. Thanks!</li>
-<li>You might have to <strong>re-add</strong> Mac Mouse Fix to the
+<li>After updating to Mac Mouse Fix 2.2.3 on older macOS versions, you
+might have to <strong>re-add</strong> Mac Mouse Fix to the
 <strong>Accessibility Preferences</strong> as described by <a
 href="https://github.com/noah-nuebling/mac-mouse-fix/discussions/101">this
-Guide</a> after updating to Mac Mouse Fix 2.2.3 on older macOS
-versions.</li>
+Guide</a></li>
 </ul>
 </body>
 </html>
