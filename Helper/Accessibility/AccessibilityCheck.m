@@ -53,9 +53,9 @@ NSTimer *_openMainAppTimer;
             ///
             
             /// This is a workaround
-            ///     for an Apple bug in Ventura (maybe previous versions too?) where the accessibility toggle for MMF Helper won't work after an update.
+            ///     for an Apple bug in Ventura (maybe previous versions too? Edit: Monterey, too. I think I even saw it on 10.13 and 10.14) where the accessibility toggle for MMF Helper won't work after an update.
             ///     This bug occured between 2.2.0 and 2.2.1 when I moved the app from a Development Signature to a proper Developer Program Signature.
-            ///     Bug also maybe occurs for 3.0.0 Beta 4. Not sure why. Maybe it's a different bug that just looks similar.
+            ///     Bug also maybe occurs for 3.0.0 Beta 4. Not sure why. Maybe because I changed the bundleID between those versions. Or maybe it's a different bug that just looks similar.
             /// See
             /// - https://github.com/noah-nuebling/mac-mouse-fix/issues/415
             /// - https://github.com/noah-nuebling/mac-mouse-fix/issues/412
@@ -64,6 +64,7 @@ NSTimer *_openMainAppTimer;
             /// Why do this in such a weird way?
             /// - We need to launch a new helper instance instead of just using the normal helper instance because `AXIsProcessTrustedWithOptions` will only add the helper to System Settings __once__ after launch. Subsequent calls don't do anything.`AXIsProcessTrustedWithOptions` is also the __only__ way to check if we already have accessibility access. And we need to check if we already have access __before__ deciding to reset the access, because we don't want to reset access if it has already been granted. So therefore we need to do the intial check and the forced system settings update in two different instances of the helper. You would think normally relaunching the helper would solve this but...
             /// - We can't just relaunch the helper normally through launchd because launchd permits at most 1 start per 10 seconds. So if the helper's just been enabled and there's no accessibility access you have to wait 10 seconds until the helper can be restarted through launchd.
+            /// -> So we start a new instance of the helper independently of launchd and let it update the accessibility settings and then quit immediately.
             
             /// Log
             
@@ -72,6 +73,8 @@ NSTimer *_openMainAppTimer;
             /// Remove existing helper from System Settings
             /// - If an old helper exists, the user won't be able to enable the new helper!
             /// - This will make the system unresponsive if there is still an old helper running that's already tapped into the button event stream!
+            ///     -> TODO: Disable & kill any helpers before doing this so we don't cause freezes.
+            /// - This doesn't work under macOS 10.13 and 10.14 because `tccutil` doesn't take bundleID argument there (bundleID arg was introduced in 10.15 - Src: https://eclecticlight.co/2020/01/28/a-guide-to-catalinas-privacy-protection-4-tccutil/). I don't see a solution. Just make the Accessibility Guide good.
             [SharedUtility launchCLT:[NSURL fileURLWithPath:kMFTccutilPath] withArguments:@[@"reset", @"Accessibility", kMFBundleIDHelper] error:nil];
             
             /// Add self to System Settings
