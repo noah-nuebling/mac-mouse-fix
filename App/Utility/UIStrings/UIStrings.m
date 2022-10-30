@@ -328,7 +328,6 @@ static NSAttributedString *stringWithSymbol(NSString *symbolName, NSString *fall
         }
         
         /// Fix font alignment
-        ///     Src: https://stackoverflow.com/a/45161058/10601702
         [UIStrings centerImageAttachment:symbolAttachment image:symbol font:font offsetX:alignmentOffsetX offsetY: alignmentOffsetY];
     }
     
@@ -400,6 +399,10 @@ static NSAttributedString *stringWithSymbol(NSString *symbolName, NSString *fall
 }
 
 + (void)centerImageAttachment:(NSTextAttachment *)attachment image:(NSImage *)image font:(NSFont *)font offsetX:(double)offsetX offsetY:(double)offsetY {
+    
+    /// Vertically align the imageAttachment with normal text
+    /// - This is not necessary if the NSImage represents an SFSymbol
+    /// - Src: https://stackoverflow.com/a/45161058/10601702
     
     double fontCenterOffset = (font.capHeight - image.size.height)/2.0;
     attachment.bounds = NSMakeRect(offsetX, offsetY + fontCenterOffset, image.size.width, image.size.height);
