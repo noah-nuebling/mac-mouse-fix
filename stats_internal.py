@@ -249,9 +249,25 @@ def main():
         raise Exception('Too many command line arguments.')
 
 def load_releases():
-    request = urllib.request.urlopen(releases_api_url)
-    releases = json.load(request)
-    return releases
+
+    page = 1
+    result = []
+    
+    while True:
+        
+        print(f'Loading releases page {page}...')
+    
+        # Using `?per_page=100` should decrease the number of requests and make things faster. But it doesn't work.
+        #    See: https://stackoverflow.com/a/30656830/10601702
+        request = urllib.request.urlopen(releases_api_url + '?page=' + str(page))
+        releases = json.load(request)
+        
+        if releases == []:
+            break
+        result += releases
+        page += 1
+    
+    return result
 
 def load_latest_release():
     request = urllib.request.urlopen(releases_api_url + '/latest')
