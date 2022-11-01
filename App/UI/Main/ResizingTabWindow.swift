@@ -65,7 +65,7 @@ import CocoaLumberjackSwift
         animator.start(distance: 1.0, callback: { value in
 
             /// Debug
-            DDLogDebug("springAnimationValue: \(value)")
+//            DDLogDebug("springAnimationValue: \(value)")
 
             /// Interpolate
             let result = SharedUtilitySwift.interpolateRects(value, ogFrame, newFrame);

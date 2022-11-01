@@ -16,10 +16,11 @@
 ///     The `ClickCycle` class is used to track an abstract clickCycle and analyze it. Perhaps most importantly, it tracks state transitions not only to button pressed and button released states but also to more abstract states: `button held down` and `level expired`. Then it can notify the client of these state transitions and the client can do cool stuff with that.
 
 /// Thread safety:
-///     All calls to this are expected to come from the dispatchQueue owned by Buttons.swift `buttonsQueue`. It will also protect its timer callbacks using `buttonQueue`.
-///     So when using this:
-///         1. Make sure that you're running on buttonsQueue when calling, otherwise there might be race conditions
-///         2. The `modifierCallback` and `triggerCallback` are already protected when they arrive in `Buttons.swift`
+/// - Edit: IIRC we're just not implementing the dispatchQueue stuff properly because race conditions are incredibly rare and when they happen stuff is robust and doesn't break badly.
+/// - All calls to this are expected to come from the dispatchQueue owned by Buttons.swift `buttonsQueue`. It will also protect its timer callbacks using `buttonQueue`.
+/// - So when using this:
+///     1. Make sure that you're running on buttonsQueue when calling, otherwise there might be race conditions
+///     2. The `modifierCallback` and `triggerCallback` are already protected when they arrive in `Buttons.swift`
 
 
 
@@ -27,6 +28,7 @@
 import Cocoa
 import CocoaLumberjackSwift
 
+/// Typedefs
 enum ClickCycleTriggerPhase: Int {
     case none = -1
     case press = 0
@@ -42,7 +44,6 @@ enum ClickCycleModifierPhase: Int {
     case release = 1
 }
 
-/// Typedefs
 typealias ButtonNumber = Int
 typealias ClickLevel = Int
 typealias UnconditionalReleaseCallback = (() -> ())

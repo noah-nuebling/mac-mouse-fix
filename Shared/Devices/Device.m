@@ -171,6 +171,7 @@ static void handleInput(void *context, IOReturn result, void *sender, IOHIDValue
     IOHIDElementRef elem = IOHIDValueGetElement(value);
     uint32_t usage = IOHIDElementGetUsage(elem);
     uint32_t usagePage = IOHIDElementGetUsagePage(elem);
+    
     /// Get info
     BOOL isButton = usagePage == 9;
     assert(isButton);

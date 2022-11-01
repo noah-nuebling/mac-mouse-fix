@@ -558,19 +558,19 @@ int8_t sign(double x) {
     /// Set logging format
     //    DDOSLogger.sharedInstance.logFormatter = DDLogFormatter.
     
-    if (SharedUtility.runningPreRelease) {
+    if ((NO) /*SharedUtility.runningPreRelease*/) {
         
         /// Setup logging  file
         /// Copied this from https://github.com/CocoaLumberjack/CocoaLumberjack/blob/master/Documentation/GettingStarted.md
         /// Haven't thought about whether the exact settings make sense.
         
         DDFileLogger *fileLogger = [[DDFileLogger alloc] init];
-        fileLogger.rollingFrequency = 60 * 60 * 24; // 24 hour rolling
+        fileLogger.rollingFrequency = 60 * 60 * 24; /// 24 hour rolling
         fileLogger.logFileManager.maximumNumberOfLogFiles = 2;
         
         [DDLog addLogger:fileLogger];
         
-        DDLogInfo(@"Logging to directory: %@", fileLogger.logFileManager.logsDirectory);
+        DDLogInfo(@"Logging to directory: \'%@\'", fileLogger.logFileManager.logsDirectory);
     }
 }
 

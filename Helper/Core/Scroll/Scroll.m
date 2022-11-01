@@ -97,6 +97,9 @@ static BOOL _isSuspended = NO;
     });
 }
 void resetState_Sync(void) {
+    
+    /// TODO: I just saw a crash here where _scrollQueue was nil
+    
     dispatch_sync(_scrollQueue, ^{
         resetState_Unsafe();
     });

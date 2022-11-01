@@ -209,8 +209,8 @@ import CocoaLumberjackSwift
         let isEnd = abs(x) <= epsilon && abs(x_) <= epsilon
         
         /// Debug
-        DDLogDebug("SpringAnimation state: \(x), \(x_), \(x__), samples: \(samples)")
-        DDLogDebug("SpringAnimation isEnding.")
+//        DDLogDebug("SpringAnimation state: \(x), \(x_), \(x__), samples: \(samples)")
+//        DDLogDebug("SpringAnimation isEnding.")
         
         /// Call callback
         callback(target - x) /// Becaues x actually goes from target to 0
