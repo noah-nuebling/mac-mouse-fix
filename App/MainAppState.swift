@@ -89,7 +89,7 @@ import ReactiveSwift
         HelperServices.enableHelperAsUserAgent(false, onComplete: nil)
         observer.send(value: false)
     }
-    func isEnabled() -> Bool {
+    func isEnabled() -> Bool { // TODO: Think about returning `latest` here or renaming the `isEnabled_Uncached`
         HelperServices.helperIsActive()
     }
     
