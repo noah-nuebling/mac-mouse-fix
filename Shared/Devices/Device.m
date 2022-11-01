@@ -79,7 +79,7 @@
         ///     Not sure if this is also necessary in the mainApp
         IOReturn ret = IOHIDDeviceOpen(self.iohidDevice, kIOHIDOptionsTypeNone);
         if (ret) {
-            DDLogInfo(@"Error opening device. Code: %x", ret);
+            DDLogError(@"Error opening device. Code: %x", ret);
         }
         
 #if IS_HELPER
