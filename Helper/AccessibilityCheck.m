@@ -82,7 +82,6 @@ CGEventRef _Nullable testCallback(CGEventTapProxy proxy, CGEventType type, CGEve
     
     ///
     /// Check command line args.
-    ///     If there are args, just process them and then exit.
     
     NSMutableArray<NSString *> *args = NSProcessInfo.processInfo.arguments.mutableCopy;
     [args removeObjectAtIndex:0]; /// First argument is just the executable path or sth, we can ignore that.
@@ -90,14 +89,14 @@ CGEventRef _Nullable testCallback(CGEventTapProxy proxy, CGEventType type, CGEve
     if (args.count > 0) {
         
         /// Log
-        NSLog(@"Started helper with command line args: %@", args);
+        DDLogInfo(@"Started helper with command line args: %@", args);
         
         ///
         /// Process args
-        if ([args[0] isEqual:@"forceUpdateAccessibilitySettings"]) {
+        if ([args containsObject:@"forceUpdateAccessibilitySettings"]) {
             
             ///
-            /// Force update accessibility settings
+            /// Force update accessibility settings, then exit immediately
             ///
             
             /// This is a workaround
@@ -124,10 +123,10 @@ CGEventRef _Nullable testCallback(CGEventTapProxy proxy, CGEventType type, CGEve
             
             /// Add self to System Settings
             [self checkAccessibilityAndUpdateSystemSettings];
+            
+            /// Close helper
+            exit(0);
         }
-        
-        /// Close helper
-        exit(0);
     }
     
     /// No command line args - start normally

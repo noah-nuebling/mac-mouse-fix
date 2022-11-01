@@ -41,6 +41,7 @@ IOHIDDeviceRef _Nullable CGEventGetSendingDevice(CGEventRef cgEvent) {
     
     if (senderID == 0) {
         assert(false);
+        return NULL;
     }
     return getSendingDeviceWithSenderID(senderID);
 }
