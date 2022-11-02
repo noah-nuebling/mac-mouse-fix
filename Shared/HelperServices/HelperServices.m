@@ -93,6 +93,7 @@
 + (void)enableHelperAsUserAgent:(BOOL)enable onComplete:(void (^ _Nullable)(NSError * _Nullable error))onComplete {
     
     /// Register/unregister the helper as a User Agent with launchd so it runs in the background - also launches/terminates helper
+    /// Not sure if we should use this directly. Using EnabledState.shared.enable() / disable() is probably better
     
     if (@available(macOS 13.0, *)) {
         
@@ -415,7 +416,7 @@ static void removeLaunchdPlist() {
     NSError *error;
     [NSFileManager.defaultManager removeItemAtURL:Locator.launchdPlistURL error:&error];
     if (error != nil) {
-        DDLogError(@"Failed to delete launchd.plist file. The helper will likely be re-enabled on startup. Delete the file at \"%@\" to prevent this.", Locator.launchdPlistURL.path);
+        DDLogError(@"Failed to delete launchd.plist file. This might be because the file doesn't exist. If the file still exists at \"%@\" the helper might be re-enabled on startup.", Locator.launchdPlistURL.path);
     }
 }
 

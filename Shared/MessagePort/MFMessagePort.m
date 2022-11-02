@@ -50,17 +50,26 @@ static CFDataRef _Nullable didReceiveMessage(CFMessagePortRef port, SInt32 messa
         
         DDLogError(@"Received Message From Stranger: %@ with payload: %@, localVersion: %ld, remoteVersion: %ld. Killing the strange helper.", message, payload, localVersion, remoteVersion);
         
-        if (SharedUtility.runningMainApp) {
-            
-            /// Kill the strange helper
-            ///
-            /// Notes:
-            /// - Not sure if just using `enableHelperAsUserAgent:` is enough. Does this call `launchctl remove`? Does it kill strange helpers that weren't started by launchd? That might be necessary in some situations.
-            /// - In Ventura 13.0, SMAppService has strange bugs where it will always start an old version of MMF until you delete the old version, empty the trash, then restart computer and then try again. Was hoping this would be fixed but it's still there after the 13.0 Beta.
-            ///     -> We should probably give the user instructions on how to fix things, when this situation occurs.
-            
-            [HelperServices enableHelperAsUserAgent:NO onComplete:nil];
+        /// Kill the strange helper
+        
+#if IS_MAIN_APP
+        
+        /// Kill helper from main app
+        /// Notes:
+        /// - This doesn't work immediately. Takes like 5 seconds. Not sure why. When debugging it doesn't happen. Might be some timeout in the API
+        /// - Not sure if just using `enableHelperAsUserAgent:` is enough. Does this call `launchctl remove`? Does it kill strange helpers that weren't started by launchd? That might be necessary in some situations.
+        /// - In Ventura 13.0, SMAppService has strange bugs where it will always start an old version of MMF until you delete the old version, empty the trash, then restart computer and then try again. Was hoping this would be fixed but it's still there after the 13.0 Beta.
+        ///     -> We should probably give the user instructions on how to fix things, when this situation occurs.
+        
+//            [HelperServices enableHelperAsUserAgent:NO onComplete:nil];
+
+        [HelperServices enableHelperAsUserAgent:NO onComplete:nil];
+        
+        if ([message isEqualToString:@"helperEnabled"]) {
+            [ToastNotificationController attachNotificationWithMessage:[NSAttributedString attributedStringWithCoolMarkdown:@"Helooo__oo__oo"] toWindow:MainAppState.shared.window forDuration:-1.0];
         }
+        
+#endif
         
         return NULL;
     }
