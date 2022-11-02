@@ -26,73 +26,7 @@
 
 @implementation MessagePort
 
-#pragma mark - Receiving messages
-
-
-
-#pragma mark Setup port
-
-+ (void)load_Manual {
-    
-    /// Notes from Helper:
-    /// I'm not sure this is supposed to be `load_Manual` instead of load
-    
-    /// Notes from mainApp:
-    /// We used to do this in `load` but that lead to issues when restarting the app if it's translocated
-    /// If the app detects that it is translocated, it will restart itself at the untranslocated location,  after removing the quarantine flags from itself. It starts a copy of itself while it's still running, and only then does it terminate itself. If the message port is already 'claimed' by the translocated instances when it starts the untranslocated copy, then the untranslocated copy can't 'claim' the message port for itself, which leads to things like the accessiblity screen not working.
-    /// I hope thinik moving using `initialize` instead of `load` within `MessagePort_App` should fix this and work just fine for everything else. I don't know why we used load to begin with.
-    /// Edit: I don't remember why we moved to `load_Manual` now, but it works fine
-    
-    DDLogInfo(@"Initializing MessagePort...");
-    
-    assert(SharedUtility.runningMainApp || SharedUtility.runningHelper);
-    
-    CFMessagePortRef localPort =
-    CFMessagePortCreateLocal(kCFAllocatorDefault,
-                             (__bridge CFStringRef)(SharedUtility.runningMainApp ? kMFBundleIDApp : kMFBundleIDHelper),
-                             didReceiveMessage,
-                             nil,
-                             NULL);
-    
-    DDLogInfo(@"Created localPort: %@", localPort);
-    
-    /// Setting the name here instead of when creating the port creates some super weird behavior, too.
-//    CFMessagePortSetName(localPort, CFSTR("com.nuebling.mousefix.port"));
-    
-    
-    if (localPort != NULL) {
-        
-        /// Notes from mainApp:
-        /// On CatalinM, creating the local Port returns NULL and throws a permission denied error. Trying to schedule it with the runloop yields a crash.
-        /// But even if you just skip the runloop scheduling it still works somehow!
-        
-        /// Notes from Helper:
-        /// CFMessagePortCreateRunLoopSource() used to crash when another instance of MMF Helper was already running.
-        /// It would log this: `*** CFMessagePort: bootstrap_register(): failed 1100 (0x44c) 'Permission denied', port = 0x1b03, name = 'com.nuebling.mac-mouse-fix.helper'`
-        /// I think the reason for this messate is that the existing instance would already 'occupy' the kMFBundleIDHelper name.
-        /// Checking if `localPort != nil` should detect this case
-        
-        CFRunLoopSourceRef runLoopSource =
-            CFMessagePortCreateRunLoopSource(kCFAllocatorDefault, localPort, 0);
-        
-        CFRunLoopAddSource(CFRunLoopGetMain(),
-                           runLoopSource,
-                           kCFRunLoopCommonModes);
-        
-        CFRelease(runLoopSource);
-    } else {
-        
-        if (SharedUtility.runningMainApp) {
-            DDLogInfo(@"Failed to create a local message port. It will probably work anyway for some reason");
-        } else {
-            DDLogError(@"Failed to create a local message port. This might be because there is another instance of %@ already running. Crashing the app.", kMFHelperName);
-            @throw [NSException exceptionWithName:@"NoMessagePortException" reason:@"Couldn't create a local CFMessagePort. Can't function properly without local CFMessagePort" userInfo:nil];
-        }
-        
-    }
-}
-
-#pragma mark Handle incoming messages
+#pragma mark - Handle incoming messages
 
 static CFDataRef _Nullable didReceiveMessage(CFMessagePortRef port, SInt32 messageID, CFDataRef data, void *info) {
     
@@ -102,9 +36,9 @@ static CFDataRef _Nullable didReceiveMessage(CFMessagePortRef port, SInt32 messa
     
     NSString *message = messageDict[kMFMessageKeyMessage];
     NSObject *payload = messageDict[kMFMessageKeyPayload];
+    NSInteger remoteVersion = [messageDict[kMFMessageKeyBundleVersion] integerValue];
     
     NSInteger localVersion = Locator.bundleVersion;
-    NSInteger remoteVersion = [messageDict[kMFMessageKeyBundleVersion] integerValue];
     
     if (localVersion != remoteVersion) {
         
@@ -140,7 +74,6 @@ static CFDataRef _Nullable didReceiveMessage(CFMessagePortRef port, SInt32 messa
     } else if ([message isEqualToString:@"keyCaptureModeFeedbackWithSystemEvent"]) {
         [KeyCaptureView handleKeyCaptureModeFeedbackWithPayload:(NSDictionary *)payload isSystemDefinedEvent:YES];
     } else if ([message isEqualToString:@"helperEnabled"]) {
-        //        [AppDelegate handleHelperEnabledMessage]; /// Old MMF2 stuff
         [EnabledState.shared reactToDidBecomeEnabled];
     } else if ([message isEqualToString:@"helperDisabled"]) {
         [EnabledState.shared reactToDidBecomeDisabled];
@@ -191,6 +124,8 @@ static CFDataRef _Nullable didReceiveMessage(CFMessagePortRef port, SInt32 messa
         DDLogInfo(@"Unknown message received: %@", message);
     }
     
+#else
+    abort();
 #endif
     
     if (response != nil) {
@@ -200,37 +135,94 @@ static CFDataRef _Nullable didReceiveMessage(CFMessagePortRef port, SInt32 messa
      return NULL;
 }
 
-#pragma mark - Sending messages
 
-static CFMessagePortRef _Nullable createRemotePort() {
+#pragma mark - Setup port
 
-    /// Note: We can't just create the port once and cache it, trying to send with that port will yield ``kCFMessagePortIsInvalid``.
++ (void)load_Manual {
     
-    NSString *remotePortName;
-    if (SharedUtility.runningMainApp) {
-        remotePortName = kMFBundleIDHelper;
-    } else if (SharedUtility.runningHelper) {
-        remotePortName = kMFBundleIDApp;
-    }
-
-    CFMessagePortRef remotePort = CFMessagePortCreateRemote(kCFAllocatorDefault, (__bridge CFStringRef)remotePortName);
+    /// This sets up a local port for listening for incoming messages
     
-    if (remotePort != NULL) {
-        CFMessagePortSetInvalidationCallBack(remotePort, invalidationCallback);
+    /// Notes from Helper:
+    /// I'm not sure this is supposed to be `load_Manual` instead of load
+    
+    /// Notes from mainApp:
+    /// We used to do this in `load` but that lead to issues when restarting the app if it's translocated
+    /// If the app detects that it is translocated, it will restart itself at the untranslocated location,  after removing the quarantine flags from itself. It starts a copy of itself while it's still running, and only then does it terminate itself. If the message port is already 'claimed' by the translocated instances when it starts the untranslocated copy, then the untranslocated copy can't 'claim' the message port for itself, which leads to things like the accessiblity screen not working.
+    /// I hope thinik moving using `initialize` instead of `load` within `MessagePort_App` should fix this and work just fine for everything else. I don't know why we used load to begin with.
+    /// Edit: I don't remember why we moved to `load_Manual` now, but it works fine
+    
+    assert(SharedUtility.runningMainApp || SharedUtility.runningHelper);
+    
+    DDLogInfo(@"Initializing MessagePort...");
+    
+    CFMessagePortRef localPort =
+    CFMessagePortCreateLocal(kCFAllocatorDefault,
+                             (__bridge CFStringRef)(SharedUtility.runningMainApp ? kMFBundleIDApp : kMFBundleIDHelper),
+                             didReceiveMessage,
+                             nil,
+                             NULL);
+    
+    DDLogInfo(@"Created localPort: %@", localPort);
+    
+    /// Setting the name here instead of when creating the port creates some super weird behavior, too.
+//    CFMessagePortSetName(localPort, CFSTR("com.nuebling.mousefix.port"));
+    
+    
+    if (localPort != NULL) {
+        
+        /// Notes from mainApp:
+        /// On CatalinM, creating the local Port returns NULL and throws a permission denied error. Trying to schedule it with the runloop yields a crash.
+        /// But even if you just skip the runloop scheduling it still works somehow!
+        
+        /// Notes from Helper:
+        /// CFMessagePortCreateRunLoopSource() used to crash when another instance of MMF Helper was already running.
+        /// It would log this: `*** CFMessagePort: bootstrap_register(): failed 1100 (0x44c) 'Permission denied', port = 0x1b03, name = 'com.nuebling.mac-mouse-fix.helper'`
+        /// I think the reason for this messate is that the existing instance would already 'occupy' the kMFBundleIDHelper name.
+        /// Checking if `localPort != nil` should detect this case
+        
+        CFRunLoopSourceRef runLoopSource =
+            CFMessagePortCreateRunLoopSource(kCFAllocatorDefault, localPort, 0);
+        
+        CFRunLoopAddSource(CFRunLoopGetMain(),
+                           runLoopSource,
+                           kCFRunLoopCommonModes);
+        
+        CFRelease(runLoopSource);
+    } else {
+        
+        if (SharedUtility.runningMainApp) {
+            DDLogInfo(@"Failed to create a local message port. It will probably work anyway for some reason");
+        } else {
+            DDLogError(@"Failed to create a local message port. This might be because there is another instance of %@ already running. Crashing the app.", kMFHelperName);
+            @throw [NSException exceptionWithName:@"NoMessagePortException" reason:@"Couldn't create a local CFMessagePort. Can't function properly without local CFMessagePort" userInfo:nil];
+        }
+        
     }
-
-    return remotePort;
 }
+
+#pragma mark - Send messages
+
 
 + (NSObject *_Nullable)sendMessage:(NSString * _Nonnull)message withPayload:(NSObject <NSCoding> * _Nullable)payload expectingReply:(BOOL)replyExpected { // TODO: Consider renaming last arg to `expectingReturn`
     
-    CFMessagePortRef remotePort = createRemotePort();
+    /// Validate
+    assert(SharedUtility.runningMainApp || SharedUtility.runningHelper);
+    
+    /// Get remote port
+    /// Note: We can't just create the port once and cache it, trying to send with that port will yield ``kCFMessagePortIsInvalid``
+    
+    NSString *remotePortName = SharedUtility.runningMainApp ? kMFBundleIDHelper : kMFBundleIDApp;
+    CFMessagePortRef remotePort = CFMessagePortCreateRemote(kCFAllocatorDefault, (__bridge CFStringRef)remotePortName);
+
     if (remotePort == NULL) {
-        
         DDLogInfo(@"Can't send message \'%@\', because there is no CFMessagePort", message);
         return nil;
     }
+    
+    CFMessagePortSetInvalidationCallBack(remotePort, invalidationCallback);
 
+    /// Create message dict
+    
     NSDictionary *messageDict;
     if (payload) {
         messageDict = @{
@@ -247,6 +239,8 @@ static CFMessagePortRef _Nullable createRemotePort() {
     
     DDLogInfo(@"Sending message: %@ with payload: %@ from bundle: %@ via message port", message, payload, NSBundle.mainBundle.bundleIdentifier);
     
+    /// Send message
+    
     SInt32 messageID = 0x420666; /// Arbitrary
     CFDataRef messageData = (__bridge CFDataRef)[NSKeyedArchiver archivedDataWithRootObject:messageDict];
     CFTimeInterval sendTimeout = 0.0;
@@ -262,6 +256,8 @@ static CFMessagePortRef _Nullable createRemotePort() {
     SInt32 status = CFMessagePortSendRequest(remotePort, messageID, messageData, sendTimeout, recieveTimeout, replyMode, &returnData);
     CFRelease(remotePort);
     
+    /// Handle errors & response
+    
     if (status != 0) {
         DDLogError(@"Non-zero CFMessagePortSendRequest status: %d", status);
         return nil;
@@ -272,41 +268,13 @@ static CFMessagePortRef _Nullable createRemotePort() {
         returnObject = [NSKeyedUnarchiver unarchiveObjectWithData:(__bridge NSData *)returnData];
     }
     
+    /// Return
+    
     return returnObject;
 }
 
 void invalidationCallback(CFMessagePortRef ms, void *info) {
-    
     DDLogInfo(@"MessagePort invalidated in %@", SharedUtility.runningHelper ? @"Helper" : @"MainApp");
 }
-
-//+ (CFDataRef _Nullable)sendMessage:(NSString *_Nonnull)message expectingReply:(BOOL)expectingReply {
-//
-//    DDLogInfo(@"Sending message: %@ via message port from bundle: %@", message, NSBundle.mainBundle);
-//
-//    CFMessagePortRef remotePort = CFMessagePortCreateRemote(kCFAllocatorDefault, CFSTR("com.nuebling.mousefix.helper.port"));
-//    if (remotePort == NULL) {
-//        DDLogInfo(@"There is no CFMessagePort");
-//        return nil;
-//    }
-//
-//    SInt32 messageID = 0x420666; // Arbitrary
-//    CFDataRef messageData = (__bridge CFDataRef)[message dataUsingEncoding:kUnicodeUTF8Format];
-//    CFTimeInterval sendTimeout = 0.0;
-//    CFTimeInterval receiveTimeout = 0.0;
-//    CFStringRef replyMode = NULL;
-//    CFDataRef returnData;
-//    if (expectingReply) {
-//        receiveTimeout = 0.1; // 1.0
-//        replyMode = kCFRunLoopDefaultMode;
-//    }
-//    SInt32 status = CFMessagePortSendRequest(remotePort, messageID, messageData, sendTimeout, receiveTimeout, replyMode, &returnData);
-//    if (status != 0) {
-//        DDLogInfo(@"Non-zero CFMessagePortSendRequest status: %d", status);
-//    }
-//    CFRelease(remotePort);
-//
-//    return returnData;
-//}
 
 @end
