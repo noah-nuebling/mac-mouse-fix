@@ -29,7 +29,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 #define MFHelperServicesErrorDomain @"MFHelperServicesErrorDomain"
 typedef enum {
-    kMFHelperServicesErrorEnableFromHelper
+    kMFHelperServicesErrorEnableFromHelper,
+//    kMFHelperServicesErrorMismatchedHelper
 } MFHelperServicesError;
 
 NS_ASSUME_NONNULL_END

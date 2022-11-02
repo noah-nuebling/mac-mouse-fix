@@ -35,6 +35,7 @@
 #import <ServiceManagement/ServiceManagement.h>
 #import <sys/sysctl.h>
 #import <sys/types.h>
+#import "MFMessagePort.h"
 
 @implementation HelperServices
 
@@ -109,8 +110,23 @@
         /// Call core
         ///    Do this on some global queue. Xcode complains if you do this on mainThread because it can lead to unresponsive UI.
         dispatch_async(dispatch_get_global_queue(QOS_CLASS_USER_INTERACTIVE, 0), ^{
+            
             NSError *error = [self enableHelper_SM:enable];
-            if (onComplete != nil) onComplete(error);
+            
+            if (onComplete != nil) {
+                
+//                if (error == nil) {
+//                    
+//                    NSNumber *helperVersion = (NSNumber *)[MFMessagePort sendMessage:@"getBundleVersion" withPayload:nil expectingReply:YES];
+//                    NSInteger mainAppVersion = Locator.bundleVersion;
+//                    
+//                    if (helperVersion != nil && helperVersion.integerValue != mainAppVersion) {
+//                        error = [NSError errorWithDomain:MFHelperServicesErrorDomain code:kMFHelperServicesErrorMismatchedHelper userInfo:nil];
+//                    }
+//                }
+                
+                onComplete(error);
+            }
         });
         
     } else {
