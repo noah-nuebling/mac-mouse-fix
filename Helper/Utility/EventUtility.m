@@ -29,8 +29,6 @@ int64_t fixedScrollDelta(double scrollDelta) {
 
 #pragma mark - Sending device
 
-NSMutableDictionary *_hidDeviceCache = nil;
-
 IOHIDDeviceRef _Nullable CGEventGetSendingDevice(CGEventRef cgEvent) {
     /// Sometimes CGEventGetHIDEvent() doesn't work. I observed this in the `PollingRateMeasurer` where it doesn't work for mouseDragged events. (Only mouseMoved). This works for `mouseDragged` events as well! -> Use this instead of `HIDEventGetSendingDevice()` as long as `CGEventGetHIDEvent()` isn't reliable.
     
@@ -47,8 +45,6 @@ IOHIDDeviceRef _Nullable CGEventGetSendingDevice(CGEventRef cgEvent) {
 }
 
 IOHIDDeviceRef _Nullable HIDEventGetSendingDevice(HIDEvent *hidEvent) {
-    /// This version uses a cache to avoid calling IOHIDDeviceCreate() (which is super slow) over and over.
-    ///     \note Do we need to reset the cache at certain points?
     
     assert(hidEvent != NULL);
     if (hidEvent == NULL) return NULL;
@@ -68,7 +64,10 @@ IOHIDDeviceRef _Nullable HIDEventGetSendingDevice(HIDEvent *hidEvent) {
 IOHIDDeviceRef _Nullable getSendingDeviceWithSenderID(uint64_t senderID) {
     
     /// Pass in the senderID obtained from a CGEvent from field 87
+    ///     This uses a cache to avoid calling IOHIDDeviceCreate() (which is super slow) over and over.
+    ///     \note Do we need to reset the cache at certain points? What do if a device is disconnected?
     
+    static NSMutableDictionary *_hidDeviceCache = nil;
     if (_hidDeviceCache == nil) {
         _hidDeviceCache = [NSMutableDictionary dictionary];
     }

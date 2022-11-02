@@ -166,7 +166,9 @@ static CGEventRef eventTapCallback(CGEventTapProxy proxy, CGEventType type, CGEv
     ///     TODO: If new method works. Remove old method - including the callbacks in Device.m and the input queue and stuff.
     
     /// New method
-    ///     Use reverse engineered knowledge about CGEventFields to get the sender directly from the CGEvent
+    ///  - Using reverse engineered knowledge about CGEventFields to get the sender directly from the CGEvent
+    ///  - Tested this method under 10.13, 10.14, 10.15 Beta, 13.0, - it works!
+    ///  - Performance vs oldMethod: Testing was limited but seems about the same.
     
     IOHIDDeviceRef iohidDevice = CGEventGetSendingDevice(event);
     Device *device = [DeviceManager attachedDeviceWithIOHIDDevice:iohidDevice];

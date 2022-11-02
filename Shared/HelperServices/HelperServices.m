@@ -7,8 +7,12 @@
 // --------------------------------------------------------------------------
 //
 
+/// This class is primarily used to activate, deactivate and check activation state of the helper as a 'launchAgent'. (A process that always runs in the background)
+///     - It achieves this primarily  by wrapping the `launchctl` command line tool and the `SMAppService` API for macOS 13.0 and later.
+///     - Later we also added some methods for restarting the helper and for starting a new instance of the helper in a special mode. We should maybe split the functionality up into different classes.
+
 /// Notes on availability
-///     HelperServices uses a new API for registering the Helper as UserAgent under macOS 13.0 Ventura. It's called `SMAppService`. It's not available pre-Ventura. To handle this we use Apple's availability APIs.
+///     HelperServices uses a new API for registering the Helper as launchAgent under macOS 13.0 Ventura. It's called `SMAppService`. It's not available pre-Ventura. To handle this we use Apple's availability APIs.
 ///     Unfortunately there have been problems with the availability APIs. See https://github.com/noah-nuebling/mac-mouse-fix/issues/241.
 ///     Below you can find my notes / stream of consciousness on trying to figure this out.
 ///
