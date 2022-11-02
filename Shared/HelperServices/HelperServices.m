@@ -98,61 +98,84 @@
     
     if (@available(macOS 13.0, *)) {
         
-        /// Disable and clean up legacy versions
-        ///     Edit: I'm not totally sure what the reason is for the differences between this and what we do pre macOS 13.
-        ///     - Why aren't we terminating other helper instance here?
-        ///     - At the time of writing `runPreviousVersionCleanup` won't work properly, because `strangeHelperIsRegisteredWithLaunchd` only looks at the pre macOS 13 helper. But it doesn't matter since all it does when it finds a strange helper is call. `removeHelperFromLaunchd`, and we're calling that anyways right here. -> Clean this up. Maybe rename `runPreviousVersionCleanup` -> `prefPaneCleanup`, and clearly mark `strangeHelperIsRegisteredWithLaunchd` as only working pre macOS 13 or update it to work with macOS 13. Idea: give `strangeHelperIsRegisteredWithLaunchd` and the helperIsActive function an argument which launchd label they should check for.
+        ///
+        /// Cleanup
+        ///
         
-        [self runPreviousVersionCleanup];
+        /// Edit: I'm not totally sure what the reason is for the differences between this and what we do pre macOS 13.
+        /// - Why aren't we terminating other helper instance here?
+        /// - At the time of writing `strangeHelperIsRegisteredWithLaunchd` only looks at the pre macOS 13 helper. But it doesn't matter since all it does when it finds a strange helper is call. `removeHelperFromLaunchd`, and we're calling that anyways right here. -> Clean this up, and clearly mark `strangeHelperIsRegisteredWithLaunchd` as only working pre macOS 13 or update it to work with macOS 13. Idea: give `strangeHelperIsRegisteredWithLaunchd` and the helperIsActive function an argument which launchd label they should check for.
+        
+        
+        if (self.strangeHelperIsRegisteredWithLaunchd) {
+            [self removeHelperFromLaunchd];
+        }
+        
+        [self removePrefpaneLaunchdPlist];
+        /// ^ Could also do this in the if block but users have been having some weirdd issues after upgrading to the app version and I don't know why. I feel like this might make things slightly more robust.
+        
         [self removeHelperFromLaunchd];
         removeLaunchdPlist();
         
-        /// Call core
-        ///    Do this on some global queue. Xcode complains if you do this on mainThread because it can lead to unresponsive UI.
         dispatch_async(dispatch_get_global_queue(QOS_CLASS_USER_INTERACTIVE, 0), ^{
-            
+                
+            ///
+            /// Enable helper
+            ///    Do this on some global queue. Xcode complains if you do this on mainThread because it can lead to unresponsive UI.
             NSError *error = [self enableHelper_SM:enable];
             
-            if (onComplete != nil) {
-                
-//                if (error == nil) {
-//                    
-//                    NSNumber *helperVersion = (NSNumber *)[MFMessagePort sendMessage:@"getBundleVersion" withPayload:nil expectingReply:YES];
-//                    NSInteger mainAppVersion = Locator.bundleVersion;
-//                    
-//                    if (helperVersion != nil && helperVersion.integerValue != mainAppVersion) {
-//                        error = [NSError errorWithDomain:MFHelperServicesErrorDomain code:kMFHelperServicesErrorMismatchedHelper userInfo:nil];
-//                    }
-//                }
-                
-                onComplete(error);
-            }
+            ///
+            /// Call onComplete
+            ///
+            if (onComplete != nil) onComplete(error);
         });
         
     } else {
         
-        /// Repair/generate launchdPlist so that the following code works for sure
+        ///
+        /// Generate / repair launchd.plist
+        ///
+        
         [HelperServices repairLaunchdPlist];
-        /// If an old version of Mac Mouse Fix is still running and stuff, clean that up to prevent issues
-        [HelperServices runPreviousVersionCleanup];
+        
+        ///
+        /// Cleanup
+        ///     Remove residue & prevent interference
+        
+        /// Unregister strange helper
+        if (self.strangeHelperIsRegisteredWithLaunchd) {
+            [self removeHelperFromLaunchd];
+        }
+        
+        /// Remove old prefpane launchd.plist
+        /// Notes:
+        /// - We could only do this only if strangeHelperIsRegisteredWithLaunchd, but users have been having some weirdd issues after upgrading to the app version and I don't know why. I feel like this might make things slightly more robust.
+        [self removePrefpaneLaunchdPlist];
         
         /**
+         Kill & unregister helper instances
+            If we're enabling
+         
          Sometimes there's a weird bug where the main app won't recognize the helper as enabled even though it is. The code down below for enabling will then fail, when the user tries to check the enable checkbox.
          So we're removing the helper from launchd before trying to enable to hopefully fix this. Edit: seems to fix it!
          I'm pretty sure that if we didn't check for `launchdPathIsBundlePath` in `strangeHelperIsRegisteredWithLaunchd` this issue wouldn't have occured and we wouldn't need this workaround. But I'm not sure anymore why we do that so it's not smart to remove it.
          Edit: I think the specific issue I saw only happens when there are two instances of MMF open at the same time.
          */
         if (enable) {
-            [HelperServices removeHelperFromLaunchd];
             
+            [HelperServices removeHelperFromLaunchd];
             /// Any Mac Mouse Fix Helper processes that were started by launchd should have been quit by now. But if there are Helpers which weren't started by launchd they will still be running which causes problems. Terminate them now.
             [HelperServices terminateOtherHelperInstances];
         }
         
-        /// Call core
+        ///
+        /// Enable helper
+        ///
         enableHelper_PList(enable);
         
+        ///
         /// Call onComplete
+        ///
         if (onComplete != nil) onComplete(nil);
     }
 }
@@ -652,17 +675,17 @@ static NSError *makeWritable(NSString *itemPath) {
 
 #pragma mark - Clean up legacy stuff
 
-+ (void)runPreviousVersionCleanup {
-    
-    DDLogInfo(@"Cleaning up stuff from previous versions");
-    
-    if (self.strangeHelperIsRegisteredWithLaunchd) {
-        [self removeHelperFromLaunchd];
-    }
-    
-    [self removePrefpaneLaunchdPlist];
-    /// ^ Could also do this in the if block but users have been having some weirdd issues after upgrading to the app version and I don't know why. I feel like this might make things slightly more robust.
-}
+//+ (void)runPreviousVersionCleanup {
+//
+//    DDLogInfo(@"Cleaning up stuff from previous versions");
+//
+//    if (self.strangeHelperIsRegisteredWithLaunchd) {
+//        [self removeHelperFromLaunchd];
+//    }
+//
+//    [self removePrefpaneLaunchdPlist];
+//    /// ^ Could also do this in the if block but users have been having some weirdd issues after upgrading to the app version and I don't know why. I feel like this might make things slightly more robust.
+//}
 
 /// Check if helper is registered with launchd from some other location
 + (BOOL)strangeHelperIsRegisteredWithLaunchd {
@@ -702,9 +725,12 @@ static NSError *makeWritable(NSString *itemPath) {
     
 }
 
-/// Remove currently running helper from launchd
-/// From my testing this does the same as the `bootout` command, but it doesn't rely on a valid launchd.plist file to exist in the library, so it should be more robust.
 + (void)removeHelperFromLaunchd {
+    
+    /// Remove currently running helper from launchd
+    /// Notes:
+    /// - From my testing this does the same as the `bootout` command, but it doesn't rely on a valid launchd.plist file to exist in the library, so it should be more robust.
+    /// - The removed service will be quit immediately but will be restarted on the next boot. Pre-SMAppService you can prevent start on next boot by deleting the launchd.plist file. Post-SMAppService you need to unregister the service. Not sure if there are other ways.
     
     /// Remove pre-service management helper
     removeServiceWithIdentifier(kMFLaunchdHelperIdentifier);
