@@ -7,6 +7,12 @@
 // --------------------------------------------------------------------------
 //
 
+/// This class is used to communicate between the MainApp and the Helper.
+///     More or less works like a function call across processes.
+/// Notes:
+/// - Can't be named MessagePort because there's already a class in Foundation with that name
+/// - This is a wrapper around CFMessagePort, which itself is a wrapper around mach ports. This was one of the first things we wrote for Mac Mouse Fix. Don't remember why we didn't use the higher level NSMachPort or directly use the low level mach_port C APIs. 
+
 #import "MFMessagePort.h"
 #import <Cocoa/Cocoa.h>
 #import "Constants.h"
