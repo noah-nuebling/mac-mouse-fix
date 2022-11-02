@@ -163,7 +163,7 @@ CGEventRef _Nullable testCallback(CGEventTapProxy proxy, CGEventType type, CGEve
     ///
     
     [PrefixSwift initGlobalStuff];
-    [MessagePort_Helper load_Manual];
+    [SharedMessagePort load_Manual];
     
     ///
     /// Do the accessibility check

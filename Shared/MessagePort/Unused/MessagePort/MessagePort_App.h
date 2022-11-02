@@ -12,6 +12,6 @@
 
 @interface MessagePort_App : NSObject
 
-+ (void)load_Manual;
+//+ (void)load_Manual;
 
 @end

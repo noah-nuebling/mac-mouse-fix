@@ -154,7 +154,7 @@ static NSDictionary *sideButtonActions;
         [AppTranslocationManager removeTranslocation];
         
         /// Start parts of the app that depend on the initialization we just did
-        [MessagePort_App load_Manual];
+        [SharedMessagePort load_Manual];
         
         /// Need to manually initConfig because it is shared with Helper, and helper uses `load_Manual`
         ///     Edit: What?? That doesn't make sense to me.

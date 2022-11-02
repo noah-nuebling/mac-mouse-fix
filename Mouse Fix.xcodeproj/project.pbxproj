@@ -180,6 +180,7 @@
 		4FC8A7D928AD3FC7007DB982 /* RemapTableCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FC8A7D828AD3FC7007DB982 /* RemapTableCellView.swift */; };
 		4FCA07D625F3129B00BFE209 /* RemapTableController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FCA07D525F3129B00BFE209 /* RemapTableController.m */; };
 		4FCC03352757B181002E5A57 /* ScreenDrawer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FCC03322757A50C002E5A57 /* ScreenDrawer.swift */; };
+		4FCD01732912C0A400B43C1B /* MessagePortUtility_App.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F2F0B2A28E6258B00246D59 /* MessagePortUtility_App.swift */; };
 		4FD0A71127B295F600FFCD12 /* OtherConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FD0A71027B295F600FFCD12 /* OtherConfig.swift */; };
 		4FD148C728AA416700FE688C /* MenuBarItem.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4FD148C928AA416700FE688C /* MenuBarItem.xib */; };
 		4FD148CC28AA423F00FE688C /* AuthorizeAccessibilityView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4FD148CE28AA423F00FE688C /* AuthorizeAccessibilityView.xib */; };
@@ -916,6 +917,8 @@
 			children = (
 				4F44FF022606D73D00926A5E /* SharedMessagePort.h */,
 				4F44FF032606D73D00926A5E /* SharedMessagePort.m */,
+				4F2F0B2A28E6258B00246D59 /* MessagePortUtility_App.swift */,
+				4FCD01742912C0B600B43C1B /* Unused */,
 			);
 			path = MessagePort;
 			sourceTree = "<group>";
@@ -1386,6 +1389,15 @@
 			path = Unused;
 			sourceTree = "<group>";
 		};
+		4FCD01742912C0B600B43C1B /* Unused */ = {
+			isa = PBXGroup;
+			children = (
+				4FF6661125F2C93A00689B77 /* MessagePort */,
+				4FF665D625F2C92700689B77 /* MessagePort */,
+			);
+			path = Unused;
+			sourceTree = "<group>";
+		};
 		4FCECD7721092354001F1078 = {
 			isa = PBXGroup;
 			children = (
@@ -1604,7 +1616,6 @@
 				4F7A1A70289F2517007D5B30 /* UI */,
 				4F8CE6FE2617738A00D70A76 /* AppTranslocation */,
 				4FF665C625F2C92700689B77 /* Update */,
-				4FF665D625F2C92700689B77 /* MessagePort */,
 				4FF665E525F2C92700689B77 /* Utility */,
 				4F909D3F28A0C411009349A2 /* Experiments */,
 				4FF665D425F2C92700689B77 /* Resources */,
@@ -1648,7 +1659,6 @@
 			children = (
 				4FF665D825F2C92700689B77 /* MessagePort_App.h */,
 				4FF665D725F2C92700689B77 /* MessagePort_App.m */,
-				4F2F0B2A28E6258B00246D59 /* MessagePortUtility_App.swift */,
 			);
 			path = MessagePort;
 			sourceTree = "<group>";
@@ -1694,7 +1704,6 @@
 				4FF6664B25F2C93A00689B77 /* AccessibilityCheck.m */,
 				4FF6661425F2C93A00689B77 /* Core */,
 				4FF6660825F2C93A00689B77 /* FileMonitor */,
-				4FF6661125F2C93A00689B77 /* MessagePort */,
 				4F78CEF22904414B0030086C /* UI */,
 				4FF6663F25F2C93A00689B77 /* Utility */,
 				4FF6660F25F2C93A00689B77 /* Resources */,
@@ -1741,7 +1750,8 @@
 				4FF6661225F2C93A00689B77 /* MessagePort_Helper.h */,
 				4FF6661325F2C93A00689B77 /* MessagePort_Helper.m */,
 			);
-			path = MessagePort;
+			name = MessagePort;
+			path = ../../../Helper/MessagePort;
 			sourceTree = "<group>";
 		};
 		4FF6661425F2C93A00689B77 /* Core */ = {
@@ -2550,6 +2560,7 @@
 				4FF6669125F2C93A00689B77 /* ScrollUtility.m in Sources */,
 				4FF666A825F2C93A00689B77 /* DeviceManager.m in Sources */,
 				4FF8C89F28955DC4007EC31F /* CoolTimer.swift in Sources */,
+				4FCD01732912C0A400B43C1B /* MessagePortUtility_App.swift in Sources */,
 				4FF6669B25F2C93A00689B77 /* AppDelegate.m in Sources */,
 				4FFA4E4728B7D2980062A1FE /* Animate.swift in Sources */,
 				4FDE75A228B2397600662314 /* PayButton.swift in Sources */,
