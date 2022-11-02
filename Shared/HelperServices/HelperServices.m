@@ -261,20 +261,23 @@
     }
 }
 
+//BOOL buildNumberMatchesMainApp(NSInteger bundleVersion) {
+//    
+//    /// - Not sure if this belongs here? HelperServices is getting a little messy.
+//    /// - Maybe we could just move the build number checking into messagePort entirely.
+//    ///   Edit: Did move the build number checking into messagePort - Remove this
+//    
+//    assert(SharedUtility.runningMainApp);
+//    return Locator.bundleVersion == bundleVersion;
+//}
 
 + (BOOL)helperIsActive_Message {
 
     if (SharedUtility.runningMainApp) {
         
-        NSString *response = (NSString *)[SharedMessagePort sendMessage:@"getBundleVersion" withPayload:nil expectingReply:YES];
-        if (response == nil) {
-            return NO ;
-        } else {
-            NSString *helperVersion = response;
-            NSString *mainAppVersion = [NSBundle.mainBundle objectForInfoDictionaryKey:@"CFBundleVersion"];
-            
-            return [helperVersion isEqual:mainAppVersion];
-        }
+        NSNumber *response = (NSNumber *)[SharedMessagePort sendMessage:@"isActive" withPayload:nil expectingReply:YES];
+        return [response isEqual:@(YES)];
+        
     } else {
         /// Crash
         assert(false);

@@ -11,6 +11,7 @@
 #import <Cocoa/Cocoa.h>
 #import "Constants.h"
 #import "SharedUtility.h"
+#import "Locator.h"
 
 @implementation SharedMessagePort
 
@@ -47,11 +48,13 @@ static CFMessagePortRef _Nullable createRemotePort() {
     if (payload) {
         messageDict = @{
             kMFMessageKeyMessage: message,
-            kMFMessageKeyPayload: payload, // This crashes if payload is nil for some reason
+            kMFMessageKeyPayload: payload, /// This crashes if payload is nil for some reason
+            kMFMessageKeyBundleVersion: @(Locator.bundleVersion),
         };
     } else {
         messageDict = @{
             kMFMessageKeyMessage: message,
+            kMFMessageKeyBundleVersion: @(Locator.bundleVersion),
         };
     }
     

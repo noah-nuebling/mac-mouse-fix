@@ -21,6 +21,8 @@ NS_ASSUME_NONNULL_BEGIN
 + (void)restartHelperWithDelay:(double)delay;
 + (NSDate *)possibleRestartTime;
 
+//BOOL buildNumberMatchesMainApp(NSString *buildNumber);
+
 + (NSString *)launchHelperInstanceWithMessage:(NSString *)message;
 
 @end

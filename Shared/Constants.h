@@ -62,8 +62,9 @@ typedef enum {
 
 /// Message dict keys
 
-#define kMFMessageKeyMessage    @"message"
-#define kMFMessageKeyPayload    @"payload"
+#define kMFMessageKeyMessage        @"message"
+#define kMFMessageKeyBundleVersion  @"version"
+#define kMFMessageKeyPayload        @"payload"
 
 /// Other AddMode keys (more below)
 #define kMFAddModeModificationPrecondition  @"addModeModifier"

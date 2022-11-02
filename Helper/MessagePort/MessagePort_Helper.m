@@ -17,6 +17,7 @@
 #import "ButtonLandscapeAssessor.h"
 #import "DeviceManager.h"
 #import "Mac_Mouse_Fix_Helper-Swift.h"
+#import "Locator.h"
 
 #import <CoreFoundation/CoreFoundation.h>
 #import "WannabePrefixHeader.h"
@@ -65,6 +66,14 @@ static CFDataRef _Nullable didReceiveMessage(CFMessagePortRef port, SInt32 messa
     
     NSString *message = messageDict[kMFMessageKeyMessage];
     NSObject *payload = messageDict[kMFMessageKeyPayload];
+    NSInteger appVersion = [messageDict[kMFMessageKeyBundleVersion] integerValue];
+    
+    NSInteger helperVersion = Locator.bundleVersion;
+    
+    if (appVersion != helperVersion) {
+        DDLogError(@"Helper Received Message From Strange Main App: %@ with payload: %@, appVersion: %ld, helperVersion: %ld", message, payload, appVersion, helperVersion);
+        return NULL;
+    }
     
     NSObject *response = nil;
     
@@ -105,8 +114,8 @@ static CFDataRef _Nullable didReceiveMessage(CFMessagePortRef port, SInt32 messa
         uint64_t senderID = [(NSNumber *)payload unsignedIntegerValue];
         [HelperState updateActiveDeviceWithEventSenderID:senderID];
         
-    } else if ([message isEqualToString:@"getBundleVersion"]) {
-        response = [NSBundle.mainBundle objectForInfoDictionaryKey:@"CFBundleVersion"];
+    } else if ([message isEqualToString:@"isActive"]) {
+        response = @(YES);
     } else {
         DDLogInfo(@"Unknown message received: %@", message);
     }

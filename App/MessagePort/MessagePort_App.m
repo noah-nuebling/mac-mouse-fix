@@ -67,6 +67,14 @@ static CFDataRef didReceiveMessage(CFMessagePortRef port, SInt32 messageID, CFDa
     
     NSString *message = messageDict[kMFMessageKeyMessage];
     NSObject *payload = messageDict[kMFMessageKeyPayload];
+    NSInteger helperVersion = [messageDict[kMFMessageKeyBundleVersion] integerValue];
+    
+    NSInteger appVersion = Locator.bundleVersion;
+    
+    if (appVersion != helperVersion) {
+        DDLogError(@"Main App Received Message From Strange Helper: %@ with payload: %@, helperVersion: %ld, appVersion: %ld", message, payload, helperVersion, appVersion);
+        return NULL;
+    }
     
     DDLogInfo(@"Main App Received Message: %@ with payload: %@", message, payload);
     
