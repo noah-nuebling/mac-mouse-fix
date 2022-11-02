@@ -106,22 +106,30 @@
         /// - Why aren't we terminating other helper instance here?
         /// - At the time of writing `strangeHelperIsRegisteredWithLaunchd` only looks at the pre macOS 13 helper. But it doesn't matter since all it does when it finds a strange helper is call. `removeHelperFromLaunchd`, and we're calling that anyways right here. -> Clean this up, and clearly mark `strangeHelperIsRegisteredWithLaunchd` as only working pre macOS 13 or update it to work with macOS 13. Idea: give `strangeHelperIsRegisteredWithLaunchd` and the helperIsActive function an argument which launchd label they should check for.
         
+        /// Remove __app__ launchd.plist
+        removeLaunchdPlist();
         
+        /// Remove __prefpane__ launchd.plist
+        removePrefpaneLaunchdPlist();
+        
+        /// Unregister strange helper
         if (self.strangeHelperIsRegisteredWithLaunchd) {
             [self removeHelperFromLaunchd];
         }
         
-        [self removePrefpaneLaunchdPlist];
-        /// ^ Could also do this in the if block but users have been having some weirdd issues after upgrading to the app version and I don't know why. I feel like this might make things slightly more robust.
-        
+        /// Unregister helper
+        ///     ? Why
         [self removeHelperFromLaunchd];
-        removeLaunchdPlist();
+        
         
         dispatch_async(dispatch_get_global_queue(QOS_CLASS_USER_INTERACTIVE, 0), ^{
                 
             ///
             /// Enable helper
-            ///    Do this on some global queue. Xcode complains if you do this on mainThread because it can lead to unresponsive UI.
+            /// 
+            
+            /// Do this on some global queue. Xcode complains if you do this on mainThread because it can lead to unresponsive UI.
+            
             NSError *error = [self enableHelper_SM:enable];
             
             ///
@@ -142,30 +150,32 @@
         /// Cleanup
         ///     Remove residue & prevent interference
         
+        /// Remove old prefpane launchd.plist
+        /// Notes:
+        /// - We could only do this only if strangeHelperIsRegisteredWithLaunchd, but users have been having some weirdd issues after upgrading to the app version and I don't know why. I feel like this might make things slightly more robust.
+        removePrefpaneLaunchdPlist();
+        
+        
         /// Unregister strange helper
         if (self.strangeHelperIsRegisteredWithLaunchd) {
             [self removeHelperFromLaunchd];
         }
         
-        /// Remove old prefpane launchd.plist
-        /// Notes:
-        /// - We could only do this only if strangeHelperIsRegisteredWithLaunchd, but users have been having some weirdd issues after upgrading to the app version and I don't know why. I feel like this might make things slightly more robust.
-        [self removePrefpaneLaunchdPlist];
-        
-        /**
-         Kill & unregister helper instances
-            If we're enabling
-         
-         Sometimes there's a weird bug where the main app won't recognize the helper as enabled even though it is. The code down below for enabling will then fail, when the user tries to check the enable checkbox.
-         So we're removing the helper from launchd before trying to enable to hopefully fix this. Edit: seems to fix it!
-         I'm pretty sure that if we didn't check for `launchdPathIsBundlePath` in `strangeHelperIsRegisteredWithLaunchd` this issue wouldn't have occured and we wouldn't need this workaround. But I'm not sure anymore why we do that so it's not smart to remove it.
-         Edit: I think the specific issue I saw only happens when there are two instances of MMF open at the same time.
-         */
         if (enable) {
             
+            /// Kill & unregister if we're enabling
+            ///
+            /// Doing this because sometimes there's a weird bug where the main app won't recognize the helper as enabled even though it is. The code down below for enabling will then fail, when the user tries to check the enable checkbox.
+            /// So we're removing the helper from launchd before trying to enable to hopefully fix this. Edit: seems to fix it!
+            /// I'm pretty sure that if we didn't check for `launchdPathIsBundlePath` in `strangeHelperIsRegisteredWithLaunchd` this issue whave occured and we wouldn't need this workaround. But I'm not sure anymore why we do that so it's not smart to remove it.
+            /// Edit: I think the specific issue I saw only happens when there are two instances of MMF open at the same time.
+            
             [HelperServices removeHelperFromLaunchd];
-            /// Any Mac Mouse Fix Helper processes that were started by launchd should have been quit by now. But if there are Helpers which weren't started by launchd they will still be running which causes problems. Terminate them now.
+            
+            /// Kill non-launchd helpers
+            ///     Non-launchd helpers can only normally happen during debugging I think
             [HelperServices terminateOtherHelperInstances];
+            
         }
         
         ///
@@ -751,14 +761,14 @@ static void removeServiceWithIdentifier(NSString *identifier) {
     }
 }
 
-+ (void)removePrefpaneLaunchdPlist {
+static void removePrefpaneLaunchdPlist() {
         
     /// Remove legacy launchd plist file if it exists
     /// The launchd plist file used to be at `~/Library/LaunchAgents/com.nuebling.mousefix.helper.plist` when the app was still a prefpane
     /// Now, with the app version, it's moved to `~/Library/LaunchAgents/com.nuebling.mac-mouse-fix.helper.plist`
     /// Having the old version still can lead to the old helper being started at startup, and I think other conflicts, too.
     
-    DDLogInfo(@"Removing legacy launchd plist");
+    DDLogInfo(@"Removing prefpane launchd plist");
     
     /// Find user library
     NSArray<NSString *> *libraryPaths = NSSearchPathForDirectoriesInDomains(NSLibraryDirectory, NSUserDomainMask, YES);
@@ -766,14 +776,15 @@ static void removeServiceWithIdentifier(NSString *identifier) {
     NSMutableString *libraryPath = libraryPaths.firstObject.mutableCopy;
     NSString *legacyLaunchdPlistPath = [libraryPath stringByAppendingPathComponent:@"LaunchAgents/com.nuebling.mousefix.helper.plist"];
     NSError *err;
-    // Remove old file
+    
+    /// Remove old file
     if ([NSFileManager.defaultManager fileExistsAtPath:legacyLaunchdPlistPath]) {
         [NSFileManager.defaultManager removeItemAtPath:legacyLaunchdPlistPath error:&err];
         if (err) {
-            DDLogError(@"Error while removing legacy launchd plist file: %@", err);
+            DDLogError(@"Error while removing prefpane launchd plist file: %@", err);
         }
     } else  {
-        DDLogInfo(@"No legacy launchd plist file found at: %@", legacyLaunchdPlistPath);
+        DDLogInfo(@"No prefpane launchd.plist file found at: %@", legacyLaunchdPlistPath);
     }
 }
 

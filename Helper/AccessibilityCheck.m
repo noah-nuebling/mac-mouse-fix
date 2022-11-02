@@ -190,6 +190,12 @@ CGEventRef _Nullable testCallback(CGEventTapProxy proxy, CGEventType type, CGEve
     } else {
         
         ///
+        /// Log
+        ///
+        
+        DDLogInfo(@"Helper started with accessibility permissions at: URL %@", Locator.currentExecutableURL);
+        
+        ///
         /// __Post-check init__
         ///
         /// Using `load_Manual` instead of normal load, because creating an eventTap crashes the program, if we don't have accessibilty access (I think - I don't really remember)
