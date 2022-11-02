@@ -279,7 +279,7 @@ static void iteratePropertiesOn(id obj, void(^callback)(objc_property_t property
 + (BOOL)runningMainApp {
     
     /// Return YES if called by main app
-    ///     Note: Could also use compiler flags `IS_MAIN_APP` and `IS_HELPER` to speed this up.
+    ///     Note: Could also use compiler flags `IS_MAIN_APP` and `IS_HELPER` to speed this up. Or just remove these methods and just use the flags directly
     return [NSBundle.mainBundle.bundleIdentifier isEqual:kMFBundleIDApp];
 }
 + (BOOL)runningHelper {

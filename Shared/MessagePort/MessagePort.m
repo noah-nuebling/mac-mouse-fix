@@ -46,11 +46,10 @@
     DDLogInfo(@"Initializing MessagePort...");
     
     assert(SharedUtility.runningMainApp || SharedUtility.runningHelper);
-    BOOL isApp = SharedUtility.runningMainApp;
     
     CFMessagePortRef localPort =
     CFMessagePortCreateLocal(kCFAllocatorDefault,
-                             (__bridge CFStringRef)(isApp ? kMFBundleIDApp : kMFBundleIDHelper),
+                             (__bridge CFStringRef)(SharedUtility.runningMainApp ? kMFBundleIDApp : kMFBundleIDHelper),
                              didReceiveMessage,
                              nil,
                              NULL);
@@ -83,7 +82,7 @@
         CFRelease(runLoopSource);
     } else {
         
-        if (isApp) {
+        if (SharedUtility.runningMainApp) {
             DDLogInfo(@"Failed to create a local message port. It will probably work anyway for some reason");
         } else {
             DDLogError(@"Failed to create a local message port. This might be because there is another instance of %@ already running. Crashing the app.", kMFHelperName);
@@ -97,34 +96,40 @@
 
 static CFDataRef _Nullable didReceiveMessage(CFMessagePortRef port, SInt32 messageID, CFDataRef data, void *info) {
     
-    
-#if IS_MAIN_APP
+    assert(SharedUtility.runningMainApp || SharedUtility.runningHelper);
     
     NSDictionary *messageDict = [NSKeyedUnarchiver unarchiveObjectWithData:(__bridge NSData *)data];
     
     NSString *message = messageDict[kMFMessageKeyMessage];
     NSObject *payload = messageDict[kMFMessageKeyPayload];
-    NSInteger helperVersion = [messageDict[kMFMessageKeyBundleVersion] integerValue];
     
-    NSInteger appVersion = Locator.bundleVersion;
+    NSInteger localVersion = Locator.bundleVersion;
+    NSInteger remoteVersion = [messageDict[kMFMessageKeyBundleVersion] integerValue];
     
-    if (appVersion != helperVersion) {
+    if (localVersion != remoteVersion) {
         
-        DDLogError(@"Main App Received Message From Strange Helper: %@ with payload: %@, helperVersion: %ld, appVersion: %ld. Killing the strange helper.", message, payload, helperVersion, appVersion);
+        DDLogError(@"Received Message From Stranger: %@ with payload: %@, localVersion: %ld, remoteVersion: %ld. Killing the strange helper.", message, payload, localVersion, remoteVersion);
         
-        /// Kill the strange helper
-        ///
-        /// Notes:
-        /// - Not sure if just using `enableHelperAsUserAgent:` is enough. Does this call `launchctl remove`? Does it kill strange helpers that weren't started by launchd? That might be necessary in some situations.
-        /// - In Ventura 13.0, SMAppService has strange bugs where it will always start an old version of MMF until you delete the old version, empty the trash, then restart computer and then try again. Was hoping this would be fixed but it's still there after the 13.0 Beta.
-        ///     -> We should probably give the user instructions on how to fix things, when this situation occurs.
-        
-        [HelperServices enableHelperAsUserAgent:NO onComplete:nil];
+        if (SharedUtility.runningMainApp) {
+            
+            /// Kill the strange helper
+            ///
+            /// Notes:
+            /// - Not sure if just using `enableHelperAsUserAgent:` is enough. Does this call `launchctl remove`? Does it kill strange helpers that weren't started by launchd? That might be necessary in some situations.
+            /// - In Ventura 13.0, SMAppService has strange bugs where it will always start an old version of MMF until you delete the old version, empty the trash, then restart computer and then try again. Was hoping this would be fixed but it's still there after the 13.0 Beta.
+            ///     -> We should probably give the user instructions on how to fix things, when this situation occurs.
+            
+            [HelperServices enableHelperAsUserAgent:NO onComplete:nil];
+        }
         
         return NULL;
     }
     
-    DDLogInfo(@"Main App Received Message: %@ with payload: %@", message, payload);
+    DDLogInfo(@"Received Message: %@ with payload: %@", message, payload);
+    
+    NSObject *response = nil;
+    
+#if IS_MAIN_APP
     
     if ([message isEqualToString:@"accessibilityDisabled"]) {
         [(ResizingTabWindowController *)MainAppState.shared.window.windowController handleAccessibilityDisabledMessage]; /// If App delegate is about to remove the acc overlay, stop that
@@ -143,29 +148,8 @@ static CFDataRef _Nullable didReceiveMessage(CFMessagePortRef port, SInt32 messa
         [Config handleConfigFileChange];
     }
     
-    return NULL;
-    
-#endif
-    
-#if IS_HELPER
-    
-    NSDictionary *messageDict = [NSKeyedUnarchiver unarchiveObjectWithData:(__bridge NSData *)data];
-    
-    NSString *message = messageDict[kMFMessageKeyMessage];
-    NSObject *payload = messageDict[kMFMessageKeyPayload];
-    NSInteger appVersion = [messageDict[kMFMessageKeyBundleVersion] integerValue];
-    
-    NSInteger helperVersion = Locator.bundleVersion;
-    
-    if (appVersion != helperVersion) {
-        DDLogError(@"Helper Received Message From Strange Main App: %@ with payload: %@, appVersion: %ld, helperVersion: %ld", message, payload, appVersion, helperVersion);
-        return NULL;
-    }
-    
-    NSObject *response = nil;
-    
-    DDLogInfo(@"Helper Received Message: %@ with payload: %@", message, payload);
-    
+#elif IS_HELPER
+
     if ([message isEqualToString:@"configFileChanged"]) {
         [Config handleConfigFileChange];
     } else if ([message isEqualToString:@"terminate"]) {
@@ -207,15 +191,13 @@ static CFDataRef _Nullable didReceiveMessage(CFMessagePortRef port, SInt32 messa
         DDLogInfo(@"Unknown message received: %@", message);
     }
     
+#endif
+    
     if (response != nil) {
          return (__bridge_retained CFDataRef)[NSKeyedArchiver archivedDataWithRootObject:response];
      }
 
      return NULL;
-    
-#endif
-    
-    
 }
 
 #pragma mark - Sending messages
