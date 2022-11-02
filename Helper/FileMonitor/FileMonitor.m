@@ -14,7 +14,7 @@
 #import <Foundation/Foundation.h>
 #import "Constants.h"
 #import "SharedUtility.h"
-#import "SharedMessagePort.h"
+#import "MessagePort.h"
 
 @implementation FileMonitor
 
@@ -124,7 +124,7 @@ void handleRelocation(void) {
         /// If we disable the Helper, it won't be able to be restarted until the whole computer is restarted, so it's better to do nothing. (Under Ventura Beta 7).
 //        [HelperServices disableHelperFromHelper];
     } else {
-        [SharedMessagePort sendMessage:@"helperDisabled" withPayload:nil expectingReply:NO];
+        [MessagePort sendMessage:@"helperDisabled" withPayload:nil expectingReply:NO];
         [HelperServices enableHelperAsUserAgent:NO onComplete:nil];
         disableHelper();
     }

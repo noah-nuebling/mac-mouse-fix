@@ -31,7 +31,7 @@
 #import "Constants.h"
 #import "Locator.h"
 #import "SharedUtility.h"
-#import "SharedMessagePort.h"
+#import "MessagePort.h"
 #import <ServiceManagement/ServiceManagement.h>
 #import <sys/sysctl.h>
 #import <sys/types.h>
@@ -53,7 +53,7 @@
     return;
     
     /// Notify mainApp
-    [SharedMessagePort sendMessage:@"helperDisabled" withPayload:nil expectingReply:NO];
+    [MessagePort sendMessage:@"helperDisabled" withPayload:nil expectingReply:NO];
     
     /// Disable helper
     ///     We can't just do `[self removeHelperFromLaunchd]`, because
@@ -275,7 +275,7 @@
 
     if (SharedUtility.runningMainApp) {
         
-        NSNumber *response = (NSNumber *)[SharedMessagePort sendMessage:@"isActive" withPayload:nil expectingReply:YES];
+        NSNumber *response = (NSNumber *)[MessagePort sendMessage:@"isActive" withPayload:nil expectingReply:YES];
         return [response isEqual:@(YES)];
         
     } else {

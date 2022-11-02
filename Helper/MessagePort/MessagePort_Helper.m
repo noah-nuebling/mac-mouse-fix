@@ -13,7 +13,7 @@
 #import <AppKit/NSWindow.h>
 #import "AccessibilityCheck.h"
 #import "Constants.h"
-#import "SharedMessagePort.h"
+#import "MessagePort.h"
 #import "ButtonLandscapeAssessor.h"
 #import "DeviceManager.h"
 #import "Mac_Mouse_Fix_Helper-Swift.h"

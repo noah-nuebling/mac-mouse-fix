@@ -1,13 +1,13 @@
 //
 // --------------------------------------------------------------------------
-// SharedMessagePort.m
+// MessagePort.m
 // Created for Mac Mouse Fix (https://github.com/noah-nuebling/mac-mouse-fix)
 // Created by Noah Nuebling in 2021
 // Licensed under the MMF License (https://github.com/noah-nuebling/mac-mouse-fix/blob/master/LICENSE)
 // --------------------------------------------------------------------------
 //
 
-#import "SharedMessagePort.h"
+#import "MessagePort.h"
 #import <Cocoa/Cocoa.h>
 #import "Constants.h"
 #import "SharedUtility.h"
@@ -24,7 +24,7 @@
 #import "AccessibilityCheck.h"
 #endif
 
-@implementation SharedMessagePort
+@implementation MessagePort
 
 #pragma mark - Receiving messages
 
@@ -42,7 +42,7 @@
     /// I hope thinik moving using `initialize' instead of `load` within `MessagePort_App` should fix this and work just fine for everything else. I don't know why we used load to begin with.
     /// Edit: I don't remember why we moved to load_Manual now, but it works fine
     
-    if (self == [SharedMessagePort class]) { /// This shouldn't be necessary, now that we're not using initialize anymore
+    if (self == [MessagePort class]) { /// This shouldn't be necessary, now that we're not using initialize anymore
         
         DDLogInfo(@"Initializing MessagePort...");
         
@@ -192,7 +192,7 @@ static CFDataRef _Nullable didReceiveMessage(CFMessagePortRef port, SInt32 messa
     } else if ([message isEqualToString:@"checkAccessibility"]) {
         BOOL isTrusted = [AccessibilityCheck checkAccessibilityAndUpdateSystemSettings];
         if (!isTrusted) {
-            [SharedMessagePort sendMessage:@"accessibilityDisabled" withPayload:nil expectingReply:NO];
+            [MessagePort sendMessage:@"accessibilityDisabled" withPayload:nil expectingReply:NO];
         }
     } else if ([message isEqualToString:@"enableAddMode"]) {
         [TransformationManager enableAddMode];
@@ -313,7 +313,7 @@ static CFMessagePortRef _Nullable createRemotePort() {
 
 void invalidationCallback(CFMessagePortRef ms, void *info) {
     
-    DDLogInfo(@"SharedMessagePort invalidated in %@", SharedUtility.runningHelper ? @"Helper" : @"MainApp");
+    DDLogInfo(@"MessagePort invalidated in %@", SharedUtility.runningHelper ? @"Helper" : @"MainApp");
 }
 
 //+ (CFDataRef _Nullable)sendMessage:(NSString *_Nonnull)message expectingReply:(BOOL)expectingReply {

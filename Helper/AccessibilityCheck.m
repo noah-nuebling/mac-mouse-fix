@@ -10,7 +10,7 @@
 #import "AccessibilityCheck.h"
 
 #import <AppKit/AppKit.h>
-#import "SharedMessagePort.h"
+#import "MessagePort.h"
 #import "MessagePort_Helper.h"
 #import "DeviceManager.h"
 #import "Config.h"
@@ -163,7 +163,7 @@ CGEventRef _Nullable testCallback(CGEventTapProxy proxy, CGEventType type, CGEve
     ///
     
     [PrefixSwift initGlobalStuff];
-    [SharedMessagePort load_Manual];
+    [MessagePort load_Manual];
     
     ///
     /// Do the accessibility check
@@ -208,7 +208,7 @@ CGEventRef _Nullable testCallback(CGEventTapProxy proxy, CGEventType type, CGEve
         
         /// Send 'started' message to mainApp
         ///     Note: We could improve responsivity of the enableToggle in mainApp by sending the message before doing all the initialization. But only slightly.
-        [SharedMessagePort sendMessage:@"helperEnabled" withPayload:nil expectingReply:NO];
+        [MessagePort sendMessage:@"helperEnabled" withPayload:nil expectingReply:NO];
         
         ///
         /// License init
@@ -282,7 +282,7 @@ CGEventRef _Nullable testCallback(CGEventTapProxy proxy, CGEventType type, CGEve
 
 + (void)sendAccessibilityMessageToMainApp {
     DDLogInfo(@"Sending accessibilty disabled message to main app");
-    [SharedMessagePort sendMessage:@"accessibilityDisabled" withPayload:nil expectingReply:NO];
+    [MessagePort sendMessage:@"accessibilityDisabled" withPayload:nil expectingReply:NO];
 }
 
 + (void)openMainAppAndRestart {

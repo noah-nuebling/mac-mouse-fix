@@ -18,7 +18,7 @@
 #import <Cocoa/Cocoa.h>
 
 #import "TransformationUtility.h"
-#import "SharedMessagePort.h"
+#import "MessagePort.h"
 #import "TransformationManager.h"
 #import "SharedUtility.h"
 

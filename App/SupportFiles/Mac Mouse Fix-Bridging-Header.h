@@ -29,7 +29,7 @@
 #import "NSDictionary+Additions.h"
 #import "SparkleUpdaterController.h"
 #import "AppDelegate.h"
-#import "SharedMessagePort.h"
+#import "MessagePort.h"
 #import "AuthorizeAccessibilityView.h"
 #import "UIStrings.h"
 //#import "AddViewController.h"

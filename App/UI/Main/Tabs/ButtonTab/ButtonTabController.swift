@@ -56,7 +56,7 @@ import CocoaLumberjackSwift
         /// Get device info
         ///
         
-        let (name, nOfButtons, bestPresetMatch) =  MessagePortUtility_App.getActiveDeviceInfo() ?? (nil, nil, nil)
+        let (name, nOfButtons, bestPresetMatch) =  MessagePortUtility.getActiveDeviceInfo() ?? (nil, nil, nil)
         
         ///
         /// Add accessoryView
@@ -312,7 +312,7 @@ import CocoaLumberjackSwift
             ///
             
             /// Get device info
-            guard let (deviceName, nOfButtons, _) = MessagePortUtility_App.getActiveDeviceInfo() else { return }
+            guard let (deviceName, nOfButtons, _) = MessagePortUtility.getActiveDeviceInfo() else { return }
             
             /// Get actionTable info
             let usedButtons = RemapTableUtility.getCapturedButtons()
@@ -406,7 +406,7 @@ import CocoaLumberjackSwift
             setConfig("Other.remapsAreInitialized", true as NSObject)
             commitConfig()
             
-            let (_, _, bestPresetMatch) = MessagePortUtility_App.getActiveDeviceInfo() ?? (nil, nil, nil)
+            let (_, _, bestPresetMatch) = MessagePortUtility.getActiveDeviceInfo() ?? (nil, nil, nil)
             
             /// This is copy-pasted from `restoreDefaults()`
             
@@ -611,12 +611,12 @@ import CocoaLumberjackSwift
     override func mouseEntered(with event: NSEvent) {
         pointerIsInsideAddField = true
         addFieldHoverEffect(enable: true)
-        SharedMessagePort.sendMessage("enableAddMode", withPayload: nil, expectingReply: false)
+        MessagePort.sendMessage("enableAddMode", withPayload: nil, expectingReply: false)
     }
     override func mouseExited(with event: NSEvent) {
         pointerIsInsideAddField = false
         addFieldHoverEffect(enable: false)
-        SharedMessagePort .sendMessage("disableAddMode", withPayload: nil, expectingReply: false)
+        MessagePort.sendMessage("disableAddMode", withPayload: nil, expectingReply: false)
     }
     
     /// Ignore MB1 & MB2
