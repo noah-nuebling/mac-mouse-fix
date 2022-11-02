@@ -168,7 +168,7 @@ static CGEventRef eventTapCallback(CGEventTapProxy proxy, CGEventType type, CGEv
     /// New method
     ///  - Using reverse engineered knowledge about CGEventFields to get the sender directly from the CGEvent
     ///  - Tested this method under 10.13, 10.14, 10.15 Beta, 13.0, - it works!
-    ///  - Performance vs oldMethod: Testing was limited but seems about the same.
+    ///  - Performance: Under newMethod, spamming a button in release build with debugger attached had up to 1.6% CPU usage in Activitry Monitor. OldMethod had up to 1.9%, but it went up and down a lot more.
     
     IOHIDDeviceRef iohidDevice = CGEventGetSendingDevice(event);
     Device *device = [DeviceManager attachedDeviceWithIOHIDDevice:iohidDevice];
