@@ -34,81 +34,63 @@
 
 + (void)load_Manual {
     
+    /// Notes from Helper:
+    /// I'm not sure this is supposed to be `load_Manual` instead of load
     
-#if IS_MAIN_APP
-    
+    /// Notes from mainApp:
     /// We used to do this in `load` but that lead to issues when restarting the app if it's translocated
     /// If the app detects that it is translocated, it will restart itself at the untranslocated location,  after removing the quarantine flags from itself. It starts a copy of itself while it's still running, and only then does it terminate itself. If the message port is already 'claimed' by the translocated instances when it starts the untranslocated copy, then the untranslocated copy can't 'claim' the message port for itself, which leads to things like the accessiblity screen not working.
-    /// I hope thinik moving using `initialize' instead of `load` within `MessagePort_App` should fix this and work just fine for everything else. I don't know why we used load to begin with.
-    /// Edit: I don't remember why we moved to load_Manual now, but it works fine
-    
-    if (self == [MessagePort class]) { /// This shouldn't be necessary, now that we're not using initialize anymore
-        
-        DDLogInfo(@"Initializing MessagePort...");
-        
-        CFMessagePortRef localPort =
-        CFMessagePortCreateLocal(kCFAllocatorDefault,
-                             (__bridge CFStringRef)kMFBundleIDApp,
-                             didReceiveMessage,
-                             nil,
-                             NULL);
-        
-        // Setting the name here instead of when creating the port creates some super weird behavior, too.
-//        CFMessagePortSetName(localPort, CFSTR("com.nuebling.mousefix.port"));
-        
-        // On Catalina, creating the local Port returns NULL and throws a permission denied error. Trying to schedule it with the runloop yields a crash.
-        // But even if you just skip the runloop scheduling it still works somehow!
-        if (localPort != NULL) {
-            // Could set up message port. Scheduling with run loop.
-            CFRunLoopSourceRef runLoopSource =
-                CFMessagePortCreateRunLoopSource(kCFAllocatorDefault, localPort, 0);
-            
-            CFRunLoopAddSource(CFRunLoopGetMain(),
-                               runLoopSource,
-                               kCFRunLoopCommonModes);
-            CFRelease(runLoopSource);
-        } else {
-            DDLogInfo(@"Failed to create a local message port. It will probably work anyway for some reason");
-        }
-    }
-    
-#endif
-    
-#if IS_HELPER
-    
-    /// I'm not sure this is supposed to be load_Manual instead of load
+    /// I hope thinik moving using `initialize` instead of `load` within `MessagePort_App` should fix this and work just fine for everything else. I don't know why we used load to begin with.
+    /// Edit: I don't remember why we moved to `load_Manual` now, but it works fine
     
     DDLogInfo(@"Initializing MessagePort...");
     
+    assert(SharedUtility.runningMainApp || SharedUtility.runningHelper);
+    BOOL isApp = SharedUtility.runningMainApp;
+    
     CFMessagePortRef localPort =
-    CFMessagePortCreateLocal(NULL,
-                             (__bridge CFStringRef)kMFBundleIDHelper,
+    CFMessagePortCreateLocal(kCFAllocatorDefault,
+                             (__bridge CFStringRef)(isApp ? kMFBundleIDApp : kMFBundleIDHelper),
                              didReceiveMessage,
                              nil,
-                             nil);
+                             NULL);
     
-    DDLogInfo(@"localPort: %@ (MessagePortReceiver)", localPort);
+    DDLogInfo(@"Created localPort: %@", localPort);
+    
+    /// Setting the name here instead of when creating the port creates some super weird behavior, too.
+//    CFMessagePortSetName(localPort, CFSTR("com.nuebling.mousefix.port"));
+    
     
     if (localPort != NULL) {
+        
+        /// Notes from mainApp:
+        /// On CatalinM, creating the local Port returns NULL and throws a permission denied error. Trying to schedule it with the runloop yields a crash.
+        /// But even if you just skip the runloop scheduling it still works somehow!
+        
+        /// Notes from Helper:
         /// CFMessagePortCreateRunLoopSource() used to crash when another instance of MMF Helper was already running.
         /// It would log this: `*** CFMessagePort: bootstrap_register(): failed 1100 (0x44c) 'Permission denied', port = 0x1b03, name = 'com.nuebling.mac-mouse-fix.helper'`
         /// I think the reason for this messate is that the existing instance would already 'occupy' the kMFBundleIDHelper name.
         /// Checking if `localPort != nil` should detect this case
-    
+        
         CFRunLoopSourceRef runLoopSource =
             CFMessagePortCreateRunLoopSource(kCFAllocatorDefault, localPort, 0);
         
-        CFRunLoopAddSource(CFRunLoopGetCurrent(),
+        CFRunLoopAddSource(CFRunLoopGetMain(),
                            runLoopSource,
                            kCFRunLoopCommonModes);
         
         CFRelease(runLoopSource);
     } else {
-        DDLogError(@"Failed to create a local message port. This might be because there is another instance of %@ already running. Crashing the app.", kMFHelperName);
-        @throw [NSException exceptionWithName:@"NoMessagePortException" reason:@"Couldn't create a local CFMessagePort. Can't function properly without local CFMessagePort" userInfo:nil];
+        
+        if (isApp) {
+            DDLogInfo(@"Failed to create a local message port. It will probably work anyway for some reason");
+        } else {
+            DDLogError(@"Failed to create a local message port. This might be because there is another instance of %@ already running. Crashing the app.", kMFHelperName);
+            @throw [NSException exceptionWithName:@"NoMessagePortException" reason:@"Couldn't create a local CFMessagePort. Can't function properly without local CFMessagePort" userInfo:nil];
+        }
+        
     }
-    
-#endif
 }
 
 #pragma mark Handle incoming messages
