@@ -10,7 +10,7 @@
 #import <PreferencePanes/PreferencePanes.h>
 #import "AppDelegate.h"
 #import "Config.h"
-#import "MessagePort.h"
+#import "MFMessagePort.h"
 #import "Utility_App.h"
 #import "AuthorizeAccessibilityView.h"
 #import "HelperServices.h"
@@ -154,7 +154,7 @@ static NSDictionary *sideButtonActions;
         [AppTranslocationManager removeTranslocation];
         
         /// Start parts of the app that depend on the initialization we just did
-        [MessagePort load_Manual];
+        [MFMessagePort load_Manual];
         
         /// Need to manually initConfig because it is shared with Helper, and helper uses `load_Manual`
         ///     Edit: What?? That doesn't make sense to me.
@@ -216,7 +216,7 @@ static NSDictionary *sideButtonActions;
         eventMonitor = [NSEvent addLocalMonitorForEventsMatchingMask:NSEventMaskLeftMouseDown handler:^NSEvent * _Nullable(NSEvent * _Nonnull event) {
             
             uint64_t senderID = CGEventGetIntegerValueField(event.CGEvent, (CGEventField)kMFCGEventFieldSenderID);
-            [MessagePort sendMessage:@"updateActiveDeviceWithEventSenderID" withPayload:@(senderID) expectingReply:NO];
+            [MFMessagePort sendMessage:@"updateActiveDeviceWithEventSenderID" withPayload:@(senderID) expectingReply:NO];
             
             return event;
         }];

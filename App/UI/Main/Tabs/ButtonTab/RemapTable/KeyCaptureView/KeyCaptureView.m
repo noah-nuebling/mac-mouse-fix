@@ -11,7 +11,7 @@
 #import "AppDelegate.h"
 #import "UIStrings.h"
 #import <Carbon/Carbon.h>
-#import "MessagePort.h"
+#import "MFMessagePort.h"
 #import "NSView+Additions.h"
 #import "WannabePrefixHeader.h"
 #import "Mac_Mouse_Fix-Swift.h"
@@ -147,7 +147,7 @@
                     [MainAppState.shared.window makeFirstResponder:nil];
         }];
         
-        [MessagePort sendMessage:@"enableKeyCaptureMode" withPayload:@"" expectingReply:NO];
+        [MFMessagePort sendMessage:@"enableKeyCaptureMode" withPayload:@"" expectingReply:NO];
         /// ^ Do actual capturing in helper app because it already has permissions to stop captured events from being sent to other apps
         
         [self drawEmptyAppearance];
@@ -186,7 +186,7 @@
 
     if (superResigns) {
         
-        [MessagePort sendMessage:@"disableKeyCaptureMode" withPayload:nil expectingReply:NO];
+        [MFMessagePort sendMessage:@"disableKeyCaptureMode" withPayload:nil expectingReply:NO];
         
         [NSEvent removeMonitor:_localEventMonitor];
         _cancelHandler();

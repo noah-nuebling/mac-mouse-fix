@@ -46,7 +46,7 @@ class ResizingTabWindowController: NSWindowController, NSWindowDelegate {
     private var removeAccessibilityViewTimer: Timer? = nil
     func windowDidBecomeMain(_ notification: Notification) {
         /// Ask helper if accessibility enabled
-        MessagePort.sendMessage("checkAccessibility", withPayload: nil, expectingReply: false)
+        MFMessagePort.sendMessage("checkAccessibility", withPayload: nil, expectingReply: false)
         /// Dismiss accessibility view if no reply
         removeAccessibilityViewTimer = Timer.scheduledTimer(withTimeInterval: 0.5, repeats: false) { timer in
             AuthorizeAccessibilityView.remove()

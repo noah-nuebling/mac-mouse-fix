@@ -21,7 +21,7 @@
 #import "Constants.h"
 #import "TransformationUtility.h"
 #import "HelperUtility.h"
-#import "MessagePort.h"
+#import "MFMessagePort.h"
 #import "Locator.h"
 
 #if IS_HELPER
@@ -112,7 +112,7 @@ void commitConfig() {
     [Config.shared writeConfigToFile];
     
     /// Notify other app (mainApp notifies helper, helper notifies mainApp
-    [MessagePort sendMessage:@"configFileChanged" withPayload:nil expectingReply:NO];
+    [MFMessagePort sendMessage:@"configFileChanged" withPayload:nil expectingReply:NO];
     
     /// Update own state
     [Config handleConfigFileChange];
@@ -399,7 +399,7 @@ void Handle_FSEventStreamCallback (ConstFSEventStreamRef streamRef, void *client
     
     /// Update helper
     ///     Why aren't we just sending a configFileChanged message?
-    [MessagePort sendMessage:@"terminate" withPayload:nil expectingReply:NO];
+    [MFMessagePort sendMessage:@"terminate" withPayload:nil expectingReply:NO];
     
     /// Update self (mainApp)
 //    [self loadConfigFromFile];

@@ -1,13 +1,13 @@
 //
 // --------------------------------------------------------------------------
-// MessagePort.m
+// MFMessagePort.m
 // Created for Mac Mouse Fix (https://github.com/noah-nuebling/mac-mouse-fix)
 // Created by Noah Nuebling in 2021
 // Licensed under the MMF License (https://github.com/noah-nuebling/mac-mouse-fix/blob/master/LICENSE)
 // --------------------------------------------------------------------------
 //
 
-#import "MessagePort.h"
+#import "MFMessagePort.h"
 #import <Cocoa/Cocoa.h>
 #import "Constants.h"
 #import "SharedUtility.h"
@@ -24,7 +24,7 @@
 #import "AccessibilityCheck.h"
 #endif
 
-@implementation MessagePort
+@implementation MFMessagePort
 
 #pragma mark - Handle incoming messages
 
@@ -91,7 +91,7 @@ static CFDataRef _Nullable didReceiveMessage(CFMessagePortRef port, SInt32 messa
     } else if ([message isEqualToString:@"checkAccessibility"]) {
         BOOL isTrusted = [AccessibilityCheck checkAccessibilityAndUpdateSystemSettings];
         if (!isTrusted) {
-            [MessagePort sendMessage:@"accessibilityDisabled" withPayload:nil expectingReply:NO];
+            [MFMessagePort sendMessage:@"accessibilityDisabled" withPayload:nil expectingReply:NO];
         }
     } else if ([message isEqualToString:@"enableAddMode"]) {
         [TransformationManager enableAddMode];
@@ -148,7 +148,7 @@ static CFDataRef _Nullable didReceiveMessage(CFMessagePortRef port, SInt32 messa
     /// Notes from mainApp:
     /// We used to do this in `load` but that lead to issues when restarting the app if it's translocated
     /// If the app detects that it is translocated, it will restart itself at the untranslocated location,  after removing the quarantine flags from itself. It starts a copy of itself while it's still running, and only then does it terminate itself. If the message port is already 'claimed' by the translocated instances when it starts the untranslocated copy, then the untranslocated copy can't 'claim' the message port for itself, which leads to things like the accessiblity screen not working.
-    /// I hope thinik moving using `initialize` instead of `load` within `MessagePort_App` should fix this and work just fine for everything else. I don't know why we used load to begin with.
+    /// I hope that moving using `initialize` instead of `load` if `IS_MAIN_APP` should fix this and work just fine for everything else. I don't know why we used load to begin with.
     /// Edit: I don't remember why we moved to `load_Manual` now, but it works fine
     
     assert(SharedUtility.runningMainApp || SharedUtility.runningHelper);

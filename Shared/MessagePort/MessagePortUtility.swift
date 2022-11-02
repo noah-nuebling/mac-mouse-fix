@@ -22,7 +22,7 @@ import Foundation
         
         var result = (name: ("" as NSString), nOfButtons: (-1 as Int), bestPresetMatch: (-1 as Int))
         
-        if let info = MessagePort.sendMessage("getActiveDeviceInfo", withPayload: nil, expectingReply: true) as! NSDictionary? {
+        if let info = MFMessagePort.sendMessage("getActiveDeviceInfo", withPayload: nil, expectingReply: true) as! NSDictionary? {
             
             let deviceName = info["name"] as! NSString
             let deviceManufacturer = info["manufacturer"] as! NSString

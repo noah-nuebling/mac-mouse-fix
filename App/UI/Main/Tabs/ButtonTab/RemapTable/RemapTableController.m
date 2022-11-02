@@ -19,7 +19,7 @@
 #import "NSAttributedString+Additions.h"
 #import "NSTextField+Additions.h"
 #import "UIStrings.h"
-#import "MessagePort.h"
+#import "MFMessagePort.h"
 #import "CaptureNotificationCreator.h"
 #import "RemapTableTranslator.h"
 #import "NSView+Additions.h"

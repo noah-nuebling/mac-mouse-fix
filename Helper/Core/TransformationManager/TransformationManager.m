@@ -18,7 +18,7 @@
 #import "NSDictionary+Additions.h"
 #import "Constants.h"
 #import "Config.h"
-#import "MessagePort.h"
+#import "MFMessagePort.h"
 #import "Mac_Mouse_Fix_Helper-Swift.h"
 
 @implementation TransformationManager
@@ -256,7 +256,7 @@ BOOL _addModeIsEnabled = NO;
     
     if (![self addModePayloadIsValid:payload]) return;
     
-    [MessagePort sendMessage:@"addModeFeedback" withPayload:payload expectingReply:NO];
+    [MFMessagePort sendMessage:@"addModeFeedback" withPayload:payload expectingReply:NO];
     ///    [TransformationManager performSelector:@selector(disableAddMode) withObject:nil afterDelay:0.5];
     /// ^ We did this to keep the remapping disabled for a little while after adding a new row, but it leads to adding several entries at once when trying to input button modification precondition, if you're not fast enough.
 }
@@ -321,7 +321,7 @@ CGEventRef  _Nullable keyCaptureModeCallback(CGEventTapProxy proxy, CGEventType 
         @"flags": @(flags),
     };
     
-    [MessagePort sendMessage:@"keyCaptureModeFeedback" withPayload:payload expectingReply:NO];
+    [MFMessagePort sendMessage:@"keyCaptureModeFeedback" withPayload:payload expectingReply:NO];
             [TransformationManager disableKeyCaptureMode];
         }
     
@@ -340,7 +340,7 @@ CGEventRef  _Nullable keyCaptureModeCallback(CGEventTapProxy proxy, CGEventType 
                 @"flags": @(flags),
             };
             
-            [MessagePort sendMessage:@"keyCaptureModeFeedbackWithSystemEvent" withPayload:payload expectingReply:NO];
+            [MFMessagePort sendMessage:@"keyCaptureModeFeedbackWithSystemEvent" withPayload:payload expectingReply:NO];
     [TransformationManager disableKeyCaptureMode];
         }
         

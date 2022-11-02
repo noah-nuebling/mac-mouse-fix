@@ -39,8 +39,8 @@
 		4F44794328B55F6300AD1979 /* CAAnimation+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F909D0C28A0C3D2009349A2 /* CAAnimation+Extensions.swift */; };
 		4F44794528B62FA400AD1979 /* LicenseConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F44794428B62FA400AD1979 /* LicenseConfig.swift */; };
 		4F44794628B62FA400AD1979 /* LicenseConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F44794428B62FA400AD1979 /* LicenseConfig.swift */; };
-		4F44FF042606D73D00926A5E /* MessagePort.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F44FF032606D73D00926A5E /* MessagePort.m */; };
-		4F44FF052606D73D00926A5E /* MessagePort.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F44FF032606D73D00926A5E /* MessagePort.m */; };
+		4F44FF042606D73D00926A5E /* MFMessagePort.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F44FF032606D73D00926A5E /* MFMessagePort.m */; };
+		4F44FF052606D73D00926A5E /* MFMessagePort.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F44FF032606D73D00926A5E /* MFMessagePort.m */; };
 		4F5971E52901763D00A32656 /* MathObjc.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F5971E42901763D00A32656 /* MathObjc.m */; };
 		4F5971E62901763D00A32656 /* MathObjc.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F5971E42901763D00A32656 /* MathObjc.m */; };
 		4F5C2F802885C5D0001B9B8A /* HelperState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F5C2F7F2885C5D0001B9B8A /* HelperState.swift */; };
@@ -416,8 +416,8 @@
 		4F3E067D26A2F97D000C9E06 /* URLMenuItem.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = URLMenuItem.m; sourceTree = "<group>"; };
 		4F42304628CE6C1C003A41D3 /* LICENSE */ = {isa = PBXFileReference; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
 		4F44794428B62FA400AD1979 /* LicenseConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LicenseConfig.swift; sourceTree = "<group>"; };
-		4F44FF022606D73D00926A5E /* MessagePort.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MessagePort.h; sourceTree = "<group>"; };
-		4F44FF032606D73D00926A5E /* MessagePort.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MessagePort.m; sourceTree = "<group>"; };
+		4F44FF022606D73D00926A5E /* MFMessagePort.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MFMessagePort.h; sourceTree = "<group>"; };
+		4F44FF032606D73D00926A5E /* MFMessagePort.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MFMessagePort.m; sourceTree = "<group>"; };
 		4F5971E42901763D00A32656 /* MathObjc.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MathObjc.m; sourceTree = "<group>"; };
 		4F5C2F7F2885C5D0001B9B8A /* HelperState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelperState.swift; sourceTree = "<group>"; };
 		4F5F3EED2756DB0A00C350C0 /* RemapsOverrider_old_.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemapsOverrider_old_.swift; sourceTree = "<group>"; };
@@ -914,8 +914,8 @@
 		4F44FF012606D6FD00926A5E /* MessagePort */ = {
 			isa = PBXGroup;
 			children = (
-				4F44FF022606D73D00926A5E /* MessagePort.h */,
-				4F44FF032606D73D00926A5E /* MessagePort.m */,
+				4F44FF022606D73D00926A5E /* MFMessagePort.h */,
+				4F44FF032606D73D00926A5E /* MFMessagePort.m */,
 				4F2F0B2A28E6258B00246D59 /* MessagePortUtility.swift */,
 				4FCD01742912C0B600B43C1B /* Unused */,
 			);
@@ -2399,7 +2399,7 @@
 				4F909D2328A0C3D2009349A2 /* PointerTabController.swift in Sources */,
 				4FDE75A128B2397600662314 /* PayButton.swift in Sources */,
 				4FCA07D625F3129B00BFE209 /* RemapTableController.m in Sources */,
-				4F44FF052606D73D00926A5E /* MessagePort.m in Sources */,
+				4F44FF052606D73D00926A5E /* MFMessagePort.m in Sources */,
 				4FA40D0B28A0D87200499E53 /* DisplayLink.m in Sources */,
 				4FAD391426702CD4000CF4FA /* DerivedProperty.swift in Sources */,
 				4F909D2928A0C3D2009349A2 /* TabViewControllerDisabling.swift in Sources */,
@@ -2489,7 +2489,7 @@
 				4F909D4828A0C4C2009349A2 /* Collection+Extensions.swift in Sources */,
 				4FF6669625F2C93A00689B77 /* Actions.m in Sources */,
 				4FF0254E27AFF90800923107 /* ModifiedDragOutputThreeFingerSwipe.m in Sources */,
-				4F44FF042606D73D00926A5E /* MessagePort.m in Sources */,
+				4F44FF042606D73D00926A5E /* MFMessagePort.m in Sources */,
 				4F1D7F4728A4639800253407 /* MenuBarItem.swift in Sources */,
 				4F8CF95728686C0100BF5E55 /* PolynomialRegression.m in Sources */,
 				4FFA4E3628B795F30062A1FE /* LicenseUtility.swift in Sources */,

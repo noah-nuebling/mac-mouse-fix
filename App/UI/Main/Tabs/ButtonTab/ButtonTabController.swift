@@ -611,12 +611,12 @@ import CocoaLumberjackSwift
     override func mouseEntered(with event: NSEvent) {
         pointerIsInsideAddField = true
         addFieldHoverEffect(enable: true)
-        MessagePort.sendMessage("enableAddMode", withPayload: nil, expectingReply: false)
+        MFMessagePort.sendMessage("enableAddMode", withPayload: nil, expectingReply: false)
     }
     override func mouseExited(with event: NSEvent) {
         pointerIsInsideAddField = false
         addFieldHoverEffect(enable: false)
-        MessagePort.sendMessage("disableAddMode", withPayload: nil, expectingReply: false)
+        MFMessagePort.sendMessage("disableAddMode", withPayload: nil, expectingReply: false)
     }
     
     /// Ignore MB1 & MB2
