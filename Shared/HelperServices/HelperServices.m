@@ -98,32 +98,35 @@
     
     if (@available(macOS 13.0, *)) {
         
-        ///
-        /// Cleanup
-        ///
-        
-        /// Edit: I'm not totally sure what the reason is for the differences between this and what we do pre macOS 13.
-        /// - Why aren't we terminating other helper instance here?
-        /// - At the time of writing `strangeHelperIsRegisteredWithLaunchd` only looks at the pre macOS 13 helper. But it doesn't matter since all it does when it finds a strange helper is call. `removeHelperFromLaunchd`, and we're calling that anyways right here. -> Clean this up, and clearly mark `strangeHelperIsRegisteredWithLaunchd` as only working pre macOS 13 or update it to work with macOS 13. Idea: give `strangeHelperIsRegisteredWithLaunchd` and the helperIsActive function an argument which launchd label they should check for.
-        
-        /// Remove __app__ launchd.plist
-        removeLaunchdPlist();
-        
-        /// Remove __prefpane__ launchd.plist
-        removePrefpaneLaunchdPlist();
-        
-        /// Unregister strange helper
-        if (self.strangeHelperIsRegisteredWithLaunchd) {
-            [self removeHelperFromLaunchd];
-        }
-        
-        /// Unregister helper
-        ///     ? Why
-        [self removeHelperFromLaunchd];
-        
-        
         dispatch_async(dispatch_get_global_queue(QOS_CLASS_USER_INTERACTIVE, 0), ^{
                 
+            ///
+            /// Cleanup
+            ///
+            
+            /// Edit: I'm not totally sure what the reason is for the differences between this and what we do pre macOS 13.
+            /// - Why aren't we terminating other helper instance here?
+            /// - At the time of writing `strangeHelperIsRegisteredWithLaunchd` only looks at the pre macOS 13 helper. But it doesn't matter since all it does when it finds a strange helper is call. `removeHelperFromLaunchd`, and we're calling that anyways right here. -> Clean this up, and clearly mark `strangeHelperIsRegisteredWithLaunchd` as only working pre macOS 13 or update it to work with macOS 13. Idea: give `strangeHelperIsRegisteredWithLaunchd` and the helperIsActive function an argument which launchd label they should check for.
+            
+            /// Remove __app__ launchd.plist
+            removeLaunchdPlist();
+            
+            /// Remove __prefpane__ launchd.plist
+            removePrefpaneLaunchdPlist();
+            
+            /// Unregister old helper from launchd
+            removeServiceWithIdentifier(kMFLaunchdHelperIdentifier);
+            
+            /// Unregister strange helper
+            /// Notes:
+            /// - Under Ventura 13.0 we can't automatically fix it when a strange helper is registered. When we try to register the right helper, it will always be the strange one. The user has to uninstall the strange helper and then empty the trash and then restart to fix things
+            /// - So removing the strange helper service won't help and leads to weird stuff where the helper seems to be started twice next time that it is registered.
+            /// -> So we're disabling this for now. Hopefully Apple will fix this at some point.
+            
+//            if ([self strangeHelperIsRegisteredWithLaunchdIdentifier:kMFLaunchdHelperIdentifierSM]) {
+//                removeServiceWithIdentifier(kMFLaunchdHelperIdentifierSM);
+//            }
+            
             ///
             /// Enable helper
             /// 
@@ -155,10 +158,9 @@
         /// - We could only do this only if strangeHelperIsRegisteredWithLaunchd, but users have been having some weirdd issues after upgrading to the app version and I don't know why. I feel like this might make things slightly more robust.
         removePrefpaneLaunchdPlist();
         
-        
         /// Unregister strange helper
-        if (self.strangeHelperIsRegisteredWithLaunchd) {
-            [self removeHelperFromLaunchd];
+        if ([self strangeHelperIsRegisteredWithLaunchdIdentifier:kMFLaunchdHelperIdentifier]) {
+            removeServiceWithIdentifier(kMFLaunchdHelperIdentifier);
         }
         
         if (enable) {
@@ -170,11 +172,11 @@
             /// I'm pretty sure that if we didn't check for `launchdPathIsBundlePath` in `strangeHelperIsRegisteredWithLaunchd` this issue whave occured and we wouldn't need this workaround. But I'm not sure anymore why we do that so it's not smart to remove it.
             /// Edit: I think the specific issue I saw only happens when there are two instances of MMF open at the same time.
             
-            [HelperServices removeHelperFromLaunchd];
+            removeServiceWithIdentifier(kMFLaunchdHelperIdentifier);
             
             /// Kill non-launchd helpers
             ///     Non-launchd helpers can only normally happen during debugging I think
-            [HelperServices terminateOtherHelperInstances];
+            [HelperServices terminateAllHelperInstances];
             
         }
         
@@ -369,7 +371,7 @@
 static BOOL helperIsActive_PList() {
     
     /// Get info from launchd
-    NSString *launchctlOutput = [HelperServices helperInfoFromLaunchd];
+    NSString *launchctlOutput = [HelperServices serviceInfoWithIdentifier:kMFLaunchdHelperIdentifier];
     
     /// Analyze info
     
@@ -380,7 +382,7 @@ static BOOL helperIsActive_PList() {
     /// Check exit status. Not sure if useful
     BOOL exitStatusIsZero = [launchctlOutput rangeOfString: @"\"LastExitStatus\" = 0;"].location != NSNotFound;
     
-    if (HelperServices.strangeHelperIsRegisteredWithLaunchd) {
+    if ([HelperServices strangeHelperIsRegisteredWithLaunchdIdentifier:kMFLaunchdHelperIdentifier]) {
         DDLogInfo(@"Found helper running somewhere else.");
         return NO;
     }
@@ -675,11 +677,12 @@ static NSError *makeWritable(NSString *itemPath) {
     return nil;
 }
 
-+ (NSString *)helperInfoFromLaunchd {
++ (NSString *)serviceInfoWithIdentifier:(NSString *)identifier {
     
     /// Using NSTask to ask launchd about helper status
+    
     NSURL *launchctlURL = [NSURL fileURLWithPath: kMFLaunchctlPath];
-    NSString * launchctlOutput = [SharedUtility launchCLT:launchctlURL withArguments:@[@"list", kMFLaunchdHelperIdentifier] error:nil];
+    NSString * launchctlOutput = [SharedUtility launchCLT:launchctlURL withArguments:@[@"list", identifier] error:nil];
     return launchctlOutput;
 }
 
@@ -697,28 +700,31 @@ static NSError *makeWritable(NSString *itemPath) {
 //    /// ^ Could also do this in the if block but users have been having some weirdd issues after upgrading to the app version and I don't know why. I feel like this might make things slightly more robust.
 //}
 
-/// Check if helper is registered with launchd from some other location
-+ (BOOL)strangeHelperIsRegisteredWithLaunchd {
++ (BOOL)strangeHelperIsRegisteredWithLaunchdIdentifier:(NSString *)identifier {
     
-    NSString *launchdPath = [self helperExecutablePathFromLaunchd];
+    /// Check if helper is registered with launchd from some other location
+    
+    NSString *launchdPath = [self executablePathForLaunchdIdentifier:identifier];
     BOOL launchdPathExists = launchdPath.length != 0;
     
-    BOOL launchdPathIsBundlePath = [Locator.helperBundle.executablePath isEqual:launchdPath];
-    
-    if (!launchdPathIsBundlePath && launchdPathExists) {
+    if (launchdPathExists) {
         
-        DDLogWarn(@"Strange helper: found at: %@ \nbundleExecutable at: %@", launchdPath, Locator.helperBundle.executablePath);
-        return YES;
+        BOOL isStrange = ![Locator.helperBundle.executablePath isEqual:launchdPath];
+        
+        if (isStrange) {
+            
+            DDLogWarn(@"Strange helper: found at: %@ \nbundleExecutable at: %@", launchdPath, Locator.helperBundle.executablePath);
+            return YES;
+        }
     }
     
     DDLogInfo(@"Strange Helper: not found");
-    
     return NO;
 }
 
-+ (void)terminateOtherHelperInstances {
-    /// Terminate any other running instances of the app
-    /// Only call this after after removing the Helper from launchd
++ (void)terminateAllHelperInstances {
+    
+    /// Terminate any running instances of the helper app
     /// This only works to terminate instances of the Helper which weren't started by launchd.
     /// Launchd-started instances will immediately be restarted after they are terminated
     /// Mac Mouse Fix Accomplice does something similar to this in update()
@@ -735,21 +741,12 @@ static NSError *makeWritable(NSString *itemPath) {
     
 }
 
-+ (void)removeHelperFromLaunchd {
+static void removeServiceWithIdentifier(NSString *identifier) {
     
-    /// Remove currently running helper from launchd
+    /// Remove service from launchd
     /// Notes:
     /// - From my testing this does the same as the `bootout` command, but it doesn't rely on a valid launchd.plist file to exist in the library, so it should be more robust.
     /// - The removed service will be quit immediately but will be restarted on the next boot. Pre-SMAppService you can prevent start on next boot by deleting the launchd.plist file. Post-SMAppService you need to unregister the service. Not sure if there are other ways.
-    
-    /// Remove pre-service management helper
-    removeServiceWithIdentifier(kMFLaunchdHelperIdentifier);
-    
-    /// Remove helper installed with service management
-    removeServiceWithIdentifier(kMFLaunchdHelperIdentifierSM);
-}
-
-static void removeServiceWithIdentifier(NSString *identifier) {
     
     DDLogInfo(@"Removing service %@ from launchd", identifier);
     
@@ -788,10 +785,10 @@ static void removePrefpaneLaunchdPlist() {
     }
 }
 
-+ (NSString *)helperExecutablePathFromLaunchd {
++ (NSString *)executablePathForLaunchdIdentifier:(NSString *)identifier {
     
     /// Using NSTask to ask launchd about helper status
-    NSString * launchctlOutput = [self helperInfoFromLaunchd];
+    NSString * launchctlOutput = [self serviceInfoWithIdentifier:identifier];
     
     NSString *executablePathRegEx = @"(?<=\"Program\" = \").*(?=\";)";
     ///    NSRegularExpression executablePathRegEx =
