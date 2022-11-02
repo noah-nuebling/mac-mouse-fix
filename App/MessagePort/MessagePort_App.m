@@ -72,7 +72,18 @@ static CFDataRef didReceiveMessage(CFMessagePortRef port, SInt32 messageID, CFDa
     NSInteger appVersion = Locator.bundleVersion;
     
     if (appVersion != helperVersion) {
-        DDLogError(@"Main App Received Message From Strange Helper: %@ with payload: %@, helperVersion: %ld, appVersion: %ld", message, payload, helperVersion, appVersion);
+        
+        DDLogError(@"Main App Received Message From Strange Helper: %@ with payload: %@, helperVersion: %ld, appVersion: %ld. Killing the strange helper.", message, payload, helperVersion, appVersion);
+        
+        /// Kill the strange helper
+        ///
+        /// Notes:
+        /// - Not sure if just using `enableHelperAsUserAgent:` is enough. Does this call `launchctl remove`? Does it kill strange helpers that weren't started by launchd? That might be necessary in some situations.
+        /// - In Ventura 13.0, SMAppService has strange bugs where it will always start an old version of MMF until you delete the old version, empty the trash, then restart computer and then try again. Was hoping this would be fixed but it's still there after the 13.0 Beta.
+        ///     -> We should probably give the user instructions on how to fix things, when this situation occurs.
+        
+        [HelperServices enableHelperAsUserAgent:NO onComplete:nil];
+        
         return NULL;
     }
     
