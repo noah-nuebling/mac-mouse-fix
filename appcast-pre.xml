@@ -6,6 +6,397 @@
     <description>Prereleases of Mac Mouse Fix</description>
     <language>en</language>
         <item>
+        <title>3.0.0 Beta 5 available!</title>
+        <pubDate>2022-11-03T14:21:23Z</pubDate>
+        <sparkle:minimumSystemVersion>10.13</sparkle:minimumSystemVersion>
+        <description><![CDATA[
+            <!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>-</title>
+  <style>
+    html {
+      line-height: 1.5;
+      font-family: Georgia, serif;
+      font-size: 20px;
+      color: #1a1a1a;
+      background-color: #fdfdfd;
+    }
+    body {
+      margin: 0 auto;
+      max-width: 36em;
+      padding-left: 50px;
+      padding-right: 50px;
+      padding-top: 50px;
+      padding-bottom: 50px;
+      hyphens: auto;
+      overflow-wrap: break-word;
+      text-rendering: optimizeLegibility;
+      font-kerning: normal;
+    }
+    @media (max-width: 600px) {
+      body {
+        font-size: 0.9em;
+        padding: 1em;
+      }
+      h1 {
+        font-size: 1.8em;
+      }
+    }
+    @media print {
+      body {
+        background-color: transparent;
+        color: black;
+        font-size: 12pt;
+      }
+      p, h2, h3 {
+        orphans: 3;
+        widows: 3;
+      }
+      h2, h3, h4 {
+        page-break-after: avoid;
+      }
+    }
+    p {
+      margin: 1em 0;
+    }
+    a {
+      color: #1a1a1a;
+    }
+    a:visited {
+      color: #1a1a1a;
+    }
+    img {
+      max-width: 100%;
+    }
+    h1, h2, h3, h4, h5, h6 {
+      margin-top: 1.4em;
+    }
+    h5, h6 {
+      font-size: 1em;
+      font-style: italic;
+    }
+    h6 {
+      font-weight: normal;
+    }
+    ol, ul {
+      padding-left: 1.7em;
+      margin-top: 1em;
+    }
+    li > ol, li > ul {
+      margin-top: 0;
+    }
+    blockquote {
+      margin: 1em 0 1em 1.7em;
+      padding-left: 1em;
+      border-left: 2px solid #e6e6e6;
+      color: #606060;
+    }
+    code {
+      font-family: Menlo, Monaco, 'Lucida Console', Consolas, monospace;
+      font-size: 85%;
+      margin: 0;
+    }
+    pre {
+      margin: 1em 0;
+      overflow: auto;
+    }
+    pre code {
+      padding: 0;
+      overflow: visible;
+      overflow-wrap: normal;
+    }
+    .sourceCode {
+     background-color: transparent;
+     overflow: visible;
+    }
+    hr {
+      background-color: #1a1a1a;
+      border: none;
+      height: 1px;
+      margin: 1em 0;
+    }
+    table {
+      margin: 1em 0;
+      border-collapse: collapse;
+      width: 100%;
+      overflow-x: auto;
+      display: block;
+      font-variant-numeric: lining-nums tabular-nums;
+    }
+    table caption {
+      margin-bottom: 0.75em;
+    }
+    tbody {
+      margin-top: 0.5em;
+      border-top: 1px solid #1a1a1a;
+      border-bottom: 1px solid #1a1a1a;
+    }
+    th {
+      border-top: 1px solid #1a1a1a;
+      padding: 0.25em 0.5em 0.25em 0.5em;
+    }
+    td {
+      padding: 0.125em 0.5em 0.25em 0.5em;
+    }
+    header {
+      margin-bottom: 4em;
+      text-align: center;
+    }
+    #TOC li {
+      list-style: none;
+    }
+    #TOC ul {
+      padding-left: 1.3em;
+    }
+    #TOC > ul {
+      padding-left: 0;
+    }
+    #TOC a:not(:hover) {
+      text-decoration: none;
+    }
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+  </style>
+  
+
+  <style>
+
+      /* Following this tutorial: https://devilgate.org/blog/2012/07/02/tip-using-pandoc-to-create-truly-standalone-html-files/ */
+
+      :root {
+          font-size: 10px; /* 1 rem is this much */
+          padding: 0 0 0 0;
+      }
+
+      body {
+          background-color: transparent;
+          margin: 0 1.2rem 2.0rem 1.2rem;
+          padding: 0;
+          font-family: -apple-system;
+          font-size: 1.3rem;
+
+          line-height: 1.15em;
+      }
+
+      h1, h2, h3, h4, h5, h6 {
+          line-height: 1.15em;
+      }
+
+      h1:after, h2:after {
+          content:' ';
+          display: block;
+          border: 0.5px solid rgba(0, 0, 0, 0.12);
+      }
+      h1:after {
+          margin: 0.6rem 0 0 0;
+      }
+      h2:after {
+          margin: 0.4rem 0 0 0;
+      }
+
+      h1 {
+          font-size: 2.2rem;
+          margin: 2.2rem 0 1.3rem -0.0rem;
+      }
+
+      h2 {
+          font-size: 1.7rem;
+          margin: 2.0rem 0 1.7rem -0.0rem;
+      }
+
+      h3 {
+          font-size: 1.3rem;
+          margin: 1.5rem 0 0.0rem -0.0rem;
+      }
+
+      p {
+          margin: 1.1rem 0 1.1rem 0;
+          font-size: 1.1rem;
+      }
+
+      ul {
+          padding: 0 0 0 1.5rem;
+          margin: 1.0rem 0 1.0rem 0.5rem;
+      }
+      ul ul {
+          margin: 0.6rem 0 -0.6rem 0;
+          padding: 0 0 0 2.1rem;
+      }
+
+      li {
+          padding: 0 0 0.6rem 0;
+
+          font-size: 1.1rem;
+      }
+      .annotation {
+          font-size: 1.1rem;
+      }
+      img {
+          max-width: 100%;
+          height: auto;
+          
+          border-radius: 1.0rem;
+          box-shadow: 0 0.2rem 0.4rem 0.0rem rgba(0, 0, 0, 0.15), 0 0.2rem 1.7rem 0.0rem rgba(0, 0, 0, 0.15);
+
+          display: block;
+          margin: 1.4rem auto 1.8rem auto;
+      }
+
+      hr {
+          height: 0px;
+          border: none;
+          border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+          border-color:rgba(0, 0, 0, 0.12);
+
+          margin: 1.7rem 0 1.7rem 0;
+      }
+
+      @media (prefers-color-scheme: light) {
+
+          h1 {
+              color: #272727;
+          }
+
+          a {
+              color: #0948be;
+          }
+      }
+
+      @media (prefers-color-scheme: dark) {
+
+          body {
+              background-color: #1e1e1e; 
+              /* ^ Sparkle background is still bright when we have `background-color: transparent` even with darkmode active. 
+                  This is the color of the text field background in Apple Mail on macOS 11 BigSur */
+
+              color: #D9D9D9; /* For headers */
+          }
+
+          li, p {
+              color:#FFFFFF;
+          }
+          a {
+              color: #3586FF;
+          }
+      }
+
+  </style>
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
+</head>
+<body>
+<p>Also check out the <strong>neat changes</strong> introduced in <a
+href="https://github.com/noah-nuebling/mac-mouse-fix/releases/tag/3.0.0-Beta-4">3.0.0
+Beta 4</a>!</p>
+<hr />
+<p><strong>3.0.0 Beta 5</strong> restores <strong>compatibility</strong>
+with some <strong>mice</strong> under macOS 13 Ventura and it
+<strong>fixes scrolling</strong> in many apps. It also features several
+other small fixes and improvements.</p>
+<p>Here’s <strong>everything new</strong>:</p>
+<h3 id="mouse">Mouse</h3>
+<ul>
+<li>Fixed scrolling in Terminal and other apps! See GitHub Issue <a
+href="https://github.com/noah-nuebling/mac-mouse-fix/issues/413">#413</a>.</li>
+<li>Fixed incompatibility with some mice under macOS 13 Ventura by
+moving away from using unreliable Apple APIs in favor of low level
+hacks. Hope this doesn’t introduce new issues - let me know if it does!
+Special thanks to Maria and GitHub user <a
+href="https://github.com/samiulhsnt">samiulhsnt</a> for helping to
+figure this out! See GithHub Issue <a
+href="https://github.com/noah-nuebling/mac-mouse-fix/issues/424">#424</a>
+for more infos.</li>
+<li>Will not use any CPU when clicking Mouse Button 1 or 2 anymore.
+Slightly lowered CPU usage when clicking other buttons.
+<ul>
+<li>This is a “Debug Build” so the CPU usage can be around 10 times
+higher when clicking buttons in this beta vs the final release</li>
+</ul></li>
+<li>The trackpad scrolling simulation that is used for Mac Mouse Fix’
+“Smooth Scrolling” and “Scroll &amp; Navigate” features is now even more
+accurate. This might lead to better behaviour in some situations.</li>
+</ul>
+<h3 id="ui">UI</h3>
+<ul>
+<li>Automatically fixing issues with granting Accessibility Access after
+updating from an older version of Mac Mouse Fix. Adopts the changes
+described in the <a
+href="https://github.com/noah-nuebling/mac-mouse-fix/releases/tag/2.2.2">2.2.2
+Release Notes</a>.</li>
+<li>Added a “Cancel” button to the “Grant Accessibiliy Access”
+screen</li>
+<li>Fixed an issue where configuring Mac Mouse Fix wouldn’t work
+properly after installing a new version of Mac Mouse Fix, because the
+new version would connect to the old version of “Mac Mouse Fix Helper”.
+Now, Mac Mouse Fix will not connect to the old “Mac Mouse Fix Helper”
+anymore and disable the old version automatically when appropriate.</li>
+<li>Giving the user instructions on how to fix and issue where Mac Mouse
+Fix can’t be enabled properly due to another version of Mac Mouse Fix
+being present on the system. This issue only occurs under macOS
+Ventura.</li>
+<li>Polished behaviour and animations on the “Grant Accessibiliy Access”
+screen</li>
+<li>Improved UI strings on the “Grant Accessibiliy Access” screen</li>
+<li>Improved UI strings that show when trying to enable Mac Mouse Fix
+while it is disabled in System Settings</li>
+<li>Fixed a German UI string</li>
+</ul>
+<h3 id="under-the-hood">Under-the-hood</h3>
+<ul>
+<li>The build number of “Mac Mouse Fix” and the embedded “Mac Mouse Fix
+Helper” are now synchronised. This is used to prevent “Mac Mouse Fix”
+from accidentally connecting to old versions of “Mac Mouse Fix
+Helper”.</li>
+<li>Fixed issue where some data around your license and trial period
+would sometimes display incorrectly when starting the app for the first
+time by removing cache data from the initial configuration</li>
+<li>Lots of cleanup of the project structure and source code</li>
+<li>Improved debug messages</li>
+</ul>
+<hr />
+<h3 id="how-you-can-help">How You Can Help</h3>
+<p>You can help by sharing your <strong>ideas</strong>,
+<strong>issues</strong> and <strong>feedback</strong>!</p>
+<p>The best place to share your <strong>ideas</strong> and
+<strong>issues</strong> is the <a
+href="https://noah-nuebling.github.io/mac-mouse-fix-feedback-assistant/?type=bug-report">Feedback
+Assistant</a>. The best place to give <strong>quick</strong>
+unstructured feedback is the <a
+href="https://github.com/noah-nuebling/mac-mouse-fix/discussions/366">Feedback
+Discussion</a>.</p>
+<p>You can also access these places from within the app on the
+“<strong>ⓘ About</strong>” tab.</p>
+<p><strong>Thanks</strong> for helping to make Mac Mouse Fix better!
+💙💛❤️</p>
+</body>
+</html>
+
+        ]]>
+        </description>
+        <enclosure
+            url="https://github.com/noah-nuebling/mac-mouse-fix/releases/download/3.0.0-Beta-5/MacMouseFixApp.zip"
+            sparkle:version="19739"
+            sparkle:shortVersionString="3.0.0 Beta 5"
+            sparkle:edSignature="WGKIpoCG7c2RJFgF2LwiAXNKiXZ+6MVEnky85oVqfgmAnboyUPg71weEDRalnhTiiIjE5/FMNQIm3E2SHw4dBA==" length="19083739"
+            type="application/octet-stream"
+        />
+    </item>
+    <item>
         <title>2.2.3 available!</title>
         <pubDate>2022-10-30T16:41:07Z</pubDate>
         <sparkle:minimumSystemVersion>10.13</sparkle:minimumSystemVersion>
@@ -332,10 +723,10 @@ margins on macOS versions before macOS 11 Big Sur</li>
 <li>If you’re still experiencing any <strong>issues</strong> on older
 macOS versions, please <strong>let me know</strong> in a <a
 href="https://noah-nuebling.github.io/mac-mouse-fix-feedback-assistant/?type=bug-report">Bug
-Report</a>. Thanks!</li>
+Report</a>.</li>
 <li>After updating to Mac Mouse Fix 2.2.3 on older macOS versions, you
-might have to <strong>re-add</strong> Mac Mouse Fix to the
-<strong>Accessibility Preferences</strong> as described by <a
+might have to remove and then <strong>re-add</strong> Mac Mouse Fix to
+the <strong>Accessibility Preferences</strong> as described by <a
 href="https://github.com/noah-nuebling/mac-mouse-fix/discussions/101">this
 Guide</a></li>
 </ul>
@@ -2458,7 +2849,7 @@ Mac Mouse Fix so far!</p>
 <p>Bringing together many features that I’ve worked on for a long time
 to finally deliver this awesome <strong>value proposal</strong>:</p>
 <p><strong>Make your $10 mouse better than an Apple
-Trackpad.</strong></p>
+Trackpad!</strong></p>
 <p>And you can <strong>test it now</strong>! I’m really excited to hear
 your guys’ feedback!</p>
 <p>Here is <strong>everything that’s new</strong>:</p>
@@ -2520,7 +2911,7 @@ to give you a <strong>great intertial feel</strong> while still offering
 a lot of <strong>control</strong>.</p>
 <p>By the way, if you download this Beta, I think you’ll be <strong>one
 of the first</strong> humans to use <strong>scroll bouncing</strong>
-from a mouse! I think that’s kinda cool.
+from a mouse! (other than the Magic Mouse) I think that’s kinda cool.
 <!-- If you want even more **control** and **responsivity**, you can still **turn it off**. --></p>
 <h2 id="other-scrolling-improvements">4. Other Scrolling
 Improvements</h2>
@@ -3712,9 +4103,9 @@ href="https://github.com/noah-nuebling/mac-mouse-fix/issues/249">#249</a>.</li>
 <li>Fixed an issue where <strong>keyboard shortcuts</strong> including
 the ‘A’ key couldn’t be recorded. Fixes GitHub Issue <a
 href="https://github.com/noah-nuebling/mac-mouse-fix/issues/275">#275</a>.</li>
-<li>Fixed an issue where some button remappings wouldn’t work properly
-when using a non-standard keyboard layout.</li>
-<li>Other small fixes and visual improvements.</li>
+<li>Fixed an issue where some button <strong>remappings</strong>
+wouldn’t work properly when using a non-standard keyboard layout.</li>
+<li><strong>Other</strong> small fixes and visual improvements.</li>
 </ul>
 </body>
 </html>
@@ -10128,323 +10519,6 @@ option would always re-enable itself after launching the app. (See
             sparkle:version="2325"
             sparkle:shortVersionString="1.0.2"
             sparkle:edSignature="lMQ5DMXfrT1dGgrf6tQ+l+/4UJ0/O5SXEIkOz5i+6k6VXARVKSvOHb5bgNRdo2ZuYZv4IPT3lAAzvTB9ExoCAQ==" length="1742433"
-            type="application/octet-stream"
-        />
-    </item>
-    <item>
-        <title>1.0.1 available!</title>
-        <pubDate>2021-03-03T00:20:23Z</pubDate>
-        <sparkle:minimumSystemVersion>10.11</sparkle:minimumSystemVersion>
-        <description><![CDATA[
-            <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
-<head>
-  <meta charset="utf-8" />
-  <meta name="generator" content="pandoc" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
-  <title>-</title>
-  <style>
-    html {
-      line-height: 1.5;
-      font-family: Georgia, serif;
-      font-size: 20px;
-      color: #1a1a1a;
-      background-color: #fdfdfd;
-    }
-    body {
-      margin: 0 auto;
-      max-width: 36em;
-      padding-left: 50px;
-      padding-right: 50px;
-      padding-top: 50px;
-      padding-bottom: 50px;
-      hyphens: auto;
-      overflow-wrap: break-word;
-      text-rendering: optimizeLegibility;
-      font-kerning: normal;
-    }
-    @media (max-width: 600px) {
-      body {
-        font-size: 0.9em;
-        padding: 1em;
-      }
-      h1 {
-        font-size: 1.8em;
-      }
-    }
-    @media print {
-      body {
-        background-color: transparent;
-        color: black;
-        font-size: 12pt;
-      }
-      p, h2, h3 {
-        orphans: 3;
-        widows: 3;
-      }
-      h2, h3, h4 {
-        page-break-after: avoid;
-      }
-    }
-    p {
-      margin: 1em 0;
-    }
-    a {
-      color: #1a1a1a;
-    }
-    a:visited {
-      color: #1a1a1a;
-    }
-    img {
-      max-width: 100%;
-    }
-    h1, h2, h3, h4, h5, h6 {
-      margin-top: 1.4em;
-    }
-    h5, h6 {
-      font-size: 1em;
-      font-style: italic;
-    }
-    h6 {
-      font-weight: normal;
-    }
-    ol, ul {
-      padding-left: 1.7em;
-      margin-top: 1em;
-    }
-    li > ol, li > ul {
-      margin-top: 0;
-    }
-    blockquote {
-      margin: 1em 0 1em 1.7em;
-      padding-left: 1em;
-      border-left: 2px solid #e6e6e6;
-      color: #606060;
-    }
-    code {
-      font-family: Menlo, Monaco, 'Lucida Console', Consolas, monospace;
-      font-size: 85%;
-      margin: 0;
-    }
-    pre {
-      margin: 1em 0;
-      overflow: auto;
-    }
-    pre code {
-      padding: 0;
-      overflow: visible;
-      overflow-wrap: normal;
-    }
-    .sourceCode {
-     background-color: transparent;
-     overflow: visible;
-    }
-    hr {
-      background-color: #1a1a1a;
-      border: none;
-      height: 1px;
-      margin: 1em 0;
-    }
-    table {
-      margin: 1em 0;
-      border-collapse: collapse;
-      width: 100%;
-      overflow-x: auto;
-      display: block;
-      font-variant-numeric: lining-nums tabular-nums;
-    }
-    table caption {
-      margin-bottom: 0.75em;
-    }
-    tbody {
-      margin-top: 0.5em;
-      border-top: 1px solid #1a1a1a;
-      border-bottom: 1px solid #1a1a1a;
-    }
-    th {
-      border-top: 1px solid #1a1a1a;
-      padding: 0.25em 0.5em 0.25em 0.5em;
-    }
-    td {
-      padding: 0.125em 0.5em 0.25em 0.5em;
-    }
-    header {
-      margin-bottom: 4em;
-      text-align: center;
-    }
-    #TOC li {
-      list-style: none;
-    }
-    #TOC ul {
-      padding-left: 1.3em;
-    }
-    #TOC > ul {
-      padding-left: 0;
-    }
-    #TOC a:not(:hover) {
-      text-decoration: none;
-    }
-    code{white-space: pre-wrap;}
-    span.smallcaps{font-variant: small-caps;}
-    div.columns{display: flex; gap: min(4vw, 1.5em);}
-    div.column{flex: auto; overflow-x: auto;}
-    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
-    ul.task-list{list-style: none;}
-    ul.task-list li input[type="checkbox"] {
-      width: 0.8em;
-      margin: 0 0.8em 0.2em -1.6em;
-      vertical-align: middle;
-    }
-    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
-  </style>
-  
-
-  <style>
-
-      /* Following this tutorial: https://devilgate.org/blog/2012/07/02/tip-using-pandoc-to-create-truly-standalone-html-files/ */
-
-      :root {
-          font-size: 10px; /* 1 rem is this much */
-          padding: 0 0 0 0;
-      }
-
-      body {
-          background-color: transparent;
-          margin: 0 1.2rem 2.0rem 1.2rem;
-          padding: 0;
-          font-family: -apple-system;
-          font-size: 1.3rem;
-
-          line-height: 1.15em;
-      }
-
-      h1, h2, h3, h4, h5, h6 {
-          line-height: 1.15em;
-      }
-
-      h1:after, h2:after {
-          content:' ';
-          display: block;
-          border: 0.5px solid rgba(0, 0, 0, 0.12);
-      }
-      h1:after {
-          margin: 0.6rem 0 0 0;
-      }
-      h2:after {
-          margin: 0.4rem 0 0 0;
-      }
-
-      h1 {
-          font-size: 2.2rem;
-          margin: 2.2rem 0 1.3rem -0.0rem;
-      }
-
-      h2 {
-          font-size: 1.7rem;
-          margin: 2.0rem 0 1.7rem -0.0rem;
-      }
-
-      h3 {
-          font-size: 1.3rem;
-          margin: 1.5rem 0 0.0rem -0.0rem;
-      }
-
-      p {
-          margin: 1.1rem 0 1.1rem 0;
-          font-size: 1.1rem;
-      }
-
-      ul {
-          padding: 0 0 0 1.5rem;
-          margin: 1.0rem 0 1.0rem 0.5rem;
-      }
-      ul ul {
-          margin: 0.6rem 0 -0.6rem 0;
-          padding: 0 0 0 2.1rem;
-      }
-
-      li {
-          padding: 0 0 0.6rem 0;
-
-          font-size: 1.1rem;
-      }
-      .annotation {
-          font-size: 1.1rem;
-      }
-      img {
-          max-width: 100%;
-          height: auto;
-          
-          border-radius: 1.0rem;
-          box-shadow: 0 0.2rem 0.4rem 0.0rem rgba(0, 0, 0, 0.15), 0 0.2rem 1.7rem 0.0rem rgba(0, 0, 0, 0.15);
-
-          display: block;
-          margin: 1.4rem auto 1.8rem auto;
-      }
-
-      hr {
-          height: 0px;
-          border: none;
-          border-bottom: 1px solid rgba(0, 0, 0, 0.12);
-          border-color:rgba(0, 0, 0, 0.12);
-
-          margin: 1.7rem 0 1.7rem 0;
-      }
-
-      @media (prefers-color-scheme: light) {
-
-          h1 {
-              color: #272727;
-          }
-
-          a {
-              color: #0948be;
-          }
-      }
-
-      @media (prefers-color-scheme: dark) {
-
-          body {
-              background-color: #1e1e1e; 
-              /* ^ Sparkle background is still bright when we have `background-color: transparent` even with darkmode active. 
-                  This is the color of the text field background in Apple Mail on macOS 11 BigSur */
-
-              color: #D9D9D9; /* For headers */
-          }
-
-          li, p {
-              color:#FFFFFF;
-          }
-          a {
-              color: #3586FF;
-          }
-      }
-
-  </style>
-  <!--[if lt IE 9]>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
-  <![endif]-->
-</head>
-<body>
-<h3 id="changes">Changes</h3>
-<ul>
-<li>Icons on the ‘More…’ sheet are now displayed properly on older macOS
-versions.</li>
-<li>Mac Mouse Fix is now a Universal Binary running natively on M1
-Macs.</li>
-<li>Improved scrolling behaviour when Smooth Scrolling is turned off.
-Fixes #61.</li>
-</ul>
-</body>
-</html>
-
-        ]]>
-        </description>
-        <enclosure
-            url="https://github.com/noah-nuebling/mac-mouse-fix/releases/download/1.0.1/MacMouseFixApp.zip"
-            sparkle:version="2309"
-            sparkle:shortVersionString="1.0.1"
-            sparkle:edSignature="JABjbX4bGMfagl3Ph+eTLk0nAQ1whno9Kv7z0aEg/wM8X8DFZhkHulP2tQUauUYPzG6cn9ax348emTYFqfrZBw==" length="1742389"
             type="application/octet-stream"
         />
     </item>
