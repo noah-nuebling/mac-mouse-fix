@@ -307,7 +307,7 @@ Beta 4</a>!</p>
 <p><strong>3.0.0 Beta 5</strong> restores <strong>compatibility</strong>
 with some <strong>mice</strong> under macOS 13 Ventura and it
 <strong>fixes scrolling</strong> in many apps. It also features several
-other small fixes and improvements.</p>
+other small fixes and and quality of life improvements.</p>
 <p>Here’s <strong>everything new</strong>:</p>
 <h3 id="mouse">Mouse</h3>
 <ul>
@@ -351,6 +351,10 @@ being present on the system. This issue only occurs under macOS
 Ventura.</li>
 <li>Polished behaviour and animations on the “Grant Accessibiliy Access”
 screen</li>
+<li>Mac Mouse Fix will be brought to the foreground when it it’s
+enabled. This improves the UI interactions in some situations like when
+Mac Mouse Fix is disabled under System Settings &gt; General &gt; Login
+Items.</li>
 <li>Improved UI strings on the “Grant Accessibiliy Access” screen</li>
 <li>Improved UI strings that show when trying to enable Mac Mouse Fix
 while it is disabled in System Settings</li>
