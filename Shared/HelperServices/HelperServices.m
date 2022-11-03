@@ -95,6 +95,9 @@
     
     /// Register/unregister the helper as a User Agent with launchd so it runs in the background - also launches/terminates helper
     /// Not sure if we should use this directly. Using EnabledState.shared.enable() / disable() is probably better
+    ///
+    /// I refactored HelperServices, which is very dangerous. Haven't tested it properly at the time of writing, especially pre-Ventura.
+    ///     I think 07e861de4504daad9996a40ce32c4aea5c87552a is the last commit before the changes.
     
     if (@available(macOS 13.0, *)) {
         
@@ -106,7 +109,6 @@
             
             /// Edit: I'm not totally sure what the reason is for the differences between this and what we do pre macOS 13.
             /// - Why aren't we terminating other helper instance here?
-            /// - At the time of writing `strangeHelperIsRegisteredWithLaunchd` only looks at the pre macOS 13 helper. But it doesn't matter since all it does when it finds a strange helper is call. `removeHelperFromLaunchd`, and we're calling that anyways right here. -> Clean this up, and clearly mark `strangeHelperIsRegisteredWithLaunchd` as only working pre macOS 13 or update it to work with macOS 13. Idea: give `strangeHelperIsRegisteredWithLaunchd` and the helperIsActive function an argument which launchd label they should check for.
             
             /// Remove __app__ launchd.plist
             removeLaunchdPlist();
@@ -119,7 +121,7 @@
             
             /// Unregister strange helper
             /// Notes:
-            /// - Under Ventura 13.0 we can't automatically fix it when a strange helper is registered. When we try to register the right helper, it will always be the strange one. The user has to uninstall the strange helper and then empty the trash and then restart to fix things
+            /// - Under Ventura 13.0 we can't automatically fix it when a strange helper is registered. When we try to register the right helper, it will always register the strange one. The user has to uninstall the strange helper and then empty the trash and then restart to fix things
             /// - So removing the strange helper service won't help and leads to weird stuff where the helper seems to be started twice next time that it is registered.
             /// -> So we're disabling this for now. Hopefully Apple will fix this at some point.
             
