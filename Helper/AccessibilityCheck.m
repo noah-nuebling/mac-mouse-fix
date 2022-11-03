@@ -214,7 +214,7 @@ CGEventRef _Nullable testCallback(CGEventTapProxy proxy, CGEventType type, CGEve
         
         /// Send 'started' message to mainApp
         ///     Note: We could improve responsivity of the enableToggle in mainApp by sending the message before doing all the initialization. But only slightly.
-        [MFMessagePort sendMessage:@"helperEnabled" withPayload:nil expectingReply:NO];
+        [MFMessagePort sendMessage:@"helperEnabled" withPayload:@(Locator.bundleVersion) expectingReply:NO];
         
         ///
         /// License init

@@ -787,6 +787,11 @@ static void removePrefpaneLaunchdPlist() {
 
 + (NSString *)executablePathForLaunchdIdentifier:(NSString *)identifier {
     
+    /// Validate
+    /// - This actually only works for `kMFLaunchdHelperIdentifier`. For `kMFLaunchdHelperIdentifierSM` it gets the executable path relative to the mainApp bundle which isn't that helpful.
+    
+    assert([identifier isEqual:kMFLaunchdHelperIdentifier]);
+    
     /// Using NSTask to ask launchd about helper status
     NSString * launchctlOutput = [self serviceInfoWithIdentifier:identifier];
     

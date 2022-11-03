@@ -43,35 +43,6 @@ static CFDataRef _Nullable didReceiveMessage(CFMessagePortRef port, SInt32 messa
     
     NSString *message = messageDict[kMFMessageKeyMessage];
     NSObject *payload = messageDict[kMFMessageKeyPayload];
-    NSInteger remoteVersion = [messageDict[kMFMessageKeyBundleVersion] integerValue];
-
-    NSInteger localVersion = Locator.bundleVersion;
-
-    if (localVersion != remoteVersion) {
-
-        DDLogError(@"Received Message From Stranger: %@ with payload: %@, localVersion: %ld, remoteVersion: %ld. Killing the strange helper.", message, payload, localVersion, remoteVersion);
-
-        /// Kill the strange helper
-
-#if IS_MAIN_APP
-
-        /// Kill helper from main app
-        /// Notes:
-        /// - This doesn't work immediately. Takes like 5 seconds. Not sure why. When debugging it doesn't happen. Might be some timeout in the API
-        /// - Not sure if just using `enableHelperAsUserAgent:` is enough. Does this call `launchctl remove`? Does it kill strange helpers that weren't started by launchd? That might be necessary in some situations.
-        /// - In Ventura 13.0, SMAppService has strange bugs where it will always start an old version of MMF until you delete the old version, empty the trash, then restart computer and then try again. Was hoping this would be fixed but it's still there after the 13.0 Beta.
-        ///     -> We should probably give the user instructions on how to fix things, when this situation occurs.
-
-        [HelperServices enableHelperAsUserAgent:NO onComplete:nil];
-
-        if ([message isEqualToString:@"helperEnabled"]) {
-            [ToastNotificationController attachNotificationWithMessage:[NSAttributedString attributedStringWithCoolMarkdown:@"Helooo __oo__ oo"] toWindow:MainAppState.shared.window forDuration:-1.0];
-        }
-
-#endif
-
-        return NULL;
-    }
     
     DDLogInfo(@"Received Message: %@ with payload: %@", message, payload);
     
@@ -89,12 +60,47 @@ static CFDataRef _Nullable didReceiveMessage(CFMessagePortRef port, SInt32 messa
         [KeyCaptureView handleKeyCaptureModeFeedbackWithPayload:(NSDictionary *)payload isSystemDefinedEvent:YES];
     } else if ([message isEqualToString:@"helperEnabled"]) {
         
-        /// Bring mainApp for foreground
-        /// In some places like when the accessibilitySheet is dismissed, we have other methods for bringing mainApp to the foreground that might be unnecessary now that we're doing this.
-        [NSApp activateIgnoringOtherApps:YES];
+        /// Handle enabling of strange helper under Ventura
         
-        /// Notify rest of the app
-        [EnabledState.shared reactToDidBecomeEnabled];
+        /// Explanation:
+        /// The `helperEnabled` message is sent by the helper right after the enableCheckbox is clicked and the helper is subsequently launched
+        /// On older macOS versions we can just kill / unregister strange helpers before registering the new helper and go about our day. But under Ventura using SMAppService there's a problem where the strange helper keeps getting registered instead of the right one until we completely uninstall the strange helper and restart the computer.
+        /// What we do here is catch that case of the strange helper getting registered. Then we unregister the strange helper and show the user a toast about what to do.
+        /// Notes:
+        /// - Unregistering the helper doesn't work immediately. Takes like 5 seconds. Not sure why. When debugging it doesn't happen. Might be some timeout in the API.
+        /// - Not sure if just using `enableHelperAsUserAgent:` is enough. Does this call `launchctl remove`? Does it kill strange helpers that weren't started by launchd? That might be necessary in some situations. Edit: pretty sure it's good enough. It will simply unregister the strange helper that was just registered and sent this message. We don't need to do anything else.
+        
+        BOOL strangerDanger = NO;
+        if (@available(macOS 13.0, *)) {
+            NSInteger helperVersion = [(NSNumber *)payload integerValue];
+            NSInteger mainAppVersion = Locator.bundleVersion;
+            if (mainAppVersion != helperVersion) {
+                strangerDanger = YES;
+            }
+        }
+        
+        if (strangerDanger) {
+            
+            DDLogError(@"Received enabled message from strange helper. Disabling it");
+            
+            [HelperServices enableHelperAsUserAgent:NO onComplete:nil];
+            
+            NSString *rawMessage = @"Helooo __oo__ oo";
+            [ToastNotificationController attachNotificationWithMessage:[NSAttributedString attributedStringWithCoolMarkdown:rawMessage]
+                                                              toWindow:MainAppState.shared.window
+                                                           forDuration:-1.0];
+            
+        } else { /// Helper matches mainApp instance.
+            
+            /// Bring mainApp for foreground
+            /// In some places like when the accessibilitySheet is dismissed, we have other methods for bringing mainApp to the foreground that might be unnecessary now that we're doing this.
+            [NSApp activateIgnoringOtherApps:YES];
+            
+            /// Notify rest of the app
+            [EnabledState.shared reactToDidBecomeEnabled];
+        }
+        
+        
     } else if ([message isEqualToString:@"helperDisabled"]) {
         [EnabledState.shared reactToDidBecomeDisabled];
     } else if ([message isEqualToString:@"configFileChanged"]) {
@@ -250,12 +256,10 @@ static CFDataRef _Nullable didReceiveMessage(CFMessagePortRef port, SInt32 messa
         messageDict = @{
             kMFMessageKeyMessage: message,
             kMFMessageKeyPayload: payload, /// This crashes if payload is nil for some reason
-            kMFMessageKeyBundleVersion: @(Locator.bundleVersion),
         };
     } else {
         messageDict = @{
             kMFMessageKeyMessage: message,
-            kMFMessageKeyBundleVersion: @(Locator.bundleVersion),
         };
     }
     
