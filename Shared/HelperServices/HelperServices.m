@@ -127,6 +127,14 @@
 //                removeServiceWithIdentifier(kMFLaunchdHelperIdentifierSM);
 //            }
             
+            /// Unregister if enabling
+            /// - This is necessary for enabling to work after updating to new version in the same place while the old helper is still running
+            /// - removeServiceWithIdentifier() also works for this, but it leads to the helper weirdly enabling twice which causes the `is-strange-helper-toast` message to be shown twice
+            
+            if (enable) {
+                [self enableHelper_SM:NO];
+            }
+            
             ///
             /// Enable helper
             /// 
@@ -327,8 +335,8 @@
 
     if (SharedUtility.runningMainApp) {
         
-        NSNumber *response = (NSNumber *)[MFMessagePort sendMessage:@"isActive" withPayload:nil expectingReply:YES];
-        return [response isEqual:@(YES)];
+        NSNumber *response = (NSNumber *)[MFMessagePort sendMessage:@"getBundleVersion" withPayload:nil expectingReply:YES];
+        return response != nil && response.integerValue == Locator.bundleVersion;
         
     } else {
         /// Crash

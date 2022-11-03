@@ -40,10 +40,15 @@ struct ToAttributed: MarkupWalker {
     var string: NSMutableAttributedString = NSMutableAttributedString(string: "")
     
     mutating func visitLink(_ link: Link) -> () {
-        string.append(NSAttributedString(string: link.plainText))
+        
+        let str: NSAttributedString
         if let destination = link.destination, let url = URL(string: destination) {
-            string = string.addingLink(with: url, forSubstring: link.plainText) as! NSMutableAttributedString
+            str = NSAttributedString.hyperlink(from: link.plainText, with: url)
+        } else {
+            str = NSAttributedString(string: link.plainText)
         }
+        
+        string.append(str)
     }
     
     mutating func visitEmphasis(_ emphasis: Emphasis) -> () {

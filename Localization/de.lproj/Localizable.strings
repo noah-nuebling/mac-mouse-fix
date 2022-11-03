@@ -1,6 +1,9 @@
 /* First draft: Mac Mouse Fix was **disabled** in System Settings\n\nTo enable Mac Mouse Fix:\n\n1. Go to [Login Items Settings](x-apple.systempreferences:com.apple.LoginItems-Settings.extension)\n2. Switch on \'Mac Mouse Fix.app\' */
 "is-disabled-toast" = "Mac Mouse Fix wurde in den Systemeinstellungen **deaktiviert**\n\nUm Mac Mouse Fix zu aktivieren:\n\n1. Öffne die [Anmeldeobjekte-Einstellungen](x-apple.systempreferences:com.apple.LoginItems-Settings.extension)\n2. Aktiviere \'Mac Mouse Fix.app\'";
 
+/* First draft: Mac Mouse Fix can't be enabled because there's __another version__ of Mac Mouse Fix present on your computer\n\nTo enable Mac Mouse Fix:\n\n1. Delete the [other version](%@)\n2. Empty the Bin\n3. Restart your Mac\n4. Try again! */
+"is-strange-helper-toast" = "Mac Mouse Fix kann nicht eingeschaltet werden da noch eine __andere Version__ von Mac Mouse Fix auf deinem Computer vorliegt\n\nUm Mac Mouse Fix einzuschalten:\n\n1. Lösche die [andere Version](%@)\n2. Leere den Papierkorb\n3. Starte deinen Mac neu\n4. Versuche es erneut!";
+
 /* First draft: __Enabled__ Mac Mouse Fix for __Buttons__\nIt had been disabled from the Menu Bar %@ || Note: %@ will be replaced by the menubar icon */
 "button-revive-toast" = "Mac Mouse Fix __aktiviert__ für __Tasten__\nEs war in der Menüleiste %@ deakiviert worden";
 

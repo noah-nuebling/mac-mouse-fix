@@ -69,10 +69,12 @@ static CFDataRef _Nullable didReceiveMessage(CFMessagePortRef port, SInt32 messa
         /// Notes:
         /// - Unregistering the helper doesn't work immediately. Takes like 5 seconds. Not sure why. When debugging it doesn't happen. Might be some timeout in the API.
         /// - Not sure if just using `enableHelperAsUserAgent:` is enough. Does this call `launchctl remove`? Does it kill strange helpers that weren't started by launchd? That might be necessary in some situations. Edit: pretty sure it's good enough. It will simply unregister the strange helper that was just registered and sent this message. We don't need to do anything else.
+        /// - Logically, the `is-disabled-toast` and the `is-strange-helper-toast` belong together since they both give UI feedback about a failure to enable the helper. It would be nice if they were in the same place in code as well
         
+        NSDictionary *dict = (NSDictionary *)payload;
         BOOL strangerDanger = NO;
         if (@available(macOS 13.0, *)) {
-            NSInteger helperVersion = [(NSNumber *)payload integerValue];
+            NSInteger helperVersion = [(NSNumber *)dict[@"version"] integerValue];
             NSInteger mainAppVersion = Locator.bundleVersion;
             if (mainAppVersion != helperVersion) {
                 strangerDanger = YES;
@@ -85,7 +87,7 @@ static CFDataRef _Nullable didReceiveMessage(CFMessagePortRef port, SInt32 messa
             
             [HelperServices enableHelperAsUserAgent:NO onComplete:nil];
             
-            NSString *rawMessage = @"Helooo __oo__ oo";
+            NSString *rawMessage = stringf(NSLocalizedString(@"is-strange-helper-toast", @"First draft: Mac Mouse Fix can't be enabled because there's __another version__ of Mac Mouse Fix present on your computer\n\nTo enable Mac Mouse Fix:\n\n1. Delete the [other version](%@)\n2. Empty the Bin\n3. Restart your Mac\n4. Try again!"), ((NSURL *)dict[@"url"]).absoluteString);
             [ToastNotificationController attachNotificationWithMessage:[NSAttributedString attributedStringWithCoolMarkdown:rawMessage]
                                                               toWindow:MainAppState.shared.window
                                                            forDuration:-1.0];
@@ -144,8 +146,8 @@ static CFDataRef _Nullable didReceiveMessage(CFMessagePortRef port, SInt32 messa
         uint64_t senderID = [(NSNumber *)payload unsignedIntegerValue];
         [HelperState updateActiveDeviceWithEventSenderID:senderID];
         
-    } else if ([message isEqualToString:@"isActive"]) {
-        response = @(YES);
+    } else if ([message isEqualToString:@"getBundleVersion"]) {
+        response = @(Locator.bundleVersion);
 //    } else if ([message isEqualToString:@"getBundleVersion"]) {
 //        response = @(Locator.bundleVersion);
     } else {
