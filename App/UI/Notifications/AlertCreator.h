@@ -14,7 +14,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface AlertCreator : NSObject
 
-+ (void)showAlertWithTitle:(NSString *)title markdownBody:(NSString *)bodyRaw maxWidth:(int)maxWidth style:(NSAlertStyle)style isAlwaysOnTop:(BOOL)isAlwaysOnTop;
++ (void)showPersistenNotificationWithTitle:(NSString *)title markdownBody:(NSString *)bodyRaw maxWidth:(int)maxWidth stayOnTop:(BOOL)isAlwaysOnTop asSheet:(BOOL)asSheet;
 
 @end
 

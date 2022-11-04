@@ -90,10 +90,16 @@ static CFDataRef _Nullable didReceiveMessage(CFMessagePortRef port, SInt32 messa
             
             [HelperServices enableHelperAsUserAgent:NO onComplete:nil];
             
-            NSString *title = NSLocalizedString(@"is-strange-helper-alert.title", @"First draft: Enabling Failed");
-            NSString *bodyRaw = stringf(NSLocalizedString(@"is-strange-helper-alert.body", @"First draft: Mac Mouse Fix can't be enabled because there's __another version__ of Mac Mouse Fix present on your computer\n\nTo enable Mac Mouse Fix:\n\n1. Delete the [other version](%@)\n2. Empty the Bin\n3. Restart your Mac\n4. Try again!"), ((NSURL *)dict[@"url"]).absoluteString);
+            /// Notify user
+            ///     And show solution steps
+            /// Notes:
+            /// - Setting asSheet to NO because the sheet will block restarting (which is one of the steps)
+            /// - Setting stayOnTop to YES so the user doesn't loose the instructions when deleting the strange helper (which is one of the steps)
             
-            [AlertCreator showAlertWithTitle:title markdownBody:bodyRaw maxWidth:300 style:NSAlertStyleInformational isAlwaysOnTop:YES];
+            NSString *title = NSLocalizedString(@"is-strange-helper-alert.title", @"First draft: Enabling Failed");
+            NSString *body = stringf(NSLocalizedString(@"is-strange-helper-alert.body", @"First draft: Mac Mouse Fix can't be enabled because there's __another version__ of Mac Mouse Fix present on your computer\n\nTo enable Mac Mouse Fix:\n\n1. Delete the [other version](%@)\n2. Empty the Bin\n3. Restart your Mac\n4. Try again!"), ((NSURL *)dict[@"url"]).absoluteString);
+            
+            [AlertCreator showPersistenNotificationWithTitle:title markdownBody:body maxWidth:300 stayOnTop:YES asSheet:NO];
             
         } else { /// Helper matches mainApp instance.
             
