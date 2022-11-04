@@ -284,6 +284,7 @@ static void handleMouseInputWhileInitialized(int64_t deltaX, int64_t deltaY, CGE
         /// Could also do this in normal init `initializeDragWithDict`, but here is more effiicient
         /// (`initializeDragWithDict` is called on every mouse click if it's set up for that button)
         /// -> Don't use `naturalDirection` before state switches to `kMFModifiedInputActivationStateInUse`!
+        /// TODO: Build UI for this
         
         _drag.naturalDirection = [NSUserDefaults.standardUserDefaults boolForKey:@"com.apple.swipescrolldirection"];
         
