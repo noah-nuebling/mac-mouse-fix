@@ -24,6 +24,7 @@
 #if IS_MAIN_APP
 #import "Mac_Mouse_Fix-Swift.h"
 #import "KeyCaptureView.h"
+#import "AlertCreator.h"
 #endif
 
 #if IS_HELPER
@@ -89,42 +90,12 @@ static CFDataRef _Nullable didReceiveMessage(CFMessagePortRef port, SInt32 messa
             
             [HelperServices enableHelperAsUserAgent:NO onComplete:nil];
             
-            NSString *rawMessage = stringf(NSLocalizedString(@"is-strange-helper-toast", @"First draft: Mac Mouse Fix can't be enabled because there's __another version__ of Mac Mouse Fix present on your computer\n\nTo enable Mac Mouse Fix:\n\n1. Delete the [other version](%@)\n2. Empty the Bin\n3. Restart your Mac\n4. Try again!"), ((NSURL *)dict[@"url"]).absoluteString);
-            NSAttributedString *message = [NSAttributedString attributedStringWithCoolMarkdown:rawMessage];
+            NSString *title = NSLocalizedString(@"is-strange-helper-alert.title", @"First draft: Enabling Failed");
+            NSString *bodyRaw = stringf(NSLocalizedString(@"is-strange-helper-alert.body", @"First draft: Mac Mouse Fix can't be enabled because there's __another version__ of Mac Mouse Fix present on your computer\n\nTo enable Mac Mouse Fix:\n\n1. Delete the [other version](%@)\n2. Empty the Bin\n3. Restart your Mac\n4. Try again!"), ((NSURL *)dict[@"url"]).absoluteString);
             
-            [ToastNotificationController attachNotificationWithMessage:message
-                                                              toWindow:MainAppState.shared.window
-                                                           forDuration:-1.0];
-            
-            NSAlert *alert = [[NSAlert alloc] init];
-            alert.messageText = @"Another version of Mac Mouse Fix is present on your computer";
-//            alert.informativeText = @"To enable Mac Mouse Fix:\n\n1. Delete the other version\n2. Empty the Bin\n3. Restart your Mac\n4. Try again!";
-            NSAttributedString *message2 = [message attributedStringByAligningSubstring:nil alignment:NSTextAlignmentCenter];
-            
-            NSTextView *accessory = [[NSTextView alloc] init];
-            accessory.editable = NO;
-            accessory.drawsBackground = NO;
-            [accessory.textStorage setAttributedString:message2];
-            
-            [accessory setFrameSize:[message sizeAtMaxWidth:300]];
-            
-            
-//            NSTextView *accessory = NSTextView 
-            
-            alert.accessoryView = accessory;
-            alert.alertStyle = NSAlertStyleCritical;
-//            [alert layout];
-            
-            alert.window.level = CGWindowLevelForKey(kCGMaximumWindowLevelKey);
+            NSAlert *alert = [AlertCreator alertWithTitle:title markdownBody:bodyRaw maxWidth:300 style:NSAlertStyleInformational isAlwaysOnTop:YES];
             
             [alert runModal];
-            
-//            NSPanel *panel = [[NSPanel alloc] initWithContentRect:NSMakeRect(0, 0, 200, 200) styleMask:(NSWindowStyleMaskTitled|NSWindowStyleMaskClosable|NSWindowStyleMaskResizable) backing:NSBackingStoreBuffered defer:NO];
-//            panel.contentView = accessory;
-////            panel.maxSize = NSMakeSize(200, 200);
-////            panel.minSize = NSMakeSize(200, 200);
-//            [panel setFloatingPanel:YES];
-//            [panel makeKeyAndOrderFront:nil];
             
         } else { /// Helper matches mainApp instance.
             

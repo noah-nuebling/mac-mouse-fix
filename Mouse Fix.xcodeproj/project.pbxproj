@@ -170,6 +170,7 @@
 		4FB4FA202611DD6000806DDD /* KeyCaptureScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FB4FA1F2611DD6000806DDD /* KeyCaptureScrollView.m */; };
 		4FBC943B260F8AA60062F186 /* MASShortcut.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FBC9434260F8AA60062F186 /* MASShortcut.m */; };
 		4FBDA14F27B241CE0030E4EA /* GlobalEventTapThread.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FBDA14E27B241CE0030E4EA /* GlobalEventTapThread.m */; };
+		4FC55B982915652C00663B24 /* AlertCreator.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FC55B972915652C00663B24 /* AlertCreator.m */; };
 		4FC55E31285E6F1F00F2FCCF /* GlobalDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FC55E2F285E6BF800F2FCCF /* GlobalDefaults.swift */; };
 		4FC8A7CD28AAF1BC007DB982 /* MarkdownParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FC8A7CC28AAF1BC007DB982 /* MarkdownParser.swift */; };
 		4FC8A7CE28AAF1BC007DB982 /* MarkdownParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FC8A7CC28AAF1BC007DB982 /* MarkdownParser.swift */; };
@@ -572,6 +573,8 @@
 		4FBDA14D27B241CE0030E4EA /* GlobalEventTapThread.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GlobalEventTapThread.h; sourceTree = "<group>"; };
 		4FBDA14E27B241CE0030E4EA /* GlobalEventTapThread.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GlobalEventTapThread.m; sourceTree = "<group>"; };
 		4FBE18BA2666EC4A002A6771 /* WannabePrefixHeader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WannabePrefixHeader.h; sourceTree = "<group>"; };
+		4FC55B962915652C00663B24 /* AlertCreator.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AlertCreator.h; sourceTree = "<group>"; };
+		4FC55B972915652C00663B24 /* AlertCreator.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AlertCreator.m; sourceTree = "<group>"; };
 		4FC55E2F285E6BF800F2FCCF /* GlobalDefaults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlobalDefaults.swift; sourceTree = "<group>"; };
 		4FC8A7CC28AAF1BC007DB982 /* MarkdownParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarkdownParser.swift; sourceTree = "<group>"; };
 		4FC8A7D428ABDEFD007DB982 /* MFClipView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MFClipView.swift; sourceTree = "<group>"; };
@@ -975,7 +978,7 @@
 				4F909CF228A0C3D2009349A2 /* Main */,
 				4FF665DC25F2C92700689B77 /* Accessibility */,
 				4F09284728B8E83400BDC2FF /* LicenseSheet */,
-				4FA13FBA28B393B0005C68FC /* Toasts */,
+				4FA13FBA28B393B0005C68FC /* Notifications */,
 				4F909D0228A0C3D2009349A2 /* UIExtensions */,
 				4F909D1328A0C3D2009349A2 /* CustomDataTypes */,
 				4F909D1A28A0C3D2009349A2 /* CustomUIElements */,
@@ -1257,18 +1260,14 @@
 			path = Old;
 			sourceTree = "<group>";
 		};
-		4FA13FBA28B393B0005C68FC /* Toasts */ = {
+		4FA13FBA28B393B0005C68FC /* Notifications */ = {
 			isa = PBXGroup;
 			children = (
-				4F1B832B26081A5400AEAF37 /* CaptureNotificationCreator.h */,
-				4F1B832C26081A5500AEAF37 /* CaptureNotificationCreator.m */,
-				4F79A81A2604317200076A7E /* ToastNotificationController.h */,
-				4F79A81B2604317200076A7E /* ToastNotificationController.m */,
-				4F79A83426051E4A00076A7E /* ToastNotification.h */,
-				4F79A83526051E4A00076A7E /* ToastNotification.m */,
-				4F79A7EE26042E2E00076A7E /* ToastNotification.xib */,
+				4FC55B962915652C00663B24 /* AlertCreator.h */,
+				4FC55B972915652C00663B24 /* AlertCreator.m */,
+				4FC55B93291564C200663B24 /* Toasts */,
 			);
-			path = Toasts;
+			path = Notifications;
 			sourceTree = "<group>";
 		};
 		4FA1ACE025E85904007DB95B /* Tests */ = {
@@ -1386,6 +1385,20 @@
 				4FF6662425F2C93A00689B77 /* CubicUnitBezier.m */,
 			);
 			path = Unused;
+			sourceTree = "<group>";
+		};
+		4FC55B93291564C200663B24 /* Toasts */ = {
+			isa = PBXGroup;
+			children = (
+				4F1B832B26081A5400AEAF37 /* CaptureNotificationCreator.h */,
+				4F1B832C26081A5500AEAF37 /* CaptureNotificationCreator.m */,
+				4F79A81A2604317200076A7E /* ToastNotificationController.h */,
+				4F79A81B2604317200076A7E /* ToastNotificationController.m */,
+				4F79A83426051E4A00076A7E /* ToastNotification.h */,
+				4F79A83526051E4A00076A7E /* ToastNotification.m */,
+				4F79A7EE26042E2E00076A7E /* ToastNotification.xib */,
+			);
+			path = Toasts;
 			sourceTree = "<group>";
 		};
 		4FCD01742912C0B600B43C1B /* Unused */ = {
@@ -2401,6 +2414,7 @@
 				4FCA07D625F3129B00BFE209 /* RemapTableController.m in Sources */,
 				4F44FF052606D73D00926A5E /* MFMessagePort.m in Sources */,
 				4FA40D0B28A0D87200499E53 /* DisplayLink.m in Sources */,
+				4FC55B982915652C00663B24 /* AlertCreator.m in Sources */,
 				4FAD391426702CD4000CF4FA /* DerivedProperty.swift in Sources */,
 				4F909D2928A0C3D2009349A2 /* TabViewControllerDisabling.swift in Sources */,
 				4FA40D0E28A0D87200499E53 /* DynamicSystemAnimator.swift in Sources */,
