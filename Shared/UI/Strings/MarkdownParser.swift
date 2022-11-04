@@ -24,7 +24,7 @@ import CocoaLumberjackSwift
         let document = Document(parsing: markdown, source: URL(string: ""), options: [])
         if document.isEmpty { return nil }
         
-        print("Transforming Markdown doc to attributed string: \(document)")
+//        print("Transforming Markdown doc to attributed string: \(document)")
         
         var walker = ToAttributed()
         walker.visit(document)
