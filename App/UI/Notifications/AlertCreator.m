@@ -10,9 +10,76 @@
 #import "AlertCreator.h"
 #import "NSAttributedString+Additions.h"
 
+#pragma mark - NSAlert subclass
+
+@interface MFAlert : NSAlert<NSWindowDelegate> {
+    @public BOOL stayOnTop; /// Instance vars are automatically initialized to 0 aka NO
+}
+    
+@end
+
+@implementation MFAlert
+
+//- (void)windowDidBecomeKey:(NSNotification *)notification {
+//
+//    /// Notes:
+//    /// - didBecomeMain is never called
+//
+//    /// Invoke super implementation
+//
+//    if ([self.class.superclass instancesRespondToSelector:_cmd]) {
+//        IMP imp = [self.class.superclass instanceMethodForSelector:_cmd];
+//        if (imp != NULL) {
+//            void (*imp2)(id, SEL, NSNotification *) = (void *)imp;
+//            imp2(self, _cmd, notification);
+//        }
+//    }
+//
+//    /// Make window on top of EVERYTHING
+//
+//    static BOOL didIt = NO;
+//    if (!didIt) {
+//        self.window.level = NSFloatingWindowLevel;
+////        [self.window orderOut:nil];
+//        [self.window orderFrontRegardless];
+////        [self.window orderWindow:NSWindowAbove relativeTo:0];
+//        didIt = YES;
+//    }
+//
+//}
+
+- (void)windowDidResignKey:(NSNotification *)notification {
+
+    /// Notes:
+    /// - This is a hack to keep the Alert window always on top of all other windows. This is very ugly. We managed to achieve always-on-top another way for OverridePanel, but I don't know what we did there. I also tried calling just`orderFrontRegardless` on `windowDidBecomeKey` but it didn't work. `windowDidBecomeMain` is never called
+    
+    /// Invoke super implementation
+
+    if ([self.class.superclass instancesRespondToSelector:_cmd]) {
+        IMP imp = [self.class.superclass instanceMethodForSelector:_cmd];
+        if (imp != NULL) {
+            void (*imp2)(id, SEL, NSNotification *) = (void *)imp;
+            imp2(self, _cmd, notification);
+        }
+    }
+
+    /// Keep window on top
+    if (stayOnTop) {
+        self.window.level = NSFloatingWindowLevel;
+        [self.window orderFrontRegardless];
+    }
+
+}
+
+@end
+
+#pragma mark - AlertCreator
+
 @implementation AlertCreator
 
-+ (NSAlert *)alertWithTitle:(NSString *)title markdownBody:(NSString *)bodyRaw maxWidth:(int)maxWidth style:(NSAlertStyle)style isAlwaysOnTop:(BOOL)isAlwaysOnTop {
++ (void)showAlertWithTitle:(NSString *)title markdownBody:(NSString *)bodyRaw maxWidth:(int)maxWidth style:(NSAlertStyle)style isAlwaysOnTop:(BOOL)isAlwaysOnTop {
+    
+    /// Override body alignment
     
     NSAttributedString *body = [NSAttributedString attributedStringWithCoolMarkdown:bodyRaw];
     if (@available(macOS 11.0, *)) {
@@ -23,19 +90,18 @@
     
     /// Create alert
     
-    NSAlert *alert = [[NSAlert alloc] init];
+    MFAlert *alert = [[MFAlert alloc] init];
     
     /// Set alert stye
     alert.alertStyle = style;
     
     /// Make alert alway-on-top
-    ///     This doesn't work under 13.0
-    alert.window.level = CGWindowLevelForKey(isAlwaysOnTop ? kCGFloatingWindowLevelKey : kCGNormalWindowLevelKey);
+    alert->stayOnTop = isAlwaysOnTop;
     
-    /// Set alert title
+    /// Set title
     alert.messageText = title;
     
-    /// Create view for alert body
+    /// Create view for body
     NSTextView *bodyView = [[NSTextView alloc] init];
     bodyView.editable = NO;
     bodyView.drawsBackground = NO;
@@ -44,7 +110,9 @@
     
     /// Set alert body
     alert.accessoryView = bodyView;
-    return alert;
+    
+    /// Show alert
+    [alert runModal];
 }
 
 @end

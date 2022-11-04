@@ -336,8 +336,7 @@
 + (BOOL)helperIsActive_Message {
 
     if (SharedUtility.runningMainApp) {
-        
-        NSNumber *response = (NSNumber *)[MFMessagePort sendMessage:@"getBundleVersion" withPayload:nil expectingReply:YES];
+                NSNumber *response = (NSNumber *)[MFMessagePort sendMessage:@"getBundleVersion" withPayload:nil expectingReply:YES];
         return response != nil && response.integerValue == Locator.bundleVersion;
         
     } else {

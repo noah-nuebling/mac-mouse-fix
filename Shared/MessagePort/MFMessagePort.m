@@ -93,9 +93,7 @@ static CFDataRef _Nullable didReceiveMessage(CFMessagePortRef port, SInt32 messa
             NSString *title = NSLocalizedString(@"is-strange-helper-alert.title", @"First draft: Enabling Failed");
             NSString *bodyRaw = stringf(NSLocalizedString(@"is-strange-helper-alert.body", @"First draft: Mac Mouse Fix can't be enabled because there's __another version__ of Mac Mouse Fix present on your computer\n\nTo enable Mac Mouse Fix:\n\n1. Delete the [other version](%@)\n2. Empty the Bin\n3. Restart your Mac\n4. Try again!"), ((NSURL *)dict[@"url"]).absoluteString);
             
-            NSAlert *alert = [AlertCreator alertWithTitle:title markdownBody:bodyRaw maxWidth:300 style:NSAlertStyleInformational isAlwaysOnTop:YES];
-            
-            [alert runModal];
+            [AlertCreator showAlertWithTitle:title markdownBody:bodyRaw maxWidth:300 style:NSAlertStyleInformational isAlwaysOnTop:YES];
             
         } else { /// Helper matches mainApp instance.
             
