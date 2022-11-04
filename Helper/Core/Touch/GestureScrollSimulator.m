@@ -537,7 +537,7 @@ static void getDeltaVectors(Vector point, VectorSubPixelator *subPixelator, Vect
     
     CGEventSetIntegerValueField(e22, 55, 22); /// 22 -> NSEventTypeScrollWheel // Setting field 55 is the same as using CGEventSetType(), I'm not sure if that has weird side-effects though, so I'd rather do it this way.
     CGEventSetIntegerValueField(e22, 88, 1); /// 88 -> kCGScrollWheelEventIsContinuous
-    CGEventSetIntegerValueField(e22, 137, 1); /// Maybe this is NSEvent.directionInvertedFromDevice
+    CGEventSetIntegerValueField(e22, 137, 1); /// I think this is NSEvent.directionInvertedFromDevice. Will flip direction of unread swiping in Mail
     
     /// Set dynamic fields
     

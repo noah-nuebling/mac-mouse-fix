@@ -66,10 +66,12 @@ static CFDataRef _Nullable didReceiveMessage(CFMessagePortRef port, SInt32 messa
         /// The `helperEnabled` message is sent by the helper right after the enableCheckbox is clicked and the helper is subsequently launched
         /// On older macOS versions we can just kill / unregister strange helpers before registering the new helper and go about our day. But under Ventura using SMAppService there's a problem where the strange helper keeps getting registered instead of the right one until we completely uninstall the strange helper and restart the computer.
         /// What we do here is catch that case of the strange helper getting registered. Then we unregister the strange helper and show the user a toast about what to do.
+        ///
         /// Notes:
         /// - Unregistering the helper doesn't work immediately. Takes like 5 seconds. Not sure why. When debugging it doesn't happen. Might be some timeout in the API.
         /// - Not sure if just using `enableHelperAsUserAgent:` is enough. Does this call `launchctl remove`? Does it kill strange helpers that weren't started by launchd? That might be necessary in some situations. Edit: pretty sure it's good enough. It will simply unregister the strange helper that was just registered and sent this message. We don't need to do anything else.
         /// - Logically, the `is-disabled-toast` and the `is-strange-helper-toast` belong together since they both give UI feedback about a failure to enable the helper. It would be nice if they were in the same place in code as well
+        /// - Maybe we should move this UI code out of MFMessagePort because it clutters things up
         
         NSDictionary *dict = (NSDictionary *)payload;
         BOOL strangerDanger = NO;
@@ -88,9 +90,41 @@ static CFDataRef _Nullable didReceiveMessage(CFMessagePortRef port, SInt32 messa
             [HelperServices enableHelperAsUserAgent:NO onComplete:nil];
             
             NSString *rawMessage = stringf(NSLocalizedString(@"is-strange-helper-toast", @"First draft: Mac Mouse Fix can't be enabled because there's __another version__ of Mac Mouse Fix present on your computer\n\nTo enable Mac Mouse Fix:\n\n1. Delete the [other version](%@)\n2. Empty the Bin\n3. Restart your Mac\n4. Try again!"), ((NSURL *)dict[@"url"]).absoluteString);
-            [ToastNotificationController attachNotificationWithMessage:[NSAttributedString attributedStringWithCoolMarkdown:rawMessage]
+            NSAttributedString *message = [NSAttributedString attributedStringWithCoolMarkdown:rawMessage];
+            
+            [ToastNotificationController attachNotificationWithMessage:message
                                                               toWindow:MainAppState.shared.window
                                                            forDuration:-1.0];
+            
+            NSAlert *alert = [[NSAlert alloc] init];
+            alert.messageText = @"Another version of Mac Mouse Fix is present on your computer";
+//            alert.informativeText = @"To enable Mac Mouse Fix:\n\n1. Delete the other version\n2. Empty the Bin\n3. Restart your Mac\n4. Try again!";
+            NSAttributedString *message2 = [message attributedStringByAligningSubstring:nil alignment:NSTextAlignmentCenter];
+            
+            NSTextView *accessory = [[NSTextView alloc] init];
+            accessory.editable = NO;
+            accessory.drawsBackground = NO;
+            [accessory.textStorage setAttributedString:message2];
+            
+            [accessory setFrameSize:[message sizeAtMaxWidth:300]];
+            
+            
+//            NSTextView *accessory = NSTextView 
+            
+            alert.accessoryView = accessory;
+            alert.alertStyle = NSAlertStyleCritical;
+//            [alert layout];
+            
+            alert.window.level = CGWindowLevelForKey(kCGMaximumWindowLevelKey);
+            
+            [alert runModal];
+            
+//            NSPanel *panel = [[NSPanel alloc] initWithContentRect:NSMakeRect(0, 0, 200, 200) styleMask:(NSWindowStyleMaskTitled|NSWindowStyleMaskClosable|NSWindowStyleMaskResizable) backing:NSBackingStoreBuffered defer:NO];
+//            panel.contentView = accessory;
+////            panel.maxSize = NSMakeSize(200, 200);
+////            panel.minSize = NSMakeSize(200, 200);
+//            [panel setFloatingPanel:YES];
+//            [panel makeKeyAndOrderFront:nil];
             
         } else { /// Helper matches mainApp instance.
             
