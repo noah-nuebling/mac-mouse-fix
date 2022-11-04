@@ -85,7 +85,7 @@ import CocoaLumberjackSwift
     
     // MARK: Inverted from device flag
     
-    @objc let invertedFromDevice = false;
+    @objc let invertedFromDevice = true;
     
     // MARK: Analysis
     
