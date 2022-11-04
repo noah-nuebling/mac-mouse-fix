@@ -76,7 +76,7 @@ static dispatch_queue_t _momentumQueue;
  \note For more info on which delta values and which phases to use, see the documentation for `postGestureScrollEventWithGestureDeltaX:deltaY:phase:momentumPhase:scrollDeltaConversionFunction:scrollPointDeltaConversionFunction:`. In contrast to the aforementioned function, you shouldn't need to call this function with kIOHIDEventPhaseUndefined.
 */
 
-+ (void)postGestureScrollEventWithDeltaX:(int64_t)dx deltaY:(int64_t)dy phase:(IOHIDEventPhaseBits)phase autoMomentumScroll:(BOOL)autoMomentumScroll {
++ (void)postGestureScrollEventWithDeltaX:(int64_t)dx deltaY:(int64_t)dy phase:(IOHIDEventPhaseBits)phase autoMomentumScroll:(BOOL)autoMomentumScroll invertedFromDevice:(BOOL)invertedFromDevice {
     
     /// This function doesn't dispatch to _queue. It should only be called if you're already on _queue. Otherwise there will be race conditions with the other functions that execute on _queue.
     /// `autoMomentumScroll` should always be true, except if you are going to post momentumScrolls manually using `+ postMomentumScrollEvent`
@@ -145,7 +145,8 @@ static dispatch_queue_t _momentumQueue;
                                                     scrollVectorLineInt:vecScrollLineInt
                                                       scrollVectorPoint:vecScrollPoint
                                                                   phase:phase
-                                                          momentumPhase:kCGMomentumScrollPhaseNone];
+                                                          momentumPhase:kCGMomentumScrollPhaseNone
+                                                     invertedFromDevice:invertedFromDevice];
         
         /// Debug
         //        DDLogInfo(@"timeSinceLast: %f scrollVec: %f %f speed: %f", timeSinceLastInput, vecScrollPoint.x, vecScrollPoint.y, vecScrollPoint.y / timeSinceLastInput);
@@ -162,7 +163,8 @@ static dispatch_queue_t _momentumQueue;
                                                     scrollVectorLineInt:(Vector){}
                                                       scrollVectorPoint:(Vector){}
                                                                   phase:kIOHIDEventPhaseEnded
-                                                          momentumPhase:0];
+                                                          momentumPhase:0
+                                                     invertedFromDevice:invertedFromDevice];
         
         if (autoMomentumScroll) {
         
@@ -184,7 +186,7 @@ static dispatch_queue_t _momentumQueue;
             
             /// Do start momentum scroll
             
-            startMomentumScroll(timeSinceLastInput, exitVelocity, stopSpeed, dragCoeff, dragExp);
+            startMomentumScroll(timeSinceLastInput, exitVelocity, stopSpeed, dragCoeff, dragExp, invertedFromDevice);
         }
         
     } else {
@@ -199,7 +201,8 @@ static dispatch_queue_t _momentumQueue;
 
 + (void)postMomentumScrollDirectlyWithDeltaX:(double)dx
                                       deltaY:(double)dy
-                               momentumPhase:(CGMomentumScrollPhase)momentumPhase {
+                               momentumPhase:(CGMomentumScrollPhase)momentumPhase
+                          invertedFromDevice:(BOOL)invertedFromDevice {
     
     /// Reset subpixelator
     if (momentumPhase == kCGMomentumScrollPhaseBegin) {
@@ -220,7 +223,8 @@ static dispatch_queue_t _momentumQueue;
                                                 scrollVectorLineInt:vecScrollLineInt
                                                   scrollVectorPoint:vecScrollPoint
                                                               phase:kIOHIDEventPhaseUndefined
-                                                      momentumPhase:momentumPhase];
+                                                      momentumPhase:momentumPhase
+                                                 invertedFromDevice:invertedFromDevice];
 }
 
 #pragma mark - Auto momentum scroll
@@ -271,13 +275,13 @@ static void (^_momentumScrollCallback)(void);
 
 /// Momentum scroll main
 
-static void startMomentumScroll(double timeSinceLastInput, Vector exitVelocity, double stopSpeed, double dragCoefficient, double dragExponent) {
+static void startMomentumScroll(double timeSinceLastInput, Vector exitVelocity, double stopSpeed, double dragCoefficient, double dragExponent, BOOL invertedFromDevice) {
     dispatch_sync(_momentumQueue, ^{
-        startMomentumScroll_Unsafe(timeSinceLastInput, exitVelocity, stopSpeed, dragCoefficient, dragExponent);
+        startMomentumScroll_Unsafe(timeSinceLastInput, exitVelocity, stopSpeed, dragCoefficient, dragExponent, invertedFromDevice);
     });
 }
 
-static void startMomentumScroll_Unsafe(double timeSinceLastInput, Vector exitVelocity, double stopSpeed, double dragCoefficient, double dragExponent) {
+static void startMomentumScroll_Unsafe(double timeSinceLastInput, Vector exitVelocity, double stopSpeed, double dragCoefficient, double dragExponent, BOOL invertedFromDevice) {
     
     /// Debug
     
@@ -399,7 +403,8 @@ static void startMomentumScroll_Unsafe(double timeSinceLastInput, Vector exitVel
                                                     scrollVectorLineInt:vecScrollLineInt
                                                       scrollVectorPoint:deltaVec
                                                                   phase:kIOHIDEventPhaseUndefined
-                                                          momentumPhase:momentumPhase];
+                                                          momentumPhase:momentumPhase
+                                                     invertedFromDevice:invertedFromDevice];
 
     }];
     
@@ -485,7 +490,8 @@ static void getDeltaVectors(Vector point, VectorSubPixelator *subPixelator, Vect
                             scrollVectorLineInt:(Vector)vecScrollLineInt
                               scrollVectorPoint:(Vector)vecScrollPoint
                                           phase:(IOHIDEventPhaseBits)phase
-                                  momentumPhase:(CGMomentumScrollPhase)momentumPhase {
+                                  momentumPhase:(CGMomentumScrollPhase)momentumPhase
+                             invertedFromDevice:(BOOL)invertedFromDevice {
 
     /// Post scroll events that behave as if they are coming from an Apple Trackpad or Magic Mouse.
     /// This allows for swiping between pages in apps like Safari or Preview, and it also makes overscroll and inertial scrolling work.
@@ -537,7 +543,7 @@ static void getDeltaVectors(Vector point, VectorSubPixelator *subPixelator, Vect
     
     CGEventSetIntegerValueField(e22, 55, 22); /// 22 -> NSEventTypeScrollWheel // Setting field 55 is the same as using CGEventSetType(), I'm not sure if that has weird side-effects though, so I'd rather do it this way.
     CGEventSetIntegerValueField(e22, 88, 1); /// 88 -> kCGScrollWheelEventIsContinuous
-    CGEventSetIntegerValueField(e22, 137, 1); /// I think this is NSEvent.directionInvertedFromDevice. Will flip direction of unread swiping in Mail
+    CGEventSetIntegerValueField(e22, 137, invertedFromDevice ? 1 : 0); /// I think this is NSEvent.directionInvertedFromDevice. Will flip direction of unread swiping in Mail
     
     /// Set dynamic fields
     
@@ -558,7 +564,7 @@ static void getDeltaVectors(Vector point, VectorSubPixelator *subPixelator, Vect
     
     /// Debug
     
-    DDLogDebug(@"\nHNGG Sent event: %@ || customIntLineDelta: %@", scrollEventDescription(e22));
+    DDLogDebug(@"\nHNGG Sent event: %@", scrollEventDescription(e22));
     
     /// Phase
     

@@ -135,6 +135,7 @@ static CGEventTapProxy _tapProxy;
         _drag.effectDict = effectDict;
         _drag.initialModifiers = modifiers;
         _drag.initTime = CACurrentMediaTime();
+        _drag.naturalDirection = false;
         
         id<ModifiedDragOutputPlugin> p;
         if ([type isEqualToString:kMFModifiedDragTypeThreeFingerSwipe]) {
@@ -171,7 +172,7 @@ void initDragState_Unsafe(void) {
     DDLogDebug(@"\nEnabled drag eventTap");
 }
 
-static CGEventRef __nullable eventTapCallBack(CGEventTapProxy proxy, CGEventType type, CGEventRef  event, void * __nullable userInfo) {
+static CGEventRef __nullable eventTapCallBack(CGEventTapProxy proxy, CGEventType type, CGEventRef event, void * __nullable userInfo) {
     
     /// Store proxy
     _tapProxy = proxy;
@@ -188,12 +189,16 @@ static CGEventRef __nullable eventTapCallBack(CGEventTapProxy proxy, CGEventType
     }
     
     /// Get deltas
+    /// These are truly integer values, I'm not rounding anything / losing any info here
+    /// However, the deltas seem to be pre-subpixelated, and often, both dx and dy are 0.
     
     int64_t dx = CGEventGetIntegerValueField(event, kCGMouseEventDeltaX);
     int64_t dy = CGEventGetIntegerValueField(event, kCGMouseEventDeltaY);
     
-    /// ^ These are truly integer values, I'm not rounding anything / losing any info here
-    /// However, the deltas seem to be pre-subpixelated, and often, both dx and dy are 0.
+    if (!_drag.naturalDirection) {
+        dx = -dx;
+        dy = -dy;
+    }
     
     /// Debug
     
@@ -280,6 +285,10 @@ static void handleMouseInputWhileInitialized(int64_t deltaX, int64_t deltaY, CGE
         /// Update state
         _drag.activationState = kMFModifiedInputActivationStateInUse;
         _drag.firstCallback = true;
+        
+        /// Do deferred init
+        ///     Could also do this in normal init `initializeDragWithDict`, but here is more effiicient
+        ///     (`initializeDragWithDict` is called on every mouse click if it's set up for that button)
         
         /// Notify output plugin
         [_drag.outputPlugin handleBecameInUse];

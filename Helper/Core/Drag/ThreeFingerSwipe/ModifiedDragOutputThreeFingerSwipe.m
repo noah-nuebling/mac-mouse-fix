@@ -69,10 +69,10 @@ static int16_t _nOfSpaces = 1;
     
     if (_drag->usageAxis == kMFAxisHorizontal) {
         double delta = -deltaX * threeFingerScaleH;
-        [TouchSimulator postDockSwipeEventWithDelta:delta type:kMFDockSwipeTypeHorizontal phase:eventPhase];
+        [TouchSimulator postDockSwipeEventWithDelta:delta type:kMFDockSwipeTypeHorizontal phase:eventPhase invertedFromDevice:_drag->naturalDirection];
     } else if (_drag->usageAxis == kMFAxisVertical) {
         double delta = deltaY * threeFingerScaleV;
-        [TouchSimulator postDockSwipeEventWithDelta:delta type:kMFDockSwipeTypeVertical phase:eventPhase];
+        [TouchSimulator postDockSwipeEventWithDelta:delta type:kMFDockSwipeTypeVertical phase:eventPhase invertedFromDevice:_drag->naturalDirection];
     }
 }
 
@@ -91,7 +91,7 @@ static int16_t _nOfSpaces = 1;
     
     phase = cancel ? kIOHIDEventPhaseCancelled : kIOHIDEventPhaseEnded;
     
-    [TouchSimulator postDockSwipeEventWithDelta:0.0 type:type phase:phase];
+    [TouchSimulator postDockSwipeEventWithDelta:0.0 type:type phase:phase invertedFromDevice:_drag->naturalDirection];
     
     /// Unfreeze pointer
     if (OtherConfig.freezePointerDuringModifiedDrag) {
