@@ -135,7 +135,6 @@ static CGEventTapProxy _tapProxy;
         _drag.effectDict = effectDict;
         _drag.initialModifiers = modifiers;
         _drag.initTime = CACurrentMediaTime();
-        _drag.naturalDirection = false;
         
         id<ModifiedDragOutputPlugin> p;
         if ([type isEqualToString:kMFModifiedDragTypeThreeFingerSwipe]) {
@@ -194,11 +193,6 @@ static CGEventRef __nullable eventTapCallBack(CGEventTapProxy proxy, CGEventType
     
     int64_t dx = CGEventGetIntegerValueField(event, kCGMouseEventDeltaX);
     int64_t dy = CGEventGetIntegerValueField(event, kCGMouseEventDeltaY);
-    
-    if (!_drag.naturalDirection) {
-        dx = -dx;
-        dy = -dy;
-    }
     
     /// Debug
     
@@ -287,8 +281,11 @@ static void handleMouseInputWhileInitialized(int64_t deltaX, int64_t deltaY, CGE
         _drag.firstCallback = true;
         
         /// Do deferred init
-        ///     Could also do this in normal init `initializeDragWithDict`, but here is more effiicient
-        ///     (`initializeDragWithDict` is called on every mouse click if it's set up for that button)
+        /// Could also do this in normal init `initializeDragWithDict`, but here is more effiicient
+        /// (`initializeDragWithDict` is called on every mouse click if it's set up for that button)
+        /// -> Don't use `naturalDirection` before state switches to `kMFModifiedInputActivationStateInUse`!
+        
+        _drag.naturalDirection = [NSUserDefaults.standardUserDefaults boolForKey:@"com.apple.swipescrolldirection"];
         
         /// Notify output plugin
         [_drag.outputPlugin handleBecameInUse];
@@ -304,8 +301,13 @@ static void handleMouseInputWhileInitialized(int64_t deltaX, int64_t deltaY, CGE
 /// Only passing in event to obtain event location to get slightly better behaviour for fakeDrag
 void handleMouseInputWhileInUse(int64_t deltaX, int64_t deltaY, CGEventRef event) {
     
-    /// Notifiy plugin
+    /// Invert direction
+    if (!_drag.naturalDirection) {
+        deltaX = -deltaX;
+        deltaY = -deltaY;
+    }
     
+    /// Notifiy plugin
     [_drag.outputPlugin handleMouseInputWhileInUseWithDeltaX:deltaX deltaY:deltaY event:event];
     
     /// Update phase
