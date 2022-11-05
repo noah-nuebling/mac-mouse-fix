@@ -371,11 +371,6 @@ static void startMomentumScroll_Unsafe(double timeSinceLastInput, Vector exitVel
         Vector vecScrollLineInt;
         getDeltaVectors(deltaVec, _scrollLinePixelator, &vecScrollLine, &vecScrollLineInt, NULL);
         
-        /// Call momentumScrollStart callback
-        if (animationPhase == kMFAnimationCallbackPhaseStart) {
-            if (_momentumScrollCallback != NULL) _momentumScrollCallback();
-        }
-        
         /// Get momentumPhase from animationPhase
         
         CGMomentumScrollPhase momentumPhase;
@@ -405,6 +400,10 @@ static void startMomentumScroll_Unsafe(double timeSinceLastInput, Vector exitVel
                                                                   phase:kIOHIDEventPhaseUndefined
                                                           momentumPhase:momentumPhase
                                                      invertedFromDevice:invertedFromDevice];
+        /// Call momentumScrollStart callback
+        if (animationPhase == kMFAnimationCallbackPhaseStart) {
+            if (_momentumScrollCallback != NULL) _momentumScrollCallback();
+        }
 
     }];
     
