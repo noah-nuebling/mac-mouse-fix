@@ -893,11 +893,11 @@ static void sendOutputEvents(int64_t dx, int64_t dy, MFScrollOutputType outputTy
         
         if (outputType == kMFScrollOutputTypeFourFingerPinch) {
             type = kMFDockSwipeTypePinch;
-            eventDelta = -(dx + dy)/600.0;
-            /// ^ Launchpad feels a lot less sensitive than Show Desktop, but to improve this we'd have to somehow detect which of both is active atm. Negate delta to mirror the way that zooming works
+            eventDelta = (dx + dy)/600.0;
+            /// ^ Launchpad feels a lot less sensitive than Show Desktop, but to improve this we'd have to somehow detect which of both is active atm.
         } else if (outputType == kMFScrollOutputTypeThreeFingerSwipeHorizontal) {
             type = kMFDockSwipeTypeHorizontal;
-            eventDelta = -(dx + dy)/600.0;
+            eventDelta = -(dx + dy)/600.0; /// Not sure why we need to negate here
         } else {
             assert(false);
         }
@@ -907,7 +907,6 @@ static void sendOutputEvents(int64_t dx, int64_t dy, MFScrollOutputType outputTy
     } else if (outputType == kMFScrollOutputTypeCommandTab) {
         
         /// --- CommandTab ---
-        
         
         double d = -(dx + dy);
         
