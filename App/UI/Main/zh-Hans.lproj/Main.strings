@@ -190,8 +190,8 @@
 /* Class = "NSTabViewItem"; label = "Buttons"; ObjectID = "Mjk-wy-Z7C"; Note = "Toolbar > Buttons Tab Button"; */
 "Mjk-wy-Z7C.label" = "按钮";
 
-/* Class = "NSTextFieldCell"; title = "Move the mouse pointer inside the '+' field, then __Click__ a mouse button to assign an action to it.  You can also __Double Click__, __Click and Drag__ and __[more]()__."; ObjectID = "N7H-9j-DIr"; Note = "Buttons > Add Field Hint"; */
-"N7H-9j-DIr.title" = "移动鼠标指针到“+”区域内，然后__点按__鼠标按钮来指定动作。  您也可以__连按__、__点按并拖移__、执行__[更多]()__操作。";
+/* Class = "NSTextFieldCell"; title = "Move the mouse pointer inside the '+' field, then click a mouse button to assign an action to it.  You can also Double Click, Click and Drag and [more]()."; ObjectID = "N7H-9j-DIr"; Note = "Buttons > Add Field Hint"; */
+"N7H-9j-DIr.title" = "移动鼠标指针到“+”区域内，然后点按鼠标按钮来指定动作。  您也可以连按、点按并拖移、执行[更多]()操作。";
 
 /* Class = "NSButtonCell"; title = "with Inertia"; ObjectID = "N65-aN-Hxp"; Note = "Scrolling > with Inertia Toggle (See what Apple uses for Trackpad marketing in your Language)"; */
 "N65-aN-Hxp.title" = "带惯性";

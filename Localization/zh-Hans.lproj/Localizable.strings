@@ -226,8 +226,14 @@
 /* First draft: **Secondary Mouse Button** can't be used\nPlease try another button */
 "forbidden-capture-toast.2" = "不能使用**鼠标辅键**\n请换一个按钮再试";
 
-/* First draft: Mac Mouse Fix was **disabled** in System Settings.\nTo enable Mac Mouse Fix:\n\n1. Go to [Login Items Settings](x-apple.systempreferences:com.apple.LoginItems-Settings.extension)\n2. Switch on \'Mac Mouse Fix.app\' */
-"is-disabled-toast" = "系统偏好设置中已**禁用**Mac Mouse Fix。\n若要启用Mac Mouse Fix：\n\n⒈前往[登录项](x-apple.systempreferences:com.apple.LoginItems-Settings.extension)\n⒉开启“Mac Mouse Fix.app”";
+/* First draft: Mac Mouse Fix was **disabled** in System Settings\n\nTo enable Mac Mouse Fix:\n\n1. Go to [Login Items Settings](x-apple.systempreferences:com.apple.LoginItems-Settings.extension)\n2. Switch on \'Mac Mouse Fix.app\' */
+"is-disabled-toast" = "系统偏好设置中已**禁用**Mac Mouse Fix\n\n若要启用Mac Mouse Fix：\n\n⒈前往[登录项](x-apple.systempreferences:com.apple.LoginItems-Settings.extension)\n⒉开启“Mac Mouse Fix.app”";
+
+/* First draft: Enabling Failed */
+"is-strange-helper-alert.title" = "启用失败";
+
+/* First draft: Mac Mouse Fix can't be enabled because there's __another version__ of Mac Mouse Fix present on your computer\n\nTo enable Mac Mouse Fix:\n\n1. Delete the [other version](%@)\n2. Empty the Bin\n3. Restart your Mac\n4. Try again! */
+"is-strange-helper-alert.body" = "无法启用Mac Mouse Fix，因为您的电脑上已有__另一版本__的Mac Mouse Fix\n\n若要启用Mac Mouse Fix：\n\n⒈删除[其他版本](%@)\n⒉清倒废纸篓\n⒊重新启动您的Mac\n⒋再试一次！";
 
 /* First draft: ,  || Note: This string joins elements in a list except the second-to-last and last one. || Note: The first draft contains a space after the comma. */
 "join-list" = "、";
