@@ -57,8 +57,11 @@ class ScrollTabController: NSViewController {
         
         /// Remove focus
         ///     Sometimes, one of the modifierCapture fields is randomly selected. This hopefully prevents that.
+        ///     Need to do asynAfter 0.0 seconds for it to work (I think - not well tested) that makes it do it on the next runLoop cycle I think.
         
-        MainAppState.shared.window?.makeFirstResponder(nil)
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.0, execute: {
+            MainAppState.shared.window?.makeFirstResponder(nil)
+        })
         
         /// Turn off killswitch
         

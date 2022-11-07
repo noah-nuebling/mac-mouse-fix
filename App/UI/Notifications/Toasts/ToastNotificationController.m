@@ -113,13 +113,14 @@ static double _toastAnimationOffset = 20;
     [w close];
     
     /// Set message text and text attributes to label
+    message = [message copy];
     NSDictionary *baseAttributes = _labelAttributesFromIB;
-    NSAttributedString *m = [message attributedStringByAddingStringAttributesAsBase:baseAttributes];
-    m = [m attributedStringByFillingOutBase];
+    message = [message attributedStringByAddingStringAttributesAsBase:baseAttributes];
+    message = [message attributedStringByFillingOutBase];
     
-    [_instance.label.textStorage setAttributedString:m];
+    [_instance.label.textStorage setAttributedString:message];
 
-    DDLogDebug(@"Attaching notification with attributed string: %@", m);
+    DDLogDebug(@"Attaching notification with attributed string: %@", message);
     
     /// Set notification frame
     
@@ -129,8 +130,6 @@ static double _toastAnimationOffset = 20;
     /// Get insets around label
     ///     We used to implement the insets by just having an actual margin between the scrollView and the windowFrame. But this cut off emojis a little bit, so we are now setting the insets via textContainerInsets instead. We changed a few things for this.
     ///     Last commit before the change: 47d97be6482df3c37898c3c6cd5c21c6be02ab4a
-    
-    NotificationLabel *label = _instance.label;
     
 //    NSRect notifFrame = w.frame;
     
@@ -144,14 +143,14 @@ static double _toastAnimationOffset = 20;
 //    assert(leftInset == rightInset);
     
     /// New method
-    CGFloat bottomInset = label.textContainerInset.height;
-    CGFloat topInset = label.textContainerInset.height;
-    CGFloat leftInset = label.textContainerInset.width;
-    CGFloat rightInset = label.textContainerInset.width;
+    CGFloat bottomInset = _instance.label.textContainerInset.height;
+    CGFloat topInset = _instance.label.textContainerInset.height;
+    CGFloat leftInset = _instance.label.textContainerInset.width;
+    CGFloat rightInset = _instance.label.textContainerInset.width;
     
     /// Calculate new text size
     CGFloat maxTextWidth = mainW.frame.size.width - 2*sideMargin - leftInset - rightInset;
-    NSSize newTextSize = [label.attributedString sizeAtMaxWidth:maxTextWidth];
+    NSSize newTextSize = [_instance.label.attributedString sizeAtMaxWidth:maxTextWidth];
     
     /// Setting actual width for newLabelSize. See https://stackoverflow.com/questions/13621084/boundingrectwithsize-for-nsattributedstring-returning-wrong-size
     ///  ... Actually this breaks short "Primary Mouse Button can't be used" notifications.
@@ -281,19 +280,20 @@ static void removeLocalEventMonitor() {
     [w orderOut:nil];
 }
 
-/// We use this to close the notification when the window it's attached to resigns key.
-/// This prevents some jank when closing and then reopening the AddWindow while a notification is attached to it
-/// This won't work when using `closeNotificationWithFadeOut` instead of `closeNotificationImmediately` because of some conflicts between animations or something.
-/// This could also lead to weird behaviour whhen a notification starts to display while the Mac Mouse Fix window it attaches to is not in the foreground
-/// What we really want to do here is to close the notification as soon as the window whcih is it's parent becomes invisible, but I haven't found a way to do that. So we're resorting to tracking key status.
-/// This hacky solution might cause more weirdness and jank than it's worth.
 + (void)windowResignKey:(NSNotification *)notification {
+    
+    /// We use this to close the notification when the window it's attached to resigns key.
+    /// This prevents some jank when closing and then reopening the AddWindow while a notification is attached to it
+    /// This won't work when using `closeNotificationWithFadeOut` instead of `closeNotificationImmediately` because of some conflicts between animations or something.
+    /// This could also lead to weird behaviour whhen a notification starts to display while the Mac Mouse Fix window it attaches to is not in the foreground
+    /// What we really want to do here is to close the notification as soon as the window whcih is it's parent becomes invisible, but I haven't found a way to do that. So we're resorting to tracking key status.
+    /// This hacky solution might cause more weirdness and jank than it's worth.
+    /// Edit: Under MMF 3 there are situations where it's sometimes nice if the Toast still stays up when the app is in the background. E.g. the `is-strange-helper-toast` contains a list of instruction containing a link into Finder. When you click the link it's nice if the instructions stay up. -> Consider changing / removing this
+    
     NSWindow *closedWindow = notification.object;
     
-    DDLogDebug(@"RESIGNED KEY: %@", closedWindow.title);
     if ([_instance.window.parentWindow isEqual:closedWindow]) {
         [_closeTimer invalidate];
-//        [self closeNotificationWithFadeOut];
         [self closeNotificationImmediately];
     }
 }

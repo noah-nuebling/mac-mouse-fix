@@ -24,7 +24,7 @@
 		4F1D7F4728A4639800253407 /* MenuBarItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F1D7F4628A4639800253407 /* MenuBarItem.swift */; };
 		4F2CC58727B8D2300084AACE /* HybridCurves.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F2CC58627B8D2300084AACE /* HybridCurves.swift */; };
 		4F2CC58927B8DA8B0084AACE /* Line.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F2CC58827B8DA8B0084AACE /* Line.swift */; };
-		4F2F0B2B28E6258B00246D59 /* MessagePortUtility_App.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F2F0B2A28E6258B00246D59 /* MessagePortUtility_App.swift */; };
+		4F2F0B2B28E6258B00246D59 /* MessagePortUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F2F0B2A28E6258B00246D59 /* MessagePortUtility.swift */; };
 		4F319CBB26252A2D004E5F63 /* ButtonGroupRowView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F319CBA26252A2D004E5F63 /* ButtonGroupRowView.m */; };
 		4F37FAD825FDFDC5004C34C4 /* MFScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F37FAD725FDFDC4004C34C4 /* MFScrollView.m */; };
 		4F39BC26263AC31600FDF692 /* Sparkle.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4F39BC24263AC2E800FDF692 /* Sparkle.framework */; };
@@ -39,8 +39,8 @@
 		4F44794328B55F6300AD1979 /* CAAnimation+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F909D0C28A0C3D2009349A2 /* CAAnimation+Extensions.swift */; };
 		4F44794528B62FA400AD1979 /* LicenseConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F44794428B62FA400AD1979 /* LicenseConfig.swift */; };
 		4F44794628B62FA400AD1979 /* LicenseConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F44794428B62FA400AD1979 /* LicenseConfig.swift */; };
-		4F44FF042606D73D00926A5E /* SharedMessagePort.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F44FF032606D73D00926A5E /* SharedMessagePort.m */; };
-		4F44FF052606D73D00926A5E /* SharedMessagePort.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F44FF032606D73D00926A5E /* SharedMessagePort.m */; };
+		4F44FF042606D73D00926A5E /* MFMessagePort.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F44FF032606D73D00926A5E /* MFMessagePort.m */; };
+		4F44FF052606D73D00926A5E /* MFMessagePort.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F44FF032606D73D00926A5E /* MFMessagePort.m */; };
 		4F5971E52901763D00A32656 /* MathObjc.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F5971E42901763D00A32656 /* MathObjc.m */; };
 		4F5971E62901763D00A32656 /* MathObjc.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F5971E42901763D00A32656 /* MathObjc.m */; };
 		4F5C2F802885C5D0001B9B8A /* HelperState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F5C2F7F2885C5D0001B9B8A /* HelperState.swift */; };
@@ -170,6 +170,7 @@
 		4FB4FA202611DD6000806DDD /* KeyCaptureScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FB4FA1F2611DD6000806DDD /* KeyCaptureScrollView.m */; };
 		4FBC943B260F8AA60062F186 /* MASShortcut.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FBC9434260F8AA60062F186 /* MASShortcut.m */; };
 		4FBDA14F27B241CE0030E4EA /* GlobalEventTapThread.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FBDA14E27B241CE0030E4EA /* GlobalEventTapThread.m */; };
+		4FC55B982915652C00663B24 /* AlertCreator.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FC55B972915652C00663B24 /* AlertCreator.m */; };
 		4FC55E31285E6F1F00F2FCCF /* GlobalDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FC55E2F285E6BF800F2FCCF /* GlobalDefaults.swift */; };
 		4FC8A7CD28AAF1BC007DB982 /* MarkdownParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FC8A7CC28AAF1BC007DB982 /* MarkdownParser.swift */; };
 		4FC8A7CE28AAF1BC007DB982 /* MarkdownParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FC8A7CC28AAF1BC007DB982 /* MarkdownParser.swift */; };
@@ -394,7 +395,7 @@
 		4F1D7F4628A4639800253407 /* MenuBarItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuBarItem.swift; sourceTree = "<group>"; };
 		4F2CC58627B8D2300084AACE /* HybridCurves.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HybridCurves.swift; sourceTree = "<group>"; };
 		4F2CC58827B8DA8B0084AACE /* Line.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Line.swift; sourceTree = "<group>"; };
-		4F2F0B2A28E6258B00246D59 /* MessagePortUtility_App.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessagePortUtility_App.swift; sourceTree = "<group>"; };
+		4F2F0B2A28E6258B00246D59 /* MessagePortUtility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessagePortUtility.swift; sourceTree = "<group>"; };
 		4F319CB926252A2D004E5F63 /* ButtonGroupRowView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ButtonGroupRowView.h; sourceTree = "<group>"; };
 		4F319CBA26252A2D004E5F63 /* ButtonGroupRowView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ButtonGroupRowView.m; sourceTree = "<group>"; };
 		4F37FAD725FDFDC4004C34C4 /* MFScrollView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MFScrollView.m; sourceTree = "<group>"; };
@@ -416,8 +417,8 @@
 		4F3E067D26A2F97D000C9E06 /* URLMenuItem.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = URLMenuItem.m; sourceTree = "<group>"; };
 		4F42304628CE6C1C003A41D3 /* LICENSE */ = {isa = PBXFileReference; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
 		4F44794428B62FA400AD1979 /* LicenseConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LicenseConfig.swift; sourceTree = "<group>"; };
-		4F44FF022606D73D00926A5E /* SharedMessagePort.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SharedMessagePort.h; sourceTree = "<group>"; };
-		4F44FF032606D73D00926A5E /* SharedMessagePort.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SharedMessagePort.m; sourceTree = "<group>"; };
+		4F44FF022606D73D00926A5E /* MFMessagePort.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MFMessagePort.h; sourceTree = "<group>"; };
+		4F44FF032606D73D00926A5E /* MFMessagePort.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MFMessagePort.m; sourceTree = "<group>"; };
 		4F5971E42901763D00A32656 /* MathObjc.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MathObjc.m; sourceTree = "<group>"; };
 		4F5C2F7F2885C5D0001B9B8A /* HelperState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelperState.swift; sourceTree = "<group>"; };
 		4F5F3EED2756DB0A00C350C0 /* RemapsOverrider_old_.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemapsOverrider_old_.swift; sourceTree = "<group>"; };
@@ -572,6 +573,8 @@
 		4FBDA14D27B241CE0030E4EA /* GlobalEventTapThread.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GlobalEventTapThread.h; sourceTree = "<group>"; };
 		4FBDA14E27B241CE0030E4EA /* GlobalEventTapThread.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GlobalEventTapThread.m; sourceTree = "<group>"; };
 		4FBE18BA2666EC4A002A6771 /* WannabePrefixHeader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WannabePrefixHeader.h; sourceTree = "<group>"; };
+		4FC55B962915652C00663B24 /* AlertCreator.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AlertCreator.h; sourceTree = "<group>"; };
+		4FC55B972915652C00663B24 /* AlertCreator.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AlertCreator.m; sourceTree = "<group>"; };
 		4FC55E2F285E6BF800F2FCCF /* GlobalDefaults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlobalDefaults.swift; sourceTree = "<group>"; };
 		4FC8A7CC28AAF1BC007DB982 /* MarkdownParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarkdownParser.swift; sourceTree = "<group>"; };
 		4FC8A7D428ABDEFD007DB982 /* MFClipView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MFClipView.swift; sourceTree = "<group>"; };
@@ -935,8 +938,10 @@
 		4F44FF012606D6FD00926A5E /* MessagePort */ = {
 			isa = PBXGroup;
 			children = (
-				4F44FF022606D73D00926A5E /* SharedMessagePort.h */,
-				4F44FF032606D73D00926A5E /* SharedMessagePort.m */,
+				4F44FF022606D73D00926A5E /* MFMessagePort.h */,
+				4F44FF032606D73D00926A5E /* MFMessagePort.m */,
+				4F2F0B2A28E6258B00246D59 /* MessagePortUtility.swift */,
+				4FCD01742912C0B600B43C1B /* Unused */,
 			);
 			path = MessagePort;
 			sourceTree = "<group>";
@@ -994,7 +999,7 @@
 				4F909CF228A0C3D2009349A2 /* Main */,
 				4FF665DC25F2C92700689B77 /* Accessibility */,
 				4F09284728B8E83400BDC2FF /* LicenseSheet */,
-				4FA13FBA28B393B0005C68FC /* Toasts */,
+				4FA13FBA28B393B0005C68FC /* Notifications */,
 				4F909D0228A0C3D2009349A2 /* UIExtensions */,
 				4F909D1328A0C3D2009349A2 /* CustomDataTypes */,
 				4F909D1A28A0C3D2009349A2 /* CustomUIElements */,
@@ -1276,18 +1281,14 @@
 			path = Old;
 			sourceTree = "<group>";
 		};
-		4FA13FBA28B393B0005C68FC /* Toasts */ = {
+		4FA13FBA28B393B0005C68FC /* Notifications */ = {
 			isa = PBXGroup;
 			children = (
-				4F1B832B26081A5400AEAF37 /* CaptureNotificationCreator.h */,
-				4F1B832C26081A5500AEAF37 /* CaptureNotificationCreator.m */,
-				4F79A81A2604317200076A7E /* ToastNotificationController.h */,
-				4F79A81B2604317200076A7E /* ToastNotificationController.m */,
-				4F79A83426051E4A00076A7E /* ToastNotification.h */,
-				4F79A83526051E4A00076A7E /* ToastNotification.m */,
-				4F79A7EE26042E2E00076A7E /* ToastNotification.xib */,
+				4FC55B962915652C00663B24 /* AlertCreator.h */,
+				4FC55B972915652C00663B24 /* AlertCreator.m */,
+				4FC55B93291564C200663B24 /* Toasts */,
 			);
-			path = Toasts;
+			path = Notifications;
 			sourceTree = "<group>";
 		};
 		4FA1ACE025E85904007DB95B /* Tests */ = {
@@ -1403,6 +1404,29 @@
 			children = (
 				4FF6662625F2C93A00689B77 /* CubicUnitBezier.h */,
 				4FF6662425F2C93A00689B77 /* CubicUnitBezier.m */,
+			);
+			path = Unused;
+			sourceTree = "<group>";
+		};
+		4FC55B93291564C200663B24 /* Toasts */ = {
+			isa = PBXGroup;
+			children = (
+				4F1B832B26081A5400AEAF37 /* CaptureNotificationCreator.h */,
+				4F1B832C26081A5500AEAF37 /* CaptureNotificationCreator.m */,
+				4F79A81A2604317200076A7E /* ToastNotificationController.h */,
+				4F79A81B2604317200076A7E /* ToastNotificationController.m */,
+				4F79A83426051E4A00076A7E /* ToastNotification.h */,
+				4F79A83526051E4A00076A7E /* ToastNotification.m */,
+				4F79A7EE26042E2E00076A7E /* ToastNotification.xib */,
+			);
+			path = Toasts;
+			sourceTree = "<group>";
+		};
+		4FCD01742912C0B600B43C1B /* Unused */ = {
+			isa = PBXGroup;
+			children = (
+				4FF6661125F2C93A00689B77 /* MessagePort */,
+				4FF665D625F2C92700689B77 /* MessagePort */,
 			);
 			path = Unused;
 			sourceTree = "<group>";
@@ -1625,7 +1649,6 @@
 				4F7A1A70289F2517007D5B30 /* UI */,
 				4F8CE6FE2617738A00D70A76 /* AppTranslocation */,
 				4FF665C625F2C92700689B77 /* Update */,
-				4FF665D625F2C92700689B77 /* MessagePort */,
 				4FF665E525F2C92700689B77 /* Utility */,
 				4F909D3F28A0C411009349A2 /* Experiments */,
 				4FF665D425F2C92700689B77 /* Resources */,
@@ -1669,7 +1692,6 @@
 			children = (
 				4FF665D825F2C92700689B77 /* MessagePort_App.h */,
 				4FF665D725F2C92700689B77 /* MessagePort_App.m */,
-				4F2F0B2A28E6258B00246D59 /* MessagePortUtility_App.swift */,
 			);
 			path = MessagePort;
 			sourceTree = "<group>";
@@ -1715,7 +1737,6 @@
 				4FF6664B25F2C93A00689B77 /* AccessibilityCheck.m */,
 				4FF6661425F2C93A00689B77 /* Core */,
 				4FF6660825F2C93A00689B77 /* FileMonitor */,
-				4FF6661125F2C93A00689B77 /* MessagePort */,
 				4F78CEF22904414B0030086C /* UI */,
 				4FF6663F25F2C93A00689B77 /* Utility */,
 				4FF6660F25F2C93A00689B77 /* Resources */,
@@ -1762,7 +1783,8 @@
 				4FF6661225F2C93A00689B77 /* MessagePort_Helper.h */,
 				4FF6661325F2C93A00689B77 /* MessagePort_Helper.m */,
 			);
-			path = MessagePort;
+			name = MessagePort;
+			path = ../../../Helper/MessagePort;
 			sourceTree = "<group>";
 		};
 		4FF6661425F2C93A00689B77 /* Core */ = {
@@ -2414,8 +2436,9 @@
 				4F909D2328A0C3D2009349A2 /* PointerTabController.swift in Sources */,
 				4FDE75A128B2397600662314 /* PayButton.swift in Sources */,
 				4FCA07D625F3129B00BFE209 /* RemapTableController.m in Sources */,
-				4F44FF052606D73D00926A5E /* SharedMessagePort.m in Sources */,
+				4F44FF052606D73D00926A5E /* MFMessagePort.m in Sources */,
 				4FA40D0B28A0D87200499E53 /* DisplayLink.m in Sources */,
+				4FC55B982915652C00663B24 /* AlertCreator.m in Sources */,
 				4FAD391426702CD4000CF4FA /* DerivedProperty.swift in Sources */,
 				4F909D2928A0C3D2009349A2 /* TabViewControllerDisabling.swift in Sources */,
 				4FA40D0E28A0D87200499E53 /* DynamicSystemAnimator.swift in Sources */,
@@ -2455,7 +2478,7 @@
 				4F909D2D28A0C3D2009349A2 /* CoolNSTextField.swift in Sources */,
 				4F79C2EA260976950067B381 /* RemapTableTranslator.m in Sources */,
 				4F909D2128A0C3D2009349A2 /* GeneralTabController.swift in Sources */,
-				4F2F0B2B28E6258B00246D59 /* MessagePortUtility_App.swift in Sources */,
+				4F2F0B2B28E6258B00246D59 /* MessagePortUtility.swift in Sources */,
 				4FB4F9FE260FDBC800806DDD /* RemapTableUtility.m in Sources */,
 				4FA40D1228A10E1900499E53 /* NSScreen+Additions.m in Sources */,
 				4FF665FD25F2C92700689B77 /* AuthorizeAccessibilityView.m in Sources */,
@@ -2504,7 +2527,7 @@
 				4F909D4828A0C4C2009349A2 /* Collection+Extensions.swift in Sources */,
 				4FF6669625F2C93A00689B77 /* Actions.m in Sources */,
 				4FF0254E27AFF90800923107 /* ModifiedDragOutputThreeFingerSwipe.m in Sources */,
-				4F44FF042606D73D00926A5E /* SharedMessagePort.m in Sources */,
+				4F44FF042606D73D00926A5E /* MFMessagePort.m in Sources */,
 				4F1D7F4728A4639800253407 /* MenuBarItem.swift in Sources */,
 				4F8CF95728686C0100BF5E55 /* PolynomialRegression.m in Sources */,
 				4FFA4E3628B795F30062A1FE /* LicenseUtility.swift in Sources */,
@@ -2751,8 +2774,7 @@
 				);
 				INFOPLIST_FILE = App/SupportFiles/Info.plist;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
-				MACOSX_DEPLOYMENT_TARGET = 10.13;
-				MARKETING_VERSION = "3.0.0 Beta 4";
+				MARKETING_VERSION = "3.0.0 Beta 5";
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.nuebling.mac-mouse-fix";
@@ -2787,8 +2809,7 @@
 				);
 				INFOPLIST_FILE = App/SupportFiles/Info.plist;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
-				MACOSX_DEPLOYMENT_TARGET = 10.13;
-				MARKETING_VERSION = "3.0.0 Beta 4";
+				MARKETING_VERSION = "3.0.0 Beta 5";
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.nuebling.mac-mouse-fix";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -2813,7 +2834,6 @@
 					"@executable_path/../Frameworks",
 					"@loader_path/../Frameworks",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 11.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.nuebling.Mac-Mouse-FixTests";
@@ -2837,7 +2857,6 @@
 					"@executable_path/../Frameworks",
 					"@loader_path/../Frameworks",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 11.0;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.nuebling.Mac-Mouse-FixTests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -2859,7 +2878,6 @@
 					"@executable_path/../Frameworks",
 					"@loader_path/../Frameworks",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 11.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -2883,7 +2901,6 @@
 					"@executable_path/../Frameworks",
 					"@loader_path/../Frameworks",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 11.0;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.nuebling.Mac-Mouse-FixUITests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -3060,7 +3077,6 @@
 				INFOPLIST_FILE = Helper/SupportFiles/Info.plist;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
-				MACOSX_DEPLOYMENT_TARGET = 10.13;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.nuebling.mac-mouse-fix.helper";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -3097,7 +3113,6 @@
 				INFOPLIST_FILE = Helper/SupportFiles/Info.plist;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
-				MACOSX_DEPLOYMENT_TARGET = 10.13;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.nuebling.mac-mouse-fix.helper";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";

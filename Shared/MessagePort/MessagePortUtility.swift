@@ -1,6 +1,6 @@
 //
 // --------------------------------------------------------------------------
-// MessagePortUtility_App.swift
+// MessagePortUtility.swift
 // Created for Mac Mouse Fix (https://github.com/noah-nuebling/mac-mouse-fix)
 // Created by Noah Nuebling in 2022
 // Licensed under MIT
@@ -9,7 +9,9 @@
 
 import Foundation
 
-@objc class MessagePortUtility_App: NSObject {
+@objc class MessagePortUtility: NSObject {
+    
+#if IS_MAIN_APP
     
     static func getActiveDeviceInfo() -> (name: NSString, nOfButtons: Int, bestPresetMatch: Int)? {
         
@@ -20,7 +22,7 @@ import Foundation
         
         var result = (name: ("" as NSString), nOfButtons: (-1 as Int), bestPresetMatch: (-1 as Int))
         
-        if let info = SharedMessagePort.sendMessage("getActiveDeviceInfo", withPayload: nil, expectingReply: true) as! NSDictionary? {
+        if let info = MFMessagePort.sendMessage("getActiveDeviceInfo", withPayload: nil, expectingReply: true) as! NSDictionary? {
             
             let deviceName = info["name"] as! NSString
             let deviceManufacturer = info["manufacturer"] as! NSString
@@ -42,5 +44,7 @@ import Foundation
             return nil
         }
     }
-
+    
+#endif
+    
 }

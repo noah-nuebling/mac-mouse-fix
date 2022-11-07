@@ -36,6 +36,8 @@ typedef struct {
     NSDictionary *effectDict;
     NSDictionary *initialModifiers;
     
+    bool naturalDirection; /// Content follows mouse movement
+    
     MFStringConstant type;
     id<ModifiedDragOutputPlugin> outputPlugin;
     
@@ -43,13 +45,13 @@ typedef struct {
     Device *modifiedDevice;
     
     CFTimeInterval initTime;
-    Boolean isSuspended;
+    bool isSuspended;
     
     CGPoint origin;
     Vector originOffset;
     CGPoint usageOrigin; /// Point at which the modified drag changed its activationState to inUse
     MFAxis usageAxis;
-    Boolean firstCallback;
+    bool firstCallback;
     
     dispatch_queue_t queue;
     

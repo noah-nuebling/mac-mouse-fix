@@ -135,6 +135,7 @@ static CGEventRef eventTapCallback(CGEventTapProxy proxy, CGEventType type, CGEv
     @try {
         NSUInteger buttonNumber = CGEventGetIntegerValueField(event, kCGMouseEventButtonNumber) + 1;
         if (buttonNumber != 1 && buttonNumber != 2) { /// Don't print left and right click cause that'll clog the logs
+            
             DDLogDebug(@"Received CG Button Input - %@", [NSEvent eventWithCGEvent:event]);
             /// ^ This crashes sometimes.
             /// I think it's because the timeout events can't be translated to NSEvent
@@ -152,21 +153,40 @@ static CGEventRef eventTapCallback(CGEventTapProxy proxy, CGEventType type, CGEv
     /// Main logic
     ///
     
-    /// Get data from relevant-input-queue
-    if ([_buttonInputsFromRelevantDevices isEmpty]) return event;
-    NSDictionary *lastInputFromRelevantDevice = [_buttonInputsFromRelevantDevices dequeue];
-    Device *dev = lastInputFromRelevantDevice[@"dev"];
-    
     /// Get info from cgEvent
     NSUInteger buttonNumber = CGEventGetIntegerValueField(event, kCGMouseEventButtonNumber) + 1;
-    long long pr = CGEventGetIntegerValueField(event, kCGMouseEventPressure);
-    BOOL mouseDown = pr != 0;
+    BOOL mouseDown = CGEventGetIntegerValueField(event, kCGMouseEventPressure) != 0;
     
     /// Filter buttons
     if ([_buttonParseBlacklist containsObject:@(buttonNumber)]) return event;
     
+    ///
+    /// Get device
+    ///     & filter input from irrelevant devices
+    ///     TODO: If new method works. Remove old method - including the callbacks in Device.m and the input queue and stuff.
+    
+    /// New method
+    ///  - Using reverse engineered knowledge about CGEventFields to get the sender directly from the CGEvent
+    ///  - Tested this method under 10.13, 10.14, 10.15 Beta, 13.0, - it works!
+    ///  - Performance: Under newMethod, spamming a button in release build with debugger attached had up to 1.6% CPU usage in Activitry Monitor. OldMethod had up to 1.9%, but it went up and down a lot more.
+    
+    IOHIDDeviceRef iohidDevice = CGEventGetSendingDevice(event);
+    Device *device = [DeviceManager attachedDeviceWithIOHIDDevice:iohidDevice];
+    
+    DDLogDebug(@"Device for CG Button Input - iohidDevice: %@, device: %@", iohidDevice, device);
+    
+    if (device == nil) return event;
+    
+    /// Old method
+    /// - How does old method work? - For the old method, we registered input callbacks on the HIDDevices and put those low level inputs in with co-occuring CGEvents to find which device sent a CGEvent
+    /// - Why switch away from old method? - Under Ventura I think the HID callback API broke for some devices. See https://github.com/noah-nuebling/mac-mouse-fix/issues/424. I remember similar bugs in the API in older macOS versions a few years back.
+    
+//    if ([_buttonInputsFromRelevantDevices isEmpty]) return event;
+//    NSDictionary *lastInputFromRelevantDevice = [_buttonInputsFromRelevantDevices dequeue];
+//    Device *dev = lastInputFromRelevantDevice[@"dev"];
+    
     /// Pass to buttonInput processor
-    MFEventPassThroughEvaluation eval  = [Buttons handleInputWithDevice:dev button:@(buttonNumber) downNotUp:mouseDown event: event];
+    MFEventPassThroughEvaluation eval = [Buttons handleInputWithDevice:device button:@(buttonNumber) downNotUp:mouseDown event: event];
     /// Let events pass through
     if (eval == kMFEventPassThroughRefusal) {
         return nil;

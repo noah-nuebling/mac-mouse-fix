@@ -11,6 +11,6 @@
 
 @interface MessagePort_Helper : NSObject
 
-+ (void)load_Manual;
+//+ (void)load_Manual;
 @end
 

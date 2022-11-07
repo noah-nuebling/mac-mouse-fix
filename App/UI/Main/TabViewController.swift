@@ -22,6 +22,10 @@ class TabViewController: NSTabViewController {
     private var injectedConstraints: [NSLayoutConstraint] = []
     private var unselectedTabImageView: NSImageView = NSImageView()
     
+    /// Constants
+    ///     TODO: Think about using validTabs in different places / if using it at all makes sense in the grand architecture
+    private let validTabs = ["general", "buttons", "scrolling", "about"]
+    
     private var window: ResizingTabWindow? {
         if let w = self.tabView.window as? ResizingTabWindow {
             return w /// This is nil when the app first selects a tab from `viewDidAppear()`. But only when running the app from Xcode debugger!?
@@ -158,7 +162,7 @@ class TabViewController: NSTabViewController {
         ///
         
         coolHideTab(identifier: "initial", window: self.window)
-        if let lastID = config("Other.autosave_tabID") as! String?, lastID != "initial" {
+        if let lastID = config("Other.autosave_tabID") as! String?, /*lastID != "initial",*/ validTabs.contains(lastID) {
 //            tabView.selectTabViewItem(withIdentifier: lastID)
             coolSelectTab(identifier: lastID, window: self.window)
         } else {
@@ -188,7 +192,7 @@ class TabViewController: NSTabViewController {
         }
         
         /// Ignore `initial` TabViewItem
-        if tabViewItem?.identifier as! NSString == "initial" {
+        guard let tabID = tabViewItem?.identifier as! NSString?, validTabs.contains(tabID as String) /*tabViewItem?.identifier as! NSString != "initial"*/ else {
             return false
         }
         

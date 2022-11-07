@@ -23,7 +23,8 @@ import CocoaLumberjackSwift
         
         let document = Document(parsing: markdown, source: URL(string: ""), options: [])
         if document.isEmpty { return nil }
-        print("THE DOC: \(document.debugDescription())")
+        
+//        print("Transforming Markdown doc to attributed string: \(document)")
         
         var walker = ToAttributed()
         walker.visit(document)
@@ -40,10 +41,15 @@ struct ToAttributed: MarkupWalker {
     var string: NSMutableAttributedString = NSMutableAttributedString(string: "")
     
     mutating func visitLink(_ link: Link) -> () {
-        string.append(NSAttributedString(string: link.plainText))
+        
+        let str: NSAttributedString
         if let destination = link.destination, let url = URL(string: destination) {
-            string = string.addingLink(with: url, forSubstring: link.plainText) as! NSMutableAttributedString
+            str = NSAttributedString.hyperlink(from: link.plainText, with: url)
+        } else {
+            str = NSAttributedString(string: link.plainText)
         }
+        
+        string.append(str)
     }
     
     mutating func visitEmphasis(_ emphasis: Emphasis) -> () {
@@ -64,22 +70,38 @@ struct ToAttributed: MarkupWalker {
     mutating func visitSoftBreak(_ softBreak: SoftBreak) -> () {
         string.append(NSAttributedString(string: "\n"))
     }
+    mutating func visitLineBreak(_ lineBreak: LineBreak) -> () {
+        /// I've never seen this be called. `\n\n` will start a new paragraph.
+        string.append(NSAttributedString(string: "\n\n"))
+    }
+    
     mutating func visitParagraph(_ paragraph: Paragraph) -> () {
+        
+        /// Note: Why the isTopLevel restriction?
+        
         descendInto(paragraph)
-        let isLast = paragraph.indexInParent == (paragraph.parent?.childCount ?? 0) - 1 
+        
+        var isLast = false
+        if let peerCount = paragraph.parent?.childCount, paragraph.indexInParent == peerCount - 1 {
+            isLast = true
+        }
         let isTopLevel = paragraph.parent is Document
         if isTopLevel && !isLast {
             string.append(NSAttributedString(string: "\n\n"))
         }
     }
-    mutating func visitLineBreak(_ lineBreak: LineBreak) -> () {
-        /// I've never seen this be called
-        string.append(NSAttributedString(string: "\n\n"))
-    }
     
     mutating func visitListItem(_ listItem: ListItem) -> () {
-        let num = listItem.indexInParent + 1
-        string.append(NSAttributedString(string: String(format: "\n%d. ", num)))
+        
+        string.append(NSAttributedString(string: String(format: "%d. ", listItem.indexInParent+1)))
         descendInto(listItem)
+        
+        var isLast = false
+        if let peerCount = listItem.parent?.childCount, listItem.indexInParent == peerCount - 1{
+            isLast = true
+        }
+        if !isLast {
+            string.append(NSAttributedString(string: "\n"))
+        }
     }
 }

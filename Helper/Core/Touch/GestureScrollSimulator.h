@@ -15,11 +15,16 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface GestureScrollSimulator : NSObject
 
-+ (void)postGestureScrollEventWithDeltaX:(int64_t)dx deltaY:(int64_t)dy phase:(IOHIDEventPhaseBits)phase autoMomentumScroll:(BOOL)autoMomentum;
++ (void)postGestureScrollEventWithDeltaX:(int64_t)dx
+                                  deltaY:(int64_t)dy
+                                   phase:(IOHIDEventPhaseBits)phase
+                      autoMomentumScroll:(BOOL)autoMomentum
+                      invertedFromDevice:(BOOL)invertedFromDevice;
 
 + (void)postMomentumScrollDirectlyWithDeltaX:(double)dx
                                       deltaY:(double)dy
-                               momentumPhase:(CGMomentumScrollPhase)momentumPhase;
+                               momentumPhase:(CGMomentumScrollPhase)momentumPhase
+                          invertedFromDevice:(BOOL)invertedFromDevice;
 
 + (void)afterStartingMomentumScroll:(void (^ _Nullable)(void))callback;
 + (void)stopMomentumScroll;

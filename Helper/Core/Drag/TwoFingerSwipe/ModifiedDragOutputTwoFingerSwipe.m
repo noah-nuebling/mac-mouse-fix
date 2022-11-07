@@ -177,7 +177,7 @@ static dispatch_group_t _momentumScrollWaitGroup;
         if (animatorPhase == kMFAnimationCallbackPhaseEnd) {
 
              if (_smoothingAnimatorShouldStartMomentumScroll) {
-                 [GestureScrollSimulator postGestureScrollEventWithDeltaX:0 deltaY:0 phase:kIOHIDEventPhaseEnded autoMomentumScroll:YES];
+                 [GestureScrollSimulator postGestureScrollEventWithDeltaX:0 deltaY:0 phase:kIOHIDEventPhaseEnded autoMomentumScroll:YES invertedFromDevice:_drag->naturalDirection];
              }
 
             _smoothingAnimatorShouldStartMomentumScroll = false;
@@ -185,7 +185,7 @@ static dispatch_group_t _momentumScrollWaitGroup;
             return;
         }
 
-        [GestureScrollSimulator postGestureScrollEventWithDeltaX:deltaVec.x deltaY:deltaVec.y phase:eventPhase autoMomentumScroll:YES];
+        [GestureScrollSimulator postGestureScrollEventWithDeltaX:deltaVec.x deltaY:deltaVec.y phase:eventPhase autoMomentumScroll:YES invertedFromDevice:_drag->naturalDirection];
 
         eventPhase = kIOHIDEventPhaseChanged;
 
@@ -200,7 +200,7 @@ static dispatch_group_t _momentumScrollWaitGroup;
         if (_smoothingAnimator.isRunning) {
             [_smoothingAnimator cancel];
         }
-        [GestureScrollSimulator postGestureScrollEventWithDeltaX:0 deltaY:0 phase:kIOHIDEventPhaseEnded autoMomentumScroll:YES];
+        [GestureScrollSimulator postGestureScrollEventWithDeltaX:0 deltaY:0 phase:kIOHIDEventPhaseEnded autoMomentumScroll:YES invertedFromDevice:_drag->naturalDirection];
         [GestureScrollSimulator suspendMomentumScroll];
         
         [PointerFreeze unfreeze];
@@ -231,7 +231,7 @@ static dispatch_group_t _momentumScrollWaitGroup;
         _smoothingAnimatorShouldStartMomentumScroll = YES;
         
     } else { /// Start momentumScroll directly
-        [GestureScrollSimulator postGestureScrollEventWithDeltaX:0 deltaY:0 phase:kIOHIDEventPhaseEnded autoMomentumScroll:YES];
+        [GestureScrollSimulator postGestureScrollEventWithDeltaX:0 deltaY:0 phase:kIOHIDEventPhaseEnded autoMomentumScroll:YES invertedFromDevice:_drag->naturalDirection];
     }
     
     /// Wait until momentumScroll has been started

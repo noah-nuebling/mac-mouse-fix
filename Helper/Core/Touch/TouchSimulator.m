@@ -92,7 +92,7 @@ static NSMutableDictionary *_swipeInfo;
     CFRelease(event);
 }
 
-+ (void)postDockSwipeEventWithDelta:(double)d type:(MFDockSwipeType)type phase:(IOHIDEventPhaseBits)phase {
++ (void)postDockSwipeEventWithDelta:(double)d type:(MFDockSwipeType)type phase:(IOHIDEventPhaseBits)phase invertedFromDevice:(BOOL)invertedFromDevice {
     
     /// State
     
@@ -104,7 +104,6 @@ static NSMutableDictionary *_swipeInfo;
     /// Constants
     
     int valFor41 = 33231;
-    int vertInvert = 1;
     
     /// Update originOffset
     
@@ -194,7 +193,7 @@ static NSMutableDictionary *_swipeInfo;
     CGEventSetDoubleValueField(e30, 123, type); /// Horizontal or vertical
     CGEventSetDoubleValueField(e30, 165, type); /// Horizontal or vertical // Probs not necessary
     
-    CGEventSetDoubleValueField(e30, 136, vertInvert); /// Vertical invert
+    CGEventSetIntegerValueField(e30, 136, invertedFromDevice ? 1 : 0);
     
     if (phase == kIOHIDEventPhaseEnded || phase == kIOHIDEventPhaseCancelled) {
         

@@ -83,6 +83,10 @@ import CocoaLumberjackSwift
         return isNatural ? kMFSemanticScrollInversionNatural : kMFSemanticScrollInversionNormal
     }
     
+    // MARK: Inverted from device flag
+    
+    @objc let invertedFromDevice = false;
+    
     // MARK: Analysis
     
     /// Note:

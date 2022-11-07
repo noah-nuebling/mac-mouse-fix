@@ -1,18 +1,17 @@
 //
 // --------------------------------------------------------------------------
-// SharedMessagePort.h
+// MessagePort_App.h
 // Created for Mac Mouse Fix (https://github.com/noah-nuebling/mac-mouse-fix)
-// Created by Noah Nuebling in 2021
+// Created by Noah Nuebling in 2019
 // Licensed under the MMF License (https://github.com/noah-nuebling/mac-mouse-fix/blob/master/LICENSE)
 // --------------------------------------------------------------------------
 //
 
 #import <Foundation/Foundation.h>
 
-NS_ASSUME_NONNULL_BEGIN
 
-@interface SharedMessagePort : NSObject
-+ (NSObject *_Nullable)sendMessage:(NSString * _Nonnull)message withPayload:(NSObject <NSCoding> * _Nullable)payload expectingReply:(BOOL)replyExpected;
+@interface MessagePort_App : NSObject
+
+//+ (void)load_Manual;
+
 @end
-
-NS_ASSUME_NONNULL_END

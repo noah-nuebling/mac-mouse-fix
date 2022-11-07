@@ -18,7 +18,7 @@
 #import <Cocoa/Cocoa.h>
 
 #import "TransformationUtility.h"
-#import "SharedMessagePort.h"
+#import "MFMessagePort.h"
 #import "TransformationManager.h"
 #import "SharedUtility.h"
 
@@ -171,7 +171,7 @@ void initDragState_Unsafe(void) {
     DDLogDebug(@"\nEnabled drag eventTap");
 }
 
-static CGEventRef __nullable eventTapCallBack(CGEventTapProxy proxy, CGEventType type, CGEventRef  event, void * __nullable userInfo) {
+static CGEventRef __nullable eventTapCallBack(CGEventTapProxy proxy, CGEventType type, CGEventRef event, void * __nullable userInfo) {
     
     /// Store proxy
     _tapProxy = proxy;
@@ -188,12 +188,11 @@ static CGEventRef __nullable eventTapCallBack(CGEventTapProxy proxy, CGEventType
     }
     
     /// Get deltas
+    /// These are truly integer values, I'm not rounding anything / losing any info here
+    /// However, the deltas seem to be pre-subpixelated, and often, both dx and dy are 0.
     
     int64_t dx = CGEventGetIntegerValueField(event, kCGMouseEventDeltaX);
     int64_t dy = CGEventGetIntegerValueField(event, kCGMouseEventDeltaY);
-    
-    /// ^ These are truly integer values, I'm not rounding anything / losing any info here
-    /// However, the deltas seem to be pre-subpixelated, and often, both dx and dy are 0.
     
     /// Debug
     
@@ -281,6 +280,14 @@ static void handleMouseInputWhileInitialized(int64_t deltaX, int64_t deltaY, CGE
         _drag.activationState = kMFModifiedInputActivationStateInUse;
         _drag.firstCallback = true;
         
+        /// Do deferred init
+        /// Could also do this in normal init `initializeDragWithDict`, but here is more effiicient
+        /// (`initializeDragWithDict` is called on every mouse click if it's set up for that button)
+        /// -> Don't use `naturalDirection` before state switches to `kMFModifiedInputActivationStateInUse`!
+        /// TODO: Build UI for this
+        
+        _drag.naturalDirection = [NSUserDefaults.standardUserDefaults boolForKey:@"com.apple.swipescrolldirection"];
+        
         /// Notify output plugin
         [_drag.outputPlugin handleBecameInUse];
         
@@ -295,8 +302,13 @@ static void handleMouseInputWhileInitialized(int64_t deltaX, int64_t deltaY, CGE
 /// Only passing in event to obtain event location to get slightly better behaviour for fakeDrag
 void handleMouseInputWhileInUse(int64_t deltaX, int64_t deltaY, CGEventRef event) {
     
-    /// Notifiy plugin
+    /// Invert direction
+    if (!_drag.naturalDirection) {
+        deltaX = -deltaX;
+        deltaY = -deltaY;
+    }
     
+    /// Notifiy plugin
     [_drag.outputPlugin handleMouseInputWhileInUseWithDeltaX:deltaX deltaY:deltaY event:event];
     
     /// Update phase

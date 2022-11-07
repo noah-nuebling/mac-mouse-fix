@@ -97,6 +97,9 @@ static BOOL _isSuspended = NO;
     });
 }
 void resetState_Sync(void) {
+    
+    /// TODO: I just saw a crash here where _scrollQueue was nil
+    
     dispatch_sync(_scrollQueue, ^{
         resetState_Unsafe();
     });
@@ -745,7 +748,7 @@ static void sendOutputEvents(int64_t dx, int64_t dy, MFScrollOutputType outputTy
         if (!config.animationCurveParams.sendMomentumScrolls) {
             
             /// Post event
-            [GestureScrollSimulator postGestureScrollEventWithDeltaX:dx deltaY:dy phase:eventPhase autoMomentumScroll:YES];
+            [GestureScrollSimulator postGestureScrollEventWithDeltaX:dx deltaY:dy phase:eventPhase autoMomentumScroll:YES invertedFromDevice:_scrollConfig.invertedFromDevice];
             
             /// Suppress momentumScroll
             if (eventPhase == kIOHIDEventPhaseEnded) {
@@ -768,7 +771,7 @@ static void sendOutputEvents(int64_t dx, int64_t dy, MFScrollOutputType outputTy
                 if (lastMomentumHint == kMFMomentumHintMomentum) {
                     
                     /// Send momentum end event
-                    [GestureScrollSimulator postMomentumScrollDirectlyWithDeltaX:0 deltaY:0 momentumPhase:kCGMomentumScrollPhaseEnd];
+                    [GestureScrollSimulator postMomentumScrollDirectlyWithDeltaX:0 deltaY:0 momentumPhase:kCGMomentumScrollPhaseEnd invertedFromDevice:_scrollConfig.invertedFromDevice];
                     
                     /// Set eventPhase to start
                     eventPhase = kIOHIDEventPhaseBegan;
@@ -778,7 +781,7 @@ static void sendOutputEvents(int64_t dx, int64_t dy, MFScrollOutputType outputTy
                 }
                 
                 /// Send normal gesture scroll
-                [GestureScrollSimulator postGestureScrollEventWithDeltaX:dx deltaY:dy phase:eventPhase autoMomentumScroll:NO];
+                [GestureScrollSimulator postGestureScrollEventWithDeltaX:dx deltaY:dy phase:eventPhase autoMomentumScroll:NO invertedFromDevice:_scrollConfig.invertedFromDevice];
                 
                 /// Debug
                 DDLogDebug(@"\nHybrid event - gesture: (%lld, %lld, %d)", dx, dy, eventPhase);
@@ -791,7 +794,7 @@ static void sendOutputEvents(int64_t dx, int64_t dy, MFScrollOutputType outputTy
                     /// Momentum begins
                     
                     /// Send gesture end event
-                    [GestureScrollSimulator postGestureScrollEventWithDeltaX:0 deltaY:0 phase:kIOHIDEventPhaseEnded autoMomentumScroll:NO];
+                    [GestureScrollSimulator postGestureScrollEventWithDeltaX:0 deltaY:0 phase:kIOHIDEventPhaseEnded autoMomentumScroll:NO invertedFromDevice:_scrollConfig.invertedFromDevice];
                     
                     /// Get momentum phase
                     momentumPhase = kCGMomentumScrollPhaseBegin;
@@ -816,7 +819,7 @@ static void sendOutputEvents(int64_t dx, int64_t dy, MFScrollOutputType outputTy
                 }
 
                 /// Send momentum event
-                [GestureScrollSimulator postMomentumScrollDirectlyWithDeltaX:dx deltaY:dy momentumPhase:momentumPhase];
+                [GestureScrollSimulator postMomentumScrollDirectlyWithDeltaX:dx deltaY:dy momentumPhase:momentumPhase invertedFromDevice:_scrollConfig.invertedFromDevice];
                 
                 /// Debug
                 DDLogDebug(@"\nHybrid event - momentum: (%lld, %lld, %d)", dx, dy, momentumPhase);
@@ -890,21 +893,20 @@ static void sendOutputEvents(int64_t dx, int64_t dy, MFScrollOutputType outputTy
         
         if (outputType == kMFScrollOutputTypeFourFingerPinch) {
             type = kMFDockSwipeTypePinch;
-            eventDelta = -(dx + dy)/600.0;
-            /// ^ Launchpad feels a lot less sensitive than Show Desktop, but to improve this we'd have to somehow detect which of both is active atm. Negate delta to mirror the way that zooming works
+            eventDelta = (dx + dy)/600.0;
+            /// ^ Launchpad feels a lot less sensitive than Show Desktop, but to improve this we'd have to somehow detect which of both is active atm.
         } else if (outputType == kMFScrollOutputTypeThreeFingerSwipeHorizontal) {
             type = kMFDockSwipeTypeHorizontal;
-            eventDelta = -(dx + dy)/600.0;
+            eventDelta = -(dx + dy)/600.0; /// Not sure why we need to negate here
         } else {
             assert(false);
         }
         
-        [TouchSimulator postDockSwipeEventWithDelta:eventDelta type:type phase:eventPhase];
+        [TouchSimulator postDockSwipeEventWithDelta:eventDelta type:type phase:eventPhase invertedFromDevice:_scrollConfig.invertedFromDevice];
         
     } else if (outputType == kMFScrollOutputTypeCommandTab) {
         
         /// --- CommandTab ---
-        
         
         double d = -(dx + dy);
         

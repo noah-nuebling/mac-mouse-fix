@@ -263,22 +263,24 @@ void assignAttributedStringKeepingBase(NSAttributedString *_Nonnull *_Nonnull as
     
     NSAttributedString *result = nil;
     
-    if (@available(macOS 13.0, *)) {
+    if ((NO)) {
         
-        /// Use library function
-        
-        /// Create options object
-        NSAttributedStringMarkdownParsingOptions *options = [[NSAttributedStringMarkdownParsingOptions alloc] init];
-        
-        /// No idea what these do
-        options.allowsExtendedAttributes = NO;
-        options.appliesSourcePositionAttributes = NO;
-        
-        /// Make it respect linebreaks
-        options.interpretedSyntax = NSAttributedStringMarkdownInterpretedSyntaxInlineOnlyPreservingWhitespace;
-        
-        /// Create string
-        result = [[NSAttributedString alloc] initWithMarkdownString:md options:options baseURL:[NSURL URLWithString:@""] error:nil];
+        /// Never use Apple API, always use custom method - so things are consistent across versions and we can catch issues witht custom version during development
+//
+//        /// Use library function
+//
+//        /// Create options object
+//        NSAttributedStringMarkdownParsingOptions *options = [[NSAttributedStringMarkdownParsingOptions alloc] init];
+//
+//        /// No idea what these do
+//        options.allowsExtendedAttributes = NO;
+//        options.appliesSourcePositionAttributes = NO;
+//
+//        /// Make it respect linebreaks
+//        options.interpretedSyntax = NSAttributedStringMarkdownInterpretedSyntaxInlineOnlyPreservingWhitespace;
+//
+//        /// Create string
+//        result = [[NSAttributedString alloc] initWithMarkdownString:md options:options baseURL:[NSURL URLWithString:@""] error:nil];
         
     } else {
         
@@ -746,11 +748,13 @@ void assignAttributedStringKeepingBase(NSAttributedString *_Nonnull *_Nonnull as
     [attrString beginEditing];
     [attrString addAttribute:NSLinkAttributeName value:aURL.absoluteString range:range];
  
-    // Make the text appear in blue
+    /// Make the text appear in blue
+    ///     This doesn't seem to be necessary. The links will still be blue if we don't do this.
 //    [attrString addAttribute:NSForegroundColorAttributeName value:[NSColor blueColor] range:range];
  
-    // Next make the text appear with an underline
-//    [attrString addAttribute:NSUnderlineStyleAttributeName value:@(NSUnderlineStyleSingle) range:range];
+    /// Next make the text appear with an underline
+    ///     This is unnecessary in NSTextView but necessary in NSTextField
+    [attrString addAttribute:NSUnderlineStyleAttributeName value:@(NSUnderlineStyleSingle) range:range];
  
     [attrString endEditing];
  

@@ -77,11 +77,7 @@ class ButtonModifiers: NSObject {
     }
     
     func getActiveButtonModifiersForDevice(device: Device) -> [[String: Int]] {
-        /// When passing in nil for the devID, this function will try to find a device with pressed buttons and use that. It will also write that device to the `devID` argument
         
-        /// get device
-        
-        /// Get result
         let buttonStates = Array(state.values)
         
         let result: [[String: Int]] = buttonStates.filter { bs in

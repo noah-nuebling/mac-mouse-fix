@@ -59,7 +59,7 @@ class CoolNSTextField: NSTextField {
 //        addCursorRect(bounds, cursor: .arrow)
 //    }
     
-    func makeLinksClickable() {
+    @objc func makeLinksClickable() {
         
         /// Make clickable so links work
         /// This also makes the cursor an inseration cursor on hover which is weird
