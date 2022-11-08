@@ -24,7 +24,7 @@ extern CFTimeInterval CATimeWithHostTime(UInt64 mach_absolute_time); /// I saw t
 
 int64_t fixedScrollDelta(double scrollDelta) {
     /// We round instead of just truncating because that makes the values look more like real scrollWheel values. Probably doesn't make a difference.
-    return (int64_t)roundf(scrollDelta * pow(2, 16));
+    return (int64_t)round(scrollDelta * pow(2, 16));
 }
 
 #pragma mark - Sending device

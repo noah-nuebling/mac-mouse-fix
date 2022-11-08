@@ -443,7 +443,7 @@ static void getDeltaVectors(Vector point, VectorSubPixelator *subPixelator, Vect
     /// You can pass NULL for `gesture` if you don't need it. (You don't need it for momentum scrolls)
     
     /// Guard `point` contains int
-    assert(point.x == roundf(point.x) && point.y == roundf(point.y));
+    assert(point.x == round(point.x) && point.y == round(point.y));
     
     /// Configure pixelator threshold
     
