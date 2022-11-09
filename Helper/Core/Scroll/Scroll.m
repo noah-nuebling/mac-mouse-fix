@@ -761,14 +761,25 @@ static void sendOutputEvents(int64_t dx, int64_t dy, MFScrollOutputType outputTy
         
         if (!config.animationCurveParams.sendMomentumScrolls) {
             
-            /// Post event
-            [GestureScrollSimulator postGestureScrollEventWithDeltaX:dx deltaY:dy phase:eventPhase autoMomentumScroll:NO invertedFromDevice:_scrollConfig.invertedFromDevice];
-            
-            /// Suppress momentumScroll
-//            if (eventPhase == kIOHIDEventPhaseEnded) {
-//                DDLogDebug(@"THAT CALL where displayLinkkk is stopped from Scroll.m");
-//                [GestureScrollSimulator stopMomentumScroll];
-//            }
+            if (eventPhase != kIOHIDEventPhaseEnded) {
+                
+                /// Post event
+                [GestureScrollSimulator postGestureScrollEventWithDeltaX:dx deltaY:dy phase:eventPhase autoMomentumScroll:YES invertedFromDevice:_scrollConfig.invertedFromDevice];
+                
+            } else {
+                
+                /// Post end event
+                [GestureScrollSimulator postGestureScrollEventWithDeltaX:0.0 deltaY:0.0 phase:kIOHIDEventPhaseEnded autoMomentumScroll:YES invertedFromDevice:_scrollConfig.invertedFromDevice];
+                
+                /// Debug
+                DDLogDebug(@"THAT CALL where displayLinkkk is stopped from Scroll.m");
+                
+                /// Suppress momentumScroll
+                /// - Only works if autoMomentumScroll is set to YES
+                /// - ...That's because This architecture is so complicated but idk how to make it better. The idea behind it was that certain apps like Xcode have their own automatic momentumScrolling built in. To stop it you need to send an explicit 'momentumStop' event. Even if you haven't sent any other momentum events beforehand. Why not just send the momentumStop event directly? Here are our reasons (not sure if they are good) To lower the chances of any misbehaviour our approach was to simulate the trackpad behaviour as closely as possible. That means we start momentumScrolling automatically (hence `autoMomentumScroll:YES`) and then we simulate a finger touching the trackpad immediately. However, in this scenario, since we start and then stop the autoMomentumScroll immediately, the TouchAnimator which is started for autoMomentumScroll never calls its callback at all! So this is sort of nonsensical. Butttt we're also using `autoMomentumScroll:YES` for Click and Drag so I guess it might be simpler to do it this way since we need the autoMomentumScroll implementation anyways. Another reason for the architecture is that we decided to call the cancel callback from our autoMomentum TouchAnimator callback because that puts it inline with the other events sending and therefore makes stuff easier to think about (??) and provides more context info when we call the callback (?).
+                
+                [GestureScrollSimulator stopMomentumScroll];
+            }
             
         } else { /// sendMomentumScrolls == true
             

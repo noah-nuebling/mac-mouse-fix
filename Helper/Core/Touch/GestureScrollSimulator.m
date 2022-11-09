@@ -270,7 +270,7 @@ static void (^_momentumScrollCallback)(void);
 }
 
 + (void)stopMomentumScroll_Unsafe {
-    [_momentumAnimator cancel];
+    [_momentumAnimator cancel_forAutoMomentumScroll:YES];
 }
 
 /// Momentum scroll main
