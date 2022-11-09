@@ -27,7 +27,7 @@ import CocoaLumberjackSwift
     
     @objc static var linearCurve: Bezier = { () -> Bezier in
         
-        let controlPoints: [P] = [P(x: 0,y: 0), P(x: 0,y: 0), P(x: 1,y: 1), P(x: 1,y: 1)]
+        let controlPoints: [P] = [_P(0,0), _P(0,0), _P(1,1), _P(1,1)]
         
         return Bezier(controlPoints: controlPoints, defaultEpsilon: 0.001) /// The default defaultEpsilon 0.08 makes the animations choppy
     }()
@@ -245,8 +245,7 @@ import CocoaLumberjackSwift
             
         case kMFScrollAnimationCurvePresetNoInertia:
             
-            typealias P = Bezier.Point
-            let baseCurve = Bezier(controlPoints: [P(x: 0, y: 0), P(x: 0, y: 0), P(x: 0.5, y: 1), P(x: 1, y: 1)], defaultEpsilon: 0.001)
+            let baseCurve = Bezier(controlPoints: [_P(0, 0), _P(0, 0), _P(0.5, 1), _P(1, 1)], defaultEpsilon: 0.001)
             return MFScrollAnimationCurveParameters(baseCurve: baseCurve, msPerStep: 250)
             
         case kMFScrollAnimationCurvePresetLowInertia:
@@ -266,8 +265,7 @@ import CocoaLumberjackSwift
             
         case kMFScrollAnimationCurvePresetTouchDriver:
             
-            typealias P = Bezier.Point
-            let baseCurve = Bezier(controlPoints: [P(x: 0, y: 0), P(x: 0, y: 0), P(x: 0.5, y: 1), P(x: 1, y: 1)], defaultEpsilon: 0.001)
+            let baseCurve = Bezier(controlPoints: [_P(0, 0), _P(0, 0), _P(0.5, 1), _P(1, 1)], defaultEpsilon: 0.001)
             return MFScrollAnimationCurveParameters(baseCurve: baseCurve, msPerStep: 250)
             
         case kMFScrollAnimationCurvePresetTouchDriverLinear:
@@ -582,13 +580,11 @@ import CocoaLumberjackSwift
             x3 = Math.scale(value: capHump, from: .unitInterval, to: Interval(xMax, xMin))
             y3 = yMax
         }
-        
-        typealias P = Bezier.Point
         let curve = AccelerationBezier(controlPoints:
-                                    [P(x: xMin, y: yMin),
-                                     P(x: x2, y: y2),
-                                     P(x: x3, y: y3),
-                                     P(x: xMax, y: yMax)], defaultEpsilon: 0.08)
+                                        [_P(xMin, yMin),
+                                         _P(x2, y2),
+                                         _P(x3, y3),
+                                         _P(xMax, yMax)], defaultEpsilon: 0.08)
         
         /// Return
         return curve

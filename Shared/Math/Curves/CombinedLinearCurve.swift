@@ -27,7 +27,7 @@ struct CombinedLinearCurve {
         for i in 0..<yValues.count {
             let x = Double(i) / Double(yValues.count-1)
             let y = yValues[i]
-            points.append(P(x: x,y: y))
+            points.append(_P(x, y))
         }
         
         /// Init with points
