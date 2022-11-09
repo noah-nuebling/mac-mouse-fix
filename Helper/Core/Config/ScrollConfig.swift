@@ -181,7 +181,7 @@ import CocoaLumberjackSwift
     /// User setting
     
     private lazy var u_animationCurvePreset = {
-        return c("inertia") as! Bool ? kMFScrollAnimationCurvePresetHighInertia : kMFScrollAnimationCurvePresetLowInertia
+        return c("inertia") as! Bool ? kMFScrollAnimationCurvePresetHighInertia : kMFScrollAnimationCurvePresetNoInertia /*kMFScrollAnimationCurvePresetLowInertia*/
     }()
     
     @objc var animationCurvePreset: MFScrollAnimationCurvePreset {
@@ -200,23 +200,38 @@ import CocoaLumberjackSwift
     @objc class MFScrollAnimationCurveParameters: NSObject { /// Does this have to inherit from NSObject?
         
         /// baseCurve params
-        @objc let msPerStep: Int
+        @objc let minMsPerStep: Int
         @objc let baseCurve: Bezier?
         /// dragCurve params
         @objc let dragExponent: Double
         @objc let dragCoefficient: Double
         @objc let stopSpeed: Int
         /// Other params
+        @objc let useDragCurve: Bool
         @objc let sendMomentumScrolls: Bool /// This will make Scroll.m send momentumScroll events (what the Apple Trackpad sends after lifting your fingers off) when scrolling is controlled by the dragCurve. Use this when the dragCurve closely mimicks the Apple Trackpad.
         
         /// Init
-        required init(msPerStep: Int, baseCurve: Bezier?, dragExponent: Double, dragCoefficient: Double, stopSpeed: Int, sendMomentumScrolls: Bool) { /// Why can't Swift autogenerate this, absolut UNPROGRAMMIERBAR
-            self.msPerStep = msPerStep
+        init(baseCurve: Bezier?, minMsPerStep: Int, dragExponent: Double, dragCoefficient: Double, stopSpeed: Int, sendMomentumScrolls: Bool) { /// Why can't Swift autogenerate this, absolut UNPROGRAMMIERBAR
+            
+            self.minMsPerStep = minMsPerStep
             self.baseCurve = baseCurve
+            
+            self.useDragCurve = true
             self.dragExponent = dragExponent
             self.dragCoefficient = dragCoefficient
             self.stopSpeed = stopSpeed
             self.sendMomentumScrolls = sendMomentumScrolls
+        }
+        init(baseCurve: Bezier?, msPerStep: Int) {
+            
+            self.minMsPerStep = msPerStep
+            self.baseCurve = baseCurve
+            
+            self.useDragCurve = false
+            self.dragExponent = -1
+            self.dragCoefficient = -1
+            self.stopSpeed = -1
+            self.sendMomentumScrolls = false
         }
     }
     
@@ -235,20 +250,20 @@ import CocoaLumberjackSwift
             
             typealias P = Bezier.Point
             let baseCurve = Bezier(controlPoints: [P(x: 0, y: 0), P(x: 0, y: 0), P(x: 0.5, y: 1), P(x: 1, y: 1)], defaultEpsilon: 0.001)
-            return MFScrollAnimationCurveParameters(msPerStep: 250, baseCurve: baseCurve, dragExponent: 1.0, dragCoefficient: 987654321, stopSpeed: 987654321, sendMomentumScrolls: false)
+            return MFScrollAnimationCurveParameters(baseCurve: baseCurve, msPerStep: 250)
             
         case kMFScrollAnimationCurvePresetLowInertia:
 
-            return MFScrollAnimationCurveParameters(msPerStep: 140/*160*/, baseCurve: ScrollConfig.linearCurve, dragExponent: 1.0, dragCoefficient: 30/*23*/, stopSpeed: 50, sendMomentumScrolls: false)
+            return MFScrollAnimationCurveParameters(baseCurve: ScrollConfig.linearCurve, minMsPerStep: 140, dragExponent: 1.0, dragCoefficient: 30/*23*/, stopSpeed: 50, sendMomentumScrolls: false)
             
         case kMFScrollAnimationCurvePresetMediumInertia:
             
-            return MFScrollAnimationCurveParameters(msPerStep: 190, baseCurve: ScrollConfig.linearCurve, dragExponent: 1.0, dragCoefficient: 17, stopSpeed: 50, sendMomentumScrolls: false)
+            return MFScrollAnimationCurveParameters(baseCurve: ScrollConfig.linearCurve, minMsPerStep: 190, dragExponent: 1.0, dragCoefficient: 17, stopSpeed: 50, sendMomentumScrolls: false)
             
         case kMFScrollAnimationCurvePresetHighInertia:
             /// Snappiest curve that can be used to send momentumScrolls.
             ///    If you make it snappier then it will cut off the build-in momentumScroll in apps like Xcode
-            return MFScrollAnimationCurveParameters(msPerStep: 205, baseCurve: ScrollConfig.linearCurve, dragExponent: 0.7, dragCoefficient: 40, stopSpeed: 50, sendMomentumScrolls: true)
+            return MFScrollAnimationCurveParameters(baseCurve: ScrollConfig.linearCurve, minMsPerStep: 205, dragExponent: 0.7, dragCoefficient: 40, stopSpeed: 50, sendMomentumScrolls: true)
             
         /// --- Dynamically applied ---
             
@@ -256,31 +271,31 @@ import CocoaLumberjackSwift
             
             typealias P = Bezier.Point
             let baseCurve = Bezier(controlPoints: [P(x: 0, y: 0), P(x: 0, y: 0), P(x: 0.5, y: 1), P(x: 1, y: 1)], defaultEpsilon: 0.001)
-            return MFScrollAnimationCurveParameters(msPerStep: 250, baseCurve: baseCurve, dragExponent: 1.0, dragCoefficient: 987654321, stopSpeed: 987654321, sendMomentumScrolls: false)
+            return MFScrollAnimationCurveParameters(baseCurve: baseCurve, msPerStep: 250)
             
         case kMFScrollAnimationCurvePresetTouchDriverLinear:
             /// "Disable" the dragCurve by setting the dragCoefficient to an absurdly high number. This creates a linear curve. This is not elegant or efficient -> Maybe refactor this (have a bool `usePureBezier` or sth to disable the dragCurve)
-            return MFScrollAnimationCurveParameters(msPerStep: 180, baseCurve: ScrollConfig.linearCurve, dragExponent: 1.0, dragCoefficient: 987654321, stopSpeed: 987654321, sendMomentumScrolls: false)
+            return MFScrollAnimationCurveParameters(baseCurve: ScrollConfig.linearCurve, msPerStep: 180)
         
         case kMFScrollAnimationCurvePresetQuickScroll:
             /// Almost the same as `highInertia` just more inertial
-            return MFScrollAnimationCurveParameters(msPerStep: 220, baseCurve: ScrollConfig.linearCurve, dragExponent: 0.7, dragCoefficient: 30, stopSpeed: 1, sendMomentumScrolls: true)
+            return MFScrollAnimationCurveParameters(baseCurve: ScrollConfig.linearCurve, minMsPerStep: 220, dragExponent: 0.7, dragCoefficient: 30, stopSpeed: 1, sendMomentumScrolls: true)
             
         case kMFScrollAnimationCurvePresetPreciseScroll:
             /// Similar to `lowInertia`
-            return MFScrollAnimationCurveParameters(msPerStep: 140, baseCurve: ScrollConfig.linearCurve, dragExponent: 1.0, dragCoefficient: 20, stopSpeed: 50, sendMomentumScrolls: false)
+            return MFScrollAnimationCurveParameters(baseCurve: ScrollConfig.linearCurve, minMsPerStep: 140, dragExponent: 1.0, dragCoefficient: 20, stopSpeed: 50, sendMomentumScrolls: false)
             
         /// --- Testing ---
             
         case kMFScrollAnimationCurvePresetTest:
             
-            return MFScrollAnimationCurveParameters(msPerStep: 350, baseCurve: ScrollConfig.linearCurve, dragExponent: 1.0, dragCoefficient: 99999, stopSpeed: 999999, sendMomentumScrolls: false)
+            return MFScrollAnimationCurveParameters(baseCurve: ScrollConfig.linearCurve, msPerStep: 350)
             
         /// --- Other ---
             
         case kMFScrollAnimationCurvePresetTrackpad:
             /// The dragCurve parameters emulate the trackpad as closely as possible. Use this in GestureSimulator.m. The baseCurve parameters as well as `sendMomentumScrolls` are irrelevant, since this is not used in Scroll.m. Not sure if this belongs here. Maybe we should just put these parameters into GestureScrollSimulator where they are used.
-            return MFScrollAnimationCurveParameters(msPerStep: -1, baseCurve: nil, dragExponent: 0.7, dragCoefficient: 30, stopSpeed: 1, sendMomentumScrolls: true)
+            return MFScrollAnimationCurveParameters(baseCurve: nil, minMsPerStep: -1, dragExponent: 0.7, dragCoefficient: 30, stopSpeed: 1, sendMomentumScrolls: true)
         
         default:
             fatalError()

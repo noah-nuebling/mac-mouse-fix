@@ -10,6 +10,11 @@
 #ifndef Shorthands_h
 #define Shorthands_h
 
+#import "VectorUtility.h"
+
+//typedef Vector MFPoint;
+//Point P(double x, double y);
+
 typedef struct {
     double x;
     double y;

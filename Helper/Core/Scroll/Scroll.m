@@ -583,7 +583,7 @@ static void heavyProcessing(CGEventRef event, int64_t scrollDeltaAxis1, int64_t 
             MFScrollAnimationCurveParameters *cParams = _scrollConfig.animationCurveParams;
             BezierHybridCurve *c = [[BezierHybridCurve alloc]
                                     initWithBaseCurve:cParams.baseCurve
-                                    minDuration:((double)cParams.msPerStep) / 1000.0
+                                    minDuration:((double)cParams.minMsPerStep) / 1000.0
                                     distance:delta
                                     dragCoefficient:cParams.dragCoefficient
                                     dragExponent:cParams.dragExponent
