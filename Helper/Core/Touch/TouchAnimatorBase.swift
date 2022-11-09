@@ -316,22 +316,24 @@ import QuartzCore
             
             if wasRunning, let callback = self.callback as? AnimatorCallback {
                 
-                if forAutoMomentumScroll {
-                    
-                    /// Notes:
-                    ///   - If the animator is started and then immediately stopped, we usally just want to ignore that and just not call the callback (Why do we even want that? I guess performance, but when does this happen?). But for autoMomentumScroll in GestureScrollSimulator we DO want to send start and cancel events if started and then immediately stepped. Otherwise, app like Xcode might continue momentumScrolling.
-                    ///   - Specifically, this is necessary when used through GestureScrollSimulator when it itself is used in Scroll.m when ending an animation and immediately suppressing momentumScroll. Feels like we're implementing some pretty specific high level behaviour in this very low level class. Maybe we need to restructure our abstractions.
-                    ///   - Calling callback with start phase here might be totally unnecessary
-                    ///   - Maybe we should spread out the start phase and canceled phase callbacks over time? Maybe call the canceled phase callback from the displayLinkCallback?? There an issue in Safari. When you scroll into the rubberband and then back Safari will add momentum. (Even though Safari normally never adds its own momentum I think). This momentum can't even be stopped by touching the trackpad, so idk what we could do about it.
-                    
-                    if !hadProducedDeltas {
-                        callback(Vector(x: 0, y: 0), kMFAnimationCallbackPhaseStart, self.lastMomentumHint)
-                    }
+                if hadProducedDeltas {
                     callback(Vector(x: 0, y: 0), kMFAnimationCallbackPhaseCanceled, self.lastMomentumHint)
-                    
                 } else {
-                    if hadProducedDeltas {
-                        callback(Vector(x: 0, y: 0), kMFAnimationCallbackPhaseCanceled, self.lastMomentumHint)
+                    if forAutoMomentumScroll {
+                        
+                        /// Notes:
+                        ///   - If the animator is started and then immediately stopped, we usally just want to ignore that and just not call the callback (Why do we even want that? I guess performance, but when does this happen?). But for autoMomentumScroll in GestureScrollSimulator we DO want to send start and cancel events if started and then immediately stepped. Otherwise, app like Xcode might continue momentumScrolling.
+                        ///   - Specifically, this is necessary when used through GestureScrollSimulator when it itself is used in Scroll.m when ending an animation and immediately suppressing momentumScroll. Feels like we're implementing some pretty specific high level behaviour in this very low level class. Maybe we need to restructure our abstractions.
+                        ///   - Calling callback with start phase here might be totally unnecessary Edit: Nope is necessary to fix the Safari weirdness.
+                        ///   - Maybe we should spread out the start phase and canceled phase callbacks over time? Maybe call the canceled phase callback from the displayLinkCallback?? There an issue in Safari. When you scroll into the rubberband and then back Safari will add momentum. (Even though Safari normally never adds its own momentum I think). This momentum can't even be stopped by touching the trackpad, so idk what we could do about it.
+                        ///     - Edit: Spacing the events out fixes it! We're just using a DispatchQueue, not the displaylink to do this. Might lead to raceconditions if the animator is restarted before the call. Don't think so though.
+                        ///   - Not sure the delay should scale with frametime. I tested 2ms that's too low. 4ms works, so we chose 8ms to be safe (On a 60 hz screen)
+                        
+                        callback(Vector(x: 0, y: 0), kMFAnimationCallbackPhaseStart, self.lastMomentumHint)
+                        let delay = 8.0/1000.0 /// self.displayLink.nominalTimeBetweenFrames()
+                        DispatchQueue.global(qos: .userInteractive).asyncAfter(deadline: .now() + delay, execute: {
+                            callback(Vector(x: 0, y: 0), kMFAnimationCallbackPhaseCanceled, self.lastMomentumHint)
+                        })
                     }
                 }
             }
