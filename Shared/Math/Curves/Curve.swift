@@ -11,8 +11,17 @@ import Cocoa
 
 @objc class Curve: NSObject {
     
+    ///
+    /// Main
+    ///
+    
     @objc func evaluate(at x: Double) -> Double { fatalError() }
     /// ^ TouchAnimatorBase.swift expects this to pass through (0,0) and (1,1)
+    
+    
+    ///
+    /// Debug
+    ///
     
     @objc func stringTrace(startX x0: Double, endX x1: Double, nOfSamples: Int) -> String {
         
@@ -62,7 +71,22 @@ import Cocoa
     }
 }
 
-@objc class AccelerationCurve: Curve {
+@objc extension Curve {
+    
+    ///
+    /// AnimationCurve extension
+    ///     We actually only need duration and distance for Hybrid animation curves not pure Bezier animation curves
+    
+//    @objc var duration: Double { fatalError() }
+//    @objc var distance: Double { fatalError() }
+    
+}
+
+@objc extension Curve {
+    
+    ///
+    /// AccelerationCurve extension
+    ///
     
 //    @objc func createAccelerationTable(numberOfPoints: Int, endX x1: Double, accelIndex: Double) -> CFData { /// This is unused I think
 //        let trace = self.trace(startX: 0, endX: x1, nOfSamples: numberOfPoints)

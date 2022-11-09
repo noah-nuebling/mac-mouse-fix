@@ -38,7 +38,7 @@
 
 import Foundation
 
-@objc class PolynomialCappedAccelerationCurve: AccelerationCurve {
+@objc class PolynomialCappedAccelerationCurve: Curve {
     
     /// Constants
     let epsilon: Double = 10e-3

@@ -280,6 +280,7 @@ static void heavyProcessing(CGEventRef event, int64_t scrollDeltaAxis1, int64_t 
     
     BOOL firstConsecutive = [ScrollAnalyzer peekIsFirstConsecutiveTickWithTickOccuringAt:tickTime withDirection:scrollDirection withConfig:_scrollConfig];
     
+    ///
     /// Update stuff
     ///     on the first scrollTick
     
@@ -329,9 +330,9 @@ static void heavyProcessing(CGEventRef event, int64_t scrollDeltaAxis1, int64_t 
             _modifications = newMods;
         }
         
-#pragma mark Override config
-        
+        ///
         /// Override scrollConfig based on modifications
+        ///
         
         /// inputModifications
         
@@ -570,6 +571,9 @@ static void heavyProcessing(CGEventRef event, int64_t scrollDeltaAxis1, int64_t 
                 [_animator resetSubPixelator_Unsafe];
                 
             } else if ([animationCurve isKindOfClass:SimpleBezierHybridCurve.class]) {
+                
+                assert(false); /// Unused - remove
+                
                 SimpleBezierHybridCurve *c = (SimpleBezierHybridCurve *)animationCurve;
                 pxLeftToScroll = [c baseDistanceLeftWithDistanceLeft: distanceLeft]; /// If we feed valueLeft instead of baseValueLeft back into the animator, it will lead to unwanted acceleration
             } else {
@@ -578,37 +582,45 @@ static void heavyProcessing(CGEventRef event, int64_t scrollDeltaAxis1, int64_t 
             
             /// Calculate distance to scroll
             double delta = pxToScrollForThisTick + pxLeftToScroll;
+            double duration;
             
             /// Create curve
             MFScrollAnimationCurveParameters *cParams = _scrollConfig.animationCurveParams;
-            BezierHybridCurve *c = [[BezierHybridCurve alloc]
-                                    initWithBaseCurve:cParams.baseCurve
-                                    minDuration:((double)cParams.minMsPerStep) / 1000.0
-                                    distance:delta
-                                    dragCoefficient:cParams.dragCoefficient
-                                    dragExponent:cParams.dragExponent
-                                    stopSpeed:cParams.stopSpeed
-                                    distanceEpsilon:0.2];
             
-            /// Get values from curve
+            Curve *c;
+            if (cParams.useDragCurve) {
+                
+                HybridCurve *hc = [[BezierHybridCurve alloc]
+                     initWithBaseCurve:cParams.baseCurve
+                     minDuration:((double)cParams.minMsPerStep) / 1000.0
+                     distance:delta
+                     dragCoefficient:cParams.dragCoefficient
+                     dragExponent:cParams.dragExponent
+                     stopSpeed:cParams.stopSpeed
+                     distanceEpsilon:0.2];
+                
+                duration = hc.duration;
+                
+                /// Validate
+                assert(fabs(hc.distance - delta) < 3);
+                /// Debug
+                DDLogDebug(@"pre-animator - distance %f, duration: %f", hc.distance, hc.duration);
+    //            DDLogDebug(@"\nDuration pre-animator: %f base: %f", c.duration, c.baseDuration);
+                
+                /// Assign
+                c = hc;
+                
+            } else {
+                c = cParams.baseCurve;
+                duration = ((double)cParams.minMsPerStep) / 1000.0;
+            }
             
-            double deltaFromCurve = c.distance;
-            double durationFromCurve = c.duration;
-            
-            /// Validate distanceFromCurve
-            
-            assert(fabs(deltaFromCurve - delta) < 3);
             
             /// Fill return dict
             
-            p[@"duration"] = @(durationFromCurve);
-            p[@"vector"] = nsValueFromVector(vectorFromDeltaAndDirection(deltaFromCurve, scrollDirection));
+            p[@"duration"] = @(duration);
+            p[@"vector"] = nsValueFromVector(vectorFromDeltaAndDirection(delta, scrollDirection));
             p[@"curve"] = c;
-            
-            /// Debug
-
-            DDLogDebug(@"pre-animator - distance %f, duration: %f", c.distance, c.duration);
-//            DDLogDebug(@"\nDuration pre-animator: %f base: %f", c.duration, c.baseDuration);
             
             static double scrollDeltaSum = 0;
             scrollDeltaSum += labs(pxToScrollForThisTick);
@@ -656,6 +668,8 @@ static void heavyProcessing(CGEventRef event, int64_t scrollDeltaAxis1, int64_t 
     
     CFRelease(event);
 }
+
+#pragma mark - Send Scroll events
 
 static void sendScroll(int64_t px, MFDirection scrollDirection, BOOL gesture, MFAnimationCallbackPhase animationPhase, MFMomentumHint momentumHint, ScrollConfig *config) {
     
