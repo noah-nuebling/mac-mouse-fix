@@ -762,13 +762,13 @@ static void sendOutputEvents(int64_t dx, int64_t dy, MFScrollOutputType outputTy
         if (!config.animationCurveParams.sendMomentumScrolls) {
             
             /// Post event
-            [GestureScrollSimulator postGestureScrollEventWithDeltaX:dx deltaY:dy phase:eventPhase autoMomentumScroll:YES invertedFromDevice:_scrollConfig.invertedFromDevice];
+            [GestureScrollSimulator postGestureScrollEventWithDeltaX:dx deltaY:dy phase:eventPhase autoMomentumScroll:NO invertedFromDevice:_scrollConfig.invertedFromDevice];
             
             /// Suppress momentumScroll
-            if (eventPhase == kIOHIDEventPhaseEnded) {
-                DDLogDebug(@"THAT CALL where displayLinkkk is stopped from Scroll.m");
-                [GestureScrollSimulator stopMomentumScroll];
-            }
+//            if (eventPhase == kIOHIDEventPhaseEnded) {
+//                DDLogDebug(@"THAT CALL where displayLinkkk is stopped from Scroll.m");
+//                [GestureScrollSimulator stopMomentumScroll];
+//            }
             
         } else { /// sendMomentumScrolls == true
             

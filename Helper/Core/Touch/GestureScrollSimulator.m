@@ -561,15 +561,15 @@ static void getDeltaVectors(Vector point, VectorSubPixelator *subPixelator, Vect
     CGEventSetIntegerValueField(e22, 97, vecScrollPoint.x); /// 97 -> kCGScrollWheelEventPointDeltaAxis2
     CGEventSetIntegerValueField(e22, 94, fixedScrollDelta(vecScrollLine.x)); /// 94 -> kCGScrollWheelEventFixedPtDeltaAxis2
     
-    /// Debug
-    
-    DDLogDebug(@"\nHNGG Sent event: %@", scrollEventDescription(e22));
-    
     /// Phase
     
     CGEventSetIntegerValueField(e22, 99, phase);
     CGEventSetIntegerValueField(e22, 123, momentumPhase);
 
+    /// Debug
+    
+    DDLogDebug(@"\nHNGG Sent event: %@", scrollEventDescription(e22));
+    
     /// Post t22s0 event
     ///     Posting after the t29s6 event because I thought that was close to real trackpad events. But in real trackpad events the order is always different it seems.
     ///     Wow, posting this after the t29s6 events removed the little stutter when swiping between pages, nice!
