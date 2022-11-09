@@ -9,15 +9,6 @@
 import Foundation
 import Cocoa
 
-struct P {
-    init(_ x: Double, _ y: Double) {
-        self.x = x
-        self.y = y
-    }
-    let x: Double;
-    let y: Double;
-}
-
 struct CombinedLinearCurve {
 
     let points: [P]
@@ -36,7 +27,7 @@ struct CombinedLinearCurve {
         for i in 0..<yValues.count {
             let x = Double(i) / Double(yValues.count-1)
             let y = yValues[i]
-            points.append(P(x,y))
+            points.append(P(x: x,y: y))
         }
         
         /// Init with points

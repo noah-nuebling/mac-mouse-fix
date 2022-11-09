@@ -11,13 +11,9 @@
 #define Shorthands_h
 
 #import "VectorUtility.h"
+#import <Foundation/Foundation.h>
 
-//typedef Vector MFPoint;
-//Point P(double x, double y);
-
-typedef struct {
-    double x;
-    double y;
-} P;
+typedef CGPoint P;
+P _P(double x, double y);
 
 #endif /* Shorthands_h */

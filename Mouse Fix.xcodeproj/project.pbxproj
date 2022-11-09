@@ -134,8 +134,8 @@
 		4F9E78C026855BCF002C2309 /* Concurrency.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F9E78BE26855BCF002C2309 /* Concurrency.swift */; };
 		4F9E78D02685E30C002C2309 /* GestureScrollSimulator.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F9E78CE2685E30B002C2309 /* GestureScrollSimulator.m */; };
 		4F9E78E3268663B1002C2309 /* ExponentialSmoother.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F9E78E2268663B1002C2309 /* ExponentialSmoother.swift */; };
-		4FA06819291B2C4C00949B5F /* Shorthands.c in Sources */ = {isa = PBXBuildFile; fileRef = 4FA06818291B2C4C00949B5F /* Shorthands.c */; };
-		4FA0681A291B2C4C00949B5F /* Shorthands.c in Sources */ = {isa = PBXBuildFile; fileRef = 4FA06818291B2C4C00949B5F /* Shorthands.c */; };
+		4FA06819291B2C4C00949B5F /* Shorthands.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FA06818291B2C4C00949B5F /* Shorthands.m */; };
+		4FA0681A291B2C4C00949B5F /* Shorthands.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FA06818291B2C4C00949B5F /* Shorthands.m */; };
 		4FA13FC228B3A2D3005C68FC /* TrialNotificationWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FA13FC028B3A2D3005C68FC /* TrialNotificationWindow.swift */; };
 		4FA13FC328B3A2DB005C68FC /* TrialNotificationController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4FA13FBC28B39423005C68FC /* TrialNotificationController.xib */; };
 		4FA13FC428B3A2E0005C68FC /* TrialNotificationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FA13FBB28B39423005C68FC /* TrialNotificationController.swift */; };
@@ -303,6 +303,8 @@
 		4FFA4E4928B7D3750062A1FE /* NSView+Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F92A72C260F6C7800529D1F /* NSView+Additions.m */; };
 		4FFA4E4A28B7D3750062A1FE /* NSView+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F909D0428A0C3D2009349A2 /* NSView+Extensions.swift */; };
 		4FFBC5A8266977CA001D389B /* DoubleExponentialSmoother.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FFBC5A7266977CA001D389B /* DoubleExponentialSmoother.swift */; };
+		4FFE2894291B35AA0058ABE0 /* Shorthands.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FFE2893291B35AA0058ABE0 /* Shorthands.swift */; };
+		4FFE2895291B35AA0058ABE0 /* Shorthands.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FFE2893291B35AA0058ABE0 /* Shorthands.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -549,7 +551,7 @@
 		4F9E78CE2685E30B002C2309 /* GestureScrollSimulator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GestureScrollSimulator.m; sourceTree = "<group>"; };
 		4F9E78CF2685E30C002C2309 /* GestureScrollSimulator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GestureScrollSimulator.h; sourceTree = "<group>"; };
 		4F9E78E2268663B1002C2309 /* ExponentialSmoother.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExponentialSmoother.swift; sourceTree = "<group>"; };
-		4FA06818291B2C4C00949B5F /* Shorthands.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = Shorthands.c; sourceTree = "<group>"; };
+		4FA06818291B2C4C00949B5F /* Shorthands.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Shorthands.m; sourceTree = "<group>"; };
 		4FA13FBB28B39423005C68FC /* TrialNotificationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrialNotificationController.swift; sourceTree = "<group>"; };
 		4FA13FBC28B39423005C68FC /* TrialNotificationController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TrialNotificationController.xib; sourceTree = "<group>"; };
 		4FA13FC028B3A2D3005C68FC /* TrialNotificationWindow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrialNotificationWindow.swift; sourceTree = "<group>"; };
@@ -782,6 +784,7 @@
 		4FFBC5732667DCE4001D389B /* PrefixHeader.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PrefixHeader.pch; sourceTree = "<group>"; };
 		4FFBC5A6266977CA001D389B /* Mac Mouse Fix Helper-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Mac Mouse Fix Helper-Bridging-Header.h"; sourceTree = "<group>"; };
 		4FFBC5A7266977CA001D389B /* DoubleExponentialSmoother.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DoubleExponentialSmoother.swift; sourceTree = "<group>"; };
+		4FFE2893291B35AA0058ABE0 /* Shorthands.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Shorthands.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1604,7 +1607,8 @@
 			isa = PBXGroup;
 			children = (
 				4F8A8DC0287F885D00786BCC /* Shorthands.h */,
-				4FA06818291B2C4C00949B5F /* Shorthands.c */,
+				4FA06818291B2C4C00949B5F /* Shorthands.m */,
+				4FFE2893291B35AA0058ABE0 /* Shorthands.swift */,
 				4FE40B95283A49DD00880BEF /* SharedUtilitySwift.swift */,
 				4FF6653E25F2C7B000689B77 /* SharedUtility.h */,
 				4FF6653B25F2C7B000689B77 /* SharedUtility.m */,
@@ -2361,7 +2365,7 @@
 				4FA40CFC28A0CCCB00499E53 /* NaturalAccelerationCurve.swift in Sources */,
 				4FF6654625F2C7B000689B77 /* Locator.m in Sources */,
 				4F909D2A28A0C3D2009349A2 /* ResizingTabWindowController.swift in Sources */,
-				4FA06819291B2C4C00949B5F /* Shorthands.c in Sources */,
+				4FA06819291B2C4C00949B5F /* Shorthands.m in Sources */,
 				4FF665EE25F2C92700689B77 /* OverridePanel.m in Sources */,
 				4FDECCDE28A3E93100DDEE91 /* IsObjC.m in Sources */,
 				4F909D2228A0C3D2009349A2 /* ScrollTabController.swift in Sources */,
@@ -2443,6 +2447,7 @@
 				4FF665F825F2C92700689B77 /* MessagePort_App.m in Sources */,
 				4FA40D1028A0D8F100499E53 /* VectorSubPixelator.m in Sources */,
 				4FA40D0228A0CE5B00499E53 /* VectorUtility.m in Sources */,
+				4FFE2894291B35AA0058ABE0 /* Shorthands.swift in Sources */,
 				4F319CBB26252A2D004E5F63 /* ButtonGroupRowView.m in Sources */,
 				4F79A82B2605074000076A7E /* NSAttributedString+Additions.m in Sources */,
 				4FA40CFD28A0CCCB00499E53 /* AccelerationBezier.swift in Sources */,
@@ -2514,7 +2519,7 @@
 				4FFA4E3628B795F30062A1FE /* LicenseUtility.swift in Sources */,
 				4F5F3EEE2756DB0A00C350C0 /* RemapsOverrider_old_.swift in Sources */,
 				4F8B7E6727B4E32600598B65 /* TouchAnimatorBase.swift in Sources */,
-				4FA0681A291B2C4C00949B5F /* Shorthands.c in Sources */,
+				4FA0681A291B2C4C00949B5F /* Shorthands.m in Sources */,
 				4FF6669325F2C93A00689B77 /* TouchSimulator.m in Sources */,
 				4FFA4E4A28B7D3750062A1FE /* NSView+Extensions.swift in Sources */,
 				4F9E78E3268663B1002C2309 /* ExponentialSmoother.swift in Sources */,
@@ -2600,6 +2605,7 @@
 				4F909D4628A0C4C2009349A2 /* NSArray+Extensions.swift in Sources */,
 				4F9E78C026855BCF002C2309 /* Concurrency.swift in Sources */,
 				4FF93059288026FC0007CCA7 /* PolynomialCappedAccelerationCurve.swift in Sources */,
+				4FFE2895291B35AA0058ABE0 /* Shorthands.swift in Sources */,
 				4F3A40DA266C5BDF00436821 /* NSScreen+Additions.m in Sources */,
 				4FF6654325F2C7B000689B77 /* HelperServices.m in Sources */,
 				4FA994BE26678AC90007F003 /* ScrollAnalyzer.m in Sources */,

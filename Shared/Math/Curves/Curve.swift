@@ -11,7 +11,7 @@ import Cocoa
 
 @objc class Curve: NSObject {
     
-    typealias Point = Vector
+    typealias Point = P
     
     @objc func evaluate(at x: Double) -> Double { fatalError() }
     /// ^ TouchAnimatorBase.swift expects this to pass through (0,0) and (1,1)

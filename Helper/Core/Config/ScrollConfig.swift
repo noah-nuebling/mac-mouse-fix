@@ -12,8 +12,6 @@ import CocoaLumberjackSwift
 
 @objc class ScrollConfig: NSObject, NSCopying /*, NSCoding*/ {
     
-    
-    
     /// This class has almost all instance properties
     /// You can request the config once, then store it.
     /// You'll receive an independent instance that you can override with custom values. This should be useful for implementing Modifications in Scroll.m
@@ -29,8 +27,7 @@ import CocoaLumberjackSwift
     
     @objc static var linearCurve: Bezier = { () -> Bezier in
         
-        typealias P = Bezier.Point
-        let controlPoints: [P] = [P(x:0,y:0), P(x:0,y:0), P(x:1,y:1), P(x:1,y:1)]
+        let controlPoints: [P] = [P(x: 0,y: 0), P(x: 0,y: 0), P(x: 1,y: 1), P(x: 1,y: 1)]
         
         return Bezier(controlPoints: controlPoints, defaultEpsilon: 0.001) /// The default defaultEpsilon 0.08 makes the animations choppy
     }()
