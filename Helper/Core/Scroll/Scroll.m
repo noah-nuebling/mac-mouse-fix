@@ -757,6 +757,32 @@ static void sendOutputEvents(int64_t dx, int64_t dy, MFScrollOutputType outputTy
     
     if (outputType == kMFScrollOutputTypeGestureScroll) {
         
+//        static VectorSubPixelator *pixelator;
+//        pixelator = [VectorSubPixelator biasedPixelator];
+//        
+//        double dyLine = ((double)dy)/10.0;
+//        double dxLine = ((double)dx)/10.0;
+//        
+//        Vector roundedLines = [pixelator intVectorWithDoubleVector:_P(dxLine, dyLine)];
+//        
+//        CGEventRef event = CGEventCreate(NULL);
+//        CGEventSetIntegerValueField(event, 55, 22); /// Set type to `kCGEventScrollWheel`
+//        CGEventSetIntegerValueField(event, kCGScrollWheelEventIsContinuous, 1);
+//        
+//        CGEventSetIntegerValueField(event, kCGScrollWheelEventDeltaAxis1, roundedLines.y);
+//        CGEventSetIntegerValueField(event, kCGScrollWheelEventPointDeltaAxis1, dy);
+//        CGEventSetIntegerValueField(event, kCGScrollWheelEventFixedPtDeltaAxis1, fixedScrollDelta(roundedLines.y));
+//        
+//        CGEventSetIntegerValueField(event, kCGScrollWheelEventDeltaAxis2, roundedLines.x);
+//        CGEventSetIntegerValueField(event, kCGScrollWheelEventPointDeltaAxis2, dx);
+//        CGEventSetIntegerValueField(event, kCGScrollWheelEventFixedPtDeltaAxis2, fixedScrollDelta(roundedLines.x));
+//        
+//        CGEventPost(kCGSessionEventTap, event);
+//        CFRelease(event);
+//        
+//        return;
+        
+        
         /// --- GestureScroll ---
         
         if (!config.animationCurveParams.sendMomentumScrolls) {
@@ -898,7 +924,6 @@ static void sendOutputEvents(int64_t dx, int64_t dy, MFScrollOutputType outputTy
         }
         
         [TouchSimulator postMagnificationEventWithMagnification:eventDelta phase:eventPhase];
-        
         
     } else if (outputType == kMFScrollOutputTypeRotation) {
         

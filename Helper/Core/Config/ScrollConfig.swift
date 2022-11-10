@@ -250,7 +250,7 @@ import CocoaLumberjackSwift
 //            Bezier(controlPoints: [_P(0, 0), _P(0.31, 0.44), _P(0.66, 1), _P(1, 1)], defaultEpsilon: 0.001)
 //            ScrollConfig.linearCurve
 //            Bezier(controlPoints: [_P(0, 0), _P(0.23, 0.89), _P(0.52, 1), _P(1, 1)], defaultEpsilon: 0.001)
-            return MFScrollAnimationCurveParameters(baseCurve: baseCurve, msPerStep: 200)
+            return MFScrollAnimationCurveParameters(baseCurve: baseCurve, msPerStep: 250)
             
         case kMFScrollAnimationCurvePresetLowInertia:
 
