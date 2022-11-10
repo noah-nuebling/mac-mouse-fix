@@ -592,7 +592,7 @@ static void heavyProcessing(CGEventRef event, int64_t scrollDeltaAxis1, int64_t 
                 
                 HybridCurve *hc = [[BezierHybridCurve alloc]
                      initWithBaseCurve:cParams.baseCurve
-                     minDuration:((double)cParams.minMsPerStep) / 1000.0
+                     minDuration:((double)cParams.baseMsPerStep) / 1000.0
                      distance:delta
                      dragCoefficient:cParams.dragCoefficient
                      dragExponent:cParams.dragExponent
@@ -612,7 +612,7 @@ static void heavyProcessing(CGEventRef event, int64_t scrollDeltaAxis1, int64_t 
                 
             } else {
                 c = cParams.baseCurve;
-                duration = ((double)cParams.minMsPerStep) / 1000.0;
+                duration = ((double)cParams.baseMsPerStep) / 1000.0;
             }
             
             
@@ -671,7 +671,7 @@ static void heavyProcessing(CGEventRef event, int64_t scrollDeltaAxis1, int64_t 
 
 #pragma mark - Send Scroll events
 
-static void sendScroll(int64_t px, MFDirection scrollDirection, BOOL gesture, MFAnimationCallbackPhase animationPhase, MFMomentumHint momentumHint, ScrollConfig *config) {
+static void sendScroll(int64_t px, MFDirection scrollDirection, BOOL animated, MFAnimationCallbackPhase animationPhase, MFMomentumHint momentumHint, ScrollConfig *config) {
     
     /// Get x and y deltas
     
@@ -696,10 +696,14 @@ static void sendScroll(int64_t px, MFDirection scrollDirection, BOOL gesture, MF
     
     MFScrollOutputType outputType;
     
-    if (!gesture) {
+    if (!animated) {
         outputType = kMFScrollOutputTypeLineScroll;
     } else {
-        outputType = kMFScrollOutputTypeGestureScroll;
+        if (config.animationCurveParams.sendGestureScrolls) {
+            outputType = kMFScrollOutputTypeGestureScroll;
+        } else {
+            outputType = kMFScrollOutputTypeContinuousScroll;
+        }
     }
     
     if (_modifications.effectMod == kMFScrollEffectModificationZoom) {
@@ -723,12 +727,13 @@ static void sendScroll(int64_t px, MFDirection scrollDirection, BOOL gesture, MF
 
 typedef enum {
     kMFScrollOutputTypeGestureScroll,
+    kMFScrollOutputTypeContinuousScroll,
+    kMFScrollOutputTypeLineScroll,
     kMFScrollOutputTypeFourFingerPinch,
     kMFScrollOutputTypeThreeFingerSwipeHorizontal,
     kMFScrollOutputTypeZoom,
     kMFScrollOutputTypeRotation,
     kMFScrollOutputTypeCommandTab,
-    kMFScrollOutputTypeLineScroll,
 } MFScrollOutputType;
 
 /// Output
@@ -756,32 +761,6 @@ static void sendOutputEvents(int64_t dx, int64_t dy, MFScrollOutputType outputTy
     /// Send events based on outputType
     
     if (outputType == kMFScrollOutputTypeGestureScroll) {
-        
-//        static VectorSubPixelator *pixelator;
-//        pixelator = [VectorSubPixelator biasedPixelator];
-//        
-//        double dyLine = ((double)dy)/10.0;
-//        double dxLine = ((double)dx)/10.0;
-//        
-//        Vector roundedLines = [pixelator intVectorWithDoubleVector:_P(dxLine, dyLine)];
-//        
-//        CGEventRef event = CGEventCreate(NULL);
-//        CGEventSetIntegerValueField(event, 55, 22); /// Set type to `kCGEventScrollWheel`
-//        CGEventSetIntegerValueField(event, kCGScrollWheelEventIsContinuous, 1);
-//        
-//        CGEventSetIntegerValueField(event, kCGScrollWheelEventDeltaAxis1, roundedLines.y);
-//        CGEventSetIntegerValueField(event, kCGScrollWheelEventPointDeltaAxis1, dy);
-//        CGEventSetIntegerValueField(event, kCGScrollWheelEventFixedPtDeltaAxis1, fixedScrollDelta(roundedLines.y));
-//        
-//        CGEventSetIntegerValueField(event, kCGScrollWheelEventDeltaAxis2, roundedLines.x);
-//        CGEventSetIntegerValueField(event, kCGScrollWheelEventPointDeltaAxis2, dx);
-//        CGEventSetIntegerValueField(event, kCGScrollWheelEventFixedPtDeltaAxis2, fixedScrollDelta(roundedLines.x));
-//        
-//        CGEventPost(kCGSessionEventTap, event);
-//        CFRelease(event);
-//        
-//        return;
-        
         
         /// --- GestureScroll ---
         
@@ -868,7 +847,7 @@ static void sendOutputEvents(int64_t dx, int64_t dy, MFScrollOutputType outputTy
                 } else {
                     assert(false);
                 }
-
+                
                 /// Send momentum event
                 [GestureScrollSimulator postMomentumScrollDirectlyWithDeltaX:dx deltaY:dy momentumPhase:momentumPhase invertedFromDevice:_scrollConfig.invertedFromDevice];
                 
@@ -883,6 +862,108 @@ static void sendOutputEvents(int64_t dx, int64_t dy, MFScrollOutputType outputTy
                 lastMomentumHint = kMFMomentumHintNone;
             }
         }
+        
+    } else if (outputType == kMFScrollOutputTypeContinuousScroll) {
+        
+        /// --- ContinuousScroll ---
+        
+        if (dx+dy == 0) return; /// Copied from lineScroll
+        
+        /// Create base event
+        
+        CGEventRef event = CGEventCreate(NULL);
+        CGEventSetIntegerValueField(event, 55, 22); /// Set type to `kCGEventScrollWheel`
+        CGEventSetIntegerValueField(event, kCGScrollWheelEventIsContinuous, 1);
+        
+        /// Setup subpixelator
+        
+        static VectorSubPixelator *pixelator = nil;
+        
+        if (pixelator == nil) {
+            pixelator = [VectorSubPixelator biasedPixelator];
+        }
+        if (animatorPhase == kMFAnimationCallbackPhaseStart) {
+            [pixelator reset];
+        }
+        
+        /// Get alt deltas
+        ///     Maybe we should reuse `GestureScrollSimulator` -> `getDeltaVectors()` here. Basically does the same.
+        
+        double dyLine = ((double)dy)/10.0;
+        double dxLine = ((double)dx)/10.0;
+        
+        Vector pixelatedLines = [pixelator intVectorWithDoubleVector:_P(dxLine, dyLine)];
+        
+        /// Set deltas
+        
+        CGEventSetIntegerValueField(event, kCGScrollWheelEventDeltaAxis1, pixelatedLines.y);
+        CGEventSetIntegerValueField(event, kCGScrollWheelEventPointDeltaAxis1, dy);
+        CGEventSetIntegerValueField(event, kCGScrollWheelEventFixedPtDeltaAxis1, fixedScrollDelta(pixelatedLines.y));
+        
+        CGEventSetIntegerValueField(event, kCGScrollWheelEventDeltaAxis2, pixelatedLines.x);
+        CGEventSetIntegerValueField(event, kCGScrollWheelEventPointDeltaAxis2, dx);
+        CGEventSetIntegerValueField(event, kCGScrollWheelEventFixedPtDeltaAxis2, fixedScrollDelta(pixelatedLines.x));
+        
+        /// Post event
+        
+        CGEventPost(kCGSessionEventTap, event);
+        CFRelease(event);
+        
+    } else if (outputType == kMFScrollOutputTypeLineScroll) {
+        
+        /// --- LineScroll ---
+        
+        /// We ignore the phases here
+        
+        if (dx+dy == 0) return;
+        
+        /// Create base event
+        
+        /// Sol 1: Use `CGEventCreateScrollWheelEvent()`
+        ///     - Mysterious: In the real events, `kCGScrollWheelEventIsContinuous` is false. But we have to set it true (through `kCGScrollEventUnitPixel`) to make the scroll distance match the real events.
+        ///     - Safari makes the scroll distance larger than the pixels that are specified in lineScrollEvents. But that doesn't work here. Maybe it's becuase we're setting `kCGScrollWheelEventIsContinuous` true? We're just using
+//        CGEventRef event = CGEventCreateScrollWheelEvent(NULL, kCGScrollEventUnitPixel, 1, 0);
+        
+        /// Sol 2: Just use `CGEventCreate`
+        ///     - This is based on analysis of real events
+        CGEventRef event = CGEventCreate(NULL);
+        CGEventSetIntegerValueField(event, 55, 22); /// Set type to `kCGEventScrollWheel`
+        
+        /// Get line deltas
+        ///     Line deltas are 1/10 of pixel deltas. See CGEventSource pixelsPerLine - it's 10
+        double dyLine = ((double)dy) / 10;
+        double dxLine = ((double)dx) / 10;
+        
+        /// Get line deltas as int
+        ///     Int deltas are generally truncated but also rounded up to be at least 1 (or -1). This also happens in real events.
+        int64_t dyLineInt = (int64_t)dyLine;
+        int64_t dxLineInt = (int64_t)dxLine;
+        if (fabs(dyLine) != 0 && llabs(dyLineInt) == 0) dyLineInt = sign(dyLine);
+        if (fabs(dxLine) != 0 && llabs(dxLineInt) == 0) dxLineInt = sign(dxLine);
+        
+        /// Get line deltas as fixed point number
+        int64_t dyLineFixed = fixedScrollDelta(dyLine);
+        int64_t dxLineFixed = fixedScrollDelta(dxLine);
+        
+        /// Set fields
+        ///     We used to have a comment here saying that the `FixedPtDelta`s were automatically being set when setting the `PointDelta`s. But under the Ventura Beta this doesn't seem to be true, so we're setting it manually.
+        
+        CGEventSetIntegerValueField(event, kCGScrollWheelEventDeltaAxis1, dyLineInt);
+        CGEventSetIntegerValueField(event, kCGScrollWheelEventPointDeltaAxis1, dy);
+        CGEventSetIntegerValueField(event, kCGScrollWheelEventFixedPtDeltaAxis1, dyLineFixed);
+        
+        CGEventSetIntegerValueField(event, kCGScrollWheelEventDeltaAxis2, dxLineInt);
+        CGEventSetIntegerValueField(event, kCGScrollWheelEventPointDeltaAxis2, dx);
+        CGEventSetIntegerValueField(event, kCGScrollWheelEventFixedPtDeltaAxis2, dxLineFixed);
+        
+        /// Debug
+        DDLogDebug(@"SCROOOL OVONT – %@", CGScrollWheelEventDescription(event));
+        
+        /// Send
+        CGEventPost(kCGSessionEventTap, event);
+        
+        /// Release
+        CFRelease(event);
         
     } else if (outputType == kMFScrollOutputTypeZoom) {
         
@@ -992,62 +1073,6 @@ static void sendOutputEvents(int64_t dx, int64_t dy, MFScrollOutputType outputTy
                 sendKeyEvent(48, kCGEventFlagMaskCommand | kCGEventFlagMaskShift, false);
             }
         }
-        
-    } else if (outputType == kMFScrollOutputTypeLineScroll) {
-        
-        /// --- LineScroll ---
-        
-        /// We ignore the phases here
-        
-        if (dx+dy == 0) return;
-        
-        /// Create base event
-        
-        /// Sol 1: Use `CGEventCreateScrollWheelEvent()`
-        ///     - Mysterious: In the real events, `kCGScrollWheelEventIsContinuous` is false. But we have to set it true (through `kCGScrollEventUnitPixel`) to make the scroll distance match the real events.
-        ///     - Safari makes the scroll distance larger than the pixels that are specified in lineScrollEvents. But that doesn't work here. Maybe it's becuase we're setting `kCGScrollWheelEventIsContinuous` true? We're just using
-//        CGEventRef event = CGEventCreateScrollWheelEvent(NULL, kCGScrollEventUnitPixel, 1, 0);
-        
-        /// Sol 2: Just use `CGEventCreate`
-        ///     - This is based on analysis of real events
-        CGEventRef event = CGEventCreate(NULL);
-        CGEventSetIntegerValueField(event, 55, 22); /// Set type to `kCGEventScrollWheel`
-        
-        /// Get line deltas
-        ///     Line deltas are 1/10 of pixel deltas. See CGEventSource pixelsPerLine - it's 10
-        double dyLine = ((double)dy) / 10;
-        double dxLine = ((double)dx) / 10;
-        
-        /// Get line deltas as int
-        ///     Int deltas are generally truncated but also rounded up to be at least 1 (or -1). This also happens in real events.
-        int64_t dyLineInt = (int64_t)dyLine;
-        int64_t dxLineInt = (int64_t)dxLine;
-        if (fabs(dyLine) != 0 && llabs(dyLineInt) == 0) dyLineInt = sign(dyLine);
-        if (fabs(dxLine) != 0 && llabs(dxLineInt) == 0) dxLineInt = sign(dxLine);
-        
-        /// Get line deltas as fixed point number
-        int64_t dyLineFixed = fixedScrollDelta(dyLine);
-        int64_t dxLineFixed = fixedScrollDelta(dxLine);
-        
-        /// Set fields
-        ///     We used to have a comment here saying that the `FixedPtDelta`s were automatically being set when setting the `PointDelta`s. But under the Ventura Beta this doesn't seem to be true, so we're setting it manually.
-        
-        CGEventSetIntegerValueField(event, kCGScrollWheelEventDeltaAxis1, dyLineInt);
-        CGEventSetIntegerValueField(event, kCGScrollWheelEventPointDeltaAxis1, dy);
-        CGEventSetIntegerValueField(event, kCGScrollWheelEventFixedPtDeltaAxis1, dyLineFixed);
-        
-        CGEventSetIntegerValueField(event, kCGScrollWheelEventDeltaAxis2, dxLineInt);
-        CGEventSetIntegerValueField(event, kCGScrollWheelEventPointDeltaAxis2, dx);
-        CGEventSetIntegerValueField(event, kCGScrollWheelEventFixedPtDeltaAxis2, dxLineFixed);
-        
-        /// Debug
-        DDLogDebug(@"SCROOOL OVONT – %@", CGScrollWheelEventDescription(event));
-        
-        /// Send
-        CGEventPost(kCGSessionEventTap, event);
-        
-        /// Release
-        CFRelease(event);
         
     } else {
         assert(false);
