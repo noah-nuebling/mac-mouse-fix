@@ -51,61 +51,41 @@ static CFDataRef _Nullable didReceiveMessage(CFMessagePortRef port, SInt32 messa
     
 #if IS_MAIN_APP
     
-    if ([message isEqualToString:@"accessibilityDisabled"]) {
-        [(ResizingTabWindowController *)MainAppState.shared.window.windowController handleAccessibilityDisabledMessage]; /// If App delegate is about to remove the acc overlay, stop that
-    } else if ([message isEqualToString:@"addModeFeedback"]) {
+#pragma mark MainApp
+    
+    if ([message isEqualToString:@"addModeFeedback"]) {
         [MainAppState.shared.buttonTabController handleReceivedAddModeFeedbackFromHelperWithPayload:(NSDictionary *)payload];
     } else if ([message isEqualToString:@"keyCaptureModeFeedback"]) {
         [KeyCaptureView handleKeyCaptureModeFeedbackWithPayload:(NSDictionary *)payload isSystemDefinedEvent:NO];
     } else if ([message isEqualToString:@"keyCaptureModeFeedbackWithSystemEvent"]) {
         [KeyCaptureView handleKeyCaptureModeFeedbackWithPayload:(NSDictionary *)payload isSystemDefinedEvent:YES];
-    } else if ([message isEqualToString:@"helperEnabled"]) {
+    } else if ([message isEqualToString:@"helperEnabledWithNoAccessibility"]
+               /*|| [message isEqualToString:@"noAccessibility"]*/) {
         
-        /// Handle enabling of strange helper under Ventura
-        
-        /// Explanation:
-        /// The `helperEnabled` message is sent by the helper right after the enableCheckbox is clicked and the helper is subsequently launched
-        /// On older macOS versions we can just kill / unregister strange helpers before registering the new helper and go about our day. But under Ventura using SMAppService there's a problem where the strange helper keeps getting registered instead of the right one until we completely uninstall the strange helper and restart the computer.
-        /// What we do here is catch that case of the strange helper getting registered. Then we unregister the strange helper and show the user a toast about what to do.
-        ///
-        /// Notes:
-        /// - Unregistering the helper doesn't work immediately. Takes like 5 seconds. Not sure why. When debugging it doesn't happen. Might be some timeout in the API.
-        /// - Not sure if just using `enableHelperAsUserAgent:` is enough. Does this call `launchctl remove`? Does it kill strange helpers that weren't started by launchd? That might be necessary in some situations. Edit: pretty sure it's good enough. It will simply unregister the strange helper that was just registered and sent this message. We don't need to do anything else.
-        /// - Logically, the `is-disabled-toast` and the `is-strange-helper-toast` belong together since they both give UI feedback about a failure to enable the helper. It would be nice if they were in the same place in code as well
-        /// - Maybe we should move this UI code out of MFMessagePort because it clutters things up
-        
-        NSDictionary *dict = (NSDictionary *)payload;
-        BOOL strangerDanger = NO;
-        if (@available(macOS 13.0, *)) {
-            NSInteger helperVersion = [(NSNumber *)dict[@"version"] integerValue];
-            NSInteger mainAppVersion = Locator.bundleVersion;
-            if (mainAppVersion != helperVersion) {
-                strangerDanger = YES;
-            }
+        BOOL isStrange = false;
+        if (@available(macOS 13, *)) {
+            isStrange = [MessagePortUtility checkHelperStrangenessReactWithPayload:payload];
         }
         
-        if (strangerDanger) {
-            
-            DDLogError(@"Received enabled message from strange helper. Disabling it");
-            
-            [HelperServices enableHelperAsUserAgent:NO onComplete:nil];
-            
-            /// Notify user
-            ///     And show solution steps
-            /// Notes:
-            /// - Setting asSheet to NO because the sheet will block restarting (which is one of the steps)
-            /// - Setting stayOnTop to YES so the user doesn't loose the instructions when deleting the strange helper (which is one of the steps)
-            
-            NSString *title = NSLocalizedString(@"is-strange-helper-alert.title", @"First draft: Enabling Failed");
-            NSString *body = stringf(NSLocalizedString(@"is-strange-helper-alert.body", @"First draft: Mac Mouse Fix can't be enabled because there's __another version__ of Mac Mouse Fix present on your computer\n\nTo enable Mac Mouse Fix:\n\n1. Delete the [other version](%@)\n2. Empty the Bin\n3. Restart your Mac\n4. Try again!"), ((NSURL *)dict[@"url"]).absoluteString);
-            
-            [AlertCreator showPersistenNotificationWithTitle:title markdownBody:body maxWidth:300 stayOnTop:YES asSheet:NO];
-            
-        } else { /// Helper matches mainApp instance.
+        if (!isStrange) {
+            [AuthorizeAccessibilityView add];
+        }
+    } else if ([message isEqualToString:@"helperEnabled"]) {
+        
+        BOOL isStrange = false;
+        if (@available(macOS 13, *)) {
+            isStrange = [MessagePortUtility checkHelperStrangenessReactWithPayload:payload];
+        }
+        
+        if (!isStrange) { /// Helper matches mainApp instance.
             
             /// Bring mainApp for foreground
-            /// In some places like when the accessibilitySheet is dismissed, we have other methods for bringing mainApp to the foreground that might be unnecessary now that we're doing this.
+            /// In some places like when the accessibilitySheet is dismissed, we have other methods for bringing mainApp to the foreground that might be unnecessary now that we're doing this. Edit: We stopped the accessibiility enabling code from activating the app.
             [NSApp activateIgnoringOtherApps:YES];
+            
+            /// Dismiss accessibilitySheet
+            ///     This is unnecessary under Ventura since `activateIgnoringOtherApps` will trigger `ResizingTabWindowController.windowDidBecomeMain()` which will also call `[AuthorizeAccessibilityView remove]`. But it's better to be safe and explicit about this.
+            [AuthorizeAccessibilityView remove];
             
             /// Notify rest of the app
             [EnabledState.shared reactToDidBecomeEnabled];
@@ -120,6 +100,8 @@ static CFDataRef _Nullable didReceiveMessage(CFMessagePortRef port, SInt32 messa
     
 #elif IS_HELPER
 
+#pragma mark HelperApp
+    
     if ([message isEqualToString:@"configFileChanged"]) {
         [Config handleConfigFileChange];
     } else if ([message isEqualToString:@"terminate"]) {
@@ -127,9 +109,7 @@ static CFDataRef _Nullable didReceiveMessage(CFMessagePortRef port, SInt32 messa
         [NSApp terminate:NULL];
     } else if ([message isEqualToString:@"checkAccessibility"]) {
         BOOL isTrusted = [AccessibilityCheck checkAccessibilityAndUpdateSystemSettings];
-        if (!isTrusted) {
-            [MFMessagePort sendMessage:@"accessibilityDisabled" withPayload:nil expectingReply:NO];
-        }
+        response = @(isTrusted);
     } else if ([message isEqualToString:@"enableAddMode"]) {
         [TransformationManager enableAddMode];
     } else if ([message isEqualToString:@"disableAddMode"]) {
@@ -242,7 +222,7 @@ static CFDataRef _Nullable didReceiveMessage(CFMessagePortRef port, SInt32 messa
 #pragma mark - Send messages
 
 
-+ (NSObject *_Nullable)sendMessage:(NSString * _Nonnull)message withPayload:(NSObject <NSCoding> * _Nullable)payload expectingReply:(BOOL)replyExpected { // TODO: Consider renaming last arg to `expectingReturn`
++ (NSObject *_Nullable)sendMessage:(NSString * _Nonnull)message withPayload:(NSObject <NSCoding> * _Nullable)payload expectingReply:(BOOL)replyExpected { // TODO: Consider renaming last arg to `expectingReturn` or `waitForReply`
     
     /// Validate
     assert(SharedUtility.runningMainApp || SharedUtility.runningHelper);

@@ -85,11 +85,14 @@ AuthorizeAccessibilityView *_accViewController;
     /// New sheet method
     ///
     
-    if (_accViewController == nil) {
-        _accViewController = [[AuthorizeAccessibilityView alloc] initWithNibName:@"AuthorizeAccessibilityView" bundle:[NSBundle bundleForClass:[self class]]];
-    }
-    if ([MainAppState.shared.tabViewController.presentedViewControllers containsObject:_accViewController]) return;
-    [MainAppState.shared.tabViewController presentViewControllerAsSheet:_accViewController]; /// Under Ventura Beta 6 this stopped animating. Same things with the options sheet in the buttons tab. Hopefully it'll come back.
+    dispatch_async(dispatch_get_main_queue(), ^{ /// Remove just don't work sometimes when we don't dispatch to mainQueue. Also dispatching add to be safe.
+        
+        if (_accViewController == nil) {
+            _accViewController = [[AuthorizeAccessibilityView alloc] initWithNibName:@"AuthorizeAccessibilityView" bundle:[NSBundle bundleForClass:[self class]]];
+        }
+        if ([MainAppState.shared.tabViewController.presentedViewControllers containsObject:_accViewController]) return;
+        [MainAppState.shared.tabViewController presentViewControllerAsSheet:_accViewController];
+    });
     
     ///
     /// Old overlay method for MMF 2.0
@@ -156,10 +159,13 @@ AuthorizeAccessibilityView *_accViewController;
     /// New sheet method
     ///
     
-    if (_accViewController == nil) return;
-    if (![MainAppState.shared.tabViewController.presentedViewControllers containsObject:_accViewController]) return;
-    
-    [MainAppState.shared.tabViewController dismissViewController:_accViewController];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        
+        if (_accViewController == nil) return;
+        if (![MainAppState.shared.tabViewController.presentedViewControllers containsObject:_accViewController]) return;
+        
+        [MainAppState.shared.tabViewController dismissViewController:_accViewController];
+    });
     
     ///
     /// Old overlay method for MMF 2.0
