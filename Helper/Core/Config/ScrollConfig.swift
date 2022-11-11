@@ -178,7 +178,7 @@ import CocoaLumberjackSwift
     /// User setting
     
     private lazy var u_animationCurvePreset = {
-        return c("inertia") as! Bool ? kMFScrollAnimationCurvePresetHighInertia : kMFScrollAnimationCurvePresetNoInertia /*kMFScrollAnimationCurvePresetLowInertia*/
+        return c("inertia") as! Bool ? kMFScrollAnimationCurvePresetHighInertia : kMFScrollAnimationCurvePresetLowInertia /*kMFScrollAnimationCurvePresetLowInertia*/
     }()
     
     @objc var animationCurvePreset: MFScrollAnimationCurvePreset {
