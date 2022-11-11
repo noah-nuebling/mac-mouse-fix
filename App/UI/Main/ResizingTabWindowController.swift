@@ -49,23 +49,8 @@ class ResizingTabWindowController: NSWindowController, NSWindowDelegate {
         if accessibilityEnabled {
             AuthorizeAccessibilityView.remove()
         } else {
-//            handleAccessibilityDisabledMessage()
             AuthorizeAccessibilityView.add()
         }
-    }
-    
-//    private var removeAccessibilityViewTimer: Timer? = nil
-    @objc public func handleAccessibilityDisabledMessage() {
-        /// Unused now - Remove
-        
-        AuthorizeAccessibilityView.add()
-        
-        /// Dismiss accessibility view automatically if the stream of accessibilityDisabled messages is interrupted
-//        removeAccessibilityViewTimer?.invalidate()
-//        removeAccessibilityViewTimer = nil
-//        removeAccessibilityViewTimer = Timer.scheduledTimer(withTimeInterval: 0.6, repeats: false) { timer in
-//            AuthorizeAccessibilityView.remove()
-//        }
     }
 
 }

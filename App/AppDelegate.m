@@ -18,7 +18,6 @@
 #import "ToastNotificationController.h"
 #import "NSView+Additions.h"
 #import "AppTranslocationManager.h"
-#import "MessagePort_App.h"
 #import <Sparkle/Sparkle.h>
 #import "SparkleUpdaterController.h"
 #import "NSAttributedString+Additions.h"

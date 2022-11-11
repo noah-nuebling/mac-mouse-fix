@@ -11,7 +11,6 @@
 
 #import <AppKit/AppKit.h>
 #import "MFMessagePort.h"
-#import "MessagePort_Helper.h"
 #import "DeviceManager.h"
 #import "Config.h"
 #import "Scroll.h"
@@ -29,8 +28,6 @@
 #import <signal.h>
 
 @implementation AccessibilityCheck
-
-NSTimer *_openMainAppTimer;
 
 /// Handle Unix signals
 
@@ -169,6 +166,7 @@ CGEventRef _Nullable testCallback(CGEventTapProxy proxy, CGEventType type, CGEve
     /// Do the accessibility check
     ///
     Boolean accessibilityEnabled = [self checkAccessibilityAndUpdateSystemSettings];
+    
     if (!accessibilityEnabled) {
         
         DDLogInfo(@"Accessibility Access Disabled");
@@ -178,7 +176,6 @@ CGEventRef _Nullable testCallback(CGEventTapProxy proxy, CGEventType type, CGEve
 
         [HelperServices launchHelperInstanceWithMessage:@"forceUpdateAccessibilitySettings"];
 
-        
         /// Notify main app
         NSDictionary *payload = @{
             @"bundleVersion": @(Locator.bundleVersion),
@@ -186,32 +183,23 @@ CGEventRef _Nullable testCallback(CGEventTapProxy proxy, CGEventType type, CGEve
         };
         [MFMessagePort sendMessage:@"helperEnabledWithNoAccessibility" withPayload:payload expectingReply:NO];
         
-        /// Check accessibility every 0.5s. Once the accessibility is enabled, restart the helper and notify the mainApp.
-        _openMainAppTimer = [NSTimer scheduledTimerWithTimeInterval:0.5 repeats:YES block:^(NSTimer * _Nonnull timer) {
+        /// Check accessibility every 0.5s
+        ///     Not storing the timer in a variable because we don't have to invalidate / release it since the helper will restart anyways
+        [NSTimer scheduledTimerWithTimeInterval:0.5 repeats:YES block:^(NSTimer * _Nonnull timer) {
             
             BOOL hasAccessibility = [self checkAccessibilityAndUpdateSystemSettings];
             
-            
-            if (!hasAccessibility) {
-//                [MFMessagePort sendMessage:@"noAccessibility" withPayload:payload expectingReply:NO];
-            } else {
-                
-                /// Open mainApp
-                ///     Edit: What? Why are we calling `[self openMainAppAndRestart]` again here? Doesn't this cause an infinite loop? We'll change this to call `[HelperUtility openMainApp]`.
-                ///     Edit2: Disabling this now. mainApp will put itself into foreground after receiving "helperEnabled" message. Also, this will open the wrong mainApp if this helper instance is strange to the mainApp that it's sending messages to. (Maybe we should catch connection between strange mainApp and helper earlier?)
-        //        [HelperUtility openMainApp];
-                
+            if (hasAccessibility) {
                 /// Restart helper
                 ///     Use a 0.5s delay so the accessibilitySheet can first animate out before the mainApp's UI activates. Without the delay there is slight visual jank.
-                [HelperServices restartHelperWithDelay:0.5];
-                
-                /// Testing
-        //        [self load]; /// To make button capture notification work
-        //        [_openMainAppTimer invalidate];
+                ///     Edit: We refactored the accessibility stuff in 144296c225dbdd9f49598823fb73ad503b2b2e2d and now the delay is not necessary anymore. Maybe has to do with us removing the automatic removing of the accessibilitySheet on a timer
+                [HelperServices restartHelperWithDelay:0.0];
             }
         }];
             
     } else {
+        
+        /// Accessibility is enabled -> Start normally!
         
         ///
         /// Log
@@ -237,7 +225,9 @@ CGEventRef _Nullable testCallback(CGEventTapProxy proxy, CGEventType type, CGEve
         [MenuBarItem load_Manual];
         
         /// Send 'started' message to mainApp
-        ///     Note: We could improve responsivity of the enableToggle in mainApp by sending the message before doing all the initialization. But only slightly.
+        /// Notes:
+        /// - We could improve responsivity of the enableToggle in mainApp by sending the message before doing all the initialization. But only slightly.
+        /// - Why are we doing the license init after this? Little weird
         
         NSDictionary *payload = @{
             @"bundleVersion": @(Locator.bundleVersion),
@@ -311,28 +301,5 @@ CGEventRef _Nullable testCallback(CGEventTapProxy proxy, CGEventType type, CGEve
     CFRelease(options);
     return isTrusted;
 }
-
-
-/// Timer Callback
-
-//+ (void)openMainAppAndRestart {
-//
-//    if ([self checkAccessibilityAndUpdateSystemSettings]) {
-//
-//        /// Open mainApp
-//        ///     Edit: What? Why are we calling `[self openMainAppAndRestart]` again here? Doesn't this cause an infinite loop? We'll change this to call `[HelperUtility openMainApp]`.
-//        ///     Edit2: Disabling this now. mainApp will put itself into foreground after receiving "helperEnabled" message. Also, this will open the wrong mainApp if this helper instance is strange to the mainApp that it's sending messages to. (Maybe we should catch connection between strange mainApp and helper earlier?)
-////        [HelperUtility openMainApp];
-//
-//        /// Restart helper
-//        ///     Use a 0.5s delay so the accessibilitySheet can first animate out before the mainApp's UI activates. Without the delay there is slight visual jank.
-//        [HelperServices restartHelperWithDelay:0.5];
-//
-//        /// Testing
-////        [self load]; /// To make button capture notification work
-////        [_openMainAppTimer invalidate];
-//    }
-//}
-
 
 @end

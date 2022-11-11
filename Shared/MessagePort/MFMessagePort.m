@@ -59,14 +59,12 @@ static CFDataRef _Nullable didReceiveMessage(CFMessagePortRef port, SInt32 messa
         [KeyCaptureView handleKeyCaptureModeFeedbackWithPayload:(NSDictionary *)payload isSystemDefinedEvent:NO];
     } else if ([message isEqualToString:@"keyCaptureModeFeedbackWithSystemEvent"]) {
         [KeyCaptureView handleKeyCaptureModeFeedbackWithPayload:(NSDictionary *)payload isSystemDefinedEvent:YES];
-    } else if ([message isEqualToString:@"helperEnabledWithNoAccessibility"]
-               /*|| [message isEqualToString:@"noAccessibility"]*/) {
+    } else if ([message isEqualToString:@"helperEnabledWithNoAccessibility"]) {
         
         BOOL isStrange = false;
         if (@available(macOS 13, *)) {
             isStrange = [MessagePortUtility checkHelperStrangenessReactWithPayload:payload];
         }
-        
         if (!isStrange) {
             [AuthorizeAccessibilityView add];
         }
