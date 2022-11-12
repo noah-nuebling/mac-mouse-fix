@@ -904,6 +904,20 @@ static void sendOutputEvents(int64_t dx, int64_t dy, MFScrollOutputType outputTy
         CGEventSetIntegerValueField(event, kCGScrollWheelEventPointDeltaAxis2, dx);
         CGEventSetIntegerValueField(event, kCGScrollWheelEventFixedPtDeltaAxis2, fixedScrollDelta(pixelatedLines.x));
         
+        /// Log
+        
+        if (SharedUtility.runningPreRelease) {
+            
+            static double tsStart = 0;
+            if (animatorPhase == kMFAnimationCallbackPhaseStart) {
+                tsStart = CACurrentMediaTime();
+            }
+            double ts = CACurrentMediaTime();
+            double timeSinceStart = ts - tsStart;
+            
+            DDLogDebug(@"HNGG: Posting continuous scroll event: %@, momentumHint: %d, time: %d", scrollEventDescriptionWithOptions(event, NO, NO), momentumHint, (int)(timeSinceStart*1000));
+        }
+        
         /// Post event
         
         CGEventPost(kCGSessionEventTap, event);

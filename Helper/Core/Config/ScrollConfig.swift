@@ -267,6 +267,8 @@ import CocoaLumberjackSwift
 
             return MFScrollAnimationCurveParameters(baseCurve: ScrollConfig.linearCurve, baseMsPerStep: 140, dragExponent: 1.0, dragCoefficient: 30/*23*/, stopSpeed: 50, sendGestureScrolls: false, sendMomentumScrolls: false)
             
+//            return MFScrollAnimationCurveParameters(baseCurve: ScrollConfig.linearCurve, baseMsPerStep: 120, dragExponent: 1.0, dragCoefficient: 23/*23*/, stopSpeed: 50, sendGestureScrolls: false, sendMomentumScrolls: false)
+            
         case kMFScrollAnimationCurvePresetMediumInertia:
             
             return MFScrollAnimationCurveParameters(baseCurve: ScrollConfig.linearCurve, baseMsPerStep: 190, dragExponent: 1.0, dragCoefficient: 17, stopSpeed: 50, sendGestureScrolls: false, sendMomentumScrolls: false)

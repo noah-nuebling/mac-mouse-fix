@@ -513,7 +513,12 @@ import QuartzCore
             
             let timeSinceAnimationStart = frameTime - animationStartTime
             let minBaseCurveTime = ScrollConfig().consecutiveScrollTickIntervalMax
-            if timeSinceAnimationStart < minBaseCurveTime {
+            
+            /// DEBUG
+//            minBaseCurveTime = 0.0
+            
+            
+            if timeSinceAnimationStart < minBaseCurveTime{
                 
                 /// Make the first x ms of the animation always kMFMomentumHintGesture
                 ///     This is so that:
