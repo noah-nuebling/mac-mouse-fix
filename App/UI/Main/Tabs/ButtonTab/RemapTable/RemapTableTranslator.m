@@ -74,9 +74,9 @@ static NSArray *getScrollEffectsTable() {
         @{@"ui": NSLocalizedString(@"scroll-effect.4-pinch", @"First draft: Desktop & Launchpad") , @"tool": NSLocalizedString(@"scroll-effect.4-pinch.hint", @"First draft: Scroll up for Launchpad and down to show the Desktop\n \nWorks like Pinching with 4 fingers on an Apple Trackpad"), @"dict": @{
             kMFModifiedScrollDictKeyEffectModificationType: kMFModifiedScrollEffectModificationTypeFourFingerPinch
         }},
-        @{@"ui": NSLocalizedString(@"scroll-effect.spaces", @"First draft: Move Between Spaces"), @"tool": NSLocalizedString(@"scroll-effect.spaces.hint", @"First draft: Scroll up to move left a Space and down to move right a Space\n \nWorks like swiping horizontally with 3 fingers on an Apple Trackpad"), @"dict": @{
-            kMFModifiedScrollDictKeyEffectModificationType: kMFModifiedScrollEffectModificationTypeThreeFingerSwipeHorizontal
-        }},
+//        @{@"ui": NSLocalizedString(@"scroll-effect.spaces", @"First draft: Move Between Spaces"), @"tool": NSLocalizedString(@"scroll-effect.spaces.hint", @"First draft: Scroll up to move left a Space and down to move right a Space\n \nWorks like swiping horizontally with 3 fingers on an Apple Trackpad"), @"dict": @{
+//            kMFModifiedScrollDictKeyEffectModificationType: kMFModifiedScrollEffectModificationTypeThreeFingerSwipeHorizontal
+//        }},
         separatorEffectsTableEntry(),
         @{@"ui": NSLocalizedString(@"scroll-effect.zoom", @"First draft: Zoom In or Out"), @"tool": NSLocalizedString(@"scroll-effect.zoom.hint", @"First draft: Zoom in or out in Safari, Maps and other apps\n \nWorks like pinching to zoom on an Apple trackpad") , @"dict": @{
             kMFModifiedScrollDictKeyEffectModificationType: kMFModifiedScrollEffectModificationTypeZoom
@@ -84,9 +84,9 @@ static NSArray *getScrollEffectsTable() {
         @{@"ui": NSLocalizedString(@"scroll-effect.horizontal", @"First draft: Horizontal Scroll"), @"tool": NSLocalizedString(@"scroll-effect.horizontal.hint", @"First draft: Scroll left and right, navigate between pages in Safari, delete messages in Mail and more\n \nWorks like swiping horizontally with 2 fingers on an Apple Trackpad"), @"dict": @{
             kMFModifiedScrollDictKeyEffectModificationType: kMFModifiedScrollEffectModificationTypeHorizontalScroll
         }},
-        @{@"ui": NSLocalizedString(@"scroll-effect.rotate", @"First draft: Rotate"), @"hideable": @NO, @"tool": NSLocalizedString(@"scroll-effect.rotate.hint", @"First draft: Rotate content in Apple Maps and other apps\n \nWorks like twisting with 2 fingers on an Apple Trackpad"), @"dict": @{
-            kMFModifiedScrollDictKeyEffectModificationType: kMFModifiedScrollEffectModificationTypeRotate
-        }},
+//        @{@"ui": NSLocalizedString(@"scroll-effect.rotate", @"First draft: Rotate"), @"hideable": @NO, @"tool": NSLocalizedString(@"scroll-effect.rotate.hint", @"First draft: Rotate content in Apple Maps and other apps\n \nWorks like twisting with 2 fingers on an Apple Trackpad"), @"dict": @{
+//            kMFModifiedScrollDictKeyEffectModificationType: kMFModifiedScrollEffectModificationTypeRotate
+//        }},
         separatorEffectsTableEntry(),
         @{@"ui": NSLocalizedString(@"scroll-effect.swift", @"First draft: Swift Scroll"), @"tool": NSLocalizedString(@"scroll-effect.swift.hint", @"Scroll long distances with minimal effort"), @"dict": @{
             kMFModifiedScrollDictKeyInputModificationType: kMFModifiedScrollInputModificationTypeQuickScroll
@@ -156,32 +156,32 @@ static NSArray *getOneShotEffectsTable(NSDictionary *rowDict) {
                   kMFActionDictKeyGenericVariant: kMFNavigationSwipeVariantRight
         }},
         separatorEffectsTableEntry(),
-        @{@"ui": NSLocalizedString(@"effect.mission-control", @"First draft: Mission Control"), @"tool": NSLocalizedString(@"effect.mission-control.hint", @"First draft: Show Mission Control"), @"dict": @{
-                  kMFActionDictKeyType: kMFActionDictTypeSymbolicHotkey,
-                  kMFActionDictKeyGenericVariant: @(kMFSHMissionControl)
-        }},
-        @{@"ui": NSLocalizedString(@"effect.app-expose", @"First draft: Application Windows"), @"tool": NSLocalizedString(@"effect.app-expose.hint", @"First draft: Show all windows of the active app"), @"dict": @{
-                  kMFActionDictKeyType: kMFActionDictTypeSymbolicHotkey,
-                  kMFActionDictKeyGenericVariant: @(kMFSHAppExpose)
-        }},
+//        @{@"ui": NSLocalizedString(@"effect.mission-control", @"First draft: Mission Control"), @"tool": NSLocalizedString(@"effect.mission-control.hint", @"First draft: Show Mission Control"), @"dict": @{
+//                  kMFActionDictKeyType: kMFActionDictTypeSymbolicHotkey,
+//                  kMFActionDictKeyGenericVariant: @(kMFSHMissionControl)
+//        }},
+//        @{@"ui": NSLocalizedString(@"effect.app-expose", @"First draft: Application Windows"), @"tool": NSLocalizedString(@"effect.app-expose.hint", @"First draft: Show all windows of the active app"), @"dict": @{
+//                  kMFActionDictKeyType: kMFActionDictTypeSymbolicHotkey,
+//                  kMFActionDictKeyGenericVariant: @(kMFSHAppExpose)
+//        }},
         @{@"ui": NSLocalizedString(@"effect.desktop", @"First draft: Show Desktop"), @"tool": NSLocalizedString(@"effect.desktop.hint", @"First draft: Show the desktop"), @"dict": @{
                   kMFActionDictKeyType: kMFActionDictTypeSymbolicHotkey,
                   kMFActionDictKeyGenericVariant: @(kMFSHShowDesktop)
         }},
-        separatorEffectsTableEntry(),
+//        separatorEffectsTableEntry(),
         @{@"ui": NSLocalizedString(@"effect.launchpad", @"First draft: Launchpad"), @"tool": NSLocalizedString(@"effect.launchpad.hint", @"First draft: Open Launchpad"), @"dict": @{
                   kMFActionDictKeyType: kMFActionDictTypeSymbolicHotkey,
                   kMFActionDictKeyGenericVariant: @(kMFSHLaunchpad)
         }},
-        separatorEffectsTableEntry(),
-        @{@"ui": NSLocalizedString(@"effect.left-space", @"First draft: Move Left a Space"), @"tool": NSLocalizedString(@"effect.left-space.hint", @"First draft: Move one Space to the left"), @"dict": @{
-                  kMFActionDictKeyType: kMFActionDictTypeSymbolicHotkey,
-                  kMFActionDictKeyGenericVariant: @(kMFSHMoveLeftASpace)
-        }},
-        @{@"ui": NSLocalizedString(@"effect.right-space", @"First draft: Move Right a Space"), @"tool": NSLocalizedString(@"effect.right-space.hint", @"First draft: Move one Space to the right"), @"dict": @{
-                  kMFActionDictKeyType: kMFActionDictTypeSymbolicHotkey,
-                  kMFActionDictKeyGenericVariant: @(kMFSHMoveRightASpace)
-        }},
+//        separatorEffectsTableEntry(),
+//        @{@"ui": NSLocalizedString(@"effect.left-space", @"First draft: Move Left a Space"), @"tool": NSLocalizedString(@"effect.left-space.hint", @"First draft: Move one Space to the left"), @"dict": @{
+//                  kMFActionDictKeyType: kMFActionDictTypeSymbolicHotkey,
+//                  kMFActionDictKeyGenericVariant: @(kMFSHMoveLeftASpace)
+//        }},
+//        @{@"ui": NSLocalizedString(@"effect.right-space", @"First draft: Move Right a Space"), @"tool": NSLocalizedString(@"effect.right-space.hint", @"First draft: Move one Space to the right"), @"dict": @{
+//                  kMFActionDictKeyType: kMFActionDictTypeSymbolicHotkey,
+//                  kMFActionDictKeyGenericVariant: @(kMFSHMoveRightASpace)
+//        }},
         separatorEffectsTableEntry(),
         @{@"ui": NSLocalizedString(@"effect.record-shortcut", @"First draft: Keyboard Shortcut..."), @"tool": NSLocalizedString(@"effect.record-shortcut.hint", @"First draft: Type a keyboard shortcut, then use it from your mouse"), @"keyCaptureEntry": @YES},
     ].mutableCopy;
