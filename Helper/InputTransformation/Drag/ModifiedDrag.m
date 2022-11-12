@@ -148,17 +148,28 @@ int16_t _nOfSpaces = 1;
 
 static CGEventRef __nullable eventTapCallBack(CGEventTapProxy proxy, CGEventType type, CGEventRef  event, void * __nullable userInfo) {
     
-    // Re-enable on timeout (Not sure if this ever times out)
+    /// Re-enable on timeout (Not sure if this ever times out)
+    /// Should we also re-enable on kCGEventTapDisabledByUserInput?
     if (type == kCGEventTapDisabledByTimeout) {
         NSLog(@"ButtonInputReceiver eventTap timed out. Re-enabling.");
         CGEventTapEnable(_drag.eventTap, true);
     }
     
+    /// Handle
     int64_t dx = CGEventGetIntegerValueField(event, kCGMouseEventDeltaX);
     int64_t dy = CGEventGetIntegerValueField(event, kCGMouseEventDeltaY);
     [ModifiedDrag handleMouseInputWithDeltaX:dx deltaY:dy event:event];
     
-    return NULL; // Sending event or NULL here doesn't seem to make a difference. If you alter the event and send that it does have an effect though
+    
+    /// Return mouseMoved event
+    /// Notes:
+    /// - Sending NULL here almost works perfectly, but in screenRecordings it will make the cursor jump. That's expecially annoying for DisplayLink useres
+    /// - The cursor jumping also goes away when you set the eventTap location to kCGAnnotatedSessionEventTap. The other two locations don't work.
+    /// - Sending mouseMoved here will interfere with fakeDrag output. How will we solve that?
+    /// - Just changing the type on the original event is a little hacky but it should work
+    
+    CGEventSetType(event, kCGEventMouseMoved);
+    return event;
 }
 
 + (void)handleMouseInputWithDeltaX:(int64_t)deltaX deltaY:(int64_t)deltaY event:(CGEventRef)event {
