@@ -74,7 +74,13 @@
     NSArray *store = self.dataModel;
     self.dataModel = tempDataModel;
     [self.tableView reloadData];
-    [self.tableView displayIfNeeded]; /// Need to do this because reloadData is async
+    [self.tableView displayIfNeeded]; /// Force data to reload immediately
+    if (@available(macOS 10.14, *)) { } else {
+        /// Use layout to force data reload under 10.13
+        ///     For some reason, under 10.13, `displayIfNeeded` doesn't do anything
+        self.tableView.needsLayout = YES;
+        [self.tableView layoutSubtreeIfNeeded];
+    }
     self.dataModel = store;
 }
 
@@ -252,9 +258,22 @@
     
     NSScrollView * scrollView = self.scrollView;
     
+    /// Get corner radius
+    ///     The cornerRadius of the Action Table should be equal to cornerRadius of surrounding NSBox
+    ///     Ideally we would access the cornerradius of the NSBox directly, but I don't know how
+    
     CGFloat cr = 5.0;
-    /// ^ Should be equal to cornerRadius of surrounding NSBox
-    ///   Hardcoding this might lead to bad visuals on pre-BigSur macOS versions with lower corner radius, but idk how to access the NSBox's effective cornerRadius
+    
+    if (@available(macOS 11.0, *)) { } else {
+        cr = 4.0;
+    }
+    
+    /// Shrink Action Table pre-Mojave
+    ///     Otherwise it spills out of the surrounding NSBox. Not sure why
+    
+    if (@available(macOS 10.14, *)) { } else {
+        scrollView.frame = NSInsetRect(scrollView.frame, 2, 2);
+    }
     
     scrollView.borderType = NSNoBorder;
     scrollView.wantsLayer = YES;
@@ -489,7 +508,6 @@ static void updateBorderColor(RemapTableController *object) {
     }
     if (!buttonIsStillTriggerInDataModel) { /// Yes, we want to remove a group row, too
         [rowsToRemoveWithAnimation addIndex:rowToRemove-1];
-        
     }
     
     /// Do remove rows with animation
@@ -623,6 +641,12 @@ static void updateBorderColor(RemapTableController *object) {
         NSTableCellView *buttonGroupCell = [self.tableView makeViewWithIdentifier:@"buttonGroupCell" owner:self];
         NSTextField *groupTextField = (NSTextField *)buttonGroupCell.nextKeyView;
         groupTextField.stringValue = stringf(@"  %@", [UIStrings getButtonString:groupButtonNumber].firstCapitalized);
+        
+        if (@available(macOS 11.0, *)) { } else {
+            /// Fix groupRow text being too far left pre-Big Sur
+            NSRect f = groupTextField.frame;
+            groupTextField.frame = NSMakeRect(f.origin.x + 6.0, f.origin.y, f.size.width - 6.0, f.size.height);
+        }
         return buttonGroupCell;
         
     } else if ([tableColumn.identifier isEqualToString:@"trigger"]) {

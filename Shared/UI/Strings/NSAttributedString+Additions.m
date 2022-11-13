@@ -771,6 +771,8 @@ void assignAttributedStringKeepingBase(NSAttributedString *_Nonnull *_Nonnull as
     
     NSUInteger i = 0;
     while (true) {
+        if (i >= self.length) break;
+        
         NSRange range;
         NSDictionary<NSAttributedStringKey, id> *attributes = [self attributesAtIndex:i effectiveRange:&range];
         NSTextAttachment *attachment = attributes[NSAttachmentAttributeName];
@@ -784,9 +786,6 @@ void assignAttributedStringKeepingBase(NSAttributedString *_Nonnull *_Nonnull as
             [result appendString:substring];
         }
         i = NSMaxRange(range);
-        if (i >= self.length) {
-            break;
-        }
     }
     
     return result;
