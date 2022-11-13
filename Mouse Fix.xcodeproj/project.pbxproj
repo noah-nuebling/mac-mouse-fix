@@ -212,6 +212,7 @@
 		4FE40B96283A49DD00880BEF /* SharedUtilitySwift.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FE40B95283A49DD00880BEF /* SharedUtilitySwift.swift */; };
 		4FE40B97283A49DD00880BEF /* SharedUtilitySwift.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FE40B95283A49DD00880BEF /* SharedUtilitySwift.swift */; };
 		4FE6CBC428987E8B00B3E829 /* DynamicSystemAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FE6CBC328987E8A00B3E829 /* DynamicSystemAnimator.swift */; };
+		4FEA63CF2921510F00E464D6 /* NSImage+Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FEA63CD2921510E00E464D6 /* NSImage+Additions.m */; };
 		4FEB660F2793510300E6A111 /* CocoaLumberjack in Frameworks */ = {isa = PBXBuildFile; productRef = 4FEB660E2793510300E6A111 /* CocoaLumberjack */; };
 		4FEB66112793510800E6A111 /* CocoaLumberjackSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 4FEB66102793510800E6A111 /* CocoaLumberjackSwift */; };
 		4FEB66132793510C00E6A111 /* CocoaLumberjack in Frameworks */ = {isa = PBXBuildFile; productRef = 4FEB66122793510C00E6A111 /* CocoaLumberjack */; };
@@ -628,6 +629,8 @@
 		4FE40B95283A49DD00880BEF /* SharedUtilitySwift.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharedUtilitySwift.swift; sourceTree = "<group>"; };
 		4FE6CBC328987E8A00B3E829 /* DynamicSystemAnimator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DynamicSystemAnimator.swift; sourceTree = "<group>"; };
 		4FE7A0DE28677AD600C33B37 /* Gain Curve Math.tex */ = {isa = PBXFileReference; lastKnownFileType = text; path = "Gain Curve Math.tex"; sourceTree = "<group>"; };
+		4FEA63CD2921510E00E464D6 /* NSImage+Additions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSImage+Additions.m"; sourceTree = "<group>"; };
+		4FEA63CE2921510E00E464D6 /* NSImage+Additions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSImage+Additions.h"; sourceTree = "<group>"; };
 		4FEB6617279376C200E6A111 /* SymbolicHotKeys Reference.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = "SymbolicHotKeys Reference.txt"; sourceTree = "<group>"; };
 		4FEB6618279376C200E6A111 /* notes.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = notes.md; sourceTree = "<group>"; };
 		4FEC9666278BBDC600548604 /* NSColor+Additions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSColor+Additions.h"; sourceTree = "<group>"; };
@@ -1684,6 +1687,8 @@
 			children = (
 				4FF665E925F2C92700689B77 /* Utility_App.h */,
 				4FF665E825F2C92700689B77 /* Utility_App.m */,
+				4FEA63CE2921510E00E464D6 /* NSImage+Additions.h */,
+				4FEA63CD2921510E00E464D6 /* NSImage+Additions.m */,
 			);
 			path = Utility;
 			sourceTree = "<group>";
@@ -2342,6 +2347,7 @@
 				4F909D2528A0C3D2009349A2 /* TabViewController.swift in Sources */,
 				4F1B832D26081A5500AEAF37 /* CaptureNotificationCreator.m in Sources */,
 				4FC8A7D928AD3FC7007DB982 /* RemapTableCellView.swift in Sources */,
+				4FEA63CF2921510F00E464D6 /* NSImage+Additions.m in Sources */,
 				4F909D3628A0C3D2009349A2 /* Collapse.swift in Sources */,
 				4F909D4128A0C412009349A2 /* SwiftUITest.swift in Sources */,
 				4F909D2C28A0C3D2009349A2 /* NSView+Extensions.swift in Sources */,

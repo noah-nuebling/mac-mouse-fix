@@ -26,7 +26,7 @@ NS_ASSUME_NONNULL_BEGIN
 + (NSString *)getKeyboardModifierStringToolTip:(CGEventFlags)flags;
 + (NSAttributedString *)getStringForKeyCode:(CGKeyCode)keyCode flags:(CGEventFlags)flags font:(NSFont *)font;
 + (NSAttributedString *)getStringForSystemDefinedEvent:(MFSystemDefinedEventType)type flags:(CGEventFlags)flags font:(NSFont *)font;
-+ (NSAttributedString *)stringWithSymbol:(NSString *)symbolName fallback:(NSString *)fallbackString;
+//+ (NSAttributedString *)stringWithSymbol:(NSString *)symbolName fallback:(NSString *)fallbackString;
 + (NSString *)naturalLanguageListFromStringArray:(NSArray<NSString *> *)stringArray;
 + (void)centerImageAttachment:(NSTextAttachment *)attachment image:(NSImage *)image font:(NSFont *)font;
 
