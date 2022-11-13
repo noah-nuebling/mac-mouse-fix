@@ -259,6 +259,7 @@ static CGEventRef __nullable eventTapCallBack(CGEventTapProxy proxy, CGEventType
     /// - The cursor jumping also goes away when you set the eventTap location to kCGAnnotatedSessionEventTap. The other two locations don't work.
     /// - Sending mouseMoved here would interfere with fakeDrag output. How will we solve that?
     /// - Just changing the type on the original event is a little hacky but it should work
+    /// - Sending these mouseMoved events doesn't interfere with freezing the pointer. Not sure why.
     
     CGEventSetType(event, kCGEventMouseMoved);
     return event;
