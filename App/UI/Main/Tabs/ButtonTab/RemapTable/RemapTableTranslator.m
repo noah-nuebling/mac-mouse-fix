@@ -299,14 +299,14 @@ static NSAttributedString *getShortcutString(NSDictionary *effectDict, BOOL isKe
         CGKeyCode keyCode = ((NSNumber *)effectDict[kMFActionDictKeyKeyboardShortcutVariantKeycode]).unsignedShortValue;
         CGEventFlags flags = ((NSNumber *)effectDict[kMFActionDictKeyKeyboardShortcutVariantModifierFlags]).unsignedLongValue;
         
-        return [UIStrings getStringForKeyCode:keyCode flags:flags];
+        return [UIStrings getStringForKeyCode:keyCode flags:flags font:[NSFont systemFontOfSize:NSFont.systemFontSize]];
         
     } else { /// Is systemEventShortcut
         
         MFSystemDefinedEventType type = ((NSNumber *)effectDict[kMFActionDictKeySystemDefinedEventVariantType]).unsignedIntValue;
         CGEventFlags flags = ((NSNumber *)effectDict[kMFActionDictKeySystemDefinedEventVariantModifierFlags]).unsignedLongValue;
         
-        return [UIStrings getStringForSystemDefinedEvent:type flags:flags];
+        return [UIStrings getStringForSystemDefinedEvent:type flags:flags font:[NSFont systemFontOfSize:NSFont.systemFontSize]];
     }
 }
 
