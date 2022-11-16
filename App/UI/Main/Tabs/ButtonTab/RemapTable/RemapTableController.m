@@ -643,9 +643,22 @@ static void updateBorderColor(RemapTableController *object) {
         groupTextField.stringValue = stringf(@"  %@", [UIStrings getButtonString:groupButtonNumber].firstCapitalized);
         
         if (@available(macOS 11.0, *)) { } else {
+            
             /// Fix groupRow text being too far left pre-Big Sur
-            NSRect f = groupTextField.frame;
-            groupTextField.frame = NSMakeRect(f.origin.x + 6.0, f.origin.y, f.size.width - 6.0, f.size.height);
+            
+            /// Old MMF 2 non-autolalyout fix
+//            NSRect f = groupTextField.frame;
+//            groupTextField.frame = NSMakeRect(f.origin.x + 6.0, f.origin.y, f.size.width - 6.0, f.size.height);
+            
+            /// New MMF 3 autolayout fix
+            ///     It would probably be smarter to create and IBOutlet to the leading constraint instead of searching for it like this
+            for (NSLayoutConstraint *c in groupTextField.constraints) {
+                if (c.firstAttribute == NSLayoutAttributeLeading || c.secondAttribute == NSLayoutAttributeLeading) {
+                    c.constant = 0; /// This is set to -6 in IB
+                    break;
+                }
+            }
+            
         }
         return buttonGroupCell;
         

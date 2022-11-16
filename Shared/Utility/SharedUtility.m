@@ -295,34 +295,86 @@ static void iteratePropertiesOn(id obj, void(^callback)(objc_property_t property
 
 #pragma mark - Use command-line tools
 
-/// This returns the output of the CLT, in contrast to the other `launchCLT` function further down
-+ (NSString *)launchCLT:(NSURL *)executableURL withArguments:(NSArray<NSString *> *)arguments error:(NSError ** _Nullable)error {
++ (NSString *)launchCLT:(NSURL *)executableURL withArguments:(NSArray<NSString *> *)arguments error:(NSError *_Nullable * _Nullable)errorPtr {
     
-    NSPipe * launchctlOutput = [NSPipe pipe];
-        
+    /// In contrast to the other launchCTL method below, this waits for the CLTs exit and then returns the output of the CLT as well as an error
+    /// TODO: Make this take an executablePath instead of an executableURL, because that makes it much easier to use with our constants like kMFLaunchctlPath
+    
+    
+    /// Declare error if none is passed in
+    ///     So we can still retrieve errors for internal logic and debug messages. Not sure about the __autoreleasing stuff.
+    NSError *__autoreleasing localError;
+    if (errorPtr == nil) {
+        errorPtr = &localError;
+    }
+    
+    /// Init pipes
+    NSPipe *pipe = [NSPipe pipe];
+    NSPipe *errorPipe = [NSPipe pipe];
+    
+    /// Init task
     NSTask *task = [[NSTask alloc] init];
     [task setExecutableURL: executableURL.absoluteURL];
     [task setArguments: arguments];
-    [task setStandardOutput: launchctlOutput];
+    [task setStandardOutput:pipe];
+    [task setStandardError:errorPipe];
     
-    [task launchAndReturnError:error];
+    /// Launch task and wait
+    [task launchAndReturnError:errorPtr];
+    [task waitUntilExit];
     
-    /// Get output
+    /// Get Result
     
-    NSFileHandle *output_fileHandle = [launchctlOutput fileHandleForReading];
-    NSData *output_data = [output_fileHandle readDataToEndOfFile];
-    NSString *output_string = [[NSString alloc] initWithData:output_data encoding:NSUTF8StringEncoding];
+    NSString *result;
     
-    if (output_string == nil) {
-        output_string = @"";
+    if (*errorPtr != nil) {
+        result = @"";
+    } else {
+        
+        /// Get stdout
+        NSFileHandle *output_fileHandle = [pipe fileHandleForReading];
+        NSData *output_data = [output_fileHandle readDataToEndOfFile];
+        NSString *output_string = [[NSString alloc] initWithData:output_data encoding:NSUTF8StringEncoding];
+        
+        /// Get stderr
+        NSFileHandle *error_fileHandle = [errorPipe fileHandleForReading];
+        NSData *error_data = [error_fileHandle readDataToEndOfFile];
+        NSString *error_string = [[NSString alloc] initWithData:error_data encoding:NSUTF8StringEncoding];
+        
+        /// Process stdout
+        if (output_string != nil) {
+            result = output_string;
+        } else {
+            result = @"";
+        }
+        /// Process stderr
+        if (error_string != nil && ![error_string isEqual:@""]) {
+            *errorPtr = [NSError errorWithDomain:@"MFStderrDomain" code:0 userInfo:@{
+                @"stderr": error_string,
+            }];
+        }
     }
     
-    return output_string;
+    /// Debug
+    if (SharedUtility.runningPreRelease) {
+        NSString *errorDesc = @"";
+        if (errorPtr != nil && *errorPtr != nil) {
+            errorDesc = (*errorPtr).debugDescription;
+        }
+        DDLogDebug(@"Called command line tool at %@ with args: %@ - result: %@, error: %@", executableURL, arguments, result, errorDesc);
+    }
+    
+    /// Return
+    return result;
 }
 
 + (void)launchCLT:(NSURL *)commandLineTool
          withArgs:(NSArray <NSString *> *)args {
         
+    /// TODO: Think about when / why we're using this instead of the other launchCTL method. Should we really just ignore errors?
+    
+    DDLogDebug(@"Calling command line tool at %@ with args: %@ using async API", commandLineTool, args);
+    
     [NSTask launchedTaskWithExecutableURL:commandLineTool arguments:args error:nil terminationHandler:nil];
 }
 

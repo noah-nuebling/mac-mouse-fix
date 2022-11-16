@@ -53,8 +53,14 @@ class TabViewController: NSTabViewController {
         
         guard let tb = window?.toolbar else { return }
         let tbv = SharedUtility.getPrivateValue(of: tb, forName: "_toolbarView")
-        let lvs = SharedUtility.getPrivateValue(of: tbv, forName: "_allItemViewers") as? [NSView]
-        /// ^ Might be better to use`_layoutViews` vs `_allItemViewers` here
+        let lvs: [NSView]?
+        if #available(macOS 11.0, *) {
+            lvs = SharedUtility.getPrivateValue(of: tbv, forName: "_allItemViewers") as? [NSView]
+            /// ^ Might be better to use`_layoutViews` vs `_allItemViewers` here
+        } else {
+            lvs = SharedUtility.getPrivateValue(of: tbv, forName: "_toolbarOrderedItemViewers") as? [NSView]
+            /// ^ Might be better to use `_layoutOrderedItemViewers`vs `_toolbarOrderedItemViewers  here
+        }
         guard let lvs = lvs else { return }
         
         for v in lvs {
@@ -84,7 +90,17 @@ class TabViewController: NSTabViewController {
         
         guard let tb = window?.toolbar else { return }
         let tbv = SharedUtility.getPrivateValue(of: tb, forName: "_toolbarView")
-        let lvs = SharedUtility.getPrivateValue(of: tbv, forName: "_layoutViews") as? NSMutableArray
+        
+        let lvs: NSMutableArray?
+        
+        if #available(macOS 11.0, *) {
+            lvs = SharedUtility.getPrivateValue(of: tbv, forName: "_layoutViews") as? NSMutableArray
+        } else {
+            /// Note: Removing from `_layoutOrderedItemViewers` doesn't seem to do anything. But I feel like we might still want to remove from both `_toolbarOrderedItemViewers` and `_toolbarOrderedItemViewers` so the overall state is for sure valid, cause I don't get what the role of each of the two is.
+            lvs = SharedUtility.getPrivateValue(of: tbv, forName: "_toolbarOrderedItemViewers") as? NSMutableArray
+            
+        }
+        
         guard let lvs = lvs else { return }
         
         for v in lvs {
