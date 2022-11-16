@@ -13,7 +13,6 @@
 #import "CGSHotKeys.h"
 #import "SharedUtility.h"
 #import "NSAttributedString+Additions.h"
-#import "NSImage+Additions.h"
 #import "Symbols.h"
 
 @implementation UIStrings

@@ -29,6 +29,7 @@
 #import "Mac_Mouse_Fix-Swift.h"
 #import "NSColor+Additions.h"
 #import "MFSegmentedControl.h"
+#import "Mac_Mouse_Fix-Swift.h"
 
 @interface RemapTableController ()
 @property NSTableView *tableView;
@@ -652,14 +653,15 @@ static void updateBorderColor(RemapTableController *object) {
             
             /// New MMF 3 autolayout fix
             ///     It would probably be smarter to create and IBOutlet to the leading constraint instead of searching for it like this
-            for (NSLayoutConstraint *c in groupTextField.constraints) {
+            
+            for (NSLayoutConstraint *c in groupTextField.superview.constraints) {
                 if (c.firstAttribute == NSLayoutAttributeLeading || c.secondAttribute == NSLayoutAttributeLeading) {
-                    c.constant = 0; /// This is set to -6 in IB
+                    c.constant += 8; /// This is set to -6 in IB I think
                     break;
                 }
             }
-            
         }
+        
         return buttonGroupCell;
         
     } else if ([tableColumn.identifier isEqualToString:@"trigger"]) {
