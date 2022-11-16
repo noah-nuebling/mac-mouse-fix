@@ -778,8 +778,8 @@ static void removeServiceWithIdentifier(NSString *identifier) {
         NSString *launchctlOutput = [HelperServices serviceInfoWithIdentifier:identifier];
         
         if ([launchctlOutput isEqual:@""]) break;
-        
         if (i >= maxWaitCycles) break;
+        
         i += 1;
     }
 }

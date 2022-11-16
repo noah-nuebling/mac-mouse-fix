@@ -148,6 +148,13 @@ class TabViewController: NSTabViewController {
     
     override func viewDidAppear() {
         
+        /// Hide tabBar icons pre-Big Sur
+        ///  Because the scaling and resolution of the fallback images is terrible and I don't know how to fix. (Haven't spent too much time but I don't see an obvious way)
+        
+        if #available(macOS 11.0, *) { } else {
+            self.window?.toolbar?.displayMode = .labelOnly
+        }
+        
         ///
         /// Change to general tab, when app is disabled
         ///
