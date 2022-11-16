@@ -566,17 +566,39 @@ static NSError *makeWritable(NSString *itemPath) {
     
 }
 
-/// Remove currently running helper from launchd
-/// From my testing this does the same as the `bootout` command, but it doesn't rely on a valid launchd.plist file to exist in the library, so it should be more robust.
 + (void)removeHelperFromLaunchd {
     
-    NSLog(@"Removing Helper from launchd");
+    /// Remove service from launchd
+    /// Notes:
+    /// - From my testing this does the same as the `bootout` command, but it doesn't rely on a valid launchd.plist file to exist in the library, so it should be more robust.
+    /// - The removed service will be quit immediately but will be restarted on the next boot. Pre-SMAppService you can prevent start on next boot by deleting the launchd.plist file. Post-SMAppService you need to unregister the service. Not sure if there are other ways.
+    
+    NSString *identifier = kMFLaunchdHelperIdentifier;
+    
+    NSLog(@"Removing service %@ from launchd", identifier);
     
     NSURL *launchctlURL = [NSURL fileURLWithPath:kMFLaunchctlPath];
     NSError *err;
-    [SharedUtility launchCLT:launchctlURL withArguments:@[@"remove", kMFLaunchdHelperIdentifier] error:&err];
+    [SharedUtility launchCLT:launchctlURL withArguments:@[@"remove", identifier] error:&err];
     if (err != nil) {
-        NSLog(@"Error removing Helper from launchd: %@", err);
+        NSLog(@"Error removing service %@ from launchd: %@", identifier, err);
+    }
+    
+    /// Wait until service is actually removed
+    /// Notes:
+    /// - Otherwise enabling while old helper is still enabled won't work under Mojave
+    /// - TODO: I copied this over from MMF 3 but was hacky since MMF 2 is missing some previous improvements made to HelperServices in MMF 3. That's bad, we shouldn't have let HelperServices diverge like that between MMF 2 and 3! We should unify them again.
+    
+    int maxWaitCycles = 25;
+    int i = 0;
+    while (true) {
+        
+        NSString *launchctlOutput = [HelperServices helperInfoFromLaunchd];
+        
+        if ([launchctlOutput isEqual:@""]) break;
+        if (i >= maxWaitCycles) break;
+        
+        i += 1;
     }
 }
 
