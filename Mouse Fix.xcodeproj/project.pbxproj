@@ -71,6 +71,8 @@
 		4F85C05128BBDBDC00E96E9C /* NSImageView+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F85C04F28BBDBDC00E96E9C /* NSImageView+Extensions.swift */; };
 		4F85C05428BBE6FA00E96E9C /* TrialSectionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F85C05328BBE6FA00E96E9C /* TrialSectionManager.swift */; };
 		4F85C05528BBE6FA00E96E9C /* TrialSectionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F85C05328BBE6FA00E96E9C /* TrialSectionManager.swift */; };
+		4F8A44522925311B00361EFF /* Symbols.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F8A44512925311B00361EFF /* Symbols.m */; };
+		4F8A44532925311B00361EFF /* Symbols.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F8A44512925311B00361EFF /* Symbols.m */; };
 		4F8A8DAD287EEF6200786BCC /* IOHIDAccelerationTableBridge.mm in Sources */ = {isa = PBXBuildFile; fileRef = 4F8A8DAC287EEF6200786BCC /* IOHIDAccelerationTableBridge.mm */; };
 		4F8A8DBD287F203D00786BCC /* IOHIDAccelerationTable.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4F8A8DBC287F203D00786BCC /* IOHIDAccelerationTable.cpp */; };
 		4F8A8DBF287F7BBA00786BCC /* NaturalAccelerationCurve.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F8A8DBE287F7BBA00786BCC /* NaturalAccelerationCurve.swift */; };
@@ -458,6 +460,8 @@
 		4F854D7D2789266A00B46E9D /* SFSymbols.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = SFSymbols.xcassets; sourceTree = "<group>"; };
 		4F85C04F28BBDBDC00E96E9C /* NSImageView+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSImageView+Extensions.swift"; sourceTree = "<group>"; };
 		4F85C05328BBE6FA00E96E9C /* TrialSectionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrialSectionManager.swift; sourceTree = "<group>"; };
+		4F8A44502925311B00361EFF /* Symbols.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Symbols.h; sourceTree = "<group>"; };
+		4F8A44512925311B00361EFF /* Symbols.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Symbols.m; sourceTree = "<group>"; };
 		4F8A8DAC287EEF6200786BCC /* IOHIDAccelerationTableBridge.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = IOHIDAccelerationTableBridge.mm; sourceTree = "<group>"; };
 		4F8A8DB0287EEF9B00786BCC /* IOHIDAccelerationTableBridge.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = IOHIDAccelerationTableBridge.hpp; sourceTree = "<group>"; };
 		4F8A8DBA287EFB3400786BCC /* IOHIDAccelerationTable.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = IOHIDAccelerationTable.hpp; sourceTree = "<group>"; };
@@ -841,6 +845,8 @@
 				4F12951F28D2D5E1009A49AB /* NSTextField+Extentions.swift */,
 				4F909D0928A0C3D2009349A2 /* UIAnimations */,
 				4FFA4E3928B79D8D0062A1FE /* Strings */,
+				4F8A44502925311B00361EFF /* Symbols.h */,
+				4F8A44512925311B00361EFF /* Symbols.m */,
 			);
 			path = UI;
 			sourceTree = "<group>";
@@ -2411,6 +2417,7 @@
 				4FC8A7CD28AAF1BC007DB982 /* MarkdownParser.swift in Sources */,
 				4F09284528B8E82B00BDC2FF /* LicenseSheetController.swift in Sources */,
 				4F909D3E28A0C3D2009349A2 /* SensitivityDisplay.swift in Sources */,
+				4F8A44522925311B00361EFF /* Symbols.m in Sources */,
 				4F909D4528A0C4C2009349A2 /* NSArray+Extensions.swift in Sources */,
 				4FA8A30A28A9508C001E740F /* ButtonOptionsViewController.swift in Sources */,
 				4F85C05028BBDBDC00E96E9C /* NSImageView+Extensions.swift in Sources */,
@@ -2545,6 +2552,7 @@
 				4F3A40CB266C44D100436821 /* DisplayLink.m in Sources */,
 				4FF6669925F2C93A00689B77 /* VectorSubPixelator.m in Sources */,
 				4FDE75AA28B269AE00662314 /* Randomizer.swift in Sources */,
+				4F8A44532925311B00361EFF /* Symbols.m in Sources */,
 				4FFA4E3B28B79D980062A1FE /* String+Extensions.swift in Sources */,
 				4FF0BD4B266A8B7E003935EA /* Bezier.swift in Sources */,
 				4FA13FC228B3A2D3005C68FC /* TrialNotificationWindow.swift in Sources */,

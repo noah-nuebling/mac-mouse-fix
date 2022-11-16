@@ -14,6 +14,7 @@
 #import "SharedUtility.h"
 #import "NSAttributedString+Additions.h"
 #import "NSImage+Additions.h"
+#import "Symbols.h"
 
 @implementation UIStrings
 
@@ -178,7 +179,7 @@
     }
     
     /// Get symbol and attach it to keyStr
-    NSAttributedString *keyStr = stringWithSymbol(symbolName, stringFallback, font);
+    NSAttributedString *keyStr =  [Symbols keyStringWithSymbol:symbolName fallbackString:stringFallback font:font];
     NSString *flagsStr = [UIStrings getKeyboardModifierString:flags];
     return symbolStringWithModifierPrefix(flagsStr, keyStr);
 }
@@ -281,7 +282,7 @@ static CGSSymbolicHotKey _highestSymbolicHotKeyInCache = 0;
             }
             
             /// Get symbol and attach it to keyStr
-            keyStr = stringWithSymbol(symbolName, stringFallback, font);
+            keyStr =  [Symbols keyStringWithSymbol:symbolName fallbackString:stringFallback font:font];
             
             /// Validate
             
@@ -312,99 +313,103 @@ static NSMutableAttributedString *symbolStringWithModifierPrefix(NSString *flags
     
     return result;
 }
-static NSAttributedString *stringWithSymbol(NSString *symbolName, NSString *fallbackString, NSFont *font) {
 
-    /// Image
-    /// Try to get SFSymbol first, fall back to bundled image
-    /// Why aren't we using [NSAttributedString stringWithSymbol:hPadding:vOffset:fallback:] anymore?
-    
-    NSImage *sfSymbol = nil;
-    if (@available(macOS 11.0, *)) {
-        sfSymbol = [NSImage imageWithSystemSymbolName:symbolName accessibilityDescription:@""];
-    }
-    BOOL useBundledImage = sfSymbol == nil; // arc4random_uniform(2) == 0; // YES; //sfSymbol == nil;
-    
-    NSImage *symbol = nil;
-    if (useBundledImage) { /// Fallback to bundled image
-        symbol = [NSImage imageNamed:symbolName];
-    } else {
-        symbol = sfSymbol;
-    }
-    
-    /// Early return
-    ///     If no symbol is found anywhere, just return the fallback string.
-    if (symbol == nil) {
-        return [[NSAttributedString alloc] initWithString:fallbackString];
-    }
-    
-    /// Fix fallback tint
-    if (useBundledImage) {
-        symbol = [symbol coolTintedImage:symbol color:NSColor.textColor];
-    }
-    
-    /// Store fallback
-    ///     This is read in `[NSAttributedString coolString]`. Maybe elsewhere
-    ///     Storing in `accessibilityDescription` is kind of hacky
-    symbol.accessibilityDescription = fallbackString;
-    
-    /// Image ->  textAattachment
-    NSTextAttachment *symbolAttachment = [[NSTextAttachment alloc] init];
-    symbolAttachment.image = symbol;
 
-    /// Fix fallback alignment
-    
-    if (useBundledImage) {
-        
-        /// Fix alignmentRect centering
-        ///     - I don't think this makes any sense
-        ///     - The alignmentRect seems to be ignored when rendering non-SFSymbol images (Maybe it's also ignored for SFSymbol images - haven't tested much)
-        ///     - So we try to offset the image such that the alignment rect center is preserved. I don't think this makes sense since when we render non-sfsymbol images they don't even have an alignmentRect since they are just loaded from pure images. Also the SFSymbols alignment rects ARE always centered in the image from what I've seen
-        ///     -> TODO: Remove
-        
-        double alignmentOffsetX = 0.0;
-        double alignmentOffsetY = 0.0;
+/// vvv Moved this stuff to Symbols.swift TODO: Remove
 
-        if (useBundledImage) {
-
-            double centerX1 = symbol.alignmentRect.origin.x + symbol.alignmentRect.size.width/2.0;
-            double centerY1 = symbol.alignmentRect.origin.y + symbol.alignmentRect.size.height/2.0;
-
-            double centerX2 = symbol.size.width/2.0;
-            double centerY2 = symbol.size.height/2.0;
-
-            alignmentOffsetX = centerX2 - centerX1;
-            alignmentOffsetY = centerY2 - centerY1;
-        }
-        
-        /// Fix font alignment
-        [UIStrings centerImageAttachment:symbolAttachment image:symbol font:font offsetX:alignmentOffsetX offsetY: alignmentOffsetY];
-    }
-    
-    /// Create textAttachment -> String
-    NSAttributedString *string = [NSAttributedString attributedStringWithAttachment:symbolAttachment];
-    
-    /// Check darmode
-    BOOL isDarkmode = NO;
-    if (@available(macOS 10.14, *)) if (NSApp.effectiveAppearance.name == NSAppearanceNameDarkAqua) isDarkmode = YES;
-    
-    
-    /// Polish weight, size, alighment
-    /// Not sure why this stuff also works for the fallback but it does
-    /// This is probably very specific to displaying in the keyCaptureView. Might want to refactor and put core functionality into `NSAttributedString+Additions`
-    
-    if (isDarkmode) {
-        string = [string attributedStringByAddingWeight:0.4];
-        string = [string attributedStringByAddingBaseLineOffset:0.39];
-    } else {
-        string = [string attributedStringByAddingWeight:0.3];
-        string = [string attributedStringByAddingBaseLineOffset:0.39];
-    }
-    
-    string = [string attributedStringBySettingFontSize:11.4];
-    
-    /// Return
-    return string;
-}
+//static NSAttributedString *stringWithSymbol(NSString *symbolName, NSString *fallbackString, NSFont *font) {
+//
+//    /// Image
+//    /// Try to get SFSymbol first, fall back to bundled image
+//    /// Why aren't we using [NSAttributedString stringWithSymbol:hPadding:vOffset:fallback:] anymore?
+//
+//    NSImage *sfSymbol = nil;
+//    if (@available(macOS 11.0, *)) {
+//        sfSymbol = [NSImage imageWithSystemSymbolName:symbolName accessibilityDescription:@""];
+//    }
+//    BOOL useBundledImage = sfSymbol == nil; // arc4random_uniform(2) == 0; // YES; //sfSymbol == nil;
+//
+//    NSImage *symbol = nil;
+//    if (useBundledImage) { /// Fallback to bundled image
+//        symbol = [NSImage imageNamed:symbolName];
+//    } else {
+//        symbol = sfSymbol;
+//    }
+//
+//    /// Early return
+//    ///     If no symbol is found anywhere, just return the fallback string.
+//    if (symbol == nil) {
+//        return [[NSAttributedString alloc] initWithString:fallbackString];
+//    }
+//
+//    /// Fix fallback tint
+//    if (useBundledImage) {
+//        symbol = [symbol coolTintedImage:symbol color:NSColor.textColor];
+//    }
+//
+//    /// Store fallback
+//    ///     This is read in `[NSAttributedString coolString]`. Maybe elsewhere
+//    ///     Storing in `accessibilityDescription` is kind of hacky
+//    symbol.accessibilityDescription = fallbackString;
+//
+//    /// Image ->  textAattachment
+//    NSTextAttachment *symbolAttachment = [[NSTextAttachment alloc] init];
+//    symbolAttachment.image = symbol;
+//
+//    /// Fix fallback alignment
+//
+//    if (useBundledImage) {
+//
+//        /// Fix alignmentRect centering
+//        ///     - I don't think this makes any sense
+//        ///     - The alignmentRect seems to be ignored when rendering non-SFSymbol images (Maybe it's also ignored for SFSymbol images - haven't tested much)
+//        ///     - So we try to offset the image such that the alignment rect center is preserved. I don't think this makes sense since when we render non-sfsymbol images they don't even have an alignmentRect since they are just loaded from pure images. Also the SFSymbols alignment rects ARE always centered in the image from what I've seen
+//        ///     -> TODO: Remove
+//
+//        double alignmentOffsetX = 0.0;
+//        double alignmentOffsetY = 0.0;
+//
+//        if (useBundledImage) {
+//
+//            double centerX1 = symbol.alignmentRect.origin.x + symbol.alignmentRect.size.width/2.0;
+//            double centerY1 = symbol.alignmentRect.origin.y + symbol.alignmentRect.size.height/2.0;
+//
+//            double centerX2 = symbol.size.width/2.0;
+//            double centerY2 = symbol.size.height/2.0;
+//
+//            alignmentOffsetX = centerX2 - centerX1;
+//            alignmentOffsetY = centerY2 - centerY1;
+//        }
+//
+//        /// Fix font alignment
+//        [UIStrings centerImageAttachment:symbolAttachment image:symbol font:font offsetX:alignmentOffsetX offsetY: alignmentOffsetY];
+//    }
+//
+//    /// Create textAttachment -> String
+//    NSAttributedString *string = [NSAttributedString attributedStringWithAttachment:symbolAttachment];
+//
+//    /// Check darmode
+//    BOOL isDarkmode = NO;
+//    if (@available(macOS 10.14, *)) if (NSApp.effectiveAppearance.name == NSAppearanceNameDarkAqua) isDarkmode = YES;
+//
+//
+//    /// Polish weight, size, alighment
+//    /// Not sure why this stuff also works for the fallback but it does
+//    /// This is probably very specific to displaying in the keyCaptureView. Might want to refactor and put core functionality into `NSAttributedString+Additions`
+//
+//    if (isDarkmode) {
+//        string = [string attributedStringByAddingWeight:0.4];
+//        string = [string attributedStringByAddingBaseLineOffset:0.39];
+//    } else {
+//        string = [string attributedStringByAddingWeight:0.3];
+//        string = [string attributedStringByAddingBaseLineOffset:0.39];
+//    }
+//
+//    string = [string attributedStringBySettingFontSize:11.4];
+//
+//    /// Return
+//    return string;
+//}
 
 + (NSString *)naturalLanguageListFromStringArray:(NSArray<NSString *> *)stringArray {
     
@@ -447,22 +452,5 @@ static NSAttributedString *stringWithSymbol(NSString *symbolName, NSString *fall
     NSRange range = [str rangeOfString:@"^\\s*" options:NSRegularExpressionSearch];
     return [str stringByReplacingCharactersInRange:range withString:@""];
 }
-
-/// Other
-
-+ (void)centerImageAttachment:(NSTextAttachment *)attachment image:(NSImage *)image font:(NSFont *)font {
-    [UIStrings centerImageAttachment:attachment image:image font:font offsetX:0.0 offsetY:0.0];
-}
-
-+ (void)centerImageAttachment:(NSTextAttachment *)attachment image:(NSImage *)image font:(NSFont *)font offsetX:(double)offsetX offsetY:(double)offsetY {
-    
-    /// Vertically align the imageAttachment with normal text
-    /// - This is not necessary if the NSImage represents an SFSymbol
-    /// - Src: https://stackoverflow.com/a/45161058/10601702
-    
-    double fontCenterOffset = (font.capHeight - image.size.height)/2.0;
-    attachment.bounds = NSMakeRect(offsetX, offsetY + fontCenterOffset, image.size.width, image.size.height);
-}
-
 
 @end

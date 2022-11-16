@@ -28,7 +28,7 @@ NS_ASSUME_NONNULL_BEGIN
 + (NSAttributedString *)getStringForSystemDefinedEvent:(MFSystemDefinedEventType)type flags:(CGEventFlags)flags font:(NSFont *)font;
 //+ (NSAttributedString *)stringWithSymbol:(NSString *)symbolName fallback:(NSString *)fallbackString;
 + (NSString *)naturalLanguageListFromStringArray:(NSArray<NSString *> *)stringArray;
-+ (void)centerImageAttachment:(NSTextAttachment *)attachment image:(NSImage *)image font:(NSFont *)font;
+//+ (void)centerImageAttachment:(NSTextAttachment *)attachment image:(NSImage *)image font:(NSFont *)font;
 
 @end
 
