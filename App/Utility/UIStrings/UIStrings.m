@@ -137,7 +137,7 @@
     }
     
     /// Get symbol and attach it to keyStr
-    NSAttributedString *keyStr = stringWithSymbol(symbolName, stringFallback, font);
+    NSAttributedString *keyStr = keyStringWithSymbol(symbolName, stringFallback, font);
     NSString *flagsStr = [UIStrings getKeyboardModifierString:flags];
     return symbolStringWithModifierPrefix(flagsStr, keyStr);
 }
@@ -233,7 +233,7 @@ static CGSSymbolicHotKey _highestSymbolicHotKeyInCache = 0;
             }
             
             /// Get symbol and attach it to keyStr
-            keyStr = stringWithSymbol(symbolName, stringFallback, font);
+            keyStr = keyStringWithSymbol(symbolName, stringFallback, font);
             
             /// Validate
             
@@ -264,47 +264,71 @@ static NSMutableAttributedString *symbolStringWithModifierPrefix(NSString *flags
     
     return result;
 }
-static NSAttributedString *stringWithSymbol(NSString *symbolName, NSString *fallbackString, NSFont *font) {
 
-    /// Image
-    /// Try to get SFSymbol first, fall back to bundled image
+static NSImage *_Nullable imageWithSymbol(NSString *symbolName, NSString *fallbackString) {
+    
+    BOOL usingBundledFallback;
+    return imageWithSymbol2(symbolName, fallbackString, &usingBundledFallback);
+}
+
+static NSImage *_Nullable imageWithSymbol2(NSString *symbolName, NSString *fallbackString, BOOL *usingBundledFallback) {
+    
+    /// Try to get SFSymbol with name `symbolName` first, fall back to bundledImage with name `symbolName`. Return nil if both fails
+    ///     Store `fallbackString` as accessibilityDescription of the NSImage
     
     NSImage *sfSymbol = nil;
     if (@available(macOS 11.0, *)) {
         sfSymbol = [NSImage imageWithSystemSymbolName:symbolName accessibilityDescription:@""];
     }
-    BOOL useBundledImage = sfSymbol == nil; // arc4random_uniform(2) == 0; // YES; //sfSymbol == nil;
+    *usingBundledFallback = sfSymbol == nil; // arc4random_uniform(2) == 0; // YES; //sfSymbol == nil;
     
     NSImage *symbol = nil;
-    if (useBundledImage) { /// Fallback to bundled image
+    if (*usingBundledFallback) { /// Fallback to bundled image
         symbol = [NSImage imageNamed:symbolName];
     } else {
         symbol = sfSymbol;
     }
     
     /// Early return
-    ///     If no symbol is found anywhere, just return the fallback string.
+    ///     No symbol found
     if (symbol == nil) {
-        return [[NSAttributedString alloc] initWithString:fallbackString];
+        return nil;
     }
     
     /// Fix fallback tint
-    if (useBundledImage) {
+    if (*usingBundledFallback) {
         symbol = [symbol coolTintedImage:symbol color:NSColor.textColor];
     }
     
     /// Store fallback
-    ///     This is read in `[NSAttributedString coolString]`. Maybe elsewhere
-    ///     Storing in `accessibilityDescription` is kind of hacky
+    ///     This is read in `[NSAttributedString coolString]`. Maybe elsewhere.
     symbol.accessibilityDescription = fallbackString;
     
-    /// Image ->  textAattachment
+    /// Return
+    return symbol;
+}
+
+static NSAttributedString *stringWithSymbol(NSString *symbolName, NSString *fallbackString, NSFont *font) {
+
+    /// Try to get SFSymbol with name `symbolName` first, fall back to bundled image with name `symbolName`, then fall back to `fallbackString`
+    /// `font` is used to vertically align the symbol with the text
+    
+    BOOL usingBundledFallback;
+    NSImage *symbol = imageWithSymbol2(symbolName, fallbackString, &usingBundledFallback);
+    
+    /// Early return
+    ///     If no symbol is found anywhere, just return the fallback string
+    if (symbol == nil) {
+        return [[NSAttributedString alloc] initWithString:fallbackString];
+    }
+    
+    /// Image ->  textAttachment
     NSTextAttachment *symbolAttachment = [[NSTextAttachment alloc] init];
     symbolAttachment.image = symbol;
 
     /// Fix fallback alignment
     
-    if (useBundledImage) {
+    if (usingBundledFallback) {
         
         /// Fix alignmentRect centering
         ///     - I don't think this makes any sense
@@ -315,7 +339,7 @@ static NSAttributedString *stringWithSymbol(NSString *symbolName, NSString *fall
         double alignmentOffsetX = 0.0;
         double alignmentOffsetY = 0.0;
 
-        if (useBundledImage) {
+        if (usingBundledFallback) {
 
             double centerX1 = symbol.alignmentRect.origin.x + symbol.alignmentRect.size.width/2.0;
             double centerY1 = symbol.alignmentRect.origin.y + symbol.alignmentRect.size.height/2.0;
@@ -334,12 +358,22 @@ static NSAttributedString *stringWithSymbol(NSString *symbolName, NSString *fall
     /// Create textAttachment -> String
     NSAttributedString *string = [NSAttributedString attributedStringWithAttachment:symbolAttachment];
     
+    /// Return
+    return string;
+}
+
+static NSAttributedString *keyStringWithSymbol(NSString *symbolName, NSString *fallbackString, NSFont *font) {
+    
+    /// This is intended specifically to display keyboad keys for the `Keyboard Shortcut...` feature
+    
+    /// Call core
+    NSAttributedString *string = stringWithSymbol(symbolName, fallbackString, font);
+    
     /// Check darmode
     BOOL isDarkmode = NO;
     if (@available(macOS 10.14, *)) if (NSApp.effectiveAppearance.name == NSAppearanceNameDarkAqua) isDarkmode = YES;
     
-    
-    /// Polish weight, size, alighment
+    /// Set weight, size, alighment
     /// Not sure why this stuff also works for the fallback but it does
         
     if (isDarkmode) {
@@ -351,7 +385,6 @@ static NSAttributedString *stringWithSymbol(NSString *symbolName, NSString *fall
     }
     
     string = [string attributedStringBySettingFontSize:11.4];
-    
     
     /// Return
     return string;
