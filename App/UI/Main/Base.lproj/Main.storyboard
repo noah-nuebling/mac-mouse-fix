@@ -536,7 +536,7 @@ Mac Mouse Fix</string>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <subviews>
                                                 <imageView identifier="PlusIcon" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Jod-JU-J5j">
-                                                    <rect key="frame" x="216" y="38.5" width="60" height="66.5"/>
+                                                    <rect key="frame" x="240" y="41.5" width="60" height="66.5"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                                     <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyUpOrDown" image="plus" catalog="system" id="EyU-is-YRF"/>
                                                     <color key="contentTintColor" name="placeholderTextColor" catalog="System" colorSpace="catalog"/>
@@ -860,7 +860,6 @@ Mac Mouse Fix</string>
                     </attributedString>
                     <connections>
                         <outlet property="addField" destination="Pxm-4w-iO7" id="ncr-e0-lmY"/>
-                        <outlet property="addFieldController" destination="d6t-6H-FSq" id="LaT-PW-h0R"/>
                         <outlet property="clipView" destination="Fkp-gm-SVn" id="Me9-e3-Cuy"/>
                         <outlet property="optionsButton" destination="am9-X6-JrT" id="yk5-GW-6RT"/>
                         <outlet property="plusIconView" destination="Jod-JU-J5j" id="7lx-UU-uJJ"/>
@@ -874,13 +873,6 @@ Mac Mouse Fix</string>
                     </connections>
                 </viewController>
                 <customObject id="7uh-Xl-poI" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
-                <customObject id="d6t-6H-FSq" customClass="AddViewController">
-                    <connections>
-                        <outlet property="addField" destination="Pxm-4w-iO7" id="8NP-x6-VjU"/>
-                        <outlet property="plusIconView" destination="Jod-JU-J5j" id="1GQ-Zq-okr"/>
-                        <outlet property="view" destination="Pxm-4w-iO7" id="aea-ej-aWI"/>
-                    </connections>
-                </customObject>
                 <customObject id="sHV-yD-oIc" customClass="RemapTableController">
                     <connections>
                         <outlet property="view" destination="JEf-5U-AJf" id="jQD-XG-Ikk"/>
