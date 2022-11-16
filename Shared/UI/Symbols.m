@@ -20,7 +20,7 @@
     /// This is intended specifically to display keyboad keys for the `Keyboard Shortcut...` feature
     
     /// Call core
-    NSAttributedString *string = [Symbols stringWithSymbol:symbolName fallbackString:fallbackString font:font];
+    NSAttributedString *string = [Symbols stringWithSymbolName:symbolName stringFallback:fallbackString font:font];
     
     /// Check darmode
     BOOL isDarkmode = NO;
@@ -43,18 +43,18 @@
     return string;
 }
 
-+ (NSAttributedString *)stringWithSymbol:(NSString *)symbolName fallbackString:(NSString *)fallbackString font:(NSFont *)font {
++ (NSAttributedString *)stringWithSymbolName:(NSString *)symbolName stringFallback:(NSString *)stringFallback font:(NSFont *)font {
 
-    /// Try to get SFSymbol with name `symbolName` first, fall back to bundled image with name `symbolName`, then fall back to `fallbackString`
+    /// Try to get SFSymbol with name `symbolName` first, fall back to bundled image with name `symbolName`, then fall back to `stringFallback`
     /// `font` is used to vertically align the symbol with the text
     
     BOOL usingBundledFallback;
-    NSImage *symbol = [Symbols imageWithSymbol:symbolName fallbackString:fallbackString usingBundledFallback:&usingBundledFallback];
+    NSImage *symbol = [Symbols imageWithSymbolName:symbolName accessibilityDescription:stringFallback usingBundledFallback:&usingBundledFallback];
     
     /// Early return
     ///     If no symbol is found anywhere, just return the fallback string
     if (symbol == nil) {
-        return [[NSAttributedString alloc] initWithString:fallbackString];
+        return [[NSAttributedString alloc] initWithString:stringFallback];
     }
     
     /// Image ->  textAttachment
@@ -99,16 +99,25 @@
 
 #pragma mark - Lvl 0 - Symbol images
 
-+ (NSImage *_Nullable)imageWithSymbol:(NSString *)symbolName fallbackString:(NSString *)fallbackString {
++ (NSImage *_Nullable)imageWithSymbolName:(NSString *)symbolName {
+    
+    /// Use this over `[NSImage imageNamed:]` aka `NSImage(named:)` when getting symbols! It will dynamically either get the systemSymbol if it's available or fallback to a bundledImage.
     
     BOOL usingBundledFallback;
-    return [Symbols imageWithSymbol:symbolName fallbackString:fallbackString usingBundledFallback:&usingBundledFallback];
+    NSString *description = symbolName; /// This is bad, but we don't really support accessibility at the moment anyways.
+    return [Symbols imageWithSymbolName:symbolName accessibilityDescription:description usingBundledFallback:&usingBundledFallback];
 }
 
-+ (NSImage *_Nullable)imageWithSymbol:(NSString *)symbolName fallbackString:(NSString *)fallbackString usingBundledFallback:(BOOL *)usingBundledFallback {
++ (NSImage *_Nullable)imageWithSymbolName:(NSString *)symbolName accessibilityDescription:(NSString *)description {
     
-    /// Try to get SFSymbol with name `symbolName` first, fall back to bundledImage with name `symbolName`. Return nil if both fails
-    ///     Store `fallbackString` as accessibilityDescription of the NSImage
+    BOOL usingBundledFallback;
+    return [Symbols imageWithSymbolName:symbolName accessibilityDescription:description usingBundledFallback:&usingBundledFallback];
+}
+
++ (NSImage *_Nullable)imageWithSymbolName:(NSString *)symbolName accessibilityDescription:(NSString *)description usingBundledFallback:(BOOL *)usingBundledFallback {
+    
+    /// Try to get SFSymbol with name `symbolName` first. If that fails, fall back to bundledImage with name `symbolName` and set `usingBundledFallback` true. If both fail return nil
+    /// `description` is stored as accessibilityDescription of the returned NSImage
     
     NSImage *sfSymbol = nil;
     if (@available(macOS 11.0, *)) {
@@ -135,9 +144,9 @@
         symbol = [symbol coolTintedImage:symbol color:NSColor.textColor];
     }
     
-    /// Store fallback
-    ///     This is read in `[NSAttributedString coolString]`. Maybe elsewhere.
-    symbol.accessibilityDescription = fallbackString;
+    /// Store description
+    ///     Not just used for accessibility! (Which we don't support at this point) This is read in `[NSAttributedString coolString]`. Maybe elsewhere.
+    symbol.accessibilityDescription = description;
     
     /// Return
     return symbol;

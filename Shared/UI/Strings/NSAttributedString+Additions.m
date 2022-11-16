@@ -212,6 +212,10 @@ void assignAttributedStringKeepingBase(NSAttributedString *_Nonnull *_Nonnull as
 
 + (NSAttributedString *)stringWithSymbol:(NSString * _Nonnull)symbolName hPadding:(CGFloat)hPadding vOffset:(CGFloat)baselineOffset fallback:(NSString * _Nonnull)fallbackString {
     
+    /// Use Symbols.string() instead of this
+    
+    abort();
+    
     /// Get symbolString
     /// Primarily used by `[UIStrings stringWithSymbol:fallback:]`
     /// Larger vOffset displays higher on the screen

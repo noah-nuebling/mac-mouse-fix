@@ -43,5 +43,6 @@
 #import "RemapTableUtility.h"
 #import "AlertCreator.h"
 #import "Shorthands.h"
+#import "Symbols.h"
 
 #endif /* Mac_Mouse_Fix_Bridging_Header_h */

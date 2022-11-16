@@ -24,7 +24,9 @@
 #import "Mac_Mouse_Fix-Swift.h"
 
 @interface ToastNotificationController ()
+
 @property (unsafe_unretained) IBOutlet NotificationLabel *label;
+
 @end
 
 @implementation ToastNotificationController {
@@ -33,6 +35,7 @@
 static ToastNotificationController *_instance;
 static NSDictionary *_labelAttributesFromIB;
 static id _localEventMonitor;
+
 
 + (void)initialize {
     
@@ -296,6 +299,13 @@ static void removeLocalEventMonitor() {
         [_closeTimer invalidate];
         [self closeNotificationImmediately];
     }
+}
+
+#pragma mark - Other interface
+
++ (NSFont *)defaultFont {
+    /// At the time of writing this is only used from outside ToastNotificationController not inside - so I hope this is correct! Should we use `labelFontSize` instead?
+    return [NSFont systemFontOfSize:NSFont.systemFontSize];
 }
 
 @end

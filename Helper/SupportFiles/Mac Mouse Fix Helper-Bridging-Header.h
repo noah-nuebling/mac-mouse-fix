@@ -41,5 +41,6 @@
 #import "Hyperlink.h"
 #import "HelperServices.h"
 #import "Shorthands.h"
+#import "Symbols.h"
 
 //#import <CocoaLumberjack/CocoaLumberjack.h> /// Importing CocoaLumberjack/Swift with CocoaPods breaks my project. Can't use macros when importing this.

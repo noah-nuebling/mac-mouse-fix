@@ -43,7 +43,7 @@ class TrialSectionManager {
         if #available(macOS 11.0, *) {
             currentSection.imageView!.symbolConfiguration = .init(pointSize: 13, weight: .regular, scale: .large)
         }
-        currentSection.imageView!.image = NSImage(named: imageName)
+        currentSection.imageView!.image = Symbols.image(withSymbolName: imageName)
         
         /// Set string
         currentSection.textField!.attributedStringValue = LicenseUtility.trialCounterString(licenseConfig: licenseConfig, license: license)
@@ -154,12 +154,7 @@ class TrialSectionManager {
                 /// Setup Image
                 
                 /// Create image
-                let image: NSImage
-                if #available(macOS 11.0, *) {
-                    image = NSImage(systemSymbolName: "lock.open", accessibilityDescription: nil)!
-                } else {
-                    image = NSImage(named: "lock.open")!
-                }
+                let image = Symbols.image(withSymbolName: "lock.open")
                 
                 /// Configure image
                 if #available(macOS 10.14, *) { newSection.imageView?.contentTintColor = .linkColor }

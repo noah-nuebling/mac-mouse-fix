@@ -78,7 +78,7 @@ class ScrollTabController: NSViewController {
             
             let messageRaw = NSLocalizedString("scroll-revive-toast", comment: "First draft: __Enabled__ Mac Mouse Fix for __Scrolling__\nIt had been disabled from the Menu Bar %@ || Note: Where %@ will be replaced by the menubar icon")
             var message = NSAttributedString(coolMarkdown: messageRaw)!
-            let symbolString = NSAttributedString(symbol: "CoolMenuBarIcon", hPadding: 0.0, vOffset: -6, fallback: "<Mac Mouse Fix Menu Bar Item>")
+            let symbolString = Symbols.string(withSymbolName: "CoolMenuBarIcon", stringFallback: "<Mac Mouse Fix Menu Bar Item>", font: ToastNotificationController.defaultFont()) // NSAttributedString(symbol: "CoolMenuBarIcon", hPadding: 0.0, vOffset: -6, fallback: "<Mac Mouse Fix Menu Bar Item>")
             message = NSAttributedString(attributedFormat: message, args: [symbolString])
             
             /// Show message

@@ -173,7 +173,7 @@ double effectColumnWidth = -1;
         /// Create add menu
         NSMenuItem *addItem = [[NSMenuItem alloc] init];
         addItem.title = @"Add";
-        addItem.image = [NSImage imageNamed:@"plus.square"];
+        addItem.image =  [Symbols imageWithSymbolName:@"plus.square"];
         addItem.target = self.delegate;
         addItem.action = @selector(addButtonAction);
         
