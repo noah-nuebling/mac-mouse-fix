@@ -842,6 +842,23 @@ static NSString *effectNameForRowDict(NSDictionary * _Nonnull rowDict) {
     deleteButton.action = @selector(inRowRemoveButtonAction:);
     deleteButton.target = self.controller;
     
+    /// Override image on older macOS
+    ///  Explanation: Try to fix weird margins / dimensions under older macOS versions. So far nothing works.
+    ///  Note: Also see where we override plusIconView.image in ButtonTabController
+    if (@available(macOS 11.0, *)) { } else {
+        
+        NSImage *plusImage = [NSImage imageNamed:NSImageNameRemoveTemplate];
+        plusImage.size = NSMakeSize(plusImage.size.width + 6.0, plusImage.size.height);
+        deleteButton.image = plusImage;
+        
+//        for (NSLayoutConstraint *c in deleteButton.constraints) {
+//            if (c.firstAttribute == NSLayoutAttributeWidth) {
+//                c.constant = 20; /// In IB it's set to 15 at time of writing
+//                break;
+//            }
+//        }
+    }
+
     /// Return view!
     return triggerCell;
     

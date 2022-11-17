@@ -207,6 +207,16 @@ import CocoaLumberjackSwift
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        /// Override icon on older macOS
+        /// Explanation: We bundle an svg fallback for the SFSymbol that is used by default, but the resolution is wayy to low it's rendered too large. Maybe there's a more elegant solution but this should work.
+        /// Notes:
+        /// - Actually maybe we should just use NSAddTemplate in the first place even on newer macOS?
+        /// - I think this makes it unnecessary that we bundle the svg fallback for the 'add' SFSymbol
+        
+        if #available(macOS 11.0, *) { } else {
+            plusIconView.image = NSImage(named: NSImage.addTemplateName)
+        }
+        
         /// Init remaps when the helper becomes (or already is) enabled
         ///     This doesn't really belong here. It just needs to be executed on app start (which it is, being here)
         ///     TODO: Move this. E.g. to   `AppDelegate - applicationDidFinishLaunching`
@@ -595,14 +605,15 @@ import CocoaLumberjackSwift
     /// Init
     func initAddFieldStuff() {
         
-        /// Init state
-        pointerIsInsideAddField = false
-        
         /// Validate: Init is not called twice
         assert(MainAppState.shared.buttonTabController == nil)
         
         /// Store self into global state
+        ///     Why is this in `initAddFieldStuff`?
         MainAppState.shared.buttonTabController = self
+        
+        /// Init state
+        pointerIsInsideAddField = false
     }
     
     /// AddField callbacks
