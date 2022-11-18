@@ -125,8 +125,10 @@ class ScrollTabController: NSViewController {
         preciseHint.attributedStringValue = NSAttributedString(coolMarkdown: preciseHintRaw, fillOutBase: false)!.fillingOutBaseAsHint()
         
         /// Generate macOS hint string
-        ///      - Under Ventura, you can open the mouse prefpane with the URL `x-apple.systempreferences:com.apple.Mouse-Settings.extension`, but it only works when a mouse is attached and otherwise it will give weird errors, so we're not using it now. We might want to use it if  we test whether a mouse is attached beforehand, or if future Ventura Betas give less janky errors
+        /// Notes:
+        ///   - Under Ventura, you can open the mouse prefpane with the URL `x-apple.systempreferences:com.apple.Mouse-Settings.extension`, but it only works when a mouse is attached and otherwise it will give weird errors, so we're not using it now. We might want to use it if  we test whether a mouse is attached beforehand, or if future Ventura Betas give less janky errors
         ///     - A nice solution was if we had a reactive `activeDevice` class which we could attach to and update this stuff whenever it changes. See `MessagePortUtility_App.getActiveDeviceInfo()`
+        ///   - Pre-Ventura you can open the prefPane with `file:///System/Library/PreferencePanes/Mouse.prefPane` but clicking that link inside the macOSHint just reveals the `.prefPane` file in Finder under Big Sur instead of opening it.
         
         var mouseSettingsURL: NSString
         if #available(macOS 13.0, *) {
@@ -134,7 +136,8 @@ class ScrollTabController: NSViewController {
             mouseSettingsURL = "x-apple.systempreferences:com.apple.Mouse-Settings.extension"
             mouseSettingsURL = "" /// Disable for now (see above)
         } else {
-            mouseSettingsURL = "/System/Library/PreferencePanes/Mouse.prefPane"
+            mouseSettingsURL = "file:///System/Library/PreferencePanes/Mouse.prefPane"
+            mouseSettingsURL = "" /// Disable for now (see above)
         }
         let macOSHintRaw = String(format: NSLocalizedString("macos-scrolling-hint", comment: "First draft: Set Scroll Speed under\n[%@ > Mouse > Scrolling Speed](%@)"), UIStrings.systemSettingsName(), mouseSettingsURL)
 
