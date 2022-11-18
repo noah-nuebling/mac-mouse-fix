@@ -529,14 +529,14 @@ Mac Mouse Fix</string>
                             <stackView distribution="fill" orientation="vertical" alignment="centerX" horizontalStackHuggingPriority="1000" verticalStackHuggingPriority="1000" horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Qu8-7l-RFn">
                                 <rect key="frame" x="23" y="0.0" width="541" height="456"/>
                                 <subviews>
-                                    <box identifier="addField" boxType="custom" borderType="line" cornerRadius="6" title="&lt;Box&gt;" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="Pxm-4w-iO7" userLabel="AddBox">
+                                    <box identifier="addField" boxType="custom" borderType="line" cornerRadius="6" title="&lt;Box&gt;" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="Pxm-4w-iO7" userLabel="AddBox" customClass="AddField" customModule="Mac_Mouse_Fix" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="306" width="541" height="150"/>
                                         <view key="contentView" id="B6d-Fk-sWp">
                                             <rect key="frame" x="1" y="1" width="539" height="148"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <subviews>
                                                 <imageView identifier="PlusIcon" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Jod-JU-J5j">
-                                                    <rect key="frame" x="240" y="41.5" width="60" height="66.5"/>
+                                                    <rect key="frame" x="240" y="38.5" width="60" height="66.5"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                                     <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyUpOrDown" image="plus" catalog="system" id="EyU-is-YRF"/>
                                                     <color key="contentTintColor" name="placeholderTextColor" catalog="System" colorSpace="catalog"/>
@@ -549,6 +549,9 @@ Mac Mouse Fix</string>
                                         </constraints>
                                         <color key="borderColor" name="separatorColor" catalog="System" colorSpace="catalog"/>
                                         <color key="fillColor" name="quaternaryLabelColor" catalog="System" colorSpace="catalog"/>
+                                        <connections>
+                                            <outlet property="plusIconView" destination="Jod-JU-J5j" id="W2H-cU-Bpp"/>
+                                        </connections>
                                     </box>
                                     <customView horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="OIq-v6-9Zy" userLabel="HintWrap">
                                         <rect key="frame" x="0.0" y="248" width="541" height="50"/>
@@ -634,7 +637,7 @@ Mac Mouse Fix</string>
                                                                     </connections>
                                                                 </tableCellView>
                                                                 <tableCellView identifier="buttonGroupCell" id="pxf-x1-gL5" userLabel="ButtonGroupCell">
-                                                                    <rect key="frame" x="8" y="38" width="288" height="22"/>
+                                                                    <rect key="frame" x="8" y="38" width="287" height="22"/>
                                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                                     <subviews>
                                                                         <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="AHZ-Kd-4Xf">
@@ -673,7 +676,7 @@ Mac Mouse Fix</string>
                                                             <tableColumnResizingMask key="resizingMask" resizeWithTable="YES"/>
                                                             <prototypeCellViews>
                                                                 <tableCellView identifier="effectCell" translatesAutoresizingMaskIntoConstraints="NO" id="Epw-SW-Ew3" customClass="RemapTableCellView" customModule="Mac_Mouse_Fix" customModuleProvider="target">
-                                                                    <rect key="frame" x="313" y="0.0" width="223" height="39"/>
+                                                                    <rect key="frame" x="312" y="0.0" width="223" height="39"/>
                                                                     <subviews>
                                                                         <popUpButton verticalHuggingPriority="750" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="Pw9-ZH-Tb7">
                                                                             <rect key="frame" x="0.0" y="6" width="224" height="25"/>
@@ -701,7 +704,7 @@ Mac Mouse Fix</string>
                                                                     </constraints>
                                                                 </tableCellView>
                                                                 <tableCellView identifier="keyCaptureCell" translatesAutoresizingMaskIntoConstraints="NO" id="MzR-b1-853" customClass="RemapTableCellView" customModule="Mac_Mouse_Fix" customModuleProvider="target">
-                                                                    <rect key="frame" x="313" y="39" width="220" height="39"/>
+                                                                    <rect key="frame" x="312" y="39" width="220" height="39"/>
                                                                     <subviews>
                                                                         <button hidden="YES" focusRingType="exterior" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="psy-Jg-KLq">
                                                                             <rect key="frame" x="-4" y="3" width="228" height="32"/>
@@ -862,7 +865,6 @@ Mac Mouse Fix</string>
                         <outlet property="addField" destination="Pxm-4w-iO7" id="ncr-e0-lmY"/>
                         <outlet property="clipView" destination="Fkp-gm-SVn" id="Me9-e3-Cuy"/>
                         <outlet property="optionsButton" destination="am9-X6-JrT" id="yk5-GW-6RT"/>
-                        <outlet property="plusIconView" destination="Jod-JU-J5j" id="7lx-UU-uJJ"/>
                         <outlet property="restoreDefaultButton" destination="JHB-lg-H8e" id="urx-gI-o4v"/>
                         <outlet property="restoreDefaultPopover" destination="Cts-Zb-d93" id="LMv-Q3-UYM"/>
                         <outlet property="restoreDefaultPopoverDontRemindAgainCheckbox" destination="PRU-rA-I4Y" id="ekr-di-Qnk"/>

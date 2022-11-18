@@ -37,6 +37,7 @@
 		4F3A40DA266C5BDF00436821 /* NSScreen+Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F3A40D9266C5BDF00436821 /* NSScreen+Additions.m */; };
 		4F3E067E26A2F97D000C9E06 /* URLMenuItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F3E067D26A2F97D000C9E06 /* URLMenuItem.m */; };
 		4F41506429255F880040BA7D /* NSImage+Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FEA63CD2921510E00E464D6 /* NSImage+Additions.m */; };
+		4F4150662927B6A40040BA7D /* AddField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F4150652927B6A40040BA7D /* AddField.swift */; };
 		4F44794328B55F6300AD1979 /* CAAnimation+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F909D0C28A0C3D2009349A2 /* CAAnimation+Extensions.swift */; };
 		4F44794528B62FA400AD1979 /* LicenseConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F44794428B62FA400AD1979 /* LicenseConfig.swift */; };
 		4F44794628B62FA400AD1979 /* LicenseConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F44794428B62FA400AD1979 /* LicenseConfig.swift */; };
@@ -421,6 +422,7 @@
 		4F3CDB272837D889000E28F0 /* ScrollNotes.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = ScrollNotes.md; sourceTree = "<group>"; };
 		4F3E067C26A2F97D000C9E06 /* URLMenuItem.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = URLMenuItem.h; sourceTree = "<group>"; };
 		4F3E067D26A2F97D000C9E06 /* URLMenuItem.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = URLMenuItem.m; sourceTree = "<group>"; };
+		4F4150652927B6A40040BA7D /* AddField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddField.swift; sourceTree = "<group>"; };
 		4F42304628CE6C1C003A41D3 /* LICENSE */ = {isa = PBXFileReference; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
 		4F44794428B62FA400AD1979 /* LicenseConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LicenseConfig.swift; sourceTree = "<group>"; };
 		4F44FF022606D73D00926A5E /* MFMessagePort.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MFMessagePort.h; sourceTree = "<group>"; };
@@ -938,6 +940,7 @@
 			isa = PBXGroup;
 			children = (
 				4F6F679F28A8141800C6C40F /* ButtonTabController.swift */,
+				4F4150652927B6A40040BA7D /* AddField.swift */,
 				4FA911E4260D00CB00553CA8 /* RemapTable */,
 			);
 			path = ButtonTab;
@@ -2332,6 +2335,7 @@
 				4F909D2828A0C3D2009349A2 /* ResizingTabWindow.swift in Sources */,
 				4FA40CF728A0CCCA00499E53 /* Curve.swift in Sources */,
 				4FF6655225F2C7B000689B77 /* NSDictionary+Additions.m in Sources */,
+				4F4150662927B6A40040BA7D /* AddField.swift in Sources */,
 				4FDE75A728B25FB300662314 /* NSAttributedString+Extensions.swift in Sources */,
 				4FA40D0F28A0D8EF00499E53 /* SubPixelator.m in Sources */,
 				4F44794528B62FA400AD1979 /* LicenseConfig.swift in Sources */,
