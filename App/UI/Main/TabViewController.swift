@@ -395,7 +395,7 @@ class TabViewController: NSTabViewController {
         /// Adjust frameOrigin so that
         ///   the window is fully on screen after resize, if it's fully on screen before resize
         
-        if let s = window.screen?.frame {
+        if let s = window.screen?.visibleFrame {
             
             let oldFrame = window.frame
             
