@@ -52,8 +52,12 @@ static CFDataRef _Nullable didReceiveMessage(CFMessagePortRef port, SInt32 messa
 #if IS_MAIN_APP
     
 #pragma mark MainApp
-    
-    if ([message isEqualToString:@"addModeFeedback"]) {
+ 
+    if ([message isEqualToString:@"addModeEnabled"]) {
+        [MainAppState.shared.buttonTabController handleAddModeEnabled];
+    } else if ([message isEqualToString:@"addModeDisabled"]) {
+        [MainAppState.shared.buttonTabController handleAddModeDisabled];
+    } else if ([message isEqualToString:@"addModeFeedback"]) {
         [MainAppState.shared.buttonTabController handleReceivedAddModeFeedbackFromHelperWithPayload:(NSDictionary *)payload];
     } else if ([message isEqualToString:@"keyCaptureModeFeedback"]) {
         [KeyCaptureView handleKeyCaptureModeFeedbackWithPayload:(NSDictionary *)payload isSystemDefinedEvent:NO];

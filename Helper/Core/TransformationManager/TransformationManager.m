@@ -197,8 +197,6 @@ BOOL _addModeIsEnabled = NO;
     ///     Edit: The remapSwizzler is actually responsible for this now.
     ///     TODO: Remove addModePayloadIsValid.
     
-    _addModeIsEnabled = YES;
-    
     NSMutableDictionary *triggerToEffectDict = [NSMutableDictionary dictionary];
     
     /// Drag trigger
@@ -232,16 +230,21 @@ BOOL _addModeIsEnabled = NO;
         }
     }
     
-    /// Set _remaps to generated
+    /// Set `_remaps` to generated
     _remaps = @{
         @{}: triggerToEffectDict
     };
+    
+    /// Update state and notifiy
+    _addModeIsEnabled = YES;
+    [MFMessagePort sendMessage:@"addModeEnabled" withPayload:nil expectingReply:NO];
 }
 
 + (void)disableAddMode {
         
-    _addModeIsEnabled = NO;
     [self reload];
+    _addModeIsEnabled = NO;
+    [MFMessagePort sendMessage:@"addModeDisabled" withPayload:nil expectingReply:NO];
 }
 
 + (void)disableAddModeWithPayload:(NSDictionary *)payload {

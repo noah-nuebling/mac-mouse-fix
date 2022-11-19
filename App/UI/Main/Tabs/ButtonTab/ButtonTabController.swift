@@ -177,7 +177,7 @@ import CocoaLumberjackSwift
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
         
         /// Do actual init
-        initAddFieldStuff()
+        nonGarbageInit()
     }
     
     required init?(coder: NSCoder) {
@@ -190,7 +190,22 @@ import CocoaLumberjackSwift
         super.init(coder: coder)
         
         /// Real init
-        initAddFieldStuff()
+        nonGarbageInit()
+    }
+    
+    func nonGarbageInit() {
+        
+        /// Note: Why are we doing some stuff in init and some in viewDidLoad? I don't understand the logic behind that.
+        
+        /// Validate: Init is not called twice
+        assert(MainAppState.shared.buttonTabController == nil)
+        
+        /// Store self into global state
+        ///     Why is this in `initAddFieldStuff`?
+        MainAppState.shared.buttonTabController = self
+        
+        /// Init state
+        pointerIsInsideAddField = false
     }
     
     
@@ -198,7 +213,7 @@ import CocoaLumberjackSwift
         super.viewDidLoad()
         
         /// Init remaps when the helper becomes (or already is) enabled
-        ///     This doesn't really belong here. It just needs to be executed on app start (which it is, being here)
+        ///     This doesn't really belong here. It just needs to be executed when the app is first enabled.
         ///     TODO: Move this. E.g. to   `AppDelegate - applicationDidFinishLaunching`
         ///
         EnabledState.shared.producer.startWithValues { enabled in
@@ -207,7 +222,6 @@ import CocoaLumberjackSwift
         /// Add trackingArea
         ///     Do we ever need to remove it?
         trackingArea = NSTrackingArea(rect: self.addField.bounds, options: [.mouseEnteredAndExited, .activeInKeyWindow], owner: self)
-        
         self.addField.addTrackingArea(trackingArea)
         
         /// Init AddField visuals
@@ -512,32 +526,23 @@ import CocoaLumberjackSwift
     var pointerIsInsideAddField: Bool
     var trackingArea: NSTrackingArea
     
-    /// Init
-    func initAddFieldStuff() {
-        
-        /// Validate: Init is not called twice
-        assert(MainAppState.shared.buttonTabController == nil)
-        
-        /// Store self into global state
-        ///     Why is this in `initAddFieldStuff`?
-        MainAppState.shared.buttonTabController = self
-        
-        /// Init state
-        pointerIsInsideAddField = false
-    }
-    
     /// AddField callbacks
     ///     TODO: Maybe think about race condition for the mouseEntered and mouseExited functions
 
     override func mouseEntered(with event: NSEvent) {
         pointerIsInsideAddField = true
-        addField.hoverEffect(enable: true)
         MFMessagePort.sendMessage("enableAddMode", withPayload: nil, expectingReply: false)
     }
     override func mouseExited(with event: NSEvent) {
         pointerIsInsideAddField = false
-        addField.hoverEffect(enable: false)
         MFMessagePort.sendMessage("disableAddMode", withPayload: nil, expectingReply: false)
+    }
+    
+    @objc func handleAddModeEnabled() {
+        addField.hoverEffect(enable: true)
+    }
+    @objc func handleAddModeDisabled() {
+        addField.hoverEffect(enable: false)
     }
     
     /// Ignore MB1 & MB2
