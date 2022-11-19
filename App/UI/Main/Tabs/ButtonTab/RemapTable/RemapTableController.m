@@ -464,7 +464,6 @@ static void updateBorderColor(RemapTableController *object, BOOL isInitialAppear
             
         } else {
             
-            
             BOOL isInitialAppearance = [initialAppearance isEqual:newAppearance.name];
             updateBorderColor(self, isInitialAppearance);
             
