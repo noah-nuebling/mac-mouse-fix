@@ -539,10 +539,33 @@ import CocoaLumberjackSwift
     }
     
     @objc func handleAddModeEnabled() {
-        addField.hoverEffect(enable: true)
+        
+        /// \discussion After addMode refactoring around commit 02c9fcc20d3f03d8b0d2db6e25830276ed937107 I saw a deadlock in the animationCode maybe dispatch to main will prevent it. Edit: Nope still happens. Edit2: Could fix the deadlock by not locking the CATransaction in Animate.swift. So dispatching to main here might be unnecessary.
+        
+        DispatchQueue.main.async {
+            self.addField.hoverEffect(enable: true)
+        }
     }
     @objc func handleAddModeDisabled() {
-        addField.hoverEffect(enable: false)
+        DispatchQueue.main.async {
+            self.addField.hoverEffect(enable: false)
+        }
+    }
+
+    @objc func handleAddModeConcluded(payload: NSDictionary) {
+        
+        DispatchQueue.main.async {
+            
+            /// Debug
+            DDLogDebug("Received AddMode feedback with payload: \(payload)")
+            
+            /// Remove hover
+            self.addField.hoverEffect(enable: false, playAcceptAnimation: true)
+            
+            /// Send payoad to tableController
+            ///     The payload is an almost finished remapsTable (aka RemapTableController.dataModel) entry with the kMFRemapsKeyEffect key missing
+            self.tableController.addRow(withHelperPayload: payload as! [AnyHashable : Any])
+        }
     }
     
     /// Ignore MB1 & MB2
@@ -563,25 +586,5 @@ import CocoaLumberjackSwift
         let message = NSAttributedString(coolMarkdown: messageRaw)!;
         
         ToastNotificationController.attachNotification(withMessage: message, to: MainAppState.shared.window!, forDuration: -1)
-    }
-    
-    /// Conclude addMode
-
-    @objc func handleReceivedAddModeFeedbackFromHelper(payload: NSDictionary) {
-        
-        DDLogDebug("Received AddMode feedback with payload: \(payload)")
-        
-        self.wrapUpAddModeFeedbackHandling(payload: payload)
-    }
-    
-    @objc func wrapUpAddModeFeedbackHandling(payload: NSDictionary) {
-        
-        /// Remove hover
-        addField.hoverEffect(enable: false, playAcceptAnimation: true)
-        
-        /// Send payoad to tableController
-        ///     The payload is an almost finished remapsTable (aka RemapTableController.dataModel) entry with the kMFRemapsKeyEffect key missing
-        tableController.addRow(withHelperPayload: payload as! [AnyHashable : Any])
-        
     }
 }

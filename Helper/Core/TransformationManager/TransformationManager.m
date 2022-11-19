@@ -247,29 +247,36 @@ BOOL _addModeIsEnabled = NO;
     [MFMessagePort sendMessage:@"addModeDisabled" withPayload:nil expectingReply:NO];
 }
 
-+ (void)disableAddModeWithPayload:(NSDictionary *)payload {
-    /// Wrapper for disableAddMode. Not sure if this is useful
-    
-    if (![self addModePayloadIsValid:payload]) return;
-        
-    [self disableAddMode];
-}
+//+ (void)disableAddModeWithPayload:(NSDictionary *)payload {
+//    /// Wrapper for disableAddMode. Not sure if this is useful
+//
+//    if (![self addModePayloadIsValid:payload]) return;
+//
+//    [self disableAddMode];
+//}
 
-+ (void)sendAddModeFeedbackWithPayload:(NSDictionary *)payload {
-    
-    if (![self addModePayloadIsValid:payload]) return;
-    
-    [MFMessagePort sendMessage:@"addModeFeedback" withPayload:payload expectingReply:NO];
-    ///    [TransformationManager performSelector:@selector(disableAddMode) withObject:nil afterDelay:0.5];
-    /// ^ We did this to keep the remapping disabled for a little while after adding a new row, but it leads to adding several entries at once when trying to input button modification precondition, if you're not fast enough.
-}
+//+ (void)sendAddModeFeedbackWithPayload:(NSDictionary *)payload {
+//
+//    if (![self addModePayloadIsValid:payload]) return;
+//
+//    [MFMessagePort sendMessage:@"addModeFeedback" withPayload:payload expectingReply:NO];
+//    ///    [TransformationManager performSelector:@selector(disableAddMode) withObject:nil afterDelay:0.5];
+//    /// ^ We did this to keep the remapping disabled for a little while after adding a new row, but it leads to adding several entries at once when trying to input button modification precondition, if you're not fast enough.
+//}
 
 + (void)concludeAddModeWithPayload:(NSDictionary *)payload {
     
     DDLogDebug(@"Concluding addMode with payload: %@", payload);
     
-    [self sendAddModeFeedbackWithPayload:payload];
-    [self disableAddModeWithPayload:payload];
+    if (![self addModePayloadIsValid:payload]) return;
+    
+    [self reload];
+    _addModeIsEnabled = NO;
+//    [MFMessagePort sendMessage:@"addModeDisabled" withPayload:nil expectingReply:NO];
+    [MFMessagePort sendMessage:@"addModeFeedback" withPayload:payload expectingReply:NO];
+    ///    [TransformationManager performSelector:@selector(disableAddMode) withObject:nil afterDelay:0.5];
+    /// ^ We did this to keep the remapping disabled for a little while after adding a new row, but it leads to adding several entries at once when trying to input button modification precondition, if you're not fast enough.
+
 }
 
 

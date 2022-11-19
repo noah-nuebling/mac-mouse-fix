@@ -38,8 +38,14 @@ import QuartzCore
         
 
         
+
+        /// Lock
+        /// Locking seems to sometimes create a deadlock with the addField hoveranimation where one thread is waiting for something on the "NSCGSTransactionAfter" queue and the other is on the mainQueue waiting for CA::Transaction::commit().
+        /// I'll just disable locking now and hope for the best. Not sure what it does anyways.
+        
+//        CATransaction.lock()
+        
         /// Do changes
-        CATransaction.lock() /// Not sure if necessary
         CATransaction.begin()
         if animation.duration != 0 {
             CATransaction.setCompletionBlock(onComplete) /// Need to set this before making changes to work
@@ -51,6 +57,8 @@ import QuartzCore
             onComplete?() /// Do onComplete synchronously if no animation
         }
         CATransaction.commit()
-        CATransaction.unlock()
+        
+        /// Unlock
+//        CATransaction.unlock()
     }
 }

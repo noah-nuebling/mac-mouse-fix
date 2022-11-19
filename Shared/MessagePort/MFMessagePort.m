@@ -58,7 +58,7 @@ static CFDataRef _Nullable didReceiveMessage(CFMessagePortRef port, SInt32 messa
     } else if ([message isEqualToString:@"addModeDisabled"]) {
         [MainAppState.shared.buttonTabController handleAddModeDisabled];
     } else if ([message isEqualToString:@"addModeFeedback"]) {
-        [MainAppState.shared.buttonTabController handleReceivedAddModeFeedbackFromHelperWithPayload:(NSDictionary *)payload];
+        [MainAppState.shared.buttonTabController handleAddModeConcludedWithPayload:(NSDictionary *)payload];
     } else if ([message isEqualToString:@"keyCaptureModeFeedback"]) {
         [KeyCaptureView handleKeyCaptureModeFeedbackWithPayload:(NSDictionary *)payload isSystemDefinedEvent:NO];
     } else if ([message isEqualToString:@"keyCaptureModeFeedbackWithSystemEvent"]) {
