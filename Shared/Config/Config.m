@@ -222,11 +222,19 @@ void commitConfig() {
      This allows you to easily test configurations.
      
      Secret trick to find the main configuration file: Open the Mac Mouse Fix app, and click on "More...". Then, hold Command and Shift while clicking the Mac Mouse Fix Icon in the top left.
+     
+     Why are we disabling this now?
+     In MMF 3 this causes a bug with the addField. And turning this off is the only feasible way I can find to fix that bug.
+     
+     Explanation of the bug that this caused:
+     - When the mainApp writes the config to file it calls `[Config handleConfigFileChange]` . Then the eventStreamCallback calls `[Config handleConfigFileChange]` again - but with a significant delay. Sometimes seems like more than a second. The second, delayed call to `[Config handleConfigFileChange]` leads addMode to be disabled. When the user intends to use addMode that's annoying.
+     - To fix this we would either have to ignore FSEvents originating from the mainApp - I haven't found a way to do that. Or we would have to disable the delay with which the FSEvent callback is called. There is a `latency` parameter but even if you set it low there are still usually long delays.
      */
     
     assert(SharedUtility.runningHelper);
     
-#if IS_HELPER
+// #if IS_HELPER
+#if 0 /// Disable for now
     
     CFArrayRef pathsToWatch;
     void *callbackInfo = NULL; /// Could put stream-specific data here.
@@ -243,8 +251,15 @@ void commitConfig() {
     DDLogInfo(@"pathsToWatch : %@", (__bridge NSArray *)pathsToWatch);
     
     /// Create eventStream
-    CFAbsoluteTime latency = 0.3;
-    FSEventStreamRef remapsFileEventStream = FSEventStreamCreate(kCFAllocatorDefault, &Handle_FSEventStreamCallback, callbackInfo, pathsToWatch, kFSEventStreamEventIdSinceNow, latency, kFSEventStreamCreateFlagFileEvents ^ kFSEventStreamCreateFlagUseCFTypes);
+    /// Notes:
+    /// - Not sure if fileEvents flag is a good idea
+    /// - Flags ignoreSelf and markSelf seem redundant but this post (https://stackoverflow.com/a/37014613/10601702) says it's necessary. Still kind of unnecessary since Helper never writes to file I think.
+    /// - Latency is for optimization I think. Probably totally unnecessary here, but with noDefer it shouldn't make a difference.
+    /// - The flag kFSEventStreamCreateFlagUseExtendedData apparently makes a file "inode" available which is something like a low level id. Don't think that's useful for us though.
+    
+    CFAbsoluteTime latency = 300.0/1000.0;
+    FSEventStreamCreateFlags flags = kFSEventStreamCreateFlagUseCFTypes | kFSEventStreamCreateFlagNoDefer | kFSEventStreamCreateFlagIgnoreSelf | kFSEventStreamCreateFlagFileEvents | kFSEventStreamCreateFlagMarkSelf;
+    FSEventStreamRef remapsFileEventStream = FSEventStreamCreate(kCFAllocatorDefault, &Handle_FSEventStreamCallback, callbackInfo, pathsToWatch, kFSEventStreamEventIdSinceNow, latency, flags);
     
     /// Start eventStream
     FSEventStreamScheduleWithRunLoop(remapsFileEventStream, CFRunLoopGetCurrent(), kCFRunLoopDefaultMode);
@@ -258,11 +273,29 @@ void commitConfig() {
 #endif
 }
 
-void Handle_FSEventStreamCallback (ConstFSEventStreamRef streamRef, void *clientCallBackInfo, size_t numEvents, void *eventPaths, const FSEventStreamEventFlags *eventFlags, const FSEventStreamEventId *eventIds) {
+void Handle_FSEventStreamCallback(ConstFSEventStreamRef streamRef, void *clientCallBackInfo, size_t numEvents, void *eventPaths, const FSEventStreamEventFlags *eventFlags, const FSEventStreamEventId *eventIds) {
     
-    DDLogInfo(@"config.plist changed (FSMonitor)");
+    /// Disable for now (see setupFSEventStreamCallback for explanation)
+    assert(false);
     
-    [Config handleConfigFileChange];
+    /// Gather info
+    
+    NSArray<NSString *> *paths = (__bridge NSArray *)((CFArrayRef)eventPaths);
+    BOOL noInfo = *eventFlags == kFSEventStreamEventFlagNone;
+    BOOL isFromSelf = *eventFlags & kFSEventStreamEventFlagOwnEvent;
+    BOOL isModified = *eventFlags & kFSEventStreamEventFlagItemModified;
+    BOOL isRemoved = *eventFlags & kFSEventStreamEventFlagItemRemoved;
+    BOOL isRenamed = *eventFlags & kFSEventStreamEventFlagItemRenamed;
+    BOOL isCreated = *eventFlags & kFSEventStreamEventFlagItemCreated;
+    BOOL isFile = *eventFlags & kFSEventStreamEventFlagItemIsFile;
+    
+    /// Log
+    
+    DDLogInfo(@"FSEvent for config.plist - paths: %@, noInfo: %d, isFromSelf: %d, isModified: %d, isRemoved: %d, isRenamed: %d, isCreated: %d, isFile: %d", paths, noInfo, isFromSelf, isModified, isRemoved, isRenamed, isCreated, isFile);
+    
+    if (!isFromSelf && isFile) {
+        [Config handleConfigFileChange];
+    }
 }
 
 

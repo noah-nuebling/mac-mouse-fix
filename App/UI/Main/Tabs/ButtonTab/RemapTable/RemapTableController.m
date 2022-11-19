@@ -65,6 +65,9 @@
     self.dataModel = Config.shared.config[kMFConfigKeyRemaps];
 }
 - (void)writeDataModelToConfig {
+    
+    DDLogDebug(@"TRM remap table store remaps"); /// Currently looks like this is never called? That can't be true.
+    
     setConfig(kMFConfigKeyRemaps, self.dataModel);
     commitConfig();
 }
