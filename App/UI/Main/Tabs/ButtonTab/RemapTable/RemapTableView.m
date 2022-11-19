@@ -49,7 +49,7 @@ double effectColumnWidth = -1;
     ///     Edit: it seemingly won't have created the actual tableCellViews, yet though.
     
     /// Init height constraint
-    _heightConstraint = [self.heightAnchor constraintEqualToConstant:self.intrinsicContentSize.height-1];
+    _heightConstraint = [self.heightAnchor constraintEqualToConstant:self.intrinsicContentSize.height];
     _heightConstraint.priority = 1000;
     [_heightConstraint setActive:YES];
     
@@ -207,20 +207,17 @@ double effectColumnWidth = -1;
 
 - (void)updateSizeWithAnimation:(BOOL)animate {
     
-    NSSize s = self.intrinsicContentSize;
-    NSSize targetSize = NSMakeSize(s.width, s.height-1);
-    
-    [self setFrameSize:targetSize]; /// THIS FIXES EVERYTHING I'M AN APE IN FRONT OF A TYPEWRITER
+    [self setFrameSize:self.intrinsicContentSize]; /// THIS FIXES EVERYTHING I'M AN APE IN FRONT OF A TYPEWRITER
 
     if (animate) {
         [NSAnimationContext runAnimationGroup:^(NSAnimationContext * _Nonnull context) {
             context.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionDefault];
             context.duration = 0.25;
-            _heightConstraint.animator.constant = targetSize.height;
+            _heightConstraint.animator.constant = self.intrinsicContentSize.height;
             
         }];
     } else {
-        _heightConstraint.constant = targetSize.height;
+        _heightConstraint.constant = self.intrinsicContentSize.height;
     }
 }
 

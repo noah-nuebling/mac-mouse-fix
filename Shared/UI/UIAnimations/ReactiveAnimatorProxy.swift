@@ -115,70 +115,55 @@ extension NSAnimatablePropertyContainer where Self: NSObject {
                 /// Special case: shadows
                 ///
                 
-                if keyPath != "shadow" {
-                    
-//                    base.setValue(newValue, forKeyPath: keyPath)
-                    
-                } else {
-                    
-                    /// Validate
-                    
-                    assert(keyPath == "shadow")
-                    
-                    /// Init shadow
-                    /// Seems like you need to set a shadow before you play this animation for the first time, or it looks weird. Where 'before' means way before. Not during the same (runLoop cycle?) (rendering cycle?) that you call this the first time.
-                    
-                    if base.shadow == nil {
+                /// Seems like you need to set a shadow before you play this animation for the first time, or it looks weird. Where 'before' means way before. Not during the same (runLoop cycle?) (rendering cycle?) that you call this the first time.
+                
+                if base.shadow == nil {
 //                    base.wantsLayer = true
-                        base.shadow = .clearShadow
+                    base.shadow = .clearShadow
 //                    base.updateLayer()
 //                    base.layer.shadow
-                        
-                    }
                     
-                    /// Prevent animation from resetting after completion (not necessary for animationManager I think)
-                    animation.fillMode = .forwards
-                    animation.isRemovedOnCompletion = false
-                    
-                    /// Try to get the layerPresentation to sync up with the the frst time this animation plays. doesn't work
-//                    base.needsDisplay = true
-//                    base.displayIfNeeded()
-//                    base.layer?.setNeedsDisplay()
-//                    base.layer?.displayIfNeeded()
-                    
-                    let c = animation.copy() as! CABasicAnimation// newValue.shadowColor
-                    let r = animation.copy() as! CABasicAnimation//newValue.shadowBlurRadius
-                    let o = animation.copy() as! CABasicAnimation // newValue.shadowOffset
-                    
-                    c.fromValue = base.shadow?.shadowColor
-                    c.toValue = newValue.shadowColor
-                    
-                    r.fromValue = base.shadow?.shadowBlurRadius
-                    r.toValue = newValue.shadowBlurRadius
-                    
-                    o.fromValue = base.shadow?.shadowOffset
-                    o.toValue = newValue.shadowOffset
-                    
-                    base.layer?.add(c, forKey: "shadowColor")
-                    base.layer?.add(r, forKey: "shadowRadius")
-                    base.layer?.add(o, forKey: "shadowOffset")
-                    
-                    CATransaction.setCompletionBlock {
-                        base.shadow = newValue
-                        CATransaction.completionBlock()?()
-                    }
+                }
+//                if base.shadow == .clearShadow {
+//                    base.layer.preset
+//                }
+                
+                /// Prevent animation from resetting after completion (not necessary for animationManager I think)
+                animation.fillMode = .forwards
+                animation.isRemovedOnCompletion = false
+                
+                /// Try to get the layerPresentation to sync up with the the frst time this animation plays. doesn't work
+                base.needsDisplay = true
+                base.displayIfNeeded()
+                base.layer?.setNeedsDisplay()
+                base.layer?.displayIfNeeded()
+                
+                let c = animation.copy() as! CABasicAnimation// newValue.shadowColor
+                let r = animation.copy() as! CABasicAnimation//newValue.shadowBlurRadius
+                let o = animation.copy() as! CABasicAnimation // newValue.shadowOffset
+                
+                c.fromValue = base.shadow?.shadowColor
+                c.toValue = newValue.shadowColor
+                
+                r.fromValue = base.shadow?.shadowBlurRadius
+                r.toValue = newValue.shadowBlurRadius
+                
+                o.fromValue = base.shadow?.shadowOffset
+                o.toValue = newValue.shadowOffset
+                
+                base.layer?.add(c, forKey: "shadowColor")
+                base.layer?.add(r, forKey: "shadowRadius")
+                base.layer?.add(o, forKey: "shadowOffset")
+
+                CATransaction.setCompletionBlock {
+                    base.shadow = newValue
+                    CATransaction.completionBlock()?()
                 }
                 
             } else if let newValue = newValue as? CATransform3D, let base = base as? CALayer {
                 
                 /// Special case: transforms
                 ///     This makes the `scale()` NSView extension obsolete
-                
-                /// Validate
-                
-                assert(keyPath == "transform")
-                
-                /// Stuff
                 
                 animation.fromValue = base.presentation()?.value(forKeyPath: "transform")
                 animation.toValue = newValue
@@ -191,8 +176,7 @@ extension NSAnimatablePropertyContainer where Self: NSObject {
                 
             } else if let animationManager = NSAnimationManager.current() {
                 
-                /// Default case: Use animationManager
-                
+                /// Default: Use animationManager
                 animationManager.setTargetValue(newValue, for: base, keyPath: keyPath, animation: animation)
                 
             } else { /// Fallback

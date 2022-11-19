@@ -332,20 +332,11 @@ static void updateBorderColor(RemapTableController *object) {
     ///     This is really just .separatorColor without transparency
     ///     This is copied from ButtonTabController > updateColors()
     
-//    if (isDarkMode) {
-//        object.scrollView.layer.borderColor = [NSColor colorWithRed:57.0/255.0 green:57.0/255.0 blue:57.0/255.0 alpha:1.0].CGColor;
-//    } else {
-//        object.scrollView.layer.borderColor = [NSColor colorWithRed:227.0/255.0 green:227.0/255.0 blue:227.0/255.0 alpha:1.0].CGColor;
-//    }
-    
-    if (@available(macOS 10.14, *)) {
-        object.scrollView.layer.borderColor = NSColor.separatorColor.CGColor;
+    if (isDarkMode) {
+        object.scrollView.layer.borderColor = [NSColor colorWithRed:57.0/255.0 green:57.0/255.0 blue:57.0/255.0 alpha:1.0].CGColor;
     } else {
-        object.scrollView.layer.borderColor = NSColor.gridColor.CGColor;
+        object.scrollView.layer.borderColor = [NSColor colorWithRed:227.0/255.0 green:227.0/255.0 blue:227.0/255.0 alpha:1.0].CGColor;
     }
-    object.scrollView.automaticallyAdjustsContentInsets = NO;
-    object.scrollView.contentInsets = NSEdgeInsetsMake(5, 5, 5, 5);
-//    object.scrollView.
     
     ///
 //    object.scrollView.layer.borderColor = NSColor.separatorColor.CGColor;
