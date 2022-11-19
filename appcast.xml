@@ -294,7 +294,7 @@
       @media (prefers-color-scheme: dark) {
 
           body {
-              background-color: #1e1e1e; 
+              /* background-color: #1e1e1e;  */
               /* ^ Sparkle background is still bright when we have `background-color: transparent` even with darkmode active. 
                   This is the color of the text field background in Apple Mail on macOS 11 BigSur 
                   
@@ -670,7 +670,7 @@ Guide</a></li>
       @media (prefers-color-scheme: dark) {
 
           body {
-              background-color: #1e1e1e; 
+              /* background-color: #1e1e1e;  */
               /* ^ Sparkle background is still bright when we have `background-color: transparent` even with darkmode active. 
                   This is the color of the text field background in Apple Mail on macOS 11 BigSur 
                   
@@ -1032,7 +1032,7 @@ screen</li>
       @media (prefers-color-scheme: dark) {
 
           body {
-              background-color: #1e1e1e; 
+              /* background-color: #1e1e1e;  */
               /* ^ Sparkle background is still bright when we have `background-color: transparent` even with darkmode active. 
                   This is the color of the text field background in Apple Mail on macOS 11 BigSur 
                   
@@ -1413,7 +1413,7 @@ was very helpful in figuring out the problem!</li>
       @media (prefers-color-scheme: dark) {
 
           body {
-              background-color: #1e1e1e; 
+              /* background-color: #1e1e1e;  */
               /* ^ Sparkle background is still bright when we have `background-color: transparent` even with darkmode active. 
                   This is the color of the text field background in Apple Mail on macOS 11 BigSur 
                   
@@ -1818,7 +1818,7 @@ future release.</li>
       @media (prefers-color-scheme: dark) {
 
           body {
-              background-color: #1e1e1e; 
+              /* background-color: #1e1e1e;  */
               /* ^ Sparkle background is still bright when we have `background-color: transparent` even with darkmode active. 
                   This is the color of the text field background in Apple Mail on macOS 11 BigSur 
                   
@@ -2171,7 +2171,7 @@ proprietary function keys like “Play-Pause” or “Mute Speaker”.</p>
       @media (prefers-color-scheme: dark) {
 
           body {
-              background-color: #1e1e1e; 
+              /* background-color: #1e1e1e;  */
               /* ^ Sparkle background is still bright when we have `background-color: transparent` even with darkmode active. 
                   This is the color of the text field background in Apple Mail on macOS 11 BigSur 
                   
@@ -2594,7 +2594,7 @@ quite a bit closer to that goal. Thank you! 🚀🚀🚀 :)</p>
       @media (prefers-color-scheme: dark) {
 
           body {
-              background-color: #1e1e1e; 
+              /* background-color: #1e1e1e;  */
               /* ^ Sparkle background is still bright when we have `background-color: transparent` even with darkmode active. 
                   This is the color of the text field background in Apple Mail on macOS 11 BigSur 
                   
@@ -2942,7 +2942,7 @@ Fix Helper’ screen</li>
       @media (prefers-color-scheme: dark) {
 
           body {
-              background-color: #1e1e1e; 
+              /* background-color: #1e1e1e;  */
               /* ^ Sparkle background is still bright when we have `background-color: transparent` even with darkmode active. 
                   This is the color of the text field background in Apple Mail on macOS 11 BigSur 
                   
@@ -3286,7 +3286,7 @@ running. Resolves #67.</li>
       @media (prefers-color-scheme: dark) {
 
           body {
-              background-color: #1e1e1e; 
+              /* background-color: #1e1e1e;  */
               /* ^ Sparkle background is still bright when we have `background-color: transparent` even with darkmode active. 
                   This is the color of the text field background in Apple Mail on macOS 11 BigSur 
                   
