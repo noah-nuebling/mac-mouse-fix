@@ -125,7 +125,7 @@
             /* ^ Sparkle background is still bright when we have `background-color: transparent` even with darkmode active. 
                 This is the color of the text field background in Apple Mail on macOS 11 BigSur 
                 
-                Edit: This might've been because pandoc made the background white, which we've overriden now, so maybe this is not necessary anymore.
+                Edit: This was because pandoc made the background white, which we've overriden now. So now this is not necessary anymore. Might want to reenable for testing in Safari.
                 */
 
             color: rgba(255, 255, 255, 0.9); /* For headers */
