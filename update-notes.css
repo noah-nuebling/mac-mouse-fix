@@ -7,6 +7,7 @@
     :root {
         font-size: 10px; /* 1 rem is this much */
         padding: 0 0 0 0;
+        background-color: transparent; /* pandoc automatically applies styling where the bg is white. So we need to override that. */
     }
 
     body {
@@ -108,7 +109,10 @@
         body {
             background-color: #1e1e1e; 
             /* ^ Sparkle background is still bright when we have `background-color: transparent` even with darkmode active. 
-                This is the color of the text field background in Apple Mail on macOS 11 BigSur */
+                This is the color of the text field background in Apple Mail on macOS 11 BigSur 
+                
+                Edit: This might've been because pandoc made the background white, which we've overriden now, so maybe this is not necessary anymore.
+                */
 
             color: #D9D9D9; /* For headers */
         }
