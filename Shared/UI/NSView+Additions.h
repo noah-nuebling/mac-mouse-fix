@@ -13,6 +13,10 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface NSView (Additions)
 
+- (CGRect)rectInQuartzScreenCoordinates;
+- (CGRect)rectInScreenCoordinates;
+- (CGRect)rectInWindowCoordinates;
+
 - (NSArray<NSView *> *)subviewsWithIdentifier:(NSString *)identifier;
 
 - (NSArray<NSView *> *)nestedSubviews;

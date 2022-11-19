@@ -477,9 +477,15 @@ static void iteratePropertiesOn(id obj, void(^callback)(objc_property_t property
 
 #pragma mark - Coordinate conversion
 
-/// The *cocoa*  global "display" coordinate system starts at the bottom left of the main screen, while the *quartz* coordinate system starts at the top left
+#pragma mark NSView frame conversion
+
+/// See NSView+Additions
+
+#pragma mark Flipping
+
+/// The *cocoa*  global "display" coordinate system starts at the bottom left of the zero screen, while the *quartz* coordinate system starts at the top left
 /// We sometimes need to convert between them
-/// I've tried to write conversion functions before (Find them in HelperUtility) but I don't think they worked. I'll give it one more try:
+/// I've tried to write conversion functions before (Find them in HelperUtility) but I don't think they worked. I'll give it one more try. Edit: This works!
 
 /// Convenience wrappers
 
@@ -492,23 +498,23 @@ static void iteratePropertiesOn(id obj, void(^callback)(objc_property_t property
 }
 
 + (NSRect)quartzToCocoaScreenSpace:(CGRect)quartzFrame {
-    return [self cocoaToQuartzScreenSpaceConversionWithOriginFrame:quartzFrame destinationIsCocoa:YES];
+    return [self cocoaToQuartzScreenSpaceConversionWithOriginFrame:quartzFrame];
 }
 + (CGRect)cocoaToQuartzScreenSpace:(NSRect)cocoaFrame {
-    return [self cocoaToQuartzScreenSpaceConversionWithOriginFrame:cocoaFrame destinationIsCocoa:NO];
+    return [self cocoaToQuartzScreenSpaceConversionWithOriginFrame:cocoaFrame];
 }
 
 /// Base function
 
-+ (CGRect)cocoaToQuartzScreenSpaceConversionWithOriginFrame:(CGRect)originFrame destinationIsCocoa:(BOOL)toCocoa {
++ (CGRect)cocoaToQuartzScreenSpaceConversionWithOriginFrame:(CGRect)originFrame {
     
     /// Src: https://stackoverflow.com/questions/19884363/in-objective-c-os-x-is-the-global-display-coordinate-space-used-by-quartz-d
     
-    /// Get main screen
+    /// Get zero screen
     NSScreen *zeroScreen = NSScreen.screens[0];
     CGFloat screenHeight = zeroScreen.frame.size.height;
     
-    /// Get other
+    /// Extract values
     CGFloat originY = originFrame.origin.y;
     CGFloat frameHeight = originFrame.size.height;
     
@@ -521,7 +527,6 @@ static void iteratePropertiesOn(id obj, void(^callback)(objc_property_t property
     
     /// return
     return destinationFrame;
-
 }
 
 #pragma mark - Other
