@@ -941,6 +941,7 @@
 			children = (
 				4F6F679F28A8141800C6C40F /* ButtonTabController.swift */,
 				4F4150652927B6A40040BA7D /* AddField.swift */,
+				4FA8A30C28A9509E001E740F /* Options */,
 				4FA911E4260D00CB00553CA8 /* RemapTable */,
 			);
 			path = ButtonTab;
@@ -1340,7 +1341,6 @@
 				4FA1FD7E28A847BF00D1C8EE /* DeletableTableCellView.xib */,
 				4FB4F9FC260FDBC800806DDD /* RemapTableUtility.h */,
 				4FB4F9FD260FDBC800806DDD /* RemapTableUtility.m */,
-				4FA8A30C28A9509E001E740F /* Options */,
 				4F74ADC228A7E58500901D69 /* KeyCaptureView */,
 			);
 			path = RemapTable;
