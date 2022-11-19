@@ -329,14 +329,26 @@ static void updateBorderColor(RemapTableController *object) {
     }
         
     /// Update borderColor
-    ///     This is really just .separatorColor without transparency
-    ///     This is copied from ButtonTabController > updateColors()
+    /// Notes:
+    /// - This is really just .separatorColor without transparency
+    /// - This is copied from ButtonTabController > updateColors()
+    /// - Update: These hardcoded solid colors don't work properly with desktop tinting. We'll use .separatorColor instead and make the table 1 px shorter to prevent the border from overlapping with the grid and looking weird. The overlap will still happen when you scroll but that's okay
     
-    if (isDarkMode) {
-        object.scrollView.layer.borderColor = [NSColor colorWithRed:57.0/255.0 green:57.0/255.0 blue:57.0/255.0 alpha:1.0].CGColor;
+    /// v New system colors approach
+    
+    if (@available(macOS 10.14, *)) {
+        object.scrollView.layer.borderColor = NSColor.separatorColor.CGColor;
     } else {
-        object.scrollView.layer.borderColor = [NSColor colorWithRed:227.0/255.0 green:227.0/255.0 blue:227.0/255.0 alpha:1.0].CGColor;
+        object.scrollView.layer.borderColor = NSColor.gridColor.CGColor;
     }
+    
+    /// v Old hardcoded colors approach
+    
+//    if (isDarkMode) {
+//        object.scrollView.layer.borderColor = [NSColor colorWithRed:57.0/255.0 green:57.0/255.0 blue:57.0/255.0 alpha:1.0].CGColor;
+//    } else {
+//        object.scrollView.layer.borderColor = [NSColor colorWithRed:227.0/255.0 green:227.0/255.0 blue:227.0/255.0 alpha:1.0].CGColor;
+//    }
     
     ///
 //    object.scrollView.layer.borderColor = NSColor.separatorColor.CGColor;

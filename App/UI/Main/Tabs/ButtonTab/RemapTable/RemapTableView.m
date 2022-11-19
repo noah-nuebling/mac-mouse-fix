@@ -49,7 +49,7 @@ double effectColumnWidth = -1;
     ///     Edit: it seemingly won't have created the actual tableCellViews, yet though.
     
     /// Init height constraint
-    _heightConstraint = [self.heightAnchor constraintEqualToConstant:self.intrinsicContentSize.height];
+    _heightConstraint = [self.heightAnchor constraintEqualToConstant:self.intrinsicContentSize.height + 1];
     _heightConstraint.priority = 1000;
     [_heightConstraint setActive:YES];
     
@@ -207,17 +207,23 @@ double effectColumnWidth = -1;
 
 - (void)updateSizeWithAnimation:(BOOL)animate {
     
-    [self setFrameSize:self.intrinsicContentSize]; /// THIS FIXES EVERYTHING I'M AN APE IN FRONT OF A TYPEWRITER
+    /// Notes:
+    /// - `+ 1` to prevent overlap between scrollView border and tableView grid, which looks weird. Also doing that in [RemapTableView coolDidLoad]
+    
+    NSSize z = self.intrinsicContentSize;
+    NSSize targetSize = NSMakeSize(z.width, z.height + 1);
+    
+    [self setFrameSize:targetSize]; /// THIS FIXES EVERYTHING I'M AN APE IN FRONT OF A TYPEWRITER
 
     if (animate) {
         [NSAnimationContext runAnimationGroup:^(NSAnimationContext * _Nonnull context) {
             context.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionDefault];
             context.duration = 0.25;
-            _heightConstraint.animator.constant = self.intrinsicContentSize.height;
+            _heightConstraint.animator.constant = targetSize.height;
             
         }];
     } else {
-        _heightConstraint.constant = self.intrinsicContentSize.height;
+        _heightConstraint.constant = targetSize.height;
     }
 }
 
