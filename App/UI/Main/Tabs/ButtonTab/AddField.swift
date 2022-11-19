@@ -17,12 +17,13 @@ import CocoaLumberjackSwift
     @IBOutlet var plusIconView: NSImageView!
     
     /// Drawing
+    ///     Overriding draw() breaks desktop tinting even if we just call super.draw()
     
-    override func draw(_ dirtyRect: NSRect) {
-        super.draw(dirtyRect)
-
-        // Drawing code here.
-    }
+//    override func draw(_ dirtyRect: NSRect) {
+//        super.draw(dirtyRect)
+//
+//        // Drawing code here.
+//    }
     
     var appearanceObservation: NSKeyValueObservation? = nil
     
@@ -62,43 +63,75 @@ import CocoaLumberjackSwift
         self.wantsLayer = true
         
         /// Check darkmode
-        let isDarkMode = isDarkMode()
+        let isDarkMode = checkDarkMode()
         
-        /// Get baseColor
-        let baseColor: NSColor = isDarkMode ? .black : .white
+//        /// Get baseColor
+//        let baseColor: NSColor = isDarkMode ? .black : .white
+//
+//        /// Define baseColor blending fractions
+//        let fillFraction = isDarkMode ? 0.1 : 0.25
+//        let borderFraction = isDarkMode ? 0.1 : 0.25
         
-        /// Define baseColor blending fractions
-        let fillFraction = isDarkMode ? 0.1 : 0.25
-        let borderFraction = isDarkMode ? 0.1 : 0.25
-        
+        ///
         /// Update fillColor
-        ///     This is reallly just quarternaryLabelColor but without transparency. Edit: We're making it a little lighter actually.
-        ///     I couldn't find a nicer way to remove transparency except hardcoding it. Our solidColor methods from NSColor+Additions.m didn't work properly. I suspect it's because the NSColor objects can represent different colors depending on which context they are drawn in.
-        ///     Possible nicer solution: I think the only dynamic way to remove transparency that will be reliable is to somehow render the view in the background and then take a screenhot
-        ///     Other possible solution: We really want to do this so we don't see the NSShadow behind the view. Maybe we could clip the drawing of the shadow, then we wouldn't have to remove transparency at all.
+        /// - This is reallly just quarternaryLabelColor but without transparency. Edit: We're making it a little lighter actually.
+        /// - I couldn't find a nicer way to remove transparency except hardcoding it. Our solidColor methods from NSColor+Additions.m didn't work properly. I suspect it's because the NSColor objects can represent different colors depending on which context they are drawn in.
+        /// - Possible nicer solution: I think the only dynamic way to remove transparency that will be reliable is to somehow render the view in the background and then take a screenhot
+        /// - Other possible solution: We really want to do this so we don't see the NSShadow behind the view. Maybe we could clip the drawing of the shadow, then we wouldn't have to remove transparency at all.
+        /// - Update:
+        ///     - I tried lots of different approaches for this and finally found one that I'm confident should work, but it's really annoying to implement and I gave up on it. See these experiments in the (reverted) commit 35742760e0bb0c126e16183f11f65532953822cb
+        ///     - Instead we're just using systemColors now. So much easier! Even if the darkmode colors aren't quite as nice.
+
         
-        var quarternayLabelColor: NSColor
+        /// v New systemColor approach
+        /// Notes:
+        /// - Using systemColors now to properly support desktop tinting. (Can't use transparent colors because of the NSShadow on hover)
+        /// - .underPageBackgroundColor is not semantic but it looks perfect.
+        /// - .controlBackgroundColor is a little darker than the solidColors we chose but it's the best looking systemColour I could find which supports tinting
+        /// - I found these colors that support tinting (found them by searching for 'background', maybe there are more):
+        ///   - .controlBackgroundColor, .textBackgroundColor, .underPageBackgroundColor, .windowBackgroundColor
+        
         if isDarkMode {
-            quarternayLabelColor = NSColor(red: 57/255, green: 57/255, blue: 57/255, alpha: 1.0)
+            self.fillColor = .controlBackgroundColor
         } else {
-            quarternayLabelColor = NSColor(red: 227/255, green: 227/255, blue: 227/255, alpha: 1.0)
+            self.fillColor = .underPageBackgroundColor
         }
         
-//        quarternayLabelColor = quarternayLabelColor.withAlphaComponent(0.50) /// Make things a tiny bit transparent so that desktop tinting looks better
+        /// v Old solidColor approach
         
-        self.fillColor = quarternayLabelColor.blended(withFraction: fillFraction, of: baseColor)!
+//        var quarternayLabelColor: NSColor
+//        if isDarkMode {
+//            quarternayLabelColor = NSColor(red: 57/255, green: 57/255, blue: 57/255, alpha: 1.0)
+//        } else {
+//            quarternayLabelColor = NSColor(red: 227/255, green: 227/255, blue: 227/255, alpha: 1.0)
+//        }
+//
+//        self.fillColor = quarternayLabelColor.blended(withFraction: fillFraction, of: baseColor)!
         
+        ///
         /// Update borderColor
-        ///     This is really just .separatorColor without transparency
+        ///
+
+        /// v New systemColor approach
+        ///     Using systemColors now to properly support desktop tinting. Also the transparency isn't an issue at all here, not sure why we hardcoded the colors in the first place
         
-        let separatorColor: NSColor
-        if isDarkMode {
-            separatorColor = NSColor(red: 77/255, green: 77/255, blue: 77/255, alpha: 1.0)
+        if #available(macOS 10.14, *) {
+            self.borderColor = .separatorColor
         } else {
-            separatorColor = NSColor(red: 198/255, green: 198/255, blue: 198/255, alpha: 1.0)
+            self.borderColor = .gridColor
         }
         
-        self.borderColor = separatorColor.blended(withFraction: borderFraction, of: baseColor)!
+        /// v Old solidColor approach
+        /// This is really just .separatorColor without transparency
+        
+//        let separatorColor: NSColor
+//        if isDarkMode {
+//            separatorColor = NSColor(red: 77/255, green: 77/255, blue: 77/255, alpha: 1.0)
+//        } else {
+//            separatorColor = NSColor(red: 198/255, green: 198/255, blue: 198/255, alpha: 1.0)
+//        }
+//
+//        self.borderColor = separatorColor.blended(withFraction: borderFraction, of: baseColor)!
         
         /// Update plusIcon color
         if #available(macOS 10.14, *) {
@@ -174,7 +207,7 @@ import CocoaLumberjackSwift
 
             /// Setup addField shadow
 
-            var isDarkMode = isDarkMode()
+            var isDarkMode = checkDarkMode()
 
             let s = NSShadow()
             s.shadowColor = .shadowColor.withAlphaComponent(isDarkMode ? 0.75 : 0.225)
@@ -219,7 +252,7 @@ import CocoaLumberjackSwift
         return NSColor.systemGray
     }
     
-    private func isDarkMode() -> Bool {
+    private func checkDarkMode() -> Bool {
         
         if #available(macOS 10.14, *) {
             let isDarkMode = (NSApp.effectiveAppearance == .init(named: .darkAqua)!)
