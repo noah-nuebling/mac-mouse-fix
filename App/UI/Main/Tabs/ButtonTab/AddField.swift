@@ -87,12 +87,12 @@ import CocoaLumberjackSwift
         /// Notes:
         /// - Using systemColors now to properly support desktop tinting. (Can't use transparent colors because of the NSShadow on hover)
         /// - .underPageBackgroundColor is not semantic but it looks perfect.
-        /// - .controlBackgroundColor is a little darker than the solidColors we chose but it's the best looking systemColour I could find which supports tinting
         /// - I found these colors that support tinting (found them by searching for 'background', maybe there are more):
         ///   - .controlBackgroundColor, .textBackgroundColor, .underPageBackgroundColor, .windowBackgroundColor
+        ///   - .controlBackgroundColor looks good while tinting, but is too dark otherwise. .textBackgroundColor is the same. .underPageBackgroundColor is even darker. -> best choice is .windowBackgroundColor
         
         if isDarkMode {
-            self.fillColor = .controlBackgroundColor
+            self.fillColor = .windowBackgroundColor ///.controlBackgroundColor
         } else {
             self.fillColor = .underPageBackgroundColor
         }
@@ -133,10 +133,23 @@ import CocoaLumberjackSwift
 //
 //        self.borderColor = separatorColor.blended(withFraction: borderFraction, of: baseColor)!
         
+        /// Make border thicker in darkmode
+        ///     Since the addField is now the same color as the windowBackground in darkmode we want to give it more visual presence this way
+        
+        if isDarkMode {
+            self.borderWidth = 1.5
+        } else {
+            self.borderWidth = 1.0
+        }
+        
         /// Update plusIcon color
         if #available(macOS 10.14, *) {
             plusIconView.contentTintColor = plusIconViewBaseColor()
         }
+        
+        /// Testing
+        ///     Doesn't seem to change anything
+        self.needsDisplay = true
     }
     
     /// Visual FX
