@@ -150,22 +150,6 @@ class TabViewController: NSTabViewController {
         tabsAreConfigured = true
         
         ///
-        /// Change to general tab, when app is disabled
-        ///
-        
-        EnabledState.shared.signal.observeValues { isEnabled in
-            if !isEnabled {
-                guard let currentTab = self.identifierOfSelectedTab() else { return }
-                let currentTabWillBeDisabled = !alwaysEnabledTabs.contains(currentTab)
-                if currentTabWillBeDisabled {
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.01, execute: {
-                        self.coolSelectTab(identifier: "general", window: self.window)
-                    })
-                }
-            }
-        }
-        
-        ///
         /// Hide Pointer tab (because it's unfinished and unused)
         ///
         /// Notes:
@@ -175,16 +159,48 @@ class TabViewController: NSTabViewController {
         coolHideTab(identifier: "pointer", window: self.window)
         
         ///
-        /// Set initial tab and stuff
+        /// Hide initial tab
+        ///
+
+        coolHideTab(identifier: "initial", window: self.window)
+        
+        ///
+        /// Switch tab
         ///
         
-        coolHideTab(identifier: "initial", window: self.window)
-        if let lastID = config("Other.autosave_tabID") as! String?, /*lastID != "initial",*/ validTabs.contains(lastID) {
-//            tabView.selectTabViewItem(withIdentifier: lastID)
-            coolSelectTab(identifier: lastID, window: self.window)
-        } else {
-//            tabView.selectTabViewItem(withIdentifier: "general")
-            coolSelectTab(identifier: "general", window: self.window)
+        var targetID: String?
+        
+        if let lastID = config("Other.autosave_tabID") as! String? {
+            targetID = lastID
+        }
+        var targetIsValid = targetID != nil && validTabs.contains(targetID!)
+        if targetIsValid {
+            let isEnabled = EnabledState.shared.isEnabled()
+            if !isEnabled && !alwaysEnabledTabs.contains(targetID!) {
+                targetIsValid = false
+            }
+        }
+        if !targetIsValid {
+            targetID = "general"
+        }
+        guard let targetID = targetID else { fatalError() }
+        
+        coolSelectTab(identifier: targetID, window: self.window)
+        
+        ///
+        /// Change to general tab, when app is disabled
+        ///
+        
+        EnabledState.shared.signal.observeValues { isEnabled in
+            if !isEnabled {
+                guard let currentTab = self.identifierOfSelectedTab() else { return }
+                let currentTabWillBeDisabled = !alwaysEnabledTabs.contains(currentTab)
+                if currentTabWillBeDisabled {
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.01, execute: { /// Why are we delaying this?
+                        self.coolSelectTab(identifier: "general", window: self.window)
+                    })
+                }
+            }
         }
     }
     
