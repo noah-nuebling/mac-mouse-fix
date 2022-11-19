@@ -22,6 +22,8 @@ class TabViewController: NSTabViewController {
     private var injectedConstraints: [NSLayoutConstraint] = []
     private var unselectedTabImageView: NSImageView = NSImageView()
     
+    private var initialTabSwitchWasPerformed: Bool = false
+    
     // MARK: Constants
     ///     TODO: Think about using validTabs in different places / if using it at all makes sense in the grand architecture
     private let validTabs = ["general", "buttons", "scrolling", "about"]
@@ -34,7 +36,6 @@ class TabViewController: NSTabViewController {
         }
     }
 
-    private var initialTabSwitchWasPerformed: Bool = false
     
     // MARK: Hacky tabView manipulation
     
@@ -44,16 +45,19 @@ class TabViewController: NSTabViewController {
         ///     but it doesn't change the selected toolbar button properly, so we have to use horrible hacks.
         /// Sometimes you need to pass in window, when you call this right after the window is created.
         
+        DDLogDebug("TBS switching to tab \(identifier), windowIsNil: \(w == nil)")
+        
         let window: NSWindow?
         if w == nil {
             window = MainAppState.shared.window
         } else {
             window = w
         }
-        
-        guard let tb = window?.toolbar else { return }
+        guard let window = window, let tb = window.toolbar else { assert(false); return }
         let tbv = SharedUtility.getPrivateValue(of: tb, forName: "_toolbarView")
+        
         let lvs: [NSView]?
+        
         if #available(macOS 11.0, *) {
             lvs = SharedUtility.getPrivateValue(of: tbv, forName: "_allItemViewers") as? [NSView]
             /// ^ Might be better to use`_layoutViews` vs `_allItemViewers` here
@@ -61,25 +65,33 @@ class TabViewController: NSTabViewController {
             lvs = SharedUtility.getPrivateValue(of: tbv, forName: "_toolbarOrderedItemViewers") as? [NSView]
             /// ^ Might be better to use `_layoutOrderedItemViewers`vs `_toolbarOrderedItemViewers  here
         }
-        guard let lvs = lvs else { return }
+        guard let lvs = lvs else { assert(false); return }
+        assert(lvs.count > 0)
         
-        for v in lvs {
-            guard let item = SharedUtility.getPrivateValue(of: v, forName: "_item") as? NSToolbarItem else { return }
-                    if item.itemIdentifier.rawValue == identifier {
-                for sub in v.subviews {
-                    if let sub = sub as? NSButton {
-                        sub.performClick(nil)
-                        return
-                    }
+        var success = false
+    outerLoop: for v in lvs {
+        guard let item = SharedUtility.getPrivateValue(of: v, forName: "_item") as? NSToolbarItem else { assert(false); return }
+        if item.itemIdentifier.rawValue == identifier {
+            for sub in v.subviews {
+                if let sub = sub as? NSButton {
+                    
+                    sub.performClick(nil)
+                    
+                    success = true
+                    break outerLoop
                 }
             }
         }
+    }
+        assert(success)
     }
     
     @objc public func coolHideTab(identifier: String, window w: NSWindow? = nil) {
         
         /// This is copy pasted from `coolSelectTab()`
         /// Hides the tab button from the user, but the tab will still be displayed and we can switch from/to it programmatically
+        
+        DDLogDebug("TBS hiding tab \(identifier), windowIsNil: \(w == nil)")
         
         let window: NSWindow?
         if w == nil {
@@ -88,7 +100,7 @@ class TabViewController: NSTabViewController {
             window = w
         }
         
-        guard let tb = window?.toolbar else { return }
+        guard let window = window, let tb = window.toolbar else { assert(false); return }
         let tbv = SharedUtility.getPrivateValue(of: tb, forName: "_toolbarView")
         
         let lvs: NSMutableArray?
@@ -101,39 +113,41 @@ class TabViewController: NSTabViewController {
             
         }
         
-        guard let lvs = lvs else { return }
+        guard let lvs = lvs else { assert(false); return }
+        assert(lvs.count > 0)
         
+        var success = false
         for v in lvs {
-            guard let item = SharedUtility.getPrivateValue(of: v, forName: "_item") as? NSToolbarItem else { return }
-            guard let v = v as? NSView else { return }
+            
+            guard let item = SharedUtility.getPrivateValue(of: v, forName: "_item") as? NSToolbarItem else { assert(false); return }
+            guard let v = v as? NSView else { assert(false); return }
             
             if item.itemIdentifier.rawValue == identifier {
                 v.isHidden = true
                 lvs.remove(v) /// Extremely hacky. Might break.
+                success = true
             }
         }
+        assert(success)
         
         /// Layout toolbarView
         /// - Otherwise the removal of the view from the layoutViews will not be reflected and there will be a blank space where the tab was.
         ///     - This occured only sometimes in MMF 3 beta 4 and below, but after making EnabledState slower in Beta 5 and with it making TabViewController.toolbarWillAddItem() slower too, this started to always happen (Ventura Beta)
-        
-        (tbv as! NSView).needsLayout = true
-    }
-    
-    // MARK: Life cycle
-    
-    override func viewWillAppear() {
+        guard let tbvv = (tbv as? NSView) else { assert(false); return }
+        tbvv.needsLayout = true
         
     }
     
-    override func viewDidAppear() {
+    // MARK: Initialization
+    
+    var tabsAreConfigured = false
+    
+    func configureTabs() {
+            
+        /// Guard multiple invocations
         
-        /// Hide tabBar icons pre-Big Sur
-        ///  Because the scaling and resolution of the fallback images is terrible and I don't know how to fix. (Haven't spent too much time but I don't see an obvious way)
-        
-        if #available(macOS 11.0, *) { } else {
-            self.window?.toolbar?.displayMode = .labelOnly
-        }
+        guard !tabsAreConfigured else { assert(false); return }
+        tabsAreConfigured = true
         
         ///
         /// Change to general tab, when app is disabled
@@ -174,7 +188,52 @@ class TabViewController: NSTabViewController {
         }
     }
     
+    // MARK: Life cycle
+    
+    override func awakeFromNib() {
+        
+        super.awakeFromNib()
+        /// Debug
+        DDLogDebug("TBS tabview awakeFromNib")
+    }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        /// Debug
+        DDLogDebug("TBS tabview didLoad")
+    }
+    
+    override func viewWillAppear() {
+        super.viewWillAppear()
+        /// Debug
+        DDLogDebug("TBS tabview willAppear")
+        
+    }
+    
+    override func viewDidAppear() {
+        super.viewDidAppear()
+        
+        /// Debug
+        DDLogDebug("TBS tabview didAppear")
+        
+        /// Hide tabBar icons pre-Big Sur
+        ///  Because the scaling and resolution of the fallback images is terrible and I don't know how to fix. (Haven't spent too much time but I don't see an obvious way)
+        
+        if #available(macOS 11.0, *) { } else {
+            self.window?.toolbar?.displayMode = .labelOnly
+        }
+        
+        /// Configure tabs
+        ///     This sometimes doesn't work
+        
+//        if let tabID = tabViewItem?.identifier as! NSString?, tabID == "initial" {
+            configureTabs()
+//        }
+        
+    }
+    
     override func viewWillDisappear() {
+        super.viewWillDisappear()
         
         if let lastID = identifierOfSelectedTab() {
                 
@@ -193,14 +252,14 @@ class TabViewController: NSTabViewController {
         
         /// This is called twice for some reason! Don't use this to init stuff!!
         
-        /// Get super result
-        let superResult = super.tabView(tabView, shouldSelect: tabViewItem)
-        if superResult == false {
-            return false
-        }
+        /// Call super
+        guard super.tabView(tabView, shouldSelect: tabViewItem) else { return false }
         
-        /// Ignore `initial` TabViewItem
-        guard let tabID = tabViewItem?.identifier as! NSString?, validTabs.contains(tabID as String) /*tabViewItem?.identifier as! NSString != "initial"*/ else {
+        /// Debug
+        DDLogDebug("TBS tabview shouldSelect \(String(describing: tabViewItem?.identifier))")
+        
+        /// Ignore switch to disabled tabViewItem
+        guard let tabID = tabViewItem?.identifier as! NSString?, validTabs.contains(tabID as String) else {
             return false
         }
         
@@ -224,12 +283,15 @@ class TabViewController: NSTabViewController {
         
         /// willSelect
         
+        /// Call super
+        super.tabView(tabView, willSelect: tabViewItem)
+        
         /// Set resizeInProgress
         ///     Maybe it would be better to set this in didSelect?
         window?.tabSwitchIsInProgress = true
         
-        /// Call super
-        super.tabView(tabView, willSelect: tabViewItem)
+        /// Debug
+        DDLogDebug("TBS tabview willSelect \(String(describing: tabViewItem?.identifier))")
         
         /// Save image of current contentView for fade out animation
         if let originTab = tabView.selectedTabViewItem?.view, let destinationTab = tabViewItem?.view {
@@ -271,6 +333,9 @@ class TabViewController: NSTabViewController {
         
         /// Call super
         super.tabView(tabView, didSelect: tabViewItem)
+        
+        /// Debug
+        DDLogDebug("TBS tabview didSelect \(String(describing: tabViewItem?.identifier))")
         
         /// Guard
         guard let tabViewItem = tabViewItem else { return }
