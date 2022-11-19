@@ -14,7 +14,7 @@ import CocoaLumberjackSwift
 
 class TabViewController: NSTabViewController {
     
-    /// Vars
+    // MARK: Vars
     
     private lazy var tabViewSizes: [NSTabViewItem: NSSize] = [:]
     private var windowResizeTimer: Timer?
@@ -22,7 +22,7 @@ class TabViewController: NSTabViewController {
     private var injectedConstraints: [NSLayoutConstraint] = []
     private var unselectedTabImageView: NSImageView = NSImageView()
     
-    /// Constants
+    // MARK: Constants
     ///     TODO: Think about using validTabs in different places / if using it at all makes sense in the grand architecture
     private let validTabs = ["general", "buttons", "scrolling", "about"]
     
@@ -36,7 +36,7 @@ class TabViewController: NSTabViewController {
 
     private var initialTabSwitchWasPerformed: Bool = false
     
-    /// Other interface
+    // MARK: Hacky tabView manipulation
     
     @objc public func coolSelectTab(identifier: String, window w: NSWindow? = nil) {
         
@@ -120,27 +120,7 @@ class TabViewController: NSTabViewController {
         (tbv as! NSView).needsLayout = true
     }
     
-    @objc public func identifierOfSelectedTab() -> String? {
-        return self.tabView.selectedTabViewItem?.identifier as? String
-    }
-    
-    /// Helper
-    
-    func createUnselectedTabImageView() -> NSImageView {
-        
-        let v = NSImageView()
-        v.imageScaling = .scaleNone
-//        v.frame.origin = NSZeroPoint
-//        v.removeConstraints(v.constraints)
-//        v.wantsLayer = true /// If we don't set wantsLayer to true, the animations will only work the second time they are done??
-        
-        return v
-    }
-    
-    /// Life cycle
-    ///     My understanding of the lifecycle:
-    ///     First, appKit calls `tabView(shouldSelect:)`, with the `initial` tabViewItem. We ignore this, because we don't want to display the `initial` tab.
-    ///     Then, appKit calls `viewDidAppear()`, which calls `coolSelectTab(identifier:window:)`, which simulates a click on the menubar item for the tab that the user last had open, which then, again, calls `tabView(shouldSelect:)`. This time, we don't ignore, and do return true, and therefore `tabView(willSelect:)` and `tabView(didSelect:)` are called. Normally, we would animate the tab transition, but since we're just starting the app, we turn off animations using the `initialTabSwitchWasPerformed` flag.
+    // MARK: Life cycle
     
     override func viewWillAppear() {
         
@@ -203,6 +183,11 @@ class TabViewController: NSTabViewController {
         }
     }
     
+    // MARK: Tab selection life cycle
+    ///     My understanding of the lifecycle:
+    ///     First, appKit calls `tabView(shouldSelect:)`, with the `initial` tabViewItem. We ignore this, because we don't want to display the `initial` tab.
+    ///     Then, appKit calls `viewDidAppear()`, which calls `coolSelectTab(identifier:window:)`, which simulates a click on the menubar item for the tab that the user last had open, which then, again, calls `tabView(shouldSelect:)`. This time, we don't ignore, and do return true, and therefore `tabView(willSelect:)` and `tabView(didSelect:)` are called. Normally, we would animate the tab transition, but since we're just starting the app, we turn off animations using the `initialTabSwitchWasPerformed` flag.
+    
     override func tabView(_ tabView: NSTabView, shouldSelect tabViewItem: NSTabViewItem?) -> Bool {
         /// shouldSelect
         
@@ -251,9 +236,11 @@ class TabViewController: NSTabViewController {
             
             /// Get screenshot and store it in imageView
             let imageOfOriginTab = originTab.imageWithoutWindowBackground()
-            unselectedTabImageView = createUnselectedTabImageView() /// We have to create a new one each time for some reason
-            unselectedTabImageView.image = imageOfOriginTab
-            unselectedTabImageView.frame = originTab.frame
+            let v = NSImageView() /// We have to create a new imageView each time for some reason
+            v.imageScaling = .scaleNone
+            v.frame = originTab.frame
+            v.image = imageOfOriginTab
+            unselectedTabImageView = v
             
             /// Draw imageView
             ///     Need to draw in willSelect. didSelect doesn't work for some reason
@@ -340,9 +327,12 @@ class TabViewController: NSTabViewController {
         
     }
     
-    /// Resizes the window so that it fits the content of the tab.
-    ///     Resizes such that center x stays the same
+    // MARK: Window resizing
+    
     private func resizeWindowToFit(tabViewItem: NSTabViewItem) -> TimeInterval {
+    
+        /// Resizes the window so that it fits the content of the tab.
+        ///     Resizes such that center x stays the same
         
         /// Get the stored size of the tab we're switching to
         ///     Note: The size of the general tab can change while we're in another tab (if the helper gets disabled), so we're always recalculating its size!
@@ -568,6 +558,8 @@ class TabViewController: NSTabViewController {
         }
     }
     
+    // MARK: Utility
+    
     func tabViewItem(identifier: String) -> NSTabViewItem? {
         
         for item in tabViewItems {
@@ -578,5 +570,9 @@ class TabViewController: NSTabViewController {
         }
         
         return nil
+    }
+    
+    @objc public func identifierOfSelectedTab() -> String? {
+        return self.tabView.selectedTabViewItem?.identifier as? String
     }
 }
