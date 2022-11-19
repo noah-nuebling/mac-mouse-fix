@@ -50,10 +50,23 @@
         font-size: 1.3rem;
         margin: 1.5rem 0 0.0rem -0.0rem;
     }
+    h4 {
+        font-size: 1.0rem;
+        margin: 1.5rem 0 0.0rem -0.0rem;
+    }
+    h5 {
+        font-size: 0.8rem;
+        margin: 1.5rem 0 0.0rem -0.0rem;
+        font-style: italic;
+    }
 
     p {
         margin: 1.1rem 0 1.1rem 0;
         font-size: 1.1rem;
+    }
+
+    a, a:visited {
+        color: rgba(43, 102, 211, 1.0) /* Obtained by colorpicking `Hyperlink`s in MMF */
     }
 
     ul {
@@ -85,15 +98,16 @@
     }
 
     hr {
-        height: 0px;
         border: none;
-        border-bottom: 1px solid rgba(0, 0, 0, 0.12);
-        border-color:rgba(0, 0, 0, 0.12);
+        height: 3px;
+        background-color: rgba(0, 0, 0, 0.12);
 
         margin: 1.7rem 0 1.7rem 0;
     }
 
     @media (prefers-color-scheme: light) {
+
+        /* I don't think we need this. Light is just the default, right? */
 
         h1 {
             color: #272727;
@@ -114,14 +128,24 @@
                 Edit: This might've been because pandoc made the background white, which we've overriden now, so maybe this is not necessary anymore.
                 */
 
-            color: #D9D9D9; /* For headers */
+            color: rgba(255, 255, 255, 0.9); /* For headers */
         }
 
         li, p {
-            color:#FFFFFF;
+            color:rgba(255, 255, 255, 0.8);
         }
-        a {
+        a, a:visited { /* Need to include a:visited otherwise it will be set by pandoc */
             color: #3586FF;
+        }
+
+        hr {
+            background-color: rgba(255, 255, 255, 0.15);
+        }
+
+        h1:after, h2:after {
+            content:' ';
+            display: block;
+            border: 0.5px solid rgba(255, 255, 255, 0.15);
         }
     }
 

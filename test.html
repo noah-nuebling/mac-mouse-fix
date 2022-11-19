@@ -168,7 +168,7 @@
       :root {
           font-size: 10px; /* 1 rem is this much */
           padding: 0 0 0 0;
-          background-color: transparent;
+          background-color: transparent; /* pandoc automatically applies styling where the bg is white. So we need to override that. */
       }
 
       body {
@@ -211,10 +211,23 @@
           font-size: 1.3rem;
           margin: 1.5rem 0 0.0rem -0.0rem;
       }
+      h4 {
+          font-size: 1.0rem;
+          margin: 1.5rem 0 0.0rem -0.0rem;
+      }
+      h5 {
+          font-size: 0.8rem;
+          margin: 1.5rem 0 0.0rem -0.0rem;
+          font-style: italic;
+      }
 
       p {
           margin: 1.1rem 0 1.1rem 0;
           font-size: 1.1rem;
+      }
+
+      a, a:visited {
+          color: rgba(43, 102, 211, 1.0) /* Obtained by colorpicking `Hyperlink`s in MMF */
       }
 
       ul {
@@ -246,15 +259,16 @@
       }
 
       hr {
-          height: 0px;
           border: none;
-          border-bottom: 1px solid rgba(0, 0, 0, 0.12);
-          border-color:rgba(0, 0, 0, 0.12);
+          height: 3px;
+          background-color: rgba(0, 0, 0, 0.12);
 
           margin: 1.7rem 0 1.7rem 0;
       }
 
       @media (prefers-color-scheme: light) {
+
+          /* I don't think we need this. Light is just the default, right? */
 
           h1 {
               color: #272727;
@@ -268,18 +282,31 @@
       @media (prefers-color-scheme: dark) {
 
           body {
-              /* background-color: #1e1e1e;  */
+              background-color: #1e1e1e; 
               /* ^ Sparkle background is still bright when we have `background-color: transparent` even with darkmode active. 
-                  This is the color of the text field background in Apple Mail on macOS 11 BigSur */
+                  This is the color of the text field background in Apple Mail on macOS 11 BigSur 
+                  
+                  Edit: This might've been because pandoc made the background white, which we've overriden now, so maybe this is not necessary anymore.
+                  */
 
-              color: #D9D9D9; /* For headers */
+              color: rgba(255, 255, 255, 0.9); /* For headers */
           }
 
           li, p {
-              color:#FFFFFF;
+              color:rgba(255, 255, 255, 0.8);
           }
-          a {
+          a, a:visited { /* Need to include a:visited otherwise it will be set by pandoc */
               color: #3586FF;
+          }
+
+          hr {
+              background-color: rgba(255, 255, 255, 0.15);
+          }
+
+          h1:after, h2:after {
+              content:' ';
+              display: block;
+              border: 0.5px solid rgba(255, 255, 255, 0.15);
           }
       }
 
@@ -289,9 +316,13 @@
   <![endif]-->
 </head>
 <body>
+<!-- Render this using
+cat test.md | pandoc -f markdown -t html -H update-notes.css -s -o test.html; open test.html
+-->
 <h1 id="update-available">Update available!</h1>
 <p>Yay!</p>
 <h2 id="very-cool">Very cool!</h2>
+<p>Laura Marling is underrated</p>
 <h3 id="super-neat">Super neat!</h3>
 <ul>
 <li>Lots of <em>cool</em> stuff</li>
@@ -299,14 +330,38 @@
 a;lsdkjf;lasjdf;lajsl;dfjal;sjdfjfal;sdjf;lajsfjals;dfj;asjdf;lajs;dlfjals;dfjl;asjf;lajs;dlfja;sldfj;alsjdf;lajsd;lfjas;ldfj;alsjkdf;lajsdfas;ldfj</li>
 <li>Tons of links <a href="https://google.com/">everywhere</a></li>
 </ul>
-<h3 id="badabuum-pau">Badabuum pau!</h3>
-<h4 id="badabuum-pau-1">Badabuum pau!</h4>
-<!-- Render this using
-cat test.md | pandoc -f markdown -t html -H update-notes.css -s -o test.html; open test.html
--->
+<h4 id="badabuum-pau">Badabuum pau!</h4>
+<p>Peanut butter</p>
+<h5 id="eyyy">Eyyy</h5>
+<p>Oh well… Time for a divider!</p>
+<hr />
+<p>I needed that.</p>
 <h2
 id="this-is-a-really-really-really-long-title-that-wraps-and-stuff-i-said-its-really-really-really-really-long-and-it-wraps-and-stuff">This
 is a really really really long title that wraps and stuff, I said it’s
 really really really really long and it wraps and stuff</h2>
+<p>Oh yeahhhhh</p>
+<hr />
+<ol type="1">
+<li>This</li>
+<li>Is</li>
+<li>a</li>
+<li>numbered list</li>
+</ol>
+<p><img width="500px" src="https://user-images.githubusercontent.com/40808343/148666688-f2da6897-a6d2-47cb-86df-59afb3ab8682.gif"></p>
+<hr />
+<ul>
+<li>This</li>
+<li>one
+<ul>
+<li>a lot</li>
+<li>and I mean a lot of
+<ul>
+<li>indents</li>
+</ul></li>
+<li>seriously</li>
+</ul></li>
+<li>it’s true</li>
+</ul>
 </body>
 </html>
