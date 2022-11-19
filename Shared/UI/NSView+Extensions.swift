@@ -40,7 +40,9 @@ extension NSView {
     
     // MARK: Screenshots
     
-    func imageWithoutWindowBackground() -> NSImage? {
+    private func imageWithoutWindowBackground() -> NSImage? {
+        
+        /// This is obsolete since `takeImage()` also doesn't capture the window background
         
         /// Declare result
         let result: NSImage?
@@ -117,6 +119,17 @@ extension NSView {
 
         return image
     }
+    
+//    @objc func takeImageThroughScreenshot() -> NSImage? {
+//        
+//        guard let screen = self.window?.screen else { assert(false); return }
+//        let displayID = screen.displayID
+//        let windowRect = self.convert(self.bounds, to: nil)
+//        let screenRect = self.window?.convertToScreen(windowRect)
+//        
+//        
+//        let screenShot = CGDisplayCreateImage(displayID, rect: <#T##CGRect#>)
+//    }
     
     // MARK: Set Anchor Point
     

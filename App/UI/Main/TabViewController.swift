@@ -313,7 +313,9 @@ class TabViewController: NSTabViewController {
         if let originTab = tabView.selectedTabViewItem?.view, let destinationTab = tabViewItem?.view {
             
             /// Get screenshot and store it in imageView
-            let imageOfOriginTab = originTab.imageWithoutWindowBackground()
+            ///  \discussion Neither `takeImage()` nor `imageWithoutWindowBackground()` work properly. They don't retain the right color of the groupRows of the actionTable and the fillColor of the addField color. I think the addField issue only started appearing after we updated the addField coloring to support desktop tinting. Neither of the two actually seem to capture the background
+            
+            let imageOfOriginTab = originTab.takeImage()
             let v = NSImageView() /// We have to create a new imageView each time for some reason
             v.imageScaling = .scaleNone
             v.frame = originTab.frame
@@ -484,7 +486,7 @@ class TabViewController: NSTabViewController {
         /// Animation
         ///
         
-        let springSpeed = 3.75
+        let springSpeed = 0.5//3.75
         let springDamping = 1.1 /** 1.1 For more beautiful but slightly floaty animations*/
         var animation: CASpringAnimation? = CASpringAnimation(speed: springSpeed, damping: springDamping)
         
