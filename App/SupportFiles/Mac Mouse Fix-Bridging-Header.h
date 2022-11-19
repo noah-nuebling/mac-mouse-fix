@@ -43,5 +43,7 @@
 #import "AlertCreator.h"
 #import "Shorthands.h"
 #import "Symbols.h"
+#import "NSView+Additions.h"
+#import "NSScreen+Additions.h"
 
 #endif /* Mac_Mouse_Fix_Bridging_Header_h */
