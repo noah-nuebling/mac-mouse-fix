@@ -16,6 +16,20 @@ Laura Marling is underrated
 - Pictures of **kittens** (at exorbitant prices) a;lsdkjf;lasjdf;lajsl;dfjal;sjdfjfal;sdjf;lajsfjals;dfj;asjdf;lajs;dlfjals;dfjl;asjf;lajs;dlfja;sldfj;alsjdf;lajsd;lfjas;ldfj;alsjkdf;lajsdfas;ldfj
 - Tons of links [everywhere](https://google.com/)
 
+Coding I can't believe how \
+Coding is so easy. \
+Coding is like `if (mmfIsRunning) { beGood(true) }` \
+Coding And that's actually how it is
+
+Bad at
+line breaks
+
+The dream:
+
+```bash
+brew install mac-mouse-fix
+```
+
 #### Badabuum pau!
 
 Peanut butter
@@ -44,7 +58,7 @@ Oh yeahhhhh
 ---
 
 - This
-- one
+- one has
   - a lot
   - and I mean a lot of
     - indents
