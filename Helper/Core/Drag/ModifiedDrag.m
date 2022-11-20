@@ -12,7 +12,7 @@
 #import "ModifiedDrag.h"
 #import "ScrollModifiers.h"
 #import "GestureScrollSimulator.h"
-#import "ModifierManager.h"
+#import "Modifiers.h"
 
 #import "SubPixelator.h"
 #import <Cocoa/Cocoa.h>
@@ -304,7 +304,7 @@ static void handleMouseInputWhileInitialized(int64_t deltaX, int64_t deltaY, CGE
         [TrialCounter.shared handleUse];
         
         /// Notify other modules
-        [ModifierManager handleModificationHasBeenUsedWithDevice:_drag.modifiedDevice];
+        [Modifiers handleModificationHasBeenUsedWithDevice:_drag.modifiedDevice];
         (void)[OutputCoordinator suspendTouchDriversFromDriver:kTouchDriverModifiedDrag];
     }
 }

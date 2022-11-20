@@ -65,7 +65,7 @@ class ButtonModifiers: NSObject {
         }
         
         /// Notify change
-        ModifierManager.handleButtonModifiersMightHaveChanged(with: device)
+        Modifiers.handleButtonModifiersMightHaveChanged(with: device)
     }
     
     func kill(device: Device, button: ButtonNumber) {

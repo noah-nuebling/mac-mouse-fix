@@ -18,7 +18,7 @@
 #import "Config.h"
 #import "GestureScrollSimulator.h"
 #import "Remap.h"
-#import "ModifierManager.h"
+#import "Modifiers.h"
 #import "SharedUtility.h"
 #import "ButtonTriggerHandler.h"
 #import "ButtonLandscapeAssessor.h"
@@ -60,7 +60,7 @@
     @synchronized (self) {
         _clickLevel = clickLevel;
     }
-    [ModifierManager handleButtonModifiersMightHaveChangedWithDevice:self.device];
+    [Modifiers handleButtonModifiersMightHaveChangedWithDevice:self.device];
 }
 #pragma mark isPressed accessors
 - (BOOL)isPressed {
@@ -74,7 +74,7 @@
         _isPressed = isPressed;
     }
     if (!isPressed) { /// Whenever isPressed becomes true, clickLevel is also modified, so we don't need to notify for modifier change in that case
-        [ModifierManager handleButtonModifiersMightHaveChangedWithDevice:self.device];
+        [Modifiers handleButtonModifiersMightHaveChangedWithDevice:self.device];
     }
 }
 #pragma mark pressedAtTimeStamp accessor

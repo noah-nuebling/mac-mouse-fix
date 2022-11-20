@@ -8,7 +8,7 @@
 //
 
 #import "RemapSwizzler.h"
-#import "ModifierManager.h"
+#import "Modifiers.h"
 #import "DeviceManager.h"
 #import "Remap.h"
 

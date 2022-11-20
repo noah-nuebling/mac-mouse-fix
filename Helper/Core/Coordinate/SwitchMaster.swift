@@ -36,7 +36,7 @@ class SwitchMaster: NSObject {
         /// attachedDevices x
         /// activeModifers
         /// remaps x
-        /// 
+        ///
         /// scrollConfig
         
         /// ---

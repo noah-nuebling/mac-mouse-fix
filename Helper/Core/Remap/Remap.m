@@ -12,7 +12,7 @@
 #import "SharedUtility.h"
 #import "ButtonTriggerGenerator.h"
 #import "Actions.h"
-#import "ModifierManager.h"
+#import "Modifiers.h"
 #import "ModifiedDrag.h"
 #import "NSArray+Additions.h"
 #import "NSDictionary+Additions.h"

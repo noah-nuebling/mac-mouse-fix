@@ -17,7 +17,7 @@
 #import "HelperUtility.h"
 #import "CircularBuffer.h"
 #import "ScrollModifiers.h"
-#import "ModifierManager.h"
+#import "Modifiers.h"
 #import "Remap.h"
 #import "ModifiedDrag.h"
 #import "Scroll.h"

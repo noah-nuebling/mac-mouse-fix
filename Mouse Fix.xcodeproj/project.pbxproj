@@ -255,7 +255,7 @@
 		4FF6668125F2C93A00689B77 /* FileMonitor.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF6660925F2C93A00689B77 /* FileMonitor.m */; };
 		4FF6668225F2C93A00689B77 /* Config.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF6660E25F2C93A00689B77 /* Config.m */; };
 		4FF6668325F2C93A00689B77 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4FF6661025F2C93A00689B77 /* Assets.xcassets */; };
-		4FF6668525F2C93A00689B77 /* ModifierManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF6661725F2C93A00689B77 /* ModifierManager.m */; };
+		4FF6668525F2C93A00689B77 /* Modifiers.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF6661725F2C93A00689B77 /* Modifiers.m */; };
 		4FF6668825F2C93A00689B77 /* ButtonInputReceiver.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF6661E25F2C93A00689B77 /* ButtonInputReceiver.m */; };
 		4FF6668925F2C93A00689B77 /* Scroll.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF6662125F2C93A00689B77 /* Scroll.m */; };
 		4FF6668B25F2C93A00689B77 /* CubicUnitBezier.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF6662425F2C93A00689B77 /* CubicUnitBezier.m */; };
@@ -699,8 +699,8 @@
 		4FF6660D25F2C93A00689B77 /* Config.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Config.h; sourceTree = "<group>"; };
 		4FF6660E25F2C93A00689B77 /* Config.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Config.m; sourceTree = "<group>"; };
 		4FF6661025F2C93A00689B77 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		4FF6661625F2C93A00689B77 /* ModifierManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ModifierManager.h; sourceTree = "<group>"; };
-		4FF6661725F2C93A00689B77 /* ModifierManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ModifierManager.m; sourceTree = "<group>"; };
+		4FF6661625F2C93A00689B77 /* Modifiers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Modifiers.h; sourceTree = "<group>"; };
+		4FF6661725F2C93A00689B77 /* Modifiers.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Modifiers.m; sourceTree = "<group>"; };
 		4FF6661925F2C93A00689B77 /* ButtonTriggerGenerator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ButtonTriggerGenerator.m; sourceTree = "<group>"; };
 		4FF6661A25F2C93A00689B77 /* ButtonTriggerHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ButtonTriggerHandler.m; sourceTree = "<group>"; };
 		4FF6661B25F2C93A00689B77 /* ButtonInputReceiver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ButtonInputReceiver.h; sourceTree = "<group>"; };
@@ -1797,8 +1797,8 @@
 		4FF6661525F2C93A00689B77 /* Modifiers */ = {
 			isa = PBXGroup;
 			children = (
-				4FF6661625F2C93A00689B77 /* ModifierManager.h */,
-				4FF6661725F2C93A00689B77 /* ModifierManager.m */,
+				4FF6661625F2C93A00689B77 /* Modifiers.h */,
+				4FF6661725F2C93A00689B77 /* Modifiers.m */,
 			);
 			path = Modifiers;
 			sourceTree = "<group>";
@@ -2566,7 +2566,7 @@
 				4FF6668825F2C93A00689B77 /* ButtonInputReceiver.m in Sources */,
 				4FF6669025F2C93A00689B77 /* ScrollModifiers_old_.m in Sources */,
 				4FF6655125F2C7B000689B77 /* NSDictionary+Additions.m in Sources */,
-				4FF6668525F2C93A00689B77 /* ModifierManager.m in Sources */,
+				4FF6668525F2C93A00689B77 /* Modifiers.m in Sources */,
 				4FD860CC266EF55A004F76C8 /* ScrollConfig.swift in Sources */,
 				4F8FC140275DC81900887A0C /* PrefixSwift.swift in Sources */,
 				4FFA4E4828B7D2E40062A1FE /* NSShadow+Extensions.swift in Sources */,

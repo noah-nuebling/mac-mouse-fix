@@ -1,6 +1,6 @@
 //
 // --------------------------------------------------------------------------
-// ModifierManager.m
+// Modifiers.m
 // Created for Mac Mouse Fix (https://github.com/noah-nuebling/mac-mouse-fix)
 // Created by Noah Nuebling in 2020
 // Licensed under the MMF License (https://github.com/noah-nuebling/mac-mouse-fix/blob/master/LICENSE)
@@ -9,7 +9,7 @@
 
 #import "Constants.h"
 
-#import "ModifierManager.h"
+#import "Modifiers.h"
 #import "ButtonTriggerGenerator.h"
 #import "Remap.h"
 #import "ModifiedDrag.h"
@@ -19,11 +19,11 @@
 #import <os/signpost.h>
 #import "Mac_Mouse_Fix_Helper-Swift.h"
 
-@implementation ModifierManager
+@implementation Modifiers
 
 #pragma mark - Notes
 
-/// Rename this to just`Modifiers`
+
 
 #pragma mark - Terminology
 
@@ -43,7 +43,7 @@
 /// This used to be initialize but  that didn't execute until the first mouse buttons were pressed
 /// Then it was load, but that led to '"Mac Mouse Fix Helper" would like to receive keystrokes from any application' prompt. (I think)
 + (void)load_Manual {
-    if (self == [ModifierManager class]) {
+    if (self == [Modifiers class]) {
         // Create keyboard modifier event tap
         CGEventMask mask = CGEventMaskBit(kCGEventFlagsChanged);
         _keyboardModifierEventTap = CGEventTapCreate(kCGHIDEventTap, kCGHeadInsertEventTap, kCGEventTapOptionListenOnly, mask, handleKeyboardModifiersHaveChanged, NULL);
@@ -73,7 +73,7 @@
     /// Convenience wrapper for `handleModifiersHaveHadEffect:activeModifiers:` if you don't have access to `activeModifiers`
     
     NSDictionary *activeModifiers = [self getActiveModifiersForDevice:device event:nil];
-    [ModifierManager handleModificationHasBeenUsedWithDevice:device activeModifiers:activeModifiers];
+    [Modifiers handleModificationHasBeenUsedWithDevice:device activeModifiers:activeModifiers];
 }
 + (void)handleModificationHasBeenUsedWithDevice:(Device *)device activeModifiers:(NSDictionary *)activeModifiers {
     /// Make sure to pass in device, otherwise this method (in its current form) won't do anything
@@ -125,7 +125,7 @@ CGEventRef _Nullable handleKeyboardModifiersHaveChanged(CGEventTapProxy proxy, C
     /// Get activeModifiers
     ///     Need to pass in event here as source for keyboard modifers, otherwise the returned kb-modifiers won't be up-to-date.
     ///     -> Idea: This might be because we're using a passive listener eventTap?
-    NSDictionary *activeModifiers = [ModifierManager getActiveModifiersForDevice:activeDevice event:event];
+    NSDictionary *activeModifiers = [Modifiers getActiveModifiersForDevice:activeDevice event:event];
     
     /// Do stuff
     reactToModifierChange(activeModifiers, activeDevice);
@@ -151,7 +151,7 @@ NSArray *_prevButtonModifiers;
     _prevButtonModifiers = buttonModifiers;
 }
 static void handleButtonModifiersHaveChangedWithDevice(Device *device) {
-    NSDictionary *activeModifiers = [ModifierManager getActiveModifiersForDevice:device event:nil];
+    NSDictionary *activeModifiers = [Modifiers getActiveModifiersForDevice:device event:nil];
     reactToModifierChange(activeModifiers, device);
 }
 
@@ -172,7 +172,7 @@ static void reactToModifierChange(NSDictionary *_Nonnull activeModifiers, Device
     
     /// Notify ScrollModifiers of modifierChange
     ///     It needs that to commit to an app in the app switcher when the user releases a button
-    ///     TODO: Make sure this always works, and not only when a ModifieDrag makes ModifierManager listen to modifierChanged events
+    ///     TODO: Make sure this always works, and not only when a ModifieDrag makes the Modifiers class listen to modifierChanged events
     
     [ScrollModifiers reactToModiferChangeWithActiveModifications:activeModifications];
     

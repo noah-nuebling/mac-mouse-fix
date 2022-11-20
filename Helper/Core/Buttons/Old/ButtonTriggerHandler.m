@@ -9,7 +9,7 @@
 
 #import "ButtonTriggerHandler.h"
 #import "Remap.h"
-#import "ModifierManager.h"
+#import "Modifiers.h"
 #import "Constants.h"
 #import "Actions.h"
 #import "SharedUtility.h"
@@ -28,7 +28,7 @@
     
     /// Get remaps and apply modifier overrides
     NSDictionary *remaps = Remap.remaps;
-    NSDictionary *modifiersActingOnThisButton = [ModifierManager getActiveModifiersForDevice:&devID filterButton:button event:nil];
+    NSDictionary *modifiersActingOnThisButton = [Modifiers getActiveModifiersForDevice:&devID filterButton:button event:nil];
     /// ^ The modifiers which act on the incoming button (the button can't modify itself so we filter it out)
     
     NSDictionary *modificationsForModifiersActingOnThisButton = remaps[modifiersActingOnThisButton];
@@ -49,7 +49,7 @@
     /// Asses mapping landscape
     /// \note It's unnecessary to assess mapping landscape (that includes calculating targetTrigger) on click actions again for every call of this function. It only has to be calculated once for every "click" (as opposed to "hold") actionArray in every possible overriden remapDict including the unoverriden one. We could precalculate everything once when loading remapDict if we wanted to. This is plenty fast though so it's fine.
     
-//    NSDictionary *activeModifiers = [ModifierManager getActiveModifiersForDevice:&devID filterButton:nil event:nil];
+//    NSDictionary *activeModifiers = [Modifiers getActiveModifiersForDevice:&devID filterButton:nil event:nil];
     ///      ^ We need to check whether the incoming button is acting as a modifier to determine
     ///          `effectForMouseDownStateOfThisLevelExists`, so we can't just use the variable `modifiersActingOnThisButton` defined above, because it filters out the incoming button
     ///             Update: Apparently we don't need this anymore?
@@ -123,7 +123,7 @@ static void executeClickOrHoldActionIfItExists(NSString * _Nonnull duration,
         if ([effectiveActionArray[0][kMFActionDictKeyType] isEqualToString: kMFActionDictTypeAddModeFeedback]) {
             /// Add modificationPrecondition info for addMode. See Remap -> AddMode for context
             
-            effectiveActionArray[0][kMFRemapsKeyModificationPrecondition] = [ModifierManager getActiveModifiersForDevice:&devID filterButton:button event:nil despiteAddMode:YES];
+            effectiveActionArray[0][kMFRemapsKeyModificationPrecondition] = [Modifiers getActiveModifiersForDevice:&devID filterButton:button event:nil despiteAddMode:YES];
             /// ^ These are the actual modifiersActingOnThisButton. But for addMode we needed to set the argument `modifiersActingOnThisButton` to `@{}`, so we need to get the real value here.
         }
         /// Execute action
@@ -136,7 +136,7 @@ static void executeClickOrHoldActionIfItExists(NSString * _Nonnull duration,
         NSArray *actionArrayFromActiveModification = modificationsForModifiersActingOnThisButton[button][level][duration];
         BOOL actionStemsFromModification = [effectiveActionArray isEqual:actionArrayFromActiveModification];
         if (actionStemsFromModification) {
-            [ModifierManager handleModifiersHaveHadEffectWithDevice:devID activeModifiers:modifiersActingOnThisButton];
+            [Modifiers handleModifiersHaveHadEffectWithDevice:devID activeModifiers:modifiersActingOnThisButton];
         }
     }
 }

@@ -55,7 +55,7 @@ import CocoaLumberjackSwift
             
             /// Update modifications
             let remaps = Remap.remaps() /// Why aren't we reusing the remaps from above?
-            self.modifiers = ModifierManager.getActiveModifiers(for: HelperState.activeDevice!, event: event) /// Why aren't we just using `device` here?
+            self.modifiers = Modifiers.getActiveModifiers(for: HelperState.activeDevice!, event: event) /// Why aren't we just using `device` here?
             self.modifications = Remap.modifications(withModifiers: modifiers)
             
             /// Get max clickLevel
@@ -163,7 +163,7 @@ import CocoaLumberjackSwift
             
             /// Notify modifiers
             ///     (Probably unnecessary, because the only modifiers that can be "deactivated" are buttons. And since there's only one clickCycle, any buttons modifying the current one should already be zombified)
-            ModifierManager.handleModificationHasBeenUsed(with: device, activeModifiers: self.modifiers as! [AnyHashable : Any])
+            Modifiers.handleModificationHasBeenUsed(with: device, activeModifiers: self.modifiers as! [AnyHashable : Any])
         })
         
         return passThroughEvaluation

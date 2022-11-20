@@ -17,7 +17,7 @@
 #import "ButtonInputReceiver.h"
 #import "Constants.h"
 #import "ModifiedDrag.h"
-#import "ModifierManager.h"
+#import "Modifiers.h"
 #import "SharedUtility.h"
 #import "HelperServices.h"
 #import "PointerFreeze.h"
@@ -221,7 +221,7 @@ CGEventRef _Nullable testCallback(CGEventTapProxy proxy, CGEventType type, CGEve
         [Scroll load_Manual];
         [Config load_Manual];
         [ModifiedDrag load_Manual];
-        [ModifierManager load_Manual];
+        [Modifiers load_Manual];
         
         [ScreenDrawer.shared load_Manual];
         [PointerFreeze load_Manual];

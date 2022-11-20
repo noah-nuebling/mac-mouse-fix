@@ -13,7 +13,7 @@
 #import "SharedUtility.h"
 #import "ModificationUtility.h"
 #import "HelperUtility.h"
-#import "ModifierManager.h"
+#import "Modifiers.h"
 #import "Remap.h"
 #import "Constants.h"
 
@@ -159,7 +159,7 @@ static void postKeyboardEventsForSymbolicHotkey(CGKeyCode keyCode, CGSModifierFl
     CGEventRef keyUp = CGEventCreateKeyboardEvent(NULL, keyCode, false);
     CGEventSetFlags(keyDown, (CGEventFlags)modifierFlags);
     CGEventFlags originalModifierFlags = getModifierFlags();
-    CGEventSetFlags(keyUp, originalModifierFlags); // Restore original keyboard modifier flags state on key up. This seems to fix `[ModifierManager getCurrentModifiers]`
+    CGEventSetFlags(keyUp, originalModifierFlags); // Restore original keyboard modifier flags state on key up. This seems to fix `[Modifiers getCurrentModifiers]`
     
     // Send key events
     CGEventPost(tapLoc, keyDown);
