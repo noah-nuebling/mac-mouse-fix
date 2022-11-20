@@ -197,6 +197,7 @@
 		4FD860CC266EF55A004F76C8 /* ScrollConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FD860CB266EF55A004F76C8 /* ScrollConfig.swift */; };
 		4FD9820B292A8C1700645FE3 /* ReactiveDeviceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FD98209292A8C1700645FE3 /* ReactiveDeviceManager.swift */; };
 		4FD9820E292A9CB000645FE3 /* ReactiveRemaps.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FD9820D292A9CB000645FE3 /* ReactiveRemaps.swift */; };
+		4FD98210292AB02D00645FE3 /* ReactiveModifiers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FD9820F292AB02D00645FE3 /* ReactiveModifiers.swift */; };
 		4FD9A7D128BA2A810006DF4B /* SecureStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FD9A7D028BA2A810006DF4B /* SecureStorage.swift */; };
 		4FD9A7D228BA2A8A0006DF4B /* SecureStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FD9A7D028BA2A810006DF4B /* SecureStorage.swift */; };
 		4FDE759A28B1401400662314 /* License.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FDE759928B1401400662314 /* License.swift */; };
@@ -621,6 +622,7 @@
 		4FD860DA266EFD64004F76C8 /* ScrollConfigObjC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScrollConfigObjC.h; sourceTree = "<group>"; };
 		4FD98209292A8C1700645FE3 /* ReactiveDeviceManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReactiveDeviceManager.swift; sourceTree = "<group>"; };
 		4FD9820D292A9CB000645FE3 /* ReactiveRemaps.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReactiveRemaps.swift; sourceTree = "<group>"; };
+		4FD9820F292AB02D00645FE3 /* ReactiveModifiers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReactiveModifiers.swift; sourceTree = "<group>"; };
 		4FD9A7CE28BA29CB0006DF4B /* default_secureStorage.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = default_secureStorage.plist; sourceTree = "<group>"; };
 		4FD9A7D028BA2A810006DF4B /* SecureStorage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SecureStorage.swift; sourceTree = "<group>"; };
 		4FDC127528A2C6160076972E /* ReactiveConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReactiveConfig.swift; sourceTree = "<group>"; };
@@ -1799,6 +1801,7 @@
 			children = (
 				4FF6661625F2C93A00689B77 /* Modifiers.h */,
 				4FF6661725F2C93A00689B77 /* Modifiers.m */,
+				4FD9820F292AB02D00645FE3 /* ReactiveModifiers.swift */,
 			);
 			path = Modifiers;
 			sourceTree = "<group>";
@@ -2549,6 +2552,7 @@
 				4FF6669225F2C93A00689B77 /* RoughScroll_old_.m in Sources */,
 				4FBDA14F27B241CE0030E4EA /* GlobalEventTapThread.m in Sources */,
 				4FF6669825F2C93A00689B77 /* SubPixelator.m in Sources */,
+				4FD98210292AB02D00645FE3 /* ReactiveModifiers.swift in Sources */,
 				4F44794328B55F6300AD1979 /* CAAnimation+Extensions.swift in Sources */,
 				4FE40B97283A49DD00880BEF /* SharedUtilitySwift.swift in Sources */,
 				4F8A8DC2287F967000786BCC /* TestAccelerationCurve.swift in Sources */,

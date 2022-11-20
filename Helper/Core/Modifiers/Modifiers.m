@@ -227,7 +227,7 @@ static void reactToModifierChange(NSDictionary *_Nonnull activeModifiers, Device
 
 #pragma mark Get Modifiers
 
-+ (NSDictionary *)getActiveModifiersForDevice:(Device *)device event:(CGEventRef)event {
++ (NSDictionary *)getActiveModifiersForDevice:(Device *)device event:(CGEventRef _Nullable)event {
 
     /// \discussion If you pass in an a CGEvent via the `event` argument, the returned keyboard modifiers will be more up-to-date. This is sometimes necessary to get correct data when calling this right after the keyboard modifiers have changed.
     /// \discussion Analyzing with `os_signpost` reveals this is called 9 times per button click and takes around 20% of the time.

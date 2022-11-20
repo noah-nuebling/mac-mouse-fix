@@ -13,6 +13,9 @@ import Foundation
 
 @objc class HelperState: NSObject {
     
+    // MARK: Active device
+    /// Might be more appropriate to have this as part of DeviceManager
+    
     private static var _activeDevice: Device? = nil
     @objc static var activeDevice: Device? {
         set {
@@ -39,6 +42,8 @@ import Foundation
         guard let device = DeviceManager.attachedDevice(with: IOHIDDevice) else { return }
         activeDevice = device
     }
+    
+    // MARK: Lockdown state
     
     @objc static var isLockedDown = false /// Don't write to this directly, use lockDown() instead
     @objc static func lockDown() {
