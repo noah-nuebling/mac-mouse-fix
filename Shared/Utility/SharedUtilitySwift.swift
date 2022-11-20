@@ -37,25 +37,25 @@ import CocoaLumberjackSwift
         return NSRect(x: x, y: y, width: width, height: height)
     }
     
-    static func insecureCopy<T: NSCoding>(of original: T) throws -> T {
-        
-        // TODO: Move this to a more appropriate file
-        
+    static func insecureDeepCopy<T: NSCoding>(of original: T) throws -> T {
+    
         /// Approach 4
         /// It seems theres a solution after all!!
         ///     See https://developer.apple.com/forums/thread/107533
-        
+
         let data = try NSKeyedArchiver.archivedData(withRootObject: original, requiringSecureCoding: false)
-        
+
         let unarchiver = try NSKeyedUnarchiver(forReadingFrom: data)
         unarchiver.requiresSecureCoding = false
-        
+
         let copy = unarchiver.decodeObject(forKey: NSKeyedArchiveRootObjectKey) as! T
-        
+
         return copy
     }
     
-    @objc static func shallowCopy(of object: NSObject) -> NSObject {
+    @objc static func shallowCopy(ofObject object: NSObject) -> NSObject {
+        
+        /// Why aren't we using the normal NSKeyedArchiver methods for deep copying? I assume this is faster?
         /// Why is there no default "shallowCopy" method for objects?? Is this bad?
         /// Be careful not to mutate any properties in the copy because it's shallow (holds new references to the same old objects as the original)
         /// Reference on property attributes: https://developer.apple.com/library/archive/documentation/Cocoa/Conceptual/ObjCRuntimeGuide/Articles/ocrtPropertyIntrospection.html

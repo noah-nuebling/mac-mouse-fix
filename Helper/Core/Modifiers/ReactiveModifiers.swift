@@ -12,23 +12,25 @@ import ReactiveSwift
 
 @objc class ReactiveModifiers: NSObject {
     
-//    /// Singleton
-//    @objc static let shared = ReactiveModifiers()
-//    
-//    /// Reactive Core
-//    private var signal: Signal<NSDictionary, Never>
-//    private var observer: Signal<NSDictionary, Never>.Observer
-//    
-//    /// Init
-//    override init() {
-//        (signal, observer) = Signal<NSDictionary, Never>.pipe()
-//    }
-//    
-//    /// Main interface
-//    var modifiers: SignalProducer<NSDictionary, Never> {
-//        let device = HelperState.activeDevice
-//        Modifiers.getActiveModifiers(for: HelperState.activeDevice, event: nil)
-//        return signal.producer.prefix(value: )
-//    }
-//    
+    /// Singleton
+    @objc static let shared = ReactiveModifiers()
+    
+    /// Reactive Core
+    private var signal: Signal<NSDictionary, Never>
+    private var observer: Signal<NSDictionary, Never>.Observer
+    
+    /// Init
+    override init() {
+        (signal, observer) = Signal<NSDictionary, Never>.pipe()
+    }
+/// Main interface
+    var modifiers: SignalProducer<NSDictionary, Never> {
+        return signal.producer.prefix(value: Modifiers.modifiers() as NSDictionary).skipRepeats()
+    }
+    
+    /// ObjC Interface
+    @objc func handleModifiersDidChange() {
+        observer.send(value: Modifiers.modifiers() as NSDictionary)
+    }
+    
 }

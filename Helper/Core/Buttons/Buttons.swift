@@ -55,7 +55,7 @@ import CocoaLumberjackSwift
             
             /// Update modifications
             let remaps = Remap.remaps() /// Why aren't we reusing the remaps from above?
-            self.modifiers = Modifiers.getActiveModifiers(for: HelperState.activeDevice!, event: event) /// Why aren't we just using `device` here?
+            self.modifiers = Modifiers.modifiers()
             self.modifications = Remap.modifications(withModifiers: modifiers)
             
             /// Get max clickLevel
@@ -79,9 +79,9 @@ import CocoaLumberjackSwift
             ///
             
             if triggerPhase == .press {
-                self.modifierManager.update(device: device, button: ButtonNumber(truncating: button), clickLevel: clickLevel, downNotUp: true)
+                self.modifierManager.update(button: ButtonNumber(truncating: button), clickLevel: clickLevel, downNotUp: true)
                 onRelease.append {
-                    self.modifierManager.update(device: device, button: ButtonNumber(truncating: button), clickLevel: clickLevel, downNotUp: false)
+                    self.modifierManager.update(button: ButtonNumber(truncating: button), clickLevel: clickLevel, downNotUp: false)
                 }
             }
             
@@ -163,7 +163,7 @@ import CocoaLumberjackSwift
             
             /// Notify modifiers
             ///     (Probably unnecessary, because the only modifiers that can be "deactivated" are buttons. And since there's only one clickCycle, any buttons modifying the current one should already be zombified)
-            Modifiers.handleModificationHasBeenUsed(with: device, activeModifiers: self.modifiers as! [AnyHashable : Any])
+            Modifiers.handleModificationHasBeenUsed()
         })
         
         return passThroughEvaluation
@@ -184,27 +184,27 @@ import CocoaLumberjackSwift
         if self.clickCycle.isActiveFor(device: device.uniqueID(), button: button) {
             self.clickCycle.kill()
         }
-        self.modifierManager.kill(device: device, button: ButtonNumber(truncating: button)) /// Not sure abt this
+        self.modifierManager.kill(button: ButtonNumber(truncating: button)) /// Not sure abt this
     }
     
-    @objc static func handleButtonHasHadEffectAsModifier(device: Device, button: NSNumber) {
-        handleButtonHasHadEffectAsModifier_Unsafe(device: device, button: button)
+    @objc static func handleButtonHasHadEffectAsModifier(button: NSNumber) {
+        handleButtonHasHadEffectAsModifier_Unsafe(button: button)
     }
     
-    @objc static func handleButtonHasHadEffectAsModifier_Unsafe(device: Device, button: NSNumber) {
+    @objc static func handleButtonHasHadEffectAsModifier_Unsafe(button: NSNumber) {
         /// Validate
         /// Might wanna `assert(buttonIsHeld)`
         assert(isInitialized)
         /// Do stuff
-        if self.clickCycle.isActiveFor(device: device.uniqueID(), button: button) {
+        if self.clickCycle.isActiveFor(button: button) {
             self.clickCycle.kill()
         }
     }
     
     /// Interface for accessing submodules
     
-    @objc static func getActiveButtonModifiers_Unsafe(device: Device) -> [[String: Int]] {
-        return modifierManager.getActiveButtonModifiersForDevice(device: device)
-    }
+//    @objc static func getActiveButtonModifiers_Unsafe(device: Device) -> [[String: Int]] {
+//        return modifierManager.getActiveButtonModifiersForDevice(device: device)
+//    }
     
 }

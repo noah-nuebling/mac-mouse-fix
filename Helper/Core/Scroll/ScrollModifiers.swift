@@ -29,7 +29,7 @@ import CocoaLumberjackSwift
         /// Get currently active scroll remaps
         
         let modifyingDevice: Device = HelperState.activeDevice!;
-        let activeModifiers = Modifiers.getActiveModifiers(for: modifyingDevice, event: event)
+        let activeModifiers = Modifiers.modifiers()
         let baseRemaps = Remap.remaps();
         
         /// Debug
@@ -87,7 +87,7 @@ import CocoaLumberjackSwift
         if !resultIsEmpty {
             
             /// Notify modifiers
-            Modifiers.handleModificationHasBeenUsed(with: modifyingDevice, activeModifiers: activeModifiers)
+            Modifiers.handleModificationHasBeenUsed()
             
             /// Send addMode feedback
             if result.effectMod == kMFScrollEffectModificationAddModeFeedback {

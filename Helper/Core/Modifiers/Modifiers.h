@@ -17,12 +17,16 @@ NS_ASSUME_NONNULL_BEGIN
 
 + (void)load_Manual;
 
-+ (NSDictionary *)getActiveModifiersForDevice:(Device *)device event:(CGEventRef _Nullable) event;
+//+ (NSDictionary *)getActiveModifiersForDevice:(Device *)device event:(CGEventRef _Nullable) event;
 
-+ (void)handleButtonModifiersMightHaveChangedWithDevice:(Device *)device;
++ (NSDictionary *)modifiers;
 
-+ (void)handleModificationHasBeenUsedWithDevice:(Device *_Nullable)device;
-+ (void)handleModificationHasBeenUsedWithDevice:(Device *_Nullable)device activeModifiers:(NSDictionary *)activeModifiers;
++ (void)buttonModsChangedTo:(NSArray *)newModifiers;
+
++ (void)handleModificationHasBeenUsed;
+
+//+ (void)handleModificationHasBeenUsedWithDevice:(Device *_Nullable)device;
+//+ (void)handleModificationHasBeenUsedWithDevice:(Device *_Nullable)device activeModifiers:(NSDictionary *)activeModifiers;
 
 @end
 

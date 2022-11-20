@@ -35,7 +35,7 @@ private func doubleFadePropertyChange<P>(_ view: NSView,
                                             _ newValue: P) throws {
     
     /// Copy view
-    let copiedView = try SharedUtilitySwift.insecureCopy(of: view)
+    let copiedView = try SharedUtilitySwift.insecureDeepCopy(of: view)
     
     /// Write newValue to ogView
     if let keyPath = keyPath as? String {

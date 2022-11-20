@@ -339,7 +339,10 @@ BOOL _addModeIsEnabled = NO;
     
     DDLogDebug(@"Concluding addMode with payload: %@", payload);
     
-    if (![self addModePayloadIsValid:payload]) return;
+    if (![self addModePayloadIsValid:payload]) {
+        [self disableAddMode];
+        return;
+    }
     
     [self reload];
     _addModeIsEnabled = NO;
@@ -359,6 +362,7 @@ BOOL _addModeIsEnabled = NO;
 + (BOOL)addModePayloadIsValid:(NSDictionary *)payload {
     if ([payload[kMFRemapsKeyTrigger] isEqual:kMFTriggerDrag]
         || [payload[kMFRemapsKeyTrigger] isEqual:kMFTriggerScroll]) {
+        
         NSArray *buttonPreconds = payload[kMFRemapsKeyModificationPrecondition][kMFModificationPreconditionKeyButtons];
         if (buttonPreconds == nil || buttonPreconds.count == 0) {
             return NO;

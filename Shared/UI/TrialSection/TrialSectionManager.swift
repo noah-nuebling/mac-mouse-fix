@@ -137,14 +137,14 @@ class TrialSectionManager {
                 self.isReplacing = true
                 
                 let ogSection = self.currentSection
-                let newSection = try SharedUtilitySwift.insecureCopy(of: self.currentSection)
+                let newSection = try SharedUtilitySwift.insecureDeepCopy(of: self.currentSection)
                 
                 ///
                 /// Store original trialSection for easy restoration on mouseExit
                 ///
                 
                 if self.initialSection == nil {
-                    self.initialSection = try SharedUtilitySwift.insecureCopy(of: self.currentSection)
+                    self.initialSection = try SharedUtilitySwift.insecureDeepCopy(of: self.currentSection)
                 }
                 
                 ///

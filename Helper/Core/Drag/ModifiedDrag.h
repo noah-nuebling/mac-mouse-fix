@@ -42,7 +42,7 @@ typedef struct {
     id<ModifiedDragOutputPlugin> outputPlugin;
     
     MFModifiedInputActivationState activationState;
-    Device *modifiedDevice;
+//    Device *modifiedDevice;
     
     CFTimeInterval initTime;
     bool isSuspended;
@@ -79,7 +79,7 @@ typedef struct {
 
 + (NSDictionary *)initialModifiers;
 + (CGEventTapProxy)tapProxy;
-+ (void)initializeDragWithDict:(NSDictionary *)effectDict initialModifiers:(NSDictionary *)modifiers onDevice:(Device *)dev;
++ (void)initializeDragWithDict:(NSDictionary *)effectDict initialModifiers:(NSDictionary *)modifiers;
 
 //+ (void)modifiedScrollHasBeenUsed;
 

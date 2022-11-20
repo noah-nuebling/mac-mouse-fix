@@ -527,11 +527,13 @@ static void iteratePropertiesOn(id obj, void(^callback)(objc_property_t property
     return destinationFrame;
 }
 
-#pragma mark - Other
+#pragma mark - Deep copies
 
 + (id)deepMutableCopyOf:(id)object {
-    /// NSPropertyListSerialization fails because we're using NSNumber as dictionary keys. CFPropertyListCreateDeepCopy doesn't work either.
+    
+    /// NSPropertyListSerialization fails for our remapDict because we're using NSNumber as dictionary keys. CFPropertyListCreateDeepCopy doesn't work either.
     ///     So we're doing this manually...
+    /// Edit: Doesn't NSKeyedArchiver work? Is it about making it mutable?
         
     if ([object isKindOfClass:NSDictionary.class]) {
         ///
@@ -568,13 +570,42 @@ static void iteratePropertiesOn(id obj, void(^callback)(objc_property_t property
 }
 
 + (id)deepCopyOf:(id)object {
-    return [NSKeyedUnarchiver unarchiveObjectWithData:[NSKeyedArchiver archivedDataWithRootObject:object]];
+    
+    /// New approach
+    if (object == nil) return nil;
+    return [self deepCopyOf:object error:nil];
+    
+    /// Old approach
+//    return [NSKeyedUnarchiver unarchiveObjectWithData:[NSKeyedArchiver archivedDataWithRootObject:object]];
 }
 
-// TODO: Consider returning a mutable dict to avoid constantly using `- mutableCopy`. Maybe even alter `dst` in place and return nothing (And rename to `applyOverridesFrom:to:`).
-/// Copy all leaves (elements which aren't dictionaries) from `src` to `dst`. Return the result. (`dst` itself isn't altered)
-/// Recursively search for leaves in `src`. For each srcLeaf found, create / replace a leaf in `dst` at a keyPath identical to the keyPath of srcLeaf and with the value of srcLeaf.
++ (id<NSCoding>)deepCopyOf:(id<NSCoding>)original error:(NSError *_Nullable *_Nullable)error {
+    
+    /// Copied this from the Swift implementation in SharedUtilitySwift, since the Swift implementation wasn't compatible with ObjC. We still like to keep both around since the Swift version is nicer with it's generic types. Maybe generics are also possible in this form in ObjC but I don't know how.
+    /// The simpler default methods only work with `NSSecureCoding` objects. This implementation also works with `NSCoding` objects.
+    /// Src:  https://developer.apple.com/forums/thread/107533
+    
+    assert(original != nil);
+    
+    NSData *data = [NSKeyedArchiver archivedDataWithRootObject:original requiringSecureCoding:false error:error];
+    if (data == nil) return nil;
+    
+    NSKeyedUnarchiver *unarchiver = [[NSKeyedUnarchiver alloc] initForReadingFromData:data error:error];
+    unarchiver.requiresSecureCoding = false;
+    
+    id<NSCoding> copy = [unarchiver decodeObjectForKey:NSKeyedArchiveRootObjectKey];
+    
+    return copy;
+}
+
+#pragma mark - Other
+
 + (NSDictionary *)dictionaryWithOverridesAppliedFrom:(NSDictionary *)src to: (NSDictionary *)dst {
+    
+    // TODO: Consider returning a mutable dict to avoid constantly using `- mutableCopy`. Maybe even alter `dst` in place and return nothing (And rename to `applyOverridesFrom:to:`).
+    /// Copy all leaves (elements which aren't dictionaries) from `src` to `dst`. Return the result. (`dst` itself isn't altered)
+    /// Recursively search for leaves in `src`. For each srcLeaf found, create / replace a leaf in `dst` at a keyPath identical to the keyPath of srcLeaf and with the value of srcLeaf.
+    
     NSMutableDictionary *dstMutable = [dst mutableCopy];
     if (dstMutable == nil) {
         dstMutable = [NSMutableDictionary dictionary];
@@ -601,9 +632,10 @@ int8_t sign(double x) {
     return (0 < x) - (x < 0);
 }
 
-/// Start logging to console and to Xcode output
-/// Call this at the entry point of an app, so that DDLog statements work.
 + (void)setupBasicCocoaLumberjackLogging {
+    
+    /// Start logging to console and to Xcode output
+    /// Call this at the entry point of an app, so that DDLog statements work.
     
     /// Need to enable Console.app > Action > Include Info Messages & Include Debug Messages to see these messages in Console. See https://stackoverflow.com/questions/65205310/ddoslogger-sharedinstance-logging-only-seems-to-log-error-level-logging-in-conso
     /// Will have to update instructions on Mac Mouse Fix Feedback Assistant when this releases.

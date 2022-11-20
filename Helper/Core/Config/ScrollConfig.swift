@@ -609,7 +609,7 @@ import CocoaLumberjackSwift
     
     @objc func copy(with zone: NSZone? = nil) -> Any {
         
-        return SharedUtilitySwift.shallowCopy(of: self)
+        return SharedUtilitySwift.shallowCopy(ofObject: self)
     }
     
     

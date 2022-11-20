@@ -65,12 +65,11 @@ static CGEventTapProxy _tapProxy;
         usageThreshold: %lld\n\
         type: %@\n\
         activationState: %u\n\
-        modifiedDevice: \n%@\n\
         origin: (%f, %f)\n\
         originOffset: (%f, %f)\n\
         usageAxis: %u\n\
         phase: %d\n",
-                  drag.eventTap, drag.usageThreshold, drag.type, drag.activationState, drag.modifiedDevice, drag.origin.x, drag.origin.y, drag.originOffset.x, drag.originOffset.y, drag.usageAxis, drag.firstCallback
+                  drag.eventTap, drag.usageThreshold, drag.type, drag.activationState, drag.origin.x, drag.origin.y, drag.originOffset.x, drag.originOffset.y, drag.usageAxis, drag.firstCallback
                   ];
     } @catch (NSException *exception) {
         DDLogInfo(@"Exception while generating string description of ModifiedDragState: %@", exception);
@@ -121,7 +120,7 @@ static CGEventTapProxy _tapProxy;
     }
 }
 
-+ (void)initializeDragWithDict:(NSDictionary *)effectDict initialModifiers:(NSDictionary *)modifiers onDevice:(Device *)dev {
++ (void)initializeDragWithDict:(NSDictionary *)effectDict initialModifiers:(NSDictionary *)modifiers {
     
     dispatch_async(_drag.queue, ^{
         
@@ -131,8 +130,7 @@ static CGEventTapProxy _tapProxy;
         /// Get type
         MFStringConstant type = effectDict[kMFModifiedDragDictKeyType];
         
-        /// Init static parts of _drag
-        _drag.modifiedDevice = dev;
+        /// Init static parts of `_drag`
         _drag.type = type;
         _drag.effectDict = effectDict;
         _drag.initialModifiers = modifiers;
@@ -304,7 +302,7 @@ static void handleMouseInputWhileInitialized(int64_t deltaX, int64_t deltaY, CGE
         [TrialCounter.shared handleUse];
         
         /// Notify other modules
-        [Modifiers handleModificationHasBeenUsedWithDevice:_drag.modifiedDevice];
+        [Modifiers handleModificationHasBeenUsed];
         (void)[OutputCoordinator suspendTouchDriversFromDriver:kTouchDriverModifiedDrag];
     }
 }

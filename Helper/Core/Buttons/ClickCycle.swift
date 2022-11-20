@@ -64,7 +64,7 @@ fileprivate struct ClickCycleState: Hashable {
     var downTimer = Timer()
     var upTimer = Timer()
 }
-typealias ReleaseCallbackKey = ButtonStateKey
+typealias ReleaseCallbackKey = ButtonNumber
 
 /// Main class def
 class ClickCycle: NSObject {
@@ -93,7 +93,7 @@ class ClickCycle: NSObject {
     ///     Clients can register a callback that will *always* be triggered when a button is released, even if the release event doesn't belong to the active click cycle
     fileprivate var releaseCallbacks: [ReleaseCallbackKey: [UnconditionalReleaseCallback]] = [:]
     public func waitingForRelease(device: Device, button: ButtonNumber) -> Bool {
-        return releaseCallbacks[.init(device, button)] != nil
+        return releaseCallbacks[button] != nil
     }
     
     /// Init
@@ -106,9 +106,13 @@ class ClickCycle: NSObject {
     
     /// Main interface
     
-    func isActiveFor(device: NSNumber, button: NSNumber) -> Bool {
+    func isActiveFor(device: NSNumber, button: NSNumber) -> Bool { /// Think this is unused now that we moved ButtonModifiers away from using Device
         guard let state = state else { return false }
         return state.device.uniqueID() == device && state.button == ButtonNumber(truncating: button)
+    }
+    func isActiveFor(button: NSNumber) -> Bool {
+        guard let state = state else { return false }
+        return state.button == ButtonNumber(truncating: button)
     }
     
     func handleClick(device: Device, button: ButtonNumber, downNotUp mouseDown: Bool, maxClickLevel: Int, triggerCallback: @escaping ClickCycleTriggerCallback) {
@@ -118,10 +122,9 @@ class ClickCycle: NSObject {
         ///
         
         if !mouseDown {
-            let k = ReleaseCallbackKey(device, button)
-            if let callbacks = releaseCallbacks[k] {
+            if let callbacks = releaseCallbacks[button] {
                 for c in callbacks { c() }
-                releaseCallbacks.removeValue(forKey: k)
+                releaseCallbacks.removeValue(forKey: button)
                 
             }
         }
@@ -166,7 +169,7 @@ class ClickCycle: NSObject {
                 var c: [UnconditionalReleaseCallback] = []
                 triggerCallback(.press, state!.clickLevel, device, button, &c)
                 if !c.isEmpty {
-                    releaseCallbacks[.init(device, button), default: []].append(contentsOf: c)
+                    releaseCallbacks[button, default: []].append(contentsOf: c)
                 }
             } else { /// mouseUp
                 let trigger: ClickCycleTriggerPhase = releaseFromHold ? .releaseFromHold : .release
@@ -202,7 +205,7 @@ class ClickCycle: NSObject {
                             var c: [UnconditionalReleaseCallback] = []
                             triggerCallback(.hold, self.state!.clickLevel, device, button, &c)
                             if !c.isEmpty {
-                                self.releaseCallbacks[.init(device, button), default: []].append(contentsOf: c)
+                                self.releaseCallbacks[button, default: []].append(contentsOf: c)
                             }
                             /// Update state
                             self.state?.pressState = .held

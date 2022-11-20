@@ -54,6 +54,7 @@ void *offsetPointer(void *ptr, int byteOffset);
 + (CGRect)cocoaToQuartzScreenSpace:(NSRect)cocoaFrame;
 + (id)deepMutableCopyOf:(id)object;
 + (id)deepCopyOf:(id)object;
++ (id<NSCoding>)deepCopyOf:(id<NSCoding>)original error:(NSError *_Nullable *_Nullable)error;
 + (NSString *)callerInfo;
 + (NSDictionary *)dictionaryWithOverridesAppliedFrom:(NSDictionary *)src to: (NSDictionary *)dst;
 + (CGEventType)CGEventTypeForButtonNumber:(MFMouseButtonNumber)button isMouseDown:(BOOL)isMouseDown;

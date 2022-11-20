@@ -38,21 +38,30 @@
 /// In those cases we'll use *modifier driven* modification.
 /// Which means we listen for changes to the active modifiers and when they match a modifications' precondition, we'll initialize the modification components which are modifier driven. (which is only the drag modificaitons at this point)
 
+#pragma mark - Storage
+
+static NSMutableDictionary *_modifiers;
+
 #pragma mark - Load
 
 /// This used to be initialize but  that didn't execute until the first mouse buttons were pressed
 /// Then it was load, but that led to '"Mac Mouse Fix Helper" would like to receive keystrokes from any application' prompt. (I think)
 + (void)load_Manual {
     if (self == [Modifiers class]) {
-        // Create keyboard modifier event tap
+        
+        /// Init `_modifiers`
+        _modifiers = [NSMutableDictionary dictionary];
+        
+        /// Create keyboard modifier event tap
         CGEventMask mask = CGEventMaskBit(kCGEventFlagsChanged);
-        _keyboardModifierEventTap = CGEventTapCreate(kCGHIDEventTap, kCGHeadInsertEventTap, kCGEventTapOptionListenOnly, mask, handleKeyboardModifiersHaveChanged, NULL);
+        _keyboardModifierEventTap = CGEventTapCreate(kCGHIDEventTap, kCGHeadInsertEventTap, kCGEventTapOptionListenOnly, mask, kbModsChanged, NULL);
         CFRunLoopSourceRef runLoopSource = CFMachPortCreateRunLoopSource(kCFAllocatorDefault, _keyboardModifierEventTap, 0);
         CFRunLoopAddSource(CFRunLoopGetCurrent(), runLoopSource, kCFRunLoopDefaultMode);
         CFRelease(runLoopSource);
-        // Enable/Disable eventTap based on Remap.remaps
-        CGEventTapEnable(_keyboardModifierEventTap, false); // Disable eventTap first (Might prevent `_keyboardModifierEventTap` from always being called twice - Nope doesn't make a difference)
-        toggleModifierEventTapBasedOnRemaps(Remap.remaps);
+        
+        /// Enable/Disable eventTap based on Remap.remaps
+        CGEventTapEnable(_keyboardModifierEventTap, false); /// Disable eventTap first (Might prevent `_keyboardModifierEventTap` from always being called twice - Nope doesn't make a difference)
+        toggleModifierListening(Remap.remaps);
         
         /// Re-toggle keyboard modifier callbacks whenever Remap.remaps changes
         /// TODO:! Test if this works
@@ -61,114 +70,176 @@
                                                          queue:nil
                                                     usingBlock:^(NSNotification * _Nonnull note) {
             DDLogDebug(@"Received notification that remaps have changed");
-            toggleModifierEventTapBasedOnRemaps(Remap.remaps);
+            toggleModifierListening(Remap.remaps);
         }];
     }
 }
 
-
-#pragma mark - Handle feedback
-
-+ (void)handleModificationHasBeenUsedWithDevice:(Device *)device {
-    /// Convenience wrapper for `handleModifiersHaveHadEffect:activeModifiers:` if you don't have access to `activeModifiers`
-    
-    NSDictionary *activeModifiers = [self getActiveModifiersForDevice:device event:nil];
-    [Modifiers handleModificationHasBeenUsedWithDevice:device activeModifiers:activeModifiers];
-}
-+ (void)handleModificationHasBeenUsedWithDevice:(Device *)device activeModifiers:(NSDictionary *)activeModifiers {
-    /// Make sure to pass in device, otherwise this method (in its current form) won't do anything
-    
-    if (device != nil) {
-        /// Notify active *modifiers* that they have had an effect
-        for (NSDictionary *buttonPrecondDict in activeModifiers[kMFModificationPreconditionKeyButtons]) {
-            NSNumber *precondButtonNumber = buttonPrecondDict[kMFButtonModificationPreconditionKeyButtonNumber];
-            [Buttons handleButtonHasHadEffectAsModifierWithDevice:device button:precondButtonNumber];
-            /// ^ I think we might only have to notify the last button in the sequence (instead of all of them), because all previous buttons should already have been zombified or sth due to consecutive button presses
-        }
-    }
-}
-
-#pragma mark - Modifier driven modification
-
-
-
-#pragma mark Keyboard modifiers
+#pragma mark Toggle listening
 
 static CFMachPortRef _keyboardModifierEventTap;
-static void toggleModifierEventTapBasedOnRemaps(NSDictionary *remaps) {
+static void toggleModifierListening(NSDictionary *remaps) {
+
+    ///
+    /// Toggle buttonMod processing
+    ///
+    
+    // TODO: Implement
+    
+    ///
+    /// Toggle kbMod eventTap
+    ///
+    
+    /// Decide
+    
+    bool doEnable = false;
     
     if (Remap.addModeIsEnabled) {
-        CGEventTapEnable(_keyboardModifierEventTap, true);
-        return;
-    }
-
-    /// If a modification collection exists such that it contains a proactive modification (aka modifierDriver modification) and its precondition contains a keyboard modifier, then activate the event tap.
-    for (NSDictionary *modificationPrecondition in remaps) {
-        NSDictionary *modificationCollection = remaps[modificationPrecondition];
-        BOOL collectionContainsProactiveModification = modificationCollection[kMFTriggerDrag] != nil;
-        if (collectionContainsProactiveModification) {
-            BOOL modificationDependsOnKeyboardModifier = modificationPrecondition[kMFModificationPreconditionKeyKeyboard] != nil;
-            if (modificationDependsOnKeyboardModifier) {
-                CGEventTapEnable(_keyboardModifierEventTap, true);
-                return;
+        doEnable = true;
+    } else {
+        /// If any keyboard modifier is used in remaps, enable tap
+        for (NSDictionary *modifiers in remaps) {
+            BOOL containsKB = modifiers[kMFModificationPreconditionKeyKeyboard] != nil;
+            if (containsKB) {
+                doEnable = true;
+                break;
             }
         }
     }
-    CGEventTapEnable(_keyboardModifierEventTap, false);
+    
+    /// Toggle tap
+    
+    CGEventTapEnable(_keyboardModifierEventTap, doEnable);
 }
 
-CGEventRef _Nullable handleKeyboardModifiersHaveChanged(CGEventTapProxy proxy, CGEventType type, CGEventRef event, void *userInfo) {
+#pragma mark Handle modifier change
+
+CGEventRef _Nullable kbModsChanged(CGEventTapProxy proxy, CGEventType type, CGEventRef event, void *userInfo) {
 
     /// Get mouse
-    Device *activeDevice = HelperState.activeDevice;
+    
+//    Device *activeDevice = HelperState.activeDevice;
     
     /// Get activeModifiers
-    ///     Need to pass in event here as source for keyboard modifers, otherwise the returned kb-modifiers won't be up-to-date.
-    ///     -> Idea: This might be because we're using a passive listener eventTap?
-    NSDictionary *activeModifiers = [Modifiers getActiveModifiersForDevice:activeDevice event:event];
+    /// Notes:
+    /// - We can't use CGEventCreate() here for the source of the keyboard modifers, because the kbMods won't be up-to-date.
+    /// -> Idea: This might be because we're using a passive listener eventTap?
+
+    /// Mask
+    /// - Only lets bits 16-23 through
+    /// - NSEventModifierFlagDeviceIndependentFlagsMask == 0xFFFF0000 -> it allows bits 16 - 31. But bits 24 - 31 contained weird stuff which messed up the return value and modifiers are only on bits 16-23, so we defined our own mask.
+    uint64_t mask = 0xFF0000;
     
-    /// Do stuff
-    reactToModifierChange(activeModifiers, activeDevice);
+    /// We ignore caps lock.
+    /// - Otherwise modfifications won't work normally when caps lock is enabled.
+    /// - Maybe we need to ignore caps lock in other places, too make this work properly but I don't think so
+    /// - We should probably remove this once we update RemapsOverrider to work with subset matches and stuff
+    /// -> TODO: Remove capslock ignoring now.
+    mask &= ~kCGEventFlagMaskAlphaShift;
+    
+    /// Get new flags
+    NSUInteger newFlags = CGEventGetFlags(event) & mask;
+    
+    /// Check Change
+    NSNumber *newFlagsNS = @(newFlags);
+    NSNumber *oldFlags = _modifiers[kMFModificationPreconditionKeyKeyboard];
+    BOOL didChange = ![oldFlags isEqualToNumber:newFlagsNS];
+    
+    if (didChange) {
+        
+        /// Store result
+        if (newFlags == 0) {
+            [_modifiers removeObjectForKey:kMFModificationPreconditionKeyKeyboard];
+        } else {
+            _modifiers[kMFModificationPreconditionKeyKeyboard] = newFlagsNS;
+        }
+        
+        /// Notify
+        [ReactiveModifiers.shared handleModifiersDidChange];
+        reactToModifierChange();
+    }
 
     /// Return
     return event;
 }
 
+
 #pragma mark Button modifiers
 
-os_log_t _log;
-os_signpost_id_t _log_id;
-
-NSArray *_prevButtonModifiers;
-/// Analyzing this with `os_signpost` reveals it is called 3 times per button click - we should look into optimizing this.
-///     Edit: Why `mightHave`? Do we really need to test again if they actually changed?
-+ (void)handleButtonModifiersMightHaveChangedWithDevice:(Device *)device {
++ (void)buttonModsChangedTo:(NSArray<NSDictionary<NSString *, NSNumber *> *> *)newModifiers {
     
-    NSArray *buttonModifiers = [Buttons getActiveButtonModifiers_UnsafeWithDevice:device];
-    if (![buttonModifiers isEqual:_prevButtonModifiers]) {
-        handleButtonModifiersHaveChangedWithDevice(device);
+    /// Debug
+    DDLogDebug(@"buttonMods changed to: %@", newModifiers);
+    
+    /// Assert change
+    if (SharedUtility.runningPreRelease) {
+        NSArray *oldModifiers = _modifiers[kMFModificationPreconditionKeyButtons];
+        assert(![newModifiers isEqualToArray:oldModifiers]);
     }
-    _prevButtonModifiers = buttonModifiers;
-}
-static void handleButtonModifiersHaveChangedWithDevice(Device *device) {
-    NSDictionary *activeModifiers = [Modifiers getActiveModifiersForDevice:device event:nil];
-    reactToModifierChange(activeModifiers, device);
+    
+    /// Store
+    if (newModifiers.count == 0) {
+        [_modifiers removeObjectForKey:kMFModificationPreconditionKeyButtons];
+    } else {
+        _modifiers[kMFModificationPreconditionKeyButtons] = newModifiers;
+    }
+    
+    /// Notify
+    [ReactiveModifiers.shared handleModifiersDidChange];
+    reactToModifierChange();
 }
 
-#pragma mark Helper
+#pragma mark Interface
 
-static void reactToModifierChange(NSDictionary *_Nonnull activeModifiers, Device * _Nonnull device) {
++ (NSDictionary *)modifiers {
+    return _modifiers;
+}
+
+#pragma mark Handle mod usage
+
++ (void)handleModificationHasBeenUsed {
+    
+    /// Notify active *modifiers* that they have had an effect
+    for (NSDictionary *buttonMods in _modifiers[kMFModificationPreconditionKeyButtons]) {
+        NSNumber *buttonNumber = buttonMods[kMFButtonModificationPreconditionKeyButtonNumber];
+        [Buttons handleButtonHasHadEffectAsModifierWithButton:buttonNumber];
+        /// ^ I think we might only have to notify the last button in the sequence (instead of all of them), because all previous buttons should already have been zombified or sth due to consecutive button presses
+    }
+}
+
+//+ (void)handleModificationHasBeenUsedWithDevice:(Device *)device {
+//    /// Convenience wrapper for `handleModifiersHaveHadEffect:activeModifiers:` if you don't have access to `activeModifiers`
+//
+//    NSDictionary *activeModifiers = [self getActiveModifiersForDevice:device event:nil];
+//    [Modifiers handleModificationHasBeenUsedWithDevice:device activeModifiers:activeModifiers];
+//}
+//+ (void)handleModificationHasBeenUsedWithDevice:(Device *)device activeModifiers:(NSDictionary *)activeModifiers {
+//    /// Make sure to pass in device, otherwise this method (in its current form) won't do anything
+//
+//    if (device != nil) {
+//        /// Notify active *modifiers* that they have had an effect
+//        for (NSDictionary *buttonPrecondDict in activeModifiers[kMFModificationPreconditionKeyButtons]) {
+//            NSNumber *precondButtonNumber = buttonPrecondDict[kMFButtonModificationPreconditionKeyButtonNumber];
+//            [Buttons handleButtonHasHadEffectAsModifierWithDevice:device button:precondButtonNumber];
+//            /// ^ I think we might only have to notify the last button in the sequence (instead of all of them), because all previous buttons should already have been zombified or sth due to consecutive button presses
+//        }
+//    }
+//}
+
+#pragma mark React
+
+static void reactToModifierChange() {
     
     /// Get active modifications and initialize any which are modifier driven
     
     /// Debug
     
-//    DDLogDebug(@"MODIFIERS HAVE CHANGED TO - %@", activeModifiers);
+    DDLogDebug(@"MODIFIERS HAVE CHANGED TO - %@", _modifiers);
 //    DDLogDebug(@"...ON DEVICE - %@", device);
 //    DDLogDebug(@"...CALLED BY %@", [SharedUtility getInfoOnCaller]);
     
     /// Get activeModifications
-    NSDictionary *activeModifications = [Remap modificationsWithModifiers:activeModifiers];
+    NSDictionary *activeModifications = [Remap modificationsWithModifiers:_modifiers];
     
     /// Notify ScrollModifiers of modifierChange
     ///     It needs that to commit to an app in the app switcher when the user releases a button
@@ -183,7 +254,7 @@ static void reactToModifierChange(NSDictionary *_Nonnull activeModifiers, Device
 
     BOOL modifiedDragIsStillUpToDate = NO;
     
-    if ([activeModifiers isEqual:ModifiedDrag.initialModifiers]) {
+    if ([_modifiers isEqual:ModifiedDrag.initialModifiers]) {
         modifiedDragIsStillUpToDate = YES;
     } else {
         [ModifiedDrag deactivate];
@@ -215,62 +286,15 @@ static void reactToModifierChange(NSDictionary *_Nonnull activeModifiers, Device
                     largeUsageThreshold = YES;
                 }
                 
+                /// Copy modifiers before passing into Modified drag
+                ///     Can't just be reference because we later compare to `_modifiers`
+                NSDictionary *copiedModifiers = (NSDictionary *)[SharedUtility deepCopyOf:_modifiers error:nil];
+                
                 /// Init modifiedDrag
-                [ModifiedDrag initializeDragWithDict:modifiedDragEffectDict initialModifiers:activeModifiers onDevice:device];
+                [ModifiedDrag initializeDragWithDict:modifiedDragEffectDict initialModifiers:copiedModifiers];
             }
         }
     }
-}
-
-#pragma mark - Trigger driven modification
-
-
-#pragma mark Get Modifiers
-
-+ (NSDictionary *)getActiveModifiersForDevice:(Device *)device event:(CGEventRef _Nullable)event {
-
-    /// \discussion If you pass in an a CGEvent via the `event` argument, the returned keyboard modifiers will be more up-to-date. This is sometimes necessary to get correct data when calling this right after the keyboard modifiers have changed.
-    /// \discussion Analyzing with `os_signpost` reveals this is called 9 times per button click and takes around 20% of the time.
-    ///     That's over a third of the time which is used by our code (I think) - We should look into optimizing this (if we have too much time - the program is plenty fast). Maybe caching the values or calling it less, or making it faster.
-    
-    NSMutableDictionary *outDict = [NSMutableDictionary dictionary];
-    
-    CGEventFlags kb = [self getActiveKeyboardModifiersWithEvent:event];
-    NSArray *btn = [Buttons getActiveButtonModifiers_UnsafeWithDevice:device];
-        
-    if (kb != 0) {
-        outDict[kMFModificationPreconditionKeyKeyboard] = @(kb);
-    }
-    if (btn.count != 0) {
-        outDict[kMFModificationPreconditionKeyButtons] = btn;
-    }
-    
-    return outDict;
-}
-
-+ (NSUInteger)getActiveKeyboardModifiersWithEvent:(CGEventRef _Nullable)event {
-    
-    BOOL passedInEventIsNil = NO;
-    if (event == nil) {
-        passedInEventIsNil = YES;
-        event = CGEventCreate(NULL);
-    }
-    
-    uint64_t mask = 0xFF0000; // Only lets bits 16-23 through
-    /// NSEventModifierFlagDeviceIndependentFlagsMask == 0xFFFF0000 -> it only allows bits 16 - 31.
-    ///  But bits 24 - 31 contained weird stuff which messed up the return value and modifiers are only on bits 16-23, so we defined our own mask
-    
-    mask &= ~kCGEventFlagMaskAlphaShift;
-    /// Ignore caps lock. Otherwise modfifications won't work normally when caps lock is enabled.
-    ///     Maybe we need to ignore caps lock in other places, too make this work properly but I don't think so
-    ///         We should probably remove this once we update RemapsOverrider to work with subset matches and stuff
-    ///         TODO: Remove this now.
-    
-    CGEventFlags modifierFlags = CGEventGetFlags(event) & mask;
-    
-    if (passedInEventIsNil) CFRelease(event);
-    
-    return modifierFlags;
 }
 
 @end
