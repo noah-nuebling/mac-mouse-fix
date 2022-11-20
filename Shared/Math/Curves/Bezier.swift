@@ -61,7 +61,7 @@ import CocoaLumberjack /// Doesn't work for some reason
     
     /// Control points
     
-    let controlPoints: [Point]
+    let controlPoints: [P]
     let controlPointsX: [Double]
     let controlPointsY: [Double]
     func controlPoints(_ axis: MFAxis) -> [Double] { /// Would be more elegant to use a dict or an enum (enums do that in Swift I think?)
@@ -73,7 +73,7 @@ import CocoaLumberjack /// Doesn't work for some reason
     
     /// Polynomial coefficients
     
-    var polynomialCoefficients: [Point] /// Needs to be var to fill it based on other instance properties in initializer bc Swift is weird
+    var polynomialCoefficients: [P] /// Needs to be var to fill it based on other instance properties in initializer bc Swift is weird
     var polynomialCoefficientsX: [Double]
     var polynomialCoefficientsY: [Double]
     func polynomialCoefficients(_ axis: MFAxis) -> [Double] {
@@ -93,10 +93,10 @@ import CocoaLumberjack /// Doesn't work for some reason
     }
     var n: Int { degree }
     
-    var startPoint: Point {
+    var startPoint: P {
         return controlPoints.first!
     }
-    var endPoint: Point {
+    var endPoint: P {
         return controlPoints.last!
     }
     
@@ -106,22 +106,22 @@ import CocoaLumberjack /// Doesn't work for some reason
     
     /// Helper functions for Init functions
     
-    private class func convertNSPointsToPoints(_ controlNSPoints: [NSPoint]) -> [Bezier.Point] {
+    private class func convertNSPointsToPoints(_ controlNSPoints: [NSPoint]) -> [P] {
         /// Helper function for objc  init functions
         /// Unused - remove
         
-        return controlNSPoints.map { (pointNS) -> Point in
-            var point: Point = Point.init()
+        return controlNSPoints.map { (pointNS) -> P in
+            var point: P = P.init()
             point.x = Double(pointNS.x)
             point.y = Double(pointNS.y)
             return point
         }
     }
-    private class func convertPointArraysToPoints(_ controlPointsAsArrays: [[Double]]) -> [Bezier.Point] {
+    private class func convertPointArraysToPoints(_ controlPointsAsArrays: [[Double]]) -> [P] {
         /// Helper function for objc  init functions
         
-        return controlPointsAsArrays.map { (pointArray: [Double]) -> Point in
-            var point: Point = Point.init()
+        return controlPointsAsArrays.map { (pointArray: [Double]) -> P in
+            var point: P = P.init()
             point.x = Double(pointArray[0])
             point.y = Double(pointArray[1])
             return point
@@ -136,18 +136,18 @@ import CocoaLumberjack /// Doesn't work for some reason
         /// `controlPointsAsArrays` is expected to have this structure: `[[x,y],[x,y],[x,y],...]`
         
         
-        let controlPoints: [Point] = Bezier.convertPointArraysToPoints(controlPointsAsArrays)
+        let controlPoints: [P] = Bezier.convertPointArraysToPoints(controlPointsAsArrays)
         self.init(controlPoints: controlPoints, xInterval: xInterval, yInterval: yInterval)
     }
     @objc convenience init(controlPointsAsArrays: [[Double]]) {
         
-        let controlPoints: [Point] = Bezier.convertPointArraysToPoints(controlPointsAsArrays)
+        let controlPoints: [P] = Bezier.convertPointArraysToPoints(controlPointsAsArrays)
         self.init(controlPoints: controlPoints)
     }
     
     /// Swift init
     
-    convenience init(controlPoints: [Point],
+    convenience init(controlPoints: [P],
                      defaultEpsilon: Double = 0.08,
                      xInterval: Interval,
                      yInterval: Interval) {
@@ -164,18 +164,18 @@ import CocoaLumberjack /// Doesn't work for some reason
         let xIntervalOrigin = Interval.init(start: pFirst.x, end: pLast.x) // Should we use Interval.init(lower:upper) instead, to make sure the x values are ascending?
         let yIntervalOrigin = Interval.init(start: pFirst.y, end: pLast.y)
         
-        let pointsInTargetInterval: [Point] = controlPoints.map { (point: Point) -> Point in
+        let pointsInTargetInterval: [P] = controlPoints.map { (point: P) -> P in
             let x = Math.scale(value: point.x, from: xIntervalOrigin, to: xInterval)
             let y = Math.scale(value: point.y, from: yIntervalOrigin, to: yInterval)
             
-            return Point(x: x, y: y)
+            return _P(x, y)
         }
         
         self.init(controlPoints: pointsInTargetInterval, defaultEpsilon: defaultEpsilon)
         
     }
     
-    init(controlPoints: [Point], defaultEpsilon: Double = 0.08) {
+    init(controlPoints: [P], defaultEpsilon: Double = 0.08) {
         
         /**
          - You should make sure you only pass in control points describing curves where
@@ -199,7 +199,7 @@ import CocoaLumberjack /// Doesn't work for some reason
         /// Removing consective duplicate points
         ///     For optimization. Not sure if significant
         
-        var controlPointsFiltered: [Point] = []
+        var controlPointsFiltered: [P] = []
         for i in 0..<controlPoints.count-1 {
             let this = controlPoints[i]
             let next = controlPoints[i+1]
@@ -249,15 +249,15 @@ import CocoaLumberjack /// Doesn't work for some reason
         /// Precalculate coefficients of the polynomial form of the Bezier Curve
         /// Formula according to English Wikipedia
         
-        let P: [Point] = self.controlPoints /// To make maths formulas more readable
+        let Ps: [P] = self.controlPoints /// To make maths formulas more readable
         
         /// Fill out the polynomialCoefficient arrays with placeholder values, so we can simply go
         ///   `array[i] = v`, later, instead of having to use `array.append(v)`
         ///   This is super ugly but there doesn't seem to be a better way in swift
         ///     Ideally we'd just allocate space for n+1 elements in the array instead of this but that doesn't seem to be possible in Swift
         
-        let placeholderPoint = Point.init(x:-1, y:-1)
-        let placeholderPointArray: [Point] = [Point](repeating: placeholderPoint, count: n+1)
+        let placeholderPoint = _P(-1, -1)
+        let placeholderPointArray: [P] = [P](repeating: placeholderPoint, count: n+1)
         let placeholderDoubleArray: [Double] = [Double](repeating: -1.0, count: n+1)
         
         self.polynomialCoefficients = placeholderPointArray
@@ -282,8 +282,8 @@ import CocoaLumberjack /// Doesn't work for some reason
             
             for i in 0...j {
                 let a: Double = pow(-1, Double(i+j)) / Double(fac(i) * fac(j-i))
-                sumX += a * P[i].x
-                sumY += a * P[i].y
+                sumX += a * Ps[i].x
+                sumY += a * Ps[i].y
             }
             
             /// Put it all together
@@ -295,7 +295,7 @@ import CocoaLumberjack /// Doesn't work for some reason
             
             self.polynomialCoefficientsX[j] = xCoefficient
             self.polynomialCoefficientsY[j] = yCoefficient
-            self.polynomialCoefficients[j] = Point.init(x: xCoefficient, y: yCoefficient)
+            self.polynomialCoefficients[j] = P.init(x: xCoefficient, y: yCoefficient)
         }
     }
     
@@ -553,7 +553,7 @@ import CocoaLumberjack /// Doesn't work for some reason
         let cLast = controlPoints[self.n]
         /// Find first controlPoint before cLast that is different from cLast
         var cPrevIndex: Int = self.n-1;
-        var cPrev: Point = controlPoints[cPrevIndex];
+        var cPrev: P = controlPoints[cPrevIndex];
         while (cPrev.x == cLast.x && cPrev.y == cLast.y) { /// Loop while cPrev == cLast
             cPrevIndex -= 1
             cPrev = controlPoints[cPrevIndex]
@@ -573,7 +573,7 @@ import CocoaLumberjack /// Doesn't work for some reason
         let cFirst = controlPoints[0]
         /// Find first controlPoint after cFirst that is different from cFirst
         var cNextIndex: Int = 1;
-        var cNext: Point = controlPoints[cNextIndex];
+        var cNext: P = controlPoints[cNextIndex];
         while cFirst.x == cNext.x && cFirst.y == cNext.y { /// Loop while cFirst == cNext
             cNextIndex += 1
             cNext = controlPoints[cNextIndex]
@@ -590,7 +590,7 @@ import CocoaLumberjack /// Doesn't work for some reason
 @objc class InvalidBezier: Bezier {
     
     init() {
-        super.init(controlPoints: [Point(x: 1, y: 1), Point(x: 12345, y: 12345)])
+        super.init(controlPoints: [_P(1, 1), _P(12345, 12345)])
     }
     
     override func evaluate(at x: Double) -> Double {

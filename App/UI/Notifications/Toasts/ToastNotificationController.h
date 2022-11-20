@@ -24,6 +24,8 @@ typedef enum {
 
 + (void)closeNotificationWithFadeOut;
 
++ (NSFont *)defaultFont;
+
 @end
 
 NS_ASSUME_NONNULL_END

@@ -29,6 +29,7 @@
 #import "Mac_Mouse_Fix-Swift.h"
 #import "NSColor+Additions.h"
 #import "MFSegmentedControl.h"
+#import "Mac_Mouse_Fix-Swift.h"
 
 @interface RemapTableController ()
 @property NSTableView *tableView;
@@ -64,6 +65,9 @@
     self.dataModel = Config.shared.config[kMFConfigKeyRemaps];
 }
 - (void)writeDataModelToConfig {
+    
+    DDLogDebug(@"TRM remap table store remaps"); /// Currently looks like this is never called? That can't be true.
+    
     setConfig(kMFConfigKeyRemaps, self.dataModel);
     commitConfig();
 }
@@ -74,7 +78,13 @@
     NSArray *store = self.dataModel;
     self.dataModel = tempDataModel;
     [self.tableView reloadData];
-    [self.tableView displayIfNeeded]; /// Need to do this because reloadData is async
+    [self.tableView displayIfNeeded]; /// Force data to reload immediately
+    if (@available(macOS 10.14, *)) { } else {
+        /// Use layout to force data reload under 10.13
+        ///     For some reason, under 10.13, `displayIfNeeded` doesn't do anything
+        self.tableView.needsLayout = YES;
+        [self.tableView layoutSubtreeIfNeeded];
+    }
     self.dataModel = store;
 }
 
@@ -252,9 +262,22 @@
     
     NSScrollView * scrollView = self.scrollView;
     
+    /// Get corner radius
+    ///     The cornerRadius of the Action Table should be equal to cornerRadius of surrounding NSBox
+    ///     Ideally we would access the cornerradius of the NSBox directly, but I don't know how
+    
     CGFloat cr = 5.0;
-    /// ^ Should be equal to cornerRadius of surrounding NSBox
-    ///   Hardcoding this might lead to bad visuals on pre-BigSur macOS versions with lower corner radius, but idk how to access the NSBox's effective cornerRadius
+    
+    if (@available(macOS 11.0, *)) { } else {
+        cr = 4.0;
+    }
+    
+    /// Shrink Action Table pre-Mojave
+    ///     Otherwise it spills out of the surrounding NSBox. Not sure why
+    
+    if (@available(macOS 10.14, *)) { } else {
+        scrollView.frame = NSInsetRect(scrollView.frame, 2, 2);
+    }
     
     scrollView.borderType = NSNoBorder;
     scrollView.wantsLayer = YES;
@@ -265,7 +288,7 @@
     scrollView.automaticallyAdjustsContentInsets = NO;
     scrollView.contentInsets = NSEdgeInsetsMake(1, 1, 1, 1); /// Insets so the content doesn't overlap with the border
     
-    updateBorderColor(self);
+    updateBorderColor(self, YES);
     
     /// Callback on darkmode toggle
     /// In MMF3, the table doesn't overlap with the box border anymore. So we don't need to remove transparency. So we don't need to update the color manually when darkmode toggles. So we don't need this functions.
@@ -294,11 +317,12 @@
     [self updateAddRemoveControl];
 }
 
-static void updateBorderColor(RemapTableController *object) {
+static void updateBorderColor(RemapTableController *object, BOOL isInitialAppearance) {
     
     /// We want the border to be non-transparent because it looks weird. The only way to achieve this is to hardcode the colors.
     /// Also see ButtonTabController > updateColors() for more explanations
     /// Note: NSColor.separatorColor doesn't update properly when tolggling darkmode even though it's a system color. So that's another plus
+    /// Update: These hardcoded solid colors don't work properly with desktop tinting. We'll use .separatorColor instead and make the table 1 px shorter to prevent the border from overlapping with the grid and looking weird. The overlap will still happen when you scroll but that's okay
     
 
         
@@ -307,20 +331,50 @@ static void updateBorderColor(RemapTableController *object) {
     if (@available(macOS 10.14, *)) {
         isDarkMode = NSApp.effectiveAppearance.name == NSAppearanceNameDarkAqua;
     }
-        
-    /// Update borderColor
-    ///     This is really just .separatorColor without transparency
-    ///     This is copied from ButtonTabController > updateColors()
     
-    if (isDarkMode) {
-        object.scrollView.layer.borderColor = [NSColor colorWithRed:57.0/255.0 green:57.0/255.0 blue:57.0/255.0 alpha:1.0].CGColor;
+    
+    /// Set to random color
+    ///     Attempt to get border color  to render properly after darkmode switch. Doesn't work.
+    
+    object.scrollView.layer.borderColor = NSColor.blueColor.CGColor;
+    
+    /// Update borderColor
+    /// Notes:
+    /// - This is really just .separatorColor without transparency
+    /// - This is copied from ButtonTabController > updateColors()
+    
+    if (isInitialAppearance) {
+        
+        /// v New system colors approach
+        
+        if (@available(macOS 10.14, *)) {
+            object.scrollView.layer.borderColor = NSColor.separatorColor.CGColor;
+        } else {
+            object.scrollView.layer.borderColor = NSColor.gridColor.CGColor;
+        }
+        
     } else {
-        object.scrollView.layer.borderColor = [NSColor colorWithRed:227.0/255.0 green:227.0/255.0 blue:227.0/255.0 alpha:1.0].CGColor;
+        
+        /// v Old hardcoded colors approach
+        ///     separatorColor breaks after darkmode switch (just disappears) (under Ventura 13.0, and earlier versions, too) so we fallback to this
+        
+        if (isDarkMode) {
+            object.scrollView.layer.borderColor = [NSColor colorWithRed:57.0/255.0 green:57.0/255.0 blue:57.0/255.0 alpha:1.0].CGColor;
+        } else {
+            object.scrollView.layer.borderColor = [NSColor colorWithRed:227.0/255.0 green:227.0/255.0 blue:227.0/255.0 alpha:1.0].CGColor;
+        }
+        
     }
+    
+
     
     ///
 //    object.scrollView.layer.borderColor = NSColor.separatorColor.CGColor;
     
+    
+    /// Test
+    ///     Doesn't seem to change anything
+    object.scrollView.needsDisplay = true;
 }
 
 - (void)reloadAll {
@@ -399,16 +453,22 @@ static void updateBorderColor(RemapTableController *object) {
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSKeyValueChangeKey,id> *)change context:(void *)context {
     
+    NSAppearance *newAppearance = change[@"new"];
+    
     if ([keyPath isEqual:@"effectiveAppearance"]) {
         
         static NSAppearanceName initialAppearance = @"";
         static BOOL effectiveAppearanceIsInitialized = NO; /// Prevent table reload when appearance is initially set
-        if (!effectiveAppearanceIsInitialized) {
+        
+        if (!effectiveAppearanceIsInitialized) { /// Could also check if change == nil here
+            
             effectiveAppearanceIsInitialized = YES;
             initialAppearance = self.tableView.effectiveAppearance.name;
+            
         } else {
             
-            updateBorderColor(self);
+            BOOL isInitialAppearance = [initialAppearance isEqual:newAppearance.name];
+            updateBorderColor(self, isInitialAppearance);
             
             [self.tableView updateLayer];
             [self.tableView reloadData];
@@ -489,7 +549,6 @@ static void updateBorderColor(RemapTableController *object) {
     }
     if (!buttonIsStillTriggerInDataModel) { /// Yes, we want to remove a group row, too
         [rowsToRemoveWithAnimation addIndex:rowToRemove-1];
-        
     }
     
     /// Do remove rows with animation
@@ -623,6 +682,26 @@ static void updateBorderColor(RemapTableController *object) {
         NSTableCellView *buttonGroupCell = [self.tableView makeViewWithIdentifier:@"buttonGroupCell" owner:self];
         NSTextField *groupTextField = (NSTextField *)buttonGroupCell.nextKeyView;
         groupTextField.stringValue = stringf(@"  %@", [UIStrings getButtonString:groupButtonNumber].firstCapitalized);
+        
+        if (@available(macOS 11.0, *)) { } else {
+            
+            /// Fix groupRow text being too far left pre-Big Sur
+            
+            /// Old MMF 2 non-autolalyout fix
+//            NSRect f = groupTextField.frame;
+//            groupTextField.frame = NSMakeRect(f.origin.x + 6.0, f.origin.y, f.size.width - 6.0, f.size.height);
+            
+            /// New MMF 3 autolayout fix
+            ///     It would probably be smarter to create and IBOutlet to the leading constraint instead of searching for it like this
+            
+            for (NSLayoutConstraint *c in groupTextField.superview.constraints) {
+                if (c.firstAttribute == NSLayoutAttributeLeading || c.secondAttribute == NSLayoutAttributeLeading) {
+                    c.constant += 8; /// This is set to -6 in IB I think
+                    break;
+                }
+            }
+        }
+        
         return buttonGroupCell;
         
     } else if ([tableColumn.identifier isEqualToString:@"trigger"]) {

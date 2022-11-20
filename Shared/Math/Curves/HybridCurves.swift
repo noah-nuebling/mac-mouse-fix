@@ -338,6 +338,7 @@ class HybridCurve: Curve {
     
     fileprivate var timeInterval: Interval { Interval(start: 0, end: baseDuration + dragTimeRange) }
     fileprivate var distanceInterval: Interval { Interval(start: 0, end: baseDistance + dragValueRange) }
+    
     @objc var duration: Double { timeInterval.length }
     @objc var distance: Double { distanceInterval.length }
     

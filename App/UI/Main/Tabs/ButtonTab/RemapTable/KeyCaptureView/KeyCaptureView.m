@@ -187,8 +187,8 @@
     if (superResigns) {
         
         [MFMessagePort sendMessage:@"disableKeyCaptureMode" withPayload:nil expectingReply:NO];
-        
         [NSEvent removeMonitor:_localEventMonitor];
+        _localEventMonitor = nil; /// Otherwise crashes on macOS 10.13 and 10.14. Didn't test other versions.
         _cancelHandler();
     }
     return superResigns;

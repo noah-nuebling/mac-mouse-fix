@@ -39,8 +39,79 @@ extension NSView {
     }
     
     // MARK: Screenshots
+
     
-    func imageWithoutWindowBackground() -> NSImage? {
+
+    @objc func takeImage() -> NSImage? {
+        
+        /// Notes:
+        /// - I think we didn't call this `image()` since that name collides with a property on `NSImageView`
+        /// - This mostly looks good but doesn't capture some colors:
+        ///     - addField fillColor when it is `.underPageBackgroundColor`
+        ///     - groupRow background color
+        /// - -> Use `takeScreenshot()` for these cases. Still keeping this around because I think it might be faster than `takeScreenShot()`
+        
+        /// Approach 1
+        ///     Src: https://stackoverflow.com/a/41387514/10601702
+        ///     EDIT: I feel like this looks worse than the other implementation? Probably placebo
+        
+//        let imageRepresentation = bitmapImageRepForCachingDisplay(in: bounds)!
+//        cacheDisplay(in: bounds, to: imageRepresentation)
+//        return NSImage(cgImage: imageRepresentation.cgImage!, size: bounds.size)
+        
+        /// Approach 2
+        ///     Src: https://developer.apple.com/forums/thread/88315
+        
+        let imgSize = bounds.size
+
+        guard let bir = self.bitmapImageRepForCachingDisplay(in: bounds) else {
+            return nil
+        }
+        bir.size = imgSize
+        self.cacheDisplay(in: bounds, to: bir)
+
+        let image = NSImage(size: imgSize)
+        image.addRepresentation(bir)
+
+        return image
+    }
+    
+    @objc func takeScreenshot() -> NSImage? {
+        
+        /// Note: See `takeImage()` for discussion
+        
+        /// Take the screenshot
+        
+        /// Approach 3: CGWindowListCreateImage
+        ///  This works! No screenRecording permission popup.
+        let screenRect = self.rectInQuartzScreenCoordinates()
+        guard let window = self.window
+        else { assert(false); return nil }
+        let windowID = CGWindowID(window.windowNumber)
+        guard let screenshot = CGWindowListCreateImage(screenRect, .optionIncludingWindow, windowID, [])
+        else { assert(false); return nil }
+        
+        /// Approach 2: CGWindowListCreateImageFromArray
+        ///    Didn't test this because approach 3 works
+        
+        /// Approach 1: CGDisplayCreateImage
+        ///  This works perfectly (where takeImage fails), butttt it causes a screenRecording permissions popup. It still works if you deny the permissions though?
+        
+//        let screenRect = self.rectInQuartzScreenCoordinates()
+//        guard let screen = self.window?.screen else { assert(false); return nil }
+//        let displayID = screen.displayID()
+//        guard let screenshot = CGDisplayCreateImage(displayID, rect: screenRect)
+//        else { assert(false); return nil }
+        
+        /// Return
+        return NSImage(cgImage: screenshot, size: self.frame.size)
+    }
+    
+    private func takeImageWithoutWindowBackground() -> NSImage? {
+        
+        /// This is obsolete since `takeImage()` also doesn't capture the window background. (Under Ventura 13.0)
+        
+        fatalError()
         
         /// Declare result
         let result: NSImage?
@@ -83,39 +154,6 @@ extension NSView {
 
         return result
         
-    }
-    
-    /// Render view to image
-    ///     Src: https://stackoverflow.com/a/41387514/10601702
-    ///     EDIT: I feel like this looks worse than the other implementation? Probably placebo
-    
-    /// Get `NSImage` representation of the view.
-    /// - Returns: `NSImage` of view
-    
-    private func image1() -> NSImage {
-        let imageRepresentation = bitmapImageRepForCachingDisplay(in: bounds)!
-        cacheDisplay(in: bounds, to: imageRepresentation)
-        return NSImage(cgImage: imageRepresentation.cgImage!, size: bounds.size)
-    }
-    
-    /// Attempt 2
-    ///     Src: https://developer.apple.com/forums/thread/88315
-    
-    @objc func takeImage() -> NSImage? {
-        /// Note: The name image() collides with NSImageViews image property I think.
-        
-        let imgSize = bounds.size
-
-        guard let bir = self.bitmapImageRepForCachingDisplay(in: bounds) else {
-            return nil
-        }
-        bir.size = imgSize
-        self.cacheDisplay(in: bounds, to: bir)
-
-        let image = NSImage(size: imgSize)
-        image.addRepresentation(bir)
-
-        return image
     }
     
     // MARK: Set Anchor Point

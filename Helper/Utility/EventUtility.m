@@ -24,7 +24,7 @@ extern CFTimeInterval CATimeWithHostTime(UInt64 mach_absolute_time); /// I saw t
 
 int64_t fixedScrollDelta(double scrollDelta) {
     /// We round instead of just truncating because that makes the values look more like real scrollWheel values. Probably doesn't make a difference.
-    return (int64_t)roundf(scrollDelta * pow(2, 16));
+    return (int64_t)round(scrollDelta * pow(2, 16));
 }
 
 #pragma mark - Sending device
@@ -184,7 +184,12 @@ CFTimeInterval CGEventGetTimestampInSeconds(CGEventRef event) {
     }
 }
 
+
+
 NSString *scrollEventDescription(CGEventRef scrollEvent) {
+    return scrollEventDescriptionWithOptions(scrollEvent, YES, YES);
+}
+NSString *scrollEventDescriptionWithOptions(CGEventRef scrollEvent, BOOL allDeltas, BOOL phases) {
     
     ///
     /// Gather info
@@ -207,11 +212,21 @@ NSString *scrollEventDescription(CGEventRef scrollEvent) {
     Vector fixedPt = (Vector){ .x = fixedPt2, .y = fixedPt1 };
     
     /// Gather phases
-    
     int64_t phase = CGEventGetIntegerValueField(scrollEvent, kCGScrollWheelEventScrollPhase);
     int64_t momentumPhase = CGEventGetIntegerValueField(scrollEvent, kCGScrollWheelEventMomentumPhase);
     
-    return stringf(@"delta: %@ \t point: %@ \t fixed: %@, \t phases: (%lld, %lld)", vectorDescription(delta), vectorDescription(point), vectorDescription(fixedPt), phase, momentumPhase);
+    /// Assemble result string
+    NSString *description = @"";
+    description = [description stringByAppendingFormat:@"point: %@", vectorDescription(delta)];
+    if (allDeltas) {
+        description = [description stringByAppendingFormat:@" \t line: %@ \t fixed: %@", vectorDescription(point), vectorDescription(fixedPt)];
+    }
+    if (phases) {
+        description = [description stringByAppendingFormat:@", \t phases: (%lld, %lld)", phase, momentumPhase];
+    }
+    
+    /// Return
+    return description;
 }
 
 @end

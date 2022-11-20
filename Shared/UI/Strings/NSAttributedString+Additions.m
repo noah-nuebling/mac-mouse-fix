@@ -212,6 +212,10 @@ void assignAttributedStringKeepingBase(NSAttributedString *_Nonnull *_Nonnull as
 
 + (NSAttributedString *)stringWithSymbol:(NSString * _Nonnull)symbolName hPadding:(CGFloat)hPadding vOffset:(CGFloat)baselineOffset fallback:(NSString * _Nonnull)fallbackString {
     
+    /// Use Symbols.string() instead of this
+    
+    abort();
+    
     /// Get symbolString
     /// Primarily used by `[UIStrings stringWithSymbol:fallback:]`
     /// Larger vOffset displays higher on the screen
@@ -771,6 +775,8 @@ void assignAttributedStringKeepingBase(NSAttributedString *_Nonnull *_Nonnull as
     
     NSUInteger i = 0;
     while (true) {
+        if (i >= self.length) break;
+        
         NSRange range;
         NSDictionary<NSAttributedStringKey, id> *attributes = [self attributesAtIndex:i effectiveRange:&range];
         NSTextAttachment *attachment = attributes[NSAttachmentAttributeName];
@@ -784,9 +790,6 @@ void assignAttributedStringKeepingBase(NSAttributedString *_Nonnull *_Nonnull as
             [result appendString:substring];
         }
         i = NSMaxRange(range);
-        if (i >= self.length) {
-            break;
-        }
     }
     
     return result;

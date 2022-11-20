@@ -321,7 +321,7 @@ class AboutTabController: NSViewController {
             if #available(macOS 11.0, *) {
                 self.moneyCellImage.symbolConfiguration = .init(pointSize: 13, weight: .medium, scale: .large)
             }
-            self.moneyCellImage.image = NSImage(named: .init("bag"))
+            self.moneyCellImage.image = Symbols.image(withSymbolName: "bag")
             
             /// Swap out link -> payButton
             

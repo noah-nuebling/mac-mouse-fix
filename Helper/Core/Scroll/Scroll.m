@@ -280,6 +280,7 @@ static void heavyProcessing(CGEventRef event, int64_t scrollDeltaAxis1, int64_t 
     
     BOOL firstConsecutive = [ScrollAnalyzer peekIsFirstConsecutiveTickWithTickOccuringAt:tickTime withDirection:scrollDirection withConfig:_scrollConfig];
     
+    ///
     /// Update stuff
     ///     on the first scrollTick
     
@@ -329,9 +330,9 @@ static void heavyProcessing(CGEventRef event, int64_t scrollDeltaAxis1, int64_t 
             _modifications = newMods;
         }
         
-#pragma mark Override config
-        
+        ///
         /// Override scrollConfig based on modifications
+        ///
         
         /// inputModifications
         
@@ -570,6 +571,9 @@ static void heavyProcessing(CGEventRef event, int64_t scrollDeltaAxis1, int64_t 
                 [_animator resetSubPixelator_Unsafe];
                 
             } else if ([animationCurve isKindOfClass:SimpleBezierHybridCurve.class]) {
+                
+                assert(false); /// Unused - remove
+                
                 SimpleBezierHybridCurve *c = (SimpleBezierHybridCurve *)animationCurve;
                 pxLeftToScroll = [c baseDistanceLeftWithDistanceLeft: distanceLeft]; /// If we feed valueLeft instead of baseValueLeft back into the animator, it will lead to unwanted acceleration
             } else {
@@ -578,37 +582,45 @@ static void heavyProcessing(CGEventRef event, int64_t scrollDeltaAxis1, int64_t 
             
             /// Calculate distance to scroll
             double delta = pxToScrollForThisTick + pxLeftToScroll;
+            double duration;
             
             /// Create curve
             MFScrollAnimationCurveParameters *cParams = _scrollConfig.animationCurveParams;
-            BezierHybridCurve *c = [[BezierHybridCurve alloc]
-                                    initWithBaseCurve:cParams.baseCurve
-                                    minDuration:((double)cParams.msPerStep) / 1000.0
-                                    distance:delta
-                                    dragCoefficient:cParams.dragCoefficient
-                                    dragExponent:cParams.dragExponent
-                                    stopSpeed:cParams.stopSpeed
-                                    distanceEpsilon:0.2];
             
-            /// Get values from curve
+            Curve *c;
+            if (cParams.useDragCurve) {
+                
+                HybridCurve *hc = [[BezierHybridCurve alloc]
+                     initWithBaseCurve:cParams.baseCurve
+                     minDuration:((double)cParams.baseMsPerStep) / 1000.0
+                     distance:delta
+                     dragCoefficient:cParams.dragCoefficient
+                     dragExponent:cParams.dragExponent
+                     stopSpeed:cParams.stopSpeed
+                     distanceEpsilon:0.2];
+                
+                duration = hc.duration;
+                
+                /// Validate
+                assert(fabs(hc.distance - delta) < 3);
+                /// Debug
+                DDLogDebug(@"pre-animator - distance %f, duration: %f", hc.distance, hc.duration);
+    //            DDLogDebug(@"\nDuration pre-animator: %f base: %f", c.duration, c.baseDuration);
+                
+                /// Assign
+                c = hc;
+                
+            } else {
+                c = cParams.baseCurve;
+                duration = ((double)cParams.baseMsPerStep) / 1000.0;
+            }
             
-            double deltaFromCurve = c.distance;
-            double durationFromCurve = c.duration;
-            
-            /// Validate distanceFromCurve
-            
-            assert(fabs(deltaFromCurve - delta) < 3);
             
             /// Fill return dict
             
-            p[@"duration"] = @(durationFromCurve);
-            p[@"vector"] = nsValueFromVector(vectorFromDeltaAndDirection(deltaFromCurve, scrollDirection));
+            p[@"duration"] = @(duration);
+            p[@"vector"] = nsValueFromVector(vectorFromDeltaAndDirection(delta, scrollDirection));
             p[@"curve"] = c;
-            
-            /// Debug
-
-            DDLogDebug(@"pre-animator - distance %f, duration: %f", c.distance, c.duration);
-//            DDLogDebug(@"\nDuration pre-animator: %f base: %f", c.duration, c.baseDuration);
             
             static double scrollDeltaSum = 0;
             scrollDeltaSum += labs(pxToScrollForThisTick);
@@ -657,7 +669,9 @@ static void heavyProcessing(CGEventRef event, int64_t scrollDeltaAxis1, int64_t 
     CFRelease(event);
 }
 
-static void sendScroll(int64_t px, MFDirection scrollDirection, BOOL gesture, MFAnimationCallbackPhase animationPhase, MFMomentumHint momentumHint, ScrollConfig *config) {
+#pragma mark - Send Scroll events
+
+static void sendScroll(int64_t px, MFDirection scrollDirection, BOOL animated, MFAnimationCallbackPhase animationPhase, MFMomentumHint momentumHint, ScrollConfig *config) {
     
     /// Get x and y deltas
     
@@ -682,10 +696,14 @@ static void sendScroll(int64_t px, MFDirection scrollDirection, BOOL gesture, MF
     
     MFScrollOutputType outputType;
     
-    if (!gesture) {
+    if (!animated) {
         outputType = kMFScrollOutputTypeLineScroll;
     } else {
-        outputType = kMFScrollOutputTypeGestureScroll;
+        if (config.animationCurveParams.sendGestureScrolls) {
+            outputType = kMFScrollOutputTypeGestureScroll;
+        } else {
+            outputType = kMFScrollOutputTypeContinuousScroll;
+        }
     }
     
     if (_modifications.effectMod == kMFScrollEffectModificationZoom) {
@@ -709,12 +727,13 @@ static void sendScroll(int64_t px, MFDirection scrollDirection, BOOL gesture, MF
 
 typedef enum {
     kMFScrollOutputTypeGestureScroll,
+    kMFScrollOutputTypeContinuousScroll,
+    kMFScrollOutputTypeLineScroll,
     kMFScrollOutputTypeFourFingerPinch,
     kMFScrollOutputTypeThreeFingerSwipeHorizontal,
     kMFScrollOutputTypeZoom,
     kMFScrollOutputTypeRotation,
     kMFScrollOutputTypeCommandTab,
-    kMFScrollOutputTypeLineScroll,
 } MFScrollOutputType;
 
 /// Output
@@ -747,12 +766,23 @@ static void sendOutputEvents(int64_t dx, int64_t dy, MFScrollOutputType outputTy
         
         if (!config.animationCurveParams.sendMomentumScrolls) {
             
-            /// Post event
-            [GestureScrollSimulator postGestureScrollEventWithDeltaX:dx deltaY:dy phase:eventPhase autoMomentumScroll:YES invertedFromDevice:_scrollConfig.invertedFromDevice];
-            
-            /// Suppress momentumScroll
-            if (eventPhase == kIOHIDEventPhaseEnded) {
+            if (eventPhase != kIOHIDEventPhaseEnded) {
+                
+                /// Post event
+                [GestureScrollSimulator postGestureScrollEventWithDeltaX:dx deltaY:dy phase:eventPhase autoMomentumScroll:YES invertedFromDevice:_scrollConfig.invertedFromDevice];
+                
+            } else {
+                
+                /// Post end event
+                [GestureScrollSimulator postGestureScrollEventWithDeltaX:0.0 deltaY:0.0 phase:kIOHIDEventPhaseEnded autoMomentumScroll:YES invertedFromDevice:_scrollConfig.invertedFromDevice];
+                
+                /// Debug
                 DDLogDebug(@"THAT CALL where displayLinkkk is stopped from Scroll.m");
+                
+                /// Suppress momentumScroll
+                /// - Only works if autoMomentumScroll is set to YES
+                /// - ...That's because This architecture is so complicated but idk how to make it better. The idea behind it was that certain apps like Xcode have their own automatic momentumScrolling built in. To stop it you need to send an explicit 'momentumStop' event. Even if you haven't sent any other momentum events beforehand. Why not just send the momentumStop event directly? Here are our reasons (not sure if they are good) To lower the chances of any misbehaviour our approach was to simulate the trackpad behaviour as closely as possible. That means we start momentumScrolling automatically (hence `autoMomentumScroll:YES`) and then we simulate a finger touching the trackpad immediately. However, in this scenario, since we start and then stop the autoMomentumScroll immediately, the TouchAnimator which is started for autoMomentumScroll never calls its callback at all! So this is sort of nonsensical. Butttt we're also using `autoMomentumScroll:YES` for Click and Drag so I guess it might be simpler to do it this way since we need the autoMomentumScroll implementation anyways. Another reason for the architecture is that we decided to call the cancel callback from our autoMomentum TouchAnimator callback because that puts it inline with the other events sending and therefore makes stuff easier to think about (??) and provides more context info when we call the callback (?).
+                
                 [GestureScrollSimulator stopMomentumScroll];
             }
             
@@ -817,7 +847,7 @@ static void sendOutputEvents(int64_t dx, int64_t dy, MFScrollOutputType outputTy
                 } else {
                     assert(false);
                 }
-
+                
                 /// Send momentum event
                 [GestureScrollSimulator postMomentumScrollDirectlyWithDeltaX:dx deltaY:dy momentumPhase:momentumPhase invertedFromDevice:_scrollConfig.invertedFromDevice];
                 
@@ -832,6 +862,122 @@ static void sendOutputEvents(int64_t dx, int64_t dy, MFScrollOutputType outputTy
                 lastMomentumHint = kMFMomentumHintNone;
             }
         }
+        
+    } else if (outputType == kMFScrollOutputTypeContinuousScroll) {
+        
+        /// --- ContinuousScroll ---
+        
+        if (dx+dy == 0) return; /// Copied from lineScroll
+        
+        /// Create base event
+        
+        CGEventRef event = CGEventCreate(NULL);
+        CGEventSetIntegerValueField(event, 55, 22); /// Set type to `kCGEventScrollWheel`
+        CGEventSetIntegerValueField(event, kCGScrollWheelEventIsContinuous, 1);
+        
+        /// Setup subpixelator
+        
+        static VectorSubPixelator *pixelator = nil;
+        
+        if (pixelator == nil) {
+            pixelator = [VectorSubPixelator biasedPixelator];
+        }
+        if (animatorPhase == kMFAnimationCallbackPhaseStart) {
+            [pixelator reset];
+        }
+        
+        /// Get alt deltas
+        ///     Maybe we should reuse `GestureScrollSimulator` -> `getDeltaVectors()` here. Basically does the same.
+        
+        double dyLine = ((double)dy)/10.0;
+        double dxLine = ((double)dx)/10.0;
+        
+        Vector pixelatedLines = [pixelator intVectorWithDoubleVector:_P(dxLine, dyLine)];
+        
+        /// Set deltas
+        
+        CGEventSetIntegerValueField(event, kCGScrollWheelEventDeltaAxis1, pixelatedLines.y);
+        CGEventSetIntegerValueField(event, kCGScrollWheelEventPointDeltaAxis1, dy);
+        CGEventSetIntegerValueField(event, kCGScrollWheelEventFixedPtDeltaAxis1, fixedScrollDelta(pixelatedLines.y));
+        
+        CGEventSetIntegerValueField(event, kCGScrollWheelEventDeltaAxis2, pixelatedLines.x);
+        CGEventSetIntegerValueField(event, kCGScrollWheelEventPointDeltaAxis2, dx);
+        CGEventSetIntegerValueField(event, kCGScrollWheelEventFixedPtDeltaAxis2, fixedScrollDelta(pixelatedLines.x));
+        
+        /// Log
+        
+        if (SharedUtility.runningPreRelease) {
+            
+            static double tsStart = 0;
+            if (animatorPhase == kMFAnimationCallbackPhaseStart) {
+                tsStart = CACurrentMediaTime();
+            }
+            double ts = CACurrentMediaTime();
+            double timeSinceStart = ts - tsStart;
+            
+            DDLogDebug(@"HNGG: Posting continuous scroll event: %@, momentumHint: %d, time: %d", scrollEventDescriptionWithOptions(event, NO, NO), momentumHint, (int)(timeSinceStart*1000));
+        }
+        
+        /// Post event
+        
+        CGEventPost(kCGSessionEventTap, event);
+        CFRelease(event);
+        
+    } else if (outputType == kMFScrollOutputTypeLineScroll) {
+        
+        /// --- LineScroll ---
+        
+        /// We ignore the phases here
+        
+        if (dx+dy == 0) return;
+        
+        /// Create base event
+        
+        /// Sol 1: Use `CGEventCreateScrollWheelEvent()`
+        ///     - Mysterious: In the real events, `kCGScrollWheelEventIsContinuous` is false. But we have to set it true (through `kCGScrollEventUnitPixel`) to make the scroll distance match the real events.
+        ///     - Safari makes the scroll distance larger than the pixels that are specified in lineScrollEvents. But that doesn't work here. Maybe it's becuase we're setting `kCGScrollWheelEventIsContinuous` true? We're just using
+//        CGEventRef event = CGEventCreateScrollWheelEvent(NULL, kCGScrollEventUnitPixel, 1, 0);
+        
+        /// Sol 2: Just use `CGEventCreate`
+        ///     - This is based on analysis of real events
+        CGEventRef event = CGEventCreate(NULL);
+        CGEventSetIntegerValueField(event, 55, 22); /// Set type to `kCGEventScrollWheel`
+        
+        /// Get line deltas
+        ///     Line deltas are 1/10 of pixel deltas. See CGEventSource pixelsPerLine - it's 10
+        double dyLine = ((double)dy) / 10;
+        double dxLine = ((double)dx) / 10;
+        
+        /// Get line deltas as int
+        ///     Int deltas are generally truncated but also rounded up to be at least 1 (or -1). This also happens in real events.
+        int64_t dyLineInt = (int64_t)dyLine;
+        int64_t dxLineInt = (int64_t)dxLine;
+        if (fabs(dyLine) != 0 && llabs(dyLineInt) == 0) dyLineInt = sign(dyLine);
+        if (fabs(dxLine) != 0 && llabs(dxLineInt) == 0) dxLineInt = sign(dxLine);
+        
+        /// Get line deltas as fixed point number
+        int64_t dyLineFixed = fixedScrollDelta(dyLine);
+        int64_t dxLineFixed = fixedScrollDelta(dxLine);
+        
+        /// Set fields
+        ///     We used to have a comment here saying that the `FixedPtDelta`s were automatically being set when setting the `PointDelta`s. But under the Ventura Beta this doesn't seem to be true, so we're setting it manually.
+        
+        CGEventSetIntegerValueField(event, kCGScrollWheelEventDeltaAxis1, dyLineInt);
+        CGEventSetIntegerValueField(event, kCGScrollWheelEventPointDeltaAxis1, dy);
+        CGEventSetIntegerValueField(event, kCGScrollWheelEventFixedPtDeltaAxis1, dyLineFixed);
+        
+        CGEventSetIntegerValueField(event, kCGScrollWheelEventDeltaAxis2, dxLineInt);
+        CGEventSetIntegerValueField(event, kCGScrollWheelEventPointDeltaAxis2, dx);
+        CGEventSetIntegerValueField(event, kCGScrollWheelEventFixedPtDeltaAxis2, dxLineFixed);
+        
+        /// Debug
+        DDLogDebug(@"SCROOOL OVONT – %@", CGScrollWheelEventDescription(event));
+        
+        /// Send
+        CGEventPost(kCGSessionEventTap, event);
+        
+        /// Release
+        CFRelease(event);
         
     } else if (outputType == kMFScrollOutputTypeZoom) {
         
@@ -873,7 +1019,6 @@ static void sendOutputEvents(int64_t dx, int64_t dy, MFScrollOutputType outputTy
         }
         
         [TouchSimulator postMagnificationEventWithMagnification:eventDelta phase:eventPhase];
-        
         
     } else if (outputType == kMFScrollOutputTypeRotation) {
         
@@ -942,62 +1087,6 @@ static void sendOutputEvents(int64_t dx, int64_t dy, MFScrollOutputType outputTy
                 sendKeyEvent(48, kCGEventFlagMaskCommand | kCGEventFlagMaskShift, false);
             }
         }
-        
-    } else if (outputType == kMFScrollOutputTypeLineScroll) {
-        
-        /// --- LineScroll ---
-        
-        /// We ignore the phases here
-        
-        if (dx+dy == 0) return;
-        
-        /// Create base event
-        
-        /// Sol 1: Use `CGEventCreateScrollWheelEvent()`
-        ///     - Mysterious: In the real events, `kCGScrollWheelEventIsContinuous` is false. But we have to set it true (through `kCGScrollEventUnitPixel`) to make the scroll distance match the real events.
-        ///     - Safari makes the scroll distance larger than the pixels that are specified in lineScrollEvents. But that doesn't work here. Maybe it's becuase we're setting `kCGScrollWheelEventIsContinuous` true? We're just using
-//        CGEventRef event = CGEventCreateScrollWheelEvent(NULL, kCGScrollEventUnitPixel, 1, 0);
-        
-        /// Sol 2: Just use `CGEventCreate`
-        ///     - This is based on analysis of real events
-        CGEventRef event = CGEventCreate(NULL);
-        CGEventSetIntegerValueField(event, 55, 22); /// Set type to `kCGEventScrollWheel`
-        
-        /// Get line deltas
-        ///     Line deltas are 1/10 of pixel deltas. See CGEventSource pixelsPerLine - it's 10
-        double dyLine = ((double)dy) / 10;
-        double dxLine = ((double)dx) / 10;
-        
-        /// Get line deltas as int
-        ///     Int deltas are generally truncated but also rounded up to be at least 1 (or -1). This also happens in real events.
-        int64_t dyLineInt = (int64_t)dyLine;
-        int64_t dxLineInt = (int64_t)dxLine;
-        if (fabs(dyLine) != 0 && llabs(dyLineInt) == 0) dyLineInt = sign(dyLine);
-        if (fabs(dxLine) != 0 && llabs(dxLineInt) == 0) dxLineInt = sign(dxLine);
-        
-        /// Get line deltas as fixed point number
-        int64_t dyLineFixed = fixedScrollDelta(dyLine);
-        int64_t dxLineFixed = fixedScrollDelta(dxLine);
-        
-        /// Set fields
-        ///     We used to have a comment here saying that the `FixedPtDelta`s were automatically being set when setting the `PointDelta`s. But under the Ventura Beta this doesn't seem to be true, so we're setting it manually.
-        
-        CGEventSetIntegerValueField(event, kCGScrollWheelEventDeltaAxis1, dyLineInt);
-        CGEventSetIntegerValueField(event, kCGScrollWheelEventPointDeltaAxis1, dy);
-        CGEventSetIntegerValueField(event, kCGScrollWheelEventFixedPtDeltaAxis1, dyLineFixed);
-        
-        CGEventSetIntegerValueField(event, kCGScrollWheelEventDeltaAxis2, dxLineInt);
-        CGEventSetIntegerValueField(event, kCGScrollWheelEventPointDeltaAxis2, dx);
-        CGEventSetIntegerValueField(event, kCGScrollWheelEventFixedPtDeltaAxis2, dxLineFixed);
-        
-        /// Debug
-        DDLogDebug(@"SCROOOL OVONT – %@", CGScrollWheelEventDescription(event));
-        
-        /// Send
-        CGEventPost(kCGSessionEventTap, event);
-        
-        /// Release
-        CFRelease(event);
         
     } else {
         assert(false);

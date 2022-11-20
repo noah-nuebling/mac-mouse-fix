@@ -46,7 +46,7 @@ import Foundation
         statusItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.variableLength)
         statusItem?.autosaveName = "MMFMenuBarItem" /// Probably unnecessary
         statusItem?.button?.title = ""
-        let image = NSImage(named: NSImage.Name("CoolMenuBarIcon"))
+        let image = NSImage(named: "CoolMenuBarIcon")
         statusItem?.button?.image = image
         statusItem?.menu = menu
 //        statusItem?.isVisible = false /// This makes the item forget its position when restarting the computer

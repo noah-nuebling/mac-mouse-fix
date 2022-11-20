@@ -38,7 +38,7 @@
 
 import Foundation
 
-@objc class PolynomialCappedAccelerationCurve: AccelerationCurve {
+@objc class PolynomialCappedAccelerationCurve: Curve {
     
     /// Constants
     let epsilon: Double = 10e-3
@@ -57,14 +57,14 @@ import Foundation
         /// See top of this file for explanation of parameters
         
         /// Store params
-        self.p0 = P(v0, s0)
-        self.p1 = P(v1, s1)
+        self.p0 = _P(v0, s0)
+        self.p1 = _P(v1, s1)
         self.n = n
         
         /// Generate additional key points
         var q: [P] = []
         for i in 1..<n {
-            q.append(P(p1.x + Double(i)*epsilon, p1.y))
+            q.append(_P(p1.x + Double(i)*epsilon, p1.y))
         }
         
         /// Prep points for polynomial regression

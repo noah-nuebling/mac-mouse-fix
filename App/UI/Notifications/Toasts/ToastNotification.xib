@@ -23,7 +23,7 @@
                 <rect key="frame" x="0.0" y="0.0" width="202" height="38"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <visualEffectView fixedFrame="YES" blendingMode="behindWindow" material="HUDWindow" state="active" translatesAutoresizingMaskIntoConstraints="NO" id="lhE-YX-XCp">
+                    <visualEffectView fixedFrame="YES" blendingMode="withinWindow" material="popover" state="active" translatesAutoresizingMaskIntoConstraints="NO" id="lhE-YX-XCp">
                         <rect key="frame" x="0.0" y="0.0" width="202" height="38"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>

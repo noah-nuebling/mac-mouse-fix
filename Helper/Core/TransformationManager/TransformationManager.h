@@ -23,8 +23,8 @@ NS_ASSUME_NONNULL_BEGIN
 + (void)disableAddMode;
 
 + (void)concludeAddModeWithPayload:(NSDictionary *)payload;
-+ (void)disableAddModeWithPayload:(NSDictionary *)payload;
-+ (void)sendAddModeFeedbackWithPayload:(NSDictionary *)payload;
+//+ (void)disableAddModeWithPayload:(NSDictionary *)payload;
+//+ (void)sendAddModeFeedbackWithPayload:(NSDictionary *)payload;
 + (BOOL)addModePayloadIsValid:(NSDictionary *)payload;
 
 + (void)enableKeyCaptureMode;

@@ -13,8 +13,13 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface NSView (Additions)
 
-- (NSArray<NSView *> *)subviewsWithIdentifier:(NSString *)identifier;
+- (CGRect)rectInQuartzScreenCoordinates;
+- (CGRect)rectInScreenCoordinates;
+- (CGRect)rectInWindowCoordinates;
 
+/// v Are these still used in MMF 3?
+
+- (NSArray<NSView *> *)subviewsWithIdentifier:(NSString *)identifier;
 - (NSArray<NSView *> *)nestedSubviews;
 - (NSArray<NSView *> *)nestedSubviewsWithIdentifier:(NSUserInterfaceItemIdentifier)identifier;
 

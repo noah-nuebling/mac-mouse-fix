@@ -11,7 +11,6 @@
 
 #import <AppKit/AppKit.h>
 #import "MFMessagePort.h"
-#import "MessagePort_Helper.h"
 #import "DeviceManager.h"
 #import "Config.h"
 #import "Scroll.h"
@@ -29,8 +28,6 @@
 #import <signal.h>
 
 @implementation AccessibilityCheck
-
-NSTimer *_openMainAppTimer;
 
 /// Handle Unix signals
 
@@ -100,9 +97,9 @@ CGEventRef _Nullable testCallback(CGEventTapProxy proxy, CGEventType type, CGEve
             ///
             
             /// This is a workaround
-            ///     for an Apple bug in Ventura (maybe previous versions too?) where the accessibility toggle for MMF Helper won't work after an update.
+            ///     for an Apple bug in Ventura (maybe previous versions too? Edit: Monterey, too. I think I even saw it on 10.13 and 10.14) where the accessibility toggle for MMF Helper won't work after an update.
             ///     This bug occured between 2.2.0 and 2.2.1 when I moved the app from a Development Signature to a proper Developer Program Signature.
-            ///     Bug also maybe occurs for 3.0.0 Beta 4. Not sure why. Maybe it's a different bug that just looks similar.
+            ///     Bug also maybe occurs for 3.0.0 Beta 4. Not sure why. Maybe because I changed the bundleID between those versions. Or maybe it's a different bug that just looks similar.
             /// See
             /// - https://github.com/noah-nuebling/mac-mouse-fix/issues/415
             /// - https://github.com/noah-nuebling/mac-mouse-fix/issues/412
@@ -111,6 +108,7 @@ CGEventRef _Nullable testCallback(CGEventTapProxy proxy, CGEventType type, CGEve
             /// Why do this in such a weird way?
             /// - We need to launch a new helper instance instead of just using the normal helper instance because `AXIsProcessTrustedWithOptions` will only add the helper to System Settings __once__ after launch. Subsequent calls don't do anything.`AXIsProcessTrustedWithOptions` is also the __only__ way to check if we already have accessibility access. And we need to check if we already have access __before__ deciding to reset the access, because we don't want to reset access if it has already been granted. So therefore we need to do the intial check and the forced system settings update in two different instances of the helper. You would think normally relaunching the helper would solve this but...
             /// - We can't just relaunch the helper normally through launchd because launchd permits at most 1 start per 10 seconds. So if the helper's just been enabled and there's no accessibility access you have to wait 10 seconds until the helper can be restarted through launchd.
+            /// -> So we start a new instance of the helper independently of launchd and let it update the accessibility settings and then quit immediately.
             
             /// Log
             
@@ -119,6 +117,8 @@ CGEventRef _Nullable testCallback(CGEventTapProxy proxy, CGEventType type, CGEve
             /// Remove existing helper from System Settings
             /// - If an old helper exists, the user won't be able to enable the new helper!
             /// - This will make the system unresponsive if there is still an old helper running that's already tapped into the button event stream!
+            ///     -> TODO: Disable & kill any helpers before doing this so we don't cause freezes.
+            /// - This doesn't work under macOS 10.13 and 10.14 because `tccutil` doesn't take bundleID argument there (bundleID arg was introduced in 10.15 - Src: https://eclecticlight.co/2020/01/28/a-guide-to-catalinas-privacy-protection-4-tccutil/). I don't see a solution. Just make the Accessibility Guide good.
             [SharedUtility launchCLT:[NSURL fileURLWithPath:kMFTccutilPath] withArguments:@[@"reset", @"Accessibility", kMFBundleIDHelper] error:nil];
             
             /// Add self to System Settings
@@ -129,6 +129,7 @@ CGEventRef _Nullable testCallback(CGEventTapProxy proxy, CGEventType type, CGEve
         }
     }
     
+    ///
     /// No command line args - start normally
     
     ///
@@ -168,8 +169,9 @@ CGEventRef _Nullable testCallback(CGEventTapProxy proxy, CGEventType type, CGEve
     ///
     /// Do the accessibility check
     ///
-    Boolean accessibilityEnabled = [self checkAccessibilityAndUpdateSystemSettings];
-    if (!accessibilityEnabled) {
+    Boolean isTrusted = [self checkAccessibilityAndUpdateSystemSettings];
+    
+    if (!isTrusted) {
         
         DDLogInfo(@"Accessibility Access Disabled");
         
@@ -178,16 +180,30 @@ CGEventRef _Nullable testCallback(CGEventTapProxy proxy, CGEventType type, CGEve
 
         [HelperServices launchHelperInstanceWithMessage:@"forceUpdateAccessibilitySettings"];
 
-        /// Send 'accessibility is disabled' message to mainApp
-        ///  Notes:
-        ///  - I think we only send this once, because the mainApp will ask for this information if it needs it afterwards by sending 'check accessibility' messages to the helper.
-        ///  - Why the 0.5s delay?
-        [NSTimer scheduledTimerWithTimeInterval:0.5 target:self selector:@selector(sendAccessibilityMessageToMainApp) userInfo:NULL repeats:NO];
+        /// Notify main app
+        NSDictionary *payload = @{
+            @"bundleVersion": @(Locator.bundleVersion),
+            @"mainAppURL": Locator.mainAppBundle.bundleURL
+        };
+        [MFMessagePort sendMessage:@"helperEnabledWithNoAccessibility" withPayload:payload expectingReply:NO];
         
-        /// Check accessibility every 0.5s. Once the accessibility is enabled, restart the helper and notify the mainApp.
-        _openMainAppTimer = [NSTimer scheduledTimerWithTimeInterval:0.5 target:self selector:@selector(openMainAppAndRestart) userInfo:NULL repeats:YES];
+        /// Check accessibility every 0.5s
+        ///     Not storing the timer in a variable because we don't have to invalidate / release it since the helper will restart anyways
+        [NSTimer scheduledTimerWithTimeInterval:0.5 repeats:YES block:^(NSTimer * _Nonnull timer) {
+            
+            BOOL hasAccessibility = [self checkAccessibilityAndUpdateSystemSettings];
+            
+            if (hasAccessibility) {
+                /// Restart helper
+                ///     Use a 0.5s delay so the accessibilitySheet can first animate out before the mainApp's UI activates. Without the delay there is slight visual jank.
+                ///     Edit: We refactored the accessibility stuff in 144296c225dbdd9f49598823fb73ad503b2b2e2d and now the delay is not necessary anymore. Maybe has to do with us removing the automatic removing of the accessibilitySheet on a timer
+                [HelperServices restartHelperWithDelay:0.0];
+            }
+        }];
             
     } else {
+        
+        /// Accessibility is enabled -> Start normally!
         
         ///
         /// Log
@@ -213,11 +229,13 @@ CGEventRef _Nullable testCallback(CGEventTapProxy proxy, CGEventType type, CGEve
         [MenuBarItem load_Manual];
         
         /// Send 'started' message to mainApp
-        ///     Note: We could improve responsivity of the enableToggle in mainApp by sending the message before doing all the initialization. But only slightly.
+        /// Notes:
+        /// - We could improve responsivity of the enableToggle in mainApp by sending the message before doing all the initialization. But only slightly.
+        /// - Why are we doing the license init after this? Little weird
         
         NSDictionary *payload = @{
-            @"version": @(Locator.bundleVersion),
-            @"url": Locator.mainAppBundle.bundleURL
+            @"bundleVersion": @(Locator.bundleVersion),
+            @"mainAppURL": Locator.mainAppBundle.bundleURL
         };
         [MFMessagePort sendMessage:@"helperEnabled" withPayload:payload expectingReply:NO];
         
@@ -287,32 +305,5 @@ CGEventRef _Nullable testCallback(CGEventTapProxy proxy, CGEventType type, CGEve
     CFRelease(options);
     return isTrusted;
 }
-
-
-/// Timer Callbacks
-
-+ (void)sendAccessibilityMessageToMainApp {
-    DDLogInfo(@"Sending accessibilty disabled message to main app");
-    [MFMessagePort sendMessage:@"accessibilityDisabled" withPayload:nil expectingReply:NO];
-}
-
-+ (void)openMainAppAndRestart {
-    
-    if ([self checkAccessibilityAndUpdateSystemSettings]) {
-        
-        /// Open mainApp
-        ///     Edit: What? Why are we calling `[self openMainAppAndRestart]` again here? Doesn't this cause an infinite loop? We'll change this to call `[HelperUtility openMainApp]`.
-        [HelperUtility openMainApp];
-        
-        /// Restart helper
-        ///     Use a 0.5s delay so the accessibilitySheet can first animate out before the mainApp's UI activates. Without the delay there is slight visual jank.
-        [HelperServices restartHelperWithDelay:0.5];
-        
-        /// Testing
-//        [self load]; /// To make button capture notification work
-//        [_openMainAppTimer invalidate];
-    }
-}
-
 
 @end

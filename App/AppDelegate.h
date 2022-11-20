@@ -15,14 +15,7 @@
 #import "AppState.h"
 
 @interface AppDelegate : NSObject<NSApplicationDelegate, NSWindowDelegate>
-//@property (weak, readwrite) IBOutlet RemapTableView *remapsTable; // 
-//@property (weak, readonly) RemapTableController *remapTableController;
 
 + (AppDelegate *)instance;
 
-/// v Old MMF2 stuff that is handled differently now.
-
-//+ (NSWindow *)mainWindow;
-//+ (void)handleHelperEnabledMessage;
-//- (void)handleAccessibilityDisabledMessage;
 @end

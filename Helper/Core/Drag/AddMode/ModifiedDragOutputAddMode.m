@@ -45,7 +45,8 @@ static NSDictionary *_addModePayload; /// Payload to send to the mainApp. Only u
 }
 
 + (void)handleDeactivationWhileInUseWithCancel:(BOOL)cancelation {
-    [TransformationManager disableAddModeWithPayload:_addModePayload];
+    /// Why were we doing this?
+//    [TransformationManager disableAddModeWithPayload:_addModePayload];
 }
 
 + (void)suspend {}

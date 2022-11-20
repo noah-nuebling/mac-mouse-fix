@@ -36,6 +36,8 @@
 		4F3A40CB266C44D100436821 /* DisplayLink.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F3A40CA266C44D100436821 /* DisplayLink.m */; };
 		4F3A40DA266C5BDF00436821 /* NSScreen+Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F3A40D9266C5BDF00436821 /* NSScreen+Additions.m */; };
 		4F3E067E26A2F97D000C9E06 /* URLMenuItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F3E067D26A2F97D000C9E06 /* URLMenuItem.m */; };
+		4F41506429255F880040BA7D /* NSImage+Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FEA63CD2921510E00E464D6 /* NSImage+Additions.m */; };
+		4F4150662927B6A40040BA7D /* AddField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F4150652927B6A40040BA7D /* AddField.swift */; };
 		4F44794328B55F6300AD1979 /* CAAnimation+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F909D0C28A0C3D2009349A2 /* CAAnimation+Extensions.swift */; };
 		4F44794528B62FA400AD1979 /* LicenseConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F44794428B62FA400AD1979 /* LicenseConfig.swift */; };
 		4F44794628B62FA400AD1979 /* LicenseConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F44794428B62FA400AD1979 /* LicenseConfig.swift */; };
@@ -56,7 +58,6 @@
 		4F79A83626051E4A00076A7E /* ToastNotification.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F79A83526051E4A00076A7E /* ToastNotification.m */; };
 		4F79C2EA260976950067B381 /* RemapTableTranslator.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F79C2E9260976950067B381 /* RemapTableTranslator.m */; };
 		4F7AB0552606698A0008055E /* UIStrings.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F7AB0542606698A0008055E /* UIStrings.m */; };
-		4F7D97A328AEB04D00C11E79 /* Westfalia-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 4F7D97A228AEB04D00C11E79 /* Westfalia-Regular.otf */; };
 		4F7D97A628AEB2EE00C11E79 /* AboutTabController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F7D97A528AEB2EE00C11E79 /* AboutTabController.swift */; };
 		4F7F47C528A5A01600290BBD /* ReactiveConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FDC127528A2C6160076972E /* ReactiveConfig.swift */; };
 		4F7F47CB28A5A03100290BBD /* ReactiveConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FDC127528A2C6160076972E /* ReactiveConfig.swift */; };
@@ -71,6 +72,8 @@
 		4F85C05128BBDBDC00E96E9C /* NSImageView+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F85C04F28BBDBDC00E96E9C /* NSImageView+Extensions.swift */; };
 		4F85C05428BBE6FA00E96E9C /* TrialSectionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F85C05328BBE6FA00E96E9C /* TrialSectionManager.swift */; };
 		4F85C05528BBE6FA00E96E9C /* TrialSectionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F85C05328BBE6FA00E96E9C /* TrialSectionManager.swift */; };
+		4F8A44522925311B00361EFF /* Symbols.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F8A44512925311B00361EFF /* Symbols.m */; };
+		4F8A44532925311B00361EFF /* Symbols.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F8A44512925311B00361EFF /* Symbols.m */; };
 		4F8A8DAD287EEF6200786BCC /* IOHIDAccelerationTableBridge.mm in Sources */ = {isa = PBXBuildFile; fileRef = 4F8A8DAC287EEF6200786BCC /* IOHIDAccelerationTableBridge.mm */; };
 		4F8A8DBD287F203D00786BCC /* IOHIDAccelerationTable.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4F8A8DBC287F203D00786BCC /* IOHIDAccelerationTable.cpp */; };
 		4F8A8DBF287F7BBA00786BCC /* NaturalAccelerationCurve.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F8A8DBE287F7BBA00786BCC /* NaturalAccelerationCurve.swift */; };
@@ -101,14 +104,12 @@
 		4F909D3028A0C3D2009349A2 /* ReactiveAnimatorProxy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F909D0A28A0C3D2009349A2 /* ReactiveAnimatorProxy.swift */; };
 		4F909D3128A0C3D2009349A2 /* CAAnimation+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F909D0C28A0C3D2009349A2 /* CAAnimation+Extensions.swift */; };
 		4F909D3228A0C3D2009349A2 /* FadeAnimations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F909D0D28A0C3D2009349A2 /* FadeAnimations.swift */; };
-		4F909D3328A0C3D2009349A2 /* Animating Constraints.md in Resources */ = {isa = PBXBuildFile; fileRef = 4F909D0E28A0C3D2009349A2 /* Animating Constraints.md */; };
 		4F909D3428A0C3D2009349A2 /* Replace.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F909D0F28A0C3D2009349A2 /* Replace.swift */; };
 		4F909D3528A0C3D2009349A2 /* Animate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F909D1028A0C3D2009349A2 /* Animate.swift */; };
 		4F909D3628A0C3D2009349A2 /* Collapse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F909D1128A0C3D2009349A2 /* Collapse.swift */; };
 		4F909D3728A0C3D2009349A2 /* ConstraintUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F909D1228A0C3D2009349A2 /* ConstraintUtility.swift */; };
 		4F909D3828A0C3D2009349A2 /* ReactiveFlags.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F909D1428A0C3D2009349A2 /* ReactiveFlags.swift */; };
 		4F909D3928A0C3D2009349A2 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4F909D1728A0C3D2009349A2 /* Localizable.strings */; };
-		4F909D3A28A0C3D2009349A2 /* Localization How To.md in Resources */ = {isa = PBXBuildFile; fileRef = 4F909D1928A0C3D2009349A2 /* Localization How To.md */; };
 		4F909D3B28A0C3D2009349A2 /* ModCaptureDeleteButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F909D1C28A0C3D2009349A2 /* ModCaptureDeleteButton.swift */; };
 		4F909D3C28A0C3D2009349A2 /* ModCaptureFieldEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F909D1D28A0C3D2009349A2 /* ModCaptureFieldEditor.swift */; };
 		4F909D3D28A0C3D2009349A2 /* ModCaptureTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F909D1E28A0C3D2009349A2 /* ModCaptureTextField.swift */; };
@@ -134,6 +135,8 @@
 		4F9E78C026855BCF002C2309 /* Concurrency.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F9E78BE26855BCF002C2309 /* Concurrency.swift */; };
 		4F9E78D02685E30C002C2309 /* GestureScrollSimulator.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F9E78CE2685E30B002C2309 /* GestureScrollSimulator.m */; };
 		4F9E78E3268663B1002C2309 /* ExponentialSmoother.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F9E78E2268663B1002C2309 /* ExponentialSmoother.swift */; };
+		4FA06819291B2C4C00949B5F /* Shorthands.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FA06818291B2C4C00949B5F /* Shorthands.m */; };
+		4FA0681A291B2C4C00949B5F /* Shorthands.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FA06818291B2C4C00949B5F /* Shorthands.m */; };
 		4FA13FC228B3A2D3005C68FC /* TrialNotificationWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FA13FC028B3A2D3005C68FC /* TrialNotificationWindow.swift */; };
 		4FA13FC328B3A2DB005C68FC /* TrialNotificationController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4FA13FBC28B39423005C68FC /* TrialNotificationController.xib */; };
 		4FA13FC428B3A2E0005C68FC /* TrialNotificationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FA13FBB28B39423005C68FC /* TrialNotificationController.swift */; };
@@ -204,12 +207,12 @@
 		4FDE75A728B25FB300662314 /* NSAttributedString+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FDE75A628B25FB300662314 /* NSAttributedString+Extensions.swift */; };
 		4FDE75A928B269AE00662314 /* Randomizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FDE75A828B269AE00662314 /* Randomizer.swift */; };
 		4FDE75AA28B269AE00662314 /* Randomizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FDE75A828B269AE00662314 /* Randomizer.swift */; };
-		4FDECCDB28A3A37800DDEE91 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 4FDECCD828A3A37800DDEE91 /* README.md */; };
 		4FDECCDE28A3E93100DDEE91 /* IsObjC.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FDECCDD28A3E93100DDEE91 /* IsObjC.m */; };
 		4FDECCDF28A3E93100DDEE91 /* IsObjC.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FDECCDD28A3E93100DDEE91 /* IsObjC.m */; };
 		4FE40B96283A49DD00880BEF /* SharedUtilitySwift.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FE40B95283A49DD00880BEF /* SharedUtilitySwift.swift */; };
 		4FE40B97283A49DD00880BEF /* SharedUtilitySwift.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FE40B95283A49DD00880BEF /* SharedUtilitySwift.swift */; };
 		4FE6CBC428987E8B00B3E829 /* DynamicSystemAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FE6CBC328987E8A00B3E829 /* DynamicSystemAnimator.swift */; };
+		4FEA63CF2921510F00E464D6 /* NSImage+Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FEA63CD2921510E00E464D6 /* NSImage+Additions.m */; };
 		4FEB660F2793510300E6A111 /* CocoaLumberjack in Frameworks */ = {isa = PBXBuildFile; productRef = 4FEB660E2793510300E6A111 /* CocoaLumberjack */; };
 		4FEB66112793510800E6A111 /* CocoaLumberjackSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 4FEB66102793510800E6A111 /* CocoaLumberjackSwift */; };
 		4FEB66132793510C00E6A111 /* CocoaLumberjack in Frameworks */ = {isa = PBXBuildFile; productRef = 4FEB66122793510C00E6A111 /* CocoaLumberjack */; };
@@ -241,7 +244,6 @@
 		4FF665EE25F2C92700689B77 /* OverridePanel.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF665C225F2C92700689B77 /* OverridePanel.m */; };
 		4FF665EF25F2C92700689B77 /* ScrollOverridePanel.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4FF665C325F2C92700689B77 /* ScrollOverridePanel.xib */; };
 		4FF665F725F2C92700689B77 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4FF665D525F2C92700689B77 /* Assets.xcassets */; };
-		4FF665F825F2C92700689B77 /* MessagePort_App.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF665D725F2C92700689B77 /* MessagePort_App.m */; };
 		4FF665FA25F2C92700689B77 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF665DB25F2C92700689B77 /* AppDelegate.m */; };
 		4FF665FD25F2C92700689B77 /* AuthorizeAccessibilityView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF665E025F2C92700689B77 /* AuthorizeAccessibilityView.m */; };
 		4FF665FE25F2C92700689B77 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF665E325F2C92700689B77 /* main.m */; };
@@ -251,11 +253,9 @@
 		4FF6668125F2C93A00689B77 /* FileMonitor.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF6660925F2C93A00689B77 /* FileMonitor.m */; };
 		4FF6668225F2C93A00689B77 /* Config.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF6660E25F2C93A00689B77 /* Config.m */; };
 		4FF6668325F2C93A00689B77 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4FF6661025F2C93A00689B77 /* Assets.xcassets */; };
-		4FF6668425F2C93A00689B77 /* MessagePort_Helper.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF6661325F2C93A00689B77 /* MessagePort_Helper.m */; };
 		4FF6668525F2C93A00689B77 /* ModifierManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF6661725F2C93A00689B77 /* ModifierManager.m */; };
 		4FF6668825F2C93A00689B77 /* ButtonInputReceiver.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF6661E25F2C93A00689B77 /* ButtonInputReceiver.m */; };
 		4FF6668925F2C93A00689B77 /* Scroll.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF6662125F2C93A00689B77 /* Scroll.m */; };
-		4FF6668A25F2C93A00689B77 /* SmoothScroll.m (old) in Resources */ = {isa = PBXBuildFile; fileRef = 4FF6662325F2C93A00689B77 /* SmoothScroll.m (old) */; };
 		4FF6668B25F2C93A00689B77 /* CubicUnitBezier.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF6662425F2C93A00689B77 /* CubicUnitBezier.m */; };
 		4FF6668F25F2C93A00689B77 /* SmoothScroll_old_.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF6662D25F2C93A00689B77 /* SmoothScroll_old_.m */; };
 		4FF6669025F2C93A00689B77 /* ScrollModifiers_old_.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF6662E25F2C93A00689B77 /* ScrollModifiers_old_.m */; };
@@ -301,6 +301,8 @@
 		4FFA4E4928B7D3750062A1FE /* NSView+Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F92A72C260F6C7800529D1F /* NSView+Additions.m */; };
 		4FFA4E4A28B7D3750062A1FE /* NSView+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F909D0428A0C3D2009349A2 /* NSView+Extensions.swift */; };
 		4FFBC5A8266977CA001D389B /* DoubleExponentialSmoother.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FFBC5A7266977CA001D389B /* DoubleExponentialSmoother.swift */; };
+		4FFE2894291B35AA0058ABE0 /* Shorthands.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FFE2893291B35AA0058ABE0 /* Shorthands.swift */; };
+		4FFE2895291B35AA0058ABE0 /* Shorthands.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FFE2893291B35AA0058ABE0 /* Shorthands.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -415,6 +417,7 @@
 		4F3CDB272837D889000E28F0 /* ScrollNotes.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = ScrollNotes.md; sourceTree = "<group>"; };
 		4F3E067C26A2F97D000C9E06 /* URLMenuItem.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = URLMenuItem.h; sourceTree = "<group>"; };
 		4F3E067D26A2F97D000C9E06 /* URLMenuItem.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = URLMenuItem.m; sourceTree = "<group>"; };
+		4F4150652927B6A40040BA7D /* AddField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddField.swift; sourceTree = "<group>"; };
 		4F42304628CE6C1C003A41D3 /* LICENSE */ = {isa = PBXFileReference; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
 		4F44794428B62FA400AD1979 /* LicenseConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LicenseConfig.swift; sourceTree = "<group>"; };
 		4F44FF022606D73D00926A5E /* MFMessagePort.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MFMessagePort.h; sourceTree = "<group>"; };
@@ -455,6 +458,8 @@
 		4F854D7D2789266A00B46E9D /* SFSymbols.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = SFSymbols.xcassets; sourceTree = "<group>"; };
 		4F85C04F28BBDBDC00E96E9C /* NSImageView+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSImageView+Extensions.swift"; sourceTree = "<group>"; };
 		4F85C05328BBE6FA00E96E9C /* TrialSectionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrialSectionManager.swift; sourceTree = "<group>"; };
+		4F8A44502925311B00361EFF /* Symbols.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Symbols.h; sourceTree = "<group>"; };
+		4F8A44512925311B00361EFF /* Symbols.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Symbols.m; sourceTree = "<group>"; };
 		4F8A8DAC287EEF6200786BCC /* IOHIDAccelerationTableBridge.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = IOHIDAccelerationTableBridge.mm; sourceTree = "<group>"; };
 		4F8A8DB0287EEF9B00786BCC /* IOHIDAccelerationTableBridge.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = IOHIDAccelerationTableBridge.hpp; sourceTree = "<group>"; };
 		4F8A8DBA287EFB3400786BCC /* IOHIDAccelerationTable.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = IOHIDAccelerationTable.hpp; sourceTree = "<group>"; };
@@ -547,6 +552,7 @@
 		4F9E78CE2685E30B002C2309 /* GestureScrollSimulator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GestureScrollSimulator.m; sourceTree = "<group>"; };
 		4F9E78CF2685E30C002C2309 /* GestureScrollSimulator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GestureScrollSimulator.h; sourceTree = "<group>"; };
 		4F9E78E2268663B1002C2309 /* ExponentialSmoother.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExponentialSmoother.swift; sourceTree = "<group>"; };
+		4FA06818291B2C4C00949B5F /* Shorthands.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Shorthands.m; sourceTree = "<group>"; };
 		4FA13FBB28B39423005C68FC /* TrialNotificationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrialNotificationController.swift; sourceTree = "<group>"; };
 		4FA13FBC28B39423005C68FC /* TrialNotificationController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TrialNotificationController.xib; sourceTree = "<group>"; };
 		4FA13FC028B3A2D3005C68FC /* TrialNotificationWindow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrialNotificationWindow.swift; sourceTree = "<group>"; };
@@ -625,6 +631,9 @@
 		4FE40B95283A49DD00880BEF /* SharedUtilitySwift.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharedUtilitySwift.swift; sourceTree = "<group>"; };
 		4FE6CBC328987E8A00B3E829 /* DynamicSystemAnimator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DynamicSystemAnimator.swift; sourceTree = "<group>"; };
 		4FE7A0DE28677AD600C33B37 /* Gain Curve Math.tex */ = {isa = PBXFileReference; lastKnownFileType = text; path = "Gain Curve Math.tex"; sourceTree = "<group>"; };
+		4FE8FC792929D8AC0002583B /* On Bundle Size.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "On Bundle Size.md"; sourceTree = "<group>"; };
+		4FEA63CD2921510E00E464D6 /* NSImage+Additions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSImage+Additions.m"; sourceTree = "<group>"; };
+		4FEA63CE2921510E00E464D6 /* NSImage+Additions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSImage+Additions.h"; sourceTree = "<group>"; };
 		4FEB6617279376C200E6A111 /* SymbolicHotKeys Reference.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = "SymbolicHotKeys Reference.txt"; sourceTree = "<group>"; };
 		4FEB6618279376C200E6A111 /* notes.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = notes.md; sourceTree = "<group>"; };
 		4FEC9666278BBDC600548604 /* NSColor+Additions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSColor+Additions.h"; sourceTree = "<group>"; };
@@ -665,8 +674,6 @@
 		4FF665C425F2C92700689B77 /* MFSegmentedControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MFSegmentedControl.h; sourceTree = "<group>"; };
 		4FF665C525F2C92700689B77 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		4FF665D525F2C92700689B77 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		4FF665D725F2C92700689B77 /* MessagePort_App.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MessagePort_App.m; sourceTree = "<group>"; };
-		4FF665D825F2C92700689B77 /* MessagePort_App.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MessagePort_App.h; sourceTree = "<group>"; };
 		4FF665DB25F2C92700689B77 /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		4FF665DE25F2C92700689B77 /* AuthorizeAccessibilityView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AuthorizeAccessibilityView.h; sourceTree = "<group>"; };
 		4FF665E025F2C92700689B77 /* AuthorizeAccessibilityView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AuthorizeAccessibilityView.m; sourceTree = "<group>"; };
@@ -685,8 +692,6 @@
 		4FF6660D25F2C93A00689B77 /* Config.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Config.h; sourceTree = "<group>"; };
 		4FF6660E25F2C93A00689B77 /* Config.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Config.m; sourceTree = "<group>"; };
 		4FF6661025F2C93A00689B77 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		4FF6661225F2C93A00689B77 /* MessagePort_Helper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MessagePort_Helper.h; sourceTree = "<group>"; };
-		4FF6661325F2C93A00689B77 /* MessagePort_Helper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MessagePort_Helper.m; sourceTree = "<group>"; };
 		4FF6661625F2C93A00689B77 /* ModifierManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ModifierManager.h; sourceTree = "<group>"; };
 		4FF6661725F2C93A00689B77 /* ModifierManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ModifierManager.m; sourceTree = "<group>"; };
 		4FF6661925F2C93A00689B77 /* ButtonTriggerGenerator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ButtonTriggerGenerator.m; sourceTree = "<group>"; };
@@ -859,6 +864,8 @@
 				4F12951F28D2D5E1009A49AB /* NSTextField+Extentions.swift */,
 				4F909D0928A0C3D2009349A2 /* UIAnimations */,
 				4FFA4E3928B79D8D0062A1FE /* Strings */,
+				4F8A44502925311B00361EFF /* Symbols.h */,
+				4F8A44512925311B00361EFF /* Symbols.m */,
 			);
 			path = UI;
 			sourceTree = "<group>";
@@ -941,7 +948,6 @@
 				4F44FF022606D73D00926A5E /* MFMessagePort.h */,
 				4F44FF032606D73D00926A5E /* MFMessagePort.m */,
 				4F2F0B2A28E6258B00246D59 /* MessagePortUtility.swift */,
-				4FCD01742912C0B600B43C1B /* Unused */,
 			);
 			path = MessagePort;
 			sourceTree = "<group>";
@@ -950,6 +956,8 @@
 			isa = PBXGroup;
 			children = (
 				4F6F679F28A8141800C6C40F /* ButtonTabController.swift */,
+				4F4150652927B6A40040BA7D /* AddField.swift */,
+				4FA8A30C28A9509E001E740F /* Options */,
 				4FA911E4260D00CB00553CA8 /* RemapTable */,
 			);
 			path = ButtonTab;
@@ -1228,6 +1236,8 @@
 				4F909D4328A0C4C2009349A2 /* NSArray+Extensions.swift */,
 				4F909D4428A0C4C2009349A2 /* Collection+Extensions.swift */,
 				4F85C04F28BBDBDC00E96E9C /* NSImageView+Extensions.swift */,
+				4FEA63CE2921510E00E464D6 /* NSImage+Additions.h */,
+				4FEA63CD2921510E00E464D6 /* NSImage+Additions.m */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -1347,7 +1357,6 @@
 				4FA1FD7E28A847BF00D1C8EE /* DeletableTableCellView.xib */,
 				4FB4F9FC260FDBC800806DDD /* RemapTableUtility.h */,
 				4FB4F9FD260FDBC800806DDD /* RemapTableUtility.m */,
-				4FA8A30C28A9509E001E740F /* Options */,
 				4F74ADC228A7E58500901D69 /* KeyCaptureView */,
 			);
 			path = RemapTable;
@@ -1420,15 +1429,6 @@
 				4F79A7EE26042E2E00076A7E /* ToastNotification.xib */,
 			);
 			path = Toasts;
-			sourceTree = "<group>";
-		};
-		4FCD01742912C0B600B43C1B /* Unused */ = {
-			isa = PBXGroup;
-			children = (
-				4FF6661125F2C93A00689B77 /* MessagePort */,
-				4FF665D625F2C92700689B77 /* MessagePort */,
-			);
-			path = Unused;
 			sourceTree = "<group>";
 		};
 		4FCECD7721092354001F1078 = {
@@ -1534,6 +1534,7 @@
 			children = (
 				4FEB6617279376C200E6A111 /* SymbolicHotKeys Reference.txt */,
 				4FEB6618279376C200E6A111 /* notes.md */,
+				4FE8FC792929D8AC0002583B /* On Bundle Size.md */,
 			);
 			path = Notes;
 			sourceTree = "<group>";
@@ -1622,6 +1623,8 @@
 			isa = PBXGroup;
 			children = (
 				4F8A8DC0287F885D00786BCC /* Shorthands.h */,
+				4FA06818291B2C4C00949B5F /* Shorthands.m */,
+				4FFE2893291B35AA0058ABE0 /* Shorthands.swift */,
 				4FE40B95283A49DD00880BEF /* SharedUtilitySwift.swift */,
 				4FF6653E25F2C7B000689B77 /* SharedUtility.h */,
 				4FF6653B25F2C7B000689B77 /* SharedUtility.m */,
@@ -1685,15 +1688,6 @@
 				4F854D7D2789266A00B46E9D /* SFSymbols.xcassets */,
 			);
 			path = Resources;
-			sourceTree = "<group>";
-		};
-		4FF665D625F2C92700689B77 /* MessagePort */ = {
-			isa = PBXGroup;
-			children = (
-				4FF665D825F2C92700689B77 /* MessagePort_App.h */,
-				4FF665D725F2C92700689B77 /* MessagePort_App.m */,
-			);
-			path = MessagePort;
 			sourceTree = "<group>";
 		};
 		4FF665DC25F2C92700689B77 /* Accessibility */ = {
@@ -1775,16 +1769,6 @@
 				4FF6661025F2C93A00689B77 /* Assets.xcassets */,
 			);
 			path = Resources;
-			sourceTree = "<group>";
-		};
-		4FF6661125F2C93A00689B77 /* MessagePort */ = {
-			isa = PBXGroup;
-			children = (
-				4FF6661225F2C93A00689B77 /* MessagePort_Helper.h */,
-				4FF6661325F2C93A00689B77 /* MessagePort_Helper.m */,
-			);
-			name = MessagePort;
-			path = ../../../Helper/MessagePort;
 			sourceTree = "<group>";
 		};
 		4FF6661425F2C93A00689B77 /* Core */ = {
@@ -2253,20 +2237,16 @@
 				4F09284828B8EE7200BDC2FF /* LicenseSheetController.xib in Resources */,
 				4F9E59972672A67F004E75F7 /* default_config.plist in Resources */,
 				4FD148CC28AA423F00FE688C /* AuthorizeAccessibilityView.xib in Resources */,
-				4FDECCDB28A3A37800DDEE91 /* README.md in Resources */,
 				4F79A7EF26042E2E00076A7E /* ToastNotification.xib in Resources */,
 				4F854D7E2789266A00B46E9D /* SFSymbols.xcassets in Resources */,
 				4F7F47D328A6EFC800290BBD /* SharedAssets.xcassets in Resources */,
 				4FF665F725F2C92700689B77 /* Assets.xcassets in Resources */,
 				4F909D3928A0C3D2009349A2 /* Localizable.strings in Resources */,
 				4F6B02C028AD9E4400B5BA93 /* Localizable.stringsdict in Resources */,
-				4F909D3328A0C3D2009349A2 /* Animating Constraints.md in Resources */,
 				4FA1FD7F28A847BF00D1C8EE /* DeletableTableCellView.xib in Resources */,
-				4F7D97A328AEB04D00C11E79 /* Westfalia-Regular.otf in Resources */,
 				4FF665EF25F2C92700689B77 /* ScrollOverridePanel.xib in Resources */,
 				4FFA4E4028B7D0610062A1FE /* SharedSFSymbols.xcassets in Resources */,
 				4F909D2F28A0C3D2009349A2 /* MyTitlebarAccessoryViewController.xib in Resources */,
-				4F909D3A28A0C3D2009349A2 /* Localization How To.md in Resources */,
 				4FD148D128AA428000FE688C /* ButtonOptionsViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -2290,7 +2270,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				4FF6668325F2C93A00689B77 /* Assets.xcassets in Resources */,
-				4FF6668A25F2C93A00689B77 /* SmoothScroll.m (old) in Resources */,
 				4FF6654125F2C7B000689B77 /* default_launchd.plist in Resources */,
 				4FA13FC328B3A2DB005C68FC /* TrialNotificationController.xib in Resources */,
 				4F7F47D428A6EFC800290BBD /* SharedAssets.xcassets in Resources */,
@@ -2371,6 +2350,7 @@
 				4F909D2828A0C3D2009349A2 /* ResizingTabWindow.swift in Sources */,
 				4FA40CF728A0CCCA00499E53 /* Curve.swift in Sources */,
 				4FF6655225F2C7B000689B77 /* NSDictionary+Additions.m in Sources */,
+				4F4150662927B6A40040BA7D /* AddField.swift in Sources */,
 				4FDE75A728B25FB300662314 /* NSAttributedString+Extensions.swift in Sources */,
 				4FA40D0F28A0D8EF00499E53 /* SubPixelator.m in Sources */,
 				4F44794528B62FA400AD1979 /* LicenseConfig.swift in Sources */,
@@ -2381,6 +2361,7 @@
 				4FA40CFC28A0CCCB00499E53 /* NaturalAccelerationCurve.swift in Sources */,
 				4FF6654625F2C7B000689B77 /* Locator.m in Sources */,
 				4F909D2A28A0C3D2009349A2 /* ResizingTabWindowController.swift in Sources */,
+				4FA06819291B2C4C00949B5F /* Shorthands.m in Sources */,
 				4FF665EE25F2C92700689B77 /* OverridePanel.m in Sources */,
 				4FDECCDE28A3E93100DDEE91 /* IsObjC.m in Sources */,
 				4F909D2228A0C3D2009349A2 /* ScrollTabController.swift in Sources */,
@@ -2392,6 +2373,7 @@
 				4F909D2528A0C3D2009349A2 /* TabViewController.swift in Sources */,
 				4F1B832D26081A5500AEAF37 /* CaptureNotificationCreator.m in Sources */,
 				4FC8A7D928AD3FC7007DB982 /* RemapTableCellView.swift in Sources */,
+				4FEA63CF2921510F00E464D6 /* NSImage+Additions.m in Sources */,
 				4F909D3628A0C3D2009349A2 /* Collapse.swift in Sources */,
 				4F909D4128A0C412009349A2 /* SwiftUITest.swift in Sources */,
 				4F909D2C28A0C3D2009349A2 /* NSView+Extensions.swift in Sources */,
@@ -2455,13 +2437,14 @@
 				4FC8A7CD28AAF1BC007DB982 /* MarkdownParser.swift in Sources */,
 				4F09284528B8E82B00BDC2FF /* LicenseSheetController.swift in Sources */,
 				4F909D3E28A0C3D2009349A2 /* SensitivityDisplay.swift in Sources */,
+				4F8A44522925311B00361EFF /* Symbols.m in Sources */,
 				4F909D4528A0C4C2009349A2 /* NSArray+Extensions.swift in Sources */,
 				4FA8A30A28A9508C001E740F /* ButtonOptionsViewController.swift in Sources */,
 				4F85C05028BBDBDC00E96E9C /* NSImageView+Extensions.swift in Sources */,
 				4F37FAD825FDFDC5004C34C4 /* MFScrollView.m in Sources */,
-				4FF665F825F2C92700689B77 /* MessagePort_App.m in Sources */,
 				4FA40D1028A0D8F100499E53 /* VectorSubPixelator.m in Sources */,
 				4FA40D0228A0CE5B00499E53 /* VectorUtility.m in Sources */,
+				4FFE2894291B35AA0058ABE0 /* Shorthands.swift in Sources */,
 				4F319CBB26252A2D004E5F63 /* ButtonGroupRowView.m in Sources */,
 				4F79A82B2605074000076A7E /* NSAttributedString+Additions.m in Sources */,
 				4FA40CFD28A0CCCB00499E53 /* AccelerationBezier.swift in Sources */,
@@ -2533,6 +2516,7 @@
 				4FFA4E3628B795F30062A1FE /* LicenseUtility.swift in Sources */,
 				4F5F3EEE2756DB0A00C350C0 /* RemapsOverrider_old_.swift in Sources */,
 				4F8B7E6727B4E32600598B65 /* TouchAnimatorBase.swift in Sources */,
+				4FA0681A291B2C4C00949B5F /* Shorthands.m in Sources */,
 				4FF6669325F2C93A00689B77 /* TouchSimulator.m in Sources */,
 				4FFA4E4A28B7D3750062A1FE /* NSView+Extensions.swift in Sources */,
 				4F9E78E3268663B1002C2309 /* ExponentialSmoother.swift in Sources */,
@@ -2557,7 +2541,7 @@
 				4F3A40B1266BBC5000436821 /* Curve.swift in Sources */,
 				4FFA4E3A28B79D960062A1FE /* NSString+Extensions.swift in Sources */,
 				4F09284028B8101600BDC2FF /* TrialSection.swift in Sources */,
-				4FF6668425F2C93A00689B77 /* MessagePort_Helper.m in Sources */,
+				4F41506429255F880040BA7D /* NSImage+Additions.m in Sources */,
 				4FF6669225F2C93A00689B77 /* RoughScroll_old_.m in Sources */,
 				4FBDA14F27B241CE0030E4EA /* GlobalEventTapThread.m in Sources */,
 				4FF6669825F2C93A00689B77 /* SubPixelator.m in Sources */,
@@ -2589,6 +2573,7 @@
 				4F3A40CB266C44D100436821 /* DisplayLink.m in Sources */,
 				4FF6669925F2C93A00689B77 /* VectorSubPixelator.m in Sources */,
 				4FDE75AA28B269AE00662314 /* Randomizer.swift in Sources */,
+				4F8A44532925311B00361EFF /* Symbols.m in Sources */,
 				4FFA4E3B28B79D980062A1FE /* String+Extensions.swift in Sources */,
 				4FF0BD4B266A8B7E003935EA /* Bezier.swift in Sources */,
 				4FA13FC228B3A2D3005C68FC /* TrialNotificationWindow.swift in Sources */,
@@ -2618,6 +2603,7 @@
 				4F909D4628A0C4C2009349A2 /* NSArray+Extensions.swift in Sources */,
 				4F9E78C026855BCF002C2309 /* Concurrency.swift in Sources */,
 				4FF93059288026FC0007CCA7 /* PolynomialCappedAccelerationCurve.swift in Sources */,
+				4FFE2895291B35AA0058ABE0 /* Shorthands.swift in Sources */,
 				4F3A40DA266C5BDF00436821 /* NSScreen+Additions.m in Sources */,
 				4FF6654325F2C7B000689B77 /* HelperServices.m in Sources */,
 				4FA994BE26678AC90007F003 /* ScrollAnalyzer.m in Sources */,
@@ -2971,7 +2957,7 @@
 				INFOPLIST_FILE_HELPER = Helper/SupportFiles/Info.plist;
 				INFOPLIST_FILE_MAINAPP = App/SupportFiles/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/../Frameworks";
-				MACOSX_DEPLOYMENT_TARGET = 10.13;
+				MACOSX_DEPLOYMENT_TARGET = 10.14.4;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = macosx;
@@ -3040,7 +3026,7 @@
 				INFOPLIST_FILE_HELPER = Helper/SupportFiles/Info.plist;
 				INFOPLIST_FILE_MAINAPP = App/SupportFiles/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/../Frameworks";
-				MACOSX_DEPLOYMENT_TARGET = 10.13;
+				MACOSX_DEPLOYMENT_TARGET = 10.14.4;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				ONLY_ACTIVE_ARCH = NO;
 				SDKROOT = macosx;

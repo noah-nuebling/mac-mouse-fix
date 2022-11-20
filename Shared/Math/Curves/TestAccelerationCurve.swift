@@ -11,7 +11,7 @@
 
 import Foundation
 
-class TestAccelerationCurve: AccelerationCurve {
+class TestAccelerationCurve: Curve {
     
     let thresholdSpeed: Double
     let firstSens: Double

@@ -15,7 +15,7 @@ import CoreVideo
 import QuartzCore
 
 @objc class TouchAnimatorBase: NSObject {
-
+    
     /// Typedef
     
     typealias UntypedAnimatorCallback = Any
@@ -68,9 +68,9 @@ import QuartzCore
     @Atomic var callback: UntypedAnimatorCallback?
     /// ^ This is constantly accessed by subclassHook() and constantly written to by startWithUntypedCallback(). Becuase Swift is stinky and not thread safe, the app will sometimes crash, when this property is read from and written to at the same time. So we're using @Atomic propery wrapper
     @objc var animationCurve: Curve? /// This class assumes that `animationCurve` passes through `(0, 0)` and `(1, 1)
-                                              //    let threadLock = DispatchSemaphore.init(value: 1)
-                                              /// ^ Using a queue instead of a lock to avoid deadlocks. Always use queues for mutual exclusion except if you know exactly what you're doing!
-
+    
+//    let threadLock = DispatchSemaphore.init(value: 1)
+    /// ^ Using a queue instead of a lock to avoid deadlocks. Always use queues for mutual exclusion except if you know exactly what you're doing!
 //    let animatorQueue: DispatchQueue /// Use the displayLink's queue instead to avoid deadlocks and such
     
     /// Init
@@ -109,7 +109,7 @@ import QuartzCore
     fileprivate var onStopCallback: (() -> ())?
     
     /// Vars - DisplayLink
-
+    
     var isFirstDisplayLinkCallback_AfterColdStart = false
     var isFirstDisplayLinkCallback_AfterRunningStart = false
     var isLastDisplayLinkCallback = false
@@ -229,12 +229,12 @@ import QuartzCore
         /// Get stuff
         
         let isRunningg = isRunning_Unsafe
-
+        
         /// Update state
         
         if !isRunningg
             || isFirstDisplayLinkCallback_AfterColdStart {
-
+            
             /// If `isFirstDisplayLinkCallback_AfterColdStart` == true that means that the displayLinkCallback hasn't run yet (since it sets it to false), so we don't want to signal runningStart, yet
             
             isFirstDisplayLinkCallback_AfterColdStart = true
@@ -290,19 +290,51 @@ import QuartzCore
         
         /// Debug
         
-//        DDLogDebug("AnimationValueInterval at start: \(value)")
+        //        DDLogDebug("AnimationValueInterval at start: \(value)")
     }
     
     /// Cancel
     
     @objc func cancel() {
+        cancel(forAutoMomentumScroll: false)
+    }
+    
+    @objc (cancel_forAutoMomentumScroll:) func cancel(forAutoMomentumScroll: Bool) {
         displayLink.dispatchQueue.async {
+            
+            /// Get info
+            /// Notes:
+            ///   - Checking for isRunning would be obsolete if we just set `self.thisAnimationHasProducedDeltas = false` when stopping. But maybe that has other side effects that we don't want? Edit: Don't think this is true anymore
+            ///   - Maybe we could just return if wasRunning is false. For performance. Don't think self.stop_Unsafe should do anything if wasRunning is false.
+            let wasRunning = self.isRunning_Unsafe
             let hadProducedDeltas = self.thisAnimationHasProducedDeltas
-            let wasRunning = self.isRunning_Unsafe /// This check would be obsolete if we just set `self.thisAnimationHasProducedDeltas = false` when stopping. But maybe that has other side effects that we don't want?
+            
+            /// Stop displayLink
             self.stop_Unsafe()
-            if hadProducedDeltas && wasRunning {
-                if let callback = self.callback as? AnimatorCallback {
+            
+            /// Call callback
+            
+            if wasRunning, let callback = self.callback as? AnimatorCallback {
+                
+                if hadProducedDeltas {
                     callback(Vector(x: 0, y: 0), kMFAnimationCallbackPhaseCanceled, self.lastMomentumHint)
+                } else {
+                    if forAutoMomentumScroll {
+                        
+                        /// Notes:
+                        ///   - If the animator is started and then immediately stopped, we usally just want to ignore that and just not call the callback (Why do we even want that? I guess performance, but when does this happen?). But for autoMomentumScroll in GestureScrollSimulator we DO want to send start and cancel events if started and then immediately stepped. Otherwise, app like Xcode might continue momentumScrolling.
+                        ///   - Specifically, this is necessary when used through GestureScrollSimulator when it itself is used in Scroll.m when ending an animation and immediately suppressing momentumScroll. Feels like we're implementing some pretty specific high level behaviour in this very low level class. Maybe we need to restructure our abstractions.
+                        ///   - Calling callback with start phase here might be totally unnecessary Edit: Nope is necessary to fix the Safari weirdness.
+                        ///   - Maybe we should spread out the start phase and canceled phase callbacks over time? Maybe call the canceled phase callback from the displayLinkCallback?? There an issue in Safari. When you scroll into the rubberband and then back Safari will add momentum. (Even though Safari normally never adds its own momentum I think). This momentum can't even be stopped by touching the trackpad, so idk what we could do about it.
+                        ///     - Edit: Spacing the events out fixes it! We're just using a DispatchQueue, not the displaylink to do this. Might lead to raceconditions if the animator is restarted before the call. Don't think so though.
+                        ///   - Not sure the delay should scale with frametime. I tested 2ms that's too low. 4ms works, so we chose 8ms to be safe (On a 60 hz screen)
+                        
+                        callback(Vector(x: 0, y: 0), kMFAnimationCallbackPhaseStart, self.lastMomentumHint)
+                        let delay = 8.0/1000.0 /// self.displayLink.nominalTimeBetweenFrames()
+                        DispatchQueue.global(qos: .userInteractive).asyncAfter(deadline: .now() + delay, execute: {
+                            callback(Vector(x: 0, y: 0), kMFAnimationCallbackPhaseCanceled, self.lastMomentumHint)
+                        })
+                    }
                 }
             }
         }
@@ -481,7 +513,12 @@ import QuartzCore
             
             let timeSinceAnimationStart = frameTime - animationStartTime
             let minBaseCurveTime = ScrollConfig().consecutiveScrollTickIntervalMax
-            if timeSinceAnimationStart < minBaseCurveTime {
+            
+            /// DEBUG
+//            minBaseCurveTime = 0.0
+            
+            
+            if timeSinceAnimationStart < minBaseCurveTime{
                 
                 /// Make the first x ms of the animation always kMFMomentumHintGesture
                 ///     This is so that:

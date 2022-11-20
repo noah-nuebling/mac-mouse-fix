@@ -765,6 +765,23 @@ static void removeServiceWithIdentifier(NSString *identifier) {
     if (err != nil) {
         DDLogError(@"Error removing service %@ from launchd: %@", identifier, err);
     }
+    
+    /// Wait until service is actually removed
+    /// Notes:
+    /// - Otherwise enabling while old helper is still enabled won't work under Mojave
+    /// - TODO: We also brought this improvement to MMF 2 but was hacky since it's missing some previous improvements made to HelperServices. That's bad, we shouldn't have let HelperServices diverge like that between MMF 2 and 3! We should unify them again.
+    
+    int maxWaitCycles = 25;
+    int i = 0;
+    while (true) {
+        
+        NSString *launchctlOutput = [HelperServices serviceInfoWithIdentifier:identifier];
+        
+        if ([launchctlOutput isEqual:@""]) break;
+        if (i >= maxWaitCycles) break;
+        
+        i += 1;
+    }
 }
 
 static void removePrefpaneLaunchdPlist() {
