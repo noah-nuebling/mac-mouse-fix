@@ -35,7 +35,7 @@ import CocoaLumberjackSwift
         /// Debug
 //        DDLogDebug("activeFlags in ScrollModifers: \(SharedUtility.binaryRepresentation((activeModifiers[kMFModificationPreconditionKeyKeyboard] as? NSNumber)?.uint32Value ?? 0))") /// This is unbelievably slow for some reason
         
-        self.activeModifications = RemapSwizzler.swizzleRemaps(baseRemaps, activeModifiers: activeModifiers);
+        self.activeModifications = Remap.modifications(withModifiers: activeModifiers)
         
         guard let modifiedScrollDictUntyped = activeModifications[kMFTriggerScroll] else {
             return result; /// There are no active scroll modifications

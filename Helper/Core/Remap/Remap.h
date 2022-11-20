@@ -16,16 +16,14 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (class, readonly) BOOL addModeIsEnabled;
 
++ (NSDictionary *)modificationsWithModifiers:(NSDictionary *)modifiers;
+
 + (void)reload;
 + (NSDictionary *)remaps;
 
 + (void)enableAddMode;
 + (void)disableAddMode;
-
 + (void)concludeAddModeWithPayload:(NSDictionary *)payload;
-//+ (void)disableAddModeWithPayload:(NSDictionary *)payload;
-//+ (void)sendAddModeFeedbackWithPayload:(NSDictionary *)payload;
-+ (BOOL)addModePayloadIsValid:(NSDictionary *)payload;
 
 @end
 

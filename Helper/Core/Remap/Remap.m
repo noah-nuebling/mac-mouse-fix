@@ -20,6 +20,7 @@
 #import "Config.h"
 #import "MFMessagePort.h"
 #import "Mac_Mouse_Fix_Helper-Swift.h"
+#import "RemapSwizzler.h"
 
 @implementation Remap
 
@@ -27,6 +28,26 @@
 
 /// This used to be called `TransformationManager`. Renamed to `Remap` to unify terminology.
 /// Desired Terminology: The `remaps` are a map from `modifiers` -> `modifications`, where a `modification` is itself a map from `trigger ` -> `effect`. More on this in RemapSwizzler.swift
+/// TODO: Swift automatically bridges the NSDictionary args to Swift dicts which is super slow. Try to use NS_REFINED_FOR_SWIFT to prevent this. See https://developer.apple.com/documentation/swift/improving-objective-c-api-declarations-for-swift
+
+#pragma mark - Swizzled
+
+static NSMutableDictionary *_swizzleCache;
+
++ (NSDictionary *)modificationsWithModifiers:(NSDictionary *)modifiers {
+    
+    /// Cache is reset whenever remaps change
+    
+    NSDictionary *cached = _swizzleCache[modifiers];
+    
+    if (cached) {
+        return cached;
+    } else {
+        NSDictionary *new = [RemapSwizzler swizzleRemaps:_remaps activeModifiers:modifiers];
+        _swizzleCache[modifiers] = new;
+        return new;
+    }
+}
 
 #pragma mark - Storage
 
@@ -39,21 +60,34 @@ static NSDictionary *_remaps;
 
 + (void)setRemaps:(NSDictionary *)remapsDict {
     
-    /// This method is private.
-    /// Always set remaps through this, so that the kMFNotifCenterNotificationNameRemapsChanged notification is posted
-    /// The notification is used by ModifierManager to update itself, whenever `_remaps` updates.
-    ///  (Idk why we aren't just calling an update function instead of using a notification)
+    /// This method is private. It's used by `reload` and `enableAddMode`.
     
-    /// Set
-    _remaps = remapsDict;
+    /// Compare
+    BOOL isEqual = [_remaps isEqualToDictionary:remapsDict];
     
-    /// Notify
-    [NSNotificationCenter.defaultCenter postNotificationName:kMFNotifCenterNotificationNameRemapsChanged object:self];
-    [ReactiveRemaps.shared handleRemapsDidChange];
-    
-    /// Log
-    DDLogDebug(@"Set remaps to: %@", _remaps);
+    if (isEqual) {
+        
+        /// Log
+        DDLogDebug(@"Remaps were set to the same value");
+        
+    } else {
+        
+        /// Set
+        _remaps = remapsDict;
+        
+        /// Reset cache
+        [_swizzleCache removeAllObjects];
+        
+        /// Notify
+        [ReactiveRemaps.shared handleRemapsDidChange];
+        [NSNotificationCenter.defaultCenter postNotificationName:kMFNotifCenterNotificationNameRemapsChanged object:self];
+        
+        /// Log
+        DDLogDebug(@"Set remaps to: %@", _remaps);
+    }
 }
+
+#pragma mark - Reload
 
 + (void)reload {
     

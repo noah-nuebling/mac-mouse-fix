@@ -18,6 +18,8 @@
 
 /// MARK: - Notes
 
+/// Instead of using this directly, use [Remap modificationsWithModifiers:]. It's faster since it caches results.
+
 /// This class provides methods for obtaining combined remaps based on a remaps dict and some active modifiers.
 ///     These *combined* remaps are also sometimes called *effective remaps* or *remaps for current modifiers*, "activeModifications", "modificationsActingOnButton", etc.
 ///     If this doesn't make sense, see an example of the remaps dict structure in Remap.m

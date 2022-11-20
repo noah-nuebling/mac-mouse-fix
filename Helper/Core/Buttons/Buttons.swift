@@ -21,8 +21,8 @@ import CocoaLumberjackSwift
     static private var modifierManager = ButtonModifiers()
     
     /// Vars that we only update once per clickCycle
-    static var modifiers: [AnyHashable: Any] = [:]
-    static var modifications: [AnyHashable: Any] = [:]
+    static var modifiers = [AnyHashable: Any]()
+    static var modifications = [AnyHashable: Any]()
     static var maxClickLevel: Int = -1
     
     /// Init
@@ -56,7 +56,7 @@ import CocoaLumberjackSwift
             /// Update modifications
             let remaps = Remap.remaps() /// Why aren't we reusing the remaps from above?
             self.modifiers = ModifierManager.getActiveModifiers(for: HelperState.activeDevice!, event: event) /// Why aren't we just using `device` here?
-            self.modifications = RemapSwizzler.swizzleRemaps(remaps, activeModifiers: modifiers)
+            self.modifications = Remap.modifications(withModifiers: modifiers)
             
             /// Get max clickLevel
             self.maxClickLevel = 0
@@ -99,7 +99,7 @@ import CocoaLumberjackSwift
             var effectForMouseDownStateOfThisLevelExists: ObjCBool = false
             var effectOfGreaterLevelExists: ObjCBool = false
             
-            ButtonLandscapeAssessor.assessMappingLandscape(withButton: button as NSNumber, level: clickLevel as NSNumber, modificationsActingOnThisButton: modifications, remaps: remaps, thisClickDoBe: &clickActionOfThisLevelExists, thisDownDoBe: &effectForMouseDownStateOfThisLevelExists, greaterDoBe: &effectOfGreaterLevelExists)
+            ButtonLandscapeAssessor.assessMappingLandscape(withButton: button as NSNumber, level: clickLevel as NSNumber, modificationsActingOnThisButton: modifications as! [AnyHashable : Any], remaps: remaps, thisClickDoBe: &clickActionOfThisLevelExists, thisDownDoBe: &effectForMouseDownStateOfThisLevelExists, greaterDoBe: &effectOfGreaterLevelExists)
             
             /// Create trigger -> action map based on mappingLandscape
             
@@ -163,7 +163,7 @@ import CocoaLumberjackSwift
             
             /// Notify modifiers
             ///     (Probably unnecessary, because the only modifiers that can be "deactivated" are buttons. And since there's only one clickCycle, any buttons modifying the current one should already be zombified)
-            ModifierManager.handleModificationHasBeenUsed(with: device, activeModifiers: self.modifiers)
+            ModifierManager.handleModificationHasBeenUsed(with: device, activeModifiers: self.modifiers as! [AnyHashable : Any])
         })
         
         return passThroughEvaluation

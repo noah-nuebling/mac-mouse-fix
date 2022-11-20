@@ -168,7 +168,7 @@ static void reactToModifierChange(NSDictionary *_Nonnull activeModifiers, Device
 //    DDLogDebug(@"...CALLED BY %@", [SharedUtility getInfoOnCaller]);
     
     /// Get activeModifications
-    NSDictionary *activeModifications = [RemapSwizzler swizzleRemaps:Remap.remaps activeModifiers:activeModifiers];
+    NSDictionary *activeModifications = [Remap modificationsWithModifiers:activeModifiers];
     
     /// Notify ScrollModifiers of modifierChange
     ///     It needs that to commit to an app in the app switcher when the user releases a button
