@@ -58,7 +58,6 @@
 		4F79A83626051E4A00076A7E /* ToastNotification.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F79A83526051E4A00076A7E /* ToastNotification.m */; };
 		4F79C2EA260976950067B381 /* RemapTableTranslator.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F79C2E9260976950067B381 /* RemapTableTranslator.m */; };
 		4F7AB0552606698A0008055E /* UIStrings.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F7AB0542606698A0008055E /* UIStrings.m */; };
-		4F7D97A328AEB04D00C11E79 /* Westfalia-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 4F7D97A228AEB04D00C11E79 /* Westfalia-Regular.otf */; };
 		4F7D97A628AEB2EE00C11E79 /* AboutTabController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F7D97A528AEB2EE00C11E79 /* AboutTabController.swift */; };
 		4F7F47C528A5A01600290BBD /* ReactiveConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FDC127528A2C6160076972E /* ReactiveConfig.swift */; };
 		4F7F47CB28A5A03100290BBD /* ReactiveConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FDC127528A2C6160076972E /* ReactiveConfig.swift */; };
@@ -105,14 +104,12 @@
 		4F909D3028A0C3D2009349A2 /* ReactiveAnimatorProxy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F909D0A28A0C3D2009349A2 /* ReactiveAnimatorProxy.swift */; };
 		4F909D3128A0C3D2009349A2 /* CAAnimation+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F909D0C28A0C3D2009349A2 /* CAAnimation+Extensions.swift */; };
 		4F909D3228A0C3D2009349A2 /* FadeAnimations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F909D0D28A0C3D2009349A2 /* FadeAnimations.swift */; };
-		4F909D3328A0C3D2009349A2 /* Animating Constraints.md in Resources */ = {isa = PBXBuildFile; fileRef = 4F909D0E28A0C3D2009349A2 /* Animating Constraints.md */; };
 		4F909D3428A0C3D2009349A2 /* Replace.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F909D0F28A0C3D2009349A2 /* Replace.swift */; };
 		4F909D3528A0C3D2009349A2 /* Animate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F909D1028A0C3D2009349A2 /* Animate.swift */; };
 		4F909D3628A0C3D2009349A2 /* Collapse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F909D1128A0C3D2009349A2 /* Collapse.swift */; };
 		4F909D3728A0C3D2009349A2 /* ConstraintUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F909D1228A0C3D2009349A2 /* ConstraintUtility.swift */; };
 		4F909D3828A0C3D2009349A2 /* ReactiveFlags.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F909D1428A0C3D2009349A2 /* ReactiveFlags.swift */; };
 		4F909D3928A0C3D2009349A2 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4F909D1728A0C3D2009349A2 /* Localizable.strings */; };
-		4F909D3A28A0C3D2009349A2 /* Localization How To.md in Resources */ = {isa = PBXBuildFile; fileRef = 4F909D1928A0C3D2009349A2 /* Localization How To.md */; };
 		4F909D3B28A0C3D2009349A2 /* ModCaptureDeleteButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F909D1C28A0C3D2009349A2 /* ModCaptureDeleteButton.swift */; };
 		4F909D3C28A0C3D2009349A2 /* ModCaptureFieldEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F909D1D28A0C3D2009349A2 /* ModCaptureFieldEditor.swift */; };
 		4F909D3D28A0C3D2009349A2 /* ModCaptureTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F909D1E28A0C3D2009349A2 /* ModCaptureTextField.swift */; };
@@ -210,7 +207,6 @@
 		4FDE75A728B25FB300662314 /* NSAttributedString+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FDE75A628B25FB300662314 /* NSAttributedString+Extensions.swift */; };
 		4FDE75A928B269AE00662314 /* Randomizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FDE75A828B269AE00662314 /* Randomizer.swift */; };
 		4FDE75AA28B269AE00662314 /* Randomizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FDE75A828B269AE00662314 /* Randomizer.swift */; };
-		4FDECCDB28A3A37800DDEE91 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 4FDECCD828A3A37800DDEE91 /* README.md */; };
 		4FDECCDE28A3E93100DDEE91 /* IsObjC.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FDECCDD28A3E93100DDEE91 /* IsObjC.m */; };
 		4FDECCDF28A3E93100DDEE91 /* IsObjC.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FDECCDD28A3E93100DDEE91 /* IsObjC.m */; };
 		4FE40B96283A49DD00880BEF /* SharedUtilitySwift.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FE40B95283A49DD00880BEF /* SharedUtilitySwift.swift */; };
@@ -260,7 +256,6 @@
 		4FF6668525F2C93A00689B77 /* ModifierManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF6661725F2C93A00689B77 /* ModifierManager.m */; };
 		4FF6668825F2C93A00689B77 /* ButtonInputReceiver.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF6661E25F2C93A00689B77 /* ButtonInputReceiver.m */; };
 		4FF6668925F2C93A00689B77 /* Scroll.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF6662125F2C93A00689B77 /* Scroll.m */; };
-		4FF6668A25F2C93A00689B77 /* SmoothScroll.m (old) in Resources */ = {isa = PBXBuildFile; fileRef = 4FF6662325F2C93A00689B77 /* SmoothScroll.m (old) */; };
 		4FF6668B25F2C93A00689B77 /* CubicUnitBezier.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF6662425F2C93A00689B77 /* CubicUnitBezier.m */; };
 		4FF6668F25F2C93A00689B77 /* SmoothScroll_old_.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF6662D25F2C93A00689B77 /* SmoothScroll_old_.m */; };
 		4FF6669025F2C93A00689B77 /* ScrollModifiers_old_.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF6662E25F2C93A00689B77 /* ScrollModifiers_old_.m */; };
@@ -2217,20 +2212,16 @@
 				4F09284828B8EE7200BDC2FF /* LicenseSheetController.xib in Resources */,
 				4F9E59972672A67F004E75F7 /* default_config.plist in Resources */,
 				4FD148CC28AA423F00FE688C /* AuthorizeAccessibilityView.xib in Resources */,
-				4FDECCDB28A3A37800DDEE91 /* README.md in Resources */,
 				4F79A7EF26042E2E00076A7E /* ToastNotification.xib in Resources */,
 				4F854D7E2789266A00B46E9D /* SFSymbols.xcassets in Resources */,
 				4F7F47D328A6EFC800290BBD /* SharedAssets.xcassets in Resources */,
 				4FF665F725F2C92700689B77 /* Assets.xcassets in Resources */,
 				4F909D3928A0C3D2009349A2 /* Localizable.strings in Resources */,
 				4F6B02C028AD9E4400B5BA93 /* Localizable.stringsdict in Resources */,
-				4F909D3328A0C3D2009349A2 /* Animating Constraints.md in Resources */,
 				4FA1FD7F28A847BF00D1C8EE /* DeletableTableCellView.xib in Resources */,
-				4F7D97A328AEB04D00C11E79 /* Westfalia-Regular.otf in Resources */,
 				4FF665EF25F2C92700689B77 /* ScrollOverridePanel.xib in Resources */,
 				4FFA4E4028B7D0610062A1FE /* SharedSFSymbols.xcassets in Resources */,
 				4F909D2F28A0C3D2009349A2 /* MyTitlebarAccessoryViewController.xib in Resources */,
-				4F909D3A28A0C3D2009349A2 /* Localization How To.md in Resources */,
 				4FD148D128AA428000FE688C /* ButtonOptionsViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -2254,7 +2245,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				4FF6668325F2C93A00689B77 /* Assets.xcassets in Resources */,
-				4FF6668A25F2C93A00689B77 /* SmoothScroll.m (old) in Resources */,
 				4FF6654125F2C7B000689B77 /* default_launchd.plist in Resources */,
 				4FA13FC328B3A2DB005C68FC /* TrialNotificationController.xib in Resources */,
 				4F7F47D428A6EFC800290BBD /* SharedAssets.xcassets in Resources */,
