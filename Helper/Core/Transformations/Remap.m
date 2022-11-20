@@ -1,14 +1,14 @@
 //
 // --------------------------------------------------------------------------
-// TransformationManager.m
+// Remap.m
 // Created for Mac Mouse Fix (https://github.com/noah-nuebling/mac-mouse-fix)
 // Created by Noah Nuebling in 2020
 // Licensed under the MMF License (https://github.com/noah-nuebling/mac-mouse-fix/blob/master/LICENSE)
 // --------------------------------------------------------------------------
 //
 
-#import "TransformationManager.h"
-#import "TransformationUtility.h"
+#import "Remap.h"
+#import "ModificationUtility.h"
 #import "SharedUtility.h"
 #import "ButtonTriggerGenerator.h"
 #import "Actions.h"
@@ -21,11 +21,12 @@
 #import "MFMessagePort.h"
 #import "Mac_Mouse_Fix_Helper-Swift.h"
 
-@implementation TransformationManager
+@implementation Remap
 
 #pragma mark - Notes
 
-/// Rename this to `Transformations`rename `_remaps` to `_transformations`.
+/// This used to be called `TransformationManager`. Renamed to `Remap` to unify terminology.
+/// Desired Terminology: The `remaps` are a map from `modifiers` -> `modifications`, where a `modification` is itself a map from `trigger ` -> `effect`. More on this in RemapSwizzler.swift
 
 #pragma mark - Storage
 
@@ -52,11 +53,12 @@ static NSDictionary *_remaps;
     DDLogDebug(@"Set remaps to: %@", _remaps);
 }
 
-/// The main app uses an array of dicts (aka a table) to represent the remaps in a way that is easy to present in a table view.
-/// The remaps are also stored to file in this format and therefore what `ConfigFileInterface_App.config` contains.
-/// The helper was made to handle a dictionary format which should be more effictient among other perks.
-/// This function takes the remaps in table format from config, then converts it to dict format and makes that available to all the other Input Transformation classes to base their behaviour off of through self.remaps.
 + (void)reload {
+    
+    /// The main app uses an array of dicts (aka a table) to represent the remaps in a way that is easy to present in a table view.
+    /// The remaps are also stored to file in this format and therefore what `Config.config` contains.
+    /// The helper was made to handle a dictionary format which should be more effictient among other perks.
+    /// This function takes the remaps in table format from config, then converts it to dict format and makes that available to all the other Input modification classes to base their behaviour off of through self.remaps.
     
     DDLogDebug(@"TRM set remaps to config");
     
@@ -296,7 +298,7 @@ BOOL _addModeIsEnabled = NO;
 //    if (![self addModePayloadIsValid:payload]) return;
 //
 //    [MFMessagePort sendMessage:@"addModeFeedback" withPayload:payload expectingReply:NO];
-//    ///    [TransformationManager performSelector:@selector(disableAddMode) withObject:nil afterDelay:0.5];
+//    ///    [Remap performSelector:@selector(disableAddMode) withObject:nil afterDelay:0.5];
 //    /// ^ We did this to keep the remapping disabled for a little while after adding a new row, but it leads to adding several entries at once when trying to input button modification precondition, if you're not fast enough.
 //}
 
@@ -310,7 +312,7 @@ BOOL _addModeIsEnabled = NO;
     _addModeIsEnabled = NO;
 //    [MFMessagePort sendMessage:@"addModeDisabled" withPayload:nil expectingReply:NO];
     [MFMessagePort sendMessage:@"addModeFeedback" withPayload:payload expectingReply:NO];
-    ///    [TransformationManager performSelector:@selector(disableAddMode) withObject:nil afterDelay:0.5];
+    ///    [Remap performSelector:@selector(disableAddMode) withObject:nil afterDelay:0.5];
     /// ^ We did this to keep the remapping disabled for a little while after adding a new row, but it leads to adding several entries at once when trying to input button modification precondition, if you're not fast enough.
 
 }
@@ -341,7 +343,7 @@ CFMachPortRef _keyCaptureEventTap;
     DDLogInfo(@"Enabling keyCaptureMode");
     
     if (_keyCaptureEventTap == nil) {
-        _keyCaptureEventTap = [TransformationUtility createEventTapWithLocation:kCGHIDEventTap mask:CGEventMaskBit(kCGEventKeyDown) | CGEventMaskBit(NSEventTypeSystemDefined) option:kCGEventTapOptionDefault placement:kCGHeadInsertEventTap callback:keyCaptureModeCallback];
+        _keyCaptureEventTap = [ModificationUtility createEventTapWithLocation:kCGHIDEventTap mask:CGEventMaskBit(kCGEventKeyDown) | CGEventMaskBit(NSEventTypeSystemDefined) option:kCGEventTapOptionDefault placement:kCGHeadInsertEventTap callback:keyCaptureModeCallback];
     }
     CGEventTapEnable(_keyCaptureEventTap, true);
 }
@@ -368,7 +370,7 @@ CGEventRef  _Nullable keyCaptureModeCallback(CGEventTapProxy proxy, CGEventType 
     };
     
     [MFMessagePort sendMessage:@"keyCaptureModeFeedback" withPayload:payload expectingReply:NO];
-            [TransformationManager disableKeyCaptureMode];
+            [Remap disableKeyCaptureMode];
         }
     
     } else if (type == NSEventTypeSystemDefined) {
@@ -387,7 +389,7 @@ CGEventRef  _Nullable keyCaptureModeCallback(CGEventTapProxy proxy, CGEventType 
             };
             
             [MFMessagePort sendMessage:@"keyCaptureModeFeedbackWithSystemEvent" withPayload:payload expectingReply:NO];
-    [TransformationManager disableKeyCaptureMode];
+    [Remap disableKeyCaptureMode];
         }
         
     }

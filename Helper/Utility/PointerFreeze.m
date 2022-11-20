@@ -12,7 +12,7 @@
 #import "HelperUtility.h"
 #import "Mac_Mouse_Fix_Helper-Swift.h"
 #import "CGSConnection.h"
-#import "TransformationUtility.h"
+#import "ModificationUtility.h"
 #import "GlobalEventTapThread.h"
 #import "NSScreen+Additions.h"
 @import CoreMedia;
@@ -71,7 +71,7 @@ static int64_t _lastEventDelta;
         
         /// Setup eventTap
         ///     Using a listenOnly tap would be more appropriate but they sometimes behave weirdly
-        _eventTap = [TransformationUtility createEventTapWithLocation:kCGHIDEventTap mask:CGEventMaskBit(kCGEventMouseMoved) | CGEventMaskBit(kCGEventLeftMouseDragged) | CGEventMaskBit(kCGEventRightMouseDragged) | CGEventMaskBit(kCGEventOtherMouseDragged) option:kCGEventTapOptionDefault placement:kCGHeadInsertEventTap callback:mouseMovedCallback runLoop:GlobalEventTapThread.runLoop];
+        _eventTap = [ModificationUtility createEventTapWithLocation:kCGHIDEventTap mask:CGEventMaskBit(kCGEventMouseMoved) | CGEventMaskBit(kCGEventLeftMouseDragged) | CGEventMaskBit(kCGEventRightMouseDragged) | CGEventMaskBit(kCGEventOtherMouseDragged) option:kCGEventTapOptionDefault placement:kCGHeadInsertEventTap callback:mouseMovedCallback runLoop:GlobalEventTapThread.runLoop];
     }
 }
 
@@ -139,7 +139,7 @@ static int64_t _lastEventDelta;
             usleep(USEC_PER_SEC * 0.01);
             
             /// Hid cursor
-            [TransformationUtility hideMousePointer:YES];
+            [ModificationUtility hideMousePointer:YES];
         }
     });
 }
@@ -251,7 +251,7 @@ CGEventRef _Nullable mouseMovedCallback(CGEventTapProxy proxy, CGEventType type,
         if (_keepPointerMoving) {
         
             /// Show mouse pointer again
-            [TransformationUtility hideMousePointer:NO];
+            [ModificationUtility hideMousePointer:NO];
             
             /// Undraw puppet cursor
             [PointerFreeze drawPuppetCursor:NO fresh:NO];

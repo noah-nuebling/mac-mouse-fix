@@ -11,7 +11,7 @@
 #import <Cocoa/Cocoa.h>
 #import "Scroll.h"
 #import "ScrollUtility.h"
-#import "TransformationUtility.h"
+#import "ModificationUtility.h"
 
 @implementation ScrollAnalyzer
 

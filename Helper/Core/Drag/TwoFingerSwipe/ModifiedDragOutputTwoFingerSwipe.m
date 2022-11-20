@@ -9,7 +9,7 @@
 
 #import "ModifiedDragOutputTwoFingerSwipe.h"
 #import "Mac_Mouse_Fix_Helper-Swift.h"
-#import "TransformationUtility.h"
+#import "ModificationUtility.h"
 #import "GestureScrollSimulator.h"
 #import "CGSConnection.h"
 #import "PointerFreeze.h"
@@ -45,7 +45,7 @@ static dispatch_group_t _momentumScrollWaitGroup;
     _momentumScrollWaitGroup = dispatch_group_create();
     
     /// Make cursor settable
-    [TransformationUtility makeCursorSettable];
+    [ModificationUtility makeCursorSettable];
 }
 
 #pragma mark - Interface

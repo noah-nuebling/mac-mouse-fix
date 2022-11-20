@@ -20,7 +20,7 @@ import Foundation
     ///
     /// This class provides methods for obtaining combined remaps based on a remaps dict and some active modifiers.
     ///     These *combined* remaps are also sometimes called *effective remaps* or *remaps for current modifiers*
-    ///     If this doesn't make sense, see an example of the remaps dict structure in TransformationManager.m
+    ///     If this doesn't make sense, see an example of the remaps dict structure in Remap.m
     
     
     @objc class func effectiveRemapsMethod() -> MFEffectiveRemapsMethod {

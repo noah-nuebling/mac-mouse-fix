@@ -30,7 +30,7 @@ import CocoaLumberjackSwift
         
         let modifyingDevice: Device = HelperState.activeDevice!;
         let activeModifiers = ModifierManager.getActiveModifiers(for: modifyingDevice, event: event)
-        let baseRemaps = TransformationManager.remaps();
+        let baseRemaps = Remap.remaps();
         
         /// Debug
 //        DDLogDebug("activeFlags in ScrollModifers: \(SharedUtility.binaryRepresentation((activeModifiers[kMFModificationPreconditionKeyKeyboard] as? NSNumber)?.uint32Value ?? 0))") /// This is unbelievably slow for some reason
@@ -93,7 +93,7 @@ import CocoaLumberjackSwift
             if result.effectMod == kMFScrollEffectModificationAddModeFeedback {
                 var payload = modifiedScrollDict
                 payload.removeValue(forKey: kMFModifiedScrollDictKeyEffectModificationType)
-                TransformationManager.concludeAddMode(withPayload: payload)
+                Remap.concludeAddMode(withPayload: payload)
             }
         }
         

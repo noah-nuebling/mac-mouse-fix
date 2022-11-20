@@ -8,7 +8,7 @@
 //
 
 #import "ModifiedDragOutputAddMode.h"
-#import "TransformationManager.h"
+#import "Remap.h"
 
 @implementation ModifiedDragOutputAddMode
 
@@ -23,7 +23,7 @@ static NSDictionary *_addModePayload; /// Payload to send to the mainApp. Only u
     
     _drag = dragStateRef;
     
-    /// Prepare payload to send to mainApp during AddMode. See TransformationManager -> AddMode for context
+    /// Prepare payload to send to mainApp during AddMode. See Remap -> AddMode for context
     NSMutableDictionary *payload = _drag->effectDict.mutableCopy; /// Probably already mutable. See RemapSwizzler.
     [payload removeObjectForKey:kMFModifiedDragDictKeyType];
     _addModePayload = payload;
@@ -32,8 +32,8 @@ static NSDictionary *_addModePayload; /// Payload to send to the mainApp. Only u
 + (void)handleBecameInUse {
     
     if (_addModePayload != nil) {
-//        [TransformationManager sendAddModeFeedbackWithPayload:_addModePayload]; /// Remove this and make sendAddModeFeedbackWithPayload private.
-        [TransformationManager concludeAddModeWithPayload:_addModePayload];
+//        [Remap sendAddModeFeedbackWithPayload:_addModePayload]; /// Remove this and make sendAddModeFeedbackWithPayload private.
+        [Remap concludeAddModeWithPayload:_addModePayload];
     } else {
         @throw [NSException exceptionWithName:@"InvalidAddModeFeedbackPayload" reason:@"_drag.addModePayload is nil. Something went wrong!" userInfo:nil]; /// Throw exception to cause crash
     }
@@ -46,7 +46,7 @@ static NSDictionary *_addModePayload; /// Payload to send to the mainApp. Only u
 
 + (void)handleDeactivationWhileInUseWithCancel:(BOOL)cancelation {
     /// Why were we doing this?
-//    [TransformationManager disableAddModeWithPayload:_addModePayload];
+//    [Remap disableAddModeWithPayload:_addModePayload];
 }
 
 + (void)suspend {}

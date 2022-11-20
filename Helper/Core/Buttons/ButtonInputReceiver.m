@@ -13,7 +13,7 @@
 #import "ButtonTriggerGenerator.h"
 #import "Queue.h"
 #import "SharedUtility.h"
-#import "TransformationUtility.h"
+#import "ModificationUtility.h"
 #import "HelperUtility.h"
 #import "GestureScrollSimulator.h"
 #import "Mac_Mouse_Fix_Helper-Swift.h"

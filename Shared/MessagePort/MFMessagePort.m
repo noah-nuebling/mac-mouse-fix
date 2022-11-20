@@ -113,13 +113,13 @@ static CFDataRef _Nullable didReceiveMessage(CFMessagePortRef port, SInt32 messa
         BOOL isTrusted = [AccessibilityCheck checkAccessibilityAndUpdateSystemSettings];
         response = @(isTrusted);
     } else if ([message isEqualToString:@"enableAddMode"]) {
-        [TransformationManager enableAddMode];
+        [Remap enableAddMode];
     } else if ([message isEqualToString:@"disableAddMode"]) {
-        [TransformationManager disableAddMode];
+        [Remap disableAddMode];
     } else if ([message isEqualToString:@"enableKeyCaptureMode"]) {
-        [TransformationManager enableKeyCaptureMode];
+        [Remap enableKeyCaptureMode];
     } else if ([message isEqualToString:@"disableKeyCaptureMode"]) {
-        [TransformationManager disableKeyCaptureMode];
+        [Remap disableKeyCaptureMode];
     } else if ([message isEqualToString:@"getActiveDeviceInfo"]) {
         Device *dev = HelperState.activeDevice;
         if (dev != NULL) {

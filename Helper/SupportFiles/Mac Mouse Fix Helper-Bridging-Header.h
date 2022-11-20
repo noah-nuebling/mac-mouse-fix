@@ -19,7 +19,7 @@
 #import "RemapSwizzler.h"
 #import "ScrollModifiers.h"
 #import "ModifierManager.h"
-#import "TransformationManager.h"
+#import "Remap.h"
 #import "ModifiedDrag.h"
 #import "Scroll.h"
 #import "PointerSpeed.h"

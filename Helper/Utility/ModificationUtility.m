@@ -1,13 +1,13 @@
 //
 // --------------------------------------------------------------------------
-// RemapUtility.m
+// ModificationUtility.m
 // Created for Mac Mouse Fix (https://github.com/noah-nuebling/mac-mouse-fix)
 // Created by Noah Nuebling in 2020
 // Licensed under the MMF License (https://github.com/noah-nuebling/mac-mouse-fix/blob/master/LICENSE)
 // --------------------------------------------------------------------------
 //
 
-#import "TransformationUtility.h"
+#import "ModificationUtility.h"
 #import <Cocoa/Cocoa.h>
 #import <Carbon/Carbon.h>
 #import <ApplicationServices/ApplicationServices.h>
@@ -18,7 +18,12 @@
 #include <sys/types.h>
 #include <sys/sysctl.h>
 
-@implementation TransformationUtility
+@implementation ModificationUtility
+
+
+/// NOTE:
+/// At the time of writing this class is a bit of a hodgepodge of utility methods for both scroll modifications and drag modifications. Should probably split this up.
+
 
 BOOL directionChanged(MFDirection direction1, MFDirection direction2) {
     

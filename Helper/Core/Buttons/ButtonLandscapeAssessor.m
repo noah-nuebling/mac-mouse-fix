@@ -8,10 +8,9 @@
 //
 
 #import "ButtonLandscapeAssessor.h"
-#import "TransformationManager.h"
+#import "Remap.h"
 #import "SharedUtility.h"
 #import "ModifierManager.h"
-//#import "Utility_Transformation.h"
 #import "Mac_Mouse_Fix_Helper-Swift.h"
 
 @implementation ButtonLandscapeAssessor
@@ -130,7 +129,7 @@ static NSInteger maxLevelForButtonInModificationPreconditions(NSNumber *button, 
 
 //+ (BOOL)buttonCouldStillBeUsedThisClickCycle:(Device *)device button:(NSNumber *)button level:(NSNumber *)level {
 //
-//    NSDictionary *remaps = TransformationManager.remaps;
+//    NSDictionary *remaps = Remap.remaps;
 //    NSDictionary *modifiersActingOnThisButton = [ModifierManager getActiveModifiersForDevice:&device filterButton:button event:nil];
 //    NSDictionary *remapsActingOnThisButton = RemapsOverrider.swizzler(remaps, modifiersActingOnThisButton);
 //

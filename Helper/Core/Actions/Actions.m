@@ -11,10 +11,10 @@
 #import "CGSHotKeys.h"
 #import "TouchSimulator.h"
 #import "SharedUtility.h"
-#import "TransformationUtility.h"
+#import "ModificationUtility.h"
 #import "HelperUtility.h"
 #import "ModifierManager.h"
-#import "TransformationManager.h"
+#import "Remap.h"
 #import "Constants.h"
 
 @import Carbon;
@@ -73,7 +73,7 @@
             
             NSNumber *button = actionDict[kMFActionDictKeyMouseButtonClicksVariantButtonNumber];
             NSNumber *nOfClicks = actionDict[kMFActionDictKeyMouseButtonClicksVariantNumberOfClicks];
-            [TransformationUtility postMouseButtonClicks:button.intValue nOfClicks:nOfClicks.intValue];
+            [ModificationUtility postMouseButtonClicks:button.intValue nOfClicks:nOfClicks.intValue];
         
         } else if ([actionType isEqualToString:kMFActionDictTypeAddModeFeedback]) {
             NSMutableDictionary *payload = ((NSMutableDictionary *)actionDict.mutableCopy);
@@ -82,7 +82,7 @@
             /// It is almost a valid remaps table entry.
             /// All that the main app has to do with the payload in order to make it a valid entry of the remap table's
             ///  dataModel is to add the kMFRemapsKeyEffect key and corresponding values
-            [TransformationManager concludeAddModeWithPayload:payload];
+            [Remap concludeAddModeWithPayload:payload];
             
         }
     }
@@ -107,13 +107,13 @@ static void postSystemDefinedEvent(MFSystemDefinedEventType type, NSEventModifie
     
     /// Post key down
     
-    NSTimeInterval ts = [TransformationUtility nsTimeStamp];
+    NSTimeInterval ts = [ModificationUtility nsTimeStamp];
     NSEvent *e = [NSEvent otherEventWithType:14 location:loc modifierFlags:modifierFlags timestamp:ts windowNumber:-1 context:nil subtype:8 data1:downData data2:-1];
     
     CGEventPost(tapLoc, e.CGEvent);
     
     /// Post key up
-    ts = [TransformationUtility nsTimeStamp];
+    ts = [ModificationUtility nsTimeStamp];
     e = [NSEvent otherEventWithType:14 location:loc modifierFlags:modifierFlags timestamp:ts windowNumber:-1 context:nil subtype:8 data1:upData data2:-1];
     
     CGEventPost(tapLoc, e.CGEvent);

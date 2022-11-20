@@ -11,7 +11,7 @@
 #import "Constants.h"
 #import "ScrollConfigObjC.h"
 #import "Mac_Mouse_Fix_Helper-Swift.h"
-#import "TransformationUtility.h"
+#import "ModificationUtility.h"
 
 NS_ASSUME_NONNULL_BEGIN
 

@@ -461,7 +461,7 @@ import QuartzCore
             ///     This is so that the last timeDelta is the same size as all the others
             ///     Doing this in start() would be easier but leads to deadlocks
             
-            self.animationDuration = TransformationUtility.roundUp(animationDurationRaw, toMultiple: displayLink.nominalTimeBetweenFrames())
+            self.animationDuration = ModificationUtility.roundUp(animationDurationRaw, toMultiple: displayLink.nominalTimeBetweenFrames())
             assert(self.animationDuration >= 0)
         }
         

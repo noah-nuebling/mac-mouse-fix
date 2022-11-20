@@ -10,7 +10,7 @@
 #import <AppKit/AppKit.h>
 #import "HelperUtility.h"
 #import "Constants.h"
-#import "TransformationUtility.h"
+#import "ModificationUtility.h"
 #import "WannabePrefixHeader.h"
 #import "Locator.h"
 #import "SharedUtility.h"

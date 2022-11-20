@@ -12,7 +12,7 @@
 #import "GestureScrollSimulator.h"
 #import "DeviceManager.h"
 #import "ButtonInputReceiver.h"
-#import "TransformationUtility.h"
+#import "ModificationUtility.h"
 #import "CFRuntime.h"
 #import "SharedUtility.h"
 #import <Cocoa/Cocoa.h>

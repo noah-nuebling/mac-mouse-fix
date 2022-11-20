@@ -8,7 +8,7 @@
 ////
 //
 //#import "ButtonTriggerHandler.h"
-//#import "TransformationManager.h"
+//#import "Remap.h"
 //#import "ModifierManager.h"
 //#import "Constants.h"
 //#import "Actions.h"
@@ -16,7 +16,6 @@
 //#import "ButtonTriggerGenerator.h"
 //#import "ButtonTriggerHandler.h"
 //#import "ButtonLandscapeAssessor.h"
-////#import "Utility_Transformation.h"
 //#import "Mac_Mouse_Fix_Helper-Swift.h"
 //
 //@implementation ButtonTriggerHandler
@@ -28,7 +27,7 @@
 //    DDLogDebug(@"HANDLING BUTTON TRIGGER - button: %@, triggerType: %@, level: %@, devID: %@", button, @(triggerType), level, devID);
 //    
 //    /// Get remaps and apply modifier overrides
-//    NSDictionary *remaps = TransformationManager.remaps;
+//    NSDictionary *remaps = Remap.remaps;
 //    NSDictionary *modifiersActingOnThisButton = [ModifierManager getActiveModifiersForDevice:&devID filterButton:button event:nil];
 //    /// ^ The modifiers which act on the incoming button (the button can't modify itself so we filter it out)
 //    
@@ -122,7 +121,7 @@
 //    if (effectiveActionArray) { /// click/hold action does exist for this button + level
 //        
 //        if ([effectiveActionArray[0][kMFActionDictKeyType] isEqualToString: kMFActionDictTypeAddModeFeedback]) {
-//            /// Add modificationPrecondition info for addMode. See TransformationManager -> AddMode for context
+//            /// Add modificationPrecondition info for addMode. See Remap -> AddMode for context
 //            
 //            effectiveActionArray[0][kMFRemapsKeyModificationPrecondition] = [ModifierManager getActiveModifiersForDevice:&devID filterButton:button event:nil despiteAddMode:YES];
 //            /// ^ These are the actual modifiersActingOnThisButton. But for addMode we needed to set the argument `modifiersActingOnThisButton` to `@{}`, so we need to get the real value here.

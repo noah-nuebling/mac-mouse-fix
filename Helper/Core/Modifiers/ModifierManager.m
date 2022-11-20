@@ -11,11 +11,11 @@
 
 #import "ModifierManager.h"
 #import "ButtonTriggerGenerator.h"
-#import "TransformationManager.h"
+#import "Remap.h"
 #import "ModifiedDrag.h"
 #import "DeviceManager.h"
 #import "SharedUtility.h"
-#import "TransformationUtility.h"
+#import "ModificationUtility.h"
 #import <os/signpost.h>
 #import "Mac_Mouse_Fix_Helper-Swift.h"
 
@@ -50,18 +50,18 @@
         CFRunLoopSourceRef runLoopSource = CFMachPortCreateRunLoopSource(kCFAllocatorDefault, _keyboardModifierEventTap, 0);
         CFRunLoopAddSource(CFRunLoopGetCurrent(), runLoopSource, kCFRunLoopDefaultMode);
         CFRelease(runLoopSource);
-        // Enable/Disable eventTap based on TransformationManager.remaps
+        // Enable/Disable eventTap based on Remap.remaps
         CGEventTapEnable(_keyboardModifierEventTap, false); // Disable eventTap first (Might prevent `_keyboardModifierEventTap` from always being called twice - Nope doesn't make a difference)
-        toggleModifierEventTapBasedOnRemaps(TransformationManager.remaps);
+        toggleModifierEventTapBasedOnRemaps(Remap.remaps);
         
-        /// Re-toggle keyboard modifier callbacks whenever TransformationManager.remaps changes
+        /// Re-toggle keyboard modifier callbacks whenever Remap.remaps changes
         /// TODO:! Test if this works
         [NSNotificationCenter.defaultCenter addObserverForName:kMFNotifCenterNotificationNameRemapsChanged
                                                         object:nil
                                                          queue:nil
                                                     usingBlock:^(NSNotification * _Nonnull note) {
             DDLogDebug(@"Received notification that remaps have changed");
-            toggleModifierEventTapBasedOnRemaps(TransformationManager.remaps);
+            toggleModifierEventTapBasedOnRemaps(Remap.remaps);
         }];
     }
 }
@@ -97,7 +97,7 @@
 static CFMachPortRef _keyboardModifierEventTap;
 static void toggleModifierEventTapBasedOnRemaps(NSDictionary *remaps) {
     
-    if (TransformationManager.addModeIsEnabled) {
+    if (Remap.addModeIsEnabled) {
         CGEventTapEnable(_keyboardModifierEventTap, true);
         return;
     }
@@ -168,7 +168,7 @@ static void reactToModifierChange(NSDictionary *_Nonnull activeModifiers, Device
 //    DDLogDebug(@"...CALLED BY %@", [SharedUtility getInfoOnCaller]);
     
     /// Get activeModifications
-    NSDictionary *activeModifications = [RemapSwizzler swizzleRemaps:TransformationManager.remaps activeModifiers:activeModifiers];
+    NSDictionary *activeModifications = [RemapSwizzler swizzleRemaps:Remap.remaps activeModifiers:activeModifiers];
     
     /// Notify ScrollModifiers of modifierChange
     ///     It needs that to commit to an app in the app switcher when the user releases a button
@@ -202,7 +202,7 @@ static void reactToModifierChange(NSDictionary *_Nonnull activeModifiers, Device
             if (modifiedDragEffectDict) {
                 
                 /// If addMode is active, add activeModifiers to modifiedDragDict
-                ///     See TransformationManager.m -> AddMode for context.
+                ///     See Remap.m -> AddMode for context.
 //                if ([modifiedDragEffect[kMFModifiedDragDictKeyType] isEqualToString:kMFModifiedDragTypeAddModeFeedback]) {
 //                    modifiedDragEffect = modifiedDragEffect.mutableCopy; /// Make actually mutable
 //                    modifiedDragEffect[kMFRemapsKeyModificationPrecondition] = activeModifiers;

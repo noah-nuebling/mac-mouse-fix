@@ -14,7 +14,6 @@
 #import "Utility_Helper.h"
 #import "SharedUtility.h"
 #import "VectorSubPixelator.h"
-#import "Utility_Transformation.h"
 
 /**
 
@@ -198,12 +197,6 @@ static VectorSubPixelator *_scrollPixelator;
     
     CGEventSetDoubleValueField(e22, 99, phase);
     CGEventSetDoubleValueField(e22, 123, momentumPhase);
-    
-    // Testing
-    
-//    CGPoint flippedNSLoc = [HelperUtility getCurrentPointerLocation_flipped];
-//    CGPoint CGLoc = Utility_Transformation.CG
-//    DDLogInfo(@"\nFLIPPED NS: %f, %f \nCG: %f, %f", flippedNSLoc.x, flippedNSLoc.y, CGLoc.x, CGLoc.y);
     
     if (momentumPhase == 0) {
         

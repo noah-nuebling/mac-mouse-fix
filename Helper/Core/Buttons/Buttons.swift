@@ -42,7 +42,7 @@ import CocoaLumberjackSwift
         if !isInitialized { coolInitialize() }
         
         /// Get remaps
-        let remaps = TransformationManager.remaps()
+        let remaps = Remap.remaps()
         
         /// Update stuff when clickCycle starts
         
@@ -53,7 +53,7 @@ import CocoaLumberjackSwift
             HelperState.updateActiveDevice(event: event)
             
             /// Update modifications
-            let remaps = TransformationManager.remaps() /// This is apparently incredibly slow because Swift needs to convert the dict.
+            let remaps = Remap.remaps() /// This is apparently incredibly slow because Swift needs to convert the dict.
             self.modifiers = ModifierManager.getActiveModifiers(for: HelperState.activeDevice!, event: event) /// Why aren't we just using `device` here?
             self.modifications = RemapSwizzler.swizzleRemaps(remaps, activeModifiers: modifiers)
             
@@ -135,7 +135,7 @@ import CocoaLumberjackSwift
                 return /// Return if there's no action array to send
             }
             
-            /// Add modifiers to actionArray for addMode. See TransformationManager -> AddMode for context
+            /// Add modifiers to actionArray for addMode. See Remap -> addMode for context
             ///     Edit: We don't need this anymore now that we're using the addModeSwizzler
 //            if actionArray[0][kMFActionDictKeyType] as! String == kMFActionDictTypeAddModeFeedback {
 //                actionArray[0][kMFRemapsKeyModificationPrecondition] = self.modifiers

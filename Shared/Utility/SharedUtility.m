@@ -14,8 +14,6 @@
 #import "SharedUtility.h"
 @import AppKit.NSScreen;
 #import <objc/runtime.h>
-// #import "ConfigFileInterface_App.h"
-// #import "ConfigFileInterface_Helper.h"
 
 @implementation SharedUtility
 

@@ -1,6 +1,6 @@
 //
 // --------------------------------------------------------------------------
-// RemapUtility.h
+// ModificationUtility.h
 // Created for Mac Mouse Fix (https://github.com/noah-nuebling/mac-mouse-fix)
 // Created by Noah Nuebling in 2020
 // Licensed under the MMF License (https://github.com/noah-nuebling/mac-mouse-fix/blob/master/LICENSE)
@@ -13,7 +13,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface TransformationUtility : NSObject
+@interface ModificationUtility : NSObject
 
 typedef enum {
     kMFDirectionUp,
@@ -47,6 +47,7 @@ BOOL directionChanged(MFDirection direction1, MFDirection direction2);
 + (void)hideMousePointer:(BOOL)B;
 + (void)postMouseButtonClicks:(MFMouseButtonNumber)button nOfClicks:(int64_t)nOfClicks;
 + (void)postMouseButton:(MFMouseButtonNumber)button down:(BOOL)down;
+
 @end
 
 NS_ASSUME_NONNULL_END

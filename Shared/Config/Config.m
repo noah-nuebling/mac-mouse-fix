@@ -1,6 +1,6 @@
 //
 // --------------------------------------------------------------------------
-// ConfigFileInterface_Helper.m
+// Config.m
 // Created for Mac Mouse Fix (https://github.com/noah-nuebling/mac-mouse-fix)
 // Created by Noah Nuebling in 2019
 // Licensed under the MMF License (https://github.com/noah-nuebling/mac-mouse-fix/blob/master/LICENSE)
@@ -17,9 +17,9 @@
 #import "ButtonInputReceiver.h"
 #import "ScrollModifiers.h"
 #import "SharedUtility.h"
-#import "TransformationManager.h"
+#import "Remap.h"
 #import "Constants.h"
-#import "TransformationUtility.h"
+#import "ModificationUtility.h"
 #import "HelperUtility.h"
 #import "MFMessagePort.h"
 #import "Locator.h"
@@ -140,7 +140,7 @@ void commitConfig() {
     [self.shared loadOverridesForApp:@""]; /// Force update of internal state, (even the active app hastn't changed)
     
     /// Notify other modules
-    [TransformationManager reload];
+    [Remap reload];
     [ScrollConfig reload];
     [Scroll decide];
     [PointerConfig reload];
@@ -324,7 +324,7 @@ void Handle_FSEventStreamCallback(ConstFSEventStreamRef streamRef, void *clientC
 - (void)loadConfigFromFile {
     
     /// Load data from plist file at `_configURL` into `_config` class variable
-    /// This only really needs to be called when `ConfigFileInterface_App` is loaded, but I use it in other places as well, to make the program behave better, when I manually edit the config file.
+    /// This only really needs to be called when `Config` is loaded, but I use it in other places as well, to make the program behave better, when I manually edit the config file.
     
 #if IS_MAIN_APP
     [self repairConfigWithProblem:kMFConfigProblemNone info:nil];

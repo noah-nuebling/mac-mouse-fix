@@ -225,21 +225,23 @@ static void attachIOHIDDevice(IOHIDDeviceRef device) {
 //    [PointerSpeed setForDevice:newDevice.IOHIDDevice];
     
     ///
-    if ((NO)) { /// Polling rate measurer is unused so far and has a strange bug where it sometimes receives an event long after it's disabled and then crashes.
-        
-        /// Measure Polling Rate of new device
-        static NSMutableArray *measurerMap = nil;
-        if (measurerMap == nil) {
-            measurerMap = [NSMutableArray array];
-        }
-        PollingRateMeasurer *measurer = [[PollingRateMeasurer alloc] init];
-        [measurerMap addObject:measurer];
-        [measurer measureOnDevice:newDevice numberOfSamples:400 completionCallback:^(double period, NSInteger rate) {
-            DDLogDebug(@"Completed polling rate measurement! Period: %f ms, Rate: %ld Hz", period, rate);
-        } progressCallback:^(double completion, double period, NSInteger rate) {
-            DDLogDebug(@"Polling rate measurement %d\%% completed. Current estimate: %ld", (int)(completion*100), (long)rate);
-        }];
+    
+#if 0 /// Polling rate measurer is unused so far and has a strange bug where it sometimes receives an event long after it's disabled and then crashes.
+    
+    /// Measure Polling Rate of new device
+    static NSMutableArray *measurerMap = nil;
+    if (measurerMap == nil) {
+        measurerMap = [NSMutableArray array];
     }
+    PollingRateMeasurer *measurer = [[PollingRateMeasurer alloc] init];
+    [measurerMap addObject:measurer];
+    [measurer measureOnDevice:newDevice numberOfSamples:400 completionCallback:^(double period, NSInteger rate) {
+        DDLogDebug(@"Completed polling rate measurement! Period: %f ms, Rate: %ld Hz", period, rate);
+    } progressCallback:^(double completion, double period, NSInteger rate) {
+        DDLogDebug(@"Polling rate measurement %d\%% completed. Current estimate: %ld", (int)(completion*100), (long)rate);
+    }];
+    
+#endif
     
     /// Log
     DDLogInfo(@"New device added to attached devices:\n%@", newDevice);

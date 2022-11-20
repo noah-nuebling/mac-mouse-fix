@@ -47,8 +47,8 @@ import Foundation
         isLockedDown = true
         
         /// Notify input processing modules
-        ///     Note: We don't need to lock down `ModifiedDrag.m`, because it only does anything when a modification becomes active. And we turn off all modifications via TransformationManager.m.
-        TransformationManager.reload()
+        ///     Note: We don't need to lock down `ModifiedDrag.m`, because it only does anything when a modification becomes active. And we turn off all modifications via Remap.m.
+        Remap.reload()
         ScrollConfig.reload() /// Not sure if necessary
     }
 }

@@ -17,9 +17,9 @@
 #import "SubPixelator.h"
 #import <Cocoa/Cocoa.h>
 
-#import "TransformationUtility.h"
+#import "ModificationUtility.h"
 #import "MFMessagePort.h"
-#import "TransformationManager.h"
+#import "Remap.h"
 #import "SharedUtility.h"
 
 #import "HelperUtility.h"
@@ -102,7 +102,7 @@ static CGEventTapProxy _tapProxy;
         CGEventMask mask = CGEventMaskBit(kCGEventOtherMouseDragged) | CGEventMaskBit(kCGEventMouseMoved); /// kCGEventMouseMoved is only necessary for keyboard-only drag-modification (which we've disable because it had other problems), and maybe for AddMode to work.
         mask = mask | CGEventMaskBit(kCGEventLeftMouseDragged) | CGEventMaskBit(kCGEventRightMouseDragged); /// This is necessary for modified drag to work during a left/right click and drag. Concretely I added this to make drag and drop work. For that we only need the kCGEventLeftMouseDragged. Adding kCGEventRightMouseDragged is probably completely unnecessary. Not sure if there are other concrete applications outside of drag and drop.
         
-        CFMachPortRef eventTap = [TransformationUtility createEventTapWithLocation:location mask:mask option:option placement:placement callback:eventTapCallBack runLoop:GlobalEventTapThread.runLoop];
+        CFMachPortRef eventTap = [ModificationUtility createEventTapWithLocation:location mask:mask option:option placement:placement callback:eventTapCallBack runLoop:GlobalEventTapThread.runLoop];
         
         _drag.eventTap = eventTap;
     }
