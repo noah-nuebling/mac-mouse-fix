@@ -1,15 +1,28 @@
 //
 // --------------------------------------------------------------------------
-// RemapSwift.swift
+// SwitchMaster.swift
 // Created for Mac Mouse Fix (https://github.com/noah-nuebling/mac-mouse-fix)
 // Created by Noah Nuebling in 2022
 // Licensed under MIT
 // --------------------------------------------------------------------------
 //
 
+/// This class dynamically turns on or off interception of certain events from the device based on the current state.
+///
+/// The relevant state consists of:
+/// - attachedDevices
+/// - modifiers
+/// - modifications (at the time of writing: remaps & scrollConfig)
+///
+/// The intercepted eventTypes are
+/// - Keyboard modifier changes
+/// - Scroll wheel input
+/// - Mouse button clicks
+/// - Mouse movement
+
 import Cocoa
 
-class RemapSwift: NSObject {
+class SwitchMaster: NSObject {
     
     @objc static func load_Manual() {
         

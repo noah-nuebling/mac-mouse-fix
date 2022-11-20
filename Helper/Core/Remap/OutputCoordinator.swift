@@ -7,6 +7,8 @@
 // --------------------------------------------------------------------------
 // 
 
+/// NOTE: This is unused. See below for more info
+
 /// Temporarily disable other modules that drive touch events other than the caller.
 ///     Guarantee: Other modules completely stop sending touch events *before* this function returns
 ///     This means the suspend() functions that will be called on the other modules must have this property as well.
