@@ -30,6 +30,7 @@
 #if IS_HELPER
 #import "Mac_Mouse_Fix_Helper-Swift.h"
 #import "AccessibilityCheck.h"
+#import "KeyCaptureMode.h"
 #endif
 
 @implementation MFMessagePort
@@ -117,9 +118,9 @@ static CFDataRef _Nullable didReceiveMessage(CFMessagePortRef port, SInt32 messa
     } else if ([message isEqualToString:@"disableAddMode"]) {
         [Remap disableAddMode];
     } else if ([message isEqualToString:@"enableKeyCaptureMode"]) {
-        [Remap enableKeyCaptureMode];
+        [KeyCaptureMode enable];
     } else if ([message isEqualToString:@"disableKeyCaptureMode"]) {
-        [Remap disableKeyCaptureMode];
+        [KeyCaptureMode disable];
     } else if ([message isEqualToString:@"getActiveDeviceInfo"]) {
         Device *dev = HelperState.activeDevice;
         if (dev != NULL) {
