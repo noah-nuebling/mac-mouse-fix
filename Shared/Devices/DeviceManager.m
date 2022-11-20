@@ -158,15 +158,11 @@ static void handleDeviceMatching(void *context, IOReturn result, void *sender, I
         /// Attach
         attachIOHIDDevice(device);
         
-        ///  Notify other objects
-        [Scroll decide];
-        [ButtonInputReceiver decide];
-        
     } else {
         DDLogInfo(@"New matching IOHIDDevice device didn't pass filtering");
     }
     
-    DDLogDebug(@"%@", deviceInfo());
+    DDLogDebug(@"%@", debugInfo());
     
     return;
     
@@ -174,18 +170,32 @@ static void handleDeviceMatching(void *context, IOReturn result, void *sender, I
 
 static void handleDeviceRemoval(void *context, IOReturn result, void *sender, IOHIDDeviceRef device) {
     
-    Device *removedDevice = [Device deviceWithIOHIDDevice:device];
-    [_attachedDevices removeObject:removedDevice]; // This might do nothing if this device wasn't contained in _attachedDevice (that's if it didn't pass filtering in `handleDeviceMatching()`)
     
-    /// Notifiy other objects
-    ///     If there aren't any relevant devices attached, then we might want to turn off some parts of the program.
-    [Scroll decide];
-    [ButtonInputReceiver decide];
     
-    DDLogInfo(@"Matching IOHIDDevice was removed:\n%@", device);
+    Device *attachedDevice = [DeviceManager attachedDeviceWithIOHIDDevice:device];
     
-    DDLogDebug(@"%@", deviceInfo());
-    
+    if (attachedDevice == nil) {
+        
+        DDLogDebug(@"Device was removed but it wasn't attached to Mac Mouse Fix: %@", device);
+        
+    } else {
+        
+        /// Remove
+        [_attachedDevices removeObject:attachedDevice];
+        
+        /// Notify
+        [ReactiveDeviceManager.shared handleAttachedDevicesDidChange];
+        
+        /// Notifiy other objects
+        ///     If there aren't any relevant devices attached, then we might want to turn off some parts of the program.
+        [Scroll decide];
+        [ButtonInputReceiver decide];
+        
+        /// Log
+        
+        DDLogInfo(@"Attached device was removed:\n%@", attachedDevice);
+        DDLogDebug(@"Device Manager state after removal %@", debugInfo());
+    }
 }
 
 # pragma mark - Helper Functions
@@ -214,6 +224,13 @@ static void attachIOHIDDevice(IOHIDDeviceRef device) {
     
     /// Add to attachedDevices list
     [_attachedDevices addObject:newDevice];
+    
+    /// Notify
+    [ReactiveDeviceManager.shared handleAttachedDevicesDidChange];
+    
+    ///  Notify other objects
+    [Scroll decide];
+    [ButtonInputReceiver decide];
     
     ///
     /// Testing
@@ -248,8 +265,7 @@ static void attachIOHIDDevice(IOHIDDeviceRef device) {
     
 }
 
-static NSString *deviceInfo() {
-    /// Only used for debugging
+static NSString *debugInfo() {
     
     NSString *relevantDevices = stringf(@"Relevant devices:\n%@", _attachedDevices); /// Relevant devices are those that are matching the match dicts defined in setupDeviceMatchingAndRemovalCallbacks() and which also pass the filtering in handleDeviceMatching()
     CFSetRef devices = IOHIDManagerCopyDevices(_manager);
