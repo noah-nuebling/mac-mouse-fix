@@ -27,13 +27,18 @@
 
 /// Rename this to `Transformations`rename `_remaps` to `_transformations`.
 
-#pragma mark - Remaps dictionary and interface
+#pragma mark - Storage
 
 #define USE_TEST_REMAPS NO
 static NSDictionary *_remaps;
 
++ (NSDictionary *)remaps {
+    return _remaps;
+}
+
 + (void)setRemaps:(NSDictionary *)remapsDict {
     
+    /// This method is private.
     /// Always set remaps through this, so that the kMFNotifCenterNotificationNameRemapsChanged notification is posted
     /// The notification is used by ModifierManager to update itself, whenever `_remaps` updates.
     ///  (Idk why we aren't just calling an update function instead of using a notification)
@@ -70,7 +75,8 @@ static NSDictionary *_remaps;
     ///
     
     if (USE_TEST_REMAPS) {
-        [self setRemaps:self.testRemaps]; return;
+        [self setRemaps:self.testRemaps];
+        return;
     }
     
     ///
@@ -184,9 +190,6 @@ static NSDictionary *_remaps;
     }
     
     [self setRemaps:remapsDict];
-}
-+ (NSDictionary *)remaps {
-    return _remaps;
 }
 
 #pragma mark - AddMode

@@ -16,6 +16,7 @@
 		4F09BF58288355170080A5F8 /* PollingRateMeasurer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F09BF57288355170080A5F8 /* PollingRateMeasurer.swift */; };
 		4F12952028D2D5E1009A49AB /* NSTextField+Extentions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F12951F28D2D5E1009A49AB /* NSTextField+Extentions.swift */; };
 		4F12952128D2D738009A49AB /* NSTextField+Extentions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F12951F28D2D5E1009A49AB /* NSTextField+Extentions.swift */; };
+		4F17D2E1292A635200EB07CA /* TransformationManagerSwift.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F17D2E0292A635200EB07CA /* TransformationManagerSwift.swift */; };
 		4F1AFE972670EBA900ECA424 /* DragCurve.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F1AFE962670EBA900ECA424 /* DragCurve.swift */; };
 		4F1B83062606E68300AEAF37 /* ButtonLandscapeAssessor.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F1B83052606E68300AEAF37 /* ButtonLandscapeAssessor.m */; };
 		4F1B832D26081A5500AEAF37 /* CaptureNotificationCreator.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F1B832C26081A5500AEAF37 /* CaptureNotificationCreator.m */; };
@@ -383,6 +384,7 @@
 		4F09284C28B8EE7600BDC2FF /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/LicenseSheetController.strings; sourceTree = "<group>"; };
 		4F09BF57288355170080A5F8 /* PollingRateMeasurer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PollingRateMeasurer.swift; sourceTree = "<group>"; };
 		4F12951F28D2D5E1009A49AB /* NSTextField+Extentions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSTextField+Extentions.swift"; sourceTree = "<group>"; };
+		4F17D2E0292A635200EB07CA /* TransformationManagerSwift.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransformationManagerSwift.swift; sourceTree = "<group>"; };
 		4F18A85727BF6E0200A5703B /* IOHIDEvent-Reconstructed.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "IOHIDEvent-Reconstructed.h"; sourceTree = "<group>"; };
 		4F19F65E2906BB98007DE4CD /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		4F1AFE962670EBA900ECA424 /* DragCurve.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DragCurve.swift; sourceTree = "<group>"; };
@@ -1873,6 +1875,7 @@
 			children = (
 				4FF6663E25F2C93A00689B77 /* TransformationManager.h */,
 				4FF6663D25F2C93A00689B77 /* TransformationManager.m */,
+				4F17D2E0292A635200EB07CA /* TransformationManagerSwift.swift */,
 				4F5F3EEF2756DD1200C350C0 /* RemapSwizzler.h */,
 				4F5F3EF02756EC0400C350C0 /* RemapSwizzler.m */,
 				4F02C71C2899448900ED0AA8 /* OutputCoordinator.swift */,
@@ -2511,6 +2514,7 @@
 				4F8A8DBF287F7BBA00786BCC /* NaturalAccelerationCurve.swift in Sources */,
 				4FF6668F25F2C93A00689B77 /* SmoothScroll_old_.m in Sources */,
 				4F70ECB7267E810900325A76 /* IOUtility.m in Sources */,
+				4F17D2E1292A635200EB07CA /* TransformationManagerSwift.swift in Sources */,
 				4FD0A71127B295F600FFCD12 /* OtherConfig.swift in Sources */,
 				4F1D58192881D880002EB119 /* CombinedLinearCurve.swift in Sources */,
 				4FFA4E3E28B7AA250062A1FE /* NotificationLabel.m in Sources */,
