@@ -83,6 +83,19 @@
 
         font-size: 1.1rem;
     }
+
+    code {
+        padding: 0.2rem 0.5rem;
+        border-radius: 0.5rem;
+        background-color: rgba(0, 0, 75, 0.09);
+    }
+    div.sourceCode {
+        
+        padding: 1.6rem 1.5rem;
+        border-radius: 1.1rem; /*0.3rem;*/
+        background-color: rgba(0, 0, 75, 0.055);
+    }
+
     .annotation {
         font-size: 1.1rem;
     }
@@ -137,9 +150,14 @@
         a, a:visited { /* Need to include a:visited otherwise it will be set by pandoc */
             color: #3586FF;
         }
-
         hr {
             background-color: rgba(255, 255, 255, 0.15);
+        }
+        code {
+            background-color: rgba(255, 255, 255, 0.16);
+        }
+        div.sourceCode {
+            background-color: rgba(255, 255, 255, 0.08);
         }
 
         h1:after, h2:after {
