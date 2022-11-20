@@ -20,7 +20,7 @@ import ReactiveSwift
     
     // MARK: Main interface
     var attachedDevices: SignalProducer<[Device], Never> {
-        return attachedDevicesSignal.producer.prefix(value: DeviceManager.attachedDevices())
+        return attachedDevicesSignal.producer.prefix(value: DeviceManager.attachedDevices()).skipRepeats()
     }
     
     // MARK: Reactive core

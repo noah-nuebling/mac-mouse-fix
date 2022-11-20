@@ -42,6 +42,7 @@ import CocoaLumberjackSwift
         if !isInitialized { coolInitialize() }
         
         /// Get remaps
+        /// Accessing the dict like this is super slow. Casting to NSDictionary and using NSDictionary API to access it's values might fix that. See https://stackoverflow.com/questions/57555444/accessing-object-c-nsdictionary-values-in-swift-is-slow
         let remaps = Remap.remaps()
         
         /// Update stuff when clickCycle starts
@@ -53,7 +54,7 @@ import CocoaLumberjackSwift
             HelperState.updateActiveDevice(event: event)
             
             /// Update modifications
-            let remaps = Remap.remaps() /// This is apparently incredibly slow because Swift needs to convert the dict.
+            let remaps = Remap.remaps() /// Why aren't we reusing the remaps from above?
             self.modifiers = ModifierManager.getActiveModifiers(for: HelperState.activeDevice!, event: event) /// Why aren't we just using `device` here?
             self.modifications = RemapSwizzler.swizzleRemaps(remaps, activeModifiers: modifiers)
             

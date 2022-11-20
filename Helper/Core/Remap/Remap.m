@@ -44,12 +44,14 @@ static NSDictionary *_remaps;
     /// The notification is used by ModifierManager to update itself, whenever `_remaps` updates.
     ///  (Idk why we aren't just calling an update function instead of using a notification)
     
+    /// Set
     _remaps = remapsDict;
-//    _remaps = self.testRemaps; /// TESTING
-//    if (!_addModeIsEnabled) {
-//        [self enableAddMode]; /// TESTING
-//    }
+    
+    /// Notify
     [NSNotificationCenter.defaultCenter postNotificationName:kMFNotifCenterNotificationNameRemapsChanged object:self];
+    [ReactiveRemaps.shared handleRemapsDidChange];
+    
+    /// Log
     DDLogDebug(@"Set remaps to: %@", _remaps);
 }
 
@@ -265,10 +267,7 @@ BOOL _addModeIsEnabled = NO;
     
     /// Set `_remaps` to generated
     ///    Why weren't we using setRemaps here? Changed it to setRemaps now. Hopefully nothing breaks.
-    
-//    _remaps = @{
-//        @{}: triggerToEffectDict
-//    };
+
     [self setRemaps:@{
         @{}: triggerToEffectDict
     }];

@@ -27,6 +27,7 @@ class SwitchMaster: NSObject {
     @objc static func load_Manual() {
         
         let attachedDevices = ReactiveDeviceManager.shared.attachedDevices
+        let remaps = ReactiveRemaps.shared.remaps
         
         /// ---
         
