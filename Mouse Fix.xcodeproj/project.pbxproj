@@ -2911,7 +2911,7 @@
 				INFOPLIST_FILE_HELPER = Helper/SupportFiles/Info.plist;
 				INFOPLIST_FILE_MAINAPP = App/SupportFiles/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/../Frameworks";
-				MACOSX_DEPLOYMENT_TARGET = 10.13;
+				MACOSX_DEPLOYMENT_TARGET = 10.14.4;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = macosx;
@@ -2980,7 +2980,7 @@
 				INFOPLIST_FILE_HELPER = Helper/SupportFiles/Info.plist;
 				INFOPLIST_FILE_MAINAPP = App/SupportFiles/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/../Frameworks";
-				MACOSX_DEPLOYMENT_TARGET = 10.13;
+				MACOSX_DEPLOYMENT_TARGET = 10.14.4;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				ONLY_ACTIVE_ARCH = NO;
 				SDKROOT = macosx;
