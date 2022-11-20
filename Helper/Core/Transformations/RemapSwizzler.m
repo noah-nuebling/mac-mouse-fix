@@ -14,6 +14,12 @@
 
 #import "SharedUtility.h"
 
+@implementation RemapSwizzler
+
+/// MARK: - Notes
+
+/// TODO: Renamed this to TransformationSwizzler
+
 /// This class provides methods for obtaining combined remaps based on a remaps dict and some active modifiers.
 ///     These *combined* remaps are also sometimes called *effective remaps* or *remaps for current modifiers*, "activeModifications", "modificationsActingOnButton", etc.
 ///     If this doesn't make sense, see an example of the remaps dict structure in TransformationManager.m
@@ -39,8 +45,6 @@
 ///     During **addMode**, we need to change this map from modifiers -> triggers -> effects, such that any combination of trigger T and modifiers M that the user can input, is mapped to `addModeFeedback_T_M`. But this would mean c o m b i n a t o r i c e x p l o s i o n if we wanted to store that all in the remaps dict in TransformationManger. So we came up with this weird solution:
 ///         Basically the TransformationManager creates a map from `noModifiers -> anyTrigger -> addModeFeedback_T`, as a dictionary, which isn't that large because there aren't that many triggers, so we can list them all. Then we dynamically swizzle up that map in **RemapSwizzler** so it becomes the full `anyModifier -> anyTrigger -> addModeFeedback_T_M` map!
 ///         See `addModeSwizzler()` for the implementation of that.
-
-@implementation RemapSwizzler
 
 /// MARK: Interface
 

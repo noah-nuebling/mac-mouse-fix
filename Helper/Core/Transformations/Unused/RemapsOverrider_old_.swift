@@ -7,6 +7,8 @@
 // --------------------------------------------------------------------------
 //
 
+/// This is the precursor to RemapSwizzler
+
 /// Tried to do this in Swift, but it's way easier to just do in objc so we don't have to work around the Swift typesystem
 
 

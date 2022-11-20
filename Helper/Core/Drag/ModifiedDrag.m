@@ -36,6 +36,8 @@
 
 @implementation ModifiedDrag
 
+/// TODO: Rename this to just `Drag`
+
 /// Vars
 
 static ModifiedDragState _drag;

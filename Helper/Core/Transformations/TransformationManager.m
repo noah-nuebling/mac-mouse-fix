@@ -23,6 +23,10 @@
 
 @implementation TransformationManager
 
+#pragma mark - Notes
+
+/// Rename this to `Transformations`rename `_remaps` to `_transformations`.
+
 #pragma mark - Remaps dictionary and interface
 
 #define USE_TEST_REMAPS NO

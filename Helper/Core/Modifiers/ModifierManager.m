@@ -21,6 +21,10 @@
 
 @implementation ModifierManager
 
+#pragma mark - Notes
+
+/// Rename this to just`Modifiers`
+
 #pragma mark - Terminology
 
 /// Explanation:

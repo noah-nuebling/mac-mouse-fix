@@ -46,7 +46,6 @@
 		4F5971E52901763D00A32656 /* MathObjc.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F5971E42901763D00A32656 /* MathObjc.m */; };
 		4F5971E62901763D00A32656 /* MathObjc.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F5971E42901763D00A32656 /* MathObjc.m */; };
 		4F5C2F802885C5D0001B9B8A /* HelperState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F5C2F7F2885C5D0001B9B8A /* HelperState.swift */; };
-		4F5F3EEE2756DB0A00C350C0 /* RemapsOverrider_old_.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F5F3EED2756DB0A00C350C0 /* RemapsOverrider_old_.swift */; };
 		4F5F3EF12756EC0400C350C0 /* RemapSwizzler.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F5F3EF02756EC0400C350C0 /* RemapSwizzler.m */; };
 		4F5F3EF32756F1DB00C350C0 /* ScrollModifiers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F5F3EF22756F1DB00C350C0 /* ScrollModifiers.swift */; };
 		4F6B02C028AD9E4400B5BA93 /* Localizable.stringsdict in Resources */ = {isa = PBXBuildFile; fileRef = 4F6B02C228AD9E4400B5BA93 /* Localizable.stringsdict */; };
@@ -866,6 +865,14 @@
 				4F39BCE8263B7B1500FDF692 /* README.md */,
 			);
 			path = Frameworks;
+			sourceTree = "<group>";
+		};
+		4F17D2DF292A61DE00EB07CA /* Unused */ = {
+			isa = PBXGroup;
+			children = (
+				4F5F3EED2756DB0A00C350C0 /* RemapsOverrider_old_.swift */,
+			);
+			path = Unused;
 			sourceTree = "<group>";
 		};
 		4F1D7F4528A45FEA00253407 /* MenuBarItem */ = {
@@ -1755,7 +1762,7 @@
 			isa = PBXGroup;
 			children = (
 				4FF6660C25F2C93A00689B77 /* Config */,
-				4FF6663C25F2C93A00689B77 /* TransformationManager */,
+				4FF6663C25F2C93A00689B77 /* Transformations */,
 				4FF6661525F2C93A00689B77 /* Modifiers */,
 				4FF6661825F2C93A00689B77 /* Buttons */,
 				4FF6661F25F2C93A00689B77 /* Scroll */,
@@ -1861,18 +1868,18 @@
 			path = Actions;
 			sourceTree = "<group>";
 		};
-		4FF6663C25F2C93A00689B77 /* TransformationManager */ = {
+		4FF6663C25F2C93A00689B77 /* Transformations */ = {
 			isa = PBXGroup;
 			children = (
 				4FF6663E25F2C93A00689B77 /* TransformationManager.h */,
 				4FF6663D25F2C93A00689B77 /* TransformationManager.m */,
 				4F5F3EEF2756DD1200C350C0 /* RemapSwizzler.h */,
 				4F5F3EF02756EC0400C350C0 /* RemapSwizzler.m */,
-				4F5F3EED2756DB0A00C350C0 /* RemapsOverrider_old_.swift */,
 				4F02C71C2899448900ED0AA8 /* OutputCoordinator.swift */,
 				4F02C7202899453200ED0AA8 /* OutputCoordinator.h */,
+				4F17D2DF292A61DE00EB07CA /* Unused */,
 			);
-			path = TransformationManager;
+			path = Transformations;
 			sourceTree = "<group>";
 		};
 		4FF6663F25F2C93A00689B77 /* Utility */ = {
@@ -2491,7 +2498,6 @@
 				4F1D7F4728A4639800253407 /* MenuBarItem.swift in Sources */,
 				4F8CF95728686C0100BF5E55 /* PolynomialRegression.m in Sources */,
 				4FFA4E3628B795F30062A1FE /* LicenseUtility.swift in Sources */,
-				4F5F3EEE2756DB0A00C350C0 /* RemapsOverrider_old_.swift in Sources */,
 				4F8B7E6727B4E32600598B65 /* TouchAnimatorBase.swift in Sources */,
 				4FA0681A291B2C4C00949B5F /* Shorthands.m in Sources */,
 				4FF6669325F2C93A00689B77 /* TouchSimulator.m in Sources */,
