@@ -256,6 +256,19 @@
 
           font-size: 1.1rem;
       }
+
+      code {
+          padding: 0.2rem 0.5rem;
+          border-radius: 0.5rem;
+          background-color: rgba(0, 0, 75, 0.09);
+      }
+      div.sourceCode {
+          
+          padding: 1.6rem 1.5rem;
+          border-radius: 1.1rem; /*0.3rem;*/
+          background-color: rgba(0, 0, 75, 0.055);
+      }
+
       .annotation {
           font-size: 1.1rem;
       }
@@ -298,7 +311,7 @@
               /* ^ Sparkle background is still bright when we have `background-color: transparent` even with darkmode active. 
                   This is the color of the text field background in Apple Mail on macOS 11 BigSur 
                   
-                  Edit: This might've been because pandoc made the background white, which we've overriden now, so maybe this is not necessary anymore.
+                  Edit: This was because pandoc made the background white, which we've overriden now. So now this is not necessary anymore. Might want to reenable for testing in Safari.
                   */
 
               color: rgba(255, 255, 255, 0.9); /* For headers */
@@ -310,9 +323,14 @@
           a, a:visited { /* Need to include a:visited otherwise it will be set by pandoc */
               color: #3586FF;
           }
-
           hr {
               background-color: rgba(255, 255, 255, 0.15);
+          }
+          code {
+              background-color: rgba(255, 255, 255, 0.16);
+          }
+          div.sourceCode {
+              background-color: rgba(255, 255, 255, 0.08);
           }
 
           h1:after, h2:after {
@@ -679,6 +697,19 @@ Discussion</a>.</p>
 
           font-size: 1.1rem;
       }
+
+      code {
+          padding: 0.2rem 0.5rem;
+          border-radius: 0.5rem;
+          background-color: rgba(0, 0, 75, 0.09);
+      }
+      div.sourceCode {
+          
+          padding: 1.6rem 1.5rem;
+          border-radius: 1.1rem; /*0.3rem;*/
+          background-color: rgba(0, 0, 75, 0.055);
+      }
+
       .annotation {
           font-size: 1.1rem;
       }
@@ -721,7 +752,7 @@ Discussion</a>.</p>
               /* ^ Sparkle background is still bright when we have `background-color: transparent` even with darkmode active. 
                   This is the color of the text field background in Apple Mail on macOS 11 BigSur 
                   
-                  Edit: This might've been because pandoc made the background white, which we've overriden now, so maybe this is not necessary anymore.
+                  Edit: This was because pandoc made the background white, which we've overriden now. So now this is not necessary anymore. Might want to reenable for testing in Safari.
                   */
 
               color: rgba(255, 255, 255, 0.9); /* For headers */
@@ -733,9 +764,14 @@ Discussion</a>.</p>
           a, a:visited { /* Need to include a:visited otherwise it will be set by pandoc */
               color: #3586FF;
           }
-
           hr {
               background-color: rgba(255, 255, 255, 0.15);
+          }
+          code {
+              background-color: rgba(255, 255, 255, 0.16);
+          }
+          div.sourceCode {
+              background-color: rgba(255, 255, 255, 0.08);
           }
 
           h1:after, h2:after {
@@ -1055,6 +1091,19 @@ Guide</a></li>
 
           font-size: 1.1rem;
       }
+
+      code {
+          padding: 0.2rem 0.5rem;
+          border-radius: 0.5rem;
+          background-color: rgba(0, 0, 75, 0.09);
+      }
+      div.sourceCode {
+          
+          padding: 1.6rem 1.5rem;
+          border-radius: 1.1rem; /*0.3rem;*/
+          background-color: rgba(0, 0, 75, 0.055);
+      }
+
       .annotation {
           font-size: 1.1rem;
       }
@@ -1097,7 +1146,7 @@ Guide</a></li>
               /* ^ Sparkle background is still bright when we have `background-color: transparent` even with darkmode active. 
                   This is the color of the text field background in Apple Mail on macOS 11 BigSur 
                   
-                  Edit: This might've been because pandoc made the background white, which we've overriden now, so maybe this is not necessary anymore.
+                  Edit: This was because pandoc made the background white, which we've overriden now. So now this is not necessary anymore. Might want to reenable for testing in Safari.
                   */
 
               color: rgba(255, 255, 255, 0.9); /* For headers */
@@ -1109,9 +1158,14 @@ Guide</a></li>
           a, a:visited { /* Need to include a:visited otherwise it will be set by pandoc */
               color: #3586FF;
           }
-
           hr {
               background-color: rgba(255, 255, 255, 0.15);
+          }
+          code {
+              background-color: rgba(255, 255, 255, 0.16);
+          }
+          div.sourceCode {
+              background-color: rgba(255, 255, 255, 0.08);
           }
 
           h1:after, h2:after {
@@ -1417,6 +1471,19 @@ screen</li>
 
           font-size: 1.1rem;
       }
+
+      code {
+          padding: 0.2rem 0.5rem;
+          border-radius: 0.5rem;
+          background-color: rgba(0, 0, 75, 0.09);
+      }
+      div.sourceCode {
+          
+          padding: 1.6rem 1.5rem;
+          border-radius: 1.1rem; /*0.3rem;*/
+          background-color: rgba(0, 0, 75, 0.055);
+      }
+
       .annotation {
           font-size: 1.1rem;
       }
@@ -1459,7 +1526,7 @@ screen</li>
               /* ^ Sparkle background is still bright when we have `background-color: transparent` even with darkmode active. 
                   This is the color of the text field background in Apple Mail on macOS 11 BigSur 
                   
-                  Edit: This might've been because pandoc made the background white, which we've overriden now, so maybe this is not necessary anymore.
+                  Edit: This was because pandoc made the background white, which we've overriden now. So now this is not necessary anymore. Might want to reenable for testing in Safari.
                   */
 
               color: rgba(255, 255, 255, 0.9); /* For headers */
@@ -1471,9 +1538,14 @@ screen</li>
           a, a:visited { /* Need to include a:visited otherwise it will be set by pandoc */
               color: #3586FF;
           }
-
           hr {
               background-color: rgba(255, 255, 255, 0.15);
+          }
+          code {
+              background-color: rgba(255, 255, 255, 0.16);
+          }
+          div.sourceCode {
+              background-color: rgba(255, 255, 255, 0.08);
           }
 
           h1:after, h2:after {
@@ -1798,6 +1870,19 @@ was very helpful in figuring out the problem!</li>
 
           font-size: 1.1rem;
       }
+
+      code {
+          padding: 0.2rem 0.5rem;
+          border-radius: 0.5rem;
+          background-color: rgba(0, 0, 75, 0.09);
+      }
+      div.sourceCode {
+          
+          padding: 1.6rem 1.5rem;
+          border-radius: 1.1rem; /*0.3rem;*/
+          background-color: rgba(0, 0, 75, 0.055);
+      }
+
       .annotation {
           font-size: 1.1rem;
       }
@@ -1840,7 +1925,7 @@ was very helpful in figuring out the problem!</li>
               /* ^ Sparkle background is still bright when we have `background-color: transparent` even with darkmode active. 
                   This is the color of the text field background in Apple Mail on macOS 11 BigSur 
                   
-                  Edit: This might've been because pandoc made the background white, which we've overriden now, so maybe this is not necessary anymore.
+                  Edit: This was because pandoc made the background white, which we've overriden now. So now this is not necessary anymore. Might want to reenable for testing in Safari.
                   */
 
               color: rgba(255, 255, 255, 0.9); /* For headers */
@@ -1852,9 +1937,14 @@ was very helpful in figuring out the problem!</li>
           a, a:visited { /* Need to include a:visited otherwise it will be set by pandoc */
               color: #3586FF;
           }
-
           hr {
               background-color: rgba(255, 255, 255, 0.15);
+          }
+          code {
+              background-color: rgba(255, 255, 255, 0.16);
+          }
+          div.sourceCode {
+              background-color: rgba(255, 255, 255, 0.08);
           }
 
           h1:after, h2:after {
@@ -2310,6 +2400,19 @@ work with, more future-proof.</li>
 
           font-size: 1.1rem;
       }
+
+      code {
+          padding: 0.2rem 0.5rem;
+          border-radius: 0.5rem;
+          background-color: rgba(0, 0, 75, 0.09);
+      }
+      div.sourceCode {
+          
+          padding: 1.6rem 1.5rem;
+          border-radius: 1.1rem; /*0.3rem;*/
+          background-color: rgba(0, 0, 75, 0.055);
+      }
+
       .annotation {
           font-size: 1.1rem;
       }
@@ -2352,7 +2455,7 @@ work with, more future-proof.</li>
               /* ^ Sparkle background is still bright when we have `background-color: transparent` even with darkmode active. 
                   This is the color of the text field background in Apple Mail on macOS 11 BigSur 
                   
-                  Edit: This might've been because pandoc made the background white, which we've overriden now, so maybe this is not necessary anymore.
+                  Edit: This was because pandoc made the background white, which we've overriden now. So now this is not necessary anymore. Might want to reenable for testing in Safari.
                   */
 
               color: rgba(255, 255, 255, 0.9); /* For headers */
@@ -2364,9 +2467,14 @@ work with, more future-proof.</li>
           a, a:visited { /* Need to include a:visited otherwise it will be set by pandoc */
               color: #3586FF;
           }
-
           hr {
               background-color: rgba(255, 255, 255, 0.15);
+          }
+          code {
+              background-color: rgba(255, 255, 255, 0.16);
+          }
+          div.sourceCode {
+              background-color: rgba(255, 255, 255, 0.08);
           }
 
           h1:after, h2:after {
@@ -2656,6 +2764,19 @@ glitches.</p>
 
           font-size: 1.1rem;
       }
+
+      code {
+          padding: 0.2rem 0.5rem;
+          border-radius: 0.5rem;
+          background-color: rgba(0, 0, 75, 0.09);
+      }
+      div.sourceCode {
+          
+          padding: 1.6rem 1.5rem;
+          border-radius: 1.1rem; /*0.3rem;*/
+          background-color: rgba(0, 0, 75, 0.055);
+      }
+
       .annotation {
           font-size: 1.1rem;
       }
@@ -2698,7 +2819,7 @@ glitches.</p>
               /* ^ Sparkle background is still bright when we have `background-color: transparent` even with darkmode active. 
                   This is the color of the text field background in Apple Mail on macOS 11 BigSur 
                   
-                  Edit: This might've been because pandoc made the background white, which we've overriden now, so maybe this is not necessary anymore.
+                  Edit: This was because pandoc made the background white, which we've overriden now. So now this is not necessary anymore. Might want to reenable for testing in Safari.
                   */
 
               color: rgba(255, 255, 255, 0.9); /* For headers */
@@ -2710,9 +2831,14 @@ glitches.</p>
           a, a:visited { /* Need to include a:visited otherwise it will be set by pandoc */
               color: #3586FF;
           }
-
           hr {
               background-color: rgba(255, 255, 255, 0.15);
+          }
+          code {
+              background-color: rgba(255, 255, 255, 0.16);
+          }
+          div.sourceCode {
+              background-color: rgba(255, 255, 255, 0.08);
           }
 
           h1:after, h2:after {
@@ -3001,6 +3127,19 @@ href="https://github.com/noah-nuebling/mac-mouse-fix/issues/369">#369</a>.</p>
 
           font-size: 1.1rem;
       }
+
+      code {
+          padding: 0.2rem 0.5rem;
+          border-radius: 0.5rem;
+          background-color: rgba(0, 0, 75, 0.09);
+      }
+      div.sourceCode {
+          
+          padding: 1.6rem 1.5rem;
+          border-radius: 1.1rem; /*0.3rem;*/
+          background-color: rgba(0, 0, 75, 0.055);
+      }
+
       .annotation {
           font-size: 1.1rem;
       }
@@ -3043,7 +3182,7 @@ href="https://github.com/noah-nuebling/mac-mouse-fix/issues/369">#369</a>.</p>
               /* ^ Sparkle background is still bright when we have `background-color: transparent` even with darkmode active. 
                   This is the color of the text field background in Apple Mail on macOS 11 BigSur 
                   
-                  Edit: This might've been because pandoc made the background white, which we've overriden now, so maybe this is not necessary anymore.
+                  Edit: This was because pandoc made the background white, which we've overriden now. So now this is not necessary anymore. Might want to reenable for testing in Safari.
                   */
 
               color: rgba(255, 255, 255, 0.9); /* For headers */
@@ -3055,9 +3194,14 @@ href="https://github.com/noah-nuebling/mac-mouse-fix/issues/369">#369</a>.</p>
           a, a:visited { /* Need to include a:visited otherwise it will be set by pandoc */
               color: #3586FF;
           }
-
           hr {
               background-color: rgba(255, 255, 255, 0.15);
+          }
+          code {
+              background-color: rgba(255, 255, 255, 0.16);
+          }
+          div.sourceCode {
+              background-color: rgba(255, 255, 255, 0.08);
           }
 
           h1:after, h2:after {
@@ -3617,6 +3761,19 @@ Discussion</a>.</p>
 
           font-size: 1.1rem;
       }
+
+      code {
+          padding: 0.2rem 0.5rem;
+          border-radius: 0.5rem;
+          background-color: rgba(0, 0, 75, 0.09);
+      }
+      div.sourceCode {
+          
+          padding: 1.6rem 1.5rem;
+          border-radius: 1.1rem; /*0.3rem;*/
+          background-color: rgba(0, 0, 75, 0.055);
+      }
+
       .annotation {
           font-size: 1.1rem;
       }
@@ -3659,7 +3816,7 @@ Discussion</a>.</p>
               /* ^ Sparkle background is still bright when we have `background-color: transparent` even with darkmode active. 
                   This is the color of the text field background in Apple Mail on macOS 11 BigSur 
                   
-                  Edit: This might've been because pandoc made the background white, which we've overriden now, so maybe this is not necessary anymore.
+                  Edit: This was because pandoc made the background white, which we've overriden now. So now this is not necessary anymore. Might want to reenable for testing in Safari.
                   */
 
               color: rgba(255, 255, 255, 0.9); /* For headers */
@@ -3671,9 +3828,14 @@ Discussion</a>.</p>
           a, a:visited { /* Need to include a:visited otherwise it will be set by pandoc */
               color: #3586FF;
           }
-
           hr {
               background-color: rgba(255, 255, 255, 0.15);
+          }
+          code {
+              background-color: rgba(255, 255, 255, 0.16);
+          }
+          div.sourceCode {
+              background-color: rgba(255, 255, 255, 0.08);
           }
 
           h1:after, h2:after {
@@ -3966,6 +4128,19 @@ was very helpful in figuring out the problem!</li>
 
           font-size: 1.1rem;
       }
+
+      code {
+          padding: 0.2rem 0.5rem;
+          border-radius: 0.5rem;
+          background-color: rgba(0, 0, 75, 0.09);
+      }
+      div.sourceCode {
+          
+          padding: 1.6rem 1.5rem;
+          border-radius: 1.1rem; /*0.3rem;*/
+          background-color: rgba(0, 0, 75, 0.055);
+      }
+
       .annotation {
           font-size: 1.1rem;
       }
@@ -4008,7 +4183,7 @@ was very helpful in figuring out the problem!</li>
               /* ^ Sparkle background is still bright when we have `background-color: transparent` even with darkmode active. 
                   This is the color of the text field background in Apple Mail on macOS 11 BigSur 
                   
-                  Edit: This might've been because pandoc made the background white, which we've overriden now, so maybe this is not necessary anymore.
+                  Edit: This was because pandoc made the background white, which we've overriden now. So now this is not necessary anymore. Might want to reenable for testing in Safari.
                   */
 
               color: rgba(255, 255, 255, 0.9); /* For headers */
@@ -4020,9 +4195,14 @@ was very helpful in figuring out the problem!</li>
           a, a:visited { /* Need to include a:visited otherwise it will be set by pandoc */
               color: #3586FF;
           }
-
           hr {
               background-color: rgba(255, 255, 255, 0.15);
+          }
+          code {
+              background-color: rgba(255, 255, 255, 0.16);
+          }
+          div.sourceCode {
+              background-color: rgba(255, 255, 255, 0.08);
           }
 
           h1:after, h2:after {
@@ -4315,6 +4495,19 @@ resizing the main window under Ventura</li>
 
           font-size: 1.1rem;
       }
+
+      code {
+          padding: 0.2rem 0.5rem;
+          border-radius: 0.5rem;
+          background-color: rgba(0, 0, 75, 0.09);
+      }
+      div.sourceCode {
+          
+          padding: 1.6rem 1.5rem;
+          border-radius: 1.1rem; /*0.3rem;*/
+          background-color: rgba(0, 0, 75, 0.055);
+      }
+
       .annotation {
           font-size: 1.1rem;
       }
@@ -4357,7 +4550,7 @@ resizing the main window under Ventura</li>
               /* ^ Sparkle background is still bright when we have `background-color: transparent` even with darkmode active. 
                   This is the color of the text field background in Apple Mail on macOS 11 BigSur 
                   
-                  Edit: This might've been because pandoc made the background white, which we've overriden now, so maybe this is not necessary anymore.
+                  Edit: This was because pandoc made the background white, which we've overriden now. So now this is not necessary anymore. Might want to reenable for testing in Safari.
                   */
 
               color: rgba(255, 255, 255, 0.9); /* For headers */
@@ -4369,9 +4562,14 @@ resizing the main window under Ventura</li>
           a, a:visited { /* Need to include a:visited otherwise it will be set by pandoc */
               color: #3586FF;
           }
-
           hr {
               background-color: rgba(255, 255, 255, 0.15);
+          }
+          code {
+              background-color: rgba(255, 255, 255, 0.16);
+          }
+          div.sourceCode {
+              background-color: rgba(255, 255, 255, 0.08);
           }
 
           h1:after, h2:after {
@@ -4684,6 +4882,19 @@ wouldn’t work properly when using a non-standard keyboard layout.</li>
 
           font-size: 1.1rem;
       }
+
+      code {
+          padding: 0.2rem 0.5rem;
+          border-radius: 0.5rem;
+          background-color: rgba(0, 0, 75, 0.09);
+      }
+      div.sourceCode {
+          
+          padding: 1.6rem 1.5rem;
+          border-radius: 1.1rem; /*0.3rem;*/
+          background-color: rgba(0, 0, 75, 0.055);
+      }
+
       .annotation {
           font-size: 1.1rem;
       }
@@ -4726,7 +4937,7 @@ wouldn’t work properly when using a non-standard keyboard layout.</li>
               /* ^ Sparkle background is still bright when we have `background-color: transparent` even with darkmode active. 
                   This is the color of the text field background in Apple Mail on macOS 11 BigSur 
                   
-                  Edit: This might've been because pandoc made the background white, which we've overriden now, so maybe this is not necessary anymore.
+                  Edit: This was because pandoc made the background white, which we've overriden now. So now this is not necessary anymore. Might want to reenable for testing in Safari.
                   */
 
               color: rgba(255, 255, 255, 0.9); /* For headers */
@@ -4738,9 +4949,14 @@ wouldn’t work properly when using a non-standard keyboard layout.</li>
           a, a:visited { /* Need to include a:visited otherwise it will be set by pandoc */
               color: #3586FF;
           }
-
           hr {
               background-color: rgba(255, 255, 255, 0.15);
+          }
+          code {
+              background-color: rgba(255, 255, 255, 0.16);
+          }
+          div.sourceCode {
+              background-color: rgba(255, 255, 255, 0.08);
           }
 
           h1:after, h2:after {
@@ -5089,6 +5305,19 @@ future release.</li>
 
           font-size: 1.1rem;
       }
+
+      code {
+          padding: 0.2rem 0.5rem;
+          border-radius: 0.5rem;
+          background-color: rgba(0, 0, 75, 0.09);
+      }
+      div.sourceCode {
+          
+          padding: 1.6rem 1.5rem;
+          border-radius: 1.1rem; /*0.3rem;*/
+          background-color: rgba(0, 0, 75, 0.055);
+      }
+
       .annotation {
           font-size: 1.1rem;
       }
@@ -5131,7 +5360,7 @@ future release.</li>
               /* ^ Sparkle background is still bright when we have `background-color: transparent` even with darkmode active. 
                   This is the color of the text field background in Apple Mail on macOS 11 BigSur 
                   
-                  Edit: This might've been because pandoc made the background white, which we've overriden now, so maybe this is not necessary anymore.
+                  Edit: This was because pandoc made the background white, which we've overriden now. So now this is not necessary anymore. Might want to reenable for testing in Safari.
                   */
 
               color: rgba(255, 255, 255, 0.9); /* For headers */
@@ -5143,9 +5372,14 @@ future release.</li>
           a, a:visited { /* Need to include a:visited otherwise it will be set by pandoc */
               color: #3586FF;
           }
-
           hr {
               background-color: rgba(255, 255, 255, 0.15);
+          }
+          code {
+              background-color: rgba(255, 255, 255, 0.16);
+          }
+          div.sourceCode {
+              background-color: rgba(255, 255, 255, 0.08);
           }
 
           h1:after, h2:after {
@@ -5442,6 +5676,19 @@ proprietary function keys like “Play-Pause” or “Mute Speaker”.</p>
 
           font-size: 1.1rem;
       }
+
+      code {
+          padding: 0.2rem 0.5rem;
+          border-radius: 0.5rem;
+          background-color: rgba(0, 0, 75, 0.09);
+      }
+      div.sourceCode {
+          
+          padding: 1.6rem 1.5rem;
+          border-radius: 1.1rem; /*0.3rem;*/
+          background-color: rgba(0, 0, 75, 0.055);
+      }
+
       .annotation {
           font-size: 1.1rem;
       }
@@ -5484,7 +5731,7 @@ proprietary function keys like “Play-Pause” or “Mute Speaker”.</p>
               /* ^ Sparkle background is still bright when we have `background-color: transparent` even with darkmode active. 
                   This is the color of the text field background in Apple Mail on macOS 11 BigSur 
                   
-                  Edit: This might've been because pandoc made the background white, which we've overriden now, so maybe this is not necessary anymore.
+                  Edit: This was because pandoc made the background white, which we've overriden now. So now this is not necessary anymore. Might want to reenable for testing in Safari.
                   */
 
               color: rgba(255, 255, 255, 0.9); /* For headers */
@@ -5496,9 +5743,14 @@ proprietary function keys like “Play-Pause” or “Mute Speaker”.</p>
           a, a:visited { /* Need to include a:visited otherwise it will be set by pandoc */
               color: #3586FF;
           }
-
           hr {
               background-color: rgba(255, 255, 255, 0.15);
+          }
+          code {
+              background-color: rgba(255, 255, 255, 0.16);
+          }
+          div.sourceCode {
+              background-color: rgba(255, 255, 255, 0.08);
           }
 
           h1:after, h2:after {
@@ -5865,6 +6117,19 @@ quite a bit closer to that goal. Thank you! 🚀🚀🚀 :)</p>
 
           font-size: 1.1rem;
       }
+
+      code {
+          padding: 0.2rem 0.5rem;
+          border-radius: 0.5rem;
+          background-color: rgba(0, 0, 75, 0.09);
+      }
+      div.sourceCode {
+          
+          padding: 1.6rem 1.5rem;
+          border-radius: 1.1rem; /*0.3rem;*/
+          background-color: rgba(0, 0, 75, 0.055);
+      }
+
       .annotation {
           font-size: 1.1rem;
       }
@@ -5907,7 +6172,7 @@ quite a bit closer to that goal. Thank you! 🚀🚀🚀 :)</p>
               /* ^ Sparkle background is still bright when we have `background-color: transparent` even with darkmode active. 
                   This is the color of the text field background in Apple Mail on macOS 11 BigSur 
                   
-                  Edit: This might've been because pandoc made the background white, which we've overriden now, so maybe this is not necessary anymore.
+                  Edit: This was because pandoc made the background white, which we've overriden now. So now this is not necessary anymore. Might want to reenable for testing in Safari.
                   */
 
               color: rgba(255, 255, 255, 0.9); /* For headers */
@@ -5919,9 +6184,14 @@ quite a bit closer to that goal. Thank you! 🚀🚀🚀 :)</p>
           a, a:visited { /* Need to include a:visited otherwise it will be set by pandoc */
               color: #3586FF;
           }
-
           hr {
               background-color: rgba(255, 255, 255, 0.15);
+          }
+          code {
+              background-color: rgba(255, 255, 255, 0.16);
+          }
+          div.sourceCode {
+              background-color: rgba(255, 255, 255, 0.08);
           }
 
           h1:after, h2:after {
@@ -6212,6 +6482,19 @@ copy-paste, etc.</li>
 
           font-size: 1.1rem;
       }
+
+      code {
+          padding: 0.2rem 0.5rem;
+          border-radius: 0.5rem;
+          background-color: rgba(0, 0, 75, 0.09);
+      }
+      div.sourceCode {
+          
+          padding: 1.6rem 1.5rem;
+          border-radius: 1.1rem; /*0.3rem;*/
+          background-color: rgba(0, 0, 75, 0.055);
+      }
+
       .annotation {
           font-size: 1.1rem;
       }
@@ -6254,7 +6537,7 @@ copy-paste, etc.</li>
               /* ^ Sparkle background is still bright when we have `background-color: transparent` even with darkmode active. 
                   This is the color of the text field background in Apple Mail on macOS 11 BigSur 
                   
-                  Edit: This might've been because pandoc made the background white, which we've overriden now, so maybe this is not necessary anymore.
+                  Edit: This was because pandoc made the background white, which we've overriden now. So now this is not necessary anymore. Might want to reenable for testing in Safari.
                   */
 
               color: rgba(255, 255, 255, 0.9); /* For headers */
@@ -6266,9 +6549,14 @@ copy-paste, etc.</li>
           a, a:visited { /* Need to include a:visited otherwise it will be set by pandoc */
               color: #3586FF;
           }
-
           hr {
               background-color: rgba(255, 255, 255, 0.15);
+          }
+          code {
+              background-color: rgba(255, 255, 255, 0.16);
+          }
+          div.sourceCode {
+              background-color: rgba(255, 255, 255, 0.08);
           }
 
           h1:after, h2:after {
@@ -6569,6 +6857,19 @@ data-cites="FraserEmbrey">@FraserEmbrey</span> suggested in Issue
 
           font-size: 1.1rem;
       }
+
+      code {
+          padding: 0.2rem 0.5rem;
+          border-radius: 0.5rem;
+          background-color: rgba(0, 0, 75, 0.09);
+      }
+      div.sourceCode {
+          
+          padding: 1.6rem 1.5rem;
+          border-radius: 1.1rem; /*0.3rem;*/
+          background-color: rgba(0, 0, 75, 0.055);
+      }
+
       .annotation {
           font-size: 1.1rem;
       }
@@ -6611,7 +6912,7 @@ data-cites="FraserEmbrey">@FraserEmbrey</span> suggested in Issue
               /* ^ Sparkle background is still bright when we have `background-color: transparent` even with darkmode active. 
                   This is the color of the text field background in Apple Mail on macOS 11 BigSur 
                   
-                  Edit: This might've been because pandoc made the background white, which we've overriden now, so maybe this is not necessary anymore.
+                  Edit: This was because pandoc made the background white, which we've overriden now. So now this is not necessary anymore. Might want to reenable for testing in Safari.
                   */
 
               color: rgba(255, 255, 255, 0.9); /* For headers */
@@ -6623,9 +6924,14 @@ data-cites="FraserEmbrey">@FraserEmbrey</span> suggested in Issue
           a, a:visited { /* Need to include a:visited otherwise it will be set by pandoc */
               color: #3586FF;
           }
-
           hr {
               background-color: rgba(255, 255, 255, 0.15);
+          }
+          code {
+              background-color: rgba(255, 255, 255, 0.16);
+          }
+          div.sourceCode {
+              background-color: rgba(255, 255, 255, 0.08);
           }
 
           h1:after, h2:after {
@@ -6907,6 +7213,19 @@ data-cites="FraserEmbrey">@FraserEmbrey</span> suggested in Issue
 
           font-size: 1.1rem;
       }
+
+      code {
+          padding: 0.2rem 0.5rem;
+          border-radius: 0.5rem;
+          background-color: rgba(0, 0, 75, 0.09);
+      }
+      div.sourceCode {
+          
+          padding: 1.6rem 1.5rem;
+          border-radius: 1.1rem; /*0.3rem;*/
+          background-color: rgba(0, 0, 75, 0.055);
+      }
+
       .annotation {
           font-size: 1.1rem;
       }
@@ -6949,7 +7268,7 @@ data-cites="FraserEmbrey">@FraserEmbrey</span> suggested in Issue
               /* ^ Sparkle background is still bright when we have `background-color: transparent` even with darkmode active. 
                   This is the color of the text field background in Apple Mail on macOS 11 BigSur 
                   
-                  Edit: This might've been because pandoc made the background white, which we've overriden now, so maybe this is not necessary anymore.
+                  Edit: This was because pandoc made the background white, which we've overriden now. So now this is not necessary anymore. Might want to reenable for testing in Safari.
                   */
 
               color: rgba(255, 255, 255, 0.9); /* For headers */
@@ -6961,9 +7280,14 @@ data-cites="FraserEmbrey">@FraserEmbrey</span> suggested in Issue
           a, a:visited { /* Need to include a:visited otherwise it will be set by pandoc */
               color: #3586FF;
           }
-
           hr {
               background-color: rgba(255, 255, 255, 0.15);
+          }
+          code {
+              background-color: rgba(255, 255, 255, 0.16);
+          }
+          div.sourceCode {
+              background-color: rgba(255, 255, 255, 0.08);
           }
 
           h1:after, h2:after {
@@ -7268,6 +7592,19 @@ Swipe’. I’m not quite sure about that. What do you think?</li>
 
           font-size: 1.1rem;
       }
+
+      code {
+          padding: 0.2rem 0.5rem;
+          border-radius: 0.5rem;
+          background-color: rgba(0, 0, 75, 0.09);
+      }
+      div.sourceCode {
+          
+          padding: 1.6rem 1.5rem;
+          border-radius: 1.1rem; /*0.3rem;*/
+          background-color: rgba(0, 0, 75, 0.055);
+      }
+
       .annotation {
           font-size: 1.1rem;
       }
@@ -7310,7 +7647,7 @@ Swipe’. I’m not quite sure about that. What do you think?</li>
               /* ^ Sparkle background is still bright when we have `background-color: transparent` even with darkmode active. 
                   This is the color of the text field background in Apple Mail on macOS 11 BigSur 
                   
-                  Edit: This might've been because pandoc made the background white, which we've overriden now, so maybe this is not necessary anymore.
+                  Edit: This was because pandoc made the background white, which we've overriden now. So now this is not necessary anymore. Might want to reenable for testing in Safari.
                   */
 
               color: rgba(255, 255, 255, 0.9); /* For headers */
@@ -7322,9 +7659,14 @@ Swipe’. I’m not quite sure about that. What do you think?</li>
           a, a:visited { /* Need to include a:visited otherwise it will be set by pandoc */
               color: #3586FF;
           }
-
           hr {
               background-color: rgba(255, 255, 255, 0.15);
+          }
+          code {
+              background-color: rgba(255, 255, 255, 0.16);
+          }
+          div.sourceCode {
+              background-color: rgba(255, 255, 255, 0.08);
           }
 
           h1:after, h2:after {
@@ -7634,6 +7976,19 @@ thoughts.</p>
 
           font-size: 1.1rem;
       }
+
+      code {
+          padding: 0.2rem 0.5rem;
+          border-radius: 0.5rem;
+          background-color: rgba(0, 0, 75, 0.09);
+      }
+      div.sourceCode {
+          
+          padding: 1.6rem 1.5rem;
+          border-radius: 1.1rem; /*0.3rem;*/
+          background-color: rgba(0, 0, 75, 0.055);
+      }
+
       .annotation {
           font-size: 1.1rem;
       }
@@ -7676,7 +8031,7 @@ thoughts.</p>
               /* ^ Sparkle background is still bright when we have `background-color: transparent` even with darkmode active. 
                   This is the color of the text field background in Apple Mail on macOS 11 BigSur 
                   
-                  Edit: This might've been because pandoc made the background white, which we've overriden now, so maybe this is not necessary anymore.
+                  Edit: This was because pandoc made the background white, which we've overriden now. So now this is not necessary anymore. Might want to reenable for testing in Safari.
                   */
 
               color: rgba(255, 255, 255, 0.9); /* For headers */
@@ -7688,9 +8043,14 @@ thoughts.</p>
           a, a:visited { /* Need to include a:visited otherwise it will be set by pandoc */
               color: #3586FF;
           }
-
           hr {
               background-color: rgba(255, 255, 255, 0.15);
+          }
+          code {
+              background-color: rgba(255, 255, 255, 0.16);
+          }
+          div.sourceCode {
+              background-color: rgba(255, 255, 255, 0.08);
           }
 
           h1:after, h2:after {
@@ -8004,6 +8364,19 @@ thoughts.</p>
 
           font-size: 1.1rem;
       }
+
+      code {
+          padding: 0.2rem 0.5rem;
+          border-radius: 0.5rem;
+          background-color: rgba(0, 0, 75, 0.09);
+      }
+      div.sourceCode {
+          
+          padding: 1.6rem 1.5rem;
+          border-radius: 1.1rem; /*0.3rem;*/
+          background-color: rgba(0, 0, 75, 0.055);
+      }
+
       .annotation {
           font-size: 1.1rem;
       }
@@ -8046,7 +8419,7 @@ thoughts.</p>
               /* ^ Sparkle background is still bright when we have `background-color: transparent` even with darkmode active. 
                   This is the color of the text field background in Apple Mail on macOS 11 BigSur 
                   
-                  Edit: This might've been because pandoc made the background white, which we've overriden now, so maybe this is not necessary anymore.
+                  Edit: This was because pandoc made the background white, which we've overriden now. So now this is not necessary anymore. Might want to reenable for testing in Safari.
                   */
 
               color: rgba(255, 255, 255, 0.9); /* For headers */
@@ -8058,9 +8431,14 @@ thoughts.</p>
           a, a:visited { /* Need to include a:visited otherwise it will be set by pandoc */
               color: #3586FF;
           }
-
           hr {
               background-color: rgba(255, 255, 255, 0.15);
+          }
+          code {
+              background-color: rgba(255, 255, 255, 0.16);
+          }
+          div.sourceCode {
+              background-color: rgba(255, 255, 255, 0.08);
           }
 
           h1:after, h2:after {
@@ -8374,6 +8752,19 @@ thoughts.</p>
 
           font-size: 1.1rem;
       }
+
+      code {
+          padding: 0.2rem 0.5rem;
+          border-radius: 0.5rem;
+          background-color: rgba(0, 0, 75, 0.09);
+      }
+      div.sourceCode {
+          
+          padding: 1.6rem 1.5rem;
+          border-radius: 1.1rem; /*0.3rem;*/
+          background-color: rgba(0, 0, 75, 0.055);
+      }
+
       .annotation {
           font-size: 1.1rem;
       }
@@ -8416,7 +8807,7 @@ thoughts.</p>
               /* ^ Sparkle background is still bright when we have `background-color: transparent` even with darkmode active. 
                   This is the color of the text field background in Apple Mail on macOS 11 BigSur 
                   
-                  Edit: This might've been because pandoc made the background white, which we've overriden now, so maybe this is not necessary anymore.
+                  Edit: This was because pandoc made the background white, which we've overriden now. So now this is not necessary anymore. Might want to reenable for testing in Safari.
                   */
 
               color: rgba(255, 255, 255, 0.9); /* For headers */
@@ -8428,9 +8819,14 @@ thoughts.</p>
           a, a:visited { /* Need to include a:visited otherwise it will be set by pandoc */
               color: #3586FF;
           }
-
           hr {
               background-color: rgba(255, 255, 255, 0.15);
+          }
+          code {
+              background-color: rgba(255, 255, 255, 0.16);
+          }
+          div.sourceCode {
+              background-color: rgba(255, 255, 255, 0.08);
           }
 
           h1:after, h2:after {
@@ -8722,6 +9118,19 @@ Fix Helper’ screen</li>
 
           font-size: 1.1rem;
       }
+
+      code {
+          padding: 0.2rem 0.5rem;
+          border-radius: 0.5rem;
+          background-color: rgba(0, 0, 75, 0.09);
+      }
+      div.sourceCode {
+          
+          padding: 1.6rem 1.5rem;
+          border-radius: 1.1rem; /*0.3rem;*/
+          background-color: rgba(0, 0, 75, 0.055);
+      }
+
       .annotation {
           font-size: 1.1rem;
       }
@@ -8764,7 +9173,7 @@ Fix Helper’ screen</li>
               /* ^ Sparkle background is still bright when we have `background-color: transparent` even with darkmode active. 
                   This is the color of the text field background in Apple Mail on macOS 11 BigSur 
                   
-                  Edit: This might've been because pandoc made the background white, which we've overriden now, so maybe this is not necessary anymore.
+                  Edit: This was because pandoc made the background white, which we've overriden now. So now this is not necessary anymore. Might want to reenable for testing in Safari.
                   */
 
               color: rgba(255, 255, 255, 0.9); /* For headers */
@@ -8776,9 +9185,14 @@ Fix Helper’ screen</li>
           a, a:visited { /* Need to include a:visited otherwise it will be set by pandoc */
               color: #3586FF;
           }
-
           hr {
               background-color: rgba(255, 255, 255, 0.15);
+          }
+          code {
+              background-color: rgba(255, 255, 255, 0.16);
+          }
+          div.sourceCode {
+              background-color: rgba(255, 255, 255, 0.08);
           }
 
           h1:after, h2:after {
@@ -9098,6 +9512,19 @@ thoughts.</p>
 
           font-size: 1.1rem;
       }
+
+      code {
+          padding: 0.2rem 0.5rem;
+          border-radius: 0.5rem;
+          background-color: rgba(0, 0, 75, 0.09);
+      }
+      div.sourceCode {
+          
+          padding: 1.6rem 1.5rem;
+          border-radius: 1.1rem; /*0.3rem;*/
+          background-color: rgba(0, 0, 75, 0.055);
+      }
+
       .annotation {
           font-size: 1.1rem;
       }
@@ -9140,7 +9567,7 @@ thoughts.</p>
               /* ^ Sparkle background is still bright when we have `background-color: transparent` even with darkmode active. 
                   This is the color of the text field background in Apple Mail on macOS 11 BigSur 
                   
-                  Edit: This might've been because pandoc made the background white, which we've overriden now, so maybe this is not necessary anymore.
+                  Edit: This was because pandoc made the background white, which we've overriden now. So now this is not necessary anymore. Might want to reenable for testing in Safari.
                   */
 
               color: rgba(255, 255, 255, 0.9); /* For headers */
@@ -9152,9 +9579,14 @@ thoughts.</p>
           a, a:visited { /* Need to include a:visited otherwise it will be set by pandoc */
               color: #3586FF;
           }
-
           hr {
               background-color: rgba(255, 255, 255, 0.15);
+          }
+          code {
+              background-color: rgba(255, 255, 255, 0.16);
+          }
+          div.sourceCode {
+              background-color: rgba(255, 255, 255, 0.08);
           }
 
           h1:after, h2:after {
@@ -9436,6 +9868,19 @@ ignore it.</p>
 
           font-size: 1.1rem;
       }
+
+      code {
+          padding: 0.2rem 0.5rem;
+          border-radius: 0.5rem;
+          background-color: rgba(0, 0, 75, 0.09);
+      }
+      div.sourceCode {
+          
+          padding: 1.6rem 1.5rem;
+          border-radius: 1.1rem; /*0.3rem;*/
+          background-color: rgba(0, 0, 75, 0.055);
+      }
+
       .annotation {
           font-size: 1.1rem;
       }
@@ -9478,7 +9923,7 @@ ignore it.</p>
               /* ^ Sparkle background is still bright when we have `background-color: transparent` even with darkmode active. 
                   This is the color of the text field background in Apple Mail on macOS 11 BigSur 
                   
-                  Edit: This might've been because pandoc made the background white, which we've overriden now, so maybe this is not necessary anymore.
+                  Edit: This was because pandoc made the background white, which we've overriden now. So now this is not necessary anymore. Might want to reenable for testing in Safari.
                   */
 
               color: rgba(255, 255, 255, 0.9); /* For headers */
@@ -9490,9 +9935,14 @@ ignore it.</p>
           a, a:visited { /* Need to include a:visited otherwise it will be set by pandoc */
               color: #3586FF;
           }
-
           hr {
               background-color: rgba(255, 255, 255, 0.15);
+          }
+          code {
+              background-color: rgba(255, 255, 255, 0.16);
+          }
+          div.sourceCode {
+              background-color: rgba(255, 255, 255, 0.08);
           }
 
           h1:after, h2:after {
@@ -9816,6 +10266,19 @@ thoughts.</p>
 
           font-size: 1.1rem;
       }
+
+      code {
+          padding: 0.2rem 0.5rem;
+          border-radius: 0.5rem;
+          background-color: rgba(0, 0, 75, 0.09);
+      }
+      div.sourceCode {
+          
+          padding: 1.6rem 1.5rem;
+          border-radius: 1.1rem; /*0.3rem;*/
+          background-color: rgba(0, 0, 75, 0.055);
+      }
+
       .annotation {
           font-size: 1.1rem;
       }
@@ -9858,7 +10321,7 @@ thoughts.</p>
               /* ^ Sparkle background is still bright when we have `background-color: transparent` even with darkmode active. 
                   This is the color of the text field background in Apple Mail on macOS 11 BigSur 
                   
-                  Edit: This might've been because pandoc made the background white, which we've overriden now, so maybe this is not necessary anymore.
+                  Edit: This was because pandoc made the background white, which we've overriden now. So now this is not necessary anymore. Might want to reenable for testing in Safari.
                   */
 
               color: rgba(255, 255, 255, 0.9); /* For headers */
@@ -9870,9 +10333,14 @@ thoughts.</p>
           a, a:visited { /* Need to include a:visited otherwise it will be set by pandoc */
               color: #3586FF;
           }
-
           hr {
               background-color: rgba(255, 255, 255, 0.15);
+          }
+          code {
+              background-color: rgba(255, 255, 255, 0.16);
+          }
+          div.sourceCode {
+              background-color: rgba(255, 255, 255, 0.08);
           }
 
           h1:after, h2:after {
@@ -10176,6 +10644,19 @@ feedback.</p>
 
           font-size: 1.1rem;
       }
+
+      code {
+          padding: 0.2rem 0.5rem;
+          border-radius: 0.5rem;
+          background-color: rgba(0, 0, 75, 0.09);
+      }
+      div.sourceCode {
+          
+          padding: 1.6rem 1.5rem;
+          border-radius: 1.1rem; /*0.3rem;*/
+          background-color: rgba(0, 0, 75, 0.055);
+      }
+
       .annotation {
           font-size: 1.1rem;
       }
@@ -10218,7 +10699,7 @@ feedback.</p>
               /* ^ Sparkle background is still bright when we have `background-color: transparent` even with darkmode active. 
                   This is the color of the text field background in Apple Mail on macOS 11 BigSur 
                   
-                  Edit: This might've been because pandoc made the background white, which we've overriden now, so maybe this is not necessary anymore.
+                  Edit: This was because pandoc made the background white, which we've overriden now. So now this is not necessary anymore. Might want to reenable for testing in Safari.
                   */
 
               color: rgba(255, 255, 255, 0.9); /* For headers */
@@ -10230,9 +10711,14 @@ feedback.</p>
           a, a:visited { /* Need to include a:visited otherwise it will be set by pandoc */
               color: #3586FF;
           }
-
           hr {
               background-color: rgba(255, 255, 255, 0.15);
+          }
+          code {
+              background-color: rgba(255, 255, 255, 0.16);
+          }
+          div.sourceCode {
+              background-color: rgba(255, 255, 255, 0.08);
           }
 
           h1:after, h2:after {
@@ -10542,6 +11028,19 @@ feedback.</p>
 
           font-size: 1.1rem;
       }
+
+      code {
+          padding: 0.2rem 0.5rem;
+          border-radius: 0.5rem;
+          background-color: rgba(0, 0, 75, 0.09);
+      }
+      div.sourceCode {
+          
+          padding: 1.6rem 1.5rem;
+          border-radius: 1.1rem; /*0.3rem;*/
+          background-color: rgba(0, 0, 75, 0.055);
+      }
+
       .annotation {
           font-size: 1.1rem;
       }
@@ -10584,7 +11083,7 @@ feedback.</p>
               /* ^ Sparkle background is still bright when we have `background-color: transparent` even with darkmode active. 
                   This is the color of the text field background in Apple Mail on macOS 11 BigSur 
                   
-                  Edit: This might've been because pandoc made the background white, which we've overriden now, so maybe this is not necessary anymore.
+                  Edit: This was because pandoc made the background white, which we've overriden now. So now this is not necessary anymore. Might want to reenable for testing in Safari.
                   */
 
               color: rgba(255, 255, 255, 0.9); /* For headers */
@@ -10596,9 +11095,14 @@ feedback.</p>
           a, a:visited { /* Need to include a:visited otherwise it will be set by pandoc */
               color: #3586FF;
           }
-
           hr {
               background-color: rgba(255, 255, 255, 0.15);
+          }
+          code {
+              background-color: rgba(255, 255, 255, 0.16);
+          }
+          div.sourceCode {
+              background-color: rgba(255, 255, 255, 0.08);
           }
 
           h1:after, h2:after {
@@ -10934,6 +11438,19 @@ feedback.</p>
 
           font-size: 1.1rem;
       }
+
+      code {
+          padding: 0.2rem 0.5rem;
+          border-radius: 0.5rem;
+          background-color: rgba(0, 0, 75, 0.09);
+      }
+      div.sourceCode {
+          
+          padding: 1.6rem 1.5rem;
+          border-radius: 1.1rem; /*0.3rem;*/
+          background-color: rgba(0, 0, 75, 0.055);
+      }
+
       .annotation {
           font-size: 1.1rem;
       }
@@ -10976,7 +11493,7 @@ feedback.</p>
               /* ^ Sparkle background is still bright when we have `background-color: transparent` even with darkmode active. 
                   This is the color of the text field background in Apple Mail on macOS 11 BigSur 
                   
-                  Edit: This might've been because pandoc made the background white, which we've overriden now, so maybe this is not necessary anymore.
+                  Edit: This was because pandoc made the background white, which we've overriden now. So now this is not necessary anymore. Might want to reenable for testing in Safari.
                   */
 
               color: rgba(255, 255, 255, 0.9); /* For headers */
@@ -10988,9 +11505,14 @@ feedback.</p>
           a, a:visited { /* Need to include a:visited otherwise it will be set by pandoc */
               color: #3586FF;
           }
-
           hr {
               background-color: rgba(255, 255, 255, 0.15);
+          }
+          code {
+              background-color: rgba(255, 255, 255, 0.16);
+          }
+          div.sourceCode {
+              background-color: rgba(255, 255, 255, 0.08);
           }
 
           h1:after, h2:after {
@@ -11278,6 +11800,19 @@ running. Resolves #67.</li>
 
           font-size: 1.1rem;
       }
+
+      code {
+          padding: 0.2rem 0.5rem;
+          border-radius: 0.5rem;
+          background-color: rgba(0, 0, 75, 0.09);
+      }
+      div.sourceCode {
+          
+          padding: 1.6rem 1.5rem;
+          border-radius: 1.1rem; /*0.3rem;*/
+          background-color: rgba(0, 0, 75, 0.055);
+      }
+
       .annotation {
           font-size: 1.1rem;
       }
@@ -11320,7 +11855,7 @@ running. Resolves #67.</li>
               /* ^ Sparkle background is still bright when we have `background-color: transparent` even with darkmode active. 
                   This is the color of the text field background in Apple Mail on macOS 11 BigSur 
                   
-                  Edit: This might've been because pandoc made the background white, which we've overriden now, so maybe this is not necessary anymore.
+                  Edit: This was because pandoc made the background white, which we've overriden now. So now this is not necessary anymore. Might want to reenable for testing in Safari.
                   */
 
               color: rgba(255, 255, 255, 0.9); /* For headers */
@@ -11332,9 +11867,14 @@ running. Resolves #67.</li>
           a, a:visited { /* Need to include a:visited otherwise it will be set by pandoc */
               color: #3586FF;
           }
-
           hr {
               background-color: rgba(255, 255, 255, 0.15);
+          }
+          code {
+              background-color: rgba(255, 255, 255, 0.16);
+          }
+          div.sourceCode {
+              background-color: rgba(255, 255, 255, 0.08);
           }
 
           h1:after, h2:after {
