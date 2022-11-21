@@ -19,8 +19,8 @@
 /* First draft: Content tracks finger movement */
 "natural-scrolling-hint" = "Inhalte folgen Finger-Bewegung";
 
-/* First draft: Scroll precisely even without a keyboard modifier by\nmoving the scroll wheel slowly || Note: The line break (\n) is there so the layout of the Scroll tab doesn't become too wide which looks weird. You can set it to your own taste. */
-"precise-scrolling-hint" = "Scrolle auch ohne Sondertasten präzise indem du das\nScrollrad langsam bewegst";
+/* First draft: Scroll precisely, even without a keyboard modifier,\nbymoving the scroll wheel slowly || Note: The line break (\n) is there so the layout of the Scroll tab doesn't become too wide which looks weird. You can set it to your own taste. */
+"precise-scrolling-hint" = "Scrolle auch ohne Sondertasten präzise, indem du das\nScrollrad langsam bewegst";
 
 /* First draft: Spaces & Mission Control */
 "drag-effect.dock-swipe" = "Spaces & Mission Control";
@@ -460,14 +460,14 @@
 /* First draft: Back */
 "mail-alert.back" = "Zurück";
 
-/* First draft: I can't respond to all emails but I read and am happy about all feedback! */
-"mail-alert.body" = "Ich kann nicht auf alle Emails antworten aber ich lese und freue mich über alles Feedback!";
+/* First draft: I can't respond to all emails, but I read and appreciate all feedback */
+"mail-alert.body" = "Ich lese und schätze alle E-Mails, auch wenn ich nicht auf alle antworten kann";
 
 /* First draft: Write Email */
-"mail-alert.send" = "Email schreiben";
+"mail-alert.send" = "E-Mail schreiben";
 
 /* First draft: Write an Email? */
-"mail-alert.title" = "Eine Email schreiben?";
+"mail-alert.title" = "Eine E-Mail schreiben?";
 
 /* First draft: Cancel */
 "beta-alert.back" = "Abbrechen";
@@ -499,11 +499,11 @@
 /* First draft: Restore Default for ... */
 "restore-buttons-alert.title" = "Standard wiederherstellen für ...";
 
-/* First draft: You're __already using__ the default setting for mice with __3 buttons__! */
-"already-using-defaults-toast.3" = "Du __verwendest bereits__ die Standard-Einstellung für Mäuse mit __3 Tasten__!";
+/* First draft: You're __already using__ the default setting for mice with __3 buttons__ */
+"already-using-defaults-toast.3" = "Du __verwendest bereits__ die Standard-Einstellung für Mäuse mit __3 Tasten__";
 
-/* First draft: You're __already using__ the default setting for mice with __5 buttons__! */
-"already-using-defaults-toast.5" = "Du __verwendest bereits__ die Standard-Einstellung für Mäuse mit __5+ Tasten__!";
+/* First draft: You're __already using__ the default setting for mice with __5 buttons__ */
+"already-using-defaults-toast.5" = "Du __verwendest bereits__ die Standard-Einstellung für Mäuse mit __5+ Tasten__";
 
 /* Note: Value for this key is defined in Localizable.stringsdict, not Localizable.strings. || Note: The UI strings in .stringsdict have two lines. Only the first line is visible unless you start editing and then use the arrow keys to go to the second line. This is necessary to have linebreaks in .stringsdict since \n doesn't work. Use Option-Enter to insert these linebreaks. */
 "capture-toast.body.captured" = "<>";

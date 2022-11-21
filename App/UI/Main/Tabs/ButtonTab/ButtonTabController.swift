@@ -139,9 +139,9 @@ import CocoaLumberjackSwift
                     
                     let messageRaw: String
                     if selectedPreset == 3 {
-                        messageRaw = NSLocalizedString("already-using-defaults-toast.3", comment: "First draft: You're __already using__ the default setting for mice with __3 buttons__!")
+                        messageRaw = NSLocalizedString("already-using-defaults-toast.3", comment: "First draft: You're __already using__ the default setting for mice with __3 buttons__")
                     } else {
-                        messageRaw = NSLocalizedString("already-using-defaults-toast.5", comment: "First draft: You're __already using__ the default setting for mice with __5 buttons__!")
+                        messageRaw = NSLocalizedString("already-using-defaults-toast.5", comment: "First draft: You're __already using__ the default setting for mice with __5 buttons__")
                     }
                     let message = NSAttributedString(coolMarkdown: messageRaw)!
                     DispatchQueue.main.async {

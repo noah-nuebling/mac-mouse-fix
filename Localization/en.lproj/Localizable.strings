@@ -278,7 +278,7 @@
 "natural-scrolling-hint" = "Content tracks finger movement";
 
 /* First draft: Scroll precisely even without a keyboard modifier by\nmoving the scroll wheel slowly || Note: The line break (\n) is there so the layout of the Scroll tab doesn't become too wide which looks weird. You can set it to your own taste. */
-"precise-scrolling-hint" = "Scroll precisely even without a keyboard modifier by\nmoving the scroll wheel slowly";
+"precise-scrolling-hint" = "Scroll precisely, even without a keyboard modifier,\nby moving the scroll wheel slowly";
 
 /* First draft: Desktop & Launchpad */
 "scroll-effect.4-pinch" = "Desktop & Launchpad";
@@ -466,8 +466,8 @@
 /* First draft: Write an Email? */
 "mail-alert.title" = "Write an Email?";
 
-/* First draft: I can't respond to all emails but I read and am happy about all feedback! */
-"mail-alert.body" = "I can't respond to all emails but I read and am happy about all feedback!";
+/* First draft: I read and appreciate all emails, even though I can't respond to all. */
+"mail-alert.body" = "I read and appreciate all emails, even though I can't respond to all";
 
 /* First draft: Cancel */
 "beta-alert.back" = "Cancel";
@@ -499,11 +499,11 @@
 /* First draft: Restore Default for ... */
 "restore-buttons-alert.title" = "Restore Default for ...";
 
-/* First draft: You're __already using__ the default setting for mice with __3 buttons__! */
-"already-using-defaults-toast.3" = "You're __already using__ the default setting for mice with __3 buttons__!";
+/* First draft: You're __already using__ the default setting for mice with __3 buttons__ */
+"already-using-defaults-toast.3" = "You're __already using__ the default setting for mice with __3 buttons__";
 
-/* First draft: You're __already using__ the default setting for mice with __5 buttons__! */
-"already-using-defaults-toast.5" = "You're __already using__ the default setting for mice with __5 buttons__!";
+/* First draft: You're __already using__ the default setting for mice with __5 buttons__ */
+"already-using-defaults-toast.5" = "You're __already using__ the default setting for mice with __5 buttons__";
 
 /* Note: Value for this key is defined in Localizable.stringsdict, not Localizable.strings. || Note: The UI strings in .stringsdict have two lines. Only the first line is visible unless you start editing and then use the arrow keys to go to the second line. This is necessary to have linebreaks in .stringsdict since \n doesn't work. Use Option-Enter to insert these linebreaks. */
 "capture-toast.body.captured" = "<>";

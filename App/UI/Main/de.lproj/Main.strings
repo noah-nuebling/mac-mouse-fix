@@ -89,13 +89,13 @@
 "aZA-uL-uvx.title" = "Alle nach vorne bringen";
 
 /* Class = "NSTextFieldCell"; title = "Mac Mouse Fix will stay enabled after you close it"; ObjectID = "bew-ni-FnZ"; */
-"bew-ni-FnZ.title" = "Mac Mouse Fix bleibt eingeschaltet nachdem du\nes beendest";
+"bew-ni-FnZ.title" = "Mac Mouse Fix bleibt eingeschaltet, nachdem du\nes beendest";
 
 /* Class = "NSTextFieldCell"; title = "Lets you quickly turn off or on features like\n'Smooth Scrolling'"; ObjectID = "AqN-zN-yDS"; */
 "AqN-zN-yDS.title" = "Lässt dich schnell Features wie\n'Flüssiges Scrollen' an- und abschalten";
 
 /* Class = "NSTextFieldCell"; title = "You'll be notified of updates when you open\nMac Mouse Fix"; ObjectID = "SaY-fF-d1s"; */
-"SaY-fF-d1s.title" = "Du wirst über Updates benachrichtigt werden\nwenn du dieses Fenster öffnest";
+"SaY-fF-d1s.title" = "Du wirst über Updates benachrichtigt werden,\nwenn du dieses Fenster öffnest";
 
 /* Class = "NSMenuItem"; title = "High"; ObjectID = "bIE-g7-3St"; Note = "Scrolling > Scroll Speed > High Option"; */
 "bIE-g7-3St.title" = "Hoch";
@@ -271,7 +271,7 @@
 /* Class = "NSTextFieldCell"; title = "Visit the Website"; ObjectID = "Ozk-o9-C4a"; */
 "Ozk-o9-C4a.title" = "Besuche die Webseite";
 
-/* Class = "NSTextFieldCell"; title = "Check Out the GitHub"; ObjectID = "ZMA-p0-2lf"; Note = "After the MMF 3 Beta I plan to change this to: Check Out the GitHub"; */
+/* Class = "NSTextFieldCell"; title = "Check It Out on GitHub"; ObjectID = "ZMA-p0-2lf"; */
 "ZMA-p0-2lf.title" = "Schau dir das GitHub an";
 
 /* Class = "NSTextFieldCell"; title = "File a Bug Report"; ObjectID = "bQf-qv-mvB"; */
@@ -281,10 +281,10 @@
 "8pi-FV-zYE.title" = "Anerkennungen";
 
 /* Class = "NSTextFieldCell"; title = "Buy Me a Milkshake :)"; ObjectID = "TrI-uu-DEN"; */
-"TrI-uu-DEN.title" = "Spendier mir nen Milchshake! :)"; /// "KAUF MIR NEN MILCHSHAKE :)";
+"TrI-uu-DEN.title" = "Spendier mir einen Milchshake :)"; /// "KAUF MIR NEN MILCHSHAKE :)";
 
 /* Class = "NSTextFieldCell"; title = "Send Me an Email"; ObjectID = "QaW-cc-uzc"; */
-"QaW-cc-uzc.title" = "Sende mir eine Email";
+"QaW-cc-uzc.title" = "Sende mir eine E-Mail";
 
 /* Class = "NSTextFieldCell"; title = "Get Help"; ObjectID = "eVc-l9-Z0h"; */
 "eVc-l9-Z0h.title" = "Bekomme Hilfe";

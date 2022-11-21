@@ -29,6 +29,7 @@
 /// This used to be called `TransformationManager`. Renamed to `Remap` to unify terminology.
 /// Desired Terminology: The `remaps` are a map from `modifiers` -> `modifications`, where a `modification` is itself a map from `trigger ` -> `effect`. More on this in RemapSwizzler.swift
 /// TODO: Swift automatically bridges the NSDictionary args to Swift dicts which is super slow. Try to use NS_REFINED_FOR_SWIFT to prevent this. See https://developer.apple.com/documentation/swift/improving-objective-c-api-declarations-for-swift
+/// -> DONE - Is much faster now!
 
 #pragma mark - Swizzled
 
