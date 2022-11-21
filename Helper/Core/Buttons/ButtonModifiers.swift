@@ -41,6 +41,7 @@ class ButtonModifiers: NSObject {
                                        pressTime: pressTime)
             
             state[button] = newState
+            
             /// Validate
             assert(oldState != newState)
             
@@ -72,6 +73,8 @@ class ButtonModifiers: NSObject {
     }
     
     func kill(button: ButtonNumber) {
+        
+        /// I don't think this has any effect under the current architecture. Not totally sure though.
         
         /// Debug
         DDLogDebug("buttonModifiers - kill - btn: \(button)")

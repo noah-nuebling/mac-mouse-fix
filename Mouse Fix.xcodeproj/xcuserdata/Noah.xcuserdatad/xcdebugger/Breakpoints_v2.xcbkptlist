@@ -273,9 +273,9 @@
             filePath = "Helper/Core/Modifiers/Modifiers.m"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "113"
-            endingLineNumber = "113"
-            landmarkName = "toggleModifierListening(remaps)"
+            startingLineNumber = "136"
+            endingLineNumber = "136"
+            landmarkName = "updateModifierPriority(remaps)"
             landmarkType = "9">
          </BreakpointContent>
       </BreakpointProxy>

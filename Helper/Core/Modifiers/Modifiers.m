@@ -67,7 +67,7 @@ static NSMutableDictionary *_modifiers;
         
         /// Enable/Disable eventTap based on Remap.remaps
         CGEventTapEnable(_kbModEventTap, false); /// Disable eventTap first (Might prevent `_keyboardModifierEventTap` from always being called twice - Nope doesn't make a difference)
-        toggleModifierListening(Remap.remaps);
+        updateModifierPriority(Remap.remaps);
         
         /// Re-toggle keyboard modifier callbacks whenever Remap.remaps changes
         /// TODO:! Test if this works
@@ -77,12 +77,28 @@ static NSMutableDictionary *_modifiers;
                                                     usingBlock:^(NSNotification * _Nonnull note) {
             
             DDLogDebug(@"Received notification that remaps have changed");
-            toggleModifierListening(Remap.remaps);
+            updateModifierPriority(Remap.remaps);
         }];
     }
 }
 
 #pragma mark Toggle listening
+
+/// On `modifierPriority`
+///
+///  Naming of this enum and it's cases is pretty bad.
+///
+///  modifierPriority has 3 cases
+///  - 1. `activeListen` -> We want to proactively listen to modifier changes and cache the result and also trigger some side effects
+///  - 2. `passiveUse` -> Determine the modifierState on the fly as requests for the modifier state come in
+///  - 3. `unused` -> We don't want to use this __type__ of modifier at all
+///
+///  There are currently 2 __types__ of modifiers: buttonModifers and keyboardModifiers
+///  The buttonModifiers can't be determined on the fly so they can't be used with `passiveUse`. We always actively listen to them or don't listen to them at all.
+///
+///  Motivation:
+///  - For kbMods we usually want to use them passively so we don't have to use CPU everytime the user presses a modifierKey. But in certain situations, listening actively to kbMods gives us the opportunity to turn off another eventTap dynamically. Example is if the user turns off scrolling enhancements but still wants to use Command-Scroll to zoom. In that case we could then turn on the scrollEventTap only while the Command key is held.
+///  - If the modifier type is `unused` we can also optimize things further
 
 typedef enum {
     
@@ -90,13 +106,13 @@ typedef enum {
     kMFModifierPriorityPassiveUse,
     kMFModifierPriorityUnused,
     
-} MFModifierPriority; /// Name `priority` isn't that great
+} MFModifierPriority;
 
-static BOOL _kbModPriority;
-static BOOL _buttonModPriority;
+static MFModifierPriority _kbModPriority;
+static MFModifierPriority _buttonModPriority;
 static CFMachPortRef _kbModEventTap;
 
-static void toggleModifierListening(NSDictionary *remaps) {
+static void updateModifierPriority(NSDictionary *remaps) {
 
     ///
     /// Toggle buttonMod processing
@@ -104,20 +120,27 @@ static void toggleModifierListening(NSDictionary *remaps) {
     
     // TODO: Implement
 
+    
+    /// Determine priority
     _buttonModPriority = kMFModifierPriorityActiveListen;
-        
-    assert(_buttonModPriority != kMFModifierPriorityPassiveUse); /// We can't passively retrieve the button mods
+    
+    /// Validate
+    /// We can't passively retrieve the button mods
+    assert(_buttonModPriority != kMFModifierPriorityPassiveUse);
+    
+    /// Toggle ButtonModifiers
+    Buttons.useButtonModifiers = _buttonModPriority == kMFModifierPriorityActiveListen;
     
     ///
     /// Toggle kbMod eventTap
     ///
     
-    /// Decide
+    /// Determine priority
     
     _kbModPriority = kMFModifierPriorityUnused;
     
     if (Remap.addModeIsEnabled) {
-        _kbModPriority = kMFModifierPriorityActiveListen;
+        _kbModPriority = kMFModifierPriorityPassiveUse;
     } else {
         /// If any keyboard modifier is used in remaps, enable tap
         /// TODO: Only actively listen if the keyboardMods could toggle another eventTap

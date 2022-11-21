@@ -18,7 +18,8 @@ import CocoaLumberjackSwift
     /// Ivars
     static var queue: DispatchQueue = DispatchQueue(label: "com.nuebling.mac-mouse-fix.buttons", qos: .userInteractive, attributes: [], autoreleaseFrequency: .inherit, target: nil)
     static private var clickCycle = ClickCycle(buttonQueue: DispatchQueue(label: "replace this"))
-    static private var modifierManager = ButtonModifiers()
+    static private var buttonModifiers = ButtonModifiers()
+    @objc static var useButtonModifiers = false
     
     /// Vars that we only update once per clickCycle
     static var modifiers = [AnyHashable: Any]()
@@ -78,10 +79,13 @@ import CocoaLumberjackSwift
             /// Update modifiers
             ///
             
-            if triggerPhase == .press {
-                self.modifierManager.update(button: ButtonNumber(truncating: button), clickLevel: clickLevel, downNotUp: true)
-                onRelease.append {
-                    self.modifierManager.update(button: ButtonNumber(truncating: button), clickLevel: clickLevel, downNotUp: false)
+            if useButtonModifiers {
+                
+                if triggerPhase == .press {
+                    self.buttonModifiers.update(button: ButtonNumber(truncating: button), clickLevel: clickLevel, downNotUp: true)
+                    onRelease.append {
+                        self.buttonModifiers.update(button: ButtonNumber(truncating: button), clickLevel: clickLevel, downNotUp: false)
+                    }
                 }
             }
             
@@ -184,7 +188,9 @@ import CocoaLumberjackSwift
         if self.clickCycle.isActiveFor(device: device.uniqueID(), button: button) {
             self.clickCycle.kill()
         }
-        self.modifierManager.kill(button: ButtonNumber(truncating: button)) /// Not sure abt this
+        if useButtonModifiers {
+            self.buttonModifiers.kill(button: ButtonNumber(truncating: button)) /// Not sure abt this
+        }
     }
     
     @objc static func handleButtonHasHadEffectAsModifier(button: NSNumber) {
