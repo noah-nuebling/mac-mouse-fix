@@ -236,6 +236,9 @@ import CocoaLumberjackSwift
         /// This is called every time the tab is switched to
         /// This is called twice, awakeFromNib as well. Use init() or viewDidLoad() to do things once
         
+        /// Update tableView size
+        self.tableView.updateSize(withAnimation: false, tabContentView: self.view)
+        
         /// Display extra UI
         ///     Doing this with a delay because it doesn't work if the tab switch animation is still ongoing
         

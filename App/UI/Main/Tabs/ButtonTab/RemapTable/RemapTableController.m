@@ -400,7 +400,7 @@ static void updateBorderColor(RemapTableController *object, BOOL isInitialAppear
     [self.tableView insertRowsAtIndexes:allRows withAnimation:NSTableViewAnimationEffectNone];
     
     /// Update tableView size
-    [(RemapTableView *)self.tableView updateSizeWithAnimation:YES];
+    [(RemapTableView *)self.tableView updateSizeWithAnimation];
     
     /// Capture notifs
     NSSet *capturedButtonsAfter = [RemapTableUtility getCapturedButtons];

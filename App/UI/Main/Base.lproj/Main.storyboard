@@ -641,7 +641,7 @@ Mac Mouse Fix</string>
                                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                                     <subviews>
                                                                         <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="AHZ-Kd-4Xf">
-                                                                            <rect key="frame" x="-8" y="3" width="294" height="16"/>
+                                                                            <rect key="frame" x="-8" y="3" width="295" height="16"/>
                                                                             <constraints>
                                                                                 <constraint firstAttribute="height" constant="16" id="iEl-dG-QM5"/>
                                                                             </constraints>
@@ -765,8 +765,10 @@ Mac Mouse Fix</string>
                                                         </tableColumn>
                                                     </tableColumns>
                                                     <connections>
+                                                        <outlet property="_scrollViewMaxHeightConstraint" destination="lgg-Lp-QGT" id="H0Z-zM-Hmu"/>
                                                         <outlet property="dataSource" destination="sHV-yD-oIc" id="dRh-LR-NFk"/>
                                                         <outlet property="delegate" destination="sHV-yD-oIc" id="c9M-kd-lkD"/>
+                                                        <outlet property="scrollView" destination="OGV-uF-BjJ" id="vgE-aZ-MkA"/>
                                                     </connections>
                                                 </tableView>
                                             </subviews>
@@ -781,6 +783,7 @@ Mac Mouse Fix</string>
                                             <edgeInsets key="contentInsets" left="0.0" right="0.0" top="0.0" bottom="0.0"/>
                                         </clipView>
                                         <constraints>
+                                            <constraint firstAttribute="width" constant="541" id="6FJ-zV-Tbp"/>
                                             <constraint firstAttribute="height" relation="lessThanOrEqual" constant="500" id="lgg-Lp-QGT"/>
                                             <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="300" id="oIt-mA-DPV"/>
                                         </constraints>
