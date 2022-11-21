@@ -60,13 +60,13 @@ static NSMutableDictionary *_modifiers;
         
         /// Create keyboard modifier event tap
         CGEventMask mask = CGEventMaskBit(kCGEventFlagsChanged);
-        _keyboardModifierEventTap = CGEventTapCreate(kCGHIDEventTap, kCGHeadInsertEventTap, kCGEventTapOptionListenOnly, mask, kbModsChanged, NULL);
-        CFRunLoopSourceRef runLoopSource = CFMachPortCreateRunLoopSource(kCFAllocatorDefault, _keyboardModifierEventTap, 0);
+        _kbModEventTap = CGEventTapCreate(kCGHIDEventTap, kCGHeadInsertEventTap, kCGEventTapOptionListenOnly, mask, kbModsChanged, NULL);
+        CFRunLoopSourceRef runLoopSource = CFMachPortCreateRunLoopSource(kCFAllocatorDefault, _kbModEventTap, 0);
         CFRunLoopAddSource(CFRunLoopGetCurrent(), runLoopSource, kCFRunLoopDefaultMode);
         CFRelease(runLoopSource);
         
         /// Enable/Disable eventTap based on Remap.remaps
-        CGEventTapEnable(_keyboardModifierEventTap, false); /// Disable eventTap first (Might prevent `_keyboardModifierEventTap` from always being called twice - Nope doesn't make a difference)
+        CGEventTapEnable(_kbModEventTap, false); /// Disable eventTap first (Might prevent `_keyboardModifierEventTap` from always being called twice - Nope doesn't make a difference)
         toggleModifierListening(Remap.remaps);
         
         /// Re-toggle keyboard modifier callbacks whenever Remap.remaps changes
@@ -75,6 +75,7 @@ static NSMutableDictionary *_modifiers;
                                                         object:nil
                                                          queue:nil
                                                     usingBlock:^(NSNotification * _Nonnull note) {
+            
             DDLogDebug(@"Received notification that remaps have changed");
             toggleModifierListening(Remap.remaps);
         }];
@@ -83,7 +84,18 @@ static NSMutableDictionary *_modifiers;
 
 #pragma mark Toggle listening
 
-static CFMachPortRef _keyboardModifierEventTap;
+typedef enum {
+    
+    kMFModifierPriorityActiveListen,
+    kMFModifierPriorityPassiveUse,
+    kMFModifierPriorityUnused,
+    
+} MFModifierPriority; /// Name `priority` isn't that great
+
+static BOOL _kbModPriority;
+static BOOL _buttonModPriority;
+static CFMachPortRef _kbModEventTap;
+
 static void toggleModifierListening(NSDictionary *remaps) {
 
     ///
@@ -91,6 +103,10 @@ static void toggleModifierListening(NSDictionary *remaps) {
     ///
     
     // TODO: Implement
+
+    _buttonModPriority = kMFModifierPriorityActiveListen;
+        
+    assert(_buttonModPriority != kMFModifierPriorityPassiveUse); /// We can't passively retrieve the button mods
     
     ///
     /// Toggle kbMod eventTap
@@ -98,24 +114,24 @@ static void toggleModifierListening(NSDictionary *remaps) {
     
     /// Decide
     
-    bool doEnable = false;
+    _kbModPriority = kMFModifierPriorityUnused;
     
     if (Remap.addModeIsEnabled) {
-        doEnable = true;
+        _kbModPriority = kMFModifierPriorityActiveListen;
     } else {
         /// If any keyboard modifier is used in remaps, enable tap
+        /// TODO: Only actively listen if the keyboardMods could toggle another eventTap
         for (NSDictionary *modifiers in remaps) {
             BOOL containsKB = modifiers[kMFModificationPreconditionKeyKeyboard] != nil;
             if (containsKB) {
-                doEnable = true;
+                _kbModPriority = kMFModifierPriorityActiveListen; ///kMFModifierPriorityPassiveUse;
                 break;
             }
         }
     }
     
     /// Toggle tap
-    
-    CGEventTapEnable(_keyboardModifierEventTap, doEnable);
+    CGEventTapEnable(_kbModEventTap, _kbModPriority == kMFModifierPriorityActiveListen);
 }
 
 #pragma mark Handle modifier change
@@ -131,20 +147,7 @@ CGEventRef _Nullable kbModsChanged(CGEventTapProxy proxy, CGEventType type, CGEv
     /// - We can't use CGEventCreate() here for the source of the keyboard modifers, because the kbMods won't be up-to-date.
     /// -> Idea: This might be because we're using a passive listener eventTap?
 
-    /// Mask
-    /// - Only lets bits 16-23 through
-    /// - NSEventModifierFlagDeviceIndependentFlagsMask == 0xFFFF0000 -> it allows bits 16 - 31. But bits 24 - 31 contained weird stuff which messed up the return value and modifiers are only on bits 16-23, so we defined our own mask.
-    uint64_t mask = 0xFF0000;
-    
-    /// We ignore caps lock.
-    /// - Otherwise modfifications won't work normally when caps lock is enabled.
-    /// - Maybe we need to ignore caps lock in other places, too make this work properly but I don't think so
-    /// - We should probably remove this once we update RemapsOverrider to work with subset matches and stuff
-    /// -> TODO: Remove capslock ignoring now.
-    mask &= ~kCGEventFlagMaskAlphaShift;
-    
-    /// Get new flags
-    NSUInteger newFlags = CGEventGetFlags(event) & mask;
+    NSUInteger newFlags = flagsFromEvent(event);
     
     /// Check Change
     NSNumber *newFlagsNS = @(newFlags);
@@ -161,16 +164,13 @@ CGEventRef _Nullable kbModsChanged(CGEventTapProxy proxy, CGEventType type, CGEv
         }
         
         /// Notify
-        [ReactiveModifiers.shared handleModifiersDidChange];
-        reactToModifierChange();
+        [ReactiveModifiers.shared handleModifiersDidChangeTo:_modifiers];
+//        reactToModifierChange(); /// Calling this here leads to different behaviour in how modifiedDrag is toggled between active and passive kbMod priority. We probably don't want that.
     }
 
     /// Return
     return event;
 }
-
-
-#pragma mark Button modifiers
 
 + (void)buttonModsChangedTo:(NSArray<NSDictionary<NSString *, NSNumber *> *> *)newModifiers {
     
@@ -190,14 +190,73 @@ CGEventRef _Nullable kbModsChanged(CGEventTapProxy proxy, CGEventType type, CGEv
         _modifiers[kMFModificationPreconditionKeyButtons] = newModifiers;
     }
     
+    /// Also update kbMods before notifying
+    if (_kbModPriority == kMFModifierPriorityPassiveUse) {
+        updateKBMods(nil);
+    }
+    
     /// Notify
-    [ReactiveModifiers.shared handleModifiersDidChange];
+    [ReactiveModifiers.shared handleModifiersDidChangeTo:_modifiers];
     reactToModifierChange();
+}
+
+#pragma mark Helper
+
+static void updateKBMods(CGEventRef  _Nullable event) {
+    
+    assert(_kbModPriority == kMFModifierPriorityPassiveUse);
+    
+    NSUInteger flags = flagsFromEvent(event);
+    if (flags == 0) {
+        [_modifiers removeObjectForKey:kMFModificationPreconditionKeyKeyboard];
+    } else {
+        _modifiers[kMFModificationPreconditionKeyKeyboard] = @(flags);
+    }
+}
+
+static NSUInteger flagsFromEvent(CGEventRef _Nullable event) {
+    
+    /// When you don't pass in an event sometimes the flags won't be up to date (e.g. from the kbModsChanged eventTap). Also it will be somewhat slower
+    
+    /// Create event
+    BOOL eventWasNULL = NO;
+    if (event == NULL) {
+        eventWasNULL = YES;
+        event = CGEventCreate(NULL);
+    }
+    
+    /// Mask
+    /// - Only lets bits 16-23 through
+    /// - NSEventModifierFlagDeviceIndependentFlagsMask == 0xFFFF0000 -> it allows bits 16 - 31. But bits 24 - 31 contained weird stuff which messed up the return value and modifiers are only on bits 16-23, so we defined our own mask.
+    uint64_t mask = 0xFF0000;
+    
+    /// We ignore caps lock.
+    /// - Otherwise modfifications won't work normally when caps lock is enabled.
+    /// - Maybe we need to ignore caps lock in other places, too make this work properly but I don't think so
+    /// - We should probably remove this once we update RemapsOverrider to work with subset matches and stuff
+    /// -> TODO: Remove capslock ignoring now.
+    mask &= ~kCGEventFlagMaskAlphaShift;
+    
+    /// Get new flags
+    NSUInteger flags = CGEventGetFlags(event) & mask;
+    
+    /// Release
+    if (eventWasNULL) CFRelease(event);
+    
+    /// Return
+    return flags;
 }
 
 #pragma mark Interface
 
-+ (NSDictionary *)modifiers {
++ (NSDictionary *)modifiersWithEvent:(CGEventRef _Nullable)event {
+    
+    if (_kbModPriority == kMFModifierPriorityPassiveUse) {
+        
+        /// If we don't actively listen to kbMods, get the kbMods on the fly
+        updateKBMods(event);
+    }
+    
     return _modifiers;
 }
 
@@ -234,7 +293,7 @@ CGEventRef _Nullable kbModsChanged(CGEventTapProxy proxy, CGEventType type, CGEv
 
 #pragma mark React
 
-static void reactToModifierChange() {
+static void reactToModifierChange(void) {
     
     /// Get active modifications and initialize any which are modifier driven
     

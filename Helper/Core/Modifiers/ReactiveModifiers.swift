@@ -25,12 +25,12 @@ import ReactiveSwift
     }
 /// Main interface
     var modifiers: SignalProducer<NSDictionary, Never> {
-        return signal.producer.prefix(value: Modifiers.modifiers() as NSDictionary).skipRepeats()
+        return signal.producer.prefix(value: Modifiers.modifiers(with: nil) as NSDictionary).skipRepeats()
     }
     
     /// ObjC Interface
-    @objc func handleModifiersDidChange() {
-        observer.send(value: Modifiers.modifiers() as NSDictionary)
+    @objc func handleModifiersDidChange(to newModifiers: NSDictionary) {
+        observer.send(value: newModifiers)
     }
     
 }

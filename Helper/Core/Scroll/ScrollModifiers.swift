@@ -29,7 +29,7 @@ import CocoaLumberjackSwift
         /// Get currently active scroll remaps
         
         let modifyingDevice: Device = HelperState.activeDevice!;
-        let activeModifiers = Modifiers.modifiers()
+        let activeModifiers = Modifiers.modifiers(with: event)
         let baseRemaps = Remap.remaps();
         
         /// Debug

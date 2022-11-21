@@ -19,10 +19,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 //+ (NSDictionary *)getActiveModifiersForDevice:(Device *)device event:(CGEventRef _Nullable) event;
 
-+ (NSDictionary *)modifiers;
++ (NSDictionary *)modifiersWithEvent:(CGEventRef _Nullable)event;
 
 + (void)buttonModsChangedTo:(NSArray *)newModifiers;
-
 + (void)handleModificationHasBeenUsed;
 
 //+ (void)handleModificationHasBeenUsedWithDevice:(Device *_Nullable)device;
