@@ -12,7 +12,7 @@ import CocoaLumberjackSwift
 
 @objc class ScrollModifiers: NSObject {
 
-    static var activeModifications: Dictionary<AnyHashable, Any> = [:];
+    static var activeModifications = NSDictionary()
     
     @objc public static func currentModifications(event: CGEvent) -> MFScrollModificationResult {
         
@@ -28,19 +28,22 @@ import CocoaLumberjackSwift
         
         /// Get currently active scroll remaps
         
-        let modifyingDevice: Device = HelperState.activeDevice!;
+//        let modifyingDevice: Device = HelperState.activeDevice!;
         let activeModifiers = Modifiers.modifiers(with: event)
-        let baseRemaps = Remap.remaps();
+//        let baseRemaps = Remap.remaps;
         
         /// Debug
 //        DDLogDebug("activeFlags in ScrollModifers: \(SharedUtility.binaryRepresentation((activeModifiers[kMFModificationPreconditionKeyKeyboard] as? NSNumber)?.uint32Value ?? 0))") /// This is unbelievably slow for some reason
         
         self.activeModifications = Remap.modifications(withModifiers: activeModifiers)
         
-        guard let modifiedScrollDictUntyped = activeModifications[kMFTriggerScroll] else {
+        guard let modifiedScrollDict = activeModifications[kMFTriggerScroll] else {
             return result; /// There are no active scroll modifications
         }
-        let modifiedScrollDict = modifiedScrollDictUntyped as! Dictionary<AnyHashable, Any>
+        guard let modifiedScrollDict = modifiedScrollDict as? NSDictionary else {
+            assert(false) /// Invalid state
+            return result;
+        }
         
         /// Input modification
         
@@ -91,8 +94,8 @@ import CocoaLumberjackSwift
             
             /// Send addMode feedback
             if result.effectMod == kMFScrollEffectModificationAddModeFeedback {
-                var payload = modifiedScrollDict
-                payload.removeValue(forKey: kMFModifiedScrollDictKeyEffectModificationType)
+                var payload = modifiedScrollDict.mutableCopy() as! NSMutableDictionary /// I think a shallow mutableCopy is enough
+                payload.removeObject(forKey: kMFModifiedScrollDictKeyEffectModificationType)
                 Remap.concludeAddMode(withPayload: payload)
             }
         }
@@ -107,7 +110,7 @@ import CocoaLumberjackSwift
     
     }
     
-    @objc public static func reactToModiferChange(activeModifications: Dictionary<AnyHashable, Any>) {
+    @objc public static func reactToModiferChange(activeModifications: NSDictionary) {
         /// This is called on every button press. Might be good to optimize this if it has any noticable performance impact.
         
         /// Deactivate app switcher - if appropriate
@@ -115,7 +118,7 @@ import CocoaLumberjackSwift
         let effectModKeyPath = "\(kMFTriggerScroll).\(kMFModifiedScrollDictKeyEffectModificationType)"
         
         let switcherActiveLastScroll = (self.activeModifications as NSDictionary).value(forKeyPath: effectModKeyPath) as? String == kMFModifiedScrollEffectModificationTypeCommandTab
-        let switcherActiveNow = (activeModifications as NSDictionary).value(forKeyPath: effectModKeyPath) as? String == kMFModifiedScrollEffectModificationTypeCommandTab
+        let switcherActiveNow = activeModifications.value(forKeyPath: effectModKeyPath) as? String == kMFModifiedScrollEffectModificationTypeCommandTab
         
         if (switcherActiveLastScroll && !switcherActiveNow) {
             /// AppSwitcher has been deactivated - notify Scroll.m

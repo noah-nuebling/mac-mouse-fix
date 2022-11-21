@@ -38,7 +38,7 @@
     [resultImage lockFocus];
     
     /// Get shorthand for context
-    NSGraphicsContext *ctx = NSGraphicsContext.currentContext;
+//    NSGraphicsContext *ctx = NSGraphicsContext.currentContext;
     
     /// Get frame for drawing
     NSRect drawingFrame = NSMakeRect(0.0, 0.0, inputImage.size.width, inputImage.size.height);

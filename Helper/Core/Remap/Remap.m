@@ -49,6 +49,10 @@ static NSMutableDictionary *_swizzleCache;
     }
 }
 
++ (id)__SWIFT_UNBRIDGED_modificationsWithModifiers:(id)modifiers {
+    return [self modificationsWithModifiers:modifiers];
+}
+
 #pragma mark - Storage
 
 #define USE_TEST_REMAPS NO
@@ -56,6 +60,9 @@ static NSDictionary *_remaps;
 
 + (NSDictionary *)remaps {
     return _remaps;
+}
++ (id)__SWIFT_UNBRIDGED_remaps {
+    return self.remaps;
 }
 
 + (void)setRemaps:(NSDictionary *)remapsDict {
@@ -352,6 +359,10 @@ BOOL _addModeIsEnabled = NO;
     ///    [Remap performSelector:@selector(disableAddMode) withObject:nil afterDelay:0.5];
     /// ^ We did this to keep the remapping disabled for a little while after adding a new row, but it leads to adding several entries at once when trying to input button modification precondition, if you're not fast enough.
 
+}
+
++ (void)__SWIFT_UNBRIDGED_concludeAddModeWithPayload:(id)payload {
+    [self concludeAddModeWithPayload:payload];
 }
 
 

@@ -10,6 +10,7 @@
 #import <CoreGraphics/CoreGraphics.h>
 #import <Foundation/Foundation.h>
 #import "Device.h"
+#import "WannabePrefixHeader.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -19,7 +20,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 //+ (NSDictionary *)getActiveModifiersForDevice:(Device *)device event:(CGEventRef _Nullable) event;
 
-+ (NSDictionary *)modifiersWithEvent:(CGEventRef _Nullable)event;
++ (NSDictionary *)modifiersWithEvent:(CGEventRef _Nullable)event MF_SWIFT_HIDDEN;
++ (id)__SWIFT_UNBRIDGED_modifiersWithEvent:(CGEventRef _Nullable)event;
 
 + (void)buttonModsChangedTo:(NSArray *)newModifiers;
 + (void)handleModificationHasBeenUsed;

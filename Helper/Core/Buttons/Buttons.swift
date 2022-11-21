@@ -22,8 +22,8 @@ import CocoaLumberjackSwift
     @objc static var useButtonModifiers = false
     
     /// Vars that we only update once per clickCycle
-    static var modifiers = [AnyHashable: Any]()
-    static var modifications = [AnyHashable: Any]()
+    static var modifiers = NSDictionary()
+    static var modifications = NSDictionary()
     static var maxClickLevel: Int = -1
     
     /// Init
@@ -44,7 +44,7 @@ import CocoaLumberjackSwift
         
         /// Get remaps
         /// Accessing the dict like this is super slow. Casting to NSDictionary and using NSDictionary API to access it's values might fix that. See https://stackoverflow.com/questions/57555444/accessing-object-c-nsdictionary-values-in-swift-is-slow
-        let remaps = Remap.remaps()
+        let remaps = Remap.remaps
         
         /// Update stuff when clickCycle starts
         
@@ -55,7 +55,7 @@ import CocoaLumberjackSwift
             HelperState.updateActiveDevice(event: event)
             
             /// Update modifications
-            let remaps = Remap.remaps() /// Why aren't we reusing the remaps from above?
+            let remaps = Remap.remaps /// Why aren't we reusing the remaps from above?
             self.modifiers = Modifiers.modifiers(with: event)
             self.modifications = Remap.modifications(withModifiers: modifiers)
             
@@ -103,7 +103,7 @@ import CocoaLumberjackSwift
             var effectForMouseDownStateOfThisLevelExists: ObjCBool = false
             var effectOfGreaterLevelExists: ObjCBool = false
             
-            ButtonLandscapeAssessor.assessMappingLandscape(withButton: button as NSNumber, level: clickLevel as NSNumber, modificationsActingOnThisButton: modifications as! [AnyHashable : Any], remaps: remaps, thisClickDoBe: &clickActionOfThisLevelExists, thisDownDoBe: &effectForMouseDownStateOfThisLevelExists, greaterDoBe: &effectOfGreaterLevelExists)
+            ButtonLandscapeAssessor.assessMappingLandscape(withButton: button as NSNumber, level: clickLevel as NSNumber, modificationsActingOnThisButton: modifications, remaps: remaps, thisClickDoBe: &clickActionOfThisLevelExists, thisDownDoBe: &effectForMouseDownStateOfThisLevelExists, greaterDoBe: &effectOfGreaterLevelExists)
             
             /// Create trigger -> action map based on mappingLandscape
             
