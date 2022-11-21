@@ -299,16 +299,17 @@ BOOL _addModeIsEnabled = NO;
         }
     }
     
+    /// Update state and notifiy
+    ///     Need to set `_addModeIsEnabled` true before calling `setRemaps:` so that the keyboard mods event tap in `Modifiers` is toggled properly
+    _addModeIsEnabled = YES;
+    [MFMessagePort sendMessage:@"addModeEnabled" withPayload:nil expectingReply:NO];
+    
     /// Set `_remaps` to generated
     ///    Why weren't we using setRemaps here? Changed it to setRemaps now. Hopefully nothing breaks.
 
     [self setRemaps:@{
         @{}: triggerToEffectDict
     }];
-    
-    /// Update state and notifiy
-    _addModeIsEnabled = YES;
-    [MFMessagePort sendMessage:@"addModeEnabled" withPayload:nil expectingReply:NO];
 }
 
 + (void)disableAddMode {

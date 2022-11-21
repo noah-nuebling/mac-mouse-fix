@@ -257,8 +257,8 @@
             filePath = "Helper/Core/Remap/Remap.m"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "342"
-            endingLineNumber = "342"
+            startingLineNumber = "343"
+            endingLineNumber = "343"
             landmarkName = "+concludeAddModeWithPayload:"
             landmarkType = "7">
          </BreakpointContent>
@@ -266,32 +266,16 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "C1379779-D6CD-41B2-ADDF-564899F60161"
-            shouldBeEnabled = "No"
+            uuid = "A89C8F71-68DD-4775-B00A-50A5DEDC2612"
+            shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Helper/Core/Modifiers/Modifiers.m"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "180"
-            endingLineNumber = "180"
-            landmarkName = "+buttonModsChangedTo:"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "79FCDCAE-BD44-432C-B598-E95FC27FC9C3"
-            shouldBeEnabled = "No"
-            ignoreCount = "1"
-            continueAfterRunningActions = "No"
-            filePath = "Helper/Core/Modifiers/Modifiers.m"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "234"
-            endingLineNumber = "234"
-            landmarkName = "reactToModifierChange()"
+            startingLineNumber = "97"
+            endingLineNumber = "97"
+            landmarkName = "toggleModifierListening(remaps)"
             landmarkType = "9">
          </BreakpointContent>
       </BreakpointProxy>

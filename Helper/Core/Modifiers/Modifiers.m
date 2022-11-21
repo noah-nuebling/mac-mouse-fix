@@ -38,15 +38,21 @@
 /// In those cases we'll use *modifier driven* modification.
 /// Which means we listen for changes to the active modifiers and when they match a modifications' precondition, we'll initialize the modification components which are modifier driven. (which is only the drag modificaitons at this point)
 
+/// Update:
+/// (At the time of writing, this change is not yet reflected in the other comments in this class.)`Modifiers` class now has a single `modifiers` instance var which is updated whenever modifiers change. When some module requests the current modifiers that instance var is simply returned. Before, the modifiers were recompiled each time they were requested. The whole idea of "modifier driven" and "trigger driven" modifications is now not used anymore. All modifications are in effect "modifier driven". This does mean we always listen to keyboard modifiers which is bad. But that will allow us to turn off other event interception dynamically. For example when the user has scrolling enhancements turned off we can turn the scrollwheel eventTap off but then when they hold a modifier for scroll-to-zoom we can dynamically turn the tap on again. Ideally we'd only tap into the keyboard mod event stream if there is such a situation where the keyboard mods can toggle another tap and otherwise turn the keyboard mod tap off. I'll look into that.
+
+
 #pragma mark - Storage
 
 static NSMutableDictionary *_modifiers;
 
 #pragma mark - Load
 
-/// This used to be initialize but  that didn't execute until the first mouse buttons were pressed
-/// Then it was load, but that led to '"Mac Mouse Fix Helper" would like to receive keystrokes from any application' prompt. (I think)
 + (void)load_Manual {
+    
+    /// This used to be initialize but  that didn't execute until the first mouse buttons were pressed
+    /// Then it was load, but that led to '"Mac Mouse Fix Helper" would like to receive keystrokes from any application' prompt. (I think)
+    
     if (self == [Modifiers class]) {
         
         /// Init `_modifiers`
