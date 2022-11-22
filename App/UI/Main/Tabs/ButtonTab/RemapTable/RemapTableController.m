@@ -624,6 +624,10 @@ static void updateBorderColor(RemapTableController *object, BOOL isInitialAppear
     } else {
         toHighlightIndexSet = existingIndexes;
     }
+    
+    /// Scroll to visible and select
+    ///     Scrolling to visible sometimes doesn't work when the table is at maxSize
+    
     [self.tableView selectRowIndexes:toHighlightIndexSet byExtendingSelection:NO];
     [self.tableView scrollRowToVisible:toHighlightIndexSet.firstIndex];
     

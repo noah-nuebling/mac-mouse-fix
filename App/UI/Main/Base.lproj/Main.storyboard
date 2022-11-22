@@ -637,11 +637,11 @@ Mac Mouse Fix</string>
                                                                     </connections>
                                                                 </tableCellView>
                                                                 <tableCellView identifier="buttonGroupCell" id="pxf-x1-gL5" userLabel="ButtonGroupCell">
-                                                                    <rect key="frame" x="8" y="38" width="288" height="22"/>
+                                                                    <rect key="frame" x="8" y="38" width="287" height="22"/>
                                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                                     <subviews>
                                                                         <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="AHZ-Kd-4Xf">
-                                                                            <rect key="frame" x="-8" y="3" width="295" height="16"/>
+                                                                            <rect key="frame" x="-8" y="3" width="294" height="16"/>
                                                                             <constraints>
                                                                                 <constraint firstAttribute="height" constant="16" id="iEl-dG-QM5"/>
                                                                             </constraints>
@@ -765,9 +765,10 @@ Mac Mouse Fix</string>
                                                         </tableColumn>
                                                     </tableColumns>
                                                     <connections>
-                                                        <outlet property="_scrollViewMaxHeightConstraint" destination="lgg-Lp-QGT" id="H0Z-zM-Hmu"/>
                                                         <outlet property="dataSource" destination="sHV-yD-oIc" id="dRh-LR-NFk"/>
                                                         <outlet property="delegate" destination="sHV-yD-oIc" id="c9M-kd-lkD"/>
+                                                        <outlet property="scrollView" destination="OGV-uF-BjJ" id="D4U-Ho-Z6a"/>
+                                                        <outlet property="scrollViewMaxHeightConstraint" destination="lgg-Lp-QGT" id="3SS-Fg-BdJ"/>
                                                     </connections>
                                                 </tableView>
                                             </subviews>
