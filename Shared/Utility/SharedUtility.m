@@ -62,6 +62,8 @@ NSException * _Nullable tryCatch(void (^tryBlock)(void)) {
     
     if (matchingDisplayCount == 1) {
         
+        /// Doesn't this case also cover `matchingDisplayCount > 1`? Should we really assert(false) in that case?
+        
         /// Get the the master display in case _displaysUnderMousePointer[0] is part of a mirror set
         CGDirectDisplayID d = CGDisplayPrimaryDisplay(newDisplaysUnderMousePointer[0]);
         /// Output
