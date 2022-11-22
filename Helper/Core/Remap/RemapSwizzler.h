@@ -14,7 +14,7 @@
 
 @interface RemapSwizzler : NSObject
 
-+ (NSDictionary *_Nonnull)swizzleRemaps:(NSDictionary *_Nonnull)remaps activeModifiers:(NSDictionary *_Nonnull)modifiers;
++ (NSDictionary *_Nullable)swizzleRemaps:(NSDictionary *_Nonnull)remaps activeModifiers:(NSDictionary *_Nonnull)modifiers;
 
 @end
 

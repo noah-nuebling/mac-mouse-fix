@@ -35,7 +35,7 @@
 
 static NSMutableDictionary *_swizzleCache;
 
-+ (NSDictionary *)modificationsWithModifiers:(NSDictionary *)modifiers {
++ (NSDictionary * _Nullable)modificationsWithModifiers:(NSDictionary *)modifiers {
     
     /// Cache is reset whenever remaps change
     
@@ -50,7 +50,7 @@ static NSMutableDictionary *_swizzleCache;
     }
 }
 
-+ (id)__SWIFT_UNBRIDGED_modificationsWithModifiers:(id)modifiers {
++ (id _Nullable)__SWIFT_UNBRIDGED_modificationsWithModifiers:(id)modifiers {
     return [self modificationsWithModifiers:modifiers];
 }
 

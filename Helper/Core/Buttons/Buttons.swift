@@ -57,7 +57,7 @@ import CocoaLumberjackSwift
             /// Update modifications
             let remaps = Remap.remaps /// Why aren't we reusing the remaps from above?
             self.modifiers = Modifiers.modifiers(with: event)
-            self.modifications = Remap.modifications(withModifiers: modifiers)
+            self.modifications = Remap.modifications(withModifiers: modifiers) ?? NSDictionary()
             
             /// Get max clickLevel
             self.maxClickLevel = 0

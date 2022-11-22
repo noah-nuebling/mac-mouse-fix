@@ -183,7 +183,7 @@ static CGEventRef __nullable eventTapCallBack(CGEventTapProxy proxy, CGEventType
         CGEventTapEnable(_drag.eventTap, true);
         return event;
     } else if (type == kCGEventTapDisabledByUserInput) {
-        DDLogInfo(@"ModifiedDrag eventTap disabled by user input.");
+        DDLogDebug(@"ModifiedDrag eventTap disabled by user input.");
         return event;
     }
     

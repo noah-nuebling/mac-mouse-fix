@@ -17,8 +17,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (class, readonly) BOOL addModeIsEnabled;
 
-+ (NSDictionary *)modificationsWithModifiers:(NSDictionary *)modifiers MF_SWIFT_HIDDEN;
-+ (id)__SWIFT_UNBRIDGED_modificationsWithModifiers:(id)modifiers;
++ (NSDictionary * _Nullable)modificationsWithModifiers:(NSDictionary *)modifiers MF_SWIFT_HIDDEN;
++ (id _Nullable)__SWIFT_UNBRIDGED_modificationsWithModifiers:(id)modifiers;
 
 + (void)reload;
 

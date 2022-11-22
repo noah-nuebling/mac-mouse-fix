@@ -11,11 +11,11 @@ import Foundation
 
 extension Modifiers {
     
-    static func modifiers(with event: CGEvent?) -> NSDictionary {
-        return __SWIFT_UNBRIDGED_modifiers(with: event) as! NSDictionary
+    static func modifiers(with event: CGEvent?) -> NSMutableDictionary {
+        return __SWIFT_UNBRIDGED_modifiers(with: event) as! NSMutableDictionary
     }
     
-    static func buttonModsChanged(to newMods: NSArray) {
+    static func buttonModsChanged(to newMods: NSMutableArray) {
         __SWIFT_UNBRIDGED_buttonModsChanged(to: newMods)
     }
 }

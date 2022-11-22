@@ -35,7 +35,7 @@ import CocoaLumberjackSwift
         /// Debug
 //        DDLogDebug("activeFlags in ScrollModifers: \(SharedUtility.binaryRepresentation((activeModifiers[kMFModificationPreconditionKeyKeyboard] as? NSNumber)?.uint32Value ?? 0))") /// This is unbelievably slow for some reason
         
-        self.activeModifications = Remap.modifications(withModifiers: activeModifiers)
+        self.activeModifications = Remap.modifications(withModifiers: activeModifiers) ?? NSDictionary()
         
         guard let modifiedScrollDict = activeModifications[kMFTriggerScroll] else {
             return result; /// There are no active scroll modifications
@@ -94,7 +94,7 @@ import CocoaLumberjackSwift
             
             /// Send addMode feedback
             if result.effectMod == kMFScrollEffectModificationAddModeFeedback {
-                var payload = modifiedScrollDict.mutableCopy() as! NSMutableDictionary /// I think a shallow mutableCopy is enough
+                let payload = modifiedScrollDict.mutableCopy() as! NSMutableDictionary /// I think a shallow mutableCopy is enough
                 payload.removeObject(forKey: kMFModifiedScrollDictKeyEffectModificationType)
                 Remap.concludeAddMode(withPayload: payload)
             }

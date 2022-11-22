@@ -31,7 +31,7 @@ class ButtonModifiers: NSObject {
     func update(button: ButtonNumber, clickLevel: ClickLevel, downNotUp mouseDown: Bool) {
         
         /// Copy old state
-        var oldState = state.copy() as! NSArray
+        let oldState = state.copy() as! NSArray
         
         /// Update state
         if mouseDown {
