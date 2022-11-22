@@ -30,11 +30,11 @@
     /// Not sure why this stuff also works for the fallback but it does
         
     if (isDarkmode) {
-        string = [string attributedStringByAddingWeight:0.4];
-        string = [string attributedStringByAddingBaseLineOffset:0.39];
+        string = [string attributedStringByAddingWeight:0.4 forRange:NULL];
+        string = [string attributedStringByAddingBaseLineOffset:0.39 forRange:NULL];
     } else {
-        string = [string attributedStringByAddingWeight:0.3];
-        string = [string attributedStringByAddingBaseLineOffset:0.39];
+        string = [string attributedStringByAddingWeight:0.3 forRange:NULL];
+        string = [string attributedStringByAddingBaseLineOffset:0.39 forRange:NULL];
     }
     
     string = [string attributedStringBySettingFontSize:11.4];

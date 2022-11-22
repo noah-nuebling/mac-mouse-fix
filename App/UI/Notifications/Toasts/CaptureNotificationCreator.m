@@ -55,7 +55,7 @@
         /// Define learn more string
         
         NSString *linkStringRaw = NSLocalizedString(@"capture-toast.link", @"First draft: Learn More");
-        NSAttributedString *linkString = [linkStringRaw.attributed attributedStringByAddingLinkWithURL:[NSURL URLWithString:@"https://github.com/noah-nuebling/mac-mouse-fix/discussions/112"] forSubstring:linkStringRaw];
+        NSAttributedString *linkString = [linkStringRaw.attributed attributedStringByAddingHyperlink:[NSURL URLWithString:@"https://github.com/noah-nuebling/mac-mouse-fix/discussions/112"] forSubstring:linkStringRaw];
         
         /// Create string describing uncaptured and captured
         

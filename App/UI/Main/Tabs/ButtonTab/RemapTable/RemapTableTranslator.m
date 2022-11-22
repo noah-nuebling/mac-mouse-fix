@@ -795,7 +795,7 @@ static NSString *effectNameForRowDict(NSDictionary * _Nonnull rowDict) {
         /// Display main button – only if there *are* button modifiers
         
         NSAttributedString *mainButton = [UIStrings getButtonString:btn.intValue].attributed;
-        mainButton = [mainButton attributedStringBySettingSecondaryLabelColorForSubstring:mainButton.string];
+        mainButton = [mainButton attributedStringByAddingColor:NSColor.secondaryLabelColor forRange:NULL];
         tr = [NSAttributedString attributedStringWithAttributedFormat:tr args:@[mainButton]];
         
     } else {

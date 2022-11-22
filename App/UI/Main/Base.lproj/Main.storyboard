@@ -560,7 +560,7 @@ Mac Mouse Fix</string>
                                                 <rect key="frame" x="-2" y="12" width="545" height="38"/>
                                                 <textFieldCell key="cell" alignment="center" id="N7H-9j-DIr">
                                                     <font key="font" metaFont="smallSystem"/>
-                                                    <string key="title">Move the mouse pointer inside the '+' field, then Click a mouse button to assign an action to it.  You can also Double Click, Click and Drag and [more]().</string>
+                                                    <string key="title">Move the mouse pointer inside the '+' field, then _Click_ a mouse button to assign an action to it.  You can also _Double Click_, _Click and Drag_ and [more]().</string>
                                                     <color key="textColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
                                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                 </textFieldCell>
@@ -768,7 +768,6 @@ Mac Mouse Fix</string>
                                                         <outlet property="_scrollViewMaxHeightConstraint" destination="lgg-Lp-QGT" id="H0Z-zM-Hmu"/>
                                                         <outlet property="dataSource" destination="sHV-yD-oIc" id="dRh-LR-NFk"/>
                                                         <outlet property="delegate" destination="sHV-yD-oIc" id="c9M-kd-lkD"/>
-                                                        <outlet property="scrollView" destination="OGV-uF-BjJ" id="vgE-aZ-MkA"/>
                                                     </connections>
                                                 </tableView>
                                             </subviews>

@@ -21,65 +21,139 @@ import CocoaLumberjackSwift
  
     @objc static func attributedString(markdown: String) -> NSAttributedString? {
         
-        let document = Document(parsing: markdown, source: URL(string: ""), options: [])
+        let document = Document(parsing: markdown, source: URL(string: ""), options: [.disableSmartOpts])
         if document.isEmpty { return nil }
         
-//        print("Transforming Markdown doc to attributed string: \(document)")
+        var visitor = ApplyMarkdown(attributeBase: nil)
+        let result = visitor.visit(document)
         
-        var walker = ToAttributed()
-        walker.visit(document)
-        
-        let walkerResult = walker.string
-        
-        return walkerResult /// Remember to fill out base before using this in UI or trying to calculate it's size. (What's wrong with using it in the UI before filling out base?)
+        return result
     }
     
+    @objc static func attributedString(attributedMarkdown: NSAttributedString) -> NSAttributedString? {
+        
+        let document = Document(parsing: attributedMarkdown.string, source: URL(string: ""), options: [.disableSmartOpts])
+        if document.isEmpty { return nil }
+        
+        var visitor = ApplyMarkdown(attributeBase: attributedMarkdown)
+        let result = visitor.visit(document)
+        
+        
+        return result /// Remember to fill out base before using this in UI or trying to calculate it's size. (What's wrong with using it in the UI before filling out base?)
+    }
 }
 
-struct ToAttributed: MarkupWalker {
+struct ApplyMarkdown: MarkupVisitor {
     
-    var string: NSMutableAttributedString = NSMutableAttributedString(string: "")
+    /// Generic type
     
-    mutating func visitLink(_ link: Link) -> () {
+    typealias Result = NSAttributedString?
+    
+    /// Storage
+    
+    var base: NSAttributedString? = nil
+    var baseRaw: NSString? = nil
+    var baseSearchRange: NSRange? = nil
+    
+    /// Init
+    
+    init(attributeBase: NSAttributedString? = nil) {
         
-        let str: NSAttributedString
-        if let destination = link.destination, let url = URL(string: destination) {
-            str = NSAttributedString.hyperlink(from: link.plainText, with: url)
-        } else {
-            str = NSAttributedString(string: link.plainText)
+        /// Use the attributes from `attributeBase` as base and override them with the markdown styling where there is markdown styling
+        
+        if let base = attributeBase {
+            self.base = base
+            self.baseRaw = base.string as NSString
+            self.baseSearchRange = NSRange(location: 0, length: base.string.count)
+        }
+    }
+    
+    /// Helper function for visiting
+    
+    fileprivate mutating func descendInto(_ markup: Markup) -> ApplyMarkdown.Result {
+        
+        var result = NSMutableAttributedString(string: "")
+        
+        for child in markup.children {
+            if let r = visit(child) {
+                result.append(r)
+            }
         }
         
-        string.append(str)
+        return result
     }
     
-    mutating func visitEmphasis(_ emphasis: Emphasis) -> () {
-        string.append(NSAttributedString(string: emphasis.plainText))
-        string = string.addingItalic(forSubstring: emphasis.plainText) as! NSMutableAttributedString
-
+    /// Visitors
+    
+    mutating func defaultVisit(_ markup: Markdown.Markup) -> Result {
+        return descendInto(markup)
     }
     
-    mutating func visitStrong(_ strong: Strong) -> () {
-        string.append(NSAttributedString(string: strong.plainText))
-        string = string.addingBold(forSubstring: strong.plainText) as! NSMutableAttributedString
+    mutating func visitText(_ text: Text) -> Result {
+        
+        if let base = base, let baseRaw = baseRaw, let baseSearchRange = baseSearchRange {
+            
+            /// Find range of text in base string
+            let range = baseRaw.range(of: text.string, options: [], range: baseSearchRange, locale: nil)
+            
+            if range.location != NSNotFound {
+                
+                /// Update start of search range
+                ///     End should always be the end of the string
+                self.baseSearchRange = NSRange(location: range.location, length: baseRaw.length - range.location)
+                
+                /// Return substring of the base string
+                return base.attributedSubstring(from: range)
+                
+            } else {
+                fatalError()
+            }
+            
+        } else {
+            
+            /// If there's no base string, just convert the plainText
+            return NSAttributedString(string: text.string)
+        }
     }
     
-    mutating func visitText(_ text: Text) -> () {
-        string.append(NSAttributedString(string: text.string))
+    mutating func visitLink(_ link: Link) -> Result {
+        
+        guard let str = descendInto(link) else { return nil }
+        
+        if let destination = link.destination, let url = URL(string: destination) {
+            return str.addingHyperlink(url, for: nil)
+        } else {
+            return str
+        }
     }
     
-    mutating func visitSoftBreak(_ softBreak: SoftBreak) -> () {
-        string.append(NSAttributedString(string: "\n"))
+    mutating func visitEmphasis(_ emphasis: Emphasis) -> Result {
+        
+        guard let str = descendInto(emphasis) else { return nil }
+//        return str.addingItalic(for: nil)
+        return str.addingWeight(.semibold, for: nil)
     }
-    mutating func visitLineBreak(_ lineBreak: LineBreak) -> () {
+    
+    mutating func visitStrong(_ strong: Strong) -> Result {
+        
+        guard let str = descendInto(strong) else { return nil }
+//        return str.addingBold(for: nil)
+        return str.addingWeight(.bold, for: nil)
+    }
+    
+    mutating func visitSoftBreak(_ softBreak: SoftBreak) -> Result {
+        return NSAttributedString(string: "\n")
+    }
+    mutating func visitLineBreak(_ lineBreak: LineBreak) -> Result {
         /// I've never seen this be called. `\n\n` will start a new paragraph.
-        string.append(NSAttributedString(string: "\n\n"))
+        return NSAttributedString(string: "\n\n")
     }
     
-    mutating func visitParagraph(_ paragraph: Paragraph) -> () {
+    mutating func visitParagraph(_ paragraph: Paragraph) -> Result {
         
         /// Note: Why the isTopLevel restriction?
         
-        descendInto(paragraph)
+        guard let str = descendInto(paragraph) else { return nil }
         
         var isLast = false
         if let peerCount = paragraph.parent?.childCount, paragraph.indexInParent == peerCount - 1 {
@@ -87,21 +161,24 @@ struct ToAttributed: MarkupWalker {
         }
         let isTopLevel = paragraph.parent is Document
         if isTopLevel && !isLast {
-            string.append(NSAttributedString(string: "\n\n"))
+            return str.appending(NSAttributedString(string: "\n\n"))
+        } else {
+            return str
         }
     }
     
-    mutating func visitListItem(_ listItem: ListItem) -> () {
+    mutating func visitListItem(_ listItem: ListItem) -> Result {
         
-        string.append(NSAttributedString(string: String(format: "%d. ", listItem.indexInParent+1)))
-        descendInto(listItem)
-        
+        var str = NSAttributedString(string: String(format: "%d. ", listItem.indexInParent+1))
+        str = str.appending(descendInto(listItem) ?? NSAttributedString(string: ""))
         var isLast = false
         if let peerCount = listItem.parent?.childCount, listItem.indexInParent == peerCount - 1{
             isLast = true
         }
         if !isLast {
-            string.append(NSAttributedString(string: "\n"))
+            return str.appending(NSAttributedString(string: "\n"))
+        } else {
+            return str
         }
     }
 }
