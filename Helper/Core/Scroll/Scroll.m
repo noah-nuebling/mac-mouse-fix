@@ -299,30 +299,35 @@ static void heavyProcessing(CGEventRef event, int64_t scrollDeltaAxis1, int64_t 
         [HelperState updateActiveDeviceWithEvent:event];
         
         /// Update application Overrides
-        [ScrollUtility updateMouseDidMoveWithEvent:event];
-        if (!ScrollUtility.mouseDidMove) {
-            [ScrollUtility updateFrontMostAppDidChange];
-            /// Only checking this if mouse didn't move, because of || in (mouseMoved || frontMostAppChanged). For optimization. Not sure if significant.
-        }
         
-        if (ScrollUtility.mouseDidMove || ScrollUtility.frontMostAppDidChange) {
+        if ((NO)) { /// Unused in MMF 3
             
-            /// Set app overrides
-            DDLogDebug(@"Frontmost app did change. Reloading config overrides.");
-            BOOL didChange = [Config.shared loadOverridesForAppUnderMousePointerWithEvent:event];
-            if (didChange) {
-                DDLogDebug(@"Config did change. Resetting state.");
-                resetState_Unsafe();
+            [ScrollUtility updateMouseDidMoveWithEvent:event];
+            if (!ScrollUtility.mouseDidMove) {
+                [ScrollUtility updateFrontMostAppDidChange];
+                /// Only checking this if mouse didn't move, because of || in (mouseMoved || frontMostAppChanged). For optimization. Not sure if significant.
+            }
+            
+            if (ScrollUtility.mouseDidMove || ScrollUtility.frontMostAppDidChange) {
+                
+                /// Set app overrides
+                DDLogDebug(@"Frontmost app did change. Reloading config overrides.");
+                BOOL didChange = [Config.shared loadOverridesForAppUnderMousePointerWithEvent:event];
+                if (didChange) {
+                    DDLogDebug(@"Config did change. Resetting state.");
+                    resetState_Unsafe();
+                }
             }
         }
         
-        /// Update scrollConfig
-        _scrollConfig = [ScrollConfig copyOfConfig];
-        
         /// Notify other touch drivers
-        DriverUnsuspender thisDriverUnsuspender = [OutputCoordinator suspendTouchDriversFromDriver:kTouchDriverScroll];
-        if (thisDriverUnsuspender != nil) {
-            unsuspendDrivers = thisDriverUnsuspender;
+        
+        if ((NO)) {
+            
+            DriverUnsuspender thisDriverUnsuspender = [OutputCoordinator suspendTouchDriversFromDriver:kTouchDriverScroll];
+            if (thisDriverUnsuspender != nil) {
+                unsuspendDrivers = thisDriverUnsuspender;
+            }
         }
         
         /// Update modfications
@@ -332,112 +337,8 @@ static void heavyProcessing(CGEventRef event, int64_t scrollDeltaAxis1, int64_t 
             _modifications = newMods;
         }
         
-        ///
-        /// Override scrollConfig based on modifications
-        ///
-        
-        /// inputModifications
-        
-        if (_modifications.inputMod == kMFScrollInputModificationQuick) {
-            
-            /// Set quick acceleration curve
-            _scrollConfig.accelerationCurve = _scrollConfig.quickAccelerationCurve;
-            
-            /// Set animationCurve
-            _scrollConfig.animationCurvePreset = kMFScrollAnimationCurvePresetQuickScroll;
-            
-            /// Make fast scroll easy to trigger
-            _scrollConfig.consecutiveScrollSwipeMaxInterval *= 1.2;
-            _scrollConfig.consecutiveScrollTickIntervalMax *= 1.2;
-            
-            /// Amp up fast scroll
-            _scrollConfig.fastScrollThreshold_inSwipes = 2;
-            _scrollConfig.fastScrollSpeedup = 20;
-            
-        } else if (_modifications.inputMod == kMFScrollInputModificationPrecise) {
-            
-            /// Set slow acceleration curve
-            _scrollConfig.accelerationCurve = _scrollConfig.preciseAccelerationCurve;
-            
-            /// Set animationCurve
-            
-            _scrollConfig.animationCurvePreset = kMFScrollAnimationCurvePresetPreciseScroll;
-            
-            /// Turn off fast scroll
-            _scrollConfig.fastScrollThreshold_inSwipes = 69; /// This is the haha sex number
-            _scrollConfig.fastScrollExponentialBase = 1.0;
-            _scrollConfig.fastScrollSpeedup = 0.0;
-            
-        } else if (_modifications.inputMod == kMFScrollInputModificationNone) {
-            
-            /// We do the actual handling of this case below after we handle the effectModifications.
-            ///     That's because our standardAccelerationCurve depends on the animationCurve, and the animationCurve can change depending on the effectModifications
-            ///     We also can't handle all the effectModifications before all inputModifications, because the animationCurves that the effectModifications prescribe should override the animationCurves that the inputModifications prescribe (if an effectModification and an inputModification are active at the same time)
-            
-        } else {
-            assert(false);
-        }
-        
-        /// effectModifications
-        
-        if (_modifications.effectMod == kMFScrollEffectModificationHorizontalScroll) {
-            
-
-        } else if (_modifications.effectMod == kMFScrollEffectModificationZoom) {
-            
-            _scrollConfig.u_smoothEnabled = YES;
-            /// Override animation curve
-            _scrollConfig.animationCurvePreset = kMFScrollAnimationCurvePresetTouchDriver;
-            
-        } else if (_modifications.effectMod == kMFScrollEffectModificationRotate) {
-            
-            _scrollConfig.u_smoothEnabled = YES;
-            /// Override animation curve
-            _scrollConfig.animationCurvePreset = kMFScrollAnimationCurvePresetTouchDriver;
-            
-        } else if (_modifications.effectMod == kMFScrollEffectModificationCommandTab) {
-            
-            _scrollConfig.u_smoothEnabled = NO;
-            
-        } else if (_modifications.effectMod == kMFScrollEffectModificationThreeFingerSwipeHorizontal) {
-            
-            _scrollConfig.u_smoothEnabled = YES;
-            /// Override animation curve
-            _scrollConfig.animationCurvePreset = kMFScrollAnimationCurvePresetTouchDriverLinear;
-            
-        } else if (_modifications.effectMod == kMFScrollEffectModificationFourFingerPinch) {
-            
-            _scrollConfig.u_smoothEnabled = YES;
-            /// Override animation curve
-            _scrollConfig.animationCurvePreset = kMFScrollAnimationCurvePresetTouchDriverLinear;
-            
-        } else if (_modifications.effectMod == kMFScrollEffectModificationNone) {
-        } else if (_modifications.effectMod == kMFScrollEffectModificationAddModeFeedback) {
-            /// We don't wanna scroll at all in this case but I don't think it makes a difference.
-        } else {
-            assert(false);
-        }
-        
-        /// Input modifications (pt2)
-        
-        if (_modifications.inputMod == kMFScrollInputModificationNone) {
-        
-            /// Get display under mouse pointer
-            CGDirectDisplayID displayUnderMousePointer;
-            [SharedUtility displayUnderMousePointer:&displayUnderMousePointer withEvent:event];
-            
-            /// Get display height/width
-            size_t displayDimension;
-            if (scrollDirection == kMFDirectionLeft || scrollDirection == kMFDirectionRight) {
-                displayDimension = CGDisplayPixelsWide(displayUnderMousePointer);
-            } else if (scrollDirection == kMFDirectionUp || scrollDirection == kMFDirectionDown) {
-                displayDimension = CGDisplayPixelsHigh(displayUnderMousePointer);
-            } else assert(false);
-            
-            /// Calculate accelerationCurve
-            _scrollConfig.accelerationCurve = [_scrollConfig standardAccelerationCurveWithScreenSize:displayDimension];
-        }
-        
+        /// Get scrollConfig
+        _scrollConfig = [ScrollConfig configWithModifiers:newMods scrollDirection:scrollDirection event:event];
         
     } /// End `if (firstConsecutive) {`
     

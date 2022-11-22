@@ -187,6 +187,9 @@
 		4FCA07D625F3129B00BFE209 /* RemapTableController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FCA07D525F3129B00BFE209 /* RemapTableController.m */; };
 		4FCC03352757B181002E5A57 /* ScreenDrawer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FCC03322757A50C002E5A57 /* ScreenDrawer.swift */; };
 		4FCEDC82292CDC8B00E7DA2A /* Actions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FCEDC80292CDC8300E7DA2A /* Actions.swift */; };
+		4FCEDC86292D694200E7DA2A /* ModificationUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FCEDC85292D694200E7DA2A /* ModificationUtility.swift */; };
+		4FCEDC88292D6A8F00E7DA2A /* HashablePair.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FCEDC87292D6A8F00E7DA2A /* HashablePair.swift */; };
+		4FCEDC89292D6A8F00E7DA2A /* HashablePair.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FCEDC87292D6A8F00E7DA2A /* HashablePair.swift */; };
 		4FD0A71127B295F600FFCD12 /* OtherConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FD0A71027B295F600FFCD12 /* OtherConfig.swift */; };
 		4FD148C728AA416700FE688C /* MenuBarItem.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4FD148C928AA416700FE688C /* MenuBarItem.xib */; };
 		4FD148CC28AA423F00FE688C /* AuthorizeAccessibilityView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4FD148CE28AA423F00FE688C /* AuthorizeAccessibilityView.xib */; };
@@ -603,6 +606,8 @@
 		4FCC03322757A50C002E5A57 /* ScreenDrawer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScreenDrawer.swift; sourceTree = "<group>"; };
 		4FCECD8021092354001F1078 /* Mac Mouse Fix Helper.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Mac Mouse Fix Helper.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		4FCEDC80292CDC8300E7DA2A /* Actions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Actions.swift; sourceTree = "<group>"; };
+		4FCEDC85292D694200E7DA2A /* ModificationUtility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModificationUtility.swift; sourceTree = "<group>"; };
+		4FCEDC87292D6A8F00E7DA2A /* HashablePair.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HashablePair.swift; sourceTree = "<group>"; };
 		4FD0A71027B295F600FFCD12 /* OtherConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OtherConfig.swift; sourceTree = "<group>"; };
 		4FD148C628AA414100FE688C /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Main.strings; sourceTree = "<group>"; };
 		4FD148C828AA416700FE688C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/MenuBarItem.xib; sourceTree = "<group>"; };
@@ -1649,6 +1654,7 @@
 				4FF6653A25F2C7B000689B77 /* Queue.m */,
 				4FD860A9266EC24E004F76C8 /* DerivedProperty.swift */,
 				4FF8C89D28955DC4007EC31F /* CoolTimer.swift */,
+				4FCEDC87292D6A8F00E7DA2A /* HashablePair.swift */,
 				4FBDA14927B2246B0030E4EA /* SubPixelator */,
 				4FD860C2266EEA94004F76C8 /* Unused */,
 			);
@@ -1920,6 +1926,7 @@
 			children = (
 				4FF6664525F2C93A00689B77 /* ModificationUtility.h */,
 				4FF6664225F2C93A00689B77 /* ModificationUtility.m */,
+				4FCEDC85292D694200E7DA2A /* ModificationUtility.swift */,
 				4FF0255D27B013A100923107 /* PointerFreeze.h */,
 				4FF0255E27B013A100923107 /* PointerFreeze.m */,
 				4FCC03322757A50C002E5A57 /* ScreenDrawer.swift */,
@@ -2414,6 +2421,7 @@
 				4FA40CFF28A0CCCB00499E53 /* DragCurve.swift in Sources */,
 				4FA40CFA28A0CCCA00499E53 /* PolynomialCappedAccelerationCurve.swift in Sources */,
 				4F7F47CB28A5A03100290BBD /* ReactiveConfig.swift in Sources */,
+				4FCEDC88292D6A8F00E7DA2A /* HashablePair.swift in Sources */,
 				4F909D3C28A0C3D2009349A2 /* ModCaptureFieldEditor.swift in Sources */,
 				4FFA4E3528B795F30062A1FE /* LicenseUtility.swift in Sources */,
 				4F3E067E26A2F97D000C9E06 /* URLMenuItem.m in Sources */,
@@ -2583,6 +2591,7 @@
 				4FFA4E4628B7D2960062A1FE /* Replace.swift in Sources */,
 				4FF6668825F2C93A00689B77 /* ButtonInputReceiver.m in Sources */,
 				4FF6669025F2C93A00689B77 /* ScrollModifiers_old_.m in Sources */,
+				4FCEDC89292D6A8F00E7DA2A /* HashablePair.swift in Sources */,
 				4FF6655125F2C7B000689B77 /* NSDictionary+Additions.m in Sources */,
 				4FF6668525F2C93A00689B77 /* Modifiers.m in Sources */,
 				4FD860CC266EF55A004F76C8 /* ScrollConfig.swift in Sources */,
@@ -2627,6 +2636,7 @@
 				4FF6668B25F2C93A00689B77 /* CubicUnitBezier.m in Sources */,
 				4F909D4628A0C4C2009349A2 /* NSArray+Extensions.swift in Sources */,
 				4F9E78C026855BCF002C2309 /* Concurrency.swift in Sources */,
+				4FCEDC86292D694200E7DA2A /* ModificationUtility.swift in Sources */,
 				4FF93059288026FC0007CCA7 /* PolynomialCappedAccelerationCurve.swift in Sources */,
 				4FFE2895291B35AA0058ABE0 /* Shorthands.swift in Sources */,
 				4FD9820B292A8C1700645FE3 /* ReactiveDeviceManager.swift in Sources */,

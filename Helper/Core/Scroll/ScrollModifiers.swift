@@ -10,6 +10,21 @@
 import Cocoa
 import CocoaLumberjackSwift
 
+
+extension MFScrollModificationResult: Hashable {
+    
+    /// Make hashable so we can use this as dict key for cache
+    
+    public static func == (lhs: MFScrollModificationResult, rhs: MFScrollModificationResult) -> Bool {
+        return lhs.inputMod == rhs.inputMod && lhs.effectMod == rhs.effectMod
+    }
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(inputMod.rawValue)
+        hasher.combine(effectMod.rawValue)
+    }
+    
+}
+
 @objc class ScrollModifiers: NSObject {
 
     static var activeModifications = NSDictionary()

@@ -17,12 +17,152 @@ import CocoaLumberjackSwift
     /// You'll receive an independent instance that you can override with custom values. This should be useful for implementing Modifications in Scroll.m
     ///     Everything in ScrollConfigResult is lazy so that you only pay for what you actually use
     
-    // MARK: Class functions
+    // MARK: Static functions
     
-    private(set) static var scrollConfig = ScrollConfig() /// Singleton instance
-    @objc static var copyOfConfig: ScrollConfig { scrollConfig.copy() as! ScrollConfig }
+    @objc private(set) static var scrollConfig = ScrollConfig() /// Singleton instance
+//    @objc static var copyOfConfig: ScrollConfig { scrollConfig.copy() as! ScrollConfig }
     @objc static func reload() { /// This should be called when the underlying config (which mirrors the config file) changes
         scrollConfig = ScrollConfig() /// All the property values are cached in `currentConfig`, because the properties are lazy. Replacing with a fresh object deletes this implicit cache.
+        cache = nil
+    }
+    private static var cache: [_HP<MFScrollModificationResult, MFDirection>: ScrollConfig]? = nil
+    @objc static func config(modifiers: MFScrollModificationResult, scrollDirection: MFDirection, event: CGEvent?) -> ScrollConfig {
+        
+        if cache == nil {
+            cache = .init()
+        }
+        
+        let key = _HP(a: modifiers, b: scrollDirection)
+        let fromCache = cache![key]
+        
+        if let fromCache = fromCache {
+            return fromCache
+        } else {
+            
+            ///
+            /// Copy og settings
+            ///
+            let new = scrollConfig.copy() as! ScrollConfig
+            
+            ///
+            /// Override settings
+            ///
+            
+            ///
+            /// Override scrollConfig based on modifications
+            ///
+            
+            /// inputModifications
+            
+            if modifiers.inputMod == kMFScrollInputModificationQuick {
+                
+                /// Set quick acceleration curve
+                new.accelerationCurve = new.quickAccelerationCurve;
+                
+                /// Set animationCurve
+                new.animationCurvePreset = kMFScrollAnimationCurvePresetQuickScroll;
+                
+                /// Make fast scroll easy to trigger
+                new.consecutiveScrollSwipeMaxInterval *= 1.2;
+                new.consecutiveScrollTickIntervalMax *= 1.2;
+                
+                /// Amp up fast scroll
+                new.fastScrollThreshold_inSwipes = 2;
+                new.fastScrollSpeedup = 20;
+                
+            } else if modifiers.inputMod == kMFScrollInputModificationPrecise {
+                
+                /// Set slow acceleration curve
+                new.accelerationCurve = new.preciseAccelerationCurve;
+                
+                /// Set animationCurve
+                
+                new.animationCurvePreset = kMFScrollAnimationCurvePresetPreciseScroll;
+                
+                /// Turn off fast scroll
+                new.fastScrollThreshold_inSwipes = 69; /// This is the haha sex number
+                new.fastScrollExponentialBase = 1.0;
+                new.fastScrollSpeedup = 0.0;
+                
+            } else if modifiers.inputMod == kMFScrollInputModificationNone {
+                
+                /// We do the actual handling of this case below after we handle the effectModifications.
+                ///     That's because our standardAccelerationCurve depends on the animationCurve, and the animationCurve can change depending on the effectModifications
+                ///     We also can't handle all the effectModifications before all inputModifications, because the animationCurves that the effectModifications prescribe should override the animationCurves that the inputModifications prescribe (if an effectModification and an inputModification are active at the same time)
+                
+            } else {
+                assert(false);
+            }
+            
+            /// effectModifications
+            
+            if modifiers.effectMod == kMFScrollEffectModificationHorizontalScroll {
+                
+
+            } else if modifiers.effectMod == kMFScrollEffectModificationZoom {
+                
+                new.u_smoothEnabled = true;
+                /// Override animation curve
+                new.animationCurvePreset = kMFScrollAnimationCurvePresetTouchDriver;
+                
+            } else if modifiers.effectMod == kMFScrollEffectModificationRotate {
+                
+                new.u_smoothEnabled = true;
+                /// Override animation curve
+                new.animationCurvePreset = kMFScrollAnimationCurvePresetTouchDriver;
+                
+            } else if modifiers.effectMod == kMFScrollEffectModificationCommandTab {
+                
+                new.u_smoothEnabled = false;
+                
+            } else if modifiers.effectMod == kMFScrollEffectModificationThreeFingerSwipeHorizontal {
+                
+                new.u_smoothEnabled = true;
+                /// Override animation curve
+                new.animationCurvePreset = kMFScrollAnimationCurvePresetTouchDriverLinear;
+                
+            } else if modifiers.effectMod == kMFScrollEffectModificationFourFingerPinch {
+                
+                new.u_smoothEnabled = true;
+                /// Override animation curve
+                new.animationCurvePreset = kMFScrollAnimationCurvePresetTouchDriverLinear;
+                
+            } else if modifiers.effectMod == kMFScrollEffectModificationNone {
+            } else if modifiers.effectMod == kMFScrollEffectModificationAddModeFeedback {
+                /// We don't wanna scroll at all in this case but I don't think it makes a difference.
+            } else {
+                assert(false);
+            }
+            
+            /// Input modifications (pt2)
+            
+            if (modifiers.inputMod == kMFScrollInputModificationNone) {
+            
+                /// Get display under mouse pointer
+                var displayUnderMousePointer: CGDirectDisplayID = 0
+                SharedUtility.displayUnderMousePointer(&displayUnderMousePointer, with: event)
+
+                /// Get display height/width
+                var displayDimension: size_t
+                if scrollDirection == kMFDirectionLeft || scrollDirection == kMFDirectionRight {
+                    displayDimension = CGDisplayPixelsWide(displayUnderMousePointer);
+                } else if scrollDirection == kMFDirectionUp || scrollDirection == kMFDirectionDown {
+                    displayDimension = CGDisplayPixelsHigh(displayUnderMousePointer);
+                } else {
+                    fatalError()
+                }
+                
+                /// Calculate accelerationCurve
+                new.accelerationCurve = new.standardAccelerationCurve(withScreenSize: displayDimension)
+            }
+            
+            ///
+            /// Cache & return
+            ///
+            cache![key] = new
+            return new
+            
+        }
     }
     
     @objc static var linearCurve: Bezier = { () -> Bezier in
@@ -49,7 +189,7 @@ import CocoaLumberjackSwift
     
     @objc lazy var u_smoothEnabled: Bool = { c("smooth") as! Bool && !killSwitch }()
     
-    @objc private var u_killSwitch: Bool { config("Other.scrollKillSwitch") as? Bool ?? false } /// Not cached cause it's just used to calc the other vars
+    @objc private var u_killSwitch: Bool { c("Other.scrollKillSwitch") as? Bool ?? false } /// Not cached cause it's just used to calc the other vars
     @objc private var killSwitch: Bool { u_killSwitch || HelperState.isLockedDown }
     
     // MARK: Invert Direction
