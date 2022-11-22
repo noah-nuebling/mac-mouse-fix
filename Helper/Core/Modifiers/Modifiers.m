@@ -384,7 +384,9 @@ static void reactToModifierChange(void) {
                 
                 /// Copy modifiers before passing into Modified drag
                 ///     Can't just be reference because we later compare to `_modifiers`
-                NSDictionary *copiedModifiers = (NSDictionary *)[SharedUtility deepCopyOf:_modifiers error:nil];
+                /// `deepCopyOf:error:` is actually super slow for some reason. I think `deepMutableCopyOf:` is a little faster? Not sure. Should remove this copying entirely.
+//                NSDictionary *copiedModifiers = (NSDictionary *)[SharedUtility deepCopyOf:_modifiers error:nil];
+                NSDictionary *copiedModifiers = (NSDictionary *)[SharedUtility deepMutableCopyOf:_modifiers];
                 
                 /// Init modifiedDrag
                 [ModifiedDrag initializeDragWithDict:modifiedDragEffectDict initialModifiers:copiedModifiers];

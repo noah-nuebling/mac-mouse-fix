@@ -88,6 +88,10 @@
     }
 }
 
++ (void)__SWIFT_UNBRIDGED_executeActionArray:(id)actionArray phase:(MFActionPhase)phase {
+    [self executeActionArray:actionArray phase:phase];
+}
+
 #pragma mark - System defined events
 
 static void postSystemDefinedEvent(MFSystemDefinedEventType type, NSEventModifierFlags modifierFlags) {

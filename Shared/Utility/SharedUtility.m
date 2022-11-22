@@ -245,30 +245,39 @@ static void iteratePropertiesOn(id obj, void(^callback)(objc_property_t property
 #pragma mark - Check if this is a prerelease version
 
 + (BOOL)runningPreRelease {
-    
-    BOOL runningPrerelease = NO;
-    
-    /// Check debug configuration
 
-#if DEBUG 
-    runningPrerelease = YES;
-#endif
+    /// Caching this seems excessive but it's called a lot and actually has a huge performance impact.
     
-    /// Check app name for 'beta' or 'alpha'
-    ///     We've started shipping release builds as betas because under MMF 3 using Swift, the debug builds are very very slow.
-    ///     Notes:
-    ///     - Why are we using the 'localized' search? What does that do?
-    ///     - Attention! This makes the version names magic. Make sure you always include 'beta' or 'alpha' in the prerelease version names!
+    static BOOL _isCached = NO;
+    static BOOL _runningPrerelease = NO;
     
-    if (!runningPrerelease) {
+    if (!_isCached) {
         
-        NSString *versionName = Locator.bundleVersionShort;
-        if ([versionName localizedCaseInsensitiveContainsString:@"beta"] || [versionName localizedCaseInsensitiveContainsString:@"alpha"]) {
-            runningPrerelease = YES;
+        /// Check debug configuration
+        
+#if DEBUG
+        _runningPrerelease = YES;
+#endif
+        
+        /// Check app name for 'beta' or 'alpha'
+        ///     We've started shipping release builds as betas because under MMF 3 using Swift, the debug builds are very very slow.
+        ///     Notes:
+        ///     - Why are we using the 'localized' search? What does that do?
+        ///     - Attention! This makes the version names magic. Make sure you always include 'beta' or 'alpha' in the prerelease version names!
+        
+        if (!_runningPrerelease) {
+            
+            NSString *versionName = Locator.bundleVersionShort;
+            if ([versionName localizedCaseInsensitiveContainsString:@"beta"] || [versionName localizedCaseInsensitiveContainsString:@"alpha"]) {
+                _runningPrerelease = YES;
+            }
         }
+        
+        /// Update flag
+        _isCached = YES;
     }
     
-    return runningPrerelease;
+    return _runningPrerelease;
 }
 
 #pragma mark - Check which executable is running
@@ -571,12 +580,14 @@ static void iteratePropertiesOn(id obj, void(^callback)(objc_property_t property
 
 + (id)deepCopyOf:(id)object {
     
-    /// New approach
+    /// Check nil
     if (object == nil) return nil;
-    return [self deepCopyOf:object error:nil];
+    
+    /// New approach
+//    return [self deepCopyOf:object error:nil];
     
     /// Old approach
-//    return [NSKeyedUnarchiver unarchiveObjectWithData:[NSKeyedArchiver archivedDataWithRootObject:object]];
+    return [NSKeyedUnarchiver unarchiveObjectWithData:[NSKeyedArchiver archivedDataWithRootObject:object]];
 }
 
 + (id<NSCoding>)deepCopyOf:(id<NSCoding>)original error:(NSError *_Nullable *_Nullable)error {
@@ -584,6 +595,7 @@ static void iteratePropertiesOn(id obj, void(^callback)(objc_property_t property
     /// Copied this from the Swift implementation in SharedUtilitySwift, since the Swift implementation wasn't compatible with ObjC. We still like to keep both around since the Swift version is nicer with it's generic types. Maybe generics are also possible in this form in ObjC but I don't know how.
     /// The simpler default methods only work with `NSSecureCoding` objects. This implementation also works with `NSCoding` objects.
     /// Src:  https://developer.apple.com/forums/thread/107533
+    /// Edit: This is actually superrrr slow. Was the old one this slow as well? Edit2: I think the old one was also very slow.
     
     assert(original != nil);
     

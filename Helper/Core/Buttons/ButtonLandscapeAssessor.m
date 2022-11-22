@@ -116,13 +116,22 @@ static NSInteger maxLevelForButtonInModificationPreconditions(NSNumber *button, 
         ///     Edit: I think we're taking that into account. We're checking all elements of the buttonSequence, no matter how they can be reached.
         ///         TODO: remove this comment
         
-        NSIndexSet *indexesContainingButton = [(NSArray *)modificationPrecondition[kMFModificationPreconditionKeyButtons] indexesOfObjectsPassingTest:^BOOL(NSDictionary *_Nonnull dict, NSUInteger idx, BOOL * _Nonnull stop) {
-            return [dict[kMFButtonModificationPreconditionKeyButtonNumber] isEqualToNumber:button];
-        }];
-        if (indexesContainingButton.count > 1) assert(false);
-        if (indexesContainingButton.count == 0) continue;
+        NSUInteger buttonIndex = NSNotFound;
         
-        NSNumber *precondLvlNS = modificationPrecondition[kMFModificationPreconditionKeyButtons][indexesContainingButton.firstIndex][kMFButtonModificationPreconditionKeyClickLevel];
+        NSArray *buttonMods = modificationPrecondition[kMFModificationPreconditionKeyButtons];
+        for (int i = 0; i < buttonMods.count; i++) {
+            BOOL found = [buttonMods[i][kMFButtonModificationPreconditionKeyButtonNumber] isEqualToNumber: button];
+            if (found) buttonIndex = i;
+        }
+        
+        /// v Old method using `indexesOfObjectsPassingTest:` was pretty slow
+//        [(NSArray *)modificationPrecondition[kMFModificationPreconditionKeyButtons] indexesOfObjectsPassingTest:^BOOL(NSDictionary *_Nonnull dict, NSUInteger idx, BOOL * _Nonnull stop) {
+//            return [dict[kMFButtonModificationPreconditionKeyButtonNumber] isEqualToNumber:button];
+//        }];
+        
+        if (buttonIndex == NSNotFound) continue;
+        
+        NSNumber *precondLvlNS = modificationPrecondition[kMFModificationPreconditionKeyButtons][buttonIndex][kMFButtonModificationPreconditionKeyClickLevel];
         NSUInteger precondLvl = precondLvlNS.unsignedIntegerValue;
         if (precondLvl > maxLvl) {
             maxLvl = precondLvl;

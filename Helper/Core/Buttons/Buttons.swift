@@ -132,10 +132,13 @@ import CocoaLumberjackSwift
             /// Get actionArray
             guard
                 let (duration, startOrEnd) = map[triggerPhase],
-                let m1 = modifications[button] as? [AnyHashable: Any],
-                let m2 = m1[clickLevel as NSNumber] as? [AnyHashable: Any],
-                let m3 = m2[duration],
-                let actionArray = m3 as? [[AnyHashable: Any]] /// Not nil -> a click/hold action does exist for this button + level + duration
+//                let m1 = modifications[button] as? [AnyHashable: Any],
+                let m1 = modifications.object(forKey: button) as? NSDictionary,
+//                let m2 = m1[clickLevel as NSNumber] as? [AnyHashable: Any],
+                let m2 = m1.object(forKey: clickLevel) as? NSDictionary,
+//                let m3 = m2[duration],
+                let actionArray = m2.object(forKey: duration) as? NSArray /// Not nil -> a click/hold action does exist for this button + level + duration
+//                let actionArray = m3 as? [[AnyHashable: Any]]
             else {
                 return /// Return if there's no action array to send
             }
