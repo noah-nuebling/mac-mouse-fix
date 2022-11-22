@@ -113,13 +113,13 @@ static MFModifierPriority _buttonModPriority;
 static CFMachPortRef _kbModEventTap;
 
 static void updateModifierPriority(NSDictionary *remaps) {
-
+    
     ///
     /// Toggle buttonMod processing
     ///
     
     // TODO: Implement
-
+    
     
     /// Determine priority
     _buttonModPriority = kMFModifierPriorityActiveListen;
@@ -160,16 +160,16 @@ static void updateModifierPriority(NSDictionary *remaps) {
 #pragma mark Handle modifier change
 
 CGEventRef _Nullable kbModsChanged(CGEventTapProxy proxy, CGEventType type, CGEventRef event, void *userInfo) {
-
+    
     /// Get mouse
     
-//    Device *activeDevice = HelperState.activeDevice;
+    //    Device *activeDevice = HelperState.activeDevice;
     
     /// Get activeModifiers
     /// Notes:
     /// - We can't use CGEventCreate() here for the source of the keyboard modifers, because the kbMods won't be up-to-date.
     /// -> Idea: This might be because we're using a passive listener eventTap?
-
+    
     NSUInteger newFlags = flagsFromEvent(event);
     
     /// Check Change
@@ -188,9 +188,9 @@ CGEventRef _Nullable kbModsChanged(CGEventTapProxy proxy, CGEventType type, CGEv
         
         /// Notify
         [ReactiveModifiers.shared handleModifiersDidChangeTo:_modifiers];
-//        reactToModifierChange(); /// Calling this here leads to different behaviour in how modifiedDrag is toggled between active and passive kbMod priority. We probably don't want that.
+        //        reactToModifierChange(); /// Calling this here leads to different behaviour in how modifiedDrag is toggled between active and passive kbMod priority. We probably don't want that.
     }
-
+    
     /// Return
     return event;
 }
@@ -210,7 +210,7 @@ CGEventRef _Nullable kbModsChanged(CGEventTapProxy proxy, CGEventType type, CGEv
     if (newModifiers.count == 0) {
         [_modifiers removeObjectForKey:kMFModificationPreconditionKeyButtons];
     } else {
-        _modifiers[kMFModificationPreconditionKeyButtons] = newModifiers;
+        _modifiers[kMFModificationPreconditionKeyButtons] = [newModifiers copy]; /// I think we only copy here so the newModifers != oldModifiers assert works
     }
     
     /// Also update kbMods before notifying
@@ -221,6 +221,10 @@ CGEventRef _Nullable kbModsChanged(CGEventTapProxy proxy, CGEventType type, CGEv
     /// Notify
     [ReactiveModifiers.shared handleModifiersDidChangeTo:_modifiers];
     reactToModifierChange();
+}
+
++ (void)__SWIFT_UNBRIDGED_buttonModsChangedTo:(id)newModifiers {
+    [self buttonModsChangedTo:newModifiers];
 }
 
 #pragma mark Helper

@@ -23,7 +23,8 @@ NS_ASSUME_NONNULL_BEGIN
 + (NSDictionary *)modifiersWithEvent:(CGEventRef _Nullable)event MF_SWIFT_HIDDEN;
 + (id)__SWIFT_UNBRIDGED_modifiersWithEvent:(CGEventRef _Nullable)event;
 
-+ (void)buttonModsChangedTo:(NSArray *)newModifiers;
++ (void)__SWIFT_UNBRIDGED_buttonModsChangedTo:(id)newModifiers;
+
 + (void)handleModificationHasBeenUsed;
 
 //+ (void)handleModificationHasBeenUsedWithDevice:(Device *_Nullable)device;

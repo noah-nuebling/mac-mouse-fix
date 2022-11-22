@@ -24,62 +24,86 @@ private struct ButtonState: Equatable {
 
 class ButtonModifiers: NSObject {
 
-    private var state = Dictionary<ButtonNumber, ButtonState>()
+    private var state = NSMutableArray()
+    
+    ///Full type`NSArray<NSDictionary<NSString, NSNumber>>`
     
     func update(button: ButtonNumber, clickLevel: ClickLevel, downNotUp mouseDown: Bool) {
         
-        /// Debug
-        DDLogDebug("buttonModifiers - update - lvl: \(clickLevel), mouseDown: \(mouseDown), btn: \(button)")
+        /// Copy old state
+        var oldState = state.copy() as! NSArray
         
         /// Update state
         if mouseDown {
-            let oldState = state[button]
-            let pressTime = mouseDown ? CACurrentMediaTime() : (oldState?.pressTime ?? 0) /// Not sure if necessary to ever keep old pressTime
-            let newState = ButtonState(button: button,
-                                       clickLevel: clickLevel,
-                                       isPressed: mouseDown,
-                                       pressTime: pressTime)
-            
-            state[button] = newState
-            
-            /// Validate
-            assert(oldState != newState)
+            state.add(NSDictionary(dictionaryLiteral:
+                                    (kMFButtonModificationPreconditionKeyButtonNumber as NSString, button as NSNumber),
+                                    (kMFButtonModificationPreconditionKeyClickLevel as NSString, clickLevel as NSNumber)))
             
         } else {
-            state.removeValue(forKey: button)
+            removeStateFor(button)
         }
         
-        /// Compile state for `Modifiers` class
-        
-        let buttonStates = Array(state.values)
-        
-        let result: [[String: Int]] = buttonStates.filter { bs in
-            let isActive = bs.isPressed && bs.clickLevel != 0
-            return isActive
-        }.sorted { bs1, bs2 in
-            bs1.pressTime < bs2.pressTime
-        }.map { bs in
-            return [
-                kMFButtonModificationPreconditionKeyButtonNumber: bs.button,
-                kMFButtonModificationPreconditionKeyClickLevel: bs.clickLevel
-            ]
+        if oldState != state {
+                
+            /// Debug
+            DDLogDebug("buttonModifiers - update - toState: \(stateDescription())")
+            
+            /// Notify
+            Modifiers.buttonModsChanged(to: state)
         }
         
-        /// Debug
-        DDLogDebug("buttonModifiers - gotMods: \(result)")
-        
-        /// Notify `Modifiers` class
-        Modifiers.buttonModsChanged(to: result)
+//        /// Compile state for `Modifiers` class
+//
+//        let buttonStates = Array(state.values)
+//
+//        let result: [[String: Int]] = buttonStates.filter { bs in
+//            let isActive = bs.isPressed && bs.clickLevel != 0
+//            return isActive
+//        }.sorted { bs1, bs2 in
+//            bs1.pressTime < bs2.pressTime
+//        }.map { bs in
+//            return [
+//                kMFButtonModificationPreconditionKeyButtonNumber: bs.button,
+//                kMFButtonModificationPreconditionKeyClickLevel: bs.clickLevel
+//            ]
+//        }
+//
+//        /// Debug
+//        DDLogDebug("buttonModifiers - gotMods: \(result)")
+//
+//        /// Notify `Modifiers` class
+//        Modifiers.buttonModsChanged(to: result)
     }
     
     func kill(button: ButtonNumber) {
         
         /// I don't think this has any effect under the current architecture. Not totally sure though.
+        /// Should we also be notifying buttonModifers here?
         
-        /// Debug
-        DDLogDebug("buttonModifiers - kill - btn: \(button)")
+        removeStateFor(button)
         
-        state.removeValue(forKey: button)
+        DDLogDebug("buttonModifiers - kill - toState: \(stateDescription())")
+    }
+    
+    /// Helper
+    private func removeStateFor(_ button: ButtonNumber) {
+        for i in 0..<state.count {
+            let buttonState = state.object(at: i)
+            let buttonNumber = ((buttonState as! NSDictionary).object(forKey: kMFButtonModificationPreconditionKeyButtonNumber) as! NSNumber)
+            
+            if buttonNumber == (button as NSNumber) {
+                state.removeObject(at: i)
+                return
+            }
+        }
+    }
+    
+    /// Debug
+    private func stateDescription() -> String {
+        
+        return (state as! [[String: Int]]).map({ (element: [String: Int]) -> String in
+            return "(\(element[kMFButtonModificationPreconditionKeyButtonNumber]!), \(element[kMFButtonModificationPreconditionKeyClickLevel]!))"
+        }).joined(separator: " ")
     }
     
 }

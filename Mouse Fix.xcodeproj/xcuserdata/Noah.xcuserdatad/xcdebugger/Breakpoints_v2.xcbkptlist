@@ -32,12 +32,12 @@
             landmarkType = "0">
             <Locations>
                <Location
-                  uuid = "89086700-FFC4-4B38-8486-95DC7AE9A2D3 - 31df95ed7e23d8ee"
+                  uuid = "89086700-FFC4-4B38-8486-95DC7AE9A2D3 - 22be48f5aeb4378e"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
-                  symbolName = "Mac_Mouse_Fix.BezierHybridCurve.__allocating_init() -&gt; Mac_Mouse_Fix.BezierHybridCurve"
-                  moduleName = "Mac Mouse Fix"
+                  symbolName = "Mac_Mouse_Fix_Helper.BezierHybridCurve.__allocating_init() -&gt; Mac_Mouse_Fix_Helper.BezierHybridCurve"
+                  moduleName = "Mac Mouse Fix Helper"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/Noah/Desktop/mac-mouse-fix/Shared/Math/Curves/HybridCurves.swift"
                   startingColumnNumber = "9223372036854775807"
@@ -47,12 +47,12 @@
                   offsetFromSymbolStart = "12">
                </Location>
                <Location
-                  uuid = "89086700-FFC4-4B38-8486-95DC7AE9A2D3 - 2e820ac554241b14"
+                  uuid = "89086700-FFC4-4B38-8486-95DC7AE9A2D3 - 681b048c32232a03"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
-                  symbolName = "Mac_Mouse_Fix.BezierHybridCurve.init() -&gt; Mac_Mouse_Fix.BezierHybridCurve"
-                  moduleName = "Mac Mouse Fix"
+                  symbolName = "Mac_Mouse_Fix_Helper.BezierHybridCurve.init() -&gt; Mac_Mouse_Fix_Helper.BezierHybridCurve"
+                  moduleName = "Mac Mouse Fix Helper"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/Noah/Desktop/mac-mouse-fix/Shared/Math/Curves/HybridCurves.swift"
                   startingColumnNumber = "9223372036854775807"
@@ -62,12 +62,12 @@
                   offsetFromSymbolStart = "132">
                </Location>
                <Location
-                  uuid = "89086700-FFC4-4B38-8486-95DC7AE9A2D3 - c7ba44f9d4d9f8dc"
+                  uuid = "89086700-FFC4-4B38-8486-95DC7AE9A2D3 - d4488a8fe1dbd401"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
-                  symbolName = "Mac_Mouse_Fix.BezierHybridCurve.__deallocating_deinit"
-                  moduleName = "Mac Mouse Fix"
+                  symbolName = "Mac_Mouse_Fix_Helper.BezierHybridCurve.__deallocating_deinit"
+                  moduleName = "Mac Mouse Fix Helper"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/Noah/Desktop/mac-mouse-fix/Shared/Math/Curves/HybridCurves.swift"
                   startingColumnNumber = "9223372036854775807"
@@ -83,7 +83,7 @@
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
             uuid = "B86BB373-E2AB-430D-AA39-201A0458F031"
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Helper/Core/Touch/GestureScrollSimulator.m"
@@ -267,7 +267,7 @@
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
             uuid = "A89C8F71-68DD-4775-B00A-50A5DEDC2612"
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Helper/Core/Modifiers/Modifiers.m"
@@ -373,6 +373,22 @@
             endingLineNumber = "228"
             landmarkName = "-updateSizeWithAnimation:tabContentView:"
             landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "5BDC6116-59C2-448E-80EC-60179C24F563"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Helper/Core/Modifiers/Modifiers.m"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "137"
+            endingLineNumber = "137"
+            landmarkName = "updateModifierPriority(remaps)"
+            landmarkType = "9">
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

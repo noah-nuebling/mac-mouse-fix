@@ -14,4 +14,8 @@ extension Modifiers {
     static func modifiers(with event: CGEvent?) -> NSDictionary {
         return __SWIFT_UNBRIDGED_modifiers(with: event) as! NSDictionary
     }
+    
+    static func buttonModsChanged(to newMods: NSArray) {
+        __SWIFT_UNBRIDGED_buttonModsChanged(to: newMods)
+    }
 }
