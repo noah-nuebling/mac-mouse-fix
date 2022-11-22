@@ -338,7 +338,8 @@ static void heavyProcessing(CGEventRef event, int64_t scrollDeltaAxis1, int64_t 
         }
         
         /// Get scrollConfig
-        _scrollConfig = [ScrollConfig configWithModifiers:newMods scrollDirection:scrollDirection event:event];
+        
+        _scrollConfig = [ScrollConfig configWithModifiers:newMods inputAxis:inputAxis event:event];
         
     } /// End `if (firstConsecutive) {`
     
@@ -443,7 +444,10 @@ static void heavyProcessing(CGEventRef event, int64_t scrollDeltaAxis1, int64_t 
         /// Send scroll events through animator, spread out over time.
         
         /// Create config-copy for animation-callback-block
-        ScrollConfig *configCopyForBlock = [_scrollConfig copy];
+        ///  Edit: Turned copying off now, since it's extremely slow. I don't think this is necessary with the current architecture (the `_scrollConfig` is a reference into a cache. When the scrollConfig updates the cache is deleted but this reference should still be valid)
+        
+//        ScrollConfig *configCopyForBlock = [_scrollConfig copy];
+        ScrollConfig *configCopyForBlock = _scrollConfig;
         
         /// Start animation
         
@@ -540,7 +544,7 @@ static void heavyProcessing(CGEventRef event, int64_t scrollDeltaAxis1, int64_t 
             double distanceDelta = magnitudeOfVector(distanceDeltaVec);
             
             /// Get reference to copy of config specific for this block
-            ///     Use this instead of the global _scrollConfig to avoid race conditions
+            ///     Use this instead of the global `_scrollConfig` to avoid race conditions
             ScrollConfig *config = configCopyForBlock;
             
             /// Unsuspend

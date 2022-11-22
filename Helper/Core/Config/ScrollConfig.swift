@@ -25,19 +25,21 @@ import CocoaLumberjackSwift
         scrollConfig = ScrollConfig() /// All the property values are cached in `currentConfig`, because the properties are lazy. Replacing with a fresh object deletes this implicit cache.
         cache = nil
     }
-    private static var cache: [_HP<MFScrollModificationResult, MFDirection>: ScrollConfig]? = nil
-    @objc static func config(modifiers: MFScrollModificationResult, scrollDirection: MFDirection, event: CGEvent?) -> ScrollConfig {
+    private static var cache: [_HP<MFScrollModificationResult, MFAxis>: ScrollConfig]? = nil
+    @objc static func config(modifiers: MFScrollModificationResult, inputAxis: MFAxis, event: CGEvent?) -> ScrollConfig {
         
         if cache == nil {
             cache = .init()
         }
         
-        let key = _HP(a: modifiers, b: scrollDirection)
-        let fromCache = cache![key]
+        let key = _HP(a: modifiers, b: inputAxis)
         
-        if let fromCache = fromCache {
+        if let fromCache = cache![key] {
             return fromCache
+            
         } else {
+            
+            DDLogDebug("ScrollConfig - Recalculating overriden config")
             
             ///
             /// Copy og settings
@@ -144,9 +146,11 @@ import CocoaLumberjackSwift
 
                 /// Get display height/width
                 var displayDimension: size_t
-                if scrollDirection == kMFDirectionLeft || scrollDirection == kMFDirectionRight {
+                if inputAxis == kMFAxisHorizontal
+                    || modifiers.effectMod == kMFScrollEffectModificationHorizontalScroll {
+                    
                     displayDimension = CGDisplayPixelsWide(displayUnderMousePointer);
-                } else if scrollDirection == kMFDirectionUp || scrollDirection == kMFDirectionDown {
+                } else if inputAxis == kMFAxisVertical {
                     displayDimension = CGDisplayPixelsHigh(displayUnderMousePointer);
                 } else {
                     fatalError()

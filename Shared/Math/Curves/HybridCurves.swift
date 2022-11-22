@@ -98,9 +98,8 @@ import CocoaLumberjackSwift
             /// Fallback: Get a dragCurve that exactly covers `targetDistance`
             ///     Note that this means that the slope of the baseCurve is ignored. This might lead to weird feeling speed changes
             
-            /// Warn
-            DDLogWarn("Coudn't find DragCurve transition point. Ignoring Bezier.")
-//            assert(false) /// For debugging
+            /// Debug
+            DDLogDebug("Coudn't find DragCurve transition point. Ignoring Bezier.")
             
             /// Get new curve
             dragCurve = DragCurve(coefficient: dragCoefficient, exponent: dragExponent, distance: targetDistance, stopSpeed: stopSpeed)

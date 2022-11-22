@@ -21,6 +21,14 @@ typedef enum {
     kMFAxisVertical,
 } MFAxis;
 
+typedef enum {
+    kMFDirectionNone,
+    kMFDirectionUp,
+    kMFDirectionRight,
+    kMFDirectionDown,
+    kMFDirectionLeft,
+} MFDirection;
+
 /// Bundles and Bezelservices
 
 /// Added some x's to the bundleID. See notes.md for context.

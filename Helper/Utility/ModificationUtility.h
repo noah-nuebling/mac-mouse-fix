@@ -15,14 +15,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface ModificationUtility : NSObject
 
-typedef enum {
-    kMFDirectionUp,
-    kMFDirectionRight,
-    kMFDirectionDown,
-    kMFDirectionLeft,
-    kMFDirectionNone
-} MFDirection;
-
 BOOL directionChanged(MFDirection direction1, MFDirection direction2);
 
 + (double)roundUp:(double)numToRound toMultiple:(double)multiple;
