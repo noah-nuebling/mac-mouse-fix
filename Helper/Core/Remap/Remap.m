@@ -121,121 +121,123 @@ static NSDictionary *_remaps;
     ///
     
     if (USE_TEST_REMAPS) {
+        
         [self setRemaps:self.testRemaps];
-        return;
-    }
-    
-    ///
-    /// Load remaps from config 
-    ///
-    
-    NSMutableDictionary *remapsDict = [NSMutableDictionary dictionary];
-    
-    ///
-    /// Get keyboard mods from scroll screen
-    ///
-    
-    if ([(id)config(@"Other.scrollKillSwitch") boolValue]) { /// Disable keyboard mods when scrollKillSwitch is on
         
     } else {
         
-        NSEventModifierFlags horizontal = [(id)config(@"Scroll.modifiers.horizontal") unsignedIntegerValue];
-        NSEventModifierFlags zoom = [(id)config(@"Scroll.modifiers.zoom") unsignedIntegerValue];
-        NSEventModifierFlags swift = [(id)config(@"Scroll.modifiers.swift") unsignedIntegerValue];
-        NSEventModifierFlags precise = [(id)config(@"Scroll.modifiers.precise") unsignedIntegerValue];
-        /// ^ Might be faster to only get Scroll.modifiers once and then query that? Probably not significant
+        ///
+        /// Load remaps from config
+        ///
         
-        if (horizontal) {
-            NSDictionary *precondition = @{
-                kMFModificationPreconditionKeyKeyboard: @(horizontal)
-            };
-            NSDictionary *effect = @{
-                kMFTriggerScroll: @{
-                    kMFModifiedScrollDictKeyEffectModificationType: kMFModifiedScrollEffectModificationTypeHorizontalScroll
-                }
-            };
-            [remapsDict setObject:effect forKey:precondition];
-        }
-        if (zoom) {
-            NSDictionary *precondition = @{
-                kMFModificationPreconditionKeyKeyboard: @(zoom)
-            };
-            NSDictionary *effect = @{
-                kMFTriggerScroll: @{
-                    kMFModifiedScrollDictKeyEffectModificationType: kMFModifiedScrollEffectModificationTypeZoom
-                }
-            };
-            [remapsDict setObject:effect forKey:precondition];
-        }
-        if (swift) {
-            NSDictionary *precondition = @{
-                kMFModificationPreconditionKeyKeyboard: @(swift)
-            };
-            NSDictionary *effect = @{
-                kMFTriggerScroll: @{
-                    kMFModifiedScrollDictKeyInputModificationType: kMFModifiedScrollInputModificationTypeQuickScroll
-                }
-            };
-            [remapsDict setObject:effect forKey:precondition];
-        }
-        if (precise) {
-            NSDictionary *precondition = @{
-                kMFModificationPreconditionKeyKeyboard: @(precise)
-            };
-            NSDictionary *effect = @{
-                kMFTriggerScroll: @{
-                    kMFModifiedScrollDictKeyInputModificationType: kMFModifiedScrollInputModificationTypePrecisionScroll
-                }
-            };
-            [remapsDict setObject:effect forKey:precondition];
-        }
-    }
-    
-    ///
-    /// Get values from action table (button remaps)
-    ///
-    
-    BOOL killSwitch = [(id)config(@"Other.buttonKillSwitch") boolValue] || HelperState.isLockedDown;
-    
-    if (killSwitch) {
-        /// TODO: Turn off button interception completely (generally when the remaps dict is empty)
-    } else {
+        NSMutableDictionary *remapsDict = [NSMutableDictionary dictionary];
         
-        /// Convert remaps table to remaps dict
+        ///
+        /// Get keyboard mods from scroll screen
+        ///
         
-        NSArray *remapsTable = [Config.shared.config objectForKey:kMFConfigKeyRemaps];
-
-        for (NSDictionary *tableEntry in remapsTable) {
-            /// Get modification precondition section of keypath
-            NSDictionary *modificationPrecondition = tableEntry[kMFRemapsKeyModificationPrecondition];
-            /// Get trigger section of keypath
-            NSArray *triggerKeyArray;
-            id trigger = tableEntry[kMFRemapsKeyTrigger];
-            if ([trigger isKindOfClass:NSString.class]) {
-                NSString *triggerStr = (NSString *)trigger;
-                triggerKeyArray = @[triggerStr];
-                NSAssert([triggerStr isEqualToString:kMFTriggerScroll] || [triggerStr isEqualToString:kMFTriggerDrag] , @"");
-            } else if ([trigger isKindOfClass:NSDictionary.class]) {
-                NSDictionary *triggerDict = (NSDictionary *)trigger;
-                NSString *duration = triggerDict[kMFButtonTriggerKeyDuration];
-                NSNumber *level = triggerDict[kMFButtonTriggerKeyClickLevel];
-                NSNumber *buttonNum = triggerDict[kMFButtonTriggerKeyButtonNumber];
-                triggerKeyArray = @[buttonNum, level, duration];
-            } else NSAssert(NO, @"");
-            /// Get effect
-            id effect = tableEntry[kMFRemapsKeyEffect]; /// This is always dict
-            if ([trigger isKindOfClass:NSDictionary.class]) {
-                effect = @[effect];
-                /// ^ For some reason we built one shot effect handling code around _arrays_ of effects. So we need to wrap our effect in an array.
-                ///  This doesn't make sense. We should clean this up at some point and remove the array.
+        if ([(id)config(@"Other.scrollKillSwitch") boolValue]) { /// Disable keyboard mods when scrollKillSwitch is on
+            
+        } else {
+            
+            NSEventModifierFlags horizontal = [(id)config(@"Scroll.modifiers.horizontal") unsignedIntegerValue];
+            NSEventModifierFlags zoom = [(id)config(@"Scroll.modifiers.zoom") unsignedIntegerValue];
+            NSEventModifierFlags swift = [(id)config(@"Scroll.modifiers.swift") unsignedIntegerValue];
+            NSEventModifierFlags precise = [(id)config(@"Scroll.modifiers.precise") unsignedIntegerValue];
+            /// ^ Might be faster to only get Scroll.modifiers once and then query that? Probably not significant
+            
+            if (horizontal) {
+                NSDictionary *precondition = @{
+                    kMFModificationPreconditionKeyKeyboard: @(horizontal)
+                };
+                NSDictionary *effect = @{
+                    kMFTriggerScroll: @{
+                        kMFModifiedScrollDictKeyEffectModificationType: kMFModifiedScrollEffectModificationTypeHorizontalScroll
+                    }
+                };
+                [remapsDict setObject:effect forKey:precondition];
             }
-            /// Put it all together
-            NSArray *keyArray = [@[modificationPrecondition] arrayByAddingObjectsFromArray:triggerKeyArray];
-            [remapsDict setObject:effect forCoolKeyArray:keyArray];
+            if (zoom) {
+                NSDictionary *precondition = @{
+                    kMFModificationPreconditionKeyKeyboard: @(zoom)
+                };
+                NSDictionary *effect = @{
+                    kMFTriggerScroll: @{
+                        kMFModifiedScrollDictKeyEffectModificationType: kMFModifiedScrollEffectModificationTypeZoom
+                    }
+                };
+                [remapsDict setObject:effect forKey:precondition];
+            }
+            if (swift) {
+                NSDictionary *precondition = @{
+                    kMFModificationPreconditionKeyKeyboard: @(swift)
+                };
+                NSDictionary *effect = @{
+                    kMFTriggerScroll: @{
+                        kMFModifiedScrollDictKeyInputModificationType: kMFModifiedScrollInputModificationTypeQuickScroll
+                    }
+                };
+                [remapsDict setObject:effect forKey:precondition];
+            }
+            if (precise) {
+                NSDictionary *precondition = @{
+                    kMFModificationPreconditionKeyKeyboard: @(precise)
+                };
+                NSDictionary *effect = @{
+                    kMFTriggerScroll: @{
+                        kMFModifiedScrollDictKeyInputModificationType: kMFModifiedScrollInputModificationTypePrecisionScroll
+                    }
+                };
+                [remapsDict setObject:effect forKey:precondition];
+            }
         }
+        
+        ///
+        /// Get values from action table (button remaps)
+        ///
+        
+        BOOL killSwitch = [(id)config(@"Other.buttonKillSwitch") boolValue] || HelperState.isLockedDown;
+        
+        if (killSwitch) {
+            /// TODO: Turn off button interception completely (generally when the remaps dict is empty)
+        } else {
+            
+            /// Convert remaps table to remaps dict
+            
+            NSArray *remapsTable = [Config.shared.config objectForKey:kMFConfigKeyRemaps];
+            
+            for (NSDictionary *tableEntry in remapsTable) {
+                /// Get modification precondition section of keypath
+                NSDictionary *modificationPrecondition = tableEntry[kMFRemapsKeyModificationPrecondition];
+                /// Get trigger section of keypath
+                NSArray *triggerKeyArray;
+                id trigger = tableEntry[kMFRemapsKeyTrigger];
+                if ([trigger isKindOfClass:NSString.class]) {
+                    NSString *triggerStr = (NSString *)trigger;
+                    triggerKeyArray = @[triggerStr];
+                    NSAssert([triggerStr isEqualToString:kMFTriggerScroll] || [triggerStr isEqualToString:kMFTriggerDrag] , @"");
+                } else if ([trigger isKindOfClass:NSDictionary.class]) {
+                    NSDictionary *triggerDict = (NSDictionary *)trigger;
+                    NSString *duration = triggerDict[kMFButtonTriggerKeyDuration];
+                    NSNumber *level = triggerDict[kMFButtonTriggerKeyClickLevel];
+                    NSNumber *buttonNum = triggerDict[kMFButtonTriggerKeyButtonNumber];
+                    triggerKeyArray = @[buttonNum, level, duration];
+                } else NSAssert(NO, @"");
+                /// Get effect
+                id effect = tableEntry[kMFRemapsKeyEffect]; /// This is always dict
+                if ([trigger isKindOfClass:NSDictionary.class]) {
+                    effect = @[effect];
+                    /// ^ For some reason we built one shot effect handling code around _arrays_ of effects. So we need to wrap our effect in an array.
+                    ///  This doesn't make sense. We should clean this up at some point and remove the array.
+                }
+                /// Put it all together
+                NSArray *keyArray = [@[modificationPrecondition] arrayByAddingObjectsFromArray:triggerKeyArray];
+                [remapsDict setObject:effect forCoolKeyArray:keyArray];
+            }
+        }
+        
+        [self setRemaps:remapsDict];
     }
-    
-    [self setRemaps:remapsDict];
 }
 
 #pragma mark - AddMode
