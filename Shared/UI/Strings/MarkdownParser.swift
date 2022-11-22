@@ -21,6 +21,11 @@ import CocoaLumberjackSwift
  
     @objc static func attributedString(markdown: String) -> NSAttributedString? {
         
+//        if markdown.localizedCaseInsensitiveContains("the recommended settings for") {
+//            
+//        }
+        
+        
         let document = Document(parsing: markdown, source: URL(string: ""), options: [.disableSmartOpts])
         if document.isEmpty { return nil }
         
@@ -37,7 +42,6 @@ import CocoaLumberjackSwift
         
         var visitor = ApplyMarkdown(attributeBase: attributedMarkdown)
         let result = visitor.visit(document)
-        
         
         return result /// Remember to fill out base before using this in UI or trying to calculate it's size. (What's wrong with using it in the UI before filling out base?)
     }
@@ -72,7 +76,7 @@ struct ApplyMarkdown: MarkupVisitor {
     
     fileprivate mutating func descendInto(_ markup: Markup) -> ApplyMarkdown.Result {
         
-        var result = NSMutableAttributedString(string: "")
+        let result = NSMutableAttributedString(string: "")
         
         for child in markup.children {
             if let r = visit(child) {

@@ -402,6 +402,8 @@ import CocoaLumberjackSwift
     
     /// Show popover method
     
+    private var restoreDefaultPopover_stringAttributesFromIB: [NSAttributedString.Key : Any]? = nil
+    
     fileprivate func showRestoreDefaultPopover(deviceName: String, nOfButtons: Int, usedButtons: Set<NSNumber>) {
         
         /// This is a helper for `viewDidAppear()`
@@ -459,12 +461,20 @@ import CocoaLumberjackSwift
             ///     So we can observe animations
             self.restoreDefaultPopover.delegate = self
             
+            /// Store attributes from IB
+            if restoreDefaultPopover_stringAttributesFromIB == nil {
+                restoreDefaultPopover_stringAttributesFromIB = self.restoreDefaultPopoverLabel.attributedStringValue.attributes(at: 0, effectiveRange: nil)
+            }
+            
             /// Setup body text
             ///     There used to be different text based on whether your were using a 3 button or a 5 button mouse, but we've simplified that now
             
             let message = String(format: NSLocalizedString("restore-default-buttons-popover.body", comment: "First draft:  __Click here__ to load the recommended settings\nfor your __%@__ mouse || Note: The \n linebreak is so the popover doesn't become too wide. You can set it to your taste. || Note: In English, there needs to be a space at the start of this string otherwise the whole string will be bold. This might be a Ventura Bug"), deviceName)
             
-            assignAttributedStringKeepingBase(&self.restoreDefaultPopoverLabel.attributedStringValue, NSAttributedString(coolMarkdown: message, fillOutBase: false)!)
+            if let attributes = restoreDefaultPopover_stringAttributesFromIB, let newString = NSAttributedString(coolMarkdown: message, fillOutBase: false)?.addingStringAttributes(asBase: attributes) {
+                
+                self.restoreDefaultPopoverLabel.attributedStringValue = newString
+            }
             
             /// Turn checkbox off
             self.restoreDefaultPopoverDontRemindAgainCheckbox.state = .off
