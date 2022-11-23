@@ -63,7 +63,7 @@ class TouchAnimator: TouchAnimatorBase {
         self.subPixelator.reset()
     }
     @objc func resetSubPixelator() {
-        displayLink.dispatchQueue.async {
+        displayLink.dispatchQueue.async(flags: defaultDFs) {
             self.resetSubPixelator_Unsafe()
         }
     }
@@ -73,7 +73,7 @@ class TouchAnimator: TouchAnimatorBase {
     @objc func start(params: @escaping StartParamCalculationCallback,
                      integerCallback: @escaping TouchAnimatorCallback) {
         
-        displayLink.dispatchQueue.async {
+        displayLink.dispatchQueue.async(flags: defaultDFs) {
             
             /// Get startParams
             

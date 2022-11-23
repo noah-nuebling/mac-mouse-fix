@@ -24,7 +24,7 @@ import QuartzCore
     typealias StartParamCalculationCallback = (_ valueLeft: Vector, _ isRunning: Bool, _ animationCurve: Curve?) -> MFAnimatorStartParams
     /// ^ When starting the animator, we usually want to get the value that the animator still wants to scroll (`animationValueLeft`), and add that to the new value. The specific logic can differ a lot though, so we can't just hardcode this into `Animator`
     ///     But to avoid race-conditions, we can't just externally execute this, so we to pass in a callback that can execute custom logic to get the start params right before the animator is started
-    typealias MFAnimatorStartParams = Dictionary<String, Any>
+    typealias MFAnimatorStartParams = NSDictionary ///`Dictionary<String, Any>` `<-` Using Swift dict was slow for interop with ObjC due to autobridging
     /// ^ 4 keys: "doStart", "duration", "vector", "curve"
     
     /// Conversion
@@ -60,13 +60,15 @@ import QuartzCore
         }
     }
     
-    /// Constants
+    /// ConstantsDispatchWorkItemFlags
     
     /// Vars - Init
     
     let displayLink: DisplayLink
-    @Atomic var callback: UntypedAnimatorCallback?
+    /*@Atomic*/ var clientCallback: UntypedAnimatorCallback?
     /// ^ This is constantly accessed by subclassHook() and constantly written to by startWithUntypedCallback(). Becuase Swift is stinky and not thread safe, the app will sometimes crash, when this property is read from and written to at the same time. So we're using @Atomic propery wrapper
+    ///  Edit: Atomic makes writing to this super slow we're locking everything with displayLink.queue now so it shouldn't be necessary. Disabling @Atomc now.
+    
     @objc var animationCurve: Curve? /// This class assumes that `animationCurve` passes through `(0, 0)` and `(1, 1)
     
 //    let threadLock = DispatchSemaphore.init(value: 1)
@@ -126,14 +128,14 @@ import QuartzCore
     
     @objc var animationTimeLeft: Double {
         var result: Double = -1
-        displayLink.dispatchQueue.sync {
+        displayLink.dispatchQueue.sync(flags: defaultDFs) {
             result = animationTimeLeft_Unsafe
         }
         return result
     }
     @objc var animationValueLeft: Vector {
         var result = Vector(x:-1, y:-1)
-        displayLink.dispatchQueue.sync {
+        displayLink.dispatchQueue.sync(flags: defaultDFs) {
             result = animationValueLeft_Unsafe
         }
         return result
@@ -180,7 +182,7 @@ import QuartzCore
         ///         Orrr we can also have self.isRunning() execute on self.queue. - we did that. Should be most robust solution
         ///         But actually, maybe it's faster to make start() use queue.sync after all. Because isRunning() is probably called a lot more.
         
-        displayLink.dispatchQueue.async {
+        displayLink.dispatchQueue.async(flags: defaultDFs) {
             
             /// Reset lastAnimationValue
             ///     So we don't give the `params` callback old invalid animationValueLeft.
@@ -223,7 +225,7 @@ import QuartzCore
         
         /// Store args
         
-        self.callback = callback;
+        self.clientCallback = callback;
         self.animationCurve = animationCurve
         
         /// Get stuff
@@ -301,7 +303,8 @@ import QuartzCore
     
     @objc (cancel_forAutoMomentumScroll:) func cancel(forAutoMomentumScroll: Bool) {
         
-        displayLink.dispatchQueue.async {
+        /// We're using the long async call because creating the dispatchworkitemflags for the normal one is somehow pretty slow.
+        displayLink.dispatchQueue.async(flags: defaultDFs) {
             
             /// Get info
             /// Notes:
@@ -315,7 +318,7 @@ import QuartzCore
             
             /// Call callback
             
-            if wasRunning, let callback = self.callback as? AnimatorCallback {
+            if wasRunning, let callback = self.clientCallback as? AnimatorCallback {
                 
                 if hadProducedDeltas {
                     callback(Vector(x: 0, y: 0), kMFAnimationCallbackPhaseCanceled, self.lastMomentumHint)
@@ -337,7 +340,7 @@ import QuartzCore
                         
                         callback(Vector(x: 0, y: 0), kMFAnimationCallbackPhaseStart, self.lastMomentumHint)
                         let delay = 8.0/1000.0 /// self.displayLink.nominalTimeBetweenFrames() / 2.0
-                        DispatchQueue.global(qos: .userInteractive).asyncAfter(deadline: .now() + delay, execute: { /// Why aren't we just using our queue here?
+                        DispatchQueue.global(qos: .userInteractive).asyncAfter(deadline: .now() + delay, flags: defaultDFs, execute: { /// Why aren't we just using our queue here?
                             callback(Vector(x: 0, y: 0), kMFAnimationCallbackPhaseCanceled, self.lastMomentumHint)
                         })
                     }
@@ -352,7 +355,7 @@ import QuartzCore
         /// Trying to stop from displayLinkThread causes deadlock. So we need to wait until the displayLinkThread has finished its iteration and then stop ASAP.
         ///     The best way we found to stop ASAP is to simply enqueu async on the displayLink's dispatchQueue
         
-        displayLink.dispatchQueue.async {
+        displayLink.dispatchQueue.async(flags: defaultDFs) {
             self.stop_Unsafe()
         }
     }
@@ -431,7 +434,7 @@ import QuartzCore
         
         /// Guard nil
         
-        guard let callback = self.callback else {
+        guard let callback = self.clientCallback else {
             fatalError("Invalid state - callback can't be nil during running animation")
         }
         guard let animationCurve = self.animationCurve else {

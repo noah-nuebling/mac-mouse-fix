@@ -354,8 +354,8 @@
             filePath = "Helper/Core/Touch/TouchAnimatorBase.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "326"
-            endingLineNumber = "326"
+            startingLineNumber = "329"
+            endingLineNumber = "329"
             landmarkName = "cancel(forAutoMomentumScroll:)"
             landmarkType = "7">
          </BreakpointContent>

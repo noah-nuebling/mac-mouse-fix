@@ -89,7 +89,6 @@ import CocoaLumberjackSwift
                 
                 return combinedDistance(transitionPoint: t, baseCurve: baseCurve, baseDistance: targetDistance, baseDuration: minDuration, dragExponent: dragExponent, dragCoefficient: dragCoefficient, stopSpeed: stopSpeed)
             }) as? Double
-            
         }
         
         if transitionPoint == nil {
