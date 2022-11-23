@@ -37,7 +37,7 @@ class SwitchMaster: NSObject {
         /// activeModifers
         /// remaps x
         ///
-        /// scrollConfig
+        /// scrollConfig (I think we only intended to use this for scrollDirection determination, but I think we'll just go back to calling it 'invert scrolling' and then we won't need this)
         
         /// ---
         

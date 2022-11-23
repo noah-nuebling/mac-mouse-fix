@@ -234,29 +234,30 @@ static void heavyProcessing(CGEventRef event, int64_t scrollDeltaAxis1, int64_t 
     /// Declare stuff for later
     static DriverUnsuspender unsuspendDrivers = ^{};
     
-    /// Get HIDEvent
-    HIDEvent *hidEvent = CGEventGetHIDEvent(event);
-    
     /// Debug
     if (SharedUtility.runningPreRelease) { /// if-statement because hidEvent.description is very slow
+        
+        /// Get HIDEvent
+        HIDEvent *hidEvent = CGEventGetHIDEvent(event);
         DDLogDebug(@"Scroll event: %@", hidEvent.description);
-    }
-    
-    /// Get sending device
-    IOHIDDeviceRef sendingDev = CGEventGetSendingDevice(event);
-    
-    /// Debug
-    assert(sendingDev != NULL);
-    
-    /// Print info on sendingDev
-    if (sendingDev != NULL) {
         
-        CFStringRef name = IOHIDDeviceGetProperty(sendingDev, CFSTR(kIOHIDProductKey));
-        CFStringRef manufacturer = IOHIDDeviceGetProperty(sendingDev, CFSTR(kIOHIDManufacturerKey));
         
-        DDLogDebug(@"Device sending scroll: %@ %@", manufacturer, name);
+        /// Get sending device
+        IOHIDDeviceRef sendingDev = CGEventGetSendingDevice(event);
+        
+        /// Debug
+        assert(sendingDev != NULL);
+        
+        /// Print info on sendingDev
+        if (sendingDev != NULL) {
+            
+            CFStringRef name = IOHIDDeviceGetProperty(sendingDev, CFSTR(kIOHIDProductKey));
+            CFStringRef manufacturer = IOHIDDeviceGetProperty(sendingDev, CFSTR(kIOHIDManufacturerKey));
+            
+            DDLogDebug(@"Device sending scroll: %@ %@", manufacturer, name);
+        }
     }
-    
+
     /// Get axis
     
     MFAxis inputAxis = [ScrollUtility axisForVerticalDelta:scrollDeltaAxis1 horizontalDelta:scrollDeltaAxis2];
@@ -322,7 +323,7 @@ static void heavyProcessing(CGEventRef event, int64_t scrollDeltaAxis1, int64_t 
         
         /// Notify other touch drivers
         
-        if ((NO)) {
+        if ((NO)) { /// Unused
             
             DriverUnsuspender thisDriverUnsuspender = [OutputCoordinator suspendTouchDriversFromDriver:kTouchDriverScroll];
             if (thisDriverUnsuspender != nil) {
