@@ -1,19 +1,26 @@
 //
 // --------------------------------------------------------------------------
-// ButtonLandscapeAssessor.m
+// RemapsAnalyzer.m
 // Created for Mac Mouse Fix (https://github.com/noah-nuebling/mac-mouse-fix)
 // Created by Noah Nuebling in 2021
 // Licensed under the MMF License (https://github.com/noah-nuebling/mac-mouse-fix/blob/master/LICENSE)
 // --------------------------------------------------------------------------
 //
 
-#import "ButtonLandscapeAssessor.h"
+#import "RemapsAnalyzer.h"
 #import "Remap.h"
 #import "SharedUtility.h"
 #import "Modifiers.h"
 #import "Mac_Mouse_Fix_Helper-Swift.h"
 
-@implementation ButtonLandscapeAssessor
+@implementation RemapsAnalyzer
+
+#pragma mark - Notes
+
+/// - This used to be called ButtonLandscapeAssessor
+///
+/// - At the time of writing, this is the only part of the live input processing code (aka scroll handling and button handling) which is not optimized. Optimizing this could shave off another 10-20%  off the CPU usage when clicking a button.
+/// - We could optimize this by caching the results in a dictionary and deleting the cache when the remaps are reloaded.
 
 #pragma mark - Main Assess Button Landscape Function
 

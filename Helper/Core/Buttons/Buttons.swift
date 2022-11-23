@@ -62,7 +62,7 @@ import CocoaLumberjackSwift
             /// Get max clickLevel
             self.maxClickLevel = 0
             if mouseDown {
-                self.maxClickLevel = ButtonLandscapeAssessor.maxLevel(forButton: button, remaps: remaps, modificationsActingOnThisButton: modifications)
+                self.maxClickLevel = RemapsAnalyzer.maxLevel(forButton: button, remaps: remaps, modificationsActingOnThisButton: modifications)
             }
             
         }
@@ -103,7 +103,7 @@ import CocoaLumberjackSwift
             var effectForMouseDownStateOfThisLevelExists: ObjCBool = false
             var effectOfGreaterLevelExists: ObjCBool = false
             
-            ButtonLandscapeAssessor.assessMappingLandscape(withButton: button as NSNumber, level: clickLevel as NSNumber, modificationsActingOnThisButton: modifications, remaps: remaps, thisClickDoBe: &clickActionOfThisLevelExists, thisDownDoBe: &effectForMouseDownStateOfThisLevelExists, greaterDoBe: &effectOfGreaterLevelExists)
+            RemapsAnalyzer.assessMappingLandscape(withButton: button as NSNumber, level: clickLevel as NSNumber, modificationsActingOnThisButton: modifications, remaps: remaps, thisClickDoBe: &clickActionOfThisLevelExists, thisDownDoBe: &effectForMouseDownStateOfThisLevelExists, greaterDoBe: &effectOfGreaterLevelExists)
             
             /// Create trigger -> action map based on mappingLandscape
             

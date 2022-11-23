@@ -28,7 +28,7 @@
 #import "EventUtility.h"
 #import "GlobalEventTapThread.h"
 #import "DeviceManager.h"
-#import "ButtonLandscapeAssessor.h"
+#import "RemapsAnalyzer.h"
 #import "Actions.h"
 #import "OutputCoordinator.h"
 #import "GestureScrollSimulator.h"

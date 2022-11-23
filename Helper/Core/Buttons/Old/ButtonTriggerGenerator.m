@@ -21,7 +21,7 @@
 #import "Modifiers.h"
 #import "SharedUtility.h"
 #import "ButtonTriggerHandler.h"
-#import "ButtonLandscapeAssessor.h"
+#import "RemapsAnalyzer.h"
 #import "Device.h"
 #import "DeviceManager.h"
 

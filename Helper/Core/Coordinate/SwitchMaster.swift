@@ -62,66 +62,65 @@ import CocoaLumberjackSwift
             
             DDLogError("Switch Master switching to - kbMod: \(enableKbModTap), button: \(enableButtonTap), scroll: \(enableScrollTap), drag: \(enableDragTap)")
             
-//            DispatchQueue.global(qos: .background).async(flags: defaultDFs) {
-//                decide()
-//            }
-
-                
-                /// Debug
-    //            DDLogError("Switch Master switching with state - devs: \(attachedDevices), remaps: \(remaps), modifiers: \(modifiers)")
-                
-            }
+            //            DispatchQueue.global(qos: .background).async(flags: defaultDFs) {
+            //                decide()
+            //            }
+            
+            
+            /// Debug
+            //            DDLogError("Switch Master switching with state - devs: \(attachedDevices), remaps: \(remaps), modifiers: \(modifiers)")
+            
         }
-        
-        /// ---
-        
-        /// Base sginals
-        
-        /// attachedDevices x
-        /// activeModifers x
-        /// remaps x
-        ///
-        /// scrollConfig (I think we only intended to use this for scrollDirection determination, but I think we'll just go back to calling it 'invert scrolling' and then we won't need this)
-        
-        /// ---
-        
-        /// Combine signals
-        
-        ///
-        /// Decide kbModTap enable
-        ///
-        
-        /// if (devicesWithUsableScrollingAreAttached || devicesWithUsableButtonsAreAttached || devicesWithUsablePointerAreAttached) == false { return false }
-        /// if kbModsArePrecondition == false { return false }
-        /// else { return true }
-        
-        /// Decide buttonModifier callback enable?
-
-        ///
-        /// Decide scrollTap enable
-        ///
-        
-        /// if devicesWithUsableScrollingAreAttached == false { return false }
-        /// if scrollConfigDoesTransform == true { return **true** }
-        /// if swizzledScrollTransformsExist == false { return false }
-        /// else { return true }
-        
-        ///
-        /// Decide buttonTap enable
-        ///
-        
-        /// if devicesWithUsableButtonsAreAttached == false { return false }
-        /// if swizzledButtonTransformationsExistForUsableButtons == false { return false }
-        /// else { return true }
-        
-        ///
-        /// Decide dragTap enable
-        ///
-        
-        /// if devicesWithUsablePointerAreAttached == false { return false } // I don't think there will ever be devices without a usable pointer
-        /// if swizzledDragTransformsExist == false { return false }
-        /// else { return true }
-        
     }
+    
+    /// ---
+    
+    /// Base sginals
+    
+    /// attachedDevices x
+    /// activeModifers x
+    /// remaps x
+    ///
+    /// scrollConfig (I think we only intended to use this for scrollDirection determination, but I think we'll just go back to calling it 'invert scrolling' and then we won't need this)
+    
+    /// ---
+    
+    /// Combine signals
+    
+    ///
+    /// Decide kbModTap enable
+    ///
+    
+    /// if (devicesWithUsableScrollingAreAttached || devicesWithUsableButtonsAreAttached || devicesWithUsablePointerAreAttached) == false { return false }
+    /// if kbModsArePrecondition == false { return false }
+    /// else { return true }
+    
+    /// Decide buttonModifier callback enable?
+    
+    ///
+    /// Decide scrollTap enable
+    ///
+    
+    /// if devicesWithUsableScrollingAreAttached == false { return false }
+    /// if scrollConfigDoesTransform == true { return **true** }
+    /// if swizzledScrollTransformsExist == false { return false }
+    /// else { return true }
+    
+    ///
+    /// Decide buttonTap enable
+    ///
+    
+    /// if devicesWithUsableButtonsAreAttached == false { return false }
+    /// if swizzledButtonTransformationsExistForUsableButtons == false { return false }
+    /// else { return true }
+    
+    ///
+    /// Decide dragTap enable
+    ///
+    
+    /// if devicesWithUsablePointerAreAttached == false { return false } // I don't think there will ever be devices without a usable pointer
+    /// if swizzledDragTransformsExist == false { return false }
+    /// else { return true }
+    
     
 }

@@ -1,6 +1,6 @@
 //
 // --------------------------------------------------------------------------
-// ButtonLandscapeAssessor.swift
+// RemapsAnalyzer.swift
 // Created for Mac Mouse Fix (https://github.com/noah-nuebling/mac-mouse-fix)
 // Created by Noah Nuebling in 2022
 // Licensed under MIT
@@ -9,7 +9,7 @@
 
 import Foundation
 
-extension ButtonLandscapeAssessor {
+extension RemapsAnalyzer {
     
     ///
     /// Turn off swift autobridging
