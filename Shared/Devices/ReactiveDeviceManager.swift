@@ -19,23 +19,23 @@ import ReactiveSwift
     @objc static var shared = ReactiveDeviceManager()
     
     // MARK: Main interface
-    var attachedDevices: SignalProducer<[Device], Never> {
-        return attachedDevicesSignal.producer.prefix(value: DeviceManager.attachedDevices()).skipRepeats()
+    var attachedDevices: SignalProducer<NSArray, Never> {
+        return attachedDevicesSignal.producer.prefix(value: DeviceManager.attachedDevices) // .skipRepeats() // SkipRepeats doesn't work on reference types, it just kills the signal!
     }
     
     // MARK: Reactive core
-    private var attachedDevicesObserver: Signal<[Device], Never>.Observer
-    private var attachedDevicesSignal: Signal<[Device], Never>
+    private var attachedDevicesObserver: Signal<NSArray, Never>.Observer
+    private var attachedDevicesSignal: Signal<NSArray, Never>
     
     // MARK: Init
     private override init() {
-        let (o, i) = ReactiveSwift.Signal<[Device], Never>.pipe()
+        let (o, i) = ReactiveSwift.Signal<NSArray, Never>.pipe()
         attachedDevicesObserver = i
         attachedDevicesSignal = o
     }
     
     // MARK: ObjC interface
     @objc func handleAttachedDevicesDidChange() {
-        attachedDevicesObserver.send(value: DeviceManager.attachedDevices())
+        attachedDevicesObserver.send(value: DeviceManager.attachedDevices)
     }
 }

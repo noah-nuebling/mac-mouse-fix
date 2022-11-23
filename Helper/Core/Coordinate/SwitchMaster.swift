@@ -21,20 +21,64 @@
 /// - Mouse movement
 
 import Cocoa
+import CocoaLumberjackSwift
 
-class SwitchMaster: NSObject {
+@objc class SwitchMaster: NSObject {
     
     @objc static func load_Manual() {
         
-        let attachedDevices = ReactiveDeviceManager.shared.attachedDevices
-        let remaps = ReactiveRemaps.shared.remaps
+        let attachedDevicesSignal = ReactiveDeviceManager.shared.attachedDevices
+        let remapsSignal = ReactiveRemaps.shared.remaps
+        
+        
+        
+        let modifiersSignal = ReactiveModifiers.shared.modifiers
+        
+        attachedDevicesSignal.combineLatest(with: remapsSignal).combineLatest(with: modifiersSignal).startWithValues { (arg0, modifiers: NSDictionary) in
+            
+            /// Destrucure args
+            let (attachedDevices, remaps) = arg0
+            
+            /// Decide which input to switch on or off
+            
+            var enableKbModTap = false
+            var enableButtonTap = false
+            var enableScrollTap = false
+            var enableDragTap = false
+            
+            let decide = {
+                
+                /// Analyze attached devices
+                if attachedDevices.count == 0 { return }
+                
+                /// Analyze remaps
+                
+                /// Analyze modifiers
+                
+                
+            }
+            
+            decide()
+            
+            DDLogError("Switch Master switching to - kbMod: \(enableKbModTap), button: \(enableButtonTap), scroll: \(enableScrollTap), drag: \(enableDragTap)")
+            
+//            DispatchQueue.global(qos: .background).async(flags: defaultDFs) {
+//                decide()
+//            }
+
+                
+                /// Debug
+    //            DDLogError("Switch Master switching with state - devs: \(attachedDevices), remaps: \(remaps), modifiers: \(modifiers)")
+                
+            }
+        }
         
         /// ---
         
         /// Base sginals
         
         /// attachedDevices x
-        /// activeModifers
+        /// activeModifers x
         /// remaps x
         ///
         /// scrollConfig (I think we only intended to use this for scrollDirection determination, but I think we'll just go back to calling it 'invert scrolling' and then we won't need this)
@@ -50,6 +94,8 @@ class SwitchMaster: NSObject {
         /// if (devicesWithUsableScrollingAreAttached || devicesWithUsableButtonsAreAttached || devicesWithUsablePointerAreAttached) == false { return false }
         /// if kbModsArePrecondition == false { return false }
         /// else { return true }
+        
+        /// Decide buttonModifier callback enable?
 
         ///
         /// Decide scrollTap enable

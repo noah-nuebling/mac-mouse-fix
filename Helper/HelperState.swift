@@ -25,7 +25,7 @@ import Foundation
             if _activeDevice != nil {
                 return _activeDevice
             } else { /// Just return any attached device as a fallback
-                return DeviceManager.attachedDevices().first
+                return DeviceManager.attachedDevices.first as! Device?
             }
         }
     }

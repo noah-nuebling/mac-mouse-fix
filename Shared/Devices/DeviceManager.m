@@ -46,6 +46,9 @@ static NSMutableArray<Device *> *_attachedDevices;
 + (NSArray<Device *> *)attachedDevices {
     return _attachedDevices;
 }
++ (id)__SWIFT_UNBRIDGED_attachedDevices {
+    return _attachedDevices;
+}
 
 # pragma mark - Load
 

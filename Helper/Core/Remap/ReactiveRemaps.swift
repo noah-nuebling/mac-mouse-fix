@@ -28,12 +28,12 @@ import ReactiveSwift
     
     /// Main interface
     var remaps: SignalProducer<NSDictionary, Never> {
-        return signal.producer.prefix(value: Remap.remaps as! NSDictionary).skipRepeats()
+        return signal.producer.prefix(value: Remap.remaps) // .skipRepeats()
     }
     
     /// ObjC interface
     @objc func handleRemapsDidChange() {
-        observer.send(value: Remap.remaps as! NSDictionary)
+        observer.send(value: Remap.remaps)
     }
 }
 

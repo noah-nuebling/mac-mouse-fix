@@ -223,6 +223,8 @@ CGEventRef _Nullable testCallback(CGEventTapProxy proxy, CGEventType type, CGEve
         [ModifiedDrag load_Manual];
         [Modifiers load_Manual];
         
+        [SwitchMaster load_Manual];
+        
         [ScreenDrawer.shared load_Manual];
         [PointerFreeze load_Manual];
         

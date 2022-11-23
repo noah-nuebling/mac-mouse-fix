@@ -204,6 +204,7 @@ class ScrollTabController: NSViewController {
             self.preciseMod.set(defaultP.rawValue)
         }
         
+        /// v Using combineLatest here might be easier
         let allFlags = SignalProducer<(String, UInt), Never>.merge(horizontalMod.producer.map{ ("h", $0) }, zoomMod.producer.map{ ("z", $0) }, swiftMod.producer.map{ ("s", $0) }, preciseMod.producer.map{ ("p", $0) })
         
         allFlags.startWithValues { (src, flags) in

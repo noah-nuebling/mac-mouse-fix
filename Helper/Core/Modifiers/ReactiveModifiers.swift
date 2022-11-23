@@ -25,7 +25,7 @@ import ReactiveSwift
     }
 /// Main interface
     var modifiers: SignalProducer<NSDictionary, Never> {
-        return signal.producer.prefix(value: Modifiers.modifiers(with: nil) as NSDictionary).skipRepeats()
+        return signal.producer.prefix(value: Modifiers.modifiers(with: nil)) // .skipRepeats()
     }
     
     /// ObjC Interface
