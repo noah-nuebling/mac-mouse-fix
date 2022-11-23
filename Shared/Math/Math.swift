@@ -175,7 +175,8 @@ import CocoaLumberjackSwift
     /// - Defines only closed Intervals. We don't need open or half-open intervals
     /// - Also stores a direction, which Maths Intervals don't usually do, but it's real useful for us. If the caller want to ignore this they can use `lower` and `upper` instead of `start` and `end`
     /// - This is used a lot for BezierCurve and Animator, which means tons of these are instantiated every second while scrolling -> Might be worth looking into optimizing
-    ///     Edit: We made everything lazy for optimization. Don't know if it makes any difference.
+    ///     - Edit: We made everything lazy for optimization. Don't know if it makes any difference.
+    ///     - Edit 2: creating instances of this takes up a lot of CPU. I tried moving to a pure swift class that doesn't inherit from NSObject but somehow it became even slower. See message for commit 4b48286745730435dc2384ecdc8c43547aaec2e5.
     
     @objc override var description: String { "(\(start), \(end))" }
     

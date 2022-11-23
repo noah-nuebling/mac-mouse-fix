@@ -50,7 +50,7 @@
     /// Setup stuff
     ///     Can't do this in `[_instance init]` because the callchain accesses tries to access the `_instance` through `Config.shared`. (Might be fixable by making `handleConfigFileChange()` an instance method like everything else)
     
-    if (SharedUtility.runningHelper) {
+    if (runningHelper()) {
         /// Load config
         [Config handleConfigFileChange];
         /// Setup stuff
@@ -164,7 +164,7 @@ void commitConfig() {
     
     /// Validate
     
-    assert(SharedUtility.runningHelper);
+    assert(runningHelper());
     
 #if IS_HELPER
     
@@ -189,7 +189,7 @@ void commitConfig() {
 - (void)loadOverridesForApp:(NSString *)bundleID {
     
     /// Validate
-    assert(SharedUtility.runningHelper);
+    assert(runningHelper());
     
 #if IS_HELPER
     
@@ -233,7 +233,7 @@ void commitConfig() {
      Edit: I have an idea for a fix! Simply disable the eventStream while the mainApp is open / while the messageport is connected! Maybe implement this as part of SwitchMaster
      */
     
-    assert(SharedUtility.runningHelper);
+    assert(runningHelper());
     
 // #if IS_HELPER
 #if 0 /// Disable for now
@@ -380,7 +380,7 @@ void Handle_FSEventStreamCallback(ConstFSEventStreamRef streamRef, void *clientC
     /// TODO: Check whether all default (as opposed to override) values exist in config file. If they don't, then everything breaks. Maybe do this by comparing with default_config. Edit: Not sure this is feasible, also the comparing with default_config breaks if we want to have keys that are optional.
     /// TODO: Consider porting this to Helper
     
-    assert(SharedUtility.runningMainApp);
+    assert(runningMainApp());
     
     /// Create config file if none exists
     
@@ -426,7 +426,7 @@ void Handle_FSEventStreamCallback(ConstFSEventStreamRef streamRef, void *clientC
     
     /// Replaces the current config file which the helper app is reading from with the backup one and then terminates the helper. (Helper will restart automatically because of the KeepAlive attribute in its user agent config file.)
     
-    assert(SharedUtility.runningMainApp);
+    assert(runningMainApp());
     
     /// Overwrite `config.plist` with `default_config.plist`
     NSData *defaultData = [NSData dataWithContentsOfURL:defaultConfigURL()];

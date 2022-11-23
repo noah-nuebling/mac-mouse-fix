@@ -201,7 +201,7 @@ CGEventRef _Nullable kbModsChanged(CGEventTapProxy proxy, CGEventType type, CGEv
     DDLogDebug(@"buttonMods changed to: %@", newModifiers);
     
     /// Assert change
-    if (SharedUtility.runningPreRelease) {
+    if (runningPreRelease()) {
         NSArray *oldModifiers = _modifiers[kMFModificationPreconditionKeyButtons];
         assert(![newModifiers isEqualToArray:oldModifiers]);
     }

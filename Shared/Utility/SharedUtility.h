@@ -33,11 +33,11 @@ NSException * _Nullable tryCatch(void (^tryBlock)(void));
 
 void *offsetPointer(void *ptr, int byteOffset);
 
-+ (BOOL)runningPreRelease;
+bool runningPreRelease(void);
 
-+ (BOOL)runningMainApp;
-+ (BOOL)runningHelper;
-+ (BOOL)runningAccomplice;
+bool runningMainApp(void);
+bool runningHelper(void);
+//bool runningAccomplice(void);
 
 + (CVReturn)displayUnderMousePointer:(CGDirectDisplayID *)dspID withEvent:(CGEventRef _Nullable)event;
 + (CVReturn)display:(CGDirectDisplayID *)dspID atPoint:(CGPoint)point;

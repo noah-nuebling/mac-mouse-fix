@@ -83,6 +83,11 @@ import CocoaLumberjack /// Doesn't work for some reason
         return []
     }
     
+    /// Other
+    
+    let isLine: Bool /// When the Bezier is really just a line we can do some optimzations.
+    let lineRepresentation: Line?
+    
     let maxDegreeForPolynomialApproach: Int = 20
     /// ^ Wikipedia says that "high order curves may lack numeric stability" in polynomial form, and to use Casteljau instead if that happens. Not sure where exactly we should make the cutoff
     
@@ -178,6 +183,7 @@ import CocoaLumberjack /// Doesn't work for some reason
     init(controlPoints: [P], defaultEpsilon: Double = 0.08) {
         
         /**
+         Core init
          - You should make sure you only pass in control points describing curves where
             - 1. The x values of the first and last point are the two extreme (minimal and maximal) x values among all control points x values
             - 2. The curves x values are monotonically increasing / decreasing along the y axis, so that there are no x coordinates for which there are several points on the curve
@@ -185,12 +191,6 @@ import CocoaLumberjack /// Doesn't work for some reason
                 - There is a proper mathsy name for this but I forgot
                 - If it's not the case, it won't necessarily throw an error, but things might behave unpredicably.
          */
-        
-        
-        
-        /// Make sure that there are at least 2 points
-        
-        assert(controlPoints.count >= 2, "There need to be at least 2 controlPoints");
         
         /// Set defaultEpsilon
         
@@ -205,6 +205,19 @@ import CocoaLumberjack /// Doesn't work for some reason
             let next = controlPoints[i+1]
             if this.x == next.x && this.y == next.y { continue }
             controlPointsFiltered.append(this)
+        }
+        
+        /// Make sure that there are at least 2 points
+        assert(controlPoints.count >= 2, "There need to be at least 2 controlPoints");
+        
+        /// Fill isLine and lineRepresentation
+        ///     isLine lets us do some optimizations
+        
+        isLine = controlPoints.count == 2
+        if isLine {
+            lineRepresentation = Line(connecting: controlPoints[0], controlPoints[1])
+        } else {
+            lineRepresentation = nil
         }
         
         /// Fill self.controlPoints
@@ -299,7 +312,25 @@ import CocoaLumberjack /// Doesn't work for some reason
         }
     }
     
-    /// Empty init
+    /// Invalid init
+    ///     For InvalidBezier
+    
+    fileprivate init(forInvalid: Bool) {
+        if !forInvalid { fatalError() }
+        
+        defaultEpsilon = 0.0
+        controlPoints = []
+        controlPointsX = []
+        controlPointsY = []
+        polynomialCoefficients = []
+        polynomialCoefficientsX = []
+        polynomialCoefficientsY = []
+        xValueRange = Interval(0.0, 0.0)
+        isLine = false
+        lineRepresentation = nil
+    }
+    
+    /// Copying init
     ///     For copying
     
     private init(copiedFrom other: Bezier, withZone zone: NSZone?) {
@@ -312,6 +343,8 @@ import CocoaLumberjack /// Doesn't work for some reason
         polynomialCoefficientsX = other.polynomialCoefficientsX
         polynomialCoefficientsY = other.polynomialCoefficientsY
         xValueRange = other.xValueRange.copy(with: zone) as! Interval
+        isLine = other.isLine
+        lineRepresentation = other.lineRepresentation?.copy() as! Line? /// I hope this copy function works. Do we even needt to copy? I don't think Line is mutable does that matter?
     }
     
     /// Copying
@@ -320,7 +353,7 @@ import CocoaLumberjack /// Doesn't work for some reason
         return Bezier(copiedFrom: self, withZone: zone)
     }
     
-    // MARK: Sample curve
+    // MARK: Sampling the curve
     
     /// - Parameters:
     ///   - axis: Axis which to sample. Either `xAxis` or `yAxis`
@@ -515,10 +548,14 @@ import CocoaLumberjack /// Doesn't work for some reason
     
     @objc func evaluate(at x: Double, epsilon: Double) -> Double {
         
-        let t: Double = solveForT(x: x, epsilon: epsilon)
-        let y: Double = sampleCurve(onAxis: yAxis, atT: t)
-        
-        return y
+        if isLine {
+            return lineRepresentation!.evaluate(at: x)
+        } else {
+            let t: Double = solveForT(x: x, epsilon: epsilon)
+            let y: Double = sampleCurve(onAxis: yAxis, atT: t)
+            
+            return y
+        }
     }
     
     // MARK: Derivative dy/dx
@@ -527,20 +564,27 @@ import CocoaLumberjack /// Doesn't work for some reason
         
         assert(controlPoints.count > 1)
         
-        /// Our sampleDerivative() function doesn't work for t == 0 and t == 1
-        
-        if t == 0 {
-            return entrySlope
+        if isLine {
+            
+            return lineRepresentation!.slope
+            
+        } else {
+            
+            /// Our sampleDerivative() function doesn't work for t == 0 and t == 1
+            
+            if t == 0 {
+                return entrySlope
+            }
+            if t == 1 {
+                return exitSlope
+            }
+            
+            /// All parametric functions have this derivative
+            let dyDt = sampleDerivative(on: yAxis, at: t)
+            let dxDt = sampleDerivative(on: xAxis, at: t)
+            
+            return dyDt / dxDt
         }
-        if t == 1 {
-            return exitSlope
-        }
-        
-        /// All parametric functions have this derivative
-        let dyDt = sampleDerivative(on: yAxis, at: t)
-        let dxDt = sampleDerivative(on: xAxis, at: t)
-        
-        return dyDt / dxDt
     }
     
     // MARK: Other Interface
@@ -549,40 +593,51 @@ import CocoaLumberjack /// Doesn't work for some reason
         
         assert(controlPoints.count > 1)
         
-        /// Get last control point
-        let cLast = controlPoints[self.n]
-        /// Find first controlPoint before cLast that is different from cLast
-        var cPrevIndex: Int = self.n-1;
-        var cPrev: P = controlPoints[cPrevIndex];
-        while (cPrev.x == cLast.x && cPrev.y == cLast.y) { /// Loop while cPrev == cLast
-            cPrevIndex -= 1
-            cPrev = controlPoints[cPrevIndex]
+        if isLine {
+            
+            return lineRepresentation!.slope
+            
+        } else {
+            /// Get last control point
+            let cLast = controlPoints[self.n]
+            /// Find first controlPoint before cLast that is different from cLast
+            var cPrevIndex: Int = self.n-1;
+            var cPrev: P = controlPoints[cPrevIndex];
+            while (cPrev.x == cLast.x && cPrev.y == cLast.y) { /// Loop while cPrev == cLast
+                cPrevIndex -= 1
+                cPrev = controlPoints[cPrevIndex]
+            }
+            
+            /// Find slope
+            let slope = (cLast.y - cPrev.y) / (cLast.x - cPrev.x)
+            
+            return slope
         }
-        
-        /// Find slope
-        let slope = (cLast.y - cPrev.y) / (cLast.x - cPrev.x)
-        
-        return slope
     }
     
     var entrySlope: Double {
         
         assert(controlPoints.count > 1)
         
-        /// Get first control point
-        let cFirst = controlPoints[0]
-        /// Find first controlPoint after cFirst that is different from cFirst
-        var cNextIndex: Int = 1;
-        var cNext: P = controlPoints[cNextIndex];
-        while cFirst.x == cNext.x && cFirst.y == cNext.y { /// Loop while cFirst == cNext
-            cNextIndex += 1
-            cNext = controlPoints[cNextIndex]
+        if isLine {
+            return lineRepresentation!.slope
+        } else {
+            
+            /// Get first control point
+            let cFirst = controlPoints[0]
+            /// Find first controlPoint after cFirst that is different from cFirst
+            var cNextIndex: Int = 1;
+            var cNext: P = controlPoints[cNextIndex];
+            while cFirst.x == cNext.x && cFirst.y == cNext.y { /// Loop while cFirst == cNext
+                cNextIndex += 1
+                cNext = controlPoints[cNextIndex]
+            }
+            
+            /// Find slope
+            let slope = (cNext.y - cFirst.y) / (cNext.x - cFirst.x)
+            
+            return slope
         }
-        
-        /// Find slope
-        let slope = (cNext.y - cFirst.y) / (cNext.x - cFirst.x)
-        
-        return slope
     }
 
 }
@@ -590,7 +645,8 @@ import CocoaLumberjack /// Doesn't work for some reason
 @objc class InvalidBezier: Bezier {
     
     init() {
-        super.init(controlPoints: [_P(1, 1), _P(12345, 12345)])
+        /// Is this 'invalid' stuff really a good architecture? We're allocating all this stuff for nothing.
+        super.init(forInvalid: true)
     }
     
     override func evaluate(at x: Double) -> Double {

@@ -511,7 +511,7 @@ static void getDeltaVectors(Vector point, VectorSubPixelator *subPixelator, Vect
     
     /// Debug
     
-    if (SharedUtility.runningPreRelease) {
+    if (runningPreRelease()) {
         
         static double tsLast = 0;
         double ts = CACurrentMediaTime();

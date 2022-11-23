@@ -235,7 +235,7 @@ static void heavyProcessing(CGEventRef event, int64_t scrollDeltaAxis1, int64_t 
     static DriverUnsuspender unsuspendDrivers = ^{};
     
     /// Debug
-    if (SharedUtility.runningPreRelease) { /// if-statement because hidEvent.description is very slow
+    if (runningPreRelease()) { /// if-statement because hidEvent.description is very slow
         
         /// Get HIDEvent
         HIDEvent *hidEvent = CGEventGetHIDEvent(event);
@@ -814,7 +814,7 @@ static void sendOutputEvents(int64_t dx, int64_t dy, MFScrollOutputType outputTy
         
         /// Log
         
-        if (SharedUtility.runningPreRelease) {
+        if (runningPreRelease()) {
             
             static double tsStart = 0;
             if (animatorPhase == kMFAnimationCallbackPhaseStart) {

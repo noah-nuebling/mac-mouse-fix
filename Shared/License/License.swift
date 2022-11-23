@@ -78,16 +78,14 @@ extension MFLicenseAndTrialState: Equatable {
                         ///     This is unused so far
                         
                         /// Validate
-                        assert(SharedUtility.runningMainApp())
-                        
-                        
+                        assert(runningMainApp())
                         
                     } else {
                         
                         /// Not triggered by user -> the users workflow is disruped -> make it as short as possible
                         
                         /// Validate
-                        assert(SharedUtility.runningHelper())
+                        assert(runningHelper())
                         
                         /// Only compile if helper (Otherwise there are linker errors)
                         #if IS_HELPER

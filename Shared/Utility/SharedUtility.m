@@ -246,14 +246,19 @@ static void iteratePropertiesOn(id obj, void(^callback)(objc_property_t property
 
 #pragma mark - Check if this is a prerelease version
 
-+ (BOOL)runningPreRelease {
+bool runningPreRelease(void) {
 
-    /// Caching this seems excessive but it's called a lot and actually has a huge performance impact.
+    /// Caching this seems excessive but it's called a lot and actually has a huge performance impact. We also moved to from ObjC to being a pure C function because that improves performance of the app by a few percentage points.
     
     static BOOL _isCached = NO;
     static BOOL _runningPrerelease = NO;
     
-    if (!_isCached) {
+    if (_isCached) {
+        
+        return _runningPrerelease;
+        
+    } else{
+        
         
         /// Check debug configuration
         
@@ -277,30 +282,38 @@ static void iteratePropertiesOn(id obj, void(^callback)(objc_property_t property
         
         /// Update flag
         _isCached = YES;
+        
+        /// Return
+        return _runningPrerelease;
     }
-    
-    return _runningPrerelease;
 }
 
 #pragma mark - Check which executable is running
 /// TODO: Maybe move this to `Locator.m`
 
-+ (BOOL)runningMainApp {
+bool runningMainApp(void) {
     
-    /// Return YES if called by main app
-    ///     Note: Could also use compiler flags `IS_MAIN_APP` and `IS_HELPER` to speed this up. Or just remove these methods and just use the flags directly
-    return [NSBundle.mainBundle.bundleIdentifier isEqual:kMFBundleIDApp];
+#if IS_MAIN_APP
+    return true;
+#endif
+    return false;
+
+//    return [NSBundle.mainBundle.bundleIdentifier isEqual:kMFBundleIDApp];
 }
-+ (BOOL)runningHelper {
+bool runningHelper(void) {
     
-    /// Return YES if called by helper app
-    return [NSBundle.mainBundle.bundleIdentifier isEqual:kMFBundleIDHelper];
-}
-+ (BOOL)runningAccomplice {
+#if IS_HELPER
+    return true;
+#endif
+    return false;
     
-    /// Return YES if called by accomplice
-    return [NSFileManager.defaultManager isExecutableFileAtPath:[NSBundle.mainBundle.bundlePath stringByAppendingPathComponent:kMFAccompliceName]];
+//    return [NSBundle.mainBundle.bundleIdentifier isEqual:kMFBundleIDHelper];
 }
+//bool runningAccomplice(void) {
+//    
+//    /// Return YES if called by accomplice
+//    return [NSFileManager.defaultManager isExecutableFileAtPath:[NSBundle.mainBundle.bundlePath stringByAppendingPathComponent:kMFAccompliceName]];
+//}
 
 #pragma mark - Use command-line tools
 
@@ -365,7 +378,7 @@ static void iteratePropertiesOn(id obj, void(^callback)(objc_property_t property
     }
     
     /// Debug
-    if (SharedUtility.runningPreRelease) {
+    if (runningPreRelease()) {
         NSString *errorDesc = @"";
         if (errorPtr != nil && *errorPtr != nil) {
             errorDesc = (*errorPtr).debugDescription;
@@ -659,7 +672,7 @@ int8_t sign(double x) {
     /// Set logging format
     //    DDOSLogger.sharedInstance.logFormatter = DDLogFormatter.
     
-    if ((NO) /*SharedUtility.runningPreRelease*/) {
+    if ((NO) /*runningPreRelease()*/) {
         
         /// Setup logging  file
         /// Copied this from https://github.com/CocoaLumberjack/CocoaLumberjack/blob/master/Documentation/GettingStarted.md

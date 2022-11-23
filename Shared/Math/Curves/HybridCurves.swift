@@ -37,7 +37,64 @@ import CocoaLumberjackSwift
         super.init()
         
         /// Validate
+        ///     The baseCurve should always pass through (0.0, 0.0) and (1.0, 1.0) `minDuration` and `distance` are used to stretch the baseCurve along the x and y axis.
+        
         assert(targetDistance > 0)
+        assert(baseCurve.controlPoints.first == CGPoint(x: 0.0, y: 0.0))
+        assert(baseCurve.controlPoints.last == CGPoint(x: 1.0, y: 1.0))
+        
+        /// Call core
+        
+        let transitionTime: Double
+        let transitionDistance: Double
+        let dragCurve: DragCurve?
+        
+        if baseCurve.isLine { /// Fallback to line logic if the Bezier is just a line - for optimization
+            (transitionTime, transitionDistance, dragCurve) = LineHybridCurve._lineInit(minDuration: minDuration, distance: targetDistance, dragCoefficient: dragCoefficient, dragExponent: dragExponent, stopSpeed: stopSpeed)
+        } else {
+            (transitionTime, transitionDistance, dragCurve) = BezierHybridCurve._bezierInit(baseCurve: baseCurve, minDuration: minDuration, targetDistance: targetDistance, dragCoefficient: dragCoefficient, dragExponent: dragExponent, stopSpeed: stopSpeed, distanceEpsilon: distanceEpsilon)
+        }
+        
+        /// Store params
+        
+        self._baseCurve = baseCurve
+        self.baseTimeInterval = Interval(start: 0, end: transitionTime)
+        self.baseDistanceInterval = Interval(start: 0, end: transitionDistance)
+        
+        self.dragCurve = dragCurve
+        self.dragCoefficient = dragCoefficient
+        self.dragExponent = dragExponent
+        self.stopSpeed = stopSpeed
+    }
+    
+    /// Init - Helpers
+    
+    static func combinedDistance(transitionPoint t: Double, baseCurve: Bezier, baseDistance: Double, baseDuration: Double, dragExponent: Double, dragCoefficient: Double, stopSpeed: Double) -> Double {
+        
+        assert(0 <= t && t <= 1)
+        
+        let slopeAtT = baseCurve.derivativeDyOverDx(atT: t)
+        let speedAtT = slopeAtT * baseDistance / baseDuration
+        
+        if speedAtT <= stopSpeed {
+            
+            DDLogWarn("Proposed transitionSpeed is lower than stopSpeed")
+            
+            let transitionDistance = baseCurve.sampleCurve(onAxis: Bezier.yAxis, atT: t) * baseDistance
+            return transitionDistance
+        }
+        
+        let dragCurve = DragCurve(coefficient: dragCoefficient, exponent: dragExponent, initialSpeed: speedAtT, stopSpeed: stopSpeed)
+        let dragDistance = dragCurve.distanceInterval.length
+        
+        let transitionDistance = baseCurve.sampleCurve(onAxis: Bezier.yAxis, atT: t) * baseDistance
+        
+        let combinedDistance = transitionDistance + dragDistance
+        
+        return combinedDistance
+    }
+    
+    static func _bezierInit(baseCurve: Bezier, minDuration: Double, targetDistance: Double, dragCoefficient: Double, dragExponent: Double, stopSpeed: Double, distanceEpsilon: Double) -> (transitionTime: Double, transitionDistance: Double, dragCurve: DragCurve?) {
         
         /// Find transition point
         ///     We need to find a point on the BezierCurve where to attach the DragCurve, such that the combined curve covers a distance of `distance`
@@ -119,6 +176,8 @@ import CocoaLumberjackSwift
             } else {
                 
                 DDLogWarn("transitionPoint has been found but transitionSpeed is lower than stopSpeed. So the dragCurve can't cover any distance. This likely means that the baseCurve covers the whole distance on its own exactly.")
+                
+                assert(false) /// For debugging, remove later
             }
             
         }
@@ -133,43 +192,8 @@ import CocoaLumberjackSwift
         
         DDLogDebug("\ntransition time: \(transitionTime*1000), dist: \(transitionDistance), dragTime: \((dragCurve?.timeInterval.length ?? 0)*1000)")
         
-        /// Store params
-        
-        self._baseCurve = baseCurve
-        self.baseTimeInterval = Interval(start: 0, end: transitionTime)
-        self.baseDistanceInterval = Interval(start: 0, end: transitionDistance)
-        
-        self.dragCurve = dragCurve
-        self.dragCoefficient = dragCoefficient
-        self.dragExponent = dragExponent
-        self.stopSpeed = stopSpeed
-    }
-    
-    /// Init - Helpers
-    
-    func combinedDistance(transitionPoint t: Double, baseCurve: Bezier, baseDistance: Double, baseDuration: Double, dragExponent: Double, dragCoefficient: Double, stopSpeed: Double) -> Double {
-        
-        assert(0 <= t && t <= 1)
-        
-        let slopeAtT = baseCurve.derivativeDyOverDx(atT: t)
-        let speedAtT = slopeAtT * baseDistance / baseDuration
-        
-        if speedAtT <= stopSpeed {
-            
-            DDLogWarn("Proposed transitionSpeed is lower than stopSpeed")
-            
-            let transitionDistance = baseCurve.sampleCurve(onAxis: Bezier.yAxis, atT: t) * baseDistance
-            return transitionDistance
-        }
-        
-        let dragCurve = DragCurve(coefficient: dragCoefficient, exponent: dragExponent, initialSpeed: speedAtT, stopSpeed: stopSpeed)
-        let dragDistance = dragCurve.distanceInterval.length
-        
-        let transitionDistance = baseCurve.sampleCurve(onAxis: Bezier.yAxis, atT: t) * baseDistance
-        
-        let combinedDistance = transitionDistance + dragDistance
-        
-        return combinedDistance
+        /// Return
+        return (transitionTime: transitionTime, transitionDistance: transitionDistance, dragCurve: dragCurve)
     }
     
 }
@@ -180,9 +204,9 @@ import CocoaLumberjackSwift
     
     /// Base Curve
     
-    let _baseCurve: Line = Line(a: 1, b: 0)
+    static let _baseCurve: Line = Line(a: 1, b: 0)
     override var baseCurve: Curve {
-        get { _baseCurve }
+        get { LineHybridCurve._baseCurve }
         set { fatalError() }
     }
     
@@ -196,14 +220,33 @@ import CocoaLumberjackSwift
         /// Validate
         assert(distance > 0)
         
+        /// Get transitionTime and distance
+        let (transitionTime, transitionDistance, dragCurve) = LineHybridCurve._lineInit(minDuration: minDuration, distance: distance, dragCoefficient: dragCoefficient, dragExponent: dragExponent, stopSpeed: stopSpeed)
+        
+        /// Store params
+        
+        self.baseTimeInterval = Interval(start: 0, end: transitionTime)
+        self.baseDistanceInterval = Interval(start: 0, end: transitionDistance)
+        
+        self.dragCurve = dragCurve
+        self.dragCoefficient = dragCoefficient
+        self.dragExponent = dragExponent
+        self.stopSpeed = stopSpeed
+    }
+    
+    /// Init helper
+        
+    static func _lineInit(minDuration: Double, distance: Double, dragCoefficient: Double, dragExponent: Double, stopSpeed: Double) -> (transitionTime: Double, transitionDistance: Double, dragCurve: DragCurve) {
+        
         /// Get base curve exit speed
-        let transitionSpeed = _baseCurve.slope * distance / minDuration
+        let transitionSpeed = LineHybridCurve._baseCurve.slope * distance / minDuration
         
         /// Get drag curve
-        dragCurve = getDragCurve(initialSpeed: transitionSpeed, stopSpeed: stopSpeed, coefficient: dragCoefficient, exponent: dragExponent)
+        var dragCurve = getDragCurve(initialSpeed: transitionSpeed, stopSpeed: stopSpeed, coefficient: dragCoefficient, exponent: dragExponent)
+        guard var dragCurve = dragCurve else { fatalError() }
         
         /// Find transition point
-        let dragDistance = dragCurve!.distanceInterval.length
+        let dragDistance = dragCurve.distanceInterval.length
         var transitionDistance = distance - dragDistance
         
         /// Change dragCurve if transition distance is negative
@@ -212,28 +255,20 @@ import CocoaLumberjackSwift
             /// Get a dragCurve that exactly covers valueRange
             ///     Note that this means that the slope of the baseCurve is ignored. This might lead to weird feeling speed changes
             
-            /// Warn
-            DDLogWarn("DragCurve transition distance is negative. Ignoring Line.")
-            assert(false) /// For debugging - remove later
+            /// Debug
+            DDLogDebug("DragCurve transition distance is negative. Ignoring Line.")
             
             /// Get new curve
             dragCurve = DragCurve(coefficient: dragCoefficient, exponent: dragExponent, distance: distance, stopSpeed: stopSpeed)
             
             /// Set transition Distance to 0
-            transitionDistance = 0
+            transitionDistance = 0.0
         }
 
         /// Get transition time
-        let transitionTime = _baseCurve.evaluate(atY: transitionDistance / distance) * minDuration
+        let transitionTime = LineHybridCurve._baseCurve.evaluate(atY: transitionDistance / distance) * minDuration
         
-        /// Store params
-        
-        self.baseTimeInterval = Interval(start: 0, end: transitionTime)
-        self.baseDistanceInterval = Interval(start: 0, end: transitionDistance)
-        
-        self.dragCoefficient = dragCoefficient
-        self.dragExponent = dragExponent
-        self.stopSpeed = stopSpeed
+        return (transitionTime: transitionTime, transitionDistance: transitionDistance, dragCurve: dragCurve)
     }
 }
 
@@ -289,7 +324,7 @@ import CocoaLumberjackSwift
         /// Get exit speed of baseCurve (== initial speed of dragCurve)
         
         let v0 = baseCurve.exitSlope * distance / duration
-        self.dragCurve = getDragCurve(initialSpeed: v0, stopSpeed: stopSpeed, coefficient: dragCoefficient, exponent: dragExponent)
+        self.dragCurve = HybridCurve.getDragCurve(initialSpeed: v0, stopSpeed: stopSpeed, coefficient: dragCoefficient, exponent: dragExponent)
         
     }
 }
@@ -317,7 +352,7 @@ class HybridCurve: Curve {
     
     /// DragCurve
     
-    fileprivate var dragCoefficient: Double = -1
+    fileprivate var dragCoefficient: Double = -1 /// Couldn't we access these through self.dragCurve somehow?
     fileprivate var dragExponent: Double = -1
     fileprivate var stopSpeed: Double = -1
     
@@ -353,12 +388,14 @@ class HybridCurve: Curve {
     
     /// Init - Helper functions
     
-    fileprivate func getDragCurve(initialSpeed: Double, stopSpeed: Double, coefficient: Double, exponent: Double) -> DragCurve? {
+    fileprivate static func getDragCurve(initialSpeed: Double, stopSpeed: Double, coefficient: Double, exponent: Double) -> DragCurve? {
         
         /// Get dragCurve
+        ///     This method does nothing except do some validation and then call the DragCurve initializer. Should probably delete.
         
         let result: DragCurve?
         
+        /// Validate & create curve
         if initialSpeed > stopSpeed {
             result = DragCurve(coefficient: coefficient, exponent: exponent, initialSpeed: initialSpeed, stopSpeed: stopSpeed)
         } else {
@@ -368,7 +405,7 @@ class HybridCurve: Curve {
         
         /// Debug
         
-        DDLogDebug("dragTime: \(dragTimeRange), dragValue: \(dragValueRange), time: \(duration), value: \(distance)")
+//        DDLogDebug("dragTime: \(dragTimeRange), dragValue: \(dragValueRange), time: \(duration), value: \(distance)")
         
         /// Return
         

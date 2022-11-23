@@ -39,7 +39,7 @@
 
 static CFDataRef _Nullable didReceiveMessage(CFMessagePortRef port, SInt32 messageID, CFDataRef data, void *info) {
     
-    assert(SharedUtility.runningMainApp || SharedUtility.runningHelper);
+    assert(runningMainApp() || runningHelper());
     
     NSDictionary *messageDict = [NSKeyedUnarchiver unarchiveObjectWithData:(__bridge NSData *)data];
     
@@ -173,13 +173,13 @@ static CFDataRef _Nullable didReceiveMessage(CFMessagePortRef port, SInt32 messa
     /// I hope that moving using `initialize` instead of `load` if `IS_MAIN_APP` should fix this and work just fine for everything else. I don't know why we used load to begin with.
     /// Edit: I don't remember why we moved to `load_Manual` now, but it works fine
     
-    assert(SharedUtility.runningMainApp || SharedUtility.runningHelper);
+    assert(runningMainApp() || runningHelper());
     
     DDLogInfo(@"Initializing MessagePort...");
     
     CFMessagePortRef localPort =
     CFMessagePortCreateLocal(kCFAllocatorDefault,
-                             (__bridge CFStringRef)(SharedUtility.runningMainApp ? kMFBundleIDApp : kMFBundleIDHelper),
+                             (__bridge CFStringRef)(runningMainApp() ? kMFBundleIDApp : kMFBundleIDHelper),
                              didReceiveMessage,
                              nil,
                              NULL);
@@ -212,7 +212,7 @@ static CFDataRef _Nullable didReceiveMessage(CFMessagePortRef port, SInt32 messa
         CFRelease(runLoopSource);
     } else {
         
-        if (SharedUtility.runningMainApp) {
+        if (runningMainApp()) {
             DDLogInfo(@"Failed to create a local message port. It will probably work anyway for some reason");
         } else {
             DDLogError(@"Failed to create a local message port. This might be because there is another instance of %@ already running. Crashing the app.", kMFHelperName);
@@ -228,12 +228,12 @@ static CFDataRef _Nullable didReceiveMessage(CFMessagePortRef port, SInt32 messa
 + (NSObject *_Nullable)sendMessage:(NSString * _Nonnull)message withPayload:(NSObject <NSCoding> * _Nullable)payload expectingReply:(BOOL)replyExpected { // TODO: Consider renaming last arg to `expectingReturn` or `waitForReply`
     
     /// Validate
-    assert(SharedUtility.runningMainApp || SharedUtility.runningHelper);
+    assert(runningMainApp() || runningHelper());
     
     /// Get remote port
     /// Note: We can't just create the port once and cache it, trying to send with that port will yield ``kCFMessagePortIsInvalid``
     
-    NSString *remotePortName = SharedUtility.runningMainApp ? kMFBundleIDHelper : kMFBundleIDApp;
+    NSString *remotePortName = runningMainApp() ? kMFBundleIDHelper : kMFBundleIDApp;
     CFMessagePortRef remotePort = CFMessagePortCreateRemote(kCFAllocatorDefault, (__bridge CFStringRef)remotePortName);
 
     if (remotePort == NULL) {
@@ -294,7 +294,7 @@ static CFDataRef _Nullable didReceiveMessage(CFMessagePortRef port, SInt32 messa
 }
 
 void invalidationCallback(CFMessagePortRef ms, void *info) {
-    DDLogInfo(@"MessagePort invalidated in %@", SharedUtility.runningHelper ? @"Helper" : @"MainApp");
+    DDLogInfo(@"MessagePort invalidated in %@", runningHelper() ? @"Helper" : @"MainApp");
 }
 
 @end

@@ -18,7 +18,7 @@ import CocoaLumberjackSwift
         
         /// Set Log level for CocoaLumberjack in Swift
         ///     Separate from objc log level, which is setup in `WannabePrefixHeader.h`
-        ///     Think about moving to using SharedUtility.runningPrerelease() instead of #if DEBUG
+        ///     Think about moving to using runningPreRelease() instead of #if DEBUG
         ///
         
 #if DEBUG

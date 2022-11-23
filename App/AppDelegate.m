@@ -273,7 +273,7 @@ static NSDictionary *sideButtonActions;
         ///     It will only work if `SparkleUpdaterDelegate - updaterDidRelaunchApplication:` is called before this
         /// The app (or this version of it) has probably been downloaded from the internet and is running for the first time.
         ///  -> Override check-for-prereleases setting
-        if (SharedUtility.runningPreRelease) {
+        if (runningPreRelease()) {
             /// If this is a pre-release version itself, we activate updates to pre-releases
             checkForPrereleases = YES;
         } else {

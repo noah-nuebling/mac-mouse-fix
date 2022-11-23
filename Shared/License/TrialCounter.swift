@@ -56,7 +56,7 @@ import CocoaLumberjackSwift
         ///     We only want to run the daily timer once, not in both apps
         ///     But we still might want to use this class in main app to access `lastUseDate` and `daysOfUse`.
         ///     Feel like it might be problematic to expose this to mainApp.
-        if !SharedUtility.runningHelper() { return }
+        if !runningHelper() { return }
         
         /// Real init
         
@@ -148,7 +148,7 @@ import CocoaLumberjackSwift
         DDLogDebug("handling use in trial")
         
         /// Guard not running helper
-        assert(SharedUtility.runningHelper())
+        assert(runningHelper())
         
         /// Only react if trial is active
         if !trialIsActive { return }

@@ -255,7 +255,7 @@ static dispatch_group_t _momentumScrollWaitGroup;
         
         /// Clean up
         ///     Unhide mouse pointer
-        if (!SharedUtility.runningPreRelease) {
+        if (!runningPreRelease()) {
             [PointerFreeze unfreeze]; /// Only in release so the crashes are more noticable in prereleases
         }
         
