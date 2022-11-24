@@ -198,33 +198,45 @@ import CocoaLumberjackSwift
     
     // MARK: Invert Direction
     
-    @objc func scrollInvert(event: CGEvent) -> MFScrollInversion {
+    @objc func scrollInvert() -> MFScrollInversion {
         /// This can be used as a factor to invert things. kMFScrollInversionInverted is -1.
         
         if HelperState.isLockedDown { return kMFScrollInversionNonInverted }
-        
-        if self.u_direction == self.semanticScrollInvertSystem(event) {
-            return kMFScrollInversionNonInverted
-        } else {
-            return kMFScrollInversionInverted
-        }
-    }
-    lazy private var u_direction: MFSemanticScrollInversion = {
-        c("naturalDirection") as! Bool ? kMFSemanticScrollInversionNatural : kMFSemanticScrollInversionNormal
-    }()
-    private func semanticScrollInvertSystem(_ event: CGEvent) -> MFSemanticScrollInversion {
-        
-        /// Accessing userDefaults is actually surprisingly slow, so we're using NSEvent.isDirectionInvertedFromDevice instead... but NSEvent(cgEvent:) is slow as well...
-        ///     .... So we're using our advanced knowledge of CGEventFields!!!
-        
-//            let isNatural = UserDefaults.standard.bool(forKey: "com.apple.swipescrolldirection") /// User defaults method
-//            let isNatural = NSEvent(cgEvent: event)!.isDirectionInvertedFromDevice /// NSEvent method
-        let isNatural = event.getIntegerValueField(CGEventField(rawValue: 137)!) != 0; /// CGEvent method
-        
-        return isNatural ? kMFSemanticScrollInversionNatural : kMFSemanticScrollInversionNormal
+        return c("reverseDirection") as! Bool ? kMFScrollInversionInverted : kMFScrollInversionNonInverted
     }
     
+    // MARK: Old Invert Direction
+    /// Rationale: We used to have the user setting be "Natural Direction" but we changed it to being "Reverse Direction". This is so it's more transparent to the user when Mac Mouse Fix is intercepting the scroll input and also to have the SwitchMaster more easily decide when to turn the scrolling tap on or off. Also I think the setting is slightly more intuitive this way.
+    
+//    @objc func scrollInvert(event: CGEvent) -> MFScrollInversion {
+//        /// This can be used as a factor to invert things. kMFScrollInversionInverted is -1.
+//
+//        if HelperState.isLockedDown { return kMFScrollInversionNonInverted }
+//
+//        if self.u_direction == self.semanticScrollInvertSystem(event) {
+//            return kMFScrollInversionNonInverted
+//        } else {
+//            return kMFScrollInversionInverted
+//        }
+//    }
+    
+//    lazy private var u_direction: MFSemanticScrollInversion = {
+//        c("naturalDirection") as! Bool ? kMFSemanticScrollInversionNatural : kMFSemanticScrollInversionNormal
+//    }()
+//    private func semanticScrollInvertSystem(_ event: CGEvent) -> MFSemanticScrollInversion {
+//
+//        /// Accessing userDefaults is actually surprisingly slow, so we're using NSEvent.isDirectionInvertedFromDevice instead... but NSEvent(cgEvent:) is slow as well...
+//        ///     .... So we're using our advanced knowledge of CGEventFields!!!
+//
+////            let isNatural = UserDefaults.standard.bool(forKey: "com.apple.swipescrolldirection") /// User defaults method
+////            let isNatural = NSEvent(cgEvent: event)!.isDirectionInvertedFromDevice /// NSEvent method
+//        let isNatural = event.getIntegerValueField(CGEventField(rawValue: 137)!) != 0; /// CGEvent method
+//
+//        return isNatural ? kMFSemanticScrollInversionNatural : kMFSemanticScrollInversionNormal
+//    }
+    
     // MARK: Inverted from device flag
+    /// This flag will be set on GestureScroll events and will invert some interactions like scrolling to delete messages in Mail
     
     @objc let invertedFromDevice = false;
     

@@ -17,7 +17,7 @@
 			<key>zoom</key>
 			<integer>1048576</integer>
 		</dict>
-		<key>naturalDirection</key>
+		<key>reverseDirection</key>
 		<false/>
 		<key>precise</key>
 		<false/>
@@ -211,7 +211,7 @@
 		<key>checkForUpdates</key>
 		<true/>
 		<key>configVersion</key>
-		<integer>16</integer>
+		<integer>17</integer>
 		<key>launchesOverall</key>
 		<string>0</string>
 		<key>lastLaunchedBundleVersion</key>

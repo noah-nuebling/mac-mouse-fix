@@ -142,8 +142,8 @@
 /* Class = "NSTabViewItem"; label = "<Initial>"; ObjectID = "g9N-Za-8Ss"; */
 "g9N-Za-8Ss.label" = "<>";
 
-/* Class = "NSButtonCell"; title = "Natural Scroll Direction"; ObjectID = "gK0-1z-Pjv"; Note = "Scrolling > Natural Scroll Direction Toggle"; */
-"gK0-1z-Pjv.title" = "Natürliche Scrollrichtung";
+/* Class = "NSButtonCell"; title = "Reverse Scroll Direction"; ObjectID = "gK0-1z-Pjv"; Note = "Scrolling > Natural Scroll Direction Toggle"; */
+"gK0-1z-Pjv.title" = "Scrollrichtung umkehren";
 
 /* Class = "NSTableColumn"; headerCell.title = "<Effect>"; ObjectID = "gOt-GR-IbE"; */
 "gOt-GR-IbE.headerCell.title" = "<>";

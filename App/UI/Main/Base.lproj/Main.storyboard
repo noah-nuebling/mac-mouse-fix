@@ -637,11 +637,11 @@ Mac Mouse Fix</string>
                                                                     </connections>
                                                                 </tableCellView>
                                                                 <tableCellView identifier="buttonGroupCell" id="pxf-x1-gL5" userLabel="ButtonGroupCell">
-                                                                    <rect key="frame" x="8" y="38" width="287" height="22"/>
+                                                                    <rect key="frame" x="8" y="38" width="288" height="22"/>
                                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                                     <subviews>
                                                                         <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="AHZ-Kd-4Xf">
-                                                                            <rect key="frame" x="-8" y="3" width="294" height="16"/>
+                                                                            <rect key="frame" x="-8" y="3" width="295" height="16"/>
                                                                             <constraints>
                                                                                 <constraint firstAttribute="height" constant="16" id="iEl-dG-QM5"/>
                                                                             </constraints>
@@ -676,7 +676,7 @@ Mac Mouse Fix</string>
                                                             <tableColumnResizingMask key="resizingMask" resizeWithTable="YES"/>
                                                             <prototypeCellViews>
                                                                 <tableCellView identifier="effectCell" translatesAutoresizingMaskIntoConstraints="NO" id="Epw-SW-Ew3" customClass="RemapTableCellView" customModule="Mac_Mouse_Fix" customModuleProvider="target">
-                                                                    <rect key="frame" x="312.5" y="0.0" width="223" height="39"/>
+                                                                    <rect key="frame" x="313" y="0.0" width="223" height="39"/>
                                                                     <subviews>
                                                                         <popUpButton verticalHuggingPriority="750" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="Pw9-ZH-Tb7">
                                                                             <rect key="frame" x="0.0" y="6" width="224" height="25"/>
@@ -704,7 +704,7 @@ Mac Mouse Fix</string>
                                                                     </constraints>
                                                                 </tableCellView>
                                                                 <tableCellView identifier="keyCaptureCell" translatesAutoresizingMaskIntoConstraints="NO" id="MzR-b1-853" customClass="RemapTableCellView" customModule="Mac_Mouse_Fix" customModuleProvider="target">
-                                                                    <rect key="frame" x="312.5" y="39" width="220" height="39"/>
+                                                                    <rect key="frame" x="313" y="39" width="220" height="39"/>
                                                                     <subviews>
                                                                         <button hidden="YES" focusRingType="exterior" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="psy-Jg-KLq">
                                                                             <rect key="frame" x="-4" y="3" width="228" height="32"/>
@@ -982,9 +982,9 @@ your __Logitech M720 Triathlon__.&gt;</string>
                                             <constraint firstAttribute="height" id="Dh0-br-i3S"/>
                                         </constraints>
                                     </customView>
-                                    <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="dtR-AX-YsY">
+                                    <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="dtR-AX-YsY" userLabel="Reverse Direction Toggle">
                                         <rect key="frame" x="-2" y="368" width="352" height="18"/>
-                                        <buttonCell key="cell" type="check" title="Natural Scroll Direction" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="gK0-1z-Pjv">
+                                        <buttonCell key="cell" type="check" title="Reverse Scroll Direction" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="gK0-1z-Pjv">
                                             <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                             <font key="font" metaFont="system"/>
                                         </buttonCell>
@@ -995,7 +995,7 @@ your __Logitech M720 Triathlon__.&gt;</string>
                                     <customView hidden="YES" translatesAutoresizingMaskIntoConstraints="NO" id="K2b-ZE-JxN" userLabel="Indent">
                                         <rect key="frame" x="0.0" y="425" width="203" height="14"/>
                                         <subviews>
-                                            <textField horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="ljz-rp-t9J">
+                                            <textField horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="ljz-rp-t9J" userLabel="Reverse Direction Hint">
                                                 <rect key="frame" x="18" y="0.0" width="187" height="14"/>
                                                 <textFieldCell key="cell" controlSize="small" selectable="YES" alignment="left" title="&lt;Content tracks finger movement&gt;" id="AHn-zX-g4d">
                                                     <font key="font" metaFont="smallSystem"/>
@@ -1044,11 +1044,17 @@ your __Logitech M720 Triathlon__.&gt;</string>
                                             </textField>
                                             <popUpButton horizontalHuggingPriority="1000" verticalHuggingPriority="750" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="AUN-SK-ju7">
                                                 <rect key="frame" x="86" y="-4" width="88" height="25"/>
-                                                <popUpButtonCell key="cell" type="push" title="Low" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="FT8-zP-xsg" id="4Es-L9-Mle">
+                                                <popUpButtonCell key="cell" type="push" title="macOS" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="fW3-4Q-yB8" id="4Es-L9-Mle">
                                                     <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
                                                     <font key="font" metaFont="menu"/>
                                                     <menu key="menu" id="RH4-UE-BzP">
                                                         <items>
+                                                            <menuItem title="macOS" identifier="system" id="fW3-4Q-yB8">
+                                                                <attributedString key="userComments">
+                                                                    <fragment content="Scrolling &gt; Scroll Speed &gt; macOS Option"/>
+                                                                </attributedString>
+                                                            </menuItem>
+                                                            <menuItem isSeparatorItem="YES" id="8ic-KV-X3l"/>
                                                             <menuItem title="Low" state="on" identifier="low" id="FT8-zP-xsg">
                                                                 <attributedString key="userComments">
                                                                     <fragment content="Scrolling &gt; Scroll Speed &gt; Low Option"/>
@@ -1062,12 +1068,6 @@ your __Logitech M720 Triathlon__.&gt;</string>
                                                             <menuItem title="High" identifier="high" id="bIE-g7-3St">
                                                                 <attributedString key="userComments">
                                                                     <fragment content="Scrolling &gt; Scroll Speed &gt; High Option"/>
-                                                                </attributedString>
-                                                            </menuItem>
-                                                            <menuItem isSeparatorItem="YES" id="8ic-KV-X3l"/>
-                                                            <menuItem title="macOS" identifier="system" id="fW3-4Q-yB8">
-                                                                <attributedString key="userComments">
-                                                                    <fragment content="Scrolling &gt; Scroll Speed &gt; macOS Option"/>
                                                                 </attributedString>
                                                             </menuItem>
                                                         </items>
@@ -1470,13 +1470,13 @@ your __Logitech M720 Triathlon__.&gt;</string>
                         <outlet property="inertiaSection" destination="enY-m0-Esm" id="Bgf-CS-IP4"/>
                         <outlet property="inertiaToggle" destination="BaB-SW-lek" id="TyK-xD-IEc"/>
                         <outlet property="masterStack" destination="N4F-RB-d7a" id="l0H-83-1J7"/>
-                        <outlet property="naturalDirectionHint" destination="ljz-rp-t9J" id="pUy-mv-lBP"/>
-                        <outlet property="naturalDirectionToggle" destination="dtR-AX-YsY" id="P3O-kx-KCg"/>
                         <outlet property="preciseHint" destination="Yn5-ch-Oxi" id="qNm-Cv-Jsf"/>
                         <outlet property="preciseModField" destination="gqo-T2-Nmz" id="Rts-Lf-EyR"/>
                         <outlet property="preciseSection" destination="WGO-Zc-NYH" id="3ee-ik-5UL"/>
                         <outlet property="preciseToggle" destination="5rO-m9-I0Q" id="qoO-s1-pXz"/>
                         <outlet property="restoreDefaultModsButton" destination="4ZD-1f-bbe" id="4G3-Tp-sEf"/>
+                        <outlet property="reverseDirectionHint" destination="ljz-rp-t9J" id="pUy-mv-lBP"/>
+                        <outlet property="reverseDirectionToggle" destination="dtR-AX-YsY" id="P3O-kx-KCg"/>
                         <outlet property="scrollSpeedPicker" destination="AUN-SK-ju7" id="5Qf-b9-Y8X"/>
                         <outlet property="smoothToggle" destination="OTl-Rd-e6e" id="s3r-Im-Gp5"/>
                         <outlet property="swiftModField" destination="Abk-fb-uRV" id="kYs-Xn-eTk"/>

@@ -17,7 +17,7 @@ class ScrollTabController: NSViewController {
     
     var smooth = ConfigValue<Bool>(configPath: "Scroll.smooth")
     var inertia = ConfigValue<Bool>(configPath: "Scroll.inertia")
-    var naturalDirection = ConfigValue<Bool>(configPath: "Scroll.naturalDirection")
+    var reverseDirection = ConfigValue<Bool>(configPath: "Scroll.reverseDirection")
     var scrollSpeed = ConfigValue<String>(configPath: "Scroll.speed")
     var precise = ConfigValue<Bool>(configPath: "Scroll.precise")
     var horizontalMod = ConfigValue<UInt>(configPath: "Scroll.modifiers.horizontal")
@@ -36,8 +36,8 @@ class ScrollTabController: NSViewController {
     @IBOutlet weak var inertiaSection: NSView!
     @IBOutlet weak var inertiaToggle: NSButton!
     
-    @IBOutlet weak var naturalDirectionToggle: NSButton!
-    @IBOutlet weak var naturalDirectionHint: NSTextField!
+    @IBOutlet weak var reverseDirectionToggle: NSButton!
+    @IBOutlet weak var reverseDirectionHint: NSTextField!
     
     @IBOutlet weak var scrollSpeedPicker: NSPopUpButton!
     
@@ -107,8 +107,8 @@ class ScrollTabController: NSViewController {
         inertiaToggle.reactive.boolValue <~ inertia.producer
         
         /// Natural direction
-        naturalDirection.bindingTarget <~ naturalDirectionToggle.reactive.boolValues
-        naturalDirectionToggle.reactive.boolValue <~ naturalDirection.producer
+        reverseDirection.bindingTarget <~ reverseDirectionToggle.reactive.boolValues
+        reverseDirectionToggle.reactive.boolValue <~ reverseDirection.producer
         
         /// Scroll speed
         scrollSpeed.bindingTarget <~ scrollSpeedPicker.reactive.selectedIdentifiers.map({ identifier in
