@@ -20,10 +20,15 @@ import CocoaLumberjackSwift
     // MARK: Static functions
     
     @objc private(set) static var scrollConfig = ScrollConfig() /// Singleton instance
-//    @objc static var copyOfConfig: ScrollConfig { scrollConfig.copy() as! ScrollConfig }
-    @objc static func reload() { /// This should be called when the underlying config (which mirrors the config file) changes
-        scrollConfig = ScrollConfig() /// All the property values are cached in `currentConfig`, because the properties are lazy. Replacing with a fresh object deletes this implicit cache.
+    
+    @objc static func reload() {
+        
+        /// Notes:
+        /// - This should be called when the underlying config (which mirrors the config file) changes
+        /// - All the property values are cached in `currentConfig`, because the properties are lazy. Replacing with a fresh object deletes this implicit cache.
+        scrollConfig = ScrollConfig()
         cache = nil
+        ReactiveScrollConfig.shared.handleScrollConfigChanged(newValue: scrollConfig)
     }
     private static var cache: [_HP<MFScrollModificationResult, MFAxis>: ScrollConfig]? = nil
     @objc static func config(modifiers: MFScrollModificationResult, inputAxis: MFAxis, event: CGEvent?) -> ScrollConfig {
@@ -194,11 +199,11 @@ import CocoaLumberjackSwift
     @objc lazy var u_smoothEnabled: Bool = { c("smooth") as! Bool && !killSwitch }()
     
     @objc private var u_killSwitch: Bool { c("Other.scrollKillSwitch") as? Bool ?? false } /// Not cached cause it's just used to calc the other vars
-    @objc private var killSwitch: Bool { u_killSwitch || HelperState.isLockedDown }
+    @objc var killSwitch: Bool { u_killSwitch || HelperState.isLockedDown } /// Should probably move this into SwitchMaster
     
     // MARK: Invert Direction
     
-    @objc func scrollInvert() -> MFScrollInversion {
+    @objc var u_invertDirection: MFScrollInversion {
         /// This can be used as a factor to invert things. kMFScrollInversionInverted is -1.
         
         if HelperState.isLockedDown { return kMFScrollInversionNonInverted }
