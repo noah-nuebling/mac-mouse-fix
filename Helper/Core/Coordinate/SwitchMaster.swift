@@ -11,8 +11,8 @@
 ///
 /// The relevant state consists of:
 /// - attachedDevices
-/// - modifiers
 /// - modifications (at the time of writing: remaps & scrollConfig)
+/// - modifiers
 ///
 /// The intercepted eventTypes are
 /// - Keyboard modifier changes
@@ -29,9 +29,6 @@ import CocoaLumberjackSwift
         
         let attachedDevicesSignal = ReactiveDeviceManager.shared.attachedDevices
         let remapsSignal = ReactiveRemaps.shared.remaps
-        
-        
-        
         let modifiersSignal = ReactiveModifiers.shared.modifiers
         
         attachedDevicesSignal.combineLatest(with: remapsSignal).combineLatest(with: modifiersSignal).startWithValues { (arg0, modifiers: NSDictionary) in
@@ -78,10 +75,12 @@ import CocoaLumberjackSwift
     /// Base sginals
     
     /// attachedDevices x
+    ///     Replace this with activeDevice signal
     /// activeModifers x
     /// remaps x
     ///
-    /// scrollConfig (I think we only intended to use this for scrollDirection determination, but I think we'll just go back to calling it 'invert scrolling' and then we won't need this)
+    /// scrollConfig
+    ///     (to check if default / modified scrollConfig transforms input)
     
     /// ---
     
@@ -91,36 +90,40 @@ import CocoaLumberjackSwift
     /// Decide kbModTap enable
     ///
     
-    /// if (devicesWithUsableScrollingAreAttached || devicesWithUsableButtonsAreAttached || devicesWithUsablePointerAreAttached) == false { return false }
-    /// if kbModsArePrecondition == false { return false }
-    /// else { return true }
-    
-    /// Decide buttonModifier callback enable?
-    
-    ///
-    /// Decide scrollTap enable
-    ///
-    
-    /// if devicesWithUsableScrollingAreAttached == false { return false }
-    /// if scrollConfigDoesTransform == true { return **true** }
-    /// if swizzledScrollTransformsExist == false { return false }
-    /// else { return true }
-    
-    ///
-    /// Decide buttonTap enable
-    ///
-    
-    /// if devicesWithUsableButtonsAreAttached == false { return false }
-    /// if swizzledButtonTransformationsExistForUsableButtons == false { return false }
-    /// else { return true }
-    
-    ///
-    /// Decide dragTap enable
-    ///
-    
-    /// if devicesWithUsablePointerAreAttached == false { return false } // I don't think there will ever be devices without a usable pointer
-    /// if swizzledDragTransformsExist == false { return false }
-    /// else { return true }
+    /**
+     ```
+     ///
+     /// Decide kbModTap enable
+     ///
+     
+     let someKbModsToggleScroll = (defaultTransformsScroll != somekbModsTransformScroll)
+     let someKbModsToggleButtons = (defaultTransformsButtons != somekbModsTransformButtons)
+     let someKbModsTogglePointing = (defaultTransformsPointing != somekbModsTransformPointing)
+     
+     (deviceHasScrolling && someKbModsToggleScroll)
+     || (deviceHasUsableButtons && someKbModsToggleButtons)
+     || (deviceHasPointing && someKbModsTogglePointing)
+     
+     ///
+     /// Decide scrollTap enable
+     ///
+     
+     deviceHasScrolling && (defaultTransformsScroll || modificationTransformsScroll)
+     
+     ///
+     /// Decide buttonTap enable
+     ///
+     
+     deviceHasUsableButtons && modificationTransformsButtonOnDevice
+     
+     ///
+     /// Decide dragTap enable
+     ///
+     
+     deviceHasPointing && modificationTransformsDrag // I don't think there will ever be devices without pointing
+     
+     ```
+     */
     
     
 }
