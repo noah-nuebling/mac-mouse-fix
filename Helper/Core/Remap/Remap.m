@@ -26,10 +26,17 @@
 
 #pragma mark - Notes
 
+/// On Terminology
 /// This used to be called `TransformationManager`. Renamed to `Remap` to unify terminology.
 /// Desired Terminology: The `remaps` are a map from `modifiers` -> `modifications`, where a `modification` is itself a map from `trigger ` -> `effect`. More on this in RemapSwizzler.swift
-/// TODO: Swift automatically bridges the NSDictionary args to Swift dicts which is super slow. Try to use NS_REFINED_FOR_SWIFT to prevent this. See https://developer.apple.com/documentation/swift/improving-objective-c-api-declarations-for-swift
-/// -> DONE - Is much faster now!
+///
+/// On Swift Autobriding
+/// Swift automatically bridges Foundation-type args (like NSDictionary) to native Swift types which is super slow. At least for Dictionaries. We've found a way to prevent this:
+///  1. Use `MF_SWIFT_HIDDEN` on the original method declaration to hide it from Swift.
+///  2. Declare a new method that calls the old method. The signature is the same but the name is prefixed with `__SWIFT_UNBRIDGED_` and all autobridging argument types are replaced with `id`
+///  3. Create a Swift extension and implement a method that calls the `__SWIFT_UNBRIDGED_` implementation and itself takes Foundation types like NSDictionary as arguments
+///  -> Now you can call the ObjC method from Swift using foundation types as arguments directly, instead of being forced to use native Swift types which are then autobridged.
+///
 
 #pragma mark - Swizzled
 
@@ -59,7 +66,7 @@ static NSMutableDictionary *_swizzleCache;
 #define USE_TEST_REMAPS NO
 static NSDictionary *_remaps;
 
-+ (NSDictionary *)remaps {
++ (NSDictionary *)remaps MF_SWIFT_HIDDEN {
     return _remaps;
 }
 + (id)__SWIFT_UNBRIDGED_remaps {
