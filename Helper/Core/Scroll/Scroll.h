@@ -18,7 +18,8 @@ NS_ASSUME_NONNULL_BEGIN
 + (AXUIElementRef) systemWideAXUIElement;
 
 + (void)load_Manual;
-+ (void)decide;
++ (void)start;
++ (void)stop;
 
 + (void)resetState;
 + (void)suspend;

@@ -607,6 +607,8 @@
 		4FCA07D425F3129B00BFE209 /* RemapTableController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RemapTableController.h; sourceTree = "<group>"; };
 		4FCA07D525F3129B00BFE209 /* RemapTableController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RemapTableController.m; sourceTree = "<group>"; };
 		4FCB2609292F91D70066EE56 /* ReactiveScrollConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReactiveScrollConfig.swift; sourceTree = "<group>"; };
+		4FCB260B29312A020066EE56 /* ButtonInputReceiver_old.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ButtonInputReceiver_old.h; sourceTree = "<group>"; };
+		4FCB260C29312A020066EE56 /* ButtonInputReceiver_old.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ButtonInputReceiver_old.m; sourceTree = "<group>"; };
 		4FCC03322757A50C002E5A57 /* ScreenDrawer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScreenDrawer.swift; sourceTree = "<group>"; };
 		4FCECD8021092354001F1078 /* Mac Mouse Fix Helper.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Mac Mouse Fix Helper.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		4FCEDC80292CDC8300E7DA2A /* Actions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Actions.swift; sourceTree = "<group>"; };
@@ -2027,6 +2029,8 @@
 		4FF8C8A428960309007EC31F /* Old */ = {
 			isa = PBXGroup;
 			children = (
+				4FCB260B29312A020066EE56 /* ButtonInputReceiver_old.h */,
+				4FCB260C29312A020066EE56 /* ButtonInputReceiver_old.m */,
 				4FF6661C25F2C93A00689B77 /* ButtonTriggerGenerator.h */,
 				4FF6661925F2C93A00689B77 /* ButtonTriggerGenerator.m */,
 				4FF6661D25F2C93A00689B77 /* ButtonTriggerHandler.h */,

@@ -95,7 +95,7 @@ static NSDictionary *_remaps;
         
         /// Notify
         [ReactiveRemaps.shared handleRemapsDidChange];
-        [NSNotificationCenter.defaultCenter postNotificationName:kMFNotifCenterNotificationNameRemapsChanged object:self];
+//        [NSNotificationCenter.defaultCenter postNotificationName:kMFNotifCenterNotificationNameRemapsChanged object:self];
         
         /// Log
         DDLogDebug(@"Set remaps to: %@", _remaps);

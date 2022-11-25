@@ -191,58 +191,89 @@ import CocoaLumberjackSwift
     
     private func toggleKbModTap() {
         
-        let someKbModsToggleScroll = (defaultModifiesScroll != somekbModModifiesScroll)
-        let someKbModsToggleButtons = (defaultModifiesButtonOnSomeDevice != somekbModModifiesButtonOnSomeDevice)
-        let someKbModsTogglePointing = (defaultModifiesPointing != somekbModModifiesPointing)
+        var priority = kMFModifierPriorityUnused
         
-       if  (someDeviceHasScroll && someKbModsToggleScroll)
-            || (someDeviceHasUsableButtons && someKbModsToggleButtons)
-            || (someDeviceHasPointing && someKbModsTogglePointing) {
-           
-           /// Toggle on
-       } else {
-           /// Toggle off
-       }
+        let kbModsAreUsed =
+        (someDeviceHasScroll && somekbModModifiesScroll)
+        || (someDeviceHasPointing && somekbModModifiesPointing)
+        || (someDeviceHasUsableButtons && somekbModModifiesButtonOnSomeDevice)
+        
+        if kbModsAreUsed {
+            
+            let someKbModsToggleScroll = !defaultModifiesScroll && somekbModModifiesScroll
+            let someKbModsTogglePointing = !defaultModifiesPointing && somekbModModifiesPointing
+            let someKbModsToggleButtons = !defaultModifiesButtonOnSomeDevice && somekbModModifiesButtonOnSomeDevice
+            
+            if  (someDeviceHasScroll && someKbModsToggleScroll)
+                    || (someDeviceHasPointing && someKbModsTogglePointing)
+                    || (someDeviceHasUsableButtons && someKbModsToggleButtons) {
+                
+                priority = kMFModifierPriorityActiveListen
+            } else {
+                priority = kMFModifierPriorityPassiveUse
+            }
+        }
+        
+        Modifiers.setKeyboardModifierPriority(priority)
     }
     
     private func toggleBtnModProcessing() {
         
-        let someBtnModsToggleScroll = (defaultModifiesScroll != someButtonModifiesScroll)
-        let someBtnModsToggleButtons = (defaultModifiesButtonOnSomeDevice != someButtonModifiesButtonOnSomeDevice)
-        let someBtnModsTogglePointing = (defaultModifiesPointing != someButtonModifiesPointing)
+        var priority = kMFModifierPriorityUnused
         
-        if  (someDeviceHasScroll && someBtnModsToggleScroll)
-             || (someDeviceHasUsableButtons && someBtnModsToggleButtons)
-             || (someDeviceHasPointing && someBtnModsTogglePointing) {
+        let buttonsAreUsedAsModifiers =
+        (someDeviceHasScroll && someButtonModifiesScroll)
+        || (someDeviceHasPointing && someButtonModifiesPointing)
+        || (someDeviceHasUsableButtons && someButtonModifiesButtonOnSomeDevice)
+        
+        if  buttonsAreUsedAsModifiers {
             
-            /// Toggle on
-        } else {
-            /// Toggle off
+            let someBtnModsToggleScroll = !defaultModifiesScroll && someButtonModifiesScroll
+            let someBtnModsTogglePointing = !defaultModifiesPointing && someButtonModifiesPointing
+            let someBtnModsToggleButtons = !defaultModifiesButtonOnSomeDevice && someButtonModifiesButtonOnSomeDevice
+            
+            let buttonModifiersToggleTaps =
+            (someDeviceHasScroll && someBtnModsToggleScroll)
+            || (someDeviceHasPointing && someBtnModsTogglePointing)
+            || (someDeviceHasUsableButtons && someBtnModsToggleButtons)
+            
+            if buttonModifiersToggleTaps {
+                priority = kMFModifierPriorityActiveListen
+            } else {
+                priority = kMFModifierPriorityPassiveUse
+            }
         }
+        
+        Modifiers.setButtonModifierPriority(priority)
     }
     
     private func toggleScrollTap() {
         
         if someDeviceHasScroll && (defaultModifiesScroll || currentModificationModifiesScroll) {
-            /// Toggle on
+            Scroll.start()
         } else {
-            /// Toggle off
+            Scroll.stop()
         }
-        
     }
     
     private func toggleButtonTap() {
     
-        if someDeviceHasUsableButtons && currentModificationModifiesButtonOnSomeDevice {
-            /// Toggle on
+        var buttonsAreUsedAsModifiers =
+        (someDeviceHasScroll && someButtonModifiesScroll)
+        || (someDeviceHasPointing && someButtonModifiesPointing)
+        || (someDeviceHasUsableButtons && someButtonModifiesButtonOnSomeDevice)
+        
+        if someDeviceHasUsableButtons && (currentModificationModifiesButtonOnSomeDevice || buttonsAreUsedAsModifiers) {
+            
+            ButtonInputReceiver.start()
         } else {
-            /// Toggle off
+            ButtonInputReceiver.stop()
         }
     }
     
     private func togglePointingTap() {
         
-        if someDeviceHasPointing && currentModificationModifiesPointing { /// I don't think there will ever be devices without pointing
+        if someDeviceHasPointing && currentModificationModifiesPointing {
             /// Toggle on
         } else {
             /// toggle off

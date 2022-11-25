@@ -65,96 +65,41 @@ static NSMutableDictionary *_modifiers;
         CFRunLoopAddSource(CFRunLoopGetCurrent(), runLoopSource, kCFRunLoopDefaultMode);
         CFRelease(runLoopSource);
         
-        /// Enable/Disable eventTap based on Remap.remaps
-        CGEventTapEnable(_kbModEventTap, false); /// Disable eventTap first (Might prevent `_keyboardModifierEventTap` from always being called twice - Nope doesn't make a difference)
-        updateModifierPriority(Remap.remaps);
-        
-        /// Re-toggle keyboard modifier callbacks whenever Remap.remaps changes
-        /// TODO:! Test if this works
-        [NSNotificationCenter.defaultCenter addObserverForName:kMFNotifCenterNotificationNameRemapsChanged
-                                                        object:nil
-                                                         queue:nil
-                                                    usingBlock:^(NSNotification * _Nonnull note) {
-            
-            DDLogDebug(@"Received notification that remaps have changed");
-            updateModifierPriority(Remap.remaps);
-        }];
+//        /// Enable/Disable eventTap based on Remap.remaps
+//        CGEventTapEnable(_kbModEventTap, false); /// Disable eventTap first (Might prevent `_keyboardModifierEventTap` from always being called twice - Nope doesn't make a difference)
+//        toggleModifierListening(Remap.remaps);
+//
+//        /// Re-toggle keyboard modifier callbacks whenever Remap.remaps changes
+//        /// TODO:! Test if this works
+//        [NSNotificationCenter.defaultCenter addObserverForName:kMFNotifCenterNotificationNameRemapsChanged
+//                                                        object:nil
+//                                                         queue:nil
+//                                                    usingBlock:^(NSNotification * _Nonnull note) {
+//
+//            DDLogDebug(@"Received notification that remaps have changed");
+//            toggleModifierListening(Remap.remaps);
+//        }];
     }
 }
 
 #pragma mark Toggle listening
 
-/// On `modifierPriority`
-///
-///  Naming of this enum and it's cases is pretty bad.
-///
-///  modifierPriority has 3 cases
-///  - 1. `activeListen` -> We want to proactively listen to modifier changes and cache the result and also trigger some side effects
-///  - 2. `passiveUse` -> Determine the modifierState on the fly as requests for the modifier state come in
-///  - 3. `unused` -> We don't want to use this __type__ of modifier at all
-///
-///  There are currently 2 __types__ of modifiers: buttonModifers and keyboardModifiers
-///  The buttonModifiers can't be determined on the fly so they can't be used with `passiveUse`. We always actively listen to them or don't listen to them at all.
-///
-///  Motivation:
-///  - For kbMods we usually want to use them passively so we don't have to use CPU everytime the user presses a modifierKey. But in certain situations, listening actively to kbMods gives us the opportunity to turn off another eventTap dynamically. Example is if the user turns off scrolling enhancements but still wants to use Command-Scroll to zoom. In that case we could then turn on the scrollEventTap only while the Command key is held.
-///  - If the modifier type is `unused` we can also optimize things further
-
-typedef enum {
-    
-    kMFModifierPriorityActiveListen,
-    kMFModifierPriorityPassiveUse,
-    kMFModifierPriorityUnused,
-    
-} MFModifierPriority;
-
 static MFModifierPriority _kbModPriority;
 static MFModifierPriority _buttonModPriority;
 static CFMachPortRef _kbModEventTap;
 
-static void updateModifierPriority(NSDictionary *remaps) {
-    
-    ///
-    /// Toggle buttonMod processing
-    ///
-    
-    // TODO: Implement
-    
-    
-    /// Determine priority
-    _buttonModPriority = kMFModifierPriorityActiveListen;
-    
-    /// Validate
-    /// We can't passively retrieve the button mods
-    assert(_buttonModPriority != kMFModifierPriorityPassiveUse);
-    
-    /// Toggle ButtonModifiers
-    Buttons.useButtonModifiers = _buttonModPriority == kMFModifierPriorityActiveListen;
-    
-    ///
-    /// Toggle kbMod eventTap
-    ///
-    
-    /// Determine priority
-    
-    _kbModPriority = kMFModifierPriorityUnused;
-    
-    if (Remap.addModeIsEnabled) {
-        _kbModPriority = kMFModifierPriorityPassiveUse;
-    } else {
-        /// If any keyboard modifier is used in remaps, enable tap
-        /// TODO: Only actively listen if the keyboardMods could toggle another eventTap
-        for (NSDictionary *modifiers in remaps) {
-            BOOL containsKB = modifiers[kMFModificationPreconditionKeyKeyboard] != nil;
-            if (containsKB) {
-                _kbModPriority = kMFModifierPriorityActiveListen; ///kMFModifierPriorityPassiveUse;
-                break;
-            }
-        }
-    }
-    
-    /// Toggle tap
++ (void)setKeyboardModifierPriority:(MFModifierPriority)priority {
+    _kbModPriority = priority;
     CGEventTapEnable(_kbModEventTap, _kbModPriority == kMFModifierPriorityActiveListen);
+}
+
++ (void)setButtonModifierPriority:(MFModifierPriority)priority {
+    /// NOTE:
+    /// We can't passively retrieve the button mods, so we always need to actively listen to the buttons, even if the modifierPriority is `passive`.
+    /// Also we don't only listen to buttons to use them as modifiers but also to use them as triggers.
+    /// As a consequence of this, we only toggle off some of the button modifier processing here if the button mods are completely unused and we don't toggle off the button input receiving entirely here at all. That is done by MasterSwitch when there are no effects for the buttons either as modifiers or as triggers.
+    _buttonModPriority = priority;
+    Buttons.useButtonModifiers = _buttonModPriority != kMFModifierPriorityUnused;
 }
 
 #pragma mark Handle modifier change
@@ -213,14 +158,17 @@ CGEventRef _Nullable kbModsChanged(CGEventTapProxy proxy, CGEventType type, CGEv
         _modifiers[kMFModificationPreconditionKeyButtons] = [newModifiers copy]; /// I think we only copy here so the newModifers != oldModifiers assert works
     }
     
-    /// Also update kbMods before notifying
-    if (_kbModPriority == kMFModifierPriorityPassiveUse) {
-        updateKBMods(nil);
+    if (_buttonModPriority == kMFModifierPriorityActiveListen) {
+        
+        /// Also update kbMods before notifying
+        if (_kbModPriority == kMFModifierPriorityPassiveUse) {
+            updateKBMods(nil);
+        }
+        
+        /// Notify
+        [ReactiveModifiers.shared handleModifiersDidChangeTo:_modifiers];
+        reactToModifierChange();
     }
-    
-    /// Notify
-    [ReactiveModifiers.shared handleModifiersDidChangeTo:_modifiers];
-    reactToModifierChange();
 }
 
 + (void)__SWIFT_UNBRIDGED_buttonModsChangedTo:(id)newModifiers {

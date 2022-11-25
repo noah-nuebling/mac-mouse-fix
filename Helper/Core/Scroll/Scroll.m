@@ -119,26 +119,19 @@ void resetState_Unsafe(void) {
     });
 }
 
-+ (void)decide {
-    /// Whether to enable or enable scrolling interception
-    ///     Call this whenever a value which the decision depends on changes
-    
-    BOOL disableAll = !DeviceManager.devicesAreAttached /*|| _scrollConfig.killSwitch*/; /// We decided we still want to invert scroll direction when `killSwitch` is active
-    
-    if (disableAll) {
-        /// Disable scroll interception
-        resetState_Sync();
-        if (_eventTap) {
-            CGEventTapEnable(_eventTap, false);
-        }
-        
-    } else {
-        /// Enable scroll interception
-        CGEventTapEnable(_eventTap, true);
-    }
++ (void)start {
+    CGEventTapEnable(_eventTap, true);
+}
+
++ (void)stop {
     
     /// Are there other things we should enable/disable here?
     ///     ScrollModifiers.reactToModiferChange() comes to mind
+    
+    resetState_Sync();
+    if (_eventTap) {
+        CGEventTapEnable(_eventTap, false);
+    }
 }
 
 #pragma mark - Event tap

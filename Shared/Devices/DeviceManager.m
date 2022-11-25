@@ -208,7 +208,7 @@ static void handleDeviceMatching(void *context, IOReturn result, void *sender, I
         
         ///  Notify other objects
         [Scroll decide];
-        [ButtonInputReceiver decide];
+//        [ButtonInputReceiver decide];
         
         ///
         /// Testing
@@ -274,7 +274,7 @@ static void handleDeviceRemoval(void *context, IOReturn result, void *sender, IO
         /// Notifiy other objects
         ///     If there aren't any relevant devices attached, then we might want to turn off some parts of the program.
         [Scroll decide];
-        [ButtonInputReceiver decide];
+//        [ButtonInputReceiver decide];
         
         /// Log
         
