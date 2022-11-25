@@ -26,11 +26,10 @@
 /// On using reactive signals
 /// - It's pretty unnecessary since we're not using any fancy ReactiveSwift features like we thought we would. We could just as well use simple callbacks.
 //  -> TODO: Remove Reactive stuff if it's too slow
+//   EDIT: We did end up using fancy reactive stuff.
 ///
 /// On Optimization
-/// - We could toggle buttonModifier listening. Modifers.m has that capability
-/// - Cache some of the remaps analysis methods
-/// - Store maxNOfNumbers on the deviceManger and don't recalculate nOfButtons in Device class
+/// - We should move the remapsAnalysis methods into RemapsAnalyzer and cache the ones that are used when the modifier state changes.
 ///
 // TODO: Implement killSwitch signals
 
@@ -258,7 +257,7 @@ import CocoaLumberjackSwift
     
     private func toggleButtonTap() {
     
-        var buttonsAreUsedAsModifiers =
+        let buttonsAreUsedAsModifiers =
         (someDeviceHasScroll && someButtonModifiesScroll)
         || (someDeviceHasPointing && someButtonModifiesPointing)
         || (someDeviceHasUsableButtons && someButtonModifiesButtonOnSomeDevice)
@@ -273,10 +272,23 @@ import CocoaLumberjackSwift
     
     private func togglePointingTap() {
         
-        if someDeviceHasPointing && currentModificationModifiesPointing {
-            /// Toggle on
+        /// Determine enable
+        let enable = someDeviceHasPointing && currentModificationModifiesPointing
+        
+        if enable {
+            
+            /// Get modifications
+            /// - Maybe we should store the "latestModifications" as an instance var for optimzation && to keep things clean? Aside from this we're only using instance vars in the tapTogglers, I feel like maybe there's is some architectural idea for why we only need to use instance vars.
+            let modifications = Remap.modifications(withModifiers: Modifiers.modifiers(with: nil))
+            
+            /// Initialize ModifiedDrag
+            if let dragEffect = modifications?.object(forKey: kMFTriggerDrag) as! NSDictionary? {
+                ModifiedDrag.initializeDrag(withDict: dragEffect)
+            } else {
+                assert(false)
+            }
         } else {
-            /// toggle off
+            ModifiedDrag.deactivate()
         }
     }
     
@@ -419,64 +431,4 @@ import CocoaLumberjackSwift
         
         return (someKbModModifiesPointing: kbSwayPoint, someKbModModifiesScroll: kbSwayScroll, someButtonModifiesPointing: btnSwayPoint, someButtonModifiesScroll: btnSwayScroll)
     }
-    
-    // MARK: v Delete
-    
-    ///
-    /// v Design notes - delete these
-    /// ---
-    
-    /// Base sginals
-    
-    /// attachedDevices x
-    ///     Replace this with activeDevice signal
-    /// activeModifers x
-    /// remaps x
-    /// scrollConfig x
-    ///     (to check if default / modified scrollConfig transforms input)
-    
-    /// ---
-    
-    /// Combine signals
-    
-    ///
-    /// Decide kbModTap enable
-    ///
-    
-    /**
-     ```
-     ///
-     /// Decide kbModTap enable
-     ///
-     
-     let someKbModsToggleScroll = (defaultTransformsScroll != somekbModsTransformScroll)
-     let someKbModsToggleButtons = (defaultTransformsButtonOnDevice != somekbModsTransformButtonOnDevice)
-     let someKbModsTogglePointing = (defaultTransformsPointing != somekbModsTransformPointing)
-     
-     (deviceHasScrolling && someKbModsToggleScroll)
-     || (deviceHasUsableButtons && someKbModsToggleButtons)
-     || (deviceHasPointing && someKbModsTogglePointing)
-     
-     ///
-     /// Decide scrollTap enable
-     ///
-     
-     deviceHasScrolling && (defaultTransformsScroll || modificationTransformsScroll)
-     
-     ///
-     /// Decide buttonTap enable
-     ///
-     
-     deviceHasUsableButtons && modificationTransformsButtonOnDevice
-     
-     ///
-     /// Decide dragTap enable
-     ///
-     
-     deviceHasPointing && modificationTransformsDrag // I don't think there will ever be devices without pointing
-     
-     ```
-     */
-    
-    
 }

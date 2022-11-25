@@ -133,7 +133,6 @@ CGEventRef _Nullable kbModsChanged(CGEventTapProxy proxy, CGEventType type, CGEv
         
         /// Notify
         [ReactiveModifiers.shared handleModifiersDidChangeTo:_modifiers];
-        //        reactToModifierChange(); /// Calling this here leads to different behaviour in how modifiedDrag is toggled between active and passive kbMod priority. We probably don't want that.
     }
     
     /// Return
@@ -167,7 +166,6 @@ CGEventRef _Nullable kbModsChanged(CGEventTapProxy proxy, CGEventType type, CGEv
         
         /// Notify
         [ReactiveModifiers.shared handleModifiersDidChangeTo:_modifiers];
-        reactToModifierChange();
     }
 }
 
@@ -272,75 +270,75 @@ static NSUInteger flagsFromEvent(CGEventRef _Nullable event) {
 
 #pragma mark React
 
-static void reactToModifierChange(void) {
-    
-    /// Get active modifications and initialize any which are modifier driven
-    
-    /// Debug
-    
-    DDLogDebug(@"MODIFIERS HAVE CHANGED TO - %@", _modifiers);
-//    DDLogDebug(@"...ON DEVICE - %@", device);
-//    DDLogDebug(@"...CALLED BY %@", [SharedUtility getInfoOnCaller]);
-    
-    /// Get activeModifications
-    NSDictionary *activeModifications = [Remap modificationsWithModifiers:_modifiers];
-    
-    /// Notify ScrollModifiers of modifierChange
-    ///     It needs that to commit to an app in the app switcher when the user releases a button
-    ///     TODO: Make sure this always works, and not only when a ModifieDrag makes the Modifiers class listen to modifierChanged events
-    
-    [ScrollModifiers reactToModiferChangeWithActiveModifications:activeModifications];
-    
-    /// Kill old modifications
-    
-    /// Kill the currently active modifiedDrag if the modifiers have changed since it started.
-    ///     (If there were other modifier driven effects than modifiedDrag in the future, we would also kill them here)
-
-    BOOL modifiedDragIsStillUpToDate = NO;
-    
-    if ([_modifiers isEqual:ModifiedDrag.initialModifiers]) {
-        modifiedDragIsStillUpToDate = YES;
-    } else {
-        [ModifiedDrag deactivate];
-    }
-    
-    /// Init new modifications
-    
-    if (activeModifications) {
-        
-        /// Init modifiedDrag
-        ///    (If there were other modifier driven effects than modifiedDrag in the future, we would also init them here)
-        
-        if (!modifiedDragIsStillUpToDate) {
-        
-            NSMutableDictionary *modifiedDragEffectDict = activeModifications[kMFTriggerDrag]; /// Declared as NSMutableDictionary but probably not actually mutable at this point
-            if (modifiedDragEffectDict) {
-                
-                /// If addMode is active, add activeModifiers to modifiedDragDict
-                ///     See Remap.m -> AddMode for context.
-//                if ([modifiedDragEffect[kMFModifiedDragDictKeyType] isEqualToString:kMFModifiedDragTypeAddModeFeedback]) {
-//                    modifiedDragEffect = modifiedDragEffect.mutableCopy; /// Make actually mutable
-//                    modifiedDragEffect[kMFRemapsKeyModificationPrecondition] = activeModifiers;
+//static void reactToModifierChange(void) {
+//    
+//    /// Get active modifications and initialize any which are modifier driven
+//    
+//    /// Debug
+//    
+//    DDLogDebug(@"MODIFIERS HAVE CHANGED TO - %@", _modifiers);
+////    DDLogDebug(@"...ON DEVICE - %@", device);
+////    DDLogDebug(@"...CALLED BY %@", [SharedUtility getInfoOnCaller]);
+//    
+//    /// Get activeModifications
+//    NSDictionary *activeModifications = [Remap modificationsWithModifiers:_modifiers];
+//    
+//    /// Notify ScrollModifiers of modifierChange
+//    ///     It needs that to commit to an app in the app switcher when the user releases a button
+//    ///     TODO: Make sure this always works, and not only when a ModifieDrag makes the Modifiers class listen to modifierChanged events
+//    
+////    [ScrollModifiers reactToModiferChangeWithActiveModifications:activeModifications];
+//    
+//    /// Kill old modifications
+//    
+//    /// Kill the currently active modifiedDrag if the modifiers have changed since it started.
+//    ///     (If there were other modifier driven effects than modifiedDrag in the future, we would also kill them here)
+//
+//    BOOL modifiedDragIsStillUpToDate = NO;
+//    
+//    if ([_modifiers isEqual:ModifiedDrag.initialModifiers]) {
+//        modifiedDragIsStillUpToDate = YES;
+//    } else {
+//        [ModifiedDrag deactivate];
+//    }
+//    
+//    /// Init new modifications
+//    
+//    if (activeModifications) {
+//        
+//        /// Init modifiedDrag
+//        ///    (If there were other modifier driven effects than modifiedDrag in the future, we would also init them here)
+//        
+//        if (!modifiedDragIsStillUpToDate) {
+//        
+//            NSMutableDictionary *modifiedDragEffectDict = activeModifications[kMFTriggerDrag]; /// Declared as NSMutableDictionary but probably not actually mutable at this point
+//            if (modifiedDragEffectDict) {
+//                
+//                /// If addMode is active, add activeModifiers to modifiedDragDict
+//                ///     See Remap.m -> AddMode for context.
+////                if ([modifiedDragEffect[kMFModifiedDragDictKeyType] isEqualToString:kMFModifiedDragTypeAddModeFeedback]) {
+////                    modifiedDragEffect = modifiedDragEffect.mutableCopy; /// Make actually mutable
+////                    modifiedDragEffect[kMFRemapsKeyModificationPrecondition] = activeModifiers;
+////                }
+//                
+//                /// Determine usage threshold based on other active modifications
+//                ///     It's easy to accidentally drag the mouse while trying to scroll so in that case we want a larger usageThreshold to avoid accidental drag activation
+//                BOOL largeUsageThreshold = NO;
+//                if (activeModifications[kMFTriggerScroll] != nil) {
+//                    largeUsageThreshold = YES;
 //                }
-                
-                /// Determine usage threshold based on other active modifications
-                ///     It's easy to accidentally drag the mouse while trying to scroll so in that case we want a larger usageThreshold to avoid accidental drag activation
-                BOOL largeUsageThreshold = NO;
-                if (activeModifications[kMFTriggerScroll] != nil) {
-                    largeUsageThreshold = YES;
-                }
-                
-                /// Copy modifiers before passing into Modified drag
-                ///     Can't just be reference because we later compare to `_modifiers`
-                /// `deepCopyOf:error:` is actually super slow for some reason. I think `deepMutableCopyOf:` is a little faster? Not sure. Should remove this copying entirely.
-//                NSDictionary *copiedModifiers = (NSDictionary *)[SharedUtility deepCopyOf:_modifiers error:nil];
-                NSDictionary *copiedModifiers = (NSDictionary *)[SharedUtility deepMutableCopyOf:_modifiers];
-                
-                /// Init modifiedDrag
-                [ModifiedDrag initializeDragWithDict:modifiedDragEffectDict initialModifiers:copiedModifiers];
-            }
-        }
-    }
-}
+//                
+//                /// Copy modifiers before passing into Modified drag
+//                ///     Can't just be reference because we later compare to `_modifiers`
+//                /// `deepCopyOf:error:` is actually super slow for some reason. I think `deepMutableCopyOf:` is a little faster? Not sure. Should remove this copying entirely.
+////                NSDictionary *copiedModifiers = (NSDictionary *)[SharedUtility deepCopyOf:_modifiers error:nil];
+//                NSDictionary *copiedModifiers = (NSDictionary *)[SharedUtility deepMutableCopyOf:_modifiers];
+//                
+//                /// Init modifiedDrag
+//                [ModifiedDrag initializeDragWithDict:modifiedDragEffectDict initialModifiers:copiedModifiers];
+//            }
+//        }
+//    }
+//}
 
 @end

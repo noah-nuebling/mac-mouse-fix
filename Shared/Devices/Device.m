@@ -215,7 +215,8 @@ static void handleInput(void *context, IOReturn result, void *sender, IOHIDValue
     DDLogDebug(@"Received HID input - usagePage: %d usage: %d value: %ld from device: %@", usagePage, usage, (long)IOHIDValueGetIntegerValue(value), sendingDev.name);
 
     /// Notify ButtonInputReceiver
-    [ButtonInputReceiver handleHIDButtonInputFromRelevantDeviceOccured:sendingDev button:@(button)];
+    /// Not needed now since we deactivated AppSwitcher feature. If we do implement it in the future we'll probably take a completely different approach
+//    [ButtonInputReceiver handleHIDButtonInputFromRelevantDeviceOccured:sendingDev button:@(button)];
 
     /// Stop momentumScroll on LMB click
     ///     ButtonInputReceiver tries to filter out LMB and RMB events as early as possible, so it's better to do this here

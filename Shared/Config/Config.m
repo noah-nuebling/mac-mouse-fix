@@ -142,7 +142,7 @@ void commitConfig() {
     /// Notify other modules
     [Remap reload];
     [ScrollConfig reload];
-    [Scroll decide];
+//    [Scroll decide];
     [PointerConfig reload];
     [OtherConfig reload];
     [MenuBarItem reload];

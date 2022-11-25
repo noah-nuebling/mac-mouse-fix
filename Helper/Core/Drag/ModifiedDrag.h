@@ -34,7 +34,7 @@ typedef struct {
     int64_t usageThreshold;
     
     NSDictionary *effectDict;
-    NSDictionary *initialModifiers;
+//    NSDictionary *initialModifiers;
     
     bool naturalDirection; /// Content follows mouse movement
     
@@ -79,7 +79,8 @@ typedef struct {
 
 + (NSDictionary *)initialModifiers;
 + (CGEventTapProxy)tapProxy;
-+ (void)initializeDragWithDict:(NSDictionary *)effectDict initialModifiers:(NSDictionary *)modifiers;
++ (void)initializeDragWithDict:(NSDictionary *)effectDict;
++ (void)__SWIFT_UNBRIDGED_initializeDragWithDict:(id)effectDict;
 
 //+ (void)modifiedScrollHasBeenUsed;
 

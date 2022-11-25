@@ -125,23 +125,23 @@ extension MFScrollModificationResult: Hashable {
     
     }
     
-    @objc public static func reactToModiferChange(activeModifications: NSDictionary) {
-        /// This is called on every button press. Might be good to optimize this if it has any noticable performance impact.
-        
-        /// Deactivate app switcher - if appropriate
-        
-        let effectModKeyPath = "\(kMFTriggerScroll).\(kMFModifiedScrollDictKeyEffectModificationType)"
-        
-        let switcherActiveLastScroll = (self.activeModifications as NSDictionary).value(forKeyPath: effectModKeyPath) as? String == kMFModifiedScrollEffectModificationTypeCommandTab
-        let switcherActiveNow = activeModifications.value(forKeyPath: effectModKeyPath) as? String == kMFModifiedScrollEffectModificationTypeCommandTab
-        
-        if (switcherActiveLastScroll && !switcherActiveNow) {
-            /// AppSwitcher has been deactivated - notify Scroll.m
-            
-            Scroll.appSwitcherModificationHasBeenDeactivated();
-            self.activeModifications = activeModifications;
-        }
-    }
+//    @objc public static func reactToModiferChange(activeModifications: NSDictionary) {
+//        /// This is called on every button press. Might be good to optimize this if it has any noticable performance impact.
+//        
+//        /// Deactivate app switcher - if appropriate
+//        
+//        let effectModKeyPath = "\(kMFTriggerScroll).\(kMFModifiedScrollDictKeyEffectModificationType)"
+//        
+//        let switcherActiveLastScroll = (self.activeModifications as NSDictionary).value(forKeyPath: effectModKeyPath) as? String == kMFModifiedScrollEffectModificationTypeCommandTab
+//        let switcherActiveNow = activeModifications.value(forKeyPath: effectModKeyPath) as? String == kMFModifiedScrollEffectModificationTypeCommandTab
+//        
+//        if (switcherActiveLastScroll && !switcherActiveNow) {
+//            /// AppSwitcher has been deactivated - notify Scroll.m
+//            
+//            Scroll.appSwitcherModificationHasBeenDeactivated();
+//            self.activeModifications = activeModifications;
+//        }
+//    }
     
     /// Utility
     @objc static func scrollModsAreEqual(_ mods1: MFScrollModificationResult, other mods2: MFScrollModificationResult) -> Bool {

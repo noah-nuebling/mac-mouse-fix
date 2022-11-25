@@ -109,23 +109,31 @@ static CGEventTapProxy _tapProxy;
 
 /// Interface - start
 
-+ (NSDictionary *)initialModifiers {
-    
-    if (_drag.activationState == kMFModifiedInputActivationStateNone) {
-        return nil;
-    } else if (_drag.activationState == kMFModifiedInputActivationStateInitialized || _drag.activationState == kMFModifiedInputActivationStateInUse) {
-        return _drag.initialModifiers;
-    } else {
-        assert(false);
-    }
-}
+//+ (NSDictionary *)initialModifiers {
+//
+//    if (_drag.activationState == kMFModifiedInputActivationStateNone) {
+//        return nil;
+//    } else if (_drag.activationState == kMFModifiedInputActivationStateInitialized || _drag.activationState == kMFModifiedInputActivationStateInUse) {
+//        return _drag.initialModifiers;
+//    } else {
+//        assert(false);
+//    }
+//}
 
-+ (void)initializeDragWithDict:(NSDictionary *)effectDict initialModifiers:(NSDictionary *)modifiers {
++ (void)initializeDragWithDict:(NSDictionary *)effectDict MF_SWIFT_HIDDEN {
     
     dispatch_async(_drag.queue, ^{
         
         /// Debug
-        DDLogDebug(@"INITIALIZING MODIFIEDDRAG WITH previous type %@ activationState %d, newEffectDict: %@, modifiers: %@", _drag.type, _drag.activationState, effectDict, modifiers);
+        DDLogDebug(@"INITIALIZING MODIFIEDDRAG WITH previous type %@ activationState %d, newEffectDict: %@", _drag.type, _drag.activationState, effectDict);
+        
+        /// Guard state == inUse
+        ///  I think if state == initialized we don't need to do anything special
+        if (_drag.activationState == kMFModifiedInputActivationStateInUse
+            && ![effectDict isEqualToDictionary:_drag.effectDict]) {
+            
+            deactivate_Unsafe(YES);
+        }
         
         /// Get type
         MFStringConstant type = effectDict[kMFModifiedDragDictKeyType];
@@ -133,7 +141,7 @@ static CGEventTapProxy _tapProxy;
         /// Init static parts of `_drag`
         _drag.type = type;
         _drag.effectDict = effectDict;
-        _drag.initialModifiers = modifiers;
+//        _drag.initialModifiers = modifiers;
         _drag.initTime = CACurrentMediaTime();
         
         id<ModifiedDragOutputPlugin> p;
@@ -150,12 +158,16 @@ static CGEventTapProxy _tapProxy;
         }
         
         /// Link with plugin
-        [p initializeWithDragState:&_drag];
+//        [p initializeWithDragState:&_drag];
         _drag.outputPlugin = p;
         
         /// Init dynamic parts of _drag
         initDragState_Unsafe();
     });
+}
+
++ (void)__SWIFT_UNBRIDGED_initializeDragWithDict:(id)effectDict {
+    [self initializeDragWithDict:effectDict];
 }
 
 void initDragState_Unsafe(void) {
