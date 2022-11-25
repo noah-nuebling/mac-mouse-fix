@@ -75,16 +75,19 @@ typedef struct {
 
 @interface ModifiedDrag : NSObject
 
++ (MFModifiedInputActivationState)activationState;
+
 + (void)load_Manual;
 
-+ (NSDictionary *)initialModifiers;
-+ (CGEventTapProxy)tapProxy;
+//+ (NSDictionary *)initialModifiers;
+//+ (CGEventTapProxy)tapProxy;
 + (void)initializeDragWithDict:(NSDictionary *)effectDict;
 + (void)__SWIFT_UNBRIDGED_initializeDragWithDict:(id)effectDict;
 
 //+ (void)modifiedScrollHasBeenUsed;
 
-+ (void (^ _Nullable)(void))suspend;
+//+ (void (^ _Nullable)(void))suspend;
+
 + (void)deactivate;
 + (void)deactivateWithCancel:(BOOL)cancel;
 

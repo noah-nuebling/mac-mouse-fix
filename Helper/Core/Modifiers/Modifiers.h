@@ -33,9 +33,9 @@ NS_ASSUME_NONNULL_BEGIN
 ///  - If the modifier type is `unused` we can also optimize things further
 
 typedef enum {
-    kMFModifierPriorityActiveListen,
-    kMFModifierPriorityPassiveUse,
     kMFModifierPriorityUnused,
+    kMFModifierPriorityPassiveUse,
+    kMFModifierPriorityActiveListen,
 } MFModifierPriority;
 
 + (void)load_Manual;
@@ -51,6 +51,9 @@ typedef enum {
 + (void)__SWIFT_UNBRIDGED_buttonModsChangedTo:(id)newModifiers;
 
 + (void)handleModificationHasBeenUsed;
+
++ (MFModifierPriority)kbModPriority;
++ (MFModifierPriority)btnModPriority;
 
 //+ (void)handleModificationHasBeenUsedWithDevice:(Device *_Nullable)device;
 //+ (void)handleModificationHasBeenUsedWithDevice:(Device *_Nullable)device activeModifiers:(NSDictionary *)activeModifiers;

@@ -20,6 +20,7 @@ NS_ASSUME_NONNULL_BEGIN
 + (void)load_Manual;
 + (void)start;
 + (void)stop;
++ (BOOL)isRunning;
 
 + (void)resetState;
 + (void)suspend;

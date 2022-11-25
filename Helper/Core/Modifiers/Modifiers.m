@@ -41,7 +41,6 @@
 /// Update:
 /// (At the time of writing, this change is not yet reflected in the other comments in this class.)`Modifiers` class now has a single `modifiers` instance var which is updated whenever modifiers change. When some module requests the current modifiers that instance var is simply returned. Before, the modifiers were recompiled each time they were requested. The whole idea of "modifier driven" and "trigger driven" modifications is now not used anymore. All modifications are in effect "modifier driven". This does mean we always listen to keyboard modifiers which is bad. But that will allow us to turn off other event interception dynamically. For example when the user has scrolling enhancements turned off we can turn the scrollwheel eventTap off but then when they hold a modifier for scroll-to-zoom we can dynamically turn the tap on again. Ideally we'd only tap into the keyboard mod event stream if there is such a situation where the keyboard mods can toggle another tap and otherwise turn the keyboard mod tap off. I'll look into that.
 
-
 #pragma mark - Storage
 
 static NSMutableDictionary *_modifiers;
@@ -85,7 +84,7 @@ static NSMutableDictionary *_modifiers;
 #pragma mark Toggle listening
 
 static MFModifierPriority _kbModPriority;
-static MFModifierPriority _buttonModPriority;
+static MFModifierPriority _btnModPriority;
 static CFMachPortRef _kbModEventTap;
 
 + (void)setKeyboardModifierPriority:(MFModifierPriority)priority {
@@ -98,8 +97,19 @@ static CFMachPortRef _kbModEventTap;
     /// We can't passively retrieve the button mods, so we always need to actively listen to the buttons, even if the modifierPriority is `passive`.
     /// Also we don't only listen to buttons to use them as modifiers but also to use them as triggers.
     /// As a consequence of this, we only toggle off some of the button modifier processing here if the button mods are completely unused and we don't toggle off the button input receiving entirely here at all. That is done by MasterSwitch when there are no effects for the buttons either as modifiers or as triggers.
-    _buttonModPriority = priority;
-    Buttons.useButtonModifiers = _buttonModPriority != kMFModifierPriorityUnused;
+    _btnModPriority = priority;
+    Buttons.useButtonModifiers = _btnModPriority != kMFModifierPriorityUnused;
+}
+
+#pragma mark Inspect State
+/// At the time of writing we just need this for debugging
+
++ (MFModifierPriority)kbModPriority {
+    return _kbModPriority;
+}
+
++ (MFModifierPriority)btnModPriority {
+    return _btnModPriority;
 }
 
 #pragma mark Handle modifier change
@@ -157,7 +167,7 @@ CGEventRef _Nullable kbModsChanged(CGEventTapProxy proxy, CGEventType type, CGEv
         _modifiers[kMFModificationPreconditionKeyButtons] = [newModifiers copy]; /// I think we only copy here so the newModifers != oldModifiers assert works
     }
     
-    if (_buttonModPriority == kMFModifierPriorityActiveListen) {
+    if (_btnModPriority == kMFModifierPriorityActiveListen) {
         
         /// Also update kbMods before notifying
         if (_kbModPriority == kMFModifierPriorityPassiveUse) {
@@ -173,7 +183,7 @@ CGEventRef _Nullable kbModsChanged(CGEventTapProxy proxy, CGEventType type, CGEv
     [self buttonModsChangedTo:newModifiers];
 }
 
-#pragma mark Helper
+/// Helper for modifier change handling
 
 static void updateKBMods(CGEventRef  _Nullable event) {
     
@@ -220,7 +230,7 @@ static NSUInteger flagsFromEvent(CGEventRef _Nullable event) {
     return flags;
 }
 
-#pragma mark Interface
+#pragma mark Main Interface
 
 + (NSDictionary *)modifiersWithEvent:(CGEventRef _Nullable)event {
     

@@ -40,6 +40,10 @@ static CFMachPortRef _eventTap;
 + (void)stop {
     CGEventTapEnable(_eventTap, false);
 }
++ (BOOL)isRunning {
+    /// Only used for debug inspection at the time of writing. Shouldn't need it for anything else.
+    return CGEventTapIsEnabled(_eventTap);
+}
 
 static void registerInputCallback() {
     

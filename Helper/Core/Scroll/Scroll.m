@@ -134,6 +134,11 @@ void resetState_Unsafe(void) {
     }
 }
 
++ (BOOL)isRunning {
+    /// At the time of writing we just need this for debugging. Should'nt ever need it for something else I think.
+    return CGEventTapIsEnabled(_eventTap);
+}
+
 #pragma mark - Event tap
 
 #pragma clang diagnostic push
@@ -171,7 +176,7 @@ static CGEventRef eventTapCallback(CGEventTapProxy proxy, CGEventType type, CGEv
     
     if (type == kCGEventTapDisabledByTimeout || type == kCGEventTapDisabledByUserInput) {
         
-        if (type == kCGEventTapDisabledByUserInput) {
+        if (type == kCGEventTapDisabledByTimeout) {
             DDLogInfo(@"Scroll.m eventTap was disabled by timeout. Re-enabling");
             CGEventTapEnable(_eventTap, true);
         } else if (type == kCGEventTapDisabledByUserInput) {
@@ -318,10 +323,10 @@ static void heavyProcessing(CGEventRef event, int64_t scrollDeltaAxis1, int64_t 
         
         if ((NO)) { /// Unused
             
-            DriverUnsuspender thisDriverUnsuspender = [OutputCoordinator suspendTouchDriversFromDriver:kTouchDriverScroll];
-            if (thisDriverUnsuspender != nil) {
-                unsuspendDrivers = thisDriverUnsuspender;
-            }
+//            DriverUnsuspender thisDriverUnsuspender = [OutputCoordinator suspendTouchDriversFromDriver:kTouchDriverScroll];
+//            if (thisDriverUnsuspender != nil) {
+//                unsuspendDrivers = thisDriverUnsuspender;
+//            }
         }
         
         /// Update modfications

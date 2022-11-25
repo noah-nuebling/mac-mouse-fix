@@ -41,20 +41,33 @@
 /// Vars
 
 static ModifiedDragState _drag;
-static CGEventTapProxy _tapProxy;
 
-+ (CGEventTapProxy)tapProxy {
-    return _tapProxy;
-}
+//static CGEventTapProxy _tapProxy;
+
+//+ (CGEventTapProxy)tapProxy {
+//    return _tapProxy;
+//}
+
 
 /// Derived props
 
-+ (CGPoint)pseudoPointerPosition {
-    
-    return CGPointMake(_drag.origin.x + _drag.originOffset.x, _drag.origin.y + _drag.originOffset.y);
-}
+//+ (CGPoint)pseudoPointerPosition {
+//
+//    return CGPointMake(_drag.origin.x + _drag.originOffset.x, _drag.origin.y + _drag.originOffset.y);
+//}
 
 /// Debug
+
++ (MFModifiedInputActivationState)activationState {
+    
+    /// We wanted to expose `_drag` to other modules for debugging, but `_drag` can't be exposed to Swift. Maybe because it contains an ObjC pointer`id`. Right now this is fine though because we only need the activationState for debugging anyways.
+    
+    __block MFModifiedInputActivationState result;
+    dispatch_sync(_drag.queue, ^{
+        result = _drag.activationState;
+    });
+    return result;
+}
 
 + (NSString *)modifiedDragStateDescription:(ModifiedDragState)drag {
     NSString *output = @"";
@@ -186,7 +199,7 @@ void initDragState_Unsafe(void) {
 static CGEventRef __nullable eventTapCallBack(CGEventTapProxy proxy, CGEventType type, CGEventRef event, void * __nullable userInfo) {
     
     /// Store proxy
-    _tapProxy = proxy;
+//    _tapProxy = proxy;
     
     /// Catch special events
     if (type == kCGEventTapDisabledByTimeout) {
@@ -315,7 +328,7 @@ static void handleMouseInputWhileInitialized(int64_t deltaX, int64_t deltaY, CGE
         
         /// Notify other modules
         [Modifiers handleModificationHasBeenUsed];
-        (void)[OutputCoordinator suspendTouchDriversFromDriver:kTouchDriverModifiedDrag];
+//        (void)[OutputCoordinator suspendTouchDriversFromDriver:kTouchDriverModifiedDrag];
     }
 }
 /// Only passing in event to obtain event location to get slightly better behaviour for fakeDrag
@@ -340,6 +353,8 @@ void handleMouseInputWhileInUse(int64_t deltaX, int64_t deltaY, CGEventRef event
 }
 
 + (void (^ _Nullable)(void))suspend {
+    
+    /// This was used for OutputCoordinator stuff which is unused now. Can probably remove this
     
     void (^ __block unsuspend)(void);
     unsuspend = nil;

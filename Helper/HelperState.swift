@@ -25,7 +25,8 @@ import Foundation
             if _activeDevice != nil {
                 return _activeDevice
             } else { /// Just return any attached device as a fallback
-                return DeviceManager.attachedDevices.first as! Device?
+                /// NOTE: Swift let me do `attachedDevices.first` (even thought that's not defined on NSArray) without a compiler warning which did return a Device? but the as! Device? cast still crashed. Using `attachedDevices.firstObject` it doesn't crash.
+                return DeviceManager.attachedDevices.firstObject as! Device?
             }
         }
     }

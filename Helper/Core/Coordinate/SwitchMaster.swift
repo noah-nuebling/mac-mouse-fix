@@ -35,6 +35,7 @@
 
 import Cocoa
 import CocoaLumberjackSwift
+import ReactiveSwift
 
 @objc class SwitchMaster: NSObject {
     
@@ -152,6 +153,8 @@ import CocoaLumberjackSwift
         
         attachedDevicesSignal.startWithValues { _ in
             
+            DDLogDebug("SwitchMaster toggling due to attachedDevices change")
+            
             self.toggleKbModTap()
             self.toggleBtnModProcessing()
             
@@ -160,6 +163,8 @@ import CocoaLumberjackSwift
             self.togglePointingTap()
         }
         remapsSignal.startWithValues { _ in
+            
+            DDLogDebug("SwitchMaster toggling due to remaps change")
             
             self.toggleKbModTap()
             self.toggleBtnModProcessing()
@@ -170,6 +175,8 @@ import CocoaLumberjackSwift
         }
         scrollConfigSignal.startWithValues { _ in
             
+            DDLogDebug("SwitchMaster toggling due to scroll config change")
+            
             self.toggleKbModTap()
             self.toggleBtnModProcessing()
             
@@ -178,9 +185,19 @@ import CocoaLumberjackSwift
 
         modifiersSignal.startWithValues { _ in
             
+            DDLogDebug("SwitchMaster toggling due to modifier change")
+            
             self.toggleScrollTap()
             self.toggleButtonTap()
             self.togglePointingTap()
+        }
+        
+        if runningPreRelease() {
+            SignalProducer<Any, Never>.merge(attachedDevicesSignal.map { $0 as Any }, remapsSignal.map { $0 as Any }, scrollConfigSignal.map { $0 as Any }, modifiersSignal.map { $0 as Any }).startWithValues { _ in
+                
+                DDLogDebug("SwitchMaster switched to - kbMod: \(Modifiers.kbModPriority().rawValue), btnMod: \(Modifiers.btnModPriority().rawValue), scroll: \(Scroll.isRunning() ? 1 : 0), button: \(ButtonInputReceiver.isRunning() ? 1 : 0), pointing: \(ModifiedDrag.activationState().rawValue)")
+            }
+            
         }
     }
     
