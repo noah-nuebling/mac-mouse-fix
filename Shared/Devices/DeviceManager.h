@@ -20,10 +20,16 @@ NS_ASSUME_NONNULL_BEGIN
 + (id)__SWIFT_UNBRIDGED_attachedDevices;
 
 + (void)load_Manual;
-+ (BOOL)devicesAreAttached;
-
-+ (Device * _Nullable)attachedDeviceWithIOHIDDevice:(IOHIDDeviceRef)iohidDevice;
 + (void)deconfigureDevices;
+
++ (BOOL)devicesAreAttached;
++ (Device * _Nullable)attachedDeviceWithIOHIDDevice:(IOHIDDeviceRef)iohidDevice;
+
++ (BOOL)someDeviceHasScrollWheel;
++ (BOOL)someDeviceHasPointing;
++ (BOOL)someDeviceHasUsableButtons;
++ (int)maxButtonNumberAmongDevices;
+
 
 @end
 

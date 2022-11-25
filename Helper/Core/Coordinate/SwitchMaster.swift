@@ -39,6 +39,10 @@ import CocoaLumberjackSwift
 
 @objc class SwitchMaster: NSObject {
     
+    //
+    // MARK: Storage
+    //
+    
     ///
     /// Singleton
     ///
@@ -49,38 +53,36 @@ import CocoaLumberjackSwift
     /// State
     ///
     
+    /// NOTE: Some (most?, all?) of these are sort of unnecessary to store here separately. E.g. `someDeviceHasScroll` can just be read from the DeviceManager.
+    
     /// Derived from: Attached Devices
     
     var someDeviceHasScroll = false
-    var someDeviceHasPointer = false
+    var someDeviceHasPointing = false
     var someDeviceHasUsableButtons = false
-    var maxNOfButtons: Int32 = 0 // TODO: Store this on the device manager
+    var maxButtonNumberAmongDevices: Int32 = 0
     
     /// Derived from: Various
     
     var defaultModifiesScroll = false /// Derives from: Scroll Config
-    let defaultModifiesPointer = false /// Always false
+    let defaultModifiesPointing = false /// Always false
     var defaultModifiesButtonOnSomeDevice = false /// Derives from: Remaps & Attached Devices
     
     /// Derived from: Remaps
     
     var somekbModModifiesScroll = false
-    var somekbModModifiesPointer = false
+    var somekbModModifiesPointing = false
     var somekbModModifiesButtonOnSomeDevice = false /// & derives from: Attached Devices
     
     var someButtonModifiesScroll = false
-    var someButtonModifiesPointer = false
+    var someButtonModifiesPointing = false
     var someButtonModifiesButtonOnSomeDevice = false /// & derives from: Attached Devices
     
     /// Derived from: Modifiers & Remaps
     
-    var modificationModifiesScroll = false
-    var modificationModifiesPointer = false
-    var modificationModifiesButtonOnSomeDevice = false /// & derives from: Attached Devices
-    
-    ///
-    /// Init
-    ///
+    var currentModificationModifiesScroll = false
+    var currentModificationModifiesPointing = false
+    var currentModificationModifiesButtonOnSomeDevice = false /// & derives from: Attached Devices
     
     @objc func load_Manual() {
         
@@ -91,147 +93,37 @@ import CocoaLumberjackSwift
         let scrollConfigSignal = ReactiveScrollConfig.shared.scrollConfig
         let modifiersSignal = ReactiveModifiers.shared.modifiers
         
-        ///
-        ///
-        /// State update callbacks
-        ///
-        ///
+        // MARK: Update state
         
-        ///
-        /// Attached devices
-        ///
+        /// Attached Devices Signal
         
         attachedDevicesSignal.startWithValues { devices in
             
-            var scroll = false
-            var point = false
-            var buttons: Int32 = 0
-            
-            if devices.count > 0 {
-                scroll = true
-                point = true
-                for device in devices {
-                    let device = device as! Device
-                    let b = device.nOfButtons()
-                    if b > buttons { buttons = b }
-                }
-            }
-            
-            self.someDeviceHasScroll = scroll
-            self.someDeviceHasPointer = point
-            self.someDeviceHasUsableButtons = buttons > 2
-            self.maxNOfButtons = buttons
+            self.someDeviceHasScroll = DeviceManager.someDeviceHasScrollWheel()
+            self.someDeviceHasPointing = DeviceManager.someDeviceHasPointing()
+            self.someDeviceHasUsableButtons = DeviceManager.someDeviceHasUsableButtons()
+            self.maxButtonNumberAmongDevices = DeviceManager.maxButtonNumberAmongDevices()
         }
         
-        ///
-        /// Remaps
-        ///
+        /// Remaps Signal
         
         remapsSignal.startWithValues { remaps in
             
-            var kbSwayScroll = false
-            var kbSwayPoint = false
-            var btnSwayScroll = false
-            var btnSwayPoint = false
-            
-            remaps.enumerateKeysAndObjects(options: [/*.concurrent*/]) { modifiers, modification, stop in
-                
-                /// Notes:
-                ///  - `.concurrent` option should make things slower for small arrays. See https://darkdust.net/writings/objective-c/nsarray-enumeration-performance
-                ///   - All these if statements totally overcomplicate things. It's what I call "Premature Boptimization"
-                ///   - Notice how we made it even faster by first looking at the modifers and then looking at the modification because the modifiers have less keys usually.
-                ///   - This only happens when the remaps change, and we should just cache this if it's slow. There is no reason whatsoever to make this so fast and unreadable.
-                ///   - Just using a for...in loop on the dict also gives you the keys and values in Swift, so using `enumerateKeysAndObjects` is probably not the best idea since it might be slower than a simple loop.
-                
-                var keyboard = false
-                var button = false
-                
-                if !kbSwayPoint || !kbSwayScroll {
-                    keyboard = (modifiers as! NSDictionary).object(forKey: kMFModificationPreconditionKeyKeyboard) != nil
-                }
-                if !btnSwayPoint || !btnSwayScroll {
-                    button = (modifiers as! NSDictionary).object(forKey: kMFModificationPreconditionKeyButtons) != nil
-                }
-                
-                if keyboard || button {
-                    
-                    if (!kbSwayPoint && keyboard) || (!btnSwayPoint && button) {
-                        let point = self.modificationModfiesPointer(modification as? NSDictionary)
-                        btnSwayPoint = button && point
-                        kbSwayPoint = keyboard && point
-                    }
-                    if (!kbSwayScroll && keyboard) || (!btnSwayScroll && button) {
-                        let scroll = self.modificationModifiesScroll(modification as? NSDictionary)
-                        btnSwayScroll = button && scroll
-                        kbSwayScroll = keyboard && scroll
-                    }
-                }
-                
-                if kbSwayScroll && kbSwayPoint && btnSwayScroll && btnSwayPoint {
-                    stop.pointee = ObjCBool.init(true)
-                }
-            }
-            
-            self.somekbModModifiesScroll = kbSwayScroll
-            self.somekbModModifiesPointer = kbSwayPoint
-            self.someButtonModifiesScroll = btnSwayScroll
-            self.someButtonModifiesPointer = btnSwayPoint
-            
+            (self.somekbModModifiesPointing,
+             self.somekbModModifiesScroll,
+             self.someButtonModifiesPointing,
+             self.someButtonModifiesScroll) = self.modifierUsage_Point_Scroll(remaps)
         }
         
-        ///
-        /// Remaps & Attached Devices
-        ///
+        /// Remaps & Attached Devices Signal
         
         remapsSignal.combineLatest(with: attachedDevicesSignal).startWithValues { (remaps, attachedDevices) in
             
-            var kbModSways = false
-            var btnSways = false
-            
-            remaps.enumerateKeysAndObjects(options: [/*.concurrent*/]) { modifiers, modification, stop in
-                
-                var keyboard = false
-                var button = false
-                
-                if !kbModSways {
-                    keyboard = (modifiers as! NSDictionary).object(forKey: kMFModificationPreconditionKeyKeyboard) != nil
-                }
-                if !btnSways {
-                    button = (modifiers as! NSDictionary).object(forKey: kMFModificationPreconditionKeyButtons) != nil
-                }
-                
-                if keyboard || button {
-                    
-                    if (!kbModSways && keyboard) || (!btnSways && button) {
-                        let doesModify = self.modificationModifiesButtons(modification: (modification as! NSDictionary), maxButton: self.maxNOfButtons)
-                        if doesModify {
-                            kbModSways = keyboard
-                            btnSways = button
-                        }
-                    }
-                }
-                
-                if kbModSways && btnSways {
-                    stop.pointee = ObjCBool.init(true)
-                }
-            }
-            
-            self.somekbModModifiesButtonOnSomeDevice = kbModSways
-            self.someButtonModifiesButtonOnSomeDevice = btnSways
-            
-            var defaultSways = false
-            
-            let empty = NSDictionary()
-            if let defaultModification = remaps.object(forKey: empty) as? NSDictionary {
-                defaultSways = self.modificationModifiesButtons(modification: defaultModification, maxButton: self.maxNOfButtons)
-            }
-            
-            self.defaultModifiesButtonOnSomeDevice = defaultSways
+            (self.somekbModModifiesButtonOnSomeDevice, self.someButtonModifiesButtonOnSomeDevice) = self.modifierUsage_Buttons(remaps)
+            self.defaultModifiesButtonOnSomeDevice = self.defaultModifiesButtonOnSomeDevice(remaps)
         }
         
-        ///
-        /// Scroll Config
-        ///
+        /// Scroll Config Signal
         
         scrollConfigSignal.startWithValues { scrollConfig in
             
@@ -240,37 +132,24 @@ import CocoaLumberjackSwift
             
         }
         
-        ///
-        /// Remaps & Modifiers
-        ///
-        /// These are called whenever the modifiers change so they need to be fast!
+        /// Remaps & Modifiers Signal
+        ///  NOTE: The callbacks are called whenever the modifiers change so they need to be fast!
         
         let modificationsSignal = remapsSignal.combineLatest(with: modifiersSignal).map { (remaps, modifiers) in Remap.modifications(withModifiers: modifiers) }
         
-        modificationsSignal.startWithValues { modification in
-            
-            self.modificationModifiesScroll = self.modificationModifiesScroll(modification)
-            self.modificationModifiesPointer = self.modificationModfiesPointer(modification)
+        
+        modificationsSignal.startWithValues { modifications in
+            self.currentModificationModifiesScroll = self.modificationModifiesScroll(modifications)
+            self.currentModificationModifiesPointing = self.modificationModfiesPointing(modifications)
         }
         
-        ///
-        /// Remaps & Modifiers & Attached Devices
-        ///
-        modificationsSignal.combineLatest(with: attachedDevicesSignal).startWithValues { (modifiers, attachedDevices) in
-            
-            /// This is called whenever the modifiers change so this should be fast!
-            var modification: NSDictionary? = nil
-            if let modifiers = modifiers {
-                modification = Remap.modifications(withModifiers: modifiers)
-            }
-            self.modificationModifiesButtonOnSomeDevice = self.modificationModifiesButtons(modification: modification, maxButton: self.maxNOfButtons)
+        /// Remaps & Modifiers & Attached Devices Signal
+        
+        modificationsSignal.combineLatest(with: attachedDevicesSignal).startWithValues { (modifications, attachedDevices) in
+            self.currentModificationModifiesButtonOnSomeDevice = self.modificationModifiesButtons(modification: modifications, maxButton: DeviceManager.maxButtonNumberAmongDevices())
         }
         
-        ///
-        ///
-        /// Toggling callbacks
-        ///
-        ///
+        // MARK: Call tap togglers
         
         attachedDevicesSignal.startWithValues { _ in
             
@@ -279,7 +158,7 @@ import CocoaLumberjackSwift
             
             self.toggleScrollTap()
             self.toggleButtonTap()
-            self.togglePointerTap()
+            self.togglePointingTap()
         }
         remapsSignal.startWithValues { _ in
             
@@ -288,7 +167,7 @@ import CocoaLumberjackSwift
             
             self.toggleScrollTap()
             self.toggleButtonTap()
-            self.togglePointerTap()
+            self.togglePointingTap()
         }
         scrollConfigSignal.startWithValues { _ in
             
@@ -302,23 +181,91 @@ import CocoaLumberjackSwift
             
             self.toggleScrollTap()
             self.toggleButtonTap()
-            self.togglePointerTap()
+            self.togglePointingTap()
         }
     }
     
-    ///
-    /// State update helper
-    ///
+    //
+    // MARK: Tap togglers
+    //
+    
+    private func toggleKbModTap() {
+        
+        let someKbModsToggleScroll = (defaultModifiesScroll != somekbModModifiesScroll)
+        let someKbModsToggleButtons = (defaultModifiesButtonOnSomeDevice != somekbModModifiesButtonOnSomeDevice)
+        let someKbModsTogglePointing = (defaultModifiesPointing != somekbModModifiesPointing)
+        
+       if  (someDeviceHasScroll && someKbModsToggleScroll)
+            || (someDeviceHasUsableButtons && someKbModsToggleButtons)
+            || (someDeviceHasPointing && someKbModsTogglePointing) {
+           
+           /// Toggle on
+       } else {
+           /// Toggle off
+       }
+    }
+    
+    private func toggleBtnModProcessing() {
+        
+        let someBtnModsToggleScroll = (defaultModifiesScroll != someButtonModifiesScroll)
+        let someBtnModsToggleButtons = (defaultModifiesButtonOnSomeDevice != someButtonModifiesButtonOnSomeDevice)
+        let someBtnModsTogglePointing = (defaultModifiesPointing != someButtonModifiesPointing)
+        
+        if  (someDeviceHasScroll && someBtnModsToggleScroll)
+             || (someDeviceHasUsableButtons && someBtnModsToggleButtons)
+             || (someDeviceHasPointing && someBtnModsTogglePointing) {
+            
+            /// Toggle on
+        } else {
+            /// Toggle off
+        }
+    }
+    
+    private func toggleScrollTap() {
+        
+        if someDeviceHasScroll && (defaultModifiesScroll || currentModificationModifiesScroll) {
+            /// Toggle on
+        } else {
+            /// Toggle off
+        }
+        
+    }
+    
+    private func toggleButtonTap() {
+    
+        if someDeviceHasUsableButtons && currentModificationModifiesButtonOnSomeDevice {
+            /// Toggle on
+        } else {
+            /// Toggle off
+        }
+    }
+    
+    private func togglePointingTap() {
+        
+        if someDeviceHasPointing && currentModificationModifiesPointing { /// I don't think there will ever be devices without pointing
+            /// Toggle on
+        } else {
+            /// toggle off
+        }
+    }
+    
+    //
+    // MARK: Remaps analysis
+    //
+    
+    // TODO: Put this into remapsAnalyzer
+    ////   In RemapsAnalyzer, create methods:
+    /// - 1. modifesScroll(modifiers: )
+    /// - 2. modifesDrag(modifiers: )
+    /// - 3. minimumModifiedButton(modifiers: )
+    /// - 4. etc...
+    /// Then cache access for super super fast SwitchMaster
+    
+    /// Modification analysis
     
     func modificationModifiesButtons(modification: NSDictionary?, maxButton: Int32) -> Bool {
         
         /// Return true if the modification modifies any button `<=` maxButton
-        // TODO: Move this into RemapsAnalyzer.
-        ////    In RemapsAnalyzer, create methods:
-        /// - 1. modifesScroll(modifiers: )
-        /// - 2. modifesDrag(modifiers: )
-        /// - 3. minimumModifiedButton(modifiers: )
-        /// Then cache access for super super fast Master
         
         if let modification = modification {
             
@@ -338,73 +285,111 @@ import CocoaLumberjackSwift
         return modification?.object(forKey: kMFTriggerScroll) != nil
     }
     
-    fileprivate func modificationModfiesPointer(_ modification: NSDictionary?) -> Bool {
+    fileprivate func modificationModfiesPointing(_ modification: NSDictionary?) -> Bool {
         return modification?.object(forKey: kMFTriggerDrag) != nil
     }
     
-    ///
-    /// Togglers
-    ///
     
-    private func toggleKbModTap() {
-        
-        let someKbModsToggleScroll = (defaultModifiesScroll != somekbModModifiesScroll)
-        let someKbModsToggleButtons = (defaultModifiesButtonOnSomeDevice != somekbModModifiesButtonOnSomeDevice)
-        let someKbModsTogglePointing = (defaultModifiesPointer != somekbModModifiesPointer)
-        
-       if  (someDeviceHasScroll && someKbModsToggleScroll)
-            || (someDeviceHasUsableButtons && someKbModsToggleButtons)
-            || (someDeviceHasPointer && someKbModsTogglePointing) {
-           
-           /// Toggle on
-       } else {
-           /// Toggle off
-       }
-    }
+    /// Remaps analysis
     
-    private func toggleBtnModProcessing() {
+    fileprivate func modifierUsage_Buttons(_ remaps: NSDictionary?) -> (somekbModModifiesButtonOnSomeDevice: Bool,
+                                                                       someButtonModifiesButtonOnSomeDevice: Bool) {
         
-        let someBtnModsToggleScroll = (defaultModifiesScroll != someButtonModifiesScroll)
-        let someBtnModsToggleButtons = (defaultModifiesButtonOnSomeDevice != someButtonModifiesButtonOnSomeDevice)
-        let someBtnModsTogglePointing = (defaultModifiesPointer != someButtonModifiesPointer)
+        var kbModSways = false
+        var btnSways = false
         
-        if  (someDeviceHasScroll && someBtnModsToggleScroll)
-             || (someDeviceHasUsableButtons && someBtnModsToggleButtons)
-             || (someDeviceHasPointer && someBtnModsTogglePointing) {
+        remaps?.enumerateKeysAndObjects(options: [/*.concurrent*/]) { modifiers, modification, stop in
             
-            /// Toggle on
-        } else {
-            /// Toggle off
+            var keyboard = false
+            var button = false
+            
+            if !kbModSways {
+                keyboard = (modifiers as! NSDictionary).object(forKey: kMFModificationPreconditionKeyKeyboard) != nil
+            }
+            if !btnSways {
+                button = (modifiers as! NSDictionary).object(forKey: kMFModificationPreconditionKeyButtons) != nil
+            }
+            
+            if keyboard || button {
+                
+                if (!kbModSways && keyboard) || (!btnSways && button) {
+                    let doesModify = self.modificationModifiesButtons(modification: (modification as! NSDictionary), maxButton: DeviceManager.maxButtonNumberAmongDevices())
+                    if doesModify {
+                        kbModSways = keyboard
+                        btnSways = button
+                    }
+                }
+            }
+            
+            if kbModSways && btnSways {
+                stop.pointee = ObjCBool.init(true)
+            }
         }
-    }
-    
-    private func toggleScrollTap() {
         
-        if someDeviceHasScroll && (defaultModifiesScroll || modificationModifiesScroll) {
-            /// Toggle on
-        } else {
-            /// Toggle off
+        return (somekbModModifiesButtonOnSomeDevice: kbModSways, someButtonModifiesButtonOnSomeDevice: btnSways)
+    }
+    
+    fileprivate func defaultModifiesButtonOnSomeDevice(_ remaps: NSDictionary) -> Bool {
+        
+        var defaultSways = false
+        
+        let empty = NSDictionary()
+        if let defaultModification = remaps.object(forKey: empty) as? NSDictionary {
+            defaultSways = self.modificationModifiesButtons(modification: defaultModification, maxButton: DeviceManager.maxButtonNumberAmongDevices())
         }
         
+        return defaultSways
     }
     
-    private func toggleButtonTap() {
-    
-        if someDeviceHasUsableButtons && modificationModifiesButtonOnSomeDevice {
-            /// Toggle on
-        } else {
-            /// Toggle off
-        }
-    }
-    
-    private func togglePointerTap() {
+    fileprivate func modifierUsage_Point_Scroll(_ remaps: NSDictionary) -> (someKbModModifiesPointing: Bool, someKbModModifiesScroll: Bool, someButtonModifiesPointing: Bool, someButtonModifiesScroll: Bool) {
         
-        if someDeviceHasPointer && modificationModifiesPointer { /// I don't think there will ever be devices without pointing
-            /// Toggle on
-        } else {
-            /// toggle off
+        var kbSwayPoint = false
+        var kbSwayScroll = false
+        var btnSwayPoint = false
+        var btnSwayScroll = false
+        
+        remaps.enumerateKeysAndObjects(options: [/*.concurrent*/]) { modifiers, modification, stop in
+            
+            /// Notes:
+            ///  - `.concurrent` option should make things slower for small arrays. See https://darkdust.net/writings/objective-c/nsarray-enumeration-performance
+            ///   - All these if statements totally overcomplicate things. It's what I call "Premature Boptimization"
+            ///   - Notice how we made it even faster by first looking at the modifers and then looking at the modification because the modifiers have less keys usually.
+            ///   - This only happens when the remaps change, and we should just cache this if it's slow. There is no reason whatsoever to make this so fast and unreadable.
+            ///   - Just using a for...in loop on the dict also gives you the keys and values in Swift, so using `enumerateKeysAndObjects` is probably not the best idea since it might be slower than a simple loop.
+            
+            var keyboard = false
+            var button = false
+            
+            if !kbSwayPoint || !kbSwayScroll {
+                keyboard = (modifiers as! NSDictionary).object(forKey: kMFModificationPreconditionKeyKeyboard) != nil
+            }
+            if !btnSwayPoint || !btnSwayScroll {
+                button = (modifiers as! NSDictionary).object(forKey: kMFModificationPreconditionKeyButtons) != nil
+            }
+            
+            if keyboard || button {
+                
+                if (!kbSwayPoint && keyboard) || (!btnSwayPoint && button) {
+                    let point = self.modificationModfiesPointing(modification as? NSDictionary)
+                    btnSwayPoint = button && point
+                    kbSwayPoint = keyboard && point
+                }
+                if (!kbSwayScroll && keyboard) || (!btnSwayScroll && button) {
+                    let scroll = self.modificationModifiesScroll(modification as? NSDictionary)
+                    btnSwayScroll = button && scroll
+                    kbSwayScroll = keyboard && scroll
+                }
+            }
+            
+            if kbSwayScroll && kbSwayPoint && btnSwayScroll && btnSwayPoint {
+                stop.pointee = ObjCBool.init(true)
+            }
         }
+        
+        return (someKbModModifiesPointing: kbSwayPoint, someKbModModifiesScroll: kbSwayScroll, someButtonModifiesPointing: btnSwayPoint, someButtonModifiesScroll: btnSwayScroll)
     }
+    
+    // MARK: v Delete
     
     ///
     /// v Design notes - delete these

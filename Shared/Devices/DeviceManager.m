@@ -35,7 +35,7 @@
 
 @implementation DeviceManager
 
-# pragma mark - Vars and properties
+# pragma mark - Accessing attached devices
 
 static IOHIDManagerRef _manager;
 static NSMutableArray<Device *> *_attachedDevices;
@@ -50,7 +50,16 @@ static NSMutableArray<Device *> *_attachedDevices;
     return _attachedDevices;
 }
 
-# pragma mark - Load
++ (Device * _Nullable)attachedDeviceWithIOHIDDevice:(IOHIDDeviceRef)iohidDevice {
+    for (Device *device in _attachedDevices) {
+        if ([device wrapsIOHIDDevice:iohidDevice]) {
+            return device;
+        }
+    }
+    return nil;
+}
+
+# pragma mark - Lifecycle
 
 /**
  True entry point of the program.
@@ -59,6 +68,15 @@ static NSMutableArray<Device *> *_attachedDevices;
 + (void)load_Manual {
     setupDeviceMatchingAndRemovalCallbacks();
     _attachedDevices = [NSMutableArray array];
+}
+
++ (void)deconfigureDevices {
+    
+    /// Meant to be called when the app closes
+    
+    for (Device *device in _attachedDevices) {
+        [PointerSpeed deconfigureDevice:device.iohidDevice];
+    }
 }
 
 # pragma mark - Seize devices (Remove this)
@@ -80,24 +98,40 @@ static NSMutableArray<Device *> *_attachedDevices;
 //    DDLogInfo(@"Seize manager open return: %d", retOpen);
 //}
 
-# pragma mark - Interface
+#pragma mark - Device information
 
-+ (void)deconfigureDevices {
-    
-    /// Meant to be called when the app closes
-    
-    for (Device *device in _attachedDevices) {
-        [PointerSpeed deconfigureDevice:device.iohidDevice];
-    }
++ (BOOL)someDeviceHasScrollWheel {
+    return _attachedDevices.count > 0;
 }
 
-+ (Device * _Nullable)attachedDeviceWithIOHIDDevice:(IOHIDDeviceRef)iohidDevice {
-    for (Device *device in _attachedDevices) {
-        if ([device wrapsIOHIDDevice:iohidDevice]) {
-            return device;
++ (BOOL)someDeviceHasPointing {
+    return _attachedDevices.count > 0;
+}
++ (BOOL)someDeviceHasUsableButtons {
+    /// We ignore MB 1 and MB 2. That's also why it's called "deviceHas**Usable**Buttons", and not just "deviceHasButtons"
+    return self.maxButtonNumberAmongDevices > 2;
+}
+
+static BOOL _maxButtonNumberAmongDevices_IsCached = false;
++ (int)maxButtonNumberAmongDevices {
+    
+    static int _result = 0;
+    
+    if (_maxButtonNumberAmongDevices_IsCached) {
+        return _result;
+    } else {
+        
+        _result = 0;
+        for (Device *device in _attachedDevices) {
+            int b = device.nOfButtons;
+            if (b > _result) {
+                _result = b;
+            }
         }
+        
+        _maxButtonNumberAmongDevices_IsCached = true;
+        return _result;
     }
-    return nil;
 }
 
 # pragma mark - Setup callbacks
@@ -159,7 +193,53 @@ static void handleDeviceMatching(void *context, IOReturn result, void *sender, I
     if (devicePassesFiltering(device)) {
         
         /// Attach
-        attachIOHIDDevice(device);
+        
+        /// Create Device instance
+        Device *newDevice = [Device deviceWithIOHIDDevice:device];
+        
+        /// Add to attachedDevices list
+        [_attachedDevices addObject:newDevice];
+        
+        /// Reset cache
+        _maxButtonNumberAmongDevices_IsCached = false;
+        
+        /// Notify
+        [ReactiveDeviceManager.shared handleAttachedDevicesDidChange];
+        
+        ///  Notify other objects
+        [Scroll decide];
+        [ButtonInputReceiver decide];
+        
+        ///
+        /// Testing
+        ///
+        
+        /// Set pointer sensitivity and acceleration for device
+        ///     Edit: Seems that parametric curves are always set under Ventura, so we can't use tableBased curves :/ And in its current form this code will always crash. See PointerSpeed for more details.
+    //    DDLogDebug(@"Setting PointerSpeed for device: %@", newDevice.description);
+    //    [PointerSpeed setForDevice:newDevice.IOHIDDevice];
+        
+        ///
+        
+    #if 0 /// Polling rate measurer is unused so far and has a strange bug where it sometimes receives an event long after it's disabled and then crashes.
+        
+        /// Measure Polling Rate of new device
+        static NSMutableArray *measurerMap = nil;
+        if (measurerMap == nil) {
+            measurerMap = [NSMutableArray array];
+        }
+        PollingRateMeasurer *measurer = [[PollingRateMeasurer alloc] init];
+        [measurerMap addObject:measurer];
+        [measurer measureOnDevice:newDevice numberOfSamples:400 completionCallback:^(double period, NSInteger rate) {
+            DDLogDebug(@"Completed polling rate measurement! Period: %f ms, Rate: %ld Hz", period, rate);
+        } progressCallback:^(double completion, double period, NSInteger rate) {
+            DDLogDebug(@"Polling rate measurement %d\%% completed. Current estimate: %ld", (int)(completion*100), (long)rate);
+        }];
+        
+    #endif
+        
+        /// Log
+        DDLogInfo(@"New device added to attached devices:\n%@", newDevice);
         
     } else {
         DDLogInfo(@"New matching IOHIDDevice device didn't pass filtering");
@@ -173,8 +253,6 @@ static void handleDeviceMatching(void *context, IOReturn result, void *sender, I
 
 static void handleDeviceRemoval(void *context, IOReturn result, void *sender, IOHIDDeviceRef device) {
     
-    
-    
     Device *attachedDevice = [DeviceManager attachedDeviceWithIOHIDDevice:device];
     
     if (attachedDevice == nil) {
@@ -185,6 +263,10 @@ static void handleDeviceRemoval(void *context, IOReturn result, void *sender, IO
         
         /// Remove
         [_attachedDevices removeObject:attachedDevice];
+        
+        /// Reset cache
+        
+        _maxButtonNumberAmongDevices_IsCached = false;
         
         /// Notify
         [ReactiveDeviceManager.shared handleAttachedDevicesDidChange];
@@ -217,55 +299,6 @@ static BOOL devicePassesFiltering(IOHIDDeviceRef device) {
     }
     return YES;
 
-}
-
-static void attachIOHIDDevice(IOHIDDeviceRef device) {
-    /// Helper function for handleDeviceMatching()
-    
-    /// Create Device instance
-    Device *newDevice = [Device deviceWithIOHIDDevice:device];
-    
-    /// Add to attachedDevices list
-    [_attachedDevices addObject:newDevice];
-    
-    /// Notify
-    [ReactiveDeviceManager.shared handleAttachedDevicesDidChange];
-    
-    ///  Notify other objects
-    [Scroll decide];
-    [ButtonInputReceiver decide];
-    
-    ///
-    /// Testing
-    ///
-    
-    /// Set pointer sensitivity and acceleration for device
-    ///     Edit: Seems that parametric curves are always set under Ventura, so we can't use tableBased curves :/ And in its current form this code will always crash. See PointerSpeed for more details.
-//    DDLogDebug(@"Setting PointerSpeed for device: %@", newDevice.description);
-//    [PointerSpeed setForDevice:newDevice.IOHIDDevice];
-    
-    ///
-    
-#if 0 /// Polling rate measurer is unused so far and has a strange bug where it sometimes receives an event long after it's disabled and then crashes.
-    
-    /// Measure Polling Rate of new device
-    static NSMutableArray *measurerMap = nil;
-    if (measurerMap == nil) {
-        measurerMap = [NSMutableArray array];
-    }
-    PollingRateMeasurer *measurer = [[PollingRateMeasurer alloc] init];
-    [measurerMap addObject:measurer];
-    [measurer measureOnDevice:newDevice numberOfSamples:400 completionCallback:^(double period, NSInteger rate) {
-        DDLogDebug(@"Completed polling rate measurement! Period: %f ms, Rate: %ld Hz", period, rate);
-    } progressCallback:^(double completion, double period, NSInteger rate) {
-        DDLogDebug(@"Polling rate measurement %d\%% completed. Current estimate: %ld", (int)(completion*100), (long)rate);
-    }];
-    
-#endif
-    
-    /// Log
-    DDLogInfo(@"New device added to attached devices:\n%@", newDevice);
-    
 }
 
 static NSString *debugInfo() {
