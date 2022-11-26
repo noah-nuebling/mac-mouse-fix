@@ -124,7 +124,7 @@ void handleRelocation(void) {
         /// If we disable the Helper, it won't be able to be restarted until the whole computer is restarted, so it's better to do nothing. (Under Ventura Beta 7).
 //        [HelperServices disableHelperFromHelper];
     } else {
-        [MFMessagePort sendMessage:@"helperDisabled" withPayload:nil expectingReply:NO];
+        [MFMessagePort sendMessage:@"helperDisabled" withPayload:nil waitForReply:NO];
         [HelperServices enableHelperAsUserAgent:NO onComplete:nil];
         disableHelper();
     }

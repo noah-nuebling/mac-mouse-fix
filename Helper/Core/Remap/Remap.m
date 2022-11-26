@@ -118,10 +118,10 @@ static NSDictionary *_remaps;
     ///
     /// We used to do this *after* loading the remaps from config into `_remaps`. Now we're doing it before. Not sure if that could break things.
     
-    if (_addModeIsEnabled) {
-        _addModeIsEnabled = NO;
-        [MFMessagePort sendMessage:@"addModeDisabled" withPayload:nil expectingReply:NO];
-    }
+//    if (_addModeIsEnabled) {
+//        _addModeIsEnabled = NO;
+//        [MFMessagePort sendMessage:@"addModeDisabled" withPayload:nil expectingReply:NO];
+//    }
     
     ///
     /// Load test remaps
@@ -254,7 +254,7 @@ BOOL _addModeIsEnabled = NO;
     return _addModeIsEnabled;
 }
 
-+ (void)enableAddMode {
++ (BOOL)enableAddMode {
     
     /// \discussion  Add mode configures the helper such that it remaps to "add mode feedback effects" instead of normal effects.
     /// When "add mode feedback effects" are triggered, the helper will send information about how exactly the effect was triggered to the main app.
@@ -321,7 +321,7 @@ BOOL _addModeIsEnabled = NO;
     _addModeIsEnabled = YES;
     
     /// Send feedback
-    [MFMessagePort sendMessage:@"addModeEnabled" withPayload:nil expectingReply:NO];
+//    [MFMessagePort sendMessage:@"addModeEnabled" withPayload:nil expectingReply:NO];
     
     /// Set `_remaps` to generated
     ///    Why weren't we using setRemaps here? Changed it to setRemaps now. Hopefully nothing breaks.
@@ -329,12 +329,20 @@ BOOL _addModeIsEnabled = NO;
     [self setRemaps:@{
         @{}: triggerToEffectDict
     }];
+    
+    /// Return success
+    return YES;
 }
 
-+ (void)disableAddMode {
++ (BOOL)disableAddMode {
+    
+    /// Reload
     if (_addModeIsEnabled) {
         [self reload];
     }
+    
+    /// Return success
+    return YES;
 }
 
 //+ (void)disableAddModeWithPayload:(NSDictionary *)payload {
@@ -370,7 +378,7 @@ BOOL _addModeIsEnabled = NO;
     
     
     
-    [MFMessagePort sendMessage:@"addModeFeedback" withPayload:payload expectingReply:NO];
+    [MFMessagePort sendMessage:@"addModeFeedback" withPayload:payload waitForReply:NO];
     ///    [Remap performSelector:@selector(disableAddMode) withObject:nil afterDelay:0.5];
     /// ^ We did this to keep the remapping disabled for a little while after adding a new row, but it leads to adding several entries at once when trying to input button modification precondition, if you're not fast enough.
 

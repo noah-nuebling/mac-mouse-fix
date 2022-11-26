@@ -25,8 +25,8 @@ NS_ASSUME_NONNULL_BEGIN
 + (NSDictionary *)remaps MF_SWIFT_HIDDEN;
 + (id)__SWIFT_UNBRIDGED_remaps;
 
-+ (void)enableAddMode;
-+ (void)disableAddMode;
++ (BOOL)enableAddMode;
++ (BOOL)disableAddMode;
 + (void)sendAddModeFeedback:(NSDictionary *)payload MF_SWIFT_HIDDEN;
 + (void)__SWIFT_UNBRIDGED_sendAddModeFeedback:(id)payload;
 

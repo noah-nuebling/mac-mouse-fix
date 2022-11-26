@@ -177,7 +177,7 @@ import CocoaLumberjackSwift
                 
                 DDLogWarn("transitionPoint has been found but transitionSpeed is lower than stopSpeed. So the dragCurve can't cover any distance. This likely means that the baseCurve covers the whole distance on its own exactly.")
                 
-                assert(false) /// For debugging, remove later
+//                assert(false) /// For debugging, remove later
             }
             
         }

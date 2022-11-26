@@ -54,12 +54,12 @@ static CFDataRef _Nullable didReceiveMessage(CFMessagePortRef port, SInt32 messa
     
 #pragma mark MainApp
  
-    if ([message isEqualToString:@"addModeEnabled"]) {
-        [MainAppState.shared.buttonTabController handleAddModeEnabled];
-    } else if ([message isEqualToString:@"addModeDisabled"]) {
-        [MainAppState.shared.buttonTabController handleAddModeDisabled];
-    } else if ([message isEqualToString:@"addModeFeedback"]) {
-        [MainAppState.shared.buttonTabController handleAddModeConcludedWithPayload:(NSDictionary *)payload];
+//    if ([message isEqualToString:@"addModeEnabled"]) {
+//        [MainAppState.shared.buttonTabController handleAddModeEnabled];
+//    } else if ([message isEqualToString:@"addModeDisabled"]) {
+//        [MainAppState.shared.buttonTabController handleAddModeDisabled];
+    if ([message isEqualToString:@"addModeFeedback"]) {
+        [MainAppState.shared.buttonTabController handleAddModeFeedbackWithPayload:(NSDictionary *)payload];
     } else if ([message isEqualToString:@"keyCaptureModeFeedback"]) {
         [KeyCaptureView handleKeyCaptureModeFeedbackWithPayload:(NSDictionary *)payload isSystemDefinedEvent:NO];
     } else if ([message isEqualToString:@"keyCaptureModeFeedbackWithSystemEvent"]) {
@@ -114,9 +114,11 @@ static CFDataRef _Nullable didReceiveMessage(CFMessagePortRef port, SInt32 messa
         BOOL isTrusted = [AccessibilityCheck checkAccessibilityAndUpdateSystemSettings];
         response = @(isTrusted);
     } else if ([message isEqualToString:@"enableAddMode"]) {
-        [Remap enableAddMode];
+        BOOL success = [Remap enableAddMode];
+        response = @(success); 
     } else if ([message isEqualToString:@"disableAddMode"]) {
-        [Remap disableAddMode];
+        BOOL success = [Remap disableAddMode];
+        response = @(success);
     } else if ([message isEqualToString:@"enableKeyCaptureMode"]) {
         [KeyCaptureMode enable];
     } else if ([message isEqualToString:@"disableKeyCaptureMode"]) {
@@ -225,7 +227,7 @@ static CFDataRef _Nullable didReceiveMessage(CFMessagePortRef port, SInt32 messa
 #pragma mark - Send messages
 
 
-+ (NSObject *_Nullable)sendMessage:(NSString * _Nonnull)message withPayload:(NSObject <NSCoding> * _Nullable)payload expectingReply:(BOOL)replyExpected { // TODO: Consider renaming last arg to `expectingReturn` or `waitForReply`
++ (NSObject *_Nullable)sendMessage:(NSString * _Nonnull)message withPayload:(NSObject <NSCoding> * _Nullable)payload waitForReply:(BOOL)waitForReply {
     
     /// Validate
     assert(runningMainApp() || runningHelper());
@@ -267,7 +269,7 @@ static CFDataRef _Nullable didReceiveMessage(CFMessagePortRef port, SInt32 messa
     CFTimeInterval recieveTimeout = 0.0;
     CFStringRef replyMode = NULL;
     CFDataRef returnData = NULL;
-    if (replyExpected) {
+    if (waitForReply) {
 //        sendTimeout = 1.0;
         recieveTimeout = 1.0;
         replyMode = kCFRunLoopDefaultMode;
@@ -284,7 +286,7 @@ static CFDataRef _Nullable didReceiveMessage(CFMessagePortRef port, SInt32 messa
     }
     
     NSObject *returnObject = nil;
-    if (returnData != NULL && replyExpected /*&& status == 0*/) {
+    if (returnData != NULL && waitForReply /*&& status == 0*/) {
         returnObject = [NSKeyedUnarchiver unarchiveObjectWithData:(__bridge NSData *)returnData];
     }
     

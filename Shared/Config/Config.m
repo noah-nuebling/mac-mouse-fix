@@ -112,7 +112,7 @@ void commitConfig() {
     [Config.shared writeConfigToFile];
     
     /// Notify other app (mainApp notifies helper, helper notifies mainApp
-    [MFMessagePort sendMessage:@"configFileChanged" withPayload:nil expectingReply:NO];
+    [MFMessagePort sendMessage:@"configFileChanged" withPayload:nil waitForReply:NO];
     
     /// Update own state
     [Config handleConfigFileChange];
@@ -434,7 +434,7 @@ void Handle_FSEventStreamCallback(ConstFSEventStreamRef streamRef, void *clientC
     
     /// Update helper
     ///     Why aren't we just sending a configFileChanged message?
-    [MFMessagePort sendMessage:@"terminate" withPayload:nil expectingReply:NO];
+    [MFMessagePort sendMessage:@"terminate" withPayload:nil waitForReply:NO];
     
     /// Update self (mainApp)
 //    [self loadConfigFromFile];

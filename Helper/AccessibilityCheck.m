@@ -185,7 +185,7 @@ CGEventRef _Nullable testCallback(CGEventTapProxy proxy, CGEventType type, CGEve
             @"bundleVersion": @(Locator.bundleVersion),
             @"mainAppURL": Locator.mainAppBundle.bundleURL
         };
-        [MFMessagePort sendMessage:@"helperEnabledWithNoAccessibility" withPayload:payload expectingReply:NO];
+        [MFMessagePort sendMessage:@"helperEnabledWithNoAccessibility" withPayload:payload waitForReply:NO];
         
         /// Check accessibility every 0.5s
         ///     Not storing the timer in a variable because we don't have to invalidate / release it since the helper will restart anyways
@@ -239,7 +239,7 @@ CGEventRef _Nullable testCallback(CGEventTapProxy proxy, CGEventType type, CGEve
             @"bundleVersion": @(Locator.bundleVersion),
             @"mainAppURL": Locator.mainAppBundle.bundleURL
         };
-        [MFMessagePort sendMessage:@"helperEnabled" withPayload:payload expectingReply:NO];
+        [MFMessagePort sendMessage:@"helperEnabled" withPayload:payload waitForReply:NO];
         
         ///
         /// License init

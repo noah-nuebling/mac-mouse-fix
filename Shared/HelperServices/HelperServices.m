@@ -54,7 +54,7 @@
     return;
     
     /// Notify mainApp
-    [MFMessagePort sendMessage:@"helperDisabled" withPayload:nil expectingReply:NO];
+    [MFMessagePort sendMessage:@"helperDisabled" withPayload:nil waitForReply:NO];
     
     /// Disable helper
     ///     We can't just do `[self removeHelperFromLaunchd]`, because
@@ -336,7 +336,7 @@
 + (BOOL)helperIsActive_Message {
 
     if (runningMainApp()) {
-                NSNumber *response = (NSNumber *)[MFMessagePort sendMessage:@"getBundleVersion" withPayload:nil expectingReply:YES];
+                NSNumber *response = (NSNumber *)[MFMessagePort sendMessage:@"getBundleVersion" withPayload:nil waitForReply:YES];
         return response != nil && response.integerValue == Locator.bundleVersion;
         
     } else {

@@ -546,37 +546,35 @@ import CocoaLumberjackSwift
     ///     TODO: Maybe think about race condition for the mouseEntered and mouseExited functions
 
     override func mouseEntered(with event: NSEvent) {
-        pointerIsInsideAddField = true
-        MFMessagePort.sendMessage("enableAddMode", withPayload: nil, expectingReply: false)
+        DispatchQueue.main.async {
+            
+            /// Not sure it makes sense to dispatch async for mouseEntered and mouseExited. We added that dispatch when addField.hoverEffect was controlled by messages we received instead of being based on response to the the messages we sent.
+            /// Here are some notes we wrote for the old architecture:
+            /// \discussion After addMode refactoring around commit 02c9fcc20d3f03d8b0d2db6e25830276ed937107 I saw a deadlock in the animationCode maybe dispatch to main will prevent it. Edit: Nope still happens. Edit2: Could fix the deadlock by not locking the CATransaction in Animate.swift. So dispatching to main here might be unnecessary.
+            
+            self.pointerIsInsideAddField = true
+            let success = MFMessagePort.sendMessage("enableAddMode", withPayload: nil, waitForReply: true)
+            if let success = success as? Bool, success == true {
+                self.addField.hoverEffect(enable: true)
+            }
+        }
     }
     override func mouseExited(with event: NSEvent) {
-        pointerIsInsideAddField = false
-        MFMessagePort.sendMessage("disableAddMode", withPayload: nil, expectingReply: false)
-    }
-    
-    @objc func handleAddModeEnabled() {
-        
-        /// \discussion After addMode refactoring around commit 02c9fcc20d3f03d8b0d2db6e25830276ed937107 I saw a deadlock in the animationCode maybe dispatch to main will prevent it. Edit: Nope still happens. Edit2: Could fix the deadlock by not locking the CATransaction in Animate.swift. So dispatching to main here might be unnecessary.
-        
         DispatchQueue.main.async {
-            self.addField.hoverEffect(enable: true)
-        }
-    }
-    @objc func handleAddModeDisabled() {
-        DispatchQueue.main.async {
+            
+            self.pointerIsInsideAddField = false
+            MFMessagePort.sendMessage("disableAddMode", withPayload: nil, waitForReply: false)
             self.addField.hoverEffect(enable: false)
         }
+        
     }
 
-    @objc func handleAddModeConcluded(payload: NSDictionary) {
+    @objc func handleAddModeFeedback(payload: NSDictionary) {
         
         DispatchQueue.main.async {
             
             /// Debug
             DDLogDebug("Received AddMode feedback with payload: \(payload)")
-            
-            /// Remove hover
-            self.addField.hoverEffect(enable: false, playAcceptAnimation: true)
             
             /// Send payoad to tableController
             ///     The payload is an almost finished remapsTable (aka RemapTableController.dataModel) entry with the kMFRemapsKeyEffect key missing
@@ -584,7 +582,10 @@ import CocoaLumberjackSwift
             
             /// Disable addMode
 //            pointerIsInsideAddField = false /// ???
-            MFMessagePort.sendMessage("disableAddMode", withPayload: nil, expectingReply: false)
+            MFMessagePort.sendMessage("disableAddMode", withPayload: nil, waitForReply: false)
+            
+            /// Remove hover
+            self.addField.hoverEffect(enable: false, playAcceptAnimation: true)
         }
     }
     

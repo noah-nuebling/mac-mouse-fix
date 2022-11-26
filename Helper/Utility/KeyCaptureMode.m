@@ -53,7 +53,7 @@ CGEventRef  _Nullable keyCaptureModeCallback(CGEventTapProxy proxy, CGEventType 
                 @"flags": @(flags),
             };
             
-            [MFMessagePort sendMessage:@"keyCaptureModeFeedback" withPayload:payload expectingReply:NO];
+            [MFMessagePort sendMessage:@"keyCaptureModeFeedback" withPayload:payload waitForReply:NO];
             [KeyCaptureMode disable];
         }
         
@@ -72,7 +72,7 @@ CGEventRef  _Nullable keyCaptureModeCallback(CGEventTapProxy proxy, CGEventType 
                 @"flags": @(flags),
             };
             
-            [MFMessagePort sendMessage:@"keyCaptureModeFeedbackWithSystemEvent" withPayload:payload expectingReply:NO];
+            [MFMessagePort sendMessage:@"keyCaptureModeFeedbackWithSystemEvent" withPayload:payload waitForReply:NO];
             [KeyCaptureMode disable];
         }
         
