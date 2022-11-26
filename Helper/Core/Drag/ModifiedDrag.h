@@ -75,7 +75,7 @@ typedef struct {
 
 @interface ModifiedDrag : NSObject
 
-+ (MFModifiedInputActivationState)activationState;
++ (void)activationStateWithCallback:(void (^)(MFModifiedInputActivationState))callback;
 
 + (void)load_Manual;
 

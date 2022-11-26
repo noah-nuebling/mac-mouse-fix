@@ -58,15 +58,14 @@ static ModifiedDragState _drag;
 
 /// Debug
 
-+ (MFModifiedInputActivationState)activationState {
++ (void)activationStateWithCallback:(void (^)(MFModifiedInputActivationState))callback {
     
     /// We wanted to expose `_drag` to other modules for debugging, but `_drag` can't be exposed to Swift. Maybe because it contains an ObjC pointer`id`. Right now this is fine though because we only need the activationState for debugging anyways.
+    /// We need to retrieve this on the `_drag.queue` to avoid race conditions. But using `dispatch_sync` leads to loads of concurrency issues, so we're using a callback instead.
     
-    __block MFModifiedInputActivationState result;
-    dispatch_sync(_drag.queue, ^{
-        result = _drag.activationState;
+    dispatch_async(_drag.queue, ^{
+        callback(_drag.activationState);
     });
-    return result;
 }
 
 + (NSString *)modifiedDragStateDescription:(ModifiedDragState)drag {
@@ -190,7 +189,7 @@ void initDragState_Unsafe(void) {
     _drag.activationState = kMFModifiedInputActivationStateInitialized;
     _drag.isSuspended = NO;
     
-    [_drag.outputPlugin initializeWithDragState:&_drag]; /// We just want to reset the plugin state here. The plugin will already hold ref to _drag. So this is not super pretty/semantic
+    [_drag.outputPlugin initializeWithDragState:&_drag]; /// We just want to reset the plugin state here. The plugin will already hold ref to `_drag`. So this is not super pretty/semantic
     
     CGEventTapEnable(_drag.eventTap, true);
     DDLogDebug(@"\nEnabled drag eventTap");

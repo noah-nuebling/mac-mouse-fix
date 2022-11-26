@@ -119,8 +119,9 @@ import ReactiveSwift
         
         remapsSignal.combineLatest(with: attachedDevicesSignal).startWithValues { (remaps, attachedDevices) in
             
-            (self.somekbModModifiesButtonOnSomeDevice, self.someButtonModifiesButtonOnSomeDevice) = self.modifierUsage_Buttons(remaps)
-            self.defaultModifiesButtonOnSomeDevice = self.defaultModifiesButtonOnSomeDevice(remaps)
+            let maxButton = DeviceManager.maxButtonNumberAmongDevices()
+            (self.somekbModModifiesButtonOnSomeDevice, self.someButtonModifiesButtonOnSomeDevice) = self.modifierUsage_Buttons(remaps, maxButton: maxButton)
+            self.defaultModifiesButtonOnSomeDevice = self.defaultModifiesButtonOnSomeDevice(remaps, maxButton: maxButton)
         }
         
         /// Scroll Config Signal
@@ -136,7 +137,6 @@ import ReactiveSwift
         ///  NOTE: The callbacks are called whenever the modifiers change so they need to be fast!
         
         let modificationsSignal = remapsSignal.combineLatest(with: modifiersSignal).map { (remaps, modifiers) in Remap.modifications(withModifiers: modifiers) }
-        
         
         modificationsSignal.startWithValues { modifications in
             self.currentModificationModifiesScroll = self.modificationModifiesScroll(modifications)
@@ -195,9 +195,11 @@ import ReactiveSwift
         if runningPreRelease() {
             SignalProducer<Any, Never>.merge(attachedDevicesSignal.map { $0 as Any }, remapsSignal.map { $0 as Any }, scrollConfigSignal.map { $0 as Any }, modifiersSignal.map { $0 as Any }).startWithValues { _ in
                 
-                DDLogDebug("SwitchMaster switched to - kbMod: \(Modifiers.kbModPriority().rawValue), btnMod: \(Modifiers.btnModPriority().rawValue), scroll: \(Scroll.isRunning() ? 1 : 0), button: \(ButtonInputReceiver.isRunning() ? 1 : 0), pointing: \(ModifiedDrag.activationState().rawValue)")
+                ModifiedDrag.activationState { modifiedDragActivation in
+                    
+                    DDLogDebug("SwitchMaster switched to - kbMod: \(Modifiers.kbModPriority().rawValue), btnMod: \(Modifiers.btnModPriority().rawValue), scroll: \(Scroll.isRunning() ? 1 : 0), button: \(ButtonInputReceiver.isRunning() ? 1 : 0), pointing: \(modifiedDragActivation.rawValue)")
+                }
             }
-            
         }
     }
     
@@ -352,50 +354,56 @@ import ReactiveSwift
     
     /// Remaps analysis
     
-    fileprivate func modifierUsage_Buttons(_ remaps: NSDictionary?) -> (somekbModModifiesButtonOnSomeDevice: Bool,
-                                                                       someButtonModifiesButtonOnSomeDevice: Bool) {
+    fileprivate func modifierUsage_Buttons(_ remaps: NSDictionary?, maxButton: Int32) -> (somekbModModifiesButtonOnSomeDevice: Bool,
+                                                                                          someButtonModifiesButtonOnSomeDevice: Bool) {
         
         var kbModSways = false
         var btnSways = false
         
-        remaps?.enumerateKeysAndObjects(options: [/*.concurrent*/]) { modifiers, modification, stop in
+        if Remap.addModeIsEnabled {
+            kbModSways = true
+            btnSways = true
+        } else {
             
-            var keyboard = false
-            var button = false
-            
-            if !kbModSways {
-                keyboard = (modifiers as! NSDictionary).object(forKey: kMFModificationPreconditionKeyKeyboard) != nil
-            }
-            if !btnSways {
-                button = (modifiers as! NSDictionary).object(forKey: kMFModificationPreconditionKeyButtons) != nil
-            }
-            
-            if keyboard || button {
+            remaps?.enumerateKeysAndObjects(options: [/*.concurrent*/]) { modifiers, modification, stop in
                 
-                if (!kbModSways && keyboard) || (!btnSways && button) {
-                    let doesModify = self.modificationModifiesButtons(modification: (modification as! NSDictionary), maxButton: DeviceManager.maxButtonNumberAmongDevices())
-                    if doesModify {
-                        kbModSways = keyboard
-                        btnSways = button
+                var keyboard = false
+                var button = false
+                
+                if !kbModSways {
+                    keyboard = (modifiers as! NSDictionary).object(forKey: kMFModificationPreconditionKeyKeyboard) != nil
+                }
+                if !btnSways {
+                    button = (modifiers as! NSDictionary).object(forKey: kMFModificationPreconditionKeyButtons) != nil
+                }
+                
+                if keyboard || button {
+                    
+                    if (!kbModSways && keyboard) || (!btnSways && button) {
+                        let doesModify = self.modificationModifiesButtons(modification: (modification as! NSDictionary), maxButton: maxButton)
+                        if doesModify {
+                            kbModSways = keyboard
+                            btnSways = button
+                        }
                     }
                 }
-            }
-            
-            if kbModSways && btnSways {
-                stop.pointee = ObjCBool.init(true)
+                
+                if kbModSways && btnSways {
+                    stop.pointee = ObjCBool.init(true)
+                }
             }
         }
         
         return (somekbModModifiesButtonOnSomeDevice: kbModSways, someButtonModifiesButtonOnSomeDevice: btnSways)
     }
     
-    fileprivate func defaultModifiesButtonOnSomeDevice(_ remaps: NSDictionary) -> Bool {
+    fileprivate func defaultModifiesButtonOnSomeDevice(_ remaps: NSDictionary, maxButton: Int32) -> Bool {
         
         var defaultSways = false
         
         let empty = NSDictionary()
         if let defaultModification = remaps.object(forKey: empty) as? NSDictionary {
-            defaultSways = self.modificationModifiesButtons(modification: defaultModification, maxButton: DeviceManager.maxButtonNumberAmongDevices())
+            defaultSways = self.modificationModifiesButtons(modification: defaultModification, maxButton: maxButton)
         }
         
         return defaultSways
@@ -408,43 +416,55 @@ import ReactiveSwift
         var btnSwayPoint = false
         var btnSwayScroll = false
         
-        remaps.enumerateKeysAndObjects(options: [/*.concurrent*/]) { modifiers, modification, stop in
+        if Remap.addModeIsEnabled {
             
-            /// Notes:
-            ///  - `.concurrent` option should make things slower for small arrays. See https://darkdust.net/writings/objective-c/nsarray-enumeration-performance
-            ///   - All these if statements totally overcomplicate things. It's what I call "Premature Boptimization"
-            ///   - Notice how we made it even faster by first looking at the modifers and then looking at the modification because the modifiers have less keys usually.
-            ///   - This only happens when the remaps change, and we should just cache this if it's slow. There is no reason whatsoever to make this so fast and unreadable.
-            ///   - Just using a for...in loop on the dict also gives you the keys and values in Swift, so using `enumerateKeysAndObjects` is probably not the best idea since it might be slower than a simple loop.
+            kbSwayPoint = true
+            kbSwayScroll = true
+            btnSwayPoint = true
+            btnSwayScroll = true
             
-            var keyboard = false
-            var button = false
+        } else {
             
-            if !kbSwayPoint || !kbSwayScroll {
-                keyboard = (modifiers as! NSDictionary).object(forKey: kMFModificationPreconditionKeyKeyboard) != nil
-            }
-            if !btnSwayPoint || !btnSwayScroll {
-                button = (modifiers as! NSDictionary).object(forKey: kMFModificationPreconditionKeyButtons) != nil
-            }
-            
-            if keyboard || button {
+            remaps.enumerateKeysAndObjects(options: [/*.concurrent*/]) { modifiers, modification, stop in
                 
-                if (!kbSwayPoint && keyboard) || (!btnSwayPoint && button) {
-                    let point = self.modificationModfiesPointing(modification as? NSDictionary)
-                    btnSwayPoint = button && point
-                    kbSwayPoint = keyboard && point
+                /// Notes:
+                ///  - `.concurrent` option should make things slower for small arrays. See https://darkdust.net/writings/objective-c/nsarray-enumeration-performance
+                ///   - All these if statements totally overcomplicate things. It's what I call "Premature Boptimization"
+                ///   - Notice how we made it even faster by first looking at the modifers and then looking at the modification because the modifiers have less keys usually.
+                ///   - This only happens when the remaps change, and we should just cache this if it's slow. There is no reason whatsoever to make this so fast and unreadable.
+                ///   - Just using a for...in loop on the dict also gives you the keys and values in Swift, so using `enumerateKeysAndObjects` is probably not the best idea since it might be slower than a simple loop.
+                
+                var keyboard = false
+                var button = false
+                
+                if !kbSwayPoint || !kbSwayScroll {
+                    keyboard = (modifiers as! NSDictionary).object(forKey: kMFModificationPreconditionKeyKeyboard) != nil
                 }
-                if (!kbSwayScroll && keyboard) || (!btnSwayScroll && button) {
-                    let scroll = self.modificationModifiesScroll(modification as? NSDictionary)
-                    btnSwayScroll = button && scroll
-                    kbSwayScroll = keyboard && scroll
+                if !btnSwayPoint || !btnSwayScroll {
+                    button = (modifiers as! NSDictionary).object(forKey: kMFModificationPreconditionKeyButtons) != nil
                 }
-            }
-            
-            if kbSwayScroll && kbSwayPoint && btnSwayScroll && btnSwayPoint {
-                stop.pointee = ObjCBool.init(true)
+                
+                if keyboard || button {
+                    
+                    if (!kbSwayPoint && keyboard) || (!btnSwayPoint && button) {
+                        let point = self.modificationModfiesPointing(modification as? NSDictionary)
+                        btnSwayPoint = button && point
+                        kbSwayPoint = keyboard && point
+                    }
+                    if (!kbSwayScroll && keyboard) || (!btnSwayScroll && button) {
+                        let scroll = self.modificationModifiesScroll(modification as? NSDictionary)
+                        btnSwayScroll = button && scroll
+                        kbSwayScroll = keyboard && scroll
+                    }
+                }
+                
+                if kbSwayScroll && kbSwayPoint && btnSwayScroll && btnSwayPoint {
+                    stop.pointee = ObjCBool.init(true)
+                }
             }
         }
+        
+        
         
         return (someKbModModifiesPointing: kbSwayPoint, someKbModModifiesScroll: kbSwayScroll, someButtonModifiesPointing: btnSwayPoint, someButtonModifiesScroll: btnSwayScroll)
     }

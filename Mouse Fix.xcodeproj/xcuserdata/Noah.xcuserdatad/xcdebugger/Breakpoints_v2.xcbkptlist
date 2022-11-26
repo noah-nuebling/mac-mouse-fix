@@ -354,8 +354,8 @@
             filePath = "Helper/Core/Drag/ModifiedDrag.m"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "140"
-            endingLineNumber = "140"
+            startingLineNumber = "139"
+            endingLineNumber = "139"
             landmarkName = "+initializeDragWithDict:"
             landmarkType = "7">
          </BreakpointContent>
@@ -363,17 +363,33 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "EC3A4D44-097F-4D05-99A7-A2F6714D1144"
+            uuid = "A3E15AAF-DD33-44D5-A68F-5DEACC69A059"
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "Helper/Core/Scroll/Scroll.m"
+            filePath = "Helper/Core/Coordinate/SwitchMaster.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "169"
             endingLineNumber = "169"
-            landmarkName = "eventTapCallback(proxy, type, event, userInfo)"
-            landmarkType = "9">
+            landmarkName = "load_Manual()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "384BAB1E-3842-4D28-97E6-C6FAE882150F"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Helper/Core/Coordinate/SwitchMaster.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "115"
+            endingLineNumber = "115"
+            landmarkName = "load_Manual()"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>
