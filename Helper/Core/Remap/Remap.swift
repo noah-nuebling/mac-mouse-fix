@@ -17,7 +17,7 @@ extension Remap {
     static func modifications(withModifiers modifiers: NSDictionary) -> NSDictionary? {
         return __SWIFT_UNBRIDGED_modifications(withModifiers: modifiers) as! NSDictionary?
     }
-    static func concludeAddMode(withPayload payload: NSDictionary) {
-        __SWIFT_UNBRIDGED_concludeAddMode(withPayload: payload)
+    static func sendAddModeFeedback(_ payload: NSDictionary) {
+        __SWIFT_UNBRIDGED_sendAddModeFeedback(payload)
     }
 }

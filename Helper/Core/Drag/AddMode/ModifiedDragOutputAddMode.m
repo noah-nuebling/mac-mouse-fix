@@ -40,7 +40,7 @@ static BOOL _didConclude;
     
     if (!_didConclude) {
         if (_addModePayload != nil) {
-            [Remap concludeAddModeWithPayload:_addModePayload];
+            [Remap sendAddModeFeedback:_addModePayload];
             _didConclude = YES;
         } else {
             @throw [NSException exceptionWithName:@"InvalidAddModeFeedbackPayload" reason:@"_drag.addModePayload is nil. Something went wrong!" userInfo:nil]; /// Throw exception to cause crash

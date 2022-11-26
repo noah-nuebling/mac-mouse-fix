@@ -319,6 +319,8 @@ BOOL _addModeIsEnabled = NO;
     /// Update state and notifiy
     ///     Need to set `_addModeIsEnabled` true before calling `setRemaps:` so that the keyboard mods event tap in `Modifiers` is toggled properly
     _addModeIsEnabled = YES;
+    
+    /// Send feedback
     [MFMessagePort sendMessage:@"addModeEnabled" withPayload:nil expectingReply:NO];
     
     /// Set `_remaps` to generated
@@ -333,8 +335,6 @@ BOOL _addModeIsEnabled = NO;
     if (_addModeIsEnabled) {
         [self reload];
     }
-//    _addModeIsEnabled = NO;
-//    [MFMessagePort sendMessage:@"addModeDisabled" withPayload:nil expectingReply:NO];
 }
 
 //+ (void)disableAddModeWithPayload:(NSDictionary *)payload {
@@ -354,7 +354,7 @@ BOOL _addModeIsEnabled = NO;
 //    /// ^ We did this to keep the remapping disabled for a little while after adding a new row, but it leads to adding several entries at once when trying to input button modification precondition, if you're not fast enough.
 //}
 
-+ (void)concludeAddModeWithPayload:(NSDictionary *)payload {
++ (void)sendAddModeFeedback:(NSDictionary *)payload {
     
     DDLogDebug(@"Concluding addMode with payload: %@", payload);
     
@@ -376,8 +376,8 @@ BOOL _addModeIsEnabled = NO;
 
 }
 
-+ (void)__SWIFT_UNBRIDGED_concludeAddModeWithPayload:(id)payload {
-    [self concludeAddModeWithPayload:payload];
++ (void)__SWIFT_UNBRIDGED_sendAddModeFeedback:(id)payload {
+    [self sendAddModeFeedback:payload];
 }
 
 

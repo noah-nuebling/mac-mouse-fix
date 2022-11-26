@@ -82,7 +82,7 @@
             /// It is almost a valid remaps table entry.
             /// All that the main app has to do with the payload in order to make it a valid entry of the remap table's
             ///  dataModel is to add the kMFRemapsKeyEffect key and corresponding values
-            [Remap concludeAddModeWithPayload:payload];
+            [Remap sendAddModeFeedback:payload];
             
         }
     }

@@ -27,8 +27,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 + (void)enableAddMode;
 + (void)disableAddMode;
-+ (void)concludeAddModeWithPayload:(NSDictionary *)payload MF_SWIFT_HIDDEN;
-+ (void)__SWIFT_UNBRIDGED_concludeAddModeWithPayload:(id)payload;
++ (void)sendAddModeFeedback:(NSDictionary *)payload MF_SWIFT_HIDDEN;
++ (void)__SWIFT_UNBRIDGED_sendAddModeFeedback:(id)payload;
 
 @end
 

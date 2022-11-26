@@ -111,7 +111,7 @@ extension MFScrollModificationResult: Hashable {
             if result.effectMod == kMFScrollEffectModificationAddModeFeedback {
                 let payload = modifiedScrollDict.mutableCopy() as! NSMutableDictionary /// I think a shallow mutableCopy is enough
                 payload.removeObject(forKey: kMFModifiedScrollDictKeyEffectModificationType)
-                Remap.concludeAddMode(withPayload: payload)
+                Remap.sendAddModeFeedback(payload)
             }
         }
         
