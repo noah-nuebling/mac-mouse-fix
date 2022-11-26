@@ -581,6 +581,10 @@ import CocoaLumberjackSwift
             /// Send payoad to tableController
             ///     The payload is an almost finished remapsTable (aka RemapTableController.dataModel) entry with the kMFRemapsKeyEffect key missing
             self.tableController.addRow(withHelperPayload: payload as! [AnyHashable : Any])
+            
+            /// Disable addMode
+//            pointerIsInsideAddField = false /// ???
+            MFMessagePort.sendMessage("disableAddMode", withPayload: nil, expectingReply: false)
         }
     }
     

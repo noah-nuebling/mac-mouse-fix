@@ -141,10 +141,14 @@ static ModifiedDragState _drag;
         
         /// Guard state == inUse
         ///  I think if state == initialized we don't need to do anything special
-        if (_drag.activationState == kMFModifiedInputActivationStateInUse
-            && ![effectDict isEqualToDictionary:_drag.effectDict]) {
-            
-            deactivate_Unsafe(YES);
+        if (_drag.activationState == kMFModifiedInputActivationStateInUse) {
+            BOOL isSame = [effectDict isEqualToDictionary:_drag.effectDict];
+            BOOL isAddMode = [_drag.effectDict[kMFModifiedDragDictKeyType] isEqual:kMFModifiedDragTypeAddModeFeedback];
+            if (!isSame && !isAddMode) {
+                deactivate_Unsafe(YES);
+            } else {
+                return;
+            }
         }
         
         /// Get type

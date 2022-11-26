@@ -31,22 +31,19 @@ static NSDictionary *_addModePayload; /// Payload to send to the mainApp. Only u
 
 + (void)handleBecameInUse {
     
+    return;
+}
+
++ (void)handleMouseInputWhileInUseWithDeltaX:(double)deltaX deltaY:(double)deltaY event:(nonnull CGEventRef)event {
+    
     if (_addModePayload != nil) {
-//        [Remap sendAddModeFeedbackWithPayload:_addModePayload]; /// Remove this and make sendAddModeFeedbackWithPayload private.
         [Remap concludeAddModeWithPayload:_addModePayload];
     } else {
         @throw [NSException exceptionWithName:@"InvalidAddModeFeedbackPayload" reason:@"_drag.addModePayload is nil. Something went wrong!" userInfo:nil]; /// Throw exception to cause crash
     }
 }
 
-+ (void)handleMouseInputWhileInUseWithDeltaX:(double)deltaX deltaY:(double)deltaY event:(nonnull CGEventRef)event {
-    
-    return;
-}
-
 + (void)handleDeactivationWhileInUseWithCancel:(BOOL)cancelation {
-    /// Why were we doing this?
-//    [Remap disableAddModeWithPayload:_addModePayload];
 }
 
 + (void)suspend {}

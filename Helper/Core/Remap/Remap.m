@@ -330,8 +330,9 @@ BOOL _addModeIsEnabled = NO;
 }
 
 + (void)disableAddMode {
-        
-    [self reload];
+    if (_addModeIsEnabled) {
+        [self reload];
+    }
 //    _addModeIsEnabled = NO;
 //    [MFMessagePort sendMessage:@"addModeDisabled" withPayload:nil expectingReply:NO];
 }
@@ -358,13 +359,17 @@ BOOL _addModeIsEnabled = NO;
     DDLogDebug(@"Concluding addMode with payload: %@", payload);
     
     if (![self addModePayloadIsValid:payload]) {
-        [self disableAddMode];
+        /// The way things are set up currently, we constantly get invalid payloads. So we just ignore them
+//        [self disableAddMode];
         return;
     }
     
-    [self reload];
-    _addModeIsEnabled = NO;
+//    [self reload];
+    
 //    [MFMessagePort sendMessage:@"addModeDisabled" withPayload:nil expectingReply:NO];
+    
+    
+    
     [MFMessagePort sendMessage:@"addModeFeedback" withPayload:payload expectingReply:NO];
     ///    [Remap performSelector:@selector(disableAddMode) withObject:nil afterDelay:0.5];
     /// ^ We did this to keep the remapping disabled for a little while after adding a new row, but it leads to adding several entries at once when trying to input button modification precondition, if you're not fast enough.
@@ -388,7 +393,7 @@ BOOL _addModeIsEnabled = NO;
         
         NSArray *buttonPreconds = payload[kMFRemapsKeyModificationPrecondition][kMFModificationPreconditionKeyButtons];
         if (buttonPreconds == nil || buttonPreconds.count == 0) {
-            assert(false);
+//            assert(false);
             return NO;
         }
     }

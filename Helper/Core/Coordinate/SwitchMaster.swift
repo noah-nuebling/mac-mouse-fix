@@ -145,8 +145,13 @@ import ReactiveSwift
         
         scrollConfigSignal.startWithValues { scrollConfig in
             
-            self.defaultModifiesScroll = !scrollConfig.killSwitch &&
-            (scrollConfig.u_smoothEnabled || scrollConfig.u_speed != "system" || scrollConfig.u_invertDirection == kMFScrollInversionInverted)
+            if Remap.addModeIsEnabled {
+                /// This doesn't work because scrollConfig doesn't change for addMode, so we don't get a callback. We instead solved this in `concludeAddModeWithPayload:`
+                self.defaultModifiesScroll = false
+            } else {
+                self.defaultModifiesScroll = !scrollConfig.killSwitch &&
+                (scrollConfig.u_smoothEnabled || scrollConfig.u_speed != "system" || scrollConfig.u_invertDirection == kMFScrollInversionInverted)
+            }
             
         }
         
@@ -188,6 +193,13 @@ import ReactiveSwift
             
             self.toggleScrollTap()
             self.toggleButtonTap()
+            
+            /// On not toggling pointing tap
+            /// - Would be a hack
+            /// - We want to do this because it prevents an issue where after recording a click and drag in the addField it immediately activates.
+            /// - I'm not totally sure this won't lead to other issues in edge cases though, so we'll find another solution:
+            ///     - sol1: Only conclude addMode drag when the user lets go of the button - Works but makes things less responsive
+            ///     - sol2:Make modifiedDrag ignore reinitialization while addModeDrag is active
             self.togglePointingTap()
         }
         scrollConfigSignal.startWithValues { _ in
@@ -214,7 +226,7 @@ import ReactiveSwift
                 
                 ModifiedDrag.activationState { modifiedDragActivation in
                     
-                    DDLogDebug("SwitchMaster switched to - kbMod: \(Modifiers.kbModPriority().rawValue), btnMod: \(Modifiers.btnModPriority().rawValue), scroll: \(Scroll.isRunning() ? 1 : 0), button: \(ButtonInputReceiver.isRunning() ? 1 : 0), pointing: \(modifiedDragActivation.rawValue)")
+                    DDLogDebug("SwitchMaster switched to - kbMod: \(Modifiers.kbModPriority().rawValue), btnMod: \(Modifiers.btnModPriority().rawValue), button: \(ButtonInputReceiver.isRunning() ? 1 : 0), scroll: \(Scroll.isRunning() ? 1 : 0), pointing: \(modifiedDragActivation.rawValue)")
                 }
             }
         }
@@ -435,8 +447,10 @@ import ReactiveSwift
         
         if Remap.addModeIsEnabled {
             
-            /// Setting kbMod stuff to false because we need a button as a modifier or a trigger to record stuff into Remap Table.
-            ///     This should work but it's not semantic because `someKbModModifiesPointing` and `someKbModModifiesScroll` (which we're setting false here) are technically true. Probably a better way to do this is to implement the "there needs to be a button" restriction in `concludeAddModeWithPayload:`. 
+            /// On setting `kbSwayPoint` and `kbSwayScroll` to false:
+            /// Setting kbMod stuff to false because we don't allow recording scroll and drag triggers  in addMode without a button as a modifier.
+            ///     Just setting this stuff to false should prevent this but it's not semantic because `someKbModModifiesPointing` and `someKbModModifiesScroll` (which we're setting false here) are technically true. Probably a better way to implement the "there needs to be a button" restriction in `concludeAddModeWithPayload:`.
+            ///     Edit: Implemented the stuff in `concludeAddModeWithPayload:` so this should be unnecessary, but it also shouldn't hurt.
             
             kbSwayPoint = false
             kbSwayScroll = false
