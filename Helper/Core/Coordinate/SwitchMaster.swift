@@ -120,10 +120,12 @@ import ReactiveSwift
         
         remapsSignal.startWithValues { remaps in
             
-            (self.somekbModModifiesPointing,
-             self.somekbModModifiesScroll,
-             self.someButtonModifiesPointing,
-             self.someButtonModifiesScroll) = self.modifierUsage_Point_Scroll(remaps)
+            let result = self.modifierUsage_Point_Scroll(remaps)
+            
+            self.somekbModModifiesPointing = result.someKbModModifiesPointing
+            self.somekbModModifiesScroll = result.someKbModModifiesScroll
+            self.someButtonModifiesPointing = result.someButtonModifiesPointing
+            self.someButtonModifiesScroll = result.someButtonModifiesScroll
         }
         
         /// Remaps & Attached Devices Signal
@@ -131,7 +133,10 @@ import ReactiveSwift
         remapsSignal.combineLatest(with: attachedDevicesSignal).startWithValues { (remaps, attachedDevices) in
             
             let maxButton = DeviceManager.maxButtonNumberAmongDevices()
-            (self.somekbModModifiesButtonOnSomeDevice, self.someButtonModifiesButtonOnSomeDevice) = self.modifierUsage_Buttons(remaps, maxButton: maxButton)
+            let result = self.modifierUsage_Buttons(remaps, maxButton: maxButton)
+            self.somekbModModifiesButtonOnSomeDevice = result.somekbModModifiesButtonOnSomeDevice
+            self.someButtonModifiesButtonOnSomeDevice = result.someButtonModifiesButtonOnSomeDevice
+            
             self.defaultModifiesButtonOnSomeDevice = self.defaultModifiesButtonOnSomeDevice(remaps, maxButton: maxButton)
         }
         
@@ -393,8 +398,8 @@ import ReactiveSwift
                     if (!kbModSways && keyboard) || (!btnSways && button) {
                         let doesModify = self.modificationModifiesButtons(modification: (modification as! NSDictionary), maxButton: maxButton)
                         if doesModify {
-                            kbModSways = keyboard
-                            btnSways = button
+                            if !kbModSways { kbModSways = keyboard }
+                            if !btnSways { btnSways = button }
                         }
                     }
                 }
@@ -459,13 +464,13 @@ import ReactiveSwift
                     
                     if (!kbSwayPoint && keyboard) || (!btnSwayPoint && button) {
                         let point = self.modificationModfiesPointing(modification as? NSDictionary)
-                        btnSwayPoint = button && point
-                        kbSwayPoint = keyboard && point
+                        if !btnSwayPoint { btnSwayPoint = button && point }
+                        if !kbSwayPoint { kbSwayPoint = keyboard && point }
                     }
                     if (!kbSwayScroll && keyboard) || (!btnSwayScroll && button) {
                         let scroll = self.modificationModifiesScroll(modification as? NSDictionary)
-                        btnSwayScroll = button && scroll
-                        kbSwayScroll = keyboard && scroll
+                        if !btnSwayScroll { btnSwayScroll = button && scroll }
+                        if !kbSwayScroll { kbSwayScroll = keyboard && scroll }
                     }
                 }
                 
