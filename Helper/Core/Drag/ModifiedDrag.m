@@ -145,7 +145,8 @@ static ModifiedDragState _drag;
             BOOL isSame = [effectDict isEqualToDictionary:_drag.effectDict];
             BOOL isAddMode = [_drag.effectDict[kMFModifiedDragDictKeyType] isEqual:kMFModifiedDragTypeAddModeFeedback];
             if (!isSame && !isAddMode) {
-                deactivate_Unsafe(YES);
+//                deactivate_Unsafe(YES);
+                return;
             } else {
                 return;
             }
