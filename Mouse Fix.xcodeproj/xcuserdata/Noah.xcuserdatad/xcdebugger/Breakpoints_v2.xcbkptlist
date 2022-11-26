@@ -370,8 +370,8 @@
             filePath = "Helper/Core/Coordinate/SwitchMaster.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "169"
-            endingLineNumber = "169"
+            startingLineNumber = "180"
+            endingLineNumber = "180"
             landmarkName = "load_Manual()"
             landmarkType = "7">
          </BreakpointContent>
@@ -380,14 +380,30 @@
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
             uuid = "384BAB1E-3842-4D28-97E6-C6FAE882150F"
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Helper/Core/Coordinate/SwitchMaster.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "115"
-            endingLineNumber = "115"
+            startingLineNumber = "126"
+            endingLineNumber = "126"
+            landmarkName = "load_Manual()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "B43C3DF0-C944-4D93-AF80-B627A1576E21"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "4"
+            continueAfterRunningActions = "No"
+            filePath = "Helper/Core/Coordinate/SwitchMaster.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "199"
+            endingLineNumber = "199"
             landmarkName = "load_Manual()"
             landmarkType = "7">
          </BreakpointContent>

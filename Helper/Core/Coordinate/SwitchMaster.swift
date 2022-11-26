@@ -31,6 +31,17 @@
 /// On Optimization
 /// - We should move the remapsAnalysis methods into RemapsAnalyzer and cache the ones that are used when the modifier state changes.
 ///
+/// Testing:
+/// - [ ] Keyboard Modifiers have 0% CPU usage when not toggling another tap
+/// - [ ] Scrolling has 0% CPU usage when umodified
+/// - [ ] Buttons have 0% CPU usage when not (modified or toggling another tap)
+/// - [ ] Buttons work as modifiers even if no buttons are modified
+/// - [ ] Moving / Dragging has 0% CPU usage when unmodified
+/// - AddMode works even when all input taps are turned off for (and the assigned action also works)
+///  - [ ] Click, Hold, Double Click, Button Modifier + Click, Keyboard Modifier + Click
+///  - [ ] Click and Drag, Double Click and Drag, Keyboard Modifier + Click and Drag
+///  - [ ] Click and Scroll, Double Click and Scroll, Keyboard Modifier + Click and Scroll
+///
 // TODO: Implement killSwitch signals
 
 import Cocoa
@@ -463,8 +474,6 @@ import ReactiveSwift
                 }
             }
         }
-        
-        
         
         return (someKbModModifiesPointing: kbSwayPoint, someKbModModifiesScroll: kbSwayScroll, someButtonModifiesPointing: btnSwayPoint, someButtonModifiesScroll: btnSwayScroll)
     }

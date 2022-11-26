@@ -116,6 +116,16 @@ static CFMachPortRef _kbModEventTap;
 
 CGEventRef _Nullable kbModsChanged(CGEventTapProxy proxy, CGEventType type, CGEventRef event, void *userInfo) {
     
+    
+    if (type == kCGEventTapDisabledByTimeout || type == kCGEventTapDisabledByUserInput) {
+        
+        if (type == kCGEventTapDisabledByTimeout) {
+            CGEventTapEnable(_kbModEventTap, true);
+        }
+        
+        return event;
+    }
+    
     /// Get mouse
     
     //    Device *activeDevice = HelperState.activeDevice;
