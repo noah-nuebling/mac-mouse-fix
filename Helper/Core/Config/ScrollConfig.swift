@@ -17,21 +17,39 @@ import CocoaLumberjackSwift
     /// You'll receive an independent instance that you can override with custom values. This should be useful for implementing Modifications in Scroll.m
     ///     Everything in ScrollConfigResult is lazy so that you only pay for what you actually use
     
+    // MARK: Convenience functions
+    ///     For accessing top level dict and different sub-dicts
+    
+    private static var _scrollConfigRaw: NSDictionary? = nil /// This needs to be static, not an instance var. Otherwise there are weird crashes in Scroll.m. Not sure why.
+    private func c(_ keyPath: String) -> NSObject? {
+        return ScrollConfig._scrollConfigRaw?.object(forCoolKeyPath: keyPath) /// Not sure whether to use coolKeyPath here?
+    }
+    
     // MARK: Static functions
     
-    @objc private(set) static var scrollConfig = ScrollConfig() /// Singleton instance
+    @objc private(set) static var shared = ScrollConfig() /// Singleton instance
+    
     
     @objc static func reload() {
+        
+        /// Guard not equal
+        
+        let newConfigRaw = config("Scroll") as! NSDictionary?
+        guard !(_scrollConfigRaw?.isEqual(newConfigRaw) ?? false) else {
+            return
+        }
         
         /// Notes:
         /// - This should be called when the underlying config (which mirrors the config file) changes
         /// - All the property values are cached in `currentConfig`, because the properties are lazy. Replacing with a fresh object deletes this implicit cache.
-        scrollConfig = ScrollConfig()
+        shared = ScrollConfig()
+        _scrollConfigRaw = newConfigRaw
         cache = nil
-        ReactiveScrollConfig.shared.handleScrollConfigChanged(newValue: scrollConfig)
+        ReactiveScrollConfig.shared.handleScrollConfigChanged(newValue: shared)
     }
     private static var cache: [_HP<MFScrollModificationResult, MFAxis>: ScrollConfig]? = nil
-    @objc static func config(modifiers: MFScrollModificationResult, inputAxis: MFAxis, event: CGEvent?) -> ScrollConfig {
+    
+    @objc static func scrollConfig(modifiers: MFScrollModificationResult, inputAxis: MFAxis, event: CGEvent?) -> ScrollConfig {
         
         if cache == nil {
             cache = .init()
@@ -49,7 +67,7 @@ import CocoaLumberjackSwift
             ///
             /// Copy og settings
             ///
-            let new = scrollConfig.copy() as! ScrollConfig
+            let new = shared.copy() as! ScrollConfig
             
             ///
             /// Override settings
@@ -174,6 +192,8 @@ import CocoaLumberjackSwift
         }
     }
     
+    // MARK: ???
+    
     @objc static var linearCurve: Bezier = { () -> Bezier in
         
         let controlPoints: [P] = [_P(0,0), _P(0,0), _P(1,1), _P(1,1)]
@@ -185,13 +205,6 @@ import CocoaLumberjackSwift
 //                                                            "control" : CGEventFlags.maskControl,
 //                                                            "option" : CGEventFlags.maskAlternate,
 //                                                            "shift" : CGEventFlags.maskShift]
-    
-    // MARK: Convenience functions
-    ///     For accessing top level dict and different sub-dicts
-    
-    private func c(_ keyPath: String) -> NSObject? {
-        return (Config.shared().configWithAppOverridesApplied["Scroll"] as! NSDictionary).value(forKeyPath: keyPath) as! NSObject?
-    }
     
     // MARK: General
     

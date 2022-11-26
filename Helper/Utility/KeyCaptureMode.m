@@ -92,8 +92,9 @@ bool keyCaptureModePayloadIsValidWithEvent(NSEvent *e, CGEventFlags flags, MFSys
     BOOL secondDataIsNil = e.data2 == -1; /// The power key up event has both data fields be 0
     BOOL typeIsBlackListed = type == kMFSystemEventTypeCapsLock;
     
-    
-    return isSub8 && isKeyDown && secondDataIsNil && !typeIsBlackListed;
+    BOOL isValid = isSub8 && isKeyDown && secondDataIsNil && !typeIsBlackListed;
+    assert(isValid);
+    return isValid;
 }
 
 @end

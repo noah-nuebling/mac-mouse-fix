@@ -32,17 +32,18 @@
 /// - We should move the remapsAnalysis methods into RemapsAnalyzer and cache the ones that are used when the modifier state changes.
 ///
 /// Testing:
-/// - [ ] Keyboard Modifiers have 0% CPU usage when not toggling another tap
-/// - [ ] Scrolling has 0% CPU usage when umodified
-/// - [ ] Buttons have 0% CPU usage when not (modified or toggling another tap)
-/// - [ ] Buttons work as modifiers even if no buttons are modified
-/// - [ ] Moving / Dragging has 0% CPU usage when unmodified
+/// - [x] Keyboard Modifiers have 0% CPU usage when not toggling another tap
+/// - [x] Scrolling has 0% CPU usage when umodified
+/// - [x] Buttons have 0% CPU usage when not (modified or toggling another tap)
+/// - [x] Buttons work as modifiers even if no buttons are modified
+/// - [x] Pointing has 0% CPU usage when unmodified
 /// - AddMode works even when all input taps are turned off for (and the assigned action also works)
 ///  - [ ] Click, Hold, Double Click, Button Modifier + Click, Keyboard Modifier + Click
 ///  - [ ] Click and Drag, Double Click and Drag, Keyboard Modifier + Click and Drag
 ///  - [ ] Click and Scroll, Double Click and Scroll, Keyboard Modifier + Click and Scroll
 ///
-// TODO: Implement killSwitch signals
+// TODO: ...
+/// - Implement killSwitch signals
 
 import Cocoa
 import CocoaLumberjackSwift
@@ -434,8 +435,11 @@ import ReactiveSwift
         
         if Remap.addModeIsEnabled {
             
-            kbSwayPoint = true
-            kbSwayScroll = true
+            /// Setting kbMod stuff to false because we need a button as a modifier or a trigger to record stuff into Remap Table.
+            ///     This should work but it's not semantic because `someKbModModifiesPointing` and `someKbModModifiesScroll` (which we're setting false here) are technically true. Probably a better way to do this is to implement the "there needs to be a button" restriction in `concludeAddModeWithPayload:`. 
+            
+            kbSwayPoint = false
+            kbSwayScroll = false
             btnSwayPoint = true
             btnSwayScroll = true
             

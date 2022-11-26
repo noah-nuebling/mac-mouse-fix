@@ -18,7 +18,7 @@ class ReactiveScrollConfig {
     /// Main Interface
     
     var scrollConfig: SignalProducer<ScrollConfig, Never> {
-        return signal.producer.prefix(value: ScrollConfig.scrollConfig)
+        return signal.producer.prefix(value: ScrollConfig.shared)
     }
     
     /// Reactive Core + Init

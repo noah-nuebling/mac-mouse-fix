@@ -187,22 +187,6 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "B4F2C6D6-1633-4FFF-B3E3-269214F65E21"
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Helper/Core/Remap/Remap.m"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "360"
-            endingLineNumber = "360"
-            landmarkName = "+concludeAddModeWithPayload:"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
             uuid = "41CA190C-892E-41AB-A5AE-0A06E83E9F9B"
             shouldBeEnabled = "No"
             ignoreCount = "0"
@@ -370,8 +354,8 @@
             filePath = "Helper/Core/Coordinate/SwitchMaster.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "185"
-            endingLineNumber = "185"
+            startingLineNumber = "186"
+            endingLineNumber = "186"
             landmarkName = "load_Manual()"
             landmarkType = "7">
          </BreakpointContent>
@@ -386,8 +370,8 @@
             filePath = "Helper/Core/Coordinate/SwitchMaster.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "204"
-            endingLineNumber = "204"
+            startingLineNumber = "205"
+            endingLineNumber = "205"
             landmarkName = "load_Manual()"
             landmarkType = "7">
          </BreakpointContent>
@@ -402,8 +386,8 @@
             filePath = "Helper/Core/Coordinate/SwitchMaster.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "228"
-            endingLineNumber = "228"
+            startingLineNumber = "229"
+            endingLineNumber = "229"
             landmarkName = "toggleKbModTap()"
             landmarkType = "7">
          </BreakpointContent>
@@ -418,8 +402,8 @@
             filePath = "Helper/Core/Coordinate/SwitchMaster.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "483"
-            endingLineNumber = "483"
+            startingLineNumber = "487"
+            endingLineNumber = "487"
             landmarkName = "modifierUsage_Point_Scroll(_:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -434,8 +418,8 @@
             filePath = "Helper/Core/Coordinate/SwitchMaster.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "125"
-            endingLineNumber = "125"
+            startingLineNumber = "126"
+            endingLineNumber = "126"
             landmarkName = "load_Manual()"
             landmarkType = "7">
          </BreakpointContent>
@@ -450,8 +434,8 @@
             filePath = "Helper/Core/Coordinate/SwitchMaster.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "122"
-            endingLineNumber = "122"
+            startingLineNumber = "123"
+            endingLineNumber = "123"
             landmarkName = "load_Manual()"
             landmarkType = "7">
          </BreakpointContent>
@@ -466,8 +450,8 @@
             filePath = "Helper/Core/Coordinate/SwitchMaster.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "471"
-            endingLineNumber = "471"
+            startingLineNumber = "475"
+            endingLineNumber = "475"
             landmarkName = "modifierUsage_Point_Scroll(_:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -482,8 +466,8 @@
             filePath = "Helper/Core/Coordinate/SwitchMaster.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "138"
-            endingLineNumber = "138"
+            startingLineNumber = "139"
+            endingLineNumber = "139"
             landmarkName = "load_Manual()"
             landmarkType = "7">
          </BreakpointContent>

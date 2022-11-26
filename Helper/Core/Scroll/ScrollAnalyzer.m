@@ -81,7 +81,7 @@ static CFTimeInterval _consecutiveSwipeSequenceStartTime;
     /// We shouldn't definitely not reset _scrollDirectionDidChange here, because a scroll direction change causes this function to be called, and then the information about the scroll direction changing would be lost as it's reset immediately
 }
 
-+ (BOOL)peekIsFirstConsecutiveTickWithTickOccuringAt:(CFTimeInterval)thisScrollTickTimeStamp withDirection:(MFDirection)direction withConfig:(ScrollConfig *)scrollConfig {
++ (BOOL)peekIsFirstConsecutiveTickWithTickOccuringAt:(CFTimeInterval)thisScrollTickTimeStamp direction:(MFDirection)direction config:(ScrollConfig *)scrollConfig {
     
     /// Checks if a given tick is the first consecutive tick. Without changing state.
     
@@ -99,7 +99,7 @@ static CFTimeInterval _consecutiveSwipeSequenceStartTime;
 }
 
 /// This is the main input function which should be called on each scrollwheel tick event
-+ (ScrollAnalysisResult)updateWithTickOccuringAt:(CFTimeInterval)thisScrollTickTimeStamp withDirection:(MFDirection)direction withConfig:(ScrollConfig *)scrollConfig {
++ (ScrollAnalysisResult)updateWithTickOccuringAt:(CFTimeInterval)thisScrollTickTimeStamp direction:(MFDirection)direction config:(ScrollConfig *)scrollConfig {
     
     /// Update scrollDirectionDidChange
     ///     Checks whether the scrolling direction is different from when this function was last called.

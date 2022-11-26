@@ -88,7 +88,8 @@ static BOOL _isSuspended = NO;
     _animator = [[TouchAnimator alloc] init];
     
     /// Create initial config instance
-    _scrollConfig = [[ScrollConfig alloc] init];
+    ///     Edit: I don't think this makes sense. `_scrollConfig` will be retrieved as necessary on first consecutive ticks
+    _scrollConfig = nil; /// [[ScrollConfig alloc] init];
 }
 
 + (void)resetState {
@@ -272,14 +273,21 @@ static void heavyProcessing(CGEventRef event, int64_t scrollDeltaAxis1, int64_t 
         NSCAssert(NO, @"Invalid scroll axis");
     }
     
+    /// Initialized scrollConfig for preliminary analysis
+    /// Could also use `[ScrollConfig scrollConfigWithModifiers:inputAxis:event:]` here? It probably doesn't matter. This should only happen once on the very first tick after the helper starts.
+    
+    if (_scrollConfig != nil) {
+        _scrollConfig = ScrollConfig.shared;
+    }
+    
     /// Run preliminary scrollAnalysis
     ///     To check if this is the first consecutive scrollTick
     ///
-    ///     @note We check the _modifications.effectMod before updating _modifications. Not totally sure this makes sense?
+    ///     @note We check the `_modifications.effectMod` before updating `_modifications`. Not totally sure this makes sense?
     
     MFDirection scrollDirection = [ScrollUtility directionForInputAxis:inputAxis inputDelta:scrollDelta invertSetting:_scrollConfig.u_invertDirection horizontalModifier:(_modifications.effectMod == kMFScrollEffectModificationHorizontalScroll)];
     
-    BOOL firstConsecutive = [ScrollAnalyzer peekIsFirstConsecutiveTickWithTickOccuringAt:tickTime withDirection:scrollDirection withConfig:_scrollConfig];
+    BOOL firstConsecutive = [ScrollAnalyzer peekIsFirstConsecutiveTickWithTickOccuringAt:tickTime direction:scrollDirection config:_scrollConfig];
     
     ///
     /// Update stuff
@@ -338,7 +346,7 @@ static void heavyProcessing(CGEventRef event, int64_t scrollDeltaAxis1, int64_t 
         
         /// Get scrollConfig
         
-        _scrollConfig = [ScrollConfig configWithModifiers:newMods inputAxis:inputAxis event:event];
+        _scrollConfig = [ScrollConfig scrollConfigWithModifiers:newMods inputAxis:inputAxis event:event];
         
     } /// End `if (firstConsecutive) {`
     
@@ -349,7 +357,7 @@ static void heavyProcessing(CGEventRef event, int64_t scrollDeltaAxis1, int64_t 
     scrollDirection = [ScrollUtility directionForInputAxis:inputAxis inputDelta:scrollDelta invertSetting:_scrollConfig.u_invertDirection horizontalModifier:(_modifications.effectMod == kMFScrollEffectModificationHorizontalScroll)]; /// Why do we need to get the scrollDirection again? We already calculated it during the "preliminary scrollAnalysis". Can it ever change betweent he 2 times we calculate it?
     
     /// Run full scrollAnalysis
-    ScrollAnalysisResult scrollAnalysisResult = [ScrollAnalyzer updateWithTickOccuringAt:tickTime withDirection:scrollDirection withConfig:_scrollConfig];
+    ScrollAnalysisResult scrollAnalysisResult = [ScrollAnalyzer updateWithTickOccuringAt:tickTime direction:scrollDirection config:_scrollConfig];
 
     
     /// Store scrollAnalysisResult

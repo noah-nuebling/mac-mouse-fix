@@ -382,11 +382,13 @@ BOOL _addModeIsEnabled = NO;
 /// Keyboard-modifier-only modifiedDrags and modifiedScrolls work in principle but they cause some smaller bugs and issues in the mainApp UI. We don't wan't to polish that up so we're just disabling the ability to add them.
 ///     Also the remap table is completely structured around buttons now, so it wouldn't fit into the UI to have keyboard-modifier-only modifiedDrags and modifiedScrolls
 + (BOOL)addModePayloadIsValid:(NSDictionary *)payload {
+    
     if ([payload[kMFRemapsKeyTrigger] isEqual:kMFTriggerDrag]
         || [payload[kMFRemapsKeyTrigger] isEqual:kMFTriggerScroll]) {
         
         NSArray *buttonPreconds = payload[kMFRemapsKeyModificationPrecondition][kMFModificationPreconditionKeyButtons];
         if (buttonPreconds == nil || buttonPreconds.count == 0) {
+            assert(false);
             return NO;
         }
     }
