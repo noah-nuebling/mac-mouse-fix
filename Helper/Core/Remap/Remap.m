@@ -118,10 +118,10 @@ static NSDictionary *_remaps;
     ///
     /// We used to do this *after* loading the remaps from config into `_remaps`. Now we're doing it before. Not sure if that could break things.
     
-//    if (_addModeIsEnabled) {
-//        _addModeIsEnabled = NO;
+    if (_addModeIsEnabled) {
+        _addModeIsEnabled = NO;
 //        [MFMessagePort sendMessage:@"addModeDisabled" withPayload:nil expectingReply:NO];
-//    }
+    }
     
     ///
     /// Load test remaps
