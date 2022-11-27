@@ -31,6 +31,7 @@ class ReactiveScrollConfig {
     
     /// Updater
     func handleScrollConfigChanged(newValue: ScrollConfig) {
-        observer.send(value: newValue)
+//        observer.send(value: newValue)
+        SwitchMaster.shared.scrollConfigChanged(scrollConfig: newValue)
     }
 }

@@ -30,7 +30,8 @@ import ReactiveSwift
     
     /// ObjC Interface
     @objc func handleModifiersDidChange(to newModifiers: NSDictionary) {
-        observer.send(value: newModifiers)
+//        observer.send(value: newModifiers)
+        SwitchMaster.shared.modifiersChanged(modifiers: newModifiers)
     }
     
 }

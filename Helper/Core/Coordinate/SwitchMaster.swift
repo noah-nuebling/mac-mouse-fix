@@ -100,146 +100,186 @@ import ReactiveSwift
     var currentModificationModifiesScroll = false
     var currentModificationModifiesPointing = false
     var currentModificationModifiesButtonOnSomeDevice = false /// & derives from: Attached Devices
-    var latestModifications: NSDictionary? = nil
+    
+    //
+    // MARK: Init
+    //
     
     @objc func load_Manual() {
         
-        /// Get signals
+        /// Not sure this is necessary or useful
         
-        let attachedDevicesSignal = ReactiveDeviceManager.shared.attachedDevices
-        let remapsSignal = ReactiveRemaps.shared.remaps
-        let scrollConfigSignal = ReactiveScrollConfig.shared.scrollConfig
-        let modifiersSignal = ReactiveModifiers.shared.modifiers
+        latestDevices = DeviceManager.attachedDevices
+        latestRemaps = Remap.remaps
+        latestScrollConfig = ScrollConfig.shared
+        latestModifiers = Modifiers.modifiers(with: nil)
+    }
+    
+    //
+    // MARK: Base callbacks
+    //
+    
+    private var latestDevices = NSArray()
+    @objc func attachedDevicesChanged(devices: NSArray) {
         
-        // MARK: Update state
+        /// Update state
+        self.someDeviceHasScroll = DeviceManager.someDeviceHasScrollWheel()
+        self.someDeviceHasPointing = DeviceManager.someDeviceHasPointing()
+        self.someDeviceHasUsableButtons = DeviceManager.someDeviceHasUsableButtons()
+        self.maxButtonNumberAmongDevices = DeviceManager.maxButtonNumberAmongDevices()
         
-        /// Attached Devices Signal
+        /// Call combined state updaters
+        remapsOrAttachedDevicesChanged(remaps: latestRemaps, devices: devices)
+        remapsOrModifiersOrAttachedDevicesChanged(remaps: latestRemaps, modifiers: latestModifiers, attachedDevices: devices)
         
-        attachedDevicesSignal.startWithValues { devices in
-            
-            self.someDeviceHasScroll = DeviceManager.someDeviceHasScrollWheel()
-            self.someDeviceHasPointing = DeviceManager.someDeviceHasPointing()
-            self.someDeviceHasUsableButtons = DeviceManager.someDeviceHasUsableButtons()
-            self.maxButtonNumberAmongDevices = DeviceManager.maxButtonNumberAmongDevices()
+        /// Store
+        latestDevices = devices
+        
+        /// Call togglers
+        self.toggleKbModTap()
+        self.toggleBtnModProcessing()
+        
+        self.toggleScrollTap()
+        self.toggleButtonTap()
+        self.togglePointingTap(modifications: nil)
+        
+        /// Debug
+        DDLogDebug("SwitchMaster toggling due to attachedDevices change")
+        logState()
+        
+    }
+    
+    private var latestRemaps = NSDictionary()
+    @objc func remapsChanged(remaps: NSDictionary) {
+        
+        /// Update state
+        let result = self.modifierUsage_Point_Scroll(remaps)
+        self.somekbModModifiesPointing = result.someKbModModifiesPointing
+        self.somekbModModifiesScroll = result.someKbModModifiesScroll
+        self.someButtonModifiesPointing = result.someButtonModifiesPointing
+        self.someButtonModifiesScroll = result.someButtonModifiesScroll
+        
+        /// Call combined state updaters
+        remapsOrAttachedDevicesChanged(remaps: remaps, devices: latestDevices)
+        remapsOrModifiersChanged(remaps: remaps, modifiers: latestModifiers)
+        remapsOrModifiersOrAttachedDevicesChanged(remaps: remaps, modifiers: latestModifiers, attachedDevices: latestDevices)
+        
+        /// Store
+        latestRemaps = remaps
+        
+        /// Call togglers
+        self.toggleKbModTap()
+        self.toggleBtnModProcessing()
+        
+        self.toggleScrollTap()
+        self.toggleButtonTap()
+        
+        /// On not toggling pointing tap
+        /// - Would be a hack
+        /// - We want to do this because it prevents an issue where after recording a click and drag in the addField it immediately activates.
+        /// - I'm not totally sure this won't lead to other issues in edge cases though, so we'll find another solution:
+        ///     - sol1: Only conclude addMode drag when the user lets go of the button - Works but makes things less responsive
+        ///     - sol2:Make modifiedDrag ignore reinitialization while addModeDrag is active
+        /// - On passing in self.latestModifications:
+        ///  -  I'm not 100% sure self.latestModifications is always up-to-date here (what if the new remaps should enable modifier tracking but those modifiers aren't in self.latestModifications, yet?). Since this is not performance-critical it's better to just pass in nil, so that `togglePointingTap()` gets the values fresh.
+        self.togglePointingTap(modifications: nil /*self.latestModifications*/)
+        
+        /// Debug
+        DDLogDebug("SwitchMaster toggling due to remaps change")
+        logState()
+    }
+    
+    private var latestScrollConfig = ScrollConfig.shared /// Not sure if this is a good initialization value
+    @objc func scrollConfigChanged(scrollConfig: ScrollConfig) {
+        
+        /// Update state
+        if Remap.addModeIsEnabled {
+            /// This doesn't work because scrollConfig doesn't change for addMode, so we don't get a callback. We instead solved this in `concludeAddModeWithPayload:`
+            self.defaultModifiesScroll = false
+        } else {
+            self.defaultModifiesScroll = !scrollConfig.killSwitch &&
+            (scrollConfig.u_smoothEnabled || scrollConfig.u_speed != "system" || scrollConfig.u_invertDirection == kMFScrollInversionInverted)
         }
         
-        /// Remaps Signal
+        /// Store
+        latestScrollConfig = scrollConfig
         
-        remapsSignal.startWithValues { remaps in
-            
-            let result = self.modifierUsage_Point_Scroll(remaps)
-            
-            self.somekbModModifiesPointing = result.someKbModModifiesPointing
-            self.somekbModModifiesScroll = result.someKbModModifiesScroll
-            self.someButtonModifiesPointing = result.someButtonModifiesPointing
-            self.someButtonModifiesScroll = result.someButtonModifiesScroll
-        }
+        /// Call togglers
+        self.toggleKbModTap()
+        self.toggleBtnModProcessing()
         
-        /// Remaps & Attached Devices Signal
+        self.toggleScrollTap()
         
-        remapsSignal.combineLatest(with: attachedDevicesSignal).startWithValues { (remaps, attachedDevices) in
-            
-            let maxButton = DeviceManager.maxButtonNumberAmongDevices()
-            let result = self.modifierUsage_Buttons(remaps, maxButton: maxButton)
-            self.somekbModModifiesButtonOnSomeDevice = result.somekbModModifiesButtonOnSomeDevice
-            self.someButtonModifiesButtonOnSomeDevice = result.someButtonModifiesButtonOnSomeDevice
-            
-            self.defaultModifiesButtonOnSomeDevice = self.defaultModifiesButtonOnSomeDevice(remaps, maxButton: maxButton)
-        }
+        /// Debug
+        DDLogDebug("SwitchMaster toggling due to scroll config change")
+        logState()
+    }
+    
+    private var latestModifiers = NSDictionary()
+    @objc func modifiersChanged(modifiers: NSDictionary) {
         
-        /// Scroll Config Signal
+        /// Call combined state updaters
+        remapsOrModifiersChanged(remaps: latestRemaps, modifiers: modifiers)
+        remapsOrModifiersOrAttachedDevicesChanged(remaps: latestRemaps, modifiers: modifiers, attachedDevices: latestDevices)
         
-        scrollConfigSignal.startWithValues { scrollConfig in
-            
-            if Remap.addModeIsEnabled {
-                /// This doesn't work because scrollConfig doesn't change for addMode, so we don't get a callback. We instead solved this in `concludeAddModeWithPayload:`
-                self.defaultModifiesScroll = false
-            } else {
-                self.defaultModifiesScroll = !scrollConfig.killSwitch &&
-                (scrollConfig.u_smoothEnabled || scrollConfig.u_speed != "system" || scrollConfig.u_invertDirection == kMFScrollInversionInverted)
-            }
-            
-        }
+        /// Store
+        latestModifiers = modifiers
         
-        /// Remaps & Modifiers Signal
-        ///  NOTE: The callbacks are called whenever the modifiers change so they need to be fast!
+        /// Call togglers
         
-        let modificationsSignal = remapsSignal.combineLatest(with: modifiersSignal).map { (remaps, modifiers) in
-            let modifications = Remap.modifications(withModifiers: modifiers)
-            self.latestModifications = modifications
-            return modifications
-        }
+        self.toggleScrollTap()
+        self.toggleButtonTap()
+        self.togglePointingTap(modifications: self.latestModifications)
         
-        modificationsSignal.startWithValues { modifications in
-            self.currentModificationModifiesScroll = self.modificationModifiesScroll(modifications)
-            self.currentModificationModifiesPointing = self.modificationModifiesPointing(modifications)
-        }
+        /// Debug
+        DDLogDebug("SwitchMaster toggling due to modifier change")
+        logState()
+    }
+    
+    //
+    // MARK: Combined callbacks
+    //
+    
+    private func remapsOrAttachedDevicesChanged(remaps: NSDictionary, devices: NSArray) {
         
-        /// Remaps & Modifiers & Attached Devices Signal
+        let maxButton = DeviceManager.maxButtonNumberAmongDevices()
+        let result = self.modifierUsage_Buttons(remaps, maxButton: maxButton)
+        self.somekbModModifiesButtonOnSomeDevice = result.somekbModModifiesButtonOnSomeDevice
+        self.someButtonModifiesButtonOnSomeDevice = result.someButtonModifiesButtonOnSomeDevice
         
-        modificationsSignal.combineLatest(with: attachedDevicesSignal).startWithValues { (modifications, attachedDevices) in
-            self.currentModificationModifiesButtonOnSomeDevice = self.modificationModifiesButtons(modification: modifications, maxButton: DeviceManager.maxButtonNumberAmongDevices())
-        }
+        self.defaultModifiesButtonOnSomeDevice = self.defaultModifiesButtonOnSomeDevice(remaps, maxButton: maxButton)
+    }
+    
+    private var latestModifications: NSDictionary? = nil
+    private func remapsOrModifiersChanged(remaps: NSDictionary, modifiers: NSDictionary) {
         
-        // MARK: Call tap togglers
+        /// Derive modifications
+        let modifications = Remap.modifications(withModifiers: modifiers)
         
-        attachedDevicesSignal.startWithValues { _ in
-            
-            DDLogDebug("SwitchMaster toggling due to attachedDevices change")
-            
-            self.toggleKbModTap()
-            self.toggleBtnModProcessing()
-            
-            self.toggleScrollTap()
-            self.toggleButtonTap()
-            self.togglePointingTap(modifications: nil)
-        }
-        remapsSignal.startWithValues { _ in
-            
-            DDLogDebug("SwitchMaster toggling due to remaps change")
-            
-            self.toggleKbModTap()
-            self.toggleBtnModProcessing()
-            
-            self.toggleScrollTap()
-            self.toggleButtonTap()
-            
-            /// On not toggling pointing tap
-            /// - Would be a hack
-            /// - We want to do this because it prevents an issue where after recording a click and drag in the addField it immediately activates.
-            /// - I'm not totally sure this won't lead to other issues in edge cases though, so we'll find another solution:
-            ///     - sol1: Only conclude addMode drag when the user lets go of the button - Works but makes things less responsive
-            ///     - sol2:Make modifiedDrag ignore reinitialization while addModeDrag is active
-            /// - On passing in self.latestModifications:
-            ///  -  I'm not 100% sure self.latestModifications is always up-to-date here (what if the new remaps should enable modifier tracking but those modifiers aren't in self.latestModifications, yet?). Since this is not performance-critical it's better to just pass in nil, so that `togglePointingTap()` gets the values fresh.
-            self.togglePointingTap(modifications: nil /*self.latestModifications*/)
-        }
-        scrollConfigSignal.startWithValues { _ in
-            
-            DDLogDebug("SwitchMaster toggling due to scroll config change")
-            
-            self.toggleKbModTap()
-            self.toggleBtnModProcessing()
-            
-            self.toggleScrollTap()
-        }
-
-        modifiersSignal.startWithValues { _ in
-            
-            DDLogDebug("SwitchMaster toggling due to modifier change")
-            
-            self.toggleScrollTap()
-            self.toggleButtonTap()
-            self.togglePointingTap(modifications: self.latestModifications)
-        }
+        /// Update state
+        self.currentModificationModifiesScroll = self.modificationModifiesScroll(modifications)
+        self.currentModificationModifiesPointing = self.modificationModifiesPointing(modifications)
         
+        /// Store
+        latestModifications = modifications
+    }
+    
+    private func remapsOrModifiersOrAttachedDevicesChanged(remaps: NSDictionary, modifiers: NSDictionary, attachedDevices: NSArray) {
+        
+        /// NOTE: Not totally sure using `latestModifications` always works here. Make sure you call `remapsOrModifiersChanged` before this so `latestModifications` is updated first
+        
+        /// Update state
+        self.currentModificationModifiesButtonOnSomeDevice = self.modificationModifiesButtons(modification: latestModifications, maxButton: DeviceManager.maxButtonNumberAmongDevices())
+    }
+    
+    //
+    // MARK: Debug
+    //
+    
+    private func logState() {
         if runningPreRelease() {
-            SignalProducer<Any, Never>.merge(attachedDevicesSignal.map { $0 as Any }, remapsSignal.map { $0 as Any }, scrollConfigSignal.map { $0 as Any }, modifiersSignal.map { $0 as Any }).startWithValues { _ in
-                
-                ModifiedDrag.activationState { modifiedDragActivation in
-                    
-                    DDLogDebug("SwitchMaster switched to - kbMod: \(Modifiers.kbModPriority().rawValue), btnMod: \(Modifiers.btnModPriority().rawValue), button: \(ButtonInputReceiver.isRunning() ? 1 : 0), scroll: \(Scroll.isRunning() ? 1 : 0), pointing: \(modifiedDragActivation.rawValue)")
-                }
+            ModifiedDrag.activationState { modifiedDragActivation in
+                DDLogDebug("SwitchMaster switched to - kbMod: \(Modifiers.kbModPriority().rawValue), btnMod: \(Modifiers.btnModPriority().rawValue), button: \(ButtonInputReceiver.isRunning() ? 1 : 0), scroll: \(Scroll.isRunning() ? 1 : 0), pointing: \(modifiedDragActivation.rawValue)")
             }
         }
     }
@@ -520,3 +560,147 @@ import ReactiveSwift
         return (someKbModModifiesPointing: kbSwayPoint, someKbModModifiesScroll: kbSwayScroll, someButtonModifiesPointing: btnSwayPoint, someButtonModifiesScroll: btnSwayScroll)
     }
 }
+
+// MARK: - Old Reactive Swift Stuff
+/// We moved away from ReactiveSwift because it was too slow
+
+//@objc func load_Manual() {
+    
+    /// Get signals
+    
+//        let attachedDevicesSignal = ReactiveDeviceManager.shared.attachedDevices
+//        let remapsSignal = ReactiveRemaps.shared.remaps
+//        let scrollConfigSignal = ReactiveScrollConfig.shared.scrollConfig
+//        let modifiersSignal = ReactiveModifiers.shared.modifiers
+    
+    // MARK: Update state
+    
+    /// Attached Devices Signal
+    
+//        attachedDevicesSignal.startWithValues { devices in
+//            self.someDeviceHasScroll = DeviceManager.someDeviceHasScrollWheel()
+//            self.someDeviceHasPointing = DeviceManager.someDeviceHasPointing()
+//            self.someDeviceHasUsableButtons = DeviceManager.someDeviceHasUsableButtons()
+//            self.maxButtonNumberAmongDevices = DeviceManager.maxButtonNumberAmongDevices()
+//        }
+    
+    /// Remaps Signal
+    
+//        remapsSignal.startWithValues { remaps in
+//
+//            let result = self.modifierUsage_Point_Scroll(remaps)
+//
+//            self.somekbModModifiesPointing = result.someKbModModifiesPointing
+//            self.somekbModModifiesScroll = result.someKbModModifiesScroll
+//            self.someButtonModifiesPointing = result.someButtonModifiesPointing
+//            self.someButtonModifiesScroll = result.someButtonModifiesScroll
+//        }
+    
+    /// Remaps & Attached Devices Signal
+    
+//        remapsSignal.combineLatest(with: attachedDevicesSignal).startWithValues { (remaps, attachedDevices) in
+//
+//            let maxButton = DeviceManager.maxButtonNumberAmongDevices()
+//            let result = self.modifierUsage_Buttons(remaps, maxButton: maxButton)
+//            self.somekbModModifiesButtonOnSomeDevice = result.somekbModModifiesButtonOnSomeDevice
+//            self.someButtonModifiesButtonOnSomeDevice = result.someButtonModifiesButtonOnSomeDevice
+//
+//            self.defaultModifiesButtonOnSomeDevice = self.defaultModifiesButtonOnSomeDevice(remaps, maxButton: maxButton)
+//        }
+    
+    /// Scroll Config Signal
+    
+//        scrollConfigSignal.startWithValues { scrollConfig in
+//
+//            if Remap.addModeIsEnabled {
+//                /// This doesn't work because scrollConfig doesn't change for addMode, so we don't get a callback. We instead solved this in `concludeAddModeWithPayload:`
+//                self.defaultModifiesScroll = false
+//            } else {
+//                self.defaultModifiesScroll = !scrollConfig.killSwitch &&
+//                (scrollConfig.u_smoothEnabled || scrollConfig.u_speed != "system" || scrollConfig.u_invertDirection == kMFScrollInversionInverted)
+//            }
+//
+//        }
+    
+    /// Remaps & Modifiers Signal
+    ///  NOTE: The callbacks are called whenever the modifiers change so they need to be fast!
+    
+//        let modificationsSignal = remapsSignal.combineLatest(with: modifiersSignal).map { (remaps, modifiers) in
+//            let modifications = Remap.modifications(withModifiers: modifiers)
+//            self.latestModifications = modifications
+//            return modifications
+//        }
+    
+//        modificationsSignal.startWithValues { modifications in
+//            self.currentModificationModifiesScroll = self.modificationModifiesScroll(modifications)
+//            self.currentModificationModifiesPointing = self.modificationModifiesPointing(modifications)
+//        }
+    
+    /// Remaps & Modifiers & Attached Devices Signal
+    
+//        modificationsSignal.combineLatest(with: attachedDevicesSignal).startWithValues { (modifications, attachedDevices) in
+//            self.currentModificationModifiesButtonOnSomeDevice = self.modificationModifiesButtons(modification: modifications, maxButton: DeviceManager.maxButtonNumberAmongDevices())
+//        }
+    
+    // MARK: Call tap togglers
+    
+//        attachedDevicesSignal.startWithValues { _ in
+//
+//            DDLogDebug("SwitchMaster toggling due to attachedDevices change")
+//
+//            self.toggleKbModTap()
+//            self.toggleBtnModProcessing()
+//
+//            self.toggleScrollTap()
+//            self.toggleButtonTap()
+//            self.togglePointingTap(modifications: nil)
+//        }
+//        remapsSignal.startWithValues { _ in
+//
+//            DDLogDebug("SwitchMaster toggling due to remaps change")
+//
+//            self.toggleKbModTap()
+//            self.toggleBtnModProcessing()
+//
+//            self.toggleScrollTap()
+//            self.toggleButtonTap()
+//
+//            /// On not toggling pointing tap
+//            /// - Would be a hack
+//            /// - We want to do this because it prevents an issue where after recording a click and drag in the addField it immediately activates.
+//            /// - I'm not totally sure this won't lead to other issues in edge cases though, so we'll find another solution:
+//            ///     - sol1: Only conclude addMode drag when the user lets go of the button - Works but makes things less responsive
+//            ///     - sol2:Make modifiedDrag ignore reinitialization while addModeDrag is active
+//            /// - On passing in self.latestModifications:
+//            ///  -  I'm not 100% sure self.latestModifications is always up-to-date here (what if the new remaps should enable modifier tracking but those modifiers aren't in self.latestModifications, yet?). Since this is not performance-critical it's better to just pass in nil, so that `togglePointingTap()` gets the values fresh.
+//            self.togglePointingTap(modifications: nil /*self.latestModifications*/)
+//        }
+//        scrollConfigSignal.startWithValues { _ in
+//
+//            DDLogDebug("SwitchMaster toggling due to scroll config change")
+//
+//            self.toggleKbModTap()
+//            self.toggleBtnModProcessing()
+//
+//            self.toggleScrollTap()
+//        }
+
+//        modifiersSignal.startWithValues { _ in
+//
+//            DDLogDebug("SwitchMaster toggling due to modifier change")
+//
+//            self.toggleScrollTap()
+//            self.toggleButtonTap()
+//            self.togglePointingTap(modifications: self.latestModifications)
+//        }
+    
+//        if runningPreRelease() {
+//            SignalProducer<Any, Never>.merge(attachedDevicesSignal.map { $0 as Any }, remapsSignal.map { $0 as Any }, scrollConfigSignal.map { $0 as Any }, modifiersSignal.map { $0 as Any }).startWithValues { _ in
+//
+//                ModifiedDrag.activationState { modifiedDragActivation in
+//
+//                    DDLogDebug("SwitchMaster switched to - kbMod: \(Modifiers.kbModPriority().rawValue), btnMod: \(Modifiers.btnModPriority().rawValue), button: \(ButtonInputReceiver.isRunning() ? 1 : 0), scroll: \(Scroll.isRunning() ? 1 : 0), pointing: \(modifiedDragActivation.rawValue)")
+//                }
+//            }
+//        }
+//}

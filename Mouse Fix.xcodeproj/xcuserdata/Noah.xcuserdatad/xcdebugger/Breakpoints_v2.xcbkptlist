@@ -299,38 +299,6 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "A3E15AAF-DD33-44D5-A68F-5DEACC69A059"
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Helper/Core/Coordinate/SwitchMaster.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "201"
-            endingLineNumber = "201"
-            landmarkName = "load_Manual()"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "B43C3DF0-C944-4D93-AF80-B627A1576E21"
-            shouldBeEnabled = "No"
-            ignoreCount = "4"
-            continueAfterRunningActions = "No"
-            filePath = "Helper/Core/Coordinate/SwitchMaster.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "229"
-            endingLineNumber = "229"
-            landmarkName = "load_Manual()"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
             uuid = "0D5F8F2C-DF95-4800-A119-556AA5EE0B27"
             shouldBeEnabled = "No"
             ignoreCount = "6"
@@ -338,9 +306,9 @@
             filePath = "Helper/Core/Coordinate/SwitchMaster.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "253"
-            endingLineNumber = "253"
-            landmarkName = "load_Manual()"
+            startingLineNumber = "293"
+            endingLineNumber = "293"
+            landmarkName = "toggleKbModTap()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -354,9 +322,9 @@
             filePath = "Helper/Core/Coordinate/SwitchMaster.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "508"
-            endingLineNumber = "508"
-            landmarkName = "load_Manual()"
+            startingLineNumber = "548"
+            endingLineNumber = "548"
+            landmarkName = "modifierUsage_Point_Scroll(_:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

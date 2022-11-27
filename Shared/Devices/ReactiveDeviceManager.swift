@@ -36,6 +36,7 @@ import ReactiveSwift
     
     // MARK: ObjC interface
     @objc func handleAttachedDevicesDidChange() {
-        attachedDevicesObserver.send(value: DeviceManager.attachedDevices)
+//        attachedDevicesObserver.send(value: DeviceManager.attachedDevices)
+        SwitchMaster.shared.attachedDevicesChanged(devices: DeviceManager.attachedDevices)
     }
 }
