@@ -298,18 +298,22 @@ BOOL getCharsForKeyCode(CGKeyCode keyCode, NSString **chars) {
     
     /// Get layout
     
-    const UCKeyboardLayout *layout;
+    const UCKeyboardLayout *layout = NULL;
     
     TISInputSourceRef inputSource = TISCopyCurrentKeyboardInputSource() /*TISCopyCurrentKeyboardLayoutInputSource()*/; /// Not sure what's better
-    CFDataRef layoutData = TISGetInputSourceProperty(inputSource, kTISPropertyUnicodeKeyLayoutData);
-    if (layoutData != NULL) {
-        layout = (UCKeyboardLayout *)CFDataGetBytePtr(layoutData);
-    } else {
-        CFRelease(inputSource);
+    
+    if (inputSource != NULL) {
+        CFDataRef layoutData = TISGetInputSourceProperty(inputSource, kTISPropertyUnicodeKeyLayoutData);
+        if (layoutData != NULL) {
+            layout = (UCKeyboardLayout *)CFDataGetBytePtr(layoutData);
+        }
+    }
+    
+    if (layout == NULL) {
         *chars = @"";
+        CFRelease(inputSource);
         return NO;
     }
-    CFRelease(inputSource);
     
     /// Get other input params
     
@@ -331,16 +335,18 @@ BOOL getCharsForKeyCode(CGKeyCode keyCode, NSString **chars) {
     OSStatus r = UCKeyTranslate(layout, keyCodeForLayout, keyAction, modifierKeyState, keyboardType, keyTranslateOptions, &deadKeyState, maxStringLength, &actualStringLength, unicodeString);
     
     /// Check errors
-    
     if (r != noErr) {
         DDLogError(@"UCKeyTranslate() failed with error code: %d", r);
         *chars = @"";
+        CFRelease(inputSource);
         return NO;
     }
     
-    /// Return result
-    
+    /// Get result
     *chars = [NSString stringWithCharacters:unicodeString length:actualStringLength];
+    /// Release inputSource
+    CFRelease(inputSource);
+    /// Return success
     return YES;
 }
 

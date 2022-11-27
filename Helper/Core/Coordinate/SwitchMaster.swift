@@ -30,6 +30,7 @@
 ///
 /// On Optimization
 /// - We should move the remapsAnalysis methods into RemapsAnalyzer and cache the ones that are used when the modifier state changes.
+/// - When buttons are not used as trigger and are only used as modifier in combination with kbMod, we can switch off buttonTap until kbMods are pressed. 
 ///
 /// Testing:
 /// - [x] Keyboard Modifiers have 0% CPU usage when not toggling another tap
