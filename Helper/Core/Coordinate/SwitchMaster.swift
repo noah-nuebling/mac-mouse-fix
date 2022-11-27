@@ -24,30 +24,32 @@
 /// - This would let us turn off buttonTap / scrollTap for mice that don't support buttons / don't support scrolling. However then we couldn't update the active device when another mouse sends scroll or button input because we wouldn't be listening to that input. So it's better to just listen to all attachedDevices.
 ///
 /// On Optimization
-/// - [ ] We should move the remapsAnalysis methods into RemapsAnalyzer and cache the ones that are used when the modifier state changes.
 /// - [ ] When buttons are not used as trigger and are only used as modifier in combination with kbMod, we could switch off buttonTap until kbMods are pressed.
+///     - -> Implementation ideas: only toggle buttonTap if button is used as "solo" modifier (without kbMod requirement) or if the kbMod it could "complete" a modification precondition together with the currently active keyboard modifiers.
+///     - This might be easier impelement / more performant if we encode this kbMods -> btnMods -> modifications hierarchy into the remaps dataStructure, currently it has a form (kbMods, btnMods) -> modifications. Or if we bring back the original "modifiying actions" architecture. But that probably requires large architectural changes and would create other problems.
+/// - [x] We should move the remapsAnalysis methods into RemapsAnalyzer and cache the ones that are used when the modifier state changes.
+///     - -> Moved the performance-critical stuff to RemapsAnalyzer. Tried caching but it didn't speed things up (at least the way I did it - maybe if we cache bigger chunks of data we could get a speedup)
 /// - [x] Using simple function calls instead of reactiveSwift should improve performance a decent bit. Should consider that,at least for the buttonModifier input
 ///     - Improved performance a good bit. See commit 1a15623bd254d548b553d0073df1bf72887f1ac1.
 ///
 /// Issues:
-/// - When you detach mouse during modifiedDrag modifiedDrag will immediately re-enable when you re-attach the mouse. I think this is because the modifier state doesn't reset properly when the mouse is detached.
+/// - When you detach mouse during modifiedDrag, modifiedDrag will immediately re-enable when you re-attach the mouse. I think this is because the modifier state doesn't reset properly when the mouse is detached.
 ///
-/// Testing:
-/// - [x] Keyboard Modifiers have 0% CPU usage when not toggling another tap
-/// - [x] Scrolling has 0% CPU usage when umodified
-/// - [x] Buttons have 0% CPU usage when not (modified or toggling another tap)
-/// - [x] Buttons work as modifiers even if no buttons are modified
-/// - [x] Pointing has 0% CPU usage when unmodified
+/// Testing: [ ]
+/// - [ ] Keyboard Modifiers have 0% CPU usage when not toggling another tap
+/// - [ ] Scrolling has 0% CPU usage when umodified
+/// - [ ] Buttons have 0% CPU usage when not (modified or toggling another tap)
+/// - [ ] Buttons work as modifiers even if no buttons are modified
+/// - [ ] Pointing has 0% CPU usage when unmodified
 /// - AddMode works even when all input taps are turned off for (and the assigned action also works)
-///  - [x] Click, Hold, Double Click, Button Modifier + Click, Keyboard Modifier + Click
+///  - [ ] Click, Hold, Double Click, Button Modifier + Click, Keyboard Modifier + Click
 ///  - [ ] Click and Drag, Double Click and Drag, Keyboard Modifier + Click and Drag
 ///  - [ ] Click and Scroll, Double Click and Scroll, Keyboard Modifier + Click and Scroll
 /// - Kill switch testing
 ///  - [ ] 0% CPU when using either of the killSwitces
 ///  - [ ] When kbMods toggle scrollTap (and nothing else), scrollKillSwitch also disables kbModTap
 ///  - [ ] addMode still works with the killSwitches are enabled
-///
-/// - [ ] Test if lockDown still works after we moved it in here
+/// - [x] Test if lockDown works
 ///
 // TODO: ...
 /// - [x] Implement killSwitch signals
