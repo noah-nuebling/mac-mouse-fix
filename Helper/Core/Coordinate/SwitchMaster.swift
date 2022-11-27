@@ -43,8 +43,11 @@
 ///  - [ ] Click and Drag, Double Click and Drag, Keyboard Modifier + Click and Drag
 ///  - [ ] Click and Scroll, Double Click and Scroll, Keyboard Modifier + Click and Scroll
 ///
+/// - [ ] Test if lockDown still works after we moved it in here
+///
 // TODO: ...
 /// - Implement killSwitch signals
+/// - [x] Implement trial expired lockdown
 
 import Cocoa
 import CocoaLumberjackSwift
@@ -97,6 +100,10 @@ import ReactiveSwift
     var currentModificationModifiesPointing = false
     var currentModificationModifiesButtonOnSomeDevice = false /// & derives from: Attached Devices
     
+    /// Derived from: Lockdown
+    var isLockedDown = false
+    
+    
     //
     // MARK: Init
     //
@@ -109,6 +116,31 @@ import ReactiveSwift
         latestRemaps = Remap.remaps
         latestScrollConfig = ScrollConfig.shared
         latestModifiers = Modifiers.modifiers(with: nil)
+    }
+    
+    //
+    // MARK: Lockdown
+    //
+    
+
+    @objc func lockDown() {
+        
+        /// Update state
+        isLockedDown = true
+        
+        /// Call togglers
+        /// Notes:
+        /// - Calling`toggleBtnModProcessing()` is unnecessary since we already turn off all button inputs in  `toggleButtonTap()`
+        /// - Not sure if we need to call `togglePointingTap(modifications:)`
+        
+        toggleKbModTap()
+        toggleScrollTap()
+        toggleButtonTap()
+        togglePointingTap(modifications: nil)
+        
+        /// Debug
+        DDLogDebug("SwitchMaster toggling due to lockdown")
+        logState()
     }
     
     //
@@ -286,6 +318,11 @@ import ReactiveSwift
     
     private func toggleKbModTap() {
         
+        if isLockedDown {
+            Modifiers.setKeyboardModifierPriority(kMFModifierPriorityUnused)
+            return
+        }
+        
         var priority = kMFModifierPriorityUnused
         
         let kbModsAreUsed =
@@ -344,6 +381,11 @@ import ReactiveSwift
     
     private func toggleScrollTap() {
         
+        if isLockedDown {
+            Scroll.stop()
+            return
+        }
+        
         if someDeviceHasScroll && (defaultModifiesScroll || currentModificationModifiesScroll) {
             Scroll.start()
         } else {
@@ -353,6 +395,11 @@ import ReactiveSwift
     
     private func toggleButtonTap() {
     
+        if isLockedDown {
+            ButtonInputReceiver.stop()
+            return
+        }
+        
         let buttonsAreUsedAsModifiers =
         (someDeviceHasScroll && someButtonModifiesScroll)
         || (someDeviceHasPointing && someButtonModifiesPointing)
@@ -367,6 +414,11 @@ import ReactiveSwift
     }
     
     private func togglePointingTap(modifications modificationsArg: NSDictionary?) {
+        
+        if isLockedDown { /// Not sure if necessary
+            ModifiedDrag.deactivate()
+            return
+        }
         
         /// Determine enable
         let enable = someDeviceHasPointing && currentModificationModifiesPointing

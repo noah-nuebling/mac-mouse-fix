@@ -96,7 +96,7 @@ extension MFLicenseAndTrialState: Equatable {
                         }
                         
                         /// Lock helper
-                        HelperState.lockDown()
+                        SwitchMaster.shared.lockDown()
                         
                         #endif
                         

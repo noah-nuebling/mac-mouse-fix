@@ -43,18 +43,4 @@ import Foundation
         guard let device = DeviceManager.attachedDevice(with: IOHIDDevice) else { return }
         activeDevice = device
     }
-    
-    // MARK: Lockdown state
-    
-    @objc static var isLockedDown = false /// Don't write to this directly, use lockDown() instead
-    @objc static func lockDown() {
-        
-        /// Set flag
-        isLockedDown = true
-        
-        /// Notify input processing modules
-        ///     Note: We don't need to lock down `ModifiedDrag.m`, because it only does anything when a modification becomes active. And we turn off all modifications via Remap.m.
-        Remap.reload()
-        ScrollConfig.reload() /// Not sure if necessary
-    }
 }

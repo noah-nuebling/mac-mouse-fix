@@ -213,14 +213,14 @@ import CocoaLumberjackSwift
     @objc lazy var u_smoothEnabled: Bool = { c("smooth") as! Bool && !killSwitch }()
     
     @objc private var u_killSwitch: Bool { c("Other.scrollKillSwitch") as? Bool ?? false } /// Not cached cause it's just used to calc the other vars
-    @objc var killSwitch: Bool { u_killSwitch || HelperState.isLockedDown } /// Should probably move this into SwitchMaster
+    @objc var killSwitch: Bool { u_killSwitch /*|| HelperState.isLockedDown */ } /// Should probably move this into SwitchMaster. Edit: Moved lockDown stuff into switchMaster
     
     // MARK: Invert Direction
     
     @objc var u_invertDirection: MFScrollInversion {
         /// This can be used as a factor to invert things. kMFScrollInversionInverted is -1.
         
-        if HelperState.isLockedDown { return kMFScrollInversionNonInverted }
+//        if HelperState.isLockedDown { return kMFScrollInversionNonInverted }
         return c("reverseDirection") as! Bool ? kMFScrollInversionInverted : kMFScrollInversionNonInverted
     }
     

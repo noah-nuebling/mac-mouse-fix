@@ -299,22 +299,6 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "0D5F8F2C-DF95-4800-A119-556AA5EE0B27"
-            shouldBeEnabled = "No"
-            ignoreCount = "6"
-            continueAfterRunningActions = "No"
-            filePath = "Helper/Core/Coordinate/SwitchMaster.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "289"
-            endingLineNumber = "289"
-            landmarkName = "toggleKbModTap()"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
             uuid = "4247FCC4-4B4C-457A-8E99-0BF3547A2AA7"
             shouldBeEnabled = "No"
             ignoreCount = "0"
@@ -322,8 +306,8 @@
             filePath = "Helper/Core/Coordinate/SwitchMaster.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "544"
-            endingLineNumber = "544"
+            startingLineNumber = "596"
+            endingLineNumber = "596"
             landmarkName = "modifierUsage_Point_Scroll(_:)"
             landmarkType = "7">
          </BreakpointContent>

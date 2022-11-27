@@ -32,7 +32,7 @@ import ReactiveSwift
     }
     
     /// ObjC interface
-    @objc func handleRemapsDidChange() -> <#type#> {
+    @objc func handleRemapsDidChange() {
 //        observer.send(value: Remap.remaps)
         SwitchMaster.shared.remapsChanged(remaps: Remap.remaps)
     }

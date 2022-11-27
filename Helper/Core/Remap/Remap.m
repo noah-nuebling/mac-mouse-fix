@@ -211,7 +211,7 @@ static NSDictionary *_remaps;
         /// Get values from action table (button remaps)
         ///
         
-        BOOL killSwitch = [(id)config(@"Other.buttonKillSwitch") boolValue] || HelperState.isLockedDown;
+        BOOL killSwitch = [(id)config(@"Other.buttonKillSwitch") boolValue] /*|| HelperState.isLockedDown*/;
         
         if (killSwitch) {
             /// TODO: Turn off button interception completely (generally when the remaps dict is empty)
