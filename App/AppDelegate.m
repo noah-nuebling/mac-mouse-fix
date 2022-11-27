@@ -228,9 +228,9 @@ static NSDictionary *sideButtonActions;
     NSInteger launchesOverall;
     NSInteger launchesOfCurrentBundleVersion;
     
-    launchesOverall = [(id)config(@"Other.launchesOverall") integerValue];
-    launchesOfCurrentBundleVersion = [(id)config(@"Other.launchesOfCurrentBundleVersion") integerValue];
-    NSInteger lastLaunchedBundleVersion = [(id)config(@"Other.lastLaunchedBundleVersion") integerValue];
+    launchesOverall = [(id)config(@"State.launchesOverall") integerValue];
+    launchesOfCurrentBundleVersion = [(id)config(@"State.launchesOfCurrentBundleVersion") integerValue];
+    NSInteger lastLaunchedBundleVersion = [(id)config(@"State.lastLaunchedBundleVersion") integerValue];
     NSInteger currentBundleVersion = Locator.bundleVersion;
     
     launchesOverall += 1;
@@ -240,9 +240,9 @@ static NSDictionary *sideButtonActions;
     }
     launchesOfCurrentBundleVersion += 1;
     
-    setConfig(@"Other.launchesOfCurrentBundleVersion", @(launchesOfCurrentBundleVersion));
-    setConfig(@"Other.launchesOverall", @(launchesOverall));
-    setConfig(@"Other.lastLaunchedBundleVersion", @(currentBundleVersion));
+    setConfig(@"State.launchesOfCurrentBundleVersion", @(launchesOfCurrentBundleVersion));
+    setConfig(@"State.launchesOverall", @(launchesOverall));
+    setConfig(@"State.lastLaunchedBundleVersion", @(currentBundleVersion));
     
     
 //    BOOL firstAppLaunch = launchesOverall == 1; /// App is launched for the first time

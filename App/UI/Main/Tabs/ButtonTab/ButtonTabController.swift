@@ -339,11 +339,11 @@ import CocoaLumberjackSwift
         /// This func doesn't clearly belong into `ButtonTabController`
         ///     Is called when the helper is enabled
         
-        let hasBeenInited = config("Other.remapsAreInitialized") as! Bool? ?? false
+        let hasBeenInited = config("State.remapsAreInitialized") as! Bool? ?? false
         
         if !hasBeenInited {
             
-            setConfig("Other.remapsAreInitialized", true as NSObject)
+            setConfig("State.remapsAreInitialized", true as NSObject)
             commitConfig()
             
             let (_, _, bestPresetMatch) = MessagePortUtility.getActiveDeviceInfo() ?? (nil, nil, nil)
