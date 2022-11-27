@@ -211,45 +211,46 @@ static NSDictionary *_remaps;
         /// Get values from action table (button remaps)
         ///
         
-        BOOL killSwitch = [(id)config(@"General.buttonKillSwitch") boolValue] /*|| HelperState.isLockedDown*/;
+//        BOOL killSwitch = [(id)config(@"General.buttonKillSwitch") boolValue] /*|| HelperState.isLockedDown*/;
         
-        if (killSwitch) {
-            /// TODO: Turn off button interception completely (generally when the remaps dict is empty)
-        } else {
+//        if (killSwitch) {
+//            /// TODO: Turn off button interception completely (generally when the remaps dict is empty)
+//        } else {
             
-            /// Convert remaps table to remaps dict
-            
-            NSArray *remapsTable = [Config.shared.config objectForKey:kMFConfigKeyRemaps];
-            
-            for (NSDictionary *tableEntry in remapsTable) {
-                /// Get modification precondition section of keypath
-                NSDictionary *modificationPrecondition = tableEntry[kMFRemapsKeyModificationPrecondition];
-                /// Get trigger section of keypath
-                NSArray *triggerKeyArray;
-                id trigger = tableEntry[kMFRemapsKeyTrigger];
-                if ([trigger isKindOfClass:NSString.class]) {
-                    NSString *triggerStr = (NSString *)trigger;
-                    triggerKeyArray = @[triggerStr];
-                    NSAssert([triggerStr isEqualToString:kMFTriggerScroll] || [triggerStr isEqualToString:kMFTriggerDrag] , @"");
-                } else if ([trigger isKindOfClass:NSDictionary.class]) {
-                    NSDictionary *triggerDict = (NSDictionary *)trigger;
-                    NSString *duration = triggerDict[kMFButtonTriggerKeyDuration];
-                    NSNumber *level = triggerDict[kMFButtonTriggerKeyClickLevel];
-                    NSNumber *buttonNum = triggerDict[kMFButtonTriggerKeyButtonNumber];
-                    triggerKeyArray = @[buttonNum, level, duration];
-                } else NSAssert(NO, @"");
-                /// Get effect
-                id effect = tableEntry[kMFRemapsKeyEffect]; /// This is always dict
-                if ([trigger isKindOfClass:NSDictionary.class]) {
-                    effect = @[effect];
-                    /// ^ For some reason we built one shot effect handling code around _arrays_ of effects. So we need to wrap our effect in an array.
-                    ///  This doesn't make sense. We should clean this up at some point and remove the array.
-                }
-                /// Put it all together
-                NSArray *keyArray = [@[modificationPrecondition] arrayByAddingObjectsFromArray:triggerKeyArray];
-                [remapsDict setObject:effect forCoolKeyArray:keyArray];
+        /// Convert remaps table to remaps dict
+        
+        NSArray *remapsTable = [Config.shared.config objectForKey:kMFConfigKeyRemaps];
+        
+        for (NSDictionary *tableEntry in remapsTable) {
+            /// Get modification precondition section of keypath
+            NSDictionary *modificationPrecondition = tableEntry[kMFRemapsKeyModificationPrecondition];
+            /// Get trigger section of keypath
+            NSArray *triggerKeyArray;
+            id trigger = tableEntry[kMFRemapsKeyTrigger];
+            if ([trigger isKindOfClass:NSString.class]) {
+                NSString *triggerStr = (NSString *)trigger;
+                triggerKeyArray = @[triggerStr];
+                NSAssert([triggerStr isEqualToString:kMFTriggerScroll] || [triggerStr isEqualToString:kMFTriggerDrag] , @"");
+            } else if ([trigger isKindOfClass:NSDictionary.class]) {
+                NSDictionary *triggerDict = (NSDictionary *)trigger;
+                NSString *duration = triggerDict[kMFButtonTriggerKeyDuration];
+                NSNumber *level = triggerDict[kMFButtonTriggerKeyClickLevel];
+                NSNumber *buttonNum = triggerDict[kMFButtonTriggerKeyButtonNumber];
+                triggerKeyArray = @[buttonNum, level, duration];
+            } else NSAssert(NO, @"");
+            /// Get effect
+            id effect = tableEntry[kMFRemapsKeyEffect]; /// This is always dict
+            if ([trigger isKindOfClass:NSDictionary.class]) {
+                effect = @[effect];
+                /// ^ For some reason we built one shot effect handling code around _arrays_ of effects. So we need to wrap our effect in an array.
+                ///  This doesn't make sense. We should clean this up at some point and remove the array.
             }
+            /// Put it all together
+            NSArray *keyArray = [@[modificationPrecondition] arrayByAddingObjectsFromArray:triggerKeyArray];
+            [remapsDict setObject:effect forCoolKeyArray:keyArray];
         }
+        
+//        }
         
         [self setRemaps:remapsDict];
     }

@@ -306,8 +306,8 @@
             filePath = "Helper/Core/Coordinate/SwitchMaster.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "596"
-            endingLineNumber = "596"
+            startingLineNumber = "641"
+            endingLineNumber = "641"
             landmarkName = "modifierUsage_Point_Scroll(_:)"
             landmarkType = "7">
          </BreakpointContent>

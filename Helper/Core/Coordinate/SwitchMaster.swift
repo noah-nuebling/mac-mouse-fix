@@ -42,6 +42,10 @@
 ///  - [x] Click, Hold, Double Click, Button Modifier + Click, Keyboard Modifier + Click
 ///  - [ ] Click and Drag, Double Click and Drag, Keyboard Modifier + Click and Drag
 ///  - [ ] Click and Scroll, Double Click and Scroll, Keyboard Modifier + Click and Scroll
+/// - Kill switch testing
+///  - [ ] 0% CPU when using either of the killSwitces
+///  - [ ] When kbMods toggle scrollTap (and nothing else), scrollKillSwitch also disables kbModTap
+///  - [ ] addMode still works with the killSwitches enabled
 ///
 /// - [ ] Test if lockDown still works after we moved it in here
 ///
@@ -103,6 +107,10 @@ import ReactiveSwift
     /// Derived from: Lockdown
     var isLockedDown = false
     
+    /// Derived from: General Config
+    private var buttonKillSwitch = false
+    private var scrollKillSwitch = false
+    
     
     //
     // MARK: Init
@@ -141,6 +149,43 @@ import ReactiveSwift
         /// Debug
         DDLogDebug("SwitchMaster toggling due to lockdown")
         logState()
+    }
+    
+    //
+    // MARK: Kill switches
+    //
+    
+    @objc func generalConfigChanged(generalConfig: NSDictionary) {
+        
+        /// Get raw
+        let btn = generalConfig.object(forKey: "buttonKillSwitch") as! Bool
+        let scrl = generalConfig.object(forKey: "scrollKillSwitch") as! Bool
+        
+        /// Store & record change
+        
+        var didChange = false
+        
+        if btn != buttonKillSwitch {
+            buttonKillSwitch = btn
+            didChange = true
+        }
+        if scrl != scrollKillSwitch {
+            scrollKillSwitch = scrl
+            didChange = true
+        }
+        
+        if didChange {
+            
+            /// Call togglers
+            toggleKbModTap()
+            toggleScrollTap()
+            toggleButtonTap()
+            togglePointingTap(modifications: nil)
+            
+            /// Debug
+            DDLogDebug("SwitchMaster toggling due to killSwitch change")
+            logState()
+        }
     }
     
     //
@@ -225,7 +270,7 @@ import ReactiveSwift
             /// This doesn't work because scrollConfig doesn't change for addMode, so we don't get a callback. We instead solved this in `concludeAddModeWithPayload:`
             self.defaultModifiesScroll = false
         } else {
-            self.defaultModifiesScroll = !scrollConfig.killSwitch &&
+            self.defaultModifiesScroll = /*!scrollKillSwitch && */
             (scrollConfig.u_smoothEnabled || scrollConfig.u_speed != "system" || scrollConfig.u_invertDirection == kMFScrollInversionInverted)
         }
         
@@ -326,15 +371,15 @@ import ReactiveSwift
         var priority = kMFModifierPriorityUnused
         
         let kbModsAreUsed =
-        (someDeviceHasScroll && somekbModModifiesScroll)
+        (someDeviceHasScroll && somekbModModifiesScroll && !scrollKillSwitch)
         || (someDeviceHasPointing && somekbModModifiesPointing)
-        || (someDeviceHasUsableButtons && somekbModModifiesButtonOnSomeDevice)
+        || (someDeviceHasUsableButtons && somekbModModifiesButtonOnSomeDevice && !buttonKillSwitch)
         
         if kbModsAreUsed {
             
-            let someKbModsToggleScroll = !defaultModifiesScroll && somekbModModifiesScroll
+            let someKbModsToggleScroll = !defaultModifiesScroll && somekbModModifiesScroll && !scrollKillSwitch
             let someKbModsTogglePointing = !defaultModifiesPointing && somekbModModifiesPointing
-            let someKbModsToggleButtons = !defaultModifiesButtonOnSomeDevice && somekbModModifiesButtonOnSomeDevice
+            let someKbModsToggleButtons = !defaultModifiesButtonOnSomeDevice && somekbModModifiesButtonOnSomeDevice && !buttonKillSwitch
             
             if  (someDeviceHasScroll && someKbModsToggleScroll)
                     || (someDeviceHasPointing && someKbModsTogglePointing)
@@ -354,15 +399,15 @@ import ReactiveSwift
         var priority = kMFModifierPriorityUnused
         
         let buttonsAreUsedAsModifiers =
-        (someDeviceHasScroll && someButtonModifiesScroll)
+        (someDeviceHasScroll && someButtonModifiesScroll && !scrollKillSwitch)
         || (someDeviceHasPointing && someButtonModifiesPointing)
-        || (someDeviceHasUsableButtons && someButtonModifiesButtonOnSomeDevice)
+        || (someDeviceHasUsableButtons && someButtonModifiesButtonOnSomeDevice && !buttonKillSwitch) /// `!buttonKillSwitch` is redundant here, but makes it more readable?
         
         if  buttonsAreUsedAsModifiers {
             
-            let someBtnModsToggleScroll = !defaultModifiesScroll && someButtonModifiesScroll
+            let someBtnModsToggleScroll = !defaultModifiesScroll && someButtonModifiesScroll && !scrollKillSwitch
             let someBtnModsTogglePointing = !defaultModifiesPointing && someButtonModifiesPointing
-            let someBtnModsToggleButtons = !defaultModifiesButtonOnSomeDevice && someButtonModifiesButtonOnSomeDevice
+            let someBtnModsToggleButtons = !defaultModifiesButtonOnSomeDevice && someButtonModifiesButtonOnSomeDevice && !buttonKillSwitch
             
             let buttonModifiersToggleTaps =
             (someDeviceHasScroll && someBtnModsToggleScroll)
@@ -381,7 +426,7 @@ import ReactiveSwift
     
     private func toggleScrollTap() {
         
-        if isLockedDown {
+        if isLockedDown || scrollKillSwitch {
             Scroll.stop()
             return
         }
@@ -395,7 +440,7 @@ import ReactiveSwift
     
     private func toggleButtonTap() {
     
-        if isLockedDown {
+        if isLockedDown || buttonKillSwitch {
             ButtonInputReceiver.stop()
             return
         }

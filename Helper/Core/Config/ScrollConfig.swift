@@ -42,6 +42,7 @@ import CocoaLumberjackSwift
         /// Notes:
         /// - This should be called when the underlying config (which mirrors the config file) changes
         /// - All the property values are cached in `currentConfig`, because the properties are lazy. Replacing with a fresh object deletes this implicit cache.
+        /// - TODO: Make a copy before storing in `_scrollConfigRaw` just to be sure the equality checks always work
         shared = ScrollConfig()
         _scrollConfigRaw = newConfigRaw
         cache = nil
@@ -210,10 +211,10 @@ import CocoaLumberjackSwift
     // MARK: General
     
     
-    @objc lazy var u_smoothEnabled: Bool = { c("smooth") as! Bool && !killSwitch }()
+    @objc lazy var u_smoothEnabled: Bool = { c("smooth") as! Bool /* && !killSwitch */ }()
     
-    @objc private var u_killSwitch: Bool { c("General.scrollKillSwitch") as? Bool ?? false } /// Not cached cause it's just used to calc the other vars
-    @objc var killSwitch: Bool { u_killSwitch /*|| HelperState.isLockedDown */ } /// Should probably move this into SwitchMaster. Edit: Moved lockDown stuff into switchMaster
+//    @objc private var u_killSwitch: Bool { c("General.scrollKillSwitch") as? Bool ?? false } /// Not cached cause it's just used to calc the other vars
+//    @objc var killSwitch: Bool { u_killSwitch /*|| HelperState.isLockedDown */ } /// Should probably move this into SwitchMaster. Edit: Moved lockDown stuff into switchMaster
     
     // MARK: Invert Direction
     
@@ -497,7 +498,7 @@ import CocoaLumberjackSwift
     @objc lazy var u_precise: Bool = { c("precise") as! Bool }()
     
     @objc lazy var useAppleAcceleration: Bool = {
-        u_speed == "system" || killSwitch
+        u_speed == "system" /* || killSwitch */
     }() /// Ignore MMF acceleration algorithm and use values provided by macOS
     
     @objc lazy var scrollSensitivity: MFScrollSensitivity = {

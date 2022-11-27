@@ -11,13 +11,27 @@ import Cocoa
 
 @objc class GeneralConfig: NSObject {
 
-    /// Reload from config dict
-    ///     Use this to delete cached values
+    private static var _generalConfigRaw: NSDictionary? = nil
+    
     @objc static func reload() {
         
+        /// Guard equal
+        let new = config("General") as! NSDictionary?
+        
+        guard !(new?.isEqual(to: _generalConfigRaw) ?? false) else {
+            return
+        }
+        
+        /// Store
+        _generalConfigRaw = new?.copy() as! NSDictionary?  
+        
+        /// Notify
+        if let new = new {
+            SwitchMaster.shared.generalConfigChanged(generalConfig: new)
+        } else {
+            assert(false)
+        }
     }
-    
-    
     
     /// Advanced settings
     
