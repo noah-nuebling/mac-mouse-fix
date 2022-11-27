@@ -17,7 +17,7 @@ class ButtonOptionsViewController: NSViewController {
     
     static var instance: ButtonOptionsViewController? = nil
     
-    var lockPointer = ConfigValue<Bool>(configPath: "Other.lockPointerDuringDrag")
+    var lockPointer = ConfigValue<Bool>(configPath: "General.lockPointerDuringDrag")
     
     /// IB outlets & actions
     

@@ -264,9 +264,9 @@ static NSDictionary *sideButtonActions;
 //    up.sendsSystemProfile = NO; /// This is no by default
     up.automaticallyDownloadsUpdates = NO;
     
-    BOOL checkForUpdates = [(id)config(@"Other.checkForUpdates") boolValue];
+    BOOL checkForUpdates = [(id)config(@"General.checkForUpdates") boolValue];
     
-    BOOL checkForPrereleases = [(id)config(@"Other.checkForPrereleases") boolValue];
+    BOOL checkForPrereleases = [(id)config(@"General.checkForPrereleases") boolValue];
     
     if (firstVersionLaunch && !appState().updaterDidRelaunchApplication) {
         /// TODO: Test if updaterDidRelaunchApplication works.
@@ -280,7 +280,7 @@ static NSDictionary *sideButtonActions;
             /// If this is not a pre-release, then we'll *deactivate* updates to pre-releases
 //            checkForPrereleases = NO;
         }
-        setConfig(@"Other.checkForPrereleases", @(checkForPrereleases));
+        setConfig(@"General.checkForPrereleases", @(checkForPrereleases));
     }
     
     /// Write changes to we made to config through setConfig() to file. Also notifies helper app, which is probably unnecessary.

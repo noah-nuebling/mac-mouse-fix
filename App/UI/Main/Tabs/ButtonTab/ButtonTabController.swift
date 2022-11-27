@@ -311,12 +311,12 @@ import CocoaLumberjackSwift
         
         /// We do the exact same thing in the scrollTab
         
-        let isDisabled = config("Other.buttonKillSwitch") as! Bool
+        let isDisabled = config("General.buttonKillSwitch") as! Bool
         
         if isDisabled {
             
             /// Turn off killSwitch
-            setConfig("Other.buttonKillSwitch", false as NSObject)
+            setConfig("General.buttonKillSwitch", false as NSObject)
             commitConfig()
                 
             /// Build string

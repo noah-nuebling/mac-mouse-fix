@@ -212,7 +212,7 @@ import CocoaLumberjackSwift
     
     @objc lazy var u_smoothEnabled: Bool = { c("smooth") as! Bool && !killSwitch }()
     
-    @objc private var u_killSwitch: Bool { c("Other.scrollKillSwitch") as? Bool ?? false } /// Not cached cause it's just used to calc the other vars
+    @objc private var u_killSwitch: Bool { c("General.scrollKillSwitch") as? Bool ?? false } /// Not cached cause it's just used to calc the other vars
     @objc var killSwitch: Bool { u_killSwitch /*|| HelperState.isLockedDown */ } /// Should probably move this into SwitchMaster. Edit: Moved lockDown stuff into switchMaster
     
     // MARK: Invert Direction

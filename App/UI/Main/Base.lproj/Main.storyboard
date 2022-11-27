@@ -1044,18 +1044,18 @@ your __Logitech M720 Triathlon__.&gt;</string>
                                             </textField>
                                             <popUpButton horizontalHuggingPriority="1000" verticalHuggingPriority="750" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="AUN-SK-ju7">
                                                 <rect key="frame" x="86" y="-4" width="88" height="25"/>
-                                                <popUpButtonCell key="cell" type="push" title="macOS" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="fW3-4Q-yB8" id="4Es-L9-Mle">
+                                                <popUpButtonCell key="cell" type="push" title="macOS" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="fW3-4Q-yB8" id="4Es-L9-Mle">
                                                     <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
                                                     <font key="font" metaFont="menu"/>
                                                     <menu key="menu" id="RH4-UE-BzP">
                                                         <items>
-                                                            <menuItem title="macOS" identifier="system" id="fW3-4Q-yB8">
+                                                            <menuItem title="macOS" state="on" identifier="system" id="fW3-4Q-yB8">
                                                                 <attributedString key="userComments">
                                                                     <fragment content="Scrolling &gt; Scroll Speed &gt; macOS Option"/>
                                                                 </attributedString>
                                                             </menuItem>
                                                             <menuItem isSeparatorItem="YES" id="8ic-KV-X3l"/>
-                                                            <menuItem title="Low" state="on" identifier="low" id="FT8-zP-xsg">
+                                                            <menuItem title="Low" identifier="low" id="FT8-zP-xsg">
                                                                 <attributedString key="userComments">
                                                                     <fragment content="Scrolling &gt; Scroll Speed &gt; Low Option"/>
                                                                 </attributedString>

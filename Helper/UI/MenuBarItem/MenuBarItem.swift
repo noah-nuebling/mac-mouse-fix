@@ -72,11 +72,11 @@ import Foundation
     
     @objc static func reload() {
         
-        let shouldShow = config("Other.showMenuBarItem") as? Bool ?? false
+        let shouldShow = config("General.showMenuBarItem") as? Bool ?? false
         instance?.statusItem?.isVisible = shouldShow
         
-        let buttonsKilled = config("Other.buttonKillSwitch") as? Bool ?? false
-        let scrollKilled = config("Other.scrollKillSwitch") as? Bool ?? false
+        let buttonsKilled = config("General.buttonKillSwitch") as? Bool ?? false
+        let scrollKilled = config("General.scrollKillSwitch") as? Bool ?? false
         
         if shouldShow {
             
@@ -91,8 +91,8 @@ import Foundation
             /// Need to do the killed check to prevent infinite loops. (Not sure if true anymore). This would be easier if we just used the reactive ConfigValue instead.
             
             if (buttonsKilled || scrollKilled) {
-                setConfig("Other.scrollKillSwitch", false as NSObject)
-                setConfig("Other.buttonKillSwitch", false as NSObject)
+                setConfig("General.scrollKillSwitch", false as NSObject)
+                setConfig("General.buttonKillSwitch", false as NSObject)
                 commitConfig()
             }
         }
@@ -111,7 +111,7 @@ import Foundation
         /// Toggle
         sender.state = sender.state == .on ? .off : .on
         /// Set to config
-        setConfig("Other.scrollKillSwitch", !(sender.state == .on) as NSObject)
+        setConfig("General.scrollKillSwitch", !(sender.state == .on) as NSObject)
         commitConfig()
     }
     
@@ -120,7 +120,7 @@ import Foundation
         /// Toggle
         sender.state = sender.state == .on ? .off : .on
         /// Set to config
-        setConfig("Other.buttonKillSwitch", !(sender.state == .on) as NSObject)
+        setConfig("General.buttonKillSwitch", !(sender.state == .on) as NSObject)
         commitConfig()
     }
     

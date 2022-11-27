@@ -65,11 +65,11 @@ class ScrollTabController: NSViewController {
         
         /// Turn off killswitch
         
-        let isDisabled = config("Other.scrollKillSwitch") as! Bool /// From the debugger it seems you can only cast NSNumber to bool with as! not with as?. That weird??
+        let isDisabled = config("General.scrollKillSwitch") as! Bool /// From the debugger it seems you can only cast NSNumber to bool with as! not with as?. That weird??
         if isDisabled {
             
             /// Turn off killSwitch
-            setConfig("Other.scrollKillSwitch", false as NSObject)
+            setConfig("General.scrollKillSwitch", false as NSObject)
             commitConfig()
             
             /// Show message to user

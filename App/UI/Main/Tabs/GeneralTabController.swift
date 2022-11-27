@@ -18,9 +18,9 @@ class GeneralTabController: NSViewController {
 //    var enabled: MutableProperty<Bool> { MainAppState.shared.appIsEnabled }
     
     /// Config
-    var showInMenuBar = ConfigValue<Bool>(configPath: "Other.showMenuBarItem")
-    var checkForUpdates = ConfigValue<Bool>(configPath: "Other.checkForUpdates")
-    var getBetaVersions = ConfigValue<Bool>(configPath: "Other.checkForPrereleases")
+    var showInMenuBar = ConfigValue<Bool>(configPath: "General.showMenuBarItem")
+    var checkForUpdates = ConfigValue<Bool>(configPath: "General.checkForUpdates")
+    var getBetaVersions = ConfigValue<Bool>(configPath: "General.checkForPrereleases")
     
     /// Outlets
     
