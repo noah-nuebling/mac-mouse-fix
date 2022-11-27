@@ -122,7 +122,7 @@ import CocoaLumberjackSwift
                 /// Check Change
                 
                 let currentMap = config("Remaps")
-                let defaultMap = config(selectedPreset == 3 ? "Other.defaultRemaps.threeButtons" : "Other.defaultRemaps.fiveButtons")
+                let defaultMap = config(selectedPreset == 3 ? "Constants.defaultRemaps.threeButtons" : "Constants.defaultRemaps.fiveButtons")
                 
                 if currentMap != defaultMap {
                     
@@ -351,7 +351,7 @@ import CocoaLumberjackSwift
             /// This is copy-pasted from `restoreDefaults()`
             
             let currentMap = config("Remaps")
-            let defaultMap = config(bestPresetMatch == 3 ? "Other.defaultRemaps.threeButtons" : "Other.defaultRemaps.fiveButtons")
+            let defaultMap = config(bestPresetMatch == 3 ? "Constants.defaultRemaps.threeButtons" : "Constants.defaultRemaps.fiveButtons")
             
             if (currentMap != defaultMap) {
                 
