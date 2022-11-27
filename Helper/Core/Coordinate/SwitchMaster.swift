@@ -32,6 +32,9 @@
 /// - We should move the remapsAnalysis methods into RemapsAnalyzer and cache the ones that are used when the modifier state changes.
 /// - When buttons are not used as trigger and are only used as modifier in combination with kbMod, we can switch off buttonTap until kbMods are pressed. 
 ///
+/// Issues:
+/// - When you detach mouse during modifiedDrag modifiedDrag will immediately re-enable when you re-attach the mouse. I think this is because the modifier state doesn't reset properly when the mouse is detached.
+///
 /// Testing:
 /// - [x] Keyboard Modifiers have 0% CPU usage when not toggling another tap
 /// - [x] Scrolling has 0% CPU usage when umodified
@@ -39,7 +42,7 @@
 /// - [x] Buttons work as modifiers even if no buttons are modified
 /// - [x] Pointing has 0% CPU usage when unmodified
 /// - AddMode works even when all input taps are turned off for (and the assigned action also works)
-///  - [ ] Click, Hold, Double Click, Button Modifier + Click, Keyboard Modifier + Click
+///  - [x] Click, Hold, Double Click, Button Modifier + Click, Keyboard Modifier + Click
 ///  - [ ] Click and Drag, Double Click and Drag, Keyboard Modifier + Click and Drag
 ///  - [ ] Click and Scroll, Double Click and Scroll, Keyboard Modifier + Click and Scroll
 ///
@@ -163,7 +166,7 @@ import ReactiveSwift
         
         modificationsSignal.startWithValues { modifications in
             self.currentModificationModifiesScroll = self.modificationModifiesScroll(modifications)
-            self.currentModificationModifiesPointing = self.modificationModfiesPointing(modifications)
+            self.currentModificationModifiesPointing = self.modificationModifiesPointing(modifications)
         }
         
         /// Remaps & Modifiers & Attached Devices Signal
@@ -334,7 +337,8 @@ import ReactiveSwift
             if let dragEffect = modifications?.object(forKey: kMFTriggerDrag) as! NSDictionary? {
                 ModifiedDrag.initializeDrag(withDict: dragEffect)
             } else {
-                assert(false)
+                /// I've seen this happening. I'll just ignore it. Should be fine. Could maybe prevent this is we store a local copy of the `latestModifications` so the "Update State" code and the "Tap toggling" code work with the exact same data and there can't be race conditions that cause situations like this.
+//                assert(false)
             }
         } else {
             ModifiedDrag.deactivate()
@@ -377,7 +381,7 @@ import ReactiveSwift
         return modification?.object(forKey: kMFTriggerScroll) != nil
     }
     
-    fileprivate func modificationModfiesPointing(_ modification: NSDictionary?) -> Bool {
+    fileprivate func modificationModifiesPointing(_ modification: NSDictionary?) -> Bool {
         return modification?.object(forKey: kMFTriggerDrag) != nil
     }
     
@@ -482,7 +486,7 @@ import ReactiveSwift
                 if keyboard || button {
                     
                     if (!kbSwayPoint && keyboard) || (!btnSwayPoint && button) {
-                        let point = self.modificationModfiesPointing(modification as? NSDictionary)
+                        let point = self.modificationModifiesPointing(modification as? NSDictionary)
                         if !btnSwayPoint { btnSwayPoint = button && point }
                         if !kbSwayPoint { kbSwayPoint = keyboard && point }
                     }

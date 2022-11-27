@@ -40,9 +40,13 @@
 
 #pragma mark - Swizzled
 
-static NSMutableDictionary *_swizzleCache;
+static NSMutableDictionary *_swizzleCache = nil;
 
 + (NSDictionary * _Nullable)modificationsWithModifiers:(NSDictionary *)modifiers {
+    
+    if (_swizzleCache == nil) {
+        _swizzleCache = [NSMutableDictionary dictionary];
+    }
     
     /// Cache is reset whenever remaps change
     
@@ -51,6 +55,9 @@ static NSMutableDictionary *_swizzleCache;
     if (cached) {
         return cached;
     } else {
+        
+        DDLogDebug(@"Recalculating modifications for modifiers: %@", modifiers);
+        
         NSDictionary *new = [RemapSwizzler swizzleRemaps:_remaps activeModifiers:modifiers];
         _swizzleCache[modifiers] = new;
         return new;
