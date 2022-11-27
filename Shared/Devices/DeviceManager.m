@@ -76,7 +76,9 @@ static NSMutableDictionary<NSNumber *, Device *> *_iohidToAttachedCache;
             }
         }
         
-        [_iohidToAttachedCache setObject:result forKey:key];
+        if (result != nil && key != nil) {
+            [_iohidToAttachedCache setObject:result forKey:key];
+        }
         return result;
     }
     
