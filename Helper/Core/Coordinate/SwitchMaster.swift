@@ -21,11 +21,11 @@
 /// - Mouse movement
 ///
 /// On listening to activeDevice
-/// - This would let us turn off buttonTap / scrollTap for mice that don't support buttons / don't support scrolling. However then we couldn't re-enable the tap when another mouse sends scroll or button input because we wouldn't be listening to that input. So it's better to just listen to all attachedDevices.
+/// - This would let us turn off buttonTap / scrollTap for mice that don't support buttons / don't support scrolling. However then we couldn't update the active device when another mouse sends scroll or button input because we wouldn't be listening to that input. So it's better to just listen to all attachedDevices.
 ///
 /// On Optimization
 /// - [ ] We should move the remapsAnalysis methods into RemapsAnalyzer and cache the ones that are used when the modifier state changes.
-/// - [ ] When buttons are not used as trigger and are only used as modifier in combination with kbMod, we can switch off buttonTap until kbMods are pressed.
+/// - [ ] When buttons are not used as trigger and are only used as modifier in combination with kbMod, we could switch off buttonTap until kbMods are pressed.
 /// - [x] Using simple function calls instead of reactiveSwift should improve performance a decent bit. Should consider that,at least for the buttonModifier input
 ///     - Improved performance a good bit. See commit 1a15623bd254d548b553d0073df1bf72887f1ac1.
 ///
