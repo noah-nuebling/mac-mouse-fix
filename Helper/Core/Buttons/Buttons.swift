@@ -107,7 +107,7 @@ import CocoaLumberjackSwift
             
             /// Create trigger -> action map based on mappingLandscape
             
-            var map: [ClickCycleTriggerPhase: (String, MFActionPhase)] = [:]
+            var map: [ClickCycleTriggerPhase: (String, MFActionPhase)] = Dictionary(minimumCapacity: 3)
             
             /// Map for click actions
             if clickActionOfThisLevelExists.boolValue {
