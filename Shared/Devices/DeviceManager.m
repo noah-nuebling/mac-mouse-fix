@@ -229,7 +229,8 @@ static void handleDeviceMatching(void *context, IOReturn result, void *sender, I
         _maxButtonNumberAmongDevices_IsCached = false;
         
         /// Notify
-        [ReactiveDeviceManager.shared handleAttachedDevicesDidChange];
+//        [ReactiveDeviceManager.shared handleAttachedDevicesDidChange];
+        [SwitchMaster.shared attachedDevicesChangedWithDevices:_attachedDevices];
         
         ///  Notify other objects
 //        [Scroll decide];
@@ -295,7 +296,8 @@ static void handleDeviceRemoval(void *context, IOReturn result, void *sender, IO
         [_iohidToAttachedCache removeAllObjects];
         
         /// Notify
-        [ReactiveDeviceManager.shared handleAttachedDevicesDidChange];
+//        [ReactiveDeviceManager.shared handleAttachedDevicesDidChange];
+        [SwitchMaster.shared attachedDevicesChangedWithDevices:_attachedDevices];
         
         /// Notifiy other objects
         ///     If there aren't any relevant devices attached, then we might want to turn off some parts of the program.

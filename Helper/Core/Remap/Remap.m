@@ -101,7 +101,8 @@ static NSDictionary *_remaps;
         [_swizzleCache removeAllObjects];
         
         /// Notify
-        [ReactiveRemaps.shared handleRemapsDidChange];
+//        [ReactiveRemaps.shared handleRemapsDidChange];
+        [SwitchMaster.shared remapsChangedWithRemaps:_remaps];
 //        [NSNotificationCenter.defaultCenter postNotificationName:kMFNotifCenterNotificationNameRemapsChanged object:self];
         
         /// Log

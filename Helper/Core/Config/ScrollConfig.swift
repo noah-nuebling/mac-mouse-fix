@@ -45,7 +45,8 @@ import CocoaLumberjackSwift
         shared = ScrollConfig()
         _scrollConfigRaw = newConfigRaw
         cache = nil
-        ReactiveScrollConfig.shared.handleScrollConfigChanged(newValue: shared)
+//        ReactiveScrollConfig.shared.handleScrollConfigChanged(newValue: shared)
+        SwitchMaster.shared.scrollConfigChanged(scrollConfig: shared)
     }
     private static var cache: [_HP<MFScrollModificationResult, MFAxis>: ScrollConfig]? = nil
     
