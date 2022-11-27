@@ -120,15 +120,17 @@ static NSInteger minButtonInModifications(NSDictionary *modifications) {
 
 + (BOOL)modificationsModifyScroll:(NSDictionary *)modifications {
     
-    /// NOTE: This code was originally written in Swift in SwitchMaster. Using the `kMFTriggerScroll` brought a big a big performance penalty for bridging the string to Swift.
+    /// NOTES:
+    /// - This code was originally written in Swift in SwitchMaster. Using the `kMFTriggerScroll` brought a big a big performance penalty for bridging the string to Swift.
+    /// - Using `CFDictionaryContainsKey(dict, key)` instead of `dict[key] != nil` because I'm pretty sure it's faster.
     
     assert(modifications != nil);
-    return modifications[kMFTriggerScroll] != nil;
+    return CFDictionaryContainsKey((__bridge CFDictionaryRef)modifications, (__bridge CFStringRef)kMFTriggerScroll);
 }
 
 + (BOOL)modificationsModifyPointing:(NSDictionary *)modifications {
     assert(modifications != nil);
-    return modifications[kMFTriggerDrag] != nil;
+    return CFDictionaryContainsKey((__bridge CFDictionaryRef)modifications, (__bridge CFStringRef)kMFTriggerDrag);
 }
 
 + (BOOL)__SWIFT_UNBRIDGED_modificationsModifyScroll:(id)modifications {

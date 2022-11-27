@@ -53,20 +53,21 @@ static NSMutableArray<Device *> *_attachedDevices;
 static NSMutableDictionary<NSNumber *, Device *> *_iohidToAttachedCache;
 + (Device * _Nullable)attachedDeviceWithIOHIDDevice:(IOHIDDeviceRef)iohidDevice {
     
-    /// Haven't tested if caching here actually makes things faster
+    /// NOTE: Tried caching here using `_iohidToAttachedCache`, but it actually makes things slower.
+    /// TODO: Remove caching
     
-    if (_iohidToAttachedCache == nil) {
-        _iohidToAttachedCache = [NSMutableDictionary dictionary];
-    }
-    
-    NSNumber *key = (__bridge NSNumber *)IOHIDDeviceGetProperty(iohidDevice, CFSTR(kIOHIDUniqueIDKey));
-    
-    Device *fromCache = _iohidToAttachedCache[key];
-    
-    if (fromCache != nil) {
-        return fromCache;
-    } else {
-        
+//    if (_iohidToAttachedCache == nil) {
+//        _iohidToAttachedCache = [NSMutableDictionary dictionary];
+//    }
+//
+//    NSNumber *key = (__bridge NSNumber *)IOHIDDeviceGetProperty(iohidDevice, CFSTR(kIOHIDUniqueIDKey));
+//
+//    Device *fromCache = _iohidToAttachedCache[key];
+//
+//    if (fromCache != nil) {
+//        return fromCache;
+//    } else {
+//
         Device *result = nil;
         
         for (Device *device in _attachedDevices) {
@@ -76,11 +77,11 @@ static NSMutableDictionary<NSNumber *, Device *> *_iohidToAttachedCache;
             }
         }
         
-        if (result != nil && key != nil) {
-            [_iohidToAttachedCache setObject:result forKey:key];
-        }
+//        if (result != nil && key != nil) {
+//            [_iohidToAttachedCache setObject:result forKey:key];
+//        }
         return result;
-    }
+//    }
     
 
 }

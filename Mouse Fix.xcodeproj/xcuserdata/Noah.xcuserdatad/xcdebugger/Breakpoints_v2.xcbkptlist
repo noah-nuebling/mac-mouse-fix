@@ -370,8 +370,8 @@
             filePath = "Shared/Devices/DeviceManager.m"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "67"
-            endingLineNumber = "67"
+            startingLineNumber = "68"
+            endingLineNumber = "68"
             landmarkName = "+attachedDeviceWithIOHIDDevice:"
             landmarkType = "7">
          </BreakpointContent>
