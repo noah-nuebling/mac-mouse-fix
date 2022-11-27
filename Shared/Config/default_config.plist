@@ -77,7 +77,7 @@
 	<key>Constants</key>
 	<dict>
 		<key>configVersion</key>
-		<integer>17</integer>
+		<integer>18</integer>
 		<key>defaultRemaps</key>
 		<dict>
 			<key>threeButtons</key>
