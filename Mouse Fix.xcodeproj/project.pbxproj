@@ -192,7 +192,7 @@
 		4FCEDC92292D765600E7DA2A /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FCEDC91292D765600E7DA2A /* Constants.swift */; };
 		4FCEDC93292D765600E7DA2A /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FCEDC91292D765600E7DA2A /* Constants.swift */; };
 		4FCEDC96292EB41700E7DA2A /* DeviceManagerSwift.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FCEDC94292EB41700E7DA2A /* DeviceManagerSwift.swift */; };
-		4FD0A71127B295F600FFCD12 /* OtherConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FD0A71027B295F600FFCD12 /* OtherConfig.swift */; };
+		4FD0A71127B295F600FFCD12 /* GeneralConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FD0A71027B295F600FFCD12 /* GeneralConfig.swift */; };
 		4FD148C728AA416700FE688C /* MenuBarItem.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4FD148C928AA416700FE688C /* MenuBarItem.xib */; };
 		4FD148CC28AA423F00FE688C /* AuthorizeAccessibilityView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4FD148CE28AA423F00FE688C /* AuthorizeAccessibilityView.xib */; };
 		4FD148D128AA428000FE688C /* ButtonOptionsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4FD148D328AA428000FE688C /* ButtonOptionsViewController.xib */; };
@@ -612,7 +612,7 @@
 		4FCEDC87292D6A8F00E7DA2A /* HashablePair.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HashablePair.swift; sourceTree = "<group>"; };
 		4FCEDC91292D765600E7DA2A /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		4FCEDC94292EB41700E7DA2A /* DeviceManagerSwift.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceManagerSwift.swift; sourceTree = "<group>"; };
-		4FD0A71027B295F600FFCD12 /* OtherConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OtherConfig.swift; sourceTree = "<group>"; };
+		4FD0A71027B295F600FFCD12 /* GeneralConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeneralConfig.swift; sourceTree = "<group>"; };
 		4FD148C628AA414100FE688C /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Main.strings; sourceTree = "<group>"; };
 		4FD148C828AA416700FE688C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/MenuBarItem.xib; sourceTree = "<group>"; };
 		4FD148CB28AA416C00FE688C /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/MenuBarItem.strings; sourceTree = "<group>"; };
@@ -1777,10 +1777,10 @@
 		4FF6660C25F2C93A00689B77 /* Config */ = {
 			isa = PBXGroup;
 			children = (
+				4FD0A71027B295F600FFCD12 /* GeneralConfig.swift */,
 				4FD860CB266EF55A004F76C8 /* ScrollConfig.swift */,
 				4FCB2609292F91D70066EE56 /* ReactiveScrollConfig.swift */,
 				4FA83A2D268288D900F3A31B /* PointerConfig.swift */,
-				4FD0A71027B295F600FFCD12 /* OtherConfig.swift */,
 				4F09BF57288355170080A5F8 /* PollingRateMeasurer.swift */,
 				4FFAD8EF28677F94005DD496 /* PointerConfigObjC.h */,
 				4FD860DA266EFD64004F76C8 /* ScrollConfigObjC.h */,
@@ -2568,7 +2568,7 @@
 				4FF6668F25F2C93A00689B77 /* SmoothScroll_old_.m in Sources */,
 				4F70ECB7267E810900325A76 /* IOUtility.m in Sources */,
 				4F17D2E1292A635200EB07CA /* SwitchMaster.swift in Sources */,
-				4FD0A71127B295F600FFCD12 /* OtherConfig.swift in Sources */,
+				4FD0A71127B295F600FFCD12 /* GeneralConfig.swift in Sources */,
 				4F1D58192881D880002EB119 /* CombinedLinearCurve.swift in Sources */,
 				4FFA4E3E28B7AA250062A1FE /* NotificationLabel.m in Sources */,
 				4FF6669A25F2C93A00689B77 /* ModificationUtility.m in Sources */,

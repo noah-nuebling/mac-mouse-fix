@@ -294,7 +294,7 @@ static void startMomentumScroll_Unsafe(double timeSinceLastInput, Vector exitVel
     Vector zeroVector = (Vector){ .x = 0, .y = 0 };
     
     /// Stop immediately, if too much time has passed since last event (So if the mouse is stationary)
-    if (OtherConfig.mouseMovingMaxIntervalLarge < timeSinceLastInput
+    if (GeneralConfig.mouseMovingMaxIntervalLarge < timeSinceLastInput
         || timeSinceLastInput == DBL_MAX) { /// This should never be true at this point, because it's only set to DBL_MAX when phase == kIOHIDEventPhaseBegan
         DDLogDebug(@"Not sending momentum scroll - timeSinceLastInput: %f", timeSinceLastInput);
         if (_momentumScrollCallback != NULL) _momentumScrollCallback();

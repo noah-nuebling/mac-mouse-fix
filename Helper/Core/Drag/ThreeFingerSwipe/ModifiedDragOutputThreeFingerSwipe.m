@@ -39,7 +39,7 @@ static int16_t _nOfSpaces = 1;
     CFRelease(spaces);
     
     /// Freeze pointer
-    if (OtherConfig.freezePointerDuringModifiedDrag) {
+    if (GeneralConfig.freezePointerDuringModifiedDrag) {
         [PointerFreeze freezePointerAtPosition:_drag->usageOrigin];
     }
 }
@@ -94,7 +94,7 @@ static int16_t _nOfSpaces = 1;
     [TouchSimulator postDockSwipeEventWithDelta:0.0 type:type phase:phase invertedFromDevice:_drag->naturalDirection];
     
     /// Unfreeze pointer
-    if (OtherConfig.freezePointerDuringModifiedDrag) {
+    if (GeneralConfig.freezePointerDuringModifiedDrag) {
         [PointerFreeze unfreeze];
     }
     

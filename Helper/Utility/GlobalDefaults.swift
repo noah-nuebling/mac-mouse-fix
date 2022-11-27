@@ -32,7 +32,7 @@ import CocoaLumberjackSwift
     // MARK: Convenience
     
     @objc static func applyDoubleClickThreshold() {
-        let newValue = NSNumber(value: OtherConfig.doubleClickThreshold)
+        let newValue = NSNumber(value: GeneralConfig.doubleClickThreshold)
         write(value: newValue, atKey: "com.apple.mouse.doubleClickThreshold")
     }
 

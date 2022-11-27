@@ -66,7 +66,7 @@ static dispatch_group_t _momentumScrollWaitGroup;
 + (void)handleBecameInUse {
     
     /// Freeze pointer
-    if (OtherConfig.freezePointerDuringModifiedDrag) {
+    if (GeneralConfig.freezePointerDuringModifiedDrag) {
         [PointerFreeze freezePointerAtPosition:_drag->usageOrigin];
     } else {
         [PointerFreeze freezeEventDispatchPointAtPosition:_drag->usageOrigin];

@@ -216,7 +216,7 @@ CGEventRef _Nullable mouseMovedCallback(CGEventTapProxy proxy, CGEventType type,
     dispatch_async(_queue, ^{
         
         /// Process timestamp
-        BOOL pointerIsMoving = (timeSinceLastEvent < OtherConfig.mouseMovingMaxIntervalSmall) && _lastEventDelta > 0;
+        BOOL pointerIsMoving = (timeSinceLastEvent < GeneralConfig.mouseMovingMaxIntervalSmall) && _lastEventDelta > 0;
         
         /// Debug
         /// Doing this outside the queue led to race conditions (I think?)

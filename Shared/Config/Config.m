@@ -144,7 +144,7 @@ void commitConfig() {
     [ScrollConfig reload];
 //    [Scroll decide];
     [PointerConfig reload];
-    [OtherConfig reload];
+    [GeneralConfig reload];
     [MenuBarItem reload];
 
 #endif
