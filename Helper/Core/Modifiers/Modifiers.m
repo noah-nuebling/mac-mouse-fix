@@ -152,7 +152,8 @@ CGEventRef _Nullable kbModsChanged(CGEventTapProxy proxy, CGEventType type, CGEv
         }
         
         /// Notify
-        [ReactiveModifiers.shared handleModifiersDidChangeTo:_modifiers];
+//        [ReactiveModifiers.shared handleModifiersDidChangeTo:_modifiers];
+        [SwitchMaster.shared modifiersChangedWithModifiers:_modifiers];
     }
     
     /// Return
@@ -185,7 +186,8 @@ CGEventRef _Nullable kbModsChanged(CGEventTapProxy proxy, CGEventType type, CGEv
         }
         
         /// Notify
-        [ReactiveModifiers.shared handleModifiersDidChangeTo:_modifiers];
+//        [ReactiveModifiers.shared handleModifiersDidChangeTo:_modifiers];
+        [SwitchMaster.shared modifiersChangedWithModifiers:_modifiers];
     }
 }
 

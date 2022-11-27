@@ -23,15 +23,11 @@
 /// On listening to activeDevice
 /// - This would let us turn off buttonTap / scrollTap for mice that don't support buttons / don't support scrolling. However then we couldn't re-enable the tap when another mouse sends scroll or button input because we wouldn't be listening to that input. So it's better to just listen to all attachedDevices.
 ///
-/// On using reactive signals
-/// - It's pretty unnecessary since we're not using any fancy ReactiveSwift features like we thought we would. We could just as well use simple callbacks.
-//  -> TODO: Remove Reactive stuff if it's too slow
-//   EDIT: We did end up using fancy reactive stuff.
-///
 /// On Optimization
-/// - We should move the remapsAnalysis methods into RemapsAnalyzer and cache the ones that are used when the modifier state changes.
-/// - When buttons are not used as trigger and are only used as modifier in combination with kbMod, we can switch off buttonTap until kbMods are pressed.
-/// - Using simple function calls instead of reactiveSwift should improve performance a decent bit. Should consider that,at least for the buttonModifier input
+/// - [ ] We should move the remapsAnalysis methods into RemapsAnalyzer and cache the ones that are used when the modifier state changes.
+/// - [ ] When buttons are not used as trigger and are only used as modifier in combination with kbMod, we can switch off buttonTap until kbMods are pressed.
+/// - [x] Using simple function calls instead of reactiveSwift should improve performance a decent bit. Should consider that,at least for the buttonModifier input
+///     - Improved performance a good bit. See commit 1a15623bd254d548b553d0073df1bf72887f1ac1.
 ///
 /// Issues:
 /// - When you detach mouse during modifiedDrag modifiedDrag will immediately re-enable when you re-attach the mouse. I think this is because the modifier state doesn't reset properly when the mouse is detached.
