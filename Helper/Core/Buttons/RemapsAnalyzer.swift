@@ -15,6 +15,10 @@ extension RemapsAnalyzer {
     /// Turn off swift autobridging
     ///
     
+    static func modificationsModifyButtons(_ modifications: NSDictionary, maxButton: Int32) -> Bool {
+        return __SWIFT_UNBRIDGED_modificationsModifyButtons(modifications, maxButton: maxButton)
+    }
+    
     static func maxLevel(forButton button: NSNumber, remaps: NSDictionary, modificationsActingOnThisButton: NSDictionary) -> NSInteger {
         
         return self.__SWIFT_UNBRIDGED_maxLevel(forButton: button, remaps: remaps, modificationsActingOnThisButton: modificationsActingOnThisButton)

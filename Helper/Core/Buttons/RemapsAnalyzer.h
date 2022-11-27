@@ -10,10 +10,22 @@
 #import <Foundation/Foundation.h>
 #import "Device.h"
 #import "WannabePrefixHeader.h"
+#import "Constants.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
 @interface RemapsAnalyzer : NSObject
+
+#pragma mark General
+
++ (void)reload;
+
+#pragma mark For SwitchMaster
+
++ (BOOL)modificationsModifyButtons:(NSDictionary *)modifications maxButton:(MFMouseButtonNumber)maxButton MF_SWIFT_HIDDEN;
++ (BOOL)__SWIFT_UNBRIDGED_modificationsModifyButtons:(id)modifications maxButton:(int)maxButton;
+
+#pragma mark For Buttons.swift
 
 ///
 /// Original declartions

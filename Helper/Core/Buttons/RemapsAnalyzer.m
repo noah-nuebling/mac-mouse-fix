@@ -22,8 +22,87 @@
 /// - At the time of writing, this is the only part of the live input processing code (aka scroll handling and button handling) which is not optimized. Optimizing this could shave off another 10-20%  off the CPU usage when clicking a button.
 /// - We could optimize this by caching the results in a dictionary and deleting the cache when the remaps are reloaded.
 
-#pragma mark - Main Assess Button Landscape Function
+#pragma mark - Caches
 
++ (void)reload {
+    /// Reset caches
+    /// NOTES:
+    /// - `_minButtonInModificationsCache` doesn't depend on remaps and doesn't really have to ever be reset I think. But I guess it doesn't hurt to reset it once in a while.
+    [_minButtonInModificationsCache removeAllObjects];
+}
+
+static NSMutableDictionary *_minButtonInModificationsCache;
+
+#pragma mark - For SwitchMaster
+/// Most of the remapsAnalysis methods used for SwitchMaster are still in SwitchMaster.swift. Should migrate them here and cache the slow ones at some point.
+
++ (BOOL)modificationsModifyButtons:(NSDictionary *)modifications maxButton:(MFMouseButtonNumber)maxButton {
+    
+    assert(modifications != nil);
+    
+    NSInteger minInModifications = minButtonInModifications(modifications);
+    return minInModifications <= maxButton;
+}
+
++ (BOOL)__SWIFT_UNBRIDGED_modificationsModifyButtons:(id)modifications maxButton:(int)maxButton {
+    return [self modificationsModifyButtons:modifications maxButton:maxButton];
+}
+
+static NSInteger minButtonInModifications(NSDictionary *modifications) {
+    
+    if (_minButtonInModificationsCache == nil) {
+        _minButtonInModificationsCache = [NSMutableDictionary dictionary];
+    }
+    
+    NSNumber *fromCache = _minButtonInModificationsCache[modifications];
+    
+    if (fromCache != nil) {
+        return fromCache.integerValue;
+    } else {
+        
+        NSInteger min = NSIntegerMax;
+        
+        for (NSObject *key in modifications) {
+            if ([key isKindOfClass:NSNumber.class]) {
+                
+                NSNumber *btn = (NSNumber *)key;
+                NSInteger button = btn.integerValue;
+                
+                if (button < min) {
+                    min = button;
+                }
+            }
+        }
+        
+        _minButtonInModificationsCache[modifications] = @(min);
+        
+        return min;
+    }
+}
+
+//func modificationModifiesButtons(modification: NSDictionary?, maxButton: Int32) -> Bool {
+//
+//    /// Return true if the modification modifies any button `<=` maxButton
+//
+//    if let modification = modification {
+//
+//        for element in modification {
+//
+//            guard let btn = element.key as? NSNumber else { continue }
+//
+//            let doesModify = btn.int32Value <= maxButton
+//            if doesModify { return true }
+//        }
+//    }
+//
+//    return false
+//}
+
+#pragma mark - For Buttons.swift
+///
+///
+///
+#pragma mark Main assess func
 /// Primarily used for `[ButtonTriggerHandler + handleButtonTriggerWithButton:...]` to help figure out when to fire clickEffects
 /// `activeModifiers` are the active modifiers including `button` (We've since removed this argument since we didn't use it)
 /// `activeModifiersActingOnThisButton` are the active modifiers with `button` filtered out
@@ -53,7 +132,7 @@
     [self assessMappingLandscapeWithButton:button level:level modificationsActingOnThisButton:remapsActingOnThisButton remaps:remaps thisClickDoBe:clickActionOfThisLevelExists thisDownDoBe:effectForMouseDownStateOfThisLevelExists greaterDoBe:effectOfGreaterLevelExists];
 }
 
-#pragma mark Helper functions for Main Assess Button Landscape Function
+#pragma mark Helper for assess
 
 static BOOL effectExistsForMouseDownState(NSNumber *button, NSNumber *level, NSDictionary *remaps, NSDictionary *modificationsActingOnThisButton) {
     BOOL holdActionExists = modificationsActingOnThisButton[button][level][kMFButtonTriggerDurationHold] != nil;
@@ -147,7 +226,7 @@ static NSInteger maxLevelForButtonInModificationPreconditions(NSNumber *button, 
     return maxLvl;
 }
 
-#pragma mark - Other Landscape Assessment Functions
+#pragma mark Other analysis
 
 /// Used by `ButtonTriggerGenerator` to reset the click cycle, if we know the button can't be used this click cycle anyways.
 ///     Later in the control chain - in ButtonTriggerHandler - the assessMappingLandscapeWithButton:... method is called again. This is probably redundant, as we could just store the result of the first call somehow. But if it's fast enough, who cares

@@ -103,6 +103,7 @@ static NSDictionary *_remaps;
         /// Notify
 //        [ReactiveRemaps.shared handleRemapsDidChange];
         [SwitchMaster.shared remapsChangedWithRemaps:_remaps];
+        [RemapsAnalyzer reload];
 //        [NSNotificationCenter.defaultCenter postNotificationName:kMFNotifCenterNotificationNameRemapsChanged object:self];
         
         /// Log

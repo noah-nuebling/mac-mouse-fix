@@ -141,7 +141,7 @@ static NSMutableDictionary<NSNumber *, Device *> *_iohidToAttachedCache;
 static BOOL _maxButtonNumberAmongDevices_IsCached = false;
 + (int)maxButtonNumberAmongDevices {
     
-    static int _result = 0;
+    static MFMouseButtonNumber _result = 0;
     
     if (_maxButtonNumberAmongDevices_IsCached) {
         return _result;

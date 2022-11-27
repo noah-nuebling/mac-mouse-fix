@@ -349,7 +349,10 @@ import ReactiveSwift
         /// NOTE: Not totally sure using `latestModifications` always works here. Make sure you call `remapsOrModifiersChanged` before this so `latestModifications` is updated first
         
         /// Update state
-        self.currentModificationModifiesButtonOnSomeDevice = self.modificationModifiesButtons(modification: latestModifications, maxButton: DeviceManager.maxButtonNumberAmongDevices())
+        guard let m = latestModifications else {
+            assert(false); return /// Can this ever happen?
+        }
+        self.currentModificationModifiesButtonOnSomeDevice = RemapsAnalyzer.modificationsModifyButtons(m, maxButton: DeviceManager.maxButtonNumberAmongDevices())
     }
     
     //
@@ -535,23 +538,23 @@ import ReactiveSwift
     
     /// Modification analysis
     
-    func modificationModifiesButtons(modification: NSDictionary?, maxButton: Int32) -> Bool {
-        
-        /// Return true if the modification modifies any button `<=` maxButton
-        
-        if let modification = modification {
-            
-            for element in modification {
-                
-                guard let btn = element.key as? NSNumber else { continue }
-                
-                let doesModify = btn.int32Value <= maxButton
-                if doesModify { return true }
-            }
-        }
-        
-        return false
-    }
+//    func modificationModifiesButtons(modification: NSDictionary?, maxButton: Int32) -> Bool {
+//        
+//        /// Return true if the modification modifies any button `<=` maxButton
+//        
+//        if let modification = modification {
+//            
+//            for element in modification {
+//                
+//                guard let btn = element.key as? NSNumber else { continue }
+//                
+//                let doesModify = btn.int32Value <= maxButton
+//                if doesModify { return true }
+//            }
+//        }
+//        
+//        return false
+//    }
     
     fileprivate func modificationModifiesScroll(_ modification: NSDictionary?) -> Bool {
         return modification?.object(forKey: kMFTriggerScroll) != nil
@@ -590,7 +593,7 @@ import ReactiveSwift
                 if keyboard || button {
                     
                     if (!kbModSways && keyboard) || (!btnSways && button) {
-                        let doesModify = self.modificationModifiesButtons(modification: (modification as! NSDictionary), maxButton: maxButton)
+                        let doesModify = RemapsAnalyzer.modificationsModifyButtons((modification as! NSDictionary), maxButton: maxButton)
                         if doesModify {
                             if !kbModSways { kbModSways = keyboard }
                             if !btnSways { btnSways = button }
@@ -613,7 +616,7 @@ import ReactiveSwift
         
         let empty = NSDictionary()
         if let defaultModification = remaps.object(forKey: empty) as? NSDictionary {
-            defaultSways = self.modificationModifiesButtons(modification: defaultModification, maxButton: maxButton)
+            defaultSways = RemapsAnalyzer.modificationsModifyButtons(defaultModification, maxButton: maxButton)
         }
         
         return defaultSways
