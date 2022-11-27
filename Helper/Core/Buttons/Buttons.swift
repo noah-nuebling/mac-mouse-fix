@@ -82,9 +82,9 @@ import CocoaLumberjackSwift
             if useButtonModifiers {
                 
                 if triggerPhase == .press {
-                    self.buttonModifiers.update(button: ButtonNumber(truncating: button), clickLevel: clickLevel, downNotUp: true)
+                    self.buttonModifiers.update(withButton: MFMouseButtonNumber(button.uint32Value), clickLevel: clickLevel, downNotUp: true)
                     onRelease.append {
-                        self.buttonModifiers.update(button: ButtonNumber(truncating: button), clickLevel: clickLevel, downNotUp: false)
+                        self.buttonModifiers.update(withButton: MFMouseButtonNumber(button.uint32Value), clickLevel: clickLevel, downNotUp: false)
                     }
                 }
             }
@@ -192,7 +192,7 @@ import CocoaLumberjackSwift
             self.clickCycle.kill()
         }
         if useButtonModifiers {
-            self.buttonModifiers.kill(button: ButtonNumber(truncating: button)) /// Not sure abt this
+            self.buttonModifiers.killButton(MFMouseButtonNumber(rawValue: button.uint32Value)) /// Not sure abt this
         }
     }
     

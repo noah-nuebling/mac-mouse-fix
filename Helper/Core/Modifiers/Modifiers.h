@@ -32,6 +32,8 @@ NS_ASSUME_NONNULL_BEGIN
 ///  - For kbMods we usually want to use them passively so we don't have to use CPU everytime the user presses a modifierKey. But in certain situations, listening actively to kbMods gives us the opportunity to turn off another eventTap dynamically. Example is if the user turns off scrolling enhancements but still wants to use Command-Scroll to zoom. In that case we could then turn on the scrollEventTap only while the Command key is held.
 ///  - If the modifier type is `unused` we can also optimize things further
 
+typedef NSMutableArray<NSDictionary<NSString *, NSNumber *> *> * ButtonModifierState;
+
 typedef enum {
     kMFModifierPriorityUnused,
     kMFModifierPriorityPassiveUse,
@@ -48,6 +50,7 @@ typedef enum {
 + (NSDictionary *)modifiersWithEvent:(CGEventRef _Nullable)event MF_SWIFT_HIDDEN;
 + (id)__SWIFT_UNBRIDGED_modifiersWithEvent:(CGEventRef _Nullable)event;
 
++ (void)buttonModsChangedTo:(ButtonModifierState)newModifiers;
 + (void)__SWIFT_UNBRIDGED_buttonModsChangedTo:(id)newModifiers;
 
 + (void)handleModificationHasBeenUsed;

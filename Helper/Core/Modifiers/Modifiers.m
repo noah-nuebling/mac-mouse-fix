@@ -160,7 +160,7 @@ CGEventRef _Nullable kbModsChanged(CGEventTapProxy proxy, CGEventType type, CGEv
     return event;
 }
 
-+ (void)buttonModsChangedTo:(NSMutableArray<NSDictionary<NSString *, NSNumber *> *> *)newModifiers {
++ (void)buttonModsChangedTo:(ButtonModifierState)newModifiers {
     
     /// Debug
     DDLogDebug(@"buttonMods changed to: %@", newModifiers);

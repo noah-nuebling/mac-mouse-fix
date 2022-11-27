@@ -220,6 +220,7 @@
 		4FDECCDF28A3E93100DDEE91 /* IsObjC.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FDECCDD28A3E93100DDEE91 /* IsObjC.m */; };
 		4FE40B96283A49DD00880BEF /* SharedUtilitySwift.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FE40B95283A49DD00880BEF /* SharedUtilitySwift.swift */; };
 		4FE40B97283A49DD00880BEF /* SharedUtilitySwift.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FE40B95283A49DD00880BEF /* SharedUtilitySwift.swift */; };
+		4FE479E12933C87A00B75E9B /* ButtonModifiers.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FE479E02933C87A00B75E9B /* ButtonModifiers.m */; };
 		4FE6CBC428987E8B00B3E829 /* DynamicSystemAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FE6CBC328987E8A00B3E829 /* DynamicSystemAnimator.swift */; };
 		4FEA63CF2921510F00E464D6 /* NSImage+Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FEA63CD2921510E00E464D6 /* NSImage+Additions.m */; };
 		4FEB660F2793510300E6A111 /* CocoaLumberjack in Frameworks */ = {isa = PBXBuildFile; productRef = 4FEB660E2793510300E6A111 /* CocoaLumberjack */; };
@@ -288,7 +289,6 @@
 		4FF8C89A28955491007EC31F /* ClickCycle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FF8C89928955490007EC31F /* ClickCycle.swift */; };
 		4FF8C89E28955DC4007EC31F /* CoolTimer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FF8C89D28955DC4007EC31F /* CoolTimer.swift */; };
 		4FF8C89F28955DC4007EC31F /* CoolTimer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FF8C89D28955DC4007EC31F /* CoolTimer.swift */; };
-		4FF8C8A128956DDD007EC31F /* ButtonModifiers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FF8C8A028956DDD007EC31F /* ButtonModifiers.swift */; };
 		4FF8C8A32895AACB007EC31F /* Buttons.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FF8C8A22895AACB007EC31F /* Buttons.swift */; };
 		4FF93059288026FC0007CCA7 /* PolynomialCappedAccelerationCurve.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FF93058288026FC0007CCA7 /* PolynomialCappedAccelerationCurve.swift */; };
 		4FFA4E3528B795F30062A1FE /* LicenseUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FFA4E3428B795F30062A1FE /* LicenseUtility.swift */; };
@@ -656,6 +656,8 @@
 		4FDECCDC28A3E93100DDEE91 /* IsObjC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IsObjC.h; sourceTree = "<group>"; };
 		4FDECCDD28A3E93100DDEE91 /* IsObjC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = IsObjC.m; sourceTree = "<group>"; };
 		4FE40B95283A49DD00880BEF /* SharedUtilitySwift.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharedUtilitySwift.swift; sourceTree = "<group>"; };
+		4FE479DF2933C87A00B75E9B /* ButtonModifiers.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ButtonModifiers.h; sourceTree = "<group>"; };
+		4FE479E02933C87A00B75E9B /* ButtonModifiers.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ButtonModifiers.m; sourceTree = "<group>"; };
 		4FE6CBC328987E8A00B3E829 /* DynamicSystemAnimator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DynamicSystemAnimator.swift; sourceTree = "<group>"; };
 		4FE7A0DE28677AD600C33B37 /* Gain Curve Math.tex */ = {isa = PBXFileReference; lastKnownFileType = text; path = "Gain Curve Math.tex"; sourceTree = "<group>"; };
 		4FE8FC792929D8AC0002583B /* On Bundle Size.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "On Bundle Size.md"; sourceTree = "<group>"; };
@@ -1837,6 +1839,8 @@
 				4FF6661E25F2C93A00689B77 /* ButtonInputReceiver.m */,
 				4FF8C8A22895AACB007EC31F /* Buttons.swift */,
 				4FF8C89928955490007EC31F /* ClickCycle.swift */,
+				4FE479DF2933C87A00B75E9B /* ButtonModifiers.h */,
+				4FE479E02933C87A00B75E9B /* ButtonModifiers.m */,
 				4FF8C8A028956DDD007EC31F /* ButtonModifiers.swift */,
 				4F1B83042606E68300AEAF37 /* RemapsAnalyzer.h */,
 				4F1B83052606E68300AEAF37 /* RemapsAnalyzer.m */,
@@ -2547,7 +2551,6 @@
 				4FF6668225F2C93A00689B77 /* Config.m in Sources */,
 				4FCEDC82292CDC8B00E7DA2A /* Actions.swift in Sources */,
 				4FFBC5A8266977CA001D389B /* DoubleExponentialSmoother.swift in Sources */,
-				4FF8C8A128956DDD007EC31F /* ButtonModifiers.swift in Sources */,
 				4F85C05528BBE6FA00E96E9C /* TrialSectionManager.swift in Sources */,
 				4F909D4828A0C4C2009349A2 /* Collection+Extensions.swift in Sources */,
 				4FF6669625F2C93A00689B77 /* Actions.m in Sources */,
@@ -2658,6 +2661,7 @@
 				4FA994BE26678AC90007F003 /* ScrollAnalyzer.m in Sources */,
 				4F9C9B60268A29FE0083DED0 /* Smoother.swift in Sources */,
 				4FDE759F28B174E700662314 /* TrialCounter.swift in Sources */,
+				4FE479E12933C87A00B75E9B /* ButtonModifiers.m in Sources */,
 				4FA83A29268271E200F3A31B /* PointerSpeed.m in Sources */,
 				4F5971E62901763D00A32656 /* MathObjc.m in Sources */,
 				4FFA4E3828B79D410062A1FE /* NSAttributedString+Additions.m in Sources */,
@@ -2788,7 +2792,7 @@
 				);
 				INFOPLIST_FILE = App/SupportFiles/Info.plist;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
-				MARKETING_VERSION = "3.0.0 Beta 5";
+				MARKETING_VERSION = "3.0.0 Bet-a 5";
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.nuebling.mac-mouse-fix";
@@ -2823,7 +2827,7 @@
 				);
 				INFOPLIST_FILE = App/SupportFiles/Info.plist;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
-				MARKETING_VERSION = "3.0.0 Beta 5";
+				MARKETING_VERSION = "3.0.0 Bet-a 5";
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.nuebling.mac-mouse-fix";
 				PRODUCT_NAME = "$(TARGET_NAME)";
