@@ -192,15 +192,15 @@ import QuartzCore
             
             self.lastAnimationValue = Vector(x: 0, y: 0)
             
-            if let doStart = p["doStart"] as? Bool {
+            if let doStart = p.object(forKey: "doStart") as? Bool {
                 if doStart == false {
                     return;
                 }
             }
             
-            let durationRaw = p["duration"] as! Double
-            let vector = vectorFromNSValue(p["vector"] as! NSValue) as Vector
-            let curve = p["curve"] as! Curve
+            let durationRaw = p.object(forKey: "duration") as! Double
+            let vector = vectorFromNSValue(p.object(forKey: "vector") as! NSValue) as Vector
+            let curve = p.object(forKey: "curve") as! Curve
             
             self.startWithUntypedCallback_Unsafe(durationRaw: durationRaw, value: vector, animationCurve: curve, callback: callback);
         }
