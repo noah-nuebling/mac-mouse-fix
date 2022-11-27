@@ -219,9 +219,13 @@ CGEventRef _Nullable testCallback(CGEventTapProxy proxy, CGEventType type, CGEve
         [ButtonInputReceiver load_Manual];
         [DeviceManager load_Manual];
         [Scroll load_Manual];
-        [Config load_Manual];
-        [ModifiedDrag load_Manual];
+        
+        /// NOTE: v Moved these 2 down, to prevent crashes introduced by moving SwitchMaster away from ReactiveSwift to simple callbacks.
+//        [Config load_Manual];
+//        [ModifiedDrag load_Manual];
         [Modifiers load_Manual];
+        [ModifiedDrag load_Manual];
+        [Config load_Manual];
         
         [SwitchMaster.shared load_Manual];
         
