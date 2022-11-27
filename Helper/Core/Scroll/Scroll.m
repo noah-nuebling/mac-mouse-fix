@@ -122,23 +122,29 @@ void resetState_Unsafe(void) {
 
 + (void)start {
     
-    dispatch_async(_scrollQueue, ^{ /// Not sure why exactly this is on the queue
-        CGEventTapEnable(_eventTap, true);
-    });
+//    dispatch_async(_scrollQueue, ^{ /// Not sure why exactly this is on the queue
+    CGEventTapEnable(_eventTap, true);
+//    });
 }
 
 + (void)stop {
+        
+    /// NOTES:
+    /// - Are there other things we should enable/disable here? ScrollModifiers.reactToModiferChange() comes to mind
+    /// - We check for isEnabled first because resetState uses `dispatch` which is pretty slow since this is called a lot by SwitchMaster
     
-    dispatch_async(_scrollQueue, ^{
-        
-        /// Are there other things we should enable/disable here?
-        ///     ScrollModifiers.reactToModiferChange() comes to mind
-        
-        resetState_Unsafe();
-        if (_eventTap) { /// Why are we checking if the eventTap exists here?
-            CGEventTapEnable(_eventTap, false);
-        }
-    });
+    if (CGEventTapIsEnabled(_eventTap)) {
+        CGEventTapEnable(_eventTap, false);
+        [self resetState];
+    }
+    
+    
+//    dispatch_async(_scrollQueue, ^{
+//        resetState_Unsafe();
+//        if (_eventTap) { /// Why are we checking if the eventTap exists here?
+//            CGEventTapEnable(_eventTap, false);
+//        }
+//    });
 }
 
 + (BOOL)isRunning {

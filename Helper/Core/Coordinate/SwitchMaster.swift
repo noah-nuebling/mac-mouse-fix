@@ -52,7 +52,7 @@
 // TODO: ...
 /// - [x] Implement killSwitch signals
 /// - [x] Implement trial expired lockdown
-/// - [ ] Deactivate killSwitches when the intercept they control is disabled anyways
+/// - [x] Deactivate killSwitches when the intercept they control is disabled anyways -> Didn't like this
 
 import Cocoa
 import CocoaLumberjackSwift
@@ -501,16 +501,24 @@ import ReactiveSwift
     
     private func toggleKillSwitchMenuItems() {
         
-        var scrollCanBeToggled =
-        !isLockedDown && someDeviceHasScroll &&
-        (defaultModifiesScroll || somekbModModifiesScroll || someButtonModifiesScroll)
+        MenuBarItem.enableScrollItem(true)
+        MenuBarItem.enableButtonsItem(true)
         
-        var buttonsCanBeToggled =
-        !isLockedDown &&
-        (defaultModifiesButtonOnSomeDevice || somekbModModifiesButtonOnSomeDevice || someButtonModifiesButtonOnSomeDevice)
-    
-        MenuBarItem.enableScrollItem(scrollCanBeToggled)
-        MenuBarItem.enableButtonsItem(buttonsCanBeToggled)
+        if ((false)) {
+            
+            /// Disabling this, because it's not really clear what graying out the items means or when it happens.
+            
+            var scrollCanBeToggled =
+            !isLockedDown && someDeviceHasScroll &&
+            (defaultModifiesScroll || somekbModModifiesScroll || someButtonModifiesScroll)
+            
+            var buttonsCanBeToggled =
+            !isLockedDown &&
+            (defaultModifiesButtonOnSomeDevice || somekbModModifiesButtonOnSomeDevice || someButtonModifiesButtonOnSomeDevice)
+            
+            MenuBarItem.enableScrollItem(scrollCanBeToggled)
+            MenuBarItem.enableButtonsItem(buttonsCanBeToggled)
+        }
     }
     
     //
