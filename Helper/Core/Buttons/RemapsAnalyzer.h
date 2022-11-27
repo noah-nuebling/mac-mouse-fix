@@ -25,6 +25,11 @@ NS_ASSUME_NONNULL_BEGIN
 + (BOOL)modificationsModifyButtons:(NSDictionary *)modifications maxButton:(MFMouseButtonNumber)maxButton MF_SWIFT_HIDDEN;
 + (BOOL)__SWIFT_UNBRIDGED_modificationsModifyButtons:(id)modifications maxButton:(int)maxButton;
 
++ (BOOL)modificationsModifyScroll:(NSDictionary *)modifications MF_SWIFT_HIDDEN;
++ (BOOL)modificationsModifyPointing:(NSDictionary *)modifications MF_SWIFT_HIDDEN;
++ (BOOL)__SWIFT_UNBRIDGED_modificationsModifyScroll:(id)modifications;
++ (BOOL)__SWIFT_UNBRIDGED_modificationsModifyPointing:(id)modifications;
+
 #pragma mark For Buttons.swift
 
 ///

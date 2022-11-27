@@ -19,6 +19,13 @@ extension RemapsAnalyzer {
         return __SWIFT_UNBRIDGED_modificationsModifyButtons(modifications, maxButton: maxButton)
     }
     
+    static func modificationsModifyScroll(_ modifications: NSDictionary) -> Bool {
+        return __SWIFT_UNBRIDGED_modificationsModifyScroll(modifications)
+    }
+    static func modificationsModifyPointing(_ modifications: NSDictionary) -> Bool {
+        return __SWIFT_UNBRIDGED_modificationsModifyPointing(modifications)
+    }
+    
     static func maxLevel(forButton button: NSNumber, remaps: NSDictionary, modificationsActingOnThisButton: NSDictionary) -> NSInteger {
         
         return self.__SWIFT_UNBRIDGED_maxLevel(forButton: button, remaps: remaps, modificationsActingOnThisButton: modificationsActingOnThisButton)

@@ -306,8 +306,8 @@
             filePath = "Helper/Core/Coordinate/SwitchMaster.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "673"
-            endingLineNumber = "673"
+            startingLineNumber = "687"
+            endingLineNumber = "687"
             landmarkName = "modifierUsage_Point_Scroll(_:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -386,8 +386,8 @@
             filePath = "Helper/Core/Coordinate/SwitchMaster.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "355"
-            endingLineNumber = "355"
+            startingLineNumber = "362"
+            endingLineNumber = "362"
             landmarkName = "remapsOrModifiersOrAttachedDevicesChanged(remaps:modifiers:attachedDevices:)"
             landmarkType = "7">
          </BreakpointContent>

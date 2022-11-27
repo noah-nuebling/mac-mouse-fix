@@ -337,8 +337,13 @@ import ReactiveSwift
         let modifications = Remap.modifications(withModifiers: modifiers)
         
         /// Update state
-        self.currentModificationModifiesScroll = self.modificationModifiesScroll(modifications)
-        self.currentModificationModifiesPointing = self.modificationModifiesPointing(modifications)
+        if let m = modifications {
+            self.currentModificationModifiesScroll = RemapsAnalyzer.modificationsModifyScroll(m)
+            self.currentModificationModifiesPointing = RemapsAnalyzer.modificationsModifyPointing(m)
+        } else {
+            self.currentModificationModifiesScroll = false
+            self.currentModificationModifiesPointing = false
+        }
         
         /// Store
         latestModifications = modifications
@@ -349,10 +354,12 @@ import ReactiveSwift
         /// NOTE: Not totally sure using `latestModifications` always works here. Make sure you call `remapsOrModifiersChanged` before this so `latestModifications` is updated first
         
         /// Update state
-        guard let m = latestModifications else {
-            assert(false); return /// Can this ever happen?
+        if let m = latestModifications {
+            self.currentModificationModifiesButtonOnSomeDevice = RemapsAnalyzer.modificationsModifyButtons(m, maxButton: DeviceManager.maxButtonNumberAmongDevices())
+        } else {
+            self.currentModificationModifiesButtonOnSomeDevice = false
         }
-        self.currentModificationModifiesButtonOnSomeDevice = RemapsAnalyzer.modificationsModifyButtons(m, maxButton: DeviceManager.maxButtonNumberAmongDevices())
+
     }
     
     //
@@ -511,11 +518,11 @@ import ReactiveSwift
             
             /// Disabling this, because it's not really clear what graying out the items means or when it happens.
             
-            var scrollCanBeToggled =
+            let scrollCanBeToggled =
             !isLockedDown && someDeviceHasScroll &&
             (defaultModifiesScroll || somekbModModifiesScroll || someButtonModifiesScroll)
             
-            var buttonsCanBeToggled =
+            let buttonsCanBeToggled =
             !isLockedDown &&
             (defaultModifiesButtonOnSomeDevice || somekbModModifiesButtonOnSomeDevice || someButtonModifiesButtonOnSomeDevice)
             
@@ -535,8 +542,9 @@ import ReactiveSwift
     /// - 3. minimumModifiedButton(modifiers: )
     /// - 4. etc...
     /// Then cache access for super super fast SwitchMaster
+    ///  EDIT: I moved the modifications analysis into RemapsAnalyzer. ObjC did speed things up a bit. Caching did not speed things up in my testing.
     
-    /// Modification analysis
+    /// Modifications analysis
     
 //    func modificationModifiesButtons(modification: NSDictionary?, maxButton: Int32) -> Bool {
 //        
@@ -556,13 +564,13 @@ import ReactiveSwift
 //        return false
 //    }
     
-    fileprivate func modificationModifiesScroll(_ modification: NSDictionary?) -> Bool {
-        return modification?.object(forKey: kMFTriggerScroll) != nil
-    }
-    
-    fileprivate func modificationModifiesPointing(_ modification: NSDictionary?) -> Bool {
-        return modification?.object(forKey: kMFTriggerDrag) != nil
-    }
+//    fileprivate func modificationModifiesScroll(_ modification: NSDictionary?) -> Bool {
+//        return modification?.object(forKey: kMFTriggerScroll) != nil
+//    }
+//    
+//    fileprivate func modificationModifiesPointing(_ modification: NSDictionary?) -> Bool {
+//        return modification?.object(forKey: kMFTriggerDrag) != nil
+//    }
     
     
     /// Remaps analysis
@@ -578,7 +586,7 @@ import ReactiveSwift
             btnSways = true
         } else {
             
-            remaps?.enumerateKeysAndObjects(options: [/*.concurrent*/]) { modifiers, modification, stop in
+            remaps?.enumerateKeysAndObjects(options: [/*.concurrent*/]) { modifiers, modifications, stop in
                 
                 var keyboard = false
                 var button = false
@@ -593,7 +601,10 @@ import ReactiveSwift
                 if keyboard || button {
                     
                     if (!kbModSways && keyboard) || (!btnSways && button) {
-                        let doesModify = RemapsAnalyzer.modificationsModifyButtons((modification as! NSDictionary), maxButton: maxButton)
+                        var doesModify = false
+                        if let m = modifications as? NSDictionary {
+                            doesModify = RemapsAnalyzer.modificationsModifyButtons(m, maxButton: maxButton)
+                        }
                         if doesModify {
                             if !kbModSways { kbModSways = keyboard }
                             if !btnSways { btnSways = button }
@@ -665,12 +676,18 @@ import ReactiveSwift
                 if keyboard || button {
                     
                     if (!kbSwayPoint && keyboard) || (!btnSwayPoint && button) {
-                        let point = self.modificationModifiesPointing(modification as? NSDictionary)
+                        var point = false
+                        if let m = modification as? NSDictionary {
+                            point = RemapsAnalyzer.modificationsModifyPointing(m)
+                        }
                         if !btnSwayPoint { btnSwayPoint = button && point }
                         if !kbSwayPoint { kbSwayPoint = keyboard && point }
                     }
                     if (!kbSwayScroll && keyboard) || (!btnSwayScroll && button) {
-                        let scroll = self.modificationModifiesScroll(modification as? NSDictionary)
+                        var scroll = false
+                        if let m = modification as? NSDictionary {
+                            scroll = RemapsAnalyzer.modificationsModifyScroll(m)
+                        }
                         if !btnSwayScroll { btnSwayScroll = button && scroll }
                         if !kbSwayScroll { kbSwayScroll = keyboard && scroll }
                     }
