@@ -14,6 +14,7 @@
 #import "SharedUtility.h"
 #import "NSAttributedString+Additions.h"
 #import "Symbols.h"
+#import "Mac_Mouse_Fix-Swift.h"
 
 @implementation UIStrings
 
@@ -441,7 +442,8 @@ static NSMutableAttributedString *symbolStringWithModifierPrefix(NSString *flags
         outString = stringf(joinLast, [firstStrings componentsJoinedByString:join], lastString);
     }
     
-    return outString;
+    /// On trimming whitespace: Not sure if trimming whitespace here is a good idea. If we always trim whitespace right before a string is displayed to the user this should be unnecessary.
+    return outString.stringByTrimmingWhiteSpace;
 }
 
 /// Helper

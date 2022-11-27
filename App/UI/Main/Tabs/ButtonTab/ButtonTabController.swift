@@ -304,29 +304,25 @@ import CocoaLumberjackSwift
             
         })
         
-        
         ///
         /// Turn off killswitch
         ///
         
         /// We do the exact same thing in the scrollTab
         
-        let isDisabled = config("General.buttonKillSwitch") as! Bool
+        let buttonsAreKilled = config("General.buttonKillSwitch") as! Bool
+        let scrollIsKilled = config("General.scrollKillSwitch") as! Bool
         
-        if isDisabled {
+        if buttonsAreKilled || scrollIsKilled {
             
             /// Turn off killSwitch
+            ///     NOTE: We also turn off the scrollKillSwitch because otherwise we can't record click and scroll in addMode.
             setConfig("General.buttonKillSwitch", false as NSObject)
+            setConfig("General.scrollKillSwitch", false as NSObject)
             commitConfig()
-                
-            /// Build string
-            let messageRaw = NSLocalizedString("button-revive-toast", comment: "First draft: __Enabled__ Mac Mouse Fix for __Buttons__\nIt had been disabled from the Menu Bar %@ || Note: %@ will be replaced by the menubar icon")
-            var message = NSAttributedString(coolMarkdown: messageRaw)!
-            let symbolString = Symbols.string(withSymbolName: "CoolMenuBarIcon", stringFallback: "<Mac Mouse Fix Menu Bar Item>", font: ToastNotificationController.defaultFont()) ///NSAttributedString(symbol: "CoolMenuBarIcon", hPadding: 0.0, vOffset: -6, fallback: "<Mac Mouse Fix Menu Bar Item>")
-            message = NSAttributedString(attributedFormat: message, args: [symbolString])
             
-            /// Show message
-            ToastNotificationController.attachNotification(withMessage: message, to: MainAppState.shared.window!, forDuration: -1, alignment: kToastNotificationAlignmentTopMiddle)
+            /// Show user feedback
+            ToastCreator.showReviveToast(showButtons: buttonsAreKilled, showScroll: scrollIsKilled)
         }
     }
     

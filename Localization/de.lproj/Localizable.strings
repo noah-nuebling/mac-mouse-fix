@@ -7,11 +7,14 @@
 /* First draft: Mac Mouse Fix can't be enabled because there's __another version__ of Mac Mouse Fix present on your computer\n\nTo enable Mac Mouse Fix:\n\n1. Delete the [other version](%@)\n2. Empty the Bin\n3. Restart your Mac\n4. Try again! */
 "is-strange-helper-alert.body" = "Mac Mouse Fix kann nicht eingeschaltet werden da noch eine __andere Version__ von Mac Mouse Fix auf deinem Computer vorliegt\n\nUm Mac Mouse Fix einzuschalten:\n\n1. Lösche die [andere Version](%@)\n2. Leere den Papierkorb\n3. Starte deinen Mac neu\n4. Versuche es erneut!";
 
-/* First draft: __Enabled__ Mac Mouse Fix for __Buttons__\nIt had been disabled from the Menu Bar %@ || Note: %@ will be replaced by the menubar icon */
-"button-revive-toast" = "Mac Mouse Fix __aktiviert__ für __Tasten__\nEs war in der Menüleiste %@ deakiviert worden";
+/* First draft: __Enabled__ Mac Mouse Fix for %1@\nIt had been disabled from the Menu Bar %2@ || Note: %1@ will be replaced by the list of enabled features, %2@ will be replaced by the menubar icon */
+"revive-toast" = "Mac Mouse Fix __aktiviert__ für %1@\nEs war in der Menüleiste %2@ deakiviert worden";
 
-/* First draft: __Enabled__ Mac Mouse Fix for __Scrolling__\nIt had been disabled from the Menu Bar %@ || Note: Where %@ will be replaced by the menubar icon */
-"scroll-revive-toast" = "Mac Mouse Fix __aktiviert__ für __Scrollen__\nEs war in der Menüleiste %@ deakiviert worden";
+/* First draft: __Buttons__ */
+"revive-toast.feature-buttons" = "__Tasten__";
+
+/* First draft: __Scrolling__ */
+"revive-toast.feature-scrolling" = "__Scrollen__";
 
 /* First draft: Set Scroll Speed under\n[%@ > Mouse > Scrolling Speed](%@) */
 "macos-scrolling-hint" = "Stelle das Scrolltempo ein unter\n[%@ > Maus > Scrolltempo](%@)";

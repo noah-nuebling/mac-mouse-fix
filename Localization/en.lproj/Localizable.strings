@@ -76,8 +76,14 @@
 /* First draft: Triple Click %@ +  */
 "button-modifier.3" = "Triple Click %@ +";
 
-/* First draft: __Enabled__ Mac Mouse Fix for __Buttons__\nIt had been disabled from the Menu Bar %@ || Note: %@ will be replaced by the menubar icon */
-"button-revive-toast" = "__Enabled__ Mac Mouse Fix for __Buttons__\nIt had been disabled from the Menu Bar %@";
+/* First draft: __Enabled__ Mac Mouse Fix for %1@\nIt had been disabled from the Menu Bar %2@ || Note: %1@ will be replaced by the list of enabled features, %2@ will be replaced by the menubar icon */
+"revive-toast" = "__Enabled__ Mac Mouse Fix for %1@\nIt had been disabled from the Menu Bar %2@";
+
+/* First draft: __Buttons__ */
+"revive-toast.feature-buttons" = " __Buttons__";
+
+/* First draft: __Scrolling__ */
+"revive-toast.feature-scrolling" = "__Scrolling__";
 
 /* First draft: Middle Button */
 "button-string.middle" = "Middle Button";
@@ -327,9 +333,6 @@
 
 /* First draft: Rotate content in Apple Maps and other apps\n \nWorks like twisting with 2 fingers on an Apple Trackpad */
 "scroll-effect.rotate.hint" = "Rotate content in Apple Maps and other apps\n \nWorks like twisting with 2 fingers on an Apple Trackpad";
-
-/* First draft: __Enabled__ Mac Mouse Fix for __Scrolling__\nIt had been disabled from the Menu Bar %@ || Note: Where %@ will be replaced by the menubar icon */
-"scroll-revive-toast" = "__Enabled__ Mac Mouse Fix for __Scrolling__\nIt had been disabled from the Menu Bar %@";
 
 /* First draft: 💫 Thank you for buying Mac Mouse Fix! */
 "thanks.01" = "💫 Thank you for buying Mac Mouse Fix!";

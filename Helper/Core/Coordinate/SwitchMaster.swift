@@ -45,13 +45,14 @@
 /// - Kill switch testing
 ///  - [ ] 0% CPU when using either of the killSwitces
 ///  - [ ] When kbMods toggle scrollTap (and nothing else), scrollKillSwitch also disables kbModTap
-///  - [ ] addMode still works with the killSwitches enabled
+///  - [ ] addMode still works with the killSwitches are enabled
 ///
 /// - [ ] Test if lockDown still works after we moved it in here
 ///
 // TODO: ...
-/// - Implement killSwitch signals
+/// - [x] Implement killSwitch signals
 /// - [x] Implement trial expired lockdown
+/// - [ ] Deactivate killSwitches when the intercept they control is disabled anyways
 
 import Cocoa
 import CocoaLumberjackSwift

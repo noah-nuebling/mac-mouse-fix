@@ -184,6 +184,7 @@
 		4FC8A7D728ACEB7B007DB982 /* NSString+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FC8A7D628ACEB7B007DB982 /* NSString+Extensions.swift */; };
 		4FC8A7D928AD3FC7007DB982 /* RemapTableCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FC8A7D828AD3FC7007DB982 /* RemapTableCellView.swift */; };
 		4FCA07D625F3129B00BFE209 /* RemapTableController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FCA07D525F3129B00BFE209 /* RemapTableController.m */; };
+		4FCABCF72933A7090018E538 /* ToastCreator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FCABCF62933A7090018E538 /* ToastCreator.swift */; };
 		4FCB260E293147CD0066EE56 /* ModifiedDrag.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FCB260D293147CD0066EE56 /* ModifiedDrag.swift */; };
 		4FCC03352757B181002E5A57 /* ScreenDrawer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FCC03322757A50C002E5A57 /* ScreenDrawer.swift */; };
 		4FCEDC82292CDC8B00E7DA2A /* Actions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FCEDC80292CDC8300E7DA2A /* Actions.swift */; };
@@ -602,6 +603,7 @@
 		4FC8A7D828AD3FC7007DB982 /* RemapTableCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemapTableCellView.swift; sourceTree = "<group>"; };
 		4FCA07D425F3129B00BFE209 /* RemapTableController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RemapTableController.h; sourceTree = "<group>"; };
 		4FCA07D525F3129B00BFE209 /* RemapTableController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RemapTableController.m; sourceTree = "<group>"; };
+		4FCABCF62933A7090018E538 /* ToastCreator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToastCreator.swift; sourceTree = "<group>"; };
 		4FCB2609292F91D70066EE56 /* ReactiveScrollConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReactiveScrollConfig.swift; sourceTree = "<group>"; };
 		4FCB260B29312A020066EE56 /* ButtonInputReceiver_old.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ButtonInputReceiver_old.h; sourceTree = "<group>"; };
 		4FCB260C29312A020066EE56 /* ButtonInputReceiver_old.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ButtonInputReceiver_old.m; sourceTree = "<group>"; };
@@ -1436,6 +1438,7 @@
 			children = (
 				4F1B832B26081A5400AEAF37 /* CaptureNotificationCreator.h */,
 				4F1B832C26081A5500AEAF37 /* CaptureNotificationCreator.m */,
+				4FCABCF62933A7090018E538 /* ToastCreator.swift */,
 				4F79A81A2604317200076A7E /* ToastNotificationController.h */,
 				4F79A81B2604317200076A7E /* ToastNotificationController.m */,
 				4F79A83426051E4A00076A7E /* ToastNotification.h */,
@@ -1801,8 +1804,8 @@
 		4FF6661425F2C93A00689B77 /* Core */ = {
 			isa = PBXGroup;
 			children = (
-				4FF6660C25F2C93A00689B77 /* Config */,
 				4FD9820C292A9BEE00645FE3 /* Coordinate */,
+				4FF6660C25F2C93A00689B77 /* Config */,
 				4FF6663C25F2C93A00689B77 /* Remap */,
 				4FF6661525F2C93A00689B77 /* Modifiers */,
 				4FF6661825F2C93A00689B77 /* Buttons */,
@@ -2442,6 +2445,7 @@
 				4F39BC3B263AF2B000FDF692 /* SparkleUpdaterController.m in Sources */,
 				4FA40D0028A0CCCB00499E53 /* CombinedLinearCurve.swift in Sources */,
 				4F85C05428BBE6FA00E96E9C /* TrialSectionManager.swift in Sources */,
+				4FCABCF72933A7090018E538 /* ToastCreator.swift in Sources */,
 				4F1C51DA260543DD007F4930 /* NSTextField+Additions.m in Sources */,
 				4F09283F28B8101600BDC2FF /* TrialSection.swift in Sources */,
 				4F909D3128A0C3D2009349A2 /* CAAnimation+Extensions.swift in Sources */,
