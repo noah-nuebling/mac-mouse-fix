@@ -146,6 +146,7 @@ import ReactiveSwift
         toggleScrollTap()
         toggleButtonTap()
         togglePointingTap(modifications: nil)
+        toggleKillSwitchMenuItems()
         
         /// Debug
         DDLogDebug("SwitchMaster toggling due to lockdown")
@@ -216,6 +217,7 @@ import ReactiveSwift
         self.toggleScrollTap()
         self.toggleButtonTap()
         self.togglePointingTap(modifications: nil)
+        toggleKillSwitchMenuItems()
         
         /// Debug
         DDLogDebug("SwitchMaster toggling due to attachedDevices change")
@@ -247,6 +249,8 @@ import ReactiveSwift
         
         self.toggleScrollTap()
         self.toggleButtonTap()
+        
+        toggleKillSwitchMenuItems()
         
         /// On not toggling pointing tap
         /// - Would be a hack
@@ -283,6 +287,8 @@ import ReactiveSwift
         self.toggleBtnModProcessing()
         
         self.toggleScrollTap()
+        
+        toggleKillSwitchMenuItems()
         
         /// Debug
         DDLogDebug("SwitchMaster toggling due to scroll config change")
@@ -353,7 +359,7 @@ import ReactiveSwift
     private func logState() {
         if runningPreRelease() {
             ModifiedDrag.activationState { modifiedDragActivation in
-                DDLogDebug("SwitchMaster switched to - kbMod: \(Modifiers.kbModPriority().rawValue), btnMod: \(Modifiers.btnModPriority().rawValue), button: \(ButtonInputReceiver.isRunning() ? 1 : 0), scroll: \(Scroll.isRunning() ? 1 : 0), pointing: \(modifiedDragActivation.rawValue)")
+                DDLogDebug("SwitchMaster switched to - kbMod: \(Modifiers.kbModPriority().rawValue), btnMod: \(Modifiers.btnModPriority().rawValue), button: \(ButtonInputReceiver.isRunning() ? 1 : 0), scroll: \(Scroll.isRunning() ? 1 : 0), pointing: \(modifiedDragActivation.rawValue), buttonMenu: \(MenuBarItem.buttonsItemIsEnabled() ? 1 : 0), scrollMenu: \(MenuBarItem.scrollItemIsEnabled() ? 1 : 0)")
             }
         }
     }
@@ -491,6 +497,20 @@ import ReactiveSwift
         } else {
             ModifiedDrag.deactivate()
         }
+    }
+    
+    private func toggleKillSwitchMenuItems() {
+        
+        var scrollCanBeToggled =
+        !isLockedDown && someDeviceHasScroll &&
+        (defaultModifiesScroll || somekbModModifiesScroll || someButtonModifiesScroll)
+        
+        var buttonsCanBeToggled =
+        !isLockedDown &&
+        (defaultModifiesButtonOnSomeDevice || somekbModModifiesButtonOnSomeDevice || someButtonModifiesButtonOnSomeDevice)
+    
+        MenuBarItem.enableScrollItem(scrollCanBeToggled)
+        MenuBarItem.enableButtonsItem(buttonsCanBeToggled)
     }
     
     //

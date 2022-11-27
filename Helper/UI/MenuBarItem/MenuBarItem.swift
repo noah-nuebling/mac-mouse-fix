@@ -19,6 +19,8 @@ import Foundation
 
 @objc class MenuBarItem: NSObject {
     
+    // MARK: Vars and outlets
+    
     var topLevelObjects: NSArray? = []
     static var instance: MenuBarItem? = nil
     
@@ -33,6 +35,8 @@ import Foundation
     
     @IBOutlet weak var appCompatHintItem: NSMenuItem!
     @IBOutlet var appCompatHintView: NSView!
+    
+    // MARK: Init
     
     @objc static func load_Manual() {
         instance = MenuBarItem()
@@ -51,6 +55,10 @@ import Foundation
         statusItem?.menu = menu
 //        statusItem?.isVisible = false /// This makes the item forget its position when restarting the computer
         
+        /// Turn off menuItem autoenabling
+        ///     So we can control enabling through SwitchMaster
+        statusItem?.menu?.autoenablesItems = false
+        
         /// Setup group menu item
         /// `.indentationLevel` doesn't work. Do indentation in IB autolayout instead
         appCompatItem.view = appCompatView
@@ -68,7 +76,24 @@ import Foundation
         MenuBarItem.reload()
     }
     
-    // MARK: Load from config
+    // MARK: SwitchMaster interface
+    
+    static func enableButtonsItem(_ enable: Bool) {
+        instance?.buttonsEnabledItem.isEnabled = enable
+        
+    }
+    static func enableScrollItem(_ enable: Bool) {
+        instance?.scrollEnabledItem.isEnabled = enable
+    }
+    
+    static func buttonsItemIsEnabled() -> Bool { /// This is for introspection for debugging SwitchMaster
+        instance?.buttonsEnabledItem.isEnabled ?? false
+    }
+    static func scrollItemIsEnabled() -> Bool {
+        instance?.scrollEnabledItem.isEnabled ?? false
+    }
+    
+    // MARK: Reload
     
     @objc static func reload() {
         
@@ -98,7 +123,7 @@ import Foundation
         }
     }
     
-    // MARK: Actions
+    // MARK: IBActions
     
     @IBAction func openMMF(_ sender: Any) {
         HelperUtility.openMainApp()
