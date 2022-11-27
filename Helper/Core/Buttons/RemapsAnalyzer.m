@@ -40,8 +40,25 @@ static NSMutableDictionary *_minButtonInModificationsCache;
     
     assert(modifications != nil);
     
-    NSInteger minInModifications = minButtonInModifications(modifications);
-    return minInModifications <= maxButton;
+    /// 1. v Old caching method
+//    NSInteger minInModifications = minButtonInModifications(modifications);
+//    return minInModifications <= maxButton;
+    
+    /// 2. v New direct method
+    ///     We tried caching here but it doesn't seem to speed things up
+    for (NSObject *key in modifications) {
+        if ([key isKindOfClass:NSNumber.class]) {
+            
+            NSNumber *btn = (NSNumber *)key;
+            NSInteger button = btn.integerValue;
+            
+            if (button <= maxButton) {
+                return YES;
+            }
+        }
+    }
+    
+    return NO;
 }
 
 + (BOOL)__SWIFT_UNBRIDGED_modificationsModifyButtons:(id)modifications maxButton:(int)maxButton {
@@ -49,6 +66,9 @@ static NSMutableDictionary *_minButtonInModificationsCache;
 }
 
 static NSInteger minButtonInModifications(NSDictionary *modifications) {
+    
+    assert(false);
+    return 0;
     
     if (_minButtonInModificationsCache == nil) {
         _minButtonInModificationsCache = [NSMutableDictionary dictionary];
