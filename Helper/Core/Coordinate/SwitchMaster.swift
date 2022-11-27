@@ -30,7 +30,8 @@
 ///
 /// On Optimization
 /// - We should move the remapsAnalysis methods into RemapsAnalyzer and cache the ones that are used when the modifier state changes.
-/// - When buttons are not used as trigger and are only used as modifier in combination with kbMod, we can switch off buttonTap until kbMods are pressed. 
+/// - When buttons are not used as trigger and are only used as modifier in combination with kbMod, we can switch off buttonTap until kbMods are pressed.
+/// - Using simple function calls instead of reactiveSwift should improve performance a decent bit. Should consider that,at least for the buttonModifier input
 ///
 /// Issues:
 /// - When you detach mouse during modifiedDrag modifiedDrag will immediately re-enable when you re-attach the mouse. I think this is because the modifier state doesn't reset properly when the mouse is detached.
@@ -99,6 +100,7 @@ import ReactiveSwift
     var currentModificationModifiesScroll = false
     var currentModificationModifiesPointing = false
     var currentModificationModifiesButtonOnSomeDevice = false /// & derives from: Attached Devices
+    var latestModifications: NSDictionary? = nil
     
     @objc func load_Manual() {
         
@@ -162,7 +164,11 @@ import ReactiveSwift
         /// Remaps & Modifiers Signal
         ///  NOTE: The callbacks are called whenever the modifiers change so they need to be fast!
         
-        let modificationsSignal = remapsSignal.combineLatest(with: modifiersSignal).map { (remaps, modifiers) in Remap.modifications(withModifiers: modifiers) }
+        let modificationsSignal = remapsSignal.combineLatest(with: modifiersSignal).map { (remaps, modifiers) in
+            let modifications = Remap.modifications(withModifiers: modifiers)
+            self.latestModifications = modifications
+            return modifications
+        }
         
         modificationsSignal.startWithValues { modifications in
             self.currentModificationModifiesScroll = self.modificationModifiesScroll(modifications)
@@ -186,7 +192,7 @@ import ReactiveSwift
             
             self.toggleScrollTap()
             self.toggleButtonTap()
-            self.togglePointingTap()
+            self.togglePointingTap(modifications: nil)
         }
         remapsSignal.startWithValues { _ in
             
@@ -204,7 +210,9 @@ import ReactiveSwift
             /// - I'm not totally sure this won't lead to other issues in edge cases though, so we'll find another solution:
             ///     - sol1: Only conclude addMode drag when the user lets go of the button - Works but makes things less responsive
             ///     - sol2:Make modifiedDrag ignore reinitialization while addModeDrag is active
-            self.togglePointingTap()
+            /// - On passing in self.latestModifications:
+            ///  -  I'm not 100% sure self.latestModifications is always up-to-date here (what if the new remaps should enable modifier tracking but those modifiers aren't in self.latestModifications, yet?). Since this is not performance-critical it's better to just pass in nil, so that `togglePointingTap()` gets the values fresh.
+            self.togglePointingTap(modifications: nil /*self.latestModifications*/)
         }
         scrollConfigSignal.startWithValues { _ in
             
@@ -222,7 +230,7 @@ import ReactiveSwift
             
             self.toggleScrollTap()
             self.toggleButtonTap()
-            self.togglePointingTap()
+            self.togglePointingTap(modifications: self.latestModifications)
         }
         
         if runningPreRelease() {
@@ -322,7 +330,7 @@ import ReactiveSwift
         }
     }
     
-    private func togglePointingTap() {
+    private func togglePointingTap(modifications modificationsArg: NSDictionary?) {
         
         /// Determine enable
         let enable = someDeviceHasPointing && currentModificationModifiesPointing
@@ -331,7 +339,13 @@ import ReactiveSwift
             
             /// Get modifications
             /// - Maybe we should store the "latestModifications" as an instance var for optimzation && to keep things clean? Aside from this we're only using instance vars in the tapTogglers, I feel like maybe there's is some architectural idea for why we only need to use instance vars.
-            let modifications = Remap.modifications(withModifiers: Modifiers.modifiers(with: nil))
+            let modifications: NSDictionary?
+            
+            if modificationsArg != nil {
+                modifications = modificationsArg
+            } else {
+                modifications = Remap.modifications(withModifiers: Modifiers.modifiers(with: nil))
+            }
             
             /// Initialize ModifiedDrag
             if let dragEffect = modifications?.object(forKey: kMFTriggerDrag) as! NSDictionary? {

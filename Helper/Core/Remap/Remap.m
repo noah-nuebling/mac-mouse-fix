@@ -44,11 +44,11 @@ static NSMutableDictionary *_swizzleCache = nil;
 
 + (NSDictionary * _Nullable)modificationsWithModifiers:(NSDictionary *)modifiers {
     
+    /// Cache is reset whenever remaps change
+    
     if (_swizzleCache == nil) {
         _swizzleCache = [NSMutableDictionary dictionary];
     }
-    
-    /// Cache is reset whenever remaps change
     
     NSDictionary *cached = _swizzleCache[modifiers];
     

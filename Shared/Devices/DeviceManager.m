@@ -50,13 +50,37 @@ static NSMutableArray<Device *> *_attachedDevices;
     return _attachedDevices;
 }
 
+static NSMutableDictionary<NSNumber *, Device *> *_iohidToAttachedCache;
 + (Device * _Nullable)attachedDeviceWithIOHIDDevice:(IOHIDDeviceRef)iohidDevice {
-    for (Device *device in _attachedDevices) {
-        if ([device wrapsIOHIDDevice:iohidDevice]) {
-            return device;
-        }
+    
+    /// Haven't tested if caching here actually makes things faster
+    
+    if (_iohidToAttachedCache == nil) {
+        _iohidToAttachedCache = [NSMutableDictionary dictionary];
     }
-    return nil;
+    
+    NSNumber *key = (__bridge NSNumber *)IOHIDDeviceGetProperty(iohidDevice, CFSTR(kIOHIDUniqueIDKey));
+    
+    Device *fromCache = _iohidToAttachedCache[key];
+    
+    if (fromCache != nil) {
+        return fromCache;
+    } else {
+        
+        Device *result = nil;
+        
+        for (Device *device in _attachedDevices) {
+            if ([device wrapsIOHIDDevice:iohidDevice]) {
+                result = device;
+                break;
+            }
+        }
+        
+        [_iohidToAttachedCache setObject:result forKey:key];
+        return result;
+    }
+    
+
 }
 
 # pragma mark - Lifecycle
@@ -199,6 +223,7 @@ static void handleDeviceMatching(void *context, IOReturn result, void *sender, I
         
         /// Add to attachedDevices list
         [_attachedDevices addObject:newDevice];
+//        [_iohidToAttachedCache removeAllObjects];
         
         /// Reset cache
         _maxButtonNumberAmongDevices_IsCached = false;
@@ -267,6 +292,7 @@ static void handleDeviceRemoval(void *context, IOReturn result, void *sender, IO
         /// Reset cache
         
         _maxButtonNumberAmongDevices_IsCached = false;
+        [_iohidToAttachedCache removeAllObjects];
         
         /// Notify
         [ReactiveDeviceManager.shared handleAttachedDevicesDidChange];

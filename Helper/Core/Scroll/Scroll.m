@@ -121,18 +121,24 @@ void resetState_Unsafe(void) {
 }
 
 + (void)start {
-    CGEventTapEnable(_eventTap, true);
+    
+    dispatch_async(_scrollQueue, ^{ /// Not sure why exactly this is on the queue
+        CGEventTapEnable(_eventTap, true);
+    });
 }
 
 + (void)stop {
     
-    /// Are there other things we should enable/disable here?
-    ///     ScrollModifiers.reactToModiferChange() comes to mind
-    
-    resetState_Sync();
-    if (_eventTap) {
-        CGEventTapEnable(_eventTap, false);
-    }
+    dispatch_async(_scrollQueue, ^{
+        
+        /// Are there other things we should enable/disable here?
+        ///     ScrollModifiers.reactToModiferChange() comes to mind
+        
+        resetState_Unsafe();
+        if (_eventTap) { /// Why are we checking if the eventTap exists here?
+            CGEventTapEnable(_eventTap, false);
+        }
+    });
 }
 
 + (BOOL)isRunning {

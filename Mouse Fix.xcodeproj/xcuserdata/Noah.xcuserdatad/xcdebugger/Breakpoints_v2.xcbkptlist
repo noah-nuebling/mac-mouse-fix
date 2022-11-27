@@ -306,8 +306,8 @@
             filePath = "Helper/Core/Coordinate/SwitchMaster.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "195"
-            endingLineNumber = "195"
+            startingLineNumber = "201"
+            endingLineNumber = "201"
             landmarkName = "load_Manual()"
             landmarkType = "7">
          </BreakpointContent>
@@ -322,8 +322,8 @@
             filePath = "Helper/Core/Coordinate/SwitchMaster.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "221"
-            endingLineNumber = "221"
+            startingLineNumber = "229"
+            endingLineNumber = "229"
             landmarkName = "load_Manual()"
             landmarkType = "7">
          </BreakpointContent>
@@ -338,9 +338,9 @@
             filePath = "Helper/Core/Coordinate/SwitchMaster.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "245"
-            endingLineNumber = "245"
-            landmarkName = "toggleKbModTap()"
+            startingLineNumber = "253"
+            endingLineNumber = "253"
+            landmarkName = "load_Manual()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -354,9 +354,9 @@
             filePath = "Helper/Core/Coordinate/SwitchMaster.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "494"
-            endingLineNumber = "494"
-            landmarkName = "modifierUsage_Point_Scroll(_:)"
+            startingLineNumber = "508"
+            endingLineNumber = "508"
+            landmarkName = "load_Manual()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -405,6 +405,22 @@
             startingLineNumber = "59"
             endingLineNumber = "59"
             landmarkName = "+modificationsWithModifiers:"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "2FB7CBC8-7107-463C-A311-DA1BD3DE9999"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Shared/Devices/DeviceManager.m"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "67"
+            endingLineNumber = "67"
+            landmarkName = "+attachedDeviceWithIOHIDDevice:"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

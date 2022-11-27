@@ -11,6 +11,8 @@
 
 /// Threading:
 ///     This should only be used by Buttons.swift. Use buttons.swfits dispatchQueue to protect resources.
+/// Optimization:
+///     Switft does some weird bridging when when we call `state.add(NSDictionary(dictionaryLiteral:)`, that should be much faster in ObjC
 
 import Cocoa
 import CocoaLumberjackSwift
