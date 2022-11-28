@@ -34,7 +34,7 @@
     NSInteger uncapturedCount = uncapturedSet.count;
     NSInteger capturedCount = capturedSet.count;
     
-    if (capturedCount + uncapturedCount == 1) {
+    if (capturedCount + uncapturedCount >= 1) {
         
         /// NOTES: On why we only display the notification when the count == 1:
         ///   - At the time of writing, the `> 1` case only happens on first app startup and when restoring defaults. In those cases the information in the capture notification is imo overwhelming and not really relevant.
@@ -43,21 +43,16 @@
         ///     - Turn off the capture notifications entirely
         ///     - Make the `> 1` case display "Some buttons on your mouse have been captured" instead of listing all the buttons that have been captured / uncaptured individually.
         
-        /// Sort buttons
         
-        NSArray *uncapturedArray = [uncapturedSet sortedArrayUsingDescriptors:@[[NSSortDescriptor sortDescriptorWithKey:@"" ascending:YES]]];
-        NSArray *capturedArray = [capturedSet sortedArrayUsingDescriptors:@[[NSSortDescriptor sortDescriptorWithKey:@"" ascending:YES]]];
+        BOOL showUncaptured = capturedCount == 0;
         
-        /// Create natural language string from button list
-        
-        NSString *uncapturedButtonString = buttonStringFromButtonNumberArray(uncapturedArray);
-        NSString *capturedButtonString = buttonStringFromButtonNumberArray(capturedArray);
-        
-        /// Get array of strings
-        ///     Only need these for adding bold to the button strings
-        
-        NSArray<NSString *> *uncapturedButtonStringArray = buttonStringArrayFromButtonNumberArray(uncapturedArray);
-        NSArray<NSString *> *capturedButtonStringArray = buttonStringArrayFromButtonNumberArray(capturedArray);
+        NSString *buttonString;
+        if (uncapturedCount + capturedCount > 1) {
+            buttonString = @"Some Buttons";
+        } else {
+            NSNumber *btn = showUncaptured ? uncapturedSet.anyObject : capturedSet.anyObject;
+            buttonString = [UIStrings getButtonString:btn.intValue];
+        }
         
         /// Define learn more string
         
@@ -66,39 +61,23 @@
         
         /// Create string describing uncaptured and captured
         
-        NSString *buttonStringCaptureRaw = stringf(NSLocalizedString(@"capture-toast.body.captured", @"Note: Value for this key is defined in Localizable.stringsdict, not Localizable.strings. || Note: The UI strings in .stringsdict have two lines. Only the first line is visible unless you start editing and then use the arrow keys to go to the second line. This is necessary to have linebreaks in .stringsdict since \n doesn't work. Use Option-Enter to insert these linebreaks."), capturedButtonString, capturedCount);
+        NSString *captureStringRaw;
+        if (!showUncaptured) {
+            captureStringRaw = stringf(NSLocalizedString(@"capture-toast.body.captured", @"Note: Value for this key is defined in Localizable.stringsdict, not Localizable.strings. || Note: The UI strings in .stringsdict have two lines. Only the first line is visible unless you start editing and then use the arrow keys to go to the second line. This is necessary to have linebreaks in .stringsdict since \n doesn't work. Use Option-Enter to insert these linebreaks."), buttonString, capturedCount);
+        } else {
+            captureStringRaw = stringf(NSLocalizedString(@"capture-toast.body.uncaptured", @"Note: Value for this key is defined in Localizable.stringsdict, not Localizable.strings"), buttonString, uncapturedCount);
+        }
         
-        NSString *buttonStringUncaptureRaw = stringf(NSLocalizedString(@"capture-toast.body.uncaptured", @"Note: Value for this key is defined in Localizable.stringsdict, not Localizable.strings"), uncapturedButtonString, uncapturedCount);
-        
-        NSAttributedString *buttonStringUncapture = buttonStringUncaptureRaw.attributed;
-        NSAttributedString *buttonStringCapture = buttonStringCaptureRaw.attributed;
+        NSAttributedString *captureString = captureStringRaw.attributed;
         
         /// Add bold
-        for (NSString *buttonString in uncapturedButtonStringArray) {
-            buttonStringUncapture = [buttonStringUncapture attributedStringByAddingBoldForSubstring:buttonString];
-        }
-        for (NSString *buttonString in capturedButtonStringArray) {
-            buttonStringCapture = [buttonStringCapture attributedStringByAddingBoldForSubstring:buttonString];
-        }
+        captureString = [captureString attributedStringByAddingBoldForSubstring:buttonString];
         
         /// Capitalize buttonStrings
-        buttonStringUncapture = [buttonStringUncapture attributedStringByCapitalizingFirst];
-        buttonStringCapture = [buttonStringCapture attributedStringByCapitalizingFirst];
+        captureString = [captureString attributedStringByCapitalizingFirst];
         
         /// Build notification body string
-        ///
-        NSAttributedString *body = @"".attributed;
-        
-        if (capturedCount > 0) { /// Need to check for 0 despite trimming whitespace because it doesn't trim linebreaks (See `\n\n`). Maybe we should make it trim linebreaks instead?
-            body = [[body attributedStringByAppending:buttonStringCapture] attributedStringByAppending:@"\n\n".attributed];
-        }
-        if (uncapturedCount > 0) {
-            body = [[body attributedStringByAppending:buttonStringUncapture] attributedStringByAppending:@"\n\n".attributed];
-        }
-        body = [body attributedStringByAppending:linkString];
-        
-        /// Trim
-        body = [body attributedStringByTrimmingWhitespace];
+        NSAttributedString *body = [[[captureString attributedStringByAppending:@"\n\n".attributed] attributedStringByAppending:linkString] attributedStringByTrimmingWhitespace];
         
         /// Show notification
         [ToastNotificationController attachNotificationWithMessage:body toWindow:MainAppState.shared.window forDuration:-1];
