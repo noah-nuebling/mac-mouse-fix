@@ -34,7 +34,14 @@
     NSInteger uncapturedCount = uncapturedSet.count;
     NSInteger capturedCount = capturedSet.count;
     
-    if (uncapturedCount > 0 || capturedCount > 0) {
+    if (capturedCount + uncapturedCount == 1) {
+        
+        /// NOTES: On why we only display the notification when the count == 1:
+        ///   - At the time of writing, the `> 1` case only happens on first app startup and when restoring defaults. In those cases the information in the capture notification is imo overwhelming and not really relevant.
+        ///   - I think the whole reason for the capture notifications is so people understand that you can't just delete the "Click" action to make clicking the button work as normal, you have to delete "all" the bindings instead. I feel like with the new easier deletion and addition of actions to the actionsTable and with the default settings  not even using the middle button this is not that important to teach the user anymore. But I feel like especially in those cases where several buttons are captured / uncaptured at the same time the mindset of the user is not such that they have a good chance of learning this concept in those situations.
+        ///   - Alternatively we could also:
+        ///     - Turn off the capture notifications entirely
+        ///     - Make the `> 1` case display "Some buttons on your mouse have been captured" instead of listing all the buttons that have been captured / uncaptured individually.
         
         /// Sort buttons
         
