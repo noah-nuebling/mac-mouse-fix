@@ -267,22 +267,6 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "F9CBBCBD-5870-4E19-9DAB-4175772E6BB9"
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "App/UI/Main/Tabs/ButtonTab/RemapTable/RemapTableView.m"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "228"
-            endingLineNumber = "228"
-            landmarkName = "-updateSizeWithAnimation:tabContentView:"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
             uuid = "836A6784-0A3D-4924-B14E-C41A999383E9"
             shouldBeEnabled = "No"
             ignoreCount = "0"
@@ -567,54 +551,6 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "40693C26-B453-4E40-95A9-50D5B76BD30F"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Shared/UI/TrialSection/TrialSectionManager.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "78"
-            endingLineNumber = "78"
-            landmarkName = "showInitial(animate:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "11A21028-B319-4DE5-9958-457AFDF3EC59"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Shared/UI/TrialSection/TrialSectionManager.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "44"
-            endingLineNumber = "44"
-            landmarkName = "startManaging(licenseConfig:license:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "33BB6B3C-79BE-47E5-A0B7-997F923375E8"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Shared/UI/TrialSection/TrialSectionManager.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "67"
-            endingLineNumber = "67"
-            landmarkName = "stopManaging()"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
             uuid = "A8BC648F-5FF8-4F6A-B8E4-8F921BB2CB4E"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
@@ -724,36 +660,68 @@
             landmarkType = "7">
             <Locations>
                <Location
-                  uuid = "65635CB8-1056-4B10-A08F-B2DEFB276BD3 - ed8bbc3d03bdcf30"
+                  uuid = "65635CB8-1056-4B10-A08F-B2DEFB276BD3 - 4e4b8dcbc61e5ea8"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
-                  symbolName = "closure #1 () -&gt; () in Mac_Mouse_Fix.TrialSectionManager.showActivate(animate: Swift.Bool) -&gt; ()"
+                  symbolName = "closure #1 () -&gt; () in Mac_Mouse_Fix.TrialSectionManager.showAlternate(animate: Swift.Bool) -&gt; ()"
                   moduleName = "Mac Mouse Fix"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/Noah/Desktop/mac-mouse-fix/Shared/UI/TrialSection/TrialSectionManager.swift"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "197"
-                  endingLineNumber = "197"
-                  offsetFromSymbolStart = "2364">
+                  startingLineNumber = "177"
+                  endingLineNumber = "177"
+                  offsetFromSymbolStart = "3004">
                </Location>
                <Location
-                  uuid = "65635CB8-1056-4B10-A08F-B2DEFB276BD3 - c05557868a8dd627"
+                  uuid = "65635CB8-1056-4B10-A08F-B2DEFB276BD3 - 21431fe38c796365"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
-                  symbolName = "closure #1 () -&gt; () in closure #1 () -&gt; () in Mac_Mouse_Fix.TrialSectionManager.showActivate(animate: Swift.Bool) -&gt; ()"
+                  symbolName = "closure #1 () -&gt; () in closure #1 () -&gt; () in Mac_Mouse_Fix.TrialSectionManager.showAlternate(animate: Swift.Bool) -&gt; ()"
                   moduleName = "Mac Mouse Fix"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/Noah/Desktop/mac-mouse-fix/Shared/UI/TrialSection/TrialSectionManager.swift"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "199"
-                  endingLineNumber = "199"
-                  offsetFromSymbolStart = "80">
+                  startingLineNumber = "179"
+                  endingLineNumber = "179"
+                  offsetFromSymbolStart = "64">
                </Location>
             </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "9C68DC8F-9C80-4A5F-98A7-5FC4D25D7ABA"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "App/UI/Main/Tabs/ButtonTab/RemapTable/RemapTableView.m"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "245"
+            endingLineNumber = "245"
+            landmarkName = "-updateSizeWithAnimation:tabContentView:"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "7CC2B735-C6D8-4C02-9A83-24D4428AD25E"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "App/UI/Main/Tabs/ButtonTab/RemapTable/RemapTableView.m"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "263"
+            endingLineNumber = "263"
+            landmarkName = "-updateSizeWithAnimation:tabContentView:"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

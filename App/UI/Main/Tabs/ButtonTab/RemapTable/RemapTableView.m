@@ -60,7 +60,7 @@ double effectColumnWidth = -1;
     
     /// Init size and height constraint
     ///     This shouldn't be necessary since we update the size when we switch to the button tab, but it's sometimes wrong and I think this might help.
-    [self updateSizeWithAnimation:NO tabContentView:nil];
+//    [self updateSizeWithAnimation:NO tabContentView:nil];
     
     /// Define constant
     ///     Also see RemapTableCellView > columnPadding for context
@@ -215,6 +215,11 @@ double effectColumnWidth = -1;
 }
 
 - (void)updateSizeWithAnimation:(BOOL)animate tabContentView:(NSView *_Nullable)tabContentView {
+    
+    /// Investigation on glitchy size when opening app directly into Buttons tab
+    ///   - (Only happens when the tableView content is too large for the window to fit on screen, so when the maxHeightConstraint comes into play)
+    ///   - This is called twice in a row, when the app opens into ButtonTab directly. because ButtonTabController.viewDidAppear() is called twice in a row (Is that an Apple bug?). Not totally sure if that's relevant. Both times, this method sets the same height and maxHeight constraints as far as I've seen. Yet still, the whole window first renders too small, with the bottom row of buttons squished, before becoming slightly too big to fit on the screen.
+    ///   - Update: We set the vertical compression resistance on the button row and the buttons to 1000 and now the window ends up snapping to the correct size. But still shows up too small at first.
     
     ///
     /// Update scrollView maxHeight
