@@ -168,32 +168,35 @@ import CocoaLumberjackSwift
 
         if !enable {
 
-
+            
             /// Animation curve
-            var animation = CASpringAnimation(speed: 2.25, damping: 1.0)
-
-            if playAcceptAnimation {
-                animation = CASpringAnimation(speed: 3.75, damping: 0.25, initialVelocity: -10)
-            }
-
-
+            /// NOTE: We used to use the bounce animation for the shadow as well as the transform, but pre-Ventura, having overshoot in the shadow animation causes visual glitches
+            
+            let animation = CASpringAnimation(speed: 2.25, damping: 1.0)
+            let bounceAnimation = CASpringAnimation(speed: 3.75, damping: 0.25, initialVelocity: -10)
+            
+            let transformAnimation = playAcceptAnimation ? bounceAnimation : animation
+            let shadowAnimation = animation
+            
             /// Play animation
-
-            Animate.with(animation) {
+            
+            Animate.with(transformAnimation) {
                 self.reactiveAnimator().layer.transform.set(CATransform3DIdentity)
-
+            }
+            Animate.with(shadowAnimation) {
+                
 //                var isDarkMode = false
 //                if #available(macOS 10.14, *) {
 //                    isDarkMode = (NSApp.effectiveAppearance == .init(named: .darkAqua)!)
 //                }
-//
 //                let baseShadow = NSShadow() /// NSShadow.clearShadow
 //                baseShadow.shadowColor = .shadowColor.withAlphaComponent(isDarkMode ? 0.75 : 0.225)
 //                baseShadow.shadowOffset = NSMakeSize(0, 0)
 //                baseShadow.shadowBlurRadius = 0.0
-
+                
                 self.reactiveAnimator().shadow.set(NSShadow.clearShadow)
             }
+            
 
             /// Play tint animation
 
