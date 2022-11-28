@@ -303,10 +303,11 @@ class AboutTabController: NSViewController {
                 trackingArea = NSTrackingArea(rect: trialSectionManager!.currentSection.superview!.bounds, options: [.activeInKeyWindow, .mouseEnteredAndExited], owner: self)
                 trialSectionManager!.currentSection.superview!.addTrackingArea(trackingArea!)
                 
-            } else { /// Trial has expired
+            }
+            else { /// Trial has expired
                 
                 /// Always show activate button
-                trialSectionManager?.showActivate()
+                trialSectionManager?.showAlternate(animate: false)
             }
             
             ///
@@ -382,13 +383,13 @@ class AboutTabController: NSViewController {
     override func mouseEntered(with event: NSEvent) {
         
         DispatchQueue.main.async {
-            self.trialSectionManager?.showActivate()
+            self.trialSectionManager?.showAlternate()
         }
     }
     override func mouseExited(with event: NSEvent) {
         
         DispatchQueue.main.async {
-            self.trialSectionManager?.showTrial()
+            self.trialSectionManager?.showInitial()
         }
     }
 }

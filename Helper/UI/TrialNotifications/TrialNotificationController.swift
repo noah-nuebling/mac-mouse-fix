@@ -338,14 +338,14 @@ class TrialNotificationController: NSWindowController {
     override func mouseEntered(with event: NSEvent) {
         
         DispatchQueue.main.async {
-            self.trialSectionManager.showActivate()
+            self.trialSectionManager.showAlternate()
         }
     }
 
     override func mouseExited(with event: NSEvent) {
             
         DispatchQueue.main.async {
-            self.trialSectionManager.showTrial()
+            self.trialSectionManager.showInitial()
         }
     }
     
