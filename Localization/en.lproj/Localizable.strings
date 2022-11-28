@@ -446,7 +446,7 @@
 "trigger.scroll-particle" = "Scroll";
 
 /* First draft: Click and Scroll %@ */
-"trigger.scroll.1" = "Click and Scroll";
+"trigger.scroll.1" = "Click and Scroll %@";
 
 /* First draft: Double Click and Scroll %@ */
 "trigger.scroll.2" = "Double Click and Scroll %@";

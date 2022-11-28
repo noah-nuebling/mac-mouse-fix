@@ -314,7 +314,7 @@
 "trigger.scroll.2" = "%@ doppelklicken und scrollen";
 
 /* First draft: Triple Click and Scroll %@ */
-"trigger.scroll.3" = "%2 dreifach klicken und scrollen";
+"trigger.scroll.3" = "%@ dreifach klicken und scrollen";
 
 /* First draft: and Scroll || Example: ⌥⌘ and Scroll */
 "trigger.scroll.flags" = "und scrollen";
