@@ -296,7 +296,7 @@ static CFDataRef _Nullable didReceiveMessage(CFMessagePortRef port, SInt32 messa
 }
 
 void invalidationCallback(CFMessagePortRef ms, void *info) {
-    DDLogInfo(@"MessagePort invalidated in %@", runningHelper() ? @"Helper" : @"MainApp");
+    DDLogInfo(@"Remote MessagePort invalidated in %@", runningHelper() ? @"Helper" : @"MainApp");
 }
 
 @end

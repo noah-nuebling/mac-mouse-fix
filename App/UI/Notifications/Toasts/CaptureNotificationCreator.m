@@ -34,7 +34,7 @@
     NSInteger uncapturedCount = uncapturedSet.count;
     NSInteger capturedCount = capturedSet.count;
     
-    if (capturedCount + uncapturedCount == 1) {
+    if (capturedCount + uncapturedCount >= 1) {
         
         /// NOTES: On why we only display the notification when the count == 1:
         ///   - At the time of writing, the `> 1` case only happens on first app startup and when restoring defaults. In those cases the information in the capture notification is imo overwhelming and not really relevant.
@@ -42,6 +42,9 @@
         ///   - Alternatively we could also:
         ///     - Turn off the capture notifications entirely
         ///     - Make the `> 1` case display "Some buttons on your mouse have been captured" instead of listing all the buttons that have been captured / uncaptured individually.
+        ///
+        /// Edit: Undid this now because this means that after restoring defaults, if the restore happens to only add one captured button an alert is displayed, but if it captures more, then no alert is displayed. This is weird and inconsistent. I also tried simplifying the notifications by just saying "Some Buttons have been captured" instead of listing all the captured and uncaptured ones separately, but being more vague about what exactly happens makes things more confusing and bad I think, even if it's shorter. See the reverted commit d6f386ad6bbad29188a9bc3782dbb1c836c1bd48 for that code.
+        /// New solution idea: Disable capture notifications specifically on app startup and when restoring defaults, instead of trying to disable them here. -> DONE
         
         /// Sort buttons
         

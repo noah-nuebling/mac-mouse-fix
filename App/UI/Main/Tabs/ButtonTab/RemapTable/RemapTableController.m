@@ -379,7 +379,7 @@ static void updateBorderColor(RemapTableController *object, BOOL isInitialAppear
 
 - (void)reloadAll {
     
-    /// Used when resetting to default
+    /// Used when resetting to default or when setting the initial remaps on first app start
     /// Similar to what we do in `- viewDidLoad`
         
     /// Capture notifs
@@ -403,8 +403,9 @@ static void updateBorderColor(RemapTableController *object, BOOL isInitialAppear
     [(RemapTableView *)self.tableView updateSizeWithAnimation];
     
     /// Capture notifs
-    NSSet *capturedButtonsAfter = [RemapTableUtility getCapturedButtons];
-    [CaptureNotificationCreator showButtonCaptureNotificationWithBeforeSet:capturedButtonsBefore afterSet:capturedButtonsAfter];
+    ///     These are too long and obnoxious and not really helpful in this situation.
+//    NSSet *capturedButtonsAfter = [RemapTableUtility getCapturedButtons];
+//    [CaptureNotificationCreator showButtonCaptureNotificationWithBeforeSet:capturedButtonsBefore afterSet:capturedButtonsAfter];
 }
 
 #pragma mark - Delegate & Controller
