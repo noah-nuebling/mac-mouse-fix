@@ -1,8 +1,8 @@
 /* Class = "NSTextFieldCell"; title = "Help"; ObjectID = "04N-yp-Qg1"; */
 "04N-yp-Qg1.title" = "Hilfe";
 
-/* Class = "NSTextFieldCell"; title = "Why does Mac Mouse Fix need Accessibility Access?"; ObjectID = "0lz-be-kpl"; */
-"0lz-be-kpl.title" = "Wieso braucht Mac Mouse Fix Zugriff auf Bedienungshilfen?";
+/* Class = "NSTextFieldCell"; title = "Accessibility Access allows Mac Mouse Fix to intercept signals from your mouse and keyboard"; ObjectID = "0lz-be-kpl"; */
+"0lz-be-kpl.title" = "Zugriff auf Bedienungshilfen erlaubt es Mac Mouse Fix Eingaben von deiner Maus und deiner Tastatur abzufangen";
 
 /* Class = "NSTextFieldCell"; title = "Switch on 'Mac Mouse Fix Helper'"; ObjectID = "46z-Nd-nh4"; */
 "46z-Nd-nh4.title" = "Schalte 'Mac Mouse Fix Helper' an";
