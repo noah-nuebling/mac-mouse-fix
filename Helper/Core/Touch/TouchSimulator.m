@@ -250,7 +250,7 @@ static NSMutableDictionary *_swipeInfo;
         /// Put the events into a dict
         ///     Note: Using `__bridge_transfer` should make it so the events are released when the dict is autoreleased, which is when the timer that the dict gets stored in is invalidated.
 
-        NSDictionary *events = @{@"e30": (__bridge_transfer id)e30, @"e29": (__bridge_transfer id)e29};
+        NSDictionary *events = @{@"e30": (__bridge id)e30, @"e29": (__bridge id)e29};
 
         /// Invalidate existing timers
 
@@ -262,6 +262,13 @@ static NSMutableDictionary *_swipeInfo;
         _doubleSendTimer = [NSTimer scheduledTimerWithTimeInterval:0.2 target:self selector:@selector(dockSwipeTimerFired:) userInfo:events repeats:NO];
         _tripleSendTimer = [NSTimer scheduledTimerWithTimeInterval:0.5 target:self selector:@selector(dockSwipeTimerFired:) userInfo:events repeats:NO];
     }
+    
+    ///
+    /// Release events
+    ///
+    
+    CFRelease(e29);
+    CFRelease(e30);
     
     ///
     /// Update state
