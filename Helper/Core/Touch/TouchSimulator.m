@@ -118,23 +118,27 @@ static NSMutableDictionary *_swipeInfo;
     
     /// Debug
     
-    static CFTimeInterval _dockSwipeLastTimeStamp = 0.0;
-    CFTimeInterval ts = CACurrentMediaTime();
-//    CFTimeInterval timeDiff = ts - _dockSwipeLastTimeStamp;
-    _dockSwipeLastTimeStamp = ts;
-    DDLogDebug(@"\nSending dockSwipe with delta: %@,"
-//               @"lastDelta: %@, "
-//               @"prevOriginOffset: %@ "
-//               @"type: %@, "
-               @"phase: %@, "
-//               @"timeSinceLastEvent: %@"
-               ,@(d*600)
-//               ,@(_dockSwipeLastDelta)
-//               ,@(_dockSwipeOriginOffset)
-//               ,@(type)
-               ,@(phase)
-//               ,@(timeDiff)
-   );
+    
+    if (runningPreRelease()) {
+        static CFTimeInterval _dockSwipeLastTimeStamp = 0.0;
+        CFTimeInterval ts = CACurrentMediaTime();
+        CFTimeInterval timeDiff = ts - _dockSwipeLastTimeStamp;
+        _dockSwipeLastTimeStamp = ts;
+        DDLogDebug(@"\nDock Swipe send with "
+                   @"delta: %@, "
+//                   @"lastDelta: %@, "
+//                   @"prevOriginOffset: %@ "
+//                   @"type: %@, "
+                   @"phase: %@, "
+                   @"timeSinceLast: %@"
+                   ,
+                   @(d),
+//                   @(_dockSwipeLastDelta),
+//                   @(_dockSwipeOriginOffset),
+//                   @(type),
+                   @(phase),
+                   @(timeDiff));
+    }
     
     /// Override end phase with canceled phase
     
@@ -198,9 +202,23 @@ static NSMutableDictionary *_swipeInfo;
     if (phase == kIOHIDEventPhaseEnded || phase == kIOHIDEventPhaseCancelled) {
         
         /// Set Exit Speed
-        ///     Note: `*100` cause that's closer to how the real values look, but it doesn't make a difference
-        CGEventSetDoubleValueField(e30, 129, _dockSwipeLastDelta*100); /// 'Exit speed'
-        CGEventSetDoubleValueField(e30, 130, _dockSwipeLastDelta*100); /// Probs not necessary
+        /// Notes:
+        /// - This only seems to affect the pinch dockSwipes. Doesn't seem to affect horiztonal or vertical.
+        /// -`*100` is a rough approximation of how the real values look.
+        /// - Problem with pinch dock swipes: The exitSpeed is necessary for Reveal Desktop to feel good, but for Launchpad, it seems the exitSpeed is interpreted in the wrong direction.
+        ///   This leads to a noticable jitter at the end of the dockSwipe when opening Launchpad. This jitter is also present with the trackpad but it's far less noticable.
+        ///   I don't know why it's so much less noticable on the trackpad. Maybe our exitSpeed values are too large, or something about the timing of how the events are sent affects the jitter.
+        ///     Sidenote: I just compared this to the real events, and I noticed these differences which might affect the issue:
+        ///     1. Real pinch events seem to be sent about every 8ms (but with a lot of variation so maybe it's just a coincidence) on a 16ms refresh rate screen.
+        ///     2. The `end` events usually still have non-zero deltas in the real dockswipes! I was under the assumption that `end` events should always have zero deltas (and that's how the TouchAnimator works, too)
+        ///   - Solution: By halving the exitSpeed, we keep Reveal Desktop feeling nice and responsive, while making the LaunchPad jitter about as noticable as with a real trackpad.
+        
+        double exitSpeed = _dockSwipeLastDelta*100;
+        if (type == kMFDockSwipeTypePinch) {
+            exitSpeed /= 2.0;
+        }
+        CGEventSetDoubleValueField(e30, 129, exitSpeed);
+        CGEventSetDoubleValueField(e30, 130, exitSpeed);
         
         /// Debug
         ///     Debugging of stuck-bug. When the stuck bug occurs, This always seems to be called and in the appropriate order (The fake dockSwipe with the end-phase is always called after all other phases).
@@ -208,8 +226,11 @@ static NSMutableDictionary *_swipeInfo;
         ///     This makes me think the bug is about timing / how slow the events are sent, and not in which order the events are sent or with on which thread the events are sent as I suspected initially.
         ///     Another hint towards this is, that the stuck-bug seems to occur more, the slower and more stuttery the UI is (the longer the computer has been running)
         /// I fixed the stuck-bug now. (See the comment with "This fixed the stuck-bug!" in ModifiedDrag.m) But I still don't know what caused it exactly.
-//        DDLogDebug(@"EXIT SPEED: %f, originOffset: %f, phase: %hu", _dockSwipeLastDelta, _dockSwipeOriginOffset, phase);
+        DDLogDebug(@"Dock Swipe exit: %f, originOffset: %f, phase: %hu", _dockSwipeLastDelta*100, _dockSwipeOriginOffset, phase);
 
+    } else {
+        DDLogDebug(@"Dock Swipe delta: %f originOffset: %f, phase: %hu", d, _dockSwipeOriginOffset, phase);
+        
     }
     
     ///
@@ -220,24 +241,24 @@ static NSMutableDictionary *_swipeInfo;
     CGEventPost(kCGSessionEventTap, e29);
     
     if (phase == kIOHIDEventPhaseEnded || phase == kIOHIDEventPhaseCancelled) {
-        
+
         /// Double-send events
         /// Notes:
         ///     - The inital dockSwipe event we post will be ignored by the system when it is under load (I called this the "stuck bug" in other places). Sending the event again with a delay of 200ms (0.2s) gets it unstuck almost always. Sending the event twice gives us the best of both responsiveness and reliability.
         ///     - In Scroll.m, even with sending the event again after 0.2 seconds, the stuck bug still happens a bunch for some reason. Even though this almost completely eliminates the bug in ModifiedDrag. Sending it again after 0.5 seconds works better but still sometimes happens. Edit: Doesn't happen anymore on M1.
-        
+
         /// Put the events into a dict
         ///     Note: Using `__bridge_transfer` should make it so the events are released when the dict is autoreleased, which is when the timer that the dict gets stored in is invalidated.
-        
+
         NSDictionary *events = @{@"e30": (__bridge_transfer id)e30, @"e29": (__bridge_transfer id)e29};
-        
+
         /// Invalidate existing timers
-        
+
         if (_doubleSendTimer != nil) [_doubleSendTimer invalidate];
         if (_tripleSendTimer != nil) [_tripleSendTimer invalidate];
-        
+
         /// Schedule new timers
-        
+
         _doubleSendTimer = [NSTimer scheduledTimerWithTimeInterval:0.2 target:self selector:@selector(dockSwipeTimerFired:) userInfo:events repeats:NO];
         _tripleSendTimer = [NSTimer scheduledTimerWithTimeInterval:0.5 target:self selector:@selector(dockSwipeTimerFired:) userInfo:events repeats:NO];
     }
