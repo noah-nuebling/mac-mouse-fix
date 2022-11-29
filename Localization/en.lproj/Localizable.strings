@@ -259,8 +259,8 @@
 /* First draft: **An unknown error occurred:**\n\n%@ */
 "license-toast.unknown-error" = "**An unknown error occurred:**\n\n%@";
 
-/* First draft: **'%@'** is not a known license key\nPlease try another one */
-"license-toast.unknown-key" = "**'%@'** is not a known license key\nPlease try another one";
+/* First draft: **'%@'** is not a known license key\n\nPlease try a different key */
+"license-toast.unknown-key" = "**'%@'** is not a known license key\n\nPlease try a different key";
 
 /* First draft: Activating your license failed for **unknown reasons**\n\nPlease write a **Bug Report** [here](https://noah-nuebling.github.io/mac-mouse-fix-feedback-assistant/?type=bug-report) */
 "license-toast.unknown-reason" = "Activating your license failed for **unknown reasons**\n\nPlease write a **Bug Report** [here](https://noah-nuebling.github.io/mac-mouse-fix-feedback-assistant/?type=bug-report)";
