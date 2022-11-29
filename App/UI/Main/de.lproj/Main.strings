@@ -79,7 +79,7 @@
 /* Class = "NSTextFieldCell"; title = "Scroll Precisely"; ObjectID = "A6t-UZ-2DE"; Note = "Scrolling > Keyboard Modifiers > Scroll Precisely Label"; */
 "A6t-UZ-2DE.title" = "Präzise scrollen";
 
-/* Class = "NSTextFieldCell"; title = "Move between pages in Safari by scrolling horizontally, and more"; ObjectID = "AHn-zX-g4d"; Note = "Scrolling > Natural Scroll Direction > Hint"; */
+/* Class = "NSTextFieldCell"; title = "Move between pages in Safari by scrolling horizontally, and more"; ObjectID = "AHn-zX-g4d"; Note = "Scrolling > Advanced Navigation > Hint"; */
 "AHn-zX-g4d.title" = "Blättere zwischen Seiten in Safari, indem du horizontal scrollst, und mehr";
 
 /* Class = "NSMenu"; title = "Main Menu"; ObjectID = "AYu-sK-qS6"; */
@@ -139,7 +139,7 @@
 /* Class = "NSTabViewItem"; label = "<Initial>"; ObjectID = "g9N-Za-8Ss"; */
 "g9N-Za-8Ss.label" = "<>";
 
-/* Class = "NSButtonCell"; title = "Reverse Direction"; ObjectID = "gK0-1z-Pjv"; Note = "Scrolling > Natural Scroll Direction Toggle"; */
+/* Class = "NSButtonCell"; title = "Reverse Direction"; ObjectID = "gK0-1z-Pjv"; Note = "Scrolling > Reverse Scroll Direction Toggle"; */
 "gK0-1z-Pjv.title" = "Richtung umkehren";
 
 /* Class = "NSTableColumn"; headerCell.title = "<Effect>"; ObjectID = "gOt-GR-IbE"; */
@@ -184,8 +184,8 @@
 /* Class = "NSButtonCell"; title = "Get Beta Versions"; ObjectID = "Mck-5W-5lv"; Note = "General > Get Beta Versions Toggle"; */
 "Mck-5W-5lv.title" = "Beta-Versionen erhalten";
 
-/* Class = "NSButtonCell"; title = "Trackpad Interactions"; ObjectID = "N65-aN-Hxp"; Note = "Scroll > Trackpad Interactions"; */
-"N65-aN-Hxp.title" = "Trackpad Interaktionen";
+/* Class = "NSButtonCell"; title = "Advanced Navigation"; ObjectID = "N65-aN-Hxp"; Note = "Scroll > Advanced Navigation"; */
+"N65-aN-Hxp.title" = "Erweiterte Navigation";
 
 /* Class = "NSTextFieldCell"; title = "Move the mouse pointer inside the '+' field, then click a mouse button to assign an action to it.  You can also __Double Click__, __Click and Drag__ and [more](https://google.com)."; ObjectID = "N7H-9j-DIr"; Note = "Buttons > Add Field Hint"; */
 "N7H-9j-DIr.title" = "Bewege den Mauszeiger in das '+' Feld, dann klicke eine Maustaste, um ihr eine Aktion zuzuweisen.\nDu kannst auch doppelklicken, klicken und ziehen, und [mehr]().";
@@ -310,14 +310,14 @@
 /* Class = "NSMenuItem"; title = "Buy Mac Mouse Fix..."; ObjectID = "d0g-07-PaJ"; */
 "d0g-07-PaJ.title" = "Mac Mouse Fix kaufen...";
 
-/* Class = "NSMenuItem"; title = "Regular"; ObjectID = "17P-PJ-tV1"; Note = "Scrolling > Scroll Speed > Low Option"; */
+/* Class = "NSMenuItem"; title = "Regular"; ObjectID = "17P-PJ-tV1"; Note = "Scrolling > Smoothness > Regular Option"; */
 "17P-PJ-tV1.title" = "Regulär";
 
-/* Class = "NSMenuItem"; title = "Off"; ObjectID = "4gx-d0-WNb"; Note = "Scrolling > Scroll Speed > macOS Option"; */
+/* Class = "NSMenuItem"; title = "Off"; ObjectID = "4gx-d0-WNb"; Note = "Scrolling > Smoothness > Off Option"; */
 "4gx-d0-WNb.title" = "Aus";
 
-/* Class = "NSMenuItem"; title = "High"; ObjectID = "97W-3h-SSc"; Note = "Scrolling > Scroll Speed > High Option"; */
+/* Class = "NSMenuItem"; title = "High"; ObjectID = "97W-3h-SSc"; Note = "Scrolling > Smoothness > High Option"; */
 "97W-3h-SSc.title" = "Hoch";
 
-/* Class = "NSTextFieldCell"; title = "Smoothness:"; ObjectID = "SjO-Dq-CEX"; Note = "Scrolling > Scroll Speed Label"; */
+/* Class = "NSTextFieldCell"; title = "Smoothness:"; ObjectID = "SjO-Dq-CEX"; Note = "Scrolling > Smoothness Label"; */
 "SjO-Dq-CEX.title" = "Flüssgkeit:";
