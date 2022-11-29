@@ -211,7 +211,14 @@ import CocoaLumberjackSwift
     // MARK: General
     
     
-    @objc lazy var u_smoothEnabled: Bool = { c("smooth") as! Bool /* && !killSwitch */ }()
+    @objc lazy var u_smoothEnabled: Bool = {
+        
+        // TODO: MAKE THIS DO STH USEFUL
+        
+        return true
+        
+//        c("smooth") as! Bool /* && !killSwitch */
+    }()
     
 //    @objc private var u_killSwitch: Bool { c("General.scrollKillSwitch") as? Bool ?? false } /// Not cached cause it's just used to calc the other vars
 //    @objc var killSwitch: Bool { u_killSwitch /*|| HelperState.isLockedDown */ } /// Should probably move this into SwitchMaster. Edit: Moved lockDown stuff into switchMaster
@@ -354,7 +361,13 @@ import CocoaLumberjackSwift
     /// User setting
     
     private lazy var u_animationCurvePreset = {
-        return c("inertia") as! Bool ? kMFScrollAnimationCurvePresetHighInertia : kMFScrollAnimationCurvePresetLowInertia /*kMFScrollAnimationCurvePresetLowInertia*/
+        
+        let smoothness = c("smooth") as! String
+        let trackpadSim = c("trackpadSimulation") as! Bool
+        
+        // TODO: MAKE THIS DO STH USEFUL
+        
+        return  kMFScrollAnimationCurvePresetHighInertia //? kMFScrollAnimationCurvePresetHighInertia : kMFScrollAnimationCurvePresetLowInertia /*kMFScrollAnimationCurvePresetLowInertia*/
     }()
     
     @objc var animationCurvePreset: MFScrollAnimationCurvePreset {

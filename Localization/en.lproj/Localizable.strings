@@ -265,8 +265,8 @@
 /* First draft: Activating your license failed for **unknown reasons**\n\nPlease write a **Bug Report** [here](https://noah-nuebling.github.io/mac-mouse-fix-feedback-assistant/?type=bug-report) */
 "license-toast.unknown-reason" = "Activating your license failed for **unknown reasons**\n\nPlease write a **Bug Report** [here](https://noah-nuebling.github.io/mac-mouse-fix-feedback-assistant/?type=bug-report)";
 
-/* First draft: Set Scroll Speed under\n[%@ > Mouse > Scrolling Speed](%@) */
-"macos-scrolling-hint" = "Set Scroll Speed under\n[%@ > Mouse > Scrolling Speed](%@)";
+/* First draft: Set speed under\n[%@ > Mouse > Scrolling Speed](%@) */
+"macos-scrolling-hint" = "Set speed under\n[%@ > Mouse > Scrolling Speed](%@)";
 
 /* First draft: Command (⌘) */
 "modifer-key.tool.command" = "Command (⌘)";

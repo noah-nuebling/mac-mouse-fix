@@ -15,8 +15,8 @@ class ScrollTabController: NSViewController {
     
     /// Config
     
-    var smooth = ConfigValue<Bool>(configPath: "Scroll.smooth")
-    var inertia = ConfigValue<Bool>(configPath: "Scroll.inertia")
+    var smooth = ConfigValue<String>(configPath: "Scroll.smooth")
+    var trackpad = ConfigValue<Bool>(configPath: "Scroll.trackpadSimulation")
     var reverseDirection = ConfigValue<Bool>(configPath: "Scroll.reverseDirection")
     var scrollSpeed = ConfigValue<String>(configPath: "Scroll.speed")
     var precise = ConfigValue<Bool>(configPath: "Scroll.precise")
@@ -31,15 +31,20 @@ class ScrollTabController: NSViewController {
     
     @IBOutlet weak var masterStack: CollapsingStackView!
     
-    @IBOutlet weak var smoothToggle: NSButton!
+
     
-    @IBOutlet weak var inertiaSection: NSView!
-    @IBOutlet weak var inertiaToggle: NSButton!
+    
+    
+    
+    @IBOutlet weak var smoothPicker: NSPopUpButton!
+    
+    @IBOutlet weak var trackpadSection: NSStackView!
+    @IBOutlet weak var trackpadToggle: NSButton!
+    @IBOutlet weak var trackpadHint: NSTextField!
     
     @IBOutlet weak var reverseDirectionToggle: NSButton!
-    @IBOutlet weak var reverseDirectionHint: NSTextField!
     
-    @IBOutlet weak var scrollSpeedPicker: NSPopUpButton!
+    @IBOutlet weak var speedPicker: NSPopUpButton!
     
     @IBOutlet weak var preciseSection: NSStackView!
     @IBOutlet weak var preciseToggle: NSButton!
@@ -89,28 +94,28 @@ class ScrollTabController: NSViewController {
         
         /// Smooth
         
-        smooth.bindingTarget <~ smoothToggle.reactive.boolValues
-        smoothToggle.reactive.boolValue <~ smooth.producer
+        smooth.bindingTarget <~ smoothPicker.reactive.selectedIdentifiers.map({ $0!.rawValue })
+        smoothPicker.reactive.selectedIdentifier <~ smooth.producer.map({ NSUserInterfaceItemIdentifier($0) })
          
-        inertiaSection.reactive.isCollapsed <~ smooth.producer.negate()
+        trackpadSection.reactive.isCollapsed <~ smooth.producer.map({ $0 != "high" })
         
-        /// Inertia
-        inertia.bindingTarget <~ inertiaToggle.reactive.boolValues
-        inertiaToggle.reactive.boolValue <~ inertia.producer
+        /// Trackpad
+        trackpad.bindingTarget <~ trackpadToggle.reactive.boolValues
+        trackpadToggle.reactive.boolValue <~ trackpad.producer
         
         /// Natural direction
         reverseDirection.bindingTarget <~ reverseDirectionToggle.reactive.boolValues
         reverseDirectionToggle.reactive.boolValue <~ reverseDirection.producer
         
         /// Scroll speed
-        scrollSpeed.bindingTarget <~ scrollSpeedPicker.reactive.selectedIdentifiers.map({ identifier in
+        scrollSpeed.bindingTarget <~ speedPicker.reactive.selectedIdentifiers.map({ identifier in
             identifier!.rawValue
         })
-        scrollSpeedPicker.reactive.selectedIdentifier <~ scrollSpeed.producer.map({ speed in
-            NSUserInterfaceItemIdentifier.init(rawValue: speed)
-        })
+        speedPicker.reactive.selectedIdentifier <~ scrollSpeed.producer.map({ NSUserInterfaceItemIdentifier($0) })
         
         /// Precise
+        /// Notes:
+        /// - Why do we generate the preciseHint text in code instead of setting it in IB?
         precise.bindingTarget <~ preciseToggle.reactive.boolValues
         preciseToggle.reactive.boolValue <~ precise.producer
         let preciseHintRaw = NSLocalizedString("precise-scrolling-hint", comment: "First draft: Scroll precisely, even without a keyboard modifier,\nbymoving the scroll wheel slowly || Note: The line break (\n) is there so the layout of the Scroll tab doesn't become too wide which looks weird. You can set it to your own taste.")
@@ -131,7 +136,7 @@ class ScrollTabController: NSViewController {
             mouseSettingsURL = "file:///System/Library/PreferencePanes/Mouse.prefPane"
             mouseSettingsURL = "" /// Disable for now (see above)
         }
-        let macOSHintRaw = String(format: NSLocalizedString("macos-scrolling-hint", comment: "First draft: Set Scroll Speed under\n[%@ > Mouse > Scrolling Speed](%@)"), UIStrings.systemSettingsName(), mouseSettingsURL)
+        let macOSHintRaw = String(format: NSLocalizedString("macos-scrolling-hint", comment: "First draft: Set speed under\n[%@ > Mouse > Scrolling Speed](%@)"), UIStrings.systemSettingsName(), mouseSettingsURL)
 
         /// Installl the macOSHint.
         ///     We manually make the macOSHint width equal the preciseSection width, because if the width changes the window resizes from the left edge which looks crappy.

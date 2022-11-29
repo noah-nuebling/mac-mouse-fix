@@ -637,11 +637,11 @@ Mac Mouse Fix</string>
                                                                     </connections>
                                                                 </tableCellView>
                                                                 <tableCellView identifier="buttonGroupCell" id="pxf-x1-gL5" userLabel="ButtonGroupCell">
-                                                                    <rect key="frame" x="8" y="38" width="287" height="22"/>
+                                                                    <rect key="frame" x="8" y="38" width="288" height="22"/>
                                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                                     <subviews>
                                                                         <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="AHZ-Kd-4Xf">
-                                                                            <rect key="frame" x="-8" y="3" width="294" height="16"/>
+                                                                            <rect key="frame" x="-8" y="3" width="295" height="16"/>
                                                                             <constraints>
                                                                                 <constraint firstAttribute="height" constant="16" id="iEl-dG-QM5"/>
                                                                             </constraints>
@@ -676,7 +676,7 @@ Mac Mouse Fix</string>
                                                             <tableColumnResizingMask key="resizingMask" resizeWithTable="YES"/>
                                                             <prototypeCellViews>
                                                                 <tableCellView identifier="effectCell" translatesAutoresizingMaskIntoConstraints="NO" id="Epw-SW-Ew3" customClass="RemapTableCellView" customModule="Mac_Mouse_Fix" customModuleProvider="target">
-                                                                    <rect key="frame" x="312.5" y="0.0" width="223" height="39"/>
+                                                                    <rect key="frame" x="313" y="0.0" width="223" height="39"/>
                                                                     <subviews>
                                                                         <popUpButton verticalHuggingPriority="750" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="Pw9-ZH-Tb7">
                                                                             <rect key="frame" x="0.0" y="6" width="224" height="25"/>
@@ -704,7 +704,7 @@ Mac Mouse Fix</string>
                                                                     </constraints>
                                                                 </tableCellView>
                                                                 <tableCellView identifier="keyCaptureCell" translatesAutoresizingMaskIntoConstraints="NO" id="MzR-b1-853" customClass="RemapTableCellView" customModule="Mac_Mouse_Fix" customModuleProvider="target">
-                                                                    <rect key="frame" x="312.5" y="39" width="220" height="39"/>
+                                                                    <rect key="frame" x="313" y="39" width="220" height="39"/>
                                                                     <subviews>
                                                                         <button hidden="YES" focusRingType="exterior" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="psy-Jg-KLq">
                                                                             <rect key="frame" x="-4" y="3" width="228" height="32"/>
@@ -945,46 +945,118 @@ your __Logitech M720 Triathlon__.&gt;</string>
                             <stackView distribution="fill" orientation="vertical" alignment="leading" horizontalStackHuggingPriority="999" verticalStackHuggingPriority="249.99998474121094" horizontalHuggingPriority="999" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="N4F-RB-d7a" userLabel="Master Stack" customClass="CollapsingStackView" customModule="Mac_Mouse_Fix" customModuleProvider="target">
                                 <rect key="frame" x="30" y="20" width="350" height="439"/>
                                 <subviews>
-                                    <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="OTl-Rd-e6e">
-                                        <rect key="frame" x="-2" y="422" width="352" height="18"/>
-                                        <buttonCell key="cell" type="check" title="Smooth Scrolling" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="g1O-zc-bnx">
-                                            <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                                            <font key="font" metaFont="system"/>
-                                        </buttonCell>
-                                        <attributedString key="userComments">
-                                            <fragment content="Scrolling &gt; Smooth Scrolling Toggle"/>
-                                        </attributedString>
-                                    </button>
-                                    <customView horizontalHuggingPriority="1000" verticalHuggingPriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="enY-m0-Esm" userLabel="Indent">
-                                        <rect key="frame" x="0.0" y="401" width="99" height="14"/>
+                                    <stackView distribution="fill" orientation="horizontal" alignment="centerY" horizontalStackHuggingPriority="1000" verticalStackHuggingPriority="750" horizontalHuggingPriority="1000" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Ew8-Wm-Z08">
+                                        <rect key="frame" x="0.0" y="419" width="166" height="20"/>
                                         <subviews>
-                                            <button horizontalHuggingPriority="1000" verticalHuggingPriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="BaB-SW-lek">
-                                                <rect key="frame" x="19" y="-1" width="80" height="16"/>
-                                                <buttonCell key="cell" type="check" title="with Inertia" bezelStyle="regularSquare" imagePosition="left" controlSize="small" state="on" inset="2" id="N65-aN-Hxp">
+                                            <textField horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="FCc-U0-c29" userLabel="Smoothness:">
+                                                <rect key="frame" x="-2" y="2" width="83" height="16"/>
+                                                <textFieldCell key="cell" lineBreakMode="clipping" alignment="left" title="Smoothness:" id="SjO-Dq-CEX">
+                                                    <font key="font" usesAppearanceFont="YES"/>
+                                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                                </textFieldCell>
+                                                <attributedString key="userComments">
+                                                    <fragment content="Scrolling &gt; Scroll Speed Label"/>
+                                                </attributedString>
+                                            </textField>
+                                            <popUpButton horizontalHuggingPriority="1000" verticalHuggingPriority="750" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="saP-aP-bnv">
+                                                <rect key="frame" x="84" y="-4" width="86" height="25"/>
+                                                <popUpButtonCell key="cell" type="push" title="High" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="97W-3h-SSc" id="LBG-Mq-hAQ">
+                                                    <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
+                                                    <font key="font" metaFont="menu"/>
+                                                    <menu key="menu" id="Mvm-5t-dK8">
+                                                        <items>
+                                                            <menuItem title="Off" identifier="off" id="4gx-d0-WNb">
+                                                                <attributedString key="userComments">
+                                                                    <fragment content="Scrolling &gt; Scroll Speed &gt; macOS Option"/>
+                                                                </attributedString>
+                                                            </menuItem>
+                                                            <menuItem title="Regular" identifier="regular" id="17P-PJ-tV1">
+                                                                <attributedString key="userComments">
+                                                                    <fragment content="Scrolling &gt; Scroll Speed &gt; Low Option"/>
+                                                                </attributedString>
+                                                            </menuItem>
+                                                            <menuItem title="High" state="on" identifier="high" id="97W-3h-SSc">
+                                                                <attributedString key="userComments">
+                                                                    <fragment content="Scrolling &gt; Scroll Speed &gt; High Option"/>
+                                                                </attributedString>
+                                                            </menuItem>
+                                                        </items>
+                                                    </menu>
+                                                </popUpButtonCell>
+                                            </popUpButton>
+                                        </subviews>
+                                        <visibilityPriorities>
+                                            <integer value="1000"/>
+                                            <integer value="1000"/>
+                                        </visibilityPriorities>
+                                        <customSpacing>
+                                            <real value="3.4028234663852886e+38"/>
+                                            <real value="3.4028234663852886e+38"/>
+                                        </customSpacing>
+                                    </stackView>
+                                    <stackView distribution="fill" orientation="vertical" alignment="leading" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="TFj-AL-hbW">
+                                        <rect key="frame" x="0.0" y="351" width="350" height="60"/>
+                                        <subviews>
+                                            <customView verticalHuggingPriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="9fp-mG-Lpx" userLabel="Spacer">
+                                                <rect key="frame" x="0.0" y="60" width="99" height="0.0"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" id="wba-TF-3xX"/>
+                                                </constraints>
+                                            </customView>
+                                            <button horizontalHuggingPriority="1000" verticalHuggingPriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="BaB-SW-lek" userLabel="Trackpad Toggle">
+                                                <rect key="frame" x="-2" y="35" width="158" height="18"/>
+                                                <buttonCell key="cell" type="check" title="Trackpad Interactions" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="N65-aN-Hxp">
                                                     <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                                                    <font key="font" metaFont="smallSystem"/>
+                                                    <font key="font" metaFont="system"/>
                                                 </buttonCell>
                                                 <attributedString key="userComments">
-                                                    <fragment content="Scrolling &gt; with Inertia Toggle (See what Apple uses for Trackpad marketing in your Language)"/>
+                                                    <fragment content="Scroll &gt; Trackpad Interactions"/>
                                                 </attributedString>
                                             </button>
+                                            <customView translatesAutoresizingMaskIntoConstraints="NO" id="K2b-ZE-JxN" userLabel="Indent">
+                                                <rect key="frame" x="0.0" y="0.0" width="350" height="28"/>
+                                                <subviews>
+                                                    <textField horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="999" translatesAutoresizingMaskIntoConstraints="NO" id="ljz-rp-t9J" userLabel="Trackpad hint">
+                                                        <rect key="frame" x="18" y="0.0" width="334" height="28"/>
+                                                        <textFieldCell key="cell" controlSize="small" selectable="YES" alignment="left" title="Move between pages in Safari by scrolling horizontally, and more" id="AHn-zX-g4d">
+                                                            <font key="font" metaFont="smallSystem"/>
+                                                            <color key="textColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
+                                                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                                        </textFieldCell>
+                                                        <attributedString key="userComments">
+                                                            <fragment content="Scrolling &gt; Natural Scroll Direction &gt; Hint"/>
+                                                        </attributedString>
+                                                    </textField>
+                                                </subviews>
+                                                <constraints>
+                                                    <constraint firstItem="ljz-rp-t9J" firstAttribute="top" secondItem="K2b-ZE-JxN" secondAttribute="top" id="I0h-fj-xNX"/>
+                                                    <constraint firstAttribute="trailing" secondItem="ljz-rp-t9J" secondAttribute="trailing" id="OVf-3M-1Pn"/>
+                                                    <constraint firstItem="ljz-rp-t9J" firstAttribute="leading" secondItem="K2b-ZE-JxN" secondAttribute="leading" constant="20" symbolic="YES" id="Wsk-Q6-Blc"/>
+                                                    <constraint firstAttribute="bottom" secondItem="ljz-rp-t9J" secondAttribute="bottom" id="YAd-iC-gHG"/>
+                                                </constraints>
+                                            </customView>
                                         </subviews>
-                                        <constraints>
-                                            <constraint firstAttribute="trailing" secondItem="BaB-SW-lek" secondAttribute="trailing" id="71m-gY-Koy"/>
-                                            <constraint firstItem="BaB-SW-lek" firstAttribute="leading" secondItem="enY-m0-Esm" secondAttribute="leading" constant="20" symbolic="YES" id="Awd-5s-pxf"/>
-                                            <constraint firstItem="BaB-SW-lek" firstAttribute="top" secondItem="enY-m0-Esm" secondAttribute="top" id="Uv0-G9-WOv"/>
-                                            <constraint firstAttribute="bottom" secondItem="BaB-SW-lek" secondAttribute="bottom" id="uBH-SS-lbe"/>
-                                        </constraints>
-                                    </customView>
+                                        <visibilityPriorities>
+                                            <integer value="1000"/>
+                                            <integer value="1000"/>
+                                            <integer value="1000"/>
+                                        </visibilityPriorities>
+                                        <customSpacing>
+                                            <real value="3.4028234663852886e+38"/>
+                                            <real value="3.4028234663852886e+38"/>
+                                            <real value="3.4028234663852886e+38"/>
+                                        </customSpacing>
+                                    </stackView>
                                     <customView verticalHuggingPriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="R6A-ti-FG4" userLabel="Spacer">
-                                        <rect key="frame" x="0.0" y="393" width="350" height="0.0"/>
+                                        <rect key="frame" x="0.0" y="343" width="350" height="0.0"/>
                                         <constraints>
                                             <constraint firstAttribute="height" id="Dh0-br-i3S"/>
                                         </constraints>
                                     </customView>
                                     <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="dtR-AX-YsY" userLabel="Reverse Direction Toggle">
-                                        <rect key="frame" x="-2" y="368" width="352" height="18"/>
-                                        <buttonCell key="cell" type="check" title="Reverse Scroll Direction" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="gK0-1z-Pjv">
+                                        <rect key="frame" x="-2" y="318" width="352" height="18"/>
+                                        <buttonCell key="cell" type="check" title="Reverse Direction" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="gK0-1z-Pjv">
                                             <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                             <font key="font" metaFont="system"/>
                                         </buttonCell>
@@ -992,33 +1064,11 @@ your __Logitech M720 Triathlon__.&gt;</string>
                                             <fragment content="Scrolling &gt; Natural Scroll Direction Toggle"/>
                                         </attributedString>
                                     </button>
-                                    <customView hidden="YES" translatesAutoresizingMaskIntoConstraints="NO" id="K2b-ZE-JxN" userLabel="Indent">
-                                        <rect key="frame" x="0.0" y="425" width="203" height="14"/>
-                                        <subviews>
-                                            <textField horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="ljz-rp-t9J" userLabel="Reverse Direction Hint">
-                                                <rect key="frame" x="18" y="0.0" width="187" height="14"/>
-                                                <textFieldCell key="cell" controlSize="small" selectable="YES" alignment="left" title="&lt;Content tracks finger movement&gt;" id="AHn-zX-g4d">
-                                                    <font key="font" metaFont="smallSystem"/>
-                                                    <color key="textColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
-                                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                                </textFieldCell>
-                                                <attributedString key="userComments">
-                                                    <fragment content="Scrolling &gt; Natural Scroll Direction &gt; Hint"/>
-                                                </attributedString>
-                                            </textField>
-                                        </subviews>
-                                        <constraints>
-                                            <constraint firstItem="ljz-rp-t9J" firstAttribute="top" secondItem="K2b-ZE-JxN" secondAttribute="top" id="I0h-fj-xNX"/>
-                                            <constraint firstAttribute="trailing" secondItem="ljz-rp-t9J" secondAttribute="trailing" id="OVf-3M-1Pn"/>
-                                            <constraint firstItem="ljz-rp-t9J" firstAttribute="leading" secondItem="K2b-ZE-JxN" secondAttribute="leading" constant="20" symbolic="YES" id="Wsk-Q6-Blc"/>
-                                            <constraint firstAttribute="bottom" secondItem="ljz-rp-t9J" secondAttribute="bottom" id="YAd-iC-gHG"/>
-                                        </constraints>
-                                    </customView>
                                     <customView verticalHuggingPriority="999" translatesAutoresizingMaskIntoConstraints="NO" id="PDb-87-6bc" userLabel="Divider">
-                                        <rect key="frame" x="0.0" y="321" width="350" height="40"/>
+                                        <rect key="frame" x="0.0" y="285" width="350" height="26"/>
                                         <subviews>
                                             <box horizontalHuggingPriority="1000" verticalHuggingPriority="750" boxType="separator" translatesAutoresizingMaskIntoConstraints="NO" id="dvw-oy-SUP">
-                                                <rect key="frame" x="0.0" y="6" width="350" height="28"/>
+                                                <rect key="frame" x="0.0" y="6" width="350" height="14"/>
                                             </box>
                                         </subviews>
                                         <constraints>
@@ -1029,11 +1079,11 @@ your __Logitech M720 Triathlon__.&gt;</string>
                                         </constraints>
                                     </customView>
                                     <stackView distribution="fill" orientation="horizontal" alignment="centerY" horizontalStackHuggingPriority="1000" verticalStackHuggingPriority="750" horizontalHuggingPriority="1000" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Ajf-ff-OPq">
-                                        <rect key="frame" x="0.0" y="293" width="170" height="20"/>
+                                        <rect key="frame" x="0.0" y="257" width="132" height="20"/>
                                         <subviews>
                                             <textField horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="T0R-D1-tZu">
-                                                <rect key="frame" x="-2" y="2" width="85" height="16"/>
-                                                <textFieldCell key="cell" lineBreakMode="clipping" alignment="left" title="Scroll Speed:" id="l7d-al-Y14">
+                                                <rect key="frame" x="-2" y="2" width="47" height="16"/>
+                                                <textFieldCell key="cell" lineBreakMode="clipping" alignment="left" title="Speed:" id="l7d-al-Y14">
                                                     <font key="font" usesAppearanceFont="YES"/>
                                                     <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -1043,7 +1093,7 @@ your __Logitech M720 Triathlon__.&gt;</string>
                                                 </attributedString>
                                             </textField>
                                             <popUpButton horizontalHuggingPriority="1000" verticalHuggingPriority="750" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="AUN-SK-ju7">
-                                                <rect key="frame" x="86" y="-4" width="88" height="25"/>
+                                                <rect key="frame" x="48" y="-4" width="88" height="25"/>
                                                 <popUpButtonCell key="cell" type="push" title="macOS" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="fW3-4Q-yB8" id="4Es-L9-Mle">
                                                     <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
                                                     <font key="font" metaFont="menu"/>
@@ -1084,67 +1134,56 @@ your __Logitech M720 Triathlon__.&gt;</string>
                                             <real value="3.4028234663852886e+38"/>
                                         </customSpacing>
                                     </stackView>
-                                    <customView translatesAutoresizingMaskIntoConstraints="NO" id="gW0-dC-uuV" userLabel="Precise Section Wrapper" customClass="NoClipWrapper" customModule="Mac_Mouse_Fix" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="203" width="350" height="82"/>
+                                    <stackView distribution="fill" orientation="vertical" alignment="leading" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="WGO-Zc-NYH" userLabel="Precise Section">
+                                        <rect key="frame" x="0.0" y="203" width="350" height="46"/>
                                         <subviews>
-                                            <stackView distribution="fill" orientation="vertical" alignment="leading" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="WGO-Zc-NYH" userLabel="Precise Section">
-                                                <rect key="frame" x="0.0" y="0.0" width="350" height="82"/>
+                                            <customView verticalHuggingPriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="8JP-6I-CYk" userLabel="Spacer">
+                                                <rect key="frame" x="0.0" y="46" width="99" height="0.0"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" id="gGV-lw-xrR"/>
+                                                </constraints>
+                                            </customView>
+                                            <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="5rO-m9-I0Q">
+                                                <rect key="frame" x="-2" y="21" width="82" height="18"/>
+                                                <buttonCell key="cell" type="check" title="Precision" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="4hf-tQ-y76">
+                                                    <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                                    <font key="font" metaFont="system"/>
+                                                </buttonCell>
+                                                <attributedString key="userComments">
+                                                    <fragment content="Scrolling &gt; Precise Scrolling Toggle"/>
+                                                </attributedString>
+                                            </button>
+                                            <customView horizontalHuggingPriority="999" verticalHuggingPriority="999" translatesAutoresizingMaskIntoConstraints="NO" id="WnW-0I-ajJ" userLabel="Indent">
+                                                <rect key="frame" x="0.0" y="0.0" width="350" height="14"/>
                                                 <subviews>
-                                                    <customView verticalHuggingPriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="8JP-6I-CYk" userLabel="Spacer">
-                                                        <rect key="frame" x="0.0" y="82" width="99" height="0.0"/>
-                                                        <constraints>
-                                                            <constraint firstAttribute="height" id="gGV-lw-xrR"/>
-                                                        </constraints>
-                                                    </customView>
-                                                    <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="5rO-m9-I0Q">
-                                                        <rect key="frame" x="-2" y="57" width="196" height="18"/>
-                                                        <buttonCell key="cell" type="check" title="Always-On Precise Scrolling" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="4hf-tQ-y76">
-                                                            <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                                                            <font key="font" metaFont="system"/>
-                                                        </buttonCell>
-                                                        <attributedString key="userComments">
-                                                            <fragment content="Scrolling &gt; Precise Scrolling Toggle"/>
-                                                        </attributedString>
-                                                    </button>
-                                                    <customView horizontalHuggingPriority="999" verticalHuggingPriority="999" translatesAutoresizingMaskIntoConstraints="NO" id="WnW-0I-ajJ" userLabel="Indent">
-                                                        <rect key="frame" x="0.0" y="0.0" width="293" height="50"/>
-                                                        <subviews>
-                                                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="Yn5-ch-Oxi" customClass="MarkdownTextField" customModule="Mac_Mouse_Fix" customModuleProvider="target">
-                                                                <rect key="frame" x="18" y="0.0" width="277" height="50"/>
-                                                                <textFieldCell key="cell" controlSize="small" alignment="left" title="&lt;Scroll precisely by moving the scroll wheel slowly&gt;" id="1nK-vb-jNz">
-                                                                    <font key="font" metaFont="smallSystem"/>
-                                                                    <color key="textColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
-                                                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                                                </textFieldCell>
-                                                            </textField>
-                                                        </subviews>
-                                                        <constraints>
-                                                            <constraint firstItem="Yn5-ch-Oxi" firstAttribute="leading" secondItem="WnW-0I-ajJ" secondAttribute="leading" constant="20" symbolic="YES" id="3lB-Tc-gjb"/>
-                                                            <constraint firstItem="Yn5-ch-Oxi" firstAttribute="top" secondItem="WnW-0I-ajJ" secondAttribute="top" id="73D-fr-uSW"/>
-                                                            <constraint firstAttribute="bottom" secondItem="Yn5-ch-Oxi" secondAttribute="bottom" id="HQg-uu-Dfw"/>
-                                                            <constraint firstAttribute="trailing" secondItem="Yn5-ch-Oxi" secondAttribute="trailing" id="IIo-57-lz0"/>
-                                                        </constraints>
-                                                    </customView>
+                                                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="Yn5-ch-Oxi" customClass="MarkdownTextField" customModule="Mac_Mouse_Fix" customModuleProvider="target">
+                                                        <rect key="frame" x="18" y="0.0" width="334" height="14"/>
+                                                        <textFieldCell key="cell" controlSize="small" alignment="left" title="&lt;Scroll precisely by moving the scroll wheel slowly&gt;" id="1nK-vb-jNz">
+                                                            <font key="font" metaFont="smallSystem"/>
+                                                            <color key="textColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
+                                                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                                        </textFieldCell>
+                                                    </textField>
                                                 </subviews>
-                                                <visibilityPriorities>
-                                                    <integer value="1000"/>
-                                                    <integer value="1000"/>
-                                                    <integer value="1000"/>
-                                                </visibilityPriorities>
-                                                <customSpacing>
-                                                    <real value="3.4028234663852886e+38"/>
-                                                    <real value="3.4028234663852886e+38"/>
-                                                    <real value="3.4028234663852886e+38"/>
-                                                </customSpacing>
-                                            </stackView>
+                                                <constraints>
+                                                    <constraint firstItem="Yn5-ch-Oxi" firstAttribute="leading" secondItem="WnW-0I-ajJ" secondAttribute="leading" constant="20" symbolic="YES" id="3lB-Tc-gjb"/>
+                                                    <constraint firstItem="Yn5-ch-Oxi" firstAttribute="top" secondItem="WnW-0I-ajJ" secondAttribute="top" id="73D-fr-uSW"/>
+                                                    <constraint firstAttribute="bottom" secondItem="Yn5-ch-Oxi" secondAttribute="bottom" id="HQg-uu-Dfw"/>
+                                                    <constraint firstAttribute="trailing" secondItem="Yn5-ch-Oxi" secondAttribute="trailing" id="IIo-57-lz0"/>
+                                                </constraints>
+                                            </customView>
                                         </subviews>
-                                        <constraints>
-                                            <constraint firstAttribute="bottom" secondItem="WGO-Zc-NYH" secondAttribute="bottom" id="CVQ-na-uJB"/>
-                                            <constraint firstAttribute="trailing" secondItem="WGO-Zc-NYH" secondAttribute="trailing" id="PFB-fB-Mif"/>
-                                            <constraint firstItem="WGO-Zc-NYH" firstAttribute="top" secondItem="gW0-dC-uuV" secondAttribute="top" id="PiV-o7-woO"/>
-                                            <constraint firstItem="WGO-Zc-NYH" firstAttribute="leading" secondItem="gW0-dC-uuV" secondAttribute="leading" id="Una-ME-vcp"/>
-                                        </constraints>
-                                    </customView>
+                                        <visibilityPriorities>
+                                            <integer value="1000"/>
+                                            <integer value="1000"/>
+                                            <integer value="1000"/>
+                                        </visibilityPriorities>
+                                        <customSpacing>
+                                            <real value="3.4028234663852886e+38"/>
+                                            <real value="3.4028234663852886e+38"/>
+                                            <real value="3.4028234663852886e+38"/>
+                                        </customSpacing>
+                                    </stackView>
                                     <customView verticalHuggingPriority="999" translatesAutoresizingMaskIntoConstraints="NO" id="fzz-BT-Lok" userLabel="Divider">
                                         <rect key="frame" x="0.0" y="178" width="350" height="17"/>
                                         <subviews>
@@ -1428,8 +1467,10 @@ your __Logitech M720 Triathlon__.&gt;</string>
                                         </constraints>
                                     </customView>
                                 </subviews>
+                                <constraints>
+                                    <constraint firstItem="ljz-rp-t9J" firstAttribute="width" relation="greaterThanOrEqual" secondItem="Yn5-ch-Oxi" secondAttribute="width" id="sEf-4q-f8E"/>
+                                </constraints>
                                 <visibilityPriorities>
-                                    <integer value="1000"/>
                                     <integer value="1000"/>
                                     <integer value="1000"/>
                                     <integer value="1000"/>
@@ -1441,7 +1482,6 @@ your __Logitech M720 Triathlon__.&gt;</string>
                                     <integer value="1000"/>
                                 </visibilityPriorities>
                                 <customSpacing>
-                                    <real value="3.4028234663852886e+38"/>
                                     <real value="3.4028234663852886e+38"/>
                                     <real value="3.4028234663852886e+38"/>
                                     <real value="3.4028234663852886e+38"/>
@@ -1467,25 +1507,25 @@ your __Logitech M720 Triathlon__.&gt;</string>
                     </attributedString>
                     <connections>
                         <outlet property="horizontalModField" destination="PpE-2r-BrM" id="sxE-uX-0zf"/>
-                        <outlet property="inertiaSection" destination="enY-m0-Esm" id="Bgf-CS-IP4"/>
-                        <outlet property="inertiaToggle" destination="BaB-SW-lek" id="TyK-xD-IEc"/>
                         <outlet property="masterStack" destination="N4F-RB-d7a" id="l0H-83-1J7"/>
                         <outlet property="preciseHint" destination="Yn5-ch-Oxi" id="qNm-Cv-Jsf"/>
                         <outlet property="preciseModField" destination="gqo-T2-Nmz" id="Rts-Lf-EyR"/>
                         <outlet property="preciseSection" destination="WGO-Zc-NYH" id="3ee-ik-5UL"/>
                         <outlet property="preciseToggle" destination="5rO-m9-I0Q" id="qoO-s1-pXz"/>
                         <outlet property="restoreDefaultModsButton" destination="4ZD-1f-bbe" id="4G3-Tp-sEf"/>
-                        <outlet property="reverseDirectionHint" destination="ljz-rp-t9J" id="pUy-mv-lBP"/>
                         <outlet property="reverseDirectionToggle" destination="dtR-AX-YsY" id="P3O-kx-KCg"/>
-                        <outlet property="scrollSpeedPicker" destination="AUN-SK-ju7" id="5Qf-b9-Y8X"/>
-                        <outlet property="smoothToggle" destination="OTl-Rd-e6e" id="s3r-Im-Gp5"/>
+                        <outlet property="smoothPicker" destination="saP-aP-bnv" id="Zlr-EF-GAN"/>
+                        <outlet property="speedPicker" destination="AUN-SK-ju7" id="5Qf-b9-Y8X"/>
                         <outlet property="swiftModField" destination="Abk-fb-uRV" id="kYs-Xn-eTk"/>
+                        <outlet property="trackpadHint" destination="ljz-rp-t9J" id="pUy-mv-lBP"/>
+                        <outlet property="trackpadSection" destination="TFj-AL-hbW" id="ID7-aO-Rky"/>
+                        <outlet property="trackpadToggle" destination="BaB-SW-lek" id="TyK-xD-IEc"/>
                         <outlet property="zoomModField" destination="HZF-jc-NcN" id="Cbj-dq-4Sv"/>
                     </connections>
                 </viewController>
                 <customObject id="lB6-fT-42m" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-363" y="1658"/>
+            <point key="canvasLocation" x="-363" y="1657.5"/>
         </scene>
         <!--Pointer View Controller-->
         <scene sceneID="cBw-Z2-DNT">

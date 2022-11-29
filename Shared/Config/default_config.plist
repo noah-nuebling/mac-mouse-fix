@@ -4,8 +4,6 @@
 <dict>
 	<key>Scroll</key>
 	<dict>
-		<key>inertia</key>
-		<true/>
 		<key>modifiers</key>
 		<dict>
 			<key>horizontal</key>
@@ -19,12 +17,14 @@
 		</dict>
 		<key>reverseDirection</key>
 		<true/>
+		<key>trackpadSimulation</key>
+		<true/>
 		<key>precise</key>
 		<false/>
 		<key>smooth</key>
-		<true/>
-		<key>speed</key>
 		<string>high</string>
+		<key>speed</key>
+		<string>medium</string>
 	</dict>
 	<key>License</key>
 	<dict>
@@ -77,7 +77,7 @@
 	<key>Constants</key>
 	<dict>
 		<key>configVersion</key>
-		<integer>18</integer>
+		<integer>19</integer>
 		<key>defaultRemaps</key>
 		<dict>
 			<key>threeButtons</key>

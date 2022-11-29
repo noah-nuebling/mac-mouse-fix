@@ -16,8 +16,8 @@
 /* First draft: __Scrolling__ */
 "revive-toast.feature-scrolling" = "__Scrollen__";
 
-/* First draft: Set Scroll Speed under\n[%@ > Mouse > Scrolling Speed](%@) */
-"macos-scrolling-hint" = "Stelle das Scrolltempo ein unter\n[%@ > Maus > Scrolltempo](%@)";
+/* First draft: Set speed under\n[%@ > Mouse > Scrolling Speed](%@) */
+"macos-scrolling-hint" = "Stelle das Tempo ein unter\n[%@ > Maus > Scrolltempo](%@)";
 
 /* First draft: Content tracks finger movement */
 "natural-scrolling-hint" = "Inhalte folgen Finger-Bewegung";
