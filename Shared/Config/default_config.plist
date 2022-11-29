@@ -18,7 +18,7 @@
 			<integer>1048576</integer>
 		</dict>
 		<key>reverseDirection</key>
-		<false/>
+		<true/>
 		<key>precise</key>
 		<false/>
 		<key>smooth</key>
