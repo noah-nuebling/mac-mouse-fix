@@ -91,10 +91,10 @@
 /* Class = "NSTextFieldCell"; title = "Mac Mouse Fix will stay enabled after you close it"; ObjectID = "bew-ni-FnZ"; */
 "bew-ni-FnZ.title" = "Mac Mouse Fix bleibt eingeschaltet, nachdem du\nes beendest";
 
-/* Class = "NSTextFieldCell"; title = "Lets you quickly turn off or on features like\n'Smooth Scrolling'"; ObjectID = "AqN-zN-yDS"; */
-"AqN-zN-yDS.title" = "Lässt dich schnell Features wie\n'Flüssiges Scrollen' an- und abschalten";
+/* Class = "NSTextFieldCell"; title = "Lets you quickly turn off or on features like\nsmooth scrolling"; ObjectID = "AqN-zN-yDS"; */
+"AqN-zN-yDS.title" = "Lässt dich schnell Features wie\nflüssiges Scrollen an- und abschalten";
 
-/* Class = "NSTextFieldCell"; title = "You'll be notified of updates when you open\nMac Mouse Fix"; ObjectID = "SaY-fF-d1s"; */
+/* Class = "NSTextFieldCell"; title = "You'll be notified of updates when you open\nthis window"; ObjectID = "SaY-fF-d1s"; */
 "SaY-fF-d1s.title" = "Du wirst über Updates benachrichtigt werden,\nwenn du dieses Fenster öffnest";
 
 /* Class = "NSMenuItem"; title = "High"; ObjectID = "bIE-g7-3St"; Note = "Scrolling > Scroll Speed > High Option"; */

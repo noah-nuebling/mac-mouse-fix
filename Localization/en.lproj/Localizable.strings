@@ -284,7 +284,7 @@
 "natural-scrolling-hint" = "Content tracks finger movement";
 
 /* First draft: Scroll precisely even without a keyboard modifier by\nmoving the scroll wheel slowly || Note: The line break (\n) is there so the layout of the Scroll tab doesn't become too wide which looks weird. You can set it to your own taste. */
-"precise-scrolling-hint" = "Scroll precisely, even without a keyboard modifier,\nby moving the scroll wheel slowly";
+"precise-scrolling-hint" = "Scroll precisely, even without a keyboard modifier,\nby moving the scroll wheel _slowly_";
 
 /* First draft: Desktop & Launchpad */
 "scroll-effect.4-pinch" = "Desktop & Launchpad";
