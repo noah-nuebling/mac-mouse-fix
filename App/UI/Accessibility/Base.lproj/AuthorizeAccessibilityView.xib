@@ -8,6 +8,7 @@
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="AuthorizeAccessibilityView">
             <connections>
+                <outlet property="openSettingsLink" destination="xUD-oJ-hdN" id="E5T-zj-scq"/>
                 <outlet property="view" destination="1T3-8f-fdJ" id="A2e-7M-lzh"/>
             </connections>
         </customObject>
@@ -27,7 +28,7 @@
                 </textField>
                 <textField horizontalHuggingPriority="999" verticalHuggingPriority="750" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" verifyAmbiguity="off" translatesAutoresizingMaskIntoConstraints="NO" id="xUD-oJ-hdN" customClass="Hyperlink">
                     <rect key="frame" x="134" y="143" width="216" height="16"/>
-                    <textFieldCell key="cell" lineBreakMode="clipping" alignment="center" title="Open 'Security &amp; Privacy' Settings" id="9qp-gN-SZZ">
+                    <textFieldCell key="cell" lineBreakMode="clipping" alignment="center" title="Open 'Privacy &amp; Security' Settings" id="9qp-gN-SZZ">
                         <font key="font" metaFont="message"/>
                         <color key="textColor" name="linkColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>

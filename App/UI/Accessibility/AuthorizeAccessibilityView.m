@@ -18,6 +18,8 @@
 
 @interface AuthorizeAccessibilityView ()
 
+@property (weak) IBOutlet Hyperlink *openSettingsLink;
+
 @end
 
 @implementation AuthorizeAccessibilityView
@@ -55,6 +57,10 @@ AuthorizeAccessibilityView *_accViewController;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    if (@available(macOS 13.0, *)) { } else {
+        self.openSettingsLink.stringValue = NSLocalizedString(@"accessibility.settings-link.pre-ventura", @"First draft: Open 'Security & Privacy' Preferences || Notes: The string for Ventura and later is defined in Interface Builder");
+    }
 }
 
 - (IBAction)AuthorizeButton:(NSButton *)sender {

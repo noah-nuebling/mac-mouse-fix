@@ -537,3 +537,6 @@
 
 /* First draft: OK */
 "buy-mouse-alert.ok" = "OK";
+
+/* First draft: Open 'Security & Privacy' Preferences || Notes: The string for Ventura and later is defined in Interface Builder */
+"accessibility.settings-link.pre-ventura" = "Open 'Security & Privacy' Preferences";
