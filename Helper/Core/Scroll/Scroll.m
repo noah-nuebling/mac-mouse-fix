@@ -287,7 +287,7 @@ static void heavyProcessing(CGEventRef event, int64_t scrollDeltaAxis1, int64_t 
     /// Initialized scrollConfig for preliminary analysis
     /// Could also use `[ScrollConfig scrollConfigWithModifiers:inputAxis:event:]` here? It probably doesn't matter. This should only happen once on the very first tick after the helper starts.
     
-    if (_scrollConfig != nil) {
+    if (_scrollConfig == nil) {
         _scrollConfig = ScrollConfig.shared;
     }
     
@@ -515,6 +515,8 @@ static void heavyProcessing(CGEventRef event, int64_t scrollDeltaAxis1, int64_t 
             Curve *c;
             if (cParams.useDragCurve) {
                 
+                DDLogDebug(@"Scroll.m start animation curve hybrid");
+                
                 HybridCurve *hc = [[BezierHybridCurve alloc]
                      initWithBaseCurve:cParams.baseCurve
                      minDuration:((double)cParams.baseMsPerStep) / 1000.0
@@ -536,6 +538,7 @@ static void heavyProcessing(CGEventRef event, int64_t scrollDeltaAxis1, int64_t 
                 c = hc;
                 
             } else {
+                DDLogDebug(@"Scroll.m start animation curve base");
                 c = cParams.baseCurve;
                 duration = ((double)cParams.baseMsPerStep) / 1000.0;
             }

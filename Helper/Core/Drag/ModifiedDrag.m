@@ -211,7 +211,7 @@ static CGEventRef __nullable eventTapCallBack(CGEventTapProxy proxy, CGEventType
         DDLogInfo(@"ModifiedDrag eventTap was disabled by %@", type == kCGEventTapDisabledByTimeout ? @"timeout. Re-enabling." : @"user input.");
         
         if (type == kCGEventTapDisabledByTimeout) {
-            assert(false); /// Not sure this ever times out
+//            assert(false); /// Not sure this ever times out
             CGEventTapEnable(_drag.eventTap, true);
         }
         

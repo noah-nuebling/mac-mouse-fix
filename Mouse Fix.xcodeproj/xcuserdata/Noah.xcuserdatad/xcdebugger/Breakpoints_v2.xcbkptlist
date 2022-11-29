@@ -708,12 +708,12 @@
             landmarkType = "7">
             <Locations>
                <Location
-                  uuid = "85EE0409-3166-4F47-A300-03BC5729D720 - ae23a9ca55749b9a"
+                  uuid = "85EE0409-3166-4F47-A300-03BC5729D720 - 8c1cd90bf64b6444"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
-                  symbolName = "closure #2 (Swift.Optional&lt;Swift.Dictionary&lt;Swift.String, Any&gt;&gt;, Swift.Optional&lt;__C.NSError&gt;, Swift.Optional&lt;__C.NSURLResponse&gt;) -&gt; () in static Mac_Mouse_Fix.Gumroad.getLicenseInfo(_: Swift.String, incrementUsageCount: Swift.Bool, completionHandler: (Swift.Bool, Swift.Optional&lt;Swift.Int&gt;, Swift.Optional&lt;Swift.Dictionary&lt;Swift.String, Any&gt;&gt;, Swift.Optional&lt;__C.NSError&gt;, Swift.Optional&lt;__C.NSURLResponse&gt;) -&gt; ()) -&gt; ()"
-                  moduleName = "Mac Mouse Fix"
+                  symbolName = "closure #2 (Swift.Optional&lt;Swift.Dictionary&lt;Swift.String, Any&gt;&gt;, Swift.Optional&lt;__C.NSError&gt;, Swift.Optional&lt;__C.NSURLResponse&gt;) -&gt; () in static Mac_Mouse_Fix_Helper.Gumroad.getLicenseInfo(_: Swift.String, incrementUsageCount: Swift.Bool, completionHandler: (Swift.Bool, Swift.Optional&lt;Swift.Int&gt;, Swift.Optional&lt;Swift.Dictionary&lt;Swift.String, Any&gt;&gt;, Swift.Optional&lt;__C.NSError&gt;, Swift.Optional&lt;__C.NSURLResponse&gt;) -&gt; ()) -&gt; ()"
+                  moduleName = "Mac Mouse Fix Helper"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/Noah/Desktop/mac-mouse-fix/Shared/License/License.swift"
                   startingColumnNumber = "9223372036854775807"
@@ -723,12 +723,12 @@
                   offsetFromSymbolStart = "200">
                </Location>
                <Location
-                  uuid = "85EE0409-3166-4F47-A300-03BC5729D720 - ae23a9ca55749b9a"
+                  uuid = "85EE0409-3166-4F47-A300-03BC5729D720 - 8c1cd90bf64b6444"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
-                  symbolName = "closure #2 (Swift.Optional&lt;Swift.Dictionary&lt;Swift.String, Any&gt;&gt;, Swift.Optional&lt;__C.NSError&gt;, Swift.Optional&lt;__C.NSURLResponse&gt;) -&gt; () in static Mac_Mouse_Fix.Gumroad.getLicenseInfo(_: Swift.String, incrementUsageCount: Swift.Bool, completionHandler: (Swift.Bool, Swift.Optional&lt;Swift.Int&gt;, Swift.Optional&lt;Swift.Dictionary&lt;Swift.String, Any&gt;&gt;, Swift.Optional&lt;__C.NSError&gt;, Swift.Optional&lt;__C.NSURLResponse&gt;) -&gt; ()) -&gt; ()"
-                  moduleName = "Mac Mouse Fix"
+                  symbolName = "closure #2 (Swift.Optional&lt;Swift.Dictionary&lt;Swift.String, Any&gt;&gt;, Swift.Optional&lt;__C.NSError&gt;, Swift.Optional&lt;__C.NSURLResponse&gt;) -&gt; () in static Mac_Mouse_Fix_Helper.Gumroad.getLicenseInfo(_: Swift.String, incrementUsageCount: Swift.Bool, completionHandler: (Swift.Bool, Swift.Optional&lt;Swift.Int&gt;, Swift.Optional&lt;Swift.Dictionary&lt;Swift.String, Any&gt;&gt;, Swift.Optional&lt;__C.NSError&gt;, Swift.Optional&lt;__C.NSURLResponse&gt;) -&gt; ()) -&gt; ()"
+                  moduleName = "Mac Mouse Fix Helper"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/Noah/Desktop/mac-mouse-fix/Shared/License/License.swift"
                   startingColumnNumber = "9223372036854775807"
@@ -754,6 +754,118 @@
             endingLineNumber = "455"
             landmarkName = "getLicenseInfo(_:incrementUsageCount:completionHandler:)"
             landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "305048FD-0DD8-49D4-819F-CEC84D953AB8"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Helper/Core/Scroll/Scroll.m"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "355"
+            endingLineNumber = "355"
+            landmarkName = "heavyProcessing(event, scrollDeltaAxis1, scrollDeltaAxis2, tickTime)"
+            landmarkType = "9">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "60706385-2EC6-4CDC-93D3-B598C0D25270"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Helper/Core/Config/ScrollConfig.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "72"
+            endingLineNumber = "72"
+            landmarkName = "scrollConfig(modifiers:inputAxis:event:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "48D3AE44-395C-490D-9673-8422BAFA6439"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Helper/Core/Config/ScrollConfig.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "788"
+            endingLineNumber = "788"
+            landmarkName = "copy(with:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "94D31941-1C77-44F0-81C0-D4CB63DD238E"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Helper/Core/Config/ScrollConfig.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "153"
+            endingLineNumber = "153"
+            landmarkName = "scrollConfig(modifiers:inputAxis:event:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "3A4AF0F7-3672-40A6-8184-1AAB10DE49F3"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Helper/Core/Config/ScrollConfig.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "192"
+            endingLineNumber = "192"
+            landmarkName = "scrollConfig(modifiers:inputAxis:event:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "5182672C-B04B-4490-A5A6-653B493A05D1"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Helper/Core/Scroll/Scroll.m"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "365"
+            endingLineNumber = "365"
+            landmarkName = "heavyProcessing(event, scrollDeltaAxis1, scrollDeltaAxis2, tickTime)"
+            landmarkType = "9">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "DDF165D0-AA3C-45C9-927F-8AA9754AE817"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Helper/Core/Scroll/Scroll.m"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "542"
+            endingLineNumber = "542"
+            landmarkName = "heavyProcessing(event, scrollDeltaAxis1, scrollDeltaAxis2, tickTime)"
+            landmarkType = "9">
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>
