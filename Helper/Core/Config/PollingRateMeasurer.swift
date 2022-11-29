@@ -84,6 +84,11 @@ func eventTapCallback(_ proxy: OpaquePointer, _ type: CGEventType, _ event: CGEv
     
     /// Guard weird events
     if type == .tapDisabledByTimeout || type == .tapDisabledByUserInput {
+        
+        if type == .tapDisabledByTimeout {
+            CGEvent.tapEnable(tap: _eventTap, enable: true)
+        }
+        
         return Unmanaged.passUnretained(event)
     }
     

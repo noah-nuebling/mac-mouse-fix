@@ -47,30 +47,6 @@ static void signal_handler(int signal_number, siginfo_t *signal_info, void *cont
     }
 }
 
-/// Testing
-
-CGEventRef _Nullable testCallback(CGEventTapProxy proxy, CGEventType type, CGEventRef event, void * __nullable userInfo) {
-    
-    if (type == kCGEventTapDisabledByTimeout || type == kCGEventTapDisabledByUserInput) {
-        return NULL;
-    }
-    
-    IOHIDDeviceRef device = CGEventGetSendingDevice(event);
-    NSString *deviceName = (__bridge NSString *)IOHIDDeviceGetProperty(device, CFSTR(kIOHIDProductKey));
-    DDLogDebug(@"Sending Device Test: %@", deviceName);
-    
-    /// CGEvent bridging test
-    ///     Conclusion: objc version of cgevent has no properties, no ivars and no interesting methods
-    ///     Also see code built on this: [SharedUtility dumpClassInfo];
-    
-    id objcEvent = (__bridge id)event;
-    
-    DDLogDebug(@"objcEvent: %@", [objcEvent description]);
-    
-    /// Return
-    return event;
-}
-
 /// Load
 
 + (void)load {

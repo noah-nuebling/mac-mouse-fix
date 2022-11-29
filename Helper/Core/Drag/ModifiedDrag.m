@@ -206,13 +206,15 @@ static CGEventRef __nullable eventTapCallBack(CGEventTapProxy proxy, CGEventType
 //    _tapProxy = proxy;
     
     /// Catch special events
-    if (type == kCGEventTapDisabledByTimeout) {
-        /// Re-enable on timeout (Not sure if this ever times out)
-        DDLogInfo(@"ModifiedDrag eventTap timed out. Re-enabling.");
-        CGEventTapEnable(_drag.eventTap, true);
-        return event;
-    } else if (type == kCGEventTapDisabledByUserInput) {
-        DDLogDebug(@"ModifiedDrag eventTap disabled by user input.");
+    if (type == kCGEventTapDisabledByTimeout || type == kCGEventTapDisabledByUserInput) {
+        
+        DDLogInfo(@"ModifiedDrag eventTap was disabled by %@", type == kCGEventTapDisabledByTimeout ? @"timeout. Re-enabling." : @"user input.");
+        
+        if (type == kCGEventTapDisabledByTimeout) {
+            assert(false); /// Not sure this ever times out
+            CGEventTapEnable(_drag.eventTap, true);
+        }
+        
         return event;
     }
     

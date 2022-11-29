@@ -147,14 +147,16 @@ static int64_t _lastEventDelta;
 CGEventRef _Nullable mouseMovedCallback(CGEventTapProxy proxy, CGEventType type, CGEventRef event, void *userInfo) {
     
     /// Catch special events
-    if (type == kCGEventTapDisabledByTimeout) {
-        /// Re-enable on timeout (Not sure if this ever times out)
-        DDLogInfo(@"PointerFreeze eventTap timed out. Re-enabling.");
-        CGEventTapEnable(_eventTap, true);
-        _coolEventTapIsEnabled = true;
-        return event;
-    } else if (type == kCGEventTapDisabledByUserInput) {
-        DDLogInfo(@"PointerFreeze eventTap disabled by user input.");
+    if (type == kCGEventTapDisabledByTimeout || type == kCGEventTapDisabledByUserInput) {
+        
+        DDLogInfo(@"PointerFreeze eventTap disabled by %@", type == kCGEventTapDisabledByTimeout ? @"timeout. Re-enabling." : @"user input.");
+        
+        if (type == kCGEventTapDisabledByTimeout) {
+            assert(false); /// Not sure this ever times out
+            CGEventTapEnable(_eventTap, true);
+            _coolEventTapIsEnabled = true;
+        }
+        
         return event;
     }
     

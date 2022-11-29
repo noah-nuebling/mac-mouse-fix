@@ -82,11 +82,15 @@ static CGEventRef eventTapCallback(CGEventTapProxy proxy, CGEventType type, CGEv
     
     /// Re-enable on timeout
     /// Maybe it would be better to do the heavy lifting on a background queue, so this never times out, but this is easier, and it times out quite rarely anyways so this should be fine.
-    if (type == kCGEventTapDisabledByTimeout) {
-        DDLogInfo(@"ButtonInputReceiver eventTap timed out. Re-enabling.");
-        CGEventTapEnable(_eventTap, true);
-    } else if (type == kCGEventTapDisabledByUserInput) {
-        DDLogInfo(@"ButtonInputReceiver eventTap was disabled by user input");
+   
+    if (type == kCGEventTapDisabledByTimeout || type == kCGEventTapDisabledByUserInput) {
+        
+        DDLogInfo(@"ButtonInputReceiver eventTap was disabled by %@", type == kCGEventTapDisabledByTimeout ? @"timeout. Re-enabling." : @"user input.");
+        
+        if (type == kCGEventTapDisabledByTimeout) {
+            CGEventTapEnable(_eventTap, true);
+        }
+        return event;
     }
     
     /// Debug
