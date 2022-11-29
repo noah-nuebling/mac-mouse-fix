@@ -93,6 +93,25 @@ static NSMutableDictionary *_swipeInfo;
 }
 
 + (void)postDockSwipeEventWithDelta:(double)d type:(MFDockSwipeType)type phase:(IOHIDEventPhaseBits)phase invertedFromDevice:(BOOL)invertedFromDevice {
+
+    /// Fix Apple bug
+    ///   If we don't do this, the exitSpeed is interpreted in the wrong direction when opening Launchpad, leading to a noticable jitter.
+    ///   This also happens on an Apple Trackpad if you turn natural scrolling off.
+    ///
+    /// Old notes on trying to figure out the problem:
+    /// 
+    /// (At first we tried adjust the exitSpeed)
+    /// - ... this jitter is also present with the trackpad but it's far less noticable.
+    ///   I don't know why it's so much less noticable on the trackpad. Maybe our exitSpeed values are too large, or something about the timing of how the events are sent affects the jitter.
+    ///     Sidenote: I just compared this to the real events, and I noticed these differences which might affect the issue:
+    ///     1. Real pinch events seem to be sent about every 8ms (but with a lot of variation so maybe it's just a coincidence) on a 16ms refresh rate screen.
+    ///     2. The `end` events usually still have non-zero deltas in the real dockswipes! I was under the assumption that `end` events should always have 0 deltas (and that's how the TouchAnimator works, too)
+    /// - Solution: By halving the exitSpeed, we keep Reveal Desktop feeling nice and responsive, while making the LaunchPad jitter about as noticable as with a real trackpad.
+    
+    if (type == kMFDockSwipeTypePinch && !invertedFromDevice) {
+        invertedFromDevice = YES;
+        d = -d;
+    }
     
     /// State
     
@@ -204,19 +223,9 @@ static NSMutableDictionary *_swipeInfo;
         /// Set Exit Speed
         /// Notes:
         /// - This only seems to affect the pinch dockSwipes. Doesn't seem to affect horiztonal or vertical.
-        /// -`*100` is a rough approximation of how the real values look.
-        /// - Problem with pinch dock swipes: The exitSpeed is necessary for Reveal Desktop to feel good, but for Launchpad, it seems the exitSpeed is interpreted in the wrong direction.
-        ///   This leads to a noticable jitter at the end of the dockSwipe when opening Launchpad. This jitter is also present with the trackpad but it's far less noticable.
-        ///   I don't know why it's so much less noticable on the trackpad. Maybe our exitSpeed values are too large, or something about the timing of how the events are sent affects the jitter.
-        ///     Sidenote: I just compared this to the real events, and I noticed these differences which might affect the issue:
-        ///     1. Real pinch events seem to be sent about every 8ms (but with a lot of variation so maybe it's just a coincidence) on a 16ms refresh rate screen.
-        ///     2. The `end` events usually still have non-zero deltas in the real dockswipes! I was under the assumption that `end` events should always have zero deltas (and that's how the TouchAnimator works, too)
-        ///   - Solution: By halving the exitSpeed, we keep Reveal Desktop feeling nice and responsive, while making the LaunchPad jitter about as noticable as with a real trackpad.
+        /// -`*100` is a rough approximation of how the real values look. `*50` also seemed to work well.
         
         double exitSpeed = _dockSwipeLastDelta*100;
-        if (type == kMFDockSwipeTypePinch) {
-            exitSpeed /= 2.0;
-        }
         CGEventSetDoubleValueField(e30, 129, exitSpeed);
         CGEventSetDoubleValueField(e30, 130, exitSpeed);
         
