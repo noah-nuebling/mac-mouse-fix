@@ -1,5 +1,87 @@
 #  ScrollConfigTesting
 
+## Figuring out lowInertia settings (1. December 2022) 
+
+/// NOTES on figuring out the lowInertia curve:
+/// - 120ms is max to make pure linear curve feel responsive
+/// - 110ms is max to make exp=1.0, coeff=30 feel responsive
+/// - 110ms, exp=1.0, coeff=20 still feels responsive, but slightly floaty at the end (not a bad thing)
+/// - stopSpeed 10 is the lowest to make 110ms, exp=1.0, coeff=20, not have pixel creep at the end
+///     -. Feels much better than 50, because 50 makes single ticks stop abruptly. Medium values like 25 also feel less smooth than 10 and not really more responsive . I think 10 is good.
+///     - stopSpeed 15 removes some additional creep (not "pixel-creep" but still feels a little annoying) -> Like that better
+///   -
+/// - coeff=15 (with 110ms, exp=1.0, stop=10) is the lowest that doesn't feel trackpad-y, but it somehow makes single ticks feel abrupt. I don't quite understand why. 20 feels better though.
+/// -> Local optimum: 110ms, exp=1.0, coeff=20, stop=15
+///
+/// Expoerimenting with different dragExponent:
+///
+/// coeff=75 is minimum for responsive feel with exp=0.9, 110ms, coeff=75, stop=15
+///     SIDENOTES:
+///     - lowering exp makes the single steps shorter compared to the swipes
+///     - increasing exp makes single steps longer compared to swipes
+///     - exp is extremely sensitive. A 0.1 change feels huge
+///     - Adjusting exp hugely affects the whole curve. You have to compensate by severely adjusting coeff. Looked at the formulas on Desmos and still don't understsand why. Maybe there's an error in our maths code
+///     - lowering base ms makes more responsive at first but also makes drag kick in harder so it can make things less responsive that way I think?
+///     - lowering coeff should make things smoother but sometimes makes single ticks feel more abrupt
+///
+/// New sweetspot: 110ms, exp=1.2, coeff=17, stop=15
+///     -> Increasing exp makes single ticks feel smoother and swipes more responsive. Lowering coeff a little to compensate
+///     -> When we set the coeff to 10 instead of 17 it feels LESS smooth. I don't understand why. Also tried 15 and 20 and they feel worse.
+/// exp=1.3 seems to be too much, no matter how we set the coeff
+///
+/// Trying to go slightly less responsive to make text nice and readable during swipes
+/// New sweetspot: 110ms exp=0.95, coeff=25, stop=15
+/// Also nice: 110ms, exp=1.05, coeff=22, stop=15 (tried lowering coeff but makes ticks feel abrubt for some reason)
+///
+/// Sweetspots:
+/// - 1. 110ms, exp=1.0, coeff=20, stop=15
+/// - 2. ??? 110ms, exp=0.9, coeff=75, stop=15
+/// - 3. 110ms, exp=1.2, coeff=17, stop=15
+/// - 4. 110ms, exp=1.05, coeff=22, stop=15
+/// - 5. ??? 110ms, exp=1.05, coeff=22, stop=15
+///
+/// Face off!!!
+/// 1. vs 3.
+///     -> 1. Feels too floaty (Might benefit from lowering ms), 3. is very direct but nice. Maybe too direct
+///     -> 3. Wins
+/// 3. vs 4.
+///     -> 3. is too direct, 4. still super responsive but more smooth
+///     -> 4. Wins
+///
+/// Comparing with MMF 2
+/// New sweetspot: 5. 110ms, exp=1.05, coeff=17, stop=15
+/// -> Brings single ticks and overall speed in line with MMF 2. Swipes feel more responsive than MMF2 -> NICE
+/// New ??? sweetspot: 120ms, exp=1.05, coeff=15, stop=15
+/// -> Makes single ticks feel like MMF 0.9, but too unresponsive.
+/// -> Can't find a response-feeling setting where the single ticks feel as good as MMF 1 :(
+///
+/// Face off!!!
+/// 4. vs 5.
+/// -> 5. Wins. It's more smoother and nicer.
+/// -> I think the reason why we went for more smoothness in 5 is because we made the step size much higher. Since the "high" setting in MMF 3 (currently) matches the default setting in MMF 2 step-size wise.
+///     SIDENOTE: Higher step size makes more smoothness feel appropriate. But more smoothness also makes higher step size more appropriate. We're already making the speed higher based on the smoothness. Could/should we also adjust the smoothness beased on the stepsize? The inertia already does this automatically to some extent. Idk.
+///
+/// Making ms higher. There is no other way to make the steps at high speed easy to follow with your eyes.
+/// ?? sweetspot:                       140ms, exp=1.05, coeff=17, stop=15
+///     -> like thie even more: 6. 140ms, exp=1.05, coeff=15, stop=15
+/// Also like: 140ms, exp=1.06, coeff=17, stop=15
+///
+/// Face off!!!
+///  5. vs 6.
+///  -> 6. Wins HARD
+///  -> 6 is everything I never managed to achieve with MMF 1 and MMF 2. It has the super smooth, elegant-feeling single ticks of MMF 0.9, but it also has the responsivity of MMF 1 / 2. Very happy with it.
+///
+/// EDIT: 6, Is great. I also changed the stop speed to 30 on 6. Otherwise there was a little creep at the end that felt bad. Also made that change to the high Inertia settngs so they are in sync I gues. Not sure if that's necessary
+
+EDIT2: Also here are some old curves that were still around commented out when I started these tests:
+
+            
+- 100ms exp=1.0 coeff=30 stop=50
+- 140ms exp=1.0 coeff=30/*23*/ stop=50
+- 120ms exp=1.0 coeff=23 stop=50
+
+## Og testing 
+
 (Using BezierHybridCurve for everything)
 
 __Final Settings__
