@@ -215,7 +215,9 @@ import CocoaLumberjackSwift
         
         // TODO: MAKE THIS DO STH USEFUL
         
-        return true
+        let smoothness = c("smooth") as! String
+        
+        return smoothness != "off"
         
 //        c("smooth") as! Bool /* && !killSwitch */
     }()
@@ -309,7 +311,7 @@ import CocoaLumberjackSwift
             return 350/1000
         case kMFScrollAnimationCurvePresetMediumInertia:
             return 475/1000
-        case kMFScrollAnimationCurvePresetHighInertia, kMFScrollAnimationCurvePresetQuickScroll:
+        case kMFScrollAnimationCurvePresetHighInertia, kMFScrollAnimationCurvePresetHighInertiaPlusTrackpadSim, kMFScrollAnimationCurvePresetQuickScroll:
             return 600/1000
         default:
             fatalError()
@@ -363,11 +365,26 @@ import CocoaLumberjackSwift
     private lazy var u_animationCurvePreset = {
         
         let smoothness = c("smooth") as! String
-        let trackpadSim = c("trackpadSimulation") as! Bool
+        
         
         // TODO: MAKE THIS DO STH USEFUL
         
-        return  kMFScrollAnimationCurvePresetHighInertia //? kMFScrollAnimationCurvePresetHighInertia : kMFScrollAnimationCurvePresetLowInertia /*kMFScrollAnimationCurvePresetLowInertia*/
+        if smoothness == "off" {
+            return kMFScrollAnimationCurvePresetNoInertia
+        } else if smoothness == "regular" {
+            return kMFScrollAnimationCurvePresetLowInertia
+        } else if smoothness == "high" {
+            
+            let trackpadSim = c("trackpadSimulation") as! Bool
+            
+            if !trackpadSim {
+                return kMFScrollAnimationCurvePresetHighInertia
+            } else {
+                return kMFScrollAnimationCurvePresetHighInertiaPlusTrackpadSim
+            }
+        } else {
+            assert(false)
+        }
     }()
     
     @objc var animationCurvePreset: MFScrollAnimationCurvePreset {
@@ -384,6 +401,9 @@ import CocoaLumberjackSwift
     /// Define storage class for animationCurve params
     
     @objc class MFScrollAnimationCurveParameters: NSObject { /// Does this have to inherit from NSObject?
+        
+        /// Notes:
+        /// - I don't really think it make sense for sendGestureScrolls and sendMomentumScrolls to be part of the animation curve, but it works so whatever
         
         /// baseCurve params
         @objc let baseCurve: Bezier?
@@ -465,6 +485,10 @@ import CocoaLumberjackSwift
         case kMFScrollAnimationCurvePresetHighInertia:
             /// Snappiest curve that can be used to send momentumScrolls.
             ///    If you make it snappier then it will cut off the build-in momentumScroll in apps like Xcode
+            return MFScrollAnimationCurveParameters(baseCurve: ScrollConfig.linearCurve, baseMsPerStep: 205, dragExponent: 0.7, dragCoefficient: 40, stopSpeed: 50, sendGestureScrolls: false, sendMomentumScrolls: false)
+            
+        case kMFScrollAnimationCurvePresetHighInertiaPlusTrackpadSim:
+            /// Same as highInertia preset but with full trackpad simulation.
             return MFScrollAnimationCurveParameters(baseCurve: ScrollConfig.linearCurve, baseMsPerStep: 205, dragExponent: 0.7, dragCoefficient: 40, stopSpeed: 50, sendGestureScrolls: true, sendMomentumScrolls: true)
             
         /// --- Dynamically applied ---
@@ -479,7 +503,8 @@ import CocoaLumberjackSwift
             return MFScrollAnimationCurveParameters(baseCurve: ScrollConfig.linearCurve, msPerStep: 180, sendGestureScrolls: false)
         
         case kMFScrollAnimationCurvePresetQuickScroll:
-            /// Almost the same as `highInertia` just more inertial
+            /// Almost the same as `highInertia` just more inertial. Actually same feel as `trackpad` preset.
+            /// Should we use trackpad sim (sendMomentumScrolls and sendGestureScrolls) here?
             return MFScrollAnimationCurveParameters(baseCurve: ScrollConfig.linearCurve, baseMsPerStep: 220, dragExponent: 0.7, dragCoefficient: 30, stopSpeed: 1, sendGestureScrolls: true, sendMomentumScrolls: true)
             
         case kMFScrollAnimationCurvePresetPreciseScroll:
@@ -580,7 +605,7 @@ import CocoaLumberjackSwift
                     inertiaFactor = /*1*/2/3
                 case kMFScrollAnimationCurvePresetMediumInertia:
                     inertiaFactor = /*1*/3/4
-                case kMFScrollAnimationCurvePresetHighInertia:
+                case kMFScrollAnimationCurvePresetHighInertia, kMFScrollAnimationCurvePresetHighInertiaPlusTrackpadSim:
                     inertiaFactor = 1
                 case kMFScrollAnimationCurvePresetTouchDriver:
                     /// TODO: Why do we define acceleration curves for the touchDriver so weirdly? Shouldn't we just hardcode it to one curve and acceleration?
@@ -629,7 +654,7 @@ import CocoaLumberjackSwift
                 inertiaFactor = /*1*/ 2/3
             case kMFScrollAnimationCurvePresetMediumInertia:
                 inertiaFactor = /*1*/ 3/4
-            case kMFScrollAnimationCurvePresetHighInertia:
+            case kMFScrollAnimationCurvePresetHighInertia, kMFScrollAnimationCurvePresetHighInertiaPlusTrackpadSim:
                 inertiaFactor = 1
             case kMFScrollAnimationCurvePresetTouchDriver:
                 inertiaFactor = 2/3
@@ -671,7 +696,7 @@ import CocoaLumberjackSwift
             capHump = 0.6
         case kMFScrollAnimationCurvePresetMediumInertia:
             capHump = 0.4
-        case kMFScrollAnimationCurvePresetHighInertia:
+        case kMFScrollAnimationCurvePresetHighInertia, kMFScrollAnimationCurvePresetHighInertiaPlusTrackpadSim:
             capHump = 0.0
         case kMFScrollAnimationCurvePresetTouchDriver:
             capHump = 0.4

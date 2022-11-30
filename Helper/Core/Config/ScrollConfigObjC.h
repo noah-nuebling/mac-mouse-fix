@@ -42,6 +42,7 @@ typedef enum {
     kMFScrollAnimationCurvePresetLowInertia,
     kMFScrollAnimationCurvePresetMediumInertia,
     kMFScrollAnimationCurvePresetHighInertia,
+    kMFScrollAnimationCurvePresetHighInertiaPlusTrackpadSim,
     
     /// Modifier overrides
     ///     Used in Scroll.m to dynamically override the animationCurve if a certain scroll modification is active
