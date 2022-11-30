@@ -219,4 +219,13 @@ static CFTimeInterval _consecutiveSwipeSequenceStartTime;
     return result;
 }
 
+#pragma mark - Debug
+
++ (NSString *)scrollAnalysisResultDescription:(ScrollAnalysisResult)analysis {
+    
+    NSString *timeDeltaStr = analysis.timeBetweenTicks > 5.0 ? @"?" : stringf(@"%f", analysis.timeBetweenTicks);
+    
+    return stringf(@"dirChange: %d, ticks: %lld, swipes: %f, time: %@, rawTime: %f, rawSwipes: %lld", analysis.scrollDirectionDidChange, analysis.consecutiveScrollTickCounter, analysis.consecutiveScrollSwipeCounter, timeDeltaStr, analysis.DEBUG_timeBetweenTicksRaw, analysis.DEBUG_consecutiveScrollSwipeCounterRaw);
+}
+
 @end

@@ -38,6 +38,8 @@ typedef struct {
 
 + (void)resetState;
 
++ (NSString *)scrollAnalysisResultDescription:(ScrollAnalysisResult)analysis;
+
 @end
 
 NS_ASSUME_NONNULL_END

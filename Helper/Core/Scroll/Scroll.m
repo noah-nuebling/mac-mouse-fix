@@ -376,6 +376,10 @@ static void heavyProcessing(CGEventRef event, int64_t scrollDeltaAxis1, int64_t 
     _lastScrollAnalysisResult = scrollAnalysisResult;
     _lastScrollAnalysisResultTimeStamp = CACurrentMediaTime();
     
+    /// Debug
+    DDLogDebug(@"Scroll analysisResult: %@", [ScrollAnalyzer scrollAnalysisResultDescription:scrollAnalysisResult]);
+    
+    
     /// Make scrollDelta positive, now that we have scrollDirection stored
     scrollDelta = llabs(scrollDelta);
     
@@ -497,28 +501,30 @@ static void heavyProcessing(CGEventRef event, int64_t scrollDeltaAxis1, int64_t 
             /// Declare result dict (animator start params)
             NSMutableDictionary *p = [NSMutableDictionary dictionary];
             
-            /// Extract 1d valueLeft
-            double distanceLeft = magnitudeOfVector(valueLeftVec);
-            
-            /// Debug
-            DDLogDebug(@"Scroll animationStart distanceLeft: %f", distanceLeft);
-            
             /// Get px that the animator still wants to scroll
-            double pxLeftToScroll;
-            if (/* !isRunning || */ scrollAnalysisResult.scrollDirectionDidChange) { /// Checking for isRunning here leads to lost input when the computer is slow
+            double pxLeftToScroll = 0.0;
+            
+            if (isRunning) {
                 
-                /// Reset pxLeftToScroll
-                pxLeftToScroll = 0;
-                [_animator resetSubPixelator_Unsafe];
+                double distanceLeft = magnitudeOfVector(valueLeftVec);
                 
-            } else if ([animationCurve isKindOfClass:SimpleBezierHybridCurve.class]) {
+                BOOL isSwipeSequenceStart = scrollAnalysisResult.consecutiveScrollTickCounter == 0 && scrollAnalysisResult.consecutiveScrollSwipeCounter == 0;
                 
-                assert(false); /// Unused - remove
-                
-                SimpleBezierHybridCurve *c = (SimpleBezierHybridCurve *)animationCurve;
-                pxLeftToScroll = [c baseDistanceLeftWithDistanceLeft: distanceLeft]; /// If we feed valueLeft instead of baseValueLeft back into the animator, it will lead to unwanted acceleration
-            } else {
-                pxLeftToScroll = distanceLeft;
+                if (isSwipeSequenceStart) { /// Checking for isRunning here leads to lost input when the computer is slow
+                    
+                    /// Reset pxLeftToScroll
+                    pxLeftToScroll = 0;
+                    [_animator resetSubPixelator_Unsafe];
+                    
+                } else if ([animationCurve isKindOfClass:SimpleBezierHybridCurve.class]) {
+                    
+                    assert(false); /// Unused - remove
+                    
+                    SimpleBezierHybridCurve *c = (SimpleBezierHybridCurve *)animationCurve;
+                    pxLeftToScroll = [c baseDistanceLeftWithDistanceLeft: distanceLeft]; /// If we feed valueLeft instead of baseValueLeft back into the animator, it will lead to unwanted acceleration
+                } else {
+                    pxLeftToScroll = distanceLeft;
+                }
             }
             
             /// Calculate distance to scroll
