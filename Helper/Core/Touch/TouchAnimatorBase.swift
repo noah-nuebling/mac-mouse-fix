@@ -60,7 +60,9 @@ import QuartzCore
         }
     }
     
-    /// ConstantsDispatchWorkItemFlags
+    /// Constants
+    
+    let maxAnimationDuration = 5.0
     
     /// Vars - Init
     
@@ -289,6 +291,13 @@ import QuartzCore
                  */
             })
         }
+        
+        /// Limit animationDuration
+        ///  Note: With fastScroll the animationDuration can become absurdly large - easily several hours. Especially on a free spinning wheel. So we limit the duration here.
+//
+//            double oneHundredMillion = 100000/*000*/;
+//            if (delta > oneHundredMillion) delta = oneHundredMillion;
+        if animationDurationRaw > maxAnimationDuration { animationDurationRaw = maxAnimationDuration }
         
         /// Debug
         
