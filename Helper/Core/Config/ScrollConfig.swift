@@ -128,29 +128,29 @@ import CocoaLumberjackSwift
 
             } else if modifiers.effectMod == kMFScrollEffectModificationZoom {
                 
-                new.u_smoothEnabled = true;
+                new.smoothEnabled = true;
                 /// Override animation curve
                 new.animationCurvePreset = kMFScrollAnimationCurvePresetTouchDriver;
                 
             } else if modifiers.effectMod == kMFScrollEffectModificationRotate {
                 
-                new.u_smoothEnabled = true;
+                new.smoothEnabled = true;
                 /// Override animation curve
                 new.animationCurvePreset = kMFScrollAnimationCurvePresetTouchDriver;
                 
             } else if modifiers.effectMod == kMFScrollEffectModificationCommandTab {
                 
-                new.u_smoothEnabled = false;
+                new.smoothEnabled = false;
                 
             } else if modifiers.effectMod == kMFScrollEffectModificationThreeFingerSwipeHorizontal {
                 
-                new.u_smoothEnabled = true;
+                new.smoothEnabled = true;
                 /// Override animation curve
                 new.animationCurvePreset = kMFScrollAnimationCurvePresetTouchDriverLinear;
                 
             } else if modifiers.effectMod == kMFScrollEffectModificationFourFingerPinch {
                 
-                new.u_smoothEnabled = true;
+                new.smoothEnabled = true;
                 /// Override animation curve
                 new.animationCurvePreset = kMFScrollAnimationCurvePresetTouchDriverLinear;
                 
@@ -211,15 +211,12 @@ import CocoaLumberjackSwift
     // MARK: General
     
     
-    @objc lazy var u_smoothEnabled: Bool = {
+    @objc lazy var smoothEnabled: Bool = {
         
-        // TODO: MAKE THIS DO STH USEFUL
+        /// TODO: Introduce / move to `u_smoothness` instead of `c("smooth")`
         
         let smoothness = c("smooth") as! String
-        
         return smoothness != "off"
-        
-//        c("smooth") as! Bool /* && !killSwitch */
     }()
     
 //    @objc private var u_killSwitch: Bool { c("General.scrollKillSwitch") as? Bool ?? false } /// Not cached cause it's just used to calc the other vars
@@ -364,10 +361,14 @@ import CocoaLumberjackSwift
     
     private lazy var u_animationCurvePreset = {
         
+        // TODO: Refactor
+        /// Explanation:
+        /// This method name is prefixed with `u_`. We introduced the `u_` prefix to signify settings that are directly set by the user instead of being derived from user settings. This method doesn't really fit this category because it's derived from different user settings and therefore shouldn't have the `u_` prefix. I think this stuff stopped making sense when we introduced the "Advanced Navigation" settings.
+        /// I'll leave this as is because it works fine but it's a little messy now.
+        /// Idea for a refactor:
+        /// Move the trackpad sim settings out of the MFScrollAnimationCurvePreset, and then make `u_` prefixed vars for `c("smooth")` and `c("trackpadSimulation")`. Remove the `u_` prefix here.
+        
         let smoothness = c("smooth") as! String
-        
-        
-        // TODO: MAKE THIS DO STH USEFUL
         
         if smoothness == "off" {
             return kMFScrollAnimationCurvePresetNoInertia
@@ -732,7 +733,7 @@ import CocoaLumberjackSwift
         return self.standardAccelerationCurve(forSensitivity: self.scrollSensitivity,
                                               acceleration: self.scrollAcceleration,
                                               animationCurve: self.animationCurvePreset,
-                                              smoothEnabled: self.u_smoothEnabled,
+                                              smoothEnabled: self.smoothEnabled,
                                               screenSize: screenSize)
     }
     

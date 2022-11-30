@@ -798,8 +798,8 @@
             filePath = "Helper/Core/Config/ScrollConfig.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "826"
-            endingLineNumber = "826"
+            startingLineNumber = "827"
+            endingLineNumber = "827"
             landmarkName = "copy(with:)"
             landmarkType = "7">
          </BreakpointContent>

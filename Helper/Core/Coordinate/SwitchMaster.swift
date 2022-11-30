@@ -278,7 +278,7 @@ import ReactiveSwift
             self.defaultModifiesScroll = false
         } else {
             self.defaultModifiesScroll = /*!scrollKillSwitch && */
-            (scrollConfig.u_smoothEnabled || scrollConfig.u_speed != "system" || scrollConfig.u_invertDirection == kMFScrollInversionInverted)
+            (scrollConfig.smoothEnabled || scrollConfig.u_speed != "system" || scrollConfig.u_invertDirection == kMFScrollInversionInverted)
         }
         
         /// Store

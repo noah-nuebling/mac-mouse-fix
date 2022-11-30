@@ -451,7 +451,7 @@ static void heavyProcessing(CGEventRef event, int64_t scrollDeltaAxis1, int64_t 
         
         DDLogWarn(@"pxToScrollForThisTick is 0");
         
-    } else if (!_scrollConfig.u_smoothEnabled) {
+    } else if (!_scrollConfig.smoothEnabled) {
         
         /// Send scroll event directly - without the animator. Will scroll all of pxToScrollForThisTick at once.
         
