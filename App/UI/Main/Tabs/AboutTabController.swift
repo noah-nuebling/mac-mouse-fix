@@ -242,7 +242,7 @@ class AboutTabController: NSViewController {
                     (NSLocalizedString("thanks.09", comment: "First draft: 👽 Share it with your Spacebook friends!"), weight: 0.05),
                     
                     /// Extremely rare
-                    (NSLocalizedString("thanks.10", comment: "First draft: 🏂 Duckgang for life! || Note: A lot of these are very personal. And weir. They are also super rare. Feel free to change them to anything you feel like to leave a little easter egg!"), weight: 0.01),
+                    (NSLocalizedString("thanks.10", comment: "First draft: 🏂 Duckgang for life!! || Note: A lot of these are very personal. And weird. They are also super rare. Feel free to change them to anything you feel like to leave a little easter egg!"), weight: 0.01),
                     (NSLocalizedString("thanks.11", comment: "First draft: 🚜 Watch where you're going :P"), weight: 0.01),
                     (NSLocalizedString("thanks.12", comment: "First draft: 🐁 Not these mice, mom!"), weight: 0.01),
                     (NSLocalizedString("thanks.13", comment: "First draft: 🐹 We should get him a bow tie."), weight: 0.01),
@@ -250,7 +250,7 @@ class AboutTabController: NSViewController {
                     (NSLocalizedString("thanks.15", comment: "First draft: 🥛 Whole milk of course! It's your birthday after all."), weight: 0.01),
                     (NSLocalizedString("thanks.16", comment: "First draft: 🎸 Not John Mayer (yet). Nevertheless mayor of hearts."), weight: 0.01),
                     (NSLocalizedString("thanks.17", comment: "First draft: 💃 1NEIN8NEIN"), weight: 0.01),
-                    (NSLocalizedString("thanks.18", comment: "First draft: 🦋 Give me a call when you saved the world :)"), weight: 0.01),
+                    (NSLocalizedString("thanks.18", comment: "First draft: 🦄 You may not want to save the world, but you're already saving mine :)"), weight: 0.01),
                     (NSLocalizedString("thanks.19", comment: "First draft: 🏜️ Dankeschön, meine Frau..."), weight: 0.01),
                     (NSLocalizedString("thanks.20", comment: "First draft: 🌍 Universal Studios is probably not that great anyways... :)"), weight: 0.01),
                     (NSLocalizedString("thanks.21", comment: "First draft: 🐠 What... are... you?"), weight: 0.01),
@@ -260,7 +260,7 @@ class AboutTabController: NSViewController {
                     (NSLocalizedString("thanks.25", comment: "First draft: 🌏 First the mice, then the world!! >:)"), weight: 0.01),
                     
                     /// Mom
-                    ("💖❤️❤️❤️ Für Beate, meine Lieblingsperson :)", weight: 0.005),
+                    ("💖❤️❤️❤️ Für Beate :)", weight: 0.005),
                 ])
             default:
                 fatalError()
