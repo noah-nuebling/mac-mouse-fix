@@ -62,7 +62,7 @@ import QuartzCore
     
     /// Constants
     
-    let maxAnimationDuration = 5.0
+    let maxAnimationDuration = 1.5 /*5.0*/ /// Explanation below. TODO: Move this into ScrollConfig.
     
     /// Vars - Init
     
@@ -294,14 +294,11 @@ import QuartzCore
         
         /// Limit animationDuration
         ///  Note: With fastScroll the animationDuration can become absurdly large - easily several hours. Especially on a free spinning wheel. So we limit the duration here.
-//
-//            double oneHundredMillion = 100000/*000*/;
-//            if (delta > oneHundredMillion) delta = oneHundredMillion;
         if animationDurationRaw > maxAnimationDuration { animationDurationRaw = maxAnimationDuration }
         
         /// Debug
-        
-        //        DDLogDebug("AnimationValueInterval at start: \(value)")
+    
+        DDLogDebug("TouchAnimator animationDurationRaw: \(animationDurationRaw)")
     }
     
     /// Cancel
