@@ -170,13 +170,18 @@ import CocoaLumberjackSwift
 
             
             /// Animation curve
-            /// NOTE: We used to use the bounce animation for the shadow as well as the transform, but pre-Ventura, having overshoot in the shadow animation causes visual glitches
             
             let animation = CASpringAnimation(speed: 2.25, damping: 1.0)
             let bounceAnimation = CASpringAnimation(speed: 3.75, damping: 0.25, initialVelocity: -10)
             
             let transformAnimation = playAcceptAnimation ? bounceAnimation : animation
-            let shadowAnimation = animation
+            let shadowAnimation: CAAnimation
+            if #available(macOS 13.0, *) {
+                shadowAnimation = transformAnimation
+            } else {
+                /// Pre-Ventura, having overshoot in the shadow animation causes visual glitches
+                shadowAnimation = animation
+            }
             
             /// Play animation
             
