@@ -79,7 +79,7 @@
 /* Class = "NSTextFieldCell"; title = "Scroll Precisely"; ObjectID = "A6t-UZ-2DE"; Note = "Scrolling > Keyboard Modifiers > Scroll Precisely Label"; */
 "A6t-UZ-2DE.title" = "Präzise scrollen";
 
-/* Class = "NSTextFieldCell"; title = "Move between pages in Safari by scrolling horizontally, and more"; ObjectID = "AHn-zX-g4d"; Note = "Scrolling > Advanced Navigation > Hint"; */
+/* Class = "NSTextFieldCell"; title = "Move between pages in Safari by scrolling horizontally, and more"; ObjectID = "AHn-zX-g4d"; Note = "Scrolling > Trackpad Interactions > Hint"; */
 "AHn-zX-g4d.title" = "Blättere zwischen Seiten in Safari, indem du horizontal scrollst, und mehr";
 
 /* Class = "NSMenu"; title = "Main Menu"; ObjectID = "AYu-sK-qS6"; */
@@ -184,8 +184,8 @@
 /* Class = "NSButtonCell"; title = "Get Beta Versions"; ObjectID = "Mck-5W-5lv"; Note = "General > Get Beta Versions Toggle"; */
 "Mck-5W-5lv.title" = "Beta-Versionen erhalten";
 
-/* Class = "NSButtonCell"; title = "Advanced Navigation"; ObjectID = "N65-aN-Hxp"; Note = "Scroll > Advanced Navigation"; */
-"N65-aN-Hxp.title" = "Erweiterte Navigation";
+/* Class = "NSButtonCell"; title = "Trackpad Simulation"; ObjectID = "N65-aN-Hxp"; Note = "Scroll > Trackpad Interactions"; */
+"N65-aN-Hxp.title" = "Trackpadsimulation";
 
 /* Class = "NSTextFieldCell"; title = "Move the mouse pointer inside the '+' field, then click a mouse button to assign an action to it.  You can also __Double Click__, __Click and Drag__ and [more](https://google.com)."; ObjectID = "N7H-9j-DIr"; Note = "Buttons > Add Field Hint"; */
 "N7H-9j-DIr.title" = "Bewege den Mauszeiger in das '+' Feld, dann klicke eine Maustaste, um ihr eine Aktion zuzuweisen.\nDu kannst auch doppelklicken, klicken und ziehen, und [mehr]().";

@@ -133,6 +133,9 @@ struct ApplyMarkdown: MarkupVisitor {
     
     mutating func visitEmphasis(_ emphasis: Emphasis) -> Result {
         
+        /// Notes:
+        /// - We're misusing emphasis (which is usually italic) as a semibold. We're using the semibold, because for the small hint texts in the UI, bold looks way to strong. This is a very unsemantic and hacky solution. It works for now, but just keep this in mind.
+        
         guard let str = descendInto(emphasis) else { return nil }
 //        return str.addingItalic(for: nil)
         return str.addingWeight(.semibold, for: nil)
@@ -149,7 +152,10 @@ struct ApplyMarkdown: MarkupVisitor {
         return NSAttributedString(string: "\n")
     }
     mutating func visitLineBreak(_ lineBreak: LineBreak) -> Result {
-        /// I've never seen this be called. `\n\n` will start a new paragraph.
+        /// Notes:
+        /// - I've never seen this be called. `\n\n` will start a new paragraph.
+        /// - That's because even a siingle newline char starts a new paragraph (at least for NSParagraphStyle). We should be using the "Unicode Line Separator" for simple linebreaks in UI text.
+        ///   - See: https://stackoverflow.com/questions/4404286/how-is-a-paragraph-defined-in-an-nsattributedstring
         return NSAttributedString(string: "\n\n")
     }
     

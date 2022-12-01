@@ -457,7 +457,7 @@ void assignAttributedStringKeepingBase(NSAttributedString *_Nonnull *_Nonnull as
     return result;
 }
 
-#pragma mark - CORE: String attributes
+#pragma mark - CORE: String attrs
 ///
 
 
@@ -554,11 +554,100 @@ void assignAttributedStringKeepingBase(NSAttributedString *_Nonnull *_Nonnull as
     } forRange:range];
 }
 
+
+#pragma mark - META CORE: Modify attrs
+
+- (NSAttributedString *)attributedStringByModifyingAttribute:(NSAttributedStringKey)attribute forRange:(const NSRangePointer _Nullable)inRange modifier:(id _Nullable (^)(id _Nullable attributeValue))modifier {
+    
+    NSRange range;
+    if (inRange == NULL) {
+        range = NSMakeRange(0, self.length);
+    } else {
+        range = *inRange;
+    }
+    
+    NSMutableAttributedString *result = self.mutableCopy;
+    
+    [self enumerateAttribute:attribute inRange:range options:0 usingBlock:^(id _Nullable value, NSRange range, BOOL * _Nonnull stop) {
+        
+        /// Notes:
+        /// Should we pass in `stop` to the callback?
+        /// Do we need to copy the value or sth?
+        
+        id newValue = modifier(value);
+        [result addAttribute:attribute value:newValue range:range];
+    }];
+    
+    return result;
+}
+
+- (NSAttributedString *)attributedStringByModifyingAttribute:(NSAttributedStringKey)attribute forSubstring:(NSString *)substring modifier:(id _Nullable(^)(id _Nullable attributeValue))modifier {
+    
+    NSRange range = [self.string rangeOfString:substring];
+    return [self attributedStringByModifyingAttribute:attribute forRange:&range modifier:modifier];
+}
+
+#pragma mark - CORE: Paragraph style
+
+- (NSAttributedString *)attributedStringByModifyingParagraphStyleForRange:(const NSRangePointer _Nullable)inRange modifier:(NSParagraphStyle *_Nullable (^)(NSMutableParagraphStyle *_Nullable style))modifier {
+    
+    return [self attributedStringByModifyingAttribute:NSParagraphStyleAttributeName forRange:inRange modifier:^id _Nullable(id  _Nullable attributeValue) {
+        
+        NSMutableParagraphStyle *newValue = ((NSMutableParagraphStyle *)attributeValue).mutableCopy;
+        if (newValue == nil) {
+            newValue = [NSMutableParagraphStyle new];
+        }
+        return modifier(newValue);
+    }];
+}
+
+- (NSAttributedString *)attributedStringByModifyingParagraphStyleForSubstring:(NSString *)substring modifier:(NSParagraphStyle *_Nullable (^)(NSMutableParagraphStyle *_Nullable style))modifier {
+    
+    NSRange subRange = [self.string rangeOfString:substring];
+    return [self attributedStringByModifyingParagraphStyleForRange:&subRange modifier:modifier];
+    
+}
+
+#pragma mark Paragraph spacing
+
+- (NSAttributedString *)attributedStringByAddingParagraphSpacing:(CGFloat)spacing forRange:(const NSRangePointer _Nullable)range {
+    
+    return [self attributedStringByModifyingParagraphStyleForRange:range modifier:^NSParagraphStyle * _Nullable(NSMutableParagraphStyle * _Nullable style) {
+        style.paragraphSpacing = spacing;
+        return style;
+    }];
+}
+
+#pragma mark Alignment
+
+- (NSAttributedString *)attributedStringByAddingAlignment:(NSTextAlignment)alignment forRange:(const NSRangePointer _Nullable)rangeIn {
+    
+    return [self attributedStringByModifyingParagraphStyleForRange:rangeIn modifier:^NSParagraphStyle * _Nullable(NSMutableParagraphStyle * _Nullable style) {
+        style.alignment = alignment;
+        return style;
+    }];
+}
+
+//- (NSAttributedString *)attributedStringByAddingAlignment:(NSTextAlignment)alignment forSubstring:(NSString * _Nullable)subStr {
+//
+//    return [self attributedStringByModifyingAttribute:NSParagraphStyleAttributeName forSubstring:subStr modifier:^NSParagraphStyle *(NSParagraphStyle *value) {
+//
+//        NSMutableParagraphStyle *newValue = value.mutableCopy;
+//        if (newValue == nil) {
+//            newValue = [NSMutableParagraphStyle new];
+//        }
+//        newValue.alignment = alignment;
+//        return newValue;
+//    }];
+//}
+
 #pragma mark - CORE: Font attributes
 /// Font attributes are a subset of attributed string attributes.
 ///     It might be smart to use our function for adding string attributes instead of the function for adding font attributes
 
 - (NSAttributedString *)attributedStringByAddingFontAttributes:(NSDictionary<NSFontDescriptorAttributeName,id> *)attributes forRange:(const NSRangePointer _Nullable)inRange {
+    
+    /// TODO: Use `attributedStringByModifyingAttribute:`
     
     NSRange range;
     if (inRange == NULL) {
@@ -589,6 +678,8 @@ void assignAttributedStringKeepingBase(NSAttributedString *_Nonnull *_Nonnull as
 ///     We have a completely separate function for adding font traits (instead of utilitzing the func for adding font attributes), so that we can add font traits without overriding exising ones. Not sure if this separate func is actually necessary to achieve this.
 
 - (NSAttributedString *)attributedStringByAddingFontTraits:(NSDictionary<NSFontDescriptorTraitKey, id> *)traits forRange:(const NSRangePointer _Nullable)inRange {
+    
+    /// TODO: Move this to modifyFont core
     
     /// This might mutate the font and the size
     ///  (If there's no font, yet, this will assign systemFont at default size.)
@@ -720,38 +811,11 @@ void assignAttributedStringKeepingBase(NSAttributedString *_Nonnull *_Nonnull as
 ///
 ///
 
-#pragma mark Alignment
-
-- (NSAttributedString *)attributedStringByAddingAlignment:(NSTextAlignment)alignment forSubstring:(NSString * _Nullable)subStr {
-    
-    /// Pass in nil for the subStr for the whole string
-    ///
-    
-    NSMutableAttributedString *ret = [[NSMutableAttributedString alloc] initWithAttributedString:self];
-    
-    NSRange subRange;
-    if (subStr == nil) {
-        subRange = NSMakeRange(0, self.length);
-    } else {
-        subRange = [self.string rangeOfString:subStr];
-    }
-    
-    [self enumerateAttribute:NSParagraphStyleAttributeName inRange:subRange options:0 usingBlock:^(id _Nullable value, NSRange range, BOOL * _Nonnull stop) {
-        NSMutableParagraphStyle *newParagraphStyle = ((NSParagraphStyle *)value).mutableCopy;
-        if (newParagraphStyle == nil) {
-            newParagraphStyle = [NSMutableParagraphStyle new];
-        }
-        newParagraphStyle.alignment = alignment;
-        [ret addAttribute:NSParagraphStyleAttributeName value:newParagraphStyle range:range];
-        
-    }];
-    
-    return ret.copy;
-}
-
 #pragma mark Font size
 
 - (NSAttributedString *)attributedStringBySettingFontSize:(CGFloat)size {
+    
+    /// TODO: Move this to modifiyFont core
     
     /// I think it is more  ideal to use `attributedStringByAddingFontAttributes:` (ideally build a wrapper around it for setting size)
     ///  NSFontManager is not intended for this, this is probably slower than using `attributedStringByAddingFontAttributes:`.
@@ -779,6 +843,8 @@ void assignAttributedStringKeepingBase(NSAttributedString *_Nonnull *_Nonnull as
 
 - (NSMutableAttributedString *)attributedStringBySettingWeight:(NSInteger)weight forRange:(const NSRangePointer _Nullable)inRange {
 
+    /// TODO: Move this to modifyFont core
+    
     /// Notes:
     /// - This uses NSFontManager init to get a font of the desired size. Should probably stop using this at some point.
     /// - Weight is int between 0 and 15. 5 is normal weight

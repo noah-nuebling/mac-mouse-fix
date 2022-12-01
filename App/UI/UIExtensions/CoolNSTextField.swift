@@ -29,6 +29,11 @@ class MarkdownTextField: CoolNSTextField {
         /// Configure
         configureForAttributedString()
         
+        /// Increase paragraph spacing
+        /// - (Should parametrize this probably and put it into CoolNSTextField but whatever)
+        /// - Turing this off, because 1. Any linebreak with a `\n` character is considered a new paragraph, so this messes up existing UI strings 2. If we're using several paragraphs in any of the UI text we need to STOP. cause that's too much text.
+//        self.attributedStringValue = self.attributedStringValue.addingParagraphSpacing(5.0, for: nil)
+        
         /// Fill out attributedString
         ///     With textField properties
 //        var str = self.attributedStringValue.copy() as! NSAttributedString /// attributedStringValue is empty from what I've seen
