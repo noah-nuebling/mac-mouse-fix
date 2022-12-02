@@ -559,11 +559,11 @@ import CocoaLumberjackSwift
     /// Stored property
     ///     This is used by Scroll.m to determine how to accelerate
     
-    @objc lazy var accelerationCurve: AccelerationBezier = standardAccelerationCurve(withScreenSize: 1080) /// Initial value is unused I think
+    @objc lazy var accelerationCurve: Curve = standardAccelerationCurve(withScreenSize: 1080) /// Initial value is unused I think
     
     /// Define function that maps userSettings -> accelerationCurve
     
-    private func standardAccelerationCurve(forSensitivity sensitivity: MFScrollSensitivity, acceleration: MFScrollAcceleration, animationCurve: MFScrollAnimationCurvePreset, smoothEnabled: Bool, screenSize: Int) -> AccelerationBezier {
+    private func standardAccelerationCurve(forSensitivity sensitivity: MFScrollSensitivity, acceleration: MFScrollAcceleration, animationCurve: MFScrollAnimationCurvePreset, smoothEnabled: Bool, screenSize: Int) -> Curve {
         /// `screenSize` should be the width/height of the screen you're scrolling on. Depending on if you're scrolling horizontally or vertically.
         
         
@@ -730,7 +730,7 @@ import CocoaLumberjackSwift
     /// Acceleration curve defnitions
     ///     These aren't used directly but instead they are dynamically loaded into `self.accelerationCurve` by Scroll.m on each first consecutive scroll tick.
     
-    @objc func standardAccelerationCurve(withScreenSize screenSize: Int) -> AccelerationBezier {
+    @objc func standardAccelerationCurve(withScreenSize screenSize: Int) -> Curve {
         
         return self.standardAccelerationCurve(forSensitivity: self.scrollSensitivity,
                                               acceleration: self.scrollAcceleration,
@@ -739,7 +739,7 @@ import CocoaLumberjackSwift
                                               screenSize: screenSize)
     }
     
-    @objc lazy var preciseAccelerationCurve: AccelerationBezier = { () -> AccelerationBezier in
+    @objc lazy var preciseAccelerationCurve: Curve = { () -> Curve in
         ScrollConfig.accelerationCurveFromParams(pxPerTickBase: 3, /// 2 is better than 3 but that leads to weird asswert failures in TouchAnimator that I can't be bothered to fix
                                                  pxPerTickEnd: 30,
                                                  accelerationHump: 0.0,
@@ -747,7 +747,7 @@ import CocoaLumberjackSwift
                                                  consecutiveScrollTickIntervalMax: self.consecutiveScrollTickIntervalMax, /// We don't expect this to ever change so it's okay to just capture here
                                                  consecutiveScrollTickInterval_AccelerationEnd: self.consecutiveScrollTickInterval_AccelerationEnd)
     }()
-    @objc lazy var quickAccelerationCurve: AccelerationBezier = { () -> AccelerationBezier in
+    @objc lazy var quickAccelerationCurve: Curve = { () -> Curve in
         ScrollConfig.accelerationCurveFromParams(pxPerTickBase: 100,
                                                  pxPerTickEnd: 500,
                                                  accelerationHump: 0.0,
@@ -765,7 +765,7 @@ import CocoaLumberjackSwift
     
     // MARK: - Helper functions
     
-    fileprivate static func accelerationCurveFromParams(pxPerTickBase: Int, pxPerTickEnd: Int, accelerationHump: Double, capHump: Double, consecutiveScrollTickIntervalMax: TimeInterval, consecutiveScrollTickInterval_AccelerationEnd: TimeInterval) -> AccelerationBezier {
+    fileprivate static func accelerationCurveFromParams(pxPerTickBase: Int, pxPerTickEnd: Int, accelerationHump: Double, capHump: Double, consecutiveScrollTickIntervalMax: TimeInterval, consecutiveScrollTickInterval_AccelerationEnd: TimeInterval) -> Curve {
         /**
          Define a curve describing the relationship between the scrollTickSpeed (in scrollTicks per second) (on the x-axis) and the pxPerTick (on the y axis).
          We'll call this function y(x).
