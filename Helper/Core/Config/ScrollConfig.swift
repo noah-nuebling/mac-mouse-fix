@@ -830,36 +830,16 @@ import CocoaLumberjackSwift
             y3 = yMax
         }
         
+//        var curve = AccelerationBezier(controlPoints:
+//                                        [_P(xMin, yMin),
+//                                         _P(x2, y2),
+//                                         _P(x3, y3),
+//                                         _P(xMax, yMax)], defaultEpsilon: 0.08)
+        
+        
         /// TESTING
-        /// TODO: Move this documentation somewhere else
-        /// Coordinates for Bezier that matches **quartic** PolynomialCappedAccelerationCurve()
-        ///     (0.0, 5.0) (1.75, 20.0) (3.5, 20.0) (7.0, 20.0)
-        ///     -> 1.75 and 3.5 are **quarters** of the way between 0.0 and 7.0
-        /// Coordinates for Bezier that matches **cubic** PolynomialCappedAccelerationCurve()
-        ///     (0.0, 5.0) (2.5, 20.0) (4.5, 20.0) (7.0, 20.0)
-        ///     -> 2.5 and 4.5 are **thirds** of the way between 0.0 and 7.0
-        ///     -> If you set a point at each third, it matches even better: `(0.0, 5.0) (7/3 * 1, 20.0) (7/3 * 2, 20.0) (7/3 * 3, 20.0)
-        /// Coordinates for Bezier that matches **quadratic** PolynomialCappedAccelerationCurve()
-        ///     (0.0, 5.0) (3.5, 20.0) (7.0, 20.0)
-        ///     -> Matches absolutely PERFECTLY in Desmos
-        ///     -> I think the reason why the others don't match absolutely absolutely perfectly might be because the polynomial regression in Desmos isn't 100% accurate (already better than anything I could find in any Swift/ObjC/Cpp library, but it just seems to be impossible for polynomial regression to be highly accurate at higher degrees)
-        ///
-        /// -> Result:
-        ///   - To match a PolynomialCappedAccelerationCurve() with degree (aka `curvature`) of `n`, place `n+1` Bezier points with
-        ///     `{ (x, y) | i in 0...n, x = (maxX-minX)*(n/i), y = minY if i == 0 else maxY }`
-        ///   - If you only use the first 3 and the last points, you will get a cubicBezier, which is 1. Overall very similar, 2. Has smoother curvature, since it's not as straight at the end 3. Should be more efficient to calculate (Don't know if that matters)
-        ///
-        /// Resources:
-        /// - Desmos Project for PolynomialCapped curves: https://www.desmos.com/calculator/sdvkwmqnmk?lang=de
-        /// - Desmos Project for n-point Bezier curves: https://www.desmos.com/calculator/4cqrr3f05o?lang=de
         
-//        let curve = PolynomialCappedAccelerationCurve(lowSpeed: xMin, lowSens: yMin, highSpeed: xMax, highSens: yMax, curvature: 3)
-        
-        let curve = AccelerationBezier(controlPoints:
-                                        [_P(xMin, yMin),
-                                         _P(x2, y2),
-                                         _P(x3, y3),
-                                         _P(xMax, yMax)], defaultEpsilon: 0.08)
+        let curve = BezierCappedAccelerationCurve(xMin: xMin, yMin: yMin, xMax: xMax, yMax: yMax, curvature: 2.5, reduceToCubic: false, defaultEpsilon: 0.08)
         
         /// Return
         return curve
