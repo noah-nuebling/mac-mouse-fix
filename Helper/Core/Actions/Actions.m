@@ -40,6 +40,8 @@
             
         } else if ([actionType isEqualToString:kMFActionDictTypeNavigationSwipe]) {
             
+            /// TODO: Rename the action dict keys to 'back' and 'forward' instead of 'navigationSwipeVariantLeft' and 'navigationSwipeVariantRight', then send keyboard shortcuts for vscode, navigation swipes for safari, etc. 
+            
             NSString *dirString = actionDict[kMFActionDictKeyGenericVariant];
             
             if ([dirString isEqualToString:kMFNavigationSwipeVariantLeft]) {

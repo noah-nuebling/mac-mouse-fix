@@ -6,6 +6,8 @@
 //  Created by Noah Nübling on 12/27/21.
 //
 
+// TODO: Rename this to LineSegmentCurve
+
 import Foundation
 import Cocoa
 
