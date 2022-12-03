@@ -54,8 +54,6 @@ typedef enum {
     kMFScrollAnimationCurveNamePreciseScroll, /// For driving preciseScroll
     
     /// Other
-    
-    kMFScrollAnimationCurveNameTrackpad,
     kMFScrollAnimationCurveNameTest,
     
 } MFScrollAnimationCurveName;

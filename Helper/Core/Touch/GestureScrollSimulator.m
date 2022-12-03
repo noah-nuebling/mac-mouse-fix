@@ -176,13 +176,11 @@ static dispatch_queue_t _momentumQueue;
             };
             
             /// Get momentum scroll params
+            ///     These params try to emulate the momentum scrolls of a real trackpad as closely as possible
             
-            ScrollConfig *config = ScrollConfig.shared;
-            MFScrollAnimationCurveParameters *trackpadParams = [config animationCurveParamsForName:kMFScrollAnimationCurveNameTrackpad]; /// This is a really stupid way to access the Trackpad params. TODO: Find a better way (e.g. just hardcode them or make `- animationCurveParamsForPreset:` a class function)
-            
-            double stopSpeed = trackpadParams.stopSpeed;
-            double dragCoeff = trackpadParams.dragCoefficient;
-            double dragExp = trackpadParams.dragExponent;
+            double stopSpeed = 1.0;
+            double dragCoeff = 30.0;
+            double dragExp = 0.7;
             
             /// Do start momentum scroll
             
