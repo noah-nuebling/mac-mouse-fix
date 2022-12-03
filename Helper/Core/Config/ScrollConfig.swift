@@ -29,7 +29,6 @@ import CocoaLumberjackSwift
     
     @objc private(set) static var shared = ScrollConfig() /// Singleton instance
     
-    
     @objc static func reload() {
         
         /// Guard not equal
@@ -50,6 +49,8 @@ import CocoaLumberjackSwift
         SwitchMaster.shared.scrollConfigChanged(scrollConfig: shared)
     }
     private static var cache: [_HP<MFScrollModificationResult, MFAxis>: ScrollConfig]? = nil
+    
+    // MARK: Overrides
     
     @objc static func scrollConfig(modifiers: MFScrollModificationResult, inputAxis: MFAxis, event: CGEvent?) -> ScrollConfig {
         
@@ -89,7 +90,7 @@ import CocoaLumberjackSwift
                 new.accelerationCurve = new.quickAccelerationCurve;
                 
                 /// Set animationCurve
-                new.animationCurvePreset = kMFScrollAnimationCurvePresetQuickScroll;
+                new.animationCurveName = kMFScrollAnimationCurveNameQuickScroll;
                 
                 /// Make fast scroll easy to trigger
                 new.consecutiveScrollSwipeMaxInterval *= 1.2;
@@ -106,7 +107,7 @@ import CocoaLumberjackSwift
                 
                 /// Set animationCurve
                 
-                new.animationCurvePreset = kMFScrollAnimationCurvePresetPreciseScroll;
+                new.animationCurveName = kMFScrollAnimationCurveNamePreciseScroll;
                 
                 /// Turn off fast scroll
                 new.fastScrollThreshold_inSwipes = 69; /// This is the haha sex number
@@ -132,13 +133,13 @@ import CocoaLumberjackSwift
                 
                 new.smoothEnabled = true;
                 /// Override animation curve
-                new.animationCurvePreset = kMFScrollAnimationCurvePresetTouchDriver;
+                new.animationCurveName = kMFScrollAnimationCurveNameTouchDriver;
                 
             } else if modifiers.effectMod == kMFScrollEffectModificationRotate {
                 
                 new.smoothEnabled = true;
                 /// Override animation curve
-                new.animationCurvePreset = kMFScrollAnimationCurvePresetTouchDriver;
+                new.animationCurveName = kMFScrollAnimationCurveNameTouchDriver;
                 
             } else if modifiers.effectMod == kMFScrollEffectModificationCommandTab {
                 
@@ -148,13 +149,13 @@ import CocoaLumberjackSwift
                 
                 new.smoothEnabled = true;
                 /// Override animation curve
-                new.animationCurvePreset = kMFScrollAnimationCurvePresetTouchDriverLinear;
+                new.animationCurveName = kMFScrollAnimationCurveNameTouchDriverLinear;
                 
             } else if modifiers.effectMod == kMFScrollEffectModificationFourFingerPinch {
                 
                 new.smoothEnabled = true;
                 /// Override animation curve
-                new.animationCurvePreset = kMFScrollAnimationCurvePresetTouchDriverLinear;
+                new.animationCurveName = kMFScrollAnimationCurveNameTouchDriverLinear;
                 
             } else if modifiers.effectMod == kMFScrollEffectModificationNone {
             } else if modifiers.effectMod == kMFScrollEffectModificationAddModeFeedback {
@@ -221,9 +222,6 @@ import CocoaLumberjackSwift
         return u_speed == kMFScrollSpeedSystem
     }()
     
-//    @objc private var u_killSwitch: Bool { c("General.scrollKillSwitch") as? Bool ?? false } /// Not cached cause it's just used to calc the other vars
-//    @objc var killSwitch: Bool { u_killSwitch /*|| HelperState.isLockedDown */ } /// Should probably move this into SwitchMaster. Edit: Moved lockDown stuff into switchMaster
-    
     // MARK: Invert Direction
     
     @objc lazy var u_invertDirection: MFScrollInversion = {
@@ -271,7 +269,7 @@ import CocoaLumberjackSwift
     // MARK: Analysis
     
     /// Note:
-    ///     We tuned all these parameters for highInertia. However, they made fastScroll feel bad for lowInertia, so we added all these `switch _animationCurvePreset` statements as a bandaid. to make lowInertia feel good, too.
+    ///     We tuned all these parameters for highInertia. However, they made fastScroll feel bad for lowInertia, so we added all these `switch animationCurveName` statements as a bandaid. to make lowInertia feel good, too.
     ///     TODO: Think about: 1. Is this elegant? 2. What about the inertias between high and low? Is fast scroll even used with any of them?
     
     @objc lazy var scrollSwipeThreshold_inTicks: Int = 2 /*other["scrollSwipeThreshold_inTicks"] as! Int;*/ /// If `scrollSwipeThreshold_inTicks` consecutive ticks occur, they are deemed a scroll-swipe.
@@ -279,8 +277,8 @@ import CocoaLumberjackSwift
     @objc lazy var fastScrollThreshold_inSwipes: Int = { /// On the `fastScrollThreshold_inSwipes`th consecutive swipe, fast scrolling kicks in
         /*other["fastScrollThreshold_inSwipes"] as! Int*/
             
-        switch animationCurvePreset {
-        case kMFScrollAnimationCurvePresetHighInertia, kMFScrollAnimationCurvePresetQuickScroll:
+        switch animationCurveName {
+        case kMFScrollAnimationCurveNameHighInertia, kMFScrollAnimationCurveNameQuickScroll:
             return 3
         default:
             return 4
@@ -305,12 +303,12 @@ import CocoaLumberjackSwift
         
         /// Not sure this switch makes sense. Quick bandaid. Might wanna change.
         
-        switch animationCurvePreset {
-        case kMFScrollAnimationCurvePresetLowInertia, kMFScrollAnimationCurvePresetNoInertia, kMFScrollAnimationCurvePresetTouchDriver, kMFScrollAnimationCurvePresetTouchDriverLinear, kMFScrollAnimationCurvePresetPreciseScroll:
+        switch animationCurveName {
+        case kMFScrollAnimationCurveNameLowInertia, kMFScrollAnimationCurveNameNoInertia, kMFScrollAnimationCurveNameTouchDriver, kMFScrollAnimationCurveNameTouchDriverLinear, kMFScrollAnimationCurveNamePreciseScroll:
             return 350/1000
-        case kMFScrollAnimationCurvePresetMediumInertia:
+        case kMFScrollAnimationCurveNameMediumInertia:
             return 475/1000
-        case kMFScrollAnimationCurvePresetHighInertia, kMFScrollAnimationCurvePresetHighInertiaPlusTrackpadSim, kMFScrollAnimationCurvePresetQuickScroll:
+        case kMFScrollAnimationCurveNameHighInertia, kMFScrollAnimationCurveNameHighInertiaPlusTrackpadSim, kMFScrollAnimationCurveNameQuickScroll:
             return 600/1000
         default:
             fatalError()
@@ -318,8 +316,8 @@ import CocoaLumberjackSwift
     }()
     
     @objc lazy var consecutiveScrollSwipeMinTickSpeed: Double = {
-        switch animationCurvePreset {
-        case kMFScrollAnimationCurvePresetHighInertia, kMFScrollAnimationCurvePresetQuickScroll:
+        switch animationCurveName {
+        case kMFScrollAnimationCurveNameHighInertia, kMFScrollAnimationCurveNameQuickScroll:
             return 12.0
         default:
             return 16.0
@@ -349,8 +347,8 @@ import CocoaLumberjackSwift
     ///     Needs to be > 1 for there to be any speedup
     
     @objc lazy var fastScrollSpeedup: Double = { /// Needs to be > 0 for there to be any speedup
-        switch animationCurvePreset {
-        case kMFScrollAnimationCurvePresetHighInertia, kMFScrollAnimationCurvePresetQuickScroll:
+        switch animationCurveName {
+        case kMFScrollAnimationCurveNameHighInertia, kMFScrollAnimationCurveNameQuickScroll:
             return 7.0
         default:
             return 5.0
@@ -373,97 +371,41 @@ import CocoaLumberjackSwift
         return c("trackpadSimulation") as! Bool
     }()
     
-    private lazy var _animationCurvePreset = {
+    private lazy var _animationCurveName = {
         
-        /// Maybe we should move the trackpad sim settings out of the MFScrollAnimationCurvePreset, (because that's weird?)
+        /// Maybe we should move the trackpad sim settings out of the MFScrollAnimationCurveName, (because that's weird?)
         
         switch u_smoothness {
-        case kMFScrollSmoothnessOff: return kMFScrollAnimationCurvePresetNoInertia
-        case kMFScrollSmoothnessRegular: return kMFScrollAnimationCurvePresetLowInertia
+        case kMFScrollSmoothnessOff: return kMFScrollAnimationCurveNameNoInertia
+        case kMFScrollSmoothnessRegular: return kMFScrollAnimationCurveNameLowInertia
         case kMFScrollSmoothnessHigh:
-            return u_trackpadSimulation ? kMFScrollAnimationCurvePresetHighInertiaPlusTrackpadSim : kMFScrollAnimationCurvePresetHighInertia
+            return u_trackpadSimulation ? kMFScrollAnimationCurveNameHighInertiaPlusTrackpadSim : kMFScrollAnimationCurveNameHighInertia
         default: fatalError()
         }
     }()
     
-    @objc var animationCurvePreset: MFScrollAnimationCurvePreset {
+    @objc var animationCurveName: MFScrollAnimationCurveName {
         
         set {
-            _animationCurvePreset = newValue
-            self.animationCurveParams = self.animationCurveParams(forPreset: animationCurvePreset)
+            _animationCurveName = newValue
+            self.animationCurveParams = self.animationCurveParams(forName: animationCurveName)
         } get {
-            return _animationCurvePreset
+            return _animationCurveName
         }
     }
     
-    @objc private(set) lazy var animationCurveParams = { self.animationCurveParams(forPreset: self.animationCurvePreset) }() /// Updates automatically to match `self.animationCurvePreset`
+    @objc private(set) lazy var animationCurveParams = { self.animationCurveParams(forName: self.animationCurveName) }() /// Updates automatically to match `self.animationCurveName
     
-    /// Define storage class for animationCurve params
-    
-    @objc class MFScrollAnimationCurveParameters: NSObject { /// Does this have to inherit from NSObject?
+    @objc func animationCurveParams(forName name: MFScrollAnimationCurveName) -> MFScrollAnimationCurveParameters {
         
-        /// Notes:
-        /// - I don't really think it make sense for sendGestureScrolls and sendMomentumScrolls to be part of the animation curve, but it works so whatever
-        
-        /// baseCurve params
-        @objc let baseCurve: Bezier?
-        @objc let baseMsPerStep: Int /// When using dragCurve that will make the actual msPerStep longer
-        /// dragCurve params
-        @objc let useDragCurve: Bool /// If false, use only baseCurve, and ignore dragCurve
-        @objc let dragExponent: Double
-        @objc let dragCoefficient: Double
-        @objc let stopSpeed: Int
-        /// Other params
-        @objc let sendGestureScrolls: Bool /// If false, send simple continuous scroll events (like MMF 2) instead of using GestureScrollSimulator
-        @objc let sendMomentumScrolls: Bool /// Only works if sendGestureScrolls and useDragCurve is true. If true, make Scroll.m send momentumScroll events (what the Apple Trackpad sends after lifting your fingers off) when scrolling is controlled by the dragCurve (and in some other cases, see TouchAnimator). Only use this when the dragCurve closely mimicks the Apple Trackpads otherwise apps like Xcode will behave differently from other apps during momentum scrolling.
-        
-        /// Init
-        init(baseCurve: Bezier?, baseMsPerStep: Int, dragExponent: Double, dragCoefficient: Double, stopSpeed: Int, sendGestureScrolls: Bool, sendMomentumScrolls: Bool) {
-            
-            /// Init for using hybridCurve (baseCurve + dragCurve)
-            
-            if sendMomentumScrolls { assert(sendGestureScrolls) }
-            
-            self.baseMsPerStep = baseMsPerStep
-            self.baseCurve = baseCurve
-            
-            self.useDragCurve = true
-            self.dragExponent = dragExponent
-            self.dragCoefficient = dragCoefficient
-            self.stopSpeed = stopSpeed
-            
-            self.sendGestureScrolls = sendGestureScrolls
-            self.sendMomentumScrolls = sendMomentumScrolls
-        }
-        init(baseCurve: Bezier?, msPerStep: Int, sendGestureScrolls: Bool) {
-            
-            /// Init for using just baseCurve
-            
-            self.baseMsPerStep = msPerStep
-            self.baseCurve = baseCurve
-            
-            self.useDragCurve = false
-            self.dragExponent = -1
-            self.dragCoefficient = -1
-            self.stopSpeed = -1
-            
-            self.sendGestureScrolls = sendGestureScrolls
-            self.sendMomentumScrolls = false
-        }
-    }
-    
-    /// Define function that maps preset -> params
-    
-    @objc func animationCurveParams(forPreset preset: MFScrollAnimationCurvePreset) -> MFScrollAnimationCurveParameters {
-        
-        /// For the origin behind these presets see ScrollConfigTesting.md
+        /// For the origin behind these curves see ScrollConfigTesting.md
         /// @note I just checked the formulas on Desmos, and I don't get how this can work with 0.7 as the exponent? (But it does??) If the value is `< 1.0` that gives a completely different curve that speeds up over time, instead of slowing down.
         
-        switch preset {
+        switch name {
             
         /// --- User selected ---
             
-        case kMFScrollAnimationCurvePresetNoInertia:
+        case kMFScrollAnimationCurveNameNoInertia:
             
             fatalError()
             
@@ -474,54 +416,54 @@ import CocoaLumberjackSwift
 //            Bezier(controlPoints: [_P(0, 0), _P(0.23, 0.89), _P(0.52, 1), _P(1, 1)], defaultEpsilon: 0.001)
             return MFScrollAnimationCurveParameters(baseCurve: baseCurve, msPerStep: 250, sendGestureScrolls: false)
             
-        case kMFScrollAnimationCurvePresetLowInertia:            
+        case kMFScrollAnimationCurveNameLowInertia:            
             
             return MFScrollAnimationCurveParameters(baseCurve: ScrollConfig.linearCurve, baseMsPerStep: 140, dragExponent: 1.05, dragCoefficient: 15, stopSpeed: 30, sendGestureScrolls: false, sendMomentumScrolls: false)
             
-        case kMFScrollAnimationCurvePresetMediumInertia:
+        case kMFScrollAnimationCurveNameMediumInertia:
             
             fatalError()
             
             return MFScrollAnimationCurveParameters(baseCurve: ScrollConfig.linearCurve, baseMsPerStep: 190, dragExponent: 1.0, dragCoefficient: 17, stopSpeed: 50, sendGestureScrolls: false, sendMomentumScrolls: false)
             
-        case kMFScrollAnimationCurvePresetHighInertia:
+        case kMFScrollAnimationCurveNameHighInertia:
             /// Snappiest curve that can be used to send momentumScrolls.
             ///    If you make it snappier then it will cut off the built-in momentumScroll in apps like Xcode
             return MFScrollAnimationCurveParameters(baseCurve: ScrollConfig.linearCurve, baseMsPerStep: 205, dragExponent: 0.7, dragCoefficient: 40, stopSpeed: /*50*/30, sendGestureScrolls: false, sendMomentumScrolls: false)
             
-        case kMFScrollAnimationCurvePresetHighInertiaPlusTrackpadSim:
-            /// Same as highInertia preset but with full trackpad simulation.
+        case kMFScrollAnimationCurveNameHighInertiaPlusTrackpadSim:
+            /// Same as highInertia curve but with full trackpad simulation. The trackpad sim stuff doesn't really belong here I think.
             return MFScrollAnimationCurveParameters(baseCurve: ScrollConfig.linearCurve, baseMsPerStep: 205, dragExponent: 0.7, dragCoefficient: 40, stopSpeed: /*50*/30, sendGestureScrolls: true, sendMomentumScrolls: true)
             
         /// --- Dynamically applied ---
             
-        case kMFScrollAnimationCurvePresetTouchDriver:
+        case kMFScrollAnimationCurveNameTouchDriver:
             
             let baseCurve = Bezier(controlPoints: [_P(0, 0), _P(0, 0), _P(0.5, 1), _P(1, 1)], defaultEpsilon: 0.001)
             return MFScrollAnimationCurveParameters(baseCurve: baseCurve, msPerStep: 250, sendGestureScrolls: false)
             
-        case kMFScrollAnimationCurvePresetTouchDriverLinear:
+        case kMFScrollAnimationCurveNameTouchDriverLinear:
             /// "Disable" the dragCurve by setting the dragCoefficient to an absurdly high number. This creates a linear curve. This is not elegant or efficient -> Maybe refactor this (have a bool `usePureBezier` or sth to disable the dragCurve)
             return MFScrollAnimationCurveParameters(baseCurve: ScrollConfig.linearCurve, msPerStep: 180, sendGestureScrolls: false)
         
-        case kMFScrollAnimationCurvePresetQuickScroll:
-            /// Almost the same as `highInertia` just more inertial. Actually same feel as `trackpad` preset.
+        case kMFScrollAnimationCurveNameQuickScroll:
+            /// Almost the same as `highInertia` just more inertial. Actually same feel as `trackpad` curve.
             /// Should we use trackpad sim (sendMomentumScrolls and sendGestureScrolls) here?
             return MFScrollAnimationCurveParameters(baseCurve: ScrollConfig.linearCurve, baseMsPerStep: 220, dragExponent: 0.7, dragCoefficient: 30, stopSpeed: 1, sendGestureScrolls: true, sendMomentumScrolls: true)
             
-        case kMFScrollAnimationCurvePresetPreciseScroll:
+        case kMFScrollAnimationCurveNamePreciseScroll:
             /// Similar to `lowInertia`
             return MFScrollAnimationCurveParameters(baseCurve: ScrollConfig.linearCurve, baseMsPerStep: 140, dragExponent: 1.0, dragCoefficient: 20, stopSpeed: 50, sendGestureScrolls: false, sendMomentumScrolls: false)
             
         /// --- Testing ---
             
-        case kMFScrollAnimationCurvePresetTest:
+        case kMFScrollAnimationCurveNameTest:
             
             return MFScrollAnimationCurveParameters(baseCurve: ScrollConfig.linearCurve, msPerStep: 350, sendGestureScrolls: false)
             
         /// --- Other ---
             
-        case kMFScrollAnimationCurvePresetTrackpad:
+        case kMFScrollAnimationCurveNameTrackpad:
             /// The dragCurve parameters emulate the trackpad as closely as possible. Use this in GestureSimulator.m. The baseCurve parameters as well as `sendMomentumScrolls` are irrelevant, since this is not used in Scroll.m. This doesn't really belong here. We should just put these parameters into GestureScrollSimulator where they are used.
             return MFScrollAnimationCurveParameters(baseCurve: nil, baseMsPerStep: -1, dragExponent: 0.7, dragCoefficient: 30, stopSpeed: 1, sendGestureScrolls: true, sendMomentumScrolls: true)
         
@@ -588,17 +530,17 @@ import CocoaLumberjackSwift
                 
                 /// Notes:
                 /// - TODO: Why do we define acceleration curves for the touchDriver so weirdly? Shouldn't we just hardcode it to one curve and acceleration?
-                /// - The reason why the other MFScrollAnimationCurvePreset constants will never be passed in here is because quickScroll and preciseScroll define their own accelerationCurves. See Scroll.m for more.
+                /// - The reason why the other MFScrollAnimationCurveName constants will never be passed in here is because quickScroll and preciseScroll define their own accelerationCurves. See Scroll.m for more.
                 
                 inertiaFactor = SharedUtilitySwift.eval {
-                    switch animationCurvePreset {
-                    case kMFScrollAnimationCurvePresetLowInertia: 2.0/3.0
-                    case kMFScrollAnimationCurvePresetNoInertia: 2.0/3.0
-                    case kMFScrollAnimationCurvePresetMediumInertia: 3.0/4.0
-                    case kMFScrollAnimationCurvePresetHighInertia: 1.0
-                    case kMFScrollAnimationCurvePresetHighInertiaPlusTrackpadSim: 1.0
-                    case kMFScrollAnimationCurvePresetTouchDriver: 2.0/3.0
-                    case kMFScrollAnimationCurvePresetTouchDriverLinear: 2.0/3.0
+                    switch animationCurveName {
+                    case kMFScrollAnimationCurveNameLowInertia: 2.0/3.0
+                    case kMFScrollAnimationCurveNameNoInertia: 2.0/3.0
+                    case kMFScrollAnimationCurveNameMediumInertia: 3.0/4.0
+                    case kMFScrollAnimationCurveNameHighInertia: 1.0
+                    case kMFScrollAnimationCurveNameHighInertiaPlusTrackpadSim: 1.0
+                    case kMFScrollAnimationCurveNameTouchDriver: 2.0/3.0
+                    case kMFScrollAnimationCurveNameTouchDriverLinear: 2.0/3.0
                     default: -1.0
                     }
                 }
@@ -639,16 +581,16 @@ import CocoaLumberjackSwift
             
         } else {
             
-            switch animationCurvePreset {
-            case kMFScrollAnimationCurvePresetLowInertia, kMFScrollAnimationCurvePresetNoInertia:
+            switch animationCurveName {
+            case kMFScrollAnimationCurveNameLowInertia, kMFScrollAnimationCurveNameNoInertia:
                 inertiaFactor = /*1*/ 2/3
-            case kMFScrollAnimationCurvePresetMediumInertia:
+            case kMFScrollAnimationCurveNameMediumInertia:
                 inertiaFactor = /*1*/ 3/4
-            case kMFScrollAnimationCurvePresetHighInertia, kMFScrollAnimationCurvePresetHighInertiaPlusTrackpadSim:
+            case kMFScrollAnimationCurveNameHighInertia, kMFScrollAnimationCurveNameHighInertiaPlusTrackpadSim:
                 inertiaFactor = 1
-            case kMFScrollAnimationCurvePresetTouchDriver:
+            case kMFScrollAnimationCurveNameTouchDriver:
                 inertiaFactor = 2/3
-            case kMFScrollAnimationCurvePresetTouchDriverLinear:
+            case kMFScrollAnimationCurveNameTouchDriverLinear:
                 inertiaFactor = 2/3
             default:
                 fatalError()
@@ -677,14 +619,14 @@ import CocoaLumberjackSwift
         ///
         
         let curvature: Double = SharedUtilitySwift.eval {
-            switch animationCurvePreset {
-            case kMFScrollAnimationCurvePresetLowInertia: 2.5
-            case kMFScrollAnimationCurvePresetNoInertia: 2.5
-            case kMFScrollAnimationCurvePresetMediumInertia: 2.5
-            case kMFScrollAnimationCurvePresetHighInertia: 2.5
-            case kMFScrollAnimationCurvePresetHighInertiaPlusTrackpadSim: 2.5
-            case kMFScrollAnimationCurvePresetTouchDriver: 2.5
-            case kMFScrollAnimationCurvePresetTouchDriverLinear: 2.5
+            switch animationCurveName {
+            case kMFScrollAnimationCurveNameLowInertia: 2.5
+            case kMFScrollAnimationCurveNameNoInertia: 2.5
+            case kMFScrollAnimationCurveNameMediumInertia: 2.5
+            case kMFScrollAnimationCurveNameHighInertia: 2.5
+            case kMFScrollAnimationCurveNameHighInertiaPlusTrackpadSim: 2.5
+            case kMFScrollAnimationCurveNameTouchDriver: 2.5
+            case kMFScrollAnimationCurveNameTouchDriverLinear: 2.5
             default: -1.0
             }
         }
@@ -825,3 +767,58 @@ import CocoaLumberjackSwift
     
 }
 
+// MARK: Helper classes
+
+/// Storage class for animationCurve params
+
+@objc class MFScrollAnimationCurveParameters: NSObject {
+    
+    /// Notes:
+    /// - I don't really think it make sense for sendGestureScrolls and sendMomentumScrolls to be part of the animation curve, but it works so whatever
+    
+    /// baseCurve params
+    @objc let baseCurve: Bezier?
+    @objc let baseMsPerStep: Int /// When using dragCurve that will make the actual msPerStep longer
+    /// dragCurve params
+    @objc let useDragCurve: Bool /// If false, use only baseCurve, and ignore dragCurve
+    @objc let dragExponent: Double
+    @objc let dragCoefficient: Double
+    @objc let stopSpeed: Int
+    /// Other params
+    @objc let sendGestureScrolls: Bool /// If false, send simple continuous scroll events (like MMF 2) instead of using GestureScrollSimulator
+    @objc let sendMomentumScrolls: Bool /// Only works if sendGestureScrolls and useDragCurve is true. If true, make Scroll.m send momentumScroll events (what the Apple Trackpad sends after lifting your fingers off) when scrolling is controlled by the dragCurve (and in some other cases, see TouchAnimator). Only use this when the dragCurve closely mimicks the Apple Trackpads otherwise apps like Xcode will behave differently from other apps during momentum scrolling.
+    
+    /// Init
+    init(baseCurve: Bezier?, baseMsPerStep: Int, dragExponent: Double, dragCoefficient: Double, stopSpeed: Int, sendGestureScrolls: Bool, sendMomentumScrolls: Bool) {
+        
+        /// Init for using hybridCurve (baseCurve + dragCurve)
+        
+        if sendMomentumScrolls { assert(sendGestureScrolls) }
+        
+        self.baseMsPerStep = baseMsPerStep
+        self.baseCurve = baseCurve
+        
+        self.useDragCurve = true
+        self.dragExponent = dragExponent
+        self.dragCoefficient = dragCoefficient
+        self.stopSpeed = stopSpeed
+        
+        self.sendGestureScrolls = sendGestureScrolls
+        self.sendMomentumScrolls = sendMomentumScrolls
+    }
+    init(baseCurve: Bezier?, msPerStep: Int, sendGestureScrolls: Bool) {
+        
+        /// Init for using just baseCurve
+        
+        self.baseMsPerStep = msPerStep
+        self.baseCurve = baseCurve
+        
+        self.useDragCurve = false
+        self.dragExponent = -1
+        self.dragCoefficient = -1
+        self.stopSpeed = -1
+        
+        self.sendGestureScrolls = sendGestureScrolls
+        self.sendMomentumScrolls = false
+    }
+}
