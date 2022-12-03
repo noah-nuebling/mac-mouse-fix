@@ -58,7 +58,7 @@ typedef enum {
     kMFScrollAnimationCurvePresetTrackpad,
     kMFScrollAnimationCurvePresetTest,
     
-} MFScrollAnimationCurvePreset;
+} MFScrollAnimationCurvePreset; // TODO: Rename this to MFScrollAnimationName (don't forget to rename ivars)
 
 typedef enum  {
     kMFScrollSpeedSystem,

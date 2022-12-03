@@ -14,7 +14,7 @@ import CocoaLumberjackSwift
 
     
     
-    func eval<V>(@SingleValueBuilder<V> _ value: () -> V) -> V {
+    static func eval<V>(@SingleValueBuilder<V> _ value: () -> V) -> V {
         
         /// Src: https://forums.swift.org/t/how-to-assign-the-value-of-a-switch-statement-to-a-variable/50991/6
         
