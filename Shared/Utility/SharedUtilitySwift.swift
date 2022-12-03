@@ -12,6 +12,27 @@ import CocoaLumberjackSwift
 
 @objc class SharedUtilitySwift: NSObject {
 
+    
+    
+    func eval<V>(@SingleValueBuilder<V> _ value: () -> V) -> V {
+        
+        /// Src: https://forums.swift.org/t/how-to-assign-the-value-of-a-switch-statement-to-a-variable/50991/6
+        
+        value()
+    }
+    @resultBuilder
+    enum SingleValueBuilder<V> {
+        static func buildEither(first component: V) -> V {
+            component
+        }
+        static func buildEither(second component: V) -> V {
+            component
+        }
+        static func buildBlock(_ components: V) -> V {
+            components
+        }
+    }
+    
     @objc static func doOnMain(_ block: () -> ()) {
         if Thread.isMainThread {
             block()

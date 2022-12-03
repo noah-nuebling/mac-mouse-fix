@@ -60,22 +60,17 @@ typedef enum {
     
 } MFScrollAnimationCurvePreset;
 
-typedef enum {
-    
-    kMFScrollAccelerationLow,
-    kMFScrollAccelerationMedium,
-    kMFScrollAccelerationHigh
-    
-} MFScrollAcceleration;
+typedef enum  {
+    kMFScrollSpeedSystem,
+    kMFScrollSpeedLow,
+    kMFScrollSpeedMedium,
+    kMFScrollSpeedHigh,
+} MFScrollSpeed;
 
 typedef enum {
-    
-    kMFScrollSensitivityPrecise,
-    kMFScrollSensitivityLow,
-    kMFScrollSensitivityMedium,
-    kMFScrollSensitivityHigh,
-    kMFScrollSensitivityTest
-    
-} MFScrollSensitivity;
+    kMFScrollSmoothnessOff,
+    kMFScrollSmoothnessRegular,
+    kMFScrollSmoothnessHigh,
+} MFScrollSmoothness;
 
 NS_ASSUME_NONNULL_END

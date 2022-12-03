@@ -279,7 +279,7 @@ import CocoaLumberjackSwift
     @objc lazy var fastScrollThreshold_inSwipes: Int = { /// On the `fastScrollThreshold_inSwipes`th consecutive swipe, fast scrolling kicks in
         /*other["fastScrollThreshold_inSwipes"] as! Int*/
             
-        switch u_animationCurvePreset {
+        switch animationCurvePreset {
         case kMFScrollAnimationCurvePresetHighInertia, kMFScrollAnimationCurvePresetQuickScroll:
             return 3
         default:
@@ -305,7 +305,7 @@ import CocoaLumberjackSwift
         
         /// Not sure this switch makes sense. Quick bandaid. Might wanna change.
         
-        switch u_animationCurvePreset {
+        switch animationCurvePreset {
         case kMFScrollAnimationCurvePresetLowInertia, kMFScrollAnimationCurvePresetNoInertia, kMFScrollAnimationCurvePresetTouchDriver, kMFScrollAnimationCurvePresetTouchDriverLinear, kMFScrollAnimationCurvePresetPreciseScroll:
             return 350/1000
         case kMFScrollAnimationCurvePresetMediumInertia:
@@ -318,7 +318,7 @@ import CocoaLumberjackSwift
     }()
     
     @objc lazy var consecutiveScrollSwipeMinTickSpeed: Double = {
-        switch u_animationCurvePreset {
+        switch animationCurvePreset {
         case kMFScrollAnimationCurvePresetHighInertia, kMFScrollAnimationCurvePresetQuickScroll:
             return 12.0
         default:
@@ -349,7 +349,7 @@ import CocoaLumberjackSwift
     ///     Needs to be > 1 for there to be any speedup
     
     @objc lazy var fastScrollSpeedup: Double = { /// Needs to be > 0 for there to be any speedup
-        switch u_animationCurvePreset {
+        switch animationCurvePreset {
         case kMFScrollAnimationCurvePresetHighInertia, kMFScrollAnimationCurvePresetQuickScroll:
             return 7.0
         default:
@@ -361,45 +361,42 @@ import CocoaLumberjackSwift
     
     /// User setting
     
-    private lazy var u_animationCurvePreset = {
+    private lazy var u_smoothness: MFScrollSmoothness = {
+        switch c("smooth") as! String {
+        case "off": return kMFScrollSmoothnessOff
+        case "regular": return kMFScrollSmoothnessRegular
+        case "high": return kMFScrollSmoothnessHigh
+        default: fatalError()
+        }
+    }()
+    private lazy var u_trackpadSimulation: Bool = {
+        return c("trackpadSimulation") as! Bool
+    }()
+    
+    private lazy var _animationCurvePreset = {
         
-        // TODO: Refactor
-        /// Explanation:
-        /// This method name is prefixed with `u_`. We introduced the `u_` prefix to signify settings that are directly set by the user instead of being derived from user settings. This method doesn't really fit this category because it's derived from different user settings and therefore shouldn't have the `u_` prefix. I think this stuff stopped making sense when we introduced the "Advanced Navigation" settings.
-        /// I'll leave this as is because it works fine but it's a little messy now.
-        /// Idea for a refactor:
-        /// Move the trackpad sim settings out of the MFScrollAnimationCurvePreset, and then make `u_` prefixed vars for `c("smooth")` and `c("trackpadSimulation")`. Remove the `u_` prefix here.
+        /// Maybe we should move the trackpad sim settings out of the MFScrollAnimationCurvePreset, (because that's weird?)
         
-        let smoothness = c("smooth") as! String
-        
-        if smoothness == "off" {
-            return kMFScrollAnimationCurvePresetNoInertia
-        } else if smoothness == "regular" {
-            return kMFScrollAnimationCurvePresetLowInertia
-        } else if smoothness == "high" {
-            
-            let trackpadSim = c("trackpadSimulation") as! Bool
-            
-            if !trackpadSim {
-                return kMFScrollAnimationCurvePresetHighInertia
-            } else {
-                return kMFScrollAnimationCurvePresetHighInertiaPlusTrackpadSim
-            }
-        } else {
-            assert(false)
+        switch u_smoothness {
+        case kMFScrollSmoothnessOff: return kMFScrollAnimationCurvePresetNoInertia
+        case kMFScrollSmoothnessRegular: return kMFScrollAnimationCurvePresetLowInertia
+        case kMFScrollSmoothnessHigh:
+            return u_trackpadSimulation ? kMFScrollAnimationCurvePresetHighInertiaPlusTrackpadSim : kMFScrollAnimationCurvePresetHighInertia
+        default: fatalError()
         }
     }()
     
     @objc var animationCurvePreset: MFScrollAnimationCurvePreset {
+        
         set {
-            u_animationCurvePreset = newValue
-            self.animationCurveParams = self.animationCurveParams(forPreset: u_animationCurvePreset)
+            _animationCurvePreset = newValue
+            self.animationCurveParams = self.animationCurveParams(forPreset: animationCurvePreset)
         } get {
-            return u_animationCurvePreset
+            return _animationCurvePreset
         }
     }
     
-    @objc private(set) lazy var animationCurveParams = { self.animationCurveParams(forPreset: self.animationCurvePreset) }() /// Updates automatically do match `self.animationCurvePreset`
+    @objc private(set) lazy var animationCurveParams = { self.animationCurveParams(forPreset: self.animationCurvePreset) }() /// Updates automatically to match `self.animationCurvePreset`
     
     /// Define storage class for animationCurve params
     
@@ -537,26 +534,16 @@ import CocoaLumberjackSwift
     
     /// User settings
     
-    @objc lazy var u_speed: String = { c("speed") as! String }()
+    @objc lazy var u_speed: MFScrollSpeed = {
+        switch c("speed") as! String {
+        case "system": return kMFScrollSpeedSystem /// Ignore MMF acceleration algorithm and use values provided by macOS
+        case "low": return kMFScrollSpeedLow
+        case "medium": return kMFScrollSpeedMedium
+        case "high": return kMFScrollSpeedHigh
+        default: fatalError()
+        }
+    }()
     @objc lazy var u_precise: Bool = { c("precise") as! Bool }()
-    
-    @objc lazy var useAppleAcceleration: Bool = {
-        u_speed == "system" /* || killSwitch */
-    }() /// Ignore MMF acceleration algorithm and use values provided by macOS
-    
-    @objc lazy var scrollSensitivity: MFScrollSensitivity = {
-        if u_precise { return kMFScrollSensitivityPrecise }
-        if u_speed == "low" { return kMFScrollSensitivityLow }
-        if u_speed == "medium" { return kMFScrollSensitivityMedium }
-        if u_speed == "high" { return kMFScrollSensitivityHigh }
-        return kMFScrollSensitivityMedium /// This should be unused. Should maybe add a "none" sensitivity
-    }()
-    @objc lazy var scrollAcceleration: MFScrollAcceleration = {
-        if u_speed == "low" { return kMFScrollAccelerationLow }
-        if u_speed == "medium" { return kMFScrollAccelerationMedium }
-        if u_speed == "high" { return kMFScrollAccelerationHigh }
-        return kMFScrollAccelerationMedium /// This should be unused. Should maybe add a "none" sensitivity
-    }()
     
     /// Stored property
     ///     This is used by Scroll.m to determine how to accelerate
@@ -565,9 +552,8 @@ import CocoaLumberjackSwift
     
     /// Define function that maps userSettings -> accelerationCurve
     
-    private func standardAccelerationCurve(forSensitivity sensitivity: MFScrollSensitivity, acceleration: MFScrollAcceleration, animationCurve: MFScrollAnimationCurvePreset, smoothEnabled: Bool, screenSize: Int) -> Curve {
+    private func standardAccelerationCurve(forSpeed speed: MFScrollSpeed, precise: Bool, smoothness: MFScrollSmoothness, screenSize: Int) -> Curve {
         /// `screenSize` should be the width/height of the screen you're scrolling on. Depending on if you're scrolling horizontally or vertically.
-        
         
         ///
         /// Get pxPerTickStart
@@ -575,7 +561,7 @@ import CocoaLumberjackSwift
         
         let pxPerTickStart: Int
         
-        if sensitivity == kMFScrollSensitivityPrecise {
+        if precise {
             
             pxPerTickStart = 10
             
@@ -583,21 +569,15 @@ import CocoaLumberjackSwift
             
             /// Get base pxPerTick
             
-            let pxPerTickStartBase: Double
-            
-            switch sensitivity {
-            case kMFScrollSensitivityTest:
-                pxPerTickStartBase = 120
-            case kMFScrollSensitivityLow:
-                pxPerTickStartBase = 30
-            case kMFScrollSensitivityMedium:
-                pxPerTickStartBase = 60
-            case kMFScrollSensitivityHigh:
-                pxPerTickStartBase = 90
-            default:
-                fatalError()
+            let pxPerTickStartBase: Int = eval {
+                switch speed {
+                case kMFScrollSpeedLow: 30
+                case kMFScrollSpeedMedium: 60
+                case kMFScrollSpeedHigh: 90
+                default: fatalError()
+                }
             }
-
+            
             /// Get inertia factor
             
             let inertiaFactor: Double
@@ -605,21 +585,25 @@ import CocoaLumberjackSwift
             if !smoothEnabled {
                 inertiaFactor = 1/2
             } else {
-                switch animationCurve {
-                case kMFScrollAnimationCurvePresetLowInertia, kMFScrollAnimationCurvePresetNoInertia:
-                    inertiaFactor = /*1*/2/3
-                case kMFScrollAnimationCurvePresetMediumInertia:
-                    inertiaFactor = /*1*/3/4
-                case kMFScrollAnimationCurvePresetHighInertia, kMFScrollAnimationCurvePresetHighInertiaPlusTrackpadSim:
-                    inertiaFactor = 1
-                case kMFScrollAnimationCurvePresetTouchDriver:
-                    /// TODO: Why do we define acceleration curves for the touchDriver so weirdly? Shouldn't we just hardcode it to one curve and acceleration?
-                    inertiaFactor = 2/3
-                case kMFScrollAnimationCurvePresetTouchDriverLinear:
-                    inertiaFactor = 2/3
-                default: /// The reason why the other MFScrollAnimationCurvePreset constants will never be passed in here is because quickScroll and preciseScroll define their own accelerationCurves. See Scroll.m for more.
-                    fatalError()
+                
+                /// Notes:
+                /// - TODO: Why do we define acceleration curves for the touchDriver so weirdly? Shouldn't we just hardcode it to one curve and acceleration?
+                /// - The reason why the other MFScrollAnimationCurvePreset constants will never be passed in here is because quickScroll and preciseScroll define their own accelerationCurves. See Scroll.m for more.
+                
+                inertiaFactor = eval {
+                    switch animationCurve {
+                    case kMFScrollAnimationCurvePresetLowInertia: 2/3
+                    case kMFScrollAnimationCurvePresetNoInertia: 2/3
+                    case kMFScrollAnimationCurvePresetMediumInertia: 3/4
+                    case kMFScrollAnimationCurvePresetHighInertia: 1
+                    case kMFScrollAnimationCurvePresetHighInertiaPlusTrackpadSim: 1
+                    case kMFScrollAnimationCurvePresetTouchDriver: 2/3
+                    case kMFScrollAnimationCurvePresetTouchDriverLinear: 2/3
+                    default: fatalError()
+                    }
                 }
+                
+                
             }
             
             /// Put it together
