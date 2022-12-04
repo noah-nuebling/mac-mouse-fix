@@ -75,10 +75,13 @@
 
 EDIT2: Also here are some old curves that were still around commented out when I started these tests:
 
-            
 - 100ms exp=1.0 coeff=30 stop=50
 - 140ms exp=1.0 coeff=30/*23*/ stop=50
 - 120ms exp=1.0 coeff=23 stop=50
+
+EDIT 3: 
+
+I wrote about how 6. feels like MMF 0.9 but I think I was testing against 0.9.2 Beta which already has the more snappy scrolling. The real 0.9.1 and 0.9 scrolling feels a lot smoother than 6. but also less responsive. 6. does feel noticably smoother than 2.2.3 though. I think it's a good compromise
 
 ## Og testing 
 

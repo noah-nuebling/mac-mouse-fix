@@ -711,6 +711,16 @@ static void sendOutputEvents(int64_t dx, int64_t dy, MFScrollOutputType outputTy
         assert(eventPhase == kIOHIDEventPhaseEnded || eventPhase == kIOHIDEventPhaseCancelled);
     }
     
+    if (runningPreRelease()) {
+        
+        static CFTimeInterval lastTs = 0.0;
+        CFTimeInterval ts = CACurrentMediaTime();
+        CFTimeInterval tsDiff = ts - lastTs;
+        lastTs = ts;
+        
+        DDLogDebug(@"\nHNGG: Posting event from scrollwheel: dx: %lld, dy: %lld, type: %d, phase: %d, momentum: %d, time: %d", dx, dy, outputType, animatorPhase, momentumHint, (int)(tsDiff*1000));
+    }
+    
     /// Send events based on outputType
     
     if (outputType == kMFScrollOutputTypeGestureScroll) {
@@ -868,7 +878,7 @@ static void sendOutputEvents(int64_t dx, int64_t dy, MFScrollOutputType outputTy
             double ts = CACurrentMediaTime();
             double timeSinceStart = ts - tsStart;
             
-            DDLogDebug(@"HNGG: Posting continuous scroll event: %@, momentumHint: %d, time: %d", scrollEventDescriptionWithOptions(event, NO, NO), momentumHint, (int)(timeSinceStart*1000));
+            DDLogDebug(@"\nHNGG: Posting continuous scroll event: %@, momentumHint: %d, time: %d", scrollEventDescriptionWithOptions(event, YES, NO), momentumHint, (int)(timeSinceStart*1000));
         }
         
         /// Post event

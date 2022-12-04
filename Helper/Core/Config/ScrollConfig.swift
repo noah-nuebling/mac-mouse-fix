@@ -515,11 +515,13 @@ fileprivate func animationCurveParamsMap(name: MFScrollAnimationCurveName) -> MF
         
     case kMFScrollAnimationCurveNameLowInertia:
         
-        return MFScrollAnimationCurveParameters(baseCurve: ScrollConfig.linearCurve, baseMsPerStep: /*140*/200, dragExponent: 1.05, dragCoefficient: 15, stopSpeed: 30, sendGestureScrolls: false, sendMomentumScrolls: false)
+        return MFScrollAnimationCurveParameters(baseCurve: ScrollConfig.linearCurve, baseMsPerStep: 140, dragExponent: 1.05, dragCoefficient: 15, stopSpeed: 30, sendGestureScrolls: false, sendMomentumScrolls: false)
         
     case kMFScrollAnimationCurveNameMediumInertia:
         
         fatalError()
+        
+        return MFScrollAnimationCurveParameters(baseCurve: ScrollConfig.linearCurve, baseMsPerStep: 200, dragExponent: 1.05, dragCoefficient: 15, stopSpeed: 30, sendGestureScrolls: false, sendMomentumScrolls: false)
         
         return MFScrollAnimationCurveParameters(baseCurve: ScrollConfig.linearCurve, baseMsPerStep: 190, dragExponent: 1.0, dragCoefficient: 17, stopSpeed: 50, sendGestureScrolls: false, sendMomentumScrolls: false)
         
@@ -652,14 +654,14 @@ fileprivate func getAccelerationCurve(forSpeed speedArg: MFScrollSpeed, precise:
         curvature = CombinedLinearCurve(yValues: [1.0, 1.0, 1.0]).evaluate(atX: curvature_n)
         
     } else if smoothness == kMFScrollSmoothnessRegular {
-//
-//        minSens =   CombinedLinearCurve(yValues: [/*20.0, 40.0,*/ 30.0, 60.0, 120.0]).evaluate(atX: minSend_n)
-//        maxSens =   CombinedLinearCurve(yValues: [/*60.0, 90.0,*/ 90.0, 120.0, 180.0]).evaluate(atX: maxSens_n)
-//        curvature = CombinedLinearCurve(yValues: [1.0, 1.0, 1.0]).evaluate(atX: curvature_n)
+
+        minSens =   CombinedLinearCurve(yValues: [/*20.0, 40.0,*/ 30.0, 60.0, 120.0]).evaluate(atX: minSend_n)
+        maxSens =   CombinedLinearCurve(yValues: [/*60.0, 90.0,*/ 90.0, 120.0, 180.0]).evaluate(atX: maxSens_n)
+        curvature = !precise ? 1.0 : CombinedLinearCurve(yValues: [1.75, 1.75, 1.25]).evaluate(atX: curvature_n)
         
-        minSens =   CombinedLinearCurve(yValues: [/*30.0,*/ 60.0, 90.0, 120.0]).evaluate(atX: minSend_n)
-        maxSens =   CombinedLinearCurve(yValues: [/*90.0,*/ 120.0, 180.0, 240.0]).evaluate(atX: maxSens_n)
-        curvature = !precise ? 1.0 : CombinedLinearCurve(yValues: [2.5, 2.25, 1.75]).evaluate(atX: curvature_n)
+//        minSens =   CombinedLinearCurve(yValues: [/*30.0,*/ 60.0, 90.0, 120.0]).evaluate(atX: minSend_n)
+//        maxSens =   CombinedLinearCurve(yValues: [/*90.0,*/ 120.0, 180.0, 240.0]).evaluate(atX: maxSens_n)
+//        curvature = !precise ? 1.0 : CombinedLinearCurve(yValues: [2.5, 2.25, 1.75]).evaluate(atX: curvature_n)
         
     } else if smoothness == kMFScrollSmoothnessHigh {
         
