@@ -535,11 +535,11 @@ fileprivate func animationCurveParamsMap(name: MFScrollAnimationCurveName) -> MF
     case kMFScrollAnimationCurveNameHighInertia:
         /// Snappiest curve that can be used to send momentumScrolls.
         ///    If you make it snappier then it will cut off the built-in momentumScroll in apps like Xcode
-        return MFScrollAnimationCurveParameters(baseCurve: ScrollConfig.linearCurve, baseMsPerStep: 205, dragExponent: 0.7, dragCoefficient: 40, stopSpeed: /*50*/30, sendGestureScrolls: false, sendMomentumScrolls: false)
+        return MFScrollAnimationCurveParameters(baseCurve: ScrollConfig.linearCurve, baseMsPerStep: /*205*/240, dragExponent: 0.7, dragCoefficient: 40, stopSpeed: /*50*/30, sendGestureScrolls: false, sendMomentumScrolls: false)
         
     case kMFScrollAnimationCurveNameHighInertiaPlusTrackpadSim:
         /// Same as highInertia curve but with full trackpad simulation. The trackpad sim stuff doesn't really belong here I think.
-        return MFScrollAnimationCurveParameters(baseCurve: ScrollConfig.linearCurve, baseMsPerStep: 205, dragExponent: 0.7, dragCoefficient: 40, stopSpeed: /*50*/30, sendGestureScrolls: true, sendMomentumScrolls: true)
+        return MFScrollAnimationCurveParameters(baseCurve: ScrollConfig.linearCurve, baseMsPerStep: /*205*/240, dragExponent: 0.7, dragCoefficient: 40, stopSpeed: /*50*/30, sendGestureScrolls: true, sendMomentumScrolls: true)
         
     /// --- Dynamically applied ---
         
