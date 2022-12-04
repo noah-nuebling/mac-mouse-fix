@@ -515,7 +515,7 @@ fileprivate func animationCurveParamsMap(name: MFScrollAnimationCurveName) -> MF
         
     case kMFScrollAnimationCurveNameLowInertia:
         
-        return MFScrollAnimationCurveParameters(baseCurve: ScrollConfig.linearCurve, baseMsPerStep: 140, dragExponent: 1.05, dragCoefficient: 15, stopSpeed: 30, sendGestureScrolls: false, sendMomentumScrolls: false)
+        return MFScrollAnimationCurveParameters(baseCurve: ScrollConfig.linearCurve, baseMsPerStep: /*140*/200, dragExponent: 1.05, dragCoefficient: 15, stopSpeed: 30, sendGestureScrolls: false, sendMomentumScrolls: false)
         
     case kMFScrollAnimationCurveNameMediumInertia:
         
@@ -546,11 +546,12 @@ fileprivate func animationCurveParamsMap(name: MFScrollAnimationCurveName) -> MF
     case kMFScrollAnimationCurveNameQuickScroll:
         /// - Almost the same as `highInertia` just more inertial. Actually same feel as trackpad-like parameters used in `GestureScrollSimulator` for autoMomentumScroll.
         /// - Should we use trackpad sim (sendMomentumScrolls and sendGestureScrolls) here?
-        return MFScrollAnimationCurveParameters(baseCurve: ScrollConfig.linearCurve, baseMsPerStep: 220, dragExponent: 0.7, dragCoefficient: 30, stopSpeed: 1, sendGestureScrolls: true, sendMomentumScrolls: true)
+        return MFScrollAnimationCurveParameters(baseCurve: ScrollConfig.linearCurve, baseMsPerStep: /*220*/300, dragExponent: 0.7, dragCoefficient: 30, stopSpeed: 1, sendGestureScrolls: true, sendMomentumScrolls: true)
         
     case kMFScrollAnimationCurveNamePreciseScroll:
         /// Similar to `lowInertia`
-        return MFScrollAnimationCurveParameters(baseCurve: ScrollConfig.linearCurve, baseMsPerStep: 140, dragExponent: 1.0, dragCoefficient: 20, stopSpeed: 50, sendGestureScrolls: false, sendMomentumScrolls: false)
+//        return MFScrollAnimationCurveParameters(baseCurve: ScrollConfig.linearCurve, baseMsPerStep: 140, dragExponent: 1.0, dragCoefficient: 20, stopSpeed: 50, sendGestureScrolls: false, sendMomentumScrolls: false)
+        return MFScrollAnimationCurveParameters(baseCurve: ScrollConfig.linearCurve, baseMsPerStep: 140, dragExponent: 1.05, dragCoefficient: 15, stopSpeed: 50, sendGestureScrolls: false, sendMomentumScrolls: false)
         
     /// --- Testing ---
         
@@ -590,6 +591,21 @@ fileprivate func getAccelerationCurve(forSpeed speedArg: MFScrollSpeed, precise:
       HyperParameters:
       - `curvature` raises sensitivity for medium scrollSpeeds making scrolling feel more comfortable and accurate. This is especially nice for very low minSens.
      */
+
+    var screenSize: size_t = -1
+    if useQuickModSpeed || useDisplaySize {
+        
+        if inputAxis == kMFAxisHorizontal
+            || modifiers.effectMod == kMFScrollEffectModificationHorizontalScroll {
+            screenSize = CGDisplayPixelsWide(display);
+        } else if inputAxis == kMFAxisVertical {
+            screenSize = CGDisplayPixelsHigh(display);
+        } else {
+            fatalError()
+        }
+    }
+
+
     
     let speed_n = SharedUtilitySwift.eval {
         switch speedArg {
@@ -611,15 +627,16 @@ fileprivate func getAccelerationCurve(forSpeed speedArg: MFScrollSpeed, precise:
     
     if useQuickModSpeed {
         
-        minSens = 100
-        maxSens = 500
+        let windowSize = Double(screenSize)*0.85
+        minSens = windowSize * 0.5 //100
+        maxSens = windowSize * 1.5 //500
         curvature = 1.0
         
     } else if usePreciseModSpeed {
 
-        minSens = 3 /// 2 is better than 3 but that leads to weird asswert failures in TouchAnimator that I can't be bothered to fix
-        maxSens = 30
-        curvature = 1.0
+        minSens = 1
+        maxSens = 20
+        curvature = 3.0
         
     } else if animationCurve == kMFScrollAnimationCurveNameTouchDriver
                 || animationCurve == kMFScrollAnimationCurveNameTouchDriverLinear {
@@ -635,16 +652,20 @@ fileprivate func getAccelerationCurve(forSpeed speedArg: MFScrollSpeed, precise:
         curvature = CombinedLinearCurve(yValues: [1.0, 1.0, 1.0]).evaluate(atX: curvature_n)
         
     } else if smoothness == kMFScrollSmoothnessRegular {
-     
-        minSens =   CombinedLinearCurve(yValues: [20.0, 40.0, 60.0]).evaluate(atX: minSend_n)
-        maxSens =   CombinedLinearCurve(yValues: [60.0, 90.0, 120.0]).evaluate(atX: maxSens_n)
-        curvature = CombinedLinearCurve(yValues: [1.0, 1.0, 1.0]).evaluate(atX: curvature_n)
+//
+//        minSens =   CombinedLinearCurve(yValues: [/*20.0, 40.0,*/ 30.0, 60.0, 120.0]).evaluate(atX: minSend_n)
+//        maxSens =   CombinedLinearCurve(yValues: [/*60.0, 90.0,*/ 90.0, 120.0, 180.0]).evaluate(atX: maxSens_n)
+//        curvature = CombinedLinearCurve(yValues: [1.0, 1.0, 1.0]).evaluate(atX: curvature_n)
+        
+        minSens =   CombinedLinearCurve(yValues: [/*30.0,*/ 60.0, 90.0, 120.0]).evaluate(atX: minSend_n)
+        maxSens =   CombinedLinearCurve(yValues: [/*90.0,*/ 120.0, 180.0, 240.0]).evaluate(atX: maxSens_n)
+        curvature = !precise ? 1.0 : CombinedLinearCurve(yValues: [2.5, 2.25, 1.75]).evaluate(atX: curvature_n)
         
     } else if smoothness == kMFScrollSmoothnessHigh {
         
-        minSens =   CombinedLinearCurve(yValues: [30.0, 60.0, 90.0]).evaluate(atX: minSend_n)
-        maxSens =   CombinedLinearCurve(yValues: [90.0, 140.0, 180.0]).evaluate(atX: maxSens_n)
-        curvature = CombinedLinearCurve(yValues: [1.0, 1.0, 1.0]).evaluate(atX: curvature_n)
+        minSens =   CombinedLinearCurve(yValues: [/*30.0,*/ 60.0, 90.0, 120.0]).evaluate(atX: minSend_n)
+        maxSens =   CombinedLinearCurve(yValues: [/*90.0,*/ 120.0, 180.0, 240.0]).evaluate(atX: maxSens_n)
+        curvature = !precise ? 1.0 : CombinedLinearCurve(yValues: [2.5, 2.25, 1.75]).evaluate(atX: curvature_n)
         
     } else {
         fatalError()
@@ -655,24 +676,11 @@ fileprivate func getAccelerationCurve(forSpeed speedArg: MFScrollSpeed, precise:
     
     if precise {
         minSens = 10
-        curvature = 2.5
     }
     
     /// Screen height
     
     if useDisplaySize {
-        
-        /// Get display height/width
-        
-        var screenSize: size_t
-        if inputAxis == kMFAxisHorizontal
-            || modifiers.effectMod == kMFScrollEffectModificationHorizontalScroll {
-            screenSize = CGDisplayPixelsWide(display);
-        } else if inputAxis == kMFAxisVertical {
-            screenSize = CGDisplayPixelsHigh(display);
-        } else {
-            fatalError()
-        }
         
         /// Get screenHeight summand
         let baseScreenSize = inputAxis == kMFAxisHorizontal ? 1280.0 : 800.0
