@@ -37,6 +37,8 @@ typedef enum {
     /// User configured
     ///  The user can choose these options in the UI
     
+    kMFScrollAnimationCurveNameNone,
+    
     kMFScrollAnimationCurveNameNoInertia,
     
     kMFScrollAnimationCurveNameLowInertia,

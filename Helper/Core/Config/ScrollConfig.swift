@@ -193,8 +193,9 @@ import CocoaLumberjackSwift
             }
             
             /// Get speed
-            
-            new.accelerationCurve = getAccelerationCurve(forSpeed: new.u_speed, precise: precise, smoothness: new.u_smoothness, animationCurve: new.animationCurve, inputAxis: inputAxis, display: display, useDisplaySize: useDisplaySize, modifiers: modifiers, useQuickModSpeed: useQuickMod, usePreciseModSpeed: usePreciseMod, consecutiveScrollTickIntervalMax: new.consecutiveScrollTickIntervalMax, consecutiveScrollTickInterval_AccelerationEnd: new.consecutiveScrollTickInterval_AccelerationEnd)
+            if new.u_speed != kMFScrollSpeedSystem {
+                new.accelerationCurve = getAccelerationCurve(forSpeed: new.u_speed, precise: precise, smoothness: new.u_smoothness, animationCurve: new.animationCurve, inputAxis: inputAxis, display: display, useDisplaySize: useDisplaySize, modifiers: modifiers, useQuickModSpeed: useQuickMod, usePreciseModSpeed: usePreciseMod, consecutiveScrollTickIntervalMax: new.consecutiveScrollTickIntervalMax, consecutiveScrollTickInterval_AccelerationEnd: new.consecutiveScrollTickInterval_AccelerationEnd)
+            }
             
             /// Cache & return
             
@@ -311,12 +312,14 @@ import CocoaLumberjackSwift
         /// Not sure this switch makes sense. Quick bandaid. Might wanna change.
         
         switch animationCurve {
+        case kMFScrollAnimationCurveNameNone:
+            return 350.0/1000.0
         case kMFScrollAnimationCurveNameLowInertia, kMFScrollAnimationCurveNameNoInertia, kMFScrollAnimationCurveNameTouchDriver, kMFScrollAnimationCurveNameTouchDriverLinear, kMFScrollAnimationCurveNamePreciseScroll:
-            return 350/1000
+            return 350.0/1000.0
         case kMFScrollAnimationCurveNameMediumInertia:
-            return 475/1000
+            return 475.0/1000.0
         case kMFScrollAnimationCurveNameHighInertia, kMFScrollAnimationCurveNameHighInertiaPlusTrackpadSim, kMFScrollAnimationCurveNameQuickScroll:
-            return 600/1000
+            return 600.0/1000.0
         default:
             fatalError()
         }
@@ -383,7 +386,7 @@ import CocoaLumberjackSwift
         /// Maybe we should move the trackpad sim settings out of the MFScrollAnimationCurveName, (because that's weird?)
         
         switch u_smoothness {
-        case kMFScrollSmoothnessOff: return kMFScrollAnimationCurveNameNoInertia
+        case kMFScrollSmoothnessOff: return kMFScrollAnimationCurveNameNone
         case kMFScrollSmoothnessRegular: return kMFScrollAnimationCurveNameLowInertia
         case kMFScrollSmoothnessHigh:
             return u_trackpadSimulation ? kMFScrollAnimationCurveNameHighInertiaPlusTrackpadSim : kMFScrollAnimationCurveNameHighInertia
@@ -401,7 +404,7 @@ import CocoaLumberjackSwift
         }
     }
     
-    @objc private(set) lazy var animationCurveParams = { animationCurveParamsMap(name: animationCurve) }() /// Updates automatically to match `self.animationCurveName
+    @objc private(set) lazy var animationCurveParams: MFScrollAnimationCurveParameters? = { animationCurveParamsMap(name: animationCurve) }() /// Updates automatically to match `self.animationCurveName
     
     // MARK: Acceleration
     
@@ -492,7 +495,7 @@ import CocoaLumberjackSwift
     }
 }
 
-fileprivate func animationCurveParamsMap(name: MFScrollAnimationCurveName) -> MFScrollAnimationCurveParameters {
+fileprivate func animationCurveParamsMap(name: MFScrollAnimationCurveName) -> MFScrollAnimationCurveParameters? {
     
     /// Map from animationCurveName -> animationCurveParams
     /// For the origin behind these curves see ScrollConfigTesting.md
@@ -501,6 +504,10 @@ fileprivate func animationCurveParamsMap(name: MFScrollAnimationCurveName) -> MF
     switch name {
         
     /// --- User selected ---
+        
+    case kMFScrollAnimationCurveNameNone:
+        
+        return nil
         
     case kMFScrollAnimationCurveNameNoInertia:
         
@@ -649,15 +656,25 @@ fileprivate func getAccelerationCurve(forSpeed speedArg: MFScrollSpeed, precise:
         
     } else if smoothness == kMFScrollSmoothnessOff { /// It might be better to use the animationCurve instead of smoothness in these if-statements
         
-        minSens =   CombinedLinearCurve(yValues: [15.0, 30.0, 45.0]).evaluate(atX: minSend_n)
-        maxSens =   CombinedLinearCurve(yValues: [45.0, 70.0, 90.0]).evaluate(atX: maxSens_n)
-        curvature = CombinedLinearCurve(yValues: [1.0, 1.0, 1.0]).evaluate(atX: curvature_n)
+        minSens =   CombinedLinearCurve(yValues: [20.0, 30.0, 40.0]).evaluate(atX: minSend_n)
+        maxSens =   CombinedLinearCurve(yValues: [40.0, 60.0, 80.0]).evaluate(atX: maxSens_n)
+        if !precise {
+            /// For the other smoothnesses we apply more curvature if precise == true, but here it felt best to have them the same. Don't know why.
+            curvature = CombinedLinearCurve(yValues: [5.25, 4.0, 3.25]).evaluate(atX: curvature_n)
+        } else {
+            curvature = CombinedLinearCurve(yValues: [5.25, 4.0, 3.25]).evaluate(atX: curvature_n)
+        }
+
         
     } else if smoothness == kMFScrollSmoothnessRegular {
 
         minSens =   CombinedLinearCurve(yValues: [/*20.0, 40.0,*/ 30.0, 60.0, 120.0]).evaluate(atX: minSend_n)
         maxSens =   CombinedLinearCurve(yValues: [/*60.0, 90.0,*/ 90.0, 120.0, 180.0]).evaluate(atX: maxSens_n)
-        curvature = !precise ? 1.0 : CombinedLinearCurve(yValues: [1.75, 1.75, 1.25]).evaluate(atX: curvature_n)
+        if !precise {
+            curvature = CombinedLinearCurve(yValues: [1.25, 1.0, 1.0]).evaluate(atX: curvature_n)
+        } else {
+            curvature = CombinedLinearCurve(yValues: [1.75, 1.75, 1.25]).evaluate(atX: curvature_n)
+        }
         
 //        minSens =   CombinedLinearCurve(yValues: [/*30.0,*/ 60.0, 90.0, 120.0]).evaluate(atX: minSend_n)
 //        maxSens =   CombinedLinearCurve(yValues: [/*90.0,*/ 120.0, 180.0, 240.0]).evaluate(atX: maxSens_n)
@@ -667,7 +684,11 @@ fileprivate func getAccelerationCurve(forSpeed speedArg: MFScrollSpeed, precise:
         
         minSens =   CombinedLinearCurve(yValues: [/*30.0,*/ 60.0, 90.0, 120.0]).evaluate(atX: minSend_n)
         maxSens =   CombinedLinearCurve(yValues: [/*90.0,*/ 120.0, 180.0, 240.0]).evaluate(atX: maxSens_n)
-        curvature = !precise ? 1.0 : CombinedLinearCurve(yValues: [2.5, 2.25, 1.75]).evaluate(atX: curvature_n)
+        if !precise {
+            curvature = 1.0
+        } else {
+            curvature = CombinedLinearCurve(yValues: [2.5, 2.25, 1.75]).evaluate(atX: curvature_n)
+        }
         
     } else {
         fatalError()
