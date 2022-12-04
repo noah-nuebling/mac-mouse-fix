@@ -639,20 +639,20 @@ fileprivate func getAccelerationCurve(forSpeed speedArg: MFScrollSpeed, precise:
         let windowSize = Double(screenSize)*0.85
         minSens = windowSize * 0.5 //100
         maxSens = windowSize * 1.5 //500
-        curvature = 1.0
+        curvature = 0.0
         
     } else if usePreciseModSpeed {
 
         minSens = 1
         maxSens = 20
-        curvature = 3.0
+        curvature = 2.0
         
     } else if animationCurve == kMFScrollAnimationCurveNameTouchDriver
                 || animationCurve == kMFScrollAnimationCurveNameTouchDriverLinear {
         
         minSens =   CombinedLinearCurve(yValues: [20.0, 40.0, 60.0]).evaluate(atX: minSend_n)
         maxSens =   CombinedLinearCurve(yValues: [60.0, 90.0, 120.0]).evaluate(atX: maxSens_n)
-        curvature = CombinedLinearCurve(yValues: [1.0, 1.0, 1.0]).evaluate(atX: curvature_n)
+        curvature = CombinedLinearCurve(yValues: [0.0, 0.0, 0.0]).evaluate(atX: curvature_n)
         
     } else if smoothness == kMFScrollSmoothnessOff { /// It might be better to use the animationCurve instead of smoothness in these if-statements
         
@@ -660,9 +660,9 @@ fileprivate func getAccelerationCurve(forSpeed speedArg: MFScrollSpeed, precise:
         maxSens =   CombinedLinearCurve(yValues: [40.0, 60.0, 80.0]).evaluate(atX: maxSens_n)
         if !precise {
             /// For the other smoothnesses we apply more curvature if precise == true, but here it felt best to have them the same. Don't know why.
-            curvature = CombinedLinearCurve(yValues: [5.25, 4.0, 3.25]).evaluate(atX: curvature_n)
+            curvature = CombinedLinearCurve(yValues: [4.25, 3.0, 2.25]).evaluate(atX: curvature_n)
         } else {
-            curvature = CombinedLinearCurve(yValues: [5.25, 4.0, 3.25]).evaluate(atX: curvature_n)
+            curvature = CombinedLinearCurve(yValues: [4.25, 3.0, 2.25]).evaluate(atX: curvature_n)
         }
 
         
@@ -671,23 +671,19 @@ fileprivate func getAccelerationCurve(forSpeed speedArg: MFScrollSpeed, precise:
         minSens =   CombinedLinearCurve(yValues: [/*20.0, 40.0,*/ 30.0, 60.0, 120.0]).evaluate(atX: minSend_n)
         maxSens =   CombinedLinearCurve(yValues: [/*60.0, 90.0,*/ 90.0, 120.0, 180.0]).evaluate(atX: maxSens_n)
         if !precise {
-            curvature = CombinedLinearCurve(yValues: [1.25, 1.0, 1.0]).evaluate(atX: curvature_n)
+            curvature = CombinedLinearCurve(yValues: [0.25, 0.0, 0.0]).evaluate(atX: curvature_n)
         } else {
-            curvature = CombinedLinearCurve(yValues: [1.75, 1.75, 1.25]).evaluate(atX: curvature_n)
+            curvature = CombinedLinearCurve(yValues: [0.75, 0.75, 0.25]).evaluate(atX: curvature_n)
         }
-        
-//        minSens =   CombinedLinearCurve(yValues: [/*30.0,*/ 60.0, 90.0, 120.0]).evaluate(atX: minSend_n)
-//        maxSens =   CombinedLinearCurve(yValues: [/*90.0,*/ 120.0, 180.0, 240.0]).evaluate(atX: maxSens_n)
-//        curvature = !precise ? 1.0 : CombinedLinearCurve(yValues: [2.5, 2.25, 1.75]).evaluate(atX: curvature_n)
         
     } else if smoothness == kMFScrollSmoothnessHigh {
         
         minSens =   CombinedLinearCurve(yValues: [/*30.0,*/ 60.0, 90.0, 120.0]).evaluate(atX: minSend_n)
         maxSens =   CombinedLinearCurve(yValues: [/*90.0,*/ 120.0, 180.0, 240.0]).evaluate(atX: maxSens_n)
         if !precise {
-            curvature = 1.0
+            curvature = 0.0
         } else {
-            curvature = CombinedLinearCurve(yValues: [2.5, 2.25, 1.75]).evaluate(atX: curvature_n)
+            curvature = CombinedLinearCurve(yValues: [1.5, 1.25, 0.75]).evaluate(atX: curvature_n)
         }
         
     } else {
@@ -724,7 +720,6 @@ fileprivate func getAccelerationCurve(forSpeed speedArg: MFScrollSpeed, precise:
 //        screenHeightSummand = -20*((1/screenHeightFactor) - 1)
 //    }
 //    maxSens += screenHeightSummand
-
     
     /// Get Curve
     /// - Not sure if 0.08 defaultEpsilon is accurate enough when we create the curve.
