@@ -227,14 +227,14 @@ class AboutTabController: NSViewController {
                 message = Randomizer.select(from: [
                     
                     /// Common
-                    (NSLocalizedString("thanks.01", comment: "First draft: 💫 Thank you for buying Mac Mouse Fix!"), weight: 1),
+                    (NSLocalizedString("thanks.01", comment: "First draft: ⭐️ Thank you for buying Mac Mouse Fix!"), weight: 1),
                     (NSLocalizedString("thanks.02", comment: "First draft: 🌟 Thanks for purchasing Mac Mouse Fix!"), weight: 1),
                     (NSLocalizedString("thanks.03", comment: "First draft: 🚀 Thanks for supporting Mac Mouse Fix!"), weight: 1),
-                    (NSLocalizedString("thanks.04", comment: "First draft: 🙏 Thank you for buying Mac Mouse Fix!"), weight: 1),
-                    (NSLocalizedString("thanks.05", comment: "First draft: 🧠 Great purchasing decisions ;)"), weight: 1),
+                    (NSLocalizedString("thanks.04", comment: "First draft: 🙌 Thanks for buying Mac Mouse Fix!"), weight: 1),
                     
                     /// Rare
-                    (NSLocalizedString("thanks.06", comment: "First draft: 🔥 Awesome taste in mouse fixing software ;)"), weight: 0.1),
+                    (NSLocalizedString("thanks.05", comment: "First draft: 🧠 Great purchasing decision! ;)"), weight: 0.1),
+                    (NSLocalizedString("thanks.06", comment: "First draft: 🔥 Awesome taste in mouse fixing software! ;)"), weight: 0.1),
                     (NSLocalizedString("thanks.07", comment: "First draft: 💙"), weight: 0.1),
                     (NSLocalizedString("thanks.08", comment: "First draft: :) <- My face when I saw you bought Mac Mouse Fix"), weight: 0.1),
                     

@@ -340,23 +340,23 @@
 /* First draft: %@ and %@ || Note: This format string joins the second-to-last element and the last elements in a list of items */
 "join-list.last" = " %@ und %@";
 
-/* First draft: 💫 Thank you for buying Mac Mouse Fix! */
-"thanks.01" = "💫 Danke, dass du Mac Mouse Fix gekauft hast!";
+/* First draft: ⭐️ Thank you for buying Mac Mouse Fix! */
+"thanks.01" = "⭐️ Danke, dass du Mac Mouse Fix gekauft hast!";
 
 /* First draft: 🌟 Thanks for purchasing Mac Mouse Fix! */
 "thanks.02" = "🌟 Dankeschön, dass du Mac Mouse Fix gekauft hast!";
 
-/* First draft: 🚀 Thanks for supporting Mac Mouse Fix! */
+/* First draft: 🚀 Thanks for supporti✨ng Mac Mouse Fix! */
 "thanks.03" = "🚀 Danke, dass du Mac Mouse Fix unterstützt!";
 
-/* First draft: 🙏 Thank you for buying Mac Mouse Fix! */
-"thanks.04" = "🙏 Danke, dass du Mac Mouse Fix gekauft hast!";
+/* First draft: 🙌 Thank you for buying Mac Mouse Fix! */
+"thanks.04" = "🙌 Danke, dass du Mac Mouse Fix gekauft hast!";
 
-/* First draft: 🧠 Great purchasing decisions ;) */
-"thanks.05" = "🧠 Großartige Kaufentscheidung ;)";
+/* First draft: 🧠 Great purchasing decision! ;) */
+"thanks.05" = "🧠 Großartige Kaufentscheidung! ;)";
 
-/* First draft: 🔥 Awesome taste in mouse fixing software ;) */
-"thanks.06" = "🔥 Super Geschmack was Maus-Fixing-Software angeht ;)";
+/* First draft: 🔥 Awesome taste in mouse fixing software! ;) */
+"thanks.06" = "🔥 Super Geschmack was Maus-Fixing-Software angeht! ;)";
 
 /* First draft: 💙 */
 "thanks.07" = "💙";
