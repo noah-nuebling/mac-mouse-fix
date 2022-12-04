@@ -52,7 +52,7 @@ import CocoaLumberjackSwift
     
     // MARK: Overrides
     
-    @objc static func scrollConfig(modifiers: MFScrollModificationResult, inputAxis: MFAxis, event: CGEvent?) -> ScrollConfig {
+    @objc static func scrollConfig(modifiers: MFScrollModificationResult, inputAxis: MFAxis, event: CGEvent?, display: CGDirectDisplayID) -> ScrollConfig {
         
         // TODO: Make displaySize an input parameter
         
@@ -86,9 +86,6 @@ import CocoaLumberjackSwift
             
             if modifiers.inputMod == kMFScrollInputModificationQuick {
                 
-                /// Set quick acceleration curve
-                new.accelerationCurve = new.quickAccelerationCurve;
-                
                 /// Set animationCurve
                 new.animationCurveName = kMFScrollAnimationCurveNameQuickScroll;
                 
@@ -101,9 +98,6 @@ import CocoaLumberjackSwift
                 new.fastScrollSpeedup = 20;
                 
             } else if modifiers.inputMod == kMFScrollInputModificationPrecise {
-                
-                /// Set slow acceleration curve
-                new.accelerationCurve = new.preciseAccelerationCurve;
                 
                 /// Set animationCurve
                 
@@ -164,29 +158,13 @@ import CocoaLumberjackSwift
                 assert(false);
             }
             
-            /// Input modifications (pt2)
+            ///
+            /// Speed
+            ///
+            /// Notes:
+            /// - Why do we have a separate function for this instead of doing it inline?
             
-            if (modifiers.inputMod == kMFScrollInputModificationNone) {
-            
-                /// Get display under mouse pointer
-                var displayUnderMousePointer: CGDirectDisplayID = 0
-                SharedUtility.displayUnderMousePointer(&displayUnderMousePointer, with: event)
-
-                /// Get display height/width
-                var displayDimension: size_t
-                if inputAxis == kMFAxisHorizontal
-                    || modifiers.effectMod == kMFScrollEffectModificationHorizontalScroll {
-                    
-                    displayDimension = CGDisplayPixelsWide(displayUnderMousePointer);
-                } else if inputAxis == kMFAxisVertical {
-                    displayDimension = CGDisplayPixelsHigh(displayUnderMousePointer);
-                } else {
-                    fatalError()
-                }
-                
-                /// Calculate accelerationCurve
-                new.accelerationCurve = new.standardAccelerationCurve(withScreenSize: displayDimension)
-            }
+            new.accelerationCurve = standardAccelerationCurve(forSpeed: new.u_speed, precise: new.u_precise, smoothness: new.u_smoothness, animationCurve: new.animationCurveName, inputAxis: inputAxis, display: display, modifiers: modifiers, consecutiveScrollTickIntervalMax: new.consecutiveScrollTickIntervalMax, consecutiveScrollTickInterval_AccelerationEnd: new.consecutiveScrollTickInterval_AccelerationEnd)
             
             ///
             /// Cache & return
@@ -414,200 +392,7 @@ import CocoaLumberjackSwift
     /// Stored property
     ///     This is used by Scroll.m to determine how to accelerate
     
-    @objc lazy var accelerationCurve: Curve = standardAccelerationCurve(withScreenSize: 1080) /// Initial value is unused I think
-    
-    /// Define function that maps userSettings -> accelerationCurve
-    
-    private func standardAccelerationCurve(forSpeed speed: MFScrollSpeed, precise: Bool, smoothness: MFScrollSmoothness, screenSize: Int) -> Curve {
-        /// `screenSize` should be the width/height of the screen you're scrolling on. Depending on if you're scrolling horizontally or vertically.
-        
-        ///
-        /// Get pxPerTickStart
-        ///
-        
-        let pxPerTickStart: Int
-        
-        if precise {
-            
-            pxPerTickStart = 10
-            
-        } else {
-            
-            /// Get base pxPerTick
-            
-            let pxPerTickStartBase = SharedUtilitySwift.eval {
-                switch speed {
-                case kMFScrollSpeedLow: 30.0
-                case kMFScrollSpeedMedium: 60.0
-                case kMFScrollSpeedHigh: 90.0
-                default: -1.0
-                }
-            }
-            
-            /// Get inertia factor
-            
-            let inertiaFactor: Double
-            
-            if !smoothEnabled {
-                inertiaFactor = 1/2
-            } else {
-                
-                /// Notes:
-                /// - TODO: Why do we define acceleration curves for the touchDriver so weirdly? Shouldn't we just hardcode it to one curve and acceleration?
-                /// - The reason why the other MFScrollAnimationCurveName constants will never be passed in here is because quickScroll and preciseScroll define their own accelerationCurves. See Scroll.m for more.
-                
-                inertiaFactor = SharedUtilitySwift.eval {
-                    switch animationCurveName {
-                    case kMFScrollAnimationCurveNameLowInertia: 2.0/3.0
-                    case kMFScrollAnimationCurveNameNoInertia: 2.0/3.0
-                    case kMFScrollAnimationCurveNameMediumInertia: 3.0/4.0
-                    case kMFScrollAnimationCurveNameHighInertia: 1.0
-                    case kMFScrollAnimationCurveNameHighInertiaPlusTrackpadSim: 1.0
-                    case kMFScrollAnimationCurveNameTouchDriver: 2.0/3.0
-                    case kMFScrollAnimationCurveNameTouchDriverLinear: 2.0/3.0
-                    default: -1.0
-                    }
-                }
-                
-                
-            }
-            
-            /// Put it together
-            pxPerTickStart = Int(pxPerTickStartBase * inertiaFactor)
-        }
-        
-        ///
-        /// Get pxPerTickEnd
-        ///
-        
-        /// Get base pxPerTick
-        
-        let pxPerTickEndBase: Double
-        
-        switch speed {
-        case kMFScrollSpeedLow:
-            pxPerTickEndBase = 90
-        case kMFScrollSpeedMedium:
-            pxPerTickEndBase = 140
-        case kMFScrollSpeedHigh:
-            pxPerTickEndBase = 180
-        default:
-            fatalError()
-        }
-        
-        /// Get inertia factor
-        
-        let inertiaFactor: Double
-        
-        if !smoothEnabled {
-            
-            inertiaFactor = 1/2
-            
-        } else {
-            
-            switch animationCurveName {
-            case kMFScrollAnimationCurveNameLowInertia, kMFScrollAnimationCurveNameNoInertia:
-                inertiaFactor = /*1*/ 2/3
-            case kMFScrollAnimationCurveNameMediumInertia:
-                inertiaFactor = /*1*/ 3/4
-            case kMFScrollAnimationCurveNameHighInertia, kMFScrollAnimationCurveNameHighInertiaPlusTrackpadSim:
-                inertiaFactor = 1
-            case kMFScrollAnimationCurveNameTouchDriver:
-                inertiaFactor = 2/3
-            case kMFScrollAnimationCurveNameTouchDriverLinear:
-                inertiaFactor = 2/3
-            default:
-                fatalError()
-            }
-        }
-        
-        /// Get screenHeight summand
-        let screenHeightSummand: Double
-        
-        let screenHeightFactor = Double(screenSize) / 1080.0
-        
-        if screenHeightFactor >= 1 {
-            screenHeightSummand = 20*(screenHeightFactor - 1)
-        } else {
-            screenHeightSummand = -20*((1/screenHeightFactor) - 1)
-        }
-        
-        /// Put it all together to get pxPerTickEnd
-        let pxPerTickEnd = Int(pxPerTickEndBase * inertiaFactor + screenHeightSummand)
-        
-        /// Debug
-        DDLogDebug("Dynamic pxPerTickStart: \(pxPerTickStart) end: \(pxPerTickEnd)")
-        
-        ///
-        /// Get curvature
-        ///
-        
-        let curvature: Double = SharedUtilitySwift.eval {
-            switch animationCurveName {
-            case kMFScrollAnimationCurveNameLowInertia: 2.5
-            case kMFScrollAnimationCurveNameNoInertia: 2.5
-            case kMFScrollAnimationCurveNameMediumInertia: 2.5
-            case kMFScrollAnimationCurveNameHighInertia: 2.5
-            case kMFScrollAnimationCurveNameHighInertiaPlusTrackpadSim: 2.5
-            case kMFScrollAnimationCurveNameTouchDriver: 2.5
-            case kMFScrollAnimationCurveNameTouchDriverLinear: 2.5
-            default: -1.0
-            }
-        }
-        
-        ///
-        /// Generate curve from params
-        ///
-        
-        let curve = ScrollConfig.accelerationCurveFromParams(pxPerTickBase: pxPerTickStart,
-                                                        pxPerTickEnd: pxPerTickEnd,
-                                                        consecutiveScrollTickIntervalMax: self.consecutiveScrollTickIntervalMax,
-                                                        consecutiveScrollTickInterval_AccelerationEnd: self.consecutiveScrollTickInterval_AccelerationEnd,
-                                                        curvature: curvature)
-        
-        /// DEBUG
-        
-        if runningPreRelease() {
-            
-            let xMin: Double = 1 / Double(consecutiveScrollTickIntervalMax)
-//            let yMin: Double = Double(pxPerTickBase);
-            let xMax: Double = 1 / consecutiveScrollTickInterval_AccelerationEnd
-//            let yMax: Double = Double(pxPerTickEnd)
-            
-            DDLogDebug("Setting scroll acceleration curve with trace\(curve.stringTrace(startX: xMin, endX: xMax, nOfSamples: 50))")
-        }
-        
-        /// Return
-        
-        return curve
-        
-    }
-    
-    /// Acceleration curve defnitions
-    ///     These aren't used directly but instead they are dynamically loaded into `self.accelerationCurve` by Scroll.m on each first consecutive scroll tick.
-    
-    @objc func standardAccelerationCurve(withScreenSize screenSize: Int) -> Curve {
-        
-        return self.standardAccelerationCurve(forSpeed: self.u_speed,
-                                              precise: self.u_precise,
-                                              smoothness: self.u_smoothness,
-                                              screenSize: screenSize)
-    }
-    
-    @objc lazy var preciseAccelerationCurve: Curve = { () -> Curve in
-        ScrollConfig.accelerationCurveFromParams(pxPerTickBase: 3, /// 2 is better than 3 but that leads to weird asswert failures in TouchAnimator that I can't be bothered to fix
-                                                 pxPerTickEnd: 30,
-                                                 consecutiveScrollTickIntervalMax: self.consecutiveScrollTickIntervalMax, /// We don't expect this to ever change so it's okay to just capture here
-                                                 consecutiveScrollTickInterval_AccelerationEnd: self.consecutiveScrollTickInterval_AccelerationEnd,
-                                                 curvature: 1.0)
-    }()
-    @objc lazy var quickAccelerationCurve: Curve = { () -> Curve in
-        ScrollConfig.accelerationCurveFromParams(pxPerTickBase: 100,
-                                                 pxPerTickEnd: 500,
-                                                 consecutiveScrollTickIntervalMax: self.consecutiveScrollTickIntervalMax,
-                                                 consecutiveScrollTickInterval_AccelerationEnd: self.consecutiveScrollTickInterval_AccelerationEnd,
-                                                 curvature: 1.0)
-    }()
+    @objc lazy var accelerationCurve: Curve = InvalidBezier() /// Initial value is unused I think
     
     // MARK: Keyboard modifiers
     
@@ -615,83 +400,14 @@ import CocoaLumberjackSwift
     @objc lazy var horizontalModifiers = CGEventFlags(rawValue: c("modifiers.horizontal") as! UInt64)
     @objc lazy var zoomModifiers = CGEventFlags(rawValue: c("modifiers.zoom") as! UInt64)
     
-    
-    // MARK: - Helper functions
-    
-    fileprivate static func accelerationCurveFromParams(pxPerTickBase: Int, pxPerTickEnd: Int, consecutiveScrollTickIntervalMax: TimeInterval, consecutiveScrollTickInterval_AccelerationEnd: TimeInterval, curvature: Double) -> Curve {
-        /**
-         Define a curve describing the relationship between the scrollTickSpeed (in scrollTicks per second) (on the x-axis) and the pxPerTick (on the y axis).
-         We'll call this function y(x).
-         y(x) is composed of 3 other curves. The core of y(x) is a BezierCurve *b(x)*, which is defined on the interval (xMin, xMax).
-         y(xMin) is called yMin and y(xMax) is called yMax
-         There are two other components to y(x):
-         - For `x < xMin`, we set y(x) to yMin
-         - We do this so that the acceleration is turned off for tickSpeeds below xMin. Acceleration should only affect scrollTicks that feel 'consecutive' and not ones that feel like singular events unrelated to other scrollTicks. `self.consecutiveScrollTickIntervalMax` is (supposed to be) the maximum time between ticks where they feel consecutive. So we're using it to define xMin.
-         - For `xMax < x`, we lineraly extrapolate b(x), such that the extrapolated line has the slope b'(xMax) and passes through (xMax, yMax)
-         - We do this so the curve is defined and has reasonable values even when the user scrolls really fast
-         (We use tick and step are interchangable here)
-         
-         HyperParameters:
-         - `curvature` raises sensitivity for medium scrollSpeeds making scrolling feel more comfortable and accurate. This is especially nice for very low pxPerTickBase.
-         */
-        
-        /// Define Curve
-        
-        let xMin: Double = 1 / Double(consecutiveScrollTickIntervalMax)
-        let yMin: Double = Double(pxPerTickBase);
-        
-        let xMax: Double = 1 / consecutiveScrollTickInterval_AccelerationEnd
-        let yMax: Double = Double(pxPerTickEnd)
-        
-        /// v Old accelerationHump / capHump curvature system
-        
-//        let x2: Double
-//        let y2: Double
-//        if (accelerationHump < 0) {
-//            x2 = Math.scale(value: -accelerationHump, from: .unitInterval, to: Interval(xMin, xMax))
-//            y2 = yMin
-//        } else {
-//            x2 = xMin
-//            y2 = Math.scale(value: accelerationHump, from: .unitInterval, to: Interval(yMin, yMax))
-//        }
-//
-//        /// Flatten out the end of the curve to prevent ridiculous pxPerTick outputs when input (tickSpeed) is very high. tickSpeed can be extremely high despite smoothing, because our time measurements of when ticks occur are very imprecise
-//        ///     Edit: Turn off flattening by making x3 = xMax. Do this because currenlty `consecutiveScrollTickIntervalMin == consecutiveScrollTickInterval_AccelerationEnd`, and therefore the extrapolated curve after xMax will never be used anyways -> I think this feels much nicer!
-//        let x3: Double /* = (xMax-xMin)*0.9 + xMin*/
-//        let y3: Double
-//        if capHump < 0 {
-//            x3 = xMax
-//            y3 = Math.scale(value: capHump, from: .unitInterval, to: Interval(yMax, yMin))
-//        } else {
-//            x3 = Math.scale(value: capHump, from: .unitInterval, to: Interval(xMax, xMin))
-//            y3 = yMax
-//        }
-        
-//        var curve = AccelerationBezier(controlPoints:
-//                                        [_P(xMin, yMin),
-//                                         _P(x2, y2),
-//                                         _P(x3, y3),
-//                                         _P(xMax, yMax)], defaultEpsilon: 0.08)
-        
-        
-        /// Create curve
-        ///     Not sure if 0.08 defaultEpsilon makes sense here. Is it accurate enough?
-        let curve = BezierCappedAccelerationCurve(xMin: xMin, yMin: yMin, xMax: xMax, yMax: yMax, curvature: curvature, reduceToCubic: false, defaultEpsilon: 0.08)
-        
-        /// Return
-        return curve
-    }
-    
     @objc func copy(with zone: NSZone? = nil) -> Any {
         
         return SharedUtilitySwift.shallowCopy(ofObject: self)
     }
     
-    
-    
 }
 
-// MARK: Helper stuff
+// MARK: - Helper stuff
 
 /// Storage class for animationCurve params
 
@@ -747,7 +463,7 @@ import CocoaLumberjackSwift
     }
 }
 
-func animationCurveParamsMap(name: MFScrollAnimationCurveName) -> MFScrollAnimationCurveParameters {
+fileprivate func animationCurveParamsMap(name: MFScrollAnimationCurveName) -> MFScrollAnimationCurveParameters {
     
     /// Map from animationCurveName -> animationCurveParams
     /// For the origin behind these curves see ScrollConfigTesting.md
@@ -818,4 +534,204 @@ func animationCurveParamsMap(name: MFScrollAnimationCurveName) -> MFScrollAnimat
     default:
         fatalError()
     }
+}
+
+/// Define function that maps userSettings -> accelerationCurve
+fileprivate func standardAccelerationCurve(forSpeed speedArg: MFScrollSpeed, precise: Bool, smoothness: MFScrollSmoothness, animationCurve: MFScrollAnimationCurveName, inputAxis: MFAxis, display: CGDirectDisplayID, modifiers: MFScrollModificationResult, consecutiveScrollTickIntervalMax: Double, consecutiveScrollTickInterval_AccelerationEnd: Double) -> Curve {
+
+    /// `_n` stands for 'normalized', so the value is between 0.0 and 1.0
+    
+    let speed_n = SharedUtilitySwift.eval {
+        switch speedArg {
+        case kMFScrollSpeedLow: 0.0
+        case kMFScrollSpeedMedium: 0.5
+        case kMFScrollSpeedHigh: 1.0
+        case kMFScrollSpeedSystem: -1.0
+        default: -1.0
+        }
+    }
+    
+    let minSend_n = speed_n
+    let maxSens_n = speed_n
+    let curvature_n = speed_n
+    
+    var minSens: Double
+    var maxSens: Double
+    var curvature: Double
+    
+    if modifiers.inputMod == kMFScrollInputModificationQuick {
+        
+        minSens = 3 /// 2 is better than 3 but that leads to weird asswert failures in TouchAnimator that I can't be bothered to fix
+        maxSens = 30
+        curvature = 1.0
+        
+    } else if modifiers.inputMod == kMFScrollInputModificationPrecise {
+        
+        minSens = 100
+        maxSens = 500
+        curvature = 1.0
+        
+    } else if animationCurve == kMFScrollAnimationCurveNameTouchDriver
+                || animationCurve == kMFScrollAnimationCurveNameTouchDriverLinear {
+        
+        minSens = CombinedLinearCurve(yValues: [20.0, 40.0, 60.0]).evaluate(atX: minSend_n)
+        maxSens = CombinedLinearCurve(yValues: [60.0, 90.0, 120.0]).evaluate(atX: maxSens_n)
+        curvature = CombinedLinearCurve(yValues: [1.0]).evaluate(atX: curvature_n)
+        
+    } else if smoothness == kMFScrollSmoothnessOff {
+        
+        minSens = CombinedLinearCurve(yValues: [15.0, 30.0, 45.0]).evaluate(atX: minSend_n)
+        maxSens = CombinedLinearCurve(yValues: [45.0, 70.0, 90.0]).evaluate(atX: maxSens_n)
+        curvature = CombinedLinearCurve(yValues: [1.0, 1.0]).evaluate(atX: curvature_n)
+        
+    } else if smoothness == kMFScrollSmoothnessRegular {
+     
+        minSens = CombinedLinearCurve(yValues: [20.0, 40.0, 60.0]).evaluate(atX: minSend_n)
+        maxSens = CombinedLinearCurve(yValues: [60.0, 90.0, 120.0]).evaluate(atX: maxSens_n)
+        curvature = CombinedLinearCurve(yValues: [1.0, 1.0]).evaluate(atX: curvature_n)
+        
+    } else if smoothness == kMFScrollSmoothnessHigh {
+        
+        minSens = CombinedLinearCurve(yValues: [30.0, 60.0, 90.0]).evaluate(atX: minSend_n)
+        maxSens = CombinedLinearCurve(yValues: [90.0, 140.0, 180.0]).evaluate(atX: maxSens_n)
+        curvature = CombinedLinearCurve(yValues: [1.0, 1.0]).evaluate(atX: curvature_n)
+        
+    } else {
+        fatalError()
+    }
+    
+    
+    ///
+    /// Precise
+    ///
+    
+    if precise {
+        minSens = 10
+        curvature = 2.5
+    }
+    
+    ///
+    /// Screen height
+    ///
+    
+    
+    /// Get display height/width
+    var screenSize: size_t
+    if inputAxis == kMFAxisHorizontal
+        || modifiers.effectMod == kMFScrollEffectModificationHorizontalScroll {
+        screenSize = CGDisplayPixelsWide(display);
+    } else if inputAxis == kMFAxisVertical {
+        screenSize = CGDisplayPixelsHigh(display);
+    } else {
+        fatalError()
+    }
+    
+    /// Get screenHeight summand
+    let baseScreenSize = inputAxis == kMFAxisHorizontal ? 1280.0 : 800.0
+    let screenSizeFactor = Double(screenSize) / baseScreenSize
+    
+    let screenSizeWeight = 0.1
+    
+    /// Apply screenSizeFactor
+    
+    maxSens = (maxSens * (1-screenSizeWeight)) + ((maxSens * screenSizeWeight) * screenSizeFactor)
+    
+    /// vv Old screenSizeFactor formula
+    
+//    if screenHeightFactor >= 1 {
+//        screenHeightSummand = 20*(screenHeightFactor - 1)
+//    } else {
+//        screenHeightSummand = -20*((1/screenHeightFactor) - 1)
+//    }
+//    maxSens += screenHeightSummand
+
+    
+    /// Debug
+//    DDLogDebug("Dynamic pxPerTickStart: \(pxPerTickStart) end: \(pxPerTickEnd)")
+    
+    ///
+    /// Get curvature
+    ///
+    
+//    let curvature: Double = SharedUtilitySwift.eval {
+//        switch animationCurveName {
+//        case kMFScrollAnimationCurveNameLowInertia: 2.5
+//        case kMFScrollAnimationCurveNameNoInertia: 2.5
+//        case kMFScrollAnimationCurveNameMediumInertia: 2.5
+//        case kMFScrollAnimationCurveNameHighInertia: 2.5
+//        case kMFScrollAnimationCurveNameHighInertiaPlusTrackpadSim: 2.5
+//        case kMFScrollAnimationCurveNameTouchDriver: 2.5
+//        case kMFScrollAnimationCurveNameTouchDriverLinear: 2.5
+//        default: -1.0
+//        }
+//    }
+    
+//    let curvature = 0.0
+    
+    ///
+    /// Generate curve from params
+    ///
+    
+    /**
+     Define a curve describing the relationship between the scrollTickSpeed (in scrollTicks per second) (on the x-axis) and the pxPerTick (on the y axis).
+     We'll call this function y(x).
+     y(x) is composed of 3 other curves. The core of y(x) is a BezierCurve *b(x)*, which is defined on the interval (xMin, xMax).
+     y(xMin) is called yMin and y(xMax) is called yMax
+     There are two other components to y(x):
+     - For `x < xMin`, we set y(x) to yMin
+     - We do this so that the acceleration is turned off for tickSpeeds below xMin. Acceleration should only affect scrollTicks that feel 'consecutive' and not ones that feel like singular events unrelated to other scrollTicks. `self.consecutiveScrollTickIntervalMax` is (supposed to be) the maximum time between ticks where they feel consecutive. So we're using it to define xMin.
+     - For `xMax < x`, we lineraly extrapolate b(x), such that the extrapolated line has the slope b'(xMax) and passes through (xMax, yMax)
+     - We do this so the curve is defined and has reasonable values even when the user scrolls really fast
+     (We use tick and step are interchangable here)
+     
+     HyperParameters:
+     - `curvature` raises sensitivity for medium scrollSpeeds making scrolling feel more comfortable and accurate. This is especially nice for very low pxPerTickBase.
+     */
+    
+    /// Define Curve
+    
+    let xMin: Double = 1 / Double(consecutiveScrollTickIntervalMax)
+    let yMin: Double = minSens
+    
+    let xMax: Double = 1 / consecutiveScrollTickInterval_AccelerationEnd
+    let yMax: Double = maxSens
+    
+    /// v Old accelerationHump / capHump curvature system
+    
+//        let x2: Double
+//        let y2: Double
+//        if (accelerationHump < 0) {
+//            x2 = Math.scale(value: -accelerationHump, from: .unitInterval, to: Interval(xMin, xMax))
+//            y2 = yMin
+//        } else {
+//            x2 = xMin
+//            y2 = Math.scale(value: accelerationHump, from: .unitInterval, to: Interval(yMin, yMax))
+//        }
+//
+//        /// Flatten out the end of the curve to prevent ridiculous pxPerTick outputs when input (tickSpeed) is very high. tickSpeed can be extremely high despite smoothing, because our time measurements of when ticks occur are very imprecise
+//        ///     Edit: Turn off flattening by making x3 = xMax. Do this because currenlty `consecutiveScrollTickIntervalMin == consecutiveScrollTickInterval_AccelerationEnd`, and therefore the extrapolated curve after xMax will never be used anyways -> I think this feels much nicer!
+//        let x3: Double /* = (xMax-xMin)*0.9 + xMin*/
+//        let y3: Double
+//        if capHump < 0 {
+//            x3 = xMax
+//            y3 = Math.scale(value: capHump, from: .unitInterval, to: Interval(yMax, yMin))
+//        } else {
+//            x3 = Math.scale(value: capHump, from: .unitInterval, to: Interval(xMax, xMin))
+//            y3 = yMax
+//        }
+    
+//        var curve = AccelerationBezier(controlPoints:
+//                                        [_P(xMin, yMin),
+//                                         _P(x2, y2),
+//                                         _P(x3, y3),
+//                                         _P(xMax, yMax)], defaultEpsilon: 0.08)
+    
+    
+    /// Create curve
+    ///     Not sure if 0.08 defaultEpsilon makes sense here. Is it accurate enough?
+    let curve = BezierCappedAccelerationCurve(xMin: xMin, yMin: yMin, xMax: xMax, yMax: yMax, curvature: curvature, reduceToCubic: false, defaultEpsilon: 0.08)
+    
+    /// Return
+    return curve
+    
 }

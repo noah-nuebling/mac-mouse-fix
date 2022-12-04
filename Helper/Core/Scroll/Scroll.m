@@ -355,9 +355,12 @@ static void heavyProcessing(CGEventRef event, int64_t scrollDeltaAxis1, int64_t 
             _modifications = newMods;
         }
         
-        /// Get scrollConfig
+        /// Get display  under mouse pointer
+        CGDirectDisplayID displayID;
+        [SharedUtility displayUnderMousePointer:&displayID withEvent:event];
         
-        _scrollConfig = [ScrollConfig scrollConfigWithModifiers:newMods inputAxis:inputAxis event:event];
+        /// Get scrollConfig
+        _scrollConfig = [ScrollConfig scrollConfigWithModifiers:newMods inputAxis:inputAxis event:event display:displayID];
         
     } /// End `if (firstConsecutive) {`
     
