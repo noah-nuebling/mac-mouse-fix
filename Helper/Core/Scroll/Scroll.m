@@ -360,7 +360,7 @@ static void heavyProcessing(CGEventRef event, int64_t scrollDeltaAxis1, int64_t 
         [SharedUtility displayUnderMousePointer:&displayID withEvent:event];
         
         /// Get scrollConfig
-        _scrollConfig = [ScrollConfig scrollConfigWithModifiers:newMods inputAxis:inputAxis event:event display:displayID];
+        _scrollConfig = [ScrollConfig scrollConfigWithModifiers:newMods inputAxis:inputAxis display:displayID];
         
     } /// End `if (firstConsecutive) {`
     
