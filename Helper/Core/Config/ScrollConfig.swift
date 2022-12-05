@@ -194,7 +194,7 @@ import CocoaLumberjackSwift
             
             /// Get speed
             if new.u_speed != kMFScrollSpeedSystem {
-                new.accelerationCurve = getAccelerationCurve(forSpeed: new.u_speed, precise: precise, smoothness: new.u_smoothness, animationCurve: new.animationCurve, inputAxis: inputAxis, display: display, useDisplaySize: useDisplaySize, modifiers: modifiers, useQuickModSpeed: useQuickMod, usePreciseModSpeed: usePreciseMod, consecutiveScrollTickIntervalMax: new.consecutiveScrollTickIntervalMax, consecutiveScrollTickInterval_AccelerationEnd: new.consecutiveScrollTickInterval_AccelerationEnd)
+                new.accelerationCurve = getAccelerationCurve(forSpeed: new.u_speed, precise: precise, smoothness: new.u_smoothness, animationCurve: new.animationCurve, inputAxis: inputAxis, display: display, scaleToDisplay: useDisplaySize, modifiers: modifiers, useQuickModSpeed: useQuickMod, usePreciseModSpeed: usePreciseMod, consecutiveScrollTickIntervalMax: new.consecutiveScrollTickIntervalMax, consecutiveScrollTickInterval_AccelerationEnd: new.consecutiveScrollTickInterval_AccelerationEnd)
             }
             
             /// Cache & return
@@ -544,20 +544,23 @@ fileprivate func animationCurveParamsMap(name: MFScrollAnimationCurveName) -> MF
     /// --- Dynamically applied ---
         
     case kMFScrollAnimationCurveNameTouchDriver:
-        
+
+        /// v Note: At the time of writing, this curve is equivalent to a BezierCappedAccelerationCurve with curvature 1.
         let baseCurve = Bezier(controlPoints: [_P(0, 0), _P(0, 0), _P(0.5, 1), _P(1, 1)], defaultEpsilon: 0.001)
-        return MFScrollAnimationCurveParameters(baseCurve: baseCurve, msPerStep: 250, sendGestureScrolls: false)
+        return MFScrollAnimationCurveParameters(baseCurve: baseCurve, msPerStep: /*225*/250/*275*/, sendGestureScrolls: false)
         
     case kMFScrollAnimationCurveNameTouchDriverLinear:
-        /// "Disable" the dragCurve by setting the dragCoefficient to an absurdly high number. This creates a linear curve. This is not elegant or efficient -> Maybe refactor this (have a bool `usePureBezier` or sth to disable the dragCurve)
-        return MFScrollAnimationCurveParameters(baseCurve: ScrollConfig.linearCurve, msPerStep: 180, sendGestureScrolls: false)
+        
+        return MFScrollAnimationCurveParameters(baseCurve: ScrollConfig.linearCurve, msPerStep: 180/*200*/, sendGestureScrolls: false)
     
     case kMFScrollAnimationCurveNameQuickScroll:
+        
         /// - Almost the same as `highInertia` just more inertial. Actually same feel as trackpad-like parameters used in `GestureScrollSimulator` for autoMomentumScroll.
         /// - Should we use trackpad sim (sendMomentumScrolls and sendGestureScrolls) here?
         return MFScrollAnimationCurveParameters(baseCurve: ScrollConfig.linearCurve, baseMsPerStep: /*220*/300, dragExponent: 0.7, dragCoefficient: 30, stopSpeed: 1, sendGestureScrolls: true, sendMomentumScrolls: true)
         
     case kMFScrollAnimationCurveNamePreciseScroll:
+        
         /// Similar to `lowInertia`
 //        return MFScrollAnimationCurveParameters(baseCurve: ScrollConfig.linearCurve, baseMsPerStep: 140, dragExponent: 1.0, dragCoefficient: 20, stopSpeed: 50, sendGestureScrolls: false, sendMomentumScrolls: false)
         return MFScrollAnimationCurveParameters(baseCurve: ScrollConfig.linearCurve, baseMsPerStep: 140, dragExponent: 1.05, dragCoefficient: 15, stopSpeed: 50, sendGestureScrolls: false, sendMomentumScrolls: false)
@@ -576,7 +579,7 @@ fileprivate func animationCurveParamsMap(name: MFScrollAnimationCurveName) -> MF
 }
 
 /// Define function that maps userSettings -> accelerationCurve
-fileprivate func getAccelerationCurve(forSpeed speedArg: MFScrollSpeed, precise: Bool, smoothness: MFScrollSmoothness, animationCurve: MFScrollAnimationCurveName, inputAxis: MFAxis, display: CGDirectDisplayID, useDisplaySize: Bool, modifiers: MFScrollModificationResult, useQuickModSpeed: Bool, usePreciseModSpeed: Bool, consecutiveScrollTickIntervalMax: Double, consecutiveScrollTickInterval_AccelerationEnd: Double) -> Curve {
+fileprivate func getAccelerationCurve(forSpeed speedArg: MFScrollSpeed, precise: Bool, smoothness: MFScrollSmoothness, animationCurve: MFScrollAnimationCurveName, inputAxis: MFAxis, display: CGDirectDisplayID, scaleToDisplay: Bool, modifiers: MFScrollModificationResult, useQuickModSpeed: Bool, usePreciseModSpeed: Bool, consecutiveScrollTickIntervalMax: Double, consecutiveScrollTickInterval_AccelerationEnd: Double) -> Curve {
     
     /// Notes:
     /// - The inputs to the curve can sometimes be ridiculously high despite smoothing, because our time measurements of when ticks occur are very imprecise
@@ -602,7 +605,7 @@ fileprivate func getAccelerationCurve(forSpeed speedArg: MFScrollSpeed, precise:
      */
 
     var screenSize: size_t = -1
-    if useQuickModSpeed || useDisplaySize {
+    if useQuickModSpeed || scaleToDisplay {
         
         if inputAxis == kMFAxisHorizontal
             || modifiers.effectMod == kMFScrollEffectModificationHorizontalScroll {
@@ -650,9 +653,16 @@ fileprivate func getAccelerationCurve(forSpeed speedArg: MFScrollSpeed, precise:
     } else if animationCurve == kMFScrollAnimationCurveNameTouchDriver
                 || animationCurve == kMFScrollAnimationCurveNameTouchDriverLinear {
         
-        minSens =   CombinedLinearCurve(yValues: [20.0, 40.0, 60.0]).evaluate(atX: minSend_n)
-        maxSens =   CombinedLinearCurve(yValues: [60.0, 90.0, 120.0]).evaluate(atX: maxSens_n)
-        curvature = CombinedLinearCurve(yValues: [0.0, 0.0, 0.0]).evaluate(atX: curvature_n)
+        /// At the time of writing, this is an exact copy of the `regular` smoothness acceleration curves. Not totally sure if that makes sense. One reason I can come up with for adjusting this to the user's scroll speed settings is that the user might use the scroll speed settings to compensate for differences in their physical scrollwheel and therefore the speed should apply to everything they do with the scrollwheel
+        
+        minSens =   CombinedLinearCurve(yValues: [30.0, 60.0, 120.0]).evaluate(atX: minSend_n)
+        maxSens =   CombinedLinearCurve(yValues: [90.0, 120.0, 180.0]).evaluate(atX: maxSens_n)
+        if !precise {
+            curvature = CombinedLinearCurve(yValues: [0.25, 0.0, 0.0]).evaluate(atX: curvature_n)
+        } else {
+            curvature = CombinedLinearCurve(yValues: [0.75, 0.75, 0.25]).evaluate(atX: curvature_n)
+        }
+
         
     } else if smoothness == kMFScrollSmoothnessOff { /// It might be better to use the animationCurve instead of smoothness in these if-statements
         
@@ -664,7 +674,6 @@ fileprivate func getAccelerationCurve(forSpeed speedArg: MFScrollSpeed, precise:
         } else {
             curvature = CombinedLinearCurve(yValues: [4.25, 3.0, 2.25]).evaluate(atX: curvature_n)
         }
-
         
     } else if smoothness == kMFScrollSmoothnessRegular {
 
@@ -678,7 +687,7 @@ fileprivate func getAccelerationCurve(forSpeed speedArg: MFScrollSpeed, precise:
         
     } else if smoothness == kMFScrollSmoothnessHigh {
         
-        minSens =   CombinedLinearCurve(yValues: [/*30.0,*/ 60.0, 90.0, 120.0]).evaluate(atX: minSend_n)
+        minSens =   CombinedLinearCurve(yValues: [/*30.0,*/ 60.0, 90.0, 150.0]).evaluate(atX: minSend_n)
         maxSens =   CombinedLinearCurve(yValues: [/*90.0,*/ 120.0, 180.0, 240.0]).evaluate(atX: maxSens_n)
         if !precise {
             curvature = 0.0
@@ -699,10 +708,10 @@ fileprivate func getAccelerationCurve(forSpeed speedArg: MFScrollSpeed, precise:
     
     /// Screen height
     
-    if useDisplaySize {
+    if scaleToDisplay {
         
         /// Get screenHeight summand
-        let baseScreenSize = inputAxis == kMFAxisHorizontal ? 1280.0 : 800.0
+        let baseScreenSize = inputAxis == kMFAxisHorizontal ? 1920.0 : 1080.0
         let screenSizeFactor = Double(screenSize) / baseScreenSize
         
         let screenSizeWeight = 0.1
