@@ -508,7 +508,7 @@ static void heavyProcessing(CGEventRef event, int64_t scrollDeltaAxis1, int64_t 
                 if (isSwipeSequenceStart) { /// Checking for isRunning here leads to lost input when the computer is slow
                     
                     /// Reset pxLeftToScroll
-                    pxLeftToScroll = 0;
+                    pxLeftToScroll = 0.0;
                     [_animator resetSubPixelator_Unsafe];
                     
                 } else if ([animationCurve isKindOfClass:SimpleBezierHybridCurve.class]) {
@@ -520,6 +520,9 @@ static void heavyProcessing(CGEventRef event, int64_t scrollDeltaAxis1, int64_t 
                 } else {
                     pxLeftToScroll = distanceLeft;
                 }
+            } else {
+                pxLeftToScroll = 0.0;
+                [_animator resetSubPixelator_Unsafe]; /// Maybe it would make more sense to do this automatically inside the animator? That might lead to problems with click and drag smoothing.
             }
             
             /// Calculate distance to scroll
@@ -832,13 +835,13 @@ static void sendOutputEvents(int64_t dx, int64_t dy, MFScrollOutputType outputTy
         
         /// Setup subpixelator
         
-        static VectorSubPixelator *pixelator = nil;
+        static VectorSubPixelator *linePixelator = nil;
         
-        if (pixelator == nil) {
-            pixelator = [VectorSubPixelator biasedPixelator];
+        if (linePixelator == nil) {
+            linePixelator = [VectorSubPixelator biasedPixelator];
         }
         if (animatorPhase == kMFAnimationCallbackPhaseStart) {
-            [pixelator reset];
+            [linePixelator reset];
         }
         
         /// Get alt deltas
@@ -847,7 +850,7 @@ static void sendOutputEvents(int64_t dx, int64_t dy, MFScrollOutputType outputTy
         double dyLine = ((double)dy)/10.0;
         double dxLine = ((double)dx)/10.0;
         
-        Vector pixelatedLines = [pixelator intVectorWithDoubleVector:_P(dxLine, dyLine)];
+        Vector pixelatedLines = [linePixelator intVectorWithDoubleVector:_P(dxLine, dyLine)];
         
         /// Set deltas
         

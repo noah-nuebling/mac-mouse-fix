@@ -306,7 +306,7 @@ static void startMomentumScroll_Unsafe(double timeSinceLastInput, Vector exitVel
     
     /// Init animator
     
-    [_momentumAnimator resetSubPixelator];
+    [_momentumAnimator resetSubPixelator]; /// Shouldn't we use the `_Unsafe` version here?
     [_momentumAnimator linkToMainScreen];
     
     /// Start animator
