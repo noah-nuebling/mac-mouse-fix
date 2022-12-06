@@ -16,6 +16,7 @@ import CocoaLumberjackSwift
     /// You can request the config once, then store it.
     /// You'll receive an independent instance that you can override with custom values. This should be useful for implementing Modifications in Scroll.m
     ///     Everything in ScrollConfigResult is lazy so that you only pay for what you actually use
+    ///  Edit: Since we're always copying the scrollConfig before returning to apply some overrides, all this lazyness is sort of useless I think. Because during copy, all the lazy computed properties will be calculated from what I've seen. But this will only happen during the first copy, so it's whatever.
     
     // MARK: Convenience functions
     ///     For accessing top level dict and different sub-dicts
@@ -162,12 +163,13 @@ import CocoaLumberjackSwift
                 precise = false
                 useDisplaySize = false
                 
-                /// Configure fastScroll
+                /// Make fastScroll easier to trigger
                 new.consecutiveScrollSwipeMaxInterval = 725.0/1000.0
                 new.consecutiveScrollTickIntervalMax = 200.0/1000.0
                 new.consecutiveScrollSwipeMinTickSpeed = 12.0
                 
-                new.fastScrollCurve = ScrollSpeedupCurve(swipeThreshold: 2, initialSpeedup: 2.0, exponentialSpeedup: 20)
+                /// Amp-up fastScroll
+                new.fastScrollCurve = ScrollSpeedupCurve(swipeThreshold: 1, initialSpeedup: 2.0, exponentialSpeedup: 10)
                 
             } else if usePreciseMod {
                 
@@ -343,21 +345,25 @@ import CocoaLumberjackSwift
         /// - We're using swipeThreshold to configure how far the user must've scrolled before fastScroll starts kicking in.
         /// - It would probably be better to have an explicit mechanism that counts how many pixels the user has scrolled already and then lets fastScroll kick in after a threshold is reached. That would also scale with the scrollSpeed setting. These current `fastScrollSpeedup` values are chosen so you don't accidentally trigger it at the lowest scrollSpeed, but they could be higher at higher scrollspeeds.
         /// - Fastscroll starts kicking in on the `swipeThreshold + 1` th scrollSwipe
+        ///
+        /// On how we chose parameters:
+        /// - The `swipeThreshold` was chosen proportional to the max stepSize of the lowest scrollspeed setting of the respective animationCurve.
+        /// - The `exponentialSpeedup` of the unanimated ScrollSpeedCurve is lower and the `initialSpeedup` is higher because without animation you quickly reach a speed where you can't tell how far or in which direction you scrolled. We want to have a few swipes in that window of speed where you can tell that it's speeding up but it's not yet so fast that you can't tell which direction you scrolled and how fast.
         
         
         switch animationCurve {
             
         case kMFScrollAnimationCurveNameNone:
-            return ScrollSpeedupCurve(swipeThreshold: 8, initialSpeedup: 1.5, exponentialSpeedup: 3.0)
+            return ScrollSpeedupCurve(swipeThreshold: 6, initialSpeedup: 1.4, exponentialSpeedup: 3.0)
             
         case kMFScrollAnimationCurveNameLowInertia:
-            return ScrollSpeedupCurve(swipeThreshold: 4, initialSpeedup: 1.5, exponentialSpeedup: 3.0)
+            return ScrollSpeedupCurve(swipeThreshold: 3, initialSpeedup: 1.33, exponentialSpeedup: 7.5)
             
         case kMFScrollAnimationCurveNameHighInertia, kMFScrollAnimationCurveNameHighInertiaPlusTrackpadSim:
-            return ScrollSpeedupCurve(swipeThreshold: 3, initialSpeedup: 1.5, exponentialSpeedup: 7.0)
+            return ScrollSpeedupCurve(swipeThreshold: 2, initialSpeedup: 1.33, exponentialSpeedup: 7.5)
             
         case kMFScrollAnimationCurveNameTouchDriver, kMFScrollAnimationCurveNameTouchDriverLinear:
-            return ScrollSpeedupCurve(swipeThreshold: 4, initialSpeedup: 1.5, exponentialSpeedup: 3.0)
+            return ScrollSpeedupCurve(swipeThreshold: 3, initialSpeedup: 1.33, exponentialSpeedup: 7.5)
             
         case kMFScrollAnimationCurveNamePreciseScroll, kMFScrollAnimationCurveNameQuickScroll:
             return nil as ScrollSpeedupCurve? /// Will be overriden
