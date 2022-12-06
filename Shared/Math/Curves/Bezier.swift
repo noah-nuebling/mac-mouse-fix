@@ -180,7 +180,7 @@ import CocoaLumberjack /// Doesn't work for some reason
         
     }
     
-    init(controlPoints: [P], defaultEpsilon: Double = 0.08) {
+    init(controlPoints controlPointsArg: [P], defaultEpsilon: Double = 0.08) {
         
         /**
          Core init
@@ -196,15 +196,22 @@ import CocoaLumberjack /// Doesn't work for some reason
         
         self.defaultEpsilon = defaultEpsilon
         
-        /// Removing consective duplicate points
-        ///     For optimization. Not sure if significant
+        /// Remove consective duplicate points
+        /// - For optimization. Not sure if significant.
+        /// - I'm also not totally sure if the duplicate control points really have no effect at all. I think having two controlPoints in the same point might  give that point more "weight" in where the curve lies.
         
-        var controlPointsFiltered: [P] = []
-        for i in 0..<controlPoints.count-1 {
-            let this = controlPoints[i]
-            let next = controlPoints[i+1]
-            if this.x == next.x && this.y == next.y { continue }
-            controlPointsFiltered.append(this)
+        var controlPoints: [P] = []
+        var lastPoint: P? = nil
+        for p in controlPointsArg {
+            
+            var isSame = false
+            if let lastPoint = lastPoint {
+                isSame = p.x == lastPoint.x && p.y == lastPoint.y
+            }
+            if isSame { continue }
+            
+            controlPoints.append(p)
+            lastPoint = p
         }
         
         /// Make sure that there are at least 2 points
@@ -620,7 +627,9 @@ import CocoaLumberjack /// Doesn't work for some reason
         assert(controlPoints.count > 1)
         
         if isLine {
+            
             return lineRepresentation!.slope
+            
         } else {
             
             /// Get first control point
