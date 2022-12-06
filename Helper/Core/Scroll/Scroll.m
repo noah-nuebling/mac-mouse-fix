@@ -415,7 +415,9 @@ static void heavyProcessing(CGEventRef event, int64_t scrollDeltaAxis1, int64_t 
         double scrollSpeed = 1/timeBetweenTicks; /// In tick/s
 
         /// Evaluate acceleration curve
-        double pxForThisTickDouble = [_scrollConfig.accelerationCurve evaluateAt:scrollSpeed]; /// In px/s
+        Curve *accelerationCurve = _scrollConfig.accelerationCurve;
+        assert(accelerationCurve != nil);
+        double pxForThisTickDouble = [accelerationCurve evaluateAt:scrollSpeed]; /// In px/s
         pxToScrollForThisTick = pxForThisTickDouble; /// We could use a SubPixelator balance out the rounding errors, but I don't think that'll be noticable
         
         /// Debug

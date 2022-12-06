@@ -188,19 +188,20 @@ import CocoaLumberjackSwift
                 
             }
             
-            /// Apply overrides
+            /// Apply animationCurve override
             
             if let ovr = animationCurveOverride {
                 new.animationCurve = ovr
             }
             
             /// Get speed
-            if new.u_speed != kMFScrollSpeedSystem {
+            if new.u_speed == kMFScrollSpeedSystem && !usePreciseMod && !useQuickMod {
+                new.accelerationCurve = nil
+            } else {
                 new.accelerationCurve = getAccelerationCurve(forSpeed: new.u_speed, precise: precise, smoothness: new.u_smoothness, animationCurve: new.animationCurve, inputAxis: inputAxis, display: display, scaleToDisplay: scaleToDisplay, modifiers: modifiers, useQuickModSpeed: useQuickMod, usePreciseModSpeed: usePreciseMod, consecutiveScrollTickIntervalMax: new.consecutiveScrollTickIntervalMax, consecutiveScrollTickInterval_AccelerationEnd: new.consecutiveScrollTickInterval_AccelerationEnd)
             }
             
             /// Cache & return
-            
             cache![key] = new
             return new
             
@@ -230,7 +231,7 @@ import CocoaLumberjackSwift
         return _animationCurveName != kMFScrollAnimationCurveNameNone
     }
     @objc var useAppleAcceleration: Bool {
-        return u_speed == kMFScrollSpeedSystem
+        return accelerationCurve == nil
     }
     
     // MARK: Invert Direction
@@ -437,7 +438,7 @@ import CocoaLumberjackSwift
     /// Stored property
     ///     This is used by Scroll.m to determine how to accelerate
     
-    @objc lazy var accelerationCurve: Curve = InvalidBezier() /// Initial value is unused I think
+    @objc lazy var accelerationCurve: Curve? = nil /// Initial value is unused I think. Will always be overriden before it's used anywhere
     
     // MARK: Keyboard modifiers
     
