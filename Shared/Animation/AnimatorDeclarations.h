@@ -14,11 +14,11 @@
 
 #pragma mark - General
 
-typedef struct {
-    double value;
-    double duration;
-//    id curve; /// Putting an Objc type into the struct makes the struct invisible to swift
-} MFAnimatorStartParams;
+//typedef struct {
+//    double value;
+//    double duration;
+////    id curve; /// Putting an Objc type into the struct makes the struct invisible to swift
+//} MFAnimatorStartParams;
 
 typedef enum {
     kMFAnimationPhaseStart = 0,

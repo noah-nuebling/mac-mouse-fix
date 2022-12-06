@@ -481,7 +481,7 @@ static void heavyProcessing(CGEventRef event, int64_t scrollDeltaAxis1, int64_t 
         
         /// Start animation
         
-        [_animator startWithParams:^NSDictionary<NSString *,id> * _Nonnull(Vector valueLeftVec, BOOL isRunning, Curve *animationCurve) {
+        [_animator startWithParams:^void(Vector valueLeftVec, BOOL isRunning, Curve *animationCurve, MFAnimatorStartParams * _Nonnull p) {
             
             /// Validate
             assert(valueLeftVec.x == 0 || valueLeftVec.y == 0);
@@ -494,7 +494,7 @@ static void heavyProcessing(CGEventRef event, int64_t scrollDeltaAxis1, int64_t 
             }
             
             /// Declare result dict (animator start params)
-            NSMutableDictionary *p = [NSMutableDictionary dictionary];
+//            NSMutableDictionary *p = [NSMutableDictionary dictionary];
             
             /// Get px that the animator still wants to scroll
             double pxLeftToScroll = 0.0;
@@ -520,6 +520,7 @@ static void heavyProcessing(CGEventRef event, int64_t scrollDeltaAxis1, int64_t 
                 } else {
                     pxLeftToScroll = distanceLeft;
                 }
+            
             } else {
                 pxLeftToScroll = 0.0;
                 [_animator resetSubPixelator_Unsafe]; /// Maybe it would make more sense to do this automatically inside the animator? That might lead to problems with click and drag smoothing.
@@ -563,19 +564,14 @@ static void heavyProcessing(CGEventRef event, int64_t scrollDeltaAxis1, int64_t 
                 duration = ((double)cParams.baseMsPerStep) / 1000.0;
             }
             
+            /// Debug
             
-            /// Fill return dict
-            
-            p[@"duration"] = @(duration);
-            p[@"vector"] = nsValueFromVector(vectorFromDeltaAndDirection(delta, scrollDirection));
-            p[@"curve"] = c;
-            
-            static double scrollDeltaSum = 0;
-            scrollDeltaSum += labs(pxToScrollForThisTick);
+//            static double scrollDeltaSum = 0;
+//            scrollDeltaSum += labs(pxToScrollForThisTick);
 //            DDLogDebug(@"Delta sum pre-animator: %f", scrollDeltaSum);
             
             /// Return
-            return p;
+            [p setWithDuration:duration vector:vectorFromDeltaAndDirection(delta, scrollDirection) curve:c];
             
         } integerCallback:^(Vector distanceDeltaVec, MFAnimationCallbackPhase animationPhase, MFMomentumHint momentumHint) {
             

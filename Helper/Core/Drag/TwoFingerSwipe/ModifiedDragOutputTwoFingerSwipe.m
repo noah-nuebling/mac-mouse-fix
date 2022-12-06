@@ -125,9 +125,7 @@ static dispatch_group_t _momentumScrollWaitGroup;
 //    }];
     
     /// Start animator
-    [_smoothingAnimator startWithParams:^NSDictionary<NSString *,id> * _Nonnull(Vector valueLeft, BOOL isRunning, Curve * _Nullable curve) {
-
-        NSMutableDictionary *p = [NSMutableDictionary dictionary];
+    [_smoothingAnimator startWithParams:^void(Vector valueLeft, BOOL isRunning, Curve * _Nullable curve, MFAnimatorStartParams * _Nonnull p) {
         
         /// Get delta
         Vector currentVec = { .x = deltaX*twoFingerScale, .y = deltaY*twoFingerScale };
@@ -158,12 +156,11 @@ static dispatch_group_t _momentumScrollWaitGroup;
         
         if (magnitudeOfVector(combinedVec) == 0.0) {
             DDLogWarn(@"Not starting baseAnimator since combinedMagnitude is 0.0");
-            p[@"doStart"] = @NO;
+            [p setDoNotStart];
+            
         } else {
-            p[@"vector"] = nsValueFromVector(combinedVec);
-            p[@"curve"] = ScrollConfig.linearCurve;
-            p[@"duration"] = @(3.0/60.0);
-//            p[@"durationInFrames"] = @3;
+            [p setWithDuration:3.0/60.0 vector:combinedVec curve:ScrollConfig.linearCurve];
+//            [p setWithDurationInFrames:3 vector:combinedVec curve:ScrollConfig.linearCurve];
         }
 
         /// Debug
@@ -173,10 +170,6 @@ static dispatch_group_t _momentumScrollWaitGroup;
         scrollDeltaSum.y += fabs(currentVec.y);
         DDLogDebug(@"Delta sum pre-animator: (%f, %f)", scrollDeltaSum.x, scrollDeltaSum.y);
         DDLogDebug(@"Value left pre-animator: (%f, %f)", valueLeft.x, valueLeft.y);
-
-        /// Return
-
-        return p;
 
     } integerCallback:^(Vector deltaVec, MFAnimationCallbackPhase animatorPhase, MFMomentumHint subCurve) {
 
