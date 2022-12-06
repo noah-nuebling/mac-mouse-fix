@@ -311,7 +311,9 @@ static void startMomentumScroll_Unsafe(double timeSinceLastInput, Vector exitVel
     
     /// Start animator
     
-    [_momentumAnimator startWithParams:^void(Vector valueLeft, BOOL isRunning, Curve * _Nullable curve, MFAnimatorStartParams * _Nonnull p) {
+    [_momentumAnimator startWithParams:^NSDictionary<NSString *,id> * _Nonnull(Vector valueLeft, BOOL isRunning, Curve * _Nullable curve) {
+        
+        NSMutableDictionary *p = [NSMutableDictionary dictionary];
         
         /// Reset subpixelators
         [_scrollLinePixelator reset];
@@ -329,8 +331,8 @@ static void startMomentumScroll_Unsafe(double timeSinceLastInput, Vector exitVel
             DDLogDebug(@"Not starting momentum scroll - initialSpeed smaller stopSpeed: i: %f, s: %f", initialSpeed, stopSpeed);
             if (_momentumScrollCallback != NULL) _momentumScrollCallback();
             [GestureScrollSimulator stopMomentumScroll];
-            [p setDoNotStart];
-            return;
+            p[@"doStart"] = @(NO);
+            return p;
         }
         
         /// Get drag animation curve
@@ -350,7 +352,12 @@ static void startMomentumScroll_Unsafe(double timeSinceLastInput, Vector exitVel
         Vector distanceVec = scaledVector(unitVector(initialVelocity), distance);
         
         /// Return
-        [p setWithDuration:duration vector:distanceVec curve: animationCurve];
+        
+        p[@"vector"] = nsValueFromVector(distanceVec);
+        p[@"duration"] = @(duration);
+        p[@"curve"] = animationCurve;
+        
+        return p;
         
     } integerCallback:^(Vector deltaVec, MFAnimationCallbackPhase animationPhase, MFMomentumHint subCurve) {
         

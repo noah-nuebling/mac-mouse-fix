@@ -21,13 +21,11 @@ import QuartzCore
     typealias UntypedAnimatorCallback = Any
     typealias AnimatorCallback = (_ animationValueDelta: Vector, _ phase: MFAnimationCallbackPhase, _ subCurve: MFMomentumHint) -> ()
 //    typealias StopCallback = (_ lastPhase: MFAnimationPhase) -> ()
-    
-    /// Start param calculation callback
-    
-    typealias StartParamCalculationCallback = (_ valueLeft: Vector, _ isRunning: Bool, _ animationCurve: Curve?, _ result: MFAnimatorStartParams) -> ()
+    typealias StartParamCalculationCallback = (_ valueLeft: Vector, _ isRunning: Bool, _ animationCurve: Curve?) -> MFAnimatorStartParams
     /// ^ When starting the animator, we usually want to get the value that the animator still wants to scroll (`animationValueLeft`), and add that to the new value. The specific logic can differ a lot though, so we can't just hardcode this into `Animator`
     ///     But to avoid race-conditions, we can't just externally execute this, so we to pass in a callback that can execute custom logic to get the start params right before the animator is started
-    
+    typealias MFAnimatorStartParams = NSDictionary ///`Dictionary<String, Any>` `<-` Using Swift dict was slow for interop with ObjC due to autobridging
+    /// ^ 4 keys: "doStart", "duration", "vector", "curve"
     
     /// Conversion
     
@@ -88,11 +86,6 @@ import QuartzCore
         
         super.init()
     }
-    
-    /// Var - startParams instance
-    ///     Storing here so we don't need to reallocate it every time
-    
-    var startParamsInstance = MFAnimatorStartParams()
     
     /// Vars - Start & stop
     
@@ -198,19 +191,20 @@ import QuartzCore
             ///     So we don't give the `params` callback old invalid animationValueLeft.
             ///     I think this is sort of redundant, because we're resetting animationValueLeft in `startWithUntypedCallback_Unsafe()` as well?
             
-            params(self.animationValueLeft_Unsafe, self.isRunning_Unsafe, self.animationCurve, self.startParamsInstance)
-            let p = self.startParamsInstance
+            let p: MFAnimatorStartParams = params(self.animationValueLeft_Unsafe, self.isRunning_Unsafe, self.animationCurve)
             
             self.lastAnimationValue = Vector(x: 0, y: 0)
             
-            if p.doStart.boolValue == false {
-                return;
+            if let doStart = p.object(forKey: "doStart") as? Bool {
+                if doStart == false {
+                    return;
+                }
             }
             
-            let durationRaw = p.duration
-            let durationRawInFrames = p.durationInFrames
-            let vector = p.vector
-            let curve = p.curve!
+            let durationRaw = p.object(forKey: "duration") as! Double?
+            let durationRawInFrames = p.object(forKey: "durationInFrames") as! Int?
+            let vector = vectorFromNSValue(p.object(forKey: "vector") as! NSValue) as Vector
+            let curve = p.object(forKey: "curve") as! Curve
             
             self.startWithUntypedCallback_Unsafe(durationRaw: durationRaw, durationRawInFrames: durationRawInFrames, value: vector, animationCurve: curve, callback: callback);
         }
@@ -652,43 +646,3 @@ import QuartzCore
         
 }
 
-// MARK: Helper
-
-@objc class MFAnimatorStartParams: NSObject {
-    
-    /// Startparams
-    /// - Notes on dataStructure:
-    ///   - Can't use ObjC struct, because if ObjC structs contain object pointers they aren't visible to Swift.
-    ///   - Can't use Swift struct because they aren't visible to ObjC
-    ///   - Can't use Swift dict because autobridgin to ObjC is sper slow
-    ///   - Could use NSDictionary, but that's sitll slow
-    ///   -> We use an NSObject
-    
-    @objc var doStart: ObjCBool = true
-    @objc var duration: Double = 0.0
-    @objc var durationInFrames: Int = 0
-    @objc var useDurationInFrames: ObjCBool = false
-    @objc var vector: Vector = Vector(x: 0.0, y: 0.0)
-    @objc var curve: Curve? = nil
-    
-    @objc func set(duration: Double, vector: Vector, curve: Curve) {
-        
-        self.doStart = true
-        self.duration = duration
-        self.vector = vector
-        self.curve = curve
-    }
-    
-    @objc func set(durationInFrames: Int, vector: Vector, curve: Curve) {
-        
-        self.doStart = true
-        self.durationInFrames = durationInFrames
-        self.useDurationInFrames = true
-        self.vector = vector
-        self.curve = curve
-    }
-    
-    @objc func setDoNotStart() {
-        self.doStart = false
-    }
-}

@@ -77,21 +77,26 @@ class TouchAnimator: TouchAnimatorBase {
             
             /// Get startParams
             
-            params(self.animationValueLeft_Unsafe, self.isRunning_Unsafe, self.animationCurve, self.startParamsInstance)
-            let p = self.startParamsInstance
+            let p = params(self.animationValueLeft_Unsafe, self.isRunning_Unsafe, self.animationCurve)
             
             /// Reset animationValueLeft
             ///     Do this here since `animationValueLeft` is `animationValueTotal - lastAnimationValue`. A new `animationValueTotal` is contained in `p`, and we need to reset `lastAnimationValue` to make it usable.
             self.lastAnimationValue = Vector(x: 0, y: 0)
             
             /// Do nothing if doStart == false
-            if p.doStart.boolValue == false {
-                return
+            if let doStart = p["doStart"] as? Bool {
+                if doStart == false {
+                    return
+                }
             }
+            
+            /// Validate
+            assert(p["vector"] is NSValue)
+            /// ^ This is always true for some reason. Make sure to actually pass a Vector in an NSValue! Edit: Randomly, this starting working on 29.05.22
             
             /// Start animator
             
-            super.startWithUntypedCallback_Unsafe(durationRaw: p.duration, durationRawInFrames: p.durationInFrames, value: p.vector, animationCurve: p.curve!, callback: integerCallback)
+            super.startWithUntypedCallback_Unsafe(durationRaw: p["duration"] as! Double?, durationRawInFrames: p["durationInFrames"] as! Int?, value: vectorFromNSValue(p["vector"] as! NSValue), animationCurve: p["curve"] as! Curve, callback: integerCallback)
             
             /// Debug
             
