@@ -64,13 +64,12 @@
 }
 
 - (void)killButton:(MFMouseButtonNumber)button {
-
-    return;
     
     /// I don't really understand what this does anymore. Should compare this with before the refactor where we simplified ButtonModifers (commit 98470f5ec938454c986e34daf753f827c63b04a5)
     /// Edit:
     /// I think this is primarily so the drag modification is deactivated after hold has been triggered. Not sure if this is desirable behaviour, generally. It's desirable in addMode, but we should probably implement another mechanism where ModifiedScroll is reloaded when addMode is deactivated that would make this obsolete.
     // -> TODO: Try to do this when we implement SwitchMaster. Then turn this off if successful.
+    /// Edit: I do think that killing a button as a modifier after it has directly triggered an action is desirable, now.
     
     /// Copy old state
     

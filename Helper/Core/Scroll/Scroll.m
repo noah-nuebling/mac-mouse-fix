@@ -451,7 +451,7 @@ static void heavyProcessing(CGEventRef event, int64_t scrollDeltaAxis1, int64_t 
     /// - Limit it to 100,000, which is still super extreme, but it can grow far FAR larger. Especially with a free spinning wheel.
     /// - If it gets into the trillions things will still work properly, but the animations times might be several hours long which we obviously don't want
     /// - 100.000 still lets you scroll the world's longest website in a few seconds.
-    /// - Edit: We also limit the animationDuration in TouchAnimator now, so this might now be necessary or useful.
+    /// - Edit: We also limit the animationDuration in TouchAnimator now, so this might not be necessary or useful anymore
     if (fastScrollFactor > 100000) fastScrollFactor = 100000;
     
     /// Apply fastScroll

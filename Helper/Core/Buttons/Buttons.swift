@@ -166,10 +166,12 @@ import CocoaLumberjackSwift
             /// Notify triggering button
             ///     For levelExpired and .releaseFromHold, we know that the clickCycle will be killed right after this callback.
             ///     In that case it might not be necessary to notify the triggering button.
+            ///     Edit: We also want to kill the triggering button as a modifier though
             self.handleButtonHasHadDirectEffect_Unsafe(device: device, button: button)
             
             /// Notify modifiers
             ///     (Probably unnecessary, because the only modifiers that can be "deactivated" are buttons. And since there's only one clickCycle, any buttons modifying the current one should already be zombified)
+            ///
             Modifiers.handleModificationHasBeenUsed()
         })
         

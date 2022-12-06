@@ -162,11 +162,11 @@ import CocoaLumberjackSwift
                 precise = false
                 useDisplaySize = false
                 
-                /// Make fast scroll easy to trigger
-                new.consecutiveScrollSwipeMaxInterval *= 1.2;
-                new.consecutiveScrollTickIntervalMax *= 1.2;
+                /// Configure fastScroll
+                new.consecutiveScrollSwipeMaxInterval = 725.0/1000.0
+                new.consecutiveScrollTickIntervalMax = 200.0/1000.0
+                new.consecutiveScrollSwipeMinTickSpeed = 12.0
                 
-                /// Amp up fast scroll
                 new.fastScrollThreshold_inSwipes = 2;
                 new.fastScrollSpeedup = 20;
                 
@@ -276,23 +276,7 @@ import CocoaLumberjackSwift
     
     // MARK: Analysis
     
-    /// Note:
-    ///     We tuned all these parameters for highInertia. However, they made fastScroll feel bad for lowInertia, so we added all these `switch animationCurveName` statements as a bandaid. to make lowInertia feel good, too.
-    ///     TODO: Think about: 1. Is this elegant? 2. What about the inertias between high and low? Is fast scroll even used with any of them?
-    
     @objc lazy var scrollSwipeThreshold_inTicks: Int = 2 /*other["scrollSwipeThreshold_inTicks"] as! Int;*/ /// If `scrollSwipeThreshold_inTicks` consecutive ticks occur, they are deemed a scroll-swipe.
-    
-    @objc lazy var fastScrollThreshold_inSwipes: Int = { /// On the `fastScrollThreshold_inSwipes`th consecutive swipe, fast scrolling kicks in
-        /*other["fastScrollThreshold_inSwipes"] as! Int*/
-            
-        switch animationCurve {
-        case kMFScrollAnimationCurveNameHighInertia, kMFScrollAnimationCurveNameQuickScroll:
-            return 3
-        default:
-            return 4
-            
-        }
-    }()
     
     @objc lazy var scrollSwipeMax_inTicks: Int = 11 /// Max number of ticks that we think can occur in a single swipe naturally (if the user isn't using a free-spinning scrollwheel). (See `consecutiveScrollSwipeCounter_ForFreeScrollWheel` definition for more info)
     
@@ -309,29 +293,36 @@ import CocoaLumberjackSwift
     @objc lazy var consecutiveScrollSwipeMaxInterval: TimeInterval = {
         /// If more than `_consecutiveScrollSwipeIntervalMax` seconds passes between two scrollwheel swipes, then they aren't deemed consecutive.
         
-        /// Not sure this switch makes sense. Quick bandaid. Might wanna change.
-        
-        switch animationCurve {
-        case kMFScrollAnimationCurveNameNone:
-            return 350.0/1000.0
-        case kMFScrollAnimationCurveNameLowInertia, kMFScrollAnimationCurveNameNoInertia, kMFScrollAnimationCurveNameTouchDriver, kMFScrollAnimationCurveNameTouchDriverLinear, kMFScrollAnimationCurveNamePreciseScroll:
-            return 350.0/1000.0
-        case kMFScrollAnimationCurveNameMediumInertia:
-            return 475.0/1000.0
-        case kMFScrollAnimationCurveNameHighInertia, kMFScrollAnimationCurveNameHighInertiaPlusTrackpadSim, kMFScrollAnimationCurveNameQuickScroll:
-            return 600.0/1000.0
-        default:
-            fatalError()
+        let result = SharedUtilitySwift.eval {
+            
+            switch animationCurve {
+            case kMFScrollAnimationCurveNameNone: 325.0
+            case kMFScrollAnimationCurveNameLowInertia: 375.0
+            case kMFScrollAnimationCurveNameHighInertia, kMFScrollAnimationCurveNameHighInertiaPlusTrackpadSim: 600.0
+            case kMFScrollAnimationCurveNameTouchDriver, kMFScrollAnimationCurveNameTouchDriverLinear: 375.0
+            case kMFScrollAnimationCurveNamePreciseScroll, kMFScrollAnimationCurveNameQuickScroll: 0.1234 /// Will be overriden
+            default: -1.0
+            }
         }
+        assert(result != -1.0)
+        return result/1000.0
     }()
     
     @objc lazy var consecutiveScrollSwipeMinTickSpeed: Double = {
-        switch animationCurve {
-        case kMFScrollAnimationCurveNameHighInertia, kMFScrollAnimationCurveNameQuickScroll:
-            return 12.0
-        default:
-            return 16.0
+        /// The ticks per second need to be at least `consecutiveScrollSwipeMinTickSpeed` to register a series of scrollswipes as consecutive
+        
+        let result = SharedUtilitySwift.eval {
+            switch animationCurve {
+            case kMFScrollAnimationCurveNameNone: 16.0
+            case kMFScrollAnimationCurveNameLowInertia: 16.0
+            case kMFScrollAnimationCurveNameHighInertia, kMFScrollAnimationCurveNameHighInertiaPlusTrackpadSim: 12.0
+            case kMFScrollAnimationCurveNameTouchDriver, kMFScrollAnimationCurveNameTouchDriverLinear: 16.0
+            case kMFScrollAnimationCurveNamePreciseScroll, kMFScrollAnimationCurveNameQuickScroll: 0.1234 /// Will be overriden
+            default: -1.0
+            }
         }
+        assert(result != -1.0)
+        return result
     }()
     
     @objc lazy private var consecutiveScrollTickInterval_AccelerationEnd: TimeInterval = consecutiveScrollTickIntervalMin
@@ -349,20 +340,50 @@ import CocoaLumberjackSwift
     // MARK: Fast scroll
     /// See the function on Desmos: https://www.desmos.com/calculator/e3qhvipmu0
     
-    @objc lazy var fastScrollFactor = 1.0 /*other["fastScrollFactor"] as! Double*/
+    @objc lazy var fastScrollFactor = 1.1 /*other["fastScrollFactor"] as! Double*/
     /// ^ With the introduction of fastScrollSpeedup, this should always be 1.0. (So that the speedup is even and doesn't have a dip/hump at the start?)
+    ///     Edit: In MMF 2 it was 1.1. Desmos says lower values and higher `fastScrollSpeedUp` values make the start of the curve slower compared to the end
     
     @objc lazy var fastScrollExponentialBase = 1.1 /* other["fastScrollExponentialBase"] as! Double; */
-    /// ^ This seems to do the same thing as `fastScrollSpeedup`. Setting it close to 1 makes fastScrollSpeeup less sensitive. which allows us to be more precise
-    ///     Needs to be > 1 for there to be any speedup
+    /// ^ This seems to do the exact same thing as `fastScrollSpeedup` looking at Desmos. Setting it close to 1 makes fastScrollSpeeup less sensitive. which allows us to be more precise
+    ///     Needs to be > 1 for there to be any speedup.
     
     @objc lazy var fastScrollSpeedup: Double = { /// Needs to be > 0 for there to be any speedup
-        switch animationCurve {
-        case kMFScrollAnimationCurveNameHighInertia, kMFScrollAnimationCurveNameQuickScroll:
-            return 7.0
-        default:
-            return 5.0
+        
+        let result = SharedUtilitySwift.eval {
+            switch animationCurve {
+            case kMFScrollAnimationCurveNameNone: 3.0
+            case kMFScrollAnimationCurveNameLowInertia: 3.0
+            case kMFScrollAnimationCurveNameHighInertia, kMFScrollAnimationCurveNameHighInertiaPlusTrackpadSim: 7.0
+            case kMFScrollAnimationCurveNameTouchDriver, kMFScrollAnimationCurveNameTouchDriverLinear: 3.0
+            case kMFScrollAnimationCurveNamePreciseScroll, kMFScrollAnimationCurveNameQuickScroll: 0.1234 /// Will be overriden
+            default: -1.0
+            }
         }
+        assert(result != -1.0)
+        
+        return result
+    }()
+    
+    @objc lazy var fastScrollThreshold_inSwipes: Int = { /// On the `fastScrollThreshold_inSwipes`th consecutive swipe, fast scrolling kicks in
+        
+        /// We're using this to configure how far the user must've scrolled before fastScroll starts kicking in.
+        // TODO: Refactor this:
+        /// It would probably be better to have an explicit mechanism that counts how many pixels the user has scrolled already and then lets fastScroll kick in after a threshold is reached. That would also scale with the scrollSpeed setting. These current `fastScrollSpeedup` values are chosen so you don't accidentally trigger it at the lowest scrollSpeed, but they could be higher at higher scrollspeeds.
+        
+        let result = SharedUtilitySwift.eval {
+            
+            switch animationCurve {
+            case kMFScrollAnimationCurveNameNone: 8
+            case kMFScrollAnimationCurveNameLowInertia: 4
+            case kMFScrollAnimationCurveNameHighInertia, kMFScrollAnimationCurveNameHighInertiaPlusTrackpadSim: 3
+            case kMFScrollAnimationCurveNameTouchDriver, kMFScrollAnimationCurveNameTouchDriverLinear: 4
+            case kMFScrollAnimationCurveNamePreciseScroll, kMFScrollAnimationCurveNameQuickScroll: 0 /// Will be overriden
+            default: -1
+            }
+        }
+        assert(result != -1)
+        return result
     }()
     
     // MARK: Animation curve
