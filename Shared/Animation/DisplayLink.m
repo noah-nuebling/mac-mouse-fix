@@ -284,6 +284,19 @@ typedef enum {
     return [DisplayLink identifierForDisplayLink:_displayLink];
 }
 
+- (CFTimeInterval)bestTimeBetweenFramesEstimate {
+    
+    /// This normally returns the actual timeBetweenFrames.
+    /// But if the displayLink is not running, yet the actual timeBetweenFrames is 0.0, so in that case it returns the nominal timeBetweenFrames.
+    
+    double t = CVDisplayLinkGetActualOutputVideoRefreshPeriod(_displayLink);
+    if (t == 0) {
+        CVTime tCV = CVDisplayLinkGetNominalOutputVideoRefreshPeriod(_displayLink);
+        t = (tCV.timeValue / (double)tCV.timeScale);
+    }
+    return t;
+}
+
 - (CFTimeInterval)timeBetweenFrames {
     double t = CVDisplayLinkGetActualOutputVideoRefreshPeriod(_displayLink);
     return t;

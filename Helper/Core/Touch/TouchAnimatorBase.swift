@@ -66,7 +66,7 @@ import QuartzCore
     
     /// Vars - Init
     
-    let displayLink: DisplayLink
+    @objc let displayLink: DisplayLink
     /*@Atomic*/ var clientCallback: UntypedAnimatorCallback?
     /// ^ This is constantly accessed by subclassHook() and constantly written to by startWithUntypedCallback(). Becuase Swift is stinky and not thread safe, the app will sometimes crash, when this property is read from and written to at the same time. So we're using @Atomic propery wrapper
     ///  Edit: Atomic makes writing to this super slow we're locking everything with displayLink.queue now so it shouldn't be necessary. Disabling @Atomc now.
@@ -89,7 +89,8 @@ import QuartzCore
     
     /// Vars - Start & stop
     
-    var animationDurationRaw: CFTimeInterval = 0
+    var animationDurationRaw: CFTimeInterval? = 0
+    var animationDurationRawInFrames: Int? = 0
     var animationDuration: CFTimeInterval = 0
     var animationStartTime: CFTimeInterval = 0
     var animationEndTime: CFTimeInterval { animationStartTime + animationDuration }
@@ -200,15 +201,17 @@ import QuartzCore
                 }
             }
             
-            let durationRaw = p.object(forKey: "duration") as! Double
+            let durationRaw = p.object(forKey: "duration") as! Double?
+            let durationRawInFrames = p.object(forKey: "durationInFrames") as! Int?
             let vector = vectorFromNSValue(p.object(forKey: "vector") as! NSValue) as Vector
             let curve = p.object(forKey: "curve") as! Curve
             
-            self.startWithUntypedCallback_Unsafe(durationRaw: durationRaw, value: vector, animationCurve: curve, callback: callback);
+            self.startWithUntypedCallback_Unsafe(durationRaw: durationRaw, durationRawInFrames: durationRawInFrames, value: vector, animationCurve: curve, callback: callback);
         }
     }
     
-    internal func startWithUntypedCallback_Unsafe(durationRaw: CFTimeInterval,
+    internal func startWithUntypedCallback_Unsafe(durationRaw: CFTimeInterval?,
+                                                  durationRawInFrames: Int?,
                                                   value: Vector,
                                                   animationCurve: Curve,
                                                   callback: UntypedAnimatorCallback) {
@@ -223,7 +226,12 @@ import QuartzCore
         
         /// Validate
         
-        assert(!durationRaw.isNaN && durationRaw.isFinite && durationRaw >= 0)
+        assert((durationRaw == nil) != (durationRawInFrames == nil))
+        if let durationRaw = durationRaw {
+            assert(!durationRaw.isNaN && durationRaw.isFinite && durationRaw > 0)
+        } else if let durationInFrames = durationRawInFrames {
+            assert(durationInFrames > 0);
+        }
         
         /// Store args
         
@@ -265,6 +273,7 @@ import QuartzCore
             animationStartTime = lastFrameTime
             animationDuration = -1
             animationDurationRaw = durationRaw
+            animationDurationRawInFrames = durationRawInFrames
             animationValueTotal = value
             
         } else {
@@ -273,6 +282,7 @@ import QuartzCore
             animationStartTime = -1
             animationDuration = -1
             animationDurationRaw = durationRaw
+            animationDurationRawInFrames = durationRawInFrames
             animationValueTotal = value
             
             /// Start displayLink
@@ -291,14 +301,6 @@ import QuartzCore
                  */
             })
         }
-        
-        /// Limit animationDuration
-        ///  Note: With fastScroll the animationDuration can become absurdly large - easily several hours. Especially on a free spinning wheel. So we limit the duration here.
-        if animationDurationRaw > maxAnimationDuration { animationDurationRaw = maxAnimationDuration }
-        
-        /// Debug
-    
-        DDLogDebug("TouchAnimator animationDurationRaw: \(animationDurationRaw)")
     }
     
     /// Cancel
@@ -431,7 +433,7 @@ import QuartzCore
         /// Debug
         
         if isFirstDisplayLinkCallback_AfterRunningStart || isFirstDisplayLinkCallback_AfterColdStart {
-            DDLogDebug("inside-animator - start")
+            DDLogDebug("inside-animator - start \(isFirstDisplayLinkCallback_AfterRunningStart ? "(running)" : "(cold)")")
         }
         
         DDLogDebug("\nAnimation value total: (\(animationValueTotal.x), \(animationValueTotal.y)), left: (\(animationValueLeft_Unsafe.x), \(animationValueLeft_Unsafe.y))")
@@ -476,8 +478,20 @@ import QuartzCore
             ///     This is so that the last timeDelta is the same size as all the others
             ///     Doing this in start() would be easier but leads to deadlocks
             
-            self.animationDuration = ModificationUtility.roundUp(animationDurationRaw, toMultiple: displayLink.nominalTimeBetweenFrames())
+            if let animationDurationRaw = animationDurationRaw {
+                self.animationDuration = ModificationUtility.roundUp(animationDurationRaw, toMultiple: displayLink.nominalTimeBetweenFrames())
+            } else if let animationDurationRawInFrames = animationDurationRawInFrames {
+                self.animationDuration = Double(animationDurationRawInFrames) * displayLink.nominalTimeBetweenFrames()
+            } else {
+                assert(false)
+            }
+            
+            /// Validate
             assert(self.animationDuration >= 0)
+            
+            /// Limit animationDuration
+            ///  Note: With fastScroll the animationDuration can become absurdly large - easily several hours. Especially on a free spinning wheel. So we limit the duration here.
+            if animationDuration > maxAnimationDuration { animationDuration = maxAnimationDuration }
         }
         
         /// Set phase to end

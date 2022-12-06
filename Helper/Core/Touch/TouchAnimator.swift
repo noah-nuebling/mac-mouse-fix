@@ -96,7 +96,7 @@ class TouchAnimator: TouchAnimatorBase {
             
             /// Start animator
             
-            super.startWithUntypedCallback_Unsafe(durationRaw: p["duration"] as! Double, value: vectorFromNSValue(p["vector"] as! NSValue), animationCurve: p["curve"] as! Curve, callback: integerCallback)
+            super.startWithUntypedCallback_Unsafe(durationRaw: p["duration"] as! Double?, durationRawInFrames: p["durationInFrames"] as! Int?, value: vectorFromNSValue(p["vector"] as! NSValue), animationCurve: p["curve"] as! Curve, callback: integerCallback)
             
             /// Debug
             

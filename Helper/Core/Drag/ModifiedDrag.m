@@ -98,7 +98,7 @@ static ModifiedDragState _drag;
     ///     This allows us to process events in the right order
     ///     When the eventTap and the deactivate function are driven by different threads or whatever then the deactivation can happen before we've processed all the events. This allows us to avoid that issue
     dispatch_queue_attr_t attr = dispatch_queue_attr_make_with_qos_class(DISPATCH_QUEUE_SERIAL, QOS_CLASS_USER_INTERACTIVE, -1);
-    _drag.queue = dispatch_queue_create("com.nuebling.mac-mouse-fix.helper.momentum-scroll", attr);
+    _drag.queue = dispatch_queue_create("com.nuebling.mac-mouse-fix.helper.modified-drag", attr);
     
     /// Set usage threshold
     _drag.usageThreshold = 7; // 20, 5
