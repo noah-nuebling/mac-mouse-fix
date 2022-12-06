@@ -26,6 +26,7 @@ import QuartzCore
     ///     But to avoid race-conditions, we can't just externally execute this, so we to pass in a callback that can execute custom logic to get the start params right before the animator is started
     typealias MFAnimatorStartParams = NSDictionary ///`Dictionary<String, Any>` `<-` Using Swift dict was slow for interop with ObjC due to autobridging
     /// ^ 4 keys: "doStart", "duration", "vector", "curve"
+    ///     I tried moving this to a custom dataStorage class instead of a dict for optimization, but that somehow made things even slower. Maybe I did it wrong. See commit d64517dd0f7e7cddf46b305c354665c2d3223888
     
     /// Conversion
     
