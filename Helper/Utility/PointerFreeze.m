@@ -124,7 +124,7 @@ static int64_t _lastEventDelta;
             _puppetCursorPosition = origin;
             
             /// Get display under mouse pointer
-            CVReturn rt = [SharedUtility display:&_display atPoint:_origin];
+            CVReturn rt = [HelperUtility display:&_display atPoint:_origin];
             if (rt != kCVReturnSuccess) DDLogWarn(@"Couldn't get display under mouse pointer in PointerFreeze");
             
             /// Draw puppet cursor before hiding
@@ -279,6 +279,7 @@ typedef enum {
 static MFEventSuppressionInterval _previousMFSuppressionInterval = kMFEventSuppressionIntervalDefault;
 static CFTimeInterval _defaultSuppressionInterval = 0.25;
 void setSuppressionInterval(MFEventSuppressionInterval mfInterval) {
+    
     /// We use CGWarpMousePointer to keep the pointer from moving during simulated touchScroll.
     ///     However, after that, the cursor will freeze for like half a second which is annoying.
     ///     To avoid this we need to set the CGEventSuppressionInterval to 0
@@ -322,13 +323,19 @@ void setSuppressionInterval(MFEventSuppressionInterval mfInterval) {
     
     /// Store previous mfInterval
     _previousMFSuppressionInterval = mfInterval;
+    
+    /// Release
+    CFRelease(src);
 }
 
 void setSuppressionIntervalWithTimeInterval(CFTimeInterval interval) {
     
+    /// Get src
     CGEventSourceRef src = CGEventSourceCreate(kCGEventSourceStateCombinedSessionState);
     /// Set new suppressionInterval
     CGEventSourceSetLocalEventsSuppressionInterval(src, interval);
+    /// Release
+    CFRelease(src);
 }
 
 /// Puppet cursor

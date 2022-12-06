@@ -383,7 +383,7 @@ static void updateBorderColor(RemapTableController *object, BOOL isInitialAppear
     /// Similar to what we do in `- viewDidLoad`
         
     /// Capture notifs
-    NSSet<NSNumber *> *capturedButtonsBefore = [RemapTableUtility getCapturedButtons];
+//    NSSet<NSNumber *> *capturedButtonsBefore = [RemapTableUtility getCapturedButtons];
     
     /// Get old rows
     NSIndexSet *allRowsOld = [NSIndexSet indexSetWithIndexesInRange:NSMakeRange(0, self.groupedDataModel.count)];
@@ -424,31 +424,31 @@ static void updateBorderColor(RemapTableController *object, BOOL isInitialAppear
     }
 }
 
-- (NSArray<NSTableViewRowAction *> *)tableView:(NSTableView *)tableView rowActionsForRow:(NSInteger)row edge:(NSTableRowActionEdge)edge {
-        
-    /// Define swipe actions
-    
-    return nil;
-    
-    if ((NO)) {
-        
-        NSMutableArray *result = [NSMutableArray array];
-        
-        if (edge == NSTableRowActionEdgeTrailing) {
-            
-            NSTableViewRowAction *deleteAction = [NSTableViewRowAction rowActionWithStyle:NSTableViewRowActionStyleDestructive title:@"Delete" handler:^(NSTableViewRowAction * _Nonnull action, NSInteger row) {
-                [self removeRow:row];
-            }];
-            if (@available(macOS 11.0, *)) {
-                deleteAction.image = [NSImage imageWithSystemSymbolName:@"trash.fill" accessibilityDescription:@"Delete"];
-            }
-            
-            [result addObject:deleteAction];
-        }
-        
-        return result;
-    }
-}
+//- (NSArray<NSTableViewRowAction *> *)tableView:(NSTableView *)tableView rowActionsForRow:(NSInteger)row edge:(NSTableRowActionEdge)edge {
+//        
+//    /// Define swipe actions
+//    
+//    return nil;
+//    
+//    if ((NO)) {
+//        
+//        NSMutableArray *result = [NSMutableArray array];
+//        
+//        if (edge == NSTableRowActionEdgeTrailing) {
+//            
+//            NSTableViewRowAction *deleteAction = [NSTableViewRowAction rowActionWithStyle:NSTableViewRowActionStyleDestructive title:@"Delete" handler:^(NSTableViewRowAction * _Nonnull action, NSInteger row) {
+//                [self removeRow:row];
+//            }];
+//            if (@available(macOS 11.0, *)) {
+//                deleteAction.image = [NSImage imageWithSystemSymbolName:@"trash.fill" accessibilityDescription:@"Delete"];
+//            }
+//            
+//            [result addObject:deleteAction];
+//        }
+//        
+//        return result;
+//    }
+//}
 
 #pragma mark - Observer
 

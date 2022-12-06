@@ -361,6 +361,7 @@ void handleMouseInputWhileInUse(int64_t deltaX, int64_t deltaY, CGEventRef event
 + (void (^ _Nullable)(void))suspend {
     
     /// This was used for OutputCoordinator stuff which is unused now. Can probably remove this
+    /// Also this creates a dangling pointer according to Xcode analyzer
     
     void (^ __block unsuspend)(void);
     unsuspend = nil;

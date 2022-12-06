@@ -25,12 +25,14 @@
     NSBundle *hhh;
     NSBundle *helperBundle;
     [self getBundlesForMainApp:&hhh helper:&helperBundle];
+    assert(helperBundle != nil);
     return helperBundle;
 }
 + (NSBundle *)mainAppBundle {
     NSBundle *mainAppBundle;
     NSBundle *hhh;
     [self getBundlesForMainApp:&mainAppBundle helper:&hhh];
+    assert(mainAppBundle != nil);
     return mainAppBundle;
 }
 /// Return bundle at the location at which the app was launched - even after the app has been moved while running

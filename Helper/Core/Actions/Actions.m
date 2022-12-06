@@ -313,7 +313,9 @@ BOOL getCharsForKeyCode(CGKeyCode keyCode, NSString **chars) {
     
     if (layout == NULL) {
         *chars = @"";
-        CFRelease(inputSource);
+        if (inputSource != NULL) {
+            CFRelease(inputSource);
+        }
         return NO;
     }
     

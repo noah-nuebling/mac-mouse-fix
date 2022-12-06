@@ -39,9 +39,6 @@ bool runningMainApp(void);
 bool runningHelper(void);
 //bool runningAccomplice(void);
 
-+ (CVReturn)displayUnderMousePointer:(CGDirectDisplayID *)dspID withEvent:(CGEventRef _Nullable)event;
-+ (CVReturn)display:(CGDirectDisplayID *)dspID atPoint:(CGPoint)point;
-
 + (id)getPrivateValueOf:(id)obj forName:(NSString *)name;
 + (NSString *)dumpClassInfo:(id)obj;
 + (NSString *)launchCLT:(NSURL *)executableURL withArguments:(NSArray<NSString *> *)arguments error:(NSError ** _Nullable)error;

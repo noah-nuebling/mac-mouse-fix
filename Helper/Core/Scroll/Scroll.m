@@ -357,7 +357,7 @@ static void heavyProcessing(CGEventRef event, int64_t scrollDeltaAxis1, int64_t 
         
         /// Get display  under mouse pointer
         CGDirectDisplayID displayID;
-        [SharedUtility displayUnderMousePointer:&displayID withEvent:event];
+        [HelperUtility displayUnderMousePointer:&displayID withEvent:event];
         
         /// Get scrollConfig
         _scrollConfig = [ScrollConfig scrollConfigWithModifiers:newMods inputAxis:inputAxis display:displayID];

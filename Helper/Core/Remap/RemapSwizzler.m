@@ -205,7 +205,7 @@ static NSDictionary *_Nullable subsetSwizzler(NSDictionary *remaps, NSDictionary
     /// Apply modifications in order of their precond size
     
     NSDictionary *combinedScrollMods = [NSMutableDictionary dictionary];
-    NSDictionary *combinedDragMods = [NSMutableDictionary dictionary];
+    NSDictionary *combinedDragMods;
     NSDictionary *combinedButtonMods = [NSMutableDictionary dictionary];
     
     /// Scroll

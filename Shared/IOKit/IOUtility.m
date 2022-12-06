@@ -133,8 +133,8 @@ clean_up:
     /// Release stuff
     /// Not sure if necessary because none of these were created by a function with `create` or `copy` in its name (see CreateRule)
     
-    CFRelease(entryIDCF);
-    CFRelease(idMatching);
+//    CFRelease(entryIDCF); /// Xcode analyzer says we don't own this. Makes sense since it's a CF type obtained with a 'Get' function
+//    CFRelease(idMatching); /// Reference is consumed by `IOServiceGetMatchingService()`
     IOObjectRelease(serviceClientService);
     
     /// Return
