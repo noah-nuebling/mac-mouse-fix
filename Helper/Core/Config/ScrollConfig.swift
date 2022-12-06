@@ -547,13 +547,14 @@ fileprivate func animationCurveParamsMap(name: MFScrollAnimationCurveName) -> MF
         return MFScrollAnimationCurveParameters(baseCurve: ScrollConfig.linearCurve, baseMsPerStep: 190, dragExponent: 1.0, dragCoefficient: 17, stopSpeed: 50, sendGestureScrolls: false, sendMomentumScrolls: false)
         
     case kMFScrollAnimationCurveNameHighInertia:
-        /// Snappiest curve that can be used to send momentumScrolls.
+        /// - Snappiest curve that can be used to send momentumScrolls.
         ///    If you make it snappier then it will cut off the built-in momentumScroll in apps like Xcode
-        return MFScrollAnimationCurveParameters(baseCurve: ScrollConfig.linearCurve, baseMsPerStep: /*205*/240, dragExponent: 0.7, dragCoefficient: 40, stopSpeed: /*50*/30, sendGestureScrolls: false, sendMomentumScrolls: false)
+        /// - We tried setting baseMsPerStep 205 -> 240, which lets medium scroll speed look slightly smoother since you can't tell the ticks apart, but it takes longer until text becomes readable again so I think I like it less.
+        return MFScrollAnimationCurveParameters(baseCurve: ScrollConfig.linearCurve, baseMsPerStep: 205/*240*/, dragExponent: 0.7, dragCoefficient: 40, stopSpeed: /*50*/30, sendGestureScrolls: false, sendMomentumScrolls: false)
         
     case kMFScrollAnimationCurveNameHighInertiaPlusTrackpadSim:
         /// Same as highInertia curve but with full trackpad simulation. The trackpad sim stuff doesn't really belong here I think.
-        return MFScrollAnimationCurveParameters(baseCurve: ScrollConfig.linearCurve, baseMsPerStep: /*205*/240, dragExponent: 0.7, dragCoefficient: 40, stopSpeed: /*50*/30, sendGestureScrolls: true, sendMomentumScrolls: true)
+        return MFScrollAnimationCurveParameters(baseCurve: ScrollConfig.linearCurve, baseMsPerStep: 205/*240*/, dragExponent: 0.7, dragCoefficient: 40, stopSpeed: /*50*/30, sendGestureScrolls: true, sendMomentumScrolls: true)
         
     /// --- Dynamically applied ---
         
@@ -668,7 +669,7 @@ fileprivate func getAccelerationCurve(forSpeed speedArg: MFScrollSpeed, precise:
         
         /// At the time of writing, this is an exact copy of the `regular` smoothness acceleration curves. Not totally sure if that makes sense. One reason I can come up with for adjusting this to the user's scroll speed settings is that the user might use the scroll speed settings to compensate for differences in their physical scrollwheel and therefore the speed should apply to everything they do with the scrollwheel
         
-        minSens =   CombinedLinearCurve(yValues: [30.0, 60.0, 120.0]).evaluate(atX: minSend_n)
+        minSens =   CombinedLinearCurve(yValues: [45.0, 60.0, 90.0]).evaluate(atX: minSend_n)
         maxSens =   CombinedLinearCurve(yValues: [90.0, 120.0, 180.0]).evaluate(atX: maxSens_n)
         if !precise {
             curvature = CombinedLinearCurve(yValues: [0.25, 0.0, 0.0]).evaluate(atX: curvature_n)
