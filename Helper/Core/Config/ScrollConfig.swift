@@ -167,8 +167,7 @@ import CocoaLumberjackSwift
                 new.consecutiveScrollTickIntervalMax = 200.0/1000.0
                 new.consecutiveScrollSwipeMinTickSpeed = 12.0
                 
-                new.fastScrollThreshold_inSwipes = 2;
-                new.fastScrollSpeedup = 20;
+                new.fastScrollCurve = ScrollSpeedupCurve(swipeThreshold: 2, initialSpeedup: 2.0, exponentialSpeedup: 20)
                 
             } else if usePreciseMod {
                 
@@ -180,9 +179,7 @@ import CocoaLumberjackSwift
                 useDisplaySize = false
                 
                 /// Turn off fast scroll
-                new.fastScrollThreshold_inSwipes = 69; /// This is the haha sex number
-                new.fastScrollExponentialBase = 1.0;
-                new.fastScrollSpeedup = 0.0;
+                new.fastScrollCurve = ScrollSpeedupCurve(swipeThreshold: 69, initialSpeedup: 1.0, exponentialSpeedup: 0.0)
                 
             }
             
@@ -338,52 +335,37 @@ import CocoaLumberjackSwift
     ///     0.5 -> (Edit) I prefer smoother feel now in everything. 0.5 Makes short scroll swipes less accelerated which I like
     
     // MARK: Fast scroll
-    /// See the function on Desmos: https://www.desmos.com/calculator/e3qhvipmu0
     
-    @objc lazy var fastScrollFactor = 1.1 /*other["fastScrollFactor"] as! Double*/
-    /// ^ With the introduction of fastScrollSpeedup, this should always be 1.0. (So that the speedup is even and doesn't have a dip/hump at the start?)
-    ///     Edit: In MMF 2 it was 1.1. Desmos says lower values and higher `fastScrollSpeedUp` values make the start of the curve slower compared to the end
     
-    @objc lazy var fastScrollExponentialBase = 1.1 /* other["fastScrollExponentialBase"] as! Double; */
-    /// ^ This seems to do the exact same thing as `fastScrollSpeedup` looking at Desmos. Setting it close to 1 makes fastScrollSpeeup less sensitive. which allows us to be more precise
-    ///     Needs to be > 1 for there to be any speedup.
-    
-    @objc lazy var fastScrollSpeedup: Double = { /// Needs to be > 0 for there to be any speedup
+    @objc lazy var fastScrollCurve: ScrollSpeedupCurve? = {
         
-        let result = SharedUtilitySwift.eval {
-            switch animationCurve {
-            case kMFScrollAnimationCurveNameNone: 3.0
-            case kMFScrollAnimationCurveNameLowInertia: 3.0
-            case kMFScrollAnimationCurveNameHighInertia, kMFScrollAnimationCurveNameHighInertiaPlusTrackpadSim: 7.0
-            case kMFScrollAnimationCurveNameTouchDriver, kMFScrollAnimationCurveNameTouchDriverLinear: 3.0
-            case kMFScrollAnimationCurveNamePreciseScroll, kMFScrollAnimationCurveNameQuickScroll: 0.1234 /// Will be overriden
-            default: -1.0
-            }
-        }
-        assert(result != -1.0)
+        /// NOTES:
+        /// - We're using swipeThreshold to configure how far the user must've scrolled before fastScroll starts kicking in.
+        /// - It would probably be better to have an explicit mechanism that counts how many pixels the user has scrolled already and then lets fastScroll kick in after a threshold is reached. That would also scale with the scrollSpeed setting. These current `fastScrollSpeedup` values are chosen so you don't accidentally trigger it at the lowest scrollSpeed, but they could be higher at higher scrollspeeds.
+        /// - Fastscroll starts kicking in on the `swipeThreshold + 1` th scrollSwipe
         
-        return result
-    }()
-    
-    @objc lazy var fastScrollThreshold_inSwipes: Int = { /// On the `fastScrollThreshold_inSwipes`th consecutive swipe, fast scrolling kicks in
         
-        /// We're using this to configure how far the user must've scrolled before fastScroll starts kicking in.
-        // TODO: Refactor this:
-        /// It would probably be better to have an explicit mechanism that counts how many pixels the user has scrolled already and then lets fastScroll kick in after a threshold is reached. That would also scale with the scrollSpeed setting. These current `fastScrollSpeedup` values are chosen so you don't accidentally trigger it at the lowest scrollSpeed, but they could be higher at higher scrollspeeds.
-        
-        let result = SharedUtilitySwift.eval {
+        switch animationCurve {
             
-            switch animationCurve {
-            case kMFScrollAnimationCurveNameNone: 8
-            case kMFScrollAnimationCurveNameLowInertia: 4
-            case kMFScrollAnimationCurveNameHighInertia, kMFScrollAnimationCurveNameHighInertiaPlusTrackpadSim: 3
-            case kMFScrollAnimationCurveNameTouchDriver, kMFScrollAnimationCurveNameTouchDriverLinear: 4
-            case kMFScrollAnimationCurveNamePreciseScroll, kMFScrollAnimationCurveNameQuickScroll: 0 /// Will be overriden
-            default: -1
-            }
+        case kMFScrollAnimationCurveNameNone:
+            return ScrollSpeedupCurve(swipeThreshold: 8, initialSpeedup: 1.5, exponentialSpeedup: 3.0)
+            
+        case kMFScrollAnimationCurveNameLowInertia:
+            return ScrollSpeedupCurve(swipeThreshold: 4, initialSpeedup: 1.5, exponentialSpeedup: 3.0)
+            
+        case kMFScrollAnimationCurveNameHighInertia, kMFScrollAnimationCurveNameHighInertiaPlusTrackpadSim:
+            return ScrollSpeedupCurve(swipeThreshold: 3, initialSpeedup: 1.5, exponentialSpeedup: 7.0)
+            
+        case kMFScrollAnimationCurveNameTouchDriver, kMFScrollAnimationCurveNameTouchDriverLinear:
+            return ScrollSpeedupCurve(swipeThreshold: 4, initialSpeedup: 1.5, exponentialSpeedup: 3.0)
+            
+        case kMFScrollAnimationCurveNamePreciseScroll, kMFScrollAnimationCurveNameQuickScroll:
+            return nil as ScrollSpeedupCurve? /// Will be overriden
+        
+        default:
+            assert(false)
+            return nil as ScrollSpeedupCurve?
         }
-        assert(result != -1)
-        return result
     }()
     
     // MARK: Animation curve

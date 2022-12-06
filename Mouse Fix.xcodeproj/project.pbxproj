@@ -167,6 +167,7 @@
 		4FA83A29268271E200F3A31B /* PointerSpeed.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FA83A28268271E200F3A31B /* PointerSpeed.m */; };
 		4FA83A2E268288D900F3A31B /* PointerConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FA83A2D268288D900F3A31B /* PointerConfig.swift */; };
 		4FA8A30A28A9508C001E740F /* ButtonOptionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FA8A30828A9508C001E740F /* ButtonOptionsViewController.swift */; };
+		4FA9733B293F7643002B5C24 /* ScrollSpeedupCurve.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FA9733A293F7643002B5C24 /* ScrollSpeedupCurve.swift */; };
 		4FA994BE26678AC90007F003 /* ScrollAnalyzer.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FA994BD26678AC90007F003 /* ScrollAnalyzer.m */; };
 		4FAA5601293A41AF00BA782C /* BezierCappedAccelerationCurve.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FAA5600293A41AF00BA782C /* BezierCappedAccelerationCurve.swift */; };
 		4FAA5602293A41AF00BA782C /* BezierCappedAccelerationCurve.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FAA5600293A41AF00BA782C /* BezierCappedAccelerationCurve.swift */; };
@@ -580,6 +581,7 @@
 		4FA83A28268271E200F3A31B /* PointerSpeed.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PointerSpeed.m; sourceTree = "<group>"; };
 		4FA83A2D268288D900F3A31B /* PointerConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PointerConfig.swift; sourceTree = "<group>"; };
 		4FA8A30828A9508C001E740F /* ButtonOptionsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonOptionsViewController.swift; sourceTree = "<group>"; };
+		4FA9733A293F7643002B5C24 /* ScrollSpeedupCurve.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrollSpeedupCurve.swift; sourceTree = "<group>"; };
 		4FA994BC26678AC90007F003 /* ScrollAnalyzer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ScrollAnalyzer.h; sourceTree = "<group>"; };
 		4FA994BD26678AC90007F003 /* ScrollAnalyzer.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ScrollAnalyzer.m; sourceTree = "<group>"; };
 		4FAA5600293A41AF00BA782C /* BezierCappedAccelerationCurve.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BezierCappedAccelerationCurve.swift; sourceTree = "<group>"; };
@@ -2066,6 +2068,7 @@
 			isa = PBXGroup;
 			children = (
 				4F3A40B0266BBC5000436821 /* Curve.swift */,
+				4FA9733A293F7643002B5C24 /* ScrollSpeedupCurve.swift */,
 				4F8A8DC1287F967000786BCC /* TestAccelerationCurve.swift */,
 				4F8A8DBE287F7BBA00786BCC /* NaturalAccelerationCurve.swift */,
 				4FF93058288026FC0007CCA7 /* PolynomialCappedAccelerationCurve.swift */,
@@ -2559,6 +2562,7 @@
 				4F85C05528BBE6FA00E96E9C /* TrialSectionManager.swift in Sources */,
 				4F909D4828A0C4C2009349A2 /* Collection+Extensions.swift in Sources */,
 				4FF6669625F2C93A00689B77 /* Actions.m in Sources */,
+				4FA9733B293F7643002B5C24 /* ScrollSpeedupCurve.swift in Sources */,
 				4FF0254E27AFF90800923107 /* ModifiedDragOutputThreeFingerSwipe.m in Sources */,
 				4FCEDC96292EB41700E7DA2A /* DeviceManagerSwift.swift in Sources */,
 				4F44FF042606D73D00926A5E /* MFMessagePort.m in Sources */,

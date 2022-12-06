@@ -432,20 +432,10 @@ static void heavyProcessing(CGEventRef event, int64_t scrollDeltaAxis1, int64_t 
     /// Apply fast scroll to pxToScrollForThisTick
     ///
     
-    /// Get fast scroll config
-    int64_t fsThreshold = _scrollConfig.fastScrollThreshold_inSwipes;
-    double fsFactor = _scrollConfig.fastScrollFactor;
-    double fsBase = _scrollConfig.fastScrollExponentialBase;
-    double fsSpeedup = _scrollConfig.fastScrollSpeedup;
-    
     /// Evaluate fast scroll
-    
-    double fastScrollFactor = 1;
-    
-    double fastScrollThresholdDelta = (scrollAnalysisResult.consecutiveScrollSwipeCounter+1) - fsThreshold; /// +1 cause consecutiveScrollSwipeCounter starts counting at 0, and fsThreshold at 1
-    if (fastScrollThresholdDelta >= 0) {
-        fastScrollFactor = fsFactor * pow(fsBase, (fastScrollThresholdDelta+1)*fsSpeedup); /// +1 so fsSpeedup is always a factor
-    }
+    /// +1 cause consecutiveScrollSwipeCounter starts counting at 0, and fsThreshold at 1
+    double consecutiveSwipes = scrollAnalysisResult.consecutiveScrollSwipeCounter;
+    double fastScrollFactor = [_scrollConfig.fastScrollCurve evaluateAt:consecutiveSwipes+1];
     
     /// LImit fastScroll
     /// - Limit it to 100,000, which is still super extreme, but it can grow far FAR larger. Especially with a free spinning wheel.
@@ -459,7 +449,7 @@ static void heavyProcessing(CGEventRef event, int64_t scrollDeltaAxis1, int64_t 
     
     /// Debug
     
-    DDLogDebug(@"consecTicks: %lld, consecSwipes: %lld, consecSwipesFree: %f, fsThresholdDelta: %f fsFactor: %f", scrollAnalysisResult.consecutiveScrollTickCounter, scrollAnalysisResult.DEBUG_consecutiveScrollSwipeCounterRaw, scrollAnalysisResult.consecutiveScrollSwipeCounter, fastScrollThresholdDelta, fastScrollFactor);
+    DDLogDebug(@"consecTicks: %lld, consecSwipes: %lld, consecSwipesFree: %f, fsFactor: %f", scrollAnalysisResult.consecutiveScrollTickCounter, scrollAnalysisResult.DEBUG_consecutiveScrollSwipeCounterRaw, scrollAnalysisResult.consecutiveScrollSwipeCounter, fastScrollFactor);
     
     DDLogDebug(@"timeBetweenTicks: %f, timeBetweenTicksRaw: %f, diff: %f, ticks: %lld", scrollAnalysisResult.timeBetweenTicks, scrollAnalysisResult.DEBUG_timeBetweenTicksRaw, scrollAnalysisResult.timeBetweenTicks - scrollAnalysisResult.DEBUG_timeBetweenTicksRaw, scrollAnalysisResult.consecutiveScrollTickCounter);
     
