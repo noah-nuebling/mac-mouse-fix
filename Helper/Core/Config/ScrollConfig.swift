@@ -630,8 +630,6 @@ fileprivate func getAccelerationCurve(forSpeed speedArg: MFScrollSpeed, precise:
             fatalError()
         }
     }
-
-
     
     let speed_n = SharedUtilitySwift.eval {
         switch speedArg {
@@ -725,7 +723,7 @@ fileprivate func getAccelerationCurve(forSpeed speedArg: MFScrollSpeed, precise:
     
     if scaleToDisplay {
         
-        /// Get screenHeight summand
+        /// Get screenHeight factor
         let baseScreenSize = inputAxis == kMFAxisHorizontal ? 1920.0 : 1080.0
         let screenSizeFactor = Double(screenSize) / baseScreenSize
         
@@ -737,6 +735,7 @@ fileprivate func getAccelerationCurve(forSpeed speedArg: MFScrollSpeed, precise:
     }
     
     /// vv Old screenSizeFactor formula
+    ///     Replaced this with the new formula without in-depth testing, so this might be better
     
 //    if screenHeightFactor >= 1 {
 //        screenHeightSummand = 20*(screenHeightFactor - 1)
