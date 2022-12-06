@@ -77,7 +77,7 @@ import CocoaLumberjackSwift
             var precise = new.u_precise
             var useQuickMod = modifiers.inputMod == kMFScrollInputModificationQuick
             var usePreciseMod = modifiers.inputMod == kMFScrollInputModificationPrecise
-            var useDisplaySize = true
+            var scaleToDisplay = true
             var animationCurveOverride: MFScrollAnimationCurveName? = nil
             
             ///
@@ -92,34 +92,31 @@ import CocoaLumberjackSwift
             } else if modifiers.effectMod == kMFScrollEffectModificationZoom {
                 
                 /// Override animation curve
-                new.smoothEnabled = true;
-                animationCurveOverride = kMFScrollAnimationCurveNameTouchDriver;
+                animationCurveOverride = kMFScrollAnimationCurveNameTouchDriver
                 
                 /// Adjust speed params
-                useDisplaySize = false
+                scaleToDisplay = false
                 
             } else if modifiers.effectMod == kMFScrollEffectModificationRotate {
                 
                 /// Override animation curve
-                new.smoothEnabled = true;
-                animationCurveOverride = kMFScrollAnimationCurveNameTouchDriver;
+                animationCurveOverride = kMFScrollAnimationCurveNameTouchDriver
                 
                 /// Adjust speed params
-                useDisplaySize = false
+                scaleToDisplay = false
                 
             } else if modifiers.effectMod == kMFScrollEffectModificationCommandTab {
                 
-                new.smoothEnabled = false;
+                animationCurveOverride = kMFScrollAnimationCurveNameNone
                 
             } else if modifiers.effectMod == kMFScrollEffectModificationThreeFingerSwipeHorizontal {
                 
                 /// Override animation curve
-                new.smoothEnabled = true;
                 animationCurveOverride = kMFScrollAnimationCurveNameTouchDriverLinear;
                 
                 /// Adjust speed params
                 precise = false
-                useDisplaySize = false
+                scaleToDisplay = false
                 
                 /// Turn off inputMods
                 useQuickMod = false
@@ -128,12 +125,11 @@ import CocoaLumberjackSwift
             } else if modifiers.effectMod == kMFScrollEffectModificationFourFingerPinch {
                 
                 /// Override animation curve
-                new.smoothEnabled = true;
                 animationCurveOverride = kMFScrollAnimationCurveNameTouchDriverLinear;
                 
                 /// Adjust speed params
                 precise = false
-                useDisplaySize = false
+                scaleToDisplay = false
                 
                 /// Turn off inputMods
                 useQuickMod = false
@@ -161,7 +157,7 @@ import CocoaLumberjackSwift
                 
                 /// Adjust speed params
                 precise = false
-                useDisplaySize = false
+                scaleToDisplay = false /// Is scaled to windowSize instead
                 
                 /// Make fastScroll easier to trigger
                 new.consecutiveScrollSwipeMaxInterval = 725.0/1000.0
@@ -174,11 +170,18 @@ import CocoaLumberjackSwift
             } else if usePreciseMod {
                 
                 /// Set animationCurve
-                animationCurveOverride = kMFScrollAnimationCurveNamePreciseScroll
+                /// The idea is that:
+                /// - inputMods may only override effectMod animationCurve overrides, if that shortens the animation. Because you don't want long animations during scroll-to-zoom, scroll-to-reveal-desktop, etc.
+                /// - The precise input mod should never turn on smoothScrolling.
+                if (animationCurveOverride == nil && new.animationCurve != kMFScrollAnimationCurveNameNone)
+                    || (animationCurveOverride != nil && animationCurveOverride != kMFScrollAnimationCurveNameNone) {
+                    
+                    animationCurveOverride = kMFScrollAnimationCurveNamePreciseScroll
+                }
                 
                 /// Adjust speed params
                 precise = false
-                useDisplaySize = false
+                scaleToDisplay = false
                 
                 /// Turn off fast scroll
                 new.fastScrollCurve = ScrollSpeedupCurve(swipeThreshold: 69, initialSpeedup: 1.0, exponentialSpeedup: 0.0)
@@ -193,7 +196,7 @@ import CocoaLumberjackSwift
             
             /// Get speed
             if new.u_speed != kMFScrollSpeedSystem {
-                new.accelerationCurve = getAccelerationCurve(forSpeed: new.u_speed, precise: precise, smoothness: new.u_smoothness, animationCurve: new.animationCurve, inputAxis: inputAxis, display: display, scaleToDisplay: useDisplaySize, modifiers: modifiers, useQuickModSpeed: useQuickMod, usePreciseModSpeed: usePreciseMod, consecutiveScrollTickIntervalMax: new.consecutiveScrollTickIntervalMax, consecutiveScrollTickInterval_AccelerationEnd: new.consecutiveScrollTickInterval_AccelerationEnd)
+                new.accelerationCurve = getAccelerationCurve(forSpeed: new.u_speed, precise: precise, smoothness: new.u_smoothness, animationCurve: new.animationCurve, inputAxis: inputAxis, display: display, scaleToDisplay: scaleToDisplay, modifiers: modifiers, useQuickModSpeed: useQuickMod, usePreciseModSpeed: usePreciseMod, consecutiveScrollTickIntervalMax: new.consecutiveScrollTickIntervalMax, consecutiveScrollTickInterval_AccelerationEnd: new.consecutiveScrollTickInterval_AccelerationEnd)
             }
             
             /// Cache & return
@@ -218,16 +221,17 @@ import CocoaLumberjackSwift
 //                                                            "option" : CGEventFlags.maskAlternate,
 //                                                            "shift" : CGEventFlags.maskShift]
     
-    // MARK: General
+    // MARK: Derived
+    /// For convenience I guess? Should probably remove these
     
     
-    @objc lazy var smoothEnabled: Bool = {
+    @objc var smoothEnabled: Bool {
         /// Does this really have to exist?
-        return u_smoothness != kMFScrollSmoothnessOff
-    }()
-    @objc lazy var useAppleAcceleration: Bool = {
+        return _animationCurveName != kMFScrollAnimationCurveNameNone
+    }
+    @objc var useAppleAcceleration: Bool {
         return u_speed == kMFScrollSpeedSystem
-    }()
+    }
     
     // MARK: Invert Direction
     
@@ -648,7 +652,8 @@ fileprivate func getAccelerationCurve(forSpeed speedArg: MFScrollSpeed, precise:
     
     if useQuickModSpeed {
         
-        let windowSize = Double(screenSize)*0.85
+        var windowSize = Double(screenSize)*0.85 /// When we use unanimated line-scrolling this doesn't hold up, but I think we always animate when using quickMod
+        
         minSens = windowSize * 0.5 //100
         maxSens = windowSize * 1.5 //500
         curvature = 0.0
