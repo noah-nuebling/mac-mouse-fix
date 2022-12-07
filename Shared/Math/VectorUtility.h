@@ -8,7 +8,8 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "TransformationUtility.h"
+#import "ModificationUtility.h"
+#import "Shorthands.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -16,10 +17,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 typedef double (^OneDTransform)(double);
 
-typedef struct __Vector {
-    double x;
-    double y;
-} Vector;
+typedef CGPoint Vector; /// Can't typedef this to `P` for some reason
 
 Vector vectorByApplyingToEachDimension(Vector vec, OneDTransform f);
 Vector scaledVectorWithFunction(Vector vec, OneDTransform f);

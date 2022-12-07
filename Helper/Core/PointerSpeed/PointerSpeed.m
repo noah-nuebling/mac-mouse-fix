@@ -76,6 +76,8 @@ extern IOHIDServiceClientRef IOHIDEventSystemClientCopyServiceForRegistryID(IOHI
 //    CFDataRef table = createAccelerationTableWithPoints(points, pointCount, accelIndex);
     CFDataRef defaultTable = copyDefaultAccelerationTable();
     printAccelerationTable(defaultTable);
+    
+    CFRelease(defaultTable);
 }
 
 + (void)deconfigureDevice:(IOHIDDeviceRef)device {
@@ -202,8 +204,10 @@ static Boolean selectAccelCurveWithIndex(double accelerationPresetIndex, IOHIDSe
     /// - See NotePlan "MMF - Scraps - macOS Pointer Acceleration Investigation 11.06.2022" for more info
     
     /// Debug
-    NSString *accelType = (__bridge NSString *)IOHIDServiceClientCopyProperty(eventServiceClient, CFSTR(kIOHIDPointerAccelerationTypeKey));
-    DDLogDebug(@"Setting AccelCurve preset %f for eventServiceClient: %@ with kIOHIDPointerAccelerationTypeKey: %@", accelerationPresetIndex, eventServiceClient, accelType);
+    if (runningPreRelease()) {
+        NSString *accelType = (__bridge_transfer NSString *)IOHIDServiceClientCopyProperty(eventServiceClient, CFSTR(kIOHIDPointerAccelerationTypeKey));
+        DDLogDebug(@"Setting AccelCurve preset %f for eventServiceClient: %@ with kIOHIDPointerAccelerationTypeKey: %@", accelerationPresetIndex, eventServiceClient, accelType);
+    }
     
     /// Get accelerationPresetIndex as fixed point CFNumber
     CFNumberRef mouseAccelerationCF = (__bridge CFNumberRef)@(FloatToFixed(accelerationPresetIndex));
@@ -290,11 +294,14 @@ static Boolean parametricCurvesAreSet(IOHIDServiceClientRef serviceClient) {
     
     CFArrayRef parametricCurves = IOHIDServiceClientCopyProperty(serviceClient, CFSTR(kHIDAccelParametricCurvesKey));
     
-    if (parametricCurves == NULL) {
-        return false;
-    } else {
-        return true;
+    BOOL result = NO;
+    
+    if (parametricCurves != NULL) {
+        CFRelease(parametricCurves);
+        result = YES;
     }
+    
+    return result;
 }
 
 static Boolean setTableCurves(CFDataRef curves, IOHIDServiceClientRef serviceClient) {

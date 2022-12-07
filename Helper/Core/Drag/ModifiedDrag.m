@@ -12,14 +12,14 @@
 #import "ModifiedDrag.h"
 #import "ScrollModifiers.h"
 #import "GestureScrollSimulator.h"
-#import "ModifierManager.h"
+#import "Modifiers.h"
 
 #import "SubPixelator.h"
 #import <Cocoa/Cocoa.h>
 
-#import "TransformationUtility.h"
-#import "SharedMessagePort.h"
-#import "TransformationManager.h"
+#import "ModificationUtility.h"
+#import "MFMessagePort.h"
+#import "Remap.h"
 #import "SharedUtility.h"
 
 #import "HelperUtility.h"
@@ -36,23 +36,37 @@
 
 @implementation ModifiedDrag
 
+/// TODO: Rename this to just `Drag`
+
 /// Vars
 
 static ModifiedDragState _drag;
-static CGEventTapProxy _tapProxy;
 
-+ (CGEventTapProxy)tapProxy {
-    return _tapProxy;
-}
+//static CGEventTapProxy _tapProxy;
+
+//+ (CGEventTapProxy)tapProxy {
+//    return _tapProxy;
+//}
+
 
 /// Derived props
 
-+ (CGPoint)pseudoPointerPosition {
-    
-    return CGPointMake(_drag.origin.x + _drag.originOffset.x, _drag.origin.y + _drag.originOffset.y);
-}
+//+ (CGPoint)pseudoPointerPosition {
+//
+//    return CGPointMake(_drag.origin.x + _drag.originOffset.x, _drag.origin.y + _drag.originOffset.y);
+//}
 
 /// Debug
+
++ (void)activationStateWithCallback:(void (^)(MFModifiedInputActivationState))callback {
+    
+    /// We wanted to expose `_drag` to other modules for debugging, but `_drag` can't be exposed to Swift. Maybe because it contains an ObjC pointer`id`. Right now this is fine though because we only need the activationState for debugging anyways.
+    /// We need to retrieve this on the `_drag.queue` to avoid race conditions. But using `dispatch_sync` leads to loads of concurrency issues, so we're using a callback instead.
+    
+    dispatch_async(_drag.queue, ^{
+        callback(_drag.activationState);
+    });
+}
 
 + (NSString *)modifiedDragStateDescription:(ModifiedDragState)drag {
     NSString *output = @"";
@@ -63,12 +77,11 @@ static CGEventTapProxy _tapProxy;
         usageThreshold: %lld\n\
         type: %@\n\
         activationState: %u\n\
-        modifiedDevice: \n%@\n\
         origin: (%f, %f)\n\
         originOffset: (%f, %f)\n\
         usageAxis: %u\n\
         phase: %d\n",
-                  drag.eventTap, drag.usageThreshold, drag.type, drag.activationState, drag.modifiedDevice, drag.origin.x, drag.origin.y, drag.originOffset.x, drag.originOffset.y, drag.usageAxis, drag.firstCallback
+                  drag.eventTap, drag.usageThreshold, drag.type, drag.activationState, drag.origin.x, drag.origin.y, drag.originOffset.x, drag.originOffset.y, drag.usageAxis, drag.firstCallback
                   ];
     } @catch (NSException *exception) {
         DDLogInfo(@"Exception while generating string description of ModifiedDragState: %@", exception);
@@ -85,7 +98,7 @@ static CGEventTapProxy _tapProxy;
     ///     This allows us to process events in the right order
     ///     When the eventTap and the deactivate function are driven by different threads or whatever then the deactivation can happen before we've processed all the events. This allows us to avoid that issue
     dispatch_queue_attr_t attr = dispatch_queue_attr_make_with_qos_class(DISPATCH_QUEUE_SERIAL, QOS_CLASS_USER_INTERACTIVE, -1);
-    _drag.queue = dispatch_queue_create("com.nuebling.mac-mouse-fix.helper.momentum-scroll", attr);
+    _drag.queue = dispatch_queue_create("com.nuebling.mac-mouse-fix.helper.modified-drag", attr);
     
     /// Set usage threshold
     _drag.usageThreshold = 7; // 20, 5
@@ -100,7 +113,7 @@ static CGEventTapProxy _tapProxy;
         CGEventMask mask = CGEventMaskBit(kCGEventOtherMouseDragged) | CGEventMaskBit(kCGEventMouseMoved); /// kCGEventMouseMoved is only necessary for keyboard-only drag-modification (which we've disable because it had other problems), and maybe for AddMode to work.
         mask = mask | CGEventMaskBit(kCGEventLeftMouseDragged) | CGEventMaskBit(kCGEventRightMouseDragged); /// This is necessary for modified drag to work during a left/right click and drag. Concretely I added this to make drag and drop work. For that we only need the kCGEventLeftMouseDragged. Adding kCGEventRightMouseDragged is probably completely unnecessary. Not sure if there are other concrete applications outside of drag and drop.
         
-        CFMachPortRef eventTap = [TransformationUtility createEventTapWithLocation:location mask:mask option:option placement:placement callback:eventTapCallBack runLoop:GlobalEventTapThread.runLoop];
+        CFMachPortRef eventTap = [ModificationUtility createEventTapWithLocation:location mask:mask option:option placement:placement callback:eventTapCallBack runLoop:GlobalEventTapThread.runLoop];
         
         _drag.eventTap = eventTap;
     }
@@ -108,32 +121,44 @@ static CGEventTapProxy _tapProxy;
 
 /// Interface - start
 
-+ (NSDictionary *)initialModifiers {
-    
-    if (_drag.activationState == kMFModifiedInputActivationStateNone) {
-        return nil;
-    } else if (_drag.activationState == kMFModifiedInputActivationStateInitialized || _drag.activationState == kMFModifiedInputActivationStateInUse) {
-        return _drag.initialModifiers;
-    } else {
-        assert(false);
-    }
-}
+//+ (NSDictionary *)initialModifiers {
+//
+//    if (_drag.activationState == kMFModifiedInputActivationStateNone) {
+//        return nil;
+//    } else if (_drag.activationState == kMFModifiedInputActivationStateInitialized || _drag.activationState == kMFModifiedInputActivationStateInUse) {
+//        return _drag.initialModifiers;
+//    } else {
+//        assert(false);
+//    }
+//}
 
-+ (void)initializeDragWithDict:(NSDictionary *)effectDict initialModifiers:(NSDictionary *)modifiers onDevice:(Device *)dev {
++ (void)initializeDragWithDict:(NSDictionary *)effectDict MF_SWIFT_HIDDEN {
     
     dispatch_async(_drag.queue, ^{
         
         /// Debug
-        DDLogDebug(@"INITIALIZING MODIFIEDDRAG WITH previous type %@ activationState %d, newEffectDict: %@, modifiers: %@", _drag.type, _drag.activationState, effectDict, modifiers);
+        DDLogDebug(@"INITIALIZING MODIFIEDDRAG WITH previous type %@ activationState %d, newEffectDict: %@", _drag.type, _drag.activationState, effectDict);
+        
+        /// Guard state == inUse
+        ///  I think if state == initialized we don't need to do anything special
+        if (_drag.activationState == kMFModifiedInputActivationStateInUse) {
+            BOOL isSame = [effectDict isEqualToDictionary:_drag.effectDict];
+            BOOL isAddMode = [_drag.effectDict[kMFModifiedDragDictKeyType] isEqual:kMFModifiedDragTypeAddModeFeedback];
+            if (!isSame && !isAddMode) {
+//                deactivate_Unsafe(YES);
+                return;
+            } else {
+                return;
+            }
+        }
         
         /// Get type
         MFStringConstant type = effectDict[kMFModifiedDragDictKeyType];
         
-        /// Init static parts of _drag
-        _drag.modifiedDevice = dev;
+        /// Init static parts of `_drag`
         _drag.type = type;
         _drag.effectDict = effectDict;
-        _drag.initialModifiers = modifiers;
+//        _drag.initialModifiers = modifiers;
         _drag.initTime = CACurrentMediaTime();
         
         id<ModifiedDragOutputPlugin> p;
@@ -150,12 +175,16 @@ static CGEventTapProxy _tapProxy;
         }
         
         /// Link with plugin
-        [p initializeWithDragState:&_drag];
+//        [p initializeWithDragState:&_drag];
         _drag.outputPlugin = p;
         
         /// Init dynamic parts of _drag
         initDragState_Unsafe();
     });
+}
+
++ (void)__SWIFT_UNBRIDGED_initializeDragWithDict:(id)effectDict {
+    [self initializeDragWithDict:effectDict];
 }
 
 void initDragState_Unsafe(void) {
@@ -165,97 +194,106 @@ void initDragState_Unsafe(void) {
     _drag.activationState = kMFModifiedInputActivationStateInitialized;
     _drag.isSuspended = NO;
     
-    [_drag.outputPlugin initializeWithDragState:&_drag]; /// We just want to reset the plugin state here. The plugin will already hold ref to _drag. So this is not super pretty/semantic
+    [_drag.outputPlugin initializeWithDragState:&_drag]; /// We just want to reset the plugin state here. The plugin will already hold ref to `_drag`. So this is not super pretty/semantic
     
     CGEventTapEnable(_drag.eventTap, true);
     DDLogDebug(@"\nEnabled drag eventTap");
 }
 
-static CGEventRef __nullable eventTapCallBack(CGEventTapProxy proxy, CGEventType type, CGEventRef  event, void * __nullable userInfo) {
+static CGEventRef __nullable eventTapCallBack(CGEventTapProxy proxy, CGEventType type, CGEventRef event, void * __nullable userInfo) {
     
     /// Store proxy
-    _tapProxy = proxy;
+//    _tapProxy = proxy;
     
     /// Catch special events
-    if (type == kCGEventTapDisabledByTimeout) {
-        /// Re-enable on timeout (Not sure if this ever times out)
-        DDLogInfo(@"ModifiedDrag eventTap timed out. Re-enabling.");
-        CGEventTapEnable(_drag.eventTap, true);
-        return event;
-    } else if (type == kCGEventTapDisabledByUserInput) {
-        DDLogInfo(@"ModifiedDrag eventTap disabled by user input.");
+    if (type == kCGEventTapDisabledByTimeout || type == kCGEventTapDisabledByUserInput) {
+        
+        DDLogInfo(@"ModifiedDrag eventTap was disabled by %@", type == kCGEventTapDisabledByTimeout ? @"timeout. Re-enabling." : @"user input.");
+        
+        if (type == kCGEventTapDisabledByTimeout) {
+//            assert(false); /// Not sure this ever times out
+            CGEventTapEnable(_drag.eventTap, true);
+        }
+        
         return event;
     }
     
     /// Get deltas
+    /// These are truly integer values, I'm not rounding anything / losing any info here
+    /// However, the deltas seem to be pre-subpixelated, and often, both dx and dy are 0.
     
     int64_t dx = CGEventGetIntegerValueField(event, kCGMouseEventDeltaX);
     int64_t dy = CGEventGetIntegerValueField(event, kCGMouseEventDeltaY);
-    
-    /// ^ These are truly integer values, I'm not rounding anything / losing any info here
-    /// However, the deltas seem to be pre-subpixelated, and often, both dx and dy are 0.
     
     /// Debug
     
 //    DDLogDebug(@"modifiedDrag input: %lld %lld", dx, dy);
     
     /// Ignore event if both deltas are zero
-    ///     We do this so the phases for the gesture scroll simulation (aka twoFingerSwipe) make sense. The gesture scroll event with phase kIOHIDEventPhaseBegan should always have a non-zero delta. If we let through zero deltas here it messes those phases up.
-    ///     I think for all other types of modified drag (aside from gesture scroll simulation) this shouldn't break anything, either.
-    if (dx == 0 && dy == 0) return NULL;
+    /// - We do this so the phases for the gesture scroll simulation (aka twoFingerSwipe) make sense. The gesture scroll event with phase kIOHIDEventPhaseBegan should always have a non-zero delta. If we let through zero deltas here it messes those phases up. Now that we're dispatching throuch a TouchAnimator this shouldn't really matter but it doesn't hurt.
+    /// - I think for all other types of modified drag (aside from the gesture scroll simulation discussed above) this shouldn't break anything, either.
     
-    /// Make copy of event for _drag.queue
+    if (dx != 0 || dy != 0) {
+        
+        /// Make copy of event for _drag.queue
+        
+        CGEventRef eventCopy = CGEventCreateCopy(event);
+        
+        /// Do main processing on _drag.queue
+        
+        dispatch_async(_drag.queue, ^{
+            
+            /// Interrupt
+            ///     This handles race condition where _drag.eventTap is disabled right after eventTapCallBack() is called
+            ///     We implemented the same idea in PointerFreeze.
+            ///     Actually, the check for kMFModifiedInputActivationStateNone below has the same effect, but I think but this makes it clearer?
+            
+            if (!CGEventTapIsEnabled(_drag.eventTap)) {
+                return;
+            }
+            
+            /// Update originOffset
+            
+            _drag.originOffset.x += dx;
+            _drag.originOffset.y += dy;
+            
+            /// Suspension
+            if (_drag.isSuspended) return;
+            
+            /// Debug
+            DDLogDebug(@"ModifiedDrag handling mouseMoved");
+            
+            /// Call further handler functions depending on current state
+            
+            MFModifiedInputActivationState st = _drag.activationState;
+            
+            if (st == kMFModifiedInputActivationStateNone) {
+                
+                /// Disabling the callback triggers this function one more time apparently
+                ///     That's the only case I know where I expect this. Maybe we should log this to see what's going on.
+                
+            } else if (st == kMFModifiedInputActivationStateInitialized) {
+                
+                handleMouseInputWhileInitialized(dx, dy, eventCopy);
+                
+            } else if (st == kMFModifiedInputActivationStateInUse) {
+                
+                handleMouseInputWhileInUse(dx, dy, eventCopy);
+            }
+            
+        });
+    }
+        
+    /// Return mouseMoved event
+    /// Notes:
+    /// - Sending NULL here almost works perfectly, but in screenRecordings it will make the cursor jump. That's especially annoying for DisplayLink users
+    /// - The cursor jumping also goes away when you set the eventTap location to kCGAnnotatedSessionEventTap. The other two locations don't work.
+    /// - Sending mouseMoved here would interfere with fakeDrag output. How will we solve that?
+    /// - Just changing the type on the original event is a little hacky but it should work
+    /// - Sending these mouseMoved events doesn't interfere with freezing the pointer. Not sure why.
     
-    CGEventRef eventCopy = CGEventCreateCopy(event);
-    
-    /// Do main processing on _drag.queue
-    
-    dispatch_async(_drag.queue, ^{
-        
-        /// Interrupt
-        ///     This handles race condition where _drag.eventTap is disabled right after eventTapCallBack() is called
-        ///     We implemented the same idea in PointerFreeze.
-        ///     Actually, the check for kMFModifiedInputActivationStateNone below has the same effect, but I think but this makes it clearer?
-        
-        if (!CGEventTapIsEnabled(_drag.eventTap)) {
-            return;
-        }
-        
-        /// Update originOffset
-        
-        _drag.originOffset.x += dx;
-        _drag.originOffset.y += dy;
-        
-        /// Suspension
-        if (_drag.isSuspended) return;
-        
-        /// Debug
-        DDLogDebug(@"ModifiedDrag handling mouseMoved");
-        
-        /// Call further handler functions depending on current state
-        
-        MFModifiedInputActivationState st = _drag.activationState;
-        
-        if (st == kMFModifiedInputActivationStateNone) {
-            
-            /// Disabling the callback triggers this function one more time apparently
-            ///     That's the only case I know where I expect this. Maybe we should log this to see what's going on.
-            
-        } else if (st == kMFModifiedInputActivationStateInitialized) {
-            
-            handleMouseInputWhileInitialized(dx, dy, eventCopy);
-            
-        } else if (st == kMFModifiedInputActivationStateInUse) {
-            
-            handleMouseInputWhileInUse(dx, dy, eventCopy);
-        }
-        
-    });
-        
-    /// Return
-    ///     Sending `event` or NULL here doesn't seem to make a difference. If you alter the event and send that it does have an effect though?
-    
-    return NULL;
+    CGEventSetType(event, kCGEventMouseMoved);
+    return event;
 }
 
 static void handleMouseInputWhileInitialized(int64_t deltaX, int64_t deltaY, CGEventRef event) {
@@ -281,6 +319,13 @@ static void handleMouseInputWhileInitialized(int64_t deltaX, int64_t deltaY, CGE
         _drag.activationState = kMFModifiedInputActivationStateInUse;
         _drag.firstCallback = true;
         
+        /// Do deferred init
+        /// Could also do this in normal init `initializeDragWithDict`, but here is more effiicient (`initializeDragWithDict` is called on every mouse click if it's set up for that button)
+        /// -> Don't use `naturalDirection` before state switches to `kMFModifiedInputActivationStateInUse`!
+        /// TODO: Build UI for this
+        
+        _drag.naturalDirection = [NSUserDefaults.standardUserDefaults boolForKey:@"com.apple.swipescrolldirection"];
+        
         /// Notify output plugin
         [_drag.outputPlugin handleBecameInUse];
         
@@ -288,15 +333,20 @@ static void handleMouseInputWhileInitialized(int64_t deltaX, int64_t deltaY, CGE
         [TrialCounter.shared handleUse];
         
         /// Notify other modules
-        [ModifierManager handleModificationHasBeenUsedWithDevice:_drag.modifiedDevice];
-        (void)[OutputCoordinator suspendTouchDriversFromDriver:kTouchDriverModifiedDrag];
+        [Modifiers handleModificationHasBeenUsed];
+//        (void)[OutputCoordinator suspendTouchDriversFromDriver:kTouchDriverModifiedDrag];
     }
 }
 /// Only passing in event to obtain event location to get slightly better behaviour for fakeDrag
 void handleMouseInputWhileInUse(int64_t deltaX, int64_t deltaY, CGEventRef event) {
     
-    /// Notifiy plugin
+    /// Invert direction
+    if (!_drag.naturalDirection) {
+        deltaX = -deltaX;
+        deltaY = -deltaY;
+    }
     
+    /// Notifiy plugin
     [_drag.outputPlugin handleMouseInputWhileInUseWithDeltaX:deltaX deltaY:deltaY event:event];
     
     /// Update phase
@@ -309,6 +359,9 @@ void handleMouseInputWhileInUse(int64_t deltaX, int64_t deltaY, CGEventRef event
 }
 
 + (void (^ _Nullable)(void))suspend {
+    
+    /// This was used for OutputCoordinator stuff which is unused now. Can probably remove this
+    /// Also this creates a dangling pointer according to Xcode analyzer
     
     void (^ __block unsuspend)(void);
     unsuspend = nil;

@@ -169,6 +169,8 @@ class PointerConfig: NSObject {
         let nSamp = 1000
         
         /// Create polynomialCurve
+        // TODO: Move the degree interpolation into PolynomialCappedAccelerationCurve, and/or just use BezierCappeAccelerationCurve
+        
         /// Assert
         assert(1 <= n && n <= 3) /// Larger curvature might be nice but our polynomial regression breaks for n > 3
         /// Get interpolation params

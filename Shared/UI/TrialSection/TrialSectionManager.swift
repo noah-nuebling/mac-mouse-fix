@@ -16,25 +16,31 @@ class TrialSectionManager {
     
     var currentSection: TrialSection
     
-    private var isReplacing = false
-    private var shouldShowActivate = false
-    private var queuedReplace: (() -> ())? = nil
     private var initialSection: TrialSection? = nil
+    private var shouldShowAlternate = false
+    private var queuedReplace: (() -> ())? = nil
     private var animationInterruptor: (() -> ())? = nil
+    private var isReplacing = false
     
     /// Init
     
-    init(_ trialSection: TrialSection) {
+    init(_ initialSection: TrialSection) {
         
-        /// Store trial section
-        self.currentSection = trialSection
+        /// Store initialSection
+        self.initialSection = initialSection
+        
+        /// Fill out currentSection with garbage
+        self.currentSection = initialSection
     }
     
     /// Start and stop
     
     func startManaging(licenseConfig: LicenseConfig, license: MFLicenseAndTrialState) {
         
-        /// Init trial section
+        /// Make initialSection current
+        showInitial(animate: false)
+        
+        /// Style intialSection
         
         /// Setup image
 
@@ -43,7 +49,7 @@ class TrialSectionManager {
         if #available(macOS 11.0, *) {
             currentSection.imageView!.symbolConfiguration = .init(pointSize: 13, weight: .regular, scale: .large)
         }
-        currentSection.imageView!.image = NSImage(named: imageName)
+        currentSection.imageView!.image = Symbols.image(withSymbolName: imageName)
         
         /// Set string
         currentSection.textField!.attributedStringValue = LicenseUtility.trialCounterString(licenseConfig: licenseConfig, license: license)
@@ -54,16 +60,17 @@ class TrialSectionManager {
         if let fittingHeight: CGFloat = currentSection.textField?.coolFittingSize().height {
             currentSection.textField?.heightAnchor.constraint(equalToConstant: fittingHeight).isActive = true
         }
+        
     }
     
     func stopManaging() {
         animationInterruptor?()
-        showTrial(animate: false)
+        showInitial(animate: false)
     }
     
     /// Interface
     
-    func showTrial(animate: Bool = true) {
+    func showInitial(animate: Bool = true) {
         
         /// This code is a little convoluted. showTrial and showActivate are almost copy-pasted, except for setting up in newSection in mouseEntered.
             
@@ -71,17 +78,11 @@ class TrialSectionManager {
             
             DDLogDebug("triall enter begin")
             
-            if !self.shouldShowActivate {
-                if let r = self.queuedReplace {
-                    self.queuedReplace = nil
-                    r()
-                } else {
-                    self.isReplacing = false
-                }
+            if !self.shouldShowAlternate {
+                self.finishReplace()
                 return
             }
-            self.shouldShowActivate = false
-            
+            self.shouldShowAlternate = false
             self.isReplacing = true
             
             let ogSection = self.currentSection
@@ -97,12 +98,7 @@ class TrialSectionManager {
                 
                 self.currentSection = newSection
                 
-                if let r = self.queuedReplace {
-                    self.queuedReplace = nil
-                    r()
-                } else {
-                    self.isReplacing = false
-                }
+                self.finishReplace()
             }
         }
         
@@ -115,7 +111,7 @@ class TrialSectionManager {
 
     }
     
-    func showActivate() {
+    func showAlternate(animate: Bool = true) {
         
         let workload = {
             
@@ -123,29 +119,25 @@ class TrialSectionManager {
                 
                 DDLogDebug("triall exit begin")
                 
-                if self.shouldShowActivate {
-                    if let r = self.queuedReplace {
-                        self.queuedReplace = nil
-                        r()
-                    } else {
-                        self.isReplacing = false
-                    }
+                if self.shouldShowAlternate {
+                    self.finishReplace()
                     return
                 }
-                self.shouldShowActivate = true
-                
+                self.shouldShowAlternate = true
                 self.isReplacing = true
                 
                 let ogSection = self.currentSection
-                let newSection = try SharedUtilitySwift.insecureCopy(of: self.currentSection)
+                let newSection = try SharedUtilitySwift.insecureDeepCopy(of: self.currentSection)
                 
                 ///
                 /// Store original trialSection for easy restoration on mouseExit
-                ///
+                /// NOTES:
+                /// - Why don't we store the initialSection when we start managing?
+                /// - Why do we need to make a copy of the currentSection?
                 
-                if self.initialSection == nil {
-                    self.initialSection = try SharedUtilitySwift.insecureCopy(of: self.currentSection)
-                }
+//                if self.initialSection == nil {
+//                    self.initialSection = try SharedUtilitySwift.insecureDeepCopy(of: self.currentSection)
+//                }
                 
                 ///
                 /// Setup newSection
@@ -154,12 +146,7 @@ class TrialSectionManager {
                 /// Setup Image
                 
                 /// Create image
-                let image: NSImage
-                if #available(macOS 11.0, *) {
-                    image = NSImage(systemSymbolName: "lock.open", accessibilityDescription: nil)!
-                } else {
-                    image = NSImage(named: "lock.open")!
-                }
+                let image = Symbols.image(withSymbolName: "lock.open")
                 
                 /// Configure image
                 if #available(macOS 10.14, *) { newSection.imageView?.contentTintColor = .linkColor }
@@ -182,12 +169,12 @@ class TrialSectionManager {
                 newSection.textField = link
                 
                 ///
-                /// Done setting up newSection
+                /// Animated replace
                 ///
                 
                 assert(self.animationInterruptor == nil)
                 
-                self.animationInterruptor = ReplaceAnimations.animate(ogView: ogSection, replaceView: newSection) {
+                self.animationInterruptor = ReplaceAnimations.animate(ogView: ogSection, replaceView: newSection, doAnimate: animate) {
                     
                     DDLogDebug("triall exit finish")
                     
@@ -195,12 +182,7 @@ class TrialSectionManager {
                     
                     self.currentSection = newSection
                     
-                    if let r = self.queuedReplace {
-                        self.queuedReplace = nil
-                        r()
-                    } else {
-                        self.isReplacing = false
-                    }
+                    self.finishReplace()
                 }
             } catch {
                 DDLogError("Failed to swap out trialSection on notification with error: \(error)")
@@ -214,6 +196,16 @@ class TrialSectionManager {
         } else {
             workload()
         }
-        
+    }
+    
+    /// Helper
+    
+    fileprivate func finishReplace() {
+        if let r = self.queuedReplace {
+            self.queuedReplace = nil
+            r()
+        } else {
+            self.isReplacing = false
+        }
     }
 }

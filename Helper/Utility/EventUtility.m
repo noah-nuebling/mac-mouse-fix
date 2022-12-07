@@ -24,12 +24,10 @@ extern CFTimeInterval CATimeWithHostTime(UInt64 mach_absolute_time); /// I saw t
 
 int64_t fixedScrollDelta(double scrollDelta) {
     /// We round instead of just truncating because that makes the values look more like real scrollWheel values. Probably doesn't make a difference.
-    return (int64_t)roundf(scrollDelta * pow(2, 16));
+    return (int64_t)round(scrollDelta * pow(2, 16));
 }
 
 #pragma mark - Sending device
-
-NSMutableDictionary *_hidDeviceCache = nil;
 
 IOHIDDeviceRef _Nullable CGEventGetSendingDevice(CGEventRef cgEvent) {
     /// Sometimes CGEventGetHIDEvent() doesn't work. I observed this in the `PollingRateMeasurer` where it doesn't work for mouseDragged events. (Only mouseMoved). This works for `mouseDragged` events as well! -> Use this instead of `HIDEventGetSendingDevice()` as long as `CGEventGetHIDEvent()` isn't reliable.
@@ -41,13 +39,12 @@ IOHIDDeviceRef _Nullable CGEventGetSendingDevice(CGEventRef cgEvent) {
     
     if (senderID == 0) {
         assert(false);
+        return NULL;
     }
     return getSendingDeviceWithSenderID(senderID);
 }
 
 IOHIDDeviceRef _Nullable HIDEventGetSendingDevice(HIDEvent *hidEvent) {
-    /// This version uses a cache to avoid calling IOHIDDeviceCreate() (which is super slow) over and over.
-    ///     \note Do we need to reset the cache at certain points?
     
     assert(hidEvent != NULL);
     if (hidEvent == NULL) return NULL;
@@ -67,7 +64,10 @@ IOHIDDeviceRef _Nullable HIDEventGetSendingDevice(HIDEvent *hidEvent) {
 IOHIDDeviceRef _Nullable getSendingDeviceWithSenderID(uint64_t senderID) {
     
     /// Pass in the senderID obtained from a CGEvent from field 87
+    ///     This uses a cache to avoid calling IOHIDDeviceCreate() (which is super slow) over and over.
+    ///     \note Do we need to reset the cache at certain points? What do if a device is disconnected?
     
+    static NSMutableDictionary *_hidDeviceCache = nil;
     if (_hidDeviceCache == nil) {
         _hidDeviceCache = [NSMutableDictionary dictionary];
     }
@@ -184,7 +184,12 @@ CFTimeInterval CGEventGetTimestampInSeconds(CGEventRef event) {
     }
 }
 
+
+
 NSString *scrollEventDescription(CGEventRef scrollEvent) {
+    return scrollEventDescriptionWithOptions(scrollEvent, YES, YES);
+}
+NSString *scrollEventDescriptionWithOptions(CGEventRef scrollEvent, BOOL allDeltas, BOOL phases) {
     
     ///
     /// Gather info
@@ -207,11 +212,21 @@ NSString *scrollEventDescription(CGEventRef scrollEvent) {
     Vector fixedPt = (Vector){ .x = fixedPt2, .y = fixedPt1 };
     
     /// Gather phases
-    
     int64_t phase = CGEventGetIntegerValueField(scrollEvent, kCGScrollWheelEventScrollPhase);
     int64_t momentumPhase = CGEventGetIntegerValueField(scrollEvent, kCGScrollWheelEventMomentumPhase);
     
-    return stringf(@"delta: %@ \t point: %@ \t fixed: %@, \t phases: (%lld, %lld)", vectorDescription(delta), vectorDescription(point), vectorDescription(fixedPt), phase, momentumPhase);
+    /// Assemble result string
+    NSString *description = @"";
+    description = [description stringByAppendingFormat:@"point: %@", vectorDescription(delta)];
+    if (allDeltas) {
+        description = [description stringByAppendingFormat:@" \t line: %@ \t fixed: %@", vectorDescription(point), vectorDescription(fixedPt)];
+    }
+    if (phases) {
+        description = [description stringByAppendingFormat:@", \t phases: (%lld, %lld)", phase, momentumPhase];
+    }
+    
+    /// Return
+    return description;
 }
 
 @end

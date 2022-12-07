@@ -21,36 +21,43 @@ void assignAttributedStringKeepingBase(NSAttributedString *_Nonnull *_Nonnull as
 
 - (NSAttributedString *)attributedStringByAppending:(NSAttributedString *)string;
 + (NSAttributedString *)attributedStringWithAttributedFormat:(NSAttributedString *)format args:(NSArray<NSAttributedString *> *)args;
-+ (NSAttributedString *)stringWithSymbol:(NSString * _Nonnull)symbolName hPadding:(CGFloat)hPadding vOffset:(CGFloat)baselineOffset fallback:(NSString * _Nonnull)fallbackString;
 + (NSAttributedString * _Nullable)attributedStringWithCoolMarkdown:(NSString *)md;
 + (NSAttributedString * _Nullable)attributedStringWithCoolMarkdown:(NSString *)md fillOutBase:(BOOL)fillOutBase;
++ (NSAttributedString * _Nullable)attributedStringWithAttributedMarkdown:(NSAttributedString *)md;
 
-- (NSAttributedString *)attributedStringByAddingBaseLineOffset:(CGFloat)offset;
+- (NSAttributedString *)attributedStringByAddingBaseLineOffset:(CGFloat)offset forRange:(const NSRangePointer _Nullable)range;
 
 - (NSString *)stringWithAttachmentDescriptions;
 
-- (NSAttributedString *)attributedStringByAddingFontTraits:(NSDictionary<NSFontDescriptorTraitKey, id> *)traits;
-- (NSAttributedString *)attributedStringByAddingWeight:(NSFontWeight)weight;
+- (NSAttributedString *)attributedStringByAddingFontTraits:(NSDictionary<NSFontDescriptorTraitKey, id> *)traits forRange:(const NSRangePointer _Nullable)inRange;
+- (NSAttributedString *)attributedStringByAddingWeight:(NSFontWeight)weight forRange:(const NSRangePointer _Nullable)range;
 
 - (NSAttributedString *)attributedStringByAddingSymbolicFontTraits:(NSFontDescriptorSymbolicTraits)traits forSubstring:(NSString *)subStr;
-- (NSAttributedString *)attributedStringByAddingSymbolicFontTraits:(NSFontDescriptorSymbolicTraits)traits;
+- (NSAttributedString *)attributedStringByAddingSymbolicFontTraits:(NSFontDescriptorSymbolicTraits)traits forRange:(const NSRangePointer _Nullable)inRange;
 
 - (NSAttributedString *)attributedStringByFillingOutBase;
 - (NSAttributedString *)attributedStringByFillingOutBaseAsHint;
 
 - (NSAttributedString *)attributedStringByAddingStringAttributesAsBase:(NSDictionary<NSAttributedStringKey, id> *)baseAttributes;
-- (NSAttributedString *)attributedStringByAddingLinkWithURL:(NSURL *)linkURL forSubstring:(NSString *)substring;
++ (NSAttributedString *)hyperlinkFromString:(NSString *)inString withURL:(NSURL *)url;
+- (NSAttributedString *)attributedStringByAddingHyperlink:(NSURL *)url forSubstring:(NSString *)substring;
+- (NSAttributedString *)attributedStringByAddingHyperlink:(NSURL *_Nonnull)aURL forRange:(const NSRangePointer _Nullable)range;
+- (NSAttributedString *)attributedStringByAddingFont:(NSFont *)font forRange:(const NSRangePointer _Nullable)range;
+
 - (NSAttributedString *)attributedStringByAddingBoldForSubstring:(NSString *)subStr;
-- (NSAttributedString *)attributedStringByAddingSemiBoldForSubstring:(NSString *)subStr;
-- (NSAttributedString *)attributedStringBySettingSemiBoldColorForSubstring:(NSString *)subStr;
-- (NSAttributedString *)attributedStringByAddingBold;
+- (NSAttributedString *)attributedStringByAddingBoldForRange:(const NSRangePointer _Nullable)range;
+- (NSAttributedString *)attributedStringByAddingItalicForRange:(const NSRangePointer _Nullable)range;
 - (NSAttributedString *)attributedStringByAddingItalicForSubstring:(NSString *)subStr;
-- (NSAttributedString *)attributedStringByAligningSubstring:(NSString * _Nullable)subStr alignment:(NSTextAlignment)alignment;
+- (NSAttributedString *)attributedStringByAddingAlignment:(NSTextAlignment)alignment forRange:(const NSRangePointer _Nullable)rangeIn;
+- (NSAttributedString *)attributedStringByAddingParagraphSpacing:(CGFloat)spacing forRange:(const NSRangePointer _Nullable)range;
 - (NSAttributedString *)attributedStringBySettingWeight:(NSInteger)weight;
 - (NSAttributedString *)attributedStringBySettingThinForSubstring:(NSString *)subStr;
+- (NSAttributedString *)attributedStringByAddingSemiBoldForSubstring:(NSString *)subStr;
+- (NSAttributedString *)attributedStringBySettingSemiBoldColorForSubstring:(NSString *)subStr;
 - (NSAttributedString *)attributedStringBySettingFontSize:(CGFloat)size;
-- (NSAttributedString *)attributedStringBySettingSecondaryLabelColorForSubstring:(NSString * _Nullable)subStr;
-+ (NSAttributedString *)hyperlinkFromString:(NSString *)inString withURL:(NSURL *)aURL;
+- (NSAttributedString *)attributedStringByAddingColor:(NSColor *)color forSubstring:(NSString *)subStr;
+- (NSAttributedString *)attributedStringByAddingColor:(NSColor *)color forRange:(const NSRangePointer _Nullable)range;
+
 
 - (NSSize)sizeAtMaxWidth:(CGFloat)maxWidth;
 - (CGFloat)heightAtWidth:(CGFloat)width;

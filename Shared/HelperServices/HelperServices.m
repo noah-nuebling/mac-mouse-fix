@@ -7,8 +7,12 @@
 // --------------------------------------------------------------------------
 //
 
+/// This class is primarily used to activate, deactivate and check activation state of the helper as a 'launchAgent'. (A process that always runs in the background)
+///     - It achieves this primarily  by wrapping the `launchctl` command line tool and the `SMAppService` API for macOS 13.0 and later.
+///     - Later we also added some methods for restarting the helper and for starting a new instance of the helper in a special mode. We should maybe split the functionality up into different classes.
+
 /// Notes on availability
-///     HelperServices uses a new API for registering the Helper as UserAgent under macOS 13.0 Ventura. It's called `SMAppService`. It's not available pre-Ventura. To handle this we use Apple's availability APIs.
+///     HelperServices uses a new API for registering the Helper as launchAgent under macOS 13.0 Ventura. It's called `SMAppService`. It's not available pre-Ventura. To handle this we use Apple's availability APIs.
 ///     Unfortunately there have been problems with the availability APIs. See https://github.com/noah-nuebling/mac-mouse-fix/issues/241.
 ///     Below you can find my notes / stream of consciousness on trying to figure this out.
 ///
@@ -27,10 +31,11 @@
 #import "Constants.h"
 #import "Locator.h"
 #import "SharedUtility.h"
-#import "SharedMessagePort.h"
+#import "MFMessagePort.h"
 #import <ServiceManagement/ServiceManagement.h>
 #import <sys/sysctl.h>
 #import <sys/types.h>
+#import "MFMessagePort.h"
 
 @implementation HelperServices
 
@@ -39,7 +44,7 @@
 + (void)disableHelperFromHelper {
     
     /// Validate
-    assert(SharedUtility.runningHelper);
+    assert(runningHelper());
     
     /// HACK (?)
     ///     Our original approach (below) doesn't work with the new SMAppService API under Ventura Beta, so we're disabling this for now. See below for more info.
@@ -49,7 +54,7 @@
     return;
     
     /// Notify mainApp
-    [SharedMessagePort sendMessage:@"helperDisabled" withPayload:nil expectingReply:NO];
+    [MFMessagePort sendMessage:@"helperDisabled" withPayload:nil waitForReply:NO];
     
     /// Disable helper
     ///     We can't just do `[self removeHelperFromLaunchd]`, because
@@ -89,49 +94,110 @@
 + (void)enableHelperAsUserAgent:(BOOL)enable onComplete:(void (^ _Nullable)(NSError * _Nullable error))onComplete {
     
     /// Register/unregister the helper as a User Agent with launchd so it runs in the background - also launches/terminates helper
+    /// Not sure if we should use this directly. Using EnabledState.shared.enable() / disable() is probably better
+    ///
+    /// I refactored HelperServices, which is very dangerous. Haven't tested it properly at the time of writing, especially pre-Ventura.
+    ///     I think 07e861de4504daad9996a40ce32c4aea5c87552a is the last commit before the changes.
     
     if (@available(macOS 13.0, *)) {
         
-        /// Disable and clean up legacy versions
-        ///     Edit: I'm not totally sure what the reason is for the differences between this and what we do pre macOS 13.
-        ///     - Why aren't we terminating other helper instance here?
-        ///     - At the time of writing `runPreviousVersionCleanup` won't work properly, because `strangeHelperIsRegisteredWithLaunchd` only looks at the pre macOS 13 helper. But it doesn't matter since all it does when it finds a strange helper is call. `removeHelperFromLaunchd`, and we're calling that anyways right here. -> Clean this up. Maybe rename `runPreviousVersionCleanup` -> `prefPaneCleanup`, and clearly mark `strangeHelperIsRegisteredWithLaunchd` as only working pre macOS 13 or update it to work with macOS 13. Idea: give `strangeHelperIsRegisteredWithLaunchd` and the helperIsActive function an argument which launchd label they should check for.
-        
-        [self runPreviousVersionCleanup];
-        [self removeHelperFromLaunchd];
-        removeLaunchdPlist();
-        
-        /// Call core
-        ///    Do this on some global queue. Xcode complains if you do this on mainThread because it can lead to unresponsive UI.
         dispatch_async(dispatch_get_global_queue(QOS_CLASS_USER_INTERACTIVE, 0), ^{
+                
+            ///
+            /// Cleanup
+            ///
+            
+            /// Edit: I'm not totally sure what the reason is for the differences between this and what we do pre macOS 13.
+            /// - Why aren't we terminating other helper instance here?
+            
+            /// Remove __app__ launchd.plist
+            removeLaunchdPlist();
+            
+            /// Remove __prefpane__ launchd.plist
+            removePrefpaneLaunchdPlist();
+            
+            /// Unregister old helper from launchd
+            removeServiceWithIdentifier(kMFLaunchdHelperIdentifier);
+            
+            /// Unregister strange helper
+            /// Notes:
+            /// - Under Ventura 13.0 we can't automatically fix it when a strange helper is registered. When we try to register the right helper, it will always register the strange one. The user has to uninstall the strange helper and then empty the trash and then restart to fix things
+            /// - So removing the strange helper service won't help and leads to weird stuff where the helper seems to be started twice next time that it is registered.
+            /// -> So we're disabling this for now. Hopefully Apple will fix this at some point.
+            
+//            if ([self strangeHelperIsRegisteredWithLaunchdIdentifier:kMFLaunchdHelperIdentifierSM]) {
+//                removeServiceWithIdentifier(kMFLaunchdHelperIdentifierSM);
+//            }
+            
+            /// Unregister if enabling
+            /// - This is necessary for enabling to work after updating to new version in the same place while the old helper is still running
+            /// - removeServiceWithIdentifier() also works for this, but it leads to the helper weirdly enabling twice which causes the `is-strange-helper-toast` message to be shown twice
+            
+            if (enable) {
+                [self enableHelper_SM:NO];
+            }
+            
+            ///
+            /// Enable helper
+            /// 
+            
+            /// Do this on some global queue. Xcode complains if you do this on mainThread because it can lead to unresponsive UI.
+            
             NSError *error = [self enableHelper_SM:enable];
+            
+            ///
+            /// Call onComplete
+            ///
             if (onComplete != nil) onComplete(error);
         });
         
     } else {
         
-        /// Repair/generate launchdPlist so that the following code works for sure
-        [HelperServices repairLaunchdPlist];
-        /// If an old version of Mac Mouse Fix is still running and stuff, clean that up to prevent issues
-        [HelperServices runPreviousVersionCleanup];
+        ///
+        /// Generate / repair launchd.plist
+        ///
         
-        /**
-         Sometimes there's a weird bug where the main app won't recognize the helper as enabled even though it is. The code down below for enabling will then fail, when the user tries to check the enable checkbox.
-         So we're removing the helper from launchd before trying to enable to hopefully fix this. Edit: seems to fix it!
-         I'm pretty sure that if we didn't check for `launchdPathIsBundlePath` in `strangeHelperIsRegisteredWithLaunchd` this issue wouldn't have occured and we wouldn't need this workaround. But I'm not sure anymore why we do that so it's not smart to remove it.
-         Edit: I think the specific issue I saw only happens when there are two instances of MMF open at the same time.
-         */
-        if (enable) {
-            [HelperServices removeHelperFromLaunchd];
-            
-            /// Any Mac Mouse Fix Helper processes that were started by launchd should have been quit by now. But if there are Helpers which weren't started by launchd they will still be running which causes problems. Terminate them now.
-            [HelperServices terminateOtherHelperInstances];
+        [HelperServices repairLaunchdPlist];
+        
+        ///
+        /// Cleanup
+        ///     Remove residue & prevent interference
+        
+        /// Remove old prefpane launchd.plist
+        /// Notes:
+        /// - We could only do this only if strangeHelperIsRegisteredWithLaunchd, but users have been having some weirdd issues after upgrading to the app version and I don't know why. I feel like this might make things slightly more robust.
+        removePrefpaneLaunchdPlist();
+        
+        /// Unregister strange helper
+        if ([self strangeHelperIsRegisteredWithLaunchdIdentifier:kMFLaunchdHelperIdentifier]) {
+            removeServiceWithIdentifier(kMFLaunchdHelperIdentifier);
         }
         
-        /// Call core
+        if (enable) {
+            
+            /// Kill & unregister if we're enabling
+            ///
+            /// Doing this because sometimes there's a weird bug where the main app won't recognize the helper as enabled even though it is. The code down below for enabling will then fail, when the user tries to check the enable checkbox.
+            /// So we're removing the helper from launchd before trying to enable to hopefully fix this. Edit: seems to fix it!
+            /// I'm pretty sure that if we didn't check for `launchdPathIsBundlePath` in `strangeHelperIsRegisteredWithLaunchd` this issue whave occured and we wouldn't need this workaround. But I'm not sure anymore why we do that so it's not smart to remove it.
+            /// Edit: I think the specific issue I saw only happens when there are two instances of MMF open at the same time.
+            
+            removeServiceWithIdentifier(kMFLaunchdHelperIdentifier);
+            
+            /// Kill non-launchd helpers
+            ///     Non-launchd helpers can only normally happen during debugging I think
+            [HelperServices terminateAllHelperInstances];
+            
+        }
+        
+        ///
+        /// Enable helper
+        ///
         enableHelper_PList(enable);
         
+        ///
         /// Call onComplete
+        ///
         if (onComplete != nil) onComplete(nil);
     }
 }
@@ -168,7 +234,7 @@
     /// 2. Approach
     ///     Disable and re-enable. This seems to circumvent the 1 launch per 10 seconds restriction. (See possibleRestartTime)
     
-    if (SharedUtility.runningMainApp) {
+    if (runningMainApp()) {
         
 //        assert([self helperIsActive]);
         
@@ -179,7 +245,7 @@
             });
         }];
         
-    } else if (SharedUtility.runningHelper) {
+    } else if (runningHelper()) {
         
         /// Open the mainApp and then have it call this function
         
@@ -257,20 +323,22 @@
     }
 }
 
+//BOOL buildNumberMatchesMainApp(NSInteger bundleVersion) {
+//    
+//    /// - Not sure if this belongs here? HelperServices is getting a little messy.
+//    /// - Maybe we could just move the build number checking into messagePort entirely.
+//    ///   Edit: Did move the build number checking into messagePort - Remove this
+//    
+//    assert(runningMainApp());
+//    return Locator.bundleVersion == bundleVersion;
+//}
 
 + (BOOL)helperIsActive_Message {
 
-    if (SharedUtility.runningMainApp) {
+    if (runningMainApp()) {
+                NSNumber *response = (NSNumber *)[MFMessagePort sendMessage:@"getBundleVersion" withPayload:nil waitForReply:YES];
+        return response != nil && response.integerValue == Locator.bundleVersion;
         
-        NSString *response = (NSString *)[SharedMessagePort sendMessage:@"getBundleVersion" withPayload:nil expectingReply:YES];
-        if (response == nil) {
-            return NO ;
-        } else {
-            NSString *helperVersion = response;
-            NSString *mainAppVersion = [NSBundle.mainBundle objectForInfoDictionaryKey:@"CFBundleVersion"];
-            
-            return [helperVersion isEqual:mainAppVersion];
-        }
     } else {
         /// Crash
         assert(false);
@@ -312,7 +380,7 @@
 static BOOL helperIsActive_PList() {
     
     /// Get info from launchd
-    NSString *launchctlOutput = [HelperServices helperInfoFromLaunchd];
+    NSString *launchctlOutput = [HelperServices serviceInfoWithIdentifier:kMFLaunchdHelperIdentifier];
     
     /// Analyze info
     
@@ -323,7 +391,7 @@ static BOOL helperIsActive_PList() {
     /// Check exit status. Not sure if useful
     BOOL exitStatusIsZero = [launchctlOutput rangeOfString: @"\"LastExitStatus\" = 0;"].location != NSNotFound;
     
-    if (HelperServices.strangeHelperIsRegisteredWithLaunchd) {
+    if ([HelperServices strangeHelperIsRegisteredWithLaunchdIdentifier:kMFLaunchdHelperIdentifier]) {
         DDLogInfo(@"Found helper running somewhere else.");
         return NO;
     }
@@ -345,7 +413,7 @@ static BOOL helperIsActive_PList() {
             
         /// Guard running main app
         ///     Before using the SM APIs we could call this from anywhere, but the SM stuff will only work from the mainApp afaik.
-        if (SharedUtility.runningHelper) {
+        if (runningHelper()) {
             DDLogWarn(@"Calling enableHelper_SM from Helper under Ventura or later. This is does not work.");
             return [NSError errorWithDomain:MFHelperServicesErrorDomain code:kMFHelperServicesErrorEnableFromHelper userInfo:nil];
         }
@@ -408,7 +476,7 @@ static void removeLaunchdPlist() {
     NSError *error;
     [NSFileManager.defaultManager removeItemAtURL:Locator.launchdPlistURL error:&error];
     if (error != nil) {
-        DDLogError(@"Failed to delete launchd.plist file. The helper will likely be re-enabled on startup. Delete the file at \"%@\" to prevent this.", Locator.launchdPlistURL.path);
+        DDLogError(@"Failed to delete launchd.plist file. This might be because the file doesn't exist. If the file still exists at \"%@\" the helper might be re-enabled on startup.", Locator.launchdPlistURL.path);
     }
 }
 
@@ -618,50 +686,54 @@ static NSError *makeWritable(NSString *itemPath) {
     return nil;
 }
 
-+ (NSString *)helperInfoFromLaunchd {
++ (NSString *)serviceInfoWithIdentifier:(NSString *)identifier {
     
     /// Using NSTask to ask launchd about helper status
+    
     NSURL *launchctlURL = [NSURL fileURLWithPath: kMFLaunchctlPath];
-    NSString * launchctlOutput = [SharedUtility launchCLT:launchctlURL withArguments:@[@"list", kMFLaunchdHelperIdentifier] error:nil];
+    NSString * launchctlOutput = [SharedUtility launchCLT:launchctlURL withArguments:@[@"list", identifier] error:nil];
     return launchctlOutput;
 }
 
 #pragma mark - Clean up legacy stuff
 
-+ (void)runPreviousVersionCleanup {
-    
-    DDLogInfo(@"Cleaning up stuff from previous versions");
-    
-    if (self.strangeHelperIsRegisteredWithLaunchd) {
-        [self removeHelperFromLaunchd];
-    }
-    
-    [self removePrefpaneLaunchdPlist];
-    /// ^ Could also do this in the if block but users have been having some weirdd issues after upgrading to the app version and I don't know why. I feel like this might make things slightly more robust.
-}
+//+ (void)runPreviousVersionCleanup {
+//
+//    DDLogInfo(@"Cleaning up stuff from previous versions");
+//
+//    if (self.strangeHelperIsRegisteredWithLaunchd) {
+//        [self removeHelperFromLaunchd];
+//    }
+//
+//    [self removePrefpaneLaunchdPlist];
+//    /// ^ Could also do this in the if block but users have been having some weirdd issues after upgrading to the app version and I don't know why. I feel like this might make things slightly more robust.
+//}
 
-/// Check if helper is registered with launchd from some other location
-+ (BOOL)strangeHelperIsRegisteredWithLaunchd {
++ (BOOL)strangeHelperIsRegisteredWithLaunchdIdentifier:(NSString *)identifier {
     
-    NSString *launchdPath = [self helperExecutablePathFromLaunchd];
+    /// Check if helper is registered with launchd from some other location
+    
+    NSString *launchdPath = [self executablePathForLaunchdIdentifier:identifier];
     BOOL launchdPathExists = launchdPath.length != 0;
     
-    BOOL launchdPathIsBundlePath = [Locator.helperBundle.executablePath isEqual:launchdPath];
-    
-    if (!launchdPathIsBundlePath && launchdPathExists) {
+    if (launchdPathExists) {
         
-        DDLogWarn(@"Strange helper: found at: %@ \nbundleExecutable at: %@", launchdPath, Locator.helperBundle.executablePath);
-        return YES;
+        BOOL isStrange = ![Locator.helperBundle.executablePath isEqual:launchdPath];
+        
+        if (isStrange) {
+            
+            DDLogWarn(@"Strange helper: found at: %@ \nbundleExecutable at: %@", launchdPath, Locator.helperBundle.executablePath);
+            return YES;
+        }
     }
     
     DDLogInfo(@"Strange Helper: not found");
-    
     return NO;
 }
 
-+ (void)terminateOtherHelperInstances {
-    /// Terminate any other running instances of the app
-    /// Only call this after after removing the Helper from launchd
++ (void)terminateAllHelperInstances {
+    
+    /// Terminate any running instances of the helper app
     /// This only works to terminate instances of the Helper which weren't started by launchd.
     /// Launchd-started instances will immediately be restarted after they are terminated
     /// Mac Mouse Fix Accomplice does something similar to this in update()
@@ -678,18 +750,12 @@ static NSError *makeWritable(NSString *itemPath) {
     
 }
 
-/// Remove currently running helper from launchd
-/// From my testing this does the same as the `bootout` command, but it doesn't rely on a valid launchd.plist file to exist in the library, so it should be more robust.
-+ (void)removeHelperFromLaunchd {
-    
-    /// Remove pre-service management helper
-    removeServiceWithIdentifier(kMFLaunchdHelperIdentifier);
-    
-    /// Remove helper installed with service management
-    removeServiceWithIdentifier(kMFLaunchdHelperIdentifierSM);
-}
-
 static void removeServiceWithIdentifier(NSString *identifier) {
+    
+    /// Remove service from launchd
+    /// Notes:
+    /// - From my testing this does the same as the `bootout` command, but it doesn't rely on a valid launchd.plist file to exist in the library, so it should be more robust.
+    /// - The removed service will be quit immediately but will be restarted on the next boot. Pre-SMAppService you can prevent start on next boot by deleting the launchd.plist file. Post-SMAppService you need to unregister the service. Not sure if there are other ways.
     
     DDLogInfo(@"Removing service %@ from launchd", identifier);
     
@@ -699,16 +765,33 @@ static void removeServiceWithIdentifier(NSString *identifier) {
     if (err != nil) {
         DDLogError(@"Error removing service %@ from launchd: %@", identifier, err);
     }
+    
+    /// Wait until service is actually removed
+    /// Notes:
+    /// - Otherwise enabling while old helper is still enabled won't work under Mojave
+    /// - TODO: We also brought this improvement to MMF 2 but was hacky since it's missing some previous improvements made to HelperServices. That's bad, we shouldn't have let HelperServices diverge like that between MMF 2 and 3! We should unify them again.
+    
+    int maxWaitCycles = 25;
+    int i = 0;
+    while (true) {
+        
+        NSString *launchctlOutput = [HelperServices serviceInfoWithIdentifier:identifier];
+        
+        if ([launchctlOutput isEqual:@""]) break;
+        if (i >= maxWaitCycles) break;
+        
+        i += 1;
+    }
 }
 
-+ (void)removePrefpaneLaunchdPlist {
+static void removePrefpaneLaunchdPlist() {
         
     /// Remove legacy launchd plist file if it exists
     /// The launchd plist file used to be at `~/Library/LaunchAgents/com.nuebling.mousefix.helper.plist` when the app was still a prefpane
     /// Now, with the app version, it's moved to `~/Library/LaunchAgents/com.nuebling.mac-mouse-fix.helper.plist`
     /// Having the old version still can lead to the old helper being started at startup, and I think other conflicts, too.
     
-    DDLogInfo(@"Removing legacy launchd plist");
+    DDLogInfo(@"Removing prefpane launchd plist");
     
     /// Find user library
     NSArray<NSString *> *libraryPaths = NSSearchPathForDirectoriesInDomains(NSLibraryDirectory, NSUserDomainMask, YES);
@@ -716,21 +799,27 @@ static void removeServiceWithIdentifier(NSString *identifier) {
     NSMutableString *libraryPath = libraryPaths.firstObject.mutableCopy;
     NSString *legacyLaunchdPlistPath = [libraryPath stringByAppendingPathComponent:@"LaunchAgents/com.nuebling.mousefix.helper.plist"];
     NSError *err;
-    // Remove old file
+    
+    /// Remove old file
     if ([NSFileManager.defaultManager fileExistsAtPath:legacyLaunchdPlistPath]) {
         [NSFileManager.defaultManager removeItemAtPath:legacyLaunchdPlistPath error:&err];
         if (err) {
-            DDLogError(@"Error while removing legacy launchd plist file: %@", err);
+            DDLogError(@"Error while removing prefpane launchd plist file: %@", err);
         }
     } else  {
-        DDLogInfo(@"No legacy launchd plist file found at: %@", legacyLaunchdPlistPath);
+        DDLogInfo(@"No prefpane launchd.plist file found at: %@", legacyLaunchdPlistPath);
     }
 }
 
-+ (NSString *)helperExecutablePathFromLaunchd {
++ (NSString *)executablePathForLaunchdIdentifier:(NSString *)identifier {
+    
+    /// Validate
+    /// - This actually only works for `kMFLaunchdHelperIdentifier`. For `kMFLaunchdHelperIdentifierSM` it gets the executable path relative to the mainApp bundle which isn't that helpful.
+    
+    assert([identifier isEqual:kMFLaunchdHelperIdentifier]);
     
     /// Using NSTask to ask launchd about helper status
-    NSString * launchctlOutput = [self helperInfoFromLaunchd];
+    NSString * launchctlOutput = [self serviceInfoWithIdentifier:identifier];
     
     NSString *executablePathRegEx = @"(?<=\"Program\" = \").*(?=\";)";
     ///    NSRegularExpression executablePathRegEx =

@@ -14,7 +14,11 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface HelperUtility : NSObject
 
-/// App under mouse pointer
+/// Display under pointer
++ (CVReturn)displayUnderMousePointer:(CGDirectDisplayID *)dspID withEvent:(CGEventRef _Nullable)event;
++ (CVReturn)display:(CGDirectDisplayID *)dspID atPoint:(CGPoint)point;
+
+/// App under pointer
 + (NSRunningApplication * _Nullable)appUnderMousePointerWithEvent:(CGEventRef _Nullable)event;
 
 /// Open main app
@@ -31,9 +35,9 @@ CGEventFlags getModifierFlagsWithEvent(CGEventRef flagEvent);
 
 /// Get current pointer location
 CGPoint getPointerLocation(void);
-CGPoint getPointerLocationWithEvent(CGEventRef locEvent);
+CGPoint getPointerLocationWithEvent(CGEventRef _Nullable locEvent);
 NSPoint getFlippedPointerLocation(void);
-NSPoint getFlippedPointerLocationWithEvent(CGEventRef locEvent);
+NSPoint getFlippedPointerLocationWithEvent(CGEventRef _Nullable locEvent);
 
 @end
 

@@ -9,17 +9,28 @@
 
 #import <Foundation/Foundation.h>
 #import "Device.h"
+#import "WannabePrefixHeader.h"
+#import "Constants.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
 @interface DeviceManager : NSObject
 
-+ (void)load_Manual;
-+ (BOOL)devicesAreAttached;
-+ (NSArray<Device *> *)attachedDevices;
 
-+ (Device * _Nullable)attachedDeviceWithIOHIDDevice:(IOHIDDeviceRef)iohidDevice;
++ (NSArray<Device *> *)attachedDevices MF_SWIFT_HIDDEN;
++ (id)__SWIFT_UNBRIDGED_attachedDevices;
+
++ (void)load_Manual;
 + (void)deconfigureDevices;
+
++ (BOOL)devicesAreAttached;
++ (Device * _Nullable)attachedDeviceWithIOHIDDevice:(IOHIDDeviceRef)iohidDevice;
+
++ (BOOL)someDeviceHasScrollWheel;
++ (BOOL)someDeviceHasPointing;
++ (BOOL)someDeviceHasUsableButtons;
++ (int)maxButtonNumberAmongDevices;
+
 
 @end
 

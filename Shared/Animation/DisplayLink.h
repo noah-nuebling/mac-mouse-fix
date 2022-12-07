@@ -46,6 +46,7 @@ typedef void(^DisplayLinkCallback)(DisplayLinkCallbackTimeInfo timeInfo);
 - (BOOL)isRunning;
 - (BOOL)isRunning_Unsafe;
 
+- (CFTimeInterval)bestTimeBetweenFramesEstimate;
 - (CFTimeInterval)timeBetweenFrames;
 - (CFTimeInterval)nominalTimeBetweenFrames;
 - (void)linkToMainScreen;

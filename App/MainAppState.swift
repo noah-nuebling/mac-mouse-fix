@@ -68,7 +68,7 @@ import ReactiveSwift
     override init() {
         
         let (o, i) = Signal<Bool, Never>.pipe()
-        signal = o
+        signal = o.skipRepeats()
         observer = i
         
         super.init()
@@ -79,6 +79,7 @@ import ReactiveSwift
     }
     
     /// Main interface
+    ///     Are these wrappers around HelperServices necessary? If not we should remove them / make them private
     
     @objc func enable(onComplete: ((NSError?) -> Void)?) {
         HelperServices.enableHelperAsUserAgent(true) { swiftError in
@@ -86,10 +87,13 @@ import ReactiveSwift
         }
     }
     @objc func disable() {
+        
+        /// What happens if we call `enableHelperAsUserAgent(false, ...` directly? Will it break things?
+        
         HelperServices.enableHelperAsUserAgent(false, onComplete: nil)
         observer.send(value: false)
     }
-    func isEnabled() -> Bool {
+    func isEnabled() -> Bool { // TODO: Think about returning `latest` here or renaming the `isEnabled_Uncached`
         HelperServices.helperIsActive()
     }
     

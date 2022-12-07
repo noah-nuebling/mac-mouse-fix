@@ -10,9 +10,10 @@
 #ifndef Shorthands_h
 #define Shorthands_h
 
-typedef struct {
-    double x;
-    double y;
-} P;
+#import "VectorUtility.h"
+#import <Foundation/Foundation.h>
+
+typedef CGPoint P;
+P _P(double x, double y);
 
 #endif /* Shorthands_h */

@@ -12,7 +12,7 @@
 #import "GestureScrollSimulator.h"
 #import "DeviceManager.h"
 #import "ButtonInputReceiver.h"
-#import "TransformationUtility.h"
+#import "ModificationUtility.h"
 #import "CFRuntime.h"
 #import "SharedUtility.h"
 #import <Cocoa/Cocoa.h>
@@ -24,7 +24,9 @@
 
 /// We've moved this to shared to be able to access the device name and button number from the mainApp for the Buttons tabs. But to access the buttonNumber you have to open the device which requires accessibility access. So instead we'll have the mainApp ask the helper for that info instead. The registryEntryID based init's are not used after this removal.
 
-@implementation Device
+@implementation Device {
+    int _nOfButtons;
+}
 
 #pragma mark - Init
 
@@ -66,10 +68,14 @@
 
 - (Device *)initWithIOHIDDevice:(IOHIDDeviceRef)IOHIDDevice {
     
+    /// This is the core init method which all others call (at time of writing)
+    
     self = [super init];
     if (self) {
         
+        ///
         /// Store & retain device
+        ///
         _iohidDevice = IOHIDDevice;
         CFRetain(_iohidDevice);
         
@@ -79,18 +85,45 @@
         ///     Not sure if this is also necessary in the mainApp
         IOReturn ret = IOHIDDeviceOpen(self.iohidDevice, kIOHIDOptionsTypeNone);
         if (ret) {
-            DDLogInfo(@"Error opening device. Code: %x", ret);
+            DDLogError(@"Error opening device. Code: %x", ret);
         }
+        
+        ///
+        /// Fill instance variables
+        ///
+        
+        ///
+        /// Calculate nOfButtons
+        /// 
+        
+        /// Get button elements
+        IOHIDDeviceRef device = self.iohidDevice;
+        NSDictionary *match = @{
+            @(kIOHIDElementUsagePageKey): @(kHIDPage_Button)
+        };
+        NSArray *elements = (__bridge_transfer NSArray *)IOHIDDeviceCopyMatchingElements(device, (__bridge CFDictionaryRef)match, 0);
+        
+        /// Get max button number
+        ///     Could proabably also just count the number elements instead of this. But this might be more robust.
+        int maxButtonNumber = 0;
+        for (id e in elements) { /// e is of the private type `HIDElement *` which is bridged with `IOHIDElementRef`
+            IOHIDElementRef element = (__bridge IOHIDElementRef)e;
+            int buttonNumber = IOHIDElementGetUsage(element);
+            maxButtonNumber = MAX(maxButtonNumber, buttonNumber);
+        }
+        
+        /// Store result
+        _nOfButtons = maxButtonNumber;
         
 #if IS_HELPER
         
-        /// Set values of interest for callback
-        NSDictionary *buttonMatchDict = @{ @(kIOHIDElementUsagePageKey): @(kHIDPage_Button) };
-        IOHIDDeviceSetInputValueMatching(_iohidDevice, (__bridge CFDictionaryRef)buttonMatchDict);
-        
-        /// Register callback
-        IOHIDDeviceScheduleWithRunLoop(IOHIDDevice, CFRunLoopGetMain(), kCFRunLoopDefaultMode);
-        IOHIDDeviceRegisterInputValueCallback(IOHIDDevice, &handleInput, (__bridge void * _Nullable)(self));
+//        /// Set values of interest for callback
+//        NSDictionary *buttonMatchDict = @{ @(kIOHIDElementUsagePageKey): @(kHIDPage_Button) };
+//        IOHIDDeviceSetInputValueMatching(_iohidDevice, (__bridge CFDictionaryRef)buttonMatchDict);
+//
+//        /// Register callback
+//        IOHIDDeviceScheduleWithRunLoop(IOHIDDevice, CFRunLoopGetMain(), kCFRunLoopDefaultMode);
+//        IOHIDDeviceRegisterInputValueCallback(IOHIDDevice, &handleInput, (__bridge void * _Nullable)(self));
 #endif
         
     }
@@ -146,51 +179,54 @@
 //}
 
 
-
-/// The CGEvent function which we use to intercept and manipulate incoming button events (`ButtonInputReceiver_CG::handleInput()`)  cannot gain any information about which devices is causing input, and it can therefore also not filter out input form certain devices. We use functions from the IOHID Framework (`MFDevice::handleInput()`) to solve this problem.
-///
-/// For each MFDevice instance which is created, we register an input callback for the IOHIDDevice which it owns. The callback is handled by `MFDevice::handleInput()`.
-/// IOHID callback functions seem to always be called very shortly before any CGEvent callback function responding to the same input.
-/// So what we can do to gain info about the device causing input from within the CGEvent callback function (`ButtonInputReceiver_CG::handleInput()`) is this:
-///
-/// From within `MFDevice::handleInput()` we set the ButtonInputReceiver_CG.deviceWhichCausedThisButtonInput property to the MFDeviceInstance which triggered `MFDevice::handleInput()`.
-/// Then from within `ButtonInputReceiver_CG::handleInput()` we read this property to gain knowledge about the device which caused this input. After reading the property from within  `ButtonInputReceiver_CG::handleInput()`, we set it to nil.
-/// If `ButtonInputReceiver_CG::handleInput()` is called while the `deviceWhichCausedThisButtonInput` is nil, we know that the input doesn't stem from a device which has an associated MFDevice instance. We use this to filter out input from devices without an associated MFDevice instances.
-///
-/// Filtering criteria for which attached devices we create an MFDevice for, are setup in  `DeviceManager::setupDeviceMatchingAndRemovalCallbacks()`
-
 //static int64_t _previousDeltaY;
 
 static void handleInput(void *context, IOReturn result, void *sender, IOHIDValueRef value) {
+
+    /// EDIT: This is unused now. Instead we're using our new `CGEventGetSendingDevice()` method
+    
+    /// The CGEvent function which we use to intercept and manipulate incoming button events (`ButtonInputReceiver_CG::handleInput()`)  cannot gain any information about which devices is causing input, and it can therefore also not filter out input form certain devices. We use functions from the IOHID Framework (`MFDevice::handleInput()`) to solve this problem.
+    ///
+    /// For each MFDevice instance which is created, we register an input callback for the IOHIDDevice which it owns. The callback is handled by `MFDevice::handleInput()`.
+    /// IOHID callback functions seem to always be called very shortly before any CGEvent callback function responding to the same input.
+    /// So what we can do to gain info about the device causing input from within the CGEvent callback function (`ButtonInputReceiver_CG::handleInput()`) is this:
+    ///
+    /// From within `MFDevice::handleInput()` we set the ButtonInputReceiver_CG.deviceWhichCausedThisButtonInput property to the MFDeviceInstance which triggered `MFDevice::handleInput()`.
+    /// Then from within `ButtonInputReceiver_CG::handleInput()` we read this property to gain knowledge about the device which caused this input. After reading the property from within  `ButtonInputReceiver_CG::handleInput()`, we set it to nil.
+    /// If `ButtonInputReceiver_CG::handleInput()` is called while the `deviceWhichCausedThisButtonInput` is nil, we know that the input doesn't stem from a device which has an associated MFDevice instance. We use this to filter out input from devices without an associated MFDevice instances.
+    ///
+    /// Filtering criteria for which attached devices we create an MFDevice for, are setup in  `DeviceManager::setupDeviceMatchingAndRemovalCallbacks()`
     
 #if IS_HELPER
-    
+
     Device *sendingDev = (__bridge Device *)context;
-    
+
     /// Get elements
     IOHIDElementRef elem = IOHIDValueGetElement(value);
     uint32_t usage = IOHIDElementGetUsage(elem);
     uint32_t usagePage = IOHIDElementGetUsagePage(elem);
+
     /// Get info
     BOOL isButton = usagePage == 9;
     assert(isButton);
     MFMouseButtonNumber button = usage;
-    
+
     /// Debug
     DDLogDebug(@"Received HID input - usagePage: %d usage: %d value: %ld from device: %@", usagePage, usage, (long)IOHIDValueGetIntegerValue(value), sendingDev.name);
-    
+
     /// Notify ButtonInputReceiver
-    [ButtonInputReceiver handleHIDButtonInputFromRelevantDeviceOccured:sendingDev button:@(button)];
-    
+    /// Not needed now since we deactivated AppSwitcher feature. If we do implement it in the future we'll probably take a completely different approach
+//    [ButtonInputReceiver handleHIDButtonInputFromRelevantDeviceOccured:sendingDev button:@(button)];
+
     /// Stop momentumScroll on LMB click
     ///     ButtonInputReceiver tries to filter out LMB and RMB events as early as possible, so it's better to do this here
     int64_t pressure = IOHIDValueGetIntegerValue(value);
     if (button == 1 && pressure != 0) {
         [GestureScrollSimulator stopMomentumScroll];
     }
-    
+
 #endif
-    
+
 }
 
 #pragma mark - Properties + override NSObject methods
@@ -206,7 +242,6 @@ static void handleInput(void *context, IOReturn result, void *sender, IOHIDValue
 - (BOOL)isEqualToDevice:(Device *)device {
     
     /// What does this function do? Why do we have 2 equality check functions?
-    
     return CFEqual(self.iohidDevice, device.iohidDevice);
 }
 - (BOOL)isEqual:(Device *)other {
@@ -245,25 +280,7 @@ static void handleInput(void *context, IOReturn result, void *sender, IOHIDValue
 }
 
 - (int)nOfButtons {
-    
-    /// Get button elements
-    IOHIDDeviceRef device = self.iohidDevice;
-    NSDictionary *match = @{
-        @(kIOHIDElementUsagePageKey): @(kHIDPage_Button)
-    };
-    NSArray *elements = (__bridge_transfer NSArray *)IOHIDDeviceCopyMatchingElements(device, (__bridge CFDictionaryRef)match, 0);
-    
-    /// Get max button number
-    ///     Could proabably also just count the number elements instead of this. But this might be more robust.
-    int maxButtonNumber = 0;
-    for (id e in elements) { /// e is of the private type `HIDElement *` which is bridged with `IOHIDElementRef`
-        IOHIDElementRef element = (__bridge IOHIDElementRef)e;
-        int buttonNumber = IOHIDElementGetUsage(element);
-        maxButtonNumber = MAX(maxButtonNumber, buttonNumber);
-    }
-    
-    /// Return
-    return maxButtonNumber;
+    return self->_nOfButtons;
 }
 
 - (NSString *)description {

@@ -18,17 +18,41 @@ class MarkdownTextField: CoolNSTextField {
         /// Init from IB
         
         /// Init super
-        
         super.init(coder: coder)
+
+        /// Debug
         
-        /// Make clickable
-        makeLinksClickable()
+//        if stringValue.localizedCaseInsensitiveContains("double click") {
+//
+//        }
+        
+        /// Configure
+        configureForAttributedString()
+        
+        /// Increase paragraph spacing
+        /// - (Should parametrize this probably and put it into CoolNSTextField but whatever)
+        /// - Turing this off, because 1. Any linebreak with a `\n` character is considered a new paragraph, so this messes up existing UI strings 2. If we're using several paragraphs in any of the UI text we need to STOP. cause that's too much text.
+//        self.attributedStringValue = self.attributedStringValue.addingParagraphSpacing(5.0, for: nil)
+        
+        /// Fill out attributedString
+        ///     With textField properties
+//        var str = self.attributedStringValue.copy() as! NSAttributedString /// attributedStringValue is empty from what I've seen
+//        if let font = self.font {
+//            str = str.adding(font, for: nil)
+//        }
+//        str = str.adding(self.alignment, forSubstring: nil)
+//        if let color = self.textColor {
+//            str = str.adding(color, for: nil)
+//        }
         
         /// Parse md
-        guard let md = NSAttributedString(coolMarkdown: self.stringValue, fillOutBase: false) else { return }
+        /// - We need to pass in the original markdown string so the original attributes can be kept as base. Otherwise the font will be set to system default font at default size on markup elements where e.g. bold is applied and that will make the bodl text much too large.
+        /// - I remember this working before some other way but I don't understand how it could've worked before without this method.
+        /// -  Edit: Seems we were using `addingStringAttributes(asBase:)` but I still don't get how that worked. I tried the old code again and it definitely doesn't work anymore. Whatttt
+        ///        It still worked in commit 2463689a86ef44f9631fda01b089e1f51f52e350
         
-        /// Assign markdown to self
-        assignAttributedStringKeepingBase(&self.attributedStringValue, md)
+        guard let md = NSAttributedString(attributedMarkdown: self.attributedStringValue) else { return }
+        self.attributedStringValue = md
     }
     
 }
@@ -47,7 +71,7 @@ class CoolNSTextField: NSTextField {
         
         let hintString = hintString.fillingOutBaseAsHint()
         self.init(labelWithAttributedString: hintString)
-        makeLinksClickable()
+        configureForAttributedString()
     }
     
     // MARK: - Links
@@ -59,7 +83,11 @@ class CoolNSTextField: NSTextField {
 //        addCursorRect(bounds, cursor: .arrow)
 //    }
     
-    func makeLinksClickable() {
+    @objc func configureForAttributedString() {
+        
+        /// Make it use attributedString
+        ///     I think this will make is so the attributedStringValue actually has the attributes set for the textField in IB. Not totally sure.
+        self.allowsEditingTextAttributes = true
         
         /// Make clickable so links work
         /// This also makes the cursor an inseration cursor on hover which is weird

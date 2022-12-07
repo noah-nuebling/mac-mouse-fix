@@ -33,14 +33,11 @@ NSException * _Nullable tryCatch(void (^tryBlock)(void));
 
 void *offsetPointer(void *ptr, int byteOffset);
 
-+ (BOOL)runningPreRelease;
+bool runningPreRelease(void);
 
-+ (BOOL)runningMainApp;
-+ (BOOL)runningHelper;
-+ (BOOL)runningAccomplice;
-
-+ (CVReturn)displayUnderMousePointer:(CGDirectDisplayID *)dspID withEvent:(CGEventRef _Nullable)event;
-+ (CVReturn)display:(CGDirectDisplayID *)dspID atPoint:(CGPoint)point;
+bool runningMainApp(void);
+bool runningHelper(void);
+//bool runningAccomplice(void);
 
 + (id)getPrivateValueOf:(id)obj forName:(NSString *)name;
 + (NSString *)dumpClassInfo:(id)obj;
@@ -54,6 +51,7 @@ void *offsetPointer(void *ptr, int byteOffset);
 + (CGRect)cocoaToQuartzScreenSpace:(NSRect)cocoaFrame;
 + (id)deepMutableCopyOf:(id)object;
 + (id)deepCopyOf:(id)object;
++ (id<NSCoding>)deepCopyOf:(id<NSCoding>)original error:(NSError *_Nullable *_Nullable)error;
 + (NSString *)callerInfo;
 + (NSDictionary *)dictionaryWithOverridesAppliedFrom:(NSDictionary *)src to: (NSDictionary *)dst;
 + (CGEventType)CGEventTypeForButtonNumber:(MFMouseButtonNumber)button isMouseDown:(BOOL)isMouseDown;

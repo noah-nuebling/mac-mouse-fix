@@ -14,7 +14,16 @@
 /// So now this is the place for stuff I want to import/define everywhere. (Since it's not a prefix header I'll also have to import this everywhere for that to work)
 /// Remove this if you can ever get PrefixHeader.pch to work
 
+///
+/// Hide ObjC methods from Swfit
+///
+/// `NS_SWIFT_UNAVIALBLE("")` doesn't completely hide stuff and sometimes leads to bad behviour where the compiler warnings don't tell you what's actually wrong.` NS_REFINED_FOR_SWIFT` is not intended for this but it works better.
+
+#define MF_SWIFT_HIDDEN NS_REFINED_FOR_SWIFT
+
+///
 /// Setup Cocoalumberjack
+///
 
 #define LOG_LEVEL_DEF ddLogLevel
 @import CocoaLumberjack;

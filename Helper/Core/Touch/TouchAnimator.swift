@@ -63,7 +63,7 @@ class TouchAnimator: TouchAnimatorBase {
         self.subPixelator.reset()
     }
     @objc func resetSubPixelator() {
-        displayLink.dispatchQueue.async {
+        displayLink.dispatchQueue.async(flags: defaultDFs) {
             self.resetSubPixelator_Unsafe()
         }
     }
@@ -73,7 +73,7 @@ class TouchAnimator: TouchAnimatorBase {
     @objc func start(params: @escaping StartParamCalculationCallback,
                      integerCallback: @escaping TouchAnimatorCallback) {
         
-        displayLink.dispatchQueue.async {
+        displayLink.dispatchQueue.async(flags: defaultDFs) {
             
             /// Get startParams
             
@@ -96,7 +96,7 @@ class TouchAnimator: TouchAnimatorBase {
             
             /// Start animator
             
-            super.startWithUntypedCallback_Unsafe(durationRaw: p["duration"] as! Double, value: vectorFromNSValue(p["vector"] as! NSValue), animationCurve: p["curve"] as! Curve, callback: integerCallback)
+            super.startWithUntypedCallback_Unsafe(durationRaw: p["duration"] as! Double?, durationRawInFrames: p["durationInFrames"] as! Int?, value: vectorFromNSValue(p["vector"] as! NSValue), animationCurve: p["curve"] as! Curve, callback: integerCallback)
             
             /// Debug
             
@@ -124,14 +124,14 @@ class TouchAnimator: TouchAnimatorBase {
         /// Update phase to `end` if all valueLeft won't lead to another non-zero delta
         
         let currentAnimationValueLeft = animationValueLeft_Unsafe
-        let intAnimationValueLeft = subPixelator.peekIntVector(withDouble: currentAnimationValueLeft);
+        let intAnimationValueLeft = subPixelator.peekIntVector(withDoubleVector: currentAnimationValueLeft);
         if isZeroVector(intAnimationValueLeft) {
             isLastDisplayLinkCallback = true /// After this we know the delta will be zero, so most of the work we do below is unnecessary
         }
         
         /// Get subpixelated animationValueDelta
         
-        let integerAnimationValueDelta = subPixelator.intVector(withDouble: animationValueDelta)
+        let integerAnimationValueDelta = subPixelator.intVector(withDoubleVector: animationValueDelta)
         
         /// Skip this frames callback
         ///     and don't update animationPhase from `start` to `continue`

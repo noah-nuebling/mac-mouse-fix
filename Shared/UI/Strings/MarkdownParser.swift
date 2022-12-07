@@ -21,65 +21,174 @@ import CocoaLumberjackSwift
  
     @objc static func attributedString(markdown: String) -> NSAttributedString? {
         
-        let document = Document(parsing: markdown, source: URL(string: ""), options: [])
+//        if markdown.localizedCaseInsensitiveContains("the recommended settings for") {
+//            
+//        }
+        
+        
+        let document = Document(parsing: markdown, source: URL(string: ""), options: [.disableSmartOpts])
         if document.isEmpty { return nil }
-        print("THE DOC: \(document.debugDescription())")
         
-        var walker = ToAttributed()
-        walker.visit(document)
+        var visitor = ApplyMarkdown(attributeBase: nil)
+        let result = visitor.visit(document)
         
-        let walkerResult = walker.string
-        
-        return walkerResult /// Remember to fill out base before using this in UI or trying to calculate it's size. (What's wrong with using it in the UI before filling out base?)
+        return result
     }
     
+    @objc static func attributedString(attributedMarkdown: NSAttributedString) -> NSAttributedString? {
+        
+        let document = Document(parsing: attributedMarkdown.string, source: URL(string: ""), options: [.disableSmartOpts])
+        if document.isEmpty { return nil }
+        
+        var visitor = ApplyMarkdown(attributeBase: attributedMarkdown)
+        let result = visitor.visit(document)
+        
+        return result /// Remember to fill out base before using this in UI or trying to calculate it's size. (What's wrong with using it in the UI before filling out base?)
+    }
 }
 
-struct ToAttributed: MarkupWalker {
+struct ApplyMarkdown: MarkupVisitor {
     
-    var string: NSMutableAttributedString = NSMutableAttributedString(string: "")
+    /// Generic type
     
-    mutating func visitLink(_ link: Link) -> () {
-        string.append(NSAttributedString(string: link.plainText))
-        if let destination = link.destination, let url = URL(string: destination) {
-            string = string.addingLink(with: url, forSubstring: link.plainText) as! NSMutableAttributedString
+    typealias Result = NSAttributedString?
+    
+    /// Storage
+    
+    var base: NSAttributedString? = nil
+    var baseRaw: NSString? = nil
+    var baseSearchRange: NSRange? = nil
+    
+    /// Init
+    
+    init(attributeBase: NSAttributedString? = nil) {
+        
+        /// Use the attributes from `attributeBase` as base and override them with the markdown styling where there is markdown styling
+        
+        if let base = attributeBase {
+            self.base = base
+            self.baseRaw = base.string as NSString
+            self.baseSearchRange = NSRange(location: 0, length: base.string.count)
         }
     }
     
-    mutating func visitEmphasis(_ emphasis: Emphasis) -> () {
-        string.append(NSAttributedString(string: emphasis.plainText))
-        string = string.addingItalic(forSubstring: emphasis.plainText) as! NSMutableAttributedString
-
+    /// Helper function for visiting
+    
+    fileprivate mutating func descendInto(_ markup: Markup) -> ApplyMarkdown.Result {
+        
+        let result = NSMutableAttributedString(string: "")
+        
+        for child in markup.children {
+            if let r = visit(child) {
+                result.append(r)
+            }
+        }
+        
+        return result
     }
     
-    mutating func visitStrong(_ strong: Strong) -> () {
-        string.append(NSAttributedString(string: strong.plainText))
-        string = string.addingBold(forSubstring: strong.plainText) as! NSMutableAttributedString
+    /// Visitors
+    
+    mutating func defaultVisit(_ markup: Markdown.Markup) -> Result {
+        return descendInto(markup)
     }
     
-    mutating func visitText(_ text: Text) -> () {
-        string.append(NSAttributedString(string: text.string))
+    mutating func visitText(_ text: Text) -> Result {
+        
+        if let base = base, let baseRaw = baseRaw, let baseSearchRange = baseSearchRange {
+            
+            /// Find range of text in base string
+            let range = baseRaw.range(of: text.string, options: [], range: baseSearchRange, locale: nil)
+            
+            if range.location != NSNotFound {
+                
+                /// Update start of search range
+                ///     End should always be the end of the string
+                self.baseSearchRange = NSRange(location: range.location, length: baseRaw.length - range.location)
+                
+                /// Return substring of the base string
+                return base.attributedSubstring(from: range)
+                
+            } else {
+                fatalError()
+            }
+            
+        } else {
+            
+            /// If there's no base string, just convert the plainText
+            return NSAttributedString(string: text.string)
+        }
     }
     
-    mutating func visitSoftBreak(_ softBreak: SoftBreak) -> () {
-        string.append(NSAttributedString(string: "\n"))
+    mutating func visitLink(_ link: Link) -> Result {
+        
+        guard let str = descendInto(link) else { return nil }
+        
+        if let destination = link.destination, let url = URL(string: destination) {
+            return str.addingHyperlink(url, for: nil)
+        } else {
+            return str
+        }
     }
-    mutating func visitParagraph(_ paragraph: Paragraph) -> () {
-        descendInto(paragraph)
-        let isLast = paragraph.indexInParent == (paragraph.parent?.childCount ?? 0) - 1 
+    
+    mutating func visitEmphasis(_ emphasis: Emphasis) -> Result {
+        
+        /// Notes:
+        /// - We're misusing emphasis (which is usually italic) as a semibold. We're using the semibold, because for the small hint texts in the UI, bold looks way to strong. This is a very unsemantic and hacky solution. It works for now, but just keep this in mind.
+        
+        guard let str = descendInto(emphasis) else { return nil }
+//        return str.addingItalic(for: nil)
+        return str.addingWeight(.semibold, for: nil)
+    }
+    
+    mutating func visitStrong(_ strong: Strong) -> Result {
+        
+        guard let str = descendInto(strong) else { return nil }
+//        return str.addingBold(for: nil)
+        return str.addingWeight(.bold, for: nil)
+    }
+    
+    mutating func visitSoftBreak(_ softBreak: SoftBreak) -> Result {
+        return NSAttributedString(string: "\n")
+    }
+    mutating func visitLineBreak(_ lineBreak: LineBreak) -> Result {
+        /// Notes:
+        /// - I've never seen this be called. `\n\n` will start a new paragraph.
+        /// - That's because even a siingle newline char starts a new paragraph (at least for NSParagraphStyle). We should be using the "Unicode Line Separator" for simple linebreaks in UI text.
+        ///   - See: https://stackoverflow.com/questions/4404286/how-is-a-paragraph-defined-in-an-nsattributedstring
+        return NSAttributedString(string: "\n\n")
+    }
+    
+    mutating func visitParagraph(_ paragraph: Paragraph) -> Result {
+        
+        /// Note: Why the isTopLevel restriction?
+        
+        guard let str = descendInto(paragraph) else { return nil }
+        
+        var isLast = false
+        if let peerCount = paragraph.parent?.childCount, paragraph.indexInParent == peerCount - 1 {
+            isLast = true
+        }
         let isTopLevel = paragraph.parent is Document
         if isTopLevel && !isLast {
-            string.append(NSAttributedString(string: "\n\n"))
+            return str.appending(NSAttributedString(string: "\n\n"))
+        } else {
+            return str
         }
     }
-    mutating func visitLineBreak(_ lineBreak: LineBreak) -> () {
-        /// I've never seen this be called
-        string.append(NSAttributedString(string: "\n\n"))
-    }
     
-    mutating func visitListItem(_ listItem: ListItem) -> () {
-        let num = listItem.indexInParent + 1
-        string.append(NSAttributedString(string: String(format: "\n%d. ", num)))
-        descendInto(listItem)
+    mutating func visitListItem(_ listItem: ListItem) -> Result {
+        
+        var str = NSAttributedString(string: String(format: "%d. ", listItem.indexInParent+1))
+        str = str.appending(descendInto(listItem) ?? NSAttributedString(string: ""))
+        var isLast = false
+        if let peerCount = listItem.parent?.childCount, listItem.indexInParent == peerCount - 1{
+            isLast = true
+        }
+        if !isLast {
+            return str.appending(NSAttributedString(string: "\n"))
+        } else {
+            return str
+        }
     }
 }

@@ -18,11 +18,12 @@ import CocoaLumberjackSwift
     /// Ivars
     static var queue: DispatchQueue = DispatchQueue(label: "com.nuebling.mac-mouse-fix.buttons", qos: .userInteractive, attributes: [], autoreleaseFrequency: .inherit, target: nil)
     static private var clickCycle = ClickCycle(buttonQueue: DispatchQueue(label: "replace this"))
-    static private var modifierManager = ButtonModifiers()
+    static private var buttonModifiers = ButtonModifiers()
+    @objc static var useButtonModifiers = false
     
     /// Vars that we only update once per clickCycle
-    static var modifiers: [AnyHashable: Any] = [:]
-    static var modifications: [AnyHashable: Any] = [:]
+    static var modifiers = NSDictionary()
+    static var modifications = NSDictionary()
     static var maxClickLevel: Int = -1
     
     /// Init
@@ -42,7 +43,8 @@ import CocoaLumberjackSwift
         if !isInitialized { coolInitialize() }
         
         /// Get remaps
-        let remaps = TransformationManager.remaps()
+        /// Accessing the dict like this is super slow. Casting to NSDictionary and using NSDictionary API to access it's values might fix that. See https://stackoverflow.com/questions/57555444/accessing-object-c-nsdictionary-values-in-swift-is-slow
+        let remaps = Remap.remaps
         
         /// Update stuff when clickCycle starts
         
@@ -53,14 +55,14 @@ import CocoaLumberjackSwift
             HelperState.updateActiveDevice(event: event)
             
             /// Update modifications
-            let remaps = TransformationManager.remaps() /// This is apparently incredibly slow because Swift needs to convert the dict.
-            self.modifiers = ModifierManager.getActiveModifiers(for: HelperState.activeDevice!, event: event) /// Why aren't we just using `device` here?
-            self.modifications = RemapSwizzler.swizzleRemaps(remaps, activeModifiers: modifiers)
+            let remaps = Remap.remaps /// Why aren't we reusing the remaps from above?
+            self.modifiers = Modifiers.modifiers(with: event)
+            self.modifications = Remap.modifications(withModifiers: modifiers) ?? NSDictionary()
             
             /// Get max clickLevel
             self.maxClickLevel = 0
             if mouseDown {
-                self.maxClickLevel = ButtonLandscapeAssessor.maxLevel(forButton: button, remaps: remaps, modificationsActingOnThisButton: modifications)
+                self.maxClickLevel = RemapsAnalyzer.maxLevel(forButton: button, remaps: remaps, modificationsActingOnThisButton: modifications)
             }
             
         }
@@ -77,10 +79,13 @@ import CocoaLumberjackSwift
             /// Update modifiers
             ///
             
-            if triggerPhase == .press {
-                self.modifierManager.update(device: device, button: ButtonNumber(truncating: button), clickLevel: clickLevel, downNotUp: true)
-                onRelease.append {
-                    self.modifierManager.update(device: device, button: ButtonNumber(truncating: button), clickLevel: clickLevel, downNotUp: false)
+            if useButtonModifiers {
+                
+                if triggerPhase == .press {
+                    self.buttonModifiers.update(withButton: MFMouseButtonNumber(button.uint32Value), clickLevel: clickLevel, downNotUp: true)
+                    onRelease.append {
+                        self.buttonModifiers.update(withButton: MFMouseButtonNumber(button.uint32Value), clickLevel: clickLevel, downNotUp: false)
+                    }
                 }
             }
             
@@ -98,11 +103,11 @@ import CocoaLumberjackSwift
             var effectForMouseDownStateOfThisLevelExists: ObjCBool = false
             var effectOfGreaterLevelExists: ObjCBool = false
             
-            ButtonLandscapeAssessor.assessMappingLandscape(withButton: button as NSNumber, level: clickLevel as NSNumber, modificationsActingOnThisButton: modifications, remaps: remaps, thisClickDoBe: &clickActionOfThisLevelExists, thisDownDoBe: &effectForMouseDownStateOfThisLevelExists, greaterDoBe: &effectOfGreaterLevelExists)
+            RemapsAnalyzer.assessMappingLandscape(withButton: button as NSNumber, level: clickLevel as NSNumber, modificationsActingOnThisButton: modifications, remaps: remaps, thisClickDoBe: &clickActionOfThisLevelExists, thisDownDoBe: &effectForMouseDownStateOfThisLevelExists, greaterDoBe: &effectOfGreaterLevelExists)
             
             /// Create trigger -> action map based on mappingLandscape
             
-            var map: [ClickCycleTriggerPhase: (String, MFActionPhase)] = [:]
+            var map: [ClickCycleTriggerPhase: (String, MFActionPhase)] = Dictionary(minimumCapacity: 3)
             
             /// Map for click actions
             if clickActionOfThisLevelExists.boolValue {
@@ -127,15 +132,18 @@ import CocoaLumberjackSwift
             /// Get actionArray
             guard
                 let (duration, startOrEnd) = map[triggerPhase],
-                let m1 = modifications[button] as? [AnyHashable: Any],
-                let m2 = m1[clickLevel as NSNumber] as? [AnyHashable: Any],
-                let m3 = m2[duration],
-                let actionArray = m3 as? [[AnyHashable: Any]] /// Not nil -> a click/hold action does exist for this button + level + duration
+//                let m1 = modifications[button] as? [AnyHashable: Any],
+                let m1 = modifications.object(forKey: button) as? NSDictionary,
+//                let m2 = m1[clickLevel as NSNumber] as? [AnyHashable: Any],
+                let m2 = m1.object(forKey: clickLevel) as? NSDictionary,
+//                let m3 = m2[duration],
+                let actionArray = m2.object(forKey: duration) as? NSArray /// Not nil -> a click/hold action does exist for this button + level + duration
+//                let actionArray = m3 as? [[AnyHashable: Any]]
             else {
                 return /// Return if there's no action array to send
             }
             
-            /// Add modifiers to actionArray for addMode. See TransformationManager -> AddMode for context
+            /// Add modifiers to actionArray for addMode. See Remap -> addMode for context
             ///     Edit: We don't need this anymore now that we're using the addModeSwizzler
 //            if actionArray[0][kMFActionDictKeyType] as! String == kMFActionDictTypeAddModeFeedback {
 //                actionArray[0][kMFRemapsKeyModificationPrecondition] = self.modifiers
@@ -158,11 +166,13 @@ import CocoaLumberjackSwift
             /// Notify triggering button
             ///     For levelExpired and .releaseFromHold, we know that the clickCycle will be killed right after this callback.
             ///     In that case it might not be necessary to notify the triggering button.
+            ///     Edit: We also want to kill the triggering button as a modifier though
             self.handleButtonHasHadDirectEffect_Unsafe(device: device, button: button)
             
             /// Notify modifiers
             ///     (Probably unnecessary, because the only modifiers that can be "deactivated" are buttons. And since there's only one clickCycle, any buttons modifying the current one should already be zombified)
-            ModifierManager.handleModificationHasBeenUsed(with: device, activeModifiers: self.modifiers)
+            ///
+            Modifiers.handleModificationHasBeenUsed()
         })
         
         return passThroughEvaluation
@@ -183,27 +193,29 @@ import CocoaLumberjackSwift
         if self.clickCycle.isActiveFor(device: device.uniqueID(), button: button) {
             self.clickCycle.kill()
         }
-        self.modifierManager.kill(device: device, button: ButtonNumber(truncating: button)) /// Not sure abt this
+        if useButtonModifiers {
+            self.buttonModifiers.killButton(MFMouseButtonNumber(rawValue: button.uint32Value)) /// Not sure abt this
+        }
     }
     
-    @objc static func handleButtonHasHadEffectAsModifier(device: Device, button: NSNumber) {
-        handleButtonHasHadEffectAsModifier_Unsafe(device: device, button: button)
+    @objc static func handleButtonHasHadEffectAsModifier(button: NSNumber) {
+        handleButtonHasHadEffectAsModifier_Unsafe(button: button)
     }
     
-    @objc static func handleButtonHasHadEffectAsModifier_Unsafe(device: Device, button: NSNumber) {
+    @objc static func handleButtonHasHadEffectAsModifier_Unsafe(button: NSNumber) {
         /// Validate
         /// Might wanna `assert(buttonIsHeld)`
         assert(isInitialized)
         /// Do stuff
-        if self.clickCycle.isActiveFor(device: device.uniqueID(), button: button) {
+        if self.clickCycle.isActiveFor(button: button) {
             self.clickCycle.kill()
         }
     }
     
     /// Interface for accessing submodules
     
-    @objc static func getActiveButtonModifiers_Unsafe(device: Device) -> [[String: Int]] {
-        return modifierManager.getActiveButtonModifiersForDevice(device: device)
-    }
+//    @objc static func getActiveButtonModifiers_Unsafe(device: Device) -> [[String: Int]] {
+//        return modifierManager.getActiveButtonModifiersForDevice(device: device)
+//    }
     
 }

@@ -11,6 +11,7 @@
 #import "Utility_App.h"
 #import "AppDelegate.h"
 #import "WannabePrefixHeader.h"
+#import "SharedUtility.h"
 
 IB_DESIGNABLE
 @interface Hyperlink ()
@@ -105,10 +106,16 @@ IB_DESIGNABLE
 
 - (void)updateTrackingAreas {
     
+    DDLogDebug(@"Hyperlink updateTrackingAreas");
+//    DDLogDebug(@"Hyperlink updateTrackingAreas caller: %@", SharedUtility.callerInfo);
+    
     [super updateTrackingAreas];
     
-    _mouseIsOverSelf = NO;
-    _mouseDownOverSelf = NO;
+    /// Reset state
+    ///     Doing this lead to the Activate License link on the about tab sometimes not reacting to clicks even though it was moused-over, because updateTrackingAreas is called a lot as it animates in. I hope not resetting these doesn't have any negative side-effects.
+    
+//    _mouseIsOverSelf = NO;
+//    _mouseDownOverSelf = NO;
     
     /// Remove old tracking area
     
@@ -145,7 +152,7 @@ IB_DESIGNABLE
 
 - (void)mouseEntered:(NSEvent *)event {
     
-    DDLogDebug(@"MOUSEE enter");
+    DDLogDebug(@"Hyperlink enter");
     
     _mouseIsOverSelf = YES;
     
@@ -158,7 +165,7 @@ IB_DESIGNABLE
 }
 - (void)mouseExited:(NSEvent *)event {
     
-    DDLogDebug(@"MOUSEE exit");
+    DDLogDebug(@"Hyperlink exit");
     
     _mouseIsOverSelf = NO;
     
@@ -172,11 +179,15 @@ IB_DESIGNABLE
 }
 - (void)mouseDown:(NSEvent *)event {
     
+    DDLogDebug(@"Hyperlink mouseDown");
+    
     if (_mouseIsOverSelf) {
         _mouseDownOverSelf = YES;
     }
 }
 - (void)mouseUp:(NSEvent *)event {
+    
+    DDLogDebug(@"Hyperlink mouseUp");
     
     if (_mouseDownOverSelf && _mouseIsOverSelf) {
         [self reactToClick];
@@ -185,6 +196,8 @@ IB_DESIGNABLE
     _mouseIsOverSelf = NO;
 }
 - (void)reactToClick {
+    
+    DDLogDebug(@"Hyperlink acceptClick");
     
     /// Get info
     BOOL hasAction = self.action != nil;

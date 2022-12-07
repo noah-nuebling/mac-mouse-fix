@@ -41,7 +41,7 @@ class AboutTabController: NSViewController {
         let alert = NSAlert()
         alert.alertStyle = .informational
         alert.messageText = NSLocalizedString("mail-alert.title", comment: "First draft: Write an Email?")
-        alert.informativeText = NSLocalizedString("mail-alert.body", comment: "First draft: I can't respond to all emails but I read and am happy about all feedback!")
+        alert.informativeText = NSLocalizedString("mail-alert.body", comment: "First draft: I read and appreciate all emails, even though I can't respond to all")
 //        alert.showsSuppressionButton = true
         alert.addButton(withTitle: NSLocalizedString("mail-alert.send", comment: "First draft: Write Email"))
         alert.addButton(withTitle: NSLocalizedString("mail-alert.back", comment: "First draft: Back"))
@@ -227,14 +227,14 @@ class AboutTabController: NSViewController {
                 message = Randomizer.select(from: [
                     
                     /// Common
-                    (NSLocalizedString("thanks.01", comment: "First draft: 💫 Thank you for buying Mac Mouse Fix!"), weight: 1),
+                    (NSLocalizedString("thanks.01", comment: "First draft: ⭐️ Thank you for buying Mac Mouse Fix!"), weight: 1),
                     (NSLocalizedString("thanks.02", comment: "First draft: 🌟 Thanks for purchasing Mac Mouse Fix!"), weight: 1),
                     (NSLocalizedString("thanks.03", comment: "First draft: 🚀 Thanks for supporting Mac Mouse Fix!"), weight: 1),
-                    (NSLocalizedString("thanks.04", comment: "First draft: 🙏 Thank you for buying Mac Mouse Fix!"), weight: 1),
-                    (NSLocalizedString("thanks.05", comment: "First draft: 🧠 Great purchasing decisions ;)"), weight: 1),
+                    (NSLocalizedString("thanks.04", comment: "First draft: 🙌 Thanks for buying Mac Mouse Fix!"), weight: 1),
                     
                     /// Rare
-                    (NSLocalizedString("thanks.06", comment: "First draft: 🔥 Awesome taste in mouse fixing software ;)"), weight: 0.1),
+                    (NSLocalizedString("thanks.05", comment: "First draft: 🧠 Great purchasing decision! ;)"), weight: 0.1),
+                    (NSLocalizedString("thanks.06", comment: "First draft: 🔥 Awesome taste in mouse fixing software! ;)"), weight: 0.1),
                     (NSLocalizedString("thanks.07", comment: "First draft: 💙"), weight: 0.1),
                     (NSLocalizedString("thanks.08", comment: "First draft: :) <- My face when I saw you bought Mac Mouse Fix"), weight: 0.1),
                     
@@ -242,7 +242,7 @@ class AboutTabController: NSViewController {
                     (NSLocalizedString("thanks.09", comment: "First draft: 👽 Share it with your Spacebook friends!"), weight: 0.05),
                     
                     /// Extremely rare
-                    (NSLocalizedString("thanks.10", comment: "First draft: 🏂 Duckgang for life! || Note: A lot of these are very personal. And weir. They are also super rare. Feel free to change them to anything you feel like to leave a little easter egg!"), weight: 0.01),
+                    (NSLocalizedString("thanks.10", comment: "First draft: 🏂 Duckgang for life!! || Note: A lot of these are very personal. And weird. They are also super rare. Feel free to change them to anything you feel like to leave a little easter egg!"), weight: 0.01),
                     (NSLocalizedString("thanks.11", comment: "First draft: 🚜 Watch where you're going :P"), weight: 0.01),
                     (NSLocalizedString("thanks.12", comment: "First draft: 🐁 Not these mice, mom!"), weight: 0.01),
                     (NSLocalizedString("thanks.13", comment: "First draft: 🐹 We should get him a bow tie."), weight: 0.01),
@@ -250,7 +250,7 @@ class AboutTabController: NSViewController {
                     (NSLocalizedString("thanks.15", comment: "First draft: 🥛 Whole milk of course! It's your birthday after all."), weight: 0.01),
                     (NSLocalizedString("thanks.16", comment: "First draft: 🎸 Not John Mayer (yet). Nevertheless mayor of hearts."), weight: 0.01),
                     (NSLocalizedString("thanks.17", comment: "First draft: 💃 1NEIN8NEIN"), weight: 0.01),
-                    (NSLocalizedString("thanks.18", comment: "First draft: 🦋 Give me a call when you saved the world :)"), weight: 0.01),
+                    (NSLocalizedString("thanks.18", comment: "First draft: 🦄 You may not want to save the world, but you're already saving mine :)"), weight: 0.01),
                     (NSLocalizedString("thanks.19", comment: "First draft: 🏜️ Dankeschön, meine Frau..."), weight: 0.01),
                     (NSLocalizedString("thanks.20", comment: "First draft: 🌍 Universal Studios is probably not that great anyways... :)"), weight: 0.01),
                     (NSLocalizedString("thanks.21", comment: "First draft: 🐠 What... are... you?"), weight: 0.01),
@@ -260,7 +260,7 @@ class AboutTabController: NSViewController {
                     (NSLocalizedString("thanks.25", comment: "First draft: 🌏 First the mice, then the world!! >:)"), weight: 0.01),
                     
                     /// Mom
-                    ("💖❤️❤️❤️ Für Beate, meine Lieblingsperson :)", weight: 0.005),
+                    ("💖❤️❤️❤️ Für Beate :)", weight: 0.005),
                 ])
             default:
                 fatalError()
@@ -303,10 +303,11 @@ class AboutTabController: NSViewController {
                 trackingArea = NSTrackingArea(rect: trialSectionManager!.currentSection.superview!.bounds, options: [.activeInKeyWindow, .mouseEnteredAndExited], owner: self)
                 trialSectionManager!.currentSection.superview!.addTrackingArea(trackingArea!)
                 
-            } else { /// Trial has expired
+            }
+            else { /// Trial has expired
                 
                 /// Always show activate button
-                trialSectionManager?.showActivate()
+                trialSectionManager?.showAlternate(animate: false)
             }
             
             ///
@@ -321,7 +322,7 @@ class AboutTabController: NSViewController {
             if #available(macOS 11.0, *) {
                 self.moneyCellImage.symbolConfiguration = .init(pointSize: 13, weight: .medium, scale: .large)
             }
-            self.moneyCellImage.image = NSImage(named: .init("bag"))
+            self.moneyCellImage.image = Symbols.image(withSymbolName: "bag")
             
             /// Swap out link -> payButton
             
@@ -382,13 +383,13 @@ class AboutTabController: NSViewController {
     override func mouseEntered(with event: NSEvent) {
         
         DispatchQueue.main.async {
-            self.trialSectionManager?.showActivate()
+            self.trialSectionManager?.showAlternate()
         }
     }
     override func mouseExited(with event: NSEvent) {
         
         DispatchQueue.main.async {
-            self.trialSectionManager?.showTrial()
+            self.trialSectionManager?.showInitial()
         }
     }
 }

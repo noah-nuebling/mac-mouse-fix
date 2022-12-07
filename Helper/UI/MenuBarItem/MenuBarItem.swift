@@ -19,6 +19,8 @@ import Foundation
 
 @objc class MenuBarItem: NSObject {
     
+    // MARK: Vars and outlets
+    
     var topLevelObjects: NSArray? = []
     static var instance: MenuBarItem? = nil
     
@@ -34,6 +36,8 @@ import Foundation
     @IBOutlet weak var appCompatHintItem: NSMenuItem!
     @IBOutlet var appCompatHintView: NSView!
     
+    // MARK: Init
+    
     @objc static func load_Manual() {
         instance = MenuBarItem()
         Bundle.main.loadNibNamed(NSNib.Name("MenuBarItem"), owner: instance, topLevelObjects: &(instance!.topLevelObjects))
@@ -46,10 +50,14 @@ import Foundation
         statusItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.variableLength)
         statusItem?.autosaveName = "MMFMenuBarItem" /// Probably unnecessary
         statusItem?.button?.title = ""
-        let image = NSImage(named: NSImage.Name("CoolMenuBarIcon"))
+        let image = NSImage(named: "CoolMenuBarIcon")
         statusItem?.button?.image = image
         statusItem?.menu = menu
 //        statusItem?.isVisible = false /// This makes the item forget its position when restarting the computer
+        
+        /// Turn off menuItem autoenabling
+        ///     So we can control enabling through SwitchMaster
+        statusItem?.menu?.autoenablesItems = false
         
         /// Setup group menu item
         /// `.indentationLevel` doesn't work. Do indentation in IB autolayout instead
@@ -68,15 +76,32 @@ import Foundation
         MenuBarItem.reload()
     }
     
-    // MARK: Load from config
+    // MARK: SwitchMaster interface
+    
+    static func enableButtonsItem(_ enable: Bool) {
+        instance?.buttonsEnabledItem.isEnabled = enable
+        
+    }
+    static func enableScrollItem(_ enable: Bool) {
+        instance?.scrollEnabledItem.isEnabled = enable
+    }
+    
+    static func buttonsItemIsEnabled() -> Bool { /// This is for introspection for debugging SwitchMaster
+        instance?.buttonsEnabledItem.isEnabled ?? false
+    }
+    static func scrollItemIsEnabled() -> Bool {
+        instance?.scrollEnabledItem.isEnabled ?? false
+    }
+    
+    // MARK: Reload
     
     @objc static func reload() {
         
-        let shouldShow = config("Other.showMenuBarItem") as? Bool ?? false
+        let shouldShow = config("General.showMenuBarItem") as? Bool ?? false
         instance?.statusItem?.isVisible = shouldShow
         
-        let buttonsKilled = config("Other.buttonKillSwitch") as? Bool ?? false
-        let scrollKilled = config("Other.scrollKillSwitch") as? Bool ?? false
+        let buttonsKilled = config("General.buttonKillSwitch") as? Bool ?? false
+        let scrollKilled = config("General.scrollKillSwitch") as? Bool ?? false
         
         if shouldShow {
             
@@ -91,14 +116,14 @@ import Foundation
             /// Need to do the killed check to prevent infinite loops. (Not sure if true anymore). This would be easier if we just used the reactive ConfigValue instead.
             
             if (buttonsKilled || scrollKilled) {
-                setConfig("Other.scrollKillSwitch", false as NSObject)
-                setConfig("Other.buttonKillSwitch", false as NSObject)
+                setConfig("General.scrollKillSwitch", false as NSObject)
+                setConfig("General.buttonKillSwitch", false as NSObject)
                 commitConfig()
             }
         }
     }
     
-    // MARK: Actions
+    // MARK: IBActions
     
     @IBAction func openMMF(_ sender: Any) {
         HelperUtility.openMainApp()
@@ -111,7 +136,7 @@ import Foundation
         /// Toggle
         sender.state = sender.state == .on ? .off : .on
         /// Set to config
-        setConfig("Other.scrollKillSwitch", !(sender.state == .on) as NSObject)
+        setConfig("General.scrollKillSwitch", !(sender.state == .on) as NSObject)
         commitConfig()
     }
     
@@ -120,7 +145,7 @@ import Foundation
         /// Toggle
         sender.state = sender.state == .on ? .off : .on
         /// Set to config
-        setConfig("Other.buttonKillSwitch", !(sender.state == .on) as NSObject)
+        setConfig("General.buttonKillSwitch", !(sender.state == .on) as NSObject)
         commitConfig()
     }
     

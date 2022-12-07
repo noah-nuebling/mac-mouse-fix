@@ -11,7 +11,7 @@
 #import "Constants.h"
 #import "ScrollConfigObjC.h"
 #import "Mac_Mouse_Fix_Helper-Swift.h"
-#import "TransformationUtility.h"
+#import "ModificationUtility.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -32,11 +32,13 @@ typedef struct {
     
 } ScrollAnalysisResult;
 
-+ (BOOL)peekIsFirstConsecutiveTickWithTickOccuringAt:(CFTimeInterval)thisScrollTickTimeStamp withDirection:(MFDirection)direction withConfig:(ScrollConfig *)scrollConfig;
++ (BOOL)peekIsFirstConsecutiveTickWithTickOccuringAt:(CFTimeInterval)thisScrollTickTimeStamp direction:(MFDirection)direction config:(ScrollConfig *)scrollConfig;
 
-+ (ScrollAnalysisResult)updateWithTickOccuringAt:(CFTimeInterval)thisScrollTickTimeStamp withDirection:(MFDirection)direction withConfig:(ScrollConfig *)scrollConfig;
++ (ScrollAnalysisResult)updateWithTickOccuringAt:(CFTimeInterval)thisScrollTickTimeStamp direction:(MFDirection)direction config:(ScrollConfig *)scrollConfig;
 
 + (void)resetState;
+
++ (NSString *)scrollAnalysisResultDescription:(ScrollAnalysisResult)analysis;
 
 @end
 

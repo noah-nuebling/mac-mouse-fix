@@ -34,22 +34,24 @@ typedef struct {
     int64_t usageThreshold;
     
     NSDictionary *effectDict;
-    NSDictionary *initialModifiers;
+//    NSDictionary *initialModifiers;
+    
+    bool naturalDirection; /// Content follows mouse movement
     
     MFStringConstant type;
     id<ModifiedDragOutputPlugin> outputPlugin;
     
     MFModifiedInputActivationState activationState;
-    Device *modifiedDevice;
+//    Device *modifiedDevice;
     
     CFTimeInterval initTime;
-    Boolean isSuspended;
+    bool isSuspended;
     
     CGPoint origin;
     Vector originOffset;
     CGPoint usageOrigin; /// Point at which the modified drag changed its activationState to inUse
     MFAxis usageAxis;
-    Boolean firstCallback;
+    bool firstCallback;
     
     dispatch_queue_t queue;
     
@@ -73,15 +75,19 @@ typedef struct {
 
 @interface ModifiedDrag : NSObject
 
++ (void)activationStateWithCallback:(void (^)(MFModifiedInputActivationState))callback;
+
 + (void)load_Manual;
 
-+ (NSDictionary *)initialModifiers;
-+ (CGEventTapProxy)tapProxy;
-+ (void)initializeDragWithDict:(NSDictionary *)effectDict initialModifiers:(NSDictionary *)modifiers onDevice:(Device *)dev;
+//+ (NSDictionary *)initialModifiers;
+//+ (CGEventTapProxy)tapProxy;
++ (void)initializeDragWithDict:(NSDictionary *)effectDict;
++ (void)__SWIFT_UNBRIDGED_initializeDragWithDict:(id)effectDict;
 
 //+ (void)modifiedScrollHasBeenUsed;
 
-+ (void (^ _Nullable)(void))suspend;
+//+ (void (^ _Nullable)(void))suspend;
+
 + (void)deactivate;
 + (void)deactivateWithCancel:(BOOL)cancel;
 

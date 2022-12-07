@@ -14,7 +14,7 @@
 #import "HelperUtility.h"
 #import "SharedUtility.h"
 #import "VectorSubPixelator.h"
-#import "TransformationUtility.h"
+#import "ModificationUtility.h"
 #import "Mac_Mouse_Fix_Helper-Swift.h"
 #import "WannabePrefixHeader.h"
 
@@ -76,7 +76,7 @@ static dispatch_queue_t _momentumQueue;
  \note For more info on which delta values and which phases to use, see the documentation for `postGestureScrollEventWithGestureDeltaX:deltaY:phase:momentumPhase:scrollDeltaConversionFunction:scrollPointDeltaConversionFunction:`. In contrast to the aforementioned function, you shouldn't need to call this function with kIOHIDEventPhaseUndefined.
 */
 
-+ (void)postGestureScrollEventWithDeltaX:(int64_t)dx deltaY:(int64_t)dy phase:(IOHIDEventPhaseBits)phase autoMomentumScroll:(BOOL)autoMomentumScroll {
++ (void)postGestureScrollEventWithDeltaX:(int64_t)dx deltaY:(int64_t)dy phase:(IOHIDEventPhaseBits)phase autoMomentumScroll:(BOOL)autoMomentumScroll invertedFromDevice:(BOOL)invertedFromDevice {
     
     /// This function doesn't dispatch to _queue. It should only be called if you're already on _queue. Otherwise there will be race conditions with the other functions that execute on _queue.
     /// `autoMomentumScroll` should always be true, except if you are going to post momentumScrolls manually using `+ postMomentumScrollEvent`
@@ -145,7 +145,8 @@ static dispatch_queue_t _momentumQueue;
                                                     scrollVectorLineInt:vecScrollLineInt
                                                       scrollVectorPoint:vecScrollPoint
                                                                   phase:phase
-                                                          momentumPhase:kCGMomentumScrollPhaseNone];
+                                                          momentumPhase:kCGMomentumScrollPhaseNone
+                                                     invertedFromDevice:invertedFromDevice];
         
         /// Debug
         //        DDLogInfo(@"timeSinceLast: %f scrollVec: %f %f speed: %f", timeSinceLastInput, vecScrollPoint.x, vecScrollPoint.y, vecScrollPoint.y / timeSinceLastInput);
@@ -162,7 +163,8 @@ static dispatch_queue_t _momentumQueue;
                                                     scrollVectorLineInt:(Vector){}
                                                       scrollVectorPoint:(Vector){}
                                                                   phase:kIOHIDEventPhaseEnded
-                                                          momentumPhase:0];
+                                                          momentumPhase:0
+                                                     invertedFromDevice:invertedFromDevice];
         
         if (autoMomentumScroll) {
         
@@ -174,17 +176,15 @@ static dispatch_queue_t _momentumQueue;
             };
             
             /// Get momentum scroll params
+            ///     These params try to emulate the momentum scrolls of a real trackpad as closely as possible
             
-            ScrollConfig *config = [ScrollConfig copyOfConfig];
-            MFScrollAnimationCurveParameters *trackpadParams = [config animationCurveParamsForPreset:kMFScrollAnimationCurvePresetTrackpad]; /// This is a really stupid way to access the Trackpad params. TODO: Find a better way (e.g. just hardcode them or make `- animationCurveParamsForPreset:` a class function)
-            
-            double stopSpeed = trackpadParams.stopSpeed;
-            double dragCoeff = trackpadParams.dragCoefficient;
-            double dragExp = trackpadParams.dragExponent;
+            double stopSpeed = 1.0;
+            double dragCoeff = 30.0;
+            double dragExp = 0.7;
             
             /// Do start momentum scroll
             
-            startMomentumScroll(timeSinceLastInput, exitVelocity, stopSpeed, dragCoeff, dragExp);
+            startMomentumScroll(timeSinceLastInput, exitVelocity, stopSpeed, dragCoeff, dragExp, invertedFromDevice);
         }
         
     } else {
@@ -199,7 +199,8 @@ static dispatch_queue_t _momentumQueue;
 
 + (void)postMomentumScrollDirectlyWithDeltaX:(double)dx
                                       deltaY:(double)dy
-                               momentumPhase:(CGMomentumScrollPhase)momentumPhase {
+                               momentumPhase:(CGMomentumScrollPhase)momentumPhase
+                          invertedFromDevice:(BOOL)invertedFromDevice {
     
     /// Reset subpixelator
     if (momentumPhase == kCGMomentumScrollPhaseBegin) {
@@ -220,7 +221,8 @@ static dispatch_queue_t _momentumQueue;
                                                 scrollVectorLineInt:vecScrollLineInt
                                                   scrollVectorPoint:vecScrollPoint
                                                               phase:kIOHIDEventPhaseUndefined
-                                                      momentumPhase:momentumPhase];
+                                                      momentumPhase:momentumPhase
+                                                 invertedFromDevice:invertedFromDevice];
 }
 
 #pragma mark - Auto momentum scroll
@@ -266,18 +268,18 @@ static void (^_momentumScrollCallback)(void);
 }
 
 + (void)stopMomentumScroll_Unsafe {
-    [_momentumAnimator cancel];
+    [_momentumAnimator cancel_forAutoMomentumScroll:YES];
 }
 
 /// Momentum scroll main
 
-static void startMomentumScroll(double timeSinceLastInput, Vector exitVelocity, double stopSpeed, double dragCoefficient, double dragExponent) {
+static void startMomentumScroll(double timeSinceLastInput, Vector exitVelocity, double stopSpeed, double dragCoefficient, double dragExponent, BOOL invertedFromDevice) {
     dispatch_sync(_momentumQueue, ^{
-        startMomentumScroll_Unsafe(timeSinceLastInput, exitVelocity, stopSpeed, dragCoefficient, dragExponent);
+        startMomentumScroll_Unsafe(timeSinceLastInput, exitVelocity, stopSpeed, dragCoefficient, dragExponent, invertedFromDevice);
     });
 }
 
-static void startMomentumScroll_Unsafe(double timeSinceLastInput, Vector exitVelocity, double stopSpeed, double dragCoefficient, double dragExponent) {
+static void startMomentumScroll_Unsafe(double timeSinceLastInput, Vector exitVelocity, double stopSpeed, double dragCoefficient, double dragExponent, BOOL invertedFromDevice) {
     
     /// Debug
     
@@ -290,7 +292,7 @@ static void startMomentumScroll_Unsafe(double timeSinceLastInput, Vector exitVel
     Vector zeroVector = (Vector){ .x = 0, .y = 0 };
     
     /// Stop immediately, if too much time has passed since last event (So if the mouse is stationary)
-    if (OtherConfig.mouseMovingMaxIntervalLarge < timeSinceLastInput
+    if (GeneralConfig.mouseMovingMaxIntervalLarge < timeSinceLastInput
         || timeSinceLastInput == DBL_MAX) { /// This should never be true at this point, because it's only set to DBL_MAX when phase == kIOHIDEventPhaseBegan
         DDLogDebug(@"Not sending momentum scroll - timeSinceLastInput: %f", timeSinceLastInput);
         if (_momentumScrollCallback != NULL) _momentumScrollCallback();
@@ -300,11 +302,11 @@ static void startMomentumScroll_Unsafe(double timeSinceLastInput, Vector exitVel
     
     /// Notify other touch drivers
 
-    (void)[OutputCoordinator suspendTouchDriversFromDriver:kTouchDriverGestureScrollSimulator];
+//    (void)[OutputCoordinator suspendTouchDriversFromDriver:kTouchDriverGestureScrollSimulator];
     
     /// Init animator
     
-    [_momentumAnimator resetSubPixelator];
+    [_momentumAnimator resetSubPixelator]; /// Shouldn't we use the `_Unsafe` version here?
     [_momentumAnimator linkToMainScreen];
     
     /// Start animator
@@ -367,11 +369,6 @@ static void startMomentumScroll_Unsafe(double timeSinceLastInput, Vector exitVel
         Vector vecScrollLineInt;
         getDeltaVectors(deltaVec, _scrollLinePixelator, &vecScrollLine, &vecScrollLineInt, NULL);
         
-        /// Call momentumScrollStart callback
-        if (animationPhase == kMFAnimationCallbackPhaseStart) {
-            if (_momentumScrollCallback != NULL) _momentumScrollCallback();
-        }
-        
         /// Get momentumPhase from animationPhase
         
         CGMomentumScrollPhase momentumPhase;
@@ -399,7 +396,12 @@ static void startMomentumScroll_Unsafe(double timeSinceLastInput, Vector exitVel
                                                     scrollVectorLineInt:vecScrollLineInt
                                                       scrollVectorPoint:deltaVec
                                                                   phase:kIOHIDEventPhaseUndefined
-                                                          momentumPhase:momentumPhase];
+                                                          momentumPhase:momentumPhase
+                                                     invertedFromDevice:invertedFromDevice];
+        /// Call momentumScrollStart callback
+        if (animationPhase == kMFAnimationCallbackPhaseStart) {
+            if (_momentumScrollCallback != NULL) _momentumScrollCallback();
+        }
 
     }];
     
@@ -439,7 +441,7 @@ static void getDeltaVectors(Vector point, VectorSubPixelator *subPixelator, Vect
     /// You can pass NULL for `gesture` if you don't need it. (You don't need it for momentum scrolls)
     
     /// Guard `point` contains int
-    assert(point.x == roundf(point.x) && point.y == roundf(point.y));
+    assert(point.x == round(point.x) && point.y == round(point.y));
     
     /// Configure pixelator threshold
     
@@ -485,7 +487,8 @@ static void getDeltaVectors(Vector point, VectorSubPixelator *subPixelator, Vect
                             scrollVectorLineInt:(Vector)vecScrollLineInt
                               scrollVectorPoint:(Vector)vecScrollPoint
                                           phase:(IOHIDEventPhaseBits)phase
-                                  momentumPhase:(CGMomentumScrollPhase)momentumPhase {
+                                  momentumPhase:(CGMomentumScrollPhase)momentumPhase
+                             invertedFromDevice:(BOOL)invertedFromDevice {
 
     /// Post scroll events that behave as if they are coming from an Apple Trackpad or Magic Mouse.
     /// This allows for swiping between pages in apps like Safari or Preview, and it also makes overscroll and inertial scrolling work.
@@ -506,7 +509,7 @@ static void getDeltaVectors(Vector point, VectorSubPixelator *subPixelator, Vect
     
     /// Debug
     
-    if (SharedUtility.runningPreRelease) {
+    if (runningPreRelease()) {
         
         static double tsLast = 0;
         double ts = CACurrentMediaTime();
@@ -537,7 +540,7 @@ static void getDeltaVectors(Vector point, VectorSubPixelator *subPixelator, Vect
     
     CGEventSetIntegerValueField(e22, 55, 22); /// 22 -> NSEventTypeScrollWheel // Setting field 55 is the same as using CGEventSetType(), I'm not sure if that has weird side-effects though, so I'd rather do it this way.
     CGEventSetIntegerValueField(e22, 88, 1); /// 88 -> kCGScrollWheelEventIsContinuous
-    CGEventSetIntegerValueField(e22, 137, 1); /// Maybe this is NSEvent.directionInvertedFromDevice
+    CGEventSetIntegerValueField(e22, 137, invertedFromDevice ? 1 : 0); /// I think this is NSEvent.directionInvertedFromDevice. Will flip direction of unread swiping in Mail
     
     /// Set dynamic fields
     
@@ -556,15 +559,15 @@ static void getDeltaVectors(Vector point, VectorSubPixelator *subPixelator, Vect
     CGEventSetIntegerValueField(e22, 97, vecScrollPoint.x); /// 97 -> kCGScrollWheelEventPointDeltaAxis2
     CGEventSetIntegerValueField(e22, 94, fixedScrollDelta(vecScrollLine.x)); /// 94 -> kCGScrollWheelEventFixedPtDeltaAxis2
     
-    /// Debug
-    
-    DDLogDebug(@"\nHNGG Sent event: %@ || customIntLineDelta: %@", scrollEventDescription(e22));
-    
     /// Phase
     
     CGEventSetIntegerValueField(e22, 99, phase);
     CGEventSetIntegerValueField(e22, 123, momentumPhase);
 
+    /// Debug
+    
+    DDLogDebug(@"\nHNGG Sent event: %@", scrollEventDescription(e22));
+    
     /// Post t22s0 event
     ///     Posting after the t29s6 event because I thought that was close to real trackpad events. But in real trackpad events the order is always different it seems.
     ///     Wow, posting this after the t29s6 events removed the little stutter when swiping between pages, nice!

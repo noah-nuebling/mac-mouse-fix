@@ -18,8 +18,7 @@ import CocoaLumberjackSwift
     
     /// AddField
     
-    @IBOutlet weak var addField: NSBox!
-    @IBOutlet weak var plusIconView: NSImageView!
+    @IBOutlet weak var addField: AddField!
     
     /// TableView
     
@@ -56,7 +55,7 @@ import CocoaLumberjackSwift
         /// Get device info
         ///
         
-        let (name, nOfButtons, bestPresetMatch) =  MessagePortUtility_App.getActiveDeviceInfo() ?? (nil, nil, nil)
+        let (name, nOfButtons, bestPresetMatch) =  MessagePortUtility.getActiveDeviceInfo() ?? (nil, nil, nil)
         
         ///
         /// Add accessoryView
@@ -71,7 +70,10 @@ import CocoaLumberjackSwift
         if let nOfButtons = nOfButtons {
             
             let hintStringRaw = String(format: NSLocalizedString("restore-buttons-alert.hint", comment: "First draft: Your __%@__ mouse says it has __%d__ buttons"), name!, nOfButtons)
-            let hintString = NSAttributedString(coolMarkdown: hintStringRaw)?.settingSecondaryLabelColor(forSubstring: nil).settingFontSize(NSFont.smallSystemFontSize).aligningSubstring(nil, alignment: .center).trimmingWhitespace()
+            
+//            let hintString = NSAttributedString(coolMarkdown: hintStringRaw)?.settingSecondaryLabelColor(forSubstring: nil).settingFontSize(NSFont.smallSystemFontSize).aligningSubstring(nil, alignment: .center).trimmingWhitespace()
+            let hintString = NSAttributedString(coolMarkdown: hintStringRaw)?.adding(.secondaryLabelColor, for: nil).settingFontSize(NSFont.smallSystemFontSize).adding(.center, for: nil).trimmingWhitespace()
+            
             if let hintString = hintString {
                 hint = CoolNSTextField(labelWithAttributedString: hintString)
                 if hint != nil {
@@ -120,7 +122,7 @@ import CocoaLumberjackSwift
                 /// Check Change
                 
                 let currentMap = config("Remaps")
-                let defaultMap = config(selectedPreset == 3 ? "Other.defaultRemaps.threeButtons" : "Other.defaultRemaps.fiveButtons")
+                let defaultMap = config(selectedPreset == 3 ? "Constants.defaultRemaps.threeButtons" : "Constants.defaultRemaps.fiveButtons")
                 
                 if currentMap != defaultMap {
                     
@@ -140,9 +142,9 @@ import CocoaLumberjackSwift
                     
                     let messageRaw: String
                     if selectedPreset == 3 {
-                        messageRaw = NSLocalizedString("already-using-defaults-toast.3", comment: "First draft: You're __already using__ the default setting for mice with __3 buttons__!")
+                        messageRaw = NSLocalizedString("already-using-defaults-toast.3", comment: "First draft: You're __already using__ the default setting for mice with __3 buttons__")
                     } else {
-                        messageRaw = NSLocalizedString("already-using-defaults-toast.5", comment: "First draft: You're __already using__ the default setting for mice with __5 buttons__!")
+                        messageRaw = NSLocalizedString("already-using-defaults-toast.5", comment: "First draft: You're __already using__ the default setting for mice with __5 buttons__")
                     }
                     let message = NSAttributedString(coolMarkdown: messageRaw)!
                     DispatchQueue.main.async {
@@ -178,7 +180,7 @@ import CocoaLumberjackSwift
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
         
         /// Do actual init
-        initAddFieldStuff()
+        nonGarbageInit()
     }
     
     required init?(coder: NSCoder) {
@@ -191,107 +193,42 @@ import CocoaLumberjackSwift
         super.init(coder: coder)
         
         /// Real init
-        initAddFieldStuff()
+        nonGarbageInit()
     }
     
-//    override func viewDidLoad() {
-//        super.viewDidLoad()
-//
-//        /// Init addField
-//        initAddFieldStuff()
-//
-//    }
+    func nonGarbageInit() {
+        
+        /// Note: Why are we doing some stuff in init and some in viewDidLoad? I don't understand the logic behind that.
+        
+        /// Validate: Init is not called twice
+        assert(MainAppState.shared.buttonTabController == nil)
+        
+        /// Store self into global state
+        ///     Why is this in `initAddFieldStuff`?
+        MainAppState.shared.buttonTabController = self
+        
+        /// Init state
+        pointerIsInsideAddField = false
+    }
     
-    var appearanceObservation: NSKeyValueObservation? = nil
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         /// Init remaps when the helper becomes (or already is) enabled
-        ///     This doesn't really belong here. It just needs to be executed on app start (which it is, being here)
+        ///     This doesn't really belong here. It just needs to be executed when the app is first enabled.
         ///     TODO: Move this. E.g. to   `AppDelegate - applicationDidFinishLaunching`
         ///
-        
         EnabledState.shared.producer.startWithValues { enabled in
             if enabled { ButtonTabController.initRemaps() }
         }
-        
         /// Add trackingArea
         ///     Do we ever need to remove it?
         trackingArea = NSTrackingArea(rect: self.addField.bounds, options: [.mouseEnteredAndExited, .activeInKeyWindow], owner: self)
-        
         self.addField.addTrackingArea(trackingArea)
         
-        /// Fix hover animations
-        ///     Need to set some shadow before (and not directly, synchronously before) the hover animation first plays. No idea why this works
-        addField.shadow = .clearShadow
-        plusIconView.shadow = .clearShadow
-        
-        /// Make colors non-transparent
-        updateColors()
-        
-        /// Observe darkmode changes to update colors (we do the same thing in RemapTable)
-        if #available(macOS 10.14, *) {
-            appearanceObservation = NSApp.observe(\.effectiveAppearance) { nsApp, change in
-                self.updateColors()
-            }
-        }
-    }
-    
-    func updateColors() {
-        
-        /// This is a helper for `viewDidLoad`
-        
-        ///
-        /// Update addField
-        ///
-        /// We use non-transparent colors so the shadows don't bleed through
-        
-        /// Init
-        addField.wantsLayer = true
-        
-        /// Check darkmode
-        let isDarkMode = isDarkMode()
-        
-        /// Get baseColor
-        let baseColor: NSColor = isDarkMode ? .black : .white
-        
-        /// Define baseColor blending fractions
-        
-        let fillFraction = isDarkMode ? 0.1 : 0.25
-        let borderFraction = isDarkMode ? 0.1 : 0.25
-        
-        /// Update fillColor
-        ///     This is reallly just quarternaryLabelColor but without transparency. Edit: We're making it a little lighter actually.
-        ///     I couldn't find a nicer way to remove transparency except hardcoding it. Our solidColor methods from NSColor+Additions.m didn't work properly. I suspect it's because the NSColor objects can represent different colors depending on which context they are drawn in.
-        ///     Possible nicer solution: I think the only dynamic way to remove transparency that will be reliable is to somehow render the view in the background and then take a screenhot
-        ///     Other possible solution: We really want to do this so we don't see the NSShadow behind the view. Maybe we could clip the drawing of the shadow, then we wouldn't have to remove transparency at all.
-        
-        let quarternayLabelColor: NSColor
-        if isDarkMode {
-            quarternayLabelColor = NSColor(red: 57/255, green: 57/255, blue: 57/255, alpha: 1.0)
-        } else {
-            quarternayLabelColor = NSColor(red: 227/255, green: 227/255, blue: 227/255, alpha: 1.0)
-        }
-        
-        addField.fillColor = quarternayLabelColor.blended(withFraction: fillFraction, of: baseColor)!
-        
-        /// Update borderColor
-        ///     This is really just .separatorColor without transparency
-        
-        let separatorColor: NSColor
-        if isDarkMode {
-            separatorColor = NSColor(red: 77/255, green: 77/255, blue: 77/255, alpha: 1.0)
-        } else {
-            separatorColor = NSColor(red: 198/255, green: 198/255, blue: 198/255, alpha: 1.0)
-        }
-        
-        addField.borderColor = separatorColor.blended(withFraction: borderFraction, of: baseColor)!
-        
-        /// Update plusIcon color
-        if #available(macOS 10.14, *) {
-            plusIconView.contentTintColor = plusIconViewBaseColor()
-        }
+        /// Init AddField visuals
+        addField.coolInit()
     }
     
     // MARK: Did appear
@@ -301,6 +238,9 @@ import CocoaLumberjackSwift
         
         /// This is called every time the tab is switched to
         /// This is called twice, awakeFromNib as well. Use init() or viewDidLoad() to do things once
+        
+        /// Update tableView size
+        self.tableView.updateSize(withAnimation: false, tabContentView: self.view)
         
         /// Display extra UI
         ///     Doing this with a delay because it doesn't work if the tab switch animation is still ongoing
@@ -312,7 +252,7 @@ import CocoaLumberjackSwift
             ///
             
             /// Get device info
-            guard let (deviceName, nOfButtons, _) = MessagePortUtility_App.getActiveDeviceInfo() else { return }
+            guard let (deviceName, nOfButtons, _) = MessagePortUtility.getActiveDeviceInfo() else { return }
             
             /// Get actionTable info
             let usedButtons = RemapTableUtility.getCapturedButtons()
@@ -364,29 +304,25 @@ import CocoaLumberjackSwift
             
         })
         
-        
         ///
         /// Turn off killswitch
         ///
         
         /// We do the exact same thing in the scrollTab
         
-        let isDisabled = config("Other.buttonKillSwitch") as! Bool
+        let buttonsAreKilled = config("General.buttonKillSwitch") as! Bool
+        let scrollIsKilled = config("General.scrollKillSwitch") as! Bool
         
-        if isDisabled {
+        if buttonsAreKilled || scrollIsKilled {
             
             /// Turn off killSwitch
-            setConfig("Other.buttonKillSwitch", false as NSObject)
+            ///     NOTE: We also turn off the scrollKillSwitch because otherwise we can't record click and scroll in addMode.
+            setConfig("General.buttonKillSwitch", false as NSObject)
+            setConfig("General.scrollKillSwitch", false as NSObject)
             commitConfig()
-                
-            /// Build string
-            let messageRaw = NSLocalizedString("button-revive-toast", comment: "First draft: __Enabled__ Mac Mouse Fix for __Buttons__\nIt had been disabled from the Menu Bar %@ || Note: %@ will be replaced by the menubar icon")
-            var message = NSAttributedString(coolMarkdown: messageRaw)!
-            let symbolString = NSAttributedString(symbol: "CoolMenuBarIcon", hPadding: 0.0, vOffset: -6, fallback: "<Mac Mouse Fix Menu Bar Item>")
-            message = NSAttributedString(attributedFormat: message, args: [symbolString])
             
-            /// Show message
-            ToastNotificationController.attachNotification(withMessage: message, to: MainAppState.shared.window!, forDuration: -1, alignment: kToastNotificationAlignmentTopMiddle)
+            /// Show user feedback
+            ToastCreator.showReviveToast(showButtons: buttonsAreKilled, showScroll: scrollIsKilled)
         }
     }
     
@@ -399,19 +335,19 @@ import CocoaLumberjackSwift
         /// This func doesn't clearly belong into `ButtonTabController`
         ///     Is called when the helper is enabled
         
-        let hasBeenInited = config("Other.remapsAreInitialized") as! Bool? ?? false
+        let hasBeenInited = config("State.remapsAreInitialized") as! Bool? ?? false
         
         if !hasBeenInited {
             
-            setConfig("Other.remapsAreInitialized", true as NSObject)
+            setConfig("State.remapsAreInitialized", true as NSObject)
             commitConfig()
             
-            let (_, _, bestPresetMatch) = MessagePortUtility_App.getActiveDeviceInfo() ?? (nil, nil, nil)
+            let (_, _, bestPresetMatch) = MessagePortUtility.getActiveDeviceInfo() ?? (nil, nil, nil)
             
             /// This is copy-pasted from `restoreDefaults()`
             
             let currentMap = config("Remaps")
-            let defaultMap = config(bestPresetMatch == 3 ? "Other.defaultRemaps.threeButtons" : "Other.defaultRemaps.fiveButtons")
+            let defaultMap = config(bestPresetMatch == 3 ? "Constants.defaultRemaps.threeButtons" : "Constants.defaultRemaps.fiveButtons")
             
             if (currentMap != defaultMap) {
                 
@@ -461,6 +397,8 @@ import CocoaLumberjackSwift
     }
     
     /// Show popover method
+    
+    private var restoreDefaultPopover_stringAttributesFromIB: [NSAttributedString.Key : Any]? = nil
     
     fileprivate func showRestoreDefaultPopover(deviceName: String, nOfButtons: Int, usedButtons: Set<NSNumber>) {
         
@@ -519,12 +457,20 @@ import CocoaLumberjackSwift
             ///     So we can observe animations
             self.restoreDefaultPopover.delegate = self
             
+            /// Store attributes from IB
+            if restoreDefaultPopover_stringAttributesFromIB == nil {
+                restoreDefaultPopover_stringAttributesFromIB = self.restoreDefaultPopoverLabel.attributedStringValue.attributes(at: 0, effectiveRange: nil)
+            }
+            
             /// Setup body text
             ///     There used to be different text based on whether your were using a 3 button or a 5 button mouse, but we've simplified that now
             
             let message = String(format: NSLocalizedString("restore-default-buttons-popover.body", comment: "First draft:  __Click here__ to load the recommended settings\nfor your __%@__ mouse || Note: The \n linebreak is so the popover doesn't become too wide. You can set it to your taste. || Note: In English, there needs to be a space at the start of this string otherwise the whole string will be bold. This might be a Ventura Bug"), deviceName)
             
-            assignAttributedStringKeepingBase(&self.restoreDefaultPopoverLabel.attributedStringValue, NSAttributedString(coolMarkdown: message, fillOutBase: false)!)
+            if let attributes = restoreDefaultPopover_stringAttributesFromIB, let newString = NSAttributedString(coolMarkdown: message, fillOutBase: false)?.addingStringAttributes(asBase: attributes) {
+                
+                self.restoreDefaultPopoverLabel.attributedStringValue = newString
+            }
             
             /// Turn checkbox off
             self.restoreDefaultPopoverDontRemindAgainCheckbox.state = .off
@@ -592,31 +538,51 @@ import CocoaLumberjackSwift
     var pointerIsInsideAddField: Bool
     var trackingArea: NSTrackingArea
     
-    /// Init
-    func initAddFieldStuff() {
-        
-        /// Init state
-        pointerIsInsideAddField = false
-        
-        /// Validate: Init is not called twice
-        assert(MainAppState.shared.buttonTabController == nil)
-        
-        /// Store self into global state
-        MainAppState.shared.buttonTabController = self
-    }
-    
     /// AddField callbacks
     ///     TODO: Maybe think about race condition for the mouseEntered and mouseExited functions
 
     override func mouseEntered(with event: NSEvent) {
-        pointerIsInsideAddField = true
-        addFieldHoverEffect(enable: true)
-        SharedMessagePort.sendMessage("enableAddMode", withPayload: nil, expectingReply: false)
+        DispatchQueue.main.async {
+            
+            /// Not sure it makes sense to dispatch async for mouseEntered and mouseExited. We added that dispatch when addField.hoverEffect was controlled by messages we received instead of being based on response to the the messages we sent.
+            /// Here are some notes we wrote for the old architecture:
+            /// \discussion After addMode refactoring around commit 02c9fcc20d3f03d8b0d2db6e25830276ed937107 I saw a deadlock in the animationCode maybe dispatch to main will prevent it. Edit: Nope still happens. Edit2: Could fix the deadlock by not locking the CATransaction in Animate.swift. So dispatching to main here might be unnecessary.
+            
+            self.pointerIsInsideAddField = true
+            let success = MFMessagePort.sendMessage("enableAddMode", withPayload: nil, waitForReply: true)
+            if let success = success as? Bool, success == true {
+                self.addField.hoverEffect(enable: true)
+            }
+        }
     }
     override func mouseExited(with event: NSEvent) {
-        pointerIsInsideAddField = false
-        addFieldHoverEffect(enable: false)
-        SharedMessagePort .sendMessage("disableAddMode", withPayload: nil, expectingReply: false)
+        DispatchQueue.main.async {
+            
+            self.pointerIsInsideAddField = false
+            MFMessagePort.sendMessage("disableAddMode", withPayload: nil, waitForReply: false)
+            self.addField.hoverEffect(enable: false)
+        }
+        
+    }
+
+    @objc func handleAddModeFeedback(payload: NSDictionary) {
+        
+        DispatchQueue.main.async {
+            
+            /// Debug
+            DDLogDebug("Received AddMode feedback with payload: \(payload)")
+            
+            /// Send payoad to tableController
+            ///     The payload is an almost finished remapsTable (aka RemapTableController.dataModel) entry with the kMFRemapsKeyEffect key missing
+            self.tableController.addRow(withHelperPayload: payload as! [AnyHashable : Any])
+            
+            /// Disable addMode
+//            pointerIsInsideAddField = false /// ???
+            MFMessagePort.sendMessage("disableAddMode", withPayload: nil, waitForReply: false)
+            
+            /// Remove hover
+            self.addField.hoverEffect(enable: false, playAcceptAnimation: true)
+        }
     }
     
     /// Ignore MB1 & MB2
@@ -637,184 +603,5 @@ import CocoaLumberjackSwift
         let message = NSAttributedString(coolMarkdown: messageRaw)!;
         
         ToastNotificationController.attachNotification(withMessage: message, to: MainAppState.shared.window!, forDuration: -1)
-    }
-    
-    /// Conclude addMode
-
-    @objc func handleReceivedAddModeFeedbackFromHelper(payload: NSDictionary) {
-        
-        DDLogDebug("Received AddMode feedback with payload: \(payload)")
-        
-        self.wrapUpAddModeFeedbackHandling(payload: payload)
-    }
-    
-    @objc func wrapUpAddModeFeedbackHandling(payload: NSDictionary) {
-        
-        /// Remove hover
-        addFieldHoverEffect(enable: false, playAcceptAnimation: true)
-        
-        /// Send payoad to tableController
-        ///     The payload is an almost finished remapsTable (aka RemapTableController.dataModel) entry with the kMFRemapsKeyEffect key missing
-        tableController.addRow(withHelperPayload: payload as! [AnyHashable : Any])
-        
-    }
-    
-
-    ///
-    /// Old MMF 2 methods for reference (had to translate some of these to swift)
-    ///
-    
-//    - (void)handleReceivedAddModeFeedbackFromHelperWithPayload:(NSDictionary *)payload {
-//
-//        DDLogDebug(@"Received AddMode feedback with payload: %@", payload);
-//
-//        /// Tint plus icon to give visual feedback
-//        NSImageView *plusIconViewCopy;
-//        if (@available(macOS 10.14, *)) {
-//            plusIconViewCopy = (NSImageView *)[SharedUtility deepCopyOf:_instance.plusIconView];
-//            [_instance.plusIconView.superview addSubview:plusIconViewCopy];
-//            plusIconViewCopy.alphaValue = 0.0;
-//            plusIconViewCopy.contentTintColor = NSColor.controlAccentColor;
-//            [NSAnimationContext runAnimationGroup:^(NSAnimationContext * _Nonnull context) {
-//                NSAnimationContext.currentContext.duration = 0.2;
-//                plusIconViewCopy.animator.alphaValue = 0.6;
-//    //            _instance.plusIconView.animator.alphaValue = 0.0;
-//                [NSThread sleepForTimeInterval:NSAnimationContext.currentContext.duration];
-//            }];
-//            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 0.1 * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
-//                [self wrapUpAddModeFeedbackHandlingWithPayload:payload andPlusIconViewCopy:plusIconViewCopy];
-//            });
-//        } else {
-//            [self wrapUpAddModeFeedbackHandlingWithPayload:payload andPlusIconViewCopy:plusIconViewCopy];
-//        }
-//    }
-        
-//    - (void)wrapUpAddModeFeedbackHandlingWithPayload:(NSDictionary * _Nonnull)payload andPlusIconViewCopy:(NSImageView *)plusIconViewCopy {
-//        /// Dismiss sheet
-//        [self end];
-//        /// Send payload to RemapTableController
-//        ///      The payload is an almost finished remapsTable (aka RemapTableController.dataModel) entry with the kMFRemapsKeyEffect key missing
-//        [((RemapTableController *)AppDelegate.instance.remapsTable.delegate) addRowWithHelperPayload:(NSDictionary *)payload];
-//        /// Reset plus image tint
-//        if (@available(macOS 10.14, *)) {
-//            plusIconViewCopy.alphaValue = 0.0;
-//            [plusIconViewCopy removeFromSuperview];
-//            _instance.plusIconView.alphaValue = 1.0;
-//        }
-//    }
-//
-    
-    /// Visual FX
-    
-    func addFieldHoverEffect(enable: Bool, playAcceptAnimation: Bool = false) {
-        /// Ideas: Draw focus ring or shadow, or zoom
-        
-        /// Debug
-        
-        DDLogDebug("FIELD HOOVER: \(enable)")
-        
-        /// Init
-        addField.wantsLayer = true
-        addField.layer?.transform = CATransform3DIdentity
-        addField.coolSetAnchorPoint(anchorPoint: .init(x: 0.5, y: 0.5))
-        
-        if !enable {
-            
-            
-            /// Animation curve
-            var animation = CASpringAnimation(speed: 2.25, damping: 1.0)
-            
-            if playAcceptAnimation {
-                animation = CASpringAnimation(speed: 3.75, damping: 0.25, initialVelocity: -10)
-            }
-            
-            
-            /// Play animation
-            
-            Animate.with(animation) {
-                addField.reactiveAnimator().layer.transform.set(CATransform3DIdentity)
-                addField.reactiveAnimator().shadow.set(NSShadow.clearShadow)
-            }
-            
-            /// Play tint animation
-            
-            if #available(macOS 10.14, *) {
-                if playAcceptAnimation {
-                    Animate.with(CASpringAnimation(speed: 3.5, damping: 1.0)) {
-                        plusIconView.reactiveAnimator().contentTintColor.set(NSColor.controlAccentColor)
-                    } onComplete: {
-                        DispatchQueue.main.asyncAfter(deadline: .now() + 1.5, execute: { /// This 'timer' is not terminated when unhover is triggered some other way, leading to slightly weird behaviour
-                            Animate.with(CASpringAnimation(speed: 3.5, damping: 1.3)) {
-                                self.plusIconView.reactiveAnimator().contentTintColor.set(self.plusIconViewBaseColor())
-                            }
-                        })
-                    }
-                } else { /// Normal un-hovering
-                    Animate.with(CASpringAnimation(speed: 3.5, damping: 1.3)) {
-                        self.plusIconView.reactiveAnimator().contentTintColor.set(self.plusIconViewBaseColor())
-                    }
-                }
-            }
-            
-            
-        } else {
-            
-            /// Setup addField shadow
-            
-            var isDarkMode: Bool = false
-            if #available(macOS 10.14, *) {
-                isDarkMode = (NSApp.effectiveAppearance == .init(named: .darkAqua)!)
-            }
-            
-            let s = NSShadow()
-            s.shadowColor = .shadowColor.withAlphaComponent(isDarkMode ? 0.75 : 0.225)
-            s.shadowOffset = .init(width: 0, height: -2)
-            s.shadowBlurRadius = 1.5
-            
-            addField.wantsLayer = true
-            addField.layer?.masksToBounds = false
-            addField.superview?.wantsLayer = true
-            addField.superview?.layer?.masksToBounds = false
-            
-            /// Setup plusIcon shadow
-            
-            let t = NSShadow()
-            t.shadowColor = .shadowColor.withAlphaComponent(0.5)
-            t.shadowOffset = .init(width: 0, height: -1)
-            t.shadowBlurRadius = /*3*/10
-            
-            plusIconView.wantsLayer = true
-            plusIconView.layer?.masksToBounds = false
-            plusIconView.superview?.wantsLayer = true
-            plusIconView.superview?.layer?.masksToBounds = false
-            
-            /// Animate
-            
-            Animate.with(CASpringAnimation(speed: 3.75, damping: 1.0)) {
-                addField.reactiveAnimator().layer.transform.set(CATransform3DTranslate(CATransform3DMakeScale(1.005, 1.005, 1.0), 0.0, 1.0, 0.0))
-                addField.reactiveAnimator().shadow.set(s)
-            }
-            
-//            DispatchQueue.main.asyncAfter(deadline: .now() + 0.05, execute: {
-//                Animate.with(CABasicAnimation(name: .default, duration: 0.25)) {
-//                    self.plusIconView.reactiveAnimator().shadow.set(t)
-//                }
-//            })
-        }
-        
-    }
-    
-    private func plusIconViewBaseColor() -> NSColor {
-        
-        return NSColor.systemGray
-    }
-    
-    private func isDarkMode() -> Bool {
-        
-        if #available(macOS 10.14, *) {
-            let isDarkMode = (NSApp.effectiveAppearance == .init(named: .darkAqua)!)
-            return isDarkMode
-        }
-        return false
     }
 }

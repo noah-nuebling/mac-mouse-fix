@@ -180,7 +180,7 @@ import Foundation
         
         /// Validate input
         
-        assert(exponent > 0)
+        assert(exponent >= 0)
         assert(coefficient > 0)
         assert(SharedUtility.sign(of: d) == SharedUtility.sign(of: vs))
         assert(vs > 0)
@@ -253,7 +253,7 @@ import Foundation
         var vs = vs_arg
         
         /// Validate curve shape params
-        assert(exponent > 0)
+        assert(exponent >= 0)
         assert(coefficient > 0)
         
         /// Validate velocities

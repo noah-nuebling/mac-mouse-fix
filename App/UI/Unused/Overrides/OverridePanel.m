@@ -404,8 +404,8 @@ NSMutableArray *_tableViewDataModel;
 - (void)loadTableViewDataModelFromConfig {
     _tableViewDataModel = [NSMutableArray array];
     NSDictionary *config = Config.shared.config;
-    if (!config) { // TODO: does this exception make sense? What is the consequence of it being thrown? Where is it caught? Should we just reload the config file instead? Can this even happen if ConfigFileInterface successfully loaded?
-        NSException *configNotLoadedException = [NSException exceptionWithName:@"ConfigNotLoadedException" reason:@"ConfigFileInterface config property is nil" userInfo:nil];
+    if (!config) { // TODO: does this exception make sense? What is the consequence of it being thrown? Where is it caught? Should we just reload the config file instead? Can this even happen if the Config class successfully loaded?
+        NSException *configNotLoadedException = [NSException exceptionWithName:@"ConfigNotLoadedException" reason:@"Config class' config property is nil" userInfo:nil];
         @throw configNotLoadedException;
         return;
     }

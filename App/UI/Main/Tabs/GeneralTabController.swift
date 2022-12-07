@@ -10,6 +10,7 @@ import ReactiveSwift
 import ReactiveCocoa
 import CocoaLumberjackSwift
 import Sparkle
+import ServiceManagement
 
 class GeneralTabController: NSViewController {
     
@@ -17,9 +18,9 @@ class GeneralTabController: NSViewController {
 //    var enabled: MutableProperty<Bool> { MainAppState.shared.appIsEnabled }
     
     /// Config
-    var showInMenuBar = ConfigValue<Bool>(configPath: "Other.showMenuBarItem")
-    var checkForUpdates = ConfigValue<Bool>(configPath: "Other.checkForUpdates")
-    var getBetaVersions = ConfigValue<Bool>(configPath: "Other.checkForPrereleases")
+    var showInMenuBar = ConfigValue<Bool>(configPath: "General.showMenuBarItem")
+    var checkForUpdates = ConfigValue<Bool>(configPath: "General.checkForUpdates")
+    var getBetaVersions = ConfigValue<Bool>(configPath: "General.checkForPrereleases")
     
     /// Outlets
     
@@ -79,15 +80,19 @@ class GeneralTabController: NSViewController {
                     
                     guard let error = error else { return }
                     
-                    if #available(macOS 13.0, *) {
-                        if (error as NSError).code == 1 {
-                            let messageRaw = NSLocalizedString("is-disabled-toast", comment: "First draft: Mac Mouse Fix was **disabled** in System Settings.\nTo enable Mac Mouse Fix:\n\n1. Go to [Login Items Settings](x-apple.systempreferences:com.apple.LoginItems-Settings.extension)\n2. Switch on \'Mac Mouse Fix.app\'")
-                            let message = NSMutableAttributedString(coolMarkdown: messageRaw)
-                            
-                            DispatchQueue.main.async { /// UI stuff needs to be called from the main thread
-                                if let window = NSApp.mainWindow, let message = message {
-                                    ToastNotificationController.attachNotification(withMessage: message, to: window, forDuration: -1.0)
-                                }
+                    var messageRaw = ""
+                    if #available(macOS 13.0, *), error.domain == "SMAppServiceErrorDomain", error.code == 1 {
+                        messageRaw = NSLocalizedString("is-disabled-toast", comment: "First draft: Mac Mouse Fix was **disabled** in System Settings\n\nTo enable Mac Mouse Fix:\n\n1. Go to [Login Items Settings](x-apple.systempreferences:com.apple.LoginItems-Settings.extension)\n2. Switch on \'Mac Mouse Fix.app\'")
+                    }
+//                    else if error.domain == MFHelperServicesErrorDomain, error.code == kMFHelperServicesErrorMismatchedHelper.rawValue {
+//                        messageRaw = "Whattttt"
+//                    }
+                    
+                    if messageRaw != "" {
+                        let message = NSMutableAttributedString(coolMarkdown: messageRaw)
+                        DispatchQueue.main.async { /// UI stuff needs to be called from the main thread
+                            if let window = NSApp.mainWindow, let message = message {
+                                ToastNotificationController.attachNotification(withMessage: message, to: window, forDuration: -1.0)
                             }
                         }
                     }

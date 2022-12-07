@@ -9,8 +9,28 @@
 
 #import "NSView+Additions.h"
 #import "NSArray+Additions.h"
+#import "SharedUtility.h"
 
 @implementation NSView (Additions)
+
+#pragma mark - Frame conversion
+
+- (CGRect)rectInQuartzScreenCoordinates {
+    
+    /// Not sure if this still works when self.isFlipped. Should test that.
+    
+    return [SharedUtility cocoaToQuartzScreenSpace:[self.window convertRectToScreen:self.rectInWindowCoordinates]];
+}
+
+- (CGRect)rectInScreenCoordinates {
+    return [self.window convertRectToScreen:self.rectInWindowCoordinates];
+}
+
+- (CGRect)rectInWindowCoordinates {
+    return [self convertRect:self.bounds toView:nil];
+}
+
+#pragma mark - Accessing related views
 
 - (NSArray<NSView *> *)nestedSubviews {
     

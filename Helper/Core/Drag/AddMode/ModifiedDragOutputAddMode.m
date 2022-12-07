@@ -8,7 +8,7 @@
 //
 
 #import "ModifiedDragOutputAddMode.h"
-#import "TransformationManager.h"
+#import "Remap.h"
 
 @implementation ModifiedDragOutputAddMode
 
@@ -16,6 +16,7 @@
 
 static ModifiedDragState *_drag;
 static NSDictionary *_addModePayload; /// Payload to send to the mainApp. Only used with modified drag of type kMFModifiedDragTypeAddModeFeedback.
+static BOOL _didConclude;
 
 /// Interface
 
@@ -23,29 +24,31 @@ static NSDictionary *_addModePayload; /// Payload to send to the mainApp. Only u
     
     _drag = dragStateRef;
     
-    /// Prepare payload to send to mainApp during AddMode. See TransformationManager -> AddMode for context
+    /// Prepare payload to send to mainApp during AddMode. See Remap -> AddMode for context
     NSMutableDictionary *payload = _drag->effectDict.mutableCopy; /// Probably already mutable. See RemapSwizzler.
     [payload removeObjectForKey:kMFModifiedDragDictKeyType];
     _addModePayload = payload;
+    _didConclude = NO;
 }
 
 + (void)handleBecameInUse {
     
-    if (_addModePayload != nil) {
-//        [TransformationManager sendAddModeFeedbackWithPayload:_addModePayload]; /// Remove this and make sendAddModeFeedbackWithPayload private.
-        [TransformationManager concludeAddModeWithPayload:_addModePayload];
-    } else {
-        @throw [NSException exceptionWithName:@"InvalidAddModeFeedbackPayload" reason:@"_drag.addModePayload is nil. Something went wrong!" userInfo:nil]; /// Throw exception to cause crash
-    }
+    return;
 }
 
 + (void)handleMouseInputWhileInUseWithDeltaX:(double)deltaX deltaY:(double)deltaY event:(nonnull CGEventRef)event {
     
-    return;
+    if (!_didConclude) {
+        if (_addModePayload != nil) {
+            [Remap sendAddModeFeedback:_addModePayload];
+            _didConclude = YES;
+        } else {
+            @throw [NSException exceptionWithName:@"InvalidAddModeFeedbackPayload" reason:@"_drag.addModePayload is nil. Something went wrong!" userInfo:nil]; /// Throw exception to cause crash
+        }
+    }
 }
 
 + (void)handleDeactivationWhileInUseWithCancel:(BOOL)cancelation {
-    [TransformationManager disableAddModeWithPayload:_addModePayload];
 }
 
 + (void)suspend {}

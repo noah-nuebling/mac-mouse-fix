@@ -78,16 +78,14 @@ extension MFLicenseAndTrialState: Equatable {
                         ///     This is unused so far
                         
                         /// Validate
-                        assert(SharedUtility.runningMainApp())
-                        
-                        
+                        assert(runningMainApp())
                         
                     } else {
                         
                         /// Not triggered by user -> the users workflow is disruped -> make it as short as possible
                         
                         /// Validate
-                        assert(SharedUtility.runningHelper())
+                        assert(runningHelper())
                         
                         /// Only compile if helper (Otherwise there are linker errors)
                         #if IS_HELPER
@@ -98,7 +96,7 @@ extension MFLicenseAndTrialState: Equatable {
                         }
                         
                         /// Lock helper
-                        HelperState.lockDown()
+                        SwitchMaster.shared.lockDown()
                         
                         #endif
                         
@@ -415,22 +413,19 @@ fileprivate class Gumroad: NSObject {
     //
     
     /// Constants
+    /// Notes:
+    /// - `mmfinapp` was used during the MMF 3 Beta. It was using € which you can't change, so we had to create a new product in Gumroad `mmfinappusd`
     
-    private static let productPermalink = "mmfinapp"
+    private static let productPermalinkOld = "mmfinapp"
+    private static let productPermalink = "mmfinappusd"
     
     /// Functions
     
     static func getLicenseInfo(_ key: String, incrementUsageCount: Bool, completionHandler: @escaping (_ isValidKey: Bool, _ nOfActivations: Int?, _ serverResponse: [String: Any]?, _ error: NSError?, _ urlResponse: URLResponse?) -> ()) {
         
-        
-        sendGumroadAPIRequest(method: "/licenses/verify",
-                              args: ["product_permalink": productPermalink,
-                                     "license_key": key,
-                                     "increment_uses_count": incrementUsageCount ? "true" : "false"],
-                              completionHandler: { data, error, urlResponse in
+        let workload = { (_ error: NSError?, _ data: [String : Any]?, _ urlResponse: URLResponse?) in
             
             /// Guard error
-            
             if error != nil {
                 completionHandler(false, nil, data, error, urlResponse)
                 return
@@ -446,6 +441,30 @@ fileprivate class Gumroad: NSObject {
             
             /// Call completions handler
             completionHandler(isValidKey, activations, data, error, urlResponse)
+        }
+        
+        
+        sendGumroadAPIRequest(method: "/licenses/verify",
+                              args: ["product_permalink": productPermalink,
+                                     "license_key": key,
+                                     "increment_uses_count": incrementUsageCount ? "true" : "false"],
+                              completionHandler: { data, error, urlResponse in
+            
+            if let message = error?.userInfo["message"] as? NSString, message == "That license does not exist for the provided product." {
+                
+                /// If license doesn't exist for new product, try old product
+                
+                sendGumroadAPIRequest(method: "/licenses/verify",
+                                      args: ["product_permalink": productPermalinkOld,
+                                             "license_key": key,
+                                             "increment_uses_count": incrementUsageCount ? "true" : "false"],
+                                      completionHandler: { data, error, urlResponse in
+                    workload(error, data, urlResponse)
+                })
+                
+            } else {
+                workload(error, data, urlResponse)
+            }
         })
     }
     

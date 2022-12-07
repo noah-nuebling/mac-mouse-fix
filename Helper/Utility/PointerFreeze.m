@@ -12,7 +12,7 @@
 #import "HelperUtility.h"
 #import "Mac_Mouse_Fix_Helper-Swift.h"
 #import "CGSConnection.h"
-#import "TransformationUtility.h"
+#import "ModificationUtility.h"
 #import "GlobalEventTapThread.h"
 #import "NSScreen+Additions.h"
 @import CoreMedia;
@@ -71,7 +71,7 @@ static int64_t _lastEventDelta;
         
         /// Setup eventTap
         ///     Using a listenOnly tap would be more appropriate but they sometimes behave weirdly
-        _eventTap = [TransformationUtility createEventTapWithLocation:kCGHIDEventTap mask:CGEventMaskBit(kCGEventMouseMoved) | CGEventMaskBit(kCGEventLeftMouseDragged) | CGEventMaskBit(kCGEventRightMouseDragged) | CGEventMaskBit(kCGEventOtherMouseDragged) option:kCGEventTapOptionDefault placement:kCGHeadInsertEventTap callback:mouseMovedCallback runLoop:GlobalEventTapThread.runLoop];
+        _eventTap = [ModificationUtility createEventTapWithLocation:kCGHIDEventTap mask:CGEventMaskBit(kCGEventMouseMoved) | CGEventMaskBit(kCGEventLeftMouseDragged) | CGEventMaskBit(kCGEventRightMouseDragged) | CGEventMaskBit(kCGEventOtherMouseDragged) option:kCGEventTapOptionDefault placement:kCGHeadInsertEventTap callback:mouseMovedCallback runLoop:GlobalEventTapThread.runLoop];
     }
 }
 
@@ -124,7 +124,7 @@ static int64_t _lastEventDelta;
             _puppetCursorPosition = origin;
             
             /// Get display under mouse pointer
-            CVReturn rt = [SharedUtility display:&_display atPoint:_origin];
+            CVReturn rt = [HelperUtility display:&_display atPoint:_origin];
             if (rt != kCVReturnSuccess) DDLogWarn(@"Couldn't get display under mouse pointer in PointerFreeze");
             
             /// Draw puppet cursor before hiding
@@ -139,7 +139,7 @@ static int64_t _lastEventDelta;
             usleep(USEC_PER_SEC * 0.01);
             
             /// Hid cursor
-            [TransformationUtility hideMousePointer:YES];
+            [ModificationUtility hideMousePointer:YES];
         }
     });
 }
@@ -147,14 +147,16 @@ static int64_t _lastEventDelta;
 CGEventRef _Nullable mouseMovedCallback(CGEventTapProxy proxy, CGEventType type, CGEventRef event, void *userInfo) {
     
     /// Catch special events
-    if (type == kCGEventTapDisabledByTimeout) {
-        /// Re-enable on timeout (Not sure if this ever times out)
-        DDLogInfo(@"PointerFreeze eventTap timed out. Re-enabling.");
-        CGEventTapEnable(_eventTap, true);
-        _coolEventTapIsEnabled = true;
-        return event;
-    } else if (type == kCGEventTapDisabledByUserInput) {
-        DDLogInfo(@"PointerFreeze eventTap disabled by user input.");
+    if (type == kCGEventTapDisabledByTimeout || type == kCGEventTapDisabledByUserInput) {
+        
+        DDLogInfo(@"PointerFreeze eventTap disabled by %@", type == kCGEventTapDisabledByTimeout ? @"timeout. Re-enabling." : @"user input.");
+        
+        if (type == kCGEventTapDisabledByTimeout) {
+//            assert(false); /// Not sure this ever times out
+            CGEventTapEnable(_eventTap, true);
+            _coolEventTapIsEnabled = true;
+        }
+        
         return event;
     }
     
@@ -216,7 +218,7 @@ CGEventRef _Nullable mouseMovedCallback(CGEventTapProxy proxy, CGEventType type,
     dispatch_async(_queue, ^{
         
         /// Process timestamp
-        BOOL pointerIsMoving = (timeSinceLastEvent < OtherConfig.mouseMovingMaxIntervalSmall) && _lastEventDelta > 0;
+        BOOL pointerIsMoving = (timeSinceLastEvent < GeneralConfig.mouseMovingMaxIntervalSmall) && _lastEventDelta > 0;
         
         /// Debug
         /// Doing this outside the queue led to race conditions (I think?)
@@ -251,7 +253,7 @@ CGEventRef _Nullable mouseMovedCallback(CGEventTapProxy proxy, CGEventType type,
         if (_keepPointerMoving) {
         
             /// Show mouse pointer again
-            [TransformationUtility hideMousePointer:NO];
+            [ModificationUtility hideMousePointer:NO];
             
             /// Undraw puppet cursor
             [PointerFreeze drawPuppetCursor:NO fresh:NO];
@@ -277,6 +279,7 @@ typedef enum {
 static MFEventSuppressionInterval _previousMFSuppressionInterval = kMFEventSuppressionIntervalDefault;
 static CFTimeInterval _defaultSuppressionInterval = 0.25;
 void setSuppressionInterval(MFEventSuppressionInterval mfInterval) {
+    
     /// We use CGWarpMousePointer to keep the pointer from moving during simulated touchScroll.
     ///     However, after that, the cursor will freeze for like half a second which is annoying.
     ///     To avoid this we need to set the CGEventSuppressionInterval to 0
@@ -320,13 +323,19 @@ void setSuppressionInterval(MFEventSuppressionInterval mfInterval) {
     
     /// Store previous mfInterval
     _previousMFSuppressionInterval = mfInterval;
+    
+    /// Release
+    CFRelease(src);
 }
 
 void setSuppressionIntervalWithTimeInterval(CFTimeInterval interval) {
     
+    /// Get src
     CGEventSourceRef src = CGEventSourceCreate(kCGEventSourceStateCombinedSessionState);
     /// Set new suppressionInterval
     CGEventSourceSetLocalEventsSuppressionInterval(src, interval);
+    /// Release
+    CFRelease(src);
 }
 
 /// Puppet cursor

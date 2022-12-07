@@ -11,10 +11,17 @@ import Cocoa
 
 @objc class Curve: NSObject {
     
-    typealias Point = Vector
+    ///
+    /// Main
+    ///
     
     @objc func evaluate(at x: Double) -> Double { fatalError() }
     /// ^ TouchAnimatorBase.swift expects this to pass through (0,0) and (1,1)
+    
+    
+    ///
+    /// Debug
+    ///
     
     @objc func stringTrace(startX x0: Double, endX x1: Double, nOfSamples: Int) -> String {
         
@@ -42,11 +49,11 @@ import Cocoa
         return traceAsPoints(startX: x0, endX: x1, nOfSamples: nOfSamples, bias: bias).map { p in [p.x, p.y] }
     }
     
-    func traceAsPoints(startX x0: Double, endX x1: Double, nOfSamples: Int, bias: Double) -> [Point] {
+    func traceAsPoints(startX x0: Double, endX x1: Double, nOfSamples: Int, bias: Double) -> [P] {
         
         /// `bias` makes the algorithm take more samples at smaller x values. 1.0 is no bias.
         
-        var trace: Array<Point> = Array()
+        var trace: Array<P> = Array()
         
         let xInterval = Interval(x0, x1)
         
@@ -56,7 +63,7 @@ import Cocoa
             let x = Math.scale(value: biasedI, from: .unitInterval, to: xInterval)
             let y = evaluate(at: x)
             
-            trace.append(Point(x: x, y: y))
+            trace.append(_P(x, y))
             
         }
         
@@ -64,7 +71,22 @@ import Cocoa
     }
 }
 
-@objc class AccelerationCurve: Curve {
+@objc extension Curve {
+    
+    ///
+    /// AnimationCurve extension
+    ///     We actually only need duration and distance for Hybrid animation curves not pure Bezier animation curves
+    
+//    @objc var duration: Double { fatalError() }
+//    @objc var distance: Double { fatalError() }
+    
+}
+
+@objc extension Curve {
+    
+    ///
+    /// AccelerationCurve extension
+    ///
     
 //    @objc func createAccelerationTable(numberOfPoints: Int, endX x1: Double, accelIndex: Double) -> CFData { /// This is unused I think
 //        let trace = self.trace(startX: 0, endX: x1, nOfSamples: numberOfPoints)

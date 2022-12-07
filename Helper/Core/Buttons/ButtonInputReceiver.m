@@ -13,40 +13,36 @@
 #import "ButtonTriggerGenerator.h"
 #import "Queue.h"
 #import "SharedUtility.h"
-#import "TransformationUtility.h"
+#import "ModificationUtility.h"
 #import "HelperUtility.h"
 #import "GestureScrollSimulator.h"
 #import "Mac_Mouse_Fix_Helper-Swift.h"
 
-
 @implementation ButtonInputReceiver
 
-static CGEventSourceRef _eventSource;
+///
+/// On getting the sending device:
+/// - There is an "old Method" and a "new Method"
+/// - How does old method work? - For the old method, we registered input callbacks on the HIDDevices and put those low level inputs in with co-occuring CGEvents to find which device sent a CGEvent
+/// - Why switch away from old method? - Under Ventura I think the HID callback API broke for some devices. See https://github.com/noah-nuebling/mac-mouse-fix/issues/424. I remember similar bugs in the API in older macOS versions a few years back.
+/// - Some time after moving to the newMethod I deleted the old method. You can still find it in ButtonInputReceiver_old.m and in the the MMF 1 and MMF 2 source. We might have moved away from it under MMF 2 as well to fix Ventura problems, not sure. 
+
 static CFMachPortRef _eventTap;
 
 + (void)load_Manual {
-    _eventSource = CGEventSourceCreate(kCGEventSourceStatePrivate);
     registerInputCallback();
-    _buttonInputsFromRelevantDevices = [Queue queue];
     _buttonParseBlacklist = @[@(1),@(2)]; /// Ignore inputs from left and right mouse buttons
 }
 
-+ (void)decide {
-    if ([DeviceManager devicesAreAttached]) {
-        DDLogInfo(@"started ButtonInputReceiver");
-        [ButtonInputReceiver start];
-    } else {
-        DDLogInfo(@"stopped ButtonInputReceiver");
-        [ButtonInputReceiver stop];
-    }
-}
-
 + (void)start {
-    _buttonInputsFromRelevantDevices = [Queue queue]; /// Not sure if resetting here necessary
     CGEventTapEnable(_eventTap, true);
 }
 + (void)stop {
     CGEventTapEnable(_eventTap, false);
+}
++ (BOOL)isRunning {
+    /// Only used for debug inspection at the time of writing. Shouldn't need it for anything else.
+    return CGEventTapIsEnabled(_eventTap);
 }
 
 static void registerInputCallback() {
@@ -80,93 +76,74 @@ static void registerInputCallback() {
     CFRelease(runLoopSource);
 }
 
-//+ (void)insertFakeEventWithButton:(MFMouseButtonNumber)button isMouseDown:(BOOL)isMouseDown {
-//    
-//    DDLogInfo(@"Inserting event");
-//    
-//    /// Create event
-//    CGEventType mouseEventType = [SharedUtility CGEventTypeForButtonNumber:button isMouseDown:isMouseDown];
-//    CGPoint mouseLoc = getPointerLocation();
-//    CGEventRef fakeEvent = CGEventCreateMouseEvent(NULL, mouseEventType, mouseLoc, [SharedUtility CGMouseButtonFromMFMouseButtonNumber:button]);    
-//    /// Insert event
-//    CGEventRef ret = eventTapCallback(0, CGEventGetType(fakeEvent), fakeEvent, nil);
-//    CFRelease(fakeEvent);
-//    if (ret) {
-//        CGEventPost(kCGSessionEventTap, ret);
-//    }
-//}
-
-/// `_buttonInputsFromRelevantDevices` is a queue with one entry for each unhandled button input coming from a relevant device
-/// Instances of Device insert values into this queue  when they receive input from the IOHIDDevice which they own.
-/// Input from the IOHIDDevice will always occur shortly before `ButtonInputReceiver->eventTapCallback()`. (Pretty sure)
-/// This allows `ButtonInputReceiver->eventTapCallback()` to gain information about the nature of the incoming event, especially the device it stems from.
-///     It also allows us to filter out input from devices which aren't relevant
-///         (Because we don't create an Device instance for irrelevant devices, and so they can't insert their events into `_buttonInputsFromRelevantDevices`)
-///         (All Device instances for relevant devices can be found in DeviceManager.attachedDevices).
-static Queue<NSDictionary *> *_buttonInputsFromRelevantDevices;
-
-+ (void)handleHIDButtonInputFromRelevantDeviceOccured:(Device *)dev button:(NSNumber *)btn {
-    if ([_buttonParseBlacklist containsObject:btn]) return;
-    if (!CGEventTapIsEnabled(_eventTap)) return;
-    
-    [_buttonInputsFromRelevantDevices enqueue: @{
-        @"dev": dev, /// TODO: Now that this has only 1 value – make it not a dict
-    }];
-}
-+ (BOOL)allRelevantButtonInputsHaveBeenProcessed {
-    return [_buttonInputsFromRelevantDevices isEmpty];
-}
-
 NSArray *_buttonParseBlacklist; /// Don't send inputs from these buttons to ButtonInputParser
 
 static CGEventRef eventTapCallback(CGEventTapProxy proxy, CGEventType type, CGEventRef event, void *userInfo) {
     
     /// Re-enable on timeout
     /// Maybe it would be better to do the heavy lifting on a background queue, so this never times out, but this is easier, and it times out quite rarely anyways so this should be fine.
-    if (type == kCGEventTapDisabledByTimeout) {
-        DDLogInfo(@"ButtonInputReceiver eventTap timed out. Re-enabling.");
-        CGEventTapEnable(_eventTap, true);
-    } else if (type == kCGEventTapDisabledByUserInput) {
-        DDLogInfo(@"ButtonInputReceiver eventTap was disabled by user input");
+   
+    if (type == kCGEventTapDisabledByTimeout || type == kCGEventTapDisabledByUserInput) {
+        
+        DDLogInfo(@"ButtonInputReceiver eventTap was disabled by %@", type == kCGEventTapDisabledByTimeout ? @"timeout. Re-enabling." : @"user input.");
+        
+        if (type == kCGEventTapDisabledByTimeout) {
+            CGEventTapEnable(_eventTap, true);
+        }
+        return event;
     }
     
     /// Debug
     
-    @try {
-        NSUInteger buttonNumber = CGEventGetIntegerValueField(event, kCGMouseEventButtonNumber) + 1;
-        if (buttonNumber != 1 && buttonNumber != 2) { /// Don't print left and right click cause that'll clog the logs
-            DDLogDebug(@"Received CG Button Input - %@", [NSEvent eventWithCGEvent:event]);
-            /// ^ This crashes sometimes.
-            /// I think it's because the timeout events can't be translated to NSEvent
-            ///  I usually see it crash with the message "Invalid parameter not satisfying: _type > 0 && _type <= kCGSLastEventType", so I it seems there are some events with weird types being passed to this function, I don't know why that would happen though, because it should only receive normal mouse down and mouse up events.
-            /// I used to speculate that it's connected to attaching / deatching devices, but I don't remember why.
-            /// I feel like it might be connected to inserting events but I'm not sure why
-            /// I saw this error in some log messages which people sent me. I feel like it might be interfering with logging other important stuff because maybe the eventTap will break or the program will crash when this error occurs. Not sure thought. See the logs in GH Issue #103, for an example. They contain the error and I think that might have prevented logging of device re-attachment.
-            /// TODO: Investigate when and why exactly this crashes (when you have time)
+    if (runningPreRelease()) {
+        @try {
+            NSUInteger buttonNumber = CGEventGetIntegerValueField(event, kCGMouseEventButtonNumber) + 1;
+            if (buttonNumber != 1 && buttonNumber != 2) { /// Don't print left and right click cause that'll clog the logs
+                
+                DDLogDebug(@"Received CG Button Input - %@", [NSEvent eventWithCGEvent:event]);
+                /// ^ This crashes sometimes.
+                /// I think it's because the timeout events can't be translated to NSEvent
+                ///  I usually see it crash with the message "Invalid parameter not satisfying: _type > 0 && _type <= kCGSLastEventType", so I it seems there are some events with weird types being passed to this function, I don't know why that would happen though, because it should only receive normal mouse down and mouse up events.
+                /// I used to speculate that it's connected to attaching / deatching devices, but I don't remember why.
+                /// I feel like it might be connected to inserting events but I'm not sure why
+                /// I saw this error in some log messages which people sent me. I feel like it might be interfering with logging other important stuff because maybe the eventTap will break or the program will crash when this error occurs. Not sure thought. See the logs in GH Issue #103, for an example. They contain the error and I think that might have prevented logging of device re-attachment.
+                /// TODO: Investigate when and why exactly this crashes (when you have time)
+            }
+        } @catch (NSException *exception) {
+            DDLogDebug(@"Received CG Button Input which can't be printed normally - Exception while printing: %@", exception);
         }
-    } @catch (NSException *exception) {
-        DDLogDebug(@"Received CG Button Input which can't be printed normally - Exception while printing: %@", exception);
     }
     
     ///
     /// Main logic
     ///
     
-    /// Get data from relevant-input-queue
-    if ([_buttonInputsFromRelevantDevices isEmpty]) return event;
-    NSDictionary *lastInputFromRelevantDevice = [_buttonInputsFromRelevantDevices dequeue];
-    Device *dev = lastInputFromRelevantDevice[@"dev"];
-    
     /// Get info from cgEvent
     NSUInteger buttonNumber = CGEventGetIntegerValueField(event, kCGMouseEventButtonNumber) + 1;
-    long long pr = CGEventGetIntegerValueField(event, kCGMouseEventPressure);
-    BOOL mouseDown = pr != 0;
+    BOOL mouseDown = CGEventGetIntegerValueField(event, kCGMouseEventPressure) != 0;
     
     /// Filter buttons
     if ([_buttonParseBlacklist containsObject:@(buttonNumber)]) return event;
     
+    ///
+    /// Get device
+    ///     & filter input from irrelevant devices
+    ///     TODO: If new method works. Remove old method - including the callbacks in Device.m and the input queue and stuff.
+    
+    /// New method
+    ///  - Using reverse engineered knowledge about CGEventFields to get the sender directly from the CGEvent
+    ///  - Tested this method under 10.13, 10.14, 10.15 Beta, 13.0, - it works!
+    ///  - Performance: Under newMethod, spamming a button in release build with debugger attached had up to 1.6% CPU usage in Activitry Monitor. OldMethod had up to 1.9%, but it went up and down a lot more.
+    
+    IOHIDDeviceRef iohidDevice = CGEventGetSendingDevice(event);
+    Device *device = [DeviceManager attachedDeviceWithIOHIDDevice:iohidDevice];
+    
+    DDLogDebug(@"Device for CG Button Input - iohidDevice: %@, device: %@", iohidDevice, device);
+    
+    if (device == nil) return event;
+    
     /// Pass to buttonInput processor
-    MFEventPassThroughEvaluation eval  = [Buttons handleInputWithDevice:dev button:@(buttonNumber) downNotUp:mouseDown event: event];
+    MFEventPassThroughEvaluation eval = [Buttons handleInputWithDevice:device button:@(buttonNumber) downNotUp:mouseDown event:event];
     /// Let events pass through
     if (eval == kMFEventPassThroughRefusal) {
         return nil;

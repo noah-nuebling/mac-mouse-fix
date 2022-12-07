@@ -223,18 +223,59 @@ class TrialNotificationController: NSWindowController {
             
             effect.layer?.cornerRadius = 20.0
             
+            /// Mojave hack
+            ///  Under Mojave there's a white border at the top of the window. It looks reallly weird since it doesn't align with our rounded corners. This is a well known Apple Bug. See this electron GitHub Issue: https://github.com/electron/electron/issues/13164.
+            ///  - Possible solutions:
+            ///     - Just live with it
+            ///     - Just turn off the custom corner rounding for 10.14 `<-` We went with this
+            ///     - Remove .titled from the style.
+            ///         - Seems to remove the white border but it also removes the rounded corners entirely for some reason.
+            
+            
             /// Swap out contentView -> effectView
             ///     Under macOS 12 (originally wrote this under macOS 13 Beta) the effectView's subviews just disappear as soon as we set it as contentView? Setting window.contentView = nil in between fixes it. Not sure why.
-            let ogContent = self.window!.contentView!
-            window.contentView = nil
-            effect.addSubview(ogContent)
-            window.contentView = effect
+            
+            
+            var runningMojave = false
+            if #available(macOS 10.14, *) {
+                if #available(macOS 10.15, *) { } else {
+                    runningMojave = true
+                }
+            }
+            
+            if !runningMojave { /// Only use the effectView when not running Mojave
+                let ogContent = self.window!.contentView!
+                window.contentView = nil
+                effect.addSubview(ogContent)
+                window.contentView = effect
+                window.backgroundColor = .clear
+            }
             
             /// Style window
+            ///     The styleMask added here (borderless, titled, fullSizeContentView) is the same that is defined through IB. But it's kind of nice to have it here explicitly I guess?
             window.titlebarAppearsTransparent = true
             window.titleVisibility = .hidden
             window.isOpaque = false
-            window.backgroundColor = .clear
+            window.styleMask = [.borderless, .titled, .fullSizeContentView]
+            
+            
+            /// vvv Old code pre Mojave hack - remove this
+            
+            
+            //            /// Swap out contentView -> effectView
+            //            ///     Under macOS 12 (originally wrote this under macOS 13 Beta) the effectView's subviews just disappear as soon as we set it as contentView? Setting window.contentView = nil in between fixes it. Not sure why.
+            //            let ogContent = self.window!.contentView!
+            //            window.contentView = nil
+            //            effect.addSubview(ogContent)
+            //            window.contentView = effect
+//
+//            /// Style window
+//            window.titlebarAppearsTransparent = true
+//            window.titleVisibility = .hidden
+//            window.isOpaque = false
+//            window.backgroundColor = .clear
+            
+            
         }
         firstAppearance = false
         
@@ -297,14 +338,14 @@ class TrialNotificationController: NSWindowController {
     override func mouseEntered(with event: NSEvent) {
         
         DispatchQueue.main.async {
-            self.trialSectionManager.showActivate()
+            self.trialSectionManager.showAlternate()
         }
     }
 
     override func mouseExited(with event: NSEvent) {
             
         DispatchQueue.main.async {
-            self.trialSectionManager.showTrial()
+            self.trialSectionManager.showInitial()
         }
     }
     

@@ -21,6 +21,14 @@ typedef enum {
     kMFAxisVertical,
 } MFAxis;
 
+typedef enum {
+    kMFDirectionNone,
+    kMFDirectionUp,
+    kMFDirectionRight,
+    kMFDirectionDown,
+    kMFDirectionLeft,
+} MFDirection;
+
 /// Bundles and Bezelservices
 
 /// Added some x's to the bundleID. See notes.md for context.
@@ -62,8 +70,9 @@ typedef enum {
 
 /// Message dict keys
 
-#define kMFMessageKeyMessage    @"message"
-#define kMFMessageKeyPayload    @"payload"
+#define kMFMessageKeyMessage        @"message"
+#define kMFMessageKeyBundleVersion  @"version"
+#define kMFMessageKeyPayload        @"payload"
 
 /// Other AddMode keys (more below)
 #define kMFAddModeModificationPrecondition  @"addModeModifier"
@@ -94,7 +103,7 @@ typedef NSString*                                                       MFString
 
 #pragma mark - NSNotificationCenter notification names
 
-#define kMFNotifCenterNotificationNameRemapsChanged                                @"remapsChanged"
+//#define kMFNotifCenterNotificationNameRemapsChanged                                @"remapsChanged"
 
 #pragma mark - Config dict
 

@@ -1,20 +1,29 @@
-/* First draft: Mac Mouse Fix was **disabled** in System Settings.\nTo enable Mac Mouse Fix:\n\n1. Go to [Login Items Settings](x-apple.systempreferences:com.apple.LoginItems-Settings.extension)\n2. Switch on \'Mac Mouse Fix.app\' */
-"is-disabled-toast" = "Mac Mouse Fix wurde in den Systemeinstellungen **deaktiviert**.\nUm Mac Mouse Fix zu aktivieren:\n\n1. Öffne die [Anmeldeobjekte-Einstellungen](x-apple.systempreferences:com.apple.LoginItems-Settings.extension)\n2. Aktiviere \'Mac Mouse Fix.app\'";
+/* First draft: Mac Mouse Fix was **disabled** in System Settings\n\nTo enable Mac Mouse Fix:\n\n1. Go to [Login Items Settings](x-apple.systempreferences:com.apple.LoginItems-Settings.extension)\n2. Switch on \'Mac Mouse Fix.app\' */
+"is-disabled-toast" = "Mac Mouse Fix wurde in den Systemeinstellungen **deaktiviert**\n\nUm Mac Mouse Fix zu aktivieren:\n\n1. Öffne die [Anmeldeobjekte-Einstellungen](x-apple.systempreferences:com.apple.LoginItems-Settings.extension)\n2. Aktiviere \'Mac Mouse Fix.app\'";
 
-/* First draft: __Enabled__ Mac Mouse Fix for __Buttons__\nIt had been disabled from the Menu Bar %@ || Note: %@ will be replaced by the menubar icon */
-"button-revive-toast" = "Mac Mouse Fix __aktiviert__ für __Tasten__\nEs war in der Menüleiste %@ deakiviert worden";
+/* First draft: Enabling Failed */
+"is-strange-helper-alert.title" = "Einschalten Fehlgeschlagen";
 
-/* First draft: __Enabled__ Mac Mouse Fix for __Scrolling__\nIt had been disabled from the Menu Bar %@ || Note: Where %@ will be replaced by the menubar icon */
-"scroll-revive-toast" = "Mac Mouse Fix __aktiviert__ für __Scrollen__\nEs war in der Menüleiste %@ deakiviert worden";
+/* First draft: Mac Mouse Fix can't be enabled because there's __another version__ of Mac Mouse Fix present on your computer\n\nTo enable Mac Mouse Fix:\n\n1. Delete the [other version](%@)\n2. Empty the Bin\n3. Restart your Mac\n4. Try again! */
+"is-strange-helper-alert.body" = "Mac Mouse Fix kann nicht eingeschaltet werden da noch eine __andere Version__ von Mac Mouse Fix auf deinem Computer vorliegt\n\nUm Mac Mouse Fix einzuschalten:\n\n1. Lösche die [andere Version](%@)\n2. Leere den Papierkorb\n3. Starte deinen Mac neu\n4. Versuche es erneut!";
 
-/* First draft: Set Scroll Speed under\n[%@ > Mouse > Scrolling Speed](%@) */
-"macos-scrolling-hint" = "Stelle das Scrolltempo ein unter\n[%@ > Maus > Scrolltempo](%@)";
+/* First draft: __Enabled__ Mac Mouse Fix for %1@\nIt had been disabled from the Menu Bar %2@ || Note: %1@ will be replaced by the list of enabled features, %2@ will be replaced by the menubar icon */
+"revive-toast" = "Mac Mouse Fix __aktiviert__ für %1@\nEs war in der Menüleiste %2@ deakiviert worden";
+
+/* First draft: __Buttons__ */
+"revive-toast.feature-buttons" = "__Tasten__";
+
+/* First draft: __Scrolling__ */
+"revive-toast.feature-scrolling" = "__Scrollen__";
+
+/* First draft: Set speed under\n[%@ > Mouse > Scrolling Speed](%@) */
+"macos-scrolling-hint" = "Stelle das Tempo ein unter\n[%@ > Maus > Scrolltempo](%@)";
 
 /* First draft: Content tracks finger movement */
 "natural-scrolling-hint" = "Inhalte folgen Finger-Bewegung";
 
-/* First draft: Scroll precisely even without a keyboard modifier by\nmoving the scroll wheel slowly || Note: The line break (\n) is there so the layout of the Scroll tab doesn't become too wide which looks weird. You can set it to your own taste. */
-"precise-scrolling-hint" = "Scrolle auch ohne Sondertasten präzise indem du das\nScrollrad langsam bewegst";
+/* First draft: Scroll precisely, even without a keyboard modifier,\nbymoving the scroll wheel slowly || Note: The line break (\n) is there so the layout of the Scroll tab doesn't become too wide which looks weird. You can set it to your own taste. */
+"precise-scrolling-hint" = "Scrolle auch ohne Sondertasten präzise, indem du das\nScrollrad _langsam_ bewegst";
 
 /* First draft: Spaces & Mission Control */
 "drag-effect.dock-swipe" = "Spaces & Mission Control";
@@ -305,7 +314,7 @@
 "trigger.scroll.2" = "%@ doppelklicken und scrollen";
 
 /* First draft: Triple Click and Scroll %@ */
-"trigger.scroll.3" = "%2 dreifach klicken und scrollen";
+"trigger.scroll.3" = "%@ dreifach klicken und scrollen";
 
 /* First draft: and Scroll || Example: ⌥⌘ and Scroll */
 "trigger.scroll.flags" = "und scrollen";
@@ -331,23 +340,23 @@
 /* First draft: %@ and %@ || Note: This format string joins the second-to-last element and the last elements in a list of items */
 "join-list.last" = " %@ und %@";
 
-/* First draft: 💫 Thank you for buying Mac Mouse Fix! */
-"thanks.01" = "💫 Danke, dass du Mac Mouse Fix gekauft hast!";
+/* First draft: ⭐️ Thank you for buying Mac Mouse Fix! */
+"thanks.01" = "⭐️ Danke, dass du Mac Mouse Fix gekauft hast!";
 
 /* First draft: 🌟 Thanks for purchasing Mac Mouse Fix! */
 "thanks.02" = "🌟 Dankeschön, dass du Mac Mouse Fix gekauft hast!";
 
-/* First draft: 🚀 Thanks for supporting Mac Mouse Fix! */
+/* First draft: 🚀 Thanks for supporti✨ng Mac Mouse Fix! */
 "thanks.03" = "🚀 Danke, dass du Mac Mouse Fix unterstützt!";
 
-/* First draft: 🙏 Thank you for buying Mac Mouse Fix! */
-"thanks.04" = "🙏 Danke, dass du Mac Mouse Fix gekauft hast!";
+/* First draft: 🙌 Thank you for buying Mac Mouse Fix! */
+"thanks.04" = "🙌 Danke, dass du Mac Mouse Fix gekauft hast!";
 
-/* First draft: 🧠 Great purchasing decisions ;) */
-"thanks.05" = "🧠 Großartige Kaufentscheidung ;)";
+/* First draft: 🧠 Great purchasing decision! ;) */
+"thanks.05" = "🧠 Großartige Kaufentscheidung! ;)";
 
-/* First draft: 🔥 Awesome taste in mouse fixing software ;) */
-"thanks.06" = "🔥 Super Geschmack was Maus-Fixing-Software angeht ;)";
+/* First draft: 🔥 Awesome taste in mouse fixing software! ;) */
+"thanks.06" = "🔥 Super Geschmack was Maus-Fixing-Software angeht! ;)";
 
 /* First draft: 💙 */
 "thanks.07" = "💙";
@@ -358,8 +367,8 @@
 /* First draft: 👽 Share it with your Spacebook friends! */
 "thanks.09" = "👽 Teile es mit deinen Spacebook Freunden!";
 
-/* First draft: 🏂 Duckgang for life! || Note: A lot of these are very personal. And weird. They are also super rare. Feel free to change them to anything you feel like to leave a little easter egg! */
-"thanks.10" = "🏂 Entengang fürs Leben!";
+/* First draft: 🏂 Duckgang for life!! || Note: A lot of these are very personal. And weird. They are also super rare. Feel free to change them to anything you feel like to leave a little easter egg! */
+"thanks.10" = "🏂 Entengang fürs Leben!!";
 
 /* First draft: 🚜 Watch where you're going :P */
 "thanks.11" = "🚜 Pass auf wo du hinfährst :P";
@@ -377,13 +386,13 @@
 "thanks.15" = "🥛 Vollmilch natürlich! Es ist schließlich dein Geburtstag.";
 
 /* First draft: 🎸 Not John Mayer (yet). Nevertheless mayor of hearts. */
-"thanks.16" = "🎸 Nicht John Mayer. Trotzdem Bürgermeister der Herzen.";
+"thanks.16" = "🎸 (Noch) nicht John Mayer. Trotzdem Bürgermeister der Herzen.";
 
 /* First draft: 💃 1NEIN8NEIN */
 "thanks.17" = "💃 1NEIN8NEIN";
 
-/* First draft: 🦋 Give me a call when you saved the world. :) */
-"thanks.18" = "🦋 Ruf mich mal an wenn du die Welt gerettet hast. :)";
+/* First draft: 🦄 You may not want to save the world, but you're already saving mine :) */
+"thanks.18" = "🦄 Du willst vielleicht nicht die Welt retten, aber du rettest schon meine :)";
 
 /* First draft: 🏜️ Dankeschön, meine Frau... */
 "thanks.19" = "🏜️ Dankeschön, meine Frau...";
@@ -439,8 +448,8 @@
 /* First draft: **An unknown error occurred:**\n\n%@ */
 "license-toast.unknown-error" = "**Ein unbekannter Fehler ist aufgetreten:**\n\n%@";
 
-/* First draft: **'%@'** is not a known license key\nPlease try another one */
-"license-toast.unknown-key" = "**'%@'** ist kein bekannter Lizenzschlüssel\nBitte versuche einen anderen";
+/* First draft: **'%@'** is not a known license key\n\nPlease try a different key */
+"license-toast.unknown-key" = "**'%@'** ist kein bekannter Lizenzschlüssel\n\nBitte versuche einen anderen Schlüssel";
 
 /* First draft: Activating your license failed for **unknown reasons**\n\nPlease write a **Bug Report** [here](https://noah-nuebling.github.io/mac-mouse-fix-feedback-assistant/?type=bug-report) */
 "license-toast.unknown-reason" = "Die Aktivierung deiner Lizenz ist aus **unbekannten Gründen** gescheitert\n\nBitte schreibe [hier](https://noah-nuebling.github.io/mac-mouse-fix-feedback-assistant/?type=bug-report) einen Fehlerbericht";
@@ -454,14 +463,14 @@
 /* First draft: Back */
 "mail-alert.back" = "Zurück";
 
-/* First draft: I can't respond to all emails but I read and am happy about all feedback! */
-"mail-alert.body" = "Ich kann nicht auf alle Emails antworten aber ich lese und freue mich über alles Feedback!";
+/* First draft: I can't respond to all emails, but I read and appreciate all feedback */
+"mail-alert.body" = "Ich lese und schätze alle E-Mails, auch wenn ich nicht auf alle antworten kann";
 
 /* First draft: Write Email */
-"mail-alert.send" = "Email schreiben";
+"mail-alert.send" = "E-Mail schreiben";
 
 /* First draft: Write an Email? */
-"mail-alert.title" = "Eine Email schreiben?";
+"mail-alert.title" = "Eine E-Mail schreiben?";
 
 /* First draft: Cancel */
 "beta-alert.back" = "Abbrechen";
@@ -493,11 +502,11 @@
 /* First draft: Restore Default for ... */
 "restore-buttons-alert.title" = "Standard wiederherstellen für ...";
 
-/* First draft: You're __already using__ the default setting for mice with __3 buttons__! */
-"already-using-defaults-toast.3" = "Du __verwendest bereits__ die Standard-Einstellung für Mäuse mit __3 Tasten__!";
+/* First draft: You're __already using__ the default setting for mice with __3 buttons__ */
+"already-using-defaults-toast.3" = "Du __verwendest bereits__ die Standard-Einstellung für Mäuse mit __3 Tasten__";
 
-/* First draft: You're __already using__ the default setting for mice with __5 buttons__! */
-"already-using-defaults-toast.5" = "Du __verwendest bereits__ die Standard-Einstellung für Mäuse mit __5+ Tasten__!";
+/* First draft: You're __already using__ the default setting for mice with __5 buttons__ */
+"already-using-defaults-toast.5" = "Du __verwendest bereits__ die Standard-Einstellung für Mäuse mit __5+ Tasten__";
 
 /* Note: Value for this key is defined in Localizable.stringsdict, not Localizable.strings. || Note: The UI strings in .stringsdict have two lines. Only the first line is visible unless you start editing and then use the arrow keys to go to the second line. This is necessary to have linebreaks in .stringsdict since \n doesn't work. Use Option-Enter to insert these linebreaks. */
 "capture-toast.body.captured" = "<>";
@@ -528,3 +537,6 @@
 
 /* First draft: OK */
 "buy-mouse-alert.ok" = "OK";
+
+/* First draft: Open 'Security & Privacy' Preferences || Notes: The string for Ventura and later is defined in Interface Builder */
+"accessibility.settings-link.pre-ventura" = "Öffne die 'Sicherheit & Datenschutz' Einstellungen";

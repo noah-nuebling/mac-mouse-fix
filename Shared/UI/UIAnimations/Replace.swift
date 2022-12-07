@@ -278,7 +278,9 @@ class ReplaceAnimations {
                 const.isActive = true
             }
             
-            DDLogDebug("Finished replacing")
+            if runningPreRelease() { /// I saw this deadlocking in a release build after resuming from debugger. No idea what's going on.
+                DDLogDebug("Finished replacing")
+            }
             
             /// Call onComplete
             onComplete()

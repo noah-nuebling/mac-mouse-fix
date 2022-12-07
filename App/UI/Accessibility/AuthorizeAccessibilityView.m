@@ -9,16 +9,16 @@
 
 #import "AppDelegate.h"
 #import "AuthorizeAccessibilityView.h"
-#import "MessagePort_App.h"
 #import "Utility_App.h"
 #import "ToastNotificationController.h"
-#import "SharedMessagePort.h"
-#import "CaptureNotificationCreator.h"
-#import "RemapTableUtility.h"
+#import "MFMessagePort.h"
+//#import "CaptureNotificationCreator.h" 
 #import "WannabePrefixHeader.h"
 #import "Mac_Mouse_Fix-Swift.h"
 
 @interface AuthorizeAccessibilityView ()
+
+@property (weak) IBOutlet Hyperlink *openSettingsLink;
 
 @end
 
@@ -57,6 +57,10 @@ AuthorizeAccessibilityView *_accViewController;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    if (@available(macOS 13.0, *)) { } else {
+        self.openSettingsLink.stringValue = NSLocalizedString(@"accessibility.settings-link.pre-ventura", @"First draft: Open 'Security & Privacy' Preferences || Notes: The string for Ventura and later is defined in Interface Builder");
+    }
 }
 
 - (IBAction)AuthorizeButton:(NSButton *)sender {
@@ -85,11 +89,14 @@ AuthorizeAccessibilityView *_accViewController;
     /// New sheet method
     ///
     
-    if (_accViewController == nil) {
-        _accViewController = [[AuthorizeAccessibilityView alloc] initWithNibName:@"AuthorizeAccessibilityView" bundle:[NSBundle bundleForClass:[self class]]];
-    }
-    if ([MainAppState.shared.tabViewController.presentedViewControllers containsObject:_accViewController]) return;
-    [MainAppState.shared.tabViewController presentViewControllerAsSheet:_accViewController]; /// Under Ventura Beta 6 this stopped animating. Same things with the options sheet in the buttons tab. Hopefully it'll come back.
+    dispatch_async(dispatch_get_main_queue(), ^{ /// Remove just don't work sometimes when we don't dispatch to mainQueue. Also dispatching add to be safe.
+        
+        if (_accViewController == nil) {
+            _accViewController = [[AuthorizeAccessibilityView alloc] initWithNibName:@"AuthorizeAccessibilityView" bundle:[NSBundle bundleForClass:[self class]]];
+        }
+        if ([MainAppState.shared.tabViewController.presentedViewControllers containsObject:_accViewController]) return;
+        [MainAppState.shared.tabViewController presentViewControllerAsSheet:_accViewController];
+    });
     
     ///
     /// Old overlay method for MMF 2.0
@@ -156,10 +163,13 @@ AuthorizeAccessibilityView *_accViewController;
     /// New sheet method
     ///
     
-    if (_accViewController == nil) return;
-    if (![MainAppState.shared.tabViewController.presentedViewControllers containsObject:_accViewController]) return;
-    
-    [MainAppState.shared.tabViewController dismissViewController:_accViewController];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        
+        if (_accViewController == nil) return;
+        if (![MainAppState.shared.tabViewController.presentedViewControllers containsObject:_accViewController]) return;
+        
+        [MainAppState.shared.tabViewController dismissViewController:_accViewController];
+    });
     
     ///
     /// Old overlay method for MMF 2.0

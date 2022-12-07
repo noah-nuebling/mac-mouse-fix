@@ -25,7 +25,7 @@ typedef enum {
 + (void)postSmartZoomEvent;
 + (void)postRotationEventWithRotation:(double)rotation phase:(IOHIDEventPhaseBits)phase;
 + (void)postMagnificationEventWithMagnification:(double)magnification phase:(IOHIDEventPhaseBits)phase;
-+ (void)postDockSwipeEventWithDelta:(double)d type:(MFDockSwipeType)type phase:(IOHIDEventPhaseBits)phase;
++ (void)postDockSwipeEventWithDelta:(double)d type:(MFDockSwipeType)type phase:(IOHIDEventPhaseBits)phase invertedFromDevice:(BOOL)invertedFromDevice;
 
 
 @end

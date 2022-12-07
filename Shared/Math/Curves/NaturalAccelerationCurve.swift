@@ -15,7 +15,7 @@
 
 import Cocoa
 
-@objc class NaturalAccelerationCurve: AccelerationCurve {
+@objc class NaturalAccelerationCurve: Curve {
     
     let v0: Double
     let v1: Double

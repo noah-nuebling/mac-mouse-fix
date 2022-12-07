@@ -16,10 +16,11 @@
 ///     The `ClickCycle` class is used to track an abstract clickCycle and analyze it. Perhaps most importantly, it tracks state transitions not only to button pressed and button released states but also to more abstract states: `button held down` and `level expired`. Then it can notify the client of these state transitions and the client can do cool stuff with that.
 
 /// Thread safety:
-///     All calls to this are expected to come from the dispatchQueue owned by Buttons.swift `buttonsQueue`. It will also protect its timer callbacks using `buttonQueue`.
-///     So when using this:
-///         1. Make sure that you're running on buttonsQueue when calling, otherwise there might be race conditions
-///         2. The `modifierCallback` and `triggerCallback` are already protected when they arrive in `Buttons.swift`
+/// - Edit: IIRC we're just not implementing the dispatchQueue stuff properly because race conditions are incredibly rare and when they happen stuff is robust and doesn't break badly.
+/// - All calls to this are expected to come from the dispatchQueue owned by Buttons.swift `buttonsQueue`. It will also protect its timer callbacks using `buttonQueue`.
+/// - So when using this:
+///     1. Make sure that you're running on buttonsQueue when calling, otherwise there might be race conditions
+///     2. The `modifierCallback` and `triggerCallback` are already protected when they arrive in `Buttons.swift`
 
 
 
@@ -27,6 +28,7 @@
 import Cocoa
 import CocoaLumberjackSwift
 
+/// Typedefs
 enum ClickCycleTriggerPhase: Int {
     case none = -1
     case press = 0
@@ -42,7 +44,6 @@ enum ClickCycleModifierPhase: Int {
     case release = 1
 }
 
-/// Typedefs
 typealias ButtonNumber = Int
 typealias ClickLevel = Int
 typealias UnconditionalReleaseCallback = (() -> ())
@@ -63,7 +64,7 @@ fileprivate struct ClickCycleState: Hashable {
     var downTimer = Timer()
     var upTimer = Timer()
 }
-typealias ReleaseCallbackKey = ButtonStateKey
+typealias ReleaseCallbackKey = ButtonNumber
 
 /// Main class def
 class ClickCycle: NSObject {
@@ -92,7 +93,7 @@ class ClickCycle: NSObject {
     ///     Clients can register a callback that will *always* be triggered when a button is released, even if the release event doesn't belong to the active click cycle
     fileprivate var releaseCallbacks: [ReleaseCallbackKey: [UnconditionalReleaseCallback]] = [:]
     public func waitingForRelease(device: Device, button: ButtonNumber) -> Bool {
-        return releaseCallbacks[.init(device, button)] != nil
+        return releaseCallbacks[button] != nil
     }
     
     /// Init
@@ -105,9 +106,13 @@ class ClickCycle: NSObject {
     
     /// Main interface
     
-    func isActiveFor(device: NSNumber, button: NSNumber) -> Bool {
+    func isActiveFor(device: NSNumber, button: NSNumber) -> Bool { /// Think this is unused now that we moved ButtonModifiers away from using Device
         guard let state = state else { return false }
         return state.device.uniqueID() == device && state.button == ButtonNumber(truncating: button)
+    }
+    func isActiveFor(button: NSNumber) -> Bool {
+        guard let state = state else { return false }
+        return state.button == ButtonNumber(truncating: button)
     }
     
     func handleClick(device: Device, button: ButtonNumber, downNotUp mouseDown: Bool, maxClickLevel: Int, triggerCallback: @escaping ClickCycleTriggerCallback) {
@@ -117,10 +122,9 @@ class ClickCycle: NSObject {
         ///
         
         if !mouseDown {
-            let k = ReleaseCallbackKey(device, button)
-            if let callbacks = releaseCallbacks[k] {
+            if let callbacks = releaseCallbacks[button] {
                 for c in callbacks { c() }
-                releaseCallbacks.removeValue(forKey: k)
+                releaseCallbacks.removeValue(forKey: button)
                 
             }
         }
@@ -165,7 +169,7 @@ class ClickCycle: NSObject {
                 var c: [UnconditionalReleaseCallback] = []
                 triggerCallback(.press, state!.clickLevel, device, button, &c)
                 if !c.isEmpty {
-                    releaseCallbacks[.init(device, button), default: []].append(contentsOf: c)
+                    releaseCallbacks[button, default: []].append(contentsOf: c)
                 }
             } else { /// mouseUp
                 let trigger: ClickCycleTriggerPhase = releaseFromHold ? .releaseFromHold : .release
@@ -201,7 +205,7 @@ class ClickCycle: NSObject {
                             var c: [UnconditionalReleaseCallback] = []
                             triggerCallback(.hold, self.state!.clickLevel, device, button, &c)
                             if !c.isEmpty {
-                                self.releaseCallbacks[.init(device, button), default: []].append(contentsOf: c)
+                                self.releaseCallbacks[button, default: []].append(contentsOf: c)
                             }
                             /// Update state
                             self.state?.pressState = .held

@@ -13,6 +13,9 @@ import Foundation
 
 @objc class HelperState: NSObject {
     
+    // MARK: Active device
+    /// Might be more appropriate to have this as part of DeviceManager
+    
     private static var _activeDevice: Device? = nil
     @objc static var activeDevice: Device? {
         set {
@@ -22,7 +25,8 @@ import Foundation
             if _activeDevice != nil {
                 return _activeDevice
             } else { /// Just return any attached device as a fallback
-                return DeviceManager.attachedDevices().first
+                /// NOTE: Swift let me do `attachedDevices.first` (even thought that's not defined on NSArray) without a compiler warning which did return a Device? but the as! Device? cast still crashed. Using `attachedDevices.firstObject` it doesn't crash.
+                return DeviceManager.attachedDevices.firstObject as! Device?
             }
         }
     }
@@ -38,17 +42,5 @@ import Foundation
     @objc static func updateActiveDevice(IOHIDDevice: IOHIDDevice) {
         guard let device = DeviceManager.attachedDevice(with: IOHIDDevice) else { return }
         activeDevice = device
-    }
-    
-    @objc static var isLockedDown = false /// Don't write to this directly, use lockDown() instead
-    @objc static func lockDown() {
-        
-        /// Set flag
-        isLockedDown = true
-        
-        /// Notify input processing modules
-        ///     Note: We don't need to lock down `ModifiedDrag.m`, because it only does anything when a modification becomes active. And we turn off all modifications via TransformationManager.m.
-        TransformationManager.reload()
-        ScrollConfig.reload() /// Not sure if necessary
     }
 }

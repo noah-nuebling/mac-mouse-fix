@@ -8,7 +8,7 @@
 //
 
 #import "ModifiedDragOutputFakeDrag.h"
-#import "TransformationUtility.h"
+#import "ModificationUtility.h"
 #import "SharedUtility.h"
 #import "HelperUtility.h"
 
@@ -25,12 +25,12 @@ static MFMouseButtonNumber _fakeDragButtonNumber; /// Button number. Only used w
     
     _drag = dragStateRef;
     
-    _fakeDragButtonNumber = ((NSNumber *)_drag->initialModifiers[kMFModifiedDragDictKeyFakeDragVariantButtonNumber]).intValue;
+    _fakeDragButtonNumber = ((NSNumber *)_drag->effectDict[kMFModifiedDragDictKeyFakeDragVariantButtonNumber]).intValue;
 }
 
 + (void)handleBecameInUse {
     
-    [TransformationUtility postMouseButton:_fakeDragButtonNumber down:YES];
+    [ModificationUtility postMouseButton:_fakeDragButtonNumber down:YES];
 }
 
 + (void)handleMouseInputWhileInUseWithDeltaX:(double)deltaX deltaY:(double)deltaY event:(CGEventRef)event {
@@ -48,7 +48,7 @@ static MFMouseButtonNumber _fakeDragButtonNumber; /// Button number. Only used w
 }
 
 + (void)handleDeactivationWhileInUseWithCancel:(BOOL)cancelation {
-    [TransformationUtility postMouseButton:_fakeDragButtonNumber down:NO];
+    [ModificationUtility postMouseButton:_fakeDragButtonNumber down:NO];
 }
 
 + (void)suspend {}
