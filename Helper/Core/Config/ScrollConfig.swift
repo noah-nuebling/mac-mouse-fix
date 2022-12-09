@@ -754,7 +754,11 @@ fileprivate func getAccelerationCurve(forSpeed speedArg: MFScrollSpeed, precise:
     let xMax: Double = 1 / consecutiveScrollTickInterval_AccelerationEnd
     let yMax: Double = maxSens
     
-    let curve = BezierCappedAccelerationCurve(xMin: xMin, yMin: yMin, xMax: xMax, yMax: yMax, curvature: curvature, reduceToCubic: false, defaultEpsilon: 0.08)
+    let curve = BezierCappedAccelerationCurve(xMin: xMin, yMin: yMin, xMax: xMax, yMax: yMax, curvature: curvature, reduceToCubic: false, defaultEpsilon: 0.05)
+    
+    /// Debug
+    
+//    DDLogDebug("Recommended epsilon for Acceleration Curve: \(curve.getMinEpsilon(forResolution: 1000, startEpsilon: 0.02/*0.08*/, epsilonEpsilon: 0.001))")
     
     /// Return
     return curve

@@ -23,7 +23,7 @@ import Cocoa
     /// Debug
     ///
     
-    @objc func stringTrace(startX x0: Double, endX x1: Double, nOfSamples: Int) -> String {
+    @objc func stringTrace(startX x0: Double, endX x1: Double, nOfSamples: Int, bias: Double = 1.0) -> String {
         
         let trace = traceAsPoints(startX: x0, endX: x1, nOfSamples: nOfSamples, bias: 1.0)
         var traceStr: String = String()
@@ -35,7 +35,7 @@ import Cocoa
         return traceStr
     }
     
-    @objc func traceSpeed(startX x0: Double, endX x1: Double, nOfSamples: Int, bias: Double) -> [[Double]] {
+    @objc func traceSpeed(startX x0: Double, endX x1: Double, nOfSamples: Int, bias: Double = 1.0) -> [[Double]] {
         /// Our AccelerationCurves is defined in terms of pointerSens(mouseSpeed)
         ///  But Apple's accelerationCurves are defined as pointerSpeed(mouseSpeed). This function let's us create a trace of that
         return traceAsPoints(startX: x0, endX: x1, nOfSamples: nOfSamples, bias: bias).map { p in
@@ -45,11 +45,11 @@ import Cocoa
         }
     }
     
-    @objc func trace(startX x0: Double, endX x1: Double, nOfSamples: Int, bias: Double) -> [[Double]] {
+    @objc func trace(startX x0: Double, endX x1: Double, nOfSamples: Int, bias: Double = 1.0) -> [[Double]] {
         return traceAsPoints(startX: x0, endX: x1, nOfSamples: nOfSamples, bias: bias).map { p in [p.x, p.y] }
     }
     
-    func traceAsPoints(startX x0: Double, endX x1: Double, nOfSamples: Int, bias: Double) -> [P] {
+    func traceAsPoints(startX x0: Double, endX x1: Double, nOfSamples: Int, bias: Double = 1.0) -> [P] {
         
         /// `bias` makes the algorithm take more samples at smaller x values. 1.0 is no bias.
         

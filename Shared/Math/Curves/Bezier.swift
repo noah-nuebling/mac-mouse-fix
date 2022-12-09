@@ -14,7 +14,7 @@
 
 import Cocoa
 import simd /// Vector stuff
-import CocoaLumberjack /// Doesn't work for some reason
+import CocoaLumberjackSwift /// Doesn't work for some reason
 //import ReactiveCocoa
 //import ReactiveSwift
 
@@ -91,7 +91,7 @@ import CocoaLumberjack /// Doesn't work for some reason
     let maxDegreeForPolynomialApproach: Int = 20
     /// ^ Wikipedia says that "high order curves may lack numeric stability" in polynomial form, and to use Casteljau instead if that happens. Not sure where exactly we should make the cutoff
     
-    let defaultEpsilon: Double // Epsilon to be used when none is specified in evaluate(at:) call
+    var defaultEpsilon: Double /// Epsilon to be used when none is specified in evaluate(at:) call. This is only a var instead of let because of the debugging function `getMinEpsilon`. If we refactor we shouldn't need it for that either. Should change this.
     
     var degree: Int {
         controlPoints.count - 1
@@ -649,6 +649,127 @@ import CocoaLumberjack /// Doesn't work for some reason
         }
     }
 
+    
+    // MARK: Debug
+    
+    @objc func getMinEpsilon(forResolution resolution: Int, startEpsilon: Double, epsilonEpsilon: Double) -> Double {
+        
+        /// This is very inefficient, only meant for debugging
+        /// Not totally sure if this works. It's sort of confusing and the results are weird and I had a a headache when I wrote this.
+        
+        if !runningPreRelease() {
+            DDLogWarn("getMinEpsilon called in a non-prerelease. This is very slow.")
+        }
+        
+        /// Define helper function
+        
+        let checkMonotony = { (points: [P]) -> Bool in
+            
+            var lastY = -Double.infinity
+            
+            for p in points {
+                if p.y <= lastY {
+                    return false
+                }
+                lastY = p.y
+            }
+            
+            return true
+        }
+        
+        /// Set epsilon to startEpsilon and store og
+        
+        let ogEpsilon = defaultEpsilon
+        defaultEpsilon = startEpsilon
+        
+        /// Find upper / lower bound
+        
+        var upper: Double = Double.infinity
+        var lower: Double = -Double.infinity
+        
+        let trace = self.traceAsPoints(startX: xValueRange.lower, endX: xValueRange.upper, nOfSamples: resolution) /// We only need to trace xValues here
+        let isMonotonous = checkMonotony(trace)
+        
+        var previous: Double
+        
+        if isMonotonous {
+            previous = defaultEpsilon
+            defaultEpsilon *= 2.0
+        } else {
+            previous = defaultEpsilon
+            defaultEpsilon /= 2.0
+        }
+        
+        let wasMonotonous = isMonotonous
+        
+        while true {
+            
+            let trace = self.traceAsPoints(startX: xValueRange.lower, endX: xValueRange.upper, nOfSamples: resolution) /// We only need to trace xValues here
+            let isMonotonous = checkMonotony(trace)
+            
+            if wasMonotonous {
+                
+                if isMonotonous {
+                    previous = defaultEpsilon
+                    defaultEpsilon *= 2.0
+                } else {
+                    lower = previous
+                    upper = defaultEpsilon
+                    break
+                }
+                
+                if defaultEpsilon == .infinity {
+                    return .infinity
+                }
+                
+            } else {
+                
+                if !isMonotonous {
+                    previous = defaultEpsilon
+                    defaultEpsilon /= 2.0
+                } else {
+                    upper = previous
+                    lower = defaultEpsilon
+                    break
+                }
+                
+                if defaultEpsilon == 0.0 {
+                    return 0.0
+                }
+
+            }
+            
+        }
+        
+        /// Bisection
+        /// Not using our standard bisection function because the output of the function we want to bisect is just the isMonotonous boolean, and we want to find the input for which this boolean flips. With normal bisection we want to find an input such that the output value is within an epsilon of some target value. I don't know how you could map the task at hand to normal bisection.
+        
+        var result: Double = -1.0
+        var distanceToLast = Double.infinity
+        
+        while true {
+            
+            let middle = Math.scale(value: 0.5, from: .unitInterval, to: Interval(lower, upper))
+            distanceToLast = upper - middle
+            if abs(distanceToLast) < epsilonEpsilon {
+                result = middle
+                break
+            }
+            defaultEpsilon = middle
+            let trace = traceAsPoints(startX: xValueRange.lower, endX: xValueRange.upper, nOfSamples: resolution, bias: 0.0)
+            let isMonotonous = checkMonotony(trace)
+            
+            if isMonotonous {
+                lower = middle
+            } else {
+                upper = middle
+            }
+        }
+        
+        /// Restore epsilon & return
+        defaultEpsilon = ogEpsilon
+        return result
+    }
 }
 
 @objc class InvalidBezier: Bezier {
