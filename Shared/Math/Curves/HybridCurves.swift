@@ -175,7 +175,10 @@ import CocoaLumberjackSwift
                 dragCurve = DragCurve(coefficient: dragCoefficient, exponent: dragExponent, initialSpeed: transitionSpeed, stopSpeed: stopSpeed)
             } else {
                 
-                DDLogWarn("transitionPoint has been found but transitionSpeed is lower than stopSpeed. So the dragCurve can't cover any distance. This likely means that the baseCurve covers the whole distance on its own exactly.")
+                DDLogDebug("transitionPoint has been found but transitionSpeed is lower than stopSpeed. So the dragCurve can't cover any distance. This likely means that the baseCurve covers the whole distance on its own exactly.")
+                
+                assert(transitionPoint == targetDistance)
+                transitionPoint = targetDistance
                 
 //                assert(false) /// For debugging, remove later
             }
@@ -236,14 +239,25 @@ import CocoaLumberjackSwift
     
     /// Init helper
         
-    static func _lineInit(minDuration: Double, distance: Double, dragCoefficient: Double, dragExponent: Double, stopSpeed: Double) -> (transitionTime: Double, transitionDistance: Double, dragCurve: DragCurve) {
+    static func _lineInit(minDuration: Double, distance: Double, dragCoefficient: Double, dragExponent: Double, stopSpeed: Double) -> (transitionTime: Double, transitionDistance: Double, dragCurve: DragCurve?) {
         
         /// Get base curve exit speed
         let transitionSpeed = LineHybridCurve._baseCurve.slope * distance / minDuration
         
-        /// Get drag curve
-        var dragCurve = getDragCurve(initialSpeed: transitionSpeed, stopSpeed: stopSpeed, coefficient: dragCoefficient, exponent: dragExponent)
-        guard var dragCurve = dragCurve else { fatalError() }
+        /// Use straight line if stopSpeed is too low
+        var dragCurve: DragCurve?
+        if transitionSpeed <= stopSpeed {
+            return (transitionTime: minDuration, transitionDistance: distance, dragCurve: nil)
+        }
+        
+        /// Get dragCurve
+        dragCurve = getDragCurve(initialSpeed: transitionSpeed, stopSpeed: stopSpeed, coefficient: dragCoefficient, exponent: dragExponent)
+        
+        /// Return straight line if getting dragCurve fails for some reason
+        guard var dragCurve = dragCurve else {
+            assert(false)
+            return (transitionTime: minDuration, transitionDistance: distance, dragCurve: nil)
+         }
         
         /// Find transition point
         let dragDistance = dragCurve.distanceInterval.length
