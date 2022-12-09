@@ -787,7 +787,8 @@ static void removeServiceWithIdentifier(NSString *identifier) {
 static void removePrefpaneLaunchdPlist() {
         
     /// Remove legacy launchd plist file if it exists
-    /// The launchd plist file used to be at `~/Library/LaunchAgents/com.nuebling.mousefix.helper.plist` when the app was still a prefpane
+    /// The launchd plist file used to be at `~/Library/LaunchAgents/com.nuebling.mousefix.helper.plist` when the app was still a prefpane. In the very early days it was at `mouse.fix.helper.plist`.
+    /// The prefpane itself could be installed in the user library or the root library, but the launchd plist would always be in the user library.
     /// Now, with the app version, it's moved to `~/Library/LaunchAgents/com.nuebling.mac-mouse-fix.helper.plist`
     /// Having the old version still can lead to the old helper being started at startup, and I think other conflicts, too.
     
@@ -796,18 +797,26 @@ static void removePrefpaneLaunchdPlist() {
     /// Find user library
     NSArray<NSString *> *libraryPaths = NSSearchPathForDirectoriesInDomains(NSLibraryDirectory, NSUserDomainMask, YES);
     assert(libraryPaths.count == 1);
+    
     NSMutableString *libraryPath = libraryPaths.firstObject.mutableCopy;
-    NSString *legacyLaunchdPlistPath = [libraryPath stringByAppendingPathComponent:@"LaunchAgents/com.nuebling.mousefix.helper.plist"];
+    NSArray<NSString *> *legacyLaunchdPlistPaths = @[[libraryPath stringByAppendingPathComponent:@"LaunchAgents/com.nuebling.mousefix.helper.plist"],
+                                                   [libraryPath stringByAppendingPathComponent:@"LaunchAgents/mouse.fix.helper.plist"]];
     NSError *err;
     
-    /// Remove old file
-    if ([NSFileManager.defaultManager fileExistsAtPath:legacyLaunchdPlistPath]) {
-        [NSFileManager.defaultManager removeItemAtPath:legacyLaunchdPlistPath error:&err];
-        if (err) {
-            DDLogError(@"Error while removing prefpane launchd plist file: %@", err);
+    
+    for (NSString *path in legacyLaunchdPlistPaths) {
+        
+        /// Remove old file
+        if ([NSFileManager.defaultManager fileExistsAtPath:path]) {
+            
+            [NSFileManager.defaultManager removeItemAtPath:path error:&err];
+            
+            if (err) {
+                DDLogError(@"Error while removing prefpane launchd plist file at %@: %@", path, err);
+            }
+        } else  {
+            DDLogDebug(@"No prefpane launchd.plist file found at: %@", path);
         }
-    } else  {
-        DDLogInfo(@"No prefpane launchd.plist file found at: %@", legacyLaunchdPlistPath);
     }
 }
 
