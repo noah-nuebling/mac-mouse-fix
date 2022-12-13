@@ -170,7 +170,7 @@ class TabViewController: NSTabViewController {
         
         var targetID: String?
         
-        if let lastID = config("Other.autosave_tabID") as! String? {
+        if let lastID = config("State.autosave_tabID") as! String? {
             targetID = lastID
         }
         var targetIsValid = targetID != nil && validTabs.contains(targetID!)
@@ -253,7 +253,7 @@ class TabViewController: NSTabViewController {
         
         if let lastID = identifierOfSelectedTab() {
                 
-            setConfig("Other.autosave_tabID", lastID as NSObject)
+            setConfig("State.autosave_tabID", lastID as NSObject)
             commitConfig()
         }
     }

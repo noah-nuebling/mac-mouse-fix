@@ -3,7 +3,7 @@
 // MessagePortUtility.swift
 // Created for Mac Mouse Fix (https://github.com/noah-nuebling/mac-mouse-fix)
 // Created by Noah Nuebling in 2022
-// Licensed under MIT
+// Licensed under the MMF License (https://github.com/noah-nuebling/mac-mouse-fix/blob/master/LICENSE)
 // --------------------------------------------------------------------------
 //
 
@@ -102,7 +102,7 @@ import CocoaLumberjackSwift
         
         var result = (name: ("" as NSString), nOfButtons: (-1 as Int), bestPresetMatch: (-1 as Int))
         
-        if let info = MFMessagePort.sendMessage("getActiveDeviceInfo", withPayload: nil, expectingReply: true) as! NSDictionary? {
+        if let info = MFMessagePort.sendMessage("getActiveDeviceInfo", withPayload: nil, waitForReply: true) as! NSDictionary? {
             
             let deviceName = info["name"] as! NSString
             let deviceManufacturer = info["manufacturer"] as! NSString

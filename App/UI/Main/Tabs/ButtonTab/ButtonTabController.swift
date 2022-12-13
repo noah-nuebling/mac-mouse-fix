@@ -70,7 +70,10 @@ import CocoaLumberjackSwift
         if let nOfButtons = nOfButtons {
             
             let hintStringRaw = String(format: NSLocalizedString("restore-buttons-alert.hint", comment: "First draft: Your __%@__ mouse says it has __%d__ buttons"), name!, nOfButtons)
-            let hintString = NSAttributedString(coolMarkdown: hintStringRaw)?.settingSecondaryLabelColor(forSubstring: nil).settingFontSize(NSFont.smallSystemFontSize).aligningSubstring(nil, alignment: .center).trimmingWhitespace()
+            
+//            let hintString = NSAttributedString(coolMarkdown: hintStringRaw)?.settingSecondaryLabelColor(forSubstring: nil).settingFontSize(NSFont.smallSystemFontSize).aligningSubstring(nil, alignment: .center).trimmingWhitespace()
+            let hintString = NSAttributedString(coolMarkdown: hintStringRaw)?.adding(.secondaryLabelColor, for: nil).settingFontSize(NSFont.smallSystemFontSize).adding(.center, for: nil).trimmingWhitespace()
+            
             if let hintString = hintString {
                 hint = CoolNSTextField(labelWithAttributedString: hintString)
                 if hint != nil {
@@ -119,7 +122,7 @@ import CocoaLumberjackSwift
                 /// Check Change
                 
                 let currentMap = config("Remaps")
-                let defaultMap = config(selectedPreset == 3 ? "Other.defaultRemaps.threeButtons" : "Other.defaultRemaps.fiveButtons")
+                let defaultMap = config(selectedPreset == 3 ? "Constants.defaultRemaps.threeButtons" : "Constants.defaultRemaps.fiveButtons")
                 
                 if currentMap != defaultMap {
                     
@@ -139,9 +142,9 @@ import CocoaLumberjackSwift
                     
                     let messageRaw: String
                     if selectedPreset == 3 {
-                        messageRaw = NSLocalizedString("already-using-defaults-toast.3", comment: "First draft: You're __already using__ the default setting for mice with __3 buttons__!")
+                        messageRaw = NSLocalizedString("already-using-defaults-toast.3", comment: "First draft: You're __already using__ the default setting for mice with __3 buttons__")
                     } else {
-                        messageRaw = NSLocalizedString("already-using-defaults-toast.5", comment: "First draft: You're __already using__ the default setting for mice with __5 buttons__!")
+                        messageRaw = NSLocalizedString("already-using-defaults-toast.5", comment: "First draft: You're __already using__ the default setting for mice with __5 buttons__")
                     }
                     let message = NSAttributedString(coolMarkdown: messageRaw)!
                     DispatchQueue.main.async {
@@ -236,6 +239,9 @@ import CocoaLumberjackSwift
         /// This is called every time the tab is switched to
         /// This is called twice, awakeFromNib as well. Use init() or viewDidLoad() to do things once
         
+        /// Update tableView size
+        self.tableView.updateSize(withAnimation: false, tabContentView: self.view)
+        
         /// Display extra UI
         ///     Doing this with a delay because it doesn't work if the tab switch animation is still ongoing
         
@@ -298,29 +304,25 @@ import CocoaLumberjackSwift
             
         })
         
-        
         ///
         /// Turn off killswitch
         ///
         
         /// We do the exact same thing in the scrollTab
         
-        let isDisabled = config("Other.buttonKillSwitch") as! Bool
+        let buttonsAreKilled = config("General.buttonKillSwitch") as! Bool
+        let scrollIsKilled = config("General.scrollKillSwitch") as! Bool
         
-        if isDisabled {
+        if buttonsAreKilled || scrollIsKilled {
             
             /// Turn off killSwitch
-            setConfig("Other.buttonKillSwitch", false as NSObject)
+            ///     NOTE: We also turn off the scrollKillSwitch because otherwise we can't record click and scroll in addMode.
+            setConfig("General.buttonKillSwitch", false as NSObject)
+            setConfig("General.scrollKillSwitch", false as NSObject)
             commitConfig()
-                
-            /// Build string
-            let messageRaw = NSLocalizedString("button-revive-toast", comment: "First draft: __Enabled__ Mac Mouse Fix for __Buttons__\nIt had been disabled from the Menu Bar %@ || Note: %@ will be replaced by the menubar icon")
-            var message = NSAttributedString(coolMarkdown: messageRaw)!
-            let symbolString = Symbols.string(withSymbolName: "CoolMenuBarIcon", stringFallback: "<Mac Mouse Fix Menu Bar Item>", font: ToastNotificationController.defaultFont()) ///NSAttributedString(symbol: "CoolMenuBarIcon", hPadding: 0.0, vOffset: -6, fallback: "<Mac Mouse Fix Menu Bar Item>")
-            message = NSAttributedString(attributedFormat: message, args: [symbolString])
             
-            /// Show message
-            ToastNotificationController.attachNotification(withMessage: message, to: MainAppState.shared.window!, forDuration: -1, alignment: kToastNotificationAlignmentTopMiddle)
+            /// Show user feedback
+            ToastCreator.showReviveToast(showButtons: buttonsAreKilled, showScroll: scrollIsKilled)
         }
     }
     
@@ -333,11 +335,11 @@ import CocoaLumberjackSwift
         /// This func doesn't clearly belong into `ButtonTabController`
         ///     Is called when the helper is enabled
         
-        let hasBeenInited = config("Other.remapsAreInitialized") as! Bool? ?? false
+        let hasBeenInited = config("State.remapsAreInitialized") as! Bool? ?? false
         
         if !hasBeenInited {
             
-            setConfig("Other.remapsAreInitialized", true as NSObject)
+            setConfig("State.remapsAreInitialized", true as NSObject)
             commitConfig()
             
             let (_, _, bestPresetMatch) = MessagePortUtility.getActiveDeviceInfo() ?? (nil, nil, nil)
@@ -345,7 +347,7 @@ import CocoaLumberjackSwift
             /// This is copy-pasted from `restoreDefaults()`
             
             let currentMap = config("Remaps")
-            let defaultMap = config(bestPresetMatch == 3 ? "Other.defaultRemaps.threeButtons" : "Other.defaultRemaps.fiveButtons")
+            let defaultMap = config(bestPresetMatch == 3 ? "Constants.defaultRemaps.threeButtons" : "Constants.defaultRemaps.fiveButtons")
             
             if (currentMap != defaultMap) {
                 
@@ -395,6 +397,8 @@ import CocoaLumberjackSwift
     }
     
     /// Show popover method
+    
+    private var restoreDefaultPopover_stringAttributesFromIB: [NSAttributedString.Key : Any]? = nil
     
     fileprivate func showRestoreDefaultPopover(deviceName: String, nOfButtons: Int, usedButtons: Set<NSNumber>) {
         
@@ -453,12 +457,20 @@ import CocoaLumberjackSwift
             ///     So we can observe animations
             self.restoreDefaultPopover.delegate = self
             
+            /// Store attributes from IB
+            if restoreDefaultPopover_stringAttributesFromIB == nil {
+                restoreDefaultPopover_stringAttributesFromIB = self.restoreDefaultPopoverLabel.attributedStringValue.attributes(at: 0, effectiveRange: nil)
+            }
+            
             /// Setup body text
             ///     There used to be different text based on whether your were using a 3 button or a 5 button mouse, but we've simplified that now
             
             let message = String(format: NSLocalizedString("restore-default-buttons-popover.body", comment: "First draft:  __Click here__ to load the recommended settings\nfor your __%@__ mouse || Note: The \n linebreak is so the popover doesn't become too wide. You can set it to your taste. || Note: In English, there needs to be a space at the start of this string otherwise the whole string will be bold. This might be a Ventura Bug"), deviceName)
             
-            assignAttributedStringKeepingBase(&self.restoreDefaultPopoverLabel.attributedStringValue, NSAttributedString(coolMarkdown: message, fillOutBase: false)!)
+            if let attributes = restoreDefaultPopover_stringAttributesFromIB, let newString = NSAttributedString(coolMarkdown: message, fillOutBase: false)?.addingStringAttributes(asBase: attributes) {
+                
+                self.restoreDefaultPopoverLabel.attributedStringValue = newString
+            }
             
             /// Turn checkbox off
             self.restoreDefaultPopoverDontRemindAgainCheckbox.state = .off
@@ -530,41 +542,46 @@ import CocoaLumberjackSwift
     ///     TODO: Maybe think about race condition for the mouseEntered and mouseExited functions
 
     override func mouseEntered(with event: NSEvent) {
-        pointerIsInsideAddField = true
-        MFMessagePort.sendMessage("enableAddMode", withPayload: nil, expectingReply: false)
+        DispatchQueue.main.async {
+            
+            /// Not sure it makes sense to dispatch async for mouseEntered and mouseExited. We added that dispatch when addField.hoverEffect was controlled by messages we received instead of being based on response to the the messages we sent.
+            /// Here are some notes we wrote for the old architecture:
+            /// \discussion After addMode refactoring around commit 02c9fcc20d3f03d8b0d2db6e25830276ed937107 I saw a deadlock in the animationCode maybe dispatch to main will prevent it. Edit: Nope still happens. Edit2: Could fix the deadlock by not locking the CATransaction in Animate.swift. So dispatching to main here might be unnecessary.
+            
+            self.pointerIsInsideAddField = true
+            let success = MFMessagePort.sendMessage("enableAddMode", withPayload: nil, waitForReply: true)
+            if let success = success as? Bool, success == true {
+                self.addField.hoverEffect(enable: true)
+            }
+        }
     }
     override func mouseExited(with event: NSEvent) {
-        pointerIsInsideAddField = false
-        MFMessagePort.sendMessage("disableAddMode", withPayload: nil, expectingReply: false)
-    }
-    
-    @objc func handleAddModeEnabled() {
-        
-        /// \discussion After addMode refactoring around commit 02c9fcc20d3f03d8b0d2db6e25830276ed937107 I saw a deadlock in the animationCode maybe dispatch to main will prevent it. Edit: Nope still happens. Edit2: Could fix the deadlock by not locking the CATransaction in Animate.swift. So dispatching to main here might be unnecessary.
-        
         DispatchQueue.main.async {
-            self.addField.hoverEffect(enable: true)
-        }
-    }
-    @objc func handleAddModeDisabled() {
-        DispatchQueue.main.async {
+            
+            self.pointerIsInsideAddField = false
+            MFMessagePort.sendMessage("disableAddMode", withPayload: nil, waitForReply: false)
             self.addField.hoverEffect(enable: false)
         }
+        
     }
 
-    @objc func handleAddModeConcluded(payload: NSDictionary) {
+    @objc func handleAddModeFeedback(payload: NSDictionary) {
         
         DispatchQueue.main.async {
             
             /// Debug
             DDLogDebug("Received AddMode feedback with payload: \(payload)")
             
-            /// Remove hover
-            self.addField.hoverEffect(enable: false, playAcceptAnimation: true)
-            
             /// Send payoad to tableController
             ///     The payload is an almost finished remapsTable (aka RemapTableController.dataModel) entry with the kMFRemapsKeyEffect key missing
             self.tableController.addRow(withHelperPayload: payload as! [AnyHashable : Any])
+            
+            /// Disable addMode
+//            pointerIsInsideAddField = false /// ???
+            MFMessagePort.sendMessage("disableAddMode", withPayload: nil, waitForReply: false)
+            
+            /// Remove hover
+            self.addField.hoverEffect(enable: false, playAcceptAnimation: true)
         }
     }
     

@@ -10,12 +10,59 @@
 #import <AppKit/AppKit.h>
 #import "HelperUtility.h"
 #import "Constants.h"
-#import "TransformationUtility.h"
+#import "ModificationUtility.h"
 #import "WannabePrefixHeader.h"
 #import "Locator.h"
 #import "SharedUtility.h"
 
 @implementation HelperUtility
+
+#pragma mark - Display under pointer
+
++ (CVReturn)displayUnderMousePointer:(CGDirectDisplayID *)dspID withEvent:(CGEventRef _Nullable)event {
+    
+    CGPoint mouseLocation = getPointerLocationWithEvent(event);
+    return [self display:dspID atPoint:mouseLocation];
+    
+}
+
++ (CVReturn)display:(CGDirectDisplayID *)dspID atPoint:(CGPoint)point {
+    /// Pass in a CGEvent to get pointer location from. Not sure if signification optimization
+    
+    /// Get display
+    CGDirectDisplayID *newDisplaysUnderMousePointer = malloc(sizeof(CGDirectDisplayID));
+    uint32_t matchingDisplayCount;
+    uint32_t maxDisplays = 1;
+    CGGetDisplaysWithPoint(point, maxDisplays, newDisplaysUnderMousePointer, &matchingDisplayCount);
+    
+    if (matchingDisplayCount == 1) {
+        
+        /// Get the the master display in case _displaysUnderMousePointer[0] is part of a mirror set
+        CGDirectDisplayID d = CGDisplayPrimaryDisplay(newDisplaysUnderMousePointer[0]);
+        
+        /// Free
+        free(newDisplaysUnderMousePointer);
+        
+        /// Success output
+        *dspID = d;
+        return kCVReturnSuccess;
+        
+    } else if (matchingDisplayCount == 0) {
+        
+        /// Free
+        free(newDisplaysUnderMousePointer);
+        
+        /// Failure output
+        DDLogWarn(@"There are 0 diplays under the mouse pointer");
+        *dspID = kCGNullDirectDisplay;
+        return kCVReturnError;
+        
+    } else {
+        assert(false);
+    }
+}
+
+#pragma mark - App under pointer
 
 + (NSRunningApplication * _Nullable)appUnderMousePointerWithEvent:(CGEventRef _Nullable)event {
     
@@ -130,12 +177,16 @@ CGPoint getPointerLocation(void) {
     return mouseLoc;
 }
 
-CGPoint getPointerLocationWithEvent(CGEventRef locEvent) {
+CGPoint getPointerLocationWithEvent(CGEventRef _Nullable locEvent) {
+    
     /// This might get you a more up-to-date pointerLocation than getPointerLocation()
     ///     See notes below for more.
     
-    CGPoint mouseLoc = CGEventGetLocation(locEvent);
-    return mouseLoc;
+    if (locEvent == NULL) {
+        return getPointerLocation();
+    } else {
+        return CGEventGetLocation(locEvent);
+    }
 }
 
 NSPoint getFlippedPointerLocation(void) {

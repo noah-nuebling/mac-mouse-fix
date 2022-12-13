@@ -10,14 +10,25 @@
 #import "NSScreen+Additions.h"
 #import "SharedUtility.h"
 
+#if IS_HELPER
+#import "HelperUtility.h"
+#endif
+
 @implementation NSScreen (Additions)
 
 + (NSScreen * _Nullable)screenUnderMousePointerWithEvent:(CGEventRef _Nullable)event {
     
+#if IS_HELPER
+    
     CGDirectDisplayID displayID;
-    [SharedUtility displayUnderMousePointer:&displayID withEvent:event];
+    [HelperUtility displayUnderMousePointer:&displayID withEvent:event];
     
     return [NSScreen screenWithDisplayID:displayID];
+    
+#endif
+    
+    assert(false);
+    return nil;
 }
 
 + (NSScreen * _Nullable)screenWithDisplayID:(CGDirectDisplayID)displayID {

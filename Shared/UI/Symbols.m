@@ -3,7 +3,7 @@
 // Symbols.m
 // Created for Mac Mouse Fix (https://github.com/noah-nuebling/mac-mouse-fix)
 // Created by Noah Nuebling in 2022
-// Licensed under MIT
+// Licensed under the MMF License (https://github.com/noah-nuebling/mac-mouse-fix/blob/master/LICENSE)
 // --------------------------------------------------------------------------
 //
 
@@ -30,11 +30,11 @@
     /// Not sure why this stuff also works for the fallback but it does
         
     if (isDarkmode) {
-        string = [string attributedStringByAddingWeight:0.4];
-        string = [string attributedStringByAddingBaseLineOffset:0.39];
+        string = [string attributedStringByAddingWeight:0.4 forRange:NULL];
+        string = [string attributedStringByAddingBaseLineOffset:0.39 forRange:NULL];
     } else {
-        string = [string attributedStringByAddingWeight:0.3];
-        string = [string attributedStringByAddingBaseLineOffset:0.39];
+        string = [string attributedStringByAddingWeight:0.3 forRange:NULL];
+        string = [string attributedStringByAddingBaseLineOffset:0.39 forRange:NULL];
     }
     
     string = [string attributedStringBySettingFontSize:11.4];

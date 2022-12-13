@@ -9,7 +9,7 @@
 
 #import "ModifiedDragOutputTwoFingerSwipe.h"
 #import "Mac_Mouse_Fix_Helper-Swift.h"
-#import "TransformationUtility.h"
+#import "ModificationUtility.h"
 #import "GestureScrollSimulator.h"
 #import "CGSConnection.h"
 #import "PointerFreeze.h"
@@ -31,10 +31,12 @@ static dispatch_group_t _momentumScrollWaitGroup;
 + (void)load_Manual {
     
     /// Setup smoothingAnimator
-    ///     When using a twoFingerModifedDrag and performance drops, the timeBetweenEvents can sometimes be erratic, and this sometimes leads apps like Xcode to start their custom momentumScroll algorithms with way too high speeds (At least I think that's whats going on) So we're using an animator to smooth things out and hopefully achieve more consistent behaviour
-    ///
-    ///     Edit: Using the _smoothingAnimator forces us to use some very very error prone parallel code. I should seriously consider if this is the best approach.
+    ///  Notes:
+    /// - When using a twoFingerModifedDrag and performance drops, the timeBetweenEvents can sometimes be erratic, and this sometimes leads apps like Xcode to start their custom momentumScroll algorithms with way too high speeds (At least I think that's whats going on) So we're using an animator to smooth things out and hopefully achieve more consistent behaviour
+    ///     - Edit: Using the `_smoothingAnimator` forces us to use some very very error prone parallel code. I should seriously consider if this is the best approach.
     ///         Maybe you could just introduce a delay between the last two events? I feel like the lack of that delay causes most of the erratic behaviour.
+    ///
+    /// - Using a TouchAnimator here might not be the best choice. We made the TouchAnimator primarily for scrollwheel input. But then we started using it here too. In both situations we needed pretty different functionality so now it's this weird swiss army knife hybrid. For example it supports Vectors which we don't need for scroll wheel input and it supports generating touchPhases which we don't need for click and drag. The reason we did this is we had so much trouble getting the TouchAnimator to be free of multithreading bugs so we thought there was less potential for error if we only implement that stuff once. But we might get some performance improvements and simpler code if we make a separate animator for the dragSmoothing.
     
     _smoothingAnimator = [[TouchAnimator alloc] init];
 //    _smoothingAnimator = [[DynamicSystemAnimator alloc] initWithSpeed:3 damping:1.0 initialResponser:1.0 stopTolerance:1.0];
@@ -45,7 +47,7 @@ static dispatch_group_t _momentumScrollWaitGroup;
     _momentumScrollWaitGroup = dispatch_group_create();
     
     /// Make cursor settable
-    [TransformationUtility makeCursorSettable];
+    [ModificationUtility makeCursorSettable];
 }
 
 #pragma mark - Interface
@@ -66,7 +68,7 @@ static dispatch_group_t _momentumScrollWaitGroup;
 + (void)handleBecameInUse {
     
     /// Freeze pointer
-    if (OtherConfig.freezePointerDuringModifiedDrag) {
+    if (GeneralConfig.freezePointerDuringModifiedDrag) {
         [PointerFreeze freezePointerAtPosition:_drag->usageOrigin];
     } else {
         [PointerFreeze freezeEventDispatchPointAtPosition:_drag->usageOrigin];
@@ -126,12 +128,14 @@ static dispatch_group_t _momentumScrollWaitGroup;
     [_smoothingAnimator startWithParams:^NSDictionary<NSString *,id> * _Nonnull(Vector valueLeft, BOOL isRunning, Curve * _Nullable curve) {
 
         NSMutableDictionary *p = [NSMutableDictionary dictionary];
-
+        
+        /// Get delta
         Vector currentVec = { .x = deltaX*twoFingerScale, .y = deltaY*twoFingerScale };
         Vector combinedVec = addedVectors(currentVec, valueLeft);
 
+        /// Get Phase
         if (firstCallback) eventPhase = kIOHIDEventPhaseBegan;
-
+        
         /// Debug
 
         static double lastTs = 0;
@@ -139,17 +143,27 @@ static dispatch_group_t _momentumScrollWaitGroup;
         double tsDiff = ts - lastTs;
         lastTs = ts;
 
-        DDLogDebug(@"Time since last baseAnimator start: %f", tsDiff * 1000);
+        DDLogDebug(@"SmoothingAnimator start - time since last: %f", tsDiff * 1000);
 
         /// Get return values
-
+        ///
+        /// Notes:
+        /// - On smoothing duration:
+        ///   - We want the duration as low as possible while still preventing the erratic behaviour.
+        ///     - For 1 frametime we still get erratic behaviour. I'm not sure any smoothing happens there.
+        ///     - For 2 frametimes we still get slightly erratic behaviour.
+        ///     - For 3 frameTimes we get almost no erratic behaviour.
+        ///   - I'm on a 60 hz screen and I don't have a 120 hz screen to test. To make sure we also prevent erratic behaviour on an 120 hz screen, we are setting the duration to 3.0/60.0 seconds instead of 3 frames. 3.0/60.0 also doesn't seem to cause erratic behaviour when setting my monitor to 30hz.
+        ///     - TODO: Set duration to 3 frames instead of 3.0/60.0 seconds if that doesn't lead to erratic behaviour on 120 hz screens.
+        
         if (magnitudeOfVector(combinedVec) == 0.0) {
             DDLogWarn(@"Not starting baseAnimator since combinedMagnitude is 0.0");
             p[@"doStart"] = @NO;
         } else {
             p[@"vector"] = nsValueFromVector(combinedVec);
-            p[@"duration"] = @(3.0/60); // @(0.00001); // @(0.04);
             p[@"curve"] = ScrollConfig.linearCurve;
+            p[@"duration"] = @(3.0/60.0);
+//            p[@"durationInFrames"] = @3;
         }
 
         /// Debug
@@ -255,7 +269,7 @@ static dispatch_group_t _momentumScrollWaitGroup;
         
         /// Clean up
         ///     Unhide mouse pointer
-        if (!SharedUtility.runningPreRelease) {
+        if (!runningPreRelease()) {
             [PointerFreeze unfreeze]; /// Only in release so the crashes are more noticable in prereleases
         }
         

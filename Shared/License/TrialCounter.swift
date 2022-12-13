@@ -56,7 +56,7 @@ import CocoaLumberjackSwift
         ///     We only want to run the daily timer once, not in both apps
         ///     But we still might want to use this class in main app to access `lastUseDate` and `daysOfUse`.
         ///     Feel like it might be problematic to expose this to mainApp.
-        if !SharedUtility.runningHelper() { return }
+        if !runningHelper() { return }
         
         /// Real init
         
@@ -148,7 +148,7 @@ import CocoaLumberjackSwift
         DDLogDebug("handling use in trial")
         
         /// Guard not running helper
-        assert(SharedUtility.runningHelper())
+        assert(runningHelper())
         
         /// Only react if trial is active
         if !trialIsActive { return }
@@ -156,17 +156,22 @@ import CocoaLumberjackSwift
         /// Only react to use once a day
         if hasBeenUsedToday { return }
         
-        /// Update state
-        ///     Should we check whether the date has actually changed?
-        hasBeenUsedToday = true
-        TrialCounter.lastUseDate = Date(timeIntervalSinceNow: 0.0)
-        TrialCounter.daysOfUse += 1
-        
-        /// Get updated licenseConfig
-        LicenseConfig.get { licenseConfig in
+        DispatchQueue.global(qos: .background).async {
             
-            /// Display UI & lock down helper if necessary
-            License.checkAndReact(licenseConfig: licenseConfig, triggeredByUser: false)
+            /// Dispatching to another queue here because there was an obscure concurrency crash when trying to debug something. This is not necessary for normal operation but it shouldn't hurt.
+            
+            /// Update state
+            ///     Should we check whether the date has actually changed?
+            self.hasBeenUsedToday = true
+            TrialCounter.lastUseDate = Date(timeIntervalSinceNow: 0.0)
+            TrialCounter.daysOfUse += 1
+            
+            /// Get updated licenseConfig
+            LicenseConfig.get { licenseConfig in
+                
+                /// Display UI & lock down helper if necessary
+                License.checkAndReact(licenseConfig: licenseConfig, triggeredByUser: false)
+            }
         }
     }
 }

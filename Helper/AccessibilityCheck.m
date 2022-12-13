@@ -17,7 +17,7 @@
 #import "ButtonInputReceiver.h"
 #import "Constants.h"
 #import "ModifiedDrag.h"
-#import "ModifierManager.h"
+#import "Modifiers.h"
 #import "SharedUtility.h"
 #import "HelperServices.h"
 #import "PointerFreeze.h"
@@ -45,30 +45,6 @@ static void signal_handler(int signal_number, siginfo_t *signal_info, void *cont
     } else {
         DDLogWarn(@"SIGTERM handler caught weird signal: %d", signal_number);
     }
-}
-
-/// Testing
-
-CGEventRef _Nullable testCallback(CGEventTapProxy proxy, CGEventType type, CGEventRef event, void * __nullable userInfo) {
-    
-    if (type == kCGEventTapDisabledByTimeout || type == kCGEventTapDisabledByUserInput) {
-        return NULL;
-    }
-    
-    IOHIDDeviceRef device = CGEventGetSendingDevice(event);
-    NSString *deviceName = (__bridge NSString *)IOHIDDeviceGetProperty(device, CFSTR(kIOHIDProductKey));
-    DDLogDebug(@"Sending Device Test: %@", deviceName);
-    
-    /// CGEvent bridging test
-    ///     Conclusion: objc version of cgevent has no properties, no ivars and no interesting methods
-    ///     Also see code built on this: [SharedUtility dumpClassInfo];
-    
-    id objcEvent = (__bridge id)event;
-    
-    DDLogDebug(@"objcEvent: %@", [objcEvent description]);
-    
-    /// Return
-    return event;
 }
 
 /// Load
@@ -139,7 +115,7 @@ CGEventRef _Nullable testCallback(CGEventTapProxy proxy, CGEventType type, CGEve
 
 //    [GlobalDefaults applyDoubleClickThreshold];
 //    PointerConfig.customTableBasedAccelCurve;
-//    CFMachPortRef testTap = [TransformationUtility createEventTapWithLocation:kCGSessionEventTap mask:CGEventMaskBit(kCGEventMouseMoved) | CGEventMaskBit(kCGEventLeftMouseDragged) | CGEventMaskBit(kCGEventScrollWheel) | CGEventMaskBit(kCGEventLeftMouseDown) /* | CGEventMaskBit()*/ option:kCGEventTapOptionDefault placement:kCGTailAppendEventTap callback: testCallback];
+//    CFMachPortRef testTap = [ModificationUtility createEventTapWithLocation:kCGSessionEventTap mask:CGEventMaskBit(kCGEventMouseMoved) | CGEventMaskBit(kCGEventLeftMouseDragged) | CGEventMaskBit(kCGEventScrollWheel) | CGEventMaskBit(kCGEventLeftMouseDown) /* | CGEventMaskBit()*/ option:kCGEventTapOptionDefault placement:kCGTailAppendEventTap callback: testCallback];
 //    CGEventTapEnable(testTap, true);
     
     
@@ -185,7 +161,7 @@ CGEventRef _Nullable testCallback(CGEventTapProxy proxy, CGEventType type, CGEve
             @"bundleVersion": @(Locator.bundleVersion),
             @"mainAppURL": Locator.mainAppBundle.bundleURL
         };
-        [MFMessagePort sendMessage:@"helperEnabledWithNoAccessibility" withPayload:payload expectingReply:NO];
+        [MFMessagePort sendMessage:@"helperEnabledWithNoAccessibility" withPayload:payload waitForReply:NO];
         
         /// Check accessibility every 0.5s
         ///     Not storing the timer in a variable because we don't have to invalidate / release it since the helper will restart anyways
@@ -219,9 +195,15 @@ CGEventRef _Nullable testCallback(CGEventTapProxy proxy, CGEventType type, CGEve
         [ButtonInputReceiver load_Manual];
         [DeviceManager load_Manual];
         [Scroll load_Manual];
-        [Config load_Manual];
+        
+        /// NOTE: v Moved these 2 down, to prevent crashes introduced by moving SwitchMaster away from ReactiveSwift to simple callbacks.
+//        [Config load_Manual];
+//        [ModifiedDrag load_Manual];
+        [Modifiers load_Manual];
         [ModifiedDrag load_Manual];
-        [ModifierManager load_Manual];
+        [Config load_Manual];
+        
+        [SwitchMaster.shared load_Manual];
         
         [ScreenDrawer.shared load_Manual];
         [PointerFreeze load_Manual];
@@ -237,7 +219,7 @@ CGEventRef _Nullable testCallback(CGEventTapProxy proxy, CGEventType type, CGEve
             @"bundleVersion": @(Locator.bundleVersion),
             @"mainAppURL": Locator.mainAppBundle.bundleURL
         };
-        [MFMessagePort sendMessage:@"helperEnabled" withPayload:payload expectingReply:NO];
+        [MFMessagePort sendMessage:@"helperEnabled" withPayload:payload waitForReply:NO];
         
         ///
         /// License init

@@ -1,18 +1,18 @@
 //
 // --------------------------------------------------------------------------
-// TransformationManager.m
+// Remap.m
 // Created for Mac Mouse Fix (https://github.com/noah-nuebling/mac-mouse-fix)
 // Created by Noah Nuebling in 2020
 // Licensed under the MMF License (https://github.com/noah-nuebling/mac-mouse-fix/blob/master/LICENSE)
 // --------------------------------------------------------------------------
 //
 
-#import "TransformationManager.h"
-#import "TransformationUtility.h"
+#import "Remap.h"
+#import "ModificationUtility.h"
 #import "SharedUtility.h"
 #import "ButtonTriggerGenerator.h"
 #import "Actions.h"
-#import "ModifierManager.h"
+#import "Modifiers.h"
 #import "ModifiedDrag.h"
 #import "NSArray+Additions.h"
 #import "NSDictionary+Additions.h"
@@ -20,34 +20,105 @@
 #import "Config.h"
 #import "MFMessagePort.h"
 #import "Mac_Mouse_Fix_Helper-Swift.h"
+#import "RemapSwizzler.h"
 
-@implementation TransformationManager
+@implementation Remap
 
-#pragma mark - Remaps dictionary and interface
+#pragma mark - Notes
+
+/// On Terminology
+/// This used to be called `TransformationManager`. Renamed to `Remap` to unify terminology.
+/// Desired Terminology: The `remaps` are a map from `modifiers` -> `modifications`, where a `modification` is itself a map from `trigger ` -> `effect`. More on this in RemapSwizzler.swift
+///
+/// On Swift Autobriding
+/// Swift automatically bridges Foundation-type args (like NSDictionary) to native Swift types which is super slow. At least for Dictionaries. We've found a way to prevent this:
+///  1. Use `MF_SWIFT_HIDDEN` on the original method declaration to hide it from Swift.
+///  2. Declare a new method that calls the old method. The signature is the same but the name is prefixed with `__SWIFT_UNBRIDGED_` and all autobridging argument types are replaced with `id`
+///  3. Create a Swift extension and implement a method that calls the `__SWIFT_UNBRIDGED_` implementation and itself takes Foundation types like NSDictionary as arguments
+///  -> Now you can call the ObjC method from Swift using foundation types as arguments directly, instead of being forced to use native Swift types which are then autobridged.
+///
+
+#pragma mark - Swizzled
+
+static NSMutableDictionary *_swizzleCache = nil;
+
++ (NSDictionary * _Nullable)modificationsWithModifiers:(NSDictionary *)modifiers {
+    
+    /// Cache is reset whenever remaps change
+    
+    if (_swizzleCache == nil) {
+        _swizzleCache = [NSMutableDictionary dictionary];
+    }
+    
+    NSDictionary *cached = _swizzleCache[modifiers];
+    
+    if (cached) {
+        return cached;
+    } else {
+        
+        DDLogDebug(@"Recalculating modifications for modifiers: %@", modifiers);
+        
+        NSDictionary *new = [RemapSwizzler swizzleRemaps:_remaps activeModifiers:modifiers];
+        _swizzleCache[modifiers] = new;
+        return new;
+    }
+}
+
++ (id _Nullable)__SWIFT_UNBRIDGED_modificationsWithModifiers:(id)modifiers {
+    return [self modificationsWithModifiers:modifiers];
+}
+
+#pragma mark - Storage
 
 #define USE_TEST_REMAPS NO
 static NSDictionary *_remaps;
 
-+ (void)setRemaps:(NSDictionary *)remapsDict {
-    
-    /// Always set remaps through this, so that the kMFNotifCenterNotificationNameRemapsChanged notification is posted
-    /// The notification is used by ModifierManager to update itself, whenever `_remaps` updates.
-    ///  (Idk why we aren't just calling an update function instead of using a notification)
-    
-    _remaps = remapsDict;
-//    _remaps = self.testRemaps; /// TESTING
-//    if (!_addModeIsEnabled) {
-//        [self enableAddMode]; /// TESTING
-//    }
-    [NSNotificationCenter.defaultCenter postNotificationName:kMFNotifCenterNotificationNameRemapsChanged object:self];
-    DDLogDebug(@"Set remaps to: %@", _remaps);
++ (NSDictionary *)remaps MF_SWIFT_HIDDEN {
+    return _remaps;
+}
++ (id)__SWIFT_UNBRIDGED_remaps {
+    return self.remaps;
 }
 
-/// The main app uses an array of dicts (aka a table) to represent the remaps in a way that is easy to present in a table view.
-/// The remaps are also stored to file in this format and therefore what `ConfigFileInterface_App.config` contains.
-/// The helper was made to handle a dictionary format which should be more effictient among other perks.
-/// This function takes the remaps in table format from config, then converts it to dict format and makes that available to all the other Input Transformation classes to base their behaviour off of through self.remaps.
++ (void)setRemaps:(NSDictionary *)remapsDict {
+    
+    /// This method is private. It's used by `reload` and `enableAddMode`.
+    
+    /// Compare
+    BOOL isEqual = [_remaps isEqualToDictionary:remapsDict];
+    
+    if (isEqual) {
+        
+        /// Log
+        DDLogDebug(@"Remaps were set to the same value");
+        
+    } else {
+        
+        /// Set
+        _remaps = remapsDict;
+        
+        /// Reset cache
+        [_swizzleCache removeAllObjects];
+        
+        /// Notify
+//        [ReactiveRemaps.shared handleRemapsDidChange];
+        [SwitchMaster.shared remapsChangedWithRemaps:_remaps];
+        [RemapsAnalyzer reload];
+//        [NSNotificationCenter.defaultCenter postNotificationName:kMFNotifCenterNotificationNameRemapsChanged object:self];
+        
+        /// Log
+        DDLogDebug(@"Set remaps to: %@", _remaps);
+    }
+}
+
+#pragma mark - Reload
+
 + (void)reload {
+    
+    /// The main app uses an array of dicts (aka a table) to represent the remaps in a way that is easy to present in a table view.
+    /// The remaps are also stored to file in this format and therefore what `Config.config` contains.
+    /// The helper was made to handle a dictionary format which should be more effictient among other perks.
+    /// This function takes the remaps in table format from config, then converts it to dict format and makes that available to all the other Input modification classes to base their behaviour off of through self.remaps.
     
     DDLogDebug(@"TRM set remaps to config");
     
@@ -58,7 +129,7 @@ static NSDictionary *_remaps;
     
     if (_addModeIsEnabled) {
         _addModeIsEnabled = NO;
-        [MFMessagePort sendMessage:@"addModeDisabled" withPayload:nil expectingReply:NO];
+//        [MFMessagePort sendMessage:@"addModeDisabled" withPayload:nil expectingReply:NO];
     }
     
     ///
@@ -66,89 +137,91 @@ static NSDictionary *_remaps;
     ///
     
     if (USE_TEST_REMAPS) {
-        [self setRemaps:self.testRemaps]; return;
-    }
-    
-    ///
-    /// Load remaps from config 
-    ///
-    
-    NSMutableDictionary *remapsDict = [NSMutableDictionary dictionary];
-    
-    ///
-    /// Get keyboard mods from scroll screen
-    ///
-    
-    if ([(id)config(@"Other.scrollKillSwitch") boolValue]) { /// Disable keyboard mods when scrollKillSwitch is on
+        
+        [self setRemaps:self.testRemaps];
         
     } else {
         
-        NSEventModifierFlags horizontal = [(id)config(@"Scroll.modifiers.horizontal") unsignedIntegerValue];
-        NSEventModifierFlags zoom = [(id)config(@"Scroll.modifiers.zoom") unsignedIntegerValue];
-        NSEventModifierFlags swift = [(id)config(@"Scroll.modifiers.swift") unsignedIntegerValue];
-        NSEventModifierFlags precise = [(id)config(@"Scroll.modifiers.precise") unsignedIntegerValue];
-        /// ^ Might be faster to only get Scroll.modifiers once and then query that? Probably not significant
+        ///
+        /// Load remaps from config
+        ///
         
-        if (horizontal) {
-            NSDictionary *precondition = @{
-                kMFModificationPreconditionKeyKeyboard: @(horizontal)
-            };
-            NSDictionary *effect = @{
-                kMFTriggerScroll: @{
-                    kMFModifiedScrollDictKeyEffectModificationType: kMFModifiedScrollEffectModificationTypeHorizontalScroll
-                }
-            };
-            [remapsDict setObject:effect forKey:precondition];
-        }
-        if (zoom) {
-            NSDictionary *precondition = @{
-                kMFModificationPreconditionKeyKeyboard: @(zoom)
-            };
-            NSDictionary *effect = @{
-                kMFTriggerScroll: @{
-                    kMFModifiedScrollDictKeyEffectModificationType: kMFModifiedScrollEffectModificationTypeZoom
-                }
-            };
-            [remapsDict setObject:effect forKey:precondition];
-        }
-        if (swift) {
-            NSDictionary *precondition = @{
-                kMFModificationPreconditionKeyKeyboard: @(swift)
-            };
-            NSDictionary *effect = @{
-                kMFTriggerScroll: @{
-                    kMFModifiedScrollDictKeyInputModificationType: kMFModifiedScrollInputModificationTypeQuickScroll
-                }
-            };
-            [remapsDict setObject:effect forKey:precondition];
-        }
-        if (precise) {
-            NSDictionary *precondition = @{
-                kMFModificationPreconditionKeyKeyboard: @(precise)
-            };
-            NSDictionary *effect = @{
-                kMFTriggerScroll: @{
-                    kMFModifiedScrollDictKeyInputModificationType: kMFModifiedScrollInputModificationTypePrecisionScroll
-                }
-            };
-            [remapsDict setObject:effect forKey:precondition];
-        }
-    }
-    
-    ///
-    /// Get values from action table (button remaps)
-    ///
-    
-    BOOL killSwitch = [(id)config(@"Other.buttonKillSwitch") boolValue] || HelperState.isLockedDown;
-    
-    if (killSwitch) {
-        /// TODO: Turn off button interception completely (generally when the remaps dict is empty)
-    } else {
+        NSMutableDictionary *remapsDict = [NSMutableDictionary dictionary];
         
+        ///
+        /// Get keyboard mods from scroll screen
+        ///
+        
+        if ([(id)config(@"General.scrollKillSwitch") boolValue]) { /// Disable keyboard mods when scrollKillSwitch is on
+            
+        } else {
+            
+            NSEventModifierFlags horizontal = [(id)config(@"Scroll.modifiers.horizontal") unsignedIntegerValue];
+            NSEventModifierFlags zoom = [(id)config(@"Scroll.modifiers.zoom") unsignedIntegerValue];
+            NSEventModifierFlags swift = [(id)config(@"Scroll.modifiers.swift") unsignedIntegerValue];
+            NSEventModifierFlags precise = [(id)config(@"Scroll.modifiers.precise") unsignedIntegerValue];
+            /// ^ Might be faster to only get Scroll.modifiers once and then query that? Probably not significant
+            
+            if (horizontal) {
+                NSDictionary *precondition = @{
+                    kMFModificationPreconditionKeyKeyboard: @(horizontal)
+                };
+                NSDictionary *effect = @{
+                    kMFTriggerScroll: @{
+                        kMFModifiedScrollDictKeyEffectModificationType: kMFModifiedScrollEffectModificationTypeHorizontalScroll
+                    }
+                };
+                [remapsDict setObject:effect forKey:precondition];
+            }
+            if (zoom) {
+                NSDictionary *precondition = @{
+                    kMFModificationPreconditionKeyKeyboard: @(zoom)
+                };
+                NSDictionary *effect = @{
+                    kMFTriggerScroll: @{
+                        kMFModifiedScrollDictKeyEffectModificationType: kMFModifiedScrollEffectModificationTypeZoom
+                    }
+                };
+                [remapsDict setObject:effect forKey:precondition];
+            }
+            if (swift) {
+                NSDictionary *precondition = @{
+                    kMFModificationPreconditionKeyKeyboard: @(swift)
+                };
+                NSDictionary *effect = @{
+                    kMFTriggerScroll: @{
+                        kMFModifiedScrollDictKeyInputModificationType: kMFModifiedScrollInputModificationTypeQuickScroll
+                    }
+                };
+                [remapsDict setObject:effect forKey:precondition];
+            }
+            if (precise) {
+                NSDictionary *precondition = @{
+                    kMFModificationPreconditionKeyKeyboard: @(precise)
+                };
+                NSDictionary *effect = @{
+                    kMFTriggerScroll: @{
+                        kMFModifiedScrollDictKeyInputModificationType: kMFModifiedScrollInputModificationTypePrecisionScroll
+                    }
+                };
+                [remapsDict setObject:effect forKey:precondition];
+            }
+        }
+        
+        ///
+        /// Get values from action table (button remaps)
+        ///
+        
+//        BOOL killSwitch = [(id)config(@"General.buttonKillSwitch") boolValue] /*|| HelperState.isLockedDown*/;
+        
+//        if (killSwitch) {
+//            /// TODO: Turn off button interception completely (generally when the remaps dict is empty)
+//        } else {
+            
         /// Convert remaps table to remaps dict
         
         NSArray *remapsTable = [Config.shared.config objectForKey:kMFConfigKeyRemaps];
-
+        
         for (NSDictionary *tableEntry in remapsTable) {
             /// Get modification precondition section of keypath
             NSDictionary *modificationPrecondition = tableEntry[kMFRemapsKeyModificationPrecondition];
@@ -177,12 +250,11 @@ static NSDictionary *_remaps;
             NSArray *keyArray = [@[modificationPrecondition] arrayByAddingObjectsFromArray:triggerKeyArray];
             [remapsDict setObject:effect forCoolKeyArray:keyArray];
         }
+        
+//        }
+        
+        [self setRemaps:remapsDict];
     }
-    
-    [self setRemaps:remapsDict];
-}
-+ (NSDictionary *)remaps {
-    return _remaps;
 }
 
 #pragma mark - AddMode
@@ -192,7 +264,7 @@ BOOL _addModeIsEnabled = NO;
     return _addModeIsEnabled;
 }
 
-+ (void)enableAddMode {
++ (BOOL)enableAddMode {
     
     /// \discussion  Add mode configures the helper such that it remaps to "add mode feedback effects" instead of normal effects.
     /// When "add mode feedback effects" are triggered, the helper will send information about how exactly the effect was triggered to the main app.
@@ -254,26 +326,33 @@ BOOL _addModeIsEnabled = NO;
         }
     }
     
+    /// Update state and notifiy
+    ///     Need to set `_addModeIsEnabled` true before calling `setRemaps:` so that the keyboard mods event tap in `Modifiers` is toggled properly
+    _addModeIsEnabled = YES;
+    
+    /// Send feedback
+//    [MFMessagePort sendMessage:@"addModeEnabled" withPayload:nil expectingReply:NO];
+    
     /// Set `_remaps` to generated
     ///    Why weren't we using setRemaps here? Changed it to setRemaps now. Hopefully nothing breaks.
-    
-//    _remaps = @{
-//        @{}: triggerToEffectDict
-//    };
+
     [self setRemaps:@{
         @{}: triggerToEffectDict
     }];
     
-    /// Update state and notifiy
-    _addModeIsEnabled = YES;
-    [MFMessagePort sendMessage:@"addModeEnabled" withPayload:nil expectingReply:NO];
+    /// Return success
+    return YES;
 }
 
-+ (void)disableAddMode {
-        
-    [self reload];
-//    _addModeIsEnabled = NO;
-//    [MFMessagePort sendMessage:@"addModeDisabled" withPayload:nil expectingReply:NO];
++ (BOOL)disableAddMode {
+    
+    /// Reload
+    if (_addModeIsEnabled) {
+        [self reload];
+    }
+    
+    /// Return success
+    return YES;
 }
 
 //+ (void)disableAddModeWithPayload:(NSDictionary *)payload {
@@ -289,23 +368,34 @@ BOOL _addModeIsEnabled = NO;
 //    if (![self addModePayloadIsValid:payload]) return;
 //
 //    [MFMessagePort sendMessage:@"addModeFeedback" withPayload:payload expectingReply:NO];
-//    ///    [TransformationManager performSelector:@selector(disableAddMode) withObject:nil afterDelay:0.5];
+//    ///    [Remap performSelector:@selector(disableAddMode) withObject:nil afterDelay:0.5];
 //    /// ^ We did this to keep the remapping disabled for a little while after adding a new row, but it leads to adding several entries at once when trying to input button modification precondition, if you're not fast enough.
 //}
 
-+ (void)concludeAddModeWithPayload:(NSDictionary *)payload {
++ (void)sendAddModeFeedback:(NSDictionary *)payload {
     
     DDLogDebug(@"Concluding addMode with payload: %@", payload);
     
-    if (![self addModePayloadIsValid:payload]) return;
+    if (![self addModePayloadIsValid:payload]) {
+        /// The way things are set up currently, we constantly get invalid payloads. So we just ignore them
+//        [self disableAddMode];
+        return;
+    }
     
-    [self reload];
-    _addModeIsEnabled = NO;
+//    [self reload];
+    
 //    [MFMessagePort sendMessage:@"addModeDisabled" withPayload:nil expectingReply:NO];
-    [MFMessagePort sendMessage:@"addModeFeedback" withPayload:payload expectingReply:NO];
-    ///    [TransformationManager performSelector:@selector(disableAddMode) withObject:nil afterDelay:0.5];
+    
+    
+    
+    [MFMessagePort sendMessage:@"addModeFeedback" withPayload:payload waitForReply:NO];
+    ///    [Remap performSelector:@selector(disableAddMode) withObject:nil afterDelay:0.5];
     /// ^ We did this to keep the remapping disabled for a little while after adding a new row, but it leads to adding several entries at once when trying to input button modification precondition, if you're not fast enough.
 
+}
+
++ (void)__SWIFT_UNBRIDGED_sendAddModeFeedback:(id)payload {
+    [self sendAddModeFeedback:payload];
 }
 
 
@@ -315,92 +405,17 @@ BOOL _addModeIsEnabled = NO;
 /// Keyboard-modifier-only modifiedDrags and modifiedScrolls work in principle but they cause some smaller bugs and issues in the mainApp UI. We don't wan't to polish that up so we're just disabling the ability to add them.
 ///     Also the remap table is completely structured around buttons now, so it wouldn't fit into the UI to have keyboard-modifier-only modifiedDrags and modifiedScrolls
 + (BOOL)addModePayloadIsValid:(NSDictionary *)payload {
+    
     if ([payload[kMFRemapsKeyTrigger] isEqual:kMFTriggerDrag]
         || [payload[kMFRemapsKeyTrigger] isEqual:kMFTriggerScroll]) {
+        
         NSArray *buttonPreconds = payload[kMFRemapsKeyModificationPrecondition][kMFModificationPreconditionKeyButtons];
         if (buttonPreconds == nil || buttonPreconds.count == 0) {
+//            assert(false);
             return NO;
         }
     }
     return YES;
-}
-
-#pragma mark - keyCaptureMode
-
-CFMachPortRef _keyCaptureEventTap;
-
-+ (void)enableKeyCaptureMode {
-    
-    DDLogInfo(@"Enabling keyCaptureMode");
-    
-    if (_keyCaptureEventTap == nil) {
-        _keyCaptureEventTap = [TransformationUtility createEventTapWithLocation:kCGHIDEventTap mask:CGEventMaskBit(kCGEventKeyDown) | CGEventMaskBit(NSEventTypeSystemDefined) option:kCGEventTapOptionDefault placement:kCGHeadInsertEventTap callback:keyCaptureModeCallback];
-    }
-    CGEventTapEnable(_keyCaptureEventTap, true);
-}
-
-+ (void)disableKeyCaptureMode {
-    CGEventTapEnable(_keyCaptureEventTap, false);
-}
-
-CGEventRef  _Nullable keyCaptureModeCallback(CGEventTapProxy proxy, CGEventType type, CGEventRef event, void *userInfo) {
-    
-    CGEventFlags flags  = CGEventGetFlags(event);
-    
-    NSDictionary *payload;
-    
-    if (type == kCGEventKeyDown) {
-    
-        CGKeyCode keyCode = CGEventGetIntegerValueField(event, kCGKeyboardEventKeycode);
-    
-        if (keyCaptureModePayloadIsValidWithKeyCode(keyCode, flags)) {
-        
-            payload = @{
-        @"keyCode": @(keyCode),
-        @"flags": @(flags),
-    };
-    
-    [MFMessagePort sendMessage:@"keyCaptureModeFeedback" withPayload:payload expectingReply:NO];
-            [TransformationManager disableKeyCaptureMode];
-        }
-    
-    } else if (type == NSEventTypeSystemDefined) {
-        
-        NSEvent *e = [NSEvent eventWithCGEvent:event];
-        
-        MFSystemDefinedEventType type = (MFSystemDefinedEventType)(e.data1 >> 16);
-        
-        if (keyCaptureModePayloadIsValidWithEvent(e, flags, type)) {
-            
-            DDLogDebug(@"Capturing system event with data1: %ld, data2: %ld", e.data1, e.data2);
-            
-            payload = @{
-                @"systemEventType": @(type),
-                @"flags": @(flags),
-            };
-            
-            [MFMessagePort sendMessage:@"keyCaptureModeFeedbackWithSystemEvent" withPayload:payload expectingReply:NO];
-    [TransformationManager disableKeyCaptureMode];
-        }
-        
-    }
-    
-    
-    return nil;
-}
-bool keyCaptureModePayloadIsValidWithKeyCode(CGKeyCode keyCode, CGEventFlags flags) {
-    return true; /// keyCode 0 is 'A'
-}
-    
-bool keyCaptureModePayloadIsValidWithEvent(NSEvent *e, CGEventFlags flags, MFSystemDefinedEventType type) {
-    
-    BOOL isSub8 = (e.subtype == 8); /// 8 -> NSEventSubtypeScreenChanged
-    BOOL isKeyDown = (e.data1 & kMFSystemDefinedEventPressedMask) == 0;
-    BOOL secondDataIsNil = e.data2 == -1; /// The power key up event has both data fields be 0
-    BOOL typeIsBlackListed = type == kMFSystemEventTypeCapsLock;
-    
-    
-    return isSub8 && isKeyDown && secondDataIsNil && !typeIsBlackListed;
 }
 
 #pragma mark - Dummy Data

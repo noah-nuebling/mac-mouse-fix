@@ -25,12 +25,14 @@
     NSBundle *hhh;
     NSBundle *helperBundle;
     [self getBundlesForMainApp:&hhh helper:&helperBundle];
+    assert(helperBundle != nil);
     return helperBundle;
 }
 + (NSBundle *)mainAppBundle {
     NSBundle *mainAppBundle;
     NSBundle *hhh;
     [self getBundlesForMainApp:&mainAppBundle helper:&hhh];
+    assert(mainAppBundle != nil);
     return mainAppBundle;
 }
 /// Return bundle at the location at which the app was launched - even after the app has been moved while running
@@ -71,9 +73,9 @@ static NSURL *_configURL;
     /// Use config instead of defaults. There's no good reason to use defaults
     assert(false);
     
-    if (SharedUtility.runningMainApp) {
+    if (runningMainApp()) {
         return NSUserDefaults.standardUserDefaults;
-    } else if (SharedUtility.runningHelper) {
+    } else if (runningHelper()) {
         return [[NSUserDefaults alloc] initWithSuiteName:kMFBundleIDApp];
     } else {
         assert(false);
@@ -99,11 +101,11 @@ static NSURL *_configURL;
 + (void)getOriginalBundlesForMainApp:(NSBundle *__autoreleasing *)mainAppBundle helper:(NSBundle *__autoreleasing *)helperBundle {
     NSBundle *thisBundle = NSBundle.mainBundle;
     
-    if (SharedUtility.runningMainApp) {
+    if (runningMainApp()) {
         NSString *helperPath = [thisBundle.bundleURL URLByAppendingPathComponent:kMFRelativeHelperAppPath].path;
         *mainAppBundle = thisBundle;
         *helperBundle = [NSBundle bundleWithPath:helperPath];
-    } else if (SharedUtility.runningHelper) {
+    } else if (runningHelper()) {
         NSString *mainAppPath = [thisBundle.bundleURL URLByAppendingPathComponent:kMFRelativeMainAppPathFromHelperBundle].path;
         *mainAppBundle = [NSBundle bundleWithPath:mainAppPath];
         *helperBundle = thisBundle;

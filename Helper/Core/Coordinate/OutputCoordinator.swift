@@ -5,7 +5,9 @@
 // Created by Noah Nuebling in 2022
 // Licensed under the MMF License (https://github.com/noah-nuebling/mac-mouse-fix/blob/master/LICENSE)
 // --------------------------------------------------------------------------
-//
+// 
+
+/// NOTE: This is unused. See below for more info
 
 /// Temporarily disable other modules that drive touch events other than the caller.
 ///     Guarantee: Other modules completely stop sending touch events *before* this function returns

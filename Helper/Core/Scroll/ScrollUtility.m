@@ -12,7 +12,7 @@
 #import <Cocoa/Cocoa.h>
 #import "IOHIDEventTypes.h"
 #import "SharedUtility.h"
-#import "TransformationUtility.h"
+#import "ModificationUtility.h"
 
 @implementation ScrollUtility
 
@@ -32,14 +32,16 @@ static NSDictionary *_MFScrollPhaseToIOHIDEventPhase;
     };
 }
 
-/// Basically creates a copy of a scroll event.
-/// \discussion
-/// When multithreading from within `ScrollControl -> eventTapCallback()` events would become invalid and unusable in the new thread.
-/// Using CGEventCreateCopy didn't help, but this does fix the issue. Not sure why.
-/// Xcode Analysis warns of potential memory leak here, even though we have `create` in the name. Maybe we should flag the return with `CF_RETURNS_RETAINED`
-/// This doesn't produce identically behaving events (See https://github.com/noah-nuebling/mac-mouse-fix/issues/61)
-///     So we made a more general version of this function, which copies over _all_ fields, at `Utility_HelperApp:createEventWithValuesFromEvent:` ... which couldn't produce identical results either... so we're back to trying to make CGEventCreateCopy work.
 + (CGEventRef)createPixelBasedScrollEventWithValuesFromEvent:(CGEventRef)event {
+    
+    /// Basically creates a copy of a scroll event.
+    /// \discussion
+    /// When multithreading from within `ScrollControl -> eventTapCallback()` events would become invalid and unusable in the new thread.
+    /// Using CGEventCreateCopy didn't help, but this does fix the issue. Not sure why.
+    /// Xcode Analysis warns of potential memory leak here, even though we have `create` in the name. Maybe we should flag the return with `CF_RETURNS_RETAINED`
+    /// This doesn't produce identically behaving events (See https://github.com/noah-nuebling/mac-mouse-fix/issues/61)
+    ///     So we made a more general version of this function, which copies over _all_ fields, at `Utility_HelperApp:createEventWithValuesFromEvent:` ... which couldn't produce identical results either... so we're back to trying to make CGEventCreateCopy work.
+    
     CGEventRef newEvent = CGEventCreateScrollWheelEvent(NULL, kCGScrollEventUnitPixel, 1, 0);
     NSArray *valueFields = @[@(kCGScrollWheelEventDeltaAxis1),
                              @(kCGScrollWheelEventDeltaAxis2),
@@ -54,10 +56,12 @@ static NSDictionary *_MFScrollPhaseToIOHIDEventPhase;
     return newEvent;
 }
 
-/// Creates a vertical scroll event with a line delta value of 1 and a pixel value of `lineHeight`
-/// \discussion Xcode Analysis warns of potential memory leak here, even though we have `create` in the name. Maybe we should flag the return with `CF_RETURNS_RETAINED`
 + (CGEventRef)createNormalizedEventWithPixelValue:(int)lineHeight {
-    // invert vertical
+    
+    /// Creates a vertical scroll event with a line delta value of 1 and a pixel value of `lineHeight`
+    /// \discussion Xcode Analysis warns of potential memory leak here, even though we have `create` in the name. Maybe we should flag the return with `CF_RETURNS_RETAINED`
+    
+    /// invert vertical
     CGEventRef event = CGEventCreateScrollWheelEvent(NULL, kCGScrollEventUnitPixel, 1, 0);
     CGEventSetIntegerValueField(event, kCGScrollWheelEventDeltaAxis1, 1);
     CGEventSetIntegerValueField(event, kCGScrollWheelEventPointDeltaAxis1, lineHeight);
@@ -68,7 +72,7 @@ static NSDictionary *_MFScrollPhaseToIOHIDEventPhase;
     DDLogInfo(@"%lld",CGEventGetIntegerValueField(event, kCGScrollWheelEventPointDeltaAxis1));
     DDLogInfo(@"%f",CGEventGetDoubleValueField(event, kCGScrollWheelEventFixedPtDeltaAxis1));
     
-    return event; // This is potentially a memory leak, because I'm creating a CGEvent but not releasing it??
+    return event;
 }
 /// Inverts the diection of a given scroll event if dir is -1.
 /// @param event Event to be inverted

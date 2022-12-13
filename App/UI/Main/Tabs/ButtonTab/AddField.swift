@@ -3,7 +3,7 @@
 // AddField.swift
 // Created for Mac Mouse Fix (https://github.com/noah-nuebling/mac-mouse-fix)
 // Created by Noah Nuebling in 2022
-// Licensed under MIT
+// Licensed under the MMF License (https://github.com/noah-nuebling/mac-mouse-fix/blob/master/LICENSE)
 // --------------------------------------------------------------------------
 //
 
@@ -168,32 +168,40 @@ import CocoaLumberjackSwift
 
         if !enable {
 
-
+            
             /// Animation curve
-            var animation = CASpringAnimation(speed: 2.25, damping: 1.0)
-
-            if playAcceptAnimation {
-                animation = CASpringAnimation(speed: 3.75, damping: 0.25, initialVelocity: -10)
+            
+            let animation = CASpringAnimation(speed: 2.25, damping: 1.0)
+            let bounceAnimation = CASpringAnimation(speed: 3.75, damping: 0.25, initialVelocity: -10)
+            
+            let transformAnimation = playAcceptAnimation ? bounceAnimation : animation
+            let shadowAnimation: CAAnimation
+            if #available(macOS 13.0, *) {
+                shadowAnimation = transformAnimation
+            } else {
+                /// Pre-Ventura, having overshoot in the shadow animation causes visual glitches
+                shadowAnimation = animation
             }
-
-
+            
             /// Play animation
-
-            Animate.with(animation) {
+            
+            Animate.with(transformAnimation) {
                 self.reactiveAnimator().layer.transform.set(CATransform3DIdentity)
-
+            }
+            Animate.with(shadowAnimation) {
+                
 //                var isDarkMode = false
 //                if #available(macOS 10.14, *) {
 //                    isDarkMode = (NSApp.effectiveAppearance == .init(named: .darkAqua)!)
 //                }
-//
 //                let baseShadow = NSShadow() /// NSShadow.clearShadow
 //                baseShadow.shadowColor = .shadowColor.withAlphaComponent(isDarkMode ? 0.75 : 0.225)
 //                baseShadow.shadowOffset = NSMakeSize(0, 0)
 //                baseShadow.shadowBlurRadius = 0.0
-
+                
                 self.reactiveAnimator().shadow.set(NSShadow.clearShadow)
             }
+            
 
             /// Play tint animation
 

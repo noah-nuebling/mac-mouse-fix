@@ -1,6 +1,6 @@
 //
 // --------------------------------------------------------------------------
-// OtherConfig.swift
+// GeneralConfig.swift
 // Created for Mac Mouse Fix (https://github.com/noah-nuebling/mac-mouse-fix)
 // Created by Noah Nuebling in 2022
 // Licensed under the MMF License (https://github.com/noah-nuebling/mac-mouse-fix/blob/master/LICENSE)
@@ -9,18 +9,34 @@
 
 import Cocoa
 
-@objc class OtherConfig: NSObject {
+@objc class GeneralConfig: NSObject {
 
-    /// Reload from config dict
-    ///     Use this to delete cached values
+    private static var _generalConfigRaw: NSDictionary? = nil
+    
     @objc static func reload() {
         
+        /// Guard equal
+        let new = config("General") as! NSDictionary?
+        
+        guard !(new?.isEqual(to: _generalConfigRaw) ?? false) else {
+            return
+        }
+        
+        /// Store
+        _generalConfigRaw = new?.copy() as! NSDictionary?  
+        
+        /// Notify
+        if let new = new {
+            SwitchMaster.shared.generalConfigChanged(generalConfig: new)
+        } else {
+            assert(false)
+        }
     }
     
     /// Advanced settings
     
     @objc static func freezePointerDuringModifiedDrag() -> Bool {
-        return config("Other.lockPointerDuringDrag") as! Bool
+        return config("General.lockPointerDuringDrag") as! Bool
     }
     @objc static var doubleClickThreshold: Double {
         return 0.01;

@@ -151,6 +151,9 @@ CFDataRef createAccelerationTableWithArray(NSArray/**<<NSNumber *> *>*/ *points)
     
     /// `points` is supposed to have type NSArray<NSArray<NSNumber *> *> *, where the inner array represents a point -> Has two float values representing x and y.
     
+    /// Validate
+    assert(points != nil && points.count > 0);
+    
     /// Convert to C
     
     P cPoints[points.count];

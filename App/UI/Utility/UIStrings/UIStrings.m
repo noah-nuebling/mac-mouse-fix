@@ -14,6 +14,7 @@
 #import "SharedUtility.h"
 #import "NSAttributedString+Additions.h"
 #import "Symbols.h"
+#import "Mac_Mouse_Fix-Swift.h"
 
 @implementation UIStrings
 
@@ -439,9 +440,12 @@ static NSMutableAttributedString *symbolStringWithModifierPrefix(NSString *flags
         NSString *joinLast = NSLocalizedString(@"join-list.last", @"First draft: %@ and %@ || Note: This format string joins the second-to-last element and the last elements in a list of items");
         
         outString = stringf(joinLast, [firstStrings componentsJoinedByString:join], lastString);
+    } else {
+        assert(false);
     }
     
-    return outString;
+    /// On trimming whitespace: Not sure if trimming whitespace here is a good idea. If we always trim whitespace right before a string is displayed to the user this should be unnecessary.
+    return outString.stringByTrimmingWhiteSpace;
 }
 
 /// Helper

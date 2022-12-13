@@ -4,8 +4,6 @@
 <dict>
 	<key>Scroll</key>
 	<dict>
-		<key>inertia</key>
-		<true/>
 		<key>modifiers</key>
 		<dict>
 			<key>horizontal</key>
@@ -17,189 +15,28 @@
 			<key>zoom</key>
 			<integer>1048576</integer>
 		</dict>
-		<key>naturalDirection</key>
-		<false/>
+		<key>reverseDirection</key>
+		<true/>
+		<key>trackpadSimulation</key>
+		<true/>
 		<key>precise</key>
 		<false/>
 		<key>smooth</key>
-		<true/>
-		<key>speed</key>
 		<string>high</string>
+		<key>speed</key>
+		<string>medium</string>
 	</dict>
 	<key>License</key>
-	<dict/>
-	<key>AppOverrides</key>
 	<dict>
-		<key>com.adobe.Photoshop</key>
-		<dict>
-			<key>Root</key>
-			<dict>
-				<key>Scroll</key>
-				<dict>
-					<key>modifierKeys</key>
-					<dict>
-						<key>horizontalScrollModifierKeyEnabled</key>
-						<false/>
-						<key>magnificationScrollModifierKeyEnabled</key>
-						<false/>
-					</dict>
-					<key>smooth</key>
-					<false/>
-				</dict>
-			</dict>
-			<key>meta</key>
-			<dict>
-				<key>scrollOverridePanelTableViewOrderKey</key>
-				<integer>0</integer>
-			</dict>
-		</dict>
-		<key>com.adobe.PhotoshopElements</key>
-		<dict>
-			<key>Root</key>
-			<dict>
-				<key>Scroll</key>
-				<dict>
-					<key>modifierKeys</key>
-					<dict>
-						<key>horizontalScrollModifierKeyEnabled</key>
-						<false/>
-						<key>magnificationScrollModifierKeyEnabled</key>
-						<false/>
-					</dict>
-					<key>smooth</key>
-					<false/>
-				</dict>
-			</dict>
-			<key>meta</key>
-			<dict>
-				<key>scrollOverridePanelTableViewOrderKey</key>
-				<integer>0</integer>
-			</dict>
-		</dict>
-		<key>com.adobe.Reader</key>
-		<dict>
-			<key>Root</key>
-			<dict>
-				<key>Scroll</key>
-				<dict>
-					<key>modifierKeys</key>
-					<dict>
-						<key>horizontalScrollModifierKeyEnabled</key>
-						<false/>
-						<key>magnificationScrollModifierKeyEnabled</key>
-						<false/>
-					</dict>
-					<key>smooth</key>
-					<false/>
-				</dict>
-			</dict>
-			<key>meta</key>
-			<dict>
-				<key>scrollOverridePanelTableViewOrderKey</key>
-				<integer>0</integer>
-			</dict>
-		</dict>
-		<key>com.apple.Preview</key>
-		<dict>
-			<key>Root</key>
-			<dict>
-				<key>Scroll</key>
-				<dict>
-					<key>modifierKeys</key>
-					<dict>
-						<key>horizontalScrollModifierKeyEnabled</key>
-						<true/>
-						<key>magnificationScrollModifierKeyEnabled</key>
-						<true/>
-					</dict>
-					<key>smooth</key>
-					<false/>
-				</dict>
-			</dict>
-			<key>meta</key>
-			<dict>
-				<key>scrollOverridePanelTableViewOrderKey</key>
-				<integer>0</integer>
-			</dict>
-		</dict>
-		<key>com.apple.QuickTimePlayerXuuu</key>
-		<dict>
-			<key>Root</key>
-			<dict>
-				<key>Scroll</key>
-				<dict>
-					<key>modifierKeys</key>
-					<dict>
-						<key>horizontalScrollModifierKeyEnabled</key>
-						<false/>
-						<key>magnificationScrollModifierKeyEnabled</key>
-						<false/>
-					</dict>
-					<key>smooth</key>
-					<false/>
-				</dict>
-			</dict>
-			<key>meta</key>
-			<dict>
-				<key>scrollOverridePanelTableViewOrderKey</key>
-				<integer>0</integer>
-			</dict>
-		</dict>
-		<key>com.apple.QuickTimePlayeruuu</key>
-		<dict>
-			<key>Root</key>
-			<dict>
-				<key>Scroll</key>
-				<dict>
-					<key>modifierKeys</key>
-					<dict>
-						<key>horizontalScrollModifierKeyEnabled</key>
-						<false/>
-						<key>magnificationScrollModifierKeyEnabled</key>
-						<false/>
-					</dict>
-					<key>smooth</key>
-					<false/>
-				</dict>
-			</dict>
-			<key>meta</key>
-			<dict>
-				<key>scrollOverridePanelTableViewOrderKey</key>
-				<integer>0</integer>
-			</dict>
-		</dict>
-		<key>com.apple.Safariuuu</key>
-		<dict>
-			<key>Root</key>
-			<dict>
-				<key>Scroll</key>
-				<dict>
-					<key>modifierKeys</key>
-					<dict>
-						<key>horizontalScrollModifierKey</key>
-						<string>shift</string>
-						<key>horizontalScrollModifierKeyEnabled</key>
-						<false/>
-						<key>magnificationScrollModifierKey</key>
-						<string>command</string>
-						<key>magnificationScrollModifierKeyEnabled</key>
-						<false/>
-					</dict>
-					<key>smooth</key>
-					<false/>
-				</dict>
-			</dict>
-			<key>meta</key>
-			<dict>
-				<key>scrollOverridePanelTableViewOrderKey</key>
-				<integer>0</integer>
-			</dict>
-		</dict>
+		<key>configCache</key>
+		<dict/>
+		<key>isLicensedCache</key>
+		<false/>
+		<key>licenseReasonCache</key>
+		<integer>1</integer>
 	</dict>
-	<key>Other</key>
+	<key>General</key>
 	<dict>
-		<key>autosave_tabID</key>
-		<string>general</string>
 		<key>showMenuBarItem</key>
 		<false/>
 		<key>buttonKillSwitch</key>
@@ -210,16 +47,37 @@
 		<false/>
 		<key>checkForUpdates</key>
 		<true/>
-		<key>configVersion</key>
-		<integer>16</integer>
-		<key>launchesOverall</key>
-		<string>0</string>
-		<key>lastLaunchedBundleVersion</key>
-		<integer>0</integer>
-		<key>launchesOfCurrentBundleVersion</key>
-		<integer>0</integer>
 		<key>lockPointerDuringDrag</key>
 		<false/>
+	</dict>
+	<key>Pointer</key>
+	<dict>
+		<key>acceleration</key>
+		<real>0.6875</real>
+		<key>sensitivity</key>
+		<integer>1</integer>
+		<key>useSystemAcceleration</key>
+		<false/>
+	</dict>
+	<key>Remaps</key>
+	<array/>
+	<key>State</key>
+	<dict>
+		<key>remapsAreInitialized</key>
+		<false/>
+		<key>launchesOfCurrentBundleVersion</key>
+		<integer>0</integer>
+		<key>lastLaunchedBundleVersion</key>
+		<integer>0</integer>
+		<key>launchesOverall</key>
+		<string>0</string>
+		<key>autosave_tabID</key>
+		<string>general</string>
+	</dict>
+	<key>Constants</key>
+	<dict>
+		<key>configVersion</key>
+		<integer>19</integer>
 		<key>defaultRemaps</key>
 		<dict>
 			<key>threeButtons</key>
@@ -432,16 +290,5 @@
 			</array>
 		</dict>
 	</dict>
-	<key>Pointer</key>
-	<dict>
-		<key>acceleration</key>
-		<real>0.6875</real>
-		<key>sensitivity</key>
-		<integer>1</integer>
-		<key>useSystemAcceleration</key>
-		<false/>
-	</dict>
-	<key>Remaps</key>
-	<array/>
 </dict>
 </plist>

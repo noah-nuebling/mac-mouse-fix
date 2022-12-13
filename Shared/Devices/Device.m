@@ -12,7 +12,7 @@
 #import "GestureScrollSimulator.h"
 #import "DeviceManager.h"
 #import "ButtonInputReceiver.h"
-#import "TransformationUtility.h"
+#import "ModificationUtility.h"
 #import "CFRuntime.h"
 #import "SharedUtility.h"
 #import <Cocoa/Cocoa.h>
@@ -24,7 +24,9 @@
 
 /// We've moved this to shared to be able to access the device name and button number from the mainApp for the Buttons tabs. But to access the buttonNumber you have to open the device which requires accessibility access. So instead we'll have the mainApp ask the helper for that info instead. The registryEntryID based init's are not used after this removal.
 
-@implementation Device
+@implementation Device {
+    int _nOfButtons;
+}
 
 #pragma mark - Init
 
@@ -66,10 +68,14 @@
 
 - (Device *)initWithIOHIDDevice:(IOHIDDeviceRef)IOHIDDevice {
     
+    /// This is the core init method which all others call (at time of writing)
+    
     self = [super init];
     if (self) {
         
+        ///
         /// Store & retain device
+        ///
         _iohidDevice = IOHIDDevice;
         CFRetain(_iohidDevice);
         
@@ -81,6 +87,33 @@
         if (ret) {
             DDLogError(@"Error opening device. Code: %x", ret);
         }
+        
+        ///
+        /// Fill instance variables
+        ///
+        
+        ///
+        /// Calculate nOfButtons
+        /// 
+        
+        /// Get button elements
+        IOHIDDeviceRef device = self.iohidDevice;
+        NSDictionary *match = @{
+            @(kIOHIDElementUsagePageKey): @(kHIDPage_Button)
+        };
+        NSArray *elements = (__bridge_transfer NSArray *)IOHIDDeviceCopyMatchingElements(device, (__bridge CFDictionaryRef)match, 0);
+        
+        /// Get max button number
+        ///     Could proabably also just count the number elements instead of this. But this might be more robust.
+        int maxButtonNumber = 0;
+        for (id e in elements) { /// e is of the private type `HIDElement *` which is bridged with `IOHIDElementRef`
+            IOHIDElementRef element = (__bridge IOHIDElementRef)e;
+            int buttonNumber = IOHIDElementGetUsage(element);
+            maxButtonNumber = MAX(maxButtonNumber, buttonNumber);
+        }
+        
+        /// Store result
+        _nOfButtons = maxButtonNumber;
         
 #if IS_HELPER
         
@@ -182,7 +215,8 @@ static void handleInput(void *context, IOReturn result, void *sender, IOHIDValue
     DDLogDebug(@"Received HID input - usagePage: %d usage: %d value: %ld from device: %@", usagePage, usage, (long)IOHIDValueGetIntegerValue(value), sendingDev.name);
 
     /// Notify ButtonInputReceiver
-    [ButtonInputReceiver handleHIDButtonInputFromRelevantDeviceOccured:sendingDev button:@(button)];
+    /// Not needed now since we deactivated AppSwitcher feature. If we do implement it in the future we'll probably take a completely different approach
+//    [ButtonInputReceiver handleHIDButtonInputFromRelevantDeviceOccured:sendingDev button:@(button)];
 
     /// Stop momentumScroll on LMB click
     ///     ButtonInputReceiver tries to filter out LMB and RMB events as early as possible, so it's better to do this here
@@ -208,7 +242,6 @@ static void handleInput(void *context, IOReturn result, void *sender, IOHIDValue
 - (BOOL)isEqualToDevice:(Device *)device {
     
     /// What does this function do? Why do we have 2 equality check functions?
-    
     return CFEqual(self.iohidDevice, device.iohidDevice);
 }
 - (BOOL)isEqual:(Device *)other {
@@ -247,25 +280,7 @@ static void handleInput(void *context, IOReturn result, void *sender, IOHIDValue
 }
 
 - (int)nOfButtons {
-    
-    /// Get button elements
-    IOHIDDeviceRef device = self.iohidDevice;
-    NSDictionary *match = @{
-        @(kIOHIDElementUsagePageKey): @(kHIDPage_Button)
-    };
-    NSArray *elements = (__bridge_transfer NSArray *)IOHIDDeviceCopyMatchingElements(device, (__bridge CFDictionaryRef)match, 0);
-    
-    /// Get max button number
-    ///     Could proabably also just count the number elements instead of this. But this might be more robust.
-    int maxButtonNumber = 0;
-    for (id e in elements) { /// e is of the private type `HIDElement *` which is bridged with `IOHIDElementRef`
-        IOHIDElementRef element = (__bridge IOHIDElementRef)e;
-        int buttonNumber = IOHIDElementGetUsage(element);
-        maxButtonNumber = MAX(maxButtonNumber, buttonNumber);
-    }
-    
-    /// Return
-    return maxButtonNumber;
+    return self->_nOfButtons;
 }
 
 - (NSString *)description {

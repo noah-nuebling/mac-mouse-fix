@@ -14,7 +14,7 @@
 
 import Cocoa
 import simd /// Vector stuff
-import CocoaLumberjack /// Doesn't work for some reason
+import CocoaLumberjackSwift /// Doesn't work for some reason
 //import ReactiveCocoa
 //import ReactiveSwift
 
@@ -83,10 +83,15 @@ import CocoaLumberjack /// Doesn't work for some reason
         return []
     }
     
+    /// Other
+    
+    let isLine: Bool /// When the Bezier is really just a line we can do some optimzations.
+    let lineRepresentation: Line?
+    
     let maxDegreeForPolynomialApproach: Int = 20
     /// ^ Wikipedia says that "high order curves may lack numeric stability" in polynomial form, and to use Casteljau instead if that happens. Not sure where exactly we should make the cutoff
     
-    let defaultEpsilon: Double // Epsilon to be used when none is specified in evaluate(at:) call
+    var defaultEpsilon: Double /// Epsilon to be used when none is specified in evaluate(at:) call. This is only a var instead of let because of the debugging function `getMinEpsilon`. If we refactor we shouldn't need it for that either. Should change this.
     
     var degree: Int {
         controlPoints.count - 1
@@ -175,9 +180,10 @@ import CocoaLumberjack /// Doesn't work for some reason
         
     }
     
-    init(controlPoints: [P], defaultEpsilon: Double = 0.08) {
+    init(controlPoints controlPointsArg: [P], defaultEpsilon: Double = 0.08) {
         
         /**
+         Core init
          - You should make sure you only pass in control points describing curves where
             - 1. The x values of the first and last point are the two extreme (minimal and maximal) x values among all control points x values
             - 2. The curves x values are monotonically increasing / decreasing along the y axis, so that there are no x coordinates for which there are several points on the curve
@@ -186,25 +192,39 @@ import CocoaLumberjack /// Doesn't work for some reason
                 - If it's not the case, it won't necessarily throw an error, but things might behave unpredicably.
          */
         
-        
-        
-        /// Make sure that there are at least 2 points
-        
-        assert(controlPoints.count >= 2, "There need to be at least 2 controlPoints");
-        
         /// Set defaultEpsilon
         
         self.defaultEpsilon = defaultEpsilon
         
-        /// Removing consective duplicate points
-        ///     For optimization. Not sure if significant
+        /// Remove consective duplicate points
+        /// - For optimization. Not sure if significant.
+        /// - I'm also not totally sure if the duplicate control points really have no effect at all. I think having two controlPoints in the same point might  give that point more "weight" in where the curve lies.
         
-        var controlPointsFiltered: [P] = []
-        for i in 0..<controlPoints.count-1 {
-            let this = controlPoints[i]
-            let next = controlPoints[i+1]
-            if this.x == next.x && this.y == next.y { continue }
-            controlPointsFiltered.append(this)
+        var controlPoints: [P] = []
+        var lastPoint: P? = nil
+        for p in controlPointsArg {
+            
+            var isSame = false
+            if let lastPoint = lastPoint {
+                isSame = p.x == lastPoint.x && p.y == lastPoint.y
+            }
+            if isSame { continue }
+            
+            controlPoints.append(p)
+            lastPoint = p
+        }
+        
+        /// Make sure that there are at least 2 points
+        assert(controlPoints.count >= 2, "There need to be at least 2 controlPoints");
+        
+        /// Fill isLine and lineRepresentation
+        ///     isLine lets us do some optimizations
+        
+        isLine = controlPoints.count == 2
+        if isLine {
+            lineRepresentation = Line(connecting: controlPoints[0], controlPoints[1])
+        } else {
+            lineRepresentation = nil
         }
         
         /// Fill self.controlPoints
@@ -299,7 +319,25 @@ import CocoaLumberjack /// Doesn't work for some reason
         }
     }
     
-    /// Empty init
+    /// Invalid init
+    ///     For InvalidBezier
+    
+    fileprivate init(forInvalid: Bool) {
+        if !forInvalid { fatalError() }
+        
+        defaultEpsilon = 0.0
+        controlPoints = []
+        controlPointsX = []
+        controlPointsY = []
+        polynomialCoefficients = []
+        polynomialCoefficientsX = []
+        polynomialCoefficientsY = []
+        xValueRange = Interval(0.0, 0.0)
+        isLine = false
+        lineRepresentation = nil
+    }
+    
+    /// Copying init
     ///     For copying
     
     private init(copiedFrom other: Bezier, withZone zone: NSZone?) {
@@ -312,6 +350,8 @@ import CocoaLumberjack /// Doesn't work for some reason
         polynomialCoefficientsX = other.polynomialCoefficientsX
         polynomialCoefficientsY = other.polynomialCoefficientsY
         xValueRange = other.xValueRange.copy(with: zone) as! Interval
+        isLine = other.isLine
+        lineRepresentation = other.lineRepresentation?.copy() as! Line? /// I hope this copy function works. Do we even needt to copy? I don't think Line is mutable does that matter?
     }
     
     /// Copying
@@ -320,7 +360,7 @@ import CocoaLumberjack /// Doesn't work for some reason
         return Bezier(copiedFrom: self, withZone: zone)
     }
     
-    // MARK: Sample curve
+    // MARK: Sampling the curve
     
     /// - Parameters:
     ///   - axis: Axis which to sample. Either `xAxis` or `yAxis`
@@ -515,10 +555,14 @@ import CocoaLumberjack /// Doesn't work for some reason
     
     @objc func evaluate(at x: Double, epsilon: Double) -> Double {
         
-        let t: Double = solveForT(x: x, epsilon: epsilon)
-        let y: Double = sampleCurve(onAxis: yAxis, atT: t)
-        
-        return y
+        if isLine {
+            return lineRepresentation!.evaluate(at: x)
+        } else {
+            let t: Double = solveForT(x: x, epsilon: epsilon)
+            let y: Double = sampleCurve(onAxis: yAxis, atT: t)
+            
+            return y
+        }
     }
     
     // MARK: Derivative dy/dx
@@ -527,20 +571,27 @@ import CocoaLumberjack /// Doesn't work for some reason
         
         assert(controlPoints.count > 1)
         
-        /// Our sampleDerivative() function doesn't work for t == 0 and t == 1
-        
-        if t == 0 {
-            return entrySlope
+        if isLine {
+            
+            return lineRepresentation!.slope
+            
+        } else {
+            
+            /// Our sampleDerivative() function doesn't work for t == 0 and t == 1
+            
+            if t == 0 {
+                return entrySlope
+            }
+            if t == 1 {
+                return exitSlope
+            }
+            
+            /// All parametric functions have this derivative
+            let dyDt = sampleDerivative(on: yAxis, at: t)
+            let dxDt = sampleDerivative(on: xAxis, at: t)
+            
+            return dyDt / dxDt
         }
-        if t == 1 {
-            return exitSlope
-        }
-        
-        /// All parametric functions have this derivative
-        let dyDt = sampleDerivative(on: yAxis, at: t)
-        let dxDt = sampleDerivative(on: xAxis, at: t)
-        
-        return dyDt / dxDt
     }
     
     // MARK: Other Interface
@@ -549,48 +600,183 @@ import CocoaLumberjack /// Doesn't work for some reason
         
         assert(controlPoints.count > 1)
         
-        /// Get last control point
-        let cLast = controlPoints[self.n]
-        /// Find first controlPoint before cLast that is different from cLast
-        var cPrevIndex: Int = self.n-1;
-        var cPrev: P = controlPoints[cPrevIndex];
-        while (cPrev.x == cLast.x && cPrev.y == cLast.y) { /// Loop while cPrev == cLast
-            cPrevIndex -= 1
-            cPrev = controlPoints[cPrevIndex]
+        if isLine {
+            
+            return lineRepresentation!.slope
+            
+        } else {
+            /// Get last control point
+            let cLast = controlPoints[self.n]
+            /// Find first controlPoint before cLast that is different from cLast
+            var cPrevIndex: Int = self.n-1;
+            var cPrev: P = controlPoints[cPrevIndex];
+            while (cPrev.x == cLast.x && cPrev.y == cLast.y) { /// Loop while cPrev == cLast
+                cPrevIndex -= 1
+                cPrev = controlPoints[cPrevIndex]
+            }
+            
+            /// Find slope
+            let slope = (cLast.y - cPrev.y) / (cLast.x - cPrev.x)
+            
+            return slope
         }
-        
-        /// Find slope
-        let slope = (cLast.y - cPrev.y) / (cLast.x - cPrev.x)
-        
-        return slope
     }
     
     var entrySlope: Double {
         
         assert(controlPoints.count > 1)
         
-        /// Get first control point
-        let cFirst = controlPoints[0]
-        /// Find first controlPoint after cFirst that is different from cFirst
-        var cNextIndex: Int = 1;
-        var cNext: P = controlPoints[cNextIndex];
-        while cFirst.x == cNext.x && cFirst.y == cNext.y { /// Loop while cFirst == cNext
-            cNextIndex += 1
-            cNext = controlPoints[cNextIndex]
+        if isLine {
+            
+            return lineRepresentation!.slope
+            
+        } else {
+            
+            /// Get first control point
+            let cFirst = controlPoints[0]
+            /// Find first controlPoint after cFirst that is different from cFirst
+            var cNextIndex: Int = 1;
+            var cNext: P = controlPoints[cNextIndex];
+            while cFirst.x == cNext.x && cFirst.y == cNext.y { /// Loop while cFirst == cNext
+                cNextIndex += 1
+                cNext = controlPoints[cNextIndex]
+            }
+            
+            /// Find slope
+            let slope = (cNext.y - cFirst.y) / (cNext.x - cFirst.x)
+            
+            return slope
         }
-        
-        /// Find slope
-        let slope = (cNext.y - cFirst.y) / (cNext.x - cFirst.x)
-        
-        return slope
     }
 
+    
+    // MARK: Debug
+    
+    @objc func getMinEpsilon(forResolution resolution: Int, startEpsilon: Double, epsilonEpsilon: Double) -> Double {
+        
+        /// This is very inefficient, only meant for debugging
+        /// Not totally sure if this works. It's sort of confusing and the results are weird and I had a a headache when I wrote this.
+        
+        if !runningPreRelease() {
+            DDLogWarn("getMinEpsilon called in a non-prerelease. This is very slow.")
+        }
+        
+        /// Define helper function
+        
+        let checkMonotony = { (points: [P]) -> Bool in
+            
+            var lastY = -Double.infinity
+            
+            for p in points {
+                if p.y <= lastY {
+                    return false
+                }
+                lastY = p.y
+            }
+            
+            return true
+        }
+        
+        /// Set epsilon to startEpsilon and store og
+        
+        let ogEpsilon = defaultEpsilon
+        defaultEpsilon = startEpsilon
+        
+        /// Find upper / lower bound
+        
+        var upper: Double = Double.infinity
+        var lower: Double = -Double.infinity
+        
+        let trace = self.traceAsPoints(startX: xValueRange.lower, endX: xValueRange.upper, nOfSamples: resolution) /// We only need to trace xValues here
+        let isMonotonous = checkMonotony(trace)
+        
+        var previous: Double
+        
+        if isMonotonous {
+            previous = defaultEpsilon
+            defaultEpsilon *= 2.0
+        } else {
+            previous = defaultEpsilon
+            defaultEpsilon /= 2.0
+        }
+        
+        let wasMonotonous = isMonotonous
+        
+        while true {
+            
+            let trace = self.traceAsPoints(startX: xValueRange.lower, endX: xValueRange.upper, nOfSamples: resolution) /// We only need to trace xValues here
+            let isMonotonous = checkMonotony(trace)
+            
+            if wasMonotonous {
+                
+                if isMonotonous {
+                    previous = defaultEpsilon
+                    defaultEpsilon *= 2.0
+                } else {
+                    lower = previous
+                    upper = defaultEpsilon
+                    break
+                }
+                
+                if defaultEpsilon == .infinity {
+                    return .infinity
+                }
+                
+            } else {
+                
+                if !isMonotonous {
+                    previous = defaultEpsilon
+                    defaultEpsilon /= 2.0
+                } else {
+                    upper = previous
+                    lower = defaultEpsilon
+                    break
+                }
+                
+                if defaultEpsilon == 0.0 {
+                    return 0.0
+                }
+
+            }
+            
+        }
+        
+        /// Bisection
+        /// Not using our standard bisection function because the output of the function we want to bisect is just the isMonotonous boolean, and we want to find the input for which this boolean flips. With normal bisection we want to find an input such that the output value is within an epsilon of some target value. I don't know how you could map the task at hand to normal bisection.
+        
+        var result: Double = -1.0
+        var distanceToLast = Double.infinity
+        
+        while true {
+            
+            let middle = Math.scale(value: 0.5, from: .unitInterval, to: Interval(lower, upper))
+            distanceToLast = upper - middle
+            if abs(distanceToLast) < epsilonEpsilon {
+                result = middle
+                break
+            }
+            defaultEpsilon = middle
+            let trace = traceAsPoints(startX: xValueRange.lower, endX: xValueRange.upper, nOfSamples: resolution, bias: 0.0)
+            let isMonotonous = checkMonotony(trace)
+            
+            if isMonotonous {
+                lower = middle
+            } else {
+                upper = middle
+            }
+        }
+        
+        /// Restore epsilon & return
+        defaultEpsilon = ogEpsilon
+        return result
+    }
 }
 
 @objc class InvalidBezier: Bezier {
     
     init() {
-        super.init(controlPoints: [_P(1, 1), _P(12345, 12345)])
+        /// Is this 'invalid' stuff really a good architecture? We're allocating all this stuff for nothing.
+        super.init(forInvalid: true)
     }
     
     override func evaluate(at x: Double) -> Double {

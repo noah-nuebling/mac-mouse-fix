@@ -30,6 +30,7 @@
 #if IS_HELPER
 #import "Mac_Mouse_Fix_Helper-Swift.h"
 #import "AccessibilityCheck.h"
+#import "KeyCaptureMode.h"
 #endif
 
 @implementation MFMessagePort
@@ -38,7 +39,7 @@
 
 static CFDataRef _Nullable didReceiveMessage(CFMessagePortRef port, SInt32 messageID, CFDataRef data, void *info) {
     
-    assert(SharedUtility.runningMainApp || SharedUtility.runningHelper);
+    assert(runningMainApp() || runningHelper());
     
     NSDictionary *messageDict = [NSKeyedUnarchiver unarchiveObjectWithData:(__bridge NSData *)data];
     
@@ -53,12 +54,12 @@ static CFDataRef _Nullable didReceiveMessage(CFMessagePortRef port, SInt32 messa
     
 #pragma mark MainApp
  
-    if ([message isEqualToString:@"addModeEnabled"]) {
-        [MainAppState.shared.buttonTabController handleAddModeEnabled];
-    } else if ([message isEqualToString:@"addModeDisabled"]) {
-        [MainAppState.shared.buttonTabController handleAddModeDisabled];
-    } else if ([message isEqualToString:@"addModeFeedback"]) {
-        [MainAppState.shared.buttonTabController handleAddModeConcludedWithPayload:(NSDictionary *)payload];
+//    if ([message isEqualToString:@"addModeEnabled"]) {
+//        [MainAppState.shared.buttonTabController handleAddModeEnabled];
+//    } else if ([message isEqualToString:@"addModeDisabled"]) {
+//        [MainAppState.shared.buttonTabController handleAddModeDisabled];
+    if ([message isEqualToString:@"addModeFeedback"]) {
+        [MainAppState.shared.buttonTabController handleAddModeFeedbackWithPayload:(NSDictionary *)payload];
     } else if ([message isEqualToString:@"keyCaptureModeFeedback"]) {
         [KeyCaptureView handleKeyCaptureModeFeedbackWithPayload:(NSDictionary *)payload isSystemDefinedEvent:NO];
     } else if ([message isEqualToString:@"keyCaptureModeFeedbackWithSystemEvent"]) {
@@ -113,13 +114,15 @@ static CFDataRef _Nullable didReceiveMessage(CFMessagePortRef port, SInt32 messa
         BOOL isTrusted = [AccessibilityCheck checkAccessibilityAndUpdateSystemSettings];
         response = @(isTrusted);
     } else if ([message isEqualToString:@"enableAddMode"]) {
-        [TransformationManager enableAddMode];
+        BOOL success = [Remap enableAddMode];
+        response = @(success); 
     } else if ([message isEqualToString:@"disableAddMode"]) {
-        [TransformationManager disableAddMode];
+        BOOL success = [Remap disableAddMode];
+        response = @(success);
     } else if ([message isEqualToString:@"enableKeyCaptureMode"]) {
-        [TransformationManager enableKeyCaptureMode];
+        [KeyCaptureMode enable];
     } else if ([message isEqualToString:@"disableKeyCaptureMode"]) {
-        [TransformationManager disableKeyCaptureMode];
+        [KeyCaptureMode disable];
     } else if ([message isEqualToString:@"getActiveDeviceInfo"]) {
         Device *dev = HelperState.activeDevice;
         if (dev != NULL) {
@@ -172,13 +175,13 @@ static CFDataRef _Nullable didReceiveMessage(CFMessagePortRef port, SInt32 messa
     /// I hope that moving using `initialize` instead of `load` if `IS_MAIN_APP` should fix this and work just fine for everything else. I don't know why we used load to begin with.
     /// Edit: I don't remember why we moved to `load_Manual` now, but it works fine
     
-    assert(SharedUtility.runningMainApp || SharedUtility.runningHelper);
+    assert(runningMainApp() || runningHelper());
     
     DDLogInfo(@"Initializing MessagePort...");
     
     CFMessagePortRef localPort =
     CFMessagePortCreateLocal(kCFAllocatorDefault,
-                             (__bridge CFStringRef)(SharedUtility.runningMainApp ? kMFBundleIDApp : kMFBundleIDHelper),
+                             (__bridge CFStringRef)(runningMainApp() ? kMFBundleIDApp : kMFBundleIDHelper),
                              didReceiveMessage,
                              nil,
                              NULL);
@@ -211,7 +214,7 @@ static CFDataRef _Nullable didReceiveMessage(CFMessagePortRef port, SInt32 messa
         CFRelease(runLoopSource);
     } else {
         
-        if (SharedUtility.runningMainApp) {
+        if (runningMainApp()) {
             DDLogInfo(@"Failed to create a local message port. It will probably work anyway for some reason");
         } else {
             DDLogError(@"Failed to create a local message port. This might be because there is another instance of %@ already running. Crashing the app.", kMFHelperName);
@@ -224,15 +227,15 @@ static CFDataRef _Nullable didReceiveMessage(CFMessagePortRef port, SInt32 messa
 #pragma mark - Send messages
 
 
-+ (NSObject *_Nullable)sendMessage:(NSString * _Nonnull)message withPayload:(NSObject <NSCoding> * _Nullable)payload expectingReply:(BOOL)replyExpected { // TODO: Consider renaming last arg to `expectingReturn` or `waitForReply`
++ (NSObject *_Nullable)sendMessage:(NSString * _Nonnull)message withPayload:(NSObject <NSCoding> * _Nullable)payload waitForReply:(BOOL)waitForReply {
     
     /// Validate
-    assert(SharedUtility.runningMainApp || SharedUtility.runningHelper);
+    assert(runningMainApp() || runningHelper());
     
     /// Get remote port
     /// Note: We can't just create the port once and cache it, trying to send with that port will yield ``kCFMessagePortIsInvalid``
     
-    NSString *remotePortName = SharedUtility.runningMainApp ? kMFBundleIDHelper : kMFBundleIDApp;
+    NSString *remotePortName = runningMainApp() ? kMFBundleIDHelper : kMFBundleIDApp;
     CFMessagePortRef remotePort = CFMessagePortCreateRemote(kCFAllocatorDefault, (__bridge CFStringRef)remotePortName);
 
     if (remotePort == NULL) {
@@ -266,7 +269,7 @@ static CFDataRef _Nullable didReceiveMessage(CFMessagePortRef port, SInt32 messa
     CFTimeInterval recieveTimeout = 0.0;
     CFStringRef replyMode = NULL;
     CFDataRef returnData = NULL;
-    if (replyExpected) {
+    if (waitForReply) {
 //        sendTimeout = 1.0;
         recieveTimeout = 1.0;
         replyMode = kCFRunLoopDefaultMode;
@@ -283,7 +286,7 @@ static CFDataRef _Nullable didReceiveMessage(CFMessagePortRef port, SInt32 messa
     }
     
     NSObject *returnObject = nil;
-    if (returnData != NULL && replyExpected /*&& status == 0*/) {
+    if (returnData != NULL && waitForReply /*&& status == 0*/) {
         returnObject = [NSKeyedUnarchiver unarchiveObjectWithData:(__bridge NSData *)returnData];
     }
     
@@ -293,7 +296,7 @@ static CFDataRef _Nullable didReceiveMessage(CFMessagePortRef port, SInt32 messa
 }
 
 void invalidationCallback(CFMessagePortRef ms, void *info) {
-    DDLogInfo(@"MessagePort invalidated in %@", SharedUtility.runningHelper ? @"Helper" : @"MainApp");
+    DDLogInfo(@"Remote MessagePort invalidated in %@", runningHelper() ? @"Helper" : @"MainApp");
 }
 
 @end

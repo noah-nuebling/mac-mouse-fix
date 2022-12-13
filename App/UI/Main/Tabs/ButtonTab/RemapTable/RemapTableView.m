@@ -12,9 +12,18 @@
 #import "RemapTableView.h"
 #import "Mac_Mouse_Fix-Swift.h"
 
+@interface RemapTableView ()
+
+@property (weak) IBOutlet MFScrollView *scrollView;
+@property (weak) IBOutlet NSLayoutConstraint *scrollViewMaxHeightConstraint;
+
+@end
+
 @implementation RemapTableView {
     NSLayoutConstraint *_heightConstraint;
 }
+
+
 
 - (instancetype)init {
     
@@ -43,15 +52,15 @@
 double triggerColumWidth = -1;
 double effectColumnWidth = -1;
 
+
 - (void)coolDidLoad {
  
     /// This is called after the table has loaded all it's rows for the first time.
     ///     Edit: it seemingly won't have created the actual tableCellViews, yet though.
     
-    /// Init height constraint
-    _heightConstraint = [self.heightAnchor constraintEqualToConstant:self.intrinsicContentSize.height + 1];
-    _heightConstraint.priority = 1000;
-    [_heightConstraint setActive:YES];
+    /// Init size and height constraint
+    ///     This shouldn't be necessary since we update the size when we switch to the button tab, but it's sometimes wrong and I think this might help.
+//    [self updateSizeWithAnimation:NO tabContentView:nil];
     
     /// Define constant
     ///     Also see RemapTableCellView > columnPadding for context
@@ -152,40 +161,40 @@ double effectColumnWidth = -1;
 ///    NSRectFill(clipRect);
 ///}
 
-- (NSMenu *)menuForEvent:(NSEvent *)event {
-    
-    NSPoint clickedPoint = [self convertPoint:event.locationInWindow fromView:nil];
-    NSInteger clickedRow = [self rowAtPoint:clickedPoint];
-    
-    if (clickedRow != -1) {
-        if ([self.delegate tableView:self shouldSelectRow:clickedRow]) {
-            /// Select clicked row
-            NSIndexSet *idx = [NSIndexSet indexSetWithIndex:clickedRow];
-            [self selectRowIndexes:idx byExtendingSelection:NO];
-            /// Open menu
-            return [super menuForEvent:event];
-        }
-    } else {
-        
-        /// Unselect currently selected row
-        [self deselectAll:nil];
-        
-        /// Create add menu
-        NSMenuItem *addItem = [[NSMenuItem alloc] init];
-        addItem.title = @"Add";
-        addItem.image =  [Symbols imageWithSymbolName:@"plus.square"];
-        addItem.target = self.delegate;
-        addItem.action = @selector(addButtonAction);
-        
-        NSMenu *addMenu = [[NSMenu alloc] init];
-        [addMenu addItem:addItem];
-        
-        /// Return add Menu
-        return addMenu;
-    }
-    
-    return nil;
-}
+//- (NSMenu *)menuForEvent:(NSEvent *)event {
+//    
+//    NSPoint clickedPoint = [self convertPoint:event.locationInWindow fromView:nil];
+//    NSInteger clickedRow = [self rowAtPoint:clickedPoint];
+//    
+//    if (clickedRow != -1) {
+//        if ([self.delegate tableView:self shouldSelectRow:clickedRow]) {
+//            /// Select clicked row
+//            NSIndexSet *idx = [NSIndexSet indexSetWithIndex:clickedRow];
+//            [self selectRowIndexes:idx byExtendingSelection:NO];
+//            /// Open menu
+//            return [super menuForEvent:event];
+//        }
+//    } else {
+//        
+//        /// Unselect currently selected row
+//        [self deselectAll:nil];
+//        
+//        /// Create add menu
+//        NSMenuItem *addItem = [[NSMenuItem alloc] init];
+//        addItem.title = @"Add"; //// TODO:  Localize this
+//        addItem.image =  [Symbols imageWithSymbolName:@"plus.square"];
+//        addItem.target = self.delegate;
+//        addItem.action = @selector(addButtonAction);
+//        
+//        NSMenu *addMenu = [[NSMenu alloc] init];
+//        [addMenu addItem:addItem];
+//        
+//        /// Return add Menu
+//        return addMenu;
+//    }
+//    
+//    return nil;
+//}
 
 - (void)mouseDown:(NSEvent *)event {
     
@@ -202,28 +211,69 @@ double effectColumnWidth = -1;
     
     /// Should be called by controller when adding / removing a row. We can't use didAddRow and didRemoveRow, because they are called all the time when views are being recycled and stuff
     
-    [self updateSizeWithAnimation:YES];
+    [self updateSizeWithAnimation:YES tabContentView:nil];
 }
 
-- (void)updateSizeWithAnimation:(BOOL)animate {
+- (void)updateSizeWithAnimation:(BOOL)animate tabContentView:(NSView *_Nullable)tabContentView {
     
+    /// Investigation on glitchy size when opening app directly into Buttons tab
+    ///   - (Only happens when the tableView content is too large for the window to fit on screen, so when the maxHeightConstraint comes into play)
+    ///   - This is called twice in a row, when the app opens into ButtonTab directly. because ButtonTabController.viewDidAppear() is called twice in a row (Is that an Apple bug?). Not totally sure if that's relevant. Both times, this method sets the same height and maxHeight constraints as far as I've seen. Yet still, the whole window first renders too small, with the bottom row of buttons squished, before becoming slightly too big to fit on the screen.
+    ///   - Update: We set the vertical compression resistance on the button row and the buttons to 1000 and now the window ends up snapping to the correct size. But still shows up too small at first.
+    
+    ///
+    /// Update scrollView maxHeight
+    ///     So the window doesn't grow bigger than the screen
     /// Notes:
+    /// - Not sure this scrollView height code belongs here but this way we have all the height code in one place.
+    /// - Need to pass in tabContentView if this is called during a tabSwitch to get the correct `windowDiff`. That is the height difference between the actionTable and the window when both have been fully layed out and the tabSwitch animation has finished.
+    /// - We only really need to update this when the screen size changes, but that would make the code more complicated, and performance doesn't really matter here.
+    /// - Limiting to 500.0 is an aesthetic choice
+    
+    double scrollH = self.scrollView.frame.size.height;
+    double windowH;
+    if (tabContentView != nil) {
+        windowH = [self.window frameRectForContentRect:tabContentView.frame].size.height;
+    } else {
+        windowH = self.window.frame.size.height;
+    }
+    double windowHDiff = windowH - scrollH;
+    double screenH = self.window.screen.visibleFrame.size.height;
+    double maxH = MIN(screenH - windowHDiff, /*500.0*/INFINITY);
+    
+    self.scrollViewMaxHeightConstraint.constant = maxH;
+    
+    ///
+    /// Update table size
+    ///
+    
+    /// Init self height constraint
+    
+    if (_heightConstraint == nil) {
+        _heightConstraint = [self.heightAnchor constraintEqualToConstant:0];
+        _heightConstraint.priority = 1000;
+        [_heightConstraint setActive:YES];
+    }
+    
+    /// Get newSize
     /// - `+ 1` to prevent overlap between scrollView border and tableView grid, which looks weird. Also doing that in [RemapTableView coolDidLoad]
     
     NSSize z = self.intrinsicContentSize;
-    NSSize targetSize = NSMakeSize(z.width, z.height + 1);
+    NSSize newSize = NSMakeSize(z.width, z.height + 1);
     
-    [self setFrameSize:targetSize]; /// THIS FIXES EVERYTHING I'M AN APE IN FRONT OF A TYPEWRITER
+    /// Change content size
+    
+    [self setFrameSize:newSize]; /// THIS FIXES EVERYTHING I'M AN APE IN FRONT OF A TYPEWRITER
 
     if (animate) {
         [NSAnimationContext runAnimationGroup:^(NSAnimationContext * _Nonnull context) {
             context.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionDefault];
             context.duration = 0.25;
-            _heightConstraint.animator.constant = targetSize.height;
+            _heightConstraint.animator.constant = newSize.height;
             
         }];
     } else {
-        _heightConstraint.constant = targetSize.height;
+        _heightConstraint.constant = newSize.height;
     }
 }
 

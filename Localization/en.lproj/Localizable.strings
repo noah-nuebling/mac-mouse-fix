@@ -76,8 +76,14 @@
 /* First draft: Triple Click %@ +  */
 "button-modifier.3" = "Triple Click %@ +";
 
-/* First draft: __Enabled__ Mac Mouse Fix for __Buttons__\nIt had been disabled from the Menu Bar %@ || Note: %@ will be replaced by the menubar icon */
-"button-revive-toast" = "__Enabled__ Mac Mouse Fix for __Buttons__\nIt had been disabled from the Menu Bar %@";
+/* First draft: __Enabled__ Mac Mouse Fix for %1@\nIt had been disabled from the Menu Bar %2@ || Note: %1@ will be replaced by the list of enabled features, %2@ will be replaced by the menubar icon */
+"revive-toast" = "__Enabled__ Mac Mouse Fix for %1@\nIt had been disabled from the Menu Bar %2@";
+
+/* First draft: __Buttons__ */
+"revive-toast.feature-buttons" = " __Buttons__";
+
+/* First draft: __Scrolling__ */
+"revive-toast.feature-scrolling" = "__Scrolling__";
 
 /* First draft: Middle Button */
 "button-string.middle" = "Middle Button";
@@ -253,14 +259,14 @@
 /* First draft: **An unknown error occurred:**\n\n%@ */
 "license-toast.unknown-error" = "**An unknown error occurred:**\n\n%@";
 
-/* First draft: **'%@'** is not a known license key\nPlease try another one */
-"license-toast.unknown-key" = "**'%@'** is not a known license key\nPlease try another one";
+/* First draft: **'%@'** is not a known license key\n\nPlease try a different key */
+"license-toast.unknown-key" = "**'%@'** is not a known license key\n\nPlease try a different key";
 
 /* First draft: Activating your license failed for **unknown reasons**\n\nPlease write a **Bug Report** [here](https://noah-nuebling.github.io/mac-mouse-fix-feedback-assistant/?type=bug-report) */
 "license-toast.unknown-reason" = "Activating your license failed for **unknown reasons**\n\nPlease write a **Bug Report** [here](https://noah-nuebling.github.io/mac-mouse-fix-feedback-assistant/?type=bug-report)";
 
-/* First draft: Set Scroll Speed under\n[%@ > Mouse > Scrolling Speed](%@) */
-"macos-scrolling-hint" = "Set Scroll Speed under\n[%@ > Mouse > Scrolling Speed](%@)";
+/* First draft: Set speed under\n[%@ > Mouse > Scrolling Speed](%@) */
+"macos-scrolling-hint" = "Set speed under\n[%@ > Mouse > Scrolling Speed](%@)";
 
 /* First draft: Command (⌘) */
 "modifer-key.tool.command" = "Command (⌘)";
@@ -278,7 +284,7 @@
 "natural-scrolling-hint" = "Content tracks finger movement";
 
 /* First draft: Scroll precisely even without a keyboard modifier by\nmoving the scroll wheel slowly || Note: The line break (\n) is there so the layout of the Scroll tab doesn't become too wide which looks weird. You can set it to your own taste. */
-"precise-scrolling-hint" = "Scroll precisely even without a keyboard modifier by\nmoving the scroll wheel slowly";
+"precise-scrolling-hint" = "Scroll precisely, even without a keyboard modifier,\nby moving the scroll wheel _slowly_";
 
 /* First draft: Desktop & Launchpad */
 "scroll-effect.4-pinch" = "Desktop & Launchpad";
@@ -328,11 +334,8 @@
 /* First draft: Rotate content in Apple Maps and other apps\n \nWorks like twisting with 2 fingers on an Apple Trackpad */
 "scroll-effect.rotate.hint" = "Rotate content in Apple Maps and other apps\n \nWorks like twisting with 2 fingers on an Apple Trackpad";
 
-/* First draft: __Enabled__ Mac Mouse Fix for __Scrolling__\nIt had been disabled from the Menu Bar %@ || Note: Where %@ will be replaced by the menubar icon */
-"scroll-revive-toast" = "__Enabled__ Mac Mouse Fix for __Scrolling__\nIt had been disabled from the Menu Bar %@";
-
-/* First draft: 💫 Thank you for buying Mac Mouse Fix! */
-"thanks.01" = "💫 Thank you for buying Mac Mouse Fix!";
+/* First draft: ⭐️ Thank you for buying Mac Mouse Fix! */
+"thanks.01" = "⭐️ Thank you for buying Mac Mouse Fix!";
 
 /* First draft: 🌟 Thanks for purchasing Mac Mouse Fix! */
 "thanks.02" = "🌟 Thanks for purchasing Mac Mouse Fix!";
@@ -340,14 +343,14 @@
 /* First draft: 🚀 Thanks for supporting Mac Mouse Fix! */
 "thanks.03" = "🚀 Thanks for supporting Mac Mouse Fix!";
 
-/* First draft: 🙏 Thank you for buying Mac Mouse Fix! */
-"thanks.04" = "🙏 Thank you for buying Mac Mouse Fix!";
+/* First draft: 🙌 Thank you for buying Mac Mouse Fix! */
+"thanks.04" = "🙌 Thank you for buying Mac Mouse Fix!";
 
-/* First draft: 🧠 Great purchasing decisions ;) */
-"thanks.05" = "🧠 Great purchasing decisions ;)";
+/* First draft: 🧠 Great purchasing decision! ;) */
+"thanks.05" = "🧠 Great purchasing decision! ;)";
 
-/* First draft: 🔥 Awesome taste in mouse fixing software ;) */
-"thanks.06" = "🔥 Awesome taste in mouse fixing software ;)";
+/* First draft: 🔥 Awesome taste in mouse fixing software! ;) */
+"thanks.06" = "🔥 Awesome taste in mouse fixing software! ;)";
 
 /* First draft: 💙 */
 "thanks.07" = "💙";
@@ -359,7 +362,7 @@
 "thanks.09" = "👽 Share it with your Spacebook friends!";
 
 /* First draft: 🏂 Duckgang for life! || Note: A lot of these are very personal. And weird. They are also super rare. Feel free to change them to anything you feel like to leave a little easter egg! */
-"thanks.10" = "🏂 Duckgang for life!";
+"thanks.10" = "🏂 Duckgang for life!!";
 
 /* First draft: 🚜 Watch where you're going :P */
 "thanks.11" = "🚜 Watch where you're going :P";
@@ -382,8 +385,8 @@
 /* First draft: 💃 1NEIN8NEIN */
 "thanks.17" = "💃 1NEIN8NEIN";
 
-/* First draft: 🦋 Give me a call when you saved the world. :) */
-"thanks.18" = "🦋 Give me a call when you saved the world :)";
+/* First draft: 🦄 You may not want to save the world, but you're already saving mine :) */
+"thanks.18" = "🦄 You may not want to save the world, but you're already saving mine :)";
 
 /* First draft: 🏜️ Dankeschön, meine Frau... */
 "thanks.19" = "🏜️ Dankeschön, meine Frau...";
@@ -443,7 +446,7 @@
 "trigger.scroll-particle" = "Scroll";
 
 /* First draft: Click and Scroll %@ */
-"trigger.scroll.1" = "Click and Scroll";
+"trigger.scroll.1" = "Click and Scroll %@";
 
 /* First draft: Double Click and Scroll %@ */
 "trigger.scroll.2" = "Double Click and Scroll %@";
@@ -466,8 +469,8 @@
 /* First draft: Write an Email? */
 "mail-alert.title" = "Write an Email?";
 
-/* First draft: I can't respond to all emails but I read and am happy about all feedback! */
-"mail-alert.body" = "I can't respond to all emails but I read and am happy about all feedback!";
+/* First draft: I read and appreciate all emails, even though I can't respond to all. */
+"mail-alert.body" = "I read and appreciate all emails, even though I can't respond to all";
 
 /* First draft: Cancel */
 "beta-alert.back" = "Cancel";
@@ -499,11 +502,11 @@
 /* First draft: Restore Default for ... */
 "restore-buttons-alert.title" = "Restore Default for ...";
 
-/* First draft: You're __already using__ the default setting for mice with __3 buttons__! */
-"already-using-defaults-toast.3" = "You're __already using__ the default setting for mice with __3 buttons__!";
+/* First draft: You're __already using__ the default setting for mice with __3 buttons__ */
+"already-using-defaults-toast.3" = "You're __already using__ the default setting for mice with __3 buttons__";
 
-/* First draft: You're __already using__ the default setting for mice with __5 buttons__! */
-"already-using-defaults-toast.5" = "You're __already using__ the default setting for mice with __5 buttons__!";
+/* First draft: You're __already using__ the default setting for mice with __5 buttons__ */
+"already-using-defaults-toast.5" = "You're __already using__ the default setting for mice with __5 buttons__";
 
 /* Note: Value for this key is defined in Localizable.stringsdict, not Localizable.strings. || Note: The UI strings in .stringsdict have two lines. Only the first line is visible unless you start editing and then use the arrow keys to go to the second line. This is necessary to have linebreaks in .stringsdict since \n doesn't work. Use Option-Enter to insert these linebreaks. */
 "capture-toast.body.captured" = "<>";
@@ -534,3 +537,6 @@
 
 /* First draft: OK */
 "buy-mouse-alert.ok" = "OK";
+
+/* First draft: Open 'Security & Privacy' Preferences || Notes: The string for Ventura and later is defined in Interface Builder */
+"accessibility.settings-link.pre-ventura" = "Open 'Security & Privacy' Preferences";

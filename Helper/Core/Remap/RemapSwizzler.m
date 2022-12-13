@@ -8,18 +8,24 @@
 //
 
 #import "RemapSwizzler.h"
-#import "ModifierManager.h"
+#import "Modifiers.h"
 #import "DeviceManager.h"
-#import "TransformationManager.h"
+#import "Remap.h"
 
 #import "SharedUtility.h"
 
+@implementation RemapSwizzler
+
+/// MARK: - Notes
+
+/// Instead of using this directly, use [Remap modificationsWithModifiers:]. It's faster since it caches results.
+
 /// This class provides methods for obtaining combined remaps based on a remaps dict and some active modifiers.
 ///     These *combined* remaps are also sometimes called *effective remaps* or *remaps for current modifiers*, "activeModifications", "modificationsActingOnButton", etc.
-///     If this doesn't make sense, see an example of the remaps dict structure in TransformationManager.m
+///     If this doesn't make sense, see an example of the remaps dict structure in Remap.m
 
 /// More rigorous explanation:
-///     The `remaps` dict in Transformation manager is a dict that is defined by the user in the UI and which represents a map from modifiers -> (triggers -> effects).
+///     The `remaps` dict in the Remap class is a dict that is defined by the user in the UI and which represents a map from modifiers -> (triggers -> effects).
 ///     Elements of the righthand side of this map, (which are themselves maps from (triggers -> effects)) are also often called a `modification`, and elements of the lefthand side are called the `modificationPrecondition`. The modifiers that the user is currently holding down are also called the `activeModifiers`.
 ///
 ///     The remaps dict could be considered a function r with `r(modifiers) = modification`
@@ -37,16 +43,14 @@
 ///
 ///     But there's a second important usecase:
 ///     During **addMode**, we need to change this map from modifiers -> triggers -> effects, such that any combination of trigger T and modifiers M that the user can input, is mapped to `addModeFeedback_T_M`. But this would mean c o m b i n a t o r i c e x p l o s i o n if we wanted to store that all in the remaps dict in TransformationManger. So we came up with this weird solution:
-///         Basically the TransformationManager creates a map from `noModifiers -> anyTrigger -> addModeFeedback_T`, as a dictionary, which isn't that large because there aren't that many triggers, so we can list them all. Then we dynamically swizzle up that map in **RemapSwizzler** so it becomes the full `anyModifier -> anyTrigger -> addModeFeedback_T_M` map!
+///         Basically the Remap creates a map from `noModifiers -> anyTrigger -> addModeFeedback_T`, as a dictionary, which isn't that large because there aren't that many triggers, so we can list them all. Then we dynamically swizzle up that map in **RemapSwizzler** so it becomes the full `anyModifier -> anyTrigger -> addModeFeedback_T_M` map!
 ///         See `addModeSwizzler()` for the implementation of that.
-
-@implementation RemapSwizzler
 
 /// MARK: Interface
 
-+ (NSDictionary *)swizzleRemaps:(NSDictionary *)remaps activeModifiers:(NSDictionary *)activeModifiers {
++ (NSDictionary * _Nullable)swizzleRemaps:(NSDictionary *)remaps activeModifiers:(NSDictionary *)activeModifiers {
     
-    if (TransformationManager.addModeIsEnabled) {
+    if (Remap.addModeIsEnabled) {
         return addModeSwizzler(remaps, activeModifiers);
     } else {
         return subsetSwizzler(remaps, activeModifiers);
@@ -57,7 +61,7 @@
 
 static NSDictionary *addModeSwizzler(NSDictionary *remaps, NSDictionary *activeModifierss) {
 
-    /// See `TransformationManager + enableAddMode` and top of this file for context.
+    /// See `Remap + enableAddMode` and top of this file for context.
     
     NSMutableDictionary *modification = [SharedUtility deepMutableCopyOf:remaps[@{}]]; /// Deep copying so caller can store value without it changing afterwards due to references
     NSMutableDictionary *activeModifiers = [SharedUtility deepMutableCopyOf:(id)activeModifierss]; /// I think we deep mutable copy so the UI doesn't crash
@@ -84,7 +88,7 @@ static NSDictionary *addModeSwizzler(NSDictionary *remaps, NSDictionary *activeM
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wunused-function"
 
-static NSDictionary *simpleSwizzler(NSDictionary *remaps, NSDictionary *activeModifiers) {
+static NSDictionary * _Nullable simpleSwizzler(NSDictionary *remaps, NSDictionary *activeModifiers) {
     /// This is unused now.
     /// Primitive remaps overriding method. Simply takes the base (with an empty modification precondition) remaps and overrides it with the remaps which have a modificationPrecondition of exactly `activeModifiers`
     
@@ -97,7 +101,7 @@ static NSDictionary *simpleSwizzler(NSDictionary *remaps, NSDictionary *activeMo
 }
 #pragma clang diagnostic pop
 
-static NSDictionary *subsetSwizzler(NSDictionary *remaps, NSDictionary *activeModifiers) {
+static NSDictionary *_Nullable subsetSwizzler(NSDictionary *remaps, NSDictionary *activeModifiers) {
     
     /// This allows combining modifiers
     /// Here's what it does
@@ -201,7 +205,7 @@ static NSDictionary *subsetSwizzler(NSDictionary *remaps, NSDictionary *activeMo
     /// Apply modifications in order of their precond size
     
     NSDictionary *combinedScrollMods = [NSMutableDictionary dictionary];
-    NSDictionary *combinedDragMods = [NSMutableDictionary dictionary];
+    NSDictionary *combinedDragMods;
     NSDictionary *combinedButtonMods = [NSMutableDictionary dictionary];
     
     /// Scroll

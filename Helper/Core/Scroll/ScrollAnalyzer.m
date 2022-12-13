@@ -11,7 +11,7 @@
 #import <Cocoa/Cocoa.h>
 #import "Scroll.h"
 #import "ScrollUtility.h"
-#import "TransformationUtility.h"
+#import "ModificationUtility.h"
 
 @implementation ScrollAnalyzer
 
@@ -81,7 +81,7 @@ static CFTimeInterval _consecutiveSwipeSequenceStartTime;
     /// We shouldn't definitely not reset _scrollDirectionDidChange here, because a scroll direction change causes this function to be called, and then the information about the scroll direction changing would be lost as it's reset immediately
 }
 
-+ (BOOL)peekIsFirstConsecutiveTickWithTickOccuringAt:(CFTimeInterval)thisScrollTickTimeStamp withDirection:(MFDirection)direction withConfig:(ScrollConfig *)scrollConfig {
++ (BOOL)peekIsFirstConsecutiveTickWithTickOccuringAt:(CFTimeInterval)thisScrollTickTimeStamp direction:(MFDirection)direction config:(ScrollConfig *)scrollConfig {
     
     /// Checks if a given tick is the first consecutive tick. Without changing state.
     
@@ -99,7 +99,7 @@ static CFTimeInterval _consecutiveSwipeSequenceStartTime;
 }
 
 /// This is the main input function which should be called on each scrollwheel tick event
-+ (ScrollAnalysisResult)updateWithTickOccuringAt:(CFTimeInterval)thisScrollTickTimeStamp withDirection:(MFDirection)direction withConfig:(ScrollConfig *)scrollConfig {
++ (ScrollAnalysisResult)updateWithTickOccuringAt:(CFTimeInterval)thisScrollTickTimeStamp direction:(MFDirection)direction config:(ScrollConfig *)scrollConfig {
     
     /// Update scrollDirectionDidChange
     ///     Checks whether the scrolling direction is different from when this function was last called.
@@ -217,6 +217,15 @@ static CFTimeInterval _consecutiveSwipeSequenceStartTime;
     };
     
     return result;
+}
+
+#pragma mark - Debug
+
++ (NSString *)scrollAnalysisResultDescription:(ScrollAnalysisResult)analysis {
+    
+    NSString *timeDeltaStr = analysis.timeBetweenTicks > 5.0 ? @"?" : stringf(@"%f", analysis.timeBetweenTicks);
+    
+    return stringf(@"dirChange: %d, ticks: %lld, swipes: %f, time: %@, rawTime: %f, rawSwipes: %lld", analysis.scrollDirectionDidChange, analysis.consecutiveScrollTickCounter, analysis.consecutiveScrollSwipeCounter, timeDeltaStr, analysis.DEBUG_timeBetweenTicksRaw, analysis.DEBUG_consecutiveScrollSwipeCounterRaw);
 }
 
 @end

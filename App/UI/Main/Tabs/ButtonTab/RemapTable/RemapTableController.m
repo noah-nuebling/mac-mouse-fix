@@ -379,11 +379,11 @@ static void updateBorderColor(RemapTableController *object, BOOL isInitialAppear
 
 - (void)reloadAll {
     
-    /// Used when resetting to default
+    /// Used when resetting to default or when setting the initial remaps on first app start
     /// Similar to what we do in `- viewDidLoad`
         
     /// Capture notifs
-    NSSet<NSNumber *> *capturedButtonsBefore = [RemapTableUtility getCapturedButtons];
+//    NSSet<NSNumber *> *capturedButtonsBefore = [RemapTableUtility getCapturedButtons];
     
     /// Get old rows
     NSIndexSet *allRowsOld = [NSIndexSet indexSetWithIndexesInRange:NSMakeRange(0, self.groupedDataModel.count)];
@@ -400,11 +400,12 @@ static void updateBorderColor(RemapTableController *object, BOOL isInitialAppear
     [self.tableView insertRowsAtIndexes:allRows withAnimation:NSTableViewAnimationEffectNone];
     
     /// Update tableView size
-    [(RemapTableView *)self.tableView updateSizeWithAnimation:YES];
+    [(RemapTableView *)self.tableView updateSizeWithAnimation];
     
     /// Capture notifs
-    NSSet *capturedButtonsAfter = [RemapTableUtility getCapturedButtons];
-    [CaptureNotificationCreator showButtonCaptureNotificationWithBeforeSet:capturedButtonsBefore afterSet:capturedButtonsAfter];
+    ///     These are too long and obnoxious and not really helpful in this situation.
+//    NSSet *capturedButtonsAfter = [RemapTableUtility getCapturedButtons];
+//    [CaptureNotificationCreator showButtonCaptureNotificationWithBeforeSet:capturedButtonsBefore afterSet:capturedButtonsAfter];
 }
 
 #pragma mark - Delegate & Controller
@@ -423,31 +424,31 @@ static void updateBorderColor(RemapTableController *object, BOOL isInitialAppear
     }
 }
 
-- (NSArray<NSTableViewRowAction *> *)tableView:(NSTableView *)tableView rowActionsForRow:(NSInteger)row edge:(NSTableRowActionEdge)edge {
-        
-    /// Define swipe actions
-    
-    return nil;
-    
-    if ((NO)) {
-        
-        NSMutableArray *result = [NSMutableArray array];
-        
-        if (edge == NSTableRowActionEdgeTrailing) {
-            
-            NSTableViewRowAction *deleteAction = [NSTableViewRowAction rowActionWithStyle:NSTableViewRowActionStyleDestructive title:@"Delete" handler:^(NSTableViewRowAction * _Nonnull action, NSInteger row) {
-                [self removeRow:row];
-            }];
-            if (@available(macOS 11.0, *)) {
-                deleteAction.image = [NSImage imageWithSystemSymbolName:@"trash.fill" accessibilityDescription:@"Delete"];
-            }
-            
-            [result addObject:deleteAction];
-        }
-        
-        return result;
-    }
-}
+//- (NSArray<NSTableViewRowAction *> *)tableView:(NSTableView *)tableView rowActionsForRow:(NSInteger)row edge:(NSTableRowActionEdge)edge {
+//        
+//    /// Define swipe actions
+//    
+//    return nil;
+//    
+//    if ((NO)) {
+//        
+//        NSMutableArray *result = [NSMutableArray array];
+//        
+//        if (edge == NSTableRowActionEdgeTrailing) {
+//            
+//            NSTableViewRowAction *deleteAction = [NSTableViewRowAction rowActionWithStyle:NSTableViewRowActionStyleDestructive title:@"Delete" handler:^(NSTableViewRowAction * _Nonnull action, NSInteger row) {
+//                [self removeRow:row];
+//            }];
+//            if (@available(macOS 11.0, *)) {
+//                deleteAction.image = [NSImage imageWithSystemSymbolName:@"trash.fill" accessibilityDescription:@"Delete"];
+//            }
+//            
+//            [result addObject:deleteAction];
+//        }
+//        
+//        return result;
+//    }
+//}
 
 #pragma mark - Observer
 
@@ -624,6 +625,10 @@ static void updateBorderColor(RemapTableController *object, BOOL isInitialAppear
     } else {
         toHighlightIndexSet = existingIndexes;
     }
+    
+    /// Scroll to visible and select
+    ///     Scrolling to visible sometimes doesn't work when the table is at maxSize
+    
     [self.tableView selectRowIndexes:toHighlightIndexSet byExtendingSelection:NO];
     [self.tableView scrollRowToVisible:toHighlightIndexSet.firstIndex];
     

@@ -3,7 +3,7 @@
 // NSImage+Additions.m
 // Created for Mac Mouse Fix (https://github.com/noah-nuebling/mac-mouse-fix)
 // Created by Noah Nuebling in 2022
-// Licensed under MIT
+// Licensed under the MMF License (https://github.com/noah-nuebling/mac-mouse-fix/blob/master/LICENSE)
 // --------------------------------------------------------------------------
 //
 
@@ -38,7 +38,7 @@
     [resultImage lockFocus];
     
     /// Get shorthand for context
-    NSGraphicsContext *ctx = NSGraphicsContext.currentContext;
+//    NSGraphicsContext *ctx = NSGraphicsContext.currentContext;
     
     /// Get frame for drawing
     NSRect drawingFrame = NSMakeRect(0.0, 0.0, inputImage.size.width, inputImage.size.height);

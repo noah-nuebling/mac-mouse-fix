@@ -13,6 +13,10 @@
 #import "NSScreen+Additions.h"
 #import "SharedUtility.h"
 
+#if IS_HELPER
+#import "HelperUtility.h"
+#endif
+
 @interface DisplayLink ()
 
 typedef enum {
@@ -284,6 +288,19 @@ typedef enum {
     return [DisplayLink identifierForDisplayLink:_displayLink];
 }
 
+- (CFTimeInterval)bestTimeBetweenFramesEstimate {
+    
+    /// This normally returns the actual timeBetweenFrames.
+    /// But if the displayLink is not running, yet the actual timeBetweenFrames is 0.0, so in that case it returns the nominal timeBetweenFrames.
+    
+    double t = CVDisplayLinkGetActualOutputVideoRefreshPeriod(_displayLink);
+    if (t == 0) {
+        CVTime tCV = CVDisplayLinkGetNominalOutputVideoRefreshPeriod(_displayLink);
+        t = (tCV.timeValue / (double)tCV.timeScale);
+    }
+    return t;
+}
+
 - (CFTimeInterval)timeBetweenFrames {
     double t = CVDisplayLinkGetActualOutputVideoRefreshPeriod(_displayLink);
     return t;
@@ -313,6 +330,8 @@ typedef enum {
 - (void)linkToDisplayUnderMousePointerWithEvent:(CGEventRef _Nullable)event {
     /// TODO: Test if this new version works
     
+#if IS_HELPER
+    
     __block CVReturn result;
     
     dispatch_async(_displayLinkQueue, ^{
@@ -321,7 +340,7 @@ typedef enum {
         
         /// Get display under mouse pointer
         CGDirectDisplayID dsp;
-        rt = [SharedUtility displayUnderMousePointer:&dsp withEvent:event];
+        rt = [HelperUtility displayUnderMousePointer:&dsp withEvent:event];
         
         /// Premature return
         if (rt == kCVReturnError) {
@@ -337,33 +356,46 @@ typedef enum {
         /// Set new display
         result = [self setDisplay:dsp]; return;
     });
+    
+#else
+    assert(false);
+#endif
 }
 
-- (CVReturn)old_linkToDisplayUnderMousePointerWithEvent:(CGEventRef)event {
-    /// - Made a new version of this that is simpler and more modular.
-    /// - Pass in a CGEvent to get pointer location from. Not sure if signification optimization
-    
-    CGPoint mouseLocation = CGEventGetLocation(event);
-    CGDirectDisplayID *newDisplaysUnderMousePointer = malloc(sizeof(CGDirectDisplayID) * 2);
-    /// ^ We only make the buffer 2 (instead of 1) so that we can check if there are several displays under the mouse pointer. If there are more than 2 under the pointer, we'll get the primary onw with CGDisplayPrimaryDisplay().
-    uint32_t matchingDisplayCount;
-    CGGetDisplaysWithPoint(mouseLocation, 2, newDisplaysUnderMousePointer, &matchingDisplayCount);
-    
-    if (matchingDisplayCount >= 1) {
-        if (newDisplaysUnderMousePointer[0] != _previousDisplaysUnderMousePointer[0]) { /// Why are we only checking at index 0? Should make more sense to check current master display against the previous master display
-            free(_previousDisplaysUnderMousePointer); // We need to free this memory before we lose the pointer to it in the next line. (If I understand how raw C work in ObjC)
-            _previousDisplaysUnderMousePointer = newDisplaysUnderMousePointer;
-            // Sets dsp to the master display if _displaysUnderMousePointer[0] is part of the mirror set
-            CGDirectDisplayID dsp = CGDisplayPrimaryDisplay(_previousDisplaysUnderMousePointer[0]);
-            return [self setDisplay:dsp];
-        }
-    } else if (matchingDisplayCount == 0) {
-        DDLogWarn(@"There are 0 diplays under the mouse pointer");
-        return kCVReturnError;
-    }
-    
-    return kCVReturnSuccess;
-}
+//- (CVReturn)old_linkToDisplayUnderMousePointerWithEvent:(CGEventRef)event {
+//    
+//    /// - Made a new version of this that is simpler and more modular.
+//    /// - Pass in a CGEvent to get pointer location from. Not sure if signification optimization
+//    
+//    CGPoint mouseLocation = CGEventGetLocation(event);
+//    CGDirectDisplayID *newDisplaysUnderMousePointer = malloc(sizeof(CGDirectDisplayID) * 2);
+//    /// ^ We only make the buffer 2 (instead of 1) so that we can check if there are several displays under the mouse pointer. If there are more than 2 under the pointer, we'll get the primary onw with CGDisplayPrimaryDisplay().
+//    uint32_t matchingDisplayCount;
+//    CGGetDisplaysWithPoint(mouseLocation, 2, newDisplaysUnderMousePointer, &matchingDisplayCount);
+//    
+//    CVReturn returnCode = kCVReturnSuccess;
+//    bool doFreeDisplays = true;
+//    
+//    if (matchingDisplayCount >= 1) {
+//        if (newDisplaysUnderMousePointer[0] != _previousDisplaysUnderMousePointer[0]) { /// Why are we only checking at index 0? Should make more sense to check current master display against the previous master display
+//            free(_previousDisplaysUnderMousePointer); /// We need to free this memory before we lose the pointer to it in the next line. (If I understand how raw C work in ObjC)
+//            _previousDisplaysUnderMousePointer = newDisplaysUnderMousePointer;
+//            doFreeDisplays = false;
+//            /// Sets dsp to the master display if _displaysUnderMousePointer[0] is part of the mirror set
+//            CGDirectDisplayID dsp = CGDisplayPrimaryDisplay(_previousDisplaysUnderMousePointer[0]);
+//            returnCode = [self setDisplay:dsp];
+//        }
+//    } else if (matchingDisplayCount == 0) {
+//        DDLogWarn(@"There are 0 diplays under the mouse pointer");
+//        returnCode = kCVReturnError;
+//    }
+//    
+//    if (doFreeDisplays) {
+//        free(newDisplaysUnderMousePointer);
+//    }
+//    
+//    return returnCode;
+//}
 
 - (CVReturn)setDisplay:(CGDirectDisplayID)displayID {
     

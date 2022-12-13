@@ -15,7 +15,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)coolDidLoad;
 - (void)updateSizeWithAnimation;
-- (void)updateSizeWithAnimation:(BOOL)animate;
+- (void)updateSizeWithAnimation:(BOOL)animate tabContentView:(NSView * _Nullable)tabContentView;
 
 @end
 

@@ -14,7 +14,7 @@
 #import "HelperUtility.h"
 #import "SharedUtility.h"
 #import "VectorSubPixelator.h"
-#import "TransformationUtility.h"
+#import "ModificationUtility.h"
 #import "Mac_Mouse_Fix_Helper-Swift.h"
 #import "WannabePrefixHeader.h"
 
@@ -176,13 +176,11 @@ static dispatch_queue_t _momentumQueue;
             };
             
             /// Get momentum scroll params
+            ///     These params try to emulate the momentum scrolls of a real trackpad as closely as possible
             
-            ScrollConfig *config = [ScrollConfig copyOfConfig];
-            MFScrollAnimationCurveParameters *trackpadParams = [config animationCurveParamsForPreset:kMFScrollAnimationCurvePresetTrackpad]; /// This is a really stupid way to access the Trackpad params. TODO: Find a better way (e.g. just hardcode them or make `- animationCurveParamsForPreset:` a class function)
-            
-            double stopSpeed = trackpadParams.stopSpeed;
-            double dragCoeff = trackpadParams.dragCoefficient;
-            double dragExp = trackpadParams.dragExponent;
+            double stopSpeed = 1.0;
+            double dragCoeff = 30.0;
+            double dragExp = 0.7;
             
             /// Do start momentum scroll
             
@@ -294,7 +292,7 @@ static void startMomentumScroll_Unsafe(double timeSinceLastInput, Vector exitVel
     Vector zeroVector = (Vector){ .x = 0, .y = 0 };
     
     /// Stop immediately, if too much time has passed since last event (So if the mouse is stationary)
-    if (OtherConfig.mouseMovingMaxIntervalLarge < timeSinceLastInput
+    if (GeneralConfig.mouseMovingMaxIntervalLarge < timeSinceLastInput
         || timeSinceLastInput == DBL_MAX) { /// This should never be true at this point, because it's only set to DBL_MAX when phase == kIOHIDEventPhaseBegan
         DDLogDebug(@"Not sending momentum scroll - timeSinceLastInput: %f", timeSinceLastInput);
         if (_momentumScrollCallback != NULL) _momentumScrollCallback();
@@ -304,11 +302,11 @@ static void startMomentumScroll_Unsafe(double timeSinceLastInput, Vector exitVel
     
     /// Notify other touch drivers
 
-    (void)[OutputCoordinator suspendTouchDriversFromDriver:kTouchDriverGestureScrollSimulator];
+//    (void)[OutputCoordinator suspendTouchDriversFromDriver:kTouchDriverGestureScrollSimulator];
     
     /// Init animator
     
-    [_momentumAnimator resetSubPixelator];
+    [_momentumAnimator resetSubPixelator]; /// Shouldn't we use the `_Unsafe` version here?
     [_momentumAnimator linkToMainScreen];
     
     /// Start animator
@@ -511,7 +509,7 @@ static void getDeltaVectors(Vector point, VectorSubPixelator *subPixelator, Vect
     
     /// Debug
     
-    if (SharedUtility.runningPreRelease) {
+    if (runningPreRelease()) {
         
         static double tsLast = 0;
         double ts = CACurrentMediaTime();

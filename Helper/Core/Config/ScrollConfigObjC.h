@@ -37,44 +37,40 @@ typedef enum {
     /// User configured
     ///  The user can choose these options in the UI
     
-    kMFScrollAnimationCurvePresetNoInertia,
+    kMFScrollAnimationCurveNameNone,
     
-    kMFScrollAnimationCurvePresetLowInertia,
-    kMFScrollAnimationCurvePresetMediumInertia,
-    kMFScrollAnimationCurvePresetHighInertia,
+    kMFScrollAnimationCurveNameNoInertia,
+    
+    kMFScrollAnimationCurveNameLowInertia,
+    kMFScrollAnimationCurveNameMediumInertia,
+    kMFScrollAnimationCurveNameHighInertia,
+    kMFScrollAnimationCurveNameHighInertiaPlusTrackpadSim,
     
     /// Modifier overrides
     ///     Used in Scroll.m to dynamically override the animationCurve if a certain scroll modification is active
     
-    kMFScrollAnimationCurvePresetTouchDriver, /// For driving pinch-to-zoom and rotation simulation
-    kMFScrollAnimationCurvePresetTouchDriverLinear, /// For driving dockSwipe simulation
+    kMFScrollAnimationCurveNameTouchDriver, /// For driving pinch-to-zoom and rotation simulation
+    kMFScrollAnimationCurveNameTouchDriverLinear, /// For driving dockSwipe simulation
     
-    kMFScrollAnimationCurvePresetQuickScroll, /// For driving quickScroll
-    kMFScrollAnimationCurvePresetPreciseScroll, /// For driving preciseScroll
+    kMFScrollAnimationCurveNameQuickScroll, /// For driving quickScroll
+    kMFScrollAnimationCurveNamePreciseScroll, /// For driving preciseScroll
     
     /// Other
+    kMFScrollAnimationCurveNameTest,
     
-    kMFScrollAnimationCurvePresetTrackpad,
-    kMFScrollAnimationCurvePresetTest,
-    
-} MFScrollAnimationCurvePreset;
+} MFScrollAnimationCurveName;
+
+typedef enum  {
+    kMFScrollSpeedSystem,
+    kMFScrollSpeedLow,
+    kMFScrollSpeedMedium,
+    kMFScrollSpeedHigh,
+} MFScrollSpeed;
 
 typedef enum {
-    
-    kMFScrollAccelerationLow,
-    kMFScrollAccelerationMedium,
-    kMFScrollAccelerationHigh
-    
-} MFScrollAcceleration;
-
-typedef enum {
-    
-    kMFScrollSensitivityPrecise,
-    kMFScrollSensitivityLow,
-    kMFScrollSensitivityMedium,
-    kMFScrollSensitivityHigh,
-    kMFScrollSensitivityTest
-    
-} MFScrollSensitivity;
+    kMFScrollSmoothnessOff,
+    kMFScrollSmoothnessRegular,
+    kMFScrollSmoothnessHigh,
+} MFScrollSmoothness;
 
 NS_ASSUME_NONNULL_END

@@ -69,7 +69,6 @@
     NSRect borderRect = NSInsetRect(dirtyRect, -1, 0);
     
     /// Clip for border drawing
-    clippingRect = dirtyRect;
     clippingRect = NSInsetRect(dirtyRect, 0, 0); /// Clip side borders
     clippingRect.size.height -= 1; /// Clip top border
     clippingRect.origin.y += 1;

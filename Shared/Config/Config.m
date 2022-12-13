@@ -1,6 +1,6 @@
 //
 // --------------------------------------------------------------------------
-// ConfigFileInterface_Helper.m
+// Config.m
 // Created for Mac Mouse Fix (https://github.com/noah-nuebling/mac-mouse-fix)
 // Created by Noah Nuebling in 2019
 // Licensed under the MMF License (https://github.com/noah-nuebling/mac-mouse-fix/blob/master/LICENSE)
@@ -17,9 +17,9 @@
 #import "ButtonInputReceiver.h"
 #import "ScrollModifiers.h"
 #import "SharedUtility.h"
-#import "TransformationManager.h"
+#import "Remap.h"
 #import "Constants.h"
-#import "TransformationUtility.h"
+#import "ModificationUtility.h"
 #import "HelperUtility.h"
 #import "MFMessagePort.h"
 #import "Locator.h"
@@ -50,7 +50,7 @@
     /// Setup stuff
     ///     Can't do this in `[_instance init]` because the callchain accesses tries to access the `_instance` through `Config.shared`. (Might be fixable by making `handleConfigFileChange()` an instance method like everything else)
     
-    if (SharedUtility.runningHelper) {
+    if (runningHelper()) {
         /// Load config
         [Config handleConfigFileChange];
         /// Setup stuff
@@ -112,7 +112,7 @@ void commitConfig() {
     [Config.shared writeConfigToFile];
     
     /// Notify other app (mainApp notifies helper, helper notifies mainApp
-    [MFMessagePort sendMessage:@"configFileChanged" withPayload:nil expectingReply:NO];
+    [MFMessagePort sendMessage:@"configFileChanged" withPayload:nil waitForReply:NO];
     
     /// Update own state
     [Config handleConfigFileChange];
@@ -140,11 +140,11 @@ void commitConfig() {
     [self.shared loadOverridesForApp:@""]; /// Force update of internal state, (even the active app hastn't changed)
     
     /// Notify other modules
-    [TransformationManager reload];
+    [Remap reload];
     [ScrollConfig reload];
-    [Scroll decide];
+//    [Scroll decide];
     [PointerConfig reload];
-    [OtherConfig reload];
+    [GeneralConfig reload];
     [MenuBarItem reload];
 
 #endif
@@ -164,7 +164,7 @@ void commitConfig() {
     
     /// Validate
     
-    assert(SharedUtility.runningHelper);
+    assert(runningHelper());
     
 #if IS_HELPER
     
@@ -189,7 +189,7 @@ void commitConfig() {
 - (void)loadOverridesForApp:(NSString *)bundleID {
     
     /// Validate
-    assert(SharedUtility.runningHelper);
+    assert(runningHelper());
     
 #if IS_HELPER
     
@@ -229,9 +229,11 @@ void commitConfig() {
      Explanation of the bug that this caused:
      - When the mainApp writes the config to file it calls `[Config handleConfigFileChange]` . Then the eventStreamCallback calls `[Config handleConfigFileChange]` again - but with a significant delay. Sometimes seems like more than a second. The second, delayed call to `[Config handleConfigFileChange]` leads addMode to be disabled. When the user intends to use addMode that's annoying.
      - To fix this we would either have to ignore FSEvents originating from the mainApp - I haven't found a way to do that. Or we would have to disable the delay with which the FSEvent callback is called. There is a `latency` parameter but even if you set it low there are still usually long delays.
+     
+     Edit: I have an idea for a fix! Simply disable the eventStream while the mainApp is open / while the messageport is connected! Maybe implement this as part of SwitchMaster
      */
     
-    assert(SharedUtility.runningHelper);
+    assert(runningHelper());
     
 // #if IS_HELPER
 #if 0 /// Disable for now
@@ -324,7 +326,7 @@ void Handle_FSEventStreamCallback(ConstFSEventStreamRef streamRef, void *clientC
 - (void)loadConfigFromFile {
     
     /// Load data from plist file at `_configURL` into `_config` class variable
-    /// This only really needs to be called when `ConfigFileInterface_App` is loaded, but I use it in other places as well, to make the program behave better, when I manually edit the config file.
+    /// This only really needs to be called when `Config` is loaded, but I use it in other places as well, to make the program behave better, when I manually edit the config file.
     
 #if IS_MAIN_APP
     [self repairConfigWithProblem:kMFConfigProblemNone info:nil];
@@ -378,7 +380,7 @@ void Handle_FSEventStreamCallback(ConstFSEventStreamRef streamRef, void *clientC
     /// TODO: Check whether all default (as opposed to override) values exist in config file. If they don't, then everything breaks. Maybe do this by comparing with default_config. Edit: Not sure this is feasible, also the comparing with default_config breaks if we want to have keys that are optional.
     /// TODO: Consider porting this to Helper
     
-    assert(SharedUtility.runningMainApp);
+    assert(runningMainApp());
     
     /// Create config file if none exists
     
@@ -389,8 +391,8 @@ void Handle_FSEventStreamCallback(ConstFSEventStreamRef streamRef, void *clientC
     
     /// Check if config version matches, if not, replace with default.
     
-    NSNumber *currentConfigVersion = [[NSDictionary dictionaryWithContentsOfURL:Locator.configURL] valueForKeyPath:@"Other.configVersion"];
-    NSNumber *defaultConfigVersion = [[NSDictionary dictionaryWithContentsOfURL:defaultConfigURL()] valueForKeyPath:@"Other.configVersion"];
+    NSNumber *currentConfigVersion = [[NSDictionary dictionaryWithContentsOfURL:Locator.configURL] valueForKeyPath:@"Constants.configVersion"];
+    NSNumber *defaultConfigVersion = [[NSDictionary dictionaryWithContentsOfURL:defaultConfigURL()] valueForKeyPath:@"Constants.configVersion"];
     if (defaultConfigVersion == nil) {
         DDLogError(@"Couldn't get default config version. Something is wrong.");
         abort();
@@ -424,7 +426,7 @@ void Handle_FSEventStreamCallback(ConstFSEventStreamRef streamRef, void *clientC
     
     /// Replaces the current config file which the helper app is reading from with the backup one and then terminates the helper. (Helper will restart automatically because of the KeepAlive attribute in its user agent config file.)
     
-    assert(SharedUtility.runningMainApp);
+    assert(runningMainApp());
     
     /// Overwrite `config.plist` with `default_config.plist`
     NSData *defaultData = [NSData dataWithContentsOfURL:defaultConfigURL()];
@@ -432,7 +434,7 @@ void Handle_FSEventStreamCallback(ConstFSEventStreamRef streamRef, void *clientC
     
     /// Update helper
     ///     Why aren't we just sending a configFileChanged message?
-    [MFMessagePort sendMessage:@"terminate" withPayload:nil expectingReply:NO];
+    [MFMessagePort sendMessage:@"terminate" withPayload:nil waitForReply:NO];
     
     /// Update self (mainApp)
 //    [self loadConfigFromFile];

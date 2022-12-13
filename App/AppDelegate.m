@@ -215,7 +215,7 @@ static NSDictionary *sideButtonActions;
         eventMonitor = [NSEvent addLocalMonitorForEventsMatchingMask:NSEventMaskLeftMouseDown handler:^NSEvent * _Nullable(NSEvent * _Nonnull event) {
             
             uint64_t senderID = CGEventGetIntegerValueField(event.CGEvent, (CGEventField)kMFCGEventFieldSenderID);
-            [MFMessagePort sendMessage:@"updateActiveDeviceWithEventSenderID" withPayload:@(senderID) expectingReply:NO];
+            [MFMessagePort sendMessage:@"updateActiveDeviceWithEventSenderID" withPayload:@(senderID) waitForReply:NO];
             
             return event;
         }];
@@ -228,9 +228,9 @@ static NSDictionary *sideButtonActions;
     NSInteger launchesOverall;
     NSInteger launchesOfCurrentBundleVersion;
     
-    launchesOverall = [(id)config(@"Other.launchesOverall") integerValue];
-    launchesOfCurrentBundleVersion = [(id)config(@"Other.launchesOfCurrentBundleVersion") integerValue];
-    NSInteger lastLaunchedBundleVersion = [(id)config(@"Other.lastLaunchedBundleVersion") integerValue];
+    launchesOverall = [(id)config(@"State.launchesOverall") integerValue];
+    launchesOfCurrentBundleVersion = [(id)config(@"State.launchesOfCurrentBundleVersion") integerValue];
+    NSInteger lastLaunchedBundleVersion = [(id)config(@"State.lastLaunchedBundleVersion") integerValue];
     NSInteger currentBundleVersion = Locator.bundleVersion;
     
     launchesOverall += 1;
@@ -240,9 +240,9 @@ static NSDictionary *sideButtonActions;
     }
     launchesOfCurrentBundleVersion += 1;
     
-    setConfig(@"Other.launchesOfCurrentBundleVersion", @(launchesOfCurrentBundleVersion));
-    setConfig(@"Other.launchesOverall", @(launchesOverall));
-    setConfig(@"Other.lastLaunchedBundleVersion", @(currentBundleVersion));
+    setConfig(@"State.launchesOfCurrentBundleVersion", @(launchesOfCurrentBundleVersion));
+    setConfig(@"State.launchesOverall", @(launchesOverall));
+    setConfig(@"State.lastLaunchedBundleVersion", @(currentBundleVersion));
     
     
 //    BOOL firstAppLaunch = launchesOverall == 1; /// App is launched for the first time
@@ -264,23 +264,23 @@ static NSDictionary *sideButtonActions;
 //    up.sendsSystemProfile = NO; /// This is no by default
     up.automaticallyDownloadsUpdates = NO;
     
-    BOOL checkForUpdates = [(id)config(@"Other.checkForUpdates") boolValue];
+    BOOL checkForUpdates = [(id)config(@"General.checkForUpdates") boolValue];
     
-    BOOL checkForPrereleases = [(id)config(@"Other.checkForPrereleases") boolValue];
+    BOOL checkForPrereleases = [(id)config(@"General.checkForPrereleases") boolValue];
     
     if (firstVersionLaunch && !appState().updaterDidRelaunchApplication) {
         /// TODO: Test if updaterDidRelaunchApplication works.
         ///     It will only work if `SparkleUpdaterDelegate - updaterDidRelaunchApplication:` is called before this
         /// The app (or this version of it) has probably been downloaded from the internet and is running for the first time.
         ///  -> Override check-for-prereleases setting
-        if (SharedUtility.runningPreRelease) {
+        if (runningPreRelease()) {
             /// If this is a pre-release version itself, we activate updates to pre-releases
             checkForPrereleases = YES;
         } else {
             /// If this is not a pre-release, then we'll *deactivate* updates to pre-releases
 //            checkForPrereleases = NO;
         }
-        setConfig(@"Other.checkForPrereleases", @(checkForPrereleases));
+        setConfig(@"General.checkForPrereleases", @(checkForPrereleases));
     }
     
     /// Write changes to we made to config through setConfig() to file. Also notifies helper app, which is probably unnecessary.

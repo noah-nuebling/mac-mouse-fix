@@ -83,8 +83,8 @@ import CocoaLumberjackSwift
             instance.maxActivations = 25
             instance.trialDays = 30
             instance.price = 199
-            instance.payLink = "https://noahnuebling.gumroad.com/l/mmfinapp"
-            instance.quickPayLink = "https://noahnuebling.gumroad.com/l/mmfinapp?wanted=true"
+            instance.payLink = "https://noahnuebling.gumroad.com/l/mmfinappusd"
+            instance.quickPayLink = "https://noahnuebling.gumroad.com/l/mmfinappusd?wanted=true"
             instance.altPayLink = ""
             instance.altQuickPayLink = ""
             instance.altPayLinkCountries = []

@@ -313,7 +313,7 @@ static NSAttributedString *getShortcutString(NSDictionary *effectDict, BOOL isKe
 /// Convenience functions for effects tables
 
 /// We wanted to rename 'effects table' to 'effects menu model', but we only did it in a few places. Thats why this is named weird
-+ (NSDictionary *)getEntryFromEffectTable:(NSArray *)effectTable withEffectDict:(NSDictionary *)effectDict {
++ (NSDictionary * _Nullable)getEntryFromEffectTable:(NSArray *)effectTable withEffectDict:(NSDictionary *)effectDict {
     
     if ([effectDict[@"drawKeyCaptureView"] isEqual: @YES]) {
         return nil;
@@ -649,6 +649,8 @@ static NSString *effectNameForRowDict(NSDictionary * _Nonnull rowDict) {
             @throw [NSException exceptionWithName:@"No precondition" reason:@"Modified drag or scroll has no preconditions" userInfo:@{@"Precond dict": (rowDict[kMFRemapsKeyModificationPrecondition])}];
         }
         
+    } else {
+        assert(false);
     }
     
     #pragma mark --- Build strings ---
@@ -742,7 +744,7 @@ static NSString *effectNameForRowDict(NSDictionary * _Nonnull rowDict) {
     
     /// Validate
     
-    NSAssert(![tr.string isEqual:@""], @"Trigger string is empty. This is probably because there are missing translations. Translate strings starting with trigger. to fix this.");
+    NSAssert(tr != nil && ![tr.string isEqual:@""], @"Trigger string is empty. This is probably because there are missing translations. Translate strings starting with trigger. to fix this.");
     
     ///
     /// Build button modifier string
@@ -795,7 +797,7 @@ static NSString *effectNameForRowDict(NSDictionary * _Nonnull rowDict) {
         /// Display main button – only if there *are* button modifiers
         
         NSAttributedString *mainButton = [UIStrings getButtonString:btn.intValue].attributed;
-        mainButton = [mainButton attributedStringBySettingSecondaryLabelColorForSubstring:mainButton.string];
+        mainButton = [mainButton attributedStringByAddingColor:NSColor.secondaryLabelColor forRange:NULL];
         tr = [NSAttributedString attributedStringWithAttributedFormat:tr args:@[mainButton]];
         
     } else {

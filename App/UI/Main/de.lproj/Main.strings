@@ -67,8 +67,8 @@
 /* Class = "NSMenuItem"; title = "<Mission Control and Spaces>"; ObjectID = "4Cx-DN-qX3"; */
 "4Cx-DN-qX3.title" = "<> ";
 
-/* Class = "NSButtonCell"; title = "Always-On Precise Scrolling"; ObjectID = "4hf-tQ-y76"; Note = "Scrolling > Precise Scrolling Toggle"; */
-"4hf-tQ-y76.title" = "Präzises Scrollen immer einschalten";
+/* Class = "NSButtonCell"; title = "Precision"; ObjectID = "4hf-tQ-y76"; Note = "Scrolling > Precise Scrolling Toggle"; */
+"4hf-tQ-y76.title" = "Präzision";
 
 /* Class = "NSMenuItem"; title = "Delete"; ObjectID = "6es-it-kDs"; */
 "6es-it-kDs.title" = "Löschen";
@@ -79,8 +79,8 @@
 /* Class = "NSTextFieldCell"; title = "Scroll Precisely"; ObjectID = "A6t-UZ-2DE"; Note = "Scrolling > Keyboard Modifiers > Scroll Precisely Label"; */
 "A6t-UZ-2DE.title" = "Präzise scrollen";
 
-/* Class = "NSTextFieldCell"; title = "<Content tracks finger movement>"; ObjectID = "AHn-zX-g4d"; Note = "Scrolling > Natural Scroll Direction > Hint"; */
-"AHn-zX-g4d.title" = "<>";
+/* Class = "NSTextFieldCell"; title = "Move between pages in Safari by scrolling horizontally, and more"; ObjectID = "AHn-zX-g4d"; Note = "Scrolling > Trackpad Interactions > Hint"; */
+"AHn-zX-g4d.title" = "Blättere zwischen Seiten in Safari, indem du horizontal scrollst, und mehr";
 
 /* Class = "NSMenu"; title = "Main Menu"; ObjectID = "AYu-sK-qS6"; */
 "AYu-sK-qS6.title" = "Hauptmenü?? Was ist dies?";
@@ -89,13 +89,13 @@
 "aZA-uL-uvx.title" = "Alle nach vorne bringen";
 
 /* Class = "NSTextFieldCell"; title = "Mac Mouse Fix will stay enabled after you close it"; ObjectID = "bew-ni-FnZ"; */
-"bew-ni-FnZ.title" = "Mac Mouse Fix bleibt eingeschaltet nachdem du\nes beendest";
+"bew-ni-FnZ.title" = "Mac Mouse Fix bleibt eingeschaltet, nachdem du\nes beendest";
 
-/* Class = "NSTextFieldCell"; title = "Lets you quickly turn off or on features like\n'Smooth Scrolling'"; ObjectID = "AqN-zN-yDS"; */
-"AqN-zN-yDS.title" = "Lässt dich schnell Features wie\n'Flüssiges Scrollen' an- und abschalten";
+/* Class = "NSTextFieldCell"; title = "Lets you quickly turn off or on features like\nsmooth scrolling"; ObjectID = "AqN-zN-yDS"; */
+"AqN-zN-yDS.title" = "Lässt dich schnell Features wie\nflüssiges Scrollen an- und abschalten";
 
-/* Class = "NSTextFieldCell"; title = "You'll be notified of updates when you open\nMac Mouse Fix"; ObjectID = "SaY-fF-d1s"; */
-"SaY-fF-d1s.title" = "Du wirst über Updates benachrichtigt werden\nwenn du dieses Fenster öffnest";
+/* Class = "NSTextFieldCell"; title = "You'll be notified of updates when you open\nthis window"; ObjectID = "SaY-fF-d1s"; */
+"SaY-fF-d1s.title" = "Du wirst über Updates benachrichtigt werden,\nwenn du dieses Fenster öffnest";
 
 /* Class = "NSMenuItem"; title = "High"; ObjectID = "bIE-g7-3St"; Note = "Scrolling > Scroll Speed > High Option"; */
 "bIE-g7-3St.title" = "Hoch";
@@ -136,14 +136,11 @@
 /* Class = "NSMenuItem"; title = "macOS"; ObjectID = "fW3-4Q-yB8"; Note = "Scrolling > Scroll Speed > macOS Option"; */
 "fW3-4Q-yB8.title" = "macOS";
 
-/* Class = "NSButtonCell"; title = "Smooth Scrolling"; ObjectID = "g1O-zc-bnx"; Note = "Scrolling > Smooth Scrolling Toggle"; */
-"g1O-zc-bnx.title" = "Flüssiges Scrollen";
-
 /* Class = "NSTabViewItem"; label = "<Initial>"; ObjectID = "g9N-Za-8Ss"; */
 "g9N-Za-8Ss.label" = "<>";
 
-/* Class = "NSButtonCell"; title = "Natural Scroll Direction"; ObjectID = "gK0-1z-Pjv"; Note = "Scrolling > Natural Scroll Direction Toggle"; */
-"gK0-1z-Pjv.title" = "Natürliche Scrollrichtung";
+/* Class = "NSButtonCell"; title = "Reverse Direction"; ObjectID = "gK0-1z-Pjv"; Note = "Scrolling > Reverse Scroll Direction Toggle"; */
+"gK0-1z-Pjv.title" = "Richtung umkehren";
 
 /* Class = "NSTableColumn"; headerCell.title = "<Effect>"; ObjectID = "gOt-GR-IbE"; */
 "gOt-GR-IbE.headerCell.title" = "<>";
@@ -175,8 +172,8 @@
 /* Class = "NSMenuItem"; title = "<Click and Drag Button 3>"; ObjectID = "kK6-b5-Rfd"; */
 "kK6-b5-Rfd.title" = "<>";
 
-/* Class = "NSTextFieldCell"; title = "Scroll Speed:"; ObjectID = "l7d-al-Y14"; Note = "Scrolling > Scroll Speed Label"; */
-"l7d-al-Y14.title" = "Scrolltempo:";
+/* Class = "NSTextFieldCell"; title = "Speed:"; ObjectID = "l7d-al-Y14"; Note = "Scrolling > Scroll Speed Label"; */
+"l7d-al-Y14.title" = "Tempo:";
 
 /* Class = "NSButtonCell"; title = "Restore Defaults..."; ObjectID = "lrw-Lp-nQ4"; */
 "lrw-Lp-nQ4.title" = "Standard wiederherstellen...";
@@ -187,8 +184,8 @@
 /* Class = "NSButtonCell"; title = "Get Beta Versions"; ObjectID = "Mck-5W-5lv"; Note = "General > Get Beta Versions Toggle"; */
 "Mck-5W-5lv.title" = "Beta-Versionen erhalten";
 
-/* Class = "NSButtonCell"; title = "with Inertia"; ObjectID = "N65-aN-Hxp"; Note = "Scrolling > with Inertia Toggle (See what Apple uses for Trackpad marketing in your Language)"; */
-"N65-aN-Hxp.title" = "mit Nachlauf";
+/* Class = "NSButtonCell"; title = "Trackpad Simulation"; ObjectID = "N65-aN-Hxp"; Note = "Scroll > Trackpad Interactions"; */
+"N65-aN-Hxp.title" = "Trackpadsimulation";
 
 /* Class = "NSTextFieldCell"; title = "Move the mouse pointer inside the '+' field, then click a mouse button to assign an action to it.  You can also __Double Click__, __Click and Drag__ and [more](https://google.com)."; ObjectID = "N7H-9j-DIr"; Note = "Buttons > Add Field Hint"; */
 "N7H-9j-DIr.title" = "Bewege den Mauszeiger in das '+' Feld, dann klicke eine Maustaste, um ihr eine Aktion zuzuweisen.\nDu kannst auch doppelklicken, klicken und ziehen, und [mehr]().";
@@ -271,7 +268,7 @@
 /* Class = "NSTextFieldCell"; title = "Visit the Website"; ObjectID = "Ozk-o9-C4a"; */
 "Ozk-o9-C4a.title" = "Besuche die Webseite";
 
-/* Class = "NSTextFieldCell"; title = "Check Out the GitHub"; ObjectID = "ZMA-p0-2lf"; Note = "After the MMF 3 Beta I plan to change this to: Check Out the GitHub"; */
+/* Class = "NSTextFieldCell"; title = "Check It Out on GitHub"; ObjectID = "ZMA-p0-2lf"; */
 "ZMA-p0-2lf.title" = "Schau dir das GitHub an";
 
 /* Class = "NSTextFieldCell"; title = "File a Bug Report"; ObjectID = "bQf-qv-mvB"; */
@@ -281,10 +278,10 @@
 "8pi-FV-zYE.title" = "Anerkennungen";
 
 /* Class = "NSTextFieldCell"; title = "Buy Me a Milkshake :)"; ObjectID = "TrI-uu-DEN"; */
-"TrI-uu-DEN.title" = "Spendier mir nen Milchshake! :)"; /// "KAUF MIR NEN MILCHSHAKE :)";
+"TrI-uu-DEN.title" = "Spendier mir einen Milchshake :)"; /// "KAUF MIR NEN MILCHSHAKE :)";
 
 /* Class = "NSTextFieldCell"; title = "Send Me an Email"; ObjectID = "QaW-cc-uzc"; */
-"QaW-cc-uzc.title" = "Sende mir eine Email";
+"QaW-cc-uzc.title" = "Sende mir eine E-Mail";
 
 /* Class = "NSTextFieldCell"; title = "Get Help"; ObjectID = "eVc-l9-Z0h"; */
 "eVc-l9-Z0h.title" = "Bekomme Hilfe";
@@ -312,3 +309,15 @@
 
 /* Class = "NSMenuItem"; title = "Buy Mac Mouse Fix..."; ObjectID = "d0g-07-PaJ"; */
 "d0g-07-PaJ.title" = "Mac Mouse Fix kaufen...";
+
+/* Class = "NSMenuItem"; title = "Regular"; ObjectID = "17P-PJ-tV1"; Note = "Scrolling > Smoothness > Regular Option"; */
+"17P-PJ-tV1.title" = "Regulär";
+
+/* Class = "NSMenuItem"; title = "Off"; ObjectID = "4gx-d0-WNb"; Note = "Scrolling > Smoothness > Off Option"; */
+"4gx-d0-WNb.title" = "Aus";
+
+/* Class = "NSMenuItem"; title = "High"; ObjectID = "97W-3h-SSc"; Note = "Scrolling > Smoothness > High Option"; */
+"97W-3h-SSc.title" = "Hoch";
+
+/* Class = "NSTextFieldCell"; title = "Smoothness:"; ObjectID = "SjO-Dq-CEX"; Note = "Scrolling > Smoothness Label"; */
+"SjO-Dq-CEX.title" = "Flüssgkeit:";

@@ -11,25 +11,13 @@
 
 /// Threading:
 ///     This should only be used by Buttons.swift. Use buttons.swfits dispatchQueue to protect resources.
+/// Optimization:
+///     Switft does some weird bridging when when we call `state.add(NSDictionary(dictionaryLiteral:)`, that should be much faster in ObjC
 
 import Cocoa
 import CocoaLumberjackSwift
 
-struct ButtonStateKey: Hashable {
-    
-    /// Swift doesn't allow using tuples as Dictionary keys, so we have to do this instead
-
-    let device: Device
-    let button: ButtonNumber
-
-    init(_ device: Device, _ button: ButtonNumber) {
-        self.device = device
-        self.button = button
-    }
-}
-
 private struct ButtonState: Equatable {
-    var device: Device
     var button: ButtonNumber
     var clickLevel: ClickLevel
     var isPressed: Bool
@@ -38,79 +26,102 @@ private struct ButtonState: Equatable {
 
 class ButtonModifiers: NSObject {
 
-    private var state = Dictionary<ButtonStateKey, ButtonState>()
+    private var state = NSMutableArray()
     
-    func update(device: Device, button: ButtonNumber, clickLevel: ClickLevel, downNotUp mouseDown: Bool) {
+    ///Full type`NSArray<NSDictionary<NSString, NSNumber>>`
+    
+    func update(button: ButtonNumber, clickLevel: ClickLevel, downNotUp mouseDown: Bool) {
         
-        /// Debug
-        DDLogDebug("buttonModifiers - update - lvl: \(clickLevel), mouseDown: \(mouseDown), btn: \(button), dev: \"\(device.name())\"")
+        /// Copy old state
+        let oldState = state.copy() as! NSArray
         
         /// Update state
         if mouseDown {
-            let key = ButtonStateKey(device, button)
-            let oldState = state[key]
-            let pressTime = mouseDown ? CACurrentMediaTime() : (oldState?.pressTime ?? 0) /// Not sure if necessary to ever keep old pressTime
-            let newState = ButtonState(device: device,
-                                       button: button,
-                                       clickLevel: clickLevel,
-                                       isPressed: mouseDown,
-                                       pressTime: pressTime)
-            
-            state[key] = newState
-            /// Validate
-            assert(oldState != newState)
+            state.add(NSDictionary(dictionaryLiteral:
+                                    (kMFButtonModificationPreconditionKeyButtonNumber as NSString, button as NSNumber),
+                                    (kMFButtonModificationPreconditionKeyClickLevel as NSString, clickLevel as NSNumber)))
             
         } else {
-            state.removeValue(forKey: ButtonStateKey(device, button))
+            removeStateFor(button)
         }
         
-        /// Notify change
-        ModifierManager.handleButtonModifiersMightHaveChanged(with: device)
-    }
-    
-    func kill(device: Device, button: ButtonNumber) {
-        
-        /// Debug
-        DDLogDebug("buttonModifiers - kill - btn: \(button), dev: \"\(device.name())\"")
-        
-        state.removeValue(forKey: ButtonStateKey(device, button))
-    }
-    
-    func getActiveButtonModifiersForDevice(device: Device) -> [[String: Int]] {
-        
-        let buttonStates = Array(state.values)
-        
-        let result: [[String: Int]] = buttonStates.filter { bs in
-            let isActive = bs.isPressed && bs.clickLevel != 0
-            let isRightDevice = bs.device == device /// Was accidentally comparing bs.device.uniqueID with device here and Swift didn't say anything?
-            return isActive && isRightDevice
-        }.sorted { bs1, bs2 in
-            bs1.pressTime < bs2.pressTime
-        }.map { bs in
-            return [
-                kMFButtonModificationPreconditionKeyButtonNumber: bs.button,
-                kMFButtonModificationPreconditionKeyClickLevel: bs.clickLevel
-            ]
+        if oldState != state {
+                
+            /// Debug
+            DDLogDebug("buttonModifiers - update - toState: \(stateDescription())")
+            
+            /// Notify
+            Modifiers.buttonModsChanged(to: state)
         }
         
-        /// Debug
-        DDLogDebug("buttonModifiers - gotMods for dev: \"\(device.name())\": \(result)")
-        
-        /// Return
-        return result
-    }
-    
-//    func getAnyDeviceWithPressedButtons() -> Device? {
-//        /// Get the first device we find that has any pressed buttons
-//        
-//        for device: Device in DeviceManager.attachedDevices() {
-//            for bs: ButtonState in state.values {
-//                if bs.device == device && bs.isPressed {
-//                    return device
-//                }
-//            }
+//        /// Compile state for `Modifiers` class
+//
+//        let buttonStates = Array(state.values)
+//
+//        let result: [[String: Int]] = buttonStates.filter { bs in
+//            let isActive = bs.isPressed && bs.clickLevel != 0
+//            return isActive
+//        }.sorted { bs1, bs2 in
+//            bs1.pressTime < bs2.pressTime
+//        }.map { bs in
+//            return [
+//                kMFButtonModificationPreconditionKeyButtonNumber: bs.button,
+//                kMFButtonModificationPreconditionKeyClickLevel: bs.clickLevel
+//            ]
 //        }
-//        return nil
-//    }
+//
+//        /// Debug
+//        DDLogDebug("buttonModifiers - gotMods: \(result)")
+//
+//        /// Notify `Modifiers` class
+//        Modifiers.buttonModsChanged(to: result)
+    }
+    
+    func kill(button: ButtonNumber) {
+
+        return
+        
+        /// I don't really understand what this does anymore. Should compare this with before the refactor where we simplified ButtonModifers (commit 98470f5ec938454c986e34daf753f827c63b04a5)
+        /// Edit:
+        /// I think this is primarily so the drag modification is deactivated after hold has been triggered. Not sure if this is desirable behaviour, generally. It's desirable in addMode, but we should probably implement another mechanism where ModifiedScroll is reloaded when addMode is deactivated that would make this obsolete.
+        // -> TODO: Try to do this when we implement SwitchMaster. Then turn this off if successful.
+        
+        /// Copy old state
+        let oldState = state.copy() as! NSArray
+        
+        /// Update state
+        removeStateFor(button)
+        
+        if oldState != state {
+         
+            /// Debug
+            DDLogDebug("buttonModifiers - kill - toState: \(stateDescription())")
+            
+            /// Notify
+            Modifiers.buttonModsChanged(to: state)
+        }
+    }
+    
+    /// Helper
+    private func removeStateFor(_ button: ButtonNumber) {
+        
+        for i in 0..<state.count {
+            let buttonState = state.object(at: i)
+            let buttonNumber = ((buttonState as! NSDictionary).object(forKey: kMFButtonModificationPreconditionKeyButtonNumber) as! NSNumber)
+            
+            if buttonNumber == (button as NSNumber) {
+                state.removeObject(at: i)
+                return
+            }
+        }
+    }
+    
+    /// Debug
+    private func stateDescription() -> String {
+        
+        return (state as! [[String: Int]]).map({ (element: [String: Int]) -> String in
+            return "(\(element[kMFButtonModificationPreconditionKeyButtonNumber]!), \(element[kMFButtonModificationPreconditionKeyClickLevel]!))"
+        }).joined(separator: " ")
+    }
     
 }

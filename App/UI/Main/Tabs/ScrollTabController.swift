@@ -15,9 +15,9 @@ class ScrollTabController: NSViewController {
     
     /// Config
     
-    var smooth = ConfigValue<Bool>(configPath: "Scroll.smooth")
-    var inertia = ConfigValue<Bool>(configPath: "Scroll.inertia")
-    var naturalDirection = ConfigValue<Bool>(configPath: "Scroll.naturalDirection")
+    var smooth = ConfigValue<String>(configPath: "Scroll.smooth")
+    var trackpad = ConfigValue<Bool>(configPath: "Scroll.trackpadSimulation")
+    var reverseDirection = ConfigValue<Bool>(configPath: "Scroll.reverseDirection")
     var scrollSpeed = ConfigValue<String>(configPath: "Scroll.speed")
     var precise = ConfigValue<Bool>(configPath: "Scroll.precise")
     var horizontalMod = ConfigValue<UInt>(configPath: "Scroll.modifiers.horizontal")
@@ -31,15 +31,20 @@ class ScrollTabController: NSViewController {
     
     @IBOutlet weak var masterStack: CollapsingStackView!
     
-    @IBOutlet weak var smoothToggle: NSButton!
+
     
-    @IBOutlet weak var inertiaSection: NSView!
-    @IBOutlet weak var inertiaToggle: NSButton!
     
-    @IBOutlet weak var naturalDirectionToggle: NSButton!
-    @IBOutlet weak var naturalDirectionHint: NSTextField!
     
-    @IBOutlet weak var scrollSpeedPicker: NSPopUpButton!
+    
+    @IBOutlet weak var smoothPicker: NSPopUpButton!
+    
+    @IBOutlet weak var trackpadSection: NSStackView!
+    @IBOutlet weak var trackpadToggle: NSButton!
+    @IBOutlet weak var trackpadHint: NSTextField!
+    
+    @IBOutlet weak var reverseDirectionToggle: NSButton!
+    
+    @IBOutlet weak var speedPicker: NSPopUpButton!
     
     @IBOutlet weak var preciseSection: NSStackView!
     @IBOutlet weak var preciseToggle: NSButton!
@@ -65,24 +70,16 @@ class ScrollTabController: NSViewController {
         
         /// Turn off killswitch
         
-        let isDisabled = config("Other.scrollKillSwitch") as! Bool /// From the debugger it seems you can only cast NSNumber to bool with as! not with as?. That weird??
+        let isDisabled = config("General.scrollKillSwitch") as! Bool /// From the debugger it seems you can only cast NSNumber to bool with as! not with as?. That weird??
         if isDisabled {
             
             /// Turn off killSwitch
-            setConfig("Other.scrollKillSwitch", false as NSObject)
+            setConfig("General.scrollKillSwitch", false as NSObject)
             commitConfig()
             
             /// Show message to user
 
-            /// Build string
-            
-            let messageRaw = NSLocalizedString("scroll-revive-toast", comment: "First draft: __Enabled__ Mac Mouse Fix for __Scrolling__\nIt had been disabled from the Menu Bar %@ || Note: Where %@ will be replaced by the menubar icon")
-            var message = NSAttributedString(coolMarkdown: messageRaw)!
-            let symbolString = Symbols.string(withSymbolName: "CoolMenuBarIcon", stringFallback: "<Mac Mouse Fix Menu Bar Item>", font: ToastNotificationController.defaultFont()) // NSAttributedString(symbol: "CoolMenuBarIcon", hPadding: 0.0, vOffset: -6, fallback: "<Mac Mouse Fix Menu Bar Item>")
-            message = NSAttributedString(attributedFormat: message, args: [symbolString])
-            
-            /// Show message
-            ToastNotificationController.attachNotification(withMessage: message, to: MainAppState.shared.window!, forDuration: -1, alignment: kToastNotificationAlignmentTopMiddle)
+            ToastCreator.showReviveToast(showButtons: false, showScroll: true)
         }
     }
     
@@ -97,32 +94,32 @@ class ScrollTabController: NSViewController {
         
         /// Smooth
         
-        smooth.bindingTarget <~ smoothToggle.reactive.boolValues
-        smoothToggle.reactive.boolValue <~ smooth.producer
+        smooth.bindingTarget <~ smoothPicker.reactive.selectedIdentifiers.map({ $0!.rawValue })
+        smoothPicker.reactive.selectedIdentifier <~ smooth.producer.map({ NSUserInterfaceItemIdentifier($0) })
          
-        inertiaSection.reactive.isCollapsed <~ smooth.producer.negate()
+        trackpadSection.reactive.isCollapsed <~ smooth.producer.map({ $0 != "high" })
         
-        /// Inertia
-        inertia.bindingTarget <~ inertiaToggle.reactive.boolValues
-        inertiaToggle.reactive.boolValue <~ inertia.producer
+        /// Trackpad
+        trackpad.bindingTarget <~ trackpadToggle.reactive.boolValues
+        trackpadToggle.reactive.boolValue <~ trackpad.producer
         
         /// Natural direction
-        naturalDirection.bindingTarget <~ naturalDirectionToggle.reactive.boolValues
-        naturalDirectionToggle.reactive.boolValue <~ naturalDirection.producer
+        reverseDirection.bindingTarget <~ reverseDirectionToggle.reactive.boolValues
+        reverseDirectionToggle.reactive.boolValue <~ reverseDirection.producer
         
         /// Scroll speed
-        scrollSpeed.bindingTarget <~ scrollSpeedPicker.reactive.selectedIdentifiers.map({ identifier in
+        scrollSpeed.bindingTarget <~ speedPicker.reactive.selectedIdentifiers.map({ identifier in
             identifier!.rawValue
         })
-        scrollSpeedPicker.reactive.selectedIdentifier <~ scrollSpeed.producer.map({ speed in
-            NSUserInterfaceItemIdentifier.init(rawValue: speed)
-        })
+        speedPicker.reactive.selectedIdentifier <~ scrollSpeed.producer.map({ NSUserInterfaceItemIdentifier($0) })
         
         /// Precise
+        /// Notes:
+        /// - Why do we generate the preciseHint text in code instead of setting it in IB?
         precise.bindingTarget <~ preciseToggle.reactive.boolValues
         preciseToggle.reactive.boolValue <~ precise.producer
-        let preciseHintRaw = NSLocalizedString("precise-scrolling-hint", comment: "First draft: Scroll precisely even without a keyboard modifier by\nmoving the scroll wheel slowly || Note: The line break (\n) is there so the layout of the Scroll tab doesn't become too wide which looks weird. You can set it to your own taste.")
-        preciseHint.attributedStringValue = NSAttributedString(coolMarkdown: preciseHintRaw, fillOutBase: false)!.fillingOutBaseAsHint()
+        let preciseHintRaw = NSLocalizedString("precise-scrolling-hint", comment: "First draft: Scroll precisely, even without a keyboard modifier,\nbymoving the scroll wheel _slowly_ || Note: The line break (\n) is there so the layout of the Scroll tab doesn't become too wide which looks weird. You can set it to your own taste.")
+        preciseHint.attributedStringValue = NSAttributedString(attributedMarkdown: preciseHintRaw.attributed().fillingOutBaseAsHint())!
         
         /// Generate macOS hint string
         /// Notes:
@@ -139,7 +136,7 @@ class ScrollTabController: NSViewController {
             mouseSettingsURL = "file:///System/Library/PreferencePanes/Mouse.prefPane"
             mouseSettingsURL = "" /// Disable for now (see above)
         }
-        let macOSHintRaw = String(format: NSLocalizedString("macos-scrolling-hint", comment: "First draft: Set Scroll Speed under\n[%@ > Mouse > Scrolling Speed](%@)"), UIStrings.systemSettingsName(), mouseSettingsURL)
+        let macOSHintRaw = String(format: NSLocalizedString("macos-scrolling-hint", comment: "First draft: Set speed under\n[%@ > Mouse > Scrolling Speed](%@)"), UIStrings.systemSettingsName(), mouseSettingsURL)
 
         /// Installl the macOSHint.
         ///     We manually make the macOSHint width equal the preciseSection width, because if the width changes the window resizes from the left edge which looks crappy.
@@ -204,6 +201,7 @@ class ScrollTabController: NSViewController {
             self.preciseMod.set(defaultP.rawValue)
         }
         
+        /// v Using combineLatest here might be easier
         let allFlags = SignalProducer<(String, UInt), Never>.merge(horizontalMod.producer.map{ ("h", $0) }, zoomMod.producer.map{ ("z", $0) }, swiftMod.producer.map{ ("s", $0) }, preciseMod.producer.map{ ("p", $0) })
         
         allFlags.startWithValues { (src, flags) in

@@ -40,7 +40,7 @@ import Cocoa
         let onComplete = {
             self.isProcessing = false
             MainAppState.shared.aboutTabController?.updateUIToCurrentLicense() /// Would much more efficient to pass in the license here
-            MFMessagePort.sendMessage("terminate", withPayload: nil, expectingReply: false) /// Restart helper
+            MFMessagePort.sendMessage("terminate", withPayload: nil, waitForReply: false) /// Restart helper
         }
         
         /// Gather info
@@ -195,7 +195,7 @@ import Cocoa
                             
                             switch gumroadMessage {
                             case "That license does not exist for the provided product.":
-                                let messageFormat = NSLocalizedString("license-toast.unknown-key", comment: "First draft: **'%@'** is not a known license key\nPlease try another one")
+                                let messageFormat = NSLocalizedString("license-toast.unknown-key", comment: "First draft: **'%@'** is not a known license key\n\nPlease try a different key")
                                 message = String(format: messageFormat, key)
                             default:
                                 let messageFormat = NSLocalizedString("license-toast.gumroad-error", comment: "First draft: **An error with the licensing server occured**\n\nIt says:\n\n%@")
@@ -285,7 +285,10 @@ import Cocoa
         if openInstance != nil { return }
         openInstance = LicenseSheetController()
         
-        guard let tabViewController = MainAppState.shared.tabViewController else { assert(false); return }
+        guard let tabViewController = MainAppState.shared.tabViewController else {
+            assert(false) /// This assert fails sometimes when clicking the Activate License link on Gumroad while having the debugger attached.
+            return
+        }
         tabViewController.presentAsSheet(openInstance!)
     }
     

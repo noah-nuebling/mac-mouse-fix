@@ -1,23 +1,158 @@
 //
 // --------------------------------------------------------------------------
-// ButtonLandscapeAssessor.m
+// RemapsAnalyzer.m
 // Created for Mac Mouse Fix (https://github.com/noah-nuebling/mac-mouse-fix)
 // Created by Noah Nuebling in 2021
 // Licensed under the MMF License (https://github.com/noah-nuebling/mac-mouse-fix/blob/master/LICENSE)
 // --------------------------------------------------------------------------
 //
 
-#import "ButtonLandscapeAssessor.h"
-#import "TransformationManager.h"
+#import "RemapsAnalyzer.h"
+#import "Remap.h"
 #import "SharedUtility.h"
-#import "ModifierManager.h"
-//#import "Utility_Transformation.h"
+#import "Modifiers.h"
 #import "Mac_Mouse_Fix_Helper-Swift.h"
 
-@implementation ButtonLandscapeAssessor
+@implementation RemapsAnalyzer
 
-#pragma mark - Main Assess Button Landscape Function
+#pragma mark - Notes
 
+/// - This used to be called ButtonLandscapeAssessor
+///
+/// - At the time of writing, this is the only part of the live input processing code (aka scroll handling and button handling) which is not optimized. Optimizing this could shave off another 10-20%  off the CPU usage when clicking a button.
+/// - We could optimize this by caching the results in a dictionary and deleting the cache when the remaps are reloaded.
+
+#pragma mark - Caches
+
++ (void)reload {
+    /// Reset caches
+    /// NOTES:
+    /// - `_minButtonInModificationsCache` doesn't depend on remaps and doesn't really have to ever be reset I think. But I guess it doesn't hurt to reset it once in a while.
+    [_minButtonInModificationsCache removeAllObjects];
+}
+
+static NSMutableDictionary *_minButtonInModificationsCache;
+
+#pragma mark - For SwitchMaster
+/// Most of the remapsAnalysis methods used for SwitchMaster are still in SwitchMaster.swift. Should migrate them here and cache the slow ones at some point.
+
++ (BOOL)modificationsModifyButtons:(NSDictionary *)modifications maxButton:(MFMouseButtonNumber)maxButton {
+    
+    assert(modifications != nil);
+    
+    /// 1. v Old caching method
+//    NSInteger minInModifications = minButtonInModifications(modifications);
+//    return minInModifications <= maxButton;
+    
+    /// 2. v New direct method
+    ///     We tried caching here but it doesn't seem to speed things up
+    for (NSObject *key in modifications) {
+        if ([key isKindOfClass:NSNumber.class]) {
+            
+            NSNumber *btn = (NSNumber *)key;
+            NSInteger button = btn.integerValue;
+            
+            if (button <= maxButton) {
+                return YES;
+            }
+        }
+    }
+    
+    return NO;
+}
+
++ (BOOL)__SWIFT_UNBRIDGED_modificationsModifyButtons:(id)modifications maxButton:(int)maxButton {
+    return [self modificationsModifyButtons:modifications maxButton:maxButton];
+}
+
+static NSInteger minButtonInModifications(NSDictionary *modifications) {
+    
+    assert(false);
+    return 0;
+    
+    if (_minButtonInModificationsCache == nil) {
+        _minButtonInModificationsCache = [NSMutableDictionary dictionary];
+    }
+    
+    NSNumber *fromCache = _minButtonInModificationsCache[modifications];
+    
+    if (fromCache != nil) {
+        return fromCache.integerValue;
+    } else {
+        
+        NSInteger min = NSIntegerMax;
+        
+        for (NSObject *key in modifications) {
+            if ([key isKindOfClass:NSNumber.class]) {
+                
+                NSNumber *btn = (NSNumber *)key;
+                NSInteger button = btn.integerValue;
+                
+                if (button < min) {
+                    min = button;
+                }
+            }
+        }
+        
+        _minButtonInModificationsCache[modifications] = @(min);
+        
+        return min;
+    }
+}
+
+//func modificationModifiesButtons(modification: NSDictionary?, maxButton: Int32) -> Bool {
+//
+//    /// Return true if the modification modifies any button `<=` maxButton
+//
+//    if let modification = modification {
+//
+//        for element in modification {
+//
+//            guard let btn = element.key as? NSNumber else { continue }
+//
+//            let doesModify = btn.int32Value <= maxButton
+//            if doesModify { return true }
+//        }
+//    }
+//
+//    return false
+//}
+
++ (BOOL)modificationsModifyScroll:(NSDictionary *)modifications {
+    
+    /// NOTES:
+    /// - This code was originally written in Swift in SwitchMaster. Using the `kMFTriggerScroll` brought a big a big performance penalty for bridging the string to Swift.
+    /// - Using `CFDictionaryContainsKey(dict, key)` instead of `dict[key] != nil` because I'm pretty sure it's faster.
+    
+    assert(modifications != nil);
+    return CFDictionaryContainsKey((__bridge CFDictionaryRef)modifications, (__bridge CFStringRef)kMFTriggerScroll);
+}
+
++ (BOOL)modificationsModifyPointing:(NSDictionary *)modifications {
+    assert(modifications != nil);
+    return CFDictionaryContainsKey((__bridge CFDictionaryRef)modifications, (__bridge CFStringRef)kMFTriggerDrag);
+}
+
++ (BOOL)__SWIFT_UNBRIDGED_modificationsModifyScroll:(id)modifications {
+    return [self modificationsModifyScroll:modifications];
+}
++ (BOOL)__SWIFT_UNBRIDGED_modificationsModifyPointing:(id)modifications {
+    return [self modificationsModifyPointing:modifications];
+}
+
+//fileprivate func modificationModifiesScroll(_ modification: NSDictionary?) -> Bool {
+//    return modification?.object(forKey: kMFTriggerScroll) != nil
+//}
+//
+//fileprivate func modificationModifiesPointing(_ modification: NSDictionary?) -> Bool {
+//    return modification?.object(forKey: kMFTriggerDrag) != nil
+//}
+
+#pragma mark - For Buttons.swift
+///
+///
+///
+#pragma mark Main assess func
 /// Primarily used for `[ButtonTriggerHandler + handleButtonTriggerWithButton:...]` to help figure out when to fire clickEffects
 /// `activeModifiers` are the active modifiers including `button` (We've since removed this argument since we didn't use it)
 /// `activeModifiersActingOnThisButton` are the active modifiers with `button` filtered out
@@ -36,7 +171,18 @@
     *effectOfGreaterLevelExists = effectOfGreaterLevelExistsFor(button, level, remaps, modificationsActingOnThisButton);
 }
 
-#pragma mark Helper functions for Main Assess Button Landscape Function
++ (void)__SWIFT_UNBRIDGED_assessMappingLandscapeWithButton:(id)button
+                                                     level:(id)level
+                           modificationsActingOnThisButton:(id)remapsActingOnThisButton
+                                                    remaps:(id)remaps
+                                             thisClickDoBe:(BOOL *)clickActionOfThisLevelExists
+                                              thisDownDoBe:(BOOL *)effectForMouseDownStateOfThisLevelExists
+                                               greaterDoBe:(BOOL *)effectOfGreaterLevelExists {
+    
+    [self assessMappingLandscapeWithButton:button level:level modificationsActingOnThisButton:remapsActingOnThisButton remaps:remaps thisClickDoBe:clickActionOfThisLevelExists thisDownDoBe:effectForMouseDownStateOfThisLevelExists greaterDoBe:effectOfGreaterLevelExists];
+}
+
+#pragma mark Helper for assess
 
 static BOOL effectExistsForMouseDownState(NSNumber *button, NSNumber *level, NSDictionary *remaps, NSDictionary *modificationsActingOnThisButton) {
     BOOL holdActionExists = modificationsActingOnThisButton[button][level][kMFButtonTriggerDurationHold] != nil;
@@ -106,13 +252,22 @@ static NSInteger maxLevelForButtonInModificationPreconditions(NSNumber *button, 
         ///     Edit: I think we're taking that into account. We're checking all elements of the buttonSequence, no matter how they can be reached.
         ///         TODO: remove this comment
         
-        NSIndexSet *indexesContainingButton = [(NSArray *)modificationPrecondition[kMFModificationPreconditionKeyButtons] indexesOfObjectsPassingTest:^BOOL(NSDictionary *_Nonnull dict, NSUInteger idx, BOOL * _Nonnull stop) {
-            return [dict[kMFButtonModificationPreconditionKeyButtonNumber] isEqualToNumber:button];
-        }];
-        if (indexesContainingButton.count > 1) assert(false);
-        if (indexesContainingButton.count == 0) continue;
+        NSUInteger buttonIndex = NSNotFound;
         
-        NSNumber *precondLvlNS = modificationPrecondition[kMFModificationPreconditionKeyButtons][indexesContainingButton.firstIndex][kMFButtonModificationPreconditionKeyClickLevel];
+        NSArray *buttonMods = modificationPrecondition[kMFModificationPreconditionKeyButtons];
+        for (int i = 0; i < buttonMods.count; i++) {
+            BOOL found = [buttonMods[i][kMFButtonModificationPreconditionKeyButtonNumber] isEqualToNumber: button];
+            if (found) buttonIndex = i;
+        }
+        
+        /// v Old method using `indexesOfObjectsPassingTest:` was pretty slow
+//        [(NSArray *)modificationPrecondition[kMFModificationPreconditionKeyButtons] indexesOfObjectsPassingTest:^BOOL(NSDictionary *_Nonnull dict, NSUInteger idx, BOOL * _Nonnull stop) {
+//            return [dict[kMFButtonModificationPreconditionKeyButtonNumber] isEqualToNumber:button];
+//        }];
+        
+        if (buttonIndex == NSNotFound) continue;
+        
+        NSNumber *precondLvlNS = modificationPrecondition[kMFModificationPreconditionKeyButtons][buttonIndex][kMFButtonModificationPreconditionKeyClickLevel];
         NSUInteger precondLvl = precondLvlNS.unsignedIntegerValue;
         if (precondLvl > maxLvl) {
             maxLvl = precondLvl;
@@ -121,7 +276,7 @@ static NSInteger maxLevelForButtonInModificationPreconditions(NSNumber *button, 
     return maxLvl;
 }
 
-#pragma mark - Other Landscape Assessment Functions
+#pragma mark Other analysis
 
 /// Used by `ButtonTriggerGenerator` to reset the click cycle, if we know the button can't be used this click cycle anyways.
 ///     Later in the control chain - in ButtonTriggerHandler - the assessMappingLandscapeWithButton:... method is called again. This is probably redundant, as we could just store the result of the first call somehow. But if it's fast enough, who cares
@@ -130,8 +285,8 @@ static NSInteger maxLevelForButtonInModificationPreconditions(NSNumber *button, 
 
 //+ (BOOL)buttonCouldStillBeUsedThisClickCycle:(Device *)device button:(NSNumber *)button level:(NSNumber *)level {
 //
-//    NSDictionary *remaps = TransformationManager.remaps;
-//    NSDictionary *modifiersActingOnThisButton = [ModifierManager getActiveModifiersForDevice:&device filterButton:button event:nil];
+//    NSDictionary *remaps = Remap.remaps;
+//    NSDictionary *modifiersActingOnThisButton = [Modifiers getActiveModifiersForDevice:&device filterButton:button event:nil];
 //    NSDictionary *remapsActingOnThisButton = RemapsOverrider.swizzler(remaps, modifiersActingOnThisButton);
 //
 //    BOOL clickActionOfThisLevelExists;
@@ -163,6 +318,11 @@ static NSInteger maxLevelForButtonInModificationPreconditions(NSNumber *button, 
     return maxLevelForButton(button, remaps, modificationsActingOnThisButton);
 }
 
++ (NSInteger)__SWIFT_UNBRIDGED_maxLevelForButton:(id)button remaps:(id)remaps modificationsActingOnThisButton:(id)modificationsActingOnThisButton {
+    
+    return [self maxLevelForButton:button remaps:remaps modificationsActingOnThisButton:modificationsActingOnThisButton];
+}
+
 /// Used by `ButtonTriggerHandler` to determine `MFEventPassThroughEvaluation`
 ///     Noah from future: Why aren't we reusing `assessMappingLandscapeWithButton:` here?
 ///         -> I guess it's because we don't care about most of the arguments which have to be provided to `assessMappingLandscapeWithButton:`
@@ -186,6 +346,11 @@ static NSInteger maxLevelForButtonInModificationPreconditions(NSNumber *button, 
     }
     
     return NO;
+}
+
++ (BOOL)__SWIFT_UNBRIDGED_effectExistsForButton:(id)button remaps:(id)remaps modificationsActingOnButton:(id)effectiveRemaps {
+    
+    return [self effectExistsForButton:button remaps:remaps modificationsActingOnButton:effectiveRemaps];
 }
 
 @end

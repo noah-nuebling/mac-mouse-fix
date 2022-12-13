@@ -147,7 +147,7 @@
                     [MainAppState.shared.window makeFirstResponder:nil];
         }];
         
-        [MFMessagePort sendMessage:@"enableKeyCaptureMode" withPayload:@"" expectingReply:NO];
+        [MFMessagePort sendMessage:@"enableKeyCaptureMode" withPayload:@"" waitForReply:NO];
         /// ^ Do actual capturing in helper app because it already has permissions to stop captured events from being sent to other apps
         
         [self drawEmptyAppearance];
@@ -186,7 +186,7 @@
 
     if (superResigns) {
         
-        [MFMessagePort sendMessage:@"disableKeyCaptureMode" withPayload:nil expectingReply:NO];
+        [MFMessagePort sendMessage:@"disableKeyCaptureMode" withPayload:nil waitForReply:NO];
         [NSEvent removeMonitor:_localEventMonitor];
         _localEventMonitor = nil; /// Otherwise crashes on macOS 10.13 and 10.14. Didn't test other versions.
         _cancelHandler();

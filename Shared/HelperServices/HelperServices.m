@@ -44,7 +44,7 @@
 + (void)disableHelperFromHelper {
     
     /// Validate
-    assert(SharedUtility.runningHelper);
+    assert(runningHelper());
     
     /// HACK (?)
     ///     Our original approach (below) doesn't work with the new SMAppService API under Ventura Beta, so we're disabling this for now. See below for more info.
@@ -54,7 +54,7 @@
     return;
     
     /// Notify mainApp
-    [MFMessagePort sendMessage:@"helperDisabled" withPayload:nil expectingReply:NO];
+    [MFMessagePort sendMessage:@"helperDisabled" withPayload:nil waitForReply:NO];
     
     /// Disable helper
     ///     We can't just do `[self removeHelperFromLaunchd]`, because
@@ -234,7 +234,7 @@
     /// 2. Approach
     ///     Disable and re-enable. This seems to circumvent the 1 launch per 10 seconds restriction. (See possibleRestartTime)
     
-    if (SharedUtility.runningMainApp) {
+    if (runningMainApp()) {
         
 //        assert([self helperIsActive]);
         
@@ -245,7 +245,7 @@
             });
         }];
         
-    } else if (SharedUtility.runningHelper) {
+    } else if (runningHelper()) {
         
         /// Open the mainApp and then have it call this function
         
@@ -329,14 +329,14 @@
 //    /// - Maybe we could just move the build number checking into messagePort entirely.
 //    ///   Edit: Did move the build number checking into messagePort - Remove this
 //    
-//    assert(SharedUtility.runningMainApp);
+//    assert(runningMainApp());
 //    return Locator.bundleVersion == bundleVersion;
 //}
 
 + (BOOL)helperIsActive_Message {
 
-    if (SharedUtility.runningMainApp) {
-                NSNumber *response = (NSNumber *)[MFMessagePort sendMessage:@"getBundleVersion" withPayload:nil expectingReply:YES];
+    if (runningMainApp()) {
+                NSNumber *response = (NSNumber *)[MFMessagePort sendMessage:@"getBundleVersion" withPayload:nil waitForReply:YES];
         return response != nil && response.integerValue == Locator.bundleVersion;
         
     } else {
@@ -413,7 +413,7 @@ static BOOL helperIsActive_PList() {
             
         /// Guard running main app
         ///     Before using the SM APIs we could call this from anywhere, but the SM stuff will only work from the mainApp afaik.
-        if (SharedUtility.runningHelper) {
+        if (runningHelper()) {
             DDLogWarn(@"Calling enableHelper_SM from Helper under Ventura or later. This is does not work.");
             return [NSError errorWithDomain:MFHelperServicesErrorDomain code:kMFHelperServicesErrorEnableFromHelper userInfo:nil];
         }

@@ -3,7 +3,7 @@
 // AlertCreator.m
 // Created for Mac Mouse Fix (https://github.com/noah-nuebling/mac-mouse-fix)
 // Created by Noah Nuebling in 2022
-// Licensed under MIT
+// Licensed under the MMF License (https://github.com/noah-nuebling/mac-mouse-fix/blob/master/LICENSE)
 // --------------------------------------------------------------------------
 //
 
@@ -105,9 +105,9 @@
     
     NSAttributedString *body = [NSAttributedString attributedStringWithCoolMarkdown:bodyRaw];
     if (@available(macOS 11.0, *)) {
-        body = [body attributedStringByAligningSubstring:nil alignment:NSTextAlignmentCenter];
+        body = [body attributedStringByAddingAlignment:NSTextAlignmentCenter forRange:nil];
     } else { /// The ways this looks pre-Big Sur is untested at the time of writing
-        body = [body attributedStringByAligningSubstring:nil alignment:NSTextAlignmentNatural];
+        body = [body attributedStringByAddingAlignment:NSTextAlignmentNatural forRange:nil];
     }
     
     /// Create alert

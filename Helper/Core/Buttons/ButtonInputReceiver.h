@@ -42,11 +42,15 @@ typedef enum {
 
 + (void)load_Manual;
 
-+ (void)decide;
++ (void)start;
++ (void)stop;
++ (BOOL)isRunning;
+
+//+ (void)decide;
 
 //+ (void)insertFakeEventWithButton:(MFMouseButtonNumber)button isMouseDown:(BOOL)isMouseDown;
 
-+ (void)handleHIDButtonInputFromRelevantDeviceOccured:(Device *)dev button:(NSNumber *)btn;
-+ (BOOL)allRelevantButtonInputsHaveBeenProcessed;
+//+ (void)handleHIDButtonInputFromRelevantDeviceOccured:(Device *)dev button:(NSNumber *)btn;
+//+ (BOOL)allRelevantButtonInputsHaveBeenProcessed;
 
 @end

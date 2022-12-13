@@ -56,6 +56,11 @@ import Foundation
         
         /// See top of this file for explanation of parameters
         
+        /// Validate
+        ///  Our current polynomial regression method fails otherwise. NumPy polyfit can do it though. Writing this after so I don't remember the details, there is probably more thorough documenation on this elsewhere.
+        
+        assert(1 <= n && n <= 3)
+        
         /// Store params
         self.p0 = _P(v0, s0)
         self.p1 = _P(v1, s1)

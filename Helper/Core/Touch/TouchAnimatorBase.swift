@@ -24,8 +24,9 @@ import QuartzCore
     typealias StartParamCalculationCallback = (_ valueLeft: Vector, _ isRunning: Bool, _ animationCurve: Curve?) -> MFAnimatorStartParams
     /// ^ When starting the animator, we usually want to get the value that the animator still wants to scroll (`animationValueLeft`), and add that to the new value. The specific logic can differ a lot though, so we can't just hardcode this into `Animator`
     ///     But to avoid race-conditions, we can't just externally execute this, so we to pass in a callback that can execute custom logic to get the start params right before the animator is started
-    typealias MFAnimatorStartParams = Dictionary<String, Any>
+    typealias MFAnimatorStartParams = NSDictionary ///`Dictionary<String, Any>` `<-` Using Swift dict was slow for interop with ObjC due to autobridging
     /// ^ 4 keys: "doStart", "duration", "vector", "curve"
+    ///     I tried moving this to a custom dataStorage class instead of a dict for optimization, but that somehow made things even slower. Maybe I did it wrong. See commit d64517dd0f7e7cddf46b305c354665c2d3223888
     
     /// Conversion
     
@@ -62,11 +63,15 @@ import QuartzCore
     
     /// Constants
     
+    let maxAnimationDuration = 1.5 /*5.0*/ /// Explanation below. TODO: Move this into ScrollConfig.
+    
     /// Vars - Init
     
-    let displayLink: DisplayLink
-    @Atomic var callback: UntypedAnimatorCallback?
+    @objc let displayLink: DisplayLink
+    /*@Atomic*/ var clientCallback: UntypedAnimatorCallback?
     /// ^ This is constantly accessed by subclassHook() and constantly written to by startWithUntypedCallback(). Becuase Swift is stinky and not thread safe, the app will sometimes crash, when this property is read from and written to at the same time. So we're using @Atomic propery wrapper
+    ///  Edit: Atomic makes writing to this super slow we're locking everything with displayLink.queue now so it shouldn't be necessary. Disabling @Atomc now.
+    
     @objc var animationCurve: Curve? /// This class assumes that `animationCurve` passes through `(0, 0)` and `(1, 1)
     
 //    let threadLock = DispatchSemaphore.init(value: 1)
@@ -85,7 +90,8 @@ import QuartzCore
     
     /// Vars - Start & stop
     
-    var animationDurationRaw: CFTimeInterval = 0
+    var animationDurationRaw: CFTimeInterval? = 0
+    var animationDurationRawInFrames: Int? = 0
     var animationDuration: CFTimeInterval = 0
     var animationStartTime: CFTimeInterval = 0
     var animationEndTime: CFTimeInterval { animationStartTime + animationDuration }
@@ -126,14 +132,14 @@ import QuartzCore
     
     @objc var animationTimeLeft: Double {
         var result: Double = -1
-        displayLink.dispatchQueue.sync {
+        displayLink.dispatchQueue.sync(flags: defaultDFs) {
             result = animationTimeLeft_Unsafe
         }
         return result
     }
     @objc var animationValueLeft: Vector {
         var result = Vector(x:-1, y:-1)
-        displayLink.dispatchQueue.sync {
+        displayLink.dispatchQueue.sync(flags: defaultDFs) {
             result = animationValueLeft_Unsafe
         }
         return result
@@ -180,7 +186,7 @@ import QuartzCore
         ///         Orrr we can also have self.isRunning() execute on self.queue. - we did that. Should be most robust solution
         ///         But actually, maybe it's faster to make start() use queue.sync after all. Because isRunning() is probably called a lot more.
         
-        displayLink.dispatchQueue.async {
+        displayLink.dispatchQueue.async(flags: defaultDFs) {
             
             /// Reset lastAnimationValue
             ///     So we don't give the `params` callback old invalid animationValueLeft.
@@ -190,21 +196,23 @@ import QuartzCore
             
             self.lastAnimationValue = Vector(x: 0, y: 0)
             
-            if let doStart = p["doStart"] as? Bool {
+            if let doStart = p.object(forKey: "doStart") as? Bool {
                 if doStart == false {
                     return;
                 }
             }
             
-            let durationRaw = p["duration"] as! Double
-            let vector = vectorFromNSValue(p["vector"] as! NSValue) as Vector
-            let curve = p["curve"] as! Curve
+            let durationRaw = p.object(forKey: "duration") as! Double?
+            let durationRawInFrames = p.object(forKey: "durationInFrames") as! Int?
+            let vector = vectorFromNSValue(p.object(forKey: "vector") as! NSValue) as Vector
+            let curve = p.object(forKey: "curve") as! Curve
             
-            self.startWithUntypedCallback_Unsafe(durationRaw: durationRaw, value: vector, animationCurve: curve, callback: callback);
+            self.startWithUntypedCallback_Unsafe(durationRaw: durationRaw, durationRawInFrames: durationRawInFrames, value: vector, animationCurve: curve, callback: callback);
         }
     }
     
-    internal func startWithUntypedCallback_Unsafe(durationRaw: CFTimeInterval,
+    internal func startWithUntypedCallback_Unsafe(durationRaw: CFTimeInterval?,
+                                                  durationRawInFrames: Int?,
                                                   value: Vector,
                                                   animationCurve: Curve,
                                                   callback: UntypedAnimatorCallback) {
@@ -219,11 +227,16 @@ import QuartzCore
         
         /// Validate
         
-        assert(!durationRaw.isNaN && durationRaw.isFinite && durationRaw >= 0)
+        assert((durationRaw == nil) != (durationRawInFrames == nil))
+        if let durationRaw = durationRaw {
+            assert(!durationRaw.isNaN && durationRaw.isFinite && durationRaw > 0)
+        } else if let durationInFrames = durationRawInFrames {
+            assert(durationInFrames > 0);
+        }
         
         /// Store args
         
-        self.callback = callback;
+        self.clientCallback = callback;
         self.animationCurve = animationCurve
         
         /// Get stuff
@@ -261,6 +274,7 @@ import QuartzCore
             animationStartTime = lastFrameTime
             animationDuration = -1
             animationDurationRaw = durationRaw
+            animationDurationRawInFrames = durationRawInFrames
             animationValueTotal = value
             
         } else {
@@ -269,6 +283,7 @@ import QuartzCore
             animationStartTime = -1
             animationDuration = -1
             animationDurationRaw = durationRaw
+            animationDurationRawInFrames = durationRawInFrames
             animationValueTotal = value
             
             /// Start displayLink
@@ -287,10 +302,6 @@ import QuartzCore
                  */
             })
         }
-        
-        /// Debug
-        
-        //        DDLogDebug("AnimationValueInterval at start: \(value)")
     }
     
     /// Cancel
@@ -300,7 +311,9 @@ import QuartzCore
     }
     
     @objc (cancel_forAutoMomentumScroll:) func cancel(forAutoMomentumScroll: Bool) {
-        displayLink.dispatchQueue.async {
+        
+        /// We're using the long async call because creating the dispatchworkitemflags for the normal one is somehow pretty slow.
+        displayLink.dispatchQueue.async(flags: defaultDFs) {
             
             /// Get info
             /// Notes:
@@ -314,7 +327,7 @@ import QuartzCore
             
             /// Call callback
             
-            if wasRunning, let callback = self.callback as? AnimatorCallback {
+            if wasRunning, let callback = self.clientCallback as? AnimatorCallback {
                 
                 if hadProducedDeltas {
                     callback(Vector(x: 0, y: 0), kMFAnimationCallbackPhaseCanceled, self.lastMomentumHint)
@@ -323,15 +336,20 @@ import QuartzCore
                         
                         /// Notes:
                         ///   - If the animator is started and then immediately stopped, we usally just want to ignore that and just not call the callback (Why do we even want that? I guess performance, but when does this happen?). But for autoMomentumScroll in GestureScrollSimulator we DO want to send start and cancel events if started and then immediately stepped. Otherwise, app like Xcode might continue momentumScrolling.
-                        ///   - Specifically, this is necessary when used through GestureScrollSimulator when it itself is used in Scroll.m when ending an animation and immediately suppressing momentumScroll. Feels like we're implementing some pretty specific high level behaviour in this very low level class. Maybe we need to restructure our abstractions.
-                        ///   - Calling callback with start phase here might be totally unnecessary Edit: Nope is necessary to fix the Safari weirdness.
+                        ///   - Specifically, this is necessary when momentumScrolling is used by GestureScrollSimulator when it itself is used in Scroll.m when ending an animation and immediately suppressing momentumScroll. Feels like we're implementing some pretty specific high level behaviour in this very low level class. Maybe we need to restructure our abstractions.
+                        ///   - Calling callback with start phase here might be totally unnecessary Edit: Nope is necessary to fix the Safari weirdness. (Edit: Which Safari weirdness? I think it had something to do with overscrolling, but not sure.)
                         ///   - Maybe we should spread out the start phase and canceled phase callbacks over time? Maybe call the canceled phase callback from the displayLinkCallback?? There an issue in Safari. When you scroll into the rubberband and then back Safari will add momentum. (Even though Safari normally never adds its own momentum I think). This momentum can't even be stopped by touching the trackpad, so idk what we could do about it.
                         ///     - Edit: Spacing the events out fixes it! We're just using a DispatchQueue, not the displaylink to do this. Might lead to raceconditions if the animator is restarted before the call. Don't think so though.
                         ///   - Not sure the delay should scale with frametime. I tested 2ms that's too low. 4ms works, so we chose 8ms to be safe (On a 60 hz screen)
+                        ///
+                        ///     Edit: Getting this new dispatchQueue everytime seems to be super slow, so we'll try to use the displayLink queue instead.
+                        ///     Edit2: Nope I made a mistake, this is never even called in the configuration I was testing (it's only called for non-inertial gesture scrolling, which we're currently not using in the app anymore)
+                        
+                        DDLogDebug("Sending extra momentum cancel events even though momentumScrolling hasn't started")
                         
                         callback(Vector(x: 0, y: 0), kMFAnimationCallbackPhaseStart, self.lastMomentumHint)
-                        let delay = 8.0/1000.0 /// self.displayLink.nominalTimeBetweenFrames()
-                        DispatchQueue.global(qos: .userInteractive).asyncAfter(deadline: .now() + delay, execute: {
+                        let delay = 8.0/1000.0 /// self.displayLink.nominalTimeBetweenFrames() / 2.0
+                        DispatchQueue.global(qos: .userInteractive).asyncAfter(deadline: .now() + delay, flags: defaultDFs, execute: { /// Why aren't we just using our queue here?
                             callback(Vector(x: 0, y: 0), kMFAnimationCallbackPhaseCanceled, self.lastMomentumHint)
                         })
                     }
@@ -346,7 +364,7 @@ import QuartzCore
         /// Trying to stop from displayLinkThread causes deadlock. So we need to wait until the displayLinkThread has finished its iteration and then stop ASAP.
         ///     The best way we found to stop ASAP is to simply enqueu async on the displayLink's dispatchQueue
         
-        displayLink.dispatchQueue.async {
+        displayLink.dispatchQueue.async(flags: defaultDFs) {
             self.stop_Unsafe()
         }
     }
@@ -416,7 +434,7 @@ import QuartzCore
         /// Debug
         
         if isFirstDisplayLinkCallback_AfterRunningStart || isFirstDisplayLinkCallback_AfterColdStart {
-            DDLogDebug("inside-animator - start")
+            DDLogDebug("inside-animator - start \(isFirstDisplayLinkCallback_AfterRunningStart ? "(running)" : "(cold)")")
         }
         
         DDLogDebug("\nAnimation value total: (\(animationValueTotal.x), \(animationValueTotal.y)), left: (\(animationValueLeft_Unsafe.x), \(animationValueLeft_Unsafe.y))")
@@ -425,7 +443,7 @@ import QuartzCore
         
         /// Guard nil
         
-        guard let callback = self.callback else {
+        guard let callback = self.clientCallback else {
             fatalError("Invalid state - callback can't be nil during running animation")
         }
         guard let animationCurve = self.animationCurve else {
@@ -461,8 +479,20 @@ import QuartzCore
             ///     This is so that the last timeDelta is the same size as all the others
             ///     Doing this in start() would be easier but leads to deadlocks
             
-            self.animationDuration = TransformationUtility.roundUp(animationDurationRaw, toMultiple: displayLink.nominalTimeBetweenFrames())
+            if let animationDurationRaw = animationDurationRaw {
+                self.animationDuration = ModificationUtility.roundUp(animationDurationRaw, toMultiple: displayLink.nominalTimeBetweenFrames())
+            } else if let animationDurationRawInFrames = animationDurationRawInFrames {
+                self.animationDuration = Double(animationDurationRawInFrames) * displayLink.nominalTimeBetweenFrames()
+            } else {
+                assert(false)
+            }
+            
+            /// Validate
             assert(self.animationDuration >= 0)
+            
+            /// Limit animationDuration
+            ///  Note: With fastScroll the animationDuration can become absurdly large - easily several hours. Especially on a free spinning wheel. So we limit the duration here.
+            if animationDuration > maxAnimationDuration { animationDuration = maxAnimationDuration }
         }
         
         /// Set phase to end
@@ -518,7 +548,7 @@ import QuartzCore
 //            minBaseCurveTime = 0.0
             
             
-            if timeSinceAnimationStart < minBaseCurveTime{
+            if timeSinceAnimationStart < minBaseCurveTime {
                 
                 /// Make the first x ms of the animation always kMFMomentumHintGesture
                 ///     This is so that:

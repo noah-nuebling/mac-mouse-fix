@@ -14,8 +14,6 @@
 #import "SharedUtility.h"
 @import AppKit.NSScreen;
 #import <objc/runtime.h>
-// #import "ConfigFileInterface_App.h"
-// #import "ConfigFileInterface_Helper.h"
 
 @implementation SharedUtility
 
@@ -34,51 +32,6 @@ NSException * _Nullable tryCatch(void (^tryBlock)(void)) {
     }
     @finally {
         return e;
-    }
-}
-
-#pragma mark - Get display under pointer
-
-+ (CVReturn)displayUnderMousePointer:(CGDirectDisplayID *)dspID withEvent:(CGEventRef _Nullable)event {
-    
-    /// Get event
-    if (event == NULL) {
-        event = CGEventCreate(NULL);
-    }
-    /// Get mouse location
-    CGPoint mouseLocation = CGEventGetLocation(event);
-    
-    /// Return
-    return [self display:dspID atPoint:mouseLocation];
-    
-}
-
-+ (CVReturn)display:(CGDirectDisplayID *)dspID atPoint:(CGPoint)point {
-    /// Pass in a CGEvent to get pointer location from. Not sure if signification optimization
-    
-    /// Get display
-    CGDirectDisplayID *newDisplaysUnderMousePointer = malloc(sizeof(CGDirectDisplayID));
-    uint32_t matchingDisplayCount;
-    uint32_t maxDisplays = 1;
-    CGGetDisplaysWithPoint(point, maxDisplays, newDisplaysUnderMousePointer, &matchingDisplayCount);
-    
-    if (matchingDisplayCount == 1) {
-        
-        /// Get the the master display in case _displaysUnderMousePointer[0] is part of a mirror set
-        CGDirectDisplayID d = CGDisplayPrimaryDisplay(newDisplaysUnderMousePointer[0]);
-        /// Output
-        *dspID = d;
-        return kCVReturnSuccess;
-        
-    } else if (matchingDisplayCount == 0) {
-        
-        /// Failure output
-        DDLogWarn(@"There are 0 diplays under the mouse pointer");
-        dspID = NULL;
-        return kCVReturnError;
-        
-    } else {
-        assert(false);
     }
 }
 
@@ -246,52 +199,74 @@ static void iteratePropertiesOn(id obj, void(^callback)(objc_property_t property
 
 #pragma mark - Check if this is a prerelease version
 
-+ (BOOL)runningPreRelease {
-    
-    BOOL runningPrerelease = NO;
-    
-    /// Check debug configuration
+bool runningPreRelease(void) {
 
-#if DEBUG 
-    runningPrerelease = YES;
-#endif
+    /// Caching this seems excessive but it's called a lot and actually has a huge performance impact. We also moved to from ObjC to being a pure C function because that improves performance of the app by a few percentage points.
     
-    /// Check app name for 'beta' or 'alpha'
-    ///     We've started shipping release builds as betas because under MMF 3 using Swift, the debug builds are very very slow.
-    ///     Notes:
-    ///     - Why are we using the 'localized' search? What does that do?
-    ///     - Attention! This makes the version names magic. Make sure you always include 'beta' or 'alpha' in the prerelease version names!
+    static BOOL _isCached = NO;
+    static BOOL _runningPrerelease = NO;
     
-    if (!runningPrerelease) {
+    if (_isCached) {
         
-        NSString *versionName = Locator.bundleVersionShort;
-        if ([versionName localizedCaseInsensitiveContainsString:@"beta"] || [versionName localizedCaseInsensitiveContainsString:@"alpha"]) {
-            runningPrerelease = YES;
+        return _runningPrerelease;
+        
+    } else{
+        
+        
+        /// Check debug configuration
+        
+#if DEBUG
+        _runningPrerelease = YES;
+#endif
+        
+        /// Check app name for 'beta' or 'alpha'
+        ///     We've started shipping release builds as betas because under MMF 3 using Swift, the debug builds are very very slow.
+        ///     Notes:
+        ///     - Why are we using the 'localized' search? What does that do?
+        ///     - Attention! This makes the version names magic. Make sure you always include 'beta' or 'alpha' in the prerelease version names!
+        
+        if (!_runningPrerelease) {
+            
+            NSString *versionName = Locator.bundleVersionShort;
+            if ([versionName localizedCaseInsensitiveContainsString:@"beta"] || [versionName localizedCaseInsensitiveContainsString:@"alpha"]) {
+                _runningPrerelease = YES;
+            }
         }
+        
+        /// Update flag
+        _isCached = YES;
+        
+        /// Return
+        return _runningPrerelease;
     }
-    
-    return runningPrerelease;
 }
 
 #pragma mark - Check which executable is running
 /// TODO: Maybe move this to `Locator.m`
 
-+ (BOOL)runningMainApp {
+bool runningMainApp(void) {
     
-    /// Return YES if called by main app
-    ///     Note: Could also use compiler flags `IS_MAIN_APP` and `IS_HELPER` to speed this up. Or just remove these methods and just use the flags directly
-    return [NSBundle.mainBundle.bundleIdentifier isEqual:kMFBundleIDApp];
+#if IS_MAIN_APP
+    return true;
+#endif
+    return false;
+
+//    return [NSBundle.mainBundle.bundleIdentifier isEqual:kMFBundleIDApp];
 }
-+ (BOOL)runningHelper {
+bool runningHelper(void) {
     
-    /// Return YES if called by helper app
-    return [NSBundle.mainBundle.bundleIdentifier isEqual:kMFBundleIDHelper];
-}
-+ (BOOL)runningAccomplice {
+#if IS_HELPER
+    return true;
+#endif
+    return false;
     
-    /// Return YES if called by accomplice
-    return [NSFileManager.defaultManager isExecutableFileAtPath:[NSBundle.mainBundle.bundlePath stringByAppendingPathComponent:kMFAccompliceName]];
+//    return [NSBundle.mainBundle.bundleIdentifier isEqual:kMFBundleIDHelper];
 }
+//bool runningAccomplice(void) {
+//    
+//    /// Return YES if called by accomplice
+//    return [NSFileManager.defaultManager isExecutableFileAtPath:[NSBundle.mainBundle.bundlePath stringByAppendingPathComponent:kMFAccompliceName]];
+//}
 
 #pragma mark - Use command-line tools
 
@@ -356,7 +331,7 @@ static void iteratePropertiesOn(id obj, void(^callback)(objc_property_t property
     }
     
     /// Debug
-    if (SharedUtility.runningPreRelease) {
+    if (runningPreRelease()) {
         NSString *errorDesc = @"";
         if (errorPtr != nil && *errorPtr != nil) {
             errorDesc = (*errorPtr).debugDescription;
@@ -529,11 +504,13 @@ static void iteratePropertiesOn(id obj, void(^callback)(objc_property_t property
     return destinationFrame;
 }
 
-#pragma mark - Other
+#pragma mark - Deep copies
 
 + (id)deepMutableCopyOf:(id)object {
-    /// NSPropertyListSerialization fails because we're using NSNumber as dictionary keys. CFPropertyListCreateDeepCopy doesn't work either.
+    
+    /// NSPropertyListSerialization fails for our remapDict because we're using NSNumber as dictionary keys. CFPropertyListCreateDeepCopy doesn't work either.
     ///     So we're doing this manually...
+    /// Edit: Doesn't NSKeyedArchiver work? Is it about making it mutable?
         
     if ([object isKindOfClass:NSDictionary.class]) {
         ///
@@ -570,13 +547,48 @@ static void iteratePropertiesOn(id obj, void(^callback)(objc_property_t property
 }
 
 + (id)deepCopyOf:(id)object {
+    
+    /// Check nil
+    if (object == nil) return nil;
+    
+    /// New approach
+//    return [self deepCopyOf:object error:nil];
+    
+    /// Old approach
     return [NSKeyedUnarchiver unarchiveObjectWithData:[NSKeyedArchiver archivedDataWithRootObject:object]];
 }
 
-// TODO: Consider returning a mutable dict to avoid constantly using `- mutableCopy`. Maybe even alter `dst` in place and return nothing (And rename to `applyOverridesFrom:to:`).
-/// Copy all leaves (elements which aren't dictionaries) from `src` to `dst`. Return the result. (`dst` itself isn't altered)
-/// Recursively search for leaves in `src`. For each srcLeaf found, create / replace a leaf in `dst` at a keyPath identical to the keyPath of srcLeaf and with the value of srcLeaf.
++ (id<NSCoding>)deepCopyOf:(id<NSCoding>)original error:(NSError *_Nullable *_Nullable)error {
+    
+    /// Copied this from the Swift implementation in SharedUtilitySwift, since the Swift implementation wasn't compatible with ObjC. We still like to keep both around since the Swift version is nicer with it's generic types. Maybe generics are also possible in this form in ObjC but I don't know how.
+    /// The simpler default methods only work with `NSSecureCoding` objects. This implementation also works with `NSCoding` objects.
+    /// Src:  https://developer.apple.com/forums/thread/107533
+    /// Edit: This is actually superrrr slow. Was the old one this slow as well? Edit2: I think the old one was also very slow.
+    
+    assert(original != nil);
+    
+    NSData *data = [NSKeyedArchiver archivedDataWithRootObject:original requiringSecureCoding:false error:error];
+    if (data == nil) {
+        assert(false);
+        return nil;
+    }
+    
+    NSKeyedUnarchiver *unarchiver = [[NSKeyedUnarchiver alloc] initForReadingFromData:data error:error];
+    unarchiver.requiresSecureCoding = false;
+    
+    id<NSCoding> copy = [unarchiver decodeObjectForKey:NSKeyedArchiveRootObjectKey];
+    
+    return copy;
+}
+
+#pragma mark - Other
+
 + (NSDictionary *)dictionaryWithOverridesAppliedFrom:(NSDictionary *)src to: (NSDictionary *)dst {
+    
+    // TODO: Consider returning a mutable dict to avoid constantly using `- mutableCopy`. Maybe even alter `dst` in place and return nothing (And rename to `applyOverridesFrom:to:`).
+    /// Copy all leaves (elements which aren't dictionaries) from `src` to `dst`. Return the result. (`dst` itself isn't altered)
+    /// Recursively search for leaves in `src`. For each srcLeaf found, create / replace a leaf in `dst` at a keyPath identical to the keyPath of srcLeaf and with the value of srcLeaf.
+    
     NSMutableDictionary *dstMutable = [dst mutableCopy];
     if (dstMutable == nil) {
         dstMutable = [NSMutableDictionary dictionary];
@@ -603,9 +615,10 @@ int8_t sign(double x) {
     return (0 < x) - (x < 0);
 }
 
-/// Start logging to console and to Xcode output
-/// Call this at the entry point of an app, so that DDLog statements work.
 + (void)setupBasicCocoaLumberjackLogging {
+    
+    /// Start logging to console and to Xcode output
+    /// Call this at the entry point of an app, so that DDLog statements work.
     
     /// Need to enable Console.app > Action > Include Info Messages & Include Debug Messages to see these messages in Console. See https://stackoverflow.com/questions/65205310/ddoslogger-sharedinstance-logging-only-seems-to-log-error-level-logging-in-conso
     /// Will have to update instructions on Mac Mouse Fix Feedback Assistant when this releases.
@@ -615,7 +628,7 @@ int8_t sign(double x) {
     /// Set logging format
     //    DDOSLogger.sharedInstance.logFormatter = DDLogFormatter.
     
-    if ((NO) /*SharedUtility.runningPreRelease*/) {
+    if ((NO) /*runningPreRelease()*/) {
         
         /// Setup logging  file
         /// Copied this from https://github.com/CocoaLumberjack/CocoaLumberjack/blob/master/Documentation/GettingStarted.md
