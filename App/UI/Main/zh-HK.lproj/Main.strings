@@ -19,8 +19,8 @@
 /* Class = "NSMenuItem"; title = "<Mission Control and Spaces>"; ObjectID = "4Cx-DN-qX3"; */
 "4Cx-DN-qX3.title" = "<Mission Control and Spaces>";
 
-/* Class = "NSButtonCell"; title = "Always-On Precise Scrolling"; ObjectID = "4hf-tQ-y76"; Note = "Scrolling > Precise Scrolling Toggle"; */
-"4hf-tQ-y76.title" = "總是開啟精確捲動";
+/* Class = "NSButtonCell"; title = "Precision"; ObjectID = "4hf-tQ-y76"; Note = "Scrolling > Precise Scrolling Toggle"; */
+"4hf-tQ-y76.title" = "精確";
 
 /* Class = "NSTextFieldCell"; title = "Write a Feature Request"; ObjectID = "5yb-g8-Kcg"; */
 "5yb-g8-Kcg.title" = "填寫一個功能請求";
@@ -43,11 +43,11 @@
 /* Class = "NSTextFieldCell"; title = "Scroll Precisely"; ObjectID = "A6t-UZ-2DE"; Note = "Scrolling > Keyboard Modifiers > Scroll Precisely Label"; */
 "A6t-UZ-2DE.title" = "精確捲動";
 
-/* Class = "NSTextFieldCell"; title = "<Content tracks finger movement>"; ObjectID = "AHn-zX-g4d"; Note = "Scrolling > Natural Scroll Direction > Hint"; */
-"AHn-zX-g4d.title" = "<Content tracks finger movement>";
+/* Class = "NSTextFieldCell"; title = "Move between pages in Safari by scrolling horizontally, and more"; ObjectID = "AHn-zX-g4d"; Note = "Scrolling > Trackpad Interactions > Hint"; */
+"AHn-zX-g4d.title" = "水平捲動來在Safari頁面之間移動，以及更多";
 
-/* Class = "NSTextFieldCell"; title = "Lets you quickly turn off or on features like\n'Smooth Scrolling'"; ObjectID = "AqN-zN-yDS"; */
-"AqN-zN-yDS.title" = "讓你快速關閉或開啟「平滑捲動」等功能";
+/* Class = "NSTextFieldCell"; title = "Lets you quickly turn off or on features like\nsmooth scrolling"; ObjectID = "AqN-zN-yDS"; */
+"AqN-zN-yDS.title" = "讓你快速關閉或開啟平滑捲動等功能";
 
 /* Class = "NSMenu"; title = "Main Menu"; ObjectID = "AYu-sK-qS6"; */
 "AYu-sK-qS6.title" = "主選單";
@@ -124,14 +124,23 @@
 /* Class = "NSMenuItem"; title = "macOS"; ObjectID = "fW3-4Q-yB8"; Note = "Scrolling > Scroll Speed > macOS Option"; */
 "fW3-4Q-yB8.title" = "macOS";
 
-/* Class = "NSButtonCell"; title = "Smooth Scrolling"; ObjectID = "g1O-zc-bnx"; Note = "Scrolling > Smooth Scrolling Toggle"; */
-"g1O-zc-bnx.title" = "平滑捲動";
+/* Class = "NSMenuItem"; title = "Regular"; ObjectID = "17P-PJ-tV1"; Note = "Scrolling > Smoothness > Regular Option"; */
+"17P-PJ-tV1.title" = "一般";
+
+/* Class = "NSMenuItem"; title = "Off"; ObjectID = "4gx-d0-WNb"; Note = "Scrolling > Smoothness > Off Option"; */
+"4gx-d0-WNb.title" = "關閉";
+
+/* Class = "NSMenuItem"; title = "High"; ObjectID = "97W-3h-SSc"; Note = "Scrolling > Smoothness > High Option"; */
+"97W-3h-SSc.title" = "高";
+
+/* Class = "NSTextFieldCell"; title = "Smoothness:"; ObjectID = "SjO-Dq-CEX"; Note = "Scrolling > Smoothness Label"; */
+"SjO-Dq-CEX.title" = "平滑：";
 
 /* Class = "NSTabViewItem"; label = "<Initial>"; ObjectID = "g9N-Za-8Ss"; */
 "g9N-Za-8Ss.label" = "<Initial>";
 
-/* Class = "NSButtonCell"; title = "Natural Scroll Direction"; ObjectID = "gK0-1z-Pjv"; Note = "Scrolling > Natural Scroll Direction Toggle"; */
-"gK0-1z-Pjv.title" = "自然捲動方向";
+/* Class = "NSButtonCell"; title = "Reverse Direction"; ObjectID = "gK0-1z-Pjv"; Note = "Scrolling > Reverse Scroll Direction Toggle"; */
+"gK0-1z-Pjv.title" = "反轉方向";
 
 /* Class = "NSTableColumn"; headerCell.title = "<Effect>"; ObjectID = "gOt-GR-IbE"; */
 "gOt-GR-IbE.headerCell.title" = "<Effect>";
@@ -172,8 +181,8 @@
 /* Class = "NSMenuItem"; title = "<Click and Drag Button 3>"; ObjectID = "kK6-b5-Rfd"; */
 "kK6-b5-Rfd.title" = "<Click and Drag Button 3>";
 
-/* Class = "NSTextFieldCell"; title = "Scroll Speed:"; ObjectID = "l7d-al-Y14"; Note = "Scrolling > Scroll Speed Label"; */
-"l7d-al-Y14.title" = "捲動速度：";
+/* Class = "NSTextFieldCell"; title = "Speed:"; ObjectID = "l7d-al-Y14"; Note = "Scrolling > Scroll Speed Label"; */
+"l7d-al-Y14.title" = "速度：";
 
 /* Class = "NSTabViewItem"; label = "Pointer"; ObjectID = "lLu-45-nE3"; Note = "Toolbar > Pointer Tab Button"; */
 "lLu-45-nE3.label" = "指標";
@@ -193,8 +202,8 @@
 /* Class = "NSTextFieldCell"; title = "Move the mouse pointer inside the '+' field, then click a mouse button to assign an action to it.  You can also Double Click, Click and Drag and [more]()."; ObjectID = "N7H-9j-DIr"; Note = "Buttons > Add Field Hint"; */
 "N7H-9j-DIr.title" = "移動滑鼠指標到「+」區域內，然後按一下滑鼠按鈕來指定動作。  你也可以按兩下、按一下並拖移、執行[更多]()動作。";
 
-/* Class = "NSButtonCell"; title = "with Inertia"; ObjectID = "N65-aN-Hxp"; Note = "Scrolling > with Inertia Toggle (See what Apple uses for Trackpad marketing in your Language)"; */
-"N65-aN-Hxp.title" = "帶慣性";
+/* Class = "NSButtonCell"; title = "Trackpad Simulation"; ObjectID = "N65-aN-Hxp"; Note = "Scroll > Trackpad Interactions"; */
+"N65-aN-Hxp.title" = "模擬觸控板";
 
 /* Class = "NSMenuItem"; title = "Minimize"; ObjectID = "NdF-Gb-mOK"; */
 "NdF-Gb-mOK.title" = "縮到最細";
@@ -247,8 +256,8 @@
 /* Class = "NSButtonCell"; title = "<0.6x>"; ObjectID = "S55-uf-Xij"; */
 "S55-uf-Xij.title" = "<0.6x>";
 
-/* Class = "NSTextFieldCell"; title = "You'll be notified of updates when you open\nMac Mouse Fix"; ObjectID = "SaY-fF-d1s"; */
-"SaY-fF-d1s.title" = "當你開啟Mac Mouse Fix時，你會收到更新項目通知";
+/* Class = "NSTextFieldCell"; title = "You'll be notified of updates when you open\nthis window"; ObjectID = "SaY-fF-d1s"; */
+"SaY-fF-d1s.title" = "當你開啟這個視窗時，你會收到更新項目通知";
 
 /* Class = "NSMenuItem"; title = "High"; ObjectID = "sef-RZ-SeL"; Note = "Pointer > Acceleration > High Option"; */
 "sef-RZ-SeL.title" = "高";
@@ -295,7 +304,7 @@
 /* Class = "NSMenuItem"; title = "Zoom"; ObjectID = "ZfY-xQ-tQl"; */
 "ZfY-xQ-tQl.title" = "縮放";
 
-/* Class = "NSTextFieldCell"; title = "Check Out the GitHub"; ObjectID = "ZMA-p0-2lf"; Note = "After the MMF 3 Beta I plan to change this to: Check Out the GitHub"; */
+/* Class = "NSTextFieldCell"; title = "Check It Out on GitHub"; ObjectID = "ZMA-p0-2lf"; */
 "ZMA-p0-2lf.title" = "去GitHub看看";
 
 /* Class = "NSTextFieldCell"; title = "<Button X>"; ObjectID = "Zqs-Y4-U4Q"; */

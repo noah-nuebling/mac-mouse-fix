@@ -1,8 +1,8 @@
-/* First draft: You're __already using__ the default setting for mice with __3 buttons__! */
-"already-using-defaults-toast.3" = "您__已经在使用__默认的__三鍵__鼠标设置！";
+/* First draft: You're __already using__ the default setting for mice with __3 buttons__ */
+"already-using-defaults-toast.3" = "您**已经在使用**默认的**三鍵**鼠标设置";
 
-/* First draft: You're __already using__ the default setting for mice with __5 buttons__! */
-"already-using-defaults-toast.5" = "您__已经在使用__默认的__五鍵__鼠标设置！";
+/* First draft: You're __already using__ the default setting for mice with __5 buttons__ */
+"already-using-defaults-toast.5" = "您**已经在使用**默认的**五鍵**鼠标设置";
 
 /* First draft: <Rewind key> */
 "apple-key-fallback.backward" = "􀊉〔倒回键〕";
@@ -81,9 +81,6 @@
 
 /* First draft: Triple Click %@ + */
 "button-modifier.3" = "连按三下%@＋";
-
-/* First draft: __Enabled__ Mac Mouse Fix for __Buttons__\nIt had been disabled from the Menu Bar %@ || Note: %@ will be replaced by the menubar icon */
-"button-revive-toast" = "__已启用__Mac Mouse Fix__按钮__调校\n此前由菜单栏%@停用";
 
 /* First draft: Middle Button */
 "button-string.middle" = "中键";
@@ -233,7 +230,7 @@
 "is-strange-helper-alert.title" = "启用失败";
 
 /* First draft: Mac Mouse Fix can't be enabled because there's __another version__ of Mac Mouse Fix present on your computer\n\nTo enable Mac Mouse Fix:\n\n1. Delete the [other version](%@)\n2. Empty the Bin\n3. Restart your Mac\n4. Try again! */
-"is-strange-helper-alert.body" = "无法启用Mac Mouse Fix，因为您的电脑上已有__另一版本__的Mac Mouse Fix\n\n若要启用Mac Mouse Fix：\n\n⒈删除[其他版本](%@)\n⒉清倒废纸篓\n⒊重新启动您的Mac\n⒋再试一次！";
+"is-strange-helper-alert.body" = "无法启用Mac Mouse Fix，因为您的电脑上已有**另一版本**的Mac Mouse Fix\n\n若要启用Mac Mouse Fix：\n\n⒈删除[其他版本](%@)\n⒉清倒废纸篓\n⒊重新启动您的Mac\n⒋再试一次！";
 
 /* First draft: ,  || Note: This string joins elements in a list except the second-to-last and last one. || Note: The first draft contains a space after the comma. */
 "join-list" = "、";
@@ -268,25 +265,25 @@
 /* First draft: **An unknown error occurred:**\n\n%@ */
 "license-toast.unknown-error" = "**发生了未知错误：**\n\n%@";
 
-/* First draft: **'%@'** is not a known license key\nPlease try another one */
-"license-toast.unknown-key" = "**“%@”**并不是已知的许可证。\n请换一个再试。";
+/* First draft: **'%@'** is not a known license key\nPlease try a different key */
+"license-toast.unknown-key" = "**“%@”**并不是已知的许可证。\n请换一个许可证再试。";
 
 /* First draft: Activating your license failed for **unknown reasons**\n\nPlease write a **Bug Report** [here](https://noah-nuebling.github.io/mac-mouse-fix-feedback-assistant/?type=bug-report) */
 "license-toast.unknown-reason" = "由于**未知的原因**，许可证激活失败。\n\n请到[这里](https://noah-nuebling.github.io/mac-mouse-fix-feedback-assistant/?type=bug-report)提交**错误报告**";
 
-/* First draft: Set Scroll Speed under\n[%@ > Mouse > Scroll speed](%@) */
-"macos-scrolling-hint" = "设置滚动速度：\n[%@ > 鼠标 > 滚动速度](%@)";
+/* First draft: Set speed under\n[%@ > Mouse > Scroll speed](%@) */
+"macos-scrolling-hint" = "设置速度：\n[%@ > 鼠标 > 滚动速度](%@)";
 
 /* First draft: Back */
 "mail-alert.back" = "返回";
 
-/* First draft: I can't respond to all emails\nbut I read and consider all feedback! */
-"mail-alert.body" = "我无法回复所有的邮件，但我会阅读并考虑所有的反馈！";
+/* First draft: I can't respond to all emails, but I read and appreciate all feedback */
+"mail-alert.body" = "我无法回复所有的邮件，但我会阅读并感谢所有的反馈";
 
-/* First draft: Write Email */
+/* First draft: Write E-mail */
 "mail-alert.send" = "编写邮件";
 
-/* First draft: Write an Email? */
+/* First draft: Write an E-mail? */
 "mail-alert.title" = "编写邮件？";
 
 /* First draft: Command (⌘) */
@@ -304,8 +301,8 @@
 /* First draft: Content tracks finger movement */
 "natural-scrolling-hint" = "内容随手指移动";
 
-/* First draft: Scroll precisely even without a keyboard modifier by\nmoving the scroll wheel slowly || Note: The line break (\n) is there so the layout of the Scroll tab doesn't become too wide which looks weird. You can set it to your own taste. */
-"precise-scrolling-hint" = "慢慢滚动滚轮来精准滚动，甚至无需键盘修饰键";
+/* First draft: Scroll precisely, even without a keyboard modifier,\nbymoving the scroll wheel slowly || Note: The line break (\n) is there so the layout of the Scroll tab doesn't become too wide which looks weird. You can set it to your own taste. */
+"precise-scrolling-hint" = "*慢慢*滚动滚轮来精准滚动，甚至无需键盘修饰键";
 
 /* First draft: Cancel */
 "restore-buttons-alert.back" = "取消";
@@ -314,7 +311,7 @@
 "restore-buttons-alert.commit" = "恢复";
 
 /* First draft: Your __%@__ mouse says it has __%d__ buttons */
-"restore-buttons-alert.hint" = "您的__%@__鼠标回报了__%d__个按钮";
+"restore-buttons-alert.hint" = "您的**%@**鼠标回报了**%d**个按钮";
 
 /* First draft: Mouse with 3 buttons */
 "restore-buttons-alert.radio1" = "三键鼠标";
@@ -367,8 +364,14 @@
 /* First draft: Zoom in or out in Safari, Maps and other apps\n \nWorks like pinching to zoom on an Apple trackpad */
 "scroll-effect.zoom.hint" = "在Safari、地图和其他应用程序中放大或缩小\n \n效果相当于在Apple触控板上两指张开或捏拢";
 
-/* First draft: Enabled Mac Mouse Fix for __Scrolling__\nIt had been disabled from the Menu Bar %@ || Note: Where %@ will be replaced by the menubar icon */
-"scroll-revive-toast" = "已启用Mac Mouse Fix__滚动__调校\n此前由菜单栏%@停用";
+/* First draft: __Enabled__ Mac Mouse Fix for %1@\nIt had been disabled from the Menu Bar %2@ || Note: %1@ will be replaced by the list of enabled features, %2@ will be replaced by the menubar icon */
+"revive-toast" = "**已启用**Mac Mouse Fix调校：%1@\n此前由菜单栏%2@停用";
+
+/* First draft: __Buttons__ */
+"revive-toast.feature-buttons" = "**按钮**";
+
+/* First draft: __Scrolling__ */
+"revive-toast.feature-scrolling" = "**滚动**";
 
 /* No comment provided by engineer. */
 "Strawberry" = "草莓";
@@ -379,8 +382,8 @@
 /* First draft: System Preferences */
 "system-settings-name.pre-ventura" = "系统偏好设置";
 
-/* First draft: 💫 Thank you for buying Mac Mouse Fix! */
-"thanks.01" = "💫感谢您购买Mac Mouse Fix！";
+/* First draft: ⭐️ Thank you for buying Mac Mouse Fix! */
+"thanks.01" = "⭐️感谢您购买Mac Mouse Fix！";
 
 /* First draft: 🌟 Thanks for purchasing Mac Mouse Fix! */
 "thanks.02" = "🌟感谢购买Mac Mouse Fix！";
@@ -388,14 +391,14 @@
 /* First draft: 🚀 Thanks for supporting Mac Mouse Fix! */
 "thanks.03" = "🚀感谢支持Mac Mouse Fix！";
 
-/* First draft: 🙏 Thank you for buying Mac Mouse Fix! */
-"thanks.04" = "🙏感谢您购买Mac Mouse Fix！";
+/* First draft: 🙌 Thank you for buying Mac Mouse Fix! */
+"thanks.04" = "🙌感谢您购买Mac Mouse Fix！";
 
-/* First draft: 🧠 Great purchasing decisions ;) */
-"thanks.05" = "🧠很赞的购买决定;)";
+/* First draft: 🧠 Great purchasing decision! ;) */
+"thanks.05" = "🧠很赞的购买决定！ ;)";
 
-/* First draft: 🔥 Awesome taste in mouse fixing software ;) */
-"thanks.06" = "🔥在鼠标调校软件上的品味不俗;)";
+/* First draft: 🔥 Awesome taste in mouse fixing software! ;) */
+"thanks.06" = "🔥在鼠标调校软件上的品味不俗！ ;)";
 
 /* First draft: 💙 */
 "thanks.07" = "💙";
@@ -406,8 +409,8 @@
 /* First draft: 👽 Share it with your Spacebook friends! */
 "thanks.09" = "👽分享给你Spacebook上的朋友们！";
 
-/* First draft: 🏂 Duckgang for life! || Note: A lot of these are very personal. And weird. They are also super rare. Feel free to change them to anything you feel like to leave a little easter egg! */
-"thanks.10" = "🏂一生不悔低头族！";
+/* First draft: 🏂 Duckgang for life!！ || Note: A lot of these are very personal. And weird. They are also super rare. Feel free to change them to anything you feel like to leave a little easter egg! */
+"thanks.10" = "🏂一生不悔低头族！！";
 
 /* First draft: 🚜 Watch where you're going :P */
 "thanks.11" = "🚜你看着点方向:P";
@@ -425,13 +428,13 @@
 "thanks.15" = "🥛当然是全脂牛奶啊！毕竟是你的生日喔。";
 
 /* First draft: 🎸 Not John Mayer (yet). Nevertheless mayor of hearts. */
-"thanks.16" = "🎸 Not John Mayer (yet). Nevertheless mayor of hearts.";
+"thanks.16" = "🎸虽（还）不是约翰・梅尔，却是心之美尔。";
 
 /* First draft: 💃 1NEIN8NEIN */
 "thanks.17" = "💃 1NEIN8NEIN";
 
-/* First draft: 🦋 Give me a call when you saved the world. :) */
-"thanks.18" = "🦋你拯救完世界给我打个电话:)";
+/* First draft: 🦄 You may not want to save the world, but you're already saving mine :) */
+"thanks.18" = "🦄你或许不想拯救世界，但你的确在拯救我:)";
 
 /* First draft: 🏜️ Dankeschön, meine Frau... */
 "thanks.19" = "🏜️ Dankeschön, meine Frau...";
@@ -533,13 +536,16 @@
 "free-country" = "Mac Mouse Fix目前在您所在的国家或地区（%@）免费";
 
 /* First draft: This license __could not be activated__ but Mac Mouse Fix is currently __free in your country__! */
-"license-toast.free-country" = "__无法激活__此许可证，但Mac Mouse Fix目前__在您所在的国家或地区免费__！";
+"license-toast.free-country" = "**无法激活**此许可证，但Mac Mouse Fix目前**在您所在的国家或地区免费**！";
 
 /* First draft:  __Click here__ to load the recommended settings\nfor your __%@__ mouse || Note: The \n linebreak is so the popover doesn't become too wide. You can set it to your taste. || Note: In English, there needs to be a space at the start of this string otherwise the whole string will be bold. This might be a Ventura Bug */
-"restore-default-buttons-popover.body" = "__点按此处__来载入您的__%@__鼠标的建议设置";
+"restore-default-buttons-popover.body" = "**点按此处**来载入您的**%@**鼠标的建议设置";
 
 /* First draft: Move Between Spaces */
 "scroll-effect.spaces" = "切换空间";
 
 /* First draft: Scroll up to move left a Space and down to move right a Space\n \nWorks like swiping horizontally with 3 fingers on an Apple Trackpad */
 "scroll-effect.spaces.hint" = "向上滚动来向左移动一个空间，向下滚动来向右移动一个空间\n \n作用相当于在Apple触控板上用三指左右滑动";
+
+/* First draft: Open 'Security & Privacy' Preferences || Notes: The string for Ventura and later is defined in Interface Builder */
+"accessibility.settings-link.pre-ventura" = "打开“隐私与安全性”偏好设置";

@@ -1,11 +1,11 @@
-/* Class = "NSTextFieldCell"; title = "Why does Mac Mouse Fix need Accessibility Access?"; ObjectID = "0lz-be-kpl"; */
-"0lz-be-kpl.title" = "為什麼Mac Mouse Fix需要取用「輔助使用」？";
+/* Class = "NSTextFieldCell"; title = "Accessibility Access allows Mac Mouse Fix to intercept signals from your mouse and keyboard"; ObjectID = "0lz-be-kpl"; */
+"0lz-be-kpl.title" = "取用「輔助使用」允許Mac Mouse Fix截取您的滑鼠和鍵盤訊號";
 
 /* Class = "NSTextFieldCell"; title = "Help"; ObjectID = "04N-yp-Qg1"; */
 "04N-yp-Qg1.title" = "輔助說明";
 
-/* Class = "NSTextFieldCell"; title = "Open 'Security & Privacy' Settings"; ObjectID = "9qp-gN-SZZ"; */
-"9qp-gN-SZZ.title" = "打開「安全性與隱私權」設定頁面";
+/* Class = "NSTextFieldCell"; title = "Open 'Privacy & Security' Settings"; ObjectID = "9qp-gN-SZZ"; */
+"9qp-gN-SZZ.title" = "打開「隱私權與安全性」設定頁面";
 
 /* Class = "NSTextFieldCell"; title = "Switch on 'Mac Mouse Fix Helper'"; ObjectID = "46z-Nd-nh4"; */
 "46z-Nd-nh4.title" = "啟用「Mac Mouse Fix Helper」";
