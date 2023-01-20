@@ -68,7 +68,7 @@ static int16_t _nOfSpaces = 1;
     /// Send events
     
     if (_drag->usageAxis == kMFAxisHorizontal) {
-        double delta = -deltaX * threeFingerScaleH;
+        double delta = deltaX * threeFingerScaleH;
         [TouchSimulator postDockSwipeEventWithDelta:delta type:kMFDockSwipeTypeHorizontal phase:eventPhase invertedFromDevice:_drag->naturalDirection];
     } else if (_drag->usageAxis == kMFAxisVertical) {
         double delta = deltaY * threeFingerScaleV;
