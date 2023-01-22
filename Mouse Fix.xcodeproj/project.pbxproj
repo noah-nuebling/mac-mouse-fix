@@ -314,8 +314,8 @@
 		4FFA4E4928B7D3750062A1FE /* NSView+Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F92A72C260F6C7800529D1F /* NSView+Additions.m */; };
 		4FFA4E4A28B7D3750062A1FE /* NSView+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F909D0428A0C3D2009349A2 /* NSView+Extensions.swift */; };
 		4FFBC5A8266977CA001D389B /* DoubleExponentialSmoother.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FFBC5A7266977CA001D389B /* DoubleExponentialSmoother.swift */; };
-		4FFE2894291B35AA0058ABE0 /* Shorthands.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FFE2893291B35AA0058ABE0 /* Shorthands.swift */; };
-		4FFE2895291B35AA0058ABE0 /* Shorthands.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FFE2893291B35AA0058ABE0 /* Shorthands.swift */; };
+		4FFE2894291B35AA0058ABE0 /* (null) in Sources */ = {isa = PBXBuildFile; };
+		4FFE2895291B35AA0058ABE0 /* (null) in Sources */ = {isa = PBXBuildFile; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -819,6 +819,13 @@
 		4FFBC5732667DCE4001D389B /* PrefixHeader.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PrefixHeader.pch; sourceTree = "<group>"; };
 		4FFBC5A6266977CA001D389B /* Mac Mouse Fix Helper-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Mac Mouse Fix Helper-Bridging-Header.h"; sourceTree = "<group>"; };
 		4FFBC5A7266977CA001D389B /* DoubleExponentialSmoother.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DoubleExponentialSmoother.swift; sourceTree = "<group>"; };
+		D0BDAA91297D462C001CA0FC /* ko */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ko; path = ko.lproj/Localizable.strings; sourceTree = "<group>"; };
+		D0BDAA92297D462D001CA0FC /* ko */ = {isa = PBXFileReference; lastKnownFileType = text.plist.stringsdict; name = ko; path = ko.lproj/Localizable.stringsdict; sourceTree = "<group>"; };
+		D0BDAA93297D462D001CA0FC /* ko */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ko; path = ko.lproj/Main.strings; sourceTree = "<group>"; };
+		D0BDAA94297D462D001CA0FC /* ko */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ko; path = ko.lproj/ButtonOptionsViewController.strings; sourceTree = "<group>"; };
+		D0BDAA95297D462D001CA0FC /* ko */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ko; path = ko.lproj/AuthorizeAccessibilityView.strings; sourceTree = "<group>"; };
+		D0BDAA96297D462D001CA0FC /* ko */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ko; path = ko.lproj/LicenseSheetController.strings; sourceTree = "<group>"; };
+		D0BDAA97297D462D001CA0FC /* ko */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ko; path = ko.lproj/MenuBarItem.strings; sourceTree = "<group>"; };
 		F449C32228DC555E00136800 /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hant"; path = "zh-Hant.lproj/ButtonOptionsViewController.strings"; sourceTree = "<group>"; };
 		F449C32328DC555E00136800 /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hant"; path = "zh-Hant.lproj/Main.strings"; sourceTree = "<group>"; };
 		F449C32428DC555E00136800 /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hant"; path = "zh-Hant.lproj/AuthorizeAccessibilityView.strings"; sourceTree = "<group>"; };
@@ -1679,7 +1686,6 @@
 			children = (
 				4F8A8DC0287F885D00786BCC /* Shorthands.h */,
 				4FA06818291B2C4C00949B5F /* Shorthands.m */,
-				4FFE2893291B35AA0058ABE0 /* Shorthands.swift */,
 				4FF6653E25F2C7B000689B77 /* SharedUtility.h */,
 				4FF6653B25F2C7B000689B77 /* SharedUtility.m */,
 				4FE40B95283A49DD00880BEF /* SharedUtilitySwift.swift */,
@@ -2279,6 +2285,7 @@
 				"zh-Hant",
 				"zh-HK",
 				"zh-Hans",
+				ko,
 			);
 			mainGroup = 4FCECD7721092354001F1078;
 			packageReferences = (
@@ -2521,7 +2528,7 @@
 				4FAA5601293A41AF00BA782C /* BezierCappedAccelerationCurve.swift in Sources */,
 				4FA40D1028A0D8F100499E53 /* VectorSubPixelator.m in Sources */,
 				4FA40D0228A0CE5B00499E53 /* VectorUtility.m in Sources */,
-				4FFE2894291B35AA0058ABE0 /* Shorthands.swift in Sources */,
+				4FFE2894291B35AA0058ABE0 /* (null) in Sources */,
 				4F319CBB26252A2D004E5F63 /* ButtonGroupRowView.m in Sources */,
 				4F79A82B2605074000076A7E /* NSAttributedString+Additions.m in Sources */,
 				4FA40CFD28A0CCCB00499E53 /* AccelerationBezier.swift in Sources */,
@@ -2685,7 +2692,7 @@
 				4F909D4628A0C4C2009349A2 /* NSArray+Extensions.swift in Sources */,
 				4F9E78C026855BCF002C2309 /* Concurrency.swift in Sources */,
 				4FF93059288026FC0007CCA7 /* PolynomialCappedAccelerationCurve.swift in Sources */,
-				4FFE2895291B35AA0058ABE0 /* Shorthands.swift in Sources */,
+				4FFE2895291B35AA0058ABE0 /* (null) in Sources */,
 				4F3A40DA266C5BDF00436821 /* NSScreen+Additions.m in Sources */,
 				4FED6600292B17C0009ABB89 /* Remap.swift in Sources */,
 				4FCEDC93292D765600E7DA2A /* Constants.swift in Sources */,
@@ -2743,6 +2750,7 @@
 				F449C32528DC555E00136800 /* zh-Hant */,
 				F4EBD4C328DEBA8D0057D2DE /* zh-HK */,
 				F4EBD4CA28DEFC4A0057D2DE /* zh-Hans */,
+				D0BDAA96297D462D001CA0FC /* ko */,
 			);
 			name = LicenseSheetController.xib;
 			sourceTree = "<group>";
@@ -2755,6 +2763,7 @@
 				F449C32828DC555E00136800 /* zh-Hant */,
 				F4EBD4C628DEBA8D0057D2DE /* zh-HK */,
 				F4EBD4CD28DEFC4A0057D2DE /* zh-Hans */,
+				D0BDAA92297D462D001CA0FC /* ko */,
 			);
 			name = Localizable.stringsdict;
 			sourceTree = "<group>";
@@ -2767,6 +2776,7 @@
 				F449C32328DC555E00136800 /* zh-Hant */,
 				F4EBD4C128DEBA8D0057D2DE /* zh-HK */,
 				F4EBD4C828DEFC4A0057D2DE /* zh-Hans */,
+				D0BDAA93297D462D001CA0FC /* ko */,
 			);
 			name = Main.storyboard;
 			sourceTree = "<group>";
@@ -2779,6 +2789,7 @@
 				F449C32728DC555E00136800 /* zh-Hant */,
 				F4EBD4C528DEBA8D0057D2DE /* zh-HK */,
 				F4EBD4CC28DEFC4A0057D2DE /* zh-Hans */,
+				D0BDAA91297D462C001CA0FC /* ko */,
 			);
 			name = Localizable.strings;
 			sourceTree = "<group>";
@@ -2791,6 +2802,7 @@
 				F449C32628DC555E00136800 /* zh-Hant */,
 				F4EBD4C428DEBA8D0057D2DE /* zh-HK */,
 				F4EBD4CB28DEFC4A0057D2DE /* zh-Hans */,
+				D0BDAA97297D462D001CA0FC /* ko */,
 			);
 			name = MenuBarItem.xib;
 			sourceTree = "<group>";
@@ -2803,6 +2815,7 @@
 				F449C32428DC555E00136800 /* zh-Hant */,
 				F4EBD4C228DEBA8D0057D2DE /* zh-HK */,
 				F4EBD4C928DEFC4A0057D2DE /* zh-Hans */,
+				D0BDAA95297D462D001CA0FC /* ko */,
 			);
 			name = AuthorizeAccessibilityView.xib;
 			sourceTree = "<group>";
@@ -2815,6 +2828,7 @@
 				F449C32228DC555E00136800 /* zh-Hant */,
 				F4EBD4C028DEBA8D0057D2DE /* zh-HK */,
 				F4EBD4C728DEFC4A0057D2DE /* zh-Hans */,
+				D0BDAA94297D462D001CA0FC /* ko */,
 			);
 			name = ButtonOptionsViewController.xib;
 			sourceTree = "<group>";
