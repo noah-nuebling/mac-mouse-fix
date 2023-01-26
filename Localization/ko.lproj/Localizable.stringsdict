@@ -12,14 +12,11 @@
 			<string>NSStringPluralRuleType</string>
 			<key>NSStringFormatValueTypeKey</key>
 			<string>d</string>
+			<key>other</key>
+			<string>은 이제 Mac Mouse Fix에서 캡처합니다.
+다른 앱에서는 더 이상 캡처하지 못합니다.</string>
 			<key>zero</key>
 			<string></string>
-			<key>one</key>
-			<string>has been captured by Mac Mouse Fix.
-Other apps can&apos;t see it anymore.</string>
-			<key>other</key>
-			<string>have been captured by Mac Mouse Fix.
-Other apps can&apos;t see them anymore.</string>
 		</dict>
 	</dict>
 	<key>capture-toast.body.uncaptured</key>
@@ -32,12 +29,10 @@ Other apps can&apos;t see them anymore.</string>
 			<string>NSStringPluralRuleType</string>
 			<key>NSStringFormatValueTypeKey</key>
 			<string>d</string>
+			<key>other</key>
+			<string>은 더 이상 Mac Mouse Fix에서 캡처하지 않습니다.</string>
 			<key>zero</key>
 			<string></string>
-			<key>one</key>
-			<string>is no longer captured by Mac Mouse Fix.</string>
-			<key>other</key>
-			<string>are no longer captured by Mac Mouse Fix.</string>
 		</dict>
 	</dict>
 </dict>
