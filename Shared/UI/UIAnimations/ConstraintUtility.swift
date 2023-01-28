@@ -97,6 +97,19 @@ func transferredSuperViewConstraints(fromView srcView: NSView, toView dstView: N
     return dstConstraints /// Shouldn't this function just assign the dstConstrains to the dstView instead of returning them?
 }
 
+func transferHuggingAndCompressionResistance(fromView srcView: NSView, toView dstView: NSView) {
+    
+    let vComp = srcView.contentCompressionResistancePriority(for: .vertical)
+    let hComp = srcView.contentCompressionResistancePriority(for: .horizontal)
+    let vHug = srcView.contentHuggingPriority(for: .vertical)
+    let hHug = srcView.contentHuggingPriority(for: .horizontal)
+    
+    dstView.setContentCompressionResistancePriority(vComp, for: .vertical)
+    dstView.setContentCompressionResistancePriority(hComp, for: .horizontal)
+    dstView.setContentHuggingPriority(vHug, for: .vertical)
+    dstView.setContentHuggingPriority(hHug, for: .horizontal)
+}
+
 enum MFLayoutConstraintIndex {
     case firstItem
     case secondItem
