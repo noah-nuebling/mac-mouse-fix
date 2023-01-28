@@ -131,7 +131,7 @@ static NSArray *getOneShotEffectsTable(NSDictionary *rowDict) {
     NSDictionary *effectDict = rowDict[kMFRemapsKeyEffect];
     
     NSMutableArray *oneShotEffectsTable = @[
-        @{@"ui": NSLocalizedString(@"effect.look-up", @"First draft: Look Up & Quick Look"), @"tool": NSLocalizedString(@"effect.look-up.hint", @"First draft: Look up words in the Dictionary, Quick Look files in Finder, and more.\n \nWorks like Force Touch on an Apple Trackpad."), @"dict": @{
+        @{@"ui": NSLocalizedString(@"effect.look-up", @"First draft: Look Up & Quick Look"), @"tool": NSLocalizedString(@"effect.look-up.hint", @"First draft: Look up words in the Dictionary, Quick Look files in Finder, and more.\n \nWorks like a Force click on an Apple Trackpad."), @"dict": @{
                   kMFActionDictKeyType: kMFActionDictTypeSymbolicHotkey,
                   kMFActionDictKeyGenericVariant: @(kMFSHLookUp)
         }},
@@ -156,32 +156,32 @@ static NSArray *getOneShotEffectsTable(NSDictionary *rowDict) {
                   kMFActionDictKeyGenericVariant: kMFNavigationSwipeVariantRight
         }},
         separatorEffectsTableEntry(),
-//        @{@"ui": NSLocalizedString(@"effect.mission-control", @"First draft: Mission Control"), @"tool": NSLocalizedString(@"effect.mission-control.hint", @"First draft: Show Mission Control"), @"dict": @{
-//                  kMFActionDictKeyType: kMFActionDictTypeSymbolicHotkey,
-//                  kMFActionDictKeyGenericVariant: @(kMFSHMissionControl)
-//        }},
-//        @{@"ui": NSLocalizedString(@"effect.app-expose", @"First draft: Application Windows"), @"tool": NSLocalizedString(@"effect.app-expose.hint", @"First draft: Show all windows of the active app"), @"dict": @{
-//                  kMFActionDictKeyType: kMFActionDictTypeSymbolicHotkey,
-//                  kMFActionDictKeyGenericVariant: @(kMFSHAppExpose)
-//        }},
+        @{@"ui": NSLocalizedString(@"effect.mission-control", @"First draft: Mission Control"), @"tool": NSLocalizedString(@"effect.mission-control.hint", @"First draft: Show Mission Control"), @"dict": @{
+                  kMFActionDictKeyType: kMFActionDictTypeSymbolicHotkey,
+                  kMFActionDictKeyGenericVariant: @(kMFSHMissionControl)
+        }},
+        @{@"ui": NSLocalizedString(@"effect.app-expose", @"First draft: Application Windows"), @"tool": NSLocalizedString(@"effect.app-expose.hint", @"First draft: Show all windows of the active app"), @"dict": @{
+                  kMFActionDictKeyType: kMFActionDictTypeSymbolicHotkey,
+                  kMFActionDictKeyGenericVariant: @(kMFSHAppExpose)
+        }},
         @{@"ui": NSLocalizedString(@"effect.desktop", @"First draft: Show Desktop"), @"tool": NSLocalizedString(@"effect.desktop.hint", @"First draft: Show the desktop"), @"dict": @{
                   kMFActionDictKeyType: kMFActionDictTypeSymbolicHotkey,
                   kMFActionDictKeyGenericVariant: @(kMFSHShowDesktop)
         }},
-//        separatorEffectsTableEntry(),
+        separatorEffectsTableEntry(),
         @{@"ui": NSLocalizedString(@"effect.launchpad", @"First draft: Launchpad"), @"tool": NSLocalizedString(@"effect.launchpad.hint", @"First draft: Open Launchpad"), @"dict": @{
                   kMFActionDictKeyType: kMFActionDictTypeSymbolicHotkey,
                   kMFActionDictKeyGenericVariant: @(kMFSHLaunchpad)
         }},
-//        separatorEffectsTableEntry(),
-//        @{@"ui": NSLocalizedString(@"effect.left-space", @"First draft: Move Left a Space"), @"tool": NSLocalizedString(@"effect.left-space.hint", @"First draft: Move one Space to the left"), @"dict": @{
-//                  kMFActionDictKeyType: kMFActionDictTypeSymbolicHotkey,
-//                  kMFActionDictKeyGenericVariant: @(kMFSHMoveLeftASpace)
-//        }},
-//        @{@"ui": NSLocalizedString(@"effect.right-space", @"First draft: Move Right a Space"), @"tool": NSLocalizedString(@"effect.right-space.hint", @"First draft: Move one Space to the right"), @"dict": @{
-//                  kMFActionDictKeyType: kMFActionDictTypeSymbolicHotkey,
-//                  kMFActionDictKeyGenericVariant: @(kMFSHMoveRightASpace)
-//        }},
+        separatorEffectsTableEntry(),
+        @{@"ui": NSLocalizedString(@"effect.left-space", @"First draft: Move Left a Space"), @"tool": NSLocalizedString(@"effect.left-space.hint", @"First draft: Move one Space to the left"), @"dict": @{
+                  kMFActionDictKeyType: kMFActionDictTypeSymbolicHotkey,
+                  kMFActionDictKeyGenericVariant: @(kMFSHMoveLeftASpace)
+        }},
+        @{@"ui": NSLocalizedString(@"effect.right-space", @"First draft: Move Right a Space"), @"tool": NSLocalizedString(@"effect.right-space.hint", @"First draft: Move one Space to the right"), @"dict": @{
+                  kMFActionDictKeyType: kMFActionDictTypeSymbolicHotkey,
+                  kMFActionDictKeyGenericVariant: @(kMFSHMoveRightASpace)
+        }},
         separatorEffectsTableEntry(),
         @{@"ui": NSLocalizedString(@"effect.record-shortcut", @"First draft: Keyboard Shortcut..."), @"tool": NSLocalizedString(@"effect.record-shortcut.hint", @"First draft: Type a keyboard shortcut, then use it from your mouse"), @"keyCaptureEntry": @YES},
     ].mutableCopy;
@@ -242,7 +242,7 @@ static NSArray *getOneShotEffectsTable(NSDictionary *rowDict) {
     
     int separator = -1;
     
-    MFSystemDefinedEventType systemEventTypes[] =  {
+    MFSystemDefinedEventType systemEventTypes[] = {
         kMFSystemEventTypeBrightnessDown,
         kMFSystemEventTypeBrightnessUp,
         separator,
@@ -268,7 +268,7 @@ static NSArray *getOneShotEffectsTable(NSDictionary *rowDict) {
                 kMFActionDictKeyType: kMFActionDictTypeSystemDefinedEvent,
                 kMFActionDictKeySystemDefinedEventVariantType: @(type),
                 kMFActionDictKeySystemDefinedEventVariantModifierFlags: @(0),
-    };
+            };
     
             NSAttributedString *shortcutString = getShortcutString(actionDict, NO);
             NSString *shortcutStringRaw = [shortcutString stringWithAttachmentDescriptions];
@@ -744,7 +744,7 @@ static NSString *effectNameForRowDict(NSDictionary * _Nonnull rowDict) {
     
     /// Validate
     
-    NSAssert(tr != nil && ![tr.string isEqual:@""], @"Trigger string is empty. This is probably because there are missing translations. Translate strings starting with trigger. to fix this.");
+    NSAssert(tr != nil && ![tr.string isEqual:@""], @"Trigger string is empty. This is probably because there are missing translations. Translate strings starting with `trigger.` to fix this.");
     
     ///
     /// Build button modifier string

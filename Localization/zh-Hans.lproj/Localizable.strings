@@ -181,7 +181,7 @@
 /* First draft: Look Up & Quick Look */
 "effect.look-up" = "查询与快速查看";
 
-/* First draft: Look up words in the Dictionary, Quick Look files in Finder, and more.\n \nWorks like Force Touch on an Apple Trackpad. */
+/* First draft: Look up words in the Dictionary, Quick Look files in Finder, and more.\n \nWorks like a Force click on an Apple Trackpad. */
 "effect.look-up.hint" = "查询词典、在Finder中“快速查看”等。\n \n作用相当于在Apple触控板上用单指用力点按。";
 
 /* First draft: Middle Click */

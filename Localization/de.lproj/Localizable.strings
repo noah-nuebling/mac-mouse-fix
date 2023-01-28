@@ -73,7 +73,7 @@
 /* First draft: Look Up & Quick Look */
 "effect.look-up" = "Quick Look & Nachschlagen";
 
-/* First draft: Look up words in the Dictionary, Quick Look files in Finder, and more.\n \nWorks like Force Touch on an Apple Trackpad. */
+/* First draft: Look up words in the Dictionary, Quick Look files in Finder, and more.\n \nWorks like a Force click on an Apple Trackpad. */
 "effect.look-up.hint" = "Schlage Wörter im Wörterbuch nach, werfe einen schnellen Blick auf Dateien im Finder, und mehr\n \nFunktioniert wie ein kräftiger Klick bei einem Apple Trackpad";
 
 /* First draft: Middle Click */
