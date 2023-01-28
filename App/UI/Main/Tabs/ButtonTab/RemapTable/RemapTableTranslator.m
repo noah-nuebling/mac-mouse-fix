@@ -84,9 +84,9 @@ static NSArray *getScrollEffectsTable() {
         @{@"ui": NSLocalizedString(@"scroll-effect.horizontal", @"First draft: Horizontal Scroll"), @"tool": NSLocalizedString(@"scroll-effect.horizontal.hint", @"First draft: Scroll left and right, navigate between pages in Safari, delete messages in Mail and more\n \nWorks like swiping horizontally with 2 fingers on an Apple Trackpad"), @"dict": @{
             kMFModifiedScrollDictKeyEffectModificationType: kMFModifiedScrollEffectModificationTypeHorizontalScroll
         }},
-//        @{@"ui": NSLocalizedString(@"scroll-effect.rotate", @"First draft: Rotate"), @"hideable": @NO, @"tool": NSLocalizedString(@"scroll-effect.rotate.hint", @"First draft: Rotate content in Apple Maps and other apps\n \nWorks like twisting with 2 fingers on an Apple Trackpad"), @"dict": @{
-//            kMFModifiedScrollDictKeyEffectModificationType: kMFModifiedScrollEffectModificationTypeRotate
-//        }},
+        @{@"ui": NSLocalizedString(@"scroll-effect.rotate", @"First draft: Rotate"), @"hideable": @NO, @"tool": NSLocalizedString(@"scroll-effect.rotate.hint", @"First draft: Rotate content in Apple Maps and other apps\n \nWorks like twisting with 2 fingers on an Apple Trackpad"), @"dict": @{
+            kMFModifiedScrollDictKeyEffectModificationType: kMFModifiedScrollEffectModificationTypeRotate
+        }},
         separatorEffectsTableEntry(),
         @{@"ui": NSLocalizedString(@"scroll-effect.swift", @"First draft: Swift Scroll"), @"tool": NSLocalizedString(@"scroll-effect.swift.hint", @"Scroll long distances with minimal effort"), @"dict": @{
             kMFModifiedScrollDictKeyInputModificationType: kMFModifiedScrollInputModificationTypeQuickScroll
