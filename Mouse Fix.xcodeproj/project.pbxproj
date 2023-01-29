@@ -127,6 +127,8 @@
 		4F94F60525E5EC2800D9F24A /* Mac_Mouse_FixTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F94F60425E5EC2800D9F24A /* Mac_Mouse_FixTests.m */; };
 		4F94F61025E5EC2800D9F24A /* Mac_Mouse_FixUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F94F60F25E5EC2800D9F24A /* Mac_Mouse_FixUITests.m */; };
 		4F96060F27B4F92F004D6F6D /* TouchAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F96060E27B4F92F004D6F6D /* TouchAnimator.swift */; };
+		4F97E001298732E500012BAC /* LocalizationUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F97E000298732E500012BAC /* LocalizationUtility.m */; };
+		4F97E002298732E500012BAC /* LocalizationUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F97E000298732E500012BAC /* LocalizationUtility.m */; };
 		4F9C9B58268A29B70083DED0 /* RollingAverage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F9C9B57268A29B70083DED0 /* RollingAverage.swift */; };
 		4F9C9B60268A29FE0083DED0 /* Smoother.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F9C9B5F268A29FE0083DED0 /* Smoother.swift */; };
 		4F9C9B6B268A2D6F0083DED0 /* CircularBuffer.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F9C9B6A268A2D6F0083DED0 /* CircularBuffer.m */; };
@@ -545,6 +547,8 @@
 		4F94F60F25E5EC2800D9F24A /* Mac_Mouse_FixUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Mac_Mouse_FixUITests.m; sourceTree = "<group>"; };
 		4F94F61125E5EC2800D9F24A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4F96060E27B4F92F004D6F6D /* TouchAnimator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TouchAnimator.swift; sourceTree = "<group>"; };
+		4F97DFFF298732E500012BAC /* LocalizationUtility.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LocalizationUtility.h; sourceTree = "<group>"; };
+		4F97E000298732E500012BAC /* LocalizationUtility.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LocalizationUtility.m; sourceTree = "<group>"; };
 		4F9C14AD27BAE773008A1479 /* HIDEvent.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HIDEvent.h; sourceTree = "<group>"; };
 		4F9C14AE27BAE802008A1479 /* HIDBase.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HIDBase.h; sourceTree = "<group>"; };
 		4F9C14AF27BAEA71008A1479 /* HIDEventBase.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HIDEventBase.h; sourceTree = "<group>"; };
@@ -1242,6 +1246,8 @@
 				4F909D1728A0C3D2009349A2 /* Localizable.strings */,
 				4F6B02C228AD9E4400B5BA93 /* Localizable.stringsdict */,
 				4F909D1928A0C3D2009349A2 /* Localization How To.md */,
+				4F97DFFF298732E500012BAC /* LocalizationUtility.h */,
+				4F97E000298732E500012BAC /* LocalizationUtility.m */,
 			);
 			path = Localization;
 			sourceTree = "<group>";
@@ -2434,6 +2440,7 @@
 				4FDE75A728B25FB300662314 /* NSAttributedString+Extensions.swift in Sources */,
 				4FA40D0F28A0D8EF00499E53 /* SubPixelator.m in Sources */,
 				4F44794528B62FA400AD1979 /* LicenseConfig.swift in Sources */,
+				4F97E001298732E500012BAC /* LocalizationUtility.m in Sources */,
 				4F39BC4A263B179200FDF692 /* AppState.m in Sources */,
 				4FBC943B260F8AA60062F186 /* MASShortcut.m in Sources */,
 				4F909D3B28A0C3D2009349A2 /* ModCaptureDeleteButton.swift in Sources */,
@@ -2616,6 +2623,7 @@
 				4F17D2E1292A635200EB07CA /* SwitchMaster.swift in Sources */,
 				4FD0A71127B295F600FFCD12 /* GeneralConfig.swift in Sources */,
 				4F1D58192881D880002EB119 /* CombinedLinearCurve.swift in Sources */,
+				4F97E002298732E500012BAC /* LocalizationUtility.m in Sources */,
 				4FFA4E3E28B7AA250062A1FE /* NotificationLabel.m in Sources */,
 				4FF6669A25F2C93A00689B77 /* ModificationUtility.m in Sources */,
 				4FF6669D25F2C93A00689B77 /* AccessibilityCheck.m in Sources */,
