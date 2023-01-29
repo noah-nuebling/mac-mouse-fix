@@ -11,12 +11,12 @@
 
 @implementation LocalizationUtility
 
-+ (double)currentLanguageInformationDensity {
++ (double)informationDensityOfCurrentLanguage {
     NSString *languageCode = [NSLocale.currentLocale objectForKey:NSLocaleLanguageCode];
-    return [self languageInformationDensity:languageCode];
+    return [self informationDensityOfLanguage:languageCode];
 }
 
-+ (double)languageInformationDensity:(NSString *)languageCode {
++ (double)informationDensityOfLanguage:(NSString *)languageCode {
     
     /// At the time of writing, this is used to determine how long toast notifications should stay visible. The time is supposed to be proportional to the information content of the message which is equal to the number of characters in the message times the information density of the language that the message is written in.
     /// To determine the information density I just compare a few UI text based on how many characters they have vs the same message in English.

@@ -13,7 +13,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface LocalizationUtility : NSObject
 
-+ (double)currentLanguageInformationDensity;
++ (double)informationDensityOfCurrentLanguage;
 
 @end
 

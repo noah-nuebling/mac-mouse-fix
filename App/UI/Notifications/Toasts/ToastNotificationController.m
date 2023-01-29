@@ -85,9 +85,9 @@ static double _toastAnimationOffset = 20;
     
     /// Process showDuration
     if (showDuration <= 0) {
-        showDuration = message.length * 0.08 * [LocalizationUtility currentLanguageInformationDensity];
+        showDuration = message.length * 0.08 * [LocalizationUtility informationDensityOfCurrentLanguage];
     } else {
-        showDuration *= [LocalizationUtility currentLanguageInformationDensity];
+        showDuration *= [LocalizationUtility informationDensityOfCurrentLanguage];
     }
     
     /// Constants
