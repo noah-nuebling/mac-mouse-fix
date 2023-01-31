@@ -60,8 +60,8 @@ class GeneralTabController: NSViewController {
             
             let superView = enableToggle.superview as! NSStackView
             superView.replaceSubview(enableToggle, with: switchView)
-            switchView.addConstraints(transferredSuperViewConstraints(fromView: enableToggle, toView: switchView, transferSizeConstraints: false)) /// Doesn't seem to make a difference currently
-            switchView.setContentCompressionResistancePriority(.required, for: .vertical)
+            NSLayoutConstraint.activate(transferredSuperViewConstraints(fromView: enableToggle, toView: switchView, transferSizeConstraints: false)) /// Currently unnecessary because there are no constraints
+            transferHuggingAndCompressionResistance(fromView: enableToggle, toView: switchView)
             
             self.enableToggle = switchView
 
