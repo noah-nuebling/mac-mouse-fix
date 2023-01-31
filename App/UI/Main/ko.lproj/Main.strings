@@ -1,5 +1,5 @@
 /* Class = "NSMenuItem"; title = "Regular"; ObjectID = "17P-PJ-tV1"; Note = "Scrolling > Smoothness > Regular Option"; */
-"17P-PJ-tV1.title" = "중간";
+"17P-PJ-tV1.title" = "보통";
 
 /* Class = "NSMenuItem"; title = "Undo"; ObjectID = "1TU-wL-skT"; */
 "1TU-wL-skT.title" = "실행 취소";
@@ -26,7 +26,7 @@
 "4gx-d0-WNb.title" = "끔";
 
 /* Class = "NSButtonCell"; title = "Precision"; ObjectID = "4hf-tQ-y76"; Note = "Scrolling > Precise Scrolling Toggle"; */
-"4hf-tQ-y76.title" = "정밀";
+"4hf-tQ-y76.title" = "정밀하게 스크롤";
 
 /* Class = "NSTextFieldCell"; title = "Write a Feature Request"; ObjectID = "5yb-g8-Kcg"; */
 "5yb-g8-Kcg.title" = "기능개선 요청하기";
@@ -47,7 +47,7 @@
 "8pi-FV-zYE.title" = "법적 공지";
 
 /* Class = "NSMenuItem"; title = "High"; ObjectID = "97W-3h-SSc"; Note = "Scrolling > Smoothness > High Option"; */
-"97W-3h-SSc.title" = "높음";
+"97W-3h-SSc.title" = "부드럽게";
 
 /* Class = "NSTextFieldCell"; title = "Scroll Precisely"; ObjectID = "A6t-UZ-2DE"; Note = "Scrolling > Keyboard Modifiers > Scroll Precisely Label"; */
 "A6t-UZ-2DE.title" = "정밀 스크롤";
@@ -59,7 +59,7 @@
 "AYu-sK-qS6.title" = "메인 메뉴";
 
 /* Class = "NSTextFieldCell"; title = "Lets you quickly turn off or on features like\nsmooth scrolling"; ObjectID = "AqN-zN-yDS"; */
-"AqN-zN-yDS.title" = "부드러운 스크롤링과 같은 기능을 손쉽게 켜거나\n끌 수 있습니다.";
+"AqN-zN-yDS.title" = "부드러운 스크롤과 같은 기능을 손쉽게 켜거나\n끌 수 있습니다.";
 
 /* Class = "NSMenuItem"; title = "Hide Mac Mouse Fix"; ObjectID = "Bnm-ze-Mca"; */
 "Bnm-ze-Mca.title" = "Mac Mouse Fix 가리기";
@@ -77,7 +77,7 @@
 "E0q-4e-axc.title" = "보통";
 
 /* Class = "NSTextFieldCell"; title = "Scroll Swiftly"; ObjectID = "ENz-Ny-4ax"; Note = "Scrolling > Keyboard Modifiers > Scroll Swiftly Label"; */
-"ENz-Ny-4ax.title" = "신속 스크롤";
+"ENz-Ny-4ax.title" = "고속 스크롤";
 
 /* Class = "NSMenuItem"; title = "Low"; ObjectID = "FT8-zP-xsg"; Note = "Scrolling > Scroll Speed > Low Option"; */
 "FT8-zP-xsg.title" = "느림";
@@ -158,7 +158,7 @@
 "SaY-fF-d1s.title" = "이 창을 열 때마다 업데이트를 확인합니다.";
 
 /* Class = "NSTextFieldCell"; title = "Smoothness:"; ObjectID = "SjO-Dq-CEX"; Note = "Scrolling > Smoothness Label"; */
-"SjO-Dq-CEX.title" = "부드러움:";
+"SjO-Dq-CEX.title" = "부드러운 스크롤:";
 
 /* Class = "NSTextFieldCell"; title = "Buy Me a Milkshake :)"; ObjectID = "TrI-uu-DEN"; */
 "TrI-uu-DEN.title" = "밀크쉐이크 사주기 :)";

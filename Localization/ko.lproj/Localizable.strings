@@ -224,7 +224,7 @@
 "is-strange-helper-alert.title" = "활성화 실패";
 
 /* First draft: Mac Mouse Fix can't be enabled because there's __another version__ of Mac Mouse Fix present on your computer\n\nTo enable Mac Mouse Fix:\n\n1. Delete the [other version](%@)\n2. Empty the Bin\n3. Restart your Mac\n4. Try again! */
-"is-strange-helper-alert.body" = "컴퓨터에 **다른 버전**이 발견되어 Mac Mouse Fix를 사용할 수 없습니다.\n\nMac Mouse Fix를 사용하려면 다음 절차를 따르십시오:\n\n1. [다른 버전](%@)을 제거합니다.\n2. 휴지통을 비웁니다.\n3. Mac을 재시동합니다.\n4. 다시 시도합니다.";
+"is-strange-helper-alert.body" = "컴퓨터에 **다른 버전의 앱**이 발견되어 Mac Mouse Fix를 사용할 수 없습니다.\n\nMac Mouse Fix를 사용하려면 다음 절차를 따르십시오:\n\n1. [다른 버전](%@)을 제거합니다.\n2. 휴지통을 비웁니다.\n3. Mac을 재시동합니다.\n4. 다시 시도합니다.";
 
 /* First draft: ,  || Note: This string joins elements in a list except the second-to-last and last one. || Note: The first draft contains a space after the comma. */
 "join-list" = ", ";
@@ -317,7 +317,7 @@
 "scroll-effect.precise.hint" = "짧은 거리를 스크롤하여 민감한 UI 요소를 정밀하게 조작할 수 있습니다.";
 
 /* First draft: Swift Scroll */
-"scroll-effect.swift" = "신속 스크롤";
+"scroll-effect.swift" = "고속 스크롤";
 
 /* Scroll long distances with minimal effort */
 "scroll-effect.swift.hint" = "적은 움직임으로 먼 거리를 스크롤합니다.";
@@ -461,7 +461,7 @@
 "type-shortcut-prompt" = "키를 입력하세요.";
 
 /* First draft: Back */
-"mail-alert.back" = "돌아가기";
+"mail-alert.back" = "뒤로";
 
 /* First draft: Write Email */
 "mail-alert.send" = "이메일 작성";
@@ -494,13 +494,13 @@
 "restore-buttons-alert.hint" = "사용자의 **%@** 마우스에서 **%d개**의 버튼이 감지되었습니다.";
 
 /* First draft: Mouse with 3 buttons */
-"restore-buttons-alert.radio1" = "3개 버튼의 마우스";
+"restore-buttons-alert.radio1" = "3버튼 마우스";
 
 /* First draft: Mouse with 5+ buttons */
-"restore-buttons-alert.radio2" = "5개 이상 버튼의 마우스";
+"restore-buttons-alert.radio2" = "5버튼 이상의 마우스";
 
 /* First draft: Restore Default for ... */
-"restore-buttons-alert.title" = "마우스에 맞는 기본값으로 재설정 ...";
+"restore-buttons-alert.title" = "마우스에 맞는 기본값으로 재설정";
 
 /* First draft: You're __already using__ the default setting for mice with __3 buttons__ */
 "already-using-defaults-toast.3" = "이미 __3개 버튼__의 마우스에 해당하는 기본 설정을 사용 중입니다.";
