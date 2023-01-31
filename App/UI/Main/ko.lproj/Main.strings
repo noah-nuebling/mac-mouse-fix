@@ -53,7 +53,7 @@
 "A6t-UZ-2DE.title" = "정밀 스크롤";
 
 /* Class = "NSTextFieldCell"; title = "Move between pages in Safari by scrolling horizontally, and more"; ObjectID = "AHn-zX-g4d"; Note = "Scrolling > Trackpad Interactions > Hint"; */
-"AHn-zX-g4d.title" = "Safari에서 수평 스크롤 등의 동작을 통해 페이지 간에 이동합니다.";
+"AHn-zX-g4d.title" = "Safari에서 수평 스크롤 등의 동작을 통해 페이지 간에\n이동합니다.";
 
 /* Class = "NSMenu"; title = "Main Menu"; ObjectID = "AYu-sK-qS6"; */
 "AYu-sK-qS6.title" = "메인 메뉴";
@@ -119,7 +119,7 @@
 "N65-aN-Hxp.title" = "트랙패드 시뮬레이션";
 
 /* Class = "NSTextFieldCell"; title = "Move the mouse pointer inside the '+' field, then _Click_ a mouse button to assign an action to it.  You can also _Double Click_, _Click and Drag_ and [more]()."; ObjectID = "N7H-9j-DIr"; Note = "Buttons > Add Field Hint"; */
-"N7H-9j-DIr.title" = "마우스 포인터를 '+' 영역 위에 두고, 마우스 버튼을 *클릭*하여 액션을 할당할 수 있습니다. *이중 클릭*이나 *클릭 및 드래그* [등의]() 동작도 가능합니다.";
+"N7H-9j-DIr.title" = "마우스 포인터를 '+' 영역 위에 두고, 마우스 버튼을 *클릭*하여 액션을 할당할 수 있습니다.\n*이중 클릭*이나 *클릭 및 드래그* [등의]() 동작도 가능합니다.";
 
 /* Class = "NSMenuItem"; title = "Minimize"; ObjectID = "NdF-Gb-mOK"; */
 "NdF-Gb-mOK.title" = "최소화";

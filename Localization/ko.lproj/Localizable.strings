@@ -284,7 +284,7 @@
 "natural-scrolling-hint" = "손가락이 움직임이는 방향에 따라 콘텐츠가 이동됩니다.";
 
 /* First draft: Scroll precisely even without a keyboard modifier by\nmoving the scroll wheel slowly || Note: The line break (\n) is there so the layout of the Scroll tab doesn't become too wide which looks weird. You can set it to your own taste. */
-"precise-scrolling-hint" = "스크롤을 *천천히* 움직이는 경우, 보조 키를 사용하지 않아도 정밀하게 스크롤합니다.";
+"precise-scrolling-hint" = "스크롤을 *천천히* 움직이는 경우, 보조 키를 사용하지 않더라도\n정밀하게 스크롤합니다.";
 
 /* First draft: Desktop & Launchpad */
 "scroll-effect.4-pinch" = "데스크탑 및 Launchpad";
