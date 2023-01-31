@@ -127,6 +127,8 @@
 		4F94F60525E5EC2800D9F24A /* Mac_Mouse_FixTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F94F60425E5EC2800D9F24A /* Mac_Mouse_FixTests.m */; };
 		4F94F61025E5EC2800D9F24A /* Mac_Mouse_FixUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F94F60F25E5EC2800D9F24A /* Mac_Mouse_FixUITests.m */; };
 		4F96060F27B4F92F004D6F6D /* TouchAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F96060E27B4F92F004D6F6D /* TouchAnimator.swift */; };
+		4F97E001298732E500012BAC /* LocalizationUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F97E000298732E500012BAC /* LocalizationUtility.m */; };
+		4F97E002298732E500012BAC /* LocalizationUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F97E000298732E500012BAC /* LocalizationUtility.m */; };
 		4F9C9B58268A29B70083DED0 /* RollingAverage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F9C9B57268A29B70083DED0 /* RollingAverage.swift */; };
 		4F9C9B60268A29FE0083DED0 /* Smoother.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F9C9B5F268A29FE0083DED0 /* Smoother.swift */; };
 		4F9C9B6B268A2D6F0083DED0 /* CircularBuffer.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F9C9B6A268A2D6F0083DED0 /* CircularBuffer.m */; };
@@ -545,6 +547,8 @@
 		4F94F60F25E5EC2800D9F24A /* Mac_Mouse_FixUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Mac_Mouse_FixUITests.m; sourceTree = "<group>"; };
 		4F94F61125E5EC2800D9F24A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4F96060E27B4F92F004D6F6D /* TouchAnimator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TouchAnimator.swift; sourceTree = "<group>"; };
+		4F97DFFF298732E500012BAC /* LocalizationUtility.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LocalizationUtility.h; sourceTree = "<group>"; };
+		4F97E000298732E500012BAC /* LocalizationUtility.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LocalizationUtility.m; sourceTree = "<group>"; };
 		4F9C14AD27BAE773008A1479 /* HIDEvent.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HIDEvent.h; sourceTree = "<group>"; };
 		4F9C14AE27BAE802008A1479 /* HIDBase.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HIDBase.h; sourceTree = "<group>"; };
 		4F9C14AF27BAEA71008A1479 /* HIDEventBase.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HIDEventBase.h; sourceTree = "<group>"; };
@@ -819,6 +823,13 @@
 		4FFBC5732667DCE4001D389B /* PrefixHeader.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PrefixHeader.pch; sourceTree = "<group>"; };
 		4FFBC5A6266977CA001D389B /* Mac Mouse Fix Helper-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Mac Mouse Fix Helper-Bridging-Header.h"; sourceTree = "<group>"; };
 		4FFBC5A7266977CA001D389B /* DoubleExponentialSmoother.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DoubleExponentialSmoother.swift; sourceTree = "<group>"; };
+		D0BDAA91297D462C001CA0FC /* ko */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ko; path = ko.lproj/Localizable.strings; sourceTree = "<group>"; };
+		D0BDAA92297D462D001CA0FC /* ko */ = {isa = PBXFileReference; lastKnownFileType = text.plist.stringsdict; name = ko; path = ko.lproj/Localizable.stringsdict; sourceTree = "<group>"; };
+		D0BDAA93297D462D001CA0FC /* ko */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ko; path = ko.lproj/Main.strings; sourceTree = "<group>"; };
+		D0BDAA94297D462D001CA0FC /* ko */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ko; path = ko.lproj/ButtonOptionsViewController.strings; sourceTree = "<group>"; };
+		D0BDAA95297D462D001CA0FC /* ko */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ko; path = ko.lproj/AuthorizeAccessibilityView.strings; sourceTree = "<group>"; };
+		D0BDAA96297D462D001CA0FC /* ko */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ko; path = ko.lproj/LicenseSheetController.strings; sourceTree = "<group>"; };
+		D0BDAA97297D462D001CA0FC /* ko */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ko; path = ko.lproj/MenuBarItem.strings; sourceTree = "<group>"; };
 		F449C32228DC555E00136800 /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hant"; path = "zh-Hant.lproj/ButtonOptionsViewController.strings"; sourceTree = "<group>"; };
 		F449C32328DC555E00136800 /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hant"; path = "zh-Hant.lproj/Main.strings"; sourceTree = "<group>"; };
 		F449C32428DC555E00136800 /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hant"; path = "zh-Hant.lproj/AuthorizeAccessibilityView.strings"; sourceTree = "<group>"; };
@@ -1235,6 +1246,8 @@
 				4F909D1728A0C3D2009349A2 /* Localizable.strings */,
 				4F6B02C228AD9E4400B5BA93 /* Localizable.stringsdict */,
 				4F909D1928A0C3D2009349A2 /* Localization How To.md */,
+				4F97DFFF298732E500012BAC /* LocalizationUtility.h */,
+				4F97E000298732E500012BAC /* LocalizationUtility.m */,
 			);
 			path = Localization;
 			sourceTree = "<group>";
@@ -2278,6 +2291,7 @@
 				"zh-Hant",
 				"zh-HK",
 				"zh-Hans",
+				ko,
 			);
 			mainGroup = 4FCECD7721092354001F1078;
 			packageReferences = (
@@ -2426,6 +2440,7 @@
 				4FDE75A728B25FB300662314 /* NSAttributedString+Extensions.swift in Sources */,
 				4FA40D0F28A0D8EF00499E53 /* SubPixelator.m in Sources */,
 				4F44794528B62FA400AD1979 /* LicenseConfig.swift in Sources */,
+				4F97E001298732E500012BAC /* LocalizationUtility.m in Sources */,
 				4F39BC4A263B179200FDF692 /* AppState.m in Sources */,
 				4FBC943B260F8AA60062F186 /* MASShortcut.m in Sources */,
 				4F909D3B28A0C3D2009349A2 /* ModCaptureDeleteButton.swift in Sources */,
@@ -2608,6 +2623,7 @@
 				4F17D2E1292A635200EB07CA /* SwitchMaster.swift in Sources */,
 				4FD0A71127B295F600FFCD12 /* GeneralConfig.swift in Sources */,
 				4F1D58192881D880002EB119 /* CombinedLinearCurve.swift in Sources */,
+				4F97E002298732E500012BAC /* LocalizationUtility.m in Sources */,
 				4FFA4E3E28B7AA250062A1FE /* NotificationLabel.m in Sources */,
 				4FF6669A25F2C93A00689B77 /* ModificationUtility.m in Sources */,
 				4FF6669D25F2C93A00689B77 /* AccessibilityCheck.m in Sources */,
@@ -2742,6 +2758,7 @@
 				F449C32528DC555E00136800 /* zh-Hant */,
 				F4EBD4C328DEBA8D0057D2DE /* zh-HK */,
 				F4EBD4CA28DEFC4A0057D2DE /* zh-Hans */,
+				D0BDAA96297D462D001CA0FC /* ko */,
 			);
 			name = LicenseSheetController.xib;
 			sourceTree = "<group>";
@@ -2754,6 +2771,7 @@
 				F449C32828DC555E00136800 /* zh-Hant */,
 				F4EBD4C628DEBA8D0057D2DE /* zh-HK */,
 				F4EBD4CD28DEFC4A0057D2DE /* zh-Hans */,
+				D0BDAA92297D462D001CA0FC /* ko */,
 			);
 			name = Localizable.stringsdict;
 			sourceTree = "<group>";
@@ -2766,6 +2784,7 @@
 				F449C32328DC555E00136800 /* zh-Hant */,
 				F4EBD4C128DEBA8D0057D2DE /* zh-HK */,
 				F4EBD4C828DEFC4A0057D2DE /* zh-Hans */,
+				D0BDAA93297D462D001CA0FC /* ko */,
 			);
 			name = Main.storyboard;
 			sourceTree = "<group>";
@@ -2778,6 +2797,7 @@
 				F449C32728DC555E00136800 /* zh-Hant */,
 				F4EBD4C528DEBA8D0057D2DE /* zh-HK */,
 				F4EBD4CC28DEFC4A0057D2DE /* zh-Hans */,
+				D0BDAA91297D462C001CA0FC /* ko */,
 			);
 			name = Localizable.strings;
 			sourceTree = "<group>";
@@ -2790,6 +2810,7 @@
 				F449C32628DC555E00136800 /* zh-Hant */,
 				F4EBD4C428DEBA8D0057D2DE /* zh-HK */,
 				F4EBD4CB28DEFC4A0057D2DE /* zh-Hans */,
+				D0BDAA97297D462D001CA0FC /* ko */,
 			);
 			name = MenuBarItem.xib;
 			sourceTree = "<group>";
@@ -2802,6 +2823,7 @@
 				F449C32428DC555E00136800 /* zh-Hant */,
 				F4EBD4C228DEBA8D0057D2DE /* zh-HK */,
 				F4EBD4C928DEFC4A0057D2DE /* zh-Hans */,
+				D0BDAA95297D462D001CA0FC /* ko */,
 			);
 			name = AuthorizeAccessibilityView.xib;
 			sourceTree = "<group>";
@@ -2814,6 +2836,7 @@
 				F449C32228DC555E00136800 /* zh-Hant */,
 				F4EBD4C028DEBA8D0057D2DE /* zh-HK */,
 				F4EBD4C728DEFC4A0057D2DE /* zh-Hans */,
+				D0BDAA94297D462D001CA0FC /* ko */,
 			);
 			name = ButtonOptionsViewController.xib;
 			sourceTree = "<group>";
@@ -2845,7 +2868,7 @@
 				);
 				INFOPLIST_FILE = App/SupportFiles/Info.plist;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
-				MARKETING_VERSION = 3.0.0;
+				MARKETING_VERSION = "3.0.0 GM";
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.nuebling.mac-mouse-fix";
@@ -2880,7 +2903,7 @@
 				);
 				INFOPLIST_FILE = App/SupportFiles/Info.plist;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
-				MARKETING_VERSION = 3.0.0;
+				MARKETING_VERSION = "3.0.0 GM";
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.nuebling.mac-mouse-fix";
 				PRODUCT_NAME = "$(TARGET_NAME)";

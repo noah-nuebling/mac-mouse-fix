@@ -22,7 +22,7 @@
     /// Call core
     NSAttributedString *string = [Symbols stringWithSymbolName:symbolName stringFallback:fallbackString font:font];
     
-    /// Check darmode
+    /// Check darkmode
     BOOL isDarkmode = NO;
     if (@available(macOS 10.14, *)) if (NSApp.effectiveAppearance.name == NSAppearanceNameDarkAqua) isDarkmode = YES;
     

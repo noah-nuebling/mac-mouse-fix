@@ -67,6 +67,7 @@
 }
 
 + (NSString *)getButtonString:(MFMouseButtonNumber)buttonNumber {
+    
     NSDictionary *buttonNumberToUIString = @{
         @1: NSLocalizedString(@"button-string.primary",     @"First draft: Primary Button"),
         @2: NSLocalizedString(@"button-string.secondary",   @"First draft: Secondary Button"),
@@ -131,6 +132,9 @@
     
     /// Font is used to get SFSymbol fallback images to align correctly
     
+    /// Approach 1:
+    ///     Embed the SF Symbol image as a text attachment
+    
     NSString *symbolName = @"questionmark.square";
     NSString *stringFallback = @"<Key without description>";
     
@@ -171,15 +175,44 @@
         symbolName = @"capslock";
         stringFallback = NSLocalizedString(@"apple-key-fallback.capslock" , @"First draft: ⇪");
     }
-        
-    /// Validate
+
+    /// Get symbol and attach it to keyStr
+    NSAttributedString *keyStr =  [Symbols keyStringWithSymbol:symbolName fallbackString:stringFallback font:font];
     
+    /// Validate
     if ([symbolName isEqual: @"questionmark.square"]) {
         DDLogWarn(@"Couldn't find visualization for system event with type: %d, flags: %llu", type, flags);
     }
     
-    /// Get symbol and attach it to keyStr
-    NSAttributedString *keyStr =  [Symbols keyStringWithSymbol:symbolName fallbackString:stringFallback font:font];
+    /// Approach 2:
+    ///   Use the SF Symbol unicode character directly.
+    ///   Notes:
+    ///   - This approach is preferable to Approach 1 because we don't need a stringFallback for the tooltip and because it simplifies the code a lot.
+    ///   - However, I tested this under macOS Big Sur, and it didn't work – before I installed the SF Symbois app. After installing the app, it started working perfectly. Not sure what's going on there.
+    ///     Also see the discussion on this GH pull request with @groverlynn: https://github.com/noah-nuebling/mac-mouse-fix/pull/385
+    
+//    NSString *keyStrRaw;
+//
+//    if (type == kMFSystemEventTypeBrightnessDown)               { keyStrRaw = @"􀆫"; }
+//    else if (type == kMFSystemEventTypeBrightnessUp)            { keyStrRaw = @"􀆭"; }
+//    else if (type == kMFSystemEventTypeMediaBack)               { keyStrRaw = @"􀊉"; }
+//    else if (type == kMFSystemEventTypeMediaPlayPause)          { keyStrRaw = @"􀊇"; }
+//    else if (type == kMFSystemEventTypeMediaForward)            { keyStrRaw = @"􀊋"; }
+//    else if (type == kMFSystemEventTypeVolumeMute)              { keyStrRaw = @"􀊠"; }
+//    else if (type == kMFSystemEventTypeVolumeDown)              { keyStrRaw = @"􀊤"; }
+//    else if (type == kMFSystemEventTypeVolumeUp)                { keyStrRaw = @"􀊨"; }
+//    else if (type == kMFSystemEventTypeKeyboardBacklightDown)   { keyStrRaw = @"􀇭"; }
+//    else if (type == kMFSystemEventTypeKeyboardBacklightUp)     { keyStrRaw = @"􀇮"; }
+//    else if (type == kMFSystemEventTypePower)                   { keyStrRaw = @"􀆨"; }
+//    else if (type == kMFSystemEventTypeCapsLock)                { keyStrRaw = @"􀆡"; } /// This symbol doesn't appear on US keyboards, but we disable capturing capslock anyways
+//    else {
+//        keyStrRaw = @"􀅍";
+//        DDLogWarn(@"Couldn't find visualization for system event with type: %d, flags: %llu", type, flags);
+//    }
+//    NSAttributedString *keyStr = keyStrRaw.attributed;
+
+    
+    /// Combine with flagsString and return
     NSString *flagsStr = [UIStrings getKeyboardModifierString:flags];
     return symbolStringWithModifierPrefix(flagsStr, keyStr);
 }
@@ -258,9 +291,13 @@ static CGSSymbolicHotKey _highestSymbolicHotKeyInCache = 0;
             
             CGSSymbolicHotKey shk = (CGSSymbolicHotKey)symbolicHotkey.integerValue;
             
+            
+            /// Approach 1:
+            ///     Embed the SF Symbol image as a text attachment
+            
             NSString *symbolName = @"questionmark.square";
             NSString *stringFallback = NSLocalizedString(@"apple-key-fallback.unknown-key", @"First draft: <Key without description>");
-            
+
             if (shk == kMFFunctionKeySHKMissionControl) {
                 symbolName = @"rectangle.3.group";
                 stringFallback = NSLocalizedString(@"apple-key-fallback.rectangle.3.group", @"First draft: <Mission Control key>");
@@ -280,19 +317,35 @@ static CGSSymbolicHotKey _highestSymbolicHotKeyInCache = 0;
                 symbolName = @"square.grid.3x2";
                 stringFallback = NSLocalizedString(@"apple-key-fallback.square.grid.3x2", @"First draft: <Launchpad key>");
             }
-            
+
             /// Get symbol and attach it to keyStr
             keyStr =  [Symbols keyStringWithSymbol:symbolName fallbackString:stringFallback font:font];
-            
-            /// Validate
-            
+
+            /// Validiate
             if ([symbolName isEqual:@"questionmark.square"]) {
                 DDLogError(@"Couldn't find visualization for keyCode: %d, flags: %llu, symbolicHotKey: %@", keyCode, flags, symbolicHotkey);
             }
+            
+            
+            /// Approach 2:
+            ///     Use the SF Symbol unicode character directly
+            ///     See `+ getStringForSystemDefinedEvent:flags:`for more info
+            
+//            NSString *keyStrRaw;
+//            if (shk == kMFFunctionKeySHKMissionControl)         { keyStrRaw = @"􀇴"; }
+//            else if (shk == kMFFunctionKeySHKDictation)         { keyStrRaw = @"􀊰"; }
+//            else if (shk == kMFFunctionKeySHKSpotlight)         { keyStrRaw = @"􀊫"; }
+//            else if (shk == kMFFunctionKeySHKDoNotDisturb)      { keyStrRaw = @"􀆹"; }
+//            else if (shk == kMFFunctionKeySHKSwitchKeyboard)    { keyStrRaw = @"􀆪"; }
+//            else if (shk == kMFFunctionKeySHKLaunchpad)         { keyStrRaw = @"􀇵"; }
+//            else {
+//                keyStrRaw = @"􀅍";
+//                DDLogError(@"Couldn't find visualization for keyCode: %d, flags: %llu, symbolicHotKey: %@", keyCode, flags, symbolicHotkey);
+//            }
+//            keyStr = keyStrRaw.attributed;
         }
         
         /// Append keyStr and modStr
-        
         NSMutableAttributedString *result = symbolStringWithModifierPrefix(flagsStr, keyStr);
         
         return result;

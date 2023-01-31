@@ -20,6 +20,7 @@
 //#import "NSTextField+Additions.h"
 #import "NotificationLabel.h"
 #import "NSAttributedString+Additions.h"
+#import "LocalizationUtility.h"
 #import "WannabePrefixHeader.h"
 #import "Mac_Mouse_Fix-Swift.h"
 
@@ -35,7 +36,6 @@
 static ToastNotificationController *_instance;
 static NSDictionary *_labelAttributesFromIB;
 static id _localEventMonitor;
-
 
 + (void)initialize {
     
@@ -83,11 +83,14 @@ static double _toastAnimationOffset = 20;
     /// Override default font size from interface builder. This also overrides font size we set to `message` before passing it to this function which might be bad.
 //    message = [message attributedStringBySettingFontSize:NSFont.smallSystemFontSize];
     
-    /// Constants
+    /// Process showDuration
     if (showDuration <= 0) {
-        showDuration = message.length * 0.08;
+        showDuration = message.length * 0.08 * [LocalizationUtility informationDensityOfCurrentLanguage];
+    } else {
+        showDuration *= [LocalizationUtility informationDensityOfCurrentLanguage];
     }
     
+    /// Constants
     double mainWindowTitleBarHeight = 0.0;
     double topEdgeMargin = 0.0;
     double sideMargin = 0.0;
