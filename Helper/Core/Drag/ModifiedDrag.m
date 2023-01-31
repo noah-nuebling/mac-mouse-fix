@@ -323,8 +323,12 @@ static void handleMouseInputWhileInitialized(int64_t deltaX, int64_t deltaY, CGE
         /// Could also do this in normal init `initializeDragWithDict`, but here is more effiicient (`initializeDragWithDict` is called on every mouse click if it's set up for that button)
         /// -> Don't use `naturalDirection` before state switches to `kMFModifiedInputActivationStateInUse`!
         /// TODO: Build UI for this
-        
-        _drag.naturalDirection = [NSUserDefaults.standardUserDefaults boolForKey:@"com.apple.swipescrolldirection"];
+        /// Edit:
+        ///   Lot's of people complained about this in 3.0.0 Beta 6. See https://github.com/noah-nuebling/mac-mouse-fix/issues?q=is%3Aissue+is%3Aopen+label%3A%223.0.0+Beta+6+Click+and+Drag+Direction%22
+        ///   It think reading the userdefaults didn't work properly for many users. So we're disabling this now until we build the UI for it.
+    
+//        _drag.naturalDirection = [NSUserDefaults.standardUserDefaults boolForKey:@"com.apple.swipescrolldirection"];
+        _drag.naturalDirection = true;
         
         /// Notify output plugin
         [_drag.outputPlugin handleBecameInUse];
