@@ -77,13 +77,13 @@
 "button-modifier.3" = "%@ 삼중 클릭 +";
 
 /* First draft: __Enabled__ Mac Mouse Fix for %1@\nIt had been disabled from the Menu Bar %2@ || Note: %1@ will be replaced by the list of enabled features, %2@ will be replaced by the menubar icon */
-"revive-toast" = "%1@에 대한 Mac Mouse Fix 동작이 __다시 활성화__되었습니다.\n이는 사용자에 의해 메뉴 막대 %2@ 에서 수동으로 비활성화되어있었습니다.";
+"revive-toast" = "%1@에 대한 Mac Mouse Fix 동작이 **다시 활성화**되었습니다.\n이는 사용자에 의해 메뉴 막대 %2@ 에서 수동으로 비활성화되어있었습니다.";
 
 /* First draft: __Buttons__ */
-"revive-toast.feature-buttons" = " __버튼__";
+"revive-toast.feature-buttons" = " **버튼**";
 
 /* First draft: __Scrolling__ */
-"revive-toast.feature-scrolling" = "__스크롤__";
+"revive-toast.feature-scrolling" = "**스크롤**";
 
 /* First draft: Middle Button */
 "button-string.middle" = "가운데 버튼";
@@ -224,7 +224,7 @@
 "is-strange-helper-alert.title" = "활성화 실패";
 
 /* First draft: Mac Mouse Fix can't be enabled because there's __another version__ of Mac Mouse Fix present on your computer\n\nTo enable Mac Mouse Fix:\n\n1. Delete the [other version](%@)\n2. Empty the Bin\n3. Restart your Mac\n4. Try again! */
-"is-strange-helper-alert.body" = "컴퓨터에 __다른 버전__이 발견되어 Mac Mouse Fix를 사용할 수 없습니다.\n\nMac Mouse Fix를 사용하려면 다음 절차를 따르십시오:\n\n1. [다른 버전](%@)을 제거합니다.\n2. 휴지통을 비웁니다.\n3. Mac을 재시동합니다.\n4. 다시 시도합니다.";
+"is-strange-helper-alert.body" = "컴퓨터에 **다른 버전**이 발견되어 Mac Mouse Fix를 사용할 수 없습니다.\n\nMac Mouse Fix를 사용하려면 다음 절차를 따르십시오:\n\n1. [다른 버전](%@)을 제거합니다.\n2. 휴지통을 비웁니다.\n3. Mac을 재시동합니다.\n4. 다시 시도합니다.";
 
 /* First draft: ,  || Note: This string joins elements in a list except the second-to-last and last one. || Note: The first draft contains a space after the comma. */
 "join-list" = ", ";
@@ -284,7 +284,7 @@
 "natural-scrolling-hint" = "손가락이 움직임이는 방향에 따라 콘텐츠가 이동됩니다.";
 
 /* First draft: Scroll precisely even without a keyboard modifier by\nmoving the scroll wheel slowly || Note: The line break (\n) is there so the layout of the Scroll tab doesn't become too wide which looks weird. You can set it to your own taste. */
-"precise-scrolling-hint" = "스크롤을 _천천히_ 움직이는 경우, 보조 키를 사용하지 않아도 정밀하게 스크롤합니다.";
+"precise-scrolling-hint" = "스크롤을 *천천히* 움직이는 경우, 보조 키를 사용하지 않아도 정밀하게 스크롤합니다.";
 
 /* First draft: Desktop & Launchpad */
 "scroll-effect.4-pinch" = "데스크탑 및 Launchpad";
@@ -491,7 +491,7 @@
 "restore-buttons-alert.commit" = "재설정";
 
 /* First draft: Your __%@__ mouse says it has __%d__ buttons */
-"restore-buttons-alert.hint" = "사용자의 __%@__ 마우스에서 __%d개__의 버튼이 감지되었습니다.";
+"restore-buttons-alert.hint" = "사용자의 **%@** 마우스에서 **%d개**의 버튼이 감지되었습니다.";
 
 /* First draft: Mouse with 3 buttons */
 "restore-buttons-alert.radio1" = "3개 버튼의 마우스";
@@ -524,10 +524,10 @@
 "free-country" = "사용자 국가(%@)에서 Mac Mouse Fix는 현재 무료로 제공됩니다.";
 
 /* First draft: This license __could not be activated__ but Mac Mouse Fix is currently __free in your country__! */
-"license-toast.free-country" = "라이센스가 __활성화되지 않았습니다__. 사용자 국가에서는 현재 __무료로 사용 가능__합니다.";
+"license-toast.free-country" = "라이센스가 **활성화되지 않았습니다**. 사용자 국가에서는 현재 **무료로 사용 가능**합니다.";
 
 /* First draft:  __Click here__ to load the recommended settings\nfor your __%@__ mouse || Note: The \n linebreak is so the popover doesn't become too wide. You can set it to your taste. || Note: In English, there needs to be a space at the start of this string otherwise the whole string will be bold. This might be a Ventura Bug */
-"restore-default-buttons-popover.body" = " __여기를 누르면__ 사용자 마우스(__%@__)에 대한 추천 설정을 적용합니다.";
+"restore-default-buttons-popover.body" = " **여기를 누르면** 사용자 마우스(**%@**)에 대한 추천 설정을 적용합니다.";
 
 /* First draft: Get a mouse with 5+ buttons to unlock the full potential of Mac Mouse Fix! */
 "buy-mouse-alert.body" = "5개 이상의 버튼이 있는 마우스를 사용하면, Mac Mouse Fix의 기능을 최대로 활용할 수 있습니다!";
