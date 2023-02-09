@@ -64,6 +64,7 @@ int8_t sign(double x);
 + (void)setupBasicCocoaLumberjackLogging;
 + (NSString *)binaryRepresentation:(unsigned int)value;
 + (void)resetDispatchGroupCount:(dispatch_group_t)group;
++ (void)execute:(void (^)(void))block;
 
 #pragma mark - Clipping
 

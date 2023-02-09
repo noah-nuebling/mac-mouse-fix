@@ -12,9 +12,14 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface GlobalEventTapThread : NSObject
+@interface InputThread : NSObject
 
 + (CFRunLoopRef)runLoop;
+
++ (void)execute:(nonnull void (^)(void))block;
++ (void)executeSyncIfPossible:(nonnull void (^)(void))block;
++ (NSTimer *)executeAfter:(CFTimeInterval)interval block:(nonnull void (^)(NSTimer * _Nonnull))block;
++ (BOOL)runningOnInputThread;
 
 @end
 

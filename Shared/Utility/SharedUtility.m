@@ -583,6 +583,10 @@ bool runningHelper(void) {
 
 #pragma mark - Other
 
++ (void)execute:(void (^)(void))block {
+    block();
+}
+
 + (NSDictionary *)dictionaryWithOverridesAppliedFrom:(NSDictionary *)src to: (NSDictionary *)dst {
     
     // TODO: Consider returning a mutable dict to avoid constantly using `- mutableCopy`. Maybe even alter `dst` in place and return nothing (And rename to `applyOverridesFrom:to:`).

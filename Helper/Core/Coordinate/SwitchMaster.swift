@@ -479,13 +479,15 @@ import ReactiveSwift
     
     private func togglePointingTap(modifications modificationsArg: NSDictionary?) {
         
-        if isLockedDown { /// Not sure if necessary
-            ModifiedDrag.deactivate()
+        if self.isLockedDown { /// Not sure if necessary
+            InputThread.executeSyncIfPossible {
+                ModifiedDrag.deactivate()
+            }
             return
         }
         
         /// Determine enable
-        let enable = someDeviceHasPointing && currentModificationModifiesPointing
+        let enable = self.someDeviceHasPointing && self.currentModificationModifiesPointing
         
         if enable {
             
@@ -501,13 +503,17 @@ import ReactiveSwift
             
             /// Initialize ModifiedDrag
             if let dragEffect = modifications?.object(forKey: kMFTriggerDrag) as! NSDictionary? {
-                ModifiedDrag.initializeDrag(withDict: dragEffect)
+                InputThread.executeSyncIfPossible {
+                    ModifiedDrag.initializeDrag(withDict: dragEffect)
+                }
             } else {
                 /// I've seen this happening. I'll just ignore it. Should be fine. Could maybe prevent this is we store a local copy of the `latestModifications` so the "Update State" code and the "Tap toggling" code work with the exact same data and there can't be race conditions that cause situations like this.
 //                assert(false)
             }
         } else {
-            ModifiedDrag.deactivate()
+            InputThread.executeSyncIfPossible {
+                ModifiedDrag.deactivate()
+            }
         }
     }
     

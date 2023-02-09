@@ -25,6 +25,7 @@
 #import "SharedUtility.h"
 #import <Foundation/Foundation.h>
 #import "HelperUtility.h"
+#import "InputThread.h"
 
 @implementation TouchSimulator
 
@@ -144,18 +145,18 @@ static NSMutableDictionary *_swipeInfo;
         CFTimeInterval timeDiff = ts - _dockSwipeLastTimeStamp;
         _dockSwipeLastTimeStamp = ts;
         DDLogDebug(@"\nDock Swipe send with "
+                   @"phase: %@, "
                    @"delta: %@, "
 //                   @"lastDelta: %@, "
 //                   @"prevOriginOffset: %@ "
 //                   @"type: %@, "
-                   @"phase: %@, "
                    @"timeSinceLast: %@"
                    ,
+                   @(phase),
                    @(d),
 //                   @(_dockSwipeLastDelta),
 //                   @(_dockSwipeOriginOffset),
 //                   @(type),
-                   @(phase),
                    @(timeDiff));
     }
     
@@ -261,16 +262,23 @@ static NSMutableDictionary *_swipeInfo;
 
         NSDictionary *events = @{@"e30": (__bridge id)e30, @"e29": (__bridge id)e29};
 
-        /// Invalidate existing timers
-
-        if (_doubleSendTimer != nil) [_doubleSendTimer invalidate];
-        if (_tripleSendTimer != nil) [_tripleSendTimer invalidate];
-
+        /// Validate state
+        
+        assert(!_doubleSendTimer.isValid && !_tripleSendTimer.isValid);
+        
         /// Schedule new timers
 
         _doubleSendTimer = [NSTimer scheduledTimerWithTimeInterval:0.2 target:self selector:@selector(dockSwipeTimerFired:) userInfo:events repeats:NO];
         _tripleSendTimer = [NSTimer scheduledTimerWithTimeInterval:0.5 target:self selector:@selector(dockSwipeTimerFired:) userInfo:events repeats:NO];
+        
+    } else if (phase == kIOHIDEventPhaseBegan) {
+        
+        /// Invalidate existing timers
+        
+        if (_doubleSendTimer != nil) [_doubleSendTimer invalidate];
+        if (_tripleSendTimer != nil) [_tripleSendTimer invalidate];
     }
+    
     
     ///
     /// Release events
@@ -287,6 +295,8 @@ static NSMutableDictionary *_swipeInfo;
 }
 
 + (void)dockSwipeTimerFired:(NSTimer *)timer {
+    
+    DDLogDebug(@"Dock Swipe send timer fired");
     
     NSDictionary *events = timer.userInfo;
     CGEventRef e30 = (__bridge CGEventRef)events[@"e30"];
