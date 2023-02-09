@@ -78,8 +78,6 @@ static int16_t _nOfSpaces = 1;
 
 + (void)handleDeactivationWhileInUseWithCancel:(BOOL)cancel {
     
-    DDLogDebug(@"3swipe deactivate with cancel: %d", cancel);
-    
     MFDockSwipeType type;
     IOHIDEventPhaseBits phase;
     

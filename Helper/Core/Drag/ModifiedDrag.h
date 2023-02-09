@@ -53,7 +53,7 @@ typedef struct {
     MFAxis usageAxis;
     bool firstCallback;
     
-//    dispatch_queue_t queue;
+    dispatch_queue_t queue;
     
 } ModifiedDragState;
 

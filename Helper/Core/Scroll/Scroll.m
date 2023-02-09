@@ -79,9 +79,9 @@ static CFTimeInterval _lastScrollAnalysisResultTimeStamp;
         _eventTap = CGEventTapCreate(kCGHIDEventTap, kCGHeadInsertEventTap, kCGEventTapOptionDefault, mask, eventTapCallback, NULL);
         DDLogDebug(@"_eventTap: %@", _eventTap);
         CFRunLoopSourceRef runLoopSource = CFMachPortCreateRunLoopSource(kCFAllocatorDefault, _eventTap, 0);
-        CFRunLoopAddSource(InputThread.runLoop, runLoopSource, kCFRunLoopDefaultMode);
+        CFRunLoopAddSource(CFRunLoopGetCurrent(), runLoopSource, kCFRunLoopCommonModes);
         CFRelease(runLoopSource);
-        CGEventTapEnable(_eventTap, false); /// Not sure if this does anything
+        CGEventTapEnable(_eventTap, false); // Not sure if this does anything
     }
     
     /// Create animator

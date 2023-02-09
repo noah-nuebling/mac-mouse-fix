@@ -32,7 +32,7 @@
 #import "ModifiedDragOutputFakeDrag.h"
 #import "ModifiedDragOutputAddMode.h"
 
-#import "InputThread.h"
+#import "GlobalEventTapThread.h"
 
 @implementation ModifiedDrag
 
@@ -63,15 +63,9 @@ static ModifiedDragState _drag;
     /// We wanted to expose `_drag` to other modules for debugging, but `_drag` can't be exposed to Swift. Maybe because it contains an ObjC pointer`id`. Right now this is fine though because we only need the activationState for debugging anyways.
     /// We need to retrieve this on the `_drag.queue` to avoid race conditions. But using `dispatch_sync` leads to loads of concurrency issues, so we're using a callback instead.
     
-//    dispatch_async(_drag.queue, ^{
-//        callback(_drag.activationState);
-//    });
-    
-//    assert(!InputThread.runningOnInputThread);
-    
-    [InputThread executeSyncIfPossible:^{
+    dispatch_async(_drag.queue, ^{
         callback(_drag.activationState);
-    }];
+    });
 }
 
 + (NSString *)modifiedDragStateDescription:(ModifiedDragState)drag {
@@ -103,8 +97,8 @@ static ModifiedDragState _drag;
     /// Setup dispatch queue
     ///     This allows us to process events in the right order
     ///     When the eventTap and the deactivate function are driven by different threads or whatever then the deactivation can happen before we've processed all the events. This allows us to avoid that issue
-//    dispatch_queue_attr_t attr = dispatch_queue_attr_make_with_qos_class(DISPATCH_QUEUE_SERIAL, QOS_CLASS_USER_INTERACTIVE, -1);
-//    _drag.queue = dispatch_queue_create("com.nuebling.mac-mouse-fix.helper.modified-drag", attr);
+    dispatch_queue_attr_t attr = dispatch_queue_attr_make_with_qos_class(DISPATCH_QUEUE_SERIAL, QOS_CLASS_USER_INTERACTIVE, -1);
+    _drag.queue = dispatch_queue_create("com.nuebling.mac-mouse-fix.helper.modified-drag", attr);
     
     /// Set usage threshold
     _drag.usageThreshold = 7; // 20, 5
@@ -119,7 +113,7 @@ static ModifiedDragState _drag;
         CGEventMask mask = CGEventMaskBit(kCGEventOtherMouseDragged) | CGEventMaskBit(kCGEventMouseMoved); /// kCGEventMouseMoved is only necessary for keyboard-only drag-modification (which we've disable because it had other problems), and maybe for AddMode to work.
         mask = mask | CGEventMaskBit(kCGEventLeftMouseDragged) | CGEventMaskBit(kCGEventRightMouseDragged); /// This is necessary for modified drag to work during a left/right click and drag. Concretely I added this to make drag and drop work. For that we only need the kCGEventLeftMouseDragged. Adding kCGEventRightMouseDragged is probably completely unnecessary. Not sure if there are other concrete applications outside of drag and drop.
         
-        CFMachPortRef eventTap = [ModificationUtility createEventTapWithLocation:location mask:mask option:option placement:placement callback:eventTapCallBack runLoop:InputThread.runLoop];
+        CFMachPortRef eventTap = [ModificationUtility createEventTapWithLocation:location mask:mask option:option placement:placement callback:eventTapCallBack runLoop:GlobalEventTapThread.runLoop];
         
         _drag.eventTap = eventTap;
     }
@@ -140,9 +134,7 @@ static ModifiedDragState _drag;
 
 + (void)initializeDragWithDict:(NSDictionary *)effectDict MF_SWIFT_HIDDEN {
     
-    
-    assert(InputThread.runningOnInputThread);
-//    dispatch_async(_drag.queue, ^{
+    dispatch_async(_drag.queue, ^{
         
         /// Debug
         DDLogDebug(@"INITIALIZING MODIFIEDDRAG WITH previous type %@ activationState %d, newEffectDict: %@", _drag.type, _drag.activationState, effectDict);
@@ -188,7 +180,7 @@ static ModifiedDragState _drag;
         
         /// Init dynamic parts of _drag
         initDragState_Unsafe();
-//    });
+    });
 }
 
 + (void)__SWIFT_UNBRIDGED_initializeDragWithDict:(id)effectDict {
@@ -249,11 +241,7 @@ static CGEventRef __nullable eventTapCallBack(CGEventTapProxy proxy, CGEventType
         
         /// Do main processing on _drag.queue
         
-        assert(InputThread.runningOnInputThread);
-        
-        [SharedUtility execute:^{
-            
-//        dispatch_async(_drag.queue, ^{
+        dispatch_async(_drag.queue, ^{
             
             /// Interrupt
             ///     This handles race condition where _drag.eventTap is disabled right after eventTapCallBack() is called
@@ -293,7 +281,7 @@ static CGEventRef __nullable eventTapCallBack(CGEventTapProxy proxy, CGEventType
                 handleMouseInputWhileInUse(dx, dy, eventCopy);
             }
             
-        }];
+        });
     }
         
     /// Return mouseMoved event
@@ -376,35 +364,33 @@ void handleMouseInputWhileInUse(int64_t deltaX, int64_t deltaY, CGEventRef event
 
 + (void (^ _Nullable)(void))suspend {
     
-    assert(false);
-    
     /// This was used for OutputCoordinator stuff which is unused now. Can probably remove this
     /// Also this creates a dangling pointer according to Xcode analyzer
     
-//    void (^ __block unsuspend)(void);
-//    unsuspend = nil;
-//    ModifiedDragState *drag = &_drag; /// So the block references the gobal value instead of copying
-//
-//    dispatch_sync(_drag.queue, ^{
-//        if ((*drag).activationState != kMFModifiedInputActivationStateInUse) return;
-//        DDLogDebug(@"Suspending ModifiedDrag");
-//        deactivate_Unsafe(YES);
-//        (*drag).isSuspended = YES;
-//        [(*drag).outputPlugin suspend];
-//        CFTimeInterval ogTime = (*drag).initTime;
-//        unsuspend = ^{
-//            dispatch_async((*drag).queue, ^{
-//                if (ogTime == (*drag).initTime && (*drag).isSuspended) { /// So we don't unsuspend a different drag than the one we suspended
-//                    NSLog(@"UNSuspending ModifiedDrag");
-//                    (*drag).isSuspended = NO;
-//                    initDragState_Unsafe();
-//                    [(*drag).outputPlugin unsuspend];
-//                }
-//            });
-//        };
-//    });
-//
-//    return unsuspend;
+    void (^ __block unsuspend)(void);
+    unsuspend = nil;
+    ModifiedDragState *drag = &_drag; /// So the block references the gobal value instead of copying
+    
+    dispatch_sync(_drag.queue, ^{
+        if ((*drag).activationState != kMFModifiedInputActivationStateInUse) return;
+        DDLogDebug(@"Suspending ModifiedDrag");
+        deactivate_Unsafe(YES);
+        (*drag).isSuspended = YES;
+        [(*drag).outputPlugin suspend];
+        CFTimeInterval ogTime = (*drag).initTime;
+        unsuspend = ^{
+            dispatch_async((*drag).queue, ^{
+                if (ogTime == (*drag).initTime && (*drag).isSuspended) { /// So we don't unsuspend a different drag than the one we suspended
+                    NSLog(@"UNSuspending ModifiedDrag");
+                    (*drag).isSuspended = NO;
+                    initDragState_Unsafe();
+                    [(*drag).outputPlugin unsuspend];
+                }
+            });
+        };
+    });
+    
+    return unsuspend;
 }
 
 + (void)deactivate {
@@ -415,12 +401,10 @@ void handleMouseInputWhileInUse(int64_t deltaX, int64_t deltaY, CGEventRef event
 
 + (void)deactivateWithCancel:(BOOL)cancel {
     
-    assert(InputThread.runningOnInputThread);
-    
-//    dispatch_async(_drag.queue, ^{
+    dispatch_async(_drag.queue, ^{
         /// ^ Do everything on the dragQueue to ensure correct order of operations with the processing of the events from the eventTap.
         deactivate_Unsafe(cancel);
-//    });
+    });
 }
 
 void deactivate_Unsafe(BOOL cancel) {

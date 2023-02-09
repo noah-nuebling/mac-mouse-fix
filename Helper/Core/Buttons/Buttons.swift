@@ -9,7 +9,6 @@
 
 /// TODO?: Use dispatchQueue.
 ///     I'm not sure the DispatchQueue is neccesary, because all the interaction with this class are naturally spaced out in time, so there's a very low chance of race conditions)
-///     Edit: Now we're using InputThread for everything and don't need a dispatchQueue anymore
 
 import Cocoa
 import CocoaLumberjackSwift
@@ -17,8 +16,8 @@ import CocoaLumberjackSwift
 @objc class Buttons: NSObject {
     
     /// Ivars
-//    static var queue: DispatchQueue = DispatchQueue(label: "com.nuebling.mac-mouse-fix.buttons", qos: .userInteractive, attributes: [], autoreleaseFrequency: .inherit, target: nil)
-    static private var clickCycle = ClickCycle(/*buttonQueue: DispatchQueue(label: "replace this")*/)
+    static var queue: DispatchQueue = DispatchQueue(label: "com.nuebling.mac-mouse-fix.buttons", qos: .userInteractive, attributes: [], autoreleaseFrequency: .inherit, target: nil)
+    static private var clickCycle = ClickCycle(buttonQueue: DispatchQueue(label: "replace this"))
     static private var buttonModifiers = ButtonModifiers()
     @objc static var useButtonModifiers = false
     
@@ -31,7 +30,7 @@ import CocoaLumberjackSwift
     private static var isInitialized = false
     private static func coolInitialize() {
         isInitialized = true
-        clickCycle = ClickCycle()
+        clickCycle = ClickCycle(buttonQueue: queue)
     }
     
     /// Handling input

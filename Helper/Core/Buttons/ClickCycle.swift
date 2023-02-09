@@ -21,7 +21,6 @@
 /// - So when using this:
 ///     1. Make sure that you're running on buttonsQueue when calling, otherwise there might be race conditions
 ///     2. The `modifierCallback` and `triggerCallback` are already protected when they arrive in `Buttons.swift`
-///     Edit: We got rid of buttonQueue in favour of letting this all run on InputThread, to make sure everything is synchronized between click, drag, and scroll input
 
 
 
@@ -71,7 +70,7 @@ typealias ReleaseCallbackKey = ButtonNumber
 class ClickCycle: NSObject {
     
     /// Threading
-//    let buttonQueue: DispatchQueue
+    let buttonQueue: DispatchQueue
     
     /// Config
     var maxClickLevel = 99999
@@ -98,8 +97,8 @@ class ClickCycle: NSObject {
     }
     
     /// Init
-    override required init(/*buttonQueue: DispatchQueue*/) {
-//        self.buttonQueue = buttonQueue
+    required init(buttonQueue: DispatchQueue) {
+        self.buttonQueue = buttonQueue
         super.init()
         
         kill()
@@ -196,39 +195,39 @@ class ClickCycle: NSObject {
             /// We need to start timers from main. Async dispatching to main caused race conditions.
             /// Edit: Asserting Thread.isMainThread now since we're think it's a good idea for all input (clicks, drags, and scrolls) to be handled synchronously / on the the same thread - ideally the main thread so things are also synced with the NSTimers. (Could also use another mechanism instead of NSTimers?). Handling things on different threads leads to inconsistent triggering of gestures when the computer is slow.
             
-            assert(InputThread.runningOnInputThread())
+            assert(Thread.isMainThread)
             
-//            SharedUtilitySwift.doOnMain {
+            SharedUtilitySwift.doOnMain {
                 
-            if mouseDown {
-                /// mouseDown
-                state?.upTimer.invalidate()
-                state?.downTimer = InputThread.execute(after: 0.25, block: { timer in
-//                    self.buttonQueue.async {
-                    /// Callback
-                    var c: [UnconditionalReleaseCallback] = []
-                    triggerCallback(.hold, self.state!.clickLevel, device, button, &c)
-                    if !c.isEmpty {
-                        self.releaseCallbacks[button, default: []].append(contentsOf: c)
-                    }
-                    /// Update state
-                    self.state?.pressState = .held
-                    self.state?.upTimer.invalidate()
-//                    }
-                })
-                /// Not sure whether to start started upTimer on mouseDown or up
-                state?.upTimer = InputThread.execute(after: 0.26, block: { timer in
-//                    self.buttonQueue.async {
-                    if self.state == nil { return } /// Guard race conditions. Not totally sure why this happens.
-                    self.callTriggerCallback(triggerCallback, ClickCycleTriggerPhase.levelExpired, self.state!.clickLevel, device, button)
-                    self.kill()
-//                    }
-                })
-            } else {
-                /// mouseUp
-                state?.downTimer.invalidate()
+                if mouseDown {
+                    /// mouseDown
+                    state?.upTimer.invalidate()
+                    state?.downTimer = CoolTimer.scheduledTimer(timeInterval: 0.25, repeats: false, block: { timer in
+                        self.buttonQueue.async {
+                            /// Callback
+                            var c: [UnconditionalReleaseCallback] = []
+                            triggerCallback(.hold, self.state!.clickLevel, device, button, &c)
+                            if !c.isEmpty {
+                                self.releaseCallbacks[button, default: []].append(contentsOf: c)
+                            }
+                            /// Update state
+                            self.state?.pressState = .held
+                            self.state?.upTimer.invalidate()
+                        }
+                    })
+                    /// Not sure whether to start started upTimer on mouseDown or up
+                    state?.upTimer = CoolTimer.scheduledTimer(timeInterval: 0.26, repeats: false, block: { timer in
+                        self.buttonQueue.async {
+                            if self.state == nil { return } /// Guard race conditions. Not totally sure why this happens.
+                            self.callTriggerCallback(triggerCallback, ClickCycleTriggerPhase.levelExpired, self.state!.clickLevel, device, button)
+                            self.kill()
+                        }
+                    })
+                } else {
+                    /// mouseUp
+                    state?.downTimer.invalidate()
+                }
             }
-//            }
             
         }
     }
