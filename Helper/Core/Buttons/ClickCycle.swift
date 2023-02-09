@@ -193,6 +193,9 @@ class ClickCycle: NSObject {
             ///
             /// Consider using DispatchSourceTimer instead
             /// We need to start timers from main. Async dispatching to main caused race conditions.
+            /// Edit: Asserting Thread.isMainThread now since we're think it's a good idea for all input (clicks, drags, and scrolls) to be handled synchronously / on the the same thread - ideally the main thread so things are also synced with the NSTimers. (Could also use another mechanism instead of NSTimers?). Handling things on different threads leads to inconsistent triggering of gestures when the computer is slow.
+            
+            assert(Thread.isMainThread)
             
             SharedUtilitySwift.doOnMain {
                 
