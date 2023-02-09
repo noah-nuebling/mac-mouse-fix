@@ -73,7 +73,6 @@ import CocoaLumberjackSwift
             let new = shared.copy() as! ScrollConfig
             
             /// Declare overridables
-            
             var precise = new.u_precise
             var useQuickMod = modifiers.inputMod == kMFScrollInputModificationQuick
             var usePreciseMod = modifiers.inputMod == kMFScrollInputModificationPrecise
@@ -85,7 +84,6 @@ import CocoaLumberjackSwift
             ///
             
             /// 1. effectModifications
-            
             if modifiers.effectMod == kMFScrollEffectModificationHorizontalScroll {
                 
                 
@@ -107,6 +105,7 @@ import CocoaLumberjackSwift
                 
             } else if modifiers.effectMod == kMFScrollEffectModificationCommandTab {
                 
+                /// Disable animation
                 animationCurveOverride = kMFScrollAnimationCurveNameNone
                 
             } else if modifiers.effectMod == kMFScrollEffectModificationThreeFingerSwipeHorizontal {
@@ -122,6 +121,9 @@ import CocoaLumberjackSwift
                 useQuickMod = false
                 usePreciseMod = false
                 
+                /// Disable speedup
+                new.fastScrollCurve = nil
+                
             } else if modifiers.effectMod == kMFScrollEffectModificationFourFingerPinch {
                 
                 /// Override animation curve
@@ -134,6 +136,9 @@ import CocoaLumberjackSwift
                 /// Turn off inputMods
                 useQuickMod = false
                 usePreciseMod = false
+                
+                /// Disable speedup
+                new.fastScrollCurve = nil
                 
             } else if modifiers.effectMod == kMFScrollEffectModificationNone {
             } else if modifiers.effectMod == kMFScrollEffectModificationAddModeFeedback {
@@ -184,17 +189,15 @@ import CocoaLumberjackSwift
                 scaleToDisplay = false
                 
                 /// Turn off fast scroll
-                new.fastScrollCurve = ScrollSpeedupCurve(swipeThreshold: 69, initialSpeedup: 1.0, exponentialSpeedup: 0.0)
-                
+                new.fastScrollCurve = nil
             }
             
             /// Apply animationCurve override
-            
             if let ovr = animationCurveOverride {
                 new.animationCurve = ovr
             }
             
-            /// Get speed
+            /// Get accelerationCurve
             if new.u_speed == kMFScrollSpeedSystem && !usePreciseMod && !useQuickMod {
                 new.accelerationCurve = nil
             } else {

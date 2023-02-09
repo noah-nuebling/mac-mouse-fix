@@ -267,17 +267,17 @@
             <objects>
                 <viewController title="General" showSeguePresentationStyle="single" id="eLS-O0-A1x" userLabel="General View Controller" customClass="GeneralTabController" customModule="Mac_Mouse_Fix" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" misplaced="YES" id="As8-gY-gcx">
-                        <rect key="frame" x="0.0" y="0.0" width="353" height="271"/>
+                        <rect key="frame" x="0.0" y="0.0" width="372" height="304"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
                             <stackView distribution="fill" orientation="vertical" alignment="leading" spacing="4" horizontalStackHuggingPriority="1000" verticalStackHuggingPriority="249.99998474121094" horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="6xF-Pl-4RE" userLabel="Master Stack" customClass="CollapsingStackView" customModule="Mac_Mouse_Fix" customModuleProvider="target">
-                                <rect key="frame" x="30" y="20" width="359" height="264"/>
+                                <rect key="frame" x="30" y="20" width="312" height="264"/>
                                 <subviews>
-                                    <stackView distribution="fill" orientation="horizontal" alignment="centerY" horizontalStackHuggingPriority="999" verticalStackHuggingPriority="1000" horizontalHuggingPriority="999" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="0BS-nv-t3O" userLabel="Enable section">
-                                        <rect key="frame" x="0.0" y="214" width="359" height="50"/>
-                                        <subviews>
-                                            <customView horizontalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="D4U-Df-iCp" userLabel="Text center">
-                                                <rect key="frame" x="0.0" y="0.0" width="211" height="50"/>
+                                    <stackView orientation="horizontal" alignment="centerY" horizontalStackHuggingPriority="999" verticalStackHuggingPriority="1000" horizontalHuggingPriority="999" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="0BS-nv-t3O" userLabel="Enable section">
+                                        <rect key="frame" x="0.0" y="214" width="312" height="50"/>
+                                        <beginningViews>
+                                            <customView horizontalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="D4U-Df-iCp" userLabel="Text center">
+                                                <rect key="frame" x="0.0" y="0.0" width="16" height="50"/>
                                                 <subviews>
                                                     <textField horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="jTe-ie-zgb">
                                                         <rect key="frame" x="-2" y="17" width="156" height="17"/>
@@ -292,19 +292,22 @@
                                                     </textField>
                                                 </subviews>
                                                 <constraints>
-                                                    <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="jTe-ie-zgb" secondAttribute="trailing" id="DDb-uI-N13"/>
+                                                    <constraint firstAttribute="trailing" secondItem="jTe-ie-zgb" secondAttribute="trailing" id="DDb-uI-N13"/>
                                                     <constraint firstItem="jTe-ie-zgb" firstAttribute="leading" secondItem="D4U-Df-iCp" secondAttribute="leading" id="Ix0-KA-VUt"/>
-                                                    <constraint firstAttribute="width" constant="211" id="JrY-6M-6zF"/>
                                                     <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="jTe-ie-zgb" secondAttribute="bottom" id="M4u-q5-wc2"/>
                                                     <constraint firstItem="jTe-ie-zgb" firstAttribute="top" relation="greaterThanOrEqual" secondItem="D4U-Df-iCp" secondAttribute="top" id="gK5-ND-Zpb"/>
                                                     <constraint firstItem="jTe-ie-zgb" firstAttribute="centerY" secondItem="D4U-Df-iCp" secondAttribute="centerY" id="uGN-Ra-aee"/>
                                                 </constraints>
                                             </customView>
-                                            <customView horizontalHuggingPriority="1" verticalHuggingPriority="1" horizontalCompressionResistancePriority="1" verticalCompressionResistancePriority="1" translatesAutoresizingMaskIntoConstraints="NO" id="8kp-Dr-8M3">
-                                                <rect key="frame" x="219" y="0.0" width="116" height="50"/>
+                                        </beginningViews>
+                                        <middleViews>
+                                            <customView horizontalHuggingPriority="1" verticalHuggingPriority="1" horizontalCompressionResistancePriority="1" verticalCompressionResistancePriority="1" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="EhX-kX-uDg" userLabel="Spacer">
+                                                <rect key="frame" x="24" y="0.0" width="264" height="50"/>
                                             </customView>
-                                            <button horizontalHuggingPriority="1000" verticalHuggingPriority="750" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="sZr-Bl-L7e" userLabel="Enabled Toggle">
-                                                <rect key="frame" x="340" y="-3" width="22" height="56"/>
+                                        </middleViews>
+                                        <endViews>
+                                            <button horizontalHuggingPriority="1000" verticalHuggingPriority="750" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="sZr-Bl-L7e" userLabel="Enabled Toggle">
+                                                <rect key="frame" x="293" y="-3" width="22" height="56"/>
                                                 <buttonCell key="cell" type="check" bezelStyle="regularSquare" imagePosition="left" controlSize="large" state="on" inset="2" id="iOT-qL-bLt">
                                                     <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                     <font key="font" metaFont="system"/>
@@ -313,7 +316,7 @@
                                                     <fragment content="General &gt; Enable Mac Mouse Fix Toggle"/>
                                                 </attributedString>
                                             </button>
-                                        </subviews>
+                                        </endViews>
                                         <visibilityPriorities>
                                             <integer value="1000"/>
                                             <integer value="1000"/>
@@ -326,7 +329,7 @@
                                         </customSpacing>
                                     </stackView>
                                     <stackView distribution="fill" orientation="vertical" alignment="leading" horizontalStackHuggingPriority="1000" verticalStackHuggingPriority="249.99998474121094" horizontalClippingResistancePriority="999" horizontalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="gcq-dN-YnA" userLabel="Main Hidable Section" customClass="CollapsingStackView" customModule="Mac_Mouse_Fix" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="0.0" width="359" height="210"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="312" height="210"/>
                                         <subviews>
                                             <customView horizontalHuggingPriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="zUc-6f-AlY" userLabel="EnableIndent">
                                                 <rect key="frame" x="0.0" y="192" width="310" height="18"/>
@@ -348,10 +351,10 @@
                                                 </constraints>
                                             </customView>
                                             <customView verticalHuggingPriority="999" translatesAutoresizingMaskIntoConstraints="NO" id="FgF-8j-kMB" userLabel="Divider">
-                                                <rect key="frame" x="0.0" y="167" width="359" height="17"/>
+                                                <rect key="frame" x="0.0" y="167" width="312" height="17"/>
                                                 <subviews>
                                                     <box horizontalHuggingPriority="1000" verticalHuggingPriority="750" boxType="separator" translatesAutoresizingMaskIntoConstraints="NO" id="3RY-sV-oKD">
-                                                        <rect key="frame" x="0.0" y="6" width="359" height="5"/>
+                                                        <rect key="frame" x="0.0" y="6" width="312" height="5"/>
                                                     </box>
                                                 </subviews>
                                                 <constraints>
@@ -362,7 +365,7 @@
                                                 </constraints>
                                             </customView>
                                             <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="ncd-ap-KlE">
-                                                <rect key="frame" x="-2" y="142" width="361" height="18"/>
+                                                <rect key="frame" x="-2" y="142" width="314" height="18"/>
                                                 <buttonCell key="cell" type="check" title="Show in Menu Bar" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="ILO-GQ-vNk">
                                                     <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                     <font key="font" metaFont="system"/>
@@ -393,10 +396,10 @@ smooth scrolling</string>
                                                 </constraints>
                                             </customView>
                                             <customView verticalHuggingPriority="999" translatesAutoresizingMaskIntoConstraints="NO" id="Xec-u6-Sj4" userLabel="Divider">
-                                                <rect key="frame" x="0.0" y="82" width="359" height="17"/>
+                                                <rect key="frame" x="0.0" y="82" width="312" height="17"/>
                                                 <subviews>
                                                     <box horizontalHuggingPriority="1000" verticalHuggingPriority="750" boxType="separator" translatesAutoresizingMaskIntoConstraints="NO" id="nVG-pc-I1x">
-                                                        <rect key="frame" x="0.0" y="6" width="359" height="5"/>
+                                                        <rect key="frame" x="0.0" y="6" width="312" height="5"/>
                                                     </box>
                                                 </subviews>
                                                 <constraints>
@@ -407,7 +410,7 @@ smooth scrolling</string>
                                                 </constraints>
                                             </customView>
                                             <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="QDk-6I-X23">
-                                                <rect key="frame" x="-2" y="57" width="361" height="18"/>
+                                                <rect key="frame" x="-2" y="57" width="314" height="18"/>
                                                 <buttonCell key="cell" type="check" title="Check for Updates" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="tdD-8Q-JB2">
                                                     <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                     <font key="font" metaFont="system"/>
@@ -516,7 +519,7 @@ this window</string>
                 </viewController>
                 <customObject id="Xyx-3e-X6a" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1740.5" y="1487.5"/>
+            <point key="canvasLocation" x="-1741" y="1487"/>
         </scene>
         <!--Button View Controller-->
         <scene sceneID="FLK-3Q-9Mg">
