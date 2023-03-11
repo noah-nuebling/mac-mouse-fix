@@ -93,7 +93,11 @@ bool keyCaptureModePayloadIsValidWithEvent(NSEvent *e, CGEventFlags flags, MFSys
     BOOL typeIsBlackListed = type == kMFSystemEventTypeCapsLock;
     
     BOOL isValid = isSub8 && isKeyDown && secondDataIsNil && !typeIsBlackListed;
-    assert(isValid);
+    
+    if (!isValid) {
+        DDLogDebug(@"KeyCaptureMode received systemDefinedEvent but it is not valid – isSubtype8: %d, isKeyDown: %d, secondDataIsNil: %d, typeIsBlackListed: %d – event: %@, flags: %llu, type: %d", isSub8, isKeyDown, secondDataIsNil, typeIsBlackListed, e, flags, type);
+    }
+    
     return isValid;
 }
 
