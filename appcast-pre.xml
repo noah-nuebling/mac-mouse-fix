@@ -370,7 +370,8 @@ Mouse Fix will stop listening to input from your scroll wheel entirely.
 Meaning 0% CPU usage when you scroll! But if you set up the Command
 (⌘)-Scroll to Zoom feature, Mac Mouse Fix will start to listen to your
 scroll wheel input - but only while you hold down the Command (⌘) key.
-So it’s really smart and will only use up CPU when it has to.</p>
+And so on. So it’s really smart and will only use up CPU when it has
+to!</p>
 <p>This means, MMF is now not only the most powerful, easy-to-use, and
 polished mouse driver for Mac, it’s also one of, if not the, most
 optimized and efficient!</p>
@@ -392,7 +393,7 @@ by 2x since 10.14.4 is the earliest macOS version shipping with modern
 Swift libraries (See “Swift ABI Stability”), which means those Swift
 libraries don’t have to be contained in the app anymore.</p>
 <h2 id="scroll-improvements">4. Scroll Improvements</h2>
-<p>Beta 6 features great improvements to the configuration and the UI of
+<p>Beta 6 features many improvements to the configuration and the UI of
 the new scrolling systems introduced in MMF 3.</p>
 <h3 id="ui">UI</h3>
 <ul>
@@ -429,7 +430,7 @@ the scroll tab which was present on macOS versions before macOS 13.0
 Ventura. I couldn’t find a way to make the link work and it’s not
 terribly important.</li>
 </ul>
-<h3 id="scroll-wheel">Scroll Wheel</h3>
+<h3 id="scroll-feel">Scroll Feel</h3>
 <ul>
 <li>Improved animation curve for “Regular Smoothness” (formerly
 accessible by turning “with Inertia” off). This makes things feel more
@@ -527,7 +528,7 @@ will now reposition itself so it does not overlap with the Dock</li>
 <li>Fixed flicker on some UI elements when switching from the Buttons
 tab to another tab</li>
 <li>Improved appearance of animation that the “+”-Field plays after
-recording an input. Especially on macOS versions before Big Sur, where
+recording an input. Especially on macOS versions before Ventura, where
 the shadow of the “+”-Field would appear glitched during the
 animation.</li>
 <li>Disabled notifications listing several buttons that have been
