@@ -1,5 +1,9 @@
 .DS_Store
 
+# Ignore python environments
+update_env/
+env/
+
 # Ignore all folders named xcuserdata
 xcuserdata/
 
