@@ -18,7 +18,7 @@ echo 'Generating appcasts...'
 python3 ./generate_appcasts;
 echo 'Pushing new appcasts...'
 git add .;
-git commit -m "Updated appcasts";
+git commit -m "Update script: Updated appcasts";
 git push;
 
 # Record stats
@@ -26,7 +26,7 @@ echo 'Recording stats...'
 ./stats record;
 echo 'Pushing new stats...'
 git add .;
-git commit -m "Recorded stats";
+git commit -m "Update script: Recorded stats";
 git push;
 
 echo 'Done!'

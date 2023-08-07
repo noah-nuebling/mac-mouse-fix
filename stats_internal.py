@@ -90,7 +90,8 @@ def main():
 
             # Write log to file
             with open(history_file_path, 'w') as outfile:
-                outfile.write(json.dumps(history))
+                outfile.write(json.dumps(history, indent=2)) # Print with indent so eveything is on seperate lines. If there's only one line, git doesn't register changes properly.
+                
         elif command_line_argument == 'print':
             history = load_history()
             print_nested(sorted_by_release(history, 'name'))
