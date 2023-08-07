@@ -5,7 +5,7 @@
 
 import os
 import shutil
-# import requests # Only ships with python2 on mac it seems
+# import requests # Only ships with python2 on mac it seems. Edit: So what? We could just install it right?
 import urllib.request
 import urllib.parse
 

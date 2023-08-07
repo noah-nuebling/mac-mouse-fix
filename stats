@@ -1,5 +1,14 @@
 #!/bin/bash
 
-source update_env/bin/activate # Activate venv which contains package dependencies (Namely matplotlib)
-python3 stats_internal.py "$@" # Run python script and pass along arguments
-deactivate # Deactivate venv
+# Create and activate venv named "env"
+python3 -m venv env
+source env/bin/activate
+
+# Install dependencies into "env"
+python3 -m pip install -r requirements.txt
+
+# Run python script and pass along arguments
+python3 stats_internal.py "$@" 
+
+# Deactivate "env"
+deactivate
