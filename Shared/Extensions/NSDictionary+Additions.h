@@ -17,6 +17,7 @@ NS_ASSUME_NONNULL_BEGIN
 @end
 
 @interface NSMutableDictionary (Additions)
+- (void)removeObjectForCoolKeyPath:(NSString *)keyPath;
 - (void)setObject:(NSObject * _Nullable)object forCoolKeyPath:(NSString *)keyPath;
 - (void)setObject:(NSObject * _Nullable)object forCoolKeyArray:(NSArray *)keys;
 @end

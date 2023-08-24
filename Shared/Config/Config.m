@@ -7,9 +7,12 @@
 // --------------------------------------------------------------------------
 //
 
-/// TODO: Implement callback when frontmost application changes - change settings accordingly
-/// Need this when application changes but mouse doesn't move (e.g. Command-Tab). Without this the app specific settings for the new app aren't applied
-/// NSWorkspaceDidActivateApplicationNotification?
+/// Notes:
+/// - We're using our custom coolKeyPath API all over this class, instead of Apple's key-value-coding API (aka KVC) (See valueForKeyPath:). The main reason we do this, is so that, when we set a value at a keypPath which doesn't exist, yet using the function `setConfig(NSString *keyPath, NSObject *value)` then the keyPath is created automatically, instead of just failing. This has the benefit, of being more robust and we don't need to make sure, that all keyPaths already exist in the defaultConfig. In all the other places where we use the coolKeyPath API in this class, we only do this to stay consistent (at the time of writing). I'm not sure, whether our coolKeyPath API is slower that the KVC API. We transitioned over to coolKeyPath API without testing speed.
+/// - TODO: Test if the coolKeyPath API is slower than the KVC API and optimize
+/// - TODO: Implement callback when frontmost application changes - change settings accordingly
+///     ^ Need this when application changes but mouse doesn't move (e.g. Command-Tab). Without this the app specific settings for the new app aren't applied
+///     Maybe use NSWorkspaceDidActivateApplicationNotification?
 
 #import "Config.h"
 #import "AppDelegate.h"
@@ -84,17 +87,25 @@ static Config *_instance;
 NSObject * _Nullable config(NSString *keyPath) {
     /// Convenience function for accessing config
     NSMutableDictionary *config = Config.shared.config;
-    NSObject *result = [config valueForKeyPath:keyPath];
+    NSObject *result = [config objectForCoolKeyPath:keyPath];
     return result;
 }
 void setConfig(NSString *keyPath, NSObject *value) {
     /// Convenience function for modifying config
-    /// Note: This doesn't write to file. Use commitConfig() for that
-    [Config.shared.config setValue:value forKeyPath:keyPath];
+    /// Notes:
+    /// - This doesn't write to file. Use commitConfig() for that
+    /// - This create the keyPath if it doesn't exist in the config, yet
+    
+#if DEBUG
+    if ([Config.shared.config objectForCoolKeyPath:keyPath] == nil) {
+        DDLogDebug(@"Setting value %@ to config at non-existent keyPath %@. The keypath will be created.", value, keyPath);
+    }
+#endif
+    
+    [Config.shared.config setObject:value forCoolKeyPath:keyPath];
 }
 void removeFromConfig(NSString *keyPath) {
-    /// Not sure this works
-    [Config.shared.config setValue:nil forKeyPath:keyPath];
+    [Config.shared.config removeObjectForCoolKeyPath:keyPath];
 }
 
 static NSURL *defaultConfigURL(void) {
@@ -105,7 +116,7 @@ static NSURL *defaultConfigURL(void) {
 }
 
 
-void commitConfig() {
+void commitConfig(void) {
     /// Convenience function for notifying other modules of the changed config (and writing to file)
     
     /// Write to file
@@ -368,7 +379,6 @@ void Handle_FSEventStreamCallback(ConstFSEventStreamRef streamRef, void *clientC
      }
      ```
      */
-    
 }
 
 #pragma mark - Repair
@@ -391,8 +401,8 @@ void Handle_FSEventStreamCallback(ConstFSEventStreamRef streamRef, void *clientC
     
     /// Check if config version matches, if not, replace with default.
     
-    NSNumber *currentConfigVersion = [[NSDictionary dictionaryWithContentsOfURL:Locator.configURL] valueForKeyPath:@"Constants.configVersion"];
-    NSNumber *defaultConfigVersion = [[NSDictionary dictionaryWithContentsOfURL:defaultConfigURL()] valueForKeyPath:@"Constants.configVersion"];
+    NSNumber *currentConfigVersion = (NSNumber *)[[NSDictionary dictionaryWithContentsOfURL:Locator.configURL] objectForCoolKeyPath:@"Constants.configVersion"];
+    NSNumber *defaultConfigVersion = (NSNumber *)[[NSDictionary dictionaryWithContentsOfURL:defaultConfigURL()] objectForCoolKeyPath:@"Constants.configVersion"];
     if (defaultConfigVersion == nil) {
         DDLogError(@"Couldn't get default config version. Something is wrong.");
         abort();

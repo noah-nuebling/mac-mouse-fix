@@ -19,22 +19,41 @@
 
 #pragma mark - Utiliy
 
-/// Regex tester: https://regex101.com/
 static NSArray *coolKeyPathToKeyArray(NSString * _Nonnull keyPath) {
-    NSString *regex = @"(?<!\\\\)\\."; // Matches all "." not preceded by "\" // Actual regex pattern: @"(?<!\\)\."
-    NSString *tempSeparator = @"<;jas;jfds;lfjasdf THIS IS A TEMPORARY REPLACEMENT STRING>";
+    
+    /// Notes:
+    /// - Regex tester: https://regex101.com/
+    /// - The regex Matches all "." not preceded by "\" The actual, unescaped patterns is `(?<!\\)\.`
+    /// - `\0` is the NULL character. Previously we used `@"<;jas;jfds;lfjasdf THIS IS A TEMPORARY REPLACEMENT STRING>"`
+    
+    /// Replace unescaped "." chars in the keyPath with temporary separator
+    
+    NSString *regex = @"(?<!\\\\)\\.";
+    NSString *tempSeparator = @"\0";
+    NSRange wholeStringRange = NSMakeRange(0, keyPath.length);
+    
     NSString *keyPathTempSeparator = [keyPath stringByReplacingOccurrencesOfString:regex
                                                                         withString:tempSeparator
                                                                            options:NSRegularExpressionSearch
-                                                                             range:NSMakeRange(0, keyPath.length)];
+                                                                             range:wholeStringRange];
+    /// Remove escape characters
     NSString *keyPathBackslashesRemoved = [keyPathTempSeparator stringByReplacingOccurrencesOfString:@"\\" withString:@""];
+    
+    /// Split keyPath along temporary separatorm
     NSArray *keys = [keyPathBackslashesRemoved componentsSeparatedByString:tempSeparator];
+    
+    /// Return
     return keys;
 }
 
 #pragma mark - Mutable dict
 
 @implementation NSMutableDictionary (Additions)
+
+- (void)removeObjectForCoolKeyPath:(NSString *)keyPath {
+    /// Not sure this works. Maybe this should be recursive and remove every node along the keypath if it is empty after removing the leaf? Or maybe we should have a separate 'cleanup' method for that?
+    [self setObject:nil forCoolKeyPath:keyPath];
+}
 
 - (void)setObject:(NSObject * _Nullable)object forCoolKeyPath:(NSString *)keyPath {
     
