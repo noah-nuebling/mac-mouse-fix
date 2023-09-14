@@ -112,5 +112,53 @@
             landmarkType = "9">
          </BreakpointContent>
       </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "7202D931-3911-4400-B79E-6BB4735CCADB"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Shared/License/TrialCounter.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "141"
+            endingLineNumber = "141"
+            landmarkName = "lastUseDate"
+            landmarkType = "24">
+            <Locations>
+               <Location
+                  uuid = "7202D931-3911-4400-B79E-6BB4735CCADB - 47468d2a0b503970"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "static Mac_Mouse_Fix_Helper.TrialCounter.lastUseDate.setter : Swift.Optional&lt;Foundation.Date&gt;"
+                  moduleName = "Mac Mouse Fix Helper"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/Noah/Desktop/mmf-stuff/mmf2/Shared/License/TrialCounter.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "141"
+                  endingLineNumber = "141"
+                  offsetFromSymbolStart = "152">
+               </Location>
+               <Location
+                  uuid = "7202D931-3911-4400-B79E-6BB4735CCADB - 2a7f98163d58792d"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "static Mac_Mouse_Fix.TrialCounter.lastUseDate.setter : Swift.Optional&lt;Foundation.Date&gt;"
+                  moduleName = "Mac Mouse Fix"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/Noah/Desktop/mmf-stuff/mmf2/Shared/License/TrialCounter.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "141"
+                  endingLineNumber = "141"
+                  offsetFromSymbolStart = "152">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
    </Breakpoints>
 </Bucket>

@@ -17,7 +17,9 @@
 ///     - `[x]` clicking when a doubleClick action is set up
 /// - `[x]` Increments daysOfUse when clicking and __dragging__ after deleting lastUseDate
 /// - `[x]` Increments daysOfUse when scrolling after setting system to __new date__
-/// - `[x]` Doesn't update daysOfUse more than once if you __don't change the date__
+/// - `[x]` Doesn't increment daysOfUse more than once if you __don't change the date__
+/// - `[x]` Doesn't increment daysOfUse when you use mouse after you restart Mac Mouse Fix Helper without changing the date
+/// - `[x]` Doesn't increment daysOfUse when you use mouse  after you restart the computer while MMF is enabled and without changing date
 /// - `[x]` Increments daysOfUse when the __day changes__ without restarting the app
 ///     -> We tested this by setting the daily timer to 60 seconds. That successfully incremented the counter. Also tested by starting the helper before 00:00 and then using it after 00:00. That worked as well!
 
