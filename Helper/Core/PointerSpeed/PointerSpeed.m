@@ -335,6 +335,37 @@ static Boolean removeCustomCurves(IOHIDServiceClientRef eventServiceClient, IOHI
     }
 }
 
+
+typedef struct IOHIDServiceFilterPlugInInterface {
+    
+    /// TESTING - Currently unused
+    
+    /// Wrote this myself based on `IOHIDPointerScrollFilter.cpp` -> `sIOHIDPointerScrollFilterFtbl` definition as well as `IOHIDDevicePlugIn.h` ->` `struct IOHIDDeviceDeviceInterface` definition
+    /// Since `IOHIDPointerScrollFilter.cpp` -> `QueryInterface()` just returns `this`, I think we might be able to simply cast an instance of `IOHIDPointerScrollFilter` to this interface and then call the methods. But my understanding of using COM to interact with kernel drivers and whether IOHIDPointerScrollFilter is even a driver in this sense is lacking so idk.
+    
+    /// Required COM functions
+    void *padding1;
+    HRESULT         (STDMETHODCALLTYPE *QueryInterface)(void *this, REFIID iid, LPVOID *ppv);
+    ULONG           (STDMETHODCALLTYPE *AddRef)(void *this);
+    ULONG           (STDMETHODCALLTYPE *Release)(void *this);
+        
+    /// IOHIDSimpleServiceFilterPlugInInterface functions
+    SInt32          (STDMETHODCALLTYPE *match)(void *this, IOHIDServiceRef service, IOOptionBits options);
+    IOHIDEventRef   (STDMETHODCALLTYPE *filter)(void *this, IOHIDEventRef event);
+    void *padding2;
+    
+    /// IOHIDServiceFilterPlugInInterface functions
+    void            (STDMETHODCALLTYPE *open)(void *this, IOHIDServiceRef service, IOOptionBits options);
+    void            (STDMETHODCALLTYPE *close)(void *this, IOHIDServiceRef service, IOOptionBits options);
+    void            (STDMETHODCALLTYPE *scheduleWithDispatchQueue)(void *this, dispatch_queue_t queue);
+    void            (STDMETHODCALLTYPE *unscheduleFromDispatchQueue)(void *this, dispatch_queue_t queue);
+    CFTypeRef       (STDMETHODCALLTYPE *copyPropertyForClient)(void *this, CFStringRef key, CFTypeRef client);
+    void            (STDMETHODCALLTYPE *setPropertyForClient)(void *this, CFStringRef key, CFTypeRef property, CFTypeRef client);
+    void *padding3;
+    void            (STDMETHODCALLTYPE *setEventCallback)(void *this, IOHIDServiceEventCallback callback, void * target, void * refcon);
+    
+} IOHIDServiceFilterPlugInInterface;
+
 static IOHIDServiceClientRef copyEventServiceClient_WithEventSystem(io_service_t service, IOHIDEventSystemClientRef eventSystemClient) {
     
     uint64_t serviceID;
@@ -364,6 +395,91 @@ static void copyEventServiceAndSystemClients(IOHIDDeviceRef device, IOHIDService
     if (*serviceClient == NULL) {
         DDLogWarn(@"Failed to get service client. Can't set PointerSpeed");
     }
+    
+    if (false) {
+        
+        /// TESTING
+        /// Findings: (Under Ventura 13.3.1)
+        ///     - When you set props on the IORegistryEntry they actually get set in the "HIDEventServiceProperties" subdict of the IORegistryEntry. When you write props using IOHIDServiceClientSetProperty() on the serviceClient (which we've been doing so far to successfully change the acceleration), the props also end up inside "HIDEventServiceProperties". Setting on the IORegistryEntry directly might allow us to remove the kHIDAccelParametricCurvesKey value in order to activate table-based accel
+        ///     - When you set the mouse tracking speed to lowest in system settings, the kHIDAccelParametricCurvesKey value seems to disappear??
+        ///     - Right now – after successfull removing the kHIDAccelParametricCurvesKey using IORegistryEntrySetCFProperties – the kHIDAccelParametricCurvesKey value is never showing up inside the "HIDEventServiceProperties" subdict - even when we reconnect the mouse???? Edit: And even when we restart the computer???
+        ///     -
+        
+        /// Try to access plug-in intefaces
+        
+        //    NSDictionary *plugInTypes = (__bridge_transfer NSDictionary *)IORegistryEntryCreateCFProperty(driverService, CFSTR(kIOCFPlugInTypesKey), kCFAllocatorDefault, kNilOptions);
+        //
+        //    for (NSString *plugInTypeIDString in plugInTypes.allKeys) {
+        //        CFUUIDRef plugInTypeID = CFUUIDCreateFromString(kCFAllocatorDefault, (__bridge CFStringRef)plugInTypeIDString);
+        //
+        //        NSArray *factoryIDs = (__bridge NSArray *)CFPlugInFindFactoriesForPlugInType(plugInTypeID);
+        //
+        //        for (id f in factoryIDs) {
+        //            CFUUIDRef factoryID = (__bridge CFUUIDRef)f;
+        //
+        //            IUnknownVTbl **iunknown = CFPlugInInstanceCreate(kCFAllocatorDefault, factoryID, plugInTypeID);
+        //            CFPlu
+        //        }
+        //
+        //    }
+        
+        
+        
+        /// Try to modifiy IORegistryEntry
+        
+        //    IORegistryEntrySetCFProperty(driverService, CFSTR("Noah"), (__bridge CFArrayRef)@[@1, @2, @3]);
+        //    IORegistryEntrySetCFProperty(driverService, CFSTR(kHIDAccelParametricCurvesKey), <#CFTypeRef property#>)
+        
+        CFMutableDictionaryRef props = NULL;
+        IORegistryEntryCreateCFProperties(driverService, &props, kCFAllocatorDefault, 0);
+        NSMutableDictionary *eventServiceProps = [((__bridge NSMutableDictionary *)props) objectForKey:@"HIDEventServiceProperties"];
+        
+        //    [eventServiceProps setObject:@[@1, @2, @3] forKey:@(kHIDAccelParametricCurvesKey)];
+        [eventServiceProps removeObjectForKey:@(kHIDAccelParametricCurvesKey)]; /// This doesn't work since we can't remove things, but when you boot without a mouse attached the value is nil!!!!!  Also see my StackOverflow question: https://stackoverflow.com/questions/76176480/how-to-remove-a-property-from-an-ioregistryentry-from-user-space
+        
+        [eventServiceProps setObject:@YES forKey:@("FlipLeftAndRightEdgeGestures")];
+        //    [eventServiceProps setObject:@"It workedddddd!" forKey:@"Noah's test"];
+        //    [eventServiceProps setObject:@"It workeddddddd, too!" forKey:@"Noah's second test"];
+        [eventServiceProps removeObjectForKey:@"Noah's second test"]; /// Setting works, but removing doesn't seem to do anything
+        [eventServiceProps removeObjectForKey:@"Noah's test"];
+        
+        //    [eventServiceProps setObject:@[@1, @2, @3] forKey:@(kHIDAccelParametricCurvesKey)];
+        
+        /// Try to set generally
+        IORegistryEntrySetCFProperties(driverService, (__bridge CFMutableDictionaryRef)eventServiceProps);
+        
+        /// Try to set for key
+        ///     This creates a nested entry inside `HIDEventServiceProperties`
+        IORegistryEntrySetCFProperty(driverService, CFSTR("HIDEventServiceProperties"), (__bridge CFMutableDictionaryRef)eventServiceProps);
+        
+        
+        
+        /// Try to modify eventService through queryInterface
+        //    IOHIDServiceFilterPlugInInterface *interface = (IOHIDServiceFilterPlugInInterface *)serviceClient;
+        //
+        //    IOReturn ret = kIOReturnError;
+        //    IOCFPlugInInterface **plugin = NULL;
+        //    SInt32 score = 0;
+        //
+        //    ret = IOCreatePlugInInterfaceForService(driverService, kIOHIDDeviceTypeID, kIOCFPlugInInterfaceID, &plugin, &score);
+        
+        //    IOCreatePlugInInterfaceForService(driverService, <#CFUUIDRef pluginType#>, IUnknownUUID, <#IOCFPlugInInterface ***theInterface#>, <#SInt32 *theScore#>)
+        //    interface->setPropertyForClient(interface, CFSTR(kHIDAccelParametricCurvesKey), (__bridge CFArrayRef)@[@1, @2, @3], NULL);
+        
+        
+        /// `e IOHIDServiceClientCopyProperty(*serviceClient, CFSTR("HIDAccelCurves"))`
+        
+        /// Try to get the changes into eventService
+        selectAccelCurveWithIndex(1.5, *serviceClient); /// CRASH when u set kHIDAccelParametricCurvesKey to sth weird.
+        setSensitivity(1.1, *serviceClient);
+        
+        /// Test
+        CFTypeRef noahsTest = IOHIDServiceClientCopyProperty(*serviceClient, CFSTR("Noah's test"));
+        CFTypeRef parametricCurves = IOHIDServiceClientCopyProperty(*serviceClient, CFSTR(kHIDAccelParametricCurvesKey));
+        
+        DDLogDebug(@"EventService values – test: %@, parametricCurves: %@", noahsTest, parametricCurves);
+    }
+    
     
     /// Release
     IOObjectRelease(driverService);
