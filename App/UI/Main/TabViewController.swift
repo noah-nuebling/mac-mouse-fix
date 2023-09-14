@@ -110,25 +110,34 @@ class TabViewController: NSTabViewController {
         } else {
             /// Note: Removing from `_layoutOrderedItemViewers` doesn't seem to do anything. But I feel like we might still want to remove from both `_toolbarOrderedItemViewers` and `_toolbarOrderedItemViewers` so the overall state is for sure valid, cause I don't get what the role of each of the two is.
             lvs = SharedUtility.getPrivateValue(of: tbv, forName: "_toolbarOrderedItemViewers") as? NSMutableArray
-            
         }
         
         guard let lvs = lvs else { assert(false); return }
         assert(lvs.count > 0)
         
-        var success = false
-        for v in lvs {
+        var foundIndex = -1
+        var foundLayoutView: NSView? = nil
+        for (i, v) in lvs.enumerated() {
             
-            guard let item = SharedUtility.getPrivateValue(of: v, forName: "_item") as? NSToolbarItem else { assert(false); return }
+            guard let item = SharedUtility.getPrivateValue(of: v, forName: "_item") as? NSToolbarItem else { continue /* assert(false); return <<< With the new Sonoma code this crashed. Should be safe to remove. */ }
             guard let v = v as? NSView else { assert(false); return }
             
             if item.itemIdentifier.rawValue == identifier {
-                v.isHidden = true
-                lvs.remove(v) /// Extremely hacky. Might break.
-                success = true
+                foundIndex = i
+                foundLayoutView = v
             }
         }
-        assert(success)
+        assert(foundIndex != -1)
+        
+        if #available(macOS 14.0, *) {
+            /// This would probably also work pre-Sonoma, but no reason to change what works
+            tb.removeItem(at: foundIndex)
+        } else {
+            if let v = foundLayoutView {
+                v.isHidden = true
+                lvs.remove(v) /// Extremely hacky. Broke in macOS 14.0 Sonoma
+            }
+        }
         
         /// Layout toolbarView
         /// - Otherwise the removal of the view from the layoutViews will not be reflected and there will be a blank space where the tab was.
