@@ -132,24 +132,19 @@ def main():
                     
                     x.append(date)
                     y.append(downloads)
-
+                    
 
                 plot_data.append({
                     'version': version,
                     'x': x,
                     'y': y,
                 })
-            
+                
             if s_arg == 'total':
-                # Source: https://stackoverflow.com/a/55290542/10601702
                 
-                # Setup graph for drawing 2 axes
+                # Sum up the download numbers of each version to get totals
                 
-                fig, ax1 = plt.subplots()
-                ax2 = ax1.twinx()
-                
-                
-                # Get x values for each version
+                 # Get x values for each version
                 x_each = list(map(lambda a: a['x'], plot_data)) # List of list of dates for each version
                 
                 # Convert dates to timestamps so that interpolation works
@@ -172,9 +167,22 @@ def main():
                 
                 # Convert timestamps to datetime
                 x_combined_dates = [datetime.datetime.fromtimestamp(d) for d in x_combined] # Using utcfromtimestamp here actually gives us the wrong time. (Because it tries to convert the time again?) We need to use fromtimestamp() to get utc time.
-
-                x = x_combined_dates
-                y = y_summed
+                
+                # Replace plot_data
+                plot_data = [{
+                    'version': 'All Versions',
+                    'x': x_combined_dates,
+                    'y': y_summed,
+                }]
+            
+            if len(plot_data) == 1:
+                
+                # Source: https://stackoverflow.com/a/55290542/10601702
+                
+                # Setup graph for drawing 2 axes
+                
+                fig, ax1 = plt.subplots()
+                ax2 = ax1.twinx()
                 
                 color = 'tab:blue'
                 ax1.set_xlabel('Date')
@@ -185,8 +193,8 @@ def main():
                 
                 # Downloads per day
                 
-                first_date = x_combined_dates[0]
-                last_date = x_combined_dates[-1]
+                first_date = plot_data[0]['x'][0]
+                last_date = plot_data[0]['x'][-1]
                 
                 delta = (last_date - first_date)
                 
@@ -197,7 +205,7 @@ def main():
                     days.append(last_date - datetime.timedelta(seconds=i*interval))
                 days_timestamps = [d.timestamp() for d in days]
                 
-                day_values = np.interp(days_timestamps, x_combined, y, left=0, right=0)
+                day_values = np.interp(days_timestamps, [d.timestamp() for d in plot_data[0]['x']], plot_data[0]['y'], left=0, right=0)
                 
                 middle_dates = []
                 for i in range(len(days)-1):
@@ -206,16 +214,16 @@ def main():
                 x_p = middle_dates
                 y_p = np.diff(day_values)
                 
+                # Plot
+                
                 color2 = 'tab:red'
                 ax2.set_ylabel('Downloads per day', color=color2)  # we already handled the x-label with ax1
                 ax2.tick_params(axis='y', labelcolor=color2)
                 ax2.axhline(y=0, color='black', linestyle='--')
                 
-                # Plot
-                
                 ax2.format_coord = make_format(ax2, ax1)
                 
-                ax1.plot(x, y, linestyle='-', marker='.', color=color)
+                ax1.plot(plot_data[0]['x'], plot_data[0]['y'], linestyle='-', marker='.', color=color)
                 ax2.plot(x_p, y_p, linestyle='-', marker='.', color=color2)
                 
                 plt.gcf().autofmt_xdate()
@@ -231,7 +239,8 @@ def main():
                 plt.legend(loc='best')
                 plt.show()
                 
-            else:
+            else: # if len(plot_data) > 1
+                
                 for d in plot_data:
                     
                     x = d['x']
