@@ -142,7 +142,8 @@ def main():
                 
             if s_arg == 'total':
                 
-                # Sum up the download numbers of each version to get totals
+                # Sum up the download numbers of each version to get total
+                # Source: https://stackoverflow.com/a/55290542/10601702
                 
                  # Get x values for each version
                 x_each = list(map(lambda a: a['x'], plot_data)) # List of list of dates for each version
@@ -176,8 +177,6 @@ def main():
                 }]
             
             if len(plot_data) == 1:
-                
-                # Source: https://stackoverflow.com/a/55290542/10601702
                 
                 # Setup graph for drawing 2 axes
                 
