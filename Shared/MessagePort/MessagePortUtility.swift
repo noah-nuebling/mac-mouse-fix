@@ -104,8 +104,13 @@ import CocoaLumberjackSwift
         
         if let info = MFMessagePort.sendMessage("getActiveDeviceInfo", withPayload: nil, waitForReply: true) as! NSDictionary? {
             
-            let deviceName = info["name"] as! NSString
             let deviceManufacturer = info["manufacturer"] as! NSString
+            var deviceName = info["name"] as! NSString
+            
+            if deviceName.hasPrefix(deviceManufacturer as String) {
+                deviceName = deviceName.substring(from: deviceManufacturer.length) as NSString
+            }
+            
             result.name = (String(format: "%@ %@", deviceManufacturer, deviceName) as NSString).stringByTrimmingWhiteSpace()
             
             result.nOfButtons = (info["nOfButtons"] as! NSNumber).intValue
