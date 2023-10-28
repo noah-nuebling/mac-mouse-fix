@@ -258,6 +258,7 @@ static NSMutableDictionary *_swipeInfo;
 
         /// Put the events into a dict
         ///     Note: Using `__bridge_transfer` should make it so the events are released when the dict is autoreleased, which is when the timer that the dict gets stored in is invalidated.
+        ///     TODO: But we're not using __bridge_transfer? (See note above)
 
         NSDictionary *events = @{@"e30": (__bridge id)e30, @"e29": (__bridge id)e29};
 

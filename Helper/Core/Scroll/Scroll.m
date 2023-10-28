@@ -985,6 +985,7 @@ static void sendOutputEvents(int64_t dx, int64_t dy, MFScrollOutputType outputTy
     } else if (outputType == kMFScrollOutputTypeRotation) {
         
         /// --- Rotation ---
+        /// TODO: Consider inverting sign with `-` so that scrolling down coincides with rotating clockwise
         
         double eventDelta = (dx + dy)/8.0; /// This works because, if dx != 0 -> dy == 0, and the other way around.
         
