@@ -257,13 +257,14 @@ static NSMutableDictionary *_swipeInfo;
         ///     - In Scroll.m, even with sending the event again after 0.2 seconds, the stuck bug still happens a bunch for some reason. Even though this almost completely eliminates the bug in ModifiedDrag. Sending it again after 0.5 seconds works better but still sometimes happens. Edit: Doesn't happen anymore on M1.
 
         /// Put the events into a dict
-        ///     Note: Using `__bridge_transfer` should make it so the events are released when the dict is autoreleased, which is when the timer that the dict gets stored in is invalidated.
-        ///     TODO: But we're not using __bridge_transfer? (See note above)
+        ///     Note: Using `__bridge_transfer` should make it so the events are released when the dict is autoreleased, which is when the timer that the dict gets stored in is invalidated. Edit: We were using `__bridge` instead of `__bridge_transfer` in MMF 3.0.0 Beta 6. I changed it now, but I wonder why this didn't lead to problems?
 
-        NSDictionary *events = @{@"e30": (__bridge id)e30, @"e29": (__bridge id)e29};
+        NSDictionary *events = @{@"e30": (__bridge_transfer id)e30, @"e29": (__bridge_transfer id)e29};
 
         /// Invalidate existing timers
-
+        /// Notes:
+        ///     - Docs say timers must be scheduled and invalidated from the same thread. Are we doing that?
+        
         if (_doubleSendTimer != nil) [_doubleSendTimer invalidate];
         if (_tripleSendTimer != nil) [_tripleSendTimer invalidate];
 
@@ -271,14 +272,15 @@ static NSMutableDictionary *_swipeInfo;
 
         _doubleSendTimer = [NSTimer scheduledTimerWithTimeInterval:0.2 target:self selector:@selector(dockSwipeTimerFired:) userInfo:events repeats:NO];
         _tripleSendTimer = [NSTimer scheduledTimerWithTimeInterval:0.5 target:self selector:@selector(dockSwipeTimerFired:) userInfo:events repeats:NO];
+    } else {
+            
+        ///
+        /// Release events
+        ///
+        
+        CFRelease(e29);
+        CFRelease(e30);
     }
-    
-    ///
-    /// Release events
-    ///
-    
-    CFRelease(e29);
-    CFRelease(e30);
     
     ///
     /// Update state
