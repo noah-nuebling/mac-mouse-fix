@@ -109,6 +109,9 @@ static NSMutableDictionary *_swipeInfo;
     /// - Solution: By halving the exitSpeed, we keep Reveal Desktop feeling nice and responsive, while making the LaunchPad jitter about as noticable as with a real trackpad.
     
     if (type == kMFDockSwipeTypePinch && !invertedFromDevice) {
+        
+        DDLogDebug(@"Force enabling invertedFromDevice for dockSwipe type pinch.");
+        
         invertedFromDevice = YES;
         d = -d;
     }
