@@ -122,21 +122,31 @@ void resetState_Unsafe(void) {
 
 + (void)start {
     
-//    dispatch_async(_scrollQueue, ^{ /// Not sure why exactly this is on the queue
-    CGEventTapEnable(_eventTap, true);
-//    });
+    
+    /// Discussion
+    /// - We just moved resetState from `stop` to `start`,
+    ///     - That's because otherwise, the following bug happened: When scroll enhancements were disabled, except for click and scroll for Desktop & Launchpad, and then you would click and scroll, and release the button while doing that, then SwitchMaster`[Scroll stop]`, which would then call `[Scroll resetState]`, which would ultimately lead to a DockSwipe event of type cancel being sent, which would prevent the Desktop / Launchpad transition from completing.
+    /// - As part of moving resetState here, we're also dispatching to the scrollQueue. That's because resetState seems to be intended to only be called from the scrollQueue, given the base implementation is suffixed with `_Unsafe`.
+    /// - It should be more efficient, if we only reset the state once the first scroll event comes in, instead of here. This should allow us to remove dispatch_async from `- start` and `- stop`. Edit: Did some rudimentary performance testing and it seems that [Scroll start] and [Scroll stop] have practically no impact on CPU usage even when spamming a button with such settings that SwitchMaster calls start/stop on each button press and release. 
+    
+    dispatch_async(_scrollQueue, ^{
+        resetState_Unsafe();
+        CGEventTapEnable(_eventTap, true);
+    });
 }
 
 + (void)stop {
         
     /// NOTES:
     /// - Are there other things we should enable/disable here? ScrollModifiers.reactToModiferChange() comes to mind
-    /// - We check for isEnabled first because resetState uses `dispatch` which is pretty slow since this is called a lot by SwitchMaster
+    /// - We check for isEnabled first because resetState uses `dispatch` which is pretty slow since this is called a lot by SwitchMaster. Edit: We've moved resetSate to `start` now, so we might cosider removing the isEnabled check.
+    /// - We're dispatching to the scrollQueue here, to keep things in line with [Scroll start]. TODO: Check if this has a significant performance impact. (I don't think so since this is only called by SwitchMaster when settings change or kbMod / button is pressed.)
     
-    if (CGEventTapIsEnabled(_eventTap)) {
-        CGEventTapEnable(_eventTap, false);
-        [self resetState];
-    }
+    dispatch_async(_scrollQueue, ^{
+        if (CGEventTapIsEnabled(_eventTap)) {
+            CGEventTapEnable(_eventTap, false);
+        }
+    });
     
     
 //    dispatch_async(_scrollQueue, ^{

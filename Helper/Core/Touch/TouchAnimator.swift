@@ -153,15 +153,15 @@ class TouchAnimator: TouchAnimatorBase {
                 && !thisAnimationHasProducedDeltas
             
             /// Call callback
-            
+            var phase = kMFAnimationCallbackPhaseNone
             if (!isEndAndNoPrecedingDeltas) { /// Skip `end` phase callbacks if there have been no deltas.
-                let phase = TouchAnimator.callbackPhase(hasProducedDeltas: thisAnimationHasProducedDeltas, isLastCallback: isLastDisplayLinkCallback)
+                phase = TouchAnimator.callbackPhase(hasProducedDeltas: thisAnimationHasProducedDeltas, isLastCallback: isLastDisplayLinkCallback)
                 callback(integerAnimationValueDelta, phase, momentumHint)
             }
             
             /// Debug
             
-            DDLogDebug("\nTouchAnimator callback with delta: \(integerAnimationValueDelta)")
+            DDLogDebug("\nTouchAnimator callback with delta: \(integerAnimationValueDelta), phase: \(phase), momentumHint: \(momentumHint)")
             
             /// Update hasProducedDeltas
             /// 

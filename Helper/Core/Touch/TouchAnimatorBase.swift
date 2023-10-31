@@ -312,7 +312,7 @@ import QuartzCore
     
     @objc (cancel_forAutoMomentumScroll:) func cancel(forAutoMomentumScroll: Bool) {
         
-        /// We're using the long async call because creating the dispatchworkitemflags for the normal one is somehow pretty slow.
+        /// We're using the async call with flags because creating the dispatchworkitemflags for the normal one is somehow pretty slow.
         displayLink.dispatchQueue.async(flags: defaultDFs) {
             
             /// Get info
@@ -330,6 +330,7 @@ import QuartzCore
             if wasRunning, let callback = self.clientCallback as? AnimatorCallback {
                 
                 if hadProducedDeltas {
+                    DDLogDebug("TouchAnimator: Sending cancel events")
                     callback(Vector(x: 0, y: 0), kMFAnimationCallbackPhaseCanceled, self.lastMomentumHint)
                 } else {
                     if forAutoMomentumScroll {
@@ -345,7 +346,7 @@ import QuartzCore
                         ///     Edit: Getting this new dispatchQueue everytime seems to be super slow, so we'll try to use the displayLink queue instead.
                         ///     Edit2: Nope I made a mistake, this is never even called in the configuration I was testing (it's only called for non-inertial gesture scrolling, which we're currently not using in the app anymore)
                         
-                        DDLogDebug("Sending extra momentum cancel events even though momentumScrolling hasn't started")
+                        DDLogDebug("TouchAnimator: Sending extra momentum cancel events even though momentumScrolling hasn't started")
                         
                         callback(Vector(x: 0, y: 0), kMFAnimationCallbackPhaseStart, self.lastMomentumHint)
                         let delay = 8.0/1000.0 /// self.displayLink.nominalTimeBetweenFrames() / 2.0
