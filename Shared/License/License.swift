@@ -262,12 +262,16 @@ extension MFLicenseAndTrialState: Equatable {
                     return
     #endif
                     /// Implement freeCountries
+                    /// Notes:
+                    /// - It might be good to pass through the regionCode to the completionHandler in an `info` parameter, so we don't have to refetch the country before displaying this in the UI. Or at least factor out the code for getting the regionCode, so that we can reuse it.
                     
                     var isFreeCountry = false
                     
                     let regionCode: String?
                     if #available(macOS 13, *) {
-                        regionCode = Locale.current.language.region?.identifier
+                        /// Notes:
+                        /// - We previously used `Locale.current.language.region?.identifier` here, but that gave weird results. E.g. gave China, even thought first lang in System Preferences was English (US), Region was Germany, and China was only the last language.
+                        regionCode = Locale.current.region?.identifier
                     } else {
                         regionCode = Locale.current.regionCode
                     }
