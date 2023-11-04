@@ -85,4 +85,18 @@ import Cocoa
         return result
         
     }
+    
+    @objc static func currentRegionCode() -> String? {
+        
+        let result: String?
+        if #available(macOS 13, *) {
+            /// Notes:
+            /// - We previously used `Locale.current.language.region?.identifier` here, but that gave weird results. E.g. gave China, even thought first lang in System Preferences was English (US), Region was Germany, and China was only the last language.
+            result = Locale.current.region?.identifier
+        } else {
+            result = Locale.current.regionCode
+        }
+        
+        return result
+    }
 }

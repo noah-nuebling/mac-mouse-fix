@@ -186,19 +186,10 @@ class AboutTabController: NSViewController {
                 
             case kMFLicenseReasonFreeCountry:
                 
-                /// Get current region
-                /// TODO: It's probably better to pass the regionCode to here through `license`, instead of getting it twice
-                let regionCode: String?
-                if #available(macOS 13, *) {
-                    regionCode = Locale.current.region?.identifier
-                } else {
-                    regionCode = Locale.current.regionCode
-                }
-                
                 /// Get localized country name + flag emoji
                 var countryName = "Unknown Country"
                 var flag = "🏁"
-                if let regionCode = regionCode  {
+                if let regionCode = LicenseUtility.currentRegionCode() {
                     if let n = Locale.current.localizedString(forRegionCode: regionCode) {
                         countryName = n
                     }
