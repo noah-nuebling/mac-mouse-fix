@@ -19,7 +19,7 @@ import CocoaLumberjackSwift
     /// Constants
     
     static var licenseConfigAddress: String {
-        "\(kMFWebsiteRepoAddressRaw)/licenseinfo/config.json"
+        "\(kMFWebsiteRepoAddressRaw)/\(kMFLicenseInfoURLSub)"
     }
     
     /// Async init

@@ -77,12 +77,12 @@ typedef enum {
 /// Other AddMode keys (more below)
 #define kMFAddModeModificationPrecondition  @"addModeModifier"
 
-/// Website
+/// Web URLs
 
 #define kMFWebsiteAddress  @"https://noah-nuebling.github.io/mac-mouse-fix-website"
 #define kMFWebsiteRepoAddressRaw @"https://raw.githubusercontent.com/noah-nuebling/mac-mouse-fix-website/gh-pages"
-
 #define kMFUpdateFeedRepoAddressRaw @"https://raw.githubusercontent.com/noah-nuebling/mac-mouse-fix/update-feed"
+#define kMFLicenseInfoURLSub @"licenseinfo/config.json"
 
 /// Sparkle
 
