@@ -128,7 +128,7 @@ static NSArray *getOneShotEffectsTable(NSDictionary *rowDict) {
     
 //    MFMouseButtonNumber buttonNumber = ((NSNumber *)rowDict[kMFRemapsKeyTrigger][kMFButtonTriggerKeyButtonNumber]).unsignedIntValue;
     
-    NSDictionary *effectDict = rowDict[kMFRemapsKeyEffect];
+    NSDictionary *selectedEffect = rowDict[kMFRemapsKeyEffect];
     
     NSMutableArray *oneShotEffectsTable = @[
         @{@"ui": NSLocalizedString(@"effect.look-up", @"First draft: Look Up & Quick Look"), @"tool": NSLocalizedString(@"effect.look-up.hint", @"First draft: Look up words in the Dictionary, Quick Look files in Finder, and more.\n \nWorks like a Force click on an Apple Trackpad."), @"dict": @{
@@ -138,6 +138,24 @@ static NSArray *getOneShotEffectsTable(NSDictionary *rowDict) {
         @{@"ui": NSLocalizedString(@"effect.smart-zoom", @"First draft: Smart Zoom"), @"tool": NSLocalizedString(@"effect.smart-zoom.hint", @"First draft: Zoom in or out in Safari and other apps.\n \nWorks like a two-finger double tap on an Apple Trackpad."), @"dict": @{
                   kMFActionDictKeyType: kMFActionDictTypeSmartZoom,
         }},
+        @{@"ui": NSLocalizedString(@"effect.primary-click", @"First draft: Primary Click"),
+          @"tool": stringf(NSLocalizedString(@"effect.primary-click.hint", @"First draft: Works like clicking %@ on a standard mouse."), [UIStrings getButtonStringToolTip:1]),
+          @"hideable": @YES,
+          @"dict": @{
+              kMFActionDictKeyType: kMFActionDictTypeMouseButtonClicks,
+              kMFActionDictKeyMouseButtonClicksVariantButtonNumber: @1,
+              kMFActionDictKeyMouseButtonClicksVariantNumberOfClicks: @1,
+          }
+        },
+        @{@"ui": NSLocalizedString(@"effect.secondary-click", @"First draft: Secondary Click"),
+          @"tool": stringf(NSLocalizedString(@"effect.secondary-click.hint", @"First draft: Works like clicking %@ on a standard mouse."), [UIStrings getButtonStringToolTip:2]),
+          @"hideable": @YES,
+          @"dict": @{
+              kMFActionDictKeyType: kMFActionDictTypeMouseButtonClicks,
+              kMFActionDictKeyMouseButtonClicksVariantButtonNumber: @2,
+              kMFActionDictKeyMouseButtonClicksVariantNumberOfClicks: @1,
+          }
+        },
         @{@"ui": NSLocalizedString(@"effect.middle-click", @"First draft: Middle Click"),
           @"tool": stringf(NSLocalizedString(@"effect.middle-click.hint", @"First draft: Open links in a new tab, paste text in the Terminal, and more.\n \nWorks like clicking %@ on a standard mouse."), [UIStrings getButtonStringToolTip:3]),
           @"dict": @{
@@ -204,6 +222,19 @@ static NSArray *getOneShotEffectsTable(NSDictionary *rowDict) {
 //        [oneShotEffectsTable insertObject:buttonClickEntry atIndex:10];
 //    }
     
+    /// Make selected entry non-hidden
+    for (int i = 0; i < oneShotEffectsTable.count; i++) {
+        
+        NSDictionary *entry = oneShotEffectsTable[i];
+        
+        if ([entry[@"dict"] isEqual:selectedEffect]) {
+            NSMutableDictionary *newEntry = entry.mutableCopy;
+            newEntry[@"hideable"] = @"NO";
+            newEntry[@"alternate"] = @"NO";
+            oneShotEffectsTable[i] = newEntry;
+        }
+    }
+    
     /// Insert entry for keyboard shortcut effect
     
     /// Get keycapture index
@@ -215,8 +246,8 @@ static NSArray *getOneShotEffectsTable(NSDictionary *rowDict) {
     
     /// Insert entry for keyboard shortcut effect or systemDefined effect
     
-    BOOL isKeyShortcut = [effectDict[kMFActionDictKeyType] isEqual:kMFActionDictTypeKeyboardShortcut];
-    BOOL isSystemEvent = [effectDict[kMFActionDictKeyType] isEqual:kMFActionDictTypeSystemDefinedEvent];
+    BOOL isKeyShortcut = [selectedEffect[kMFActionDictKeyType] isEqual:kMFActionDictTypeKeyboardShortcut];
+    BOOL isSystemEvent = [selectedEffect[kMFActionDictKeyType] isEqual:kMFActionDictTypeSystemDefinedEvent];
     
     if (isKeyShortcut || isSystemEvent) {
         
@@ -225,7 +256,7 @@ static NSArray *getOneShotEffectsTable(NSDictionary *rowDict) {
         
         /// Get  strings
         
-        NSAttributedString *shortcutString = getShortcutString(effectDict, isKeyShortcut);
+        NSAttributedString *shortcutString = getShortcutString(selectedEffect, isKeyShortcut);
 
         NSString *shortcutStringRaw = [shortcutString stringWithAttachmentDescriptions];
         
@@ -233,7 +264,7 @@ static NSArray *getOneShotEffectsTable(NSDictionary *rowDict) {
         [oneShotEffectsTable insertObject:@{
             @"uiAttributed": shortcutString,
             @"tool": stringf(NSLocalizedString(@"effect.shortcut.hint", @"First draft: Works like pressing '%@' on your keyboard"), shortcutStringRaw),
-            @"dict": effectDict,
+            @"dict": selectedEffect,
             @"indentation": @1,
         } atIndex:shortcutIndex];
     }
@@ -386,23 +417,32 @@ static NSString *effectNameForRowDict(NSDictionary * _Nonnull rowDict) {
 }
 
 + (NSMenuItem * _Nullable)getPopUpButtonItemToSelectBasedOnRowDict:(NSPopUpButton * _Nonnull)button rowDict:(NSDictionary * _Nonnull)rowDict {
+        
+    /// Datamodel -> Button state
     
-    int itemIndex = -1;
+    NSDictionary *targetEffect = rowDict[kMFRemapsKeyEffect];
+    NSArray *effectPickerModel = [RemapTableTranslator getEffectsTableForRemapsTableEntry:rowDict];
     
-    NSArray *effectsTable = [RemapTableTranslator getEffectsTableForRemapsTableEntry: rowDict];
+    int resultUIIndex = -1;
     
-    int i = 0;
+    int uiIndex = 0;
+    int modelIndex = 0;
+    
     while (true) {
-        NSDictionary *effectTableEntry = effectsTable[i];
-        if ([effectTableEntry[@"dict"] isEqual: rowDict[kMFRemapsKeyEffect]]) {
-            itemIndex = i;
+        NSDictionary *effect = effectPickerModel[modelIndex];
+        if ([effect[@"hideable"] isEqual:@YES]) {
+            uiIndex += 1;
+        }
+        if ([effect[@"dict"] isEqual:targetEffect]) {
+            resultUIIndex = uiIndex;
             break;
         };
-        i++;
+        uiIndex += 1;
+        modelIndex += 1;
     }
     
-    if (itemIndex != -1) {
-        return [button itemAtIndex:i];
+    if (resultUIIndex != -1) {
+        return [button itemAtIndex:resultUIIndex];
     } else {
         return nil;
     }
@@ -410,11 +450,36 @@ static NSString *effectNameForRowDict(NSDictionary * _Nonnull rowDict) {
 
 + (NSDictionary * _Nullable)getEffectDictBasedOnSelectedItemInButton:(NSPopUpButton * _Nonnull)button rowDict:(NSDictionary * _Nonnull)rowDict {
     
+    /// Button state -> Datamodel
+    
     NSArray *effectsTable = [RemapTableTranslator getEffectsTableForRemapsTableEntry:rowDict];
-    NSInteger selectedIndex = button.indexOfSelectedItem;
+    NSInteger targetUIIndex = button.indexOfSelectedItem;
     
-    return effectsTable[selectedIndex][@"dict"];
+    int uiIndex = 0;
+    int modelIndex = 0;
     
+    while (true) {
+        
+        NSDictionary *effect = effectsTable[modelIndex];
+        if ([effect[@"hideable"] isEqual:@YES]) {
+            uiIndex += 1;
+        }
+         
+        if (uiIndex == targetUIIndex) {
+            break;
+        }
+        if (uiIndex > targetUIIndex) {
+            assert(false);
+            break;
+        }
+        
+        uiIndex += 1;
+        modelIndex += 1;
+    }
+    
+    
+    
+    return effectsTable[modelIndex][@"dict"];
 }
 
 + (NSMenuItem *)menuItemFromDataModel:(NSDictionary *)itemModel enclosingMenu:(NSMenu *)enclosingMenu tableCell:(NSTableCellView *)tableCell {

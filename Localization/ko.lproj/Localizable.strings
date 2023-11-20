@@ -178,6 +178,18 @@
 /* First draft: Look up words in the Dictionary, Quick Look files in Finder, and more.\n \nWorks like Force Touch on an Apple Trackpad. */
 "effect.look-up.hint" = "사전에서 단어를 찾아보거나, Finder에서 파일을 훑어보는 등의 동작을 수행합니다.\n \n이는 Apple 트랙패드에서 세게 클릭하는 것과 같습니다.";
 
+/* First draft: Primary Click */
+"effect.primary-click" = "";
+
+/* First draft: Works like clicking %@ on a standard mouse. */
+"effect.primary-click.hint" = "";
+
+/* First draft: Secondary Click */
+"effect.secondary-click" = "";
+
+/* First draft: Works like clicking %@ on a standard mouse. */
+"effect.secondary-click.hint" = "";
+
 /* First draft: Middle Click */
 "effect.middle-click" = "휠 클릭";
 

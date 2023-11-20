@@ -100,11 +100,11 @@
 /* First draft: Mouse Button %@ */
 "button-string.tool.numbered" = "Mouse Button %@";
 
-/* First draft: the Primary Mouse Button (also called Left Mouse Button or Mouse Button 1) */
-"button-string.tool.primary" = "the Primary Mouse Button (also called Left Mouse Button or Mouse Button 1)";
+/* First draft: Primary Mouse Button (also called Left Mouse Button or Mouse Button 1) */
+"button-string.tool.primary" = "Primary Mouse Button (also called Left Mouse Button or Mouse Button 1)";
 
-/* First draft: the Secondary Mouse Button (also called Right Mouse Button or Mouse Button 2) */
-"button-string.tool.secondary" = "the Secondary Mouse Button (also called Right Mouse Button or Mouse Button 2)";
+/* First draft: Secondary Mouse Button (also called Right Mouse Button or Mouse Button 2) */
+"button-string.tool.secondary" = "Secondary Mouse Button (also called Right Mouse Button or Mouse Button 2)";
 
 /* First draft: Middle Mouse Button (also called Scroll Wheel Button or Mouse Button 3) || Example usage: Open links in a new tab, paste text in the Terminal, and more.\n \nWorks like clicking the Middle Mouse Button (also called the Scroll Wheel Button or Mouse Button 3) on a standard mouse. */
 "button-string.tool.middle" = "Middle Mouse Button (also called Scroll Wheel Button or Mouse Button 3)";
@@ -177,6 +177,18 @@
 
 /* First draft: Look up words in the Dictionary, Quick Look files in Finder, and more.\n \nWorks like a Force click on an Apple Trackpad. */
 "effect.look-up.hint" = "Look up words in the Dictionary, Quick Look files in Finder, and more.\n \nWorks like a Force click on an Apple Trackpad.";
+
+/* First draft: Primary Click */
+"effect.primary-click" = "Primary Click";
+
+/* First draft: Works like clicking %@ on a standard mouse. */
+"effect.primary-click.hint" = "Works like clicking %@ on a standard mouse.";
+
+/* First draft: Secondary Click */
+"effect.secondary-click" = "Secondary Click";
+
+/* First draft: Works like clicking %@ on a standard mouse. */
+"effect.secondary-click.hint" = "Works like clicking %@ on a standard mouse.";
 
 /* First draft: Middle Click */
 "effect.middle-click" = "Middle Click";

@@ -184,6 +184,18 @@
 /* First draft: Look up words in the Dictionary, Quick Look files in Finder, and more.\n \nWorks like a Force click on an Apple Trackpad. */
 "effect.look-up.hint" = "查詢辭典、於Finder中「快速查看」等。\n \n作用相當於在Apple觸控式軌跡板上用一指用力長按。";
 
+/* First draft: Primary Click */
+"effect.primary-click" = "";
+
+/* First draft: Works like clicking %@ on a standard mouse. */
+"effect.primary-click.hint" = "";
+
+/* First draft: Secondary Click */
+"effect.secondary-click" = "";
+
+/* First draft: Works like clicking %@ on a standard mouse. */
+"effect.secondary-click.hint" = "";
+
 /* First draft: Middle Click */
 "effect.middle-click" = "按中鍵";
 

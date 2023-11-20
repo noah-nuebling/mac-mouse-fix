@@ -148,6 +148,8 @@ BOOL directionChanged(MFDirection direction1, MFDirection direction2) {
 
 + (void)postMouseButtonClicks:(MFMouseButtonNumber)button nOfClicks:(int64_t)nOfClicks {
     
+    DDLogDebug(@"Posting %lld mouse button %u clicks", nOfClicks, button);
+    
     CGEventTapLocation tapLoc = kCGSessionEventTap;
     
     CGPoint mouseLoc = getPointerLocation();
