@@ -100,10 +100,10 @@
 /* First draft: Mouse Button %@ */
 "button-string.tool.numbered" = "鼠标按钮%@";
 
-/* First draft: the Primary Mouse Button (also called the Left Mouse Button or Mouse Button 1) */
+/* First draft: Primary Mouse Button (also called the Left Mouse Button or Mouse Button 1) */
 "button-string.tool.primary" = "鼠标主键（又称鼠标左键或鼠标按钮１）";
 
-/* First draft: the Secondary Mouse Button (also called the Right Mouse Button or Mouse Button 2) */
+/* First draft: Secondary Mouse Button (also called the Right Mouse Button or Mouse Button 2) */
 "button-string.tool.secondary" = "鼠标辅键（又称鼠标右键或鼠标按钮２）";
 
 /* Note: Value for this key is defined in Localizable.stringsdict, not Localizable.strings */
