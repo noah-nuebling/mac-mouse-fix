@@ -12,7 +12,7 @@
 /// Only use TouchAnimator, not TouchAnimatorBase superclass directly. TouchAnimatorBase is untested and probably doesn't work right.
 /// This is basically a wrapper around TouchAnimatorBase that subpixelates the output deltas. We thought it would be easier to first build the TouchAnimatorBase without the subpixelation and then add that complextity on after the fact. I think it clutters things up a lot though.
 
-///     \Ideas for refactor: Merge TouchAnimator and TouchAnimatorBase. Maybe remove the subpixelators and just round in a way where you don't lose the rounding error.
+///     \Ideas for refactor: Merge TouchAnimator and TouchAnimatorBase. Maybe remove the subpixelators and just round in a way where you don't lose the rounding error. (e.g. rounding the pixel delta for this frame to determine what to actually scroll and only subtracting from the valueLeft what we actually scrolled... Not sure if that would have the same behavior as the current system though - might be a ton of work to get it to work right with all the touch simulation stuff that relies on very precisely setting the phases and deltas.)
 ///
 /// This class does different things. An attempt to summarize: "Based on some input deltas, this class creates smoothly animated output deltas that are that are usable for driving simulated trackpad events"
 /// It is currently used:
@@ -51,9 +51,8 @@ class TouchAnimator: TouchAnimatorBase {
     var subPixelator = VectorSubPixelator.biased()
     /// ^ This biased subpixelator should make SubTouchAnimator  also work negative value ranges. So it can also be properly used for for momentum scrolling in GestureScrollAnimator.m
     
-    // MARK: Interface
     
-    /// Other interface
+    // MARK: Other interface
     
     /// SubPixelator reset
     ///     You usually want to call this where you call linkToMainScreen()
@@ -68,7 +67,7 @@ class TouchAnimator: TouchAnimatorBase {
         }
     }
     
-    /// Declare new start function
+    // MARK: Declare new start function
     
     @objc func start(params: @escaping StartParamCalculationCallback,
                      integerCallback: @escaping TouchAnimatorCallback) {
@@ -77,10 +76,13 @@ class TouchAnimator: TouchAnimatorBase {
             
             /// Get startParams
             
-            let p = params(self.animationValueLeft_Unsafe, self.isRunning_Unsafe, self.animationCurve)
+            let p = params(self.animationValueLeft_Unsafe, self.isRunning_Unsafe, self.animationCurve, self.lastAnimationSpeed)
             
             /// Reset animationValueLeft
-            ///     Do this here since `animationValueLeft` is `animationValueTotal - lastAnimationValue`. A new `animationValueTotal` is contained in `p`, and we need to reset `lastAnimationValue` to make it usable.
+            /// Notes:
+            /// - Do this here since `animationValueLeft` is `animationValueTotal - lastAnimationValue`. A new `animationValueTotal` is contained in `p`, and we need to reset `lastAnimationValue` to make it usable. Edit: What? ... I think this is talking about why this is reset here and not inside startWithUntypedCallback() or the displayLinkCallback, where most other things are reset.
+            /// - Why is this reset before the doStart check?
+            
             self.lastAnimationValue = Vector(x: 0, y: 0)
             
             /// Do nothing if doStart == false
@@ -110,7 +112,7 @@ class TouchAnimator: TouchAnimatorBase {
     
     internal var summedIntegerAnimationValueDelta: Vector = Vector(x: 0, y: 0);
     
-    /// Hook into superclasses' displayLinkCallback()
+    // MARK: Hook into superclasses' displayLinkCallback()
     
     override func subclassHook(_ untypedCallback: Any, _ animationValueDelta: Vector, _ animationTimeDelta: CFTimeInterval, _ momentumHint: MFMomentumHint) {
         /// This hooks into displayLinkCallback() in Animator.swift. Look at that for context.

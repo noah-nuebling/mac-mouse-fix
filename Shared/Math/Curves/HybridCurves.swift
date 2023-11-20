@@ -65,6 +65,9 @@ import CocoaLumberjackSwift
         self.dragCoefficient = dragCoefficient
         self.dragExponent = dragExponent
         self.stopSpeed = stopSpeed
+        
+        /// Debug
+        DDLogDebug(String(format: "Created BezierHybridCurve with - duration: %.3f, distance: %.3f", baseDuration/duration, baseDistance/distance))
     }
     
     /// Init - Helpers

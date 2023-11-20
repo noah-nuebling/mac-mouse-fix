@@ -28,6 +28,7 @@ Vector addedVectors(Vector vec1, Vector vec2);
 Vector subtractedVectors(Vector vec1, Vector vec2);
 double dotProduct(Vector vec1, Vector vec2);
 bool isZeroVector(Vector vec);
+bool vectorHasNan(Vector vec);
 bool vectorsAreEqual(Vector vec1, Vector vec2);
 
 Vector vectorFromNSValue(NSValue *value);

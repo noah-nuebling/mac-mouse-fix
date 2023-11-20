@@ -125,7 +125,7 @@ static dispatch_group_t _momentumScrollWaitGroup;
 //    }];
     
     /// Start animator
-    [_smoothingAnimator startWithParams:^NSDictionary<NSString *,id> * _Nonnull(Vector valueLeft, BOOL isRunning, Curve * _Nullable curve) {
+    [_smoothingAnimator startWithParams:^NSDictionary<NSString *,id> * _Nonnull(Vector valueLeft, BOOL isRunning, Curve * _Nullable curve, Vector currentSpeed) {
 
         NSMutableDictionary *p = [NSMutableDictionary dictionary];
         

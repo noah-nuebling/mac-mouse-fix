@@ -21,7 +21,7 @@ import QuartzCore
     typealias UntypedAnimatorCallback = Any
     typealias AnimatorCallback = (_ animationValueDelta: Vector, _ phase: MFAnimationCallbackPhase, _ subCurve: MFMomentumHint) -> ()
 //    typealias StopCallback = (_ lastPhase: MFAnimationPhase) -> ()
-    typealias StartParamCalculationCallback = (_ valueLeft: Vector, _ isRunning: Bool, _ animationCurve: Curve?) -> MFAnimatorStartParams
+    typealias StartParamCalculationCallback = (_ valueLeft: Vector, _ isRunning: Bool, _ animationCurve: Curve?, _ currentSpeed: Vector) -> MFAnimatorStartParams
     /// ^ When starting the animator, we usually want to get the value that the animator still wants to scroll (`animationValueLeft`), and add that to the new value. The specific logic can differ a lot though, so we can't just hardcode this into `Animator`
     ///     But to avoid race-conditions, we can't just externally execute this, so we to pass in a callback that can execute custom logic to get the start params right before the animator is started
     typealias MFAnimatorStartParams = NSDictionary ///`Dictionary<String, Any>` `<-` Using Swift dict was slow for interop with ObjC due to autobridging
@@ -125,6 +125,7 @@ import QuartzCore
     var lastAnimationValue: Vector = Vector(x: 0, y: 0) /// animationValue when the displayLink was last called
     var lastAnimationTimeUnit: Double = 0.0
     private var lastMomentumHint: MFMomentumHint = kMFMomentumHintNone
+    var lastAnimationSpeed: Vector = Vector(x: 0, y: 0)
     
     var lastFrameTime: Double = -1 /// Time at which the displayLink was last called
     
@@ -174,6 +175,9 @@ import QuartzCore
     @objc func start(params: @escaping StartParamCalculationCallback,
                      callback: @escaping AnimatorCallback) {
         
+        /// Use the override of this function in TouchAnimator instead. We spent a lot of time updating the TouchAnimatorBase so that it 'should' work, even thought it's unused, but now we're stopping that and letting it become outdated compared to the start() method in TouchAnimator.
+        fatalError()
+        
         /// Lock
         ///     Otherwise there will be race conditions with this function and the displayLinkCallback() both manipulating the animationPhase (and I think other values, too) at the same time.
         ///     Generally queues are advised over locks, but since the docs of CVDisplayLink say the displayLinkCallback is executed on a special high-priority thread, I thought it might be better to use a thread lock instead of a dispatchQueue,
@@ -192,7 +196,7 @@ import QuartzCore
             ///     So we don't give the `params` callback old invalid animationValueLeft.
             ///     I think this is sort of redundant, because we're resetting animationValueLeft in `startWithUntypedCallback_Unsafe()` as well?
             
-            let p: MFAnimatorStartParams = params(self.animationValueLeft_Unsafe, self.isRunning_Unsafe, self.animationCurve)
+            let p: MFAnimatorStartParams = params(self.animationValueLeft_Unsafe, self.isRunning_Unsafe, self.animationCurve, self.lastAnimationSpeed)
             
             self.lastAnimationValue = Vector(x: 0, y: 0)
             
@@ -217,13 +221,13 @@ import QuartzCore
                                                   animationCurve: Curve,
                                                   callback: UntypedAnimatorCallback) {
         
-        /// This function has `_Unsafe` in it's name because it doesn't execute on self.animatorQueue. Only call it form self.animatorQueue
-        
-        /// Should only be called by this and subclasses
-        /// The use of 'Interval' in CFTimeInterval is kind of confusing, since its also used to spedify points in time (It's just a `Double`), and also it has nothing to do with our `Interval` class, which is much closer to an Interval in the Mathematical sense.
-        /// Will be restarted if it's already running. No need to call stop before calling this.
-        /// It's kind of unnecessary to be passing this a value interval, because we only use the length of it. Since the AnimatorCallback only receives valueDeltas each frame and no absolute values,  the location of the value interval doesn't matter.
-        /// We need to make `callback` and UntypedAnimatorCallback instead of a normal AnimatorCallback, so we can change the type of `callback` to TouchAnimatorCallback in the subclass TouchAnimator. That's because Swift is stinky. UntypedAnimatorCallback is @escaping
+        /// Notes:
+        /// - This function has `_Unsafe` in it's name because it doesn't execute on self.animatorQueue. Only call it form self.animatorQueue
+        /// - Should only be called by this and subclasses
+        /// - The use of 'Interval' in CFTimeInterval is kind of confusing, since its also used to spedify points in time (It's just a `Double`), and also it has nothing to do with our `Interval` class, which is much closer to an Interval in the Mathematical sense.
+        /// - Animator will be restarted if it's already running. No need to call stop before calling this.
+        /// - It's kind of unnecessary to be passing this a value interval, because we only use the length of it. Since the AnimatorCallback only receives valueDeltas each frame and no absolute values,  the location of the value interval doesn't matter.
+        /// - We need to make `callback` and UntypedAnimatorCallback instead of a normal AnimatorCallback, so we can change the type of `callback` to TouchAnimatorCallback in the subclass TouchAnimator. That's because Swift is stinky. UntypedAnimatorCallback is @escaping
         
         /// Validate
         
@@ -257,6 +261,7 @@ import QuartzCore
             thisAnimationHasProducedDeltas = false
             
             lastMomentumHint = kMFMomentumHintNone /// Not totally sure if makes sense?
+            lastAnimationSpeed = Vector(x: 0.0, y: 0.0)
             
         } else {
             
@@ -374,6 +379,10 @@ import QuartzCore
         
         /// Debug
         DDLogDebug("AnimationCallback STOP")
+        
+        /// Reset speed
+        /// Notes: Not totally sure this belongs here. But resetting in start() doesn't work with the current code because the speed needs to be reset before it's passed into StartParamCalculationCallback() - And that function is the first thing that is called inside start().
+        lastAnimationSpeed = Vector(x: 0, y: 0)
         
         /// Do stuff
         displayLink.stop_Unsafe()
@@ -498,7 +507,7 @@ import QuartzCore
         
         /// Set phase to end
         ///     If the last callback was the last delta callback
-        ///     We know that the delta is going to be (0,0) so most of the work below is redundant in this case
+        ///     Note: We know that for this frame, we'll just send a 'stop' event, and the delta for this frame is going to be (0,0), so most of the work below is redundant in this case
         if self.lastFrameTime >= self.animationEndTime {
             isLastDisplayLinkCallback = true
         }
@@ -551,7 +560,7 @@ import QuartzCore
             
             if timeSinceAnimationStart < minBaseCurveTime {
                 
-                /// Make the first x ms of the animation always kMFMomentumHintGesture
+                /// Make the first `minBaseCurveTime` seconds of the animation always kMFMomentumHintGesture
                 ///     This is so that:
                 ///         - ... the first event of the scroll is always sent with gestureScrolls instead of momentumScrolls in Scroll.m. Otherwise apps like Xcode won't react at all (they ignore the deltas in momentumScrolls).
                 ///         - ... to decrease the transitions into momentumScroll in Scroll.m. Due to Apple bug, this transition causes a stuttery jump in apps like Xcode
@@ -597,6 +606,13 @@ import QuartzCore
         lastAnimationValue = animationValue
         lastAnimationTimeUnit = animationTimeUnit
         lastMomentumHint = momentumHint
+        
+        if (!isLastDisplayLinkCallback) { /// For the lastDisplayLinkCallback, the animationTimeDelta might be 0 (actually I think it's always 0), which would make the lastAnimationSpeed contain NaN. Which can sometimes bleed into the client callback for reasons I don't understand. Also if lastDisplayLinkCallback, the lastAnimationSpeed will be set to 0 in the stop() function anyways.
+            lastAnimationSpeed = scaledVector(animationValueDelta, 1.0/animationTimeDelta)
+        }
+        
+        /// Validate
+        assert(!vectorHasNan(lastAnimationSpeed));
         
         /// Stop animation if phase is  `end`
         if isLastDisplayLinkCallback {

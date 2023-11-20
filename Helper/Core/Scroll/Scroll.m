@@ -495,7 +495,7 @@ static void heavyProcessing(CGEventRef event, int64_t scrollDeltaAxis1, int64_t 
         
         /// Start animation
         
-        [_animator startWithParams:^NSDictionary<NSString *,id> * _Nonnull(Vector valueLeftVec, BOOL isRunning, Curve *animationCurve) {
+        [_animator startWithParams:^NSDictionary<NSString *,id> * _Nonnull(Vector valueLeftVec, BOOL isRunning, Curve *animationCurve, Vector currentSpeed) {
             
             /// Validate
             assert(valueLeftVec.x == 0 || valueLeftVec.y == 0);
@@ -537,7 +537,12 @@ static void heavyProcessing(CGEventRef event, int64_t scrollDeltaAxis1, int64_t 
             } else {
                 pxLeftToScroll = 0.0;
                 [_animator resetSubPixelator_Unsafe]; /// Maybe it would make more sense to do this automatically inside the animator? That might lead to problems with click and drag smoothing.
+                /// Validate
+//                assert(isZeroVector(currentSpeed));
             }
+            
+            /// Debug
+            DDLogDebug(@"Scroll.m start - current speed: (%f, %f)", currentSpeed.x, currentSpeed.y);
             
             /// Calculate distance to scroll
             double delta = pxToScrollForThisTick + pxLeftToScroll;

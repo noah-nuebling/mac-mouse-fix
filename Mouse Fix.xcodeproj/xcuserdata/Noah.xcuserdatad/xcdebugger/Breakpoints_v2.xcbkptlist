@@ -473,6 +473,36 @@
                   endingLineNumber = "97"
                   offsetFromSymbolStart = "24">
                </Location>
+               <Location
+                  uuid = "4A1C81AD-D0CF-4AB4-A608-20EE23326DA6 - 7bba6f516e51e48e"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "+[Scroll resetState]"
+                  moduleName = "Mac Mouse Fix Helper"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/Noah/Desktop/mmf-stuff/mac-mouse-fix/Helper/Core/Scroll/Scroll.m"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "96"
+                  endingLineNumber = "96"
+                  offsetFromSymbolStart = "0">
+               </Location>
+               <Location
+                  uuid = "4A1C81AD-D0CF-4AB4-A608-20EE23326DA6 - 6ddbbb3f11bb9ada"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "__20+[Scroll resetState]_block_invoke"
+                  moduleName = "Mac Mouse Fix Helper"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/Noah/Desktop/mmf-stuff/mac-mouse-fix/Helper/Core/Scroll/Scroll.m"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "110"
+                  endingLineNumber = "110"
+                  offsetFromSymbolStart = "8">
+               </Location>
             </Locations>
          </BreakpointContent>
       </BreakpointProxy>
@@ -480,7 +510,7 @@
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
             uuid = "4CDEB0E7-0BFE-42BA-8DD4-48693C58FFC4"
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Helper/Utility/ModificationUtility.m"
@@ -490,6 +520,38 @@
             endingLineNumber = "153"
             landmarkName = "+postMouseButtonClicks:nOfClicks:"
             landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "4CDEB0E7-0BFE-42BA-8DD4-48693C58FFC4 - e33c3f9b1eb8d776"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "+[ModificationUtility postMouseButtonClicks:nOfClicks:]"
+                  moduleName = "Mac Mouse Fix Helper"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/Noah/Desktop/mmf-stuff/mac-mouse-fix/Helper/Utility/ModificationUtility.m"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "153"
+                  endingLineNumber = "153"
+                  offsetFromSymbolStart = "176">
+               </Location>
+               <Location
+                  uuid = "4CDEB0E7-0BFE-42BA-8DD4-48693C58FFC4 - e33c3f9b1eb8d0b0"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "+[ModificationUtility postMouseButtonClicks:nOfClicks:]"
+                  moduleName = "Mac Mouse Fix Helper"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/Noah/Desktop/mmf-stuff/mac-mouse-fix/Helper/Utility/ModificationUtility.m"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "155"
+                  endingLineNumber = "155"
+                  offsetFromSymbolStart = "32">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy

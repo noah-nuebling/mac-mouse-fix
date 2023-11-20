@@ -76,6 +76,10 @@ bool isZeroVector(Vector vec) {
     return vec.x == 0 && vec.y == 0;
 }
 
+bool vectorHasNan(Vector vec) {
+    return isnan(vec.x) || isnan(vec.y);
+}
+
 bool vectorsAreEqual(Vector vec1, Vector vec2) {
     return vec1.x == vec2.x && vec1.y == vec2.y;
 }
