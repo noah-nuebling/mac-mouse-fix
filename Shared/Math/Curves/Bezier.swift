@@ -91,6 +91,7 @@ import CocoaLumberjackSwift /// Doesn't work for some reason
     let maxDegreeForPolynomialApproach: Int = 20
     /// ^ Wikipedia says that "high order curves may lack numeric stability" in polynomial form, and to use Casteljau instead if that happens. Not sure where exactly we should make the cutoff
     
+    static let defaultDefaultEpsilon = 0.08 /// Default value for `defaultEpsilon`
     var defaultEpsilon: Double /// Epsilon to be used when none is specified in evaluate(at:) call. This is only a var instead of let because of the debugging function `getMinEpsilon`. If we refactor we shouldn't need it for that either. Should change this.
     
     var degree: Int {
@@ -136,24 +137,24 @@ import CocoaLumberjackSwift /// Doesn't work for some reason
     /// Objc compatible wrappers for the Swift init functions
     
     @objc convenience init(controlPointsAsArrays: [[Double]],
-                               xInterval: Interval = .unitInterval,
-                               yInterval: Interval = .unitInterval) {
+                           defaultEpsilon: Double = defaultDefaultEpsilon,
+                           xInterval: Interval = .unitInterval,
+                           yInterval: Interval = .unitInterval) {
         /// `controlPointsAsArrays` is expected to have this structure: `[[x,y],[x,y],[x,y],...]`
         
-        
         let controlPoints: [P] = Bezier.convertPointArraysToPoints(controlPointsAsArrays)
-        self.init(controlPoints: controlPoints, xInterval: xInterval, yInterval: yInterval)
+        self.init(controlPoints: controlPoints, defaultEpsilon: defaultEpsilon, xInterval: xInterval, yInterval: yInterval)
     }
-    @objc convenience init(controlPointsAsArrays: [[Double]]) {
+    @objc convenience init(controlPointsAsArrays: [[Double]], defaultEpsilon: Double = defaultDefaultEpsilon) {
         
         let controlPoints: [P] = Bezier.convertPointArraysToPoints(controlPointsAsArrays)
-        self.init(controlPoints: controlPoints)
+        self.init(controlPoints: controlPoints, defaultEpsilon: defaultEpsilon)
     }
     
     /// Swift init
     
     convenience init(controlPoints: [P],
-                     defaultEpsilon: Double = 0.08,
+                     defaultEpsilon: Double = defaultDefaultEpsilon,
                      xInterval: Interval,
                      yInterval: Interval) {
         /**
@@ -180,7 +181,7 @@ import CocoaLumberjackSwift /// Doesn't work for some reason
         
     }
     
-    init(controlPoints controlPointsArg: [P], defaultEpsilon: Double = 0.08) {
+    init(controlPoints controlPointsArg: [P], defaultEpsilon: Double = defaultDefaultEpsilon) {
         
         /**
          Core init

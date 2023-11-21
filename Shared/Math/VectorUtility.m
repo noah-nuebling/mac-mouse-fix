@@ -84,6 +84,18 @@ bool vectorsAreEqual(Vector vec1, Vector vec2) {
     return vec1.x == vec2.x && vec1.y == vec2.y;
 }
 
+Vector vectorFromDeltaAndDirectionVector(double delta, Vector direction) {
+    
+    assert(delta >= 0);
+    
+    Vector result = direction;
+    
+    result = unitVector(result);
+    result = scaledVector(result, delta);
+    
+    return result;
+}
+
 Vector vectorFromDeltaAndDirection(double delta, MFDirection direction) {
     
     assert(delta != 0);
@@ -123,7 +135,7 @@ NSValue *nsValueFromVector(Vector vector) {
 }
 
 NSString *vectorDescription(Vector vector) {
-    return stringf(@"(%f, %f)", vector.y, vector.x);
+    return stringf(@"(%f, %f)", vector.y, vector.x); // ! prints y before x
 }
 
 @end

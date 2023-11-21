@@ -36,6 +36,7 @@ NSValue *nsValueFromVector(Vector vector);
 NSString *vectorDescription(Vector vector);
 
 Vector vectorFromDeltaAndDirection(double delta, MFDirection direction);
+Vector vectorFromDeltaAndDirectionVector(double delta, Vector direction);
 
 @end
 

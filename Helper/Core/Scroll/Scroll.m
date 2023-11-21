@@ -556,8 +556,29 @@ static void heavyProcessing(CGEventRef event, int64_t scrollDeltaAxis1, int64_t 
                 
                 DDLogDebug(@"Scroll.m start animation curve hybrid");
                 
+                Bezier *baseCurve = cParams.baseCurve;
+                double speedSmoothing = cParams.speedSmoothing;
+                
+                if (baseCurve == nil) {
+                    
+                    /// Create baseCurve as speedSmoothing curve. The idea is to make the initial speed of the baseCurve equal to the current speed. The speedSmoothing amount determines how long the curve will take to move away from the current speed.
+                    /// Notes: Currently using 0.01 epsilon for Bezier curve. This gives a little different results than even lower epsilons in MOS scroll analyzer. But it's not really noticable otherwise. Maybe we should do more extensive testing what the optimal epsilon is here when it comes to performance vs smoothness.
+                    
+                    assert(0.0 <= speedSmoothing && speedSmoothing <= 1.0);
+                    
+                    Vector baseCurveStartDirection = {
+                        .y = magnitudeOfVector(currentSpeed)    / delta,
+                        .x = 1                                  / ((double)cParams.baseMsPerStep/1000.0),
+                    };
+                    Vector baseCurveP1 = vectorFromDeltaAndDirectionVector(speedSmoothing, baseCurveStartDirection);
+                    baseCurve = [[Bezier alloc] initWithControlPointsAsArrays:@[@[@0, @0], @[@(baseCurveP1.x), @(baseCurveP1.y)], /*@[@1, @1],*/ @[@1, @1]] defaultEpsilon:0.01];
+                    
+                    DDLogDebug(@"Scroll.m start speed smoothing p1 - currentSpeed: %@, bezier: %@", vectorDescription(unitVector(baseCurveP1)), [baseCurve stringTraceWithStartX:0 endX:1 nOfSamples:10 bias:1]);
+                }
+                
+                
                 HybridCurve *hc = [[BezierHybridCurve alloc]
-                     initWithBaseCurve:cParams.baseCurve
+                     initWithBaseCurve:baseCurve
                      minDuration:((double)cParams.baseMsPerStep) / 1000.0
                      distance:delta
                      dragCoefficient:cParams.dragCoefficient

@@ -99,6 +99,11 @@ import CocoaLumberjackSwift
     
     static func _bezierInit(baseCurve: Bezier, minDuration: Double, targetDistance: Double, dragCoefficient: Double, dragExponent: Double, stopSpeed: Double, distanceEpsilon: Double) -> (transitionTime: Double, transitionDistance: Double, dragCurve: DragCurve?) {
         
+        /// Validate
+        /// Notes:
+        /// - We're currently trying to experiment with speed smoothing in Scroll.m, and the defaultDefaultEpsilon (0.08) is wayy too inaccurate. Before I think we didn't test the 0.08 value, because we were always using straight lines as the baseCurve for the BezierHybridCurve before - and straight line Beziers get optimized into actual lines.
+        assert(baseCurve.defaultEpsilon < Bezier.defaultDefaultEpsilon);
+        
         /// Find transition point
         ///     We need to find a point on the BezierCurve where to attach the DragCurve, such that the combined curve covers a distance of `distance`
         ///     We can't solve this mathematically (at least I wouldn't know how) so we need to search for the point algorithmically
@@ -353,8 +358,7 @@ class HybridCurve: Curve {
     /// This class is supposed to be subclassed, not used directly.
 
     /// Constants
-    
-    var bezierEpsilon: Double = 0.08
+//    var bezierEpsilon: Double = 0.01
     
     /// Vars - init
     
