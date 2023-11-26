@@ -14,13 +14,13 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface Device : NSObject
 
-@property (atomic, assign, readonly, nonnull) IOHIDDeviceRef iohidDevice;
+@property (atomic, assign, readonly, nullable) IOHIDDeviceRef iohidDevice;
 
-- (instancetype)init NS_UNAVAILABLE;
 + (instancetype)new NS_UNAVAILABLE;
 
 + (Device * _Nullable)deviceWithRegistryID:(uint64_t)registryID;
 + (Device *)deviceWithIOHIDDevice:(IOHIDDeviceRef)IOHIDDevice;
++ (Device *)strangeDevice;
 
 - (NSNumber *)uniqueID;
 - (BOOL)wrapsIOHIDDevice:(IOHIDDeviceRef)iohidDevice;

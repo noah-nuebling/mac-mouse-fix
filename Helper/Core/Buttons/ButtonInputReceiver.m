@@ -144,7 +144,11 @@ static CGEventRef eventTapCallback(CGEventTapProxy proxy, CGEventType type, CGEv
     
     DDLogDebug(@"Device for CG Button Input - iohidDevice: %@, device: %@", iohidDevice, device);
     
+#if DEBUG
+    if (device == nil) device = [Device strangeDevice];
+#else
     if (device == nil) return event;
+#endif
     
     /// Pass to buttonInput processor
     MFEventPassThroughEvaluation eval = [Buttons handleInputWithDevice:device button:@(buttonNumber) downNotUp:mouseDown event:event];

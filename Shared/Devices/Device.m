@@ -24,11 +24,26 @@
 
 /// We've moved this to shared to be able to access the device name and button number from the mainApp for the Buttons tabs. But to access the buttonNumber you have to open the device which requires accessibility access. So instead we'll have the mainApp ask the helper for that info instead. The registryEntryID based init's are not used after this removal.
 
+@interface StrangeDevice : Device
+
++ (StrangeDevice *)shared;
+
+@end
+
 @implementation Device {
     int _nOfButtons;
 }
 
 #pragma mark - Init
+
+- (Device *)init { /// This is just so that StrangeDevice works.
+    self->_nOfButtons = 0;
+    self->_iohidDevice = nil;
+    return [super init];
+}
++ (Device *)strangeDevice {
+    return [StrangeDevice shared];
+}
 
 + (Device * _Nullable)deviceWithRegistryID:(uint64_t)registryID {
     Device *device = [[Device alloc] initWithRegistryID:registryID];
@@ -65,6 +80,7 @@
     Device *device = [[Device alloc] initWithIOHIDDevice:iohidDevice];
     return device;
 }
+
 
 - (Device *)initWithIOHIDDevice:(IOHIDDeviceRef)IOHIDDevice {
     
@@ -365,5 +381,54 @@ static uint64_t IOHIDDeviceGetRegistryID(IOHIDDeviceRef  _Nonnull device) {
 }
 
 #pragma clang diagnostic pop
+
+@end
+
+@implementation StrangeDevice
+
+/// This is a subclass of `Device` which doesn't hold an IOHIDDevice.
+/// Many of the codes that parse input events expect to be passed a `Device` alongside the input events. `StrangeDevice` is passed to those codes if we can't retrieve a Device from the events the normal way, but we still want to parse the input events. (See ButtonInputReceiver) We created this class because we thought it might be good to allow for playback of recorded mouse events to be parsed by MMF. But not sure if that'll work.
+
++ (StrangeDevice *)shared {
+    /// Retrieve singleton instance.
+    
+    static StrangeDevice *sharedInstance = nil;
+    static dispatch_once_t onceToken;
+    
+    dispatch_once(&onceToken, ^{ /// Use `dispatch_once` for thread safety.
+        sharedInstance = [[StrangeDevice alloc] init];
+    });
+    
+    return sharedInstance;
+}
+
+- (Device * _Nullable)initWithRegistryID:(uint64_t)registryID {
+    assert(false);
+    exit(1);
+}
+- (Device *)initWithIOHIDDevice:(IOHIDDeviceRef)IOHIDDevice {
+    assert(false);
+    exit(1);
+}
+
+- (NSNumber *)uniqueID {
+    return 0;
+}
+
+- (BOOL)isEqualToDevice:(Device *)device {
+    return NO;
+}
+
+- (NSString *)name {
+    return @"Strange Device";
+}
+
+- (NSString *)manufacturer {
+    return @"Unknown Manufacturer";
+}
+
+- (int)nOfButtons {
+    return 0;
+}
 
 @end
