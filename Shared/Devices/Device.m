@@ -387,7 +387,7 @@ static uint64_t IOHIDDeviceGetRegistryID(IOHIDDeviceRef  _Nonnull device) {
 @implementation StrangeDevice
 
 /// This is a subclass of `Device` which doesn't hold an IOHIDDevice.
-/// Many of the codes that parse input events expect to be passed a `Device` alongside the input events. `StrangeDevice` is passed to those codes if we can't retrieve a Device from the events the normal way, but we still want to parse the input events. (See ButtonInputReceiver) We created this class because we thought it might be good to allow for playback of recorded mouse events to be parsed by MMF. But not sure if that'll work.
+/// Many of the codes that parse input events expect to be passed a `Device` alongside the input events. `StrangeDevice` is passed to those codes if we can't retrieve a Device from the events the normal way, but we still want to parse the input events. (See ButtonInputReceiver) We created this class because we thought it might be good to allow for playback of recorded mouse events to be parsed by MMF. But not sure if that'll work. I think it might be smarter to not have a separate class for this and instead just create an instance of `Device` with an `isStrangeDevice` flag.
 
 + (StrangeDevice *)shared {
     /// Retrieve singleton instance.
@@ -429,6 +429,10 @@ static uint64_t IOHIDDeviceGetRegistryID(IOHIDDeviceRef  _Nonnull device) {
 
 - (int)nOfButtons {
     return 0;
+}
+
+- (NSString *)description {
+    return @"This device does not exist.";
 }
 
 @end
