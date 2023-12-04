@@ -56,6 +56,8 @@ extern IOHIDServiceClientRef IOHIDEventSystemClientCopyServiceForRegistryID(IOHI
     /// Sets pointer speed accoring to PointerConfig
     /// This should be called after a new device has been attached.
 
+    assert(false); /// Don't use this, yet, because feature not implemented
+    
     if (PointerConfig.useSystemSpeed) {
         [self deconfigureDevice:device];
     } else if (PointerConfig.useParametricCurve) {
@@ -81,6 +83,9 @@ extern IOHIDServiceClientRef IOHIDEventSystemClientCopyServiceForRegistryID(IOHI
 }
 
 + (void)deconfigureDevice:(IOHIDDeviceRef)device {
+    
+    assert(false); /// Don't use this, yet, because feature not implemented
+    
     /// Restore the default macOS settigns for `device`
     [self setForDevice:device sensitivity:PointerConfig.systemSensitivity systemCurveIndex:PointerConfig.systemAccelCurveIndex];
 }

@@ -263,7 +263,7 @@ typedef enum {
     
     return _requestedState;
     
-    /// Only call this if you're already running on _displayLinkQueue
+    /// Only call this if you're already running on `_displayLinkQueue`
     Boolean result = CVDisplayLinkIsRunning(self->_displayLink);
     
     /// Debug
@@ -437,7 +437,7 @@ static CVReturn displayLinkCallback(CVDisplayLinkRef displayLink, const CVTimeSt
     /// Get self
     DisplayLink *self = (__bridge DisplayLink *)displayLinkContext;
         
-    dispatch_sync(self.dispatchQueue, ^{ /// Use sync so this is actually executed on the high-priority display-linked thread
+    dispatch_sync(self.dispatchQueue, ^{ /// Use sync so this is actually executed on the high-priority display-linked thread // Why are we using self.dispatchQueue instead of `self->_displayLinkQueue`? I think self.dispatchQueue might cause some weird timing stuff since objc props are often atomic and stuff..
         
         /// Dispatch-sync-ing here is an experiment. Move it back to the callback if this fails
         

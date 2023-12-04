@@ -228,7 +228,10 @@ static dispatch_queue_t _momentumQueue;
 #pragma mark - Auto momentum scroll
 
 static void (^_momentumScrollCallback)(void);
-
++ (void (^)(void))getAfterStartingMomentumScrollCallback {
+    /// Just wrote this getter for debugging.
+    return _momentumScrollCallback;
+}
 + (void)afterStartingMomentumScroll:(void (^ _Nullable)(void))callback {
     /// `callback` will be called after the last `kIOHIDEventPhaseEnd` event has been sent, leading momentum scroll to be started
     ///     If it's decided that momentumScroll shouldn't be started because the `kIOHIDEventPhaseEnd` event had a too low delta or some other reason, then `callback` will be called right away.

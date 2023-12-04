@@ -327,11 +327,15 @@ import QuartzCore
             let wasRunning = self.isRunning_Unsafe
             let hadProducedDeltas = self.thisAnimationHasProducedDeltas
             
+            /// Debug
+            DDLogDebug("TouchAnimator: cancel_forAutoMomentumScroll called. wasRunning: \(wasRunning), hadProducedDeltas: \(hadProducedDeltas), forAutoMomentumScroll: \(forAutoMomentumScroll), callback: \(String(describing: self.clientCallback)), lastMomentumHint: \(self.lastMomentumHint)")
+            
             /// Stop displayLink
             self.stop_Unsafe()
             
             /// Call callback
             
+            assert(self.clientCallback is AnimatorCallback) /// Why did we use ? intead of ! in`self.clientCallback as? AnimatorCallback` below? Asserting here because I think that might have been a mistake, but I don't wanna cause crashes in production.
             if wasRunning, let callback = self.clientCallback as? AnimatorCallback {
                 
                 if hadProducedDeltas {

@@ -102,7 +102,7 @@ static NSMutableDictionary<NSNumber *, Device *> *_iohidToAttachedCache;
     /// Meant to be called when the app closes
     
     for (Device *device in _attachedDevices) {
-        [PointerSpeed deconfigureDevice:device.iohidDevice];
+//        [PointerSpeed deconfigureDevice:device.iohidDevice];
     }
 }
 
