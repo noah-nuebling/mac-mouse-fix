@@ -113,6 +113,7 @@ import CocoaLumberjackSwift
         ///         - We traverse the points on the Bezier from lastPointOnBezer (t == 1.0) to firstPointOnBezier (t == 0.0).  (Increments of 10 or less should work). Until we find a point t_n where `distance(attachmentPoint = t_n) < targetDistance`. Then we know that `t_a` is between `t_n` and `t_{n+1}`. Then we do bisection between `t_n` and `t_{n+1}` until we find a point that's within an epsilon of `t_a`.
         ///         - If we found the derivative of distance(attachmentPoint) we could use Newton's method instead of bisection, but bisection should be fast enough.
         ///             -> Maybe look into using that if there is a noticable performance impact.
+        /// Edit: Why aren't we just using bisection for the whole thing, and instead doing this weird steps-of-0.1 search first? ... I think it might be because we want to find the **last** transition point on the baseCurve, in case there are several transition points where a transitionPoint is any point where can attach the dragCurve such that we reach the targetDistance.
         
         var transitionPointRange: Interval? = nil
         var transitionPoint: Double? = nil
@@ -121,15 +122,22 @@ import CocoaLumberjackSwift
         /// Find range where transitionPoint might be
         
         let n = 10
-        var k = 0
-        while true {
+        var k0 = 0
+#if !DEBUG
+        k0 = 1 /// Optimization, see asserts inside the loop
+#endif
+        for k in k0...n {
+            
             /// Get transition point to sample
             let t = Math.scale(value: Double(k), from: Interval(0, Double(n)), to: .reversedUnitInterval) /// t goes from 1.0 to 0.0 in increments of 1/n
+            
             /// Get combined distance at transition point
             let combinedDistance = combinedDistance(transitionPoint: t, baseCurve: baseCurve, baseDistance: targetDistance, baseDuration: minDuration, dragExponent: dragExponent, dragCoefficient: dragCoefficient, stopSpeed: stopSpeed)
+            
             /// Validate
             if k == 0 { assert(t == 1) }
             if k == 0 { assert(combinedDistance >= targetDistance) }
+            
             /// Break
             if fabs(combinedDistance - targetDistance) < distanceEpsilon {
                 transitionPoint = t
@@ -139,11 +147,6 @@ import CocoaLumberjackSwift
                 transitionPointRange = Interval(t, t+(1/Double(n)))
                 break
             }
-            if k >= n { /// TODO: Shouldn't this be > instead of >=?
-                break
-            }
-            /// Increment
-            k += 1
         }
         
         
@@ -180,15 +183,14 @@ import CocoaLumberjackSwift
             if transitionSpeed > stopSpeed {
             
                 /// Get dragCurve at transition point
+                ///     Note: We already calculated this before, inside `combinedDistance()`, so this is inefficient. But idk if it matters.
                 dragCurve = DragCurve(coefficient: dragCoefficient, exponent: dragExponent, initialSpeed: transitionSpeed, stopSpeed: stopSpeed)
             } else {
                 
                 DDLogDebug("transitionPoint has been found but transitionSpeed is lower than stopSpeed. So the dragCurve can't cover any distance. This likely means that the baseCurve covers the whole distance on its own exactly.")
                 
-                assert(transitionPoint == targetDistance)
-                transitionPoint = targetDistance
-                
-//                assert(false) /// For debugging, remove later
+                assert(transitionPoint == 1)
+                transitionPoint = 1
             }
             
         }
@@ -200,7 +202,6 @@ import CocoaLumberjackSwift
         let transitionDistance = baseCurve.sampleCurve(onAxis: Bezier.yAxis, atT: transitionPoint) * targetDistance
         
         /// Debug
-        
         DDLogDebug("\ntransition time: \(transitionTime*1000), dist: \(transitionDistance), dragTime: \((dragCurve?.timeInterval.length ?? 0)*1000)")
         
         /// Return
