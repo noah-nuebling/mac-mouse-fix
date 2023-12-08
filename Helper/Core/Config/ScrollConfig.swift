@@ -73,6 +73,7 @@ import CocoaLumberjackSwift
             let new = shared.copy() as! ScrollConfig
             
             /// Declare overridables
+            var u_speed = new.u_speed
             var precise = new.u_precise
             var useQuickMod = modifiers.inputMod == kMFScrollInputModificationQuick
             var usePreciseMod = modifiers.inputMod == kMFScrollInputModificationPrecise
@@ -115,6 +116,9 @@ import CocoaLumberjackSwift
                 
                 /// Adjust speed params
                 precise = false
+                if u_speed == kMFScrollSpeedSystem {
+                    u_speed = kMFScrollSpeedMedium
+                }
                 scaleToDisplay = false
                 
                 /// Turn off inputMods
@@ -131,6 +135,9 @@ import CocoaLumberjackSwift
                 
                 /// Adjust speed params
                 precise = false
+                if u_speed == kMFScrollSpeedSystem {
+                    u_speed = kMFScrollSpeedMedium
+                }
                 scaleToDisplay = false
                 
                 /// Turn off inputMods
@@ -198,10 +205,10 @@ import CocoaLumberjackSwift
             }
             
             /// Get accelerationCurve
-            if new.u_speed == kMFScrollSpeedSystem && !usePreciseMod && !useQuickMod {
+            if u_speed == kMFScrollSpeedSystem && !usePreciseMod && !useQuickMod {
                 new.accelerationCurve = nil
             } else {
-                new.accelerationCurve = getAccelerationCurve(forSpeed: new.u_speed, precise: precise, smoothness: new.u_smoothness, animationCurve: new.animationCurve, inputAxis: inputAxis, display: display, scaleToDisplay: scaleToDisplay, modifiers: modifiers, useQuickModSpeed: useQuickMod, usePreciseModSpeed: usePreciseMod, consecutiveScrollTickIntervalMax: new.consecutiveScrollTickIntervalMax, consecutiveScrollTickInterval_AccelerationEnd: new.consecutiveScrollTickInterval_AccelerationEnd)
+                new.accelerationCurve = getAccelerationCurve(forSpeed: u_speed, precise: precise, smoothness: new.u_smoothness, animationCurve: new.animationCurve, inputAxis: inputAxis, display: display, scaleToDisplay: scaleToDisplay, modifiers: modifiers, useQuickModSpeed: useQuickMod, usePreciseModSpeed: usePreciseMod, consecutiveScrollTickIntervalMax: new.consecutiveScrollTickIntervalMax, consecutiveScrollTickInterval_AccelerationEnd: new.consecutiveScrollTickInterval_AccelerationEnd)
             }
             
             /// Cache & return
@@ -356,6 +363,7 @@ import CocoaLumberjackSwift
         /// - We're using swipeThreshold to configure how far the user must've scrolled before fastScroll starts kicking in.
         /// - It would probably be better to have an explicit mechanism that counts how many pixels the user has scrolled already and then lets fastScroll kick in after a threshold is reached. That would also scale with the scrollSpeed setting. These current `fastScrollSpeedup` values are chosen so you don't accidentally trigger it at the lowest scrollSpeed, but they could be higher at higher scrollspeeds.
         /// - Fastscroll starts kicking in on the `swipeThreshold + 1` th scrollSwipe
+        /// - Edit: Why do we need speedup for kMFScrollAnimationCurveNameTouchDriver and kMFScrollAnimationCurveNameTouchDriverLinear?
         ///
         /// On how we chose parameters:
         /// - The `swipeThreshold` was chosen proportional to the max stepSize of the lowest scrollspeed setting of the respective animationCurve.
@@ -444,7 +452,7 @@ import CocoaLumberjackSwift
     /// Stored property
     ///     This is used by Scroll.m to determine how to accelerate
     
-    @objc lazy var accelerationCurve: Curve? = nil /// Initial value is unused I think. Will always be overriden before it's used anywhere
+    @objc lazy var accelerationCurve: Curve? = nil /// Initial value is unused I think. Will always be overriden before it's used anywhere. Edit: No, this stays nil, if we useAppleAcceleration
     
     // MARK: Keyboard modifiers
     
