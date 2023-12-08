@@ -280,7 +280,7 @@ import CocoaLumberjackSwift
     /// Notes:
     /// - This flag will be set on GestureScroll events, as well as DockSwipe, and maybe other events and and will invert some interactions like scrolling to delete messages in Mail
     /// - Why did we decide to always have this off? My guess is that invertedFromDevice is meant to preserve physical relationship between fingers and UI for interactions like delete messages in Mail, but since this physical relationship doesn't exist on the scrollwheel, it makes sense to just set this to a constant value independent of scroll inversion. However, it might be better to always turn *on* invertedFromDevice, instead of keeping it turned *off*, since that's the default setting in macOS, and turning it off leads to bugs when sending pinch type Dock swipes to open Launchpad. We implemented a workaround for this bug, but still should be better to always turn this on. 
-    ///     - Edit: Always turning inverted from device **on** now. Seems to work fine so far. Except that
+    ///     - Edit: Always turning inverted from device **on** now. Seems to work fine so far. It makes the direction of unread-swipes in Mail make more sense.
     
     @objc let invertedFromDevice = true;
     

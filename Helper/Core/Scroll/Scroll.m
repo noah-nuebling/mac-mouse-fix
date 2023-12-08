@@ -1036,7 +1036,7 @@ static void sendOutputEvents(int64_t dx, int64_t dy, MFScrollOutputType outputTy
         
         if (outputType == kMFScrollOutputTypeFourFingerPinch) {
             type = kMFDockSwipeTypePinch;
-            eventDelta = (dx + dy)/600.0; /// Not sure why we need to negate here. Edit: Maybe to do with invertedFromDevice flag?
+            eventDelta = -(dx + dy)/600.0; /// We negate here to counter the invertedFromDevice flag. The goal is that zooming and dockSwipe pinch feel congruent, just like on the trackpad.
             /// ^ Launchpad feels a lot less sensitive than Show Desktop, but to improve this we'd have to somehow detect which of both is active atm.
         } else if (outputType == kMFScrollOutputTypeThreeFingerSwipeHorizontal) {
             type = kMFDockSwipeTypeHorizontal;
