@@ -371,7 +371,7 @@ import ReactiveSwift
     private func logState() {
         if runningPreRelease() {
             ModifiedDrag.activationState { modifiedDragActivation in
-                DDLogDebug("SwitchMaster switched to - kbMod: \(Modifiers.kbModPriority().rawValue), btnMod: \(Modifiers.btnModPriority().rawValue), button: \(ButtonInputReceiver.isRunning() ? 1 : 0), scroll: \(Scroll.isRunning() ? 1 : 0), pointing: \(modifiedDragActivation.rawValue), buttonMenu: \(MenuBarItem.buttonsItemIsEnabled() ? 1 : 0), scrollMenu: \(MenuBarItem.scrollItemIsEnabled() ? 1 : 0)")
+                DDLogDebug("SwitchMaster switched to - kbMod: \(Modifiers.kbModPriority().rawValue), btnMod: \(Modifiers.btnModPriority().rawValue), button: \(ButtonInputReceiver.isRunning() ? 1 : 0), scroll: \(Scroll.isReceiving() ? 1 : 0), pointing: \(modifiedDragActivation.rawValue), buttonMenu: \(MenuBarItem.buttonsItemIsEnabled() ? 1 : 0), scrollMenu: \(MenuBarItem.scrollItemIsEnabled() ? 1 : 0)")
             }
         }
     }
@@ -446,14 +446,14 @@ import ReactiveSwift
     private func toggleScrollTap() {
         
         if isLockedDown || scrollKillSwitch {
-            Scroll.stop()
+            Scroll.stopReceiving()
             return
         }
         
         if someDeviceHasScroll && (defaultModifiesScroll || currentModificationModifiesScroll) {
-            Scroll.start()
+            Scroll.startReceiving()
         } else {
-            Scroll.stop()
+            Scroll.stopReceiving()
         }
     }
     

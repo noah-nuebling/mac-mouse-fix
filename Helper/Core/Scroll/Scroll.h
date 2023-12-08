@@ -18,9 +18,9 @@ NS_ASSUME_NONNULL_BEGIN
 + (AXUIElementRef) systemWideAXUIElement;
 
 + (void)load_Manual;
-+ (void)start;
-+ (void)stop;
-+ (BOOL)isRunning;
++ (void)startReceiving;
++ (void)stopReceiving;
++ (BOOL)isReceiving;
 
 + (void)resetState;
 //+ (void)suspend;

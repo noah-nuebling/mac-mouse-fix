@@ -335,7 +335,7 @@ import QuartzCore
             
             /// Call callback
             
-            assert(self.clientCallback is AnimatorCallback) /// Why did we use ? intead of ! in`self.clientCallback as? AnimatorCallback` below? Asserting here because I think that might have been a mistake, but I don't wanna cause crashes in production.
+            assert(!wasRunning || self.clientCallback is AnimatorCallback) /// Why did we use ? intead of ! in`self.clientCallback as? AnimatorCallback` below? Asserting here because I think that might have been a mistake, but I don't wanna cause crashes in production.
             if wasRunning, let callback = self.clientCallback as? AnimatorCallback {
                 
                 if hadProducedDeltas {

@@ -120,44 +120,43 @@ void resetState_Unsafe(void) {
 //    });
 //}
 
-+ (void)start {
++ (void)startReceiving {
     
     
-    /// Discussion
-    /// - We just moved resetState from `stop` to `start`,
-    ///     - That's because otherwise, the following bug happened: When scroll enhancements were disabled, except for click and scroll for Desktop & Launchpad, and then you would click and scroll, and release the button while doing that, then SwitchMaster`[Scroll stop]`, which would then call `[Scroll resetState]`, which would ultimately lead to a DockSwipe event of type cancel being sent, which would prevent the Desktop / Launchpad transition from completing.
-    /// - As part of moving resetState here, we're also dispatching to the scrollQueue. That's because resetState seems to be intended to only be called from the scrollQueue, given the base implementation is suffixed with `_Unsafe`.
-    /// - It should be more efficient, if we only reset the state once the first scroll event comes in, instead of here. This should allow us to remove dispatch_async from `- start` and `- stop`. Edit: Did some rudimentary performance testing and it seems that [Scroll start] and [Scroll stop] have practically no impact on CPU usage even when spamming a button with such settings that SwitchMaster calls start/stop on each button press and release. 
+    /// Notes:
+    /// - The switch Master will call this over and over again whenever it checks the current conditions and decides that scroll input should be intercepted. Therefore this should be eficient and do nothing if it's called while we're already intercepting scrolls.
+    /// - We used to call `resetState` when starting/stopping, but this doesn't makes sense I think. Because we don't want to reset/cancel animations just because the interception of scrollwheel events stopped. Those things are logically separate.
+    /// - We used to `dispatch_async` here because `resetState` should be synchronized on the scrollQueue (as evidenced by its base implementation being suffixed with `_Unsafe`). But since we're not calling `resetState` anymore, I don't think there's a reason to dispatch to the scrollQueue.
+    /// - I did some rudimentary performance testing here (when we were still calling `resetState`) and it seems that `[Scroll startReceiving]` and `[Scroll stopReceiving]` have practically no impact on CPU usage even when spamming a button with such settings that SwitchMaster calls start/stop on each button press and release.
+
     
-    dispatch_async(_scrollQueue, ^{
-        resetState_Unsafe();
+    /// DEBUG
+    DDLogDebug(@"Scroll - startReceiving. isReceiving: %d", CGEventTapIsEnabled(_eventTap));
+
+    /// Start event tap
+    if (!CGEventTapIsEnabled(_eventTap)) {
         CGEventTapEnable(_eventTap, true);
-    });
+    }
+    
 }
 
-+ (void)stop {
-        
-    /// NOTES:
++ (void)stopReceiving {
+    
+    /// Notes:
     /// - Are there other things we should enable/disable here? ScrollModifiers.reactToModiferChange() comes to mind
-    /// - We check for isEnabled first because resetState uses `dispatch` which is pretty slow since this is called a lot by SwitchMaster. Edit: We've moved resetSate to `start` now, so we might cosider removing the isEnabled check.
-    /// - We're dispatching to the scrollQueue here, to keep things in line with [Scroll start]. TODO: Check if this has a significant performance impact. (I don't think so since this is only called by SwitchMaster when settings change or kbMod / button is pressed.)
+    /// - Also see notes for `- startReceiving`
     
-    dispatch_async(_scrollQueue, ^{
-        if (CGEventTapIsEnabled(_eventTap)) {
-            CGEventTapEnable(_eventTap, false);
-        }
-    });
+    /// DEBUG
+    DDLogDebug(@"Scroll - stopReceiving. isReceiving: %d", CGEventTapIsEnabled(_eventTap));
     
     
-//    dispatch_async(_scrollQueue, ^{
-//        resetState_Unsafe();
-//        if (_eventTap) { /// Why are we checking if the eventTap exists here?
-//            CGEventTapEnable(_eventTap, false);
-//        }
-//    });
+    /// Stop event tap
+    if (CGEventTapIsEnabled(_eventTap)) {
+        CGEventTapEnable(_eventTap, false);
+    }
 }
 
-+ (BOOL)isRunning {
++ (BOOL)isReceiving {
     /// At the time of writing we just need this for debugging. Should'nt ever need it for something else I think.
     return CGEventTapIsEnabled(_eventTap);
 }
@@ -519,7 +518,7 @@ static void heavyProcessing(CGEventRef event, int64_t scrollDeltaAxis1, int64_t 
                 
                 BOOL isSwipeSequenceStart = scrollAnalysisResult.consecutiveScrollTickCounter == 0 && scrollAnalysisResult.consecutiveScrollSwipeCounter == 0;
                 
-                if (isSwipeSequenceStart) { /// Checking for isRunning here leads to lost input when the computer is slow
+                if (isSwipeSequenceStart) { /// Checking for isReceiving here leads to lost input when the computer is slow
                     
                     /// Reset pxLeftToScroll
                     pxLeftToScroll = 0.0;
