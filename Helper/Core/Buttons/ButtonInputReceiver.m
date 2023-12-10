@@ -169,6 +169,12 @@ static CGEventRef eventTapCallback(CGEventTapProxy proxy, CGEventType type, CGEv
     /// Pass to buttonInput processor
     MFEventPassThroughEvaluation eval = [Buttons handleInputWithDevice:device button:@(buttonNumber) downNotUp:mouseDown event:event];
     
+    /// Set the `RECORDING_MODE` flag when you want to record video demos, so that cleanshot can properly highlight when a button or keyboard key is pressed
+    
+#if RECORDING_MODE
+    return event;
+#endif
+    
     /// Let events pass through
     if (eval == kMFEventPassThroughRefusal) {
         return nil;

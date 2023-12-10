@@ -154,7 +154,7 @@
         
         _localEventMonitor = [NSEvent addLocalMonitorForEventsMatchingMask:(NSEventMaskFlagsChanged | NSEventMaskKeyDown | NSEventMaskLeftMouseDown) handler:^NSEvent * _Nullable(NSEvent * _Nonnull event) {
             CGEventRef e = event.CGEvent;
-            // User is playing around with modifier keys
+            /// User is playing around with modifier keys
             
             if (event.type == NSEventTypeFlagsChanged) {
                 CGEventFlags flags = CGEventGetFlags(e);
@@ -172,6 +172,10 @@
                 [MainAppState.shared.window makeFirstResponder:nil];
             }
             
+            /// Set the `RECORDING_MODE` flag when you want to record video demos, so that cleanshot can properly highlight when a button or keyboard key is pressed. Edit: This doesn't seem to work here.
+#if RECORDING_MODE
+            return event;
+#endif
             return nil;
         }];
     }
@@ -197,13 +201,13 @@
 #pragma mark - Disable MouseDown and mouseover cursor
 
 - (void)mouseDown:(NSEvent *)event {
-    // Ignore
+    /// Ignore
 }
 - (void)mouseMoved:(NSEvent *)event {
-    [NSCursor.arrowCursor set]; // Prevent text insertion cursor from appearing on mouseover
+    [NSCursor.arrowCursor set]; /// Prevent text insertion cursor from appearing on mouseover
 }
 - (void)scrollWheel:(NSEvent *)event {
-    [NSCursor.arrowCursor set]; // Prevent text insertion cursor from appearing on scroll
+    [NSCursor.arrowCursor set]; /// Prevent text insertion cursor from appearing on scroll
 }
 
 - (IBAction)backgroundButton:(id)sender {
