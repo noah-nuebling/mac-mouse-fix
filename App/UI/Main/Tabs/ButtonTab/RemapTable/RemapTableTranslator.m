@@ -70,6 +70,10 @@ static NSDictionary *separatorEffectsTableEntry() {
 //    return @{@"isSeparator": @YES, @"hideable": @YES}; /// This doesn't work ;/
 //}
 static NSArray *getScrollEffectsTable() {
+    
+    /// NOTES:
+    ///     If you change effects tables, update the config version in **default_config.plist**. Otherwise there might be crash-loops after upgrading/downgrading.
+    
     NSArray *scrollEffectsTable = @[
         @{@"ui": NSLocalizedString(@"scroll-effect.4-pinch", @"First draft: Desktop & Launchpad") , @"tool": NSLocalizedString(@"scroll-effect.4-pinch.hint", @"First draft: Scroll up for Launchpad and down to show the Desktop\n \nWorks like Pinching with 4 fingers on an Apple Trackpad"), @"dict": @{
             kMFModifiedScrollDictKeyEffectModificationType: kMFModifiedScrollEffectModificationTypeFourFingerPinch
