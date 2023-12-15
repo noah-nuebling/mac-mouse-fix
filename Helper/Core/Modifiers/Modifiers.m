@@ -40,6 +40,9 @@
 
 /// Update:
 /// (At the time of writing, this change is not yet reflected in the other comments in this class.)`Modifiers` class now has a single `modifiers` instance var which is updated whenever modifiers change. When some module requests the current modifiers that instance var is simply returned. Before, the modifiers were recompiled each time they were requested. The whole idea of "modifier driven" and "trigger driven" modifications is now not used anymore. All modifications are in effect "modifier driven". This does mean we always listen to keyboard modifiers which is bad. But that will allow us to turn off other event interception dynamically. For example when the user has scrolling enhancements turned off we can turn the scrollwheel eventTap off but then when they hold a modifier for scroll-to-zoom we can dynamically turn the tap on again. Ideally we'd only tap into the keyboard mod event stream if there is such a situation where the keyboard mods can toggle another tap and otherwise turn the keyboard mod tap off. I'll look into that.
+///
+/// Update:
+/// Most of this stuff is outdated now. Now, the MasterSwitch toggles between actively listening to modifiers vs passively retrieving them on request. The active listening simply notifies the SwitchMaster that the modifers changed.
 
 #pragma mark - Storage
 
