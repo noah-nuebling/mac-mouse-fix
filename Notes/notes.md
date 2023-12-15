@@ -1,5 +1,9 @@
 #  Notes
 
+## On license copyright years
+
+You only really need to include the year of first publication. (2019 for MMF) You can also write something like 2019-2023 if you wanna look cool and maybe extend the copyright by a few years when it runs out in 2070 or so. See https://news.ycombinator.com/item?id=34880663. 
+
 ## On changing Bundle ID to com.nuebling.mac-mouse-fixxx
 
 On 13.09.2022, right after publishing MMF 3.0.0 Beta 1, I started seeing weird errors saying "Change your bundle identifier to a unique string to try again". I thought I might be able to fix this by enrolling in the Developer Program, so I did, but it didn't help. Tried other solutions from SO but nothing helped. The only fix was to change the Bundle ID. So I changed it from com.nuebling.mac-mouse-fix -> com.nuebling.mac-mouse-fixxx. I also changed the Helper and Accomplice Bundle IDs accordingly.
