@@ -1,0 +1,62 @@
+# Update the Acknowledgements.md file by periodically running a python script. !@#$!@$%!#$%
+
+name: Update Acknowledgements
+
+# Controls when the action will run
+on:
+  # Action is triggered manually
+  workflow_dispatch:
+
+  # Action runs periodically
+  schedule:  
+    - cron: "*/5 * * * *" # Every 5 minutes. See crontab.guru/
+  
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  # This workflow contains a single job called "regenerate-acknowledgements"
+  regenerate-acknowledgements:
+    
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+    
+    - name: Checkout repo
+      uses: actions/checkout@v3
+      with:
+        ref: version-3 # Checkout the branch with this name
+    
+    - name: Setup python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.10'
+        cache: 'pip' # caching pip dependencies. This is from the official example. Not totally sure what we're doing here.
+        cache-dependency-path: './Markdown/Code/python_requirements.txt'
+
+    - name: Install python dependencies
+      run: |
+        python -m pip install -r ./Markdown/Code/python_requirements.txt
+    
+    - name: Run script
+      run: |
+        python ./Markdown/Code/markdown_generator.py --document acknowledgements --api_key ${{ secrets.GUMROAD_API_KEY }}
+    
+    - name: Commit and push changes
+      run: |
+          if [[ -n $(git status --short) ]]; then
+            
+            # We do if statement here, otherwise the GitHub Actions exits with an error if there are no changes which we don't want since it's normal to have no changes. Src for the if condition: https://remarkablemark.org/blog/2017/10/12/check-git-dirty/
+          
+            git config user.name github-actions
+            git config user.email github-actions@github.com
+            git add .
+            git commit -m "GitHub Actions Workflow automatically regenerated Acknowledgements.md"
+            git push
+            
+          else
+            echo 'No changes. Not commiting and pushing'
+          fi
+      
+      
