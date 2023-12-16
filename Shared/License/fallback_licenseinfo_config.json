@@ -1,0 +1,11 @@
+{
+   "maxActivations": 25,
+   "trialDays": 30,
+   "price": 199,
+   "payLink": "https://noahnuebling.gumroad.com/l/mmfinappusd",
+   "quickPayLink": "https://noahnuebling.gumroad.com/l/mmfinappusd?wanted=true",
+   "altPayLink": "<Todo: Add paddle pay link>",
+   "altQuickPayLink": "<Todo: Add paddle quick pay link>",
+   "altPayLinkCountries": [],
+   "freeCountries": ["CN", "RU", "IN", "AZ"]
+}

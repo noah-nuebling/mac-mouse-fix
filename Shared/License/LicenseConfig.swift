@@ -40,7 +40,9 @@ import CocoaLumberjackSwift
             /// Try to extract instance from downloaded data
             if let url = url {
                 do {
-                    try fillInstanceAndCacheFromJSON(instance, url)
+                    let dict = try dictFromJSON(url)
+                    try instance.fillFromDict(dict)
+                    LicenseConfig.configCache = dict
                     instance.freshness = kMFValueFreshnessFresh
                     onComplete(instance)
                     return
@@ -68,31 +70,27 @@ import CocoaLumberjackSwift
         /// Fill from cache
 
         do {
-            try fillInstanceFromDict(instance, LicenseConfig.configCache)
+            let dict = LicenseConfig.configCache
+            try instance.fillFromDict(dict)
             instance.freshness = kMFValueFreshnessCached
         } catch {
             DDLogError("Failed to fill LicenseConfig instance from cache with error \(error). Falling back to hardcoded.")
         }
         
-        /// Fallback to hardcoded if no cache
-        ///     Why not set these values in init? Should be safer and simpler.
-        
-        // TODO: Add altPaylink stuff here after we implement support for paddle or whatever
-        
+        /// Use fallback if no cache
+                
         if !instance.isFilled {
-            instance.maxActivations = 25
-            instance.trialDays = 30
-            instance.price = 199
-            instance.payLink = "https://noahnuebling.gumroad.com/l/mmfinappusd"
-            instance.quickPayLink = "https://noahnuebling.gumroad.com/l/mmfinappusd?wanted=true"
-            instance.altPayLink = ""
-            instance.altQuickPayLink = ""
-            instance.altPayLinkCountries = []
-            instance.freeCountries = []
             
-            instance.isFilled = true
-            instance.freshness = kMFValueFreshnessFallback
+            do {
+                let url = Bundle.main.url(forResource: "fallback_licenseinfo_config", withExtension: "json")!
+                let dict = try dictFromJSON(url)
+                try instance.fillFromDict(dict)
+                instance.freshness = kMFValueFreshnessFallback
+            } catch {
+                fatalError()
+            }
         }
+
         
         /// Return
         return instance
@@ -191,23 +189,23 @@ import CocoaLumberjackSwift
     
     /// Helper funcs
 
-    private static func fillInstanceAndCacheFromJSON(_ instance: LicenseConfig, _ configURL: URL) throws {
+    private static func dictFromJSON(_ jsonURL: URL) throws -> [String: Any] {
         
         /// Extract dict from json url
         
-        var config: [String: Any]? = nil
-        let data = try Data(contentsOf: configURL)
-        config = try JSONSerialization.jsonObject(with: data) as? [String: Any]
+        var dict: [String: Any]? = nil
+        let data = try Data(contentsOf: jsonURL)
+        dict = try JSONSerialization.jsonObject(with: data) as? [String: Any]
         
-        /// Fill instance from dict
-        try fillInstanceFromDict(instance, config)
+        if dict == nil {
+            throw NSError(domain: "Lazydomain", code: 0, userInfo: ["Couldn't extract dict from json at url": jsonURL])
+        }
         
-        /// Store dict in cache
-        ///     If we successfully filled instance
-        LicenseConfig.configCache = config
+        /// Return
+        return dict!
     }
     
-    private static func fillInstanceFromDict(_ instance: LicenseConfig, _ config: [String: Any]?) throws {
+    private func fillFromDict(_ config: [String: Any]?) throws {
         
         /// Get values from dict
         
@@ -226,16 +224,16 @@ import CocoaLumberjackSwift
         
         /// Fill instance from dict values
         
-        instance.maxActivations = maxActivations
-        instance.trialDays = trialDays
-        instance.price = price
-        instance.payLink = payLink
-        instance.quickPayLink = quickPayLink
-        instance.altPayLink = altPayLink
-        instance.altQuickPayLink = altQuickPayLink
-        instance.altPayLinkCountries = altPayLinkCountries
-        instance.freeCountries = freeCountries
+        self.maxActivations = maxActivations
+        self.trialDays = trialDays
+        self.price = price
+        self.payLink = payLink
+        self.quickPayLink = quickPayLink
+        self.altPayLink = altPayLink
+        self.altQuickPayLink = altQuickPayLink
+        self.altPayLinkCountries = altPayLinkCountries
+        self.freeCountries = freeCountries
         
-        instance.isFilled = true
+        self.isFilled = true
     }
 }
