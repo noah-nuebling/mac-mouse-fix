@@ -34,14 +34,16 @@ Link section with pipe-symbols instead of html table:
   <summary>󠁧󠁿{current_language}</summary>
 	
 {language_list}
-  [Help translate Mac Mouse Fix to different languages!](https://google.com)
+  [Help translate Mac Mouse Fix to different languages!](https://github.com/noah-nuebling/mac-mouse-fix/discussions/731)
 </details>
 
 <!-- ||| Head Section ||| -->
 
+<!--
 <table align="center"><td>
 You can now test the <a href="https://github.com/noah-nuebling/mac-mouse-fix/releases/">Mac Mouse Fix 3 Beta!</a>
 </td></table>
+-->
 
 <br>
 
@@ -58,11 +60,10 @@ You can now test the <a href="https://github.com/noah-nuebling/mac-mouse-fix/rel
 
 <div align="center">
 	<table>
-	    <th><a href=https://noah-nuebling.github.io/mac-mouse-fix-website>Download</a></th>
-		<td><a href=https://github.com/noah-nuebling/mac-mouse-fix/releases>Releases</a></td>
-		<td><a href=https://github.com/noah-nuebling/mac-mouse-fix/discussions>Help</a></td>
-		<td><a href=https://github.com/noah-nuebling/mac-mouse-fix/discussions>Feedback</a></td>
-<!-- 		<td><a href=https://github.com/noah-nuebling/mac-mouse-fix/abcdefg>Acknowledgements</a></td> -->
+		<th><a href=https://noah-nuebling.github.io/mac-mouse-fix-website>Website ↗</a></th>
+		<td><a href=https://github.com/noah-nuebling/mac-mouse-fix/issues/new/choose>Help & Feedback</a></td>
+		<td><a href=https://github.com/noah-nuebling/mac-mouse-fix/releases>Version History</a></td>
+ 		<td><a href="{repo_root}Acknowledgements">Acknowledgements</a></td> <!-- If you translate this, remember to link to the right language version -->
 	</table>
 	<img src="https://img.shields.io/github/downloads/noah-nuebling/mac-mouse-fix/total.svg">
 </div>

@@ -2,7 +2,7 @@
   <summary>󠁧󠁿{current_language}</summary>
   
 {language_list}
-  [Help translate Mac Mouse Fix to different languages!](https://google.com)
+  [Help translate Mac Mouse Fix to different languages!](https://github.com/noah-nuebling/mac-mouse-fix/discussions/731)
 </details>
 
 # 🙌 Acknowledgements

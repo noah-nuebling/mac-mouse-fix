@@ -1,17 +1,21 @@
-<!-- This README is greatly inspired by / stolen from sindresorhus/Gifski and sindresorhus/caprine -->
+<!-- ||| Language picker ||| -->
 
 <details>
-  <summary>󠁧󠁿{current_language}</summary>
-	
+	<summary>󠁧󠁿{current_language}</summary>
+	  
 {language_list}
-  [Helfe Mac Mouse Fix in verschiedene Sprachen zu übersetzen!](https://google.com)
+	[Help translate Mac Mouse Fix to different languages!](https://github.com/noah-nuebling/mac-mouse-fix/discussions/731)
 </details>
 
-<table align="center">
-	<tr>
-	    <td align="center">You can now test the <a href="https://github.com/noah-nuebling/mac-mouse-fix/releases/">Mac Mouse Fix 3 Beta!</a></td>
-	</tr>
-</table>
+  
+<!-- ||| Head Section ||| -->
+
+<!--
+<table align="center"><td>
+You can now test the <a href="https://github.com/noah-nuebling/mac-mouse-fix/releases/">Mac Mouse Fix 3 Beta!</a>
+</td></table>
+-->
+
 <br>
 
 <div align="center">
@@ -19,7 +23,7 @@
 		<img src="{repo_root}Markdown/Media/AppIconRound3.png" width="200" height="auto">
 	</a>
 	<h1>Mac Mouse Fix</h1>  
-    <p>Make Your $10 Mouse Better Than an Apple Trackpad!</p>
+    <p>Mach deine $10 Maus besser als ein Apple Trackpad!</p>
 </div>
 
 <br>
@@ -27,17 +31,37 @@
 
 <div align="center">
 	<table>
-        <th><a href=https://noah-nuebling.github.io/mac-mouse-fix-website>Download</a></th>
-        <td><a href=https://github.com/noah-nuebling/mac-mouse-fix/releases>Releases</a></td>
-        <td><a href=https://github.com/noah-nuebling/mac-mouse-fix/discussions>Help</a></td>
-        <td><a href=https://github.com/noah-nuebling/mac-mouse-fix/discussions>Feedback</a></td>
-    </table>
+		<th><a href=https://noah-nuebling.github.io/mac-mouse-fix-website>Webseite ↗</a></th>
+		<td><a href=https://github.com/noah-nuebling/mac-mouse-fix/issues/new/choose>Hilfe & Feedback</a></td>
+		<td><a href=https://github.com/noah-nuebling/mac-mouse-fix/releases>Versionsverlauf</a></td>
+ 		<td><a href="{repo_root}Markdown/LocalizedDocuments/Acknowledgements - 🇩🇪 Deutsch.md">Danksagungen</a></td> <!-- If you translate this, remember to link to the right language version -->
+	</table>
 	<img src="https://img.shields.io/github/downloads/noah-nuebling/mac-mouse-fix/total.svg">
 </div>
 
 <br>
-<!--Use this second br when theres text above the first header -->
+<!--Use this second br when theres text above the first header (Edit: I think by "first header" I meant the h1 saying "Mac Mouse Fix", but not sure) -->
 <br>
+
+<!-- Learn more links -->
+
+<br><br><br><br><hr>
+
+<div align="center">
+
+<!-- Learn More about Mac Mouse Fix on the <a href=https://noah-nuebling.github.io/mac-mouse-fix-website>Website</a> and in the <a href=https://noah-nuebling.github.io/mac-mouse-fix-website>More Info</a> document. -->
+
+For an Introduction and Feature Overview of Mac Mouse Fix (including Video Demos) visit the <a href=https://noah-nuebling.github.io/mac-mouse-fix-website>Website</a>.
+</div>
+
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+
+<!-- <table>
+	<td><a href=https://noah-nuebling.github.io/mac-mouse-fix-website>Website (Feature Overview)</a></td>
+	<td><a href=https://github.com/noah-nuebling/mac-mouse-fix/releases>More Info</a></td>
+</table></div> -->
+
+<!-- ||| Intro Text ||| -->
 
 Make Mouse Fix is the most powerful, streamlined, optimized ...
 
@@ -64,24 +88,6 @@ My goal is to make Mac Mouse Fix the best mouse driver of all time. Currently it
 - How you can help
 - License
 - Acknowledgements
-
-
-<!-- <div align="center"><img src="{repo_root}Markdown/Media/MMF-Buttons-Screenshot.png" width="600" height="auto"></div> -->
-
-<!-- <h3 align="center">
-<a href=https://noah-nuebling.github.io/mac-mouse-fix-website>Download</a> |
-<a href=https://github.com/noah-nuebling/mac-mouse-fix/releases>Releases</a> |
-<a href=https://github.com/noah-nuebling/mac-mouse-fix/discussions>Help &  Feedback</a>
-</h3> -->
-
-
-<!-- This is a macOS app for the [`gifski` encoder](https://gif.ski), which converts videos to GIF animations using [`pngquant`](https://pngquant.org)'s fancy features for efficient cross-frame palettes and temporal dithering. It produces animated GIFs that use thousands of colors per frame and up to 50 FPS (useful for showing off design work on Dribbble).
-
-You can also produce smaller lower quality GIFs when needed with the “Quality” slider, thanks to [`gifsicle`](https://github.com/kohler/gifsicle).
-
-Gifski supports all the video formats that macOS supports (`.mp4` or `.mov` with H264, HEVC, ProRes, etc). The [QuickTime Animation format](https://en.wikipedia.org/wiki/QuickTime_Animation) is not supported. Use [ProRes 4444 XQ](https://en.wikipedia.org/wiki/Apple_ProRes) instead. It's more efficient, more widely supported, and like QuickTime Animation, it also supports alpha channel.
-
-Gifski has a bunch of settings like changing dimensions, speed, frame rate, quality, looping, and more. -->
 
 ## Features
 
@@ -322,12 +328,3 @@ More info in the [LICENSE](https://github.com/noah-nuebling/mac-mouse-fix/blob/m
 ## Acknowledgements
 
 Mac Mouse Fix wouldn't be the same without these [awesome contributions](<{repo_root}Markdown/LocalizedDocuments/Acknowledgements - 🇩🇪 Deutsch.md>)
-
----
-
-
-# Steal from these READMEs
-
-- https://github.com/exelban/stats
-- sindresorhus/Gifski
-- sindresorhus/caprine
