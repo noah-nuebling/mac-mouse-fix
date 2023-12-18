@@ -4,7 +4,7 @@
   
   [🇬🇧 English](../../Acknowledgements.md)\
   **🇩🇪 Deutsch**\
-  [Helfe Mac Mouse Fix in verschiedene Sprachen zu übersetzen!](https://google.com)
+  [Help translate Mac Mouse Fix to different languages!](https://github.com/noah-nuebling/mac-mouse-fix/discussions/731)
 </details>
 
 # 🙌 Danksagungen
@@ -22,7 +22,7 @@ Danke, dass ihr Mac Mouse Fix zu Menschen auf der ganzen Welt gebracht habt.
 
 ## 💰 Geld
 
-Vielen Dank an alle, die mir einen Milchshake spendiert haben, und an alle **1182** Personen, die Mac Mouse Fix gekauft haben.
+Vielen Dank an alle, die mir einen Milchshake spendiert haben, und an alle **1184** Personen, die Mac Mouse Fix gekauft haben.
 Dank euch kann ich viel Zeit mit etwas verbringen, das ich sehr gerne mache. <!-- Ihr lasst mich spüren, dass es viele Menschen da draußen gibt, die die App schätzen und unterstützen möchten, und dank euch kann ich mehr Zeit in etwas investieren, das ich sehr gerne mache. -->
 
 Menschen, die mich durch den Kauf von Mac Mouse Fix zu einem höheren Preis als dem Standardpreis unterstützt haben, erhalten hier eine besondere Erwähnung:
@@ -136,9 +136,18 @@ Diese Leute haben viel mehr als den Standardpreis ausgegeben und mir einen **ung
 - 🇷🇴&nbsp;Marian&nbsp;Melinte
 - 🇬🇧&nbsp;Niania52
 
+### ❤️ GitHub Sponsoren
+
+Riesiges Dankeschön an [alle](https://github.com/sponsors/noah-nuebling#sponsors) die mich auf GitHub sponsern! Hoffentlich kann ich mir eines Tages dank euch die Milchshakefabrik kaufen. :)
+
+
+### ✨ PayPal Spenden
+
+Viele großzügige Leute haben mir auf PayPal Milchshakes spendiert, als Mac Mouse Fix noch komplett kostenlos war. Als Dankeschön könnt ihr eine kostenlose Lizenz bekommen. Schickt mir einfach eine E-Mail mit "Free License" im Betreff und hängt einen Screenshot der Spende an. Danke euch!
+
 ## 👾 Andere Software
 
-**Sowftare**, die Mac Mouse Fix inspiriert hat:
+**Software**, die Mac Mouse Fix inspiriert hat:
 
 - [SteerMouse](https://plentycom.jp/en/steermouse/index.html) - Wegweisende Maus-Software für Mac, die viele Funktionen inspiriert hat. Es gab Momente, in denen ich dachte: "Das ist wahrscheinlich unmöglich", aber dann hab ich gesehen "oh, SteerMouse macht es", und drei Jahre später habe ich herausgefunden, wie ich es auch umsetzen kann.
 - [Calftrail Touch](https://github.com/calftrail/Touch) - Die Grundlage für die "Reverse Engineering"-Arbeit, die Mac Mouse Fix's erstklassige und einzigartige Trackpad-Simulation ermöglicht!

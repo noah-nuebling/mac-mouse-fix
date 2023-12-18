@@ -39,6 +39,16 @@ These people spent a lot more than the standard price and treated me to an **Inc
 
 {very_generous}
 
+### ❤️ GitHub Sponsors
+
+**Huge thanks** to [everyone](https://github.com/sponsors/noah-nuebling#sponsors) sponsoring me on GitHub! Hopefully I can get that milkshake factory one day thanks to you. :)
+
+### ✨ PayPal Donations
+
+Lots of generous people bought me milkshakes on PayPal when Mac Mouse Fix was still entirely free. As thanks, I will provide you with a free license. Just shoot me an email with "Free License" in the subject and attach a screenshot of your donation. Thank you!
+
+<!-- It's truly incredibly helpful to have some predictable monthly income. -->
+
 ## 👾 Other Software
 
 **Software** that inspired Mac Mouse Fix:
@@ -62,8 +72,6 @@ Mac Mouse Fix was built with the help of these **great libraries**:
 - [CGSInternal](https://github.com/NUIKit/CGSInternal) - A collection of private CoreGraphics routines
 - Dependencies of Mac Mouse Fix's Python scripts: [Update and statistics scripts](https://github.com/noah-nuebling/mac-mouse-fix/blob/update-feed/requirements.txt) | [Markdown generator script]({repo_root}Markdown/Code/python_requirements.txt)
 - Dependencies of the [Mac Mouse Fix Feedback Assistant](https://noah-nuebling.github.io/mac-mouse-fix-feedback-assistant/) web app [here](https://github.com/noah-nuebling/mac-mouse-fix-feedback-assistant/blob/master/package.json)
-
-
 
 <!--
 

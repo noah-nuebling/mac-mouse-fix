@@ -4,7 +4,7 @@
   
   **🇬🇧 English**\
   [🇩🇪 Deutsch](Markdown/LocalizedDocuments/Acknowledgements%20-%20%F0%9F%87%A9%F0%9F%87%AA%20Deutsch.md)\
-  [Help translate Mac Mouse Fix to different languages!](https://google.com)
+  [Help translate Mac Mouse Fix to different languages!](https://github.com/noah-nuebling/mac-mouse-fix/discussions/731)
 </details>
 
 # 🙌 Acknowledgements
@@ -22,9 +22,9 @@ Thanks for bringing Mac Mouse Fix to people around the globe!
 
 ## 💰 Money
 
-<!-- Thanks so much to everyone who bought me a milkshake and to all 1182 people who bought Mac Mouse Fix! Ya'll are the bomb. Thanks to you I can spend lots of time on sth I love doing. -->
+<!-- Thanks so much to everyone who bought me a milkshake and to all 1184 people who bought Mac Mouse Fix! Ya'll are the bomb. Thanks to you I can spend lots of time on sth I love doing. -->
 
-Thanks so much to everyone who treated me to a milkshake and to all **1182** people who bought Mac Mouse Fix.
+Thanks so much to everyone who treated me to a milkshake and to all **1184** people who bought Mac Mouse Fix.
 Thanks to you, I can spend lots of time doing something I love. <!-- You make me me feel like there are many generous people out there who appreciate the app and want to support it, and thanks to you, I can spend more time on something I love doing. -->
 
 People who supported me by spending more than the standard price on Mac Mouse Fix receive a special mention here:
@@ -138,6 +138,16 @@ These people spent a lot more than the standard price and treated me to an **Inc
 - 🇷🇴&nbsp;Marian&nbsp;Melinte
 - 🇬🇧&nbsp;Niania52
 
+### ❤️ GitHub Sponsors
+
+**Huge thanks** to [everyone](https://github.com/sponsors/noah-nuebling#sponsors) sponsoring me on GitHub! Hopefully I can get that milkshake factory one day thanks to you. :)
+
+### ✨ PayPal Donations
+
+Lots of generous people bought me milkshakes on PayPal when Mac Mouse Fix was still entirely free. As thanks, I will provide you with a free license. Just shoot me an email with "Free License" in the subject and attach a screenshot of your donation. Thank you!
+
+<!-- It's truly incredibly helpful to have some predictable monthly income. -->
+
 ## 👾 Other Software
 
 **Software** that inspired Mac Mouse Fix:
@@ -161,8 +171,6 @@ Mac Mouse Fix was built with the help of these **great libraries**:
 - [CGSInternal](https://github.com/NUIKit/CGSInternal) - A collection of private CoreGraphics routines
 - Dependencies of Mac Mouse Fix's Python scripts: [Update and statistics scripts](https://github.com/noah-nuebling/mac-mouse-fix/blob/update-feed/requirements.txt) | [Markdown generator script](Markdown/Code/python_requirements.txt)
 - Dependencies of the [Mac Mouse Fix Feedback Assistant](https://noah-nuebling.github.io/mac-mouse-fix-feedback-assistant/) web app [here](https://github.com/noah-nuebling/mac-mouse-fix-feedback-assistant/blob/master/package.json)
-
-
 
 <!--
 

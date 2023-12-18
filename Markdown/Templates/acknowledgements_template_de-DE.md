@@ -37,9 +37,18 @@ Diese Leute haben viel mehr als den Standardpreis ausgegeben und mir einen **ung
 
 {very_generous}
 
+### ❤️ GitHub Sponsoren
+
+Riesiges Dankeschön an [alle](https://github.com/sponsors/noah-nuebling#sponsors) die mich auf GitHub sponsern! Hoffentlich kann ich mir eines Tages dank euch die Milchshakefabrik kaufen. :)
+
+
+### ✨ PayPal Spenden
+
+Viele großzügige Leute haben mir auf PayPal Milchshakes spendiert, als Mac Mouse Fix noch komplett kostenlos war. Als Dankeschön könnt ihr eine kostenlose Lizenz bekommen. Schickt mir einfach eine E-Mail mit "Free License" im Betreff und hängt einen Screenshot der Spende an. Danke euch!
+
 ## 👾 Andere Software
 
-**Sowftare**, die Mac Mouse Fix inspiriert hat:
+**Software**, die Mac Mouse Fix inspiriert hat:
 
 - [SteerMouse](https://plentycom.jp/en/steermouse/index.html) - Wegweisende Maus-Software für Mac, die viele Funktionen inspiriert hat. Es gab Momente, in denen ich dachte: "Das ist wahrscheinlich unmöglich", aber dann hab ich gesehen "oh, SteerMouse macht es", und drei Jahre später habe ich herausgefunden, wie ich es auch umsetzen kann.
 - [Calftrail Touch](https://github.com/calftrail/Touch) - Die Grundlage für die "Reverse Engineering"-Arbeit, die Mac Mouse Fix's erstklassige und einzigartige Trackpad-Simulation ermöglicht!

@@ -6,6 +6,37 @@ The idea of the stuff in this folder is to generate/update markdown files based 
 
 We originally built this stuff in the [`github-actions-test` repo](https://github.com/noah-nuebling/github-actions-test). It contains some additional info and background in it's `Readme-Meta.md` file - which this readme is based upon. It also contains our original draft for the main MMF Readme.md, experiments and info on GitHub actions, and maybe more interesting stuff I forgot.
 
+# GitHub Sponsors
+
+At the time of writing, we're not listing GitHub sponsors in Acknowledgements. It should be possible with a graphql query like this:
+
+```graphql
+query {
+	user(login: "sindresorhus") {
+    
+    sponsorshipsAsMaintainer(last: 100, activeOnly: true) {
+      nodes {
+        tierSelectedAt
+        tier {
+          id
+          name
+        }
+        sponsorEntity {
+          ... on User {
+            login
+            
+          }
+          ... on Organization {
+            login
+          }
+        }
+      }
+    }
+```
+
+See GitHub [GraphQL API Explorer](https://docs.github.com/en/graphql/overview/explorer.)
+
+
 # Install dependencies into python env
 
 You can create a new venv and install the python_requirements.txt file like this: (In fish shell)
