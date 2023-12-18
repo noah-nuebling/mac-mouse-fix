@@ -63,7 +63,7 @@ You can now test the <a href="https://github.com/noah-nuebling/mac-mouse-fix/rel
 		<th><a href=https://noah-nuebling.github.io/mac-mouse-fix-website>Website ↗</a></th>
 		<td><a href=https://github.com/noah-nuebling/mac-mouse-fix/issues/new/choose>Help & Feedback</a></td>
 		<td><a href=https://github.com/noah-nuebling/mac-mouse-fix/releases>Version History</a></td>
- 		<td><a href="{repo_root}Acknowledgements">Acknowledgements</a></td> <!-- If you translate this, remember to link to the right language version -->
+ 		<td><a href="{repo_root}Acknowledgements.md">Acknowledgements</a></td> <!-- If you translate this, remember to link to the right language version -->
 	</table>
 	<img src="https://img.shields.io/github/downloads/noah-nuebling/mac-mouse-fix/total.svg">
 </div>
