@@ -89,7 +89,7 @@ You can now test the <a href="https://github.com/noah-nuebling/mac-mouse-fix/rel
 
 <!-- ||| Intro Text ||| -->
 
-**What is it?**
+## Overview
 
 Make Mouse Fix is a Mac app that makes your mouse better. ((It is the most powerful, streamlined and optimized mouse driver that I know of.))
 
@@ -101,11 +101,19 @@ It's highly optimized, polished. It's open-source, and the UI is beautiful and r
 
 My goal is to make Mac Mouse Fix the best mouse driver of all time. Currently it's still lacking some features, but I think it already offers the best implementation of the features which it does have. 
 
+## Background
+
+This is what I wrote on the Mac Mouse Fix website when I originally released it in the semester break of 2019:
+
+> My name is Noah and I made Mac Mouse Fix. When I started this project I was completely new to software development, but with the power of Google, Stack Overflow, and Apple's Developer Documentation at my fingertips I managed to learn what is necessary to deliver a solid little app that I hope will be useful for you guys. Working on Mac Mouse Fix made me discover a passion for programming, and led me to enroll in a Computer Science Degree at college, which has been awesome so far. I probably won't have a lot of time to work on Mac Mouse Fix during the semester, but please feel free to make your own contributions to Mac Mouse Fix on GitHub!
+
+Since then I struggled a lot with my mental health. And after starting out with really good grades and a nice social life I unfortunately became too depressed and anxious to finish my degree. However, I still have a lot of passion and fun working on Mac Mouse Fix, and I hope to be able to sustain myself financially through the project and to slowly but deliberately turn it into the best mouse driver of all time and an app that any Mac user with a mouse can appreciate/benefit from. Thanks so much to everyone for their support, be it through financial support, by requesting and discussion bugs and features, or by sharing their excitement about the app! <3 :)
 
 
+<!--
 ### Table of Contents
 
-<!-- Autogenerating the TOC might be nice but it's probably not worth it -->
+/// Autogenerating the TOC might be nice but it's probably not worth it
 
 - [Features](#features)
 - [Pricing](#pricing)
@@ -118,12 +126,13 @@ My goal is to make Mac Mouse Fix the best mouse driver of all time. Currently it
 - How you can help
 - License
 - Acknowledgements
+-->
 
 ## Features
 
 See the [Website](https://noah-nuebling.github.io/mac-mouse-fix-website#trackpad) for an overview of the features of Mac Mouse Fix, including Video Demos.
 
-For all the details, see the <a href=https://github.com/noah-nuebling/mac-mouse-fix/releases>Version History</a>.
+For more details, see the <a href=https://github.com/noah-nuebling/mac-mouse-fix/releases>Version History</a>.
 
 Major features were introduced in these versions:
 
@@ -133,6 +142,44 @@ Major features were introduced in these versions:
 | [2.1.0](https://github.com/noah-nuebling/mac-mouse-fix/releases/tag/2.1.0)
 | 3.0.0
 
+## What people say
+
+Thanks so much to everyone sharing their excitement about Mac Mouse Fix! You can find a collection of nice things people have said about Mac Mouse Fix on the [website](http://noah-nuebling.github.io/mac-mouse-fix-website/).
+
+
+<!-- 
+These cool articles were written about MMF
+
+- That YouTube video (so sick)
+- Lifehacker
+- Blib blob (Japanese)
+- Not CNET review
+- (?If you know about other coverage of MMF let me know?) 
+-->
+
+## Installation
+
+Download the latest version of Mac Mouse Fix on the [website](http://noah-nuebling.github.io/mac-mouse-fix-website/).
+
+You can also install Mac Mouse Fix through [Homebrew](https://brew.sh/)! Just type the following command into your terminal:
+
+```bash
+brew install mac-mouse-fix
+```
+
+You can download older versions of Mac Mouse Fix from the [Version History](https://github.com/noah-nuebling/mac-mouse-fix/releases).
+
+## macOS compatibility
+
+The latest version of Mac Mouse Fix is made for **macOS 11 Big Sur** or later.
+
+If you're on macOS **10.15 Catalina**, macOS **10.14 Mojave**, or macOS **10.13 High Sierra**, you can use Mac Mouse Fix [2.2.3](https://github.com/.noah-nuebling/mac-mouse-fix/releases/tag/2.2.3) or below. Later versions of Mac Mouse Fix might still work on your machine, but they will have visual issues and some features might not work properly.
+	
+If you're on macOS **10.12 Sierra**, or **10.11 El Capitan**, you can use Mac Mouse Fix [2.2.0](https://github.com/noah-nuebling/mac-mouse-fix/releases/tag/2.2.0) or below.
+
+## Supported languages
+
+Mac Mouse Fix is available in English, German and the languages listed in the [Acknowledgements](Acknowledgements.md).
 
 ## Pricing
 
@@ -195,7 +242,7 @@ Learn about the details in the new MMF License which MMF 3 will be licensed unde
 
 **Can I get Mac Mouse Fix for free if I already donated?**
 
-Yes! If you bought me a milkshake before the 10th of September 2022, you can write an email to noah.n.public@gmail.com with "Milkshake Karma" in the subject and a screenshot as proof and then I'll send you a 100% off discount code or something!
+Yes! If you donated in 2022 or before, you can write an email to noah.n.public@gmail.com with "Free License" in the subject and a screenshot as proof and then I'll send you a 100% off discount code or something!
 
 **How do I uninstall Mac Mouse Fix?**
 
@@ -204,21 +251,6 @@ You can uninstall Mac Mouse Fix by simply moving it to the bin.
 However there will be files left on your system. To get rid of these files I recommend the awesome [AppCleaner by FreeMacSoft](https://freemacsoft.net/appcleaner/).
 
 Unfortunately, macOS makes it infeasible for apps to properly clean up after themselves when you delete them. That's why I highly recommend using an app like AppCleaner.
-
-## What people say
-
-Thanks so much to everyone sharing their excitement about Mac Mouse Fix! You can find a collection of nice things people have said about Mac Mouse Fix on the [website](http://noah-nuebling.github.io/mac-mouse-fix-website/)
-
-
-<!-- 
-These cool articles were written about MMF
-
-- That YouTube video (so sick)
-- Lifehacker
-- Blib blob (Japanese)
-- Not CNET review
-- (?If you know about other coverage of MMF let me know?) 
--->
 
 ## Tips
 
@@ -243,30 +275,6 @@ Just set any button's "Click and Drag" action to "Scroll & Navigate" and you can
 
 Anything you can do by swiping with 2 fingers on an Apple Trackpad works just as well with Mac Mouse Fix!
 
-## Installation
-
-Download the latest version of Mac Mouse Fix on the [website](http://noah-nuebling.github.io/mac-mouse-fix-website/).
-
-You can also install Mac Mouse Fix through [Homebrew](https://brew.sh/)! Just type the following command into your terminal:
-
-```bash
-brew install mac-mouse-fix
-```
-
-You can download older versions of Mac Mouse Fix from the [Version History](https://github.com/noah-nuebling/mac-mouse-fix/releases).
-
-## macOS Compatibility
-
-The latest version of Mac Mouse Fix is made for **macOS 11 Big Sur** or later.
-
-If you're on macOS **10.15 Catalina**, macOS **10.14 Mojave**, or macOS **10.13 High Sierra**, you can use Mac Mouse Fix [2.2.3](https://github.com/.noah-nuebling/mac-mouse-fix/releases/tag/2.2.3) or below. Later versions of Mac Mouse Fix might still work on your machine, but they will have visual issues and some features might not work properly.
-	
-If you're on macOS **10.12 Sierra**, or **10.11 El Capitan**, you can use Mac Mouse Fix [2.2.0](https://github.com/noah-nuebling/mac-mouse-fix/releases/tag/2.2.0) or below.
-
-## Supported languages
-
-Mac Mouse Fix is available in English, German and the languages listed in the [Acknowledgements](Acknowledgements.md).
-
 ## How you can help
 
 There are several ways to help the project:
@@ -279,6 +287,7 @@ There are several ways to help the project:
   - The best place to give **quick** unstructured feedback is the [Feedback Discussion](https://github.com/noah-nuebling/mac-mouse-fix/discussions/366).
   - You can also access both these places from within the app on the "**ⓘ About**" tab.
 - **Add translations**
+  - See [this guide](https://github.com/noah-nuebling/mac-mouse-fix/discussions/731)
   - I'd love to have the app available in many languages.
   - You'll also get rewards X Y and Z for translating
   - ?Here are the langs it's been translated to
@@ -295,23 +304,14 @@ There are several ways to help the project:
   - If your translation is added to the project you'll get **10 MMF copies for free**, and of course, you'll be **credited as a contributor**. I heard you can also leave your **personal message** by changing some of the (secret rare thank you messages) on the About tab.
   - Maybe I'll add **more perks** in the future. Let me know if you have any **ideas** for that!
 - **Contribute money**
-  - You can buy Mac Mouse Fix 3. That' how I sustain myself financialy, so it's very helpful. Thanks to anyone who bought the app already.
-  - You can give me a [tip](https://www.paypal.com/donate?token=2nPK2jVfH243_odImJXG4QdSzqyHnrmFuzo9qbMFkAoJr_Vybcdl8G2ZlBlHmXNzDquQ-SiujEoBALny&locale.x=en_US). This isn't really a lot of money, but it's always cute.
-  - 
+  - You can buy Mac Mouse Fix 3. That' how I sustain myself financially, so it's very helpful. Thanks to anyone who bought the app already.
+  - You can give me a [tip on PayPal](https://www.paypal.com/donate?token=2nPK2jVfH243_odImJXG4QdSzqyHnrmFuzo9qbMFkAoJr_Vybcdl8G2ZlBlHmXNzDquQ-SiujEoBALny&locale.x=en_US). There's not a lot of money in this for me, but it's always cute.
+  - You can [Sponsor me on GitHub](https://github.com/sponsors/noah-nuebling). This is also super helpful to make my income more stable.
 
 **Thanks** for helping to make Mac Mouse Fix better! 🚀
+
 ## License
 
-Mac Mouse Fix 3 and above are licensed under the MMF License. It says you can do whatever you want with Mac Mouse Fix and its source code except release a blatant copy!
+Mac Mouse Fix 3 and above are licensed under the MMF License. It says you can do whatever you want with Mac Mouse Fix and its source code except release a blatant copy.
 
-More info in the [LICENSE](https://github.com/noah-nuebling/mac-mouse-fix/blob/master/LICENSE) file.
-
-## Acknowledgements
-
-Mac Mouse Fix wouldn't be the same without these [awesome contributions](Acknowledgements.md)
-
-## Background
-
-*"My name is Noah and I made Mac Mouse Fix. When I started this project I was completely new to software development, but with the power of Google, Stack Overflow, and Apple's Developer Documentation at my fingertips I managed to learn what is necessary to deliver a solid little app that I hope will be useful for you guys. Working on Mac Mouse Fix made me discover a passion for programming, and led me to enroll in a Computer Science Degree at college, which has been awesome so far. I probably won't have a lot of time to work on Mac Mouse Fix during the semester, but please feel free to make your own contributions to Mac Mouse Fix on GitHub!"* 
-
-This is what I wrote on the Mac Mouse Fix website when I originally released it in the semester break of 2019. Since then I struggled a lot with my mental health. And after starting out with really good grades and a nice social life I unfortunately became too depressed and anxious to finish my degree. However, I still have a lot of passion and fun working on Mac Mouse Fix, and I hope to be able to sustain myself financially through the project and to slowly but deliberately turn it into the best mouse driver of all time and an app that any Mac user with a mouse can appreciate/benefit from. Thanks so much to everyone for their support, be it through financial support, by requesting and discussion bugs and features, or by sharing their excitement about the app! <3 :)
+More info in the [License](https://github.com/noah-nuebling/mac-mouse-fix/blob/master/LICENSE) file.
