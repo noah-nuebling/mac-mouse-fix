@@ -155,7 +155,7 @@ Mac Mouse Fix is available in English, German and the languages listed in the [A
 ## Pricing
 
 See the [Website](https://noah-nuebling.github.io/mac-mouse-fix-website#price) for an overview of the pricing for Mac Mouse Fix 3.\
-Mac Mouse Fix 2 will remain free.
+Mac Mouse Fix 2 and below will remain free forever.
 
 ## Questions
 

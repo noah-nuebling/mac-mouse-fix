@@ -101,28 +101,9 @@ This is what I wrote on the Mac Mouse Fix website when I released the very first
 
 Since then, I have unfortunately struggled a lot with my mental health. And after starting out with really good grades and a nice social life, I unfortunately became too depressed and anxious to finish my degree. However, I still have a lot of passion and fun working on Mac Mouse Fix, and I hope to be able to sustain myself financially through the project and to slowly but deliberately turn it into the best mouse driver ever and an app that any Mac user with a mouse can appreciate and benefit from. Thanks so much to everyone for their support, be it through financial support, by requesting and discussing features and bugs, or by simply sharing their excitement about the app! <3 :) Thank you.
 
-
-<!--
-### Table of Contents
-
-/// Autogenerating the TOC might be nice but it's probably not worth it
-
-- [Features](#features)
-- [Pricing](#pricing)
-- [Questions](#questions)
-- What people say
-- Tips
-- Installation
-- macOS Compatibility
-- Supported languages
-- How you can help
-- License
-- Acknowledgements
--->
-
 ## Features
 
-See the [Website](https://noah-nuebling.github.io/mac-mouse-fix-website#trackpad) for an overview of the features of Mac Mouse Fix, including Video Demos.
+See the [Website](https://noah-nuebling.github.io/mac-mouse-fix-website#trackpad) for an overview of the features of Mac Mouse Fix, including Video Demos!
 
 For more details, see the <a href=https://github.com/noah-nuebling/mac-mouse-fix/releases>Version History</a>.
 
@@ -176,7 +157,7 @@ Mac Mouse Fix is available in English, German and the languages listed in the [A
 ## Pricing
 
 See the [Website](https://noah-nuebling.github.io/mac-mouse-fix-website#price) for an overview of the pricing for Mac Mouse Fix 3.\
-Mac Mouse Fix 2 will remain free.
+Mac Mouse Fix 2 and below will remain free forever.
 
 ## Questions
 
