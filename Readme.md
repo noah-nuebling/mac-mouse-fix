@@ -71,43 +71,35 @@ You can now test the <a href="https://github.com/noah-nuebling/mac-mouse-fix/rel
 </div>
 
 <br>
-<!--Use this second br when theres text above the first header (Edit: I think by "first header" I meant the h1 saying "Mac Mouse Fix", but not sure) -->
-<!-- <br> -->
-
-<!-- Learn more links -->
-
-<!-- <br><br><br><br><br><br> -->
-
-<!-- <hr> --> 
-
-<div align="center">
-
-<!-- For an Introduction and Feature Overview of Mac Mouse Fix (including Video Demos) visit the <a href=https://noah-nuebling.github.io/mac-mouse-fix-website>Website</a>. -->
-</div>
-
 <br>
+<!--Use this extra br when theres text above the first header (Edit: I think by "first header" I meant the h1 saying "Mac Mouse Fix", but not sure) -->
+<!-- <br> -->
 
 <!-- ||| Intro Text ||| -->
 
-## Overview
+Mac Mouse Fix is an app for Macs that improves regular mice.
 
-Make Mouse Fix is a Mac app that makes your mouse better. ((It is the most powerful, streamlined and optimized mouse driver that I know of.))
+I want to make Mac Mouse Fix the best mouse driver ever! Some features are still missing at the moment, but I think it already turns regular mice into the **best input devices** for Macs! Even better than an Apple Trackpad or a Logitech MX Master mouse.
 
-It's a driver for regular third-party mice that aims to be at the same level of quality and integration with macOS as Apples native Trackpad drivers. 
+For more information on how exactly Mac Mouse Fix enhances your mouse, visit the [website](https://noah-nuebling.github.io/mac-mouse-fix-website).
 
-It also aims to bring very powerful customization options to your mouse while still being extremly easy to use. 
 
-It's highly optimized, polished. It's open-source, and the UI is beautiful and responsive.
+<!--
+easy, efficient, natural and pleasant
+Better than an Apple Trackpad or a Logitech MX Master. (These are often considered some of the best input devices for Macs)
 
-My goal is to make Mac Mouse Fix the best mouse driver of all time. Currently it's still lacking some features, but I think it already offers the best implementation of the features which it does have. 
+It offers amazingly natural and polished gestures and smooth scrolling that let you breeze through macOS just like an Apple Trackpad.
+
+It lets you do almost anything right from your mouse with its powerful customization options that are so simple and intuitive that anyone can use them.
+-->
 
 ## Background
 
-This is what I wrote on the Mac Mouse Fix website when I originally released it in the semester break of 2019:
+This is what I wrote on the Mac Mouse Fix website when I released the very first version during the semester break in 2019:
 
 > My name is Noah and I made Mac Mouse Fix. When I started this project I was completely new to software development, but with the power of Google, Stack Overflow, and Apple's Developer Documentation at my fingertips I managed to learn what is necessary to deliver a solid little app that I hope will be useful for you guys. Working on Mac Mouse Fix made me discover a passion for programming, and led me to enroll in a Computer Science Degree at college, which has been awesome so far. I probably won't have a lot of time to work on Mac Mouse Fix during the semester, but please feel free to make your own contributions to Mac Mouse Fix on GitHub!
 
-Since then I struggled a lot with my mental health. And after starting out with really good grades and a nice social life I unfortunately became too depressed and anxious to finish my degree. However, I still have a lot of passion and fun working on Mac Mouse Fix, and I hope to be able to sustain myself financially through the project and to slowly but deliberately turn it into the best mouse driver of all time and an app that any Mac user with a mouse can appreciate/benefit from. Thanks so much to everyone for their support, be it through financial support, by requesting and discussion bugs and features, or by sharing their excitement about the app! <3 :)
+Since then, I have unfortunately struggled a lot with my mental health. And after starting out with really good grades and a nice social life, I unfortunately became too depressed and anxious to finish my degree. However, I still have a lot of passion and fun working on Mac Mouse Fix, and I hope to be able to sustain myself financially through the project and to slowly but deliberately turn it into the best mouse driver ever and an app that any Mac user with a mouse can appreciate and benefit from. Thanks so much to everyone for their support, be it through financial support, by requesting and discussing features and bugs, or by simply sharing their excitement about the app! <3 :) Thank you.
 
 
 <!--
