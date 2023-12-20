@@ -32,7 +32,7 @@ import CocoaLumberjackSwift
         
         /// Create canvas window
         
-        canvas = NSWindow.init(contentRect: NSRect.zero, styleMask: .borderless, backing: .buffered, defer: false, screen: nil)
+        canvas = Canvas.init(contentRect: NSRect.zero, styleMask: .borderless, backing: .buffered, defer: false, screen: nil)
         
         /// Configure canvas window
 
@@ -41,6 +41,7 @@ import CocoaLumberjackSwift
         canvas.alphaValue = 1.0
         canvas.level = NSWindow.Level.init(Int(CGWindowLevelForKey(.cursorWindow)) + 1) /// Canvas draws above everything else
         canvas.ignoresMouseEvents = true /// Mouse events should pass through
+        canvas.acceptsMouseMovedEvents = false /// Don't track mouse moving
         canvas.collectionBehavior = [.stationary, .moveToActiveSpace] /// Make unaffected by Mission Control and Exposé
 
         /// Set contentView
@@ -54,12 +55,12 @@ import CocoaLumberjackSwift
         canvas.disableCursorRects()
         
         /// Optimization
-        ///  Setting frame on canvas.contentView subview is really slow for some reason. Here are attempts at fixing that.
+        ///  Setting frame on canvas.contentView subview is really slow for some reason. We think it might be doing autolayout stuff even though we don't need that. Here are attempts at disabling autolayout stuff. We're also trying to disable autolayout in other places. I'm not sure if this works/improves performance.
     
-//        canvas.contentView?.translatesAutoresizingMaskIntoConstraints = false
-//        canvas.contentView?.autoresizingMask = .none
-//        canvas.contentView?.removeConstraints(canvas.contentView?.constraints ?? [])
-//        canvas.contentView?.autoresizesSubviews = false
+        canvas.contentView?.translatesAutoresizingMaskIntoConstraints = false
+        canvas.contentView?.autoresizingMask = .none
+        canvas.contentView?.removeConstraints(canvas.contentView?.constraints ?? [])
+        canvas.contentView?.autoresizesSubviews = false
     }
     
     /// Drawing
@@ -67,9 +68,10 @@ import CocoaLumberjackSwift
     @objc func draw(view: NSView, atFrame frameInScreen: NSRect, onScreen screen: NSScreen) {
         
         /// Optimization
-//        view.translatesAutoresizingMaskIntoConstraints = false
-//        view.autoresizingMask = .none
-//        view.removeConstraints(view.constraints)
+        ///     Trying to disable autolayout. Not sure if this works/improves performance
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.autoresizingMask = .none
+        view.removeConstraints(view.constraints)
         
         /// Begin transaction
         ///     Using transaction speeds things up slightly. Might be placebo.
@@ -115,14 +117,14 @@ import CocoaLumberjackSwift
         ///
         /// Move
         ///
+        /// Discussion:
+        ///  - Sol 1 moves the view normally, it calls all sorts of autolayout stuff and is very slow. Can't manage to turn that off. Sol 2 uses transforms and is a little faster, but it still seems to call autolayout stuff for some reason. Update late 2023: We did some more stuff to turn off autolayout/constraints stuff, and then we tested sol 1 and sol 2 again, and now sol 1 is faster. However we also found that there might be some randomness factor in our testing (See https://developer.apple.com/forums/thread/743378?answerId=775077022#775077022) so our tests aren't really conclusive. So sol 1 seems to use less CPU now, however, sol 1 seems to introduce some input lag, so we're going with sol 2 still.
         
         /// Sol 1
-        /// This calls all sorts of autolayout stuff and is very slow. Can't manage to turn that off
         
 //        view.setFrameOrigin(newOrigin)
         
         /// Sol 2
-        /// This is a little faster, still seems to call autolayout stuff.
         
         view.wantsLayer = true
         let origin = view.frame.origin
@@ -166,9 +168,61 @@ import CocoaLumberjackSwift
 
 fileprivate class CanvasContent: NSView {
     
+    // MARK: Pointer Move Optimization
     @objc override func hitTest(_ point: NSPoint) -> NSView? {
         /// Trying to remove CPU load when moving the pointer over canvas.
         ///     -> Doesn't work.
         return nil
     }
+    
+    // MARK: Autolayout Optimization
+    /// Try to reduce CPU load when moving the content image. IIRC there is autolayout stuff taking up CPU, which we don't need but can't seem to disable. Update: Not sure if disabling autolayout stuff works/helps performance
+    
+    @objc override func layout() {
+        return
+    }
+    @objc override func layoutSubtreeIfNeeded() {
+        return
+    }
+    @objc override func updateConstraints() {
+        super.updateConstraints() /// Need to call this, otherwise crash. Seems to only be called once (on startup) though.
+        return
+    }
+    @objc override func updateConstraintsForSubtreeIfNeeded() {
+        return
+    }
+    @objc override var needsLayout: Bool {
+        get { false }
+        set { return }
+    }
+    @objc override var needsUpdateConstraints: Bool {
+        get { false }
+        set { return }
+    }
+    override class var requiresConstraintBasedLayout: Bool {
+        get { false }
+        set { return }
+    }
+    
+}
+
+fileprivate class Canvas: NSWindow {
+    
+    
+    override func mouseMoved(with event: NSEvent) {
+//        DDLogError("Mouse MOVEDDD")
+    }
+    override func mouseDragged(with event: NSEvent) {
+//        DDLogError("Mouse DRAGGEDDD")
+    }
+    override func mouseEntered(with event: NSEvent) {
+//        DDLogError("Mouse ENTEREDDD")
+    }
+    override func mouseExited(with event: NSEvent) {
+//        DDLogError("Mouse EXITEDDDD")
+    }
+//    override func layoutIfNeeded() {
+    /// Developer docs say to not override this
+//        return nil
+//    }
 }
