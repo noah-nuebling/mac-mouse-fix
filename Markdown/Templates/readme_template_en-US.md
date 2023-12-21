@@ -158,9 +158,9 @@ Mac Mouse Fix 2 and below will remain free forever!
 
 ## Questions
 
-**Native on Apple Silicon?**
-
-Yes. 
+> [!NOTE]  
+> Native on Apple Silicon?
+> Yes. 
 
 (Lots of apps advertise with this but it's kind of an "of course" thing. This should also probs be under features or sth not questions?)
 
