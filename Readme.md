@@ -120,7 +120,8 @@ Major features were introduced in these versions:
 
 ## What people say
 
-Thanks so much to everyone sharing their excitement about Mac Mouse Fix! You can find a collection of nice things people have said about Mac Mouse Fix on the [website](http://noah-nuebling.github.io/mac-mouse-fix-website/).
+On the [website](http://noah-nuebling.github.io/mac-mouse-fix-website/) you can find a collection of nice things people have said about Mac Mouse Fix.\
+Thanks so much to everyone sharing their excitement about the project! 
 
 
 <!-- 
@@ -148,15 +149,48 @@ You can download older versions of Mac Mouse Fix from the [version history](http
 ## macOS compatibility
 
 The latest version of Mac Mouse Fix is made for **macOS 11 Big Sur** or later.
-
+  
 If you're on macOS **10.15 Catalina**, macOS **10.14 Mojave**, or macOS **10.13 High Sierra**, you can use Mac Mouse Fix [2.2.3](https://github.com/.noah-nuebling/mac-mouse-fix/releases/tag/2.2.3) or below. Later versions of Mac Mouse Fix might still work on your machine, but they will have visual issues and some features might not work properly.
-	
+    
 If you're on macOS **10.12 Sierra**, or **10.11 El Capitan**, you can use Mac Mouse Fix [2.2.0](https://github.com/noah-nuebling/mac-mouse-fix/releases/tag/2.2.0) or below.
 
 ## Pricing
 
 See the [website](https://noah-nuebling.github.io/mac-mouse-fix-website#price) for an overview of the pricing for Mac Mouse Fix 3.\
-Mac Mouse Fix 2 and below will remain free forever!
+Mac Mouse Fix 2 and below will remain free forever.
+
+## Uninstallation
+
+Uninstall Mac Mouse Fix by simply moving it to the bin. 
+
+However there will be files left on your system. To get rid of these files I recommend the awesome [AppCleaner by FreeMacSoft](https://freemacsoft.net/appcleaner/).
+
+*Under macOS it not infeasible for apps to properly clean up after themselves when you delete them. That's why I highly recommend using an app like AppCleaner.*
+
+
+## Tips
+
+- **Brightness, Volume, and Media controls right from your mouse!**
+
+  MMF Let's you use any key on your keyboard directly from your mouse.\
+  Even keys only found on Apple keyboards like 'Increase Brightness', 'Decrease Volume' or 'Play-Pause'. 
+
+  If you don't have an Apple Keyboard at hand, hold Option (⌥) to reveal the Apple-Keyboard exclusive keys in a dropdown menu!
+
+  <img src="Markdown/Media/Apple-Keys-Demo.gif" width="450">
+
+  You can also use keyboard shorcuts to do anything from your mouse by hooking into other stuff like Apple Shortcuts! The possibilities are endless!
+
+- **Use Swish to manage your windows**
+
+  [Swish](https://highlyopinionated.co/swish/) is my favorite way to snap windows (/ get window snapping / manage windows on macOS). It lets you position any window so it takes up half, a quarter, or the whole screen with a single swipe on your trackpad, making it much easier to work with many windows at once. 
+
+  It's designed for trackpad gestures, but with Mac Mouse Fix you can use it from any third-party mouse!
+
+  Just set any button's "Click and Drag" action to "Scroll & Navigate" and you can snap windows with a simple click and drag.
+
+  Anything you can do by swiping with 2 fingers on an Apple Trackpad works just as well with Mac Mouse Fix!
+
 
 ## Questions
 
@@ -179,26 +213,28 @@ Mac Mouse Fix 2 and below will remain free forever!
 
   If you have actions mapped to middle button, use Scroll and navigate (or Click and drag sim?) to still navigate in Blender. Or uncapture Middle button (maybe make this a guide on its own?)
 
-- **Mouse compatibility**
+- **Is my mouse supported?**
 
-  On certain mice designed to be used with proprietary driver software like Logitech Options, Mac Mouse Fix can't recognize all the buttons at the moment. That's because these mice communicate with your computer using a special, proprietary protocol, instead of the standard USB protocol.\
+  Mac Mouse Fix works with most mice. However, on certain mice designed to be used with proprietary driver software like Logitech Options, Mac Mouse Fix can't recognize all the buttons at the moment. That's because these mice communicate with your computer using a special, proprietary protocol, instead of the standard USB protocol.\
   I would love to add full compatibility for these mice at some point, but it's a ton of work and it won't be coming soon.
   
   If you're wondering how well your mouse works with Mac Mouse Fix, you can just download and test it.
 
-- **Magic Mouse compatibility**
+- **Is the Magic Mouse supported?**
 
   I might add features in the future which enhance the Apple Magic Mouse, but currently, Mac Mouse Fix has no effect on it.
   
   <!-- You can use SteerMouse or proprietary driver like Logitech Options instead. -->
 
-- **Mouse buttons**
 
-  You can get the best experience by using Mac Mouse Fix with a mouse that has at least 5 buttons. If your mouse has fewer than 5 buttons, Mac Mouse Fix still provides rich functionality and a great experience, but some features will be less easy to access compared to a 5-button mouse. With a 5-button mouse, you can really breeze through macOS in a way that's just as nice as an Apple Trackpad!
+<!--
+- **How many buttons should my mouse have?**
+
+  To get the best experience I recommend using Mac Mouse Fix with a mouse that has at least 5 buttons. If your mouse has fewer than 5 buttons, Mac Mouse Fix still provides rich functionality and a great experience, but some features will be less easy to access compared to a 5-button mouse. With a 5-button mouse, you can really breeze through macOS in a way that's just as nice as an Apple Trackpad!
   
   To learn more, see the [trackpad section](https://noah-nuebling.github.io/mac-mouse-fix-website#trackpad) on the website.
 
-<!--
+
 - **Mouse brands**
 
   I'm not the biggest expert on mouse hardware, but I do have quite a collection now, thanks to my work on Mac Mouse Fix! If I had to make a recommendation for what mouse to buy for the best experience with Mac Mouse fix, I'd say get a smaller, chinese brand on Amazon. In my experience, these mice often have better build quality at a fraction of the price of a big brand mouse like Logitech or Roccat. Also, some models of bigger manufacturers like Logitech are made to be used with their proprietary driver software, and they won't be fully compatible with Mac Mouse Fix. If you buy a smaller brand, you can usually be sure, that they will work flawlessly with non-proprietary drivers like Mac Mouse Fix.
@@ -208,7 +244,7 @@ Mac Mouse Fix 2 and below will remain free forever!
 
   Some mice let you tilt the scroll wheel left or right to scroll horizontally. Mac Mouse Fix will make this feel more natural and easy to control. But it's not currently possible to trigger other actions by tilting the scroll wheel, such as switching between desktops. I'd love to implement this feature at some point, but it's a ton of work and it won't be coming soon.
   
-  This is so hard, because it would require reprogramming the mouse so that it sends button-signals instead of sending scroll-signals, when you tilt the scroll wheel. And to reprogram the mouse, would require communicating with the it through the custom vendor-specific protocol. And that's not easy. For many mice it's not even possible.
+  <!-- This is so hard, because it would require reprogramming the mouse so that it sends button-signals instead of sending scroll-signals, when you tilt the scroll wheel. And to reprogram the mouse, would require communicating with the it through the custom vendor-specific protocol. And that's not easy. For many mice it's not even possible. -->
 
 - **Turning off pointer acceleration**
 
@@ -235,60 +271,32 @@ Mac Mouse Fix 2 and below will remain free forever!
 
   Yes! See the [Acknowledgements](Acknowledgements.md#-paypal-donations) for more info.
 
-- **How do I uninstall Mac Mouse Fix?**
-
-  You can uninstall Mac Mouse Fix by simply moving it to the bin. 
-
-  However there will be files left on your system. To get rid of these files I recommend the awesome [AppCleaner by FreeMacSoft](https://freemacsoft.net/appcleaner/).
-
-  Unfortunately, macOS makes it infeasible for apps to properly clean up after themselves when you delete them. That's why I highly recommend using an app like AppCleaner.
-
-## Tips
-
-**Brightness, Volume, and Media controls right from your mouse!**
-
-MMF Let's you use any key on your keyboard directly from your mouse.
-Even keys only found on Apple keyboards like 'Increase Brightness', 'Decrease Volume' or 'Play-Pause'. 
-
-If you don't have an Apple Keyboard at hand, hold Option (⌥) to reveal the Apple-Keyboard exclusive keys in a dropdown menu!
-
-<img src="Markdown/Media/Apple-Keys-Demo.gif" width="450">
-
-You can also use keyboard shorcuts to do anything from your mouse by hooking into other stuff like Apple Shortcuts! The possibilities are endless!
-
-**Use Swish to manage your windows**
-
-[Swish](https://highlyopinionated.co/swish/) is my favorite way to snap windows (/ get window snapping / manage windows on macOS). It lets you position any window so it takes up half, a quarter, or the whole screen with a single swipe on your trackpad, making it much easier to work with many windows at once. 
-
-It's designed for trackpad gestures, but with Mac Mouse Fix you can use it from any third-party mouse!
-
-Just set any button's "Click and Drag" action to "Scroll & Navigate" and you can snap windows with a simple click and drag.
-
-Anything you can do by swiping with 2 fingers on an Apple Trackpad works just as well with Mac Mouse Fix!
-
 ## How you can help
 
 There are several ways to help the project:
 
 - **Contribute code**
-  - I'll be happy about any pull requests! Hope my code isn't too terrible heh. 
+
+  I'll be happy about any pull requests! Hope my code isn't too terrible heh. 
+
 - **Give feedback**
-  - You can help by sharing your **ideas**, **issues** and **feedback**!
-  - The best place to share your **ideas** and **issues** is the [Feedback Assistant](https://noah-nuebling.github.io/mac-mouse-fix-feedback-assistant/?type=bug-report).
-  - The best place to give **quick** unstructured feedback is the [Feedback Discussion](https://github.com/noah-nuebling/mac-mouse-fix/discussions/366).
-  - You can also access both these places from within the app on the "**ⓘ About**" tab.
+
+  You can help by sharing your **ideas**, **issues** and **feedback**!
+
+  The best place to share your **ideas** and **issues** is the [Feedback Assistant](https://noah-nuebling.github.io/mac-mouse-fix-feedback-assistant/?type=bug-report).\
+  The best place to give **quick** unstructured feedback is the [Feedback Discussion](https://github.com/noah-nuebling/mac-mouse-fix/discussions/366).
+
+  You can also access both these places from within the app on the "**ⓘ About**" tab.
+
 - **Add translations**
-  - Mac Mouse Fix is available in English, German as well as the languages listed in the [Acknowledgements](Acknowledgements.md).
-  - If you would like to help the project, by translating it into a language that you speak, see [this guide](https://github.com/noah-nuebling/mac-mouse-fix/discussions/731).
+  
+  Mac Mouse Fix is available in English, German as well as the languages listed in the [Acknowledgements](Acknowledgements.md).\
+  If you would like to help the project, by translating it into a language that you speak, see [this guide](https://github.com/noah-nuebling/mac-mouse-fix/discussions/731).
+
 - **Contribute money**
-  - You can buy Mac Mouse Fix 3. That' how I sustain myself financially, so it's very helpful. Thanks to anyone who bought the app already.
-  - You can give me a [tip on PayPal](https://www.paypal.com/donate?token=2nPK2jVfH243_odImJXG4QdSzqyHnrmFuzo9qbMFkAoJr_Vybcdl8G2ZlBlHmXNzDquQ-SiujEoBALny&locale.x=en_US). There's not a lot of money in this for me, but it's always cute.
-  - You can [Sponsor me on GitHub](https://github.com/sponsors/noah-nuebling). This is also super helpful to make my income more stable.
+  
+  You can buy Mac Mouse Fix 3. That' how I sustain myself financially, so it's very helpful. Thanks to anyone who bought the app already.\
+  You can give me a [tip on PayPal](https://www.paypal.com/donate?token=2nPK2jVfH243_odImJXG4QdSzqyHnrmFuzo9qbMFkAoJr_Vybcdl8G2ZlBlHmXNzDquQ-SiujEoBALny&locale.x=en_US). There's not a lot of money in this for me, but it's always cute.\
+  You can [Sponsor me on GitHub](https://github.com/sponsors/noah-nuebling). This is also super helpful to make my income more stable.
 
 **Thanks** for helping to make Mac Mouse Fix better! 🚀
-
-## License
-
-Mac Mouse Fix 3 and above are licensed under the MMF License. It says you can do whatever you want with Mac Mouse Fix and its source code except release a blatant copy.
-
-More info in the [License](https://github.com/noah-nuebling/mac-mouse-fix/blob/master/LICENSE) file.
