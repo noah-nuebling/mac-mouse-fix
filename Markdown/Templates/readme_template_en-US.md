@@ -165,30 +165,26 @@ However there will be files left on your system. To get rid of these files I rec
 
 Under macOS, it is not feasible for apps to delete these leftover files by themselves when you delete the app. That's why I highly recommend using an app like AppCleaner.
 
-
 ## Tips
 
-- **Brightness, Volume, and Media controls right from your mouse!**
+- **Manage windows with a simple Click and Drag**
 
-  MMF Let's you use any key on your keyboard directly from your mouse.\
-  Even keys only found on Apple keyboards like "Increase Brightness", "Decrease Volume" or "Play-Pause". 
-
-  If you don't have an Apple Keyboard at hand, hold Option (⌥) to reveal the Apple-Keyboard exclusive keys in a dropdown menu!
-
-  <img src="{repo_root}Markdown/Media/Apple-Keys-Demo.gif" width="450">
-
-  You can also use keyboard shorcuts to do anything from your mouse by hooking into other stuff like Apple Shortcuts! The possibilities are endless!
-
-- **Use Swish to manage your windows**
-
-  [Swish](https://highlyopinionated.co/swish/) is my favorite way to snap windows (/ get window snapping / manage windows on macOS). It lets you position any window so it takes up half, a quarter, or the whole screen with a single swipe on your trackpad, making it much easier to work with many windows at once. 
+  [Swish](https://highlyopinionated.co/swish/) is my favorite way to manage windows on macOS. It lets you position any window so it takes up half, a quarter, or the whole screen with a simple swipe on your trackpad.
 
   It's designed for trackpad gestures, but with Mac Mouse Fix you can use it from any third-party mouse!
 
-  Just set any button's "Click and Drag" action to "Scroll & Navigate" and you can snap windows with a simple click and drag.
+  Just go to Mac Mouse Fix and set any buttons "Click and Drag" action to "Scroll & Navigate" and then you can snap windows with a simple click and drag.
 
-  Anything you can do by swiping with 2 fingers on an Apple Trackpad works just as well with Mac Mouse Fix!
+  This works because the "Scroll & Navigate" feature precisely emulates swiping with 2 fingers on an Apple Trackpad.
 
+- **Control Screen Brightness, Audio Volume, or Media Playback right from your mouse**
+
+  Mac Mouse Fix lets you use **any key on your keyboard** directly from your mouse -
+  even special keys only found on Apple keyboards that let you control Screen Brightness, Audio Volume, Media Playback, and more.
+
+  If you don't have an Apple keyboard at hand, **hold Option (⌥)** to choose the special Apple keyboard keys.
+
+  <img src="{repo_root}Markdown/Media/Apple-Keys-Demo.gif" width="450">
 
 ## Questions
 

@@ -103,3 +103,4 @@ Deinstalliere Mac Mouse Fix, indem du es einfach in den Papierkorb verschiebst.
 Es werden jedoch Dateien auf deinem System zurückbleiben. Um diese Dateien zu entfernen, empfehle ich den großartigen [AppCleaner von FreeMacSoft](https://freemacsoft.net/appcleaner/).
 
 Unter macOS ist es für Apps nicht machbar, diese hinterlassenen Dateien selbst zu löschen, wenn du die App löschst. Deshalb empfehle ich wärmstens die Verwendung einer App wie AppCleaner.
+
