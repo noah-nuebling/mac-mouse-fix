@@ -48,7 +48,7 @@ You can now test the <a href="https://github.com/noah-nuebling/mac-mouse-fix/rel
 
 Mac Mouse Fix ist eine App für Macs, die normale Mäuse besser macht.
 
-Ich möchte Mac Mouse Fix zum besten Maustreiber aller Zeiten machen! Derzeit fehlen noch einige Funktionen, aber ich denke es macht jetzt schon normale Mäuse zu den **besten Eingabegeräten** für Macs! Sogar besser als ein Apple Trackpad oder eine Logitech MX Master Maus.
+Ich möchte Mac Mouse Fix zum besten Maustreiber aller Zeiten machen! Derzeit fehlen noch einige Funktionen, aber ich denke es macht jetzt schon normale Mäuse zu den besten Eingabegeräten für Macs! Sogar besser als ein Apple Trackpad oder eine Logitech MX Master Maus.
 
 Für mehr Info darüber, wie genau Mac Mouse Fix deine Maus verbessert, besuche die [Website](https://noah-nuebling.github.io/mac-mouse-fix-website).
 
@@ -68,7 +68,8 @@ Mehr Details findest du in der <a href=https://github.com/noah-nuebling/mac-mous
 
 ## Was die Leute sagen
 
-Vielen Dank an alle, die ihre Begeisterung über Mac Mouse Fix geteilt haben! Auf der [Website](http://noah-nuebling.github.io/mac-mouse-fix-website/) kannst du eine Sammlung schöner Dinge, die Leute über Mac Mouse Fix gesagt haben, finden.
+Vielen Dank an alle, die ihre Begeisterung über Mac Mouse Fix geteilt haben!\
+Auf der [Website](http://noah-nuebling.github.io/mac-mouse-fix-website/) kannst du eine Sammlung schöner Dinge, die Leute über Mac Mouse Fix gesagt haben, finden.
 
 ## Installation
 
@@ -93,4 +94,12 @@ Wenn du macOS **10.12 Sierra** oder **10.11 El Capitan** benutzt, kannst du Mac 
 ## Preisgestaltung
 
 Einen Überblick über die Preisgestaltung von Mac Mouse Fix 3 findest du auf der [Website](https://noah-nuebling.github.io/mac-mouse-fix-website#price).\
-Mac Mouse Fix 2 und früher bleiben für immer kostenlos!
+Mac Mouse Fix 2 und früher bleiben für immer kostenlos.
+
+## Deinstallation
+
+Deinstalliere Mac Mouse Fix, indem du es einfach in den Papierkorb verschiebst.
+
+Es werden jedoch Dateien auf deinem System zurückbleiben. Um diese Dateien zu entfernen, empfehle ich den großartigen [AppCleaner von FreeMacSoft](https://freemacsoft.net/appcleaner/).
+
+Unter macOS ist es für Apps nicht machbar, diese hinterlassenen Dateien selbst zu löschen, wenn du die App löschst. Deshalb empfehle ich wärmstens die Verwendung einer App wie AppCleaner.

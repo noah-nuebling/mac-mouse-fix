@@ -79,7 +79,7 @@ You can now test the <a href="https://github.com/noah-nuebling/mac-mouse-fix/rel
 
 Mac Mouse Fix is an app for Macs that improves regular mice.
 
-I want to make Mac Mouse Fix the best mouse driver ever! Some features are still missing at the moment, but I think it already turns regular mice into the **best input devices** for Macs! Even better than an Apple Trackpad or a Logitech MX Master mouse.
+I want to make Mac Mouse Fix the best mouse driver ever! Some features are still missing at the moment, but I think it already turns regular mice into the best input devices for Macs! Even better than an Apple Trackpad or a Logitech MX Master mouse.
 
 For more information on how exactly Mac Mouse Fix enhances your mouse, visit the [website](https://noah-nuebling.github.io/mac-mouse-fix-website).
 
@@ -120,8 +120,8 @@ Major features were introduced in these versions:
 
 ## What people say
 
-On the [website](http://noah-nuebling.github.io/mac-mouse-fix-website/) you can find a collection of nice things people have said about Mac Mouse Fix.\
-Thanks so much to everyone sharing their excitement about the project! 
+Thanks so much to everyone sharing their excitement about Mac Mouse Fix!\
+On the [website](http://noah-nuebling.github.io/mac-mouse-fix-website/) you can find a collection of nice things people have said about Mac Mouse Fix.
 
 
 <!-- 
@@ -165,7 +165,7 @@ Uninstall Mac Mouse Fix by simply moving it to the bin.
 
 However there will be files left on your system. To get rid of these files I recommend the awesome [AppCleaner by FreeMacSoft](https://freemacsoft.net/appcleaner/).
 
-*Under macOS it not infeasible for apps to properly clean up after themselves when you delete them. That's why I highly recommend using an app like AppCleaner.*
+Under macOS, it is not feasible for apps to delete these leftover files by themselves when you delete the app. That's why I highly recommend using an app like AppCleaner.
 
 
 ## Tips
@@ -173,7 +173,7 @@ However there will be files left on your system. To get rid of these files I rec
 - **Brightness, Volume, and Media controls right from your mouse!**
 
   MMF Let's you use any key on your keyboard directly from your mouse.\
-  Even keys only found on Apple keyboards like 'Increase Brightness', 'Decrease Volume' or 'Play-Pause'. 
+  Even keys only found on Apple keyboards like "Increase Brightness", "Decrease Volume" or "Play-Pause". 
 
   If you don't have an Apple Keyboard at hand, hold Option (⌥) to reveal the Apple-Keyboard exclusive keys in a dropdown menu!
 
@@ -194,24 +194,27 @@ However there will be files left on your system. To get rid of these files I rec
 
 ## Questions
 
-- **Is it native on Apple Silicon?**
+- **Is Mac Mouse Fix native on Apple Silicon?**
 
-  Yes. 
+  Yes, Mac Mouse Fix runs 100% native on Apple Silicon.
 
-  (Lots of apps advertise with this but it's kind of an "of course" thing. This should also probs be under features or sth not questions?)
+- **Does Mac Mouse Fix track my information?**
 
-- **Privacy**
+  No. Mac Mouse Fix does not have ads and it doesn't track any personal information about you.\
+  If you have updates turned on, Mac Mouse Fix will ping GitHub's servers every time you launch the app to ask for an update. I can't retrieve any information about that however.
 
-  I'm committed to your privacy. Mac Mouse Fix does not have ads and it doesn't track any information about you. 
-  If you have automatic updates turned on, Mac Mouse Fix will ping Github's servers every time you launch the app to ask for an update. I can't retrieve any information about that however.
+- **Why is there a delay when I click?**
 
-- **Click delay**
+  When you click, Mac Mouse Fix might wait to see if you're going to double click. Delete the "Double Click" action on the "Buttons" tab to remove the delay.
 
-  When you click, MMF will wait to see if you're going to double click. Delete the "Double Click" Action to remove the delay. More info here.
+- **How can I rotate in 3D apps like Blender?**
 
-- **Blender compatibility**
-
-  If you have actions mapped to middle button, use Scroll and navigate (or Click and drag sim?) to still navigate in Blender. Or uncapture Middle button (maybe make this a guide on its own?)
+  In 3D apps like Blender, you normally Click and Drag the Middle Mouse Button to rotate the canvas.\
+  But if you assign actions to the Middle Mouse Button in Mac Mouse Fix, then this won't work anymore.
+  
+  To solve this, you can:
+  1. Assign clicking and dragging one of the buttons of your mouse to the "Scroll & Navigate" feature. This feature simulates swiping with 2 fingers on an Apple Trackpad. This will also let you rotate 3D apps! 
+  2. *Uncapture* the Middle Mouse Button by deleting all actions assigned to it. See [this guide](https://github.com/noah-nuebling/mac-mouse-fix/discussions/112) for more info.
 
 - **Is my mouse supported?**
 
@@ -295,7 +298,7 @@ There are several ways to help the project:
 
 - **Contribute money**
   
-  You can buy Mac Mouse Fix 3. That' how I sustain myself financially, so it's very helpful. Thanks to anyone who bought the app already.\
+  You can buy Mac Mouse Fix 3. That's how I sustain myself financially, so it's very helpful. Thanks to anyone who bought the app already.\
   You can give me a [tip on PayPal](https://www.paypal.com/donate?token=2nPK2jVfH243_odImJXG4QdSzqyHnrmFuzo9qbMFkAoJr_Vybcdl8G2ZlBlHmXNzDquQ-SiujEoBALny&locale.x=en_US). There's not a lot of money in this for me, but it's always cute.\
   You can [Sponsor me on GitHub](https://github.com/sponsors/noah-nuebling). This is also super helpful to make my income more stable.
 
