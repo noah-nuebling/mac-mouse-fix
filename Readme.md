@@ -103,10 +103,11 @@ Since then, I have unfortunately struggled a lot with my mental health. And afte
 
 ## Features
 
-See the [Website](https://noah-nuebling.github.io/mac-mouse-fix-website#trackpad) for an overview of the features of Mac Mouse Fix, including Video Demos!
+See the [website](https://noah-nuebling.github.io/mac-mouse-fix-website#trackpad) for an overview of the features of Mac Mouse Fix, including video demos!
 
-For more details, see the <a href=https://github.com/noah-nuebling/mac-mouse-fix/releases>Version History</a>.
+For more details, see the <a href=https://github.com/noah-nuebling/mac-mouse-fix/releases>version history</a>.
 
+<!--
 Major features were introduced in these versions:
 
 [0.9](https://github.com/noah-nuebling/mac-mouse-fix/releases/tag/0.9.0)
@@ -114,6 +115,8 @@ Major features were introduced in these versions:
 | [2.0.0](https://github.com/noah-nuebling/mac-mouse-fix/releases/tag/2.0.0)
 | [2.1.0](https://github.com/noah-nuebling/mac-mouse-fix/releases/tag/2.1.0)
 | 3.0.0
+-->
+
 
 ## What people say
 
@@ -134,13 +137,13 @@ These cool articles were written about MMF
 
 Download the latest version of Mac Mouse Fix on the [website](http://noah-nuebling.github.io/mac-mouse-fix-website/).
 
-You can also install Mac Mouse Fix through [Homebrew](https://brew.sh/)! Just type the following command into your terminal:
+You can also install Mac Mouse Fix through [Homebrew](https://brew.sh/)! Just type the following command into the terminal:
 
 ```bash
 brew install mac-mouse-fix
 ```
 
-You can download older versions of Mac Mouse Fix from the [Version History](https://github.com/noah-nuebling/mac-mouse-fix/releases).
+You can download older versions of Mac Mouse Fix from the [version history](https://github.com/noah-nuebling/mac-mouse-fix/releases).
 
 ## macOS compatibility
 
@@ -150,14 +153,10 @@ If you're on macOS **10.15 Catalina**, macOS **10.14 Mojave**, or macOS **10.13 
 	
 If you're on macOS **10.12 Sierra**, or **10.11 El Capitan**, you can use Mac Mouse Fix [2.2.0](https://github.com/noah-nuebling/mac-mouse-fix/releases/tag/2.2.0) or below.
 
-## Supported languages
-
-Mac Mouse Fix is available in English, German and the languages listed in the [Acknowledgements](Acknowledgements.md).
-
 ## Pricing
 
-See the [Website](https://noah-nuebling.github.io/mac-mouse-fix-website#price) for an overview of the pricing for Mac Mouse Fix 3.\
-Mac Mouse Fix 2 and below will remain free forever.
+See the [website](https://noah-nuebling.github.io/mac-mouse-fix-website#price) for an overview of the pricing for Mac Mouse Fix 3.\
+Mac Mouse Fix 2 and below will remain free forever!
 
 ## Questions
 
@@ -260,22 +259,8 @@ There are several ways to help the project:
   - The best place to give **quick** unstructured feedback is the [Feedback Discussion](https://github.com/noah-nuebling/mac-mouse-fix/discussions/366).
   - You can also access both these places from within the app on the "**ⓘ About**" tab.
 - **Add translations**
-  - See [this guide](https://github.com/noah-nuebling/mac-mouse-fix/discussions/731)
-  - I'd love to have the app available in many languages.
-  - You'll also get rewards X Y and Z for translating
-  - ?Here are the langs it's been translated to
-  - ?Here are missing/incoplete translations ?And their bounties?
-  - ?Note these things when translateing? (download barty crouch)
-  - ?Here ar the basic steps?
-  - ?Ask here / view this guide if you have questions about how to translate.
-  - Copied from 3.0.0 Beta 1 Release notes
-  - ((I plan to write a more detailed guide on this in the future)), but if you want to give it a go, here's a small overview of the steps:
-    - **Download** the source code & Xcode
-    - [Add your language](https://developer.apple.com/documentation/xcode/adding-support-for-languages-and-regions) to the project
-    - Put your translations into the `.strings` and `.stringsdict` files throughout the project
-    - **Commit** your changes and create a pull request
-  - If your translation is added to the project you'll get **10 MMF copies for free**, and of course, you'll be **credited as a contributor**. I heard you can also leave your **personal message** by changing some of the (secret rare thank you messages) on the About tab.
-  - Maybe I'll add **more perks** in the future. Let me know if you have any **ideas** for that!
+  - Mac Mouse Fix is available in English, German as well as the languages listed in the [Acknowledgements](Acknowledgements.md).
+  - If you would like to help the project, by translating it into a language that you speak, see [this guide](https://github.com/noah-nuebling/mac-mouse-fix/discussions/731).
 - **Contribute money**
   - You can buy Mac Mouse Fix 3. That' how I sustain myself financially, so it's very helpful. Thanks to anyone who bought the app already.
   - You can give me a [tip on PayPal](https://www.paypal.com/donate?token=2nPK2jVfH243_odImJXG4QdSzqyHnrmFuzo9qbMFkAoJr_Vybcdl8G2ZlBlHmXNzDquQ-SiujEoBALny&locale.x=en_US). There's not a lot of money in this for me, but it's always cute.
