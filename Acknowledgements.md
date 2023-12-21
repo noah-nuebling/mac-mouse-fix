@@ -146,6 +146,8 @@ These people spent a lot more than the standard price and treated me to an **Inc
 
 Lots of generous people bought me milkshakes on PayPal when Mac Mouse Fix was still entirely free. As thanks, I will provide you with a free license. Just shoot me an email with "Free License" in the subject and attach a screenshot of your donation. Thank you!
 
+*I might be slow to respond. If you already bought the app, just let me know the email that you bought the app with, and I will refund you.*
+
 <!-- It's truly incredibly helpful to have some predictable monthly income. -->
 
 ## 👾 Other Software

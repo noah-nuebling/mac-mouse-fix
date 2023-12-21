@@ -158,69 +158,88 @@ Mac Mouse Fix 2 and below will remain free forever!
 
 ## Questions
 
-> [!NOTE]  
-> Native on Apple Silicon?
-> Yes. 
+- **Is it native on Apple Silicon?**
 
-(Lots of apps advertise with this but it's kind of an "of course" thing. This should also probs be under features or sth not questions?)
+  Yes. 
 
-**Does Mac Mouse Fix track my information?**
+  (Lots of apps advertise with this but it's kind of an "of course" thing. This should also probs be under features or sth not questions?)
 
-I'm committed to your privacy. Mac Mouse Fix does not have ads and it doesn't track any information about you. 
-If you have automatic updates turned on, Mac Mouse Fix will ping Github's servers every time you launch the app to ask for an update. I can't retrieve any information about that however.
+- **Privacy**
 
-**Is Mac Mouse Fix compatible with the Apple Magic Mouse?**
+  I'm committed to your privacy. Mac Mouse Fix does not have ads and it doesn't track any information about you. 
+  If you have automatic updates turned on, Mac Mouse Fix will ping Github's servers every time you launch the app to ask for an update. I can't retrieve any information about that however.
 
-Mac Mouse Fix currently has no effect on the Apple Magic Mouse. I might add features in the future which work with the Magic Mouse.
+- **Click delay**
 
-**Is my Logitech / Razor Mouse compatible?**
+  When you click, MMF will wait to see if you're going to double click. Delete the "Double Click" Action to remove the delay. More info here.
 
-Yes but some buttons might not work properly because poopoo custom protocol + onboard memory.
+- **Blender compatibility**
 
-Same is true for Glorious, ?Steelseries
+  If you have actions mapped to middle button, use Scroll and navigate (or Click and drag sim?) to still navigate in Blender. Or uncapture Middle button (maybe make this a guide on its own?)
 
-I want to add this but it's not coming soon!!
+- **Mouse compatibility**
 
-You can use SteerMouse or proprietary driver like Logitech Options instead.
+  On certain mice designed to be used with proprietary driver software like Logitech Options, Mac Mouse Fix can't recognize all the buttons at the moment. That's because these mice communicate with your computer using a special, proprietary protocol, instead of the standard USB protocol.\
+  I would love to add full compatibility for these mice at some point, but it's a ton of work and it won't be coming soon.
+  
+  If you're wondering how well your mouse works with Mac Mouse Fix, you can just download and test it.
 
-**Can I use tilting wheel for buttons?**
+- **Magic Mouse compatibility**
 
-No you dumbo
+  I might add features in the future which enhance the Apple Magic Mouse, but currently, Mac Mouse Fix has no effect on it.
+  
+  <!-- You can use SteerMouse or proprietary driver like Logitech Options instead. -->
 
-**Pointer Speedd / Turn off acceleration??**
+- **Mouse buttons**
 
-Not yet, but here are alternatives <...>. Adding it soon and !! (I hope) (and better than everyone else hehe)
+  You can get the best experience by using Mac Mouse Fix with a mouse that has at least 5 buttons. If your mouse has fewer than 5 buttons, Mac Mouse Fix still provides rich functionality and a great experience, but some features will be less easy to access compared to a 5-button mouse. With a 5-button mouse, you can really breeze through macOS in a way that's just as nice as an Apple Trackpad!
+  
+  To learn more, see the [trackpad section](https://noah-nuebling.github.io/mac-mouse-fix-website#trackpad) on the website.
 
-**Click delay**
+<!--
+- **Mouse brands**
 
-When you click, MMF will wait to see if you're going to double click. Delete the "Double Click" Action to remove the delay. More info here.
+  I'm not the biggest expert on mouse hardware, but I do have quite a collection now, thanks to my work on Mac Mouse Fix! If I had to make a recommendation for what mouse to buy for the best experience with Mac Mouse fix, I'd say get a smaller, chinese brand on Amazon. In my experience, these mice often have better build quality at a fraction of the price of a big brand mouse like Logitech or Roccat. Also, some models of bigger manufacturers like Logitech are made to be used with their proprietary driver software, and they won't be fully compatible with Mac Mouse Fix. If you buy a smaller brand, you can usually be sure, that they will work flawlessly with non-proprietary drivers like Mac Mouse Fix.
+-->
 
-**Blender Compatibility**
+- **Tilt-wheel support**
 
-If you have actions mapped to middle button, use Scroll and navigate (or Click and drag sim?) to still navigate in Blender. Or uncapture Middle button (maybe make this a guide on its own?)
+  Some mice let you tilt the scroll wheel left or right to scroll horizontally. Mac Mouse Fix will make this feel more natural and easy to control. But it's not currently possible to trigger other actions by tilting the scroll wheel, such as switching between desktops. I'd love to implement this feature at some point, but it's a ton of work and it won't be coming soon.
+  
+  This is so hard, because it would require reprogramming the mouse so that it sends button-signals instead of sending scroll-signals, when you tilt the scroll wheel. And to reprogram the mouse, would require communicating with the it through the custom vendor-specific protocol. And that's not easy. For many mice it's not even possible.
 
-**Will Mac Mouse Fix still be Open Source now that it's monetized?**
+- **Turning off pointer acceleration**
 
-Yes. Mac Mouse Fix will still be open source, and I don't plan to change that at any point.
+  Mac Mouse Fix doesn't let you turn off the pointer acceleration, but if you're on **macOS 14 Sonoma** or later, you can turn off the pointer acceleration under `System Settings > Mouse > Advanced... > Pointer acceleration`.
 
-This also means you can use Mac Mouse Fix for free by building it from source and disabling the licensing checks. That's perfectly fine, I just discourage sharing these cracked versions online.
-And of course, on the next update, you'll get a non-cracked version which means you'll have to do this again for every update. (Or just pay $1.99 for the greatest mouse driver ever! :)
+  I plan to add really nice ways to improve pointer acceleration in the future, but I'm not sure when that's coming.
 
-Anyone will also still be able to use source code from Mac Mouse Fix in their free and commercial products as long as they don't just sell a copy of Mac Mouse Fix without adding their own contribution.
+- **Will Mac Mouse Fix still be Open Source now that it's monetized?**
 
-Learn about the details in the new MMF License which MMF 3 will be licensed under.
+  Yes, Mac Mouse Fix will still be open source.
 
-**Can I get Mac Mouse Fix for free if I already donated?**
+  I encourage anyone to use the source code of Mac Mouse Fix in their own projects, as long as they don't release a simple copy of Mac Mouse Fix without adding their own contribution.
 
-Yes! If you donated in 2022 or before, you can write an email to noah.n.public@gmail.com with "Free License" in the subject and a screenshot as proof and then I'll send you a 100% off discount code or something!
+  Learn about the details in the [MMF License](https://github.com/noah-nuebling/mac-mouse-fix/blob/master/LICENSE) which Mac Mouse Fix 3 and later are licensed under.
 
-**How do I uninstall Mac Mouse Fix?**
+  <!--
+    , and I don't plan to change that at any point.
+  
+    This also means you can use Mac Mouse Fix for free by building it from source and disabling the licensing checks. That's perfectly fine, I just discourage sharing these cracked versions online.\
+    And of course, on the next update, you'll get a non-cracked version which means you'll have to do this again for every update. (Or just pay $1.99 for the greatest mouse driver ever! :)
+  -->
 
-You can uninstall Mac Mouse Fix by simply moving it to the bin. 
+- **Can I get Mac Mouse Fix for free if I already donated?**
 
-However there will be files left on your system. To get rid of these files I recommend the awesome [AppCleaner by FreeMacSoft](https://freemacsoft.net/appcleaner/).
+  Yes! See the [Acknowledgements]({repo_root}Acknowledgements.md#-paypal-donations) for more info.
 
-Unfortunately, macOS makes it infeasible for apps to properly clean up after themselves when you delete them. That's why I highly recommend using an app like AppCleaner.
+- **How do I uninstall Mac Mouse Fix?**
+
+  You can uninstall Mac Mouse Fix by simply moving it to the bin. 
+
+  However there will be files left on your system. To get rid of these files I recommend the awesome [AppCleaner by FreeMacSoft](https://freemacsoft.net/appcleaner/).
+
+  Unfortunately, macOS makes it infeasible for apps to properly clean up after themselves when you delete them. That's why I highly recommend using an app like AppCleaner.
 
 ## Tips
 

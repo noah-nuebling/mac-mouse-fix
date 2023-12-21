@@ -46,6 +46,8 @@ Riesiges Dankeschön an [alle](https://github.com/sponsors/noah-nuebling#sponsor
 
 Viele großzügige Leute haben mir auf PayPal Milchshakes spendiert, als Mac Mouse Fix noch komplett kostenlos war. Als Dankeschön könnt ihr eine kostenlose Lizenz bekommen. Schickt mir einfach eine E-Mail mit "Free License" im Betreff und hängt einen Screenshot der Spende an. Danke euch!
 
+*Es dauert vielleicht eine Weile, bis ich antworte. Wenn ihr die App schon gekauft habt, dann lasst mich wissen, mit welcher E-Mail, und ich erstatte euch den Betrag zurück.*
+
 ## 👾 Andere Software
 
 **Software**, die Mac Mouse Fix inspiriert hat:
