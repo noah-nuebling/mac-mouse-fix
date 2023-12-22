@@ -18,36 +18,34 @@ import os
 #
 # (We expect this script to be run from the root directory of the repo)
 
+languages = {
+    
+    "en-US": {
+        "language_name": "🇬🇧 English", # Language name will be displayed in the language picker
+        "language_tag": "en-US", # Language tags are used to autogenerate some localized text (at time of writing only month names in the 'very generous' string). Find language tags here: https://www.techonthenet.com/js/language_tags.php
+        "template_root": "Markdown/Templates/en-US/",
+        "document_root": "", # The document root for english is the repo root.
+    }, 
+    "de-DE": {
+        "language_name": "🇩🇪 Deutsch",
+        "language_tag": "de-DE",
+        "template_root": "Markdown/Templates/de-DE/",
+        "document_root": "Markdown/LocalizedDocuments/de-DE/", 
+    },
+}
+
 documents = {
     
-    "readme": [
-        {
-            "language_name": "🇬🇧 English", # Language name will be displayed in the language picker
-            "language_tag": "en-US",
-            "template_path": "Markdown/Templates/en-US/readme_template.md",
-            "destination_path": "Readme.md"
-        },
-        {
-            "language_name": "🇩🇪 Deutsch",
-            "language_tag": "de-DE",
-            "template_path": "Markdown/Templates/de-DE/readme_template.md",
-            "destination_path": "Markdown/LocalizedDocuments/de-DE/Readme.md"
-        },
-    ],
-    "acknowledgements": [
-        {
-            "language_name": "🇬🇧 English", # Language name will be displayed in the language picker
-            "language_tag": "en-US", # Used to autogenerate some localized text (at time of writing only month names in the 'very generous' string). Find language tags here: https://www.techonthenet.com/js/language_tags.php
-            "template_path": "Markdown/Templates/en-US/acknowledgements_template.md",
-            "destination_path": "Acknowledgements.md"
-        },
-        {
-            "language_name": "🇩🇪 Deutsch",
-            "language_tag": "de-DE",
-            "template_path": "Markdown/Templates/de-DE/acknowledgements_template.md",
-            "destination_path": "Markdown/LocalizedDocuments/de-DE/Acknowledgements.md"
-        },
-    ]
+    "readme": {
+        "template_subpath": "readme_template.md", # This subpath is appended to the "template_root" to make the full template path
+        "document_subpath": "Readme.md", # This subpath is appended to the "document_root" to make the full document path
+        "languages": ["en-US", "de-DE"],
+    },
+    "acknowledgements": {
+        "template_subpath": "acknowledgements_template.md",
+        "document_subpath": "Acknowledgements.md",
+        "languages": ["en-US", "de-DE"],
+    }
 }
 
 # !! Amend custom_field_labels if you change the UI strings on Gumroad !!
@@ -80,28 +78,30 @@ def main():
     parser.add_argument("--no_api", action='store_true')
     args = parser.parse_args()
     gumroad_api_key = args.api_key
-    document_tag = args.document
+    document_key = args.document
     no_api = args.no_api
     
     # Validate
-    document_tag_was_provided = isinstance(document_tag, str) and document_tag != ''
-    if not document_tag_was_provided:
-        print("No document tag provided. Provide one using the '--document' command line argument.")
+    document_key_was_provided = isinstance(document_key, str) and document_key != ''
+    if not document_key_was_provided:
+        print("No document key provided. Provide one using the '--document' command line argument.")
         sys.exit(1)
-    document_tag_is_valid = document_tag in documents.keys()
-    if not document_tag_is_valid:
-        print(f"Unknown document tag '{document_tag}'. Valid document tags: {list(documents.keys())}")
+    document_key_is_valid = document_key in documents.keys()
+    if not document_key_is_valid:
+        print(f"Unknown document key '{document_key}'. Valid document keys: {list(documents.keys())}")
         sys.exit(1)
     
     # Iterate language dicts
 
-    language_dicts = documents[document_tag]
+    document_dict = documents[document_key]
+    languange_keys = document_dict['languages']
+    language_dicts = [languages[k] for k in languange_keys]
     
     for language_dict in language_dicts:
         
         # Extract info from language_dict
-        template_path = language_dict['template_path']
-        destination_path = language_dict['destination_path']
+        template_path = language_dict['template_root'] + document_dict['template_subpath']
+        destination_path = language_dict['document_root'] + document_dict['document_subpath']
         
         # Load template
         template = ""
@@ -112,15 +112,15 @@ def main():
         print('Inserting generated strings into template at {}...'.format(template_path))
         
         # Insert into template
-        if document_tag == "readme":
-            template = insert_root_paths(template, language_dict)
-            template = insert_language_picker(template, language_dict, language_dicts)
-        elif document_tag == "acknowledgements":
-            template = insert_root_paths(template, language_dict) # This is not currently necessary here since we don't use the {root_path} placeholder in the acknowledgements templates
-            template = insert_language_picker(template, language_dict, language_dicts)
+        if document_key == "readme":
+            template = insert_root_paths(template, document_dict, language_dict)
+            template = insert_language_picker(template, document_dict, language_dict, language_dicts)
+        elif document_key == "acknowledgements":
+            template = insert_root_paths(template, document_dict, language_dict) # This is not currently necessary here since we don't use the {root_path} placeholder in the acknowledgements templates
+            template = insert_language_picker(template, document_dict, language_dict, language_dicts)
             template = insert_acknowledgements(template, language_dict, gumroad_api_key, no_api)
         else:
-            assert False # Should never happen because we check document_tag for validity above.
+            assert False # Should never happen because we check document_key for validity above.
         
         # Validate that template is completely filled out
         template_parse_result = list(string.Formatter().parse(template))
@@ -319,8 +319,8 @@ def insert_acknowledgements(template, language_dict, gumroad_api_key, no_api):
     # Return
     return template
     
-def insert_language_picker(template, language_dict, language_dicts):
-        
+def insert_language_picker(template, document_dict, language_dict, language_dicts):
+    
     # Extract info from language_dict
         
     language_name = language_dict['language_name']
@@ -335,8 +335,8 @@ def insert_language_picker(template, language_dict, language_dicts):
         language_name2 = language_dict2['language_name']
         
         # Create relative path from the location of the `language_dict` document to the `language_dict2` document. This relative path works as a link. See https://github.blog/2013-01-31-relative-links-in-markup-files/
-        path = language_dict['destination_path']
-        path2 = language_dict2['destination_path']
+        path = language_dict['document_root'] + document_dict['document_subpath']
+        path2 = language_dict2['document_root'] + document_dict['document_subpath']
         root_path = path_to_root(path)
         relative_path = root_path + path2
         link = urllib.parse.quote(relative_path) # This percent encodes spaces and others chars which is necessary
@@ -363,12 +363,21 @@ def insert_language_picker(template, language_dict, language_dicts):
     # Return
     return template
 
-def insert_root_paths(template, language_dict):
+def insert_root_paths(template, document_dict, language_dict):
+        
+    # Notes: 
+    # - Abstracting the "document_root" out makes it easy to link between markdown documents of the same language.
+    #   For example, you can just `[link]({document_root}Acknowledgements.md)` to link to the acknowledgements file in the same language as the current document.
+    # - Abstracting the "repo_root" makes it easy to link to any files in the repo, no matter where the compiled document ends up.
         
     # Extract info from language_dict
         
-    path = language_dict['destination_path']
-    template = template.replace('{repo_root}', path_to_root(path))
+    path = language_dict['document_root'] + document_dict['document_subpath']
+    repo_root = path_to_root(path)
+    language_root = repo_root + language_dict['document_root']
+    
+    template = template.replace('{repo_root}', repo_root)
+    template = template.replace('{language_root}', language_root)
     
     return template
 

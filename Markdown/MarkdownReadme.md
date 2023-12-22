@@ -37,6 +37,8 @@ query {
 See GitHub [GraphQL API Explorer](https://docs.github.com/en/graphql/overview/explorer.)
 
 
+! We're also not listing people who contributed pull-requests. Maybe we should do that?
+
 # Install dependencies into python env
 
 You can create a new venv and install the python_requirements.txt file like this: (In fish shell)
@@ -81,11 +83,11 @@ I use VSCode with the plugin: https://marketplace.visualstudio.com/items?itemNam
 3. Run the markdown_generator.py script which creates an output file based on the template. To see which templates generate which output files see the 'documents' dictionary at the top of the markdown_generator.py script
 4. If the output file looks good, create a pull request
 
-# Adding a new template (This is how you add a new language for a document)
+# Adding a new template
 
 1. Make sure python is installed, create and activate a venv, then install the requirements from Markdown/Code/python_requirements.txt into your venv (see instructions above)
 2. Create a new template under Markdown/Templates/
-3. Add a new entry for your new template to the 'documents' dictionary at the top of the markdown_generator.py script
+3. Go to the top of the markdown_generator.py script. 1. Add a new entry for your new template to the 'documents' dictionary 2. If you're adding a new language, then add a new entry for your language to the 'languages' dictionary.
 4. Run the markdown_generator.py script, which creates an output file based on your new template.
 5. If the output file looks good, create a commit and a pull request and stuff
 

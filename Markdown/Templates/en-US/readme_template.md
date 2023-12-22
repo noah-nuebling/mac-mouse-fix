@@ -63,7 +63,7 @@ You can now test the <a href="https://github.com/noah-nuebling/mac-mouse-fix/rel
 		<th><a href=https://noah-nuebling.github.io/mac-mouse-fix-website>Website ↗</a></th>
 		<td><a href=https://github.com/noah-nuebling/mac-mouse-fix/issues/new/choose>Help & Feedback</a></td>
 		<td><a href=https://github.com/noah-nuebling/mac-mouse-fix/releases>Version History</a></td>
- 		<td><a href="{repo_root}Acknowledgements.md">Acknowledgements</a></td> <!-- If you translate this, remember to link to the right language version -->
+ 		<td><a href="{language_root}Acknowledgements.md">Acknowledgements</a></td> <!-- If you translate this, remember to link to the right language version -->
 	</table>
 	<img src="https://img.shields.io/github/downloads/noah-nuebling/mac-mouse-fix/total.svg">
 </div>
@@ -269,7 +269,7 @@ Under macOS, it is not feasible for apps to delete these leftover files by thems
 
 - **Can I get Mac Mouse Fix for free if I already donated?**
 
-  Yes! See the [Acknowledgements]({repo_root}Acknowledgements.md#-paypal-donations) for more info.
+  Yes! See the [Acknowledgements]({language_root}Acknowledgements.md#-paypal-donations) for more info.
 
 ## How you can contribute
 
@@ -294,7 +294,7 @@ There are several ways to help the project:
 
 - **Adding translations**
   
-  Mac Mouse Fix is available in English, German as well as the languages listed in the [Acknowledgements]({repo_root}Acknowledgements.md).\
+  Mac Mouse Fix is available in English, German as well as the languages listed in the [Acknowledgements]({language_root}Acknowledgements.md).\
   If you would like to help translate the project, see [this guide](https://github.com/noah-nuebling/mac-mouse-fix/discussions/731).
 
 - **Contributing code**
