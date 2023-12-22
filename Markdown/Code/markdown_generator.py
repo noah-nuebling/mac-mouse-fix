@@ -12,6 +12,7 @@ import pathlib
 import urllib.parse
 import string
 import os
+import math
 
 #
 # Constants
@@ -49,6 +50,9 @@ documents = {
 }
 
 # !! Amend custom_field_labels if you change the UI strings on Gumroad !!
+
+sales_count_rounder = 10 # Round sales counts to multiple of this number. This is to prevent the acknowledgements file from changing on every sale, which clogs up commit history a bit.
+
 gumroad_custom_field_labels_name = ["Your Name – Will be displayed in the Acknowledgements if you purchase the 2. or 3. Option"]
 gumroad_custom_field_labels_message = ["Your message (Will be displayed next to your name in the Acknowledgements if you purchase the 3. Option)", "Your message – Will be displayed next to your name in the Acknowledgements if you purchase the 3. Option"]
 gumroad_custom_field_labels_dont_display = ["Don't publicly display me as a 'Generous Contributor' under 'Acknowledgements'"]
@@ -63,7 +67,6 @@ gumroad_date_format = '%Y-%m-%dT%H:%M:%SZ' # T means nothing, Z means UTC+0 | Th
 
 name_blacklist = ['mail', 'paypal', 'banking', 'beratung', 'macmousefix'] # TODO: Add Iam | When gumroad doesn't provide a name we use part of the email as the display name. We use the part of the email before @, unless it contains one of these substrings, in which case we use the part of the email after @ but with the `.com`, `.de` etc. removed
 nbsp = '&nbsp;'  # Non-breaking space. &nbsp; doesn't seem to work on GitHub. Tried '\xa0', too. See https://github.com/github/cmark-gfm/issues/346
-
 
 #
 # Main
@@ -258,6 +261,9 @@ def insert_acknowledgements(template, language_dict, gumroad_api_key, no_api):
     # Log
     print('Compiling generous contributor strings...')
     
+    # Round sales count
+    all_sales_count_rounded = round_to_multiple(all_sales_count, sales_count_rounder, math.floor)
+    
     # Generate generous markdown
     
     generous_string = ''
@@ -314,7 +320,7 @@ def insert_acknowledgements(template, language_dict, gumroad_api_key, no_api):
     # str.format forces us to replace all the template placeholders at once, which we don't want, so we use str.replace
     
     # template = template.format(very_generous=very_generous_string, generous=generous_string, sales_count=all_sales_count)
-    template = template.replace('{very_generous}', very_generous_string).replace('{generous}', generous_string).replace('{sales_count}', str(all_sales_count))
+    template = template.replace('{very_generous}', very_generous_string).replace('{generous}', generous_string).replace('{sales_count}', str(all_sales_count_rounded))
     
     # Return
     return template
@@ -532,6 +538,9 @@ def gumroad_custom_field_content(sale, custom_field_labels):
                 break
 
     return content
+
+def round_to_multiple(n, multiple, rounding_fn=round):
+    return rounding_fn(n / multiple) * multiple
 
 #
 # Call main
