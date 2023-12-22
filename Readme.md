@@ -273,32 +273,37 @@ Under macOS, it is not feasible for apps to delete these leftover files by thems
 
   Yes! See the [Acknowledgements](Acknowledgements.md#-paypal-donations) for more info.
 
-## How you can help
+## How you can contribute
 
 There are several ways to help the project:
 
-- **Contribute code**
+<!--
+- **Spreading the word**
 
-  I'll be happy about any pull requests! Hope my code isn't too terrible heh. 
+  If you simply talk about Mac Mouse Fix on the internet or elsewhere, that is very helpful for the project.
 
-- **Give feedback**
+-->
+- **Giving feedback**
 
-  You can help by sharing your **ideas**, **issues** and **feedback**!
+  You can help by sharing your **ideas**, **issues** and **feedback** via the [Feedback Assistant](https://noah-nuebling.github.io/mac-mouse-fix-feedback-assistant/?type=bug-report).
 
-  The best place to share your **ideas** and **issues** is the [Feedback Assistant](https://noah-nuebling.github.io/mac-mouse-fix-feedback-assistant/?type=bug-report).\
-  The best place to give **quick** unstructured feedback is the [Feedback Discussion](https://github.com/noah-nuebling/mac-mouse-fix/discussions/366).
+- **Contributing money**
+  
+  I hope to be able to sustain myself financially through Mac Mouse Fix. That way, I can keep improving and working on the app. If you would like to help, you can:
+  1. Buy Mac Mouse Fix by clicking the button in the app, or clicking [here](https://noahnuebling.gumroad.com/l/mmfinappusd).
+  2. [Tip me](https://www.paypal.com/donate?token=2nPK2jVfH243_odImJXG4QdSzqyHnrmFuzo9qbMFkAoJr_Vybcdl8G2ZlBlHmXNzDquQ-SiujEoBALny&locale.x=en_US) on PayPal. I don't get a lot of money from this, but it's always cute and motivating to get a donation.
+  3. [Sponsor me](https://github.com/sponsors/noah-nuebling) on GitHub. A monthly sponsorship is a great way to support the project and help me have a more stable income.
 
-  You can also access both these places from within the app on the "**ⓘ About**" tab.
-
-- **Add translations**
+- **Adding translations**
   
   Mac Mouse Fix is available in English, German as well as the languages listed in the [Acknowledgements](Acknowledgements.md).\
-  If you would like to help the project, by translating it into a language that you speak, see [this guide](https://github.com/noah-nuebling/mac-mouse-fix/discussions/731).
+  If you would like to help translate the project, see [this guide](https://github.com/noah-nuebling/mac-mouse-fix/discussions/731).
 
-- **Contribute money**
+- **Contributing code**
+
+  If you would like to contribute code, that's awesome! I'll be happy about any [pull requests](https://github.com/noah-nuebling/mac-mouse-fix/pulls).
   
-  You can buy Mac Mouse Fix 3. That's how I sustain myself financially, so it's very helpful. Thanks to anyone who bought the app already.\
-  You can give me a [tip on PayPal](https://www.paypal.com/donate?token=2nPK2jVfH243_odImJXG4QdSzqyHnrmFuzo9qbMFkAoJr_Vybcdl8G2ZlBlHmXNzDquQ-SiujEoBALny&locale.x=en_US). There's not a lot of money in this for me, but it's always cute.\
-  You can [Sponsor me on GitHub](https://github.com/sponsors/noah-nuebling). This is also super helpful to make my income more stable.
+  However, I might not accept all pull requests. If you want to make sure that your work is not wasted, you can submit an initial pull request that only *describes* the changes you want to make, but contains little or no code. Then I can give you feedback and tell you if I would adopt the changes you want to make in that way.
+  <!-- NOTE: I should mention people who contributed code on the acknowledgements page. They are already in the update notes. -->
 
-**Thanks** for helping to make Mac Mouse Fix better! 🚀
+**Thank you** to everyone who has already contributed and supported me in trying to make the best mouse driver *of all time*! :)🚀

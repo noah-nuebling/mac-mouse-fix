@@ -183,3 +183,31 @@ Unter macOS ist es für Apps nicht machbar, diese hinterlassenen Dateien selbst 
 - **Kann ich Mac Mouse Fix kostenlos bekommen, wenn ich bereits gespendet habe?**
 
   Ja! Siehe die [Danksagungen](<{repo_root}Markdown/LocalizedDocuments/Acknowledgements - 🇩🇪 Deutsch.md#-paypal-donations>) für mehr Informationen.
+
+## Wie du beitragen kannst
+
+Es gibt mehrere Möglichkeiten, das Projekt zu unterstützen:
+
+- **Feedback geben**
+
+  Du kannst helfen, indem du deine **Ideen**, **Probleme** und **Rückmeldungen** über den [Feedback-Assistenten](https://noah-nuebling.github.io/mac-mouse-fix-feedback-assistant/?type=bug-report) teilst.
+
+- **Geld beitragen**
+  
+  Ich hoffe, mich finanziell durch Mac Mouse Fix erhalten zu können. So kann ich weiter an dem Projekt arbeiten und es verbessern. Wenn du dabei helfen möchtest, kannst du:
+  1. Mac Mouse Fix kaufen, indem du auf den Button in der App klickst oder [hier](https://noahnuebling.gumroad.com/l/mmfinappusd).
+  2. Mir auf PayPal ein [Trinkgeld](https://www.paypal.com/donate?token=2nPK2jVfH243_odImJXG4QdSzqyHnrmFuzo9qbMFkAoJr_Vybcdl8G2ZlBlHmXNzDquQ-SiujEoBALny&locale.x=en_US) geben. Ich verdiene nicht viel Geld damit, aber es ist immer nett und motivierend, eine Spende zu erhalten.
+  3. Mich auf GitHub [sponsorn](https://github.com/sponsors/noah-nuebling). Ein monatlicher Beitrag ist eine großartige Möglichkeit, das Projekt zu unterstützen und mir dabei zu helfen, ein stabileres Einkommen zu haben.
+
+- **Übersetzungen hinzufügen**
+  
+  Mac Mouse Fix ist auf Englisch und Deutsch verfügbar, sowie den Sprachen, die in den [Danksagungen]({repo_root}Acknowledgements.md) aufgelistet sind.\
+  Wenn du beim Übersetzen des Projekts helfen möchtest, sieh dir [diese Anleitung](https://github.com/noah-nuebling/mac-mouse-fix/discussions/731) an.
+
+- **Code beitragen**
+
+  Wenn du Code beitragen möchtest, ist das super! Ich freue mich über alle [Pull-Requests](https://github.com/noah-nuebling/mac-mouse-fix/pulls).
+  
+  Allerdings werde ich vielleicht nicht alle Pull-Requests akzeptieren. Wenn du sicherstellen willst, dass deine Arbeit nicht umsonst ist, kannst du einen ersten Pull-Request stellen, der nur die Änderungen *beschreibt*, die du vornehmen möchtest, jedoch keinen, oder nur wenig Code enthält. Dann kann ich dir Feedback geben und dir sagen, ob ich die Änderungen, die du vornehmen möchtest, so übernehmen würde.
+
+**Danke** an alle, die bereits beigetragen und mich bei meinem Versuch unterstützt haben, den besten Maustreiber *aller Zeiten* zu machen! :)🚀
