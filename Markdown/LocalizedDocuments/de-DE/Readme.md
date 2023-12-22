@@ -203,8 +203,10 @@ Es gibt mehrere Möglichkeiten, das Projekt zu unterstützen:
 
 - **Übersetzungen hinzufügen**
   
-  Mac Mouse Fix ist auf Englisch und Deutsch verfügbar, sowie den Sprachen, die in den [Danksagungen](../../../Markdown/LocalizedDocuments/de-DE/Acknowledgements.md) aufgelistet sind.\
-  Wenn du beim Übersetzen des Projekts helfen möchtest, sieh dir [diese Anleitung](https://github.com/noah-nuebling/mac-mouse-fix/discussions/731) an.
+  Mac Mouse Fix ist auf Englisch und Deutsch verfügbar, sowie den Sprachen, die in den [Danksagungen](../../../Markdown/LocalizedDocuments/de-DE/Acknowledgements.md) aufgelistet sind.
+  
+  Wenn du beim Übersetzen des Projekts helfen möchtest, sieh dir [diese Anleitung](https://github.com/noah-nuebling/mac-mouse-fix/discussions/731) an.\
+  Wenn du fehlende oder veraltete Übersetzungen über den [Feedback Assistenten](https://noah-nuebling.github.io/mac-mouse-fix-feedback-assistant/?type=other) mitteilen möchtest, ist das auch sehr hilfreich!
 
 - **Code beitragen**
 
