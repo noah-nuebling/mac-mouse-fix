@@ -380,7 +380,16 @@ class PointerConfig: NSObject {
     }
     @objc static var systemSensitivity: Double  = 1.0
     @objc static var systemAccelCurveIndex: Double {
-        return UserDefaults.standard.double(forKey: "com.apple.mouse.scaling")
+        
+        /// When `com.apple.mouse.scaling` is unset, `UserDefaults.standard.double` returns `0`, which represents nil.
+        /// This will set pointer speed to minimum, instead of the hardcoded default `0.6875`.
+        
+        if UserDefaults.standard.object(forKey: "com.apple.mouse.scaling") != nil {
+            return UserDefaults.standard.double(forKey: "com.apple.mouse.scaling")
+        }
+        else {
+            return 0.6875
+        }
     }
     @objc static var systemAccelCurves: NSArray = {
         /// By default, AppleUserHIDEventDriver instances don't have any "HIDAccelCurves" key (aka kHIDAccelParametricCurvesKey) in it's properties. When we set curves for the "HIDAccelCurves", the driver will use them though!
