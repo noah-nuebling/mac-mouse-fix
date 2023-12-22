@@ -114,7 +114,7 @@ Unter macOS ist es für Apps nicht machbar, diese hinterlassenen Dateien selbst 
 
   Swish ist für Trackpad-Gesten konzipiert, aber mit Mac Mouse Fix kannst du es von jeder Drittanbieter-Maus aus verwenden! Öffne dazu einfach Mac Mouse Fix und stelle für eine beliebige Taste die "Klicken und Ziehen" Aktion auf "Scrollen & Navigieren", dann kannst du Fenster mit einem einfachen Klicken und Ziehen positionieren.
 
-  Alles was du mit durch Wischen mit 2 Fingern auf einem Apple Trackpad machen kannst funktioniert genau so gut mit dem "Scrollen & Navigieren" Feature in Mac Mouse Fix.
+  Alles was du mit durch Wischen mit 2 Fingern auf einem Apple Trackpad machen kannst funktioniert genau so gut mit der "Scrollen & Navigieren" Funktion in Mac Mouse Fix.
 
 - **Bildschirmhelligkeit, Audio-Lautstärke oder Medienwiedergabe direkt von deiner Maus aus steuern**
 
@@ -131,80 +131,57 @@ Unter macOS ist es für Apps nicht machbar, diese hinterlassenen Dateien selbst 
 
   Ja, Mac Mouse Fix läuft zu 100% nativ auf Apple Silicon.
 
-- **Verfolgt Mac Mouse Fix meine Informationen?**
+- **Sammelt Mac Mouse Fix meine Daten?**
 
-  Nein. Mac Mouse Fix hat keine Werbung und verfolgt keine persönlichen Informationen über dich.
-  Wenn du Updates aktiviert hast, wird Mac Mouse Fix jedes Mal, wenn du die App startest, die GitHub-Server anpingen, um nach einem Update zu fragen. Ich kann jedoch keine Informationen darüber abrufen.
+  Nein. Mac Mouse Fix hat keine Werbung und sammelt keine persönlichen Informationen über dich.
+
+  Die einzigen Daten, die ich sammle, sind die Downloadzahlen und die Verkäufe der App.\
+  Wenn du Updates aktiviert hast, wird Mac Mouse Fix jedes Mal, wenn du die App startest, die GitHub-Server anpingen, um nach einem Update zu fragen. Ich sammle jedoch keinerlei Informationen darüber.
 
 - **Warum gibt es eine Verzögerung, wenn ich klicke?**
 
-  Wenn du klickst, wartet Mac Mouse Fix möglicherweise ab, um zu sehen, ob du doppelklickst. Lösche die Aktion "Doppelklick" im Tab "Tasten", um die Verzögerung zu entfernen.
+  Wenn du klickst, wartet Mac Mouse Fix möglicherweise ab, um zu sehen, ob du doppelklickst.\
+  Um die Verzögerung für eine Taste zu entfernen, lösche alle "Doppelklick"-Aktionen für diese Taste.
 
-- **Wie kann ich in 3D-Apps wie Blender rotieren?**
+- **Wie kann ich in 3D-Apps wie Blender um Objekte kreisen?**
 
-  In 3D-Apps wie Blender rotiert man normalerweise die Leinwand, indem man die mittlere Maustaste klickt und zieht.
-  Aber wenn du Aktionen der mittleren Maustaste in Mac Mouse Fix zuweist, funktioniert das nicht mehr.
+  In 3D-Apps wie Blender kreist man normalerweise um Objekte, indem man die mittlere Maustaste klickt und zieht.
+  Aber wenn du in Mac Mouse Fix der mittleren Maustaste Aktionen zuweist, dann funktioniert das nicht mehr.
   
-  Um das zu lösen, kannst du:
-  1. Das Klicken und Ziehen einer der Maustasten der Funktion "Scrollen & Navigieren" zuweisen. Diese Funktion simuliert das Wischen mit 2 Fingern auf einem Apple Trackpad. Das erlaubt dir auch, in 3D-Apps zu rotieren!
-  2. Die mittlere Maustaste *freigeben*, indem du alle ihr zugewiesenen Aktionen löschst. Siehe [diesen Leitfaden](https://github.com/noah-nuebling/mac-mouse-fix/discussions/112) für weitere Informationen.
+  Um das zu lösen, gibt es 2 Optionen, von denen ich weiß:
+  1. Weise für eine der Tasten deiner Maus das klicken und ziehen der "Scrollen & Navigieren" Funktion zu. Diese Funktion simuliert das Wischen mit 2 Fingern auf einem Apple Trackpad. Das erlaubt dir, unter anderem, in 3D-Apps zu kreisen!
+  2. *Gebe* die mittlere Maustaste *frei*, indem du alle ihr in Mac Mouse Fix zugewiesenen Aktionen löschst. Siehe [diese Anleitung](https://github.com/noah-nuebling/mac-mouse-fix/discussions/112) für weitere Informationen.
 
 - **Wird meine Maus unterstützt?**
 
-  Mac Mouse Fix funktioniert mit den meisten Mäusen. Allerdings kann Mac Mouse Fix bei bestimmten Mäusen, die für die Verwendung mit proprietärer Treibersoftware wie Logitech Options entwickelt wurden, derzeit nicht alle Tasten erkennen. Das liegt daran, dass diese Mäuse mit einem speziellen, proprietären Protokoll und nicht mit dem Standard-USB-Protokoll mit deinem Computer kommunizieren.
-  Ich würde gerne irgendwann volle Kompatibilität für diese Mäuse hinzufügen, aber das ist viel Arbeit und wird nicht so bald kommen.
+  Kurze Antwort: Wahrscheinlich schon. Wenn du es genau wissen möchtest, lade am besten Mac Mouse Fix herunter und probiere es aus.
+
+  Mac Mouse Fix funktioniert mit den meisten Mäusen sehr gut. Allerdings kann Mac Mouse Fix bei bestimmten Mäusen, die für die Verwendung mit hauseigenen Treibern wie Logitech Options entwickelt wurden, derzeit nicht alle Tasten erkennen. 
   
-  Wenn du wissen möchtest, wie gut deine Maus mit Mac Mouse Fix funktioniert, kannst du es einfach herunterladen und testen.
+  Das liegt daran, dass diese Mäuse mit einem speziellen, hauseigenen Protokoll und nicht mit dem Standard-USB-Protokoll mit deinem Computer kommunizieren. Ich würde gerne irgendwann volle Kompatibilität für diese Mäuse hinzufügen, aber das ist viel Arbeit und wird nicht so bald kommen.
 
 - **Wird die Magic Mouse unterstützt?**
 
-  Ich könnte in Zukunft Funktionen hinzufügen, die die Apple Magic Mouse verbessern, aber derzeit hat Mac Mouse Fix keinen Einfluss darauf.
-  
-  <!-- Du kannst stattdessen SteerMouse oder proprietäre Treiber wie Logitech Options verwenden. -->
+  Ich werde eventuell in Zukunft Funktionen bauen, die die Apple Magic Mouse verbessern, aber derzeit hat Mac Mouse Fix keinen Effekt auf die Magic Mouse.
 
+- **Werden kippbare Scrollräder unterstützt?**
 
-<!--
-- **Wie viele Tasten sollte meine Maus haben?**
-
-  Für das beste Erlebnis empfehle ich, Mac Mouse Fix mit einer Maus zu verwenden, die mindestens 5 Tasten hat. Wenn deine Maus weniger als 5 Tasten hat, bietet Mac Mouse Fix immer noch reichhaltige Funktionalität und ein großartiges Erlebnis, aber einige Funktionen werden im Vergleich zu einer 5-Tasten-Maus weniger leicht zugänglich sein. Mit einer 5-Tasten-Maus kannst du wirklich durch macOS gleiten, auf eine Weise, die genauso angenehm ist wie ein Apple Trackpad!
-  
-  Um mehr zu erfahren, siehe den [Trackpad-Abschnitt](https://noah-nuebling.github.io/mac-mouse-fix-website#trackpad) auf der Website.
-
-
-- **Mausmarken**
-
-  Ich bin kein großer Experte für Maushardware, aber dank meiner Arbeit an Mac Mouse Fix habe ich jetzt eine ziemlich große Sammlung. Wenn ich eine Empfehlung für den Kauf einer Maus für das beste Erlebnis mit Mac Mouse Fix aussprechen müsste, würde ich sagen, kaufe eine kleinere, chinesische Marke auf Amazon. Meiner Erfahrung nach haben diese Mäuse oft eine bessere Verarbeitungsqualität zu einem Bruchteil des Preises einer großen Markenmaus wie Logitech oder Roccat. Außerdem sind einige Modelle größerer Hersteller wie Logitech für die Verwendung mit ihrer proprietären Treibersoftware konzipiert, und sie werden nicht vollständig mit Mac Mouse Fix kompatibel sein. Wenn du eine kleinere Marke kaufst, kannst du normalerweise sicher sein, dass sie einwandfrei mit nicht-proprietären Treibern wie Mac Mouse Fix funktionieren wird.
--->
-
-- **Unterstützung für Kipp-Räder**
-
-  Einige Mäuse ermöglichen es dir, das Scrollrad nach links oder rechts zu kippen, um horizontal zu scrollen. Mac Mouse Fix wird dies
-
- natürlicher und leichter zu steuern machen. Aber derzeit ist es nicht möglich, andere Aktionen durch Kippen des Scrollrads auszulösen, wie beispielsweise das Wechseln zwischen Desktops. Ich würde gerne irgendwann diese Funktion implementieren, aber das ist viel Arbeit und wird nicht so bald kommen.
-  
-  <!-- Das ist so schwer, weil es erfordern würde, die Maus umzuprogrammieren, damit sie Tastensignale statt Scrollsignale sendet, wenn du das Scrollrad kippst. Und um die Maus umzuprogrammieren, müsste man mit ihr über das benutzerspezifische Protokoll kommunizieren. Und das ist nicht einfach. Für viele Mäuse ist es nicht einmal möglich. -->
+  Einige Mäuse ermöglichen es dir, das Scrollrad nach links oder rechts zu kippen, um horizontal zu scrollen. Mac Mouse Fix macht, dass sich das natürlicher und leichter zu steuern anfühlt. Derzeit ist es aber nicht möglich, andere Aktionen, wie beispielsweise das Wechseln zwischen Desktops, durch Kippen des Scrollrads auszulösen. Ich würde diese Funktion wirklich gerne irgendwann implementieren, aber es ist sehr viel Arbeit und wird nicht sehr bald kommen.
 
 - **Zeigerbeschleunigung ausschalten**
 
-  Mac Mouse Fix erlaubt es dir nicht, die Zeigerbeschleunigung auszuschalten, aber wenn du auf **macOS 14 Sonoma** oder neuer bist, kannst du die Zeigerbeschleunigung unter `Systemeinstellungen > Maus > Erweitert... > Zeigerbeschleunigung` ausschalten.
+  Mac Mouse Fix erlaubt es dir nicht, die Zeigerbeschleunigung auszuschalten, aber wenn du auf **macOS 14 Sonoma** oder neuer bist, kannst du die Zeigerbeschleunigung unter `Systemeinstellungen > Maus > Weitere Optionen... > Zeigerbeschleunigung` ausschalten.
 
-  Ich plane, in Zukunft wirklich schöne Wege zur Verbesserung der Zeigerbeschleunigung hinzuzufügen, aber ich bin mir nicht sicher, wann das kommt.
+  Ich plane, in Zukunft sehr gute Möglichkeiten zur Verbesserung der Zeigerbeschleunigung hinzuzufügen, aber ich weiß noch nicht, wann das kommt.
 
-- **Wird Mac Mouse Fix weiterhin Open Source sein, jetzt da es monetarisiert wird?**
+- **Wird Mac Mouse Fix weiterhin Open Source sein, jetzt da es monetarisiert ist?**
 
   Ja, Mac Mouse Fix wird weiterhin Open Source sein.
 
-  Ich ermutige jeden, den Quellcode von Mac Mouse Fix in eigenen Projekten zu verwenden, solange sie keine einfache Kopie von Mac Mouse Fix ohne eigenen Beitrag veröffentlichen.
+  Ich ermutige jeden, den Quellcode von Mac Mouse Fix in eigenen Projekten zu verwenden, solange sie keine einfache Kopie von Mac Mouse Fix veröffentlichen.
 
-  Erfahre mehr über die Details in der [MMF-Lizenz](https://github.com/noah-nuebling/mac-mouse-fix/blob/master/LICENSE), unter der Mac Mouse Fix 3 und spätere Versionen lizenziert sind.
-
-  <!--
-    , und ich habe nicht vor, das irgendwann zu ändern.
-  
-    Das bedeutet auch, dass du Mac Mouse Fix kostenlos verwenden kannst, indem du es aus dem Quellcode baust und die Lizenzüberprüfungen deaktivierst. Das ist völlig in Ordnung, ich rate nur davon ab, diese geknackten Versionen online zu teilen.\
-    Und natürlich wirst du bei der nächsten Aktualisierung eine nicht-geknackte Version bekommen, was bedeutet, dass du dies für jedes Update erneut tun musst. (Oder einfach 1,99 $ für den besten Maustreiber aller Zeiten bezahlen! :)
-  -->
+  Erfahre mehr über die Details in der [MMF License](https://github.com/noah-nuebling/mac-mouse-fix/blob/master/LICENSE), unter der Mac Mouse Fix 3 und spätere Versionen lizenziert sind.
 
 - **Kann ich Mac Mouse Fix kostenlos bekommen, wenn ich bereits gespendet habe?**
 
-  Ja! Siehe die [Danksagungen](../../Acknowledgements.md#-paypal-donations) für mehr Informationen.
+  Ja! Siehe die [Danksagungen](<../../Markdown/LocalizedDocuments/Acknowledgements - 🇩🇪 Deutsch.md#-paypal-donations>) für mehr Informationen.

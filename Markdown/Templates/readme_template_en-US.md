@@ -190,30 +190,35 @@ Under macOS, it is not feasible for apps to delete these leftover files by thems
 
   Yes, Mac Mouse Fix runs 100% native on Apple Silicon.
 
-- **Does Mac Mouse Fix track my information?**
+- **Does Mac Mouse Fix collect my data?**
 
-  No. Mac Mouse Fix does not have ads and it doesn't track any personal information about you.\
-  If you have updates turned on, Mac Mouse Fix will ping GitHub's servers every time you launch the app to ask for an update. I can't retrieve any information about that however.
+  No. Mac Mouse Fix does not have ads and it doesn't collect any personal information about you.
+
+  The only data I collect is the number of downloads and sales of the app.\
+  If you have updates turned on, Mac Mouse Fix will ping GitHub's servers every time you launch the app to ask for an update. But I don't collect any information about this.
 
 - **Why is there a delay when I click?**
 
-  When you click, Mac Mouse Fix might wait to see if you're going to double click. Delete the "Double Click" action on the "Buttons" tab to remove the delay.
+  When you click, Mac Mouse Fix might wait to see if you're going to double click.\
+  To remove the delay for a button, delete any "Double Click" actions for that button.
 
-- **How can I rotate in 3D apps like Blender?**
+- **How can I orbit around objects in 3D apps like Blender?**
 
-  In 3D apps like Blender, you normally Click and Drag the Middle Mouse Button to rotate the canvas.\
+  In 3D apps like Blender, you normally Click and Drag the Middle Mouse Button to orbit around objects.\
   But if you assign actions to the Middle Mouse Button in Mac Mouse Fix, then this won't work anymore.
   
-  To solve this, you can:
-  1. Assign clicking and dragging one of the buttons of your mouse to the "Scroll & Navigate" feature. This feature simulates swiping with 2 fingers on an Apple Trackpad. This will also let you rotate 3D apps! 
-  2. *Uncapture* the Middle Mouse Button by deleting all actions assigned to it. See [this guide](https://github.com/noah-nuebling/mac-mouse-fix/discussions/112) for more info.
+  To solve this, I know of 2 options:
+  1. Assign clicking and dragging one of the buttons of your mouse to the "Scroll & Navigate" feature. This feature simulates swiping with 2 fingers on an Apple Trackpad. This will, among other things, let you orbit in 3D apps! 
+  2. *Uncapture* the Middle Mouse Button by deleting all actions assigned to it in Mac Mouse Fix. See [this guide](https://github.com/noah-nuebling/mac-mouse-fix/discussions/112) for more info.
 
 - **Is my mouse supported?**
 
-  Mac Mouse Fix works with most mice. However, on certain mice designed to be used with proprietary driver software like Logitech Options, Mac Mouse Fix can't recognize all the buttons at the moment. That's because these mice communicate with your computer using a special, proprietary protocol, instead of the standard USB protocol.\
-  I would love to add full compatibility for these mice at some point, but it's a ton of work and it won't be coming soon.
+  Short answer: Probably. If you want to know for sure, it's best to download Mac Mouse Fix and try it out.
+
+  Mac Mouse Fix works very well with most mice. However, on certain mice designed to be used with proprietary driver software like Logitech Options, Mac Mouse Fix can't recognize all the buttons at the moment. 
   
-  If you're wondering how well your mouse works with Mac Mouse Fix, you can just download and test it.
+  That's because these mice communicate with your computer using a special, proprietary protocol, instead of the standard USB protocol.
+  I would love to add full compatibility for these mice at some point, but it's a ton of work and it won't be coming soon.
 
 - **Is the Magic Mouse supported?**
 
@@ -235,9 +240,9 @@ Under macOS, it is not feasible for apps to delete these leftover files by thems
   I'm not the biggest expert on mouse hardware, but I do have quite a collection now, thanks to my work on Mac Mouse Fix! If I had to make a recommendation for what mouse to buy for the best experience with Mac Mouse fix, I'd say get a smaller, chinese brand on Amazon. In my experience, these mice often have better build quality at a fraction of the price of a big brand mouse like Logitech or Roccat. Also, some models of bigger manufacturers like Logitech are made to be used with their proprietary driver software, and they won't be fully compatible with Mac Mouse Fix. If you buy a smaller brand, you can usually be sure, that they will work flawlessly with non-proprietary drivers like Mac Mouse Fix.
 -->
 
-- **Tilt-wheel support**
+- **Are tiltable scroll wheels supported?**
 
-  Some mice let you tilt the scroll wheel left or right to scroll horizontally. Mac Mouse Fix will make this feel more natural and easy to control. But it's not currently possible to trigger other actions by tilting the scroll wheel, such as switching between desktops. I'd love to implement this feature at some point, but it's a ton of work and it won't be coming soon.
+  Some mice let you tilt the scroll wheel left or right to scroll horizontally. Mac Mouse Fix will make this feel more natural and easy to control. However, it's not currently possible to trigger other actions, such as switching between desktops, by tilting the scroll wheel. I'd love to implement this feature at some point, but it's a ton of work and it won't be coming soon.
   
   <!-- This is so hard, because it would require reprogramming the mouse so that it sends button-signals instead of sending scroll-signals, when you tilt the scroll wheel. And to reprogram the mouse, would require communicating with the it through the custom vendor-specific protocol. And that's not easy. For many mice it's not even possible. -->
 
@@ -251,7 +256,7 @@ Under macOS, it is not feasible for apps to delete these leftover files by thems
 
   Yes, Mac Mouse Fix will still be open source.
 
-  I encourage anyone to use the source code of Mac Mouse Fix in their own projects, as long as they don't release a simple copy of Mac Mouse Fix without adding their own contribution.
+  I encourage anyone to use the source code of Mac Mouse Fix in their own projects, as long as they don't release a simple copy of Mac Mouse Fix.
 
   Learn about the details in the [MMF License](https://github.com/noah-nuebling/mac-mouse-fix/blob/master/LICENSE) which Mac Mouse Fix 3 and later are licensed under.
 
