@@ -184,7 +184,7 @@ Unter macOS ist es für Apps nicht machbar, diese hinterlassenen Dateien selbst 
 
 - **Kann ich Mac Mouse Fix kostenlos bekommen, wenn ich bereits gespendet habe?**
 
-  Ja! Siehe die [Danksagungen](<../../../Markdown/LocalizedDocuments/de-DE/Acknowledgements.md#-paypal-donations>) für mehr Informationen.
+  Ja! Siehe die [Danksagungen](../../../Markdown/LocalizedDocuments/de-DE/Acknowledgements.md#-paypal-donations) für mehr Informationen.
 
 ## Wie du beitragen kannst
 
