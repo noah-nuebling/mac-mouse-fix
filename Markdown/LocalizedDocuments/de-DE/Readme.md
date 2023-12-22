@@ -38,19 +38,20 @@ You can now test the <a href="https://github.com/noah-nuebling/mac-mouse-fix/rel
 		<td><a href=https://github.com/noah-nuebling/mac-mouse-fix/releases>Versionsverlauf</a></td>
  		<td><a href="../../../Markdown/LocalizedDocuments/de-DE/Acknowledgements.md">Danksagungen</a></td>
 	</table>
-	<img src="https://img.shields.io/github/downloads/noah-nuebling/mac-mouse-fix/total.svg">
+  <!-- vvv Hint for translators: You can change the label by editing the text inside the URL after `label=`. Use url encoding for special chars. E.g. `%20` to insert spaces. -->
+	<img src="https://img.shields.io/github/downloads/noah-nuebling/mac-mouse-fix/total?label=Downloads&color=25c65f">
 </div>
 
 <br>
 <br>
-<!--Use this extra br when theres text above the first header (Edit: I think by "first header" I meant the h1 saying "Mac Mouse Fix", but not sure) -->
+<br>
 <br>
 
 <!-- ||| Intro Text ||| -->
 
-Mac Mouse Fix ist eine App für Macs, die normale Mäuse besser macht.
+Mac Mouse Fix ist eine App, die deine Maus besser macht.
 
-Ich möchte Mac Mouse Fix zum besten Maustreiber aller Zeiten machen! Derzeit fehlen noch einige Funktionen, aber ich denke es macht jetzt schon normale Mäuse zu den besten Eingabegeräten für Macs! Sogar besser als ein Apple Trackpad oder eine Logitech MX Master Maus.
+Ich möchte Mac Mouse Fix zum besten Maustreiber *aller Zeiten* machen! Derzeit fehlen noch einige Funktionen, aber ich denke es macht jetzt schon normale Mäuse in einiger Hinsicht zu den besten Eingabegeräten für Macs! Sogar auf dem Level oder besser als ein Apple Trackpad oder eine Logitech MX Master Maus.
 
 Für mehr Info darüber, wie genau Mac Mouse Fix deine Maus verbessert, besuche die [Website](https://noah-nuebling.github.io/mac-mouse-fix-website).
 
@@ -71,7 +72,7 @@ Mehr Details findest du in der <a href=https://github.com/noah-nuebling/mac-mous
 ## Was die Leute sagen
 
 Vielen Dank an alle, die ihre Begeisterung über Mac Mouse Fix geteilt haben!\
-Auf der [Website](http://noah-nuebling.github.io/mac-mouse-fix-website/) kannst du eine Sammlung schöner Dinge, die Leute über Mac Mouse Fix gesagt haben, finden.
+Auf der [Website](http://noah-nuebling.github.io/mac-mouse-fix-website/) kannst du eine Sammlung schöner Dinge, die Leute über die App gesagt haben, finden.
 
 ## Installation
 
@@ -188,7 +189,8 @@ Unter macOS ist es für Apps nicht machbar, diese hinterlassenen Dateien selbst 
 
 ## Wie du beitragen kannst
 
-Es gibt mehrere Möglichkeiten, das Projekt zu unterstützen:
+Es gibt einige Möglichkeiten, das Projekt zu unterstützen.\
+Schau dir die [Danksagungen](../../../Markdown/LocalizedDocuments/de-DE/Acknowledgements.md) an, um mehr darüber zu erfahren, wer bereits beigetragen hat!
 
 - **Feedback geben**
 

@@ -65,9 +65,12 @@ You can now test the <a href="https://github.com/noah-nuebling/mac-mouse-fix/rel
 		<td><a href=https://github.com/noah-nuebling/mac-mouse-fix/releases>Version History</a></td>
  		<td><a href="{language_root}Acknowledgements.md">Acknowledgements</a></td> <!-- If you translate this, remember to link to the right language version -->
 	</table>
-	<img src="https://img.shields.io/github/downloads/noah-nuebling/mac-mouse-fix/total.svg">
+  <!-- vvv Hint for translators: You can change the label by editing the text inside the URL after `label=`. Use url encoding for special chars. E.g. `%20` to insert spaces. -->
+	<img src="https://img.shields.io/github/downloads/noah-nuebling/mac-mouse-fix/total?label=Downloads&color=25c65f">
 </div>
 
+<br>
+<br>
 <br>
 <br>
 <!--Use this extra br when theres text above the first header (Edit: I think by "first header" I meant the h1 saying "Mac Mouse Fix", but not sure) -->
@@ -75,9 +78,9 @@ You can now test the <a href="https://github.com/noah-nuebling/mac-mouse-fix/rel
 
 <!-- ||| Intro Text ||| -->
 
-Mac Mouse Fix is an app for Macs that improves regular mice.
+Mac Mouse Fix is an app that makes your mouse better.
 
-I want to make Mac Mouse Fix the best mouse driver ever! Some features are still missing at the moment, but I think it already turns regular mice into the best input devices for Macs! Even better than an Apple Trackpad or a Logitech MX Master mouse.
+I want to turn Mac Mouse Fix into the best mouse driver *of all time*! Some features are still missing at the moment, but I think in some ways it already turns regular mice into the best input devices for Macs! At the same level or even better than an Apple Trackpad or a Logitech MX Master mouse.
 
 For more information on how exactly Mac Mouse Fix enhances your mouse, visit the [website](https://noah-nuebling.github.io/mac-mouse-fix-website).
 
@@ -119,7 +122,7 @@ Major features were introduced in these versions:
 ## What people say
 
 Thanks so much to everyone sharing their excitement about Mac Mouse Fix!\
-On the [website](http://noah-nuebling.github.io/mac-mouse-fix-website/) you can find a collection of nice things people have said about Mac Mouse Fix.
+On the [website](http://noah-nuebling.github.io/mac-mouse-fix-website/) you can find a collection of nice things people have said about the app.
 
 
 <!-- 
@@ -161,7 +164,7 @@ Mac Mouse Fix 2 and below will remain free forever.
 
 Uninstall Mac Mouse Fix by simply moving it to the bin. 
 
-However there will be files left on your system. To get rid of these files I recommend the awesome [AppCleaner by FreeMacSoft](https://freemacsoft.net/appcleaner/).
+However, there will be files left on your system. To get rid of these files I recommend the awesome [AppCleaner by FreeMacSoft](https://freemacsoft.net/appcleaner/).
 
 Under macOS, it is not feasible for apps to delete these leftover files by themselves when you delete the app. That's why I highly recommend using an app like AppCleaner.
 
@@ -273,7 +276,8 @@ Under macOS, it is not feasible for apps to delete these leftover files by thems
 
 ## How you can contribute
 
-There are several ways to help the project:
+There are several ways to help the project.\
+Check out the [Acknowledgements]({language_root}Acknowledgements.md) for more info on who has already contributed!
 
 <!--
 - **Spreading the word**
