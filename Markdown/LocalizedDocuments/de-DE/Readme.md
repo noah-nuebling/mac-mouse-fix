@@ -4,7 +4,7 @@
 <details>
 	<summary>󠁧󠁿🇩🇪 Deutsch</summary>
 	  
-  [🇬🇧 English](../../Readme.md)\
+  [🇬🇧 English](../../../Readme.md)\
   **🇩🇪 Deutsch**\
 	[Help translate Mac Mouse Fix to different languages!](https://github.com/noah-nuebling/mac-mouse-fix/discussions/731)
 </details>
@@ -22,7 +22,7 @@ You can now test the <a href="https://github.com/noah-nuebling/mac-mouse-fix/rel
 
 <div align="center">
 	<a href="https://noah-nuebling.github.io/mac-mouse-fix-website">
-		<img src="../../Markdown/Media/AppIconRound3.png" width="200" height="auto">
+		<img src="../../../Markdown/Media/AppIconRound3.png" width="200" height="auto">
 	</a>
 	<h1>Mac Mouse Fix</h1>  
     <p>Mach deine $10 Maus besser als ein Apple Trackpad!</p>
@@ -36,7 +36,7 @@ You can now test the <a href="https://github.com/noah-nuebling/mac-mouse-fix/rel
 		<th><a href=https://noah-nuebling.github.io/mac-mouse-fix-website>Website ↗</a></th>
 		<td><a href=https://github.com/noah-nuebling/mac-mouse-fix/issues/new/choose>Hilfe & Feedback</a></td>
 		<td><a href=https://github.com/noah-nuebling/mac-mouse-fix/releases>Versionsverlauf</a></td>
- 		<td><a href="../../Markdown/LocalizedDocuments/Acknowledgements - 🇩🇪 Deutsch.md">Danksagungen</a></td> <!-- If you translate this, remember to link to the right language version -->
+ 		<td><a href="../../../Markdown/LocalizedDocuments/Acknowledgements - 🇩🇪 Deutsch.md">Danksagungen</a></td> <!-- If you translate this, remember to link to the right language version -->
 	</table>
 	<img src="https://img.shields.io/github/downloads/noah-nuebling/mac-mouse-fix/total.svg">
 </div>
@@ -123,7 +123,7 @@ Unter macOS ist es für Apps nicht machbar, diese hinterlassenen Dateien selbst 
 
   Wenn du keine Apple-Tastatur zur Hand hast, **halte die Optionstaste (⌥)** gedrückt, um die speziellen Apple-Tasten auszuwählen.
 
-  <img src="../../Markdown/Media/Apple-Keys-Demo.gif" width="700">
+  <img src="../../../Markdown/Media/Apple-Keys-Demo.gif" width="700">
 
 ## Fragen
 
@@ -184,7 +184,7 @@ Unter macOS ist es für Apps nicht machbar, diese hinterlassenen Dateien selbst 
 
 - **Kann ich Mac Mouse Fix kostenlos bekommen, wenn ich bereits gespendet habe?**
 
-  Ja! Siehe die [Danksagungen](<../../Markdown/LocalizedDocuments/Acknowledgements - 🇩🇪 Deutsch.md#-paypal-donations>) für mehr Informationen.
+  Ja! Siehe die [Danksagungen](<../../../Markdown/LocalizedDocuments/Acknowledgements - 🇩🇪 Deutsch.md#-paypal-donations>) für mehr Informationen.
 
 ## Wie du beitragen kannst
 
@@ -203,7 +203,7 @@ Es gibt mehrere Möglichkeiten, das Projekt zu unterstützen:
 
 - **Übersetzungen hinzufügen**
   
-  Mac Mouse Fix ist auf Englisch und Deutsch verfügbar, sowie den Sprachen, die in den [Danksagungen](../../Acknowledgements.md) aufgelistet sind.\
+  Mac Mouse Fix ist auf Englisch und Deutsch verfügbar, sowie den Sprachen, die in den [Danksagungen](../../../Acknowledgements.md) aufgelistet sind.\
   Wenn du beim Übersetzen des Projekts helfen möchtest, sieh dir [diese Anleitung](https://github.com/noah-nuebling/mac-mouse-fix/discussions/731) an.
 
 - **Code beitragen**

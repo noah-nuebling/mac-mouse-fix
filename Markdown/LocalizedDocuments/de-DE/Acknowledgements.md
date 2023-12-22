@@ -2,7 +2,7 @@
 <details>
   <summary>󠁧󠁿🇩🇪 Deutsch</summary>
   
-  [🇬🇧 English](../../Acknowledgements.md)\
+  [🇬🇧 English](../../../Acknowledgements.md)\
   **🇩🇪 Deutsch**\
   [Help translate Mac Mouse Fix to different languages!](https://github.com/noah-nuebling/mac-mouse-fix/discussions/731)
 </details>
@@ -22,7 +22,7 @@ Danke, dass ihr Mac Mouse Fix zu Menschen auf der ganzen Welt gebracht habt.
 
 ## 💰 Geld
 
-Vielen Dank an alle, die mir einen Milchshake spendiert haben, und an alle **1194** Personen, die Mac Mouse Fix gekauft haben.
+Vielen Dank an alle, die mir einen Milchshake spendiert haben, und an alle **1196** Personen, die Mac Mouse Fix gekauft haben.
 Dank euch kann ich viel Zeit mit etwas verbringen, das ich sehr gerne mache. <!-- Ihr lasst mich spüren, dass es viele Menschen da draußen gibt, die die App schätzen und unterstützen möchten, und dank euch kann ich mehr Zeit in etwas investieren, das ich sehr gerne mache. -->
 
 Menschen, die mich durch den Kauf von Mac Mouse Fix zu einem höheren Preis als dem Standardpreis unterstützt haben, erhalten hier eine besondere Erwähnung:
@@ -39,6 +39,7 @@ Diese Leute haben viel mehr als den Standardpreis ausgegeben und mir einen **ung
 
 **Dezember 2023**
 
+- 🇦🇺&nbsp;Alex&nbsp;Compton - "alex compton"
 - 🇯🇵&nbsp;@Hotchpotch - "MacOS のマウス操作がとても便利に！"
 
 **November 2023**
@@ -155,7 +156,7 @@ Viele großzügige Leute haben mir auf PayPal Milchshakes spendiert, als Mac Mou
 - [Calftrail Touch](https://github.com/calftrail/Touch) - Die Grundlage für die "Reverse Engineering"-Arbeit, die Mac Mouse Fix's erstklassige und einzigartige Trackpad-Simulation ermöglicht!
 - [SensibleSideButtons](https://github.com/archagon/sensible-side-buttons) - Ich habe den Code für eine frühe Implementierung der Funktion "Gehe eine Seite vor/zurück in Safari und anderen Apps" von SensibleSideButtons kopiert und bin dadurch auch auf das Calftrail Touch-Projekt gestoßen.
 - [MOS](https://mos.caldis.me/) - Viele Funktionen von Mac Mouse Fix, wie die Option "Hohe Scroll-Flüssigkeit" und die Implementierung des "App-spezifische Einstellungen" features, wurden von MOS inspiriert.
-- [Gifski](https://github.com/sindresorhus/Gifski) - Hat das Design und den Inhalt des [Readme.md](<../../Markdown/LocalizedDocuments/Readme - 🇩🇪 Deutsch.md>) von Mac Mouse Fix stark inspiriert.
+- [Gifski](https://github.com/sindresorhus/Gifski) - Hat das Design und den Inhalt des [Readme.md](<../../../Markdown/LocalizedDocuments/de-DE/Readme.md>) von Mac Mouse Fix stark inspiriert.
 - [Vue Issue Helper](https://new-issue.vuejs.org/) - Grundlage für das Design und die technische Umsetzung von [Mac Mouse Fix Feedback Assistant](https://noah-nuebling.github.io/mac-mouse-fix-feedback-assistant/).
 
 Mac Mouse Fix wurde mithilfe dieser **hervorragenden Softwarebibliotheken** erstellt:
@@ -168,5 +169,5 @@ Mac Mouse Fix wurde mithilfe dieser **hervorragenden Softwarebibliotheken** erst
 - [SnapKit](https://github.com/SnapKit/SnapKit) - Macht Auto Layout sowohl auf iOS als auch auf OS X einfach.
 - [MASShortcut](https://github.com/shpakovski/MASShortcut) - API und Benutzeroberfläche zum Aufzeichnen, Speichern und Verwenden systemweiter Tastenkürzel
 - [CGSInternal](https://github.com/NUIKit/CGSInternal) - Eine Sammlung privater CoreGraphics-Routinen
-- Abhängigkeiten der Python-Skripte von Mac Mouse Fix: [Update- und Statistikskripte](https://github.com/noah-nuebling/mac-mouse-fix/blob/update-feed/requirements.txt) | [Markdown-Generierungsskript](../../Markdown/Code/python_requirements.txt)
+- Abhängigkeiten der Python-Skripte von Mac Mouse Fix: [Update- und Statistikskripte](https://github.com/noah-nuebling/mac-mouse-fix/blob/update-feed/requirements.txt) | [Markdown-Generierungsskript](../../../Markdown/Code/python_requirements.txt)
 - Abhängigkeiten der [Mac Mouse Fix Feedback Assistant](https://noah-nuebling.github.io/mac-mouse-fix-feedback-assistant/) Web-App [hier](https://github.com/noah-nuebling/mac-mouse-fix-feedback-assistant/blob/master/package.json)

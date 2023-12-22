@@ -34,7 +34,7 @@ You can now test the <a href="https://github.com/noah-nuebling/mac-mouse-fix/rel
 		<th><a href=https://noah-nuebling.github.io/mac-mouse-fix-website>Website ↗</a></th>
 		<td><a href=https://github.com/noah-nuebling/mac-mouse-fix/issues/new/choose>Hilfe & Feedback</a></td>
 		<td><a href=https://github.com/noah-nuebling/mac-mouse-fix/releases>Versionsverlauf</a></td>
- 		<td><a href="{repo_root}Markdown/LocalizedDocuments/Acknowledgements - 🇩🇪 Deutsch.md">Danksagungen</a></td> <!-- If you translate this, remember to link to the right language version -->
+ 		<td><a href="{repo_root}Markdown/LocalizedDocuments/de-DE/Acknowledgements.md">Danksagungen</a></td> <!-- If you translate this, remember to link to the right language version -->
 	</table>
 	<img src="https://img.shields.io/github/downloads/noah-nuebling/mac-mouse-fix/total.svg">
 </div>
@@ -182,7 +182,7 @@ Unter macOS ist es für Apps nicht machbar, diese hinterlassenen Dateien selbst 
 
 - **Kann ich Mac Mouse Fix kostenlos bekommen, wenn ich bereits gespendet habe?**
 
-  Ja! Siehe die [Danksagungen](<{repo_root}Markdown/LocalizedDocuments/Acknowledgements - 🇩🇪 Deutsch.md#-paypal-donations>) für mehr Informationen.
+  Ja! Siehe die [Danksagungen](<{repo_root}Markdown/LocalizedDocuments/de-DE/Acknowledgements.md#-paypal-donations>) für mehr Informationen.
 
 ## Wie du beitragen kannst
 

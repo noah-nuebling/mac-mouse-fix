@@ -56,7 +56,7 @@ Viele großzügige Leute haben mir auf PayPal Milchshakes spendiert, als Mac Mou
 - [Calftrail Touch](https://github.com/calftrail/Touch) - Die Grundlage für die "Reverse Engineering"-Arbeit, die Mac Mouse Fix's erstklassige und einzigartige Trackpad-Simulation ermöglicht!
 - [SensibleSideButtons](https://github.com/archagon/sensible-side-buttons) - Ich habe den Code für eine frühe Implementierung der Funktion "Gehe eine Seite vor/zurück in Safari und anderen Apps" von SensibleSideButtons kopiert und bin dadurch auch auf das Calftrail Touch-Projekt gestoßen.
 - [MOS](https://mos.caldis.me/) - Viele Funktionen von Mac Mouse Fix, wie die Option "Hohe Scroll-Flüssigkeit" und die Implementierung des "App-spezifische Einstellungen" features, wurden von MOS inspiriert.
-- [Gifski](https://github.com/sindresorhus/Gifski) - Hat das Design und den Inhalt des [Readme.md](<{repo_root}Markdown/LocalizedDocuments/Readme - 🇩🇪 Deutsch.md>) von Mac Mouse Fix stark inspiriert.
+- [Gifski](https://github.com/sindresorhus/Gifski) - Hat das Design und den Inhalt des [Readme.md](<{repo_root}Markdown/LocalizedDocuments/de-DE/Readme.md>) von Mac Mouse Fix stark inspiriert.
 - [Vue Issue Helper](https://new-issue.vuejs.org/) - Grundlage für das Design und die technische Umsetzung von [Mac Mouse Fix Feedback Assistant](https://noah-nuebling.github.io/mac-mouse-fix-feedback-assistant/).
 
 Mac Mouse Fix wurde mithilfe dieser **hervorragenden Softwarebibliotheken** erstellt:

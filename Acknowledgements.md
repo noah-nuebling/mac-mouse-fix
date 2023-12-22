@@ -3,7 +3,7 @@
   <summary>󠁧󠁿🇬🇧 English</summary>
   
   **🇬🇧 English**\
-  [🇩🇪 Deutsch](Markdown/LocalizedDocuments/Acknowledgements%20-%20%F0%9F%87%A9%F0%9F%87%AA%20Deutsch.md)\
+  [🇩🇪 Deutsch](Markdown/LocalizedDocuments/de-DE/Acknowledgements.md)\
   [Help translate Mac Mouse Fix to different languages!](https://github.com/noah-nuebling/mac-mouse-fix/discussions/731)
 </details>
 
@@ -22,9 +22,9 @@ Thanks for bringing Mac Mouse Fix to people around the globe!
 
 ## 💰 Money
 
-<!-- Thanks so much to everyone who bought me a milkshake and to all 1194 people who bought Mac Mouse Fix! Ya'll are the bomb. Thanks to you I can spend lots of time on sth I love doing. -->
+<!-- Thanks so much to everyone who bought me a milkshake and to all 1196 people who bought Mac Mouse Fix! Ya'll are the bomb. Thanks to you I can spend lots of time on sth I love doing. -->
 
-Thanks so much to everyone who treated me to a milkshake and to all **1194** people who bought Mac Mouse Fix.
+Thanks so much to everyone who treated me to a milkshake and to all **1196** people who bought Mac Mouse Fix.
 Thanks to you, I can spend lots of time doing something I love. <!-- You make me me feel like there are many generous people out there who appreciate the app and want to support it, and thanks to you, I can spend more time on something I love doing. -->
 
 People who supported me by spending more than the standard price on Mac Mouse Fix receive a special mention here:
@@ -41,6 +41,7 @@ These people spent a lot more than the standard price and treated me to an **Inc
 
 **December 2023**
 
+- 🇦🇺&nbsp;Alex&nbsp;Compton - "alex compton"
 - 🇯🇵&nbsp;@Hotchpotch - "MacOS のマウス操作がとても便利に！"
 
 **November 2023**
