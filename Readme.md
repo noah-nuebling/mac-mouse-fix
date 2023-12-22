@@ -167,27 +167,24 @@ However there will be files left on your system. To get rid of these files I rec
 
 Under macOS, it is not feasible for apps to delete these leftover files by themselves when you delete the app. That's why I highly recommend using an app like AppCleaner.
 
-
 ## Tips
 
 - **Manage windows with a simple Click and Drag**
 
-  [Swish](https://highlyopinionated.co/swish/) is my favorite way to manage windows on macOS. It lets you position any window so it takes up half, a quarter, or the whole screen with a simple swipe on your trackpad.
+  [Swish](https://highlyopinionated.co/swish/) is my favorite way to manage windows on macOS. With a simple swipe on your trackpad, it lets you position any window so it takes up half, a quarter, or the whole screen.
 
-  It's designed for trackpad gestures, but with Mac Mouse Fix you can use it from any third-party mouse!
+  Swish is designed for trackpad gestures, but with Mac Mouse Fix you can use it from any third-party mouse! Just go to Mac Mouse Fix and set any buttons "Click and Drag" action to "Scroll & Navigate" and then you can snap windows with a simple Click and Drag.
 
-  Just go to Mac Mouse Fix and set any buttons "Click and Drag" action to "Scroll & Navigate" and then you can snap windows with a simple click and drag.
-
-  This works because the "Scroll & Navigate" feature precisely emulates swiping with 2 fingers on an Apple Trackpad.
+  Anything you can do with a two-finger swipe on an Apple trackpad works just as well with the "Scroll & Navigate" feature in Mac Mouse Fix.
 
 - **Control Screen Brightness, Audio Volume, or Media Playback right from your mouse**
 
   Mac Mouse Fix lets you use **any key on your keyboard** directly from your mouse -
   even special keys only found on Apple keyboards that let you control Screen Brightness, Audio Volume, Media Playback, and more.
 
-  If you don't have an Apple keyboard at hand, **hold Option (⌥)** to choose the special Apple keyboard keys.
+  If you don't have an Apple keyboard at hand, **hold Option (⌥)** to choose the special Apple keys.
 
-  <img src="Markdown/Media/Apple-Keys-Demo.gif" width="450">
+  <img src="Markdown/Media/Apple-Keys-Demo.gif" width="700">
 
 ## Questions
 
