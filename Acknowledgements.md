@@ -41,7 +41,7 @@ These people spent a lot more than the standard price and treated me to an **Inc
 
 **December 2023**
 
-- 🇦🇺&nbsp;Alex&nbsp;Compton - "alex compton"
+- 🇦🇺&nbsp;Alex&nbsp;Compton
 - 🇯🇵&nbsp;@Hotchpotch - "MacOS のマウス操作がとても便利に！"
 
 **November 2023**
@@ -60,7 +60,7 @@ These people spent a lot more than the standard price and treated me to an **Inc
 - 🇻🇳&nbsp;Le&nbsp;Tuan&nbsp;Hai - "Keep up the great work!!!"
 - 🇸🇪&nbsp;Simon&nbsp;Hoglund123
 - 🇨🇿&nbsp;Creevekcz
-- 🇨🇾&nbsp;Boris&nbsp;Soldovskii - "Boris Soldovskii"
+- 🇨🇾&nbsp;Boris&nbsp;Soldovskii
 
 **September 2023**
 

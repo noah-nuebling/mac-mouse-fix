@@ -39,7 +39,7 @@ Diese Leute haben viel mehr als den Standardpreis ausgegeben und mir einen **ung
 
 **Dezember 2023**
 
-- 🇦🇺&nbsp;Alex&nbsp;Compton - "alex compton"
+- 🇦🇺&nbsp;Alex&nbsp;Compton
 - 🇯🇵&nbsp;@Hotchpotch - "MacOS のマウス操作がとても便利に！"
 
 **November 2023**
@@ -58,7 +58,7 @@ Diese Leute haben viel mehr als den Standardpreis ausgegeben und mir einen **ung
 - 🇻🇳&nbsp;Le&nbsp;Tuan&nbsp;Hai - "Keep up the great work!!!"
 - 🇸🇪&nbsp;Simon&nbsp;Hoglund123
 - 🇨🇿&nbsp;Creevekcz
-- 🇨🇾&nbsp;Boris&nbsp;Soldovskii - "Boris Soldovskii"
+- 🇨🇾&nbsp;Boris&nbsp;Soldovskii
 
 **September 2023**
 

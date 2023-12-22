@@ -303,7 +303,7 @@ def insert_acknowledgements(template, language_dict, gumroad_api_key, no_api):
             very_generous_string += '**{}**\n'.format(babel.dates.format_datetime(datetime=date, format='LLLL yyyy', locale=language_tag.replace('-', '_'))) # See https://babel.pocoo.org/en/latest/dates.html and https://babel.pocoo.org/en/latest/api/dates.html#babel.dates.format_datetime. For some reason, babel wants _ instead of - in the language tags, not sure why.
         
         name = display_name(sale)
-        message = user_message(sale)
+        message = user_message(sale, name)
         
         if len(message) > 0:
             very_generous_string += '\n- ' + name + f' - "{message}"'
@@ -512,7 +512,7 @@ def wants_display(sale):
     
     return result
 
-def user_message(sale):
+def user_message(sale, name):
     
     # Get raw message from sale data
     message = gumroad_custom_field_content(sale, gumroad_custom_field_labels_message)
@@ -523,7 +523,12 @@ def user_message(sale):
     
     # Debug
     if len(message) > 0:
-        print("{} payed {} and left message: {}".format(display_name(sale), sale['formatted_display_price'], message))
+        print("{} payed {} and left message: {}".format(name, sale['formatted_display_price'], message))
+    
+    # Remove message if it's in the name of the purchaser (Because we assume they did that accidentally)
+    if len(message) > 0 and (message.lower() in name.replace(nbsp, ' ').lower()):
+        print("{}'s message is contained in their name, so we're filtering it out".format(name))
+        message = ''
     
     # Return
     return message
