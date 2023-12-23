@@ -79,6 +79,8 @@ class AboutTabController: NSViewController {
         
         MainAppState.shared.aboutTabController = self
         
+        // TODO: Links to Acknowledgements, Readme and Website should probably be localized.
+        
         /// Set up versionField
         /// Notes:
         ///  - Explanation for `let versionFormatExists =` logic: If the key doesn't exist in Localizable.strings, then `NSLocalizedStringgg()` returns the key. But bartycrouch (I think) automatically creates the key and initializes it to emptyString.
