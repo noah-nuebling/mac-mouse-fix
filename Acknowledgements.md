@@ -41,6 +41,7 @@ These people spent a lot more than the standard price and treated me to an **Inc
 
 **December 2023**
 
+- 🇫🇮&nbsp;Emil&nbsp;Sågfors
 - 🇦🇺&nbsp;Alex&nbsp;Compton
 - 🇯🇵&nbsp;@Hotchpotch - "MacOS のマウス操作がとても便利に！"
 
