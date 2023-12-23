@@ -76,14 +76,14 @@ python3 Markdown/Code/markdown_generator.py --document readme
 
 I use VSCode with the plugin: https://marketplace.visualstudio.com/items?itemName=bierner.markdown-preview-github-styles
 
-# Editing a template
+# Editing a document
 
 1. Make sure python is installed, create and activate a venv, then install the requirements from Markdown/Code/python_requirements.txt into your venv (see instructions above) (This is necessary in order to run the markdown_generator.py script)
 2. Edit the template under Markdown/Templates/
 3. Run the markdown_generator.py script which creates an output file based on the template. To see which templates generate which output files see the 'documents' dictionary at the top of the markdown_generator.py script
 4. If the output file looks good, create a pull request
 
-# Adding a new template
+# Adding a new document / language
 
 1. Make sure python is installed, create and activate a venv, then install the requirements from Markdown/Code/python_requirements.txt into your venv (see instructions above)
 2. Create a new template under Markdown/Templates/
