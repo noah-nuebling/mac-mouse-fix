@@ -81,7 +81,8 @@ class AboutTabController: NSViewController {
         
         /// Set up versionField
         /// Notes:
-        ///  - Explanation for `let versionFormatExists =` logic: If the key doesn't exist in Localizable.strings, then `NSLocalizedString()` returns the key. But bartycrouch (I think) automatically creates the key and initializes it to emptyString.
+        ///  - Explanation for `let versionFormatExists =` logic: If the key doesn't exist in Localizable.strings, then `NSLocalizedStringgg()` returns the key. But bartycrouch (I think) automatically creates the key and initializes it to emptyString.
+        ///     (Note: Don't use NSLocalizedStringggg real name in comments or BartyCrouch gets confused.)
         ///  - We're handling the case that the `app-version` key doesn't exist here, because we're adding the version-format stuff right before the 3.0.0 release, and the Korean and Chinese translations don't contain the 'app-version' key, yet.
         
         let versionFormat = NSLocalizedString("app-version", comment: "First draft: Version %@ || Note: %@ will be replaced by the app version, e.g. '3.0.0 (22027)'")
