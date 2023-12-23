@@ -26,7 +26,7 @@ jobs:
     - name: Checkout repo
       uses: actions/checkout@v3
       with:
-        ref: version-3 # Checkout the branch with this name
+        ref: master # Checkout the branch with this name
     
     - name: Setup python
       uses: actions/setup-python@v4
