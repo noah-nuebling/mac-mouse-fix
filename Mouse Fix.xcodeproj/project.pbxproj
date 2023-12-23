@@ -404,6 +404,20 @@
 		4F143E452B2D1F5600FE4092 /* fallback_licenseinfo_config.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = fallback_licenseinfo_config.json; sourceTree = "<group>"; };
 		4F143E482B2D1FA500FE4092 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		4F17D2E0292A635200EB07CA /* SwitchMaster.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwitchMaster.swift; sourceTree = "<group>"; };
+		4F18877B2B36B03F00ABE7EC /* ar */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ar; path = ar.lproj/Main.strings; sourceTree = "<group>"; };
+		4F18877C2B36B03F00ABE7EC /* ar */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ar; path = ar.lproj/ButtonOptionsViewController.strings; sourceTree = "<group>"; };
+		4F18877D2B36B04000ABE7EC /* ar */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ar; path = ar.lproj/AuthorizeAccessibilityView.strings; sourceTree = "<group>"; };
+		4F18877E2B36B04000ABE7EC /* ar */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ar; path = ar.lproj/LicenseSheetController.strings; sourceTree = "<group>"; };
+		4F18877F2B36B04000ABE7EC /* ar */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ar; path = ar.lproj/MenuBarItem.strings; sourceTree = "<group>"; };
+		4F1887802B36B04000ABE7EC /* ar */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ar; path = ar.lproj/Localizable.strings; sourceTree = "<group>"; };
+		4F1887812B36B04000ABE7EC /* ar */ = {isa = PBXFileReference; lastKnownFileType = text.plist.stringsdict; name = ar; path = ar.lproj/Localizable.stringsdict; sourceTree = "<group>"; };
+		4F1887822B36B62600ABE7EC /* ca */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ca; path = ca.lproj/Main.strings; sourceTree = "<group>"; };
+		4F1887832B36B62600ABE7EC /* ca */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ca; path = ca.lproj/ButtonOptionsViewController.strings; sourceTree = "<group>"; };
+		4F1887842B36B62600ABE7EC /* ca */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ca; path = ca.lproj/AuthorizeAccessibilityView.strings; sourceTree = "<group>"; };
+		4F1887852B36B62600ABE7EC /* ca */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ca; path = ca.lproj/LicenseSheetController.strings; sourceTree = "<group>"; };
+		4F1887862B36B62600ABE7EC /* ca */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ca; path = ca.lproj/MenuBarItem.strings; sourceTree = "<group>"; };
+		4F1887872B36B62700ABE7EC /* ca */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ca; path = ca.lproj/Localizable.strings; sourceTree = "<group>"; };
+		4F1887882B36B62700ABE7EC /* ca */ = {isa = PBXFileReference; lastKnownFileType = text.plist.stringsdict; name = ca; path = ca.lproj/Localizable.stringsdict; sourceTree = "<group>"; };
 		4F18A85727BF6E0200A5703B /* IOHIDEvent-Reconstructed.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "IOHIDEvent-Reconstructed.h"; sourceTree = "<group>"; };
 		4F19F65E2906BB98007DE4CD /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		4F1AFE962670EBA900ECA424 /* DragCurve.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DragCurve.swift; sourceTree = "<group>"; };
@@ -7600,6 +7614,8 @@
 				"zh-HK",
 				"zh-Hans",
 				ko,
+				ar,
+				ca,
 			);
 			mainGroup = 4FCECD7721092354001F1078;
 			packageReferences = (
@@ -8069,6 +8085,8 @@
 				F4EBD4C328DEBA8D0057D2DE /* zh-HK */,
 				F4EBD4CA28DEFC4A0057D2DE /* zh-Hans */,
 				D0BDAA96297D462D001CA0FC /* ko */,
+				4F18877E2B36B04000ABE7EC /* ar */,
+				4F1887852B36B62600ABE7EC /* ca */,
 			);
 			name = LicenseSheetController.xib;
 			sourceTree = "<group>";
@@ -8082,6 +8100,8 @@
 				F4EBD4C628DEBA8D0057D2DE /* zh-HK */,
 				F4EBD4CD28DEFC4A0057D2DE /* zh-Hans */,
 				D0BDAA92297D462D001CA0FC /* ko */,
+				4F1887812B36B04000ABE7EC /* ar */,
+				4F1887882B36B62700ABE7EC /* ca */,
 			);
 			name = Localizable.stringsdict;
 			sourceTree = "<group>";
@@ -8095,6 +8115,8 @@
 				F4EBD4C128DEBA8D0057D2DE /* zh-HK */,
 				F4EBD4C828DEFC4A0057D2DE /* zh-Hans */,
 				D0BDAA93297D462D001CA0FC /* ko */,
+				4F18877B2B36B03F00ABE7EC /* ar */,
+				4F1887822B36B62600ABE7EC /* ca */,
 			);
 			name = Main.storyboard;
 			sourceTree = "<group>";
@@ -8108,6 +8130,8 @@
 				F4EBD4C528DEBA8D0057D2DE /* zh-HK */,
 				F4EBD4CC28DEFC4A0057D2DE /* zh-Hans */,
 				D0BDAA91297D462C001CA0FC /* ko */,
+				4F1887802B36B04000ABE7EC /* ar */,
+				4F1887872B36B62700ABE7EC /* ca */,
 			);
 			name = Localizable.strings;
 			sourceTree = "<group>";
@@ -8121,6 +8145,8 @@
 				F4EBD4C428DEBA8D0057D2DE /* zh-HK */,
 				F4EBD4CB28DEFC4A0057D2DE /* zh-Hans */,
 				D0BDAA97297D462D001CA0FC /* ko */,
+				4F18877F2B36B04000ABE7EC /* ar */,
+				4F1887862B36B62600ABE7EC /* ca */,
 			);
 			name = MenuBarItem.xib;
 			sourceTree = "<group>";
@@ -8134,6 +8160,8 @@
 				F4EBD4C228DEBA8D0057D2DE /* zh-HK */,
 				F4EBD4C928DEFC4A0057D2DE /* zh-Hans */,
 				D0BDAA95297D462D001CA0FC /* ko */,
+				4F18877D2B36B04000ABE7EC /* ar */,
+				4F1887842B36B62600ABE7EC /* ca */,
 			);
 			name = AuthorizeAccessibilityView.xib;
 			sourceTree = "<group>";
@@ -8147,6 +8175,8 @@
 				F4EBD4C028DEBA8D0057D2DE /* zh-HK */,
 				F4EBD4C728DEFC4A0057D2DE /* zh-Hans */,
 				D0BDAA94297D462D001CA0FC /* ko */,
+				4F18877C2B36B03F00ABE7EC /* ar */,
+				4F1887832B36B62600ABE7EC /* ca */,
 			);
 			name = ButtonOptionsViewController.xib;
 			sourceTree = "<group>";

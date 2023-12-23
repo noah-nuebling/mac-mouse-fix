@@ -263,7 +263,7 @@ Under macOS, it is not feasible for apps to delete these leftover files by thems
 
   I encourage anyone to use the source code of Mac Mouse Fix in their own projects, as long as they don't release a simple copy of Mac Mouse Fix.
 
-  Learn about the details in the [MMF License](https://github.com/noah-nuebling/mac-mouse-fix/blob/master/LICENSE) which Mac Mouse Fix 3 and later are licensed under.
+  Learn about the details in the [MMF License](https://github.com/noah-nuebling/mac-mouse-fix/blob/master/License) which Mac Mouse Fix 3 and later are licensed under.
 
   <!--
     , and I don't plan to change that at any point.

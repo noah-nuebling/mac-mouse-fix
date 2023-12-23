@@ -181,7 +181,7 @@ Unter macOS ist es für Apps nicht machbar, diese hinterlassenen Dateien selbst 
 
   Ich ermutige jeden, den Quellcode von Mac Mouse Fix in eigenen Projekten zu verwenden, solange sie keine einfache Kopie von Mac Mouse Fix veröffentlichen.
 
-  Erfahre mehr über die Details in der [MMF License](https://github.com/noah-nuebling/mac-mouse-fix/blob/master/LICENSE), unter der Mac Mouse Fix 3 und spätere Versionen lizenziert sind.
+  Erfahre mehr über die Details in der [MMF License](https://github.com/noah-nuebling/mac-mouse-fix/blob/master/License), unter der Mac Mouse Fix 3 und spätere Versionen lizenziert sind.
 
 - **Kann ich Mac Mouse Fix kostenlos bekommen, wenn ich bereits gespendet habe?**
 
