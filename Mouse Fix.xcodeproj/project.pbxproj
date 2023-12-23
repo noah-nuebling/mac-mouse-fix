@@ -417,7 +417,7 @@
 		4F1D7F4628A4639800253407 /* MenuBarItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuBarItem.swift; sourceTree = "<group>"; };
 		4F214C142B2E13C900DD3957 /* python_requirements.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = python_requirements.txt; sourceTree = "<group>"; };
 		4F214C152B2E13C900DD3957 /* markdown_generator.py */ = {isa = PBXFileReference; lastKnownFileType = text.script.python; path = markdown_generator.py; sourceTree = "<group>"; };
-		4F214C162B2E13C900DD3957 /* Readme.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = Readme.md; sourceTree = "<group>"; };
+		4F214C162B2E13C900DD3957 /* MarkdownReadme.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = MarkdownReadme.md; sourceTree = "<group>"; };
 		4F214C182B2E13C900DD3957 /* readme_template_en-US.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "readme_template_en-US.md"; sourceTree = "<group>"; };
 		4F214C192B2E13C900DD3957 /* readme_template_de-DE.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "readme_template_de-DE.md"; sourceTree = "<group>"; };
 		4F214C1A2B2E13C900DD3957 /* acknowledgements_template_en-US.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "acknowledgements_template_en-US.md"; sourceTree = "<group>"; };
@@ -2493,7 +2493,7 @@
 		4F214C122B2E13C900DD3957 /* Markdown */ = {
 			isa = PBXGroup;
 			children = (
-				4F214C162B2E13C900DD3957 /* Readme.md */,
+				4F214C162B2E13C900DD3957 /* MarkdownReadme.md */,
 				4F214C132B2E13C900DD3957 /* Code */,
 				4F214C172B2E13C900DD3957 /* Templates */,
 				4F214C1C2B2E13C900DD3957 /* LocalizedDocuments */,
@@ -8178,7 +8178,7 @@
 				);
 				INFOPLIST_FILE = App/SupportFiles/Info.plist;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
-				MARKETING_VERSION = "3.0.0 Beta 7";
+				MARKETING_VERSION = 3.0.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.nuebling.mac-mouse-fix";
@@ -8213,7 +8213,7 @@
 				);
 				INFOPLIST_FILE = App/SupportFiles/Info.plist;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
-				MARKETING_VERSION = "3.0.0 Beta 7";
+				MARKETING_VERSION = 3.0.0;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.nuebling.mac-mouse-fix";
 				PRODUCT_NAME = "$(TARGET_NAME)";

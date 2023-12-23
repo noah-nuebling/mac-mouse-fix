@@ -80,8 +80,14 @@ class AboutTabController: NSViewController {
         MainAppState.shared.aboutTabController = self
         
         /// Set up versionField
+        /// Notes:
+        ///  - Explanation for `let versionFormatExists =` logic: If the key doesn't exist in Localizable.strings, then `NSLocalizedString()` returns the key. But bartycrouch (I think) automatically creates the key and initializes it to emptyString.
+        ///  - We're handling the case that the `app-version` key doesn't exist here, because we're adding the version-format stuff right before the 3.0.0 release, and the Korean and Chinese translations don't contain the 'app-version' key, yet.
         
-        versionField.stringValue = "\(Locator.bundleVersionShort()) (\(Locator.bundleVersion()))"
+        let versionFormat = NSLocalizedString("app-version", comment: "First draft: Version %@ || Note: %@ will be replaced by the app version, e.g. '3.0.0 (22027)'")
+        let versionFormatExists = versionFormat.count != 0 && versionFormat != "app-version"
+        let versionNumbers = "\(Locator.bundleVersionShort()) (\(Locator.bundleVersion()))"
+        versionField.stringValue = versionFormatExists ? String(format: versionFormat, versionNumbers) : versionNumbers
         
         /// Init trialSectionManager
         ///     The manager swaps out the trialSection and stuff, so always access the trialSection through the manager!
