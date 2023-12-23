@@ -74,6 +74,7 @@ Mac Mouse Fix was built with the help of these **great libraries**:
 - [CGSInternal](https://github.com/NUIKit/CGSInternal) - A collection of private CoreGraphics routines
 - Dependencies of Mac Mouse Fix's Python scripts: [Update and statistics scripts](https://github.com/noah-nuebling/mac-mouse-fix/blob/update-feed/requirements.txt) | [Markdown generator script]({repo_root}Markdown/Code/python_requirements.txt)
 - Dependencies of the [Mac Mouse Fix Feedback Assistant](https://noah-nuebling.github.io/mac-mouse-fix-feedback-assistant/) web app [here](https://github.com/noah-nuebling/mac-mouse-fix-feedback-assistant/blob/master/package.json)
+- Dependencies of the [Mac Mouse Fix Website](https://noah-nuebling.github.io/mac-mouse-fix-website/) are available [here](https://github.com/noah-nuebling/mac-mouse-fix-website/blob/main/package.json)
 
 <!--
 

@@ -71,3 +71,4 @@ Mac Mouse Fix wurde mithilfe dieser **hervorragenden Softwarebibliotheken** erst
 - [CGSInternal](https://github.com/NUIKit/CGSInternal) - Eine Sammlung privater CoreGraphics-Routinen
 - Abhängigkeiten der Python-Skripte von Mac Mouse Fix: [Update- und Statistikskripte](https://github.com/noah-nuebling/mac-mouse-fix/blob/update-feed/requirements.txt) | [Markdown-Generierungsskript]({repo_root}Markdown/Code/python_requirements.txt)
 - Abhängigkeiten der [Mac Mouse Fix Feedback Assistant](https://noah-nuebling.github.io/mac-mouse-fix-feedback-assistant/) Web-App [hier](https://github.com/noah-nuebling/mac-mouse-fix-feedback-assistant/blob/master/package.json)
+- Abhängigkeiten der [Mac Mouse Fix Website](https://noah-nuebling.github.io/mac-mouse-fix-website/) findest du [hier](https://github.com/noah-nuebling/mac-mouse-fix-website/blob/main/package.json)
