@@ -295,7 +295,7 @@ Check out the [Acknowledgements](Acknowledgements.md) for more info on who has a
   
   I hope to be able to sustain myself financially through Mac Mouse Fix. That way, I can keep improving and working on the app. If you would like to help, you can:
   1. Buy Mac Mouse Fix by clicking the button in the app, or clicking [here](https://noahnuebling.gumroad.com/l/mmfinappusd).
-  2. [Tip me](https://www.paypal.com/donate?token=2nPK2jVfH243_odImJXG4QdSzqyHnrmFuzo9qbMFkAoJr_Vybcdl8G2ZlBlHmXNzDquQ-SiujEoBALny&locale.x=en_US) on PayPal. I don't get a lot of money from this, but it's always cute and motivating to get a donation.
+  2. [Tip me](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=ARSTVR6KFB524&source=url&lc=en_US) on PayPal. I don't get a lot of money from this, but it's always cute and motivating to get a donation.
   3. [Sponsor me](https://github.com/sponsors/noah-nuebling) on GitHub. A monthly sponsorship is a great way to support the project and help me have a more stable income.
 
 - **Adding translations**

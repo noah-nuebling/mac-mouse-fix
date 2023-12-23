@@ -200,7 +200,7 @@ Schau dir die [Danksagungen](../../../Markdown/LocalizedDocuments/de-DE/Acknowle
   
   Ich hoffe, mich finanziell durch Mac Mouse Fix erhalten zu können. So kann ich weiter an dem Projekt arbeiten und es verbessern. Wenn du dabei helfen möchtest, kannst du:
   1. Mac Mouse Fix kaufen, indem du auf den Button in der App klickst oder [hier](https://noahnuebling.gumroad.com/l/mmfinappusd).
-  2. Mir auf PayPal ein [Trinkgeld](https://www.paypal.com/donate?token=2nPK2jVfH243_odImJXG4QdSzqyHnrmFuzo9qbMFkAoJr_Vybcdl8G2ZlBlHmXNzDquQ-SiujEoBALny&locale.x=en_US) geben. Ich verdiene nicht viel Geld damit, aber es ist immer nett und motivierend, eine Spende zu erhalten.
+  2. Mir auf PayPal ein [Trinkgeld](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=ARSTVR6KFB524&source=url&lc=en_US) geben. Ich verdiene nicht viel Geld damit, aber es ist immer nett und motivierend, eine Spende zu erhalten.
   3. Mich auf GitHub [sponsorn](https://github.com/sponsors/noah-nuebling). Ein monatlicher Beitrag ist eine großartige Möglichkeit, das Projekt zu unterstützen und mir dabei zu helfen, ein stabileres Einkommen zu haben.
 
 - **Übersetzungen hinzufügen**
