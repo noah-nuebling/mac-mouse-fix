@@ -135,7 +135,7 @@ Diese Leute haben viel mehr als den Standardpreis ausgegeben und mir einen **ung
 
 **September 2022**
 
-- 🇮🇱&nbsp;Rawad&nbsp;Aboud
+- 🇵🇸 Rawad Aboud
 - 🇷🇴&nbsp;Marian&nbsp;Melinte
 - 🇬🇧&nbsp;Niania52
 

@@ -137,7 +137,7 @@ These people spent a lot more than the standard price and treated me to an **Inc
 
 **September 2022**
 
-- 🇮🇱&nbsp;Rawad&nbsp;Aboud
+- 🇵🇸 Rawad Aboud
 - 🇷🇴&nbsp;Marian&nbsp;Melinte
 - 🇬🇧&nbsp;Niania52
 

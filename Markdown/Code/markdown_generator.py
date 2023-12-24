@@ -399,6 +399,10 @@ def path_to_root(path):
 def display_name(sale):
     
     name = ''
+
+    # Special requests
+    if sale['email'] == 'rawad.aboud@icloud.com': # Gumroad api says he's from IL-TA (Tel Aviv, Israel), but he's Palestinian. See [this mail](message:<8C5D64EE-447A-4A65-89A4-27F99115C986@icloud.com>)
+        return '🇵🇸 Rawad Aboud'
     
     # Get user-provided name field
     #   We haven't tested this so far due to laziness
