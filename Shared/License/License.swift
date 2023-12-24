@@ -66,7 +66,7 @@ extension MFLicenseAndTrialState: Equatable {
                 if license.trialIsActive.boolValue {
                     
                     /// Trial still active -> do nothing
-                    ///     Note: Maybe display small reminder after half of trial is over?
+                    //      TODO: Maybe display small reminder after half of trial is over?
                     
                 } else {
                     
