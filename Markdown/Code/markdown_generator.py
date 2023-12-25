@@ -19,11 +19,16 @@ import math
 #
 # (We expect this script to be run from the root directory of the repo)
 
+fallback_language_id = "en-US"
+
 languages = {
+    
+    # Note for translators: To add a new entry for your language here, simply copy the German entry and replace all occurences of `de-DE` with your language ID.
+    #   Choose the same language ID that's used in the MMF Xcode project or find a language ID using this Apple documentation: https://developer.apple.com/library/archive/documentation/MacOSX/Conceptual/BPInternational/LanguageandLocaleIDs/LanguageandLocaleIDs.html
     
     "en-US": {
         "language_name": "🇬🇧 English", # Language name will be displayed in the language picker
-        "language_tag": "en-US", # Language tags are used to autogenerate some localized text (at time of writing only month names in the 'very generous' string). Find language tags here: https://www.techonthenet.com/js/language_tags.php
+        "language_tag": "en-US", # AKA language ID. Language tags are used to autogenerate some localized text (at time of writing only month names in the 'very generous' string)
         "template_root": "Markdown/Templates/en-US/",
         "document_root": "", # The document root for english is the repo root.
     }, 
@@ -37,15 +42,15 @@ languages = {
 
 documents = {
     
+    # Note for translators: When adding a language
+    
     "readme": {
         "template_subpath": "readme_template.md", # This subpath is appended to the "template_root" to make the full template path
         "document_subpath": "Readme.md", # This subpath is appended to the "document_root" to make the full document path
-        "languages": ["en-US", "de-DE"],
     },
     "acknowledgements": {
         "template_subpath": "acknowledgements_template.md",
         "document_subpath": "Acknowledgements.md",
-        "languages": ["en-US", "de-DE"],
     }
 }
 
@@ -97,14 +102,18 @@ def main():
     # Iterate language dicts
 
     document_dict = documents[document_key]
-    languange_keys = document_dict['languages']
-    language_dicts = [languages[k] for k in languange_keys]
     
-    for language_dict in language_dicts:
+    for language_id, language_dict in languages.items():
         
         # Extract info from language_dict
         template_path = language_dict['template_root'] + document_dict['template_subpath']
         destination_path = language_dict['document_root'] + document_dict['document_subpath']
+        
+        template_exists = os.path.exists(template_path)
+        
+        if not template_exists:
+            print(f"{document_dict} template for language {language_id} doesn't exist. Falling back to {fallback_language_id}")
+            template_path = languages[fallback_language_id]['template_root'] + document_dict['template_subpath']
         
         # Load template
         template = ""
@@ -114,13 +123,18 @@ def main():
         # Log
         print('Inserting generated strings into template at {}...'.format(template_path))
         
+        # Insert fallback notice
+        
+        if not template_exists:
+            template = f"This document doesn't have a translation for {language_dict['language_name']} yet. If you want to help translate it, click [here](https://github.com/noah-nuebling/mac-mouse-fix/discussions/731)\n" + template
+        
         # Insert into template
         if document_key == "readme":
             template = insert_root_paths(template, document_dict, language_dict)
-            template = insert_language_picker(template, document_dict, language_dict, language_dicts)
+            template = insert_language_picker(template, document_dict, language_dict, languages)
         elif document_key == "acknowledgements":
             template = insert_root_paths(template, document_dict, language_dict) # This is not currently necessary here since we don't use the {root_path} placeholder in the acknowledgements templates
-            template = insert_language_picker(template, document_dict, language_dict, language_dicts)
+            template = insert_language_picker(template, document_dict, language_dict, languages)
             template = insert_acknowledgements(template, language_dict, gumroad_api_key, no_api)
         else:
             assert False # Should never happen because we check document_key for validity above.
