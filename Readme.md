@@ -62,9 +62,9 @@ You can now test the <a href="https://github.com/noah-nuebling/mac-mouse-fix/rel
 
 <div align="center">
 	<table>
-		<th><a href=https://noah-nuebling.github.io/mac-mouse-fix-website>Website ↗</a></th>
-		<td><a href=https://github.com/noah-nuebling/mac-mouse-fix/issues/new/choose>Help & Feedback</a></td>
-		<td><a href=https://github.com/noah-nuebling/mac-mouse-fix/releases>Version History</a></td>
+		<th><a href=https://noah-nuebling.github.io/mac-mouse-fix-website>Website&nbsp;↗</a></th>
+		<td><a href=https://github.com/noah-nuebling/mac-mouse-fix/issues/new/choose>Help&nbsp;&&nbsp;Feedback</a></td>
+		<td><a href=https://github.com/noah-nuebling/mac-mouse-fix/releases>Version&nbsp;History</a></td>
  		<td><a href="Acknowledgements.md">Acknowledgements</a></td> <!-- If you translate this, remember to link to the right language version -->
 	</table>
   <!-- vvv Hint for translators: You can change the label by editing the text inside the URL after `label=`. Use url encoding for special chars. E.g. `%20` to insert spaces. -->

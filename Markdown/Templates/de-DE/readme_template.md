@@ -31,8 +31,8 @@ You can now test the <a href="https://github.com/noah-nuebling/mac-mouse-fix/rel
 
 <div align="center">
 	<table>
-		<th><a href=https://noah-nuebling.github.io/mac-mouse-fix-website>Website ↗</a></th>
-		<td><a href=https://github.com/noah-nuebling/mac-mouse-fix/issues/new/choose>Hilfe & Feedback</a></td>
+		<th><a href=https://noah-nuebling.github.io/mac-mouse-fix-website>Website&nbsp;↗</a></th>
+		<td><a href=https://github.com/noah-nuebling/mac-mouse-fix/issues/new/choose>Hilfe&nbsp;&&nbsp;Feedback</a></td>
 		<td><a href=https://github.com/noah-nuebling/mac-mouse-fix/releases>Versionsverlauf</a></td>
  		<td><a href="{language_root}Acknowledgements.md">Danksagungen</a></td>
 	</table>
