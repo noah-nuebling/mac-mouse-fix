@@ -1,5 +1,5 @@
 /* First draft: Free day **%d/%d** */
-"trial-counter.active" = "Free day **%d/%d**";
+"trial-counter.active" = "THIS IS A TEST UNDO THIS STRING day **%d/%d**";
 
 /* First draft: Free days are over */
 "trial-counter.expired" = "Free days are over";
