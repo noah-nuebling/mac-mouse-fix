@@ -9,18 +9,23 @@ import Cocoa
 
 class ResizingTabWindowController: NSWindowController, NSWindowDelegate {
 
+    // MARK: Vars
+    static var window: ResizingTabWindow? = nil
     
     // MARK: Lifecycle
-    
+
     override func windowDidLoad() {
         
         super.windowDidLoad()
-        let thewindow = window!
+        let thewindow = window as! ResizingTabWindow
         
         /// Restore position
         ///     src: https://developer.apple.com/forums/thread/679764
         thewindow.setFrameUsingName("MyWindow")
         self.windowFrameAutosaveName = "MyWindow"
+        
+        /// Make globally accessible
+        ResizingTabWindowController.window = thewindow
     }
     
     // MARK: Custom field editor
