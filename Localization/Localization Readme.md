@@ -1,4 +1,4 @@
-# Localization How To
+# Localization Readme
 
 ## Also See
 
@@ -17,6 +17,10 @@
     - In build scheme set pseudo language (e.g. double length)
 - NSLocalizedString() convention: Example: `NSLocalizedString("enabled-toggle.hint", comment: "First draft: Mac Mouse Fix will stay enabled after you close it")`
 - In the `.bartycrouch.toml -> [update.code]` routine, we don't really want the __additive__ option. (It prevents cleanup of unused keys), but without it, bartycrouch started deleting all our translations from `Localizable.strings` when we added the `Shared` folder to the search folders in commit c540b4fe88f832ba5364c70587c670a38e42c753.
+
+## Notes
+
+TODO: We're using `en` as language ID for English and `de` as language ID for German. It might be be better to use `en-US` and `de-DE`? Because that's more accurate and clear if ppl add regional variants such as `de-CH`? We're also using `en-US` and `de-DE` as identifiers on the mmf website and the `markdown_generator.py`.
 
 ## Basic guide
 

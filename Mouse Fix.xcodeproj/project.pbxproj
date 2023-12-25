@@ -2063,7 +2063,7 @@
 		4F909D1228A0C3D2009349A2 /* ConstraintUtility.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConstraintUtility.swift; sourceTree = "<group>"; };
 		4F909D1428A0C3D2009349A2 /* ReactiveFlags.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReactiveFlags.swift; sourceTree = "<group>"; };
 		4F909D1828A0C3D2009349A2 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Localizable.strings; sourceTree = "<group>"; };
-		4F909D1928A0C3D2009349A2 /* Localization How To.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = "Localization How To.md"; sourceTree = "<group>"; };
+		4F909D1928A0C3D2009349A2 /* Localization Readme.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = "Localization Readme.md"; sourceTree = "<group>"; };
 		4F909D1C28A0C3D2009349A2 /* ModCaptureDeleteButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ModCaptureDeleteButton.swift; sourceTree = "<group>"; };
 		4F909D1D28A0C3D2009349A2 /* ModCaptureFieldEditor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ModCaptureFieldEditor.swift; sourceTree = "<group>"; };
 		4F909D1E28A0C3D2009349A2 /* ModCaptureTextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ModCaptureTextField.swift; sourceTree = "<group>"; };
@@ -6551,7 +6551,7 @@
 			children = (
 				4F909D1728A0C3D2009349A2 /* Localizable.strings */,
 				4F6B02C228AD9E4400B5BA93 /* Localizable.stringsdict */,
-				4F909D1928A0C3D2009349A2 /* Localization How To.md */,
+				4F909D1928A0C3D2009349A2 /* Localization Readme.md */,
 				4F97DFFF298732E500012BAC /* LocalizationUtility.h */,
 				4F97E000298732E500012BAC /* LocalizationUtility.m */,
 			);
