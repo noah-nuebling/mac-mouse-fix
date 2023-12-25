@@ -2,9 +2,85 @@
 
 This folder contains stuff for generating user-facing markdown documents. At the time of writing, that's `Acknowledgements.md` and `Readme.md`.
 
-The idea of the stuff in this folder is to generate/update markdown files based on a python script + templates. We use github actions (See `.github/workflows/...`) to automatically run the python scripts. This allows us to do some neat stuff like automatically updating the acknowledgements as people buy the app.
+The idea of the stuff in this folder is to generate/update markdown files based on a python script + templates. We use github actions (See `.github/workflows/...`) to automatically run the python scripts. We're currently using this to automatically update the acknowledgements as people buy the app. The readme isn't automatically rendered through GitHub Actions at the moment.
 
 We originally built this stuff in the [`github-actions-test` repo](https://github.com/noah-nuebling/github-actions-test). It contains some additional info and background in it's `Readme-Meta.md` file - which this readme is based upon. It also contains our original draft for the main MMF Readme.md, experiments and info on GitHub actions, and maybe more interesting stuff I forgot.
+
+
+# Compiling the documents
+
+### 1. Install dependencies into python env
+
+In order to run `markdown_generator.py`, you need to install the dependencies first. To do this, you can create a new virtual environment (venv) and then install the requirements into the venv from the `python_requirements.txt` file. To do this use the following terminal commands: 
+
+**Commands for zsh shell** (zsh is the macOS default)
+
+```
+python3 -m venv env;\
+source env/bin/activate.fish;\
+python3 -m pip install -r Markdown/Code/python_requirements.txt;
+```
+
+**Commands for fish shell**
+``````
+python3 -m venv env;\
+source env/bin/activate.fish;\
+python3 -m pip install -r Markdown/Code/python_requirements.txt;
+``````
+
+If you need to install new requirements, you can store them into a requrements.txt using:
+
+```
+pip freeze > MarkdownStuff/python_requirements.txt
+```
+
+### 2. Run markdown_generator.py to compile templates
+
+#### Acknowledgements
+
+To generate the **acknowledgements** document in different languages based on templates
+```
+python3 Markdown/Code/markdown_generator.py --document acknowledgements --api_key ***
+```
+
+If you don't have the api key:
+```
+python3 Markdown/Code/markdown_generator.py --document acknowledgements --no_api
+```
+
+#### Readme
+
+To generate the **readme** document in different languages based on templates
+```
+python3 Markdown/Code/markdown_generator.py --document readme
+```
+
+# Other
+
+
+#### Previewing generated markdown files locally
+
+I use Visual Studio Code with the plugin: https://marketplace.visualstudio.com/items?itemName=bierner.markdown-preview-github-styles
+
+#### Online GitHub Actions linting
+
+https://rhysd.github.io/actionlint/
+
+#### Localization
+
+See the MMF Localization Guide: https://github.com/noah-nuebling/mac-mouse-fix/discussions/731
+
+#### Gumroad API
+
+To test the Gumroad sales API (which we use for `markdown_generator.py`) from the command line:
+
+```
+curl --request GET --header "Content-Type: application/x-www-form-urlencoded" --data 'access_token=<SECRET>&product_id=FP8NisFw09uY8HWTvVMzvg==' https://api.gumroad.com/v2/sales | json_pp
+```
+
+#### Wrap links in markdown which contain spaces with < and > to make them work
+
+See https://superuser.com/a/1517072/1095998
 
 # GitHub Sponsors
 
@@ -38,80 +114,6 @@ See GitHub [GraphQL API Explorer](https://docs.github.com/en/graphql/overview/ex
 
 
 ! We're also not listing people who contributed pull-requests. Maybe we should do that?
-
-# Install dependencies into python env
-
-You can create a new venv and install the python_requirements.txt file like this: (In fish shell)
-
-``````
-python3 -m venv env;\
-source env/bin/activate.fish;\
-python3 -m pip install -r Markdown/Code/python_requirements.txt;
-``````
-
-If you need to install new requirements, you can store them into a requrements.txt using:
-
-```
-pip freeze > MarkdownStuff/python_requirements.txt
-```
-
-# Using markdown_generator.py
-
-To generate the **acknowledgements** document in different languages based on templates
-```
-python3 Markdown/Code/markdown_generator.py --document acknowledgements --api_key ***
-```
-
-If you don't have the api key:
-```
-python3 Markdown/Code/markdown_generator.py --document acknowledgements --no_api
-```
-
-To generate the **readme** document in different languages based on templates
-```
-python3 Markdown/Code/markdown_generator.py --document readme
-```
-
-# Previewing generated markdown files locally
-
-I use VSCode with the plugin: https://marketplace.visualstudio.com/items?itemName=bierner.markdown-preview-github-styles
-
-# Editing a document
-
-1. Make sure python is installed, create and activate a venv, then install the requirements from Markdown/Code/python_requirements.txt into your venv (see instructions above) (This is necessary in order to run the markdown_generator.py script)
-2. Edit the template under Markdown/Templates/
-3. Run the markdown_generator.py script which creates an output file based on the template. To see which templates generate which output files see the 'documents' dictionary at the top of the markdown_generator.py script
-4. If the output file looks good, create a pull request
-
-# Adding a new document / language
-
-1. Make sure python is installed, create and activate a venv, then install the requirements from Markdown/Code/python_requirements.txt into your venv (see instructions above)
-2. Create a new template under Markdown/Templates/
-3. Go to the top of the markdown_generator.py script. 1. Add a new entry for your new template to the 'documents' dictionary 2. If you're adding a new language, then add a new entry for your language to the 'languages' dictionary.
-4. Run the markdown_generator.py script, which creates an output file based on your new template.
-5. If the output file looks good, create a commit and a pull request and stuff
-
-# Online GitHub Actions linting
-
-https://rhysd.github.io/actionlint/
-
-# Localization
-
-https://www.techonthenet.com/js/language_tags.php
-
-Aside from the markdown files, you also might want to localize the Mac Mouse Fix app and the Mac Mouse Fix website.
-
-# Gumroad API
-
-To test the Gumroad sales API (which we use for acknowledgements_generator.py) from the command line:
-
-```
-curl --request GET --header "Content-Type: application/x-www-form-urlencoded" --data 'access_token=<SECRET>&product_id=FP8NisFw09uY8HWTvVMzvg==' https://api.gumroad.com/v2/sales | json_pp
-```
-
-# Wrap links in markdown which contain spaces with < and > to make them work
-
-See https://superuser.com/a/1517072/1095998
 
 # GitHub Actions
 
