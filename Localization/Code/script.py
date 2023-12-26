@@ -8,6 +8,7 @@ from pprint import pprint
 import git
 import re
 import subprocess
+import tempfile
 
 #
 # Constants
@@ -22,12 +23,23 @@ def main():
     # Get info
     repo_root = os.getcwd()
 
-    
+    # Log
+    print(f'Finding translation files inside MMF repo...')
+
     # Find localization files in MMF repo
     files = find_localization_files_in_mmf_repo(repo_root)
     
-    # For each of the translation files, find the latest change and then find changes to the base file that occured later than that
     
+    
+    # Analyze localization files
+    
+    # Log
+    print(f'Analyzing localization files...')
+    
+    # Get 'outdating commits'
+    #   This is a more primitive method than analyzing the changes to translation keys. Should only be relevant for files that don't have translation keys
+    
+    print(f'  Analyzing outdating commits...')
     git_repo = git.Repo(repo_root)
     for file_dict in files:
         base_file = file_dict['base']
@@ -53,53 +65,74 @@ def main():
                 translation_dict['outdating_commits'] = outdating_commits
     
     
-    # Find the latest string keys
+    # Log
+    print(f'  Analyzing changes to translation keys...')
+    
+    # Analyze changes to translation keys
     for file_dict in files:
-
+        
+        # Iterate through base files:
+        
         # Get info
         base_file_path = file_dict['base']
+        
+        # Log
+        print(f'    Processing base translation at {base_file_path}...')
         
         # Find basefile keys
         base_keys_and_values = find_translation_keys_and_values_in_file(file_dict['base'])
         if base_keys_and_values == None: continue
         base_keys = set(base_keys_and_values.keys())
         
-        # For each key in the base file, get the commit, when it last changed
-        base_changes = get_latest_change_for_translation_keys(base_keys, base_file_path, git_repo)
+        # DEBUG
+        latest_base_changes = None
+        _, file_type = os.path.splitext(base_file_path)
+        if file_type == '.xib' or file_type == '.storyboard':
+            pass
+        else:
+            # For each key in the base file, get the commit, when it last changed  
+            latest_base_changes = get_latest_change_for_translation_keys(base_keys, base_file_path, git_repo)
         
         for translation_file_path, translation_dict in file_dict['translations'].items():
             
             # Log
-            print(f'Analyzing keys for translation at {translation_file_path}...')
+            print(f'      Processing translation of {os.path.basename(base_file_path)} at {translation_file_path}...')
+            print(f'        Find translation keys and values...')
             
             # Find translation file keys
             translation_keys_and_values = find_translation_keys_and_values_in_file(translation_file_path)
             translation_keys = set(translation_keys_and_values.keys())
+            
+            print(f'        Check missing/superfluous keys...')
             
             # Do set operations
             missing_keys = base_keys.difference(translation_keys)
             superfluous_keys = translation_keys.difference(base_keys)
             common_keys = base_keys.intersection(translation_keys)
             
-            if 'Strawberry' in common_keys:
-                print(f"common: {common_keys}, superf: {superfluous_keys}, mis")
-            
             # Attach set operation data
             translation_dict['missing_keys'] = missing_keys
             translation_dict['superfluous_keys'] = superfluous_keys
             
+            # DEBUG
+            _, file_type = os.path.splitext(base_file_path)
+            if file_type == '.xib' or file_type == '.storyboard':
+                continue
+            
             # Log
-            print(f'Analyze when keys last changed...')
+            print(f'        Analyze when keys last changed...')
+            
+            # Check common keys if they are outdated.
             
             # For each key, get the commit when it last changed
-            translation_changes = get_latest_change_for_translation_keys(common_keys, translation_file_path, git_repo)
+            latest_translation_changes = get_latest_change_for_translation_keys(common_keys, translation_file_path, git_repo)
             
             # if 'capture-toast.body' in common_keys:  # 'Localization/de.lproj/Localizable.strings' in translation_file_path:
-            #     print(f"base_changes: {base_file_path}, changes: {base_changes}")
-            #     print(f"translated_changes: {translation_file_path}, changes: {translation_changes}")
+            #     print(f"latest_base_changes: {base_file_path}, changes: {latest_base_changes}")
+            #     print(f"translated_changes: {translation_file_path}, changes: {latest_translation_changes}")
             
             # Log
-            print(f'Check if last modification was before base for each key ...')
+            print(f'        Check if last modification was before base for each key ...')
             
             # Compare time of latest change for each key between base file and translation file
             for k in common_keys:
@@ -108,28 +141,35 @@ def main():
                 #     pprint(f"translation_dict: {translation_dict}")
                 #     break
                 
-                base_commit = base_changes[k]
-                translation_commit = translation_changes[k]
+                base_commit = latest_base_changes[k]
+                translation_commit = latest_translation_changes[k]
                 
                 base_commit_is_predecessor = is_predecessor(base_commit, translation_commit)
                 
                 if not base_commit_is_predecessor:
-                    translation_dict.setdefault('outdated_keys', {})[k] = { 'latest_base_change': base_commit, 'latest_translation_change': translation_commit }
-            
-            # Debug
-            
-
-        
-        
-        
-        
-                
-            
-            
-    
+                    translation_dict.setdefault('outdated_keys', {})[k] = { 'latest_base_change': base_commit, 'latest_translation_change': translation_commit }    
     
     pprint(files)
         
+
+    
+def is_predecessor(potentialPredecessorCommit, commit):
+    
+    # Check which commit is 'earlier'. Works kind of like potentialPredecessorCommit <= commit (returns true for equality)
+    # Not totally sure what we're doing here. 
+    #   - First, we were checking for ancestry with `git merge-base``, but that slowed the whole script down a lot (maybe we could've alleviated that by changing runCLT? We have some weird options there.) (We also tried `rev-list --is-ancestor`, but it didn't help.)
+    #   - Then we updated to just comparing the commit date. I think it might make less sense than checking ancestry, and might lead to wrong results, maybe? But currently it seems to work okay and is faster. 
+    #   - Not sure if `committed_date` or `authored_date` is better. Both seem to give the same results atm.
+        
+    return potentialPredecessorCommit.committed_date <= commit.committed_date
+    # return runCLT(f"git rev-list --is-ancestor {potentialPredecessorCommit.hexsha} {commit.hexsha}").returncode == 0
+    # return runCLT(f"git merge-base --is-ancestor {potentialPredecessorCommit.hexsha} {commit.hexsha}").returncode == 0
+
+def runCLT(command):
+    clt_result = subprocess.run(command, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True) # Not sure what `text` and `shell` does.
+    return clt_result
+
+
 
 def get_latest_change_for_translation_keys(wanted_keys, file_path, git_repo):
     
@@ -173,32 +213,76 @@ def get_latest_change_for_translation_keys(wanted_keys, file_path, git_repo):
         
     return latest_changes
 
+def find_translation_keys_and_values_in_file(file_path):
     
+    # Read file content
+    text = ''
+    with open(file_path, 'r') as file:
+        text = file.read()
 
-def is_predecessor(potentialPredecessorCommit, commit):
+    # Get extension
+    _, file_type = os.path.splitext(file_path)
     
-    # Check which commit is 'earlier'. Works kind of like potentialPredecessorCommit <= commit (returns true for equality)
-    # Not totally sure what we're doing here. 
-    #   - First, we were checking for ancestry with `git merge-base``, but that slowed the whole script down a lot (maybe we could've alleviated that by changing runCLT? We have some weird options there.) (We also tried `rev-list --is-ancestor`, but it didn't help.)
-    #   - Then we updated to just comparing the commit date. I think it might make less sense than checking ancestry, and might lead to wrong results, maybe? But currently it seems to work okay and is faster. 
-    #   - Not sure if `committed_date` or `authored_date` is better. Both seem to give the same results atm.
+    # Call core
+    if file_type == '.xib' or file_type == '.storyboard':
+        result = find_translation_keys_and_values_in_IB_file(file_path)
+    else: 
+        result = find_translation_keys_and_values(text, file_type)
+    
+    # Return
+    return result
+
+
+def find_translation_keys_and_values_in_IB_file(file_path):
         
-    return potentialPredecessorCommit.committed_date <= commit.committed_date
-    # return runCLT(f"git rev-list --is-ancestor {potentialPredecessorCommit.hexsha} {commit.hexsha}").returncode == 0
-    # return runCLT(f"git merge-base --is-ancestor {potentialPredecessorCommit.hexsha} {commit.hexsha}").returncode == 0
-
-def runCLT(command):
-    clt_result = subprocess.run(command, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True) # Not sure what `text` and `shell` does.
-    return clt_result
-
+    strings_text = ''
+    temp_file_path = ''
+    
+    with tempfile.NamedTemporaryFile(delete=False) as temp_file:
+        temp_file_path = temp_file.name
+    
+    cltResult = subprocess.run(f"/usr/bin/ibtool --export-strings-file {temp_file.name} {file_path}", shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
+    if len(cltResult.stdout) > 0 or len(cltResult.stderr) > 0:
+        print(f"Error: ibtool failed. Printing feedback ... \nstdout: {cltResult.stdout}\nstderr: {cltResult.stderr}")
+        exit(1)
+    
+    with open(temp_file_path, 'r', encoding='utf-16') as temp_file:
+        strings_text = temp_file.read()
+    
+    os.remove(temp_file_path)
+    
+    keys_and_values = find_translation_keys_and_values(strings_text, '.strings')
+    
+    return keys_and_values
+        
+        
 def find_translation_keys_and_values(text, file_type):
 
-    # Strings file regex:
-    #   Used to get keys and values from strings files. Designed to work on Xcode .strings files and on the .js strings files used on the MMF website. (Won't work on `.stringsdict`` files, those are xml)
-    #   See https://regex101.com
-    strings_file_regex = re.compile(r'^(\+?\-?)\s*[\'\"]([^\'\"]+)[\'\"]\s*[=:]\s*[\'\"]([^\'\"]*)[\'\"]', re.MULTILINE)
+    """
+    Extract translation keys and values from text.
+    Structure of result:
+    {
+        <translation_key>: {
+            added<?>: <translation_value>,
+            deleted<?>: <translation_value>,
+            value<?>: <translation_value>,
+        }
+        <translation_key>: {
+            ...
+        },
+        ... 
+    }
+
+    ... where <?> means that the key is optional. 
+        If the input text is a git diff text with - and + at the start of lines, then the result with contain `added` and `deleted` keys, otherwise, the result will contain `value` keys.
+    """
     
     if file_type == '.strings':
+        
+        # Strings file regex:
+        #   Used to get keys and values from strings files. Designed to work on Xcode .strings files and on the .js strings files used on the MMF website. (Won't work on `.stringsdict`` files, those are xml)
+        #   See https://regex101.com
+        strings_file_regex = re.compile(r'^(\+?\-?)\s*[\'\"]([^\'\"]+)[\'\"]\s*[=:]\s*[\'\"]([^\'\"]*)[\'\"]', re.MULTILINE)
         
         # Find matches
         matches = strings_file_regex.finditer(text)
@@ -220,6 +304,7 @@ def find_translation_keys_and_values(text, file_type):
                 
         return result
     elif file_type == '.xib' or file_type == '.storyboard':
+        # assert False
         return None
     
     elif file_type == '.stringsdict':
@@ -228,24 +313,6 @@ def find_translation_keys_and_values(text, file_type):
         return None
     else:
         assert False, f"translation key/value finder encountered unknown file type: {file_type}"
-
-
-def find_translation_keys_and_values_in_file(file_path):
-    
-    # Read file content
-    text = ''
-    with open(file_path, 'r') as file:
-        text = file.read()
-
-    # Get extension
-    _, extension = os.path.splitext(file_path)
-    
-    # Call core
-    result = find_translation_keys_and_values(text, extension)
-    
-    # Return
-    return result
-    
 
 def find_localization_files_in_mmf_repo(repo_root):
     
