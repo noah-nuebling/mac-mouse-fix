@@ -1,3 +1,5 @@
+"this.is.a.superfluous.key": "For testing!";
+
 /* Class = "NSTextFieldCell"; title = "Help"; ObjectID = "04N-yp-Qg1"; */
 "04N-yp-Qg1.title" = "Hilfe";
 
