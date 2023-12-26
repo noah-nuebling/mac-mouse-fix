@@ -43,7 +43,7 @@ def main():
             base_commit_iterator = git_repo.iter_commits(paths=base_file)
             
             for base_commit in base_commit_iterator:
-                if base_commit.committed_date > last_translation_commit.committed_date:
+                if not is_predecessor(base_commit, last_translation_commit):
                     outdating_commits.append(base_commit)
                 else:
                     break
@@ -69,6 +69,9 @@ def main():
         
         for translation_file_path, translation_dict in file_dict['translations'].items():
             
+            # Log
+            print(f'Analyzing keys for translation at {translation_file_path}...')
+            
             # Find translation file keys
             translation_keys_and_values = find_translation_keys_and_values_in_file(translation_file_path)
             translation_keys = set(translation_keys_and_values.keys())
@@ -76,25 +79,42 @@ def main():
             # Do set operations
             missing_keys = base_keys.difference(translation_keys)
             superfluous_keys = translation_keys.difference(base_keys)
+            common_keys = base_keys.intersection(translation_keys)
+            
+            if 'Strawberry' in common_keys:
+                print(f"common: {common_keys}, superf: {superfluous_keys}, mis")
             
             # Attach set operation data
             translation_dict['missing_keys'] = missing_keys
             translation_dict['superfluous_keys'] = superfluous_keys
             
+            # Log
+            print(f'Analyze when keys last changed...')
+            
             # For each key, get the commit when it last changed
-            translation_changes = get_latest_change_for_translation_keys(base_keys, translation_file_path, git_repo)
+            translation_changes = get_latest_change_for_translation_keys(common_keys, translation_file_path, git_repo)
+            
+            # if 'capture-toast.body' in common_keys:  # 'Localization/de.lproj/Localizable.strings' in translation_file_path:
+            #     print(f"base_changes: {base_file_path}, changes: {base_changes}")
+            #     print(f"translated_changes: {translation_file_path}, changes: {translation_changes}")
+            
+            # Log
+            print(f'Check if last modification was before base for each key ...')
             
             # Compare time of latest change for each key between base file and translation file
-            for k in base_keys:
+            for k in common_keys:
+                
+                # if k == 'capture-toast.body':
+                #     pprint(f"translation_dict: {translation_dict}")
+                #     break
+                
                 base_commit = base_changes[k]
                 translation_commit = translation_changes[k]
                 
-                translation_commit_is_ancestor = is_ancestor(translation_commit.hexsha, base_commit.hexsha)
+                base_commit_is_predecessor = is_predecessor(base_commit, translation_commit)
                 
-                if translation_commit_is_ancestor:
-                    translation_dict.setdefault('outdated_keys', {})[k] = { 'latest_base_commit': base_commit, 'latest_translation_commit': translation_commit }
-                    
-                    print(f"translation_dict: {translation_dict}")
+                if not base_commit_is_predecessor:
+                    translation_dict.setdefault('outdated_keys', {})[k] = { 'latest_base_change': base_commit, 'latest_translation_change': translation_commit }
             
             # Debug
             
@@ -108,15 +128,18 @@ def main():
             
     
     
-    # pprint(files)
+    pprint(files)
         
 
-def get_latest_change_for_translation_keys(base_keys, file_path, git_repo):
+def get_latest_change_for_translation_keys(wanted_keys, file_path, git_repo):
     
-    wanted_keys = base_keys
+    wanted_keys = wanted_keys.copy()
     latest_changes = dict()
     
     for i, commit in enumerate(git_repo.iter_commits(paths=file_path)):
+        
+        # if 'Localization/de.lproj/Localizable.strings' in file_path:
+        #     print(f"latest de changes: {latest_changes}, {list(git_repo.iter_commits(paths=file_path))}")
         
         # Debug
         # print(f"Iteration {i}. wanted_keys: {wanted_keys}")
@@ -136,14 +159,15 @@ def get_latest_change_for_translation_keys(base_keys, file_path, git_repo):
         diff_string = runCLT(f"git diff -U0 {commit_hash}^..{commit_hash} -- {file_path}").stdout
 
         # Parse
+        # print(f"finding keys and valis in {file_path}, {commit_hash}, {commit_date} ...")
         keys_and_values = find_translation_keys_and_values(diff_string, file_type)
         
         for key, changes in keys_and_values.items():
             if key in latest_changes:
                 continue
-            if key not in base_keys:
+            if key not in wanted_keys:
                 continue
-            if changes.get('added', '') != changes.get('deleted', ''):
+            if changes.get('added', None) != changes.get('deleted', None):
                 latest_changes[key] = commit
                 wanted_keys.remove(key)
         
@@ -151,8 +175,17 @@ def get_latest_change_for_translation_keys(base_keys, file_path, git_repo):
 
     
 
-def is_ancestor(potentialAncestorCommit, commit):
-    return runCLT(f"git merge-base --is-ancestor {potentialAncestorCommit} {commit}").returncode == 0
+def is_predecessor(potentialPredecessorCommit, commit):
+    
+    # Check which commit is 'earlier'. Works kind of like potentialPredecessorCommit <= commit (returns true for equality)
+    # Not totally sure what we're doing here. 
+    #   - First, we were checking for ancestry with `git merge-base``, but that slowed the whole script down a lot (maybe we could've alleviated that by changing runCLT? We have some weird options there.) (We also tried `rev-list --is-ancestor`, but it didn't help.)
+    #   - Then we updated to just comparing the commit date. I think it might make less sense than checking ancestry, and might lead to wrong results, maybe? But currently it seems to work okay and is faster. 
+    #   - Not sure if `committed_date` or `authored_date` is better. Both seem to give the same results atm.
+        
+    return potentialPredecessorCommit.committed_date <= commit.committed_date
+    # return runCLT(f"git rev-list --is-ancestor {potentialPredecessorCommit.hexsha} {commit.hexsha}").returncode == 0
+    # return runCLT(f"git merge-base --is-ancestor {potentialPredecessorCommit.hexsha} {commit.hexsha}").returncode == 0
 
 def runCLT(command):
     clt_result = subprocess.run(command, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True) # Not sure what `text` and `shell` does.
@@ -177,8 +210,13 @@ def find_translation_keys_and_values(text, file_type):
             git_line_diff = match.group(1)
             translation_key = match.group(2)
             translation_value = match.group(3)
+            
             k = 'added' if git_line_diff == '+' else 'deleted' if git_line_diff == '-' else 'value'
             result.setdefault(translation_key, {})[k] = translation_value
+            
+            # if translation_key == 'capture-toast.body':
+                # print(f"{git_line_diff} value: {translation_value} isNone: {translation_value is None}") # /Users/Noah/Desktop/mmf-stuff/mac-mouse-fix/Localization/de.lproj/Localizable.strings
+                # print(f"result: {result}")
                 
         return result
     elif file_type == '.xib' or file_type == '.storyboard':
