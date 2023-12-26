@@ -6,6 +6,8 @@
 import os
 from pprint import pprint
 import git
+import re
+import subprocess
 
 #
 # Constants
@@ -49,6 +51,56 @@ def main():
                 
             if len(outdating_commits) > 0:
                 translation_dict['outdating_commits'] = outdating_commits
+    
+    
+    # Find the latest string keys
+    for file_dict in files:
+
+        # Get info
+        base_file_path = file_dict['base']
+        
+        # Find basefile keys
+        base_keys_and_values = find_translation_keys_and_values_in_file(file_dict['base'])
+        if base_keys_and_values == None: continue
+        base_keys = set(base_keys_and_values.keys())
+        
+        # For each key in the base file, get the commit, when it last changed
+        base_changes = get_latest_change_for_translation_keys(base_keys, base_file_path, git_repo)
+        
+        for translation_file_path, translation_dict in file_dict['translations'].items():
+            
+            # Find translation file keys
+            translation_keys_and_values = find_translation_keys_and_values_in_file(translation_file_path)
+            translation_keys = set(translation_keys_and_values.keys())
+            
+            # Do set operations
+            missing_keys = base_keys.difference(translation_keys)
+            superfluous_keys = translation_keys.difference(base_keys)
+            
+            # Attach set operation data
+            translation_dict['missing_keys'] = missing_keys
+            translation_dict['superfluous_keys'] = superfluous_keys
+            
+            # For each key, get the commit when it last changed
+            translation_changes = get_latest_change_for_translation_keys(base_keys, translation_file_path, git_repo)
+            
+            # Compare time of latest change for each key between base file and translation file
+            for k in base_keys:
+                base_commit = base_changes[k]
+                translation_commit = translation_changes[k]
+                
+                translation_commit_is_ancestor = is_ancestor(translation_commit.hexsha, base_commit.hexsha)
+                
+                if translation_commit_is_ancestor:
+                    translation_dict.setdefault('outdated_keys', {})[k] = { 'latest_base_commit': base_commit, 'latest_translation_commit': translation_commit }
+                    
+                    print(f"translation_dict: {translation_dict}")
+            
+            # Debug
+            
+
+        
+        
         
         
                 
@@ -56,8 +108,106 @@ def main():
             
     
     
-    pprint(files)
+    # pprint(files)
         
+
+def get_latest_change_for_translation_keys(base_keys, file_path, git_repo):
+    
+    wanted_keys = base_keys
+    latest_changes = dict()
+    
+    for i, commit in enumerate(git_repo.iter_commits(paths=file_path)):
+        
+        # Debug
+        # print(f"Iteration {i}. wanted_keys: {wanted_keys}")
+        
+        # Break      
+        if len(wanted_keys) == 0:
+            break
+        
+        # Extract info
+        commit_hash = commit.hexsha
+        commit_date = commit.committed_date
+        _, file_type = os.path.splitext(file_path)
+        
+        # Run git command 
+        # - For getting additions and deletions of the commit compared to its parent
+        # - I tried to do this with gitpython but nothing worked, maybe I should stop using it altogether?
+        diff_string = runCLT(f"git diff -U0 {commit_hash}^..{commit_hash} -- {file_path}").stdout
+
+        # Parse
+        keys_and_values = find_translation_keys_and_values(diff_string, file_type)
+        
+        for key, changes in keys_and_values.items():
+            if key in latest_changes:
+                continue
+            if key not in base_keys:
+                continue
+            if changes.get('added', '') != changes.get('deleted', ''):
+                latest_changes[key] = commit
+                wanted_keys.remove(key)
+        
+    return latest_changes
+
+    
+
+def is_ancestor(potentialAncestorCommit, commit):
+    return runCLT(f"git merge-base --is-ancestor {potentialAncestorCommit} {commit}").returncode == 0
+
+def runCLT(command):
+    clt_result = subprocess.run(command, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True) # Not sure what `text` and `shell` does.
+    return clt_result
+
+def find_translation_keys_and_values(text, file_type):
+
+    # Strings file regex:
+    #   Used to get keys and values from strings files. Designed to work on Xcode .strings files and on the .js strings files used on the MMF website. (Won't work on `.stringsdict`` files, those are xml)
+    #   See https://regex101.com
+    strings_file_regex = re.compile(r'^(\+?\-?)\s*[\'\"]([^\'\"]+)[\'\"]\s*[=:]\s*[\'\"]([^\'\"]*)[\'\"]', re.MULTILINE)
+    
+    if file_type == '.strings':
+        
+        # Find matches
+        matches = strings_file_regex.finditer(text)
+        
+        # Parse matches
+        
+        result = dict()
+        for match in matches:
+            git_line_diff = match.group(1)
+            translation_key = match.group(2)
+            translation_value = match.group(3)
+            k = 'added' if git_line_diff == '+' else 'deleted' if git_line_diff == '-' else 'value'
+            result.setdefault(translation_key, {})[k] = translation_value
+                
+        return result
+    elif file_type == '.xib' or file_type == '.storyboard':
+        return None
+    
+    elif file_type == '.stringsdict':
+        return None
+    elif file_type == '.md':
+        return None
+    else:
+        assert False, f"translation key/value finder encountered unknown file type: {file_type}"
+
+
+def find_translation_keys_and_values_in_file(file_path):
+    
+    # Read file content
+    text = ''
+    with open(file_path, 'r') as file:
+        text = file.read()
+
+    # Get extension
+    _, extension = os.path.splitext(file_path)
+    
+    # Call core
+    result = find_translation_keys_and_values(text, extension)
+    
+    # Return
+    return result
+    
 
 def find_localization_files_in_mmf_repo(repo_root):
     
