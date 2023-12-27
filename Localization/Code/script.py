@@ -127,19 +127,18 @@ def main():
                 #     pprint(f"translation_dict: {translation_dict}")
                 #     break
                 
-                base_commit = latest_base_changes[k]
-                translation_commit = latest_translation_changes[k]
+                base_commit = latest_base_changes[k]['commit']
+                translation_commit  = latest_translation_changes[k]['commit']
                 
                 base_commit_is_predecessor = is_predecessor(base_commit, translation_commit)
                 
                 # DEBUG
-                # if file_dict['basetype'] == 'IB':
                 #     print(f"latest_base_change: {base_file_path}, change: {base_commit}")
                 #     print(f"translated_change: {translation_file_path}, change: {translation_commit}")
                 #     print(f"base_is_predecessor: {base_commit_is_predecessor}")
                 
                 if not base_commit_is_predecessor:
-                    translation_dict.setdefault('outdated_keys', {})[k] = { 'latest_base_change': base_commit, 'latest_translation_change': translation_commit }    
+                    translation_dict.setdefault('outdated_keys', {})[k] = { 'latest_base_change': latest_base_changes[k], 'latest_translation_change': latest_translation_changes[k] }    
     
     pprint(files)
         
@@ -149,6 +148,21 @@ def main():
 #
 
 def get_latest_change_for_translation_keys(wanted_keys, file_path, git_repo):
+    
+    """
+    Structure of result:
+    {
+        <translation_key>: {
+            commit: <commit_on_which_value_last_changed>,
+            before: <translation_value_before_commit>,
+            after: <translation_value_after_commit>,
+        }, 
+        <translation_key>: {
+            ...
+        },
+        ...
+    }
+    """
     
     # Declare stuff
     result = dict()
@@ -160,6 +174,21 @@ def get_latest_change_for_translation_keys(wanted_keys, file_path, git_repo):
     if t == None:
         assert False, f"Trying to get latest key changes for incompatible filetype {file_type}"
     
+    # Define reusable helper 
+    def parse_diff_and_update_state(diff_string, commit, result, wanted_keys):
+        
+        keys_and_values = extract_translation_keys_and_values_from_string(diff_string)
+    
+        for key, changes in keys_and_values.items():
+            
+            if (key not in result) and (key in wanted_keys):
+                added_value = changes.get('added', None)
+                deleted_value = changes.get('deleted', None)
+                if added_value != deleted_value:
+                    new_entry = { 'commit': commit, 'before': deleted_value, 'after': added_value }
+                    result[key] = new_entry
+                    wanted_keys.remove(key)    
+                    # print(f"parsing diff - adding new entry: {new_entry}")
     
     if t == 'strings':
         
@@ -175,19 +204,14 @@ def get_latest_change_for_translation_keys(wanted_keys, file_path, git_repo):
             #   - I tried to do this with gitpython but nothing worked, maybe I should stop using it altogether?
             diff_string = runCLT(f"git diff -U0 {commit.hexsha}^..{commit.hexsha} -- {file_path}").stdout
             
-            # Parse translation key/value diffs
-            # Note: This should be the exact same between the 'strings' and the 'IB' code. Keep it in sync!
-            
-            keys_and_values = extract_translation_keys_and_values_from_string(diff_string)
-        
-            for key, changes in keys_and_values.items():
-                
-                if (key not in result) and (key in wanted_keys):
-                    if changes.get('added', None) != changes.get('deleted', None):
-                        result[key] = commit
-                        wanted_keys.remove(key)    
+            # Parse diff
+            parse_diff_and_update_state(diff_string, commit, result, wanted_keys)
                 
     elif t == 'IB':
+        
+        # Notes:
+        # - This seems to be by far the slowest part of the script. It's still fast enough, but maybe look into optimizing.
+        # -     Possible sources of slowness: subprocess calls (I read that command is faster), file-creations/reads/writes, complex git commands.
         
         commits = list(git_repo.iter_commits(paths=file_path, reverse=False))
         commits.append(None)
@@ -204,7 +228,7 @@ def get_latest_change_for_translation_keys(wanted_keys, file_path, git_repo):
             if commit == None:
                 # This case is weird
                 #   The 'None' commit symbolizes the parent of the initial commit of the file.
-                #   We say the parent of the strings file at the initial commit is an empty file, that way we can get meaningful diff values for the initial commit.
+                #   We say the parent of the strings file at the initial commit is an empty file, that way we can get diff values in the format we expect for the initial commit.
                 assert i == (len(commits) - 1)
                 strings_file_path = create_temp_file()
             else:
@@ -221,35 +245,25 @@ def get_latest_change_for_translation_keys(wanted_keys, file_path, git_repo):
                 #  To 'make up' for this lack of diff on the first iteration, we have the extra 'None' commit. 
                 #  Kind of confusing but it should work.
                 
+                # Validate
+                assert last_strings_file_path != ''
+                
                 # Get diff string
-                diff_string = runCLT(f"git diff -U0 --no-index -- {last_strings_file_path} {strings_file_path}").stdout
+                diff_string = runCLT(f"git diff -U0 --no-index -- {strings_file_path} {last_strings_file_path}").stdout
                 
-                # Parse translation key/value diffs
-                # Note: This should be the exact same between the 'strings' and the 'IB' code. Keep it in sync!
+                # Parse diff
+                parse_diff_and_update_state(diff_string, commits[i-1], result, wanted_keys)
                 
-                keys_and_values = extract_translation_keys_and_values_from_string(diff_string)
-            
-                for key, changes in keys_and_values.items():
-                    
-                    if (key not in result) and (key in wanted_keys):
-                        if changes.get('added', None) != changes.get('deleted', None):
-                            result[key] = commits[i-1]
-                            wanted_keys.remove(key)    
-
                 # Cleanup
                 os.remove(last_strings_file_path)
             
             # Update state
             last_strings_file_path = strings_file_path
             
-            
     else:
         assert False
-            
 
-        
     # Return
-    
     return result
 
 #
@@ -257,6 +271,10 @@ def get_latest_change_for_translation_keys(wanted_keys, file_path, git_repo):
 #
 
 def extract_translation_keys_and_values_from_file(file_path):
+    
+    """
+    Structure of result: Same as extract_translation_keys_and_values_from_string()
+    """
     
     # Read file content
     text = ''
@@ -414,7 +432,6 @@ def find_localization_files_in_mmf_repo(repo_root):
     [
         {  
             base: path_to_base_localization_file, 
-            basetype: "<IB | strings | markdown>"", 
             translations: {
                 path_to_translated_file1: {}, 
                 path_to_translated_file2: {}, 
@@ -468,6 +485,7 @@ def find_localization_files_in_mmf_repo(repo_root):
         
         base_path = e['base']
         basetype = e['basetype']
+        del e['basetype']
         
         translations = {}
         
