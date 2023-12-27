@@ -211,7 +211,6 @@ def get_latest_change_for_translation_keys(wanted_keys, file_path, git_repo):
                 file_path_relative = os.path.relpath(file_path, repo_root) # `git show` breaks with absolute paths
                 file_path_at_this_commit = create_temp_file(suffix=file_type)
                 runCLT(f"git show {commit.hexsha}:{file_path_relative} > {file_path_at_this_commit}")
-                # print(f"Extracting from: {file_path_at_this_commit}. Base: {commit.hexsha}:{file_path} Content: {read_tempfile(file_path_at_this_commit, remove=False)}")
                 strings_file_path = extract_strings_from_IB_file_to_temp_file(file_path_at_this_commit)
                 
             if i != 0: 
@@ -331,68 +330,6 @@ def extract_translation_keys_and_values_from_string(text):
             
     return result
 
-    # else:
-    #     assert False, f"translation key/value finder encountered unparsable file type: {file_type}"
-    
-    # elif file_type == '.xib' or file_type == '.storyboard':
-        
-        # Trying to analyze the IB files directly didn't work, because they are too complex. Instead, we'll parse them to .strings files and then analyze those.
-        
-        # # Validate
-        # assert wanted_keys != None
-            
-        # # Extract values for the wanted_keys
-        # #   We're doing this weird regex stuff to implement this. Not sure if it's a good solution. See regex101.com to understand the regexes.
-    
-        # regex1_template = r'^([\+\-]?)\s*<[^>]*{attribute}="([^"]*)"[^>]*id="{object_id}"'
-        # regex2_template  = r'^([\+\-]?)\s*<[^>]*id="{object_id}"[^>]*{attribute}="([^"]*)"' # Template2 covers the case that the object_id comes before the attribute_name (not sure this ever happens)
-        
-        # result = dict()
-        
-        # for translation_key in wanted_keys:
-            
-        #     # Get object_id and attribute_name from the `.strings` file key
-        #     object_id, ui_attribute = translation_key.split('.', 1)
-            
-        #     # Compile regexes
-        #     #   Not sure what re.MULTILINE does. We copied that from the regex for parsing strings-files
-        #     regex1 = re.compile(regex1_template.format(object_id=object_id, attribute=ui_attribute), re.MULTILINE)
-        #     regex2 = re.compile(regex2_template.format(object_id=object_id, attribute=ui_attribute), re.MULTILINE)
-            
-        #     # Find match
-        #     #   Not sure why were using findall() here and finditer() in the .strings implementation
-        #     matches = regex1.findall(text)
-        #     if len(matches) == 0:
-        #         matches = regex2.findall(text)
-
-        #     # Validate
-        #     assert len(matches) <= 2
-            
-        #     for match in matches:
-                
-        #         # Extract group values from match (groups are the parts inside (parenthesis) in the regex_template)
-        #         git_line_diff = match[0]
-        #         translation_value = match[1]
-                
-        #         # Store in dict
-        #         k = 'added' if git_line_diff == '+' else 'deleted' if git_line_diff == '-' else 'value'
-        #         assert k != 'value'
-        #         result.setdefault(translation_key, {})[k] = translation_value
-            
-            
-        # DEBUG
-        # print(f"Diff for IB: {result}")
-            
-        # Return
-        # return result 
-    
-    # elif file_type == '.stringsdict':
-    #     return None
-    # elif file_type == '.md':
-    #     return None
-    # else:
-    #     assert False, f"translation key/value finder encountered unknown file type: {file_type}"
-
 #
 # Analysis helpers
 #
@@ -414,7 +351,8 @@ def extract_strings_from_IB_file_to_temp_file(ib_file_path):
     cltResult = subprocess.run(f"/usr/bin/ibtool --export-strings-file {temp_file_path} {ib_file_path}", shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
         
     if len(cltResult.stdout) > 0 or len(cltResult.stderr) > 0:
-        # print(f"Error: ibtool failed. Printing feedback ... \nstdout: {cltResult.stdout}\nstderr: {cltResult.stderr}")
+        # Log & Crash
+        print(f"Error: ibtool failed. Printing feedback ... \nstdout: {cltResult.stdout}\nstderr: {cltResult.stderr}")
         exit(1)
     
     # Convert to utf-8
