@@ -1,3 +1,5 @@
+"missing-translation-test": "THIS IS A TEST, UNDO THIS.";
+
 /* First draft: Free day **%d/%d** */
 "trial-counter.active" = "THIS IS A TEST UNDO THIS STRING day **%d/%d**";
 
