@@ -39,6 +39,7 @@ Diese Leute haben viel mehr als den Standardpreis ausgegeben und mir einen **ung
 
 **Dezember 2023**
 
+- 🇺🇸&nbsp;Rqiu987
 - 🇺🇸&nbsp;Kennard&nbsp;Smith
 - 🇫🇮&nbsp;Emil&nbsp;Sågfors
 - 🇦🇺&nbsp;Alex&nbsp;Compton
