@@ -41,6 +41,7 @@ These people spent a lot more than the standard price and treated me to an **Inc
 
 **December 2023**
 
+- 🇺🇸&nbsp;Spidertrax
 - 🇳🇱&nbsp;Daniël&nbsp;Terrizzi - "Great tool that I use daily. I hope app-specific disable  will be implemented!"
 - 🇺🇸&nbsp;Rqiu987
 - 🇺🇸&nbsp;Kennard&nbsp;Smith
