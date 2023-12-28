@@ -23,13 +23,101 @@ repo_root = os.getcwd()
 
 def main():
 
-    # Log
     print(f'Finding translation files inside MMF repo...')
 
-    # Find localization files in MMF repo
-    files = find_localization_files_in_mmf_repo(repo_root)
+    files = find_localization_files_in_mmf_repo(repo_root)    
+    analysis = analyze_localization_files(files, repo_root)
     
-    # Analyze localization files
+    pprint(analysis)
+    
+    # md = markdown_from_analysis(analysis)
+    
+    # print(md)
+    
+#
+# Build markdown
+#
+
+def markdown_from_analysis(files):
+    
+    md = ''
+    
+    for file_dict in files:
+        
+        base_file_path = file_dict['base']
+        
+        for translation_file_path, translation_dict in file_dict['translations'].items():
+            
+            _, file_type = os.path.splitext(translation_file_path)
+            
+            if file_type == '.md' or file_type == '.stringsdict':
+                
+                # Build user strings using outdating_commits
+                #   Since we don't analyze keys for these files
+                
+                outdating_commits_string = list(map(lambda c: f'{c.hexsha}', translation_dict.get('outdating_commits', [])))
+                
+                if len(outdating_commits_string) > 0:
+                    ui_str = f'Changes to {base_file_path} which occured after the latest change to {translation_file_path}: '
+                    ui_str += ' '.join()
+                    md += ui_str
+            elif file_type == '.js' or file_type == '.strings':
+                pass
+            else:
+                assert False, f"Trying to build markdown for invalid file_type {file_type}"
+
+    return md
+
+#
+# Analysis core
+#
+
+def analyze_localization_files(files, repo_root):
+
+    """
+        Structure of the analysis result: (at time of writing) (This takes the input file and just fills in stuff)
+        [
+            {
+                'base': '<base_file_path>',
+                'translations': {
+                    <translation_file_path>: {
+                        'outdating_commits': [<commits_to_base_files_after_the_latest_commit_to_translation_file>],
+                        'missing_keys': set(<missing_keys>),
+                        'superfluous_keys': set(<superfluous_keys>),
+                        'outdated_keys': {
+                            '<outdated_key>': {
+                                'latest_base_change': {
+                                    'commit': git.Commit(<commit_of_lastest_base_change>),
+                                    'before': '<translation_before>',
+                                    'after': '<translation_after>',
+                                },
+                                'latest_translation_change': {
+                                    'commit': git.Commit(<commit_of_latest_translation_change>),
+                                    'before': '<translation_before>',
+                                    'after': '<translation_after>',
+                                }
+                            },
+                            '<outdated_key>': {
+                                ...
+                            },
+                            ...
+                        },
+                    },
+                    <translation_file_path>: {
+                        ...
+                    },
+                    ...
+                }
+            },
+            {
+                'base': '<base_file_path>',
+                ...
+            },
+            ...
+        ]
+    """
+    
+    files = files.copy()
     
     # Log
     print(f'Analyzing localization files...')
@@ -140,8 +228,8 @@ def main():
                 if not base_commit_is_predecessor:
                     translation_dict.setdefault('outdated_keys', {})[k] = { 'latest_base_change': latest_base_changes[k], 'latest_translation_change': latest_translation_changes[k] }    
     
-    pprint(files)
-        
+    # Return
+    return files
 
 #
 # Change analysis
@@ -165,6 +253,7 @@ def get_latest_change_for_translation_keys(wanted_keys, file_path, git_repo):
     """
     
     # Declare stuff
+    repo_root = git_repo.working_tree_dir
     result = dict()
     wanted_keys = wanted_keys.copy()
     _, file_type = os.path.splitext(file_path)
