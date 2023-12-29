@@ -1,8 +1,11 @@
+
+# Ignore macOS stuff
 .DS_Store
 
-# Ignore python environments
+# Ignore python stuff
 update_env/
 env/
+__pycache__/
 
 # Ignore all folders named xcuserdata
 xcuserdata/
