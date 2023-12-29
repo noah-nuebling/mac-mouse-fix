@@ -286,6 +286,11 @@ Maybe the translation should be updated to reflect the new changes to the base f
                 superfluous_str = '\n- '.join(map(lambda x: translation_to_markdown(x['key'], x['value'], file_type), translation_dict['superfluous_translations']))
                 if len(superfluous_str) > 0:
                     content_str += f"\n\n**Superfluous translations**\n\nThe following key-value-pairs appear in the translation but not in the base file. It's likely they are unused and can be deleted from the translation:\n\n- {superfluous_str}"
+                    
+                unchanged_str = '\n- '.join(map(lambda x: translation_to_markdown(x['key'], x['value'], file_type), translation_dict['unchanged_translations']))
+                if len(unchanged_str) > 0:
+                    content_str += f"\n\n**Unchanged translations**\n\nThe following key-value-pairs have the exact same value in the translation as in the base file. Maybe they have not yet been translated:\n\n- {unchanged_str}"
+                    
                 
                 # Build strings for outdated translations
                 
@@ -635,6 +640,21 @@ def analyze_localization_files(files):
             superfluous_translations    = list(map(lambda k: {'key': k, 'value': translation_keys_and_values[k]['value']}, superfluous_keys))
             translation_dict['missing_translations'] = missing_translations
             translation_dict['superfluous_translations'] = superfluous_translations
+            
+            # Check untranslated
+            unchanged_translations = []
+            for k in common_keys:
+                
+                value_b = base_keys_and_values[k]['value']
+                value_t = translation_keys_and_values[k]['value']
+                
+                if value_b == value_t:
+                    unchanged_translations.append({'key': k, 'value': value_t})
+                    
+            translation_dict['unchanged_translations'] = unchanged_translations
+                
+                
+            
             
             # Log
             print(f'        Analyze when keys last changed...')
