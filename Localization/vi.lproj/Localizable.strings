@@ -11,94 +11,94 @@
 "trial-notif.body" = "Xin chào! Bạn đã sử dụng Mac Mouse Fix được **%d ngày**. Mong rằng bạn sẽ thích nó!\n\nNếu bạn muốn tiếp tục sử dụng Mac Mouse Fix, bạn có thể [mua ngay](%@).";
 
 /* First draft: <Rewind key> */
-"apple-key-fallback.backward" = "<Rewind key>";
+"apple-key-fallback.backward" = "<Phím tua ngược>";
 
 /* First draft: ⇪ */
 "apple-key-fallback.capslock" = "⇪";
 
 /* First draft: <Fast-Forward key> */
-"apple-key-fallback.forward" = "<Fast-Forward key>";
+"apple-key-fallback.forward" = "<Phím tua nhanh>";
 
 /* First draft: <Emoji Picker key> */
-"apple-key-fallback.globe" = "<Emoji Picker key>";
+"apple-key-fallback.globe" = "<Phím chọn emoji>";
 
 /* First draft: <Increase Keyboard Brightness key> */
-"apple-key-fallback.light.max" = "<Increase Keyboard Brightness key>";
+"apple-key-fallback.light.max" = "<Phím tăng độ sáng bàn phím>";
 
 /* First draft: <Decrease Keyboard Brightness key> */
-"apple-key-fallback.light.min" = "<Decrease Keyboard Brightness key>";
+"apple-key-fallback.light.min" = "<Phím giảm độ sáng bàn phím>";
 
 /* First draft: <Spotlight key> */
-"apple-key-fallback.magnifyingglass" = "<Spotlight key>";
+"apple-key-fallback.magnifyingglass" = "<Phím Spotlight>";
 
 /* First draft: <Dictation key> */
-"apple-key-fallback.mic" = "<Dictation key>";
+"apple-key-fallback.mic" = "<Phím chính tả>";
 
 /* First draft: <Do Not Disturb key> */
-"apple-key-fallback.moon" = "<Do Not Disturb key>";
+"apple-key-fallback.moon" = "<Phím không làm phiền>";
 
 /* First draft: <Play or Pause key> */
-"apple-key-fallback.playpause" = "<Play or Pause key>";
+"apple-key-fallback.playpause" = "<Phím phát hoặc dừng>";
 
 /* First draft: <Power key> */
-"apple-key-fallback.power" = "<Power key>";
+"apple-key-fallback.power" = "<Phím nguồn>";
 
 /* First draft: <Mission Control key> */
-"apple-key-fallback.rectangle.3.group" = "<Mission Control key>";
+"apple-key-fallback.rectangle.3.group" = "<Phím điều khiển nhiệm vụ>";
 
 /* First draft: <Mute key> */
-"apple-key-fallback.speaker" = "<Mute key>";
+"apple-key-fallback.speaker" = "<Phím câm>";
 
 /* First draft: <Decrease Volume key> */
-"apple-key-fallback.speaker.wave.1" = "<Decrease Volume key>";
+"apple-key-fallback.speaker.wave.1" = "<Phím giảm âm lượng>";
 
 /* First draft: <Increase Volume key> */
-"apple-key-fallback.speaker.wave.3" = "<Increase Volume key>";
+"apple-key-fallback.speaker.wave.3" = "<Phím tăng âm lượng>";
 
 /* First draft: <Launchpad key> */
-"apple-key-fallback.square.grid.3x2" = "<Launchpad key>";
+"apple-key-fallback.square.grid.3x2" = "<Phím Launchpad>";
 
 /* First draft: <Increase Brightness key> */
-"apple-key-fallback.sun.max" = "<Increase Brightness key>";
+"apple-key-fallback.sun.max" = "<Phím tăng độ sáng>";
 
 /* First draft: <Decrease Brightness key> || Example usage: Works like pressing '<Decrease Brightness Key>' on an Apple keyboard. || Note: Unlike in the interface builder `.strings` files, in `Localizable.strings`, <> doesn't mean that the text is unused. I think the usage of <> here is a little weird, so let me know if you have a better idea! */
-"apple-key-fallback.sun.min" = "<Decrease Brightness key>";
+"apple-key-fallback.sun.min" = "<Phím giảm độ sáng>";
 
 /* First draft: <Key without description> */
-"apple-key-fallback.unknown-key" = "<Key without description>";
+"apple-key-fallback.unknown-key" = "<Phím không có mô tả>";
 
 /* First draft: Click %@ + || Note: %@ will be a button name || Example where %@ is 'Button 4': Click Button 4 + Double Click and Drag Button 5 */
-"button-modifier.1" = "Click %@ +";
+"button-modifier.1" = "Kích %@ +";
 
 /* First draft: Double Click %@ +  */
-"button-modifier.2" = "Double Click %@ +";
+"button-modifier.2" = "Kích đúp %@ +";
 
 /* First draft: Triple Click %@ +  */
-"button-modifier.3" = "Triple Click %@ +";
+"button-modifier.3" = "Kích ba lần %@ +";
 
 /* First draft: __Enabled__ Mac Mouse Fix for %1@\nIt had been disabled from the Menu Bar %2@ || Note: %1@ will be replaced by the list of enabled features, %2@ will be replaced by the menubar icon */
-"revive-toast" = "__Enabled__ Mac Mouse Fix for %1@\nIt had been disabled from the Menu Bar %2@";
+"revive-toast" = "__Đã kích hoạt__ Mac Mouse Fix trong %1@\nNó đã bị bất hoạt từ thanh menu %2@";
 
 /* First draft: __Buttons__ */
-"revive-toast.feature-buttons" = " __Buttons__";
+"revive-toast.feature-buttons" = " __Nút__";
 
 /* First draft: __Scrolling__ */
-"revive-toast.feature-scrolling" = "__Scrolling__";
+"revive-toast.feature-scrolling" = "__Cuộn__";
 
 /* First draft: Middle Button */
-"button-string.middle" = "Middle Button";
+"button-string.middle" = "Nút giữa";
 
 /* First Draft: Button %@ */
-"button-string.numbered" = "Button %@";
+"button-string.numbered" = "Nút %@";
 
 /* First draft: Primary Button */
-"button-string.primary" = "Primary Button";
+"button-string.primary" = "Nút sơ cấp";
 
 /* First draft: Secondary Button */
-"button-string.secondary" = "Secondary Button";
+"button-string.secondary" = "Nút thứ cấp";
 
 /* First draft: Mouse Button %@ */
-"button-string.tool.numbered" = "Mouse Button %@";
+"button-string.tool.numbered" = "Nút chuột %@";
 
 /* First draft: Primary Mouse Button (also called Left Mouse Button or Mouse Button 1) */
 "button-string.tool.primary" = "Nút sơ cấp (còn gọi là Nút chuột trái hoặc Nút số 1)";
@@ -473,19 +473,19 @@
 "type-shortcut-prompt" = "Type a Keyboard Shortcut";
 
 /* First draft: Back */
-"mail-alert.back" = "Back";
+"mail-alert.back" = "Quay lại";
 
 /* First draft: Write Email */
-"mail-alert.send" = "Write Email";
+"mail-alert.send" = "Viết Email";
 
 /* First draft: Write an Email? */
-"mail-alert.title" = "Write an Email?";
+"mail-alert.title" = "Gửi email cho tôi?";
 
 /* First draft: I read and appreciate all emails, even though I can't respond to all. */
 "mail-alert.body" = "Tôi sẽ đọc và trân trọng tất cả các email gửi về, mặc dù có thể tôi sẽ không phản hồi tất cả";
 
 /* First draft: Cancel */
-"beta-alert.back" = "Cancel";
+"beta-alert.back" = "Hủy";
 
 /* First draft: Beta versions can have many issues. Don't forget to give feedback when you run into one. Thanks! */
 "beta-alert.body" = "Phiên bản Beta có thể có nhiều lỗi\nĐừng quên báo cáo các sự cố nếu bạn gặp nhé.\nCảm ơn bạn!";
