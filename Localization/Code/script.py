@@ -11,6 +11,7 @@ import tempfile
 import argparse
 import json
 import textwrap
+from datetime import datetime
 
 #
 # Package imports
@@ -241,15 +242,31 @@ def markdown_from_analysis(files, repo_root):
                 # Build user strings using outdating_commits
                 #   Since we don't analyze keys for these files
                 
-                outdating_commits = list(map(lambda c: f'{c.hexsha}', translation_dict.get('outdating_commits', [])))
-                outdating_commit_strs = []
-                for c in outdating_commits:
-                    c_short, link = commit_strings_for_markdown(c, repo_root)
-                    outdating_commit_strs.append(f"[{c_short}]({link})")
+                outdating_commits = translation_dict.get('outdating_commits', {})
+                latest_translation_commit = outdating_commits.get('latest_translation_change', None)
+                newer_base_changes = outdating_commits.get('newer_base_changes', [])
                     
-                if len(outdating_commit_strs) > 0:
-                    outdating_commit_str = ",\n".join(outdating_commit_strs)
-                    content_str += f'\n\n**Changes to base file after the latest change to the translation**\n\n{outdating_commit_str}'
+                if len(newer_base_changes) > 0:
+                    
+                    latest_translation_commit_str = commit_string_for_markdown(latest_translation_commit, repo_root)
+                    latest_translation_commit_date_str = commit_date_for_markdown(latest_translation_commit)
+                    
+                    newer_base_changes_strs = []
+                    for c in newer_base_changes:
+                        commit_str = commit_string_for_markdown(c, repo_root)
+                        commit_date_str = commit_date_for_markdown(c)
+                        newer_base_changes_strs.append(f"On `{commit_date_str}` in commit {commit_str}")
+                    newer_base_changes_str = "\n- ".join(newer_base_changes_strs)
+                    
+                    content_str += textwrap.dedent(f"""
+                        
+The latest change to the translation was on `{latest_translation_commit_date_str}` in commit {latest_translation_commit_str}.
+
+The base file changed after that: 
+- {newer_base_changes_str}
+
+Maybe the translation should be updated to reflect the new changes to the base file.
+""") # dedent stopped working all of a sudden. No idea why.
                     
             elif file_type == '.js' or file_type == '.strings':
                 
@@ -277,20 +294,22 @@ def markdown_from_analysis(files, repo_root):
                     translation_before  = escape_for_markdown(translation_change["before"] or "")
                     translation_after   = escape_for_markdown(translation_change["after"] or "")
                     
-                    base_commit = base_change["commit"].hexsha
-                    translation_commit = translation_change["commit"].hexsha
-                    base_commit_short, base_commit_link = commit_strings_for_markdown(base_commit, repo_root)
-                    translation_commit_short, translation_commit_link = commit_strings_for_markdown(translation_commit, repo_root)
+                    base_commit = base_change["commit"]
+                    translation_commit = translation_change["commit"]
+                    base_commit_str = commit_string_for_markdown(base_commit, repo_root)
+                    base_commit_date_str = commit_date_for_markdown(base_commit)
+                    translation_commit_str = commit_string_for_markdown(translation_commit, repo_root)
+                    translation_commit_date_str = commit_date_for_markdown(translation_commit)
                     
                     outdated_str = textwrap.dedent(f"""
                                                     
                         `"{translation_key}"`: `"{translation_after}"`
-                        - Latest change in base file:
-                          `"{base_before}"` -> `"{base_after}"`
-                          in commit [{base_commit_short}]({base_commit_link})
                         - Latest change in translation: 
                           `"{translation_before}"` -> `"{translation_after}"`
-                          in commit [{translation_commit_short}]({translation_commit_link})
+                          on {translation_commit_date_str} in commit {translation_commit_str}
+                        - Latest change in base file:
+                          `"{base_before}"` -> `"{base_after}"`
+                          on {base_commit_date_str} in commit {base_commit_str}
                     """)
                     
                 if len(outdated_str) > 0:
@@ -341,7 +360,9 @@ Base file at: [{base_file_display}]({base_file_link}){content_str}
 def escape_for_markdown(s):
     return s.replace(r'\n', r'\\n').replace(r'\t', r'\\t').replace(r'\r', r'\\r')
 
-def commit_strings_for_markdown(commit_hash, local_repo_path):
+def commit_string_for_markdown(commit, local_repo_path):
+    
+    commit_hash = commit.hexsha
     
     repo_name = os.path.basename(local_repo_path)
     assert repo_name == 'mac-mouse-fix' or repo_name == 'mac-mouse-fix-website', "Can't get paths for unknown repo {repo_name}"
@@ -349,7 +370,12 @@ def commit_strings_for_markdown(commit_hash, local_repo_path):
     link = f'https://github.com/noah-nuebling/{repo_name}/commit/{commit_hash}'
     display_short = commit_hash[:7] # The short hashes displayed on GH and elsewhere have the first 7 chars IIRC
     
-    return display_short, link
+    return f"[{display_short}]({link})"
+
+def commit_date_for_markdown(commit):
+    commit_date_unix = commit.committed_date # Unix timestamp
+    commit_date = datetime.fromtimestamp(commit_date_unix).strftime('%d.%m.%Y')
+    return commit_date
 
 def file_paths_for_markdown(local_path, local_repo_path):
     
@@ -382,7 +408,6 @@ def analyze_localization_files(files, repo_root):
                 'base': '<base_file_path>',
                 'translations': {
                     <translation_file_path>: {
-                        'outdating_commits': [<commits_to_base_files_after_the_latest_commit_to_translation_file>],
                         'missing_translations': [{ 'key': <translation_key>, 'value': <ui_text> }, ...],
                         'superfluous_translations': [{ 'key': <translation_key>, 'value': <ui_text> }, ...],
                         'outdated_translations': {
@@ -403,6 +428,10 @@ def analyze_localization_files(files, repo_root):
                             },
                             ...
                         },
+                        'outdating_commits': {
+                            'latest_translation_change': git.Commit(),
+                            'newer_base_changes': [<commits_to_base_file_after_the_latest_commit_to_translation_file>]
+                        }
                     },
                     <translation_file_path>: {
                         ...
@@ -449,7 +478,10 @@ def analyze_localization_files(files, repo_root):
             
                 
             if len(outdating_commits) > 0:
-                translation_dict['outdating_commits'] = outdating_commits
+                translation_dict['outdating_commits'] = {
+                    'latest_translation_change': last_translation_commit,
+                    'newer_base_changes': outdating_commits
+                }
     
     
     # Log
