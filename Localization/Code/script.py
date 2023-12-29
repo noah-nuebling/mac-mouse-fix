@@ -272,13 +272,13 @@ Maybe the translation should be updated to reflect the new changes to the base f
                 
                 # Build strings for missing/superfluous translations
                 
-                missing_str = ',\n'.join(map(lambda x: f'`"{x["key"]}"`: `"{x["value"]}"`', translation_dict['missing_translations'])) # Not sure why we need to escape the `|` here.
+                missing_str = ',\n'.join(map(lambda x: f'`"{x["key"]}"`: `"{escape_for_markdown(x["value"])}"`', translation_dict['missing_translations'])) # Not sure why we need to escape the `|` here.
                 if len(missing_str) > 0:
-                    content_str += f"\n\n**Missing translations**\n\n{missing_str}"
+                    content_str += f"\n\n**Missing translations**\n\nThe following key-value-pairs appear in the base file but not in the translation. They should probably be added to the translation:\n\n{missing_str}"
                     
-                superfluous_str = ',\n'.join(map(lambda x: f'`"{x["key"]}"`: `"{x["value"]}"`', translation_dict['superfluous_translations']))
+                superfluous_str = ',\n'.join(map(lambda x: f'`"{x["key"]}"`: `"{escape_for_markdown(x["value"])}"`', translation_dict['superfluous_translations']))
                 if len(superfluous_str) > 0:
-                    content_str += f"\n\n**Superfluous translations**\n\n{superfluous_str}"
+                    content_str += f"\n\n**Superfluous translations**\n\nThe following key-value-pairs appear in the translation but not in the base file. It's likely they are unused and can be deleted from the translation:\n\n{superfluous_str}"
                 
                 # Build strings for outdated translations
                 
@@ -301,7 +301,7 @@ Maybe the translation should be updated to reflect the new changes to the base f
                     translation_commit_str = commit_string_for_markdown(translation_commit, repo_root)
                     translation_commit_date_str = commit_date_for_markdown(translation_commit)
                     
-                    outdated_str = textwrap.dedent(f"""
+                    outdated_str += textwrap.dedent(f"""
                                                     
                         `"{translation_key}"`: `"{translation_after}"`
                         - Latest change in translation: 
@@ -313,7 +313,7 @@ Maybe the translation should be updated to reflect the new changes to the base f
                     """)
                     
                 if len(outdated_str) > 0:
-                    content_str += f"\n\n**Outdated translations**{outdated_str}"
+                    content_str += f"\n\n**Outdated translations**\n\nThe following key-value-pairs have been changed in the base file without a subsequent change in the translation. Maybe they should be updated in the translation to reflect the change in the base file:{outdated_str}"
                     
             else:
                 assert False, f"Trying to build markdown for invalid file_type {file_type}"
@@ -340,22 +340,49 @@ Base file at: [{base_file_display}]({base_file_link}){content_str}
         # Get language name
         locale = babel.Locale.parse(language_id, sep='-')
         language_name = locale.english_name
+        flag_emoji = language_tag_to_flag_emoji(language_id)
 
         # Attach to result
-        result += f"\n\n# {language_name}"
+        result += f"\n\n# {flag_emoji} {language_name}"
         for content_str in content_strs:
             result += content_str
     
     if len(result) > 0:
         result = textwrap.dedent(f"""\
-            In this comment you can find a list of translations that might need updating:
+            In this comment you can find a list of translations that might need updating: (This comment is a work-in-progress. You might not want to do work based on the info here, yet.)
         """) + result
+    else:
+        result = "All translations seem to be up-to-date at the moment! This comment will be updated if there are any translations that need updating."
+        
     
     return result
 
 #
 # Helper for build markdown
 #
+
+def language_tag_to_flag_emoji(language_id):
+    
+    # Define helper
+    def get_flag(country_code):
+        return ''.join(chr(ord(c) + 127397) for c in country_code.upper())
+    
+    # Get flag from country code
+    locale = babel.Locale.parse(language_id, sep='-')
+    if locale.territory:
+        return get_flag(locale.territory)
+    
+    # Fallback to map
+    map = {
+        'zh': '🇨🇳',       # Chinese maps to China
+        'ko': '🇰🇷',       # Korean maps to South Korea
+    }
+    flag = map.get(locale.language, None)
+    if flag:
+        return flag
+    
+    # Try to use language code as country code as last resort
+    return get_flag(locale.language)
 
 def escape_for_markdown(s):
     return s.replace(r'\n', r'\\n').replace(r'\t', r'\\t').replace(r'\r', r'\\r')
