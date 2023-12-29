@@ -272,11 +272,11 @@ Maybe the translation should be updated to reflect the new changes to the base f
                 
                 # Build strings for missing/superfluous translations
                 
-                missing_str = ',\n'.join(map(lambda x: f'`"{x["key"]}"`: `"{escape_for_markdown(x["value"])}"`', translation_dict['missing_translations'])) # Not sure why we need to escape the `|` here.
+                missing_str = ',\n'.join(map(lambda x: translation_to_markdown(x['key'], x['value'], file_type), translation_dict['missing_translations'])) # Not sure why we need to escape the `|` here.
                 if len(missing_str) > 0:
                     content_str += f"\n\n**Missing translations**\n\nThe following key-value-pairs appear in the base file but not in the translation. They should probably be added to the translation:\n\n{missing_str}"
                     
-                superfluous_str = ',\n'.join(map(lambda x: f'`"{x["key"]}"`: `"{escape_for_markdown(x["value"])}"`', translation_dict['superfluous_translations']))
+                superfluous_str = ',\n'.join(map(lambda x: translation_to_markdown(x['key'], x['value'], file_type), translation_dict['superfluous_translations']))
                 if len(superfluous_str) > 0:
                     content_str += f"\n\n**Superfluous translations**\n\nThe following key-value-pairs appear in the translation but not in the base file. It's likely they are unused and can be deleted from the translation:\n\n{superfluous_str}"
                 
@@ -289,6 +289,7 @@ Maybe the translation should be updated to reflect the new changes to the base f
                     
                     base_change = changes['latest_base_change']
                     translation_change = changes['latest_translation_change']
+                    
                     base_before         = escape_for_markdown(base_change["before"] or "")
                     base_after          = escape_for_markdown(base_change["after"] or "")
                     translation_before  = escape_for_markdown(translation_change["before"] or "")
@@ -303,12 +304,12 @@ Maybe the translation should be updated to reflect the new changes to the base f
                     
                     outdated_str += textwrap.dedent(f"""
                                                     
-                        `"{translation_key}"`: `"{translation_after}"`
+                        {translation_to_markdown(translation_key, translation_after, file_type, escape_value=False)}
                         - Latest change in translation: 
-                          `"{translation_before}"` -> `"{translation_after}"`
+                          {translation_value_to_markdown(translation_before, file_type)} -> {translation_value_to_markdown(translation_after, file_type)}
                           on {translation_commit_date_str} in commit {translation_commit_str}
                         - Latest change in base file:
-                          `"{base_before}"` -> `"{base_after}"`
+                          {translation_value_to_markdown(base_before, file_type)} -> {translation_value_to_markdown(base_after, file_type)}
                           on {base_commit_date_str} in commit {base_commit_str}
                     """)
                     
@@ -361,18 +362,48 @@ Base file at: [{base_file_display}]({base_file_link}){content_str}
 # Helper for build markdown
 #
 
+def translation_value_to_markdown(value, file_type, escape=True):
+    
+    if escape:
+        value = escape_for_markdown(value)
+    
+    
+    quoted = f"`{value}`" if len(value) > 0 else ""
+    
+    result = ''
+    if file_type == '.strings':
+        result = f'"{quoted}"'
+    elif file_type == '.js':
+        result = f"'{quoted}'"
+    
+    return result
+
+def translation_to_markdown(key, value, file_type, escape_value=True):
+    
+    value_str = translation_value_to_markdown(value, file_type, escape_value)
+    
+    result = ''
+    if file_type == '.strings':
+        result = f'"`{key}`" = {value_str};'
+    elif file_type == '.js':
+        result = f"'`{key}`': {value_str},"
+    
+    return result
+
 def language_tag_to_flag_emoji(language_id):
     
     # Define helper
     def get_flag(country_code):
         return ''.join(chr(ord(c) + 127397) for c in country_code.upper())
     
-    # Get flag from country code
+    # Parse language tag
     locale = babel.Locale.parse(language_id, sep='-')
+    
+    # Get flag from country code
     if locale.territory:
         return get_flag(locale.territory)
     
-    # Fallback to map
+    # Fallback to `language code -> flag` map
     map = {
         'zh': '🇨🇳',       # Chinese maps to China
         'ko': '🇰🇷',       # Korean maps to South Korea
@@ -796,7 +827,8 @@ def extract_translation_keys_and_values_from_string(text):
         # if translation_key == 'capture-toast.body':
             # print(f"{git_line_diff} value: {translation_value} isNone: {translation_value is None}") # /Users/Noah/Desktop/mmf-stuff/mac-mouse-fix/Localization/de.lproj/Localizable.strings
             # print(f"result: {result}")
-            
+    
+    # Return
     return result
 
 #
