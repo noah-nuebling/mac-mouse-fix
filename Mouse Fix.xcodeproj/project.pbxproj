@@ -2362,6 +2362,13 @@
 		4FFBC5732667DCE4001D389B /* PrefixHeader.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PrefixHeader.pch; sourceTree = "<group>"; };
 		4FFBC5A6266977CA001D389B /* Mac Mouse Fix Helper-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Mac Mouse Fix Helper-Bridging-Header.h"; sourceTree = "<group>"; };
 		4FFBC5A7266977CA001D389B /* DoubleExponentialSmoother.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DoubleExponentialSmoother.swift; sourceTree = "<group>"; };
+		5D222D202B3E86F0000EA68D /* vi */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = vi; path = vi.lproj/Main.strings; sourceTree = "<group>"; };
+		5D222D212B3E86F0000EA68D /* vi */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = vi; path = vi.lproj/ButtonOptionsViewController.strings; sourceTree = "<group>"; };
+		5D222D222B3E86F0000EA68D /* vi */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = vi; path = vi.lproj/AuthorizeAccessibilityView.strings; sourceTree = "<group>"; };
+		5D222D232B3E86F1000EA68D /* vi */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = vi; path = vi.lproj/LicenseSheetController.strings; sourceTree = "<group>"; };
+		5D222D242B3E86F1000EA68D /* vi */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = vi; path = vi.lproj/MenuBarItem.strings; sourceTree = "<group>"; };
+		5D222D252B3E86F1000EA68D /* vi */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = vi; path = vi.lproj/Localizable.strings; sourceTree = "<group>"; };
+		5D222D262B3E86F1000EA68D /* vi */ = {isa = PBXFileReference; lastKnownFileType = text.plist.stringsdict; name = vi; path = vi.lproj/Localizable.stringsdict; sourceTree = "<group>"; };
 		D0BDAA91297D462C001CA0FC /* ko */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ko; path = ko.lproj/Localizable.strings; sourceTree = "<group>"; };
 		D0BDAA92297D462D001CA0FC /* ko */ = {isa = PBXFileReference; lastKnownFileType = text.plist.stringsdict; name = ko; path = ko.lproj/Localizable.stringsdict; sourceTree = "<group>"; };
 		D0BDAA93297D462D001CA0FC /* ko */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ko; path = ko.lproj/Main.strings; sourceTree = "<group>"; };
@@ -7600,6 +7607,7 @@
 				"zh-HK",
 				"zh-Hans",
 				ko,
+				vi,
 			);
 			mainGroup = 4FCECD7721092354001F1078;
 			packageReferences = (
@@ -8069,6 +8077,7 @@
 				F4EBD4C328DEBA8D0057D2DE /* zh-HK */,
 				F4EBD4CA28DEFC4A0057D2DE /* zh-Hans */,
 				D0BDAA96297D462D001CA0FC /* ko */,
+				5D222D232B3E86F1000EA68D /* vi */,
 			);
 			name = LicenseSheetController.xib;
 			sourceTree = "<group>";
@@ -8082,6 +8091,7 @@
 				F4EBD4C628DEBA8D0057D2DE /* zh-HK */,
 				F4EBD4CD28DEFC4A0057D2DE /* zh-Hans */,
 				D0BDAA92297D462D001CA0FC /* ko */,
+				5D222D262B3E86F1000EA68D /* vi */,
 			);
 			name = Localizable.stringsdict;
 			sourceTree = "<group>";
@@ -8095,6 +8105,7 @@
 				F4EBD4C128DEBA8D0057D2DE /* zh-HK */,
 				F4EBD4C828DEFC4A0057D2DE /* zh-Hans */,
 				D0BDAA93297D462D001CA0FC /* ko */,
+				5D222D202B3E86F0000EA68D /* vi */,
 			);
 			name = Main.storyboard;
 			sourceTree = "<group>";
@@ -8108,6 +8119,7 @@
 				F4EBD4C528DEBA8D0057D2DE /* zh-HK */,
 				F4EBD4CC28DEFC4A0057D2DE /* zh-Hans */,
 				D0BDAA91297D462C001CA0FC /* ko */,
+				5D222D252B3E86F1000EA68D /* vi */,
 			);
 			name = Localizable.strings;
 			sourceTree = "<group>";
@@ -8121,6 +8133,7 @@
 				F4EBD4C428DEBA8D0057D2DE /* zh-HK */,
 				F4EBD4CB28DEFC4A0057D2DE /* zh-Hans */,
 				D0BDAA97297D462D001CA0FC /* ko */,
+				5D222D242B3E86F1000EA68D /* vi */,
 			);
 			name = MenuBarItem.xib;
 			sourceTree = "<group>";
@@ -8134,6 +8147,7 @@
 				F4EBD4C228DEBA8D0057D2DE /* zh-HK */,
 				F4EBD4C928DEFC4A0057D2DE /* zh-Hans */,
 				D0BDAA95297D462D001CA0FC /* ko */,
+				5D222D222B3E86F0000EA68D /* vi */,
 			);
 			name = AuthorizeAccessibilityView.xib;
 			sourceTree = "<group>";
@@ -8147,6 +8161,7 @@
 				F4EBD4C028DEBA8D0057D2DE /* zh-HK */,
 				F4EBD4C728DEFC4A0057D2DE /* zh-Hans */,
 				D0BDAA94297D462D001CA0FC /* ko */,
+				5D222D212B3E86F0000EA68D /* vi */,
 			);
 			name = ButtonOptionsViewController.xib;
 			sourceTree = "<group>";
@@ -8166,7 +8181,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 6000;
-				DEVELOPMENT_TEAM = LM5Z78756B;
+				DEVELOPMENT_TEAM = 8S7348QV8Q;
 				ENABLE_HARDENED_RUNTIME = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -8201,7 +8216,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 6000;
-				DEVELOPMENT_TEAM = LM5Z78756B;
+				DEVELOPMENT_TEAM = 8S7348QV8Q;
 				ENABLE_HARDENED_RUNTIME = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -8473,7 +8488,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				DEVELOPMENT_TEAM = LM5Z78756B;
+				DEVELOPMENT_TEAM = 8S7348QV8Q;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_ON_DEMAND_RESOURCES = NO;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -8509,7 +8524,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				DEVELOPMENT_TEAM = LM5Z78756B;
+				DEVELOPMENT_TEAM = 8S7348QV8Q;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_ON_DEMAND_RESOURCES = NO;
 				FRAMEWORK_SEARCH_PATHS = (

@@ -1,0 +1,324 @@
+
+/* Class = "NSMenuItem"; title = "Regular"; ObjectID = "17P-PJ-tV1"; Note = "Scrolling > Smoothness > Regular Option"; */
+"17P-PJ-tV1.title" = "Bình thường";
+
+/* Class = "NSMenuItem"; title = "Undo"; ObjectID = "1TU-wL-skT"; */
+"1TU-wL-skT.title" = "Hoàn tác";
+
+/* Class = "NSViewController"; title = "Pointer"; ObjectID = "1dS-BH-DIv"; Note = "Pointer Tab Title"; */
+"1dS-BH-DIv.title" = "Trỏ chuột";
+
+/* Class = "NSTextFieldCell"; title = "<Scroll precisely by moving the scroll wheel slowly>"; ObjectID = "1nK-vb-jNz"; */
+"1nK-vb-jNz.title" = "<Cuộn chính xác khi cuộn thật chậm>";
+
+/* Class = "NSMenuItem"; title = "View Guides or Ask the Community..."; ObjectID = "2Uv-W7-hzJ"; */
+"2Uv-W7-hzJ.title" = "Xem hướng dẫn hoặc hỏi tại cộng đồng...";
+
+/* Class = "NSTextFieldCell"; title = "Acceleration:"; ObjectID = "3a9-XG-oHg"; Note = "Pointer > Acceleration Label"; */
+"3a9-XG-oHg.title" = "Tăng tốc:";
+
+/* Class = "NSMenuItem"; title = "Check for Updates..."; ObjectID = "3pt-ka-lxV"; */
+"3pt-ka-lxV.title" = "Kiểm tra cập nhật...";
+
+/* Class = "NSMenuItem"; title = "<Mission Control and Spaces>"; ObjectID = "4Cx-DN-qX3"; */
+"4Cx-DN-qX3.title" = "<Mission Control and Spaces>";
+
+/* Class = "NSMenuItem"; title = "Off"; ObjectID = "4gx-d0-WNb"; Note = "Scrolling > Smoothness > Off Option"; */
+"4gx-d0-WNb.title" = "Tắt";
+
+/* Class = "NSButtonCell"; title = "Precision"; ObjectID = "4hf-tQ-y76"; Note = "Scrolling > Precise Scrolling Toggle"; */
+"4hf-tQ-y76.title" = "Chính xác";
+
+/* Class = "NSTextFieldCell"; title = "Write a Feature Request"; ObjectID = "5yb-g8-Kcg"; */
+"5yb-g8-Kcg.title" = "Gửi yêu cầu tính năng mới";
+
+/* Class = "NSTextFieldCell"; title = "Scroll Horizontally"; ObjectID = "6Nj-Ed-W5T"; Note = "Scrolling > Keyboard Modifiers > Scroll Horizontally Label"; */
+"6Nj-Ed-W5T.title" = "Cuộn ngang";
+
+/* Class = "NSMenuItem"; title = "Edit"; ObjectID = "6Yt-gG-Nf9"; */
+"6Yt-gG-Nf9.title" = "Chỉnh sửa";
+
+/* Class = "NSMenuItem"; title = "Delete"; ObjectID = "6es-it-kDs"; */
+"6es-it-kDs.title" = "Xóa";
+
+/* Class = "NSTextFieldCell"; title = "<Version - (-)>"; ObjectID = "79J-Zg-ebA"; */
+"79J-Zg-ebA.title" = "<Phiên bản - (-)>";
+
+/* Class = "NSTextFieldCell"; title = "Acknowledgements"; ObjectID = "8pi-FV-zYE"; */
+"8pi-FV-zYE.title" = "Sự ghi nhận";
+
+/* Class = "NSMenuItem"; title = "High"; ObjectID = "97W-3h-SSc"; Note = "Scrolling > Smoothness > High Option"; */
+"97W-3h-SSc.title" = "Cao";
+
+/* Class = "NSTextFieldCell"; title = "Scroll Precisely"; ObjectID = "A6t-UZ-2DE"; Note = "Scrolling > Keyboard Modifiers > Scroll Precisely Label"; */
+"A6t-UZ-2DE.title" = "Cuộn chính xác";
+
+/* Class = "NSTextFieldCell"; title = "Move between pages in Safari by scrolling horizontally, and more"; ObjectID = "AHn-zX-g4d"; Note = "Scrolling > Trackpad Interactions > Hint"; */
+"AHn-zX-g4d.title" = "Di chuyển giữa các trang của Safari và hơn nữa bằng cách cuộn ngang";
+
+/* Class = "NSMenu"; title = "Main Menu"; ObjectID = "AYu-sK-qS6"; */
+"AYu-sK-qS6.title" = "Trang chính";
+
+/* Class = "NSTextFieldCell"; title = "Lets you quickly turn off or on features like\nsmooth scrolling"; ObjectID = "AqN-zN-yDS"; */
+"AqN-zN-yDS.title" = "Cho phép bạn tắt hoặc bật nhanh các tính năng như\nscuộn mượt mà";
+
+/* Class = "NSMenuItem"; title = "Hide Mac Mouse Fix"; ObjectID = "Bnm-ze-Mca"; */
+"Bnm-ze-Mca.title" = "Ẩn Mac Mouse Fix";
+
+/* Class = "NSTextFieldCell"; title = "Low"; ObjectID = "DNu-D4-tBY"; Note = "Pointer > Sensitivity Slider > Low Label"; */
+"DNu-D4-tBY.title" = "Thấp";
+
+/* Class = "NSMenu"; title = "Help"; ObjectID = "DVS-lH-VBH"; */
+"DVS-lH-VBH.title" = "Trợ giúp";
+
+/* Class = "NSTextFieldCell"; title = "Set acceleration under \nSystem Preferences > Mouse > Tracking speed "; ObjectID = "DtT-YF-gUn"; Note = "Pointer > Acceleration > macOS Option > Hint"; */
+"DtT-YF-gUn.title" = "Cài đặt tăng tốc tại \nCài đặt hệ thống > Chuột > Tốc độ di chuyển ";
+
+/* Class = "NSMenuItem"; title = "Medium"; ObjectID = "E0q-4e-axc"; Note = "Scrolling > Scroll Speed > Medium Option"; */
+"E0q-4e-axc.title" = "Vừa";
+
+/* Class = "NSTextFieldCell"; title = "Scroll Swiftly"; ObjectID = "ENz-Ny-4ax"; Note = "Scrolling > Keyboard Modifiers > Scroll Swiftly Label"; */
+"ENz-Ny-4ax.title" = "Cuộn nhanh";
+
+/* Class = "NSMenuItem"; title = "Low"; ObjectID = "FT8-zP-xsg"; Note = "Scrolling > Scroll Speed > Low Option"; */
+"FT8-zP-xsg.title" = "Thấp";
+
+/* Class = "NSMenuItem"; title = "Help"; ObjectID = "Fp4-bf-cbR"; */
+"Fp4-bf-cbR.title" = "Trợ giúp";
+
+/* Class = "NSMenuItem"; title = "Services"; ObjectID = "Gr8-qh-oGd"; */
+"Gr8-qh-oGd.title" = "Dịch vụ";
+
+/* Class = "NSTextFieldCell"; title = "Zoom In or Out"; ObjectID = "H4T-Rp-t33"; Note = "Scrolling > Keyboard Modifiers > Zoom In or Out Label"; */
+"H4T-Rp-t33.title" = "Phóng to hoặc thu nhỏ";
+
+/* Class = "NSButtonCell"; title = "Options..."; ObjectID = "Hur-83-2a2"; Note = "Buttons > Options... Button"; */
+"Hur-83-2a2.title" = "Tùy chỉnh...";
+
+/* Class = "NSMenuItem"; title = "Redo"; ObjectID = "IJF-sN-Wfw"; */
+"IJF-sN-Wfw.title" = "Làm lại";
+
+/* Class = "NSButtonCell"; title = "Show in Menu Bar"; ObjectID = "ILO-GQ-vNk"; Note = "General > Show in Menu Bar Toggle"; */
+"ILO-GQ-vNk.title" = "Hiển thị trên Thanh Menu";
+
+/* Class = "NSWindow"; title = "Mac Mouse Fix"; ObjectID = "IQv-IB-iLA"; Note = "Mac Mouse Fix Window Title"; */
+"IQv-IB-iLA.title" = "Mac Mouse Fix";
+
+/* Class = "NSMenu"; title = "Window"; ObjectID = "InY-TB-ky6"; */
+"InY-TB-ky6.title" = "Cửa sổ";
+
+/* Class = "NSMenu"; title = "Edit"; ObjectID = "LTC-zW-sTp"; */
+"LTC-zW-sTp.title" = "Chỉnh sửa";
+
+/* Class = "NSButtonCell"; title = "Get Beta Versions"; ObjectID = "Mck-5W-5lv"; Note = "General > Get Beta Versions Toggle"; */
+"Mck-5W-5lv.title" = "Nhận phiên bản beta";
+
+/* Class = "NSTabViewItem"; label = "Buttons"; ObjectID = "Mjk-wy-Z7C"; Note = "Toolbar > Buttons Tab Button"; */
+"Mjk-wy-Z7C.label" = "Nút";
+
+/* Class = "NSButtonCell"; title = "Trackpad Simulation"; ObjectID = "N65-aN-Hxp"; Note = "Scroll > Trackpad Interactions"; */
+"N65-aN-Hxp.title" = "Giả lập trackpad";
+
+/* Class = "NSTextFieldCell"; title = "Move the mouse pointer inside the '+' field, then _Click_ a mouse button to assign an action to it.  You can also _Double Click_, _Click and Drag_ and [more]()."; ObjectID = "N7H-9j-DIr"; Note = "Buttons > Add Field Hint"; */
+"N7H-9j-DIr.title" = "Di chuyển con trỏ chuột vào trong ô '+', sau đó _nhấp_ một nút của chuột để gáng một hành động cho nó.  Bạn cũng có thể _kích đôi_, _kích và kéo_ và [nhiều hơn]().";
+
+/* Class = "NSMenuItem"; title = "Minimize"; ObjectID = "NdF-Gb-mOK"; */
+"NdF-Gb-mOK.title" = "Thu nhỏ";
+
+/* Class = "NSTextFieldCell"; title = "Visit the Website"; ObjectID = "Ozk-o9-C4a"; */
+"Ozk-o9-C4a.title" = "Ghé thăm trang web";
+
+/* Class = "NSMenuItem"; title = "Off"; ObjectID = "PdO-dH-G7Y"; Note = "Pointer > Acceleration > Off Option"; */
+"PdO-dH-G7Y.title" = "Tắt";
+
+/* Class = "NSBox"; title = "<Box>"; ObjectID = "Pxm-4w-iO7"; */
+"Pxm-4w-iO7.title" = "<Ô>";
+
+/* Class = "NSTextFieldCell"; title = "<⌘⇧⌥⌃ + Triple Click and Drag Button 3>"; ObjectID = "QKM-im-bk9"; */
+"QKM-im-bk9.title" = "<⌘⇧⌥⌃ + Kích ba lần và kéo Nút số 3>";
+
+/* Class = "NSTextFieldCell"; title = "Send Me an Email"; ObjectID = "QaW-cc-uzc"; */
+"QaW-cc-uzc.title" = "Gửi email cho tôi";
+
+/* Class = "NSTextFieldCell"; title = "Enable Mac Mouse Fix"; ObjectID = "RV9-5T-rvb"; Note = "General > Enable Mac Mouse Fix Label"; */
+"RV9-5T-rvb.title" = "Kích hoạt Mac Mouse Fix";
+
+/* Class = "NSMenuItem"; title = "Hide Others"; ObjectID = "Rlr-89-4fc"; */
+"Rlr-89-4fc.title" = "Ẩn những mục khác";
+
+/* Class = "NSMenuItem"; title = "Close"; ObjectID = "S3S-2l-eNQ"; */
+"S3S-2l-eNQ.title" = "Đóng";
+
+/* Class = "NSButtonCell"; title = "<0.6x>"; ObjectID = "S55-uf-Xij"; */
+"S55-uf-Xij.title" = "<0.6x>";
+
+/* Class = "NSMenuItem"; title = "Paste"; ObjectID = "S6k-al-LbR"; */
+"S6k-al-LbR.title" = "Dán";
+
+/* Class = "NSTextFieldCell"; title = "You'll be notified of updates when you open\nthis window"; ObjectID = "SaY-fF-d1s"; */
+"SaY-fF-d1s.title" = "Bạn sẽ được thông báo về các cập nhật khi bạn mở\ncửa sổ này";
+
+/* Class = "NSTextFieldCell"; title = "Smoothnessssss:"; ObjectID = "SjO-Dq-CEX"; Note = "Scrolling > Smoothness Label"; */
+"SjO-Dq-CEX.title" = "Thật là mượt màààààààà:";
+
+/* Class = "NSTextFieldCell"; title = "Buy Me a Milkshake :)"; ObjectID = "TrI-uu-DEN"; */
+"TrI-uu-DEN.title" = "Ủng hộ tôi một ly sữa lắc :)";
+
+/* Class = "NSMenuItem"; title = "Quit Mac Mouse Fix"; ObjectID = "UeD-ND-tYj"; */
+"UeD-ND-tYj.title" = "Tắt Mac Mouse Fix";
+
+/* Class = "NSTextFieldCell"; title = "<Text Cell>"; ObjectID = "WiZ-l0-Th5"; */
+"WiZ-l0-Th5.title" = "<Ô chữ>";
+
+/* Class = "NSMenu"; title = "Services"; ObjectID = "X8q-Nk-Fwr"; */
+"X8q-Nk-Fwr.title" = "Dịch vụ";
+
+/* Class = "NSTextFieldCell"; title = "Sensitivity:"; ObjectID = "XAP-He-hda"; Note = "Pointer > Sensitivity Label"; */
+"XAP-He-hda.title" = "Độ nhạy:";
+
+/* Class = "NSMenuItem"; title = "Activate License..."; ObjectID = "YBT-Ar-F4S"; */
+"YBT-Ar-F4S.title" = "Kích hoạt bản quyền...";
+
+/* Class = "NSTextFieldCell"; title = "Medium"; ObjectID = "YDr-ez-VKk"; Note = "Pointer > Sensitivity Slider > Medium Label"; */
+"YDr-ez-VKk.title" = "Vừa";
+
+/* Class = "NSMenu"; title = "Mac Mouse Fix"; ObjectID = "Yyg-LD-A1v"; */
+"Yyg-LD-A1v.title" = "Mac Mouse Fix";
+
+/* Class = "NSTextFieldCell"; title = "Check It Out on GitHub"; ObjectID = "ZMA-p0-2lf"; */
+"ZMA-p0-2lf.title" = "Xem trên GitHub";
+
+/* Class = "NSMenuItem"; title = "Zoom"; ObjectID = "ZfY-xQ-tQl"; */
+"ZfY-xQ-tQl.title" = "Thu phóng";
+
+/* Class = "NSTextFieldCell"; title = "<Button X>"; ObjectID = "Zqs-Y4-U4Q"; */
+"Zqs-Y4-U4Q.title" = "<Nút X>";
+
+/* Class = "NSMenuItem"; title = "Bring All to Front"; ObjectID = "aZA-uL-uvx"; */
+"aZA-uL-uvx.title" = "Mang tất cả lên trên";
+
+/* Class = "NSTextFieldCell"; title = "Mac Mouse Fix"; ObjectID = "bGk-tB-fcH"; */
+"bGk-tB-fcH.title" = "Mac Mouse Fix";
+
+/* Class = "NSMenuItem"; title = "High"; ObjectID = "bIE-g7-3St"; Note = "Scrolling > Scroll Speed > High Option"; */
+"bIE-g7-3St.title" = "Cao";
+
+/* Class = "NSMenuItem"; title = "Medium"; ObjectID = "bJS-hB-0l3"; Note = "Pointer > Acceleration > Medium Option"; */
+"bJS-hB-0l3.title" = "Vừa";
+
+/* Class = "NSTextFieldCell"; title = "File a Bug Report"; ObjectID = "bQf-qv-mvB"; */
+"bQf-qv-mvB.title" = "Gửi báo cáo lỗi";
+
+/* Class = "NSTextFieldCell"; title = "Mac Mouse Fix will stay enabled after you close it"; ObjectID = "bew-ni-FnZ"; */
+"bew-ni-FnZ.title" = "Mac Mouse Fix vẫn được bật khi bạn đóng nó";
+
+/* Class = "NSButtonCell"; title = "Don't remind me again"; ObjectID = "bgk-wr-o8T"; */
+"bgk-wr-o8T.title" = "Không nhắc lại";
+
+/* Class = "NSViewController"; title = "<Initial Tab Controller>"; ObjectID = "bsO-Hw-2ui"; */
+"bsO-Hw-2ui.title" = "<Trình điều khiển thẻ ban đầu>";
+
+/* Class = "NSViewController"; title = "About"; ObjectID = "buH-zX-xXu"; Note = "About Tab Title"; */
+"buH-zX-xXu.title" = "Giới thiệu";
+
+/* Class = "NSMenuItem"; title = "macOS"; ObjectID = "cnA-CV-nF3"; Note = "Pointer > Acceleration > macOS Option"; */
+"cnA-CV-nF3.title" = "macOS";
+
+/* Class = "NSTextFieldCell"; title = "<Day 2/14 of your test period>"; ObjectID = "cul-5Z-iUo"; */
+"cul-5Z-iUo.title" = "<Ngày 2/14 của thời gian dùng thử>";
+
+/* Class = "NSMenuItem"; title = "Buy Mac Mouse Fix..."; ObjectID = "d0g-07-PaJ"; */
+"d0g-07-PaJ.title" = "Mua Mac Mouse Fix...";
+
+/* Class = "NSViewController"; title = "Buttons"; ObjectID = "d9S-X9-qM1"; Note = "Buttons Tab Title"; */
+"d9S-X9-qM1.title" = "Nút";
+
+/* Class = "NSViewController"; title = "General"; ObjectID = "eLS-O0-A1x"; Note = "General Tab Title"; */
+"eLS-O0-A1x.title" = "Chung";
+
+/* Class = "NSTextFieldCell"; title = "Get Help"; ObjectID = "eVc-l9-Z0h"; */
+"eVc-l9-Z0h.title" = "Nhận trợ giúp";
+
+/* Class = "NSMenuItem"; title = "Show All"; ObjectID = "fGs-UI-L0d"; */
+"fGs-UI-L0d.title" = "Hiển thị tất cả";
+
+/* Class = "NSMenuItem"; title = "Window"; ObjectID = "fNA-5s-U4d"; */
+"fNA-5s-U4d.title" = "Cửa sổ";
+
+/* Class = "NSMenuItem"; title = "macOS"; ObjectID = "fW3-4Q-yB8"; Note = "Scrolling > Scroll Speed > macOS Option"; */
+"fW3-4Q-yB8.title" = "macOS";
+
+/* Class = "NSTextFieldCell"; title = "<Click \"__Restore Defaults...__\" to load the recommended settings for \nyour __Logitech M720 Triathlon__.>"; ObjectID = "g5F-ZO-vGZ"; */
+"g5F-ZO-vGZ.title" = "<Nhấp \"__Khôi phục mặc định...__\" để tải thiết lập mặc định cho \n __Logitech M720 Triathlon__ của bạn.>";
+
+/* Class = "NSTabViewItem"; label = "<Initial>"; ObjectID = "g9N-Za-8Ss"; */
+"g9N-Za-8Ss.label" = "<Ban đầu>";
+
+/* Class = "NSButtonCell"; title = "Reverse Direction"; ObjectID = "gK0-1z-Pjv"; Note = "Scrolling > Reverse Scroll Direction Toggle"; */
+"gK0-1z-Pjv.title" = "Đổi hướng";
+
+/* Class = "NSTableColumn"; headerCell.title = "<Effect>"; ObjectID = "gOt-GR-IbE"; */
+"gOt-GR-IbE.headerCell.title" = "<Tác dụng>";
+
+/* Class = "NSMenuItem"; title = "Mac Mouse Fix"; ObjectID = "hSC-BE-EZJ"; */
+"hSC-BE-EZJ.title" = "Mac Mouse Fix";
+
+/* Class = "NSMenuItem"; title = "Low"; ObjectID = "hmb-DX-idO"; Note = "Pointer > Acceleration > Low Option"; */
+"hmb-DX-idO.title" = "Thấp";
+
+/* Class = "NSMenuItem"; title = "Copy"; ObjectID = "iFe-4y-9Xa"; */
+"iFe-4y-9Xa.title" = "Sao chép";
+
+/* Class = "NSTabViewItem"; label = "Scrolling"; ObjectID = "jOM-dH-pdc"; Note = "Toolbar > Scrolling Tab Button"; */
+"jOM-dH-pdc.label" = "Cuộn";
+
+/* Class = "NSMenuItem"; title = "<Click and Drag Button 3>"; ObjectID = "kK6-b5-Rfd"; */
+"kK6-b5-Rfd.title" = "<Nhấp và kéo nút số 3>";
+
+/* Class = "NSTextFieldCell"; title = "Speed:"; ObjectID = "l7d-al-Y14"; Note = "Scrolling > Scroll Speed Label"; */
+"l7d-al-Y14.title" = "Tốc độ:";
+
+/* Class = "NSTabViewItem"; label = "Pointer"; ObjectID = "lLu-45-nE3"; Note = "Toolbar > Pointer Tab Button"; */
+"lLu-45-nE3.label" = "Trỏ chuột";
+
+/* Class = "NSButtonCell"; title = "Restore Defaults..."; ObjectID = "lrw-Lp-nQ4"; */
+"lrw-Lp-nQ4.title" = "Khôi phục mặc định...";
+
+/* Class = "NSTableColumn"; headerCell.title = "<Trigger>"; ObjectID = "o3B-zA-fJm"; */
+"o3B-zA-fJm.headerCell.title" = "<Trigger>";
+
+/* Class = "NSMenuItem"; title = "Select All"; ObjectID = "oEX-Tp-9Cv"; */
+"oEX-Tp-9Cv.title" = "Chọn tất cả";
+
+/* Class = "NSTextFieldCell"; title = "Created by Noah Nuebling"; ObjectID = "pMz-a0-1UQ"; */
+"pMz-a0-1UQ.title" = "Được tạo bởi Noah Nuebling";
+
+/* Class = "NSViewController"; title = "Scrolling"; ObjectID = "qcW-e9-BqR"; Note = "Scrolling Tab Title"; */
+"qcW-e9-BqR.title" = "Cuộn";
+
+/* Class = "NSMenuItem"; title = "Cut"; ObjectID = "rFn-h3-0EN"; */
+"rFn-h3-0EN.title" = "Cắt";
+
+/* Class = "NSTabViewItem"; label = "General"; ObjectID = "rIq-3r-6ck"; Note = "Toolbar > General Tab Button"; */
+"rIq-3r-6ck.label" = "Chung";
+
+/* Class = "NSMenuItem"; title = "High"; ObjectID = "sef-RZ-SeL"; Note = "Pointer > Acceleration > High Option"; */
+"sef-RZ-SeL.title" = "Cao";
+
+/* Class = "NSButtonCell"; title = "Check for Updates"; ObjectID = "tdD-8Q-JB2"; Note = "General > Check for Updates Toggle"; */
+"tdD-8Q-JB2.title" = "Kiểm tra cập nhật";
+
+/* Class = "NSMenuItem"; title = "About Mac Mouse Fix"; ObjectID = "u9F-yq-WC3"; */
+"u9F-yq-WC3.title" = "Giới thiệu về Mac Mouse Fix";
+
+/* Class = "NSTextFieldCell"; title = "Keyboard Modifiers:"; ObjectID = "vbN-zN-z2V"; Note = "Scrolling > Keyboard Modifiers Label"; */
+"vbN-zN-z2V.title" = "Phím bổ sung";
+
+/* Class = "NSTextFieldCell"; title = "High"; ObjectID = "wJW-hQ-lUc"; Note = "Pointer > Sensitivity Slider > High Label"; */
+"wJW-hQ-lUc.title" = "Cao";
+
+/* Class = "NSTabViewItem"; label = "About"; ObjectID = "wal-3r-ZZs"; Note = "Toolbar > About Tab Button"; */
+"wal-3r-ZZs.label" = "Giới thiệu";
+
+/* Class = "NSTextFieldCell"; title = "<Text Cell>"; ObjectID = "zwX-Pv-OOK"; */
+"zwX-Pv-OOK.title" = "<Ô chữ>";
