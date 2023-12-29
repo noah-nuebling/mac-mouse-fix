@@ -8,6 +8,9 @@ from pprint import pprint
 import re
 import subprocess
 import tempfile
+import argparse
+import json
+import textwrap
 
 #
 # Package imports
@@ -15,6 +18,7 @@ import tempfile
 
 import git
 import babel
+import requests
 
 #
 # Constants
@@ -28,16 +32,15 @@ repo_root = os.getcwd()
 #
 
 def main():
+    
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--api_key', required=True, help="See Apple Note 'MMF Localization Script Access Token'")
+    args = parser.parse_args()
 
     files = find_localization_files_in_mmf_repo(repo_root)    
     analysis = analyze_localization_files(files, repo_root)
-    
-    pprint(analysis)
-    
-    # md = markdown_from_analysis(analysis)
-    
-    # print(md)
-    
+    markdown = markdown_from_analysis(analysis, repo_root)
+    upload_markdown(args.api_key, markdown)
     
 #
 # Debug
@@ -45,7 +48,10 @@ def main():
 def prepare_interactive_debugging(repo_root):
     
     """
+    The analyze_localization_files() step in main() takes so longggg making it hard to debug any steps afterwards - Unless you're using python interactive mode!
+    
     To debug from python interactive mode:
+    
     1. Change working dir to the folder of this script. Then open python in interactive mode.
     2. >> import script, importlib
     3. >> from pprint import pprint (If necessary)
@@ -62,6 +68,143 @@ def prepare_interactive_debugging(repo_root):
     return result
     
 #
+# Upload Markdown
+# 
+
+def upload_markdown(api_key, markdown):
+    
+    """
+    Upload the generated markdown to a comment on the "Localization Mac Mouse Fix" discussion (https://github.com/noah-nuebling/mac-mouse-fix/discussions/731)
+    Notes:
+    - Adding a comment will alert people who have notifications turned on for the discussion!
+    - Find the api_key in the Apple Note `MMF Localization Script Access Token`
+    - Use GitHub GraphQL Explorer to create queries (https://docs.github.com/en/graphql/overview/explorer)
+    """
+    
+    # Log
+    
+    print(f"Uploading markdown ...")
+    
+    # Define Constants
+    
+    comment_prefix = "<!-- AUTOGEN_LOCALIZATION_ANALYSIS -->\n"
+    new_comment_body = comment_prefix + markdown
+    
+    # Get comments on the discussion
+    #   Note: If there are 100 comments since out comment last updated, then this might break. Seems unlikely though.
+    
+    comment_count = 100
+    find_comment_query = textwrap.dedent(f"""
+        {{
+            repository(owner: "noah-nuebling", name: "mac-mouse-fix") {{
+                discussion(number: 731) {{
+                    id
+                    comments(last:{comment_count}) {{
+                        nodes {{
+                            body
+                            id
+                        }}
+                    }}
+                }}
+            }}                                    
+        }}
+    """)
+    
+    response = github_graphql_request(api_key, find_comment_query)
+    
+    # Log
+    print(f"Downloaded comments for discussion. Not printing response as not to clutter up logs. But it might contain error messages.")
+    
+    # Parse
+    discussion = response['data']['repository']['discussion']
+    discussion_id = discussion['id']
+    comments = discussion['comments']['nodes']
+    
+    # Find existing comment
+    
+    old_comment_id = ''
+    old_comment_body = ''
+    
+    for comment in comments:
+        
+        body = comment['body']
+        id = comment['id']
+        
+        if body.startswith(comment_prefix):
+            old_comment_id = id
+            old_comment_body = body
+            break
+        
+    # Check if comment is outdated
+    
+    if new_comment_body == old_comment_body:
+        print(f"Comment is already up-to-date. Not uploading anything.")
+    else:
+            
+        # Delete existing comment
+        # Note: We don't need the `clientMutationId`. Should probably remove from query
+
+        if len(old_comment_id) == 0:
+            print(f"Couldn't find existing comment. Nothing to delete.")
+        else:
+            
+            delete_comment_query = textwrap.dedent(f"""
+                mutation {{
+                    deleteDiscussionComment(input:{{id: "{old_comment_id}"}}) {{
+                        clientMutationId
+                    }}
+                }}
+            """)
+            
+            response = github_graphql_request(api_key, delete_comment_query)
+            
+            # Log
+            print(f"Deleted comment with id {old_comment_id}. Response: {response}")
+            
+        
+        # Add new comment
+        
+        new_comment_body_escaped = new_comment_body.replace('"', r'\"')
+        
+        add_comment_query = textwrap.dedent(f"""
+            mutation {{
+                addDiscussionComment(input: {{discussionId: "{discussion_id}", body: "{new_comment_body_escaped}"}}) {{
+                    comment {{
+                        publishedAt
+                        id
+                        databaseId
+                    }}
+                }}
+            }}
+        """)
+        
+        response = github_graphql_request(api_key, add_comment_query)
+        
+        # Log
+        print(f"Uploaded comment! Response: {response}")
+    
+# 
+# Helper for Upload Markdown
+#
+
+def github_graphql_request(api_key, query):
+
+    # Define header
+    headers = {
+        "Authorization": f"Bearer {api_key}",
+        "Content-Type": "application/json"
+    }
+
+    # Make request
+    response = requests.post('https://api.github.com/graphql', json={'query': query}, headers=headers)
+
+    # Parse the response
+    result = response.json()
+    
+    # Return 
+    return result
+
+#
 # Build markdown
 #
 
@@ -72,17 +215,22 @@ def markdown_from_analysis(files, repo_root):
     # This is why we're sorting all of the things we iterate through. I'm not sure this is necessary, since Python 3.7 and higher iterate through dict `.items()` in insertion order anyways.
     # But I still think the sorting should make it more robust, especially also against changes in the code that produces the analysis.
     
+    # Log
+    print("Generating markdown from analysis...")
+    
+    # Build content and split it up by language
+    
     result_by_language = dict()
     
     for file_dict in sorted(files, key=lambda f: f['base']):
         
         base_file_path = file_dict['base']
-        base_file_display, base_file_link = paths_for_markdown(base_file_path, repo_root)
+        base_file_display_short, base_file_display, base_file_link = file_paths_for_markdown(base_file_path, repo_root)
         
         for translation_file_path in sorted(file_dict['translations'].keys()):
             translation_dict = file_dict['translations'][translation_file_path]
             
-            translation_file_display, translation_file_link = paths_for_markdown(base_file_path, repo_root)
+            translation_file_display_short, translation_file_display, translation_file_link = file_paths_for_markdown(translation_file_path, repo_root)
             
             _, file_type = os.path.splitext(translation_file_path)
             
@@ -93,19 +241,27 @@ def markdown_from_analysis(files, repo_root):
                 # Build user strings using outdating_commits
                 #   Since we don't analyze keys for these files
                 
-                outdating_commit_str = ', '.join(list(map(lambda c: f'{c.hexsha}', translation_dict.get('outdating_commits', []))))
-                if len(outdating_commit_str) > 0:
-                    content_str = '\n\nChanges to base file after the latest change to the translation: ' + outdating_commit_str
+                outdating_commits = list(map(lambda c: f'{c.hexsha}', translation_dict.get('outdating_commits', [])))
+                outdating_commit_strs = []
+                for c in outdating_commits:
+                    c_short, link = commit_strings_for_markdown(c, repo_root)
+                    outdating_commit_strs.append(f"[{c_short}]({link})")
+                    
+                if len(outdating_commit_strs) > 0:
+                    outdating_commit_str = ",\n".join(outdating_commit_strs)
+                    content_str += f'\n\n**Changes to base file after the latest change to the translation**\n\n{outdating_commit_str}'
                     
             elif file_type == '.js' or file_type == '.strings':
                 
-                missing_str = ' | '.join(map(lambda x: f'"{x["key"]}": "{x["value"]}"', translation_dict['missing_translations'])) # Not sure why we need to escape the `|` here.
+                # Build strings for missing/superfluous translations
+                
+                missing_str = ',\n'.join(map(lambda x: f'`"{x["key"]}"`: `"{x["value"]}"`', translation_dict['missing_translations'])) # Not sure why we need to escape the `|` here.
                 if len(missing_str) > 0:
-                    content_str += f"\n\n**Missing translations**:\n\n{missing_str}"
+                    content_str += f"\n\n**Missing translations**\n\n{missing_str}"
                     
-                superfluous_str = ' | '.join(map(lambda x: f'"{x["key"]}": "{x["value"]}"', translation_dict['superfluous_translations']))
+                superfluous_str = ',\n'.join(map(lambda x: f'`"{x["key"]}"`: `"{x["value"]}"`', translation_dict['superfluous_translations']))
                 if len(superfluous_str) > 0:
-                    content_str += f"\n\n**Superfluous translations**:\n\n{superfluous_str}"
+                    content_str += f"\n\n**Superfluous translations**\n\n{superfluous_str}"
                 
                 # Build strings for outdated translations
                 
@@ -116,30 +272,42 @@ def markdown_from_analysis(files, repo_root):
                     
                     base_change = changes['latest_base_change']
                     translation_change = changes['latest_translation_change']
-                    base_before = base_change["before"] or ""
-                    base_after = base_change["after"] or ""
-                    translation_before = translation_change["before"] or ""
-                    translation_after = translation_change["after"] or ""
+                    base_before         = escape_for_markdown(base_change["before"] or "")
+                    base_after          = escape_for_markdown(base_change["after"] or "")
+                    translation_before  = escape_for_markdown(translation_change["before"] or "")
+                    translation_after   = escape_for_markdown(translation_change["after"] or "")
                     
                     base_commit = base_change["commit"].hexsha
                     translation_commit = translation_change["commit"].hexsha
-                    base_commit_link = link_to_commit(base_commit, repo_root)
-                    translation_commit_link = link_to_commit(translation_commit, repo_root)
+                    base_commit_short, base_commit_link = commit_strings_for_markdown(base_commit, repo_root)
+                    translation_commit_short, translation_commit_link = commit_strings_for_markdown(translation_commit, repo_root)
                     
-                    outdated_str += f'\n\n"{translation_key}": "{translation_change.get("after", "")}"'
-                    outdated_str += f'\n- Latest change in English file: (commit [{base_commit}]({base_commit_link}))\n  "{base_before}" -> "{base_after}"'
-                    outdated_str += f'\n- Latest change in translated file: (commit [{translation_commit}]({translation_commit_link}]))\n  "{translation_before}" -> "{translation_after}"'
+                    outdated_str = textwrap.dedent(f"""
+                                                    
+                        `"{translation_key}"`: `"{translation_after}"`
+                        - Latest change in base file:
+                          `"{base_before}"` -> `"{base_after}"`
+                          in commit [{base_commit_short}]({base_commit_link})
+                        - Latest change in translation: 
+                          `"{translation_before}"` -> `"{translation_after}"`
+                          in commit [{translation_commit_short}]({translation_commit_link})
+                    """)
                     
                 if len(outdated_str) > 0:
-                    content_str += f"\n\n**Outdated translations**:{outdated_str}"
+                    content_str += f"\n\n**Outdated translations**{outdated_str}"
                     
             else:
                 assert False, f"Trying to build markdown for invalid file_type {file_type}"
         
             # Attach string to result
+            # Note: Textwrap dedent just won't work here. No idea why.
             if len(content_str) > 0:
                 language_id = translation_dict['language_id']
-                content_str = f'\n\n## [{translation_file_display}]({translation_file_link}))\n(Translation of base file at: [{base_file_display}]({base_file_link}))' + content_str
+                content_str = textwrap.dedent(f"""
+## {translation_file_display_short}
+Translation at: [{translation_file_display}]({translation_file_link})
+Base file at: [{base_file_display}]({base_file_link}){content_str}
+                """)
                 result_by_language.setdefault(language_id, []).append(content_str)
 
     # Build result from result_by_language
@@ -160,9 +328,9 @@ def markdown_from_analysis(files, repo_root):
             result += content_str
     
     if len(result) > 0:
-        result = """
-        In this comment you can find a list of translations that might need updating:{result}
-        """
+        result = textwrap.dedent(f"""\
+            In this comment you can find a list of translations that might need updating:
+        """) + result
     
     return result
 
@@ -170,16 +338,20 @@ def markdown_from_analysis(files, repo_root):
 # Helper for build markdown
 #
 
-def link_to_commit(commit_hash, local_repo_path):
+def escape_for_markdown(s):
+    return s.replace(r'\n', r'\\n').replace(r'\t', r'\\t').replace(r'\r', r'\\r')
+
+def commit_strings_for_markdown(commit_hash, local_repo_path):
     
     repo_name = os.path.basename(local_repo_path)
     assert repo_name == 'mac-mouse-fix' or repo_name == 'mac-mouse-fix-website', "Can't get paths for unknown repo {repo_name}"
     
-    result = f'https://github.com/noah-nuebling/{repo_name}/commit/{commit_hash}'
+    link = f'https://github.com/noah-nuebling/{repo_name}/commit/{commit_hash}'
+    display_short = commit_hash[:7] # The short hashes displayed on GH and elsewhere have the first 7 chars IIRC
     
-    return result
+    return display_short, link
 
-def paths_for_markdown(local_path, local_repo_path):
+def file_paths_for_markdown(local_path, local_repo_path):
     
     repo_name = os.path.basename(local_repo_path)
     assert repo_name == 'mac-mouse-fix' or repo_name == 'mac-mouse-fix-website', "Can't get paths for unknown repo {repo_name}"
@@ -192,10 +364,11 @@ def paths_for_markdown(local_path, local_repo_path):
     else:
         gh_root = 'https://github.com/noah-nuebling/mac-mouse-fix-website/blob/master'
 
+    display_short = os.path.basename(local_path)
     display = repo_name + '/' + relpath
     link = gh_root + '/' + relpath
     
-    return display, link
+    return display_short, display, link
 #
 # Analysis core
 #
