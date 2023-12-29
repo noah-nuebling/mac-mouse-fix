@@ -22,13 +22,6 @@ import babel
 import requests
 
 #
-# Constants
-#
-
-# Get info
-repo_root = os.getcwd()
-
-#
 # Main
 #
 
@@ -38,15 +31,21 @@ def main():
     parser.add_argument('--api_key', required=True, help="See Apple Note 'MMF Localization Script Access Token'")
     args = parser.parse_args()
 
-    files = find_localization_files_in_mmf_repo(repo_root)    
-    analysis = analyze_localization_files(files, repo_root)
-    markdown = markdown_from_analysis(analysis, repo_root)
+
+    repo_root = os.getcwd()
+    website_root = repo_root + '/' + "../mac-mouse-fix-website"
+    assert os.path.basename(repo_root) == 'mac-mouse-fix', "Run this script from the 'mac-mouse-fix' repo folder."
+    assert os.path.exists(website_root), "Couldn't find mmf website repo at {website_root}"
+    
+    files = find_localization_files_in_mmf_repo(repo_root, website_root)    
+    analysis = analyze_localization_files(files)
+    markdown = markdown_from_analysis(analysis)
     upload_markdown(args.api_key, markdown)
     
 #
 # Debug
 #
-def prepare_interactive_debugging(repo_root):
+def prepare_interactive_debugging(repo_root, website_root):
     
     """
     The analyze_localization_files() step in main() takes so longggg making it hard to debug any steps afterwards - Unless you're using python interactive mode!
@@ -56,15 +55,17 @@ def prepare_interactive_debugging(repo_root):
     1. Change working dir to the folder of this script. Then open python in interactive mode.
     2. >> import script, importlib
     3. >> from pprint import pprint (If necessary)
-    4. >> result = script.prepare_interactive_debugging(<repo_root>) 
-        - e.g. >> result = script.prepare_interactive_debugging("/Users/Noah/Desktop/mmf-stuff/mac-mouse-fix") 
+    4. >> result = script.prepare_interactive_debugging(<repo_root>, <website_root>) 
+        - e.g. >> result = script.prepare_interactive_debugging("/Users/Noah/Desktop/mmf-stuff/mac-mouse-fix", "/Users/Noah/Desktop/mmf-stuff/mac-mouse-fix-website")
     5. Play around with result 
+        - e.g. >> print(script.markdown_from_analysis(result))
+        - e.g. >> script.upload_markdown('<api_key>', script.markdown_from_analysis(result))
         - e.g. >> print(script.markdown_from_analysis(result))
     6. >> importlib.reload(script) (after updating source code)
     """
         
-    files = find_localization_files_in_mmf_repo(repo_root)    
-    result = analyze_localization_files(files, repo_root)
+    files = find_localization_files_in_mmf_repo(repo_root, website_root)
+    result = analyze_localization_files(files)
     
     return result
     
@@ -165,7 +166,7 @@ def upload_markdown(api_key, markdown):
         
         # Add new comment
         
-        new_comment_body_escaped = new_comment_body.replace('"', r'\"')
+        new_comment_body_escaped = escape_for_upload(new_comment_body) # Should we escape before the outdated check above?
         
         add_comment_query = textwrap.dedent(f"""
             mutation {{
@@ -180,6 +181,9 @@ def upload_markdown(api_key, markdown):
         """)
         
         response = github_graphql_request(api_key, add_comment_query)
+        
+        # Debug
+        # print(f"Add comment query: {repr(add_comment_query)}")
         
         # Log
         print(f"Uploaded comment! Response: {response}")
@@ -209,7 +213,7 @@ def github_graphql_request(api_key, query):
 # Build markdown
 #
 
-def markdown_from_analysis(files, repo_root):
+def markdown_from_analysis(files):
     
     # Discussion:
     # We want to always produce the exact same markdown for a given input. That's because we plan to send notifications to collaborators whenever the markdown changes.
@@ -224,6 +228,9 @@ def markdown_from_analysis(files, repo_root):
     result_by_language = dict()
     
     for file_dict in sorted(files, key=lambda f: f['base']):
+        
+        repo = file_dict['repo']
+        repo_root = repo.working_tree_dir
         
         base_file_path = file_dict['base']
         base_file_display_short, base_file_display, base_file_link = file_paths_for_markdown(base_file_path, repo_root)
@@ -272,13 +279,13 @@ Maybe the translation should be updated to reflect the new changes to the base f
                 
                 # Build strings for missing/superfluous translations
                 
-                missing_str = ',\n'.join(map(lambda x: translation_to_markdown(x['key'], x['value'], file_type), translation_dict['missing_translations'])) # Not sure why we need to escape the `|` here.
+                missing_str = '\n- '.join(map(lambda x: translation_to_markdown(x['key'], x['value'], file_type), translation_dict['missing_translations'])) # Not sure why we need to escape the `|` here.
                 if len(missing_str) > 0:
-                    content_str += f"\n\n**Missing translations**\n\nThe following key-value-pairs appear in the base file but not in the translation. They should probably be added to the translation:\n\n{missing_str}"
+                    content_str += f"\n\n**Missing translations**\n\nThe following key-value-pairs appear in the base file but not in the translation. They should probably be added to the translation:\n\n- {missing_str}"
                     
-                superfluous_str = ',\n'.join(map(lambda x: translation_to_markdown(x['key'], x['value'], file_type), translation_dict['superfluous_translations']))
+                superfluous_str = '\n- '.join(map(lambda x: translation_to_markdown(x['key'], x['value'], file_type), translation_dict['superfluous_translations']))
                 if len(superfluous_str) > 0:
-                    content_str += f"\n\n**Superfluous translations**\n\nThe following key-value-pairs appear in the translation but not in the base file. It's likely they are unused and can be deleted from the translation:\n\n{superfluous_str}"
+                    content_str += f"\n\n**Superfluous translations**\n\nThe following key-value-pairs appear in the translation but not in the base file. It's likely they are unused and can be deleted from the translation:\n\n- {superfluous_str}"
                 
                 # Build strings for outdated translations
                 
@@ -302,15 +309,23 @@ Maybe the translation should be updated to reflect the new changes to the base f
                     translation_commit_str = commit_string_for_markdown(translation_commit, repo_root)
                     translation_commit_date_str = commit_date_for_markdown(translation_commit)
                     
+                    def value_change_to_markdown(before, after, file_type):
+                        b = translation_value_to_markdown(before, file_type, escape=False)
+                        a = translation_value_to_markdown(after, file_type, escape=False)
+                        break_line = len(a) + len(b) > 80
+                        line_breaker = '\n    ' if break_line else ' '
+                        
+                        return f"{a} ->{line_breaker}{b}"
+                    
                     outdated_str += textwrap.dedent(f"""
                                                     
-                        {translation_to_markdown(translation_key, translation_after, file_type, escape_value=False)}
-                        - Latest change in translation: 
-                          {translation_value_to_markdown(translation_before, file_type, escape=False)} -> {translation_value_to_markdown(translation_after, file_type, escape=False)}
-                          on {translation_commit_date_str} in commit {translation_commit_str}
-                        - Latest change in base file:
-                          {translation_value_to_markdown(base_before, file_type, escape=False)} -> {translation_value_to_markdown(base_after, file_type, escape=False)}
-                          on {base_commit_date_str} in commit {base_commit_str}
+{translation_to_markdown(translation_key, translation_after, file_type, escape_value=False)}
+- Latest change in translation: 
+    {value_change_to_markdown(translation_before, translation_after, file_type)}
+    on {translation_commit_date_str} in commit {translation_commit_str}
+- Latest change in base file:
+    {value_change_to_markdown(base_before, base_after, file_type)}
+    on {base_commit_date_str} in commit {base_commit_str}
                     """)
                     
                 if len(outdated_str) > 0:
@@ -367,8 +382,15 @@ def translation_value_to_markdown(value, file_type, escape=True):
     if escape:
         value = escape_for_markdown(value)
     
+    cutoff = 250
     
-    quoted = f"`{value}`" if len(value) > 0 else ""
+    quoted = ''
+    if len(value) == 0:
+        quoted = ''
+    elif len(value) <= cutoff:
+        quoted = f"`{value}`"
+    else:
+        quoted = "`[This text is very long. You can see it in the linked commit/translation file.]`"
     
     result = ''
     if file_type == '.strings':
@@ -416,7 +438,24 @@ def language_tag_to_flag_emoji(language_id):
     return get_flag(locale.language)
 
 def escape_for_markdown(s):
-    return s.replace(r'\n', r'\\n').replace(r'\t', r'\\t').replace(r'\r', r'\\r')
+    
+    # This is to make `s` display verbatim in markdown.
+    # Update: This is not necessary anymore after we started using `escape_for_upload()`
+    
+    return s #.replace(r'\n', r'\\n').replace(r'\t', r'\\t').replace(r'\r', r'\\r')
+
+def escape_for_upload(s):
+    # This is to be able to upload a string through the GitHub GraphQL API.
+    # Src: https://www.linkedin.com/pulse/graphql-parse-errors-parul-aditya-1c
+    
+    # return s.replace('"', r'\"')#.replace(r'+', r'\+').replace(r'\\', r'\\\\')
+    
+    return (s.replace("\\", "\\\\")
+            .replace("\n", "\\n")
+            .replace("\r", "\\r")
+            .replace("\t", "\\t")
+            .replace("\f", "\\f")
+            .replace('"', '\\"'))
 
 def commit_string_for_markdown(commit, local_repo_path):
     
@@ -448,7 +487,7 @@ def file_paths_for_markdown(local_path, local_repo_path):
     else:
         gh_root = 'https://github.com/noah-nuebling/mac-mouse-fix-website/blob/master'
 
-    display_short = os.path.basename(local_path)
+    display_short = os.path.basename(local_path) + (" (Website)" if repo_name == 'mac-mouse-fix-website' else '')
     display = repo_name + '/' + relpath
     link = gh_root + '/' + relpath
     
@@ -457,13 +496,14 @@ def file_paths_for_markdown(local_path, local_repo_path):
 # Analysis core
 #
 
-def analyze_localization_files(files, repo_root):
+def analyze_localization_files(files):
 
     """
         Structure of the analysis result: (at time of writing) (This takes the input file and just fills in stuff)
         [
             {
                 'base': '<base_file_path>',
+                'repo': git.Repo()
                 'translations': {
                     <translation_file_path>: {
                         'missing_translations': [{ 'key': <translation_key>, 'value': <ui_text> }, ...],
@@ -514,19 +554,21 @@ def analyze_localization_files(files, repo_root):
     #   This is a more primitive method than analyzing the changes to translation keys. Should only be relevant for files that don't have translation keys
     
     print(f'  Analyzing outdating commits...')
-    git_repo = git.Repo(repo_root)
+    
     for file_dict in files:
+        
         base_file = file_dict['base']
+        repo = file_dict['repo']
         
         for translation_file, translation_dict in file_dict['translations'].items():
             
             
-            translation_commit_iterator = git_repo.iter_commits(paths=translation_file, **{'max-count': 1} ) # max-count is passed along to `git rev-list` command-line-arg
+            translation_commit_iterator = repo.iter_commits(paths=translation_file, **{'max-count': 1} ) # max-count is passed along to `git rev-list` command-line-arg
             last_translation_commit = next(translation_commit_iterator)
             
             outdating_commits = []
             
-            base_commit_iterator = git_repo.iter_commits(paths=base_file)
+            base_commit_iterator = repo.iter_commits(paths=base_file)
             
             for base_commit in base_commit_iterator:
                 if not is_predecessor(base_commit, last_translation_commit):
@@ -559,13 +601,17 @@ def analyze_localization_files(files, repo_root):
         # Log
         print(f'    Processing base translation at {base_file_path}...')
         
+        # Get repo
+        repo = file_dict['repo']
+        
         # Find basefile keys
         base_keys_and_values = extract_translation_keys_and_values_from_file(file_dict['base'])
+        
         if base_keys_and_values == None: continue
         base_keys = set(base_keys_and_values.keys())
         
         # For each key in the base file, get the commit, when it last changed  
-        latest_base_changes = get_latest_change_for_translation_keys(base_keys, base_file_path, git_repo)
+        latest_base_changes = get_latest_change_for_translation_keys(base_keys, base_file_path, repo)        
         
         for translation_file_path, translation_dict in file_dict['translations'].items():
             
@@ -596,7 +642,7 @@ def analyze_localization_files(files, repo_root):
             # Check common keys if they are outdated.
             
             # For each key, get the commit when it last changed
-            latest_translation_changes = get_latest_change_for_translation_keys(common_keys, translation_file_path, git_repo)
+            latest_translation_changes = get_latest_change_for_translation_keys(common_keys, translation_file_path, repo)
             
             # Log
             print(f'        Check if last modification was before base for each key ...')
@@ -617,8 +663,9 @@ def analyze_localization_files(files, repo_root):
                 # Notes: 
                 # - We first created `Localizable.strings` in German and then later translated it to English in commit d5aeb1195023b7bcea983d112ed0929b07311108. 
                 #   This special case is to prevent those German strings from being detected as outdated.
-                if os.path.basename(base_file_path) in ('Localizable.strings'):
-                    first_real_commit = git_repo.commit('d5aeb1195023b7bcea983d112ed0929b07311108')
+
+                if is_mmf_repo(repo) and os.path.basename(base_file_path) in ('Localizable.strings'):
+                    first_real_commit = repo.commit('d5aeb1195023b7bcea983d112ed0929b07311108')
                     if is_predecessor(first_real_commit, base_commit):
                         base_commit_is_predecessor = True
                 
@@ -693,7 +740,7 @@ def get_latest_change_for_translation_keys(wanted_keys, file_path, git_repo):
             #   Run git command 
             #   - For getting additions and deletions of the commit compared to its parent
             #   - I tried to do this with gitpython but nothing worked, maybe I should stop using it altogether?
-            diff_string = runCLT(f"git diff -U0 {commit.hexsha}^..{commit.hexsha} -- {file_path}").stdout
+            diff_string = runCLT(f"git diff -U0 {commit.hexsha}^..{commit.hexsha} -- {file_path}", cwd=repo_root).stdout
             
             # Parse diff
             parse_diff_and_update_state(diff_string, commit, result, wanted_keys)
@@ -725,7 +772,7 @@ def get_latest_change_for_translation_keys(wanted_keys, file_path, git_repo):
             else:
                 file_path_relative = os.path.relpath(file_path, repo_root) # `git show` breaks with absolute paths
                 file_path_at_this_commit = create_temp_file(suffix=file_type)
-                runCLT(f"git show {commit.hexsha}:{file_path_relative} > {file_path_at_this_commit}")
+                runCLT(f"git show {commit.hexsha}:{file_path_relative} > {file_path_at_this_commit}", cwd=repo_root)
                 strings_file_path = extract_strings_from_IB_file_to_temp_file(file_path_at_this_commit)
                 
             if i != 0: 
@@ -740,7 +787,7 @@ def get_latest_change_for_translation_keys(wanted_keys, file_path, git_repo):
                 assert last_strings_file_path != ''
                 
                 # Get diff string
-                diff_string = runCLT(f"git diff -U0 --no-index -- {strings_file_path} {last_strings_file_path}").stdout
+                diff_string = runCLT(f"git diff -U0 --no-index -- {strings_file_path} {last_strings_file_path}", cwd=repo_root).stdout
                 
                 # Parse diff
                 parse_diff_and_update_state(diff_string, commits[i-1], result, wanted_keys)
@@ -817,7 +864,8 @@ def extract_translation_keys_and_values_from_string(text):
     # Strings file regex:
     #   Used to get keys and values from strings files. Designed to work on Xcode .strings files and on the .js strings files used on the MMF website. (Won't work on `.stringsdict`` files, those are xml)
     #   See https://regex101.com
-    strings_file_regex = re.compile(r'^(\+?\-?)\s*[\'\"]([^\'\"]+)[\'\"]\s*[=:]\s*[\'\"]([^\'\"]*)[\'\"]', re.MULTILINE)
+    
+    strings_file_regex = re.compile(r'^(\+?\-?)\s*[\'\"](.+)[\'\"]\s*[=:]\s*[\'\"](.*)[\'\"][,;]$', re.MULTILINE)
     
     # Find matches
     matches = strings_file_regex.finditer(text)
@@ -832,6 +880,9 @@ def extract_translation_keys_and_values_from_string(text):
         
         k = 'added' if git_line_diff == '+' else 'deleted' if git_line_diff == '-' else 'value'
         result.setdefault(translation_key, {})[k] = translation_value
+        
+        # if translation_key == 'customization-feature.action-table.body':
+        #     print(f"NEW_MATCH: {git_line_diff} --- {translation_key} --- {translation_value}, text: {text}")
         
         # if translation_key == 'capture-toast.body':
             # print(f"{git_line_diff} value: {translation_value} isNone: {translation_value is None}") # /Users/Noah/Desktop/mmf-stuff/mac-mouse-fix/Localization/de.lproj/Localizable.strings
@@ -907,15 +958,15 @@ def is_predecessor(potential_predecessor_commit, commit):
     # return runCLT(f"git rev-list --is-ancestor {potential_predecessor_commit.hexsha} {commit.hexsha}").returncode == 0
     # return runCLT(f"git merge-base --is-ancestor {potential_predecessor_commit.hexsha} {commit.hexsha}").returncode == 0
 
-def runCLT(command):
-    clt_result = subprocess.run(command, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True) # Not sure what `text` and `shell` does.
+def runCLT(command, cwd=None):
+    clt_result = subprocess.run(command, cwd=cwd, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True) # Not sure what `text` and `shell` does. We use cwd to run git commands at a differnt repo than the current workding directory
     return clt_result
 
 #
 # Find files
 #
 
-def find_localization_files_in_mmf_repo(repo_root):
+def find_localization_files_in_mmf_repo(repo_root, website_root):
     
     """
     Find localization files
@@ -923,7 +974,8 @@ def find_localization_files_in_mmf_repo(repo_root):
     Structure of the result:
     [
         {  
-            "base": "<path_to_base_localization_file>", 
+            "base": "<path_to_base_localization_file>",
+            "repo": "<mac-mouse-fix|mac-mouse-fix-website>",
             "translations": {
                 "path_to_translated_file1": {
                     "language_id": "<id>",
@@ -950,6 +1002,11 @@ def find_localization_files_in_mmf_repo(repo_root):
     exclude_paths_relative = ["Frameworks/Sparkle.framework"]
     exclude_paths = list(map(lambda exc: repo_root + '/' + exc, exclude_paths_relative))
     
+    # Get repos
+    mmf_repo = git.Repo(repo_root)
+    website_repo = git.Repo(website_root)
+    assert mmf_repo != None and website_repo != None
+    
     # Get result
         
     result = []
@@ -970,16 +1027,23 @@ def find_localization_files_in_mmf_repo(repo_root):
                 if is_base_folder: assert extension in ['.xib', '.storyboard'], f"Base.lproj folder at {b} contained file with extension {extension}"
                 # Get type
                 type = 'strings' if is_en_folder else 'IB'
-                # Append
-                result.append({ 'base': b, 'basetype': type })
+                # Append Xcode file
+                result.append({ 'base': b, 'repo': mmf_repo, 'basetype': type })
     
     for root, dirs, files in os.walk(markdown_dir):
         is_en_folder = 'en-US' in os.path.basename(root)
         if is_en_folder:
             files_absolute = map(lambda file: root + '/' + file, files)
             for b in files_absolute:
-                # Append
-                result.append({ 'base': b, 'basetype': 'markdown' })
+                # Validate
+                _, extension = os.path.splitext(b)
+                assert extension == '.md', f'Folder at {b}, contained file with extension {extension}'
+                # Append markdown file
+                result.append({ 'base': b, 'repo': mmf_repo, 'basetype': 'markdown' })
+    
+    # Append website
+    result.append({ 'base': website_root + '/' + 'locales/en-US.js', 'repo': website_repo, 'basetype': 'nuxt'})
+        
     
     # Find translated files
     
@@ -991,10 +1055,16 @@ def find_localization_files_in_mmf_repo(repo_root):
         
         translations = {}
         
-        # Get grandparent dir of the base file, which contains all the translation files
-        grandpa = os.path.dirname(os.path.dirname(base_path))
+        # Get dir which contains all the translation files
+        translation_root = ''
+        if basetype == 'nuxt':
+            translation_root = os.path.dirname(base_path) # Parent of basefile
+        else:
+            translation_root = os.path.dirname(os.path.dirname(base_path)) # Grandparent of basefile
         
-        for root, dirs, files in os.walk(grandpa):
+        for root, dirs, files in os.walk(translation_root):
+            
+            # print(f"Finding translations in translation root {translation_root} --- root: {root}, dirs: {dirs}, files: {files}")
             
             if basetype == 'IB' or basetype == 'strings':
                 
@@ -1013,37 +1083,75 @@ def find_localization_files_in_mmf_repo(repo_root):
                 filename, extension = os.path.splitext(os.path.basename(f))
                 base_filename, base_extension = os.path.splitext(os.path.basename(base_path))
                 
-                # Get language id
-                language_id = ''
+                # Skip unrecognized files
+                if basetype == 'IB' or basetype == 'strings':
+                    if extension not in ['.xib', '.storyboard', '.strings', '.stringsdict']:
+                        print(f"  Skipping file {f} because it has an invalid extension. It was found while searching for translation files in {translation_root}")
+                        continue
+                if basetype == 'markdown':
+                    if extension not in ['.md']:
+                        print(f"  Skipping file {f} because it has an invalid extension. It was found while searching for translation files in {translation_root}")
+                        continue
                 if basetype == 'nuxt':
-                    language_id = filename
-                else:
-                    language_id, _ = os.path.splitext(os.path.basename(root))
-                
-                # Get other
-                absolute_f = root + '/' + f
+                    if extension not in ['.js']:
+                        print(f"  Skipping file {f} because it has an invalid extension. It was found while searching for translation files in {translation_root}")
+                        continue
                 
                 # Combine info
+                
+                absolute_f = root + '/' + f
                 filename_matches = filename == base_filename
                 extension_matches = extension == base_extension
                 is_base_file = absolute_f == base_path
                 
                 # Append
-                if  not is_base_file and filename_matches:
-                    if basetype == 'markdown':
-                        translations[absolute_f] = { "language_id": language_id }
+                
+                do_append = False
+                
+                if not is_base_file:    
+                    if basetype == 'nuxt':
+                        if extension_matches: do_append = False #True
+                    elif basetype == 'markdown':
+                        if extension_matches and filename_matches: do_append = True
                     elif basetype == 'IB':
-                        translations[absolute_f] = { "language_id": language_id }
+                        if filename_matches: do_append = True
                     elif basetype == 'strings':
-                        if extension_matches:
-                            translations[absolute_f] = { "language_id": language_id }
+                        if extension_matches and filename_matches: do_append = True
                     else:
                         assert False
+                
+                if do_append:
+                    
+                    # Get language id
+                    language_id = ''
+                    if basetype == 'nuxt':
+                        language_id = filename
+                    else:
+                        language_id, _ = os.path.splitext(os.path.basename(root)) # Parent folder name contains language_id. E.g. `en.lproj`
+                    
+                    # Append
+                    translations[absolute_f] = { "language_id": language_id }
         
         # Append
         e['translations'] = translations
     
     return result
+
+#
+# General Helpers
+#
+
+def is_mmf_repo(git_repo):
+    repo_root = git_repo.working_tree_dir
+    if os.path.basename(repo_root) == 'mac-mouse-fix':
+        return True
+    return False
+
+def is_website_repo(git_repo):
+    repo_root = git_repo.working_tree_dir
+    if os.path.basename(repo_root) == 'mac-mouse-fix-website':
+        return True
+    return False
 
 #
 # Call main
