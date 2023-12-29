@@ -306,10 +306,10 @@ Maybe the translation should be updated to reflect the new changes to the base f
                                                     
                         {translation_to_markdown(translation_key, translation_after, file_type, escape_value=False)}
                         - Latest change in translation: 
-                          {translation_value_to_markdown(translation_before, file_type)} -> {translation_value_to_markdown(translation_after, file_type)}
+                          {translation_value_to_markdown(translation_before, file_type, escape=False)} -> {translation_value_to_markdown(translation_after, file_type, escape=False)}
                           on {translation_commit_date_str} in commit {translation_commit_str}
                         - Latest change in base file:
-                          {translation_value_to_markdown(base_before, file_type)} -> {translation_value_to_markdown(base_after, file_type)}
+                          {translation_value_to_markdown(base_before, file_type, escape=False)} -> {translation_value_to_markdown(base_after, file_type, escape=False)}
                           on {base_commit_date_str} in commit {base_commit_str}
                     """)
                     
@@ -612,6 +612,15 @@ def analyze_localization_files(files, repo_root):
                 translation_commit  = latest_translation_changes[k]['commit']
                 
                 base_commit_is_predecessor = is_predecessor(base_commit, translation_commit)
+                
+                # Special cases
+                # Notes: 
+                # - We first created `Localizable.strings` in German and then later translated it to English in commit d5aeb1195023b7bcea983d112ed0929b07311108. 
+                #   This special case is to prevent those German strings from being detected as outdated.
+                if os.path.basename(base_file_path) in ('Localizable.strings'):
+                    first_real_commit = git_repo.commit('d5aeb1195023b7bcea983d112ed0929b07311108')
+                    if is_predecessor(first_real_commit, base_commit):
+                        base_commit_is_predecessor = True
                 
                 # DEBUG
                 #     print(f"latest_base_change: {base_file_path}, change: {base_commit}")
