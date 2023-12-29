@@ -18,6 +18,7 @@ sudopass.sh
 # !Mouse Fix.xcodeproj/xcuserdata/Noah.xcuserdatad/xcschemes/*
 # Mouse Fix.xcodeproj/xcuserdata/Noah.xcuserdatad/xcdebugger/*
 
-# Python virtual environment
+# Python stuff
 env
 venv
+__pycache__
