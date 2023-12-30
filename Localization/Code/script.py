@@ -315,8 +315,8 @@ Maybe the translation should be updated to reflect the new changes to the base f
                     translation_commit_date_str = commit_date_for_markdown(translation_commit)
                     
                     def value_change_to_markdown(before, after, file_type):
-                        b = translation_value_to_markdown(before, file_type, escape=False)
-                        a = translation_value_to_markdown(after, file_type, escape=False)
+                        a = translation_value_to_markdown(before, file_type, escape=False)
+                        b = translation_value_to_markdown(after, file_type, escape=False)
                         break_line = len(a) + len(b) > 80
                         line_breaker = '\n    ' if break_line else ' '
                         
