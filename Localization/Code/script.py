@@ -932,13 +932,14 @@ def extract_translation_keys_and_values_from_string(text):
       See https://regex101.com
     
     Some test strings:    
-            'quote-"source".,//youtubeComment':  "**{ name }** in// einem YouTube,-KommentarIS_OK", // ! omgg !!IS_OK ,that's so 
-        +  'quote-source.youtubeComment':  "**{ name }** in' einem'` YouTube`-Kommentar", // IS_OK
-          'quote-source.youtubeComment':  "**{ name }** in einem YouTube-Kommentar",
-        -  "quote-"source".,//youtubeComment" =  '**{ name }** in// einem YouTube,-KommentarIS_OK'; // ! omgg !!IS_OK ,that's so 
+    
+'quote-"source".,//youtubeComment':  "**{ name }** in// einem YouTube,-KommentarIS_OK", // ! omgg !!IS_OK ,that's so 
++  'quote-source.youtubeComment':  "**{ name }** in' einem'` YouTube`-Kommentar", // IS_OK
+    'quote-source.youtubeComment':  "**{ name }** in einem YouTube-Kommentar", /* !IS_OK */
+-  "quote-"source".,//youtubeComment" =  '**{ name }** in// einem YouTube,-KommentarIS_OK'; // ! omgg !!IS_OK ,that's so 
     """
     
-    strings_file_regex = re.compile(r'^(\+?\-?)\s*[\'\"](.+)[\'\"]\s*[=:]\s*[\'\"](.*)[\'\"][,;].*?(\/\/.*?(!+IS_OK).*)?$', re.MULTILINE)
+    strings_file_regex = re.compile(r'^(\+?\-?)\s*[\'\"](.+)[\'\"]\s*[=:]\s*[\'\"](.*)[\'\"][,;].*?(\/.*?(!+IS_OK).*)?$', re.MULTILINE)
     
     # Find matches
     matches = strings_file_regex.finditer(text)
