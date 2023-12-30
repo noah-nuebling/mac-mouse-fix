@@ -612,10 +612,10 @@ def analyze_localization_files(files):
         
         # Get base file info
         base_file_path = file_dict['base']
-        _, file_type = os.path.splitext(base_file_path)
+        _, base_file_type = os.path.splitext(base_file_path)
         
         # Skip
-        if not (file_type == '.js' or file_type == '.strings' or file_type == '.xib' or file_type == '.storyboard'):
+        if not (base_file_type == '.js' or base_file_type == '.strings' or base_file_type == '.xib' or base_file_type == '.storyboard'):
             continue
         
         # Log
@@ -624,23 +624,46 @@ def analyze_localization_files(files):
         # Get repo
         repo = file_dict['repo']
         
-        # Find basefile keys
+        # Get basefile kv-pairs
         base_keys_and_values = extract_translation_keys_and_values_from_file(file_dict['base'])
         
+        # Get IB placeholders
+        # Note: 
+        #  In IB files we mark placeholders that will not be shown to the user and don't need to be translated by surrounding them with <angle brackets>.
+        #  This code makes it so the analysis ignores these placeholders
+        ib_placeholders = dict()
+        if base_file_type == '.xib' or base_file_type == '.storyboard':
+            for key, value in base_keys_and_values.items():
+                text = value['value']['text']
+                if len(text) >= 2 and text[0] == '<' and text[-1] == '>':
+                    ib_placeholders[key] = value
+        
+        # Remove IB placeholders from main kv-pairs
+        for k in ib_placeholders.keys():
+            base_keys_and_values.pop(k, 'None')
+        
+        # Extract keys from kv-pairs
         if base_keys_and_values == None: continue
         base_keys = set(base_keys_and_values.keys())
         
-        # For each key in the base file, get the commit, when it last changed  
+        # For each key in the base file, get the commit, when it last changed
         latest_base_changes = get_latest_change_for_translation_keys(base_keys, base_file_path, repo)        
         
+        # Iterate translations
         for translation_file_path, translation_dict in file_dict['translations'].items():
             
             # Log
             print(f'      Processing translation of {os.path.basename(base_file_path)} at {translation_file_path}...')
             print(f'        Find translation keys and values...')
             
-            # Find translation file keys
+            # Find kv-pairs in translation file
             translation_keys_and_values = extract_translation_keys_and_values_from_file(translation_file_path)
+            
+            # Remove IB placeholders
+            for k in ib_placeholders.keys():
+                translation_keys_and_values.pop(k, 'None')
+            
+            # Extract keys from kv_pairs
             translation_keys = set(translation_keys_and_values.keys())
             
             print(f'        Check missing/superfluous keys...')
@@ -657,6 +680,8 @@ def analyze_localization_files(files):
             translation_dict['superfluous_translations'] = superfluous_translations
             
             # Check & attach unchanged translations
+            
+            print(f'        Check unchanged translations...')
             
             unchanged_translations = []
             for k in common_keys:
