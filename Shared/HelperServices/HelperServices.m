@@ -66,6 +66,13 @@
 #import <sys/types.h>
 #import "MFMessagePort.h"
 
+#if IS_MAIN_APP
+#import "Mac_Mouse_Fix-Swift.h"
+#endif
+#if IS_HELPER
+#import "Mac_Mouse_Fix_Helper-Swift.h"
+#endif
+
 @implementation HelperServices
 
 #pragma mark - Interface...
@@ -177,24 +184,6 @@
             /// Do this on some global queue. Xcode complains if you do this on mainThread because it can lead to unresponsive UI.
             
             NSError *error = [self enableHelper_SM:enable];
-            
-            ///
-            /// Check launchd confusion
-            /// Notes:
-            /// - We also check helper strangeness in MessagePortUtility.swift
-            /// - For the new SMAppService APIs, launchd gets easily confused when the app is moved, or there are multiple copies of the app on the system.
-            ///    It will then say that it successfully launched the helper, but really it will have launched a strange helper from another copy of MMF or it won't have launched anything at all.
-            ///    When a strange helper is successfully launched, it then sends its bundle id to us and we detect that it's strange and display user feedback with solutions steps. We do this inside MessagePortUtility.swift
-            ///    However, when nothing is launched, it gets trickier. And there are lots of issues because of this. (See the issue https://github.com/noah-nuebling/mac-mouse-fix/issues/648)
-            ///    Buttt we found a big bingo. After an unsuccessful launch, the result of the `launchctl print gui/501/com.nuebling.mac-mouse-fix.helper` command seems to contain the path of the helper that it tried to launch under `event triggers` -> `com.nuebling.mac-mouse-fix.helper` -> `descriptor` -> `"Executable" => "<executable path>"`!
-            ///    So we're trying to parse that here and then provide some user feedback.
-            /// - Edge cases and stuff:
-            ///   - I suspect that the `launchctl print` command doesn't contain the executable path immediately after we try to register the service. We could wait, but that would complicate our logic. If the user simply tries enabling a second time, then it should should work. Should be good enough
-            ///   - In some cases, maybe we'll trigger user feedback about the same thing from here and from HelperServices. We should handle that possibility inside `AlertCreator` which displays the feedback.
-            
-            
-            
-            
             
             ///
             /// Call onComplete
@@ -533,12 +522,13 @@ NSString *launchctl_list(NSString *identifier) {
 
 NSString *launchctl_print(NSString *identifier) {
     
-    /// Using NSTask to ask launchd about helper status
+    /// Using NSTask to ask launchd about helper status. 
+    /// We meant to use for for `executablePathForLaunchdIdentifier:` but never did. So currently this is unused and untested.
     
     NSURL *launchctlURL = [NSURL fileURLWithPath:kMFLaunchctlPath];
     NSString *serviceTarget = [NSString stringWithFormat:@"gui/%d/%@", getuid(), identifier];
     
-    NSString *launchctlOutput = [SharedUtility launchCLT:launchctlURL withArguments:@[@"print", identifier] error:nil];
+    NSString *launchctlOutput = [SharedUtility launchCLT:launchctlURL withArguments:@[@"print", serviceTarget] error:nil];
     return launchctlOutput;
 }
 
@@ -574,21 +564,37 @@ NSString *launchctl_print(NSString *identifier) {
 
 + (NSString *)executablePathForLaunchdIdentifier:(NSString *)identifier {
     
-    /// Validate
-    /// - This actually only works for `kMFLaunchdHelperIdentifier`. For `kMFLaunchdHelperIdentifierSM` it gets the executable path relative to the mainApp bundle which isn't that helpful.
-    
-    assert([identifier isEqual:kMFLaunchdHelperIdentifier]);
-    
-    /// Using NSTask to ask launchd about helper status
-    NSString * launchctlOutput = launchctl_list(identifier);
-    
-    NSString *executablePathRegEx = @"(?<=\"Program\" = \").*(?=\";)";
-    ///    NSRegularExpression executablePathRegEx =
-    NSRange executablePathRange = [launchctlOutput rangeOfString:executablePathRegEx options:NSRegularExpressionSearch];
-    if (executablePathRange.location == NSNotFound) return @"";
-    NSString *executablePath = [launchctlOutput substringWithRange:executablePathRange];
-    
-    return executablePath;
+    if (@available(macOS 13.0, *)) {
+        
+        /// Notes on getting **executable path**:
+        /// For SMAppService the only way to reliably get the executable path is the `sfltool dumpbtm` command. But it requires sudo permissions, so we can't do it in the background programmatically.
+        /// Under 14.2.1 I saw that `launchctl print gui/501/com.nuebling.mac-mouse-fix.helper` sometimes contains the executable path, but only under these circumstances:
+        ///     Sometimes launchd gets confused because you try to launch MMF after moving it, or you try to launch it while there's another copy of MMF present on the system.
+        ///     If and only if you have the case where launchd is confused because you **moved** MMF and you THEN call `launchctl print`, then the output seems to contain the executable path. But in the successful case or in the case where launchd launches the wrong copy of MMF Helper, `print` doesn't contain the executable path.
+        /// I would be somewhat useful to retrieve the executable path from `print` in this case to give the user instructions how to fix the issue. However, the instructions are just 'restart your computer', and that doesn't seem like it's worth implementing at the moment.
+        /// Especially since we don't even know what causes [all these enabling issues](https://github.com/noah-nuebling/mac-mouse-fix/issues/648) and therefore don't know if this is would solve any real issues for users. I think it's better for now to just figure out what is causing these issues and then after that write a `Guide`, or write some automated fixes here.
+        
+        /// Notes on **launchd being confused**:
+        /// (This is a general writeup on the launchd-is-confused issues. Maybe we should move it to some more centralized place.)
+        /// - At the time of writing, when you use SMAppService to register the Helper, launchd sometimes gets confused if you: 1. Have several copies of the app installed. 2. Have moved the app (Although it does seem to track app-moves to some extent.)
+        /// - To see where launchd thinks the app is, use `sfltool dumpbtm`
+        /// - We handle some of the launchd confusion in MessagePortUtility.swift in the 'Strange Helper' detection stuff. If a helper from another copy of MMF is started and tries to connect with us, we shut it down and give the user instructions to deleted the other copy.
+        /// - Despite this handling of the 'strange helper' situation, there are numerous reports of people not being able to open the app. See https://github.com/noah-nuebling/mac-mouse-fix/issues/648.
+        /// - In all cases I observed, when launchd gets confused, SMAppService will say that it successfully launched the helper. (but really it will have launched a strange helper from another copy of MMF or it won't have launched anything at all) (I haven't studied the case where launchd doesn't launch anything at all much, so I'm not sure about that one.)
+        
+        return @"";
+        
+    } else {
+        
+        /// Note: This actually only works pre SMAppService. For services registered with SMAppService, it gets the executable path relative to the mainApp bundle which isn't that helpful.
+        
+        assert([identifier isEqual:kMFLaunchdHelperIdentifier]);
+        
+        NSString *launchctlOutput = launchctl_list(identifier);
+        NSString *executablePath = [launchctlOutput substringWithRegex:@"(?<=\"Program\" = \").*(?=\";)"];
+        
+        return executablePath;
+    }
 }
 
 #pragma mark - Killall Helpers

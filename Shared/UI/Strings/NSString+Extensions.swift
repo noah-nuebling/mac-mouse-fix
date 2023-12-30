@@ -11,6 +11,20 @@ import Foundation
 
 @objc extension NSString {
     
+    @objc func substring(regex: String) -> String? {
+        
+        let range = self.range(of: regex, options: .regularExpression)
+        
+        let result: String?
+        if range.location == NSNotFound {
+            result = nil
+        } else {
+            result = self.substring(with: range)
+        }
+        
+        return result
+    }
+    
     @objc func attributed() -> NSAttributedString {
         return NSAttributedString(string: self as String)
     }

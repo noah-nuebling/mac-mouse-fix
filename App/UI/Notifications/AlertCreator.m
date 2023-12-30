@@ -86,6 +86,8 @@
 
 + (void)showStrangeHelperMessageWithStrangeURL:(NSString *)strangeURL {
     
+    /// Note: We moved this out from `MessagePortUtility.swift` in commit `15d24471b4c7cec9e5976b66898d37d46949efd0` because we planned to reuse this from other places. But we never did and it doesn't make sense. So should probably move it back to `MessagePortUtility.swift`.
+    
     NSString *title = NSLocalizedString(@"is-strange-helper-alert.title", @"First draft: Enabling Failed");
     NSString *body = [NSString stringWithFormat:NSLocalizedString(@"is-strange-helper-alert.body", @"First draft: Mac Mouse Fix can't be enabled because there's __another version__ of Mac Mouse Fix present on your computer\n\nTo enable Mac Mouse Fix:\n\n1. Delete the [other version](%@)\n2. Empty the Bin\n3. Restart your Mac\n4. Try again!"), strangeURL];
     
