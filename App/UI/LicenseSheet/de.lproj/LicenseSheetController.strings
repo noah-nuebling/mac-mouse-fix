@@ -5,4 +5,4 @@
 "IK8-Rj-beO.title" = "Lizenz aktivieren";
 
 /* Class = "NSTextFieldCell"; placeholderString = "Enter Your License Key"; ObjectID = "JJv-GH-7io"; */
-"JJv-GH-7io.placeholderString" = "Gib deinen Lizenzschlüssel ein";
+"JJv-GH-7io.placeholderString" = "Gib deinen Lizenzschlüssel ein"; // !IS_OK
