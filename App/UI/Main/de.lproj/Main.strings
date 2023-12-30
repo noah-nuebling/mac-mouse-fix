@@ -5,7 +5,7 @@
 "bJS-hB-0l3.title" = "Mittel";
 
 /* Class = "NSMenuItem"; title = "macOS"; ObjectID = "cnA-CV-nF3"; Note = "Pointer > Acceleration > macOS Option"; */
-"cnA-CV-nF3.title" = "macOS";
+"cnA-CV-nF3.title" = "macOS"; // !IS_OK
 
 /* Class = "NSTextFieldCell"; title = "Low"; ObjectID = "DNu-D4-tBY"; Note = "Pointer > Sensitivity Slider > Low Label"; */
 "DNu-D4-tBY.title" = "Niedrig";
@@ -20,7 +20,7 @@
 "hmb-DX-idO.title" = "Niedrig";
 
 /* Class = "NSWindow"; title = "Mac Mouse Fix"; ObjectID = "IQv-IB-iLA"; Note = "Mac Mouse Fix Window Title"; */
-"IQv-IB-iLA.title" = "Mac Mouse Fix";
+"IQv-IB-iLA.title" = "Mac Mouse Fix"; // !IS_OK
 
 /* Class = "NSTabViewItem"; label = "Scrolling"; ObjectID = "jOM-dH-pdc"; Note = "Toolbar > Scrolling Tab Button"; */
 "jOM-dH-pdc.label" = "Scrollen";
@@ -134,7 +134,7 @@
 "FT8-zP-xsg.title" = "Niedrig";
 
 /* Class = "NSMenuItem"; title = "macOS"; ObjectID = "fW3-4Q-yB8"; Note = "Scrolling > Scroll Speed > macOS Option"; */
-"fW3-4Q-yB8.title" = "macOS";
+"fW3-4Q-yB8.title" = "macOS"; // !IS_OK
 
 /* Class = "NSTabViewItem"; label = "<Initial>"; ObjectID = "g9N-Za-8Ss"; */
 "g9N-Za-8Ss.label" = "<>";
@@ -152,7 +152,7 @@
 "H4T-Rp-t33.title" = "Rein- oder rauszoomen";
 
 /* Class = "NSMenuItem"; title = "Mac Mouse Fix"; ObjectID = "hSC-BE-EZJ"; */
-"hSC-BE-EZJ.title" = "Mac Mouse Fix";
+"hSC-BE-EZJ.title" = "Mac Mouse Fix"; // !IS_OK
 
 /* Class = "NSButtonCell"; title = "Options..."; ObjectID = "Hur-83-2a2"; Note = "Buttons > Options... Button"; */
 "Hur-83-2a2.title" = "Optionen...";
@@ -245,7 +245,7 @@
 "X8q-Nk-Fwr.title" = "Dienste";
 
 /* Class = "NSMenu"; title = "Mac Mouse Fix"; ObjectID = "Yyg-LD-A1v"; */
-"Yyg-LD-A1v.title" = "Mac Mouse Fix";
+"Yyg-LD-A1v.title" = "Mac Mouse Fix"; // !IS_OK
 
 /* Class = "NSMenuItem"; title = "Zoom"; ObjectID = "ZfY-xQ-tQl"; */
 "ZfY-xQ-tQl.title" = "Zoomen";
@@ -290,7 +290,7 @@
 "79J-Zg-ebA.title" = "Version 2.0.0 Beta 4 (5842)";
 
 /* Class = "NSTextFieldCell"; title = "Mac Mouse Fix"; ObjectID = "bGk-tB-fcH"; */
-"bGk-tB-fcH.title" = "Mac Mouse Fix";
+"bGk-tB-fcH.title" = "Mac Mouse Fix"; // !IS_OK
 
 /* Class = "NSTextFieldCell"; title = "Created by Noah Nuebling"; ObjectID = "pMz-a0-1UQ"; */
 "pMz-a0-1UQ.title" = "Gemacht von Noah Nübling";
