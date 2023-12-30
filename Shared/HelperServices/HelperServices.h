@@ -12,12 +12,14 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface HelperServices : NSObject
-+ (void)enableHelperAsUserAgent:(BOOL)enable onComplete:(void (^ _Nullable)(NSError * _Nullable error))onComplete NS_SWIFT_NAME(enableHelperAsUserAgent(_:onComplete:));
-+ (BOOL)helperIsActive;
 
 + (void)disableHelperFromHelper;
+
++ (BOOL)helperIsActive;
++ (void)enableHelperAsUserAgent:(BOOL)enable onComplete:(void (^ _Nullable)(NSError * _Nullable error))onComplete NS_SWIFT_NAME(enableHelperAsUserAgent(_:onComplete:));
+
 + (void)killAllHelpers;
-+ (void)restartHelper;
+
 + (void)restartHelperWithDelay:(double)delay;
 + (NSDate *)possibleRestartTime;
 

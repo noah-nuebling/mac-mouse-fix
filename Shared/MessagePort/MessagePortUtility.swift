@@ -83,10 +83,7 @@ import CocoaLumberjackSwift
                 }
             }
             
-            let title = NSLocalizedString("is-strange-helper-alert.title", comment: "First draft: Enabling Failed");
-            let body = String(format: NSLocalizedString("is-strange-helper-alert.body", comment: "First draft: Mac Mouse Fix can't be enabled because there's __another version__ of Mac Mouse Fix present on your computer\n\nTo enable Mac Mouse Fix:\n\n1. Delete the [other version](%@)\n2. Empty the Bin\n3. Restart your Mac\n4. Try again!"), strangeURL);
-            
-            AlertCreator.showPersistenNotification(withTitle: title, markdownBody: body, maxWidth: 300, stayOnTop: true, asSheet: false)
+            AlertCreator.showStrangeHelperMessage(withStrangeURL: strangeURL)
         }
         
         /// Return

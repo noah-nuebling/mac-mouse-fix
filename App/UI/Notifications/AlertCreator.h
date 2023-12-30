@@ -14,6 +14,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface AlertCreator : NSObject
 
++ (void)showStrangeHelperMessageWithStrangeURL:(NSString *)strangeURL;
 + (void)showPersistenNotificationWithTitle:(NSString *)title markdownBody:(NSString *)bodyRaw maxWidth:(int)maxWidth stayOnTop:(BOOL)isAlwaysOnTop asSheet:(BOOL)asSheet;
 
 @end

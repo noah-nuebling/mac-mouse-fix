@@ -83,6 +83,15 @@
 
 @implementation AlertCreator
 
+
++ (void)showStrangeHelperMessageWithStrangeURL:(NSString *)strangeURL {
+    
+    NSString *title = NSLocalizedString(@"is-strange-helper-alert.title", @"First draft: Enabling Failed");
+    NSString *body = [NSString stringWithFormat:NSLocalizedString(@"is-strange-helper-alert.body", @"First draft: Mac Mouse Fix can't be enabled because there's __another version__ of Mac Mouse Fix present on your computer\n\nTo enable Mac Mouse Fix:\n\n1. Delete the [other version](%@)\n2. Empty the Bin\n3. Restart your Mac\n4. Try again!"), strangeURL];
+    
+    [self showPersistenNotificationWithTitle:title markdownBody:body maxWidth:300 stayOnTop:YES asSheet:NO];
+}
+
 + (void)showPersistenNotificationWithTitle:(NSString *)title markdownBody:(NSString *)bodyRaw maxWidth:(int)maxWidth stayOnTop:(BOOL)isAlwaysOnTop asSheet:(BOOL)asSheet {
     
     /// \discussion Created this for when we receive a "helperEnabled" message from a strange helper under Ventura. In that case we show the user prettty long instructions which involve following a link. Toasts were too "transient" for this, because they automatically disappear. So we designed this as a "persistent" alternative to a toast.

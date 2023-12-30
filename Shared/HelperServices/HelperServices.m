@@ -26,6 +26,35 @@
 
 ///     Upate 14.08.2022 Still crashes for the dude. Made another change: All mentions of macOS 11, 12, 13 have been replaced with 11.0, 12.0, 13.0. Because all the examples on the internet write it like that. Let's see if that helps. Edit: That fixed it! See https://github.com/noah-nuebling/mac-mouse-fix/issues/241
 
+
+/**
+ 
+ Example output of the `launchctl list mouse.fix.helper` command
+ 
+     {
+         "StandardOutPath" = "/dev/null";
+         "LimitLoadToSessionType" = "Aqua";
+         "StandardErrorPath" = "/dev/null";
+         "MachServices" = {
+             "com.nuebling.mac-mouse-fix.helper" = mach-port-object;
+         };
+         "Label" = "mouse.fix.helper";
+         "OnDemand" = false;
+         "LastExitStatus" = 0;
+         "PID" = 709;
+         "Program" = "/Applications/Mac Mouse Fix.app/Contents/Library/LoginItems/Mac Mouse Fix Helper.app/Contents/MacOS/Mac Mouse Fix Helper";
+         "PerJobMachServices" = {
+             "com.apple.tsm.portname" = mach-port-object;
+             "com.apple.axserver" = mach-port-object;
+         };
+     };
+ 
+ Old stuff
+ 
+    NSString *prefPaneSearchString = @"/PreferencePanes/Mouse Fix.prefPane/Contents/Library/LoginItems/Mouse Fix Helper.app/Contents/MacOS/Mouse Fix Helper";
+
+ */
+
 #import <AppKit/AppKit.h>
 #import "HelperServices.h"
 #import "Constants.h"
@@ -39,7 +68,34 @@
 
 @implementation HelperServices
 
-#pragma mark - Helper interface
+#pragma mark - Interface...
+///
+///
+///
+#pragma mark Check Helper is Active
+
++ (BOOL)helperIsActive {
+    
+    
+    /// New method
+    ///     Send method to helper to ask if it's active.
+    ///     Also checks that the connected helper's bundle version matches the main app's bundle version and returns that the helper is inactive if not. This circumvents issues where the main app would think it's enabled when being started while an old incompatible helper instance is still running
+    ///     TODO: If an old, incompatible helper is still running - disable it
+
+    return [self helperIsActive_Message];
+
+    /// Old method
+    ///     Ask launchd apis whether helper is active.
+    ///     Not as reliable, because sometimes there will be an old version of the helper still active (in that case we wan't to return that the helper is incactive but these APIs returned that it is active) or maybe the launchd APIs have registered the helper job but they're not actually starting anything. This happens under Ventura when trying to start the app from another location.
+
+//    if (@available(macos 13.0, *)) {
+//        return [self helperIsActive_SM];
+//    } else {
+//        return helperIsActive_PList();
+//    }
+}
+
+#pragma mark Enable / Disable Helper
 
 + (void)disableHelperFromHelper {
     
@@ -66,29 +122,6 @@
     ///     For now we'll just turn this functionality off. If it never gets resolved by Apple, we can use weird hacks. Basically, could set a disabledByHelper flag in the config.plist, and then use use `launchctl remove` now to kill the helper and whenever it tries to start up again. Then the next time we start the mainApp, we'll actually properly unregister the helper.
     
     [self enableHelperAsUserAgent:NO onComplete:nil];
-}
-
-#pragma mark - Main interface
-
-+ (BOOL)helperIsActive {
-    
-    
-    /// New method
-    ///     Send method to helper to ask if it's active.
-    ///     Also checks that the connected helper's bundle version matches the main app's bundle version and returns that the helper is inactive if not. This circumvents issues where the main app would think it's enabled when being started while an old incompatible helper instance is still running
-    ///     TODO: If an old, incompatible helper is still running - disable it
-
-    return [self helperIsActive_Message];
-
-    /// Old method
-    ///     Ask launchd apis whether helper is active.
-    ///     Not as reliable, because sometimes there will be an old version of the helper still active (in that case we wan't to return that the helper is incactive but these APIs returned that it is active) or maybe the launchd APIs have registered the helper job but they're not actually starting anything. This happens under Ventura when trying to start the app from another location.
-
-//    if (@available(macos 13.0, *)) {
-//        return [self helperIsActive_SM];
-//    } else {
-//        return helperIsActive_PList();
-//    }
 }
 
 + (void)enableHelperAsUserAgent:(BOOL)enable onComplete:(void (^ _Nullable)(NSError * _Nullable error))onComplete {
@@ -144,6 +177,24 @@
             /// Do this on some global queue. Xcode complains if you do this on mainThread because it can lead to unresponsive UI.
             
             NSError *error = [self enableHelper_SM:enable];
+            
+            ///
+            /// Check launchd confusion
+            /// Notes:
+            /// - We also check helper strangeness in MessagePortUtility.swift
+            /// - For the new SMAppService APIs, launchd gets easily confused when the app is moved, or there are multiple copies of the app on the system.
+            ///    It will then say that it successfully launched the helper, but really it will have launched a strange helper from another copy of MMF or it won't have launched anything at all.
+            ///    When a strange helper is successfully launched, it then sends its bundle id to us and we detect that it's strange and display user feedback with solutions steps. We do this inside MessagePortUtility.swift
+            ///    However, when nothing is launched, it gets trickier. And there are lots of issues because of this. (See the issue https://github.com/noah-nuebling/mac-mouse-fix/issues/648)
+            ///    Buttt we found a big bingo. After an unsuccessful launch, the result of the `launchctl print gui/501/com.nuebling.mac-mouse-fix.helper` command seems to contain the path of the helper that it tried to launch under `event triggers` -> `com.nuebling.mac-mouse-fix.helper` -> `descriptor` -> `"Executable" => "<executable path>"`!
+            ///    So we're trying to parse that here and then provide some user feedback.
+            /// - Edge cases and stuff:
+            ///   - I suspect that the `launchctl print` command doesn't contain the executable path immediately after we try to register the service. We could wait, but that would complicate our logic. If the user simply tries enabling a second time, then it should should work. Should be good enough
+            ///   - In some cases, maybe we'll trigger user feedback about the same thing from here and from HelperServices. We should handle that possibility inside `AlertCreator` which displays the feedback.
+            
+            
+            
+            
             
             ///
             /// Call onComplete
@@ -202,10 +253,13 @@
     }
 }
 
+#pragma mark Killall Helpers
+
 + (void)killAllHelpers {
     
     /// The updated helper application will subsequently be launched by launchd due to the keepAlive attribute in Mac Mouse Fix Helper's launchd.plist
     /// This is untested but it's copied over from the old Updating mechanism, so I trust that it works in this context, too.
+    /// At time of writing, this is only used by Sparkle update mechanism. We have a separate killAllHelpers method we use internally. Kind of weird. Should probably unify.
     
     BOOL helperNeutralized = NO;
     for (NSRunningApplication *app in [NSRunningApplication runningApplicationsWithBundleIdentifier:kMFBundleIDHelper]) {
@@ -223,9 +277,7 @@
     }
 }
 
-+ (void)restartHelper {
-    [self restartHelperWithDelay:0.0];
-}
+#pragma mark Restart Helper
 
 + (void)restartHelperWithDelay:(double)delay {
     
@@ -265,34 +317,7 @@
     
 }
 
-+ (NSDate *)possibleRestartTime {
-    
-    /// Launchd allows at most 1 launch per 10 seconds.
-    ///     This method returns the earliest possible restart of the helper.
-    
-    /// Get helper startTime
-    /// Src: https://stackoverflow.com/a/40677286/10601702
-    
-    NSRunningApplication *helper = [NSRunningApplication runningApplicationsWithBundleIdentifier:Locator.helperBundle.bundleIdentifier][0];
-    pid_t pid = helper.processIdentifier;
-    
-    int mib[4] = { CTL_KERN, KERN_PROC, KERN_PROC_PID, pid };
-    struct kinfo_proc proc;
-    size_t size = sizeof(proc);
-    sysctl(mib, 4, &proc, &size, NULL, 0);
-    
-    NSDate *startTime = [NSDate dateWithTimeIntervalSince1970:proc.kp_proc.p_starttime.tv_sec];
-    
-    /// Get earliest possible restart time
-    
-    NSDate *tenSecs = [startTime dateByAddingTimeInterval:10];
-    NSDate *now = [NSDate date];
-    NSDate *possibleRestartTime = [now laterDate:tenSecs];
-    
-    /// Return
-    
-    return possibleRestartTime;
-}
+#pragma mark - Special Mode Helper
 
 + (NSString *)launchHelperInstanceWithMessage:(NSString *)message {
     
@@ -312,26 +337,11 @@
     return response;
 }
 
-
-#pragma mark - Core
-
-+ (NSString *)launchdID {
-    if (@available(macOS 13.0, *)) {
-        return kMFLaunchdHelperIdentifierSM;
-    } else {
-        return kMFLaunchdHelperIdentifier;
-    }
-}
-
-//BOOL buildNumberMatchesMainApp(NSInteger bundleVersion) {
-//    
-//    /// - Not sure if this belongs here? HelperServices is getting a little messy.
-//    /// - Maybe we could just move the build number checking into messagePort entirely.
-//    ///   Edit: Did move the build number checking into messagePort - Remove this
-//    
-//    assert(runningMainApp());
-//    return Locator.bundleVersion == bundleVersion;
-//}
+#pragma mark - End of interface
+///
+///
+///
+#pragma mark Check Helper Is Active
 
 + (BOOL)helperIsActive_Message {
 
@@ -377,10 +387,10 @@
     }
 }
 
-static BOOL helperIsActive_PList() {
+static BOOL helperIsActive_PList(void) {
     
     /// Get info from launchd
-    NSString *launchctlOutput = [HelperServices serviceInfoWithIdentifier:kMFLaunchdHelperIdentifier];
+    NSString *launchctlOutput = launchctl_list(kMFLaunchdHelperIdentifier);
     
     /// Analyze info
     
@@ -404,6 +414,8 @@ static BOOL helperIsActive_PList() {
         return NO;
     }
 }
+
+#pragma mark Enable/Disable helper
 
 + (NSError *_Nullable)enableHelper_SM:(BOOL)enable API_AVAILABLE(macos(13.0)) {
     
@@ -472,7 +484,139 @@ static void enableHelper_PList(BOOL enable) {
     [task launchAndReturnError:&error];
 }
 
-static void removeLaunchdPlist() {
+#pragma mark - Remove launchctl service
+
+static void removeServiceWithIdentifier(NSString *identifier) {
+    
+    /// Remove service from launchd
+    /// Notes:
+    /// - From my testing this does the same as the `bootout` command, but it doesn't rely on a valid launchd.plist file to exist in the library, so it should be more robust.
+    /// - The removed service will be quit immediately but will be restarted on the next boot. Pre-SMAppService you can prevent start on next boot by deleting the launchd.plist file. Post-SMAppService you need to unregister the service. Not sure if there are other ways.
+    
+    DDLogInfo(@"Removing service %@ from launchd", identifier);
+    
+    NSURL *launchctlURL = [NSURL fileURLWithPath:kMFLaunchctlPath];
+    NSError *err;
+    [SharedUtility launchCLT:launchctlURL withArguments:@[@"remove", identifier] error:&err];
+    if (err != nil) {
+        DDLogError(@"Error removing service %@ from launchd: %@", identifier, err);
+    }
+    
+    /// Wait until service is actually removed
+    /// Notes:
+    /// - Otherwise enabling while old helper is still enabled won't work under Mojave
+    /// - TODO: We also brought this improvement to MMF 2 but was hacky since it's missing some previous improvements made to HelperServices. That's bad, we shouldn't have let HelperServices diverge like that between MMF 2 and 3! We should unify them again.
+    
+    int maxWaitCycles = 25;
+    int i = 0;
+    while (true) {
+        
+        NSString *launchctlOutput = launchctl_list(identifier);
+        
+        if ([launchctlOutput isEqual:@""]) break;
+        if (i >= maxWaitCycles) break;
+        
+        i += 1;
+    }
+}
+
+#pragma mark - Get info from launchctl
+
+NSString *launchctl_list(NSString *identifier) {
+    
+    /// Using NSTask to ask launchd about helper status
+    
+    NSURL *launchctlURL = [NSURL fileURLWithPath:kMFLaunchctlPath];
+    NSString *launchctlOutput = [SharedUtility launchCLT:launchctlURL withArguments:@[@"list", identifier] error:nil];
+    return launchctlOutput;
+}
+
+NSString *launchctl_print(NSString *identifier) {
+    
+    /// Using NSTask to ask launchd about helper status
+    
+    NSURL *launchctlURL = [NSURL fileURLWithPath:kMFLaunchctlPath];
+    NSString *serviceTarget = [NSString stringWithFormat:@"gui/%d/%@", getuid(), identifier];
+    
+    NSString *launchctlOutput = [SharedUtility launchCLT:launchctlURL withArguments:@[@"print", identifier] error:nil];
+    return launchctlOutput;
+}
+
++ (NSString *)launchdID {
+    if (@available(macOS 13.0, *)) {
+        return kMFLaunchdHelperIdentifierSM;
+    } else {
+        return kMFLaunchdHelperIdentifier;
+    }
+}
+
++ (BOOL)strangeHelperIsRegisteredWithLaunchdIdentifier:(NSString *)identifier {
+    
+    /// Check if helper is registered with launchd from some other location
+    
+    NSString *launchdPath = [self executablePathForLaunchdIdentifier:identifier];
+    BOOL launchdPathExists = launchdPath.length != 0;
+    
+    if (launchdPathExists) {
+        
+        BOOL isStrange = ![Locator.helperBundle.executablePath isEqual:launchdPath];
+        
+        if (isStrange) {
+            
+            DDLogWarn(@"Strange helper: found at: %@ \nbundleExecutable at: %@", launchdPath, Locator.helperBundle.executablePath);
+            return YES;
+        }
+    }
+    
+    DDLogInfo(@"Strange Helper: not found");
+    return NO;
+}
+
++ (NSString *)executablePathForLaunchdIdentifier:(NSString *)identifier {
+    
+    /// Validate
+    /// - This actually only works for `kMFLaunchdHelperIdentifier`. For `kMFLaunchdHelperIdentifierSM` it gets the executable path relative to the mainApp bundle which isn't that helpful.
+    
+    assert([identifier isEqual:kMFLaunchdHelperIdentifier]);
+    
+    /// Using NSTask to ask launchd about helper status
+    NSString * launchctlOutput = launchctl_list(identifier);
+    
+    NSString *executablePathRegEx = @"(?<=\"Program\" = \").*(?=\";)";
+    ///    NSRegularExpression executablePathRegEx =
+    NSRange executablePathRange = [launchctlOutput rangeOfString:executablePathRegEx options:NSRegularExpressionSearch];
+    if (executablePathRange.location == NSNotFound) return @"";
+    NSString *executablePath = [launchctlOutput substringWithRange:executablePathRange];
+    
+    return executablePath;
+}
+
+#pragma mark - Killall Helpers
+
++ (void)terminateAllHelperInstances {
+    
+    /// Terminate any running instances of the helper app
+    /// This only works to terminate instances of the Helper which weren't started by launchd.
+    /// Launchd-started instances will immediately be restarted after they are terminated
+    /// Mac Mouse Fix Accomplice does something similar to this in update()
+    
+    // TODO: This is very similar to `killAllHelpers`. Unify.
+    
+    DDLogInfo(@"Terminating other Helper instances");
+    
+    NSArray<NSRunningApplication *> *instances = [NSRunningApplication runningApplicationsWithBundleIdentifier:kMFBundleIDHelper];
+    
+    DDLogInfo(@"%lu other running Helper instances found", (unsigned long)instances.count);
+        
+    for (NSRunningApplication *instance in instances) {
+        [instance terminate]; /// Consider using forceTerminate instead
+    }
+    
+}
+
+#pragma mark - Manage launchd.plist files
+
+static void removeLaunchdPlist(void) {
     NSError *error;
     [NSFileManager.defaultManager removeItemAtURL:Locator.launchdPlistURL error:&error];
     if (error != nil) {
@@ -686,105 +830,7 @@ static NSError *makeWritable(NSString *itemPath) {
     return nil;
 }
 
-+ (NSString *)serviceInfoWithIdentifier:(NSString *)identifier {
-    
-    /// Using NSTask to ask launchd about helper status
-    
-    NSURL *launchctlURL = [NSURL fileURLWithPath: kMFLaunchctlPath];
-    NSString * launchctlOutput = [SharedUtility launchCLT:launchctlURL withArguments:@[@"list", identifier] error:nil];
-    return launchctlOutput;
-}
-
-#pragma mark - Clean up legacy stuff
-
-//+ (void)runPreviousVersionCleanup {
-//
-//    DDLogInfo(@"Cleaning up stuff from previous versions");
-//
-//    if (self.strangeHelperIsRegisteredWithLaunchd) {
-//        [self removeHelperFromLaunchd];
-//    }
-//
-//    [self removePrefpaneLaunchdPlist];
-//    /// ^ Could also do this in the if block but users have been having some weirdd issues after upgrading to the app version and I don't know why. I feel like this might make things slightly more robust.
-//}
-
-+ (BOOL)strangeHelperIsRegisteredWithLaunchdIdentifier:(NSString *)identifier {
-    
-    /// Check if helper is registered with launchd from some other location
-    
-    NSString *launchdPath = [self executablePathForLaunchdIdentifier:identifier];
-    BOOL launchdPathExists = launchdPath.length != 0;
-    
-    if (launchdPathExists) {
-        
-        BOOL isStrange = ![Locator.helperBundle.executablePath isEqual:launchdPath];
-        
-        if (isStrange) {
-            
-            DDLogWarn(@"Strange helper: found at: %@ \nbundleExecutable at: %@", launchdPath, Locator.helperBundle.executablePath);
-            return YES;
-        }
-    }
-    
-    DDLogInfo(@"Strange Helper: not found");
-    return NO;
-}
-
-+ (void)terminateAllHelperInstances {
-    
-    /// Terminate any running instances of the helper app
-    /// This only works to terminate instances of the Helper which weren't started by launchd.
-    /// Launchd-started instances will immediately be restarted after they are terminated
-    /// Mac Mouse Fix Accomplice does something similar to this in update()
-    
-    DDLogInfo(@"Terminating other Helper instances");
-    
-    NSArray<NSRunningApplication *> *instances = [NSRunningApplication runningApplicationsWithBundleIdentifier:kMFBundleIDHelper];
-    
-    DDLogInfo(@"%lu other running Helper instances found", (unsigned long)instances.count);
-        
-    for (NSRunningApplication *instance in instances) {
-        [instance terminate]; /// Consider using forceTerminate instead
-    }
-    
-}
-
-static void removeServiceWithIdentifier(NSString *identifier) {
-    
-    /// Remove service from launchd
-    /// Notes:
-    /// - From my testing this does the same as the `bootout` command, but it doesn't rely on a valid launchd.plist file to exist in the library, so it should be more robust.
-    /// - The removed service will be quit immediately but will be restarted on the next boot. Pre-SMAppService you can prevent start on next boot by deleting the launchd.plist file. Post-SMAppService you need to unregister the service. Not sure if there are other ways.
-    
-    DDLogInfo(@"Removing service %@ from launchd", identifier);
-    
-    NSURL *launchctlURL = [NSURL fileURLWithPath:kMFLaunchctlPath];
-    NSError *err;
-    [SharedUtility launchCLT:launchctlURL withArguments:@[@"remove", identifier] error:&err];
-    if (err != nil) {
-        DDLogError(@"Error removing service %@ from launchd: %@", identifier, err);
-    }
-    
-    /// Wait until service is actually removed
-    /// Notes:
-    /// - Otherwise enabling while old helper is still enabled won't work under Mojave
-    /// - TODO: We also brought this improvement to MMF 2 but was hacky since it's missing some previous improvements made to HelperServices. That's bad, we shouldn't have let HelperServices diverge like that between MMF 2 and 3! We should unify them again.
-    
-    int maxWaitCycles = 25;
-    int i = 0;
-    while (true) {
-        
-        NSString *launchctlOutput = [HelperServices serviceInfoWithIdentifier:identifier];
-        
-        if ([launchctlOutput isEqual:@""]) break;
-        if (i >= maxWaitCycles) break;
-        
-        i += 1;
-    }
-}
-
-static void removePrefpaneLaunchdPlist() {
+static void removePrefpaneLaunchdPlist(void) {
         
     /// Remove legacy launchd plist file if it exists
     /// The launchd plist file used to be at `~/Library/LaunchAgents/com.nuebling.mousefix.helper.plist` when the app was still a prefpane. In the very early days it was at `mouse.fix.helper.plist`.
@@ -820,53 +866,37 @@ static void removePrefpaneLaunchdPlist() {
     }
 }
 
-+ (NSString *)executablePathForLaunchdIdentifier:(NSString *)identifier {
+#pragma mark - Unused
+
++ (NSDate *)possibleRestartTime {
     
-    /// Validate
-    /// - This actually only works for `kMFLaunchdHelperIdentifier`. For `kMFLaunchdHelperIdentifierSM` it gets the executable path relative to the mainApp bundle which isn't that helpful.
+    /// Not sure what we used this for, but it seems we found a better solution.
     
-    assert([identifier isEqual:kMFLaunchdHelperIdentifier]);
+    /// Launchd allows at most 1 launch per 10 seconds.
+    ///     This method returns the earliest possible restart of the helper.
     
-    /// Using NSTask to ask launchd about helper status
-    NSString * launchctlOutput = [self serviceInfoWithIdentifier:identifier];
+    /// Get helper startTime
+    /// Src: https://stackoverflow.com/a/40677286/10601702
     
-    NSString *executablePathRegEx = @"(?<=\"Program\" = \").*(?=\";)";
-    ///    NSRegularExpression executablePathRegEx =
-    NSRange executablePathRange = [launchctlOutput rangeOfString:executablePathRegEx options:NSRegularExpressionSearch];
-    if (executablePathRange.location == NSNotFound) return @"";
-    NSString *executablePath = [launchctlOutput substringWithRange:executablePathRange];
+    NSRunningApplication *helper = [NSRunningApplication runningApplicationsWithBundleIdentifier:Locator.helperBundle.bundleIdentifier][0];
+    pid_t pid = helper.processIdentifier;
     
-    return executablePath;
+    int mib[4] = { CTL_KERN, KERN_PROC, KERN_PROC_PID, pid };
+    struct kinfo_proc proc;
+    size_t size = sizeof(proc);
+    sysctl(mib, 4, &proc, &size, NULL, 0);
+    
+    NSDate *startTime = [NSDate dateWithTimeIntervalSince1970:proc.kp_proc.p_starttime.tv_sec];
+    
+    /// Get earliest possible restart time
+    
+    NSDate *tenSecs = [startTime dateByAddingTimeInterval:10];
+    NSDate *now = [NSDate date];
+    NSDate *possibleRestartTime = [now laterDate:tenSecs];
+    
+    /// Return
+    
+    return possibleRestartTime;
 }
-
-#pragma mark - Documentation & other
-
-/// Example output of the `launchctl list mouse.fix.helper` command
-
-/*
- {
-     "StandardOutPath" = "/dev/null";
-     "LimitLoadToSessionType" = "Aqua";
-     "StandardErrorPath" = "/dev/null";
-     "MachServices" = {
-         "com.nuebling.mac-mouse-fix.helper" = mach-port-object;
-     };
-     "Label" = "mouse.fix.helper";
-     "OnDemand" = false;
-     "LastExitStatus" = 0;
-     "PID" = 709;
-     "Program" = "/Applications/Mac Mouse Fix.app/Contents/Library/LoginItems/Mac Mouse Fix Helper.app/Contents/MacOS/Mac Mouse Fix Helper";
-     "PerJobMachServices" = {
-         "com.apple.tsm.portname" = mach-port-object;
-         "com.apple.axserver" = mach-port-object;
-     };
- };
- */
-
-/// Old stuff
-
-/*
- //    NSString *prefPaneSearchString = @"/PreferencePanes/Mouse Fix.prefPane/Contents/Library/LoginItems/Mouse Fix Helper.app/Contents/MacOS/Mouse Fix Helper";
- */
 
 @end
