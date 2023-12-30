@@ -363,9 +363,14 @@ finally deliver this awesome value proposition:</p>
 Trackpad!</strong></p>
 <!-- Mac Mouse Fix 3 features amazing new **trackpad-like scrolling**, a beautiful **new UI**, and many **new gestures**.\ -->
 <p>Check out <strong>all the new features</strong> at the <a
-href="http://macmousefix.com/">new website</a>, or see the <a
-href="https://github.com/noah-nuebling/mac-mouse-fix/releases">release
-history</a> for even more details.</p>
+href="http://macmousefix.com/">new website</a>!</p>
+<p>…Or see a more concise list of the most important changes compared to
+Mac Mouse Fix 2 in <a
+href="https://github.com/noah-nuebling/mac-mouse-fix/discussions/743#discussioncomment-7938922">this
+discussion</a>.<br />
+You can also check out the release notes of <a
+href="https://github.com/noah-nuebling/mac-mouse-fix/releases/tag/3.0.0-Beta-7">3.0.0
+Beta 7</a> and the previous Betas for even more details.</p>
 <h2 id="monetization">Monetization</h2>
 <p>Before you upgrade to Mac Mouse Fix 3 from Mac Mouse Fix 2, there’s
 one thing you might want to know:</p>
