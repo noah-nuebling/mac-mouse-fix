@@ -1,3 +1,14 @@
+"""
+- [ ] Add ‘empty_translations’ section
+- [ ] Why isn’t website stuff showing up?
+- [ ] Why unchanged translations not showing ‘Mac Mouse Fix’?
+
+- [ ] Add ‘untranslated files’ section
+
+- [ ] Write a GitHub Actions that runs on every push to master / every 24 hours.
+- [ ] Write tutorial for updating existing translations.
+"""
+
 
 #
 # Native imports
