@@ -414,7 +414,7 @@ Base file at: [{base_file_display}]({base_file_link}){content_str}
         flag_emoji = language_tag_to_flag_emoji(language_id)
 
         # Attach header
-        result += f"\n\n# {flag_emoji} {language_name}"    
+        result += f"\n\n# {flag_emoji} {language_name} | {language_id}"    
         
         # Attach file analysis
         for content_str in content_strs:
