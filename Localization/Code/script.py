@@ -3,7 +3,7 @@
 - [x] Why unchanged translations not showing ‘Mac Mouse Fix’? -> they were actually changed, with non-breaking spaces
 
 - [x] Add ‘empty_translations’ section
-- [ ] Add ‘untranslated files’ section
+- [x] Add ‘untranslated files’ section
 
 - [ ] Write a GitHub Actions that runs on every push to master / every 24 hours.
 - [ ] Write tutorial for updating existing translations.
@@ -380,8 +380,7 @@ Base file at: [{base_file_display}]({base_file_link}){content_str}
         
         for b in untranslated:
             
-            # TODO: The repo root here is wrong. Links to the website repo don't work.
-            b_short, b_display, b_link = file_paths_for_markdown(b, repo_root)
+            b_short, b_display, b_link = file_paths_for_markdown(b['base'], b['repo'].working_tree_dir)
             
             missing_str += f"- Translation for [{b_short}]({b_link}) is missing\n"
         
@@ -398,7 +397,7 @@ Base file at: [{base_file_display}]({base_file_link}){content_str}
             
         # Attach
         if len(missing_str) > 0:
-            content_strs = content_strs.insert(0, '\n\n## Missing Files\n\n' + missing_str)
+            content_strs = content_strs.insert(0, '\n\n## Missing Files\n\nThe following files don\'t have a translation for this language, yet.\nTo translate these files see the instructions for \'Adding a Language\' at the top of the page.\n\n' + missing_str)
             
     
     # Build result from result_by_language
@@ -564,12 +563,16 @@ def analyze_missing_localization_files(files):
            'translated_files': [
                 {
                     'base': '<base_file_path>',
-                    'translation: '<translated_file_path>',
+                    'translation': '<translated_file_path>',
+                    'repo': git.Repo(),
                 },
                 ...
             ],
             'untranslated_files': [
-                <base_file_path>,
+                {
+                    'base': '<base_file_path>',
+                    'repo': git.Repo(),
+                },
                 ...
             ]
         },
@@ -577,25 +580,25 @@ def analyze_missing_localization_files(files):
     }
     """
 
-    # Get translated files
+    # Get base files & translated files
     
-    base_files = set()
+    base_files = list()
     result = dict()
     for file_dict in files:
         base_path = file_dict['base']
-        base_files.add(base_path)
+        repo = file_dict['repo']
+        base_files.append({ 'base': base_path, 'repo': repo })
         for translation_path, translation_dict in file_dict['translations'].items():
             lang_id = translation_dict['language_id']
-            result.setdefault(lang_id, {}).setdefault('translated_files', []).append({ 'base': base_path, 'translation': translation_path })
+            result.setdefault(lang_id, {}).setdefault('translated_files', []).append({ 'base': base_path, 'translation': translation_path, 'repo': repo })
     
     # Get untranslated files
     
-    # pprint(f"translateddd: {result['de']['translated_files']}")
-    
     for lang_id, d in result.items():
-        translated_bases = set(map(lambda file: file['base'], d['translated_files']))
-        untranslated_bases = base_files.difference(translated_bases)
-        d['untranslated_files'] = list(untranslated_bases)
+        translated_bases = list(map(lambda file: file['base'], d['translated_files']))
+        for b in base_files:
+            if b['base'] not in translated_bases:
+                d.setdefault('untranslated_files', []).append(b)
     
     # Return
     return result
