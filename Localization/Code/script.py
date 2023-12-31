@@ -3,7 +3,7 @@
 - [x] Why unchanged translations not showing ‘Mac Mouse Fix’? -> they were actually changed, with non-breaking spaces
 
 - [ ] Add ‘untranslated files’ section
-- [ ] Add ‘empty_translations’ section
+- [x] Add ‘empty_translations’ section
 
 - [ ] Write a GitHub Actions that runs on every push to master / every 24 hours.
 - [ ] Write tutorial for updating existing translations.
@@ -290,17 +290,21 @@ Maybe the translation should be updated to reflect the new changes to the base f
                 
                 # Build strings for missing/superfluous translations
                 
-                missing_str = '\n- '.join(map(lambda x: translation_to_markdown(x['key'], x['value'], file_type), translation_dict['missing_translations'])) # Not sure why we need to escape the `|` here.
+                missing_str =       '\n- '.join(map(lambda x: translation_to_markdown(x['key'], x['value'], file_type), translation_dict['missing_translations'])) # Not sure why we need to escape the `|` here.
                 if len(missing_str) > 0:
                     content_str += f"\n\n**Missing translations**\n\nThe following key-value-pairs appear in the base file but not in the translation. They should probably be added to the translation:\n\n- {missing_str}"
                     
-                superfluous_str = '\n- '.join(map(lambda x: translation_to_markdown(x['key'], x['value'], file_type), translation_dict['superfluous_translations']))
+                superfluous_str =   '\n- '.join(map(lambda x: translation_to_markdown(x['key'], x['value'], file_type), translation_dict['superfluous_translations']))
                 if len(superfluous_str) > 0:
                     content_str += f"\n\n**Superfluous translations**\n\nThe following key-value-pairs appear in the translation but not in the base file. It's likely they are unused and can be deleted from the translation:\n\n- {superfluous_str}"
                     
-                unchanged_str = '\n- '.join(map(lambda x: translation_to_markdown(x['key'], x['value'], file_type), translation_dict['unchanged_translations']))
+                unchanged_str =     '\n- '.join(map(lambda x: translation_to_markdown(x['key'], x['value'], file_type), translation_dict['unchanged_translations']))
                 if len(unchanged_str) > 0:
                     content_str += f"\n\n**Unchanged translations**\n\nThe following key-value-pairs have the exact same value in the translation as in the base file. Maybe they have not yet been translated:\n\n- {unchanged_str}"
+                
+                empty_str =         '\n- '.join(map(lambda x: f"Base file: {translation_to_markdown(x['key'], x['base_value'], file_type)}\n  Translation: {translation_to_markdown(x['key'], x['value'], file_type)}", translation_dict['empty_translations']))
+                if len(empty_str) > 0:
+                    content_str += f"\n\n**Empty translations**\n\nThe following key-value-pairs are empty in the translation but not empty in the base file. It looks like they have not yet been translated:\n\n- {empty_str}"
                     
                 
                 # Build strings for outdated translations
@@ -537,6 +541,7 @@ def analyze_localization_files(files):
                     'missing_translations':     [{ 'key': <translation_key>, 'value': <ui_text> }, ...],
                     'superfluous_translations': [{ 'key': <translation_key>, 'value': <ui_text> }, ...],
                     'unchanged_translations':   [{ 'key': <translation_key>, 'value': <ui_text> }, ...],
+                    'empty_translations':       [{ 'key': <translation_key>, 'value': <ui_text>, 'base_value': <ui_text>}, ...],
                     'outdated_translations': {
                         '<translation_key>': {
                             'latest_base_change': {
@@ -690,20 +695,27 @@ def analyze_localization_files(files):
             translation_dict['missing_translations'] = missing_translations
             translation_dict['superfluous_translations'] = superfluous_translations
             
-            # Check & attach unchanged translations
+            # Check & attach unchanged & empty translations
             
-            print(f'        Check unchanged translations...')
+            print(f'        Check unchanged & empty translations...')
             
             unchanged_translations = []
+            empty_translations = []
             for k in common_keys:
                 
-                value_b = base_keys_and_values[k]['value']
-                value_t = translation_keys_and_values[k]['value']
+                b = base_keys_and_values[k]['value']
+                t = translation_keys_and_values[k]['value']
                 
-                if value_b['text'] == value_t['text'] and value_t['is_ok_count'] <= 0:
-                    unchanged_translations.append({'key': k, 'value': value_t['text']})
-                    
+                is_unchanged = b['text'] == t['text'] and t['is_ok_count'] == 0
+                is_empty = len(b['text']) > 0 and len(t['text']) == 0 and t['is_ok_count'] == 0
+                
+                if is_unchanged:
+                    unchanged_translations.append({'key': k, 'value': t['text']})
+                if is_empty:
+                    empty_translations.append({'key': k, 'value': t['text'], 'base_value': b['text']})
+            
             translation_dict['unchanged_translations'] = unchanged_translations
+            translation_dict['empty_translations'] = empty_translations
             
             # Log
             print(f'        Analyze when keys last changed...')
