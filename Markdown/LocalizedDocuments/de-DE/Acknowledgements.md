@@ -39,6 +39,7 @@ Diese Leute haben viel mehr als den Standardpreis ausgegeben und mir einen **ung
 
 **Dezember 2023**
 
+- 🇺🇸&nbsp;Daniel&nbsp;Shusta
 - 🇺🇸&nbsp;Spidertrax
 - 🇳🇱&nbsp;Daniël&nbsp;Terrizzi - "Great tool that I use daily. I hope app-specific disable  will be implemented!"
 - 🇺🇸&nbsp;Rqiu987
