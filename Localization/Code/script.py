@@ -2,8 +2,8 @@
 - [x] Why isn’t website stuff showing up? -> Forgot to turn debug stuff off
 - [x] Why unchanged translations not showing ‘Mac Mouse Fix’? -> they were actually changed, with non-breaking spaces
 
-- [ ] Add ‘untranslated files’ section
 - [x] Add ‘empty_translations’ section
+- [ ] Add ‘untranslated files’ section
 
 - [ ] Write a GitHub Actions that runs on every push to master / every 24 hours.
 - [ ] Write tutorial for updating existing translations.
@@ -48,9 +48,10 @@ def main():
     assert os.path.basename(repo_root) == 'mac-mouse-fix', "Run this script from the 'mac-mouse-fix' repo folder."
     assert os.path.exists(website_root), "Couldn't find mmf website repo at {website_root}"
     
-    files = find_localization_files(repo_root, website_root)    
+    files = find_localization_files(repo_root, website_root)
+    missing_analysis = analyze_missing_localization_files(files)
     analysis = analyze_localization_files(files)
-    markdown = markdown_from_analysis(analysis)
+    markdown = markdown_from_analysis(analysis, missing_analysis)
     upload_markdown(args.api_key, markdown)
     
 #
@@ -224,7 +225,7 @@ def github_graphql_request(api_key, query):
 # Build markdown
 #
 
-def markdown_from_analysis(files):
+def markdown_from_analysis(files, missing_files):
     
     # Discussion:
     # We want to always produce the exact same markdown for a given input. That's because we plan to send notifications to collaborators whenever the markdown changes.
@@ -360,12 +361,46 @@ Maybe the translation should be updated to reflect the new changes to the base f
             if len(content_str) > 0:
                 language_id = translation_dict['language_id']
                 content_str = textwrap.dedent(f"""
-## {translation_file_display_short}
+## File: {translation_file_display_short}
 Translation at: [{translation_file_display}]({translation_file_link})
 Base file at: [{base_file_display}]({base_file_link}){content_str}
                 """)
                 result_by_language.setdefault(language_id, []).append(content_str)
 
+
+    # Attach missing files info to result_by_language
+    for language_id in sorted(result_by_language.keys()):
+        
+        content_strs = result_by_language[language_id]
+        
+        missing_str = ''
+        
+        translated = missing_files[language_id].get('translated_files', [])
+        untranslated = missing_files[language_id].get('untranslated_files', [])
+        
+        for b in untranslated:
+            
+            # TODO: The repo root here is wrong. Links to the website repo don't work.
+            b_short, b_display, b_link = file_paths_for_markdown(b, repo_root)
+            
+            missing_str += f"- Translation for [{b_short}]({b_link}) is missing\n"
+        
+        for d in translated:
+            
+            continue
+        
+            b = d['base']
+            t = d['translation']
+            b_short, b_display, b_link = file_paths_for_markdown(b, repo_root)
+            t_short, t_display, t_link = file_paths_for_markdown(t, repo_root)
+            
+            missing_str += f"- Translation for [{b_short}]({b_link})\n  is at [{t_short}]({t_link})\n"
+            
+        # Attach
+        if len(missing_str) > 0:
+            content_strs = content_strs.insert(0, '\n\n## Missing Files\n\n' + missing_str)
+            
+    
     # Build result from result_by_language
     
     result = ''
@@ -379,11 +414,14 @@ Base file at: [{base_file_display}]({base_file_link}){content_str}
         language_name = locale.english_name
         flag_emoji = language_tag_to_flag_emoji(language_id)
 
-        # Attach to result
-        result += f"\n\n# {flag_emoji} {language_name}"
+        # Attach header
+        result += f"\n\n# {flag_emoji} {language_name}"    
+        
+        # Attach file analysis
         for content_str in content_strs:
             result += content_str
     
+    # Attach intro
     if len(result) > 0:
         result = textwrap.dedent(f"""\
             In this comment you can find a list of translations that might need updating: (This comment is a work-in-progress. You might not want to do work based on the info here, yet.)
@@ -516,6 +554,51 @@ def file_paths_for_markdown(local_path, local_repo_path):
 #
 # Analysis core
 #
+
+def analyze_missing_localization_files(files):
+
+    """
+    Structure of output:
+    {
+        '<language_id>: {
+           'translated_files': [
+                {
+                    'base': '<base_file_path>',
+                    'translation: '<translated_file_path>',
+                },
+                ...
+            ],
+            'untranslated_files': [
+                <base_file_path>,
+                ...
+            ]
+        },
+        ...
+    }
+    """
+
+    # Get translated files
+    
+    base_files = set()
+    result = dict()
+    for file_dict in files:
+        base_path = file_dict['base']
+        base_files.add(base_path)
+        for translation_path, translation_dict in file_dict['translations'].items():
+            lang_id = translation_dict['language_id']
+            result.setdefault(lang_id, {}).setdefault('translated_files', []).append({ 'base': base_path, 'translation': translation_path })
+    
+    # Get untranslated files
+    
+    # pprint(f"translateddd: {result['de']['translated_files']}")
+    
+    for lang_id, d in result.items():
+        translated_bases = set(map(lambda file: file['base'], d['translated_files']))
+        untranslated_bases = base_files.difference(translated_bases)
+        d['untranslated_files'] = list(untranslated_bases)
+    
+    # Return
+    return result
 
 def analyze_localization_files(files):
 
