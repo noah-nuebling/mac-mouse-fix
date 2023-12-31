@@ -1,6 +1,6 @@
 """
 - [ ] Add ‘empty_translations’ section
-- [ ] Why isn’t website stuff showing up?
+- [x] Why isn’t website stuff showing up?
 - [ ] Why unchanged translations not showing ‘Mac Mouse Fix’?
 
 - [ ] Add ‘untranslated files’ section
@@ -48,7 +48,7 @@ def main():
     assert os.path.basename(repo_root) == 'mac-mouse-fix', "Run this script from the 'mac-mouse-fix' repo folder."
     assert os.path.exists(website_root), "Couldn't find mmf website repo at {website_root}"
     
-    files = find_localization_files_in_mmf_repo(repo_root, website_root)    
+    files = find_localization_files(repo_root, website_root)    
     analysis = analyze_localization_files(files)
     markdown = markdown_from_analysis(analysis)
     upload_markdown(args.api_key, markdown)
@@ -75,7 +75,7 @@ def prepare_interactive_debugging(repo_root, website_root):
     6. >> importlib.reload(script) (after updating source code)
     """
         
-    files = find_localization_files_in_mmf_repo(repo_root, website_root)
+    files = find_localization_files(repo_root, website_root)
     result = analyze_localization_files(files)
     
     return result
@@ -1054,7 +1054,7 @@ def runCLT(command, cwd=None):
 # Find files
 #
 
-def find_localization_files_in_mmf_repo(repo_root, website_root):
+def find_localization_files(repo_root, website_root):
     
     """
     Find localization files
@@ -1198,7 +1198,7 @@ def find_localization_files_in_mmf_repo(repo_root, website_root):
                 
                 if not is_base_file:    
                     if basetype == 'nuxt':
-                        if extension_matches: do_append = False #True
+                        if extension_matches: do_append = True
                     elif basetype == 'markdown':
                         if extension_matches and filename_matches: do_append = True
                     elif basetype == 'IB':
