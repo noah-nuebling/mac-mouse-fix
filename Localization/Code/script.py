@@ -1131,6 +1131,14 @@ def iter_content_changes(file_path, repo):
 
     # Iterate commits that actually changed the content of `file_path`. 
     #   We do this to exclude commits where the file was just renamed and the content didn't change.
+    #   Update: We can't track renames. See get_commits_follow_renames()
+    
+    # Just use iter_commits since we can't track renames anyways
+    waaaa = repo.iter_commits(paths=file_path)
+    for w in waaaa: yield w
+    
+    return 
+
 
     # Prepare
     
@@ -1164,13 +1172,17 @@ def get_commits_follow_renames(file_path, repo):
     # Use `git log --follow` to get a list of `git.Commit()`s that changed a file, while following file-renames.
     # Notes: 
     # - The old way we iterated through commits is `repo.iter_commits(paths=file_path)`, but that doesn't follow renames. I hope that switching to this doesn't cause problems.
-    # - RENAMES DON'T WORK YET. We tried a very rudimentary test to see if following renames works: 
-    #   We renamed the language id for the german markdown stuff from `de-DE`` to just `de``. 
-    #   But after that, the outdating_commits code didn't output any outdating commits anymore for the file anymore. So something was wrong. 
-    #   It might either be that get_commits_follow_renames() doesn't work properly, 
-    #   or maybe it's because the `outdating_commits` code doesn't check if the content actually changed in a commit, and instead just checks that git says that the commit changed the file in any way (which might include renames.)
+    # - UDPATE: RENAMES DON'T WORK YET. neither `git show` nor `git diff` can follow renames when called on a specific file. 
+    #   `git diff` can detect renames but only when called on the whole repo not when a path is specified. We could probably do some manual parsing to make this work but that't tooo hard for now. 
+    #   If we can't get diffs between renames, then we don't need to iterate through commits on files through renames either. Hence this function is unnecessary.
+    #   Tracking changes through renames is but a dream for us at this point. So I guess we'll just have to abide by this principle: 
+    #       
+    #       Don't rename files unless all the issues detected by this script are resolved! I think then everything should be sound.
+    #
+    #   TODO: Remove this renames stuff, since it doesn't work 
     
-    # return list(repo.iter_commits(paths=file_path)) # Debug
+    # Just use iter_commits since we can't track renames anyways
+    return list(repo.iter_commits(paths=file_path))
     
     # Get repository path
     repo_path = repo.working_tree_dir
