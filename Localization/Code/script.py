@@ -732,24 +732,22 @@ def analyze_localization_files(files):
         
         for translation_file, translation_dict in file_dict['translations'].items():
             
-            
-            translation_commit_iterator = iter(get_commits_follow_renames(translation_file, repo)) # repo.iter_commits(paths=translation_file, **{'max-count': 1} ) # max-count is passed along to `git rev-list` command-line-arg
-            last_translation_commit = next(translation_commit_iterator)
+            translation_change_iterator = iter_content_changes(translation_file, repo) # repo.iter_commits(paths=translation_file, **{'max-count': 1} ) # max-count is passed along to `git rev-list` command-line-arg
+            last_translation_change = next(translation_change_iterator)
             
             outdating_commits = []
             
-            base_commit_iterator = iter(get_commits_follow_renames(base_file, repo)) # repo.iter_commits(paths=translation_file)
+            base_change_iterator = iter_content_changes(base_file, repo) # repo.iter_commits(paths=translation_file)
             
-            for base_commit in base_commit_iterator:
-                if not is_predecessor(base_commit, last_translation_commit):
-                    outdating_commits.append(base_commit)
+            for base_change in base_change_iterator:
+                if not is_predecessor(base_change, last_translation_change):
+                    outdating_commits.append(base_change)
                 else:
                     break
             
-                
             if len(outdating_commits) > 0:
                 translation_dict['outdating_commits'] = {
-                    'latest_translation_change': last_translation_commit,
+                    'latest_translation_change': last_translation_change,
                     'newer_base_changes': outdating_commits
                 }
     
@@ -1129,10 +1127,48 @@ def extract_translation_keys_and_values_from_string(text):
 # Analysis helpers
 #
 
+def iter_content_changes(file_path, repo):
+
+    # Iterate commits that actually changed the content of `file_path`. 
+    #   We do this to exclude commits where the file was just renamed and the content didn't change.
+
+    # Prepare
+    
+    repo_root = repo.working_tree_dir
+    file_path_relative = os.path.relpath(file_path, repo_root) # `git show` breaks with absolute paths
+    
+    # Get changes
+    
+    changes = get_commits_follow_renames(file_path, repo)
+    
+    # Init loop vars to current state of file
+    
+    last_commit = repo.head.commit
+    last_content = runCLT(f"git show HEAD:{file_path_relative}").stdout
+    
+    for commit in changes:
+        
+        commit_content = runCLT(f"git show {commit.hexsha}:{file_path_relative}").stdout
+        
+        if commit_content != last_content:
+            yield last_commit
+    
+        last_content = commit_content
+        last_commit = commit
+    
+    yield changes[-1]
+    
+
 def get_commits_follow_renames(file_path, repo):
     
     # Use `git log --follow` to get a list of `git.Commit()`s that changed a file, while following file-renames.
-    # Note: The old way we iterated through commits is `repo.iter_commits(paths=file_path)`, but that doesn't follow renames. I hope that switching to this doesn't cause problems.
+    # Notes: 
+    # - The old way we iterated through commits is `repo.iter_commits(paths=file_path)`, but that doesn't follow renames. I hope that switching to this doesn't cause problems.
+    # - RENAMES DON'T WORK YET. We tried a very rudimentary test to see if following renames works: 
+    #   We renamed the language id for the german markdown stuff from `de-DE`` to just `de``. 
+    #   But after that, the outdating_commits code didn't output any outdating commits anymore for the file anymore. So something was wrong. 
+    #   It might either be that get_commits_follow_renames() doesn't work properly, 
+    #   or maybe it's because the `outdating_commits` code doesn't check if the content actually changed in a commit, and instead just checks that git says that the commit changed the file in any way (which might include renames.)
     
     # return list(repo.iter_commits(paths=file_path)) # Debug
     
@@ -1441,14 +1477,14 @@ def is_website_repo(git_repo):
 # Debug Helpers
 #
 
-def get_diff_string(str1, str2):
+def get_diff_string(str1, str2, filter_unchanged_lines=True):
     
     # Generate the diff
     diff = difflib.ndiff(str1.splitlines(), str2.splitlines())
 
-    # Accumulate the diff output in a list
-    diff_list = [line for line in diff]
-
+    # Accumulate the diff output in a list & filter unchanged lines
+    diff_list = [line for line in diff if not filter_unchanged_lines or line.startswith('+ ') or line.startswith('- ')]
+    
     # Join the list into a single string
     return '\n'.join(diff_list)
 
