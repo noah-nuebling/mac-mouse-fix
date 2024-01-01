@@ -432,9 +432,9 @@ see **Updating Translation Files** at the top of the page.
             content_strs = content_strs.insert(0, '\n\n## Missing Files\n\nThe following files don\'t have a translation for this language, yet:\n\n' + missing_str)
             
     
-    # Build result from result_by_language
+    # Build rrresult from result_by_language
     
-    result = ''
+    rrresult = ''
     
     for language_id in sorted(result_by_language.keys()):
         
@@ -445,18 +445,20 @@ see **Updating Translation Files** at the top of the page.
         language_name = locale.english_name
         flag_emoji = language_tag_to_flag_emoji(language_id)
 
-        # Attach header
-        result += f"\n\n# {flag_emoji} {language_name} | {language_id}"    
+        # Attach language header
+        rrresult += f"\n\n# {flag_emoji} {language_name} | {language_id}"    
         
         # Attach file analysis
         for content_str in sorted(content_strs):
-            result += content_str
+            rrresult += content_str
     
-    # Attach intro
+    if len(rrresult) == 0:
+        rrresult = "All translations seem to be up-to-date at the moment! This comment will be updated if there are any translations that need updating."
+    
+    # Attach intro and outro
     # Discussion:
     #   I wanted to add a text here saying 'this was generated on <date>', but that would make it so the comment updates at least once a day, which would lead to people getting daily notifications I think.
-    if len(result) > 0:
-        result = textwrap.dedent(f"""\
+    result = textwrap.dedent(f"""\
 # 🌏 State of Localization 🌎
 
 This comment lists potential problems with the different translations of Mac Mouse Fix.
@@ -466,12 +468,9 @@ You can use the information here to help improve translations of Mac Mouse Fix.\
 If you have any questions, add a comment below.
 If you find any problem with a translation that doesn't show up here, add a comment below. 
 
-Don't reply to this comment, as this comment will be deleted and recreated periodically, which will delete your comment.
+Don't reply to this comment, as this comment will be deleted and recreated periodically, which will delete your reply.
 
-""") + result
-    else:
-        result = "All translations seem to be up-to-date at the moment! This comment will be updated if there are any translations that need updating."
-        
+""") + rrresult + f"\n\n---\n\nNote: If you rename or move a translation or base file, that will make it so the localization system looses all information about whether the content of the translation is outdated. Therefore: Only move or rename a localization files after the problems listed here have been resolved."
     
     return result
 
@@ -480,6 +479,7 @@ Don't reply to this comment, as this comment will be deleted and recreated perio
 #
 
 def translation_value_to_markdown(value, file_type, escape=True):
+    
     
     if escape:
         value = escape_for_markdown(value)
@@ -591,7 +591,7 @@ def file_paths_for_markdown(local_path, local_repo_path):
     if repo_name == 'mac-mouse-fix':
         gh_root = 'https://github.com/noah-nuebling/mac-mouse-fix/blob/master'
     else:
-        gh_root = 'https://github.com/noah-nuebling/mac-mouse-fix-website/blob/master'
+        gh_root = 'https://github.com/noah-nuebling/mac-mouse-fix-website/blob/main'
 
     display_short = os.path.basename(local_path) # + (" (Website)" if repo_name == 'mac-mouse-fix-website' else '')
     display = repo_name + '/' + relpath
