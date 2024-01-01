@@ -958,10 +958,10 @@ def get_latest_change_for_translation_keys(wanted_keys, file_path, git_repo):
             #   Run git command 
             #   - For getting additions and deletions of the commit compared to its parent
             #   - I tried to do this with gitpython but nothing worked, maybe I should stop using it altogether?
-            diff_string = runCLT(f"git diff -U0 {commit.hexsha}^..{commit.hexsha} -- {file_path}", cwd=repo_root).stdout
+            diff_string = runCLT(f"git diff -U0 {commit['hash']}^..{commit['hash']} -- {commit['path']}", cwd=repo_root).stdout
             
             # Parse diff
-            parse_diff_and_update_state(diff_string, commit, result, wanted_keys)
+            parse_diff_and_update_state(diff_string, git_repo.commit(commit['hash']), result, wanted_keys)
                 
     elif t == 'IB':
         
@@ -988,12 +988,18 @@ def get_latest_change_for_translation_keys(wanted_keys, file_path, git_repo):
                 assert i == (len(commits) - 1)
                 strings_file_path = create_temp_file()
             else:
-                file_path_relative = os.path.relpath(file_path, repo_root) # `git show` breaks with absolute paths
-                file_path_at_this_commit = create_temp_file(suffix=file_type)
-                runCLT(f"git show {commit.hexsha}:{file_path_relative} > {file_path_at_this_commit}", cwd=repo_root)
-                strings_file_path = extract_strings_from_IB_file_to_temp_file(file_path_at_this_commit)
+
+                hash = commit['hash']
+                path = commit['path']
+                
+                path_relative = os.path.relpath(path, repo_root) # `git show` breaks with absolute paths. Not sure if necessary here.
+                path_for_content_at_this_commit = create_temp_file(suffix=file_type)
+                runCLT(f"git show {hash}:{path_relative} > {path_for_content_at_this_commit}", cwd=repo_root)
+                strings_file_path = extract_strings_from_IB_file_to_temp_file(path_for_content_at_this_commit)
                 
             if i != 0: 
+                
+                # Get diff
                 
                 # Notes: 
                 #  We skip the first iteration. That's because, on the first iteration,
@@ -1007,8 +1013,9 @@ def get_latest_change_for_translation_keys(wanted_keys, file_path, git_repo):
                 # Get diff string
                 diff_string = runCLT(f"git diff -U0 --no-index -- {strings_file_path} {last_strings_file_path}", cwd=repo_root).stdout
                 
-                # Parse diff
-                parse_diff_and_update_state(diff_string, commits[i-1], result, wanted_keys)
+                # Parse diff, update state * record result
+                result_commit = git_repo.commit(commits[i-1]['hash']) if commits[i-1] else None
+                parse_diff_and_update_state(diff_string, result_commit, result, wanted_keys)
                 
                 # Cleanup
                 os.remove(last_strings_file_path)
@@ -1127,48 +1134,71 @@ def extract_translation_keys_and_values_from_string(text):
 # Analysis helpers
 #
 
-def iter_content_changes(file_path, repo):
+def iter_content_changes(file_path_arg, repo):
 
     # Iterate commits that actually changed the content of `file_path`. 
     #   We do this to exclude commits where the file was just renamed and the content didn't change.
-    #   Update: We can't track renames. See get_commits_follow_renames()
-    
-    # Just use iter_commits since we can't track renames anyways
-    waaaa = repo.iter_commits(paths=file_path)
-    for w in waaaa: yield w
-    
-    return 
-
 
     # Prepare
     
     repo_root = repo.working_tree_dir
-    file_path_relative = os.path.relpath(file_path, repo_root) # `git show` breaks with absolute paths
+    file_path_relative = os.path.relpath(file_path_arg, repo_root) # `git show` breaks with absolute paths
     
     # Get changes
     
-    changes = get_commits_follow_renames(file_path, repo)
+    changes = get_commits_follow_renames(file_path_arg, repo)
     
-    # Init loop vars to current state of file
+    assert len(changes) > 0
     
-    last_commit = repo.head.commit
-    last_content = runCLT(f"git show HEAD:{file_path_relative}").stdout
+    # Loop changes and return changes where content actually changed.
     
-    for commit in changes:
+    last_hash = changes[0]['hash']
+    last_content = runCLT(f"git show {last_hash}:{file_path_relative}").stdout
+    
+    if len(changes) > 1:
+        for commit in changes[1:]:
+            
+            hash = commit['hash']
+            path = commit['path']
+            
+            content = runCLT(f"git show {hash}:{path}").stdout
+            
+            if content != last_content:
+                yield repo.commit(last_hash)
         
-        commit_content = runCLT(f"git show {commit.hexsha}:{file_path_relative}").stdout
-        
-        if commit_content != last_content:
-            yield last_commit
+            last_content = content
+            last_hash = hash
     
-        last_content = commit_content
-        last_commit = commit
+    yield repo.commit(changes[-1]['hash'])
     
-    yield changes[-1]
-    
+def get_commits_follow_renames(file_path_arg, repo, similarity_threshold=80):
 
-def get_commits_follow_renames(file_path, repo):
+    """
+    Returns a list of commits that changed the file at `file_path`. The list follows the changes through renames of the file. 
+        For each commit it also returns what the file was names at that point and some other info.
     
+    Structure of output:
+    [
+        {
+            'hash':             <commit_hash>, 
+            'path':             <path_of_file_at_this_commit>,     
+            'previous_path':    <path_of_file_before_rename>,      # Is None unless the files has been renamed this commit
+            "status_code":      <git_file_status_code>,            # e.g. M for modified, A for added, R for renamed, etc.
+            'similarity':       <git_similarity_index>,            # How similar the file is after a rename in %. Is 100 if the file was just renamed and the content didn't change.
+        }, 
+        ...
+    ]
+    
+    Notes:
+    - The default git similarity threshold is 50%, but that made it so some strings files that were added for a new language were marked as copies
+      E.g. When App/UI/LicenseSheet/zh-Hans.lproj/LicenseSheetController.strings was added in aadba972bfccf4f3a12b8717014cb07708b3e2f7, 
+        it had 64% similarity with the German version, even though it was fully translated.
+        Between Korean and Chinese, I saw 76% similarity for 2 fully translated files.
+      This is probably because all the comment lines and all the keys are the same between all languages in `.strings.` files.
+      Maybe we should apply different similarity thresholds depending on file type.
+    """
+
+    # TODO: Update these comments.
     # Use `git log --follow` to get a list of `git.Commit()`s that changed a file, while following file-renames.
     # Notes: 
     # - The old way we iterated through commits is `repo.iter_commits(paths=file_path)`, but that doesn't follow renames. I hope that switching to this doesn't cause problems.
@@ -1182,24 +1212,94 @@ def get_commits_follow_renames(file_path, repo):
     #   TODO: Remove this renames stuff, since it doesn't work 
     
     # Just use iter_commits since we can't track renames anyways
-    return list(repo.iter_commits(paths=file_path))
+    # return list(repo.iter_commits(paths=file_path))
     
-    # Get repository path
+    # Preprocess
     repo_path = repo.working_tree_dir
-
-    # Run git log with --follow
-    commit_hashes = run_git_command(repo_path, ['log', '--follow', '--pretty=format:%H', '--', file_path]).splitlines()
-
-    # Convert commit hashes to git.Commit objects
-    commits = [repo.commit(commit_hash) for commit_hash in commit_hashes]
+    file_path = file_path_arg # os.path.relpath(file_path_arg, repo_path) # `git show` breaks with absolute paths, not sure if this is necessary for `git log`
     
-    # DEBUG
-    # assert commits == list(repo.iter_commits(paths=file_path)), f"get_commits_follow_renames is unequal to iter_commits --\ncool:\n{commits},\niter_commits:\n{list(repo.iter_commits(paths=file_path))}"
+    # Call git log
     
+    sep= "\n@@@COMMIT@@@\n"
+    cmd = f"git -C {repo_path} log --follow -M{str(similarity_threshold)}% --name-status --format='{sep}%H' -- {file_path}"
+
+    # Running the git command
+    sub_return = subprocess.run(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True, shell=True)
+    if sub_return.returncode != 0:
+        raise Exception("Git command failed: " + sub_return.stderr)
+
+    # Parse the output
+    
+    result = []
+    
+    commit_strs = sub_return.stdout.split(sep)[1:]
+    
+    for commit_str in commit_strs:
+        
+        commit_lines = commit_str.splitlines()
+        
+        commit_hash = commit_lines[0]
+        file_status_lines = commit_lines[1:]
+        
+        status_list = []
+        for status_line in file_status_lines:
+            status = parse_git_status_line(status_line)
+            if status: status_list.append(status)
+        
+        assert len(status_list) == 1
+        status = status_list[0]
+        
+        # Validate
+        # Status C (copy) does sometimes happen in the repo history, for example in d48bd4c991136c3b37cf383f86aeb6db05a52194, the korean Localizable.strings is just a copy of the english version, and then later it's changed.
+        
+        if status['code'] == 'C':
+            print(f"Found copy status in commit history at commit {commit_hash}. Status: {status}")
+                  
+        assert status['code'] != 'D', "If the file has been deleted, why do we want to track changes to it?"
+        assert status['code'] != 'U', "Unmerged files shouldn't show up when tracking the history of a file I think."
+        
+        current_path = status['file2'] or status['file1']
+        previous_path = status['file1'] if status['file2'] else None
+        
+        result.append({'hash': commit_hash, 'path': current_path, 'previous_path': previous_path, "status_code": status['code'], 'similarity': status['similarity']})
+    
+
     # Return
-    return commits
     
+    return result
 
+
+def parse_git_status_line(line):
+    
+    
+    """
+    Regular expression pattern to match the status line
+    Test strings:
+        M	App/UI/New UI/Main+TabView/Base.lproj/Main.storyboard
+        R100	App/UI/New UI/Main+TabView/Base.lproj/Main.storyboard	App/UI/Main/Base.lproj/Main.storyboard
+    """
+    pattern = r"^(A|M|D|T|U|X)\t(.+)$|^(R|C)(\d+)\t(.+)\t(.+)$"
+    match = re.match(pattern, line)
+
+    if match:
+        # Extracting data based on the matched groups
+        status = match.group(1) or match.group(3)
+        similarity = match.group(4) if match.group(4) else None
+        file1 = match.group(2) or match.group(5)
+        file2 = match.group(6) if match.group(6) else None
+
+        if similarity: similarity = int(similarity)
+
+        return {
+            "code": status,
+            "similarity": similarity,
+            "file1": file1,
+            "file2": file2
+        }
+    else:
+        return None
+    
+    
 def create_temp_file(suffix=''):
     
     # Returns temp_file_path
