@@ -24,6 +24,7 @@ import argparse
 import json
 import textwrap
 from datetime import datetime
+import difflib
 
 #
 # Package imports
@@ -155,6 +156,8 @@ def upload_markdown(api_key, markdown):
     if new_comment_body == old_comment_body:
         print(f"Comment is already up-to-date. Not uploading anything.")
     else:
+        
+        print(f"The comment has changed. Diff:\n{get_diff_string(old_comment_body, new_comment_body)}")
             
         # Delete existing comment
         # Note: We don't need the `clientMutationId`. Should probably remove from query
@@ -228,10 +231,22 @@ def github_graphql_request(api_key, query):
 
 def markdown_from_analysis(files, missing_files):
     
-    # Discussion:
-    # We want to always produce the exact same markdown for a given input. That's because we plan to send notifications to collaborators whenever the markdown changes.
-    # This is why we're sorting all of the things we iterate through. I'm not sure this is necessary, since Python 3.7 and higher iterate through dict `.items()` in insertion order anyways.
-    # But I still think the sorting should make it more robust, especially also against changes in the code that produces the analysis.
+    """
+    Discussion:
+    We want to always produce the exact same markdown for a given input. That's because we plan to send notifications to collaborators whenever the markdown changes.
+    This is why we're **sorting** all of the things we iterate through. Since Python 3.7 and higher iterating through dict `.items()` is alledgedly in insertion order. 
+        But sorting everything still seems to be necessary to get consistent outputs. (Under python 3.11)
+    
+    It's easy to forget to sort.
+    
+    One way I found to **test if this function sorts properly**:
+        Go to get_commits_follow_renames() and swap between the old `iter_commits` approach and the new `git log --follow` approach. 
+        Before we sorted this properly, that switch totally changed the order (but not the content) of the resulting markdown.
+    
+    To find unsorted iterations:
+        Find for loops and list comprehensions by searching for 'for'. Also search for `map`. 
+        Other ways to iterate dicts are `dict comprehensions` and `generator expressions`. But I don't think we'll ever use those.
+    """
     
     # Log
     print("Generating markdown from analysis...")
@@ -272,7 +287,7 @@ def markdown_from_analysis(files, missing_files):
                     latest_translation_commit_date_str = commit_date_for_markdown(latest_translation_commit)
                     
                     newer_base_changes_strs = []
-                    for c in newer_base_changes:
+                    for c in sorted(newer_base_changes):
                         commit_str = commit_string_for_markdown(c, repo_root)
                         commit_date_str = commit_date_for_markdown(c)
                         newer_base_changes_strs.append(f"On `{commit_date_str}` in commit {commit_str}")
@@ -292,19 +307,19 @@ Maybe the translation should be updated to reflect the new changes to the base f
                 
                 # Build strings for missing/superfluous translations
                 
-                missing_str =       '\n- '.join(map(lambda x: translation_to_markdown(x['key'], x['value'], file_type), translation_dict['missing_translations'])) # Not sure why we need to escape the `|` here.
+                missing_str =       '\n- '.join(map(lambda x: translation_to_markdown(x['key'], x['value'], file_type), sorted(translation_dict['missing_translations'], key=lambda x: x['key']))) # Not sure why we need to escape the `|` here.
                 if len(missing_str) > 0:
                     content_str += f"\n\n**Missing translations**\n\nThe following key-value-pairs appear in the base file but not in the translation. They should probably be added to the translation:\n\n- {missing_str}"
                     
-                superfluous_str =   '\n- '.join(map(lambda x: translation_to_markdown(x['key'], x['value'], file_type), translation_dict['superfluous_translations']))
+                superfluous_str =   '\n- '.join(map(lambda x: translation_to_markdown(x['key'], x['value'], file_type), sorted(translation_dict['superfluous_translations'], key=lambda x: x['key'])))
                 if len(superfluous_str) > 0:
                     content_str += f"\n\n**Superfluous translations**\n\nThe following key-value-pairs appear in the translation but not in the base file. It's likely they are unused and can be deleted from the translation:\n\n- {superfluous_str}"
                     
-                unchanged_str =     '\n- '.join(map(lambda x: translation_to_markdown(x['key'], x['value'], file_type), translation_dict['unchanged_translations']))
+                unchanged_str =     '\n- '.join(map(lambda x: translation_to_markdown(x['key'], x['value'], file_type), sorted(translation_dict['unchanged_translations'], key=lambda x: x['key'])))
                 if len(unchanged_str) > 0:
                     content_str += f"\n\n**Unchanged translations**\n\nThe following key-value-pairs have the exact same value in the translation as in the base file. Maybe they have not yet been translated:\n\n- {unchanged_str}"
                 
-                empty_str =         '\n- '.join(map(lambda x: f"Base file: {translation_to_markdown(x['key'], x['base_value'], file_type)}\n  Translation: {translation_to_markdown(x['key'], x['value'], file_type)}", translation_dict['empty_translations']))
+                empty_str =         '\n- '.join(map(lambda x: f"Base file: {translation_to_markdown(x['key'], x['base_value'], file_type)}\n  Translation: {translation_to_markdown(x['key'], x['value'], file_type)}", sorted(translation_dict['empty_translations'], key=lambda x: x['key'])))
                 if len(empty_str) > 0:
                     content_str += f"\n\n**Empty translations**\n\nThe following key-value-pairs are empty in the translation but not empty in the base file. It looks like they have not yet been translated:\n\n- {empty_str}"
                     
@@ -385,7 +400,7 @@ see **Updating Translation Files** at the top of the page.
         translated = missing_files[language_id].get('translated_files', [])
         untranslated = missing_files[language_id].get('untranslated_files', [])
         
-        for b in untranslated:
+        for b in sorted(untranslated, key=lambda b: b['base']):
             
             b_short, b_display, b_link = file_paths_for_markdown(b['base'], b['repo'].working_tree_dir)
             
@@ -401,7 +416,7 @@ see **Updating Translation Files** at the top of the page.
             
             missing_str += f"- [{b_short}]({b_link})\n  See **{section_name}** at the top of the page to learn how to translate this file.\n"
         
-        for d in translated:
+        for d in sorted(translated, key=lambda d: d['base']):
             
             continue
         
@@ -434,7 +449,7 @@ see **Updating Translation Files** at the top of the page.
         result += f"\n\n# {flag_emoji} {language_name} | {language_id}"    
         
         # Attach file analysis
-        for content_str in content_strs:
+        for content_str in sorted(content_strs):
             result += content_str
     
     # Attach intro
@@ -718,12 +733,12 @@ def analyze_localization_files(files):
         for translation_file, translation_dict in file_dict['translations'].items():
             
             
-            translation_commit_iterator = repo.iter_commits(paths=translation_file, **{'max-count': 1} ) # max-count is passed along to `git rev-list` command-line-arg
+            translation_commit_iterator = iter(get_commits_follow_renames(translation_file, repo)) # repo.iter_commits(paths=translation_file, **{'max-count': 1} ) # max-count is passed along to `git rev-list` command-line-arg
             last_translation_commit = next(translation_commit_iterator)
             
             outdating_commits = []
             
-            base_commit_iterator = repo.iter_commits(paths=base_file)
+            base_commit_iterator = iter(get_commits_follow_renames(base_file, repo)) # repo.iter_commits(paths=translation_file)
             
             for base_commit in base_commit_iterator:
                 if not is_predecessor(base_commit, last_translation_commit):
@@ -935,7 +950,7 @@ def get_latest_change_for_translation_keys(wanted_keys, file_path, git_repo):
     
     if t == 'strings':
         
-        for i, commit in enumerate(git_repo.iter_commits(paths=file_path, reverse=False)):
+        for i, commit in enumerate(get_commits_follow_renames(file_path, git_repo)): # enumerate(git_repo.iter_commits(paths=file_path, reverse=False)):
             
             # Break
             if len(wanted_keys) == 0:
@@ -956,7 +971,7 @@ def get_latest_change_for_translation_keys(wanted_keys, file_path, git_repo):
         # - This seems to be by far the slowest part of the script. It's still fast enough, but maybe look into optimizing.
         # -     Possible sources of slowness: subprocess calls (I read that command is faster), file-creations/reads/writes, complex git commands.
         
-        commits = list(git_repo.iter_commits(paths=file_path, reverse=False))
+        commits = get_commits_follow_renames(file_path, git_repo) # list(git_repo.iter_commits(paths=file_path, reverse=False))
         commits.append(None)
         
         last_strings_file_path = ''
@@ -1114,6 +1129,29 @@ def extract_translation_keys_and_values_from_string(text):
 # Analysis helpers
 #
 
+def get_commits_follow_renames(file_path, repo):
+    
+    # Use `git log --follow` to get a list of `git.Commit()`s that changed a file, while following file-renames.
+    # Note: The old way we iterated through commits is `repo.iter_commits(paths=file_path)`, but that doesn't follow renames. I hope that switching to this doesn't cause problems.
+    
+    # return list(repo.iter_commits(paths=file_path)) # Debug
+    
+    # Get repository path
+    repo_path = repo.working_tree_dir
+
+    # Run git log with --follow
+    commit_hashes = run_git_command(repo_path, ['log', '--follow', '--pretty=format:%H', '--', file_path]).splitlines()
+
+    # Convert commit hashes to git.Commit objects
+    commits = [repo.commit(commit_hash) for commit_hash in commit_hashes]
+    
+    # DEBUG
+    # assert commits == list(repo.iter_commits(paths=file_path)), f"get_commits_follow_renames is unequal to iter_commits --\ncool:\n{commits},\niter_commits:\n{list(repo.iter_commits(paths=file_path))}"
+    
+    # Return
+    return commits
+    
+
 def create_temp_file(suffix=''):
     
     # Returns temp_file_path
@@ -1125,20 +1163,28 @@ def create_temp_file(suffix=''):
     return temp_file_path
 
 def extract_strings_from_IB_file_to_temp_file(ib_file_path):
-    
+
+    # Create empty file
     temp_file_path = create_temp_file()
         
+    # Check if empty
+    #   If ib_file is empty, ibtool will return errors, but we just want to return an empty file instead of errors.
+    if is_file_empty(ib_file_path):
+        return temp_file_path
+    
+    # Run ibtool
     cltResult = subprocess.run(f"/usr/bin/ibtool --export-strings-file {temp_file_path} {ib_file_path}", shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
         
     if len(cltResult.stdout) > 0 or len(cltResult.stderr) > 0:
         # Log & Crash
-        print(f"Error: ibtool failed. Printing feedback ... \nstdout: {cltResult.stdout}\nstderr: {cltResult.stderr}")
+        print(f"Error: ibtool failed. temp_file: {temp_file_path}, ib_file: {ib_file_path}, printing feedback ... \nstdout: {cltResult.stdout}\nstderr: {cltResult.stderr}")
         exit(1)
     
     # Convert to utf-8
     #   For some reason, ibtool outputs strings files as utf-16, even though strings files in Xcode are utf-8 and also git doesn't understand utf-8.
     convert_utf16_file_to_utf8(temp_file_path)
     
+    # Return
     return temp_file_path
 
 def read_tempfile(temp_file_path, remove=True):
@@ -1165,6 +1211,11 @@ def convert_utf16_file_to_utf8(file_path):
     with open(file_path, 'w', encoding='utf-8') as file:
         file.write(content)
 
+def is_file_empty(file_path):
+    """Check if file is empty by confirming if its size is 0 bytes.
+        Also returns true if the file doesn't exist."""
+    return not os.path.exists(file_path) or os.path.getsize(file_path) == 0
+
 def is_predecessor(potential_predecessor_commit, commit):
     
     # Check which commit is 'earlier'. Works kind of like potential_predecessor_commit <= commit (returns true for equality)
@@ -1180,6 +1231,20 @@ def is_predecessor(potential_predecessor_commit, commit):
 def runCLT(command, cwd=None):
     clt_result = subprocess.run(command, cwd=cwd, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True) # Not sure what `text` and `shell` does. We use cwd to run git commands at a differnt repo than the current workding directory
     return clt_result
+
+def run_git_command(repo_path, command):
+    
+    """
+    Helper function to run a git command using subprocess.
+    (Credits: ChatGPT)
+    """
+    proc = subprocess.Popen(['git', '-C', repo_path] + command, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    stdout, stderr = proc.communicate()
+
+    if proc.returncode != 0:
+        raise RuntimeError(f"Git command error: {stderr.decode('utf-8')}")
+
+    return stdout.decode('utf-8')
 
 #
 # Find files
@@ -1371,6 +1436,21 @@ def is_website_repo(git_repo):
     if os.path.basename(repo_root) == 'mac-mouse-fix-website':
         return True
     return False
+
+#
+# Debug Helpers
+#
+
+def get_diff_string(str1, str2):
+    
+    # Generate the diff
+    diff = difflib.ndiff(str1.splitlines(), str2.splitlines())
+
+    # Accumulate the diff output in a list
+    diff_list = [line for line in diff]
+
+    # Join the list into a single string
+    return '\n'.join(diff_list)
 
 #
 # Call main
