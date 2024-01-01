@@ -5,8 +5,9 @@
 - [x] Add ‘empty_translations’ section
 - [x] Add ‘untranslated files’ section
 
+- [x] Write tutorial for updating existing translations.
+
 - [ ] Write a GitHub Actions that runs on every push to master / every 24 hours.
-- [ ] Write tutorial for updating existing translations.
 """
 
 
@@ -70,9 +71,9 @@ def prepare_interactive_debugging(repo_root, website_root):
     4. >> result = script.prepare_interactive_debugging(<repo_root>, <website_root>) 
         - e.g. >> result = script.prepare_interactive_debugging("/Users/Noah/Desktop/mmf-stuff/mac-mouse-fix", "/Users/Noah/Desktop/mmf-stuff/mac-mouse-fix-website")
     5. Play around with result 
-        - e.g. >> print(script.markdown_from_analysis(result))
-        - e.g. >> script.upload_markdown('<api_key>', script.markdown_from_analysis(result))
-        - e.g. >> print(script.markdown_from_analysis(result))
+        - e.g. >> print(script.analyze_missing_localization_files(result))
+        - e.g. >> print(script.markdown_from_analysis(result, script.analyze_missing_localization_files(result)))
+        - e.g. >> script.upload_markdown('<api_key>', script.markdown_from_analysis(result, script.analyze_missing_localization_files(result)))
     6. >> importlib.reload(script) (after updating source code)
     """
         
@@ -360,11 +361,17 @@ Maybe the translation should be updated to reflect the new changes to the base f
             # Note: Textwrap dedent just won't work here. No idea why.
             if len(content_str) > 0:
                 language_id = translation_dict['language_id']
-                content_str = textwrap.dedent(f"""
+                content_str = (f"""\
 ## File: {translation_file_display_short}
+
 Translation at: [{translation_file_display}]({translation_file_link})
-Base file at: [{base_file_display}]({base_file_link}){content_str}
-                """)
+Base file at: [{base_file_display}]({base_file_link})
+
+To help update the translations inside [{translation_file_display}]({translation_file_link})
+see **Updating Translation Files** at the top of the page.
+
+{content_str}
+""")
                 result_by_language.setdefault(language_id, []).append(content_str)
 
 
@@ -382,7 +389,17 @@ Base file at: [{base_file_display}]({base_file_link}){content_str}
             
             b_short, b_display, b_link = file_paths_for_markdown(b['base'], b['repo'].working_tree_dir)
             
-            missing_str += f"- Translation for [{b_short}]({b_link}) is missing\n"
+            # Note: Here, we make the assumption that translation files for App, Website, and GitHub each have non-overlapping file extensions. 
+            #       This might very well break in the future! For example when we render Website pages from .md.
+            
+            _, extension = os.path.splitext(b_short)
+            section_name = ("Adding a Language to the App" if extension in ['.strings', '.stringsdict', '.xib', '.storyboard'] else 
+                            "Adding a Language to the Website" if extension in ['.js'] else 
+                            "Adding a Language to the GitHub" if extension in ['.md'] else 
+                            None)
+            assert section_name != None, f"Couldn't determine tutorial section name for file with unknown extension {extension}"
+            
+            missing_str += f"- [{b_short}]({b_link})\n  See **{section_name}** at the top of the page to learn how to translate this file.\n"
         
         for d in translated:
             
@@ -397,7 +414,7 @@ Base file at: [{base_file_display}]({base_file_link}){content_str}
             
         # Attach
         if len(missing_str) > 0:
-            content_strs = content_strs.insert(0, '\n\n## Missing Files\n\nThe following files don\'t have a translation for this language, yet.\nTo translate these files see the instructions for \'Adding a Language\' at the top of the page.\n\n' + missing_str)
+            content_strs = content_strs.insert(0, '\n\n## Missing Files\n\nThe following files don\'t have a translation for this language, yet:\n\n' + missing_str)
             
     
     # Build result from result_by_language
@@ -421,10 +438,22 @@ Base file at: [{base_file_display}]({base_file_link}){content_str}
             result += content_str
     
     # Attach intro
+    # Discussion:
+    #   I wanted to add a text here saying 'this was generated on <date>', but that would make it so the comment updates at least once a day, which would lead to people getting daily notifications I think.
     if len(result) > 0:
         result = textwrap.dedent(f"""\
-            In this comment you can find a list of translations that might need updating: (This comment is a work-in-progress. You might not want to do work based on the info here, yet.)
-        """) + result
+# 🌏 State of Localization 🌎
+
+This comment lists potential problems with the different translations of Mac Mouse Fix.
+
+You can use the information here to help improve translations of Mac Mouse Fix.\
+
+If you have any questions, add a comment below.
+If you find any problem with a translation that doesn't show up here, add a comment below. 
+
+Don't reply to this comment, as this comment will be deleted and recreated periodically, which will delete your comment.
+
+""") + result
     else:
         result = "All translations seem to be up-to-date at the moment! This comment will be updated if there are any translations that need updating."
         
@@ -529,8 +558,12 @@ def commit_string_for_markdown(commit, local_repo_path):
 
 def commit_date_for_markdown(commit):
     commit_date_unix = commit.committed_date # Unix timestamp
-    commit_date = datetime.fromtimestamp(commit_date_unix).strftime('%d.%m.%Y')
-    return commit_date
+    date_str = unix_date_for_markdown(commit_date_unix)
+    return date_str
+
+def unix_date_for_markdown(unix_timestamp):
+    date_str = datetime.fromtimestamp(unix_timestamp).strftime('%d.%m.%Y')
+    return date_str
 
 def file_paths_for_markdown(local_path, local_repo_path):
     
@@ -545,7 +578,7 @@ def file_paths_for_markdown(local_path, local_repo_path):
     else:
         gh_root = 'https://github.com/noah-nuebling/mac-mouse-fix-website/blob/master'
 
-    display_short = os.path.basename(local_path) + (" (Website)" if repo_name == 'mac-mouse-fix-website' else '')
+    display_short = os.path.basename(local_path) # + (" (Website)" if repo_name == 'mac-mouse-fix-website' else '')
     display = repo_name + '/' + relpath
     link = gh_root + '/' + relpath
     
