@@ -32,10 +32,10 @@ languages = {
         "template_root": "Markdown/Templates/en-US/",
         "document_root": "", # The document root for english is the repo root.
     }, 
-    "de-DE": {
+    "de": {
         "language_name": "🇩🇪 Deutsch",
-        "template_root": "Markdown/Templates/de-DE/",
-        "document_root": "Markdown/LocalizedDocuments/de-DE/", 
+        "template_root": "Markdown/Templates/de/",
+        "document_root": "Markdown/LocalizedDocuments/de/", 
     },
 }
 

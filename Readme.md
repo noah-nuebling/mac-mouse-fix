@@ -35,7 +35,7 @@ Link section with pipe-symbols instead of html table:
   <summary>󠁧󠁿🇬🇧 English</summary>
 	
   **🇬🇧 English**\
-  [🇩🇪 Deutsch](Markdown/LocalizedDocuments/de-DE/Readme.md)\
+  [🇩🇪 Deutsch](Markdown/LocalizedDocuments/de/Readme.md)\
   [Help translate Mac Mouse Fix to different languages!](https://github.com/noah-nuebling/mac-mouse-fix/discussions/731)
 </details>
 
