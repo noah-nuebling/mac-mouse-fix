@@ -42,11 +42,6 @@ jobs:
         ref: main  
         path: './mac-mouse-fix-website'
         fetch-depth: 0
-
-    - name: Debug
-      run: |
-        pwd
-        find . -type d -print | awk -F'/' 'NF<=3'
     
     - name: Setup python
       uses: actions/setup-python@v4
