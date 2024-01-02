@@ -293,14 +293,14 @@ def markdown_from_analysis(files, missing_files):
                         newer_base_changes_strs.append(f"On `{commit_date_str}` in commit {commit_str}")
                     newer_base_changes_str = "\n- ".join(newer_base_changes_strs)
                     
-                    content_str += textwrap.dedent(f"""
+                    content_str += textwrap.dedent(f"""\
                         
 The latest change to the translation was on `{latest_translation_commit_date_str}` in commit {latest_translation_commit_str}.
 
 The base file changed after that: 
 - {newer_base_changes_str}
 
-Maybe the translation should be updated to reflect the new changes to the base file.
+Maybe the translation should be updated to reflect the new changes to the base file.\
 """) # dedent stopped working all of a sudden. No idea why.
                     
             elif file_type == '.js' or file_type == '.strings':
@@ -355,7 +355,8 @@ Maybe the translation should be updated to reflect the new changes to the base f
                         
                         return f"{a} ->{line_breaker}{b}"
                     
-                    outdated_str += textwrap.dedent(f"""
+                    outdated_str += textwrap.dedent(f"""\
+                                                    
                                                     
 {translation_to_markdown(translation_key, translation_after, file_type, escape_value=False)}
 - Latest change in translation: 
@@ -364,7 +365,7 @@ Maybe the translation should be updated to reflect the new changes to the base f
 - Latest change in base file:
     {value_change_to_markdown(base_before, base_after, file_type)}
     on {base_commit_date_str} in commit {base_commit_str}
-                    """)
+""")
                     
                 if len(outdated_str) > 0:
                     content_str += f"\n\n**Outdated translations**\n\nThe following key-value-pairs have been changed in the base file without a subsequent change in the translation. Maybe they should be updated in the translation to reflect the change in the base file:{outdated_str}"
@@ -377,6 +378,7 @@ Maybe the translation should be updated to reflect the new changes to the base f
             if len(content_str) > 0:
                 language_id = translation_dict['language_id']
                 content_str = (f"""\
+                    
 ## File: {translation_file_display_short}
 
 Translation at: [{translation_file_display}]({translation_file_link})
@@ -385,7 +387,7 @@ Base file at: [{base_file_display}]({base_file_link})
 To help update the translations inside [{translation_file_display}]({translation_file_link})
 see **Updating Translation Files** at the top of the page.
 
-{content_str}
+{content_str}\
 """)
                 result_by_language.setdefault(language_id, []).append(content_str)
 
@@ -468,9 +470,12 @@ You can use the information here to help improve translations of Mac Mouse Fix.\
 If you have any questions, add a comment below.
 If you find any problem with a translation that doesn't show up here, add a comment below. 
 
-Don't reply to this comment, as this comment will be deleted and recreated periodically, which will delete your reply.
+{rrresult}
 
-""") + rrresult + f"\n\n---\n\nNote: If you rename or move a translation or base file, that will make it so the localization system looses all information about whether the content of the translation is outdated. Therefore: Only move or rename a localization files after the problems listed here have been resolved."
+---
+
+Don't reply to this comment, as this comment will be deleted (and recreated) periodically, which will also delete your reply. Instead, add a new comment.
+""")
     
     return result
 
@@ -795,7 +800,11 @@ def analyze_localization_files(files):
         base_keys = set(base_keys_and_values.keys())
         
         # For each key in the base file, get the commit, when it last changed
-        latest_base_changes = get_latest_change_for_translation_keys(base_keys, base_file_path, repo)        
+        latest_base_changes = get_latest_change_for_translation_keys(base_keys, base_file_path, repo)      
+        
+        # Debug
+        if "LicenseSheetController" in base_file_path:
+            print(f"Licensesheet latest changes - {latest_base_changes}")
         
         # Iterate translations
         for translation_file_path, translation_dict in file_dict['translations'].items():
@@ -821,7 +830,13 @@ def analyze_localization_files(files):
             superfluous_keys = translation_keys.difference(base_keys)
             common_keys = base_keys.intersection(translation_keys)
             
+            
+            # DEBUG
+            # print(f"missing: {missing_keys}, super: {superfluous_keys}, common: {common_keys}, base: {base_keys}, translation: {translation_keys}, latest_base_changes: {latest_base_changes}")
+            
             # Get & attach missing / superfluous translations
+            #   Note: missing / superfluous can't be marked as !IS_OK
+            
             missing_translations        = list(map(lambda k: {'key': k, 'value': base_keys_and_values[k]['value']['text']}, missing_keys))
             superfluous_translations    = list(map(lambda k: {'key': k, 'value': translation_keys_and_values[k]['value']['text']}, superfluous_keys))
             translation_dict['missing_translations'] = missing_translations
@@ -856,6 +871,10 @@ def analyze_localization_files(files):
             
             # For each key, get the commit when it last changed
             latest_translation_changes = get_latest_change_for_translation_keys(common_keys, translation_file_path, repo)
+            
+            # DEBUG
+            # if 'de' in translation_file_path:
+            #     print(f"DEBUG: {latest_translation_changes}")
             
             # Log
             print(f'        Check if last modification was before base for each key ...')
@@ -913,6 +932,9 @@ def get_latest_change_for_translation_keys(wanted_keys, file_path, git_repo):
     }
     """
     
+    # Debug
+    # print(f"Getting latest changes per key for file {file_path}")
+    
     # Declare stuff
     repo_root = git_repo.working_tree_dir
     result = dict()
@@ -948,7 +970,14 @@ def get_latest_change_for_translation_keys(wanted_keys, file_path, git_repo):
     
     if t == 'strings':
         
-        for i, commit in enumerate(get_commits_follow_renames(file_path, git_repo)): # enumerate(git_repo.iter_commits(paths=file_path, reverse=False)):
+        # Get commits
+        commits = get_commits_follow_renames(file_path, git_repo)
+        
+        # DEBUG
+        # if 'de' in file_path:
+        #     print(f"DEBUG - commits on de file: {commits}")
+        
+        for i, commit in enumerate(commits): # enumerate(git_repo.iter_commits(paths=file_path, reverse=False)):
             
             # Break
             if len(wanted_keys) == 0:
@@ -958,11 +987,11 @@ def get_latest_change_for_translation_keys(wanted_keys, file_path, git_repo):
             #   Run git command 
             #   - For getting additions and deletions of the commit compared to its parent
             #   - I tried to do this with gitpython but nothing worked, maybe I should stop using it altogether?
-            diff_string = runCLT(f"git diff -U0 {commit['hash']}^..{commit['hash']} -- {commit['path']}", cwd=repo_root).stdout
+            diff_string = runCLT(f"git diff -U0 {commit['hash']}^..{commit['hash']} -- {commit['path']} {commit['previous_path'] or ''}", cwd=repo_root).stdout
             
             # Parse diff
             parse_diff_and_update_state(diff_string, git_repo.commit(commit['hash']), result, wanted_keys)
-                
+            
     elif t == 'IB':
         
         # Notes:
@@ -992,10 +1021,17 @@ def get_latest_change_for_translation_keys(wanted_keys, file_path, git_repo):
                 hash = commit['hash']
                 path = commit['path']
                 
-                path_relative = os.path.relpath(path, repo_root) # `git show` breaks with absolute paths. Not sure if necessary here.
+                path_relative = path # `git show` breaks with absolute paths, but paths from get_commits_follow_renames() are already relative
+                
                 path_for_content_at_this_commit = create_temp_file(suffix=file_type)
-                runCLT(f"git show {hash}:{path_relative} > {path_for_content_at_this_commit}", cwd=repo_root)
+                git_show_cmd = f"git show {hash}:'{path_relative}' > {path_for_content_at_this_commit}"
+                runCLT(git_show_cmd, cwd=repo_root)
                 strings_file_path = extract_strings_from_IB_file_to_temp_file(path_for_content_at_this_commit)
+                
+                # Debug
+                # if "LicenseSheetController" in file_path:
+                    # print(f"Licensesheet diff - {diff_string}")
+                    # print(f"Licensesheet debug - repo root: {repo_root}, cmd: {git_show_cmd}, result {read_tempfile(path_for_content_at_this_commit)}, cltResult: {cltResult}")
                 
             if i != 0: 
                 
@@ -1153,7 +1189,7 @@ def iter_content_changes(file_path_arg, repo):
     # Loop changes and return changes where content actually changed.
     
     last_hash = changes[0]['hash']
-    last_content = runCLT(f"git show {last_hash}:{file_path_relative}").stdout
+    last_content = runCLT(f"git show {last_hash}:'{file_path_relative}'", cwd=repo_root).stdout
     
     if len(changes) > 1:
         for commit in changes[1:]:
@@ -1161,7 +1197,7 @@ def iter_content_changes(file_path_arg, repo):
             hash = commit['hash']
             path = commit['path']
             
-            content = runCLT(f"git show {hash}:{path}").stdout
+            content = runCLT(f"git show {hash}:'{path}'", cwd=repo_root).stdout
             
             if content != last_content:
                 yield repo.commit(last_hash)
@@ -1176,7 +1212,10 @@ def get_commits_follow_renames(file_path_arg, repo, similarity_threshold=80):
     """
     Returns a list of commits that changed the file at `file_path`. The list follows the changes through renames of the file. 
         For each commit it also returns what the file was names at that point and some other info.
-    
+
+        Note that all paths in the output of this are relative to the repo root. 
+            ! If you call os.path.relpath() on them, that will break things
+
     Structure of output:
     [
         {
@@ -1189,12 +1228,13 @@ def get_commits_follow_renames(file_path_arg, repo, similarity_threshold=80):
         ...
     ]
     
-    Notes:
-    - The default git similarity threshold is 50%, but that made it so some strings files that were added for a new language were marked as copies
+    Notes on similarity_threshold:
+    - The default git similarity threshold in git is 50%, but that made it so some strings files that were added for a new language were marked as copies
       E.g. When App/UI/LicenseSheet/zh-Hans.lproj/LicenseSheetController.strings was added in aadba972bfccf4f3a12b8717014cb07708b3e2f7, 
         it had 64% similarity with the German version, even though it was fully translated.
         Between Korean and Chinese, I saw 76% similarity for 2 fully translated files.
-      This is probably because all the comment lines and all the keys are the same between all languages in `.strings.` files.
+        80% as the threshold seems to work at this moment.
+      The high similarity between translated files is probably because all the comment lines and all the keys are the same between all languages in `.strings.` files.
       Maybe we should apply different similarity thresholds depending on file type.
     """
 
@@ -1224,7 +1264,7 @@ def get_commits_follow_renames(file_path_arg, repo, similarity_threshold=80):
     cmd = f"git -C {repo_path} log --follow -M{str(similarity_threshold)}% --name-status --format='{sep}%H' -- {file_path}"
 
     # Running the git command
-    sub_return = subprocess.run(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True, shell=True)
+    sub_return = subprocess.run(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True, shell=True, cwd=repo.working_tree_dir)
     if sub_return.returncode != 0:
         raise Exception("Git command failed: " + sub_return.stderr)
 
@@ -1377,14 +1417,24 @@ def is_predecessor(potential_predecessor_commit, commit):
     # return runCLT(f"git merge-base --is-ancestor {potential_predecessor_commit.hexsha} {commit.hexsha}").returncode == 0
 
 def runCLT(command, cwd=None):
+    
+    success_codes=[0]
+    if command.startswith('git diff'): 
+        success_codes.append(1) # Git diff returns 1 if there's a difference
+    
     clt_result = subprocess.run(command, cwd=cwd, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True) # Not sure what `text` and `shell` does. We use cwd to run git commands at a differnt repo than the current workding directory
+    
+    assert clt_result.stderr == '' and clt_result.returncode in success_codes, f"Command \"{command}\", run in cwd \"{cwd}\"\n--- stderr:\n{clt_result.stderr}\n--- code:\n{clt_result.returncode}\n--- stdout:\n{clt_result.stdout}"
+    
     return clt_result
 
 def run_git_command(repo_path, command):
     
     """
-    Helper function to run a git command using subprocess.
+    Helper function to run a git command using subprocess. 
     (Credits: ChatGPT)
+    
+    Should probably unify this into runCLT, along with other uses of `subprocess`
     """
     proc = subprocess.Popen(['git', '-C', repo_path] + command, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
     stdout, stderr = proc.communicate()
@@ -1443,8 +1493,10 @@ def find_localization_files(repo_root, website_root):
         
     result = []
     
-    # Find base_files
+    # Append website basefile
+    result.append({ 'base': website_root + '/' + 'locales/en-US.js', 'repo': website_repo, 'basetype': 'nuxt'})
     
+    # Find base_files
     for root, dirs, files in os.walk(repo_root):
         dirs[:] = [d for d in dirs if root + '/' + d not in exclude_paths]
         is_en_folder = 'en.lproj' in os.path.basename(root)
@@ -1472,9 +1524,6 @@ def find_localization_files(repo_root, website_root):
                 assert extension == '.md', f'Folder at {b}, contained file with extension {extension}'
                 # Append markdown file
                 result.append({ 'base': b, 'repo': mmf_repo, 'basetype': 'markdown' })
-    
-    # Append website
-    result.append({ 'base': website_root + '/' + 'locales/en-US.js', 'repo': website_repo, 'basetype': 'nuxt'})
         
     
     # Find translated files
