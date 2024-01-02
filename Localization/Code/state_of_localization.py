@@ -862,6 +862,10 @@ def analyze_localization_files(files):
             translation_dict['superfluous_translations'] = superfluous_translations
             
             # Check & attach unchanged & empty translations
+            # Note on `<>` checks: 
+            #   I saw we used `<>` to signal empty for kv-pairs pairs in `.strings` file that are actually defined in .stringsdict instead, maybe also other places. That's why we consider `<>` an empty string here.
+            #   Not sure if use of `<>` is the best idea. Why not just use actually empty string? Maybe bartycrouch complained or something?
+            
             
             print(f'        Check unchanged & empty translations...')
             
@@ -872,12 +876,15 @@ def analyze_localization_files(files):
                 b = base_keys_and_values[k]['value']
                 t = translation_keys_and_values[k]['value']
                 
-                is_unchanged = b['text'] == t['text'] and t['is_ok_count'] == 0
-                is_empty = len(b['text']) > 0 and len(t['text']) == 0 and t['is_ok_count'] == 0
+                is_ok = t['is_ok_count'] > 0
+                is_equal = b['text'] == t['text']
+                b_is_empty = len(b['text']) == 0 or b['text'] == '<>'
+                t_is_empty = len(t['text']) == 0 or t['text'] == '<>'
+                both_are_empty = b_is_empty and t_is_empty
                 
-                if is_unchanged:
+                if is_equal and not both_are_empty and not is_ok:
                     unchanged_translations.append({'key': k, 'value': t['text']})
-                if is_empty:
+                if not b_is_empty and t_is_empty and not is_ok:
                     empty_translations.append({'key': k, 'value': t['text'], 'base_value': b['text']})
             
             translation_dict['unchanged_translations'] = unchanged_translations
