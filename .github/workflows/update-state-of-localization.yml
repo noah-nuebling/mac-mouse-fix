@@ -18,7 +18,7 @@ jobs:
   regenerate-state-of-localization:
     
     # Runs on macos runner. That's because we use ibtool from the python script.
-    runs-on: macos-latest
+    runs-on: ubuntu-latest
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
