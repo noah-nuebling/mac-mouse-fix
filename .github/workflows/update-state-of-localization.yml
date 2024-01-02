@@ -45,7 +45,7 @@ jobs:
     - name: Setup python
       uses: actions/setup-python@v4
       with:
-        python-version: '3.11'   # We developed the script under 3.11
+        python-version: '3.10'   # We developed the script under 3.11
         cache: 'pip'             # caching pip dependencies. This is from the official example. Not totally sure what we're doing here.
         cache-dependency-path: './mac-mouse-fix/Localization/Code/python_requirements.txt'
 
