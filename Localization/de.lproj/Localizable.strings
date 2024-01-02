@@ -335,7 +335,7 @@
 "trigger.drag.flags" = "und ziehen";
 
 /* Note: Value for this key is defined in Localizable.stringsdict, not Localizable.strings */
-"capture-toast.body" = "";
+"capture-toast.body" = "<>";
 
 /* First draft: **Primary Mouse Button** can't be used\nPlease try another button */
 "forbidden-capture-toast.1" = "**Primäre Maustaste** kann nicht verwendet werden\nBitte versuche eine andere Taste";
