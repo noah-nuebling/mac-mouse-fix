@@ -12,7 +12,7 @@ on:
     branches:
       - master
   
-  # Action runs once a day
+  # Action runs once a day (in case the mac-mouse-fix-website repo updates, which isn't covered by running on push to mac-mouse-fix repo)
   schedule:  
     - cron: "0 0 * * *" # Minute 0, hour 0, every day. See crontab.guru/
 
