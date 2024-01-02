@@ -83,7 +83,7 @@ def prepare_interactive_debugging(repo_root, website_root):
     To debug from python interactive mode:
     
     1. Change working dir to the folder of this script. Then open python in interactive mode.
-    2. >> import script, importlib
+    2. >> import state_of_localization as script, importlib
     3. >> from pprint import pprint (If necessary)
     4. >> result = script.prepare_interactive_debugging(<repo_root>, <website_root>) 
         - e.g. >> result = script.prepare_interactive_debugging("/Users/Noah/Desktop/mmf-stuff/mac-mouse-fix", "/Users/Noah/Desktop/mmf-stuff/mac-mouse-fix-website")
@@ -91,6 +91,7 @@ def prepare_interactive_debugging(repo_root, website_root):
         - e.g. >> print(script.analyze_missing_localization_files(result))
         - e.g. >> print(script.markdown_from_analysis(result, script.analyze_missing_localization_files(result)))
         - e.g. >> script.upload_markdown('<api_key>', script.markdown_from_analysis(result, script.analyze_missing_localization_files(result)))
+            (See Apple Note "MMF Localization Script Access Token")
     6. >> importlib.reload(script) (after updating source code)
     """
         
@@ -763,7 +764,7 @@ def analyze_localization_files(files):
             base_change_iterator = iter_content_changes(base_file, repo) # repo.iter_commits(paths=translation_file)
             
             for base_change in base_change_iterator:
-                if not is_predecessor(base_change, last_translation_change):
+                if not is_predecessor_or_equal(base_change, last_translation_change):
                     outdating_commits.append(base_change)
                 else:
                     break
@@ -890,9 +891,7 @@ def analyze_localization_files(files):
             # For each key, get the commit when it last changed
             latest_translation_changes = get_latest_change_for_translation_keys(common_keys, translation_file_path, repo)
             
-            # DEBUG
-            # if 'de' in translation_file_path:
-            #     print(f"DEBUG: {latest_translation_changes}")
+  
             
             # Log
             print(f'        Check if last modification was before base for each key ...')
@@ -903,24 +902,29 @@ def analyze_localization_files(files):
                 base_commit = latest_base_changes[k]['commit']
                 translation_commit  = latest_translation_changes[k]['commit']
                 
-                base_commit_is_predecessor = is_predecessor(base_commit, translation_commit)
+                is_outdated = not is_predecessor_or_equal(base_commit, translation_commit)
+                
+                # DEBUG
+                # if 'de.lproj/Localizable.strings' in translation_file_path and 'trial-counter.active' in k:
+                #     print(f"DEBUG:\n\nlatest_base: {base_commit}, latest_trans: {translation_commit}, is_outdated: {is_outdated}")
                 
                 # Special cases
                 # Notes: 
-                # - We first created `Localizable.strings` in German and then later translated it to English in commit d5aeb1195023b7bcea983d112ed0929b07311108. 
+                # - We first created `Localizable.strings` in German and then later translated it to English in commit d5aeb1195023b7bcea983d112ed0929b07311108 on 06.09.2022 [We could also use 9d385e6 on 22.09.2022 to spare us a few more `!IS_OK`s but it's whatever.]
                 #   This special case is to prevent those German strings from being detected as outdated.
 
                 if is_mmf_repo(repo) and os.path.basename(base_file_path) in ('Localizable.strings'):
-                    first_real_commit = repo.commit('d5aeb1195023b7bcea983d112ed0929b07311108')
-                    if is_predecessor(first_real_commit, base_commit):
-                        base_commit_is_predecessor = True
+                    become_base_commit = repo.commit('d5aeb1195023b7bcea983d112ed0929b07311108') # The commit where the English file became the base
+                    if is_predecessor_or_equal(base_commit, become_base_commit):
+                        is_outdated = False
                 
                 # DEBUG
+                # if 'de.lproj/Localizable.strings' in translation_file_path and 'trial-counter.active' in k:
+                #     print(f"DEBUG:\n\nlatest_base: {base_commit}, latest_trans: {translation_commit}, is_outdated: {is_outdated}")
                 #     print(f"latest_base_change: {base_file_path}, change: {base_commit}")
                 #     print(f"translated_change: {translation_file_path}, change: {translation_commit}")
-                #     print(f"base_is_predecessor: {base_commit_is_predecessor}")
                 
-                if not base_commit_is_predecessor:
+                if is_outdated:
                     translation_dict.setdefault('outdated_translations', {})[k] = { 'latest_base_change': latest_base_changes[k], 'latest_translation_change': latest_translation_changes[k] }    
     
     # Return
@@ -1309,7 +1313,7 @@ def get_commits_follow_renames(file_path_arg, repo, similarity_threshold=80):
         # Status C (copy) does sometimes happen in the repo history, for example in d48bd4c991136c3b37cf383f86aeb6db05a52194, the korean Localizable.strings is just a copy of the english version, and then later it's changed.
         
         if status['code'] == 'C':
-            print(f"Found copy status in commit history at commit {commit_hash}. Status: {status}")
+            print(f"INFO: Found copy status in commit history at commit {commit_hash}. Status: {status}")
                   
         assert status['code'] != 'D', "If the file has been deleted, why do we want to track changes to it?"
         assert status['code'] != 'U', "Unmerged files shouldn't show up when tracking the history of a file I think."
@@ -1420,7 +1424,7 @@ def is_file_empty(file_path):
         Also returns true if the file doesn't exist."""
     return not os.path.exists(file_path) or os.path.getsize(file_path) == 0
 
-def is_predecessor(potential_predecessor_commit, commit):
+def is_predecessor_or_equal(potential_predecessor_commit, commit):
     
     # Check which commit is 'earlier'. Works kind of like potential_predecessor_commit <= commit (returns true for equality)
     # Not totally sure what we're doing here. 
@@ -1512,7 +1516,20 @@ def find_localization_files(repo_root, website_root):
     # Append website basefile
     result.append({ 'base': website_root + '/' + 'locales/en-US.js', 'repo': website_repo, 'basetype': 'nuxt'})
     
-    # Find base_files
+    # Appen markdown base_files
+    for root, dirs, files in os.walk(markdown_dir):
+        is_en_folder = 'en-US' in os.path.basename(root)
+        if is_en_folder:
+            files_absolute = map(lambda file: root + '/' + file, files)
+            for b in files_absolute:
+                # Validate
+                _, extension = os.path.splitext(b)
+                assert extension == '.md', f'Folder at {b}, contained file with extension {extension}'
+                # Append markdown file
+                result.append({ 'base': b, 'repo': mmf_repo, 'basetype': 'markdown' })
+        
+    # Append Xcode base files 
+    #   Note: We do this last because in the analysis we iterate through the `result` dict in insertion order, and analyzing the IB stuff is the slowest. So doing this last makes debugging more convenient.
     for root, dirs, files in os.walk(repo_root):
         dirs[:] = [d for d in dirs if root + '/' + d not in exclude_paths]
         is_en_folder = 'en.lproj' in os.path.basename(root)
@@ -1529,18 +1546,6 @@ def find_localization_files(repo_root, website_root):
                 type = 'strings' if is_en_folder else 'IB'
                 # Append Xcode file
                 result.append({ 'base': b, 'repo': mmf_repo, 'basetype': type })
-    
-    for root, dirs, files in os.walk(markdown_dir):
-        is_en_folder = 'en-US' in os.path.basename(root)
-        if is_en_folder:
-            files_absolute = map(lambda file: root + '/' + file, files)
-            for b in files_absolute:
-                # Validate
-                _, extension = os.path.splitext(b)
-                assert extension == '.md', f'Folder at {b}, contained file with extension {extension}'
-                # Append markdown file
-                result.append({ 'base': b, 'repo': mmf_repo, 'basetype': 'markdown' })
-        
     
     # Find translated files
     
