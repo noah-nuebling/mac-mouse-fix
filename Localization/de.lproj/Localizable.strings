@@ -29,7 +29,7 @@
 "drag-effect.dock-swipe" = "Spaces & Mission Control"; // !IS_OK
 
 /* First draft: Move your mouse:\n - Up to show Mission Control\n - Down to show Application Windows\n - Left or Right to move between Spaces\n \nWorks like swiping with 3 fingers on an Apple Trackpad */
-"drag-effect.dock-swipe.hint" = "Bewege deine Maus nach: \n - Oben um Mission Control zu öffnen \n - Unten um App Exposé aufzurufen \n - Links oder rechts um zwischen Spaces zu wechseln\n \nFunktioniert wie Streichen mit 3 Fingern auf einem Apple Trackpad";
+"drag-effect.dock-swipe.hint" = "Bewege deine Maus nach:\n - Oben um Mission Control zu öffnen\n - Unten um Programmfenster zu zeigen\n - Links oder rechts um zwischen Spaces zu wechseln\n \nFunktioniert wie Streichen mit 3 Fingern auf einem Apple Trackpad";
 
 /* First draft: Scroll & Navigate */
 "drag-effect.scroll-swipe" = "Scrollen & Navigieren";
@@ -38,7 +38,7 @@
 "drag-effect.scroll-swipe.hint" = "Scrolle frei indem du deine Maus in eine beliebige Richtung bewegst\n \nBlättere ausserdem zwischen Seiten in Safari, lösche Nachrichten in Mail, und mehr, indem du deine Maus nach links oder rechts bewegst\n \nFunktioniert wie Streichen mit 2 Fingern auf einem Apple Trackpad ";
 
 /* First draft: Application Windows */
-"effect.app-expose" = "App Exposé";
+"effect.app-expose" = "Programmfenster";
 
 /* First draft: Show all windows of the active app */
 "effect.app-expose.hint" = "Zeige alle Fenster der aktiven App";
