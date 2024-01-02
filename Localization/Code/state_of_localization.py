@@ -532,7 +532,7 @@ def translation_to_markdown(key, value, file_type, escape_value=True):
         result = f'"`{key}`" = {value_str};'
     elif file_type == '.js':
         result = f"'`{key}`': {value_str},"
-    else 
+    else:
         assert False
     
     return result
