@@ -58,6 +58,7 @@ def main():
     
     parser = argparse.ArgumentParser()
     parser.add_argument('--api_key', required=True, help="See Apple Note 'MMF Localization Script Access Token'")
+    parser.add_argument('--print_latest_for', required=False, help="Debugging tool. Print the latest changes for each key for each translation file whose path contains this value.")
     args = parser.parse_args()
 
 
@@ -68,7 +69,7 @@ def main():
     
     files = find_localization_files(repo_root, website_root)
     missing_analysis = analyze_missing_localization_files(files)
-    analysis = analyze_localization_files(files)
+    analysis = analyze_localization_files(files, args.print_latest_for)
     markdown = markdown_from_analysis(analysis, missing_analysis)
     upload_markdown(args.api_key, markdown)
     
@@ -432,6 +433,7 @@ see **Updating Translation Files** at the top of the page.
                             "Adding a Language to the GitHub" if extension in ['.md'] else 
                             None)
             assert section_name != None, f"Couldn't determine tutorial section name for file with unknown extension {extension}"
+            if is_website_repo(repo): assert(extension in ['.js']), f"Found unexpected file extension {extension} in website repo" # Make this break when we add .md files to website.
             
             missing_str += f"- [{b_short}]({b_link})\n  See **{section_name}** at the top of the page to learn how to translate this file.\n"
         
@@ -650,7 +652,7 @@ def analyze_missing_localization_files(files):
     # Log
     print("Analyzing which localization files are missing...")
     
-    # Get base files & translated files
+    # Get base files & translated files and categorize them by translation language id
     
     base_files = list()
     result = dict()
@@ -673,7 +675,7 @@ def analyze_missing_localization_files(files):
     # Return
     return result
 
-def analyze_localization_files(files):
+def analyze_localization_files(files, print_latest_for):
 
     """
     
@@ -849,10 +851,6 @@ def analyze_localization_files(files):
             superfluous_keys = translation_keys.difference(base_keys)
             common_keys = base_keys.intersection(translation_keys)
             
-            
-            # DEBUG
-            # print(f"missing: {missing_keys}, super: {superfluous_keys}, common: {common_keys}, base: {base_keys}, translation: {translation_keys}, latest_base_changes: {latest_base_changes}")
-            
             # Get & attach missing / superfluous translations
             #   Note: missing / superfluous can't be marked as !IS_OK
             
@@ -898,7 +896,9 @@ def analyze_localization_files(files):
             # For each key, get the commit when it last changed
             latest_translation_changes = get_latest_change_for_translation_keys(common_keys, translation_file_path, repo)
             
-  
+            # Verbose logging stuff
+            if print_latest_for and print_latest_for in translation_file_path:
+                print(f"DEBUG latest changes for {print_latest_for}:\n\nLatest changes for base file at {base_file_path}:\n\n{latest_base_changes}\n\nLatest changes for translation at {translation_file_path}:\n\n{latest_translation_changes}\n\n")
             
             # Log
             print(f'        Check if last modification was before base for each key ...')
@@ -910,10 +910,6 @@ def analyze_localization_files(files):
                 translation_commit  = latest_translation_changes[k]['commit']
                 
                 is_outdated = not is_predecessor_or_equal(base_commit, translation_commit)
-                
-                # DEBUG
-                # if 'de.lproj/Localizable.strings' in translation_file_path and 'trial-counter.active' in k:
-                #     print(f"DEBUG:\n\nlatest_base: {base_commit}, latest_trans: {translation_commit}, is_outdated: {is_outdated}")
                 
                 # Special cases
                 # Notes: 
