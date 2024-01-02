@@ -39,6 +39,10 @@ Thanks for your support! :)
 
 These people spent a lot more than the standard price and treated me to an **Incredible Milkshake**. (And some even left a message) Thanks for the _sugar rush_!
 
+**January 2024**
+
+- 🇺🇸&nbsp;Quinn&nbsp;Slack
+
 **December 2023**
 
 - 🇺🇸&nbsp;Daniel&nbsp;Shusta

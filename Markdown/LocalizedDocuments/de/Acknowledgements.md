@@ -37,6 +37,10 @@ Danke für euren Beitrag! :)
 
 Diese Leute haben viel mehr als den Standardpreis ausgegeben und mir einen **unglaublichen Milchshake** spendiert. (Und manche haben sogar eine Nachricht hinterlassen) Danke für den _Zucker-Kick_!
 
+**Januar 2024**
+
+- 🇺🇸&nbsp;Quinn&nbsp;Slack
+
 **Dezember 2023**
 
 - 🇺🇸&nbsp;Daniel&nbsp;Shusta
