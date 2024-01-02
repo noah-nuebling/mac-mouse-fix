@@ -95,7 +95,7 @@
 "AqN-zN-yDS.title" = "Lässt dich schnell Features wie\nflüssiges Scrollen an- und abschalten";
 
 /* Class = "NSTextFieldCell"; title = "You'll be notified of updates when you open\nthis window"; ObjectID = "SaY-fF-d1s"; */
-"SaY-fF-d1s.title" = "Du wirst über Updates benachrichtigt werden,\nwenn du dieses Fenster öffnest";
+"SaY-fF-d1s.title" = "Du wirst über Updates benachrichtigt werden,\nwenn du dieses Fenster öffnest"; // !IS_OK
 
 /* Class = "NSMenuItem"; title = "High"; ObjectID = "bIE-g7-3St"; Note = "Scrolling > Scroll Speed > High Option"; */
 "bIE-g7-3St.title" = "Hoch";
@@ -269,7 +269,7 @@
 "Ozk-o9-C4a.title" = "Besuche die Webseite";
 
 /* Class = "NSTextFieldCell"; title = "Check It Out on GitHub"; ObjectID = "ZMA-p0-2lf"; */
-"ZMA-p0-2lf.title" = "Schau dir das GitHub an";
+"ZMA-p0-2lf.title" = "Schau es dir auf GitHub an";
 
 /* Class = "NSTextFieldCell"; title = "File a Bug Report"; ObjectID = "bQf-qv-mvB"; */
 "bQf-qv-mvB.title" = "Erstatte einen Fehlerbericht";
@@ -320,4 +320,4 @@
 "97W-3h-SSc.title" = "Hoch";
 
 /* Class = "NSTextFieldCell"; title = "Smoothness:"; ObjectID = "SjO-Dq-CEX"; Note = "Scrolling > Smoothness Label"; */
-"SjO-Dq-CEX.title" = "Flüssgkeit:";
+"SjO-Dq-CEX.title" = "Flüssgkeit:"; // !IS_OK
