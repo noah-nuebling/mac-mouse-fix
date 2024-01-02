@@ -39,7 +39,8 @@ jobs:
 
     - name: Debug
       run: |
-        find . -type d -print | awk -F'/' 'NF<=3'
+        pwd |
+        find . -type d -print | awk -F'/' 'NF<=3';
     
     - name: Setup python
       uses: actions/setup-python@v4
