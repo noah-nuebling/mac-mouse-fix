@@ -6,8 +6,9 @@
 - [x] Add ‘untranslated files’ section
 
 - [x] Write tutorial for updating existing translations.
+- [x] Test if this correctly tracks changes through renames of different file types (.js and .strings files, IB files, .stringsdict and .md files)
 
-- [ ] Write a GitHub Actions that runs on every push to master / every 24 hours.
+- [ ] Write a GitHub Action that runs on every push to master / every 24 hours.
 """
 
 
