@@ -7,10 +7,14 @@ on:
   # Action is triggered manually
   workflow_dispatch:
 
-  # Action runs periodically
+  # Action is runs on push
+  push:
+    branches:
+      - master
+  
+  # Action runs once a day
   schedule:  
     - cron: "0 0 * * *" # Minute 0, hour 0, every day. See crontab.guru/
-  
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
