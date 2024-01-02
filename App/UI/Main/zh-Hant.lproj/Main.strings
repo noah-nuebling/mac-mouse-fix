@@ -199,7 +199,7 @@
 /* Class = "NSTabViewItem"; label = "Buttons"; ObjectID = "Mjk-wy-Z7C"; Note = "Toolbar > Buttons Tab Button"; */
 "Mjk-wy-Z7C.label" = "按鈕";
 
-/* Class = "NSTextFieldCell"; title = "Move the mouse pointer inside the '+' field, then click a mouse button to assign an action to it.  You can also Double Click, Click and Drag and [more]()."; ObjectID = "N7H-9j-DIr"; Note = "Buttons > Add Field Hint"; */
+/* Class = "NSTextFieldCell"; title = "Move the mouse pointer inside the '+' field, then *Click* a mouse button to assign an action to it.  You can also *Double Click*, *Click and Drag* and [more]()."; ObjectID = "N7H-9j-DIr"; Note = "Buttons > Add Field Hint"; */
 "N7H-9j-DIr.title" = "移動滑鼠指標到「+」區域內，然後按一下滑鼠按鈕來指定動作。  您也可以按兩下、按一下並拖移、執行[更多]()動作。";
 
 /* Class = "NSButtonCell"; title = "Trackpad Simulation"; ObjectID = "N65-aN-Hxp"; Note = "Scroll > Trackpad Interactions"; */

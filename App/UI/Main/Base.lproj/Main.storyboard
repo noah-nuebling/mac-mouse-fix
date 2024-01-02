@@ -565,12 +565,12 @@ this window</string>
                                                 <rect key="frame" x="-2" y="12" width="545" height="38"/>
                                                 <textFieldCell key="cell" alignment="center" id="N7H-9j-DIr">
                                                     <font key="font" metaFont="smallSystem"/>
-                                                    <string key="title">Move the mouse pointer inside the '+' field, then _Click_ a mouse button to assign an action to it.  You can also _Double Click_, _Click and Drag_ and [more]().</string>
+                                                    <string key="title">Move the mouse pointer inside the '+' field, then *Click* a mouse button to assign an action to it.  You can also *Double Click*, *Click and Drag* and [more]().</string>
                                                     <color key="textColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
                                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                 </textFieldCell>
                                                 <attributedString key="userComments">
-                                                    <fragment content="Buttons &gt; Add Field Hint"/>
+                                                    <fragment content="Buttons &gt; Add Field Hint || It's better to use * instead of _ for emphasis. _ causes problems in some languages like Chinese."/>
                                                 </attributedString>
                                             </textField>
                                         </subviews>
@@ -648,7 +648,7 @@ this window</string>
                                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                                     <subviews>
                                                                         <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="AHZ-Kd-4Xf">
-                                                                            <rect key="frame" x="-8" y="3" width="294" height="16"/>
+                                                                            <rect key="frame" x="-8" y="3" width="295" height="16"/>
                                                                             <constraints>
                                                                                 <constraint firstAttribute="height" constant="16" id="iEl-dG-QM5"/>
                                                                             </constraints>
