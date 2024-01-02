@@ -36,6 +36,10 @@ jobs:
         repository: noah-nuebling/mac-mouse-fix-website # Checkout website repo
         ref: main  
         path: mac-mouse-fix-website
+
+    - name: Debug
+      run: |
+        find . -type d -print | awk -F'/' 'NF<=3'
     
     - name: Setup python
       uses: actions/setup-python@v4
