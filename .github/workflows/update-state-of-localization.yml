@@ -29,6 +29,7 @@ jobs:
         repository: noah-nuebling/mac-mouse-fix   # Checkout mmf repo
         ref: master                               # Checkout master branch
         path: './mac-mouse-fix'                   # Place repo at this path relative to $GITHUB_WORKSPACE
+        fetch-depth: 0                            # Check out everythin
     
     - name: Checkout mac-mouse-fix-website
       uses: actions/checkout@v4
@@ -36,6 +37,7 @@ jobs:
         repository: noah-nuebling/mac-mouse-fix-website # Checkout website repo
         ref: main  
         path: './mac-mouse-fix-website'
+        fetch-depth: 0
 
     - name: Debug
       run: |
