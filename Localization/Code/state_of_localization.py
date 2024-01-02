@@ -803,8 +803,8 @@ def analyze_localization_files(files):
         latest_base_changes = get_latest_change_for_translation_keys(base_keys, base_file_path, repo)      
         
         # Debug
-        if "LicenseSheetController" in base_file_path:
-            print(f"Licensesheet latest changes - {latest_base_changes}")
+        # if "LicenseSheetController" in base_file_path:
+        #     print(f"Licensesheet latest changes - {latest_base_changes}")
         
         # Iterate translations
         for translation_file_path, translation_dict in file_dict['translations'].items():
