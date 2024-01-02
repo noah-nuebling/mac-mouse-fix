@@ -74,25 +74,25 @@
 "effect.look-up" = "Quick Look & Nachschlagen";
 
 /* First draft: Look up words in the Dictionary, Quick Look files in Finder, and more.\n \nWorks like a Force click on an Apple Trackpad. */
-"effect.look-up.hint" = "Schlage Wörter im Wörterbuch nach, werfe einen schnellen Blick auf Dateien im Finder, und mehr\n \nFunktioniert wie ein kräftiger Klick bei einem Apple Trackpad"; // !IS_OK
+"effect.look-up.hint" = "Schlage Wörter im Wörterbuch nach, werfe einen schnellen Blick auf Dateien im Finder, und mehr.\n \nFunktioniert wie ein kräftiger Klick bei einem Apple Trackpad."; // !IS_OK
 
 /* First draft: Primary Click */
 "effect.primary-click" = "Primärklick";
 
 /* First draft: Works like clicking %@ on a standard mouse. */
-"effect.primary-click.hint" = "Funktioniert wie klicken von %@ bei einer Standard-Maus";
+"effect.primary-click.hint" = "Funktioniert wie klicken von %@ bei einer Standard-Maus.";
 
 /* First draft: Secondary Click */
 "effect.secondary-click" = "Sekundärklick";
 
 /* First draft: Works like clicking %@ on a standard mouse. */
-"effect.secondary-click.hint" = "Funktioniert wie klicken von %@ bei einer Standard-Maus";
+"effect.secondary-click.hint" = "Funktioniert wie klicken von %@ bei einer Standard-Maus.";
 
 /* First draft: Middle Click */
 "effect.middle-click" = "Mittelklick";
 
 /* First draft: Open links in a new tab, paste text in the Terminal, and more.\n \nWorks like clicking %@ on a standard mouse. */
-"effect.middle-click.hint" = "Öffne Links in einem neuen Tab, setze Text im Terminal ein, und mehr\n \nFunktioniert wie klicken von %@ bei einer Standard-Maus";
+"effect.middle-click.hint" = "Öffne Links in einem neuen Tab, setze Text im Terminal ein, und mehr.\n \nFunktioniert wie klicken von %@ bei einer Standard-Maus.";
 
 /* First draft: Mission Control */
 "effect.mission-control" = "Mission Control"; // !IS_OK
@@ -119,7 +119,7 @@
 "effect.smart-zoom" = "Smart Zoom"; // !IS_OK
 
 /* First draft: Zoom in or out in Safari and other apps.\n \nWorks like a two-finger double tap on an Apple Trackpad. */
-"effect.smart-zoom.hint" = "Zoome rein oder raus in Safari und anderen Apps \n \nFunktioniert wie mit zwei Fingern doppelt tippen auf einem Apple Trackpad";
+"effect.smart-zoom.hint" = "Zoome rein oder raus in Safari und anderen Apps.\n \nFunktioniert wie mit zwei Fingern doppelt tippen auf einem Apple Trackpad.";
 
 /* First draft: Back */
 "effect.back" = "Zurück";
