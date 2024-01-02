@@ -26,16 +26,16 @@ jobs:
     - name: Checkout mac-mouse-fix
       uses: actions/checkout@v4
       with:
-        repository: ${{ github.repository }} # Checkout mmf repo
-        ref: master         # Checkout master branch
-        path: '' # Place repo at this path relative to $GITHUB_WORKSPACE
+        repository: noah-nuebling/mac-mouse-fix   # Checkout mmf repo
+        ref: master                               # Checkout master branch
+        path: './mac-mouse-fix'                   # Place repo at this path relative to $GITHUB_WORKSPACE
     
     - name: Checkout mac-mouse-fix-website
       uses: actions/checkout@v4
       with:
         repository: noah-nuebling/mac-mouse-fix-website # Checkout website repo
         ref: main  
-        path: '../mac-mouse-fix-website'
+        path: './mac-mouse-fix-website'
 
     - name: Debug
       run: |
@@ -47,13 +47,14 @@ jobs:
       with:
         python-version: '3.11'   # We developed the script under 3.11
         cache: 'pip'             # caching pip dependencies. This is from the official example. Not totally sure what we're doing here.
-        cache-dependency-path: './Localization/Code/python_requirements.txt'
+        cache-dependency-path: './mac-mouse-fix/Localization/Code/python_requirements.txt'
 
     - name: Install python dependencies
       run: |
-        python -m pip install -r './Localization/Code/python_requirements.txt'
+        python -m pip install -r './mac-mouse-fix/Localization/Code/python_requirements.txt'
     
     - name: Run script
+      working-directory: ./mac-mouse-fix
       run: |
         python ./Localization/Code/state_of_localization.py --api_key ${{ secrets.GITHUB_TOKEN }}
 
