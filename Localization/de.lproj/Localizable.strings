@@ -350,7 +350,7 @@
 "join-list" = ", "; // !IS_OK
 
 /* First draft: %@ and %@ || Note: This format string joins the second-to-last element and the last elements in a list of items */
-"join-list.last" = " %@ und %@";
+"join-list.last" = "%@ und %@";
 
 /* First draft: ⭐️ Thank you for buying Mac Mouse Fix! */
 "thanks.01" = "⭐️ Danke, dass du Mac Mouse Fix gekauft hast!";
