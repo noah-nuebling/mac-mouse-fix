@@ -304,7 +304,7 @@ def markdown_from_analysis(files, missing_files):
                     latest_translation_commit_date_str = commit_date_for_markdown(latest_translation_commit)
                     
                     newer_base_changes_strs = []
-                    for c in sorted(newer_base_changes):
+                    for c in sorted(newer_base_changes, key=lambda c: c.committed_date, reverse=True):
                         commit_str = commit_string_for_markdown(c, repo_root)
                         commit_date_str = commit_date_for_markdown(c)
                         newer_base_changes_strs.append(f"On `{commit_date_str}` in commit {commit_str}")
