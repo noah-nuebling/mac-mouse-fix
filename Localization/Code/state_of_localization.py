@@ -1,4 +1,8 @@
 """
+This script creates the "🌏 State of Localization 🌎" comment on discussion #731 (https://github.com/noah-nuebling/mac-mouse-fix/discussions/731)
+
+Checklist:
+
 - [x] Why isn’t website stuff showing up? -> Forgot to turn debug stuff off
 - [x] Why unchanged translations not showing ‘Mac Mouse Fix’? -> they were actually changed, with non-breaking spaces
 
@@ -8,7 +12,7 @@
 - [x] Write tutorial for updating existing translations.
 - [x] Test if this correctly tracks changes through renames of different file types (.js and .strings files, IB files, .stringsdict and .md files)
 
-- [ ] Write a GitHub Action that runs on every push to master / every 24 hours.
+- [x] Write a GitHub Action that runs on every push to master / every 24 hours.
 """
 
 
@@ -34,6 +38,17 @@ import difflib
 import git
 import babel
 import requests
+
+#
+# Constants
+#
+
+language_flag_fallback_map = { # When a translation's languageID doesn't contain a country, fallback to these flags
+    'zh': '🇨🇳',       # Chinese maps to China
+    'ko': '🇰🇷',       # Korean maps to South Korea
+    'de': '🇩🇪',       # German maps to Germany
+    'vi': '🇻🇳',       # Vietnamese maps to Vietnam
+}
 
 #
 # Main
@@ -533,17 +548,12 @@ def language_tag_to_flag_emoji(language_id):
     if locale.territory:
         return get_flag(locale.territory)
     
-    # Fallback to `language code -> flag` map
-    map = {
-        'zh': '🇨🇳',       # Chinese maps to China
-        'ko': '🇰🇷',       # Korean maps to South Korea
-    }
-    flag = map.get(locale.language, None)
+    flag = language_flag_fallback_map.get(locale.language, None)
     if flag:
         return flag
     
     # Try to use language code as country code as last resort
-    return get_flag(locale.language)
+    return "&#xFFFD;" # Fallback to Unicode 'Replacement Character'
 
 def escape_for_markdown(s):
     
@@ -634,6 +644,9 @@ def analyze_missing_localization_files(files):
     }
     """
 
+    # Log
+    print("Analyzing which localization files are missing...")
+    
     # Get base files & translated files
     
     base_files = list()
@@ -724,7 +737,7 @@ def analyze_localization_files(files):
     files = files.copy()
     
     # Log
-    print(f'Analyzing localization files...')
+    print(f'Analyzing localization file content...')
     
     # Get 'outdating commits'
     #   This is a more primitive method than analyzing the changes to translation keys. Should only be relevant for files that don't have translation keys
