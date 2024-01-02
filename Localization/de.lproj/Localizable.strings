@@ -26,7 +26,7 @@
 "precise-scrolling-hint" = "Scrolle auch ohne Sondertasten präzise, indem du das\nScrollrad _langsam_ bewegst";
 
 /* First draft: Spaces & Mission Control */
-"drag-effect.dock-swipe" = "Spaces & Mission Control";
+"drag-effect.dock-swipe" = "Spaces & Mission Control"; // !IS_OK
 
 /* First draft: Move your mouse:\n - Up to show Mission Control\n - Down to show Application Windows\n - Left or Right to move between Spaces\n \nWorks like swiping with 3 fingers on an Apple Trackpad */
 "drag-effect.dock-swipe.hint" = "Bewege deine Maus nach: \n - Oben um Mission Control zu öffnen \n - Unten um App Exposé aufzurufen \n - Links oder rechts um zwischen Spaces zu wechseln\n \nFunktioniert wie Streichen mit 3 Fingern auf einem Apple Trackpad";
@@ -59,7 +59,7 @@
 "effect.desktop.hint" = "Zeige den Schreibtisch";
 
 /* First draft: Launchpad */
-"effect.launchpad" = "Launchpad";
+"effect.launchpad" = "Launchpad"; // !IS_OK
 
 /* First draft: Open Launchpad */
 "effect.launchpad.hint" = "Öffne Launchpad";
@@ -74,7 +74,7 @@
 "effect.look-up" = "Quick Look & Nachschlagen";
 
 /* First draft: Look up words in the Dictionary, Quick Look files in Finder, and more.\n \nWorks like a Force click on an Apple Trackpad. */
-"effect.look-up.hint" = "Schlage Wörter im Wörterbuch nach, werfe einen schnellen Blick auf Dateien im Finder, und mehr\n \nFunktioniert wie ein kräftiger Klick bei einem Apple Trackpad";
+"effect.look-up.hint" = "Schlage Wörter im Wörterbuch nach, werfe einen schnellen Blick auf Dateien im Finder, und mehr\n \nFunktioniert wie ein kräftiger Klick bei einem Apple Trackpad"; // !IS_OK
 
 /* First draft: Primary Click */
 "effect.primary-click" = "Primärklick";
@@ -95,7 +95,7 @@
 "effect.middle-click.hint" = "Öffne Links in einem neuen Tab, setze Text im Terminal ein, und mehr\n \nFunktioniert wie klicken von %@ bei einer Standard-Maus";
 
 /* First draft: Mission Control */
-"effect.mission-control" = "Mission Control";
+"effect.mission-control" = "Mission Control"; // !IS_OK
 
 /* First draft: Show Mission Control */
 "effect.mission-control.hint" = "Zeige Mission Control";
@@ -116,7 +116,7 @@
 "effect.shortcut.hint" = "Funktioniert wie drücken von '%@' auf deiner Tastatur";
 
 /* First draft: Smart Zoom */
-"effect.smart-zoom" = "Smart Zoom";
+"effect.smart-zoom" = "Smart Zoom"; // !IS_OK
 
 /* First draft: Zoom in or out in Safari and other apps.\n \nWorks like a two-finger double tap on an Apple Trackpad. */
 "effect.smart-zoom.hint" = "Zoome rein oder raus in Safari und anderen Apps \n \nFunktioniert wie mit zwei Fingern doppelt tippen auf einem Apple Trackpad";
@@ -146,10 +146,10 @@
 "scroll-effect.spaces.hint" = "Scrolle nach oben um einen Space nach links zu wechseln und nach unten um einen Space nach rechts zu wechseln\n \nFunktioniert wie horizontales Wischen mit 3 Fingern auf einem Apple Trackpad";
 
 /* First draft: App Switcher */
-"scroll-effect.app-switcher" = "App Switcher";
+"scroll-effect.app-switcher" = "App-Umschalter";
 
 /* First draft: Quickly switch between open apps\n \nWorks like holding Command (⌘) and then pressing Tab (⇥) on your keyboard */
-"scroll-effect.app-switcher.hint" = "Wechsle schnell zischen offenen Apps \n \nFunktioniert wie auf deiner Tastatur die Befehlstaste (⌘) zu halten und dann Tab (⇥) zu drücken";
+"scroll-effect.app-switcher.hint" = "Wechsle schnell zischen offenen Apps\n \nFunktioniert wie auf deiner Tastatur die Befehlstaste (⌘) zu halten und dann Tab (⇥) zu drücken";
 
 /* First draft: Horizontal Scroll */
 "scroll-effect.horizontal" = "Horizontales Scrollen";
@@ -170,7 +170,7 @@
 "scroll-effect.swift.hint" = "Scrolle große Distanzen mit minimalem Aufwand";
 
 /* First draft: Zoom In or Out */
-"scroll-effect.zoom" = "Rein- oder rauszoomen";
+"scroll-effect.zoom" = "Rein- oder rauszoomen"; // !IS_OK
 
 /* First draft: Zoom in or out in Safari, Maps and other apps\n \nWorks like pinching to zoom on an Apple trackpad */
 "scroll-effect.zoom.hint" = "Zoome rein oder raus in Safari, Maps, und anderen Apps\n \nFunktioniert wie Aufziehen mit 2 Fingern bei einem Apple Trackpad";
@@ -224,7 +224,7 @@
 "apple-key-fallback.backward" = "<Rückspultaste>";
 
 /* First draft: ⇪ */
-"apple-key-fallback.capslock" = "⇪";
+"apple-key-fallback.capslock" = "⇪"; // !IS_OK
 
 /* First draft: <Fast-Forward key> */
 "apple-key-fallback.forward" = "<Vorspultaste>";
@@ -233,7 +233,7 @@
 "apple-key-fallback.globe" = "<Emojitaste>";
 
 /* First draft: <Increase Keyboard Brightness key> */
-"apple-key-fallback.light.max" = "<Tastaturhelligkeit erhöhen Taste>";
+"apple-key-fallback.light.max" = "<Tastaturhelligkeit erhöhen Taste>"; // !IS_OK
 
 /* First draft: <Decrease Keyboard Brightness key> */
 "apple-key-fallback.light.min" = "<Tastaturhelligkeit verringern Taste>";
@@ -320,7 +320,7 @@
 "trigger.scroll-particle" = "scrollen";
 
 /* First draft: Click and Scroll %@ */
-"trigger.scroll.1" = "%@ klicken und scrollen";
+"trigger.scroll.1" = "%@ klicken und scrollen"; // !IS_OK
 
 /* First draft: Double Click and Scroll %@ */
 "trigger.scroll.2" = "%@ doppelklicken und scrollen";
@@ -347,7 +347,7 @@
 "capture-toast.link" = "Erfahre mehr";
 
 /* First draft: ,  || Note: This string joins elements in a list except the second-to-last and last one. || Note: The first draft contains a space after the comma. */
-"join-list" = ", ";
+"join-list" = ", "; // !IS_OK
 
 /* First draft: %@ and %@ || Note: This format string joins the second-to-last element and the last elements in a list of items */
 "join-list.last" = " %@ und %@";
@@ -371,7 +371,7 @@
 "thanks.06" = "🔥 Super Geschmack was Maus-Fixing-Software angeht! ;)";
 
 /* First draft: 💙 */
-"thanks.07" = "💙";
+"thanks.07" = "💙"; // !IS_OK
 
 /* First draft: :) <- My face when I saw you bought Mac Mouse Fix */
 "thanks.08" = ":) <- Mein Gesicht, als ich gesehen habe, dass du Mac Mouse Fix gekauft hast";
@@ -392,7 +392,7 @@
 "thanks.13" = "🐹 Wir sollten ihm eine Krawatte besorgen.";
 
 /* First draft: 🇹🇷 Ey Kanka, tebrikler tebrikler! */
-"thanks.14" = "🇹🇷 Ey Kanka, tebrikler tebrikler!";
+"thanks.14" = "🇹🇷 Ey Kanka, tebrikler tebrikler!"; // !IS_OK
 
 /* First draft: 🥛 Whole milk of course! It's your birthday after all. */
 "thanks.15" = "🥛 Vollmilch natürlich! Es ist schließlich dein Geburtstag.";
@@ -401,13 +401,13 @@
 "thanks.16" = "🎸 (Noch) nicht John Mayer. Trotzdem Bürgermeister der Herzen.";
 
 /* First draft: 💃 1NEIN8NEIN */
-"thanks.17" = "💃 1NEIN8NEIN";
+"thanks.17" = "💃 1NEIN8NEIN"; // !IS_OK
 
 /* First draft: 🦄 You may not want to save the world, but you're already saving mine :) */
 "thanks.18" = "🦄 Du willst vielleicht nicht die Welt retten, aber du rettest schon meine :)";
 
 /* First draft: 🏜️ Dankeschön, meine Frau... */
-"thanks.19" = "🏜️ Dankeschön, meine Frau...";
+"thanks.19" = "🏜️ Dankeschön, meine Frau..."; // !IS_OK
 
 /* First draft: 🌍 Universal Studios is probably not that great anyways... :) */
 "thanks.20" = "🌍 Universal Studios ist wahrscheinlich sowieso nicht so toll... :)";
@@ -416,10 +416,10 @@
 "thanks.21" = "🐠 Was... bist... du?";
 
 /* First draft: 🖤 */
-"thanks.22" = "🖤";
+"thanks.22" = "🖤"; // !IS_OK
 
 /* First draft: 🤍 */
-"thanks.23" = "🤍";
+"thanks.23" = "🤍"; // !IS_OK
 
 /* First draft: 😎 Oh you're using Mac Mouse Fix? You must be pretty cool. */
 "thanks.24" = "😎 Oh du benutzt Mac Mouse Fix? Du musst ziemlich cool sein.";
@@ -428,7 +428,7 @@
 "thanks.25" = "🌏 Erst die Mäuse, dann die Welt!! >:)";
 
 /* First draft: Free day **%d/%d** */
-"trial-counter.active" = "Kostenloser Tag **%d/%d**";
+"trial-counter.active" = "Kostenloser Tag **%d/%d**"; // !IS_OK
 
 /* First draft: Free days are over */
 "trial-counter.expired" = "Kostenlose Tage sind vorbei";
@@ -548,10 +548,10 @@
 "buy-mouse-alert.title" = "Deine Maus hat nur 3 Tasten";
 
 /* First draft: OK */
-"buy-mouse-alert.ok" = "OK";
+"buy-mouse-alert.ok" = "OK"; // !IS_OK
 
 /* First draft: Open 'Security & Privacy' Preferences || Notes: The string for Ventura and later is defined in Interface Builder */
 "accessibility.settings-link.pre-ventura" = "Öffne die 'Sicherheit & Datenschutz' Einstellungen";
 
 /* First draft: Version %@ || Note: %@ will be replaced by the app version, e.g. '3.0.0 (22027)' */
-"app-version" = "Version %@";
+"app-version" = "Version %@"; // !IS_OK
