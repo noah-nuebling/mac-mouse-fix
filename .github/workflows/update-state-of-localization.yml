@@ -39,7 +39,7 @@ jobs:
 
     - name: Debug
       run: |
-        pwd |
+        pwd;
         find . -type d -print | awk -F'/' 'NF<=3';
     
     - name: Setup python
