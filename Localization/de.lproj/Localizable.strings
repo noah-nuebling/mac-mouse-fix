@@ -287,7 +287,7 @@
 "button-modifier.3" = "%@ dreifach klicken + ";
 
 /* First draft: Click %@ || Note: %@ will be a button name || Example where %@ is 'Button 5': ⌥⌘ Double Click Button 4 + Click Button 5 || Note: Most of the substrings that are used to build the Action Table Trigger Strings (this is one of those substrings) are capitalized in English because it's common to use 'title case' there. In your language, 'title case' might not be a thing, and so you might not want to capitalize these strings. The first letter of the trigger string will be programmatically capitalized in any language. */
-"trigger.click.1" = "%@ klicken"; // !NOT_OUTDATED
+"trigger.click.1" = "%@ klicken";
 
 /* First draft: Double Click %@ */
 "trigger.click.2" = "%@ doppelklicken";
@@ -555,6 +555,3 @@
 
 /* First draft: Version %@ || Note: %@ will be replaced by the app version, e.g. '3.0.0 (22027)' */
 "app-version" = "Version %@";
-
-/* First draft: Double Click %@ */
-"trigger.click.2" = "";
