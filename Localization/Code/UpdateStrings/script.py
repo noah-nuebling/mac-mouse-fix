@@ -113,7 +113,7 @@ def update_strings_files(files, wet_run, type):
         if type == 'sourcecode':
             source_code_files = shared.find_files_with_extensions(['m','c','cp','mm','swift'], ['env/', 'venv/', 'iOS-Polynomial-Regression-master/', './Test/'])
             source_code_files_str = ' '.join(map(lambda p: p.replace(' ', r'\ '), source_code_files))
-            shared.runCLT(f"extractLocStrings {source_code_files_str} -SwiftUI -o ./{temp_folder}", exec='/bin/zsh')
+            shared.runCLT(f"xcrun extractLocStrings {source_code_files_str} -SwiftUI -o ./{temp_folder}", exec='/bin/zsh')
             generated_path = f"{temp_folder}/Localizable.strings"
             generated_content = shared.read_file(generated_path, 'utf-16')
         elif type == 'IB':
