@@ -45,8 +45,8 @@ def main():
     update_source_code_comments(strings_files[0], repo_root)
     
     # Debug
-    pprint(ib_files)
-    pprint(strings_files)
+    # pprint(ib_files)
+    # pprint(strings_files)
     
     # Clean up
     shared.runCLT(f"rm -R ./{temp_folder}")
@@ -97,15 +97,78 @@ def update_source_code_comments(files, repo_root):
         new_content = update_strings_file_content(content, generated_content)
         
         # shared.write_file(path, new_content)
-        # print(f"Diff: {shared.get_diff_string(content, new_content)}")
-        print(f"Gen: {generated_content}")
-        print(f"Diff: {content}\n\n )")
         
         
 def update_strings_file_content(content, generated_content):
+    
     """
     Copies over comments from generated_content to content
     """
+    
+    # Parse both contents
+    parse = parse_strings_file_content(content)
+    generated_parse = parse_strings_file_content(generated_content, remove_value=True) # `extractLocStrings` sets all values to the key for some reason, so we remove them.
+    
+    # Replace comments 
+    #   (And insert missing kv-pairs, too, to be able to add comments)
+    
+    for key in generated_parse.keys():
+        if key in parse:
+            parse[key]['comment'] = generated_parse[key]['comment']
+        else:
+            parse[key] = generated_parse[key]
+    
+    # Reassemple parse
+    result = ''
+    for _, p in parse.items():
+        result += p['comment']
+        result += p['line']
+    
+    # Return
+    return result
+    
+    
+
+def parse_strings_file_content(content, remove_value=False):
+    
+    result = {}
+    
+    regex = shared.strings_file_regex()
+    
+    last_key = ''
+    acc_comment = ''
+    
+    for i, line in enumerate(content.splitlines(True)):
+        
+        match = regex.match(line)
+        
+        if match:
+            
+            key = match.group(2)
+            if remove_value:
+                value_start = match.start(3)
+                value_end = match.end(3)
+                result_line = line[:value_start] + line[value_end:]
+            else:
+                result_line = line
+            
+            result[key] = { "line": result_line, "comment": acc_comment }
+            acc_comment = ''
+            
+            last_key = key
+        else:
+            acc_comment += line
+    
+    post_comment = acc_comment
+    result[last_key]['post_comment'] = post_comment
+    assert len(post_comment.strip()) == 0, f"There's content under the last key {last_key}. Don't know what to do with that. Pls remove."
+    
+    return result
+    
+    
+    
+            
+    
     
     
 
@@ -118,3 +181,5 @@ def update_strings_file_content(content, generated_content):
 
 if __name__ == "__main__": 
     main()
+    
+    

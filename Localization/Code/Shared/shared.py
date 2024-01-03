@@ -45,6 +45,32 @@ def extract_translation_keys_and_values_from_file(file_path):
 #
 # Core string-level analysis
 #
+
+def strings_file_regex():
+    
+    """
+    Used to get keys and values from strings files. Designed to work on Xcode .strings files and on the .js strings files used on the MMF website. (Won't work on `.stringsdict`` files, those are xml)
+      
+    See https://regex101.com
+      
+    Group 0: The whole line
+    Group 1: git lineDiff. '+', '-' or None
+    Group 2: Key
+    Group 3: Value
+    Group 4: Useless
+    Group 5: !IS_OK string
+    
+    Some test strings:    
+    
+'quote-"source".,//youtubeComment':  "**{ name }** in// einem YouTube,-KommentarIS_OK", // ! omgg !!IS_OK ,that's so 
++  'quote-source.youtubeComment':  "**{ name }** in' einem'` YouTube`-Kommentar", // IS_OK
+    'quote-source.youtubeComment':  "**{ name }** in einem YouTube-Kommentar", /* !IS_OK */
+-  "quote-"source".,//youtubeComment" =  '**{ name }** in// einem YouTube,-KommentarIS_OK'; // ! omgg !!IS_OK ,that's so 
+    """
+    
+    strings_file_regex = re.compile(r'^(\+?\-?)\s*[\'\"](.+)[\'\"]\s*[=:]\s*[\'\"](.*)[\'\"][,;].*?(\/.*?(!+IS_OK).*)?$', re.MULTILINE)
+    
+    return strings_file_regex
     
 def extract_translation_keys_and_values_from_string(text):
 
@@ -67,25 +93,11 @@ def extract_translation_keys_and_values_from_string(text):
         If the input text is a git diff text with - and + at the start of lines, then the result with contain `added` and `deleted` keys, otherwise, the result will contain `value` keys.
     """
     
-    
-    # Define regex
-    
-    """
-      Used to get keys and values from strings files. Designed to work on Xcode .strings files and on the .js strings files used on the MMF website. (Won't work on `.stringsdict`` files, those are xml)
-      See https://regex101.com
-    
-    Some test strings:    
-    
-'quote-"source".,//youtubeComment':  "**{ name }** in// einem YouTube,-KommentarIS_OK", // ! omgg !!IS_OK ,that's so 
-+  'quote-source.youtubeComment':  "**{ name }** in' einem'` YouTube`-Kommentar", // IS_OK
-    'quote-source.youtubeComment':  "**{ name }** in einem YouTube-Kommentar", /* !IS_OK */
--  "quote-"source".,//youtubeComment" =  '**{ name }** in// einem YouTube,-KommentarIS_OK'; // ! omgg !!IS_OK ,that's so 
-    """
-    
-    strings_file_regex = re.compile(r'^(\+?\-?)\s*[\'\"](.+)[\'\"]\s*[=:]\s*[\'\"](.*)[\'\"][,;].*?(\/.*?(!+IS_OK).*)?$', re.MULTILINE)
+    # Get regex 
+    regex = strings_file_regex()
     
     # Find matches
-    matches = strings_file_regex.finditer(text)
+    matches = regex.finditer(text)
     
     # Parse matches
     
