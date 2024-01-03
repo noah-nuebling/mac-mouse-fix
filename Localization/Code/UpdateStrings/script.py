@@ -293,32 +293,38 @@ def parse_strings_file_content(content, remove_value=False):
     
     regex = shared.strings_file_regex()
     
+    last_match = None
     last_key = ''
-    acc_comment = ''
     
-    for line in content.splitlines(True): # `True` preserves linebreaks, so that we can easily stitch everything together exactly as it was.
+    matches = list(regex.finditer(content))
+    
+    for match in matches:
         
-        match = regex.match(line)
+        comment_start = last_match.end(0) if last_match else 0
+        comment_end = match.start(0)
+        comment = content[comment_start:comment_end]
         
-        if match:
-            
-            key = match.group(2)
-            if remove_value:
-                value_start = match.start(3)
-                value_end = match.end(3)
-                result_line = line[:value_start] + line[value_end:]
-            else:
-                result_line = line
-            
-            result[key] = { "line": result_line, "comment": acc_comment }
-            acc_comment = ''
-            
-            last_key = key
+        line_start = match.start(0)
+        line_end = match.end(0)
+        line = match.group(0)
+        
+        key = match.group(2)
+        
+        result_line = ''
+        if remove_value:
+            value_start = match.start(3)
+            value_end = match.end(3)
+            result_line = content[line_start:value_start] + content[value_end:line_end]
         else:
-            acc_comment += line 
-    
-    post_comment = acc_comment
-    assert len(post_comment.strip()) == 0, f"There's content under the last key {last_key}. Don't know what to do with that. Pls remove."
+            result_line = line
+        
+        result[key] = { "line": result_line, "comment": comment }
+        
+        last_key = key
+        last_match = match
+        
+    last_match = matches[-1]
+    assert len(content.rstrip()) == last_match.end(0), f"There's content under the last key {last_key}. Don't know what to do with that. Pls remove."
     
     return result
 
