@@ -227,16 +227,42 @@ def run_git_command(repo_path, command):
 # Debug Helpers
 #
 
-def get_diff_string(str1, str2, filter_unchanged_lines=True):
+def get_diff_string(str1, str2, filter_unchanged_lines=True, filter_identical_files=True, show_line_numbers=True):
     
     # Generate the diff
     diff = difflib.ndiff(str1.splitlines(), str2.splitlines())
+    
+    is_identical = True
+    for line in diff:
+        if line[0] in ['-', '+']:
+            is_identical = False
+            break
+    
+    if is_identical and filter_identical_files:
+        return ''
 
-    # Accumulate the diff output in a list & filter unchanged lines
-    diff_list = [line for line in diff if not filter_unchanged_lines or line.startswith('+ ') or line.startswith('- ')]
+    a_ctr, b_ctr = 0, 0  # Initialize line counters
+
+    lines = []
+    for line in diff:
+        mod = line[0]
+        content = line[1:]
+        
+        a_ctr += 1 if mod in [' ', '-'] else 0 # - means line is only in a
+        b_ctr += 1 if mod in [' ', '+'] else 0 # + means line is only in b
+
+        ctr = (f"{a_ctr}  {' '*len(str(b_ctr))}" if mod == '-' else f"{b_ctr}  {' '*len(str(a_ctr))}" if mod == '+' else f"{a_ctr}->{b_ctr}") if show_line_numbers else ''
+
+        lines.append({'mod': mod, "ctr": ctr, 'content': content})
+
+    # Filter unchanged lines
+    lines = [l for l in lines if l['mod'] in ['-', '+'] or not filter_unchanged_lines]
+    
+    # Join result lines into string
+    result_list = [f"{l['mod']} {l['ctr']} {l['content']}" for l in lines]
     
     # Join the list into a single string
-    return '\n'.join(diff_list)
+    return '\n'.join(result_list)
 
 def indent(s, indent_spaces=2):
     return textwrap.indent(s, ' ' * indent_spaces)

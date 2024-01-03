@@ -44,11 +44,10 @@ def main():
     # Find files
     ib_files = shared.find_localization_files(repo_root, None, ['IB'])
     strings_files = shared.find_localization_files(repo_root, None, ['strings'])
-    assert len(strings_files) == 1, "There should only be one base .strings file - Localizable.strings"
     
     # Update .strings files
-    update_ib_strings(ib_files, args.wet_run)
-    update_source_code_strings(strings_files[0], args.wet_run)
+    update_strings_files(ib_files, args.wet_run, 'IB')
+    update_strings_files(strings_files, args.wet_run, 'sourcecode')
     
     # Debug
     # pprint(ib_files)
@@ -57,48 +56,17 @@ def main():
     # Clean up
     shared.runCLT(f"rm -R ./{temp_folder}")
     
-
+    
 #
-# Update comments in .xib and .storyboard file translations
+# Update .strings files
 #
 
-def update_ib_strings(files, wet_run):
-    """
-    Update .strings files to match .xib/.storyboard files which they translate
+def update_strings_files(files, wet_run, type):
     
     """
+    (if type == 'sourcecode')   Update .strings files to match source code files which they translate
+    (if type == 'IB')           Update .strings files to match .xib/.storyboard files which they translate
     
-    for file_dict in files:
-        
-        base_file_path = file_dict['base']
-        generated_path = shared.extract_strings_from_IB_file_to_temp_file(base_file_path)
-        generated_content = shared.read_tempfile(generated_path)
-        
-        modss = []
-        
-        for translation_path in file_dict['translations'].keys():
-        
-            
-            content = shared.read_file(translation_path, 'utf-8')
-            
-            new_content, mods = update_strings_file_content(content, generated_content)
-            
-            if wet_run:
-                shared.write_file(translation_path, new_content)
-            
-            modss.append({'path': translation_path, 'mods': mods})
-        
-        log_modifications(modss)
-            
-
-#
-# Update comments in Localizable.strings files
-#
-
-def update_source_code_strings(files, wet_run):
-    
-    """
-    Update .strings files to match source code files which they translate
     Discussion: 
     - In update_ib_comments we don't update development language files - because there are none, since development language strings are directly inside the ib files.
       But in this function, we also update en.lproj/Localizable.strings. Maybe we should've specified development language values directly in the source code using `NSLocalizedStringWithDefaultValue` instead of inside en.lproj. That way we wouldn't need en.lproj at all.
@@ -106,31 +74,40 @@ def update_source_code_strings(files, wet_run):
     Note:
     """
     
-    # print(shared.runCLT(f"pwd; echo ./**/*.{{m,c,cpp,mm,swift}}", exec='/bin/zsh').stdout)
+    assert type in ['sourcecode', 'IB']
+    if type == 'sourcecode': assert len(files) == 1, "There should only be one base .strings file - Localizable.strings"
     
-    # return
-    shared.runCLT(f"extractLocStrings ./**/*.{{m,c,cpp,mm,swift}} -SwiftUI -o ./{temp_folder}", exec='/bin/zsh')
-    generated_path = f"{temp_folder}/Localizable.strings"
-    generated_content = shared.read_file(generated_path, 'utf-16')
+    for file_dict in files:
     
-    strings_files_flat = []
-    strings_files_flat.append(files['base'])
-    strings_files_flat += files['translations'].keys()
-    
-    modss = []
-    
-    for path in strings_files_flat:
+        generated_content = ''
+        if type == 'sourcecode':
+            shared.runCLT(f"extractLocStrings ./**/*.{{m,c,cpp,mm,swift}} -SwiftUI -o ./{temp_folder}", exec='/bin/zsh')
+            generated_path = f"{temp_folder}/Localizable.strings"
+            generated_content = shared.read_file(generated_path, 'utf-16')
+        elif type == 'IB':
+            base_file_path = file_dict['base']
+            generated_path = shared.extract_strings_from_IB_file_to_temp_file(base_file_path)
+            generated_content = shared.read_tempfile(generated_path)
+        else: 
+            assert False
         
-        content = shared.read_file(path, 'utf-8')
+        strings_file_paths = list(file_dict['translations'].keys())
+        if type == 'sourcecode':
+            strings_file_paths.append(file_dict['base'])
         
-        new_content, mods = update_strings_file_content(content, generated_content)
+        modss = []
         
-        if wet_run:
-            shared.write_file(path, new_content)
+        for path in strings_file_paths:
+            
+            content = shared.read_file(path, 'utf-8')
+            new_content, mods, ordered_keys = update_strings_file_content(content, generated_content)
+            
+            if wet_run:
+                shared.write_file(path, new_content)
+            
+            modss.append({'path': path, 'mods': mods, 'ordered_keys': ordered_keys})
         
-        modss.append({'path': path, 'mods': mods})
-    
-    log_modifications(modss)
+        log_modifications(modss)
         
 
 #
@@ -139,12 +116,26 @@ def update_source_code_strings(files, wet_run):
 
 def log_modifications(modss):
     
+    """
+    Notes: 
+    - Not sure if show_line_numbers in shared.get_diff_string is useful. the line number isn't the line number in the source file 
+        but instead it's the position of the kv-pair in the list of kv-pairs in the source file.
+    """
+    
     result = ''
     
     for mods in modss:
         
-        result += f"\n\n{mods['path']} was modified:"
+        path_result = ''
         
+        keys_before = '\n'.join(mods['ordered_keys']['before'])
+        keys_after = '\n'.join(mods['ordered_keys']['after'])
+        keys_diff = shared.get_diff_string(keys_before, keys_after, filter_unchanged_lines=False, show_line_numbers=True)
+        
+        if len(keys_diff) > 0:
+            path_result += f"\n\n    Key order diff:\n{shared.indent(keys_diff, 8)}"
+        
+
         for mod in sorted(mods['mods'], key=lambda x: x['modtype'], reverse=True):
             
             key = mod['key']
@@ -155,20 +146,26 @@ def log_modifications(modss):
                 a = mod['after'].strip()
                 
                 if a == b:
-                    result += f"\n\n    {key}'s comment whitespace changed"    
+                    path_result += f"\n\n    {key}'s comment whitespace changed"    
                 else:
                     a = shared.indent(a, 8)
                     b = shared.indent(b, 8)
                     
-                    result += f"\n\n    {key} comment changed:\n{b}\n        ->\n{a}"
+                    path_result += f"\n\n    {key} comment changed:\n{b}\n        ->\n{a}"
                 
             elif modtype == 'insert':
                 value = shared.indent(mod['value'], 8)
-                result += f"\n\n    {key} was inserted:\n{value}"
+                path_result += f"\n\n    {key} was inserted:\n{value}"
                 
             else: assert False
+        
+        if len(path_result) > 0:
+            result += f"\n\n{mods['path']} was modified:{path_result}"
     
-    print(result)
+    if len(result) > 0:
+        print(result)
+    else:
+        print(f"Nothing was modified. (I think. Check git diff to be sure.)")
             
     
     
@@ -227,13 +224,34 @@ def update_strings_file_content(content, generated_content):
     for k in superfluous_keys:
         new_content += parse[k]['comment']
         new_content += parse[k]['line']
+        
+    # Analyze reordering
+    ordered_keys = {
+        'before': parse.keys(),
+        'after': list(generated_parse.keys()) + superfluous_keys
+    }
     
     # Return
-    return new_content, mods
+    return new_content, mods, ordered_keys
     
     
 
 def parse_strings_file_content(content, remove_value=False):
+    
+    # Notes:
+    # - Somehow we seem to be replacing consecutive blank lines before and after comments with single blank lines in the output of the script. 
+    #   That's nice, but I don't understand why it's happending. Might be coming from this function.
+    # - See shared.strings_file_regex() for context.
+    """
+    Structure of result:
+    {
+        "<translation_key>": {
+            "comment": "<comment_string>",
+            "line": "<translation_key_value_string>",
+        },
+        ...
+    }
+    """
     
     result = {}
     
@@ -242,7 +260,7 @@ def parse_strings_file_content(content, remove_value=False):
     last_key = ''
     acc_comment = ''
     
-    for i, line in enumerate(content.splitlines(True)):
+    for line in content.splitlines(True): # `True` preserves linebreaks, so that we can easily stitch everything together exactly as it was.
         
         match = regex.match(line)
         
@@ -261,10 +279,9 @@ def parse_strings_file_content(content, remove_value=False):
             
             last_key = key
         else:
-            acc_comment += line
+            acc_comment += line 
     
     post_comment = acc_comment
-    result[last_key]['post_comment'] = post_comment
     assert len(post_comment.strip()) == 0, f"There's content under the last key {last_key}. Don't know what to do with that. Pls remove."
     
     return result
