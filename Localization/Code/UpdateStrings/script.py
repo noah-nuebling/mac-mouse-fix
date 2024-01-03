@@ -6,6 +6,7 @@
 import sys
 import os
 from pprint import pprint
+import argparse
 
 #
 # Import functions from ../Shared folder
@@ -28,6 +29,11 @@ temp_folder = './update_comments_temp'
 
 def main():
     
+    # Args
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--wet_run', required=False, action='store_true', help="Provide this arg to actually modify files. Otherwise it will just log what it would do.", default=False)
+    args = parser.parse_args()
+    
     # Constants & stuff
     repo_root = os.getcwd()
     assert os.path.basename(repo_root) == 'mac-mouse-fix', "Run this script from the 'mac-mouse-fix' repo folder."
@@ -40,9 +46,9 @@ def main():
     strings_files = shared.find_localization_files(repo_root, None, ['strings'])
     assert len(strings_files) == 1, "There should only be one base .strings file - Localizable.strings"
     
-    # Update comments
-    update_ib_comments(ib_files, repo_root)
-    update_source_code_comments(strings_files[0], repo_root)
+    # Update .strings files
+    update_ib_strings(ib_files, args.wet_run)
+    update_source_code_strings(strings_files[0], args.wet_run)
     
     # Debug
     # pprint(ib_files)
@@ -56,19 +62,40 @@ def main():
 # Update comments in .xib and .storyboard file translations
 #
 
-def update_ib_comments(files, repo_root):
+def update_ib_strings(files, wet_run):
     """
     Update .strings files to match .xib/.storyboard files which they translate
     
     """
     
-    pass
+    for file_dict in files:
+        
+        base_file_path = file_dict['base']
+        generated_path = shared.extract_strings_from_IB_file_to_temp_file(base_file_path)
+        generated_content = shared.read_tempfile(generated_path)
+        
+        modss = []
+        
+        for translation_path in file_dict['translations'].keys():
+        
+            
+            content = shared.read_file(translation_path, 'utf-8')
+            
+            new_content, mods = update_strings_file_content(content, generated_content)
+            
+            if wet_run:
+                shared.write_file(translation_path, new_content)
+            
+            modss.append({'path': translation_path, 'mods': mods})
+        
+        log_modifications(modss)
+            
 
 #
 # Update comments in Localizable.strings files
 #
 
-def update_source_code_strings(files, repo_root):
+def update_source_code_strings(files, wet_run):
     
     """
     Update .strings files to match source code files which they translate
@@ -98,18 +125,19 @@ def update_source_code_strings(files, repo_root):
         
         new_content, mods = update_strings_file_content(content, generated_content)
         
-        # shared.write_file(path, new_content)
+        if wet_run:
+            shared.write_file(path, new_content)
         
         modss.append({'path': path, 'mods': mods})
     
-    print_mods(modss)
+    log_modifications(modss)
         
 
 #
 # Debug helper
 #
 
-def print_mods(modss):
+def log_modifications(modss):
     
     result = ''
     
