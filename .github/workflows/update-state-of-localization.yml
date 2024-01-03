@@ -57,6 +57,6 @@ jobs:
     - name: Run script
       working-directory: ./mac-mouse-fix
       run: |
-        python ./mac-mouse-fix/Localization/Code/StateOfLocalization/script.py --api_key ${{ secrets.GITHUB_TOKEN }}
+        python ./Localization/Code/StateOfLocalization/script.py --api_key ${{ secrets.GITHUB_TOKEN }}
 
         
