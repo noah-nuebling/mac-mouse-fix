@@ -1,14 +1,14 @@
-/* First draft: Open 'Security & Privacy' Preferences || Notes: The string for Ventura and later is defined in Interface Builder */
-"accessibility.settings-link.pre-ventura" = "Mở thiết lập 'Security & Privacy'";
+/* First draft: Free day **%d/%d** */
+"trial-counter.active" = "ĐÂY LÀ BẢN DÙNG THỬ TRONG CHUỖI **%d/%d** NGÀY";
 
-/* First draft: You're __already using__ the default setting for mice with __3 buttons__ */
-"already-using-defaults-toast.3" = "Bạn __đã và đang sử dụng__ thiết lập mặc định với chuột __3 nút__";
+/* First draft: Free days are over */
+"trial-counter.expired" = "Hết hạn dùng thử";
 
-/* First draft: You're __already using__ the default setting for mice with __5 buttons__ */
-"already-using-defaults-toast.5" = "Bạn __đã và đang sử dụng__ thiết lập mặc định với chuột __5 nút__";
+/* First draft: Activate License */
+"trial-notif.activate-license-button" = "Kích hoạt bản quyền";
 
-/* First draft: Version %@ || Note: %@ will be replaced by the app version, e.g. '3.0.0 (22027)' */
-"app-version" = "Phiên bản %@";
+/* First draft: Hi there! You've been using Mac Mouse Fix for **%d days** now. I hope you're enjoying it!\n\nIf you want to keep using Mac Mouse Fix, you can [buy it now](%@). */
+"trial-notif.body" = "Xin chào! Bạn đã sử dụng Mac Mouse Fix được **%d ngày**. Mong rằng bạn sẽ thích nó!\n\nNếu bạn muốn tiếp tục sử dụng Mac Mouse Fix, bạn có thể [mua ngay](%@).";
 
 /* First draft: <Rewind key> */
 "apple-key-fallback.backward" = "<Phím tua ngược>";
@@ -67,18 +67,6 @@
 /* First draft: <Key without description> */
 "apple-key-fallback.unknown-key" = "<Phím không có mô tả>";
 
-/* First draft: Cancel */
-"beta-alert.back" = "Hủy";
-
-/* First draft: Beta versions can have many issues.\nDon't forget to give feedback when you run into one.\nThanks! */
-"beta-alert.body" = "Phiên bản Beta có thể có nhiều lỗi\nĐừng quên báo cáo các sự cố nếu bạn gặp nhé.\nCảm ơn bạn!";
-
-/* First draft: Get Beta Versions */
-"beta-alert.confirm" = "Nhận bản Beta";
-
-/* First draft: Get Beta Versions? */
-"beta-alert.title" = "Nhận bản Beta?";
-
 /* First draft: Click %@ + || Note: %@ will be a button name || Example where %@ is 'Button 4': Click Button 4 + Double Click and Drag Button 5 */
 "button-modifier.1" = "Kích %@ +";
 
@@ -87,6 +75,15 @@
 
 /* First draft: Triple Click %@ +  */
 "button-modifier.3" = "Kích ba lần %@ +";
+
+/* First draft: __Enabled__ Mac Mouse Fix for %1@\nIt had been disabled from the Menu Bar %2@ || Note: %1@ will be replaced by the list of enabled features, %2@ will be replaced by the menubar icon */
+"revive-toast" = "__Đã kích hoạt__ Mac Mouse Fix trong %1@\nNó đã bị bất hoạt từ thanh menu %2@";
+
+/* First draft: __Buttons__ */
+"revive-toast.feature-buttons" = " __Nút__";
+
+/* First draft: __Scrolling__ */
+"revive-toast.feature-scrolling" = "__Cuộn__";
 
 /* First draft: Middle Button */
 "button-string.middle" = "Nút giữa";
@@ -100,9 +97,6 @@
 /* First draft: Secondary Button */
 "button-string.secondary" = "Nút thứ cấp";
 
-/* First draft: Middle Mouse Button (also called Scroll Wheel Button or Mouse Button 3) || Example usage: Open links in a new tab, paste text in the Terminal, and more.\n \nWorks like clicking the Middle Mouse Button (also called the Scroll Wheel Button or Mouse Button 3) on a standard mouse. */
-"button-string.tool.middle" = "Nút giữa (còn gọi là Con lăn hoặc Nút số 3)";
-
 /* First draft: Mouse Button %@ */
 "button-string.tool.numbered" = "Nút chuột %@";
 
@@ -112,20 +106,11 @@
 /* First draft: Secondary Mouse Button (also called Right Mouse Button or Mouse Button 2) */
 "button-string.tool.secondary" = "Nút thứ cấp (còn gọi là Nút chuột phải hoặc Nút số 2)";
 
-/* First draft: Get a mouse with 5+ buttons to unlock the full potential of Mac Mouse Fix! */
-"buy-mouse-alert.body" = "Sắm một con chuột với 5+ nút để khai thác hết tiềm năng của Mac Mouse Fix!";
-
-/* First draft: OK */
-"buy-mouse-alert.ok" = "OK";
-
-/* First draft: Your mouse only has 3 buttons */
-"buy-mouse-alert.title" = "Chuột của bạn chỉ có 3 nút";
-
-/* Note: Value for this key is defined in Localizable.stringsdict, not Localizable.strings. || Note: The UI strings in .stringsdict have two lines. Only the first line is visible unless you start editing and then use the arrow keys to go to the second line. This is necessary to have linebreaks in .stringsdict since \n doesn't work. Use Option-Enter to insert these linebreaks. */
-"capture-toast.body.captured" = "<>";
+/* First draft: Middle Mouse Button (also called Scroll Wheel Button or Mouse Button 3) || Example usage: Open links in a new tab, paste text in the Terminal, and more.\n \nWorks like clicking the Middle Mouse Button (also called the Scroll Wheel Button or Mouse Button 3) on a standard mouse. */
+"button-string.tool.middle" = "Nút giữa (còn gọi là Con lăn hoặc Nút số 3)";
 
 /* Note: Value for this key is defined in Localizable.stringsdict, not Localizable.strings */
-"capture-toast.body.uncaptured" = "<>";
+"capture-toast.body" = "<>";
 
 /* First draft: Learn More */
 "capture-toast.link" = "Đọc thêm";
@@ -142,7 +127,7 @@
 /* First draft: Scroll freely by moving your mouse in any direction\n \nAlso Navigate between pages in Safari, delete messages in Mail and more by moving your mouse left and right\n \nWorks like swiping with 2 fingers on an Apple Trackpad */
 "drag-effect.scroll-swipe.hint" = "Lăn tự do bằng cách di chuyển chuột theo các hướng bất kỳ\n \nCũng có thể điều hướng giữa các trang trong Safari, xóa các mẫu tin trong Mail và nhiều thứ khác bằng cách di chuyển chuột qua trái hoặc phải. \n \nHoạt động như vuốt 2 ngón tay trên Apple Trackpad";
 
-/* First draft: Application Windows || Note: Under macOS Sonoma, this feature is called 'App Exposé' in Trackpad settings, but 'Application Windows' in Keyboard Shortcut settings and all other places I found. */
+/* First draft: Application Windows */
 "effect.app-expose" = "Application Windows";
 
 /* First draft: Show all windows of the active app */
@@ -193,6 +178,18 @@
 /* First draft: Look up words in the Dictionary, Quick Look files in Finder, and more.\n \nWorks like a Force click on an Apple Trackpad. */
 "effect.look-up.hint" = "Tra cứu từ trong Dictionary, xem nhanh tệp trong Finder, và nhiều hơn.\n \nHoạt động như nhấn, kèm lực trên Apple Trackpad.";
 
+/* First draft: Primary Click */
+"effect.primary-click" = "Primary Click";
+
+/* First draft: Works like clicking %@ on a standard mouse. */
+"effect.primary-click.hint" = "Hoạt động như kích vào nút %@ trên chuột.";
+
+/* First draft: Secondary Click */
+"effect.secondary-click" = "Secondary Click";
+
+/* First draft: Works like clicking %@ on a standard mouse. */
+"effect.secondary-click.hint" = "Hoạt động như kích vào nút %@ trên chuột.";
+
 /* First draft: Middle Click */
 "effect.middle-click" = "Middle Click";
 
@@ -205,12 +202,6 @@
 /* First draft: Show Mission Control */
 "effect.mission-control.hint" = "Hiện Mission Control";
 
-/* First draft: Primary Click */
-"effect.primary-click" = "Primary Click";
-
-/* First draft: Works like clicking %@ on a standard mouse. */
-"effect.primary-click.hint" = "Hoạt động như kích vào nút %@ trên chuột.";
-
 /* First draft: Keyboard Shortcut... */
 "effect.record-shortcut" = "Keyboard Shortcut...";
 
@@ -222,12 +213,6 @@
 
 /* First draft: Move one Space to the right */
 "effect.right-space.hint" = "Di chuyển sang Space bên phải";
-
-/* First draft: Secondary Click */
-"effect.secondary-click" = "Secondary Click";
-
-/* First draft: Works like clicking %@ on a standard mouse. */
-"effect.secondary-click.hint" = "Hoạt động như kích vào nút %@ trên chuột.";
 
 /* First draft: Works like pressing '%@' on your keyboard */
 "effect.shortcut.hint" = "Hoạt động như kích vào phím '%@' trên bàn phím";
@@ -244,17 +229,14 @@
 /* First draft: **Secondary Mouse Button** can't be used\nPlease try another button */
 "forbidden-capture-toast.2" = "**Nút thứ cấp** không thể được áp dụng\nVui lòng chọn một nút khác";
 
-/* First draft: Mac Mouse Fix is currently free in your country (%@) */
-"free-country" = "Mac Mouse Fix đang miễn phí tại quốc gia của bạn (%@)";
-
 /* First draft: Mac Mouse Fix was **disabled** in System Settings\n\nTo enable Mac Mouse Fix:\n\n1. Go to [Login Items Settings](x-apple.systempreferences:com.apple.LoginItems-Settings.extension)\n2. Switch on \'Mac Mouse Fix.app\' */
 "is-disabled-toast" = "Mac Mouse Fix đã **tắt** trong System Settings\n\nĐể mở lại Mac Mouse Fix:\n\n1. Đi đến [Login Items Settings](x-apple.systempreferences:com.apple.LoginItems-Settings.extension)\n2. Bật \'Mac Mouse Fix.app\'";
 
-/* First draft: Mac Mouse Fix can't be enabled because there's __another version__ of Mac Mouse Fix present on your computer\n\nTo enable Mac Mouse Fix:\n\n1. Delete the [other version](%@)\n2. Empty the Bin\n3. Restart your Mac\n4. Try again! */
-"is-strange-helper-alert.body" = "Mac Mouse Fix bật lên thất bại vì có __một phiên bản khác__ của Mac Mouse Fix đang chạy\n\nĐể bật Mac Mouse Fix:\n\n1. Xóa [phiên bản khác](%@)\n2. Làm trống thùng rác\n3. Khởi động lại máy Mac\n4. Thử lại!";
-
 /* First draft: Enabling Failed */
 "is-strange-helper-alert.title" = "Bật thất bại";
+
+/* First draft: Mac Mouse Fix can't be enabled because there's __another version__ of Mac Mouse Fix present on your computer\n\nTo enable Mac Mouse Fix:\n\n1. Delete the [other version](%@)\n2. Empty the Bin\n3. Restart your Mac\n4. Try again! */
+"is-strange-helper-alert.body" = "Mac Mouse Fix bật lên thất bại vì có __một phiên bản khác__ của Mac Mouse Fix đang chạy\n\nĐể bật Mac Mouse Fix:\n\n1. Xóa [phiên bản khác](%@)\n2. Làm trống thùng rác\n3. Khởi động lại máy Mac\n4. Thử lại!";
 
 /* First draft: ,  || Note: This string joins elements in a list except the second-to-last and last one. || Note: The first draft contains a space after the comma. */
 "join-list" = ", ";
@@ -280,9 +262,6 @@
 /* First draft: Your license has been **deactivated** */
 "license-toast.deactivate" = "Bản quyền của bạn đã **bất hoạt** thành công";
 
-/* First draft: This license __could not be activated__ but Mac Mouse Fix is currently __free in your country__! */
-"license-toast.free-country" = "Bản quyền này __không thể được kích hoạt__ nhưng Mac Mouse Fix đang __miễn phí tại quốc gia của bạn__!";
-
 /* First draft: **An error with the licensing server occured**\n\nIt says:\n\n%@ */
 "license-toast.gumroad-error" = "**Có lỗi xảy ra với máy chủ quản lý bản quyền**\n\nNó phản hồi rằng:\n\n%@";
 
@@ -301,18 +280,6 @@
 /* First draft: Set speed under\n[%@ > Mouse > Scrolling Speed](%@) */
 "macos-scrolling-hint" = "Thiết lập tốc độ tại \n[%@ > Mouse > Scrolling Speed](%@)";
 
-/* First draft: Back */
-"mail-alert.back" = "Quay lại";
-
-/* First draft: I read and appreciate all emails, even though I can't respond to all */
-"mail-alert.body" = "Tôi sẽ đọc và trân trọng tất cả các email gửi về, mặc dù có thể tôi sẽ không phản hồi tất cả";
-
-/* First draft: Write Email */
-"mail-alert.send" = "Viết Email";
-
-/* First draft: Write an Email? */
-"mail-alert.title" = "Gửi email cho tôi?";
-
 /* First draft: Command (⌘) */
 "modifer-key.tool.command" = "Command (⌘)";
 
@@ -325,44 +292,23 @@
 /* First draft: Shift (⇧) */
 "modifer-key.tool.shift" = "Shift (⇧)";
 
-/* First draft: Scroll precisely, even without a keyboard modifier,\nbymoving the scroll wheel _slowly_ || Note: The line break (\n) is there so the layout of the Scroll tab doesn't become too wide which looks weird. You can set it to your own taste. */
+/* First draft: Content tracks finger movement */
+"natural-scrolling-hint" = "Content tracks finger movement";
+
+/* First draft: Scroll precisely even without a keyboard modifier by\nmoving the scroll wheel slowly || Note: The line break (\n) is there so the layout of the Scroll tab doesn't become too wide which looks weird. You can set it to your own taste. */
 "precise-scrolling-hint" = "Cuộn chính xác, dù không kèm theo một phím bổ sung,\nbằng cách di chuyện con lăn _thật chậm_";
-
-/* First draft: Cancel */
-"restore-buttons-alert.back" = "Hủy";
-
-/* First draft: Restore */
-"restore-buttons-alert.commit" = "Khôi phục";
-
-/* First draft: Your __%@__ mouse says it has __%d__ buttons */
-"restore-buttons-alert.hint" = "Chuột __%@__ của bạn có __%d__ nút";
-
-/* First draft: Mouse with 3 buttons */
-"restore-buttons-alert.radio1" = "Chuột với 3 nút";
-
-/* First draft: Mouse with 5+ buttons */
-"restore-buttons-alert.radio2" = "Chuột với 5+ nút";
-
-/* First draft: Restore Default for ... */
-"restore-buttons-alert.title" = "Khôi phục mặc định cho ...";
-
-/* First draft:  __Click here__ to load the recommended settings\nfor your __%@__ mouse || Note: The \n linebreak is so the popover doesn't become too wide. You can set it to your taste. || Note: In English, there needs to be a space at the start of this string otherwise the whole string will be bold. This might be a Ventura Bug */
-"restore-default-buttons-popover.body" = " __Nhấp vào đây__ để tải cài đặt khuyến nghị\ncho chuột __%@__";
-
-/* First draft: __Enabled__ Mac Mouse Fix for %1@\nIt had been disabled from the Menu Bar %2@ || Note: %1@ will be replaced by the list of enabled features, %2@ will be replaced by the menubar icon */
-"revive-toast" = "__Đã kích hoạt__ Mac Mouse Fix trong %1@\nNó đã bị bất hoạt từ thanh menu %2@";
-
-/* First draft: __Buttons__ */
-"revive-toast.feature-buttons" = " __Nút__";
-
-/* First draft: __Scrolling__ */
-"revive-toast.feature-scrolling" = "__Cuộn__";
 
 /* First draft: Desktop & Launchpad */
 "scroll-effect.4-pinch" = "Desktop & Launchpad";
 
 /* First draft: Scroll up for Launchpad and down to show the Desktop\n \nWorks like Pinching with 4 fingers on an Apple Trackpad */
 "scroll-effect.4-pinch.hint" = "Cuộn lên để hiện Launchpad và  xuống để hiện Desktop\n \nHoạt động như chụm bốn ngón tay trên Apple Trackpad";
+
+/* First draft: Move Between Spaces */
+"scroll-effect.spaces" = "Move Between Spaces";
+
+/* First draft: Scroll up to move left a Space and down to move right a Space\n \nWorks like swiping horizontally with 3 fingers on an Apple Trackpad */
+"scroll-effect.spaces.hint" = "Cuộn lên để di chuyển qua Space bên trái và xuống để di chuyển qua Space bên phải\n \nHoạt động như vuốt ngang ba ngón tay trên Apple Trackpad";
 
 /* First draft: App Switcher */
 "scroll-effect.app-switcher" = "App Switcher";
@@ -382,18 +328,6 @@
 /* First draft: Scroll small distances and use sensitive UI elements with precision */
 "scroll-effect.precise.hint" = "Scroll small distances and use sensitive UI elements with precision";
 
-/* First draft: Rotate */
-"scroll-effect.rotate" = "Rotate";
-
-/* First draft: Rotate content in Apple Maps and other apps\n \nWorks like twisting with 2 fingers on an Apple Trackpad */
-"scroll-effect.rotate.hint" = "Xoay nội dung trên Apple Maps and và các ứng dụng khác\n \nHoạt động như vặn hai ngón tay trên Apple Trackpad";
-
-/* First draft: Move Between Spaces */
-"scroll-effect.spaces" = "Move Between Spaces";
-
-/* First draft: Scroll up to move left a Space and down to move right a Space\n \nWorks like swiping horizontally with 3 fingers on an Apple Trackpad */
-"scroll-effect.spaces.hint" = "Cuộn lên để di chuyển qua Space bên trái và xuống để di chuyển qua Space bên phải\n \nHoạt động như vuốt ngang ba ngón tay trên Apple Trackpad";
-
 /* First draft: Swift Scroll */
 "scroll-effect.swift" = "Swift Scroll";
 
@@ -406,11 +340,11 @@
 /* First draft: Zoom in or out in Safari, Maps and other apps\n \nWorks like pinching to zoom on an Apple trackpad */
 "scroll-effect.zoom.hint" = "Phóng to hoặc thu nhỏ trên Safari, Maps và các ứng dụng khác\n \nHoạt động như chụm hai ngón tay để phóng to trên Apple trackpad";
 
-/* First draft: System Settings */
-"system-settings-name" = "System Settings";
+/* First draft: Rotate */
+"scroll-effect.rotate" = "Rotate";
 
-/* First draft: System Preferences */
-"system-settings-name.pre-ventura" = "System Preferences";
+/* First draft: Rotate content in Apple Maps and other apps\n \nWorks like twisting with 2 fingers on an Apple Trackpad */
+"scroll-effect.rotate.hint" = "Xoay nội dung trên Apple Maps and và các ứng dụng khác\n \nHoạt động như vặn hai ngón tay trên Apple Trackpad";
 
 /* First draft: ⭐️ Thank you for buying Mac Mouse Fix! */
 "thanks.01" = "⭐️ Cảm ơn bạn đã mua Mac Mouse Fix!";
@@ -421,7 +355,7 @@
 /* First draft: 🚀 Thanks for supporting Mac Mouse Fix! */
 "thanks.03" = "🚀 Cảm ơn bạn đã ủng hộ Mac Mouse Fix!";
 
-/* First draft: 🙌 Thanks for buying Mac Mouse Fix! */
+/* First draft: 🙌 Thank you for buying Mac Mouse Fix! */
 "thanks.04" = "🙌 Cảm ơn bạn đã mua Mac Mouse Fix!";
 
 /* First draft: 🧠 Great purchasing decision! ;) */
@@ -439,7 +373,7 @@
 /* First draft: 👽 Share it with your Spacebook friends! */
 "thanks.09" = "👽 Chia sẻ nó với 500 anh em của bạn ngoài kia!";
 
-/* First draft: 🏂 Duckgang for life!! || Note: A lot of these are very personal. And weird. They are also super rare. Feel free to change them to anything you feel like to leave a little easter egg! */
+/* First draft: 🏂 Duckgang for life! || Note: A lot of these are very personal. And weird. They are also super rare. Feel free to change them to anything you feel like to leave a little easter egg! */
 "thanks.10" = "🏂 Phê chữ ê kéo dàiiiii!!";
 
 /* First draft: 🚜 Watch where you're going :P */
@@ -486,18 +420,6 @@
 
 /* First draft: 🌏 First the mice, then the world!! >:) */
 "thanks.25" = "🌏 Sửa xong con chuột, anh sau đi cứu thế giới! >:)";
-
-/* First draft: Free day **%d/%d** */
-"trial-counter.active" = "ĐÂY LÀ BẢN DÙNG THỬ TRONG CHUỖI **%d/%d** NGÀY";
-
-/* First draft: Free days are over */
-"trial-counter.expired" = "Hết hạn dùng thử";
-
-/* First draft: Activate License */
-"trial-notif.activate-license-button" = "Kích hoạt bản quyền";
-
-/* First draft: Hi there! You've been using Mac Mouse Fix for **%d days** now. I hope you're enjoying it!\n\nIf you want to keep using Mac Mouse Fix, you can [buy it now](%@). */
-"trial-notif.body" = "Xin chào! Bạn đã sử dụng Mac Mouse Fix được **%d ngày**. Mong rằng bạn sẽ thích nó!\n\nNếu bạn muốn tiếp tục sử dụng Mac Mouse Fix, bạn có thể [mua ngay](%@).";
 
 /* First draft: Click %@ || Note: %@ will be a button name || Example where %@ is 'Button 5': ⌥⌘ Double Click Button 4 + Click Button 5 || Note: Most of the substrings that are used to build the Action Table Trigger Strings (this is one of those substrings) are capitalized in English because it's common to use 'title case' there. In your language, 'title case' might not be a thing, and so you might not want to capitalize these strings. The first letter of the trigger string will be programmatically capitalized in any language. */
 "trigger.click.1" = "Click %@";
@@ -550,8 +472,86 @@
 /* First draft: Type a Keyboard Shortcut */
 "type-shortcut-prompt" = "Type a Keyboard Shortcut";
 
-/* Note: Value for this key is defined in Localizable.stringsdict, not Localizable.strings */
-"capture-toast.body" = "<>";
+/* First draft: Back */
+"mail-alert.back" = "Quay lại";
 
-/* First draft: Content tracks finger movement */
-"natural-scrolling-hint" = "Content tracks finger movement";
+/* First draft: Write Email */
+"mail-alert.send" = "Viết Email";
+
+/* First draft: Write an Email? */
+"mail-alert.title" = "Gửi email cho tôi?";
+
+/* First draft: I read and appreciate all emails, even though I can't respond to all. */
+"mail-alert.body" = "Tôi sẽ đọc và trân trọng tất cả các email gửi về, mặc dù có thể tôi sẽ không phản hồi tất cả";
+
+/* First draft: Cancel */
+"beta-alert.back" = "Hủy";
+
+/* First draft: Beta versions can have many issues. Don't forget to give feedback when you run into one. Thanks! */
+"beta-alert.body" = "Phiên bản Beta có thể có nhiều lỗi\nĐừng quên báo cáo các sự cố nếu bạn gặp nhé.\nCảm ơn bạn!";
+
+/* First draft: Get Beta Versions */
+"beta-alert.confirm" = "Nhận bản Beta";
+
+/* First draft: Get Beta Versions? */
+"beta-alert.title" = "Nhận bản Beta?";
+
+/* First draft: Cancel */
+"restore-buttons-alert.back" = "Hủy";
+
+/* First draft: Restore */
+"restore-buttons-alert.commit" = "Khôi phục";
+
+/* First draft: Your __%@__ mouse says it has __%d__ buttons */
+"restore-buttons-alert.hint" = "Chuột __%@__ của bạn có __%d__ nút";
+
+/* First draft: Mouse with 3 buttons */
+"restore-buttons-alert.radio1" = "Chuột với 3 nút";
+
+/* First draft: Mouse with 5+ buttons */
+"restore-buttons-alert.radio2" = "Chuột với 5+ nút";
+
+/* First draft: Restore Default for ... */
+"restore-buttons-alert.title" = "Khôi phục mặc định cho ...";
+
+/* First draft: You're __already using__ the default setting for mice with __3 buttons__ */
+"already-using-defaults-toast.3" = "Bạn __đã và đang sử dụng__ thiết lập mặc định với chuột __3 nút__";
+
+/* First draft: You're __already using__ the default setting for mice with __5 buttons__ */
+"already-using-defaults-toast.5" = "Bạn __đã và đang sử dụng__ thiết lập mặc định với chuột __5 nút__";
+
+/* Note: Value for this key is defined in Localizable.stringsdict, not Localizable.strings. || Note: The UI strings in .stringsdict have two lines. Only the first line is visible unless you start editing and then use the arrow keys to go to the second line. This is necessary to have linebreaks in .stringsdict since \n doesn't work. Use Option-Enter to insert these linebreaks. */
+"capture-toast.body.captured" = "<>";
+
+/* Note: Value for this key is defined in Localizable.stringsdict, not Localizable.strings */
+"capture-toast.body.uncaptured" = "<>";
+
+/* First draft: System Settings */
+"system-settings-name" = "System Settings";
+
+/* First draft: System Preferences */
+"system-settings-name.pre-ventura" = "System Preferences";
+
+/* First draft: Mac Mouse Fix is currently free in your country (%@) */
+"free-country" = "Mac Mouse Fix đang miễn phí tại quốc gia của bạn (%@)";
+
+/* First draft: This license __could not be activated__ but Mac Mouse Fix is currently __free in your country__! */
+"license-toast.free-country" = "Bản quyền này __không thể được kích hoạt__ nhưng Mac Mouse Fix đang __miễn phí tại quốc gia của bạn__!";
+
+/* First draft:  __Click here__ to load the recommended settings\nfor your __%@__ mouse || Note: The \n linebreak is so the popover doesn't become too wide. You can set it to your taste. || Note: In English, there needs to be a space at the start of this string otherwise the whole string will be bold. This might be a Ventura Bug */
+"restore-default-buttons-popover.body" = " __Nhấp vào đây__ để tải cài đặt khuyến nghị\ncho chuột __%@__";
+
+/* First draft: Get a mouse with 5+ buttons to unlock the full potential of Mac Mouse Fix! */
+"buy-mouse-alert.body" = "Sắm một con chuột với 5+ nút để khai thác hết tiềm năng của Mac Mouse Fix!";
+
+/* First draft: Your mouse only has 3 buttons */
+"buy-mouse-alert.title" = "Chuột của bạn chỉ có 3 nút";
+
+/* First draft: OK */
+"buy-mouse-alert.ok" = "OK";
+
+/* First draft: Open 'Security & Privacy' Preferences || Notes: The string for Ventura and later is defined in Interface Builder */
+"accessibility.settings-link.pre-ventura" = "Mở thiết lập 'Security & Privacy'";
+
+/* First draft: Version %@ || Note: %@ will be replaced by the app version, e.g. '3.0.0 (22027)' */
+"app-version" = "Phiên bản %@";
