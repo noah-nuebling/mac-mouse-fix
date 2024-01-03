@@ -23,9 +23,9 @@
 //                Section("More Settings") {
 //                    Toggle("Setting #3", isOn: .constant(true))
 //                    Picker("Select One", selection: .constant("someTag")) {
-//                        Text("Chocolate").tag("someTag")
-//                        Text("Strawberry").tag("anotherTag")
-//                        Text("Vanilla").tag("totallyOtherTag")
+//                        XXXText("Chocolate").tag("someTag")                   // Put XXX here so that extractLocStrings doesn't try to translate this.
+//                        XXXText("Strawberry").tag("anotherTag")
+//                        XXXText("Vanilla").tag("totallyOtherTag")
 //                    }
 //                }
 //            }.navigationTitle("Settings Form").pickerStyle(.menu).toggleStyle(.switch)

@@ -411,10 +411,6 @@
 		4F0BDC812B446A3C00AE65C1 /* MarkdownReadme.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = MarkdownReadme.md; sourceTree = "<group>"; };
 		4F0BDC832B446A3C00AE65C1 /* AppIconRound3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = AppIconRound3.png; sourceTree = "<group>"; };
 		4F0BDC842B446A3C00AE65C1 /* Apple-Keys-Demo.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = "Apple-Keys-Demo.gif"; sourceTree = "<group>"; };
-		4F0BDC862B446A6D00AE65C1 /* python_requirements.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = python_requirements.txt; sourceTree = "<group>"; };
-		4F0BDC872B446A6D00AE65C1 /* state_of_localization.py */ = {isa = PBXFileReference; lastKnownFileType = text.script.python; path = state_of_localization.py; sourceTree = "<group>"; };
-		4F0BDC892B446A6D00AE65C1 /* script.cpython-311.pyc */ = {isa = PBXFileReference; lastKnownFileType = file; path = "script.cpython-311.pyc"; sourceTree = "<group>"; };
-		4F0BDC8A2B446A6D00AE65C1 /* state_of_localization.cpython-311.pyc */ = {isa = PBXFileReference; lastKnownFileType = file; path = "state_of_localization.cpython-311.pyc"; sourceTree = "<group>"; };
 		4F12951F28D2D5E1009A49AB /* NSTextField+Extentions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSTextField+Extentions.swift"; sourceTree = "<group>"; };
 		4F143E452B2D1F5600FE4092 /* fallback_licenseinfo_config.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = fallback_licenseinfo_config.json; sourceTree = "<group>"; };
 		4F143E482B2D1FA500FE4092 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
@@ -2548,25 +2544,6 @@
 				4F0BDC842B446A3C00AE65C1 /* Apple-Keys-Demo.gif */,
 			);
 			path = Media;
-			sourceTree = "<group>";
-		};
-		4F0BDC852B446A6D00AE65C1 /* Code */ = {
-			isa = PBXGroup;
-			children = (
-				4F0BDC862B446A6D00AE65C1 /* python_requirements.txt */,
-				4F0BDC872B446A6D00AE65C1 /* state_of_localization.py */,
-				4F0BDC882B446A6D00AE65C1 /* __pycache__ */,
-			);
-			path = Code;
-			sourceTree = "<group>";
-		};
-		4F0BDC882B446A6D00AE65C1 /* __pycache__ */ = {
-			isa = PBXGroup;
-			children = (
-				4F0BDC892B446A6D00AE65C1 /* script.cpython-311.pyc */,
-				4F0BDC8A2B446A6D00AE65C1 /* state_of_localization.cpython-311.pyc */,
-			);
-			path = __pycache__;
 			sourceTree = "<group>";
 		};
 		4F1793A725EEC8E500E8309B /* Frameworks */ = {
@@ -6605,7 +6582,6 @@
 		4F909D1528A0C3D2009349A2 /* Localization */ = {
 			isa = PBXGroup;
 			children = (
-				4F0BDC852B446A6D00AE65C1 /* Code */,
 				4F909D1728A0C3D2009349A2 /* Localizable.strings */,
 				4F6B02C228AD9E4400B5BA93 /* Localizable.stringsdict */,
 				4F909D1928A0C3D2009349A2 /* Localization Readme.md */,
