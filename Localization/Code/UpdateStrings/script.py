@@ -159,8 +159,12 @@ def log_modifications(modss):
         keys_diff = shared.get_diff_string(keys_before, keys_after, filter_unchanged_lines=False, show_line_numbers=True)
         
         if len(keys_diff) > 0:
-            path_result += f"\n\n    Key order diff:\n{shared.indent(keys_diff, 8)}"
-        
+            if False: # This sucks. Just use git diff.
+                path_result += f"\n\n    Key order diff:\n{shared.indent(keys_diff, 8)}"
+            else: 
+                path_result += f"\\n\n    The order of keys seems to have changed. (I think - this might be broken)"
+                
+    
 
         for mod in sorted(mods['mods'], key=lambda x: x['modtype'], reverse=True):
             
