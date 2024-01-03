@@ -7749,7 +7749,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\n# Run UpdateStrings/script.py. \n# Notes:\n# - Using xcrun everywhere for hopefully better compatibility? It looks up the command in Xcode dev tools and other places, even if it's not in the path - if I understand correctly.\n# - This script takes around 2-3s from what I've seen. Should maybe optimize. Edit: Optimized a little. It's around 2s. BartyCrouch wasn't much faster - also hovers around 2s.\n \n# Install dependencies into venv\nxcrun python3 -m venv ${SRCROOT}/venv\nsource ${SRCROOT}/venv/bin/activate\nxcrun pip3 install -r ${SRCROOT}/Localization/Code/UpdateStrings/requirements.txt\n\n# Run script \nxcrun python3 ${SRCROOT}/Localization/Code/UpdateStrings/script.py\n\n# Deactivate venv \n#   (Not sure if necessary)\ndeactivate\n";
+			shellScript = "\n# Run UpdateStrings/script.py. \n# Notes:\n# - Using xcrun everywhere for hopefully better compatibility? It looks up the command in Xcode dev tools and other places, even if it's not in the path - if I understand correctly.\n# - This script takes around 2-3s from what I've seen. Should maybe optimize. Edit: Optimized a little. It's around 2s. BartyCrouch wasn't much faster - also hovers around 2s.\n# - Activating the venv doens't work here for some reason, so we do this weird ${SRCROOT}/venv/bin/pip3 stuff.\n \n# Install dependencies into venv\nxcrun python3 -m venv ${SRCROOT}/venv\n${SRCROOT}/venv/bin/pip3 install -r ${SRCROOT}/Localization/Code/UpdateStrings/requirements.txt\n\n# Run script \n${SRCROOT}/venv/bin/python3 ${SRCROOT}/Localization/Code/UpdateStrings/script.py\n";
 		};
 		4FEEEC53263C164000C50193 /* Copy Version From Main App */ = {
 			isa = PBXShellScriptBuildPhase;
