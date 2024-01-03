@@ -1,8 +1,14 @@
+/* First draft: Open 'Security & Privacy' Preferences || Notes: The string for Ventura and later is defined in Interface Builder */
+"accessibility.settings-link.pre-ventura" = "打开“隐私与安全性”偏好设置";
+
 /* First draft: You're __already using__ the default setting for mice with __3 buttons__ */
 "already-using-defaults-toast.3" = "您**已经在使用**默认的**三鍵**鼠标设置";
 
 /* First draft: You're __already using__ the default setting for mice with __5 buttons__ */
 "already-using-defaults-toast.5" = "您**已经在使用**默认的**五鍵**鼠标设置";
+
+/* First draft: Version %@ || Note: %@ will be replaced by the app version, e.g. '3.0.0 (22027)' */
+"app-version" = "";
 
 /* First draft: <Rewind key> */
 "apple-key-fallback.backward" = "􀊉〔倒回键〕";
@@ -64,7 +70,7 @@
 /* First draft: Cancel */
 "beta-alert.back" = "取消";
 
-/* First draft: Beta versions can have many issues. Don't forget to give feedback when you run into one. Thanks! */
+/* First draft: Beta versions can have many issues.\nDon't forget to give feedback when you run into one.\nThanks! */
 "beta-alert.body" = "Beta版可能有许多问题。不要忘记提交您遇到的问题。谢谢！";
 
 /* First draft: Get Beta Versions */
@@ -76,10 +82,10 @@
 /* First draft: Click %@ + || Note: %@ will be a button name || Example where %@ is 'Button 4': Click Button 4 + Double Click and Drag Button 5 */
 "button-modifier.1" = "点按%@＋";
 
-/* First draft: Double Click %@ + */
+/* First draft: Double Click %@ +  */
 "button-modifier.2" = "连按%@＋";
 
-/* First draft: Triple Click %@ + */
+/* First draft: Triple Click %@ +  */
 "button-modifier.3" = "连按三下%@＋";
 
 /* First draft: Middle Button */
@@ -94,20 +100,26 @@
 /* First draft: Secondary Button */
 "button-string.secondary" = "辅键";
 
-/* First draft: the Middle Mouse Button (also called the Scroll Wheel Button or Mouse Button 3) || Example usage: Open links in a new tab, paste text in the Terminal, and more.\n \nWorks like clicking the Middle Mouse Button (also called the Scroll Wheel Button or Mouse Button 3) on a standard mouse. */
+/* First draft: Middle Mouse Button (also called Scroll Wheel Button or Mouse Button 3) || Example usage: Open links in a new tab, paste text in the Terminal, and more.\n \nWorks like clicking the Middle Mouse Button (also called the Scroll Wheel Button or Mouse Button 3) on a standard mouse. */
 "button-string.tool.middle" = "鼠标中键（又称鼠标滚轮键或鼠标按钮３）";
 
 /* First draft: Mouse Button %@ */
 "button-string.tool.numbered" = "鼠标按钮%@";
 
-/* First draft: Primary Mouse Button (also called the Left Mouse Button or Mouse Button 1) */
+/* First draft: Primary Mouse Button (also called Left Mouse Button or Mouse Button 1) */
 "button-string.tool.primary" = "鼠标主键（又称鼠标左键或鼠标按钮１）";
 
-/* First draft: Secondary Mouse Button (also called the Right Mouse Button or Mouse Button 2) */
+/* First draft: Secondary Mouse Button (also called Right Mouse Button or Mouse Button 2) */
 "button-string.tool.secondary" = "鼠标辅键（又称鼠标右键或鼠标按钮２）";
 
-/* Note: Value for this key is defined in Localizable.stringsdict, not Localizable.strings */
-"capture-toast.body" = "<>";
+/* First draft: Get a mouse with 5+ buttons to unlock the full potential of Mac Mouse Fix! */
+"buy-mouse-alert.body" = "换一个五键或多键鼠标来释放Mac Mouse Fix的所有潜能";
+
+/* First draft: OK */
+"buy-mouse-alert.ok" = "好";
+
+/* First draft: Your mouse only has 3 buttons */
+"buy-mouse-alert.title" = "您的鼠标只有三个按钮";
 
 /* Note: Value for this key is defined in Localizable.stringsdict, not Localizable.strings. || Note: The UI strings in .stringsdict have two lines. Only the first line is visible unless you start editing and then use the arrow keys to go to the second line. This is necessary to have linebreaks in .stringsdict since \n doesn't work. Use Option-Enter to insert these linebreaks. */
 "capture-toast.body.captured" = "<>";
@@ -117,9 +129,6 @@
 
 /* First draft: Learn More */
 "capture-toast.link" = "了解更多";
-
-/* No comment provided by engineer. */
-"Chocolate" = "巧克力";
 
 /* First draft: Spaces & Mission Control */
 "drag-effect.dock-swipe" = "空间与调度中心";
@@ -133,7 +142,7 @@
 /* First draft: Scroll freely by moving your mouse in any direction\n \nAlso Navigate between pages in Safari, delete messages in Mail and more by moving your mouse left and right\n \nWorks like swiping with 2 fingers on an Apple Trackpad */
 "drag-effect.scroll-swipe.hint" = "向任意方向移动您的鼠标来自由滚动n \n也可以左右移动来导航Safari页面、删除“邮件”中的邮件等。\n \n作用相当于在Apple触控板上用双指轻扫";
 
-/* First draft: Application Windows */
+/* First draft: Application Windows || Note: Under macOS Sonoma, this feature is called 'App Exposé' in Trackpad settings, but 'Application Windows' in Keyboard Shortcut settings and all other places I found. */
 "effect.app-expose" = "应用程序窗口";
 
 /* First draft: Show all windows of the active app */
@@ -184,18 +193,6 @@
 /* First draft: Look up words in the Dictionary, Quick Look files in Finder, and more.\n \nWorks like a Force click on an Apple Trackpad. */
 "effect.look-up.hint" = "查询词典、在Finder中“快速查看”等。\n \n作用相当于在Apple触控板上用单指用力点按。";
 
-/* First draft: Primary Click */
-"effect.primary-click" = "";
-
-/* First draft: Works like clicking %@ on a standard mouse. */
-"effect.primary-click.hint" = "";
-
-/* First draft: Secondary Click */
-"effect.secondary-click" = "";
-
-/* First draft: Works like clicking %@ on a standard mouse. */
-"effect.secondary-click.hint" = "";
-
 /* First draft: Middle Click */
 "effect.middle-click" = "按中键";
 
@@ -208,6 +205,12 @@
 /* First draft: Show Mission Control */
 "effect.mission-control.hint" = "显示“调度中心”";
 
+/* First draft: Primary Click */
+"effect.primary-click" = "";
+
+/* First draft: Works like clicking %@ on a standard mouse. */
+"effect.primary-click.hint" = "";
+
 /* First draft: Keyboard Shortcut... */
 "effect.record-shortcut" = "键盘快捷键";
 
@@ -219,6 +222,12 @@
 
 /* First draft: Move one Space to the right */
 "effect.right-space.hint" = "向右移动一个空间";
+
+/* First draft: Secondary Click */
+"effect.secondary-click" = "";
+
+/* First draft: Works like clicking %@ on a standard mouse. */
+"effect.secondary-click.hint" = "";
 
 /* First draft: Works like pressing '%@' on your keyboard */
 "effect.shortcut.hint" = "作用相当于在您的键盘上按下“%@”";
@@ -235,14 +244,17 @@
 /* First draft: **Secondary Mouse Button** can't be used\nPlease try another button */
 "forbidden-capture-toast.2" = "不能使用**鼠标辅键**\n请换一个按钮再试";
 
+/* First draft: Mac Mouse Fix is currently free in your country (%@) */
+"free-country" = "Mac Mouse Fix目前在您所在的国家或地区（%@）免费";
+
 /* First draft: Mac Mouse Fix was **disabled** in System Settings\n\nTo enable Mac Mouse Fix:\n\n1. Go to [Login Items Settings](x-apple.systempreferences:com.apple.LoginItems-Settings.extension)\n2. Switch on \'Mac Mouse Fix.app\' */
 "is-disabled-toast" = "系统偏好设置中已**禁用**Mac Mouse Fix\n\n若要启用Mac Mouse Fix：\n\n⒈前往[登录项](x-apple.systempreferences:com.apple.LoginItems-Settings.extension)\n⒉开启“Mac Mouse Fix.app”";
 
-/* First draft: Enabling Failed */
-"is-strange-helper-alert.title" = "启用失败";
-
 /* First draft: Mac Mouse Fix can't be enabled because there's __another version__ of Mac Mouse Fix present on your computer\n\nTo enable Mac Mouse Fix:\n\n1. Delete the [other version](%@)\n2. Empty the Bin\n3. Restart your Mac\n4. Try again! */
 "is-strange-helper-alert.body" = "无法启用Mac Mouse Fix，因为您的电脑上已有**另一版本**的Mac Mouse Fix\n\n若要启用Mac Mouse Fix：\n\n⒈删除[其他版本](%@)\n⒉清倒废纸篓\n⒊重新启动您的Mac\n⒋再试一次！";
+
+/* First draft: Enabling Failed */
+"is-strange-helper-alert.title" = "启用失败";
 
 /* First draft: ,  || Note: This string joins elements in a list except the second-to-last and last one. || Note: The first draft contains a space after the comma. */
 "join-list" = "、";
@@ -268,6 +280,9 @@
 /* First draft: Your license has been **deactivated** */
 "license-toast.deactivate" = "您的许可证**已取消激活**";
 
+/* First draft: This license __could not be activated__ but Mac Mouse Fix is currently __free in your country__! */
+"license-toast.free-country" = "**无法激活**此许可证，但Mac Mouse Fix目前**在您所在的国家或地区免费**！";
+
 /* First draft: **An error with the licensing server occured**\n\nIt says:\n\n%@ */
 "license-toast.gumroad-error" = "**许可证服务器发生错误**\n\n服务器回应：\n\n%@";
 
@@ -277,25 +292,25 @@
 /* First draft: **An unknown error occurred:**\n\n%@ */
 "license-toast.unknown-error" = "**发生了未知错误：**\n\n%@";
 
-/* First draft: **'%@'** is not a known license key\nPlease try a different key */
+/* First draft: **'%@'** is not a known license key\n\nPlease try a different key */
 "license-toast.unknown-key" = "**“%@”**并不是已知的许可证。\n请换一个许可证再试。";
 
 /* First draft: Activating your license failed for **unknown reasons**\n\nPlease write a **Bug Report** [here](https://noah-nuebling.github.io/mac-mouse-fix-feedback-assistant/?type=bug-report) */
 "license-toast.unknown-reason" = "由于**未知的原因**，许可证激活失败。\n\n请到[这里](https://noah-nuebling.github.io/mac-mouse-fix-feedback-assistant/?type=bug-report)提交**错误报告**";
 
-/* First draft: Set speed under\n[%@ > Mouse > Scroll speed](%@) */
+/* First draft: Set speed under\n[%@ > Mouse > Scrolling Speed](%@) */
 "macos-scrolling-hint" = "设置速度：\n[%@ > 鼠标 > 滚动速度](%@)";
 
 /* First draft: Back */
 "mail-alert.back" = "返回";
 
-/* First draft: I can't respond to all emails, but I read and appreciate all feedback */
+/* First draft: I read and appreciate all emails, even though I can't respond to all */
 "mail-alert.body" = "我无法回复所有的邮件，但我会阅读并感谢所有的反馈";
 
-/* First draft: Write E-mail */
+/* First draft: Write Email */
 "mail-alert.send" = "编写邮件";
 
-/* First draft: Write an E-mail? */
+/* First draft: Write an Email? */
 "mail-alert.title" = "编写邮件？";
 
 /* First draft: Command (⌘) */
@@ -310,10 +325,7 @@
 /* First draft: Shift (⇧) */
 "modifer-key.tool.shift" = "Shift（⇧）";
 
-/* First draft: Content tracks finger movement */
-"natural-scrolling-hint" = "内容随手指移动";
-
-/* First draft: Scroll precisely, even without a keyboard modifier,\nbymoving the scroll wheel slowly || Note: The line break (\n) is there so the layout of the Scroll tab doesn't become too wide which looks weird. You can set it to your own taste. */
+/* First draft: Scroll precisely, even without a keyboard modifier,\nbymoving the scroll wheel _slowly_ || Note: The line break (\n) is there so the layout of the Scroll tab doesn't become too wide which looks weird. You can set it to your own taste. */
 "precise-scrolling-hint" = "*慢慢*滚动滚轮来精准滚动，甚至无需键盘修饰键";
 
 /* First draft: Cancel */
@@ -333,6 +345,18 @@
 
 /* First draft: Restore Default for ... */
 "restore-buttons-alert.title" = "恢复默认…";
+
+/* First draft:  __Click here__ to load the recommended settings\nfor your __%@__ mouse || Note: The \n linebreak is so the popover doesn't become too wide. You can set it to your taste. || Note: In English, there needs to be a space at the start of this string otherwise the whole string will be bold. This might be a Ventura Bug */
+"restore-default-buttons-popover.body" = "**点按此处**来载入您的**%@**鼠标的建议设置";
+
+/* First draft: __Enabled__ Mac Mouse Fix for %1@\nIt had been disabled from the Menu Bar %2@ || Note: %1@ will be replaced by the list of enabled features, %2@ will be replaced by the menubar icon */
+"revive-toast" = "**已启用**Mac Mouse Fix调校：%1@\n此前由菜单栏%2@停用";
+
+/* First draft: __Buttons__ */
+"revive-toast.feature-buttons" = "**按钮**";
+
+/* First draft: __Scrolling__ */
+"revive-toast.feature-scrolling" = "**滚动**";
 
 /* First draft: Desktop & Launchpad */
 "scroll-effect.4-pinch" = "桌面与启动台";
@@ -364,29 +388,23 @@
 /* First draft: Rotate content in Apple Maps and other apps\n \nWorks like twisting with 2 fingers on an Apple Trackpad */
 "scroll-effect.rotate.hint" = "旋转Apple地图和其他应用程序中的内容\n \n作用相当于在Apple触控板上用双指旋转";
 
+/* First draft: Move Between Spaces */
+"scroll-effect.spaces" = "切换空间";
+
+/* First draft: Scroll up to move left a Space and down to move right a Space\n \nWorks like swiping horizontally with 3 fingers on an Apple Trackpad */
+"scroll-effect.spaces.hint" = "向上滚动来向左移动一个空间，向下滚动来向右移动一个空间\n \n作用相当于在Apple触控板上用三指左右滑动";
+
 /* First draft: Swift Scroll */
 "scroll-effect.swift" = "快速滚动";
 
 /* Scroll long distances with minimal effort */
 "scroll-effect.swift.hint" = "轻松地滚动大段距离";
 
-/* First draft: Zoom in or out */
+/* First draft: Zoom In or Out */
 "scroll-effect.zoom" = "放大或缩小";
 
 /* First draft: Zoom in or out in Safari, Maps and other apps\n \nWorks like pinching to zoom on an Apple trackpad */
 "scroll-effect.zoom.hint" = "在Safari、地图和其他应用程序中放大或缩小\n \n效果相当于在Apple触控板上两指张开或捏拢";
-
-/* First draft: __Enabled__ Mac Mouse Fix for %1@\nIt had been disabled from the Menu Bar %2@ || Note: %1@ will be replaced by the list of enabled features, %2@ will be replaced by the menubar icon */
-"revive-toast" = "**已启用**Mac Mouse Fix调校：%1@\n此前由菜单栏%2@停用";
-
-/* First draft: __Buttons__ */
-"revive-toast.feature-buttons" = "**按钮**";
-
-/* First draft: __Scrolling__ */
-"revive-toast.feature-scrolling" = "**滚动**";
-
-/* No comment provided by engineer. */
-"Strawberry" = "草莓";
 
 /* First draft: System Settings */
 "system-settings-name" = "系统设置";
@@ -403,7 +421,7 @@
 /* First draft: 🚀 Thanks for supporting Mac Mouse Fix! */
 "thanks.03" = "🚀感谢支持Mac Mouse Fix！";
 
-/* First draft: 🙌 Thank you for buying Mac Mouse Fix! */
+/* First draft: 🙌 Thanks for buying Mac Mouse Fix! */
 "thanks.04" = "🙌感谢您购买Mac Mouse Fix！";
 
 /* First draft: 🧠 Great purchasing decision! ;) */
@@ -421,7 +439,7 @@
 /* First draft: 👽 Share it with your Spacebook friends! */
 "thanks.09" = "👽分享给你Spacebook上的朋友们！";
 
-/* First draft: 🏂 Duckgang for life!！ || Note: A lot of these are very personal. And weird. They are also super rare. Feel free to change them to anything you feel like to leave a little easter egg! */
+/* First draft: 🏂 Duckgang for life!! || Note: A lot of these are very personal. And weird. They are also super rare. Feel free to change them to anything you feel like to leave a little easter egg! */
 "thanks.10" = "🏂一生不悔低头族！！";
 
 /* First draft: 🚜 Watch where you're going :P */
@@ -454,7 +472,7 @@
 /* First draft: 🌍 Universal Studios is probably not that great anyways... :) */
 "thanks.20" = "🌍环球影城很可能也没有那么好⋯⋯ :)";
 
-/* First draft: 🐠 Cuter than a Reaper Leviathan. */
+/* First draft: 🐠 What... are... you? */
 "thanks.21" = "🐠比死神利维坦可爱。";
 
 /* First draft: 🖤 */
@@ -532,35 +550,17 @@
 /* First draft: Type a Keyboard Shortcut */
 "type-shortcut-prompt" = "输入键盘快捷键";
 
+/* Note: Value for this key is defined in Localizable.stringsdict, not Localizable.strings */
+"capture-toast.body" = "<>";
+
+/* No comment provided by engineer. */
+"Chocolate" = "巧克力";
+
+/* First draft: Content tracks finger movement */
+"natural-scrolling-hint" = "内容随手指移动";
+
+/* No comment provided by engineer. */
+"Strawberry" = "草莓";
+
 /* No comment provided by engineer. */
 "Vanilla" = "香草";
-
-/* First draft: Get a mouse with 5+ buttons to unlock the full potential of Mac Mouse Fix! */
-"buy-mouse-alert.body" = "换一个五键或多键鼠标来释放Mac Mouse Fix的所有潜能";
-
-/* First draft: OK */
-"buy-mouse-alert.ok" = "好";
-
-/* First draft: Your mouse only has 3 buttons */
-"buy-mouse-alert.title" = "您的鼠标只有三个按钮";
-
-/* First draft: Mac Mouse Fix is currently free in your country (%@) */
-"free-country" = "Mac Mouse Fix目前在您所在的国家或地区（%@）免费";
-
-/* First draft: This license __could not be activated__ but Mac Mouse Fix is currently __free in your country__! */
-"license-toast.free-country" = "**无法激活**此许可证，但Mac Mouse Fix目前**在您所在的国家或地区免费**！";
-
-/* First draft:  __Click here__ to load the recommended settings\nfor your __%@__ mouse || Note: The \n linebreak is so the popover doesn't become too wide. You can set it to your taste. || Note: In English, there needs to be a space at the start of this string otherwise the whole string will be bold. This might be a Ventura Bug */
-"restore-default-buttons-popover.body" = "**点按此处**来载入您的**%@**鼠标的建议设置";
-
-/* First draft: Move Between Spaces */
-"scroll-effect.spaces" = "切换空间";
-
-/* First draft: Scroll up to move left a Space and down to move right a Space\n \nWorks like swiping horizontally with 3 fingers on an Apple Trackpad */
-"scroll-effect.spaces.hint" = "向上滚动来向左移动一个空间，向下滚动来向右移动一个空间\n \n作用相当于在Apple触控板上用三指左右滑动";
-
-/* First draft: Open 'Security & Privacy' Preferences || Notes: The string for Ventura and later is defined in Interface Builder */
-"accessibility.settings-link.pre-ventura" = "打开“隐私与安全性”偏好设置";
-
-/* First draft: Version %@ || Note: %@ will be replaced by the app version, e.g. '3.0.0 (22027)' */
-"app-version" = "";
