@@ -198,7 +198,7 @@ def update_strings_file_content(content, generated_content):
         
         is_missing = key not in parse
         
-        p = parse[key]
+        p = None if is_missing else parse[key]
         g = generated_parse[key]
         
         if is_missing:
