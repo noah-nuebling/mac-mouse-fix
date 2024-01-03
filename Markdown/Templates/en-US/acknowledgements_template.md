@@ -67,7 +67,6 @@ Mac Mouse Fix was built with the help of these **great libraries**:
 - [ReactiveSwift](https://github.com/ReactiveCocoa/ReactiveSwift) - Streams of values over time tailored for Swift
 - [CocoaLumberjack](https://github.com/CocoaLumberjack/CocoaLumberjack) - Fast & simple, yet powerful & flexible logging
 - [Swift Markdown](https://github.com/apple/swift-markdown) - Parse, build, edit, and analyze Markdown documents
-- [BartyCrouch](https://github.com/FlineDev/BartyCrouch) - Keep translation files in sync with source code and Interface Builder files
 - [Sparkle](https://github.com/sparkle-project/Sparkle) - A software update framework for macOS
 - [SnapKit](https://github.com/SnapKit/SnapKit) - Making Auto Layout easy on both iOS and macOS
 - [MASShortcut](https://github.com/shpakovski/MASShortcut) - API and user interface for recording, storing & using system-wide keyboard shortcuts
@@ -86,6 +85,9 @@ Mac Mouse Fix was built with the help of these **great libraries**:
   NOTE: Should I add my personal developments tools I used to the software section? - Xcode, VSCode, GitHub, iTerm2, fish shell, z clt, maybe more...
   NOTE: We're not including the "outstandingly helpful feedback" section. It's kinda weird and there is no concrete thing that they did which is now part of MMF. 
         If ppl make pull requests with significant contributions, then we should mention them somewhere.
+
+
+[BartyCrouch](https://github.com/FlineDev/BartyCrouch) - Keep translation files in sync with source code and Interface Builder files 
 
 
   ## ☺️ Outstandingly Helpful Feedback

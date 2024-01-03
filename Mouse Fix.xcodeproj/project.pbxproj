@@ -2129,7 +2129,6 @@
 		4FA994BC26678AC90007F003 /* ScrollAnalyzer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ScrollAnalyzer.h; sourceTree = "<group>"; };
 		4FA994BD26678AC90007F003 /* ScrollAnalyzer.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ScrollAnalyzer.m; sourceTree = "<group>"; };
 		4FAA5600293A41AF00BA782C /* BezierCappedAccelerationCurve.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BezierCappedAccelerationCurve.swift; sourceTree = "<group>"; };
-		4FAABC9F28A9AF8E0043ADD7 /* .bartycrouch.toml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .bartycrouch.toml; sourceTree = "<group>"; };
 		4FB4F9FC260FDBC800806DDD /* RemapTableUtility.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RemapTableUtility.h; sourceTree = "<group>"; };
 		4FB4F9FD260FDBC800806DDD /* RemapTableUtility.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RemapTableUtility.m; sourceTree = "<group>"; };
 		4FB4FA1E2611DD6000806DDD /* KeyCaptureScrollView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KeyCaptureScrollView.h; sourceTree = "<group>"; };
@@ -6329,10 +6328,9 @@
 			children = (
 				4F214C222B2E141900DD3957 /* Readme.md */,
 				4F2153272B2E150800DD3957 /* Acknowledgements.md */,
-				4F0BDC722B446A3C00AE65C1 /* Markdown */,
 				4F42304628CE6C1C003A41D3 /* License */,
+				4F0BDC722B446A3C00AE65C1 /* Markdown */,
 				4F909D1528A0C3D2009349A2 /* Localization */,
-				4FAABC9F28A9AF8E0043ADD7 /* .bartycrouch.toml */,
 				4F1793A725EEC8E500E8309B /* Frameworks */,
 				4F39BC88263B68F400FDF692 /* xcconfig */,
 				4FEB6616279376C200E6A111 /* Notes */,

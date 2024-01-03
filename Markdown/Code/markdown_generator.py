@@ -23,15 +23,15 @@ fallback_language_id = "en-US"
 
 languages = {
     
-    # Note for translators: To add a new entry for your language here, simply copy the German entry and replace all occurences of `de-DE` with your language ID.
+    # Note for translators: To add a new entry for your language here, simply copy the German entry and replace all occurences of `de` with your language ID.
     #   Choose the same language ID that's used in the MMF Xcode project or find a language ID using this Apple documentation: https://developer.apple.com/library/archive/documentation/MacOSX/Conceptual/BPInternational/LanguageandLocaleIDs/LanguageandLocaleIDs.html
     #   Language IDs are typically either just a language identifier, such as `de` for German, or to specify a regional dialect, you can use a language identifier plus a region identifier such as `de-CH` for Swiss German or `en-US` for American English.
     
     "en-US": {
-        "language_name": "🇬🇧 English", # Language name will be displayed in the language picker
+        "language_name": "🇬🇧 English",                      # Language name will be displayed in the language picker
         "template_root": "Markdown/Templates/en-US/",
-        "document_root": "", # The document root for english is the repo root.
-    }, 
+        "document_root": "",                                # The document root for english is the repo root.
+    },
     "de": {
         "language_name": "🇩🇪 Deutsch",
         "template_root": "Markdown/Templates/de/",
@@ -40,8 +40,6 @@ languages = {
 }
 
 documents = {
-    
-    # Note for translators: When adding a language
     
     "readme": {
         "template_subpath": "readme_template.md", # This subpath is appended to the "template_root" to make the full template path

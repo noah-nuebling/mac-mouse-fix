@@ -10,19 +10,18 @@
 
 ## Memory helpers
 
-- Don't change the keys for NSLocalizedString()! Otherwise all the existing translations will be deleted.
-- Use `bartycrouch update -v` and `bartycrouch lint` from Terminal. These are also executed by a build script.
+- Don't change the keys for NSLocalizedString()! Otherwise all the existing translations for the key don't work anymore.
+- Building the App or the Helper executes the Localization/Code/UpdateStrings script. It orders the key-value-pairs and brings the comments up-to-date.
 - To test layout
     - In build scheme, set argument `-NSConstraintBasedLayoutVisualizeMutuallyExclusiveConstraints YES`
     - In build scheme set pseudo language (e.g. double length)
 - NSLocalizedString() convention: Example: `NSLocalizedString("enabled-toggle.hint", comment: "First draft: Mac Mouse Fix will stay enabled after you close it || Note: Some useful note")`
-- In the `.bartycrouch.toml -> [update.code]` routine, we don't really want the __additive__ option. (It prevents cleanup of unused keys), but without it, bartycrouch started deleting all our translations from `Localizable.strings` when we added the `Shared` folder to the search folders in commit c540b4fe88f832ba5364c70587c670a38e42c753.
 
 ## Notes
 
-TODO: We're using `en` as language ID for English and `de` as language ID for German. It might be be better to use `en-US` and `de-DE`? Because that's more accurate and clear if ppl add regional variants such as `de-CH`? We're also using `en-US` and `de-DE` as identifiers on the mmf website and the `markdown_generator.py`. Update: We changed all German translations to lang code `de`, so it shows up neatly in State of Localization.
+TODO: We're using `en` as language ID for English and `de` as language ID for German. It might be be better to use `en-US` and `de-DE`? Because that's more accurate and clear if ppl add regional variants such as `de-CH`? We're also using `en-US` and `de-DE` as identifiers on the mmf website and the `markdown_generator.py`. Update: We changed all German translations to lang code `de`, so it shows up neatly in State of Localization. For English it's not important that all the language IDs match since it's the development language and doesn't show up in the State of Localization anyways. 
 
-## Basic guide
+## Basic Localization Guide
 
 - https://medium.com/@mds6058/localization-in-ios-and-how-to-make-it-not-suck-3adcbc3ec08f
 - Covers all the (confusing) basics and setup
@@ -30,6 +29,7 @@ TODO: We're using `en` as language ID for English and `de` as language ID for Ge
     - https://github.com/Flinesoft/BartyCrouch
     - Autogenerates and updates `.strings` files. Super handy!
     - Also supports machine translation, and other cool stuff
+    - Update: We built our own script to replace bartycrouch in Localization/Code
 
 ## Auto-translate menu items
 
@@ -42,3 +42,5 @@ TODO: We're using `en` as language ID for English and `de` as language ID for Ge
         - Is a lot of hacky effort
 - 3. Maybe I could use Barty Crouch machine translations as a base and then just do the rest by hand
     - It uses Azure Translation. Should be free or extremely cheap but is a bit of work to set up. 
+
+Conclusion: Didn't end up doing this.
