@@ -191,11 +191,11 @@ def log_modifications(modss):
         
         if len(path_result) > 0:
             result += f"\n\n{mods['path']} was modified:{path_result}"
+        else:
+            result += f"\n{mods['path']} was not modified"
     
     if len(result) > 0:
         print(result)
-    else:
-        print(f"Nothing was modified. (I think. Check git diff to be sure.)")
             
     
     
