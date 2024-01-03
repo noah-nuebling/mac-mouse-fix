@@ -8,6 +8,7 @@ import subprocess
 import os
 import re
 import git
+import textwrap
 
 
 #
@@ -236,6 +237,9 @@ def get_diff_string(str1, str2, filter_unchanged_lines=True):
     
     # Join the list into a single string
     return '\n'.join(diff_list)
+
+def indent(s, indent_spaces=2):
+    return textwrap.indent(s, ' ' * indent_spaces)
 
 #
 # Find files

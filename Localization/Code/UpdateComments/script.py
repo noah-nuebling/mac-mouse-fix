@@ -58,25 +58,25 @@ def main():
 
 def update_ib_comments(files, repo_root):
     """
-    Update the comments inside .strings files to match .xib/.storyboard files which they translate
+    Update .strings files to match .xib/.storyboard files which they translate
     
     """
     
     pass
 
-
 #
 # Update comments in Localizable.strings files
 #
 
-def update_source_code_comments(files, repo_root):
+def update_source_code_strings(files, repo_root):
     
     """
-    Update comments inside .strings files to match source code files which they translate
+    Update .strings files to match source code files which they translate
     Discussion: 
     - In update_ib_comments we don't update development language files - because there are none, since development language strings are directly inside the ib files.
       But in this function, we also update en.lproj/Localizable.strings. Maybe we should've specified development language values directly in the source code using `NSLocalizedStringWithDefaultValue` instead of inside en.lproj. That way we wouldn't need en.lproj at all.
       Not sure anymore why we chose to do it with en.lproj instead of all source code for English. But either way, I don't think it's worth it to change now.
+    Note:
     """
     
     # print(shared.runCLT(f"pwd; echo ./**/*.{{m,c,cpp,mm,swift}}", exec='/bin/zsh').stdout)
@@ -90,42 +90,118 @@ def update_source_code_comments(files, repo_root):
     strings_files_flat.append(files['base'])
     strings_files_flat += files['translations'].keys()
     
+    modss = []
+    
     for path in strings_files_flat:
         
         content = shared.read_file(path, 'utf-8')
         
-        new_content = update_strings_file_content(content, generated_content)
+        new_content, mods = update_strings_file_content(content, generated_content)
         
         # shared.write_file(path, new_content)
         
+        modss.append({'path': path, 'mods': mods})
+    
+    print_mods(modss)
         
+
+#
+# Debug helper
+#
+
+def print_mods(modss):
+    
+    result = ''
+    
+    for mods in modss:
+        
+        result += f"\n\n{mods['path']} was modified:"
+        
+        for mod in sorted(mods['mods'], key=lambda x: x['modtype'], reverse=True):
+            
+            key = mod['key']
+            modtype = mod['modtype']
+            if modtype == 'comment':
+                
+                b = mod['before'].strip()
+                a = mod['after'].strip()
+                
+                if a == b:
+                    result += f"\n\n    {key}'s comment whitespace changed"    
+                else:
+                    a = shared.indent(a, 8)
+                    b = shared.indent(b, 8)
+                    
+                    result += f"\n\n    {key} comment changed:\n{b}\n        ->\n{a}"
+                
+            elif modtype == 'insert':
+                value = shared.indent(mod['value'], 8)
+                result += f"\n\n    {key} was inserted:\n{value}"
+                
+            else: assert False
+    
+    print(result)
+            
+    
+    
+#
+# String parse & modify
+#
+
 def update_strings_file_content(content, generated_content):
     
     """
-    Copies over comments from generated_content to content
+    At the time of writing:
+    - Copy over all comments from `generated_content` to `content`
+    - Insert kv-pair + comment from `generated_content` into `content` - if the kv-pair is not found in `content`
+    - Reorder kv-pairs in `content` to match `generated_content`
     """
     
     # Parse both contents
     parse = parse_strings_file_content(content)
     generated_parse = parse_strings_file_content(generated_content, remove_value=True) # `extractLocStrings` sets all values to the key for some reason, so we remove them.
     
+    # Record modifications for diagnositics
+    mods = []
+    
     # Replace comments 
     #   (And insert missing kv-pairs, too, to be able to add comments)
-    
     for key in generated_parse.keys():
-        if key in parse:
-            parse[key]['comment'] = generated_parse[key]['comment']
+        
+        is_missing = key not in parse
+        
+        p = parse[key]
+        g = generated_parse[key]
+        
+        if is_missing:
+            
+            parse[key] = g
+            mods.append({'key': key, 'modtype': 'insert', 'value': g['comment'] + g['line']})
+            
         else:
-            parse[key] = generated_parse[key]
+            if p['comment'] != g['comment']:
+                mods.append({'key': key, 'modtype': 'comment', 'before': p['comment'], 'after': g['comment']})
+                p['comment'] = g['comment']
     
-    # Reassemple parse
-    result = ''
-    for _, p in parse.items():
-        result += p['comment']
-        result += p['line']
+    # Reassemple parse into updated content
+    
+    new_content = ''
+
+    # Attach kv-pairs that also occur in generated_content
+    #   Python iterates over dicts in insertion order. Therefore, this should synchronize the order of kv-pairs in the new_content with the generated_content
+    for k in generated_parse.keys():
+        new_content += parse[k]['comment']
+        new_content += parse[k]['line']
+    
+    # Attach unused kv-pairs at the end. 
+    #   Why not just delete them?
+    superfluous_keys = [k for k in parse.keys() if k not in generated_parse.keys()]
+    for k in superfluous_keys:
+        new_content += parse[k]['comment']
+        new_content += parse[k]['line']
     
     # Return
-    return result
+    return new_content, mods
     
     
 
