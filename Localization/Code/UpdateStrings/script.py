@@ -314,6 +314,7 @@ def parse_strings_file_content(content, remove_value=False):
         else:
             result_line = line
         
+        assert key not in result, f"There's a duplicate key {key}"
         result[key] = { "line": result_line, "comment": comment }
         
         last_key = key
