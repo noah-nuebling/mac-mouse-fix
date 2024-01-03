@@ -134,7 +134,7 @@ def update_strings_files(files, wet_run, type):
             content = shared.read_file(path, 'utf-8')
             new_content, mods, ordered_keys = update_strings_file_content(content, generated_content)
             
-            if wet_run:
+            if wet_run and new_content != content:
                 shared.write_file(path, new_content)
             
             modss.append({'path': path, 'mods': mods, 'ordered_keys': ordered_keys})
