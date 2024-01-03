@@ -77,6 +77,9 @@ def main():
     # Clean up
     shared.runCLT(f"rm -R ./{temp_folder}")
     
+    if not args.wet_run:
+        print("This is a dry run. No files are actually changed even if the logs say so.")
+    
     
 #
 # Update .strings files
