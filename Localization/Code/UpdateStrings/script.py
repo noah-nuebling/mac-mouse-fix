@@ -34,6 +34,8 @@ import os
 from pprint import pprint
 import argparse
 
+import cProfile
+
 #
 # Import functions from ../Shared folder
 #
@@ -100,6 +102,8 @@ def update_strings_files(files, wet_run, type):
     Note:
     """
     
+    print(f"\nUpdating strings files type {type}...")
+    
     assert type in ['sourcecode', 'IB']
     if type == 'sourcecode': assert len(files) == 1, "There should only be one base .strings file - Localizable.strings"
     
@@ -107,7 +111,9 @@ def update_strings_files(files, wet_run, type):
     
         generated_content = ''
         if type == 'sourcecode':
-            shared.runCLT(f"extractLocStrings ./**/*.{{m,c,cpp,mm,swift}} -SwiftUI -o ./{temp_folder}", exec='/bin/zsh')
+            source_code_files = shared.find_files_with_extensions(['m','c','cp','mm','swift'], ['env/', 'venv/', 'iOS-Polynomial-Regression-master/', './Test/'])
+            source_code_files_str = ' '.join(map(lambda p: p.replace(' ', r'\ '), source_code_files))
+            shared.runCLT(f"extractLocStrings {source_code_files_str} -SwiftUI -o ./{temp_folder}", exec='/bin/zsh')
             generated_path = f"{temp_folder}/Localizable.strings"
             generated_content = shared.read_file(generated_path, 'utf-16')
         elif type == 'IB':
@@ -270,7 +276,7 @@ def parse_strings_file_content(content, remove_value=False):
     
     # Notes:
     # - Somehow we seem to be replacing consecutive blank lines before and after comments with single blank lines in the output of the script. 
-    #   That's nice, but I don't understand why it's happending. Might be coming from this function.
+    #   That's nice, but I don't understand why it's happending. Might be coming from this function. Edit: It think it's just because we replace the comments and the comments from the generated content don't have double line breaks.
     # - See shared.strings_file_regex() for context.
     """
     Structure of result:
@@ -321,6 +327,7 @@ def parse_strings_file_content(content, remove_value=False):
 #
 
 if __name__ == "__main__": 
+    # cProfile.run('main()')
     main()
     
     

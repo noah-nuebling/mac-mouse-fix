@@ -9,6 +9,7 @@ import os
 import re
 import git
 import textwrap
+import glob
 
 
 #
@@ -270,6 +271,25 @@ def indent(s, indent_spaces=2):
 #
 # Find files
 #
+
+def find_files_with_extensions(exts, excluded_paths):
+    
+    """
+    We used to use a neat glob pattern in our subprocess call `./**/*.{m,c,cpp,mm,swift}`, but that also caught python package .c files, and idk how to exclude them.
+        The .c files didn't actually cause obvious problems (because they don't contain NSLocalizedString() macros anyways) but I hope this will make things a bit faster.
+        (Didn't test if it's actually faster)
+    """
+    
+    paths = []
+    for ext in exts:
+        pattern = f'./**/*.{ext}'
+        f = glob.glob(pattern, recursive=True)
+        ff = [path for path in f if not any(exc in path for exc in excluded_paths)]
+        paths += ff
+    
+    # Return
+    return paths
+
 
 def find_localization_files(repo_root, website_root=None, basetypes=['IB', 'strings', 'stringsdict', 'gh-markdown', 'nuxt']):
     
