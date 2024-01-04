@@ -271,12 +271,9 @@ def update_strings_file_content(content, generated_content):
 
 def parse_strings_file_content(content, remove_value=False):
     
-    # Notes:
-    # - Somehow we seem to be replacing consecutive blank lines before and after comments with single blank lines in the output of the script. 
-    #   That's nice, but I don't understand why it's happending. Might be coming from this function. Edit: It think it's just because we replace the comments and the comments from the generated content don't have double line breaks.
-    # - See shared.strings_file_regex() for context.
     """
-    Structure of result:
+    
+    Parse a .strings file into this structure:      (Should also work on .js translation files, but untested)
     {
         "<translation_key>": {
             "comment": "<comment_string>",
@@ -284,11 +281,67 @@ def parse_strings_file_content(content, remove_value=False):
         },
         ...
     }
+    
+    Notes:
+    - See shared.strings_file_regex() for context.
     """
     
     result = {}
     
     regex = shared.strings_file_regex()
+    
+    
+    #
+    # Approach 1: Line-based approach
+    #
+    
+    """
+    Notes:
+    - On the line-based approach vs match-based approach:
+        - line-based approach:
+            - goes through the text line-by line, and applies the regex to each line.
+            - That makes for simple code, and it allows us to verify that the .strings file has the correct format, instead of doing weird stuff like the match-based approach.
+            - We used splitlines(True) to iterate lines, but this didn't work, because the strings sometimes contain the character 'LINE SEPARATOR' (U+2028) if you enter a linebreak in IB, and splitlines splits at those characters. (Example for this is the '+' field hint.)
+        - match-based approach:
+            - The match-based applies the regext for finding kv-pairs to the whole string, and then iterates through the matches.
+            - This works fine, butttt if you forget to put a semicolon at the end, then it will consider the whole kv-pair part of a comment, and will simply delete it.
+                This has happened to me a few times when I was tired and I HATE this behaviour. That's why we're going back to the line-based approach with some additional checks to make sure everything is well-formatted.
+    - Somehow we seem to be replacing consecutive blank lines before and after comments with single blank lines in the output of the script. 
+        That's nice, but I don't understand why it's happending. Might be coming from this function. Edit: It think it's just because we replace the comments and the comments from the generated content don't have double line breaks.
+    """
+    
+    last_key = ''
+    acc_comment = ''
+
+    for line in content.splitlines(True): # `True` preserves linebreaks, so that we can easily stitch everything together exactly as it was.
+
+        match = regex.match(line)
+
+        if match:
+
+            key = match.group(2)
+            if remove_value:
+                value_start = match.start(3)
+                value_end = match.end(3)
+                result_line = line[:value_start] + line[value_end:]
+            else:
+                result_line = line
+
+            result[key] = { "line": result_line, "comment": acc_comment }
+            acc_comment = ''
+
+            last_key = key
+        else:
+            acc_comment += line 
+
+    post_comment = acc_comment
+    assert len(post_comment.strip()) == 0, f"There's content under the last key {last_key}. Don't know what to do with that. Pls remove."
+    
+    return result
+    
+    #
+    # Approach 2: Match-based
+    #
     
     last_match = None
     last_key = ''
@@ -323,6 +376,7 @@ def parse_strings_file_content(content, remove_value=False):
         
     last_match = matches[-1]
     assert len(content.rstrip()) == last_match.end(0), f"There's content under the last key {last_key}. Don't know what to do with that. Pls remove."
+    
     
     return result
 
