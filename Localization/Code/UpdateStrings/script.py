@@ -310,9 +310,13 @@ def updated_strings_file_content(content, generated_content, file_path, repo_roo
         if i == 0 and not parse[k]['comment'].startswith('\n'): 
             new_content += '\n'
         
+        # Attach main content
         new_content += parse[k]['comment']
         new_content += parse[k]['line']
-        
+                
+    # Replace Line Separator characters
+    lsep = "\u2028"
+    new_content = new_content.replace(lsep, r'\n')
         
     # Analyze reordering
     ordered_key_dict = {
