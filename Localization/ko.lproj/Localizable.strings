@@ -1,14 +1,21 @@
-/* First draft: Free day **%d/%d** */
-"trial-counter.active" = "무료 체험 기간 **%d/%d**일";
 
-/* First draft: Free days are over */
-"trial-counter.expired" = "무료 체험 기간이 끝났습니다.";
+/* Note: Value for this key is defined in Localizable.stringsdict, not Localizable.strings */
+"capture-toast.body" = "<>";
 
-/* First draft: Activate License */
-"trial-notif.activate-license-button" = "라이센스 활성화";
+/* First draft: Content tracks finger movement */
+"natural-scrolling-hint" = "손가락이 움직임이는 방향에 따라 콘텐츠가 이동됩니다.";
 
-/* First draft: Hi there! You've been using Mac Mouse Fix for **%d days** now. I hope you're enjoying it!\n\nIf you want to keep using Mac Mouse Fix, you can [buy it now](%@). */
-"trial-notif.body" = "안녕하세요! Mac Mouse Fix를 **%d일째** 사용 중입니다.\n\n사용해주셔서 감사드리며, Mac Mouse Fix를 계속 사용하시려면 [구입](%@)해주십시오.";
+/* First draft: Open 'Security & Privacy' Preferences || Notes: The string for Ventura and later is defined in Interface Builder */
+"accessibility.settings-link.pre-ventura" = "'보안 및 개인 정보 보호' 설정 열기";
+
+/* First draft: You're __already using__ the default setting for mice with __3 buttons__ */
+"already-using-defaults-toast.3" = "이미 __3개 버튼__의 마우스에 해당하는 기본 설정을 사용 중입니다.";
+
+/* First draft: You're __already using__ the default setting for mice with __5 buttons__ */
+"already-using-defaults-toast.5" = "이미 __5개 버튼__의 마우스에 해당하는 기본 설정을 사용 중입니다.";
+
+/* First draft: Version %@ || Note: %@ will be replaced by the app version, e.g. '3.0.0 (22027)' */
+"app-version" = "";
 
 /* First draft: <Rewind key> */
 "apple-key-fallback.backward" = "<되감기 키>";
@@ -67,6 +74,18 @@
 /* First draft: <Key without description> */
 "apple-key-fallback.unknown-key" = "<설명 없는 키>";
 
+/* First draft: Cancel */
+"beta-alert.back" = "취소";
+
+/* First draft: Beta versions can have many issues.\nDon't forget to give feedback when you run into one.\nThanks! */
+"beta-alert.body" = "베타 버전을 사용하면 여러 문제를 겪을 수 있습니다.\n문제를 발견하시는 경우 의견을 보내주세요.\n감사합니다!";
+
+/* First draft: Get Beta Versions */
+"beta-alert.confirm" = "베타 버전 가져오기";
+
+/* First draft: Get Beta Versions? */
+"beta-alert.title" = "베타 버전 가져오기";
+
 /* First draft: Click %@ + || Note: %@ will be a button name || Example where %@ is 'Button 4': Click Button 4 + Double Click and Drag Button 5 */
 "button-modifier.1" = "%@ 클릭 +";
 
@@ -75,15 +94,6 @@
 
 /* First draft: Triple Click %@ +  */
 "button-modifier.3" = "%@ 삼중 클릭 +";
-
-/* First draft: __Enabled__ Mac Mouse Fix for %1@\nIt had been disabled from the Menu Bar %2@ || Note: %1@ will be replaced by the list of enabled features, %2@ will be replaced by the menubar icon */
-"revive-toast" = "%1@에 대한 Mac Mouse Fix 동작이 **다시 활성화**되었습니다.\n이는 사용자에 의해 메뉴 막대 %2@ 에서 수동으로 비활성화되어있었습니다.";
-
-/* First draft: __Buttons__ */
-"revive-toast.feature-buttons" = " **버튼**";
-
-/* First draft: __Scrolling__ */
-"revive-toast.feature-scrolling" = "**스크롤**";
 
 /* First draft: Middle Button */
 "button-string.middle" = "가운데 버튼";
@@ -97,6 +107,9 @@
 /* First draft: Secondary Button */
 "button-string.secondary" = "보조 버튼";
 
+/* First draft: Middle Mouse Button (also called Scroll Wheel Button or Mouse Button 3) || Example usage: Open links in a new tab, paste text in the Terminal, and more.\n \nWorks like clicking the Middle Mouse Button (also called the Scroll Wheel Button or Mouse Button 3) on a standard mouse. */
+"button-string.tool.middle" = "마우스 가운데 버튼(또는 스크롤 휠 버튼 및 마우스 3번 버튼)";
+
 /* First draft: Mouse Button %@ */
 "button-string.tool.numbered" = "마우스 %@번 버튼";
 
@@ -106,11 +119,20 @@
 /* First draft: Secondary Mouse Button (also called Right Mouse Button or Mouse Button 2) */
 "button-string.tool.secondary" = "마우스 보조 버튼(또는 오른쪽 마우스 버튼 및 마우스 2번 버튼)";
 
-/* First draft: Middle Mouse Button (also called Scroll Wheel Button or Mouse Button 3) || Example usage: Open links in a new tab, paste text in the Terminal, and more.\n \nWorks like clicking the Middle Mouse Button (also called the Scroll Wheel Button or Mouse Button 3) on a standard mouse. */
-"button-string.tool.middle" = "마우스 가운데 버튼(또는 스크롤 휠 버튼 및 마우스 3번 버튼)";
+/* First draft: Get a mouse with 5+ buttons to unlock the full potential of Mac Mouse Fix! */
+"buy-mouse-alert.body" = "5개 이상의 버튼이 있는 마우스를 사용하면, Mac Mouse Fix의 기능을 최대로 활용할 수 있습니다!";
+
+/* First draft: OK */
+"buy-mouse-alert.ok" = "확인";
+
+/* First draft: Your mouse only has 3 buttons */
+"buy-mouse-alert.title" = "사용자 마우스는 버튼이 3개입니다.";
+
+/* Note: Value for this key is defined in Localizable.stringsdict, not Localizable.strings. || Note: The UI strings in .stringsdict have two lines. Only the first line is visible unless you start editing and then use the arrow keys to go to the second line. This is necessary to have linebreaks in .stringsdict since \n doesn't work. Use Option-Enter to insert these linebreaks. */
+"capture-toast.body.captured" = "<>";
 
 /* Note: Value for this key is defined in Localizable.stringsdict, not Localizable.strings */
-"capture-toast.body" = "<>";
+"capture-toast.body.uncaptured" = "<>";
 
 /* First draft: Learn More */
 "capture-toast.link" = "더 알아보기";
@@ -127,7 +149,7 @@
 /* First draft: Scroll freely by moving your mouse in any direction\n \nAlso Navigate between pages in Safari, delete messages in Mail and more by moving your mouse left and right\n \nWorks like swiping with 2 fingers on an Apple Trackpad */
 "drag-effect.scroll-swipe.hint" = "마우스가 움직이는 방향대로 자유롭게 스크롤합니다.\n \n마우스를 좌우로 이동하면 Safari에서는 페이지를 쓸어넘길 수 있으며, Mail에선 메시지를 삭제할 수도 있습니다.\n \n이는 Apple 트랙패드에서 두 손가락으로 스와이프하는 것과 같습니다.";
 
-/* First draft: Application Windows */
+/* First draft: Application Windows || Note: Under macOS Sonoma, this feature is called 'App Exposé' in Trackpad settings, but 'Application Windows' in Keyboard Shortcut settings and all other places I found. */
 "effect.app-expose" = "앱 윈도우";
 
 /* First draft: Show all windows of the active app */
@@ -175,20 +197,8 @@
 /* First draft: Look Up & Quick Look */
 "effect.look-up" = "찾아보기 및 데이터 탐색기";
 
-/* First draft: Look up words in the Dictionary, Quick Look files in Finder, and more.\n \nWorks like Force Touch on an Apple Trackpad. */
+/* First draft: Look up words in the Dictionary, Quick Look files in Finder, and more.\n \nWorks like a Force click on an Apple Trackpad. */
 "effect.look-up.hint" = "사전에서 단어를 찾아보거나, Finder에서 파일을 훑어보는 등의 동작을 수행합니다.\n \n이는 Apple 트랙패드에서 세게 클릭하는 것과 같습니다.";
-
-/* First draft: Primary Click */
-"effect.primary-click" = "";
-
-/* First draft: Works like clicking %@ on a standard mouse. */
-"effect.primary-click.hint" = "";
-
-/* First draft: Secondary Click */
-"effect.secondary-click" = "";
-
-/* First draft: Works like clicking %@ on a standard mouse. */
-"effect.secondary-click.hint" = "";
 
 /* First draft: Middle Click */
 "effect.middle-click" = "휠 클릭";
@@ -202,6 +212,12 @@
 /* First draft: Show Mission Control */
 "effect.mission-control.hint" = "Mission Control을 엽니다.";
 
+/* First draft: Primary Click */
+"effect.primary-click" = "";
+
+/* First draft: Works like clicking %@ on a standard mouse. */
+"effect.primary-click.hint" = "";
+
 /* First draft: Keyboard Shortcut... */
 "effect.record-shortcut" = "키보드 단축키...";
 
@@ -213,6 +229,12 @@
 
 /* First draft: Move one Space to the right */
 "effect.right-space.hint" = "우측 Space로 이동합니다.";
+
+/* First draft: Secondary Click */
+"effect.secondary-click" = "";
+
+/* First draft: Works like clicking %@ on a standard mouse. */
+"effect.secondary-click.hint" = "";
 
 /* First draft: Works like pressing '%@' on your keyboard */
 "effect.shortcut.hint" = "키보드 상의 '%@'를 누르는 것처럼 동작합니다.";
@@ -229,14 +251,17 @@
 /* First draft: **Secondary Mouse Button** can't be used\nPlease try another button */
 "forbidden-capture-toast.2" = "**마우스 보조 버튼**은 사용할 수 없습니다.\n다른 버튼으로 다시 시도하십시오.";
 
+/* First draft: Mac Mouse Fix is currently free in your country (%@) */
+"free-country" = "사용자 국가(%@)에서 Mac Mouse Fix는 현재 무료로 제공됩니다.";
+
 /* First draft: Mac Mouse Fix was **disabled** in System Settings\n\nTo enable Mac Mouse Fix:\n\n1. Go to [Login Items Settings](x-apple.systempreferences:com.apple.LoginItems-Settings.extension)\n2. Switch on \'Mac Mouse Fix.app\' */
 "is-disabled-toast" = "시스템 설정에서 Mac Mouse Fix가 **비활성화**되어있습니다.\n\nMac Mouse Fix를 사용하려면 다음 절차를 따르십시오:\n\n1. [로그인 항목 설정](x-apple.systempreferences:com.apple.LoginItems-Settings.extension)을 엽니다.\n2. \'Mac Mouse Fix.app\' 항목을 허용합니다.";
 
-/* First draft: Enabling Failed */
-"is-strange-helper-alert.title" = "활성화 실패";
-
 /* First draft: Mac Mouse Fix can't be enabled because there's __another version__ of Mac Mouse Fix present on your computer\n\nTo enable Mac Mouse Fix:\n\n1. Delete the [other version](%@)\n2. Empty the Bin\n3. Restart your Mac\n4. Try again! */
 "is-strange-helper-alert.body" = "컴퓨터에 **다른 버전의 앱**이 발견되어 Mac Mouse Fix를 사용할 수 없습니다.\n\nMac Mouse Fix를 사용하려면 다음 절차를 따르십시오:\n\n1. [다른 버전](%@)을 제거합니다.\n2. 휴지통을 비웁니다.\n3. Mac을 재시동합니다.\n4. 다시 시도합니다.";
+
+/* First draft: Enabling Failed */
+"is-strange-helper-alert.title" = "활성화 실패";
 
 /* First draft: ,  || Note: This string joins elements in a list except the second-to-last and last one. || Note: The first draft contains a space after the comma. */
 "join-list" = ", ";
@@ -262,6 +287,9 @@
 /* First draft: Your license has been **deactivated** */
 "license-toast.deactivate" = "라이센스가 **비활성화**되었습니다.";
 
+/* First draft: This license __could not be activated__ but Mac Mouse Fix is currently __free in your country__! */
+"license-toast.free-country" = "라이센스가 **활성화되지 않았습니다**. 사용자 국가에서는 현재 **무료로 사용 가능**합니다.";
+
 /* First draft: **An error with the licensing server occured**\n\nIt says:\n\n%@ */
 "license-toast.gumroad-error" = "**라이센스 서버 에러가 발생하였습니다.**\n\n에러 정보:\n\n%@";
 
@@ -280,6 +308,18 @@
 /* First draft: Set speed under\n[%@ > Mouse > Scrolling Speed](%@) */
 "macos-scrolling-hint" = "[%@ > 마우스 > 스크롤 속도](%@)에서 속도를 설정합니다.";
 
+/* First draft: Back */
+"mail-alert.back" = "뒤로";
+
+/* First draft: I read and appreciate all emails, even though I can't respond to all */
+"mail-alert.body" = "전부 답장할 수는 없지만, 항상 모든 이메일을 읽어보고 있습니다.";
+
+/* First draft: Write Email */
+"mail-alert.send" = "이메일 작성";
+
+/* First draft: Write an Email? */
+"mail-alert.title" = "이메일 보내기";
+
 /* First draft: Command (⌘) */
 "modifer-key.tool.command" = "Command (⌘)";
 
@@ -292,23 +332,44 @@
 /* First draft: Shift (⇧) */
 "modifer-key.tool.shift" = "Shift (⇧)";
 
-/* First draft: Content tracks finger movement */
-"natural-scrolling-hint" = "손가락이 움직임이는 방향에 따라 콘텐츠가 이동됩니다.";
-
-/* First draft: Scroll precisely even without a keyboard modifier by\nmoving the scroll wheel slowly || Note: The line break (\n) is there so the layout of the Scroll tab doesn't become too wide which looks weird. You can set it to your own taste. */
+/* First draft: Scroll precisely, even without a keyboard modifier,\nbymoving the scroll wheel _slowly_ || Note: The line break (\n) is there so the layout of the Scroll tab doesn't become too wide which looks weird. You can set it to your own taste. */
 "precise-scrolling-hint" = "스크롤을 *천천히* 움직이는 경우, 보조 키를 사용하지 않더라도\n정밀하게 스크롤합니다.";
+
+/* First draft: Cancel */
+"restore-buttons-alert.back" = "취소";
+
+/* First draft: Restore */
+"restore-buttons-alert.commit" = "재설정";
+
+/* First draft: Your __%@__ mouse says it has __%d__ buttons */
+"restore-buttons-alert.hint" = "사용자의 **%@** 마우스에서 **%d개**의 버튼이 감지되었습니다.";
+
+/* First draft: Mouse with 3 buttons */
+"restore-buttons-alert.radio1" = "3버튼 마우스";
+
+/* First draft: Mouse with 5+ buttons */
+"restore-buttons-alert.radio2" = "5버튼 이상의 마우스";
+
+/* First draft: Restore Default for ... */
+"restore-buttons-alert.title" = "마우스에 맞는 기본값으로 재설정";
+
+/* First draft:  __Click here__ to load the recommended settings\nfor your __%@__ mouse || Note: The \n linebreak is so the popover doesn't become too wide. You can set it to your taste. || Note: In English, there needs to be a space at the start of this string otherwise the whole string will be bold. This might be a Ventura Bug */
+"restore-default-buttons-popover.body" = " **여기를 누르면** 사용자 마우스(**%@**)에 대한 추천 설정을 적용합니다.";
+
+/* First draft: __Enabled__ Mac Mouse Fix for %1@\nIt had been disabled from the Menu Bar %2@ || Note: %1@ will be replaced by the list of enabled features, %2@ will be replaced by the menubar icon */
+"revive-toast" = "%1@에 대한 Mac Mouse Fix 동작이 **다시 활성화**되었습니다.\n이는 사용자에 의해 메뉴 막대 %2@ 에서 수동으로 비활성화되어있었습니다.";
+
+/* First draft: __Buttons__ */
+"revive-toast.feature-buttons" = " **버튼**";
+
+/* First draft: __Scrolling__ */
+"revive-toast.feature-scrolling" = "**스크롤**";
 
 /* First draft: Desktop & Launchpad */
 "scroll-effect.4-pinch" = "데스크탑 및 Launchpad";
 
 /* First draft: Scroll up for Launchpad and down to show the Desktop\n \nWorks like Pinching with 4 fingers on an Apple Trackpad */
 "scroll-effect.4-pinch.hint" = "위로 스크롤하면 Launchpad를 열며, 아래로 스크롤하면 데스크탑 화면을 봅니다.\n \n이는 Apple 트랙패드에서 네 손가락을 오므리거나 펼치는 것과 같습니다.";
-
-/* First draft: Move Between Spaces */
-"scroll-effect.spaces" = "Spaces 간 이동";
-
-/* First draft: Scroll up to move left a Space and down to move right a Space\n \nWorks like swiping horizontally with 3 fingers on an Apple Trackpad */
-"scroll-effect.spaces.hint" = "위로 스크롤하면 좌측 Space로 이동하며, 아래로 스크롤하면 우측 스페이스로 이동합니다.\n \n이는 Apple 트랙패드에서 세 손가락으로 수평 스와이프하는 것과 같습니다.";
 
 /* First draft: App Switcher */
 "scroll-effect.app-switcher" = "앱 전환";
@@ -328,6 +389,18 @@
 /* First draft: Scroll small distances and use sensitive UI elements with precision */
 "scroll-effect.precise.hint" = "짧은 거리를 스크롤하여 민감한 UI 요소를 정밀하게 조작할 수 있습니다.";
 
+/* First draft: Rotate */
+"scroll-effect.rotate" = "회전";
+
+/* First draft: Rotate content in Apple Maps and other apps\n \nWorks like twisting with 2 fingers on an Apple Trackpad */
+"scroll-effect.rotate.hint" = "지도 등의 앱에서 콘텐츠를 회전시킵니다.\n \n이는 Apple 트랙패드에서 두 손가락으로 회전시키는 것과 같습니다.";
+
+/* First draft: Move Between Spaces */
+"scroll-effect.spaces" = "Spaces 간 이동";
+
+/* First draft: Scroll up to move left a Space and down to move right a Space\n \nWorks like swiping horizontally with 3 fingers on an Apple Trackpad */
+"scroll-effect.spaces.hint" = "위로 스크롤하면 좌측 Space로 이동하며, 아래로 스크롤하면 우측 스페이스로 이동합니다.\n \n이는 Apple 트랙패드에서 세 손가락으로 수평 스와이프하는 것과 같습니다.";
+
 /* First draft: Swift Scroll */
 "scroll-effect.swift" = "고속 스크롤";
 
@@ -340,11 +413,11 @@
 /* First draft: Zoom in or out in Safari, Maps and other apps\n \nWorks like pinching to zoom on an Apple trackpad */
 "scroll-effect.zoom.hint" = "Safari, 지도 등의 앱에서 콘텐츠를 확대 또는 축소합니다.\n \n이는 Apple 트랙패드에서 두 손가락을 오므리거나 펼쳐서 확대 또는 축소하는 것과 같습니다.";
 
-/* First draft: Rotate */
-"scroll-effect.rotate" = "회전";
+/* First draft: System Settings */
+"system-settings-name" = "시스템 설정";
 
-/* First draft: Rotate content in Apple Maps and other apps\n \nWorks like twisting with 2 fingers on an Apple Trackpad */
-"scroll-effect.rotate.hint" = "지도 등의 앱에서 콘텐츠를 회전시킵니다.\n \n이는 Apple 트랙패드에서 두 손가락으로 회전시키는 것과 같습니다.";
+/* First draft: System Preferences */
+"system-settings-name.pre-ventura" = "시스템 환경설정";
 
 /* First draft: ⭐️ Thank you for buying Mac Mouse Fix! */
 "thanks.01" = "⭐️ Mac Mouse Fix를 구입해주셔서 감사합니다!";
@@ -355,7 +428,7 @@
 /* First draft: 🚀 Thanks for supporting Mac Mouse Fix! */
 "thanks.03" = "🚀 Mac Mouse Fix를 지원해주셔서 감사합니다!";
 
-/* First draft: 🙌 Thank you for buying Mac Mouse Fix! */
+/* First draft: 🙌 Thanks for buying Mac Mouse Fix! */
 "thanks.04" = "🙌 Mac Mouse Fix를 구입해주셔서 감사합니다!";
 
 /* First draft: 🧠 Great purchasing decision! ;) */
@@ -373,7 +446,7 @@
 /* First draft: 👽 Share it with your Spacebook friends! */
 "thanks.09" = "👽 Spacebook 친구분들께도 공유해주세요!";
 
-/* First draft: 🏂 Duckgang for life! || Note: A lot of these are very personal. And weird. They are also super rare. Feel free to change them to anything you feel like to leave a little easter egg! */
+/* First draft: 🏂 Duckgang for life!! || Note: A lot of these are very personal. And weird. They are also super rare. Feel free to change them to anything you feel like to leave a little easter egg! */
 "thanks.10" = "🏂 Duckgang 영원해줘!!";
 
 /* First draft: 🚜 Watch where you're going :P */
@@ -420,6 +493,18 @@
 
 /* First draft: 🌏 First the mice, then the world!! >:) */
 "thanks.25" = "🌏 태초에 마우스가 있었고, 그 후에 세상 열렸다!! >:)";
+
+/* First draft: Free day **%d/%d** */
+"trial-counter.active" = "무료 체험 기간 **%d/%d**일";
+
+/* First draft: Free days are over */
+"trial-counter.expired" = "무료 체험 기간이 끝났습니다.";
+
+/* First draft: Activate License */
+"trial-notif.activate-license-button" = "라이센스 활성화";
+
+/* First draft: Hi there! You've been using Mac Mouse Fix for **%d days** now. I hope you're enjoying it!\n\nIf you want to keep using Mac Mouse Fix, you can [buy it now](%@). */
+"trial-notif.body" = "안녕하세요! Mac Mouse Fix를 **%d일째** 사용 중입니다.\n\n사용해주셔서 감사드리며, Mac Mouse Fix를 계속 사용하시려면 [구입](%@)해주십시오.";
 
 /* First draft: Click %@ || Note: %@ will be a button name || Example where %@ is 'Button 5': ⌥⌘ Double Click Button 4 + Click Button 5 || Note: Most of the substrings that are used to build the Action Table Trigger Strings (this is one of those substrings) are capitalized in English because it's common to use 'title case' there. In your language, 'title case' might not be a thing, and so you might not want to capitalize these strings. The first letter of the trigger string will be programmatically capitalized in any language. */
 "trigger.click.1" = "%@ 클릭";
@@ -471,87 +556,3 @@
 
 /* First draft: Type a Keyboard Shortcut */
 "type-shortcut-prompt" = "키를 입력하세요.";
-
-/* First draft: Back */
-"mail-alert.back" = "뒤로";
-
-/* First draft: Write Email */
-"mail-alert.send" = "이메일 작성";
-
-/* First draft: Write an Email? */
-"mail-alert.title" = "이메일 보내기";
-
-/* First draft: I read and appreciate all emails, even though I can't respond to all. */
-"mail-alert.body" = "전부 답장할 수는 없지만, 항상 모든 이메일을 읽어보고 있습니다.";
-
-/* First draft: Cancel */
-"beta-alert.back" = "취소";
-
-/* First draft: Beta versions can have many issues. Don't forget to give feedback when you run into one. Thanks! */
-"beta-alert.body" = "베타 버전을 사용하면 여러 문제를 겪을 수 있습니다.\n문제를 발견하시는 경우 의견을 보내주세요.\n감사합니다!";
-
-/* First draft: Get Beta Versions */
-"beta-alert.confirm" = "베타 버전 가져오기";
-
-/* First draft: Get Beta Versions? */
-"beta-alert.title" = "베타 버전 가져오기";
-
-/* First draft: Cancel */
-"restore-buttons-alert.back" = "취소";
-
-/* First draft: Restore */
-"restore-buttons-alert.commit" = "재설정";
-
-/* First draft: Your __%@__ mouse says it has __%d__ buttons */
-"restore-buttons-alert.hint" = "사용자의 **%@** 마우스에서 **%d개**의 버튼이 감지되었습니다.";
-
-/* First draft: Mouse with 3 buttons */
-"restore-buttons-alert.radio1" = "3버튼 마우스";
-
-/* First draft: Mouse with 5+ buttons */
-"restore-buttons-alert.radio2" = "5버튼 이상의 마우스";
-
-/* First draft: Restore Default for ... */
-"restore-buttons-alert.title" = "마우스에 맞는 기본값으로 재설정";
-
-/* First draft: You're __already using__ the default setting for mice with __3 buttons__ */
-"already-using-defaults-toast.3" = "이미 __3개 버튼__의 마우스에 해당하는 기본 설정을 사용 중입니다.";
-
-/* First draft: You're __already using__ the default setting for mice with __5 buttons__ */
-"already-using-defaults-toast.5" = "이미 __5개 버튼__의 마우스에 해당하는 기본 설정을 사용 중입니다.";
-
-/* Note: Value for this key is defined in Localizable.stringsdict, not Localizable.strings. || Note: The UI strings in .stringsdict have two lines. Only the first line is visible unless you start editing and then use the arrow keys to go to the second line. This is necessary to have linebreaks in .stringsdict since \n doesn't work. Use Option-Enter to insert these linebreaks. */
-"capture-toast.body.captured" = "<>";
-
-/* Note: Value for this key is defined in Localizable.stringsdict, not Localizable.strings */
-"capture-toast.body.uncaptured" = "<>";
-
-/* First draft: System Settings */
-"system-settings-name" = "시스템 설정";
-
-/* First draft: System Preferences */
-"system-settings-name.pre-ventura" = "시스템 환경설정";
-
-/* First draft: Mac Mouse Fix is currently free in your country (%@) */
-"free-country" = "사용자 국가(%@)에서 Mac Mouse Fix는 현재 무료로 제공됩니다.";
-
-/* First draft: This license __could not be activated__ but Mac Mouse Fix is currently __free in your country__! */
-"license-toast.free-country" = "라이센스가 **활성화되지 않았습니다**. 사용자 국가에서는 현재 **무료로 사용 가능**합니다.";
-
-/* First draft:  __Click here__ to load the recommended settings\nfor your __%@__ mouse || Note: The \n linebreak is so the popover doesn't become too wide. You can set it to your taste. || Note: In English, there needs to be a space at the start of this string otherwise the whole string will be bold. This might be a Ventura Bug */
-"restore-default-buttons-popover.body" = " **여기를 누르면** 사용자 마우스(**%@**)에 대한 추천 설정을 적용합니다.";
-
-/* First draft: Get a mouse with 5+ buttons to unlock the full potential of Mac Mouse Fix! */
-"buy-mouse-alert.body" = "5개 이상의 버튼이 있는 마우스를 사용하면, Mac Mouse Fix의 기능을 최대로 활용할 수 있습니다!";
-
-/* First draft: Your mouse only has 3 buttons */
-"buy-mouse-alert.title" = "사용자 마우스는 버튼이 3개입니다.";
-
-/* First draft: OK */
-"buy-mouse-alert.ok" = "확인";
-
-/* First draft: Open 'Security & Privacy' Preferences || Notes: The string for Ventura and later is defined in Interface Builder */
-"accessibility.settings-link.pre-ventura" = "'보안 및 개인 정보 보호' 설정 열기";
-
-/* First draft: Version %@ || Note: %@ will be replaced by the app version, e.g. '3.0.0 (22027)' */
-"app-version" = "";

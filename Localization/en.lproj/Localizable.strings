@@ -1,14 +1,21 @@
-/* First draft: Free day **%d/%d** */
-"trial-counter.active" = "Free day **%d/%d**";
 
-/* First draft: Free days are over */
-"trial-counter.expired" = "Free days are over";
+/* Note: Value for this key is defined in Localizable.stringsdict, not Localizable.strings */
+"capture-toast.body" = "<>";
 
-/* First draft: Activate License */
-"trial-notif.activate-license-button" = "Activate License";
+/* First draft: Content tracks finger movement */
+"natural-scrolling-hint" = "Content tracks finger movement";
 
-/* First draft: Hi there! You've been using Mac Mouse Fix for **%d days** now. I hope you're enjoying it!\n\nIf you want to keep using Mac Mouse Fix, you can [buy it now](%@). */
-"trial-notif.body" = "Hi there! You've been using Mac Mouse Fix for **%d days** now. I hope you're enjoying it!\n\nIf you want to keep using Mac Mouse Fix, you can [buy it now](%@).";
+/* First draft: Open 'Security & Privacy' Preferences || Notes: The string for Ventura and later is defined in Interface Builder */
+"accessibility.settings-link.pre-ventura" = "Open 'Security & Privacy' Preferences";
+
+/* First draft: You're __already using__ the default setting for mice with __3 buttons__ */
+"already-using-defaults-toast.3" = "You're __already using__ the default setting for mice with __3 buttons__";
+
+/* First draft: You're __already using__ the default setting for mice with __5 buttons__ */
+"already-using-defaults-toast.5" = "You're __already using__ the default setting for mice with __5 buttons__";
+
+/* First draft: Version %@ || Note: %@ will be replaced by the app version, e.g. '3.0.0 (22027)' */
+"app-version" = "Version %@";
 
 /* First draft: <Rewind key> */
 "apple-key-fallback.backward" = "<Rewind key>";
@@ -67,6 +74,18 @@
 /* First draft: <Key without description> */
 "apple-key-fallback.unknown-key" = "<Key without description>";
 
+/* First draft: Cancel */
+"beta-alert.back" = "Cancel";
+
+/* First draft: Beta versions can have many issues.\nDon't forget to give feedback when you run into one.\nThanks! */
+"beta-alert.body" = "Beta versions can have many issues.\nDon't forget to give feedback when you run into one.\nThanks!";
+
+/* First draft: Get Beta Versions */
+"beta-alert.confirm" = "Get Beta Versions";
+
+/* First draft: Get Beta Versions? */
+"beta-alert.title" = "Get Beta Versions?";
+
 /* First draft: Click %@ + || Note: %@ will be a button name || Example where %@ is 'Button 4': Click Button 4 + Double Click and Drag Button 5 */
 "button-modifier.1" = "Click %@ +";
 
@@ -75,15 +94,6 @@
 
 /* First draft: Triple Click %@ +  */
 "button-modifier.3" = "Triple Click %@ +";
-
-/* First draft: __Enabled__ Mac Mouse Fix for %1@\nIt had been disabled from the Menu Bar %2@ || Note: %1@ will be replaced by the list of enabled features, %2@ will be replaced by the menubar icon */
-"revive-toast" = "__Enabled__ Mac Mouse Fix for %1@\nIt had been disabled from the Menu Bar %2@";
-
-/* First draft: __Buttons__ */
-"revive-toast.feature-buttons" = " __Buttons__";
-
-/* First draft: __Scrolling__ */
-"revive-toast.feature-scrolling" = "__Scrolling__";
 
 /* First draft: Middle Button */
 "button-string.middle" = "Middle Button";
@@ -97,6 +107,9 @@
 /* First draft: Secondary Button */
 "button-string.secondary" = "Secondary Button";
 
+/* First draft: Middle Mouse Button (also called Scroll Wheel Button or Mouse Button 3) || Example usage: Open links in a new tab, paste text in the Terminal, and more.\n \nWorks like clicking the Middle Mouse Button (also called the Scroll Wheel Button or Mouse Button 3) on a standard mouse. */
+"button-string.tool.middle" = "Middle Mouse Button (also called Scroll Wheel Button or Mouse Button 3)";
+
 /* First draft: Mouse Button %@ */
 "button-string.tool.numbered" = "Mouse Button %@";
 
@@ -106,11 +119,20 @@
 /* First draft: Secondary Mouse Button (also called Right Mouse Button or Mouse Button 2) */
 "button-string.tool.secondary" = "Secondary Mouse Button (also called Right Mouse Button or Mouse Button 2)";
 
-/* First draft: Middle Mouse Button (also called Scroll Wheel Button or Mouse Button 3) || Example usage: Open links in a new tab, paste text in the Terminal, and more.\n \nWorks like clicking the Middle Mouse Button (also called the Scroll Wheel Button or Mouse Button 3) on a standard mouse. */
-"button-string.tool.middle" = "Middle Mouse Button (also called Scroll Wheel Button or Mouse Button 3)";
+/* First draft: Get a mouse with 5+ buttons to unlock the full potential of Mac Mouse Fix! */
+"buy-mouse-alert.body" = "Get a mouse with 5+ buttons to unlock the full potential of Mac Mouse Fix!";
+
+/* First draft: OK */
+"buy-mouse-alert.ok" = "OK";
+
+/* First draft: Your mouse only has 3 buttons */
+"buy-mouse-alert.title" = "Your mouse only has 3 buttons";
+
+/* Note: Value for this key is defined in Localizable.stringsdict, not Localizable.strings. || Note: The UI strings in .stringsdict have two lines. Only the first line is visible unless you start editing and then use the arrow keys to go to the second line. This is necessary to have linebreaks in .stringsdict since \n doesn't work. Use Option-Enter to insert these linebreaks. */
+"capture-toast.body.captured" = "<>";
 
 /* Note: Value for this key is defined in Localizable.stringsdict, not Localizable.strings */
-"capture-toast.body" = "<>";
+"capture-toast.body.uncaptured" = "<>";
 
 /* First draft: Learn More */
 "capture-toast.link" = "Learn More";
@@ -127,7 +149,7 @@
 /* First draft: Scroll freely by moving your mouse in any direction\n \nAlso Navigate between pages in Safari, delete messages in Mail and more by moving your mouse left and right\n \nWorks like swiping with 2 fingers on an Apple Trackpad */
 "drag-effect.scroll-swipe.hint" = "Scroll freely by moving your mouse in any direction\n \nAlso Navigate between pages in Safari, delete messages in Mail and more by moving your mouse left and right\n \nWorks like swiping with 2 fingers on an Apple Trackpad";
 
-/* First draft: Application Windows */
+/* First draft: Application Windows || Note: Under macOS Sonoma, this feature is called 'App Exposé' in Trackpad settings, but 'Application Windows' in Keyboard Shortcut settings and all other places I found. */
 "effect.app-expose" = "Application Windows";
 
 /* First draft: Show all windows of the active app */
@@ -178,18 +200,6 @@
 /* First draft: Look up words in the Dictionary, Quick Look files in Finder, and more.\n \nWorks like a Force click on an Apple Trackpad. */
 "effect.look-up.hint" = "Look up words in the Dictionary, Quick Look files in Finder, and more.\n \nWorks like a Force click on an Apple Trackpad.";
 
-/* First draft: Primary Click */
-"effect.primary-click" = "Primary Click";
-
-/* First draft: Works like clicking %@ on a standard mouse. */
-"effect.primary-click.hint" = "Works like clicking %@ on a standard mouse.";
-
-/* First draft: Secondary Click */
-"effect.secondary-click" = "Secondary Click";
-
-/* First draft: Works like clicking %@ on a standard mouse. */
-"effect.secondary-click.hint" = "Works like clicking %@ on a standard mouse.";
-
 /* First draft: Middle Click */
 "effect.middle-click" = "Middle Click";
 
@@ -202,6 +212,12 @@
 /* First draft: Show Mission Control */
 "effect.mission-control.hint" = "Show Mission Control";
 
+/* First draft: Primary Click */
+"effect.primary-click" = "Primary Click";
+
+/* First draft: Works like clicking %@ on a standard mouse. */
+"effect.primary-click.hint" = "Works like clicking %@ on a standard mouse.";
+
 /* First draft: Keyboard Shortcut... */
 "effect.record-shortcut" = "Keyboard Shortcut...";
 
@@ -213,6 +229,12 @@
 
 /* First draft: Move one Space to the right */
 "effect.right-space.hint" = "Move one Space to the right";
+
+/* First draft: Secondary Click */
+"effect.secondary-click" = "Secondary Click";
+
+/* First draft: Works like clicking %@ on a standard mouse. */
+"effect.secondary-click.hint" = "Works like clicking %@ on a standard mouse.";
 
 /* First draft: Works like pressing '%@' on your keyboard */
 "effect.shortcut.hint" = "Works like pressing '%@' on your keyboard";
@@ -229,14 +251,17 @@
 /* First draft: **Secondary Mouse Button** can't be used\nPlease try another button */
 "forbidden-capture-toast.2" = "**Secondary Mouse Button** can't be used\nPlease try another button";
 
+/* First draft: Mac Mouse Fix is currently free in your country (%@) */
+"free-country" = "Mac Mouse Fix is currently free in your country (%@)";
+
 /* First draft: Mac Mouse Fix was **disabled** in System Settings\n\nTo enable Mac Mouse Fix:\n\n1. Go to [Login Items Settings](x-apple.systempreferences:com.apple.LoginItems-Settings.extension)\n2. Switch on \'Mac Mouse Fix.app\' */
 "is-disabled-toast" = "Mac Mouse Fix was **disabled** in System Settings\n\nTo enable Mac Mouse Fix:\n\n1. Go to [Login Items Settings](x-apple.systempreferences:com.apple.LoginItems-Settings.extension)\n2. Switch on \'Mac Mouse Fix.app\'";
 
-/* First draft: Enabling Failed */
-"is-strange-helper-alert.title" = "Enabling Failed";
-
 /* First draft: Mac Mouse Fix can't be enabled because there's __another version__ of Mac Mouse Fix present on your computer\n\nTo enable Mac Mouse Fix:\n\n1. Delete the [other version](%@)\n2. Empty the Bin\n3. Restart your Mac\n4. Try again! */
 "is-strange-helper-alert.body" = "Mac Mouse Fix can't be enabled because there's __another version__ of Mac Mouse Fix present on your computer\n\nTo enable Mac Mouse Fix:\n\n1. Delete the [other version](%@)\n2. Empty the Bin\n3. Restart your Mac\n4. Try again!";
+
+/* First draft: Enabling Failed */
+"is-strange-helper-alert.title" = "Enabling Failed";
 
 /* First draft: ,  || Note: This string joins elements in a list except the second-to-last and last one. || Note: The first draft contains a space after the comma. */
 "join-list" = ", ";
@@ -262,6 +287,9 @@
 /* First draft: Your license has been **deactivated** */
 "license-toast.deactivate" = "Your license has been **deactivated**";
 
+/* First draft: This license __could not be activated__ but Mac Mouse Fix is currently __free in your country__! */
+"license-toast.free-country" = "This license __could not be activated__ but Mac Mouse Fix is currently __free in your country__!";
+
 /* First draft: **An error with the licensing server occured**\n\nIt says:\n\n%@ */
 "license-toast.gumroad-error" = "**An error with the licensing server occured**\n\nIt says:\n\n%@";
 
@@ -280,6 +308,18 @@
 /* First draft: Set speed under\n[%@ > Mouse > Scrolling Speed](%@) */
 "macos-scrolling-hint" = "Set speed under\n[%@ > Mouse > Scrolling Speed](%@)";
 
+/* First draft: Back */
+"mail-alert.back" = "Back";
+
+/* First draft: I read and appreciate all emails, even though I can't respond to all */
+"mail-alert.body" = "I read and appreciate all emails, even though I can't respond to all";
+
+/* First draft: Write Email */
+"mail-alert.send" = "Write Email";
+
+/* First draft: Write an Email? */
+"mail-alert.title" = "Write an Email?";
+
 /* First draft: Command (⌘) */
 "modifer-key.tool.command" = "Command (⌘)";
 
@@ -292,23 +332,44 @@
 /* First draft: Shift (⇧) */
 "modifer-key.tool.shift" = "Shift (⇧)";
 
-/* First draft: Content tracks finger movement */
-"natural-scrolling-hint" = "Content tracks finger movement";
-
-/* First draft: Scroll precisely even without a keyboard modifier by\nmoving the scroll wheel slowly || Note: The line break (\n) is there so the layout of the Scroll tab doesn't become too wide which looks weird. You can set it to your own taste. */
+/* First draft: Scroll precisely, even without a keyboard modifier,\nbymoving the scroll wheel _slowly_ || Note: The line break (\n) is there so the layout of the Scroll tab doesn't become too wide which looks weird. You can set it to your own taste. */
 "precise-scrolling-hint" = "Scroll precisely, even without a keyboard modifier,\nby moving the scroll wheel _slowly_";
+
+/* First draft: Cancel */
+"restore-buttons-alert.back" = "Cancel";
+
+/* First draft: Restore */
+"restore-buttons-alert.commit" = "Restore";
+
+/* First draft: Your __%@__ mouse says it has __%d__ buttons */
+"restore-buttons-alert.hint" = "Your __%@__ mouse says it has __%d__ buttons";
+
+/* First draft: Mouse with 3 buttons */
+"restore-buttons-alert.radio1" = "Mouse with 3 buttons";
+
+/* First draft: Mouse with 5+ buttons */
+"restore-buttons-alert.radio2" = "Mouse with 5+ buttons";
+
+/* First draft: Restore Default for ... */
+"restore-buttons-alert.title" = "Restore Default for ...";
+
+/* First draft:  __Click here__ to load the recommended settings\nfor your __%@__ mouse || Note: The \n linebreak is so the popover doesn't become too wide. You can set it to your taste. || Note: In English, there needs to be a space at the start of this string otherwise the whole string will be bold. This might be a Ventura Bug */
+"restore-default-buttons-popover.body" = " __Click here__ to load the recommended settings\nfor your __%@__ mouse";
+
+/* First draft: __Enabled__ Mac Mouse Fix for %1@\nIt had been disabled from the Menu Bar %2@ || Note: %1@ will be replaced by the list of enabled features, %2@ will be replaced by the menubar icon */
+"revive-toast" = "__Enabled__ Mac Mouse Fix for %1@\nIt had been disabled from the Menu Bar %2@";
+
+/* First draft: __Buttons__ */
+"revive-toast.feature-buttons" = " __Buttons__";
+
+/* First draft: __Scrolling__ */
+"revive-toast.feature-scrolling" = "__Scrolling__";
 
 /* First draft: Desktop & Launchpad */
 "scroll-effect.4-pinch" = "Desktop & Launchpad";
 
 /* First draft: Scroll up for Launchpad and down to show the Desktop\n \nWorks like Pinching with 4 fingers on an Apple Trackpad */
 "scroll-effect.4-pinch.hint" = "Scroll up for Launchpad and down to show the Desktop\n \nWorks like Pinching with 4 fingers on an Apple Trackpad";
-
-/* First draft: Move Between Spaces */
-"scroll-effect.spaces" = "Move Between Spaces";
-
-/* First draft: Scroll up to move left a Space and down to move right a Space\n \nWorks like swiping horizontally with 3 fingers on an Apple Trackpad */
-"scroll-effect.spaces.hint" = "Scroll up to move left a Space and down to move right a Space\n \nWorks like swiping horizontally with 3 fingers on an Apple Trackpad";
 
 /* First draft: App Switcher */
 "scroll-effect.app-switcher" = "App Switcher";
@@ -328,6 +389,18 @@
 /* First draft: Scroll small distances and use sensitive UI elements with precision */
 "scroll-effect.precise.hint" = "Scroll small distances and use sensitive UI elements with precision";
 
+/* First draft: Rotate */
+"scroll-effect.rotate" = "Rotate";
+
+/* First draft: Rotate content in Apple Maps and other apps\n \nWorks like twisting with 2 fingers on an Apple Trackpad */
+"scroll-effect.rotate.hint" = "Rotate content in Apple Maps and other apps\n \nWorks like twisting with 2 fingers on an Apple Trackpad";
+
+/* First draft: Move Between Spaces */
+"scroll-effect.spaces" = "Move Between Spaces";
+
+/* First draft: Scroll up to move left a Space and down to move right a Space\n \nWorks like swiping horizontally with 3 fingers on an Apple Trackpad */
+"scroll-effect.spaces.hint" = "Scroll up to move left a Space and down to move right a Space\n \nWorks like swiping horizontally with 3 fingers on an Apple Trackpad";
+
 /* First draft: Swift Scroll */
 "scroll-effect.swift" = "Swift Scroll";
 
@@ -340,11 +413,11 @@
 /* First draft: Zoom in or out in Safari, Maps and other apps\n \nWorks like pinching to zoom on an Apple trackpad */
 "scroll-effect.zoom.hint" = "Zoom in or out in Safari, Maps and other apps\n \nWorks like pinching to zoom on an Apple trackpad";
 
-/* First draft: Rotate */
-"scroll-effect.rotate" = "Rotate";
+/* First draft: System Settings */
+"system-settings-name" = "System Settings";
 
-/* First draft: Rotate content in Apple Maps and other apps\n \nWorks like twisting with 2 fingers on an Apple Trackpad */
-"scroll-effect.rotate.hint" = "Rotate content in Apple Maps and other apps\n \nWorks like twisting with 2 fingers on an Apple Trackpad";
+/* First draft: System Preferences */
+"system-settings-name.pre-ventura" = "System Preferences";
 
 /* First draft: ⭐️ Thank you for buying Mac Mouse Fix! */
 "thanks.01" = "⭐️ Thank you for buying Mac Mouse Fix!";
@@ -355,7 +428,7 @@
 /* First draft: 🚀 Thanks for supporting Mac Mouse Fix! */
 "thanks.03" = "🚀 Thanks for supporting Mac Mouse Fix!";
 
-/* First draft: 🙌 Thank you for buying Mac Mouse Fix! */
+/* First draft: 🙌 Thanks for buying Mac Mouse Fix! */
 "thanks.04" = "🙌 Thank you for buying Mac Mouse Fix!";
 
 /* First draft: 🧠 Great purchasing decision! ;) */
@@ -373,7 +446,7 @@
 /* First draft: 👽 Share it with your Spacebook friends! */
 "thanks.09" = "👽 Share it with your Spacebook friends!";
 
-/* First draft: 🏂 Duckgang for life! || Note: A lot of these are very personal. And weird. They are also super rare. Feel free to change them to anything you feel like to leave a little easter egg! */
+/* First draft: 🏂 Duckgang for life!! || Note: A lot of these are very personal. And weird. They are also super rare. Feel free to change them to anything you feel like to leave a little easter egg! */
 "thanks.10" = "🏂 Duckgang for life!!";
 
 /* First draft: 🚜 Watch where you're going :P */
@@ -420,6 +493,18 @@
 
 /* First draft: 🌏 First the mice, then the world!! >:) */
 "thanks.25" = "🌏 First the mice, then the world!! >:)";
+
+/* First draft: Free day **%d/%d** */
+"trial-counter.active" = "Free day **%d/%d**";
+
+/* First draft: Free days are over */
+"trial-counter.expired" = "Free days are over";
+
+/* First draft: Activate License */
+"trial-notif.activate-license-button" = "Activate License";
+
+/* First draft: Hi there! You've been using Mac Mouse Fix for **%d days** now. I hope you're enjoying it!\n\nIf you want to keep using Mac Mouse Fix, you can [buy it now](%@). */
+"trial-notif.body" = "Hi there! You've been using Mac Mouse Fix for **%d days** now. I hope you're enjoying it!\n\nIf you want to keep using Mac Mouse Fix, you can [buy it now](%@).";
 
 /* First draft: Click %@ || Note: %@ will be a button name || Example where %@ is 'Button 5': ⌥⌘ Double Click Button 4 + Click Button 5 || Note: Most of the substrings that are used to build the Action Table Trigger Strings (this is one of those substrings) are capitalized in English because it's common to use 'title case' there. In your language, 'title case' might not be a thing, and so you might not want to capitalize these strings. The first letter of the trigger string will be programmatically capitalized in any language. */
 "trigger.click.1" = "Click %@";
@@ -471,87 +556,3 @@
 
 /* First draft: Type a Keyboard Shortcut */
 "type-shortcut-prompt" = "Type a Keyboard Shortcut";
-
-/* First draft: Back */
-"mail-alert.back" = "Back";
-
-/* First draft: Write Email */
-"mail-alert.send" = "Write Email";
-
-/* First draft: Write an Email? */
-"mail-alert.title" = "Write an Email?";
-
-/* First draft: I read and appreciate all emails, even though I can't respond to all. */
-"mail-alert.body" = "I read and appreciate all emails, even though I can't respond to all";
-
-/* First draft: Cancel */
-"beta-alert.back" = "Cancel";
-
-/* First draft: Beta versions can have many issues. Don't forget to give feedback when you run into one. Thanks! */
-"beta-alert.body" = "Beta versions can have many issues.\nDon't forget to give feedback when you run into one.\nThanks!";
-
-/* First draft: Get Beta Versions */
-"beta-alert.confirm" = "Get Beta Versions";
-
-/* First draft: Get Beta Versions? */
-"beta-alert.title" = "Get Beta Versions?";
-
-/* First draft: Cancel */
-"restore-buttons-alert.back" = "Cancel";
-
-/* First draft: Restore */
-"restore-buttons-alert.commit" = "Restore";
-
-/* First draft: Your __%@__ mouse says it has __%d__ buttons */
-"restore-buttons-alert.hint" = "Your __%@__ mouse says it has __%d__ buttons";
-
-/* First draft: Mouse with 3 buttons */
-"restore-buttons-alert.radio1" = "Mouse with 3 buttons";
-
-/* First draft: Mouse with 5+ buttons */
-"restore-buttons-alert.radio2" = "Mouse with 5+ buttons";
-
-/* First draft: Restore Default for ... */
-"restore-buttons-alert.title" = "Restore Default for ...";
-
-/* First draft: You're __already using__ the default setting for mice with __3 buttons__ */
-"already-using-defaults-toast.3" = "You're __already using__ the default setting for mice with __3 buttons__";
-
-/* First draft: You're __already using__ the default setting for mice with __5 buttons__ */
-"already-using-defaults-toast.5" = "You're __already using__ the default setting for mice with __5 buttons__";
-
-/* Note: Value for this key is defined in Localizable.stringsdict, not Localizable.strings. || Note: The UI strings in .stringsdict have two lines. Only the first line is visible unless you start editing and then use the arrow keys to go to the second line. This is necessary to have linebreaks in .stringsdict since \n doesn't work. Use Option-Enter to insert these linebreaks. */
-"capture-toast.body.captured" = "<>";
-
-/* Note: Value for this key is defined in Localizable.stringsdict, not Localizable.strings */
-"capture-toast.body.uncaptured" = "<>";
-
-/* First draft: System Settings */
-"system-settings-name" = "System Settings";
-
-/* First draft: System Preferences */
-"system-settings-name.pre-ventura" = "System Preferences";
-
-/* First draft: Mac Mouse Fix is currently free in your country (%@) */
-"free-country" = "Mac Mouse Fix is currently free in your country (%@)";
-
-/* First draft: This license __could not be activated__ but Mac Mouse Fix is currently __free in your country__! */
-"license-toast.free-country" = "This license __could not be activated__ but Mac Mouse Fix is currently __free in your country__!";
-
-/* First draft:  __Click here__ to load the recommended settings\nfor your __%@__ mouse || Note: The \n linebreak is so the popover doesn't become too wide. You can set it to your taste. || Note: In English, there needs to be a space at the start of this string otherwise the whole string will be bold. This might be a Ventura Bug */
-"restore-default-buttons-popover.body" = " __Click here__ to load the recommended settings\nfor your __%@__ mouse";
-
-/* First draft: Get a mouse with 5+ buttons to unlock the full potential of Mac Mouse Fix! */
-"buy-mouse-alert.body" = "Get a mouse with 5+ buttons to unlock the full potential of Mac Mouse Fix!";
-
-/* First draft: Your mouse only has 3 buttons */
-"buy-mouse-alert.title" = "Your mouse only has 3 buttons";
-
-/* First draft: OK */
-"buy-mouse-alert.ok" = "OK";
-
-/* First draft: Open 'Security & Privacy' Preferences || Notes: The string for Ventura and later is defined in Interface Builder */
-"accessibility.settings-link.pre-ventura" = "Open 'Security & Privacy' Preferences";
-
-/* First draft: Version %@ || Note: %@ will be replaced by the app version, e.g. '3.0.0 (22027)' */
-"app-version" = "Version %@";

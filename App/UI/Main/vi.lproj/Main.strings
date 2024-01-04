@@ -119,7 +119,7 @@
 /* Class = "NSButtonCell"; title = "Trackpad Simulation"; ObjectID = "N65-aN-Hxp"; Note = "Scroll > Trackpad Interactions"; */
 "N65-aN-Hxp.title" = "Giả lập trackpad";
 
-/* Class = "NSTextFieldCell"; title = "Move the mouse pointer inside the '+' field, then *Click* a mouse button to assign an action to it.  You can also *Double Click*, *Click and Drag* and [more]()."; ObjectID = "N7H-9j-DIr"; Note = "Buttons > Add Field Hint"; */
+/* Class = "NSTextFieldCell"; title = "Move the mouse pointer inside the '+' field, then *Click* a mouse button to assign an action to it.  You can also *Double Click*, *Click and Drag* and [more]()."; ObjectID = "N7H-9j-DIr"; Note = "Buttons > Add Field Hint || It's better to use * instead of _ for emphasis. _ causes problems in some languages like Chinese."; */
 "N7H-9j-DIr.title" = "Di chuyển con trỏ chuột vào trong ô '+', sau đó _nhấp_ một nút của chuột để gáng một hành động cho nó.  Bạn cũng có thể _kích đôi_, _kích và kéo_ và [nhiều hơn]().";
 
 /* Class = "NSMenuItem"; title = "Minimize"; ObjectID = "NdF-Gb-mOK"; */
@@ -158,7 +158,7 @@
 /* Class = "NSTextFieldCell"; title = "You'll be notified of updates when you open\nthis window"; ObjectID = "SaY-fF-d1s"; */
 "SaY-fF-d1s.title" = "Bạn sẽ được thông báo về các cập nhật khi bạn mở\ncửa sổ này";
 
-/* Class = "NSTextFieldCell"; title = "Smoothnessssss:"; ObjectID = "SjO-Dq-CEX"; Note = "Scrolling > Smoothness Label"; */
+/* Class = "NSTextFieldCell"; title = "Smoothness:"; ObjectID = "SjO-Dq-CEX"; Note = "Scrolling > Smoothness Label"; */
 "SjO-Dq-CEX.title" = "Thật là mượt màààààààà:";
 
 /* Class = "NSTextFieldCell"; title = "Buy Me a Milkshake :)"; ObjectID = "TrI-uu-DEN"; */
