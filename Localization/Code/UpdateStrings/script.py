@@ -68,8 +68,9 @@ def main():
     strings_files = shared.find_localization_files(repo_root, None, ['strings'])
     
     # Get updates to .strings files
-    updated_files = update_strings_files(ib_files, 'IB')
-    updated_files += update_strings_files(strings_files, 'sourcecode')
+    updated_files_ib = update_strings_files(ib_files, 'IB')
+    updated_files_src = update_strings_files(strings_files, 'sourcecode')
+    updated_files = updated_files_ib + updated_files_src
     
     # Write 
     if args.wet_run and len(updated_files) > 0:
@@ -78,7 +79,7 @@ def main():
             print(f"Writing to file at {w['path']}...")
             shared.write_file(w['path'], w['new_content'])
     else:
-        print(f"\n\nNot writing anything. {len(updated_files)} files with updates. Is dry run: {not args.wet_run}.")
+        print(f"\n\nNot writing anything. {len(updated_files_ib)} ib files and {len(updated_files_src)} src files with updates. Is dry run: {not args.wet_run}.")
     
     # Debug
     # pprint(ib_files)
