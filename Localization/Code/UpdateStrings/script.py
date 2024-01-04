@@ -6,9 +6,9 @@ It's a replacement for bartycrouch.
 
 Manual testing steps:
 
-- [ ] Remove semicolon on a kv-pair
+- [x] Remove semicolon on a kv-pair
     -> Should throw an error
-- [ ] Multiline values like addField hint (N7H-9j-DIr.title) don't duplicate or anything
+- [x] Multiline values like addField hint (N7H-9j-DIr.title) don't duplicate or anything
 
 - [ ] Insert key in source file
     - Test both IB and code source file (insert in code using NSLocalizedString)
