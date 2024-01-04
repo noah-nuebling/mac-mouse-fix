@@ -104,7 +104,7 @@ def update_strings_files(files, wet_run, type):
     assert type in ['sourcecode', 'IB']
     if type == 'sourcecode': assert len(files) == 1, "There should only be one base .strings file - Localizable.strings"
     
-    to_write = []
+    updated_files = []
     
     for file_dict in files:
     
@@ -126,7 +126,6 @@ def update_strings_files(files, wet_run, type):
         if type == 'sourcecode':
             translation_file_paths.append(file_dict['base'])
         
-        
         updated_files = [] # This is for updating files
         modss = [] # This is for debugging
         
@@ -145,11 +144,12 @@ def update_strings_files(files, wet_run, type):
     
     # Write 
     if wet_run and len(updated_files) > 0:
-        for w in to_write:
-            print(f"Writing to file {w['path']}...")
-            shared.write_to_file(w['path'], w['new_content'])
+        print('\n\n')
+        for w in updated_files:
+            print(f"Writing to file at {w['path']}...")
+            shared.write_file(w['path'], w['new_content'])
     else:
-        print(f"Not writing anything. n of files with updates: {len(updated_files)}. is dry run: {not wet_run}.")
+        print(f"\n\nNot writing anything. n of files with updates: {len(updated_files)}. is dry run: {not wet_run}.")
     
         
         
@@ -314,7 +314,9 @@ def parse_strings_file_content(content, remove_value=False):
     
     result = {}
     
-    regex = shared.strings_file_regex()
+    kv_regex        = shared.strings_file_regex()
+    comment_regex   = shared.strings_file_regex()
+    blank_regex     = shared.strings_file_regex()
     
     
     #
@@ -339,9 +341,13 @@ def parse_strings_file_content(content, remove_value=False):
     last_key = ''
     acc_comment = ''
 
-    for line in content.splitlines(True): # `True` preserves linebreaks, so that we can easily stitch everything together exactly as it was.
-
-        match = regex.match(line)
+    lines = content.split('\n')
+    for i, line in enumerate(lines): # `True` preserves linebreaks, so that we can easily stitch everything together exactly as it was.
+        
+        if i != len(lines) - 1:
+            line += '\n'
+        
+        match = kv_regex.match(line)
 
         if match:
 
