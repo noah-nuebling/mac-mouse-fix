@@ -67,9 +67,18 @@ def main():
     ib_files = shared.find_localization_files(repo_root, None, ['IB'])
     strings_files = shared.find_localization_files(repo_root, None, ['strings'])
     
-    # Update .strings files
-    update_strings_files(ib_files, args.wet_run, 'IB')
-    update_strings_files(strings_files, args.wet_run, 'sourcecode')
+    # Get updates to .strings files
+    updated_files = update_strings_files(ib_files, 'IB')
+    updated_files += update_strings_files(strings_files, 'sourcecode')
+    
+    # Write 
+    if args.wet_run and len(updated_files) > 0:
+        print('\n\n')
+        for w in updated_files:
+            print(f"Writing to file at {w['path']}...")
+            shared.write_file(w['path'], w['new_content'])
+    else:
+        print(f"\n\nNot writing anything. {len(updated_files)} files with updates. Is dry run: {not args.wet_run}.")
     
     # Debug
     # pprint(ib_files)
@@ -78,15 +87,11 @@ def main():
     # Clean up
     shared.runCLT(f"rm -R ./{temp_folder}")
     
-    if not args.wet_run:
-        print("This is a dry run. No files are actually changed even if the logs say so.")
-    
-    
 #
 # Update .strings files
 #
 
-def update_strings_files(files, wet_run, type):
+def update_strings_files(files, type):
     
     """
     (if type == 'sourcecode')   Update .strings files to match source code files which they translate
@@ -141,15 +146,9 @@ def update_strings_files(files, wet_run, type):
         
         log_modifications(modss)
 
+    # Return
     
-    # Write 
-    if wet_run and len(updated_files) > 0:
-        print('\n\n')
-        for w in updated_files:
-            print(f"Writing to file at {w['path']}...")
-            shared.write_file(w['path'], w['new_content'])
-    else:
-        print(f"\n\nNot writing anything. n of files with updates: {len(updated_files)}. is dry run: {not wet_run}.")
+    return updated_files    
     
         
         
