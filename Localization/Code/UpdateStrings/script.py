@@ -241,20 +241,31 @@ def update_strings_file_content(content, generated_content):
                 mods.append({'key': key, 'modtype': 'comment', 'before': p['comment'], 'after': g['comment']})
                 p['comment'] = g['comment']
     
+    # Validate parse
+    
+    all_keys = set(parse.keys()).union(set(generated_parse.keys())) # For debugging
+    for l in all_keys:
+        l_comment = parse[l]['comment']
+        for k in all_keys: # Idea: you could also check if the key appears in single\double quotes, or after linebreak to increase confidence that something is broken.
+            assert f"{k}" not in l_comment, f"The key {k} appears in the comment for key {l}. Something is probably broken in the parsing code. Not proceeding. Comment:\n\n{parse[l]['comment']}\n\n"
+    
     # Reassemple parse into updated content
     
     new_content = ''
-
-    # Attach kv-pairs that also occur in generated_content
-    #   Python iterates over dicts in insertion order. Therefore, this should synchronize the order of kv-pairs in the new_content with the generated_content
-    for k in generated_parse.keys():
-        new_content += parse[k]['comment']
-        new_content += parse[k]['line']
     
-    # Attach unused kv-pairs at the end. 
-    #   Why not just delete them?
+    # Get new keys in order
+    # Notes: 
+    # - First we attach kv-pairs that also occur in generated_content
+    #       dict.keys() are in insertion order in python. Therefore, this should synchronize the order of kv-pairs in the new_content with the generated_content
+    # - Then, we attach unused kv-pairs at the end. 
+    #       Why not just delete them?
+    
+    new_keys = list(generated_parse.keys())
     superfluous_keys = [k for k in parse.keys() if k not in generated_parse.keys()]
-    for k in superfluous_keys:
+    new_keys += superfluous_keys
+    
+    # Attach
+    for k in new_keys:
         new_content += parse[k]['comment']
         new_content += parse[k]['line']
         
