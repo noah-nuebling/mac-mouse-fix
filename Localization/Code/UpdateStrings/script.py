@@ -7,7 +7,7 @@ It's a replacement for bartycrouch.
 Manual testing steps:
 
 - [x] Remove semicolon on a kv-pair
-    -> Should throw an error
+    -> Should throw an error, and not write anything
 - [x] Multiline values like addField hint (N7H-9j-DIr.title) don't duplicate or anything
 
 - [x] Insert key in source file
@@ -56,47 +56,56 @@ temp_folder = './update_comments_temp'
 
 def main():
     
-    # Args
-    parser = argparse.ArgumentParser()
-    parser.add_argument('--wet_run', required=False, action='store_true', help="Provide this arg to actually modify files. Otherwise it will just log what it would do.", default=False)
-    args = parser.parse_args()
-    
-    # Constants & stuff
-    repo_root = os.getcwd()
-    assert os.path.basename(repo_root) == 'mac-mouse-fix', "Run this script from the 'mac-mouse-fix' repo folder."
-    
     # Create temp dir
     shared.runCLT(f"mkdir -p {temp_folder}")
     
-    # Find files
-    ib_files = shared.find_localization_files(repo_root, None, ['IB'])
-    strings_files = shared.find_localization_files(repo_root, None, ['strings'])
+    try:
     
-    # Get updates to .strings files
-    updated_files_ib, modss_ib = update_strings_files(ib_files, 'IB', repo_root)
-    updated_files_src, modss_src = update_strings_files(strings_files, 'sourcecode', repo_root)
-    updated_files = updated_files_ib + updated_files_src
+        # Args
+        parser = argparse.ArgumentParser()
+        parser.add_argument('--wet_run', required=False, action='store_true', help="Provide this arg to actually modify files. Otherwise it will just log what it would do.", default=False)
+        args = parser.parse_args()
+        
+        # Constants & stuff
+        repo_root = os.getcwd()
+        assert os.path.basename(repo_root) == 'mac-mouse-fix', "Run this script from the 'mac-mouse-fix' repo folder."
+        
+        # Find files
+        ib_files = shared.find_localization_files(repo_root, None, ['IB'])
+        strings_files = shared.find_localization_files(repo_root, None, ['strings'])
+        
+        # Get updates to .strings files
+        updated_files_ib, modss_ib = update_strings_files(ib_files, 'IB', repo_root)
+        updated_files_src, modss_src = update_strings_files(strings_files, 'sourcecode', repo_root)
+        updated_files = updated_files_ib + updated_files_src
+        
+        # Log
+        #   Note: This stuff doesn't work very well. Just look at git diff
+        
+        # print(f"\nLogging all modifications that have been found...") 
+        # log_modifications(modss_src)
+        # log_modifications(modss_ib)
+        
+        # Write 
+        if args.wet_run and len(updated_files) > 0:
+            print('\n\n')
+            for w in updated_files:
+                print(f"Writing to file at {w['path']}...")
+                shared.write_file(w['path'], w['new_content'])
+        else:
+            print(f"\n\nNot writing anything. {len(updated_files_ib)} ib files and {len(updated_files_src)} src files with updates. Is dry run: {not args.wet_run}.")
+        
+        # Debug
+        # pprint(ib_files)
+        # pprint(strings_files)
     
-    # Log
-    print(f"\nLogging all modifications that have been found...")
-    log_modifications(modss_src)
-    log_modifications(modss_ib)
-    
-    # Write 
-    if args.wet_run and len(updated_files) > 0:
-        print('\n\n')
-        for w in updated_files:
-            print(f"Writing to file at {w['path']}...")
-            shared.write_file(w['path'], w['new_content'])
-    else:
-        print(f"\n\nNot writing anything. {len(updated_files_ib)} ib files and {len(updated_files_src)} src files with updates. Is dry run: {not args.wet_run}.")
-    
-    # Debug
-    # pprint(ib_files)
-    # pprint(strings_files)
-    
-    # Clean up
-    shared.runCLT(f"rm -R ./{temp_folder}")
+    finally:
+        
+        # Print
+        print("Done! Cleaning up temp folder and exiting...")
+        
+        # Clean up
+        shared.runCLT(f"rm -R ./{temp_folder}")
     
 #
 # Update .strings files
@@ -117,8 +126,8 @@ def update_strings_files(files, type, repo_root):
     
     print(f"\nUpdating strings files type {type}...")
     
-    assert type in ['sourcecode', 'IB']
-    if type == 'sourcecode': assert len(files) == 1, "There should only be one base .strings file - Localizable.strings"
+    assert type in ['sourcecode', 'IB'], f"UpdateStrings script is incorrect."
+    if type == 'sourcecode': shared.xcassert(len(files) == 1, "There should only be one base .strings file - Localizable.strings")
     
     updated_files = [] # This is for updating files
     modss = [] # This is for debugging
@@ -146,8 +155,7 @@ def update_strings_files(files, type, repo_root):
         for path in translation_file_paths:
             
             content = shared.read_file(path, 'utf-8')
-            relative_path = os.path.relpath(path, repo_root)
-            new_content, mods, ordered_keys = updated_strings_file_content(content, generated_content, relative_path)
+            new_content, mods, ordered_keys = updated_strings_file_content(content, generated_content, path, repo_root)
             
             if new_content != content:
                 updated_files.append({"path": path, "new_content": new_content})
@@ -209,7 +217,8 @@ def log_modifications(modss):
                 value = shared.indent(mod['value'], 8)
                 path_result += f"\n\n    {key} was inserted:\n{value}"
                 
-            else: assert False
+            else: 
+             assert False
         
         if len(path_result) > 0:
             result += f"\n\n{mods['path']} was modified:{path_result}\n"
@@ -225,7 +234,7 @@ def log_modifications(modss):
 # String parse & modify
 #
 
-def updated_strings_file_content(content, generated_content, relative_file_path):
+def updated_strings_file_content(content, generated_content, file_path, repo_root):
     
     """
     At the time of writing:
@@ -235,8 +244,8 @@ def updated_strings_file_content(content, generated_content, relative_file_path)
     """
     
     # Parse both contents
-    parse = parse_strings_file_content(content)
-    generated_parse = parse_strings_file_content(generated_content, remove_value=True) # `extractLocStrings` sets all values to the key for some reason, so we remove them.
+    parse = parse_strings_file_content(content, file_path)
+    generated_parse = parse_strings_file_content(generated_content, file_path, remove_value=True) # `extractLocStrings` sets all values to the key for some reason, so we remove them.
     
     # Record modifications for diagnositics
     mods = []
@@ -274,26 +283,35 @@ def updated_strings_file_content(content, generated_content, relative_file_path)
     
     # Get new keys in order
     # Notes: 
-    # - First we attach kv-pairs that also occur in generated_content
-    #       dict.keys() are in insertion order in python. Therefore, this should synchronize the order of kv-pairs in the new_content with the generated_content
-    # - Then, we attach unused kv-pairs at the end. 
-    #       Why not just delete them?
+    # - First, we attach unused kv-pairs, 
+    #   so they are visible because they might need action
+    # - Second, we attach kv-pairs that also occur in generated_content
+    #   Note: dict.keys() are in insertion order in python. Therefore, this should synchronize the order of kv-pairs in the new_content with the generated_content
     
     generated_keys = list(generated_parse.keys())
     superfluous_keys = [k for k in parse.keys() if k not in generated_parse.keys()]
     new_keys = generated_keys + superfluous_keys
     
     # Attach
+    
+    for k in superfluous_keys:
+        
+        new_content += parse[k]['comment']
+        new_content += parse[k]['line']
+        
+        # Note: We tried to remove the extra newline above the first comment, but it lead to slightly strange behaviour (didn't test much)
+        
+        if '/en' in file_path or '/Base' in file_path:
+            line_number = len(new_content.split('\n')) - 1
+            shared.xcwarn("This key isn't used in any source code files. Consider removing it from the development language Localizable.strings file. Explanation: The StateOfLocalization script compares translated Localizable.strings files against the development language Localizable.strings file and discrepancies are automatically published in the StateOfLocalization comment. So the developer only has to keep the development language Localizable.strings file in sync with the source code and the rest can be done by translators.",
+                           f"{file_path}", f"{line_number}")
+    
+    if len(superfluous_keys) > 0: # The first generated comment doesn't have a newline up top, so we insert one for consistent spacing
+        new_content += '\n'
+        
     for k in generated_keys:
         new_content += parse[k]['comment']
         new_content += parse[k]['line']
-        
-    for k in superfluous_keys:
-        new_content += parse[k]['comment']
-        new_content += parse[k]['line']
-        
-        print("Printing message for Xcode:")
-        shared.xcode_message("warning", relative_file_path, len(new_content.split('\n')), "This key isn't used.")
         
     # Analyze reordering
     ordered_key_dict = {
@@ -306,7 +324,7 @@ def updated_strings_file_content(content, generated_content, relative_file_path)
     
     
 
-def parse_strings_file_content(content, remove_value=False):
+def parse_strings_file_content(content, file_path, remove_value=False):
     
     """
     
@@ -351,10 +369,14 @@ def parse_strings_file_content(content, remove_value=False):
         That's nice, but I don't understand why it's happending. Might be coming from this function. Edit: It think it's just because we replace the comments and the comments from the generated content don't have double line breaks.
     """
     
-    def assert_full_match(match, line, name, line_number, context):
+    def assert_full_match(match, line, name, line_number):
         match_end_target = 0 if len(line) == 0 else len(line) - 1
-        assert match.start(0) == 0 and match.end(0) == match_end_target, f"Line is matched by {name}, but only partially. This means there is probably something weird with the syntax / formatting. match_start: {match.start(0)}, match_end: {match.end(0)}, line length: {len(line)}, line content: {line}, line number: {line_number}, context: {context}"
+        
+        if not (match.start(0) == 0 and match.end(0) == match_end_target):
+            shared.xcerror(f"Line is matched by {name}, but only partially. This means there is probably something weird with the syntax / formatting.",
+                           file_path, line_number)
     
+    last_key_line_number = -1
     last_key = ''
     acc_comment = ''
 
@@ -368,7 +390,7 @@ def parse_strings_file_content(content, remove_value=False):
 
         if kv_match:
             
-            assert_full_match(kv_match, line, 'kv_regex', i+1, f"acc_comment: {acc_comment}")
+            assert_full_match(kv_match, line, 'kv_regex', i+1)
 
             key = kv_match.group(2)
             if remove_value:
@@ -382,21 +404,22 @@ def parse_strings_file_content(content, remove_value=False):
             acc_comment = ''
 
             last_key = key
+            last_key_line_number = i+1
         else:
             comment_match = comment_regex.match(line)
             blank_match = blank_regex.match(line)
             
             if comment_match:
-                assert_full_match(comment_match, line, 'comment_regex', i+1, f"acc_comment: {acc_comment}")
+                assert_full_match(comment_match, line, 'comment_regex', i+1)
             elif blank_match:
-                assert_full_match(blank_match, line, 'blank_regex', i+1, f"acc_comment: {acc_comment}")
+                assert_full_match(blank_match, line, 'blank_regex', i+1)
             else:
-                assert False, f"Line doesn't match kv, comment, or blank line regex. That means there's probably something weird with the syntax / formatting. Line number: {i+1}, content: {line}, acc_comment: {acc_comment}."
+                shared.xcerror(f"Line doesn't match kv, comment, or blank line regex. That means there's probably something weird with the syntax / formatting.", file_path, i+1)
             
             acc_comment += line 
 
     post_comment = acc_comment
-    assert len(post_comment.strip()) == 0, f"There's content under the last key {last_key}. Don't know what to do with that. Pls remove?"
+    if not len(post_comment.strip()) == 0: shared.xcerror(f"There's content under the last key-value-pair (this line). Don't know what to do with that. Pls remove?", file_path, last_key_line_number)
     
     return result
     
