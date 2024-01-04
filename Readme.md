@@ -96,14 +96,6 @@ It offers amazingly natural and polished gestures and smooth scrolling that let 
 It lets you do almost anything right from your mouse with its powerful customization options that are so simple and intuitive that anyone can use them.
 -->
 
-## Background
-
-This is what I wrote on the Mac Mouse Fix website when I released the very first version during the semester break in 2019:
-
-> My name is Noah and I made Mac Mouse Fix. When I started this project I was completely new to software development, but with the power of Google, Stack Overflow, and Apple's Developer Documentation at my fingertips I managed to learn what is necessary to deliver a solid little app that I hope will be useful for you guys. Working on Mac Mouse Fix made me discover a passion for programming, and led me to enroll in a Computer Science Degree at college, which has been awesome so far. I probably won't have a lot of time to work on Mac Mouse Fix during the semester, but please feel free to make your own contributions to Mac Mouse Fix on GitHub!
-
-Since then, I have unfortunately struggled a lot with my mental health. And after starting out with really good grades and a nice social life, I unfortunately became too depressed and anxious to finish my degree. However, I still have a lot of passion and fun working on Mac Mouse Fix, and I hope to be able to sustain myself financially through the project and to slowly but deliberately turn it into the best mouse driver ever and an app that any Mac user with a mouse can appreciate and benefit from. Thanks so much to everyone for their support, be it through financial support, by requesting and discussing features and bugs, or by simply sharing their excitement about the app! <3 :) Thank you.
-
 ## Features
 
 See the [website](https://noah-nuebling.github.io/mac-mouse-fix-website#trackpad) for an overview of the features of Mac Mouse Fix, including video demos!
@@ -118,23 +110,6 @@ Major features were introduced in these versions:
 | [2.0.0](https://github.com/noah-nuebling/mac-mouse-fix/releases/tag/2.0.0)
 | [2.1.0](https://github.com/noah-nuebling/mac-mouse-fix/releases/tag/2.1.0)
 | 3.0.0
--->
-
-
-## What people say
-
-Thanks so much to everyone sharing their excitement about Mac Mouse Fix!\
-On the [website](http://noah-nuebling.github.io/mac-mouse-fix-website/) you can find a collection of nice things people have said about the app.
-
-
-<!-- 
-These cool articles were written about MMF
-
-- That YouTube video (so sick)
-- Lifehacker
-- Blib blob (Japanese)
-- Not CNET review
-- (?If you know about other coverage of MMF let me know?) 
 -->
 
 ## Installation
@@ -169,6 +144,22 @@ Uninstall Mac Mouse Fix by simply moving it to the bin.
 However, there will be files left on your system. To get rid of these files I recommend the awesome [AppCleaner by FreeMacSoft](https://freemacsoft.net/appcleaner/).
 
 Under macOS, it is not feasible for apps to delete these leftover files by themselves when you delete the app. That's why I highly recommend using an app like AppCleaner.
+
+## What people say
+
+Thanks so much to everyone sharing their excitement about Mac Mouse Fix!\
+On the [website](http://noah-nuebling.github.io/mac-mouse-fix-website/) you can find a collection of nice things people have said about the app.
+
+
+<!-- 
+These cool articles were written about MMF
+
+- That YouTube video (so sick)
+- Lifehacker
+- Blib blob (Japanese)
+- Not CNET review
+- (?If you know about other coverage of MMF let me know?) 
+-->
 
 ## Tips
 
@@ -275,6 +266,14 @@ Under macOS, it is not feasible for apps to delete these leftover files by thems
 - **Can I get Mac Mouse Fix for free if I already donated?**
 
   Yes! See the [Acknowledgements](Acknowledgements.md#-paypal-donations) for more info.
+
+## Background
+
+This is what I wrote on the Mac Mouse Fix website when I released the very first version during the semester break in 2019:
+
+> My name is Noah and I made Mac Mouse Fix. When I started this project I was completely new to software development, but with the power of Google, Stack Overflow, and Apple's Developer Documentation at my fingertips I managed to learn what is necessary to deliver a solid little app that I hope will be useful for you guys. Working on Mac Mouse Fix made me discover a passion for programming, and led me to enroll in a Computer Science Degree at college, which has been awesome so far. I probably won't have a lot of time to work on Mac Mouse Fix during the semester, but please feel free to make your own contributions to Mac Mouse Fix on GitHub!
+
+Since then, I have unfortunately struggled a lot with my mental health. And after starting out with really good grades and a nice social life, I unfortunately became too depressed and anxious to finish my degree. However, I still have a lot of passion and fun working on Mac Mouse Fix, and I hope to be able to sustain myself financially through the project and to slowly but deliberately turn it into the best mouse driver ever and an app that any Mac user with a mouse can appreciate and benefit from. Thanks so much to everyone for their support, be it through financial support, by requesting and discussing features and bugs, or by simply sharing their excitement about the app! <3 :) Thank you.
 
 ## How you can contribute
 
