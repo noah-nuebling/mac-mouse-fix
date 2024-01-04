@@ -73,8 +73,8 @@ def main():
     strings_files = shared.find_localization_files(repo_root, None, ['strings'])
     
     # Get updates to .strings files
-    updated_files_ib, modss_ib = update_strings_files(ib_files, 'IB')
-    updated_files_src, modss_src = update_strings_files(strings_files, 'sourcecode')
+    updated_files_ib, modss_ib = update_strings_files(ib_files, 'IB', repo_root)
+    updated_files_src, modss_src = update_strings_files(strings_files, 'sourcecode', repo_root)
     updated_files = updated_files_ib + updated_files_src
     
     # Log
@@ -102,7 +102,7 @@ def main():
 # Update .strings files
 #
 
-def update_strings_files(files, type):
+def update_strings_files(files, type, repo_root):
     
     """
     (if type == 'sourcecode')   Update .strings files to match source code files which they translate
@@ -146,7 +146,8 @@ def update_strings_files(files, type):
         for path in translation_file_paths:
             
             content = shared.read_file(path, 'utf-8')
-            new_content, mods, ordered_keys = updated_strings_file_content(content, generated_content)
+            relative_path = os.path.relpath(path, repo_root)
+            new_content, mods, ordered_keys = updated_strings_file_content(content, generated_content, relative_path)
             
             if new_content != content:
                 updated_files.append({"path": path, "new_content": new_content})
@@ -224,7 +225,7 @@ def log_modifications(modss):
 # String parse & modify
 #
 
-def updated_strings_file_content(content, generated_content):
+def updated_strings_file_content(content, generated_content, relative_file_path):
     
     """
     At the time of writing:
@@ -290,6 +291,9 @@ def updated_strings_file_content(content, generated_content):
     for k in superfluous_keys:
         new_content += parse[k]['comment']
         new_content += parse[k]['line']
+        
+        print("Printing message for Xcode:")
+        shared.xcode_message("warning", relative_file_path, len(new_content.split('\n')), "This key isn't used.")
         
     # Analyze reordering
     ordered_key_dict = {

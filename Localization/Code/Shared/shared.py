@@ -13,6 +13,13 @@ import glob
 
 
 #
+# Other Utils
+#
+
+def xcode_message(type, file, line, message):
+    print(f"{type}:{file}:{line}: {message}")
+
+#
 # File-level analysis
 #
 
