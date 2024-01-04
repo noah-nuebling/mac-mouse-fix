@@ -104,6 +104,8 @@ def update_strings_files(files, wet_run, type):
     assert type in ['sourcecode', 'IB']
     if type == 'sourcecode': assert len(files) == 1, "There should only be one base .strings file - Localizable.strings"
     
+    to_write = []
+    
     for file_dict in files:
     
         generated_content = ''
@@ -120,23 +122,36 @@ def update_strings_files(files, wet_run, type):
         else: 
             assert False
         
-        strings_file_paths = list(file_dict['translations'].keys())
+        translation_file_paths = list(file_dict['translations'].keys())
         if type == 'sourcecode':
-            strings_file_paths.append(file_dict['base'])
+            translation_file_paths.append(file_dict['base'])
         
-        modss = []
         
-        for path in strings_file_paths:
+        updated_files = [] # This is for updating files
+        modss = [] # This is for debugging
+        
+        for path in translation_file_paths:
             
             content = shared.read_file(path, 'utf-8')
-            new_content, mods, ordered_keys = update_strings_file_content(content, generated_content)
+            new_content, mods, ordered_keys = updated_strings_file_content(content, generated_content)
             
-            if wet_run and new_content != content:
-                shared.write_file(path, new_content)
+            if new_content != content:
+                updated_files.append({"path": path, "new_content": new_content})
             
             modss.append({'path': path, 'mods': mods, 'ordered_keys': ordered_keys})
         
         log_modifications(modss)
+
+    
+    # Write 
+    if wet_run and len(updated_files) > 0:
+        for w in to_write:
+            print(f"Writing to file {w['path']}...")
+            shared.write_to_file(w['path'], w['new_content'])
+    else:
+        print(f"Not writing anything. n of files with updates: {len(updated_files)}. is dry run: {not wet_run}.")
+    
+        
         
 
 #
@@ -206,7 +221,7 @@ def log_modifications(modss):
 # String parse & modify
 #
 
-def update_strings_file_content(content, generated_content):
+def updated_strings_file_content(content, generated_content):
     
     """
     At the time of writing:
