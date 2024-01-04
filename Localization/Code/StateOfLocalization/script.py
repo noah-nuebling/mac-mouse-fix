@@ -860,7 +860,10 @@ def analyze_localization_files(files, print_latest_for):
             
             # Get & attach missing / superfluous translations
             #   Note: missing / superfluous can't be marked as !IS_OK
-            
+            #   Note on source code keys:
+            #       For Localizable.strings, even the English 'base' strings file can have missing or superfluous keys compared to the source code which it translates.
+            #       However, we don't want to list those in the State of Localization, since it's the developers job to create the base English Localizable.strings file and keep it in sync with the source code. 
+            #       Any discrepancies between the English Localizable.strings file and the other languages will show up here.
             missing_translations        = list(map(lambda k: {'key': k, 'value': base_keys_and_values[k]['value']['text']}, missing_keys))
             superfluous_translations    = list(map(lambda k: {'key': k, 'value': translation_keys_and_values[k]['value']['text']}, superfluous_keys))
             translation_dict['missing_translations'] = missing_translations
