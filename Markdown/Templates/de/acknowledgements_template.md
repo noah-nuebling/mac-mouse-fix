@@ -68,6 +68,7 @@ Mac Mouse Fix wurde mithilfe dieser **hervorragenden Softwarebibliotheken** erst
 - [SnapKit](https://github.com/SnapKit/SnapKit) - Macht Auto Layout sowohl auf iOS als auch auf OS X einfach.
 - [MASShortcut](https://github.com/shpakovski/MASShortcut) - API und Benutzeroberfläche zum Aufzeichnen, Speichern und Verwenden systemweiter Tastenkürzel
 - [CGSInternal](https://github.com/NUIKit/CGSInternal) - Eine Sammlung privater CoreGraphics-Routinen
-- Abhängigkeiten der Python-Skripte von Mac Mouse Fix: [Update- und Statistikskripte](https://github.com/noah-nuebling/mac-mouse-fix/blob/update-feed/requirements.txt) | [Markdown-Generierungsskript]({repo_root}Markdown/Code/python_requirements.txt)
+- Abhängigkeiten der Skripte von Mac Mouse Fix:<br>
+  [Update- und Statistikskripte](https://github.com/noah-nuebling/mac-mouse-fix/blob/update-feed/requirements.txt) | [Markdown-Generierungsskript]({repo_root}Markdown/Code/python_requirements.txt) | [.strings-Datei Synchronisierungsskript]({repo_root}Localization/Code/UpdateStrings/requirements.txt) | ["State of Localization"-Skript]({repo_root}Localization/Code/StateOfLocalization/requirements.txt)
 - Abhängigkeiten der [Mac Mouse Fix Feedback Assistant](https://noah-nuebling.github.io/mac-mouse-fix-feedback-assistant/) Web-App [hier](https://github.com/noah-nuebling/mac-mouse-fix-feedback-assistant/blob/master/package.json)
 - Abhängigkeiten der [Mac Mouse Fix Website](https://noah-nuebling.github.io/mac-mouse-fix-website/) findest du [hier](https://github.com/noah-nuebling/mac-mouse-fix-website/blob/main/package.json)

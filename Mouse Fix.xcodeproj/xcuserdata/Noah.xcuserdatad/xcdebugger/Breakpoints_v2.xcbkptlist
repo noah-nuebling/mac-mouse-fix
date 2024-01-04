@@ -606,7 +606,7 @@
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
             uuid = "A815A6FB-FCE2-4FD0-B8D4-5AE262150338"
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Shared/License/LicenseConfig.swift"
@@ -615,6 +615,22 @@
             startingLineNumber = "56"
             endingLineNumber = "56"
             landmarkName = "get(onComplete:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "0D8ABE4C-8D6B-4A0D-8C93-24EDF1C9E3B0"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Shared/License/License.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "321"
+            endingLineNumber = "321"
+            landmarkName = "_checkLicense(key:licenseConfig:incrementUsageCount:completionHandler:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
