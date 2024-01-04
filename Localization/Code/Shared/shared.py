@@ -11,28 +11,6 @@ import git
 import textwrap
 import glob
 
-
-#
-# Other Utils
-#
-
-def xcassert(condition, message, file='', line=''):
-    if not condition:
-        xcerror(file, line, message)
-
-def xcerror(message, file='', line=''):
-    print("\nPrinting error for Xcode and then aborting...")
-    xcode_message("error", file, line, message, flush=True)
-    exit(1)
-
-def xcwarn(message, file='', line=''):
-    print("\nPrinting warning for Xcode...")
-    xcode_message("warning", file, line, message)
-
-def xcode_message(type, file, line, message, flush=False):
-    # Type can be "note", "warning", or "error"
-    print(f"{file}:{line}: {type}: MMF UpdateStrings script: {message}", flush=flush)
-
 #
 # File-level analysis
 #
@@ -68,8 +46,6 @@ def extract_translation_keys_and_values_from_file(file_path):
 #
 # Core string-level analysis
 #
-
-
 
 def strings_file_regex_comment_line():
     
