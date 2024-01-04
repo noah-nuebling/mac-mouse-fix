@@ -48,7 +48,57 @@ def extract_translation_keys_and_values_from_file(file_path):
 # Core string-level analysis
 #
 
-def strings_file_regex():
+
+
+def strings_file_regex_comment_line():
+    
+    """
+    Matches comments in Xcode .strings files
+    
+    Test strings:
+
+/* Class = "NSTabViewItem"; label = "Buttons"; ObjectID = "Mjk-wy-Z7C"; Note = "Toolbar > Buttons Tab Button"; */
+"Mjk-wy-Z7C.label" = "按鈕";
+
+/* Class = "NSButtonCell"; title = "Trackpad Simulation"; ObjectID = "N65-aN-Hxp"; Note = "Scroll > Trackpad Interactions"; */
+"N65-aN-Hxp.title" = "模擬觸控式軌跡板";
+
+/* Class = "NSButtonCell"; title = "Trackpad Simulation"; ObjectID = "N65-aN-Hxp"; Note = "Scroll > Trackpad Interactions"; */
+"N65-aN-Hxp.title" = "模擬觸控式軌跡板"; // Whatt
+
+         
+ // Hi thereee
+	
+
+/* Class = "NSTextFieldCell"; title = "Move the mouse pointer inside the '+' field, then *Click* a mouse button to assign an action to it.  You can also *Double Click*, *Click and Drag* and [more]()."; ObjectID = "N7H-9j-DIr"; Note = "Buttons > Add Field Hint || It's better to use * instead of _ for emphasis. _ causes problems in some languages like Chinese."; */
+"N7H-9j-DIr.title" = "移動滑鼠指標到「+」區域內，然後按一下滑鼠按鈕來指定動作。  您也可以按兩下、按一下並拖移、執行[更多]()動作。";
+
+/* Class = "NSMenuItem"; title = "Minimize"; ObjectID = "NdF-Gb-mOK"; */
+"NdF-Gb-mOK.title" = "縮到最小";
+
+/* Class = "NSTextFieldCell"; title = "Visit the Website"; ObjectID = "Ozk-o9-C4a"; */
+"Ozk-o9-C4a.title" = "參訪網站";
+
+    """
+    
+    regex = re.compile(r'^ *?\/\*.*?\*\/(\s\/\/.*?)?$', re.MULTILINE)
+    
+    return regex
+
+def strings_file_regex_blank_line():
+    
+    """
+    Matches blank lines in Xcode .strings files
+    
+    Test strings: 
+        See strings_file_regex_comment_line()
+    """
+    
+    regex = re.compile(r'^\s*?(\s\/\/.*?)?$', re.MULTILINE)
+    
+    return regex
+
+def strings_file_regex_kv_line():
     
     """
     Used to get keys and values from strings files. Designed to work on Xcode .strings files and on the .js strings files used on the MMF website. (Won't work on `.stringsdict`` files, those are xml)
@@ -67,12 +117,12 @@ def strings_file_regex():
 'quote-"source".,//youtubeComment':  "**{ name }** in// einem YouTube,-KommentarIS_OK", // ! omgg !!IS_OK ,that's so 
 +  'quote-source.youtubeComment':  "**{ name }** in' einem'` YouTube`-Kommentar", // IS_OK
     'quote-source.youtubeComment':  "**{ name }** in einem YouTube-Kommentar", /* !IS_OK */
--  "quote-"source".,//youtubeComment" =  '**{ name }** in// einem YouTube,-KommentarIS_OK'; // ! omgg !!IS_OK ,that's so 
+-  "quote-"source".,//youtubeComment" =  '**{ name }** in// einem YouTube,-KommentarIS_OK'; // ! omgg !!is_ok ,that's so 
     """
     
-    strings_file_regex = re.compile(r'^(\+?\-?)\s*[\'\"](.+)[\'\"]\s*[=:]\s*[\'\"](.*)[\'\"][,;].*?(\/.*?(!+IS_OK).*)?$', re.MULTILINE)
+    regex = re.compile(r'^(\+?\-?)\s*[\'\"](.+)[\'\"]\s*[=:]\s*[\'\"](.*)[\'\"][,;].*?(\/.*?(!+IS_OK).*)?$', re.MULTILINE | re.IGNORECASE)
     
-    return strings_file_regex
+    return regex
     
 def extract_translation_keys_and_values_from_string(text):
 
@@ -96,7 +146,7 @@ def extract_translation_keys_and_values_from_string(text):
     """
     
     # Get regex 
-    regex = strings_file_regex()
+    regex = strings_file_regex_kv_line()
     
     # Find matches
     matches = regex.finditer(text)

@@ -312,9 +312,9 @@ def parse_strings_file_content(content, remove_value=False):
     
     result = {}
     
-    kv_regex        = shared.strings_file_regex()
-    comment_regex   = shared.strings_file_regex()
-    blank_regex     = shared.strings_file_regex()
+    kv_regex        = shared.strings_file_regex_kv_line()
+    comment_regex   = shared.strings_file_regex_comment_line()
+    blank_regex     = shared.strings_file_regex_blank_line()
     
     
     #
@@ -328,6 +328,8 @@ def parse_strings_file_content(content, remove_value=False):
             - goes through the text line-by line, and applies the regex to each line.
             - That makes for simple code, and it allows us to verify that the .strings file has the correct format, instead of doing weird stuff like the match-based approach.
             - We used splitlines(True) to iterate lines, but this didn't work, because the strings sometimes contain the character 'LINE SEPARATOR' (U+2028) if you enter a linebreak in IB, and splitlines splits at those characters. (Example for this is the '+' field hint.)
+                - Note: Gave GitHub Feedback at: https://github.com/orgs/community/discussions/84092
+            - But by simply using .split('\n') it seems to work!
         - match-based approach:
             - The match-based applies the regext for finding kv-pairs to the whole string, and then iterates through the matches.
             - This works fine, butttt if you forget to put a semicolon at the end, then it will consider the whole kv-pair part of a comment, and will simply delete it.
@@ -335,6 +337,10 @@ def parse_strings_file_content(content, remove_value=False):
     - Somehow we seem to be replacing consecutive blank lines before and after comments with single blank lines in the output of the script. 
         That's nice, but I don't understand why it's happending. Might be coming from this function. Edit: It think it's just because we replace the comments and the comments from the generated content don't have double line breaks.
     """
+    
+    def assert_full_match(match, line, name, line_number, context):
+        target_match_end = 0 if len(line) == 0 else len(line) - 1
+        assert match.start(0) == 0 and match.end(0) == target_match_end, f"Line is matched by {name}, but only partially. match_start: {match.start(0)}, match_end: {match.end(0)}, line length: {len(line)}, line content: {line}, line number: {line_number}, context: {context}"
     
     last_key = ''
     acc_comment = ''
@@ -345,14 +351,16 @@ def parse_strings_file_content(content, remove_value=False):
         if i != len(lines) - 1:
             line += '\n'
         
-        match = kv_regex.match(line)
+        kv_match = kv_regex.match(line)
 
-        if match:
+        if kv_match:
+            
+            assert_full_match(kv_match, line, 'kv_regex', i+1, f"acc_comment: {acc_comment}")
 
-            key = match.group(2)
+            key = kv_match.group(2)
             if remove_value:
-                value_start = match.start(3)
-                value_end = match.end(3)
+                value_start = kv_match.start(3)
+                value_end = kv_match.end(3)
                 result_line = line[:value_start] + line[value_end:]
             else:
                 result_line = line
@@ -362,6 +370,16 @@ def parse_strings_file_content(content, remove_value=False):
 
             last_key = key
         else:
+            comment_match = comment_regex.match(line)
+            blank_match = blank_regex.match(line)
+            
+            if comment_match:
+                assert_full_match(comment_match, line, 'comment_regex', i+1, f"acc_comment: {acc_comment}")
+            elif blank_match:
+                assert_full_match(blank_match, line, 'blank_regex', i+1, f"acc_comment: {acc_comment}")
+            else:
+                assert False, f"Line doesn't match kv, comment, or blank line regex. Line number: {i+1}, content: {line}, acc_comment: {acc_comment}"
+            
             acc_comment += line 
 
     post_comment = acc_comment
