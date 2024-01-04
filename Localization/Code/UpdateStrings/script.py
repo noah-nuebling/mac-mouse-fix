@@ -68,9 +68,14 @@ def main():
     strings_files = shared.find_localization_files(repo_root, None, ['strings'])
     
     # Get updates to .strings files
-    updated_files_ib = update_strings_files(ib_files, 'IB')
-    updated_files_src = update_strings_files(strings_files, 'sourcecode')
+    updated_files_ib, modss_ib = update_strings_files(ib_files, 'IB')
+    updated_files_src, modss_src = update_strings_files(strings_files, 'sourcecode')
     updated_files = updated_files_ib + updated_files_src
+    
+    # Log
+    print(f"\nLogging all modifications that have been found...")
+    log_modifications(modss_src)
+    log_modifications(modss_ib)
     
     # Write 
     if args.wet_run and len(updated_files) > 0:
@@ -110,7 +115,8 @@ def update_strings_files(files, type):
     assert type in ['sourcecode', 'IB']
     if type == 'sourcecode': assert len(files) == 1, "There should only be one base .strings file - Localizable.strings"
     
-    updated_files = []
+    updated_files = [] # This is for updating files
+    modss = [] # This is for debugging
     
     for file_dict in files:
     
@@ -132,9 +138,6 @@ def update_strings_files(files, type):
         if type == 'sourcecode':
             translation_file_paths.append(file_dict['base'])
         
-        updated_files = [] # This is for updating files
-        modss = [] # This is for debugging
-        
         for path in translation_file_paths:
             
             content = shared.read_file(path, 'utf-8')
@@ -144,12 +147,9 @@ def update_strings_files(files, type):
                 updated_files.append({"path": path, "new_content": new_content})
             
             modss.append({'path': path, 'mods': mods, 'ordered_keys': ordered_keys})
-        
-        log_modifications(modss)
 
     # Return
-    
-    return updated_files    
+    return updated_files, modss
     
         
         
@@ -182,8 +182,6 @@ def log_modifications(modss):
             else: 
                 path_result += f"\\n\n    The order of keys seems to have changed. (I think - this might be broken)"
                 
-    
-
         for mod in sorted(mods['mods'], key=lambda x: x['modtype'], reverse=True):
             
             key = mod['key']
@@ -208,7 +206,7 @@ def log_modifications(modss):
             else: assert False
         
         if len(path_result) > 0:
-            result += f"\n\n{mods['path']} was modified:{path_result}"
+            result += f"\n\n{mods['path']} was modified:{path_result}\n"
         else:
             result += f"\n{mods['path']} was not modified"
     
