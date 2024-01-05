@@ -41,6 +41,7 @@ These people spent a lot more than the standard price and treated me to an **Inc
 
 **January 2024**
 
+- 🇳🇱&nbsp;Pieter - "Thanks!"
 - 🇺🇸&nbsp;David&nbsp;Langerman
 - 🇺🇸&nbsp;Quinn&nbsp;Slack
 
