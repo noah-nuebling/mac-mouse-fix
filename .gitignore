@@ -5,6 +5,7 @@
 # Ignore python stuff
 update_env/
 env/
+venv/
 __pycache__/
 
 # Ignore all folders named xcuserdata
