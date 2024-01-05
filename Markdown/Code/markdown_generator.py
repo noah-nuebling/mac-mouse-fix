@@ -224,7 +224,7 @@ def insert_acknowledgements(template, language_id, language_dict, gumroad_api_ke
                     if response.status_code == 401:
                         print('(The request failed because it is unauthorized (status 401). This might be because you are not providing a correct Access Token using the `--api_key` command line argument. You can retrieve an Access Token in the GitHub Secrets or in the Gumroad Settings under Advanced. Exiting script.')
                         sys.exit(1)
-                    elif failed_attempts <= 3:
+                    elif failed_attempts <= 10:
                         print(f'The HTTP request failed with status {response.status_code}. Since the the gumroad servers sometimes randomly fail (normally with code 5xx), were trying again...')
                         continue
                     else:
