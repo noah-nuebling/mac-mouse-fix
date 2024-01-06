@@ -39,6 +39,7 @@ Diese Leute haben viel mehr als den Standardpreis ausgegeben und mir einen **ung
 
 **Januar 2024**
 
+- 🇩🇪&nbsp;Emma - "Thank you for this awesome tool, love it ❤️"
 - 🇦🇺&nbsp;Kyle - "Good software is always appreciated."
 - 🇳🇱&nbsp;Pieter - "Thanks!"
 - 🇺🇸&nbsp;David&nbsp;Langerman

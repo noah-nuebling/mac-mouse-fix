@@ -41,6 +41,7 @@ These people spent a lot more than the standard price and treated me to an **Inc
 
 **January 2024**
 
+- 🇩🇪&nbsp;Emma - "Thank you for this awesome tool, love it ❤️"
 - 🇦🇺&nbsp;Kyle - "Good software is always appreciated."
 - 🇳🇱&nbsp;Pieter - "Thanks!"
 - 🇺🇸&nbsp;David&nbsp;Langerman
