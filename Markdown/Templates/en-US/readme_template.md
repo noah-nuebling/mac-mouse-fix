@@ -184,13 +184,6 @@ These cool articles were written about MMF
 
   Yes, Mac Mouse Fix runs 100% native on Apple Silicon.
 
-- **Does Mac Mouse Fix collect my data?**
-
-  No. Mac Mouse Fix does not have ads and it doesn't collect any personal information about you.
-
-  The only data I collect is the number of downloads and sales of the app.\
-  If you have updates turned on, Mac Mouse Fix will ping GitHub's servers every time you launch the app to ask for an update. But I don't collect any information about this.
-
 - **Why is there a delay when I click?**
 
   When you click, Mac Mouse Fix might wait to see if you're going to double click.\
@@ -245,6 +238,13 @@ These cool articles were written about MMF
   Mac Mouse Fix doesn't let you turn off the pointer acceleration, but if you're on **macOS 14 Sonoma** or later, you can turn off the pointer acceleration under `System Settings > Mouse > Advanced... > Pointer acceleration`.
 
   I plan to add really nice ways to improve pointer acceleration in the future, but I'm not sure when that's coming.
+
+- **Does Mac Mouse Fix collect my data?**
+
+  Mac Mouse Fix does not have ads, and it doesn't collect any personal information about you.\
+  The only data I collect is the number of downloads.
+
+  However, at the moment you buy the app, the sales provider Gumroad.com collects some personal info, such as your email address, and this info is visible to me. This is necessary to be able to issue refunds, send a license key to your email, etc. I cannot turn this off. To learn more about the data collected when you buy Mac Mouse Fix, see the [Gumroad Privacy Policy](https://gumroad.com/privacy).
 
 - **Will Mac Mouse Fix still be Open Source now that it's monetized?**
 

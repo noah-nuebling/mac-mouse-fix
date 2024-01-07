@@ -122,13 +122,6 @@ Auf der [Website](http://noah-nuebling.github.io/mac-mouse-fix-website/) kannst 
 
   Ja, Mac Mouse Fix läuft zu 100% nativ auf Apple Silicon.
 
-- **Sammelt Mac Mouse Fix meine Daten?**
-
-  Nein. Mac Mouse Fix hat keine Werbung und sammelt keine persönlichen Informationen über dich.
-
-  Die einzigen Daten, die ich sammle, sind die Downloadzahlen und die Verkäufe der App.\
-  Wenn du Updates aktiviert hast, wird Mac Mouse Fix jedes Mal, wenn du die App startest, die GitHub-Server anpingen, um nach einem Update zu fragen. Ich sammle jedoch keinerlei Informationen darüber.
-
 - **Warum gibt es eine Verzögerung, wenn ich klicke?**
 
   Wenn du klickst, wartet Mac Mouse Fix möglicherweise ab, um zu sehen, ob du doppelklickst.\
@@ -164,6 +157,13 @@ Auf der [Website](http://noah-nuebling.github.io/mac-mouse-fix-website/) kannst 
   Mac Mouse Fix erlaubt es dir nicht, die Zeigerbeschleunigung auszuschalten, aber wenn du auf **macOS 14 Sonoma** oder neuer bist, kannst du die Zeigerbeschleunigung unter `Systemeinstellungen > Maus > Weitere Optionen... > Zeigerbeschleunigung` ausschalten.
 
   Ich plane, in Zukunft sehr gute Möglichkeiten zur Verbesserung der Zeigerbeschleunigung hinzuzufügen, aber ich weiß noch nicht, wann das kommt.
+
+- **Sammelt Mac Mouse Fix meine Daten?**
+
+  Mac Mouse Fix hat keine Werbung und sammelt keine persönlichen Informationen über dich.\
+  Die einzigen Daten, die ich sammle, sind die Downloadzahlen der App.
+
+  Jedoch sammelt der Verkaufsanbieter Gumroad.com im Moment des Kaufs von Mac Mouse Fix einige persönliche Informationen, wie z.B. deine E-Mail-Adresse. Diese Informationen sind für mich sichtbar. Die Informationen sind notwendig, um Rückerstattungen ausstellen zu können, dir einen Lizenzschlüssel per E-Mail zu senden, usw. Ich kann diese Datensammlung nicht deaktivieren. Um mehr über die gesammelten Daten beim Kauf von Mac Mouse Fix zu erfahren, siehe die [Datenschutzrichtlinie](https://gumroad.com/privacy) von Gumroad.
 
 - **Wird Mac Mouse Fix weiterhin Open Source sein, jetzt da es monetarisiert ist?**
 
