@@ -308,7 +308,10 @@ Check out the [Acknowledgements]({language_root}Acknowledgements.md) for more in
 <details>
   <summary>Background</summary>
 
+<br>
 Hi I'm Noah!
+
+#### Initial Release
 
 In 2019, during my first semester break, I released Mac Mouse Fix - a simple way to make your mouse better! It was a simple portfolio/passion project and I didn't really expect people to use it, but people ended up really liking it and even bought me some milkshakes, which was a great feeling! :) Here's what I wrote on the Mac Mouse Fix website back then:
 
@@ -316,15 +319,19 @@ In 2019, during my first semester break, I released Mac Mouse Fix - a simple way
 
 I think what people really appreciated about the first version of Mac Mouse Fix was that it was free and very simple and felt almost like a native part of macOS. The feature-set was quite limited but well-implemented and people who only wanted those features were really happy with the app.
 
+#### Mac Mouse Fix 2 & Innovations
+
 After that, I kept developing Mac Mouse Fix on and off between my studies. I discovered ways of simulating Apple Trackpad gestures that were never previously discovered, as far as I know. And I also developed a really innovative UI for remapping mouse buttons that is both more simple and more flexible than anything I've seen before. 
 
 I released the coolest benefits of these innovations with Mac Mouse Fix 2 in 2020. It let you Click and Drag to use Mission Control and Spaces in a way that feels just as fluid and native as swiping on a Trackpad, and it also let you do 7 things with just one button and allowed for endless customizations due to the super nice remapping UI.
 
 I also figured out how to adjust the pointer speed under macOS which no software could do before except for SteerMouse and its spin-off CursorSense. Unfortunately, I haven't been able to release features based on this technology, yet, but because Mac Mouse Fix is open source, other apps like LinearMouse have been able to ship features based on the things I discovered back then.
 
+#### Mac Mouse Fix 3 & Mental Health
+
 After Mac Mouse Fix 2 was released, I kept working on the project during semester breaks. My goal was now to turn Mac Mouse Fix into a full-fledged Trackpad replacement. All the pieces were almost in place to let Mac Mouse Fix bring all the smooth Gestures and workflows that people are used to from a Trackpad to any cheap mouse.
 
-So I began working on the necessary features to make this a reality. I was close, but making it really good ended up being much harder than I anticipated. I worked for months, discovering low-level hacks in macOS and implementing complex maths to finally end up with a system that allows you to use all the Trackpad gestures straight from your mouse in a way that feels just as polished, intuitive and seamless as a real Trackpad!
+So I began working on the necessary features to make this a reality. I was close, but making it really good ended up being much harder than I anticipated. I worked for months, discovering low-level hacks in macOS and implementing complex maths to finally end up with a system that allows you to use **all** the Trackpad gestures straight from your mouse in a way that feels just as polished, intuitive and seamless as a real Trackpad!
 
 I also developed an innovative, beautifully animated UI for Mac Mouse Fix that dynamically hides or shows UI elements to provide powerful customization options while being super simple to use. In my opinion, the UI provides some of the sleekest, nicest settings of any app on macOS.
 

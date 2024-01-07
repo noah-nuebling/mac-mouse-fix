@@ -215,19 +215,26 @@ Schau dir die [Danksagungen](../../../Markdown/LocalizedDocuments/de/Acknowledge
 <details>
   <summary>Hintergrund</summary>
 
+<br>
 Hallo, ich bin Noah!
 
-Im Jahr 2019, während meiner ersten Semesterpause, habe ich Mac Mouse Fix veröffentlicht - eine einfache Möglichkeit, deine Maus zu verbessern! Es war ein einfaches Portfolio-/Leidenschaftsprojekt, und ich hatte nicht wirklich erwartet, dass Leute es verwenden würden. Aber am Ende mochten die Leute es sehr und haben mir sogar einige Milchshakes gekauft, was ein tolles Gefühl war! :) Hier ist, was ich damals auf der Mac Mouse Fix-Website geschrieben habe:
+#### Erstveröffentlichung
+
+Im Jahr 2019, während meiner ersten Semesterpause, habe ich Mac Mouse Fix veröffentlicht - eine einfache Möglichkeit, deine Maus zu verbessern! Es war ein einfaches Portfolio-/Leidenschaftsprojekt, und ich hatte nicht wirklich erwartet, dass Leute es verwenden würden. Aber am Ende mochten es einige Leute sehr und haben mir sogar Milchshakes spendiert, was ein tolles Gefühl war! :) Hier ist, was ich damals auf der Mac Mouse Fix-Website geschrieben habe:
 
 > Mein Name ist Noah und ich habe Mac Mouse Fix gemacht. Als ich dieses Projekt startete, war ich in der Softwareentwicklung völlig neu, aber mit der Kraft von Google, Stack Overflow und Apples Entwicklerdokumentation an meinen Fingerspitzen gelang es mir, das Notwendige zu lernen, um eine solide kleine App zu liefern, von der ich hoffe, dass sie für euch nützlich sein wird. Die Arbeit an Mac Mouse Fix hat mich meine Leidenschaft für die Programmierung entdecken lassen und mich dazu geführt, ein Informatikstudium an der Uni zu beginnen, das bisher großartig war. Wahrscheinlich werde ich während des Semesters nicht viel Zeit haben, an Mac Mouse Fix zu arbeiten, aber bitte zögert nicht, eigene Beiträge zu Mac Mouse Fix auf GitHub zu machen!
 
 Ich denke, was die Leute an der ersten Version von Mac Mouse Fix wirklich geschätzt haben, war, dass sie kostenlos und sehr simpel war und sich fast wie ein nativer Bestandteil von macOS anfühlte. Der Funktionsumfang war ziemlich begrenzt, aber gut umgesetzt, und diejenigen, die nur diese Funktionen wollten, waren sehr zufrieden mit der App.
+
+#### Mac Mouse Fix 2 & Innovationen
 
 Danach habe ich Mac Mouse Fix zwischen meinem Studium immer weiterentwickelt. Ich habe Möglichkeiten entdeckt, Apple Trackpad-Gesten zu simulieren, die zuvor meines Wissens noch nie entdeckt wurden. Außerdem habe ich eine wirklich innovative Benutzeroberfläche zur Neubelegung von Maustasten entwickelt, die einfacher und flexibler ist als alles, was ich zuvor gesehen habe.
 
 Ich habe die coolsten Vorteile dieser Innovationen mit Mac Mouse Fix 2 im Jahr 2020 veröffentlicht. Es ermöglichte das Klicken und Ziehen, um Mission Control und Spaces zu verwenden, und es hat sich genauso flüssig und nativ angefühlt wie das Wischen auf einem Trackpad. Außerdem konnte man dank der tollen Neubelegungs-Benutzeroberfläche 7 Dinge mit nur einer Taste tun und endlose Anpassungen vornehmen.
 
 Außerdem habe ich herausgefunden, wie man die Zeigergeschwindigkeit unter macOS anpassen kann, was bisher keine Software außer SteerMouse und dessen Ableger CursorSense tun konnte. Leider konnte ich bisher keine Funktionen basierend auf dieser Technologie veröffentlichen, aber da Mac Mouse Fix Open Source ist, konnten andere Apps wie LinearMouse bereits coole Funktionen veröffentlichen, die auf den Dingen basieren, die ich damals entdeckt habe.
+
+#### Mac Mouse Fix 3 & mentale Gesundheit
 
 Nach der Veröffentlichung von Mac Mouse Fix 2 habe ich während der Semesterferien weiterhin am Projekt gearbeitet. Mein Ziel war es nun, Mac Mouse Fix in einen vollwertigen Trackpad-Ersatz zu verwandeln. Alle Teile waren fast an ihrem Platz, um es Mac Mouse Fix zu ermöglichen, alle flüssigen Gesten und Arbeitsabläufe zu bieten, die die Leute von einem Trackpad gewohnt sind - und das mit jeder günstigen Maus.
 
