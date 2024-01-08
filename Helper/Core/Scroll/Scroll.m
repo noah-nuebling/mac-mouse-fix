@@ -574,7 +574,7 @@ static void heavyProcessing(CGEventRef event, int64_t scrollDeltaAxis1, int64_t 
                 baseDuration = (double)b/1000.0;
             }
             /// Debug
-            NSLog(@"Scroll.m calculating animation baseDuration - base: %f, baseMin: %f, tick: %f, tickMin: %f, tickMax: %f, result: %f", baseMax, baseMin, tick, tickMin, tickMax, baseDuration);
+            DDLogDebug(@"Scroll.m calculating animation baseDuration - base: %f, baseMin: %f, tick: %f, tickMin: %f, tickMax: %f, result: %f", baseMax, baseMin, tick, tickMin, tickMax, baseDuration);
             
             Curve *c;
             if (pCurve.useDragCurve) {
