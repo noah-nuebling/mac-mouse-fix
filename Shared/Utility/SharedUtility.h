@@ -67,6 +67,7 @@ int8_t sign(double x);
 
 #pragma mark - Clipping
 
+/// CLIP AKA CLAMP, BOUND
 /// Src: https://stackoverflow.com/a/14770282/10601702
 
 //#define MIN(A,B)    ({ __typeof__(A) __a = (A); __typeof__(B) __b = (B); __a < __b ? __a : __b; })

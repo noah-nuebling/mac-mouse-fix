@@ -548,16 +548,42 @@ static void heavyProcessing(CGEventRef event, int64_t scrollDeltaAxis1, int64_t 
             double duration;
             
             /// Create curve
-            MFScrollAnimationCurveParameters *cParams = _scrollConfig.animationCurveParams;
+            MFScrollAnimationCurveParameters *pCurve = _scrollConfig.animationCurveParams;
+            
+            /// Calculate baseDuration
+            /// Note: The idea is to speed up animations as the user scrolls the wheel faster.
+            
+            double baseMin = pCurve.baseMsPerStepMin;
+            double baseMax = pCurve.baseMsPerStep;
+            double tickMin = _scrollConfig.consecutiveScrollTickIntervalMin*1000;
+            double tickMax = _scrollConfig.consecutiveScrollTickIntervalMax*1000;
+            double tick = scrollAnalysisResult.timeBetweenTicks*1000;
+            
+            double tickScaleMax = MIN(tickMax, baseMax); /// Not sure if the `tickScaleMax` should just be `tickMax`
+            
+            double baseDuration;
+            if (tick >= tickScaleMax || baseMin == -1) {
+                baseDuration = (double)baseMax/1000.0;
+            } else {
+                /// Note: Should we use `consecutiveScrollTickIntervalMax` instead of `baseMs` here?
+                double b = [Math scaleWithValue:tick
+                                           from:[[Interval alloc] initWithStart:tickScaleMax end:tickMin]
+                                             to:[[Interval alloc] initWithStart:baseMax end:baseMin]
+                               allowOutOfBounds:NO];
+                
+                baseDuration = (double)b/1000.0;
+            }
+            /// Debug
+            NSLog(@"Scroll.m calculating animation baseDuration - base: %f, baseMin: %f, tick: %f, tickMin: %f, tickMax: %f, result: %f", baseMax, baseMin, tick, tickMin, tickMax, baseDuration);
             
             Curve *c;
-            if (cParams.useDragCurve) {
+            if (pCurve.useDragCurve) {
                 
                 DDLogDebug(@"Scroll.m start animation curve hybrid");
                 
-                Bezier *baseCurve = cParams.baseCurve;
-                double speedSmoothing = cParams.speedSmoothing;
-                
+                Bezier *baseCurve = pCurve.baseCurve;
+                double speedSmoothing = pCurve.speedSmoothing;
+
                 if (baseCurve == nil) {
                     
                     /// Create baseCurve as speedSmoothing curve. The idea is to make the initial speed of the baseCurve equal to the current speed. The speedSmoothing amount determines how long the curve will take to move away from the current speed.
@@ -567,7 +593,7 @@ static void heavyProcessing(CGEventRef event, int64_t scrollDeltaAxis1, int64_t 
                     
                     Vector baseCurveStartDirection = {
                         .y = magnitudeOfVector(currentSpeed)    / delta,
-                        .x = 1                                  / ((double)cParams.baseMsPerStep/1000.0),
+                        .x = 1                                  / ((double)baseDuration/1000.0),
                     };
                     Vector baseCurveP1 = vectorFromDeltaAndDirectionVector(speedSmoothing, baseCurveStartDirection);
                     baseCurve = [[Bezier alloc] initWithControlPointsAsArrays:@[@[@0, @0], @[@(baseCurveP1.x), @(baseCurveP1.y)], /*@[@1, @1],*/ @[@1, @1]] defaultEpsilon:0.01];
@@ -578,11 +604,11 @@ static void heavyProcessing(CGEventRef event, int64_t scrollDeltaAxis1, int64_t 
                 
                 HybridCurve *hc = [[BezierHybridCurve alloc]
                      initWithBaseCurve:baseCurve
-                     minDuration:((double)cParams.baseMsPerStep) / 1000.0
+                     minDuration:baseDuration
                      distance:delta
-                     dragCoefficient:cParams.dragCoefficient
-                     dragExponent:cParams.dragExponent
-                     stopSpeed:cParams.stopSpeed
+                     dragCoefficient:pCurve.dragCoefficient
+                     dragExponent:pCurve.dragExponent
+                     stopSpeed:pCurve.stopSpeed
                      distanceEpsilon:0.2];
                 
                 duration = hc.duration;
@@ -598,8 +624,8 @@ static void heavyProcessing(CGEventRef event, int64_t scrollDeltaAxis1, int64_t 
                 
             } else {
                 DDLogDebug(@"Scroll.m start animation curve base");
-                c = cParams.baseCurve;
-                duration = ((double)cParams.baseMsPerStep) / 1000.0;
+                c = pCurve.baseCurve;
+                duration = baseDuration;
             }
             
             
