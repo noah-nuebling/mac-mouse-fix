@@ -48,6 +48,13 @@ NSMutableDictionary *_deviceCache = nil;
             NSLog(@"Error opening device. Code: %x", ret);
         }
         
+        /// Retain IOHIDDevice
+        /// Note: Trying to work on crashes when removing `Device` objects from `_attachedDevices` inside `DeviceManager -> handleDeviceRemoval()`.
+        ///     (Actual crash seems to heppen because `[_attachedDevices removeObject:]` calls   `[Device isEqual:]`, which calls `CFEqual()`, which crashes inside `objc_msgSend`, suggesting that one of the `Device` instances has an `_IOHIDDevice` which is already freed.)
+        /// - See  https://github.com/noah-nuebling/mac-mouse-fix/discussions/771#discussioncomment-8041053
+        ///     - Also see emails with the mention crash reports: message:<1903760880.5349084.1704664694158@mail.yahoo.com>
+        CFRetain(IOHIDDevice);
+        
         /// Set values of interest for callback
         NSDictionary *buttonMatchDict = @{ @(kIOHIDElementUsagePageKey): @(kHIDPage_Button) };
         IOHIDDeviceSetInputValueMatching(_IOHIDDevice, (__bridge CFDictionaryRef)buttonMatchDict);
@@ -57,6 +64,10 @@ NSMutableDictionary *_deviceCache = nil;
         IOHIDDeviceRegisterInputValueCallback(IOHIDDevice, &handleInput, (__bridge void * _Nullable)(self));
     }
     return self;
+}
+
+- (void)dealloc {
+    CFRelease(_IOHIDDevice);
 }
 
 #pragma mark - Input callbacks
