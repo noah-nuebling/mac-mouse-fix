@@ -557,9 +557,8 @@ fileprivate func animationCurveParamsMap(name: MFScrollAnimationCurveName) -> MF
         
     case kMFScrollAnimationCurveNameLowInertia:
         
-        return MFScrollAnimationCurveParameters(baseCurve: nil, speedSmoothing: 0.00, baseMsPerStep: 90, dragExponent: 1.00, dragCoefficient: 23, stopSpeed: 30, sendGestureScrolls: false, sendMomentumScrolls: false)
-        
-        /// - vvv I don't like this curve atm. It's still too slow. I'm currently 'tuned into' what liking the MMF 2 algorithm and it's much quicker/nicer than this.
+        /// - vvv I don't like this curve atm. It's still too slow. I'm currently 'tuned into' liking the MMF 2 algorithm and it's much quicker than this.
+        /// -        MMF 2 has baseMsPerStep 90, this makes medium and large scroll swipes feel much more responsive. But single scroll ticks feel too fast. Maybe we could implement an algorithm where the baseMSPerStep is variable and it shrinks on consecutive scroll swipes or as the scroll speed gets higher, or sth like that. Orrr maybe we could add a cap to the base scroll speed. That might be a good idea.
         
         return MFScrollAnimationCurveParameters(baseCurve: nil, speedSmoothing: 0.00, baseMsPerStep: 140, dragExponent: 1.05, dragCoefficient: 15, stopSpeed: 30, sendGestureScrolls: false, sendMomentumScrolls: false)
         
