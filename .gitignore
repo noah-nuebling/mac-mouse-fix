@@ -11,3 +11,7 @@ xcuserdata/
 # Mouse Fix.xcodeproj/xcuserdata/Noah.xcuserdatad/xcdebugger/*
 
 sudopass.sh
+
+# Python stuff
+env/
+venv/
