@@ -41,6 +41,7 @@ These people spent a lot more than the standard price and treated me to an **Inc
 
 **January 2024**
 
+- 🇱🇹&nbsp;Tadas&nbsp;Mitkus - "Thank you for a great mouse fix!"
 - 🇺🇸&nbsp;Hesham&nbsp;Salman - "Saves valuable time and makes the experience of using an 11 button mouse significantly better."
 - 🇩🇪&nbsp;Oliver&nbsp;Waldmann
 - 🇩🇪&nbsp;Emma - "Thank you for this awesome tool, love it ❤️"
