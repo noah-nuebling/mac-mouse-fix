@@ -49,10 +49,13 @@ NSMutableDictionary *_deviceCache = nil;
         }
         
         /// Retain IOHIDDevice
-        /// Note: Trying to work on crashes when removing `Device` objects from `_attachedDevices` inside `DeviceManager -> handleDeviceRemoval()`.
+        /// Notes:
+        /// - Trying to work on crashes when removing `Device` objects from `_attachedDevices` inside `DeviceManager -> handleDeviceRemoval()`.
         ///     (Actual crash seems to heppen because `[_attachedDevices removeObject:]` calls   `[Device isEqual:]`, which calls `CFEqual()`, which crashes inside `objc_msgSend`, suggesting that one of the `Device` instances has an `_IOHIDDevice` which is already freed.)
-        /// - See  https://github.com/noah-nuebling/mac-mouse-fix/discussions/771#discussioncomment-8041053
+        ///     - See  https://github.com/noah-nuebling/mac-mouse-fix/discussions/771#discussioncomment-8041053
         ///     - Also see emails with the mention crash reports: message:<1903760880.5349084.1704664694158@mail.yahoo.com>
+        /// - In MMF 3 we had already been doing this.
+        /// - Adding this on 08.01.2024
         CFRetain(IOHIDDevice);
         
         /// Set values of interest for callback
@@ -67,7 +70,9 @@ NSMutableDictionary *_deviceCache = nil;
 }
 
 - (void)dealloc {
-    CFRelease(_IOHIDDevice);
+    if (_IOHIDDevice != NULL) { /// Copied over from MMF 3 device manager on 08.01.2024
+        CFRelease(_IOHIDDevice);
+    }
 }
 
 #pragma mark - Input callbacks
