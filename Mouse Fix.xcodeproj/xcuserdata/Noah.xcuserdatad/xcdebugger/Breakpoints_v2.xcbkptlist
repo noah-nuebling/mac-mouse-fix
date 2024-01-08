@@ -632,6 +632,38 @@
             endingLineNumber = "321"
             landmarkName = "_checkLicense(key:licenseConfig:incrementUsageCount:completionHandler:)"
             landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "0D8ABE4C-8D6B-4A0D-8C93-24EDF1C9E3B0 - 54b030b4990dadcd"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #2 (Swift.Bool, Swift.Optional&lt;Swift.Int&gt;, Swift.Optional&lt;Swift.Dictionary&lt;Swift.String, Any&gt;&gt;, Swift.Optional&lt;__C.NSError&gt;, Swift.Optional&lt;__C.NSURLResponse&gt;) -&gt; () in static Mac_Mouse_Fix.License._checkLicense(key: Swift.Optional&lt;Swift.String&gt;, licenseConfig: Mac_Mouse_Fix.LicenseConfig, incrementUsageCount: Swift.Bool, completionHandler: (Swift.Bool, __C.MFValueFreshness, __C.MFLicenseReason, Swift.Optional&lt;__C.NSError&gt;) -&gt; ()) -&gt; ()"
+                  moduleName = "Mac Mouse Fix"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/Noah/Desktop/mmf-stuff/mac-mouse-fix/Shared/License/License.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "326"
+                  endingLineNumber = "326"
+                  offsetFromSymbolStart = "324">
+               </Location>
+               <Location
+                  uuid = "0D8ABE4C-8D6B-4A0D-8C93-24EDF1C9E3B0 - 54b030b4990daa68"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #2 (Swift.Bool, Swift.Optional&lt;Swift.Int&gt;, Swift.Optional&lt;Swift.Dictionary&lt;Swift.String, Any&gt;&gt;, Swift.Optional&lt;__C.NSError&gt;, Swift.Optional&lt;__C.NSURLResponse&gt;) -&gt; () in static Mac_Mouse_Fix.License._checkLicense(key: Swift.Optional&lt;Swift.String&gt;, licenseConfig: Mac_Mouse_Fix.LicenseConfig, incrementUsageCount: Swift.Bool, completionHandler: (Swift.Bool, __C.MFValueFreshness, __C.MFLicenseReason, Swift.Optional&lt;__C.NSError&gt;) -&gt; ()) -&gt; ()"
+                  moduleName = "Mac Mouse Fix"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/Noah/Desktop/mmf-stuff/mac-mouse-fix/Shared/License/License.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "321"
+                  endingLineNumber = "321"
+                  offsetFromSymbolStart = "312">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

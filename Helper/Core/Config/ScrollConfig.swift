@@ -557,6 +557,10 @@ fileprivate func animationCurveParamsMap(name: MFScrollAnimationCurveName) -> MF
         
     case kMFScrollAnimationCurveNameLowInertia:
         
+        return MFScrollAnimationCurveParameters(baseCurve: nil, speedSmoothing: 0.00, baseMsPerStep: 90, dragExponent: 1.00, dragCoefficient: 23, stopSpeed: 30, sendGestureScrolls: false, sendMomentumScrolls: false)
+        
+        /// - vvv I don't like this curve atm. It's still too slow. I'm currently 'tuned into' what liking the MMF 2 algorithm and it's much quicker/nicer than this.
+        
         return MFScrollAnimationCurveParameters(baseCurve: nil, speedSmoothing: 0.00, baseMsPerStep: 140, dragExponent: 1.05, dragCoefficient: 15, stopSpeed: 30, sendGestureScrolls: false, sendMomentumScrolls: false)
         
         /// - vvv I think I like this curve better. Still super responsive and much smoother feeling. But I'm not sure I'm 'tuned into' what the lowInertia should feel like. Bc when I designed it I really liked the snappy, 'immediate' feel, but now I don't like it anymore and wanna make everything much smoother. So I'm not sure I should change it now. Also we should adjust the speed curves if we adjust the feel of this so much.
