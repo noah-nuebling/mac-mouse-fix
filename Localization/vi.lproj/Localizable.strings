@@ -516,7 +516,7 @@
 "trigger.click.3" = "Kích ba lần %@";
 
 /* First draft: Drag || Note: This substring will be emphasized in drag trigger strings like 'Double Click and Drag %@' */
-"trigger.drag-particle" = "Kéo";
+"trigger.drag-particle" = "kéo";
 
 /* First draft: Click and Drag %@ || Note: %@ will be a button name || example where %@ is 'Button 5': ⌥⌘ Triple Click Button 4 + Click and Drag Button 5 */
 "trigger.drag.1" = "Kích và kéo %@";
@@ -540,7 +540,7 @@
 "trigger.hold.3" = "Kích ba lần và giữ %@";
 
 /* First draft: Scroll || Note: This substring will be emphasized in scroll trigger strings like 'Triple Click and Scroll %@' */
-"trigger.scroll-particle" = "Cuộn";
+"trigger.scroll-particle" = "cuộn";
 
 /* First draft: Click and Scroll %@ */
 "trigger.scroll.1" = "Kích và cuộn %@";
