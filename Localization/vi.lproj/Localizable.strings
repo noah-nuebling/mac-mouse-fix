@@ -3,7 +3,7 @@
 "capture-toast.body" = "<>";
 
 /* First draft: Content tracks finger movement */
-"natural-scrolling-hint" = "Content tracks finger movement";
+"natural-scrolling-hint" = "Nội dung di chuyển theo hướng ngón tay của bạn";
 
 /* First draft: Open 'Security & Privacy' Preferences || Notes: The string for Ventura and later is defined in Interface Builder */
 "accessibility.settings-link.pre-ventura" = "Mở thiết lập 'Security & Privacy'";
@@ -123,7 +123,7 @@
 "buy-mouse-alert.body" = "Sắm một con chuột với 5+ nút để khai thác hết tiềm năng của Mac Mouse Fix!";
 
 /* First draft: OK */
-"buy-mouse-alert.ok" = "OK";
+"buy-mouse-alert.ok" = "Đồng ý";
 
 /* First draft: Your mouse only has 3 buttons */
 "buy-mouse-alert.title" = "Chuột của bạn chỉ có 3 nút";
@@ -138,25 +138,25 @@
 "capture-toast.link" = "Đọc thêm";
 
 /* First draft: Spaces & Mission Control */
-"drag-effect.dock-swipe" = "Spaces & Mission Control";
+"drag-effect.dock-swipe" = "Spaces & Mission Control"; //!IS_OK
 
 /* First draft: Move your mouse:\n - Up to show Mission Control\n - Down to show Application Windows\n - Left or Right to move between Spaces\n \nWorks like swiping with 3 fingers on an Apple Trackpad */
 "drag-effect.dock-swipe.hint" = "Di chuyển chuột:\n - Hướng lên để truy cập Mission Control\n - Hướng xuống để truy cập Application Windows\n - Qua trái hoặc phải để di chuyển giữa các Spaces\n \nHoạt động như vuốt 3 ngón tay trên Apple Trackpad";
 
 /* First draft: Scroll & Navigate */
-"drag-effect.scroll-swipe" = "Scroll & Navigate";
+"drag-effect.scroll-swipe" = "Cuộn & Điều hướng";
 
 /* First draft: Scroll freely by moving your mouse in any direction\n \nAlso Navigate between pages in Safari, delete messages in Mail and more by moving your mouse left and right\n \nWorks like swiping with 2 fingers on an Apple Trackpad */
 "drag-effect.scroll-swipe.hint" = "Lăn tự do bằng cách di chuyển chuột theo các hướng bất kỳ\n \nCũng có thể điều hướng giữa các trang trong Safari, xóa các mẫu tin trong Mail và nhiều thứ khác bằng cách di chuyển chuột qua trái hoặc phải. \n \nHoạt động như vuốt 2 ngón tay trên Apple Trackpad";
 
 /* First draft: Application Windows || Note: Under macOS Sonoma, this feature is called 'App Exposé' in Trackpad settings, but 'Application Windows' in Keyboard Shortcut settings and all other places I found. */
-"effect.app-expose" = "Application Windows";
+"effect.app-expose" = "Duyệt các ứng dụng đang mở";
 
 /* First draft: Show all windows of the active app */
-"effect.app-expose.hint" = "Hiện tất cả cửa sổ của các ứng dụng đang hoạt động";
+"effect.app-expose.hint" = "Hiện các cửa sổ của tất cả ứng dụng đang hoạt động";
 
 /* First draft:  Exclusive Keys */
-"effect.apple-keys-submenu" = " Exclusive Keys";
+"effect.apple-keys-submenu" = " Các phím độc quyền";
 
 /* First draft: Choose keys that are only available on Apple keyboards */
 "effect.apple-keys-submenu.hint" = "Chọn các phím chỉ khả dụng trên Apple keyboard";
@@ -165,43 +165,43 @@
 "effect.apple-shortcut.hint" = "Hoạt động như nhấn phím '%@' trên Apple keyboard";
 
 /* First draft: Back */
-"effect.back" = "Back";
+"effect.back" = "Quay lại";
 
 /* First draft: Go back one page in Safari and other apps */
 "effect.back.hint" = "Quay ngược lại một trang trong Safari hoặc các ứng dụng khác";
 
 /* First draft: Show Desktop */
-"effect.desktop" = "Show Desktop";
+"effect.desktop" = "Hiện Màn hình nền";
 
 /* First draft: Show the desktop */
-"effect.desktop.hint" = "Hiện màn hình Desktop";
+"effect.desktop.hint" = "Hiển thị Màn hình nền";
 
 /* First draft: Forward */
-"effect.forward" = "Forward";
+"effect.forward" = "Tiến tới";
 
 /* First draft: Go forward one page in Safari and other apps */
 "effect.forward.hint" = "Tiến tới một trang trong Safari và các ứng dụng khác";
 
 /* First draft: Launchpad */
-"effect.launchpad" = "Launchpad";
+"effect.launchpad" = "Launchpad"; //!IS_OK
 
 /* First draft: Open Launchpad */
-"effect.launchpad.hint" = "Mở Launchpad";
+"effect.launchpad.hint" = "Duyệt danh sách ứng dụng ở Launchpad";
 
 /* First draft: Move Left a Space */
-"effect.left-space" = "Move Left a Space";
+"effect.left-space" = "Chuyển sang Space bên trái";
 
 /* First draft: Move one Space to the left */
 "effect.left-space.hint" = "Di chuyển sang Space bên trái";
 
 /* First draft: Look Up & Quick Look */
-"effect.look-up" = "Look Up & Quick Look";
+"effect.look-up" = "Tra cứu & Xem nhanh";
 
 /* First draft: Look up words in the Dictionary, Quick Look files in Finder, and more.\n \nWorks like a Force click on an Apple Trackpad. */
 "effect.look-up.hint" = "Tra cứu từ trong Dictionary, xem nhanh tệp trong Finder, và nhiều hơn.\n \nHoạt động như nhấn, kèm lực trên Apple Trackpad.";
 
 /* First draft: Middle Click */
-"effect.middle-click" = "Middle Click";
+"effect.middle-click" = "Kích chuột giữ";
 
 /* First draft: Open links in a new tab, paste text in the Terminal, and more.\n \nWorks like clicking %@ on a standard mouse. */
 "effect.middle-click.hint" = "Mở liên kết trong thẻ mới, dán chữ vào Terminal, và nhiều hơn.\n \nHoạt động như kích vào nút %@ trên chuột.";
@@ -210,28 +210,28 @@
 "effect.mission-control" = "Mission Control";
 
 /* First draft: Show Mission Control */
-"effect.mission-control.hint" = "Hiện Mission Control";
+"effect.mission-control.hint" = "Quản lý các ứng dụng đang mở bằng Mission Control";
 
 /* First draft: Primary Click */
-"effect.primary-click" = "Primary Click";
+"effect.primary-click" = "Kích nút sơ cấp";
 
 /* First draft: Works like clicking %@ on a standard mouse. */
 "effect.primary-click.hint" = "Hoạt động như kích vào nút %@ trên chuột.";
 
 /* First draft: Keyboard Shortcut... */
-"effect.record-shortcut" = "Keyboard Shortcut...";
+"effect.record-shortcut" = "Tổ hợp phím tắt...";
 
 /* First draft: Type a keyboard shortcut, then use it from your mouse */
 "effect.record-shortcut.hint" = "Gõ tổ hợp phím tắt trên bàn phím, sau đó sử dụng nó từ chuột";
 
 /* First draft: Move Right a Space */
-"effect.right-space" = "Move Right a Space";
+"effect.right-space" = "Chuyển sang Space bên phải";
 
 /* First draft: Move one Space to the right */
 "effect.right-space.hint" = "Di chuyển sang Space bên phải";
 
 /* First draft: Secondary Click */
-"effect.secondary-click" = "Secondary Click";
+"effect.secondary-click" = "Kích nút thứ cấp";
 
 /* First draft: Works like clicking %@ on a standard mouse. */
 "effect.secondary-click.hint" = "Hoạt động như kích vào nút %@ trên chuột.";
@@ -240,7 +240,7 @@
 "effect.shortcut.hint" = "Hoạt động như kích vào phím '%@' trên bàn phím";
 
 /* First draft: Smart Zoom */
-"effect.smart-zoom" = "Smart Zoom";
+"effect.smart-zoom" = "Thu phóng thông minh";
 
 /* First draft: Zoom in or out in Safari and other apps.\n \nWorks like a two-finger double tap on an Apple Trackpad. */
 "effect.smart-zoom.hint" = "Phóng to hoặc thu nhỏ trong Safari và các ứng dụng khác.\n \nHoạt động như nhấp bằng hai ngón tay trên Apple Trackpad.";
@@ -264,10 +264,10 @@
 "is-strange-helper-alert.title" = "Bật thất bại";
 
 /* First draft: ,  || Note: This string joins elements in a list except the second-to-last and last one. || Note: The first draft contains a space after the comma. */
-"join-list" = ", ";
+"join-list" = ", "; //!IS_OK
 
 /* First draft: %@ and %@ || Note: This format string joins the second-to-last element and the last elements in a list of items */
-"join-list.last" = "%@ and %@";
+"join-list.last" = "%@ và %@";
 
 /* First draft: Activate License */
 "license-button.activate" = "Kích hoạt bản quyền";
@@ -321,16 +321,16 @@
 "mail-alert.title" = "Gửi email cho tôi?";
 
 /* First draft: Command (⌘) */
-"modifer-key.tool.command" = "Command (⌘)";
+"modifer-key.tool.command" = "Command (⌘)"; //!IS_OK
 
 /* First draft: Control (^) */
-"modifer-key.tool.control" = "Control (^)";
+"modifer-key.tool.control" = "Control (^)"; //!IS_OK
 
 /* First draft: Option (⌥) */
-"modifer-key.tool.option" = "Option (⌥)";
+"modifer-key.tool.option" = "Option (⌥)"; //!IS_OK
 
 /* First draft: Shift (⇧) */
-"modifer-key.tool.shift" = "Shift (⇧)";
+"modifer-key.tool.shift" = "Shift (⇧)"; //!IS_OK
 
 /* First draft: Scroll precisely, even without a keyboard modifier,\nbymoving the scroll wheel _slowly_ || Note: The line break (\n) is there so the layout of the Scroll tab doesn't become too wide which looks weird. You can set it to your own taste. */
 "precise-scrolling-hint" = "Cuộn chính xác, dù không kèm theo một phím bổ sung,\nbằng cách di chuyện con lăn _thật chậm_";
@@ -366,28 +366,28 @@
 "revive-toast.feature-scrolling" = "__Cuộn__";
 
 /* First draft: Desktop & Launchpad */
-"scroll-effect.4-pinch" = "Desktop & Launchpad";
+"scroll-effect.4-pinch" = "Desktop & Launchpad"; //!IS_OK
 
 /* First draft: Scroll up for Launchpad and down to show the Desktop\n \nWorks like Pinching with 4 fingers on an Apple Trackpad */
 "scroll-effect.4-pinch.hint" = "Cuộn lên để hiện Launchpad và  xuống để hiện Desktop\n \nHoạt động như chụm bốn ngón tay trên Apple Trackpad";
 
 /* First draft: App Switcher */
-"scroll-effect.app-switcher" = "App Switcher";
+"scroll-effect.app-switcher" = "Chuyển ứng dụng";
 
 /* First draft: Quickly switch between open apps\n \nWorks like holding Command (⌘) and then pressing Tab (⇥) on your keyboard */
 "scroll-effect.app-switcher.hint" = "Nhanh chóng chuyển đổi giữa các ứng dụng đang mở\n \nHoạt động như giữ phím Command (⌘) và nhấn Tab (⇥) trên bàn phím";
 
 /* First draft: Horizontal Scroll */
-"scroll-effect.horizontal" = "Horizontal Scroll";
+"scroll-effect.horizontal" = "Cuộn ngang";
 
 /* First draft: Scroll left and right, navigate between pages in Safari, delete messages in Mail and more\n \nWorks like swiping horizontally with 2 fingers on an Apple Trackpad */
 "scroll-effect.horizontal.hint" = "Cuộn trái và phải, điều hướng giữa các trang của Safari, xóa các mẫu tin trong Mail, và nhiều hơn.\n \nHoạt động như vuốt ngang hai ngón tay trên Apple Trackpad";
 
 /* First draft: Precise Scroll */
-"scroll-effect.precise" = "Precise Scroll";
+"scroll-effect.precise" = "Cuộn tỉ mỉ";
 
 /* First draft: Scroll small distances and use sensitive UI elements with precision */
-"scroll-effect.precise.hint" = "Scroll small distances and use sensitive UI elements with precision";
+"scroll-effect.precise.hint" = "Cho phép thao tác chính xác các thành phần trên các giao diện nhạy cảm bằng cách cuộn với khoảng cách ngắn.";
 
 /* First draft: Rotate */
 "scroll-effect.rotate" = "Rotate";
@@ -396,28 +396,28 @@
 "scroll-effect.rotate.hint" = "Xoay nội dung trên Apple Maps and và các ứng dụng khác\n \nHoạt động như vặn hai ngón tay trên Apple Trackpad";
 
 /* First draft: Move Between Spaces */
-"scroll-effect.spaces" = "Move Between Spaces";
+"scroll-effect.spaces" = "Di chuyển giữa các Spaces";
 
 /* First draft: Scroll up to move left a Space and down to move right a Space\n \nWorks like swiping horizontally with 3 fingers on an Apple Trackpad */
 "scroll-effect.spaces.hint" = "Cuộn lên để di chuyển qua Space bên trái và xuống để di chuyển qua Space bên phải\n \nHoạt động như vuốt ngang ba ngón tay trên Apple Trackpad";
 
 /* First draft: Swift Scroll */
-"scroll-effect.swift" = "Swift Scroll";
+"scroll-effect.swift" = "Cuộn nhanh";
 
 /* Scroll long distances with minimal effort */
-"scroll-effect.swift.hint" = "Cuộn nhanh một khoảng dài";
+"scroll-effect.swift.hint" = "Cuộn nhanh một khoảng dài lên đầu trang hoặc cuối trang";
 
 /* First draft: Zoom In or Out */
-"scroll-effect.zoom" = "Zoom In or Out";
+"scroll-effect.zoom" = "Phòng to hoặc thu nhỏ";
 
 /* First draft: Zoom in or out in Safari, Maps and other apps\n \nWorks like pinching to zoom on an Apple trackpad */
 "scroll-effect.zoom.hint" = "Phóng to hoặc thu nhỏ trên Safari, Maps và các ứng dụng khác\n \nHoạt động như chụm hai ngón tay để phóng to trên Apple trackpad";
 
 /* First draft: System Settings */
-"system-settings-name" = "System Settings";
+"system-settings-name" = "Cài đặt hệ thống";
 
 /* First draft: System Preferences */
-"system-settings-name.pre-ventura" = "System Preferences";
+"system-settings-name.pre-ventura" = "Cài đặt hệ thống";
 
 /* First draft: ⭐️ Thank you for buying Mac Mouse Fix! */
 "thanks.01" = "⭐️ Cảm ơn bạn đã mua Mac Mouse Fix!";
@@ -438,7 +438,7 @@
 "thanks.06" = "🔥 Ứng cử viên tuyệt vời trong những phần mềm điều chỉnh chuột! ;)";
 
 /* First draft: 💙 */
-"thanks.07" = "💙";
+"thanks.07" = "💙"; //!IS_OK
 
 /* First draft: :) <- My face when I saw you bought Mac Mouse Fix */
 "thanks.08" = ":) <- Đây là mặt tôi khi bạn mua Mac Mouse Fix";
@@ -483,10 +483,10 @@
 "thanks.21" = "🐠 Bạn... là... ai?";
 
 /* First draft: 🖤 */
-"thanks.22" = "🖤";
+"thanks.22" = "🖤"; //!IS_OK
 
 /* First draft: 🤍 */
-"thanks.23" = "🤍";
+"thanks.23" = "🤍"; //!IS_OK
 
 /* First draft: 😎 Oh you're using Mac Mouse Fix? You must be pretty cool. */
 "thanks.24" = "😎 Ủa, bạn đang dùng Mac Mouse Fix hả? Vậy là tôi biết bạn đẹp trai lắm :D";
@@ -495,7 +495,7 @@
 "thanks.25" = "🌏 Sửa xong con chuột, anh sau đi cứu thế giới! >:)";
 
 /* First draft: Free day **%d/%d** */
-"trial-counter.active" = "ĐÂY LÀ BẢN DÙNG THỬ TRONG CHUỖI **%d/%d** NGÀY";
+"trial-counter.active" = "Bạn đang dùng thử miễn phí **%d/%d** ngày";
 
 /* First draft: Free days are over */
 "trial-counter.expired" = "Hết hạn dùng thử";
@@ -507,52 +507,52 @@
 "trial-notif.body" = "Xin chào! Bạn đã sử dụng Mac Mouse Fix được **%d ngày**. Mong rằng bạn sẽ thích nó!\n\nNếu bạn muốn tiếp tục sử dụng Mac Mouse Fix, bạn có thể [mua ngay](%@).";
 
 /* First draft: Click %@ || Note: %@ will be a button name || Example where %@ is 'Button 5': ⌥⌘ Double Click Button 4 + Click Button 5 || Note: Most of the substrings that are used to build the Action Table Trigger Strings (this is one of those substrings) are capitalized in English because it's common to use 'title case' there. In your language, 'title case' might not be a thing, and so you might not want to capitalize these strings. The first letter of the trigger string will be programmatically capitalized in any language. */
-"trigger.click.1" = "Click %@";
+"trigger.click.1" = "Kích %@";
 
 /* First draft: Double Click %@ */
-"trigger.click.2" = "Double Click %@";
+"trigger.click.2" = "Kích đôi %@";
 
 /* First draft: Triple Click %@ */
-"trigger.click.3" = "Triple Click %@";
+"trigger.click.3" = "Kích ba lần %@";
 
 /* First draft: Drag || Note: This substring will be emphasized in drag trigger strings like 'Double Click and Drag %@'. Make sure that spelling and capitalization matches exactly for the emphasis to work. */
-"trigger.drag-particle" = "Drag";
+"trigger.drag-particle" = "kéo";
 
 /* First draft: Click and Drag %@ || Note: %@ will be a button name || example where %@ is 'Button 5': ⌥⌘ Triple Click Button 4 + Click and Drag Button 5 */
-"trigger.drag.1" = "Click and Drag %@";
+"trigger.drag.1" = "Kích và kéo %@";
 
 /* First draft: Double Click and Drag %@ */
-"trigger.drag.2" = "Double Click and Drag %@";
+"trigger.drag.2" = "Kích đôi và kéo %@";
 
 /* First draft: Triple Click and Drag %@ */
-"trigger.drag.3" = "Triple Click and Drag %@";
+"trigger.drag.3" = "Kích ba lần và kéo %@";
 
 /* First draft: and Drag || Note: This will be used for Drag Actions that only need keyboard modifiers to be activated - not mouse buttons || Example: ⌥⌘ and Drag */
-"trigger.drag.flags" = "and Drag";
+"trigger.drag.flags" = "và kéo";
 
 /* First draft: Hold %@ */
-"trigger.hold.1" = "Hold %@";
+"trigger.hold.1" = "Giữ %@";
 
 /* First draft: Double Click and Hold %@ */
-"trigger.hold.2" = "Double Click and Hold %@";
+"trigger.hold.2" = "Kích đôi và giữ %@";
 
 /* First draft: Triple Click and Hold %@ */
-"trigger.hold.3" = "Triple Click and Hold %@";
+"trigger.hold.3" = "Kích ba lần và giữ %@";
 
 /* First draft: Scroll || Note: This substring will be emphasized in scroll trigger strings like 'Triple Click and Scroll %@'. Make sure that spelling and capitalization matches exactly for the emphasis to work. */
-"trigger.scroll-particle" = "Scroll";
+"trigger.scroll-particle" = "cuộn";
 
 /* First draft: Click and Scroll %@ */
-"trigger.scroll.1" = "Click and Scroll %@";
+"trigger.scroll.1" = "Kích và cuộn %@";
 
 /* First draft: Double Click and Scroll %@ */
-"trigger.scroll.2" = "Double Click and Scroll %@";
+"trigger.scroll.2" = "Kích đôi và cuộn %@";
 
 /* First draft: Triple Click and Scroll %@ */
-"trigger.scroll.3" = "Triple Click and Scroll %@";
+"trigger.scroll.3" = "Kích ba lần và cuộn %@";
 
 /* First draft: and Scroll || Example: ⌥⌘ and Scroll */
-"trigger.scroll.flags" = "and Scroll";
+"trigger.scroll.flags" = "và cuộn";
 
 /* First draft: Type a Keyboard Shortcut */
-"type-shortcut-prompt" = "Type a Keyboard Shortcut";
+"type-shortcut-prompt" = "Gõ một tổ hợp phím tắt";
