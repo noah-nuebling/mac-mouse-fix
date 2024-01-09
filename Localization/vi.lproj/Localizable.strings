@@ -21,7 +21,7 @@
 "apple-key-fallback.backward" = "<Phím tua ngược>";
 
 /* First draft: ⇪ */
-"apple-key-fallback.capslock" = "⇪";
+"apple-key-fallback.capslock" = "⇪"; //!IS_OK
 
 /* First draft: <Fast-Forward key> */
 "apple-key-fallback.forward" = "<Phím tua nhanh>";
@@ -207,7 +207,7 @@
 "effect.middle-click.hint" = "Mở liên kết trong thẻ mới, dán chữ vào Terminal, và nhiều hơn.\n \nHoạt động như kích vào nút %@ trên chuột.";
 
 /* First draft: Mission Control */
-"effect.mission-control" = "Mission Control";
+"effect.mission-control" = "Quản lý tác vụ";
 
 /* First draft: Show Mission Control */
 "effect.mission-control.hint" = "Quản lý các ứng dụng đang mở bằng Mission Control";
@@ -390,7 +390,7 @@
 "scroll-effect.precise.hint" = "Cho phép thao tác chính xác các thành phần trên các giao diện nhạy cảm bằng cách cuộn với khoảng cách ngắn.";
 
 /* First draft: Rotate */
-"scroll-effect.rotate" = "Rotate";
+"scroll-effect.rotate" = "Xoay";
 
 /* First draft: Rotate content in Apple Maps and other apps\n \nWorks like twisting with 2 fingers on an Apple Trackpad */
 "scroll-effect.rotate.hint" = "Xoay nội dung trên Apple Maps and và các ứng dụng khác\n \nHoạt động như vặn hai ngón tay trên Apple Trackpad";
