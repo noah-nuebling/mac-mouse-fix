@@ -802,8 +802,8 @@ static NSString *effectNameForRowDict(NSDictionary * _Nonnull rowDict) {
         
         /// Slighly emphasize `Drag` and `Scroll` for better legibility
         
-        NSString *dragParticle =    NSLocalizedString(@"trigger.drag-particle",  @"First draft: Drag || Note: This substring will be emphasized in drag trigger strings like 'Double Click and Drag %@'");
-        NSString *scrollParticle =  NSLocalizedString(@"trigger.scroll-particle", @"First draft: Scroll || Note: This substring will be emphasized in scroll trigger strings like 'Triple Click and Scroll %@'");
+        NSString *dragParticle =    NSLocalizedString(@"trigger.drag-particle",  @"First draft: Drag || Note: This substring will be emphasized in drag trigger strings like 'Double Click and Drag %@'. Make sure that spelling and capitalization matches exactly for the emphasis to work.");
+        NSString *scrollParticle =  NSLocalizedString(@"trigger.scroll-particle", @"First draft: Scroll || Note: This substring will be emphasized in scroll trigger strings like 'Triple Click and Scroll %@'. Make sure that spelling and capitalization matches exactly for the emphasis to work.");
         
         tr = [tr attributedStringByAddingSemiBoldForSubstring:dragParticle];
         tr = [tr attributedStringByAddingSemiBoldForSubstring:scrollParticle];

@@ -515,7 +515,7 @@
 /* First draft: Triple Click %@ */
 "trigger.click.3" = "Triple Click %@";
 
-/* First draft: Drag || Note: This substring will be emphasized in drag trigger strings like 'Double Click and Drag %@' */
+/* First draft: Drag || Note: This substring will be emphasized in drag trigger strings like 'Double Click and Drag %@'. Make sure that spelling and capitalization matches exactly for the emphasis to work. */
 "trigger.drag-particle" = "Drag";
 
 /* First draft: Click and Drag %@ || Note: %@ will be a button name || example where %@ is 'Button 5': ⌥⌘ Triple Click Button 4 + Click and Drag Button 5 */
@@ -539,7 +539,7 @@
 /* First draft: Triple Click and Hold %@ */
 "trigger.hold.3" = "Triple Click and Hold %@";
 
-/* First draft: Scroll || Note: This substring will be emphasized in scroll trigger strings like 'Triple Click and Scroll %@' */
+/* First draft: Scroll || Note: This substring will be emphasized in scroll trigger strings like 'Triple Click and Scroll %@'. Make sure that spelling and capitalization matches exactly for the emphasis to work. */
 "trigger.scroll-particle" = "Scroll";
 
 /* First draft: Click and Scroll %@ */
