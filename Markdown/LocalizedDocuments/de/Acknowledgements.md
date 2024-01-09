@@ -19,6 +19,7 @@ Danke, dass ihr Mac Mouse Fix zu Menschen auf der ganzen Welt gebracht habt.
 
 - 🇨🇳 Chinesische Übersetzungen von [@groverlynn](https://github.com/groverlynn)
 - 🇰🇷 Koreanische Übersetzungen von [@jeongtae](https://github.com/jeongtae)
+- 🇻🇳 Vietnamesische Übersetzungen von [@nghlt](https://github.com/nghlt)
 
 ## 💰 Geld
 
