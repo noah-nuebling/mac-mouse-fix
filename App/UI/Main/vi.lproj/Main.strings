@@ -102,7 +102,7 @@
 "ILO-GQ-vNk.title" = "Hiển thị trên Thanh Menu";
 
 /* Class = "NSWindow"; title = "Mac Mouse Fix"; ObjectID = "IQv-IB-iLA"; Note = "Mac Mouse Fix Window Title"; */
-"IQv-IB-iLA.title" = "Mac Mouse Fix";
+"IQv-IB-iLA.title" = "Mac Mouse Fix"; //!IS_OK
 
 /* Class = "NSMenu"; title = "Window"; ObjectID = "InY-TB-ky6"; */
 "InY-TB-ky6.title" = "Cửa sổ";
@@ -120,7 +120,7 @@
 "N65-aN-Hxp.title" = "Giả lập trackpad";
 
 /* Class = "NSTextFieldCell"; title = "Move the mouse pointer inside the '+' field, then *Click* a mouse button to assign an action to it.\nYou can also *Double Click*, *Click and Drag* and [more]()."; ObjectID = "N7H-9j-DIr"; Note = "Buttons > Add Field Hint || It's better to use * instead of _ for emphasis. _ causes problems in some languages like Chinese."; */
-"N7H-9j-DIr.title" = "Di chuyển con trỏ chuột vào trong ô '+', sau đó _nhấp_ một nút của chuột để gáng một hành động cho nó.  Bạn cũng có thể _kích đôi_, _kích và kéo_ và [nhiều hơn]().";
+"N7H-9j-DIr.title" = "Di chuyển con trỏ chuột vào trong ô '+', sau đó _kích_ một nút của chuột để gáng một hành động cho nó.  Bạn cũng có thể _kích đôi_, _kích và kéo_ và [nhiều hành động khác](). Đừng ngại khám phá nhé";
 
 /* Class = "NSMenuItem"; title = "Minimize"; ObjectID = "NdF-Gb-mOK"; */
 "NdF-Gb-mOK.title" = "Thu nhỏ";
@@ -159,7 +159,7 @@
 "SaY-fF-d1s.title" = "Bạn sẽ được thông báo về các cập nhật khi bạn mở\ncửa sổ này";
 
 /* Class = "NSTextFieldCell"; title = "Smoothness:"; ObjectID = "SjO-Dq-CEX"; Note = "Scrolling > Smoothness Label"; */
-"SjO-Dq-CEX.title" = "Thật là mượt màààààààà:";
+"SjO-Dq-CEX.title" = "Thật là mượt màààààààà:";  //!IS_OK
 
 /* Class = "NSTextFieldCell"; title = "Buy Me a Milkshake :)"; ObjectID = "TrI-uu-DEN"; */
 "TrI-uu-DEN.title" = "Ủng hộ tôi một ly sữa lắc :)";
@@ -183,7 +183,7 @@
 "YDr-ez-VKk.title" = "Vừa";
 
 /* Class = "NSMenu"; title = "Mac Mouse Fix"; ObjectID = "Yyg-LD-A1v"; */
-"Yyg-LD-A1v.title" = "Mac Mouse Fix";
+"Yyg-LD-A1v.title" = "Mac Mouse Fix";  //!IS_OK
 
 /* Class = "NSTextFieldCell"; title = "Check It Out on GitHub"; ObjectID = "ZMA-p0-2lf"; */
 "ZMA-p0-2lf.title" = "Xem trên GitHub";
@@ -198,7 +198,7 @@
 "aZA-uL-uvx.title" = "Mang tất cả lên trên";
 
 /* Class = "NSTextFieldCell"; title = "Mac Mouse Fix"; ObjectID = "bGk-tB-fcH"; */
-"bGk-tB-fcH.title" = "Mac Mouse Fix";
+"bGk-tB-fcH.title" = "Mac Mouse Fix";  //!IS_OK
 
 /* Class = "NSMenuItem"; title = "High"; ObjectID = "bIE-g7-3St"; Note = "Scrolling > Scroll Speed > High Option"; */
 "bIE-g7-3St.title" = "Cao";
@@ -222,7 +222,7 @@
 "buH-zX-xXu.title" = "Giới thiệu";
 
 /* Class = "NSMenuItem"; title = "macOS"; ObjectID = "cnA-CV-nF3"; Note = "Pointer > Acceleration > macOS Option"; */
-"cnA-CV-nF3.title" = "macOS";
+"cnA-CV-nF3.title" = "macOS";  //!IS_OK
 
 /* Class = "NSTextFieldCell"; title = "<Day 2/14 of your test period>"; ObjectID = "cul-5Z-iUo"; */
 "cul-5Z-iUo.title" = "<Ngày 2/14 của thời gian dùng thử>";
@@ -246,7 +246,7 @@
 "fNA-5s-U4d.title" = "Cửa sổ";
 
 /* Class = "NSMenuItem"; title = "macOS"; ObjectID = "fW3-4Q-yB8"; Note = "Scrolling > Scroll Speed > macOS Option"; */
-"fW3-4Q-yB8.title" = "macOS";
+"fW3-4Q-yB8.title" = "macOS";  //!IS_OK
 
 /* Class = "NSTextFieldCell"; title = "<Click \"__Restore Defaults...__\" to load the recommended settings for \nyour __Logitech M720 Triathlon__.>"; ObjectID = "g5F-ZO-vGZ"; */
 "g5F-ZO-vGZ.title" = "<Nhấp \"__Khôi phục mặc định...__\" để tải thiết lập mặc định cho \n __Logitech M720 Triathlon__ của bạn.>";
@@ -261,7 +261,7 @@
 "gOt-GR-IbE.headerCell.title" = "<Tác dụng>";
 
 /* Class = "NSMenuItem"; title = "Mac Mouse Fix"; ObjectID = "hSC-BE-EZJ"; */
-"hSC-BE-EZJ.title" = "Mac Mouse Fix";
+"hSC-BE-EZJ.title" = "Mac Mouse Fix";  //!IS_OK
 
 /* Class = "NSMenuItem"; title = "Low"; ObjectID = "hmb-DX-idO"; Note = "Pointer > Acceleration > Low Option"; */
 "hmb-DX-idO.title" = "Thấp";
