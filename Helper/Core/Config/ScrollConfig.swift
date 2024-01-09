@@ -560,7 +560,13 @@ fileprivate func animationCurveParamsMap(name: MFScrollAnimationCurveName) -> MF
         return MFScrollAnimationCurveParameters(baseCurve: baseCurve, msPerStep: 250, sendGestureScrolls: false)
         
     case kMFScrollAnimationCurveNameLowInertia:
-            
+
+        /// vvv Higher baseMsPerStep
+//        return MFScrollAnimationCurveParameters(baseCurve: nil, speedSmoothing: 0.00, baseMsPerStepMin: 90, baseMsPerStep: 160, dragExponent: 1.0, dragCoefficient: 23, stopSpeed: 30, sendGestureScrolls: false, sendMomentumScrolls: false)
+        
+        /// vvv Combination of previous 2
+//        return MFScrollAnimationCurveParameters(baseCurve: nil, speedSmoothing: 0.00, baseMsPerStepMin: 90, baseMsPerStep: 140, dragExponent: 1.05, dragCoefficient: 15, stopSpeed: 30, sendGestureScrolls: false, sendMomentumScrolls: false)
+        
         /// vvv This tries to 'feel' like MMF 2.
         ///     - For medium and large scroll swipes it feels similarly responsive snappy to MMF 2 due to the 90 baseMsPerStepMin. (In MMF 2 the baseMsPerStep was 90)
         ///     - For single ticks on default settings, the speed feels similar to MMF 2 due to the 140 baseMsPerStep and due to the step size being larger than MMF 2.

@@ -190,9 +190,17 @@ static CFTimeInterval _consecutiveSwipeSequenceStartTime;
     double smoothedTimeBetweenTicks;
     
     if (_consecutiveScrollTickCounter == 0) { /// This is first consecutive tick –> reset smoothedTimeBetweenTicks state
+        
+        /// Reset smoothed tickTime
+        /// Note: `DBL_MAX` indicates that it has been longer than `consecutiveScrollTickIntervalMax` since the last tick. Maybe we should define a constant for this.
         smoothedTimeBetweenTicks = DBL_MAX;
-        ///     ^ DBL_MAX indicates that it has been longer than `consecutiveScrollTickIntervalMax` since the last tick. Maybe we should define a constant for this.
+        
+        /// Reset smoother:
+        /// Note: Initializing the smoother with the tickMax should make things a bit more stable. Not sure if good idea. Added this to make `baseMsPerStepMin` speed up the animation more slowly for fast-but-short scrollSwipes. This might make the scroll distance acceleration slower though.
         [_tickTimeSmoother reset];
+        (void)[_tickTimeSmoother smoothWithValue:scrollConfig.consecutiveScrollTickIntervalMax];
+        
+        
     } else { /// This is not first consecutive tick
         smoothedTimeBetweenTicks = [_tickTimeSmoother smoothWithValue:secondsSinceLastTick];
     }
