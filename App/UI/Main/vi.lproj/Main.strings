@@ -159,7 +159,7 @@
 "SaY-fF-d1s.title" = "Bạn sẽ được thông báo về các cập nhật khi bạn mở\ncửa sổ này";
 
 /* Class = "NSTextFieldCell"; title = "Smoothness:"; ObjectID = "SjO-Dq-CEX"; Note = "Scrolling > Smoothness Label"; */
-"SjO-Dq-CEX.title" = "Thật là mượt màààààààà:";  //!IS_OK
+"SjO-Dq-CEX.title" = "Độ mượt";
 
 /* Class = "NSTextFieldCell"; title = "Buy Me a Milkshake :)"; ObjectID = "TrI-uu-DEN"; */
 "TrI-uu-DEN.title" = "Ủng hộ tôi một ly sữa lắc :)";
