@@ -102,10 +102,10 @@
 "button-string.numbered" = "Nút %@";
 
 /* First draft: Primary Button */
-"button-string.primary" = "Nút sơ cấp";
+"button-string.primary" = "Nút chính";
 
 /* First draft: Secondary Button */
-"button-string.secondary" = "Nút thứ cấp";
+"button-string.secondary" = "Nút phụ";
 
 /* First draft: Middle Mouse Button (also called Scroll Wheel Button or Mouse Button 3) || Example usage: Open links in a new tab, paste text in the Terminal, and more.\n \nWorks like clicking the Middle Mouse Button (also called the Scroll Wheel Button or Mouse Button 3) on a standard mouse. */
 "button-string.tool.middle" = "Nút giữa (còn gọi là Con lăn hoặc Nút số 3)";
@@ -114,10 +114,10 @@
 "button-string.tool.numbered" = "Nút chuột %@";
 
 /* First draft: Primary Mouse Button (also called Left Mouse Button or Mouse Button 1) */
-"button-string.tool.primary" = "Nút sơ cấp (còn gọi là Nút chuột trái hoặc Nút số 1)";
+"button-string.tool.primary" = "Nút chính (còn gọi là Nút chuột trái hoặc Nút số 1)";
 
 /* First draft: Secondary Mouse Button (also called Right Mouse Button or Mouse Button 2) */
-"button-string.tool.secondary" = "Nút thứ cấp (còn gọi là Nút chuột phải hoặc Nút số 2)";
+"button-string.tool.secondary" = "Nút phụ (còn gọi là Nút chuột phải hoặc Nút số 2)";
 
 /* First draft: Get a mouse with 5+ buttons to unlock the full potential of Mac Mouse Fix! */
 "buy-mouse-alert.body" = "Sắm một con chuột với 5+ nút để khai thác hết tiềm năng của Mac Mouse Fix!";
@@ -213,7 +213,7 @@
 "effect.mission-control.hint" = "Quản lý các ứng dụng đang mở bằng Mission Control";
 
 /* First draft: Primary Click */
-"effect.primary-click" = "Kích nút sơ cấp";
+"effect.primary-click" = "Kích nút chính";
 
 /* First draft: Works like clicking %@ on a standard mouse. */
 "effect.primary-click.hint" = "Hoạt động như kích vào nút %@ trên chuột.";
@@ -231,7 +231,7 @@
 "effect.right-space.hint" = "Di chuyển sang Space bên phải";
 
 /* First draft: Secondary Click */
-"effect.secondary-click" = "Kích nút thứ cấp";
+"effect.secondary-click" = "Kích nút phụ";
 
 /* First draft: Works like clicking %@ on a standard mouse. */
 "effect.secondary-click.hint" = "Hoạt động như kích vào nút %@ trên chuột.";
@@ -246,10 +246,10 @@
 "effect.smart-zoom.hint" = "Phóng to hoặc thu nhỏ trong Safari và các ứng dụng khác.\n \nHoạt động như nhấp bằng hai ngón tay trên Apple Trackpad.";
 
 /* First draft: **Primary Mouse Button** can't be used\nPlease try another button */
-"forbidden-capture-toast.1" = "**Nút sơ cấp** không thể được áp dụng\nVui lòng chọn một nút khác";
+"forbidden-capture-toast.1" = "**Nút chính** không thể được áp dụng\nVui lòng chọn một nút khác";
 
 /* First draft: **Secondary Mouse Button** can't be used\nPlease try another button */
-"forbidden-capture-toast.2" = "**Nút thứ cấp** không thể được áp dụng\nVui lòng chọn một nút khác";
+"forbidden-capture-toast.2" = "**Nút phụ** không thể được áp dụng\nVui lòng chọn một nút khác";
 
 /* First draft: Mac Mouse Fix is currently free in your country (%@) */
 "free-country" = "Mac Mouse Fix đang miễn phí tại quốc gia của bạn (%@)";
