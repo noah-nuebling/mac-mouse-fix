@@ -207,7 +207,7 @@
 "effect.middle-click.hint" = "Mở liên kết trong thẻ mới, dán chữ vào Terminal, và nhiều hơn.\n \nHoạt động như kích vào nút %@ trên chuột.";
 
 /* First draft: Mission Control */
-"effect.mission-control" = "Quản lý tác vụ";
+"effect.mission-control" = "Mission Control";
 
 /* First draft: Show Mission Control */
 "effect.mission-control.hint" = "Quản lý các ứng dụng đang mở bằng Mission Control";
