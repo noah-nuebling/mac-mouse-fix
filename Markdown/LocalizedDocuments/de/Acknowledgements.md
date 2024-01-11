@@ -40,6 +40,7 @@ Diese Leute haben viel mehr als den Standardpreis ausgegeben und mir einen **ung
 
 **Januar 2024**
 
+- 🇸🇬&nbsp;Julian - "Thank you, Noah!"
 - 🇺🇸&nbsp;Gryphon&nbsp;Macthoy - "Make Tools Better To Build A Better World."
 - 🇩🇪&nbsp;Markus&nbsp;Leonhard&nbsp; - "This beautiful piece of software turned a cheap mouse into a great mouse, which I even started preferring over my MX Master. Thank you Noah and keep making awesome stuff! Much love, Markus ❤️"
 - 🇦🇺&nbsp;Hamishwhc
