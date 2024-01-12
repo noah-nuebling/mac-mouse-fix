@@ -90,8 +90,9 @@ def prepare_interactive_debugging(repo_root, website_root):
     
     To debug from python interactive mode:
     
+    0. Create a venv and install the dependencies from requirements.txt
     1. Change working dir to the folder of this script. Then open python in interactive mode.
-    2. >> import state_of_localization as script, importlib
+    2. >> import script, importlib
     3. >> from pprint import pprint (If necessary)
     4. >> result = script.prepare_interactive_debugging(<repo_root>, <website_root>) 
         - e.g. >> result = script.prepare_interactive_debugging("/Users/Noah/Desktop/mmf-stuff/mac-mouse-fix", "/Users/Noah/Desktop/mmf-stuff/mac-mouse-fix-website")
@@ -103,8 +104,8 @@ def prepare_interactive_debugging(repo_root, website_root):
     6. >> importlib.reload(script) (after updating source code)
     """
         
-    files = find_localization_files(repo_root, website_root)
-    result = analyze_localization_files(files)
+    files = shared.find_localization_files(repo_root, website_root)
+    result = analyze_localization_files(files, None)
     
     return result
     
@@ -418,9 +419,7 @@ see **Updating Translation Files** at the top of the page.
 
 
     # Attach missing files info to result_by_language
-    for language_id in sorted(result_by_language.keys()):
-        
-        content_strs = result_by_language[language_id]
+    for language_id in sorted(missing_files.keys()):
         
         missing_str = ''
         
@@ -457,7 +456,8 @@ see **Updating Translation Files** at the top of the page.
             
         # Attach
         if len(missing_str) > 0:
-            content_strs = content_strs.insert(0, '\n\n## Missing Files\n\nThe following files don\'t have a translation for this language, yet:\n\n' + missing_str)
+            new = '\n\n## Missing Files\n\nThe following files don\'t have a translation for this language, yet:\n\n' + missing_str
+            result_by_language.setdefault(language_id, []).insert(0, new)
             
     
     # Build rrresult from result_by_language
