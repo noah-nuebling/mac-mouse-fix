@@ -386,36 +386,102 @@ void Handle_FSEventStreamCallback(ConstFSEventStreamRef streamRef, void *clientC
 - (void)repairConfigWithProblem:(MFConfigProblem)problem info:(id _Nullable)info {
     
     /// Checks config for errors / incompatibilty and repairs it if necessary.
-    /// TODO: Test if this still works
     /// TODO: Check whether all default (as opposed to override) values exist in config file. If they don't, then everything breaks. Maybe do this by comparing with default_config. Edit: Not sure this is feasible, also the comparing with default_config breaks if we want to have keys that are optional.
     /// TODO: Consider porting this to Helper
     
     assert(runningMainApp());
     
+    /// Get version objects
+    ///     Note: Need to get these up here so that goto statements work.
+    NSNumber *currentVersionNS = (NSNumber *)[[NSDictionary dictionaryWithContentsOfURL:Locator.configURL] objectForCoolKeyPath:@"Constants.configVersion"];
+    NSNumber *targetVersionNS = (NSNumber *)[[NSDictionary dictionaryWithContentsOfURL:defaultConfigURL()] objectForCoolKeyPath:@"Constants.configVersion"];
+    
     /// Create config file if none exists
     
     if (![NSFileManager.defaultManager fileExistsAtPath:Locator.configURL.path]) {
         [NSFileManager.defaultManager createDirectoryAtURL:Locator.configURL.URLByDeletingLastPathComponent withIntermediateDirectories:YES attributes:nil error:nil];
-        [self replaceCurrentConfigWithDefaultConfig];
+        goto replace;
     }
     
-    /// Check if config version matches, if not, replace with default.
-    
-    NSNumber *currentConfigVersion = (NSNumber *)[[NSDictionary dictionaryWithContentsOfURL:Locator.configURL] objectForCoolKeyPath:@"Constants.configVersion"];
-    NSNumber *defaultConfigVersion = (NSNumber *)[[NSDictionary dictionaryWithContentsOfURL:defaultConfigURL()] objectForCoolKeyPath:@"Constants.configVersion"];
-    if (defaultConfigVersion == nil) {
-        DDLogError(@"Couldn't get default config version. Something is wrong.");
+    /// Unpack version objects and guard nil
+    if (targetVersionNS == nil) {
+        DDLogError(@"Couldn't get default configVersion. MMF bundle must be corrupt/wrong.");
         abort();
     }
-    if (currentConfigVersion.intValue != defaultConfigVersion.intValue) {
-        [self replaceCurrentConfigWithDefaultConfig];
+    if (currentVersionNS == nil) {
+        DDLogWarn(@"Couldn't get current configVersion. Something is weird.");
+        goto replace;
     }
     
-    /// Repair incomplete App override
-    ///     Do this by simply copying over the values from the default config
-    ///     TODO: Check if this works
+    int currentVersion = currentVersionNS.intValue;
+    int targetVersion = targetVersionNS.intValue;
+    
+    /// It's all good if the config version matches
+    if (currentVersion == targetVersion) {
+        DDLogInfo(@"configVersion matches (%d) We can keep using the existing config...", currentVersion);
+        goto dontReplace;
+    }
+    /// If config is a downgrade, we don't bother repairing
+    if (currentVersion > targetVersion) {
+        DDLogInfo(@"configVersion decreased from %d to %d. Not repairing downgrades...", currentVersion, targetVersion);
+        goto replace;
+    }
+    
+    /// Attempt to repair config version upgrades
+    ///  Note: see README.md for context on what changed between versions
+    
+    DDLogInfo(@"configVersion increased from %d to %d. Trying to repair...", currentVersion, targetVersion);
+    
+    while (true) {
+        
+        if (currentVersion == 21) {
+            
+            DDLogInfo(@"Upgrading configVersion from 21 to 22...");
+            
+            /// Move lastUseDate from config to SecureStorage.
+            NSObject *d = config(@"License.trial.lastUseDate");
+            [SecureStorage set:@"License.trial.lastUseDate" value:d];
+            removeFromConfig(@"License.trial.lastUseDate");
+            commitConfig();
+            
+            NSLog(@"DEBUG NEW SEC STORAGE: %@", [SecureStorage getAll]);
+            
+            currentVersion = 22;
+            
+        } else {
+            
+            DDLogInfo(@"No upgrades from configVersion %d. Target is %d.", currentVersion, targetVersion);
+            goto replace;
+        }
+        
+        if (currentVersion == targetVersion) {
+            
+            DDLogInfo(@"Config was repaired! It was upgraded to configVersion %d.", currentVersion);
+            
+            setConfig(@"Constants.configVersion", @(targetVersion));
+            commitConfig();
+            
+            goto dontReplace;
+        }
+    }
+    
+replace:
+    
+    /// Simply replace config with default config
+    
+    DDLogInfo(@"Replacing config with default config...");
+    [self replaceCurrentConfigWithDefaultConfig];
+    
+dontReplace:
     
     if (problem == kMFConfigProblemIncompleteAppOverride) {
+        
+        /// Repair incomplete App override
+        ///     Do this by simply copying over the values from the default config
+        ///     TODO: Check if this works
+        
+        DDLogInfo(@"Repairing incomplete appOverrides...");
+        
         NSAssert(info && [info isKindOfClass:[NSDictionary class]], @"Can't repair incomplete app override: invalid argument provided");
         
         NSString *bundleID = info[@"bundleID"]; /// Bundle ID of the app with the faulty override
