@@ -356,8 +356,10 @@ import CocoaLumberjackSwift
                 commitConfig()
                 
                 /// Reload table
+                /// Note: It feels a bit hacky to call `updateColumnWidths()` here. Maybe this should be handled automatically inside the remapTable code.
                 DispatchQueue.main.async {
                     MainAppState.shared.remapTableController?.reloadAll()
+                    MainAppState.shared.buttonTabController?.tableView.updateColumnWidths()
                 }
             }
         }
