@@ -529,7 +529,7 @@ this window</string>
                         <rect key="frame" x="0.0" y="0.0" width="587" height="476"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
-                            <stackView distribution="fill" orientation="vertical" alignment="centerX" horizontalStackHuggingPriority="1000" verticalStackHuggingPriority="1000" horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Qu8-7l-RFn">
+                            <stackView distribution="fill" orientation="vertical" alignment="centerX" horizontalStackHuggingPriority="750" verticalStackHuggingPriority="1000" horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Qu8-7l-RFn">
                                 <rect key="frame" x="23" y="0.0" width="541" height="456"/>
                                 <subviews>
                                     <box identifier="addField" boxType="custom" borderType="line" cornerRadius="6" title="&lt;Box&gt;" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="Pxm-4w-iO7" userLabel="AddBox" customClass="AddField" customModule="Mac_Mouse_Fix" customModuleProvider="target">
@@ -562,7 +562,7 @@ this window</string>
                                         <rect key="frame" x="0.0" y="248" width="541" height="50"/>
                                         <subviews>
                                             <textField focusRingType="none" horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="7En-Ho-Dyb" customClass="MarkdownTextField" customModule="Mac_Mouse_Fix" customModuleProvider="target">
-                                                <rect key="frame" x="-2" y="12" width="545" height="38"/>
+                                                <rect key="frame" x="18" y="12" width="505" height="38"/>
                                                 <textFieldCell key="cell" alignment="center" id="N7H-9j-DIr">
                                                     <font key="font" metaFont="smallSystem"/>
                                                     <string key="title">Move the mouse pointer inside the '+' field, then *Click* a mouse button to assign an action to it.
@@ -576,8 +576,8 @@ You can also *Double Click*, *Click and Drag* and [more]().</string>
                                             </textField>
                                         </subviews>
                                         <constraints>
-                                            <constraint firstAttribute="trailing" secondItem="7En-Ho-Dyb" secondAttribute="trailing" id="5E3-zZ-s1M"/>
-                                            <constraint firstItem="7En-Ho-Dyb" firstAttribute="leading" secondItem="OIq-v6-9Zy" secondAttribute="leading" id="6LP-pM-AjP"/>
+                                            <constraint firstAttribute="trailing" secondItem="7En-Ho-Dyb" secondAttribute="trailing" constant="20" id="5E3-zZ-s1M"/>
+                                            <constraint firstItem="7En-Ho-Dyb" firstAttribute="leading" secondItem="OIq-v6-9Zy" secondAttribute="leading" constant="20" id="6LP-pM-AjP"/>
                                             <constraint firstItem="7En-Ho-Dyb" firstAttribute="top" secondItem="OIq-v6-9Zy" secondAttribute="top" id="fMO-Jk-yoq"/>
                                             <constraint firstAttribute="bottom" secondItem="7En-Ho-Dyb" secondAttribute="bottom" constant="12" id="z3y-EJ-BnU"/>
                                         </constraints>
@@ -645,11 +645,11 @@ You can also *Double Click*, *Click and Drag* and [more]().</string>
                                                                     </connections>
                                                                 </tableCellView>
                                                                 <tableCellView identifier="buttonGroupCell" id="pxf-x1-gL5" userLabel="ButtonGroupCell">
-                                                                    <rect key="frame" x="8" y="38" width="288" height="22"/>
+                                                                    <rect key="frame" x="8" y="38" width="287" height="22"/>
                                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                                     <subviews>
                                                                         <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="AHZ-Kd-4Xf">
-                                                                            <rect key="frame" x="-8" y="3" width="295" height="16"/>
+                                                                            <rect key="frame" x="-8" y="3" width="294" height="16"/>
                                                                             <constraints>
                                                                                 <constraint firstAttribute="height" constant="16" id="iEl-dG-QM5"/>
                                                                             </constraints>
@@ -794,9 +794,8 @@ You can also *Double Click*, *Click and Drag* and [more]().</string>
                                             <constraint firstItem="Fkp-gm-SVn" firstAttribute="bottom" secondItem="OGV-uF-BjJ" secondAttribute="bottom" id="11d-EZ-XB4"/>
                                             <constraint firstItem="Fkp-gm-SVn" firstAttribute="trailing" secondItem="OGV-uF-BjJ" secondAttribute="trailing" id="1Gy-Na-J1I"/>
                                             <constraint firstItem="Fkp-gm-SVn" firstAttribute="top" secondItem="OGV-uF-BjJ" secondAttribute="top" id="3HQ-aH-MNB"/>
-                                            <constraint firstAttribute="width" constant="541" id="6FJ-zV-Tbp"/>
                                             <constraint firstAttribute="height" relation="lessThanOrEqual" constant="500" id="lgg-Lp-QGT"/>
-                                            <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="300" id="oIt-mA-DPV"/>
+                                            <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="500" id="oIt-mA-DPV"/>
                                             <constraint firstItem="Fkp-gm-SVn" firstAttribute="leading" secondItem="OGV-uF-BjJ" secondAttribute="trailing" id="uTS-6R-GFk"/>
                                         </constraints>
                                         <scroller key="horizontalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" horizontal="YES" id="mCT-ys-LqY">
@@ -846,6 +845,10 @@ You can also *Double Click*, *Click and Drag* and [more]().</string>
                                         </customSpacing>
                                     </stackView>
                                 </subviews>
+                                <constraints>
+                                    <constraint firstItem="OGV-uF-BjJ" firstAttribute="leading" secondItem="Qu8-7l-RFn" secondAttribute="leading" id="MU0-jT-gBj"/>
+                                    <constraint firstAttribute="trailing" secondItem="OGV-uF-BjJ" secondAttribute="trailing" id="uwW-lz-RDv"/>
+                                </constraints>
                                 <visibilityPriorities>
                                     <integer value="1000"/>
                                     <integer value="1000"/>
