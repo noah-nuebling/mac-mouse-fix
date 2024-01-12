@@ -26,7 +26,7 @@ NS_ASSUME_NONNULL_BEGIN
 + (void)load_Manual;
 
 /// Load from file
-- (void)loadConfigFromFile;
+- (void)loadConfigFromFileAndRepair;
 
 /// Read and write
 NSObject * _Nullable config(NSString *keyPath);
@@ -36,11 +36,11 @@ void commitConfig(void);
 
 /// Repair
 typedef enum {
-    kMFConfigProblemNone = 0,
-    kMFConfigProblemIncompleteAppOverride = 1
-} MFConfigProblem;
+    kMFConfigRepairReasonLoad = 0,
+    kMFConfigRepairReasonIncompleteAppOverride = 1
+} MFConfigRepairReason;
 
-- (void)repairConfigWithProblem:(MFConfigProblem)problem info:(id _Nullable)info;
+- (void)repairConfigWithReason:(MFConfigRepairReason)reason info:(id _Nullable)info;
 - (void)cleanConfig;
 
 #pragma mark - For Helper
@@ -50,7 +50,7 @@ typedef enum {
 @property (strong, nonatomic, readonly) NSMutableDictionary *configWithAppOverridesApplied;
 
 /// React
-+ (void)handleConfigFileChange;
++ (void)loadFileAndUpdateStates;
 
 
 @end

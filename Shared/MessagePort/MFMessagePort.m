@@ -98,7 +98,7 @@ static CFDataRef _Nullable didReceiveMessage(CFMessagePortRef port, SInt32 messa
     } else if ([message isEqualToString:@"helperDisabled"]) {
         [EnabledState.shared reactToDidBecomeDisabled];
     } else if ([message isEqualToString:@"configFileChanged"]) {
-        [Config handleConfigFileChange];
+        [Config loadFileAndUpdateStates];
     }
     
 #elif IS_HELPER
@@ -106,7 +106,7 @@ static CFDataRef _Nullable didReceiveMessage(CFMessagePortRef port, SInt32 messa
 #pragma mark HelperApp
     
     if ([message isEqualToString:@"configFileChanged"]) {
-        [Config handleConfigFileChange];
+        [Config loadFileAndUpdateStates];
     } else if ([message isEqualToString:@"terminate"]) {
 //        [NSApp.delegate applicationWillTerminate:[[NSNotification alloc] init]]; /// This creates an infinite loop or something? The statement below is never executed.
         [NSApp terminate:NULL];
