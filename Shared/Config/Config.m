@@ -393,17 +393,18 @@ void Handle_FSEventStreamCallback(ConstFSEventStreamRef streamRef, void *clientC
     
     if (reason == kMFConfigRepairReasonLoad) {
         
-        /// Get version objects
-        /// Notes:
-        /// - Need to get these up here so that goto statements work.
+        /// Get config dicts
         /// - We assign to `self.config` here, since repairConfig is called before actually loading `self.config`. Not sure if this is a shitty structure. We're loading the config from file 2x.
         self.config = [NSMutableDictionary dictionaryWithContentsOfURL:Locator.configURL];
         NSMutableDictionary *defaultConfig = [NSMutableDictionary dictionaryWithContentsOfURL:defaultConfigURL()];
+        
+        /// Get version objects
+        /// Notes:
+        /// - Need to get these up here for some reason so that goto statements work
         NSNumber *currentVersionNS = (NSNumber *)[self.config objectForCoolKeyPath:@"Constants.configVersion"];
         NSNumber *targetVersionNS = (NSNumber *)[defaultConfig objectForCoolKeyPath:@"Constants.configVersion"];
         
         /// Create config file if none exists
-        
         if (![NSFileManager.defaultManager fileExistsAtPath:Locator.configURL.path]) {
             DDLogInfo(@"repairConfig: Config file doesn't exist. Creating a new one.");
             [NSFileManager.defaultManager createDirectoryAtURL:Locator.configURL.URLByDeletingLastPathComponent withIntermediateDirectories:YES attributes:nil error:nil];
@@ -411,6 +412,7 @@ void Handle_FSEventStreamCallback(ConstFSEventStreamRef streamRef, void *clientC
         }
         
         /// Unpack version objects and guard nil
+        
         if (targetVersionNS == nil) {
             DDLogError(@"repairConfig: Couldn't get default configVersion. MMF bundle must be corrupt/wrong.");
             abort();
@@ -419,7 +421,6 @@ void Handle_FSEventStreamCallback(ConstFSEventStreamRef streamRef, void *clientC
             DDLogWarn(@"repairConfig: Couldn't get current configVersion. Something is weird.");
             goto replace;
         }
-        
         int currentVersion = currentVersionNS.intValue;
         int targetVersion = targetVersionNS.intValue;
         
@@ -445,14 +446,10 @@ void Handle_FSEventStreamCallback(ConstFSEventStreamRef streamRef, void *clientC
                 
                 DDLogInfo(@"repairConfig: Upgrading configVersion from 21 to 22...");
                 
-                NSLog(@"repairConfig: DEBUG OLD SEC STORAGE: %@", [SecureStorage getAll]);
-                
                 /// Move lastUseDate from config to SecureStorage.
                 NSObject *d = config(@"License.trial.lastUseDate");
                 [SecureStorage set:@"License.trial.lastUseDate" value:d];
                 removeFromConfig(@"License.trial.lastUseDate");
-                
-                NSLog(@"repairConfig: DEBUG NEW SEC STORAGE: %@", [SecureStorage getAll]);
                 
                 currentVersion = 22;
                 
@@ -489,6 +486,8 @@ void Handle_FSEventStreamCallback(ConstFSEventStreamRef streamRef, void *clientC
         /// Repair incomplete App override
         ///     Do this by simply copying over the values from the default config
         ///     TODO: Check if this works
+        
+        assert(false); /// Did some refactors and this is untested and unused at the moment.
         
         DDLogInfo(@"repairConfig: Repairing incomplete appOverrides...");
         
