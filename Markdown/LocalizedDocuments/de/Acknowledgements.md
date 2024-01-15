@@ -40,6 +40,7 @@ Diese Leute haben viel mehr als den Standardpreis ausgegeben und mir einen **ung
 
 **Januar 2024**
 
+- 🇬🇷&nbsp;Periklis&nbsp;Petridis - "Noah you made my cheap mouse MAGICal without buying APPLE's Magic Mouse!!!! Congratz"
 - 🇸🇪&nbsp;Tomas&nbsp;Bäckman - "❤️"
 - 🇺🇸&nbsp;Ryan&nbsp;Dunn - "Awesome app, but please address GitHub issues flagged "Fast User Switching""
 - 🇬🇧&nbsp;Kuznetsss - "Thanks for the great tool!"
