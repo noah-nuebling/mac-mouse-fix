@@ -73,7 +73,7 @@ NSDictionary *_columnIdentifierToKeyPath;
     };
     
     /// Load table
-    [Config.shared loadConfigFromFile];
+    [Config.shared loadConfigFromFileAndRepair];
     [self loadTableViewDataModelFromConfig];
     [_tableView reloadData];
 
@@ -435,7 +435,7 @@ NSMutableArray *_tableViewDataModel;
         }
         if (someNil) { /// Only some of the values controlled by the table don't exist in this AppOverride
             /// Fill out missing values with default ones
-            [Config.shared repairConfigWithProblem:kMFConfigProblemIncompleteAppOverride info:@{
+            [Config.shared repairConfigWithReason:kMFConfigRepairReasonIncompleteAppOverride info:@{
                     @"bundleID": bundleID,
                     @"relevantKeyPaths": _columnIdentifierToKeyPath.allValues,
             }];

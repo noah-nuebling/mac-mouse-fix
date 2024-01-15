@@ -64,14 +64,22 @@ import CocoaLumberjackSwift
         /// It seems theres a solution after all!!
         ///     See https://developer.apple.com/forums/thread/107533
 
-        let data = try NSKeyedArchiver.archivedData(withRootObject: original, requiringSecureCoding: false)
-
-        let unarchiver = try NSKeyedUnarchiver(forReadingFrom: data)
-        unarchiver.requiresSecureCoding = false
-
-        let copy = unarchiver.decodeObject(forKey: NSKeyedArchiveRootObjectKey) as! T
+        let data = try insecureArchive(of: original)
+        let copy = try insecureUnarchive(data: data) as! T
 
         return copy
+    }
+    static func insecureArchive<T: NSCoding>(of object: T) throws -> Data {
+        let result = try NSKeyedArchiver.archivedData(withRootObject: object, requiringSecureCoding: false)
+        return result
+    }
+    static func insecureUnarchive(data: Data) throws -> NSCoding {
+        
+        let unarchiver = try NSKeyedUnarchiver(forReadingFrom: data)
+        unarchiver.requiresSecureCoding = false
+        let result = unarchiver.decodeObject(forKey: NSKeyedArchiveRootObjectKey) as! NSCoding
+        
+        return result
     }
     
     @objc static func shallowCopy(ofObject object: NSObject) -> NSObject {

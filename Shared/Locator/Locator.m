@@ -15,12 +15,16 @@
 @implementation Locator
 
 #pragma mark - Interface
+
 + (NSInteger)bundleVersion {
     return [[self.mainAppBundle objectForInfoDictionaryKey:@"CFBundleVersion"] integerValue];
 }
 + (NSString *)bundleVersionShort {
     return (NSString *)[self.mainAppBundle objectForInfoDictionaryKey:@"CFBundleShortVersionString"];
 }
+//+ (NSString *)currentBundleID {
+//    return NSBundle.mainBundle.bundleIdentifier;
+//}
 + (NSBundle *)helperBundle {
     NSBundle *hhh;
     NSBundle *helperBundle;

@@ -135,11 +135,13 @@ import CocoaLumberjackSwift
     }
     @objc static var lastUseDate: Date? {
         get {
-            config("License.trial.lastUseDate") as? Date
+            SecureStorage.get("License.trial.lastUseDate") as? Date
+//            config("License.trial.lastUseDate") as? Date
         }
         set {
-            setConfig("License.trial.lastUseDate", newValue! as NSObject)
-            commitConfig()
+            SecureStorage.set("License.trial.lastUseDate", value: newValue! as NSObject)
+//            setConfig("License.trial.lastUseDate", newValue! as NSObject)
+//            commitConfig()
         }
     }
     

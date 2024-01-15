@@ -223,12 +223,15 @@ import CocoaLumberjackSwift
             if enabled { ButtonTabController.initRemaps() }
         }
         /// Add trackingArea
-        ///     Do we ever need to remove it?
-        trackingArea = NSTrackingArea(rect: self.addField.bounds, options: [.mouseEnteredAndExited, .activeInKeyWindow], owner: self)
-        self.addField.addTrackingArea(trackingArea)
+        createTrackingArea()
         
         /// Init AddField visuals
         addField.coolInit()
+    }
+    
+    func createTrackingArea() {
+        trackingArea = NSTrackingArea(rect: self.addField.bounds, options: [.mouseEnteredAndExited, .activeInKeyWindow], owner: self)
+        self.addField.addTrackingArea(trackingArea)
     }
     
     // MARK: Did appear
@@ -356,8 +359,10 @@ import CocoaLumberjackSwift
                 commitConfig()
                 
                 /// Reload table
+                /// Note: It feels a bit hacky to call `updateColumnWidths()` here. Maybe this should be handled automatically inside the remapTable code.
                 DispatchQueue.main.async {
                     MainAppState.shared.remapTableController?.reloadAll()
+                    MainAppState.shared.buttonTabController?.tableView.updateColumnWidths()
                 }
             }
         }
@@ -548,6 +553,8 @@ import CocoaLumberjackSwift
             /// Here are some notes we wrote for the old architecture:
             /// \discussion After addMode refactoring around commit 02c9fcc20d3f03d8b0d2db6e25830276ed937107 I saw a deadlock in the animationCode maybe dispatch to main will prevent it. Edit: Nope still happens. Edit2: Could fix the deadlock by not locking the CATransaction in Animate.swift. So dispatching to main here might be unnecessary.
             
+            DDLogInfo("trackingg: mouseEntered")
+            
             self.pointerIsInsideAddField = true
             let success = MFMessagePort.sendMessage("enableAddMode", withPayload: nil, waitForReply: true)
             if let success = success as? Bool, success == true {
@@ -557,12 +564,17 @@ import CocoaLumberjackSwift
     }
     override func mouseExited(with event: NSEvent) {
         DispatchQueue.main.async {
-            
-            self.pointerIsInsideAddField = false
-            MFMessagePort.sendMessage("disableAddMode", withPayload: nil, waitForReply: false)
-            self.addField.hoverEffect(enable: false)
+            self.mouseExited_Internal(dueToAddModeFeeback: false)
         }
+    }
+    
+    func mouseExited_Internal(dueToAddModeFeeback: Bool) {
         
+        DDLogInfo("trackingg: mouseExited dueToAddMode: \(dueToAddModeFeeback)")
+        
+        self.pointerIsInsideAddField = false
+        MFMessagePort.sendMessage("disableAddMode", withPayload: nil, waitForReply: false)
+        self.addField.hoverEffect(enable: false, playAcceptAnimation: dueToAddModeFeeback)
     }
 
     @objc func handleAddModeFeedback(payload: NSDictionary) {
@@ -576,12 +588,17 @@ import CocoaLumberjackSwift
             ///     The payload is an almost finished remapsTable (aka RemapTableController.dataModel) entry with the kMFRemapsKeyEffect key missing
             self.tableController.addRow(withHelperPayload: payload as! [AnyHashable : Any])
             
-            /// Disable addMode
-//            pointerIsInsideAddField = false /// ???
-            MFMessagePort.sendMessage("disableAddMode", withPayload: nil, waitForReply: false)
+            /// HACK: Force trackingArea to exit
+            /// - We need to do this because `addRow()` opens an `NSMenu`. And when an NSMenu is open, `NSTrackingArea` doesn't work properly, leading to weird behaviour.
+            ///     (The weird behaviour is that the mouse needs to enter twice before `mouseEntered()` is called again)
+            /// - Not totally sure if the + 0.5 delay is necessary or optimal. But I did some testing and it seems to work really well like this.
             
-            /// Remove hover
-            self.addField.hoverEffect(enable: false, playAcceptAnimation: true)
+            self.mouseExited_Internal(dueToAddModeFeeback: true)
+            self.addField.removeTrackingArea(self.trackingArea)
+            
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5, execute: {
+                self.createTrackingArea()
+            })
         }
     }
     

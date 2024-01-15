@@ -249,7 +249,7 @@ import CocoaLumberjackSwift
     @objc lazy var u_invertDirection: MFScrollInversion = {
         /// This can be used as a factor to invert things. kMFScrollInversionInverted is -1.
         
-//        if HelperState.isLockedDown { return kMFScrollInversionNonInverted }
+//        if HelperState.shared.isLockedDown { return kMFScrollInversionNonInverted }
         return c("reverseDirection") as! Bool ? kMFScrollInversionInverted : kMFScrollInversionNonInverted
     }()
     
@@ -259,7 +259,7 @@ import CocoaLumberjackSwift
 //    @objc func scrollInvert(event: CGEvent) -> MFScrollInversion {
 //        /// This can be used as a factor to invert things. kMFScrollInversionInverted is -1.
 //
-//        if HelperState.isLockedDown { return kMFScrollInversionNonInverted }
+//        if HelperState.shared.isLockedDown { return kMFScrollInversionNonInverted }
 //
 //        if self.u_direction == self.semanticScrollInvertSystem(event) {
 //            return kMFScrollInversionNonInverted

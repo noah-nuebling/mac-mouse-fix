@@ -20,8 +20,6 @@
 /// - Mouse button clicks
 /// - Mouse movement
 ///
-/// On listening to activeDevice
-/// - This would let us turn off buttonTap / scrollTap for mice that don't support buttons / don't support scrolling. However then we couldn't update the active device when another mouse sends scroll or button input because we wouldn't be listening to that input. So it's better to just listen to all attachedDevices.
 ///
 /// On Optimization
 /// - [ ] When buttons are not used as trigger and are only used as modifier in combination with kbMod, we could switch off buttonTap until kbMods are pressed.
@@ -76,7 +74,8 @@ import ReactiveSwift
     /// State
     ///
     
-    /// NOTE: Some (most?, all?) of these are sort of unnecessary to store here separately. E.g. `someDeviceHasScroll` can just be read from the DeviceManager.
+    /// UPDATE: If I still understand correctly, this is all the state that is used inside the tapTogglers, to decide if an eventTap should be enabled or not.
+    /// NOTE: Some (most?, all?) of these are somwhat of unnecessary to store here separately. E.g. `someDeviceHasScroll` can just be read from the DeviceManager. However it helps me think about the complicated logic, to gather all the relevant state here.
     
     /// Derived from: Attached Devices
     
@@ -109,6 +108,9 @@ import ReactiveSwift
     
     /// Derived from: Lockdown
     var isLockedDown = false
+    
+    /// Derived from: HelperState
+    var userIsActive = HelperState.shared.userIsActive
     
     /// Derived from: General Config
     private var buttonKillSwitch = false
@@ -153,6 +155,35 @@ import ReactiveSwift
         /// Debug
         DDLogDebug("SwitchMaster toggling due to lockdown")
         logState()
+    }
+    
+    //
+    // MARK: Fast user switching
+    //
+    
+    @objc func helperStateChanged() {
+        
+        /// NOTES:
+        /// - On listening to activeDevice
+        ///     - This would let us turn off buttonTap / scrollTap for mice that don't support buttons / don't support scrolling. However then we couldn't update the active device when another mouse sends scroll or button input because we wouldn't be listening to that input. So it's better to just listen to all attachedDevices.
+        
+        let userIsActiveNew = HelperState.shared.userIsActive
+        
+        if userIsActiveNew != userIsActive {
+            
+            /// Update State
+            userIsActive = userIsActiveNew
+            
+            /// Call togglers
+            toggleKbModTap()
+            toggleScrollTap()
+            toggleButtonTap()
+            togglePointingTap(modifications: nil)
+            
+            /// Debug
+            DDLogDebug("SwitchMaster toggling due to helperState change")
+            logState()
+        }
     }
     
     //
@@ -382,7 +413,7 @@ import ReactiveSwift
     
     private func toggleKbModTap() {
         
-        if isLockedDown {
+        if isLockedDown || !userIsActive {
             Modifiers.setKeyboardModifierPriority(kMFModifierPriorityUnused)
             return
         }
@@ -445,7 +476,7 @@ import ReactiveSwift
     
     private func toggleScrollTap() {
         
-        if isLockedDown || scrollKillSwitch {
+        if isLockedDown || !userIsActive || scrollKillSwitch {
             Scroll.stopReceiving()
             return
         }
@@ -459,7 +490,7 @@ import ReactiveSwift
     
     private func toggleButtonTap() {
     
-        if isLockedDown || buttonKillSwitch {
+        if isLockedDown || !userIsActive || buttonKillSwitch {
             ButtonInputReceiver.stop()
             return
         }
@@ -479,7 +510,7 @@ import ReactiveSwift
     
     private func togglePointingTap(modifications modificationsArg: NSDictionary?) {
         
-        if isLockedDown { /// Not sure if necessary
+        if isLockedDown || !userIsActive { /// Not sure if necessary
             ModifiedDrag.deactivate()
             return
         }
@@ -518,7 +549,7 @@ import ReactiveSwift
         
         if ((false)) {
             
-            /// Disabling this, because it's not really clear what graying out the items means or when it happens.
+            /// Disabling this, because I think it's not really clear to users what graying out the items means or when it happens.
             
             let scrollCanBeToggled =
             !isLockedDown && someDeviceHasScroll &&

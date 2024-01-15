@@ -49,9 +49,6 @@
     return self;
 }
 
-double triggerColumWidth = -1;
-double effectColumnWidth = -1;
-
 
 - (void)coolDidLoad {
  
@@ -62,79 +59,8 @@ double effectColumnWidth = -1;
     ///     This shouldn't be necessary since we update the size when we switch to the button tab, but it's sometimes wrong and I think this might help.
 //    [self updateSizeWithAnimation:NO tabContentView:nil];
     
-    /// Define constant
-    ///     Also see RemapTableCellView > columnPadding for context
-    double columnPadding = 8.0;
-    
-    /// Calculate column widths
-    
-    for (int c = 0; c < self.numberOfColumns; c++) {
-        
-        /// Get columnWidth
-        
-        double columnWidth = 0;
-        
-        for (int r = 0; r < self.numberOfRows; r++) {
-        
-            NSTableCellView *v = [self viewAtColumn:c row:r makeIfNecessary:YES];
-            columnWidth = MAX(columnWidth, v.fittingSize.width);
-        }
-        
-        /// Weird hacky stuff
-        ///     Makes the effectRow wider so the text in the buttons isn't as crammed.
-        ///     Idk why or how any of this works
-        columnWidth += 10;
-        
-        /// Set all tableCells equal columnWidth
-        ///     Need to set priority 999 because some mysterious `UIView-Encapsulated-Layout-Width` constraints are being added by the tableView and break our constraints. It doesn't seem to make a difference so far though.
-        for (int r = 0; r < self.numberOfRows; r++) {
-            NSTableCellView *v = [self viewAtColumn:c row:r makeIfNecessary:YES];
-            if ([v.identifier isEqual:@"buttonGroupCell"]) continue;
-            NSLayoutConstraint *c = [v.widthAnchor constraintEqualToConstant:columnWidth];
-            c.priority = 999;
-            [c setActive:YES];
-        }
-        
-        /// Store columnWidth
-        if (c == 0) {
-            triggerColumWidth = columnWidth;
-        } else if (c == 1) {
-            effectColumnWidth = columnWidth;
-        } else {
-            assert(false);
-        }
-    }
-    
-    /// Guard no width
-    ///     If the table is loaded with no rows, then the effectColumnWidth will be almost 0 which breaks things
-    ///     So we fallback to this
-    ///     Note: It makes sense to just use frame.size since self has already been layed out at this point
-    if (effectColumnWidth < 20) {
-        effectColumnWidth = self.frame.size.width / 2.0;
-    }
-    
-    /// Set min tableWidth based on content
-    ///     Not sure if this is necessary since we really want the tableWidth to be determined by the rest of the layout.
-    ///     If the triggerCells are superwide we just want them to wrap, not make the table super wide
-    ///         I think we'll just set a minimum width in IB and then let it grow beyond that based on the addField hint.
-    ///     You can only set this on the enclosing scrollView, not the tableView itself!. Even though they are just set to have the exact same size. Not sure why. Autolayout is weird.
-    /// This doesn't work, the effectCell popupButtons' text can still be cut off.
-    ///     Edit: Fixed it I think with [effectColumn setMinWidth:]
-    
-    double minTableWidth = effectColumnWidth * 2 + 4*columnPadding;
-    
-    NSLayoutConstraint *c = [self.enclosingScrollView.widthAnchor constraintGreaterThanOrEqualToConstant:minTableWidth];
-    [c setActive:YES];
-    NSLayoutConstraint *c2 = [self.enclosingScrollView.widthAnchor constraintEqualToConstant:minTableWidth];
-    c2.priority = 999.0;
-    [c2 setActive:YES];
-    
-    /// Set effect column width
-    /// Notes: Setting the column width higher does seem to make it wider but not linearly? And at some point it just stops growing?
-//    [self sizeLastColumnToFit];
-    NSTableColumn *effectColumn = self.tableColumns[1];
-    [effectColumn setMinWidth:effectColumnWidth]; /// Don't don't I'm desparate. TF this works!! ... story of AppKit programming. Actually it just makes both colums equal sized. Weird. Edit; Also setting maxWidth it works!
-    [effectColumn setMaxWidth:effectColumnWidth];
+    /// Set column widths
+    [self updateColumnWidths];
     
 }
 
@@ -205,6 +131,101 @@ double effectColumnWidth = -1;
 //    NSInteger clickedRow = [self rowAtPoint:clickedPoint];
     
 //    [super mouseDown:event];
+}
+
+
+double triggerColumWidth = -1;
+double effectColumnWidth = -1;
+NSMutableArray *columnConstraints = nil;
+
+- (void)updateColumnWidths {
+    
+    /// Create columnConstraints array
+    if (columnConstraints == nil) {
+        columnConstraints = [NSMutableArray array];
+    }
+    
+    /// Delete existing columnConstraints
+    [self.enclosingScrollView removeConstraints:columnConstraints];
+    [columnConstraints removeAllObjects];
+    
+    /// Define constant
+    ///     Also see RemapTableCellView > columnPadding for context
+    double columnPadding = 8.0;
+    
+    /// Calculate column widths
+    
+    for (int c = 0; c < self.numberOfColumns; c++) {
+        
+        /// Get columnWidth
+        
+        double columnWidth = 0;
+        
+        for (int r = 0; r < self.numberOfRows; r++) {
+        
+            NSTableCellView *v = [self viewAtColumn:c row:r makeIfNecessary:YES];
+            columnWidth = MAX(columnWidth, v.fittingSize.width);
+        }
+        
+        /// Weird hacky stuff
+        ///     Makes the effectRow wider so the text in the buttons isn't as crammed.
+        ///     Idk why or how any of this works
+        columnWidth += 10;
+        
+        /// Set all tableCells equal columnWidth
+        ///     Need to set priority 999 because some mysterious `UIView-Encapsulated-Layout-Width` constraints are being added by the tableView and break our constraints. It doesn't seem to make a difference so far though.
+        for (int r = 0; r < self.numberOfRows; r++) {
+            NSTableCellView *v = [self viewAtColumn:c row:r makeIfNecessary:YES];
+            if ([v.identifier isEqual:@"buttonGroupCell"]) continue;
+            NSLayoutConstraint *c = [v.widthAnchor constraintEqualToConstant:columnWidth];
+            c.priority = 999;
+            [c setActive:YES];
+        }
+        
+        /// Store columnWidth
+        if (c == 0) {
+            triggerColumWidth = columnWidth;
+        } else if (c == 1) {
+            effectColumnWidth = columnWidth;
+        } else {
+            assert(false);
+        }
+    }
+    
+    /// Guard no width
+    ///     If the table is loaded with no rows, then the effectColumnWidth will be almost 0 which breaks things
+    ///     So we fallback to this
+    ///     Note: It makes sense to just use frame.size since self has already been layed out at this point
+    if (effectColumnWidth < 20) {
+        effectColumnWidth = self.frame.size.width / 2.0;
+    }
+    
+    /// Set min tableWidth based on content
+    ///     Not sure if this is necessary since we really want the tableWidth to be determined by the rest of the layout.
+    ///     If the triggerCells are superwide we just want them to wrap, not make the table super wide
+    ///         I think we'll just set a minimum width in IB and then let it grow beyond that based on the addField hint.
+    ///     You can only set this on the enclosing scrollView, not the tableView itself!. Even though they are just set to have the exact same size. Not sure why. Autolayout is weird.
+    /// This doesn't work, the effectCell popupButtons' text can still be cut off.
+    ///     Edit: Fixed it I think with [effectColumn setMinWidth:]
+    
+    double minTableWidth = effectColumnWidth * 2 + 4*columnPadding;
+    
+    NSLayoutConstraint *c = [self.enclosingScrollView.widthAnchor constraintGreaterThanOrEqualToConstant:minTableWidth];
+    [c setActive:YES];
+    NSLayoutConstraint *c2 = [self.enclosingScrollView.widthAnchor constraintEqualToConstant:minTableWidth];
+    c2.priority = 999.0;
+    [c2 setActive:YES];
+    
+    [columnConstraints addObject:c];
+    [columnConstraints addObject:c2];
+    
+    /// Set effect column width
+    /// Notes: Setting the column width higher does seem to make it wider but not linearly? And at some point it just stops growing?
+//    [self sizeLastColumnToFit];
+    NSTableColumn *effectColumn = self.tableColumns[1];
+    [effectColumn setMinWidth:effectColumnWidth]; /// Don't don't I'm desparate. TF this works!! ... story of AppKit programming. Actually it just makes both colums equal sized. Weird. Edit; Also setting maxWidth it works!
+    [effectColumn setMaxWidth:effectColumnWidth];
+    
 }
 
 - (void)updateSizeWithAnimation {

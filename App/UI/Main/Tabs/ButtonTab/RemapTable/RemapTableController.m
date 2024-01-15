@@ -61,7 +61,7 @@
 #pragma mark Interact with config
 
 - (void)loadDataModelFromConfig {
-    [Config.shared loadConfigFromFile]; /// Not sure if necessary. Other than this, the only caller of `loadConfigFromFile` is `handleConfigFileChange`
+    [Config.shared loadConfigFromFileAndRepair]; /// Not sure if necessary. Other than this, the only caller of `loadConfigFromFileAndRepair` is `handleConfigFileChange`. Edit: Think this is unnecessary. Remove.
     self.dataModel = Config.shared.config[kMFConfigKeyRemaps];
 }
 - (void)writeDataModelToConfig {

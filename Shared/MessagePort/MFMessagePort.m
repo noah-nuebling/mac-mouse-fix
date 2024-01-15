@@ -98,7 +98,7 @@ static CFDataRef _Nullable didReceiveMessage(CFMessagePortRef port, SInt32 messa
     } else if ([message isEqualToString:@"helperDisabled"]) {
         [EnabledState.shared reactToDidBecomeDisabled];
     } else if ([message isEqualToString:@"configFileChanged"]) {
-        [Config handleConfigFileChange];
+        [Config loadFileAndUpdateStates];
     }
     
 #elif IS_HELPER
@@ -106,7 +106,7 @@ static CFDataRef _Nullable didReceiveMessage(CFMessagePortRef port, SInt32 messa
 #pragma mark HelperApp
     
     if ([message isEqualToString:@"configFileChanged"]) {
-        [Config handleConfigFileChange];
+        [Config loadFileAndUpdateStates];
     } else if ([message isEqualToString:@"terminate"]) {
 //        [NSApp.delegate applicationWillTerminate:[[NSNotification alloc] init]]; /// This creates an infinite loop or something? The statement below is never executed.
         [NSApp terminate:NULL];
@@ -124,7 +124,7 @@ static CFDataRef _Nullable didReceiveMessage(CFMessagePortRef port, SInt32 messa
     } else if ([message isEqualToString:@"disableKeyCaptureMode"]) {
         [KeyCaptureMode disable];
     } else if ([message isEqualToString:@"getActiveDeviceInfo"]) {
-        Device *dev = HelperState.activeDevice;
+        Device *dev = HelperState.shared.activeDevice;
         if (dev != NULL) {
             
             response = @{
@@ -138,7 +138,7 @@ static CFDataRef _Nullable didReceiveMessage(CFMessagePortRef port, SInt32 messa
         /// We can't just pass over the CGEvent from the mainApp because the senderID isn't stored when serializing CGEvents
         
         uint64_t senderID = [(NSNumber *)payload unsignedIntegerValue];
-        [HelperState updateActiveDeviceWithEventSenderID:senderID];
+        [HelperState.shared updateActiveDeviceWithEventSenderID:senderID];
         
     } else if ([message isEqualToString:@"getBundleVersion"]) {
         response = @(Locator.bundleVersion);

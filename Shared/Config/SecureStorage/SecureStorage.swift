@@ -34,6 +34,7 @@
 /// TODO: Implement cleanup function. See Notes in NSDictionary+Additions.m for details.
 
 import Foundation
+import CocoaLumberjackSwift
 
 @objc class SecureStorage: NSObject {
     
@@ -94,13 +95,28 @@ import Foundation
         
         let data = try readItem()
         
-        /// Under Ventura, this gives me strange warnings about how it 'will be disallowed in the future' to use this for unarchiving dictionaries, but there is no documentation for the replacement functions and I don't know how to use them. Putting assert(false) so we notice when this becomes deprecated.
-        guard let dict = try NSKeyedUnarchiver.unarchivedObject(ofClass: NSDictionary.self, from: data as Data) else {
+        do {
+            
+            /// Unarchive data into dict
+            ///     I think this is secure since other apps can't write to our keychain item.
+            var dict = try SharedUtilitySwift.insecureUnarchive(data: data as Data)
+            
+            /// Catch wrong type
+            ///     For some reason I saw the item be a string at some point, causing a crash, so we guard against that here.
+            if let dict = dict as? NSDictionary {
+
+            } else {
+                DDLogWarn("The Secure storage item can't be cast to an NSDictionary. It's value is \(dict). Just pretending like it's an empty dict instead.")
+                dict = NSDictionary()
+            }
+                
+            /// Return
+            return dict as! NSDictionary
+            
+        } catch {
             assert(false)
             throw KeychainError.invalidItemData
         }
-        
-        return dict
     }
     
     private static func replaceDict(_ dict: NSDictionary) throws {
@@ -118,6 +134,8 @@ import Foundation
     /// Core lvl 1
     
     private static func createItem(data: CFData) throws {
+        
+        /// Note: The docs say to use SecItemAdd() from a background thread since it blocks the calling thread, but it seems fine so far.
         
         var query = baseQuery()
         query[kSecValueData as String] = data

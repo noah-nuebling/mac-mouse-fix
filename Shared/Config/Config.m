@@ -52,18 +52,13 @@
     
     /// Setup stuff
     ///     Can't do this in `[_instance init]` because the callchain accesses tries to access the `_instance` through `Config.shared`. (Might be fixable by making `handleConfigFileChange()` an instance method like everything else)
+    [Config loadFileAndUpdateStates];
     
-    if (runningHelper()) {
-        /// Load config
-        [Config handleConfigFileChange];
-        /// Setup stuff
-        [_instance setupFSEventStreamCallback];
-    } else {
-        /// Just load config
-//        [_instance loadConfigFromFile];
-        /// Load config
-        [Config handleConfigFileChange];
-    }
+    
+#if IS_HELPER
+    /// Setup stuff
+    [_instance setupFSEventStreamCallback];
+#endif
 }
 
 static Config *_instance;
@@ -126,29 +121,33 @@ void commitConfig(void) {
     [MFMessagePort sendMessage:@"configFileChanged" withPayload:nil waitForReply:NO];
     
     /// Update own state
-    [Config handleConfigFileChange];
+    [Config updateDerivedStates];
 }
 
 
 #pragma mark - React
 
-+ (void)handleConfigFileChange {
++ (void)loadFileAndUpdateStates {
+    /// Note: This method used to be called `handleConfigFileChange`
+    [self.shared loadConfigFromFileAndRepair];
+    [self updateDerivedStates];
+}
+
++ (void)updateDerivedStates {
+    
+    /// Update states across the app that depend on the config.
+    /// We should generally call this whenever the config changes.
     
 #if IS_MAIN_APP
-    
-    /// Update this class
-    [self.shared loadConfigFromFile];
-    
-    /// Notify other modules
     [ReactiveConfig.shared reactWithNewConfig:Config.shared.config];
 
 #endif
     
 #if IS_HELPER
     
-    /// Update this class
-    [self.shared loadConfigFromFile];
-    [self.shared loadOverridesForApp:@""]; /// Force update of internal state, (even the active app hastn't changed)
+    /// Force update of internal state, (even the active app hastn't changed)
+    ///     (Not sure if we need to always do this or only after loading from file)
+    [self.shared loadOverridesForApp:@""];
     
     /// Notify other modules
     [Remap reload];
@@ -159,6 +158,7 @@ void commitConfig(void) {
     [MenuBarItem reload];
 
 #endif
+    
 }
 
 #pragma mark - Overrides
@@ -307,7 +307,7 @@ void Handle_FSEventStreamCallback(ConstFSEventStreamRef streamRef, void *clientC
     DDLogInfo(@"FSEvent for config.plist - paths: %@, noInfo: %d, isFromSelf: %d, isModified: %d, isRemoved: %d, isRenamed: %d, isCreated: %d, isFile: %d", paths, noInfo, isFromSelf, isModified, isRemoved, isRenamed, isCreated, isFile);
     
     if (!isFromSelf && isFile) {
-        [Config handleConfigFileChange];
+        [Config loadFileAndUpdateStates];
     }
 }
 
@@ -334,13 +334,13 @@ void Handle_FSEventStreamCallback(ConstFSEventStreamRef streamRef, void *clientC
     DDLogInfo(@"Wrote config to file.");
 }
 
-- (void)loadConfigFromFile {
+- (void)loadConfigFromFileAndRepair {
     
     /// Load data from plist file at `_configURL` into `_config` class variable
     /// This only really needs to be called when `Config` is loaded, but I use it in other places as well, to make the program behave better, when I manually edit the config file.
     
 #if IS_MAIN_APP
-    [self repairConfigWithProblem:kMFConfigProblemNone info:nil];
+    [self repairConfigWithReason:kMFConfigRepairReasonLoad info:nil];
 #endif
     
     NSData *configData = [NSData dataWithContentsOfURL:Locator.configURL];
@@ -383,39 +383,114 @@ void Handle_FSEventStreamCallback(ConstFSEventStreamRef streamRef, void *clientC
 
 #pragma mark - Repair
 
-- (void)repairConfigWithProblem:(MFConfigProblem)problem info:(id _Nullable)info {
+- (void)repairConfigWithReason:(MFConfigRepairReason)reason info:(id _Nullable)info {
     
     /// Checks config for errors / incompatibilty and repairs it if necessary.
-    /// TODO: Test if this still works
     /// TODO: Check whether all default (as opposed to override) values exist in config file. If they don't, then everything breaks. Maybe do this by comparing with default_config. Edit: Not sure this is feasible, also the comparing with default_config breaks if we want to have keys that are optional.
     /// TODO: Consider porting this to Helper
     
     assert(runningMainApp());
     
-    /// Create config file if none exists
-    
-    if (![NSFileManager.defaultManager fileExistsAtPath:Locator.configURL.path]) {
-        [NSFileManager.defaultManager createDirectoryAtURL:Locator.configURL.URLByDeletingLastPathComponent withIntermediateDirectories:YES attributes:nil error:nil];
-        [self replaceCurrentConfigWithDefaultConfig];
-    }
-    
-    /// Check if config version matches, if not, replace with default.
-    
-    NSNumber *currentConfigVersion = (NSNumber *)[[NSDictionary dictionaryWithContentsOfURL:Locator.configURL] objectForCoolKeyPath:@"Constants.configVersion"];
-    NSNumber *defaultConfigVersion = (NSNumber *)[[NSDictionary dictionaryWithContentsOfURL:defaultConfigURL()] objectForCoolKeyPath:@"Constants.configVersion"];
-    if (defaultConfigVersion == nil) {
-        DDLogError(@"Couldn't get default config version. Something is wrong.");
-        abort();
-    }
-    if (currentConfigVersion.intValue != defaultConfigVersion.intValue) {
-        [self replaceCurrentConfigWithDefaultConfig];
-    }
-    
-    /// Repair incomplete App override
-    ///     Do this by simply copying over the values from the default config
-    ///     TODO: Check if this works
-    
-    if (problem == kMFConfigProblemIncompleteAppOverride) {
+    if (reason == kMFConfigRepairReasonLoad) {
+        
+        /// Get config dicts
+        /// - We assign to `self.config` here, since repairConfig is called before actually loading `self.config`. Not sure if this is a shitty structure. We're loading the config from file 2x.
+        self.config = [NSMutableDictionary dictionaryWithContentsOfURL:Locator.configURL];
+        NSMutableDictionary *defaultConfig = [NSMutableDictionary dictionaryWithContentsOfURL:defaultConfigURL()];
+        
+        /// Get version objects
+        /// Notes:
+        /// - Need to get these up here for some reason so that goto statements work
+        NSNumber *currentVersionNS = (NSNumber *)[self.config objectForCoolKeyPath:@"Constants.configVersion"];
+        NSNumber *targetVersionNS = (NSNumber *)[defaultConfig objectForCoolKeyPath:@"Constants.configVersion"];
+        
+        /// Create config file if none exists
+        if (![NSFileManager.defaultManager fileExistsAtPath:Locator.configURL.path]) {
+            DDLogInfo(@"repairConfig: Config file doesn't exist. Creating a new one.");
+            [NSFileManager.defaultManager createDirectoryAtURL:Locator.configURL.URLByDeletingLastPathComponent withIntermediateDirectories:YES attributes:nil error:nil];
+            goto replace;
+        }
+        
+        /// Unpack version objects and guard nil
+        
+        if (targetVersionNS == nil) {
+            DDLogError(@"repairConfig: Couldn't get default configVersion. MMF bundle must be corrupt/wrong.");
+            abort();
+        }
+        if (currentVersionNS == nil) {
+            DDLogWarn(@"repairConfig: Couldn't get current configVersion. Something is weird.");
+            goto replace;
+        }
+        int currentVersion = currentVersionNS.intValue;
+        int targetVersion = targetVersionNS.intValue;
+        
+        /// It's all good if the config version matches
+        if (currentVersion == targetVersion) {
+            DDLogInfo(@"repairConfig: configVersion matches (%d) We can keep using the existing config...", currentVersion);
+            goto dontReplace;
+        }
+        /// If config is a downgrade, we don't bother repairing
+        if (currentVersion > targetVersion) {
+            DDLogInfo(@"repairConfig: configVersion decreased from %d to %d. Not repairing downgrades...", currentVersion, targetVersion);
+            goto replace;
+        }
+        
+        /// Attempt to repair config version upgrades
+        ///  Note: see README.md for context on what changed between versions
+        
+        DDLogInfo(@"repairConfig: configVersion increased from %d to %d. Trying to repair...", currentVersion, targetVersion);
+        
+        while (true) {
+            
+            if (currentVersion == 21) {
+                
+                DDLogInfo(@"repairConfig: Upgrading configVersion from 21 to 22...");
+                
+                /// Move lastUseDate from config to SecureStorage.
+                NSObject *d = config(@"License.trial.lastUseDate");
+                [SecureStorage set:@"License.trial.lastUseDate" value:d];
+                removeFromConfig(@"License.trial.lastUseDate");
+                
+                currentVersion = 22;
+                
+            } else {
+                
+                DDLogInfo(@"repairConfig: No upgrades from configVersion %d. Target is %d.", currentVersion, targetVersion);
+                goto replace;
+            }
+            
+            if (currentVersion == targetVersion) {
+                
+                DDLogInfo(@"repairConfig: Config was repaired! It was upgraded to configVersion %d.", currentVersion);
+                
+                setConfig(@"Constants.configVersion", @(targetVersion));
+                commitConfig();
+                
+                goto dontReplace;
+            }
+        }
+        
+    replace:
+        
+        /// Simply replace config with default config
+        
+        DDLogInfo(@"repairConfig: Replacing config with default config...");
+        self.config = defaultConfig;
+        commitConfig();
+        
+    dontReplace:
+        return;
+        
+    } else if (reason == kMFConfigRepairReasonIncompleteAppOverride) {
+        
+        /// Repair incomplete App override
+        ///     Do this by simply copying over the values from the default config
+        ///     TODO: Check if this works
+        
+        assert(false); /// Did some refactors and this is untested and unused at the moment.
+        
+        DDLogInfo(@"repairConfig: Repairing incomplete appOverrides...");
+        
         NSAssert(info && [info isKindOfClass:[NSDictionary class]], @"Can't repair incomplete app override: invalid argument provided");
         
         NSString *bundleID = info[@"bundleID"]; /// Bundle ID of the app with the faulty override
@@ -429,28 +504,33 @@ void Handle_FSEventStreamCallback(ConstFSEventStreamRef streamRef, void *clientC
             }
         }
         commitConfig();
+        
+    } else {
+        
+        DDLogError(@"Unknown config repair reason. MMF is corrupt.");
+        exit(1);
     }
 }
 
-- (void)replaceCurrentConfigWithDefaultConfig {
-    
-    /// Replaces the current config file which the helper app is reading from with the backup one and then terminates the helper. (Helper will restart automatically because of the KeepAlive attribute in its user agent config file.)
-    
-    assert(runningMainApp());
-    
-    /// Overwrite `config.plist` with `default_config.plist`
-    NSData *defaultData = [NSData dataWithContentsOfURL:defaultConfigURL()];
-    [defaultData writeToURL:Locator.configURL atomically:YES];
-    
-    /// Update helper
-    ///     Why aren't we just sending a configFileChanged message?
-    [MFMessagePort sendMessage:@"terminate" withPayload:nil waitForReply:NO];
-    
-    /// Update self (mainApp)
-//    [self loadConfigFromFile];
-    [Config handleConfigFileChange];
-    
-}
+//- (void)replaceCurrentConfigWithDefaultConfig {
+//    
+//    /// Replaces the current config file which the helper app is reading from with the backup one and then terminates the helper. (Helper will restart automatically because of the KeepAlive attribute in its user agent config file.)
+//    
+//    assert(runningMainApp());
+//    
+//    /// Overwrite `config.plist` with `default_config.plist`
+//    NSData *defaultData = [NSData dataWithContentsOfURL:defaultConfigURL()];
+//    [defaultData writeToURL:Locator.configURL atomically:YES];
+//    
+//    /// Update helper
+//    ///     Why aren't we just sending a configFileChanged message?
+//    [MFMessagePort sendMessage:@"terminate" withPayload:nil waitForReply:NO];
+//    
+//    /// Update self (mainApp)
+////    [self loadConfigFromFileAndRepair];
+//    [Config loadFileAndUpdateStates];
+//
+//}
 
 - (void)cleanConfig {
     NSMutableDictionary *appOverrides = _config[kMFConfigKeyAppOverrides];
