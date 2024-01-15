@@ -410,7 +410,7 @@ you’re updating from an older version than 3.0.0, or if you
 settings will still be reset.
 <!-- (375e4e23b097532e41cce56bc144cfaf8fbdc50e) --></li>
 </ul></li>
-<li>The layout of the Buttons tab now better adapts it’s width to
+<li>The layout of the Buttons tab now better adapts its width to
 different languages.
 <!-- (f1b0c43eea4face62d39da4c705cf671bc122690) --></li>
 <li>Improvements to the <a
