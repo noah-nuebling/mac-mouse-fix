@@ -201,7 +201,7 @@
 "effect.look-up.hint" = "Tra cứu từ trong Dictionary, xem nhanh tệp trong Finder, và nhiều hơn.\n \nHoạt động như nhấn, kèm lực trên Apple Trackpad.";
 
 /* First draft: Middle Click */
-"effect.middle-click" = "Kích chuột giữ";
+"effect.middle-click" = "Kích chuột giữa";
 
 /* First draft: Open links in a new tab, paste text in the Terminal, and more.\n \nWorks like clicking %@ on a standard mouse. */
 "effect.middle-click.hint" = "Mở liên kết trong thẻ mới, dán chữ vào Terminal, và nhiều hơn.\n \nHoạt động như kích vào nút %@ trên chuột.";
