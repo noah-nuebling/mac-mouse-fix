@@ -144,7 +144,7 @@ def generate():
 
             # Get download link
             download_link = r['assets'][0]['browser_download_url']
-            print(f"DEBUG - {r['assets']}")
+            pprint(f"DEBUG - {r['assets']}")
 
             # Download update
             os.makedirs(download_folder_absolute, exist_ok=True)
