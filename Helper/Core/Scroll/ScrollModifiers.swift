@@ -43,7 +43,7 @@ extension MFScrollModificationResult: Hashable {
         
         /// Get currently active scroll remaps
         
-//        let modifyingDevice: Device = HelperState.activeDevice!;
+//        let modifyingDevice: Device = HelperState.shared.activeDevice!;
         let activeModifiers = Modifiers.modifiers(with: event)
 //        let baseRemaps = Remap.remaps;
         

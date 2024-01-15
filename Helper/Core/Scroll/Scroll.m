@@ -323,7 +323,7 @@ static void heavyProcessing(CGEventRef event, int64_t scrollDeltaAxis1, int64_t 
         [TrialCounter.shared handleUse];
         
         /// Update active device
-        [HelperState updateActiveDeviceWithEvent:event];
+        [HelperState.shared updateActiveDeviceWithEvent:event];
         
         /// Update application Overrides
         

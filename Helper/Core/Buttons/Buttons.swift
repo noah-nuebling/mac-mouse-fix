@@ -52,7 +52,7 @@ import CocoaLumberjackSwift
         if mouseDown && !clickCycleIsActive {
             
             /// Update active device
-            HelperState.updateActiveDevice(event: event)
+            HelperState.shared.updateActiveDevice(event: event)
             
             /// Update modifications
             let remaps = Remap.remaps /// Why aren't we reusing the remaps from above?

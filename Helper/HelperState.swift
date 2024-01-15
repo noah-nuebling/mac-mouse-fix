@@ -10,16 +10,55 @@
 /// This class holds global state. Use sparingly!
 
 import Foundation
+import CoreGraphics
 
 @objc class HelperState: NSObject {
+    
+    // MARK: Singleton & init
+    @objc static let shared = HelperState()
+    override private init() {
+        super.init()
+        initUserIsActive()
+    }
+    
+    // MARK: Fast user switching
+    /// See Apple Docs at: https://developer.apple.com/library/archive/documentation/MacOSX/Conceptual/BPMultipleUsers/Concepts/FastUserSwitching.html#//apple_ref/doc/uid/20002209-104219-BAJJIFCB
+    
+    var userIsActive: Bool = false
+    func initUserIsActive() {
+        
+        /// Init userIsActive
+        userIsActive = userIsActive_Manual()
+        
+        /// Listen to user switches and update userIsActive
+        NSWorkspace.shared.notificationCenter.addObserver(forName: NSWorkspace.sessionDidBecomeActiveNotification, object: nil, queue: nil) { notification in
+            self.userIsActive = true
+            assert(self.userIsActive_Manual() == self.userIsActive)
+            SwitchMaster.shared.helperStateChanged()
+        }
+        NSWorkspace.shared.notificationCenter.addObserver(forName: NSWorkspace.sessionDidResignActiveNotification, object: nil, queue: nil) { notification in
+            self.userIsActive = false
+            assert(self.userIsActive_Manual() == self.userIsActive)
+            SwitchMaster.shared.helperStateChanged()
+        }
+        
+    }
+    
+    private func userIsActive_Manual() -> Bool {
+        /// For debugging and stuff
+        guard let d = CGSessionCopyCurrentDictionary() as NSDictionary? else { return false }
+        guard let result = d.value(forKey: kCGSessionOnConsoleKey) as? Bool else { return false }
+        return result
+    }
     
     // MARK: Active device
     /// Might be more appropriate to have this as part of DeviceManager
     
-    private static var _activeDevice: Device? = nil
-    @objc static var activeDevice: Device? {
+    private var _activeDevice: Device? = nil
+    @objc var activeDevice: Device? {
         set {
             _activeDevice = newValue
+            SwitchMaster.shared.helperStateChanged()
         }
         get {
             if _activeDevice != nil {
@@ -31,15 +70,15 @@ import Foundation
         }
     }
     
-    @objc static func updateActiveDevice(event: CGEvent) {
+    @objc func updateActiveDevice(event: CGEvent) {
         guard let iohidDevice = CGEventGetSendingDevice(event)?.takeUnretainedValue() else { return }
         updateActiveDevice(IOHIDDevice: iohidDevice)
     }
-    @objc static func updateActiveDevice(eventSenderID: UInt64) {
+    @objc func updateActiveDevice(eventSenderID: UInt64) {
         guard let iohidDevice = getSendingDeviceWithSenderID(eventSenderID)?.takeUnretainedValue() else { return }
         updateActiveDevice(IOHIDDevice: iohidDevice)
     }
-    @objc static func updateActiveDevice(IOHIDDevice: IOHIDDevice) {
+    @objc func updateActiveDevice(IOHIDDevice: IOHIDDevice) {
         guard let device = DeviceManager.attachedDevice(with: IOHIDDevice) else { return }
         activeDevice = device
     }

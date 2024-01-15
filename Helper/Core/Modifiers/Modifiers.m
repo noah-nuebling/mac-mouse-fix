@@ -131,7 +131,7 @@ CGEventRef _Nullable kbModsChanged(CGEventTapProxy proxy, CGEventType type, CGEv
     
     /// Get mouse
     
-    //    Device *activeDevice = HelperState.activeDevice;
+    //    Device *activeDevice = HelperState.shared.activeDevice;
     
     /// Get activeModifiers
     /// Notes:

@@ -663,6 +663,21 @@
                   endingLineNumber = "321"
                   offsetFromSymbolStart = "312">
                </Location>
+               <Location
+                  uuid = "0D8ABE4C-8D6B-4A0D-8C93-24EDF1C9E3B0 - e387ce82e12adce3"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #2 (Swift.Bool, Swift.Optional&lt;Swift.Int&gt;, Swift.Optional&lt;Swift.Dictionary&lt;Swift.String, Any&gt;&gt;, Swift.Optional&lt;__C.NSError&gt;, Swift.Optional&lt;__C.NSURLResponse&gt;) -&gt; () in static Mac_Mouse_Fix_Helper.License._checkLicense(key: Swift.Optional&lt;Swift.String&gt;, licenseConfig: Mac_Mouse_Fix_Helper.LicenseConfig, incrementUsageCount: Swift.Bool, completionHandler: (Swift.Bool, __C.MFValueFreshness, __C.MFLicenseReason, Swift.Optional&lt;__C.NSError&gt;) -&gt; ()) -&gt; ()"
+                  moduleName = "Mac Mouse Fix Helper"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/Noah/Desktop/mmf-stuff/mac-mouse-fix/Shared/License/License.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "321"
+                  endingLineNumber = "321"
+                  offsetFromSymbolStart = "312">
+               </Location>
             </Locations>
          </BreakpointContent>
       </BreakpointProxy>
@@ -741,6 +756,36 @@
                   endingLineNumber = "467"
                   offsetFromSymbolStart = "2180">
                </Location>
+               <Location
+                  uuid = "7404D803-330D-42F4-BA46-4627D1CCFC36 - b57883f71533d026"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "-[Config repairConfigWithReason:info:]"
+                  moduleName = "Mac Mouse Fix"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/Noah/Desktop/mmf-stuff/mac-mouse-fix/Shared/Config/Config.m"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "477"
+                  endingLineNumber = "477"
+                  offsetFromSymbolStart = "1228">
+               </Location>
+               <Location
+                  uuid = "7404D803-330D-42F4-BA46-4627D1CCFC36 - 9041afb9448d27e7"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "-[Config repairConfigWithReason:info:]"
+                  moduleName = "Mac Mouse Fix Helper"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/Noah/Desktop/mmf-stuff/mac-mouse-fix/Shared/Config/Config.m"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "467"
+                  endingLineNumber = "467"
+                  offsetFromSymbolStart = "2232">
+               </Location>
             </Locations>
          </BreakpointContent>
       </BreakpointProxy>
@@ -804,53 +849,35 @@
                   endingLineNumber = "452"
                   offsetFromSymbolStart = "1904">
                </Location>
-            </Locations>
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "CFB7F13C-BB71-4D73-BA3D-E3621F46104C"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Shared/Config/SecureStorage/SecureStorage.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "72"
-            endingLineNumber = "72"
-            landmarkName = "set(_:value:)"
-            landmarkType = "7">
-            <Locations>
                <Location
-                  uuid = "CFB7F13C-BB71-4D73-BA3D-E3621F46104C - 74a48e14eb753738"
+                  uuid = "B8DE2901-2223-4ACD-BAD5-4AAC7C61E8BC - b57883f71533d36d"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
-                  symbolName = "static Mac_Mouse_Fix.SecureStorage.set(_: Swift.String, value: Swift.Optional&lt;Any&gt;) -&gt; ()"
+                  symbolName = "-[Config repairConfigWithReason:info:]"
                   moduleName = "Mac Mouse Fix"
                   usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/Noah/Desktop/mmf-stuff/mac-mouse-fix/Shared/Config/SecureStorage/SecureStorage.swift"
+                  urlString = "file:///Users/Noah/Desktop/mmf-stuff/mac-mouse-fix/Shared/Config/Config.m"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "72"
-                  endingLineNumber = "72"
-                  offsetFromSymbolStart = "276">
+                  startingLineNumber = "452"
+                  endingLineNumber = "452"
+                  offsetFromSymbolStart = "1016">
                </Location>
                <Location
-                  uuid = "CFB7F13C-BB71-4D73-BA3D-E3621F46104C - 74a48e14eb753738"
+                  uuid = "B8DE2901-2223-4ACD-BAD5-4AAC7C61E8BC - 9041afb9448d25f6"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
-                  symbolName = "static Mac_Mouse_Fix.SecureStorage.set(_: Swift.String, value: Swift.Optional&lt;Any&gt;) -&gt; ()"
-                  moduleName = "Mac Mouse Fix"
+                  symbolName = "-[Config repairConfigWithReason:info:]"
+                  moduleName = "Mac Mouse Fix Helper"
                   usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/Noah/Desktop/mmf-stuff/mac-mouse-fix/Shared/Config/SecureStorage/SecureStorage.swift"
+                  urlString = "file:///Users/Noah/Desktop/mmf-stuff/mac-mouse-fix/Shared/Config/Config.m"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "72"
-                  endingLineNumber = "72"
-                  offsetFromSymbolStart = "128">
+                  startingLineNumber = "452"
+                  endingLineNumber = "452"
+                  offsetFromSymbolStart = "1836">
                </Location>
             </Locations>
          </BreakpointContent>
