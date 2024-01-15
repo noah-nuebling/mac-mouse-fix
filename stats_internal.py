@@ -26,7 +26,8 @@ def main():
         total_downloads = 0
         for r in releases:
             short_version = r['name']
-            downloads = r['assets'][0]['download_count']
+            app_assets = get_app_assets(r)
+            downloads = app_assets[0]['download_count']
             total_downloads += downloads
             print(f'{short_version}: {downloads}')
         print(f'\ntotal: {total_downloads}')
@@ -79,12 +80,7 @@ def main():
                 short_version = r['name']
 
                 # Get app asset
-                # NOTE: This has a copy in generate_appcasts. Keep them in sync.
-                app_assets = [asset for asset in r['assets'] if asset['name'] == 'MacMouseFixApp.zip' or asset['name'] == 'MacMouseFix.zip']
-                assert len(app_assets) <= 1, f"Found {len(app_assets)} app assets. Here are the asset names: { list(map(lambda a: a['name'], r['assets'])) }"
-                if len(app_assets) == 0:
-                    print(f"Couldn't find asset with standard name. Falling back to first asset, named {r['assets'][0]['name']}")
-                    app_assets = [r['assets'][0]]
+                app_assets = get_app_assets(r)
                 
                 # Get download count
                 downloads = app_assets[0]['download_count']
@@ -360,5 +356,16 @@ def make_format(current, other):
         
         return 'Total: {:.0f}          ({:<10})          Per day: {:.0f}'.format(ax_coord[1], datestring, y)
     return format_coord
+
+def get_app_assets(r):
+    # NOTE: This has a copy in generate_appcasts. Keep them in sync.
+    
+    app_assets = [asset for asset in r['assets'] if asset['name'] == 'MacMouseFixApp.zip' or asset['name'] == 'MacMouseFix.zip']
+    assert len(app_assets) <= 1, f"Found {len(app_assets)} app assets. Here are the asset names: { list(map(lambda a: a['name'], r['assets'])) }"
+    if len(app_assets) == 0:
+        print(f"Couldn't find asset with standard name. Falling back to first asset, named {r['assets'][0]['name']}")
+        app_assets = [r['assets'][0]]
+    
+    return app_assets
 
 main()
