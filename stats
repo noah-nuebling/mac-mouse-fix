@@ -8,7 +8,13 @@ source env/bin/activate
 python3 -m pip install -r requirements.txt
 
 # Run python script and pass along arguments
-python3 stats_internal.py "$@" 
+python3 stats_internal.py "$@"
+
+# Check the exit status
+if [ $? -ne 0 ]; then
+    echo "stats_internal Python script failed. Exiting."
+    exit 1
+fi
 
 # Deactivate "env"
 deactivate

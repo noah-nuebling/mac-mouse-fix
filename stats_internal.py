@@ -79,8 +79,12 @@ def main():
                 short_version = r['name']
 
                 # Get app asset
-                app_assets = [asset for asset in r['assets'] if asset['name'] == 'MacMouseFixApp.zip']
-                assert(len(app_assets) == 1, f"Found {len(app_assets)} assets with the name 'MacMouseFixApp.zip'")
+                # NOTE: This has a copy in generate_appcasts. Keep them in sync.
+                app_assets = [asset for asset in r['assets'] if asset['name'] == 'MacMouseFixApp.zip' or asset['name'] == 'MacMouseFix.zip']
+                assert len(app_assets) <= 1, f"Found {len(app_assets)} app assets. Here are the asset names: { list(map(lambda a: a['name'], r['assets'])) }"
+                if len(app_assets) == 0:
+                    print(f"Couldn't find asset with standard name. Falling back to first asset, named {r['assets'][0]['name']}")
+                    app_assets = [r['assets'][0]]
                 
                 # Get download count
                 downloads = app_assets[0]['download_count']

@@ -16,6 +16,10 @@ git pull;
 # Update appcast files
 echo 'Generating appcasts...'
 python3 ./generate_appcasts;
+if [ $? -ne 0 ]; then
+    echo "generate_appcasts Python script failed. Exiting."
+    exit 1
+fi
 echo 'Pushing new appcasts...'
 git add .;
 git commit -m "Update script: Updated appcasts";
@@ -24,6 +28,10 @@ git push;
 # Record stats
 echo 'Recording stats...'
 ./stats record;
+if [ $? -ne 0 ]; then
+    echo "stats bash script failed. Exiting."
+    exit 1
+fi
 echo 'Pushing new stats...'
 git add .;
 git commit -m "Update script: Recorded stats";
