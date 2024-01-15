@@ -42,6 +42,7 @@ These people spent a lot more than the standard price and treated me to an **Inc
 
 **January 2024**
 
+- 🇩🇪&nbsp;Kenny&nbsp;S
 - 🇩🇪&nbsp;Robin&nbsp;E - "This software is worth AT LEAST 10$. Period. Thank you a lot for your amazing work!"
 - 🇬🇷&nbsp;Periklis&nbsp;Petridis - "Noah you made my cheap mouse MAGICal without buying APPLE's Magic Mouse!!!! Congratz"
 - 🇸🇪&nbsp;Tomas&nbsp;Bäckman - "❤️"
