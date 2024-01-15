@@ -306,7 +306,7 @@
 "license-toast.unknown-reason" = "Kích hoạt thất bạn do một **lỗi không xác định**\n\nVui lòng gửi một **Báo cáo lỗi** [tại đây](https://noah-nuebling.github.io/mac-mouse-fix-feedback-assistant/?type=bug-report)";
 
 /* First draft: Set speed under\n[%@ > Mouse > Scrolling Speed](%@) */
-"macos-scrolling-hint" = "Thiết lập tốc độ tại \n[%@ > Mouse > Scrolling Speed](%@)";
+"macos-scrolling-hint" = "Thiết lập tốc độ tại \n[%@ > Chuột > Tốc độ di chuyển](%@)";
 
 /* First draft: Back */
 "mail-alert.back" = "Quay lại";

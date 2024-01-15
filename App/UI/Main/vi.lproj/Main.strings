@@ -72,7 +72,7 @@
 "DVS-lH-VBH.title" = "Trợ giúp";
 
 /* Class = "NSTextFieldCell"; title = "Set acceleration under \nSystem Preferences > Mouse > Tracking speed "; ObjectID = "DtT-YF-gUn"; Note = "Pointer > Acceleration > macOS Option > Hint"; */
-"DtT-YF-gUn.title" = "Cài đặt tăng tốc tại \nCài đặt hệ thống > Chuột > Tốc độ di chuyển ";
+"DtT-YF-gUn.title" = "Cài đặt tăng tốc tại \nCài đặt hệ thống > Chuột > Tốc độ di chuyển";
 
 /* Class = "NSMenuItem"; title = "Medium"; ObjectID = "E0q-4e-axc"; Note = "Scrolling > Scroll Speed > Medium Option"; */
 "E0q-4e-axc.title" = "Vừa";
@@ -120,7 +120,7 @@
 "N65-aN-Hxp.title" = "Giả lập trackpad";
 
 /* Class = "NSTextFieldCell"; title = "Move the mouse pointer inside the '+' field, then *Click* a mouse button to assign an action to it.\nYou can also *Double Click*, *Click and Drag* and [more]()."; ObjectID = "N7H-9j-DIr"; Note = "Buttons > Add Field Hint || It's better to use * instead of _ for emphasis. _ causes problems in some languages like Chinese."; */
-"N7H-9j-DIr.title" = "Di chuyển con trỏ chuột vào trong ô '+', sau đó _kích_ một nút của chuột để gáng một hành động cho nó.  Bạn cũng có thể _kích đôi_, _kích và kéo_ và [nhiều hành động khác](). Đừng ngại khám phá nhé";
+"N7H-9j-DIr.title" = "Di chuyển con trỏ chuột vào trong ô '+', sau đó _kích_ một nút của chuột để gáng một hành động cho nó.  Bạn cũng có thể _kích đôi_, _kích và kéo_ và [nhiều hành động khác](). Đừng ngại khám phá nhé.";
 
 /* Class = "NSMenuItem"; title = "Minimize"; ObjectID = "NdF-Gb-mOK"; */
 "NdF-Gb-mOK.title" = "Thu nhỏ";
