@@ -30,7 +30,7 @@
 "4hf-tQ-y76.title" = "Chính xác";
 
 /* Class = "NSTextFieldCell"; title = "Write a Feature Request"; ObjectID = "5yb-g8-Kcg"; */
-"5yb-g8-Kcg.title" = "Gửi yêu cầu tính năng mới";
+"5yb-g8-Kcg.title" = "Đề xuất tính năng mới";
 
 /* Class = "NSTextFieldCell"; title = "Scroll Horizontally"; ObjectID = "6Nj-Ed-W5T"; Note = "Scrolling > Keyboard Modifiers > Scroll Horizontally Label"; */
 "6Nj-Ed-W5T.title" = "Cuộn ngang";
@@ -60,7 +60,7 @@
 "AYu-sK-qS6.title" = "Trang chính";
 
 /* Class = "NSTextFieldCell"; title = "Lets you quickly turn off or on features like\nsmooth scrolling"; ObjectID = "AqN-zN-yDS"; */
-"AqN-zN-yDS.title" = "Cho phép bạn tắt hoặc bật nhanh các tính năng như\nscuộn mượt mà";
+"AqN-zN-yDS.title" = "Cho phép bạn tắt hoặc bật nhanh các tính năng như\ncuộn mượt mà";
 
 /* Class = "NSMenuItem"; title = "Hide Mac Mouse Fix"; ObjectID = "Bnm-ze-Mca"; */
 "Bnm-ze-Mca.title" = "Ẩn Mac Mouse Fix";
@@ -111,7 +111,7 @@
 "LTC-zW-sTp.title" = "Chỉnh sửa";
 
 /* Class = "NSButtonCell"; title = "Get Beta Versions"; ObjectID = "Mck-5W-5lv"; Note = "General > Get Beta Versions Toggle"; */
-"Mck-5W-5lv.title" = "Nhận phiên bản beta";
+"Mck-5W-5lv.title" = "Nhận phiên bản thử nghiệm";
 
 /* Class = "NSTabViewItem"; label = "Buttons"; ObjectID = "Mjk-wy-Z7C"; Note = "Toolbar > Buttons Tab Button"; */
 "Mjk-wy-Z7C.label" = "Nút";
@@ -138,7 +138,7 @@
 "QKM-im-bk9.title" = "<⌘⇧⌥⌃ + Kích ba lần và kéo Nút số 3>";
 
 /* Class = "NSTextFieldCell"; title = "Send Me an Email"; ObjectID = "QaW-cc-uzc"; */
-"QaW-cc-uzc.title" = "Gửi email cho tôi";
+"QaW-cc-uzc.title" = "Gửi email cho tác giả";
 
 /* Class = "NSTextFieldCell"; title = "Enable Mac Mouse Fix"; ObjectID = "RV9-5T-rvb"; Note = "General > Enable Mac Mouse Fix Label"; */
 "RV9-5T-rvb.title" = "Kích hoạt Mac Mouse Fix";
@@ -162,7 +162,7 @@
 "SjO-Dq-CEX.title" = "Độ mượt";
 
 /* Class = "NSTextFieldCell"; title = "Buy Me a Milkshake :)"; ObjectID = "TrI-uu-DEN"; */
-"TrI-uu-DEN.title" = "Ủng hộ tôi một ly sữa lắc :)";
+"TrI-uu-DEN.title" = "Ủng hộ tôi một ly trà sữa 🧋";
 
 /* Class = "NSMenuItem"; title = "Quit Mac Mouse Fix"; ObjectID = "UeD-ND-tYj"; */
 "UeD-ND-tYj.title" = "Tắt Mac Mouse Fix";
@@ -291,7 +291,7 @@
 "oEX-Tp-9Cv.title" = "Chọn tất cả";
 
 /* Class = "NSTextFieldCell"; title = "Created by Noah Nuebling"; ObjectID = "pMz-a0-1UQ"; */
-"pMz-a0-1UQ.title" = "Được tạo bởi Noah Nuebling";
+"pMz-a0-1UQ.title" = "Phát triển bởi Noah Nuebling";
 
 /* Class = "NSViewController"; title = "Scrolling"; ObjectID = "qcW-e9-BqR"; Note = "Scrolling Tab Title"; */
 "qcW-e9-BqR.title" = "Cuộn";
