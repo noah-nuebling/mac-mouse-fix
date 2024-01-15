@@ -6,6 +6,442 @@
     <description>Stable releases of Mac Mouse Fix</description>
     <language>en</language>
         <item>
+        <title>3.0.1 available!</title>
+        <pubDate>2024-01-15T06:30:28Z</pubDate>
+        <sparkle:minimumSystemVersion>10.14.4</sparkle:minimumSystemVersion>
+        <description><![CDATA[
+            <!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>-</title>
+  <style>
+    html {
+      color: #1a1a1a;
+      background-color: #fdfdfd;
+    }
+    body {
+      margin: 0 auto;
+      max-width: 36em;
+      padding-left: 50px;
+      padding-right: 50px;
+      padding-top: 50px;
+      padding-bottom: 50px;
+      hyphens: auto;
+      overflow-wrap: break-word;
+      text-rendering: optimizeLegibility;
+      font-kerning: normal;
+    }
+    @media (max-width: 600px) {
+      body {
+        font-size: 0.9em;
+        padding: 12px;
+      }
+      h1 {
+        font-size: 1.8em;
+      }
+    }
+    @media print {
+      html {
+        background-color: white;
+      }
+      body {
+        background-color: transparent;
+        color: black;
+        font-size: 12pt;
+      }
+      p, h2, h3 {
+        orphans: 3;
+        widows: 3;
+      }
+      h2, h3, h4 {
+        page-break-after: avoid;
+      }
+    }
+    p {
+      margin: 1em 0;
+    }
+    a {
+      color: #1a1a1a;
+    }
+    a:visited {
+      color: #1a1a1a;
+    }
+    img {
+      max-width: 100%;
+    }
+    svg {
+      height: auto;
+      max-width: 100%;
+    }
+    h1, h2, h3, h4, h5, h6 {
+      margin-top: 1.4em;
+    }
+    h5, h6 {
+      font-size: 1em;
+      font-style: italic;
+    }
+    h6 {
+      font-weight: normal;
+    }
+    ol, ul {
+      padding-left: 1.7em;
+      margin-top: 1em;
+    }
+    li > ol, li > ul {
+      margin-top: 0;
+    }
+    blockquote {
+      margin: 1em 0 1em 1.7em;
+      padding-left: 1em;
+      border-left: 2px solid #e6e6e6;
+      color: #606060;
+    }
+    code {
+      font-family: Menlo, Monaco, Consolas, 'Lucida Console', monospace;
+      font-size: 85%;
+      margin: 0;
+      hyphens: manual;
+    }
+    pre {
+      margin: 1em 0;
+      overflow: auto;
+    }
+    pre code {
+      padding: 0;
+      overflow: visible;
+      overflow-wrap: normal;
+    }
+    .sourceCode {
+     background-color: transparent;
+     overflow: visible;
+    }
+    hr {
+      background-color: #1a1a1a;
+      border: none;
+      height: 1px;
+      margin: 1em 0;
+    }
+    table {
+      margin: 1em 0;
+      border-collapse: collapse;
+      width: 100%;
+      overflow-x: auto;
+      display: block;
+      font-variant-numeric: lining-nums tabular-nums;
+    }
+    table caption {
+      margin-bottom: 0.75em;
+    }
+    tbody {
+      margin-top: 0.5em;
+      border-top: 1px solid #1a1a1a;
+      border-bottom: 1px solid #1a1a1a;
+    }
+    th {
+      border-top: 1px solid #1a1a1a;
+      padding: 0.25em 0.5em 0.25em 0.5em;
+    }
+    td {
+      padding: 0.125em 0.5em 0.25em 0.5em;
+    }
+    header {
+      margin-bottom: 4em;
+      text-align: center;
+    }
+    #TOC li {
+      list-style: none;
+    }
+    #TOC ul {
+      padding-left: 1.3em;
+    }
+    #TOC > ul {
+      padding-left: 0;
+    }
+    #TOC a:not(:hover) {
+      text-decoration: none;
+    }
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+  </style>
+  
+
+  <style>
+
+      /* Following this tutorial: https://devilgate.org/blog/2012/07/02/tip-using-pandoc-to-create-truly-standalone-html-files/ */
+
+      :root {
+          font-size: 10px; /* 1 rem is this much */
+          padding: 0 0 0 0;
+          background-color: transparent; /* pandoc automatically applies styling where the bg is white. So we need to override that. */
+      }
+
+      body {
+          background-color: transparent;
+          margin: 0 1.2rem 2.0rem 1.2rem;
+          padding: 0;
+          font-family: -apple-system;
+          font-size: 1.3rem;
+
+          line-height: 1.15em;
+      }
+
+      h1, h2, h3, h4, h5, h6 {
+          line-height: 1.15em;
+      }
+
+      h1:after, h2:after {
+          content:' ';
+          display: block;
+          border: 0.5px solid rgba(0, 0, 0, 0.12);
+      }
+      h1:after {
+          margin: 0.6rem 0 0 0;
+      }
+      h2:after {
+          margin: 0.4rem 0 0 0;
+      }
+
+      h1 {
+          font-size: 2.2rem;
+          margin: 2.2rem 0 1.3rem -0.0rem;
+      }
+
+      h2 {
+          font-size: 1.7rem;
+          margin: 2.0rem 0 1.7rem -0.0rem;
+      }
+
+      h3 {
+          font-size: 1.3rem;
+          margin: 1.5rem 0 0.0rem -0.0rem;
+      }
+      h4 {
+          font-size: 1.0rem;
+          margin: 1.5rem 0 0.0rem -0.0rem;
+      }
+      h5 {
+          font-size: 0.8rem;
+          margin: 1.5rem 0 0.0rem -0.0rem;
+          font-style: italic;
+      }
+
+      p {
+          margin: 1.1rem 0 1.1rem 0;
+          font-size: 1.1rem;
+      }
+
+      a, a:visited {
+          color: rgba(43, 102, 211, 1.0) /* Obtained by colorpicking `Hyperlink`s in MMF */
+      }
+
+      ul {
+          padding: 0 0 0 1.5rem;
+          margin: 1.0rem 0 1.0rem 0.5rem;
+      }
+      ul ul {
+          margin: 0.6rem 0 -0.6rem 0;
+          padding: 0 0 0 2.1rem;
+      }
+
+      li {
+          padding: 0 0 0.6rem 0;
+
+          font-size: 1.1rem;
+      }
+
+      code {
+          padding: 0.2rem 0.5rem;
+          border-radius: 0.5rem;
+          background-color: rgba(0, 0, 75, 0.09);
+      }
+      div.sourceCode {
+          
+          padding: 1.6rem 1.5rem;
+          border-radius: 1.1rem; /*0.3rem;*/
+          background-color: rgba(0, 0, 75, 0.055);
+      }
+
+      .annotation {
+          font-size: 1.1rem;
+      }
+      img {
+          max-width: 100%;
+          height: auto;
+          
+          border-radius: 1.0rem;
+          box-shadow: 0 0.2rem 0.4rem 0.0rem rgba(0, 0, 0, 0.15), 0 0.2rem 1.7rem 0.0rem rgba(0, 0, 0, 0.15);
+
+          display: block;
+          margin: 1.4rem auto 1.8rem auto;
+      }
+
+      hr {
+          border: none;
+          height: 3px;
+          background-color: rgba(0, 0, 0, 0.12);
+
+          margin: 1.7rem 0 1.7rem 0;
+      }
+
+      @media (prefers-color-scheme: light) {
+
+          /* I don't think we need this. Light is just the default, right? */
+
+          h1 {
+              color: #272727;
+          }
+
+          a {
+              color: #0948be;
+          }
+      }
+
+      @media (prefers-color-scheme: dark) {
+
+          body {
+              /* background-color: #1e1e1e;  */
+              /* ^ Sparkle background is still bright when we have `background-color: transparent` even with darkmode active. 
+                  This is the color of the text field background in Apple Mail on macOS 11 BigSur 
+                  
+                  Edit: This was because pandoc made the background white, which we've overriden now. So now this is not necessary anymore. Might want to reenable for testing in Safari.
+                  */
+
+              color: rgba(255, 255, 255, 0.9); /* For headers */
+          }
+
+          li, p {
+              color:rgba(255, 255, 255, 0.8);
+          }
+          a, a:visited { /* Need to include a:visited otherwise it will be set by pandoc */
+              color: #3586FF;
+          }
+          hr {
+              background-color: rgba(255, 255, 255, 0.15);
+          }
+          code {
+              background-color: rgba(255, 255, 255, 0.16);
+          }
+          div.sourceCode {
+              background-color: rgba(255, 255, 255, 0.08);
+          }
+
+          h1:after, h2:after {
+              content:' ';
+              display: block;
+              border: 0.5px solid rgba(255, 255, 255, 0.15);
+          }
+      }
+
+  </style>
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
+</head>
+<body>
+<p>Also check out the release notes for <a
+href="https://github.com/noah-nuebling/mac-mouse-fix/releases/tag/3.0.0"><strong>3.0.0</strong></a>
+- the biggest update to Mac Mouse Fix so far!</p>
+<hr />
+<p>Mac Mouse Fix <strong>3.0.1</strong> brings several bug fixes and
+improvements, along with a <strong>new language</strong>!</p>
+<h3 id="vietnamese-was-added">Vietnamese was added!</h3>
+<p>Mac Mouse Fix is now available in 🇻🇳 Vietnamese. Big thanks to <span
+class="citation" data-cites="nghlt">@nghlt</span> <a
+href="https://GitHub.com/nghlt">on GitHub</a>!</p>
+<h3 id="bug-fixes">Bug fixes</h3>
+<ul>
+<li>Mac Mouse Fix now works properly with <strong>Fast User
+Switching</strong>!
+<ul>
+<li>Fast User Switching is when you log into a second macOS account
+without logging out of the first account.
+<!-- (2840a21f243963f2ff42bc680ea3fe6a7c4a0459) --></li>
+<li>Before this update, scrolling stopped working after a fast user
+switch. Now everything should work correctly.</li>
+</ul></li>
+<li>Fixed a small bug where the layout of the Buttons tab was too wide
+after starting Mac Mouse Fix for the first time.
+<!-- (7889d9eaf27c465aeae1862490eb3594312567e8) --></li>
+<li>Made the ‘+’ field work more reliably when adding several Actions in
+quick succession.
+<!-- (8bf380383d669a54a51ca7f96c1a6dfb9b4d5616) --></li>
+<li>Fixed an obscure crash reported by <span class="citation"
+data-cites="V-Coba">@V-Coba</span> in Issue <a
+href="https://github.com/noah-nuebling/mac-mouse-fix/issues/735">735</a>.</li>
+</ul>
+<h3 id="other-improvements">Other improvements</h3>
+<ul>
+<li><strong>Scrolling feels more responsive</strong> when using the
+‘Smoothness: Regular’ setting.
+<ul>
+<li>The animation speed now becomes faster as you move the scroll wheel
+faster. That way, it feels more responsive when you scroll fast while
+feeling just as smooth when you scroll slowly.
+<!-- - Addressing https://github.com/noah-nuebling/mac-mouse-fix/issues/766. --></li>
+</ul></li>
+<li>Made the <strong>scroll speed acceleration</strong> more stable and
+predictable. <!-- (16a695ce3c30f3b972ea00e31b96b43c342e032f) --></li>
+<li>Implemented a mechanism to <strong>keep your settings</strong> when
+you update to a new Mac Mouse Fix version.
+<ul>
+<li>Before, Mac Mouse Fix would reset all your settings after updating
+to a new version, if the structure of the settings changed. Now, Mac
+Mouse Fix will attempt to upgrade the structure of your settings and
+keep your preferences.</li>
+<li>So far, this only works, when updating from 3.0.0 to 3.0.1. If
+you’re updating from an older version than 3.0.0, or if you
+<em>downgrade</em> from 3.0.1 <em>to</em> a previous version, your
+settings will still be reset.
+<!-- (375e4e23b097532e41cce56bc144cfaf8fbdc50e) --></li>
+</ul></li>
+<li>The layout of the Buttons tab now better adapts it’s width to
+different languages.
+<!-- (f1b0c43eea4face62d39da4c705cf671bc122690) --></li>
+<li>Improvements to the <a
+href="https://github.com/noah-nuebling/mac-mouse-fix#background">GitHub
+Readme</a> and other documents.</li>
+<li>Improved localization systems. The translation files are now
+automatically cleaned up and analyzed for potential issues. There’s a
+new <a
+href="https://github.com/noah-nuebling/mac-mouse-fix/discussions/731">Localization
+Guide</a> which features any automatically detected issues along with
+other useful info and instructions for people who want to help translate
+Mac Mouse Fix. Removed dependency on the <a
+href="https://github.com/FlineDev/BartyCrouch">BartyCrouch</a> tool
+which was previously used to get some of this functionality.</li>
+<li>Improved several UI strings in English and German.</li>
+<li>Lots of under-the-hood cleanup and improvements.</li>
+</ul>
+</body>
+</html>
+
+        ]]>
+        </description>
+        <enclosure
+            url="https://github.com/noah-nuebling/mac-mouse-fix/releases/download/3.0.1/MacMouseFixApp.zip"
+            sparkle:version="22148"
+            sparkle:shortVersionString="3.0.1"
+            sparkle:edSignature="6YYVBj1zzOoOyTXC7bWnEh8ZZd80V3AhTKLdRzoPUePZOMs07ROU3zCdqJvLhysPo1hmUqcs9oHkSFcQLzn2CQ==" length="6313884"
+            type="application/octet-stream"
+        />
+    </item>
+    <item>
         <title>3.0.0 available!</title>
         <pubDate>2023-12-23T11:28:16Z</pubDate>
         <sparkle:minimumSystemVersion>10.14.4</sparkle:minimumSystemVersion>
@@ -364,8 +800,8 @@ Trackpad!</strong></p>
 <!-- Mac Mouse Fix 3 features amazing new **trackpad-like scrolling**, a beautiful **new UI**, and many **new gestures**.\ -->
 <p>Check out <strong>all the new features</strong> at the <a
 href="http://macmousefix.com/">new website</a>!</p>
-<p>…Or see a more concise list of the most important changes compared to
-Mac Mouse Fix 2 in <a
+<p>…Or see a more concise list of the <strong>most important
+changes</strong> compared to Mac Mouse Fix 2 in <a
 href="https://github.com/noah-nuebling/mac-mouse-fix/discussions/743#discussioncomment-7938922">this
 discussion</a>.<br />
 You can also check out the release notes of <a
