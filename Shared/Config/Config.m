@@ -453,6 +453,16 @@ void Handle_FSEventStreamCallback(ConstFSEventStreamRef streamRef, void *clientC
                 
                 currentVersion = 22;
                 
+            } else if (currentVersion == 22) {
+                
+                DDLogInfo(@"repairConfig: Upgrading configVersion from 21 to 22...");
+                
+                /// Replace default config for 3 buttons
+                NSObject *d = [defaultConfig objectForCoolKeyPath:@"Constants.defaultRemaps.threeButtons"];
+                setConfig(@"Constants.defaultRemaps.threeButtons", d);
+                
+                currentVersion = 23;
+                
             } else {
                 
                 DDLogInfo(@"repairConfig: No upgrades from configVersion %d. Target is %d.", currentVersion, targetVersion);
