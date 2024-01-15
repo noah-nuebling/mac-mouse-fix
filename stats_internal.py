@@ -78,8 +78,12 @@ def main():
                 # Get short version
                 short_version = r['name']
 
+                # Get app asset
+                app_assets = [asset for asset in r['assets'] if asset['name'] == 'MacMouseFixApp.zip']
+                assert(len(app_assets) == 1, f"Found {len(app_assets)} assets with the name 'MacMouseFixApp.zip'")
+                
                 # Get download count
-                downloads = r['assets'][0]['download_count']
+                downloads = app_assets[0]['download_count']
 
                 # Append to log
                 make_path(history, short_version, str(current_time))['download_count'] = downloads
