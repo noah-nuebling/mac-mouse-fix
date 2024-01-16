@@ -166,9 +166,9 @@ Auf der [Website](http://noah-nuebling.github.io/mac-mouse-fix-website/) kannst 
 
 - **Gibt es eine Rückerstattungsrichtlinie?**
 
-  Es gibt keine offizielle Rückerstattungsrichtlinie, aber du kannst die App 30 Tage lang kostenlos nutzen.
+  Es gibt keine offizielle Rückerstattungsrichtlinie, aber die App ist 30 Tage lang kostenlos.
 
-  Wenn du nach dem Kauf der App Probleme hast, kontaktiere mich, und ich werde versuchen zu helfen.
+  Wenn du nach dem Kauf der App Probleme hast, kontaktiere mich einfach, und ich werde mein Bestes geben zu helfen.
 
 - **Wird Mac Mouse Fix weiterhin Open Source sein, jetzt da es monetarisiert ist?**
 

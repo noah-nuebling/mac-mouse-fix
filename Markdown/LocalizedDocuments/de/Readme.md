@@ -59,7 +59,7 @@ Für mehr Info darüber, wie genau Mac Mouse Fix deine Maus verbessert, besuche 
 
 Siehe die [Website](https://noah-nuebling.github.io/mac-mouse-fix-website#trackpad) für einen Überblick über die Funktionen von Mac Mouse Fix, einschließlich Videodemos!
 
-Mehr Details findest du in der <a href=https://github.com/noah-nuebling/mac-mouse-fix/releases>Releases</a>.
+Mehr Details findest du unter <a href=https://github.com/noah-nuebling/mac-mouse-fix/releases>Releases</a>.
 
 ## Installation
 
@@ -71,7 +71,7 @@ Du kannst Mac Mouse Fix auch über [Homebrew](https://brew.sh/) installieren! Gi
 brew install mac-mouse-fix
 ```
 
-Ältere Versionen von Mac Mouse Fix kannst du in der [Releases](https://github.com/noah-nuebling/mac-mouse-fix/releases) herunterladen.
+Ältere Versionen von Mac Mouse Fix kannst du unter [Releases](https://github.com/noah-nuebling/mac-mouse-fix/releases) herunterladen.
 
 ## macOS-Kompatibilität
 
@@ -168,9 +168,9 @@ Auf der [Website](http://noah-nuebling.github.io/mac-mouse-fix-website/) kannst 
 
 - **Gibt es eine Rückerstattungsrichtlinie?**
 
-  Es gibt keine offizielle Rückerstattungsrichtlinie, aber du kannst die App 30 Tage lang kostenlos nutzen.
+  Es gibt keine offizielle Rückerstattungsrichtlinie, aber die App ist 30 Tage lang kostenlos.
 
-  Wenn du nach dem Kauf der App Probleme hast, kontaktiere mich, und ich werde versuchen zu helfen.
+  Wenn du nach dem Kauf der App Probleme hast, kontaktiere mich einfach, und ich werde mein Bestes geben zu helfen.
 
 - **Wird Mac Mouse Fix weiterhin Open Source sein, jetzt da es monetarisiert ist?**
 

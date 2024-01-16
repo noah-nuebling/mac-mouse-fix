@@ -122,7 +122,7 @@ You can also install Mac Mouse Fix through [Homebrew](https://brew.sh/)! Just ty
 brew install mac-mouse-fix
 ```
 
-You can download older versions of Mac Mouse Fix from the [Releases](https://github.com/noah-nuebling/mac-mouse-fix/releases).
+You can download older versions of Mac Mouse Fix under [Releases](https://github.com/noah-nuebling/mac-mouse-fix/releases).
 
 ## macOS compatibility
 
@@ -249,9 +249,9 @@ These cool articles were written about MMF
 
 - **Is there a refund policy?**
 
-  There is no official refund policy, but you can use the app free for 30 days. 
+  There is no official refund policy, but the app is free for 30 days.
   
-  If you experience any issues after buying the app, reach out to me, and I will try to help. 
+  If you experience any problems after buying the app, just reach out to me, and I will do my best to help.
 
 - **Will Mac Mouse Fix still be Open Source now that it's monetized?**
 
