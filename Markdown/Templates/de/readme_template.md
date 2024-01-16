@@ -57,7 +57,7 @@ Für mehr Info darüber, wie genau Mac Mouse Fix deine Maus verbessert, besuche 
 
 Siehe die [Website](https://noah-nuebling.github.io/mac-mouse-fix-website#trackpad) für einen Überblick über die Funktionen von Mac Mouse Fix, einschließlich Videodemos!
 
-Mehr Details findest du in der <a href=https://github.com/noah-nuebling/mac-mouse-fix/releases>Releases</a>.
+Mehr Details findest du unter <a href=https://github.com/noah-nuebling/mac-mouse-fix/releases>Releases</a>.
 
 ## Installation
 
@@ -69,7 +69,7 @@ Du kannst Mac Mouse Fix auch über [Homebrew](https://brew.sh/) installieren! Gi
 brew install mac-mouse-fix
 ```
 
-Ältere Versionen von Mac Mouse Fix kannst du in der [Releases](https://github.com/noah-nuebling/mac-mouse-fix/releases) herunterladen.
+Ältere Versionen von Mac Mouse Fix kannst du unter [Releases](https://github.com/noah-nuebling/mac-mouse-fix/releases) herunterladen.
 
 ## macOS-Kompatibilität
 

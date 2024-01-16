@@ -120,7 +120,7 @@ You can also install Mac Mouse Fix through [Homebrew](https://brew.sh/)! Just ty
 brew install mac-mouse-fix
 ```
 
-You can download older versions of Mac Mouse Fix from the [Releases](https://github.com/noah-nuebling/mac-mouse-fix/releases).
+You can download older versions of Mac Mouse Fix under [Releases](https://github.com/noah-nuebling/mac-mouse-fix/releases).
 
 ## macOS compatibility
 
