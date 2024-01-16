@@ -160,7 +160,7 @@ Auf der [Website](http://noah-nuebling.github.io/mac-mouse-fix-website/) kannst 
 
 - **Sammelt Mac Mouse Fix meine Daten?**
 
-  Mac Mouse Fix hat keine Werbung und sammelt keine persönlichen Informationen über dich.\
+  Mac Mouse Fix hat keine Werbung und sammelt keine persönlichen Informationen über dich.
 
   Jedoch sammelt der Verkaufsanbieter Gumroad.com im Moment des Kaufs von Mac Mouse Fix einige persönliche Informationen, wie z.B. deine E-Mail-Adresse. Diese Informationen sind für mich sichtbar. Die Informationen sind notwendig, um Rückerstattungen ausstellen zu können, dir einen Lizenzschlüssel per E-Mail zu senden, usw. Ich kann diese Datensammlung nicht deaktivieren. Um mehr über die gesammelten Daten beim Kauf von Mac Mouse Fix zu erfahren, siehe die [Datenschutzrichtlinie](https://gumroad.com/privacy) von Gumroad.
 
@@ -172,7 +172,7 @@ Auf der [Website](http://noah-nuebling.github.io/mac-mouse-fix-website/) kannst 
 
 - **Wird Mac Mouse Fix weiterhin Open Source sein, jetzt da es monetarisiert ist?**
 
-  Ja, Mac Mouse Fix wird weiterhin Open Source sein.
+  Ja, Mac Mouse Fix wird weiterhin Open Source sein!
 
   Ich ermutige jeden, den Quellcode von Mac Mouse Fix in eigenen Projekten zu verwenden, solange sie keine einfache Kopie von Mac Mouse Fix veröffentlichen.
 
@@ -202,8 +202,8 @@ Schau dir die [Danksagungen]({language_root}Acknowledgements.md) an, um mehr dar
   
   Mac Mouse Fix ist auf Englisch und Deutsch verfügbar, sowie den Sprachen, die in den [Danksagungen]({language_root}Acknowledgements.md) aufgelistet sind.
   
-  Wenn du beim Übersetzen des Projekts helfen möchtest, sieh dir [diese Anleitung](https://github.com/noah-nuebling/mac-mouse-fix/discussions/731) an.\
-  Wenn du fehlende oder veraltete Übersetzungen über den [Feedback Assistenten](https://noah-nuebling.github.io/mac-mouse-fix-feedback-assistant/?type=other) mitteilen möchtest, ist das auch sehr hilfreich!
+  Wenn du **beim Übersetzen des Projekts helfen** möchtest, sieh dir das [Localization Guide](https://github.com/noah-nuebling/mac-mouse-fix/discussions/731) an.\
+  Wenn du **fehlende oder suboptimale Übersetzungen** melden möchtest, ist das auch sehr hilfreich! Die beste Art um Probleme zu melden, ist einen Kommentar unter dem [Localization Guide](https://github.com/noah-nuebling/mac-mouse-fix/discussions/731) zu hinterlassen.
 
 - **Code beitragen**
 

@@ -243,7 +243,7 @@ These cool articles were written about MMF
 
 - **Does Mac Mouse Fix collect my data?**
 
-  Mac Mouse Fix does not have ads, and it does not collect any personal information about you.\
+  Mac Mouse Fix does not have ads, and it does not collect any personal information about you.
 
   However, at the moment that you buy the app, the sales provider Gumroad.com collects some personal info, such as your email address, and this info is visible to me. This is necessary to be able to issue refunds, send a license key to your email, etc. I cannot turn this off. To learn more about the data collected when you buy Mac Mouse Fix, see the [Gumroad Privacy Policy](https://gumroad.com/privacy).
 
@@ -255,7 +255,7 @@ These cool articles were written about MMF
 
 - **Will Mac Mouse Fix still be Open Source now that it's monetized?**
 
-  Yes, Mac Mouse Fix will still be open source.
+  Yes, Mac Mouse Fix will still be open source!
 
   I encourage anyone to use the source code of Mac Mouse Fix in their own projects, as long as they don't release a simple copy of Mac Mouse Fix.
 
@@ -298,8 +298,8 @@ Check out the [Acknowledgements](Acknowledgements.md) for more info on who has a
   
   Mac Mouse Fix is available in English, German as well as the languages listed in the [Acknowledgements](Acknowledgements.md).
 
-  If you would like to help translate the project, see [this guide](https://github.com/noah-nuebling/mac-mouse-fix/discussions/731).\
-  If you want to report missing or outdated translations through the [Feedback Assistant](https://noah-nuebling.github.io/mac-mouse-fix-feedback-assistant/?type=other), that's also very helpful!
+  If you would like to **help translate the project**, see the [Localization Guide](https://github.com/noah-nuebling/mac-mouse-fix/discussions/731).\
+  If you want to **report missing or suboptimal translations**, that's also very helpful. The best way to report problems is by commenting under the [Localization Guide](https://github.com/noah-nuebling/mac-mouse-fix/discussions/731).
 
 - **Contributing code**
 
