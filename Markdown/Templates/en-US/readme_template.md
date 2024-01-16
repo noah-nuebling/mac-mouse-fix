@@ -80,7 +80,7 @@ You can now test the <a href="https://github.com/noah-nuebling/mac-mouse-fix/rel
 
 Mac Mouse Fix is an app that makes your mouse better.
 
-I want to turn Mac Mouse Fix into the best mouse driver *of all time*! Some features are still missing at the moment, but I think in some ways it already turns regular mice into the best input devices for Macs! At the same level or even better than an Apple Trackpad or a Logitech MX Master mouse.
+I want to turn Mac Mouse Fix into the best mouse driver *of all time*! Some features are still missing at the moment, but I think it already **turns regular mice into the best input devices for Macs** in some ways. At the same level or even better than an Apple Trackpad or a Logitech MX Master mouse.
 
 For more information on how exactly Mac Mouse Fix enhances your mouse, visit the [website](https://noah-nuebling.github.io/mac-mouse-fix-website).
 
