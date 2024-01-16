@@ -62,7 +62,7 @@ You can now test the <a href="https://github.com/noah-nuebling/mac-mouse-fix/rel
 	<table>
 		<th><a href=https://noah-nuebling.github.io/mac-mouse-fix-website>Website&nbsp;↗</a></th>
 		<td><a href=https://github.com/noah-nuebling/mac-mouse-fix/issues/new/choose>Help&nbsp;&&nbsp;Feedback</a></td>
-		<td><a href=https://github.com/noah-nuebling/mac-mouse-fix/releases>Version&nbsp;History</a></td>
+		<td><a href=https://github.com/noah-nuebling/mac-mouse-fix/releases>Releases</a></td>
  		<td><a href="{language_root}Acknowledgements.md">Acknowledgements</a></td> <!-- If you translate this, remember to link to the right language version -->
 	</table>
   <!-- vvv Hint for translators: You can change the label by editing the text inside the URL after `label=`. Use url encoding for special chars. E.g. `%20` to insert spaces. -->
@@ -98,7 +98,7 @@ It lets you do almost anything right from your mouse with its powerful customiza
 
 See the [website](https://noah-nuebling.github.io/mac-mouse-fix-website#trackpad) for an overview of the features of Mac Mouse Fix, including video demos!
 
-For more details, see the <a href=https://github.com/noah-nuebling/mac-mouse-fix/releases>version history</a>.
+For more details, see the <a href=https://github.com/noah-nuebling/mac-mouse-fix/releases>Releases</a>.
 
 <!--
 Major features were introduced in these versions:
@@ -120,7 +120,7 @@ You can also install Mac Mouse Fix through [Homebrew](https://brew.sh/)! Just ty
 brew install mac-mouse-fix
 ```
 
-You can download older versions of Mac Mouse Fix from the [version history](https://github.com/noah-nuebling/mac-mouse-fix/releases).
+You can download older versions of Mac Mouse Fix from the [Releases](https://github.com/noah-nuebling/mac-mouse-fix/releases).
 
 ## macOS compatibility
 
@@ -241,10 +241,15 @@ These cool articles were written about MMF
 
 - **Does Mac Mouse Fix collect my data?**
 
-  Mac Mouse Fix does not have ads, and it doesn't collect any personal information about you.\
-  The only data I collect is the number of downloads.
+  Mac Mouse Fix does not have ads, and it does not collect any personal information about you.\
 
-  However, at the moment you buy the app, the sales provider Gumroad.com collects some personal info, such as your email address, and this info is visible to me. This is necessary to be able to issue refunds, send a license key to your email, etc. I cannot turn this off. To learn more about the data collected when you buy Mac Mouse Fix, see the [Gumroad Privacy Policy](https://gumroad.com/privacy).
+  However, at the moment that you buy the app, the sales provider Gumroad.com collects some personal info, such as your email address, and this info is visible to me. This is necessary to be able to issue refunds, send a license key to your email, etc. I cannot turn this off. To learn more about the data collected when you buy Mac Mouse Fix, see the [Gumroad Privacy Policy](https://gumroad.com/privacy).
+
+- **Is there a refund policy?**
+
+  There is no official refund policy, but you can use the app free for 30 days. 
+  
+  If you experience any issues after buying the app, reach out to me, and I will try to help. 
 
 - **Will Mac Mouse Fix still be Open Source now that it's monetized?**
 
