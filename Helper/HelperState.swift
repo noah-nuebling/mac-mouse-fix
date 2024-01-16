@@ -16,9 +16,12 @@ import CoreGraphics
     
     // MARK: Singleton & init
     @objc static let shared = HelperState()
-    override private init() {
+    override init() {
         super.init()
         initUserIsActive()
+        DispatchQueue.main.async { /// Need to do this to avoid strange Swift crashes when this is triggered from `SwitchMaster.load_Manual()`
+            SwitchMaster.shared.helperStateChanged()
+        }
     }
     
     // MARK: Fast user switching

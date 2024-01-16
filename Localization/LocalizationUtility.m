@@ -22,6 +22,7 @@
     /// To determine the information density I just compare a few UI text based on how many characters they have vs the same message in English.
     
     NSDictionary *map = @{
+        @"vi": @0.75, /// Vietnamese
         @"de": @0.8, /// German
         @"en": @1.0, /// English
         @"ko": @1.75, /// Korean
@@ -29,6 +30,7 @@
     };
     
     NSNumber *resultNS = map[languageCode];
+    assert(resultNS != nil);
     double result = resultNS == nil ? 1.0 : resultNS.doubleValue; /// Default to 1.0
     
     return result;

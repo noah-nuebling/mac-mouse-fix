@@ -110,7 +110,7 @@ import ReactiveSwift
     var isLockedDown = false
     
     /// Derived from: HelperState
-    var userIsActive = HelperState.shared.userIsActive
+    var userIsActive = false
     
     /// Derived from: General Config
     private var buttonKillSwitch = false
@@ -123,8 +123,11 @@ import ReactiveSwift
     
     @objc func load_Manual() {
         
-        /// Not sure this is necessary or useful
+        /// Force HelperState to init so that it updates `userIsActive`
+        ///     Might be better to just directly assign `userIsActive` here instead of this indirect stuff.
+        _ = HelperState.shared
         
+        /// Not sure this is necessary or useful
         latestDevices = DeviceManager.attachedDevices
         latestRemaps = Remap.remaps
         latestScrollConfig = ScrollConfig.shared

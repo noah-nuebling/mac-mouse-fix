@@ -402,7 +402,8 @@
     [self enumerateAttributesInRange:NSMakeRange(0, s.length) options:0 usingBlock:^(NSDictionary<NSAttributedStringKey,id> * _Nonnull attrs, NSRange range, BOOL * _Nonnull stop) {
         [s addAttributes:attrs range:range];
     }]; /// Override base attributes with original string attributes to undo overrides of original string attributes
-    return s.copy;
+    
+    return s.copy; /// Why are we copying here?
 }
 
 #pragma mark Assign while keeping base
