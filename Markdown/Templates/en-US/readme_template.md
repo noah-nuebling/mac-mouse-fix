@@ -198,6 +198,17 @@ These cool articles were written about MMF
   1. Assign clicking and dragging one of the buttons of your mouse to the "Scroll & Navigate" feature. This feature simulates swiping with 2 fingers on an Apple Trackpad. This will, among other things, let you orbit in 3D apps! 
   2. *Uncapture* the Middle Mouse Button by deleting all actions assigned to it in Mac Mouse Fix. See [this guide](https://github.com/noah-nuebling/mac-mouse-fix/discussions/112) for more info.
 
+- **Can I open App Exposé through a Click and Drag Gesture?** <!-- Note: We're using App Exposé here and Application Windows in MMF. Not sure that's great. I felt this was clearer though. -->
+
+  Yes! Just choose the 'Spaces & Mission Control' Action and then Click and Drag *down*.
+
+  If this doesn't work, it's likely because the 'App Exposé' trackpad gesture is disabled on your Mac.\
+  You can enable the gesture under System Settings or by running the following command in the terminal:
+
+  ```
+  defaults write com.apple.Dock showAppExposeGestureEnabled -bool TRUE; killall Dock
+  ```
+
 - **Is my mouse supported?**
 
   Short answer: Probably. If you want to know for sure, it's best to download Mac Mouse Fix and try it out.
