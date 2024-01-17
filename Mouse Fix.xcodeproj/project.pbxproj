@@ -1994,6 +1994,13 @@
 		4F70ECAD267E442D00325A76 /* PointerSpeedExperiments2.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PointerSpeedExperiments2.m; sourceTree = "<group>"; };
 		4F70ECB5267E810900325A76 /* IOUtility.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IOUtility.h; sourceTree = "<group>"; };
 		4F70ECB6267E810900325A76 /* IOUtility.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = IOUtility.m; sourceTree = "<group>"; };
+		4F739C952B575EE600A03E3C /* pt-PT */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "pt-PT"; path = "pt-PT.lproj/Main.strings"; sourceTree = "<group>"; };
+		4F739C962B575EE600A03E3C /* pt-PT */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "pt-PT"; path = "pt-PT.lproj/ButtonOptionsViewController.strings"; sourceTree = "<group>"; };
+		4F739C972B575EE600A03E3C /* pt-PT */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "pt-PT"; path = "pt-PT.lproj/AuthorizeAccessibilityView.strings"; sourceTree = "<group>"; };
+		4F739C982B575EE600A03E3C /* pt-PT */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "pt-PT"; path = "pt-PT.lproj/LicenseSheetController.strings"; sourceTree = "<group>"; };
+		4F739C992B575EE600A03E3C /* pt-PT */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "pt-PT"; path = "pt-PT.lproj/MenuBarItem.strings"; sourceTree = "<group>"; };
+		4F739C9A2B575EE600A03E3C /* pt-PT */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "pt-PT"; path = "pt-PT.lproj/Localizable.strings"; sourceTree = "<group>"; };
+		4F739C9B2B575EE600A03E3C /* pt-PT */ = {isa = PBXFileReference; lastKnownFileType = text.plist.stringsdict; name = "pt-PT"; path = "pt-PT.lproj/Localizable.stringsdict"; sourceTree = "<group>"; };
 		4F77F7C728808DAE00847D0E /* PolyFitNumPy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PolyFitNumPy.swift; sourceTree = "<group>"; };
 		4F79A7EE26042E2E00076A7E /* ToastNotification.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ToastNotification.xib; sourceTree = "<group>"; };
 		4F79A81A2604317200076A7E /* ToastNotificationController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ToastNotificationController.h; sourceTree = "<group>"; };
@@ -7678,6 +7685,7 @@
 				"zh-Hans",
 				ko,
 				vi,
+				"pt-PT",
 			);
 			mainGroup = 4FCECD7721092354001F1078;
 			packageReferences = (
@@ -8148,6 +8156,7 @@
 				F4EBD4CA28DEFC4A0057D2DE /* zh-Hans */,
 				D0BDAA96297D462D001CA0FC /* ko */,
 				5D222D232B3E86F1000EA68D /* vi */,
+				4F739C982B575EE600A03E3C /* pt-PT */,
 			);
 			name = LicenseSheetController.xib;
 			sourceTree = "<group>";
@@ -8162,6 +8171,7 @@
 				F4EBD4CD28DEFC4A0057D2DE /* zh-Hans */,
 				D0BDAA92297D462D001CA0FC /* ko */,
 				5D222D262B3E86F1000EA68D /* vi */,
+				4F739C9B2B575EE600A03E3C /* pt-PT */,
 			);
 			name = Localizable.stringsdict;
 			sourceTree = "<group>";
@@ -8176,6 +8186,7 @@
 				F4EBD4C828DEFC4A0057D2DE /* zh-Hans */,
 				D0BDAA93297D462D001CA0FC /* ko */,
 				5D222D202B3E86F0000EA68D /* vi */,
+				4F739C952B575EE600A03E3C /* pt-PT */,
 			);
 			name = Main.storyboard;
 			sourceTree = "<group>";
@@ -8190,6 +8201,7 @@
 				F4EBD4CC28DEFC4A0057D2DE /* zh-Hans */,
 				D0BDAA91297D462C001CA0FC /* ko */,
 				5D222D252B3E86F1000EA68D /* vi */,
+				4F739C9A2B575EE600A03E3C /* pt-PT */,
 			);
 			name = Localizable.strings;
 			sourceTree = "<group>";
@@ -8204,6 +8216,7 @@
 				F4EBD4CB28DEFC4A0057D2DE /* zh-Hans */,
 				D0BDAA97297D462D001CA0FC /* ko */,
 				5D222D242B3E86F1000EA68D /* vi */,
+				4F739C992B575EE600A03E3C /* pt-PT */,
 			);
 			name = MenuBarItem.xib;
 			sourceTree = "<group>";
@@ -8218,6 +8231,7 @@
 				F4EBD4C928DEFC4A0057D2DE /* zh-Hans */,
 				D0BDAA95297D462D001CA0FC /* ko */,
 				5D222D222B3E86F0000EA68D /* vi */,
+				4F739C972B575EE600A03E3C /* pt-PT */,
 			);
 			name = AuthorizeAccessibilityView.xib;
 			sourceTree = "<group>";
@@ -8232,6 +8246,7 @@
 				F4EBD4C728DEFC4A0057D2DE /* zh-Hans */,
 				D0BDAA94297D462D001CA0FC /* ko */,
 				5D222D212B3E86F0000EA68D /* vi */,
+				4F739C962B575EE600A03E3C /* pt-PT */,
 			);
 			name = ButtonOptionsViewController.xib;
 			sourceTree = "<group>";
