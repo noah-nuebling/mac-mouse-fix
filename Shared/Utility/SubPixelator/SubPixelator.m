@@ -7,6 +7,13 @@
 // --------------------------------------------------------------------------
 //
 
+/**
+ Notes:
+ - Is it really a good idea to make all the properties here atomic? I'm not sure it prevents any race conditions, and it might have a significant performance impact.
+ 
+*/
+
+
 #import "SubPixelator.h"
 #import "SharedUtility.h"
 #import "MathObjc.h"
@@ -96,9 +103,15 @@ static RoundingFunction getBiasedRoundingFunction(double inpDelta) {
     }
     
     /// If this is biased pixelator, initialize rounding function if it isn't already
+    ///     Store the `roundingFunction` in `rf` to handle race conditions where self.roundingFunction becomes NULL while this function executes.
+    RoundingFunction rf;
     if (self.isBiasedPixelator && self.roundingFunction == NULL) {
-        self.roundingFunction = getBiasedRoundingFunction(inpDelta);
+        rf = getBiasedRoundingFunction(inpDelta);
+        self.roundingFunction = rf;
+    } else {
+        rf = self.roundingFunction;
     }
+    assert(rf != NULL);
     
     /// Get preciseDelta
     double preciseDelta = inpDelta + self.accumulatedRoundingError;
@@ -108,15 +121,11 @@ static RoundingFunction getBiasedRoundingFunction(double inpDelta) {
     if (greaterEqual(fabs(preciseDelta), self.threshold, 10e-4)) { 
         outputDelta = preciseDelta;
     } else {
-        outputDelta = self.roundingFunction(preciseDelta);
+        outputDelta = rf(preciseDelta);
     }
     
     ///  Debug
-    
     DDLogDebug(@"\nSubpixelator eval with d: %f, oldErr: %f, roundedD: %f, newErr: %f", inpDelta, self.accumulatedRoundingError, outputDelta, preciseDelta - outputDelta);
-    
-    /// Validate
-    assert(self.roundingFunction != NULL);
     
     /// Update roundingError
     self.accumulatedRoundingError = preciseDelta - outputDelta;
