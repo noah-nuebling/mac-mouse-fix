@@ -2,39 +2,6 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>Scroll</key>
-	<dict>
-		<key>modifiers</key>
-		<dict>
-			<key>horizontal</key>
-			<integer>131072</integer>
-			<key>precise</key>
-			<integer>524288</integer>
-			<key>swift</key>
-			<integer>262144</integer>
-			<key>zoom</key>
-			<integer>1048576</integer>
-		</dict>
-		<key>reverseDirection</key>
-		<true/>
-		<key>trackpadSimulation</key>
-		<true/>
-		<key>precise</key>
-		<false/>
-		<key>smooth</key>
-		<string>high</string>
-		<key>speed</key>
-		<string>medium</string>
-	</dict>
-	<key>License</key>
-	<dict>
-		<key>configCache</key>
-		<dict/>
-		<key>isLicensedCache</key>
-		<false/>
-		<key>licenseReasonCache</key>
-		<integer>1</integer>
-	</dict>
 	<key>General</key>
 	<dict>
 		<key>showMenuBarItem</key>
@@ -47,37 +14,11 @@
 		<false/>
 		<key>checkForUpdates</key>
 		<true/>
+	</dict>
+	<key>Buttons</key>
+	<dict>
 		<key>lockPointerDuringDrag</key>
 		<false/>
-	</dict>
-	<key>Pointer</key>
-	<dict>
-		<key>acceleration</key>
-		<real>0.6875</real>
-		<key>sensitivity</key>
-		<integer>1</integer>
-		<key>useSystemAcceleration</key>
-		<false/>
-	</dict>
-	<key>Remaps</key>
-	<array/>
-	<key>State</key>
-	<dict>
-		<key>remapsAreInitialized</key>
-		<false/>
-		<key>launchesOfCurrentBundleVersion</key>
-		<integer>0</integer>
-		<key>lastLaunchedBundleVersion</key>
-		<integer>0</integer>
-		<key>launchesOverall</key>
-		<string>0</string>
-		<key>autosave_tabID</key>
-		<string>general</string>
-	</dict>
-	<key>Constants</key>
-	<dict>
-		<key>configVersion</key>
-		<integer>23</integer>
 		<key>defaultRemaps</key>
 		<dict>
 			<key>threeButtons</key>
@@ -290,6 +231,75 @@
 				</dict>
 			</array>
 		</dict>
+		<key>remaps</key>
+		<array/>
 	</dict>
+	<key>Scroll</key>
+	<dict>
+		<key>modifiers</key>
+		<dict>
+			<key>horizontal</key>
+			<integer>131072</integer>
+			<key>precise</key>
+			<integer>524288</integer>
+			<key>swift</key>
+			<integer>262144</integer>
+			<key>zoom</key>
+			<integer>1048576</integer>
+		</dict>
+		<key>reverseDirection</key>
+		<true/>
+		<key>trackpadSimulation</key>
+		<true/>
+		<key>precise</key>
+		<false/>
+		<key>smooth</key>
+		<string>high</string>
+		<key>speed</key>
+		<string>medium</string>
+	</dict>
+	<key>Pointer</key>
+	<dict>
+		<key>acceleration</key>
+		<real>0.6875</real>
+		<key>sensitivity</key>
+		<integer>1</integer>
+		<key>useSystemAcceleration</key>
+		<false/>
+	</dict>
+	<key>State</key>
+	<dict>
+		<key>license</key>
+		<dict>
+			<key>configCache</key>
+			<dict/>
+			<key>isLicensedCache</key>
+			<false/>
+			<key>licenseReasonCache</key>
+			<integer>1</integer>
+		</dict>
+		<key>remapsAreInitialized</key>
+		<false/>
+		<key>launchesOfCurrentBundleVersion</key>
+		<integer>0</integer>
+		<key>lastLaunchedBundleVersion</key>
+		<integer>0</integer>
+		<key>launchesOverall</key>
+		<string>0</string>
+		<key>autosave_tabID</key>
+		<string>general</string>
+	</dict>
+	<key>Constants</key>
+	<dict>
+		<key>configVersion</key>
+		<integer>24</integer>
+	</dict>
+	<key>Overrides</key>
+	<array>
+		<dict>
+			<key>condition</key>
+			<dict/>
+		</dict>
+	</array>
 </dict>
 </plist>
