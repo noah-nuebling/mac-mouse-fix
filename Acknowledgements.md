@@ -42,6 +42,7 @@ These people spent a lot more than the standard price and treated me to an **Inc
 
 **January 2024**
 
+- 🇵🇱&nbsp;Leszek
 - 🇺🇸&nbsp;Lake&nbsp;Desing,&nbsp;Inc - "Good work"
 - 🇪🇪&nbsp;Aleksander&nbsp;Temmo - "thanks for great product!"
 - 🇳🇱&nbsp;Bart - "You're the man!"
