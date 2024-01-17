@@ -42,6 +42,7 @@ These people spent a lot more than the standard price and treated me to an **Inc
 
 **January 2024**
 
+- 🇳🇱&nbsp;Bart - "You're the man!"
 - 🇮🇹&nbsp;Marco&nbsp;Cavanna - "Without a doubt, it's the best 3rd party app I've ever come across on the web (despite myself being a Mac 3rd party app "hunter" and avid user).  UI/UX-wise, it’s ridiculously well-designed and intuitive. The look, feel, and ease of use are reminiscent of that of an official Apple app (if not better!).  Finally, in terms of customization, what you can achieve with this app is nothing short of amazing.  Everything I’ve always needed to do during my workflow (namely partial/total screenshots, mission control, and switching back and forth from one virtual desktop to another) I can now do it faster, better, and without ever having to move my right hand away from the mouse.  This is not an app; it’s a work of art."
 - 🇩🇪&nbsp;Kenny&nbsp;S
 - 🇩🇪&nbsp;Robin&nbsp;E - "This software is worth AT LEAST 10$. Period. Thank you a lot for your amazing work!"
