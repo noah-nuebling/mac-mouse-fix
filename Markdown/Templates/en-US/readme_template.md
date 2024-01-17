@@ -209,6 +209,8 @@ These cool articles were written about MMF
   defaults write com.apple.Dock showAppExposeGestureEnabled -bool TRUE; killall Dock
   ```
 
+  <!-- NOTES: Maybe we should automate this. For context, see Issue https://github.com/noah-nuebling/mac-mouse-fix/issues/387 -->
+
 - **Is my mouse supported?**
 
   Short answer: Probably. If you want to know for sure, it's best to download Mac Mouse Fix and try it out.
