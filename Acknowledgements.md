@@ -42,6 +42,7 @@ These people spent a lot more than the standard price and treated me to an **Inc
 
 **January 2024**
 
+- 🇰🇷&nbsp;Doyeop&nbsp;Kim - "Thanks for the grate app!"
 - 🇺🇸&nbsp;Raf - "Thanks for fixing the fast user switching bug!"
 - 🇵🇱&nbsp;Leszek
 - 🇺🇸&nbsp;Lake&nbsp;Desing,&nbsp;Inc - "Good work"
