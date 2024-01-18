@@ -1018,6 +1018,7 @@ static void sendOutputEvents(int64_t dx, int64_t dy, MFScrollOutputType outputTy
             if (bundleID != nil) {
                 if ([bundleID containsString:@"com.google.Chrome"]
                     || [bundleID containsString:@"org.chromium.Chromium"]
+                    || [bundleID containsString:@"company.thebrowser.Browser"] /// Arc browser
                     || [bundleID containsString:@"com.operasoftware.Opera"]
                     || [bundleID containsString:@"com.microsoft.edgemac"]
                     || [bundleID containsString:@"com.vivaldi.Vivaldi"]
