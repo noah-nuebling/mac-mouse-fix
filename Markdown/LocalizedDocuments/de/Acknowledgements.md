@@ -40,6 +40,7 @@ Diese Leute haben viel mehr als den Standardpreis ausgegeben und mir einen **ung
 
 **Januar 2024**
 
+- 🇺🇦&nbsp;Serhii - "Single developer resolved annoying issue, that multi-billion company didn't. What a mad world, huh?"
 - 🇺🇸&nbsp;Ave&nbsp;Grimshaw
 - 🇺🇸&nbsp;Alexander&nbsp;Malmberg
 - 🇹🇼&nbsp;Eugene - "Taiwan no.1"
