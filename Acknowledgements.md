@@ -42,6 +42,7 @@ These people spent a lot more than the standard price and treated me to an **Inc
 
 **January 2024**
 
+- 🇻🇳&nbsp;Long - "Thanks!"
 - 🇺🇦&nbsp;Serhii - "Single developer resolved annoying issue, that multi-billion company didn't. What a mad world, huh?"
 - 🇺🇸&nbsp;Ave&nbsp;Grimshaw
 - 🇺🇸&nbsp;Alexander&nbsp;Malmberg
