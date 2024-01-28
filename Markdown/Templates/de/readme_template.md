@@ -136,6 +136,17 @@ Auf der [Website](http://noah-nuebling.github.io/mac-mouse-fix-website/) kannst 
   1. Weise für eine der Tasten deiner Maus das klicken und ziehen der "Scrollen & Navigieren" Funktion zu. Diese Funktion simuliert das Wischen mit 2 Fingern auf einem Apple Trackpad. Das erlaubt dir, unter anderem, in 3D-Apps zu kreisen!
   2. *Gebe* die mittlere Maustaste *frei*, indem du alle ihr in Mac Mouse Fix zugewiesenen Aktionen löschst. Siehe [diese Anleitung](https://github.com/noah-nuebling/mac-mouse-fix/discussions/112) für weitere Informationen.
 
+- **Kann ich App Exposé durch eine Klick-und-Zieh-Geste öffnen?** <!-- Hinweis: Wir verwenden hier App Exposé und in MMF Programmfenster. Nicht sicher, ob das gut ist. Ich fand das allerdings klarer. -->
+
+  Ja! Wähle einfach die Aktion 'Spaces & Mission Control', dann klicke und ziehe *nach unten*.
+
+  Wenn das nicht funktioniert, liegt es wahrscheinlich daran, dass die Trackpad-Geste für 'App Exposé' auf deinem Mac deaktiviert ist.
+  Du kannst die Geste in den Systemeinstellungen aktivieren, oder indem du den folgenden Befehl im Terminal ausführst:
+
+  ```
+  defaults write com.apple.Dock showAppExposeGestureEnabled -bool TRUE; killall Dock
+  ```
+
 - **Wird meine Maus unterstützt?**
 
   Kurze Antwort: Wahrscheinlich schon. Wenn du es genau wissen möchtest, lade am besten Mac Mouse Fix herunter und probiere es aus.

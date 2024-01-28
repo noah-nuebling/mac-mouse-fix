@@ -105,6 +105,16 @@
     
     return appUnderMousePointer;
 }
+#pragma mark - Other
+
+NSString *runningApplicationDescription(NSRunningApplication *app) {
+    
+    /// `.debugDescription` is not very helpful
+    /// What we learn from this:
+    ///     - If the `NSRunningApplication` is a single executable instead of an actual app bundle (This is the case for Minecraft and many other games), then the `bundleID` is nil, but the `bundleURL` and the `executableURL` both point to the executable.
+    ///
+    return [NSString stringWithFormat:@"pid: %d, executable: %@, bundle: %@, bundleID: %@, exposedBindings: %@", app.processIdentifier, app.executableURL, app.bundleURL, app.bundleIdentifier, app.exposedBindings];
+}
 
 + (void)openMainApp {
     
@@ -153,7 +163,7 @@
 
 /// Get modifier flags
 
-CGEventFlags getModifierFlags() {
+CGEventFlags getModifierFlags(void) {
     CGEventRef flagEvent = CGEventCreate(NULL);
     CGEventFlags flags = CGEventGetFlags(flagEvent);
     CFRelease(flagEvent);
@@ -214,5 +224,7 @@ NSPoint getFlippedPointerLocationWithEvent(CGEventRef locEvent) {
  -> I deleted all the other pointer-location-gettings functions
  
  */
+
+
 
 @end
