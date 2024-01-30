@@ -76,9 +76,9 @@ import CocoaLumberjackSwift
         
         /// Update/retrieve the relevant state
             
-        /// Encode the state as strings and numbers and stuff (instead of objects)
-        /// NOTE: To get a unique id for a monitor instance, use CGDisplaySerialNumber() CGDisplayModelNumber(), and CGDisplayVendorNumber()
-        /// NOTE: Cache this if it's slow?
+        /// Encode the state as strings and numbers and stuff (instead of objects) (This format is the same as what will be stored in the config.plist) (Storing strings and stuff should work better than using like a raw NSRunningApplication instance and stuff. The instance might die at some point but then still be retained as a cache key and shiii)
+        /// NOTE: To get a unique id for a physical monitor, use CGDisplaySerialNumber() CGDisplayModelNumber(), and CGDisplayVendorNumber()
+        /// NOTE: Cache this if it's slow? (What happens if we cache an NSRunningApplication instance and it dies? Clean the cache periodically?)
         
         /// Return
         return result
