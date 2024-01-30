@@ -29,6 +29,8 @@
 + (CVReturn)display:(CGDirectDisplayID *)dspID atPoint:(CGPoint)point {
     /// Pass in a CGEvent to get pointer location from. Not sure if signification optimization
     
+    assert(false); /// Moved this to Swift implementation in HelperState.swift
+    
     /// Get display
     CGDirectDisplayID *newDisplaysUnderMousePointer = malloc(sizeof(CGDirectDisplayID));
     uint32_t matchingDisplayCount;
@@ -65,6 +67,8 @@
 #pragma mark - App under pointer
 
 + (NSRunningApplication * _Nullable)appUnderMousePointerWithEvent:(CGEventRef _Nullable)event {
+    
+    assert(false); /// Has been replaced with Swift implementation in HelperState.swift
     
     ///
     /// Get PID under mouse pointer

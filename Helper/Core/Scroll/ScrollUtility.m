@@ -134,13 +134,6 @@ static NSDictionary *_MFScrollPhaseToIOHIDEventPhase;
     
 }
 
-+ (BOOL)point:(CGPoint)p1 isAboutTheSameAs:(CGPoint)p2 threshold:(int)th {
-    if (abs((int)(p2.x - p1.x)) > th || abs((int)(p2.y - p1.y)) > th) {
-        return NO;
-    }
-    return YES;
-}
-
 /// \note 0 is considered both positive and negative
 + (BOOL)sameSign:(double)n and:(double)m {
     if (n == 0 || m == 0) {
@@ -191,35 +184,6 @@ static NSDictionary *_MFScrollPhaseToIOHIDEventPhase;
             return kMFDirectionUp;
         }
     }
-}
-
-
-static BOOL _mouseDidMove = NO;
-+ (BOOL)mouseDidMove {
-    return _mouseDidMove;
-}
-static CGPoint _previousMouseLocation;
-/// Checks if cursor did move since the last time this function was called. Writes result into `_mouseDidMove`.
-///     Storing result in _mouseDidMove instead of returning so that different parts of the program can reuse this info
-/// Passing in event for optimization. Not sure if significatnt.
-+ (void)updateMouseDidMoveWithEvent:(CGEventRef)event {
-    CGPoint mouseLocation = CGEventGetLocation(event);
-    _mouseDidMove = ![ScrollUtility point:mouseLocation
-                          isAboutTheSameAs:_previousMouseLocation
-                                 threshold:10];
-    _previousMouseLocation = mouseLocation;
-}
-
-static BOOL _frontMostAppDidChange;
-+ (BOOL)frontMostAppDidChange {
-    return _frontMostAppDidChange;
-}
-static NSRunningApplication *_previousFrontMostApp;
-/// Checks if frontmost application changed since the last time this function was called. Writes result into `_frontMostAppDidChange`.
-+ (void)updateFrontMostAppDidChange {
-    NSRunningApplication *frontMostApp = NSWorkspace.sharedWorkspace.frontmostApplication;
-    _frontMostAppDidChange = ![frontMostApp isEqual:_previousFrontMostApp];
-    _previousFrontMostApp = frontMostApp;
 }
 
 @end

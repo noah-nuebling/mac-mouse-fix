@@ -32,7 +32,6 @@ typedef enum {
 + (CGEventRef)createNormalizedEventWithPixelValue:(int)lineHeight;
 + (CGEventRef)invertScrollEvent:(CGEventRef)event direction:(int)dir;
 + (void)logScrollEvent:(CGEventRef)event;
-+ (BOOL)point:(CGPoint)p1 isAboutTheSameAs:(CGPoint)p2 threshold:(int)th;
 
 + (CGEventRef)makeScrollEventHorizontal:(CGEventRef)event;
 + (BOOL)sameSign:(double)n and:(double)m;
@@ -41,10 +40,14 @@ typedef enum {
                            inputDelta:(int64_t)inputDelta
                         invertSetting:(MFScrollInversion)invertSetting
                    horizontalModifier:(BOOL)horizontalModifier;
-+ (BOOL)mouseDidMove;
-+ (void)updateMouseDidMoveWithEvent:(CGEventRef)event;
-+ (BOOL)frontMostAppDidChange;
-+ (void)updateFrontMostAppDidChange;
+
+/// vvv All this stuff moved somewhere else (Swift implementation) so we can reused ti for buttons, etc
+
+//+ (BOOL)point:(CGPoint)p1 isAboutTheSameAs:(CGPoint)p2 threshold:(int)th;
+//+ (BOOL)mouseDidMove;
+//+ (void)updateMouseDidMoveWithEvent:(CGEventRef)event;
+//+ (BOOL)frontMostAppDidChange;
+//+ (void)updateFrontMostAppDidChange;
 
 @end
 

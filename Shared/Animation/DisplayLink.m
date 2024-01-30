@@ -324,11 +324,14 @@ typedef enum {
     /// Simple alternative to .`linkToDisplayUnderMousePointerWithEvent:`.
     /// TODO: Test which is faster
     
+    
+    assert(false); /// Update this: We moved getting display under pointer to HelperState
     [self setDisplay:NSScreen.mainScreen.displayID];
 }
 
 - (void)linkToDisplayUnderMousePointerWithEvent:(CGEventRef _Nullable)event {
-    /// TODO: Test if this new version works
+    
+    assert(false); /// Update this: We moved getting display under pointer to HelperState NOTE: Why are we doing nothing with the return code? NOTE: Why is this unused in favor of linkToMainScreen?
     
 #if IS_HELPER
     

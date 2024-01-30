@@ -14,12 +14,12 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface HelperUtility : NSObject
 
-/// Display under pointer
-+ (CVReturn)displayUnderMousePointer:(CGDirectDisplayID *)dspID withEvent:(CGEventRef _Nullable)event;
-+ (CVReturn)display:(CGDirectDisplayID *)dspID atPoint:(CGPoint)point;
+/// Display under pointer (TODO: Remove - moved this to Helper state)
+//+ (CVReturn)displayUnderMousePointer:(CGDirectDisplayID *)dspID withEvent:(CGEventRef _Nullable)event;
+//+ (CVReturn)display:(CGDirectDisplayID *)dspID atPoint:(CGPoint)point;
 
-/// App under pointer
-+ (NSRunningApplication * _Nullable)appUnderMousePointerWithEvent:(CGEventRef _Nullable)event;
+/// App under pointer (TODO: Remove - moved this to helper state)
+//+ (NSRunningApplication * _Nullable)appUnderMousePointerWithEvent:(CGEventRef _Nullable)event;
 
 /// Open main app
 + (void)openMainApp;

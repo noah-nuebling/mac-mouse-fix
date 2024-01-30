@@ -18,6 +18,8 @@
 
 + (NSScreen * _Nullable)screenUnderMousePointerWithEvent:(CGEventRef _Nullable)event {
     
+    assert(false); /// UPDATE: We moved retrieving screen under pointer to helperState
+    
 #if IS_HELPER
     
     CGDirectDisplayID displayID;
