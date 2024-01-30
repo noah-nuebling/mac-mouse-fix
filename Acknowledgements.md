@@ -42,6 +42,7 @@ These people spent a lot more than the standard price and treated me to an **Inc
 
 **January 2024**
 
+- 🇺🇸&nbsp;Jeremy&nbsp;Halvorsen
 - 🇩🇪&nbsp;Julian&nbsp;Meinking - "Apps like yours make the macOS ecosystem such a thriving place for high quality & wonderful UX!"
 - 🇩🇪&nbsp;Dominik&nbsp;Lieboner - "This is such a awesome app!!!"
 - 🇻🇳&nbsp;Long - "Thanks!"
