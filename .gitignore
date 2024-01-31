@@ -18,7 +18,14 @@ sudopass.sh
 # !Mouse Fix.xcodeproj/xcuserdata/Noah.xcuserdatad/xcschemes/*
 # Mouse Fix.xcodeproj/xcuserdata/Noah.xcuserdatad/xcdebugger/*
 
+# vscode
+#   Don't leak API keys in launch.json
+.vscode
+
 # Python stuff
 env
 venv
 __pycache__
+
+# Sensitive
+gumroad_sales_cache.json
