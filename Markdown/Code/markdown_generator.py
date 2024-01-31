@@ -8,11 +8,14 @@ import requests
 import pycountry
 import datetime
 import babel.dates
+import re
 import pathlib
 import urllib.parse
 import string
 import os
 import math
+from pprint import pprint # For debugging
+import json
 
 #
 # Constants
@@ -55,6 +58,9 @@ documents = {
 
 sales_count_rounder = 100 # Round sales counts to multiple of this number. This is to prevent the acknowledgements file from changing on every sale, which clogs up commit history a bit.
 
+gumroad_sales_cache_file = "Markdown/gumroad_sales_cache.json"  # DONT leak this. If you move/rename this, make sure it's covered by .gitignore. It's inside the Markdown folder to be a bit more hidden.
+gumroad_sales_cache_shelf_life = 24                             # In hours
+
 gumroad_custom_field_labels_name = ["Your Name – Will be displayed in the Acknowledgements if you purchase the 2. or 3. Option"]
 gumroad_custom_field_labels_message = ["Your message (Will be displayed next to your name in the Acknowledgements if you purchase the 3. Option)", "Your message – Will be displayed next to your name in the Acknowledgements if you purchase the 3. Option"]
 gumroad_custom_field_labels_dont_display = ["Don't publicly display me as a 'Generous Contributor' under 'Acknowledgements'"]
@@ -68,7 +74,7 @@ gumroad_sales_api = "/v2/sales"
 gumroad_date_format = '%Y-%m-%dT%H:%M:%SZ' # T means nothing, Z means UTC+0 | The date strings that the gumroad sales api returns have this format
 
 name_blacklist = ['mail', 'paypal', 'banking', 'beratung', 'macmousefix'] # TODO: Add Iam | When gumroad doesn't provide a name we use part of the email as the display name. We use the part of the email before @, unless it contains one of these substrings, in which case we use the part of the email after @ but with the `.com`, `.de` etc. removed
-nbsp = '&nbsp;'  # Non-breaking space. &nbsp; doesn't seem to work on GitHub. Tried '\xa0', too. See https://github.com/github/cmark-gfm/issues/346
+nbsp = '&nbsp;'  # Non-breaking space. &nbsp; doesn't seem to work on GitHub. (Edit: &nbsp; seems to work on GH now.) Tried '\xa0', too. See https://github.com/github/cmark-gfm/issues/346
 
 #
 # Main
@@ -80,10 +86,10 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--document")
     parser.add_argument("--api_key")
-    parser.add_argument("--no_api", action='store_true')
+    parser.add_argument("--no_api", action='store_true') # no_api option is not necessary anymore now since we have caching to make things fast when testing.
     args = parser.parse_args()
-    gumroad_api_key = args.api_key
     document_key = args.document
+    gumroad_api_key = args.api_key
     no_api = args.no_api
     
     # Validate
@@ -127,7 +133,7 @@ def main():
         elif document_key == "acknowledgements":
             template = insert_root_paths(template, document_dict, language_dict) # This is not currently necessary here since we don't use the {root_path} placeholder in the acknowledgements templates
             template = insert_language_picker(template, document_dict, language_dict, languages)
-            template = insert_acknowledgements(template, language_id, language_dict, gumroad_api_key, no_api)
+            template = insert_acknowledgements(template, language_id, language_dict, gumroad_api_key, gumroad_sales_cache_file, gumroad_sales_cache_shelf_life, no_api)
         else:
             assert False # Should never happen because we check document_key for validity above.
         
@@ -170,11 +176,7 @@ If you want to help translate it, click <a align="center" href="https://github.c
 
 sales_data_cache = None
 
-def insert_acknowledgements(template, language_id, language_dict, gumroad_api_key, no_api):
-    
-    if no_api:
-        template = template.replace('{very_generous}', 'NO_API').replace('{generous}', 'NO_API').replace('{sales_count}', 'NO_API')
-        return template
+def insert_acknowledgements(template, language_id, language_dict, gumroad_api_key, cache_file, cache_shelf_life, no_api):
     
     global sales_data_cache
     
@@ -198,52 +200,13 @@ def insert_acknowledgements(template, language_id, language_dict, gumroad_api_ke
         # Load from scratch and store in cache
         #
     
-        # Load all sales of the gumroad product
+        sales = get_latest_sales(cache_file, cache_shelf_life, gumroad_api_key, gumroad_api_base, gumroad_sales_api, gumroad_product_ids, no_api)
         
-        sales = []
-        
-        for pid in gumroad_product_ids:
-            
-            page = 1
-            api = gumroad_sales_api
-            failed_attempts = 0
-
-            while True:
-                
-                print('Fetching sales for product {} page {}...'.format(pid, page))
-                
-                response = requests.get(gumroad_api_base + api, 
-                            headers={'Content-Type': 'application/x-www-form-urlencoded'},
-                            params={'access_token': gumroad_api_key,
-                                    'product_id': pid})
-                
-                if response.status_code == 200:
-                    failed_attempts = 0
-                else:
-                    failed_attempts += 1
-                    if response.status_code == 401:
-                        print('(The request failed because it is unauthorized (status 401). This might be because you are not providing a correct Access Token using the `--api_key` command line argument. You can retrieve an Access Token in the GitHub Secrets or in the Gumroad Settings under Advanced. Exiting script.')
-                        sys.exit(1)
-                    elif failed_attempts <= 10:
-                        print(f'The HTTP request failed with status {response.status_code}. Since the the gumroad servers sometimes randomly fail (normally with code 5xx), were trying again...')
-                        continue
-                    else:
-                        print(f'The HTTP request failed with status {response.status_code}. Exiting script.')
-                        sys.exit(1)
-                
-                response_dict = response.json()
-                if response_dict['success'] != True:
-                    print('Gumroad API returned failure. Exiting script.')
-                    sys.exit(1)
-                
-                sales += response_dict['sales']
-                
-                if 'next_page_url' in response_dict:
-                    api = response_dict['next_page_url']
-                else:
-                    break
-                
-                page += 1
+        # Premature return
+        #   This happens e.g. if the no_api option is set and there is also no cache.
+        if len(sales) == 0:
+            template = template.replace('{very_generous}', 'NO_DATA').replace('{generous}', 'NO_DATA').replace('{sales_count}', 'NO_DATA')
+            return template
         
         # Record all sales count
         
@@ -259,9 +222,6 @@ def insert_acknowledgements(template, language_id, language_dict, gumroad_api_ke
         print('')
         sales = list(filter(wants_display, sales))
         print('')
-        
-        # Sort sales by date
-        sales.sort(key=(lambda sale: datetime.datetime.strptime(sale['created_at'], gumroad_date_format)), reverse=True)
         
         # Filter generous and very generous
         generous_sales = list(filter(is_generous, sales))
@@ -326,7 +286,6 @@ def insert_acknowledgements(template, language_id, language_dict, gumroad_api_ke
             if not first_iteration:
                 very_generous_string += '\n\n'
             first_iteration = False
-            
             very_generous_string += '**{}**\n'.format(babel.dates.format_datetime(datetime=date, format='LLLL yyyy', locale=babel_language_tag)) # See https://babel.pocoo.org/en/latest/dates.html and https://babel.pocoo.org/en/latest/api/dates.html#babel.dates.format_datetime.
         
         name = display_name(sale)
@@ -478,6 +437,12 @@ def display_name(sale):
     flag = emoji_flag(sale)
     if flag != '':
         name = flag + ' ' + name
+
+    # Escape special characters
+    name = escape_user_generated(name)
+    
+    # Normalize whitespace
+    name = normalize_whitespace_for_user_generated(name)
     
     # Replace all spaces with non-breaking spaces
     name = name.replace(' ', nbsp)
@@ -553,11 +518,17 @@ def user_message(sale, name):
     # Remove leading / trailing whitespace
     message = message.strip()
     
+    # Normalize whitespace
+    message = normalize_whitespace_for_user_generated(message)
+    
+    # Escape special characters
+    message = escape_user_generated(message)
+    
     # Debug
     if len(message) > 0:
         print("{} payed {} and left message: {}".format(name, sale['formatted_display_price'], message))
     
-    # Remove message if it's in the name of the purchaser (Because we assume they did that accidentally)
+    # Remove message if it's contained in the name of the purchaser (Because we assume they did that accidentally)
     if len(message) > 0 and (message.lower() in name.replace(nbsp, ' ').lower()):
         print("{}'s message is contained in their name, so we're filtering it out".format(name))
         message = ''
@@ -576,8 +547,199 @@ def gumroad_custom_field_content(sale, custom_field_labels):
 
     return content
 
+def normalize_whitespace_for_user_generated(text):
+    # Replace all whitespace with a single space
+    #   Prevents weird display in case users entered linebreaks or multiple spaces. (This has never happened at the time of writing, so this might be totally unnecessary)
+    text = re.sub(r'\s+', ' ', text)
+    return text
+
+def escape_user_generated(text):
+    
+    # In some cases, users used characters that messed up up the markdown generation 
+    #   (At the time of writing, there was only one instance of this, where someone used { and })
+    
+    # Remove { and } because it messes up python string formatting
+    text = text.replace(r'{', r'(')
+    text = text.replace(r'}', r')')
+    
+    # Escape special characters for markdown
+    #   Edit: This is not really necessary. If someone wants to add markdown let them have their fun.
+    # special_characters = ['\\', '`', '*', '_', '[', ']', '(', ')'] # Note: ChatGPT additionally recommened to escape: '+', '-', '.', '!', '|', '>', '#', '{', '}' - but I don't think that's necessary in our case.
+    # for char in special_characters:
+    #     if char in text:
+    #         text = text.replace(char, f"\\{char}")
+
+    return text
+
 def round_to_multiple(n, multiple, rounding_fn=round):
     return rounding_fn(n / multiple) * multiple
+
+#
+# Retrieve/cache gumroad sales
+#
+
+def get_latest_sales(cache_file, cache_shelf_life, gumroad_api_key, gumroad_api_base, gumroad_sales_api, gumroad_product_ids, no_api):
+    
+    # Log
+    
+    print('Getting latest gumroad sales using cache file...')
+    
+    # Defining helper function for control flow 
+    #   (Does python have goto?)
+    
+    cache = {}
+    
+    def get_stitched_sales(cache_file):
+        
+        # Try to get sales from the cache file, then load newer sales from the gumroad API, and then stitch the cached sales and the fresh sales together.
+        
+        nonlocal cache # This is sort of a 'secondary return value' from this function I guess?
+        
+        try:
+            with open(cache_file, 'r') as file:
+                cache = json.load(file)
+        except FileNotFoundError:
+            print("Sales cache file not found. Will load all sales from the Gumroad API...")
+            return None
+
+        # Return cached_sales instead of all_sales in case of no_api
+        if no_api:
+            print("Using cached_sales due to no_api flag...")
+            return cache['sales']
+        
+        # Check cache expiration
+        cache_creation_date = datetime.datetime.strptime(cache['created_at'], gumroad_date_format) # We don't have to use the gumroad_date_format here, but why not
+        cache_is_expired = datetime.datetime.utcnow() > (cache_creation_date + datetime.timedelta(hours=cache_shelf_life))
+        if cache_is_expired:
+            print('The cache is expired. Will load all sales from the Gumroad API...')
+            return None
+
+        # Extract sales from cache
+        cached_sales = cache['sales']
+        
+        # Get date from which to fetch new sales
+        latest_cached_sale = cached_sales[0] if len(cached_sales) > 0 else None
+        latest_cached_sale_date = datetime.datetime.strptime(latest_cached_sale['created_at'], gumroad_date_format) 
+        latest_cached_sale_day = babel.dates.format_datetime(datetime=latest_cached_sale_date, locale='en_US', format='yyyy-MM-dd') # YYYY-MM-DD format is required by gumroad sales fetching API according to docs. Not specifying `locale`` leads to weird issues in iTerm2 while still running fine from vscode Terminal. Weird.
+        
+        # Validate
+        if not latest_cached_sale_day:
+            print('Failed to get the day of the latest sale in the cache. Will load all sales from the Gumroad API...')
+            return None
+        
+        # Get new sales
+        new_sales = load_sales_from_api(gumroad_api_key, gumroad_api_base, gumroad_sales_api, gumroad_product_ids, after_day=latest_cached_sale_day)
+
+        # Find index in cache to stitch together the new sales with the cache
+        stitch_index = -1
+        for i, sale in enumerate(new_sales):
+            if sale['id'] == cached_sales[0]['id']: 
+                stitch_index = i
+                break
+        
+        # Validate
+        #   That the cache and the newly fetched sales can be stitched together
+        are_stitchable = stitch_index != -1
+        if not are_stitchable:
+            print('Failed to stitch new sales together with cached sales. Will load all sales from the Gumroad API...')
+            return None
+
+        # Get new_new_sales
+        new_new_sales = new_sales[0:stitch_index]
+
+        # Log
+        print(f"Adding new sales to cache: {list(map(lambda x: display_name(x), new_new_sales))}...")
+        
+        # Stitch the sales together
+        all_sales = new_new_sales + cached_sales
+        
+        # Return
+        return all_sales
+            
+    # Try to get the stitched sales
+    all_sales = get_stitched_sales(cache_file)
+    
+    # Fall back to loading ALL sales from the gumroad API
+    cache_has_been_cleared = False
+    if not all_sales and not no_api:
+        print('Loading all sales fresh from the Gumroad API...')
+        all_sales = load_sales_from_api(gumroad_api_key, gumroad_api_base, gumroad_sales_api, gumroad_product_ids, after_day=None)
+        cache_has_been_cleared = True
+
+    # Save the new sales to cache
+    if not no_api:
+        new_cache = {
+            'created_at': datetime.datetime.utcnow().strftime(gumroad_date_format) if cache_has_been_cleared else cache['created_at'],
+            'sales': all_sales,
+        }
+        with open(cache_file, 'w') as file:
+            json.dump(new_cache, file)
+    
+    # Return
+    return all_sales
+
+def load_sales_from_api(gumroad_api_key, gumroad_api_base, gumroad_sales_api, gumroad_product_ids, after_day=None):
+    
+    # Load sales of the gumroad product on `after_day` and later
+    
+    sales = []
+    
+    for pid in gumroad_product_ids:
+        
+        page = 1
+        api = gumroad_sales_api
+        failed_attempts = 0
+
+        while True:
+            
+            print('Fetching sales for product {} after date {} (page {})...'.format(pid, after_day, page))
+            
+            response = requests.get(
+                gumroad_api_base + api, 
+                headers={
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                },
+                params={
+                    'access_token': gumroad_api_key,
+                    'product_id': pid,
+                    **({'after': after_day} if after_day else {})
+                }
+            )
+            
+            if response.status_code == 200:
+                failed_attempts = 0
+            else:
+                failed_attempts += 1
+                if response.status_code == 401:
+                    print('(The request failed because it is unauthorized (status 401). This might be because you are not providing a correct Access Token using the `--api_key` command line argument. You can retrieve an Access Token in the GitHub Secrets or in the Gumroad Settings under Advanced. Exiting script.')
+                    sys.exit(1)
+                elif failed_attempts <= 10:
+                    print(f'The HTTP request failed with status {response.status_code}. Since the the gumroad servers sometimes randomly fail (normally with code 5xx), were trying again...')
+                    continue
+                else:
+                    print(f'The HTTP request failed with status {response.status_code}. Exiting script.')
+                    sys.exit(1)
+            
+            response_dict = response.json()
+            if response_dict['success'] != True:
+                print('Gumroad API returned failure. Exiting script.')
+                sys.exit(1)
+            
+            sales += response_dict['sales']
+            
+            if 'next_page_url' in response_dict:
+                api = response_dict['next_page_url']
+            else:
+                break
+            
+            page += 1    
+         
+    # Sort sales by date
+    #   I feel like the Gumroad api should already return stuff sorted by data but it doesn't seem to work at least as I'm using it at the time of writing
+    sales.sort(key=(lambda sale: datetime.datetime.strptime(sale['created_at'], gumroad_date_format)), reverse=True)
+    
+    # Return 
+    return sales
 
 #
 # Call main

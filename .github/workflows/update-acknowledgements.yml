@@ -24,12 +24,20 @@ jobs:
     steps:
     
     - name: Checkout repo
-      uses: actions/checkout@v3
+      uses: actions/checkout@v4
       with:
         ref: master # Checkout the branch with this name
     
+    - name: Use cache
+      uses: actions/cache@v4
+      with:
+        path: Markdown/gumroad_sales_cache.json
+        key: gumroad_sales_cache-${{ github.run_id }}-${{ github.run_attempt }} # A cache is immutable. To get the cache to behave as if it's updatable, the key needs to change on every run, so that there's a new cache every run. Then `restore-keys` can be used to restore the latest cache. Source: https://github.com/actions/cache/blob/main/tips-and-workarounds.md#update-a-cache)
+        restore-keys: |                                                        
+          gumroad_sales_cache-
+
     - name: Setup python
-      uses: actions/setup-python@v4
+      uses: actions/setup-python@v5
       with:
         python-version: '3.10'
         cache: 'pip' # caching pip dependencies. This is from the official example. Not totally sure what we're doing here.
