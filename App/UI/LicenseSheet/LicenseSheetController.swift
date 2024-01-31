@@ -177,10 +177,22 @@ import Cocoa
             if let error = error {
                 
                 if error.domain == NSURLErrorDomain {
+                    
+                    // TODO: Update this to be more detailed/accurate - say that it couldn't connect to Gumroad.com/AWS - Perhaps use NSError.localizedDescription, to provide reason why it couldn't connect.
+                    
                     message = NSLocalizedString("license-toast.no-internet", comment: "First draft: **There is no connection to the internet**\n\nTry activating your license again when your computer is online.")
+                    
                 } else if error.domain == MFLicenseErrorDomain {
                     
                     switch Int32(error.code) {
+                        
+                    case kMFLicenseErrorCodeNoInternetAndNoCache:
+                        
+                        // TODO: Refactor this
+                        /// This error is a wrapper around `NSURLErrorDomain` error. Just for the case that there is also no cache. Can probably refactor this to be handled together with other `NSURLErrorDomain` handling code.
+                        /// I'm not sure this is really ever triggered - We used to not handle this case at all, and even if I delete the config and disconnect from the intenet (the config contains the cache), the `error.domain == NSURLErrorDomain` case is hit instead of this.
+                        
+                        message = NSLocalizedString("license-toast.no-cache", comment: "First draft: **There is no connection to the internet** ((({[and no cache]})))\n\nTry activating your license again when your computer is online.")
                         
                     case kMFLicenseErrorCodeInvalidNumberOfActivations:
                         
@@ -202,8 +214,24 @@ import Cocoa
                                 message = String(format: messageFormat, gumroadMessage)
                             }
                         }
+                    
+                    case kMFLicenseErrorCodeKeyNotFound:
                         
-                    default:
+                        /// Discussion:
+                        /// - This error happens if __no key__ is passed into `License.activateLicense(key:,licenseConfig:)` and there's also no key inside SecureStorage. We always pass in a key before this here is called, so this should never happen.
+                        ///     - The UI code around licensing has caused a few weird rare bugs though, so we want to make this extra safe and cover all cases. E.g. In [this bug](https://github.com/noah-nuebling/mac-mouse-fix/issues/817), clicking the 'Activate License' button apparently creates no user feedback. That's the main reason we added this case.
+                        
+                        assert(false);
+                        
+                        let messageFormat = NSLocalizedString("license-toast.internal-error.key-not-found", comment: "Activating your license failed due internal error **kMFLicenseErrorCodeKeyNotFound**.\n\nPlease write a **Bug Report** [here](https://noah-nuebling.github.io/mac-mouse-fix-feedback-assistant/?type=bug-report).")
+                        message = String(format: messageFormat, Int32(error.code))
+                        
+                    default: 
+                        
+                        // TODO: Test this error message.
+                        
+                        let messageFormat = NSLocalizedString("license-toast.unhandled-license-error", comment: "Activating your license failed due to **License Error %d**.\n\nThis error message needs to be updated. Please write a **Bug Report** [here](https://noah-nuebling.github.io/mac-mouse-fix-feedback-assistant/?type=bug-report).")
+                        message = String(format: messageFormat, Int32(error.code))
                         assert(false)
                     }
                     

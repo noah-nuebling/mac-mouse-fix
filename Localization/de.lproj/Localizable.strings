@@ -293,8 +293,17 @@
 /* First draft: **An error with the licensing server occured**\n\nIt says:\n\n%@ */
 "license-toast.gumroad-error" = "**Beim Lizenzserver ist ein Fehler aufgetreten**\n\nEr sagt:\n\n%@";
 
+/* Activating your license failed due internal error **kMFLicenseErrorCodeKeyNotFound**.\n\nPlease write a **Bug Report** [here](https://noah-nuebling.github.io/mac-mouse-fix-feedback-assistant/?type=bug-report). */
+"license-toast.internal-error.key-not-found" = "";
+
+/* First draft: **There is no connection to the internet** ((({[and no cache]})))\n\nTry activating your license again when your computer is online. */
+"license-toast.no-cache" = "";
+
 /* First draft: **There is no connection to the internet**\n\nTry activating your license again when your computer is online. */
 "license-toast.no-internet" = "**Es besteht keine Verbindung zum Internet**\n\nProbiere nochmal, deine Lizenz zu aktivieren, wenn dein Computer online ist.";
+
+/* Activating your license failed due to **License Error %d**.\n\nThis error message needs to be updated. Please write a **Bug Report** [here](https://noah-nuebling.github.io/mac-mouse-fix-feedback-assistant/?type=bug-report). */
+"license-toast.unhandled-license-error" = "";
 
 /* First draft: **An unknown error occurred:**\n\n%@ */
 "license-toast.unknown-error" = "**Ein unbekannter Fehler ist aufgetreten:**\n\n%@";

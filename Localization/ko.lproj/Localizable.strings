@@ -293,8 +293,17 @@
 /* First draft: **An error with the licensing server occured**\n\nIt says:\n\n%@ */
 "license-toast.gumroad-error" = "**라이센스 서버 에러가 발생하였습니다.**\n\n에러 정보:\n\n%@";
 
+/* Activating your license failed due internal error **kMFLicenseErrorCodeKeyNotFound**.\n\nPlease write a **Bug Report** [here](https://noah-nuebling.github.io/mac-mouse-fix-feedback-assistant/?type=bug-report). */
+"license-toast.internal-error.key-not-found" = "";
+
+/* First draft: **There is no connection to the internet** ((({[and no cache]})))\n\nTry activating your license again when your computer is online. */
+"license-toast.no-cache" = "";
+
 /* First draft: **There is no connection to the internet**\n\nTry activating your license again when your computer is online. */
 "license-toast.no-internet" = "**인터넷 연결이 없습니다.**\n\n컴퓨터를 인터넷에 연결한 후에 다시 시도하십시오.";
+
+/* Activating your license failed due to **License Error %d**.\n\nThis error message needs to be updated. Please write a **Bug Report** [here](https://noah-nuebling.github.io/mac-mouse-fix-feedback-assistant/?type=bug-report). */
+"license-toast.unhandled-license-error" = "";
 
 /* First draft: **An unknown error occurred:**\n\n%@ */
 "license-toast.unknown-error" = "**알 수 없는 에러가 발생하였습니다:**\n\n%@";

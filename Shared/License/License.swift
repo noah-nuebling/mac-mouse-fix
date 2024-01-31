@@ -350,11 +350,15 @@ extension MFLicenseAndTrialState: Equatable {
                         
                     } else {
                         
-                        /// There's no cache
-                        let error = NSError(domain: MFLicenseErrorDomain,
-                                            code: Int(kMFLicenseErrorCodeNoInternetAndNoCache))
+                        // TODO: Remove this case (as well as kMFLicenseErrorCodeNoInternetAndNoCache).
+                        ///     If the cache is empty, we just see that as equivalent to the cache saying that the app is not licensed. We don't need this special case here. Also we shouldn't access the cache through `config("License.isLicensedCache")` but instead through the equivalent class variable of License.swift.
                         
-                        wrapUp(false, kMFValueFreshnessFallback, error, licenseConfig, completionHandler)
+                        /// There's no cache
+                        let newError = NSError(domain:      MFLicenseErrorDomain,
+                                               code:        Int(kMFLicenseErrorCodeNoInternetAndNoCache),
+                                               userInfo:    ["underlyingError": error])
+                        
+                        wrapUp(false, kMFValueFreshnessFallback, newError, licenseConfig, completionHandler)
                         return
                     }
                     
