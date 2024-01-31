@@ -243,8 +243,11 @@ import CocoaLumberjackSwift
     @objc func resetSubPixelator() {
         self.pixelator.reset()
     }
-    @objc func linkToMainScreen() {
-        self.displayLink.linkToMainScreen()
+//    @objc func linkToMainScreen() {
+//        self.displayLink.linkToMainScreen()
+//    }
+    @objc func linkToDisplay(_ dsp: CGDirectDisplayID) {
+        self.displayLink.setDisplay(dsp)
     }
     @objc func isRunning() -> Bool {
         return self.displayLink.isRunning()

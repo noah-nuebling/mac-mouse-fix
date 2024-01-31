@@ -233,14 +233,16 @@ static CGEventRef eventTapCallback(CGEventTapProxy proxy, CGEventType type, CGEv
     CFTimeInterval tickTime = CGEventGetTimestampInSeconds(event);
     
     /// Create copy of event
+    /// We do this, because the original event will become invalid and unusable in the new queue. Edit: Are we sure? Couldn't we just retain the event?
     
-    CGEventRef eventCopy = CGEventCreateCopy(event); /// Create a copy, because the original event will become invalid and unusable in the new queue.
+    CGEventRef eventCopy = CGEventCreateCopy(event);
     
     /// Enqueue heavy processing
     ///  Executing heavy stuff on a different thread to prevent the eventTap from timing out. We wrote this before knowing that you can just re-enable the eventTap when it times out. But this doesn't hurt.
     
     dispatch_async(_scrollQueue, ^{
         heavyProcessing(eventCopy, scrollDeltaAxis1, scrollDeltaAxis2, tickTime);
+        CFRelease(eventCopy);
     });
     
     return nil;
@@ -323,28 +325,29 @@ static void heavyProcessing(CGEventRef event, int64_t scrollDeltaAxis1, int64_t 
         [TrialCounter.shared handleUse];
         
         /// Update active device
+        /// TODO: Think about whether this makes sense here? Probably just getting the ConfigOverrideConditions is enough
         [HelperState.shared updateActiveDeviceWithEvent:event];
         
         /// Update application Overrides
         
         if ((NO)) { /// Unused in MMF 3
             
-            [ScrollUtility updateMouseDidMoveWithEvent:event];
-            if (!ScrollUtility.mouseDidMove) {
-                [ScrollUtility updateFrontMostAppDidChange];
-                /// Only checking this if mouse didn't move, because of || in (mouseMoved || frontMostAppChanged). For optimization. Not sure if significant.
-            }
-            
-            if (ScrollUtility.mouseDidMove || ScrollUtility.frontMostAppDidChange) {
-                
-                /// Set app overrides
-                DDLogDebug(@"Frontmost app did change. Reloading config overrides.");
-                BOOL didChange = [Config.shared loadOverridesForAppUnderMousePointerWithEvent:event];
-                if (didChange) {
-                    DDLogDebug(@"Config did change. Resetting state.");
-                    resetState_Unsafe();
-                }
-            }
+//            [ScrollUtility updateMouseDidMoveWithEvent:event];
+//            if (!ScrollUtility.mouseDidMove) {
+//                [ScrollUtility updateFrontMostAppDidChange];
+//                /// Only checking this if mouse didn't move, because of || in (mouseMoved || frontMostAppChanged). For optimization. Not sure if significant.
+//            }
+//            
+//            if (ScrollUtility.mouseDidMove || ScrollUtility.frontMostAppDidChange) {
+//                
+//                /// Set app overrides
+//                DDLogDebug(@"Frontmost app did change. Reloading config overrides.");
+//                BOOL didChange = [Config.shared loadOverridesForAppUnderMousePointerWithEvent:event];
+//                if (didChange) {
+//                    DDLogDebug(@"Config did change. Resetting state.");
+//                    resetState_Unsafe();
+//                }
+//            }
         }
         
         /// Notify other touch drivers
@@ -365,8 +368,8 @@ static void heavyProcessing(CGEventRef event, int64_t scrollDeltaAxis1, int64_t 
         }
         
         /// Get display  under mouse pointer
-        CGDirectDisplayID displayID;
-        [HelperUtility displayUnderMousePointer:&displayID withEvent:event];
+        /// TODO: Probably remove this in favor of ConfigOverrideConditions
+        CGDirectDisplayID displayID = [HelperState.shared displayUnderMousePointerWithEvent:event];
         
         /// Get scrollConfig
         _scrollConfig = [ScrollConfig scrollConfigWithModifiers:newMods inputAxis:inputAxis display:displayID];
@@ -492,6 +495,10 @@ static void heavyProcessing(CGEventRef event, int64_t scrollDeltaAxis1, int64_t 
 //        ScrollConfig *configCopyForBlock = [_scrollConfig copy];
         ScrollConfig *configCopyForBlock = _scrollConfig;
         
+        /// Retain event
+        ///     So we can use it for `displayUnderMousePointerWithEvent` inside the `_animator` start callback.
+        CFRetain(event);
+        
         /// Start animation
         
         [_animator startWithParams:^NSDictionary<NSString *,id> * _Nonnull(Vector valueLeftVec, BOOL isRunning, Curve *animationCurve, Vector currentSpeed) {
@@ -501,10 +508,16 @@ static void heavyProcessing(CGEventRef event, int64_t scrollDeltaAxis1, int64_t 
             
             /// Link to main screen
             ///     This used to be above in the `isFirstConsecutive` section. Maybe it fits better there?
-            if (ScrollUtility.mouseDidMove && !isRunning) {
+            ///     Notes: We removed the mouseDidMove check because those optimizations are planned to be moved inside HelperState and animator
+            if (/*ScrollUtility.mouseDidMove &&*/ !isRunning) {
                 /// Update animator to currently used display
-                [_animator linkToMainScreen_Unsafe];
+                CGDirectDisplayID dsp = [HelperState.shared displayUnderMousePointerWithEvent:event]; /// TODO: Can probably use the display from ConfigOverrideConditions? Might be more efficient? - If we do this, we don't need to retain the event before the `_animator` start callback.
+                [_animator linkToDisplay_Unsafe:dsp];
             }
+            
+            /// Release event
+            ///     It had been retained to use it in the `_animator` start callback
+            CFRelease(event);
             
             /// Declare result dict (animator start params)
             NSMutableDictionary *p = [NSMutableDictionary dictionary];
@@ -677,9 +690,8 @@ static void heavyProcessing(CGEventRef event, int64_t scrollDeltaAxis1, int64_t 
             sendScroll(distanceDelta, scrollDirection, YES, animationPhase, momentumHint, config);
             
         }];
+        
     }
-    
-    CFRelease(event);
 }
 
 #pragma mark - Send Scroll events
@@ -1011,9 +1023,11 @@ static void sendOutputEvents(int64_t dx, int64_t dy, MFScrollOutputType outputTy
         /// HACK:
         ///     Chromium browsers need a ton of zooming deltas before they actually start zooming. So we send a bunch of deltas right away to make things more responsive.
         ///     Another way to combat this would be to only send the `end` event when the user releases the modifier.
+        ///     TODO: It's probably better to change the logic so we retrieve the app under the mouse pointer once per scroll swipe and then reuse that throughout Scroll.m (Perhaps move to having a separate update and retrieval method for appUnderMousePointer, and then just use the retrieval method here.)
+        
         if (eventPhase == kIOHIDEventPhaseBegan) {
             
-            NSString *bundleID = [HelperUtility appUnderMousePointerWithEvent:NULL].bundleIdentifier;
+            NSString *bundleID = [HelperState.shared appUnderMousePointerWithEvent:NULL].bundleIdentifier;
             
             if (bundleID != nil) {
                 if ([bundleID containsString:@"com.google.Chrome"]

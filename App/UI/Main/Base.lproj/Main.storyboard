@@ -279,7 +279,7 @@
                                             <customView horizontalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="D4U-Df-iCp" userLabel="Text center">
                                                 <rect key="frame" x="0.0" y="0.0" width="16" height="50"/>
                                                 <subviews>
-                                                    <textField focusRingType="none" horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="jTe-ie-zgb">
+                                                    <textField horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="jTe-ie-zgb">
                                                         <rect key="frame" x="-2" y="17" width="156" height="17"/>
                                                         <textFieldCell key="cell" controlSize="large" title="Enable Mac Mouse Fix" id="RV9-5T-rvb">
                                                             <font key="font" metaFont="systemBold" size="14"/>
@@ -334,7 +334,7 @@
                                             <customView horizontalHuggingPriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="zUc-6f-AlY" userLabel="EnableIndent">
                                                 <rect key="frame" x="0.0" y="192" width="310" height="18"/>
                                                 <subviews>
-                                                    <textField focusRingType="none" horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="0gD-iB-vff" customClass="MarkdownTextField" customModule="Mac_Mouse_Fix" customModuleProvider="target">
+                                                    <textField horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="0gD-iB-vff" customClass="MarkdownTextField" customModule="Mac_Mouse_Fix" customModuleProvider="target">
                                                         <rect key="frame" x="-2" y="0.0" width="264" height="14"/>
                                                         <textFieldCell key="cell" controlSize="small" alignment="left" title="Mac Mouse Fix will stay enabled after you close it" id="bew-ni-FnZ">
                                                             <font key="font" metaFont="smallSystem"/>
@@ -377,7 +377,7 @@
                                             <customView horizontalHuggingPriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="hr6-ym-FE1" userLabel="MenuBarIndent">
                                                 <rect key="frame" x="0.0" y="107" width="245" height="28"/>
                                                 <subviews>
-                                                    <textField focusRingType="none" horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="7G6-R6-mA8" customClass="MarkdownTextField" customModule="Mac_Mouse_Fix" customModuleProvider="target">
+                                                    <textField horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="7G6-R6-mA8" customClass="MarkdownTextField" customModule="Mac_Mouse_Fix" customModuleProvider="target">
                                                         <rect key="frame" x="18" y="0.0" width="229" height="28"/>
                                                         <textFieldCell key="cell" controlSize="small" alignment="left" id="AqN-zN-yDS">
                                                             <font key="font" metaFont="smallSystem"/>
@@ -435,7 +435,7 @@ smooth scrolling</string>
                                                                     <fragment content="General &gt; Get Beta Versions Toggle"/>
                                                                 </attributedString>
                                                             </button>
-                                                            <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="tvD-Xi-viR" customClass="MarkdownTextField" customModule="Mac_Mouse_Fix" customModuleProvider="target">
+                                                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="tvD-Xi-viR" customClass="MarkdownTextField" customModule="Mac_Mouse_Fix" customModuleProvider="target">
                                                                 <rect key="frame" x="-2" y="0.0" width="234" height="28"/>
                                                                 <textFieldCell key="cell" controlSize="small" alignment="left" id="SaY-fF-d1s">
                                                                     <font key="font" metaFont="smallSystem"/>
@@ -561,7 +561,7 @@ this window</string>
                                     <customView horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="OIq-v6-9Zy" userLabel="HintWrap">
                                         <rect key="frame" x="0.0" y="248" width="541" height="50"/>
                                         <subviews>
-                                            <textField focusRingType="none" horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="7En-Ho-Dyb" customClass="MarkdownTextField" customModule="Mac_Mouse_Fix" customModuleProvider="target">
+                                            <textField horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="7En-Ho-Dyb" customClass="MarkdownTextField" customModule="Mac_Mouse_Fix" customModuleProvider="target">
                                                 <rect key="frame" x="18" y="12" width="505" height="38"/>
                                                 <textFieldCell key="cell" alignment="center" id="N7H-9j-DIr">
                                                     <font key="font" metaFont="smallSystem"/>
@@ -609,7 +609,7 @@ You can also *Double Click*, *Click and Drag* and [more]().</string>
                                                                 <tableCellView identifier="triggerCell" horizontalHuggingPriority="1000" verticalHuggingPriority="750" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="nsw-iK-CJt" userLabel="TriggerCell" customClass="RemapTableCellView" customModule="Mac_Mouse_Fix" customModuleProvider="target">
                                                                     <rect key="frame" x="8" y="0.0" width="290" height="38"/>
                                                                     <subviews>
-                                                                        <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" horizontalCompressionResistancePriority="999" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="QCK-nA-0gO">
+                                                                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" horizontalCompressionResistancePriority="999" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="QCK-nA-0gO">
                                                                             <rect key="frame" x="22" y="12" width="266" height="16"/>
                                                                             <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="left" title="&lt;⌘⇧⌥⌃ + Triple Click and Drag Button 3&gt;" id="QKM-im-bk9">
                                                                                 <font key="font" metaFont="system"/>
@@ -648,7 +648,7 @@ You can also *Double Click*, *Click and Drag* and [more]().</string>
                                                                     <rect key="frame" x="8" y="38" width="287" height="22"/>
                                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                                     <subviews>
-                                                                        <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="AHZ-Kd-4Xf">
+                                                                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="AHZ-Kd-4Xf">
                                                                             <rect key="frame" x="-8" y="3" width="294" height="16"/>
                                                                             <constraints>
                                                                                 <constraint firstAttribute="height" constant="16" id="iEl-dG-QM5"/>
@@ -913,7 +913,7 @@ You can also *Double Click*, *Click and Drag* and [more]().</string>
                                 <font key="font" metaFont="system"/>
                             </buttonCell>
                         </button>
-                        <textField focusRingType="none" horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" misplaced="YES" textCompletion="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cxd-49-HcJ" customClass="MarkdownTextField" customModule="Mac_Mouse_Fix" customModuleProvider="target">
+                        <textField horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" misplaced="YES" textCompletion="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cxd-49-HcJ" customClass="MarkdownTextField" customModule="Mac_Mouse_Fix" customModuleProvider="target">
                             <rect key="frame" x="-13" y="74" width="472" height="38"/>
                             <textFieldCell key="cell" lineBreakMode="clipping" allowsUndo="NO" alignment="center" id="g5F-ZO-vGZ">
                                 <font key="font" usesAppearanceFont="YES"/>
@@ -957,7 +957,7 @@ your __Logitech M720 Triathlon__.&gt;</string>
                                     <stackView distribution="fill" orientation="horizontal" alignment="centerY" horizontalStackHuggingPriority="1000" verticalStackHuggingPriority="750" horizontalHuggingPriority="1000" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Ew8-Wm-Z08">
                                         <rect key="frame" x="0.0" y="419" width="166" height="20"/>
                                         <subviews>
-                                            <textField focusRingType="none" horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="FCc-U0-c29" userLabel="Smoothness:">
+                                            <textField horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="FCc-U0-c29" userLabel="Smoothness:">
                                                 <rect key="frame" x="-2" y="2" width="83" height="16"/>
                                                 <textFieldCell key="cell" lineBreakMode="clipping" alignment="left" title="Smoothness:" id="SjO-Dq-CEX">
                                                     <font key="font" usesAppearanceFont="YES"/>
@@ -1026,7 +1026,7 @@ your __Logitech M720 Triathlon__.&gt;</string>
                                             <customView translatesAutoresizingMaskIntoConstraints="NO" id="K2b-ZE-JxN" userLabel="Indent">
                                                 <rect key="frame" x="0.0" y="0.0" width="350" height="28"/>
                                                 <subviews>
-                                                    <textField focusRingType="none" horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="999" translatesAutoresizingMaskIntoConstraints="NO" id="ljz-rp-t9J" userLabel="Trackpad hint" customClass="MarkdownTextField" customModule="Mac_Mouse_Fix" customModuleProvider="target">
+                                                    <textField horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="999" translatesAutoresizingMaskIntoConstraints="NO" id="ljz-rp-t9J" userLabel="Trackpad hint" customClass="MarkdownTextField" customModule="Mac_Mouse_Fix" customModuleProvider="target">
                                                         <rect key="frame" x="18" y="0.0" width="334" height="28"/>
                                                         <textFieldCell key="cell" controlSize="small" selectable="YES" alignment="left" title="Move between pages in Safari by scrolling horizontally, and more" id="AHn-zX-g4d">
                                                             <font key="font" metaFont="smallSystem"/>
@@ -1090,7 +1090,7 @@ your __Logitech M720 Triathlon__.&gt;</string>
                                     <stackView distribution="fill" orientation="horizontal" alignment="centerY" horizontalStackHuggingPriority="1000" verticalStackHuggingPriority="750" horizontalHuggingPriority="1000" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Ajf-ff-OPq">
                                         <rect key="frame" x="0.0" y="257" width="132" height="20"/>
                                         <subviews>
-                                            <textField focusRingType="none" horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="T0R-D1-tZu">
+                                            <textField horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="T0R-D1-tZu">
                                                 <rect key="frame" x="-2" y="2" width="47" height="16"/>
                                                 <textFieldCell key="cell" lineBreakMode="clipping" alignment="left" title="Speed:" id="l7d-al-Y14">
                                                     <font key="font" usesAppearanceFont="YES"/>
@@ -1165,7 +1165,7 @@ your __Logitech M720 Triathlon__.&gt;</string>
                                             <customView horizontalHuggingPriority="999" verticalHuggingPriority="999" translatesAutoresizingMaskIntoConstraints="NO" id="WnW-0I-ajJ" userLabel="Indent">
                                                 <rect key="frame" x="0.0" y="0.0" width="293" height="14"/>
                                                 <subviews>
-                                                    <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="Yn5-ch-Oxi" customClass="MarkdownTextField" customModule="Mac_Mouse_Fix" customModuleProvider="target">
+                                                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="Yn5-ch-Oxi" customClass="MarkdownTextField" customModule="Mac_Mouse_Fix" customModuleProvider="target">
                                                         <rect key="frame" x="18" y="0.0" width="277" height="14"/>
                                                         <textFieldCell key="cell" controlSize="small" alignment="left" title="&lt;Scroll precisely by moving the scroll wheel slowly&gt;" id="1nK-vb-jNz">
                                                             <font key="font" metaFont="smallSystem"/>
@@ -1210,7 +1210,7 @@ your __Logitech M720 Triathlon__.&gt;</string>
                                     <customView horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="moZ-WP-cPc" userLabel="Center">
                                         <rect key="frame" x="0.0" y="0.0" width="350" height="170"/>
                                         <subviews>
-                                            <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Vaa-uM-Yko">
+                                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Vaa-uM-Yko">
                                                 <rect key="frame" x="-2" y="86" width="126" height="84"/>
                                                 <textFieldCell key="cell" lineBreakMode="clipping" title="Keyboard Modifiers:" id="vbN-zN-z2V">
                                                     <font key="font" metaFont="system"/>
@@ -1243,7 +1243,7 @@ your __Logitech M720 Triathlon__.&gt;</string>
                                                         <customView key="contentView" horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="Six-Ec-wMk" userLabel="Mod Capture Layout">
                                                             <rect key="frame" x="0.0" y="40" width="113" height="30"/>
                                                             <subviews>
-                                                                <textField focusRingType="none" horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="AeU-6d-NTc">
+                                                                <textField horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="AeU-6d-NTc">
                                                                     <rect key="frame" x="8" y="16" width="97" height="14"/>
                                                                     <textFieldCell key="cell" lineBreakMode="clipping" title="Scroll Horizontally" id="6Nj-Ed-W5T">
                                                                         <font key="font" metaFont="smallSystem"/>
@@ -1254,7 +1254,7 @@ your __Logitech M720 Triathlon__.&gt;</string>
                                                                         <fragment content="Scrolling &gt; Keyboard Modifiers &gt; Scroll Horizontally Label"/>
                                                                     </attributedString>
                                                                 </textField>
-                                                                <textField focusRingType="none" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="PpE-2r-BrM" customClass="ModCaptureTextField" customModule="Mac_Mouse_Fix" customModuleProvider="target">
+                                                                <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="PpE-2r-BrM" customClass="ModCaptureTextField" customModule="Mac_Mouse_Fix" customModuleProvider="target">
                                                                     <rect key="frame" x="19" y="5" width="75" height="5"/>
                                                                     <constraints>
                                                                         <constraint firstAttribute="width" constant="75" id="b7R-NV-XE1"/>
@@ -1298,7 +1298,7 @@ your __Logitech M720 Triathlon__.&gt;</string>
                                                         <customView key="contentView" horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="Oos-ni-ewS" userLabel="Mod Capture Layout">
                                                             <rect key="frame" x="119" y="40" width="113" height="30"/>
                                                             <subviews>
-                                                                <textField focusRingType="none" horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="xXa-Kc-t6I">
+                                                                <textField horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="xXa-Kc-t6I">
                                                                     <rect key="frame" x="15" y="16" width="83" height="14"/>
                                                                     <textFieldCell key="cell" lineBreakMode="clipping" title="Zoom In or Out" id="H4T-Rp-t33">
                                                                         <font key="font" metaFont="smallSystem"/>
@@ -1309,7 +1309,7 @@ your __Logitech M720 Triathlon__.&gt;</string>
                                                                         <fragment content="Scrolling &gt; Keyboard Modifiers &gt; Zoom In or Out Label"/>
                                                                     </attributedString>
                                                                 </textField>
-                                                                <textField focusRingType="none" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="HZF-jc-NcN" customClass="ModCaptureTextField" customModule="Mac_Mouse_Fix" customModuleProvider="target">
+                                                                <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="HZF-jc-NcN" customClass="ModCaptureTextField" customModule="Mac_Mouse_Fix" customModuleProvider="target">
                                                                     <rect key="frame" x="19" y="5" width="75" height="5"/>
                                                                     <constraints>
                                                                         <constraint firstAttribute="width" constant="75" id="GzZ-q9-Ejv"/>
@@ -1353,7 +1353,7 @@ your __Logitech M720 Triathlon__.&gt;</string>
                                                         <customView key="contentView" horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="Jp2-3z-uFa" userLabel="Mod Capture Layout">
                                                             <rect key="frame" x="0.0" y="0.0" width="113" height="30"/>
                                                             <subviews>
-                                                                <textField focusRingType="none" horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="PDK-GT-YZg">
+                                                                <textField horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="PDK-GT-YZg">
                                                                     <rect key="frame" x="20" y="16" width="73" height="14"/>
                                                                     <textFieldCell key="cell" lineBreakMode="clipping" title="Scroll Swiftly" id="ENz-Ny-4ax">
                                                                         <font key="font" metaFont="smallSystem"/>
@@ -1364,7 +1364,7 @@ your __Logitech M720 Triathlon__.&gt;</string>
                                                                         <fragment content="Scrolling &gt; Keyboard Modifiers &gt; Scroll Swiftly Label"/>
                                                                     </attributedString>
                                                                 </textField>
-                                                                <textField focusRingType="none" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Abk-fb-uRV" customClass="ModCaptureTextField" customModule="Mac_Mouse_Fix" customModuleProvider="target">
+                                                                <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Abk-fb-uRV" customClass="ModCaptureTextField" customModule="Mac_Mouse_Fix" customModuleProvider="target">
                                                                     <rect key="frame" x="19" y="5" width="75" height="5"/>
                                                                     <constraints>
                                                                         <constraint firstAttribute="width" constant="75" id="Mio-SG-K5e"/>
@@ -1408,7 +1408,7 @@ your __Logitech M720 Triathlon__.&gt;</string>
                                                         <customView key="contentView" horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="0nj-L8-QVU" userLabel="Mod Capture Layout">
                                                             <rect key="frame" x="119" y="0.0" width="113" height="30"/>
                                                             <subviews>
-                                                                <textField focusRingType="none" horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="ZTR-Oj-cl0">
+                                                                <textField horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="ZTR-Oj-cl0">
                                                                     <rect key="frame" x="14" y="16" width="85" height="14"/>
                                                                     <textFieldCell key="cell" lineBreakMode="clipping" title="Scroll Precisely" id="A6t-UZ-2DE">
                                                                         <font key="font" metaFont="smallSystem"/>
@@ -1419,7 +1419,7 @@ your __Logitech M720 Triathlon__.&gt;</string>
                                                                         <fragment content="Scrolling &gt; Keyboard Modifiers &gt; Scroll Precisely Label"/>
                                                                     </attributedString>
                                                                 </textField>
-                                                                <textField focusRingType="none" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="gqo-T2-Nmz" customClass="ModCaptureTextField" customModule="Mac_Mouse_Fix" customModuleProvider="target">
+                                                                <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="gqo-T2-Nmz" customClass="ModCaptureTextField" customModule="Mac_Mouse_Fix" customModuleProvider="target">
                                                                     <rect key="frame" x="19" y="5" width="75" height="5"/>
                                                                     <constraints>
                                                                         <constraint firstAttribute="width" constant="75" id="5Wt-UR-yRQ"/>
@@ -1546,7 +1546,7 @@ your __Logitech M720 Triathlon__.&gt;</string>
                             <customView horizontalHuggingPriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="Dgr-fy-Ff8" userLabel="Wrapper View">
                                 <rect key="frame" x="0.0" y="0.0" width="479" height="151"/>
                                 <subviews>
-                                    <textField focusRingType="none" horizontalHuggingPriority="1000" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="YcZ-TL-GLg">
+                                    <textField horizontalHuggingPriority="1000" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="YcZ-TL-GLg">
                                         <rect key="frame" x="82" y="113" width="71" height="16"/>
                                         <textFieldCell key="cell" lineBreakMode="clipping" alignment="right" title="Sensitivity:" id="XAP-He-hda">
                                             <font key="font" metaFont="system"/>
@@ -1564,7 +1564,7 @@ your __Logitech M720 Triathlon__.&gt;</string>
                                         </constraints>
                                         <sliderCell key="cell" continuous="YES" state="on" alignment="left" maxValue="1" doubleValue="0.30857103924418605" tickMarkPosition="below" numberOfTickMarks="5" sliderType="linear" id="rfH-Df-tXx"/>
                                     </slider>
-                                    <textField focusRingType="none" horizontalHuggingPriority="1000" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="43j-d0-v0H">
+                                    <textField horizontalHuggingPriority="1000" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="43j-d0-v0H">
                                         <rect key="frame" x="69" y="57" width="84" height="16"/>
                                         <textFieldCell key="cell" lineBreakMode="clipping" alignment="right" title="Acceleration:" id="3a9-XG-oHg">
                                             <font key="font" metaFont="system"/>
@@ -1624,7 +1624,7 @@ your __Logitech M720 Triathlon__.&gt;</string>
                                                     <constraint firstAttribute="width" constant="187" id="TsA-Uq-igg"/>
                                                 </constraints>
                                             </popUpButton>
-                                            <textField focusRingType="none" horizontalHuggingPriority="1000" verticalHuggingPriority="750" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="oEH-3x-3LO">
+                                            <textField horizontalHuggingPriority="1000" verticalHuggingPriority="750" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="oEH-3x-3LO">
                                                 <rect key="frame" x="0.0" y="0.0" width="251" height="28"/>
                                                 <textFieldCell key="cell" refusesFirstResponder="YES" allowsUndo="NO" alignment="left" drawsBackground="YES" id="DtT-YF-gUn">
                                                     <font key="font" metaFont="smallSystem"/>
@@ -1647,7 +1647,7 @@ System Preferences &gt; Mouse &gt; Tracking speed </string>
                                             <real value="3.4028234663852886e+38"/>
                                         </customSpacing>
                                     </stackView>
-                                    <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="fRV-ZK-msp">
+                                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="fRV-ZK-msp">
                                         <rect key="frame" x="163" y="95" width="29" height="14"/>
                                         <textFieldCell key="cell" lineBreakMode="clipping" alignment="center" title="Low" id="DNu-D4-tBY">
                                             <font key="font" metaFont="smallSystem"/>
@@ -1658,7 +1658,7 @@ System Preferences &gt; Mouse &gt; Tracking speed </string>
                                             <fragment content="Pointer &gt; Sensitivity Slider &gt; Low Label"/>
                                         </attributedString>
                                     </textField>
-                                    <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="gh3-uq-9m8">
+                                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="gh3-uq-9m8">
                                         <rect key="frame" x="235" y="95" width="50" height="14"/>
                                         <textFieldCell key="cell" lineBreakMode="clipping" alignment="center" title="Medium" id="YDr-ez-VKk">
                                             <font key="font" metaFont="smallSystem"/>
@@ -1669,7 +1669,7 @@ System Preferences &gt; Mouse &gt; Tracking speed </string>
                                             <fragment content="Pointer &gt; Sensitivity Slider &gt; Medium Label"/>
                                         </attributedString>
                                     </textField>
-                                    <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="uSx-Gs-ivn">
+                                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="uSx-Gs-ivn">
                                         <rect key="frame" x="323" y="95" width="33" height="14"/>
                                         <textFieldCell key="cell" lineBreakMode="clipping" alignment="center" title="High" id="wJW-hQ-lUc">
                                             <font key="font" metaFont="smallSystem"/>
@@ -1753,7 +1753,7 @@ System Preferences &gt; Mouse &gt; Tracking speed </string>
                                     <customView horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="AJO-pr-dqg" userLabel="Header">
                                         <rect key="frame" x="0.0" y="713" width="2258" height="111"/>
                                         <subviews>
-                                            <textField focusRingType="none" horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="7TJ-vr-aAK">
+                                            <textField horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="7TJ-vr-aAK">
                                                 <rect key="frame" x="1080" y="20" width="99" height="16"/>
                                                 <textFieldCell key="cell" selectable="YES" alignment="center" title="&lt;Version - (-)&gt;" id="79J-Zg-ebA">
                                                     <font key="font" metaFont="system"/>
@@ -1761,7 +1761,7 @@ System Preferences &gt; Mouse &gt; Tracking speed </string>
                                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                 </textFieldCell>
                                             </textField>
-                                            <textField focusRingType="none" horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="awa-V4-n7n">
+                                            <textField horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="awa-V4-n7n">
                                                 <rect key="frame" x="1077" y="41" width="104" height="16"/>
                                                 <textFieldCell key="cell" lineBreakMode="clipping" alignment="center" title="Mac Mouse Fix" id="bGk-tB-fcH">
                                                     <font key="font" metaFont="systemBold"/>
@@ -1781,7 +1781,7 @@ System Preferences &gt; Mouse &gt; Tracking speed </string>
                                                     <userDefinedRuntimeAttribute type="string" keyPath="actionString" value="reveal-config"/>
                                                 </userDefinedRuntimeAttributes>
                                             </imageView>
-                                            <textField focusRingType="none" horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="5x2-rm-Zzf">
+                                            <textField horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="5x2-rm-Zzf">
                                                 <rect key="frame" x="1056" y="0.0" width="147" height="14"/>
                                                 <textFieldCell key="cell" lineBreakMode="clipping" alignment="center" title="Created by Noah Nuebling" id="pMz-a0-1UQ">
                                                     <font key="font" metaFont="menu" size="11"/>
@@ -1832,7 +1832,7 @@ System Preferences &gt; Mouse &gt; Tracking speed </string>
                                                             <nil key="locale"/>
                                                         </symbolConfiguration>
                                                     </imageView>
-                                                    <textField focusRingType="none" horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="AQF-Nj-tDx" customClass="Hyperlink">
+                                                    <textField horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="AQF-Nj-tDx" customClass="Hyperlink">
                                                         <rect key="frame" x="28" y="17" width="108" height="16"/>
                                                         <textFieldCell key="cell" alignment="left" title="File a Bug Report" usesSingleLineMode="YES" id="bQf-qv-mvB">
                                                             <font key="font" metaFont="system"/>
@@ -1879,7 +1879,7 @@ System Preferences &gt; Mouse &gt; Tracking speed </string>
                                                             <nil key="locale"/>
                                                         </symbolConfiguration>
                                                     </imageView>
-                                                    <textField focusRingType="none" horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="LTq-8K-saI" customClass="Hyperlink">
+                                                    <textField horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="LTq-8K-saI" customClass="Hyperlink">
                                                         <rect key="frame" x="28" y="17" width="145" height="16"/>
                                                         <textFieldCell key="cell" alignment="left" title="Check It Out on GitHub" usesSingleLineMode="YES" id="ZMA-p0-2lf">
                                                             <font key="font" metaFont="system"/>
@@ -1945,7 +1945,7 @@ System Preferences &gt; Mouse &gt; Tracking speed </string>
                                                             <nil key="locale"/>
                                                         </symbolConfiguration>
                                                     </imageView>
-                                                    <textField focusRingType="none" horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="upZ-gK-UV4" customClass="Hyperlink">
+                                                    <textField horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="upZ-gK-UV4" customClass="Hyperlink">
                                                         <rect key="frame" x="28" y="17" width="150" height="16"/>
                                                         <textFieldCell key="cell" alignment="left" title="Write a Feature Request" usesSingleLineMode="YES" id="5yb-g8-Kcg">
                                                             <font key="font" metaFont="system"/>
@@ -1992,7 +1992,7 @@ System Preferences &gt; Mouse &gt; Tracking speed </string>
                                                             <nil key="locale"/>
                                                         </symbolConfiguration>
                                                     </imageView>
-                                                    <textField focusRingType="none" horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="0lK-Xb-h2V" userLabel="Website" customClass="Hyperlink">
+                                                    <textField horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="0lK-Xb-h2V" userLabel="Website" customClass="Hyperlink">
                                                         <rect key="frame" x="28" y="17" width="106" height="16"/>
                                                         <textFieldCell key="cell" alignment="left" title="Visit the Website" usesSingleLineMode="YES" id="Ozk-o9-C4a">
                                                             <font key="font" metaFont="system"/>
@@ -2058,7 +2058,7 @@ System Preferences &gt; Mouse &gt; Tracking speed </string>
                                                             <nil key="locale"/>
                                                         </symbolConfiguration>
                                                     </imageView>
-                                                    <textField focusRingType="none" horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="3kI-Zl-8kF" customClass="Hyperlink">
+                                                    <textField horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="3kI-Zl-8kF" customClass="Hyperlink">
                                                         <rect key="frame" x="28" y="17" width="112" height="16"/>
                                                         <textFieldCell key="cell" alignment="left" title="Send Me an Email" usesSingleLineMode="YES" id="QaW-cc-uzc">
                                                             <font key="font" metaFont="system"/>
@@ -2107,7 +2107,7 @@ System Preferences &gt; Mouse &gt; Tracking speed </string>
                                                             <nil key="locale"/>
                                                         </symbolConfiguration>
                                                     </imageView>
-                                                    <textField focusRingType="none" horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="Tl2-TE-5Rb" customClass="Hyperlink">
+                                                    <textField horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="Tl2-TE-5Rb" customClass="Hyperlink">
                                                         <rect key="frame" x="28" y="17" width="58" height="16"/>
                                                         <textFieldCell key="cell" alignment="left" title="Get Help" usesSingleLineMode="YES" id="eVc-l9-Z0h">
                                                             <font key="font" metaFont="system"/>
@@ -2187,7 +2187,7 @@ System Preferences &gt; Mouse &gt; Tracking speed </string>
                                                             <nil key="locale"/>
                                                         </symbolConfiguration>
                                                     </imageView>
-                                                    <textField focusRingType="none" horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="gmk-QZ-E3o" customClass="Hyperlink">
+                                                    <textField horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="gmk-QZ-E3o" customClass="Hyperlink">
                                                         <rect key="frame" x="28" y="17" width="123" height="16"/>
                                                         <textFieldCell key="cell" alignment="left" title="Acknowledgements" usesSingleLineMode="YES" id="8pi-FV-zYE">
                                                             <font key="font" metaFont="system"/>
@@ -2234,7 +2234,7 @@ System Preferences &gt; Mouse &gt; Tracking speed </string>
                                                             </userDefinedRuntimeAttribute>
                                                         </userDefinedRuntimeAttributes>
                                                     </imageView>
-                                                    <textField focusRingType="none" horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="X0k-mF-gia" customClass="Hyperlink">
+                                                    <textField horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="X0k-mF-gia" customClass="Hyperlink">
                                                         <rect key="frame" x="28" y="17" width="136" height="16"/>
                                                         <textFieldCell key="cell" alignment="left" title="Buy Me a Milkshake :)" usesSingleLineMode="YES" id="TrI-uu-DEN">
                                                             <font key="font" metaFont="system"/>
@@ -2324,7 +2324,7 @@ System Preferences &gt; Mouse &gt; Tracking speed </string>
                                                                     <userDefinedRuntimeAttribute type="boolean" keyPath="layer.masksToBounds" value="NO"/>
                                                                 </userDefinedRuntimeAttributes>
                                                             </imageView>
-                                                            <textField focusRingType="none" horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="pEg-Ae-guC">
+                                                            <textField horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="pEg-Ae-guC">
                                                                 <rect key="frame" x="28" y="87" width="193" height="16"/>
                                                                 <textFieldCell key="cell" alignment="center" title="&lt;Day 2/14 of your test period&gt;" usesSingleLineMode="YES" id="cul-5Z-iUo">
                                                                     <font key="font" metaFont="system"/>

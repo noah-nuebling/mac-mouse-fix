@@ -16,23 +16,6 @@
 
 @implementation NSScreen (Additions)
 
-+ (NSScreen * _Nullable)screenUnderMousePointerWithEvent:(CGEventRef _Nullable)event {
-    
-    assert(false); /// UPDATE: We moved retrieving screen under pointer to helperState
-    
-#if IS_HELPER
-    
-    CGDirectDisplayID displayID;
-    [HelperUtility displayUnderMousePointer:&displayID withEvent:event];
-    
-    return [NSScreen screenWithDisplayID:displayID];
-    
-#endif
-    
-    assert(false);
-    return nil;
-}
-
 + (NSScreen * _Nullable)screenWithDisplayID:(CGDirectDisplayID)displayID {
     
     for (NSScreen *screen in NSScreen.screens) {
@@ -43,8 +26,8 @@
     return nil;
 }
 
-/// Src: https://stackoverflow.com/questions/1236498/how-to-get-the-display-name-with-the-display-id-in-mac-os-x
 - (CGDirectDisplayID)displayID {
+    /// Src: https://stackoverflow.com/questions/1236498/how-to-get-the-display-name-with-the-display-id-in-mac-os-x
     return [[[self deviceDescription] valueForKey:@"NSScreenNumber"] unsignedIntValue];
 }
 

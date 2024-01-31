@@ -15,6 +15,7 @@
 
 #if IS_HELPER
 #import "HelperUtility.h"
+#import "Mac_Mouse_Fix_Helper-Swift.h"
 #endif
 
 @interface DisplayLink ()
@@ -80,14 +81,24 @@ typedef enum {
     return self;
 }
 
-- (void)setUpNewDisplayLinkWithActiveDisplays {
+- (CVReturn)setUpNewDisplayLinkWithActiveDisplays {
+    
+    CVReturn rt = kCVReturnSuccess;
     
     if (_displayLink != nil) {
-        CVDisplayLinkStop(_displayLink);
+        rt = CVDisplayLinkStop(_displayLink);
+        if (rt != kCVReturnSuccess) DDLogWarn(@"DisplayLink setup: Stopping displayLink failed with code %d", rt);
         CVDisplayLinkRelease(_displayLink);
     }
-    CVDisplayLinkCreateWithActiveCGDisplays(&_displayLink);
-    CVDisplayLinkSetOutputCallback(_displayLink, displayLinkCallback, (__bridge void * _Nullable)(self));
+    
+    rt = CVDisplayLinkCreateWithActiveCGDisplays(&_displayLink);
+    if (rt != kCVReturnSuccess) DDLogWarn(@"DisplayLink setup: Creating displayLink failed with code %d", rt);
+    rt = CVDisplayLinkSetOutputCallback(_displayLink, displayLinkCallback, (__bridge void * _Nullable)(self));
+    if (rt != kCVReturnSuccess) DDLogWarn(@"DisplayLink setup: Setting output callback failed with code %d", rt);
+    
+    assert(rt == kCVReturnSuccess);
+    
+    return rt;
 }
 
 #pragma mark - Start and stop
@@ -103,7 +114,7 @@ typedef enum {
 }
 
 - (void)start_UnsafeWithCallback:(DisplayLinkCallback _Nonnull)callback {
-
+    
     
     /// Debug
     DDLogDebug(@"Starting displayLinkkk %@", self.identifier);
@@ -157,14 +168,14 @@ typedef enum {
         }
         
     } else {
-     
+        
         /// Dispatch to main asynchronously
         
         dispatch_async(dispatch_get_main_queue(), startDisplayLinkBlock);
         
     }
 }
-                   
+
 - (void)stop {
     
     dispatch_async(_displayLinkQueue, ^{
@@ -243,7 +254,7 @@ typedef enum {
 //    ///     I'm not sure the standard stop function even has to be synchronous
 //    ///         Edit: Actually we've since changed the normal `stop` function to be asynchronous, as well. There were more deadlocking problems and it's not necessary.. So this function is now redundant.
 //    ///         I think the displayLinkCallback might run for another frame or even more after calling `stop()`, when we stop it asynchronously. I hope that's not a problem.
-//    
+//
 //    dispatch_async(dispatch_get_main_queue(), ^{
 //        if (self.isRunning) {
 //            CVDisplayLinkStop(self->_displayLink);
@@ -313,57 +324,82 @@ typedef enum {
 
 /// Set display to mouse location
 
-- (void)linkToMainScreen {
-    
+- (void)setDisplay:(CGDirectDisplayID)dsp {
     dispatch_async(_displayLinkQueue, ^{
-        [self linkToMainScreen_Unsafe];
+        (void)[self setDisplay_Unsafe:dsp]; /// We don't use the return code here, because we already log and assert in case of non-success return inside this method
     });
 }
 
-- (void)linkToMainScreen_Unsafe {
-    /// Simple alternative to .`linkToDisplayUnderMousePointerWithEvent:`.
-    /// TODO: Test which is faster
+
+- (void)setDisplay_Unsafe:(CGDirectDisplayID)dsp {
     
+    /// Validate input
+    if (dsp == kCGNullDirectDisplay) {
+        DDLogWarn(@"DisplayLink setDisplay: Input display is NULL");
+        assert(false);
+        return;
+    }
+    /// Check if dsp is already linked to
+    if (dsp == self->_previousDisplayUnderMousePointer) {
+        return;
+    }
     
-    assert(false); /// Update this: We moved getting display under pointer to HelperState
-    [self setDisplay:NSScreen.mainScreen.displayID];
+    /// Declare return code
+    CVReturn rt = kCVReturnSuccess;
+    
+    /// Setup new display link
+    if (_displayLinkIsOutdated) {
+        rt = [self setUpNewDisplayLinkWithActiveDisplays]; /// We don't need to log the rt code here or assert success, because we already do that inside the method
+        _displayLinkIsOutdated = NO;
+    }
+    
+    /// Store dsp in cache
+    ///     Note: Should we update the `last` value here? Maybe we should only update it if the linking is successful?
+    self->_previousDisplayUnderMousePointer = dsp;
+    
+    /// Set display
+    ///     Note: We don't return the error code, because we don't plan to do any error handling beyond the asserts and logging here.
+    rt = CVDisplayLinkSetCurrentCGDisplay(_displayLink, dsp);
+    if (rt != kCVReturnSuccess) DDLogWarn(@"DisplayLink setDisplay: Setting failed with code %d", rt);
+    assert(rt == kCVReturnSuccess);
 }
 
 - (void)linkToDisplayUnderMousePointerWithEvent:(CGEventRef _Nullable)event {
-    
-    assert(false); /// Update this: We moved getting display under pointer to HelperState NOTE: Why are we doing nothing with the return code? NOTE: Why is this unused in favor of linkToMainScreen?
-    
-#if IS_HELPER
-    
-    __block CVReturn result;
-    
     dispatch_async(_displayLinkQueue, ^{
-        /// Init shared return
-        CVReturn rt;
-        
-        /// Get display under mouse pointer
-        CGDirectDisplayID dsp;
-        rt = [HelperUtility displayUnderMousePointer:&dsp withEvent:event];
-        
-        /// Premature return
-        if (rt == kCVReturnError) {
-            result = kCVReturnError; return; /// Coudln't get display under pointer
-        }
-        if (dsp == self->_previousDisplayUnderMousePointer) {
-            result = kCVReturnSuccess; return; /// Display under pointer already linked to
-        }
-        
-        /// Store dsp in cache
-        self->_previousDisplayUnderMousePointer = dsp;
-        
-        /// Set new display
-        result = [self setDisplay:dsp]; return;
+        [self linkToDisplayUnderMousePointerWithEvent_Unsafe:event];
     });
+}
+
+- (void)linkToDisplayUnderMousePointerWithEvent_Unsafe:(CGEventRef _Nullable)event {
     
-#else
+    /// TODO: Consider removing this. It feels like it might not be the 'job' of this class to retrieve the display under the mouse pointer from a cgEvent.
+    
+#if !IS_HELPER
     assert(false);
+#else
+    /// Get display under mouse pointer
+    CGDirectDisplayID dsp = [HelperState.shared displayUnderMousePointerWithEvent:event];
+    /// Call core
+    [self setDisplay_Unsafe:dsp];
 #endif
 }
+
+
+//- (void)linkToMainScreen {
+//
+//    dispatch_async(_displayLinkQueue, ^{
+//        [self linkToMainScreen_Unsafe];
+//    });
+//}
+//
+//- (void)linkToMainScreen_Unsafe {
+//    /// Simple alternative to .`linkToDisplayUnderMousePointerWithEvent:`.
+//    /// TODO: Test which is faster
+//
+//
+//    assert(false); /// Update this: We moved getting display under pointer to HelperState
+//    [self setDisplay:NSScreen.mainScreen.displayID];
+//}
 
 //- (CVReturn)old_linkToDisplayUnderMousePointerWithEvent:(CGEventRef)event {
 //    
@@ -400,16 +436,6 @@ typedef enum {
 //    return returnCode;
 //}
 
-- (CVReturn)setDisplay:(CGDirectDisplayID)displayID {
-    
-    if (_displayLinkIsOutdated) {
-        [self setUpNewDisplayLinkWithActiveDisplays];
-        _displayLinkIsOutdated = NO;
-    }
-    
-    return CVDisplayLinkSetCurrentCGDisplay(_displayLink, displayID);
-}
-
 /// Display reconfiguration callback
 
 void displayReconfigurationCallback(CGDirectDisplayID display, CGDisplayChangeSummaryFlags flags, void *userInfo) {
@@ -419,7 +445,7 @@ void displayReconfigurationCallback(CGDirectDisplayID display, CGDisplayChangeSu
     ///     Then we use that flag in `- setDisplay`, to set up a new displayLink when needed.
     ///     That way, the displayLink won't be recreated when the user isn't even using Mac Mouse Fix.
     
-    // Get self
+    /// Get self
     DisplayLink *self = (__bridge DisplayLink *)userInfo;
     
     if ((flags & kCGDisplayAddFlag) ||

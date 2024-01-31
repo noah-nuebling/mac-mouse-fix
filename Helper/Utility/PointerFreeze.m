@@ -124,8 +124,8 @@ static int64_t _lastEventDelta;
             _puppetCursorPosition = origin;
             
             /// Get display under mouse pointer
-            CVReturn rt = [HelperUtility display:&_display atPoint:_origin];
-            if (rt != kCVReturnSuccess) DDLogWarn(@"Couldn't get display under mouse pointer in PointerFreeze");
+            _display = [HelperState.shared displayAtPoint:_origin];
+            if (_display == kCGNullDirectDisplay) DDLogWarn(@"Couldn't get display under mouse pointer in PointerFreeze");
             
             /// Draw puppet cursor before hiding
             [PointerFreeze drawPuppetCursor:YES fresh:YES];
@@ -395,7 +395,8 @@ void setSuppressionIntervalWithTimeInterval(CFTimeInterval interval) {
         /// Draw/move puppet cursor image
         if (fresh) {
             /// Draw puppetCursor
-            NSScreen *screenUnderMousePointer = [NSScreen screenUnderMousePointerWithEvent:NULL]; /// We could also use `_display`?
+            CGDirectDisplayID screenUnderMousePointerDisplayID = [HelperState.shared displayUnderMousePointerWithEvent:NULL]; /// We could also use `_display`? Edit: TODO: Why not get the screen at `_puppetCursorPosition`? That seems the most appropriate.
+            NSScreen *screenUnderMousePointer = [NSScreen screenWithDisplayID:screenUnderMousePointerDisplayID];
             [ScreenDrawer.shared drawWithView:_puppetCursorView atFrame:puppetImageFrameUnflipped onScreen:screenUnderMousePointer];
         } else {
             /// Reposition  puppet cursor!

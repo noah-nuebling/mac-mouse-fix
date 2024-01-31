@@ -180,7 +180,7 @@ void commitConfig(void) {
 #if IS_HELPER
     
     /// Get bundleID
-    NSRunningApplication *app = [HelperUtility appUnderMousePointerWithEvent:event];
+    NSRunningApplication *app = [HelperState.shared appUnderMousePointerWithEvent:event];
     NSString *bundleID = app.bundleIdentifier;
     
     /// Debug

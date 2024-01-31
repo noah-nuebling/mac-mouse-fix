@@ -87,45 +87,45 @@ import CocoaLumberjackSwift
     
     // MARK: State - Display under mouse pointer
 
-    func displayUnderMousePointer(_ dspID: inout CGDirectDisplayID, event: CGEvent?) -> CVReturn {
-        
+    @objc func displayUnderMousePointer(event: CGEvent?) -> CGDirectDisplayID {
         let mouseLocation = getPointerLocationWithEvent(event);
-        return self.display(&dspID, atPoint: mouseLocation)
+        return self.display(atPoint: mouseLocation)
     }
 
-    func display(_ dspID: inout CGDirectDisplayID, atPoint point: CGPoint) -> CVReturn {
+    @objc func display(atPoint point: CGPoint) -> CGDirectDisplayID {
         
         /// Notes:
-        /// - Passing in a CGEvent to get pointer location from. Not sure if signification optimization
+        /// - TODO: This is called from lots of places. Make sure it's fast!
         /// - TODO: Adopt similar caching/optimizations to `appUnderMousePointer()`
-        /// - TODO: Remove the error code returns. We don't use them anyways. If things fail, simply do some asserts & logging & return nil or `kCGNullDirectDisplay` or sth as the displayID
         
         /// Get display
         var newDisplaysUnderMousePointer = [CGDirectDisplayID](repeating: 0, count: 1)
         var matchingDisplayCount: UInt32 = 0
         let maxDisplays: UInt32 = 1
-        let error = CGGetDisplaysWithPoint(point, maxDisplays, &newDisplaysUnderMousePointer, &matchingDisplayCount)
+        let cgError = CGGetDisplaysWithPoint(point, maxDisplays, &newDisplaysUnderMousePointer, &matchingDisplayCount)
         
         if matchingDisplayCount == 1 {
             
             /// Get the master display in case newDisplaysUnderMousePointer[0] is part of a mirror set
             let displayID = CGDisplayPrimaryDisplay(newDisplaysUnderMousePointer[0])
             
+            if (cgError != CGError.success) {
+                DDLogInfo("Found display under mouse pointer with id \(displayID), despite CGGetDisplaysWithPoint returning error \(cgError)")
+            }
+            
             /// Success output
-            dspID = displayID
-            return kCVReturnSuccess
+            return displayID
             
         } else if matchingDisplayCount == 0 {
             
             /// Failure output
-            DDLogWarn("There are 0 displays under the mouse pointer")
-            dspID = kCGNullDirectDisplay
-            return kCVReturnError
+            DDLogWarn("There are 0 displays under the mouse pointer. CGError: \(cgError)")
+            return kCGNullDirectDisplay
             
         } else {
+            /// This should never ever happen
             assert(false)
-            dspID = kCGNullDirectDisplay
-            return kCVReturnError /// Placeholder return for safety, assert will stop execution in debug mode
+            return kCGNullDirectDisplay
         }
     }
     
@@ -137,7 +137,7 @@ import CocoaLumberjackSwift
     private var AUMLastTimestamp: CFTimeInterval? = nil
     private var AUMLastCGLoc: NSPoint? = nil
     
-    func appUnderMousePointer(event: CGEvent?) -> NSRunningApplication? {
+    @objc func appUnderMousePointer(event: CGEvent?) -> NSRunningApplication? {
         
         /// Notes:
         /// - Before the `CGWindow` approach, we used the AXUI API. Inspired by MOS' approach. However, `AXUIElementCopyElementAtPosition()` was incredibly slow sometimes. At one time I saw it taking a second to return when scrolling on new Reddit in Safari on M1 Ventura Beta. On other windows and websites it's not noticably slow but still very slow in code terms.

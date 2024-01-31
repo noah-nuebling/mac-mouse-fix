@@ -49,10 +49,12 @@ typedef void(^DisplayLinkCallback)(DisplayLinkCallbackTimeInfo timeInfo);
 - (CFTimeInterval)bestTimeBetweenFramesEstimate;
 - (CFTimeInterval)timeBetweenFrames;
 - (CFTimeInterval)nominalTimeBetweenFrames;
-- (void)linkToMainScreen;
-- (void)linkToMainScreen_Unsafe;
+- (void)setDisplay:(CGDirectDisplayID)dsp;
+- (void)setDisplay_Unsafe:(CGDirectDisplayID)dsp;
+//- (void)linkToMainScreen; // TODO: Remove. Linking to display under mouse pointer instead
+//- (void)linkToMainScreen_Unsafe;
 
-- (void)linkToDisplayUnderMousePointerWithEvent:(CGEventRef _Nullable)event;
+//- (void)linkToDisplayUnderMousePointerWithEvent:(CGEventRef _Nullable)event;
 
 @property(atomic, readonly, strong) dispatch_queue_t dispatchQueue;
 /// ^ Expose queue so that Animator (which builds ontop of DisplayLink) can use it, too. Using the same queue makes sense to avoid deadlocks and stuff

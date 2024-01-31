@@ -310,7 +310,8 @@ static void startMomentumScroll_Unsafe(double timeSinceLastInput, Vector exitVel
     /// Init animator
     
     [_momentumAnimator resetSubPixelator]; /// Shouldn't we use the `_Unsafe` version here?
-    [_momentumAnimator linkToMainScreen];
+    CGDirectDisplayID dsp = [HelperState.shared displayUnderMousePointerWithEvent:NULL];
+    [_momentumAnimator linkToDisplay:dsp];
     
     /// Start animator
     

@@ -469,8 +469,8 @@ CGPoint getRoundedPointerLocation(void) {
     return location;
 }
 static CGPoint getRoundedPointerLocationWithEvent(CGEventRef event) {
-    /// I thought it was necessary to use this on _drag.origin to calculate the _drag.usageOrigin properly.
-    /// To get the _drag.usageOrigin, I used to take the _drag.origin (which is float) and add the kCGMouseEventDeltaX and DeltaY (which are ints)
+    /// I thought it was necessary to use this on `_drag.origin` to calculate the `_drag.usageOrigin` properly.
+    /// To get the `_drag.usageOrigin`, I used to take the `_drag.origin` (which is float) and add the `kCGMouseEventDeltaX` and `DeltaY` (which are ints)
     ///     But even with rounding it didn't work properly so we went over to getting usageOrigin directly from a CGEvent. I think with this new setup there might not be a  reason to use the getRoundedPointerLocation functions anymore. But I'll just leave them in because they don't break anything.
     
     CGPoint pointerLocation = CGEventGetLocation(event);

@@ -76,7 +76,8 @@ static dispatch_group_t _momentumScrollWaitGroup;
     
     /// Setup animator
     [_smoothingAnimator resetSubPixelator];
-    [_smoothingAnimator linkToMainScreen];
+    CGDirectDisplayID dsp = [HelperState.shared displayAtPoint:_drag->origin];
+    [_smoothingAnimator linkToDisplay:dsp];
 }
 
 + (void)handleMouseInputWhileInUseWithDeltaX:(double)deltaX deltaY:(double)deltaY event:(CGEventRef)event {

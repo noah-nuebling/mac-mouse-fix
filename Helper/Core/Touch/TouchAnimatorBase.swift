@@ -162,12 +162,12 @@ import QuartzCore
     
     /// Other Interface
     
-    @objc func linkToMainScreen() {
-        displayLink.linkToMainScreen()
+    @objc func linkToDisplay(_ dsp: CGDirectDisplayID) {
+        displayLink.setDisplay(dsp)
     }
-    @objc func linkToMainScreen_Unsafe() {
+    @objc func linkToDisplay_Unsafe(_ dsp: CGDirectDisplayID) {
         /// Exposing this as a function and not just doing it automatically when the animation starts because I assume it's slow. Not sure where this assumption comes from.
-        displayLink.linkToMainScreen_Unsafe()
+        displayLink.setDisplay_Unsafe(dsp)
     }
     
     /// Start
