@@ -174,7 +174,7 @@ If you want to help translate it, click <a align="center" href="https://github.c
 # Template inserters 
 #
 
-sales_data_cache = None
+sales_data_cache = None # This cache is used for different language version of the acknowledgements document. Now that we massively sped up getting all the sales through the gumroad_sales_cache.json file, this isn't really necessary anymore. But it doesn't hurt.
 
 def insert_acknowledgements(template, language_id, language_dict, gumroad_api_key, cache_file, cache_shelf_life, no_api):
     
@@ -214,7 +214,7 @@ def insert_acknowledgements(template, language_id, language_dict, gumroad_api_ke
         
         # Log
         
-        print('Sorting and filtering sales...')
+        print('Filtering sales...')
         # print(json.dumps(sales, indent=2))
         
         # Filter people who don't want to be displayed
@@ -238,6 +238,8 @@ def insert_acknowledgements(template, language_id, language_dict, gumroad_api_ke
     
     # Round sales count
     all_sales_count_rounded = round_to_multiple(all_sales_count, sales_count_rounder, math.floor)
+    assert all_sales_count_rounded <= all_sales_count
+    all_sales_count_rounded = str(all_sales_count_rounded) if all_sales_count_rounded == all_sales_count else f"{all_sales_count_rounded}+"
     
     # Generate generous markdown
     
@@ -306,7 +308,7 @@ def insert_acknowledgements(template, language_id, language_dict, gumroad_api_ke
     # str.format forces us to replace all the template placeholders at once, which we don't want, so we use str.replace
     
     # template = template.format(very_generous=very_generous_string, generous=generous_string, sales_count=all_sales_count)
-    template = template.replace('{very_generous}', very_generous_string).replace('{generous}', generous_string).replace('{sales_count}', str(all_sales_count_rounded))
+    template = template.replace('{very_generous}', very_generous_string).replace('{generous}', generous_string).replace('{sales_count}', all_sales_count_rounded)
     
     # Return
     return template
