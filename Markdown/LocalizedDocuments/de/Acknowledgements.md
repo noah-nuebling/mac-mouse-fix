@@ -40,6 +40,7 @@ Diese Leute haben viel mehr als den Standardpreis ausgegeben und mir einen **ung
 
 **Februar 2024**
 
+- 🇺🇸&nbsp;Jesse&nbsp;Persons
 - 🇧🇪&nbsp;Lode&nbsp;Vanhove - "✌🏻"
 
 **Januar 2024**

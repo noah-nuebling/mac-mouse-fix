@@ -42,6 +42,7 @@ These people spent a lot more than the standard price and treated me to an **Inc
 
 **February 2024**
 
+- 🇺🇸&nbsp;Jesse&nbsp;Persons
 - 🇧🇪&nbsp;Lode&nbsp;Vanhove - "✌🏻"
 
 **January 2024**
