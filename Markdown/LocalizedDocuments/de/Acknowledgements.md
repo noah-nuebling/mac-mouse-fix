@@ -38,6 +38,10 @@ Danke für euren Beitrag! :)
 
 Diese Leute haben viel mehr als den Standardpreis ausgegeben und mir einen **unglaublichen Milchshake** spendiert. (Und manche haben sogar eine Nachricht hinterlassen) Danke für den _Zucker-Kick_!
 
+**Februar 2024**
+
+- 🇧🇪&nbsp;Lode&nbsp;Vanhove - "✌🏻"
+
 **Januar 2024**
 
 - 🇹🇭&nbsp;(Zen)Glen&nbsp;Mcniel - "Two years ago (Feb 2022), Noah generously helped me troubleshoot a compatibility issue with v2.2.0 on Mac OS Mojave. Just updated to v3.0.1 on my new MacBook running Sonoma, and this version is just beautiful. The quality of life improvements I have enjoyed over the last few years because of Noah are worth far more than $10. Thank you!"
