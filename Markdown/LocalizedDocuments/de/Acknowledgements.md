@@ -40,6 +40,7 @@ Diese Leute haben viel mehr als den Standardpreis ausgegeben und mir einen **ung
 
 **Februar 2024**
 
+- 🇺🇸&nbsp;Casey&nbsp;Rogers - "Thanks! Though my Razer Death Adder extra mouse buttons won't register in the "plus" area, any ideas?"
 - 🇺🇸&nbsp;Jesse&nbsp;Persons
 - 🇧🇪&nbsp;Lode&nbsp;Vanhove - "✌🏻"
 
