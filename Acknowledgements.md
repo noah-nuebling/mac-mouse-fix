@@ -42,6 +42,7 @@ These people spent a lot more than the standard price and treated me to an **Inc
 
 **February 2024**
 
+- 🇩🇪&nbsp;Levyko - "Thx 4 this awesome piece of software!"
 - 🇺🇸&nbsp;Casey&nbsp;Rogers - "Thanks! Though my Razer Death Adder extra mouse buttons won't register in the "plus" area, any ideas?"
 - 🇺🇸&nbsp;Jesse&nbsp;Persons
 - 🇧🇪&nbsp;Lode&nbsp;Vanhove - "✌🏻"
