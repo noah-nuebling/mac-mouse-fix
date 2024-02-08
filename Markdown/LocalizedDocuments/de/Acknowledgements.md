@@ -40,6 +40,7 @@ Diese Leute haben viel mehr als den Standardpreis ausgegeben und mir einen **ung
 
 **Februar 2024**
 
+- 🇺🇸&nbsp;Albert&nbsp;C&nbsp;Wold
 - 🇩🇪&nbsp;Markus&nbsp;Maria
 - 🇺🇸&nbsp;Devante&nbsp;Walker - "Thank you for such an awesome app."
 - 🇩🇪&nbsp;Levyko - "Thx 4 this awesome piece of software!"

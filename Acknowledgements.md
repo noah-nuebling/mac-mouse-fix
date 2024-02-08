@@ -42,6 +42,7 @@ These people spent a lot more than the standard price and treated me to an **Inc
 
 **February 2024**
 
+- 🇺🇸&nbsp;Albert&nbsp;C&nbsp;Wold
 - 🇩🇪&nbsp;Markus&nbsp;Maria
 - 🇺🇸&nbsp;Devante&nbsp;Walker - "Thank you for such an awesome app."
 - 🇩🇪&nbsp;Levyko - "Thx 4 this awesome piece of software!"
