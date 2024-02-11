@@ -40,6 +40,7 @@ Diese Leute haben viel mehr als den Standardpreis ausgegeben und mir einen **ung
 
 **Februar 2024**
 
+- 🇨🇦&nbsp;Andy&nbsp;King - "Thanks for making my Logitech mouse scroll properly."
 - 🇺🇸&nbsp;Davquan&nbsp;Samuel
 - 🇺🇸&nbsp;Albert&nbsp;C&nbsp;Wold
 - 🇩🇪&nbsp;Markus&nbsp;Maria

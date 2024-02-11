@@ -42,6 +42,7 @@ These people spent a lot more than the standard price and treated me to an **Inc
 
 **February 2024**
 
+- 🇨🇦&nbsp;Andy&nbsp;King - "Thanks for making my Logitech mouse scroll properly."
 - 🇺🇸&nbsp;Davquan&nbsp;Samuel
 - 🇺🇸&nbsp;Albert&nbsp;C&nbsp;Wold
 - 🇩🇪&nbsp;Markus&nbsp;Maria
