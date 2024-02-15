@@ -42,6 +42,7 @@ These people spent a lot more than the standard price and treated me to an **Inc
 
 **February 2024**
 
+- 🇧🇬&nbsp;Dim&nbsp;Vladimirov - "Finally fixed the annoying default behaviour - awesome!"
 - 🇺🇸&nbsp;Emilio&nbsp;Alvarez&nbsp;Harris - "Mac Mouse Fix + Swish = ❤️"
 - 🇺🇸&nbsp;Luke
 - 🇨🇦&nbsp;Andy&nbsp;King - "Thanks for making my Logitech mouse scroll properly."
