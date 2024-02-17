@@ -40,6 +40,7 @@ Diese Leute haben viel mehr als den Standardpreis ausgegeben und mir einen **ung
 
 **Februar 2024**
 
+- 🇺🇸&nbsp;Curtis&nbsp;R&nbsp;
 - 🇧🇬&nbsp;Dim&nbsp;Vladimirov - "Finally fixed the annoying default behaviour - awesome!"
 - 🇺🇸&nbsp;Emilio&nbsp;Alvarez&nbsp;Harris - "Mac Mouse Fix + Swish = ❤️"
 - 🇺🇸&nbsp;Luke
