@@ -119,7 +119,7 @@ Download the latest version of Mac Mouse Fix on the [website](http://noah-nuebli
 You can also install Mac Mouse Fix through [Homebrew](https://brew.sh/)! Just type the following command into the terminal:
 
 ```bash
-brew install mac-mouse-fix
+brew install --cask mac-mouse-fix
 ```
 
 You can download older versions of Mac Mouse Fix under [Releases](https://github.com/noah-nuebling/mac-mouse-fix/releases).
