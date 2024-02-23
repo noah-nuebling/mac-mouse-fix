@@ -17,6 +17,43 @@
 
 @implementation SharedUtility
 
+#pragma mark - Time
+
+uint64_t secondsToMachTime(CFTimeInterval tsSeconds) {
+    
+    /// Convert to nanoseconds
+    double tsNano = tsSeconds * NSEC_PER_SEC;
+    
+    /// Get the timebase info
+    mach_timebase_info_data_t info;
+    mach_timebase_info(&info);
+    
+    /// Convert to mach
+    double tsMach = tsNano;
+    tsMach /= ((double)info.numer)/((double)info.denom);
+    uint64_t tsMachInt = (uint64_t)round(tsMach);
+    
+    /// Return
+    return tsMachInt;
+}
+
+CFTimeInterval machTimeToSeconds(uint64_t tsMach) {
+    
+    /// Get the timebase info
+    mach_timebase_info_data_t info;
+    mach_timebase_info(&info);
+    
+    /// Convert to nanoseconds
+    double tsNano = tsMach;
+    tsNano *= ((double)info.numer)/((double)info.denom);
+    
+    /// Convert to seconds
+    CFTimeInterval tsSeconds = tsNano / NSEC_PER_SEC;
+    
+    /// Return
+    return tsSeconds;
+}
+
 #pragma mark - Catch NSException in Swift
 
 NSException * _Nullable tryCatch(void (^tryBlock)(void)) {

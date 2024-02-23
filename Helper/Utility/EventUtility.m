@@ -132,23 +132,15 @@ IOHIDDeviceRef copySendingDevice_Reliable(uint64_t senderID) {
 #pragma mark - Timestamps
 
 CFTimeInterval CGEventGetTimestampInSeconds(CGEventRef event) {
+    
     /// Gets timestamp in seconds from CGEvent. More accurate and less volatile than calling CACurrentMediaTime() in the eventTapCallback.
     ///     I've found that this doesn't work for for some events like mouseMoved events in PollingRateMeasurer. Those timestamps are already in nanosecs instead of mach time
     
     /// Get raw mach timestamp
     CGEventTimestamp tsMach = CGEventGetTimestamp(event);
     
-    /// Get the timebase info
-    mach_timebase_info_data_t info;
-    mach_timebase_info(&info);
-    
-    /// Convert to nanoseconds
-    double tsNano = tsMach;
-    tsNano *= info.numer;
-    tsNano /= info.denom;
-    
-    /// Convert to seconds
-    CFTimeInterval tsSeconds = tsNano / NSEC_PER_SEC;
+    /// Convert
+    CFTimeInterval tsSeconds = machTimeToSeconds(tsMach);
     
     return tsSeconds;
     

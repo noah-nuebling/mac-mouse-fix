@@ -29,12 +29,11 @@ extern inline bool _objc_isTaggedPointer(const void *ptr);     /// Copied from h
 
 typedef void(*MFCTLCallback)(NSTask *task, NSPipe *output, NSError *error);
 
+CFTimeInterval machTimeToSeconds(uint64_t tsMach);
+uint64_t secondsToMachTime(CFTimeInterval tsSeconds);
 NSException * _Nullable tryCatch(void (^tryBlock)(void));
-
 void *offsetPointer(void *ptr, int byteOffset);
-
 bool runningPreRelease(void);
-
 bool runningMainApp(void);
 bool runningHelper(void);
 //bool runningAccomplice(void);
