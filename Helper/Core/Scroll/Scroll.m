@@ -460,6 +460,16 @@ static void heavyProcessing(CGEventRef event, int64_t scrollDeltaAxis1, int64_t 
             pxToScrollForThisTick *= fastScrollFactor;
         }
         
+        ///
+        /// TEST: Make direction change simply stop scroll animation
+        ///
+        
+        double theSpeeddd = magnitudeOfVector(_animator.getLastAnimationSpeed);
+        NSLog(@"THE SPEED: %f", theSpeeddd);
+        if (_lastScrollAnalysisResult.scrollDirectionDidChange && theSpeeddd > 200.0) {
+            [_animator cancel];
+            return;
+        }
         
         /// Debug
         
