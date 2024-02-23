@@ -40,6 +40,7 @@ Diese Leute haben viel mehr als den Standardpreis ausgegeben und mir einen **ung
 
 **Februar 2024**
 
+- 🇹🇼&nbsp;Sheng&nbsp;Feng&nbsp;Tseng - "Thank you for your contributions to the MAC ecosystem."
 - 🇺🇸&nbsp;Ian&nbsp;Sliwinski
 - 🇬🇧&nbsp;Reactor&nbsp;Uk
 - 🇰🇷&nbsp;4J
