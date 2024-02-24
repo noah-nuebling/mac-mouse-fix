@@ -691,8 +691,8 @@
             filePath = "Shared/Config/Config.m"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "477"
-            endingLineNumber = "477"
+            startingLineNumber = "478"
+            endingLineNumber = "478"
             landmarkName = "-repairConfigWithReason:info:"
             landmarkType = "7">
             <Locations>
@@ -844,8 +844,8 @@
             filePath = "Shared/Config/Config.m"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "452"
-            endingLineNumber = "452"
+            startingLineNumber = "453"
+            endingLineNumber = "453"
             landmarkName = "-repairConfigWithReason:info:"
             landmarkType = "7">
             <Locations>
@@ -945,22 +945,6 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "97E6B816-92C6-4912-B5C8-1E9F77AFC4A4"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Helper/HelperState.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "96"
-            endingLineNumber = "96"
-            landmarkName = "display(atPoint:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
             uuid = "63ABD5E2-B81D-46E8-9D42-1C357E61AB48"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
@@ -968,9 +952,9 @@
             filePath = "Helper/HelperState.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "91"
-            endingLineNumber = "91"
-            landmarkName = "displayUnderMousePointer(event:)"
+            startingLineNumber = "114"
+            endingLineNumber = "114"
+            landmarkName = "updateDisplayUnderMousePointer(event:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -984,8 +968,8 @@
             filePath = "Helper/Core/Scroll/Scroll.m"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "514"
-            endingLineNumber = "514"
+            startingLineNumber = "515"
+            endingLineNumber = "515"
             landmarkName = "heavyProcessing(event, scrollDeltaAxis1, scrollDeltaAxis2, tickTime)"
             landmarkType = "9">
          </BreakpointContent>

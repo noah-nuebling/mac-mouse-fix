@@ -364,25 +364,25 @@ typedef enum {
     assert(rt == kCVReturnSuccess);
 }
 
-- (void)linkToDisplayUnderMousePointerWithEvent:(CGEventRef _Nullable)event {
-    dispatch_async(_displayLinkQueue, ^{
-        [self linkToDisplayUnderMousePointerWithEvent_Unsafe:event];
-    });
-}
-
-- (void)linkToDisplayUnderMousePointerWithEvent_Unsafe:(CGEventRef _Nullable)event {
-    
-    /// TODO: Consider removing this. It feels like it might not be the 'job' of this class to retrieve the display under the mouse pointer from a cgEvent.
-    
-#if !IS_HELPER
-    assert(false);
-#else
-    /// Get display under mouse pointer
-    CGDirectDisplayID dsp = [HelperState.shared displayUnderMousePointerWithEvent:event];
-    /// Call core
-    [self setDisplay_Unsafe:dsp];
-#endif
-}
+//- (void)linkToDisplayUnderMousePointerWithEvent:(CGEventRef _Nullable)event {
+//    dispatch_async(_displayLinkQueue, ^{
+//        [self linkToDisplayUnderMousePointerWithEvent_Unsafe:event];
+//    });
+//}
+//
+//- (void)linkToDisplayUnderMousePointerWithEvent_Unsafe:(CGEventRef _Nullable)event {
+//    
+//    /// TODO: Consider removing this. It feels like it might not be the 'job' of this class to retrieve the display under the mouse pointer from a cgEvent.
+//    
+//#if !IS_HELPER
+//    assert(false);
+//#else
+//    /// Get display under mouse pointer
+//    CGDirectDisplayID dsp = [HelperState.shared displayUnderMousePointerWithEvent:event];
+//    /// Call core
+//    [self setDisplay_Unsafe:dsp];
+//#endif
+//}
 
 
 //- (void)linkToMainScreen {

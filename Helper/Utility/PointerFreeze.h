@@ -8,6 +8,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "CoreGraphics/CoreGraphics.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -15,8 +16,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 + (void)load_Manual;
 
-+ (void)freezeEventDispatchPointAtPosition:(CGPoint)origin;
-+ (void)freezePointerAtPosition:(CGPoint)origin;
++ (void)freezeEventDispatchPointWithEvent:(CGEventRef)event;
++ (void)freezePointerWithEvent:(CGEventRef)event;
 + (void)unfreeze;
 
 @end

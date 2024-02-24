@@ -63,7 +63,7 @@ typedef struct {
 @protocol ModifiedDragOutputPlugin <NSObject>
 
 + (void)initializeWithDragState:(ModifiedDragState *)dragStateRef;
-+ (void)handleBecameInUse;
++ (void)handleBecameInUseWithEvent:(CGEventRef)event;
 + (void)handleMouseInputWhileInUseWithDeltaX:(double)deltaX deltaY:(double)deltaY event:(CGEventRef)event;
 + (void)handleDeactivationWhileInUseWithCancel:(BOOL)cancel;
 + (void)suspend; /// See OutputCoordinator

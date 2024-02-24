@@ -16,6 +16,7 @@
  It will also provide an interface to retrieve all of the `ConfigOverrideConditions` in a dictionary. (So that the conditions can be used as a cache key in the config overriding code and stuff.)
     
  TODO: Notify SwitchMaster whenever the state changes.
+        - We're already calling SwitchMaster.shared.helperStateChanged() in some places but it's inconsistent and not thought-through at the moment
  TODO?: Maybe rename this class to 'ExternalState' or sth else instead of 'HelperState' (Don't forget to update all the references in comments and stuff.)
  
  __Broader context__
@@ -85,18 +86,36 @@ import CocoaLumberjackSwift
         
     }
     
+    // MARK: Information input
+    
+    private var latestCGEvent: CGEvent? = nil
+    @objc func updateState(event: CGEvent) {
+        /// Note: In some places we call this with `CGEventCreate(NULL)` - that might be a bad idea because that deletes storing of the latest senderID and maybe more. Perhaps we should store the latestCGEvent but the latestRelevantValues inside the event.
+        latestCGEvent = event
+    }
+    
     // MARK: State - Display under mouse pointer
-
-    @objc func displayUnderMousePointer(event: CGEvent?) -> CGDirectDisplayID {
+    
+    private var _displayUnderMousePointer: CGDirectDisplayID = kCGNullDirectDisplay
+    @objc var displayUnderMousePointer: CGDirectDisplayID {
+        get {
+            
+            /// Notes:
+            /// - TODO: Make this fast 
+            ///     - only update if the pointer has moved.
+            ///     - Maybe also update after display reconfiguration/if the displayID is invalid or sth. Could use CGDisplayIsActive() or CGDisplayIsOnline()
+            
+            updateDisplayUnderMousePointer(event: latestCGEvent)
+            return _displayUnderMousePointer
+        }
+    }
+    
+    private func updateDisplayUnderMousePointer(event: CGEvent?)  {
         let mouseLocation = getPointerLocationWithEvent(event);
-        return self.display(atPoint: mouseLocation)
+        self.updateDisplayUnderMousePointer(toPoint: mouseLocation)
     }
 
-    @objc func display(atPoint point: CGPoint) -> CGDirectDisplayID {
-        
-        /// Notes:
-        /// - TODO: This is called from lots of places. Make sure it's fast!
-        /// - TODO: Adopt similar caching/optimizations to `appUnderMousePointer()`
+    private func updateDisplayUnderMousePointer(toPoint point: CGPoint){
         
         /// Get display
         var newDisplaysUnderMousePointer = [CGDirectDisplayID](repeating: 0, count: 1)
@@ -114,30 +133,40 @@ import CocoaLumberjackSwift
             }
             
             /// Success output
-            return displayID
+            self._displayUnderMousePointer = displayID
             
         } else if matchingDisplayCount == 0 {
             
             /// Failure output
             DDLogWarn("There are 0 displays under the mouse pointer. CGError: \(cgError)")
-            return kCGNullDirectDisplay
+            self._displayUnderMousePointer = kCGNullDirectDisplay
             
         } else {
             /// This should never ever happen
             assert(false)
-            return kCGNullDirectDisplay
+            self._displayUnderMousePointer = kCGNullDirectDisplay
         }
     }
     
     // MARK: State - App under mouse pointer
     
-    private var lastAppUnderMousePointer: NSRunningApplication? = nil
+    private var _appUnderMousePointer: NSRunningApplication? = nil
+    @objc var appUnderMousePointer: NSRunningApplication? {
+        get {
+            /// Notes:
+            /// - TODO: Make this fast
+            ///     - only update if the pointer has moved, or frontmost app might have changed, maybe other criteria
+            
+            updateAppUnderMousePointer(event: latestCGEvent)
+            return _appUnderMousePointer
+        }
+    }
     
     private var AUMLastFrontmostApp: NSRunningApplication? = nil
     private var AUMLastTimestamp: CFTimeInterval? = nil
     private var AUMLastCGLoc: NSPoint? = nil
     
-    @objc func appUnderMousePointer(event: CGEvent?) -> NSRunningApplication? {
+    private func updateAppUnderMousePointer(event: CGEvent?) {
         
         /// Notes:
         /// - Before the `CGWindow` approach, we used the AXUI API. Inspired by MOS' approach. However, `AXUIElementCopyElementAtPosition()` was incredibly slow sometimes. At one time I saw it taking a second to return when scrolling on new Reddit in Safari on M1 Ventura Beta. On other windows and websites it's not noticably slow but still very slow in code terms.
@@ -162,7 +191,7 @@ import CocoaLumberjackSwift
             
             func useCache() -> Bool {
                 
-                if lastAppUnderMousePointer == nil { return false }
+                if appUnderMousePointer == nil { return false }
                 
                 now = CACurrentMediaTime()
                 timeElapsed = now! - (AUMLastTimestamp ?? 0.0)
@@ -193,7 +222,7 @@ import CocoaLumberjackSwift
             let useCache = useCache()
             
             if useCache {
-                return lastAppUnderMousePointer!
+                return
             }
             
             /// Update 'last' state
@@ -222,18 +251,56 @@ import CocoaLumberjackSwift
             pidUnderPointer = pid
         }
         
-        /// Get runningApplication
-        let appUnderMousePointer = pidUnderPointer == nil ? nil : NSRunningApplication(processIdentifier: pidUnderPointer!)
-        
-        /// Update state
-        lastAppUnderMousePointer = appUnderMousePointer
-        
-        /// Return
-        return appUnderMousePointer
-        
+        /// Get runningApplication & store result
+        self._appUnderMousePointer = pidUnderPointer == nil ? nil : NSRunningApplication(processIdentifier: pidUnderPointer!)
     }
     
     // MARK: State - Frontmost app
+    
+    private var _frontmostApp: NSRunningApplication? = nil
+    @objc var frontmostApp: NSRunningApplication? {
+        get {
+            
+            /// Notes:
+            /// - TODO: Make this fast
+            ///     - Only update this if the pid inside latestCGEvent has changed and if frontMostApp isn't actively being listened to, maybe other conditions?
+            
+            if let e = latestCGEvent {
+                updateFrontmostApp(event: e)
+            }
+            return _frontmostApp!
+        }
+    }
+    private func updateFrontmostApp(event: CGEvent) {
+        
+        /// Retrieve the frontmost app from a CGEvent, and store the result in a local variable
+        /// Notes:
+        /// - `.eventTargetUnixProcessID` seems to be how linearMouse gets the frontmost app. I'm not 100% sure this works reliably to get the frontmost app
+        /// - I'm not totally sure it's necessary/good to have a separate interface for updating the frontMost app vs retrieving it, instead of combining them into one function.
+        /// - If the update function is called more frequently than the retrieval function, we might want to optimize the update function, by only getting and storing the pid, and then only creating the NSRunningApplication instance in the retrieval function. You could call this 'lazy loading' the NSRunningApplication instance?
+        
+        /// Guard priority (for optimization)
+        if frontmostAppPriority == .unused || frontmostAppPriority == .activeListen { return }
+        
+        /// Update value
+        let pid = Int32(event.getIntegerValueField(.eventTargetUnixProcessID))
+        updateFrontmostApp(pid: pid)
+        
+        /// Fallback
+        if _frontmostApp == nil {
+            let fallback = NSWorkspace.shared.frontmostApplication
+            _frontmostApp = fallback
+        }
+    }
+    private func updateFrontmostApp(pid: pid_t) {
+        
+        /// Guard priority (for optimization)
+        if frontmostAppPriority == .unused || frontmostAppPriority == .activeListen { return }
+        
+        /// Update value
+        /// Note: In case creating an `NSRunningApplication` instance is slow, we could cache a map from pid -> runningApplication globally for the app. Then getting the frontMost app given a CGEvent should be lightning fast!
+        _frontmostApp = NSRunningApplication(processIdentifier: pid)
+    }
     
     private var frontmostAppObserver: NSObjectProtocol? = nil
     private var _frontmostAppPriority: MFStatePriority = .unused
@@ -276,67 +343,46 @@ import CocoaLumberjackSwift
         
     }
     
-    private var _frontmostApp: NSRunningApplication? = nil
-    var frontmostApp: NSRunningApplication? {
-        get {
-            if let result = _frontmostApp { return result }
-            let fallback = NSWorkspace.shared.frontmostApplication
-            _frontmostApp = fallback
-            return fallback
-        }
-    }
-    func updateFrontmostApp(event: CGEvent) {
-        
-        /// Retrieve the frontmost app from a CGEvent, and store the result in a local variable
-        /// Notes:
-        /// - `.eventTargetUnixProcessID` seems to be how linearMouse gets the frontmost app. I'm not 100% sure this works reliably to get the frontmost app
-        /// - I'm not totally sure it's necessary/good to have a separate interface for updating the frontMost app vs retrieving it, instead of combining them into one function.
-        /// - If the update function is called more frequently than the retrieval function, we might want to optimize the update function, by only getting and storing the pid, and then only creating the NSRunningApplication instance in the retrieval function. You could call this 'lazy loading' the NSRunningApplication instance?
-        
-        /// Guard priority (for optimization)
-        if frontmostAppPriority == .unused || frontmostAppPriority == .activeListen { return }
-        
-        /// Update value
-        let pid = Int32(event.getIntegerValueField(.eventTargetUnixProcessID))
-        updateFrontmostApp(pid: pid)
-    }
-    func updateFrontmostApp(pid: pid_t) {
-        
-        /// Guard priority (for optimization)
-        if frontmostAppPriority == .unused || frontmostAppPriority == .activeListen { return }
-        
-        /// Update value
-        /// Note: In case creating an `NSRunningApplication` instance is slow, we could cache a map from pid -> runningApplication globally for the app. Then getting the frontMost app given a CGEvent should be lightning fast!
-        _frontmostApp = NSRunningApplication(processIdentifier: pid)
-    }
-    
     // MARK: State - Active device
     
     private var _activeDevice: Device? = nil
-    @objc var activeDevice: Device? {
+    @objc private(set) var activeDevice: Device? {
         set {
             _activeDevice = newValue
             SwitchMaster.shared.helperStateChanged()
         }
         get {
-            if _activeDevice != nil {
-                return _activeDevice
-            } else { /// Just return any attached device as a fallback
-                /// NOTE: Swift let me do `attachedDevices.first` (even thought that's not defined on NSArray) without a compiler warning which did return a Device? but the as! Device? cast still crashed. Using `attachedDevices.firstObject` it doesn't crash.
-                return DeviceManager.attachedDevices.firstObject as! Device?
+            
+            /// Notes:
+            /// - TODO: Make this fast
+            ///     - Only update this if the eventSenderID hasn't changed
+            ///         - (Actually getSendingDeviceWithSenderID() already uses caching, so it should already be very fast. So not sure if this optimization would matter.)
+            
+            if let e = latestCGEvent {
+                updateActiveDevice(event: e)
             }
+            return _activeDevice!
         }
     }
     
-    @objc func updateActiveDevice(event: CGEvent) {
+    private func updateActiveDevice(event: CGEvent) {
         guard let iohidDevice = CGEventGetSendingDevice(event)?.takeUnretainedValue() else { return }
         updateActiveDevice(IOHIDDevice: iohidDevice)
+        
+        /// Fallback (does this belong here?)
+        ///     Notes:
+        ///     - Swift let me do `attachedDevices.first` (even thought that's not defined on NSArray) without a compiler warning which did return a Device? but the as! Device? cast still crashed. Using `attachedDevices.firstObject` it doesn't crash.
+        if _activeDevice == nil {
+            activeDevice = DeviceManager.attachedDevices.firstObject as! Device?
+        }
     }
-    @objc func updateActiveDevice(eventSenderID: UInt64) {
+    @objc public func updateActiveDevice(eventSenderID: UInt64) {
+        /// Note: This one is public not private because it's needed inside MFMessagePort.m.
+        //      > TODO: Think about whether this is a good/fast enough solution
         guard let iohidDevice = getSendingDeviceWithSenderID(eventSenderID)?.takeUnretainedValue() else { return }
         updateActiveDevice(IOHIDDevice: iohidDevice)
     }
-    @objc func updateActiveDevice(IOHIDDevice: IOHIDDevice) {
+    private func updateActiveDevice(IOHIDDevice: IOHIDDevice) {
         guard let device = DeviceManager.attachedDevice(with: IOHIDDevice) else { return }
         activeDevice = device
     }
@@ -344,8 +390,9 @@ import CocoaLumberjackSwift
     // MARK: State - Logged-in account
     /// See Apple Docs at: https://developer.apple.com/library/archive/documentation/MacOSX/Conceptual/BPMultipleUsers/Concepts/FastUserSwitching.html#//apple_ref/doc/uid/20002209-104219-BAJJIFCB
     
-    var userIsActive: Bool = false
-    func initUserIsActive() {
+    @objc private(set) var userIsActive: Bool = false
+    
+    private func initUserIsActive() {
         
         /// Init userIsActive
         userIsActive = userIsActive_Manual()

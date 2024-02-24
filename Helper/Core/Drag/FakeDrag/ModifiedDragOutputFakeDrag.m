@@ -28,7 +28,7 @@ static MFMouseButtonNumber _fakeDragButtonNumber; /// Button number. Only used w
     _fakeDragButtonNumber = ((NSNumber *)_drag->effectDict[kMFModifiedDragDictKeyFakeDragVariantButtonNumber]).intValue;
 }
 
-+ (void)handleBecameInUse {
++ (void)handleBecameInUseWithEvent:(CGEventRef)event {
     
     [ModificationUtility postMouseButton:_fakeDragButtonNumber down:YES];
 }

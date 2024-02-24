@@ -77,25 +77,25 @@ static int64_t _lastEventDelta;
 
 // MARK: Interface
 
-+ (void)freezeEventDispatchPointAtPosition:(CGPoint)origin {
++ (void)freezeEventDispatchPointWithEvent:(CGEventRef)event {
     /// Freezes the dispatch point for CGEvents in place while making it appear to the user as if the they are still controlling the pointer.
     ///     This is achieved through freezing the actual pointer in place, then making the actual pointer invisible, and then creating a fake 'puppet' pointer and letting the user move that around.
     /// `origin` should be the current pointer position. Not sure what happens if you choose another location
     
     
-    [self freezeAtPosition:origin keepPointerMoving:YES];
+    [self freezeAtEventLocation:event keepPointerMoving:YES];
 }
 
-+ (void)freezePointerAtPosition:(CGPoint)origin {
++ (void)freezePointerWithEvent:(CGEventRef)event {
     /// Freezes the dispatch point for CGEvents in place while making it appear to the user as if the they are still controlling the pointer.
     ///     This is achieved through freezing the actual pointer in place, then making the actual pointer invisible, and then creating a fake 'puppet' pointer and letting the user move that around.
     /// `origin` should be the current pointer position. Not sure what happens if you choose another location
     
     
-    [self freezeAtPosition:origin keepPointerMoving:NO];
+    [self freezeAtEventLocation:event keepPointerMoving:NO];
 }
 
-+ (void)freezeAtPosition:(CGPoint)origin keepPointerMoving:(BOOL)keepPointerMoving {
++ (void)freezeAtEventLocation:(CGEventRef)event keepPointerMoving:(BOOL)keepPointerMoving {
     /// Internal helper function
     
     /// Lock
@@ -106,7 +106,7 @@ static int64_t _lastEventDelta;
         DDLogDebug(@"PointerFreeze - freezing");
         
         /// Store
-        _origin = origin;
+        _origin = CGEventGetLocation(event);
         _keepPointerMoving = keepPointerMoving;
         
         /// Decrease delay after warping
@@ -121,10 +121,11 @@ static int64_t _lastEventDelta;
         if (keepPointerMoving) {
             
             /// Init puppet cursor pos
-            _puppetCursorPosition = origin;
+            _puppetCursorPosition = _origin;
             
             /// Get display under mouse pointer
-            _display = [HelperState.shared displayAtPoint:_origin];
+            [HelperState.shared updateStateWithEvent:event];
+            _display = [HelperState.shared displayUnderMousePointer];
             if (_display == kCGNullDirectDisplay) DDLogWarn(@"Couldn't get display under mouse pointer in PointerFreeze");
             
             /// Draw puppet cursor before hiding
@@ -395,8 +396,7 @@ void setSuppressionIntervalWithTimeInterval(CFTimeInterval interval) {
         /// Draw/move puppet cursor image
         if (fresh) {
             /// Draw puppetCursor
-            CGDirectDisplayID screenUnderMousePointerDisplayID = [HelperState.shared displayUnderMousePointerWithEvent:NULL]; /// We could also use `_display`? Edit: TODO: Why not get the screen at `_puppetCursorPosition`? That seems the most appropriate.
-            NSScreen *screenUnderMousePointer = [NSScreen screenWithDisplayID:screenUnderMousePointerDisplayID];
+            NSScreen *screenUnderMousePointer = [NSScreen screenWithDisplayID:_display];
             [ScreenDrawer.shared drawWithView:_puppetCursorView atFrame:puppetImageFrameUnflipped onScreen:screenUnderMousePointer];
         } else {
             /// Reposition  puppet cursor!

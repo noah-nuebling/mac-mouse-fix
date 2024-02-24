@@ -326,7 +326,7 @@ static void heavyProcessing(CGEventRef event, int64_t scrollDeltaAxis1, int64_t 
         
         /// Update active device
         /// TODO: Think about whether this makes sense here? Probably just getting the ConfigOverrideConditions is enough
-        [HelperState.shared updateActiveDeviceWithEvent:event];
+        [HelperState.shared updateStateWithEvent:event];
         
         /// Update application Overrides
         
@@ -369,7 +369,8 @@ static void heavyProcessing(CGEventRef event, int64_t scrollDeltaAxis1, int64_t 
         
         /// Get display  under mouse pointer
         /// TODO: Probably remove this in favor of ConfigOverrideConditions
-        CGDirectDisplayID displayID = [HelperState.shared displayUnderMousePointerWithEvent:event];
+        [HelperState.shared updateStateWithEvent:event]; /// Haven't thought about whether this makes any sens to call here
+        CGDirectDisplayID displayID = [HelperState.shared displayUnderMousePointer];
         
         /// Get scrollConfig
         _scrollConfig = [ScrollConfig scrollConfigWithModifiers:newMods inputAxis:inputAxis display:displayID];
@@ -511,7 +512,8 @@ static void heavyProcessing(CGEventRef event, int64_t scrollDeltaAxis1, int64_t 
             ///     Notes: We removed the mouseDidMove check because those optimizations are planned to be moved inside HelperState and animator
             if (/*ScrollUtility.mouseDidMove &&*/ !isRunning) {
                 /// Update animator to currently used display
-                CGDirectDisplayID dsp = [HelperState.shared displayUnderMousePointerWithEvent:event]; /// TODO: Can probably use the display from ConfigOverrideConditions? Might be more efficient? - If we do this, we don't need to retain the event before the `_animator` start callback.
+                [HelperState.shared updateStateWithEvent:event]; /// Haven't thought about whether it makes any sense to call this here
+                CGDirectDisplayID dsp = [HelperState.shared displayUnderMousePointer]; /// TODO: Can probably use the display from ConfigOverrideConditions? Might be more efficient? - If we do this, we don't need to retain the event before the `_animator` start callback.
                 [_animator linkToDisplay_Unsafe:dsp];
             }
             
@@ -1023,16 +1025,18 @@ static void sendOutputEvents(int64_t dx, int64_t dy, MFScrollOutputType outputTy
         /// HACK:
         ///     Chromium browsers need a ton of zooming deltas before they actually start zooming. So we send a bunch of deltas right away to make things more responsive.
         ///     Another way to combat this would be to only send the `end` event when the user releases the modifier.
-        ///     TODO: It's probably better to change the logic so we retrieve the app under the mouse pointer once per scroll swipe and then reuse that throughout Scroll.m (Perhaps move to having a separate update and retrieval method for appUnderMousePointer, and then just use the retrieval method here.)
         
         if (eventPhase == kIOHIDEventPhaseBegan) {
             
-            NSString *bundleID = [HelperState.shared appUnderMousePointerWithEvent:NULL].bundleIdentifier;
+            CGEventRef e = CGEventCreate(NULL);
+            [HelperState.shared updateStateWithEvent:e]; /// TODO: Think about this. Can probably remove.
+            NSString *bundleID = [HelperState.shared appUnderMousePointer].bundleIdentifier;
+            CFRelease(e);
             
             if (bundleID != nil) {
                 if ([bundleID containsString:@"com.google.Chrome"]
                     || [bundleID containsString:@"org.chromium.Chromium"]
-                    || [bundleID containsString:@"company.thebrowser.Browser"] /// Arc browser
+                    || [bundleID containsString:@"company.thebrowser.Browser"] /// Arc browser - this mechanism actually messes up zooming in the 'easels'. Those don't seem to be rendered with Chromium but natively.
                     || [bundleID containsString:@"com.operasoftware.Opera"]
                     || [bundleID containsString:@"com.microsoft.edgemac"]
                     || [bundleID containsString:@"com.vivaldi.Vivaldi"]

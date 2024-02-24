@@ -332,7 +332,7 @@ static void handleMouseInputWhileInitialized(int64_t deltaX, int64_t deltaY, CGE
         _drag.naturalDirection = systemScrollDirection == nil ? true : systemScrollDirection.boolValue;
         
         /// Notify output plugin
-        [_drag.outputPlugin handleBecameInUse];
+        [_drag.outputPlugin handleBecameInUseWithEvent:event];
         
         /// Notify TrialCounter.swift
         [TrialCounter.shared handleUse];

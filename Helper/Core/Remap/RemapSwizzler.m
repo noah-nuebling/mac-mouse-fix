@@ -132,6 +132,7 @@ static NSDictionary *_Nullable subsetSwizzler(NSDictionary *remaps, NSDictionary
     }
     
     /// Get precond sizes
+    ///     Note: I think a better name for 'precond size' would be 'precond specificity'
     
     NSMutableArray<NSDictionary *> *precondsAndSizes = [NSMutableArray array];
     
@@ -197,6 +198,9 @@ static NSDictionary *_Nullable subsetSwizzler(NSDictionary *remaps, NSDictionary
     }
     
     /// Filter out preconds that are subsets of other preconds - per trigger
+    ///     Notes:
+    ///     - Why exactly are we doing this 'splitting up by trigger' thing? Couldn't we just override all the dicts into each other (without doing the internalSubsetsFilteredOut thing beforehand) and get the same result?
+    ///         - I thought about it and: no - it's important that we do it this way. Think about the scenario, where Shift is horizontal scroll and Shift+Command is quickScroll. If we didn't do the 'internalSubsetsFilteredOut' thing, then Shift+Command would quickScroll *horizontally*. When the desired behaviour is to quickScroll vertically.
     
     NSArray *scrollPreconds2 = internalSubSetsFilteredOut(scrollPreconds);
     NSArray *dragPreconds2 = internalSubSetsFilteredOut(dragPreconds);

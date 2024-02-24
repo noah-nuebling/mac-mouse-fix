@@ -31,7 +31,7 @@ static BOOL _didConclude;
     _didConclude = NO;
 }
 
-+ (void)handleBecameInUse {
++ (void)handleBecameInUseWithEvent:(CGEventRef)event {
     
     return;
 }
