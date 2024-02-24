@@ -1059,9 +1059,9 @@
             filePath = "Shared/Animation/DisplayLink.m"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "642"
-            endingLineNumber = "642"
-            landmarkName = "parseTimeStamps(inNow, inOut)"
+            startingLineNumber = "695"
+            endingLineNumber = "695"
+            landmarkName = "parseTimeStamp(ts)"
             landmarkType = "9">
          </BreakpointContent>
       </BreakpointProxy>
@@ -1075,8 +1075,8 @@
             filePath = "Shared/Animation/DisplayLink.m"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "542"
-            endingLineNumber = "542"
+            startingLineNumber = "566"
+            endingLineNumber = "566"
             landmarkName = "displayLinkCallback(displayLink, inNow, inOutputTime, flagsIn, flagsOut, displayLinkContext)"
             landmarkType = "9">
             <Locations>
