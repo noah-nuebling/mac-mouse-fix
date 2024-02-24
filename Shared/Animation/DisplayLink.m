@@ -529,7 +529,28 @@ static CVReturn displayLinkCallback(CVDisplayLinkRef displayLink, const CVTimeSt
         
         /// Calculate targetTime
         double nextThisFrameOffset = timeInfo.nominalTimeBetweenFrames*0.0;
-        CFTimeInterval targetTime = dispatch_time(DISPATCH_TIME_NOW, NSEC_PER_SEC*((timeInfo.thisFrame - CACurrentMediaTime()) + nextThisFrameOffset));
+        CFTimeInterval targetTime   = dispatch_time(DISPATCH_TIME_NOW, NSEC_PER_SEC*((timeInfo.thisFrame - CACurrentMediaTime()) + nextThisFrameOffset));
+        
+        /// Split into 2 callbacks
+        CFTimeInterval splitNominalTimeBetweenFrames = timeInfo.nominalTimeBetweenFrames/2.0;
+        CFTimeInterval splitTimeBetweenFrames = timeInfo.timeBetweenFrames/2.0;
+        DisplayLinkCallbackTimeInfo timeInfo2 = {
+            .cvCallbackTime             = timeInfo.cvCallbackTime + splitNominalTimeBetweenFrames,
+            .lastFrame                  = timeInfo.thisFrame,
+            .thisFrame                  = timeInfo.thisFrame + splitNominalTimeBetweenFrames,
+            .outFrame                   = timeInfo.outFrame,
+            .nominalTimeBetweenFrames   = splitNominalTimeBetweenFrames,
+            .timeBetweenFrames          = splitTimeBetweenFrames,
+        };
+        timeInfo = (DisplayLinkCallbackTimeInfo){
+            .cvCallbackTime             = timeInfo.cvCallbackTime,
+            .lastFrame                  = timeInfo.thisFrame - splitNominalTimeBetweenFrames,
+            .thisFrame                  = timeInfo.thisFrame,
+            .outFrame                   = timeInfo.thisFrame + splitNominalTimeBetweenFrames,
+            .nominalTimeBetweenFrames   = splitNominalTimeBetweenFrames,
+            .timeBetweenFrames          = splitTimeBetweenFrames,
+        };
+        CFTimeInterval targetTime2  = dispatch_time(DISPATCH_TIME_NOW, NSEC_PER_SEC*((timeInfo.thisFrame+splitNominalTimeBetweenFrames - CACurrentMediaTime()) + nextThisFrameOffset));
         
         /// Dispatch
         dispatch_after(targetTime, self->_displayLinkQueue, ^{
@@ -540,12 +561,41 @@ static CVReturn displayLinkCallback(CVDisplayLinkRef displayLink, const CVTimeSt
                 startTsSync = CACurrentMediaTime();
             }
             
+            /// Do work
             workload(timeInfo);
             
             /// Debug
             if (runningPreRelease()) {
                 endTsSync = CACurrentMediaTime();
                 DDLogDebug(@"displayLinkkk callback times - last %f, now %f, now2 %f, next %f, send %f || sendProcessing %f, sendPeriod %f, sendFrameDelay %f",
+                           (timeInfo.lastFrame - rts) * 1000,
+                           (timeInfo.cvCallbackTime - rts) * 1000,
+                           (startTs - rts) * 1000,
+                           (timeInfo.thisFrame - rts) * 1000,
+                           (endTsSync - rts) * 1000,
+                           (endTsSync - startTsSync) * 1000,
+                           (endTsSync - lastEndTsSync) * 1000,
+                           (endTsSync - timeInfo.thisFrame) * 1000);
+                
+                lastEndTsSync = endTsSync;
+            }
+        });
+        
+        dispatch_after(targetTime2, self->_displayLinkQueue, ^{
+            
+            /// Debug
+            if (runningPreRelease()) {
+                DDLogDebug(@"Callback displayLinkkk %@", [DisplayLink identifierForDisplayLink:displayLink]);
+                startTsSync = CACurrentMediaTime();
+            }
+            
+            /// Do work
+            workload(timeInfo2);
+            
+            /// Debug
+            if (runningPreRelease()) {
+                endTsSync = CACurrentMediaTime();
+                DDLogDebug(@"displayLinkkk callback times - last %f, now %f, now2 %f, next %f, send %f || sendProcessing %f, sendPeriod %f, sendFrameDelay %f || (isSplitCallback)",
                            (timeInfo.lastFrame - rts) * 1000,
                            (timeInfo.cvCallbackTime - rts) * 1000,
                            (startTs - rts) * 1000,
