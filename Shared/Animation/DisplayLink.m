@@ -7,6 +7,11 @@
 // --------------------------------------------------------------------------
 //
 
+///
+/// Also see:
+/// - CoreVideo programming concepts:  https://developer.apple.com/library/archive/documentation/GraphicsImaging/Conceptual/CoreVideo/CVProg_Concepts/CVProg_Concepts.html
+/// - litherium post on understanding CVDisplayLink: http://litherum.blogspot.com/2021/05/understanding-cvdisplaylink.html
+
 #import "DisplayLink.h"
 #import <Cocoa/Cocoa.h>
 #import "WannabePrefixHeader.h"
@@ -32,10 +37,11 @@ typedef enum {
     
     CVDisplayLinkRef _displayLink;
     CGDirectDisplayID *_previousDisplaysUnderMousePointer; /// Old and unused, use `_previousDisplayUnderMousePointer` instead
-    CGDirectDisplayID _previousDisplayUnderMousePointer;                                                       ///
+    CGDirectDisplayID _previousDisplayUnderMousePointer;
     BOOL _displayLinkIsOutdated;
     dispatch_queue_t _displayLinkQueue;
     MFDisplayLinkRequestedState _requestedState;
+    MFDisplayLinkWorkType _optimizedWorkType;
 }
 
 @synthesize dispatchQueue=_displayLinkQueue;
@@ -44,17 +50,19 @@ typedef enum {
 
 /// Convenience init
 
-+ (instancetype)displayLink {
-    
-    return [[DisplayLink alloc] init];
++ (instancetype)displayLinkOptimizedForWorkType:(MFDisplayLinkWorkType)workType {
+    return [[DisplayLink alloc] initOptimizedForWorkType:workType];
 }
 
-/// Init
+/// Init 
 
-- (instancetype)init {
+- (instancetype)initOptimizedForWorkType:(MFDisplayLinkWorkType)workType {
     
     self = [super init];
     if (self) {
+        
+        /// Store type of work for which to optimize
+        self->_optimizedWorkType = workType;
         
         /// Setup queue
         dispatch_queue_attr_t attrs = dispatch_queue_attr_make_with_qos_class(DISPATCH_QUEUE_SERIAL, QOS_CLASS_USER_INTERACTIVE, -1);
@@ -67,10 +75,10 @@ typedef enum {
         _previousDisplaysUnderMousePointer = malloc(sizeof(CGDirectDisplayID) * 2);
         /// ^ Why 2? - see `setDisplayToDisplayUnderMousePointerWithEvent:`
         
-        /// Init _displayLinkIsOutdated flag
+        /// Init `_displayLinkIsOutdated` flag
         _displayLinkIsOutdated = NO;
         
-        /// Init _requestedState
+        /// Init `_requestedState`
         _requestedState = kMFDisplayLinkRequestedStateStopped;
         
         /// Setup display reconfiguration callback
@@ -186,33 +194,35 @@ typedef enum {
         };
         
         /// Make sure block is running on the main thread
+        
+        /// This has been causing deadlocks. Deadlocks explanation:
         ///
-        ///     This has been causing deadlocks. Deadlocks explanation:
-        ///         - This function runs on _displayLinkQueue and waits for displayLinkCallback when it calls CVDisplayLinkStop()
-        ///         - displayLinkCallback waits for _displayLinkQueue when it tries to sync dispatch to it
-        ///         -> Classic deadlock scenaro
-        ///     The pretty solution I can come up with is to make either the displayLinkCallback or the _displayLinkQueue not acquire its resource (thread lock) before it it can acquire all the other resources that it will need. But we don't have access to the locking stuff that the CVDisplayLink uses at all afaik, so I don't know how this would be possible.
-        ///     As an alternative, we could simply either
-        ///     1. not make the callback _not_ try to acquire the queue lock
-        ///         - by making the callback dispatch to queue async instead of sync
-        ///         - this will make the callback not execute on the high priotity display link thread though, potentially making scrolling performance worse
-        ///     2. make the queue _not_ try to acquire the callback lock
-        ///         - by dispatching to main async instead of sync in the `- stop` and `- start` functions (Those are the functions where the deadlocks have occured so far.)
-        ///         - This will potentially change the order of operations and introduce new bugs.
+        /// - This function runs on `_displayLinkQueue` and waits for displayLinkCallback when it calls CVDisplayLinkStop()
+        /// - displayLinkCallback waits for `_displayLinkQueue` when it tries to sync dispatch to it
+        /// -> Classic deadlock scenaro
+        /// 
+        /// The pretty solution I can come up with is to make either the displayLinkCallback or the _displayLinkQueue not acquire its resource (thread lock) before it it can acquire all the other resources that it will need. But we don't have access to the locking stuff that the CVDisplayLink uses at all afaik, so I don't know how this would be possible.
+        /// As an alternative, we could simply either
+        /// 1. not make the callback _not_ try to acquire the queue lock
+        ///     - by making the callback dispatch to queue async instead of sync
+        ///     - this will make the callback not execute on the high priotity display link thread though, potentially making scrolling performance worse
+        /// 2. make the queue _not_ try to acquire the callback lock
+        ///     - by dispatching to main async instead of sync in the `- stop` and `- start` functions (Those are the functions where the deadlocks have occured so far.)
+        ///     - This will potentially change the order of operations and introduce new bugs.
         ///
-        ///     -> For now I'll try 2.
+        /// -> For now I'll try 2.
         ///
-        ///     Edit: Seems to not make a difference so far and fixes the constant deadlocks!
+        /// Edit: Seems to not make a difference so far and fixes the constant deadlocks!
         ///
-        ///     Edit2: Solution 2. breaks isRunning(). Explanation: If, in start() and stop(), the displayLinkQueue async dispatches to mainQueue to do the actual starting and stopping, then the actual starting and stopping won't have happened yet when isRunnging() runs. Possible solutions:
-        ///         - 1. Go back to sync dispatching to mainQueue in start() and stop() and hope the other changes we made coincidentally prevent the deadlocks that were happening
-        ///             -> Worth a try
-        ///         - 2. Dispatch to mainQueue also in isRunning() -> We're introducing a new sync dispatch, so this might very well lead to new deadlocks
-        ///             -> Doesn't really make sense, try if desperate
-        ///         - 3. Introduce new state variable 'requestedState' with states `requestedRunning` and `requestedStop`. Use this state to make isRunning() return the right value right after start() or stop() are called, even if the underlying CVDisplayLink hasn't started / stopped yet.
-        ///             -> Think this makes sense. Try this if 1. doesn't work.
+        /// Edit2: Solution 2. breaks isRunning(). Explanation: If, in start() and stop(), the displayLinkQueue async dispatches to mainQueue to do the actual starting and stopping, then the actual starting and stopping won't have happened yet when isRunnging() runs. Possible solutions:
+        ///     - 1. Go back to sync dispatching to mainQueue in start() and stop() and hope the other changes we made coincidentally prevent the deadlocks that were happening
+        ///         -> Worth a try
+        ///     - 2. Dispatch to mainQueue also in isRunning() -> We're introducing a new sync dispatch, so this might very well lead to new deadlocks
+        ///         -> Doesn't really make sense, try if desperate
+        ///     - 3. Introduce new state variable 'requestedState' with states `requestedRunning` and `requestedStop`. Use this state to make isRunning() return the right value right after start() or stop() are called, even if the underlying CVDisplayLink hasn't started / stopped yet.
+        ///         -> Think this makes sense. Try this if 1. doesn't work.
         ///
-        ///         Edit: 1. Still doesn't work. -> Introducing _requestedState variable
+        ///     Edit: 1. Still doesn't work. -> Introducing `_requestedState` variable
         
         /// Set requestedState
         ///     before async dispatching to main -> so that isRunning() works properly
@@ -410,9 +420,11 @@ typedef enum {
 /// Display reconfiguration callback
 
 void displayReconfigurationCallback(CGDirectDisplayID display, CGDisplayChangeSummaryFlags flags, void *userInfo) {
-    /// This is called whenever a display is added or removed. If that happens we need to set up a new displayLink for it to be compatible with all the new displays (I think)
-    ///     I get this idea from the `CVDisplayLinkCreateWithActiveCGDisplays` docs at https://developer.apple.com/documentation/corevideo/1456863-cvdisplaylinkcreatewithactivecgd
-    /// To optimize, in this function, we only set the _displayLinkIsOutdated flag to true.
+    
+    /// This is called whenever a display is added or removed. 
+    ///     If that happens we need to set up a new displayLink for it to be compatible with all the new displays (I think)
+    ///     I got this idea, because the CVDisplayLinkCreateWithActiveCGDisplays() docs say that it "determines the displays actively used by the host computer and creates a display link compatible with all of them.". I took this to mean that when a new display is attached, we need to call CVDisplayLinkCreateWithActiveCGDisplays() again. But I'm not sure if that's true. Either way, I guess recreating the displayLink when a new display is attached doesn't hurt.
+    /// To optimize, in this function, we only set the `_displayLinkIsOutdated` flag to true.
     ///     Then we use that flag in `- setDisplay`, to set up a new displayLink when needed.
     ///     That way, the displayLink won't be recreated when the user isn't even using Mac Mouse Fix.
     
@@ -437,15 +449,12 @@ static CVReturn displayLinkCallback(CVDisplayLinkRef displayLink, const CVTimeSt
     /// Get self
     DisplayLink *self = (__bridge DisplayLink *)displayLinkContext;
         
-    dispatch_sync(self.dispatchQueue, ^{ /// Use sync so this is actually executed on the high-priority display-linked thread // Why are we using self.dispatchQueue instead of `self->_displayLinkQueue`? I think self.dispatchQueue might cause some weird timing stuff since objc props are often atomic and stuff..
-        
-        /// Dispatch-sync-ing here is an experiment. Move it back to the callback if this fails
-        
-        /// Debug
-        DDLogDebug(@"Callback displayLinkkk %@", [DisplayLink identifierForDisplayLink:displayLink]);
-        
-        /// Parse timestamps
-        DisplayLinkCallbackTimeInfo timeInfo = parseTimeStamps(inNow, inOutputTime);
+    /// Parse timestamps
+    DisplayLinkCallbackTimeInfo timeInfo = parseTimeStamps(inNow, inOutputTime);
+    
+    /// Define workload
+    
+    void (^workload)(DisplayLinkCallbackTimeInfo) = ^(DisplayLinkCallbackTimeInfo timeInfo){
         
         /// Check requestedState
         if (self->_requestedState == kMFDisplayLinkRequestedStateStopped) {
@@ -455,7 +464,103 @@ static CVReturn displayLinkCallback(CVDisplayLinkRef displayLink, const CVTimeSt
         
         /// Call block
         self.callback(timeInfo);
-    });
+                
+    };
+    
+    if (self->_optimizedWorkType == kMFDisplayLinkWorkTypeGraphicsRendering) {
+        
+        /// Notes:
+        /// - For workType graphicsRendering we do the workload immediately. So we keep the scheduling from CVDisplayLink. CVDisplayLink seems to be designed for drawing graphics, so this should make sense.
+        ///     - Actually, thinking about this a bit, I feel like our graphics animations that are driven by DisplayLink (at time of writing just the DynamicSystemAnimator.swift stuff) might also reduce framedrops by scheduling them like we schedule the kMFDisplayLinkWorkTypeEventSending callbacks. Edit: We're currently articially slowing down DynamicSystemAnimator by making the sampleRate super high because for some reason that lead to much smoother framerates. This smells like better scheduling could improve things.
+        ///     - TODO: See if different scheduling can improve animation performance.
+        /// - Use dispatch_sync so this is actually executed immediately on the high-priority display-linked thread - not sure if this is necessary or helpful in any way.
+        /// - Why are we using `self.dispatchQueue` instead of `self->_displayLinkQueue`? I think self.dispatchQueue might cause some weird timing stuff since objc props are often atomic and stuff.
+        
+        dispatch_sync(self.dispatchQueue, ^{
+            workload(timeInfo);
+        });
+        
+    } else if (self->_optimizedWorkType == kMFDisplayLinkWorkTypeEventSending) {
+        
+        ///
+        /// Notes:
+        /// - For workType eventSending, we execute the workload at the start of the next frame instead of right before the nextFrame. We hope that this will reduce stuttering in Safari and other apps.
+        /// - From my understanding, timeInfo.thisFrame is in vsyncTime aka videoTime, and the dispatch_after call is in hostTime aka machTime. When the two time scales are out of sync, then that might lead to problems. I think you can sync them with rateScalar somehow, but not sure how that works.
+        ///     - More on hostTime and videoTime/vsynctime in this litherium post on understanding CVDisplayLink: http://litherum.blogspot.com/2021/05/understanding-cvdisplaylink.html
+        /// - I think dispatching at the start of the next frame helps performance. Sometimes on reddit it scrolls perfectly, but then sometimes it will get stuttery again. While the trackpad still scrolls smoothly. Not sure what's going on.
+        /// - To get the time of the next frame for dispatch_after we should just be able to use `secondsToMachTime(timeInfo.nextFrame + nextFrameOffset);`, but I did a tiny bit of testing and there were some problems iirc. Either way the method we use now with dispatch_time is accurate and works well so it doesn't matter.
+        /// - On this website --- https://mindofastoic.com/stoic-quotes?utm_content=cmp-true --- I can get pretty consistent framedrops
+        ///
+        /// Investigation into scrolling framedrops
+        ///     (This investigation lead to the creation of the code for kMFDisplayLinkWorkTypeEventSending)
+        /// - Results:
+        ///     - The workload (so the actual stuff MMF is doing) takes less than 1 ms, so it can't be the source of the frame drops.
+        ///     - It seems the callback is called ca. 4 ms before the next outFrame. This is really late. Maybe if our callback was called earlier we could avoid the framedrops
+        /// - Other notes:
+        ///     - See this Hacker News post on CVDisplayLink not actually syncing to your display: https://news.ycombinator.com/item?id=15889549
+        ///         - The linked article corrects most of the claims it makes in an update, but then in the correction still says that `CVDisplayLinkCreateWithActiveCGDisplays` creates a non-vsynced display link. Which doesn't make sense I think since you can still assign that displayLink a `currentDisplay` which it should then sync to.
+        ///     - Since macOS 14.0 there is also the CADisplayLink API which was previously only available on iOS. There should be more resources on how to get it to work properly, since it's an iOS api.
+        /// - Experiments with usleep
+        ///     - If we sleep for 17ms inside our dispatch_sync callback, then the framerate drops to 30 fps as expected.
+        ///     - If we sleep for 8ms everything seems to work the same - light websites like hacker news run perfectly smooth, but websites like reddit stutter
+        ///         - (remember that the whole dispatch_sync callback usually only takes around 1 ms, not 8 - so our code being slow doesn't seem to be the reason for stuttering)
+        ///     - Conclusion:
+        ///         - Theory: The displayLink tries to schedule the call of this callback so that it's done right before the frame is rendered (in the hackernews post that was mentioned somewhere). This makes sense (I think?) if we're directly drawing from the displayLink callback - which is what the displayLink callback is designed for. However, we're not drawing - we're outputting scroll events. Safari then still has to draw stuff based on these scroll events during the same frame. Since the scroll events are sent very late in the frame, that gives Safari very little time to draw its updates based on the incoming scroll events. Possible solution to framedrops: Output the scroll events *early* in the frame instead of late.
+        /// - Experiments with scheduling
+        ///     - We tried call our inner callback right after the next frame using dispatch_after. (Instead of right before the frame, which is the natural behaviour of CVDisplayLink)
+        ///         - I used this new scheduling for a day - in Safari and Chrome, scrolling peformance seems to now be on par with Trackpad scroling. I'm not 100% sure it's not a placebo that it's working better than dispatch_sync which we were using before, but as I said it' on par with the trackpad, so I think it's close to as good as it gets. However, in Safari, with a real trackpad, the scrolling performance is still better during momentumPhase. My best theories are 1. Safari stops listening to input events during momentumPhase and just drives the animations itself - leading to better performance. I know Xcode and some other apps do this, but I thought Safari didn't? 2. The scheduling of events coming from the trackpad driver during momentumPhase is faster than the screen refreshRate or aligned with the screen refresh rate in a different way, leading to less stuttering somehow.
+        ///         - Note on dispatch_after: I was worried that using `dispatch_after` would have worse performance than executing directly on the 'high performance display link thread' which the CVDisplayLink callback apparently runs on. But this doesn't seem to matter. From my observations (didn't reproduce this several times, so not 100% sure), using `dispatch_after` it looks like the code we dispatch consistently finishes within 2 ms of the preceding frame (Or more than 14 ms before the next frame). Even when there is heavy scroll stuttering in Safari. So using `dispatch_after` should be more than accurate and fast enough, and the stuttering seems to be caused by scheduling issues/issues in Safari.
+
+        
+        /// Declare debug vars
+        
+        static CFTimeInterval rts = 0; /// reference time stamp
+        CFTimeInterval startTs = CACurrentMediaTime();
+        __block CFTimeInterval startTsSync;
+        __block CFTimeInterval endTsSync;
+        static CFTimeInterval lastEndTsSync;
+        
+        /// Init debug vars
+        if (runningPreRelease()) {
+            if (rts == 0) {
+                rts = CACurrentMediaTime();
+            }
+        }
+        
+        /// Calculate targetTime
+        double nextThisFrameOffset = timeInfo.nominalTimeBetweenFrames*0.0;
+        CFTimeInterval targetTime = dispatch_time(DISPATCH_TIME_NOW, NSEC_PER_SEC*((timeInfo.thisFrame - CACurrentMediaTime()) + nextThisFrameOffset));
+        
+        /// Dispatch
+        dispatch_after(targetTime, self->_displayLinkQueue, ^{
+            
+            /// Debug
+            if (runningPreRelease()) {
+                DDLogDebug(@"Callback displayLinkkk %@", [DisplayLink identifierForDisplayLink:displayLink]);
+                startTsSync = CACurrentMediaTime();
+            }
+            
+            workload(timeInfo);
+            
+            /// Debug
+            if (runningPreRelease()) {
+                endTsSync = CACurrentMediaTime();
+                DDLogDebug(@"displayLinkkk callback times - last %f, now %f, now2 %f, next %f, send %f || sendProcessing %f, sendPeriod %f, sendFrameDelay %f",
+                           (timeInfo.lastFrame - rts) * 1000,
+                           (timeInfo.cvCallbackTime - rts) * 1000,
+                           (startTs - rts) * 1000,
+                           (timeInfo.thisFrame - rts) * 1000,
+                           (endTsSync - rts) * 1000,
+                           (endTsSync - startTsSync) * 1000,
+                           (endTsSync - lastEndTsSync) * 1000,
+                           (endTsSync - timeInfo.thisFrame) * 1000);
+                
+                lastEndTsSync = endTsSync;
+            }
+        });
+    } else {
+        assert(false);
+    }
     
     /// Return
     return kCVReturnSuccess;
@@ -485,6 +590,11 @@ typedef struct {
 } ParsedCVTimeStamp;
 
 DisplayLinkCallbackTimeInfo parseTimeStamps(const CVTimeStamp *inNow, const CVTimeStamp *inOut) {
+    
+    /// Notes:
+    /// - See this SO post for info on how to interpret the timestamps: https://stackoverflow.com/a/77170398/10601702
+    ///     - Apple Technote on high precision timers and real-time threads: https://developer.apple.com/library/archive/technotes/tn2169/_index.html
+    ///         - (This might be useful for getting our callback to be called at the start of the frame period instead of the end)
     
     /// Get frame timestamps
     
@@ -517,18 +627,22 @@ DisplayLinkCallbackTimeInfo parseTimeStamps(const CVTimeStamp *inNow, const CVTi
     
     /// Analysis of period
     /// Our analysis shows:
-    ///     - CVDisplayLinkGetActualOutputVideoRefreshPeriod(_displayLink) is the same as tsOut.period
+    ///     - `CVDisplayLinkGetActualOutputVideoRefreshPeriod(_displayLink)` is the same as tsOut.period
     ///     - On the next displayLinkCalback() call, tsNow.period will be the same as tsOut.period on the current call.
     ///     - I'm not sure what when to use tsNow.period vs tsOut.period.  Both should be fine -> I will just use tsOut.
     ///     - Do the values make sense?
     ///         - I observed scrolling that looked distinctly 30 fps. But tsNow.period was still around 16.666 ms.
-    ///     - In my observations, (outFrame - lastFrame) is always exactly equal to 2*nominalTimeBetweenFrames
+    ///     - In my observations, (outFrame - lastFrame) is always exactly equal to `2*nominalTimeBetweenFrames`
+    ///     - timeBetweenFrames gives "The current rate of the device as measured by the timestamps" (this comes from the rateScalar docs) - so frameDrops inside apps like Safari won't affect this - it's the Displays refresh rate. I don't even know why this is be different from the nominalTimeBetweenFrames. In practise it always seems to be extremely close.
+    ///         - If I understand correctly, based on this litherium post, the timeBetweenFrames is the display refresh rate as measured by the system host clock. While the nominalTimeBetweenFrames is the displayRefreshRate as measured by 'vsyncs'. Very confusing.
+    ///             - The litherium post: http://litherum.blogspot.com/2021/05/understanding-cvdisplaylink.html
     
     /// Fill result struct
     
     DisplayLinkCallbackTimeInfo result = {
-        .now = tsNow.hostTS,
+        .cvCallbackTime = tsNow.hostTS,
         .lastFrame = tsNow.frameTS,
+        .thisFrame = tsNow.frameTS + tsOut.nominalPeriod, /// Should we use nominalPeriod or period here? And from tsNow or tsOut?
         .outFrame = tsOut.frameTS,
         .timeBetweenFrames = tsOut.period,
         .nominalTimeBetweenFrames = tsOut.nominalPeriod,
@@ -567,18 +681,22 @@ ParsedCVTimeStamp parseTimeStamp(const CVTimeStamp *ts) {
     double rateScalar = ts->rateScalar; /// I think this is nominalRefreshPeriod / actualRefreshPeriod
     
     /// Parse video time
+    ///     Note: We're calling these CFTimeInterval instead of double because they are interoperable with CACurrentMediaTime()
     
     CFTimeInterval tsVideo = videoTime / ((double)videoTimeScale);
-    /// ^ We're calling these CFTimeInterval instead of double because they are interoperable with CACurrentMediaTime()
     
     /// Parse host time
-    CFTimeInterval hostTimeScaled = hostTime / ((double)videoTimeScale);
-    /// ^ The documentation doesn't say that videoTimeScale is supposed to be used for scaling hostTime. But it works.
+    ///     Notes:
+    ///     - hostTime is in machTime according to this SO comment: https://stackoverflow.com/a/77170398/10601702
+    ///         - This also supports that theory: https://developer.apple.com/documentation/corevideo/1456915-cvgetcurrenthosttime?language=objc
+    ///     - We used to just use `videoTimeScale` to scale hostTime and it seemed to work as well. Not sure why.
+    
+    CFTimeInterval hostTimeScaled = machTimeToSeconds(hostTime);
     
     /// Parse refresh period
+    ///     Note: Since it's 'rate' it should be division, but multiplication gives us the same values as CVDisplayLinkGetActualOutputVideoRefreshPeriod()
     CFTimeInterval periodVideoNominal = videoRefreshPeriod / ((double)videoTimeScale);
     CFTimeInterval periodVideo = periodVideoNominal * rateScalar;
-    /// ^ Since it's 'rate' it should be division, but multiplication gives us the same values as CVDisplayLinkGetActualOutputVideoRefreshPeriod()
     
     /// Build result struct
     

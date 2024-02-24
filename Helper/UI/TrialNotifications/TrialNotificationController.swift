@@ -357,7 +357,7 @@ class TrialNotificationController: NSWindowController {
         ///     Note: We're doing the same thing in ResizingTabWindow. -> Think about abstracting this away
         
         let animation = CASpringAnimation(speed: 3.5, damping: 1.0)
-        let animator = DynamicSystemAnimator(fromAnimation: animation, stopTolerance: 0.1)
+        let animator = DynamicSystemAnimator(fromAnimation: animation, stopTolerance: 0.1, optimizedWorkType: kMFDisplayLinkWorkTypeGraphicsRendering)
         animator.start(distance: 1.0, callback: { value in
             var f = SharedUtilitySwift.interpolateRects(value, animStartFrame, newFrame)
             f = NSIntegralRectWithOptions(f, .alignAllEdgesNearest)

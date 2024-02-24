@@ -50,7 +50,7 @@ import CocoaLumberjackSwift
         }
         
         /// Create animator
-        let animator = DynamicSystemAnimator(fromAnimation: animation, stopTolerance: 0.003);
+        let animator = DynamicSystemAnimator(fromAnimation: animation, stopTolerance: 0.003, optimizedWorkType: kMFDisplayLinkWorkTypeGraphicsRendering);
         
         /// Debug
         let ogTime = CACurrentMediaTime()

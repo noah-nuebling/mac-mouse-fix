@@ -82,7 +82,7 @@ import QuartzCore
     
     @objc override init() {
         
-        self.displayLink = DisplayLink()
+        self.displayLink = DisplayLink(optimizedFor: kMFDisplayLinkWorkTypeEventSending)
 //        self.animatorQueue = DispatchQueue(label: "com.nuebling.mac-mouse-fix.animator", qos: .userInteractive , attributes: [], autoreleaseFrequency: .inherit, target: nil)
         
         super.init()
@@ -130,6 +130,19 @@ import QuartzCore
     var lastFrameTime: Double = -1 /// Time at which the displayLink was last called
     
     /// Vars -  Interface
+    
+    @objc var getLastAnimationSpeed: Vector {
+        /// Notes:
+        /// - We're introducing this to be able to cancel the scrolling animator when the user changes the scrolling direction. (So that the user has control over stopping the animation)
+        /// - We're passing lastAnimationSpeed into the StartParamCalculationCallback. It might point to an architectural error and slow things down if we need this separate getter.
+        /// - The naming with `get` at the start is weird. We don't use that anywhere else.
+        /// - TODO: Think about where this should be, if it should exist, and what it should be named. This is all kinda hacky and not-thought-through at this point.
+        var result = Vector(x: 0, y: 0)
+        displayLink.dispatchQueue.sync(flags: defaultDFs) {
+            result = lastAnimationSpeed
+        }
+        return result
+    }
     
     @objc var animationTimeLeft: Double {
         var result: Double = -1
@@ -472,6 +485,7 @@ import QuartzCore
             /// Set animation start time
             
             /// Pull time of last frame time out of butt
+            ///  Note: Why don't we use timeInfo.lastFrame/timeInfo.thisFrame here?
             lastFrameTime = frameTime - timeInfo.nominalTimeBetweenFrames
             
             /// Set animation start time to hypothetical last frame

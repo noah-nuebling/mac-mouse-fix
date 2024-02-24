@@ -79,16 +79,16 @@ import CocoaLumberjackSwift
     
     /// Initializers
     
-    @objc convenience init(fromAnimation animation: CASpringAnimation, stopTolerance: Double) {
+    @objc convenience init(fromAnimation animation: CASpringAnimation, stopTolerance: Double, optimizedWorkType: MFDisplayLinkWorkType) {
         
         let k = animation.stiffness
         let c = animation.damping
         let m = animation.mass
         
-        self.init(stiffness: k, damping: c, mass: m, stopTolerance: stopTolerance)
+        self.init(stiffness: k, damping: c, mass: m, stopTolerance: stopTolerance, optimizedWorkType: optimizedWorkType)
     }
     
-    @objc required init(stiffness k: Double, damping c: Double, mass m: Double = 1.0, stopTolerance: Double) {
+    @objc required init(stiffness k: Double, damping c: Double, mass m: Double = 1.0, stopTolerance: Double, optimizedWorkType: MFDisplayLinkWorkType) {
         
         /// Validate
         assert(stopTolerance > 0, "Will never stop if stopTolerance <= 0")
@@ -98,7 +98,7 @@ import CocoaLumberjackSwift
         self.c = c
         self.m = m
         epsilon = stopTolerance
-        displayLink = DisplayLink()
+        displayLink = DisplayLink(optimizedFor: optimizedWorkType)
         queue = displayLink.dispatchQueue
         pixelator = VectorSubPixelator.biased()
         stopCallback = nil
