@@ -306,8 +306,7 @@ typedef enum {
 
 typedef CF_ENUM(uint32_t, MFCGEventField) {
     
-    kMFCGEventFieldSenderID = 87,
-    
+    kMFCGEventFieldSenderID = 87, /// Use `CGEventGetSenderID()` instead of using this directly
 };
 
 @end

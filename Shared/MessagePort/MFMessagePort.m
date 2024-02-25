@@ -138,7 +138,7 @@ static CFDataRef _Nullable didReceiveMessage(CFMessagePortRef port, SInt32 messa
         /// We can't just pass over the CGEvent from the mainApp because the senderID isn't stored when serializing CGEvents
         
         uint64_t senderID = [(NSNumber *)payload unsignedIntegerValue];
-        [HelperState.shared updateActiveDeviceWithEventSenderID:senderID];
+        [HelperState.shared updateBaseValue_SenderID:senderID];
         
     } else if ([message isEqualToString:@"getBundleVersion"]) {
         response = @(Locator.bundleVersion);

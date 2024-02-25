@@ -23,6 +23,7 @@
 #import "NSAttributedString+Additions.h"
 #import "Mac_Mouse_Fix-Swift.h"
 #import "Locator.h"
+#import "EventUtility.h"
 
 @interface AppDelegate ()
 
@@ -214,7 +215,7 @@ static NSDictionary *sideButtonActions;
         
         eventMonitor = [NSEvent addLocalMonitorForEventsMatchingMask:NSEventMaskLeftMouseDown handler:^NSEvent * _Nullable(NSEvent * _Nonnull event) {
             
-            uint64_t senderID = CGEventGetIntegerValueField(event.CGEvent, (CGEventField)kMFCGEventFieldSenderID);
+            uint64_t senderID = CGEventGetSenderID(event.CGEvent);
             [MFMessagePort sendMessage:@"updateActiveDeviceWithEventSenderID" withPayload:@(senderID) waitForReply:NO];
             
             return event;

@@ -9,6 +9,12 @@
 
 import Foundation
 
+extension CGEventField {
+    init(_ mfValue: MFCGEventField) {
+        self.init(rawValue: mfValue.rawValue)!
+    }
+}
+
 extension MFAxis: Hashable { /// So we can use this as dict key
     
     public func hash(into hasher: inout Hasher) {

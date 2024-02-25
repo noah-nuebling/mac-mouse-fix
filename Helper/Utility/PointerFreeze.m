@@ -124,7 +124,7 @@ static int64_t _lastEventDelta;
             _puppetCursorPosition = _origin;
             
             /// Get display under mouse pointer
-            [HelperState.shared updateStateWithEvent:event];
+            [HelperState.shared updateBaseValuesWithEvent:event];
             _display = [HelperState.shared displayUnderMousePointer];
             if (_display == kCGNullDirectDisplay) DDLogWarn(@"Couldn't get display under mouse pointer in PointerFreeze");
             

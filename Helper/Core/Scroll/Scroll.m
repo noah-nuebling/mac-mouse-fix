@@ -326,7 +326,7 @@ static void heavyProcessing(CGEventRef event, int64_t scrollDeltaAxis1, int64_t 
         
         /// Update active device
         /// TODO: Think about whether this makes sense here? Probably just getting the ConfigOverrideConditions is enough
-        [HelperState.shared updateStateWithEvent:event];
+        [HelperState.shared updateBaseValuesWithEvent:event];
         
         /// Update application Overrides
         
@@ -369,7 +369,7 @@ static void heavyProcessing(CGEventRef event, int64_t scrollDeltaAxis1, int64_t 
         
         /// Get display  under mouse pointer
         /// TODO: Probably remove this in favor of ConfigOverrideConditions
-        [HelperState.shared updateStateWithEvent:event]; /// Haven't thought about whether this makes any sens to call here
+        [HelperState.shared updateBaseValuesWithEvent:event]; /// Haven't thought about whether this makes any sens to call here
         CGDirectDisplayID displayID = [HelperState.shared displayUnderMousePointer];
         
         /// Get scrollConfig
@@ -512,7 +512,7 @@ static void heavyProcessing(CGEventRef event, int64_t scrollDeltaAxis1, int64_t 
             ///     Notes: We removed the mouseDidMove check because those optimizations are planned to be moved inside HelperState and animator
             if (/*ScrollUtility.mouseDidMove &&*/ !isRunning) {
                 /// Update animator to currently used display
-                [HelperState.shared updateStateWithEvent:event]; /// Haven't thought about whether it makes any sense to call this here
+                [HelperState.shared updateBaseValuesWithEvent:event]; /// Haven't thought about whether it makes any sense to call this here
                 CGDirectDisplayID dsp = [HelperState.shared displayUnderMousePointer]; /// TODO: Can probably use the display from ConfigOverrideConditions? Might be more efficient? - If we do this, we don't need to retain the event before the `_animator` start callback.
                 [_animator linkToDisplay_Unsafe:dsp];
             }
@@ -1029,7 +1029,7 @@ static void sendOutputEvents(int64_t dx, int64_t dy, MFScrollOutputType outputTy
         if (eventPhase == kIOHIDEventPhaseBegan) {
             
             CGEventRef e = CGEventCreate(NULL);
-            [HelperState.shared updateStateWithEvent:e]; /// TODO: Think about this. Can probably remove.
+            [HelperState.shared updateBaseValuesWithEvent:e]; /// TODO: Think about this. Can probably remove.
             NSString *bundleID = [HelperState.shared appUnderMousePointer].bundleIdentifier;
             CFRelease(e);
             

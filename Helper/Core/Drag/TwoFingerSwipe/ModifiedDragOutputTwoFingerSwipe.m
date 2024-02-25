@@ -76,7 +76,7 @@ static dispatch_group_t _momentumScrollWaitGroup;
     
     /// Setup animator
     [_smoothingAnimator resetSubPixelator];
-    [HelperState.shared updateStateWithEvent:event];
+    [HelperState.shared updateBaseValuesWithEvent:event];
     CGDirectDisplayID dsp = [HelperState.shared displayUnderMousePointer];
     [_smoothingAnimator linkToDisplay:dsp];
 }

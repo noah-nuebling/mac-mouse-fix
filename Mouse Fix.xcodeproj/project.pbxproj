@@ -17,6 +17,11 @@
 		4F143E462B2D1F5600FE4092 /* fallback_licenseinfo_config.json in Resources */ = {isa = PBXBuildFile; fileRef = 4F143E452B2D1F5600FE4092 /* fallback_licenseinfo_config.json */; };
 		4F143E472B2D1F5600FE4092 /* fallback_licenseinfo_config.json in Resources */ = {isa = PBXBuildFile; fileRef = 4F143E452B2D1F5600FE4092 /* fallback_licenseinfo_config.json */; };
 		4F17D2E1292A635200EB07CA /* SwitchMaster.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F17D2E0292A635200EB07CA /* SwitchMaster.swift */; };
+		4F1898B12B8AB09A009B6E06 /* HelperStateObjC.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F1898B02B8AB09A009B6E06 /* HelperStateObjC.m */; };
+		4F1898B42B8AB488009B6E06 /* HelperStateObjC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F1898B32B8AB488009B6E06 /* HelperStateObjC.swift */; };
+		4F1898B62B8AC95D009B6E06 /* Bool+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F1898B52B8AC95D009B6E06 /* Bool+Extensions.swift */; };
+		4F1898B72B8AC95D009B6E06 /* Bool+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F1898B52B8AC95D009B6E06 /* Bool+Extensions.swift */; };
+		4F1898B82B8AF390009B6E06 /* EventUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FD66E0A27BB9BAE00F67559 /* EventUtility.m */; };
 		4F1AFE972670EBA900ECA424 /* DragCurve.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F1AFE962670EBA900ECA424 /* DragCurve.swift */; };
 		4F1B83062606E68300AEAF37 /* RemapsAnalyzer.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F1B83052606E68300AEAF37 /* RemapsAnalyzer.m */; };
 		4F1B832D26081A5500AEAF37 /* CaptureNotificationCreator.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F1B832C26081A5500AEAF37 /* CaptureNotificationCreator.m */; };
@@ -416,6 +421,10 @@
 		4F143E452B2D1F5600FE4092 /* fallback_licenseinfo_config.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = fallback_licenseinfo_config.json; sourceTree = "<group>"; };
 		4F143E482B2D1FA500FE4092 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		4F17D2E0292A635200EB07CA /* SwitchMaster.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwitchMaster.swift; sourceTree = "<group>"; };
+		4F1898AF2B8AB09A009B6E06 /* HelperStateObjC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HelperStateObjC.h; sourceTree = "<group>"; };
+		4F1898B02B8AB09A009B6E06 /* HelperStateObjC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HelperStateObjC.m; sourceTree = "<group>"; };
+		4F1898B32B8AB488009B6E06 /* HelperStateObjC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelperStateObjC.swift; sourceTree = "<group>"; };
+		4F1898B52B8AC95D009B6E06 /* Bool+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Bool+Extensions.swift"; sourceTree = "<group>"; };
 		4F18A85727BF6E0200A5703B /* IOHIDEvent-Reconstructed.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "IOHIDEvent-Reconstructed.h"; sourceTree = "<group>"; };
 		4F19F65E2906BB98007DE4CD /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		4F1AFE962670EBA900ECA424 /* DragCurve.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DragCurve.swift; sourceTree = "<group>"; };
@@ -2570,6 +2579,17 @@
 				4F5F3EED2756DB0A00C350C0 /* RemapsOverrider_old_.swift */,
 			);
 			path = Unused;
+			sourceTree = "<group>";
+		};
+		4F1898B22B8AB41C009B6E06 /* State */ = {
+			isa = PBXGroup;
+			children = (
+				4F5C2F7F2885C5D0001B9B8A /* HelperState.swift */,
+				4F1898AF2B8AB09A009B6E06 /* HelperStateObjC.h */,
+				4F1898B02B8AB09A009B6E06 /* HelperStateObjC.m */,
+				4F1898B32B8AB488009B6E06 /* HelperStateObjC.swift */,
+			);
+			path = State;
 			sourceTree = "<group>";
 		};
 		4F1D7F4528A45FEA00253407 /* MenuBarItem */ = {
@@ -6643,6 +6663,7 @@
 				4F85C04F28BBDBDC00E96E9C /* NSImageView+Extensions.swift */,
 				4FEA63CE2921510E00E464D6 /* NSImage+Additions.h */,
 				4FEA63CD2921510E00E464D6 /* NSImage+Additions.m */,
+				4F1898B52B8AC95D009B6E06 /* Bool+Extensions.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -7080,6 +7101,8 @@
 		4FF6653625F2C7B000689B77 /* Utility */ = {
 			isa = PBXGroup;
 			children = (
+				4FD66E0927BB9BAD00F67559 /* EventUtility.h */,
+				4FD66E0A27BB9BAE00F67559 /* EventUtility.m */,
 				4F8A8DC0287F885D00786BCC /* Shorthands.h */,
 				4FA06818291B2C4C00949B5F /* Shorthands.m */,
 				4FF6653E25F2C7B000689B77 /* SharedUtility.h */,
@@ -7182,11 +7205,11 @@
 			isa = PBXGroup;
 			children = (
 				4FF6665125F2C93A00689B77 /* main.m */,
-				4F5C2F7F2885C5D0001B9B8A /* HelperState.swift */,
 				4FF6660B25F2C93A00689B77 /* AppDelegate.h */,
 				4FF6664625F2C93A00689B77 /* AppDelegate.m */,
 				4FF6664C25F2C93A00689B77 /* AccessibilityCheck.h */,
 				4FF6664B25F2C93A00689B77 /* AccessibilityCheck.m */,
+				4F1898B22B8AB41C009B6E06 /* State */,
 				4FF6661425F2C93A00689B77 /* Core */,
 				4FF6660825F2C93A00689B77 /* FileMonitor */,
 				4F78CEF22904414B0030086C /* UI */,
@@ -7372,8 +7395,6 @@
 				4FCC03322757A50C002E5A57 /* ScreenDrawer.swift */,
 				4FBDA14D27B241CE0030E4EA /* GlobalEventTapThread.h */,
 				4FBDA14E27B241CE0030E4EA /* GlobalEventTapThread.m */,
-				4FD66E0927BB9BAD00F67559 /* EventUtility.h */,
-				4FD66E0A27BB9BAE00F67559 /* EventUtility.m */,
 				4FC55E2F285E6BF800F2FCCF /* GlobalDefaults.swift */,
 				4FF6667F25F2C93A00689B77 /* HelperUtility.h */,
 				4FF6668025F2C93A00689B77 /* HelperUtility.m */,
@@ -7869,6 +7890,7 @@
 				4FDE75A428B25E1A00662314 /* String+Extensions.swift in Sources */,
 				4FF6654C25F2C7B000689B77 /* Queue.m in Sources */,
 				4FF8C89E28955DC4007EC31F /* CoolTimer.swift in Sources */,
+				4F1898B82B8AF390009B6E06 /* EventUtility.m in Sources */,
 				4F909D3428A0C3D2009349A2 /* Replace.swift in Sources */,
 				4FF665ED25F2C92700689B77 /* MFSegmentedControl.m in Sources */,
 				4FA40CFF28A0CCCB00499E53 /* DragCurve.swift in Sources */,
@@ -7903,6 +7925,7 @@
 				4F44FF052606D73D00926A5E /* MFMessagePort.m in Sources */,
 				4FA40D0B28A0D87200499E53 /* DisplayLink.m in Sources */,
 				4FC55B982915652C00663B24 /* AlertCreator.m in Sources */,
+				4F1898B62B8AC95D009B6E06 /* Bool+Extensions.swift in Sources */,
 				4FAD391426702CD4000CF4FA /* DerivedProperty.swift in Sources */,
 				4F909D2928A0C3D2009349A2 /* TabViewControllerDisabling.swift in Sources */,
 				4FCEDC92292D765600E7DA2A /* Constants.swift in Sources */,
@@ -7982,6 +8005,7 @@
 				4F9C9B58268A29B70083DED0 /* RollingAverage.swift in Sources */,
 				4F44794628B62FA400AD1979 /* LicenseConfig.swift in Sources */,
 				4FFA4E4428B7D28E0062A1FE /* ConstraintUtility.swift in Sources */,
+				4F1898B42B8AB488009B6E06 /* HelperStateObjC.swift in Sources */,
 				4FF0255727B0091700923107 /* ModifiedDragOutputAddMode.m in Sources */,
 				4FF0255127B0033000923107 /* ModifiedDragOutputTwoFingerSwipe.m in Sources */,
 				4FC8A7CE28AAF1BC007DB982 /* MarkdownParser.swift in Sources */,
@@ -8014,6 +8038,7 @@
 				4F8A8DBF287F7BBA00786BCC /* NaturalAccelerationCurve.swift in Sources */,
 				4FF6668F25F2C93A00689B77 /* SmoothScroll_old_.m in Sources */,
 				4F70ECB7267E810900325A76 /* IOUtility.m in Sources */,
+				4F1898B12B8AB09A009B6E06 /* HelperStateObjC.m in Sources */,
 				4F17D2E1292A635200EB07CA /* SwitchMaster.swift in Sources */,
 				4FD0A71127B295F600FFCD12 /* GeneralConfig.swift in Sources */,
 				4F1D58192881D880002EB119 /* CombinedLinearCurve.swift in Sources */,
@@ -8048,6 +8073,7 @@
 				4FD86089266E819A004F76C8 /* Pointers.swift in Sources */,
 				4FFA4E4628B7D2960062A1FE /* Replace.swift in Sources */,
 				4FF6668825F2C93A00689B77 /* ButtonInputReceiver.m in Sources */,
+				4F1898B72B8AC95D009B6E06 /* Bool+Extensions.swift in Sources */,
 				4FF6669025F2C93A00689B77 /* ScrollModifiers_old_.m in Sources */,
 				4FCEDC89292D6A8F00E7DA2A /* HashablePair.swift in Sources */,
 				4FF6655125F2C7B000689B77 /* NSDictionary+Additions.m in Sources */,
