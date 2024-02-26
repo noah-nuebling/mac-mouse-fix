@@ -248,6 +248,7 @@ static void handleInput(void *context, IOReturn result, void *sender, IOHIDValue
 #pragma mark - Properties + override NSObject methods
 
 - (NSNumber *)uniqueID {
+    /// This seems to change after a reboot of the computer.
     return (__bridge NSNumber *)IOHIDDeviceGetProperty(_iohidDevice, CFSTR(kIOHIDUniqueIDKey));
 }
 
@@ -280,19 +281,28 @@ static void handleInput(void *context, IOReturn result, void *sender, IOHIDValue
 }
 
 - (NSString *)name {
-    
-    IOHIDDeviceRef device = self.iohidDevice;
-    NSString *product = IOHIDDeviceGetProperty(device, CFSTR(kIOHIDProductKey));
-    
-    return product;
+    return IOHIDDeviceGetProperty(_iohidDevice, CFSTR(kIOHIDProductKey));
 }
 
 - (NSString *)manufacturer {
-    
-    IOHIDDeviceRef device = self.iohidDevice;
-    NSString *manufacturer = IOHIDDeviceGetProperty(device, CFSTR(kIOHIDManufacturerKey));
-    
-    return manufacturer;
+    return IOHIDDeviceGetProperty(_iohidDevice, CFSTR(kIOHIDManufacturerKey));
+}
+
+- (NSString *)physicalDeviceID {
+    /// Note: This is returning empty string on my Roccat Mouse connected working on my Roccat Kone Pure connected via dongle to my MacBook - since it's not reliably available, we should instead combine the vendorID, productID and serialNumber to get a physicalDeviceID
+//    assert(false);
+    return IOHIDDeviceGetProperty(_iohidDevice, CFSTR(kIOHIDPhysicalDeviceUniqueIDKey));
+}
+
+- (NSString *)serialNumber {
+    /// Note: This returning emptyString on my Roccat Kone Pure
+    return IOHIDDeviceGetProperty(_iohidDevice, CFSTR(kIOHIDSerialNumberKey));
+}
+- (NSNumber *)productID {
+    return IOHIDDeviceGetProperty(_iohidDevice, CFSTR(kIOHIDProductIDKey));
+}
+- (NSNumber *)vendorID {
+    return IOHIDDeviceGetProperty(_iohidDevice, CFSTR(kIOHIDVendorIDKey));
 }
 
 - (int)nOfButtons {

@@ -14,7 +14,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface Device : NSObject
 
-@property (atomic, assign, readonly, nullable) IOHIDDeviceRef iohidDevice;
+@property (atomic, assign, readonly, nullable) IOHIDDeviceRef iohidDevice; /// Note: Why is this atomic? Wouldn't that slow things down? Does that make a difference to thread safety or whatever?
 
 + (instancetype)new NS_UNAVAILABLE;
 
@@ -24,8 +24,14 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (NSNumber *)uniqueID;
 - (BOOL)wrapsIOHIDDevice:(IOHIDDeviceRef)iohidDevice;
+
 - (NSString *)name;
 - (NSString *)manufacturer;
+- (NSString *)physicalDeviceID;
+- (NSNumber *)serialNumber;
+- (NSNumber *)productID;
+- (NSNumber *)vendorID;
+
 - (int)nOfButtons;
 - (NSString *)description;
 

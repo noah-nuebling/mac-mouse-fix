@@ -309,6 +309,15 @@ typedef CF_ENUM(uint32_t, MFCGEventField) {
     kMFCGEventFieldSenderID = 87, /// Use `CGEventGetSenderID()` instead of using this directly
 };
 
+///
+/// Processes
+///
+
+/// Define invalid process identifier
+///     - There should be a constant already defined for this somewhere inside macOS, but I can't find it.
+///     - -1 as the invalid PID is a convention on POSIX systems according to ChatGPT
+#define kMFInvalidPID -1
+
 @end
 
 NS_ASSUME_NONNULL_END

@@ -156,7 +156,7 @@ import CocoaLumberjackSwift
         /// - Maybe build logic to update after display reconfiguration/if the displayID is invalid or sth. Could use CGDisplayIsActive() or CGDisplayIsOnline()
         
         /// Guard base value changed
-        guard latestPointerLocation != latestPointerLocation_CacheForDisplayUnderMousePointer else { return }
+        guard !pointerLocsAreEqual(latestPointerLocation, latestPointerLocation_CacheForDisplayUnderMousePointer) else { return }
         
         /// Update base value cache
         latestPointerLocation_CacheForDisplayUnderMousePointer = latestPointerLocation
@@ -180,7 +180,8 @@ import CocoaLumberjackSwift
         
         /// Update the serializable representation
         ///     Notes:
-        ///     - To get a unique id for a physical monitor, we're combining the vendorID, modelID and serialNumber. Using the serialNumber might be overkill.
+        ///     - To get a unique id for a physical monitor, we're combining the vendorID, modelID and serialNumber. Using the serialNumber might be overkill. But maybe if ppl have the same monitor model at work or at home, this could be nice.
+        ///     - At the time of writing, we're not using this serialization since we don't have monitor-specific settings. But the performance impact of this is completely negligible. So it doesn't matter.
         let serialization = NSString(format: "%u-%u-%u", CGDisplayVendorNumber(_displayUnderMousePointer), CGDisplayModelNumber(_displayUnderMousePointer), CGDisplaySerialNumber(_displayUnderMousePointer))
         _configOverrideConditions[kConfigOverrideConditionKeyDisplayUnderMousePointer] = serialization
     }
@@ -231,38 +232,43 @@ import CocoaLumberjackSwift
     /// Base value caches
     private var latestPointerLocation_CacheForAppUnderMousePointer: CGPoint? = nil
     private var latestFrontmostAppPID_CacheForAppUnderMousePointer: pid_t? = nil
-    private var latestDerivationTimeStamp_ForAppUnderMousePointer: CFTimeInterval = 0
     
-    /// DerivedValue
+    /// Derived values
+    private var pidUnderMousePointer: pid_t? = nil
     private var _appUnderMousePointer: NSRunningApplication? = nil
     
     private func deriveAppUnderMousePointer() {
         
         /// Notes:
-        /// - Before the `CGWindow` approach, we used the AXUI API. Inspired by MOS' approach. However, `AXUIElementCopyElementAtPosition()` was incredibly slow sometimes. At one time I saw it taking a second to return when scrolling on new Reddit in Safari on M1 Ventura Beta. On other windows and websites it's not noticably slow but still very slow in code terms.
-        /// - TODO: Make this fast
-        ///     - We can skip updates if the pointer hasn't moved and the frontmost window hasn't changed.
-        ///         - To check frontMost window, we could could use CGWindowList with `kCGWindowListOptionOnScreenAboveWindow`. We could also use accessibility api or use ScriptingBridge to communicate with the SystemEvents service to get this info. As a substitute for the frontMost window, we could also just check for the frontMost app. That should also be good enough.
+        /// - Optimization
+        ///     - So far, of all the info that the HelperState class provides, this seems to be by far the slowest to calculate. I tried everything I could think of to optimize it.
+        ///     - Thoughts on optimization before we implemented it:
+        ///         - We can skip updates if the pointer hasn't moved and the frontmost window hasn't changed.
+        ///             - To check frontMost window, we could could use CGWindowList with `kCGWindowListOptionOnScreenAboveWindow`. We could also use accessibility api or use ScriptingBridge to communicate with the SystemEvents service to get this info.
+        ///             - As a substitute/approximation for the frontMost window changes, we could also just check for frontMost app changes. That should also be good enough.
         ///             - I'm not sure how we can best retrieve and store and track this info. frontMost app is probably the fastest and easiest since the incoming cgEvents seem to contain that.
-        ///     - We also though about having a cacheMin and cacheMax time which we use to determine if the cache should be reused or is outdated and should be recalculated, but I think that's quite ugly and probably not necessary. We're printing the `latestDerivationTimeStamp_ForAppUnderMousePointer` to assess this.
-        ///     - What happens if we store an NSRunningApplication instance and it dies? Clean the cache periodically?
+        ///                 - > Ended up just using the frontMost app. This should work perfectly in all scenarios I can think of except in some edge cases when using a windowSwitcher app that doesn't require you to move your mouse to switch between windows of a single app (e.g. alt-tab) but it's good enough for now.
+        ///         - We also thought about having a cacheMin and cacheMax time which we use to determine if the cache should be reused or is outdated and should be recalculated, but I think that's quite ugly and probably not necessary. Update: Implemented things now and this wouldn't really speed things up in practical scenarios I can think of.
         
+        ///
+        /// Debug
+        ///
         
-        let invocationTS = CACurrentMediaTime()
-        
-        if runningPreRelease() {
-            DDLogDebug("HelperState - deriving appUnderMousePointer - timeSince last derivation: \(invocationTS - latestDerivationTimeStamp_ForAppUnderMousePointer)")
-            DDLogDebug("HelperState - deriving appUnderMousePointer with frontmostApp: \(String(describing: latestFrontmostAppPID)), pointerLoc: \(String(describing: latestPointerLocation))")
-        }
-        defer {
-            if runningPreRelease() {
-                DDLogDebug("HelperState - derived new appUnderMousePointer: \(String(describing: _appUnderMousePointer)) in \((CACurrentMediaTime() - invocationTS)*1000)ms")
-            }
-        }
+//        let invocationTS = CACurrentMediaTime()
+//        
+//        if runningPreRelease() {
+//            DDLogDebug("HelperState - deriving appUnderMousePointer - timeSince last derivation: \(invocationTS - latestDerivationTimeStamp_ForAppUnderMousePointer)")
+//            DDLogDebug("HelperState - deriving appUnderMousePointer with frontmostApp: \(String(describing: latestFrontmostAppPID)), pointerLoc: \(String(describing: latestPointerLocation))")
+//        }
+//        defer {
+//            if runningPreRelease() {
+//                DDLogDebug("HelperState - derived new appUnderMousePointer: \(String(describing: _appUnderMousePointer)) in \((CACurrentMediaTime() - invocationTS)*1000)ms")
+//            }
+//        }
         
         /// Guard base values changed:
         /// - Do nothing if frontmostApp and pointerLocation are the same
-        /// - Note: Can this lead to subtle issues if the frontmostAppPID isn't updated properly? At the time of writing, the frontmostAppPID and the pointerLocation are always updated together since they come from the CGEvents that are provided to this class as inputs. Either way, we're using DDLogDebug here to get some insights whether this is working as intended.
+        /// - Note: Can this lead to subtle issues if the frontmostAppPID isn't updated properly? At the time of writing, the frontmostAppPID and the pointerLocation are always updated together since they come from the CGEvents that are provided to this class as inputs. So far, it seems to be working well.
         guard
             latestFrontmostAppPID != latestFrontmostAppPID_CacheForAppUnderMousePointer
                 || !pointerLocsAreEqual(latestPointerLocation, latestPointerLocation_CacheForAppUnderMousePointer)
@@ -273,7 +279,6 @@ import CocoaLumberjackSwift
         /// Update base value caches
         latestPointerLocation_CacheForAppUnderMousePointer = latestPointerLocation
         latestFrontmostAppPID_CacheForAppUnderMousePointer = latestFrontmostAppPID
-        latestDerivationTimeStamp_ForAppUnderMousePointer = invocationTS
         
         /// Unwrap
         guard let loc = latestPointerLocation else { return }
@@ -281,13 +286,24 @@ import CocoaLumberjackSwift
         /// Get pid
         guard let pid = getPIDUnderMousePointer(loc: loc) else { return }
         
+        /// Get pid using C implementation (seems slower)
+//        let pid = getPIDUnderMousePointerObjC(loc)
+//        guard pid != kMFInvalidPID else { return }
+        
+        /// Check pid change
+        guard pid != pidUnderMousePointer else { return }
+        
+        /// Update derived value
+        pidUnderMousePointer = pid
+        
         /// Get app
-        guard let app = getAppFromPID(pid) else { return }
+        guard let app = AppUtility.shared.getRunningAppFast(withPID: pid) else { return }
         
         /// NOTE: Should we have a fallback here?
         ///         We have a fallback for frontmost app - can we rely on that? Should HelperState provide fallbacks at all? Maybe the client code should get the fallbacks if it really needs them? Idk.
         
         /// Check change
+        ///     Update: I thought this is unnecessary since we're already checking for changes in the pid - which is a unique identifier of the app - but performance seems to be worse?
         guard app != _appUnderMousePointer else { return }
         
         /// Update derived value
@@ -305,14 +321,16 @@ import CocoaLumberjackSwift
         /// Calculate appUnderMousePointer fresh
         ///
         
-        /// Get PID under mouse pointer
+        /// Notes:
+        /// - Before the `NSWindow` approach, we used the AXUI API. Inspired by MOS' approach. However, `AXUIElementCopyElementAtPosition()` was incredibly slow sometimes. At one time I saw it taking a second to return when scrolling on new Reddit in Safari on M1 Ventura Beta. On other windows and websites it's not noticably slow but still very slow in code terms. This approach seems to be much faster, although I haven't benchmarked it.
+        
         
         var result: pid_t? = nil
         
         let pointerLoc: NSPoint = SharedUtility.quartz(toCocoaScreenSpace_Point: pointerLocCG)
         
         let windowNumber = CGWindowID(NSWindow.windowNumber(at: pointerLoc, belowWindowWithWindowNumber: 0))
-        let windowInfo = CGWindowListCopyWindowInfo(.optionIncludingWindow, windowNumber) as NSArray?
+        let windowInfo = CGWindowListCopyWindowInfo([.optionIncludingWindow], windowNumber) as NSArray? /// We tried CGWindowListCreateDescriptionFromArray but can't get that to work in swift
         if let i = windowInfo, i.count > 0, let j = i[0] as? NSDictionary, let pid = j[kCGWindowOwnerPID] as? pid_t {
             result = pid
         }
@@ -357,7 +375,7 @@ import CocoaLumberjackSwift
         guard let pid = latestFrontmostAppPID else { return }
         
         /// Get app
-        var newApp = getAppFromPID(pid)
+        var newApp = AppUtility.shared.getRunningAppFast(withPID: pid)
         
         if newApp == nil {
             
@@ -372,6 +390,7 @@ import CocoaLumberjackSwift
         guard let newApp = newApp else { return }
         
         /// Check change
+        ///     Update: I thought this is unnecessary since we're already checking if the pid changed - which is a unique identifier of the app - but performance seems to be worse?
         guard newApp != _frontmostApp else { return }
         
         /// Store main derived value
@@ -477,13 +496,19 @@ import CocoaLumberjackSwift
         guard let newDevice = newDevice else { return }
         
         /// Check device has changed
+        ///     Update: I think this is unnecessary to check, since we already checked if the senderID has changed - which is a unique identifier of the device - but performance seems to be worse?
         guard newDevice != _activeDevice else { return }
         
         /// Store main derived value
         _activeDevice = newDevice
         
         /// Store serialized representation
-        _configOverrideConditions[kConfigOverrideConditionKeyActiveDevice] = newDevice.uniqueID()
+        ///     Notes:
+        ///     - To get an id for the physical device, we're combining vendorID, productID and serialNumber. We're doing the same thing to serialize the displays.
+        ///     - .serialNumber() is emptyString on my Roccat mouse. Maybe there's a different way to retrieve it?
+        ///     - We tried to use newDevice.uniqueID(), but that isn't constant after a restart.
+        let serialization = "\(newDevice.vendorID())-\(newDevice.productID())-\(newDevice.serialNumber())"
+        _configOverrideConditions[kConfigOverrideConditionKeyActiveDevice] = serialization
         
         /// Notify switch master
         SwitchMaster.shared.helperStateChanged()
@@ -546,16 +571,6 @@ import CocoaLumberjackSwift
     }
     
     // MARK: Helper stuff
-        
-    private func getAppFromPID(_ pid: pid_t) -> NSRunningApplication? {
-        
-        /// Notes:
-        /// - Maybe we could cache the running applications somehow if this is slow
-        /// - Maybe we could reuse this across the app instead of using NSRunningApplication(processIdentifier: pid) directly.
-        
-        let result = NSRunningApplication(processIdentifier: pid)
-        return result
-    }
     
     func pointerLocsAreEqual(_ p1: CGPoint?, _ p2: CGPoint?) -> Bool {
         pointsAreEqual(p1, p2, .mousePointerDefaultThreshold)

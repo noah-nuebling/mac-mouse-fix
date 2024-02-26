@@ -21,15 +21,13 @@ NS_ASSUME_NONNULL_BEGIN
 /// App under pointer (TODO: Remove - moved this to helper state)
 //+ (NSRunningApplication * _Nullable)appUnderMousePointerWithEvent:(CGEventRef _Nullable)event;
 
-/// Open main app
-+ (void)openMainApp;
-
 /// Display data
 //+ (CGEventRef)createEventWithValuesFromEvent:(CGEventRef)event;
 + (void)printEventFieldDifferencesBetween:(CGEventRef)event1 and:(CGEventRef)event2;
 + (NSString *)binaryRepresentation:(int64_t)value;
 
 /// Get current modifier flags
+///     Note: Should this be in EventUtility?
 CGEventFlags getModifierFlags(void);
 CGEventFlags getModifierFlagsWithEvent(CGEventRef flagEvent);
 

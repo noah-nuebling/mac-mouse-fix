@@ -207,6 +207,8 @@
 		4FCEDC93292D765600E7DA2A /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FCEDC91292D765600E7DA2A /* Constants.swift */; };
 		4FCEDC96292EB41700E7DA2A /* DeviceManagerSwift.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FCEDC94292EB41700E7DA2A /* DeviceManagerSwift.swift */; };
 		4FD00AC82B8C20EE00FACE32 /* IOUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F70ECB6267E810900325A76 /* IOUtility.m */; };
+		4FD00ACB2B8C41FE00FACE32 /* AppUtilityObjC.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FD00ACA2B8C41FE00FACE32 /* AppUtilityObjC.m */; };
+		4FD00ACD2B8C5FB400FACE32 /* AppUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FD00ACC2B8C5FB400FACE32 /* AppUtility.swift */; };
 		4FD0A71127B295F600FFCD12 /* GeneralConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FD0A71027B295F600FFCD12 /* GeneralConfig.swift */; };
 		4FD148C728AA416700FE688C /* MenuBarItem.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4FD148C928AA416700FE688C /* MenuBarItem.xib */; };
 		4FD148CC28AA423F00FE688C /* AuthorizeAccessibilityView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4FD148CE28AA423F00FE688C /* AuthorizeAccessibilityView.xib */; };
@@ -2182,6 +2184,9 @@
 		4FCEDC87292D6A8F00E7DA2A /* HashablePair.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HashablePair.swift; sourceTree = "<group>"; };
 		4FCEDC91292D765600E7DA2A /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		4FCEDC94292EB41700E7DA2A /* DeviceManagerSwift.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceManagerSwift.swift; sourceTree = "<group>"; };
+		4FD00AC92B8C41FE00FACE32 /* AppUtilityObjC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppUtilityObjC.h; sourceTree = "<group>"; };
+		4FD00ACA2B8C41FE00FACE32 /* AppUtilityObjC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppUtilityObjC.m; sourceTree = "<group>"; };
+		4FD00ACC2B8C5FB400FACE32 /* AppUtility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppUtility.swift; sourceTree = "<group>"; };
 		4FD0A71027B295F600FFCD12 /* GeneralConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeneralConfig.swift; sourceTree = "<group>"; };
 		4FD148C628AA414100FE688C /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Main.strings; sourceTree = "<group>"; };
 		4FD148C828AA416700FE688C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/MenuBarItem.xib; sourceTree = "<group>"; };
@@ -2589,6 +2594,9 @@
 				4F1898AF2B8AB09A009B6E06 /* HelperStateObjC.h */,
 				4F1898B02B8AB09A009B6E06 /* HelperStateObjC.m */,
 				4F1898B32B8AB488009B6E06 /* HelperStateObjC.swift */,
+				4FD00ACC2B8C5FB400FACE32 /* AppUtility.swift */,
+				4FD00AC92B8C41FE00FACE32 /* AppUtilityObjC.h */,
+				4FD00ACA2B8C41FE00FACE32 /* AppUtilityObjC.m */,
 			);
 			path = State;
 			sourceTree = "<group>";
@@ -8017,6 +8025,7 @@
 				4FFBC5A8266977CA001D389B /* DoubleExponentialSmoother.swift in Sources */,
 				4F85C05528BBE6FA00E96E9C /* TrialSectionManager.swift in Sources */,
 				4F909D4828A0C4C2009349A2 /* Collection+Extensions.swift in Sources */,
+				4FD00ACD2B8C5FB400FACE32 /* AppUtility.swift in Sources */,
 				4FF6669625F2C93A00689B77 /* Actions.m in Sources */,
 				4FA9733B293F7643002B5C24 /* ScrollSpeedupCurve.swift in Sources */,
 				4FF0254E27AFF90800923107 /* ModifiedDragOutputThreeFingerSwipe.m in Sources */,
@@ -8144,6 +8153,7 @@
 				4FF8C89A28955491007EC31F /* ClickCycle.swift in Sources */,
 				4F12952128D2D738009A49AB /* NSTextField+Extentions.swift in Sources */,
 				4FDECCDF28A3E93100DDEE91 /* IsObjC.m in Sources */,
+				4FD00ACB2B8C41FE00FACE32 /* AppUtilityObjC.m in Sources */,
 				4FA83A2E268288D900F3A31B /* PointerConfig.swift in Sources */,
 				4FF6669425F2C93A00689B77 /* GestureScrollSimulator_old_.m in Sources */,
 				4F8A8DBD287F203D00786BCC /* IOHIDAccelerationTable.cpp in Sources */,

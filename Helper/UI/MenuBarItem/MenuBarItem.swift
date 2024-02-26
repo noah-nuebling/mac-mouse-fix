@@ -126,7 +126,7 @@ import Foundation
     // MARK: IBActions
     
     @IBAction func openMMF(_ sender: Any) {
-        HelperUtility.openMainApp()
+        AppUtilityObjC.openMainApp()
     }
     
     @IBAction func disableScroll(_ sender: NSMenuItem) {
