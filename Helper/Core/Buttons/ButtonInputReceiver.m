@@ -117,7 +117,7 @@ static CGEventRef eventTapCallback(CGEventTapProxy proxy, CGEventType type, CGEv
     ///
     /// Testing HelperState.swift
     ///
-    /// Measurement results:
+    /// Measurement results (from when we were optimizing HelperState.swift):
     /// - 1. Measurement: ca 1ms after moving pointer (sometimes up to 2ms). ca. 0.01 ms when keeping pointer still.
     /// - 2. Measurement: We moved getPIDUnderMousePointer from Swift to C: Still 1ms after moving pointer but with somewhat frequent dips to 3ms or even 5ms. Swift seems to be faster!
     /// - 3. Measurement: We did some more optimizations and measurements. Everything I could think of. The slowest part is mostly getPIDUnderMousePointer() I think. We got the speed up to be pretty consistently under 1 ms. Relatively rarely it goes to like 4ms. Once I saw it go to 7ms. Not sure what causes those random-seeming dips in performance. But it's rare enough that I think performance is good enough for now.

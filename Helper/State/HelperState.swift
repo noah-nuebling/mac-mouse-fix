@@ -71,7 +71,9 @@ import CocoaLumberjackSwift
     
     // MARK: Base values
     
-    /// Note: Most of the information which this class provides is lazily derived from these base values.
+    /// Notes:
+    /// - The base values are the information provided to HelperState from the outside.
+    /// - Most of the information which HelperState provides *to* the outside is  lazily _derived_ from these base values.
     
     private var latestSenderID: UInt64? = nil
     private var latestFrontmostAppPID: pid_t? = nil
@@ -119,6 +121,7 @@ import CocoaLumberjackSwift
         ///         - The serialized state lets us identify mice, monitors, apps, and more across restarts of the computer. This serialized format is the same as what will be stored in the config.plist as configOverrideConditions.
         ///     - Todo:
         ///         - Consider speed: At time of writing, we're always serializing the derived state and storing that inside `_configOverrideConditions` whenever the derived state changes. Maybe we should serialize lazily & with caching to speed things up? Also we're currently serializing displays even though we don't plan to support display-specific settings soon. We should probably turn that off.
+        ///             - Update: No I've considered this and these things have completely negligible performance impact. Everythings already so lazy that the serializations aren't often recalculated and and also serialization is super fast.
         /// - On activeProfile:
         ///     -  activeProfile is logically part of the configOverrideConditions, but the current plan is that it would just be a string value we read straight from the config. So I'm not totally sure it makes sense to include here, since when we calculate the configOverrides inside the Config class we might have more efficient and direct ways to read the activeProfile from the configDict. Also, we probably won't support profiles in the UI in the near future.
         
@@ -153,7 +156,7 @@ import CocoaLumberjackSwift
         
         /// This method looks at  baseValues (e.g. latestPointerLocation) and derives the the displayUnderMousePointer from that. It tries to to as little work as possible.
         /// Notes:
-        /// - Maybe build logic to update after display reconfiguration/if the displayID is invalid or sth. Could use CGDisplayIsActive() or CGDisplayIsOnline()
+        /// - Maybe build logic to update even if the base values haven't changed - if there was a display reconfiguration/if the displayID is invalid or sth. Could use CGDisplayIsActive() or CGDisplayIsOnline()
         
         /// Guard base value changed
         guard !pointerLocsAreEqual(latestPointerLocation, latestPointerLocation_CacheForDisplayUnderMousePointer) else { return }
@@ -175,12 +178,12 @@ import CocoaLumberjackSwift
         /// Check change
         guard newDisplay != _displayUnderMousePointer else { return }
         
-        /// Update main derived value
+        /// Update derived value
         _displayUnderMousePointer = newDisplay
         
         /// Update the serializable representation
         ///     Notes:
-        ///     - To get a unique id for a physical monitor, we're combining the vendorID, modelID and serialNumber. Using the serialNumber might be overkill. But maybe if ppl have the same monitor model at work or at home, this could be nice.
+        ///     - To get a unique id for a physical monitor, we're combining the vendorID, modelID and serialNumber. Using the serialNumber might be overkill. But maybe if ppl have the same monitor model at work or at home, this could be nice for monitor-specific settings.
         ///     - At the time of writing, we're not using this serialization since we don't have monitor-specific settings. But the performance impact of this is completely negligible. So it doesn't matter.
         let serialization = NSString(format: "%u-%u-%u", CGDisplayVendorNumber(_displayUnderMousePointer), CGDisplayModelNumber(_displayUnderMousePointer), CGDisplaySerialNumber(_displayUnderMousePointer))
         _configOverrideConditions[kConfigOverrideConditionKeyDisplayUnderMousePointer] = serialization
@@ -323,6 +326,7 @@ import CocoaLumberjackSwift
         
         /// Notes:
         /// - Before the `NSWindow` approach, we used the AXUI API. Inspired by MOS' approach. However, `AXUIElementCopyElementAtPosition()` was incredibly slow sometimes. At one time I saw it taking a second to return when scrolling on new Reddit in Safari on M1 Ventura Beta. On other windows and websites it's not noticably slow but still very slow in code terms. This approach seems to be much faster, although I haven't benchmarked it.
+        /// - Should this be part of `AppUtility`? So far we're not using this outside of HelperState.
         
         
         var result: pid_t? = nil
