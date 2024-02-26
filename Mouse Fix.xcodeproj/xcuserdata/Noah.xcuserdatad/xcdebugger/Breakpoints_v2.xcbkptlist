@@ -876,6 +876,21 @@
                   endingLineNumber = "477"
                   offsetFromSymbolStart = "1468">
                </Location>
+               <Location
+                  uuid = "7404D803-330D-42F4-BA46-4627D1CCFC36 - 9041afb9448d26bd"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "-[Config repairConfigWithReason:info:]"
+                  moduleName = "Mac Mouse Fix Helper"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/Noah/Desktop/mmf-stuff/mac-mouse-fix/Shared/Config/Config.m"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "477"
+                  endingLineNumber = "477"
+                  offsetFromSymbolStart = "1416">
+               </Location>
             </Locations>
          </BreakpointContent>
       </BreakpointProxy>
@@ -1014,6 +1029,21 @@
                   endingLineNumber = "452"
                   offsetFromSymbolStart = "1228">
                </Location>
+               <Location
+                  uuid = "B8DE2901-2223-4ACD-BAD5-4AAC7C61E8BC - 9041afb9448d25f6"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "-[Config repairConfigWithReason:info:]"
+                  moduleName = "Mac Mouse Fix Helper"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/Noah/Desktop/mmf-stuff/mac-mouse-fix/Shared/Config/Config.m"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "452"
+                  endingLineNumber = "452"
+                  offsetFromSymbolStart = "1208">
+               </Location>
             </Locations>
          </BreakpointContent>
       </BreakpointProxy>
@@ -1109,6 +1139,21 @@
                   startingLineNumber = "535"
                   endingLineNumber = "535"
                   offsetFromSymbolStart = "36">
+               </Location>
+               <Location
+                  uuid = "3C6E894E-01B5-4E5A-863A-27CFBBC94B5F - bb9bb45cfdf61255"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "parseTimeStamps"
+                  moduleName = "Mac Mouse Fix Helper"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/Noah/Desktop/mmf-stuff/mac-mouse-fix/Shared/Animation/DisplayLink.m"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "568"
+                  endingLineNumber = "568"
+                  offsetFromSymbolStart = "100">
                </Location>
             </Locations>
          </BreakpointContent>

@@ -18,7 +18,7 @@
 
 @implementation EventUtility
 
-extern CFTimeInterval CATimeWithHostTime(UInt64 mach_absolute_time); /// I saw this in assembly but linking failed I think -> remove
+extern CFTimeInterval CATimeWithHostTime(UInt64 mach_absolute_time); /// I saw this in assembly but linking failed I think. Update: We built our own implementation of this at SharedUtility > machTimeToSeconds()
 
 #pragma mark - Scroll Events
 
