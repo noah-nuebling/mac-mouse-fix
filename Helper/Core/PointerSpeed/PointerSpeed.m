@@ -18,6 +18,7 @@
 #import "Mac_Mouse_Fix_Helper-Swift.h"
 #import "DeviceManager.h"
 #import "IOHIDAccelerationTableBridge.hpp"
+#import "MFHIDEventImports.h"
 
 /// Get private Apple stuff
 /// See PointerSpeedExperiments2.m for more info

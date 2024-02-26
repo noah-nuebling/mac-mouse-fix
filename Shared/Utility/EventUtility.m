@@ -34,6 +34,8 @@ uint64_t CGEventGetSenderID(CGEventRef cgEvent) {
     /// Notes:
     /// - I'm not 100% anymore if the memcpy stuff is necessary. But casting should change the bit values soo I feel like this is probably necessary?
     /// - Use this instead of using `kMFCGEventFieldSenderID` directly to take advantage of the memcpy stuff.
+    /// - At time of writing, this function is the only reason why we include EventUtility.m inside the main app. Everything else is only used by the helper. 
+    ///     - We're only including IOUtility.m in main app to be able to build EventUtility.m, even though we're not actually using IOUtility.m in main app. Maybe we should only to conditional compilation for the stuff that isn't used inside main app.
     
     int64_t senderFieldValue = CGEventGetIntegerValueField(cgEvent, (CGEventField)kMFCGEventFieldSenderID);
     uint64_t senderID;

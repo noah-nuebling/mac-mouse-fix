@@ -121,7 +121,7 @@ import CocoaLumberjackSwift
         ///         - Consider speed: At time of writing, we're always serializing the derived state and storing that inside `_configOverrideConditions` whenever the derived state changes. Maybe we should serialize lazily & with caching to speed things up? Also we're currently serializing displays even though we don't plan to support display-specific settings soon. We should probably turn that off.
         /// - On activeProfile:
         ///     -  activeProfile is logically part of the configOverrideConditions, but the current plan is that it would just be a string value we read straight from the config. So I'm not totally sure it makes sense to include here, since when we calculate the configOverrides inside the Config class we might have more efficient and direct ways to read the activeProfile from the configDict. Also, we probably won't support profiles in the UI in the near future.
-
+        
         /// Update values
         deriveActiveDevice()
         deriveFrontmostApp()
@@ -167,9 +167,14 @@ import CocoaLumberjackSwift
         /// Get display
         let newDisplay = getDisplayUnderMousePointer(withPoint: loc)
         
-        /// Guard displayIsValid
+        /// Check displayIsValid
         guard newDisplay != kCGNullDirectDisplay && Bool(CGDisplayIsActive(newDisplay)) /* && Bool(CGDisplayIsOnline(newDisplay)) */ else { return }
-            
+        
+        /// NOTE: Should we have a fallback here?
+        
+        /// Check change
+        guard newDisplay != _displayUnderMousePointer else { return }
+        
         /// Update main derived value
         _displayUnderMousePointer = newDisplay
         
@@ -249,13 +254,18 @@ import CocoaLumberjackSwift
             DDLogDebug("HelperState - deriving appUnderMousePointer - timeSince last derivation: \(invocationTS - latestDerivationTimeStamp_ForAppUnderMousePointer)")
             DDLogDebug("HelperState - deriving appUnderMousePointer with frontmostApp: \(String(describing: latestFrontmostAppPID)), pointerLoc: \(String(describing: latestPointerLocation))")
         }
+        defer {
+            if runningPreRelease() {
+                DDLogDebug("HelperState - derived new appUnderMousePointer: \(String(describing: _appUnderMousePointer)) in \((CACurrentMediaTime() - invocationTS)*1000)ms")
+            }
+        }
         
         /// Guard base values changed:
         /// - Do nothing if frontmostApp and pointerLocation are the same
         /// - Note: Can this lead to subtle issues if the frontmostAppPID isn't updated properly? At the time of writing, the frontmostAppPID and the pointerLocation are always updated together since they come from the CGEvents that are provided to this class as inputs. Either way, we're using DDLogDebug here to get some insights whether this is working as intended.
         guard
-            latestFrontmostAppPID == latestFrontmostAppPID_CacheForAppUnderMousePointer
-                && pointerLocsAreEqual(latestPointerLocation, latestPointerLocation_CacheForAppUnderMousePointer)
+            latestFrontmostAppPID != latestFrontmostAppPID_CacheForAppUnderMousePointer
+                || !pointerLocsAreEqual(latestPointerLocation, latestPointerLocation_CacheForAppUnderMousePointer)
         else {
             return
         }
@@ -273,6 +283,12 @@ import CocoaLumberjackSwift
         
         /// Get app
         guard let app = getAppFromPID(pid) else { return }
+        
+        /// NOTE: Should we have a fallback here?
+        ///         We have a fallback for frontmost app - can we rely on that? Should HelperState provide fallbacks at all? Maybe the client code should get the fallbacks if it really needs them? Idk.
+        
+        /// Check change
+        guard app != _appUnderMousePointer else { return }
         
         /// Update derived value
         _appUnderMousePointer = app
@@ -352,8 +368,11 @@ import CocoaLumberjackSwift
             DDLogDebug("HelperState - Falling back to NSWorkspace.shared.frontmostApplication \(String(describing: newApp)) while deriving frontmost app from PID: \(pid)")
         }
         
-        /// Unwrap
+        /// Unwrap app
         guard let newApp = newApp else { return }
+        
+        /// Check change
+        guard newApp != _frontmostApp else { return }
         
         /// Store main derived value
         _frontmostApp = newApp
@@ -365,7 +384,7 @@ import CocoaLumberjackSwift
     /// FrontmostApp priority & activeObserver
     
     private var frontmostAppObserver: NSObjectProtocol? = nil
-    private var _frontmostAppPriority: MFStatePriority = .unused
+    private var _frontmostAppPriority: MFStatePriority = .passiveUse // .unused
     var frontmostAppPriority: MFStatePriority {
         
         get {
@@ -439,10 +458,10 @@ import CocoaLumberjackSwift
         /// Update base value cache
         latestSenderID_CacheForActiveDevice = latestSenderID
         
-        /// Unwrap
+        /// Unwrap senderID
         guard let senderID = latestSenderID else { return }
         
-        /// Guard invalid sender
+        /// Check senderID
         guard senderID != kIOHIDEventSenderIDUndefined else { return }
         
         /// Get new active device
@@ -454,8 +473,11 @@ import CocoaLumberjackSwift
             newDevice = DeviceManager.attachedDevices.firstObject as! Device?
         }
         
-        /// Guard
+        /// Unwrap device
         guard let newDevice = newDevice else { return }
+        
+        /// Check device has changed
+        guard newDevice != _activeDevice else { return }
         
         /// Store main derived value
         _activeDevice = newDevice

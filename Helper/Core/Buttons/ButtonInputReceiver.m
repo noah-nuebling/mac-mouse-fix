@@ -115,6 +115,25 @@ static CGEventRef eventTapCallback(CGEventTapProxy proxy, CGEventType type, CGEv
     }
     
     ///
+    /// Testing HelperState.swift
+    /// TODO: Disable this
+    ///
+    
+    if (CGEventGetIntegerValueField(event, kCGMouseEventPressure) != 0) {
+        
+        /// Measure performance
+        CFTimeInterval startTS = CACurrentMediaTime();
+        
+        /// Get configOverrideConditions
+        [HelperState.shared updateBaseValuesWithEvent:event];
+        NSDictionary *configOverrideConditions = [HelperState.shared configOverrideConditions];
+        
+        /// Measure performance
+        CFTimeInterval endTS = CACurrentMediaTime();
+        NSLog(@"HelperState - derived new configOverrideConditions in %f ms: %@", (endTS - startTS)*1000, configOverrideConditions);
+    }
+    
+    ///
     /// Main logic
     ///
     

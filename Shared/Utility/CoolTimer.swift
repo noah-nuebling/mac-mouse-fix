@@ -22,11 +22,14 @@ import Cocoa
 @objc class CoolTimer: NSObject {
 
     @objc static func scheduledTimer(timeInterval: TimeInterval, repeats: Bool, block: @escaping (Timer) -> ()) -> Timer {
-        /// Note: Remember to schedule timers from the main thread! Otherwise they won't work.
+        
+        /// Notes:
+        /// - Remember to schedule timers from the main thread! Otherwise they won't work.
+        /// - Udpate: ^^ This doesn't really make sense? The docs say that Timer.scheduledTimer schedules the timer on the current runLoop, in the default mode. (Maybe we needed commonMode in the scenario where it didn't work?)
+        ///     - TODO: At the time of writing, it seems like we're doing the whole button input processing on the mainThread (maybe that's why we had to run this timer on the main thread as well for things to work). We should probably do it on the GlobalEventTapThread instead - so the mainThread is free for drawing UI stuff and we prevent race conditions by handling all the input on one thread.
+        ///     - As an alternative for NSTimer there's also DispatchSourceTimer - that might be nicer/faster
         
         let blockKeeper = BlockKeeper()
-        blockKeeper.block = block
-        
         let timer = Timer.scheduledTimer(timeInterval: timeInterval, target: blockKeeper, selector: #selector(BlockKeeper.timerFireMethod(timer:)), userInfo: nil, repeats: repeats)
         
         return timer

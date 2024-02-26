@@ -76,7 +76,7 @@ static NSCondition *_threadIsInitializedSignal;
         .version = 0,
     };
     CFRunLoopSourceRef emptySource = CFRunLoopSourceCreate(kCFAllocatorDefault, 0, &ctx);
-    CFRunLoopAddSource(_runLoop, emptySource, kCFRunLoopCommonModes);
+    CFRunLoopAddSource(_runLoop, emptySource, kCFRunLoopCommonModes); /// Note: Why are we using commonModes here? I don't know what that entails
     
     /// Notify initialize function that we're done
     _threadIsInitialized = YES;
