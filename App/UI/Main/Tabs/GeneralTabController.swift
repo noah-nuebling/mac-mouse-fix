@@ -133,10 +133,14 @@ class GeneralTabController: NSViewController {
                             enableTimeoutDisposable?.dispose()
                             
                             /// Show user feedback
-                            // TODO: Make this good
+                            /// Notes:
+                            /// - TODO: Adjust the link after writing the guide.
+                            /// - We put a period at the end of this UI string. Usually we don't put periods for short UI strings, but it just feels wrong in this case?
+                            /// - The default duration `kMFToastDurationAutomatic` felt too short in this case. I wonder why that is? I think this toast is one of, if not the shortest toasts - maybe it has to do with that? Maybe it feels like it should display longer, because there's a delay until it shows up so it's harder to get back to? Maybe our tastes for how long the toasts should be changed? Maybe we should adjust the formula for `kMFToastDurationAutomatic`?
+                            
                             if let window = NSApp.mainWindow {
-                                let rawMessage = "It looks like Mac Mouse Fix is taking a while to enable.\nIf you're having trouble enabling Mac Mouse Fix, click [here](https://github.com/noah-nuebling/mac-mouse-fix/discussions/categories/guides)."
-                                ToastNotificationController.attachNotification(withMessage: NSMutableAttributedString(coolMarkdown: rawMessage)!, to: window, forDuration: kMFToastDurationAutomatic)
+                                let rawMessage = NSLocalizedString("enable-timeout-toast", comment: "First draft: If you have **problems enabling** the app, click [here](https://github.com/noah-nuebling/mac-mouse-fix/discussions/categories/guides).")
+                                ToastNotificationController.attachNotification(withMessage: NSMutableAttributedString(coolMarkdown: rawMessage)!, to: window, forDuration: 10.0)
                             }
                         })
                         enableTimeoutTimer?.resume()
