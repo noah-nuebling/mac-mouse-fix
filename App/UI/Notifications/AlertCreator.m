@@ -86,7 +86,9 @@
 
 + (void)showStrangeHelperMessageWithStrangeURL:(NSString *)strangeURL {
     
-    /// Note: We moved this out from `MessagePortUtility.swift` in commit `15d24471b4c7cec9e5976b66898d37d46949efd0` because we planned to reuse this from other places. But we never did and it doesn't make sense. So should probably move it back to `MessagePortUtility.swift`.
+    /// Notes:
+    /// - Should the maxWidth of the alert be adjusted to the current language? Maybe we could use LocalizationUtility.informationDensityOfCurrentLanguage.
+    /// - We moved this out from `MessagePortUtility.swift` in commit `15d24471b4c7cec9e5976b66898d37d46949efd0` because we planned to reuse this from other places. But we never did and it doesn't make sense. We could find other ways of detecting that there is a strange helper except the message port - so I think it still seems sensible to have this alert separate from the messagePort code.
     
     NSString *title = NSLocalizedString(@"is-strange-helper-alert.title", @"First draft: Enabling Failed");
     NSString *body = [NSString stringWithFormat:NSLocalizedString(@"is-strange-helper-alert.body", @"First draft: Mac Mouse Fix can't be enabled because there's __another version__ of Mac Mouse Fix present on your computer\n\nTo enable Mac Mouse Fix:\n\n1. Delete the [other version](%@)\n2. Empty the Bin\n3. Restart your Mac\n4. Try again!"), strangeURL];
@@ -111,6 +113,7 @@
     ///
     /// Notes:
     /// - This is currently untested, but also unused pre-Ventura
+    /// - Update: We're using this for checkHelperStrangenessReact() since a year now. Currently we're on macOS 14.2. It seems to be working well! I also don't see how it's so overengineered? I guess because the enabling issues turned out to be pretty common. I get several reports a week about it currently, despite the fact that this alert should come up in most situations where registering the helper with SMAppService fails.
     
     /// Override body alignment
     

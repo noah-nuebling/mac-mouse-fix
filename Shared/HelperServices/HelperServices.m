@@ -424,7 +424,15 @@ static BOOL helperIsActive_PList(void) {
         NSError *error = nil;
 
         /// Do the core (un)registering
-        ///     `loginItemServiceWithIdentifier:` would be easiest but it breaks with multiple copies of the app installed. Also, it doesn't allow for setting niceness and other stuff. So using an agent is better.
+        /// Notes:
+        /// - `loginItemServiceWithIdentifier:` would be easiest but it breaks with multiple copies of the app installed. Also, it doesn't allow for setting niceness and other stuff. So using an agent is better.
+        /// - Udpate: Currently using `agentServiceWithPlistName:` and that breaks too with multiple copies installed. It's actually super broken and leads to lots of people not being able to enable MMF. See `checkHelperStrangenessReact(payload:` for more info on the issues.
+        ///     - I just did some testing under macOS 14.2 for most of the ways that this breaks, and it never returned any error and always returned success=YES even though it didn't actually work.
+        ///         The ways that it breaks that I tested are:
+        ///         1. Have a second copy of MMF installed and registered with SMAppService - in this case, the second copy's helper will be started instead of the helper of the current bundle.
+        ///         2. Move the second, registered copy of MMF to the trash - in this case nothing happens when you try to enable this copy of MMF.
+        ///         3. Empty the trash - after that, also nothing happens when you try to this copy of MMF
+        ///         (When you restart the computer after emptying the trash that usually fixes things, so we didn't check that case for errors. Also when you restart the computer while the copy is still in the trash then the restart doesn't seem to change anything, so we also didn't test that case.)
         
         SMAppService *service = [SMAppService agentServiceWithPlistName:@"sm_launchd.plist"];
         if (enable) {
