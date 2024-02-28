@@ -15,7 +15,7 @@
 "already-using-defaults-toast.5" = "이미 __5개 버튼__의 마우스에 해당하는 기본 설정을 사용 중입니다.";
 
 /* First draft: Version %@ || Note: %@ will be replaced by the app version, e.g. '3.0.0 (22027)' */
-"app-version" = "";
+"app-version" = "app-version";
 
 /* First draft: <Rewind key> */
 "apple-key-fallback.backward" = "<되감기 키>";
@@ -213,10 +213,10 @@
 "effect.mission-control.hint" = "Mission Control을 엽니다.";
 
 /* First draft: Primary Click */
-"effect.primary-click" = "";
+"effect.primary-click" = "effect.primary-click";
 
 /* First draft: Works like clicking %@ on a standard mouse. */
-"effect.primary-click.hint" = "";
+"effect.primary-click.hint" = "effect.primary-click.hint";
 
 /* First draft: Keyboard Shortcut... */
 "effect.record-shortcut" = "키보드 단축키...";
@@ -231,10 +231,10 @@
 "effect.right-space.hint" = "우측 Space로 이동합니다.";
 
 /* First draft: Secondary Click */
-"effect.secondary-click" = "";
+"effect.secondary-click" = "effect.secondary-click";
 
 /* First draft: Works like clicking %@ on a standard mouse. */
-"effect.secondary-click.hint" = "";
+"effect.secondary-click.hint" = "effect.secondary-click.hint";
 
 /* First draft: Works like pressing '%@' on your keyboard */
 "effect.shortcut.hint" = "키보드 상의 '%@'를 누르는 것처럼 동작합니다.";
@@ -246,7 +246,7 @@
 "effect.smart-zoom.hint" = "Safari 등의 앱에서 콘텐츠를 확대하거나 축소합니다.\n \n이는 Apple 트랙패드에서 두 손가락으로 이중 탭하는 것과 같습니다.";
 
 /* First draft: If you have **problems enabling** the app, click [here](https://github.com/noah-nuebling/mac-mouse-fix/discussions/categories/guides). */
-"enable-timeout-toast" = "";
+"enable-timeout-toast" = "enable-timeout-toast";
 
 /* First draft: **Primary Mouse Button** can't be used\nPlease try another button */
 "forbidden-capture-toast.1" = "**마우스 주 버튼**은 사용할 수 없습니다.\n다른 버튼으로 다시 시도하십시오.";

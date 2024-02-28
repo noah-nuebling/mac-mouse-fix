@@ -401,7 +401,7 @@ def find_localization_files(repo_root, website_root=None, basetypes=['IB', 'stri
                 for b in files_absolute:
                     # Validate
                     _, extension = os.path.splitext(b)
-                    assert extension == '.md', f'Folder at {b}, contained file with extension {extension}'
+                    assert extension == '.md', f'Folder at {b} contained file with extension {extension}'
                     # Append markdown file
                     result.append({ 'base': b, 'repo': mmf_repo, 'basetype': 'gh-markdown' })
         

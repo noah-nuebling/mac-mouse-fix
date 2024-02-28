@@ -246,7 +246,7 @@
 "effect.smart-zoom.hint" = "Phóng to hoặc thu nhỏ trong Safari và các ứng dụng khác.\n \nHoạt động như nhấp bằng hai ngón tay trên Apple Trackpad.";
 
 /* First draft: If you have **problems enabling** the app, click [here](https://github.com/noah-nuebling/mac-mouse-fix/discussions/categories/guides). */
-"enable-timeout-toast" = "";
+"enable-timeout-toast" = "enable-timeout-toast";
 
 /* First draft: **Primary Mouse Button** can't be used\nPlease try another button */
 "forbidden-capture-toast.1" = "**Nút chính** không thể được áp dụng\nVui lòng chọn một nút khác";

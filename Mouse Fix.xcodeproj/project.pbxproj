@@ -2358,6 +2358,7 @@
 		4FF8C89D28955DC4007EC31F /* CoolTimer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoolTimer.swift; sourceTree = "<group>"; };
 		4FF8C8A028956DDD007EC31F /* ButtonModifiers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonModifiers.swift; sourceTree = "<group>"; };
 		4FF8C8A22895AACB007EC31F /* Buttons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Buttons.swift; sourceTree = "<group>"; };
+		4FF8F3A92B8F8BD3005ACF3D /* Localization Readme.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "Localization Readme.md"; sourceTree = "<group>"; };
 		4FF93058288026FC0007CCA7 /* PolynomialCappedAccelerationCurve.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PolynomialCappedAccelerationCurve.swift; sourceTree = "<group>"; };
 		4FF9305D288060100007CCA7 /* PolyFit.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = PolyFit.cpp; sourceTree = "<group>"; };
 		4FF9305E288060100007CCA7 /* PolyFit.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = PolyFit.hpp; sourceTree = "<group>"; };
@@ -6588,10 +6589,10 @@
 		4F909D1528A0C3D2009349A2 /* Localization */ = {
 			isa = PBXGroup;
 			children = (
+				4F909D1928A0C3D2009349A2 /* Localization Readme.md */,
 				4FC7D5CB2B455A1C002AED77 /* Code */,
 				4F909D1728A0C3D2009349A2 /* Localizable.strings */,
 				4F6B02C228AD9E4400B5BA93 /* Localizable.stringsdict */,
-				4F909D1928A0C3D2009349A2 /* Localization Readme.md */,
 				4F97DFFF298732E500012BAC /* LocalizationUtility.h */,
 				4F97E000298732E500012BAC /* LocalizationUtility.m */,
 			);
@@ -6837,6 +6838,7 @@
 		4FC7D5CB2B455A1C002AED77 /* Code */ = {
 			isa = PBXGroup;
 			children = (
+				4FF8F3A92B8F8BD3005ACF3D /* Localization Readme.md */,
 				4FC7D5CC2B455A1C002AED77 /* StateOfLocalization */,
 				4FC7D5CF2B455A1C002AED77 /* UpdateStrings */,
 				4FC7D5D22B455A1C002AED77 /* Shared */,
