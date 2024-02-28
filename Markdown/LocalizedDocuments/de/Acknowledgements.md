@@ -40,6 +40,7 @@ Diese Leute haben viel mehr als den Standardpreis ausgegeben und mir einen **ung
 
 **Februar 2024**
 
+- 🇫🇮&nbsp;Moritz&nbsp;Johansson - "Best software ever"
 - 🇺🇸&nbsp;Iamfritzyg&nbsp;Com - "This mouse driver is severely underrated! <3"
 - 🇺🇸&nbsp;Colby&nbsp;Kenfield - "The French-Tickler I've been looking for!!!"
 - 🇹🇼&nbsp;Sheng&nbsp;Feng&nbsp;Tseng - "Thank you for your contributions to the MAC ecosystem."
