@@ -1098,116 +1098,8 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "3C6E894E-01B5-4E5A-863A-27CFBBC94B5F"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Shared/Animation/DisplayLink.m"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "566"
-            endingLineNumber = "566"
-            landmarkName = "displayLinkCallback(displayLink, inNow, inOutputTime, flagsIn, flagsOut, displayLinkContext)"
-            landmarkType = "9">
-            <Locations>
-               <Location
-                  uuid = "3C6E894E-01B5-4E5A-863A-27CFBBC94B5F - ef0ab99926f67945"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "__displayLinkCallback_block_invoke.81"
-                  moduleName = "Mac Mouse Fix Helper"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/Noah/Desktop/mmf-stuff/mac-mouse-fix/Shared/Animation/DisplayLink.m"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "535"
-                  endingLineNumber = "535"
-                  offsetFromSymbolStart = "20">
-               </Location>
-               <Location
-                  uuid = "3C6E894E-01B5-4E5A-863A-27CFBBC94B5F - ef0ab99926f6791a"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "__displayLinkCallback_block_invoke.80"
-                  moduleName = "Mac Mouse Fix Helper"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/Noah/Desktop/mmf-stuff/mac-mouse-fix/Shared/Animation/DisplayLink.m"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "535"
-                  endingLineNumber = "535"
-                  offsetFromSymbolStart = "36">
-               </Location>
-               <Location
-                  uuid = "3C6E894E-01B5-4E5A-863A-27CFBBC94B5F - bb9bb45cfdf61255"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "parseTimeStamps"
-                  moduleName = "Mac Mouse Fix Helper"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/Noah/Desktop/mmf-stuff/mac-mouse-fix/Shared/Animation/DisplayLink.m"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "568"
-                  endingLineNumber = "568"
-                  offsetFromSymbolStart = "100">
-               </Location>
-               <Location
-                  uuid = "3C6E894E-01B5-4E5A-863A-27CFBBC94B5F - 79e2b4c31310bc99"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "displayLinkCallback"
-                  moduleName = "Mac Mouse Fix"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/Noah/Desktop/mmf-stuff/mac-mouse-fix/Shared/Animation/DisplayLink.m"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "570"
-                  endingLineNumber = "570"
-                  offsetFromSymbolStart = "508">
-               </Location>
-               <Location
-                  uuid = "3C6E894E-01B5-4E5A-863A-27CFBBC94B5F - 79e2b4c31310bc99"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "displayLinkCallback"
-                  moduleName = "Mac Mouse Fix"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/Noah/Desktop/mmf-stuff/mac-mouse-fix/Shared/Animation/DisplayLink.m"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "570"
-                  endingLineNumber = "570"
-                  offsetFromSymbolStart = "908">
-               </Location>
-               <Location
-                  uuid = "3C6E894E-01B5-4E5A-863A-27CFBBC94B5F - 79e2b4c31310bc99"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "displayLinkCallback"
-                  moduleName = "Mac Mouse Fix"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/Noah/Desktop/mmf-stuff/mac-mouse-fix/Shared/Animation/DisplayLink.m"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "570"
-                  endingLineNumber = "570"
-                  offsetFromSymbolStart = "572">
-               </Location>
-            </Locations>
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
             uuid = "E9AC7F00-F855-4FC6-A0A1-5F2112A8D3B3"
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Shared/Animation/DisplayLink.m"
@@ -1255,7 +1147,7 @@
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
             uuid = "D864760F-C3A8-4B6F-A516-5976D8DE8071"
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Shared/Animation/DisplayLink.m"
@@ -1297,6 +1189,54 @@
                   offsetFromSymbolStart = "80">
                </Location>
             </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "FFDC12A4-44E4-4164-9D53-58264022B0FF"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "App/UI/Main/Tabs/GeneralTabController.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "101"
+            endingLineNumber = "101"
+            landmarkName = "viewDidLoad()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "4250FC6B-5C82-4989-8A08-754E87F531DA"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "App/UI/Main/Tabs/GeneralTabController.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "114"
+            endingLineNumber = "114"
+            landmarkName = "viewDidLoad()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "58527CD1-BF8D-4FF4-843D-86DDA360DF8B"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "App/UI/Main/Tabs/GeneralTabController.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "130"
+            endingLineNumber = "130"
+            landmarkName = "viewDidLoad()"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

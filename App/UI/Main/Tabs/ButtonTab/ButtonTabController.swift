@@ -55,7 +55,7 @@ import CocoaLumberjackSwift
         /// Get device info
         ///
         
-        let (name, nOfButtons, bestPresetMatch) =  MessagePortUtility.getActiveDeviceInfo() ?? (nil, nil, nil)
+        let (name, nOfButtons, bestPresetMatch) =  MessagePortUtility.shared.getActiveDeviceInfo() ?? (nil, nil, nil)
         
         ///
         /// Add accessoryView
@@ -148,7 +148,7 @@ import CocoaLumberjackSwift
                     }
                     let message = NSAttributedString(coolMarkdown: messageRaw)!
                     DispatchQueue.main.async {
-                        ToastNotificationController.attachNotification(withMessage: message, to: MainAppState.shared.window!, forDuration: -1.0)
+                        ToastNotificationController.attachNotification(withMessage: message, to: MainAppState.shared.window!, forDuration: kMFToastDurationAutomatic)
                     }
                     return
                 }
@@ -255,7 +255,7 @@ import CocoaLumberjackSwift
             ///
             
             /// Get device info
-            guard let (deviceName, nOfButtons, _) = MessagePortUtility.getActiveDeviceInfo() else { return }
+            guard let (deviceName, nOfButtons, _) = MessagePortUtility.shared.getActiveDeviceInfo() else { return }
             
             /// Get actionTable info
             let usedButtons = RemapTableUtility.getCapturedButtons()
@@ -345,7 +345,7 @@ import CocoaLumberjackSwift
             setConfig("State.remapsAreInitialized", true as NSObject)
             commitConfig()
             
-            let (_, _, bestPresetMatch) = MessagePortUtility.getActiveDeviceInfo() ?? (nil, nil, nil)
+            let (_, _, bestPresetMatch) = MessagePortUtility.shared.getActiveDeviceInfo() ?? (nil, nil, nil)
             
             /// This is copy-pasted from `restoreDefaults()`
             
@@ -611,7 +611,7 @@ import CocoaLumberjackSwift
         let messageRaw = NSLocalizedString("forbidden-capture-toast.1", comment: "First draft: **Primary Mouse Button** can't be used\nPlease try another button")
         let message = NSAttributedString(coolMarkdown: messageRaw)!;
         
-        ToastNotificationController.attachNotification(withMessage: message, to: MainAppState.shared.window!, forDuration: -1)
+        ToastNotificationController.attachNotification(withMessage: message, to: MainAppState.shared.window!, forDuration: kMFToastDurationAutomatic)
     }
     override func rightMouseUp(with event: NSEvent) {
         if !pointerIsInsideAddField { return }
@@ -619,6 +619,6 @@ import CocoaLumberjackSwift
         let messageRaw = NSLocalizedString("forbidden-capture-toast.2", comment: "First draft: **Secondary Mouse Button** can't be used\nPlease try another button")
         let message = NSAttributedString(coolMarkdown: messageRaw)!;
         
-        ToastNotificationController.attachNotification(withMessage: message, to: MainAppState.shared.window!, forDuration: -1)
+        ToastNotificationController.attachNotification(withMessage: message, to: MainAppState.shared.window!, forDuration: kMFToastDurationAutomatic)
     }
 }

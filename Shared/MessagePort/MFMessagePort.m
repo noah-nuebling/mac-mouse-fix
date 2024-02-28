@@ -68,7 +68,7 @@ static CFDataRef _Nullable didReceiveMessage(CFMessagePortRef port, SInt32 messa
         
         BOOL isStrange = false;
         if (@available(macOS 13, *)) {
-            isStrange = [MessagePortUtility checkHelperStrangenessReactWithPayload:payload];
+            isStrange = [MessagePortUtility.shared checkHelperStrangenessReactWithPayload:payload];
         }
         if (!isStrange) {
             [AuthorizeAccessibilityView add];
@@ -77,7 +77,7 @@ static CFDataRef _Nullable didReceiveMessage(CFMessagePortRef port, SInt32 messa
         
         BOOL isStrange = false;
         if (@available(macOS 13, *)) {
-            isStrange = [MessagePortUtility checkHelperStrangenessReactWithPayload:payload];
+            isStrange = [MessagePortUtility.shared checkHelperStrangenessReactWithPayload:payload];
         }
         
         if (!isStrange) { /// Helper matches mainApp instance.

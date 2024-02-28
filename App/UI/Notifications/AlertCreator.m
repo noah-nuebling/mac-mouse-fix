@@ -87,8 +87,12 @@
 + (void)showStrangeHelperMessageWithStrangeURL:(NSString *)strangeURL {
     
     /// Notes:
+    /// 
     /// - Should the maxWidth of the alert be adjusted to the current language? Maybe we could use LocalizationUtility.informationDensityOfCurrentLanguage.
     /// - We moved this out from `MessagePortUtility.swift` in commit `15d24471b4c7cec9e5976b66898d37d46949efd0` because we planned to reuse this from other places. But we never did and it doesn't make sense. We could find other ways of detecting that there is a strange helper except the message port - so I think it still seems sensible to have this alert separate from the messagePort code.
+    ///
+    /// - Setting asSheet to NO because the sheet will block restarting (which is one of the steps)
+    /// - Setting stayOnTop to YES so the user doesn't loose the instructions when deleting the strange helper (which is one of the steps)
     
     NSString *title = NSLocalizedString(@"is-strange-helper-alert.title", @"First draft: Enabling Failed");
     NSString *body = [NSString stringWithFormat:NSLocalizedString(@"is-strange-helper-alert.body", @"First draft: Mac Mouse Fix can't be enabled because there's __another version__ of Mac Mouse Fix present on your computer\n\nTo enable Mac Mouse Fix:\n\n1. Delete the [other version](%@)\n2. Empty the Bin\n3. Restart your Mac\n4. Try again!"), strangeURL];

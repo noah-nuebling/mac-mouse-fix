@@ -68,32 +68,98 @@ class GeneralTabController: NSViewController {
             self.enableToggle.setValue(state, forKey: "state")
         }
         
-        /// Declare signals
+        /// 
+        /// Sync enabledToggle with Helper enabledState
+        ///
         
-        /// enabledToggle <-> Helper enabledState
+        let enableTimeout = 3.0
+        var enableTimeoutDisposable: Disposable? = nil
+        var enableTimeoutTimer: DispatchSourceTimer? = nil
         
-        let onToggle = { doEnable in
+        let onToggle = { (doEnable: Bool) in
+            
+            /// Prevent the enable toggle from toggling when it is clicked
             self.enableToggle.intValue = self.enableToggle.intValue == 0 ? 1 : 0
+            
             if doEnable {
+                
+                let userClickTS = CACurrentMediaTime()
                 
                 EnabledState.shared.enable(onComplete: { error in
                     
-                    guard let error = error else { return }
-                    
-                    var messageRaw = ""
-                    if #available(macOS 13.0, *), error.domain == "SMAppServiceErrorDomain", error.code == 1 {
-                        messageRaw = NSLocalizedString("is-disabled-toast", comment: "First draft: Mac Mouse Fix was **disabled** in System Settings\n\nTo enable Mac Mouse Fix:\n\n1. Go to [Login Items Settings](x-apple.systempreferences:com.apple.LoginItems-Settings.extension)\n2. Switch on \'Mac Mouse Fix.app\'")
-                    }
-//                    else if error.domain == MFHelperServicesErrorDomain, error.code == kMFHelperServicesErrorMismatchedHelper.rawValue {
-//                        messageRaw = "Whattttt"
-//                    }
-                    
-                    if messageRaw != "" {
-                        let message = NSMutableAttributedString(coolMarkdown: messageRaw)
-                        DispatchQueue.main.async { /// UI stuff needs to be called from the main thread
-                            if let window = NSApp.mainWindow, let message = message {
-                                ToastNotificationController.attachNotification(withMessage: message, to: window, forDuration: -1.0)
+                    if error == nil {
+                        
+                        /// Notes:
+                        /// - Unfortunately there's a whole class of errors with enabling MMF under macOS 13 Ventura and later using the SMAppService API, where the error that the API returns is nil and there seems to be no direct way of finding out that things failed. None of these issues seem to have been fixed currently under macOS 14.2
+                        ///     To help the user in these cases:
+                        ///     - In the case that the system launches a 'strange' instance of MMF Helper which comes from another version of Mac Mouse Fix. We use `MessagePortUtility.checkHelperStrangenessReact()` to detect that and provide solution steps to the user.
+                        ///     - For cases where the system doesn't seem to launch any instance of MMF Helper at all, we set a timout here and then show a toast that refers users to a help page.
+                        
+                        
+                        /// Clean up
+                        enableTimeoutDisposable?.dispose()
+                        enableTimeoutTimer?.cancel()
+                        
+                        /// Create a signal that fires when either the app is enabled or a strange helper is detected.
+                        let mergedSignal: Signal<Void, Never> = Signal.merge(
+                            EnabledState.shared.signal.filter({ $0 == true }).map({ _ in () }),
+                            MessagePortUtility.shared.strangeHelperDetected.map({ _ in () })
+                        )
+                        
+                        /// Observe the signal
+                        enableTimeoutDisposable = mergedSignal.observeValues({ _ in
+                            
+                            ///
+                            /// Enabling __has not__ timed out
+                            ///
+                            
+                            /// Clean up
+                            enableTimeoutDisposable?.dispose()
+                            enableTimeoutTimer?.cancel()
+                        })
+                        
+                        /// Set up a timer that fires after `enableTimeout` seconds
+                        let timeSinceUserClick = CACurrentMediaTime() - userClickTS
+                        let timerFireTime = DispatchTime.now() + enableTimeout - timeSinceUserClick
+                        enableTimeoutTimer = DispatchSource.makeTimerSource(flags: [], queue: .main) /// Using main queue here since we're drawing UI from the callback
+                        enableTimeoutTimer?.schedule(deadline: timerFireTime)
+                        enableTimeoutTimer?.setEventHandler(qos: .userInitiated, flags: [], handler: {
+  
+                            ///
+                            /// Enabling __has__ timed out
+                            ///
+                            
+                            /// Clean up
+                            enableTimeoutDisposable?.dispose()
+                            
+                            /// Show user feedback
+                            // TODO: Make this good
+                            if let window = NSApp.mainWindow {
+                                let rawMessage = "It looks like Mac Mouse Fix is taking a while to enable.\nIf you're having trouble enabling Mac Mouse Fix, click [here](https://github.com/noah-nuebling/mac-mouse-fix/discussions/categories/guides)."
+                                ToastNotificationController.attachNotification(withMessage: NSMutableAttributedString(coolMarkdown: rawMessage)!, to: window, forDuration: kMFToastDurationAutomatic)
                             }
+                        })
+                        enableTimeoutTimer?.resume()
+                        
+                        
+                        
+                    } else {
+                        
+                        guard let error = error else { assert(false); return }
+                        
+                        var messageRaw = ""
+                        if #available(macOS 13.0, *), error.domain == "SMAppServiceErrorDomain", error.code == 1 {
+                            messageRaw = NSLocalizedString("is-disabled-toast", comment: "First draft: Mac Mouse Fix was **disabled** in System Settings\n\nTo enable Mac Mouse Fix:\n\n1. Go to [Login Items Settings](x-apple.systempreferences:com.apple.LoginItems-Settings.extension)\n2. Switch on \'Mac Mouse Fix.app\'")
+                        }
+                        
+                        if messageRaw != "" {
+                            let message = NSMutableAttributedString(coolMarkdown: messageRaw)
+                            DispatchQueue.main.async { /// UI stuff needs to be called from the main thread
+                                if let window = NSApp.mainWindow, let message = message {
+                                    ToastNotificationController.attachNotification(withMessage: message, to: window, forDuration: kMFToastDurationAutomatic)
+                                }
+                            }
+                            
                         }
                     }
                 })
@@ -108,6 +174,8 @@ class GeneralTabController: NSViewController {
         } else {
             enableToggle.reactive.boolValues.observeValues(onToggle) /// Why are we using observe here and startWithValues above?
         }
+        
+        /// Declare signals
         
         /// UI <-> data bindings
         

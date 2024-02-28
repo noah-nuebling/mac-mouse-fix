@@ -69,7 +69,7 @@ import Cocoa
             /// Show message
             let messageRaw = NSLocalizedString("license-toast.deactivate", comment: "First draft: Your license has been **deactivated**")
             let message = NSAttributedString(coolMarkdown: messageRaw)!
-            ToastNotificationController.attachNotification(withMessage: message, to: MainAppState.shared.window!, forDuration: -1)
+            ToastNotificationController.attachNotification(withMessage: message, to: MainAppState.shared.window!, forDuration: kMFToastDurationAutomatic)
             
             /// Wrap up
             onComplete()
@@ -167,7 +167,7 @@ import Cocoa
                 fatalError()
             }
 
-            ToastNotificationController.attachNotification(withMessage: NSAttributedString(coolMarkdown: message)!, to: MainAppState.shared.window!, forDuration: -1)
+            ToastNotificationController.attachNotification(withMessage: NSAttributedString(coolMarkdown: message)!, to: MainAppState.shared.window!, forDuration: kMFToastDurationAutomatic)
             
         } else /** failed to activate */ {
             
@@ -218,7 +218,7 @@ import Cocoa
             
             assert(message != "")
             
-            ToastNotificationController.attachNotification(withMessage: NSAttributedString(coolMarkdown: message)!, to: self.view.window!, forDuration: -1)
+            ToastNotificationController.attachNotification(withMessage: NSAttributedString(coolMarkdown: message)!, to: self.view.window!, forDuration: kMFToastDurationAutomatic)
             
         }
     }

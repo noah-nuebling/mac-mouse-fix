@@ -13,6 +13,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface ToastNotificationController : NSWindowController <NSWindowDelegate>
 
+#define kMFToastDurationAutomatic -1.0
+
 typedef enum {
     kToastNotificationAlignmentTopMiddle,
     kToastNotificationAlignmentBottomRight,

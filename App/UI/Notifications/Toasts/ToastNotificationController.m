@@ -84,7 +84,8 @@ static double _toastAnimationOffset = 20;
 //    message = [message attributedStringBySettingFontSize:NSFont.smallSystemFontSize];
     
     /// Process showDuration
-    if (showDuration <= 0) {
+    if (showDuration < 0) {
+        assert(showDuration == kMFToastDurationAutomatic);
         showDuration = message.length * 0.08 * [LocalizationUtility informationDensityOfCurrentLanguage];
     } else {
         showDuration *= [LocalizationUtility informationDensityOfCurrentLanguage];

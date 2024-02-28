@@ -104,7 +104,7 @@
         body = [body attributedStringByTrimmingWhitespace];
         
         /// Show notification
-        [ToastNotificationController attachNotificationWithMessage:body toWindow:MainAppState.shared.window forDuration:-1];
+        [ToastNotificationController attachNotificationWithMessage:body toWindow:MainAppState.shared.window forDuration:kMFToastDurationAutomatic];
     }
 }
 

@@ -33,6 +33,6 @@ import Foundation
         message = NSAttributedString(attributedFormat: message, args: [symbolString])
         
         /// Show message
-        ToastNotificationController.attachNotification(withMessage: message, to: MainAppState.shared.window!, forDuration: -1, alignment: kToastNotificationAlignmentTopMiddle)
+        ToastNotificationController.attachNotification(withMessage: message, to: MainAppState.shared.window!, forDuration: kMFToastDurationAutomatic, alignment: kToastNotificationAlignmentTopMiddle)
     }
 }

@@ -9,13 +9,28 @@
 
 import Foundation
 import CocoaLumberjackSwift
+import ReactiveSwift
 
 @objc class MessagePortUtility: NSObject {
     
+    @objc static let shared = MessagePortUtility()
+    
 #if IS_MAIN_APP
     
+    override init() {
+        
+        let (output, input) = Signal<String, Never>.pipe()
+        strangeHelperDetected = output
+        strangeHelperDetectedInput = input
+    
+        super.init()
+    }
+    
+    let strangeHelperDetected: Signal<String, Never>
+    private let strangeHelperDetectedInput: Signal<String, Never>.Observer
+    
     @available(macOS 13, *)
-    @objc static func checkHelperStrangenessReact(payload: NSObject) -> Bool {
+    @objc func checkHelperStrangenessReact(payload: NSObject) -> Bool {
         
         /// Handle enabling of strange helper under Ventura
         
@@ -59,11 +74,8 @@ import CocoaLumberjackSwift
             /// Disable helper
             HelperServices.enableHelperAsUserAgent(false)
             
-            /// Notify user
-            ///     And show solution steps
-            /// Notes:
-            /// - Setting asSheet to NO because the sheet will block restarting (which is one of the steps)
-            /// - Setting stayOnTop to YES so the user doesn't loose the instructions when deleting the strange helper (which is one of the steps)
+            
+            /// Find strangeHelper URL
             
             var strangeURL = (dict?["mainAppURL"] as? NSURL)?.absoluteString ?? ""
             
@@ -83,6 +95,10 @@ import CocoaLumberjackSwift
                 }
             }
             
+            /// Notify other parts of app
+            strangeHelperDetectedInput.send(value: strangeURL)
+            
+            /// Notify user
             AlertCreator.showStrangeHelperMessage(withStrangeURL: strangeURL)
         }
         
@@ -90,7 +106,7 @@ import CocoaLumberjackSwift
         return isStrange;
     }
     
-    static func getActiveDeviceInfo() -> (name: NSString, nOfButtons: Int, bestPresetMatch: Int)? {
+    func getActiveDeviceInfo() -> (name: NSString, nOfButtons: Int, bestPresetMatch: Int)? {
         
         /// The syntax for using this is kind of complicated. Copy-paste this:
         ///     `let (deviceName, deviceManufacturer, deviceButtons, bestPresetMatch) = MessagePortUtility_App.getActiveDeviceInfo() ?? (nil, nil, nil, nil)`
