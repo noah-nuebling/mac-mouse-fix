@@ -42,6 +42,7 @@ These people spent a lot more than the standard price and treated me to an **Inc
 
 **February 2024**
 
+- 🇬🇧&nbsp;Ben&nbsp;Williams - "Thanks for this incredible utility!"
 - 🇮🇪&nbsp;Eoin&nbsp;N&nbsp;Doyle
 - 🇫🇮&nbsp;Moritz&nbsp;Johansson - "Best software ever"
 - 🇺🇸&nbsp;Iamfritzyg&nbsp;Com - "This mouse driver is severely underrated! <3"
