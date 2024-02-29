@@ -42,6 +42,7 @@ These people spent a lot more than the standard price and treated me to an **Inc
 
 **February 2024**
 
+- 🇳🇱&nbsp;Grigory&nbsp;Entin - "This is one of the best macOS utilities out there. I use it daily and notice very soon if it's not running by accident. I really appreciate the native UI look without bells and whistles. It's even open-source. Well executed!"
 - 🇬🇧&nbsp;Ben&nbsp;Williams - "Thanks for this incredible utility!"
 - 🇮🇪&nbsp;Eoin&nbsp;N&nbsp;Doyle
 - 🇫🇮&nbsp;Moritz&nbsp;Johansson - "Best software ever"
