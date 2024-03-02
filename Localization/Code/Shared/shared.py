@@ -205,7 +205,7 @@ def extract_strings_from_IB_file_to_temp_file(ib_file_path):
         exit(1)
     
     # Convert to utf-8
-    #   For some reason, ibtool outputs strings files as utf-16, even though strings files in Xcode are utf-8 and also git doesn't understand utf-8.
+    #   For some reason, ibtool outputs strings files as utf-16, even though strings files in Xcode are utf-8 and also git doesn't understand utf-8. Edit: I think I meant to say git doesn't understand utf-16
     convert_utf16_file_to_utf8(temp_file_path)
     
     # Return

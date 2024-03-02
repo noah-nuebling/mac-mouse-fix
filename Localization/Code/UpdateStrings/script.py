@@ -142,10 +142,11 @@ def update_strings_files(files, type, repo_root):
     
     for file_dict in files:
     
-        # Autogenerate fresh .strings file from the source files (IB/sourcecode) using Apples tools
-        #   Notes:
-        #   - The fresh strings file will have its comments and keys up-to-date with the source file
-        #   - We store the content of these fresh strings files inside generated_content
+        # Get generate_content
+        #   Explanation:
+        #   - What we do here is first autogenerate fresh .strings file from the source files (IB/sourcecode) using Apples tools
+        #   - The fresh strings files will have their kv-pair's comments and keys up-to-date with the source file (but it won't contain any translations, the values are just empty or garbage)
+        #   - We store the content of these freshly generated strings files inside generated_content
         
         generated_content = ''
         
@@ -194,8 +195,9 @@ def update_strings_files(files, type, repo_root):
 def log_modifications(modss):
     
     """
-    Notes: 
-    - Not sure if show_line_numbers in shared.get_diff_string is useful. the line number isn't the line number in the source file 
+    Notes:
+    - We wrote this to be able to see what exactly our code did. But it's bad and not really used. I think I just went over to using a diff tool to see what changed instead of this.
+    - Not sure if show_line_numbers in shared.get_diff_string is useful. the line number isn't the line number in the source file
         but instead it's the position of the kv-pair in the list of kv-pairs in the source file.
     """
     
@@ -359,11 +361,11 @@ def parse_strings_file_content(content, file_path, remove_value=False):
     
     """
     
-    Parse a .strings file into this structure:      (Should also work on .js translation files, but untested)
+    Parse a .strings file into this structure:      (Should also work on .js translation files such as the ones we're using on the nuxt MMF website, but that's currently untested)
     {
         "<translation_key>": {
             "comment": "<comment_string>",
-            "line": "<translation_key_value_string>",
+            "line": "<translation_key_and_value_string>",
         },
         ...
     }
@@ -389,22 +391,28 @@ def parse_strings_file_content(content, file_path, remove_value=False):
         - line-based approach:
             - goes through the text line-by line, and applies the regex to each line.
             - That makes for simple code, and it allows us to verify that the .strings file has the correct format, instead of doing weird stuff like the match-based approach.
-            - We used splitlines(True) to iterate lines, but this didn't work, because the strings sometimes contain the character 'LINE SEPARATOR' (U+2028) if you enter a linebreak in IB, and splitlines splits at those characters. (Example for this is the '+' field hint.)
+            - We used splitlines(True) to iterate lines, but this didn't work, because the strings sometimes contain the character 'LINE SEPARATOR' (U+2028) if you enter a linebreak in IB, and splitlines() splits at those characters. (Example for this is the '+' field hint, which used to contain the LINE SEPARATOR char.)
                 - Note: Gave GitHub Feedback at: https://github.com/orgs/community/discussions/84092
             - But by simply using .split('\n') it seems to work!
         - match-based approach:
-            - The match-based applies the regext for finding kv-pairs to the whole string, and then iterates through the matches.
+            - The match-based approach applies a regex for finding kv-pairs to the whole string, and then iterates through the matches.
             - This works fine, butttt if you forget to put a semicolon at the end, then it will consider the whole kv-pair part of a comment, and will simply delete it.
-                This has happened to me a few times when I was tired and I HATE this behaviour. That's why we're going back to the line-based approach with some additional checks to make sure everything is well-formatted.
-    - Somehow we seem to be replacing consecutive blank lines before and after comments with single blank lines in the output of the script. 
-        That's nice, but I don't understand why it's happending. Might be coming from this function. Edit: It think it's just because we replace the comments and the comments from the generated content don't have double line breaks.
+                This has happened to me a few times when I was tired and I HATE this behaviour. That's why we're going back to the line-based approach with some additional checks to make sure everything is well-formatted. So we can give user feedback if there's a syntax error in the strings file instead of just deleting stuff.
+    - Somehow we seem to be replacing consecutive blank lines before and after comments with single blank lines in the output of the script.
+        That's nice, but I don't understand why it's happending. Might be coming from this function. Edit: It think it's just because we replace the comments. And the comments from the generated content don't have double line breaks.
     """
     
-    def assert_full_match(match, line, name, line_number):
+    def assert_full_match(match, line, regex_name, line_number):
+    
+        """
+        Explanation:
+        We want every character of every line to be matched by one of our regexes. That way we can be more sure that the syntax of each line is correct and our code correctly parses each line. This function checks of every character of line is matched by a specific regex. 
+        """
+    
         match_end_target = 0 if len(line) == 0 else len(line) - 1
         
         if not (match.start(0) == 0 and match.end(0) == match_end_target):
-            xcerror(f"Line is matched by {name}, but only partially. This means there is probably something weird with the syntax / formatting.",
+            xcerror(f"Line is matched by {regex_name}, but only partially. This means there is probably something weird with the syntax / formatting.",
                            file_path, line_number)
     
     last_key_line_number = -1
