@@ -22,6 +22,7 @@ NS_ASSUME_NONNULL_BEGIN
 + (NSImage *)tintedImage:(NSImage *)image withColor:(NSColor *)tint;
 + (CGFloat)actualTextViewWidth:(NSTextView *)textView;
 //+ (CGFloat)actualTextFieldWidth:(NSTextField *)textField;
++ (NSArray <NSNumber *> * _Nullable)cpuUsageIncludingNice:(BOOL)includeNice;
 
 @end
 

@@ -406,7 +406,7 @@ def parse_strings_file_content(content, file_path, remove_value=False):
     
         """
         Explanation:
-        We want every character of every line to be matched by one of our regexes. That way we can be more sure that the syntax of each line is correct and our code correctly parses each line. This function checks of every character of line is matched by a specific regex. 
+        We want every character of every line to be matched by one of our regexes. That way we can be more sure that the syntax of each line is correct and our code correctly parses each line. This function checks of every character of line is matched by a specific regex.
         """
     
         match_end_target = 0 if len(line) == 0 else len(line) - 1

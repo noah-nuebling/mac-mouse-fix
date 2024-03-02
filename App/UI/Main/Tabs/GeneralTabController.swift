@@ -120,7 +120,7 @@ class GeneralTabController: NSViewController {
                         
                         /// Set up a timer that fires `enableTimeout` seconds after the user clicked
                         let timeSinceUserClick = CACurrentMediaTime() - userClickTS
-                        let timerFireTime = DispatchTime.now() + enableTimeout - timeSinceUserClick
+                        var timerFireTime = DispatchTime.now() + enableTimeout - timeSinceUserClick
                         enableTimeoutTimer = DispatchSource.makeTimerSource(flags: [], queue: .main) /// Using main queue here since we're drawing UI from the callback
                         enableTimeoutTimer?.schedule(deadline: timerFireTime)
                         enableTimeoutTimer?.setEventHandler(qos: .userInitiated, flags: [], handler: {
@@ -128,6 +128,31 @@ class GeneralTabController: NSViewController {
                             ///
                             /// Enabling __has__ timed out
                             ///
+                            
+                            /// Extend the enable timeout if the CPU is busy.
+                            /// Notes:
+                            /// -  We added this so the enableTimeout isn't triggered when the computer is starting up. I think what we really wanna be doing here is wait for all the login items to start before starting the enableTimeout. The login items are only started after most of the windows are restored. The CPU usage is an okay way to detect this startup sequence but far from perfect. The CPU usage will continute to be high during startup after the login items have been started. Also CPU can be high in other circumstances. CPU usage will be high in more cases than the ones we want to detect. But I think it's better to show enable-timeout-toast too little than too much since I don't want to confuse/clutter up normal users with it and users that actually can't enable Mac Mouse Fix are gonna find the toast, even if it doesn't show up 100% consistently.
+                            /// - It's conceivable that on weaker machines the CPU usage never goes below our thrwshold and therefore the enable-timeout-message is never shown.
+                            
+                            if let cpuUsage = Utility_App.cpuUsage(includingNice: false) {
+                                
+                                var mightBeStartingUp = false
+                                
+                                for coreUsage in cpuUsage {
+                                    if coreUsage.floatValue >= 0.5 {
+                                        mightBeStartingUp = true
+                                        break
+                                    }
+                                }
+                                
+                                if mightBeStartingUp {
+                                    timerFireTime = timerFireTime + enableTimeout
+                                    enableTimeoutTimer?.schedule(deadline: timerFireTime)
+                                    
+                                    DDLogDebug("GeneralTabController - might be starting up - extending enable timeout. CPU usage: \(cpuUsage)")
+                                    return
+                                }
+                            }
                             
                             /// Clean up
                             enableTimeoutDisposable?.dispose()
