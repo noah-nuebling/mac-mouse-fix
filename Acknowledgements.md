@@ -40,6 +40,11 @@ Thanks for your support! :)
 
 These people spent a lot more than the standard price and treated me to an **Incredible Milkshake**. (And some even left a message) Thanks for the _sugar rush_!
 
+**March 2024**
+
+- 🇺🇸&nbsp;Erica&nbsp;Frysquint
+- 🇺🇸&nbsp;Sean&nbsp;W&nbsp;Brown - "One of the best pieces of software for MacOS. Simple, robust, and does exactly what I wished my mouse would do out of the box with the OS. Cheers! 🧋"
+
 **February 2024**
 
 - 🇦🇺&nbsp;Luca&nbsp;D'Aubbonnett - "Best bit of software I've ever purchased. Cheers Noah 🍻"
