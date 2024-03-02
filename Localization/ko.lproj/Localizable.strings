@@ -245,7 +245,7 @@
 /* First draft: Zoom in or out in Safari and other apps.\n \nWorks like a two-finger double tap on an Apple Trackpad. */
 "effect.smart-zoom.hint" = "Safari 등의 앱에서 콘텐츠를 확대하거나 축소합니다.\n \n이는 Apple 트랙패드에서 두 손가락으로 이중 탭하는 것과 같습니다.";
 
-/* First draft: If you have **problems enabling** the app, click [here](https://github.com/noah-nuebling/mac-mouse-fix/discussions/categories/guides). */
+/* First draft: If you have **problems enabling** the app, click&nbsp;[here](https://github.com/noah-nuebling/mac-mouse-fix/discussions/861). */
 "enable-timeout-toast" = "enable-timeout-toast";
 
 /* First draft: **Primary Mouse Button** can't be used\nPlease try another button */

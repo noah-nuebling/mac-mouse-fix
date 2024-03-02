@@ -245,8 +245,8 @@
 /* First draft: Zoom in or out in Safari and other apps.\n \nWorks like a two-finger double tap on an Apple Trackpad. */
 "effect.smart-zoom.hint" = "Zoom in or out in Safari and other apps.\n \nWorks like a two-finger double tap on an Apple Trackpad.";
 
-/* First draft: If you have **problems enabling** the app, click [here](https://github.com/noah-nuebling/mac-mouse-fix/discussions/categories/guides). */
-"enable-timeout-toast" = "If you have **problems enabling** the app, click [here](https://github.com/noah-nuebling/mac-mouse-fix/discussions/categories/guides).";
+/* First draft: If you have **problems enabling** the app, click&nbsp;[here](https://github.com/noah-nuebling/mac-mouse-fix/discussions/861). */
+"enable-timeout-toast" = "If you have **problems enabling** the app, click&nbsp;[here](https://github.com/noah-nuebling/mac-mouse-fix/discussions/861).";
 
 /* First draft: **Primary Mouse Button** can't be used\nPlease try another button */
 "forbidden-capture-toast.1" = "**Primary Mouse Button** can't be used\nPlease try another button";
