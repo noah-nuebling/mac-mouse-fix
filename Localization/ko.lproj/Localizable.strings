@@ -407,7 +407,7 @@
 /* First draft: Swift Scroll */
 "scroll-effect.swift" = "고속 스크롤";
 
-/* Scroll long distances with minimal effort */
+/* First draft: Scroll long distances with minimal effort */
 "scroll-effect.swift.hint" = "적은 움직임으로 먼 거리를 스크롤합니다.";
 
 /* First draft: Zoom In or Out */

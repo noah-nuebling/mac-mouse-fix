@@ -92,7 +92,7 @@ static NSArray *getScrollEffectsTable() {
             kMFModifiedScrollDictKeyEffectModificationType: kMFModifiedScrollEffectModificationTypeRotate
         }}, /// We only have this option so the menu layout looks better. I can't really think of a usecase
         separatorEffectsTableEntry(),
-        @{@"ui": NSLocalizedString(@"scroll-effect.swift", @"First draft: Swift Scroll"), @"tool": NSLocalizedString(@"scroll-effect.swift.hint", @"Scroll long distances with minimal effort"), @"dict": @{
+        @{@"ui": NSLocalizedString(@"scroll-effect.swift", @"First draft: Swift Scroll"), @"tool": NSLocalizedString(@"scroll-effect.swift.hint", @"First draft: Scroll long distances with minimal effort"), @"dict": @{
             kMFModifiedScrollDictKeyInputModificationType: kMFModifiedScrollInputModificationTypeQuickScroll
         }},
         @{@"ui": NSLocalizedString(@"scroll-effect.precise", @"First draft: Precise Scroll"), @"tool": NSLocalizedString(@"scroll-effect.precise.hint", @"First draft: Scroll small distances and use sensitive UI elements with precision"), @"dict": @{

@@ -1769,7 +1769,7 @@ System Preferences &gt; Mouse &gt; Tracking speed </string>
                                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                 </textFieldCell>
                                             </textField>
-                                            <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="mWQ-i7-vza" customClass="ClickableImageView">
+                                            <imageView toolTip="Hold Command (⌘) and Shift (⇧), then click this icon to reveal Mac Mouse Fix's configuration file in Finder" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="mWQ-i7-vza" customClass="ClickableImageView">
                                                 <rect key="frame" x="1104" y="65" width="50" height="50"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="50" id="D2j-Hr-mtG"/>

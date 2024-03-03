@@ -284,6 +284,9 @@
 /* Class = "NSButtonCell"; title = "Restore Defaults..."; ObjectID = "lrw-Lp-nQ4"; */
 "lrw-Lp-nQ4.title" = "回復預設值⋯";
 
+/* Class = "NSImageView"; ibShadowedToolTip = "Hold Command (⌘) and Shift (⇧), then click this icon to reveal Mac Mouse Fix's configuration file in Finder"; ObjectID = "mWQ-i7-vza"; */
+"mWQ-i7-vza.ibShadowedToolTip" = "Hold Command (⌘) and Shift (⇧), then click this icon to reveal the Mac Mouse Fix configuration file in Finder";
+
 /* Class = "NSTableColumn"; headerCell.title = "<Trigger>"; ObjectID = "o3B-zA-fJm"; */
 "o3B-zA-fJm.headerCell.title" = "<Trigger>";
 

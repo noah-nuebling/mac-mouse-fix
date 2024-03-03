@@ -416,7 +416,7 @@
 /* First draft: Swift Scroll */
 "scroll-effect.swift" = "快速滚动";
 
-/* Scroll long distances with minimal effort */
+/* First draft: Scroll long distances with minimal effort */
 "scroll-effect.swift.hint" = "轻松地滚动大段距离";
 
 /* First draft: Zoom In or Out */

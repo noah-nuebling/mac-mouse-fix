@@ -407,7 +407,7 @@
 /* First draft: Swift Scroll */
 "scroll-effect.swift" = "Swift Scroll";
 
-/* Scroll long distances with minimal effort */
+/* First draft: Scroll long distances with minimal effort */
 "scroll-effect.swift.hint" = "Scroll long distances with minimal effort";
 
 /* First draft: Zoom In or Out */

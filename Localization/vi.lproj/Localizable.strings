@@ -407,7 +407,7 @@
 /* First draft: Swift Scroll */
 "scroll-effect.swift" = "Cuộn nhanh";
 
-/* Scroll long distances with minimal effort */
+/* First draft: Scroll long distances with minimal effort */
 "scroll-effect.swift.hint" = "Cuộn nhanh một khoảng dài lên đầu trang hoặc cuối trang";
 
 /* First draft: Zoom In or Out */
