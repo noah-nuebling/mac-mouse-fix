@@ -42,6 +42,7 @@ These people spent a lot more than the standard price and treated me to an **Inc
 
 **March 2024**
 
+- 🇳🇴&nbsp;Aleksandr&nbsp;Stoianov
 - 🇨🇦&nbsp;Zaclimon - "Now I can finally get rid of Logi Options + Mos"
 - 🇺🇸&nbsp;Erica&nbsp;Frysquint
 - 🇺🇸&nbsp;Sean&nbsp;W&nbsp;Brown - "One of the best pieces of software for MacOS. Simple, robust, and does exactly what I wished my mouse would do out of the box with the OS. Cheers! 🧋"
