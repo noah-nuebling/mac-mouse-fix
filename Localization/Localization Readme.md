@@ -53,8 +53,10 @@ Detailed Reflection:
 .xcloc files make it much easier for non-programmers to translate Mac Mouse Fix.
 
 - See the main documentation here: https://developer.apple.com/documentation/xcode/exporting-localizations/
-- Go to **Xcode > Product > Export Localizations...** to get an .xcloc file. You can also generate from the command line and include screenshots generated from XCUI tests. See the main documentation for that.
-- Make sure the Xcode build flag **Compiler to Extract Swift Strings** (aka SWIFT_EMIT_LOC_STRINGS) is set to YES so that the extracting works properly (src: main documentation)
+- See documentation on including screenshots in .xcloc files: https://developer.apple.com/documentation/xcode/creating-screenshots-of-your-app-for-localizers
+
+- Go to **Xcode > Product > Export Localizations...** to get an .xcloc file. You can also generate from the command line with **xcodebuild -exportLocalizations** and include screenshots generated from **XCUI** tests using the **-includeScreenshots** argument. See the main documentation for that. 
+- Make sure the Xcode build flag **Compiler to Extract Swift Strings** (aka SWIFT_EMIT_LOC_STRINGS) is set to YES so that the extracting works properly for swift (src: main documentation)
 
 ## Memory helpers
 
