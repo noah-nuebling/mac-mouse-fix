@@ -196,10 +196,27 @@ static CFTimeInterval _consecutiveSwipeSequenceStartTime;
         smoothedTimeBetweenTicks = DBL_MAX;
         
         /// Reset smoother:
-        /// Note: Initializing the smoother with the tickMax should make things a bit more stable. Not sure if good idea. Added this to make `baseMsPerStepMin` speed up the animation more slowly for fast-but-short scrollSwipes. This might make the scroll distance acceleration slower though.
         [_tickTimeSmoother reset];
-        (void)[_tickTimeSmoother smoothWithValue:scrollConfig.consecutiveScrollTickIntervalMax];
         
+        /// Initialize smoother with tickMax
+        /// Notes:
+        /// - Initializing the smoother with the tickMax should make things a bit more stable. Not sure if good idea. Added this to make `baseMsPerStepMin` speed up the animation more slowly for fast-but-short scrollSwipes. Without this it feels a bit volatile. This might make the scroll distance acceleration slower though.
+        /// - Update: V-Coba complained about scrolling being too slow with 'Precision' enabled in [this issue](https://github.com/noah-nuebling/mac-mouse-fix/issues/795). I'm pretty sure it is caused by this. This is a bit of a dilemma. I do think it might be good in principle to initialize the smoother with something, since otherwise the first timebetweenticks is unsmoothed and can be randomly very high or very low (as I understand currently, it's been a while since a wrote this). However, we've spent a LOT of time perfecting the acceleration curves without this additional smoothing, and adding the smoothing makes the acceleration curves noticably worse, especially with 'Precision' enabled. I don't use 'Precision', but from my limited testing I have the same impression as V-Coba.  So I'll turn the smoothing off for now, which should restore the original scroll-distance-acceleration, and try to tune the `baseMsPerStepMin` down a bit so that it doesn't feel as volatile even without the extra smoothing.
+        /// - Plan: At some point, take more time to explore adding smoothing here, and then tune the acceleration curves and the `baseMsPerStepMin` to feel as good as possible with that.
+        /// - Lesson: Don't ship changes to these fundamental aspects of the scrolling system, if you don't have a lot of time to test and tune curves to the changes.
+        /// - Further reflection:
+        ///     - My theory of how this affects scrolling in practise is that
+        ///     - 1. The other way that this affects scrolling is that it makes it so the scrolling accelerates over time even if the speed of your finger is constant. That's an inevitable effect of the smoothing, which I thought would make things more 'stable' and 'predictable'. It does make things more stable in some sense, but to me, right now, this acceleration-over-time effect makes things less predictable and feel more volatile. But maybe my perception could change if we tune the acceleration curves accordingly or if I get used to it.
+        ///     - 2. it makes the distance of small-but-fast 2-3 tick swipes closer to the unaccelerated distance. This has an especially large effect when 'Precise' is enabled because there the unaccelerated distance is super small. For high smoothness I actually liked the smaller distance for small-but-fast 2-3 tick swipes. 
+        ///         - I think the way to think about that is that those small swipes are actually *easier* to execute that single ticks (might be mouse-dependent). That's because to do the single ticks you need to put tension in your finger in order to be precise. So it's easier to do a bunch of small swipes than a bunch of single ticks. I think this is also why I see quite a bunch of people prefer the 'Precise' setting - I makes it so you have to put less tension in your fingers to scroll a smaller distance instead of a too large distance.
+        ///         - We should therefore very carefully tune the distance for those small swipes to be comfortable and consistent. For high smoothness, I think currently distance is a bit too high for many settings.
+        ///         - HORRIBLE HACK: For now I've enabled the tickSmoother initing, but only for smoothness high and precise turned off. I like it better. I think what we're doing here is simply make the speed lower for small scroll swipes. For the other settings I didn't like the additional smoothing, I think because it either made things too slow or because the speedup over time made things harder to control. But not sure.
+        ///         - TODO: Remove the hack and adjust acceleration curves instead.
+        
+        if (scrollConfig.u_smoothness == kMFScrollSmoothnessHigh && !scrollConfig.u_precise) {
+            /// HORRIBLE HACK
+            (void)[_tickTimeSmoother smoothWithValue:scrollConfig.consecutiveScrollTickIntervalMax];
+        }
         
     } else { /// This is not first consecutive tick
         smoothedTimeBetweenTicks = [_tickTimeSmoother smoothWithValue:secondsSinceLastTick];
