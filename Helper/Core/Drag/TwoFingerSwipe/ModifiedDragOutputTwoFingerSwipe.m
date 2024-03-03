@@ -58,15 +58,11 @@ static dispatch_group_t _momentumScrollWaitGroup;
     _drag = dragStateRef;
     
     /// Stop momentum scroll
-    ///     TODO: Think about this - I don't think this is an adequate solution
     ///     Notes:
-    ///     - Thought: I think we should remove the initializeWithDragState: method from the protocol entirely
-    ///         - All of the momentumScroll stopping interaction between scroll and drag I still have to think about.
-//    [GestureScrollSimulator stopMomentumScroll];
-    
-    /// Stop scrollwheen scrolling
-    ///     TODO: Also think about this
-    ///     Note: At the time of writing, [Scroll resetState] calls [GestureScrollSimulator stopMomentumScroll] so therefore we're commenting out the other call of stopMomentumScroll.
+    ///     - I think we should remove the initializeWithDragState: method from the protocol entirely (Update: Not totally sure why I thought this) All of the scrollStop interactions between I still have to think about.
+    ///     - Initially, here, we just called [GestureScrollSimulator stopMomentumScroll], then later we replaced it with [Scroll resetState], which stops both the momentumScroll animator and the scrollwheel animator.
+    ///     - On the trackpad driver, scrolling seems to stop whenever any clicks or gestures come in. Maybe we should do a similar type of top-down management of when scrolling is stopped, instead of doing it here. Feels sorta hacky to do it here.
+
     [Scroll resetState];
 }
 

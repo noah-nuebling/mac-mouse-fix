@@ -382,7 +382,7 @@ void handleMouseInputWhileInUse(int64_t deltaX, int64_t deltaY, CGEventRef event
         unsuspend = ^{
             dispatch_async((*drag).queue, ^{
                 if (ogTime == (*drag).initTime && (*drag).isSuspended) { /// So we don't unsuspend a different drag than the one we suspended
-                    NSLog(@"UNSuspending ModifiedDrag");
+                    DDLogDebug(@"UNSuspending ModifiedDrag");
                     (*drag).isSuspended = NO;
                     initDragState_Unsafe();
                     [(*drag).outputPlugin unsuspend];

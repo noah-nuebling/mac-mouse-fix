@@ -461,12 +461,14 @@ static void heavyProcessing(CGEventRef event, int64_t scrollDeltaAxis1, int64_t 
         }
         
         ///
-        /// TEST: Make direction change simply stop scroll animation
+        /// Make direction change stop scroll animation
         ///
+        /// Notes:
+        /// - We implemented this here without much consideration to play around with it. I haven't really thought about the control flow and stuff - maybe it's not super clean to just return here? Maybe we should set pxToScrollForThisTick to zero? Idk. But I've been using it for a while and it works well.
+        /// - We used to have a threshold for the currentAnimationSpeed of 200 to actually cancel the animator, but it seems to feel nicer to just set the threshold to 0. At this point it might be simpler or more efficient to not use the `currentAnimationSpeed` here or use something else instead. Buttt the performance impact reallyyy shouldn't be significant and it works fine so it's whatever.
         
-        double theSpeeddd = magnitudeOfVector(_animator.getLastAnimationSpeed);
-        NSLog(@"THE SPEED: %f", theSpeeddd);
-        if (_lastScrollAnalysisResult.scrollDirectionDidChange && theSpeeddd > 200.0) {
+        double currentAnimationSpeed = magnitudeOfVector(_animator.getLastAnimationSpeed);
+        if (_lastScrollAnalysisResult.scrollDirectionDidChange && currentAnimationSpeed > 0) {
             [_animator cancel];
             return;
         }
