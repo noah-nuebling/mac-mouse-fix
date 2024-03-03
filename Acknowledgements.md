@@ -42,6 +42,7 @@ These people spent a lot more than the standard price and treated me to an **Inc
 
 **March 2024**
 
+- 🇨🇦&nbsp;Slademachine
 - 🇳🇴&nbsp;Aleksandr&nbsp;Stoianov
 - 🇨🇦&nbsp;Zaclimon - "Now I can finally get rid of Logi Options + Mos"
 - 🇺🇸&nbsp;Erica&nbsp;Frysquint
