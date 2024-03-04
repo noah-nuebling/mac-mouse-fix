@@ -10,8 +10,6 @@ xcuserdata/
 # !Mouse Fix.xcodeproj/xcuserdata/Noah.xcuserdatad/xcschemes/*
 # Mouse Fix.xcodeproj/xcuserdata/Noah.xcuserdatad/xcdebugger/*
 
-sudopass.sh
-
 # Python stuff
 env/
 venv/
@@ -27,3 +25,4 @@ __pycache__
 
 # Sensitive
 gumroad_sales_cache.json
+sudopass.sh
