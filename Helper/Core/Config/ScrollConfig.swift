@@ -298,15 +298,19 @@ import CocoaLumberjackSwift
     @objc lazy var scrollSwipeMax_inTicks: Int = 11 /// Max number of ticks that we think can occur in a single swipe naturally (if the user isn't using a free-spinning scrollwheel). (See `consecutiveScrollSwipeCounter_ForFreeScrollWheel` definition for more info)
     
     @objc lazy var consecutiveScrollTickIntervalMax: TimeInterval = 160/1000
-    /// ^ If more than `_consecutiveScrollTickIntervalMax` seconds passes between two scrollwheel ticks, then they aren't deemed consecutive.
+    /// ^ Notes:
+    ///     If more than `_consecutiveScrollTickIntervalMax` seconds passes between two scrollwheel ticks, then they aren't deemed consecutive.
     ///        other["consecutiveScrollTickIntervalMax"] as! Double;
     ///     msPerStep/1000 <- Good idea but we don't want this to depend on msPerStep
     
-    @objc lazy var consecutiveScrollTickIntervalMin: TimeInterval = 15/1000
-    /// ^ 15ms seemst to be smallest scrollTickInterval that you can naturally produce. But when performance drops, the scrollTickIntervals that we see can be much smaller sometimes.
-    ///     This variable can be used to cap the observed scrollTickInterval to a reasonable value
-    
-    
+    @objc lazy var consecutiveScrollTickIntervalMin: TimeInterval = 1/1000
+    /// ^ Notes:
+    ///     - This variable is used to cap the observed scrollTickInterval to a reasonable value. We also use it for calling Math.scale() on the timeBetweenTicks. but I'm not sure that's better than just using 0 instead of this value.
+    ///     - 15ms seemst to be smallest scrollTickInterval that you can naturally produce. But when performance drops, the scrollTickIntervals that we see can be much smaller sometimes.
+    ///     - Update: This is not true for my Roccat Mouse connected via USB. The tick times go down to around 5ms on that mouse. I can reproduce the 15ms minimum using my Logitech M720 connected via Bluetooth. I guess it depends on the mouse hardware or on the transport (bluetooth vs USB).  The 15ms delay means the mouse has a 66.66 Hz polling rate on its wheel which is weird. 5ms is a 200hz polling rate.
+    ///         - Action: We're lowering the `consecutiveScrollTickIntervalMax` from 15 -> 1. Primarily to be able to implement the `baseMsPerStepCurve` algorithm better, but also just because it makes sense.
+    ///         **HACK**: We need to keep the  the `consecutiveScrollTickInterval_AccelerationEnd` at 15ms for now, because lowering that to 5ms would change the behaviour or the acceleration algorithm and make scrolling slower, and we don't have time to adjust the acceleration curves right now.
+
     @objc lazy var consecutiveScrollSwipeMaxInterval: TimeInterval = {
         /// If more than `_consecutiveScrollSwipeIntervalMax` seconds passes between two scrollwheel swipes, then they aren't deemed consecutive.
         
@@ -342,14 +346,17 @@ import CocoaLumberjackSwift
         return result
     }()
     
-    @objc lazy private var consecutiveScrollTickInterval_AccelerationEnd: TimeInterval = consecutiveScrollTickIntervalMin
-    /// ^ Used to define accelerationCurve. If the time interval between two ticks becomes less than `consecutiveScrollTickInterval_AccelerationEnd` seconds, then the accelerationCurve becomes managed by linear extension of the bezier instead of the bezier directly.
+    @objc lazy var consecutiveScrollTickInterval_AccelerationEnd: TimeInterval = 15/1000 //consecutiveScrollTickIntervalMin
+    /// ^ Notes:
+    ///     - Used to define accelerationCurve. If the time interval between two ticks becomes less than `consecutiveScrollTickInterval_AccelerationEnd` seconds, then the accelerationCurve becomes managed by linear extension of the bezier instead of the bezier directly.
+    ///     - This should ideally be equal to `consecutiveScrollTickIntervalMin`. For an explanation why it's different at the moment, see the notes on consecutiveScrollTickIntervalMin
     
     /// Note: We are just using RollingAverge for smoothing, not ExponentialSmoothing, so this is currently unused.
     @objc lazy var ticksPerSecond_DoubleExponentialSmoothing_InputValueWeight: Double = 0.5
     @objc lazy var ticksPerSecond_DoubleExponentialSmoothing_TrendWeight: Double = 0.2
     @objc lazy var ticksPerSecond_ExponentialSmoothing_InputValueWeight: Double = 0.5
-    /// ^       1.0 -> Turns off smoothing. I like this the best
+    /// ^  Notes:
+    ///     1.0 -> Turns off smoothing. I like this the best
     ///     0.6 -> On larger swipes this counteracts acceleration and it's unsatisfying. Not sure if placebo
     ///     0.8 ->  Nice, light smoothing. Makes  scrolling slightly less direct. Not sure if placebo.
     ///     0.5 -> (Edit) I prefer smoother feel now in everything. 0.5 Makes short scroll swipes less accelerated which I like
@@ -479,7 +486,7 @@ import CocoaLumberjackSwift
     /// baseCurve params
     @objc let baseCurve: Bezier?
     @objc let speedSmoothing: Double /// `speedSmoothing` replaces `baseCurve`. If it is active, the baseCurve will be dynamically calculated, such that the animation speed doesn't jump after a scrollwheel-tick occurs.
-    @objc let baseMsPerStepMin: Double /// If this is not -1, the minStepDuration will start at baseMsPerStep and will decrease as the time between physical scrollWheel ticks decreases.
+    @objc let baseMsPerStepCurve: Curve? /// If this is not nil, the minStepDuration will be controlled by this curve instead of baseMsPerStep. The point at which this curve is sampled will increase from 0 to 1 as the time between physical scrollWheel ticks decreases.
     @objc let baseMsPerStep: Int /// When using dragCurve that will make the actual msPerStep longer
     /// dragCurve params
     @objc let useDragCurve: Bool /// If false, use only baseCurve, and ignore dragCurve
@@ -491,17 +498,17 @@ import CocoaLumberjackSwift
     @objc let sendMomentumScrolls: Bool /// Only works if sendGestureScrolls and useDragCurve is true. If true, make Scroll.m send momentumScroll events (what the Apple Trackpad sends after lifting your fingers off) when scrolling is controlled by the dragCurve (and in some other cases, see TouchAnimator). Only use this when the dragCurve closely mimicks the Apple Trackpads otherwise apps like Xcode will behave differently from other apps during momentum scrolling.
     
     /// Init
-    init(baseCurve: Bezier?, speedSmoothing: Double, baseMsPerStepMin: Double, baseMsPerStep: Int, dragExponent: Double, dragCoefficient: Double, stopSpeed: Int, sendGestureScrolls: Bool, sendMomentumScrolls: Bool) {
+    init(baseCurve: Bezier?, speedSmoothing: Double, baseMsPerStepCurve: Curve?, baseMsPerStep: Int, dragExponent: Double, dragCoefficient: Double, stopSpeed: Int, sendGestureScrolls: Bool, sendMomentumScrolls: Bool) {
         
         /// Init for using hybridCurve (baseCurve + dragCurve) or (speedSmoothingCurve + dragCurve).
         
-        if sendMomentumScrolls      { assert(sendGestureScrolls) }
-        assert(speedSmoothing != -1 || baseCurve != nil)
-        assert(speedSmoothing == -1 || baseCurve == nil)
+        if sendMomentumScrolls { assert(sendGestureScrolls) }
+        assert((speedSmoothing != -1) ^ (baseCurve != nil))
+        assert((baseMsPerStepCurve == nil) ^ (baseMsPerStep == -1))
         
         self.baseCurve = baseCurve
         self.speedSmoothing = speedSmoothing
-        self.baseMsPerStepMin = baseMsPerStepMin
+        self.baseMsPerStepCurve = baseMsPerStepCurve
         self.baseMsPerStep = baseMsPerStep
         
         self.useDragCurve = true
@@ -522,7 +529,7 @@ import CocoaLumberjackSwift
         
         self.baseCurve = baseCurve
         self.speedSmoothing = -1
-        self.baseMsPerStepMin = -1
+        self.baseMsPerStepCurve = nil
         
         self.useDragCurve = false
         self.dragExponent = -1
@@ -562,26 +569,43 @@ fileprivate func animationCurveParamsMap(name: MFScrollAnimationCurveName) -> MF
     case kMFScrollAnimationCurveNameLowInertia:
 
         /// vvv Higher baseMsPerStep
-//        return MFScrollAnimationCurveParameters(baseCurve: nil, speedSmoothing: 0.00, baseMsPerStepMin: 90, baseMsPerStep: 160, dragExponent: 1.0, dragCoefficient: 23, stopSpeed: 30, sendGestureScrolls: false, sendMomentumScrolls: false)
+//        return MFScrollAnimationCurveParameters(baseCurve: nil, speedSmoothing: 0.00, baseMsPerStepCurve: 90, baseMsPerStep: 160, dragExponent: 1.0, dragCoefficient: 23, stopSpeed: 30, sendGestureScrolls: false, sendMomentumScrolls: false)
         
         /// vvv Combination of previous 2
-//        return MFScrollAnimationCurveParameters(baseCurve: nil, speedSmoothing: 0.00, baseMsPerStepMin: 90, baseMsPerStep: 140, dragExponent: 1.05, dragCoefficient: 15, stopSpeed: 30, sendGestureScrolls: false, sendMomentumScrolls: false)
+//        return MFScrollAnimationCurveParameters(baseCurve: nil, speedSmoothing: 0.00, baseMsPerStepCurve: 90, baseMsPerStep: 140, dragExponent: 1.05, dragCoefficient: 15, stopSpeed: 30, sendGestureScrolls: false, sendMomentumScrolls: false)
         
         /// vvv This tries to 'feel' like MMF 2.
-        ///     - For medium and large scroll swipes it feels similarly responsive snappy to MMF 2 due to the 90 baseMsPerStepMin. (In MMF 2 the baseMsPerStep was 90)
+        ///     - For medium and large scroll swipes it feels similarly responsive snappy to MMF 2 due to the 90 baseMsPerStepCurve. (In MMF 2 the baseMsPerStep was 90)
         ///     - For single ticks on default settings, the speed feels similar to MMF 2 due to the 140 baseMsPerStep and due to the step size being larger than MMF 2.
         ///     - In MMF 2, exponent is 1.0 and coeff is 2.3. Here the coeff is 23. Not sure if that's the same but feels similar.
-        ///     - TODO: Play around with `baseMsPerStepMin` and find optimal value for all the animation curves. highInertia could also possibly benefit.
+        ///     - TODO: Play around with `baseMsPerStepCurve` and find optimal value for all the animation curves. highInertia could also possibly benefit.
         
-        return MFScrollAnimationCurveParameters(baseCurve: nil, speedSmoothing: 0.00, baseMsPerStepMin: 90, baseMsPerStep: 140, dragExponent: 1.0, dragCoefficient: 23, stopSpeed: 30, sendGestureScrolls: false, sendMomentumScrolls: false)
+        /// Define curve for the baseMsPerStepCurve speedup
+        /// Notes:
+        /// - The reason why we introduced a curve, is that when we tried linear interpolation for the baseMsPerStepCurve, we found that little 2-3 tick swipes were too fast, but larger/faster swipes were too slow. Initially, we tried to fix that by adding additional smoothing inside ScrollAnalyzer by initializing the `_tickTimeSmoother` with a value. However, this messed up the scroll distance acceleration, so we turned that back off. This curve is our second attempt at making the 2-3 tick swipes animate slower while making the larger or faster swipes animate faster. In contrast to the previous ScrollAnalyzer approach, this approach doesn't have a time component, where if you scroll at the same speed for a longer time it speeds up more. Not sure if this is a good or bad thing.
+        /// - The curve we're using is basically just a shifted and scaled exponential function. I designed it using this desmos page: https://www.desmos.com/calculator/l8plcdlpmn. I first tried using a Bezier curve, but it didn't get curved enough. I thought about using a curve based on 1/x instead of e^x, but they looked very similar in desmos and e^x is simpler to deal with.
+
+        let curvature = 4.0 /* 5.0 */ /// Should be >= 0.0
+        let baseMsPerStepCurveMax = 140.0 /*150.0 140.0*/
+        let baseMsPerStepCurveMin = 60.0 /*90.0 60.0*/
+        
+        let e1 = { x in exp(x * curvature) - 1 }
+        let e2 = { x in e1(x) / e1(1) }
+        let e3 = CurveTools.transformCurve(e2) { y in
+            Math.scale(value: y, from: .unitInterval, to: Interval(baseMsPerStepCurveMax, baseMsPerStepCurveMin))
+        }
+
+        let baseSpeedupCurve = Curve(rawCurve: e3)
+        
+        return MFScrollAnimationCurveParameters(baseCurve: nil, speedSmoothing: 0.00, baseMsPerStepCurve: baseSpeedupCurve, baseMsPerStep: -1, dragExponent: 1.0, dragCoefficient: 23, stopSpeed: 30, sendGestureScrolls: false, sendMomentumScrolls: false)
         
         /// - vvv I don't like this curve atm. It's still too slow. I'm currently 'tuned into' liking the MMF 2 algorithm and it's much quicker than this.
         /// -        MMF 2 has baseMsPerStep 90, this makes medium and large scroll swipes feel much more responsive. But single scroll ticks feel too fast. Maybe we could implement an algorithm where the baseMSPerStep is variable and it shrinks on consecutive scroll swipes or as the scroll speed gets higher, or sth like that. Ideas:
         ///    - Add a cap to the base scroll speed.
         ///    - Make the msPerStep a mix between baseMSPerStep and the actual msPerStep of the scrollwheel. Maybe as soon as `scrollWheelMsPerStep < baseMSPerStep` we use `scrollWheelMsPerStep` or do an interpolation between the 2
-        ///         Update: Implemented this with the `baseMsPerStepMin` param
+        ///         Update: Implemented this with the `baseMsPerStepMin`param (Update: Now changed to `baseMsPerStepCurve`)
         
-//        return MFScrollAnimationCurveParameters(baseCurve: nil, speedSmoothing: 0.00, baseMsPerStepMin: -1, baseMsPerStep: 140, dragExponent: 1.05, dragCoefficient: 15, stopSpeed: 30, sendGestureScrolls: false, sendMomentumScrolls: false)
+//        return MFScrollAnimationCurveParameters(baseCurve: ScrollConfig.linearCurve, speedSmoothing: -1, baseMsPerStepCurve: nil, baseMsPerStep: 140, dragExponent: 1.05, dragCoefficient: 15, stopSpeed: 30, sendGestureScrolls: false, sendMomentumScrolls: false)
         
         /// - vvv I think I like this curve better. Still super responsive and much smoother feeling. But I'm not sure I'm 'tuned into' what the lowInertia should feel like. Bc when I designed it I really liked the snappy, 'immediate' feel, but now I don't like it anymore and wanna make everything much smoother. So I'm not sure I should change it now. Also we should adjust the speed curves if we adjust the feel of this so much.
         
@@ -591,9 +615,9 @@ fileprivate func animationCurveParamsMap(name: MFScrollAnimationCurveName) -> MF
         
         fatalError()
         
-        return MFScrollAnimationCurveParameters(baseCurve: ScrollConfig.linearCurve, speedSmoothing: -1, baseMsPerStepMin: -1, baseMsPerStep: 200, dragExponent: 1.05, dragCoefficient: 15, stopSpeed: 30, sendGestureScrolls: false, sendMomentumScrolls: false)
+        return MFScrollAnimationCurveParameters(baseCurve: ScrollConfig.linearCurve, speedSmoothing: -1, baseMsPerStepCurve: nil, baseMsPerStep: 200, dragExponent: 1.05, dragCoefficient: 15, stopSpeed: 30, sendGestureScrolls: false, sendMomentumScrolls: false)
         
-        return MFScrollAnimationCurveParameters(baseCurve: ScrollConfig.linearCurve, speedSmoothing: -1, baseMsPerStepMin: -1, baseMsPerStep: 190, dragExponent: 1.0, dragCoefficient: 17, stopSpeed: 50, sendGestureScrolls: false, sendMomentumScrolls: false)
+        return MFScrollAnimationCurveParameters(baseCurve: ScrollConfig.linearCurve, speedSmoothing: -1, baseMsPerStepCurve: nil, baseMsPerStep: 190, dragExponent: 1.0, dragCoefficient: 17, stopSpeed: 50, sendGestureScrolls: false, sendMomentumScrolls: false)
         
     case kMFScrollAnimationCurveNameHighInertia:
         /// - This uses the snappiest dragCurve that can be used to send momentumScrolls.
@@ -605,11 +629,11 @@ fileprivate func animationCurveParamsMap(name: MFScrollAnimationCurveName) -> MF
         ///     - I also heard some reports from people that scrolling in 3.0.1 is worse / performs worse than before. (I'm fairly sure we introduced speedSmoothing in 3.0.1) So maybe the performance issues could also have to do with speedSmoothing? (I don't think it should be performance intensive enough to make a difference though, but who knows?)
         ///     - However I also found that scrolling felt refreshingly responsive after turning speed smoothing off. Might be placebo, but I think I like it better.
         
-        return MFScrollAnimationCurveParameters(baseCurve: nil/*ScrollConfig.linearCurve*/, speedSmoothing: /*0.15*/0.0, baseMsPerStepMin: -1, baseMsPerStep: 220, dragExponent: 0.7, dragCoefficient: 40, stopSpeed: /*50*/30, sendGestureScrolls: false, sendMomentumScrolls: false)
+        return MFScrollAnimationCurveParameters(baseCurve: nil/*ScrollConfig.linearCurve*/, speedSmoothing: /*0.15*/0.0, baseMsPerStepCurve: nil, baseMsPerStep: 220, dragExponent: 0.7, dragCoefficient: 40, stopSpeed: /*50*/30, sendGestureScrolls: false, sendMomentumScrolls: false)
         
     case kMFScrollAnimationCurveNameHighInertiaPlusTrackpadSim:
         /// Same as highInertia curve but with full trackpad simulation. The trackpad sim stuff doesn't really belong here I think.
-        return MFScrollAnimationCurveParameters(baseCurve: nil/*ScrollConfig.linearCurve*/, speedSmoothing: /*0.15*/0.0, baseMsPerStepMin: -1, baseMsPerStep: 220, dragExponent: 0.7, dragCoefficient: 40, stopSpeed: /*50*/30, sendGestureScrolls: true, sendMomentumScrolls: true)
+        return MFScrollAnimationCurveParameters(baseCurve: nil/*ScrollConfig.linearCurve*/, speedSmoothing: /*0.15*/0.0, baseMsPerStepCurve: nil, baseMsPerStep: 220, dragExponent: 0.7, dragCoefficient: 40, stopSpeed: /*50*/30, sendGestureScrolls: true, sendMomentumScrolls: true)
         
     /// --- Dynamically applied ---
         
@@ -627,13 +651,13 @@ fileprivate func animationCurveParamsMap(name: MFScrollAnimationCurveName) -> MF
         
         /// - Almost the same as `highInertia` just more inertial. Actually same feel as trackpad-like parameters used in `GestureScrollSimulator` for autoMomentumScroll.
         /// - Should we use trackpad sim (sendMomentumScrolls and sendGestureScrolls) here?
-        return MFScrollAnimationCurveParameters(baseCurve: ScrollConfig.linearCurve, speedSmoothing: -1, baseMsPerStepMin: -1, baseMsPerStep: /*220*/300, dragExponent: 0.7, dragCoefficient: 30, stopSpeed: 1, sendGestureScrolls: true, sendMomentumScrolls: true)
+        return MFScrollAnimationCurveParameters(baseCurve: ScrollConfig.linearCurve, speedSmoothing: -1, baseMsPerStepCurve: nil, baseMsPerStep: /*220*/300, dragExponent: 0.7, dragCoefficient: 30, stopSpeed: 1, sendGestureScrolls: true, sendMomentumScrolls: true)
         
     case kMFScrollAnimationCurveNamePreciseScroll:
         
         /// Similar to `lowInertia`
 //        return MFScrollAnimationCurveParameters(baseCurve: ScrollConfig.linearCurve, baseMsPerStep: 140, dragExponent: 1.0, dragCoefficient: 20, stopSpeed: 50, sendGestureScrolls: false, sendMomentumScrolls: false)
-        return MFScrollAnimationCurveParameters(baseCurve: ScrollConfig.linearCurve, speedSmoothing: -1, baseMsPerStepMin: -1, baseMsPerStep: 140, dragExponent: 1.05, dragCoefficient: 15, stopSpeed: 50, sendGestureScrolls: false, sendMomentumScrolls: false)
+        return MFScrollAnimationCurveParameters(baseCurve: ScrollConfig.linearCurve, speedSmoothing: -1, baseMsPerStepCurve: nil, baseMsPerStep: 140, dragExponent: 1.05, dragCoefficient: 15, stopSpeed: 50, sendGestureScrolls: false, sendMomentumScrolls: false)
         
     /// --- Testing ---
         
@@ -658,7 +682,9 @@ fileprivate func getAccelerationCurve(forSpeed speedArg: MFScrollSpeed, precise:
     /// - Before we used the `BezierCappedAccelerationCurve` we used `capHump` / `accelerationHump` curvature system. The last commit with that system (commented out) is 1304067385a0e77ed1c095e39b8fa2ae37b9bde4
     
     /**
-     General thoughts on BezierCappedAccelerationCurve:
+     
+     General thoughts / explanation on how our BezierCappedAccelerationCurve class works in this context:
+     
       Define a curve describing the relationship between the inputSpeed (in scrollwheel ticks per second) (on the x-axis) and the sensitivity (In pixels per tick) (on the y-axis).
       We'll call this function y(x).
       y(x) is composed of 3 other curves. The core of y(x) is a BezierCurve *b(x)*, which is defined on the interval (xMin, xMax).
@@ -668,7 +694,7 @@ fileprivate func getAccelerationCurve(forSpeed speedArg: MFScrollSpeed, precise:
       - We do this so that the acceleration is turned off for tickSpeeds below xMin. Acceleration should only affect scrollTicks that feel 'consecutive' and not ones that feel like singular events unrelated to other scrollTicks. `self.consecutiveScrollTickIntervalMax` is (supposed to be) the maximum time between ticks where they feel consecutive. So we're using it to define xMin.
       - For `xMax < x`, we lineraly extrapolate b(x), such that the extrapolated line has the slope b'(xMax) and passes through (xMax, yMax)
       - We do this so the curve is defined and has reasonable values even when the user scrolls really fast
-      - (We use tick and step are interchangable here)
+      - (Our uses of tick and step are interchangable here)
      
       HyperParameters:
       - `curvature` raises sensitivity for medium scrollSpeeds making scrolling feel more comfortable and accurate. This is especially nice for very low minSens.
@@ -707,7 +733,7 @@ fileprivate func getAccelerationCurve(forSpeed speedArg: MFScrollSpeed, precise:
     
     if useQuickModSpeed {
         
-        var windowSize = Double(screenSize)*0.85 /// When we use unanimated line-scrolling this doesn't hold up, but I think we always animate when using quickMod
+        let windowSize = Double(screenSize)*0.85 /// When we use unanimated line-scrolling this doesn't hold up, but I think we always animate when using quickMod
         
         minSens = windowSize * 0.5 //100
         maxSens = windowSize * 1.5 //500

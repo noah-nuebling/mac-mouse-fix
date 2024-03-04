@@ -9,11 +9,8 @@
 
 import Foundation
 
-//struct P {
+//extension P {
 //    init(_ x: Double, _ y: Double) {
-//        self.x = x
-//        self.y = y
+//        self = P(x: x, y: y)
 //    }
-//    let x: Double;
-//    let y: Double;
 //}

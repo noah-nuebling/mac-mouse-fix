@@ -12,6 +12,15 @@
 
 @implementation MathObjc
 
+bool directionsAreOpposite(MFIntervalDirection dir1, MFIntervalDirection dir2) {
+    
+    if (dir1 == kMFIntervalDirectionNone || dir2 == kMFIntervalDirectionNone) {
+        return false;
+    }
+    
+    return dir1 != dir2;
+}
+
 bool equal(double a, double b, double tolerance) {
 
     /// If you want to be fancy you can make the epsilon relative to floating point precision. See https://stackoverflow.com/a/17467/10601702

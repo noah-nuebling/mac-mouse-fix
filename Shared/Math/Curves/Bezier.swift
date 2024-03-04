@@ -111,7 +111,7 @@ import CocoaLumberjackSwift /// Doesn't work for some reason
     // MARK: Init
     
     /// Helper functions for Init functions
-    
+
     private class func convertNSPointsToPoints(_ controlNSPoints: [NSPoint]) -> [P] {
         /// Helper function for objc  init functions
         /// Unused - remove
@@ -123,6 +123,11 @@ import CocoaLumberjackSwift /// Doesn't work for some reason
             return point
         }
     }
+    
+    @objc class func cubicUnitPoints(_ px: Double, _ py: Double, _ qx: Double, _ qy: Double) -> [[Double]] {
+        return [[0.0, 0.0], [px, py], [qx, qy], [1.0, 1.0]]
+    }
+    
     private class func convertPointArraysToPoints(_ controlPointsAsArrays: [[Double]]) -> [P] {
         /// Helper function for objc  init functions
         
@@ -136,18 +141,17 @@ import CocoaLumberjackSwift /// Doesn't work for some reason
     
     /// Objc compatible wrappers for the Swift init functions
     
-    @objc convenience init(controlPointsAsArrays: [[Double]],
+    @objc convenience init(controlPoints controlPointsArr: [[Double]],
                            defaultEpsilon: Double = defaultDefaultEpsilon,
                            xInterval: Interval = .unitInterval,
                            yInterval: Interval = .unitInterval) {
         /// `controlPointsAsArrays` is expected to have this structure: `[[x,y],[x,y],[x,y],...]`
         
-        let controlPoints: [P] = Bezier.convertPointArraysToPoints(controlPointsAsArrays)
+        let controlPoints: [P] = Bezier.convertPointArraysToPoints(controlPointsArr)
         self.init(controlPoints: controlPoints, defaultEpsilon: defaultEpsilon, xInterval: xInterval, yInterval: yInterval)
     }
-    @objc convenience init(controlPointsAsArrays: [[Double]], defaultEpsilon: Double = defaultDefaultEpsilon) {
-        
-        let controlPoints: [P] = Bezier.convertPointArraysToPoints(controlPointsAsArrays)
+    @objc convenience init(controlPoints controlPointsArr: [[Double]], defaultEpsilon: Double = defaultDefaultEpsilon) {
+        let controlPoints: [P] = Bezier.convertPointArraysToPoints(controlPointsArr)
         self.init(controlPoints: controlPoints, defaultEpsilon: defaultEpsilon)
     }
     
@@ -336,6 +340,8 @@ import CocoaLumberjackSwift /// Doesn't work for some reason
         xValueRange = Interval(0.0, 0.0)
         isLine = false
         lineRepresentation = nil
+        
+        super.init()
     }
     
     /// Copying init
@@ -353,6 +359,8 @@ import CocoaLumberjackSwift /// Doesn't work for some reason
         xValueRange = other.xValueRange.copy(with: zone) as! Interval
         isLine = other.isLine
         lineRepresentation = other.lineRepresentation?.copy() as! Line? /// I hope this copy function works. Do we even needt to copy? I don't think Line is mutable does that matter?
+        
+        super.init()
     }
     
     /// Copying

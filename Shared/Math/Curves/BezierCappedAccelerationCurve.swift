@@ -151,6 +151,8 @@ private class BezierCappedAccelerationCurve_old_interpolating: Curve {
                 curve2 = nil
             }
         }
+        
+        super.init()
     }
     
     

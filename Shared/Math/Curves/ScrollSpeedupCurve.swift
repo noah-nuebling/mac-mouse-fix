@@ -29,6 +29,8 @@ import Foundation
         
         self.t = Double(t)
         self.p = p
+        
+        super.init()
     }
     
     override func evaluate(at x: Double) -> Double {

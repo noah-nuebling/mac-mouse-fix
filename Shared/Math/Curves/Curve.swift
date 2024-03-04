@@ -9,15 +9,72 @@
 
 import Cocoa
 
+typealias RawCurve = (Double) -> Double
+
+@objc class CurveTools: NSObject {
+    
+    /// This stuff is taken from MMF Nuxt Website > animationCurveTransform.ts
+    
+    @objc class func transformCurve(_ curve: @escaping RawCurve, _ transform: @escaping (Double) -> Double) -> RawCurve {
+        
+        /// Returns a new curve which applies `transform` to the output of `curve`
+        
+        let transformed = { x in
+            let a = curve(x)
+            let result = transform(a)
+            return result
+        }
+        
+        return transformed
+    }
+    @objc class func combineCurves(_ curve1: @escaping RawCurve, _ curve2: @escaping RawCurve, transform: @escaping (Double, Double) -> Double) -> RawCurve {
+        
+        /// Returns a new curve which applies `transform` to the output of both `curve1` and `curve2`
+        
+        let transformed = { x in
+            let a = curve1(x)
+            let b = curve2(x)
+            let result = transform(a, b)
+            return result
+        }
+        
+        return transformed
+    }
+}
+
 @objc class Curve: NSObject {
     
     ///
     /// Main
     ///
     
-    @objc func evaluate(at x: Double) -> Double { fatalError() }
-    /// ^ TouchAnimatorBase.swift expects this to pass through (0,0) and (1,1)
+    @objc func evaluate(at x: Double) -> Double {
+        
+        /// Notes:
+        /// TouchAnimatorBase.swift expects this to pass through (0,0) and (1,1)
+        
+        if let rawCurve = rawCurve {
+            let result = rawCurve(x)
+            return result
+        }
+        
+        fatalError()
+    }
     
+    ///
+    /// init
+    ///
+    /// Notes:
+    /// - At the time of writing, we mostly use subclasses of Curve, but for more lightweight, one-time uses, it should be nice to just use the closure init instead of defining a class.
+    
+    override init() {
+        super.init()
+    }
+    
+    var rawCurve: RawCurve? = nil
+    init(rawCurve: @escaping RawCurve) {
+        self.rawCurve = rawCurve
+    }
     
     ///
     /// Debug

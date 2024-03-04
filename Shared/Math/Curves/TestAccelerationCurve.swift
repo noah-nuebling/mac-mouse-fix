@@ -21,6 +21,7 @@ class TestAccelerationCurve: Curve {
         self.thresholdSpeed = thresholdSpeed
         self.firstSens = firstSens
         self.secondSens = secondSens
+        super.init()
     }
     
     override func evaluate(at x: Double) -> Double {

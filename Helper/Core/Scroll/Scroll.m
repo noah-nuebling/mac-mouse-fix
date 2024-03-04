@@ -27,6 +27,7 @@
 #import "ScrollModifiers.h"
 #import "Actions.h"
 #import "EventUtility.h"
+#import "MathObjc.h"
 
 @import IOKit;
 #import "MFHIDEventImports.h"
@@ -248,7 +249,7 @@ static CGEventRef eventTapCallback(CGEventTapProxy proxy, CGEventType type, CGEv
 
 #pragma mark - Main event processing
 
-static void heavyProcessing(CGEventRef event, int64_t scrollDeltaAxis1, int64_t scrollDeltaAxis2, CFTimeInterval tickTime) {
+static void heavyProcessing(CGEventRef event, int64_t scrollDeltaAxis1, int64_t scrollDeltaAxis2, CFTimeInterval tickTS) {
     
     /// Declare stuff for later
     static DriverUnsuspender unsuspendDrivers = ^{};
@@ -307,7 +308,7 @@ static void heavyProcessing(CGEventRef event, int64_t scrollDeltaAxis1, int64_t 
     
     MFDirection scrollDirection = [ScrollUtility directionForInputAxis:inputAxis inputDelta:scrollDelta invertSetting:_scrollConfig.u_invertDirection horizontalModifier:(_modifications.effectMod == kMFScrollEffectModificationHorizontalScroll)];
     
-    BOOL firstConsecutive = [ScrollAnalyzer peekIsFirstConsecutiveTickWithTickOccuringAt:tickTime direction:scrollDirection config:_scrollConfig];
+    BOOL firstConsecutive = [ScrollAnalyzer peekIsFirstConsecutiveTickWithTickOccuringAt:tickTS direction:scrollDirection config:_scrollConfig];
     
     ///
     /// Update stuff
@@ -380,7 +381,7 @@ static void heavyProcessing(CGEventRef event, int64_t scrollDeltaAxis1, int64_t 
     scrollDirection = [ScrollUtility directionForInputAxis:inputAxis inputDelta:scrollDelta invertSetting:_scrollConfig.u_invertDirection horizontalModifier:(_modifications.effectMod == kMFScrollEffectModificationHorizontalScroll)]; /// Why do we need to get the scrollDirection again? We already calculated it during the "preliminary scrollAnalysis". Can it ever change betweent he 2 times we calculate it?
     
     /// Run full scrollAnalysis
-    ScrollAnalysisResult scrollAnalysisResult = [ScrollAnalyzer updateWithTickOccuringAt:tickTime direction:scrollDirection config:_scrollConfig];
+    ScrollAnalysisResult scrollAnalysisResult = [ScrollAnalyzer updateWithTickOccuringAt:tickTS direction:scrollDirection config:_scrollConfig];
 
     
     /// Store scrollAnalysisResult
@@ -415,12 +416,26 @@ static void heavyProcessing(CGEventRef event, int64_t scrollDeltaAxis1, int64_t 
         
     } else {
         
-        /// Get scroll speed
+        /// Get tickInterval
         double timeBetweenTicks = scrollAnalysisResult.timeBetweenTicks;
-        timeBetweenTicks = CLIP(timeBetweenTicks, 0, _scrollConfig.consecutiveScrollTickIntervalMax);
-        /// ^ Shouldn't we clip between consecutiveScrollTickIntervalMin (instead of 0) and consecutiveScrollTickIntervalMax?
-        ///     Also I think scrollAnalyzer should only produce these values and we should put an assert here instead
         
+        /// Validate tickInterval
+        assert(timeBetweenTicks == DBL_MAX
+               || ISBETWEEN(timeBetweenTicks, _scrollConfig.consecutiveScrollTickIntervalMin, _scrollConfig.consecutiveScrollTickIntervalMax));
+        
+        /// Handle tickInterval = `DBL_MAX`
+        ///     `DBL_MAX` is a special flag used by scrollAnalyzer to indicate that it has been more than `consecutiveScrollTickIntervalMax` since the last tick, and therefore the last two ticks were not consecutive. Kinda weird.
+        if (timeBetweenTicks == DBL_MAX) {
+            timeBetweenTicks = _scrollConfig.consecutiveScrollTickIntervalMax;
+        }
+        
+        /// Clip tickInterval
+        /// Notes:
+        /// - The `_scrollConfig.accelerationCurve` also uses `consecutiveScrollTickInterval_AccelerationEnd` in iits definition, but it linearly interpolates the acceleration for lower `timeBetweenTicks`. To cap the acceleration we use CLIPLOW() here.
+        /// - I'm not totally sure if this is optimal for the UX, also code is a bit messy.
+        timeBetweenTicks = CLIPLOW(timeBetweenTicks, _scrollConfig.consecutiveScrollTickInterval_AccelerationEnd);
+        
+        /// Get speed
         double scrollSpeed = 1/timeBetweenTicks; /// In tick/s
 
         /// Evaluate acceleration curve
@@ -549,7 +564,7 @@ static void heavyProcessing(CGEventRef event, int64_t scrollDeltaAxis1, int64_t 
                 pxLeftToScroll = 0.0;
                 [_animator resetSubPixelator_Unsafe]; /// Maybe it would make more sense to do this automatically inside the animator? That might lead to problems with click and drag smoothing.
                 /// Validate
-//                assert(isZeroVector(currentSpeed));
+                //                assert(isZeroVector(currentSpeed));
             }
             
             /// Debug
@@ -557,50 +572,97 @@ static void heavyProcessing(CGEventRef event, int64_t scrollDeltaAxis1, int64_t 
             
             /// Calculate distance to scroll
             double delta = pxToScrollForThisTick + pxLeftToScroll;
-            double duration;
             
-            /// Create curve
+            /// Get curve params
             MFScrollAnimationCurveParameters *pCurve = _scrollConfig.animationCurveParams;
             
-            /// Calculate baseDuration
-            /// Note: The idea is to speed up animations as the user scrolls the wheel faster.
-            
-            double baseMin = pCurve.baseMsPerStepMin;
-            double baseMax = pCurve.baseMsPerStep;
-            double tickMin = _scrollConfig.consecutiveScrollTickIntervalMin*1000;
-            double tickMax = _scrollConfig.consecutiveScrollTickIntervalMax*1000;
-            double tick = scrollAnalysisResult.timeBetweenTicks*1000;
-            
-            double tickScaleMax = MIN(tickMax, baseMax); /// Not sure if the `tickScaleMax` should just be `tickMax`
+            /// Get baseDuration
             
             double baseDuration;
-            if (tick >= tickScaleMax || baseMin == -1) {
-                baseDuration = (double)baseMax/1000.0;
-            } else {
-                /// Note: Should we use `consecutiveScrollTickIntervalMax` instead of `baseMs` here?
-                double b = [Math scaleWithValue:tick
-                                           from:[[Interval alloc] initWithStart:tickScaleMax end:tickMin]
-                                             to:[[Interval alloc] initWithStart:baseMax end:baseMin]
-                               allowOutOfBounds:NO];
-                
-                baseDuration = (double)b/1000.0;
-            }
-            /// Debug
-            DDLogDebug(@"Scroll.m calculating animation baseDuration - base: %f, baseMin: %f, tick: %f, tickMin: %f, tickMax: %f, result: %f", baseMax, baseMin, tick, tickMin, tickMax, baseDuration*1000);
             
+            if (pCurve.baseMsPerStep != -1) {
+                
+                baseDuration = (double)pCurve.baseMsPerStep/1000.0;
+                
+            } else {
+                
+                /// Use curve for baseDuration instead of constant
+                /// Note: The idea is to speed up animations as the user scrolls the wheel faster.
+                
+                /// Gather info
+                
+                Curve *baseTimeCurve    = pCurve.baseMsPerStepCurve;
+                double baseTimeStart    = [baseTimeCurve evaluateAt:0.0]; /// The non-sped-up/maximum duration for the baseCurve
+                double baseTimeEnd      = [baseTimeCurve evaluateAt:1.0];
+                double tickStart        = _scrollConfig.consecutiveScrollTickIntervalMax;
+                double tickEnd          = _scrollConfig.consecutiveScrollTickIntervalMin;
+                double tick             = scrollAnalysisResult.timeBetweenTicks;
+                
+                /// Adjust tickStart
+                /// Explanation:
+                /// - This is quite confusing. I think behind this design is the idea that the baseCurve is the part of the animation that feels like the user is directly pushing the page. (Whereas the rest of the curve feels more like the page keeps sliding after the user pushed it). This code is an approximation of the idea that only when the duration between the physical ticks of the users scrollwheel become shorter than the duration of this baseAnimation, should we start to speed up the baseAnimation. And that increases this physical relationship between the duration of the baseAnimation and the time between scrollwheel ticks. The extreme of this idea would be to try and make the duration of the base animation exactly equal to the time between scrollwheel ticks. But I think I tried that and it felt shitty (Not totally sure at the moment)
+                /// - Overall this is quite confusing and complex to understand. Maybe we should remove it.
+                /// - Update: This is also pretty much never used atm I think.
+                
+                if (tickStart > baseTimeStart) {
+                    
+                    tickStart = baseTimeStart;
+                    DDLogDebug(@"Scroll.m - baseMsPerStepCurve - adjusting tickStart below consecutiveScrollTickIntervalMax to baseTimeStart: %f", baseTimeStart);
+                    assert(false);
+                }
+                
+                /// Adjust tick
+                /// Notes:
+                /// - Scroll analyzer sets tick to `DBL_MAX` to signify that there are no previous consecutive ticks. (Not sure if  that's a great idea) We have to set it to a sendible value here so the scaling Math doesn't break.
+                
+                if (tick == DBL_MAX) {
+                    tick = _scrollConfig.consecutiveScrollTickIntervalMax;
+                }
+                assert(tick <= _scrollConfig.consecutiveScrollTickIntervalMax);
+                
+                /// Scale timeBetweenTicks to unit
+                double unitTick = [Math scaleWithValue:tick
+                                                  from:[[Interval alloc] initWithStart:tickStart end:tickEnd]
+                                                    to:Interval.unitInterval
+                                      allowOutOfBounds:YES];
+                unitTick = CLIP(unitTick, 0.0, 1.0);
+                
+                /// Sample curve
+                double b = [baseTimeCurve evaluateAt:unitTick];
+                baseDuration = (double)b/1000.0;
+                
+                /// Debug
+                DDLogDebug(@"Scroll.m - baseMsPerStepCurve - calculating animation baseDuration - baseTimeEnd: %.1f, baseBaseTimeStart: %.1f, tick: %.1f, tickEnd: %.1f, tickStart: %1.f, consecutiveScrollTickIntervalMax: %.1f, result: %.1f", baseTimeEnd, baseTimeStart, tick*1000, tickEnd*1000, tickStart*1000, _scrollConfig.consecutiveScrollTickIntervalMax*1000, baseDuration*1000);
+            }
+            
+            /// Get curve and duration
+            
+            double duration;
             Curve *c;
-            if (pCurve.useDragCurve) {
+            
+            if (!pCurve.useDragCurve) {
+                
+                DDLogDebug(@"Scroll.m start animation curve base");
+                
+                c = pCurve.baseCurve;
+                duration = baseDuration;
+                
+            } else {
                 
                 DDLogDebug(@"Scroll.m start animation curve hybrid");
                 
+                /// speedSmoothing
+                
                 Bezier *baseCurve = pCurve.baseCurve;
                 double speedSmoothing = pCurve.speedSmoothing;
-
                 if (baseCurve == nil) {
                     
-                    /// Create baseCurve as speedSmoothing curve. The idea is to make the initial speed of the baseCurve equal to the current speed. The speedSmoothing amount determines how long the curve will take to move away from the current speed.
-                    /// Notes: Currently using 0.01 epsilon for Bezier curve. This gives a little different results than even lower epsilons in MOS scroll analyzer. But it's not really noticable otherwise. Maybe we should do more extensive testing what the optimal epsilon is here when it comes to performance vs smoothness.
+                    /// Create baseCurve as speedSmoothing curve.
+                    /// Notes: 
+                    /// - The idea is to make the initial speed of the baseCurve equal to the current speed. The speedSmoothing amount determines how long the curve will take to move away from the current speed.
+                    /// - Currently using 0.01 epsilon for Bezier curve. This gives a little different results than even lower epsilons in MOS scroll analyzer. But it's not really noticable otherwise. Maybe we should do more extensive testing what the optimal epsilon is here when it comes to performance vs smoothness.
                     
+                    /// Validate
                     assert(0.0 <= speedSmoothing && speedSmoothing <= 1.0);
                     
                     Vector baseCurveStartDirection = {
@@ -608,12 +670,12 @@ static void heavyProcessing(CGEventRef event, int64_t scrollDeltaAxis1, int64_t 
                         .x = 1                                  / ((double)baseDuration/1000.0),
                     };
                     Vector baseCurveP1 = vectorFromDeltaAndDirectionVector(speedSmoothing, baseCurveStartDirection);
-                    baseCurve = [[Bezier alloc] initWithControlPointsAsArrays:@[@[@0, @0], @[@(baseCurveP1.x), @(baseCurveP1.y)], /*@[@1, @1],*/ @[@1, @1]] defaultEpsilon:0.01];
+                    baseCurve = [[Bezier alloc] initWithControlPoints:@[@[@0, @0], @[@(baseCurveP1.x), @(baseCurveP1.y)], /*@[@1, @1],*/ @[@1, @1]] defaultEpsilon:0.01];
                     
-                    DDLogDebug(@"Scroll.m start speed smoothing p1 - currentSpeed: %@, bezier: %@", vectorDescription(unitVector(baseCurveP1)), [baseCurve stringTraceWithStartX:0 endX:1 nOfSamples:10 bias:1]);
+                    DDLogDebug(@"Scroll.m - start speed smoothing p1 - currentSpeed: %@, bezier: %@", vectorDescription(unitVector(baseCurveP1)), [baseCurve stringTraceWithStartX:0 endX:1 nOfSamples:10 bias:1]);
                 }
                 
-                
+                /// Create hybrid curve
                 HybridCurve *hc = [[BezierHybridCurve alloc]
                      initWithBaseCurve:baseCurve
                      minDuration:baseDuration
@@ -623,21 +685,17 @@ static void heavyProcessing(CGEventRef event, int64_t scrollDeltaAxis1, int64_t 
                      stopSpeed:pCurve.stopSpeed
                      distanceEpsilon:0.2];
                 
+                /// Get duration
                 duration = hc.duration;
                 
                 /// Validate
                 assert(fabs(hc.distance - delta) < 3);
+                
                 /// Debug
-                DDLogDebug(@"pre-animator - distance %f, duration: %f", hc.distance, hc.duration);
-    //            DDLogDebug(@"\nDuration pre-animator: %f base: %f", c.duration, c.baseDuration);
+                DDLogDebug(@"Scroll.m pre-animator - distance %f, duration: %f", hc.distance, hc.duration);
                 
                 /// Assign
                 c = hc;
-                
-            } else {
-                DDLogDebug(@"Scroll.m start animation curve base");
-                c = pCurve.baseCurve;
-                duration = baseDuration;
             }
             
             

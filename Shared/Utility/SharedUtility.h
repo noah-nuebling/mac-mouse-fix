@@ -64,21 +64,6 @@ int8_t sign(double x);
 + (NSString *)binaryRepresentation:(unsigned int)value;
 + (void)resetDispatchGroupCount:(dispatch_group_t)group;
 
-#pragma mark - Clipping
-
-/// CLIP AKA CLAMP, BOUND
-/// Src: https://stackoverflow.com/a/14770282/10601702
-
-//#define MIN(A,B)    ({ __typeof__(A) __a = (A); __typeof__(B) __b = (B); __a < __b ? __a : __b; })
-//#define MAX(A,B)    ({ __typeof__(A) __a = (A); __typeof__(B) __b = (B); __a < __b ? __b : __a; })
-
-#define CLIP(x, low, high) ({\
-__typeof__(x) __x = (x); \
-__typeof__(low) __low = (low);\
-__typeof__(high) __high = (high);\
-__x > __high ? __high : (__x < __low ? __low : __x);\
-})
-
 @end
 
 NS_ASSUME_NONNULL_END

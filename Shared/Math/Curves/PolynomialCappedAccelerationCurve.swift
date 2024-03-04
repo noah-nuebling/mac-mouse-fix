@@ -96,6 +96,9 @@ import Foundation
         
         /// Testing
 //        self.coeffs = [0.0334005, 10.2645, -2.19908, 0.209393, -0.00747675]
+        
+        /// Init super
+        super.init()
     }
     
     /// Evaluate

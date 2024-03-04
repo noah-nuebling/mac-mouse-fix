@@ -120,6 +120,7 @@ static CFTimeInterval _consecutiveSwipeSequenceStartTime;
     
     /// Clip time since last tick to realistic value
     ///     We're also addressing this issue by capping the acceleration curve (See `consecutiveScrollTickInterval_AccelerationEnd`), but capping the timeBetweenTicks here let's us be more free with the acceleration curve.
+    ///     Update: I've now 
     
     if (secondsSinceLastTick < scrollConfig.consecutiveScrollTickIntervalMin) {
         secondsSinceLastTick = scrollConfig.consecutiveScrollTickIntervalMin;
@@ -212,6 +213,8 @@ static CFTimeInterval _consecutiveSwipeSequenceStartTime;
         ///         - We should therefore very carefully tune the distance for those small swipes to be comfortable and consistent. For high smoothness, I think currently distance is a bit too high for many settings.
         ///         - HORRIBLE HACK: For now I've enabled the tickSmoother initing, but only for smoothness high and precise turned off. I like it better. I think what we're doing here is simply make the speed lower for small scroll swipes. For the other settings I didn't like the additional smoothing, I think because it either made things too slow or because the speedup over time made things harder to control. But not sure.
         ///         - TODO: Remove the hack and adjust acceleration curves instead.
+        /// - Even further reflection:
+        ///     - Since the first first timeBetweenTicks isn't smoothed at all, and is completely subject to any measurement errors, I don't think the smoothing of the consecutive ticks even makes any sense, right?
         
         if (scrollConfig.u_smoothness == kMFScrollSmoothnessHigh && !scrollConfig.u_precise) {
             /// HORRIBLE HACK

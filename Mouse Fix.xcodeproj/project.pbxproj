@@ -244,6 +244,8 @@
 		4FF0BD4B266A8B7E003935EA /* Bezier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FF0BD4A266A8B7E003935EA /* Bezier.swift */; };
 		4FF0BD51266AC10C003935EA /* Math.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FF0BD50266AC10C003935EA /* Math.swift */; };
 		4FF0BD58266ACE32003935EA /* VectorUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF0BD57266ACE32003935EA /* VectorUtility.m */; };
+		4FF27DD72B95B108004744E1 /* Shorthands.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FF27DD62B95B108004744E1 /* Shorthands.swift */; };
+		4FF27DD82B95B108004744E1 /* Shorthands.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FF27DD62B95B108004744E1 /* Shorthands.swift */; };
 		4FF6654125F2C7B000689B77 /* default_launchd.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4FF6652E25F2C7B000689B77 /* default_launchd.plist */; };
 		4FF6654225F2C7B000689B77 /* default_launchd.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4FF6652E25F2C7B000689B77 /* default_launchd.plist */; };
 		4FF6654325F2C7B000689B77 /* HelperServices.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF6652F25F2C7B000689B77 /* HelperServices.m */; };
@@ -2238,6 +2240,7 @@
 		4FF0BD56266ACE32003935EA /* VectorUtility.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VectorUtility.h; sourceTree = "<group>"; };
 		4FF0BD57266ACE32003935EA /* VectorUtility.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = VectorUtility.m; sourceTree = "<group>"; };
 		4FF0BD5D266ADFE5003935EA /* MathObjc.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MathObjc.h; sourceTree = "<group>"; };
+		4FF27DD62B95B108004744E1 /* Shorthands.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Shorthands.swift; sourceTree = "<group>"; };
 		4FF6652D25F2C7B000689B77 /* HelperServices.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HelperServices.h; sourceTree = "<group>"; };
 		4FF6652E25F2C7B000689B77 /* default_launchd.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = default_launchd.plist; sourceTree = "<group>"; };
 		4FF6652F25F2C7B000689B77 /* HelperServices.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HelperServices.m; sourceTree = "<group>"; };
@@ -7079,6 +7082,7 @@
 			children = (
 				4F8A8DC0287F885D00786BCC /* Shorthands.h */,
 				4FA06818291B2C4C00949B5F /* Shorthands.m */,
+				4FF27DD62B95B108004744E1 /* Shorthands.swift */,
 				4FF6653E25F2C7B000689B77 /* SharedUtility.h */,
 				4FF6653B25F2C7B000689B77 /* SharedUtility.m */,
 				4FE40B95283A49DD00880BEF /* SharedUtilitySwift.swift */,
@@ -7926,6 +7930,7 @@
 				4FA40D1028A0D8F100499E53 /* VectorSubPixelator.m in Sources */,
 				4FA40D0228A0CE5B00499E53 /* VectorUtility.m in Sources */,
 				4FFE2894291B35AA0058ABE0 /* (null) in Sources */,
+				4FF27DD72B95B108004744E1 /* Shorthands.swift in Sources */,
 				4F319CBB26252A2D004E5F63 /* ButtonGroupRowView.m in Sources */,
 				4F79A82B2605074000076A7E /* NSAttributedString+Additions.m in Sources */,
 				4FA40CFD28A0CCCB00499E53 /* AccelerationBezier.swift in Sources */,
@@ -8023,6 +8028,7 @@
 				4FF666A725F2C93A00689B77 /* Device.m in Sources */,
 				4FD9A7D228BA2A8A0006DF4B /* SecureStorage.swift in Sources */,
 				4F3A40B1266BBC5000436821 /* Curve.swift in Sources */,
+				4FF27DD82B95B108004744E1 /* Shorthands.swift in Sources */,
 				4FFA4E3A28B79D960062A1FE /* NSString+Extensions.swift in Sources */,
 				4F09284028B8101600BDC2FF /* TrialSection.swift in Sources */,
 				4F41506429255F880040BA7D /* NSImage+Additions.m in Sources */,

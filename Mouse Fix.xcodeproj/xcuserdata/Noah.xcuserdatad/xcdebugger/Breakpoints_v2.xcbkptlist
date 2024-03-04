@@ -58,8 +58,8 @@
             filePath = "Shared/Math/Curves/Curve.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "56"
-            endingLineNumber = "56"
+            startingLineNumber = "113"
+            endingLineNumber = "113"
             landmarkName = "traceAsPoints(startX:endX:nOfSamples:bias:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -74,8 +74,8 @@
             filePath = "Shared/Math/Curves/Curve.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "64"
-            endingLineNumber = "64"
+            startingLineNumber = "121"
+            endingLineNumber = "121"
             landmarkName = "traceAsPoints(startX:endX:nOfSamples:bias:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -438,8 +438,8 @@
             filePath = "Helper/Core/Scroll/Scroll.m"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "96"
-            endingLineNumber = "96"
+            startingLineNumber = "97"
+            endingLineNumber = "97"
             landmarkName = "+resetState"
             landmarkType = "7">
             <Locations>
@@ -1243,16 +1243,207 @@
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
             uuid = "935B4785-8A1C-4447-8A14-946ABE61F266"
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Helper/Core/Scroll/ScrollAnalyzer.m"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "180"
-            endingLineNumber = "180"
+            startingLineNumber = "181"
+            endingLineNumber = "181"
             landmarkName = "+updateWithTickOccuringAt:direction:config:"
             landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "C1809429-3E1E-4818-BC4D-89948886E5E8"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Helper/Core/Scroll/Scroll.m"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "628"
+            endingLineNumber = "628"
+            landmarkName = "heavyProcessing(event, scrollDeltaAxis1, scrollDeltaAxis2, tickTS)"
+            landmarkType = "9">
+            <Locations>
+               <Location
+                  uuid = "C1809429-3E1E-4818-BC4D-89948886E5E8 - 360518ae992c4076"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "__heavyProcessing_block_invoke"
+                  moduleName = "Mac Mouse Fix Helper"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/Noah/Desktop/mmf-stuff/mac-mouse-fix/Helper/Core/Scroll/Scroll.m"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "599"
+                  endingLineNumber = "599"
+                  offsetFromSymbolStart = "1236">
+               </Location>
+               <Location
+                  uuid = "C1809429-3E1E-4818-BC4D-89948886E5E8 - 360518ae992c4076"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "__heavyProcessing_block_invoke"
+                  moduleName = "Mac Mouse Fix Helper"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/Noah/Desktop/mmf-stuff/mac-mouse-fix/Helper/Core/Scroll/Scroll.m"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "599"
+                  endingLineNumber = "599"
+                  offsetFromSymbolStart = "1372">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "82599E3B-E440-4762-8996-6AB572CAF823"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Helper/Core/Scroll/Scroll.m"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "624"
+            endingLineNumber = "624"
+            landmarkName = "heavyProcessing(event, scrollDeltaAxis1, scrollDeltaAxis2, tickTS)"
+            landmarkType = "9">
+            <Locations>
+               <Location
+                  uuid = "82599E3B-E440-4762-8996-6AB572CAF823 - 360518ae992c4091"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "__heavyProcessing_block_invoke"
+                  moduleName = "Mac Mouse Fix Helper"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/Noah/Desktop/mmf-stuff/mac-mouse-fix/Helper/Core/Scroll/Scroll.m"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "606"
+                  endingLineNumber = "606"
+                  offsetFromSymbolStart = "1412">
+               </Location>
+               <Location
+                  uuid = "82599E3B-E440-4762-8996-6AB572CAF823 - 360518ae992c40d3"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "__heavyProcessing_block_invoke"
+                  moduleName = "Mac Mouse Fix Helper"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/Noah/Desktop/mmf-stuff/mac-mouse-fix/Helper/Core/Scroll/Scroll.m"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "604"
+                  endingLineNumber = "604"
+                  offsetFromSymbolStart = "1244">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "96FAED13-11F4-4A76-B4C5-AFB887E53991"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Shared/Math/Math.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "147"
+            endingLineNumber = "147"
+            landmarkName = "scale(value:from:to:allowOutOfBounds:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "96FAED13-11F4-4A76-B4C5-AFB887E53991 - e1c3043e6ad5fbdf"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "static Mac_Mouse_Fix_Helper.Math.scale(value: Swift.Double, from: Mac_Mouse_Fix_Helper.Interval, to: Mac_Mouse_Fix_Helper.Interval, allowOutOfBounds: Swift.Bool) -&gt; Swift.Double"
+                  moduleName = "Mac Mouse Fix Helper"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/Noah/Desktop/mmf-stuff/mac-mouse-fix/Shared/Math/Math.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "147"
+                  endingLineNumber = "147"
+                  offsetFromSymbolStart = "124">
+               </Location>
+               <Location
+                  uuid = "96FAED13-11F4-4A76-B4C5-AFB887E53991 - e1c3043e6ad4043e"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "static Mac_Mouse_Fix_Helper.Math.scale(value: Swift.Double, from: Mac_Mouse_Fix_Helper.Interval, to: Mac_Mouse_Fix_Helper.Interval, allowOutOfBounds: Swift.Bool) -&gt; Swift.Double"
+                  moduleName = "Mac Mouse Fix Helper"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/Noah/Desktop/mmf-stuff/mac-mouse-fix/Shared/Math/Math.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "148"
+                  endingLineNumber = "148"
+                  offsetFromSymbolStart = "124">
+               </Location>
+               <Location
+                  uuid = "96FAED13-11F4-4A76-B4C5-AFB887E53991 - e1c3043e6ad4047c"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "static Mac_Mouse_Fix_Helper.Math.scale(value: Swift.Double, from: Mac_Mouse_Fix_Helper.Interval, to: Mac_Mouse_Fix_Helper.Interval, allowOutOfBounds: Swift.Bool) -&gt; Swift.Double"
+                  moduleName = "Mac Mouse Fix Helper"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/Noah/Desktop/mmf-stuff/mac-mouse-fix/Shared/Math/Math.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "150"
+                  endingLineNumber = "150"
+                  offsetFromSymbolStart = "124">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "B9B7C82E-2D11-4165-B14D-0581D8FBD9D6"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Helper/Core/Scroll/Scroll.m"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "595"
+            endingLineNumber = "595"
+            landmarkName = "heavyProcessing(event, scrollDeltaAxis1, scrollDeltaAxis2, tickTS)"
+            landmarkType = "9">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "1ABF3A08-214A-4BC5-9081-4FBE1972519E"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Helper/Core/Config/ScrollConfig.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "599"
+            endingLineNumber = "599"
+            landmarkName = "animationCurveParamsMap(name:)"
+            landmarkType = "9">
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

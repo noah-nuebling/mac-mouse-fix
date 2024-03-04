@@ -43,6 +43,8 @@ import Cocoa
         self.b = b
         self.c = c
         self.d = d
+        
+        super.init()
     }
     
     override func evaluate(at x: Double) -> Double {

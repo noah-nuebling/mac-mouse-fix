@@ -34,6 +34,7 @@ import Foundation
     @objc init(a: Double, b: Double) {
         self.a = a
         self.b = b
+        super.init()
     }
     
     override func evaluate(at x: Double) -> Double {

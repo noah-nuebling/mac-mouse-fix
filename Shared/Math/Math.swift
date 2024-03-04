@@ -141,20 +141,43 @@ import CocoaLumberjackSwift
     }
     
     @objc class func scale(value: Double, from originInterval: Interval, to targetInterval: Interval, allowOutOfBounds: Bool = false) -> Double {
+        
         /// Should probably move this into Interval
         /// Works as expected on Intervals with different directions
         
+        
+        /// Validate out of bounds
         if !allowOutOfBounds {
             assert(originInterval.contains(value))
         }
         
-        /// Normalize value between 0 and 1
-    
-        let unitValue: Double = abs(value - originInterval.start) / originInterval.length
+        /// Check weird numbers
+        ///  Note: From my testing, if we plug in `.greatestFiniteMagnitude` aka `DBL_MAX`, then the calculations will produce NaN, which is bad.
+        assert(!value.isNaN 
+               && !value.isInfinite 
+               && value.magnitude != .greatestFiniteMagnitude)
+        
+        /// Scale value from originInterval to unitInterval [0, 1]
+        var unitValue: Double = (value - originInterval.lower) / originInterval.length
+        
+        /// Flip
+        /// Notes:
+        /// - Mirror unitValue at 0.5 on the number line
+        if directionsAreOpposite(originInterval.direction, targetInterval.direction) {
+            unitValue = unitValue - 2*(unitValue - 0.5)
+        }
         
         /// Scale unitValue to targetInterval
+        let result = targetInterval.lower + (unitValue * targetInterval.length)
         
-        return targetInterval.start + (unitValue * targetInterval.directedLength)
+        /// Validate
+        /// Notes:
+        /// - We're doing similar validation inside Interval
+        /// - It's not too bad if this is -inf or +inf I think
+        assert(!result.isNaN)
+        
+        /// Return
+        return result
     }
     
     @objc class func nthroot(value: Double, _ n: Double) -> Double {
@@ -239,6 +262,14 @@ import CocoaLumberjackSwift
 
 func root(_ value: Double, _ n: Double) -> Double {
     return Math.nthroot(value: value, n)
+}
+
+// MARK: xor
+
+extension Bool {
+    static func ^ (left: Bool, right: Bool) -> Bool {
+        return left != right
+    }
 }
 
 // MARK: Exponent operator
