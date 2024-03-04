@@ -5,9 +5,6 @@
 # All contents of folders named xcuserdata
 xcuserdata/
 
-# Password file
-sudopass.sh
-
 # Carthage derived data
 # Carthage/
 
@@ -29,3 +26,6 @@ __pycache__
 
 # Sensitive
 gumroad_sales_cache.json
+
+# Password file
+sudopass.sh
