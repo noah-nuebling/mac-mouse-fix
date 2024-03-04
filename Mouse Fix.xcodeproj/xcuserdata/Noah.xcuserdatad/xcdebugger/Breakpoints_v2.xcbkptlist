@@ -1440,8 +1440,8 @@
             filePath = "Helper/Core/Config/ScrollConfig.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "599"
-            endingLineNumber = "599"
+            startingLineNumber = "611"
+            endingLineNumber = "611"
             landmarkName = "animationCurveParamsMap(name:)"
             landmarkType = "9">
          </BreakpointContent>
