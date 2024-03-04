@@ -15,3 +15,15 @@ sudopass.sh
 # Python stuff
 env/
 venv/
+
+# Python stuff
+env
+venv
+__pycache__
+
+# vscode
+#   Don't leak API keys in launch.json
+.vscode
+
+# Sensitive
+gumroad_sales_cache.json
