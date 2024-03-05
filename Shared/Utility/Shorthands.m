@@ -9,7 +9,7 @@
 
 #import "Shorthands.h"
 
-P _P(double x, double y) { /// W/hy did we name this with the underscore? 
+P _P(double x, double y) { /// Why did we name this with the underscore? 
     return (P){.x = x, .y = y};
 }
 

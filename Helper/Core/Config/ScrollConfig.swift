@@ -305,10 +305,10 @@ import CocoaLumberjackSwift
     
     @objc lazy var consecutiveScrollTickIntervalMin: TimeInterval = 1/1000
     /// ^ Notes:
-    ///     - This variable is used to cap the observed scrollTickInterval to a reasonable value. We also use it for calling Math.scale() on the timeBetweenTicks. but I'm not sure that's better than just using 0 instead of this value.
+    ///     - This variable is used to cap the observed scrollTickInterval to a reasonable value. We also use it for Math.scale() ing the timeBetweenTicks into a value between 0 and 1. But I'm not sure this is better than just using 0 instead of `consecutiveScrollTickIntervalMin`.
     ///     - 15ms seemst to be smallest scrollTickInterval that you can naturally produce. But when performance drops, the scrollTickIntervals that we see can be much smaller sometimes.
-    ///     - Update: This is not true for my Roccat Mouse connected via USB. The tick times go down to around 5ms on that mouse. I can reproduce the 15ms minimum using my Logitech M720 connected via Bluetooth. I guess it depends on the mouse hardware or on the transport (bluetooth vs USB).  The 15ms delay means the mouse has a 66.66 Hz polling rate on its wheel which is weird. 5ms is a 200hz polling rate.
-    ///         - Action: We're lowering the `consecutiveScrollTickIntervalMax` from 15 -> 1. Primarily to be able to implement the `baseMsPerStepCurve` algorithm better, but also just because it makes sense.
+    ///     - Update: This is not true for my Roccat Mouse connected via USB. The tick times go down to around 5ms on that mouse. I can reproduce the 15ms minimum using my Logitech M720 connected via Bluetooth. I guess it depends on the mouse hardware or on the transport (bluetooth vs USB).
+    ///         - Action: We're lowering the `consecutiveScrollTickIntervalMax` from 15 -> 1. Primarily to be able to implement the `baseMsPerStepCurve` algorithm better, but also because our assumption that the lowest possible value is 15 is not true for all mice.
     ///         **HACK**: We need to keep the  the `consecutiveScrollTickInterval_AccelerationEnd` at 15ms for now, because lowering that to 5ms would change the behaviour or the acceleration algorithm and make scrolling slower, and we don't have time to adjust the acceleration curves right now.
 
     @objc lazy var consecutiveScrollSwipeMaxInterval: TimeInterval = {

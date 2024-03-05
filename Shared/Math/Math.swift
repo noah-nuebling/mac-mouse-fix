@@ -142,8 +142,10 @@ import CocoaLumberjackSwift
     
     @objc class func scale(value: Double, from originInterval: Interval, to targetInterval: Interval, allowOutOfBounds: Bool = false) -> Double {
         
-        /// Should probably move this into Interval
-        /// Works as expected on Intervals with different directions
+        /// Notes:
+        /// - Should probably move this into Interval
+        /// - Works as expected on Intervals with different directions
+        /// - We fixed bugs with intervals in different directions (which never seemed to play a role before) in commit daa3c4da21aac240e367ef73949d1f307d422f36. TODO: Check if this caused any performance regressions when scrolling or dragging.
         
         
         /// Validate out of bounds
@@ -156,6 +158,10 @@ import CocoaLumberjackSwift
         assert(!value.isNaN 
                && !value.isInfinite 
                && value.magnitude != .greatestFiniteMagnitude)
+        
+        /// Check invalid interval
+        ///  Note: The length of the targetInterval may be 0
+        assert(originInterval.length > 0)
         
         /// Scale value from originInterval to unitInterval [0, 1]
         var unitValue: Double = (value - originInterval.lower) / originInterval.length
@@ -265,6 +271,7 @@ func root(_ value: Double, _ n: Double) -> Double {
 }
 
 // MARK: xor
+/// This is just an alias for != so maybe we should remove this.
 
 extension Bool {
     static func ^ (left: Bool, right: Bool) -> Bool {

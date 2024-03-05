@@ -119,8 +119,8 @@ static CFTimeInterval _consecutiveSwipeSequenceStartTime;
     double secondsSinceLastTick = thisScrollTickTimeStamp - _previousScrollTickTimeStamp;
     
     /// Clip time since last tick to realistic value
-    ///     We're also addressing this issue by capping the acceleration curve (See `consecutiveScrollTickInterval_AccelerationEnd`), but capping the timeBetweenTicks here let's us be more free with the acceleration curve.
-    ///     Update: I've now 
+    /// Notes:
+    /// - We originally introduced this to protect against putting super high tickSpeeds (that were the result of measurement errors) into the accelerationCurve, making the scrolling randomly too fast. But since then we've introduced other measures to protect against this, such as capped accelerationCurves and `consecutiveScrollTickInterval_AccelerationEnd`. Not sure if this is good or necessary.
     
     if (secondsSinceLastTick < scrollConfig.consecutiveScrollTickIntervalMin) {
         secondsSinceLastTick = scrollConfig.consecutiveScrollTickIntervalMin;
