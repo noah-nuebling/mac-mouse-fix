@@ -575,54 +575,78 @@ fileprivate func animationCurveParamsMap(name: MFScrollAnimationCurveName) -> MF
 //        return MFScrollAnimationCurveParameters(baseCurve: nil, speedSmoothing: 0.00, baseMsPerStepCurve: 90, baseMsPerStep: 140, dragExponent: 1.05, dragCoefficient: 15, stopSpeed: 30, sendGestureScrolls: false, sendMomentumScrolls: false)
         
         /// vvv This tries to 'feel' like MMF 2.
-        ///     - For medium and large scroll swipes it feels similarly responsive snappy to MMF 2 due to the 90 baseMsPerStepCurve. (In MMF 2 the baseMsPerStep was 90)
+        ///     - For medium and large scroll swipes it feels similarly responsive snappy to MMF 2 due to the 90 baseMsPerStepMin. (In MMF 2 the baseMsPerStep was 90)
         ///     - For single ticks on default settings, the speed feels similar to MMF 2 due to the 140 baseMsPerStep and due to the step size being larger than MMF 2.
         ///     - In MMF 2, exponent is 1.0 and coeff is 2.3. Here the coeff is 23. Not sure if that's the same but feels similar.
-        ///     - TODO: Play around with `baseMsPerStepCurve` and find optimal value for all the animation curves. highInertia could also possibly benefit.
+        ///     - Update:
+        ///         - We've now replaced baseMsPerStepMin with baseMsPerStepCurve and changed all the parameters around. (See below for more info on that) Not sure this feels like MMF 2 anymore. But it feels really good.
         
         /// Define curve for the baseMsPerStepCurve speedup
+        /// 
         /// Notes:
-        /// - The reason why we introduced a curve, is that when we tried linear interpolation for the baseMsPerStepCurve, we found that little 2-3 tick swipes were too fast, but larger/faster swipes were too slow. Initially, we tried to fix that by adding additional smoothing inside ScrollAnalyzer by initializing the `_tickTimeSmoother` with a value. However, this messed up the scroll distance acceleration, so we turned that back off. This curve is our second attempt at making the 2-3 tick swipes animate slower while making the larger or faster swipes animate faster. In contrast to the previous ScrollAnalyzer approach, this approach doesn't have a time component, where if you scroll at the same speed for a longer time it speeds up more. Not sure if this is a good or bad thing.
-        /// - The curve we're using is basically just a shifted and scaled exponential function. I designed it using this desmos page: https://www.desmos.com/calculator/l8plcdlpmn. I first tried using a Bezier curve, but it didn't get curved enough. I thought about using a curve based on 1/x instead of e^x, but they looked very similar in desmos and e^x is simpler to deal with.
+        ///
+        /// - The reason why we introduced a curve, is that when we tried linear interpolation for the baseMsPerStepMin, we found that little 2-3 tick swipes were too fast, but larger/faster swipes were too slow. Initially, we tried to fix that by adding additional smoothing inside ScrollAnalyzer by initializing the `_tickTimeSmoother` with a value. However, this messed up the scroll distance acceleration, so we turned that back off. This curve is our second attempt at making the 2-3 tick swipes animate slower while making the larger or faster swipes animate faster. In contrast to the previous ScrollAnalyzer-based approach, this approach doesn't have a time component, where if you scroll at the same speed for a longer time it speeds up more. Not sure if this is a good or bad thing.
+        /// - The curve we're using (at the time of writing) is basically just a shifted and scaled exponential function. I designed it using this desmos page: https://www.desmos.com/calculator/l8plcdlpmn. I first tried using a Bezier curve, but it didn't get curved enough. I thought about using a curve based on 1/x instead of e^x, but they looked very similar in desmos and e^x is simpler to deal with.
+        /// 
         /// - Sidenotes:
-        ///     - It's overall a little messy that we have these hybrid curves whose duration we can't directly control, but then we create complex curves for the baseCurve of the HybridCurve to gain back some control. It's pretty messy and confusing. All in the name of having the deceleration feel 'physical'. I mean this is still the best feeling scrolling algorithm I know of so I guess it works, but I really wonder if it wouldn't have been possible to design something more elegant. Maybe we could've done a sort of spring animator and then dynamically chose the starting speed such that the animation covers a certain distance in a certain time. That's the thing we really want to have explicit control over the distance and time. Update: Stared at Desmos for a while and came to the conclusion that our current idea is the best and with spring animations we'd have more or less the same problem. (Can't control both duration and distance while keeping consistent physics)
-        ///     - Idea: It seems that what I'm currently trying to to when designing these curves is 1. Make the animations speed for fastest scrollwheel movements as fast as possible without becoming disorientating to look at 2. Adjust the animation speed for lower scrollwheel speed to feel 'the same' or 'consistent' with the fastest speed because that makes it easier to control. --- Maybe we could do this stuff explicitly somehow. Like explicitly cap the animation speed. Update: Just measured the overall animation duration (including drag) after finding a `baseMsPerStepCurve` that feels 'consistent' to us and I found the duration is very close to being constant! It's currently between 260 and 300 ms - This gives me the idea that what we were subconsciously doing with the `baseMsPerStepCurve` was to try and make the overall animation duration constant. That's what made it feel 'consistent' to us as I mentioned above.
-        ///         - Ideaaa: Make a new algorithm where we specify the targetMaxSpeed, and it figures out a HybridCurve based on that.
+        ///     - It's overall a little messy that we have these hybrid curves whose duration we can't directly control, but then we create complex curves for the duration of the baseCurve of the HybridCurve to gain back some control of the overall duration. It's sort of messy and confusing. All in the name of having the deceleration feel 'physical'. (That's the purpose of the HybridCurves) I mean this is still the best feeling scrolling algorithm I know of so I guess it works, but I really wonder if it wouldn't have been possible to design something more elegant. Maybe we could've done a sort of spring animator and then dynamically chose the starting speed such that the animation covers a certain distance in a certain time. That's the thing we really want to have explicit control over: The distance. But we also want to have control over the feel and over the duration. However, if you want to have a 'physical' feel it's complicated to also control the distance and duration. And actually in case of the high smoothness curves I think I'm pretty happy not having to explicitly control the duration. The duration just falls out of the physics in a nice way. Update: Stared at Desmos for a while and came to the conclusion that our current idea is the best and with spring animations we'd have more or less the same problem. (Can't easily control both duration and distance while keeping consistent physics)
+        ///
+        /// - **Ideaaa**: It seems that what I'm currently trying to to when designing these curves is 1. Make the animations speed for fastest scrollwheel movements as fast as possible without becoming disorientating to look at 2. Adjust the animation speed for lower scrollwheel speed to feel 'the same' or 'consistent' with the fastest scrollwheel speed - because the 'consistent' feel makes it easier to control. (I'm not sure what consistent means, it's just a feeling) --- Maybe we could do this stuff explicitly somehow. Like explicitly cap the animation speed. Update: Just measured the overall animation duration (including drag) after finding a `baseMsPerStepCurve` that feels 'consistent' to us and I found the duration is relatively close to being constant! It's currently between 260 and 300 ms - This gives me the idea that what we were subconsciously doing with the `baseMsPerStepCurve` was to try and make the overall animation duration constant. Maybe that's what made it feel 'consistent' to us. Update: Also did some testing for curves that feel 'inconsistent' to us and the variation in overall animation duration wasn't thatt much more as I thought. I think what I observed was like 240 to 340 ms. Maybe this means that the 'consistent' feel has other aspects aside from low variation in overall animation duration.
+        ///     - **Implementation Ideas**: These thoughts give me two concrete ideas for potentially improving our scrolling algorithms:
+        ///         1. Idea: Make a way to create a `HybridCurve` with a fixed duration along with a fixed distance. The HybridCurve should then automatically figure out what the baseCurve should be / how fast the baseMsPerStep should be. Having explicit control over the duration might allow us to create better, more 'consistent' feeling and more controllable curves. I don't think we'd want to use this for High Smoothness scrolling, since there we want a large variability in animation duration, and the way the current algorithms behave feels very natural and predictable to me already. But for the regular smoothness setting (Which uses this code right here), this could potentially be nice. But on the other hand, maybe the bit of variability in animation duration is good? I'm not sure. Butt, if we implemented a system for explicitly controlling the animation duration, we could still vary the animation duration with the animation distance or with the scrollwheel speed. We'd simply have more control over it, which I think really couldn't hurt?
+        ///             - Conclusion: This idea is interesting. I think it would be good to try at some point. But to really ship this, we'd have to be careful and dedicate a lot of time to testing. I think for now, the current approach of defining a `baseSpeedupCurve` to get some control over the scroll animation duration seems like it's good enough. Maybe it's even inherently better than this idea. I'm not sure. That's why I should test it at some point. But not now.
+        ///         2. Idea: Make a way to explicitly specify a maxAnimationSpeed(Target) which is the highest speed where your eyes can follow scrolling content on the screen (This probably depends on screen refresh rate and other stuff, but we can assume our own screen as a heuristic I think). The duration of the animation curve could then be dynamically determined to be such that, when the user does a scroll swipe at max speed, the resulting animation has a max speed of maxAnimationSpeed(Target). Note that this means we'd choose different animation durations for different "Scrolling Speed" user settings that the user might choose (These user settings really determine sensitivity to be precise) . As a simpler-to-implement stand-in for such a mechanism, we could simply scale the baseMsPerStep with the accelerationCurve. E.g. we could desing the baseMsPerStep around the mediumSpeed accelerationCurve, then sample both the mediumSpeed accelerationCurve and the currentSpeed accelerationCurve at let's say 80% of the maximum scrollwheel speed that the user can input, and then get the scaling factor `s` between the 80% values of those two curves. Then we could multiply the baseMsPerStep with `s`. That way we only have to find a suitable baseMsPerStep for the mediumSpeed accelerationCurve and the rest would be adjusted such that the user can produce an animation speed of *up to* maxAnimationSpeed(Target) no matter what "Scrolling Speed" setting they choose.
+        ///             - Sidenote: I'm putting "Target" in `maxAnimationSpeed(Target)` because it's not supposed to be a hard cap for the animation speed it's more like a heuristic saying: if the user inputs the fastest scroll they can, then the movement on the screen should be about this fast.
+        ///             - Conclusion: I think this is an idea worth exploring, especially when we introduce more options for the user to choose a "Scrolling Speed".  However, this would need a lot of testing to make sure we're getting it right, and I should only do it if I have time to dedicate to this. So not now.
+        ///
+        /// - Idea:
+        ///     - What's interesting is that the animationDuration is influenced by both the baseMsPerStep speed up mechanism as well as by the Drag physics inside the HybridCurve. But at the time of writing, the baseMsPerStep speed up is applied purely based on timeBetweenscrollwheelTicks, while the animationDuration modification from the drag physics is applied based on how many pixels are left to scroll. (Which is also a result of the timeBetweenscrollwheelTicks but with an additional time component I think). This is quite messy to think about. Based on these thoughts, I would think that the animationDuration is very unpredictable. But in practise it doesn't feel that way. 
+        ///
         /// - Finding parameters:
         ///     - I liked 4.0, 140.0, 60.0 for a while - It feels super direct and immediate. And still smoother than Chrome. However I found that it's hard to follow scrolling movements with your eyes at least on my displays.
-        ///     - I liked 4.0, 180.0, 110.0 - 110 feels like MMF 2 on fast swipes, it's slow enough that  you can still see the content well 110 is the lower end for clear visibiliy during scrolling I think. 180 makes the speed feel 'consistent' for slow and fast swipes which helps controllability.
+        ///     - I liked 4.0, 180.0, 110.0
         ///         - Notes:
-        ///             - I haven't played around with small changes to this. E.g. using 170 instead of 180.
-        ///             - The fast speed of this feels similar to the pre 3.0.1 algorithm. We did this whole baseMsPerStepCurve stuff because we felt that that felt to slow and now we arrived at something similar
-        ///             - You'd think that the whole speedup and curvature stuff would make the scrolling less predictable/controllable. Not totally sure, but I feel like for this curve if we turn the speedup off it becomes harder to control/predict.
-        ///     - I liked 4.0, 200.0, 120.0 even better - 120 feels less grating and confusing to eyes. Increased other value to 200 to make the speed feel 'consistent'
+        ///             - 110 feels like MMF 2 on fast swipes, it's slow enough that  you can still see the content well. 110 is the lower end for clear visibiliy during scrolling I think. Setting the max to 180 makes the speed feel 'consistent' for slow and fast swipes which helps controllability.
+        ///             - I have played around with small changes to this a bit. E.g. using 170 instead of 180. I had the impression that 4.0, 180.0, 110.0 is close to a local optimum.
+        ///                 - I also tried 200.0, 120.0 - I thought 120 feelt less grating and confusing to eyes, but that made it feel a bit too unresponsive
+        ///             - The max animation speed of this feels similar to the pre 3.0.1 algorithm. We did this whole baseMsPerStepCurve (and the predecessor baseMsPerStepMin) stuff because we thought that things felt too unresponsive and now it feels like we've arrived at something similar to the starting point. But, I really think this is at the upper end of animation speed that is nice to use, and the responsiveness is noticably better than pre 3.0.1. Controllability is also better I think.
+        ///             - You'd think that the whole baseCurveSpeedup and curvature stuff would make the scrolling less predictable/controllable. Not totally sure, but I feel like for this curve if we turn the speedup off it becomes harder to control/predict. Update: I looked at the overall animation duration (including DragCurve and BaseCurve) and there's less variation in that with this speedup mechanism. Maybe decreased variability makes things more predictable / easy to control. See **Ideaaa** above for more on this.
 
-        let curvature = 4.0                 /* 5.0   4.0 */ /// Should be >= 0.0
-        let baseMsPerStepCurveMax = 200.0   /* 140.0 150.0  180.0 */
-        let baseMsPerStepCurveMin = 120.0   /* 60.0  90.0   110.0 */ /// MMF 2 feels more like 110 not 90 or 60
+        let curvature = 4.0                  /* 5.0   4.0 */ /// Should be >= 0.0
+        let baseMsPerStepCurveMax = 180.0    /* 140.0 150.0  180.0  200.0 */
+        let baseMsPerStepCurveMin = 110.0    /* 60.0  90.0    110.0  120.0 */ /// MMF 2 feels more like 110 not 90 or 60
         
-        let e1 = { x in exp(x * curvature) - 1 }
-        let e2 = { x in e1(x) / e1(1) }
-        let e3 = CurveTools.transformCurve(e2) { y in
-            Math.scale(value: y, from: .unitInterval, to: Interval(baseMsPerStepCurveMax, baseMsPerStepCurveMin))
+        let baseSpeedupCurve: Curve
+        
+        if curvature == 0.0 {
+            let e = { x in
+                Math.scale(value: x, from: .unitInterval, to: Interval(baseMsPerStepCurveMax, baseMsPerStepCurveMin))
+            }
+            baseSpeedupCurve = Curve(rawCurve: e)
+        } else {
+            
+            let e1 = { x in exp(x * curvature) - 1 }
+            let e2 = { x in e1(x) / e1(1) }
+            let e3 = CurveTools.transformCurve(e2) { y in
+                Math.scale(value: y, from: .unitInterval, to: Interval(baseMsPerStepCurveMax, baseMsPerStepCurveMin))
+            }
+            baseSpeedupCurve = Curve(rawCurve: e3)
         }
-
-        let baseSpeedupCurve = Curve(rawCurve: e3)
         
         return MFScrollAnimationCurveParameters(baseCurve: ScrollConfig.linearCurve, speedSmoothing: -1, baseMsPerStepCurve: baseSpeedupCurve, baseMsPerStep: -1, dragExponent: 1.0, dragCoefficient: 23, stopSpeed: 30, sendGestureScrolls: false, sendMomentumScrolls: false)
         
-        /// - vvv Pre 3.0.1
+        /// - vvv Pre 3.0.1 curve (I think)
         /// - I don't like this curve atm. It's still too slow. I'm currently 'tuned into' liking the MMF 2 algorithm and it's much quicker than this.
         /// - MMF 2 has baseMsPerStep 90, this makes medium and large scroll swipes feel much more responsive. But single scroll ticks feel too fast. Maybe we could implement an algorithm where the baseMSPerStep is variable and it shrinks on consecutive scroll swipes or as the scroll speed gets higher, or sth like that. Ideas:
         ///    - Add a cap to the base scroll speed.
         ///    - Make the msPerStep a mix between baseMSPerStep and the actual msPerStep of the scrollwheel. Maybe as soon as `scrollWheelMsPerStep < baseMSPerStep` we use `scrollWheelMsPerStep` or do an interpolation between the 2
         ///         Update: Implemented this with the `baseMsPerStepMin`param (Update: Now changed to `baseMsPerStepCurve`)
         
-        return MFScrollAnimationCurveParameters(baseCurve: ScrollConfig.linearCurve, speedSmoothing: -1, baseMsPerStepCurve: nil, baseMsPerStep: 140, dragExponent: 1.05, dragCoefficient: 15, stopSpeed: 30, sendGestureScrolls: false, sendMomentumScrolls: false)
+//        return MFScrollAnimationCurveParameters(baseCurve: ScrollConfig.linearCurve, speedSmoothing: -1, baseMsPerStepCurve: nil, baseMsPerStep: 140, dragExponent: 1.05, dragCoefficient: 15, stopSpeed: 30, sendGestureScrolls: false, sendMomentumScrolls: false)
         
         /// - vvv I think I like this curve better. Still super responsive and much smoother feeling. But I'm not sure I'm 'tuned into' what the lowInertia should feel like. Bc when I designed it I really liked the snappy, 'immediate' feel, but now I don't like it anymore and wanna make everything much smoother. So I'm not sure I should change it now. Also we should adjust the speed curves if we adjust the feel of this so much.
         
-//        return MFScrollAnimationCurveParameters(baseCurve: nil, speedSmoothing: 0.15, baseMsPerStep: 175, dragExponent: 0.9, dragCoefficient: 25, stopSpeed: 30, sendGestureScrolls: false, sendMomentumScrolls: false)
+//        return MFScrollAnimationCurveParameters(baseCurve: nil, speedSmoothing: 0.15, baseMsPerStepCurve: nil, baseMsPerStep: 175, dragExponent: 0.9, dragCoefficient: 25, stopSpeed: 30, sendGestureScrolls: false, sendMomentumScrolls: false)
         
     case kMFScrollAnimationCurveNameMediumInertia:
         
@@ -633,6 +657,7 @@ fileprivate func animationCurveParamsMap(name: MFScrollAnimationCurveName) -> MF
         return MFScrollAnimationCurveParameters(baseCurve: ScrollConfig.linearCurve, speedSmoothing: -1, baseMsPerStepCurve: nil, baseMsPerStep: 190, dragExponent: 1.0, dragCoefficient: 17, stopSpeed: 50, sendGestureScrolls: false, sendMomentumScrolls: false)
         
     case kMFScrollAnimationCurveNameHighInertia:
+        
         /// - This uses the snappiest dragCurve that can be used to send momentumScrolls.
         ///    If you make it snappier then it will cut off the built-in momentumScroll in apps like Xcode
         /// - We tried setting baseMsPerStep 205 -> 240, which lets medium scroll speed look slightly smoother since you can't tell the ticks apart, but it takes longer until text becomes readable again so I think I like it less. Edit: In MOS's scrollAnalyzer, 240 is the lowest baseMSPerStep where the animationSpeed is constant for low medium scrollwheel speed. Edit: But 215 - 220 is also almost perfect for medium speeds, and in AB testing it's barely different-feeling than 205. In AB testing, I liked 220 slightly more than 240, but the difference is small.
