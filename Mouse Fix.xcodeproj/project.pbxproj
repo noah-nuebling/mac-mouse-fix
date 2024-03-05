@@ -7657,7 +7657,6 @@
 					};
 					4F94F5FF25E5EC2800D9F24A = {
 						CreatedOnToolsVersion = 12.2;
-						ProvisioningStyle = Automatic;
 						TestTargetID = 4F94F5ED25E5EC2500D9F24A;
 					};
 					4F94F60A25E5EC2800D9F24A = {
@@ -7780,7 +7779,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = " \nbuildNumber=$(/usr/libexec/PlistBuddy -c \"Print CFBundleVersion\" \"${PROJECT_DIR}/${INFOPLIST_FILE}\")\nbuildNumber=$((buildNumber+1))\n/usr/libexec/PlistBuddy -c \"Set :CFBundleVersion $buildNumber\" \"${PROJECT_DIR}/${INFOPLIST_FILE}\"\n";
+			shellScript = "# Notes:\n# - We're storing the `version` (aka build number) directly inside the info plist so that we can increment it here. The `shortVersion` (such as 3.0.1) is instead stored inside the Xcode project under General > Identity > Version\n\nbuildNumber=$(/usr/libexec/PlistBuddy -c \"Print CFBundleVersion\" \"${PROJECT_DIR}/${INFOPLIST_FILE}\")\nbuildNumber=$((buildNumber+1))\n/usr/libexec/PlistBuddy -c \"Set :CFBundleVersion $buildNumber\" \"${PROJECT_DIR}/${INFOPLIST_FILE}\"\n";
 		};
 		4FD148D928AA45FE00FE688C /* Not BartyCrouch */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -7818,7 +7817,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\n# I originally made this because sometimes I get crashlogs of the Helper which just say -1 for the version.\n# Now I'm trying to use the build number to check if an instance of the Helper and an instance of the mainApp belong together.\n\n# Get versions from Main App\nversion=$(/usr/libexec/PlistBuddy -c \"Print CFBundleVersion\" \"${PROJECT_DIR}/${INFOPLIST_FILE_MAINAPP}\")\nshortVersion=$(/usr/libexec/PlistBuddy -c \"Print CFBundleShortVersionString\" \"${PROJECT_DIR}/${INFOPLIST_FILE_MAINAPP}\")\n\n$((version++)) \n# ^ Because we'll also be incrementing Main App version when it builds\n#   Can't get any build phase from Main App to run before the Helper is compiled. Otherwise we wouldn't need to do this. We could increment the Main App version and then simply copy it over.\n#   For some reason is not always in sync with the Main App version. I saw it lag one behind. I think it might have to do with Xcode optimizing builds and not always running this if the Helper hasn't changed, but not sure.\n#   Edit: I think I fixed the bug where the Helper build number is lagging behind the main app build number by simply moving the \"Copy Version From Main App\" build phase up - ergo executing it before other build phases. Previously it was the last build phase that was executed.\n\n# Set versions to Helper\n/usr/libexec/PlistBuddy -c \"Set CFBundleVersion ${version}\" \"${PROJECT_DIR}/${INFOPLIST_FILE_HELPER}\"\n/usr/libexec/PlistBuddy -c \"Set CFBundleShortVersionString ${shortVersion}\" \"${PROJECT_DIR}/${INFOPLIST_FILE_HELPER}\"\n";
+			shellScript = "\n# I originally made this because sometimes I get crashlogs of the Helper which just say -1 for the version.\n# Now I'm trying to use the build number to check if an instance of the Helper and an instance of the mainApp belong together.\n# Note: Where do INFOPLIST_FILE_MAINAPP and INFOPLIST_FILE_HELPER come from?\n\n# Get versions from Main App\nversion=$(/usr/libexec/PlistBuddy -c \"Print CFBundleVersion\" \"${PROJECT_DIR}/${INFOPLIST_FILE_MAINAPP}\")\nshortVersion=$(/usr/libexec/PlistBuddy -c \"Print CFBundleShortVersionString\" \"${PROJECT_DIR}/${INFOPLIST_FILE_MAINAPP}\")\n\n$((version++)) \n# ^ Because we'll also be incrementing Main App version when it builds\n#   Can't get any build phase from Main App to run before the Helper is compiled. Otherwise we wouldn't need to do this. We could increment the Main App version and then simply copy it over.\n#   For some reason is not always in sync with the Main App version. I saw it lag one behind. I think it might have to do with Xcode optimizing builds and not always running this if the Helper hasn't changed, but not sure.\n#   Edit: I think I fixed the bug where the Helper build number is lagging behind the main app build number by simply moving the \"Copy Version From Main App\" build phase up - ergo executing it before other build phases. Previously it was the last build phase that was executed.\n\n# Set versions to Helper\n/usr/libexec/PlistBuddy -c \"Set CFBundleVersion ${version}\" \"${PROJECT_DIR}/${INFOPLIST_FILE_HELPER}\"\n/usr/libexec/PlistBuddy -c \"Set CFBundleShortVersionString ${shortVersion}\" \"${PROJECT_DIR}/${INFOPLIST_FILE_HELPER}\"\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -8322,9 +8321,10 @@
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CLANG_ENABLE_OBJC_WEAK = YES;
 				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = "$(inherited)";
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				DEVELOPMENT_TEAM = H6Z6W2F7ZZ;
+				DEVELOPMENT_TEAM = LM5Z78756B;
 				INFOPLIST_FILE = "Mac Mouse FixTests/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -8335,6 +8335,7 @@
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.nuebling.Mac-Mouse-FixTests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Mac Mouse Fix.app/Contents/MacOS/Mac Mouse Fix";
 			};
 			name = Debug;
@@ -8345,9 +8346,10 @@
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CLANG_ENABLE_OBJC_WEAK = YES;
 				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = "$(inherited)";
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				DEVELOPMENT_TEAM = H6Z6W2F7ZZ;
+				DEVELOPMENT_TEAM = LM5Z78756B;
 				INFOPLIST_FILE = "Mac Mouse FixTests/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -8357,6 +8359,7 @@
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.nuebling.Mac-Mouse-FixTests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Mac Mouse Fix.app/Contents/MacOS/Mac Mouse Fix";
 			};
 			name = Release;
@@ -8368,7 +8371,7 @@
 				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = "$(inherited)";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				DEVELOPMENT_TEAM = H6Z6W2F7ZZ;
+				DEVELOPMENT_TEAM = LM5Z78756B;
 				INFOPLIST_FILE = "Mac Mouse FixUITests/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -8391,7 +8394,7 @@
 				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = "$(inherited)";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				DEVELOPMENT_TEAM = H6Z6W2F7ZZ;
+				DEVELOPMENT_TEAM = LM5Z78756B;
 				INFOPLIST_FILE = "Mac Mouse FixUITests/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
