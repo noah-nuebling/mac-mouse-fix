@@ -2,19 +2,21 @@
 # Ignore macOS stuff
 .DS_Store
 
-# Ignore python stuff
-update_env/
-env/
-venv/
-__pycache__/
+# Xcode (Only ignore this on update-feed branch!)
+Mouse\ Fix.xcodeproj/
 
-# Ignore all folders named xcuserdata
-xcuserdata/
+# vscode
+#   Don't leak API keys in launch.json
+.vscode
 
-# White-listing xcschemes folder. (.gitignore whitelisting is a huge hassle but this works)
-!Mouse Fix.xcodeproj/xcuserdata/
-!Mouse Fix.xcodeproj/xcuserdata/Noah.xcuserdatad/
-!Mouse Fix.xcodeproj/xcuserdata/Noah.xcuserdatad/xcschemes/*
-Mouse Fix.xcodeproj/xcuserdata/Noah.xcuserdatad/xcdebugger/*
+# Python stuff
+update_env
+env
+venv
+__pycache__
 
+# Sensitive
+gumroad_sales_cache.json
+
+# Password file
 sudopass.sh
