@@ -360,7 +360,8 @@ href="https://github.com/noah-nuebling/mac-mouse-fix/releases/tag/3.0.0"><strong
 <hr />
 <p>Mac Mouse Fix <strong>3.0.2</strong> brings several improvements,
 including <strong>smoother scrolling</strong>, improved translations,
-and more! ### Scrolling</p>
+and more!</p>
+<h3 id="scrolling">Scrolling</h3>
 <ul>
 <li>You can now stop scroll animations by scrolling one step in the
 opposite direction. This allows you to <strong>‘throw’</strong> and
