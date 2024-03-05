@@ -517,7 +517,7 @@ void Handle_FSEventStreamCallback(ConstFSEventStreamRef streamRef, void *clientC
         
     } else {
         
-        DDLogError(@"Unknown config repair reason. MMF is corrupt.");
+        DDLogError(@"repairConfig: Unknown config repair reason. MMF is corrupt.");
         exit(1);
     }
 }
