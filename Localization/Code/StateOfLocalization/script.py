@@ -356,7 +356,7 @@ Maybe the translation should be updated to reflect the new changes to the base f
                 
                 equal_to_key_str =     '\n- '.join(map(lambda x: f"Base file: {translation_to_markdown(x['key'], x['base_value'], file_type)}\n  Translation: {translation_to_markdown(x['key'], x['value'], file_type)}", sorted(translation_dict['equal_to_key_translations'], key=lambda x: x['key'])))
                 if len(equal_to_key_str) > 0:
-                    content_str += f"\n\n**Equal-to-key translations**\n\nThe following key-value-pairs are have a value that is equal to the key. It looks like they have not yet been translated:\n\n- {equal_to_key_str}"
+                    content_str += f"\n\n**Equal-to-key translations**\n\nThe following key-value-pairs have a value that is equal to the key. It looks like they have not yet been translated:\n\n- {equal_to_key_str}"
                     
                 
                 # Build strings for outdated translations
