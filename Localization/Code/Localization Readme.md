@@ -44,6 +44,7 @@ python3 Localization/Code/UpdateStrings/script.py
 ```
 (Use --help for an explanation of the args)
 
+**Deactivate the venv**
 ```
 deactivate
 ```
