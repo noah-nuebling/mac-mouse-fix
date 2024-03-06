@@ -51,19 +51,31 @@ def main():
 **`plot`**
     Visualize the recorded data in a graph.
     _Subcommands_:
-    `latest`
-        See downloads for the latest stable release
-    `total`
-        Total number of downloads across all versions.
-    `<list of versions>`
-        Provide a list of version names you want to compare.
-        The version names are the titles of the corresponding GitHub releases. (Would probably be better to use the git tag instead)
-        Example of usage:
-            `./stats plot "2.0.0" "2.0.0 Beta 13"`
-    `all`
-        Separate graph for each release.
-    `all-stable`
-        Separate graph for each release. Omit beta versions.
+        `latest`
+            See downloads for the latest stable release
+            - Also shows you the downloads per period.
+        `total`
+            Total number of downloads across all versions.
+            - Also shows you the downloads per period.
+        `<list of versions>`
+            Provide a list of version names you want to compare.
+            The version names are the titles of the corresponding GitHub releases. (Would probably be better to use the git tag instead)
+            Example of usage:
+                `./stats plot "2.0.0" "2.0.0 Beta 13"`
+        `all`
+            Separate graph for each release.
+        `all-stable`
+            Separate graph for each release. Omit beta versions.
+    On `--period`:
+        Subcommands that show you the downloads per period can be customized with the `--period` argument.
+        Possible values: 
+            - 'hour[*x]'
+            - 'day[*x]'
+            - 'week[*x]'
+            Where `x` can be any number.
+            Examples:
+                `./stats plot 3.0.2 --period 'week'`
+                `./stats plot --period 'day*365'`
                 """)    
             exit()
         elif command_line_argument == 'record':
@@ -100,6 +112,18 @@ def main():
             history = load_history()
             print_nested(sorted_by_release(history, 'name'))
         elif command_line_argument == 'plot':
+            
+            # Get --period arg
+    
+            periodt = None
+            for i, arg in enumerate(sys.argv):
+                if arg == "--period":
+                    periodt = sys.argv[i+1]
+                    del sys.argv[i:i+2]
+                    break
+            
+            if periodt == None:
+                periodt = 'week'
             
             # Get version arg (needs to be of the format '2.0.0 Beta 5')
             
@@ -194,7 +218,7 @@ def main():
                 ax1.tick_params(axis='y', labelcolor=color)
                 ax1.axhline(y=0, color='black', linestyle='--')
                 
-                # Downloads per day
+                # Downloads per period 
                 
                 first_date = plot_data[0]['x'][0]
                 last_date = plot_data[0]['x'][-1]
@@ -202,10 +226,25 @@ def main():
                 delta = (last_date - first_date)
                 
                 days = []
-                interval = 60*60*24 # Should be seconds in a day, but can lower for testing
                 
-                for i in reversed(range(int(delta.total_seconds()//interval))):
-                    days.append(last_date - datetime.timedelta(seconds=i*interval))
+                period_in_seconds = None
+                try: 
+                    period_base, period_multiplier = periodt.split("*")
+                except:
+                    period_base = periodt.split("*")[0]
+                    period_multiplier = 1
+                
+                if period_base == "hour":
+                    period_in_seconds = 60*60 * float(period_multiplier)
+                elif period_base == "day":
+                    period_in_seconds = 60*60*24 * float(period_multiplier)
+                elif period_base == "week":
+                    period_in_seconds = 60*60*24*7 * float(period_multiplier)
+                else:
+                    assert False, f"Invalid --period argument: {periodt}"
+                
+                for i in reversed(range(int(delta.total_seconds()//period_in_seconds))):
+                    days.append(last_date - datetime.timedelta(seconds=i*period_in_seconds))
                 days_timestamps = [d.timestamp() for d in days]
                 
                 day_values = np.interp(days_timestamps, [d.timestamp() for d in plot_data[0]['x']], plot_data[0]['y'], left=0, right=0)
@@ -220,11 +259,11 @@ def main():
                 # Plot
                 
                 color2 = 'tab:red'
-                ax2.set_ylabel('Downloads per day', color=color2)  # we already handled the x-label with ax1
+                ax2.set_ylabel(f'Downloads per {periodt}', color=color2)  # we already handled the x-label with ax1
                 ax2.tick_params(axis='y', labelcolor=color2)
                 ax2.axhline(y=0, color='black', linestyle='--')
                 
-                ax2.format_coord = make_format(ax2, ax1)
+                ax2.format_coord = make_format(ax2, ax1, periodt)
                 
                 ax1.plot(plot_data[0]['x'], plot_data[0]['y'], linestyle='-', marker='.', color=color)
                 ax2.plot(x_p, y_p, linestyle='-', marker='.', color=color2)
@@ -338,7 +377,7 @@ def cool_diff(array, n):
     
     return np.array(out)
     
-def make_format(current, other):
+def make_format(current, other, periodt):
     # Src: https://stackoverflow.com/questions/21583965/matplotlib-cursor-value-with-two-axes
     
     # current and other are axes
@@ -354,7 +393,7 @@ def make_format(current, other):
         datefmt = matplotlib.dates.DateFormatter("%d %b %Y")
         datestring = datefmt(x)
         
-        return 'Total: {:.0f}          ({:<10})          Per day: {:.0f}'.format(ax_coord[1], datestring, y)
+        return 'Total: {:.0f}          ({:<10})          Per {}: {:.0f}'.format(ax_coord[1], datestring, periodt, y)
     return format_coord
 
 def get_app_assets(r):
