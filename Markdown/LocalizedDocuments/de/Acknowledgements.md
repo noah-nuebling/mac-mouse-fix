@@ -40,6 +40,7 @@ Diese Leute haben viel mehr als den Standardpreis ausgegeben und mir einen **ung
 
 **März 2024**
 
+- 🇺🇸&nbsp;Cliff&nbsp;M&nbsp; - "March 12, 2024 - Mac mini 2018, LG 27UL500-W.Aus monitor (HDMI), Sonoma 14.3.1, Logi MX Master 3S, Logi Options+ ver. 1.66.531337... App has very Mac-like U.I. with excellent documentation."
 - 🇰🇿&nbsp;Marc&nbsp;Drell - "thank u a lot"
 - 🇺🇸&nbsp;Eric&nbsp;Moss - "Thanks for fixing my mouse!"
 - 🇰🇷&nbsp;Sw&nbsp;Kim - "❤️"
