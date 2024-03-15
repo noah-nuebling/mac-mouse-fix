@@ -42,6 +42,7 @@ These people spent a lot more than the standard price and treated me to an **Inc
 
 **March 2024**
 
+- 🇺🇸&nbsp;Kusi&nbsp;Studios&nbsp;&&nbsp;Ck&nbsp;Tech - "Simply amazing! Keep up the good work!"
 - 🇺🇸&nbsp;Kareem&nbsp;Jameel&nbsp;Arnold - "Thank you! Great work!!!"
 - 🇺🇸&nbsp;Cliff&nbsp;M&nbsp; - "March 12, 2024 - Mac mini 2018, LG 27UL500-W.Aus monitor (HDMI), Sonoma 14.3.1, Logi MX Master 3S, Logi Options+ ver. 1.66.531337... App has very Mac-like U.I. with excellent documentation."
 - 🇰🇿&nbsp;Marc&nbsp;Drell - "thank u a lot"
