@@ -40,6 +40,7 @@ Diese Leute haben viel mehr als den Standardpreis ausgegeben und mir einen **ung
 
 **März 2024**
 
+- 🇨🇭&nbsp;Vykeria - "Making the MacOS experience vastly better, one step at a time! These are the kinds of things that Apple should be doing, by default, but instead we have brilliant people like Noah who do it instead."
 - 🇺🇸&nbsp;Steve&nbsp;Downing
 - 🇵🇱&nbsp;Kamil&nbsp;Wolter - "I love you all"
 - 🇩🇪&nbsp;Christian&nbsp;Bünte
