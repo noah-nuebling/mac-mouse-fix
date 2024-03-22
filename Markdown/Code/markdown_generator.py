@@ -404,6 +404,8 @@ def display_name(sale):
     
     # Fall back to email-based heuristic
     if name == '':
+        
+        # Get email
         email = ''
         if 'email' in sale:
             email = sale['email']
@@ -412,8 +414,13 @@ def display_name(sale):
         else:
             sys.exit(1)
         
+        # Split email
         n1, _, n2 = email.partition('@')
         
+        # Remove plus addressing
+        n1, _, _ = n1.partition('+')
+        
+        # Check blacklist
         use_n1 = True
         for non_name in name_blacklist:
             if non_name in n1:
@@ -423,7 +430,7 @@ def display_name(sale):
         if use_n1:
             name = n1
         else:
-            name = n2.partition('.')[0] # In a case like gm.ail.com, we want gm.ail, but this will just return gm. But should be good enough.
+            name = n2.partition('.')[0] # In a case like gm.ail.com, we want gm.ail, but this will just return gm. But should be good enough. Edit: Why would we display the users name as 'gmail'? Why not just 'A friendly user' at that point? I guess because some ppl have me@noah.nuebling.com addresses?
 
     # Replace weird separators with spaces
     for char in '._-–—+':
@@ -443,6 +450,10 @@ def display_name(sale):
     
     # Normalize whitespace
     name = normalize_whitespace_for_user_generated(name)
+    
+    # Debug
+    if name == "🇩🇪 Gmail":
+        print("Hughhhh")
     
     # Replace all spaces with non-breaking spaces
     name = name.replace(' ', nbsp)
