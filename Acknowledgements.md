@@ -42,7 +42,6 @@ These people spent a lot more than the standard price and treated me to an **Inc
 
 **March 2024**
 
-- 🇺🇸&nbsp;Please&nbsp;Don'T&nbsp;Put&nbsp;Me&nbsp;In&nbsp;The&nbsp;Acknowledgements
 - 🇲🇾&nbsp;George
 - 🇺🇸&nbsp;Carl&nbsp;Norum
 - 🇵🇱&nbsp;Michał - "Best 🐭 app for Mac"

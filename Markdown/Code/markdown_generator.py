@@ -389,22 +389,20 @@ def display_name(sale):
     
     name = ''
 
-    # Special requests
+    # Special requests & rules
     if sale['email'] == 'rawad.aboud@icloud.com': # Gumroad api says he's from IL-TA (Tel Aviv, Israel), but he's Palestinian. See [this mail](message:<8C5D64EE-447A-4A65-89A4-27F99115C986@icloud.com>)
         return '🇵🇸 Rawad Aboud'
     
     # Get user-provided name field
-    #   We haven't tested this so far due to laziness
-    
     name = gumroad_custom_field_content(sale, gumroad_custom_field_labels_name)
     if name == None: name = ''
     
-    # Get full_name field
+    # Fall back to full_name field
     if name == '':
         if 'full_name' in sale:
             name = sale['full_name']
     
-    # Fallback to email-based heuristic
+    # Fall back to email-based heuristic
     if name == '':
         email = ''
         if 'email' in sale:
@@ -453,9 +451,26 @@ def display_name(sale):
  
 def emoji_flag(sale):
     
+    # Get country code
     country_code = sale.get('country_iso2', '')
-    if country_code == '': # Does this ever happend?
-        country_code = pycountry.countries.get(name=sale.get('country', '')).alpha_2
+    
+    # pycountry-based fallback for determining country code
+    #   Notes: Does the country code ever need a fallback? Edit: Yes, apparently for Taiwan.
+    if country_code == '': 
+    
+        country_name = sale.get('country', '')
+                
+        pycountry_object = pycountry.countries.get(name=country_name)
+        if pycountry_object:
+            country_code = pycountry_object.alpha_2
+        
+        if country_code == '':
+            
+            # Fallback for Taiwan
+            #   Note: I don't want to take a political stance or make either China or the USA angry with this. I only have a vague idea about the political issue and have no stance on it. I wrote this code so the script doesn't crash, if you can think of a better solution, please let me know.
+            if country_name == 'Taiwan':
+                country_code = "TW"
+            
     
     if country_code == '':
         return ''
@@ -501,14 +516,30 @@ def is_very_generous(sale):
         
 def wants_display(sale):
     
-    dont_display = gumroad_custom_field_content(sale, gumroad_custom_field_labels_dont_display)
-    if dont_display == None: dont_display = False
+    # Declare result
+    result = True
     
-    result = not dont_display
+    # Special requests & rules
+    #   Notes: At time of writing, we calculate the display_name() several times for each sale throughout the script, which is inefficient, but makes for easier code.
+    if result == True:
+        name = display_name(sale).replace(nbsp, ' ')
+        
+        if name == "🇺🇸 Please Don'T Put Me In The Acknowledgements":
+            result = False
     
+    # Don't display checkbox
+    if result == True:
+        dont_display_checkbox_is_checked = gumroad_custom_field_content(sale, gumroad_custom_field_labels_dont_display)
+        if dont_display_checkbox_is_checked == None: dont_display_checkbox_is_checked = False
+        if dont_display_checkbox_is_checked:
+            result = False
+    
+    
+    # Log
     if result == False:
         print("{} payed {} and does not want to be displayed".format(display_name(sale), sale['formatted_display_price']))
     
+    # Return
     return result
 
 def user_message(sale, name):
