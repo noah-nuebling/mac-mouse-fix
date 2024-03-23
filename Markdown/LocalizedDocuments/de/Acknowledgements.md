@@ -40,6 +40,7 @@ Diese Leute haben viel mehr als den Standardpreis ausgegeben und mir einen **ung
 
 **März 2024**
 
+- 🇨🇦&nbsp;Tin&nbsp;Chak&nbsp;Justin&nbsp;Yuen
 - 🇲🇾&nbsp;George
 - 🇺🇸&nbsp;Carl&nbsp;Norum
 - 🇵🇱&nbsp;Michał - "Best 🐭 app for Mac"
