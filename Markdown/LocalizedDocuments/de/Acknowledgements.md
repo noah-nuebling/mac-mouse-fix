@@ -40,6 +40,7 @@ Diese Leute haben viel mehr als den Standardpreis ausgegeben und mir einen **ung
 
 **März 2024**
 
+- 🇩🇪&nbsp;Th&nbsp;Freudenberg
 - 🇺🇦&nbsp;Anton&nbsp;Holub - "Nice job, keep it going!"
 - 🇨🇦&nbsp;Tin&nbsp;Chak&nbsp;Justin&nbsp;Yuen
 - 🇲🇾&nbsp;George
