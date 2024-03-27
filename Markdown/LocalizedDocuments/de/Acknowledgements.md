@@ -40,6 +40,7 @@ Diese Leute haben viel mehr als den Standardpreis ausgegeben und mir einen **ung
 
 **März 2024**
 
+- 🇨🇴&nbsp;Ricardo&nbsp;Gottheil
 - 🇺🇸&nbsp;Alexandre&nbsp;Smirnov
 - 🇸🇪&nbsp;Johan&nbsp;Lundström
 - 🇩🇪&nbsp;Th&nbsp;Freudenberg
