@@ -40,6 +40,7 @@ Diese Leute haben viel mehr als den Standardpreis ausgegeben und mir einen **ung
 
 **März 2024**
 
+- 🇸🇪&nbsp;Sigge&nbsp;Fabiansson - "I love you."
 - 🇨🇴&nbsp;Ricardo&nbsp;Gottheil
 - 🇺🇸&nbsp;Alexandre&nbsp;Smirnov
 - 🇸🇪&nbsp;Johan&nbsp;Lundström
