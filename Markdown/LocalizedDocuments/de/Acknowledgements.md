@@ -38,6 +38,10 @@ Danke für euren Beitrag! :)
 
 Diese Leute haben viel mehr als den Standardpreis ausgegeben und mir einen **unglaublichen Milchshake** spendiert. (Und manche haben sogar eine Nachricht hinterlassen) Danke für den _Zucker-Kick_!
 
+**April 2024**
+
+- 🇹🇭&nbsp;Wpk8
+
 **März 2024**
 
 - 🇰🇷&nbsp;Son - "Thanks for the one of the greatest app for macOS"

@@ -40,6 +40,10 @@ Thanks for your support! :)
 
 These people spent a lot more than the standard price and treated me to an **Incredible Milkshake**. (And some even left a message) Thanks for the _sugar rush_!
 
+**April 2024**
+
+- 🇹🇭&nbsp;Wpk8
+
 **March 2024**
 
 - 🇰🇷&nbsp;Son - "Thanks for the one of the greatest app for macOS"
