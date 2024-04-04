@@ -40,6 +40,7 @@ Diese Leute haben viel mehr als den Standardpreis ausgegeben und mir einen **ung
 
 **April 2024**
 
+- 🇺🇸&nbsp;Francisco&nbsp;Zavala - "This app is a MUST in my utility. It’s a huge boost to my productivity. Very easy and simple to use. The UI is clean and easy to navigate around. Highly recommend!"
 - 🇹🇭&nbsp;Wpk8
 
 **März 2024**
