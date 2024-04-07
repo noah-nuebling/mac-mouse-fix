@@ -40,6 +40,7 @@ Diese Leute haben viel mehr als den Standardpreis ausgegeben und mir einen **ung
 
 **April 2024**
 
+- 🇺🇸&nbsp;Konrad
 - 🇫🇷&nbsp;Lepaumé - "Thank you for your work, a truly useful app for a fair price. Wish you the best !"
 - 🇺🇸&nbsp;Mrbrowning
 - 🇮🇪&nbsp;Rafal - "Thank you for a well designed app and for maintaining it. The scrolling function is the best of all the apps I have tried (many). It makes it possible for me to use my RollerMouse Red, which I have to use because of issues in my hands."
