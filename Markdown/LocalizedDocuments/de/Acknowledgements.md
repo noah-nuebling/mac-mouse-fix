@@ -40,6 +40,7 @@ Diese Leute haben viel mehr als den Standardpreis ausgegeben und mir einen **ung
 
 **April 2024**
 
+- 🇺🇸&nbsp;Mrbrowning
 - 🇮🇪&nbsp;Rafal - "Thank you for a well designed app and for maintaining it. The scrolling function is the best of all the apps I have tried (many). It makes it possible for me to use my RollerMouse Red, which I have to use because of issues in my hands."
 - 🇺🇸&nbsp;Francisco&nbsp;Zavala - "This app is a MUST in my utility. It’s a huge boost to my productivity. Very easy and simple to use. The UI is clean and easy to navigate around. Highly recommend!"
 - 🇹🇭&nbsp;Wpk8
