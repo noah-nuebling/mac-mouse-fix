@@ -40,6 +40,7 @@ Diese Leute haben viel mehr als den Standardpreis ausgegeben und mir einen **ung
 
 **April 2024**
 
+- 🇬🇧&nbsp;Adrian&nbsp;Ward - "Helped make my £40 specialist thumb mouse more than an expensive paperweight! Thank you :-)"
 - 🇸🇪&nbsp;Lucas&nbsp;Arnström - "Awesome application, keep up the work!"
 - 🇺🇸&nbsp;Cesar&nbsp;B&nbsp; - "Gracias Noah!"
 - 🇺🇸&nbsp;Fishmanpet
