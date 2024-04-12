@@ -42,6 +42,7 @@ These people spent a lot more than the standard price and treated me to an **Inc
 
 **April 2024**
 
+- 🇸🇪&nbsp;Lucas&nbsp;Arnström - "Awesome application, keep up the work!"
 - 🇺🇸&nbsp;Cesar&nbsp;B&nbsp; - "Gracias Noah!"
 - 🇺🇸&nbsp;Fishmanpet
 - 🇺🇸&nbsp;Konrad
