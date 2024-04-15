@@ -326,11 +326,12 @@ static void heavyProcessing(CGEventRef event, int64_t scrollDeltaAxis1, int64_t 
         /// Update active device
         [HelperState.shared updateActiveDeviceWithEvent:event];
         
-        /// Update application Overrides
+        /// Update mouse did move
+        ///     Note: We need this in MMF 3 to update the displayLink to the current display
+        [ScrollUtility updateMouseDidMoveWithEvent:event];
         
+        /// Update application Overrides
         if ((NO)) { /// Unused in MMF 3
-            
-            [ScrollUtility updateMouseDidMoveWithEvent:event];
             if (!ScrollUtility.mouseDidMove) {
                 [ScrollUtility updateFrontMostAppDidChange];
                 /// Only checking this if mouse didn't move, because of || in (mouseMoved || frontMostAppChanged). For optimization. Not sure if significant.

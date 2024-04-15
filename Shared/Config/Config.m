@@ -389,7 +389,7 @@ void Handle_FSEventStreamCallback(ConstFSEventStreamRef streamRef, void *clientC
     /// TODO: Check whether all default (as opposed to override) values exist in config file. If they don't, then everything breaks. Maybe do this by comparing with default_config. Edit: Not sure this is feasible, also the comparing with default_config breaks if we want to have keys that are optional.
     /// TODO: Consider porting this to Helper
     
-    assert(runningMainApp());
+     assert(runningMainApp());
     
     if (reason == kMFConfigRepairReasonLoad) {
         

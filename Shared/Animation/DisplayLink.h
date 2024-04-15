@@ -60,9 +60,9 @@ typedef void(^DisplayLinkCallback)(DisplayLinkCallbackTimeInfo timeInfo);
 - (CFTimeInterval)bestTimeBetweenFramesEstimate;
 - (CFTimeInterval)timeBetweenFrames;
 - (CFTimeInterval)nominalTimeBetweenFrames;
+
 - (void)linkToMainScreen;
 - (void)linkToMainScreen_Unsafe;
-
 - (void)linkToDisplayUnderMousePointerWithEvent:(CGEventRef _Nullable)event;
 
 @property(atomic, readonly, strong) dispatch_queue_t dispatchQueue;
