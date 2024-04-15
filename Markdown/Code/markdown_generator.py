@@ -542,9 +542,6 @@ def wants_display(sale):
         if name == "🇺🇸 Please Don'T Put Me In The Acknowledgements":
             result = False
             break
-        if name == "🇹🇼 Eugene" and message == "Taiwan no.1":
-            result = False
-            break
         
         # 
         # "Don't display" checkbox    
@@ -572,6 +569,9 @@ def wants_display(sale):
 
 def user_message(sale, name):
     
+    # Notes:
+    # - At the time of writing, the name that is being passed in contains &nbsp; chars instead of normal spaces.
+    
     # Get raw message from sale data
     message = gumroad_custom_field_content(sale, gumroad_custom_field_labels_message)
     if message == None: message = ''
@@ -593,6 +593,18 @@ def user_message(sale, name):
     if len(message) > 0 and (message.lower() in name.replace(nbsp, ' ').lower()):
         print("{}'s message is contained in their name, so we're filtering it out".format(name))
         message = ''
+        
+    # Special requests & rules
+    while True:
+        
+        name = name.replace(nbsp, ' ')
+        
+        if name == "🇹🇼 Eugene" and message == "Taiwan no.1":
+            message = ''
+            break
+        
+        # This is not a loop but a a makeshift goto statement
+        break
     
     # Return
     return message
