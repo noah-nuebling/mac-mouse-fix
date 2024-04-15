@@ -128,6 +128,7 @@ Diese Leute haben viel mehr als den Standardpreis ausgegeben und mir einen **ung
 - 🇺🇦&nbsp;Serhii - "Single developer resolved annoying issue, that multi-billion company didn't. What a mad world, huh?"
 - 🇺🇸&nbsp;Ave&nbsp;Grimshaw
 - 🇺🇸&nbsp;Alexander&nbsp;Malmberg
+- 🇹🇼&nbsp;Eugene
 - 🇨🇦&nbsp;David&nbsp;Grevink - "This is simply amazing. I could replace my MX Master with a Pulsar X2 without loosing the MagSpeed scrollwheel functionality I loved!"
 - 🇨🇭&nbsp;Stephan&nbsp;Boog
 - 🇰🇷&nbsp;Doyeop&nbsp;Kim - "Thanks for the grate app!"
