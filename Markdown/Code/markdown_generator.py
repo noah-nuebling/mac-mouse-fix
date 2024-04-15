@@ -530,22 +530,39 @@ def wants_display(sale):
     # Declare result
     result = True
     
-    # Special requests & rules
-    #   Notes: At time of writing, we calculate the display_name() several times for each sale throughout the script, which is inefficient, but makes for easier code.
-    if result == True:
-        name = display_name(sale).replace(nbsp, ' ')
+    while True: # This is a goto statement, not a loop
+        
+        # 
+        # Special requests & rules
+        #
+
+        name = display_name(sale).replace(nbsp, ' ') # We should perhaps cache access to the display_name() and user_message(), since we calculcate it several times for each sale. But seems fast enough for now. And makes for easier code.
+        message = user_message(sale, name)
         
         if name == "🇺🇸 Please Don'T Put Me In The Acknowledgements":
             result = False
-    
-    # Don't display checkbox
-    if result == True:
+            break
+        if name == "🇹🇼 Eugene" and message == "Taiwan no.1":
+            result = False
+            break
+        
+        # 
+        # "Don't display" checkbox    
+        #
+        
         dont_display_checkbox_is_checked = gumroad_custom_field_content(sale, gumroad_custom_field_labels_dont_display)
         if dont_display_checkbox_is_checked == None: dont_display_checkbox_is_checked = False
         if dont_display_checkbox_is_checked:
             result = False
-    
-    
+            break
+        
+        #
+        # Break
+        #
+        #   (This is a goto statement, not a loop)
+        
+        break
+
     # Log
     if result == False:
         print("{} payed {} and does not want to be displayed".format(display_name(sale), sale['formatted_display_price']))
