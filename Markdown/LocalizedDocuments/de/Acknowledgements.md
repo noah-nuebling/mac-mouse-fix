@@ -40,6 +40,7 @@ Diese Leute haben viel mehr als den Standardpreis ausgegeben und mir einen **ung
 
 **April 2024**
 
+- 🇭🇺&nbsp;Zsombor&nbsp;Berki - "Incredible app, this functionality should be built into macOS by default"
 - 🇺🇸&nbsp;Mark&nbsp;Perkins
 - 🇬🇧&nbsp;Adrian&nbsp;Ward - "Helped make my £40 specialist thumb mouse more than an expensive paperweight! Thank you :-)"
 - 🇸🇪&nbsp;Lucas&nbsp;Arnström - "Awesome application, keep up the work!"
