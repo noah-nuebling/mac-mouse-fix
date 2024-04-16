@@ -42,6 +42,7 @@ These people spent a lot more than the standard price and treated me to an **Inc
 
 **April 2024**
 
+- 🇸🇪&nbsp;Anders&nbsp;Dahlgren - "Use it every day, makes MacOS more useful!"
 - 🇭🇺&nbsp;Zsombor&nbsp;Berki - "Incredible app, this functionality should be built into macOS by default"
 - 🇺🇸&nbsp;Mark&nbsp;Perkins
 - 🇬🇧&nbsp;Adrian&nbsp;Ward - "Helped make my £40 specialist thumb mouse more than an expensive paperweight! Thank you :-)"
