@@ -40,6 +40,7 @@ Diese Leute haben viel mehr als den Standardpreis ausgegeben und mir einen **ung
 
 **April 2024**
 
+- 🇺🇸&nbsp;Robert&nbsp;L&nbsp;Spaulding - "MX 3 Anywhere, so close."
 - 🇩🇪&nbsp;Udo&nbsp;Schneider
 - 🇸🇪&nbsp;Anders&nbsp;Dahlgren - "Use it every day, makes MacOS more useful!"
 - 🇭🇺&nbsp;Zsombor&nbsp;Berki - "Incredible app, this functionality should be built into macOS by default"
