@@ -42,6 +42,7 @@ These people spent a lot more than the standard price and treated me to an **Inc
 
 **April 2024**
 
+- 🇩🇰&nbsp;Kim&nbsp;Hartwich
 - 🇺🇸&nbsp;Robert&nbsp;L&nbsp;Spaulding - "MX 3 Anywhere, so close."
 - 🇩🇪&nbsp;Udo&nbsp;Schneider
 - 🇸🇪&nbsp;Anders&nbsp;Dahlgren - "Use it every day, makes MacOS more useful!"
