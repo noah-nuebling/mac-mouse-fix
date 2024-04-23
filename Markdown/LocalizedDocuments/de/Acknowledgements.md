@@ -40,6 +40,7 @@ Diese Leute haben viel mehr als den Standardpreis ausgegeben und mir einen **ung
 
 **April 2024**
 
+- 🇵🇱&nbsp;Daniil
 - 🇩🇰&nbsp;Kim&nbsp;Hartwich
 - 🇺🇸&nbsp;Robert&nbsp;L&nbsp;Spaulding - "MX 3 Anywhere, so close."
 - 🇩🇪&nbsp;Udo&nbsp;Schneider
