@@ -42,6 +42,7 @@ These people spent a lot more than the standard price and treated me to an **Inc
 
 **April 2024**
 
+- 🇲🇽&nbsp;Alfredo&nbsp;Lopez - "The best app to get more from your mouse."
 - 🇮🇪&nbsp;Jim&nbsp;Rutherford - "Be"
 - 🇺🇸&nbsp;Cameron&nbsp;Little
 - 🇵🇱&nbsp;Daniil
