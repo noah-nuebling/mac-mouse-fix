@@ -42,6 +42,7 @@ These people spent a lot more than the standard price and treated me to an **Inc
 
 **April 2024**
 
+- 🇺🇸&nbsp;Happy&nbsp;User - "Simple, useful. Thank you!"
 - 🇺🇸&nbsp;Asumu&nbsp;Takikawa
 - 🇺🇸&nbsp;Andy&nbsp;Cho - "Thank you!"
 - 🇰🇿&nbsp;Banochkin - "now scrolling https://banochkin.com with pleasure using mac mouse fix 🖤"
