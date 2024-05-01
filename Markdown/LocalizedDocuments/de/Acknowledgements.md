@@ -40,6 +40,7 @@ Diese Leute haben viel mehr als den Standardpreis ausgegeben und mir einen **ung
 
 **Mai 2024**
 
+- 🇦🇺&nbsp;David&nbsp;Victor
 - 🇦🇺&nbsp;Danielle&nbsp;Mclean - "Trans rights are human rights!!"
 
 **April 2024**
