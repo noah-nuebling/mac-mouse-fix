@@ -40,6 +40,10 @@ Thanks for your support! :)
 
 These people spent a lot more than the standard price and treated me to an **Incredible Milkshake**. (And some even left a message) Thanks for the _sugar rush_!
 
+**May 2024**
+
+- 🇦🇺&nbsp;Danielle&nbsp;Mclean - "Trans rights are human rights!!"
+
 **April 2024**
 
 - 🇩🇪&nbsp;Dominik
