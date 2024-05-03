@@ -40,6 +40,7 @@ Diese Leute haben viel mehr als den Standardpreis ausgegeben und mir einen **ung
 
 **Mai 2024**
 
+- 🇩🇪&nbsp;Florian&nbsp;Pircher - "Vielen herzlichen Dank, was für ein Wunderwerk!"
 - 🇺🇸&nbsp;Joe&nbsp;Young - "Excellent."
 - 🇫🇷&nbsp;Julien - "Pujol"
 - 🇺🇸&nbsp;Kurt&nbsp;H&nbsp; - "Such a useful tool. Great work!"
