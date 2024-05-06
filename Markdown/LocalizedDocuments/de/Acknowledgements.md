@@ -40,6 +40,7 @@ Diese Leute haben viel mehr als den Standardpreis ausgegeben und mir einen **ung
 
 **Mai 2024**
 
+- 🇺🇸&nbsp;Benjamin&nbsp;Nied - "Thanks for making this awesome software!"
 - 🇺🇸&nbsp;Chris&nbsp;Flora - "omg, best Mac app ever!!"
 - 🇬🇧&nbsp;Connor&nbsp;M - "Heard all the hype for the MX Master - bought one for my MacBook and hated it. This app singlehandedly changed my opinion on it!"
 - 🇺🇸&nbsp;Harold&nbsp;Chun
