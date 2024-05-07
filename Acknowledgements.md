@@ -42,6 +42,7 @@ These people spent a lot more than the standard price and treated me to an **Inc
 
 **May 2024**
 
+- 🇯🇴&nbsp;Owais&nbsp;Abukreifeh - "thanks a lot, you're a life savor"
 - 🇱🇹&nbsp;Luksys3 - "Super nice!"
 - 🇺🇸&nbsp;Jack&nbsp;Liu
 - 🇺🇸&nbsp;Benjamin&nbsp;Nied - "Thanks for making this awesome software!"
