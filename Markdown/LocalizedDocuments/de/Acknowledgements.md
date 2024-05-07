@@ -40,6 +40,7 @@ Diese Leute haben viel mehr als den Standardpreis ausgegeben und mir einen **ung
 
 **Mai 2024**
 
+- 🇱🇹&nbsp;Luksys3 - "Super nice!"
 - 🇺🇸&nbsp;Jack&nbsp;Liu
 - 🇺🇸&nbsp;Benjamin&nbsp;Nied - "Thanks for making this awesome software!"
 - 🇺🇸&nbsp;Chris&nbsp;Flora - "omg, best Mac app ever!!"
