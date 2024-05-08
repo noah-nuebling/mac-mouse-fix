@@ -202,6 +202,70 @@ def insert_acknowledgements(template, language_id, language_dict, gumroad_api_ke
     
         sales = get_latest_sales(cache_file, cache_shelf_life, gumroad_api_key, gumroad_api_base, gumroad_sales_api, gumroad_product_ids, no_api)
         
+        # Experiment: Analyze license keys and how many times they have been activated
+        #   
+        #   (This code doesn't really belong here at all. TODO: Move the code somewhere else. We might want to extract the loading-of-gumroad-sales into a separate python module or whatever it's called so we can reuse it outside of markdown_generator.py)
+        # 
+        #   Results: (09.05.2024) (This is not 100% accurate, I think we missed a few licenses and we only used the USD listing, not the older EUR listing. But these numbers describe the activations of the vast majority of bought licenses I think)
+        #   - Number of licenses that have been activated 0 times: 90
+        #   - Number of licenses that have been activated 1 time: 5910
+        #   - Number of licenses that have been activated 2 times: 307
+        #   - Number of licenses that have been activated 3 times: 39
+        #   - Number of licenses that have been activated 4 times: 7
+        #   - Number of licenses that have been activated 5 times: 4
+        #   - Number of licenses that have been activated 6 times: 1
+        #   - Number of licenses that have been activated 7 times: 1
+        #   - Number of licenses that have been activated 8 times: 1
+        #   - Number of licenses that have been activated 9 times: 1
+        #
+        #   -> We can see that so far, no license seems to have been publicly shared in a way that matters. This might mean it's okay to turn off some anti piracy measures that we currently implement. See this mail (message:<C7DE5F1A-CDED-47B6-BCAC-5CB40DF22DE3@gmail.com>) for more discussion.
+
+        if False:
+            all_license_keys = []
+            uses_distribution = {} # Keys are a number of activations, and the value is how many license keys have been activated <key> many times.
+            start_index = 3934
+            
+            for i in range(start_index, len(sales)):
+                
+                sale = sales[i]
+                
+                product_id = sale['product_id']
+                license_key = sale['license_key']
+                
+                print(f"Getting license key info no {i}/{len(sales)}. prod id: {product_id}, license_key: {license_key}.")
+                
+                if i % 5 == 0:
+                    print(f"Uses distribution so far:\n{uses_distribution}")
+                
+                response = None
+                while True:
+                    
+                    r = requests.post(
+                    gumroad_api_base + "/v2/licenses/verify", 
+                    headers={
+                        'Content-Type': 'application/x-www-form-urlencoded'
+                    },
+                    params={
+                        'product_id': product_id,
+                        'license_key': license_key,
+                        'increment_uses_count': "false", # Important!!! Don't mess up ppls usage count
+                    })
+                    if r.status_code == 200:
+                        response = r
+                        break
+                    print(f"License key request failed with code {r.status_code}. Retrying.")
+                
+                response_dict = response.json()
+                
+                if 'success' in response_dict and 'uses' in response_dict:
+                    all_license_keys.append(response_dict)
+                    old_uses_count = uses_distribution.get(response_dict['uses'], 0)
+                    uses_distribution[response_dict['uses']] = old_uses_count + 1
+                            
+            all_license_keys.sort(key='uses')
+            print('All license keys sorted by number of uses:')
+            pprint(all_license_keys)
+        
         # Premature return
         #   This happens e.g. if the no_api option is set and there is also no cache.
         if len(sales) == 0:
