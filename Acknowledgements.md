@@ -42,6 +42,7 @@ These people spent a lot more than the standard price and treated me to an **Inc
 
 **May 2024**
 
+- 🇮🇹&nbsp;Alfonso&nbsp;Caschili
 - 🇹🇭&nbsp;Nzy
 - 🇺🇸&nbsp;Dave&nbsp;Davis
 - 🇯🇴&nbsp;Owais&nbsp;Abukreifeh - "thanks a lot, you're a life savor"
