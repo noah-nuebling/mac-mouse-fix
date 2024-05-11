@@ -40,6 +40,7 @@ Diese Leute haben viel mehr als den Standardpreis ausgegeben und mir einen **ung
 
 **Mai 2024**
 
+- 🇺🇸&nbsp;Kevin&nbsp;Barrett
 - 🇮🇹&nbsp;Alfonso&nbsp;Caschili
 - 🇹🇭&nbsp;Nzy
 - 🇺🇸&nbsp;Dave&nbsp;Davis
