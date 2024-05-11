@@ -42,6 +42,7 @@ These people spent a lot more than the standard price and treated me to an **Inc
 
 **May 2024**
 
+- 🇵🇱&nbsp;Lesster - "Thank you for helping me with not having to bear LogiOptions+ anymore!"
 - 🇺🇸&nbsp;Kevin&nbsp;Barrett
 - 🇮🇹&nbsp;Alfonso&nbsp;Caschili
 - 🇹🇭&nbsp;Nzy

@@ -40,6 +40,7 @@ Diese Leute haben viel mehr als den Standardpreis ausgegeben und mir einen **ung
 
 **Mai 2024**
 
+- 🇵🇱&nbsp;Lesster - "Thank you for helping me with not having to bear LogiOptions+ anymore!"
 - 🇺🇸&nbsp;Kevin&nbsp;Barrett
 - 🇮🇹&nbsp;Alfonso&nbsp;Caschili
 - 🇹🇭&nbsp;Nzy
