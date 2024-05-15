@@ -42,6 +42,7 @@ These people spent a lot more than the standard price and treated me to an **Inc
 
 **May 2024**
 
+- 🇺🇸&nbsp;Chris&nbsp;Rodriguez
 - 🇺🇸&nbsp;Dr&nbsp;Matt&nbsp;Booth
 - 🇺🇸&nbsp;Aaron&nbsp;Hoppel - "Thank you!!!"
 - 🇸🇪&nbsp;Marko&nbsp;K
