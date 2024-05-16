@@ -462,28 +462,43 @@
   </script>
 </head>
 <body>
-<!-- **If you're upgrading from Mac Mouse Fix 2** please note that Mac Mouse Fix 3 is **not 100% free anymore**. Instead However it's very cheap, and you can also stay on Mac Mouse Fix 2 if you like - which will stay 100% free. Learn more in the release notes for [**3.0.0**](https://github.com/noah-nuebling/mac-mouse-fix/releases/tag/3.0.0) - the biggest update to Mac Mouse Fix so far! -->
-<!-- **If you're currently on Mac Mouse Fix version 2** -->
-<blockquote>
-<p>[!NOTE] <strong>Read this if you’re currently using Mac Mouse Fix
+<p><strong>Note - Read this if you’re currently using Mac Mouse Fix
 2</strong></p>
 <p>With the introduction of Mac Mouse Fix 3, I’ve made some changes to
 the pricing model:</p>
 <ul>
 <li><strong>Mac Mouse Fix 2</strong><br />
 Remains 100% free, and I plan to keep supporting it.<br />
-Just <strong>skip this update</strong> if you’d like to keep using Mac
-Mouse Fix 2.</li>
+<strong>Skip this update</strong> to keep using Mac Mouse Fix 2.</li>
 <li><strong>Mac Mouse Fix 3</strong><br />
-Free for 30 days, costs a few dollars to own. You can <strong>update
-now</strong>, if you’d like to try out Mac Mouse Fix 3.</li>
+Free for 30 days, costs a few dollars to own.<br />
+<strong>Update now</strong> to get Mac Mouse Fix 3.</li>
 </ul>
-<p>You can also download the latest version of MMF 2 <a
-href="https://noah-nuebling.github.io/redirection-service?target=mmf2-latest">here</a>.
-And you can learn more about the new pricing <a
+<p>You can download the latest version of Mac Mouse Fix 2 <a
+href="https://noah-nuebling.github.io/redirection-service?target=mmf2-latest">here</a>.<br />
+You can learn more about the new pricing <a
 href="https://github.com/noah-nuebling/mac-mouse-fix/releases/tag/3.0.0">here</a>.
-Thank you so much for all your support so far! :)</p>
-</blockquote>
+Thank you so much for all the support so far! :)</p>
+<!-- **If you're upgrading from Mac Mouse Fix 2** please note that Mac Mouse Fix 3 is **not 100% free anymore**. Instead However it's very cheap, and you can also stay on Mac Mouse Fix 2 if you like - which will stay 100% free. Learn more in the release notes for [**3.0.0**](https://github.com/noah-nuebling/mac-mouse-fix/releases/tag/3.0.0) - the biggest update to Mac Mouse Fix so far! -->
+<!-- **If you're currently on Mac Mouse Fix version 2** -->
+<!--
+
+> [!NOTE]
+> **Read this if you're currently using Mac Mouse Fix 2**
+>
+> With the introduction of Mac Mouse Fix 3, I've made some changes to the pricing model:
+> 
+> - **Mac Mouse Fix 2**\
+> Remains 100% free, and I plan to keep supporting it.\
+> Just **skip this update** if you'd like to keep using Mac Mouse Fix 2.
+> - **Mac Mouse Fix 3**\
+> Free for 30 days, costs a few dollars to own. 
+> You can **update now**, if you'd like to try out Mac Mouse Fix 3. You can go back to MMF 2 any time.
+>
+> You can also download the latest version of MMF 2 [here](https://noah-nuebling.github.io/redirection-service?target=mmf2-latest).\
+> You can learn more about the new pricing [here](https://github.com/noah-nuebling/mac-mouse-fix/releases/tag/3.0.0). Thank you so much for all the support so far! :)
+
+-->
 <!--
 > [!NOTE]
 > **Read this if you've updated to Mac Mouse Fix 3 without knowing about the pricing changes.**
@@ -495,6 +510,7 @@ Thank you so much for all your support so far! :)</p>
 
 -->
 <hr />
+<p><strong>Update Notes</strong></p>
 <p>Mac Mouse Fix <strong>3.0.2</strong> brings several improvements,
 including <strong>smoother scrolling</strong>, improved translations,
 and more!</p>
