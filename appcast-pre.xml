@@ -462,8 +462,8 @@
   </script>
 </head>
 <body>
-<p><strong>Note - Read this if you’re currently using Mac Mouse Fix
-2</strong></p>
+<p><strong>Note</strong> <strong>- Read this if you’re currently using
+Mac Mouse Fix 2</strong></p>
 <p>With the introduction of Mac Mouse Fix 3, I’ve made some changes to
 the pricing model:</p>
 <ul>
@@ -472,13 +472,25 @@ Remains 100% free, and I plan to keep supporting it.<br />
 <strong>Skip this update</strong> to keep using Mac Mouse Fix 2.</li>
 <li><strong>Mac Mouse Fix 3</strong><br />
 Free for 30 days, costs a few dollars to own.<br />
-<strong>Update now</strong> to get Mac Mouse Fix 3.</li>
+<strong>Update now</strong> to get Mac Mouse Fix 3!</li>
 </ul>
 <p>You can download the latest version of Mac Mouse Fix 2 <a
 href="https://noah-nuebling.github.io/redirection-service?target=mmf2-latest">here</a>.<br />
 You can learn more about the new pricing <a
 href="https://github.com/noah-nuebling/mac-mouse-fix/releases/tag/3.0.0">here</a>.
-Thank you so much for all the support so far! :)</p>
+Thank you for using Mac Mouse Fix! :)</p>
+<hr />
+<p><strong>Note</strong> <strong>- Read this if you have already bought
+Mac Mouse Fix 3</strong></p>
+<p>If you already bought Mac Mouse Fix 3, but only because you didn’t
+know that you could keep using Mac Mouse Fix 2 for free, then please <a
+href="https://noah-nuebling.github.io/redirection-service?message=&amp;target=mailto-noah&amp;subject=Mac%20Mouse%20Fix%20Refund">send
+me an email</a> with “Mac Mouse Fix Refund” in the subject, so I can
+give you a refund.<br />
+I’m sorry for the confusion.</p>
+<p>To everyone else who bought the app: Thank you very much for the
+support! :)</p>
+<!-- I'm sorry for any confusion about the pricing model. The update notes for version 3.0.1 and 3.0.2 should have contained more information about the pricing model changes. -->
 <!-- **If you're upgrading from Mac Mouse Fix 2** please note that Mac Mouse Fix 3 is **not 100% free anymore**. Instead However it's very cheap, and you can also stay on Mac Mouse Fix 2 if you like - which will stay 100% free. Learn more in the release notes for [**3.0.0**](https://github.com/noah-nuebling/mac-mouse-fix/releases/tag/3.0.0) - the biggest update to Mac Mouse Fix so far! -->
 <!-- **If you're currently on Mac Mouse Fix version 2** -->
 <!--
