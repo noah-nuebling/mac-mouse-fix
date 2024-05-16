@@ -277,6 +277,52 @@
           background-color: rgba(0, 0, 75, 0.055);
       }
 
+      blockquote {
+          margin-inline-start: unset;
+          border-width: 0.25rem;
+      }
+
+      blockquote.markdown-alert {
+          color: unset;
+      }
+
+      blockquote.markdown-alert.note { /* These colors are copied from the source code at https://github.com/orgs/community/discussions/16925 */
+          border-left-color: #0969da;
+      }
+      blockquote.markdown-alert.tip {
+          border-left-color: #1a7f37;
+      }
+      blockquote.markdown-alert.important {
+          border-left-color: #8250df;
+      }
+      blockquote.markdown-alert.warning {
+          border-left-color: #bf8700;
+      }
+
+      blockquote.markdown-alert.caution {
+          border-left-color: #cf222e;
+      }
+
+      blockquote.markdown-alert > .markdown-alert-title {
+          font-size: 1.2rem;
+      }
+
+      blockquote.markdown-alert.note > .markdown-alert-title {
+          color: #0969da;
+      }
+      blockquote.markdown-alert.tip > .markdown-alert-title {
+          color: #1a7f37;
+      }
+      blockquote.markdown-alert.important > .markdown-alert-title {
+          color: #8250df;
+      }
+      blockquote.markdown-alert.warning > .markdown-alert-title {
+          color: #9a6700;
+      }
+      blockquote.markdown-alert.caution > .markdown-alert-title {
+          color: #d1242f;
+      }
+
       .annotation {
           font-size: 1.1rem;
       }
@@ -349,14 +395,105 @@
       }
 
   </style>
-  <!--[if lt IE 9]>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
-  <![endif]-->
+  <script>
+
+  document.addEventListener("DOMContentLoaded", function() {
+    
+    // Implement special blockquote styles from GitHub Markdown. See https://github.com/orgs/community/discussions/16925
+
+    // Create map from `blockquote start` to `css classes that we attach to that blockquote`
+    // Notes: 
+    //  - Most symbols that we tried(︕⚠ⓘ❗︎ℹ️⚠️💡) look really weird. The only good-looking one is ⚠. Using SF Symbols or the GitHub svg symbols would be better.
+
+
+    const map = {
+      '[!NOTE]':      {
+        'class': 'markdown-alert note',
+        'title': "⚠ Note",             
+      },
+      '[!TIP]':       {
+        'class': 'markdown-alert tip',
+        'title': "⚠ Tip",
+      },
+      '[!IMPORTANT]': {
+        'class': 'markdown-alert important',
+        'title': "⚠ Important",
+      },
+      '[!WARNING]':   {
+        'class': 'markdown-alert warning',
+        'title': "⚠ Warning",
+      },
+      '[!CAUTION]':   {
+        'class': 'markdown-alert caution',
+        'title': "⚠ Caution",
+      },
+    };
+
+    // Edit blockquotes, according to the map
+
+    for (blockquote of document.querySelectorAll("blockquote")) {
+      for (key in map) {
+
+        if (blockquote.innerText.startsWith(key)) {
+
+          // Remove the [!NOTE] key from the content
+          blockquote.innerHTML = blockquote.innerHTML.replace(key, "").trim(); // This only replaces the first occurence. Src: https://stackoverflow.com/questions/3214886/javascript-replace-only-replaces-first-match
+
+          // Remove weird extra linebreaks
+          //  Explanation: If you put more than one space after [!CAUTION], then pandoc will insert weird extra linebreaks, which will mess up formatting. This fixes that.
+          if (blockquote.firstChild.innerHTML.startsWith("<br>")){
+            blockquote.firstChild.innerHTML = blockquote.firstChild.innerHTML.replace("<br>", "");
+          }
+          // Add classes
+          const newClasses = map[key]['class'].split(" ")
+          blockquote.classList.add(...newClasses);
+
+          // Insert element for holding the title (The title says sth like "ⓘ Note")
+          const titleP = document.createElement('p')
+          titleP.className = 'markdown-alert-title'
+          titleP.innerText = map[key]['title']
+
+          blockquote.prepend(titleP)
+        }
+      }
+    };
+  });
+
+  </script>
 </head>
 <body>
-<p>Also check out the release notes for <a
-href="https://github.com/noah-nuebling/mac-mouse-fix/releases/tag/3.0.0"><strong>3.0.0</strong></a>
-- the biggest update to Mac Mouse Fix so far!</p>
+<!-- **If you're upgrading from Mac Mouse Fix 2** please note that Mac Mouse Fix 3 is **not 100% free anymore**. Instead However it's very cheap, and you can also stay on Mac Mouse Fix 2 if you like - which will stay 100% free. Learn more in the release notes for [**3.0.0**](https://github.com/noah-nuebling/mac-mouse-fix/releases/tag/3.0.0) - the biggest update to Mac Mouse Fix so far! -->
+<!-- **If you're currently on Mac Mouse Fix version 2** -->
+<blockquote>
+<p>[!NOTE] <strong>Read this if you’re currently using Mac Mouse Fix
+2</strong></p>
+<p>With the introduction of Mac Mouse Fix 3, I’ve made some changes to
+the pricing model:</p>
+<ul>
+<li><strong>Mac Mouse Fix 2</strong><br />
+Remains 100% free, and I plan to keep supporting it.<br />
+Just <strong>skip this update</strong> if you’d like to keep using Mac
+Mouse Fix 2.</li>
+<li><strong>Mac Mouse Fix 3</strong><br />
+Free for 30 days, costs a few dollars to own. You can <strong>update
+now</strong>, if you’d like to try out Mac Mouse Fix 3.</li>
+</ul>
+<p>You can also download the latest version of MMF 2 <a
+href="https://noah-nuebling.github.io/redirection-service?target=mmf2-latest">here</a>.
+And you can learn more about the new pricing <a
+href="https://github.com/noah-nuebling/mac-mouse-fix/releases/tag/3.0.0">here</a>.
+Thank you so much for all your support so far! :)</p>
+</blockquote>
+<!--
+> [!NOTE]
+> **Read this if you've updated to Mac Mouse Fix 3 without knowing about the pricing changes.**
+> 
+> To anyone who has updated to Mac Mouse Fix 3, without being aware of the pricing changes, I'm sorry for any confusion or frustration this has caused. I didn't make these changes clear enough in the initial update notes for version 3.0.1 and 3.0.2, so the confusion is very understandable.
+> If you felt tricked or forced into buying Mac Mouse Fix 3, I'm sorry, and please write me an email with "Refund" in the subject so I can refund your purchase.
+> 
+> Thank you very much for using Mac Mouse Fix, and for your support!
+
+-->
 <hr />
 <p>Mac Mouse Fix <strong>3.0.2</strong> brings several improvements,
 including <strong>smoother scrolling</strong>, improved translations,
@@ -394,7 +531,7 @@ Scroll’ to ‘Zoom In or Out’.</li>
 <li>Updated 🇻🇳 Vietnamese translations. Credits to <span
 class="citation" data-cites="nghlt">@nghlt</span>!
 <!-- [792](https://github.com/noah-nuebling/mac-mouse-fix/pull/792)--></li>
-<li>Improved some German translations.</li>
+<li>Improved some 🇩🇪 German translations.</li>
 <li>Text inside Mac Mouse Fix that doesn’t have a translation for the
 current language will now show a placeholder value instead of just being
 blank. This should make it less confusing to navigate the app when there
@@ -446,8 +583,10 @@ Don't need a section for this
 
 -->
 <hr />
-<p><strong>Full Changelog</strong>:
-https://github.com/noah-nuebling/mac-mouse-fix/compare/3.0.1…3.0.2</p>
+<p>Also check out the release notes for <a
+href="https://github.com/noah-nuebling/mac-mouse-fix/releases/tag/3.0.0"><strong>3.0.0</strong></a>
+- the biggest update to Mac Mouse Fix so far!</p>
+<!-- **Full Changelog**: https://github.com/noah-nuebling/mac-mouse-fix/compare/3.0.1...3.0.2 -->
 </body>
 </html>
 
@@ -733,6 +872,52 @@ https://github.com/noah-nuebling/mac-mouse-fix/compare/3.0.1…3.0.2</p>
           background-color: rgba(0, 0, 75, 0.055);
       }
 
+      blockquote {
+          margin-inline-start: unset;
+          border-width: 0.25rem;
+      }
+
+      blockquote.markdown-alert {
+          color: unset;
+      }
+
+      blockquote.markdown-alert.note { /* These colors are copied from the source code at https://github.com/orgs/community/discussions/16925 */
+          border-left-color: #0969da;
+      }
+      blockquote.markdown-alert.tip {
+          border-left-color: #1a7f37;
+      }
+      blockquote.markdown-alert.important {
+          border-left-color: #8250df;
+      }
+      blockquote.markdown-alert.warning {
+          border-left-color: #bf8700;
+      }
+
+      blockquote.markdown-alert.caution {
+          border-left-color: #cf222e;
+      }
+
+      blockquote.markdown-alert > .markdown-alert-title {
+          font-size: 1.2rem;
+      }
+
+      blockquote.markdown-alert.note > .markdown-alert-title {
+          color: #0969da;
+      }
+      blockquote.markdown-alert.tip > .markdown-alert-title {
+          color: #1a7f37;
+      }
+      blockquote.markdown-alert.important > .markdown-alert-title {
+          color: #8250df;
+      }
+      blockquote.markdown-alert.warning > .markdown-alert-title {
+          color: #9a6700;
+      }
+      blockquote.markdown-alert.caution > .markdown-alert-title {
+          color: #d1242f;
+      }
+
       .annotation {
           font-size: 1.1rem;
       }
@@ -805,9 +990,71 @@ https://github.com/noah-nuebling/mac-mouse-fix/compare/3.0.1…3.0.2</p>
       }
 
   </style>
-  <!--[if lt IE 9]>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
-  <![endif]-->
+  <script>
+
+  document.addEventListener("DOMContentLoaded", function() {
+    
+    // Implement special blockquote styles from GitHub Markdown. See https://github.com/orgs/community/discussions/16925
+
+    // Create map from `blockquote start` to `css classes that we attach to that blockquote`
+    // Notes: 
+    //  - Most symbols that we tried(︕⚠ⓘ❗︎ℹ️⚠️💡) look really weird. The only good-looking one is ⚠. Using SF Symbols or the GitHub svg symbols would be better.
+
+
+    const map = {
+      '[!NOTE]':      {
+        'class': 'markdown-alert note',
+        'title': "⚠ Note",             
+      },
+      '[!TIP]':       {
+        'class': 'markdown-alert tip',
+        'title': "⚠ Tip",
+      },
+      '[!IMPORTANT]': {
+        'class': 'markdown-alert important',
+        'title': "⚠ Important",
+      },
+      '[!WARNING]':   {
+        'class': 'markdown-alert warning',
+        'title': "⚠ Warning",
+      },
+      '[!CAUTION]':   {
+        'class': 'markdown-alert caution',
+        'title': "⚠ Caution",
+      },
+    };
+
+    // Edit blockquotes, according to the map
+
+    for (blockquote of document.querySelectorAll("blockquote")) {
+      for (key in map) {
+
+        if (blockquote.innerText.startsWith(key)) {
+
+          // Remove the [!NOTE] key from the content
+          blockquote.innerHTML = blockquote.innerHTML.replace(key, "").trim(); // This only replaces the first occurence. Src: https://stackoverflow.com/questions/3214886/javascript-replace-only-replaces-first-match
+
+          // Remove weird extra linebreaks
+          //  Explanation: If you put more than one space after [!CAUTION], then pandoc will insert weird extra linebreaks, which will mess up formatting. This fixes that.
+          if (blockquote.firstChild.innerHTML.startsWith("<br>")){
+            blockquote.firstChild.innerHTML = blockquote.firstChild.innerHTML.replace("<br>", "");
+          }
+          // Add classes
+          const newClasses = map[key]['class'].split(" ")
+          blockquote.classList.add(...newClasses);
+
+          // Insert element for holding the title (The title says sth like "ⓘ Note")
+          const titleP = document.createElement('p')
+          titleP.className = 'markdown-alert-title'
+          titleP.innerText = map[key]['title']
+
+          blockquote.prepend(titleP)
+        }
+      }
+    };
+  });
+
+  </script>
 </head>
 <body>
 <p>Also check out the release notes for <a
@@ -1169,6 +1416,52 @@ which was previously used to get some of this functionality.</li>
           background-color: rgba(0, 0, 75, 0.055);
       }
 
+      blockquote {
+          margin-inline-start: unset;
+          border-width: 0.25rem;
+      }
+
+      blockquote.markdown-alert {
+          color: unset;
+      }
+
+      blockquote.markdown-alert.note { /* These colors are copied from the source code at https://github.com/orgs/community/discussions/16925 */
+          border-left-color: #0969da;
+      }
+      blockquote.markdown-alert.tip {
+          border-left-color: #1a7f37;
+      }
+      blockquote.markdown-alert.important {
+          border-left-color: #8250df;
+      }
+      blockquote.markdown-alert.warning {
+          border-left-color: #bf8700;
+      }
+
+      blockquote.markdown-alert.caution {
+          border-left-color: #cf222e;
+      }
+
+      blockquote.markdown-alert > .markdown-alert-title {
+          font-size: 1.2rem;
+      }
+
+      blockquote.markdown-alert.note > .markdown-alert-title {
+          color: #0969da;
+      }
+      blockquote.markdown-alert.tip > .markdown-alert-title {
+          color: #1a7f37;
+      }
+      blockquote.markdown-alert.important > .markdown-alert-title {
+          color: #8250df;
+      }
+      blockquote.markdown-alert.warning > .markdown-alert-title {
+          color: #9a6700;
+      }
+      blockquote.markdown-alert.caution > .markdown-alert-title {
+          color: #d1242f;
+      }
+
       .annotation {
           font-size: 1.1rem;
       }
@@ -1241,9 +1534,71 @@ which was previously used to get some of this functionality.</li>
       }
 
   </style>
-  <!--[if lt IE 9]>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
-  <![endif]-->
+  <script>
+
+  document.addEventListener("DOMContentLoaded", function() {
+    
+    // Implement special blockquote styles from GitHub Markdown. See https://github.com/orgs/community/discussions/16925
+
+    // Create map from `blockquote start` to `css classes that we attach to that blockquote`
+    // Notes: 
+    //  - Most symbols that we tried(︕⚠ⓘ❗︎ℹ️⚠️💡) look really weird. The only good-looking one is ⚠. Using SF Symbols or the GitHub svg symbols would be better.
+
+
+    const map = {
+      '[!NOTE]':      {
+        'class': 'markdown-alert note',
+        'title': "⚠ Note",             
+      },
+      '[!TIP]':       {
+        'class': 'markdown-alert tip',
+        'title': "⚠ Tip",
+      },
+      '[!IMPORTANT]': {
+        'class': 'markdown-alert important',
+        'title': "⚠ Important",
+      },
+      '[!WARNING]':   {
+        'class': 'markdown-alert warning',
+        'title': "⚠ Warning",
+      },
+      '[!CAUTION]':   {
+        'class': 'markdown-alert caution',
+        'title': "⚠ Caution",
+      },
+    };
+
+    // Edit blockquotes, according to the map
+
+    for (blockquote of document.querySelectorAll("blockquote")) {
+      for (key in map) {
+
+        if (blockquote.innerText.startsWith(key)) {
+
+          // Remove the [!NOTE] key from the content
+          blockquote.innerHTML = blockquote.innerHTML.replace(key, "").trim(); // This only replaces the first occurence. Src: https://stackoverflow.com/questions/3214886/javascript-replace-only-replaces-first-match
+
+          // Remove weird extra linebreaks
+          //  Explanation: If you put more than one space after [!CAUTION], then pandoc will insert weird extra linebreaks, which will mess up formatting. This fixes that.
+          if (blockquote.firstChild.innerHTML.startsWith("<br>")){
+            blockquote.firstChild.innerHTML = blockquote.firstChild.innerHTML.replace("<br>", "");
+          }
+          // Add classes
+          const newClasses = map[key]['class'].split(" ")
+          blockquote.classList.add(...newClasses);
+
+          // Insert element for holding the title (The title says sth like "ⓘ Note")
+          const titleP = document.createElement('p')
+          titleP.className = 'markdown-alert-title'
+          titleP.innerText = map[key]['title']
+
+          blockquote.prepend(titleP)
+        }
+      }
+    };
+  });
+
+  </script>
 </head>
 <body>
 <h1 id="mac-mouse-fix-3-is-here">Mac Mouse Fix 3 is here! ⭐️</h1>
@@ -1599,6 +1954,52 @@ no internet connection</li>
           background-color: rgba(0, 0, 75, 0.055);
       }
 
+      blockquote {
+          margin-inline-start: unset;
+          border-width: 0.25rem;
+      }
+
+      blockquote.markdown-alert {
+          color: unset;
+      }
+
+      blockquote.markdown-alert.note { /* These colors are copied from the source code at https://github.com/orgs/community/discussions/16925 */
+          border-left-color: #0969da;
+      }
+      blockquote.markdown-alert.tip {
+          border-left-color: #1a7f37;
+      }
+      blockquote.markdown-alert.important {
+          border-left-color: #8250df;
+      }
+      blockquote.markdown-alert.warning {
+          border-left-color: #bf8700;
+      }
+
+      blockquote.markdown-alert.caution {
+          border-left-color: #cf222e;
+      }
+
+      blockquote.markdown-alert > .markdown-alert-title {
+          font-size: 1.2rem;
+      }
+
+      blockquote.markdown-alert.note > .markdown-alert-title {
+          color: #0969da;
+      }
+      blockquote.markdown-alert.tip > .markdown-alert-title {
+          color: #1a7f37;
+      }
+      blockquote.markdown-alert.important > .markdown-alert-title {
+          color: #8250df;
+      }
+      blockquote.markdown-alert.warning > .markdown-alert-title {
+          color: #9a6700;
+      }
+      blockquote.markdown-alert.caution > .markdown-alert-title {
+          color: #d1242f;
+      }
+
       .annotation {
           font-size: 1.1rem;
       }
@@ -1671,9 +2072,71 @@ no internet connection</li>
       }
 
   </style>
-  <!--[if lt IE 9]>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
-  <![endif]-->
+  <script>
+
+  document.addEventListener("DOMContentLoaded", function() {
+    
+    // Implement special blockquote styles from GitHub Markdown. See https://github.com/orgs/community/discussions/16925
+
+    // Create map from `blockquote start` to `css classes that we attach to that blockquote`
+    // Notes: 
+    //  - Most symbols that we tried(︕⚠ⓘ❗︎ℹ️⚠️💡) look really weird. The only good-looking one is ⚠. Using SF Symbols or the GitHub svg symbols would be better.
+
+
+    const map = {
+      '[!NOTE]':      {
+        'class': 'markdown-alert note',
+        'title': "⚠ Note",             
+      },
+      '[!TIP]':       {
+        'class': 'markdown-alert tip',
+        'title': "⚠ Tip",
+      },
+      '[!IMPORTANT]': {
+        'class': 'markdown-alert important',
+        'title': "⚠ Important",
+      },
+      '[!WARNING]':   {
+        'class': 'markdown-alert warning',
+        'title': "⚠ Warning",
+      },
+      '[!CAUTION]':   {
+        'class': 'markdown-alert caution',
+        'title': "⚠ Caution",
+      },
+    };
+
+    // Edit blockquotes, according to the map
+
+    for (blockquote of document.querySelectorAll("blockquote")) {
+      for (key in map) {
+
+        if (blockquote.innerText.startsWith(key)) {
+
+          // Remove the [!NOTE] key from the content
+          blockquote.innerHTML = blockquote.innerHTML.replace(key, "").trim(); // This only replaces the first occurence. Src: https://stackoverflow.com/questions/3214886/javascript-replace-only-replaces-first-match
+
+          // Remove weird extra linebreaks
+          //  Explanation: If you put more than one space after [!CAUTION], then pandoc will insert weird extra linebreaks, which will mess up formatting. This fixes that.
+          if (blockquote.firstChild.innerHTML.startsWith("<br>")){
+            blockquote.firstChild.innerHTML = blockquote.firstChild.innerHTML.replace("<br>", "");
+          }
+          // Add classes
+          const newClasses = map[key]['class'].split(" ")
+          blockquote.classList.add(...newClasses);
+
+          // Insert element for holding the title (The title says sth like "ⓘ Note")
+          const titleP = document.createElement('p')
+          titleP.className = 'markdown-alert-title'
+          titleP.innerText = map[key]['title']
+
+          blockquote.prepend(titleP)
+        }
+      }
+    };
+  });
+
+  </script>
 </head>
 <body>
 <p>Also check out the <strong>neat improvements</strong> introduced in
@@ -2082,6 +2545,52 @@ Discussion</a>.</p>
           background-color: rgba(0, 0, 75, 0.055);
       }
 
+      blockquote {
+          margin-inline-start: unset;
+          border-width: 0.25rem;
+      }
+
+      blockquote.markdown-alert {
+          color: unset;
+      }
+
+      blockquote.markdown-alert.note { /* These colors are copied from the source code at https://github.com/orgs/community/discussions/16925 */
+          border-left-color: #0969da;
+      }
+      blockquote.markdown-alert.tip {
+          border-left-color: #1a7f37;
+      }
+      blockquote.markdown-alert.important {
+          border-left-color: #8250df;
+      }
+      blockquote.markdown-alert.warning {
+          border-left-color: #bf8700;
+      }
+
+      blockquote.markdown-alert.caution {
+          border-left-color: #cf222e;
+      }
+
+      blockquote.markdown-alert > .markdown-alert-title {
+          font-size: 1.2rem;
+      }
+
+      blockquote.markdown-alert.note > .markdown-alert-title {
+          color: #0969da;
+      }
+      blockquote.markdown-alert.tip > .markdown-alert-title {
+          color: #1a7f37;
+      }
+      blockquote.markdown-alert.important > .markdown-alert-title {
+          color: #8250df;
+      }
+      blockquote.markdown-alert.warning > .markdown-alert-title {
+          color: #9a6700;
+      }
+      blockquote.markdown-alert.caution > .markdown-alert-title {
+          color: #d1242f;
+      }
+
       .annotation {
           font-size: 1.1rem;
       }
@@ -2154,9 +2663,71 @@ Discussion</a>.</p>
       }
 
   </style>
-  <!--[if lt IE 9]>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
-  <![endif]-->
+  <script>
+
+  document.addEventListener("DOMContentLoaded", function() {
+    
+    // Implement special blockquote styles from GitHub Markdown. See https://github.com/orgs/community/discussions/16925
+
+    // Create map from `blockquote start` to `css classes that we attach to that blockquote`
+    // Notes: 
+    //  - Most symbols that we tried(︕⚠ⓘ❗︎ℹ️⚠️💡) look really weird. The only good-looking one is ⚠. Using SF Symbols or the GitHub svg symbols would be better.
+
+
+    const map = {
+      '[!NOTE]':      {
+        'class': 'markdown-alert note',
+        'title': "⚠ Note",             
+      },
+      '[!TIP]':       {
+        'class': 'markdown-alert tip',
+        'title': "⚠ Tip",
+      },
+      '[!IMPORTANT]': {
+        'class': 'markdown-alert important',
+        'title': "⚠ Important",
+      },
+      '[!WARNING]':   {
+        'class': 'markdown-alert warning',
+        'title': "⚠ Warning",
+      },
+      '[!CAUTION]':   {
+        'class': 'markdown-alert caution',
+        'title': "⚠ Caution",
+      },
+    };
+
+    // Edit blockquotes, according to the map
+
+    for (blockquote of document.querySelectorAll("blockquote")) {
+      for (key in map) {
+
+        if (blockquote.innerText.startsWith(key)) {
+
+          // Remove the [!NOTE] key from the content
+          blockquote.innerHTML = blockquote.innerHTML.replace(key, "").trim(); // This only replaces the first occurence. Src: https://stackoverflow.com/questions/3214886/javascript-replace-only-replaces-first-match
+
+          // Remove weird extra linebreaks
+          //  Explanation: If you put more than one space after [!CAUTION], then pandoc will insert weird extra linebreaks, which will mess up formatting. This fixes that.
+          if (blockquote.firstChild.innerHTML.startsWith("<br>")){
+            blockquote.firstChild.innerHTML = blockquote.firstChild.innerHTML.replace("<br>", "");
+          }
+          // Add classes
+          const newClasses = map[key]['class'].split(" ")
+          blockquote.classList.add(...newClasses);
+
+          // Insert element for holding the title (The title says sth like "ⓘ Note")
+          const titleP = document.createElement('p')
+          titleP.className = 'markdown-alert-title'
+          titleP.innerText = map[key]['title']
+
+          blockquote.prepend(titleP)
+        }
+      }
+    };
+  });
+
+  </script>
 </head>
 <body>
 <p>Also check out the <strong>neat changes</strong> introduced in <a
@@ -2698,6 +3269,52 @@ can be! 🙌:)</p>
           background-color: rgba(0, 0, 75, 0.055);
       }
 
+      blockquote {
+          margin-inline-start: unset;
+          border-width: 0.25rem;
+      }
+
+      blockquote.markdown-alert {
+          color: unset;
+      }
+
+      blockquote.markdown-alert.note { /* These colors are copied from the source code at https://github.com/orgs/community/discussions/16925 */
+          border-left-color: #0969da;
+      }
+      blockquote.markdown-alert.tip {
+          border-left-color: #1a7f37;
+      }
+      blockquote.markdown-alert.important {
+          border-left-color: #8250df;
+      }
+      blockquote.markdown-alert.warning {
+          border-left-color: #bf8700;
+      }
+
+      blockquote.markdown-alert.caution {
+          border-left-color: #cf222e;
+      }
+
+      blockquote.markdown-alert > .markdown-alert-title {
+          font-size: 1.2rem;
+      }
+
+      blockquote.markdown-alert.note > .markdown-alert-title {
+          color: #0969da;
+      }
+      blockquote.markdown-alert.tip > .markdown-alert-title {
+          color: #1a7f37;
+      }
+      blockquote.markdown-alert.important > .markdown-alert-title {
+          color: #8250df;
+      }
+      blockquote.markdown-alert.warning > .markdown-alert-title {
+          color: #9a6700;
+      }
+      blockquote.markdown-alert.caution > .markdown-alert-title {
+          color: #d1242f;
+      }
+
       .annotation {
           font-size: 1.1rem;
       }
@@ -2770,9 +3387,71 @@ can be! 🙌:)</p>
       }
 
   </style>
-  <!--[if lt IE 9]>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
-  <![endif]-->
+  <script>
+
+  document.addEventListener("DOMContentLoaded", function() {
+    
+    // Implement special blockquote styles from GitHub Markdown. See https://github.com/orgs/community/discussions/16925
+
+    // Create map from `blockquote start` to `css classes that we attach to that blockquote`
+    // Notes: 
+    //  - Most symbols that we tried(︕⚠ⓘ❗︎ℹ️⚠️💡) look really weird. The only good-looking one is ⚠. Using SF Symbols or the GitHub svg symbols would be better.
+
+
+    const map = {
+      '[!NOTE]':      {
+        'class': 'markdown-alert note',
+        'title': "⚠ Note",             
+      },
+      '[!TIP]':       {
+        'class': 'markdown-alert tip',
+        'title': "⚠ Tip",
+      },
+      '[!IMPORTANT]': {
+        'class': 'markdown-alert important',
+        'title': "⚠ Important",
+      },
+      '[!WARNING]':   {
+        'class': 'markdown-alert warning',
+        'title': "⚠ Warning",
+      },
+      '[!CAUTION]':   {
+        'class': 'markdown-alert caution',
+        'title': "⚠ Caution",
+      },
+    };
+
+    // Edit blockquotes, according to the map
+
+    for (blockquote of document.querySelectorAll("blockquote")) {
+      for (key in map) {
+
+        if (blockquote.innerText.startsWith(key)) {
+
+          // Remove the [!NOTE] key from the content
+          blockquote.innerHTML = blockquote.innerHTML.replace(key, "").trim(); // This only replaces the first occurence. Src: https://stackoverflow.com/questions/3214886/javascript-replace-only-replaces-first-match
+
+          // Remove weird extra linebreaks
+          //  Explanation: If you put more than one space after [!CAUTION], then pandoc will insert weird extra linebreaks, which will mess up formatting. This fixes that.
+          if (blockquote.firstChild.innerHTML.startsWith("<br>")){
+            blockquote.firstChild.innerHTML = blockquote.firstChild.innerHTML.replace("<br>", "");
+          }
+          // Add classes
+          const newClasses = map[key]['class'].split(" ")
+          blockquote.classList.add(...newClasses);
+
+          // Insert element for holding the title (The title says sth like "ⓘ Note")
+          const titleP = document.createElement('p')
+          titleP.className = 'markdown-alert-title'
+          titleP.innerText = map[key]['title']
+
+          blockquote.prepend(titleP)
+        }
+      }
+    };
+  });
+
+  </script>
 </head>
 <body>
 <p>Also check out the <strong>neat changes</strong> introduced in <a
@@ -3147,6 +3826,52 @@ Discussion</a>.</p>
           background-color: rgba(0, 0, 75, 0.055);
       }
 
+      blockquote {
+          margin-inline-start: unset;
+          border-width: 0.25rem;
+      }
+
+      blockquote.markdown-alert {
+          color: unset;
+      }
+
+      blockquote.markdown-alert.note { /* These colors are copied from the source code at https://github.com/orgs/community/discussions/16925 */
+          border-left-color: #0969da;
+      }
+      blockquote.markdown-alert.tip {
+          border-left-color: #1a7f37;
+      }
+      blockquote.markdown-alert.important {
+          border-left-color: #8250df;
+      }
+      blockquote.markdown-alert.warning {
+          border-left-color: #bf8700;
+      }
+
+      blockquote.markdown-alert.caution {
+          border-left-color: #cf222e;
+      }
+
+      blockquote.markdown-alert > .markdown-alert-title {
+          font-size: 1.2rem;
+      }
+
+      blockquote.markdown-alert.note > .markdown-alert-title {
+          color: #0969da;
+      }
+      blockquote.markdown-alert.tip > .markdown-alert-title {
+          color: #1a7f37;
+      }
+      blockquote.markdown-alert.important > .markdown-alert-title {
+          color: #8250df;
+      }
+      blockquote.markdown-alert.warning > .markdown-alert-title {
+          color: #9a6700;
+      }
+      blockquote.markdown-alert.caution > .markdown-alert-title {
+          color: #d1242f;
+      }
+
       .annotation {
           font-size: 1.1rem;
       }
@@ -3219,9 +3944,71 @@ Discussion</a>.</p>
       }
 
   </style>
-  <!--[if lt IE 9]>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
-  <![endif]-->
+  <script>
+
+  document.addEventListener("DOMContentLoaded", function() {
+    
+    // Implement special blockquote styles from GitHub Markdown. See https://github.com/orgs/community/discussions/16925
+
+    // Create map from `blockquote start` to `css classes that we attach to that blockquote`
+    // Notes: 
+    //  - Most symbols that we tried(︕⚠ⓘ❗︎ℹ️⚠️💡) look really weird. The only good-looking one is ⚠. Using SF Symbols or the GitHub svg symbols would be better.
+
+
+    const map = {
+      '[!NOTE]':      {
+        'class': 'markdown-alert note',
+        'title': "⚠ Note",             
+      },
+      '[!TIP]':       {
+        'class': 'markdown-alert tip',
+        'title': "⚠ Tip",
+      },
+      '[!IMPORTANT]': {
+        'class': 'markdown-alert important',
+        'title': "⚠ Important",
+      },
+      '[!WARNING]':   {
+        'class': 'markdown-alert warning',
+        'title': "⚠ Warning",
+      },
+      '[!CAUTION]':   {
+        'class': 'markdown-alert caution',
+        'title': "⚠ Caution",
+      },
+    };
+
+    // Edit blockquotes, according to the map
+
+    for (blockquote of document.querySelectorAll("blockquote")) {
+      for (key in map) {
+
+        if (blockquote.innerText.startsWith(key)) {
+
+          // Remove the [!NOTE] key from the content
+          blockquote.innerHTML = blockquote.innerHTML.replace(key, "").trim(); // This only replaces the first occurence. Src: https://stackoverflow.com/questions/3214886/javascript-replace-only-replaces-first-match
+
+          // Remove weird extra linebreaks
+          //  Explanation: If you put more than one space after [!CAUTION], then pandoc will insert weird extra linebreaks, which will mess up formatting. This fixes that.
+          if (blockquote.firstChild.innerHTML.startsWith("<br>")){
+            blockquote.firstChild.innerHTML = blockquote.firstChild.innerHTML.replace("<br>", "");
+          }
+          // Add classes
+          const newClasses = map[key]['class'].split(" ")
+          blockquote.classList.add(...newClasses);
+
+          // Insert element for holding the title (The title says sth like "ⓘ Note")
+          const titleP = document.createElement('p')
+          titleP.className = 'markdown-alert-title'
+          titleP.innerText = map[key]['title']
+
+          blockquote.prepend(titleP)
+        }
+      }
+    };
+  });
+
+  </script>
 </head>
 <body>
 <p>Mac Mouse Fix <strong>2.2.3</strong> fixes several issues and adds
@@ -3549,6 +4336,52 @@ Guide</a></li>
           background-color: rgba(0, 0, 75, 0.055);
       }
 
+      blockquote {
+          margin-inline-start: unset;
+          border-width: 0.25rem;
+      }
+
+      blockquote.markdown-alert {
+          color: unset;
+      }
+
+      blockquote.markdown-alert.note { /* These colors are copied from the source code at https://github.com/orgs/community/discussions/16925 */
+          border-left-color: #0969da;
+      }
+      blockquote.markdown-alert.tip {
+          border-left-color: #1a7f37;
+      }
+      blockquote.markdown-alert.important {
+          border-left-color: #8250df;
+      }
+      blockquote.markdown-alert.warning {
+          border-left-color: #bf8700;
+      }
+
+      blockquote.markdown-alert.caution {
+          border-left-color: #cf222e;
+      }
+
+      blockquote.markdown-alert > .markdown-alert-title {
+          font-size: 1.2rem;
+      }
+
+      blockquote.markdown-alert.note > .markdown-alert-title {
+          color: #0969da;
+      }
+      blockquote.markdown-alert.tip > .markdown-alert-title {
+          color: #1a7f37;
+      }
+      blockquote.markdown-alert.important > .markdown-alert-title {
+          color: #8250df;
+      }
+      blockquote.markdown-alert.warning > .markdown-alert-title {
+          color: #9a6700;
+      }
+      blockquote.markdown-alert.caution > .markdown-alert-title {
+          color: #d1242f;
+      }
+
       .annotation {
           font-size: 1.1rem;
       }
@@ -3621,9 +4454,71 @@ Guide</a></li>
       }
 
   </style>
-  <!--[if lt IE 9]>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
-  <![endif]-->
+  <script>
+
+  document.addEventListener("DOMContentLoaded", function() {
+    
+    // Implement special blockquote styles from GitHub Markdown. See https://github.com/orgs/community/discussions/16925
+
+    // Create map from `blockquote start` to `css classes that we attach to that blockquote`
+    // Notes: 
+    //  - Most symbols that we tried(︕⚠ⓘ❗︎ℹ️⚠️💡) look really weird. The only good-looking one is ⚠. Using SF Symbols or the GitHub svg symbols would be better.
+
+
+    const map = {
+      '[!NOTE]':      {
+        'class': 'markdown-alert note',
+        'title': "⚠ Note",             
+      },
+      '[!TIP]':       {
+        'class': 'markdown-alert tip',
+        'title': "⚠ Tip",
+      },
+      '[!IMPORTANT]': {
+        'class': 'markdown-alert important',
+        'title': "⚠ Important",
+      },
+      '[!WARNING]':   {
+        'class': 'markdown-alert warning',
+        'title': "⚠ Warning",
+      },
+      '[!CAUTION]':   {
+        'class': 'markdown-alert caution',
+        'title': "⚠ Caution",
+      },
+    };
+
+    // Edit blockquotes, according to the map
+
+    for (blockquote of document.querySelectorAll("blockquote")) {
+      for (key in map) {
+
+        if (blockquote.innerText.startsWith(key)) {
+
+          // Remove the [!NOTE] key from the content
+          blockquote.innerHTML = blockquote.innerHTML.replace(key, "").trim(); // This only replaces the first occurence. Src: https://stackoverflow.com/questions/3214886/javascript-replace-only-replaces-first-match
+
+          // Remove weird extra linebreaks
+          //  Explanation: If you put more than one space after [!CAUTION], then pandoc will insert weird extra linebreaks, which will mess up formatting. This fixes that.
+          if (blockquote.firstChild.innerHTML.startsWith("<br>")){
+            blockquote.firstChild.innerHTML = blockquote.firstChild.innerHTML.replace("<br>", "");
+          }
+          // Add classes
+          const newClasses = map[key]['class'].split(" ")
+          blockquote.classList.add(...newClasses);
+
+          // Insert element for holding the title (The title says sth like "ⓘ Note")
+          const titleP = document.createElement('p')
+          titleP.className = 'markdown-alert-title'
+          titleP.innerText = map[key]['title']
+
+          blockquote.prepend(titleP)
+        }
+      }
+    };
+  });
+
+  </script>
 </head>
 <body>
 <p>The <strong>previous release</strong> <a
@@ -3937,6 +4832,52 @@ screen</li>
           background-color: rgba(0, 0, 75, 0.055);
       }
 
+      blockquote {
+          margin-inline-start: unset;
+          border-width: 0.25rem;
+      }
+
+      blockquote.markdown-alert {
+          color: unset;
+      }
+
+      blockquote.markdown-alert.note { /* These colors are copied from the source code at https://github.com/orgs/community/discussions/16925 */
+          border-left-color: #0969da;
+      }
+      blockquote.markdown-alert.tip {
+          border-left-color: #1a7f37;
+      }
+      blockquote.markdown-alert.important {
+          border-left-color: #8250df;
+      }
+      blockquote.markdown-alert.warning {
+          border-left-color: #bf8700;
+      }
+
+      blockquote.markdown-alert.caution {
+          border-left-color: #cf222e;
+      }
+
+      blockquote.markdown-alert > .markdown-alert-title {
+          font-size: 1.2rem;
+      }
+
+      blockquote.markdown-alert.note > .markdown-alert-title {
+          color: #0969da;
+      }
+      blockquote.markdown-alert.tip > .markdown-alert-title {
+          color: #1a7f37;
+      }
+      blockquote.markdown-alert.important > .markdown-alert-title {
+          color: #8250df;
+      }
+      blockquote.markdown-alert.warning > .markdown-alert-title {
+          color: #9a6700;
+      }
+      blockquote.markdown-alert.caution > .markdown-alert-title {
+          color: #d1242f;
+      }
+
       .annotation {
           font-size: 1.1rem;
       }
@@ -4009,9 +4950,71 @@ screen</li>
       }
 
   </style>
-  <!--[if lt IE 9]>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
-  <![endif]-->
+  <script>
+
+  document.addEventListener("DOMContentLoaded", function() {
+    
+    // Implement special blockquote styles from GitHub Markdown. See https://github.com/orgs/community/discussions/16925
+
+    // Create map from `blockquote start` to `css classes that we attach to that blockquote`
+    // Notes: 
+    //  - Most symbols that we tried(︕⚠ⓘ❗︎ℹ️⚠️💡) look really weird. The only good-looking one is ⚠. Using SF Symbols or the GitHub svg symbols would be better.
+
+
+    const map = {
+      '[!NOTE]':      {
+        'class': 'markdown-alert note',
+        'title': "⚠ Note",             
+      },
+      '[!TIP]':       {
+        'class': 'markdown-alert tip',
+        'title': "⚠ Tip",
+      },
+      '[!IMPORTANT]': {
+        'class': 'markdown-alert important',
+        'title': "⚠ Important",
+      },
+      '[!WARNING]':   {
+        'class': 'markdown-alert warning',
+        'title': "⚠ Warning",
+      },
+      '[!CAUTION]':   {
+        'class': 'markdown-alert caution',
+        'title': "⚠ Caution",
+      },
+    };
+
+    // Edit blockquotes, according to the map
+
+    for (blockquote of document.querySelectorAll("blockquote")) {
+      for (key in map) {
+
+        if (blockquote.innerText.startsWith(key)) {
+
+          // Remove the [!NOTE] key from the content
+          blockquote.innerHTML = blockquote.innerHTML.replace(key, "").trim(); // This only replaces the first occurence. Src: https://stackoverflow.com/questions/3214886/javascript-replace-only-replaces-first-match
+
+          // Remove weird extra linebreaks
+          //  Explanation: If you put more than one space after [!CAUTION], then pandoc will insert weird extra linebreaks, which will mess up formatting. This fixes that.
+          if (blockquote.firstChild.innerHTML.startsWith("<br>")){
+            blockquote.firstChild.innerHTML = blockquote.firstChild.innerHTML.replace("<br>", "");
+          }
+          // Add classes
+          const newClasses = map[key]['class'].split(" ")
+          blockquote.classList.add(...newClasses);
+
+          // Insert element for holding the title (The title says sth like "ⓘ Note")
+          const titleP = document.createElement('p')
+          titleP.className = 'markdown-alert-title'
+          titleP.innerText = map[key]['title']
+
+          blockquote.prepend(titleP)
+        }
+      }
+    };
+  });
+
+  </script>
 </head>
 <body>
 <p>Mac Mouse Fix <strong>2.2.1</strong> provides full <strong>support
@@ -4344,6 +5347,52 @@ was very helpful in figuring out the problem!</li>
           background-color: rgba(0, 0, 75, 0.055);
       }
 
+      blockquote {
+          margin-inline-start: unset;
+          border-width: 0.25rem;
+      }
+
+      blockquote.markdown-alert {
+          color: unset;
+      }
+
+      blockquote.markdown-alert.note { /* These colors are copied from the source code at https://github.com/orgs/community/discussions/16925 */
+          border-left-color: #0969da;
+      }
+      blockquote.markdown-alert.tip {
+          border-left-color: #1a7f37;
+      }
+      blockquote.markdown-alert.important {
+          border-left-color: #8250df;
+      }
+      blockquote.markdown-alert.warning {
+          border-left-color: #bf8700;
+      }
+
+      blockquote.markdown-alert.caution {
+          border-left-color: #cf222e;
+      }
+
+      blockquote.markdown-alert > .markdown-alert-title {
+          font-size: 1.2rem;
+      }
+
+      blockquote.markdown-alert.note > .markdown-alert-title {
+          color: #0969da;
+      }
+      blockquote.markdown-alert.tip > .markdown-alert-title {
+          color: #1a7f37;
+      }
+      blockquote.markdown-alert.important > .markdown-alert-title {
+          color: #8250df;
+      }
+      blockquote.markdown-alert.warning > .markdown-alert-title {
+          color: #9a6700;
+      }
+      blockquote.markdown-alert.caution > .markdown-alert-title {
+          color: #d1242f;
+      }
+
       .annotation {
           font-size: 1.1rem;
       }
@@ -4416,9 +5465,71 @@ was very helpful in figuring out the problem!</li>
       }
 
   </style>
-  <!--[if lt IE 9]>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
-  <![endif]-->
+  <script>
+
+  document.addEventListener("DOMContentLoaded", function() {
+    
+    // Implement special blockquote styles from GitHub Markdown. See https://github.com/orgs/community/discussions/16925
+
+    // Create map from `blockquote start` to `css classes that we attach to that blockquote`
+    // Notes: 
+    //  - Most symbols that we tried(︕⚠ⓘ❗︎ℹ️⚠️💡) look really weird. The only good-looking one is ⚠. Using SF Symbols or the GitHub svg symbols would be better.
+
+
+    const map = {
+      '[!NOTE]':      {
+        'class': 'markdown-alert note',
+        'title': "⚠ Note",             
+      },
+      '[!TIP]':       {
+        'class': 'markdown-alert tip',
+        'title': "⚠ Tip",
+      },
+      '[!IMPORTANT]': {
+        'class': 'markdown-alert important',
+        'title': "⚠ Important",
+      },
+      '[!WARNING]':   {
+        'class': 'markdown-alert warning',
+        'title': "⚠ Warning",
+      },
+      '[!CAUTION]':   {
+        'class': 'markdown-alert caution',
+        'title': "⚠ Caution",
+      },
+    };
+
+    // Edit blockquotes, according to the map
+
+    for (blockquote of document.querySelectorAll("blockquote")) {
+      for (key in map) {
+
+        if (blockquote.innerText.startsWith(key)) {
+
+          // Remove the [!NOTE] key from the content
+          blockquote.innerHTML = blockquote.innerHTML.replace(key, "").trim(); // This only replaces the first occurence. Src: https://stackoverflow.com/questions/3214886/javascript-replace-only-replaces-first-match
+
+          // Remove weird extra linebreaks
+          //  Explanation: If you put more than one space after [!CAUTION], then pandoc will insert weird extra linebreaks, which will mess up formatting. This fixes that.
+          if (blockquote.firstChild.innerHTML.startsWith("<br>")){
+            blockquote.firstChild.innerHTML = blockquote.firstChild.innerHTML.replace("<br>", "");
+          }
+          // Add classes
+          const newClasses = map[key]['class'].split(" ")
+          blockquote.classList.add(...newClasses);
+
+          // Insert element for holding the title (The title says sth like "ⓘ Note")
+          const titleP = document.createElement('p')
+          titleP.className = 'markdown-alert-title'
+          titleP.innerText = map[key]['title']
+
+          blockquote.prepend(titleP)
+        }
+      }
+    };
+  });
+
+  </script>
 </head>
 <body>
 <p>Also check out the <strong>cool stuff</strong> introduced in <a
@@ -4882,6 +5993,52 @@ work with, more future-proof.</li>
           background-color: rgba(0, 0, 75, 0.055);
       }
 
+      blockquote {
+          margin-inline-start: unset;
+          border-width: 0.25rem;
+      }
+
+      blockquote.markdown-alert {
+          color: unset;
+      }
+
+      blockquote.markdown-alert.note { /* These colors are copied from the source code at https://github.com/orgs/community/discussions/16925 */
+          border-left-color: #0969da;
+      }
+      blockquote.markdown-alert.tip {
+          border-left-color: #1a7f37;
+      }
+      blockquote.markdown-alert.important {
+          border-left-color: #8250df;
+      }
+      blockquote.markdown-alert.warning {
+          border-left-color: #bf8700;
+      }
+
+      blockquote.markdown-alert.caution {
+          border-left-color: #cf222e;
+      }
+
+      blockquote.markdown-alert > .markdown-alert-title {
+          font-size: 1.2rem;
+      }
+
+      blockquote.markdown-alert.note > .markdown-alert-title {
+          color: #0969da;
+      }
+      blockquote.markdown-alert.tip > .markdown-alert-title {
+          color: #1a7f37;
+      }
+      blockquote.markdown-alert.important > .markdown-alert-title {
+          color: #8250df;
+      }
+      blockquote.markdown-alert.warning > .markdown-alert-title {
+          color: #9a6700;
+      }
+      blockquote.markdown-alert.caution > .markdown-alert-title {
+          color: #d1242f;
+      }
+
       .annotation {
           font-size: 1.1rem;
       }
@@ -4954,9 +6111,71 @@ work with, more future-proof.</li>
       }
 
   </style>
-  <!--[if lt IE 9]>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
-  <![endif]-->
+  <script>
+
+  document.addEventListener("DOMContentLoaded", function() {
+    
+    // Implement special blockquote styles from GitHub Markdown. See https://github.com/orgs/community/discussions/16925
+
+    // Create map from `blockquote start` to `css classes that we attach to that blockquote`
+    // Notes: 
+    //  - Most symbols that we tried(︕⚠ⓘ❗︎ℹ️⚠️💡) look really weird. The only good-looking one is ⚠. Using SF Symbols or the GitHub svg symbols would be better.
+
+
+    const map = {
+      '[!NOTE]':      {
+        'class': 'markdown-alert note',
+        'title': "⚠ Note",             
+      },
+      '[!TIP]':       {
+        'class': 'markdown-alert tip',
+        'title': "⚠ Tip",
+      },
+      '[!IMPORTANT]': {
+        'class': 'markdown-alert important',
+        'title': "⚠ Important",
+      },
+      '[!WARNING]':   {
+        'class': 'markdown-alert warning',
+        'title': "⚠ Warning",
+      },
+      '[!CAUTION]':   {
+        'class': 'markdown-alert caution',
+        'title': "⚠ Caution",
+      },
+    };
+
+    // Edit blockquotes, according to the map
+
+    for (blockquote of document.querySelectorAll("blockquote")) {
+      for (key in map) {
+
+        if (blockquote.innerText.startsWith(key)) {
+
+          // Remove the [!NOTE] key from the content
+          blockquote.innerHTML = blockquote.innerHTML.replace(key, "").trim(); // This only replaces the first occurence. Src: https://stackoverflow.com/questions/3214886/javascript-replace-only-replaces-first-match
+
+          // Remove weird extra linebreaks
+          //  Explanation: If you put more than one space after [!CAUTION], then pandoc will insert weird extra linebreaks, which will mess up formatting. This fixes that.
+          if (blockquote.firstChild.innerHTML.startsWith("<br>")){
+            blockquote.firstChild.innerHTML = blockquote.firstChild.innerHTML.replace("<br>", "");
+          }
+          // Add classes
+          const newClasses = map[key]['class'].split(" ")
+          blockquote.classList.add(...newClasses);
+
+          // Insert element for holding the title (The title says sth like "ⓘ Note")
+          const titleP = document.createElement('p')
+          titleP.className = 'markdown-alert-title'
+          titleP.innerText = map[key]['title']
+
+          blockquote.prepend(titleP)
+        }
+      }
+    };
+  });
+
+  </script>
 </head>
 <body>
 <p>Also check out the <strong>cool stuff</strong> introduced in <a
@@ -5254,6 +6473,52 @@ glitches.</p>
           background-color: rgba(0, 0, 75, 0.055);
       }
 
+      blockquote {
+          margin-inline-start: unset;
+          border-width: 0.25rem;
+      }
+
+      blockquote.markdown-alert {
+          color: unset;
+      }
+
+      blockquote.markdown-alert.note { /* These colors are copied from the source code at https://github.com/orgs/community/discussions/16925 */
+          border-left-color: #0969da;
+      }
+      blockquote.markdown-alert.tip {
+          border-left-color: #1a7f37;
+      }
+      blockquote.markdown-alert.important {
+          border-left-color: #8250df;
+      }
+      blockquote.markdown-alert.warning {
+          border-left-color: #bf8700;
+      }
+
+      blockquote.markdown-alert.caution {
+          border-left-color: #cf222e;
+      }
+
+      blockquote.markdown-alert > .markdown-alert-title {
+          font-size: 1.2rem;
+      }
+
+      blockquote.markdown-alert.note > .markdown-alert-title {
+          color: #0969da;
+      }
+      blockquote.markdown-alert.tip > .markdown-alert-title {
+          color: #1a7f37;
+      }
+      blockquote.markdown-alert.important > .markdown-alert-title {
+          color: #8250df;
+      }
+      blockquote.markdown-alert.warning > .markdown-alert-title {
+          color: #9a6700;
+      }
+      blockquote.markdown-alert.caution > .markdown-alert-title {
+          color: #d1242f;
+      }
+
       .annotation {
           font-size: 1.1rem;
       }
@@ -5326,9 +6591,71 @@ glitches.</p>
       }
 
   </style>
-  <!--[if lt IE 9]>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
-  <![endif]-->
+  <script>
+
+  document.addEventListener("DOMContentLoaded", function() {
+    
+    // Implement special blockquote styles from GitHub Markdown. See https://github.com/orgs/community/discussions/16925
+
+    // Create map from `blockquote start` to `css classes that we attach to that blockquote`
+    // Notes: 
+    //  - Most symbols that we tried(︕⚠ⓘ❗︎ℹ️⚠️💡) look really weird. The only good-looking one is ⚠. Using SF Symbols or the GitHub svg symbols would be better.
+
+
+    const map = {
+      '[!NOTE]':      {
+        'class': 'markdown-alert note',
+        'title': "⚠ Note",             
+      },
+      '[!TIP]':       {
+        'class': 'markdown-alert tip',
+        'title': "⚠ Tip",
+      },
+      '[!IMPORTANT]': {
+        'class': 'markdown-alert important',
+        'title': "⚠ Important",
+      },
+      '[!WARNING]':   {
+        'class': 'markdown-alert warning',
+        'title': "⚠ Warning",
+      },
+      '[!CAUTION]':   {
+        'class': 'markdown-alert caution',
+        'title': "⚠ Caution",
+      },
+    };
+
+    // Edit blockquotes, according to the map
+
+    for (blockquote of document.querySelectorAll("blockquote")) {
+      for (key in map) {
+
+        if (blockquote.innerText.startsWith(key)) {
+
+          // Remove the [!NOTE] key from the content
+          blockquote.innerHTML = blockquote.innerHTML.replace(key, "").trim(); // This only replaces the first occurence. Src: https://stackoverflow.com/questions/3214886/javascript-replace-only-replaces-first-match
+
+          // Remove weird extra linebreaks
+          //  Explanation: If you put more than one space after [!CAUTION], then pandoc will insert weird extra linebreaks, which will mess up formatting. This fixes that.
+          if (blockquote.firstChild.innerHTML.startsWith("<br>")){
+            blockquote.firstChild.innerHTML = blockquote.firstChild.innerHTML.replace("<br>", "");
+          }
+          // Add classes
+          const newClasses = map[key]['class'].split(" ")
+          blockquote.classList.add(...newClasses);
+
+          // Insert element for holding the title (The title says sth like "ⓘ Note")
+          const titleP = document.createElement('p')
+          titleP.className = 'markdown-alert-title'
+          titleP.innerText = map[key]['title']
+
+          blockquote.prepend(titleP)
+        }
+      }
+    };
+  });
+
+  </script>
 </head>
 <body>
 <p>Also check out the <strong>cool stuff</strong> introduced in <a
@@ -5625,6 +6952,52 @@ href="https://github.com/noah-nuebling/mac-mouse-fix/issues/369">#369</a>.</p>
           background-color: rgba(0, 0, 75, 0.055);
       }
 
+      blockquote {
+          margin-inline-start: unset;
+          border-width: 0.25rem;
+      }
+
+      blockquote.markdown-alert {
+          color: unset;
+      }
+
+      blockquote.markdown-alert.note { /* These colors are copied from the source code at https://github.com/orgs/community/discussions/16925 */
+          border-left-color: #0969da;
+      }
+      blockquote.markdown-alert.tip {
+          border-left-color: #1a7f37;
+      }
+      blockquote.markdown-alert.important {
+          border-left-color: #8250df;
+      }
+      blockquote.markdown-alert.warning {
+          border-left-color: #bf8700;
+      }
+
+      blockquote.markdown-alert.caution {
+          border-left-color: #cf222e;
+      }
+
+      blockquote.markdown-alert > .markdown-alert-title {
+          font-size: 1.2rem;
+      }
+
+      blockquote.markdown-alert.note > .markdown-alert-title {
+          color: #0969da;
+      }
+      blockquote.markdown-alert.tip > .markdown-alert-title {
+          color: #1a7f37;
+      }
+      blockquote.markdown-alert.important > .markdown-alert-title {
+          color: #8250df;
+      }
+      blockquote.markdown-alert.warning > .markdown-alert-title {
+          color: #9a6700;
+      }
+      blockquote.markdown-alert.caution > .markdown-alert-title {
+          color: #d1242f;
+      }
+
       .annotation {
           font-size: 1.1rem;
       }
@@ -5697,9 +7070,71 @@ href="https://github.com/noah-nuebling/mac-mouse-fix/issues/369">#369</a>.</p>
       }
 
   </style>
-  <!--[if lt IE 9]>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
-  <![endif]-->
+  <script>
+
+  document.addEventListener("DOMContentLoaded", function() {
+    
+    // Implement special blockquote styles from GitHub Markdown. See https://github.com/orgs/community/discussions/16925
+
+    // Create map from `blockquote start` to `css classes that we attach to that blockquote`
+    // Notes: 
+    //  - Most symbols that we tried(︕⚠ⓘ❗︎ℹ️⚠️💡) look really weird. The only good-looking one is ⚠. Using SF Symbols or the GitHub svg symbols would be better.
+
+
+    const map = {
+      '[!NOTE]':      {
+        'class': 'markdown-alert note',
+        'title': "⚠ Note",             
+      },
+      '[!TIP]':       {
+        'class': 'markdown-alert tip',
+        'title': "⚠ Tip",
+      },
+      '[!IMPORTANT]': {
+        'class': 'markdown-alert important',
+        'title': "⚠ Important",
+      },
+      '[!WARNING]':   {
+        'class': 'markdown-alert warning',
+        'title': "⚠ Warning",
+      },
+      '[!CAUTION]':   {
+        'class': 'markdown-alert caution',
+        'title': "⚠ Caution",
+      },
+    };
+
+    // Edit blockquotes, according to the map
+
+    for (blockquote of document.querySelectorAll("blockquote")) {
+      for (key in map) {
+
+        if (blockquote.innerText.startsWith(key)) {
+
+          // Remove the [!NOTE] key from the content
+          blockquote.innerHTML = blockquote.innerHTML.replace(key, "").trim(); // This only replaces the first occurence. Src: https://stackoverflow.com/questions/3214886/javascript-replace-only-replaces-first-match
+
+          // Remove weird extra linebreaks
+          //  Explanation: If you put more than one space after [!CAUTION], then pandoc will insert weird extra linebreaks, which will mess up formatting. This fixes that.
+          if (blockquote.firstChild.innerHTML.startsWith("<br>")){
+            blockquote.firstChild.innerHTML = blockquote.firstChild.innerHTML.replace("<br>", "");
+          }
+          // Add classes
+          const newClasses = map[key]['class'].split(" ")
+          blockquote.classList.add(...newClasses);
+
+          // Insert element for holding the title (The title says sth like "ⓘ Note")
+          const titleP = document.createElement('p')
+          titleP.className = 'markdown-alert-title'
+          titleP.innerText = map[key]['title']
+
+          blockquote.prepend(titleP)
+        }
+      }
+    };
+  });
+
+  </script>
 </head>
 <body>
 <p><strong>3.0.0</strong> will be the <strong>biggest update</strong> to
@@ -6267,6 +7702,52 @@ Discussion</a>.</p>
           background-color: rgba(0, 0, 75, 0.055);
       }
 
+      blockquote {
+          margin-inline-start: unset;
+          border-width: 0.25rem;
+      }
+
+      blockquote.markdown-alert {
+          color: unset;
+      }
+
+      blockquote.markdown-alert.note { /* These colors are copied from the source code at https://github.com/orgs/community/discussions/16925 */
+          border-left-color: #0969da;
+      }
+      blockquote.markdown-alert.tip {
+          border-left-color: #1a7f37;
+      }
+      blockquote.markdown-alert.important {
+          border-left-color: #8250df;
+      }
+      blockquote.markdown-alert.warning {
+          border-left-color: #bf8700;
+      }
+
+      blockquote.markdown-alert.caution {
+          border-left-color: #cf222e;
+      }
+
+      blockquote.markdown-alert > .markdown-alert-title {
+          font-size: 1.2rem;
+      }
+
+      blockquote.markdown-alert.note > .markdown-alert-title {
+          color: #0969da;
+      }
+      blockquote.markdown-alert.tip > .markdown-alert-title {
+          color: #1a7f37;
+      }
+      blockquote.markdown-alert.important > .markdown-alert-title {
+          color: #8250df;
+      }
+      blockquote.markdown-alert.warning > .markdown-alert-title {
+          color: #9a6700;
+      }
+      blockquote.markdown-alert.caution > .markdown-alert-title {
+          color: #d1242f;
+      }
+
       .annotation {
           font-size: 1.1rem;
       }
@@ -6339,9 +7820,71 @@ Discussion</a>.</p>
       }
 
   </style>
-  <!--[if lt IE 9]>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
-  <![endif]-->
+  <script>
+
+  document.addEventListener("DOMContentLoaded", function() {
+    
+    // Implement special blockquote styles from GitHub Markdown. See https://github.com/orgs/community/discussions/16925
+
+    // Create map from `blockquote start` to `css classes that we attach to that blockquote`
+    // Notes: 
+    //  - Most symbols that we tried(︕⚠ⓘ❗︎ℹ️⚠️💡) look really weird. The only good-looking one is ⚠. Using SF Symbols or the GitHub svg symbols would be better.
+
+
+    const map = {
+      '[!NOTE]':      {
+        'class': 'markdown-alert note',
+        'title': "⚠ Note",             
+      },
+      '[!TIP]':       {
+        'class': 'markdown-alert tip',
+        'title': "⚠ Tip",
+      },
+      '[!IMPORTANT]': {
+        'class': 'markdown-alert important',
+        'title': "⚠ Important",
+      },
+      '[!WARNING]':   {
+        'class': 'markdown-alert warning',
+        'title': "⚠ Warning",
+      },
+      '[!CAUTION]':   {
+        'class': 'markdown-alert caution',
+        'title': "⚠ Caution",
+      },
+    };
+
+    // Edit blockquotes, according to the map
+
+    for (blockquote of document.querySelectorAll("blockquote")) {
+      for (key in map) {
+
+        if (blockquote.innerText.startsWith(key)) {
+
+          // Remove the [!NOTE] key from the content
+          blockquote.innerHTML = blockquote.innerHTML.replace(key, "").trim(); // This only replaces the first occurence. Src: https://stackoverflow.com/questions/3214886/javascript-replace-only-replaces-first-match
+
+          // Remove weird extra linebreaks
+          //  Explanation: If you put more than one space after [!CAUTION], then pandoc will insert weird extra linebreaks, which will mess up formatting. This fixes that.
+          if (blockquote.firstChild.innerHTML.startsWith("<br>")){
+            blockquote.firstChild.innerHTML = blockquote.firstChild.innerHTML.replace("<br>", "");
+          }
+          // Add classes
+          const newClasses = map[key]['class'].split(" ")
+          blockquote.classList.add(...newClasses);
+
+          // Insert element for holding the title (The title says sth like "ⓘ Note")
+          const titleP = document.createElement('p')
+          titleP.className = 'markdown-alert-title'
+          titleP.innerText = map[key]['title']
+
+          blockquote.prepend(titleP)
+        }
+      }
+    };
+  });
+
+  </script>
 </head>
 <body>
 <p>Mac Mouse Fix <strong>2.2.1 Beta 3</strong> brings back compatibility
@@ -6642,6 +8185,52 @@ was very helpful in figuring out the problem!</li>
           background-color: rgba(0, 0, 75, 0.055);
       }
 
+      blockquote {
+          margin-inline-start: unset;
+          border-width: 0.25rem;
+      }
+
+      blockquote.markdown-alert {
+          color: unset;
+      }
+
+      blockquote.markdown-alert.note { /* These colors are copied from the source code at https://github.com/orgs/community/discussions/16925 */
+          border-left-color: #0969da;
+      }
+      blockquote.markdown-alert.tip {
+          border-left-color: #1a7f37;
+      }
+      blockquote.markdown-alert.important {
+          border-left-color: #8250df;
+      }
+      blockquote.markdown-alert.warning {
+          border-left-color: #bf8700;
+      }
+
+      blockquote.markdown-alert.caution {
+          border-left-color: #cf222e;
+      }
+
+      blockquote.markdown-alert > .markdown-alert-title {
+          font-size: 1.2rem;
+      }
+
+      blockquote.markdown-alert.note > .markdown-alert-title {
+          color: #0969da;
+      }
+      blockquote.markdown-alert.tip > .markdown-alert-title {
+          color: #1a7f37;
+      }
+      blockquote.markdown-alert.important > .markdown-alert-title {
+          color: #8250df;
+      }
+      blockquote.markdown-alert.warning > .markdown-alert-title {
+          color: #9a6700;
+      }
+      blockquote.markdown-alert.caution > .markdown-alert-title {
+          color: #d1242f;
+      }
+
       .annotation {
           font-size: 1.1rem;
       }
@@ -6714,9 +8303,71 @@ was very helpful in figuring out the problem!</li>
       }
 
   </style>
-  <!--[if lt IE 9]>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
-  <![endif]-->
+  <script>
+
+  document.addEventListener("DOMContentLoaded", function() {
+    
+    // Implement special blockquote styles from GitHub Markdown. See https://github.com/orgs/community/discussions/16925
+
+    // Create map from `blockquote start` to `css classes that we attach to that blockquote`
+    // Notes: 
+    //  - Most symbols that we tried(︕⚠ⓘ❗︎ℹ️⚠️💡) look really weird. The only good-looking one is ⚠. Using SF Symbols or the GitHub svg symbols would be better.
+
+
+    const map = {
+      '[!NOTE]':      {
+        'class': 'markdown-alert note',
+        'title': "⚠ Note",             
+      },
+      '[!TIP]':       {
+        'class': 'markdown-alert tip',
+        'title': "⚠ Tip",
+      },
+      '[!IMPORTANT]': {
+        'class': 'markdown-alert important',
+        'title': "⚠ Important",
+      },
+      '[!WARNING]':   {
+        'class': 'markdown-alert warning',
+        'title': "⚠ Warning",
+      },
+      '[!CAUTION]':   {
+        'class': 'markdown-alert caution',
+        'title': "⚠ Caution",
+      },
+    };
+
+    // Edit blockquotes, according to the map
+
+    for (blockquote of document.querySelectorAll("blockquote")) {
+      for (key in map) {
+
+        if (blockquote.innerText.startsWith(key)) {
+
+          // Remove the [!NOTE] key from the content
+          blockquote.innerHTML = blockquote.innerHTML.replace(key, "").trim(); // This only replaces the first occurence. Src: https://stackoverflow.com/questions/3214886/javascript-replace-only-replaces-first-match
+
+          // Remove weird extra linebreaks
+          //  Explanation: If you put more than one space after [!CAUTION], then pandoc will insert weird extra linebreaks, which will mess up formatting. This fixes that.
+          if (blockquote.firstChild.innerHTML.startsWith("<br>")){
+            blockquote.firstChild.innerHTML = blockquote.firstChild.innerHTML.replace("<br>", "");
+          }
+          // Add classes
+          const newClasses = map[key]['class'].split(" ")
+          blockquote.classList.add(...newClasses);
+
+          // Insert element for holding the title (The title says sth like "ⓘ Note")
+          const titleP = document.createElement('p')
+          titleP.className = 'markdown-alert-title'
+          titleP.innerText = map[key]['title']
+
+          blockquote.prepend(titleP)
+        }
+      }
+    };
+  });
+
+  </script>
 </head>
 <body>
 <h3 id="even-more-improvements-for-ventura">Even more improvements for
@@ -7017,6 +8668,52 @@ resizing the main window under Ventura</li>
           background-color: rgba(0, 0, 75, 0.055);
       }
 
+      blockquote {
+          margin-inline-start: unset;
+          border-width: 0.25rem;
+      }
+
+      blockquote.markdown-alert {
+          color: unset;
+      }
+
+      blockquote.markdown-alert.note { /* These colors are copied from the source code at https://github.com/orgs/community/discussions/16925 */
+          border-left-color: #0969da;
+      }
+      blockquote.markdown-alert.tip {
+          border-left-color: #1a7f37;
+      }
+      blockquote.markdown-alert.important {
+          border-left-color: #8250df;
+      }
+      blockquote.markdown-alert.warning {
+          border-left-color: #bf8700;
+      }
+
+      blockquote.markdown-alert.caution {
+          border-left-color: #cf222e;
+      }
+
+      blockquote.markdown-alert > .markdown-alert-title {
+          font-size: 1.2rem;
+      }
+
+      blockquote.markdown-alert.note > .markdown-alert-title {
+          color: #0969da;
+      }
+      blockquote.markdown-alert.tip > .markdown-alert-title {
+          color: #1a7f37;
+      }
+      blockquote.markdown-alert.important > .markdown-alert-title {
+          color: #8250df;
+      }
+      blockquote.markdown-alert.warning > .markdown-alert-title {
+          color: #9a6700;
+      }
+      blockquote.markdown-alert.caution > .markdown-alert-title {
+          color: #d1242f;
+      }
+
       .annotation {
           font-size: 1.1rem;
       }
@@ -7089,9 +8786,71 @@ resizing the main window under Ventura</li>
       }
 
   </style>
-  <!--[if lt IE 9]>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
-  <![endif]-->
+  <script>
+
+  document.addEventListener("DOMContentLoaded", function() {
+    
+    // Implement special blockquote styles from GitHub Markdown. See https://github.com/orgs/community/discussions/16925
+
+    // Create map from `blockquote start` to `css classes that we attach to that blockquote`
+    // Notes: 
+    //  - Most symbols that we tried(︕⚠ⓘ❗︎ℹ️⚠️💡) look really weird. The only good-looking one is ⚠. Using SF Symbols or the GitHub svg symbols would be better.
+
+
+    const map = {
+      '[!NOTE]':      {
+        'class': 'markdown-alert note',
+        'title': "⚠ Note",             
+      },
+      '[!TIP]':       {
+        'class': 'markdown-alert tip',
+        'title': "⚠ Tip",
+      },
+      '[!IMPORTANT]': {
+        'class': 'markdown-alert important',
+        'title': "⚠ Important",
+      },
+      '[!WARNING]':   {
+        'class': 'markdown-alert warning',
+        'title': "⚠ Warning",
+      },
+      '[!CAUTION]':   {
+        'class': 'markdown-alert caution',
+        'title': "⚠ Caution",
+      },
+    };
+
+    // Edit blockquotes, according to the map
+
+    for (blockquote of document.querySelectorAll("blockquote")) {
+      for (key in map) {
+
+        if (blockquote.innerText.startsWith(key)) {
+
+          // Remove the [!NOTE] key from the content
+          blockquote.innerHTML = blockquote.innerHTML.replace(key, "").trim(); // This only replaces the first occurence. Src: https://stackoverflow.com/questions/3214886/javascript-replace-only-replaces-first-match
+
+          // Remove weird extra linebreaks
+          //  Explanation: If you put more than one space after [!CAUTION], then pandoc will insert weird extra linebreaks, which will mess up formatting. This fixes that.
+          if (blockquote.firstChild.innerHTML.startsWith("<br>")){
+            blockquote.firstChild.innerHTML = blockquote.firstChild.innerHTML.replace("<br>", "");
+          }
+          // Add classes
+          const newClasses = map[key]['class'].split(" ")
+          blockquote.classList.add(...newClasses);
+
+          // Insert element for holding the title (The title says sth like "ⓘ Note")
+          const titleP = document.createElement('p')
+          titleP.className = 'markdown-alert-title'
+          titleP.innerText = map[key]['title']
+
+          blockquote.prepend(titleP)
+        }
+      }
+    };
+  });
+
+  </script>
 </head>
 <body>
 <h3 id="ventura-support">Ventura support!</h3>
@@ -7412,6 +9171,52 @@ wouldn’t work properly when using a non-standard keyboard layout.</li>
           background-color: rgba(0, 0, 75, 0.055);
       }
 
+      blockquote {
+          margin-inline-start: unset;
+          border-width: 0.25rem;
+      }
+
+      blockquote.markdown-alert {
+          color: unset;
+      }
+
+      blockquote.markdown-alert.note { /* These colors are copied from the source code at https://github.com/orgs/community/discussions/16925 */
+          border-left-color: #0969da;
+      }
+      blockquote.markdown-alert.tip {
+          border-left-color: #1a7f37;
+      }
+      blockquote.markdown-alert.important {
+          border-left-color: #8250df;
+      }
+      blockquote.markdown-alert.warning {
+          border-left-color: #bf8700;
+      }
+
+      blockquote.markdown-alert.caution {
+          border-left-color: #cf222e;
+      }
+
+      blockquote.markdown-alert > .markdown-alert-title {
+          font-size: 1.2rem;
+      }
+
+      blockquote.markdown-alert.note > .markdown-alert-title {
+          color: #0969da;
+      }
+      blockquote.markdown-alert.tip > .markdown-alert-title {
+          color: #1a7f37;
+      }
+      blockquote.markdown-alert.important > .markdown-alert-title {
+          color: #8250df;
+      }
+      blockquote.markdown-alert.warning > .markdown-alert-title {
+          color: #9a6700;
+      }
+      blockquote.markdown-alert.caution > .markdown-alert-title {
+          color: #d1242f;
+      }
+
       .annotation {
           font-size: 1.1rem;
       }
@@ -7484,9 +9289,71 @@ wouldn’t work properly when using a non-standard keyboard layout.</li>
       }
 
   </style>
-  <!--[if lt IE 9]>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
-  <![endif]-->
+  <script>
+
+  document.addEventListener("DOMContentLoaded", function() {
+    
+    // Implement special blockquote styles from GitHub Markdown. See https://github.com/orgs/community/discussions/16925
+
+    // Create map from `blockquote start` to `css classes that we attach to that blockquote`
+    // Notes: 
+    //  - Most symbols that we tried(︕⚠ⓘ❗︎ℹ️⚠️💡) look really weird. The only good-looking one is ⚠. Using SF Symbols or the GitHub svg symbols would be better.
+
+
+    const map = {
+      '[!NOTE]':      {
+        'class': 'markdown-alert note',
+        'title': "⚠ Note",             
+      },
+      '[!TIP]':       {
+        'class': 'markdown-alert tip',
+        'title': "⚠ Tip",
+      },
+      '[!IMPORTANT]': {
+        'class': 'markdown-alert important',
+        'title': "⚠ Important",
+      },
+      '[!WARNING]':   {
+        'class': 'markdown-alert warning',
+        'title': "⚠ Warning",
+      },
+      '[!CAUTION]':   {
+        'class': 'markdown-alert caution',
+        'title': "⚠ Caution",
+      },
+    };
+
+    // Edit blockquotes, according to the map
+
+    for (blockquote of document.querySelectorAll("blockquote")) {
+      for (key in map) {
+
+        if (blockquote.innerText.startsWith(key)) {
+
+          // Remove the [!NOTE] key from the content
+          blockquote.innerHTML = blockquote.innerHTML.replace(key, "").trim(); // This only replaces the first occurence. Src: https://stackoverflow.com/questions/3214886/javascript-replace-only-replaces-first-match
+
+          // Remove weird extra linebreaks
+          //  Explanation: If you put more than one space after [!CAUTION], then pandoc will insert weird extra linebreaks, which will mess up formatting. This fixes that.
+          if (blockquote.firstChild.innerHTML.startsWith("<br>")){
+            blockquote.firstChild.innerHTML = blockquote.firstChild.innerHTML.replace("<br>", "");
+          }
+          // Add classes
+          const newClasses = map[key]['class'].split(" ")
+          blockquote.classList.add(...newClasses);
+
+          // Insert element for holding the title (The title says sth like "ⓘ Note")
+          const titleP = document.createElement('p')
+          titleP.className = 'markdown-alert-title'
+          titleP.innerText = map[key]['title']
+
+          blockquote.prepend(titleP)
+        }
+      }
+    };
+  });
+
+  </script>
 </head>
 <body>
 <p>Also check out the <strong>cool stuff</strong> introduced in <a
@@ -7843,6 +9710,52 @@ future release.</li>
           background-color: rgba(0, 0, 75, 0.055);
       }
 
+      blockquote {
+          margin-inline-start: unset;
+          border-width: 0.25rem;
+      }
+
+      blockquote.markdown-alert {
+          color: unset;
+      }
+
+      blockquote.markdown-alert.note { /* These colors are copied from the source code at https://github.com/orgs/community/discussions/16925 */
+          border-left-color: #0969da;
+      }
+      blockquote.markdown-alert.tip {
+          border-left-color: #1a7f37;
+      }
+      blockquote.markdown-alert.important {
+          border-left-color: #8250df;
+      }
+      blockquote.markdown-alert.warning {
+          border-left-color: #bf8700;
+      }
+
+      blockquote.markdown-alert.caution {
+          border-left-color: #cf222e;
+      }
+
+      blockquote.markdown-alert > .markdown-alert-title {
+          font-size: 1.2rem;
+      }
+
+      blockquote.markdown-alert.note > .markdown-alert-title {
+          color: #0969da;
+      }
+      blockquote.markdown-alert.tip > .markdown-alert-title {
+          color: #1a7f37;
+      }
+      blockquote.markdown-alert.important > .markdown-alert-title {
+          color: #8250df;
+      }
+      blockquote.markdown-alert.warning > .markdown-alert-title {
+          color: #9a6700;
+      }
+      blockquote.markdown-alert.caution > .markdown-alert-title {
+          color: #d1242f;
+      }
+
       .annotation {
           font-size: 1.1rem;
       }
@@ -7915,9 +9828,71 @@ future release.</li>
       }
 
   </style>
-  <!--[if lt IE 9]>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
-  <![endif]-->
+  <script>
+
+  document.addEventListener("DOMContentLoaded", function() {
+    
+    // Implement special blockquote styles from GitHub Markdown. See https://github.com/orgs/community/discussions/16925
+
+    // Create map from `blockquote start` to `css classes that we attach to that blockquote`
+    // Notes: 
+    //  - Most symbols that we tried(︕⚠ⓘ❗︎ℹ️⚠️💡) look really weird. The only good-looking one is ⚠. Using SF Symbols or the GitHub svg symbols would be better.
+
+
+    const map = {
+      '[!NOTE]':      {
+        'class': 'markdown-alert note',
+        'title': "⚠ Note",             
+      },
+      '[!TIP]':       {
+        'class': 'markdown-alert tip',
+        'title': "⚠ Tip",
+      },
+      '[!IMPORTANT]': {
+        'class': 'markdown-alert important',
+        'title': "⚠ Important",
+      },
+      '[!WARNING]':   {
+        'class': 'markdown-alert warning',
+        'title': "⚠ Warning",
+      },
+      '[!CAUTION]':   {
+        'class': 'markdown-alert caution',
+        'title': "⚠ Caution",
+      },
+    };
+
+    // Edit blockquotes, according to the map
+
+    for (blockquote of document.querySelectorAll("blockquote")) {
+      for (key in map) {
+
+        if (blockquote.innerText.startsWith(key)) {
+
+          // Remove the [!NOTE] key from the content
+          blockquote.innerHTML = blockquote.innerHTML.replace(key, "").trim(); // This only replaces the first occurence. Src: https://stackoverflow.com/questions/3214886/javascript-replace-only-replaces-first-match
+
+          // Remove weird extra linebreaks
+          //  Explanation: If you put more than one space after [!CAUTION], then pandoc will insert weird extra linebreaks, which will mess up formatting. This fixes that.
+          if (blockquote.firstChild.innerHTML.startsWith("<br>")){
+            blockquote.firstChild.innerHTML = blockquote.firstChild.innerHTML.replace("<br>", "");
+          }
+          // Add classes
+          const newClasses = map[key]['class'].split(" ")
+          blockquote.classList.add(...newClasses);
+
+          // Insert element for holding the title (The title says sth like "ⓘ Note")
+          const titleP = document.createElement('p')
+          titleP.className = 'markdown-alert-title'
+          titleP.innerText = map[key]['title']
+
+          blockquote.prepend(titleP)
+        }
+      }
+    };
+  });
+
+  </script>
 </head>
 <body>
 <p>Also check out the <strong>cool stuff</strong> introduced in <a
@@ -8222,6 +10197,52 @@ proprietary function keys like “Play-Pause” or “Mute Speaker”.</p>
           background-color: rgba(0, 0, 75, 0.055);
       }
 
+      blockquote {
+          margin-inline-start: unset;
+          border-width: 0.25rem;
+      }
+
+      blockquote.markdown-alert {
+          color: unset;
+      }
+
+      blockquote.markdown-alert.note { /* These colors are copied from the source code at https://github.com/orgs/community/discussions/16925 */
+          border-left-color: #0969da;
+      }
+      blockquote.markdown-alert.tip {
+          border-left-color: #1a7f37;
+      }
+      blockquote.markdown-alert.important {
+          border-left-color: #8250df;
+      }
+      blockquote.markdown-alert.warning {
+          border-left-color: #bf8700;
+      }
+
+      blockquote.markdown-alert.caution {
+          border-left-color: #cf222e;
+      }
+
+      blockquote.markdown-alert > .markdown-alert-title {
+          font-size: 1.2rem;
+      }
+
+      blockquote.markdown-alert.note > .markdown-alert-title {
+          color: #0969da;
+      }
+      blockquote.markdown-alert.tip > .markdown-alert-title {
+          color: #1a7f37;
+      }
+      blockquote.markdown-alert.important > .markdown-alert-title {
+          color: #8250df;
+      }
+      blockquote.markdown-alert.warning > .markdown-alert-title {
+          color: #9a6700;
+      }
+      blockquote.markdown-alert.caution > .markdown-alert-title {
+          color: #d1242f;
+      }
+
       .annotation {
           font-size: 1.1rem;
       }
@@ -8294,9 +10315,71 @@ proprietary function keys like “Play-Pause” or “Mute Speaker”.</p>
       }
 
   </style>
-  <!--[if lt IE 9]>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
-  <![endif]-->
+  <script>
+
+  document.addEventListener("DOMContentLoaded", function() {
+    
+    // Implement special blockquote styles from GitHub Markdown. See https://github.com/orgs/community/discussions/16925
+
+    // Create map from `blockquote start` to `css classes that we attach to that blockquote`
+    // Notes: 
+    //  - Most symbols that we tried(︕⚠ⓘ❗︎ℹ️⚠️💡) look really weird. The only good-looking one is ⚠. Using SF Symbols or the GitHub svg symbols would be better.
+
+
+    const map = {
+      '[!NOTE]':      {
+        'class': 'markdown-alert note',
+        'title': "⚠ Note",             
+      },
+      '[!TIP]':       {
+        'class': 'markdown-alert tip',
+        'title': "⚠ Tip",
+      },
+      '[!IMPORTANT]': {
+        'class': 'markdown-alert important',
+        'title': "⚠ Important",
+      },
+      '[!WARNING]':   {
+        'class': 'markdown-alert warning',
+        'title': "⚠ Warning",
+      },
+      '[!CAUTION]':   {
+        'class': 'markdown-alert caution',
+        'title': "⚠ Caution",
+      },
+    };
+
+    // Edit blockquotes, according to the map
+
+    for (blockquote of document.querySelectorAll("blockquote")) {
+      for (key in map) {
+
+        if (blockquote.innerText.startsWith(key)) {
+
+          // Remove the [!NOTE] key from the content
+          blockquote.innerHTML = blockquote.innerHTML.replace(key, "").trim(); // This only replaces the first occurence. Src: https://stackoverflow.com/questions/3214886/javascript-replace-only-replaces-first-match
+
+          // Remove weird extra linebreaks
+          //  Explanation: If you put more than one space after [!CAUTION], then pandoc will insert weird extra linebreaks, which will mess up formatting. This fixes that.
+          if (blockquote.firstChild.innerHTML.startsWith("<br>")){
+            blockquote.firstChild.innerHTML = blockquote.firstChild.innerHTML.replace("<br>", "");
+          }
+          // Add classes
+          const newClasses = map[key]['class'].split(" ")
+          blockquote.classList.add(...newClasses);
+
+          // Insert element for holding the title (The title says sth like "ⓘ Note")
+          const titleP = document.createElement('p')
+          titleP.className = 'markdown-alert-title'
+          titleP.innerText = map[key]['title']
+
+          blockquote.prepend(titleP)
+        }
+      }
+    };
+  });
+
+  </script>
 </head>
 <body>
 <p>Note: Mac Mouse Fix 2 is <strong>outdated</strong> now. <a
@@ -8671,6 +10754,52 @@ quite a bit closer to that goal. Thank you! 🚀🚀🚀 :)</p>
           background-color: rgba(0, 0, 75, 0.055);
       }
 
+      blockquote {
+          margin-inline-start: unset;
+          border-width: 0.25rem;
+      }
+
+      blockquote.markdown-alert {
+          color: unset;
+      }
+
+      blockquote.markdown-alert.note { /* These colors are copied from the source code at https://github.com/orgs/community/discussions/16925 */
+          border-left-color: #0969da;
+      }
+      blockquote.markdown-alert.tip {
+          border-left-color: #1a7f37;
+      }
+      blockquote.markdown-alert.important {
+          border-left-color: #8250df;
+      }
+      blockquote.markdown-alert.warning {
+          border-left-color: #bf8700;
+      }
+
+      blockquote.markdown-alert.caution {
+          border-left-color: #cf222e;
+      }
+
+      blockquote.markdown-alert > .markdown-alert-title {
+          font-size: 1.2rem;
+      }
+
+      blockquote.markdown-alert.note > .markdown-alert-title {
+          color: #0969da;
+      }
+      blockquote.markdown-alert.tip > .markdown-alert-title {
+          color: #1a7f37;
+      }
+      blockquote.markdown-alert.important > .markdown-alert-title {
+          color: #8250df;
+      }
+      blockquote.markdown-alert.warning > .markdown-alert-title {
+          color: #9a6700;
+      }
+      blockquote.markdown-alert.caution > .markdown-alert-title {
+          color: #d1242f;
+      }
+
       .annotation {
           font-size: 1.1rem;
       }
@@ -8743,9 +10872,71 @@ quite a bit closer to that goal. Thank you! 🚀🚀🚀 :)</p>
       }
 
   </style>
-  <!--[if lt IE 9]>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
-  <![endif]-->
+  <script>
+
+  document.addEventListener("DOMContentLoaded", function() {
+    
+    // Implement special blockquote styles from GitHub Markdown. See https://github.com/orgs/community/discussions/16925
+
+    // Create map from `blockquote start` to `css classes that we attach to that blockquote`
+    // Notes: 
+    //  - Most symbols that we tried(︕⚠ⓘ❗︎ℹ️⚠️💡) look really weird. The only good-looking one is ⚠. Using SF Symbols or the GitHub svg symbols would be better.
+
+
+    const map = {
+      '[!NOTE]':      {
+        'class': 'markdown-alert note',
+        'title': "⚠ Note",             
+      },
+      '[!TIP]':       {
+        'class': 'markdown-alert tip',
+        'title': "⚠ Tip",
+      },
+      '[!IMPORTANT]': {
+        'class': 'markdown-alert important',
+        'title': "⚠ Important",
+      },
+      '[!WARNING]':   {
+        'class': 'markdown-alert warning',
+        'title': "⚠ Warning",
+      },
+      '[!CAUTION]':   {
+        'class': 'markdown-alert caution',
+        'title': "⚠ Caution",
+      },
+    };
+
+    // Edit blockquotes, according to the map
+
+    for (blockquote of document.querySelectorAll("blockquote")) {
+      for (key in map) {
+
+        if (blockquote.innerText.startsWith(key)) {
+
+          // Remove the [!NOTE] key from the content
+          blockquote.innerHTML = blockquote.innerHTML.replace(key, "").trim(); // This only replaces the first occurence. Src: https://stackoverflow.com/questions/3214886/javascript-replace-only-replaces-first-match
+
+          // Remove weird extra linebreaks
+          //  Explanation: If you put more than one space after [!CAUTION], then pandoc will insert weird extra linebreaks, which will mess up formatting. This fixes that.
+          if (blockquote.firstChild.innerHTML.startsWith("<br>")){
+            blockquote.firstChild.innerHTML = blockquote.firstChild.innerHTML.replace("<br>", "");
+          }
+          // Add classes
+          const newClasses = map[key]['class'].split(" ")
+          blockquote.classList.add(...newClasses);
+
+          // Insert element for holding the title (The title says sth like "ⓘ Note")
+          const titleP = document.createElement('p')
+          titleP.className = 'markdown-alert-title'
+          titleP.innerText = map[key]['title']
+
+          blockquote.prepend(titleP)
+        }
+      }
+    };
+  });
+
+  </script>
 </head>
 <body>
 <h3 id="changes-in-beta-13">Changes in Beta 13</h3>
@@ -9044,6 +11235,52 @@ copy-paste, etc.</li>
           background-color: rgba(0, 0, 75, 0.055);
       }
 
+      blockquote {
+          margin-inline-start: unset;
+          border-width: 0.25rem;
+      }
+
+      blockquote.markdown-alert {
+          color: unset;
+      }
+
+      blockquote.markdown-alert.note { /* These colors are copied from the source code at https://github.com/orgs/community/discussions/16925 */
+          border-left-color: #0969da;
+      }
+      blockquote.markdown-alert.tip {
+          border-left-color: #1a7f37;
+      }
+      blockquote.markdown-alert.important {
+          border-left-color: #8250df;
+      }
+      blockquote.markdown-alert.warning {
+          border-left-color: #bf8700;
+      }
+
+      blockquote.markdown-alert.caution {
+          border-left-color: #cf222e;
+      }
+
+      blockquote.markdown-alert > .markdown-alert-title {
+          font-size: 1.2rem;
+      }
+
+      blockquote.markdown-alert.note > .markdown-alert-title {
+          color: #0969da;
+      }
+      blockquote.markdown-alert.tip > .markdown-alert-title {
+          color: #1a7f37;
+      }
+      blockquote.markdown-alert.important > .markdown-alert-title {
+          color: #8250df;
+      }
+      blockquote.markdown-alert.warning > .markdown-alert-title {
+          color: #9a6700;
+      }
+      blockquote.markdown-alert.caution > .markdown-alert-title {
+          color: #d1242f;
+      }
+
       .annotation {
           font-size: 1.1rem;
       }
@@ -9116,9 +11353,71 @@ copy-paste, etc.</li>
       }
 
   </style>
-  <!--[if lt IE 9]>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
-  <![endif]-->
+  <script>
+
+  document.addEventListener("DOMContentLoaded", function() {
+    
+    // Implement special blockquote styles from GitHub Markdown. See https://github.com/orgs/community/discussions/16925
+
+    // Create map from `blockquote start` to `css classes that we attach to that blockquote`
+    // Notes: 
+    //  - Most symbols that we tried(︕⚠ⓘ❗︎ℹ️⚠️💡) look really weird. The only good-looking one is ⚠. Using SF Symbols or the GitHub svg symbols would be better.
+
+
+    const map = {
+      '[!NOTE]':      {
+        'class': 'markdown-alert note',
+        'title': "⚠ Note",             
+      },
+      '[!TIP]':       {
+        'class': 'markdown-alert tip',
+        'title': "⚠ Tip",
+      },
+      '[!IMPORTANT]': {
+        'class': 'markdown-alert important',
+        'title': "⚠ Important",
+      },
+      '[!WARNING]':   {
+        'class': 'markdown-alert warning',
+        'title': "⚠ Warning",
+      },
+      '[!CAUTION]':   {
+        'class': 'markdown-alert caution',
+        'title': "⚠ Caution",
+      },
+    };
+
+    // Edit blockquotes, according to the map
+
+    for (blockquote of document.querySelectorAll("blockquote")) {
+      for (key in map) {
+
+        if (blockquote.innerText.startsWith(key)) {
+
+          // Remove the [!NOTE] key from the content
+          blockquote.innerHTML = blockquote.innerHTML.replace(key, "").trim(); // This only replaces the first occurence. Src: https://stackoverflow.com/questions/3214886/javascript-replace-only-replaces-first-match
+
+          // Remove weird extra linebreaks
+          //  Explanation: If you put more than one space after [!CAUTION], then pandoc will insert weird extra linebreaks, which will mess up formatting. This fixes that.
+          if (blockquote.firstChild.innerHTML.startsWith("<br>")){
+            blockquote.firstChild.innerHTML = blockquote.firstChild.innerHTML.replace("<br>", "");
+          }
+          // Add classes
+          const newClasses = map[key]['class'].split(" ")
+          blockquote.classList.add(...newClasses);
+
+          // Insert element for holding the title (The title says sth like "ⓘ Note")
+          const titleP = document.createElement('p')
+          titleP.className = 'markdown-alert-title'
+          titleP.innerText = map[key]['title']
+
+          blockquote.prepend(titleP)
+        }
+      }
+    };
+  });
+
+  </script>
 </head>
 <body>
 <h3 id="changes-in-beta-12">Changes in Beta 12</h3>
@@ -9427,6 +11726,52 @@ data-cites="FraserEmbrey">@FraserEmbrey</span> suggested in Issue
           background-color: rgba(0, 0, 75, 0.055);
       }
 
+      blockquote {
+          margin-inline-start: unset;
+          border-width: 0.25rem;
+      }
+
+      blockquote.markdown-alert {
+          color: unset;
+      }
+
+      blockquote.markdown-alert.note { /* These colors are copied from the source code at https://github.com/orgs/community/discussions/16925 */
+          border-left-color: #0969da;
+      }
+      blockquote.markdown-alert.tip {
+          border-left-color: #1a7f37;
+      }
+      blockquote.markdown-alert.important {
+          border-left-color: #8250df;
+      }
+      blockquote.markdown-alert.warning {
+          border-left-color: #bf8700;
+      }
+
+      blockquote.markdown-alert.caution {
+          border-left-color: #cf222e;
+      }
+
+      blockquote.markdown-alert > .markdown-alert-title {
+          font-size: 1.2rem;
+      }
+
+      blockquote.markdown-alert.note > .markdown-alert-title {
+          color: #0969da;
+      }
+      blockquote.markdown-alert.tip > .markdown-alert-title {
+          color: #1a7f37;
+      }
+      blockquote.markdown-alert.important > .markdown-alert-title {
+          color: #8250df;
+      }
+      blockquote.markdown-alert.warning > .markdown-alert-title {
+          color: #9a6700;
+      }
+      blockquote.markdown-alert.caution > .markdown-alert-title {
+          color: #d1242f;
+      }
+
       .annotation {
           font-size: 1.1rem;
       }
@@ -9499,9 +11844,71 @@ data-cites="FraserEmbrey">@FraserEmbrey</span> suggested in Issue
       }
 
   </style>
-  <!--[if lt IE 9]>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
-  <![endif]-->
+  <script>
+
+  document.addEventListener("DOMContentLoaded", function() {
+    
+    // Implement special blockquote styles from GitHub Markdown. See https://github.com/orgs/community/discussions/16925
+
+    // Create map from `blockquote start` to `css classes that we attach to that blockquote`
+    // Notes: 
+    //  - Most symbols that we tried(︕⚠ⓘ❗︎ℹ️⚠️💡) look really weird. The only good-looking one is ⚠. Using SF Symbols or the GitHub svg symbols would be better.
+
+
+    const map = {
+      '[!NOTE]':      {
+        'class': 'markdown-alert note',
+        'title': "⚠ Note",             
+      },
+      '[!TIP]':       {
+        'class': 'markdown-alert tip',
+        'title': "⚠ Tip",
+      },
+      '[!IMPORTANT]': {
+        'class': 'markdown-alert important',
+        'title': "⚠ Important",
+      },
+      '[!WARNING]':   {
+        'class': 'markdown-alert warning',
+        'title': "⚠ Warning",
+      },
+      '[!CAUTION]':   {
+        'class': 'markdown-alert caution',
+        'title': "⚠ Caution",
+      },
+    };
+
+    // Edit blockquotes, according to the map
+
+    for (blockquote of document.querySelectorAll("blockquote")) {
+      for (key in map) {
+
+        if (blockquote.innerText.startsWith(key)) {
+
+          // Remove the [!NOTE] key from the content
+          blockquote.innerHTML = blockquote.innerHTML.replace(key, "").trim(); // This only replaces the first occurence. Src: https://stackoverflow.com/questions/3214886/javascript-replace-only-replaces-first-match
+
+          // Remove weird extra linebreaks
+          //  Explanation: If you put more than one space after [!CAUTION], then pandoc will insert weird extra linebreaks, which will mess up formatting. This fixes that.
+          if (blockquote.firstChild.innerHTML.startsWith("<br>")){
+            blockquote.firstChild.innerHTML = blockquote.firstChild.innerHTML.replace("<br>", "");
+          }
+          // Add classes
+          const newClasses = map[key]['class'].split(" ")
+          blockquote.classList.add(...newClasses);
+
+          // Insert element for holding the title (The title says sth like "ⓘ Note")
+          const titleP = document.createElement('p')
+          titleP.className = 'markdown-alert-title'
+          titleP.innerText = map[key]['title']
+
+          blockquote.prepend(titleP)
+        }
+      }
+    };
+  });
+
+  </script>
 </head>
 <body>
 <h3 id="changes-in-beta-11">Changes in Beta 11</h3>
@@ -9791,6 +12198,52 @@ data-cites="FraserEmbrey">@FraserEmbrey</span> suggested in Issue
           background-color: rgba(0, 0, 75, 0.055);
       }
 
+      blockquote {
+          margin-inline-start: unset;
+          border-width: 0.25rem;
+      }
+
+      blockquote.markdown-alert {
+          color: unset;
+      }
+
+      blockquote.markdown-alert.note { /* These colors are copied from the source code at https://github.com/orgs/community/discussions/16925 */
+          border-left-color: #0969da;
+      }
+      blockquote.markdown-alert.tip {
+          border-left-color: #1a7f37;
+      }
+      blockquote.markdown-alert.important {
+          border-left-color: #8250df;
+      }
+      blockquote.markdown-alert.warning {
+          border-left-color: #bf8700;
+      }
+
+      blockquote.markdown-alert.caution {
+          border-left-color: #cf222e;
+      }
+
+      blockquote.markdown-alert > .markdown-alert-title {
+          font-size: 1.2rem;
+      }
+
+      blockquote.markdown-alert.note > .markdown-alert-title {
+          color: #0969da;
+      }
+      blockquote.markdown-alert.tip > .markdown-alert-title {
+          color: #1a7f37;
+      }
+      blockquote.markdown-alert.important > .markdown-alert-title {
+          color: #8250df;
+      }
+      blockquote.markdown-alert.warning > .markdown-alert-title {
+          color: #9a6700;
+      }
+      blockquote.markdown-alert.caution > .markdown-alert-title {
+          color: #d1242f;
+      }
+
       .annotation {
           font-size: 1.1rem;
       }
@@ -9863,9 +12316,71 @@ data-cites="FraserEmbrey">@FraserEmbrey</span> suggested in Issue
       }
 
   </style>
-  <!--[if lt IE 9]>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
-  <![endif]-->
+  <script>
+
+  document.addEventListener("DOMContentLoaded", function() {
+    
+    // Implement special blockquote styles from GitHub Markdown. See https://github.com/orgs/community/discussions/16925
+
+    // Create map from `blockquote start` to `css classes that we attach to that blockquote`
+    // Notes: 
+    //  - Most symbols that we tried(︕⚠ⓘ❗︎ℹ️⚠️💡) look really weird. The only good-looking one is ⚠. Using SF Symbols or the GitHub svg symbols would be better.
+
+
+    const map = {
+      '[!NOTE]':      {
+        'class': 'markdown-alert note',
+        'title': "⚠ Note",             
+      },
+      '[!TIP]':       {
+        'class': 'markdown-alert tip',
+        'title': "⚠ Tip",
+      },
+      '[!IMPORTANT]': {
+        'class': 'markdown-alert important',
+        'title': "⚠ Important",
+      },
+      '[!WARNING]':   {
+        'class': 'markdown-alert warning',
+        'title': "⚠ Warning",
+      },
+      '[!CAUTION]':   {
+        'class': 'markdown-alert caution',
+        'title': "⚠ Caution",
+      },
+    };
+
+    // Edit blockquotes, according to the map
+
+    for (blockquote of document.querySelectorAll("blockquote")) {
+      for (key in map) {
+
+        if (blockquote.innerText.startsWith(key)) {
+
+          // Remove the [!NOTE] key from the content
+          blockquote.innerHTML = blockquote.innerHTML.replace(key, "").trim(); // This only replaces the first occurence. Src: https://stackoverflow.com/questions/3214886/javascript-replace-only-replaces-first-match
+
+          // Remove weird extra linebreaks
+          //  Explanation: If you put more than one space after [!CAUTION], then pandoc will insert weird extra linebreaks, which will mess up formatting. This fixes that.
+          if (blockquote.firstChild.innerHTML.startsWith("<br>")){
+            blockquote.firstChild.innerHTML = blockquote.firstChild.innerHTML.replace("<br>", "");
+          }
+          // Add classes
+          const newClasses = map[key]['class'].split(" ")
+          blockquote.classList.add(...newClasses);
+
+          // Insert element for holding the title (The title says sth like "ⓘ Note")
+          const titleP = document.createElement('p')
+          titleP.className = 'markdown-alert-title'
+          titleP.innerText = map[key]['title']
+
+          blockquote.prepend(titleP)
+        }
+      }
+    };
+  });
+
+  </script>
 </head>
 <body>
 <h3 id="changes-in-beta-10">Changes in Beta 10</h3>
@@ -10178,6 +12693,52 @@ Swipe’. I’m not quite sure about that. What do you think?</li>
           background-color: rgba(0, 0, 75, 0.055);
       }
 
+      blockquote {
+          margin-inline-start: unset;
+          border-width: 0.25rem;
+      }
+
+      blockquote.markdown-alert {
+          color: unset;
+      }
+
+      blockquote.markdown-alert.note { /* These colors are copied from the source code at https://github.com/orgs/community/discussions/16925 */
+          border-left-color: #0969da;
+      }
+      blockquote.markdown-alert.tip {
+          border-left-color: #1a7f37;
+      }
+      blockquote.markdown-alert.important {
+          border-left-color: #8250df;
+      }
+      blockquote.markdown-alert.warning {
+          border-left-color: #bf8700;
+      }
+
+      blockquote.markdown-alert.caution {
+          border-left-color: #cf222e;
+      }
+
+      blockquote.markdown-alert > .markdown-alert-title {
+          font-size: 1.2rem;
+      }
+
+      blockquote.markdown-alert.note > .markdown-alert-title {
+          color: #0969da;
+      }
+      blockquote.markdown-alert.tip > .markdown-alert-title {
+          color: #1a7f37;
+      }
+      blockquote.markdown-alert.important > .markdown-alert-title {
+          color: #8250df;
+      }
+      blockquote.markdown-alert.warning > .markdown-alert-title {
+          color: #9a6700;
+      }
+      blockquote.markdown-alert.caution > .markdown-alert-title {
+          color: #d1242f;
+      }
+
       .annotation {
           font-size: 1.1rem;
       }
@@ -10250,9 +12811,71 @@ Swipe’. I’m not quite sure about that. What do you think?</li>
       }
 
   </style>
-  <!--[if lt IE 9]>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
-  <![endif]-->
+  <script>
+
+  document.addEventListener("DOMContentLoaded", function() {
+    
+    // Implement special blockquote styles from GitHub Markdown. See https://github.com/orgs/community/discussions/16925
+
+    // Create map from `blockquote start` to `css classes that we attach to that blockquote`
+    // Notes: 
+    //  - Most symbols that we tried(︕⚠ⓘ❗︎ℹ️⚠️💡) look really weird. The only good-looking one is ⚠. Using SF Symbols or the GitHub svg symbols would be better.
+
+
+    const map = {
+      '[!NOTE]':      {
+        'class': 'markdown-alert note',
+        'title': "⚠ Note",             
+      },
+      '[!TIP]':       {
+        'class': 'markdown-alert tip',
+        'title': "⚠ Tip",
+      },
+      '[!IMPORTANT]': {
+        'class': 'markdown-alert important',
+        'title': "⚠ Important",
+      },
+      '[!WARNING]':   {
+        'class': 'markdown-alert warning',
+        'title': "⚠ Warning",
+      },
+      '[!CAUTION]':   {
+        'class': 'markdown-alert caution',
+        'title': "⚠ Caution",
+      },
+    };
+
+    // Edit blockquotes, according to the map
+
+    for (blockquote of document.querySelectorAll("blockquote")) {
+      for (key in map) {
+
+        if (blockquote.innerText.startsWith(key)) {
+
+          // Remove the [!NOTE] key from the content
+          blockquote.innerHTML = blockquote.innerHTML.replace(key, "").trim(); // This only replaces the first occurence. Src: https://stackoverflow.com/questions/3214886/javascript-replace-only-replaces-first-match
+
+          // Remove weird extra linebreaks
+          //  Explanation: If you put more than one space after [!CAUTION], then pandoc will insert weird extra linebreaks, which will mess up formatting. This fixes that.
+          if (blockquote.firstChild.innerHTML.startsWith("<br>")){
+            blockquote.firstChild.innerHTML = blockquote.firstChild.innerHTML.replace("<br>", "");
+          }
+          // Add classes
+          const newClasses = map[key]['class'].split(" ")
+          blockquote.classList.add(...newClasses);
+
+          // Insert element for holding the title (The title says sth like "ⓘ Note")
+          const titleP = document.createElement('p')
+          titleP.className = 'markdown-alert-title'
+          titleP.innerText = map[key]['title']
+
+          blockquote.prepend(titleP)
+        }
+      }
+    };
+  });
+
+  </script>
 </head>
 <body>
 <h3 id="changes-in-beta-9">Changes in Beta 9</h3>
@@ -10570,6 +13193,52 @@ thoughts.</p>
           background-color: rgba(0, 0, 75, 0.055);
       }
 
+      blockquote {
+          margin-inline-start: unset;
+          border-width: 0.25rem;
+      }
+
+      blockquote.markdown-alert {
+          color: unset;
+      }
+
+      blockquote.markdown-alert.note { /* These colors are copied from the source code at https://github.com/orgs/community/discussions/16925 */
+          border-left-color: #0969da;
+      }
+      blockquote.markdown-alert.tip {
+          border-left-color: #1a7f37;
+      }
+      blockquote.markdown-alert.important {
+          border-left-color: #8250df;
+      }
+      blockquote.markdown-alert.warning {
+          border-left-color: #bf8700;
+      }
+
+      blockquote.markdown-alert.caution {
+          border-left-color: #cf222e;
+      }
+
+      blockquote.markdown-alert > .markdown-alert-title {
+          font-size: 1.2rem;
+      }
+
+      blockquote.markdown-alert.note > .markdown-alert-title {
+          color: #0969da;
+      }
+      blockquote.markdown-alert.tip > .markdown-alert-title {
+          color: #1a7f37;
+      }
+      blockquote.markdown-alert.important > .markdown-alert-title {
+          color: #8250df;
+      }
+      blockquote.markdown-alert.warning > .markdown-alert-title {
+          color: #9a6700;
+      }
+      blockquote.markdown-alert.caution > .markdown-alert-title {
+          color: #d1242f;
+      }
+
       .annotation {
           font-size: 1.1rem;
       }
@@ -10642,9 +13311,71 @@ thoughts.</p>
       }
 
   </style>
-  <!--[if lt IE 9]>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
-  <![endif]-->
+  <script>
+
+  document.addEventListener("DOMContentLoaded", function() {
+    
+    // Implement special blockquote styles from GitHub Markdown. See https://github.com/orgs/community/discussions/16925
+
+    // Create map from `blockquote start` to `css classes that we attach to that blockquote`
+    // Notes: 
+    //  - Most symbols that we tried(︕⚠ⓘ❗︎ℹ️⚠️💡) look really weird. The only good-looking one is ⚠. Using SF Symbols or the GitHub svg symbols would be better.
+
+
+    const map = {
+      '[!NOTE]':      {
+        'class': 'markdown-alert note',
+        'title': "⚠ Note",             
+      },
+      '[!TIP]':       {
+        'class': 'markdown-alert tip',
+        'title': "⚠ Tip",
+      },
+      '[!IMPORTANT]': {
+        'class': 'markdown-alert important',
+        'title': "⚠ Important",
+      },
+      '[!WARNING]':   {
+        'class': 'markdown-alert warning',
+        'title': "⚠ Warning",
+      },
+      '[!CAUTION]':   {
+        'class': 'markdown-alert caution',
+        'title': "⚠ Caution",
+      },
+    };
+
+    // Edit blockquotes, according to the map
+
+    for (blockquote of document.querySelectorAll("blockquote")) {
+      for (key in map) {
+
+        if (blockquote.innerText.startsWith(key)) {
+
+          // Remove the [!NOTE] key from the content
+          blockquote.innerHTML = blockquote.innerHTML.replace(key, "").trim(); // This only replaces the first occurence. Src: https://stackoverflow.com/questions/3214886/javascript-replace-only-replaces-first-match
+
+          // Remove weird extra linebreaks
+          //  Explanation: If you put more than one space after [!CAUTION], then pandoc will insert weird extra linebreaks, which will mess up formatting. This fixes that.
+          if (blockquote.firstChild.innerHTML.startsWith("<br>")){
+            blockquote.firstChild.innerHTML = blockquote.firstChild.innerHTML.replace("<br>", "");
+          }
+          // Add classes
+          const newClasses = map[key]['class'].split(" ")
+          blockquote.classList.add(...newClasses);
+
+          // Insert element for holding the title (The title says sth like "ⓘ Note")
+          const titleP = document.createElement('p')
+          titleP.className = 'markdown-alert-title'
+          titleP.innerText = map[key]['title']
+
+          blockquote.prepend(titleP)
+        }
+      }
+    };
+  });
+
+  </script>
 </head>
 <body>
 <h3 id="changes-in-beta-8">Changes in Beta 8</h3>
@@ -10966,6 +13697,52 @@ thoughts.</p>
           background-color: rgba(0, 0, 75, 0.055);
       }
 
+      blockquote {
+          margin-inline-start: unset;
+          border-width: 0.25rem;
+      }
+
+      blockquote.markdown-alert {
+          color: unset;
+      }
+
+      blockquote.markdown-alert.note { /* These colors are copied from the source code at https://github.com/orgs/community/discussions/16925 */
+          border-left-color: #0969da;
+      }
+      blockquote.markdown-alert.tip {
+          border-left-color: #1a7f37;
+      }
+      blockquote.markdown-alert.important {
+          border-left-color: #8250df;
+      }
+      blockquote.markdown-alert.warning {
+          border-left-color: #bf8700;
+      }
+
+      blockquote.markdown-alert.caution {
+          border-left-color: #cf222e;
+      }
+
+      blockquote.markdown-alert > .markdown-alert-title {
+          font-size: 1.2rem;
+      }
+
+      blockquote.markdown-alert.note > .markdown-alert-title {
+          color: #0969da;
+      }
+      blockquote.markdown-alert.tip > .markdown-alert-title {
+          color: #1a7f37;
+      }
+      blockquote.markdown-alert.important > .markdown-alert-title {
+          color: #8250df;
+      }
+      blockquote.markdown-alert.warning > .markdown-alert-title {
+          color: #9a6700;
+      }
+      blockquote.markdown-alert.caution > .markdown-alert-title {
+          color: #d1242f;
+      }
+
       .annotation {
           font-size: 1.1rem;
       }
@@ -11038,9 +13815,71 @@ thoughts.</p>
       }
 
   </style>
-  <!--[if lt IE 9]>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
-  <![endif]-->
+  <script>
+
+  document.addEventListener("DOMContentLoaded", function() {
+    
+    // Implement special blockquote styles from GitHub Markdown. See https://github.com/orgs/community/discussions/16925
+
+    // Create map from `blockquote start` to `css classes that we attach to that blockquote`
+    // Notes: 
+    //  - Most symbols that we tried(︕⚠ⓘ❗︎ℹ️⚠️💡) look really weird. The only good-looking one is ⚠. Using SF Symbols or the GitHub svg symbols would be better.
+
+
+    const map = {
+      '[!NOTE]':      {
+        'class': 'markdown-alert note',
+        'title': "⚠ Note",             
+      },
+      '[!TIP]':       {
+        'class': 'markdown-alert tip',
+        'title': "⚠ Tip",
+      },
+      '[!IMPORTANT]': {
+        'class': 'markdown-alert important',
+        'title': "⚠ Important",
+      },
+      '[!WARNING]':   {
+        'class': 'markdown-alert warning',
+        'title': "⚠ Warning",
+      },
+      '[!CAUTION]':   {
+        'class': 'markdown-alert caution',
+        'title': "⚠ Caution",
+      },
+    };
+
+    // Edit blockquotes, according to the map
+
+    for (blockquote of document.querySelectorAll("blockquote")) {
+      for (key in map) {
+
+        if (blockquote.innerText.startsWith(key)) {
+
+          // Remove the [!NOTE] key from the content
+          blockquote.innerHTML = blockquote.innerHTML.replace(key, "").trim(); // This only replaces the first occurence. Src: https://stackoverflow.com/questions/3214886/javascript-replace-only-replaces-first-match
+
+          // Remove weird extra linebreaks
+          //  Explanation: If you put more than one space after [!CAUTION], then pandoc will insert weird extra linebreaks, which will mess up formatting. This fixes that.
+          if (blockquote.firstChild.innerHTML.startsWith("<br>")){
+            blockquote.firstChild.innerHTML = blockquote.firstChild.innerHTML.replace("<br>", "");
+          }
+          // Add classes
+          const newClasses = map[key]['class'].split(" ")
+          blockquote.classList.add(...newClasses);
+
+          // Insert element for holding the title (The title says sth like "ⓘ Note")
+          const titleP = document.createElement('p')
+          titleP.className = 'markdown-alert-title'
+          titleP.innerText = map[key]['title']
+
+          blockquote.prepend(titleP)
+        }
+      }
+    };
+  });
+
+  </script>
 </head>
 <body>
 <h3 id="changes-in-beta-7">Changes in Beta 7</h3>
@@ -11362,6 +14201,52 @@ thoughts.</p>
           background-color: rgba(0, 0, 75, 0.055);
       }
 
+      blockquote {
+          margin-inline-start: unset;
+          border-width: 0.25rem;
+      }
+
+      blockquote.markdown-alert {
+          color: unset;
+      }
+
+      blockquote.markdown-alert.note { /* These colors are copied from the source code at https://github.com/orgs/community/discussions/16925 */
+          border-left-color: #0969da;
+      }
+      blockquote.markdown-alert.tip {
+          border-left-color: #1a7f37;
+      }
+      blockquote.markdown-alert.important {
+          border-left-color: #8250df;
+      }
+      blockquote.markdown-alert.warning {
+          border-left-color: #bf8700;
+      }
+
+      blockquote.markdown-alert.caution {
+          border-left-color: #cf222e;
+      }
+
+      blockquote.markdown-alert > .markdown-alert-title {
+          font-size: 1.2rem;
+      }
+
+      blockquote.markdown-alert.note > .markdown-alert-title {
+          color: #0969da;
+      }
+      blockquote.markdown-alert.tip > .markdown-alert-title {
+          color: #1a7f37;
+      }
+      blockquote.markdown-alert.important > .markdown-alert-title {
+          color: #8250df;
+      }
+      blockquote.markdown-alert.warning > .markdown-alert-title {
+          color: #9a6700;
+      }
+      blockquote.markdown-alert.caution > .markdown-alert-title {
+          color: #d1242f;
+      }
+
       .annotation {
           font-size: 1.1rem;
       }
@@ -11434,9 +14319,71 @@ thoughts.</p>
       }
 
   </style>
-  <!--[if lt IE 9]>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
-  <![endif]-->
+  <script>
+
+  document.addEventListener("DOMContentLoaded", function() {
+    
+    // Implement special blockquote styles from GitHub Markdown. See https://github.com/orgs/community/discussions/16925
+
+    // Create map from `blockquote start` to `css classes that we attach to that blockquote`
+    // Notes: 
+    //  - Most symbols that we tried(︕⚠ⓘ❗︎ℹ️⚠️💡) look really weird. The only good-looking one is ⚠. Using SF Symbols or the GitHub svg symbols would be better.
+
+
+    const map = {
+      '[!NOTE]':      {
+        'class': 'markdown-alert note',
+        'title': "⚠ Note",             
+      },
+      '[!TIP]':       {
+        'class': 'markdown-alert tip',
+        'title': "⚠ Tip",
+      },
+      '[!IMPORTANT]': {
+        'class': 'markdown-alert important',
+        'title': "⚠ Important",
+      },
+      '[!WARNING]':   {
+        'class': 'markdown-alert warning',
+        'title': "⚠ Warning",
+      },
+      '[!CAUTION]':   {
+        'class': 'markdown-alert caution',
+        'title': "⚠ Caution",
+      },
+    };
+
+    // Edit blockquotes, according to the map
+
+    for (blockquote of document.querySelectorAll("blockquote")) {
+      for (key in map) {
+
+        if (blockquote.innerText.startsWith(key)) {
+
+          // Remove the [!NOTE] key from the content
+          blockquote.innerHTML = blockquote.innerHTML.replace(key, "").trim(); // This only replaces the first occurence. Src: https://stackoverflow.com/questions/3214886/javascript-replace-only-replaces-first-match
+
+          // Remove weird extra linebreaks
+          //  Explanation: If you put more than one space after [!CAUTION], then pandoc will insert weird extra linebreaks, which will mess up formatting. This fixes that.
+          if (blockquote.firstChild.innerHTML.startsWith("<br>")){
+            blockquote.firstChild.innerHTML = blockquote.firstChild.innerHTML.replace("<br>", "");
+          }
+          // Add classes
+          const newClasses = map[key]['class'].split(" ")
+          blockquote.classList.add(...newClasses);
+
+          // Insert element for holding the title (The title says sth like "ⓘ Note")
+          const titleP = document.createElement('p')
+          titleP.className = 'markdown-alert-title'
+          titleP.innerText = map[key]['title']
+
+          blockquote.prepend(titleP)
+        }
+      }
+    };
+  });
+
+  </script>
 </head>
 <body>
 <h3 id="changes">Changes</h3>
@@ -11736,6 +14683,52 @@ Fix Helper’ screen</li>
           background-color: rgba(0, 0, 75, 0.055);
       }
 
+      blockquote {
+          margin-inline-start: unset;
+          border-width: 0.25rem;
+      }
+
+      blockquote.markdown-alert {
+          color: unset;
+      }
+
+      blockquote.markdown-alert.note { /* These colors are copied from the source code at https://github.com/orgs/community/discussions/16925 */
+          border-left-color: #0969da;
+      }
+      blockquote.markdown-alert.tip {
+          border-left-color: #1a7f37;
+      }
+      blockquote.markdown-alert.important {
+          border-left-color: #8250df;
+      }
+      blockquote.markdown-alert.warning {
+          border-left-color: #bf8700;
+      }
+
+      blockquote.markdown-alert.caution {
+          border-left-color: #cf222e;
+      }
+
+      blockquote.markdown-alert > .markdown-alert-title {
+          font-size: 1.2rem;
+      }
+
+      blockquote.markdown-alert.note > .markdown-alert-title {
+          color: #0969da;
+      }
+      blockquote.markdown-alert.tip > .markdown-alert-title {
+          color: #1a7f37;
+      }
+      blockquote.markdown-alert.important > .markdown-alert-title {
+          color: #8250df;
+      }
+      blockquote.markdown-alert.warning > .markdown-alert-title {
+          color: #9a6700;
+      }
+      blockquote.markdown-alert.caution > .markdown-alert-title {
+          color: #d1242f;
+      }
+
       .annotation {
           font-size: 1.1rem;
       }
@@ -11808,9 +14801,71 @@ Fix Helper’ screen</li>
       }
 
   </style>
-  <!--[if lt IE 9]>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
-  <![endif]-->
+  <script>
+
+  document.addEventListener("DOMContentLoaded", function() {
+    
+    // Implement special blockquote styles from GitHub Markdown. See https://github.com/orgs/community/discussions/16925
+
+    // Create map from `blockquote start` to `css classes that we attach to that blockquote`
+    // Notes: 
+    //  - Most symbols that we tried(︕⚠ⓘ❗︎ℹ️⚠️💡) look really weird. The only good-looking one is ⚠. Using SF Symbols or the GitHub svg symbols would be better.
+
+
+    const map = {
+      '[!NOTE]':      {
+        'class': 'markdown-alert note',
+        'title': "⚠ Note",             
+      },
+      '[!TIP]':       {
+        'class': 'markdown-alert tip',
+        'title': "⚠ Tip",
+      },
+      '[!IMPORTANT]': {
+        'class': 'markdown-alert important',
+        'title': "⚠ Important",
+      },
+      '[!WARNING]':   {
+        'class': 'markdown-alert warning',
+        'title': "⚠ Warning",
+      },
+      '[!CAUTION]':   {
+        'class': 'markdown-alert caution',
+        'title': "⚠ Caution",
+      },
+    };
+
+    // Edit blockquotes, according to the map
+
+    for (blockquote of document.querySelectorAll("blockquote")) {
+      for (key in map) {
+
+        if (blockquote.innerText.startsWith(key)) {
+
+          // Remove the [!NOTE] key from the content
+          blockquote.innerHTML = blockquote.innerHTML.replace(key, "").trim(); // This only replaces the first occurence. Src: https://stackoverflow.com/questions/3214886/javascript-replace-only-replaces-first-match
+
+          // Remove weird extra linebreaks
+          //  Explanation: If you put more than one space after [!CAUTION], then pandoc will insert weird extra linebreaks, which will mess up formatting. This fixes that.
+          if (blockquote.firstChild.innerHTML.startsWith("<br>")){
+            blockquote.firstChild.innerHTML = blockquote.firstChild.innerHTML.replace("<br>", "");
+          }
+          // Add classes
+          const newClasses = map[key]['class'].split(" ")
+          blockquote.classList.add(...newClasses);
+
+          // Insert element for holding the title (The title says sth like "ⓘ Note")
+          const titleP = document.createElement('p')
+          titleP.className = 'markdown-alert-title'
+          titleP.innerText = map[key]['title']
+
+          blockquote.prepend(titleP)
+        }
+      }
+    };
+  });
+
+  </script>
 </head>
 <body>
 <h3 id="changes-in-beta-6">Changes in Beta 6</h3>
@@ -12138,6 +15193,52 @@ thoughts.</p>
           background-color: rgba(0, 0, 75, 0.055);
       }
 
+      blockquote {
+          margin-inline-start: unset;
+          border-width: 0.25rem;
+      }
+
+      blockquote.markdown-alert {
+          color: unset;
+      }
+
+      blockquote.markdown-alert.note { /* These colors are copied from the source code at https://github.com/orgs/community/discussions/16925 */
+          border-left-color: #0969da;
+      }
+      blockquote.markdown-alert.tip {
+          border-left-color: #1a7f37;
+      }
+      blockquote.markdown-alert.important {
+          border-left-color: #8250df;
+      }
+      blockquote.markdown-alert.warning {
+          border-left-color: #bf8700;
+      }
+
+      blockquote.markdown-alert.caution {
+          border-left-color: #cf222e;
+      }
+
+      blockquote.markdown-alert > .markdown-alert-title {
+          font-size: 1.2rem;
+      }
+
+      blockquote.markdown-alert.note > .markdown-alert-title {
+          color: #0969da;
+      }
+      blockquote.markdown-alert.tip > .markdown-alert-title {
+          color: #1a7f37;
+      }
+      blockquote.markdown-alert.important > .markdown-alert-title {
+          color: #8250df;
+      }
+      blockquote.markdown-alert.warning > .markdown-alert-title {
+          color: #9a6700;
+      }
+      blockquote.markdown-alert.caution > .markdown-alert-title {
+          color: #d1242f;
+      }
+
       .annotation {
           font-size: 1.1rem;
       }
@@ -12210,9 +15311,71 @@ thoughts.</p>
       }
 
   </style>
-  <!--[if lt IE 9]>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
-  <![endif]-->
+  <script>
+
+  document.addEventListener("DOMContentLoaded", function() {
+    
+    // Implement special blockquote styles from GitHub Markdown. See https://github.com/orgs/community/discussions/16925
+
+    // Create map from `blockquote start` to `css classes that we attach to that blockquote`
+    // Notes: 
+    //  - Most symbols that we tried(︕⚠ⓘ❗︎ℹ️⚠️💡) look really weird. The only good-looking one is ⚠. Using SF Symbols or the GitHub svg symbols would be better.
+
+
+    const map = {
+      '[!NOTE]':      {
+        'class': 'markdown-alert note',
+        'title': "⚠ Note",             
+      },
+      '[!TIP]':       {
+        'class': 'markdown-alert tip',
+        'title': "⚠ Tip",
+      },
+      '[!IMPORTANT]': {
+        'class': 'markdown-alert important',
+        'title': "⚠ Important",
+      },
+      '[!WARNING]':   {
+        'class': 'markdown-alert warning',
+        'title': "⚠ Warning",
+      },
+      '[!CAUTION]':   {
+        'class': 'markdown-alert caution',
+        'title': "⚠ Caution",
+      },
+    };
+
+    // Edit blockquotes, according to the map
+
+    for (blockquote of document.querySelectorAll("blockquote")) {
+      for (key in map) {
+
+        if (blockquote.innerText.startsWith(key)) {
+
+          // Remove the [!NOTE] key from the content
+          blockquote.innerHTML = blockquote.innerHTML.replace(key, "").trim(); // This only replaces the first occurence. Src: https://stackoverflow.com/questions/3214886/javascript-replace-only-replaces-first-match
+
+          // Remove weird extra linebreaks
+          //  Explanation: If you put more than one space after [!CAUTION], then pandoc will insert weird extra linebreaks, which will mess up formatting. This fixes that.
+          if (blockquote.firstChild.innerHTML.startsWith("<br>")){
+            blockquote.firstChild.innerHTML = blockquote.firstChild.innerHTML.replace("<br>", "");
+          }
+          // Add classes
+          const newClasses = map[key]['class'].split(" ")
+          blockquote.classList.add(...newClasses);
+
+          // Insert element for holding the title (The title says sth like "ⓘ Note")
+          const titleP = document.createElement('p')
+          titleP.className = 'markdown-alert-title'
+          titleP.innerText = map[key]['title']
+
+          blockquote.prepend(titleP)
+        }
+      }
+    };
+  });
+
+  </script>
 </head>
 <body>
 <p>This release is meant to test a new update mechanism, you can safely
@@ -12502,6 +15665,52 @@ ignore it.</p>
           background-color: rgba(0, 0, 75, 0.055);
       }
 
+      blockquote {
+          margin-inline-start: unset;
+          border-width: 0.25rem;
+      }
+
+      blockquote.markdown-alert {
+          color: unset;
+      }
+
+      blockquote.markdown-alert.note { /* These colors are copied from the source code at https://github.com/orgs/community/discussions/16925 */
+          border-left-color: #0969da;
+      }
+      blockquote.markdown-alert.tip {
+          border-left-color: #1a7f37;
+      }
+      blockquote.markdown-alert.important {
+          border-left-color: #8250df;
+      }
+      blockquote.markdown-alert.warning {
+          border-left-color: #bf8700;
+      }
+
+      blockquote.markdown-alert.caution {
+          border-left-color: #cf222e;
+      }
+
+      blockquote.markdown-alert > .markdown-alert-title {
+          font-size: 1.2rem;
+      }
+
+      blockquote.markdown-alert.note > .markdown-alert-title {
+          color: #0969da;
+      }
+      blockquote.markdown-alert.tip > .markdown-alert-title {
+          color: #1a7f37;
+      }
+      blockquote.markdown-alert.important > .markdown-alert-title {
+          color: #8250df;
+      }
+      blockquote.markdown-alert.warning > .markdown-alert-title {
+          color: #9a6700;
+      }
+      blockquote.markdown-alert.caution > .markdown-alert-title {
+          color: #d1242f;
+      }
+
       .annotation {
           font-size: 1.1rem;
       }
@@ -12574,9 +15783,71 @@ ignore it.</p>
       }
 
   </style>
-  <!--[if lt IE 9]>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
-  <![endif]-->
+  <script>
+
+  document.addEventListener("DOMContentLoaded", function() {
+    
+    // Implement special blockquote styles from GitHub Markdown. See https://github.com/orgs/community/discussions/16925
+
+    // Create map from `blockquote start` to `css classes that we attach to that blockquote`
+    // Notes: 
+    //  - Most symbols that we tried(︕⚠ⓘ❗︎ℹ️⚠️💡) look really weird. The only good-looking one is ⚠. Using SF Symbols or the GitHub svg symbols would be better.
+
+
+    const map = {
+      '[!NOTE]':      {
+        'class': 'markdown-alert note',
+        'title': "⚠ Note",             
+      },
+      '[!TIP]':       {
+        'class': 'markdown-alert tip',
+        'title': "⚠ Tip",
+      },
+      '[!IMPORTANT]': {
+        'class': 'markdown-alert important',
+        'title': "⚠ Important",
+      },
+      '[!WARNING]':   {
+        'class': 'markdown-alert warning',
+        'title': "⚠ Warning",
+      },
+      '[!CAUTION]':   {
+        'class': 'markdown-alert caution',
+        'title': "⚠ Caution",
+      },
+    };
+
+    // Edit blockquotes, according to the map
+
+    for (blockquote of document.querySelectorAll("blockquote")) {
+      for (key in map) {
+
+        if (blockquote.innerText.startsWith(key)) {
+
+          // Remove the [!NOTE] key from the content
+          blockquote.innerHTML = blockquote.innerHTML.replace(key, "").trim(); // This only replaces the first occurence. Src: https://stackoverflow.com/questions/3214886/javascript-replace-only-replaces-first-match
+
+          // Remove weird extra linebreaks
+          //  Explanation: If you put more than one space after [!CAUTION], then pandoc will insert weird extra linebreaks, which will mess up formatting. This fixes that.
+          if (blockquote.firstChild.innerHTML.startsWith("<br>")){
+            blockquote.firstChild.innerHTML = blockquote.firstChild.innerHTML.replace("<br>", "");
+          }
+          // Add classes
+          const newClasses = map[key]['class'].split(" ")
+          blockquote.classList.add(...newClasses);
+
+          // Insert element for holding the title (The title says sth like "ⓘ Note")
+          const titleP = document.createElement('p')
+          titleP.className = 'markdown-alert-title'
+          titleP.innerText = map[key]['title']
+
+          blockquote.prepend(titleP)
+        }
+      }
+    };
+  });
+
+  </script>
 </head>
 <body>
 <h3 id="changes-in-beta-4">Changes in Beta 4</h3>
