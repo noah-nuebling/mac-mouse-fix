@@ -71,6 +71,9 @@ Oh yeahhhhh
 
 ---
 
+### Blockquotes
+*Displaying the GitHub alert-style blockquotes requires javascript. MMF 2.2.3 and 3.0.2 don't have js enabled for rendering update notes. I plan to enable it for future releases using Sparkle's `SUEnableJavaScript` setting.*
+
 > **This is a normal**
 >
 > Blockquote
