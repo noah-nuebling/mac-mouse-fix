@@ -7,9 +7,6 @@
   <title>-</title>
   <style>
     html {
-      line-height: 1.5;
-      font-family: Georgia, serif;
-      font-size: 20px;
       color: #1a1a1a;
       background-color: #fdfdfd;
     }
@@ -28,13 +25,16 @@
     @media (max-width: 600px) {
       body {
         font-size: 0.9em;
-        padding: 1em;
+        padding: 12px;
       }
       h1 {
         font-size: 1.8em;
       }
     }
     @media print {
+      html {
+        background-color: white;
+      }
       body {
         background-color: transparent;
         color: black;
@@ -58,6 +58,10 @@
       color: #1a1a1a;
     }
     img {
+      max-width: 100%;
+    }
+    svg {
+      height: auto;
       max-width: 100%;
     }
     h1, h2, h3, h4, h5, h6 {
@@ -84,9 +88,10 @@
       color: #606060;
     }
     code {
-      font-family: Menlo, Monaco, 'Lucida Console', Consolas, monospace;
+      font-family: Menlo, Monaco, Consolas, 'Lucida Console', monospace;
       font-size: 85%;
       margin: 0;
+      hyphens: manual;
     }
     pre {
       margin: 1em 0;
@@ -151,14 +156,19 @@
     div.columns{display: flex; gap: min(4vw, 1.5em);}
     div.column{flex: auto; overflow-x: auto;}
     div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
-    ul.task-list{list-style: none;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
     ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
       width: 0.8em;
       margin: 0 0.8em 0.2em -1.6em;
       vertical-align: middle;
     }
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+    /* CSS for syntax highlighting */
     pre > code.sourceCode { white-space: pre; position: relative; }
-    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+    pre > code.sourceCode > span { line-height: 1.25; }
     pre > code.sourceCode > span:empty { height: 1.2em; }
     .sourceCode { overflow: visible; }
     code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -169,7 +179,7 @@
     }
     @media print {
     pre > code.sourceCode { white-space: pre-wrap; }
-    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
     }
     pre.numberSource code
       { counter-reset: source-line 0; }
@@ -220,7 +230,6 @@
     code span.va { color: #19177c; } /* Variable */
     code span.vs { color: #4070a0; } /* VerbatimString */
     code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
-    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
   </style>
   
 
@@ -320,6 +329,52 @@
           background-color: rgba(0, 0, 75, 0.055);
       }
 
+      blockquote {
+          margin-inline-start: unset;
+          border-width: 0.25rem;
+      }
+
+      blockquote.markdown-alert {
+          color: unset;
+      }
+
+      blockquote.markdown-alert.note { /* These colors are copied from the source code at https://github.com/orgs/community/discussions/16925 */
+          border-left-color: #0969da;
+      }
+      blockquote.markdown-alert.tip {
+          border-left-color: #1a7f37;
+      }
+      blockquote.markdown-alert.important {
+          border-left-color: #8250df;
+      }
+      blockquote.markdown-alert.warning {
+          border-left-color: #bf8700;
+      }
+
+      blockquote.markdown-alert.caution {
+          border-left-color: #cf222e;
+      }
+
+      blockquote.markdown-alert > .markdown-alert-title {
+          font-size: 1.2rem;
+      }
+
+      blockquote.markdown-alert.note > .markdown-alert-title {
+          color: #0969da;
+      }
+      blockquote.markdown-alert.tip > .markdown-alert-title {
+          color: #1a7f37;
+      }
+      blockquote.markdown-alert.important > .markdown-alert-title {
+          color: #8250df;
+      }
+      blockquote.markdown-alert.warning > .markdown-alert-title {
+          color: #9a6700;
+      }
+      blockquote.markdown-alert.caution > .markdown-alert-title {
+          color: #d1242f;
+      }
+
       .annotation {
           font-size: 1.1rem;
       }
@@ -358,7 +413,7 @@
       @media (prefers-color-scheme: dark) {
 
           body {
-              background-color: #1e1e1e; 
+              /* background-color: #1e1e1e;  */
               /* ^ Sparkle background is still bright when we have `background-color: transparent` even with darkmode active. 
                   This is the color of the text field background in Apple Mail on macOS 11 BigSur 
                   
@@ -392,14 +447,79 @@
       }
 
   </style>
-  <!--[if lt IE 9]>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
-  <![endif]-->
+  <script>
+
+  document.addEventListener("DOMContentLoaded", function() {
+    
+    // Implement special blockquote styles from GitHub Markdown. See https://github.com/orgs/community/discussions/16925
+
+    // Create map from `blockquote start` to `css classes that we attach to that blockquote`
+    // Notes: 
+    //  - Most symbols that we tried(︕⚠ⓘ❗︎ℹ️⚠️💡) look really weird. The only good-looking one is ⚠. Using SF Symbols or the GitHub svg symbols would be better.
+
+
+    const map = {
+      '[!NOTE]':      {
+        'class': 'markdown-alert note',
+        'title': "⚠ Note",             
+      },
+      '[!TIP]':       {
+        'class': 'markdown-alert tip',
+        'title': "⚠ Tip",
+      },
+      '[!IMPORTANT]': {
+        'class': 'markdown-alert important',
+        'title': "⚠ Important",
+      },
+      '[!WARNING]':   {
+        'class': 'markdown-alert warning',
+        'title': "⚠ Warning",
+      },
+      '[!CAUTION]':   {
+        'class': 'markdown-alert caution',
+        'title': "⚠ Caution",
+      },
+    };
+
+    // Edit blockquotes, according to the map
+
+    for (blockquote of document.querySelectorAll("blockquote")) {
+      for (key in map) {
+
+        if (blockquote.innerText.startsWith(key)) {
+
+          // Remove the [!NOTE] key from the content
+          blockquote.innerHTML = blockquote.innerHTML.replace(key, "").trim(); // This only replaces the first occurence. Src: https://stackoverflow.com/questions/3214886/javascript-replace-only-replaces-first-match
+
+          // Remove weird extra linebreaks
+          //  Explanation: If you put more than one space after [!CAUTION], then pandoc will insert weird extra linebreaks, which will mess up formatting. This fixes that.
+          if (blockquote.firstChild.innerHTML.startsWith("<br>")){
+            blockquote.firstChild.innerHTML = blockquote.firstChild.innerHTML.replace("<br>", "");
+          }
+          // Add classes
+          const newClasses = map[key]['class'].split(" ")
+          blockquote.classList.add(...newClasses);
+
+          // Insert element for holding the title (The title says sth like "ⓘ Note")
+          const titleP = document.createElement('p')
+          titleP.className = 'markdown-alert-title'
+          titleP.innerText = map[key]['title']
+
+          blockquote.prepend(titleP)
+        }
+      }
+    };
+  });
+
+  </script>
 </head>
 <body>
 <!-- Render this using
-cat test.md | pandoc -f markdown -t html -H update-notes.css -s -o test.html; open test.html
+
+rm test.html; cat test.md | pandoc --from markdown --to html --include-in-header update-notes-style.html --include-in-header update-notes-script.html --standalone --output=test.html; open test.html
+
 -->
+<hr />
 <h1 id="update-available">Update available!</h1>
 <p>Yay!</p>
 <h2 id="very-cool">Very cool!</h2>
@@ -407,24 +527,28 @@ cat test.md | pandoc -f markdown -t html -H update-notes.css -s -o test.html; op
 <h3 id="super-neat">Super neat!</h3>
 <ul>
 <li>Lots of <em>cool</em> stuff</li>
-<li>Pictures of <strong>kittens</strong> (at exorbitant prices) a;lsdkjf;lasjdf;lajsl;dfjal;sjdfjfal;sdjf;lajsfjals;dfj;asjdf;lajs;dlfjals;dfjl;asjf;lajs;dlfja;sldfj;alsjdf;lajsd;lfjas;ldfj;alsjkdf;lajsdfas;ldfj</li>
+<li>Pictures of <strong>kittens</strong> (at exorbitant prices)
+a;lsdkjf;lasjdf;lajsl;dfjal;sjdfjfal;sdjf;lajsfjals;dfj;asjdf;lajs;dlfjals;dfjl;asjf;lajs;dlfja;sldfj;alsjdf;lajsd;lfjas;ldfj;alsjkdf;lajsdfas;ldfj</li>
 <li>Tons of links <a href="https://google.com/">everywhere</a></li>
 </ul>
 <p>Coding I can’t believe how<br />
 Coding is so easy.<br />
 Coding is like <code>if (mmfIsRunning) { beGood(true) }</code><br />
 Coding And that’s actually how it is</p>
-<p>Bad at
-line breaks</p>
+<p>Bad at line breaks</p>
 <p>The dream:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">brew</span> install mac-mouse-fix</span></code></pre></div>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">brew</span> install mac-mouse-fix</span></code></pre></div>
 <h4 id="badabuum-pau">Badabuum pau!</h4>
 <p>Peanut butter</p>
 <h5 id="eyyy">Eyyy</h5>
 <p>Oh well… Time for a divider!</p>
 <hr />
 <p>I needed that.</p>
-<h2 id="this-is-a-really-really-really-long-title-that-wraps-and-stuff-i-said-its-really-really-really-really-long-and-it-wraps-and-stuff">This is a really really really long title that wraps and stuff, I said it’s really really really really long and it wraps and stuff</h2>
+<h2
+id="this-is-a-really-really-really-long-title-that-wraps-and-stuff-i-said-its-really-really-really-really-long-and-it-wraps-and-stuff">This
+is a really really really long title that wraps and stuff, I said it’s
+really really really really long and it wraps and stuff</h2>
 <p>Oh yeahhhhh</p>
 <hr />
 <ol type="1">
@@ -448,5 +572,59 @@ line breaks</p>
 </ul></li>
 <li>it’s true</li>
 </ul>
+<hr />
+<blockquote>
+<p><strong>This is a normal</strong></p>
+<p>Blockquote</p>
+<p>Some text …Single break<br />
+…Backslash (\) single break</p>
+<p>…Double break</p>
+</blockquote>
+<blockquote>
+<p>[!NOTE] Highlights information that users should take into account,
+even when skimming.</p>
+</blockquote>
+<blockquote>
+<p>[!TIP] Optional information to help a user be more successful.</p>
+</blockquote>
+<blockquote>
+<p>[!IMPORTANT] Crucial information necessary for users to succeed.</p>
+</blockquote>
+<blockquote>
+<p>[!WARNING] Critical content demanding immediate user attention due to
+potential risks.</p>
+</blockquote>
+<blockquote>
+<p>[!CAUTION] Negative potential consequences of an action.</p>
+</blockquote>
+<blockquote>
+<p>[!CAUTION]<br />
+If you put more than one space after [!CAUTION], then pandoc will insert
+weird extra linebreaks. Update: Fixed this in our js code.</p>
+</blockquote>
+<blockquote>
+<p>[!NOTE]</p>
+<p>This note has a double line break after [!NOTE]</p>
+</blockquote>
+<blockquote>
+<p>[!NOTE] <strong>Read this if you’re currently using Mac Mouse Fix
+2</strong></p>
+<p>With the introduction of Mac Mouse Fix 3, I’ve made some changes to
+the pricing model:</p>
+<ul>
+<li><strong>Mac Mouse Fix 2</strong><br />
+Remains 100% free, and I plan to keep supporting it.<br />
+Just <strong>skip this update</strong> if you’d like to keep using Mac
+Mouse Fix 2.</li>
+<li><strong>Mac Mouse Fix 3</strong><br />
+Free for 30 days, costs a few dollars to own. You can <strong>update
+now</strong>, if you’d like to try out Mac Mouse Fix 3.</li>
+</ul>
+<p>You can also download the latest version of MMF 2 <a
+href="https://noah-nuebling.github.io/redirection-service?target=mmf2-latest">here</a>.<br />
+And you can learn more about the new pricing <a
+href="https://github.com/noah-nuebling/mac-mouse-fix/releases/tag/3.0.0">here</a>.
+Thank you so much for all your support so far! :)</p>
+</blockquote>
 </body>
 </html>

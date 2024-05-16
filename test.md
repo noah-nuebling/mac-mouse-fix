@@ -1,6 +1,10 @@
 <!-- Render this using
-cat test.md | pandoc -f markdown -t html -H update-notes.css -s -o test.html; open test.html
+
+rm test.html; cat test.md | pandoc --from markdown --to html --include-in-header update-notes-style.html --include-in-header update-notes-script.html --standalone --output=test.html; open test.html
+
 -->
+
+---
 
 # Update available!
 
@@ -64,3 +68,52 @@ Oh yeahhhhh
     - indents
   - seriously
 - it's true
+
+---
+
+> **This is a normal**
+>
+> Blockquote
+>
+> Some text
+> ...Single break\
+> ...Backslash (\\) single break
+>
+> ...Double break
+
+> [!NOTE]
+> Highlights information that users should take into account, even when skimming.
+
+> [!TIP]
+> Optional information to help a user be more successful.
+
+> [!IMPORTANT]
+> Crucial information necessary for users to succeed.
+
+> [!WARNING]
+> Critical content demanding immediate user attention due to potential risks.
+
+> [!CAUTION]
+> Negative potential consequences of an action.
+
+> [!CAUTION]  
+> If you put more than one space after [!CAUTION], then pandoc will insert weird extra linebreaks. Update: Fixed this in our js code.
+
+> [!NOTE]
+> 
+> This note has a double line break after [!NOTE]
+
+> [!NOTE]
+> **Read this if you're currently using Mac Mouse Fix 2**
+>
+> With the introduction of Mac Mouse Fix 3, I've made some changes to the pricing model:
+> 
+> - **Mac Mouse Fix 2**\
+> Remains 100% free, and I plan to keep supporting it.\
+> Just **skip this update** if you'd like to keep using Mac Mouse Fix 2.
+> - **Mac Mouse Fix 3**\
+> Free for 30 days, costs a few dollars to own. 
+> You can **update now**, if you'd like to try out Mac Mouse Fix 3.
+>
+> You can also download the latest version of MMF 2 [here](https://noah-nuebling.github.io/redirection-service?target=mmf2-latest).\
+> And you can learn more about the new pricing [here](https://github.com/noah-nuebling/mac-mouse-fix/releases/tag/3.0.0). Thank you so much for all your support so far! :)

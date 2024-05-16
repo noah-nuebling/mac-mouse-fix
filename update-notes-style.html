@@ -96,6 +96,52 @@
         background-color: rgba(0, 0, 75, 0.055);
     }
 
+    blockquote {
+        margin-inline-start: unset;
+        border-width: 0.25rem;
+    }
+
+    blockquote.markdown-alert {
+        color: unset;
+    }
+
+    blockquote.markdown-alert.note { /* These colors are copied from the source code at https://github.com/orgs/community/discussions/16925 */
+        border-left-color: #0969da;
+    }
+    blockquote.markdown-alert.tip {
+        border-left-color: #1a7f37;
+    }
+    blockquote.markdown-alert.important {
+        border-left-color: #8250df;
+    }
+    blockquote.markdown-alert.warning {
+        border-left-color: #bf8700;
+    }
+
+    blockquote.markdown-alert.caution {
+        border-left-color: #cf222e;
+    }
+
+    blockquote.markdown-alert > .markdown-alert-title {
+        font-size: 1.2rem;
+    }
+
+    blockquote.markdown-alert.note > .markdown-alert-title {
+        color: #0969da;
+    }
+    blockquote.markdown-alert.tip > .markdown-alert-title {
+        color: #1a7f37;
+    }
+    blockquote.markdown-alert.important > .markdown-alert-title {
+        color: #8250df;
+    }
+    blockquote.markdown-alert.warning > .markdown-alert-title {
+        color: #9a6700;
+    }
+    blockquote.markdown-alert.caution > .markdown-alert-title {
+        color: #d1242f;
+    }
+
     .annotation {
         font-size: 1.1rem;
     }

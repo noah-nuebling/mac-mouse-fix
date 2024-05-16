@@ -11,7 +11,7 @@ This repo contains the script `stats` to easily display and record download coun
 
 `generate_appcasts` creates 2 appcast files. `appcast.xml` which contains only stable releases and `appcast-pre.xml` which contains prereleases as well. This allows you to let users opt-in to beta testing your app.
 
-Update notes will be automatically generated based on the GitHub Releases' body texts. The styling is neutral, supports dark mode, and is easy to adjust in `update-notes.css`
+Update notes will be automatically generated based on the GitHub Releases' body texts. The styling is neutral, supports dark mode, and is easy to adjust in `update-notes-style.html`
 
 # Tutorial
 
@@ -21,8 +21,8 @@ You can use this repo with the following terminal commands:
 to generate the `appcast.xml` and `appcast-pre.xml` files \
     (`appcast.xml` will only contain stable releases, while `appcast-pre.xml` will also contain prereleases)
 
-- `cat test.md | pandoc -f markdown -t html -H update-notes.css -s -o test.html; open test.html` \
-to test `update-notes.css`
+- `rm test.html; cat test.md | pandoc --from markdown --to html --include-in-header update-notes-style.html --include-in-header update-notes-script.html --standalone --output=test.html; open test.html` \
+to test
 
 - `python3 stats` \
 to see how many times your releases have been downloaded at this point
@@ -50,7 +50,7 @@ To adopt this stuff for your own app you'll want to do the following things: (Un
     - The code involving `prefpane_bundle_name` is only there because my app moved from being a prefpane to being a normal app bundle in the past. You'll probably want to remove it.
     - My app isn't signed through the Apple Developer Program nor Notarized. If yours is, then you might need to adjust other things about the script.
     - There are probably other things I can't think of right now.
-- Adjust `update-notes.css` to your liking
+- Adjust `update-notes-style.html` to your liking
 - Replace the repo URL at the top of the `stats` script if you want to use it
 - Possibly install some command line tools this depends on. I recommend you use [Homebrew](https://brew.sh/) for that.
 

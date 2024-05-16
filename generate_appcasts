@@ -23,7 +23,8 @@ raw_github_url = "https://raw.githubusercontent.com/noah-nuebling/mac-mouse-fix/
 
 appcast_file_name = "appcast.xml" # Path to the appcast for stable releases
 appcast_pre_file_name = "appcast-pre.xml" # Path to the appcast for prereleases
-css_file_path = "update-notes.css"
+css_file_path = "update-notes-style.html"
+js_file_path = "update-notes-script.html"
 
 sparkle_project_path = "Frameworks/Sparkle-1.26.0" # Need this to use Sparkles code-signing tool # This is dangerously hardcoded # Might be smart to keep this in sync with the Sparkle version in the app.
 download_folder = "generate_appcasts_downloads" # This is were we download old app versions to, and then unzip them. We want to delete this on exit.
@@ -86,8 +87,9 @@ def generate():
             
             # Convert to HTML
             # release_notes = subprocess.check_output(f"cat {download_folder}/release_notes.md | pandoc -f markdown -t html", shell=True).decode('utf-8')
+            
             # Convert to HTML (standalone, including style sheet - that's the only way to style the update notes in the app cast using embedded html)
-            release_notes = subprocess.check_output(f"""cat {download_folder}/release_notes.md | pandoc -f markdown -t html -H ./{css_file_path} -s --metadata title=''""", shell=True).decode('utf-8')
+            release_notes = subprocess.check_output(f"""cat {download_folder}/release_notes.md | pandoc -f markdown -t html -H ./{css_file_path} -H ./{js_file_path} -s --metadata title=''""", shell=True).decode('utf-8')
 
             # Get title
             title = f"{short_version} available!"
