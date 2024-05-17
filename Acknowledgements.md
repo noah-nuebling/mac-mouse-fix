@@ -42,6 +42,7 @@ These people spent a lot more than the standard price and treated me to an **Inc
 
 **May 2024**
 
+- 🇺🇸&nbsp;Jumpcutking - "Ergonomic Mouse for Mac Solved - thank you!"
 - 🇦🇺&nbsp;Will&nbsp;Bawden&nbsp;Is
 - 🇹🇭&nbsp;Supaporn&nbsp;Thipnan
 - 🇹🇼&nbsp;Wancw
