@@ -75,7 +75,7 @@ brew install mac-mouse-fix
 
 Die neueste Version von Mac Mouse Fix ist für **macOS 11 Big Sur** oder später gemacht.
 
-Wenn du macOS **10.15 Catalina**, macOS **10.14 Mojave** oder macOS **10.13 High Sierra** benutzt, kannst du die [neueste Version von Mac Mouse Fix 2](https://noah-nuebling.github.io/redirection-service?message=&target=mmf2-latest) verwenden. Spätere Versionen von Mac Mouse Fix könnten vielleicht auch noch auf deinem Gerät funktionieren, aber sie werden visuelle Probleme haben und einige Funktionen werden eventuell nicht richtig funktionieren.
+Wenn du macOS **10.15 Catalina**, macOS **10.14 Mojave** oder macOS **10.13 High Sierra** benutzt, kannst du die [neueste Version von Mac Mouse Fix 2](https://noah-nuebling.github.io/redirection-service?message=&target=mmf2-latest) verwenden. Mac Mouse Fix 3.0.0 und später könnten vielleicht auch noch auf deinem Gerät funktionieren, aber sie werden visuelle Probleme haben und einige Funktionen werden eventuell nicht richtig funktionieren.
 
 Wenn du macOS **10.12 Sierra** oder **10.11 El Capitan** benutzt, kannst du Mac Mouse Fix [2.2.0](https://github.com/noah-nuebling/mac-mouse-fix/releases/tag/2.2.0) oder früher verwenden.
 
@@ -165,7 +165,7 @@ Auf der [Website](http://noah-nuebling.github.io/mac-mouse-fix-website/) kannst 
 
 - **Zeigerbeschleunigung ausschalten**
 
-  Mac Mouse Fix erlaubt es dir nicht, die Zeigerbeschleunigung auszuschalten, aber wenn du auf **macOS 14 Sonoma** oder neuer bist, kannst du die Zeigerbeschleunigung unter `Systemeinstellungen > Maus > Weitere Optionen... > Zeigerbeschleunigung` ausschalten.
+  Mac Mouse Fix erlaubt es dir nicht, die Zeigerbeschleunigung auszuschalten, aber wenn du auf **macOS 14 Sonoma** oder später bist, kannst du die Zeigerbeschleunigung unter `Systemeinstellungen > Maus > Weitere Optionen... > Zeigerbeschleunigung` ausschalten.
 
   Ich plane, in Zukunft sehr gute Möglichkeiten zur Verbesserung der Zeigerbeschleunigung hinzuzufügen, aber ich weiß noch nicht, wann das kommt.
 
