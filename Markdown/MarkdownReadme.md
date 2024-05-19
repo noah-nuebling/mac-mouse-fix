@@ -13,15 +13,7 @@ We originally built this stuff in the [`github-actions-test` repo](https://githu
 
 In order to run `markdown_generator.py`, you need to install the dependencies first. To do this, you can create a new virtual environment (venv) and then install the requirements into the venv from the `python_requirements.txt` file. To do this use the following terminal commands: 
 
-**Commands for zsh shell** (zsh is the macOS default)
-
-```
-python3 -m venv env;\
-source env/bin/activate.fish;\
-python3 -m pip install -r Markdown/Code/python_requirements.txt;
-```
-
-**Commands for fish shell**
+**Commands for fish shell** (zsh shell is the macOS default)
 ``````
 python3 -m venv env;\
 source env/bin/activate.fish;\
