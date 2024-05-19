@@ -128,7 +128,7 @@ You can download older versions of Mac Mouse Fix under [Releases](https://github
 
 The latest version of Mac Mouse Fix is made for **macOS 11 Big Sur** or later.
   
-If you're on macOS **10.15 Catalina**, macOS **10.14 Mojave**, or macOS **10.13 High Sierra**, you can use Mac Mouse Fix [2.2.3](https://github.com/noah-nuebling/mac-mouse-fix/releases/tag/2.2.3) or below. Later versions of Mac Mouse Fix might still work on your machine, but they will have visual issues and some features might not work properly.
+If you're on macOS **10.15 Catalina**, macOS **10.14 Mojave**, or macOS **10.13 High Sierra**, you can use the [latest version of Mac Mouse Fix 2](https://noah-nuebling.github.io/redirection-service?message=&target=mmf2-latest). Later versions of Mac Mouse Fix might still work on your machine, but they will have visual issues and some features might not work properly.
     
 If you're on macOS **10.12 Sierra**, or **10.11 El Capitan**, you can use Mac Mouse Fix [2.2.0](https://github.com/noah-nuebling/mac-mouse-fix/releases/tag/2.2.0) or below.
 
