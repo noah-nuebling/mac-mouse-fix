@@ -78,16 +78,19 @@ int majorVersion(NSString *version) {
     
     /// DEBUG: Shuffle updates
     ///     -> So that we can see if the sorting really works reliably
-    void(^shuffleArray)(NSMutableArray *) = ^(NSMutableArray *array) {
-        if (array.count <= 1) return;
-        for (NSUInteger i = 0; i < array.count - 1; i++) {
-            NSInteger remainingCount = array.count - i;
-            NSInteger exchangeIndex = i + arc4random_uniform((u_int32_t )remainingCount);
-            [array exchangeObjectAtIndex:i withObjectAtIndex:exchangeIndex];
-        }
-    };
-    updates = updates.mutableCopy;
-    shuffleArray((id)updates);
+    
+    if ((NO)) {
+        void(^shuffleArray)(NSMutableArray *) = ^(NSMutableArray *array) {
+            if (array.count <= 1) return;
+            for (NSUInteger i = 0; i < array.count - 1; i++) {
+                NSInteger remainingCount = array.count - i;
+                NSInteger exchangeIndex = i + arc4random_uniform((u_int32_t )remainingCount);
+                [array exchangeObjectAtIndex:i withObjectAtIndex:exchangeIndex];
+            }
+        };
+        updates = updates.mutableCopy;
+        shuffleArray((id)updates);
+    }
     
     /// Declare previous version
     SUAppcastItem *lastUpdateBeforeCurrentVersion = nil;
