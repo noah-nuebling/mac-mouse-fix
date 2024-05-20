@@ -49,6 +49,8 @@
 		4FBC943B260F8AA60062F186 /* MASShortcut.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FBC9434260F8AA60062F186 /* MASShortcut.m */; };
 		4FCA07D625F3129B00BFE209 /* RemapTableController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FCA07D525F3129B00BFE209 /* RemapTableController.m */; };
 		4FD82DDB260575B100664D6F /* MFNotificationLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FD82DDA260575B100664D6F /* MFNotificationLabel.m */; };
+		4FE4439B2BFC04AC00C021D0 /* CoolSUVersionComparator.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FE443992BFC04AC00C021D0 /* CoolSUVersionComparator.m */; };
+		4FE4439C2BFC04AC00C021D0 /* CoolSUUpdater.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FE4439A2BFC04AC00C021D0 /* CoolSUUpdater.m */; };
 		4FEB91A5290D4648002BCFF2 /* NSImage+Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FEB91A4290D4648002BCFF2 /* NSImage+Additions.m */; };
 		4FEC9668278BBDC600548604 /* NSColor+Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FEC9667278BBDC600548604 /* NSColor+Additions.m */; };
 		4FF6654125F2C7B000689B77 /* default_launchd.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4FF6652E25F2C7B000689B77 /* default_launchd.plist */; };
@@ -293,6 +295,10 @@
 		4FD82DD9260575B100664D6F /* MFNotificationLabel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MFNotificationLabel.h; sourceTree = "<group>"; };
 		4FD82DDA260575B100664D6F /* MFNotificationLabel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MFNotificationLabel.m; sourceTree = "<group>"; };
 		4FDBC59A234F80C500A46517 /* Accomplice.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Accomplice.entitlements; sourceTree = "<group>"; };
+		4FE443972BFC04AC00C021D0 /* CoolSUVersionComparator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CoolSUVersionComparator.h; sourceTree = "<group>"; };
+		4FE443982BFC04AC00C021D0 /* CoolSUUpdater.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CoolSUUpdater.h; sourceTree = "<group>"; };
+		4FE443992BFC04AC00C021D0 /* CoolSUVersionComparator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CoolSUVersionComparator.m; sourceTree = "<group>"; };
+		4FE4439A2BFC04AC00C021D0 /* CoolSUUpdater.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CoolSUUpdater.m; sourceTree = "<group>"; };
 		4FEB6617279376C200E6A111 /* SymbolicHotKeys Reference.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = "SymbolicHotKeys Reference.txt"; sourceTree = "<group>"; };
 		4FEB6618279376C200E6A111 /* notes.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = notes.md; sourceTree = "<group>"; };
 		4FEB91A3290D4648002BCFF2 /* NSImage+Additions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSImage+Additions.h"; sourceTree = "<group>"; };
@@ -788,6 +794,10 @@
 		4FF665C625F2C92700689B77 /* Update */ = {
 			isa = PBXGroup;
 			children = (
+				4FE443982BFC04AC00C021D0 /* CoolSUUpdater.h */,
+				4FE4439A2BFC04AC00C021D0 /* CoolSUUpdater.m */,
+				4FE443972BFC04AC00C021D0 /* CoolSUVersionComparator.h */,
+				4FE443992BFC04AC00C021D0 /* CoolSUVersionComparator.m */,
 				4F39BC39263AF2B000FDF692 /* SparkleUpdaterController.h */,
 				4F39BC3A263AF2B000FDF692 /* SparkleUpdaterController.m */,
 			);
@@ -1463,6 +1473,7 @@
 				4FF6654C25F2C7B000689B77 /* MFQueue.m in Sources */,
 				4F3E067E26A2F97D000C9E06 /* URLMenuItem.m in Sources */,
 				4FF665ED25F2C92700689B77 /* MFSegmentedControl.m in Sources */,
+				4FE4439C2BFC04AC00C021D0 /* CoolSUUpdater.m in Sources */,
 				4FF6660225F2C92700689B77 /* ClickableImageView.m in Sources */,
 				4F79A81C2604317200076A7E /* MFNotificationController.m in Sources */,
 				4FEB91A5290D4648002BCFF2 /* NSImage+Additions.m in Sources */,
@@ -1480,6 +1491,7 @@
 				4F79A82B2605074000076A7E /* NSAttributedString+Additions.m in Sources */,
 				4F7AB0552606698A0008055E /* UIStrings.m in Sources */,
 				4FF6660125F2C92700689B77 /* Utility_App.m in Sources */,
+				4FE4439B2BFC04AC00C021D0 /* CoolSUVersionComparator.m in Sources */,
 				4F79A83626051E4A00076A7E /* MFNotification.m in Sources */,
 				4F79C2EA260976950067B381 /* RemapTableTranslator.m in Sources */,
 				4FB4F9FE260FDBC800806DDD /* RemapTableUtility.m in Sources */,

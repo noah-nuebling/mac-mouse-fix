@@ -42,7 +42,10 @@ static MoreSheet *_instance;
 # pragma mark - IBActions
 
 - (IBAction)checkForUpdateCheckBox:(NSButton *)sender {
-    setConfig(@"Other.skippedBundleVersion", @"0");
+    
+    setConfig(@"Other.skippedBundleVersion", @"0"); /// This is unused afaik
+    [SparkleUpdaterController resetSkippedVersions];
+    
     [self updateConfigFileToUIState];
     [self updateUI]; // So that prereleaseCheckBox gets disabled/enabled
     if (sender.state == 1) {

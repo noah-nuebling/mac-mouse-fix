@@ -1,23 +1,17 @@
 //
 // --------------------------------------------------------------------------
-// SparkleUpdateDelegate.h
+// CoolSUUpdater.h
 // Created for Mac Mouse Fix (https://github.com/noah-nuebling/mac-mouse-fix)
-// Created by Noah Nuebling in 2021
+// Created by Noah Nuebling in 2024
 // Licensed under MIT
 // --------------------------------------------------------------------------
 //
 
-#import <Foundation/Foundation.h>
 #import <Sparkle/Sparkle.h>
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface SparkleUpdaterController : NSObject <SUUpdaterDelegate>
-
-
-
-+ (void)resetSkippedVersions;
-+ (void)enablePrereleaseChannel:(BOOL)pre;
+@interface CoolSUUpdater : SUUpdater
 
 @end
 
