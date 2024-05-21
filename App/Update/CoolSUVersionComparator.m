@@ -24,8 +24,9 @@
 
 - (NSComparisonResult)compareVersion:(nonnull NSString *)versionA toVersion:(nonnull NSString *)versionB {
     
-    /// Custom app version comparator for our SparkleUpdaterController.
-    /// 
+    /// Custom app-version comparator 
+    ///     for the `bestValidUpdateInAppcast:forUpdater:` method in our `SparkleUpdaterController`.
+    ///
     /// Why are we implementing a custom comparator?
     /// - At the time of writing, (using Sparkle 1.26.0), the `SUStandardVersionComparater` considers `2.0.0abcd` greater than `2.0.0`. And wrongly considers `2.0.0 Beta 1` greater than `2.0.0`.
     /// - It correctly consideres`2.0.0 Beta 1` greater than. `2.0.0 Alpha 1` - it seems that the strings following the `2.0.0` are compared alphabetically?

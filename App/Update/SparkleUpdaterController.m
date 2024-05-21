@@ -284,9 +284,19 @@ int majorVersion(NSString *version) {
         [NSUserDefaults.standardUserDefaults setInteger:[item.versionString integerValue] forKey:CoolSUSkippedMinorVersionKey];
     }
     
-    float delayInSeconds = 1.0; /// Not sure what this should be. Did zero testing. 1.0 is probably much higher than necessary, but seems to work alright.
+    /// Do stuff after delay
+    /// Note:
+    /// - Not sure what the delay should be. Did zero testing. 1.0 is probably much higher than necessary, but seems to work alright.
+    /// - The optimal delay for the diffent stuff we do here might also be different. But it works ok.
+    
+    float delayInSeconds = 1.0;
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        [NSUserDefaults.standardUserDefaults removeObjectForKey:SUSkippedMinorVersionKey]; /// Remove the default Sparkle key so we can handle things ourselves.
+        
+        /// Remove the default Sparkle key so we can handle things ourselves.
+        [NSUserDefaults.standardUserDefaults removeObjectForKey:SUSkippedMinorVersionKey];
+        
+        /// Check for updates again. Due to our custom updating logic, this might present a minor update right after the user skipped a major update.
+        [updater checkForUpdatesInBackground];
     });
 }
 
