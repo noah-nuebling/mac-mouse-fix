@@ -42,6 +42,7 @@ These people spent a lot more than the standard price and treated me to an **Inc
 
 **May 2024**
 
+- 🇦🇺&nbsp;Tobi - "Hey mate, awesome software, thanks for trusting the open-source community!"
 - 🇺🇸&nbsp;Nanda&nbsp;Vardhan - "Everything is Perspective..!!"
 - 🇬🇧&nbsp;Contraryrhombus - "Why pay Apple for an all glass mouse, when you can pay Noah to make any mouse EPIC!"
 - 🇻🇳&nbsp;Ginny
