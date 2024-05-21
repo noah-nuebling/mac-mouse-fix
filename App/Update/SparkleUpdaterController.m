@@ -141,7 +141,7 @@ int majorVersion(NSString *version) {
         BOOL candidateIsSameVersionAsCurrent = !candidateIsLaterThanCurrent && !candidateIsEarlierThanCurrent;
         
         /// Debug
-        NSLog(@"DEBUG Comparing current best update: %@ (mv %d), with candidate update: %@ (mv %d) --- Current version %@ (mv %d)", bestVersion, bestMajorVersion, candidateVersion, candidateMajorVersion, currentVersion, currentMajorVersion);
+        NSLog(@"DEBUG Comparing current best update: %@ (mv %d, bn %d), with candidate update: %@ (mv %d, bn %d) --- Current version %@ (mv %d, bn %d)", bestVersion, bestMajorVersion, bestBuildNumber, candidateVersion, candidateMajorVersion, candidateBuildNumber, currentVersion, currentMajorVersion, currentBuildNumber);
         
         /// Determine free vs paid updates
         ///     Note: Disabling this. Wrote explanation at the top somewhere.
