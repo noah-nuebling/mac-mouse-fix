@@ -20,4 +20,4 @@
 "180.title" = "Odeslat anonymní systémový profil";
 
 /* Class = "NSTextFieldCell"; title = "Anonymous system profile information is used to help us plan future development work.\nPlease contact us if you have any questions about this.\n\nThis is the information that would be sent:"; ObjectID = "183"; */
-"183.title" = "Informace z anonymního systémového profilu pomáhají vývojářům lépe plánovat budoucí vývoj aplikace.\nBudete-li mít nějaký dotaz, obraťte se na nás.\n\nTyto informace by měly být odeslány:";
+"183.title" = "Informace z anonymního systémového profilu pomáhají vývojářům lépe plánovat budoucí vývoj aplikace.\nBudete-li mít nějaký dotaz, obraťte se na nás.\n\nToto jsou informace, které budou odeslány:";
