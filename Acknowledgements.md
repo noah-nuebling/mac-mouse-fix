@@ -42,6 +42,7 @@ These people spent a lot more than the standard price and treated me to an **Inc
 
 **May 2024**
 
+- 🇩🇪&nbsp;Andreas&nbsp;4Techs&nbsp;R&D - "Starkes Stück Software! Vielen Dank für Deine Arbeit! :-)"
 - 🇬🇧&nbsp;Martin&nbsp;Brown
 - 🇦🇺&nbsp;Tobi - "Hey mate, awesome software, thanks for trusting the open-source community!"
 - 🇺🇸&nbsp;Nanda&nbsp;Vardhan - "Everything is Perspective..!!"
