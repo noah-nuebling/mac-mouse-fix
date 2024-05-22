@@ -9,10 +9,14 @@
 
 #import <Foundation/Foundation.h>
 #import "Sparkle/Sparkle.h"
+#import "Sparkle/SUAppcast.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface CoolSUVersionComparator : NSObject <SUVersionComparison>
+@interface CoolSUComparator : NSObject <SUVersionComparison>
+
+- (NSComparisonResult)compareVersion:(nonnull NSString *)versionA withBuildNumber:(NSObject *)buildNumberA
+                           toVersion:(nonnull NSString *)versionB withBuildNumber:(NSObject *)buildNumberB;
 
 @end
 

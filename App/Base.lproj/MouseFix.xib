@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="21507" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="32700.99.1234" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="21507"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="22690"/>
         <capability name="Image references" minToolsVersion="12.0"/>
         <capability name="System colors introduced in macOS 10.14" minToolsVersion="10.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -19,7 +19,7 @@
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
             <windowCollectionBehavior key="collectionBehavior" fullScreenNone="YES"/>
             <rect key="contentRect" x="0.0" y="0.0" width="580" height="510"/>
-            <rect key="screenRect" x="0.0" y="0.0" width="1280" height="775"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="1440" height="875"/>
             <value key="minSize" type="size" width="580" height="300"/>
             <value key="maxSize" type="size" width="580" height="1000"/>
             <view key="contentView" identifier="mainView" translatesAutoresizingMaskIntoConstraints="NO" id="se5-gp-TjO">
@@ -30,7 +30,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="580" height="510"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button verticalHuggingPriority="750" fixedFrame="YES" springLoaded="YES" translatesAutoresizingMaskIntoConstraints="NO" id="vqy-WZ-nG6">
+                            <button springLoaded="YES" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="vqy-WZ-nG6">
                                 <rect key="frame" x="18" y="481" width="161" height="18"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <string key="toolTip">Enable Mac Mouse Fix for a better mouse experience!
@@ -97,7 +97,7 @@ To disable Mac Mouse Fix, uncheck this checkbox or move the app to the Trash.</s
                                                         <action selector="UIChanged:" target="NxE-tZ-vxj" id="eF8-Sp-kdg"/>
                                                     </connections>
                                                 </slider>
-                                                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="C2V-av-8kq">
+                                                <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="C2V-av-8kq">
                                                     <rect key="frame" x="217" y="58" width="106" height="17"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                                     <textFieldCell key="cell" lineBreakMode="clipping" alignment="center" title="Scroll speed" id="9F6-l7-3Jh">
@@ -106,7 +106,7 @@ To disable Mac Mouse Fix, uncheck this checkbox or move the app to the Trash.</s
                                                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                     </textFieldCell>
                                                 </textField>
-                                                <textField toolTip="Scroll more pixels per mouse wheel tick." horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="V4c-hh-3HL">
+                                                <textField toolTip="Scroll more pixels per mouse wheel tick." focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="V4c-hh-3HL">
                                                     <rect key="frame" x="308" y="11" width="26" height="14"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                                     <textFieldCell key="cell" lineBreakMode="clipping" title="Fast" id="xi0-4q-Wib">
@@ -115,7 +115,7 @@ To disable Mac Mouse Fix, uncheck this checkbox or move the app to the Trash.</s
                                                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                     </textFieldCell>
                                                 </textField>
-                                                <textField toolTip="Scroll fewer pixels per mouse wheel tick." horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="dzx-1i-bZ6">
+                                                <textField toolTip="Scroll fewer pixels per mouse wheel tick." focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="dzx-1i-bZ6">
                                                     <rect key="frame" x="203" y="11" width="27" height="14"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                                     <textFieldCell key="cell" lineBreakMode="clipping" title="Slow" id="GKV-Mh-wiX">
@@ -184,7 +184,7 @@ Tips:
                                                                         <rect key="frame" x="8" y="0.0" width="286" height="39"/>
                                                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                                         <subviews>
-                                                                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Pzd-Fo-nrS">
+                                                                            <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Pzd-Fo-nrS">
                                                                                 <rect key="frame" x="4" y="12" width="280" height="17"/>
                                                                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                                                 <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="left" title="⌘⇧⌥⌃ + Triple Click and Drag Button 3" id="hBN-M2-pMi">
@@ -202,7 +202,7 @@ Tips:
                                                                         <rect key="frame" x="8" y="39" width="286" height="22"/>
                                                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                                         <subviews>
-                                                                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ZkS-6b-dCZ">
+                                                                            <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ZkS-6b-dCZ">
                                                                                 <rect key="frame" x="-8" y="3" width="293" height="16"/>
                                                                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                                                                 <textFieldCell key="cell" lineBreakMode="truncatingTail" allowsUndo="NO" sendsActionOnEndEditing="YES" alignment="left" title="Button X" id="Jbj-n8-l11">
@@ -363,7 +363,7 @@ Tips:
                 <outlet property="view" destination="zJh-jy-oKM" id="GWC-PD-NjZ"/>
             </connections>
         </customObject>
-        <customObject id="6iu-bA-WM9" customClass="SUUpdater">
+        <customObject id="6iu-bA-WM9" customClass="CoolSUUpdater">
             <connections>
                 <outlet property="delegate" destination="iab-hA-K07" id="gdw-fE-nvv"/>
             </connections>
@@ -526,6 +526,6 @@ Tips:
     <resources>
         <image name="NSAddTemplate" width="18" height="17"/>
         <image name="NSRemoveTemplate" width="12" height="4"/>
-        <image name="minus.square" width="12" height="12"/>
+        <image name="minus.square" width="11.685999870300293" height="11.698699951171875"/>
     </resources>
 </document>

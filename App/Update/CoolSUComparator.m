@@ -7,9 +7,9 @@
 // --------------------------------------------------------------------------
 //
 
-#import "CoolSUVersionComparator.h"
+#import "CoolSUComparator.h"
 
-@implementation CoolSUVersionComparator {
+@implementation CoolSUComparator {
     SUStandardVersionComparator *defaultComparator;
 }
 
@@ -20,6 +20,29 @@
         defaultComparator = [SUStandardVersionComparator defaultComparator];
     }
     return self;
+}
+
+- (NSComparisonResult)compareVersion:(nonnull NSString *)versionA withBuildNumber:(NSObject *)buildNumberAObj 
+                           toVersion:(nonnull NSString *)versionB withBuildNumber:(NSObject *)buildNumberBObj {
+    
+    /// This method compares versions, and uses build numbers to disambiguate, if the two versions are considered the same (e.g. `3.0.0` and `3.0.0 Beta 2` are considered the same.)
+    
+    /// Compare version numbers
+    
+    NSComparisonResult versionComparison = [self compareVersion:versionA toVersion:versionB];
+    if (versionComparison == NSOrderedAscending) return NSOrderedAscending;
+    else if (versionComparison == NSOrderedDescending) return NSOrderedDescending;
+        
+    /// If version numbers are the same (e.g. in the case `3.0.0` vs `3.0.0 Beta 2`), then compare build numbers instead.
+    
+    assert([buildNumberAObj respondsToSelector:@selector(integerValue)]);
+    assert([buildNumberBObj respondsToSelector:@selector(integerValue)]);
+    
+    NSInteger buildNumberA = [(id)buildNumberAObj integerValue];
+    NSInteger buildNumberB = [(id)buildNumberBObj integerValue];
+    
+    return [@(buildNumberA) compare:@(buildNumberB)];
+    
 }
 
 - (NSComparisonResult)compareVersion:(nonnull NSString *)versionA toVersion:(nonnull NSString *)versionB {
