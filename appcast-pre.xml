@@ -473,14 +473,15 @@ opening the app for the first time.</p>
 since it felt hostile towards free and open source software like Mac
 Mouse Fix, and it also felt like a dangerous step towards Apple
 controlling and locking down the Mac like they do iPhones or iPads. But
-lack of notarization led to different problems, including many <a
-href="https://github.com/noah-nuebling/mac-mouse-fix/discussions/114">confused
-users</a> and <a
+lack of notarization led to different problems, including <a
+href="https://github.com/noah-nuebling/mac-mouse-fix/discussions/114">difficulties
+opening the app</a> and even <a
 href="https://github.com/noah-nuebling/mac-mouse-fix/issues/95">several
 situations</a> where nobody could use the app anymore until I released a
 new version.</p>
-<p>For Mac Mouse Fix 3, I thought it was finally appropriate to notarize
-the app, since Mac Mouse Fix 3 is monetized. (<a
+<p>For Mac Mouse Fix 3, I thought it was finally appropriate to pay the
+$100 per year to notarize the app, since Mac Mouse Fix 3 is monetized.
+(<a
 href="https://github.com/noah-nuebling/mac-mouse-fix/releases/tag/3.0.0">Learn
 More</a>)<br />
 Now, Mac Mouse Fix 2 gets notarization as well, which should lead to an
@@ -995,7 +996,7 @@ href="https://github.com/noah-nuebling/mac-mouse-fix/releases/tag/2.2.3"><strong
   </script>
 </head>
 <body>
-<p><strong>Note to Mac Mouse Fix 2 users</strong></p>
+<p><strong>Note to Mac Mouse Fix 2 Users</strong></p>
 <p>With the introduction of Mac Mouse Fix 3, the pricing model of the
 app has changed:</p>
 <ul>
@@ -1009,44 +1010,48 @@ Free for 30 days, costs a few dollars to own.<br />
 <strong>Update now</strong> to get Mac Mouse Fix 3!</li>
 </ul>
 <p>You can learn more about the pricing and features of Mac Mouse Fix 3
-at the <a href="https://macmousefix.com/">new website</a>.</p>
+on the <a href="https://macmousefix.com/">new website</a>.</p>
 <p>Thanks for using Mac Mouse Fix! :)</p>
 <hr />
-<p><strong>Note to Mac Mouse Fix 3 buyers</strong></p>
-<p>Recently, there have been several people leaving reviews on <a
-href="https://noahnuebling.gumroad.com/l/mmfinappusd">Gumroad.com</a>
-that felt they were tricked or pushed into buying Mac Mouse Fix. That
-was not my intention!<br />
-I would like to give out a <strong>refund</strong> to anyone who felt
-this way.</p>
-<!-- 
-If you bought Mac Mouse Fix 3 because you didn't know that you could keep using [Mac Mouse Fix 2](https://noah-nuebling.github.io/redirection-service?target=mmf2-latest) for free, then I would like to give you a refund.
--->
-<p>To get the refund, please <a
-href="https://noah-nuebling.github.io/redirection-service?message=&amp;target=mailto-noah&amp;subject=Mac%20Mouse%20Fix%20Refund">send
-me an email</a> with “Mac Mouse Fix Refund” in the subject. Inside the
-message, include the email address where you received your license key
-and the reason why you’re requesting the refund.</p>
-<p>I’m sorry about the confusion, and I hope that everyone is ok with
-this as a solution.</p>
+<p><strong>Note to Mac Mouse Fix 3 Buyers</strong></p>
+<p>In May 2024, I saw several people being surprised and upset because
+Mac Mouse Fix 3 suddenly stopped working and prompted them to buy the
+app. It seems that they updated from Mac Mouse Fix 2 to Mac Mouse Fix 3
+without being aware of the pricing changes.</p>
+<p>I’m really sorry about this! I admit it was very easy to miss the
+information about the pricing changes for people who updated from Mac
+Mouse Fix 2 directly to 3.0.1 or 3.0.2. As a result, I’ve improved the
+update notes for 3.0.2 to make it harder to miss that Mac Mouse Fix 3
+isn’t free anymore.</p>
+<p>I also want to offer a <strong>refund</strong> to anyone who felt
+negatively affected by this. Please <a
+href="https://noah-nuebling.github.io/redirection-service?message=&amp;target=mailto-noah&amp;subject=Mac%20Mouse%20Fix%20Refund&amp;body=Hi%20there%21%20To%20request%20a%20refund%2C%20please%20answer%20the%20following%20questions%2C%20and%20then%20send%20off%20this%20email%3A%0A%0A%2A%2AWhy%20are%20you%20requesting%20a%20refund%3F%2A%2A%0A%0A%28Fill%20in%20here%29%0A%0A%2A%2AWhat%20is%20the%20email%20address%20where%20you%20received%20your%20license%20key%3F%2A%2A%0A%0A%28Fill%20in%20here%29%0A%0A%2A%2AAnything%20else%20you%27d%20like%20to%20say%3F%2A%2A%0A%0A%28Fill%20in%20here%29%0A%0A---%0A%0AI%27ll%20do%20my%20best%20to%20get%20back%20to%20you%20soon%2C%20and%20to%20improve%20the%20experience%20of%20using%20Mac%20Mouse%20Fix.%20%0AI%20hope%20a%20refund%20is%20an%20ok%20solution%20for%20you%2C%20and%20thank%20you%20for%20your%20feedback.">click
+here</a> to apply for it.</p>
+<p>Again, I’m sorry about the trouble, and I hope everyone is ok with
+this as a solution!</p>
 <p>The latest version of Mac Mouse Fix 2 stays entirely free, and you
 can download it <a
 href="https://noah-nuebling.github.io/redirection-service?target=mmf2-latest">here</a>.</p>
+<!--
+
+To get the refund, please [send me an email](<https://noah-nuebling.github.io/redirection-service?message=&target=mailto-noah&subject=Mac Mouse Fix Refund>) with "Mac Mouse Fix Refund" in the subject. Inside the message, include the email address where you received your license key and the reason why you're requesting the refund.
+
+-->
+<!-- 
+If you bought Mac Mouse Fix 3 because you didn't know that you could keep using [Mac Mouse Fix 2](https://noah-nuebling.github.io/redirection-service?target=mmf2-latest) for free, then I would like to give you a refund.
+-->
 <!--
 You can download the latest version of Mac Mouse Fix 2 [here](https://noah-nuebling.github.io/redirection-service?target=mmf2-latest). It's 100% free forever.
 
 To anyone else who bought the app: Thank you very much for your support! :)
 -->
 <!-- Thank you for using Mac Mouse Fix! -->
-<p>Background:<br />
-I think there was confusion because the original update notes for
-version 3.0.1 and 3.0.2 didn’t explicitly mention that Mac Mouse Fix 3
-isn’t 100% free, like Mac Mouse Fix 2 is.<br />
-Instead, the update notes for 3.0.1 and 3.0.2 linked to the update notes
-for 3.0.0 which made the pricing changes very clear, but I totally
-understand that this would lead to
-confusion<!-- for people who upgraded directly from Mac Mouse Fix 2 -->,
-and should be made much clearer. So I’m sorry for that.</p>
+<!--
+Background: \
+I think there was confusion because the original update notes for version 3.0.1 and 3.0.2 didn't explicitly mention that Mac Mouse Fix 3 isn't 100% free, like Mac Mouse Fix 2 is. \
+Instead, the update notes for 3.0.1 and 3.0.2 linked to the update notes for 3.0.0 which made the pricing changes very clear, but I totally understand that this would lead to confusion for people who upgraded directly from Mac Mouse Fix 2, and should be made much clearer. So I'm sorry for that.
+
+-->
 <hr />
 <h3 id="update-notes">Update Notes</h3>
 <p>Mac Mouse Fix <strong>3.0.2</strong> brings several improvements,
