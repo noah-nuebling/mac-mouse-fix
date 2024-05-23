@@ -42,6 +42,7 @@ These people spent a lot more than the standard price and treated me to an **Inc
 
 **May 2024**
 
+- 🇺🇸&nbsp;Whitt&nbsp;Mitchell
 - 🇨🇦&nbsp;Anuraagmishra
 - 🇰🇷&nbsp;Minki&nbsp;Ju - "SUPER COOL!"
 - 🇫🇷&nbsp;Laurent&nbsp;Tréguier - "A must-have for anyone using a mouse on a Mac"
