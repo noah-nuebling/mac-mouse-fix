@@ -14,6 +14,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface SparkleUpdaterController : NSObject <SUUpdaterDelegate>
 
+
+
++ (void)resetSkippedVersions;
 + (void)enablePrereleaseChannel:(BOOL)pre;
 
 @end

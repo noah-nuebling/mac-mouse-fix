@@ -259,13 +259,13 @@ class GeneralTabController: NSViewController {
         ///     See `applicationDidFinishLaunching` for context
         
         checkForUpdates.producer.skip(first: 1).startWithValues { doCheckUpdates in
-            UserDefaults.standard.removeObject(forKey: "SUSkippedVersion")
+            SparkleUpdaterController.resetSkippedVersions()
             if doCheckUpdates {
                 SUUpdater.shared().checkForUpdatesInBackground()
             }
         }
         getBetaVersions.producer.skip(first: 1).startWithValues { doCheckBetas in
-            UserDefaults.standard.removeObject(forKey: "SUSkippedVersion")
+            SparkleUpdaterController.resetSkippedVersions()
             SparkleUpdaterController.enablePrereleaseChannel(doCheckBetas)
             if doCheckBetas {
                 SUUpdater.shared().checkForUpdatesInBackground()

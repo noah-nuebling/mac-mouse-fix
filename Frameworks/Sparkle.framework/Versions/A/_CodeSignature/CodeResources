@@ -6,15 +6,15 @@
 	<dict>
 		<key>Resources/Autoupdate.app/Contents/Info.plist</key>
 		<data>
-		rCqrrADBeugSVVxgyXmLis1yuZ0=
+		APH2qFljfERSsboMjpVlWT+nji0=
 		</data>
 		<key>Resources/Autoupdate.app/Contents/MacOS/Autoupdate</key>
 		<data>
-		OiKZU2y31++N67wJ6jD7XQFfeeI=
+		SAop2eA8dwRnGqOWulHH6Q45RKI=
 		</data>
 		<key>Resources/Autoupdate.app/Contents/MacOS/fileop</key>
 		<data>
-		pnJrBIEspnOGamg9p3spJ6y3utQ=
+		R/zR8NlGb2u/BGEuHBCyZVMGSGQ=
 		</data>
 		<key>Resources/Autoupdate.app/Contents/PkgInfo</key>
 		<data>
@@ -33,9 +33,13 @@
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>Resources/Autoupdate.app/Contents/Resources/SUStatus.nib</key>
+		<key>Resources/Autoupdate.app/Contents/Resources/SUStatus.nib/keyedobjects-101300.nib</key>
 		<data>
-		Bx0YakvA4WeK5k1HcKtBIne5e6Y=
+		SiFXlXTmWast/yQTJlQK/gow9KA=
+		</data>
+		<key>Resources/Autoupdate.app/Contents/Resources/SUStatus.nib/keyedobjects.nib</key>
+		<data>
+		AWzvc/Oom69t77SqVhJIUEVnNYw=
 		</data>
 		<key>Resources/Autoupdate.app/Contents/Resources/ar.lproj/Sparkle.strings</key>
 		<dict>
@@ -77,7 +81,7 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			fsC7FJvExHE/2681tuUrjkSF2+A=
+			fXH7MjrA6hDT/k/8B6Vwgntt2lw=
 			</data>
 			<key>optional</key>
 			<true/>
@@ -239,7 +243,7 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			VpSLGNvZ6sbRYsF23L8m6TG+P6E=
+			x6JdY7WL2dHnGXX6PHJl5da7WKE=
 			</data>
 			<key>optional</key>
 			<true/>
@@ -318,23 +322,35 @@
 		</dict>
 		<key>Resources/Autoupdate.app/Contents/_CodeSignature/CodeResources</key>
 		<data>
-		b7AFJMrAIkab6hGRKLaH/HMsomw=
+		HP5CEjx7ata/M+Do4iOU9fZIdAs=
 		</data>
-		<key>Resources/Base.lproj/SUAutomaticUpdateAlert.nib</key>
+		<key>Resources/Base.lproj/SUAutomaticUpdateAlert.nib/keyedobjects-101300.nib</key>
 		<data>
-		lTl4GTJse50YTceJyYDx2KPQVuU=
+		enExLNBqtGVvGiViA9tZNb5sh0U=
 		</data>
-		<key>Resources/Base.lproj/SUUpdateAlert.nib</key>
+		<key>Resources/Base.lproj/SUAutomaticUpdateAlert.nib/keyedobjects.nib</key>
 		<data>
-		rN+yPJBhZZo3K/wyAClDa2TaLaA=
+		l5KRdkey8A+be1W07Fhr06if6cs=
+		</data>
+		<key>Resources/Base.lproj/SUUpdateAlert.nib/keyedobjects-101300.nib</key>
+		<data>
+		dhd1KRbgC3wWMgKQAH2bUv4NzR0=
+		</data>
+		<key>Resources/Base.lproj/SUUpdateAlert.nib/keyedobjects.nib</key>
+		<data>
+		/BoStF/H4BviBJjwr/Esla9j4+w=
+		</data>
+		<key>Resources/Base.lproj/SUUpdatePermissionPrompt.nib/keyedobjects-101300.nib</key>
+		<data>
+		C6VP+IdQFCmu0u9kNLCPCHhPeFs=
 		</data>
 		<key>Resources/Base.lproj/SUUpdatePermissionPrompt.nib/keyedobjects-110000.nib</key>
 		<data>
-		vfj8rLxByFx6nUYTUNPmImIpCEo=
+		zJczBFAceq79V6N4zsHQ0jHG+4w=
 		</data>
 		<key>Resources/Base.lproj/SUUpdatePermissionPrompt.nib/keyedobjects.nib</key>
 		<data>
-		SbnvePf6qoeivS6Hfm0HesaVd5c=
+		6pTb8Z8gXml+rdQ5fUvN/d9xQJQ=
 		</data>
 		<key>Resources/Base.lproj/Sparkle.strings</key>
 		<data>
@@ -342,7 +358,7 @@
 		</data>
 		<key>Resources/Info.plist</key>
 		<data>
-		bF9uDOBe792xQLaTd9j6E1rjMKg=
+		RS0ZFFUIG4zo1VDi17oHVWsv7gU=
 		</data>
 		<key>Resources/ReleaseNotesColorStyle.css</key>
 		<data>
@@ -352,9 +368,13 @@
 		<data>
 		iD2Ex40Usc4ZE6IAhRePqgwK/xw=
 		</data>
-		<key>Resources/SUStatus.nib</key>
+		<key>Resources/SUStatus.nib/keyedobjects-101300.nib</key>
 		<data>
-		Bx0YakvA4WeK5k1HcKtBIne5e6Y=
+		ZyUvTYdNLAWy/PjxfPiiDg3JY+c=
+		</data>
+		<key>Resources/SUStatus.nib/keyedobjects.nib</key>
+		<data>
+		AWzvc/Oom69t77SqVhJIUEVnNYw=
 		</data>
 		<key>Resources/ar.lproj/SUAutomaticUpdateAlert.strings</key>
 		<dict>
@@ -441,7 +461,7 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			0bfdX1GCu06merNrM2hv/B0EuBo=
+			iUcJO6Oa4RdO3RM4xkx7VH0fEYs=
 			</data>
 			<key>optional</key>
 			<true/>
@@ -522,7 +542,7 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			fsC7FJvExHE/2681tuUrjkSF2+A=
+			fXH7MjrA6hDT/k/8B6Vwgntt2lw=
 			</data>
 			<key>optional</key>
 			<true/>
@@ -1179,7 +1199,7 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			VpSLGNvZ6sbRYsF23L8m6TG+P6E=
+			x6JdY7WL2dHnGXX6PHJl5da7WKE=
 			</data>
 			<key>optional</key>
 			<true/>
@@ -1547,11 +1567,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			IiawwEy33pemW1MUSgCh1AL1VeY=
+			hqAwTuGRw81S+ItxJNRJIFmv0oI=
 			</data>
 			<key>hash2</key>
 			<data>
-			DbqoEuJ/9tmEEs4/fkrVvBMZMqzDICvhoAEAbJXohVw=
+			3MKAA7S3EurLj+bjIjEyqiF5j09qBjd5i+koenojh20=
 			</data>
 		</dict>
 		<key>Headers/SUCodeSigningVerifier.h</key>
@@ -1668,44 +1688,44 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			7mTpmnTkJ97DZQQzK/hdl2aZmXU=
+			ajT4ff8G6Thho0/bbP0uDAHGHdY=
 			</data>
 			<key>hash2</key>
 			<data>
-			SQYAanTtlyX15CJapj5tDbhBEMtgQ7ZNdmpSij0+tD4=
+			wlmoqVhU3pHlFe3p0F0ITa5VCxeEUBfmjb46ivnvA/A=
 			</data>
 		</dict>
 		<key>Resources/Autoupdate.app/Contents/Info.plist</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			rCqrrADBeugSVVxgyXmLis1yuZ0=
+			APH2qFljfERSsboMjpVlWT+nji0=
 			</data>
 			<key>hash2</key>
 			<data>
-			GxEuujiONdPVHnClc4SYn28VJ1cEoPgVtxMNO1Ut+6c=
+			Sz+/xc8t+koUfqNpZLI4c4OGxuvTqEevGWJhYWueA64=
 			</data>
 		</dict>
 		<key>Resources/Autoupdate.app/Contents/MacOS/Autoupdate</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			OiKZU2y31++N67wJ6jD7XQFfeeI=
+			SAop2eA8dwRnGqOWulHH6Q45RKI=
 			</data>
 			<key>hash2</key>
 			<data>
-			WvpIY3JDKZ1QRLU93i/EbTl+7bW8RG9zZ7NhDDhN0RI=
+			r8Vo8NjSqT655ZzaVGyvqwoUzGCk14tMYRgA0zrV3O0=
 			</data>
 		</dict>
 		<key>Resources/Autoupdate.app/Contents/MacOS/fileop</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			pnJrBIEspnOGamg9p3spJ6y3utQ=
+			R/zR8NlGb2u/BGEuHBCyZVMGSGQ=
 			</data>
 			<key>hash2</key>
 			<data>
-			I0qc96wJSmqEM0tJNCQYkvCK5B1Y14uZfmdC6HC+IMg=
+			TqRxhjW2mndGB4Z0q6KvMSSdIOMVUBC9BvHp1Uh8lLI=
 			</data>
 		</dict>
 		<key>Resources/Autoupdate.app/Contents/PkgInfo</key>
@@ -1743,15 +1763,26 @@
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>Resources/Autoupdate.app/Contents/Resources/SUStatus.nib</key>
+		<key>Resources/Autoupdate.app/Contents/Resources/SUStatus.nib/keyedobjects-101300.nib</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			Bx0YakvA4WeK5k1HcKtBIne5e6Y=
+			SiFXlXTmWast/yQTJlQK/gow9KA=
 			</data>
 			<key>hash2</key>
 			<data>
-			NEfylSxvNQ30sf/Pib58/qhniAlBE4B1BOGL0Lmh53g=
+			QBTzPQLOP3aTBwOvzRY3uQufCdu8zbfov3VSHe17clo=
+			</data>
+		</dict>
+		<key>Resources/Autoupdate.app/Contents/Resources/SUStatus.nib/keyedobjects.nib</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			AWzvc/Oom69t77SqVhJIUEVnNYw=
+			</data>
+			<key>hash2</key>
+			<data>
+			zGUKYo5Dal8e+pKH1KVfXrogifmh9AWqDdAL/neSQgE=
 			</data>
 		</dict>
 		<key>Resources/Autoupdate.app/Contents/Resources/ar.lproj/Sparkle.strings</key>
@@ -1810,11 +1841,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			fsC7FJvExHE/2681tuUrjkSF2+A=
+			fXH7MjrA6hDT/k/8B6Vwgntt2lw=
 			</data>
 			<key>hash2</key>
 			<data>
-			XUpgsFH8KmcbgggpdYbJScCg0tBic9tNLdFh+8cbPyw=
+			bA5bxESyZuC/dG2VKfN+eQ7CVb2qAWrwfu94IpJ4Xi0=
 			</data>
 			<key>optional</key>
 			<true/>
@@ -2044,11 +2075,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			VpSLGNvZ6sbRYsF23L8m6TG+P6E=
+			x6JdY7WL2dHnGXX6PHJl5da7WKE=
 			</data>
 			<key>hash2</key>
 			<data>
-			wJZ5NG+mvj4anRFPUFyvSD0kGrg+ZAqklsPfHuCxLQY=
+			+vCWSRbECqQcsR6Nd8erQda/7x+ku/kQSUvZtTvemyQ=
 			</data>
 			<key>optional</key>
 			<true/>
@@ -2161,55 +2192,88 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			b7AFJMrAIkab6hGRKLaH/HMsomw=
+			HP5CEjx7ata/M+Do4iOU9fZIdAs=
 			</data>
 			<key>hash2</key>
 			<data>
-			ii6MnYh9U37/ai9mMXtVIlrFxzBBWKp/BOtNrmcf77w=
+			zd6sCH2br+oLsZP2E37vON1TlnttYf2U7ou6XqT5Rnc=
 			</data>
 		</dict>
-		<key>Resources/Base.lproj/SUAutomaticUpdateAlert.nib</key>
+		<key>Resources/Base.lproj/SUAutomaticUpdateAlert.nib/keyedobjects-101300.nib</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			lTl4GTJse50YTceJyYDx2KPQVuU=
+			enExLNBqtGVvGiViA9tZNb5sh0U=
 			</data>
 			<key>hash2</key>
 			<data>
-			V6W6bpISi3oF96P217X2KnN4LTVlDX7YhSJ7P9bdM+g=
+			wzndEMuV5g8jHWLd23T5pvy+02xAggsAsTWAxsevOP4=
 			</data>
 		</dict>
-		<key>Resources/Base.lproj/SUUpdateAlert.nib</key>
+		<key>Resources/Base.lproj/SUAutomaticUpdateAlert.nib/keyedobjects.nib</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			rN+yPJBhZZo3K/wyAClDa2TaLaA=
+			l5KRdkey8A+be1W07Fhr06if6cs=
 			</data>
 			<key>hash2</key>
 			<data>
-			e5JEPFcxVVLQNjVF3k+vqpIVZd/uZ5hBUOslI8jMnUc=
+			CNKETBNQKGCdiaGXTNHfZryvPen1njeBiogv+qwcxYY=
+			</data>
+		</dict>
+		<key>Resources/Base.lproj/SUUpdateAlert.nib/keyedobjects-101300.nib</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			dhd1KRbgC3wWMgKQAH2bUv4NzR0=
+			</data>
+			<key>hash2</key>
+			<data>
+			OCP5+Ypoj3FHeZJvj1YLVvMPVlrZZvRorOqfhozHEcc=
+			</data>
+		</dict>
+		<key>Resources/Base.lproj/SUUpdateAlert.nib/keyedobjects.nib</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			/BoStF/H4BviBJjwr/Esla9j4+w=
+			</data>
+			<key>hash2</key>
+			<data>
+			CMBII2ArjnxPAvTHGf/gSIF33NXHUj4HIJSzfkUptMQ=
+			</data>
+		</dict>
+		<key>Resources/Base.lproj/SUUpdatePermissionPrompt.nib/keyedobjects-101300.nib</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			C6VP+IdQFCmu0u9kNLCPCHhPeFs=
+			</data>
+			<key>hash2</key>
+			<data>
+			TzvyWrJ90EvDvBmtLQphRUg8jR0FxxZmY21nk+oRjvI=
 			</data>
 		</dict>
 		<key>Resources/Base.lproj/SUUpdatePermissionPrompt.nib/keyedobjects-110000.nib</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			vfj8rLxByFx6nUYTUNPmImIpCEo=
+			zJczBFAceq79V6N4zsHQ0jHG+4w=
 			</data>
 			<key>hash2</key>
 			<data>
-			Yclc1H2w82yC1HbjJEOxcgGnoVKUfZYVzsf+SEvUgNs=
+			Gb2JTsRS4eYP5jbowuoSlJ6hH9rEeBhc7ucBAf1HqT8=
 			</data>
 		</dict>
 		<key>Resources/Base.lproj/SUUpdatePermissionPrompt.nib/keyedobjects.nib</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			SbnvePf6qoeivS6Hfm0HesaVd5c=
+			6pTb8Z8gXml+rdQ5fUvN/d9xQJQ=
 			</data>
 			<key>hash2</key>
 			<data>
-			lX5/ZfTg8x9UgX0cRE8T8tZ1lYQvy7zRLLVvlbVprM8=
+			QC/9aYToBvX/3YC46ZCApZuD8HxeXUttgYSdE5/Eghw=
 			</data>
 		</dict>
 		<key>Resources/Base.lproj/Sparkle.strings</key>
@@ -2227,11 +2291,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			bF9uDOBe792xQLaTd9j6E1rjMKg=
+			RS0ZFFUIG4zo1VDi17oHVWsv7gU=
 			</data>
 			<key>hash2</key>
 			<data>
-			quiThnL+2hi5bkM0iLGAU3je8KEa+N7RJzQZoCYALBk=
+			bBvW8TPcX9o58zioHTrcUxS4T5WQbPHt91HyeTIvM80=
 			</data>
 		</dict>
 		<key>Resources/ReleaseNotesColorStyle.css</key>
@@ -2256,15 +2320,26 @@
 			bxnpRQhROJXTL2xuIeffR3p+hOuuji7eOoDeNqSYqTg=
 			</data>
 		</dict>
-		<key>Resources/SUStatus.nib</key>
+		<key>Resources/SUStatus.nib/keyedobjects-101300.nib</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			Bx0YakvA4WeK5k1HcKtBIne5e6Y=
+			ZyUvTYdNLAWy/PjxfPiiDg3JY+c=
 			</data>
 			<key>hash2</key>
 			<data>
-			NEfylSxvNQ30sf/Pib58/qhniAlBE4B1BOGL0Lmh53g=
+			5mYEWwucRT5mF4QJqhlejqV0DwtIW5Ve68yW9GGOu1Y=
+			</data>
+		</dict>
+		<key>Resources/SUStatus.nib/keyedobjects.nib</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			AWzvc/Oom69t77SqVhJIUEVnNYw=
+			</data>
+			<key>hash2</key>
+			<data>
+			zGUKYo5Dal8e+pKH1KVfXrogifmh9AWqDdAL/neSQgE=
 			</data>
 		</dict>
 		<key>Resources/ar.lproj/SUAutomaticUpdateAlert.strings</key>
@@ -2388,11 +2463,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			0bfdX1GCu06merNrM2hv/B0EuBo=
+			iUcJO6Oa4RdO3RM4xkx7VH0fEYs=
 			</data>
 			<key>hash2</key>
 			<data>
-			barrqGmYXYFWJPBZIln+S1LTAEm0ZVAzD9DFF5l3+oo=
+			9IB5sPkYYGwB/nkU/FQJk6JaGs3GNGvoyqgGnHX8Ka0=
 			</data>
 			<key>optional</key>
 			<true/>
@@ -2505,11 +2580,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			fsC7FJvExHE/2681tuUrjkSF2+A=
+			fXH7MjrA6hDT/k/8B6Vwgntt2lw=
 			</data>
 			<key>hash2</key>
 			<data>
-			XUpgsFH8KmcbgggpdYbJScCg0tBic9tNLdFh+8cbPyw=
+			bA5bxESyZuC/dG2VKfN+eQ7CVb2qAWrwfu94IpJ4Xi0=
 			</data>
 			<key>optional</key>
 			<true/>
@@ -3454,11 +3529,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			VpSLGNvZ6sbRYsF23L8m6TG+P6E=
+			x6JdY7WL2dHnGXX6PHJl5da7WKE=
 			</data>
 			<key>hash2</key>
 			<data>
-			wJZ5NG+mvj4anRFPUFyvSD0kGrg+ZAqklsPfHuCxLQY=
+			+vCWSRbECqQcsR6Nd8erQda/7x+ku/kQSUvZtTvemyQ=
 			</data>
 			<key>optional</key>
 			<true/>
