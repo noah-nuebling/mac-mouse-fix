@@ -247,8 +247,11 @@ int getMajorVersion(NSString *version) {
         bestMajorUpdate = nil;
     }
     
-    /// Return an update
+    /// Delete the skipped version that Sparkle stores
+    ///     Note: This should prevent an **obscure edge case**, which is explained in the other place where where we delete `SUSkippedMinorVersionKey`.
+    [NSUserDefaults.standardUserDefaults removeObjectForKey:SUSkippedMinorVersionKey];
     
+    /// Return an update
     if (bestMajorUpdate != nil) {
         return bestMajorUpdate;
     } else if (bestMinorUpdate != nil) {
@@ -286,8 +289,18 @@ int getMajorVersion(NSString *version) {
     float delayInSeconds = 0.0;
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         
-        /// Remove the default Sparkle key so we can handle things ourselves.
-        ///     Note: If we ever switch to Sparkle 2, we might want to remove Sparkles MajorVersionKey here as well.
+        /// Prevent Sparkle from storing its own skippedVersion
+        ///     By deleting the default Sparkle key from user defaults.
+        ///
+        /// Notes:
+        /// - If we ever switch to Sparkle 2, we might want to remove Sparkles' MajorVersionKey as well as the MinorVersionKey.
+        /// - Also, under Sparkle 2, I think the skipped versions are filtered out before they are passed to `bestValidUpdateInAppcast:`, so we'd have to change the whole logic anyways.
+        ///
+        /// - There's an **obscure edge case** with this: (Never saw this, just speculating)
+        ///     - It seems that Sparkle ignores all updates with a `buildNumber <= SUSkippedMinorVersionKey`. So therefore if we skip a minor version (and don't prevent Sparkle from storing that) and then downgrade to a previous major version, that would prevent all minor updates to this this lower major version. Any upates that `bestValidUpdateInAppcast:` returns would then just be ignored by Sparkle.
+        ///     -> This edge case seems very unlikely now that I think about it, but there's always going to be someone among thousands of users. We could address this by instead deleting Sparkle's skipped version inside `bestValidUpdateInAppcast:`. But if we don't delete the skipped version right here, there would be other similar edge cases I think. So I guess the most robust would be to do it in both places. -> That's what we did.
+        ///     - src: (Sparkle 1 src code)  https://github.com/sparkle-project/Sparkle/blob/10d96f2b9b9905b0f529f09e517219d4e20125c0/Sparkle/SUBasicUpdateDriver.m#L239.
+        
         [NSUserDefaults.standardUserDefaults removeObjectForKey:SUSkippedMinorVersionKey];
         
         /// Check for updates again. Due to our custom updating logic, this might present a minor update right after the user skipped a major update.
