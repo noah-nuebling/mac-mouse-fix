@@ -40,6 +40,7 @@ Diese Leute haben viel mehr als den Standardpreis ausgegeben und mir einen **ung
 
 **Mai 2024**
 
+- 🇨🇦&nbsp;Anuraagmishra
 - 🇰🇷&nbsp;Minki&nbsp;Ju - "SUPER COOL!"
 - 🇫🇷&nbsp;Laurent&nbsp;Tréguier - "A must-have for anyone using a mouse on a Mac"
 - 🇩🇪&nbsp;Andreas&nbsp;4Techs&nbsp;R&D - "Starkes Stück Software! Vielen Dank für Deine Arbeit! :-)"
