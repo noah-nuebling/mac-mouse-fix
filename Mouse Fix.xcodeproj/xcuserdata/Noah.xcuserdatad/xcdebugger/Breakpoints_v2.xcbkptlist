@@ -400,8 +400,8 @@
             filePath = "Shared/Animation/DisplayLink.m"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "970"
-            endingLineNumber = "970"
+            startingLineNumber = "843"
+            endingLineNumber = "843"
             landmarkName = "parseTimeStamp(ts)"
             landmarkType = "9">
          </BreakpointContent>
@@ -416,8 +416,8 @@
             filePath = "Shared/Animation/DisplayLink.m"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "652"
-            endingLineNumber = "652"
+            startingLineNumber = "499"
+            endingLineNumber = "499"
             landmarkName = "displayLinkCallback(displayLink, inNow, inOutputTime, flagsIn, flagsOut, displayLinkContext)"
             landmarkType = "9">
          </BreakpointContent>
@@ -432,8 +432,8 @@
             filePath = "Shared/Animation/DisplayLink.m"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "640"
-            endingLineNumber = "640"
+            startingLineNumber = "487"
+            endingLineNumber = "487"
             landmarkName = "displayLinkCallback(displayLink, inNow, inOutputTime, flagsIn, flagsOut, displayLinkContext)"
             landmarkType = "9">
          </BreakpointContent>
@@ -611,86 +611,6 @@
             startingLineNumber = "391"
             endingLineNumber = "391"
             landmarkName = "-repairConfigWithReason:info:"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "F5D40E19-5408-473F-9DB2-578BDFA64E2D"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Shared/Animation/DisplayLink.m"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "557"
-            endingLineNumber = "557"
-            landmarkName = "-setDisplay:"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "66AF4B9C-EA36-4EEE-B6BA-F7CA4F0EBFA3"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Shared/Animation/DisplayLink.m"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "546"
-            endingLineNumber = "546"
-            landmarkName = "-setDisplay:"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "52785FF6-60C5-4C90-8159-634084C5274B"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Shared/Animation/DisplayLink.m"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "530"
-            endingLineNumber = "530"
-            landmarkName = "-setDisplay:"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "A46E4349-7B26-4576-91A2-1341BD16AF1D"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Shared/Animation/DisplayLink.m"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "529"
-            endingLineNumber = "529"
-            landmarkName = "-setDisplay:"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "084CBFD2-0B22-4F13-BEEE-BD805C86CBC0"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Shared/Animation/DisplayLink.m"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "531"
-            endingLineNumber = "531"
-            landmarkName = "-setDisplay:"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

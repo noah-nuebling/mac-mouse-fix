@@ -27,7 +27,7 @@ typedef struct {
     CFTimeInterval cvCallbackTime;
     /// When the last frame was displayed
     CFTimeInterval lastFrame;
-    /// When the frame after lastFrame will be displayed. (I think? - It's an estimate our code makes, the value doesn't come from the api)
+    /// When the frame after lastFrame will be displayed. (I think? - It's an estimate our code makes, the value doesn't come from the api) (Should probably rename this to `nextFrame`)
     CFTimeInterval thisFrame;
     /// When the currently processed frame is estimated to be displayed (I think?) Seems to always be 2 frames after lastFrame from my observations. This value comes from the API and I'm not totally sure what it means.
     CFTimeInterval outFrame;
