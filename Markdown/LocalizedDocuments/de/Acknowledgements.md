@@ -40,6 +40,7 @@ Diese Leute haben viel mehr als den Standardpreis ausgegeben und mir einen **ung
 
 **Mai 2024**
 
+- 🇺🇸&nbsp;Carl&nbsp;Onak - "Terrific software -- I won't use a Mac without it!"
 - 🇺🇸&nbsp;George&nbsp;Shaw
 - 🇫🇮&nbsp;Jani&nbsp;Santanen
 - 🇺🇸&nbsp;Mike&nbsp;Gates
