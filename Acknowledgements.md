@@ -42,6 +42,7 @@ These people spent a lot more than the standard price and treated me to an **Inc
 
 **May 2024**
 
+- 🇨🇭&nbsp;Dario&nbsp;Franco&nbsp;Turco - "Best Mac App"
 - 🇹🇿&nbsp;Avraj&nbsp;(Under&nbsp;Ctrl) - "Thanks Noah!"
 - 🇺🇸&nbsp;Carl&nbsp;Onak - "Terrific software -- I won't use a Mac without it!"
 - 🇺🇸&nbsp;George&nbsp;Shaw
