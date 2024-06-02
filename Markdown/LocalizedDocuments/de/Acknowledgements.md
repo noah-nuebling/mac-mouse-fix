@@ -38,6 +38,10 @@ Danke für euren Beitrag! :)
 
 Diese Leute haben viel mehr als den Standardpreis ausgegeben und mir einen **unglaublichen Milchshake** spendiert. (Und manche haben sogar eine Nachricht hinterlassen) Danke für den _Zucker-Kick_!
 
+**Juni 2024**
+
+- 🇺🇸&nbsp;Donnye&nbsp;Bouey - "Reach for the stars. They're all that's left."
+
 **Mai 2024**
 
 - 🇨🇭&nbsp;Dario&nbsp;Franco&nbsp;Turco - "Best Mac App"

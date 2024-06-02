@@ -40,6 +40,10 @@ Thanks for your support! :)
 
 These people spent a lot more than the standard price and treated me to an **Incredible Milkshake**. (And some even left a message) Thanks for the _sugar rush_!
 
+**June 2024**
+
+- 🇺🇸&nbsp;Donnye&nbsp;Bouey - "Reach for the stars. They're all that's left."
+
 **May 2024**
 
 - 🇨🇭&nbsp;Dario&nbsp;Franco&nbsp;Turco - "Best Mac App"
