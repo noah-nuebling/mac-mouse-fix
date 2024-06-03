@@ -40,6 +40,7 @@ Diese Leute haben viel mehr als den Standardpreis ausgegeben und mir einen **ung
 
 **Juni 2024**
 
+- 🇨🇭&nbsp;Sboog
 - 🇺🇸&nbsp;Donnye&nbsp;Bouey - "Reach for the stars. They're all that's left."
 
 **Mai 2024**
