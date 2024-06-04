@@ -42,6 +42,7 @@ These people spent a lot more than the standard price and treated me to an **Inc
 
 **June 2024**
 
+- 🇩🇪&nbsp;Sascha&nbsp;Hansen
 - 🇰🇷&nbsp;Ki&nbsp;Young&nbsp;Kim
 - 🇵🇹&nbsp;João&nbsp;"@0Rangefox"&nbsp;Fernandes - "As a developer, what would my life be without this fantastic application?"
 - 🇨🇭&nbsp;Sboog
