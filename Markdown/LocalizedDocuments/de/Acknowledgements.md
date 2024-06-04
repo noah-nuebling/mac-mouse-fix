@@ -40,6 +40,7 @@ Diese Leute haben viel mehr als den Standardpreis ausgegeben und mir einen **ung
 
 **Juni 2024**
 
+- 🇰🇷&nbsp;Ki&nbsp;Young&nbsp;Kim
 - 🇵🇹&nbsp;João&nbsp;"@0Rangefox"&nbsp;Fernandes - "As a developer, what would my life be without this fantastic application?"
 - 🇨🇭&nbsp;Sboog
 - 🇺🇸&nbsp;Donnye&nbsp;Bouey - "Reach for the stars. They're all that's left."
