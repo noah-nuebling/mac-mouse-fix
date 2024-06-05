@@ -40,6 +40,7 @@ Diese Leute haben viel mehr als den Standardpreis ausgegeben und mir einen **ung
 
 **Juni 2024**
 
+- 🇺🇸&nbsp;Dan&nbsp;Kim
 - 🇩🇪&nbsp;Sascha&nbsp;Hansen
 - 🇰🇷&nbsp;Ki&nbsp;Young&nbsp;Kim
 - 🇵🇹&nbsp;João&nbsp;"@0Rangefox"&nbsp;Fernandes - "As a developer, what would my life be without this fantastic application?"
