@@ -42,6 +42,7 @@ These people spent a lot more than the standard price and treated me to an **Inc
 
 **June 2024**
 
+- 🇺🇸&nbsp;Nigel
 - 🇺🇸&nbsp;Dan&nbsp;Kim
 - 🇩🇪&nbsp;Sascha&nbsp;Hansen
 - 🇰🇷&nbsp;Ki&nbsp;Young&nbsp;Kim
