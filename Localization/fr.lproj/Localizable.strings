@@ -3,16 +3,16 @@
 "capture-toast.body" = "<>";
 
 /* First draft: Content tracks finger movement */
-"natural-scrolling-hint" = "Content tracks finger movement";
+"natural-scrolling-hint" = "Le contenu suit le mouvement du doigt";
 
 /* First draft: Open 'Security & Privacy' Preferences || Notes: The string for Ventura and later is defined in Interface Builder */
-"accessibility.settings-link.pre-ventura" = "Open 'Security & Privacy' Preferences";
+"accessibility.settings-link.pre-ventura" = "Ouvrir les préférences « Sécurité et confidentialité »";
 
 /* First draft: You're __already using__ the default setting for mice with __3 buttons__ */
-"already-using-defaults-toast.3" = "You're __already using__ the default setting for mice with __3 buttons__";
+"already-using-defaults-toast.3" = "Vous __utilisez déjà__ le réglage par défaut pour une souris avec __3 boutons__";
 
 /* First draft: You're __already using__ the default setting for mice with __5 buttons__ */
-"already-using-defaults-toast.5" = "You're __already using__ the default setting for mice with __5 buttons__";
+"already-using-defaults-toast.5" = "Vous __utilisez déjà__ le réglage par défaut pour une souris avec __5 boutons__";
 
 /* First draft: Version %@ || Note: %@ will be replaced by the app version, e.g. '3.0.0 (22027)' */
 "app-version" = "Version %@";
@@ -78,7 +78,7 @@
 "beta-alert.back" = "Annuler";
 
 /* First draft: Beta versions can have many issues.\nDon't forget to give feedback when you run into one.\nThanks! */
-"beta-alert.body" = "Les versions bêta peuvent contenir de nombreux problèmes.\nN'oubliez pas de donner votre retour lorsque vous en rencontrez un.\nMerci !";
+"beta-alert.body" = "Les versions bêta peuvent contenir de nombreux problèmes.\nN'oubliez pas de nous fournir un retour lorsque vous en rencontrez un.\nMerci !";
 
 /* First draft: Get Beta Versions */
 "beta-alert.confirm" = "Recevoir les versions bêta";
@@ -90,10 +90,10 @@
 "button-modifier.1" = "Clic %@ +";
 
 /* First draft: Double Click %@ +  */
-"button-modifier.2" = "Double-click %@ +";
+"button-modifier.2" = "Double-clic %@ +";
 
 /* First draft: Triple Click %@ +  */
-"button-modifier.3" = "Triple-click %@ +";
+"button-modifier.3" = "Triple-clic %@ +";
 
 /* First draft: Middle Button */
 "button-string.middle" = "Bouton du milieu";
@@ -126,7 +126,7 @@
 "buy-mouse-alert.ok" = "OK";
 
 /* First draft: Your mouse only has 3 buttons */
-"buy-mouse-alert.title" = "Votre souris n'a que 3 boutonss";
+"buy-mouse-alert.title" = "Votre souris n'a que 3 boutons";
 
 /* Note: Value for this key is defined in Localizable.stringsdict, not Localizable.strings. || Note: The UI strings in .stringsdict have two lines. Only the first line is visible unless you start editing and then use the arrow keys to go to the second line. This is necessary to have linebreaks in .stringsdict since \n doesn't work. Use Option-Enter to insert these linebreaks. */
 "capture-toast.body.captured" = "<>";
@@ -147,7 +147,7 @@
 "drag-effect.scroll-swipe" = "Défiler & naviguer";
 
 /* First draft: Scroll freely by moving your mouse in any direction\n \nAlso Navigate between pages in Safari, delete messages in Mail and more by moving your mouse left and right\n \nWorks like swiping with 2 fingers on an Apple Trackpad */
-"drag-effect.scroll-swipe.hint" = "Défiler librement en déplaçant votre souris dans n'importe quelle direction\n \nPeut aussi naviguer entre les pages dans Safari, supprimer les messages dans Mail et bien plus en bougeant votre souris à gauche ou à droit\n \nFonctionne comme le balayage avec 2 doigts sur un Trackpad Apple";
+"drag-effect.scroll-swipe.hint" = "Défiler librement en déplaçant votre souris dans n'importe quelle direction\n \nPeut aussi naviguer entre les pages dans Safari, supprimer les messages dans Mail et bien plus en bougeant votre souris à gauche ou à droite\n \nFonctionne comme le balayage avec 2 doigts sur un Trackpad Apple";
 
 /* First draft: Application Windows || Note: Under macOS Sonoma, this feature is called 'App Exposé' in Trackpad settings, but 'Application Windows' in Keyboard Shortcut settings and all other places I found. */
 "effect.app-expose" = "Fenêtres de l'application";
@@ -204,7 +204,7 @@
 "effect.middle-click" = "Clic du milieu";
 
 /* First draft: Open links in a new tab, paste text in the Terminal, and more.\n \nWorks like clicking %@ on a standard mouse. */
-"effect.middle-click.hint" = "Ouvrir les liens dans un nouvel onglet, coller du texte dans le Terminal et bien plus.\n \nFonctionne comme en cliquant sur %@ sur une souris standard.";
+"effect.middle-click.hint" = "Ouvrir les liens dans un nouvel onglet, coller du texte dans le Terminal et bien plus.\n \nFonctionne comme le clic sur le %@ sur une souris standard.";
 
 /* First draft: Mission Control */
 "effect.mission-control" = "Mission Control";
@@ -216,7 +216,7 @@
 "effect.primary-click" = "Clic principal";
 
 /* First draft: Works like clicking %@ on a standard mouse. */
-"effect.primary-click.hint" = "Fonctionne comme en cliquant sur %@ sur une souris standard.";
+"effect.primary-click.hint" = "Fonctionne comme le clic sur le %@ sur une souris standard.";
 
 /* First draft: Keyboard Shortcut... */
 "effect.record-shortcut" = "Raccourci clavier...";
@@ -234,7 +234,7 @@
 "effect.secondary-click" = "Clic secondaire";
 
 /* First draft: Works like clicking %@ on a standard mouse. */
-"effect.secondary-click.hint" = "Fonctionne comme en cliquant sur %@ sur une souris standard.";
+"effect.secondary-click.hint" = "Fonctionne comme le clic sur le %@ sur une souris standard.";
 
 /* First draft: Works like pressing '%@' on your keyboard */
 "effect.shortcut.hint" = "Fonctionne comme en appuyant sur « %@ » sur votre clavier";
@@ -243,7 +243,7 @@
 "effect.smart-zoom" = "Zoom intelligent";
 
 /* First draft: Zoom in or out in Safari and other apps.\n \nWorks like a two-finger double tap on an Apple Trackpad. */
-"effect.smart-zoom.hint" = "Zoom en avant ou en arrière dans Safari et d'autres applications.\n \nFonctionne comme un Toucher deux fois sur un Trackpad Apple.";
+"effect.smart-zoom.hint" = "Zoom en avant ou en arrière dans Safari et d'autres apps.\n \nFonctionne comme un Toucher deux fois sur un Trackpad Apple.";
 
 /* First draft: If you have **problems enabling** the app, click&nbsp;[here](https://github.com/noah-nuebling/mac-mouse-fix/discussions/861). */
 "enable-timeout-toast" = "Si vous rencontrez des **problèmes pour activer** l'app, cliquez&nbsp;[ici](https://github.com/noah-nuebling/mac-mouse-fix/discussions/861).";
@@ -294,10 +294,10 @@
 "license-toast.free-country" = "Cette licence __n'a pas pu être activée__ mais Mac Mouse Fix est actuellement __gratuit dans votre pays__ !";
 
 /* First draft: **An error with the licensing server occured**\n\nIt says:\n\n%@ */
-"license-toast.gumroad-error" = "**Une erreur avec le serveur de licenses s'est produite**\n\nElle dit :\n\n%@";
+"license-toast.gumroad-error" = "**Une erreur avec le serveur de licences s'est produite**\n\nElle dit :\n\n%@";
 
 /* First draft: **There is no connection to the internet**\n\nTry activating your license again when your computer is online. */
-"license-toast.no-internet" = "**There is no connection to the internet**\n\nTry activating your license again when your computer is online.";
+"license-toast.no-internet" = "**Il n'y a pas de connexion à Internet**\n\nRéessayer d'activer votre licence quand votre ordinateur sera à nouveau en ligne.";
 
 /* First draft: **An unknown error occurred:**\n\n%@ */
 "license-toast.unknown-error" = "**Une erreur inconnue s'est produite :**\n\n%@";
@@ -306,7 +306,7 @@
 "license-toast.unknown-key" = "**« %@ »** n'est pas une clé de licence connue\n\nVeuillez essayer une clé différente";
 
 /* First draft: Activating your license failed for **unknown reasons**\n\nPlease write a **Bug Report** [here](https://noah-nuebling.github.io/mac-mouse-fix-feedback-assistant/?type=bug-report) */
-"license-toast.unknown-reason" = "L'activation de votre licence a échoué pour des *raisons inconnues**\n\nVeuillez écrire un **signalement de bug** [ici](https://noah-nuebling.github.io/mac-mouse-fix-feedback-assistant/?type=bug-report)";
+"license-toast.unknown-reason" = "L'activation de votre licence a échoué pour des *raisons inconnues**\n\nVeuillez **signaler le bug** [ici](https://noah-nuebling.github.io/mac-mouse-fix-feedback-assistant/?type=bug-report)";
 
 /* First draft: Set speed under\n[%@ > Mouse > Scrolling Speed](%@) */
 "macos-scrolling-hint" = "Définir la vitesse sous\n[%@ > Souris > Vitesse de déplacement](%@)";
@@ -360,7 +360,7 @@
 "restore-default-buttons-popover.body" = " __Cliquer ici__ pour charger les paramètres recommandés\npour votre souris __%@__";
 
 /* First draft: __Enabled__ Mac Mouse Fix for %1@\nIt had been disabled from the Menu Bar %2@ || Note: %1@ will be replaced by the list of enabled features, %2@ will be replaced by the menubar icon */
-"revive-toast" = "__Enabled__ Mac Mouse Fix for %1@\nIt had been disabled from the Menu Bar %2@";
+"revive-toast" = "Mac Mouse Fix __activé__ pour %1@\nIl a été désactivé depuis la barre des menus %2@";
 
 /* First draft: __Buttons__ */
 "revive-toast.feature-buttons" = " __Boutons__";
@@ -372,43 +372,43 @@
 "scroll-effect.4-pinch" = "Bureau & Launchpad";
 
 /* First draft: Scroll up for Launchpad and down to show the Desktop\n \nWorks like Pinching with 4 fingers on an Apple Trackpad */
-"scroll-effect.4-pinch.hint" = "Scroll up for Launchpad and down to show the Desktop\n \nWorks like Pinching with 4 fingers on an Apple Trackpad";
+"scroll-effect.4-pinch.hint" = "Défiler vers le haut pour le Launchpad et vers le bas pour afficher le Burean \nFonctionne comme le pincement avec 4 doigts sur un Trackpad Apple";
 
 /* First draft: App Switcher */
-"scroll-effect.app-switcher" = "App Switcher";
+"scroll-effect.app-switcher" = "Basculement entre apps";
 
 /* First draft: Quickly switch between open apps\n \nWorks like holding Command (⌘) and then pressing Tab (⇥) on your keyboard */
-"scroll-effect.app-switcher.hint" = "Quickly switch between open apps\n \nWorks like holding Command (⌘) and then pressing Tab (⇥) on your keyboard";
+"scroll-effect.app-switcher.hint" = "Basculer rapidement entre les apps ouvertes\n \nFonctionne comme en maintenant Commande (⌘) et en appuyant sur Tab (⇥) sur votre clavier";
 
 /* First draft: Horizontal Scroll */
-"scroll-effect.horizontal" = "Horizontal Scroll";
+"scroll-effect.horizontal" = "Défilement horizontal";
 
 /* First draft: Scroll left and right, navigate between pages in Safari, delete messages in Mail and more\n \nWorks like swiping horizontally with 2 fingers on an Apple Trackpad */
-"scroll-effect.horizontal.hint" = "Scroll left and right, navigate between pages in Safari, delete messages in Mail and more\n \nWorks like swiping horizontally with 2 fingers on an Apple Trackpad";
+"scroll-effect.horizontal.hint" = "Défiler sur la gauche et la droite, naviguer entre les pages sur Safari, supprimer les messages dans Mail et bien plus\n \nFonctionne comme le balayage horizontal avec un Trackpad Apple";
 
 /* First draft: Precise Scroll */
-"scroll-effect.precise" = "Precise Scroll";
+"scroll-effect.precise" = "Défilement précis";
 
 /* First draft: Scroll small distances and use sensitive UI elements with precision */
-"scroll-effect.precise.hint" = "Scroll small distances and use sensitive UI elements with precision";
+"scroll-effect.precise.hint" = "Défiler de petites distances et utiliser des éléments d'IU sensibles avec précision";
 
 /* First draft: Rotate */
 "scroll-effect.rotate" = "Pivoter";
 
 /* First draft: Rotate content in Apple Maps and other apps\n \nWorks like twisting with 2 fingers on an Apple Trackpad */
-"scroll-effect.rotate.hint" = "Rotate content in Apple Maps and other apps\n \nWorks like twisting with 2 fingers on an Apple Trackpad";
+"scroll-effect.rotate.hint" = "Pivoter le contenu dans Apple Plans et d'autres apps\n \nFonctionne comme si l'on tournait avec deux doigts sur un Trackpad Apple";
 
 /* First draft: Move Between Spaces */
 "scroll-effect.spaces" = "Déplacer entre les espaces";
 
 /* First draft: Scroll up to move left a Space and down to move right a Space\n \nWorks like swiping horizontally with 3 fingers on an Apple Trackpad */
-"scroll-effect.spaces.hint" = "Scroll up to move left a Space and down to move right a Space\n \nWorks like swiping horizontally with 3 fingers on an Apple Trackpad";
+"scroll-effect.spaces.hint" = "Défiler vers le haut pour se déplacer d'un espace vers la gauche et vers le bas pour se déplacer d'un espace vers la droite\n \nFonctionne comme le balayage horizontal avec 3 doigts sur un Trackpad Apple";
 
 /* First draft: Swift Scroll */
-"scroll-effect.swift" = "Swift Scroll";
+"scroll-effect.swift" = "Défilement rapide";
 
 /* First draft: Scroll long distances with minimal effort */
-"scroll-effect.swift.hint" = "Scroll long distances with minimal effort";
+"scroll-effect.swift.hint" = "Défiler de longues distances avec un effort minimal";
 
 /* First draft: Zoom In or Out */
 "scroll-effect.zoom" = "Zoom avant ou arrière";
@@ -438,13 +438,13 @@
 "thanks.05" = "🧠 Une excellente décision d'achat ! ;)";
 
 /* First draft: 🔥 Awesome taste in mouse fixing software! ;) */
-"thanks.06" = "🔥 Excellent goût dans les logiciels permettant de corriger les souris ! ;)";
+"thanks.06" = "🔥 Excellent goût dans les logiciels permettant d'améliorer les souris ! ;)";
 
 /* First draft: 💙 */
 "thanks.07" = "💙";
 
 /* First draft: :) <- My face when I saw you bought Mac Mouse Fix */
-"thanks.08" = ":) <- Mon visgage lorsque je vous que vous avez acheté Mac Mouse Fix";
+"thanks.08" = ":) <- Mon visgage lorsque je vois que vous avez acheté Mac Mouse Fix";
 
 /* First draft: 👽 Share it with your Spacebook friends! */
 "thanks.09" = "👽 Partagez-le avec vos amis Spacebook !";
@@ -456,7 +456,7 @@
 "thanks.11" = "🚜 Regardez où vous allez :P";
 
 /* First draft: 🐁 Not these mice, mom! */
-"thanks.12" = "🐁 Non... pas cette souris maman !";
+"thanks.12" = "🐁 Non, pas cette souris, maman !";
 
 /* First draft: 🐹 We should get him a bow tie. */
 "thanks.13" = "🐹 Nous devrions lui offrir un nœud papillon.";

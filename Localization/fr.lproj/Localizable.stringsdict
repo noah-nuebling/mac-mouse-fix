@@ -5,7 +5,7 @@
 	<key>capture-toast.body.captured</key>
 	<dict>
 		<key>NSStringLocalizedFormatKey</key>
-		<string>%@ %#@captured@</string>
+		<string>%@ %#@capturé@</string>
 		<key>captured</key>
 		<dict>
 			<key>NSStringFormatSpecTypeKey</key>
@@ -25,7 +25,7 @@ Other apps can&apos;t see them anymore.</string>
 	<key>capture-toast.body.uncaptured</key>
 	<dict>
 		<key>NSStringLocalizedFormatKey</key>
-		<string>%@ %#@uncaptured@</string>
+		<string>%@ %#@plus capturé@</string>
 		<key>uncaptured</key>
 		<dict>
 			<key>NSStringFormatSpecTypeKey</key>

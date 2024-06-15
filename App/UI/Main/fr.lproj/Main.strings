@@ -3,10 +3,10 @@
 "17P-PJ-tV1.title" = "Normale";
 
 /* Class = "NSMenuItem"; title = "Undo"; ObjectID = "1TU-wL-skT"; */
-"1TU-wL-skT.title" = "Undo";
+"1TU-wL-skT.title" = "Annuler";
 
 /* Class = "NSViewController"; title = "Pointer"; ObjectID = "1dS-BH-DIv"; Note = "Pointer Tab Title"; */
-"1dS-BH-DIv.title" = "Pointer";
+"1dS-BH-DIv.title" = "Pointeur";
 
 /* Class = "NSTextFieldCell"; title = "<Scroll precisely by moving the scroll wheel slowly>"; ObjectID = "1nK-vb-jNz"; */
 "1nK-vb-jNz.title" = "<Défilez précisement en bougeant la molette de défilement doucement>";
@@ -15,7 +15,7 @@
 "2Uv-W7-hzJ.title" = "Consulter les guides ou demander à la communauté...";
 
 /* Class = "NSTextFieldCell"; title = "Acceleration:"; ObjectID = "3a9-XG-oHg"; Note = "Pointer > Acceleration Label"; */
-"3a9-XG-oHg.title" = "Acceleration:";
+"3a9-XG-oHg.title" = "Accélération :";
 
 /* Class = "NSMenuItem"; title = "Check for Updates..."; ObjectID = "3pt-ka-lxV"; */
 "3pt-ka-lxV.title" = "Vérifier les mises à jour...";
@@ -36,7 +36,7 @@
 "6Nj-Ed-W5T.title" = "Défiler à l'horizontal";
 
 /* Class = "NSMenuItem"; title = "Edit"; ObjectID = "6Yt-gG-Nf9"; */
-"6Yt-gG-Nf9.title" = "Edit";
+"6Yt-gG-Nf9.title" = "Modifier";
 
 /* Class = "NSMenuItem"; title = "Delete"; ObjectID = "6es-it-kDs"; */
 "6es-it-kDs.title" = "Supprimer";
@@ -66,13 +66,13 @@
 "Bnm-ze-Mca.title" = "Masquer Mac Mouse Fix";
 
 /* Class = "NSTextFieldCell"; title = "Low"; ObjectID = "DNu-D4-tBY"; Note = "Pointer > Sensitivity Slider > Low Label"; */
-"DNu-D4-tBY.title" = "Low";
+"DNu-D4-tBY.title" = "Faible";
 
 /* Class = "NSMenu"; title = "Help"; ObjectID = "DVS-lH-VBH"; */
 "DVS-lH-VBH.title" = "Aide";
 
 /* Class = "NSTextFieldCell"; title = "Set acceleration under \nSystem Preferences > Mouse > Tracking speed "; ObjectID = "DtT-YF-gUn"; Note = "Pointer > Acceleration > macOS Option > Hint"; */
-"DtT-YF-gUn.title" = "Set acceleration under \nSystem Preferences > Mouse > Tracking speed ";
+"DtT-YF-gUn.title" = "Définir l'accélération sous \nPréférences Système > Souris >  Mouse > Vitesse de déplacement ";
 
 /* Class = "NSMenuItem"; title = "Medium"; ObjectID = "E0q-4e-axc"; Note = "Scrolling > Scroll Speed > Medium Option"; */
 "E0q-4e-axc.title" = "Modérée";
@@ -135,7 +135,7 @@
 "Pxm-4w-iO7.title" = "<Box>";
 
 /* Class = "NSTextFieldCell"; title = "<⌘⇧⌥⌃ + Triple Click and Drag Button 3>"; ObjectID = "QKM-im-bk9"; */
-"QKM-im-bk9.title" = "<⌘⇧⌥⌃ + Triple Click and Drag Button 3>";
+"QKM-im-bk9.title" = "<⌘⇧⌥⌃ + Triple-clic et glisser Bouton 3>";
 
 /* Class = "NSTextFieldCell"; title = "Send Me an Email"; ObjectID = "QaW-cc-uzc"; */
 "QaW-cc-uzc.title" = "M'envoyer un e-mail";
@@ -204,7 +204,7 @@
 "bIE-g7-3St.title" = "Rapide";
 
 /* Class = "NSMenuItem"; title = "Medium"; ObjectID = "bJS-hB-0l3"; Note = "Pointer > Acceleration > Medium Option"; */
-"bJS-hB-0l3.title" = "Medium";
+"bJS-hB-0l3.title" = "Moyenne";
 
 /* Class = "NSTextFieldCell"; title = "File a Bug Report"; ObjectID = "bQf-qv-mvB"; */
 "bQf-qv-mvB.title" = "Signaler un bug";
@@ -243,7 +243,7 @@
 "fGs-UI-L0d.title" = "Tout afficher";
 
 /* Class = "NSMenuItem"; title = "Window"; ObjectID = "fNA-5s-U4d"; */
-"fNA-5s-U4d.title" = "Window";
+"fNA-5s-U4d.title" = "Fenêtre";
 
 /* Class = "NSMenuItem"; title = "macOS"; ObjectID = "fW3-4Q-yB8"; Note = "Scrolling > Scroll Speed > macOS Option"; */
 "fW3-4Q-yB8.title" = "macOS";
@@ -264,7 +264,7 @@
 "hSC-BE-EZJ.title" = "Mac Mouse Fix";
 
 /* Class = "NSMenuItem"; title = "Low"; ObjectID = "hmb-DX-idO"; Note = "Pointer > Acceleration > Low Option"; */
-"hmb-DX-idO.title" = "Low";
+"hmb-DX-idO.title" = "Faible";
 
 /* Class = "NSMenuItem"; title = "Copy"; ObjectID = "iFe-4y-9Xa"; */
 "iFe-4y-9Xa.title" = "Copier";
@@ -306,7 +306,7 @@
 "rIq-3r-6ck.label" = "Général";
 
 /* Class = "NSMenuItem"; title = "High"; ObjectID = "sef-RZ-SeL"; Note = "Pointer > Acceleration > High Option"; */
-"sef-RZ-SeL.title" = "High";
+"sef-RZ-SeL.title" = "Élevée";
 
 /* Class = "NSButtonCell"; title = "Check for Updates"; ObjectID = "tdD-8Q-JB2"; Note = "General > Check for Updates Toggle"; */
 "tdD-8Q-JB2.title" = "Vérifier les mises à jour";
@@ -318,10 +318,10 @@
 "vbN-zN-z2V.title" = "Raccourcis clavier :";
 
 /* Class = "NSTextFieldCell"; title = "High"; ObjectID = "wJW-hQ-lUc"; Note = "Pointer > Sensitivity Slider > High Label"; */
-"wJW-hQ-lUc.title" = "High";
+"wJW-hQ-lUc.title" = "Élevée";
 
 /* Class = "NSTabViewItem"; label = "About"; ObjectID = "wal-3r-ZZs"; Note = "Toolbar > About Tab Button"; */
-"wal-3r-ZZs.label" = "À  propos";
+"wal-3r-ZZs.label" = "À propos";
 
 /* Class = "NSTextFieldCell"; title = "<Text Cell>"; ObjectID = "zwX-Pv-OOK"; */
 "zwX-Pv-OOK.title" = "<Text Cell>";
