@@ -1,0 +1,9 @@
+
+/* Class = "NSButtonCell"; title = "Back"; ObjectID = "7yY-kF-Q7q"; */
+"7yY-kF-Q7q.title" = "Back";
+
+/* Class = "NSButtonCell"; title = "<Activate License>"; ObjectID = "IK8-Rj-beO"; */
+"IK8-Rj-beO.title" = "<Activer la licence>";
+
+/* Class = "NSTextFieldCell"; placeholderString = "Enter Your License Key"; ObjectID = "JJv-GH-7io"; */
+"JJv-GH-7io.placeholderString" = "Saisir votre clé de licence";

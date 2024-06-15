@@ -25,6 +25,7 @@
         @"vi": @0.75, /// Vietnamese
         @"de": @0.8, /// German
         @"en": @1.0, /// English
+        @"fr": @1.5, /// French
         @"ko": @1.75, /// Korean
         @"zh": @3.5, /// Chinese
     };
