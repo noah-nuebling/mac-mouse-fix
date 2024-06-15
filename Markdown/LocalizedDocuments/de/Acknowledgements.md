@@ -40,6 +40,7 @@ Diese Leute haben viel mehr als den Standardpreis ausgegeben und mir einen **ung
 
 **Juni 2024**
 
+- 🇺🇸&nbsp;Tom&nbsp;Hess
 - 🇺🇸&nbsp;Phil&nbsp;Peterman
 - 🇺🇸&nbsp;Thealtruistichacker
 - 🇺🇸&nbsp;Nigel

@@ -42,6 +42,7 @@ These people spent a lot more than the standard price and treated me to an **Inc
 
 **June 2024**
 
+- 🇺🇸&nbsp;Tom&nbsp;Hess
 - 🇺🇸&nbsp;Phil&nbsp;Peterman
 - 🇺🇸&nbsp;Thealtruistichacker
 - 🇺🇸&nbsp;Nigel
