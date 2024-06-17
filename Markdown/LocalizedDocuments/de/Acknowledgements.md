@@ -40,6 +40,7 @@ Diese Leute haben viel mehr als den Standardpreis ausgegeben und mir einen **ung
 
 **Juni 2024**
 
+- 🇦🇺&nbsp;Ray&nbsp;Pearce - "Unreal. You have made a blind man very happy. I can now use a vertical mouse with smart zoom . Love it"
 - 🇺🇸&nbsp;Tom&nbsp;Hess
 - 🇺🇸&nbsp;Phil&nbsp;Peterman
 - 🇺🇸&nbsp;Thealtruistichacker
