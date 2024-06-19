@@ -42,6 +42,7 @@ These people spent a lot more than the standard price and treated me to an **Inc
 
 **June 2024**
 
+- 🇧🇷&nbsp;Viviane&nbsp;Brenner - "Thanks for your mind!"
 - 🇺🇸&nbsp;Mitchel&nbsp;C&nbsp;Harper
 - 🇦🇺&nbsp;Ray&nbsp;Pearce - "Unreal. You have made a blind man very happy. I can now use a vertical mouse with smart zoom . Love it"
 - 🇺🇸&nbsp;Tom&nbsp;Hess
