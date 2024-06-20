@@ -40,6 +40,7 @@ Diese Leute haben viel mehr als den Standardpreis ausgegeben und mir einen **ung
 
 **Juni 2024**
 
+- 🇺🇸&nbsp;Alex&nbsp;Bass&nbsp;(Efficient&nbsp;App) - "Immediate Top Pick on https://efficient.app (+ first app I install on my MacBook)"
 - 🇧🇷&nbsp;Viviane&nbsp;Brenner - "Thanks for your mind!"
 - 🇺🇸&nbsp;Mitchel&nbsp;C&nbsp;Harper
 - 🇦🇺&nbsp;Ray&nbsp;Pearce - "Unreal. You have made a blind man very happy. I can now use a vertical mouse with smart zoom . Love it"
