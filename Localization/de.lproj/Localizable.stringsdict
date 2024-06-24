@@ -15,9 +15,9 @@
 			<key>zero</key>
 			<string></string>
 			<key>one</key>
-			<string>wurde von Mac Mouse Fix eingefangen.</string>
+			<string>wird jetzt von Mac Mouse Fix abgefangen.</string>
 			<key>other</key>
-			<string>wurden von Mac Mouse Fix eingefangen.</string>
+			<string>werden jetzt von Mac Mouse Fix abgefangen.</string>
 		</dict>
 	</dict>
 	<key>capture-toast.buttons.uncaptured.body</key>
