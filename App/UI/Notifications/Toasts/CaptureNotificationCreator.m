@@ -92,15 +92,15 @@ static NSAttributedString *createSimpleNotificationBody(BOOL didGetCaptured, MFC
     NSString *rawBody;
     NSString *rawHint;
     if (didGetCaptured) {
-        rawBody = getCapturedBodyFormat(inputType);
-        rawHint = getCapturedHintFormat(inputType);
+        rawBody = getLocalizedString(inputType, @"captured.body");
+        rawHint = getLocalizedString(inputType, @"captured.hint");
     } else {
-        rawBody = getUncapturedBodyFormat(inputType);
-        rawHint = getUncapturedHintFormat(inputType);
+        rawBody = getLocalizedString(inputType, @"uncaptured.body");
+        rawHint = getLocalizedString(inputType, @"uncaptured.hint");
     }
     
     /// Get learn more string
-    NSAttributedString *learnMoreString = getLearnMoreString(inputType);
+    NSAttributedString *learnMoreString = [NSAttributedString attributedStringWithCoolMarkdown:getLocalizedString(inputType, @"link")];
     
     /// Apply markdown to rawBody
     NSAttributedString *body = [NSAttributedString attributedStringWithCoolMarkdown:rawBody];
@@ -145,12 +145,12 @@ static NSAttributedString *createButtonsNotificationBody(NSArray<NSString *> *ca
     NSString *uncapturedItemEnumeration = [UIStrings naturalLanguageListFromStringArray:uncapturedItemArray];
     
     /// Create body strings for captured and uncaptured
-    NSString *capturedBodyRaw = stringf(getCapturedBodyFormat(kMFCapturedInputTypeButtons), capturedItemEnumeration, capturedCount);
-    NSString *uncapturedBodyRaw = stringf(getUncapturedBodyFormat(kMFCapturedInputTypeButtons), uncapturedItemEnumeration, uncapturedCount);
+    NSString *capturedBodyRaw = stringf(getLocalizedString(kMFCapturedInputTypeButtons, @"captured.body"), capturedItemEnumeration, capturedCount);
+    NSString *uncapturedBodyRaw = stringf(getLocalizedString(kMFCapturedInputTypeButtons, @"uncaptured.body"), uncapturedItemEnumeration, uncapturedCount);
     
     /// Create body string for hint
-    NSString *capturedHintRaw = stringf(getCapturedHintFormat(kMFCapturedInputTypeButtons), capturedCount);
-    NSString *uncapturedHintRaw = stringf(getUncapturedHintFormat(kMFCapturedInputTypeButtons), uncapturedCount);
+    NSString *capturedHintRaw = stringf(getLocalizedString(kMFCapturedInputTypeButtons, @"captured.hint"), capturedCount);
+    NSString *uncapturedHintRaw = stringf(getLocalizedString(kMFCapturedInputTypeButtons, @"uncaptured.hint"), uncapturedCount);
     
     /// Apply Markdown
     NSAttributedString *capturedBody = [NSAttributedString attributedStringWithCoolMarkdown:capturedBodyRaw];
@@ -192,7 +192,7 @@ static NSAttributedString *createButtonsNotificationBody(NSArray<NSString *> *ca
     }
         
     /// Get learn more string
-    NSAttributedString *learnMoreString = getLearnMoreString(kMFCapturedInputTypeButtons);
+    NSAttributedString *learnMoreString = [NSAttributedString attributedStringWithCoolMarkdown:getLocalizedString(kMFCapturedInputTypeButtons, @"link")];
     
     /// Attach learnMore string to body
     body = [body attributedStringByAppending:learnMoreString];
@@ -204,71 +204,46 @@ static NSAttributedString *createButtonsNotificationBody(NSArray<NSString *> *ca
     return body;
 }
 
-static NSString *getCapturedBodyFormat(MFCapturedInputType inputType) {
+static NSString *getLocalizedString(MFCapturedInputType inputType, NSString *simpleKey) {
     
+    /// Define simple key -> localizedString map
+    NSDictionary *map;
     if (inputType == kMFCapturedInputTypeButtons) {
-        return NSLocalizedString(@"capture-toast.buttons.captured.body", @"Note: Value for this key is defined in Localizable.stringsdict, not Localizable.strings. || Note: The UI strings in .stringsdict have two lines. Only the first line is visible unless you start editing and then use the arrow keys to go to the second line. This is necessary to have linebreaks in .stringsdict since \n doesn't work. Use Option-Enter to insert these linebreaks.");
+        map = @{
+            
+            @"captured.body": NSLocalizedString(@"capture-toast.buttons.captured.body", @"Note: Value for this key is defined in Localizable.stringsdict, not Localizable.strings. || Note: The UI strings in .stringsdict have two lines. Only the first line is visible unless you start editing and then use the arrow keys to go to the second line. This is necessary to have linebreaks in .stringsdict since \n doesn't work. Use Option-Enter to insert these linebreaks."),
+            @"captured.hint": @"", //NSLocalizedString(@"capture-toast.buttons.captured.hint", @"Note: Value for this key is defined in Localizable.stringsdict, not Localizable.strings"),
+            
+            @"uncaptured.body": NSLocalizedString(@"capture-toast.buttons.uncaptured.body", @"Note: Value for this key is defined in Localizable.stringsdict, not Localizable.strings"),
+            @"uncaptured.hint": NSLocalizedString(@"capture-toast.buttons.uncaptured.hint", @"Note: Value for this key is defined in Localizable.stringsdict, not Localizable.strings"),
+            
+            @"link": NSLocalizedString(@"capture-toast.buttons.link", @"First draft: [Learn More](https://github.com/noah-nuebling/mac-mouse-fix/discussions/112)"),
+        };
     } else if (inputType == kMFCapturedInputTypeScroll) {
-        return NSLocalizedString(@"capture-toast.scroll.captured.body", @"First draft: **Scrolling** is now captured by Mac Mouse Fix.");
+        map = @{
+            
+            @"captured.body": NSLocalizedString(@"capture-toast.scroll.captured.body", @"First draft: **Scrolling** is now captured by Mac Mouse Fix."),
+            @"captured.hint": @"", //NSLocalizedString(@"capture-toast.scroll.captured.hint", @"First draft: Other apps can't manage scrolling input anymore."),
+            
+            @"uncaptured.body": NSLocalizedString(@"capture-toast.scroll.uncaptured.body", @"First draft: **Scrolling** is no longer captured by Mac Mouse Fix."),
+            @"uncaptured.hint": NSLocalizedString(@"capture-toast.scroll.uncaptured.hint", @"First draft: Other apps can manage scrolling input now."),
+            
+            @"link": NSLocalizedString(@"capture-toast.scroll.link", @"First draft: [Learn More](https://github.com/noah-nuebling/mac-mouse-fix/discussions/112)"),
+        };
     } else {
         assert(false); /// We haven't implemented the other inputTypes, yet.
         return @"";
     }
-}
-
-static NSString *getCapturedHintFormat(MFCapturedInputType inputType) {
     
-    if (inputType == kMFCapturedInputTypeButtons) {
-        return NSLocalizedString(@"capture-toast.buttons.captured.hint", @"Note: Value for this key is defined in Localizable.stringsdict, not Localizable.strings");
-    } else if (inputType == kMFCapturedInputTypeScroll) {
-        return NSLocalizedString(@"capture-toast.scroll.captured.hint", @"First draft: Other apps can't manage scrolling input anymore.");
-    } else {
-        assert(false);
-        return @"";
-    }
-}
-
-static NSString *getUncapturedHintFormat(MFCapturedInputType inputType) {
+    /// Get value from the map
+    NSString *result = map[simpleKey];
     
-    if (inputType == kMFCapturedInputTypeButtons) {
-        return NSLocalizedString(@"capture-toast.buttons.uncaptured.hint", @"Note: Value for this key is defined in Localizable.stringsdict, not Localizable.strings");
-    } else if (inputType == kMFCapturedInputTypeScroll) {
-        return NSLocalizedString(@"capture-toast.scroll.uncaptured.hint", @"First draft: Other apps can manage scrolling input now.");
-    } else {
-        assert(false);
-        return @"";
-    }
-}
-
-static NSString *getUncapturedBodyFormat(MFCapturedInputType inputType) {
-    
-    if (inputType == kMFCapturedInputTypeButtons) {
-        return NSLocalizedString(@"capture-toast.buttons.uncaptured.body", @"Note: Value for this key is defined in Localizable.stringsdict, not Localizable.strings");
-    } else if (inputType == kMFCapturedInputTypeScroll) {
-        return NSLocalizedString(@"capture-toast.scroll.uncaptured.body", @"First draft: **Scrolling** is no longer captured by Mac Mouse Fix.");
-    } else {
-        assert(false);
-        return @"";
-    }
-}
-static NSAttributedString *getLearnMoreString(MFCapturedInputType inputType) {
-    
-    /// Get raw string
-    NSString *learnMoreStringRaw;
-    if (inputType == kMFCapturedInputTypeButtons) {
-        learnMoreStringRaw = NSLocalizedString(@"capture-toast.buttons.link", @"First draft: [Learn More](https://github.com/noah-nuebling/mac-mouse-fix/discussions/112)");
-    } else if (inputType == kMFCapturedInputTypeScroll) {
-        learnMoreStringRaw = NSLocalizedString(@"capture-toast.scroll.link", @"First draft: [Learn More](https://github.com/noah-nuebling/mac-mouse-fix/discussions/112)");
-    } else {
-        assert(false);
-        learnMoreStringRaw = @"";
-    }
-    
-    /// Render markdown
-    NSAttributedString *learnMoreString = [NSAttributedString attributedStringWithCoolMarkdown:learnMoreStringRaw];
+    /// Validate
+    assert(result != nil);
     
     /// Return
-    return learnMoreString;
+    return result;
+    
 }
 
 static NSArray *buttonStringArrayFromButtonNumberArray(NSArray<NSNumber *> *buttons) {
