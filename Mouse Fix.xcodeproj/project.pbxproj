@@ -147,6 +147,7 @@
 		4FA1FD7F28A847BF00D1C8EE /* DeletableTableCellView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4FA1FD7E28A847BF00D1C8EE /* DeletableTableCellView.xib */; };
 		4FA1FD8128A85FD100D1C8EE /* RemapTableElements.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FA1FD8028A85FD100D1C8EE /* RemapTableElements.swift */; };
 		4FA1FD8328A916B600D1C8EE /* NSShadow+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FA1FD8228A916B600D1C8EE /* NSShadow+Extensions.swift */; };
+		4FA2F1262C29A125000C5535 /* NotificationLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FD82DDA260575B100664D6F /* NotificationLabel.m */; };
 		4FA40CEF28A0CA0A00499E53 /* ReactiveSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 4FA40CEE28A0CA0A00499E53 /* ReactiveSwift */; };
 		4FA40CF228A0CA3900499E53 /* ReactiveCocoa in Frameworks */ = {isa = PBXBuildFile; productRef = 4FA40CF128A0CA3900499E53 /* ReactiveCocoa */; };
 		4FA40CF628A0CCC600499E53 /* Math.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FF0BD50266AC10C003935EA /* Math.swift */; };
@@ -2475,6 +2476,7 @@
 				4FFA4E3928B79D8D0062A1FE /* Strings */,
 				4F8A44502925311B00361EFF /* Symbols.h */,
 				4F8A44512925311B00361EFF /* Symbols.m */,
+				4FA2F1252C29A11D000C5535 /* Notifications */,
 			);
 			path = UI;
 			sourceTree = "<group>";
@@ -6307,8 +6309,6 @@
 				4FA13FBC28B39423005C68FC /* TrialNotificationController.xib */,
 				4FA13FBB28B39423005C68FC /* TrialNotificationController.swift */,
 				4FA13FC028B3A2D3005C68FC /* TrialNotificationWindow.swift */,
-				4FD82DD9260575B100664D6F /* NotificationLabel.h */,
-				4FD82DDA260575B100664D6F /* NotificationLabel.m */,
 			);
 			path = TrialNotifications;
 			sourceTree = "<group>";
@@ -6720,6 +6720,15 @@
 				4F94F60E25E5EC2800D9F24A /* UITests */,
 			);
 			path = Tests;
+			sourceTree = "<group>";
+		};
+		4FA2F1252C29A11D000C5535 /* Notifications */ = {
+			isa = PBXGroup;
+			children = (
+				4FD82DD9260575B100664D6F /* NotificationLabel.h */,
+				4FD82DDA260575B100664D6F /* NotificationLabel.m */,
+			);
+			path = Notifications;
 			sourceTree = "<group>";
 		};
 		4FA40D1128A0D9FB00499E53 /* External */ = {
@@ -7899,6 +7908,7 @@
 				4FA40D0028A0CCCB00499E53 /* CombinedLinearCurve.swift in Sources */,
 				4F85C05428BBE6FA00E96E9C /* TrialSectionManager.swift in Sources */,
 				4FCABCF72933A7090018E538 /* ToastCreator.swift in Sources */,
+				4FA2F1262C29A125000C5535 /* NotificationLabel.m in Sources */,
 				4F1C51DA260543DD007F4930 /* NSTextField+Additions.m in Sources */,
 				4F09283F28B8101600BDC2FF /* TrialSection.swift in Sources */,
 				4F909D3128A0C3D2009349A2 /* CAAnimation+Extensions.swift in Sources */,

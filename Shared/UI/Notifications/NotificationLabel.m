@@ -12,6 +12,10 @@
 
 @implementation NotificationLabel
 
+/// Discussion:
+/// - At the time of writing this is used inside TrialNotifications and ToastNotifications.
+/// - I'm not really sure if it's beneficial to have one class to determine the behaviour of labels in both of those types of notifications. 
+
 - (instancetype)init
 {
     self = [super init];

@@ -222,6 +222,7 @@ static double _toastAnimationOffset = 20;
         NSPoint loc = NSEvent.mouseLocation;
         
         /// Check where mouse is located relative to other stuff
+        ///     Since we track mouseHover now, we might be able to reuse that here, instead of this hit-test stuff obsolete? Edit: I don't think so, since here, we don't *only* check if the cursor is over the toast.
         
         /// Get mouse location in the main content views' coordinate system. Need this to do a hit-test later.
         NSView *mainContentView = MainAppState.shared.window.contentView;
@@ -232,37 +233,89 @@ static double _toastAnimationOffset = 20;
         BOOL locIsOverMainWindowContentView = [mainContentView hitTest:locContentView] != nil; /// So that we can drag the window by its titlebar without dismissing the notification.
         
         if (!locIsOverNotification && locIsOverMainWindowContentView) {
-            [_closeTimer invalidate];
-            [self closeNotification:nil];
+            [_showDurationTimer invalidate];
+            [self closeNotificationWithFadeOut];
         }
         
         return event;
     }];
     
-    /// Close after showDuration
-    [_closeTimer invalidate];
-    _closeTimer = [NSTimer scheduledTimerWithTimeInterval:showDuration target:self selector:@selector(closeNotification:) userInfo:nil repeats:NO];
-}
-
-static NSTimer *_closeTimer;
-
-+ (void)closeNotification:(NSTimer *)timer {
+    /// Track mouse hover
+    ///     This is to keep the notification from timing out, if the cursor hovers over it
     
-    dispatch_async(dispatch_get_main_queue(), ^{ /// Necessary under Ventura Beta for animations to work
-        [self closeNotificationWithFadeOut];
-    });
+    _toastTrackingArea = [[NSTrackingArea alloc] initWithRect:w.contentView.bounds
+                                                                options:NSTrackingMouseEnteredAndExited | NSTrackingActiveAlways
+                                                                  owner:self userInfo:nil];
+    
+    [w.contentView addTrackingArea:_toastTrackingArea];
+    
+    /// Track showDuration
+    [_showDurationTimer invalidate];
+    _showDurationTimer = [NSTimer scheduledTimerWithTimeInterval:showDuration target:self selector:@selector(onShowDurationExpired:) userInfo:nil repeats:NO];
 }
 
-static void removeLocalEventMonitor() {
-    if (_localEventMonitor != nil) {
-        [NSEvent removeMonitor:_localEventMonitor];
-        _localEventMonitor = nil;
+#pragma mark Track toastHover
+
+static NSTrackingArea *_toastTrackingArea;
+static BOOL _mouseIsOverToast = NO;
+
++ (void)mouseEntered:(NSEvent *)event {
+    /// The mouse has entered the notifications content view
+    
+    _mouseIsOverToast = YES;
+    [self decideOverNotificationClose];
+}
++ (void)mouseExited:(NSEvent *)event {
+    /// The mouse has left the notifications content view
+    
+    _mouseIsOverToast = NO;
+    [self decideOverNotificationClose];
+}
+ 
+#pragma mark Track showDuration
+
+static NSTimer *_showDurationTimer;
++ (void)onShowDurationExpired:(NSTimer *)timer {
+    
+    /// Validate
+    assert([timer isEqual:_showDurationTimer]);
+    
+    /// Invalidate the timer
+    ///     Note: After the timer fires, I thought it invalidates itself, but `timer.isValid` seems to be true in here (if I didn't test wrong)
+    [_showDurationTimer invalidate];
+    _showDurationTimer = nil;
+    
+    /// Signal the decide method
+    [self decideOverNotificationClose];
+}
+
+//+ (void)closeNotification:(NSTimer *)timer {
+//    
+//    dispatch_async(dispatch_get_main_queue(), ^{ /// Necessary under Ventura Beta for animations to work (this function used to be called by the showDuration timer)
+//        [self closeNotificationWithFadeOut];
+//    });
+//}
+
+#pragma mark Close the Toast
+
++ (void)decideOverNotificationClose {
+    
+    BOOL showDurationIsOver = _showDurationTimer == nil;
+    
+    DDLogDebug(@"ToastController - showDurationIsOver: %d, !mouseIsOverToast: %d", showDurationIsOver, !_mouseIsOverToast);
+    
+    if (showDurationIsOver && !_mouseIsOverToast) {
+        
+        dispatch_async(dispatch_get_main_queue(), ^{ /// Necessary under Ventura Beta for animations to work (at that point the calling logic was different, e.g. now we also call this from the mouseEntered/mouseExited callbacks)
+            [self closeNotificationWithFadeOut];
+        });
+        
     }
 }
 
 + (void)closeNotificationWithFadeOut {
     
-    removeLocalEventMonitor();
+    cleanupForNotificationClose();
     
     NSPanel *w = (NSPanel *)_instance.window;
         
@@ -283,15 +336,33 @@ static void removeLocalEventMonitor() {
 
 + (void)closeNotificationImmediately {
     
-    removeLocalEventMonitor();
+    cleanupForNotificationClose();
     
     NSPanel *w = (NSPanel *)_instance.window;
     [w orderOut:nil];
 }
 
+static void cleanupForNotificationClose(void) {
+    
+    /// Helper function for closing the notification
+    
+    /// Remove the local event monitor
+    if (_localEventMonitor != nil) {
+        [NSEvent removeMonitor:_localEventMonitor];
+        _localEventMonitor = nil;
+    }
+    
+    /// Remove the tracking area
+    /// Notes:
+    /// - This is necessary to deactivate the tracking area, otherwise mouseExited: and mouseEntered: keep getting called. We also have to do this before replacing `_instance.window` with a new window instance for it work I think. I think we could theoretically do this right before we replace the content of `_instance.window`, but I think it's easier to do it here.
+    NSPanel *w = (id)_instance.window;
+    [w.contentView removeTrackingArea:_toastTrackingArea];
+    [w.contentView updateTrackingAreas]; /// Not sure what this does, or if it's necessary
+}
+
 + (void)windowResignKey:(NSNotification *)notification {
     
-    /// We use this to close the notification when the window it's attached to resigns key.
+    /// We use this to close the notification when the window which it is attached to resigns key.
     /// This prevents some jank when closing and then reopening the AddWindow while a notification is attached to it
     /// This won't work when using `closeNotificationWithFadeOut` instead of `closeNotificationImmediately` because of some conflicts between animations or something.
     /// This could also lead to weird behaviour whhen a notification starts to display while the Mac Mouse Fix window it attaches to is not in the foreground
@@ -302,7 +373,7 @@ static void removeLocalEventMonitor() {
     NSWindow *closedWindow = notification.object;
     
     if ([_instance.window.parentWindow isEqual:closedWindow]) {
-        [_closeTimer invalidate];
+        [_showDurationTimer invalidate];
         [self closeNotificationImmediately];
     }
 }

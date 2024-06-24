@@ -124,6 +124,9 @@ IB_DESIGNABLE
     /// Setup new tracking area
     
     /// Options
+    /// Notes:
+    /// - Is NSTrackingEnabledDuringMouseDrag really necessary? I just read a bit of docs and it seems unnecessary
+    /// - Why not use the NSTrackingInVisibleRect option instead of specifying the `_trackingRect` manually? Edit: It's because we make the `_trackingArea` larger than the view. See below.
     
     NSTrackingAreaOptions trackingAreaOptions =  NSTrackingMouseEnteredAndExited | NSTrackingEnabledDuringMouseDrag;
     trackingAreaOptions |= _alwaysTracking ? NSTrackingActiveAlways : NSTrackingActiveInKeyWindow;
