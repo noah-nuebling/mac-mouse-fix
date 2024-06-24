@@ -88,7 +88,7 @@ static NSAttributedString *createSimpleNotificationBody(BOOL didGetCaptured, MFC
     /// Validate
     assert(inputType != kMFCapturedInputTypeButtons); /// For this case, use the dedicated function
     
-    /// Get body & hint
+    /// Get raw strings
     NSString *rawBody;
     NSString *rawHint;
     if (didGetCaptured) {
@@ -98,6 +98,9 @@ static NSAttributedString *createSimpleNotificationBody(BOOL didGetCaptured, MFC
         rawBody = getLocalizedString(inputType, @"uncaptured.body");
         rawHint = getLocalizedString(inputType, @"uncaptured.hint");
     }
+    
+    /// Validate
+    assert(rawBody.length > 0);
     
     /// Get learn more string
     NSAttributedString *learnMoreString = [NSAttributedString attributedStringWithCoolMarkdown:getLocalizedString(inputType, @"link")];
@@ -144,13 +147,23 @@ static NSAttributedString *createButtonsNotificationBody(NSArray<NSString *> *ca
     NSString *capturedItemEnumeration = [UIStrings naturalLanguageListFromStringArray:capturedItemArray];
     NSString *uncapturedItemEnumeration = [UIStrings naturalLanguageListFromStringArray:uncapturedItemArray];
     
-    /// Create body strings for captured and uncaptured
+    /// Get raw strings
     NSString *capturedBodyRaw = stringf(getLocalizedString(kMFCapturedInputTypeButtons, @"captured.body"), capturedItemEnumeration, capturedCount);
     NSString *uncapturedBodyRaw = stringf(getLocalizedString(kMFCapturedInputTypeButtons, @"uncaptured.body"), uncapturedItemEnumeration, uncapturedCount);
-    
-    /// Create body string for hint
     NSString *capturedHintRaw = stringf(getLocalizedString(kMFCapturedInputTypeButtons, @"captured.hint"), capturedCount);
     NSString *uncapturedHintRaw = stringf(getLocalizedString(kMFCapturedInputTypeButtons, @"uncaptured.hint"), uncapturedCount);
+    
+    /// Validate
+    assert(capturedBodyRaw.length > 0 && uncapturedBodyRaw.length > 0);
+    
+    /// Handle hint being @"(null)"
+    ///     Explanation: If we try to format an NSLocalizedString with an integer that is not defined in the .stringsdict, then the result is @"(null)". We sometimes want to do this for testing purposes.
+    if ([capturedHintRaw isEqual:@"(null)"]) {
+        capturedHintRaw = @"";
+    }
+    if ([uncapturedHintRaw isEqual:@"(null)"]) {
+        uncapturedHintRaw = @"";
+    }
     
     /// Apply Markdown
     NSAttributedString *capturedBody = [NSAttributedString attributedStringWithCoolMarkdown:capturedBodyRaw];
@@ -208,6 +221,8 @@ static NSString *getLocalizedString(MFCapturedInputType inputType, NSString *sim
     
     /// Discussion:
     ///
+    /// - The return type of this might be an object of the private "NSLocalizedString" class, which holds different plural versions of the same string. In that case, you first need to apply `stringf()` to it to get a normal NSString.
+    ///
     /// - We put a lot of consideration into the original phrasing of "Button 4 is now captured by Mac Mouse Fix\nOther apps can't see it anymore.":
     ///     - See this ChatGPT conversation: https://chatgpt.com/share/4922a5e2-0669-412d-82c6-9d1397058409
     ///     - we choose "is now" over "has been" to make clear it's an ongoing state, where any input from Button 4 is intercepted by MMF.
@@ -215,13 +230,25 @@ static NSString *getLocalizedString(MFCapturedInputType inputType, NSString *sim
     ///     - With "Other apps can't see it anymore", we want to convey that the normal functions that a button might perform, (like opening links in a new tab) will not work anymore, but also that other mouse drivers won't be able to affect the functionality of the button anymore. We chose the phrase of "seeing" the button since it seems non-technical and relatively clear, and can be expressed in a very short phrase.
     ///     - We chose "it" instead of "the button" to make things as short as possible.
     ///     -> It was originally a priority to make the second line "Other apps can't see it anymore." very short, otherwise the first line seemed like it's not emphasized enough, and it felt hard to parse the notification at a glance. However, since we now made the font of the second line smaller and greyed out, I think we can now affort to make the second line phrase a bit longer and more descriptive.
+    ///
+    /// - Hint string brainstorming:
+    ///     - Original: Other apps can't see it anymore.
+    ///     - Alternatives:
+    ///         - Other apps can't see this button anymore.
+    ///         - Other apps can now handle scrolling input.
+    ///         - Other apps can't manage scrolling input anymore.
+    ///         - The button now works as if Mac Mouse Fix was disabled.
+    ///         - Scrolling now works as if Mac Mouse Fix was disabled.
+    ///         German:
+    ///         - Andere Apps können jetzt die Scroll-Eingabe handhaben.
+    ///         - Scrollen funktioniert jetzt, als wäre Mac Mouse Fix ausgeschaltet.
     
     /// Define simple key -> localizedString map
     NSDictionary *map;
     if (inputType == kMFCapturedInputTypeButtons) {
         map = @{
             
-            @"captured.body": NSLocalizedString(@"capture-toast.buttons.captured.body", @"Note: Value for this key is defined in Localizable.stringsdict, not Localizable.strings. || Note: The core idea that we want to convey here is that a button is 'intercepted' by Mac Mouse Fix. We used the word 'capture' instead of 'intercept' since it sounds friendlier in English. In your language, you might want to use something closer to 'intercept'."),
+            @"captured.body": NSLocalizedString(@"capture-toast.buttons.captured.body", @"Note: Value for this key is defined in Localizable.stringsdict, not Localizable.strings. || Note: The core idea that we want to convey here is that, from now on, the button is being 'intercepted' by Mac Mouse Fix. We used the word 'capture' instead of 'intercept' since it sounds friendlier in English. In your language, you might want to use something closer to 'intercept'."),
             @"captured.hint": NSLocalizedString(@"capture-toast.buttons.captured.hint", @"Note: Value for this key is defined in Localizable.stringsdict, not Localizable.strings"),
             
             @"uncaptured.body": NSLocalizedString(@"capture-toast.buttons.uncaptured.body", @"Note: Value for this key is defined in Localizable.stringsdict, not Localizable.strings"),
@@ -233,10 +260,10 @@ static NSString *getLocalizedString(MFCapturedInputType inputType, NSString *sim
         map = @{
             
             @"captured.body": NSLocalizedString(@"capture-toast.scroll.captured.body", @"First draft: **Scrolling** is now captured by Mac Mouse Fix."),
-            @"captured.hint": NSLocalizedString(@"capture-toast.scroll.captured.hint", @"First draft: Other apps can't manage scrolling input anymore."),
+            @"captured.hint": NSLocalizedString(@"capture-toast.scroll.captured.hint", @"First draft: "),
             
             @"uncaptured.body": NSLocalizedString(@"capture-toast.scroll.uncaptured.body", @"First draft: **Scrolling** is no longer captured by Mac Mouse Fix."),
-            @"uncaptured.hint": NSLocalizedString(@"capture-toast.scroll.uncaptured.hint", @"First draft: Other apps can manage scrolling input now."),
+            @"uncaptured.hint": NSLocalizedString(@"capture-toast.scroll.uncaptured.hint", @"First draft: Scrolling now works as if Mac Mouse Fix was disabled."),
             
             @"link": NSLocalizedString(@"capture-toast.scroll.link", @"First draft: [Learn More](https://github.com/noah-nuebling/mac-mouse-fix/discussions/112)"),
         };

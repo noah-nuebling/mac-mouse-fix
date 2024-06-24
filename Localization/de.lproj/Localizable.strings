@@ -125,7 +125,7 @@
 /* First draft: Your mouse only has 3 buttons */
 "buy-mouse-alert.title" = "Deine Maus hat nur 3 Tasten";
 
-/* Note: Value for this key is defined in Localizable.stringsdict, not Localizable.strings. || Note: The core idea that we want to convey here is that a button is 'intercepted' by Mac Mouse Fix. We used the word 'capture' instead of 'intercept' since it sounds friendlier in English. In your language, you might want to use something closer to 'intercept'. */
+/* Note: Value for this key is defined in Localizable.stringsdict, not Localizable.strings. || Note: The core idea that we want to convey here is that, from now on, the button is being 'intercepted' by Mac Mouse Fix. We used the word 'capture' instead of 'intercept' since it sounds friendlier in English. In your language, you might want to use something closer to 'intercept'. */
 "capture-toast.buttons.captured.body" = "<>";
 
 /* Note: Value for this key is defined in Localizable.stringsdict, not Localizable.strings */
@@ -141,19 +141,19 @@
 "capture-toast.buttons.uncaptured.hint" = "<>";
 
 /* First draft: **Scrolling** is now captured by Mac Mouse Fix. */
-"capture-toast.scroll.captured.body" = "";
+"capture-toast.scroll.captured.body" = "**Scrollen** wird jetzt von Mac Mouse Fix abgefangen.";
 
-/* First draft: Other apps can't manage scrolling input anymore. */
+/* First draft:  */
 "capture-toast.scroll.captured.hint" = "";
 
 /* First draft: [Learn More](https://github.com/noah-nuebling/mac-mouse-fix/discussions/112) */
 "capture-toast.scroll.link" = "[Erfahre mehr](https://github.com/noah-nuebling/mac-mouse-fix/discussions/112)";
 
 /* First draft: **Scrolling** is no longer captured by Mac Mouse Fix. */
-"capture-toast.scroll.uncaptured.body" = "";
+"capture-toast.scroll.uncaptured.body" = "**Scrollen** wird nicht länger von Mac Mouse Fix abgefangen.";
 
-/* First draft: Other apps can manage scrolling input now. */
-"capture-toast.scroll.uncaptured.hint" = "";
+/* First draft: Scrolling now works as if Mac Mouse Fix was disabled. */
+"capture-toast.scroll.uncaptured.hint" = "Scrollen funktioniert jetzt, als wäre Mac Mouse Fix ausgeschaltet.";
 
 /* First draft: Spaces & Mission Control */
 "drag-effect.dock-swipe" = "Spaces & Mission Control"; // !IS_OK

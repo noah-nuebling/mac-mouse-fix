@@ -50,9 +50,9 @@
 			<string>d</string>
 			<key>zero</key>
 			<string></string>
-			<key>one</key>
+			<key>onee</key>
 			<string>Other apps can&apos;t see the button anymore.</string>
-			<key>other</key>
+			<key>otherr</key>
 			<string>Other apps can&apos;t see these buttons anymore.</string>
 		</dict>
 	</dict>
@@ -69,9 +69,9 @@
 			<key>zero</key>
 			<string></string>
 			<key>one</key>
-			<string>The button will now work as if Mac Mouse Fix is disabled.</string>
+			<string>The button now works as if Mac Mouse Fix was disabled.</string>
 			<key>other</key>
-			<string>These buttons will now work as if Mac Mouse Fix is disabled.</string>
+			<string>These buttons now work as if Mac Mouse Fix was disabled.</string>
 		</dict>
 	</dict>
 </dict>
