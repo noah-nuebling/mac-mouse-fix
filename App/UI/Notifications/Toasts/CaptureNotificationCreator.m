@@ -206,12 +206,22 @@ static NSAttributedString *createButtonsNotificationBody(NSArray<NSString *> *ca
 
 static NSString *getLocalizedString(MFCapturedInputType inputType, NSString *simpleKey) {
     
+    /// Discussion:
+    ///
+    /// - We put a lot of consideration into the original phrasing of "Button 4 is now captured by Mac Mouse Fix\nOther apps can't see it anymore.":
+    ///     - See this ChatGPT conversation: https://chatgpt.com/share/4922a5e2-0669-412d-82c6-9d1397058409
+    ///     - we choose "is now" over "has been" to make clear it's an ongoing state, where any input from Button 4 is intercepted by MMF.
+    ///     - We choose "captured" or "intercepted". The core idea we want to convey is 'interception', but "intercept" sounds really aggressive and sci-fi to me, and 'capture' was the best alternative I could find. We could also use 'manage', but I feel like that's more abstract. 'controlled' also more abstract and also aggressive-sounding.
+    ///     - With "Other apps can't see it anymore", we want to convey that the normal functions that a button might perform, (like opening links in a new tab) will not work anymore, but also that other mouse drivers won't be able to affect the functionality of the button anymore. We chose the phrase of "seeing" the button since it seems non-technical and relatively clear, and can be expressed in a very short phrase.
+    ///     - We chose "it" instead of "the button" to make things as short as possible.
+    ///     -> It was originally a priority to make the second line "Other apps can't see it anymore." very short, otherwise the first line seemed like it's not emphasized enough, and it felt hard to parse the notification at a glance. However, since we now made the font of the second line smaller and greyed out, I think we can now affort to make the second line phrase a bit longer and more descriptive.
+    
     /// Define simple key -> localizedString map
     NSDictionary *map;
     if (inputType == kMFCapturedInputTypeButtons) {
         map = @{
             
-            @"captured.body": NSLocalizedString(@"capture-toast.buttons.captured.body", @"Note: Value for this key is defined in Localizable.stringsdict, not Localizable.strings. || Note: The UI strings in .stringsdict have two lines. Only the first line is visible unless you start editing and then use the arrow keys to go to the second line. This is necessary to have linebreaks in .stringsdict since \n doesn't work. Use Option-Enter to insert these linebreaks."),
+            @"captured.body": NSLocalizedString(@"capture-toast.buttons.captured.body", @"Note: Value for this key is defined in Localizable.stringsdict, not Localizable.strings. || Note: The core idea that we want to convey here is that a button is 'intercepted' by Mac Mouse Fix. We used the word 'capture' instead of 'intercept' since it sounds friendlier in English. In your language, you might want to use something closer to 'intercept'."),
             @"captured.hint": NSLocalizedString(@"capture-toast.buttons.captured.hint", @"Note: Value for this key is defined in Localizable.stringsdict, not Localizable.strings"),
             
             @"uncaptured.body": NSLocalizedString(@"capture-toast.buttons.uncaptured.body", @"Note: Value for this key is defined in Localizable.stringsdict, not Localizable.strings"),

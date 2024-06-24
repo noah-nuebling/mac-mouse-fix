@@ -133,7 +133,7 @@
 /* First draft: Your mouse only has 3 buttons */
 "buy-mouse-alert.title" = "您的鼠标只有三个按钮";
 
-/* Note: Value for this key is defined in Localizable.stringsdict, not Localizable.strings. || Note: The UI strings in .stringsdict have two lines. Only the first line is visible unless you start editing and then use the arrow keys to go to the second line. This is necessary to have linebreaks in .stringsdict since \n doesn't work. Use Option-Enter to insert these linebreaks. */
+/* Note: Value for this key is defined in Localizable.stringsdict, not Localizable.strings. || Note: The core idea that we want to convey here is that a button is 'intercepted' by Mac Mouse Fix. We used the word 'capture' instead of 'intercept' since it sounds friendlier in English. In your language, you might want to use something closer to 'intercept'. */
 "capture-toast.buttons.captured.body" = "<>";
 
 /* Note: Value for this key is defined in Localizable.stringsdict, not Localizable.strings */
