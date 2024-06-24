@@ -1,7 +1,3 @@
-
-/* Note: Value for this key is defined in Localizable.stringsdict, not Localizable.strings */
-"capture-toast.body" = "<>";
-
 /* No comment provided by engineer. */
 "Chocolate" = "巧克力";
 
@@ -13,36 +9,6 @@
 
 /* No comment provided by engineer. */
 "Vanilla" = "香草";
-
-/* Note: Value for this key is defined in Localizable.stringsdict, not Localizable.strings. || Note: The UI strings in .stringsdict have two lines. Only the first line is visible unless you start editing and then use the arrow keys to go to the second line. This is necessary to have linebreaks in .stringsdict since \n doesn't work. Use Option-Enter to insert these linebreaks. */
-"capture-toast.buttons.body.captured" = "capture-toast.buttons.body.captured";
-
-/* First draft: **Scrolling** is now captured by Mac Mouse Fix.\nOther apps can no longer see scrolling input. */
-"capture-toast.scroll.body.captured" = "capture-toast.scroll.body.captured";
-
-/* First draft: **Scrolling** is now captured by Mac Mouse Fix.\n*Other apps can no longer see scrolling input.* */
-"capture-toast-scroll.body.captured" = "capture-toast-scroll.body.captured";
-
-/* First draft: **Scrolling** is no longer captured by Mac Mouse Fix. */
-"capture-toast-scroll.body.uncaptured" = "capture-toast-scroll.body.uncaptured";
-
-/* Note: Value for this key is defined in Localizable.stringsdict, not Localizable.strings. || Note: The UI strings in .stringsdict have two lines. Only the first line is visible unless you start editing and then use the arrow keys to go to the second line. This is necessary to have linebreaks in .stringsdict since \n doesn't work. Use Option-Enter to insert these linebreaks. */
-"capture-toast.body.captured" = "<>";
-
-/* Note: Value for this key is defined in Localizable.stringsdict, not Localizable.strings */
-"capture-toast.body.uncaptured" = "<>";
-
-/* First draft: [Learn More](https://github.com/noah-nuebling/mac-mouse-fix/discussions/112) */
-"capture-toast-scroll.link" = "capture-toast-scroll.link";
-
-/* First draft: [Learn More](https://github.com/noah-nuebling/mac-mouse-fix/discussions/112) */
-"capture-toast.link" = "了解更多";
-
-/* Note: Value for this key is defined in Localizable.stringsdict, not Localizable.strings */
-"capture-toast.buttons.body.uncaptured" = "capture-toast.buttons.body.uncaptured";
-
-/* First draft: **Scrolling** is no longer captured by Mac Mouse Fix. */
-"capture-toast.scroll.body.uncaptured" = "capture-toast.scroll.body.uncaptured";
 
 /* First draft: Open 'Security & Privacy' Preferences || Notes: The string for Ventura and later is defined in Interface Builder */
 "accessibility.settings-link.pre-ventura" = "打开“隐私与安全性”偏好设置";
@@ -168,19 +134,19 @@
 "buy-mouse-alert.title" = "您的鼠标只有三个按钮";
 
 /* Note: Value for this key is defined in Localizable.stringsdict, not Localizable.strings. || Note: The UI strings in .stringsdict have two lines. Only the first line is visible unless you start editing and then use the arrow keys to go to the second line. This is necessary to have linebreaks in .stringsdict since \n doesn't work. Use Option-Enter to insert these linebreaks. */
-"capture-toast.buttons.captured.body" = "capture-toast.buttons.captured.body";
+"capture-toast.buttons.captured.body" = "<>";
 
 /* Note: Value for this key is defined in Localizable.stringsdict, not Localizable.strings */
-"capture-toast.buttons.captured.hint" = "capture-toast.buttons.captured.hint";
+"capture-toast.buttons.captured.hint" = "<>";
 
 /* First draft: [Learn More](https://github.com/noah-nuebling/mac-mouse-fix/discussions/112) */
-"capture-toast.buttons.link" = "capture-toast.buttons.link";
+"capture-toast.buttons.link" = "[了解更多](https://github.com/noah-nuebling/mac-mouse-fix/discussions/112)";
 
 /* Note: Value for this key is defined in Localizable.stringsdict, not Localizable.strings */
-"capture-toast.buttons.uncaptured.body" = "capture-toast.buttons.uncaptured.body";
+"capture-toast.buttons.uncaptured.body" = "<>";
 
 /* Note: Value for this key is defined in Localizable.stringsdict, not Localizable.strings */
-"capture-toast.buttons.uncaptured.hint" = "capture-toast.buttons.uncaptured.hint";
+"capture-toast.buttons.uncaptured.hint" = "<>";
 
 /* First draft: **Scrolling** is now captured by Mac Mouse Fix. */
 "capture-toast.scroll.captured.body" = "capture-toast.scroll.captured.body";
@@ -189,7 +155,7 @@
 "capture-toast.scroll.captured.hint" = "capture-toast.scroll.captured.hint";
 
 /* First draft: [Learn More](https://github.com/noah-nuebling/mac-mouse-fix/discussions/112) */
-"capture-toast.scroll.link" = "capture-toast.scroll.link";
+"capture-toast.scroll.link" = "[了解更多](https://github.com/noah-nuebling/mac-mouse-fix/discussions/112)";
 
 /* First draft: **Scrolling** is no longer captured by Mac Mouse Fix. */
 "capture-toast.scroll.uncaptured.body" = "capture-toast.scroll.uncaptured.body";
