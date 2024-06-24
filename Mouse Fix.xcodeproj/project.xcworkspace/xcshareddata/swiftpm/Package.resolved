@@ -6,8 +6,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/CocoaLumberjack/CocoaLumberjack.git",
       "state" : {
-        "revision" : "4b8714a7fb84d42393314ce897127b3939885ec3",
-        "version" : "3.8.5"
+        "revision" : "80ada1f753b0d53d9b57c465936a7c4169375002",
+        "version" : "3.7.4"
       }
     },
     {
@@ -24,8 +24,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/ReactiveCocoa/ReactiveSwift",
       "state" : {
-        "revision" : "40c465af19b993344e84355c00669ba2022ca3cd",
-        "version" : "7.1.1"
+        "revision" : "efb2f0a6f6c8739cce8fb14148a5bd3c83f2f91d",
+        "version" : "7.0.0"
       }
     },
     {
@@ -33,8 +33,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/SnapKit/SnapKit",
       "state" : {
-        "revision" : "2842e6e84e82eb9a8dac0100ca90d9444b0307f4",
-        "version" : "5.7.1"
+        "revision" : "f222cbdf325885926566172f6f5f06af95473158",
+        "version" : "5.6.0"
       }
     },
     {
@@ -49,10 +49,10 @@
     {
       "identity" : "swift-log",
       "kind" : "remoteSourceControl",
-      "location" : "https://github.com/apple/swift-log",
+      "location" : "https://github.com/apple/swift-log.git",
       "state" : {
-        "revision" : "e97a6fcb1ab07462881ac165fdbb37f067e205d5",
-        "version" : "1.5.4"
+        "revision" : "6fe203dc33195667ce1759bf0182975e4653ba1c",
+        "version" : "1.4.4"
       }
     },
     {

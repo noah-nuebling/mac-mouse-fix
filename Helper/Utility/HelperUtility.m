@@ -37,7 +37,7 @@
     
     if (matchingDisplayCount == 1) {
         
-        /// Get the the master display in case _displaysUnderMousePointer[0] is part of a mirror set
+        /// Get the the master display in case `_displaysUnderMousePointer[0]` is part of a mirror set
         CGDirectDisplayID d = CGDisplayPrimaryDisplay(newDisplaysUnderMousePointer[0]);
         
         /// Free
@@ -59,6 +59,7 @@
         
     } else {
         assert(false);
+        return kCVReturnError;
     }
 }
 
