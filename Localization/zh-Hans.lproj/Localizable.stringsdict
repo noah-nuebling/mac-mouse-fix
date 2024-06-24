@@ -2,7 +2,7 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>capture-toast.body.captured</key>
+	<key>capture-toast.buttons.captured.body</key>
 	<dict>
 		<key>NSStringLocalizedFormatKey</key>
 		<string>%@ %#@captured@</string>
@@ -18,7 +18,7 @@
 			<string></string>
 		</dict>
 	</dict>
-	<key>capture-toast.body.uncaptured</key>
+	<key>capture-toast.buttons.uncaptured.body</key>
 	<dict>
 		<key>NSStringLocalizedFormatKey</key>
 		<string>%@ %#@uncaptured@</string>
@@ -31,6 +31,42 @@
 			<key>other</key>
 			<string>不再被Mac Mouse Fix所捕获。</string>
 			<key>zero</key>
+			<string></string>
+		</dict>
+	</dict>
+	<key>capture-toast.buttons.captured.hint</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@hint@</string>
+		<key>hint</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>zero</key>
+			<string></string>
+			<key>one</key>
+			<string></string>
+			<key>other</key>
+			<string></string>
+		</dict>
+	</dict>
+	<key>capture-toast.buttons.uncaptured.hint</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@hint@</string>
+		<key>hint</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>zero</key>
+			<string></string>
+			<key>one</key>
+			<string></string>
+			<key>other</key>
 			<string></string>
 		</dict>
 	</dict>

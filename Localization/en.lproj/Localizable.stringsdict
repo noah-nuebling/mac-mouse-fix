@@ -20,6 +20,24 @@
 			<string>are now captured by Mac Mouse Fix.</string>
 		</dict>
 	</dict>
+	<key>capture-toast.buttons.uncaptured.body</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%@ %#@uncaptured@</string>
+		<key>uncaptured</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>zero</key>
+			<string></string>
+			<key>one</key>
+			<string>is no longer captured by Mac Mouse Fix.</string>
+			<key>other</key>
+			<string>are no longer captured by Mac Mouse Fix.</string>
+		</dict>
+	</dict>
 	<key>capture-toast.buttons.captured.hint</key>
 	<dict>
 		<key>NSStringLocalizedFormatKey</key>
@@ -54,24 +72,6 @@
 			<string>The button will now work as if Mac Mouse Fix is disabled.</string>
 			<key>other</key>
 			<string>These buttons will now work as if Mac Mouse Fix is disabled.</string>
-		</dict>
-	</dict>
-	<key>capture-toast.buttons.uncaptured.body</key>
-	<dict>
-		<key>NSStringLocalizedFormatKey</key>
-		<string>%@ %#@uncaptured@</string>
-		<key>uncaptured</key>
-		<dict>
-			<key>NSStringFormatSpecTypeKey</key>
-			<string>NSStringPluralRuleType</string>
-			<key>NSStringFormatValueTypeKey</key>
-			<string>d</string>
-			<key>zero</key>
-			<string></string>
-			<key>one</key>
-			<string>is no longer captured by Mac Mouse Fix.</string>
-			<key>other</key>
-			<string>are no longer captured by Mac Mouse Fix.</string>
 		</dict>
 	</dict>
 </dict>
