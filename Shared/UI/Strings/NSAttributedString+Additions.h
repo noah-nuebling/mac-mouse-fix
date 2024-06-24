@@ -14,6 +14,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface NSAttributedString (Additions)
 
+/// For usage guide, see Apple Typography Human Interface Guidelines: https://developer.apple.com/design/human-interface-guidelines/typography
+
 void assignAttributedStringKeepingBase(NSAttributedString *_Nonnull *_Nonnull assignee, NSAttributedString *newValue);
 
 - (NSAttributedString *)attributedStringByCapitalizingFirst;
@@ -53,11 +55,12 @@ void assignAttributedStringKeepingBase(NSAttributedString *_Nonnull *_Nonnull as
 - (NSAttributedString *)attributedStringBySettingWeight:(NSInteger)weight;
 - (NSAttributedString *)attributedStringBySettingThinForSubstring:(NSString *)subStr;
 - (NSAttributedString *)attributedStringByAddingSemiBoldForSubstring:(NSString *)subStr;
-- (NSAttributedString *)attributedStringBySettingSemiBoldColorForSubstring:(NSString *)subStr;
 - (NSAttributedString *)attributedStringBySettingFontSize:(CGFloat)size;
 - (NSAttributedString *)attributedStringByAddingColor:(NSColor *)color forSubstring:(NSString *)subStr;
 - (NSAttributedString *)attributedStringByAddingColor:(NSColor *)color forRange:(const NSRangePointer _Nullable)range;
 
+- (NSAttributedString *)attributedStringBySettingSemiBoldColorForSubstring:(NSString *)subStr;
+- (NSAttributedString *)attributedStringByAddingHintStyle;
 
 - (NSSize)sizeAtMaxWidth:(CGFloat)maxWidth;
 - (CGFloat)heightAtWidth:(CGFloat)width;

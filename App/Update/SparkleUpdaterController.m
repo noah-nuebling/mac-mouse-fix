@@ -260,8 +260,8 @@ int getMajorVersion(NSString *version) {
     } else if (latestUnshowableUpdate != nil) {
         return latestUnshowableUpdate;  /// Newest update which Sparkle (1.26.0) won't present to the user. Explanation where this variable is filled.
     } else {
-        DDLogInfo(@"UPDATER: WARN: Returning nil appcastItem to Sparkle because we couldn't find a latestUnshowableUpdate. This normally shouldn't happen I think, except if the build number of this build is very low.");
-        return [[SUAppcastItem alloc] init];    /// If we return nil Sparkle (1.26.0) will just show the latest udpate to the user which we want to avoid.
+        DDLogInfo(@"UPDATER: WARN: Returning empty appcastItem to Sparkle because we couldn't find a latestUnshowableUpdate. This normally shouldn't happen I think, except if the build number of this build is very low.");
+        return [[SUAppcastItem alloc] init];    /// If we return nil, Sparkle (1.26.0) will just show the latest udpate to the user which we want to avoid.
     }
 }
 

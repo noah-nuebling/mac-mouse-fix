@@ -135,6 +135,7 @@ struct ApplyMarkdown: MarkupVisitor {
         
         /// Notes:
         /// - We're misusing emphasis (which is usually italic) as a semibold. We're using the semibold, because for the small hint texts in the UI, bold looks way to strong. This is a very unsemantic and hacky solution. It works for now, but just keep this in mind.
+        /// - I tried using Italics in different places in the UI, and it always looked really bad. Also Chinese, Korean, and Japanese don't have italics. Edit: Actually on GitHub they do seem to have italics: https://github.com/dokuwiki/dokuwiki/issues/4080
         
         guard let str = descendInto(emphasis) else { return nil }
 //        return str.addingItalic(for: nil)

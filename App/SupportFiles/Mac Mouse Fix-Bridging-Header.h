@@ -45,6 +45,7 @@
 #import "Symbols.h"
 #import "NSView+Additions.h"
 #import "NSScreen+Additions.h"
+#import "CaptureNotificationCreator.h"
 
 
 #endif /* Mac_Mouse_Fix_Bridging_Header_h */

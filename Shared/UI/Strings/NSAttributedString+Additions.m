@@ -731,12 +731,31 @@ void assignAttributedStringKeepingBase(NSAttributedString *_Nonnull *_Nonnull as
     return [self attributedStringByAddingFontTraits:traits forRange:&range];
 }
 
+- (NSAttributedString *)attributedStringByAddingFontTraits:(NSDictionary<NSFontDescriptorTraitKey, id> *)traits {
+    
+    assert(false); /// Just pass nil for the range to achieve the same thing
+    
+    NSRange range = NSMakeRange(0, self.length);
+    return [self attributedStringByAddingFontTraits:traits forRange:&range];
+}
+
 
 
 #pragma mark Weight
 
+- (NSAttributedString *)attributedStringByAddingWeight:(NSFontWeight)weight {
+    
+    assert(false); /// Just pass nil for the range to achieve the same thing
+    
+    return [self attributedStringByAddingFontTraits:@{
+        NSFontWeightTrait: @(weight),
+    }];
+}
+
 - (NSAttributedString *)attributedStringByAddingWeight:(NSFontWeight)weight forRange:(const NSRangePointer _Nullable)range {
+    
     ///  Weight is a double between -1 and 1
+    ///  You can use predefined constants starting with NSFontWeight, such as NSFontWeightBold
     
     return [self attributedStringByAddingFontTraits:@{
         NSFontWeightTrait: @(weight),
@@ -820,6 +839,12 @@ void assignAttributedStringKeepingBase(NSAttributedString *_Nonnull *_Nonnull as
     
     /// I think it is more  ideal to use `attributedStringByAddingFontAttributes:` (ideally build a wrapper around it for setting size)
     ///  NSFontManager is not intended for this, this is probably slower than using `attributedStringByAddingFontAttributes:`.
+    ///
+    /// How to use:
+    /// - You can pass in NSFont.smallSystemFontSize, which is 11.0
+    /// - You can pass in NSFont.systemFontSize, which is 13.0 I believe
+    /// - You can pass in other arbitrary floating point numbers
+    
     
     NSMutableAttributedString *ret = self.mutableCopy;
     NSRange enumerateRange = NSMakeRange(0, self.length);
@@ -902,7 +927,22 @@ void assignAttributedStringKeepingBase(NSAttributedString *_Nonnull *_Nonnull as
     return [self attributedStringBySettingWeight:weight forSubstring:subStr];
 }
 
+#pragma mark - Special usecases
+
+- (NSAttributedString *)attributedStringByAddingHintStyle {
+    
+    /// Notes:
+    /// - The is the style of the small grey 'hint' texts we see all over the the General Tab and other Tabs. However those are mostly defined inside Interface Builder.
+    
+    NSAttributedString *ret = self.copy;
+    ret = [ret attributedStringBySettingFontSize:NSFont.smallSystemFontSize];
+    ret = [ret attributedStringByAddingColor:NSColor.secondaryLabelColor forRange:nil];
+    
+    return ret;
+}
+
 - (NSAttributedString *)attributedStringBySettingSemiBoldColorForSubstring:(NSString *)subStr {
+    
     /// I can't really get a semibold. It's too thick or too thin. So I'm trying to make it appear thicker by darkening the color.
     
     NSMutableAttributedString *ret = self.mutableCopy;

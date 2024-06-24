@@ -9,6 +9,7 @@ import Cocoa
 import ReactiveSwift
 import ReactiveCocoa
 import AppKit
+import CocoaLumberjackSwift
 
 @available(macOS 11.0, *)
 class ScrollTabController: NSViewController {
@@ -176,6 +177,42 @@ class ScrollTabController: NSViewController {
             }
         }
         
+        /// Scrollwheel capture notifications
+        /// Notes:
+        /// - You can find discussion of the design-thoughts behind this inside `getCapturedButtonsAndExcludeButtonsThatAreOnlyCapturedByModifier:`
+        /// - How to ship this:
+        ///     - We're introducing new localizable strings, so we should ship this in a major update with a Beta version
+        ///     - Once we shipped it, we should probably update the Captured Buttons Guide: https://github.com/noah-nuebling/mac-mouse-fix/discussions/112 - or create a new guide.
+        
+        let modProducer = SignalProducer.combineLatest(horizontalMod.producer, zoomMod.producer, swiftMod.producer, preciseMod.producer) /// We could reuse this down in the Keyboard modifier section, but currently, we're not
+        let captureProducer = SignalProducer.combineLatest(smooth.producer, reverseDirection.producer, scrollSpeed.producer, modProducer).combinePrevious()
+            
+        captureProducer.startWithValues { (previous, current) in
+            
+            DDLogDebug("ScrollTab - Capture-relevant settings changed")
+            
+            if let toastedWindow = NSApp.mainWindow {
+                
+                let (smooth0, reverse0, speed0, mods0) = previous
+                let (smooth1, reverse1, speed1, mods1) = current
+                
+                let (horizontal0, zoom0, swift0, precise0) = mods0
+                let (horizontal1, zoom1, swift1, precise1) = mods1
+                
+                let wasCaptured = smooth0 != "off" || reverse0 || speed0 != "system" || horizontal0 != 0 || zoom0 != 0 || swift0 != 0 || precise0 != 0
+                let isCaptured  = smooth1 != "off" || reverse1 || speed1 != "system" || horizontal1 != 0 || zoom1 != 0 || swift1 != 0 || precise1 != 0
+                    
+                DDLogDebug("ScrollTab - smooth: \(smooth0)->\(smooth1) reverse: \(reverse0)->\(reverse1) speed: \(speed0)->\(speed1) horizontal: \(horizontal0)->\(horizontal1) zoom: \(zoom0)->\(zoom1) swift: \(swift0)->\(swift1) precise: \(precise0)->\(precise1)")
+                
+                if wasCaptured && !isCaptured {
+                    CaptureNotificationCreator.showScrollWheelCaptureNotification(false)
+                }
+                if !wasCaptured && isCaptured {
+                    CaptureNotificationCreator.showScrollWheelCaptureNotification(true)
+                }
+            }
+        }
+        
         /// Keyboard modifiers
         
         horizontalModField <~ horizontalMod.producer.map({ NSEvent.ModifierFlags(rawValue: $0) })
@@ -201,13 +238,17 @@ class ScrollTabController: NSViewController {
             self.preciseMod.set(defaultP.rawValue)
         }
         
-        /// v Using combineLatest here might be easier
-        let allFlags = SignalProducer<(String, UInt), Never>.merge(horizontalMod.producer.map{ ("h", $0) }, zoomMod.producer.map{ ("z", $0) }, swiftMod.producer.map{ ("s", $0) }, preciseMod.producer.map{ ("p", $0) })
+        /// v Using Signal.combineLatest here might be easier.
+        ///     Edit: I could do it using combinePrevious() on the modProducer we defined above, but I think it would be much more complicated and less elegant
         
+        let allFlags = SignalProducer<(String, UInt), Never>.merge(horizontalMod.producer.map{ ("h", $0) }, zoomMod.producer.map{ ("z", $0) }, swiftMod.producer.map{ ("s", $0) }, preciseMod.producer.map{ ("p", $0) })
         allFlags.startWithValues { (src, flags) in
             
-//            DispatchQueue.main.async { /// Need to dispatch async to prevent weird crashes inside ReactiveSwift
+//            DispatchQueue.main.async { /// Need to dispatch async to prevent weird crashes inside ReactiveSwift. Edit: When / why did we comment this out? Seems to not be needed anymore
                 
+                /// Delete the modifiers which the user just set - delete them for all the other scroll modifications
+                ///     So you can't set two different modifications to the same modifier
+            
                 if self.horizontalMod.get() == flags && src != "h" {
                     self.horizontalMod.set(0)
                 }
@@ -221,6 +262,8 @@ class ScrollTabController: NSViewController {
                     self.preciseMod.set(0)
                 }
                 
+                /// Make restoreDefaults button appear/disappear
+            
                 var restoreDefaultsIsEnabled = true
                 
                 if self.horizontalMod.get() == defaultH.rawValue

@@ -520,7 +520,7 @@ static void updateBorderColor(RemapTableController *object, BOOL isInitialAppear
     /// `rowToRemove` is relative to actual table / groupedDataModel. Not baseDataModel
     
     /// Capture notifs
-    NSSet<NSNumber *> *capturedButtonsBefore = [RemapTableUtility getCapturedButtons];
+    NSSet<NSNumber *> *capturedButtonsBefore = [RemapTableUtility getCapturedButtonsAndExcludeButtonsThatAreOnlyCapturedByModifier:NO];
     
     /// Get base data model index corresponding to selected table index
     NSUInteger dataModelRowToRemove = [RemapTableUtility baseDataModelIndexFromGroupedDataModelIndex:rowToRemove withGroupedDataModel:self.groupedDataModel];
@@ -556,7 +556,7 @@ static void updateBorderColor(RemapTableController *object, BOOL isInitialAppear
     [self.tableView removeRowsAtIndexes:rowsToRemoveWithAnimation withAnimation:/*NSTableViewAnimationEffectNone*/NSTableViewAnimationSlideUp];
     
     /// Capture notifs
-    NSSet *capturedButtonsAfter = [RemapTableUtility getCapturedButtons];
+    NSSet *capturedButtonsAfter = [RemapTableUtility getCapturedButtonsAndExcludeButtonsThatAreOnlyCapturedByModifier:NO];
     [CaptureNotificationCreator showButtonCaptureNotificationWithBeforeSet:capturedButtonsBefore afterSet:capturedButtonsAfter];
 }
 
@@ -569,7 +569,7 @@ static void updateBorderColor(RemapTableController *object, BOOL isInitialAppear
 - (void)addRowWithHelperPayload:(NSDictionary *)payload {
     
     /// Capture notifs
-    NSSet<NSNumber *> *capturedButtonsBefore = [RemapTableUtility getCapturedButtons];
+    NSSet<NSNumber *> *capturedButtonsBefore = [RemapTableUtility getCapturedButtonsAndExcludeButtonsThatAreOnlyCapturedByModifier:NO];
     
     /// Make tableView key, so it's not greyed out
     [self.tableView.window makeFirstResponder:self.tableView];
@@ -651,7 +651,8 @@ static void updateBorderColor(RemapTableController *object, BOOL isInitialAppear
     [popUpButton performSelector:@selector(performClick:) withObject:nil afterDelay:delay];
     
     /// Capture notifs
-    NSSet<NSNumber *> *capturedButtonsAfter =  [RemapTableUtility getCapturedButtons];
+    /// 
+    NSSet<NSNumber *> *capturedButtonsAfter = [RemapTableUtility getCapturedButtonsAndExcludeButtonsThatAreOnlyCapturedByModifier:NO];
     [CaptureNotificationCreator showButtonCaptureNotificationWithBeforeSet:capturedButtonsBefore afterSet:capturedButtonsAfter];
     
 //    if ([capturedButtonsBefore isEqual:capturedButtonsAfter]) {

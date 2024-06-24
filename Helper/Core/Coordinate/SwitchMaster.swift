@@ -7,7 +7,7 @@
 // --------------------------------------------------------------------------
 //
 
-/// This class dynamically turns on or off interception of certain events from the device based on the current state.
+/// This class dynamically turns on or off interception of certain events sent by the device, based on the current state.
 ///
 /// The relevant state consists of:
 /// - attachedDevices

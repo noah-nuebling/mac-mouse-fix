@@ -258,7 +258,7 @@ import CocoaLumberjackSwift
             guard let (deviceName, nOfButtons, _) = MessagePortUtility.shared.getActiveDeviceInfo() else { return }
             
             /// Get actionTable info
-            let usedButtons = RemapTableUtility.getCapturedButtons()
+            let usedButtons = RemapTableUtility.getCapturedButtonsAndExcludeButtonsThatAreOnlyCaptured(byModifier: false)
 
             ///
             /// Show buyMouseAlert

@@ -12,6 +12,7 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface CaptureNotificationCreator : NSObject
++ (void)showScrollWheelCaptureNotification:(BOOL)hasBeenCaptured;
 + (void)showButtonCaptureNotificationWithBeforeSet:(NSSet<NSNumber *> *)beforeSet afterSet:(NSSet<NSNumber *> *)afterSet;
 @end
 

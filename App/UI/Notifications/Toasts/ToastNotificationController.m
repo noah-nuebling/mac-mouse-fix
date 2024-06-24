@@ -77,8 +77,10 @@ static double _toastAnimationOffset = 20;
     [self attachNotificationWithMessage:message toWindow:window forDuration:showDuration alignment:kToastNotificationAlignmentTopMiddle];
 }
 
-/// Pass 0 to `showDuration` to get the default duration
 + (void)attachNotificationWithMessage:(NSAttributedString *)message toWindow:(NSWindow *)attachWindow forDuration:(NSTimeInterval)showDuration alignment:(ToastNotificationAlignment)alignment {
+
+    /// Arguments:
+    /// - Pass `kMFToastDurationAutomatic` to `showDuration` to get the default duration
     
     /// Override default font size from interface builder. This also overrides font size we set to `message` before passing it to this function which might be bad.
 //    message = [message attributedStringBySettingFontSize:NSFont.smallSystemFontSize];
