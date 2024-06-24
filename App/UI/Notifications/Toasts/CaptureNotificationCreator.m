@@ -212,7 +212,7 @@ static NSString *getLocalizedString(MFCapturedInputType inputType, NSString *sim
         map = @{
             
             @"captured.body": NSLocalizedString(@"capture-toast.buttons.captured.body", @"Note: Value for this key is defined in Localizable.stringsdict, not Localizable.strings. || Note: The UI strings in .stringsdict have two lines. Only the first line is visible unless you start editing and then use the arrow keys to go to the second line. This is necessary to have linebreaks in .stringsdict since \n doesn't work. Use Option-Enter to insert these linebreaks."),
-            @"captured.hint": @"", //NSLocalizedString(@"capture-toast.buttons.captured.hint", @"Note: Value for this key is defined in Localizable.stringsdict, not Localizable.strings"),
+            @"captured.hint": NSLocalizedString(@"capture-toast.buttons.captured.hint", @"Note: Value for this key is defined in Localizable.stringsdict, not Localizable.strings"),
             
             @"uncaptured.body": NSLocalizedString(@"capture-toast.buttons.uncaptured.body", @"Note: Value for this key is defined in Localizable.stringsdict, not Localizable.strings"),
             @"uncaptured.hint": NSLocalizedString(@"capture-toast.buttons.uncaptured.hint", @"Note: Value for this key is defined in Localizable.stringsdict, not Localizable.strings"),
@@ -223,7 +223,7 @@ static NSString *getLocalizedString(MFCapturedInputType inputType, NSString *sim
         map = @{
             
             @"captured.body": NSLocalizedString(@"capture-toast.scroll.captured.body", @"First draft: **Scrolling** is now captured by Mac Mouse Fix."),
-            @"captured.hint": @"", //NSLocalizedString(@"capture-toast.scroll.captured.hint", @"First draft: Other apps can't manage scrolling input anymore."),
+            @"captured.hint": NSLocalizedString(@"capture-toast.scroll.captured.hint", @"First draft: Other apps can't manage scrolling input anymore."),
             
             @"uncaptured.body": NSLocalizedString(@"capture-toast.scroll.uncaptured.body", @"First draft: **Scrolling** is no longer captured by Mac Mouse Fix."),
             @"uncaptured.hint": NSLocalizedString(@"capture-toast.scroll.uncaptured.hint", @"First draft: Other apps can manage scrolling input now."),
