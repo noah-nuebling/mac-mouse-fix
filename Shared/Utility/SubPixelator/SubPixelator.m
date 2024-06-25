@@ -50,6 +50,7 @@
 
 - (instancetype)init {
     assert(false);
+    exit(1);
 }
 - (instancetype)initWithRoundingFunction:(double (*)(double))roundingFunction threshold:(double)threshold {
     

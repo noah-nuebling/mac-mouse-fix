@@ -43,7 +43,7 @@ static void signal_handler(int signal_number, siginfo_t *signal_info, void *cont
         ///     If this leads to further problems around termination, consider simply sending a `willTerminate` message from the Main App before terminating the Helper.
         [NSApp terminate:nil];
     } else {
-        DDLogWarn(@"SIGTERM handler caught weird signal: %d", signal_number);
+        NSLog(@"SIGTERM handler caught weird signal: %d", signal_number); /// Can't use CocoaLumberjack here since it might not be set up, yet (I think)
     }
 }
 
@@ -62,7 +62,7 @@ static void signal_handler(int signal_number, siginfo_t *signal_info, void *cont
     if (args.count > 0) {
         
         /// Log
-        DDLogInfo(@"Started helper with command line args: %@", args);
+        NSLog(@"Accessibility Check - Started helper with command line args: %@", args); /// Can't use CocoaLumberjack here since it's not set up, yet
         
         ///
         /// Process args
@@ -87,8 +87,7 @@ static void signal_handler(int signal_number, siginfo_t *signal_info, void *cont
             /// -> So we start a new instance of the helper independently of launchd and let it update the accessibility settings and then quit immediately.
             
             /// Log
-            
-            NSLog(@"Force update system settings");
+            NSLog(@"Accessibility Check - Force update system settings"); /// Can't use CocoaLumberjack here since it's not set up, yet
             
             /// Remove existing helper from System Settings
             /// - If an old helper exists, the user won't be able to enable the new helper!
@@ -128,12 +127,28 @@ static void signal_handler(int signal_number, siginfo_t *signal_info, void *cont
     };
     int rt = sigaction(SIGTERM, &action, NULL);
     if (rt < 0) {
-        DDLogError(@"Error setting up sigterm handler: %d", rt);
+        NSLog(@"Accessibility Check - Error setting up sigterm handler: %d", rt); /// Can't use CocoaLumberjack here, since it's not set up, yet
     }
     
     /// Set up CocoaLumberjack
     [SharedUtility setupBasicCocoaLumberjackLogging];
-    DDLogInfo(@"Mac Mosue Fix begins logging excessively");
+    DDLogInfo(@"Accessibility Check - Mac Mosue Fix begins logging excessively");
+    
+    
+    /// Validate asserts working properly
+    /// Notes:
+    /// - Doing this here so CocoaLumberjack is set up already. Not sure if smart decision
+    /// - It seems the NDEBUG flag is necessary to disable asserts. We hadn't had the NDEBUG flag set in 3.0.2 which contributed to a crashing issue issue where an assert was false (See: https://github.com/noah-nuebling/mac-mouse-fix/issues/988) I'm not sure when we removed the NDEBUG flag.
+    /// - I added the NDEBUG flag back to the Clang Preprocessor Macros now. I also added the NDEBUG flag to the Swift Active Compilation Conditions. Not sure what effect that has, but I think the NDEBUG flag is standard for Swift, as well so it should work fine (Not totally sure though)
+    
+#if NDEBUG
+    DDLogInfo(@"Accessibility Check - Running a Non-Debug build. Asserts are disabled.");
+    assert(false);
+#endif
+    
+#if DEBUG
+    DDLogInfo(@"Accessibility Check - Running a Debug build. Asserts are enabled.");
+#endif
     
     ///
     /// __Pre-check init__
@@ -149,7 +164,7 @@ static void signal_handler(int signal_number, siginfo_t *signal_info, void *cont
     
     if (!isTrusted) {
         
-        DDLogInfo(@"Accessibility Access Disabled");
+        DDLogInfo(@"Accessibility Check - Accessibility Access Disabled");
         
         /// Workaround for macOS bug
         ///     If there's still and old version of the helper in System Settings, the user won't be able to trust the new helper. So we remove the old helper from System Settings and add the new one again.
@@ -185,7 +200,7 @@ static void signal_handler(int signal_number, siginfo_t *signal_info, void *cont
         /// Log
         ///
         
-        DDLogInfo(@"Helper started with accessibility permissions at: URL %@", Locator.currentExecutableURL);
+        DDLogInfo(@"Accessibility Check - Helper started with accessibility permissions at: URL %@", Locator.currentExecutableURL);
         
         ///
         /// __Post-check init__

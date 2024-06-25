@@ -83,6 +83,7 @@ static NSURL *_configURL;
         return [[NSUserDefaults alloc] initWithSuiteName:kMFBundleIDApp];
     } else {
         assert(false);
+        exit(1);
     }
 }
 

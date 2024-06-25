@@ -588,7 +588,9 @@ static void heavyProcessing(CGEventRef event, int64_t scrollDeltaAxis1, int64_t 
             } else {
                 
                 /// Use curve for baseDuration instead of constant
-                /// Note: The idea is to speed up animations as the user scrolls the wheel faster.
+                /// Notes:
+                /// - The idea is to speed up animations as the user scrolls the wheel faster.
+                /// - This is currently used for the `Smoothness: Regular` setting.
                 
                 /// Gather info
                 
@@ -619,7 +621,33 @@ static void heavyProcessing(CGEventRef event, int64_t scrollDeltaAxis1, int64_t 
                 if (tick == DBL_MAX) {
                     tick = _scrollConfig.consecutiveScrollTickIntervalMax;
                 }
-                assert(tick <= _scrollConfig.consecutiveScrollTickIntervalMax);
+                
+                /// TESTING
+//                tick = _scrollConfig.consecutiveScrollTickIntervalMax + 1.0;
+                
+                /// Ensure that `tick <= max`
+                ///
+                /// Notes:
+                /// - Asserting this apparently caused the crash in 3.0.2 from https://github.com/noah-nuebling/mac-mouse-fix/issues/988
+                /// - To address this we turned off asserts in release builds by adding the NDEBUG preprocessor macro. For release builds, we're trying to recover by capping `tick` to `max` here, to smoothly recover if this bug happens.
+                ///
+                /// Discussion:
+                /// - I looked at the code inside ScrollAnalyzer.m which generates the `tick` values and and I couldn't find a reason why `tick` would ever exceed `max` (aka `_scrollConfig.consecutiveScrollTickIntervalMax`).
+                /// - The only idea I have for how this might happen is if the `max` changes between now and when the `scrollAnalysisResult` was calculated? The max *can* change, when quickScroll mod is activated. But since the `_scrollConfig` should only ever change on the first consecutiveTick and then the scrollAnalysis is made based on the new `_scrollConfig`... I still don't understand how it could lead to tick being `>` max here. So I'm not sure this is it.
+                /// - The issue also apparently went away with the 3.0.2-v-coba which returned to the classic animator scheduling. No idea how that could play a role. This animation-init-code right here is run on the animator queue, so it might be indirectly affected by the animation-callback-scheduling changes between the different vcoba builds. But I don't understand how it could lead to this crash. Maybe have to think about it more.
+                /// - One other idea is that the lower framerates in 3.0.2 could have indirectly caused problems somehowww, but one user also said the crashes didn't coincide with their computer being slow, so idk. (In this GH comment: https://github.com/noah-nuebling/mac-mouse-fix/issues/988#issuecomment-2187647181)
+                /// - One possibility to consider is that we symbolicated the crashlog wrong? But I'm very confident we didn't.
+                ///     - We used this command to symbolicate: `atos -arch arm64 -o ~/Downloads/dSYMs/Mac\ Mouse\ Fix\ Helper.app.dSYM/Contents/Resources/DWARF/Mac\ Mouse\ Fix\ Helper -l 0x100c3c000 0x100c4e44c` where the MMF Binary Image Address is the first and the Stacktrace Address is the second of the two hex numbers at the end. (you can get both of those from the crash report) The result is `__heavyProcessing_block_invoke (in Mac Mouse Fix Helper) (Scroll.m:621)`, and `Scroll.m:621` is the exactly location of an assert statement in the 3.0.2 source code (This assert probably caused the crash). If I put in any other hex numbers from the crash report I get gibberish. I'm pretty sure the symbolication is correct.
+                ///     - In [this mail](message:<5F9539CA-3097-4E29-B83E-4B91784AD3AB@platten.me>) by Jack Platten, he also attached a crashlog and it also points to `Scroll.m:621` even though the hex numbers are totally differnt. So I'm very certain now that the symbolication is correct.
+                ///
+                /// Also see:
+                /// - For further discussion, see the "Ensure that `tick <= max`" section inside `ScrollAnalyzer.m`
+                
+                if (tick > _scrollConfig.consecutiveScrollTickIntervalMax && tick != DBL_MAX) {
+                    DDLogError(@"Scroll.m - tickTime is over max. This is a bug but we can recover. tickTime: %f", tick);
+                    tick = _scrollConfig.consecutiveScrollTickIntervalMax;
+                    assert(false);
+                };
                 
                 /// Scale timeBetweenTicks to unit
                 double unitTick = [Math scaleWithValue:tick

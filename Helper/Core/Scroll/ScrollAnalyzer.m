@@ -120,7 +120,7 @@ static CFTimeInterval _consecutiveSwipeSequenceStartTime;
     
     /// Clip time since last tick to realistic value
     /// Notes:
-    /// - We originally introduced this to protect against putting super high tickSpeeds (that were the result of measurement errors) into the accelerationCurve, making the scrolling randomly too fast. But since then we've introduced other measures to protect against this, such as capped accelerationCurves and `consecutiveScrollTickInterval_AccelerationEnd`. Not sure if this is good or necessary.
+    /// - We originally introduced this to protect against putting super high tickSpeeds (that were the result of measurement errors) into the accelerationCurve, making the scrolling randomly too fast. But since then we've introduced other measures to protect against this, such as capped accelerationCurves and `consecutiveScrollTickInterval_AccelerationEnd` (And the tickTime smoothing is arguably also a measure against this?). Not sure if this is good or necessary.
     
     if (secondsSinceLastTick < scrollConfig.consecutiveScrollTickIntervalMin) {
         secondsSinceLastTick = scrollConfig.consecutiveScrollTickIntervalMin;
@@ -149,7 +149,7 @@ static CFTimeInterval _consecutiveSwipeSequenceStartTime;
             goto resetSwipes; /// Time between the last tick of the previous swipe and the first tick of the current swipe (now) is greater than swipe threshold
         
         /// Guard: Average speed high enough
-        ///     We purely use _consecutiveScrollSwipeCounter to drive fastScroll. That's why we don't want to increase it when the user scrolls slowly. -> Should consider renaming to signify coupling with fastScroll
+        ///     We purely use `_consecutiveScrollSwipeCounter` to drive fastScroll. That's why we don't want to increase it when the user scrolls slowly. -> Should consider renaming to signify coupling with fastScroll
         
         double tickSpeedThisSwipeSequence = ((double)_ticksInCurrentConsecutiveSwipeSequence) / (CACurrentMediaTime() - _consecutiveSwipeSequenceStartTime);
         
@@ -222,6 +222,7 @@ static CFTimeInterval _consecutiveSwipeSequenceStartTime;
         }
         
     } else { /// This is not first consecutive tick
+        assert(secondsSinceLastTick <= scrollConfig.consecutiveScrollTickIntervalMax);
         smoothedTimeBetweenTicks = [_tickTimeSmoother smoothWithValue:secondsSinceLastTick];
     }
     
@@ -230,7 +231,6 @@ static CFTimeInterval _consecutiveSwipeSequenceStartTime;
     _previousScrollTickTimeStamp = thisScrollTickTimeStamp;
     
     /// Debug
-    
 //    DDLogDebug(@"tickTime: %f, Smoothed tickTime: %f", secondsSinceLastTick, smoothedTimeBetweenTicks);
     
     /// Output
@@ -239,10 +239,27 @@ static CFTimeInterval _consecutiveSwipeSequenceStartTime;
         .consecutiveScrollSwipeCounter = _consecutiveScrollSwipeCounter_ForFreeScrollWheel,
         .scrollDirectionDidChange = scrollDirectionDidChange,
         .timeBetweenTicks = smoothedTimeBetweenTicks,
-        /// ^  `smoothedTimeBetweenTicks` is our best approximation of the true value of `secondsSinceLastTick`. Don't use secondsSinceLastTick directly.
-        .DEBUG_timeBetweenTicksRaw = secondsSinceLastTick,
+        .DEBUG_timeBetweenTicksRaw = secondsSinceLastTick, /// Unsmoothed timeBetweenTicks
         .DEBUG_consecutiveScrollSwipeCounterRaw = _consecutiveScrollSwipeCounter,
     };
+    
+    /// TESTING
+//    result.timeBetweenTicks = scrollConfig.consecutiveScrollTickIntervalMax + 1.0;
+    
+    /// Ensure that `tick <= max`
+    ///
+    /// Discussion:
+    /// - tickTime was apparently sometimes `>` max (and `!= DBL_MAX`) inside Scroll.m, leading to assertion-failed-crashes.
+    /// - I thought about the code and I don't understand how this can happen. So we're trying to log the weird state and recover without crashing. We're doing the log-and-recover attempts both in here and inside `Scroll.m` since we're not sure how and where the erroneous state arises.
+    ///
+    /// Also see:
+    /// - For further discussion, see the "Ensure that `tick <= max`" section inside `Scroll.m`
+    
+    if (result.timeBetweenTicks > scrollConfig.consecutiveScrollTickIntervalMax && result.timeBetweenTicks != DBL_MAX) {
+        DDLogError(@"ScrollAnalyzer - smoothed tickTime is over max. This is a bug but we can recover. Analysis result: %@", [self scrollAnalysisResultDescription:result]);
+        result.timeBetweenTicks = scrollConfig.consecutiveScrollTickIntervalMax;
+        assert(false);
+    }
     
     return result;
 }
@@ -251,9 +268,9 @@ static CFTimeInterval _consecutiveSwipeSequenceStartTime;
 
 + (NSString *)scrollAnalysisResultDescription:(ScrollAnalysisResult)analysis {
     
-    NSString *timeDeltaStr = analysis.timeBetweenTicks > 5.0 ? @"?" : stringf(@"%f", analysis.timeBetweenTicks);
+    NSString *tickTimeStr = analysis.timeBetweenTicks == DBL_MAX ? @"9999" : stringf(@"%f", analysis.timeBetweenTicks); /// 9999 signals that the analyzed tick is the first consecutive tick.
     
-    return stringf(@"dirChange: %d, ticks: %lld, swipes: %f, time: %@, rawTime: %f, rawSwipes: %lld", analysis.scrollDirectionDidChange, analysis.consecutiveScrollTickCounter, analysis.consecutiveScrollSwipeCounter, timeDeltaStr, analysis.DEBUG_timeBetweenTicksRaw, analysis.DEBUG_consecutiveScrollSwipeCounterRaw);
+    return stringf(@"dirChange: %d, ticks: %lld, swipes: %f, tickTime: %@, rawTickTime: %f, rawSwipes: %lld", analysis.scrollDirectionDidChange, analysis.consecutiveScrollTickCounter, analysis.consecutiveScrollSwipeCounter, tickTimeStr, analysis.DEBUG_timeBetweenTicksRaw, analysis.DEBUG_consecutiveScrollSwipeCounterRaw);
 }
 
 @end
