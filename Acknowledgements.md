@@ -42,6 +42,7 @@ These people spent a lot more than the standard price and treated me to an **Inc
 
 **June 2024**
 
+- 🇦🇺&nbsp;Caino - "Hey Apple, when are you going to buy this for millions?"
 - 🇺🇸&nbsp;Erik&nbsp;V&nbsp;Olson
 - 🇦🇪&nbsp;Syafiq&nbsp;Kamarul&nbsp;Azman - "Costs $2.99 but worth $10. Super intuitive to use, perfect for my workflow"
 - 🇦🇺&nbsp;Thomas&nbsp;Mcmahon
