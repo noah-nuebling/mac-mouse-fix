@@ -1,0 +1,438 @@
+{
+  "sourceLanguage" : "en",
+  "strings" : {
+    "0lz-be-kpl.title" : {
+      "comment" : "Class = \"NSTextFieldCell\"; title = \"Accessibility Access allows Mac Mouse Fix to intercept signals from your mouse and keyboard\"; ObjectID = \"0lz-be-kpl\";",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zugriff auf Bedienungshilfen erlaubt es Mac Mouse Fix Eingaben von deiner Maus und deiner Tastatur abzufangen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Accessibility Access allows Mac Mouse Fix to intercept signals from your mouse and keyboard"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mac Mouse Fix가 마우스 및 키보드 신호에 접근하려면 손쉬운 사용 접근 권한이 필요합니다."
+          }
+        },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nhận quyền truy cập Trợ năng cho phép Mac Mouse Fix can thiệp vào tín hiệu từ chuột và bàn phím"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "授权访问“辅助功能”允许Mac Mouse Fix拦截您的鼠标和键盘信号"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "取用「輔助使用」允許Mac Mouse Fix截取您的滑鼠和鍵盤訊號"
+          }
+        },
+        "zh-HK" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "取用「輔助使用」允許Mac Mouse Fix截取你的滑鼠和鍵盤訊號"
+          }
+        }
+      }
+    },
+    "04N-yp-Qg1.title" : {
+      "comment" : "Class = \"NSTextFieldCell\"; title = \"Help\"; ObjectID = \"04N-yp-Qg1\";",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hilfe"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Help"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "도움말"
+          }
+        },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Trợ giúp"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "帮助"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "輔助說明"
+          }
+        },
+        "zh-HK" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "輔助說明"
+          }
+        }
+      }
+    },
+    "9qp-gN-SZZ.title" : {
+      "comment" : "Class = \"NSTextFieldCell\"; title = \"Open 'Privacy & Security' Settings\"; ObjectID = \"9qp-gN-SZZ\";",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Öffne die 'Datenschutz & Sicherheit' Einstellungen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Open 'Privacy & Security' Settings"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "'개인정보 보호 및 보안' 설정을 엽니다."
+          }
+        },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mở cài đặt 'Riêng tư & Bảo Mật' Settings"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "打开“隐私与安全性”设置页面"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "打開「隱私權與安全性」設定頁面"
+          }
+        },
+        "zh-HK" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "開啟「私隱與保安」設定頁面"
+          }
+        }
+      }
+    },
+    "46z-Nd-nh4.title" : {
+      "comment" : "Class = \"NSTextFieldCell\"; title = \"Switch on 'Mac Mouse Fix Helper'\"; ObjectID = \"46z-Nd-nh4\";",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Schalte 'Mac Mouse Fix Helper' an"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Switch on 'Mac Mouse Fix Helper'"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "'Mac Mouse Fix Helper' 항목을 허용합니다."
+          }
+        },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bật 'Mac Mouse Fix Helper'"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "启用“Mac Mouse Fix Helper”"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "啟用「Mac Mouse Fix Helper」"
+          }
+        },
+        "zh-HK" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "啟用「Mac Mouse Fix Helper」"
+          }
+        }
+      }
+    },
+    "72q-sS-xMS.title" : {
+      "comment" : "Class = \"NSTextFieldCell\"; title = \"1.\"; ObjectID = \"72q-sS-xMS\";",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "1."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "1."
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "1."
+          }
+        },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "1."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "⒈"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "⒈"
+          }
+        },
+        "zh-HK" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "⒈"
+          }
+        }
+      }
+    },
+    "fK8-8z-KQn.ibShadowedToolTip" : {
+      "comment" : "Class = \"NSImageView\"; ibShadowedToolTip = \"Hold Shift (⇧) and click this icon to reveal 'Mac Mouse Fix Helper.app' in Finder\"; ObjectID = \"fK8-8z-KQn\";",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Halte die Umschalttaste (⇧) und klicke dieses Icon um 'Mac Mouse Fix Helper.app' im Finder anzuzeigen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Hold Shift (⇧) and click this icon to reveal 'Mac Mouse Fix Helper.app' in Finder"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Finder에서 'Mac Mouse Fix Helper.app' 파일 위치를 열어보려면 Shift (⇧) 키를 누른 상태에서 이 아이콘을 클릭하세요."
+          }
+        },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Giữ Shift (⇧) and kích vào biểu tượng này để hiện 'Mac Mouse Fix Helper.app' trong Finder"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "按住Shift（⇧）并点按这个图标即可在访达中显示“Mac Mouse Fix Helper.app”"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "按住Shift（⇧）並按一下此圖像即可於Finder顯示「Mac Mouse Fix Helper.app」"
+          }
+        },
+        "zh-HK" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "按住Shift（⇧）並按一下此圖像即可在Finder顯示「Mac Mouse Fix Helper.app」"
+          }
+        }
+      }
+    },
+    "OSk-Cl-izW.title" : {
+      "comment" : "Class = \"NSTextFieldCell\"; title = \"Grant Accessibility Access to Mac Mouse Fix\"; ObjectID = \"OSk-Cl-izW\";",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Erstatte Mac Mouse Fix Zugriff auf Bedienungshilfen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Grant Accessibility Access to Mac Mouse Fix"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mac Mouse Fix에 손쉬운 사용 접근 권한 허용"
+          }
+        },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cấp quyền truy cập Trợ năng cho Mac Mouse Fix"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "授予Mac Mouse Fix访问“辅助功能”的权限"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "允許Mac Mouse Fix取用「輔助使用」"
+          }
+        },
+        "zh-HK" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "允許Mac Mouse Fix取用「輔助使用」"
+          }
+        }
+      }
+    },
+    "RIR-VN-l6s.title" : {
+      "comment" : "Class = \"NSTextFieldCell\"; title = \"2.\"; ObjectID = \"RIR-VN-l6s\";",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "2."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "2."
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "2."
+          }
+        },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "2."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "⒉"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "⒉"
+          }
+        },
+        "zh-HK" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "⒉"
+          }
+        }
+      }
+    },
+    "u9c-up-oQG.title" : {
+      "comment" : "Class = \"NSButtonCell\"; title = \"Cancel\"; ObjectID = \"u9c-up-oQG\";",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Abbrechen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Cancel"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "취소"
+          }
+        },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hủy bỏ"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "取消"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "取消"
+          }
+        },
+        "zh-HK" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "取消"
+          }
+        }
+      }
+    }
+  },
+  "version" : "1.0"
+}
