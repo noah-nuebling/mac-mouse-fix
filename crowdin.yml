@@ -1,0 +1,3 @@
+files:
+  - source: en.lproj/Localizable.*
+    translation: '%osx_code%/%original_file_name%'
