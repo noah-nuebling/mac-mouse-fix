@@ -7776,7 +7776,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\n# Run UpdateStrings/script.py. \n# Notes:\n# - Using xcrun everywhere for hopefully better compatibility? It looks up the command in Xcode dev tools and other places, even if it's not in the path - if I understand correctly.\n# - This script takes around 2-3s from what I've seen. Should maybe optimize. Edit: Optimized a little. It's around 2s. BartyCrouch wasn't much faster - also hovers around 2s.\n# - Activating the venv doens't work here for some reason, so we do this weird ${SRCROOT}/venv/bin/pip3 stuff.\n \n# Install dependencies into venv\nxcrun python3 -m venv ${SRCROOT}/venv\n${SRCROOT}/venv/bin/pip3 install -r ${SRCROOT}/Localization/Code/UpdateStrings/requirements.txt\n\n# Run script \n${SRCROOT}/venv/bin/python3 ${SRCROOT}/Localization/Code/UpdateStrings/script.py --wet_run\n";
+			shellScript = "\n# Update: Commenting this out now, since we've moved everything to .xcstrings files instead of .strings files. Later, maybe we want to reactivate this and change the script so that it extracts strings from .md.skeleton files which we plan to introduce.\n\n# Run UpdateStrings/script.py. \n# Notes:\n# - Using xcrun everywhere for hopefully better compatibility? It looks up the command in Xcode dev tools and other places, even if it's not in the path - if I understand correctly.\n# - This script takes around 2-3s from what I've seen. Should maybe optimize. Edit: Optimized a little. It's around 2s. BartyCrouch wasn't much faster - also hovers around 2s.\n# - Activating the venv doens't work here for some reason, so we do this weird ${SRCROOT}/venv/bin/pip3 stuff.\n \n# Install dependencies into venv\n#xcrun python3 -m venv ${SRCROOT}/venv\n#${SRCROOT}/venv/bin/pip3 install -r ${SRCROOT}/Localization/Code/UpdateStrings/requirements.txt\n\n# Run script \n#${SRCROOT}/venv/bin/python3 ${SRCROOT}/Localization/Code/UpdateStrings/script.py --wet_run\n";
 		};
 		4FEEEC53263C164000C50193 /* Copy Version From Main App */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -8341,6 +8341,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = "$(inherited)";
+				CLANG_ANALYZER_LOCALIZABILITY_EMPTY_CONTEXT = YES;
 				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
@@ -8420,6 +8421,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = "$(inherited)";
+				CLANG_ANALYZER_LOCALIZABILITY_EMPTY_CONTEXT = YES;
 				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
