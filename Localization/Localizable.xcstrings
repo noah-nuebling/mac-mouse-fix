@@ -2153,13 +2153,13 @@
               "formatSpecifier" : "d",
               "variations" : {
                 "plural" : {
-                  "onee" : {
+                  "one" : {
                     "stringUnit" : {
                       "state" : "translated",
                       "value" : "Andere Apps können sie nicht mehr sehen."
                     }
                   },
-                  "otherr" : {
+                  "other" : {
                     "stringUnit" : {
                       "state" : "translated",
                       "value" : "Andere Apps können sie nicht mehr sehen."
