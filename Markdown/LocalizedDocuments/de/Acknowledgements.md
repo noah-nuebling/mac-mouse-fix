@@ -40,6 +40,7 @@ Diese Leute haben viel mehr als den Standardpreis ausgegeben und mir einen **ung
 
 **Juni 2024**
 
+- 🇺🇸&nbsp;Shawn&nbsp;Holmes
 - 🇮🇱&nbsp;סרגיי&nbsp;אגרונוב
 - 🇦🇺&nbsp;Caino - "Hey Apple, when are you going to buy this for millions?"
 - 🇺🇸&nbsp;Erik&nbsp;V&nbsp;Olson
