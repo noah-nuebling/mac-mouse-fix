@@ -342,85 +342,85 @@ And you can help! 🧠
 
 To contribute translations to Mac Mouse Fix, follow these steps:
 
-1. **Download Translation Files**
-    <details> 
-      <summary><ins>Download</ins> the translation files for the language you want to translate Mac Mouse Fix into.</summary>
-    <br>
+### 1. **Download Translation Files**
+<details> 
+    <summary><ins>Download</ins> the translation files for the language you want to translate Mac Mouse Fix into.</summary>
+<br>
 
 {download_table}
 
-    *If your language is missing from this list, please let me know in a comment below.*
+*If your language is missing from this list, please let me know in a comment below.*
+
+</details>
+
+<!--
+
+#### Further Infooo
+
+The download will contain two files: "Mac Mouse Fix.xcloc" and "Mac Mouse Fix Website.xcloc". Edit these files to translate Mac Mouse Fix.
+
+-->
+
+### 2. **Download Xcode**
+
+[Download](https://apps.apple.com/de/app/xcode/id497799835?l=en-GB&mt=12) Xcode to be able to edit the translation files.
+<!--
+> [!NOTE] 
+> **Do I need to know programming?**
+> No. Xcode is Apples Software for professional Software Development. But don't worry, it has a nice user interface for editing translation files, and you don't have to know anything about programming or software development.
+--> 
+
+### 3. **Edit the translation files files using Xcode**
+
+The Translation Files you downloaded have the file extension `.xcloc`. 
+
+Open these files in Xcode and then fill in your translations until the 'State' of every Translation shows a green checkmark.
+
+<br>
+
+<img width="759" alt="Screenshot 2024-06-27 at 10 38 27" src="https://github.com/noah-nuebling/mac-mouse-fix/assets/40808343/fb1067e9-18f4-4579-b147-cfea7f38caeb">
+
+<br><br>
+
+<details> 
+    <summary><ins>Click here</ins> for a more <b>detailed explanation</b> about how to edit your .xcloc files in Xcode.</summary>
+
+1. **Open your Translation Files**
+
+    After downloading Xcode, double click one of the .xcloc files you downloaded to begin editing it.
+
+    <img width="607" alt="Screenshot 2024-06-27 at 09 24 39" src="https://github.com/noah-nuebling/mac-mouse-fix/assets/40808343/a70addcf-466f-4a92-8096-eee717ecc9fe">
+
+2. **Navigate the UI**
+
+    After opeing your .xcloc file, browse different sections in the **Navigator** on the left, then translate the text in the **Editor** on the right.
+
+    <img width="1283" alt="Screenshot 2024-06-27 at 09 25 44" src="https://github.com/noah-nuebling/mac-mouse-fix/assets/40808343/62eb0db2-02a0-46dd-bc59-37ad892915ee">
+
+3. **Find translations that need work**
+
+    Click the 'State' column on the very right to sort the translatable text by its 'State'. Text with a Green Checkmark as it's state is probably ok, Text with other state may need to be reviewd or filled in.
+
+    <img width="1341" alt="Screenshot 2024-06-27 at 09 30 10" src="https://github.com/noah-nuebling/mac-mouse-fix/assets/40808343/daea7f0d-d823-4c75-9f06-5a81c56f836e">
+
+4. **Edit Translations**
     
-    </details>
+    Click a cell in the middle column to edit the translation.
+
+    After you edit a translation, the 'State' will turn into a green checkmark, signalling that the translation has been reviewed and approved.
     
-    <!--
-    
-    #### Further Infooo
-    
-    The download will contain two files: "Mac Mouse Fix.xcloc" and "Mac Mouse Fix Website.xcloc". Edit these files to translate Mac Mouse Fix.
-    
-    -->
-    
-2. **Download Xcode**
-    
-    [Download](https://apps.apple.com/de/app/xcode/id497799835?l=en-GB&mt=12) Xcode to be able to edit the translation files.
-    <!--
-    > [!NOTE] 
-    > **Do I need to know programming?**
-    > No. Xcode is Apples Software for professional Software Development. But don't worry, it has a nice user interface for editing translation files, and you don't have to know anything about programming or software development.
-    --> 
-    
-3. **Edit the translation files files using Xcode**
-    
-    The Translation Files you downloaded have the file extension `.xcloc`. 
-    
-    Open these files in Xcode and then fill in your translations until the 'State' of every Translation shows a green checkmark.
-    
-    <br>
-    
-    <img width="759" alt="Screenshot 2024-06-27 at 10 38 27" src="https://github.com/noah-nuebling/mac-mouse-fix/assets/40808343/fb1067e9-18f4-4579-b147-cfea7f38caeb">
-    
-    <br><br>
-    
-    <details> 
-      <summary><ins>Click here</ins> for a more <b>detailed explanation</b> about how to edit your .xcloc files in Xcode.</summary>
-    
-    1. **Open your Translation Files**
-    
-        After downloading Xcode, double click one of the .xcloc files you downloaded to begin editing it.
-    
-        <img width="607" alt="Screenshot 2024-06-27 at 09 24 39" src="https://github.com/noah-nuebling/mac-mouse-fix/assets/40808343/a70addcf-466f-4a92-8096-eee717ecc9fe">
-    
-    2. **Navigate the UI**
-    
-        After opeing your .xcloc file, browse different sections in the **Navigator** on the left, then translate the text in the **Editor** on the right.
-    
-        <img width="1283" alt="Screenshot 2024-06-27 at 09 25 44" src="https://github.com/noah-nuebling/mac-mouse-fix/assets/40808343/62eb0db2-02a0-46dd-bc59-37ad892915ee">
-    
-    3. **Find translations that need work**
-    
-        Click the 'State' column on the very right to sort the translatable text by its 'State'. Text with a Green Checkmark as it's state is probably ok, Text with other state may need to be reviewd or filled in.
-    
-        <img width="1341" alt="Screenshot 2024-06-27 at 09 30 10" src="https://github.com/noah-nuebling/mac-mouse-fix/assets/40808343/daea7f0d-d823-4c75-9f06-5a81c56f836e">
-    
-    4. **Edit Translations**
-        
-        Click a cell in the middle column to edit the translation.
-    
-        After you edit a translation, the 'State' will turn into a green checkmark, signalling that the translation has been reviewed and approved.
-        
-        <img width="1103" alt="Screenshot 2024-06-27 at 10 47 04" src="https://github.com/noah-nuebling/mac-mouse-fix/assets/40808343/56b1f109-6319-4ba8-991d-8fced7b35f9b">
-    
-    
-    </details>
-    
-4. **Submit your translations!**
-    
-    Once all your translations have a green checkmark, you can send the Translation files back to me and I will add them to Mac Mouse Fix!
-    
-    To send your Translation Files:
-    - **Option 1**: Add a comment below this post. When creating the comment, drag-and-drop your translation files into the comment text field to send them along with your comment.
-    - **Option 2**: Send me an email and add the translation files as an attachment.
+    <img width="1103" alt="Screenshot 2024-06-27 at 10 47 04" src="https://github.com/noah-nuebling/mac-mouse-fix/assets/40808343/56b1f109-6319-4ba8-991d-8fced7b35f9b">
+
+
+</details>
+
+### 4. **Submit your translations!**
+
+Once all your translations have a green checkmark, you can send the Translation files back to me and I will add them to Mac Mouse Fix!
+
+To send your Translation Files:
+- **Option 1**: Add a comment below this post. When editing the comment, drag-and-drop your translation files into the comment text field to send them along with your comment.
+- **Option 2**: Send me an email and add the translation files as an attachment.
 
 ## Credits
 
@@ -444,8 +444,8 @@ Thank you so much for your help in bringing Mac Mouse Fix to people around the w
     download_table = ""
     
     download_table += """\
-    | Language | Translation Files | Completeness |
-    |:--- |:---:| ---:|
+| Language | Translation Files | Completeness |
+|:--- |:---:| ---:|
 """
 
     for locale in sorted(locales, key=lambda l: shared.language_tag_to_language_name(l)): # Sort the locales by language name (Alphabetically)
@@ -459,7 +459,7 @@ Thank you so much for your help in bringing Mac Mouse Fix to people around the w
         language_name = shared.language_tag_to_language_name(locale)
         
         entry = f"""\
-    | {emoji_flag} {language_name} ({locale}) | [{download_name}]({download_url}) | ![Static Badge](https://img.shields.io/badge/{progress_percentage}%25-Translated-gray?style=flat&labelColor={'%23aaaaaa' if progress_percentage < 100 else 'brightgreen'}) |
+| {emoji_flag} {language_name} ({locale}) | [{download_name}]({download_url}) | ![Static Badge](https://img.shields.io/badge/{progress_percentage}%25-Translated-gray?style=flat&labelColor={'%23aaaaaa' if progress_percentage < 100 else 'brightgreen'}) |
 """
         download_table += entry
     
