@@ -431,7 +431,7 @@ def runCLT(command, cwd=None, exec='/bin/bash'):
     if command.startswith('git diff'): 
         success_codes.append(1) # Git diff returns 1 if there's a difference
     
-    clt_result = subprocess.run(command, cwd=cwd, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True, executable=exec) # Not sure what `text` and `shell` does. We use cwd to run git commands at a differnt repo than the current workding directory
+    clt_result = subprocess.run(command, cwd=cwd, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True, executable=exec) # Not sure what `text` and `shell` does. Update: It seems that sheel is for passing the command in as a string instead of several args for several args to the clt, not sure though. We use cwd to run git commands at a differnt repo than the current workding directory
     
     assert clt_result.stderr == '' and clt_result.returncode in success_codes, f"Command \"{command}\", run in cwd \"{cwd}\"\nreturned: {clt_result_description(clt_result)}"
     

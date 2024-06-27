@@ -137,32 +137,48 @@ def main():
     # Export .xcloc file for each locale
     print(f"Exporting .xcloc files for locales ...\n")
     locale_args = ' '.join([ '-exportLanguage ' + l for l in locales ])
-    shared.runCLT(f"xcodebuild -exportLocalizations -localizationPath { xcloc_dir } { locale_args }")
+    shared.runCLT(f'xcodebuild -exportLocalizations -localizationPath "{ xcloc_dir }" { locale_args }')
     print(f"Exported .xcloc files to {xcloc_dir}\n")
     
-    # Zipping up .xcloc files
+    # Rename .xcloc files and put them in subfolders
     
+    folder_name_format = "Mac Mouse Fix Translations ({})"
+    zip_file_format = "MacMouseFixTranslations.{}.zip" # GitHub Releases assets seemingly can't have spaces, that's why we're using this separate format
+    
+    for l in locales:
+        language_name = shared.language_tag_to_language_name(l)
+        current_path = os.path.join(xcloc_dir, f'{l}.xcloc')
+        target_folder = os.path.join(xcloc_dir, folder_name_format.format(language_name))
+        target_path = os.path.join(target_folder, 'Mac Mouse Fix.xcloc')
+        shared.runCLT(f'mkdir -p "{target_folder}"') # -p creates any intermediate parent folders
+        shared.runCLT(f'mv "{current_path}" "{target_path}"')
+    
+    # Zipping up folders containing .xcloc files 
     print(f"Zipping up .xcloc files ...\n")
     zip_files = {}
-    for file_path in glob.glob(f'{xcloc_dir}/*.xcloc'):
+    for l in locales:
         
-        file_name = os.path.basename(file_path)
-        file_name_stem = os.path.splitext(file_name)[0]
-        zip_file_path = os.path.join(xcloc_dir, f'{file_name_stem}.zip')
-        zip_file_name = os.path.basename(zip_file_path)
+        language_name = shared.language_tag_to_language_name(l)
+        folder_name = folder_name_format.format(language_name)
+        target_folder = os.path.join(xcloc_dir, folder_name)
+        zip_file_name = zip_file_format.format(l)
+        zip_file_path = os.path.join(xcloc_dir, zip_file_name)
         
         if os.path.exists(zip_file_path):
-            rm_result = shared.runCLT(f'rm -R {zip_file_path}') # We first remove any existing zip_file, because otherwise the `zip` CLT will combine the existing archive with the new data we're archiving which is weird. (If I understand the `zip` man correctly`)
+            rm_result = shared.runCLT(f'rm -R "{zip_file_path}"') # We first remove any existing zip_file, because otherwise the `zip` CLT will combine the existing archive with the new data we're archiving which is weird. (If I understand the `zip` man correctly`)
             print(f'Zip file of same name already existed. Calling rm on the zip_file returned: { shared.clt_result_description(rm_result) }')
             
-        zip_result = shared.runCLT(f'zip -r {zip_file_name} {file_name}', cwd=xcloc_dir) # We need to set the cwd (current working directory) like this, if we use abslute path to the zip_file and xcloc file, then the `zip` clt will recreate the whole path from our system root inside the zip archive. Not sure why.
+        zip_result = shared.runCLT(f'zip -r "{zip_file_name}" "{folder_name}"', cwd=xcloc_dir) # We need to set the cwd (current working directory) like this, if we use abslute path to the zip_file and xcloc file, then the `zip` clt will recreate the whole path from our system root inside the zip archive. Not sure why.
         print(f'zip clt returned: { shared.clt_result_description(zip_result) }')
         
         with open(zip_file_path, 'rb') as zip_file:
             # Load the zip data
             zip_file_content = zip_file.read()
             # Store the data in the GitHub API format
-            zip_files[zip_file_name] = zip_file_content
+            zip_files[l] = {
+                'name': zip_file_name,
+                'content': zip_file_content,
+            }
             
     print(f"Finished zipping up .xcloc files.\n")
     
@@ -183,10 +199,13 @@ def main():
     #   to GitHub Release
     
     download_urls = {}
-    for zip_file_name, zip_file_content in zip_files.items():
+    for zip_file_locale, value in zip_files.items():
+        
+        zip_file_name = value['name']
+        zip_file_content = value['content']
         
         response = shared.github_releases_upload_asset(args.api_key, 'noah-nuebling/mac-mouse-fix-localization-file-hosting', release['id'], zip_file_name, zip_file_content)        
-        download_urls[zip_file_name] = response.json()['browser_download_url']
+        download_urls[zip_file_locale] = response.json()['browser_download_url']
         
         print(f"Uploaded asset { zip_file_name }, received response: { shared.response_description(response) }")
         
@@ -218,12 +237,10 @@ is a
         progress = localization_progress[locale]
         progress_percentage = int(100 * progress['percentage'])
         download_name = 'Download'
-        download_url = download_urls[f'{locale}.zip']
+        download_url = download_urls[locale]
         
         emoji_flag = shared.language_tag_to_flag_emoji(locale)
         language_name = shared.language_tag_to_language_name(locale)
-        
-        # Note: We're adding the <br>'s to make the rows a little higher. This makes it less visible tha the shields.io badge isn't vertically aligned. Best solution I could come up with.
         
         entry = f"""\
 | {emoji_flag} {language_name} ({locale}) | [{download_name}]({download_url}) | ![Static Badge](https://img.shields.io/badge/{progress_percentage}%25-Translated-gray?style=flat&labelColor={'%23aaaaaa' if progress_percentage < 100 else 'brightgreen'}) |
