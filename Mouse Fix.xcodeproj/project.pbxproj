@@ -2126,6 +2126,7 @@
 		4FA2F13C2C2B0932000C5535 /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
 		4FA2F13F2C2B0932000C5535 /* mul */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; name = mul; path = mul.lproj/ButtonOptionsViewController.xcstrings; sourceTree = "<group>"; };
 		4FA2F1402C2B0932000C5535 /* mul */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; name = mul; path = mul.lproj/AuthorizeAccessibilityView.xcstrings; sourceTree = "<group>"; };
+		4FA2F1E82C2C79CF000C5535 /* script.py */ = {isa = PBXFileReference; lastKnownFileType = text.script.python; path = script.py; sourceTree = "<group>"; };
 		4FA40CF528A0CBA600499E53 /* Mac Mouse Fix-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Mac Mouse Fix-Bridging-Header.h"; sourceTree = "<group>"; };
 		4FA83A27268271E200F3A31B /* PointerSpeed.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PointerSpeed.h; sourceTree = "<group>"; };
 		4FA83A28268271E200F3A31B /* PointerSpeed.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PointerSpeed.m; sourceTree = "<group>"; };
@@ -2364,7 +2365,7 @@
 		4FF8C89D28955DC4007EC31F /* CoolTimer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoolTimer.swift; sourceTree = "<group>"; };
 		4FF8C8A028956DDD007EC31F /* ButtonModifiers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonModifiers.swift; sourceTree = "<group>"; };
 		4FF8C8A22895AACB007EC31F /* Buttons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Buttons.swift; sourceTree = "<group>"; };
-		4FF8F3A92B8F8BD3005ACF3D /* Localization Readme.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "Localization Readme.md"; sourceTree = "<group>"; };
+		4FF8F3A92B8F8BD3005ACF3D /* Localization Readme > Code.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "Localization Readme > Code.md"; sourceTree = "<group>"; };
 		4FF93058288026FC0007CCA7 /* PolynomialCappedAccelerationCurve.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PolynomialCappedAccelerationCurve.swift; sourceTree = "<group>"; };
 		4FF9305D288060100007CCA7 /* PolyFit.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = PolyFit.cpp; sourceTree = "<group>"; };
 		4FF9305E288060100007CCA7 /* PolyFit.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = PolyFit.hpp; sourceTree = "<group>"; };
@@ -6691,6 +6692,15 @@
 			path = Notifications;
 			sourceTree = "<group>";
 		};
+		4FA2F1E92C2C79CF000C5535 /* ExportLocalizationCatalog */ = {
+			isa = PBXGroup;
+			children = (
+				4FA2F1E82C2C79CF000C5535 /* script.py */,
+			);
+			name = ExportLocalizationCatalog;
+			path = Localization/Code/ExportLocalizationCatalog;
+			sourceTree = SOURCE_ROOT;
+		};
 		4FA40D1128A0D9FB00499E53 /* External */ = {
 			isa = PBXGroup;
 			children = (
@@ -6816,9 +6826,10 @@
 		4FC7D5CB2B455A1C002AED77 /* Code */ = {
 			isa = PBXGroup;
 			children = (
-				4FF8F3A92B8F8BD3005ACF3D /* Localization Readme.md */,
+				4FF8F3A92B8F8BD3005ACF3D /* Localization Readme > Code.md */,
 				4FC7D5CC2B455A1C002AED77 /* StateOfLocalization */,
 				4FC7D5CF2B455A1C002AED77 /* UpdateStrings */,
+				4FA2F1E92C2C79CF000C5535 /* ExportLocalizationCatalog */,
 				4FC7D5D22B455A1C002AED77 /* Shared */,
 			);
 			path = Code;

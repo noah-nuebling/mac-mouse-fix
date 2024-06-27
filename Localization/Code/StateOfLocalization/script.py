@@ -47,17 +47,6 @@ if code_dir not in sys.path:
 from Shared import shared
 
 #
-# Constants
-#
-
-language_flag_fallback_map = { # When a translation's languageID doesn't contain a country, fallback to these flags
-    'zh': '🇨🇳',       # Chinese maps to China
-    'ko': '🇰🇷',       # Korean maps to South Korea
-    'de': '🇩🇪',       # German maps to Germany
-    'vi': '🇻🇳',       # Vietnamese maps to Vietnam
-}
-
-#
 # Main
 #
 
@@ -125,7 +114,6 @@ def upload_markdown(api_key, markdown):
     Notes:
     - Adding a comment will alert people who have notifications turned on for the discussion!
     - Find the api_key in the Apple Note `MMF Localization Script Access Token`
-    - Use GitHub GraphQL Explorer to create queries (https://docs.github.com/en/graphql/overview/explorer)
     """
     
     # Log
@@ -138,7 +126,7 @@ def upload_markdown(api_key, markdown):
     new_comment_body = comment_prefix + markdown
     
     # Get comments on the discussion
-    #   Note: If there are 100 comments since out comment last updated, then this might break. Seems unlikely though.
+    #   Note: If there are 100 comments since our comment last updated, then this might break. Seems unlikely though.
     
     comment_count = 100
     find_comment_query = textwrap.dedent(f"""
@@ -157,7 +145,7 @@ def upload_markdown(api_key, markdown):
         }}
     """)
     
-    response = github_graphql_request(api_key, find_comment_query)
+    response = shared.github_graphql_request(api_key, find_comment_query)
     
     # Log
     print(f"Downloaded comments for discussion. Not printing response as not to clutter up logs. But it might contain error messages.")
@@ -205,7 +193,7 @@ def upload_markdown(api_key, markdown):
                 }}
             """)
             
-            response = github_graphql_request(api_key, delete_comment_query)
+            response = shard.github_graphql_request(api_key, delete_comment_query)
             
             # Log
             print(f"Deleted comment with id {old_comment_id}. Response: {response}")
@@ -213,7 +201,7 @@ def upload_markdown(api_key, markdown):
         
         # Add new comment
         
-        new_comment_body_escaped = escape_for_upload(new_comment_body) # Should we escape before the outdated check above?
+        new_comment_body_escaped = shared.escape_for_upload(new_comment_body) # Should we escape before the outdated check above?
         
         add_comment_query = textwrap.dedent(f"""
             mutation {{
@@ -227,34 +215,13 @@ def upload_markdown(api_key, markdown):
             }}
         """)
         
-        response = github_graphql_request(api_key, add_comment_query)
+        response = shared.github_graphql_request(api_key, add_comment_query)
         
         # Debug
         # print(f"Add comment query: {repr(add_comment_query)}")
         
         # Log
         print(f"Uploaded comment! Response: {response}")
-    
-# 
-# Helper for Upload Markdown
-#
-
-def github_graphql_request(api_key, query):
-
-    # Define header
-    headers = {
-        "Authorization": f"Bearer {api_key}",
-        "Content-Type": "application/json"
-    }
-
-    # Make request
-    response = requests.post('https://api.github.com/graphql', json={'query': query}, headers=headers)
-
-    # Parse the response
-    result = response.json()
-    
-    # Return 
-    return result
 
 #
 # Build markdown
@@ -370,10 +337,10 @@ Maybe the translation should be updated to reflect the new changes to the base f
                     translation_change = changes['latest_translation_change']
                     
                     ddd = { 'text': "" }
-                    base_before         = escape_for_markdown((base_change["before"] or ddd)['text'])
-                    base_after          = escape_for_markdown((base_change["after"] or ddd)['text'])
-                    translation_before  = escape_for_markdown((translation_change["before"] or ddd)['text'])
-                    translation_after   = escape_for_markdown((translation_change["after"] or ddd)['text'])
+                    base_before         = shared.escape_for_markdown((base_change["before"] or ddd)['text'])
+                    base_after          = shared.escape_for_markdown((base_change["after"] or ddd)['text'])
+                    translation_before  = shared.escape_for_markdown((translation_change["before"] or ddd)['text'])
+                    translation_after   = shared.escape_for_markdown((translation_change["after"] or ddd)['text'])
                     
                     base_commit = base_change["commit"]
                     translation_commit = translation_change["commit"]
@@ -522,7 +489,7 @@ def translation_value_to_markdown(value, file_type, escape=True):
     
     
     if escape:
-        value = escape_for_markdown(value)
+        value = shared.escape_for_markdown(value)
     
     cutoff = 250
     
@@ -556,45 +523,6 @@ def translation_to_markdown(key, value, file_type, escape_value=True):
     
     return result
 
-def language_tag_to_flag_emoji(language_id):
-    
-    # Define helper
-    def get_flag(country_code):
-        return ''.join(chr(ord(c) + 127397) for c in country_code.upper())
-    
-    # Parse language tag
-    locale = babel.Locale.parse(language_id, sep='-')
-    
-    # Get flag from country code
-    if locale.territory:
-        return get_flag(locale.territory)
-    
-    flag = language_flag_fallback_map.get(locale.language, None)
-    if flag:
-        return flag
-    
-    # Fallback to Unicode 'Replacement Character' (Missing emoji symbol/questionmark-in-rectangle symbol)
-    return "&#xFFFD;" 
-
-def escape_for_markdown(s):
-    
-    # This is to make `s` display verbatim in markdown.
-    # Update: This is not necessary anymore after we started using `escape_for_upload()`
-    
-    return s #.replace(r'\n', r'\\n').replace(r'\t', r'\\t').replace(r'\r', r'\\r')
-
-def escape_for_upload(s):
-    # This is to be able to upload a string through the GitHub GraphQL API.
-    # Src: https://www.linkedin.com/pulse/graphql-parse-errors-parul-aditya-1c
-    
-    # return s.replace('"', r'\"')#.replace(r'+', r'\+').replace(r'\\', r'\\\\')
-    
-    return (s.replace("\\", "\\\\")
-            .replace("\n", "\\n")
-            .replace("\r", "\\r")
-            .replace("\t", "\\t")
-            .replace("\f", "\\f")
-            .replace('"', '\\"'))
 
 def commit_string_for_markdown(commit, local_repo_path):
     

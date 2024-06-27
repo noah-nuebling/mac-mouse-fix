@@ -10,6 +10,178 @@ import re
 import git
 import textwrap
 import glob
+import requests
+import json
+import babel
+
+#
+# Constants
+#
+
+language_flag_fallback_map = { # When a translation's languageID doesn't contain a country, fallback to these flags
+    'zh': '🇨🇳',       # Chinese maps to China
+    'ko': '🇰🇷',       # Korean maps to South Korea
+    'de': '🇩🇪',       # German maps to Germany
+    'vi': '🇻🇳',       # Vietnamese maps to Vietnam
+}
+
+language_name_override_map = {
+    'zh-HK': 'Chinese (Honk Kong)', # The native Babel name for this locale is way to long. This is name used by Apple.
+}
+
+#
+# Language stuff
+#
+
+def language_tag_to_language_name(language_id):
+
+    language_name = language_name_override_map.get(language_id, None)
+    
+    if language_name != None:
+        return language_name
+    
+    locale_obj = babel.Locale.parse(language_id, sep='-')
+    language_name = locale_obj.english_name # You can use .display_name for native name and .english_name for the english name. Not sure what to use. I feel like since it's an English document we should use English
+    
+    return language_name
+
+def language_tag_to_flag_emoji(language_id):
+    
+    # Define helper
+    def get_flag(country_code):
+        return ''.join(chr(ord(c) + 127397) for c in country_code.upper())
+    
+    # Parse language tag
+    locale = babel.Locale.parse(language_id, sep='-')
+    
+    # Get flag from country code
+    if locale.territory:
+        return get_flag(locale.territory)
+    
+    flag = language_flag_fallback_map.get(locale.language, None)
+    if flag:
+        return flag
+    
+    # Fallback to Unicode 'Replacement Character' (Missing emoji symbol/questionmark-in-rectangle symbol)
+    return "&#xFFFD;" 
+
+# 
+# GitHub integration
+#
+
+def response_description(response: requests.Response) -> str:
+    
+    # Notes:
+    # - We return the status, the headers, and the body of the response
+    # - For the body we try to parse it as json. If that doesn't work we return plain text instead.
+    #   - `text`, `content`, and `json` are all different representations for the main body of the response as far as I understand. According to ChatGPT, if only part of the body is parsable as json, then .json() would not be None, but yet, `text` or `content` could contain extra info. In that case we're missing this extra info. I don't think this will matter.
+    
+    status = response.status_code
+    headers = response.headers
+    body_text = response.text
+    body_content = response.content
+    body_json = None
+    try:
+        body_json = response.json()
+    except:
+        body_json = None
+    
+    body = body_json if body_json != None else body_text
+    
+    return_data = {
+        'status': status,
+        'headers': dict(headers), # Need to convert this since it's a "CaseSensitiveDict"
+        'body': body,
+    }
+    
+    return json.dumps(return_data, indent=2)
+
+def github_rest_api_headers(api_key, for_uploading_binary=False): # Found these values in the github docs
+    
+    result = {
+        'Accept': 'application/vnd.github+json',
+        'Authorization': f'Bearer {api_key}',
+        'X-GitHub-Api-Version': '2022-11-28',
+    }
+    if for_uploading_binary:
+        result = { 
+            **result, 
+            **{ 'Content-Type': 'application/octet-stream' }
+        }
+        
+    return result
+
+def github_releases_get_release_with_tag(api_key, owner_and_repo, tag):
+    response = requests.get(f'https://api.github.com/repos/{owner_and_repo}/releases/tags/{tag}', headers=github_rest_api_headers(api_key))
+    assert 200 <= response.status_code < 300, f'GitHub Release retrieval failed. Code: { response.status_code }, JSON: { response.json() }'
+    return response
+
+def github_releases_list_assets_for_release(api_key, owner_and_repo, release_id):
+    # Notes
+    # - We don't need to use this. The json that github_releases_get_release_with_tag() returns already contains a list of assets
+    
+    assert(False)
+    
+    response = requests.get(f'https://api.github.com/repos/{owner_and_repo}/releases/{release_id}/assets', headers=github_rest_api_headers(api_key))
+    return response
+
+def github_releases_delete_asset(api_key, owner_and_repo, asset_id):
+    response = requests.delete(f'https://api.github.com/repos/{owner_and_repo}/releases/assets/{asset_id}', headers=github_rest_api_headers(api_key))
+    assert 200 <= response.status_code < 300, f'GitHub Release asset deletion failed. Code: { response.status_code }, JSON: { response.json() }'
+    return response
+
+def github_releases_upload_asset(api_key, owner_and_repo, release_id, asset_name, asset_binary_data):
+    headers = github_rest_api_headers(api_key, for_uploading_binary=True)
+    response = requests.post(f'https://uploads.github.com/repos/{owner_and_repo}/releases/{release_id}/assets?name={asset_name}', headers=headers, data=asset_binary_data)
+    assert 200 <= response.status_code < 300, f'GitHub Release asset upload failed. Code: { response.status_code }, JSON: { response.json() }'
+    return response
+
+def github_gists_request(api_key, data):
+    
+    # Notes:
+    # - We intended to upload our .xcloc files to gists, but that seems impossible. Trying to use gh releases for filehosting instead
+    
+    pass
+
+def github_graphql_request(api_key, query):
+
+    # Notes:
+    # - Use GitHub GraphQL Explorer to create queries (https://docs.github.com/en/graphql/overview/explorer)
+
+    # Define header
+    headers = {
+        "Authorization": f"Bearer {api_key}",
+        "Content-Type": "application/json"
+    }
+
+    # Make request
+    response = requests.post('https://api.github.com/graphql', json={'query': query}, headers=headers)
+
+    # Parse the response
+    result = response.json()
+    
+    # Return 
+    return result
+
+def escape_for_markdown(s):
+    
+    # This is to make `s` display verbatim in markdown.
+    # Update: This is not necessary anymore after we started using `escape_for_upload()`
+    
+    return s #.replace(r'\n', r'\\n').replace(r'\t', r'\\t').replace(r'\r', r'\\r')
+
+def escape_for_upload(s):
+    # This is to be able to upload a string through the GitHub GraphQL API.
+    # Src: https://www.linkedin.com/pulse/graphql-parse-errors-parul-aditya-1c
+    
+    # return s.replace('"', r'\"')#.replace(r'+', r'\+').replace(r'\\', r'\\\\')
+    
+    return (s.replace("\\", "\\\\")
+            .replace("\n", "\\n")
+            .replace("\r", "\\r")
+            .replace("\t", "\\t")
+            .replace("\f", "\\f")
+            .replace('"', '\\"'))
 
 #
 # File-level analysis
@@ -243,6 +415,16 @@ def is_file_empty(file_path):
         Also returns true if the file doesn't exist."""
     return not os.path.exists(file_path) or os.path.getsize(file_path) == 0
 
+def clt_result_description(completed_process: subprocess.CompletedProcess) -> str:
+    
+    data = {
+        'code': completed_process.returncode,
+        'stderr': completed_process.stderr,
+        'stdout': completed_process.stdout,
+    }
+    
+    return json.dumps(data, indent=2)
+    
 def runCLT(command, cwd=None, exec='/bin/bash'):
     
     success_codes=[0]
@@ -251,7 +433,7 @@ def runCLT(command, cwd=None, exec='/bin/bash'):
     
     clt_result = subprocess.run(command, cwd=cwd, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True, executable=exec) # Not sure what `text` and `shell` does. We use cwd to run git commands at a differnt repo than the current workding directory
     
-    assert clt_result.stderr == '' and clt_result.returncode in success_codes, f"Command \"{command}\", run in cwd \"{cwd}\"\n--- stderr:\n{clt_result.stderr}\n--- code:\n{clt_result.returncode}\n--- stdout:\n{clt_result.stdout}"
+    assert clt_result.stderr == '' and clt_result.returncode in success_codes, f"Command \"{command}\", run in cwd \"{cwd}\"\nreturned: {clt_result_description(clt_result)}"
     
     return clt_result
 
@@ -519,3 +701,4 @@ def find_localization_files(repo_root, website_root=None, basetypes=['IB', 'stri
         e['translations'] = translations
     
     return result
+
