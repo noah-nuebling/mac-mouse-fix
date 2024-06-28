@@ -2374,6 +2374,9 @@
 		4FFA4E3428B795F30062A1FE /* LicenseUtility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LicenseUtility.swift; sourceTree = "<group>"; };
 		4FFA4E3F28B7D0120062A1FE /* SharedSFSymbols.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = SharedSFSymbols.xcassets; sourceTree = "<group>"; };
 		4FFAD8EF28677F94005DD496 /* PointerConfigObjC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PointerConfigObjC.h; sourceTree = "<group>"; };
+		4FFB5EF42C2E67690096AA3E /* Markdown.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Markdown.xcstrings; sourceTree = "<group>"; };
+		4FFB5EF52C2E67690096AA3E /* readme_skeleton.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = readme_skeleton.md; sourceTree = "<group>"; };
+		4FFB5EF62C2E67690096AA3E /* acknowledgements_skeleton.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = acknowledgements_skeleton.md; sourceTree = "<group>"; };
 		4FFBC5732667DCE4001D389B /* PrefixHeader.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PrefixHeader.pch; sourceTree = "<group>"; };
 		4FFBC5A6266977CA001D389B /* Mac Mouse Fix Helper-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Mac Mouse Fix Helper-Bridging-Header.h"; sourceTree = "<group>"; };
 		4FFBC5A7266977CA001D389B /* DoubleExponentialSmoother.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DoubleExponentialSmoother.swift; sourceTree = "<group>"; };
@@ -2455,6 +2458,9 @@
 		4F0BDC722B446A3C00AE65C1 /* Markdown */ = {
 			isa = PBXGroup;
 			children = (
+				4FFB5EF42C2E67690096AA3E /* Markdown.xcstrings */,
+				4FFB5EF62C2E67690096AA3E /* acknowledgements_skeleton.md */,
+				4FFB5EF52C2E67690096AA3E /* readme_skeleton.md */,
 				4F0BDC732B446A3C00AE65C1 /* Code */,
 				4F0BDC762B446A3C00AE65C1 /* Templates */,
 				4F0BDC7D2B446A3C00AE65C1 /* LocalizedDocuments */,
