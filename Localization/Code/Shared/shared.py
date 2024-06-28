@@ -197,9 +197,12 @@ def get_indent(string: str) -> tuple[int, chr]:
     while True:
         
         # Idea: If all lines have a an identical whitespace at the current indent_level, then we can increase the indent_level by 1. 
+        #   Note: GitHub Flavoured Markdown apparently considers 1 tab equal to 4 spaces. Don't know how we could handle that here. We'll just crash on tab.
         
         last_line = None
         for line in lines:
+            
+            assert line[indent_level] != '\t' # Tabs are weird, we're not sure how to handle them.
             
             is_space = line[indent_level].isspace()
             is_differnt = line[indent_level] != last_line[indent_level] if last_line != None else False

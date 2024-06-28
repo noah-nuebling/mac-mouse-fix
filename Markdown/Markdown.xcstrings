@@ -24,7 +24,6 @@
       }
     },
     "readme.contributing.code.body" : {
-      "comment" : " Make sure to indent everything by 2 spaces",
       "extractionState" : "extracted_with_value",
       "localizations" : {
         "en" : {
@@ -47,7 +46,6 @@
       }
     },
     "readme.contributing.feedback.body" : {
-      "comment" : " Make sure to indent everything by 2 spaces",
       "extractionState" : "extracted_with_value",
       "localizations" : {
         "en" : {
@@ -81,7 +79,6 @@
       }
     },
     "readme.contributing.money.body" : {
-      "comment" : " Make sure to indent everything by 2 spaces",
       "extractionState" : "extracted_with_value",
       "localizations" : {
         "en" : {
@@ -115,7 +112,6 @@
       }
     },
     "readme.contributing.translations.body" : {
-      "comment" : " Make sure to indent everything by 2 spaces",
       "extractionState" : "extracted_with_value",
       "localizations" : {
         "en" : {
@@ -348,7 +344,6 @@
       }
     },
     "readme.questions.app-expose.body" : {
-      "comment" : " Make sure to indent everything by 2 spaces",
       "extractionState" : "extracted_with_value",
       "localizations" : {
         "en" : {
@@ -371,7 +366,6 @@
       }
     },
     "readme.questions.apple-silicon.body" : {
-      "comment" : " Make sure to indent everything by 2 spaces",
       "extractionState" : "extracted_with_value",
       "localizations" : {
         "en" : {
@@ -394,7 +388,6 @@
       }
     },
     "readme.questions.blender.body" : {
-      "comment" : " Make sure to indent everything by 2 spaces",
       "extractionState" : "extracted_with_value",
       "localizations" : {
         "en" : {
@@ -417,7 +410,6 @@
       }
     },
     "readme.questions.click-delay.body" : {
-      "comment" : " Make sure to indent everything by 2 spaces",
       "extractionState" : "extracted_with_value",
       "localizations" : {
         "en" : {
@@ -440,7 +432,6 @@
       }
     },
     "readme.questions.data-collection.body" : {
-      "comment" : " Make sure to indent everything by 2 spaces",
       "extractionState" : "extracted_with_value",
       "localizations" : {
         "en" : {
@@ -463,7 +454,6 @@
       }
     },
     "readme.questions.free-for-donators.body" : {
-      "comment" : " Make sure to indent everything by 2 spaces",
       "extractionState" : "extracted_with_value",
       "localizations" : {
         "en" : {
@@ -486,7 +476,6 @@
       }
     },
     "readme.questions.magic-mouse-support.body" : {
-      "comment" : " Make sure to indent everything by 2 spaces",
       "extractionState" : "extracted_with_value",
       "localizations" : {
         "en" : {
@@ -509,7 +498,6 @@
       }
     },
     "readme.questions.mouse-support.body" : {
-      "comment" : " Make sure to indent everything by 2 spaces",
       "extractionState" : "extracted_with_value",
       "localizations" : {
         "en" : {
@@ -532,7 +520,6 @@
       }
     },
     "readme.questions.open-source.body" : {
-      "comment" : " Make sure to indent everything by 2 spaces",
       "extractionState" : "extracted_with_value",
       "localizations" : {
         "en" : {
@@ -555,7 +542,6 @@
       }
     },
     "readme.questions.pointer-acceleration.body" : {
-      "comment" : " Make sure to indent everything by 2 spaces",
       "extractionState" : "extracted_with_value",
       "localizations" : {
         "en" : {
@@ -578,7 +564,6 @@
       }
     },
     "readme.questions.refund-policy.body" : {
-      "comment" : " Make sure to indent everything by 2 spaces",
       "extractionState" : "extracted_with_value",
       "localizations" : {
         "en" : {
@@ -601,7 +586,6 @@
       }
     },
     "readme.questions.tilt-wheel.body" : {
-      "comment" : " Make sure to indent everything by 2 spaces",
       "extractionState" : "extracted_with_value",
       "localizations" : {
         "en" : {
@@ -635,7 +619,6 @@
       }
     },
     "readme.tips.apple-keys.body" : {
-      "comment" : " Make sure to indent everything by 2 spaces",
       "extractionState" : "extracted_with_value",
       "localizations" : {
         "en" : {
@@ -658,7 +641,6 @@
       }
     },
     "readme.tips.swish.body" : {
-      "comment" : " Make sure to indent everything by 2 spaces. Otherwise this section of the readme will look weird.",
       "extractionState" : "extracted_with_value",
       "localizations" : {
         "en" : {

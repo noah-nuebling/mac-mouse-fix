@@ -49,7 +49,7 @@ def main():
             new_indent_level, new_indent_char = shared.get_indent(ui_string)
             
             if old_indent_level != new_indent_level:
-                print(f'Changed {key} indentation from {old_indent_level}*"{old_indent_char}" -> {new_indent_level}*"{new_indent_char}"')
+                print(f'[Changed {key} indentation from {old_indent_level}*"{old_indent_char}" -> {new_indent_level}*"{new_indent_char}"]\n')
             
             # Store result
             #   In .stringsdata format

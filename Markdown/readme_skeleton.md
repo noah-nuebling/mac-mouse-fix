@@ -211,7 +211,7 @@ These cool articles were written about MMF
 
   Anything you can do with a two-finger swipe on an Apple trackpad works just as well with the "Scroll & Navigate" feature in Mac Mouse Fix.
   ```
-  comment: Make sure to indent everything by 2 spaces. Otherwise this section of the readme will look weird. 
+  comment:  
   ```
 
 - {{**Control Screen Brightness, Audio Volume, or Media Playback right from your mouse**||readme.tips.apple-keys.title||}}
@@ -226,7 +226,7 @@ These cool articles were written about MMF
 
   <img src="{repo_root}Markdown/Media/Apple-Keys-Demo.gif" width="700">
   ```
-  comment: Make sure to indent everything by 2 spaces
+  comment: 
   ```
 
 ## {{Questions||readme.questions.title||}}
@@ -238,7 +238,7 @@ These cool articles were written about MMF
   ```
   Yes, Mac Mouse Fix runs 100% native on Apple Silicon.
   ```
-  comment: Make sure to indent everything by 2 spaces
+  comment: 
   ```
 
 - {{**Why is there a delay when I click?**||readme.questions.click-delay.title||}}
@@ -249,7 +249,7 @@ These cool articles were written about MMF
   When you click, Mac Mouse Fix might wait to see if you're going to double click.\
   To remove the delay for a button, delete any "Double Click" actions for that button.
   ```
-  comment: Make sure to indent everything by 2 spaces
+  comment: 
   ```
 
 - {{**How can I orbit around objects in 3D apps like Blender?**||readme.questions.blender.title||}}
@@ -264,7 +264,7 @@ These cool articles were written about MMF
   1. Assign clicking and dragging one of the buttons of your mouse to the "Scroll & Navigate" feature. This feature simulates swiping with 2 fingers on an Apple Trackpad. This will, among other things, let you orbit in 3D apps! 
   2. *Uncapture* the Middle Mouse Button by deleting all actions assigned to it in Mac Mouse Fix. See [this guide](https://github.com/noah-nuebling/mac-mouse-fix/discussions/112) for more info.
   ```
-  comment: Make sure to indent everything by 2 spaces
+  comment: 
   ```
 
 - {{**Can I open App Exposé through a Click and Drag Gesture?**||readme.questions.app-expose.title||}} <!-- Note: We're using App Exposé here and Application Windows in MMF. Not sure that's great. I felt this was clearer though. -->
@@ -281,7 +281,7 @@ These cool articles were written about MMF
   defaults write com.apple.Dock showAppExposeGestureEnabled -bool TRUE; killall Dock
   ```
   ```
-  comment: Make sure to indent everything by 2 spaces
+  comment: 
   ```
   
   <!-- NOTES: Maybe we should automate this. For context, see Issue https://github.com/noah-nuebling/mac-mouse-fix/issues/387 -->
@@ -298,7 +298,7 @@ These cool articles were written about MMF
   That's because these mice communicate with your computer using a special, proprietary protocol, instead of the standard USB protocol.
   I would love to add full compatibility for these mice at some point, but it's a ton of work and it won't be coming soon.
   ```
-  comment: Make sure to indent everything by 2 spaces
+  comment: 
   ```
 
 - {{**Is the Magic Mouse supported?**||readme.questions.magic-mouse-support.title||}}
@@ -308,7 +308,7 @@ These cool articles were written about MMF
   ```
   I might add features in the future which enhance the Apple Magic Mouse, but currently, Mac Mouse Fix has no effect on it.
   ```
-  comment: Make sure to indent everything by 2 spaces
+  comment: 
   ```
   
   <!-- You can use SteerMouse or proprietary driver like Logitech Options instead. -->
@@ -334,7 +334,7 @@ These cool articles were written about MMF
   ```
   Some mice let you tilt the scroll wheel left or right to scroll horizontally. Mac Mouse Fix will make this feel more natural and easy to control. However, it's not currently possible to trigger other actions, such as switching between desktops, by tilting the scroll wheel. I'd love to implement this feature at some point, but it's a ton of work and it won't be coming soon.
   ```
-  comment: Make sure to indent everything by 2 spaces
+  comment: 
   ```
   
   <!-- This is so hard, because it would require reprogramming the mouse so that it sends button-signals instead of sending scroll-signals, when you tilt the scroll wheel. And to reprogram the mouse, would require communicating with the it through the custom vendor-specific protocol. And that's not easy. For many mice it's not even possible. -->
@@ -348,7 +348,7 @@ These cool articles were written about MMF
 
   I plan to add really nice ways to improve pointer acceleration in the future, but I'm not sure when that's coming.
   ```
-  comment: Make sure to indent everything by 2 spaces
+  comment: 
   ```
 
 - {{**Does Mac Mouse Fix collect my data?**||readme.questions.data-collection.title||}}
@@ -360,7 +360,7 @@ These cool articles were written about MMF
 
   However, at the moment that you buy the app, the sales provider Gumroad.com collects some personal info, such as your email address, and this info is visible to me. This is necessary to be able to issue refunds, send a license key to your email, etc. I cannot turn this off. To learn more about the data collected when you buy Mac Mouse Fix, see the [Gumroad Privacy Policy](https://gumroad.com/privacy).
   ```
-  comment: Make sure to indent everything by 2 spaces
+  comment: 
   ```
 
 - {{**Is there a refund policy?**||readme.questions.refund-policy.title||}}
@@ -372,7 +372,7 @@ These cool articles were written about MMF
   
   If you experience any problems after buying the app, just reach out to me, and I will do my best to help.
   ```
-  comment: Make sure to indent everything by 2 spaces
+  comment: 
   ```
 
 - {{**Will Mac Mouse Fix still be Open Source now that it's monetized?**||readme.questions.open-source.title||}}
@@ -386,7 +386,7 @@ These cool articles were written about MMF
 
   Learn about the details in the [MMF License](https://github.com/noah-nuebling/mac-mouse-fix/blob/master/License) which Mac Mouse Fix 3 and later are licensed under.
   ```
-  comment: Make sure to indent everything by 2 spaces
+  comment: 
   ```
 
   <!--
@@ -403,7 +403,7 @@ These cool articles were written about MMF
   ```
   Yes! See the [Acknowledgements]({language_root}Acknowledgements.md#-paypal-donations) for more info.
   ```
-  comment: Make sure to indent everything by 2 spaces
+  comment: 
   ```
 
 ## {{How you can contribute||readme.contributing.title||}}
@@ -431,7 +431,7 @@ comment:
   ```
   You can help by sharing your **ideas**, **issues** and **feedback** via the [Feedback Assistant](https://noah-nuebling.github.io/mac-mouse-fix-feedback-assistant/?type=bug-report).
   ```
-  comment: Make sure to indent everything by 2 spaces
+  comment: 
   ```
 
 - {{**Contributing money**||readme.contributing.money.title||}}
@@ -444,7 +444,7 @@ comment:
   2. [Tip me](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=ARSTVR6KFB524&source=url&lc=en_US) on PayPal. I don't get a lot of money from this, but it's always cute and motivating to get a donation.
   3. [Sponsor me](https://github.com/sponsors/noah-nuebling) on GitHub. A monthly sponsorship is a great way to support the project and help me have a more stable income.
   ```
-  comment: Make sure to indent everything by 2 spaces
+  comment: 
   ```
 
 - {{**Adding translations**||readme.contributing.translations.title||}}
@@ -457,7 +457,7 @@ comment:
   If you would like to **help translate the project**, see the [Localization Guide](https://github.com/noah-nuebling/mac-mouse-fix/discussions/731).\
   If you want to **report missing or suboptimal translations**, that's also very helpful. The best way to report problems is by commenting under the [Localization Guide](https://github.com/noah-nuebling/mac-mouse-fix/discussions/731).
   ```
-  comment: Make sure to indent everything by 2 spaces
+  comment: 
   ```
 
 - {{**Contributing code**||readme.contributing.code.title||}}
@@ -470,7 +470,7 @@ comment:
   However, I might not accept all pull requests. If you want to make sure that your work is not wasted, you can submit an initial pull request that only *describes* the changes you want to make, but contains little or no code. Then I can give you feedback and tell you if I would adopt the changes you want to make in that way.
   <!-- NOTE: I should mention people who contributed code on the acknowledgements page. They are already in the update notes. -->
   ```
-  comment: Make sure to indent everything by 2 spaces
+  comment: 
   ```
 
 {{**Thank you** to everyone who has already contributed and supported me in trying to make the best mouse driver *of all time*! :)🚀||readme.contributing.footer||}}
