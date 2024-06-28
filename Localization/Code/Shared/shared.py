@@ -435,6 +435,8 @@ def runCLT(command, cwd=None, exec='/bin/bash'):
     
     assert clt_result.stderr == '' and clt_result.returncode in success_codes, f"Command \"{command}\", run in cwd \"{cwd}\"\nreturned: {clt_result_description(clt_result)}"
     
+    clt_result.stdout = clt_result.stdout.strip() # The stdout sometimes has trailing newline character which we remove here.
+    
     return clt_result
 
 def run_git_command(repo_path, command):

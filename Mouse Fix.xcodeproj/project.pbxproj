@@ -2377,6 +2377,8 @@
 		4FFB5EF42C2E67690096AA3E /* Markdown.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Markdown.xcstrings; sourceTree = "<group>"; };
 		4FFB5EF52C2E67690096AA3E /* readme_skeleton.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = readme_skeleton.md; sourceTree = "<group>"; };
 		4FFB5EF62C2E67690096AA3E /* acknowledgements_skeleton.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = acknowledgements_skeleton.md; sourceTree = "<group>"; };
+		4FFB5EF72C2E67F10096AA3E /* sync_xcstrings.py */ = {isa = PBXFileReference; lastKnownFileType = text.script.python; path = sync_xcstrings.py; sourceTree = "<group>"; };
+		4FFB5EFA2C2E78D30096AA3E /* Misappropriating XCStrings.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; name = "Misappropriating XCStrings.md"; path = "Localization/Misappropriating XCStrings.md"; sourceTree = SOURCE_ROOT; };
 		4FFBC5732667DCE4001D389B /* PrefixHeader.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PrefixHeader.pch; sourceTree = "<group>"; };
 		4FFBC5A6266977CA001D389B /* Mac Mouse Fix Helper-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Mac Mouse Fix Helper-Bridging-Header.h"; sourceTree = "<group>"; };
 		4FFBC5A7266977CA001D389B /* DoubleExponentialSmoother.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DoubleExponentialSmoother.swift; sourceTree = "<group>"; };
@@ -2473,8 +2475,8 @@
 		4F0BDC732B446A3C00AE65C1 /* Code */ = {
 			isa = PBXGroup;
 			children = (
-				4F0BDC742B446A3C00AE65C1 /* python_requirements.txt */,
-				4F0BDC752B446A3C00AE65C1 /* markdown_generator.py */,
+				4FFB5EF82C2E684B0096AA3E /* MarkdownGenerator */,
+				4FFB5EF92C2E685A0096AA3E /* SyncXCStrings */,
 			);
 			path = Code;
 			sourceTree = "<group>";
@@ -6566,6 +6568,7 @@
 		4F909D1528A0C3D2009349A2 /* Localization */ = {
 			isa = PBXGroup;
 			children = (
+				4FFB5EFA2C2E78D30096AA3E /* Misappropriating XCStrings.md */,
 				4F909D1928A0C3D2009349A2 /* Localization Readme.md */,
 				4FC7D5CB2B455A1C002AED77 /* Code */,
 				4FA2F13C2C2B0932000C5535 /* Localizable.xcstrings */,
@@ -7514,6 +7517,23 @@
 				4FC8A7CC28AAF1BC007DB982 /* MarkdownParser.swift */,
 			);
 			path = Strings;
+			sourceTree = "<group>";
+		};
+		4FFB5EF82C2E684B0096AA3E /* MarkdownGenerator */ = {
+			isa = PBXGroup;
+			children = (
+				4F0BDC742B446A3C00AE65C1 /* python_requirements.txt */,
+				4F0BDC752B446A3C00AE65C1 /* markdown_generator.py */,
+			);
+			path = MarkdownGenerator;
+			sourceTree = "<group>";
+		};
+		4FFB5EF92C2E685A0096AA3E /* SyncXCStrings */ = {
+			isa = PBXGroup;
+			children = (
+				4FFB5EF72C2E67F10096AA3E /* sync_xcstrings.py */,
+			);
+			path = SyncXCStrings;
 			sourceTree = "<group>";
 		};
 		4FFBC56E2667DC76001D389B /* PrefixHeader */ = {

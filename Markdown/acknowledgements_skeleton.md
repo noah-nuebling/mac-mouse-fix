@@ -88,7 +88,6 @@ key: acknowledgements.software.inspiration.body
 - [SensibleSideButtons](https://github.com/archagon/sensible-side-buttons) - I copied its code for an early implementation of the "Go back/forward one page in Safari and other apps" feature, and also led me to discover the Calftrail Touch project.
 - [Gifski](https://github.com/sindresorhus/Gifski) - Greatly inspired the design and content of the [Readme.md]({language_root}Readme.md) for Mac Mouse Fix.
 - [Vue Issue Helper](https://new-issue.vuejs.org/) - Foundation for the design and technical implementation of [Mac Mouse Fix Feedback Assistant](https://noah-nuebling.github.io/mac-mouse-fix-feedback-assistant/).
-
 ```
 comment:
 ```

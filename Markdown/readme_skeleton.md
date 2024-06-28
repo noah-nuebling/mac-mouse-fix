@@ -34,7 +34,7 @@ Link section with pipe-symbols instead of html table:
   <summary>󠁧󠁿{current_language}</summary>
     
 {language_list}
-  {{[Help translate Mac Mouse Fix to different languages!](https://github.com/noah-nuebling/mac-mouse-fix/discussions/731)||markdown.translate-prompt||}}
+  {{[Help translate Mac Mouse Fix to different languagessss!](https://github.com/noah-nuebling/mac-mouse-fix/discussions/731)||markdown.translate-prompt||}}
 </details>
 
 <!-- ||| Head Section ||| -->
@@ -267,7 +267,7 @@ These cool articles were written about MMF
   comment: Make sure to indent everything by 2 spaces
   ```
 
-- {{**Can I open App Exposé through a Click and Drag Gesture?**||readme.questions.app-expose.body||}} <!-- Note: We're using App Exposé here and Application Windows in MMF. Not sure that's great. I felt this was clearer though. -->
+- {{**Can I open App Exposé through a Click and Drag Gesture?**||readme.questions.app-expose.title||}} <!-- Note: We're using App Exposé here and Application Windows in MMF. Not sure that's great. I felt this was clearer though. -->
 
   ```
   key: readme.questions.app-expose.body

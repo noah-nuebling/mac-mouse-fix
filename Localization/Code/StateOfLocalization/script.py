@@ -447,7 +447,7 @@ see **Updating Translation Files** at the top of the page.
         # Get language name
         locale = babel.Locale.parse(language_id, sep='-')
         language_name = locale.english_name
-        flag_emoji = language_tag_to_flag_emoji(language_id)
+        flag_emoji = shared.language_tag_to_flag_emoji(language_id)
 
         # Attach language header
         rrresult += f"\n\n# {flag_emoji} {language_name} | {language_id}"    
