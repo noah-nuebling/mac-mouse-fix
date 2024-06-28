@@ -7,7 +7,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "new",
-            "value" : "[Help translate Mac Mouse Fix to different languagessss!](https://github.com/noah-nuebling/mac-mouse-fix/discussions/731)"
+            "value" : "[Help translate Mac Mouse Fix to different languages!](https://github.com/noah-nuebling/mac-mouse-fix/discussions/731)"
           }
         }
       }
@@ -184,6 +184,18 @@
           "stringUnit" : {
             "state" : "new",
             "value" : "Mac Mouse Fix is an app that makes your mouse better.\n\nI want to turn Mac Mouse Fix into the best mouse driver *of all time*! Some features are still missing at the moment, but I think it already **turns regular mice into the best input devices for Macs** in some ways. At the same level or even better than an Apple Trackpad or a Logitech MX Master mouse.\n\nFor more information on how exactly Mac Mouse Fix enhances your mouse, visit the [website](https://noah-nuebling.github.io/mac-mouse-fix-website)."
+          }
+        }
+      }
+    },
+    "readme.intro.downloads-badge-url" : {
+      "comment" : "You can test this url in your browser. You can change the 'Downloads' label by editing the text inside the URL after `label=`. Use url encoding for special chars. E.g. `%20` to insert spaces. - We should do this through code not translators.",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "https://img.shields.io/github/downloads/noah-nuebling/mac-mouse-fix/total?label=Downloads&color=25c65f"
           }
         }
       }
@@ -658,6 +670,17 @@
           "stringUnit" : {
             "state" : "new",
             "value" : "**Manage windows with a simple Click and Drag**"
+          }
+        }
+      }
+    },
+    "readme.tips.title" : {
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Tips"
           }
         }
       }

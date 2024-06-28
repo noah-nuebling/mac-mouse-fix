@@ -25,9 +25,9 @@ import shared
 #   - This needs to contain the ../Shared folder in oder for the import and VSCode completions to work properly
 #   - We add the ../Shared folder to the path through the .env file at the project root.
 
-print("Current sys.path:")
-for p in sys.path:
-    print(p)
+# print("Current sys.path:")
+# for p in sys.path:
+#     print(p)
 
 # Note about vvv: Since we add the ../Shared folder to the python env inside the .env file (at the project root), we don't need the code below vvv any more. Using the .env file has the benefit that VSCode completions work with it.
 
@@ -46,7 +46,7 @@ for p in sys.path:
     
 def main():
     
-    # Inital free line to make stuff nicer
+    # Inital free line to make stuff look nicer
     print("")
     
     # Parse args
@@ -64,29 +64,12 @@ def main():
     if no_api_key:
         print("No API key provided\n")
     else:
-        print(f"Working with API_KEY: {args.api_key}")
+        print(f"Working with API_KEY: ")
     
     # Get locales for this project
     print(f"Extracting locales from .xcodeproject ...")
     
-    pbxproject_json = json.loads(shared.runCLT(f"plutil -convert json -r -o - Mouse\ Fix.xcodeproj/project.pbxproj").stdout) # -r puts linebreaks into the json which is unnecessary here.
-    development_locale = None
-    locales = None
-    for obj in pbxproject_json['objects'].values():
-        if obj['isa'] == 'PBXProject':
-            locales = obj['knownRegions']
-            development_locale = obj['developmentRegion']
-            break
-    
-    assert(development_locale != None and locales != None and len(locales) >= 1)
-    
-    print("")
-    
-    # Filter locales
-    print(f"Filtering out Base and development locales ...\n")
-    locales = [l for l in locales if l != development_locale and l != 'Base']
-    print(f"Filtered locales: { locales }")
-    print("")
+    development_locale, translation_locales = shared.find_locales('Mouse\ Fix.xcodeproj')
     
     # Load all .xcstrings files
     print(f"Loading all .xcstring files ...\n")
@@ -104,7 +87,7 @@ def main():
     for xcstring_object in xcstring_objects:
         for key, string_dict in xcstring_object['strings'].items():
             
-            for locale in locales:
+            for locale in translation_locales:
                 
                 s = string_dict.get('localizations', {}).get(locale, {}).get('stringUnit', {}).get('state', 'mmf_indeterminate')
                 assert(s == 'new' or s == 'needs_review' or s == 'translated' or s == 'stale' or s == 'mmf_indeterminate')        
@@ -136,7 +119,7 @@ def main():
     
     # Export .xcloc file for each locale
     print(f"Exporting .xcloc files for locales ...\n")
-    locale_args = ' '.join([ '-exportLanguage ' + l for l in locales ])
+    locale_args = ' '.join([ '-exportLanguage ' + l for l in translation_locales ])
     shared.runCLT(f'xcodebuild -exportLocalizations -localizationPath "{ xcloc_dir }" { locale_args }')
     print(f"Exported .xcloc files to {xcloc_dir}\n")
     
@@ -145,7 +128,7 @@ def main():
     folder_name_format = "Mac Mouse Fix Translations ({})"
     zip_file_format = "MacMouseFixTranslations.{}.zip" # GitHub Releases assets seemingly can't have spaces, that's why we're using this separate format
     
-    for l in locales:
+    for l in translation_locales:
         language_name = shared.language_tag_to_language_name(l)
         current_path = os.path.join(xcloc_dir, f'{l}.xcloc')
         target_folder = os.path.join(xcloc_dir, folder_name_format.format(language_name))
@@ -156,7 +139,7 @@ def main():
     # Zipping up folders containing .xcloc files 
     print(f"Zipping up .xcloc files ...\n")
     zip_files = {}
-    for l in locales:
+    for l in translation_locales:
         
         language_name = shared.language_tag_to_language_name(l)
         folder_name = folder_name_format.format(language_name)
@@ -448,7 +431,7 @@ Thank you so much for your help in bringing Mac Mouse Fix to people around the w
 |:--- |:---:| ---:|
 """
 
-    for locale in sorted(locales, key=lambda l: shared.language_tag_to_language_name(l)): # Sort the locales by language name (Alphabetically)
+    for locale in sorted(translation_locales, key=lambda l: shared.language_tag_to_language_name(l)): # Sort the locales by language name (Alphabetically)
         
         progress = localization_progress[locale]
         progress_percentage = int(100 * progress['percentage'])

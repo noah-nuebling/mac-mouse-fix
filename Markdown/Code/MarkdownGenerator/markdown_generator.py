@@ -16,43 +16,38 @@ import os
 import math
 from pprint import pprint # For debugging
 import json
+import shared
+
+#
+# Document paths
+#
+# (We expect this script to be run from the root directory of the repo)
+
+fallback_language_iddd = "en-US" # REMOVE
+
+development_locale_destination_root = ""                        # Compiled documents in 'development language' will be put into repo_root/development_locale_destination_root/document_subpath
+translation_destination_root = "Markdown/LocalizedDocuments"    # Compiled documents in translated languages will be put into   repo_root/translation_destination_root/locale/document_subpath
+template_root = "Markdown/Templates"                            # Templates are found inside                                    repo_root/template_root/document_subpath
+
+document_subpaths = {
+    "readme": "Readme.md", # The readme documents can be found at this subpath relative to the 'document_root' and 'template_root' folders.
+    "acknowledgements": "Acknowledgements.md",
+}
+xcstrings_path = "Markdown/Markdown.xcstrings"
+
+def get_destination_root(locale: str, development_locale: str) -> str:
+    return development_locale_destination_root if locale == development_locale else os.path.join(translation_destination_root, locale)
+
+def get_destination_path(document_key: str, locale: str, development_locale: str) -> str:
+    return os.path.join(get_destination_root(locale, development_locale), document_subpaths[document_key])
+
+def get_template_path(document_key: str) -> str:
+    return os.path.join(template_root, document_subpaths[document_key])
+
 
 #
 # Constants
 #
-# (We expect this script to be run from the root directory of the repo)
-
-fallback_language_id = "en-US"
-
-languages = {
-    
-    # Note for translators: To add a new entry for your language here, simply copy the German entry and replace all occurences of `de` with your language ID.
-    #   Choose the same language ID that's used in the MMF Xcode project or find a language ID using this Apple documentation: https://developer.apple.com/library/archive/documentation/MacOSX/Conceptual/BPInternational/LanguageandLocaleIDs/LanguageandLocaleIDs.html
-    #   Language IDs are typically either just a language identifier, such as `de` for German, or to specify a regional dialect, you can use a language identifier plus a region identifier such as `de-CH` for Swiss German or `en-US` for American English.
-    
-    "en-US": {
-        "language_name": "🇬🇧 English",                      # Language name will be displayed in the language picker
-        "template_root": "Markdown/Templates/en-US/",
-        "document_root": "",                                # The document root for english is the repo root.
-    },
-    "de": {
-        "language_name": "🇩🇪 Deutsch",
-        "template_root": "Markdown/Templates/de/",
-        "document_root": "Markdown/LocalizedDocuments/de/", 
-    },
-}
-
-documents = {
-    
-    "readme": {
-        "template_subpath": "readme_template.md", # This subpath is appended to the "template_root" to make the full template path
-        "document_subpath": "Readme.md", # This subpath is appended to the "document_root" to make the full document path
-    },
-    "acknowledgements": {
-        "template_subpath": "acknowledgements_template.md",
-        "document_subpath": "Acknowledgements.md",
-    }
-}
 
 # !! Amend custom_field_labels if you change the UI strings on Gumroad !!
 
@@ -81,6 +76,9 @@ nbsp = '&nbsp;'  # Non-breaking space. &nbsp; doesn't seem to work on GitHub. (E
 #
 def main():
     
+    # Gather info
+    document_keys = document_subpaths.keys()
+    
     # Parse args
     
     parser = argparse.ArgumentParser()
@@ -88,52 +86,102 @@ def main():
     parser.add_argument("--api_key")
     parser.add_argument("--no_api", action='store_true') # no_api option is not necessary anymore now since we have caching to make things fast when testing.
     args = parser.parse_args()
+
     document_key = args.document
     gumroad_api_key = args.api_key
     no_api = args.no_api
     
+    if document_key == None:
+        document_key = os.getenv("DOCUMENT")    
+    if gumroad_api_key == None:
+        gumroad_api_key = os.getenv("API_KEY")
+    
     # Validate
     document_key_was_provided = isinstance(document_key, str) and document_key != ''
     if not document_key_was_provided:
-        print("No document key provided. Provide one using the '--document' command line argument.")
+        print("No document key provided. Provide one using the '--document' command line argument, or by setting the DOCUMENT environment variable.")
         sys.exit(1)
-    document_key_is_valid = document_key in documents.keys()
+    document_key_is_valid = document_key in document_keys
     if not document_key_is_valid:
-        print(f"Unknown document key '{document_key}'. Valid document keys: {list(documents.keys())}")
+        print(f"Unknown document key '{document_key}'. Valid document keys: {list(document_keys)}")
         sys.exit(1)
     
-    # Iterate language dicts
-
-    document_dict = documents[document_key]
+    # Load xcstrings file as python object
+    xcstrings = None
+    with open(xcstrings_path, 'r') as file:
+        xcstrings = json.load(file)
     
-    for language_id, language_dict in languages.items():
+    # Find locales
+    development_locale, translation_locales = shared.find_locales('Mouse\ Fix.xcodeproj')
+    
+    # Compile locales
+    iterated_locales = translation_locales.copy() 
+    iterated_locales.append(development_locale)
+    
+    # Sort locales
+    #   Don't sort these while iterating - will lead to bugs
+    smallest_char = "\u0000"
+    iterated_locales.sort(key=lambda l: smallest_char if l == development_locale else shared.language_tag_to_language_name(l, l, False))
+    
+    # Iterate locales
+    for locale in iterated_locales:
         
-        # Extract info from language_dict
-        template_path = language_dict['template_root'] + document_dict['template_subpath']
-        destination_path = language_dict['document_root'] + document_dict['document_subpath']
+        # Get document root
+        #   The folder that the output files for this locale go into
+        document_root = get_destination_root(locale, development_locale)
         
-        template_exists = os.path.exists(template_path)
+        # Get document subpath
+        document_subpath = document_subpaths[document_key]
         
-        if not template_exists:
-            print(f"{document_dict} template for language {language_id} doesn't exist. Falling back to {fallback_language_id}")
-            template_path = languages[fallback_language_id]['template_root'] + document_dict['template_subpath']
+        # Get src and dst paths
+        destination_path = get_destination_path(document_key, locale, development_locale)
+        template_path = get_template_path(document_key)
         
         # Load template
         template = ""
-        with open(template_path) as f:
+        with open(template_path, ) as f:
             template = f.read()
         
         # Log
-        print('Inserting generated strings into template at {}...'.format(template_path))
+        print('Inserting translations into template at path {}...'.format(template_path))
+        
+        missing_strings = 0
+        overall_strings = 0
+        
+        # Translate the template
+        for key, value, comment, full_match in shared.get_localizable_strings_from_markdown(template):
+            
+            # Get the translated value
+            translation, best_locale = shared.get_translation(xcstrings, key, locale)
+            
+            # Count strings
+            overall_strings += 1
+            if best_locale != locale:
+                print(f"Couldn't find translation for {key} in locale {locale}. Fell back to {best_locale} ")
+                missing_strings += 1
+            
+            
+            # Apply the original indentation to the translated value
+            indent_level, indent_char = shared.get_indent(value)
+            assert indent_char == ' ' or indent_char == None
+            translation = shared.set_indent(translation, indent_level, ' ')
+            
+            # Replace with translation
+            template = template.replace(full_match, translation)
+        
+        translation_completion = int(100 * ((overall_strings-missing_strings)/overall_strings))
+        
+        # Log
+        print(f'Inserting generated strings into template at {template_path}...')
         
         # Insert into template
         if document_key == "readme":
-            template = insert_root_paths(template, document_dict, language_dict)
-            template = insert_language_picker(template, document_dict, language_dict, languages)
+            template = insert_root_paths(template, document_root, document_subpath)
+            template = insert_language_picker(template, document_key, locale, development_locale, iterated_locales)
         elif document_key == "acknowledgements":
-            template = insert_root_paths(template, document_dict, language_dict) # This is not currently necessary here since we don't use the {root_path} placeholder in the acknowledgements templates
-            template = insert_language_picker(template, document_dict, language_dict, languages)
-            template = insert_acknowledgements(template, language_id, language_dict, gumroad_api_key, gumroad_sales_cache_file, gumroad_sales_cache_shelf_life, no_api)
+            template = insert_root_paths(template, document_root, document_subpath) # This is not currently necessary here since we don't use the {root_path} placeholder in the acknowledgements templates
+            template = insert_language_picker(template, document_key, locale, development_locale, iterated_locales)
+            template = insert_acknowledgements(template, locale, gumroad_api_key, gumroad_sales_cache_file, gumroad_sales_cache_shelf_life, no_api)
         else:
             assert False # Should never happen because we check document_key for validity above.
         
@@ -146,11 +194,11 @@ def main():
             sys.exit(1)
         
         # Insert fallback notice
-        if not template_exists:
+        if missing_strings > 0:
             fallback_notice = f"""
 <table align="center"><td align="center">
-This document doesn't have a translation for <code>{language_dict['language_name']}</code> yet.<br>
-If you want to help translate it, click <a align="center" href="https://github.com/noah-nuebling/mac-mouse-fix/discussions/731">here</a>.
+This document is <code>{translation_completion}% Translated</code> into the language <code>{shared.language_tag_to_language_name(locale, destination_language_id=locale, include_flag=True)}</code>.<br>
+To help translate it, click <a align="center" href="https://github.com/noah-nuebling/mac-mouse-fix/discussions/731">here</a>!
 </td></table>\n\n"""
             template = fallback_notice + template
         
@@ -169,14 +217,16 @@ If you want to help translate it, click <a align="center" href="https://github.c
         # Log
         print('Wrote result to {}'.format(destination_path))
     
-    
+
+
+
 # 
 # Template inserters 
 #
 
 sales_data_cache = None # This cache is used for different language version of the acknowledgements document. Now that we massively sped up getting all the sales through the gumroad_sales_cache.json file, this isn't really necessary anymore. But it doesn't hurt.
 
-def insert_acknowledgements(template, language_id, language_dict, gumroad_api_key, cache_file, cache_shelf_life, no_api):
+def insert_acknowledgements(template, language_id, gumroad_api_key, cache_file, cache_shelf_life, no_api):
     
     global sales_data_cache
     
@@ -377,25 +427,24 @@ def insert_acknowledgements(template, language_id, language_dict, gumroad_api_ke
     # Return
     return template
     
-def insert_language_picker(template, document_dict, language_dict, languages):
+def insert_language_picker(template: str, document_key: str, locale: str, development_locale: str, locales: list[str]):
     
-    # Extract data
+    # Process locale
         
-    language_name = language_dict['language_name']
-    language_dicts = languages.values()
+    language_name = f'{shared.language_tag_to_language_name(locale, locale, True)}'
     
     # Generate language list ui string
     
     ui_language_list = ''
-    for i, language_dict2 in enumerate(language_dicts):
+    for i, locale2 in enumerate(locales):
         
-        is_last = i == len(language_dicts) - 1
+        is_last = i == len(locales) - 1
         
-        language_name2 = language_dict2['language_name']
+        language_name2 = f'{shared.language_tag_to_language_name(locale2, locale2, True)}'
         
         # Create relative path from the location of the `language_dict` document to the `language_dict2` document. This relative path works as a link. See https://github.blog/2013-01-31-relative-links-in-markup-files/
-        path = language_dict['document_root'] + document_dict['document_subpath']
-        path2 = language_dict2['document_root'] + document_dict['document_subpath']
+        path = get_destination_path(document_key, locale, development_locale)
+        path2 = get_destination_path(document_key, locale2, development_locale)
         root_path = path_to_root(path)
         relative_path = root_path + path2
         link = urllib.parse.quote(relative_path) # This percent encodes spaces and others chars which is necessary
@@ -422,7 +471,7 @@ def insert_language_picker(template, document_dict, language_dict, languages):
     # Return
     return template
 
-def insert_root_paths(template, document_dict, language_dict):
+def insert_root_paths(template, document_root, document_subpath):
         
     # Notes: 
     # - Abstracting the "document_root" out makes it easy to link between markdown documents of the same language.
@@ -431,9 +480,9 @@ def insert_root_paths(template, document_dict, language_dict):
         
     # Extract info from language_dict
         
-    path = language_dict['document_root'] + document_dict['document_subpath']
+    path = document_root + document_subpath
     repo_root = path_to_root(path)
-    language_root = repo_root + language_dict['document_root']
+    language_root = repo_root + document_root
     
     template = template.replace('{repo_root}', repo_root)
     template = template.replace('{language_root}', language_root)

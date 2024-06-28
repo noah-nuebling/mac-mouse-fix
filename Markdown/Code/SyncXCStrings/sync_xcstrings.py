@@ -11,8 +11,8 @@ import os
 # Constants
 #
 source_paths = [ # The .md file from which we want to extract strings.
-    'Markdown/acknowledgements_skeleton.md',
-    'Markdown/readme_skeleton.md',
+    'Markdown/Templates/Acknowledgements.md',
+    'Markdown/Templates/Readme.md',
 ]
 
 strings_table_name = "Markdown" # Each .xcstrings file represents one stringsTable (and should probably be named after it). This is the name we use for the table of strings which were extracted from Markdown. See apple docs for more info on strings tables.

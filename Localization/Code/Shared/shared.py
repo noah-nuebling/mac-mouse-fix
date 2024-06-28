@@ -23,10 +23,16 @@ language_flag_fallback_map = { # When a translation's languageID doesn't contain
     'ko': '🇰🇷',       # Korean maps to South Korea
     'de': '🇩🇪',       # German maps to Germany
     'vi': '🇻🇳',       # Vietnamese maps to Vietnam
+    'en': '🇬🇧',       # English maps to UK
 }
 
 language_name_override_map = {
-    'zh-HK': 'Chinese (Honk Kong)', # The native Babel name for this locale is way to long. This is name used by Apple.
+    'en': {
+        'zh-HK': 'Chinese (Honk Kong)', # The native Babel name for this locale is way to long. This is name used by Apple.
+    },
+    'zh-HK': {
+        'zh-HK': '中文（香港)',
+    }
 }
 
 #
@@ -174,9 +180,6 @@ def get_localizable_strings_from_markdown(md_string: str) -> list[tuple[str, str
     
     return result
             
-            
-            
-
 #
 # Basic String Processing
 #
@@ -246,15 +249,75 @@ def set_indent(string: str, indent_level: int, indent_character: chr) -> str:
 # Language stuff
 #
 
-def language_tag_to_language_name(language_id):
+def get_translation(xcstrings: dict, key: str, preferred_locale: str) -> tuple[str, str]:
+    
+    """
+    -> Retrieves a `translation` for key `key` from `xcstrings` for the `preferred_locale`
+    
+    -> Returns a tuple with structure: (translation, locale_of_the_translation)
+    
+    If no translation is available for the preferred_locale, it will fall back to the next best language. 
+        - For example, it could fall back from Swiss German to Standard German, if a String only has a German and English version. (Haven't tested this) 
+        - As a last resort it will always fall back to the development language (English)
+        - This logic is implemented by babel.negotiate_locale, and I'm not sure how exactly it behaves.
 
-    language_name = language_name_override_map.get(language_id, None)
+    Notes: 
+    - The xcstrings dict is the content of an .xcstrings file which has been loaded using json.load()
+    """
     
-    if language_name != None:
-        return language_name
+    assert xcstrings['version'] == '1.0' # Maybe we should also assert this in other places where we parse .xcstrings files
     
-    locale_obj = babel.Locale.parse(language_id, sep='-')
-    language_name = locale_obj.english_name # You can use .display_name for native name and .english_name for the english name. Not sure what to use. I feel like since it's an English document we should use English
+    source_locale = xcstrings['sourceLanguage']
+    localizations = xcstrings['strings'][key]['localizations']
+    
+    available_locales = localizations.keys()
+    preferred_locales = [preferred_locale, source_locale] # The leftmost is the most preferred in babel.negotiate_locale
+    best_locale = babel.negotiate_locale(preferred_locales, available_locales) # What's the difference to babel.Locale.negotiate()?
+    
+    translation = localizations[best_locale]['stringUnit']['value']
+    
+    assert translation != None and len(translation) != 0
+    
+    return translation, best_locale
+        
+
+def find_locales(path_to_xcodeproj) -> tuple[str, list[str]]:
+    
+    """
+    Returns the development locale of the xcode project as the first argument and the list of translation locales as the second argument
+    """
+    
+    pbxproject_json = json.loads(runCLT(f"plutil -convert json -r -o - {path_to_xcodeproj}/project.pbxproj").stdout) # -r puts linebreaks into the json which makes it human readable, but is unnecessary here.
+    
+    development_locale = None
+    locales = None
+    for obj in pbxproject_json['objects'].values():
+        if obj['isa'] == 'PBXProject':
+            locales = obj['knownRegions']
+            development_locale = obj['developmentRegion']
+            break
+    
+    assert(development_locale != None and locales != None and len(locales) >= 1)
+    
+    # Filter out development locale and 'Base' locale
+    translation_locales = [l for l in locales if l != development_locale and l != 'Base']
+    
+    return development_locale, translation_locales
+    
+
+def language_tag_to_language_name(language_id: str, destination_language_id: str = 'en', include_flag = False):
+    
+    language_name = language_name_override_map.get(destination_language_id, {}).get(language_id)
+    
+    if language_name == None:
+            
+        locale_obj = babel.Locale.parse(language_id, sep='-')
+        destination_locale_obj = babel.Locale.parse(destination_language_id, sep='-')
+        
+        language_name = locale_obj.get_display_name(destination_locale_obj) # .display_name is the native name, .english_name is the english name
+    
+    if include_flag:
+        language_name = f"{language_tag_to_flag_emoji(language_id)} {language_name}"
     
     return language_name
 
