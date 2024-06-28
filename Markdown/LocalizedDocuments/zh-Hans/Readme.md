@@ -62,7 +62,7 @@ You can now test the <a href="https://github.com/noah-nuebling/mac-mouse-fix/rel
 
 <div align="center">
     <a href="https://noah-nuebling.github.io/mac-mouse-fix-website">
-        <img src="../../Markdown/Media/AppIconRound3.png" width="200" height="auto">
+        <img src="../../../Markdown/Media/AppIconRound3.png" width="200" height="auto">
     </a>
     <h1>Mac Mouse Fix</h1>  
     <p>Make Your $10 Mouse Better Than an Apple Trackpad!</p>
@@ -76,7 +76,7 @@ You can now test the <a href="https://github.com/noah-nuebling/mac-mouse-fix/rel
         <th><a href=https://noah-nuebling.github.io/mac-mouse-fix-website>Website&nbsp;↗</a></th>
         <td><a href=https://github.com/noah-nuebling/mac-mouse-fix/issues/new/choose>Help&nbsp;&&nbsp;Feedback</a></td>
         <td><a href=https://github.com/noah-nuebling/mac-mouse-fix/releases>Releases</a></td>
-        <td><a href="../../Markdown/LocalizedDocuments/zh-HansAcknowledgements.md">Acknowledgements</a></td> <!-- If you translate this, remember to link to the right language version -->
+        <td><a href="../../../Markdown/LocalizedDocuments/zh-Hans/Acknowledgements.md">Acknowledgements</a></td> <!-- If you translate this, remember to link to the right language version -->
     </table>
     <img src="https://img.shields.io/github/downloads/noah-nuebling/mac-mouse-fix/total?label=Downloads&color=25c65f">
 </div>
@@ -186,7 +186,7 @@ These cool articles were written about MMF
   
   If you don't have an Apple keyboard at hand, **hold Option (⌥)** to choose the special Apple keys.
   
-  <img src="../../Markdown/Media/Apple-Keys-Demo.gif" width="700">
+  <img src="../../../Markdown/Media/Apple-Keys-Demo.gif" width="700">
 
 ## Questions
 
@@ -291,12 +291,12 @@ These cool articles were written about MMF
 
 - **Can I get Mac Mouse Fix for free if I already donated?**
 
-    Yes! See the [Acknowledgements](../../Markdown/LocalizedDocuments/zh-HansAcknowledgements.md#-paypal-donations) for more info.
+    Yes! See the [Acknowledgements](../../../Markdown/LocalizedDocuments/zh-Hans/Acknowledgements.md#-paypal-donations) for more info.
 
 ## How you can contribute
 
 There are several ways to help the project.\
-Check out the [Acknowledgements](../../Markdown/LocalizedDocuments/zh-HansAcknowledgements.md) for more info on who has already contributed!
+Check out the [Acknowledgements](../../../Markdown/LocalizedDocuments/zh-Hans/Acknowledgements.md) for more info on who has already contributed!
 
 <!--
 - **Spreading the word**
@@ -318,7 +318,7 @@ Check out the [Acknowledgements](../../Markdown/LocalizedDocuments/zh-HansAcknow
 
 - **Adding translations**
   
-    Mac Mouse Fix is available in English, German as well as the languages listed in the [Acknowledgements](../../Markdown/LocalizedDocuments/zh-HansAcknowledgements.md).
+    Mac Mouse Fix is available in English, German as well as the languages listed in the [Acknowledgements](../../../Markdown/LocalizedDocuments/zh-Hans/Acknowledgements.md).
   
   If you would like to **help translate the project**, see the [Localization Guide](https://github.com/noah-nuebling/mac-mouse-fix/discussions/731).\
   If you want to **report missing or suboptimal translations**, that's also very helpful. The best way to report problems is by commenting under the [Localization Guide](https://github.com/noah-nuebling/mac-mouse-fix/discussions/731).

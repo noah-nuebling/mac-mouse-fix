@@ -114,6 +114,9 @@ def main():
     # Find locales
     development_locale, translation_locales = shared.find_locales('Mouse\ Fix.xcodeproj')
     
+    # Get translation progress
+    translation_progress = shared.get_localization_progress([xcstrings], translation_locales)
+    
     # Compile locales
     iterated_locales = translation_locales.copy() 
     iterated_locales.append(development_locale)
@@ -169,8 +172,6 @@ def main():
             # Replace with translation
             template = template.replace(full_match, translation)
         
-        translation_completion = int(100 * ((overall_strings-missing_strings)/overall_strings))
-        
         # Log
         print(f'Inserting generated strings into template at {template_path}...')
         
@@ -195,9 +196,12 @@ def main():
         
         # Insert fallback notice
         if missing_strings > 0:
+            
+            progress_percentage = int(100 * translation_progress[locale]['percentage'])
+            
             fallback_notice = f"""
 <table align="center"><td align="center">
-This document is <code>{translation_completion}% Translated</code> into the language <code>{shared.language_tag_to_language_name(locale, destination_language_id=locale, include_flag=True)}</code>.<br>
+This document is <code>{progress_percentage}% Translated</code> into the language <code>{shared.language_tag_to_language_name(locale, destination_language_id=locale, include_flag=True)}</code>.<br>
 To help translate it, click <a align="center" href="https://github.com/noah-nuebling/mac-mouse-fix/discussions/731">here</a>!
 </td></table>\n\n"""
             template = fallback_notice + template
@@ -480,9 +484,9 @@ def insert_root_paths(template, document_root, document_subpath):
         
     # Extract info from language_dict
         
-    path = document_root + document_subpath
+    path = os.path.join(document_root, document_subpath, '') # The '' at the end makes it end with a separator `/`
     repo_root = path_to_root(path)
-    language_root = repo_root + document_root
+    language_root = os.path.join(repo_root, document_root, '')
     
     template = template.replace('{repo_root}', repo_root)
     template = template.replace('{language_root}', language_root)

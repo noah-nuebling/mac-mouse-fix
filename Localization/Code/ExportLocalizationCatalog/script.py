@@ -80,36 +80,8 @@ def main():
             xcstring_objects.append(json.load(content))
     print(f".xcstring file paths: { json.dumps(xcstring_filenames, indent=2) }\n")
     
-    
-    # Create an overview of how many times each translation state appears for each language
-    print(f"Determining localization state overview ...\n")
-    localization_state_overview = defaultdict(lambda: defaultdict(lambda: 0))
-    for xcstring_object in xcstring_objects:
-        for key, string_dict in xcstring_object['strings'].items():
-            
-            for locale in translation_locales:
-                
-                s = string_dict.get('localizations', {}).get(locale, {}).get('stringUnit', {}).get('state', 'mmf_indeterminate')
-                assert(s == 'new' or s == 'needs_review' or s == 'translated' or s == 'stale' or s == 'mmf_indeterminate')        
-                
-                localization_state_overview[locale][s] += 1
-    
-    localization_state_overview = json.loads(json.dumps(localization_state_overview)) # Convert nested defaultdict to normal dict - which prints in a pretty way
-    
-    print(f"Localization state overview: \n")
-    pprint(localization_state_overview)
-    print("")
-    
-    # Get translation progress for each language
-    #   Notes: 
-    #   - Based on my testing, this seems to be accurate except that it didn't catch the missing translations for the Info.plist file. That's because the info.plist file doesn't have an .xcstrings file at the moment but we can add one.
-    print(f"Determining localization progress ...\n")
-    localization_progress = {}
-    for locale, states in localization_state_overview.items():
-        translated_count = states.get('translated', 0)
-        to_translate_count = states.get('translated', 0) + states.get('needs_review', 0) + states.get('new', 0) + states.get('mmf_indeterminate', 0) # Note how we're ignoring stale strings here. (Stale means that the kv-pair is superfluous and doesn't occur in the base file/source code file afaik, therefore it's not part of 'to_translate' set)
-        localization_progress[locale] = {'translated': translated_count, 'to_translate': to_translate_count, 'percentage': translated_count/to_translate_count}
-    print(f"Localization progress: {json.dumps(localization_progress, indent=2)}\n")    
+    # Get localization progress
+    localization_progress = shared.get_localization_progress(xcstrings_objects, translation_locales)
     
     # Get a temp dir to store exported .xcloc files to
     temp_dir = tempfile.gettempdir()

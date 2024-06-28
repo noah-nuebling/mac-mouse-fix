@@ -13,6 +13,7 @@ import glob
 import requests
 import json
 import babel
+from collections import defaultdict
 
 #
 # Constants
@@ -248,6 +249,49 @@ def set_indent(string: str, indent_level: int, indent_character: chr) -> str:
 #
 # Language stuff
 #
+
+def get_localization_progress(xcstring_objects: list[dict], translation_locales: list[str]) -> dict:
+    
+    """
+    - You pass in a list of xcstrings objects, each of which is the content of an xcstrings parsed using json.load()
+    - The return is a dict with structure:
+        {
+            '<locale>': {
+                'translated': <number of translated strings>,
+                'to_translate': <number of strings that should be translated overall>,
+                'percentage': <percentage of strings that should be translated, which actually have been translated>
+        }
+        
+        - Note that strings which are marked as 'stale' in the development language are not considered 'strings that should be translated'. Since the 'stale' state means that the string isn't used in the source files.
+    """
+    
+    # Create an overview of how many times each translation state appears for each language
+    
+    localization_state_overview = defaultdict(lambda: defaultdict(lambda: 0))
+    for xcstring_object in xcstring_objects:
+        for key, string_dict in xcstring_object['strings'].items():
+            
+            for locale in translation_locales:
+                
+                s = string_dict.get('localizations', {}).get(locale, {}).get('stringUnit', {}).get('state', 'mmf_indeterminate')
+                assert(s == 'new' or s == 'needs_review' or s == 'translated' or s == 'stale' or s == 'mmf_indeterminate')        
+                
+                localization_state_overview[locale][s] += 1
+    
+    localization_state_overview = json.loads(json.dumps(localization_state_overview)) # Convert nested defaultdict to normal dict - which prints in a pretty way
+    
+    # Get translation progress for each language
+    #   Notes: 
+    #   - Based on my testing, this seems to be accurate except that it didn't catch the missing translations for the Info.plist file. That's because the info.plist file doesn't have an .xcstrings file at the moment but we can add one.
+    
+    localization_progress = {}
+    for locale, states in localization_state_overview.items():
+        translated_count = states.get('translated', 0)
+        to_translate_count = states.get('translated', 0) + states.get('needs_review', 0) + states.get('new', 0) + states.get('mmf_indeterminate', 0) # Note how we're ignoring stale strings here. (Stale means that the kv-pair is superfluous and doesn't occur in the base file/source code file afaik, therefore it's not part of 'to_translate' set)
+        localization_progress[locale] = {'translated': translated_count, 'to_translate': to_translate_count, 'percentage': translated_count/to_translate_count}
+
+    # Return
+    return localization_progress
 
 def get_translation(xcstrings: dict, key: str, preferred_locale: str) -> tuple[str, str]:
     
