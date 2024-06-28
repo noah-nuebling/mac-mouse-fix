@@ -385,6 +385,9 @@ These cool articles were written about MMF
   I encourage anyone to use the source code of Mac Mouse Fix in their own projects, as long as they don't release a simple copy of Mac Mouse Fix.
 
   Learn about the details in the [MMF License](https://github.com/noah-nuebling/mac-mouse-fix/blob/master/License) which Mac Mouse Fix 3 and later are licensed under.
+  ```
+  comment: Make sure to indent everything by 2 spaces
+  ```
 
   <!--
     , and I don't plan to change that at any point.
@@ -392,9 +395,6 @@ These cool articles were written about MMF
     This also means you can use Mac Mouse Fix for free by building it from source and disabling the licensing checks. That's perfectly fine, I just discourage sharing these cracked versions online.\
     And of course, on the next update, you'll get a non-cracked version which means you'll have to do this again for every update. (Or just pay $1.99 for the greatest mouse driver ever! :)
   -->
-  ```
-  comment: Make sure to indent everything by 2 spaces
-  ```
 
 - {{**Can I get Mac Mouse Fix for free if I already donated?**||readme.questions.free-for-donators.title||}}
 

@@ -4,12 +4,6 @@
     "markdown.translate-prompt" : {
       "extractionState" : "extracted_with_value",
       "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Helpa da translataa!"
-          }
-        },
         "en" : {
           "stringUnit" : {
             "state" : "new",
@@ -36,7 +30,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "new",
-            "value" : "  If you would like to contribute code, that's awesome! I'll be happy about any [pull requests](https://github.com/noah-nuebling/mac-mouse-fix/pulls).\n  \n  However, I might not accept all pull requests. If you want to make sure that your work is not wasted, you can submit an initial pull request that only *describes* the changes you want to make, but contains little or no code. Then I can give you feedback and tell you if I would adopt the changes you want to make in that way.\n  <!-- NOTE: I should mention people who contributed code on the acknowledgements page. They are already in the update notes. -->"
+            "value" : "If you would like to contribute code, that's awesome! I'll be happy about any [pull requests](https://github.com/noah-nuebling/mac-mouse-fix/pulls).\n\nHowever, I might not accept all pull requests. If you want to make sure that your work is not wasted, you can submit an initial pull request that only *describes* the changes you want to make, but contains little or no code. Then I can give you feedback and tell you if I would adopt the changes you want to make in that way.\n<!-- NOTE: I should mention people who contributed code on the acknowledgements page. They are already in the update notes. -->"
           }
         }
       }
@@ -59,7 +53,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "new",
-            "value" : "  You can help by sharing your **ideas**, **issues** and **feedback** via the [Feedback Assistant](https://noah-nuebling.github.io/mac-mouse-fix-feedback-assistant/?type=bug-report)."
+            "value" : "You can help by sharing your **ideas**, **issues** and **feedback** via the [Feedback Assistant](https://noah-nuebling.github.io/mac-mouse-fix-feedback-assistant/?type=bug-report)."
           }
         }
       }
@@ -93,7 +87,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "new",
-            "value" : "  I hope to be able to sustain myself financially through Mac Mouse Fix. That way, I can keep improving and working on the app. If you would like to help, you can:\n  1. Buy Mac Mouse Fix by clicking the button in the app, or clicking [here](https://noahnuebling.gumroad.com/l/mmfinappusd).\n  2. [Tip me](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=ARSTVR6KFB524&source=url&lc=en_US) on PayPal. I don't get a lot of money from this, but it's always cute and motivating to get a donation.\n  3. [Sponsor me](https://github.com/sponsors/noah-nuebling) on GitHub. A monthly sponsorship is a great way to support the project and help me have a more stable income."
+            "value" : "I hope to be able to sustain myself financially through Mac Mouse Fix. That way, I can keep improving and working on the app. If you would like to help, you can:\n1. Buy Mac Mouse Fix by clicking the button in the app, or clicking [here](https://noahnuebling.gumroad.com/l/mmfinappusd).\n2. [Tip me](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=ARSTVR6KFB524&source=url&lc=en_US) on PayPal. I don't get a lot of money from this, but it's always cute and motivating to get a donation.\n3. [Sponsor me](https://github.com/sponsors/noah-nuebling) on GitHub. A monthly sponsorship is a great way to support the project and help me have a more stable income."
           }
         }
       }
@@ -127,7 +121,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "new",
-            "value" : "  Mac Mouse Fix is available in English, German as well as the languages listed in the [Acknowledgements]({language_root}Acknowledgements.md).\n\n  If you would like to **help translate the project**, see the [Localization Guide](https://github.com/noah-nuebling/mac-mouse-fix/discussions/731).\\\n  If you want to **report missing or suboptimal translations**, that's also very helpful. The best way to report problems is by commenting under the [Localization Guide](https://github.com/noah-nuebling/mac-mouse-fix/discussions/731)."
+            "value" : "Mac Mouse Fix is available in English, German as well as the languages listed in the [Acknowledgements]({language_root}Acknowledgements.md).\n\nIf you would like to **help translate the project**, see the [Localization Guide](https://github.com/noah-nuebling/mac-mouse-fix/discussions/731).\\\nIf you want to **report missing or suboptimal translations**, that's also very helpful. The best way to report problems is by commenting under the [Localization Guide](https://github.com/noah-nuebling/mac-mouse-fix/discussions/731)."
           }
         }
       }
@@ -360,7 +354,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "new",
-            "value" : "  Yes! Just choose the 'Spaces & Mission Control' Action and then Click and Drag *down*.\n\n  If this doesn't work, it's likely because the 'App Exposé' trackpad gesture is disabled on your Mac.\\\n  You can enable the gesture under System Settings or by running the following command in the terminal:\n\n  ```\n  defaults write com.apple.Dock showAppExposeGestureEnabled -bool TRUE; killall Dock\n  ```"
+            "value" : "Yes! Just choose the 'Spaces & Mission Control' Action and then Click and Drag *down*.\n\nIf this doesn't work, it's likely because the 'App Exposé' trackpad gesture is disabled on your Mac.\\\nYou can enable the gesture under System Settings or by running the following command in the terminal:\n\n```\ndefaults write com.apple.Dock showAppExposeGestureEnabled -bool TRUE; killall Dock\n```"
           }
         }
       }
@@ -383,7 +377,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "new",
-            "value" : "  Yes, Mac Mouse Fix runs 100% native on Apple Silicon."
+            "value" : "Yes, Mac Mouse Fix runs 100% native on Apple Silicon."
           }
         }
       }
@@ -406,7 +400,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "new",
-            "value" : "  In 3D apps like Blender, you normally Click and Drag the Middle Mouse Button to orbit around objects.\\\n  But if you assign actions to the Middle Mouse Button in Mac Mouse Fix, then this won't work anymore.\n  \n  To solve this, I know of 2 options:\n  1. Assign clicking and dragging one of the buttons of your mouse to the \"Scroll & Navigate\" feature. This feature simulates swiping with 2 fingers on an Apple Trackpad. This will, among other things, let you orbit in 3D apps! \n  2. *Uncapture* the Middle Mouse Button by deleting all actions assigned to it in Mac Mouse Fix. See [this guide](https://github.com/noah-nuebling/mac-mouse-fix/discussions/112) for more info."
+            "value" : "In 3D apps like Blender, you normally Click and Drag the Middle Mouse Button to orbit around objects.\\\nBut if you assign actions to the Middle Mouse Button in Mac Mouse Fix, then this won't work anymore.\n\nTo solve this, I know of 2 options:\n1. Assign clicking and dragging one of the buttons of your mouse to the \"Scroll & Navigate\" feature. This feature simulates swiping with 2 fingers on an Apple Trackpad. This will, among other things, let you orbit in 3D apps! \n2. *Uncapture* the Middle Mouse Button by deleting all actions assigned to it in Mac Mouse Fix. See [this guide](https://github.com/noah-nuebling/mac-mouse-fix/discussions/112) for more info."
           }
         }
       }
@@ -429,7 +423,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "new",
-            "value" : "  When you click, Mac Mouse Fix might wait to see if you're going to double click.\\\n  To remove the delay for a button, delete any \"Double Click\" actions for that button."
+            "value" : "When you click, Mac Mouse Fix might wait to see if you're going to double click.\\\nTo remove the delay for a button, delete any \"Double Click\" actions for that button."
           }
         }
       }
@@ -452,7 +446,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "new",
-            "value" : "  Mac Mouse Fix does not have ads, and it does not collect any personal information about you.\n\n  However, at the moment that you buy the app, the sales provider Gumroad.com collects some personal info, such as your email address, and this info is visible to me. This is necessary to be able to issue refunds, send a license key to your email, etc. I cannot turn this off. To learn more about the data collected when you buy Mac Mouse Fix, see the [Gumroad Privacy Policy](https://gumroad.com/privacy)."
+            "value" : "Mac Mouse Fix does not have ads, and it does not collect any personal information about you.\n\nHowever, at the moment that you buy the app, the sales provider Gumroad.com collects some personal info, such as your email address, and this info is visible to me. This is necessary to be able to issue refunds, send a license key to your email, etc. I cannot turn this off. To learn more about the data collected when you buy Mac Mouse Fix, see the [Gumroad Privacy Policy](https://gumroad.com/privacy)."
           }
         }
       }
@@ -475,7 +469,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "new",
-            "value" : "  Yes! See the [Acknowledgements]({language_root}Acknowledgements.md#-paypal-donations) for more info."
+            "value" : "Yes! See the [Acknowledgements]({language_root}Acknowledgements.md#-paypal-donations) for more info."
           }
         }
       }
@@ -498,7 +492,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "new",
-            "value" : "  I might add features in the future which enhance the Apple Magic Mouse, but currently, Mac Mouse Fix has no effect on it."
+            "value" : "I might add features in the future which enhance the Apple Magic Mouse, but currently, Mac Mouse Fix has no effect on it."
           }
         }
       }
@@ -521,7 +515,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "new",
-            "value" : "  Short answer: Probably. If you want to know for sure, it's best to download Mac Mouse Fix and try it out.\n\n  Mac Mouse Fix works very well with most mice. However, on certain mice designed to be used with proprietary driver software like Logitech Options, Mac Mouse Fix can't recognize all the buttons at the moment. \n  \n  That's because these mice communicate with your computer using a special, proprietary protocol, instead of the standard USB protocol.\n  I would love to add full compatibility for these mice at some point, but it's a ton of work and it won't be coming soon."
+            "value" : "Short answer: Probably. If you want to know for sure, it's best to download Mac Mouse Fix and try it out.\n\nMac Mouse Fix works very well with most mice. However, on certain mice designed to be used with proprietary driver software like Logitech Options, Mac Mouse Fix can't recognize all the buttons at the moment. \n\nThat's because these mice communicate with your computer using a special, proprietary protocol, instead of the standard USB protocol.\nI would love to add full compatibility for these mice at some point, but it's a ton of work and it won't be coming soon."
           }
         }
       }
@@ -544,7 +538,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "new",
-            "value" : "  Yes, Mac Mouse Fix will still be open source!\n\n  I encourage anyone to use the source code of Mac Mouse Fix in their own projects, as long as they don't release a simple copy of Mac Mouse Fix.\n\n  Learn about the details in the [MMF License](https://github.com/noah-nuebling/mac-mouse-fix/blob/master/License) which Mac Mouse Fix 3 and later are licensed under.\n\n  <!--\n    , and I don't plan to change that at any point.\n  \n    This also means you can use Mac Mouse Fix for free by building it from source and disabling the licensing checks. That's perfectly fine, I just discourage sharing these cracked versions online.\\\n    And of course, on the next update, you'll get a non-cracked version which means you'll have to do this again for every update. (Or just pay $1.99 for the greatest mouse driver ever! :)\n  -->"
+            "value" : "Yes, Mac Mouse Fix will still be open source!\n\nI encourage anyone to use the source code of Mac Mouse Fix in their own projects, as long as they don't release a simple copy of Mac Mouse Fix.\n\nLearn about the details in the [MMF License](https://github.com/noah-nuebling/mac-mouse-fix/blob/master/License) which Mac Mouse Fix 3 and later are licensed under."
           }
         }
       }
@@ -567,7 +561,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "new",
-            "value" : "  Mac Mouse Fix doesn't let you turn off the pointer acceleration, but if you're on **macOS 14 Sonoma** or later, you can turn off the pointer acceleration under `System Settings > Mouse > Advanced... > Pointer acceleration`.\n\n  I plan to add really nice ways to improve pointer acceleration in the future, but I'm not sure when that's coming."
+            "value" : "Mac Mouse Fix doesn't let you turn off the pointer acceleration, but if you're on **macOS 14 Sonoma** or later, you can turn off the pointer acceleration under `System Settings > Mouse > Advanced... > Pointer acceleration`.\n\nI plan to add really nice ways to improve pointer acceleration in the future, but I'm not sure when that's coming."
           }
         }
       }
@@ -590,7 +584,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "new",
-            "value" : "  There is no official refund policy, but the app is free for 30 days.\n  \n  If you experience any problems after buying the app, just reach out to me, and I will do my best to help."
+            "value" : "There is no official refund policy, but the app is free for 30 days.\n\nIf you experience any problems after buying the app, just reach out to me, and I will do my best to help."
           }
         }
       }
@@ -613,7 +607,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "new",
-            "value" : "  Some mice let you tilt the scroll wheel left or right to scroll horizontally. Mac Mouse Fix will make this feel more natural and easy to control. However, it's not currently possible to trigger other actions, such as switching between desktops, by tilting the scroll wheel. I'd love to implement this feature at some point, but it's a ton of work and it won't be coming soon."
+            "value" : "Some mice let you tilt the scroll wheel left or right to scroll horizontally. Mac Mouse Fix will make this feel more natural and easy to control. However, it's not currently possible to trigger other actions, such as switching between desktops, by tilting the scroll wheel. I'd love to implement this feature at some point, but it's a ton of work and it won't be coming soon."
           }
         }
       }
@@ -647,7 +641,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "new",
-            "value" : "  Mac Mouse Fix lets you use **any key on your keyboard** directly from your mouse -\n  even special keys only found on Apple keyboards that let you control Screen Brightness, Audio Volume, Media Playback, and more.\n\n  If you don't have an Apple keyboard at hand, **hold Option (⌥)** to choose the special Apple keys.\n\n  <img src=\"{repo_root}Markdown/Media/Apple-Keys-Demo.gif\" width=\"700\">"
+            "value" : "Mac Mouse Fix lets you use **any key on your keyboard** directly from your mouse -\neven special keys only found on Apple keyboards that let you control Screen Brightness, Audio Volume, Media Playback, and more.\n\nIf you don't have an Apple keyboard at hand, **hold Option (⌥)** to choose the special Apple keys.\n\n<img src=\"{repo_root}Markdown/Media/Apple-Keys-Demo.gif\" width=\"700\">"
           }
         }
       }
@@ -670,7 +664,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "new",
-            "value" : "  [Swish](https://highlyopinionated.co/swish/) is my favorite way to manage windows on macOS. With a simple swipe on your trackpad, it lets you position any window so it takes up half, a quarter, or the whole screen.\n\n  Swish is designed for trackpad gestures, but with Mac Mouse Fix you can use it from any third-party mouse! Just go to Mac Mouse Fix and set any buttons \"Click and Drag\" action to \"Scroll & Navigate\" and then you can snap windows with a simple Click and Drag.\n\n  Anything you can do with a two-finger swipe on an Apple trackpad works just as well with the \"Scroll & Navigate\" feature in Mac Mouse Fix."
+            "value" : "[Swish](https://highlyopinionated.co/swish/) is my favorite way to manage windows on macOS. With a simple swipe on your trackpad, it lets you position any window so it takes up half, a quarter, or the whole screen.\n\nSwish is designed for trackpad gestures, but with Mac Mouse Fix you can use it from any third-party mouse! Just go to Mac Mouse Fix and set any buttons \"Click and Drag\" action to \"Scroll & Navigate\" and then you can snap windows with a simple Click and Drag.\n\nAnything you can do with a two-finger swipe on an Apple trackpad works just as well with the \"Scroll & Navigate\" feature in Mac Mouse Fix."
           }
         }
       }

@@ -31,96 +31,39 @@ def main():
         with open(source_file, 'r') as file:
             content = file.read()
         
-        # Extract translatable strings with inline syntax
-        # Notes:
-        #   - Use https://regex101.com
+        # Extract localizable strings from content
         
-        print("Extracting inline strings...")
+        extracted_srings = []
         
-        """
-        The inline sytax looks like this:  
-        
-        
-        bla blah {{🙌 Acknowledgements||acknowledgements.title||This is the title for the acknowledgements document!}}
-        
-        blubb
-        
-        bli blubb {{😔 Roasting of Enemies||roast.title||This is the title for the roasting of enemies document!}} blah
-        """
-        inline_regex = r"\{\{(.*?)\|\|(.*?)\|\|(.*?)\}\}" # r makes it so \ is treated as a literal character and so we don't have to double escape everything
-        inline_matches = re.finditer(inline_regex, content)
-        
-        # Extract translatable strings with block syntax
-        
-        """
-        The syntax for block strings looks like this:
-        
-        ```
-        key: acknowledgements.body
-        ```
-        Big thanks to everyone using Mac Mouse Fix.
-
-        I want to especially thank the people and projects named in this document.
-        ```
-        comment: This is the intro for the acknowledgements document
-        ```
-        
-        Not a translatable string:
-        ```
-        nope
-        ```
-        
-                ```
-        key: acknowledgements.booty
-        ```
-            hello 
-
-        ```
-        comment: Moar stufff
-        ```
-        
-        """
-        
-        block_regex = r"```\n\s*?key:\s*(.*?)\s*\n\s*?```\n\s*(^.*?$)\s*```\n\s*?comment:\s*?(.*?)\s*\n\s*?```"      #r"```\n\s*?key:\s*(.*?)\s*\n\s*?```\n(.*)\n\s*?```\n\s*?comment:\s*(.*?)\s*\n\s*?```"
-        block_matches = re.finditer(block_regex, content, re.DOTALL | re.MULTILINE)
-        
-        # Assemble parsed_strings list
-        parsed_strings = []
-        for match in inline_matches:
-            ui_string, key, comment = match.groups()
-            parsed_strings.append({'comment': comment, 'key': key, 'value': ui_string})
-        for match in block_matches:
-            key, ui_string, comment = match.groups()
-            parsed_strings.append({'comment': comment, 'key': key, 'value': ui_string})
-        
-        for r in parsed_strings:
-            
-            key = r['key']
-            ui_string = r['value']
-            comment = r['comment']
+        for key, ui_string, comment, full_match in shared.get_localizable_strings_from_markdown(content):
             
             # Print
             print(f"k:\n{key}\nv:\n{ui_string}\nc:\n{comment}\n-----------------------\n")
+                        
+            # Remove indentation from ui_string 
+            #   (Otherwise translators have to manually add indentation to every indented line)
+            #   (When we insert the translated strings back into the .md we have to add the indentation back in.)
             
-            # Validate
-            assert ' ' not in key, f'key contains space: {key}' # I don't think string keys are supposed to contain spaces inside the Xcode toolchain stuff
-            assert len(key) > 0 # We need a key to parse this
-            assert len(ui_string) > 0 # English ui strings are defined directly in the markdown file - don't think this should be empty
-            for str in [ui_string, key, comment]:
-                assert r'}}' not in str # Protect against matching past the first occurrence of }}
-                assert r'||' not in str # Protect against ? - this is weird
-                assert r'{{' not in str # Protect against ? - this is also weird
+            old_indent_level, old_indent_char = shared.get_indent(ui_string)
+            ui_string = shared.set_indent(ui_string, 0, ' ')
+            new_indent_level, new_indent_char = shared.get_indent(ui_string)
+            
+            if old_indent_level != new_indent_level:
+                print(f'Changed {key} indentation from {old_indent_level}*"{old_indent_char}" -> {new_indent_level}*"{new_indent_char}"')
+            
+            # Store result
+            #   In .stringsdata format
+            extracted_srings.append({'comment': comment, 'key': key, 'value': ui_string})
         
         # Create .stringsdata file
         
         stringsdata_content = {
             "source": "garbage/path.md",
             "tables": {
-                strings_table_name: parsed_strings
+                strings_table_name: extracted_srings
             },
             "version": 1
         }
-        
         stringsdata_path = None
         with tempfile.NamedTemporaryFile(delete=False, suffix=".stringsdata", mode='w') as file: # Not sure what the 'delete' option does
             # write data
@@ -130,15 +73,13 @@ def main():
         
         print(f"Created .stringsdata file at: {stringsdata_path}")
         
-        # Find XCStringsTool
+        # sync the .xcstrings file with the .stringsdata using xcstringstool
+        
         developer_dir = shared.runCLT("xcode-select --print-path").stdout
         stringstool_path = os.path.join(developer_dir, 'usr/bin/xcstringstool')
-        
-        # Update the .xcstrings file using the .stringdata
         result = shared.runCLT(f"{stringstool_path} sync {xcstrings_path} --stringsdata {stringsdata_path}")
         
-        print(f"ran XCStringsTool to update {xcstrings_path} Result: {shared.clt_result_description(result)}")
-
+        print(f"ran xcstringstool to update {xcstrings_path} Result: {shared.clt_result_description(result)}")
         
 
 #

@@ -30,6 +30,216 @@ language_name_override_map = {
 }
 
 #
+# Markdown parsing (Localizable strings)
+#
+
+def get_localizable_strings_from_markdown(md_string: str) -> list[tuple[str, str, str, str]]:
+
+    """
+    Returns a list of localizable strings extracted from the `md_string`.
+    
+    Each tuple in the list has the structure (key, value, comment, full_match)
+        key: 
+            a.key.that identifies the string across different languages
+        value: 
+            The user-facing string in the development language (english). The goal is to translate this string into differnt languages.
+        comment: 
+            A comment providing context for translators.
+        full_match: 
+            The entire substring of the .md file that we extracted the key, value, and comment from. Replace all full_matches with translated strings to localize the .md file.
+    
+    The localizable strings inside the .md file can be specified in 2 ways: Using the `inline syntax` or the `block syntax`.
+    
+    The `inline sytax` follows the pattern:
+    
+        {{value||key||comment}}
+        
+        Examples:
+
+            bla blah {{🙌 Acknowledgements||acknowledgements.title||This is the title for the acknowledgements document!}}
+            
+            blubb
+            
+            bli blubb {{😔 Roasting of Enemies||roast.title||This is the title for the roasting of enemies document!}} blah
+    
+    The `block syntax` follows the pattern:
+
+        ```
+        key: <key>
+        ```
+        <value>
+        ```
+        comment: <comment>
+        ```
+        
+        Example:
+        
+            ```
+            key: acknowledgements.body
+            ```
+            Big thanks to everyone using Mac Mouse Fix.
+
+            I want to especially thank the people and projects named in this document.
+            ```
+            comment: This is the intro for the acknowledgements document
+            ```
+            
+
+    Keep in mind!
+    
+        For the `block_syntax`, any free lines directly above or below the <value> will be ignored and removed. 
+        
+        So it doesn't make any difference whether the markdown source looks like this:
+
+            ```
+            key: <key>
+            ```
+            abcefghijklmnop
+            qrstuvwxyz
+            ```
+            comment: <comment>
+            ```
+        
+        Or like this:
+            
+            ```
+            key: <key>
+            ```
+            
+            
+            
+            abcefghijklmnop
+            qrstuvwxyz
+            
+            
+            
+            ```
+            comment: <comment>
+            ```
+        
+        -> I tried to respect the free lines around the <value>, but I couldn't ge the regex to work like that. But honestly, it's probably better this way. 
+            Since, this way, translators will never have to add blank lines above or below their content to make the layout of the .md file work as intended.
+            
+    Notes:
+    - Use https://regex101.com to design and test regexes like the ones used here.
+    - To test, you might want to post the whole .md file on regex101. That way you can see any under or overmatching which might not be obvious when testing a smaller example string.
+    
+    """
+
+    # Extract translatable strings with inline syntax
+
+    inline_regex = r"\{\{(.*?)\|\|(.*?)\|\|(.*?)\}\}"           # r makes it so \ is treated as a literal character and so we don't have to double escape everything
+    inline_matches = re.finditer(inline_regex, md_string)
+    
+    # Extract translatable strings with block syntax
+    
+    block_regex = r"```\n\s*?key:\s*(.*?)\s*\n\s*?```\n\s*(^.*?$)\s*```\n\s*?comment:\s*?(.*?)\s*\n\s*?```" 
+    block_matches = re.finditer(block_regex, md_string, re.DOTALL | re.MULTILINE)
+
+    # Assemble result
+
+    all_matches = list(map(lambda m: ('inline', m), inline_matches)) + list(map(lambda m: ('block', m), block_matches))
+    
+    result = []
+        
+    for match in all_matches:
+        
+        # Get info from match
+        
+        full_match = match[1].group(0)
+        comment = None
+        value = None
+        key = None
+        
+        if match[0] == 'inline':
+            value, key, comment = match[1].groups()
+        elif match[0] == 'block':
+            key, value, comment = match[1].groups()    
+        else: 
+            assert False    
+
+        # Validate
+        assert ' ' not in key, f'key contains space: {key}' # I don't think string keys are supposed to contain spaces inside the Xcode toolchain stuff
+        assert len(key) > 0 # We need a key to parse this
+        assert len(value) > 0 # English ui strings are defined directly in the markdown file - don't think this should be empty
+        for str in [value, key, comment]:
+            assert r'}}' not in str # Protect against matching past the first occurrence of }}
+            assert r'||' not in str # Protect against ? - this is weird
+            assert r'{{' not in str # Protect against ? - this is also weird
+        
+        # Store
+        result.append((key, value, comment, full_match))
+    
+    # Return
+    
+    return result
+            
+            
+            
+
+#
+# Basic String Processing
+#
+
+def get_indent(string: str) -> tuple[int, chr]:
+    
+    # Split into lines
+    lines = string.split('\n')
+    
+    # Remove lines empty lines (ones that have no chars or only whitespace)
+    def is_empty(string: str):
+        return len(string) == 0 or all(character.isspace() for character in string)
+    lines = list(filter(lambda line: not is_empty(line), lines))
+    
+    indent_level = 0
+    break_outer_loop = False
+    
+    while True:
+        
+        # Idea: If all lines have a an identical whitespace at the current indent_level, then we can increase the indent_level by 1. 
+        
+        last_line = None
+        for line in lines:
+            
+            is_space = line[indent_level].isspace()
+            is_differnt = line[indent_level] != last_line[indent_level] if last_line != None else False
+            if not is_space or is_differnt : 
+                break_outer_loop = True; break;
+            last_line = line
+        
+        if break_outer_loop:
+            break    
+        
+        indent_level += 1
+    
+    indent_char = None if indent_level == 0 else lines[0][0]
+
+    return indent_level, indent_char
+
+def set_indent(string: str, indent_level: int, indent_character: chr) -> str:
+    
+    # Get existing indent
+    old_level, old_characer = get_indent(string)
+    
+    # Remove existing indent
+    if old_level > 0:
+        unindented_lines = []
+        for line in string.split('\n'):
+            unindented_lines.append(line[old_level:])
+        string = '\n'.join(unindented_lines)
+    
+    # Add new indent
+    if indent_level > 0:
+        indented_lines = []
+        for line in string.split('\n'):
+            indented_lines.append(indent_character*indent_level + line)
+        string = '\n'.join(indented_lines)
+    
+    # Return
+    return string
+    
+
+#
 # Language stuff
 #
 
