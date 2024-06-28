@@ -42,6 +42,7 @@ These people spent a lot more than the standard price and treated me to an **Inc
 
 **June 2024**
 
+- 🇦🇹&nbsp;Samo&nbsp;Korošec
 - 🇺🇸&nbsp;Shawn&nbsp;Holmes
 - 🇮🇱&nbsp;סרגיי&nbsp;אגרונוב
 - 🇦🇺&nbsp;Caino - "Hey Apple, when are you going to buy this for millions?"
