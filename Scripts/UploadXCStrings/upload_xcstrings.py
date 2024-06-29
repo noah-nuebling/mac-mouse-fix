@@ -44,7 +44,10 @@ import mfgithub
 #    
 # Constants
 #
-    
+
+xcode_project = 'Mouse\ Fix.xcodeproj/'
+custom_xcstrings_files = ['Markdown.xcstrings'] # These .xcstrings files are created and managed by MMF instead of Xcode, so we need to treat them differently
+
 #
 # Define main
 #
@@ -84,6 +87,10 @@ def main():
     
     # Get localization progress
     localization_progress = mflocales.get_localization_progress(xcstring_objects, translation_locales)
+    
+    # Add Markdown.xcstrings to 'Mac Mouse Fix' build target
+    #   - Otherwise it won't be exported
+    mflocales.make_custom_xcstrings_visible_to_xcodebuild(xcode_project, custom_xcstrings_files)
     
     # Get a temp dir to store exported .xcloc files to
     temp_dir = tempfile.gettempdir()

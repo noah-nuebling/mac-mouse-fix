@@ -6,6 +6,7 @@ import babel
 import json
 from collections import defaultdict
 import re
+import os
 import mfutils
 
 #
@@ -108,13 +109,57 @@ def get_translation(xcstrings: dict, key: str, preferred_locale: str) -> tuple[s
     return translation, best_locale
         
 
+def make_custom_xcstrings_visible_to_xcodebuild(path_to_xcodeproj: str, custom_xcstrings_paths: list) -> dict:
+    
+    # Load xcode project as json
+    #   I have no idea why plutil can do this - .pbxproj files aren't .plist files?
+    pbxproject_json = json.loads(mfutils.runCLT(f"plutil -convert json -r -o - {path_to_xcodeproj}/project.pbxproj").stdout)
+        
+    for xcstrings_path in custom_xcstrings_paths:
+
+        # Find xcstrings file
+        xcstrings_name = os.path.basename(xcstrings_path) # Just ignore the path, just use the name
+        xcstrings_uuids = []
+        for uuid, info in pbxproject_json['objects'].items():
+            if info['isa'] == 'PBXFileReference' and info['path'] == xcstrings_name:
+                xcstrings_uuids.append(uuid)
+        
+    # Validate
+    #   This will fail if the xcstrings file's name is not unique throughout the project, or if the xcstrings files doesn't exist in the project.
+    assert len(xcstrings_uuids) == 1
+    
+    # Extract
+    xcstrings_uuid = xcstrings_uuids[0]
+    
+    # Create PXBuildFile object
+    
+    build_file_key = mfutils.xcode_project_uuid()
+    build_file_value = {
+         "fileRef" : xcstrings_uuid,
+         "isa" : "PBXBuildFile"
+      },
+    
+    # Insert PXBuildFile into xcode project
+    mfutils.runCLT(f"plutil -insert objects.{build_file_key} -json '{json.dumps(build_file_value)}' {path_to_xcodeproj}/project.pbxproj")
+    
+    # Create 'undo payload'
+    #   Pass this to the undo function to undo the changes that this function made
+    undo_payload = {
+        'project': path_to_xcodeproj,
+        'inserted_build_file_key': build_file_key,
+    }
+    
+    # Return
+    return undo_payload
+    
+
 def find_locales(path_to_xcodeproj) -> tuple[str, list[str]]:
     
     """
     Returns the development locale of the xcode project as the first argument and the list of translation locales as the second argument
     """
     
-    pbxproject_json = json.loads(mfutils.runCLT(f"plutil -convert json -r -o - {path_to_xcodeproj}/project.pbxproj").stdout) # -r puts linebreaks into the json which makes it human readable, but is unnecessary here.
+    pbxproject_json = json.loads(mfutils.runCLT(f"plutil -convert json -r -o - {path_to_xcodeproj}/project.pbxproj").stdout) # -r puts linebreaks into the json which makes it human readable, but is unnecessary here. `-o -` returns to stdout
     
     development_locale = None
     locales = None

@@ -17,6 +17,7 @@ import subprocess
 import os
 import textwrap
 import json
+import random
             
 
 #
@@ -183,3 +184,25 @@ def is_file_empty(file_path):
     """Check if file is empty by confirming if its size is 0 bytes.
         Also returns true if the file doesn't exist."""
     return not os.path.exists(file_path) or os.path.getsize(file_path) == 0
+
+#
+# Other
+#
+
+def xcode_project_uuid():
+    
+    """
+    The project.pbxproj file from Xcode uses 12 digit hexadecimal numbers (which have 24 characters) as keys/identifiers for it's 'objects'. So here we generate such an identifier. (In a really naive way)
+    """
+    
+    result = ""
+    for _ in range(24):
+        num = random.randint(0, 15)
+        hexa = hex(num)[2:].capitalize()
+        result += hexa
+    
+    assert(len(result) == 24)
+    
+    return result
+    
+    
