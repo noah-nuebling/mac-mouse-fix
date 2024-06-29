@@ -1,0 +1,4 @@
+#!/bin/bash
+
+# Dispatch to python, passing along all arguments
+python3 Scripts/Run/run.py "$@";

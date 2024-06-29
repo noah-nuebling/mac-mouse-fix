@@ -6,10 +6,10 @@
   {{[Help translate Mac Mouse Fix to different languages!](https://github.com/noah-nuebling/mac-mouse-fix/discussions/731)||markdown.translate-prompt||}}
 </details>
 
-# {{🙌 Acknowledgements||acknowledgements.title||This is the title for the acknowledgements document which gives credit to people who have helped the project!}}
+# {{🙌 Acknowledgements||acknowledgements.intro.title||This is the title for the acknowledgements document which gives credit to people who have helped the project!}}
 
 ```
-key: acknowledgements.body
+key: acknowledgements.intro.body
 ```
 Big thanks to everyone using Mac Mouse Fix and providing feedback. It's awesome and highly motivating to see so many people enjoy and engage with something I created.
 
@@ -52,7 +52,7 @@ comment:
 
 {generous}
 
-### {{🚀 Very Generous Contributors||acknowledgements.money.very-generous.title||}
+### {{🚀 Very Generous Contributors||acknowledgements.money.very-generous.title||}}
 
 {{These people spent a lot more than the standard price and treated me to an **Incredible Milkshake**. (And some even left a message) Thanks for the _sugar rush_!||acknowledgements.money.very-generous.body||}}
 

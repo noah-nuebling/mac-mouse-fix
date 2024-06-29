@@ -1,25 +1,30 @@
+
+"""
+
+This scripts creates .xcloc files for the MMF project and publishes them on GitHub.
+
+"""
+
 #
-# Imports 
+# Imports
 # 
 
 import tempfile
 import os
-import sys
 import json
 import shutil
 import glob
-from collections import defaultdict
 from collections import namedtuple
 from pprint import pprint
 import argparse
-import zipfile
-import babel
 
 #
 # Import functions from ../Shared folder
 #
 
-import shared
+import mfutils
+import mflocales
+import mfgithub
 
 # Print sys.path to debug
 #   - This needs to contain the ../Shared folder in oder for the import and VSCode completions to work properly
@@ -51,25 +56,22 @@ def main():
     
     # Parse args
     parser = argparse.ArgumentParser()
-    parser.add_argument('--api_key', required=False, help="The API key is used to interact with GitHub || You can also set the api key to the API_KEY env variable in the VSCode Terminal || To find the API key, see Apple Note 'MMF Localization Script Access Token'")
+    parser.add_argument('--api_key', required=False, default=os.getenv("GH_API_KEY"), help="The API key is used to interact with GitHub || You can also set the api key to the GH_API_KEY env variable (in the VSCode Terminal to use with VSCode) || To find the API key, see Apple Note 'MMF Localization Script Access Token'")
     args = parser.parse_args()
     
-    # Get api_key
-    print("Getting API key ...\n")
+    # Check api_key
     no_api_key = args.api_key == None or len(args.api_key) == 0
-    if no_api_key:
-        args.api_key = os.getenv("API_KEY")
-    no_api_key = args.api_key == None or len(args.api_key) == 0
-    
-    if no_api_key:
-        print("No API key provided\n")
+    if not no_api_key:
+        print(f"Working with api_key: ")
     else:
-        print(f"Working with API_KEY: ")
+        print("No api key provided\n")
+        parser.print_help()
+        exit(1)
     
     # Get locales for this project
     print(f"Extracting locales from .xcodeproject ...")
     
-    development_locale, translation_locales = shared.find_locales('Mouse\ Fix.xcodeproj')
+    development_locale, translation_locales = mflocales.find_locales('Mouse\ Fix.xcodeproj')
     
     # Load all .xcstrings files
     print(f"Loading all .xcstring files ...\n")
@@ -81,7 +83,7 @@ def main():
     print(f".xcstring file paths: { json.dumps(xcstring_filenames, indent=2) }\n")
     
     # Get localization progress
-    localization_progress = shared.get_localization_progress(xcstrings_objects, translation_locales)
+    localization_progress = mflocales.get_localization_progress(xcstring_objects, translation_locales)
     
     # Get a temp dir to store exported .xcloc files to
     temp_dir = tempfile.gettempdir()
@@ -90,9 +92,9 @@ def main():
     os.mkdir(xcloc_dir)
     
     # Export .xcloc file for each locale
-    print(f"Exporting .xcloc files for locales ...\n")
+    print(f"Exporting .xcloc files for locales (might take a while) ... \n")
     locale_args = ' '.join([ '-exportLanguage ' + l for l in translation_locales ])
-    shared.runCLT(f'xcodebuild -exportLocalizations -localizationPath "{ xcloc_dir }" { locale_args }')
+    mfutils.runCLT(f'xcodebuild -exportLocalizations -localizationPath "{ xcloc_dir }" { locale_args }')
     print(f"Exported .xcloc files to {xcloc_dir}\n")
     
     # Rename .xcloc files and put them in subfolders
@@ -101,30 +103,30 @@ def main():
     zip_file_format = "MacMouseFixTranslations.{}.zip" # GitHub Releases assets seemingly can't have spaces, that's why we're using this separate format
     
     for l in translation_locales:
-        language_name = shared.language_tag_to_language_name(l)
+        language_name = mflocales.language_tag_to_language_name(l)
         current_path = os.path.join(xcloc_dir, f'{l}.xcloc')
         target_folder = os.path.join(xcloc_dir, folder_name_format.format(language_name))
         target_path = os.path.join(target_folder, 'Mac Mouse Fix.xcloc')
-        shared.runCLT(f'mkdir -p "{target_folder}"') # -p creates any intermediate parent folders
-        shared.runCLT(f'mv "{current_path}" "{target_path}"')
+        mfutils.runCLT(f'mkdir -p "{target_folder}"') # -p creates any intermediate parent folders
+        mfutils.runCLT(f'mv "{current_path}" "{target_path}"')
     
     # Zipping up folders containing .xcloc files 
     print(f"Zipping up .xcloc files ...\n")
     zip_files = {}
     for l in translation_locales:
         
-        language_name = shared.language_tag_to_language_name(l)
+        language_name = mflocales.language_tag_to_language_name(l)
         folder_name = folder_name_format.format(language_name)
         target_folder = os.path.join(xcloc_dir, folder_name)
         zip_file_name = zip_file_format.format(l)
         zip_file_path = os.path.join(xcloc_dir, zip_file_name)
         
         if os.path.exists(zip_file_path):
-            rm_result = shared.runCLT(f'rm -R "{zip_file_path}"') # We first remove any existing zip_file, because otherwise the `zip` CLT will combine the existing archive with the new data we're archiving which is weird. (If I understand the `zip` man correctly`)
-            print(f'Zip file of same name already existed. Calling rm on the zip_file returned: { shared.clt_result_description(rm_result) }')
+            rm_result = mfutils.runCLT(f'rm -R "{zip_file_path}"') # We first remove any existing zip_file, because otherwise the `zip` CLT will combine the existing archive with the new data we're archiving which is weird. (If I understand the `zip` man correctly`)
+            print(f'Zip file of same name already existed. Calling rm on the zip_file returned: { mfutils.clt_result_description(rm_result) }')
             
-        zip_result = shared.runCLT(f'zip -r "{zip_file_name}" "{folder_name}"', cwd=xcloc_dir) # We need to set the cwd (current working directory) like this, if we use abslute path to the zip_file and xcloc file, then the `zip` clt will recreate the whole path from our system root inside the zip archive. Not sure why.
-        print(f'zip clt returned: { shared.clt_result_description(zip_result) }')
+        zip_result = mfutils.runCLT(f'zip -r "{zip_file_name}" "{folder_name}"', cwd=xcloc_dir) # We need to set the cwd (current working directory) like this, if we use abslute path to the zip_file and xcloc file, then the `zip` clt will recreate the whole path from our system root inside the zip archive. Not sure why.
+        print(f'zip clt returned: { mfutils.clt_result_description(zip_result) }')
         
         with open(zip_file_path, 'rb') as zip_file:
             # Load the zip data
@@ -140,15 +142,15 @@ def main():
     print(f"Uploading to GitHub ...\n")
     
     # Find GitHub Release
-    response = shared.github_releases_get_release_with_tag(args.api_key, 'noah-nuebling/mac-mouse-fix-localization-file-hosting', 'arbitrary-tag') # arbitrary-tag is the tag of the release we want to use, so it is not, in fact, arbitrary
+    response = mfgithub.github_releases_get_release_with_tag(args.api_key, 'noah-nuebling/mac-mouse-fix-localization-file-hosting', 'arbitrary-tag') # arbitrary-tag is the tag of the release we want to use, so it is not, in fact, arbitrary
     release = response.json()
-    print(f"Found release { release['name'] }, received response: { shared.response_description(response) }")
+    print(f"Found release { release['name'] }, received response: { mfgithub.response_description(response) }")
     
     # Delete all Assets 
     #   from GitHub Release
     for asset in release['assets']:
-        response = shared.github_releases_delete_asset(args.api_key, 'noah-nuebling/mac-mouse-fix-localization-file-hosting', asset['id'])
-        print(f"Deleted asset { asset['name'] }, received response: { shared.response_description(response) }")
+        response = mfgithub.github_releases_delete_asset(args.api_key, 'noah-nuebling/mac-mouse-fix-localization-file-hosting', asset['id'])
+        print(f"Deleted asset { asset['name'] }, received response: { mfgithub.response_description(response) }")
     
     # Upload new Assets
     #   to GitHub Release
@@ -159,10 +161,10 @@ def main():
         zip_file_name = value['name']
         zip_file_content = value['content']
         
-        response = shared.github_releases_upload_asset(args.api_key, 'noah-nuebling/mac-mouse-fix-localization-file-hosting', release['id'], zip_file_name, zip_file_content)        
+        response = mfgithub.github_releases_upload_asset(args.api_key, 'noah-nuebling/mac-mouse-fix-localization-file-hosting', release['id'], zip_file_name, zip_file_content)        
         download_urls[zip_file_locale] = response.json()['browser_download_url']
         
-        print(f"Uploaded asset { zip_file_name }, received response: { shared.response_description(response) }")
+        print(f"Uploaded asset { zip_file_name }, received response: { mfgithub.response_description(response) }")
         
     print(f"Finshed Uploading to GitHub. Download urls: { json.dumps(download_urls, indent=2) }")
     
@@ -403,15 +405,15 @@ Thank you so much for your help in bringing Mac Mouse Fix to people around the w
 |:--- |:---:| ---:|
 """
 
-    for locale in sorted(translation_locales, key=lambda l: shared.language_tag_to_language_name(l)): # Sort the locales by language name (Alphabetically)
+    for locale in sorted(translation_locales, key=lambda l: mflocales.language_tag_to_language_name(l)): # Sort the locales by language name (Alphabetically)
         
         progress = localization_progress[locale]
         progress_percentage = int(100 * progress['percentage'])
         download_name = 'Download'
         download_url = download_urls[locale]
         
-        emoji_flag = shared.language_tag_to_flag_emoji(locale)
-        language_name = shared.language_tag_to_language_name(locale)
+        emoji_flag = mflocales.language_tag_to_flag_emoji(locale)
+        language_name = mflocales.language_tag_to_language_name(locale)
         
         entry = f"""\
 | {emoji_flag} {language_name} ({locale}) | [{download_name}]({download_url}) | ![Static Badge](https://img.shields.io/badge/{progress_percentage}%25-Translated-gray?style=flat&labelColor={'%23aaaaaa' if progress_percentage < 100 else 'brightgreen'}) |
@@ -421,7 +423,7 @@ Thank you so much for your help in bringing Mac Mouse Fix to people around the w
     new_discussion_body = new_discussion_body.format(download_table=download_table)
     
     # Escape markdown
-    new_discussion_body = shared.escape_for_upload(new_discussion_body)
+    new_discussion_body = mfgithub.escape_for_upload(new_discussion_body)
 
 
     
@@ -432,7 +434,7 @@ Thank you so much for your help in bringing Mac Mouse Fix to people around the w
     else:
     
         # Find discussion #1022
-        find_discussion_result = shared.github_graphql_request(args.api_key, """      
+        find_discussion_result = mfgithub.github_graphql_request(args.api_key, """      
                                                                                            
 query {
   repository(owner: "noah-nuebling", name: "mac-mouse-fix") {
@@ -447,7 +449,7 @@ query {
         discussion_url = find_discussion_result['data']['repository']['discussion']['url']
     
         # Mutate the discussion body
-        mutate_discussion_result = shared.github_graphql_request(args.api_key, f"""
+        mutate_discussion_result = mfgithub.github_graphql_request(args.api_key, f"""
                                   
 mutation {{
     updateDiscussion(input: {{discussionId: "{discussion_id}", body: "{new_discussion_body}"}}) {{

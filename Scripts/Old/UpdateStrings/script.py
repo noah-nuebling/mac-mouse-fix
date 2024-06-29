@@ -213,7 +213,7 @@ def log_modifications(modss):
         
         if len(keys_diff) > 0:
             if False: # This sucks. Just use git diff.
-                path_result += f"\n\n    Key order diff:\n{shared.indent(keys_diff, 8)}"
+                path_result += f"\n\n    Key order diff:\n{shared.add_indent(keys_diff, 8)}"
             else: 
                 path_result += f"\\n\n    The order of keys seems to have changed. (I think - this might be broken)"
                 
@@ -229,13 +229,13 @@ def log_modifications(modss):
                 if a == b:
                     path_result += f"\n\n    {key}'s comment whitespace changed"    
                 else:
-                    a = shared.indent(a, 8)
-                    b = shared.indent(b, 8)
+                    a = shared.add_indent(a, 8)
+                    b = shared.add_indent(b, 8)
                     
                     path_result += f"\n\n    {key} comment changed:\n{b}\n        ->\n{a}"
                 
             elif modtype == 'insert':
-                value = shared.indent(mod['value'], 8)
+                value = shared.add_indent(mod['value'], 8)
                 path_result += f"\n\n    {key} was inserted:\n{value}"
                 
             else: 

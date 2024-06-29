@@ -321,6 +321,21 @@
 		4FFA4E4828B7D2E40062A1FE /* NSShadow+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FA1FD8228A916B600D1C8EE /* NSShadow+Extensions.swift */; };
 		4FFA4E4928B7D3750062A1FE /* NSView+Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F92A72C260F6C7800529D1F /* NSView+Additions.m */; };
 		4FFA4E4A28B7D3750062A1FE /* NSView+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F909D0428A0C3D2009349A2 /* NSView+Extensions.swift */; };
+		4FFB5F052C2FECDD0096AA3E /* Readme.md in Resources */ = {isa = PBXBuildFile; fileRef = 4FFB5F032C2FECDC0096AA3E /* Readme.md */; };
+		4FFB5F062C2FECDD0096AA3E /* Acknowledgements.md in Resources */ = {isa = PBXBuildFile; fileRef = 4FFB5F042C2FECDD0096AA3E /* Acknowledgements.md */; };
+		4FFB5F1C2C2FEE460096AA3E /* markdown_generator.py in Resources */ = {isa = PBXBuildFile; fileRef = 4FFB5F072C2FEE460096AA3E /* markdown_generator.py */; };
+		4FFB5F1D2C2FEE460096AA3E /* python_requirements.txt in Resources */ = {isa = PBXBuildFile; fileRef = 4FFB5F082C2FEE460096AA3E /* python_requirements.txt */; };
+		4FFB5F1E2C2FEE460096AA3E /* requirements.txt in Resources */ = {isa = PBXBuildFile; fileRef = 4FFB5F0A2C2FEE460096AA3E /* requirements.txt */; };
+		4FFB5F1F2C2FEE460096AA3E /* script.py in Resources */ = {isa = PBXBuildFile; fileRef = 4FFB5F0B2C2FEE460096AA3E /* script.py */; };
+		4FFB5F202C2FEE460096AA3E /* requirements.txt in Resources */ = {isa = PBXBuildFile; fileRef = 4FFB5F0D2C2FEE460096AA3E /* requirements.txt */; };
+		4FFB5F212C2FEE460096AA3E /* script.py in Resources */ = {isa = PBXBuildFile; fileRef = 4FFB5F0E2C2FEE460096AA3E /* script.py */; };
+		4FFB5F232C2FEE460096AA3E /* __init__.py in Resources */ = {isa = PBXBuildFile; fileRef = 4FFB5F122C2FEE460096AA3E /* __init__.py */; };
+		4FFB5F242C2FEE460096AA3E /* shared.py in Resources */ = {isa = PBXBuildFile; fileRef = 4FFB5F132C2FEE460096AA3E /* shared.py */; };
+		4FFB5F252C2FEE460096AA3E /* sync_xcstrings.py in Resources */ = {isa = PBXBuildFile; fileRef = 4FFB5F152C2FEE460096AA3E /* sync_xcstrings.py */; };
+		4FFB5F262C2FEE460096AA3E /* requirements.txt in Resources */ = {isa = PBXBuildFile; fileRef = 4FFB5F172C2FEE460096AA3E /* requirements.txt */; };
+		4FFB5F272C2FEE460096AA3E /* upload_xcstrings.py in Resources */ = {isa = PBXBuildFile; fileRef = 4FFB5F182C2FEE460096AA3E /* upload_xcstrings.py */; };
+		4FFB5F282C2FEE460096AA3E /* Readme.md in Resources */ = {isa = PBXBuildFile; fileRef = 4FFB5F1A2C2FEE460096AA3E /* Readme.md */; };
+		4FFB5F2B2C3076270096AA3E /* Markdown.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 4FFB5EF42C2E67690096AA3E /* Markdown.xcstrings */; };
 		4FFBC5A8266977CA001D389B /* DoubleExponentialSmoother.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FFBC5A7266977CA001D389B /* DoubleExponentialSmoother.swift */; };
 		4FFE2894291B35AA0058ABE0 /* (null) in Sources */ = {isa = PBXBuildFile; };
 		4FFE2895291B35AA0058ABE0 /* (null) in Sources */ = {isa = PBXBuildFile; };
@@ -403,8 +418,6 @@
 		4F09284328B8E82B00BDC2FF /* LicenseSheetController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LicenseSheetController.swift; sourceTree = "<group>"; };
 		4F09284928B8EE7200BDC2FF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LicenseSheetController.xib; sourceTree = "<group>"; };
 		4F09BF57288355170080A5F8 /* PollingRateMeasurer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PollingRateMeasurer.swift; sourceTree = "<group>"; };
-		4F0BDC742B446A3C00AE65C1 /* python_requirements.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = python_requirements.txt; sourceTree = "<group>"; };
-		4F0BDC752B446A3C00AE65C1 /* markdown_generator.py */ = {isa = PBXFileReference; lastKnownFileType = text.script.python; path = markdown_generator.py; sourceTree = "<group>"; };
 		4F0BDC782B446A3C00AE65C1 /* acknowledgements_template.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = acknowledgements_template.md; sourceTree = "<group>"; };
 		4F0BDC792B446A3C00AE65C1 /* readme_template.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = readme_template.md; sourceTree = "<group>"; };
 		4F0BDC7B2B446A3C00AE65C1 /* acknowledgements_template.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = acknowledgements_template.md; sourceTree = "<group>"; };
@@ -2126,7 +2139,6 @@
 		4FA2F13C2C2B0932000C5535 /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
 		4FA2F13F2C2B0932000C5535 /* mul */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; name = mul; path = mul.lproj/ButtonOptionsViewController.xcstrings; sourceTree = "<group>"; };
 		4FA2F1402C2B0932000C5535 /* mul */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; name = mul; path = mul.lproj/AuthorizeAccessibilityView.xcstrings; sourceTree = "<group>"; };
-		4FA2F1E82C2C79CF000C5535 /* script.py */ = {isa = PBXFileReference; lastKnownFileType = text.script.python; path = script.py; sourceTree = "<group>"; };
 		4FA40CF528A0CBA600499E53 /* Mac Mouse Fix-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Mac Mouse Fix-Bridging-Header.h"; sourceTree = "<group>"; };
 		4FA83A27268271E200F3A31B /* PointerSpeed.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PointerSpeed.h; sourceTree = "<group>"; };
 		4FA83A28268271E200F3A31B /* PointerSpeed.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PointerSpeed.m; sourceTree = "<group>"; };
@@ -2152,12 +2164,6 @@
 		4FC55B962915652C00663B24 /* AlertCreator.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AlertCreator.h; sourceTree = "<group>"; };
 		4FC55B972915652C00663B24 /* AlertCreator.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AlertCreator.m; sourceTree = "<group>"; };
 		4FC55E2F285E6BF800F2FCCF /* GlobalDefaults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlobalDefaults.swift; sourceTree = "<group>"; };
-		4FC7D5CD2B455A1C002AED77 /* requirements.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = requirements.txt; sourceTree = "<group>"; };
-		4FC7D5CE2B455A1C002AED77 /* script.py */ = {isa = PBXFileReference; lastKnownFileType = text.script.python; path = script.py; sourceTree = "<group>"; };
-		4FC7D5D02B455A1C002AED77 /* requirements.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = requirements.txt; sourceTree = "<group>"; };
-		4FC7D5D12B455A1C002AED77 /* script.py */ = {isa = PBXFileReference; lastKnownFileType = text.script.python; path = script.py; sourceTree = "<group>"; };
-		4FC7D5D32B455A1C002AED77 /* __init__.py */ = {isa = PBXFileReference; lastKnownFileType = text.script.python; path = __init__.py; sourceTree = "<group>"; };
-		4FC7D5D72B455A1C002AED77 /* shared.py */ = {isa = PBXFileReference; lastKnownFileType = text.script.python; path = shared.py; sourceTree = "<group>"; };
 		4FC7D5D82B455A60002AED77 /* update-state-of-localization.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = "update-state-of-localization.yml"; sourceTree = "<group>"; };
 		4FC8A7CC28AAF1BC007DB982 /* MarkdownParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarkdownParser.swift; sourceTree = "<group>"; };
 		4FC8A7D428ABDEFD007DB982 /* MFClipView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MFClipView.swift; sourceTree = "<group>"; };
@@ -2365,7 +2371,6 @@
 		4FF8C89D28955DC4007EC31F /* CoolTimer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoolTimer.swift; sourceTree = "<group>"; };
 		4FF8C8A028956DDD007EC31F /* ButtonModifiers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonModifiers.swift; sourceTree = "<group>"; };
 		4FF8C8A22895AACB007EC31F /* Buttons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Buttons.swift; sourceTree = "<group>"; };
-		4FF8F3A92B8F8BD3005ACF3D /* Localization Readme > Code.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "Localization Readme > Code.md"; sourceTree = "<group>"; };
 		4FF93058288026FC0007CCA7 /* PolynomialCappedAccelerationCurve.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PolynomialCappedAccelerationCurve.swift; sourceTree = "<group>"; };
 		4FF9305D288060100007CCA7 /* PolyFit.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = PolyFit.cpp; sourceTree = "<group>"; };
 		4FF9305E288060100007CCA7 /* PolyFit.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = PolyFit.hpp; sourceTree = "<group>"; };
@@ -2375,10 +2380,21 @@
 		4FFA4E3F28B7D0120062A1FE /* SharedSFSymbols.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = SharedSFSymbols.xcassets; sourceTree = "<group>"; };
 		4FFAD8EF28677F94005DD496 /* PointerConfigObjC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PointerConfigObjC.h; sourceTree = "<group>"; };
 		4FFB5EF42C2E67690096AA3E /* Markdown.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Markdown.xcstrings; sourceTree = "<group>"; };
-		4FFB5EF52C2E67690096AA3E /* readme_skeleton.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = readme_skeleton.md; sourceTree = "<group>"; };
-		4FFB5EF62C2E67690096AA3E /* acknowledgements_skeleton.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = acknowledgements_skeleton.md; sourceTree = "<group>"; };
-		4FFB5EF72C2E67F10096AA3E /* sync_xcstrings.py */ = {isa = PBXFileReference; lastKnownFileType = text.script.python; path = sync_xcstrings.py; sourceTree = "<group>"; };
 		4FFB5EFA2C2E78D30096AA3E /* Misappropriating XCStrings.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; name = "Misappropriating XCStrings.md"; path = "Localization/Misappropriating XCStrings.md"; sourceTree = SOURCE_ROOT; };
+		4FFB5F032C2FECDC0096AA3E /* Readme.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = Readme.md; sourceTree = "<group>"; };
+		4FFB5F042C2FECDD0096AA3E /* Acknowledgements.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = Acknowledgements.md; sourceTree = "<group>"; };
+		4FFB5F072C2FEE460096AA3E /* markdown_generator.py */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.python; path = markdown_generator.py; sourceTree = "<group>"; };
+		4FFB5F082C2FEE460096AA3E /* python_requirements.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = python_requirements.txt; sourceTree = "<group>"; };
+		4FFB5F0A2C2FEE460096AA3E /* requirements.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = requirements.txt; sourceTree = "<group>"; };
+		4FFB5F0B2C2FEE460096AA3E /* script.py */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.python; path = script.py; sourceTree = "<group>"; };
+		4FFB5F0D2C2FEE460096AA3E /* requirements.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = requirements.txt; sourceTree = "<group>"; };
+		4FFB5F0E2C2FEE460096AA3E /* script.py */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.python; path = script.py; sourceTree = "<group>"; };
+		4FFB5F122C2FEE460096AA3E /* __init__.py */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.python; path = __init__.py; sourceTree = "<group>"; };
+		4FFB5F132C2FEE460096AA3E /* shared.py */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.python; path = shared.py; sourceTree = "<group>"; };
+		4FFB5F152C2FEE460096AA3E /* sync_xcstrings.py */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.python; path = sync_xcstrings.py; sourceTree = "<group>"; };
+		4FFB5F172C2FEE460096AA3E /* requirements.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = requirements.txt; sourceTree = "<group>"; };
+		4FFB5F182C2FEE460096AA3E /* upload_xcstrings.py */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.python; path = upload_xcstrings.py; sourceTree = "<group>"; };
+		4FFB5F1A2C2FEE460096AA3E /* Readme.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = Readme.md; sourceTree = "<group>"; };
 		4FFBC5732667DCE4001D389B /* PrefixHeader.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PrefixHeader.pch; sourceTree = "<group>"; };
 		4FFBC5A6266977CA001D389B /* Mac Mouse Fix Helper-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Mac Mouse Fix Helper-Bridging-Header.h"; sourceTree = "<group>"; };
 		4FFBC5A7266977CA001D389B /* DoubleExponentialSmoother.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DoubleExponentialSmoother.swift; sourceTree = "<group>"; };
@@ -2461,9 +2477,6 @@
 			isa = PBXGroup;
 			children = (
 				4FFB5EF42C2E67690096AA3E /* Markdown.xcstrings */,
-				4FFB5EF62C2E67690096AA3E /* acknowledgements_skeleton.md */,
-				4FFB5EF52C2E67690096AA3E /* readme_skeleton.md */,
-				4F0BDC732B446A3C00AE65C1 /* Code */,
 				4F0BDC762B446A3C00AE65C1 /* Templates */,
 				4F0BDC7D2B446A3C00AE65C1 /* LocalizedDocuments */,
 				4F0BDC812B446A3C00AE65C1 /* MarkdownReadme.md */,
@@ -2472,18 +2485,11 @@
 			path = Markdown;
 			sourceTree = "<group>";
 		};
-		4F0BDC732B446A3C00AE65C1 /* Code */ = {
-			isa = PBXGroup;
-			children = (
-				4FFB5EF82C2E684B0096AA3E /* MarkdownGenerator */,
-				4FFB5EF92C2E685A0096AA3E /* SyncXCStrings */,
-			);
-			path = Code;
-			sourceTree = "<group>";
-		};
 		4F0BDC762B446A3C00AE65C1 /* Templates */ = {
 			isa = PBXGroup;
 			children = (
+				4FFB5F042C2FECDD0096AA3E /* Acknowledgements.md */,
+				4FFB5F032C2FECDC0096AA3E /* Readme.md */,
 				4F0BDC772B446A3C00AE65C1 /* de */,
 				4F0BDC7A2B446A3C00AE65C1 /* en-US */,
 			);
@@ -6306,6 +6312,7 @@
 		4F422EF023469B2B00AA6E22 /* Other */ = {
 			isa = PBXGroup;
 			children = (
+				4FFB5F1B2C2FEE460096AA3E /* Scripts */,
 				4F214C222B2E141900DD3957 /* Readme.md */,
 				4F2153272B2E150800DD3957 /* Acknowledgements.md */,
 				4F42304628CE6C1C003A41D3 /* License */,
@@ -6570,7 +6577,6 @@
 			children = (
 				4FFB5EFA2C2E78D30096AA3E /* Misappropriating XCStrings.md */,
 				4F909D1928A0C3D2009349A2 /* Localization Readme.md */,
-				4FC7D5CB2B455A1C002AED77 /* Code */,
 				4FA2F13C2C2B0932000C5535 /* Localizable.xcstrings */,
 				4F97DFFF298732E500012BAC /* LocalizationUtility.h */,
 				4F97E000298732E500012BAC /* LocalizationUtility.m */,
@@ -6701,15 +6707,6 @@
 			path = Notifications;
 			sourceTree = "<group>";
 		};
-		4FA2F1E92C2C79CF000C5535 /* ExportLocalizationCatalog */ = {
-			isa = PBXGroup;
-			children = (
-				4FA2F1E82C2C79CF000C5535 /* script.py */,
-			);
-			name = ExportLocalizationCatalog;
-			path = Localization/Code/ExportLocalizationCatalog;
-			sourceTree = SOURCE_ROOT;
-		};
 		4FA40D1128A0D9FB00499E53 /* External */ = {
 			isa = PBXGroup;
 			children = (
@@ -6830,45 +6827,6 @@
 				4F79A7EE26042E2E00076A7E /* ToastNotification.xib */,
 			);
 			path = Toasts;
-			sourceTree = "<group>";
-		};
-		4FC7D5CB2B455A1C002AED77 /* Code */ = {
-			isa = PBXGroup;
-			children = (
-				4FF8F3A92B8F8BD3005ACF3D /* Localization Readme > Code.md */,
-				4FC7D5CC2B455A1C002AED77 /* StateOfLocalization */,
-				4FC7D5CF2B455A1C002AED77 /* UpdateStrings */,
-				4FA2F1E92C2C79CF000C5535 /* ExportLocalizationCatalog */,
-				4FC7D5D22B455A1C002AED77 /* Shared */,
-			);
-			path = Code;
-			sourceTree = "<group>";
-		};
-		4FC7D5CC2B455A1C002AED77 /* StateOfLocalization */ = {
-			isa = PBXGroup;
-			children = (
-				4FC7D5CD2B455A1C002AED77 /* requirements.txt */,
-				4FC7D5CE2B455A1C002AED77 /* script.py */,
-			);
-			path = StateOfLocalization;
-			sourceTree = "<group>";
-		};
-		4FC7D5CF2B455A1C002AED77 /* UpdateStrings */ = {
-			isa = PBXGroup;
-			children = (
-				4FC7D5D02B455A1C002AED77 /* requirements.txt */,
-				4FC7D5D12B455A1C002AED77 /* script.py */,
-			);
-			path = UpdateStrings;
-			sourceTree = "<group>";
-		};
-		4FC7D5D22B455A1C002AED77 /* Shared */ = {
-			isa = PBXGroup;
-			children = (
-				4FC7D5D32B455A1C002AED77 /* __init__.py */,
-				4FC7D5D72B455A1C002AED77 /* shared.py */,
-			);
-			path = Shared;
 			sourceTree = "<group>";
 		};
 		4FCECD7721092354001F1078 = {
@@ -7519,21 +7477,79 @@
 			path = Strings;
 			sourceTree = "<group>";
 		};
-		4FFB5EF82C2E684B0096AA3E /* MarkdownGenerator */ = {
+		4FFB5F092C2FEE460096AA3E /* MarkdownGenerator */ = {
 			isa = PBXGroup;
 			children = (
-				4F0BDC742B446A3C00AE65C1 /* python_requirements.txt */,
-				4F0BDC752B446A3C00AE65C1 /* markdown_generator.py */,
+				4FFB5F072C2FEE460096AA3E /* markdown_generator.py */,
+				4FFB5F082C2FEE460096AA3E /* python_requirements.txt */,
 			);
 			path = MarkdownGenerator;
 			sourceTree = "<group>";
 		};
-		4FFB5EF92C2E685A0096AA3E /* SyncXCStrings */ = {
+		4FFB5F0C2C2FEE460096AA3E /* StateOfLocalization */ = {
 			isa = PBXGroup;
 			children = (
-				4FFB5EF72C2E67F10096AA3E /* sync_xcstrings.py */,
+				4FFB5F0A2C2FEE460096AA3E /* requirements.txt */,
+				4FFB5F0B2C2FEE460096AA3E /* script.py */,
+			);
+			path = StateOfLocalization;
+			sourceTree = "<group>";
+		};
+		4FFB5F0F2C2FEE460096AA3E /* UpdateStrings */ = {
+			isa = PBXGroup;
+			children = (
+				4FFB5F0D2C2FEE460096AA3E /* requirements.txt */,
+				4FFB5F0E2C2FEE460096AA3E /* script.py */,
+			);
+			path = UpdateStrings;
+			sourceTree = "<group>";
+		};
+		4FFB5F112C2FEE460096AA3E /* Old */ = {
+			isa = PBXGroup;
+			children = (
+				4FFB5F1A2C2FEE460096AA3E /* Readme.md */,
+				4FFB5F0C2C2FEE460096AA3E /* StateOfLocalization */,
+				4FFB5F0F2C2FEE460096AA3E /* UpdateStrings */,
+			);
+			path = Old;
+			sourceTree = "<group>";
+		};
+		4FFB5F142C2FEE460096AA3E /* Shared */ = {
+			isa = PBXGroup;
+			children = (
+				4FFB5F122C2FEE460096AA3E /* __init__.py */,
+				4FFB5F132C2FEE460096AA3E /* shared.py */,
+			);
+			path = Shared;
+			sourceTree = "<group>";
+		};
+		4FFB5F162C2FEE460096AA3E /* SyncXCStrings */ = {
+			isa = PBXGroup;
+			children = (
+				4FFB5F152C2FEE460096AA3E /* sync_xcstrings.py */,
 			);
 			path = SyncXCStrings;
+			sourceTree = "<group>";
+		};
+		4FFB5F192C2FEE460096AA3E /* UploadXCStrings */ = {
+			isa = PBXGroup;
+			children = (
+				4FFB5F182C2FEE460096AA3E /* upload_xcstrings.py */,
+				4FFB5F172C2FEE460096AA3E /* requirements.txt */,
+			);
+			path = UploadXCStrings;
+			sourceTree = "<group>";
+		};
+		4FFB5F1B2C2FEE460096AA3E /* Scripts */ = {
+			isa = PBXGroup;
+			children = (
+				4FFB5F142C2FEE460096AA3E /* Shared */,
+				4FFB5F092C2FEE460096AA3E /* MarkdownGenerator */,
+				4FFB5F192C2FEE460096AA3E /* UploadXCStrings */,
+				4FFB5F162C2FEE460096AA3E /* SyncXCStrings */,
+				4FFB5F112C2FEE460096AA3E /* Old */,
+			);
+			path = Scripts;
 			sourceTree = "<group>";
 		};
 		4FFBC56E2667DC76001D389B /* PrefixHeader */ = {
@@ -7725,15 +7741,30 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4FFB5F052C2FECDD0096AA3E /* Readme.md in Resources */,
+				4FFB5F252C2FEE460096AA3E /* sync_xcstrings.py in Resources */,
 				4FF6654225F2C7B000689B77 /* default_launchd.plist in Resources */,
 				4F909D2728A0C3D2009349A2 /* Main.storyboard in Resources */,
+				4FFB5F1F2C2FEE460096AA3E /* script.py in Resources */,
+				4FFB5F062C2FECDD0096AA3E /* Acknowledgements.md in Resources */,
 				4F09284828B8EE7200BDC2FF /* LicenseSheetController.xib in Resources */,
+				4FFB5F282C2FEE460096AA3E /* Readme.md in Resources */,
 				4F9E59972672A67F004E75F7 /* default_config.plist in Resources */,
+				4FFB5F1D2C2FEE460096AA3E /* python_requirements.txt in Resources */,
 				4FD148CC28AA423F00FE688C /* AuthorizeAccessibilityView.xib in Resources */,
 				4F79A7EF26042E2E00076A7E /* ToastNotification.xib in Resources */,
 				4F854D7E2789266A00B46E9D /* SFSymbols.xcassets in Resources */,
 				4F7F47D328A6EFC800290BBD /* SharedAssets.xcassets in Resources */,
+				4FFB5F1C2C2FEE460096AA3E /* markdown_generator.py in Resources */,
+				4FFB5F262C2FEE460096AA3E /* requirements.txt in Resources */,
+				4FFB5F212C2FEE460096AA3E /* script.py in Resources */,
+				4FFB5F2B2C3076270096AA3E /* Markdown.xcstrings in Resources */,
+				4FFB5F232C2FEE460096AA3E /* __init__.py in Resources */,
+				4FFB5F1E2C2FEE460096AA3E /* requirements.txt in Resources */,
 				4FA2F13D2C2B0932000C5535 /* Localizable.xcstrings in Resources */,
+				4FFB5F272C2FEE460096AA3E /* upload_xcstrings.py in Resources */,
+				4FFB5F202C2FEE460096AA3E /* requirements.txt in Resources */,
+				4FFB5F242C2FEE460096AA3E /* shared.py in Resources */,
 				4FF665F725F2C92700689B77 /* Assets.xcassets in Resources */,
 				4FA1FD7F28A847BF00D1C8EE /* DeletableTableCellView.xib in Resources */,
 				4FF665EF25F2C92700689B77 /* ScrollOverridePanel.xib in Resources */,

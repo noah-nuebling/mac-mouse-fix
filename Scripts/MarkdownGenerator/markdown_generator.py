@@ -1,3 +1,10 @@
+
+"""
+
+This script compiles markdown documents which are translatable or which have dynamic content.
+
+"""
+
 #
 # Imports
 #
@@ -16,7 +23,9 @@ import os
 import math
 from pprint import pprint # For debugging
 import json
-import shared
+
+import mfutils
+import mflocales
 
 #
 # Document paths
@@ -82,8 +91,8 @@ def main():
     # Parse args
     
     parser = argparse.ArgumentParser()
-    parser.add_argument("--document")
-    parser.add_argument("--api_key")
+    parser.add_argument("--api_key", default=os.getenv("GUMROAD_API_KEY"), help="Provide a Gumroad API key using the `--api_key` command line argument or by setting the GUMROAD_API_KEY environment variable. You can retrieve your Access Token in the GitHub Secrets or in the Gumroad Settings under Advanced.")
+    parser.add_argument("--document"), # We used to get the document through .getenv, too but that can be confusing I think
     parser.add_argument("--no_api", action='store_true') # no_api option is not necessary anymore now since we have caching to make things fast when testing.
     args = parser.parse_args()
 
@@ -91,20 +100,23 @@ def main():
     gumroad_api_key = args.api_key
     no_api = args.no_api
     
-    if document_key == None:
-        document_key = os.getenv("DOCUMENT")    
-    if gumroad_api_key == None:
-        gumroad_api_key = os.getenv("API_KEY")
+    # Validate --api_key
+    if gumroad_api_key == None or len(gumroad_api_key) == 0:
+        print("No gumroad api key provided.")
+    else:
+        print(f"Working with gumroad api key: {gumroad_api_key}")
     
-    # Validate
+    # Validate --document
     document_key_was_provided = isinstance(document_key, str) and document_key != ''
     if not document_key_was_provided:
-        print("No document key provided. Provide one using the '--document' command line argument, or by setting the DOCUMENT environment variable.")
+        print("No document key provided. Provide one using the '--document' command line argument")
         sys.exit(1)
     document_key_is_valid = document_key in document_keys
     if not document_key_is_valid:
         print(f"Unknown document key '{document_key}'. Valid document keys: {list(document_keys)}")
         sys.exit(1)
+    
+    print(f"Generating document: {document_key}")
     
     # Load xcstrings file as python object
     xcstrings = None
@@ -112,10 +124,10 @@ def main():
         xcstrings = json.load(file)
     
     # Find locales
-    development_locale, translation_locales = shared.find_locales('Mouse\ Fix.xcodeproj')
+    development_locale, translation_locales = mflocales.find_locales('Mouse\ Fix.xcodeproj')
     
     # Get translation progress
-    translation_progress = shared.get_localization_progress([xcstrings], translation_locales)
+    translation_progress = mflocales.get_localization_progress([xcstrings], translation_locales)
     
     # Compile locales
     iterated_locales = translation_locales.copy() 
@@ -124,7 +136,7 @@ def main():
     # Sort locales
     #   Don't sort these while iterating - will lead to bugs
     smallest_char = "\u0000"
-    iterated_locales.sort(key=lambda l: smallest_char if l == development_locale else shared.language_tag_to_language_name(l, l, False))
+    iterated_locales.sort(key=lambda l: smallest_char if l == development_locale else mflocales.language_tag_to_language_name(l, l, False))
     
     # Iterate locales
     for locale in iterated_locales:
@@ -149,19 +161,19 @@ def main():
         print('Inserting translations into template at path {}...'.format(template_path))
         
         # Translate the template
-        for key, value, comment, full_match in shared.get_localizable_strings_from_markdown(template):
+        for key, value, comment, full_match in mflocales.get_localizable_strings_from_markdown(template):
             
             # Get the translated value
-            translation, best_locale = shared.get_translation(xcstrings, key, locale)
+            translation, best_locale = mflocales.get_translation(xcstrings, key, locale)
             
             # Log
             if best_locale != locale:
                 print(f"Couldn't find translation for {key} in locale {locale}. Fell back to {best_locale} ")
             
             # Apply the original indentation to the translated value
-            indent_level, indent_char = shared.get_indent(value)
+            indent_level, indent_char = mfutils.get_indent(value)
             assert indent_char == ' ' or indent_char == None
-            translation = shared.set_indent(translation, indent_level, ' ')
+            translation = mfutils.set_indent(translation, indent_level, ' ')
             
             # Replace with translation
             template = template.replace(full_match, translation)
@@ -181,6 +193,7 @@ def main():
             assert False # Should never happen because we check document_key for validity above.
         
         # Validate that template is completely filled out
+        #   Note: Having this crash might be annoying for writing documents. If there's an issue we have to understand these weird errors instead of just seeing the problems in the resulting document.
         template_parse_result = list(string.Formatter().parse(template))
         template_fields = [tup[1] for tup in template_parse_result if tup[1] is not None]
         is_fully_formatted = len(template_fields) == 0
@@ -189,13 +202,13 @@ def main():
             sys.exit(1)
         
         # Insert fallback notice
-        if missing_strings > 0:
+        if locale != development_locale and translation_progress[locale]['percentage'] != 1.0:
             
             progress_percentage = int(100 * translation_progress[locale]['percentage'])
             
             fallback_notice = f"""
 <table align="center"><td align="center">
-This document is <code>{progress_percentage}% Translated</code> into the language <code>{shared.language_tag_to_language_name(locale, destination_language_id=locale, include_flag=True)}</code>.<br>
+This document is <code>{progress_percentage}% Translated</code> into the language <code>{mflocales.language_tag_to_language_name(locale, destination_language_id=locale, include_flag=True)}</code>.<br>
 To help translate it, click <a align="center" href="https://github.com/noah-nuebling/mac-mouse-fix/discussions/731">here</a>!
 </td></table>\n\n"""
             template = fallback_notice + template
@@ -429,7 +442,7 @@ def insert_language_picker(template: str, document_key: str, locale: str, develo
     
     # Process locale
         
-    language_name = f'{shared.language_tag_to_language_name(locale, locale, True)}'
+    language_name = f'{mflocales.language_tag_to_language_name(locale, locale, True)}'
     
     # Generate language list ui string
     
@@ -438,7 +451,7 @@ def insert_language_picker(template: str, document_key: str, locale: str, develo
         
         is_last = i == len(locales) - 1
         
-        language_name2 = f'{shared.language_tag_to_language_name(locale2, locale2, True)}'
+        language_name2 = f'{mflocales.language_tag_to_language_name(locale2, locale2, True)}'
         
         # Create relative path from the location of the `language_dict` document to the `language_dict2` document. This relative path works as a link. See https://github.blog/2013-01-31-relative-links-in-markup-files/
         path = get_destination_path(document_key, locale, development_locale)
@@ -572,6 +585,8 @@ def display_name(sale):
     return name
  
 def emoji_flag(sale):
+    
+    # TODO: Move this to Shared/ (Also why are we using pycountry instead of babel as we do everywhere else?)
     
     # Get country code
     country_code = sale.get('country_iso2', '')
@@ -895,7 +910,7 @@ def load_sales_from_api(gumroad_api_key, gumroad_api_base, gumroad_sales_api, gu
             else:
                 failed_attempts += 1
                 if response.status_code == 401:
-                    print('(The request failed because it is unauthorized (status 401). This might be because you are not providing a correct Access Token using the `--api_key` command line argument. You can retrieve an Access Token in the GitHub Secrets or in the Gumroad Settings under Advanced. Exiting script.')
+                    print('(The request failed because it is unauthorized (status 401). This might be because you are not providing a correct Access Token. See --help for more info')
                     sys.exit(1)
                 elif failed_attempts <= 10:
                     print(f'The HTTP request failed with status {response.status_code}. Since the the gumroad servers sometimes randomly fail (normally with code 5xx), were trying again...')
