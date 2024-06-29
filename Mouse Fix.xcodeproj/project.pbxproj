@@ -29,7 +29,7 @@
 		4F319CBB26252A2D004E5F63 /* ButtonGroupRowView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F319CBA26252A2D004E5F63 /* ButtonGroupRowView.m */; };
 		4F37FAD825FDFDC5004C34C4 /* MFScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F37FAD725FDFDC4004C34C4 /* MFScrollView.m */; };
 		4F39BC26263AC31600FDF692 /* Sparkle.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4F39BC24263AC2E800FDF692 /* Sparkle.framework */; };
-		4F39BC27263AC31600FDF692 /* Sparkle.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 4F39BC24263AC2E800FDF692 /* Sparkle.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		4F39BC27263AC31600FDF692 /* Sparkle.framework in Embed Sparkle (Redundant with Link Binary Phase?) */ = {isa = PBXBuildFile; fileRef = 4F39BC24263AC2E800FDF692 /* Sparkle.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		4F39BC3B263AF2B000FDF692 /* SparkleUpdaterController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F39BC3A263AF2B000FDF692 /* SparkleUpdaterController.m */; };
 		4F39BC4A263B179200FDF692 /* AppState.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F39BC49263B179200FDF692 /* AppState.m */; };
 		4F3A40AB266BBB6200436821 /* AccelerationBezier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F3A40AA266BBB6200436821 /* AccelerationBezier.swift */; };
@@ -83,7 +83,7 @@
 		4F8CE7012617738A00D70A76 /* AppTranslocationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F8CE6FF2617738A00D70A76 /* AppTranslocationManager.m */; };
 		4F8CF95728686C0100BF5E55 /* PolynomialRegression.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F8CF94328686C0100BF5E55 /* PolynomialRegression.m */; };
 		4F8CF95B28686EA200BF5E55 /* DoublesMatrix.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F8CF94528686C0100BF5E55 /* DoublesMatrix.m */; };
-		4F8D2C5928A035EA0060F76F /* Mac Mouse Fix Helper.app in Copy Helper */ = {isa = PBXBuildFile; fileRef = 4FCECD8021092354001F1078 /* Mac Mouse Fix Helper.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		4F8D2C5928A035EA0060F76F /* Mac Mouse Fix Helper.app in Copy MMF Helper */ = {isa = PBXBuildFile; fileRef = 4FCECD8021092354001F1078 /* Mac Mouse Fix Helper.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		4F8FC13F275DC81900887A0C /* PrefixSwift.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F8FC13E275DC81900887A0C /* PrefixSwift.swift */; };
 		4F8FC140275DC81900887A0C /* PrefixSwift.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F8FC13E275DC81900887A0C /* PrefixSwift.swift */; };
 		4F909CF028A0C3B7009349A2 /* MainAppState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F909CEF28A0C3B6009349A2 /* MainAppState.swift */; };
@@ -321,20 +321,6 @@
 		4FFA4E4828B7D2E40062A1FE /* NSShadow+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FA1FD8228A916B600D1C8EE /* NSShadow+Extensions.swift */; };
 		4FFA4E4928B7D3750062A1FE /* NSView+Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F92A72C260F6C7800529D1F /* NSView+Additions.m */; };
 		4FFA4E4A28B7D3750062A1FE /* NSView+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F909D0428A0C3D2009349A2 /* NSView+Extensions.swift */; };
-		4FFB5F052C2FECDD0096AA3E /* Readme.md in Resources */ = {isa = PBXBuildFile; fileRef = 4FFB5F032C2FECDC0096AA3E /* Readme.md */; };
-		4FFB5F062C2FECDD0096AA3E /* Acknowledgements.md in Resources */ = {isa = PBXBuildFile; fileRef = 4FFB5F042C2FECDD0096AA3E /* Acknowledgements.md */; };
-		4FFB5F1C2C2FEE460096AA3E /* markdown_generator.py in Resources */ = {isa = PBXBuildFile; fileRef = 4FFB5F072C2FEE460096AA3E /* markdown_generator.py */; };
-		4FFB5F1D2C2FEE460096AA3E /* python_requirements.txt in Resources */ = {isa = PBXBuildFile; fileRef = 4FFB5F082C2FEE460096AA3E /* python_requirements.txt */; };
-		4FFB5F1E2C2FEE460096AA3E /* requirements.txt in Resources */ = {isa = PBXBuildFile; fileRef = 4FFB5F0A2C2FEE460096AA3E /* requirements.txt */; };
-		4FFB5F1F2C2FEE460096AA3E /* script.py in Resources */ = {isa = PBXBuildFile; fileRef = 4FFB5F0B2C2FEE460096AA3E /* script.py */; };
-		4FFB5F202C2FEE460096AA3E /* requirements.txt in Resources */ = {isa = PBXBuildFile; fileRef = 4FFB5F0D2C2FEE460096AA3E /* requirements.txt */; };
-		4FFB5F212C2FEE460096AA3E /* script.py in Resources */ = {isa = PBXBuildFile; fileRef = 4FFB5F0E2C2FEE460096AA3E /* script.py */; };
-		4FFB5F232C2FEE460096AA3E /* __init__.py in Resources */ = {isa = PBXBuildFile; fileRef = 4FFB5F122C2FEE460096AA3E /* __init__.py */; };
-		4FFB5F242C2FEE460096AA3E /* shared.py in Resources */ = {isa = PBXBuildFile; fileRef = 4FFB5F132C2FEE460096AA3E /* shared.py */; };
-		4FFB5F252C2FEE460096AA3E /* sync_xcstrings.py in Resources */ = {isa = PBXBuildFile; fileRef = 4FFB5F152C2FEE460096AA3E /* sync_xcstrings.py */; };
-		4FFB5F262C2FEE460096AA3E /* requirements.txt in Resources */ = {isa = PBXBuildFile; fileRef = 4FFB5F172C2FEE460096AA3E /* requirements.txt */; };
-		4FFB5F272C2FEE460096AA3E /* upload_xcstrings.py in Resources */ = {isa = PBXBuildFile; fileRef = 4FFB5F182C2FEE460096AA3E /* upload_xcstrings.py */; };
-		4FFB5F282C2FEE460096AA3E /* Readme.md in Resources */ = {isa = PBXBuildFile; fileRef = 4FFB5F1A2C2FEE460096AA3E /* Readme.md */; };
 		4FFB5F2B2C3076270096AA3E /* Markdown.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 4FFB5EF42C2E67690096AA3E /* Markdown.xcstrings */; };
 		4FFBC5A8266977CA001D389B /* DoubleExponentialSmoother.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FFBC5A7266977CA001D389B /* DoubleExponentialSmoother.swift */; };
 		4FFE2894291B35AA0058ABE0 /* (null) in Sources */ = {isa = PBXBuildFile; };
@@ -377,36 +363,26 @@
 			name = "Copy sm_launchd.plist";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		4F94F68E25E5EF1100D9F24A /* Embed Frameworks */ = {
+		4F94F68E25E5EF1100D9F24A /* Embed Sparkle (Redundant with Link Binary Phase?) */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				4F39BC27263AC31600FDF692 /* Sparkle.framework in Embed Frameworks */,
+				4F39BC27263AC31600FDF692 /* Sparkle.framework in Embed Sparkle (Redundant with Link Binary Phase?) */,
 			);
-			name = "Embed Frameworks";
+			name = "Embed Sparkle (Redundant with Link Binary Phase?)";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		4F94F72E25E612AB00D9F24A /* Copy Helper */ = {
+		4F94F72E25E612AB00D9F24A /* Copy MMF Helper */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = Contents/Library/LoginItems;
 			dstSubfolderSpec = 1;
 			files = (
-				4F8D2C5928A035EA0060F76F /* Mac Mouse Fix Helper.app in Copy Helper */,
+				4F8D2C5928A035EA0060F76F /* Mac Mouse Fix Helper.app in Copy MMF Helper */,
 			);
-			name = "Copy Helper";
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		4F94F74B25E6149500D9F24A /* Copy Accomplice */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = Contents/Library/LaunchServices;
-			dstSubfolderSpec = 1;
-			files = (
-			);
-			name = "Copy Accomplice";
+			name = "Copy MMF Helper";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXCopyFilesBuildPhase section */
@@ -2405,11 +2381,11 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4F39BC26263AC31600FDF692 /* Sparkle.framework in Frameworks */,
 				4FEB66132793510C00E6A111 /* CocoaLumberjack in Frameworks */,
 				4FC8A7D128AAF2EA007DB982 /* Markdown in Frameworks */,
 				4FA40CF228A0CA3900499E53 /* ReactiveCocoa in Frameworks */,
 				4F909D5128A0C6F3009349A2 /* SnapKit in Frameworks */,
-				4F39BC26263AC31600FDF692 /* Sparkle.framework in Frameworks */,
 				4FA40CEF28A0CA0A00499E53 /* ReactiveSwift in Frameworks */,
 				4FEB66152793510F00E6A111 /* CocoaLumberjackSwift in Frameworks */,
 			);
@@ -7585,11 +7561,10 @@
 				4F94F75125E614D500D9F24A /* Increment Build Number */,
 				4F94F5EA25E5EC2500D9F24A /* Sources */,
 				4F94F5EB25E5EC2500D9F24A /* Frameworks */,
+				4F94F68E25E5EF1100D9F24A /* Embed Sparkle (Redundant with Link Binary Phase?) */,
 				4F94F5EC25E5EC2500D9F24A /* Resources */,
 				4F9111F8289FF25D00D2DD8C /* Copy sm_launchd.plist */,
-				4F94F68E25E5EF1100D9F24A /* Embed Frameworks */,
-				4F94F72E25E612AB00D9F24A /* Copy Helper */,
-				4F94F74B25E6149500D9F24A /* Copy Accomplice */,
+				4F94F72E25E612AB00D9F24A /* Copy MMF Helper */,
 			);
 			buildRules = (
 			);
@@ -7741,37 +7716,23 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4FFB5F052C2FECDD0096AA3E /* Readme.md in Resources */,
-				4FFB5F252C2FEE460096AA3E /* sync_xcstrings.py in Resources */,
-				4FF6654225F2C7B000689B77 /* default_launchd.plist in Resources */,
-				4F909D2728A0C3D2009349A2 /* Main.storyboard in Resources */,
-				4FFB5F1F2C2FEE460096AA3E /* script.py in Resources */,
-				4FFB5F062C2FECDD0096AA3E /* Acknowledgements.md in Resources */,
-				4F09284828B8EE7200BDC2FF /* LicenseSheetController.xib in Resources */,
-				4FFB5F282C2FEE460096AA3E /* Readme.md in Resources */,
+				4FA2F13D2C2B0932000C5535 /* Localizable.xcstrings in Resources */,
+				4FFB5F2B2C3076270096AA3E /* Markdown.xcstrings in Resources */,
 				4F9E59972672A67F004E75F7 /* default_config.plist in Resources */,
-				4FFB5F1D2C2FEE460096AA3E /* python_requirements.txt in Resources */,
-				4FD148CC28AA423F00FE688C /* AuthorizeAccessibilityView.xib in Resources */,
-				4F79A7EF26042E2E00076A7E /* ToastNotification.xib in Resources */,
+				4FF6654225F2C7B000689B77 /* default_launchd.plist in Resources */,
+				4F143E462B2D1F5600FE4092 /* fallback_licenseinfo_config.json in Resources */,
 				4F854D7E2789266A00B46E9D /* SFSymbols.xcassets in Resources */,
 				4F7F47D328A6EFC800290BBD /* SharedAssets.xcassets in Resources */,
-				4FFB5F1C2C2FEE460096AA3E /* markdown_generator.py in Resources */,
-				4FFB5F262C2FEE460096AA3E /* requirements.txt in Resources */,
-				4FFB5F212C2FEE460096AA3E /* script.py in Resources */,
-				4FFB5F2B2C3076270096AA3E /* Markdown.xcstrings in Resources */,
-				4FFB5F232C2FEE460096AA3E /* __init__.py in Resources */,
-				4FFB5F1E2C2FEE460096AA3E /* requirements.txt in Resources */,
-				4FA2F13D2C2B0932000C5535 /* Localizable.xcstrings in Resources */,
-				4FFB5F272C2FEE460096AA3E /* upload_xcstrings.py in Resources */,
-				4FFB5F202C2FEE460096AA3E /* requirements.txt in Resources */,
-				4FFB5F242C2FEE460096AA3E /* shared.py in Resources */,
 				4FF665F725F2C92700689B77 /* Assets.xcassets in Resources */,
+				4FFA4E4028B7D0610062A1FE /* SharedSFSymbols.xcassets in Resources */,
+				4F909D2728A0C3D2009349A2 /* Main.storyboard in Resources */,
+				4F09284828B8EE7200BDC2FF /* LicenseSheetController.xib in Resources */,
+				4FD148CC28AA423F00FE688C /* AuthorizeAccessibilityView.xib in Resources */,
+				4F79A7EF26042E2E00076A7E /* ToastNotification.xib in Resources */,
 				4FA1FD7F28A847BF00D1C8EE /* DeletableTableCellView.xib in Resources */,
 				4FF665EF25F2C92700689B77 /* ScrollOverridePanel.xib in Resources */,
-				4FFA4E4028B7D0610062A1FE /* SharedSFSymbols.xcassets in Resources */,
 				4F909D2F28A0C3D2009349A2 /* MyTitlebarAccessoryViewController.xib in Resources */,
 				4FD148D128AA428000FE688C /* ButtonOptionsViewController.xib in Resources */,
-				4F143E462B2D1F5600FE4092 /* fallback_licenseinfo_config.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -7793,14 +7754,14 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4FF6668325F2C93A00689B77 /* Assets.xcassets in Resources */,
+				4FA2F13E2C2B0932000C5535 /* Localizable.xcstrings in Resources */,
 				4FF6654125F2C7B000689B77 /* default_launchd.plist in Resources */,
 				4F143E472B2D1F5600FE4092 /* fallback_licenseinfo_config.json in Resources */,
-				4FA13FC328B3A2DB005C68FC /* TrialNotificationController.xib in Resources */,
-				4F7F47D428A6EFC800290BBD /* SharedAssets.xcassets in Resources */,
-				4FA2F13E2C2B0932000C5535 /* Localizable.xcstrings in Resources */,
-				4FD148C728AA416700FE688C /* MenuBarItem.xib in Resources */,
+				4FF6668325F2C93A00689B77 /* Assets.xcassets in Resources */,
 				4FFA4E4128B7D0610062A1FE /* SharedSFSymbols.xcassets in Resources */,
+				4F7F47D428A6EFC800290BBD /* SharedAssets.xcassets in Resources */,
+				4FA13FC328B3A2DB005C68FC /* TrialNotificationController.xib in Resources */,
+				4FD148C728AA416700FE688C /* MenuBarItem.xib in Resources */,
 				4FD148D628AA43E900FE688C /* MainMenu.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -7844,7 +7805,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\n# Update: Commenting this out now, since we've moved everything to .xcstrings files instead of .strings files. Later, maybe we want to reactivate this and change the script so that it extracts strings from .md.skeleton files which we plan to introduce.\n\n# Run UpdateStrings/script.py. \n# Notes:\n# - Using xcrun everywhere for hopefully better compatibility? It looks up the command in Xcode dev tools and other places, even if it's not in the path - if I understand correctly.\n# - This script takes around 2-3s from what I've seen. Should maybe optimize. Edit: Optimized a little. It's around 2s. BartyCrouch wasn't much faster - also hovers around 2s.\n# - Activating the venv doens't work here for some reason, so we do this weird ${SRCROOT}/venv/bin/pip3 stuff.\n \n# Install dependencies into venv\n#xcrun python3 -m venv ${SRCROOT}/venv\n#${SRCROOT}/venv/bin/pip3 install -r ${SRCROOT}/Localization/Code/UpdateStrings/requirements.txt\n\n# Run script \n#${SRCROOT}/venv/bin/python3 ${SRCROOT}/Localization/Code/UpdateStrings/script.py --wet_run\n";
+			shellScript = "\n# Update: Commenting this out now, since we've moved everything to .xcstrings files instead of .strings files. Later, maybe we want to reactivate this and change the script so that it extracts strings from .md.skeleton files which we plan to introduce. \n# Update2: No we're extracting strings from the .md files before building the .md files probably\n\n# Run UpdateStrings/script.py. \n# Notes:\n# - Using xcrun everywhere for hopefully better compatibility? It looks up the command in Xcode dev tools and other places, even if it's not in the path - if I understand correctly.\n# - This script takes around 2-3s from what I've seen. Should maybe optimize. Edit: Optimized a little. It's around 2s. BartyCrouch wasn't much faster - also hovers around 2s.\n# - Activating the venv doens't work here for some reason, so we do this weird ${SRCROOT}/venv/bin/pip3 stuff.\n \n# Install dependencies into venv\n#xcrun python3 -m venv ${SRCROOT}/venv\n#${SRCROOT}/venv/bin/pip3 install -r ${SRCROOT}/Localization/Code/UpdateStrings/requirements.txt\n\n# Run script \n#${SRCROOT}/venv/bin/python3 ${SRCROOT}/Localization/Code/UpdateStrings/script.py --wet_run\n";
 		};
 		4FEEEC53263C164000C50193 /* Copy Version From Main App */ = {
 			isa = PBXShellScriptBuildPhase;
