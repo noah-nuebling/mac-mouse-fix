@@ -321,7 +321,6 @@
 		4FFA4E4828B7D2E40062A1FE /* NSShadow+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FA1FD8228A916B600D1C8EE /* NSShadow+Extensions.swift */; };
 		4FFA4E4928B7D3750062A1FE /* NSView+Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F92A72C260F6C7800529D1F /* NSView+Additions.m */; };
 		4FFA4E4A28B7D3750062A1FE /* NSView+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F909D0428A0C3D2009349A2 /* NSView+Extensions.swift */; };
-		4FFB5F2B2C3076270096AA3E /* Markdown.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 4FFB5EF42C2E67690096AA3E /* Markdown.xcstrings */; };
 		4FFBC5A8266977CA001D389B /* DoubleExponentialSmoother.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FFBC5A7266977CA001D389B /* DoubleExponentialSmoother.swift */; };
 		4FFE2894291B35AA0058ABE0 /* (null) in Sources */ = {isa = PBXBuildFile; };
 		4FFE2895291B35AA0058ABE0 /* (null) in Sources */ = {isa = PBXBuildFile; };
@@ -7717,7 +7716,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				4FA2F13D2C2B0932000C5535 /* Localizable.xcstrings in Resources */,
-				4FFB5F2B2C3076270096AA3E /* Markdown.xcstrings in Resources */,
 				4F9E59972672A67F004E75F7 /* default_config.plist in Resources */,
 				4FF6654225F2C7B000689B77 /* default_launchd.plist in Resources */,
 				4F143E462B2D1F5600FE4092 /* fallback_licenseinfo_config.json in Resources */,
