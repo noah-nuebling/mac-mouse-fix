@@ -29,7 +29,7 @@ language_flag_fallback_map = { # When a translation's languageID doesn't contain
 
 language_name_override_map = {
     'en': {
-        'zh-HK': 'Chinese (Honk Kong)', # The native Babel name for this locale is way to long. This is name used by Apple.
+        'zh-HK': 'Chinese (Honk Kong)', # The native Babel name for this locale is way too long. This is name used by Apple.
     },
     'zh-HK': {
         'zh-HK': '中文（香港)',
@@ -166,13 +166,14 @@ def get_localizable_strings_from_markdown(md_string: str) -> list[tuple[str, str
             assert False    
 
         # Validate
-        assert ' ' not in key, f'key contains space: {key}' # I don't think string keys are supposed to contain spaces inside the Xcode toolchain stuff
-        assert len(key) > 0 # We need a key to parse this
+        assert ' ' not in key, f'key contains space: {key}' # I don't think keys are supposed to contain spaces in objc and swift. We're trying to adhere to the standard xcode way of doing things. 
+        assert len(key) > 0   # We need a key to do anything useful
         assert len(value) > 0 # English ui strings are defined directly in the markdown file - don't think this should be empty
         for str in [value, key, comment]:
             assert r'}}' not in str # Protect against matching past the first occurrence of }}
             assert r'||' not in str # Protect against ? - this is weird
             assert r'{{' not in str # Protect against ? - this is also weird
+        # TODO: Maybe somehow protect against over matching on block syntax, too
         
         # Store
         result.append((key, value, comment, full_match))
@@ -378,6 +379,7 @@ def language_tag_to_flag_emoji(language_id):
     if locale.territory:
         return get_flag(locale.territory)
     
+    # Fallback
     flag = language_flag_fallback_map.get(locale.language, None)
     if flag:
         return flag

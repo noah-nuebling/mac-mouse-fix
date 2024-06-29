@@ -148,21 +148,15 @@ def main():
         # Log
         print('Inserting translations into template at path {}...'.format(template_path))
         
-        missing_strings = 0
-        overall_strings = 0
-        
         # Translate the template
         for key, value, comment, full_match in shared.get_localizable_strings_from_markdown(template):
             
             # Get the translated value
             translation, best_locale = shared.get_translation(xcstrings, key, locale)
             
-            # Count strings
-            overall_strings += 1
+            # Log
             if best_locale != locale:
                 print(f"Couldn't find translation for {key} in locale {locale}. Fell back to {best_locale} ")
-                missing_strings += 1
-            
             
             # Apply the original indentation to the translated value
             indent_level, indent_char = shared.get_indent(value)
