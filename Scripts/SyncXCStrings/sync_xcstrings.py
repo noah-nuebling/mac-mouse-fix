@@ -84,15 +84,36 @@ def main():
     
     print(f"Created .stringsdata file at: {stringsdata_path}")
     
-    # sync the .xcstrings file with the .stringsdata using xcstringstool
+    # Set the 'extractedState' for all strings to 'extracted_with_value' 
+    #   Also set the 'state' of all 'sourceLanguage' ui strings to 'new'
+    #   -> If we have accidentally changed them, their state will be 'translated' 
+    #       instead which will prevent xcstringstool from updating them to the new value from the markdown file.
+    #   -> All this is necessary so that xcstringstool updates everything (I think)
     
+    xcstrings_obj = json.loads(mfutils.read_file(xcstrings_path))
+    source_language = xcstrings_obj['sourceLanguage']
+    assert source_language == 'en'
+    for key, info in xcstrings_obj['strings'].items():
+        info['extractionState'] = 'extracted_with_value'
+        info['localizations'][source_language]['stringUnit']['state'] = 'new'
+        
+    mfutils.write_file(xcstrings_path, json.dumps(xcstrings_obj, indent=2))
+    print(f"Set the extractionState of all strings to 'extracted_with_value'")
+        
+    # Use xcstringstool to sync the .xcstrings file with the .stringsdata
     developer_dir = mfutils.runCLT("xcode-select --print-path").stdout
     stringstool_path = os.path.join(developer_dir, 'usr/bin/xcstringstool')
     result = mfutils.runCLT(f"{stringstool_path} sync {xcstrings_path} --stringsdata {stringsdata_path}")
-    
     print(f"ran xcstringstool to update {xcstrings_path} Result: {mfutils.clt_result_description(result)}")
-        
-
+    
+    # Set the 'extractedState' for all strings to 'manual' 
+    #  Otherwise Xcode won't export them and also delete all of them or give them the 'Stale' state
+    xcstrings_obj = json.loads(mfutils.read_file(xcstrings_path))
+    for key, info in xcstrings_obj['strings'].items():
+        info['extractionState'] = 'manual'
+    mfutils.write_file(xcstrings_path, json.dumps(xcstrings_obj, indent=2))
+    print(f"Set the extractionState of all strings to 'manual'")
+    
 #
 # Call main
 #

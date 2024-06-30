@@ -1,945 +1,945 @@
 {
-  "sourceLanguage" : "en",
-  "strings" : {
-    "acknowledgements.intro.body" : {
-      "comment" : " This is the intro for the acknowledgements document",
-      "extractionState" : "extracted_with_value",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "Big thanks to everyone using Mac Mouse Fix and providing feedback. It's awesome and highly motivating to see so many people enjoy and engage with something I created.\n\nI want to especially thank the people and projects named in this document."
+  "sourceLanguage": "en",
+  "strings": {
+    "acknowledgements.intro.body": {
+      "comment": " This is the intro for the acknowledgements document",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "new",
+            "value": "Big thanks to everyone using Mac Mouse Fix and providing feedback. It's awesome and highly motivating to see so many people enjoy and engage with something I created.\n\nI want to especially thank the people and projects named in this document."
           }
         }
       }
     },
-    "acknowledgements.intro.title" : {
-      "comment" : "This is the title for the acknowledgements document which gives credit to people who have helped the project!",
-      "extractionState" : "extracted_with_value",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "🙌 Acknowledgements"
+    "acknowledgements.intro.title": {
+      "comment": "This is the title for the acknowledgements document which gives credit to people who have helped the project!",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "new",
+            "value": "\ud83d\ude4c Acknowledgements"
           }
         }
       }
     },
-    "acknowledgements.money.body" : {
-      "extractionState" : "extracted_with_value",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "<!-- Thanks so much to everyone who bought me a milkshake and to all {sales_count} people who bought Mac Mouse Fix! Ya'll are the bomb. Thanks to you I can spend lots of time on sth I love doing. -->\n\nThanks so much to everyone who treated me to a milkshake and to all **{sales_count}** people who bought Mac Mouse Fix.\nThanks to you, I can spend lots of time doing something I love. <!-- You make me me feel like there are many generous people out there who appreciate the app and want to support it, and thanks to you, I can spend more time on something I love doing. -->\n\nPeople who supported me by spending more than the standard price on Mac Mouse Fix receive a special mention here:"
+    "acknowledgements.money.body": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "new",
+            "value": "<!-- Thanks so much to everyone who bought me a milkshake and to all {sales_count} people who bought Mac Mouse Fix! Ya'll are the bomb. Thanks to you I can spend lots of time on sth I love doing. -->\n\nThanks so much to everyone who treated me to a milkshake and to all **{sales_count}** people who bought Mac Mouse Fix.\nThanks to you, I can spend lots of time doing something I love. <!-- You make me me feel like there are many generous people out there who appreciate the app and want to support it, and thanks to you, I can spend more time on something I love doing. -->\n\nPeople who supported me by spending more than the standard price on Mac Mouse Fix receive a special mention here:"
           }
         }
       }
     },
-    "acknowledgements.money.generous.body" : {
-      "extractionState" : "extracted_with_value",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "Thanks for your support! :)"
+    "acknowledgements.money.generous.body": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "new",
+            "value": "Thanks for your support! :)"
           }
         }
       }
     },
-    "acknowledgements.money.generous.title" : {
-      "extractionState" : "extracted_with_value",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "⭐️ Generous Contributors"
+    "acknowledgements.money.generous.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "new",
+            "value": "\u2b50\ufe0f Generous Contributors"
           }
         }
       }
     },
-    "acknowledgements.money.github-sponsors.body" : {
-      "extractionState" : "extracted_with_value",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "**Huge thanks** to [everyone](https://github.com/sponsors/noah-nuebling#sponsors) sponsoring me on GitHub! Hopefully I can get that milkshake factory one day thanks to you. :)"
+    "acknowledgements.money.github-sponsors.body": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "new",
+            "value": "**Huge thanks** to [everyone](https://github.com/sponsors/noah-nuebling#sponsors) sponsoring me on GitHub! Hopefully I can get that milkshake factory one day thanks to you. :)"
           }
         }
       }
     },
-    "acknowledgements.money.github-sponsors.title" : {
-      "extractionState" : "extracted_with_value",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "❤️ GitHub Sponsors"
+    "acknowledgements.money.github-sponsors.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "new",
+            "value": "\u2764\ufe0f GitHub Sponsors"
           }
         }
       }
     },
-    "acknowledgements.money.paypal-donations.body" : {
-      "extractionState" : "extracted_with_value",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "Lots of generous people bought me milkshakes on PayPal when Mac Mouse Fix was still entirely free. As thanks, I will provide you with a free license. Just shoot me an email with \"Free License\" in the subject and attach a screenshot of your donation. Thank you!\n\n*I might be slow to respond. If you already bought the app, just let me know the email that you bought the app with, and I will refund you.*"
+    "acknowledgements.money.paypal-donations.body": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "new",
+            "value": "Lots of generous people bought me milkshakes on PayPal when Mac Mouse Fix was still entirely free. As thanks, I will provide you with a free license. Just shoot me an email with \"Free License\" in the subject and attach a screenshot of your donation. Thank you!\n\n*I might be slow to respond. If you already bought the app, just let me know the email that you bought the app with, and I will refund you.*"
           }
         }
       }
     },
-    "acknowledgements.money.paypal-donations.title" : {
-      "extractionState" : "extracted_with_value",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "✨ PayPal Donations"
+    "acknowledgements.money.paypal-donations.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "new",
+            "value": "\u2728 PayPal Donations"
           }
         }
       }
     },
-    "acknowledgements.money.title" : {
-      "extractionState" : "extracted_with_value",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "💰 Money"
+    "acknowledgements.money.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "new",
+            "value": "\ud83d\udcb0 Money"
           }
         }
       }
     },
-    "acknowledgements.money.very-generous.body" : {
-      "extractionState" : "extracted_with_value",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "These people spent a lot more than the standard price and treated me to an **Incredible Milkshake**. (And some even left a message) Thanks for the _sugar rush_!"
+    "acknowledgements.money.very-generous.body": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "new",
+            "value": "These people spent a lot more than the standard price and treated me to an **Incredible Milkshake**. (And some even left a message) Thanks for the _sugar rush_!"
           }
         }
       }
     },
-    "acknowledgements.money.very-generous.title" : {
-      "extractionState" : "extracted_with_value",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "🚀 Very Generous Contributors"
+    "acknowledgements.money.very-generous.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "new",
+            "value": "\ud83d\ude80 Very Generous Contributors"
           }
         }
       }
     },
-    "acknowledgements.software" : {
-      "extractionState" : "extracted_with_value",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "👾 Other Software"
+    "acknowledgements.software": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "new",
+            "value": "\ud83d\udc7e Other Software"
           }
         }
       }
     },
-    "acknowledgements.software.inspiration.body" : {
-      "extractionState" : "extracted_with_value",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "- [SteerMouse](https://plentycom.jp/en/steermouse/index.html) - Pioneering mouse software for Mac, inspiring many features. There were moments when I thought \"this is probably not possible\", but then I saw \"oh, SteerMouse does it\", and three years later, I figured out how to implement it, too.\n- [Calftrail Touch](https://github.com/calftrail/Touch) - The foundation for the \"reverse engineering\" work which powers Mac Mouse Fix's best-in-class and first-of-a-kind trackpad simulation!\n- [MOS](https://mos.caldis.me/) - Mac Mouse Fix's \"High Scroll-Smoothness\" option, the \"App-Specific Settings\" implementation, and more were inspired by MOS.\n- [SensibleSideButtons](https://github.com/archagon/sensible-side-buttons) - I copied its code for an early implementation of the \"Go back/forward one page in Safari and other apps\" feature, and also led me to discover the Calftrail Touch project.\n- [Gifski](https://github.com/sindresorhus/Gifski) - Greatly inspired the design and content of the [Readme.md]({language_root}Readme.md) for Mac Mouse Fix.\n- [Vue Issue Helper](https://new-issue.vuejs.org/) - Foundation for the design and technical implementation of [Mac Mouse Fix Feedback Assistant](https://noah-nuebling.github.io/mac-mouse-fix-feedback-assistant/)."
+    "acknowledgements.software.inspiration.body": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "new",
+            "value": "- [SteerMouse](https://plentycom.jp/en/steermouse/index.html) - Pioneering mouse software for Mac, inspiring many features. There were moments when I thought \"this is probably not possible\", but then I saw \"oh, SteerMouse does it\", and three years later, I figured out how to implement it, too.\n- [Calftrail Touch](https://github.com/calftrail/Touch) - The foundation for the \"reverse engineering\" work which powers Mac Mouse Fix's best-in-class and first-of-a-kind trackpad simulation!\n- [MOS](https://mos.caldis.me/) - Mac Mouse Fix's \"High Scroll-Smoothness\" option, the \"App-Specific Settings\" implementation, and more were inspired by MOS.\n- [SensibleSideButtons](https://github.com/archagon/sensible-side-buttons) - I copied its code for an early implementation of the \"Go back/forward one page in Safari and other apps\" feature, and also led me to discover the Calftrail Touch project.\n- [Gifski](https://github.com/sindresorhus/Gifski) - Greatly inspired the design and content of the [Readme.md]({language_root}Readme.md) for Mac Mouse Fix.\n- [Vue Issue Helper](https://new-issue.vuejs.org/) - Foundation for the design and technical implementation of [Mac Mouse Fix Feedback Assistant](https://noah-nuebling.github.io/mac-mouse-fix-feedback-assistant/)."
           }
         }
       }
     },
-    "acknowledgements.software.inspiration.title" : {
-      "extractionState" : "extracted_with_value",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "**Software** that inspired Mac Mouse Fix:"
+    "acknowledgements.software.inspiration.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "new",
+            "value": "**Software** that inspired Mac Mouse Fix:"
           }
         }
       }
     },
-    "acknowledgements.software.libraries.body" : {
-      "extractionState" : "extracted_with_value",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "- [ReactiveSwift](https://github.com/ReactiveCocoa/ReactiveSwift) - Streams of values over time tailored for Swift\n- [CocoaLumberjack](https://github.com/CocoaLumberjack/CocoaLumberjack) - Fast & simple, yet powerful & flexible logging\n- [Swift Markdown](https://github.com/apple/swift-markdown) - Parse, build, edit, and analyze Markdown documents\n- [Sparkle](https://github.com/sparkle-project/Sparkle) - A software update framework for macOS\n- [SnapKit](https://github.com/SnapKit/SnapKit) - Making Auto Layout easy on both iOS and macOS\n- [MASShortcut](https://github.com/shpakovski/MASShortcut) - API and user interface for recording, storing & using system-wide keyboard shortcuts\n- [CGSInternal](https://github.com/NUIKit/CGSInternal) - A collection of private CoreGraphics routines\n- Dependencies of Mac Mouse Fix's scripts:<br>\n  [Update and statistics scripts](https://github.com/noah-nuebling/mac-mouse-fix/blob/update-feed/requirements.txt) | [Markdown generator script]({repo_root}Markdown/Code/python_requirements.txt) | [.strings file sync script]({repo_root}Localization/Code/UpdateStrings/requirements.txt) | [\"State of Localization\" script]({repo_root}Localization/Code/StateOfLocalization/requirements.txt)\n- Dependencies of the [Mac Mouse Fix Feedback Assistant](https://noah-nuebling.github.io/mac-mouse-fix-feedback-assistant/) web app [here](https://github.com/noah-nuebling/mac-mouse-fix-feedback-assistant/blob/master/package.json)\n- Dependencies of the [Mac Mouse Fix Website](https://noah-nuebling.github.io/mac-mouse-fix-website/) are available [here](https://github.com/noah-nuebling/mac-mouse-fix-website/blob/main/package.json)"
+    "acknowledgements.software.libraries.body": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "new",
+            "value": "- [ReactiveSwift](https://github.com/ReactiveCocoa/ReactiveSwift) - Streams of values over time tailored for Swift\n- [CocoaLumberjack](https://github.com/CocoaLumberjack/CocoaLumberjack) - Fast & simple, yet powerful & flexible logging\n- [Swift Markdown](https://github.com/apple/swift-markdown) - Parse, build, edit, and analyze Markdown documents\n- [Sparkle](https://github.com/sparkle-project/Sparkle) - A software update framework for macOS\n- [SnapKit](https://github.com/SnapKit/SnapKit) - Making Auto Layout easy on both iOS and macOS\n- [MASShortcut](https://github.com/shpakovski/MASShortcut) - API and user interface for recording, storing & using system-wide keyboard shortcuts\n- [CGSInternal](https://github.com/NUIKit/CGSInternal) - A collection of private CoreGraphics routines\n- Dependencies of Mac Mouse Fix's scripts:<br>\n  [Update and statistics scripts](https://github.com/noah-nuebling/mac-mouse-fix/blob/update-feed/requirements.txt) | [Markdown generator script]({repo_root}Markdown/Code/python_requirements.txt) | [.strings file sync script]({repo_root}Localization/Code/UpdateStrings/requirements.txt) | [\"State of Localization\" script]({repo_root}Localization/Code/StateOfLocalization/requirements.txt)\n- Dependencies of the [Mac Mouse Fix Feedback Assistant](https://noah-nuebling.github.io/mac-mouse-fix-feedback-assistant/) web app [here](https://github.com/noah-nuebling/mac-mouse-fix-feedback-assistant/blob/master/package.json)\n- Dependencies of the [Mac Mouse Fix Website](https://noah-nuebling.github.io/mac-mouse-fix-website/) are available [here](https://github.com/noah-nuebling/mac-mouse-fix-website/blob/main/package.json)"
           }
         }
       }
     },
-    "acknowledgements.software.libraries.title" : {
-      "extractionState" : "extracted_with_value",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "Mac Mouse Fix was built with the help of these **great libraries**:"
+    "acknowledgements.software.libraries.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "new",
+            "value": "Mac Mouse Fix was built with the help of these **great libraries**:"
           }
         }
       }
     },
-    "acknowledgements.translations.body" : {
-      "extractionState" : "extracted_with_value",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "Thanks for bringing Mac Mouse Fix to people around the globe!\n\n- 🇨🇳 Chinese translations by [@groverlynn](https://github.com/groverlynn)\n- 🇰🇷 Korean translations by [@jeongtae](https://github.com/jeongtae)\n- 🇻🇳 Vietnamese translations by [@nghlt](https://github.com/nghlt)"
+    "acknowledgements.translations.body": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "new",
+            "value": "Thanks for bringing Mac Mouse Fix to people around the globe!\n\n- \ud83c\udde8\ud83c\uddf3 Chinese translations by [@groverlynn](https://github.com/groverlynn)\n- \ud83c\uddf0\ud83c\uddf7 Korean translations by [@jeongtae](https://github.com/jeongtae)\n- \ud83c\uddfb\ud83c\uddf3 Vietnamese translations by [@nghlt](https://github.com/nghlt)"
           }
         }
       }
     },
-    "acknowledgements.translations.title" : {
-      "extractionState" : "extracted_with_value",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "🌏 Translations"
+    "acknowledgements.translations.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "new",
+            "value": "\ud83c\udf0f Translations"
           }
         }
       }
     },
-    "markdown.translate-prompt" : {
-      "extractionState" : "extracted_with_value",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "[Help translate Mac Mouse Fix to different languages!](https://github.com/noah-nuebling/mac-mouse-fix/discussions/731)"
+    "markdown.translate-prompt": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "new",
+            "value": "[Help translate Mac Mouse Fix to different languages!](https://github.com/noah-nuebling/mac-mouse-fix/discussions/731)"
           }
         }
       }
     },
-    "readme.contributing.body" : {
-      "extractionState" : "extracted_with_value",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "There are several ways to help the project.\\\nCheck out the [Acknowledgements]({language_root}Acknowledgements.md) for more info on who has already contributed!"
+    "readme.contributing.body": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "new",
+            "value": "There are several ways to help the project.\\\nCheck out the [Acknowledgements]({language_root}Acknowledgements.md) for more info on who has already contributed!"
           }
         }
       }
     },
-    "readme.contributing.code.body" : {
-      "extractionState" : "extracted_with_value",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "If you would like to contribute code, that's awesome! I'll be happy about any [pull requests](https://github.com/noah-nuebling/mac-mouse-fix/pulls).\n\nHowever, I might not accept all pull requests. If you want to make sure that your work is not wasted, you can submit an initial pull request that only *describes* the changes you want to make, but contains little or no code. Then I can give you feedback and tell you if I would adopt the changes you want to make in that way.\n<!-- NOTE: I should mention people who contributed code on the acknowledgements page. They are already in the update notes. -->"
+    "readme.contributing.code.body": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "new",
+            "value": "If you would like to contribute code, that's awesome! I'll be happy about any [pull requests](https://github.com/noah-nuebling/mac-mouse-fix/pulls).\n\nHowever, I might not accept all pull requests. If you want to make sure that your work is not wasted, you can submit an initial pull request that only *describes* the changes you want to make, but contains little or no code. Then I can give you feedback and tell you if I would adopt the changes you want to make in that way.\n<!-- NOTE: I should mention people who contributed code on the acknowledgements page. They are already in the update notes. -->"
           }
         }
       }
     },
-    "readme.contributing.code.title" : {
-      "extractionState" : "extracted_with_value",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "**Contributing code**"
+    "readme.contributing.code.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "new",
+            "value": "**Contributing code**"
           }
         }
       }
     },
-    "readme.contributing.feedback.body" : {
-      "extractionState" : "extracted_with_value",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "You can help by sharing your **ideas**, **issues** and **feedback** via the [Feedback Assistant](https://noah-nuebling.github.io/mac-mouse-fix-feedback-assistant/?type=bug-report)."
+    "readme.contributing.feedback.body": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "new",
+            "value": "You can help by sharing your **ideas**, **issues** and **feedback** via the [Feedback Assistant](https://noah-nuebling.github.io/mac-mouse-fix-feedback-assistant/?type=bug-report)."
           }
         }
       }
     },
-    "readme.contributing.feedback.title" : {
-      "extractionState" : "extracted_with_value",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "**Giving feedback**"
+    "readme.contributing.feedback.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "new",
+            "value": "**Giving feedback**"
           }
         }
       }
     },
-    "readme.contributing.footer" : {
-      "extractionState" : "extracted_with_value",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "**Thank you** to everyone who has already contributed and supported me in trying to make the best mouse driver *of all time*! :)🚀"
+    "readme.contributing.footer": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "new",
+            "value": "**Thank you** to everyone who has already contributed and supported me in trying to make the best mouse driver *of all time*! :)\ud83d\ude80"
           }
         }
       }
     },
-    "readme.contributing.money.body" : {
-      "extractionState" : "extracted_with_value",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "I hope to be able to sustain myself financially through Mac Mouse Fix. That way, I can keep improving and working on the app. If you would like to help, you can:\n1. Buy Mac Mouse Fix by clicking the button in the app, or clicking [here](https://noahnuebling.gumroad.com/l/mmfinappusd).\n2. [Tip me](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=ARSTVR6KFB524&source=url&lc=en_US) on PayPal. I don't get a lot of money from this, but it's always cute and motivating to get a donation.\n3. [Sponsor me](https://github.com/sponsors/noah-nuebling) on GitHub. A monthly sponsorship is a great way to support the project and help me have a more stable income."
+    "readme.contributing.money.body": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "new",
+            "value": "I hope to be able to sustain myself financially through Mac Mouse Fix. That way, I can keep improving and working on the app. If you would like to help, you can:\n1. Buy Mac Mouse Fix by clicking the button in the app, or clicking [here](https://noahnuebling.gumroad.com/l/mmfinappusd).\n2. [Tip me](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=ARSTVR6KFB524&source=url&lc=en_US) on PayPal. I don't get a lot of money from this, but it's always cute and motivating to get a donation.\n3. [Sponsor me](https://github.com/sponsors/noah-nuebling) on GitHub. A monthly sponsorship is a great way to support the project and help me have a more stable income."
           }
         }
       }
     },
-    "readme.contributing.money.title" : {
-      "extractionState" : "extracted_with_value",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "**Contributing money**"
+    "readme.contributing.money.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "new",
+            "value": "**Contributing money**"
           }
         }
       }
     },
-    "readme.contributing.title" : {
-      "extractionState" : "extracted_with_value",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "How you can contribute"
+    "readme.contributing.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "new",
+            "value": "How you can contribute"
           }
         }
       }
     },
-    "readme.contributing.translations.body" : {
-      "extractionState" : "extracted_with_value",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "Mac Mouse Fix is available in English, German as well as the languages listed in the [Acknowledgements]({language_root}Acknowledgements.md).\n\nIf you would like to **help translate the project**, see the [Localization Guide](https://github.com/noah-nuebling/mac-mouse-fix/discussions/731).\\\nIf you want to **report missing or suboptimal translations**, that's also very helpful. The best way to report problems is by commenting under the [Localization Guide](https://github.com/noah-nuebling/mac-mouse-fix/discussions/731)."
+    "readme.contributing.translations.body": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "new",
+            "value": "Mac Mouse Fix is available in English, German as well as the languages listed in the [Acknowledgements]({language_root}Acknowledgements.md).\n\nIf you would like to **help translate the project**, see the [Localization Guide](https://github.com/noah-nuebling/mac-mouse-fix/discussions/731).\\\nIf you want to **report missing or suboptimal translations**, that's also very helpful. The best way to report problems is by commenting under the [Localization Guide](https://github.com/noah-nuebling/mac-mouse-fix/discussions/731)."
           }
         }
       }
     },
-    "readme.contributing.translations.title" : {
-      "extractionState" : "extracted_with_value",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "**Adding translations**"
+    "readme.contributing.translations.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "new",
+            "value": "**Adding translations**"
           }
         }
       }
     },
-    "readme.features.body" : {
-      "extractionState" : "extracted_with_value",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "See the [website](https://noah-nuebling.github.io/mac-mouse-fix-website#trackpad) for an overview of the features of Mac Mouse Fix, including video demos!\n\nFor more details, see the <a href=https://github.com/noah-nuebling/mac-mouse-fix/releases>Releases</a>."
+    "readme.features.body": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "new",
+            "value": "See the [website](https://noah-nuebling.github.io/mac-mouse-fix-website#trackpad) for an overview of the features of Mac Mouse Fix, including video demos!\n\nFor more details, see the <a href=https://github.com/noah-nuebling/mac-mouse-fix/releases>Releases</a>."
           }
         }
       }
     },
-    "readme.features.title" : {
-      "extractionState" : "extracted_with_value",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "Features"
+    "readme.features.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "new",
+            "value": "Features"
           }
         }
       }
     },
-    "readme.install.body" : {
-      "extractionState" : "extracted_with_value",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "Download the latest version of Mac Mouse Fix on the [website](http://noah-nuebling.github.io/mac-mouse-fix-website/).\n\nYou can also install Mac Mouse Fix through [Homebrew](https://brew.sh/)! Just type the following command into the terminal:\n\n```bash\nbrew install mac-mouse-fix\n```\n\nYou can download older versions of Mac Mouse Fix under [Releases](https://github.com/noah-nuebling/mac-mouse-fix/releases)."
+    "readme.install.body": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "new",
+            "value": "Download the latest version of Mac Mouse Fix on the [website](http://noah-nuebling.github.io/mac-mouse-fix-website/).\n\nYou can also install Mac Mouse Fix through [Homebrew](https://brew.sh/)! Just type the following command into the terminal:\n\n```bash\nbrew install mac-mouse-fix\n```\n\nYou can download older versions of Mac Mouse Fix under [Releases](https://github.com/noah-nuebling/mac-mouse-fix/releases)."
           }
         }
       }
     },
-    "readme.install.title" : {
-      "extractionState" : "extracted_with_value",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "Installation"
+    "readme.install.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "new",
+            "value": "Installation"
           }
         }
       }
     },
-    "readme.intro.body" : {
-      "extractionState" : "extracted_with_value",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "Mac Mouse Fix is an app that makes your mouse better.\n\nI want to turn Mac Mouse Fix into the best mouse driver *of all time*! Some features are still missing at the moment, but I think it already **turns regular mice into the best input devices for Macs** in some ways. At the same level or even better than an Apple Trackpad or a Logitech MX Master mouse.\n\nFor more information on how exactly Mac Mouse Fix enhances your mouse, visit the [website](https://noah-nuebling.github.io/mac-mouse-fix-website)."
+    "readme.intro.body": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "new",
+            "value": "Mac Mouse Fix is an app that makes your mouse better.\n\nI want to turn Mac Mouse Fix into the best mouse driver *of all time*! Some features are still missing at the moment, but I think it already **turns regular mice into the best input devices for Macs** in some ways. At the same level or even better than an Apple Trackpad or a Logitech MX Master mouse.\n\nFor more information on how exactly Mac Mouse Fix enhances your mouse, visit the [website](https://noah-nuebling.github.io/mac-mouse-fix-website)."
           }
         }
       }
     },
-    "readme.intro.downloads-badge-url" : {
-      "comment" : "You can test this url in your browser. You can change the 'Downloads' label by editing the text inside the URL after `label=`. Use url encoding for special chars. E.g. `%20` to insert spaces. - We should do this through code not translators.",
-      "extractionState" : "extracted_with_value",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "https://img.shields.io/github/downloads/noah-nuebling/mac-mouse-fix/total?label=Downloads&color=25c65f"
+    "readme.intro.downloads-badge-url": {
+      "comment": "You can test this url in your browser. You can change the 'Downloads' label by editing the text inside the URL after `label=`. Use url encoding for special chars. E.g. `%20` to insert spaces. - We should do this through code not translators.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "new",
+            "value": "https://img.shields.io/github/downloads/noah-nuebling/mac-mouse-fix/total?label=Downloads&color=25c65f"
           }
         }
       }
     },
-    "readme.intro.links.acknowledgements.text" : {
-      "extractionState" : "extracted_with_value",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "Acknowledgements"
+    "readme.intro.links.acknowledgements.text": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "new",
+            "value": "Acknowledgements"
           }
         }
       }
     },
-    "readme.intro.links.acknowledgements.url" : {
-      "comment" : "We should determine this link through code not translators",
-      "extractionState" : "extracted_with_value",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "{language_root}Acknowledgements.md"
+    "readme.intro.links.acknowledgements.url": {
+      "comment": "We should determine this link through code not translators",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "new",
+            "value": "{language_root}Acknowledgements.md"
           }
         }
       }
     },
-    "readme.intro.links.help.text" : {
-      "extractionState" : "extracted_with_value",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "Help&nbsp;&&nbsp;Feedback"
+    "readme.intro.links.help.text": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "new",
+            "value": "Help&nbsp;&&nbsp;Feedback"
           }
         }
       }
     },
-    "readme.intro.links.help.url" : {
-      "extractionState" : "extracted_with_value",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "https://github.com/noah-nuebling/mac-mouse-fix/issues/new/choose"
+    "readme.intro.links.help.url": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "new",
+            "value": "https://github.com/noah-nuebling/mac-mouse-fix/issues/new/choose"
           }
         }
       }
     },
-    "readme.intro.links.releases.text" : {
-      "extractionState" : "extracted_with_value",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "Releases"
+    "readme.intro.links.releases.text": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "new",
+            "value": "Releases"
           }
         }
       }
     },
-    "readme.intro.links.releases.url" : {
-      "extractionState" : "extracted_with_value",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "https://github.com/noah-nuebling/mac-mouse-fix/releases"
+    "readme.intro.links.releases.url": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "new",
+            "value": "https://github.com/noah-nuebling/mac-mouse-fix/releases"
           }
         }
       }
     },
-    "readme.intro.links.website.text" : {
-      "extractionState" : "extracted_with_value",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "Website&nbsp;↗"
+    "readme.intro.links.website.text": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "new",
+            "value": "Website&nbsp;\u2197"
           }
         }
       }
     },
-    "readme.intro.links.website.url" : {
-      "extractionState" : "extracted_with_value",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "https://noah-nuebling.github.io/mac-mouse-fix-website"
+    "readme.intro.links.website.url": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "new",
+            "value": "https://noah-nuebling.github.io/mac-mouse-fix-website"
           }
         }
       }
     },
-    "readme.intro.subtitle" : {
-      "extractionState" : "extracted_with_value",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "Make Your $10 Mouse Better Than an Apple Trackpad!"
+    "readme.intro.subtitle": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "new",
+            "value": "Make Your $10 Mouse Better Than an Apple Trackpad!"
           }
         }
       }
     },
-    "readme.intro.title" : {
-      "extractionState" : "extracted_with_value",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "Mac Mouse Fix"
+    "readme.intro.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "new",
+            "value": "Mac Mouse Fix"
           }
         }
       }
     },
-    "readme.macos-compat.body" : {
-      "extractionState" : "extracted_with_value",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "The latest version of Mac Mouse Fix is made for **macOS 11 Big Sur** or later.\n  \nIf you're on macOS **10.15 Catalina**, macOS **10.14 Mojave**, or macOS **10.13 High Sierra**, you can use the [latest version of Mac Mouse Fix 2](https://noah-nuebling.github.io/redirection-service?message=&target=mmf2-latest). Mac Mouse Fix 3.0.0 and later might still work on your machine, but they will have visual issues and some features might not work properly.\n    \nIf you're on macOS **10.12 Sierra**, or **10.11 El Capitan**, you can use Mac Mouse Fix [2.2.0](https://github.com/noah-nuebling/mac-mouse-fix/releases/tag/2.2.0) or below."
+    "readme.macos-compat.body": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "new",
+            "value": "The latest version of Mac Mouse Fix is made for **macOS 11 Big Sur** or later.\n  \nIf you're on macOS **10.15 Catalina**, macOS **10.14 Mojave**, or macOS **10.13 High Sierra**, you can use the [latest version of Mac Mouse Fix 2](https://noah-nuebling.github.io/redirection-service?message=&target=mmf2-latest). Mac Mouse Fix 3.0.0 and later might still work on your machine, but they will have visual issues and some features might not work properly.\n    \nIf you're on macOS **10.12 Sierra**, or **10.11 El Capitan**, you can use Mac Mouse Fix [2.2.0](https://github.com/noah-nuebling/mac-mouse-fix/releases/tag/2.2.0) or below."
           }
         }
       }
     },
-    "readme.macos-compat.title" : {
-      "extractionState" : "extracted_with_value",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "macOS compatibility"
+    "readme.macos-compat.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "new",
+            "value": "macOS compatibility"
           }
         }
       }
     },
-    "readme.price.body" : {
-      "extractionState" : "extracted_with_value",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "See the [website](https://noah-nuebling.github.io/mac-mouse-fix-website#price) for an overview of the pricing for Mac Mouse Fix 3.\\\nMac Mouse Fix 2 and below will remain free forever."
+    "readme.price.body": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "new",
+            "value": "See the [website](https://noah-nuebling.github.io/mac-mouse-fix-website#price) for an overview of the pricing for Mac Mouse Fix 3.\\\nMac Mouse Fix 2 and below will remain free forever."
           }
         }
       }
     },
-    "readme.price.title" : {
-      "extractionState" : "extracted_with_value",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "Pricing"
+    "readme.price.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "new",
+            "value": "Pricing"
           }
         }
       }
     },
-    "readme.questions.app-expose.body" : {
-      "extractionState" : "extracted_with_value",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "Yes! Just choose the 'Spaces & Mission Control' Action and then Click and Drag *down*.\n\nIf this doesn't work, it's likely because the 'App Exposé' trackpad gesture is disabled on your Mac.\\\nYou can enable the gesture under System Settings or by running the following command in the terminal:\n\n```\ndefaults write com.apple.Dock showAppExposeGestureEnabled -bool TRUE; killall Dock\n```"
+    "readme.questions.app-expose.body": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "new",
+            "value": "Yes! Just choose the 'Spaces & Mission Control' Action and then Click and Drag *down*.\n\nIf this doesn't work, it's likely because the 'App Expos\u00e9' trackpad gesture is disabled on your Mac.\\\nYou can enable the gesture under System Settings or by running the following command in the terminal:\n\n```\ndefaults write com.apple.Dock showAppExposeGestureEnabled -bool TRUE; killall Dock\n```"
           }
         }
       }
     },
-    "readme.questions.app-expose.title" : {
-      "extractionState" : "extracted_with_value",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "**Can I open App Exposé through a Click and Drag Gesture?**"
+    "readme.questions.app-expose.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "new",
+            "value": "**Can I open App Expos\u00e9 through a Click and Drag Gesture?**"
           }
         }
       }
     },
-    "readme.questions.apple-silicon.body" : {
-      "extractionState" : "extracted_with_value",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "Yes, Mac Mouse Fix runs 100% native on Apple Silicon."
+    "readme.questions.apple-silicon.body": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "new",
+            "value": "Yes, Mac Mouse Fix runs 100% native on Apple Silicon."
           }
         }
       }
     },
-    "readme.questions.apple-silicon.title" : {
-      "extractionState" : "extracted_with_value",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "**Is Mac Mouse Fix native on Apple Silicon?**"
+    "readme.questions.apple-silicon.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "new",
+            "value": "**Is Mac Mouse Fix native on Apple Silicon?**"
           }
         }
       }
     },
-    "readme.questions.blender.body" : {
-      "extractionState" : "extracted_with_value",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "In 3D apps like Blender, you normally Click and Drag the Middle Mouse Button to orbit around objects.\\\nBut if you assign actions to the Middle Mouse Button in Mac Mouse Fix, then this won't work anymore.\n\nTo solve this, I know of 2 options:\n1. Assign clicking and dragging one of the buttons of your mouse to the \"Scroll & Navigate\" feature. This feature simulates swiping with 2 fingers on an Apple Trackpad. This will, among other things, let you orbit in 3D apps! \n2. *Uncapture* the Middle Mouse Button by deleting all actions assigned to it in Mac Mouse Fix. See [this guide](https://github.com/noah-nuebling/mac-mouse-fix/discussions/112) for more info."
+    "readme.questions.blender.body": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "new",
+            "value": "In 3D apps like Blender, you normally Click and Drag the Middle Mouse Button to orbit around objects.\\\nBut if you assign actions to the Middle Mouse Button in Mac Mouse Fix, then this won't work anymore.\n\nTo solve this, I know of 2 options:\n1. Assign clicking and dragging one of the buttons of your mouse to the \"Scroll & Navigate\" feature. This feature simulates swiping with 2 fingers on an Apple Trackpad. This will, among other things, let you orbit in 3D apps! \n2. *Uncapture* the Middle Mouse Button by deleting all actions assigned to it in Mac Mouse Fix. See [this guide](https://github.com/noah-nuebling/mac-mouse-fix/discussions/112) for more info."
           }
         }
       }
     },
-    "readme.questions.blender.title" : {
-      "extractionState" : "extracted_with_value",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "**How can I orbit around objects in 3D apps like Blender?**"
+    "readme.questions.blender.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "new",
+            "value": "**How can I orbit around objects in 3D apps like Blender?**"
           }
         }
       }
     },
-    "readme.questions.click-delay.body" : {
-      "extractionState" : "extracted_with_value",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "When you click, Mac Mouse Fix might wait to see if you're going to double click.\\\nTo remove the delay for a button, delete any \"Double Click\" actions for that button."
+    "readme.questions.click-delay.body": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "new",
+            "value": "When you click, Mac Mouse Fix might wait to see if you're going to double click.\\\nTo remove the delay for a button, delete any \"Double Click\" actions for that button."
           }
         }
       }
     },
-    "readme.questions.click-delay.title" : {
-      "extractionState" : "extracted_with_value",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "**Why is there a delay when I click?**"
+    "readme.questions.click-delay.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "new",
+            "value": "**Why is there a delay when I click?**"
           }
         }
       }
     },
-    "readme.questions.data-collection.body" : {
-      "extractionState" : "extracted_with_value",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "Mac Mouse Fix does not have ads, and it does not collect any personal information about you.\n\nHowever, at the moment that you buy the app, the sales provider Gumroad.com collects some personal info, such as your email address, and this info is visible to me. This is necessary to be able to issue refunds, send a license key to your email, etc. I cannot turn this off. To learn more about the data collected when you buy Mac Mouse Fix, see the [Gumroad Privacy Policy](https://gumroad.com/privacy)."
+    "readme.questions.data-collection.body": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "new",
+            "value": "Mac Mouse Fix does not have ads, and it does not collect any personal information about you.\n\nHowever, at the moment that you buy the app, the sales provider Gumroad.com collects some personal info, such as your email address, and this info is visible to me. This is necessary to be able to issue refunds, send a license key to your email, etc. I cannot turn this off. To learn more about the data collected when you buy Mac Mouse Fix, see the [Gumroad Privacy Policy](https://gumroad.com/privacy)."
           }
         }
       }
     },
-    "readme.questions.data-collection.title" : {
-      "extractionState" : "extracted_with_value",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "**Does Mac Mouse Fix collect my data?**"
+    "readme.questions.data-collection.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "new",
+            "value": "**Does Mac Mouse Fix collect my data?**"
           }
         }
       }
     },
-    "readme.questions.free-for-donators.body" : {
-      "extractionState" : "extracted_with_value",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "Yes! See the [Acknowledgements]({language_root}Acknowledgements.md#-paypal-donations) for more info."
+    "readme.questions.free-for-donators.body": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "new",
+            "value": "Yes! See the [Acknowledgements]({language_root}Acknowledgements.md#-paypal-donations) for more info."
           }
         }
       }
     },
-    "readme.questions.free-for-donators.title" : {
-      "extractionState" : "extracted_with_value",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "**Can I get Mac Mouse Fix for free if I already donated?**"
+    "readme.questions.free-for-donators.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "new",
+            "value": "**Can I get Mac Mouse Fix for free if I already donated?**"
           }
         }
       }
     },
-    "readme.questions.magic-mouse-support.body" : {
-      "extractionState" : "extracted_with_value",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "I might add features in the future which enhance the Apple Magic Mouse, but currently, Mac Mouse Fix has no effect on it."
+    "readme.questions.magic-mouse-support.body": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "new",
+            "value": "I might add features in the future which enhance the Apple Magic Mouse, but currently, Mac Mouse Fix has no effect on it."
           }
         }
       }
     },
-    "readme.questions.magic-mouse-support.title" : {
-      "extractionState" : "extracted_with_value",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "**Is the Magic Mouse supported?**"
+    "readme.questions.magic-mouse-support.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "new",
+            "value": "**Is the Magic Mouse supported?**"
           }
         }
       }
     },
-    "readme.questions.mouse-support.body" : {
-      "extractionState" : "extracted_with_value",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "Short answer: Probably. If you want to know for sure, it's best to download Mac Mouse Fix and try it out.\n\nMac Mouse Fix works very well with most mice. However, on certain mice designed to be used with proprietary driver software like Logitech Options, Mac Mouse Fix can't recognize all the buttons at the moment. \n\nThat's because these mice communicate with your computer using a special, proprietary protocol, instead of the standard USB protocol.\nI would love to add full compatibility for these mice at some point, but it's a ton of work and it won't be coming soon."
+    "readme.questions.mouse-support.body": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "new",
+            "value": "Short answer: Probably. If you want to know for sure, it's best to download Mac Mouse Fix and try it out.\n\nMac Mouse Fix works very well with most mice. However, on certain mice designed to be used with proprietary driver software like Logitech Options, Mac Mouse Fix can't recognize all the buttons at the moment. \n\nThat's because these mice communicate with your computer using a special, proprietary protocol, instead of the standard USB protocol.\nI would love to add full compatibility for these mice at some point, but it's a ton of work and it won't be coming soon."
           }
         }
       }
     },
-    "readme.questions.mouse-support.title" : {
-      "extractionState" : "extracted_with_value",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "**Is my mouse supported?**"
+    "readme.questions.mouse-support.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "new",
+            "value": "**Is my mouse supported?**"
           }
         }
       }
     },
-    "readme.questions.open-source.body" : {
-      "extractionState" : "extracted_with_value",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "Yes, Mac Mouse Fix will still be open source!\n\nI encourage anyone to use the source code of Mac Mouse Fix in their own projects, as long as they don't release a simple copy of Mac Mouse Fix.\n\nLearn about the details in the [MMF License](https://github.com/noah-nuebling/mac-mouse-fix/blob/master/License) which Mac Mouse Fix 3 and later are licensed under."
+    "readme.questions.open-source.body": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "new",
+            "value": "Yes, Mac Mouse Fix will still be open source!\n\nI encourage anyone to use the source code of Mac Mouse Fix in their own projects, as long as they don't release a simple copy of Mac Mouse Fix.\n\nLearn about the details in the [MMF License](https://github.com/noah-nuebling/mac-mouse-fix/blob/master/License) which Mac Mouse Fix 3 and later are licensed under."
           }
         }
       }
     },
-    "readme.questions.open-source.title" : {
-      "extractionState" : "extracted_with_value",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "**Will Mac Mouse Fix still be Open Source now that it's monetized?**"
+    "readme.questions.open-source.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "new",
+            "value": "**Will Mac Mouse Fix still be Open Source now that it's monetized?**"
           }
         }
       }
     },
-    "readme.questions.pointer-acceleration.body" : {
-      "extractionState" : "extracted_with_value",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "Mac Mouse Fix doesn't let you turn off the pointer acceleration, but if you're on **macOS 14 Sonoma** or later, you can turn off the pointer acceleration under `System Settings > Mouse > Advanced... > Pointer acceleration`.\n\nI plan to add really nice ways to improve pointer acceleration in the future, but I'm not sure when that's coming."
+    "readme.questions.pointer-acceleration.body": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "new",
+            "value": "Mac Mouse Fix doesn't let you turn off the pointer acceleration, but if you're on **macOS 14 Sonoma** or later, you can turn off the pointer acceleration under `System Settings > Mouse > Advanced... > Pointer acceleration`.\n\nI plan to add really nice ways to improve pointer acceleration in the future, but I'm not sure when that's coming."
           }
         }
       }
     },
-    "readme.questions.pointer-acceleration.title" : {
-      "extractionState" : "extracted_with_value",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "**Turning off pointer acceleration**"
+    "readme.questions.pointer-acceleration.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "new",
+            "value": "**Turning off pointer acceleration**"
           }
         }
       }
     },
-    "readme.questions.refund-policy.body" : {
-      "extractionState" : "extracted_with_value",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "There is no official refund policy, but the app is free for 30 days.\n\nIf you experience any problems after buying the app, just reach out to me, and I will do my best to help."
+    "readme.questions.refund-policy.body": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "new",
+            "value": "There is no official refund policy, but the app is free for 30 days.\n\nIf you experience any problems after buying the app, just reach out to me, and I will do my best to help."
           }
         }
       }
     },
-    "readme.questions.refund-policy.title" : {
-      "extractionState" : "extracted_with_value",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "**Is there a refund policy?**"
+    "readme.questions.refund-policy.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "new",
+            "value": "**Is there a refund policy?**"
           }
         }
       }
     },
-    "readme.questions.tilt-wheel.body" : {
-      "extractionState" : "extracted_with_value",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "Some mice let you tilt the scroll wheel left or right to scroll horizontally. Mac Mouse Fix will make this feel more natural and easy to control. However, it's not currently possible to trigger other actions, such as switching between desktops, by tilting the scroll wheel. I'd love to implement this feature at some point, but it's a ton of work and it won't be coming soon."
+    "readme.questions.tilt-wheel.body": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "new",
+            "value": "Some mice let you tilt the scroll wheel left or right to scroll horizontally. Mac Mouse Fix will make this feel more natural and easy to control. However, it's not currently possible to trigger other actions, such as switching between desktops, by tilting the scroll wheel. I'd love to implement this feature at some point, but it's a ton of work and it won't be coming soon."
           }
         }
       }
     },
-    "readme.questions.tilt-wheel.title" : {
-      "extractionState" : "extracted_with_value",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "**Are tiltable scroll wheels supported?**"
+    "readme.questions.tilt-wheel.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "new",
+            "value": "**Are tiltable scroll wheels supported?**"
           }
         }
       }
     },
-    "readme.questions.title" : {
-      "extractionState" : "extracted_with_value",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "Questions"
+    "readme.questions.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "new",
+            "value": "Questions"
           }
         }
       }
     },
-    "readme.tips.apple-keys.body" : {
-      "extractionState" : "extracted_with_value",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "Mac Mouse Fix lets you use **any key on your keyboard** directly from your mouse -\neven special keys only found on Apple keyboards that let you control Screen Brightness, Audio Volume, Media Playback, and more.\n\nIf you don't have an Apple keyboard at hand, **hold Option (⌥)** to choose the special Apple keys.\n\n<img src=\"{repo_root}Markdown/Media/Apple-Keys-Demo.gif\" width=\"700\">"
+    "readme.tips.apple-keys.body": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "new",
+            "value": "Mac Mouse Fix lets you use **any key on your keyboard** directly from your mouse -\neven special keys only found on Apple keyboards that let you control Screen Brightness, Audio Volume, Media Playback, and more.\n\nIf you don't have an Apple keyboard at hand, **hold Option (\u2325)** to choose the special Apple keys.\n\n<img src=\"{repo_root}Markdown/Media/Apple-Keys-Demo.gif\" width=\"700\">"
           }
         }
       }
     },
-    "readme.tips.apple-keys.title" : {
-      "extractionState" : "extracted_with_value",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "**Control Screen Brightness, Audio Volume, or Media Playback right from your mouse**"
+    "readme.tips.apple-keys.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "new",
+            "value": "**Control Screen Brightness, Audio Volume, or Media Playback right from your mouse**"
           }
         }
       }
     },
-    "readme.tips.swish.body" : {
-      "extractionState" : "extracted_with_value",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "[Swish](https://highlyopinionated.co/swish/) is my favorite way to manage windows on macOS. With a simple swipe on your trackpad, it lets you position any window so it takes up half, a quarter, or the whole screen.\n\nSwish is designed for trackpad gestures, but with Mac Mouse Fix you can use it from any third-party mouse! Just go to Mac Mouse Fix and set any buttons \"Click and Drag\" action to \"Scroll & Navigate\" and then you can snap windows with a simple Click and Drag.\n\nAnything you can do with a two-finger swipe on an Apple trackpad works just as well with the \"Scroll & Navigate\" feature in Mac Mouse Fix."
+    "readme.tips.swish.body": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "new",
+            "value": "[Swish](https://highlyopinionated.co/swish/) is my favorite way to manage windows on macOS. With a simple swipe on your trackpad, it lets you position any window so it takes up half, a quarter, or the whole screen.\n\nSwish is designed for trackpad gestures, but with Mac Mouse Fix you can use it from any third-party mouse! Just go to Mac Mouse Fix and set any buttons \"Click and Drag\" action to \"Scroll & Navigate\" and then you can snap windows with a simple Click and Drag.\n\nAnything you can do with a two-finger swipe on an Apple trackpad works just as well with the \"Scroll & Navigate\" feature in Mac Mouse Fix."
           }
         }
       }
     },
-    "readme.tips.swish.title" : {
-      "extractionState" : "extracted_with_value",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "**Manage windows with a simple Click and Drag**"
+    "readme.tips.swish.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "new",
+            "value": "**Manage windows with a simple Click and Drag**"
           }
         }
       }
     },
-    "readme.tips.title" : {
-      "extractionState" : "extracted_with_value",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "Tips"
+    "readme.tips.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "new",
+            "value": "Tips"
           }
         }
       }
     },
-    "readme.uninstall.body" : {
-      "extractionState" : "extracted_with_value",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "Uninstall Mac Mouse Fix by simply moving it to the bin. \n\nHowever, there will be files left on your system. To get rid of these files I recommend the awesome [AppCleaner by FreeMacSoft](https://freemacsoft.net/appcleaner/).\n\nUnder macOS, it is not feasible for apps to delete these leftover files by themselves when you delete the app. That's why I highly recommend using an app like AppCleaner."
+    "readme.uninstall.body": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "new",
+            "value": "Uninstall Mac Mouse Fix by simply moving it to the bin. \n\nHowever, there will be files left on your system. To get rid of these files I recommend the awesome [AppCleaner by FreeMacSoft](https://freemacsoft.net/appcleaner/).\n\nUnder macOS, it is not feasible for apps to delete these leftover files by themselves when you delete the app. That's why I highly recommend using an app like AppCleaner."
           }
         }
       }
     },
-    "readme.uninstall.title" : {
-      "extractionState" : "extracted_with_value",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "Uninstallation"
+    "readme.uninstall.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "new",
+            "value": "Uninstallation"
           }
         }
       }
     },
-    "readme.what-people-say.body" : {
-      "extractionState" : "extracted_with_value",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "Thanks so much to everyone sharing their excitement about Mac Mouse Fix!\\\nOn the [website](http://noah-nuebling.github.io/mac-mouse-fix-website/) you can find a collection of nice things people have said about the app."
+    "readme.what-people-say.body": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "new",
+            "value": "Thanks so much to everyone sharing their excitement about Mac Mouse Fix!\\\nOn the [website](http://noah-nuebling.github.io/mac-mouse-fix-website/) you can find a collection of nice things people have said about the app."
           }
         }
       }
     },
-    "readme.what-people-say.title" : {
-      "extractionState" : "extracted_with_value",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "What people say"
+    "readme.what-people-say.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "new",
+            "value": "What people say"
           }
         }
       }
     }
   },
-  "version" : "1.0"
+  "version": "1.0"
 }
