@@ -40,19 +40,6 @@ def main():
     output_path_ext = os.path.splitext(output_path)[1]
     assert output_path_ext == '.js', f'Path extension of output path should be ".js". Is "{output_path_ext}".'
     
-    # Find .xcstrings file in mmf-website-repo
-    xcstrings_paths = glob.glob(os.path.join(target_repo, '**/*.xcstrings'))
-    assert(len(xcstrings_paths) == 1)
-    xcstrings_path = xcstrings_paths[0]
-    
-    # Load xcstrings file
-    xcstrings = None
-    with open(xcstrings_path, 'r') as file:
-        xcstrings = json.load(file)
-    
-    # Log
-    print(f'compile_website_strings: Loaded .xcstrings file at {xcstrings_path}')
-    
     # Find mmf-project locales
     source_locale, translation_locales = mflocales.find_mmf_project_locales()
     locales = [source_locale] + translation_locales
@@ -64,28 +51,64 @@ def main():
     #   We sort the locales - this way that vue will display the languages in a nice order
     locales = mflocales.sorted_locales(locales, source_locale)
     
+    # Find .xcstrings files in mmf-website-repo
+    #   Note: I don't think we're treating the quotes.xcstrings in a special way, so not sure this code is necessary, we could just iterate through the .xcstrings files
+    xcstrings_paths = glob.glob(os.path.join(target_repo, '**/*.xcstrings'))
+    assert(len(xcstrings_paths) == 2)
+    main_xcstrings_path = None
+    quotes_xcstrings_path = None
+    if os.path.basename(xcstrings_paths[0]) == 'Quotes.xcstrings':
+        quotes_xcstrings_path, main_xcstrings_path = xcstrings_paths
+    elif os.path.basename(xcstrings_paths[1]) == 'Quotes.xcstrings':
+        main_xcstrings_path, quotes_xcstrings_path = xcstrings_paths
+    else:
+        assert False
+    
+    # Load xcstrings files
+    main_xcstrings = json.loads(mfutils.read_file(main_xcstrings_path))
+    quotes_xcstrings = json.loads(mfutils.read_file(quotes_xcstrings_path))
+    
+    # Get progress
+    progress = mflocales.get_localization_progress([main_xcstrings, quotes_xcstrings], translation_locales)
+    
+    # Log
+    print(f'compile_website_strings: Loaded .xcstrings file at {main_xcstrings_path}, loaded Quotes.xcstrings from: {quotes_xcstrings_path}')
+    
     # Compile
+    
+    # Compile xcstrings 
     vuestrings = {}
     vuelangs = []
+    
     for locale in locales:
         
-        # Compile new strings dict
-        #   that @nuxtjs/i18n can understand
-        vuestrings[locale] = {}
-        for key in xcstrings['strings']:
-            value, locale_of_value = mflocales.get_translation(xcstrings, key, locale, fall_back_to_next_best_language=False)
-            assert locale_of_value == locale
-            if value != None and len(value) > 0:
-                vuestrings[locale][key] = value
-
+        # Get progress string 
+        #   For this locale
+        progress_display = str(int(100*progress[locale]["percentage"])) + '%' if locale != source_locale else ''
+            
         # Compile list-of-languages dict
-        #   (These are nuxt i18n `LocaleObject`s)
+        #   (These are parsed as nuxt i18n `LocaleObject`s, but we add the 'progressDisplay' field for our custom logic.)
         vuelangs.append({
             'code': locale,
             'name': mflocales.language_tag_to_language_name(locale, locale, include_flag=True),
+            'progressDisplay': progress_display
         })
+        
+        # Compile new vuestrings dict
+        #   that @nuxtjs/i18n can understand
+        #   Notes:
+        #       - Note that we enabled fallbacks. This means the resulting Localizable.js file will aleady contain best-effort fallbacks for each string for each language. 
+        #           So we don't need extra fallback logic inside the mmf-website code.
+        vuestrings[locale] = {}
+        for xcstrings in [main_xcstrings, quotes_xcstrings]:
+            for key in xcstrings['strings']:
+                value, locale_of_value = mflocales.get_translation(xcstrings, key, locale, fall_back_to_next_best_language=True)
+                assert value != None # Since we enabled fallbacks, there should be a value for every string
+                vuestrings[locale][key] = value
+            
+
     
-    # Render the dict to a .js file
+    # Render the compiled data to a .js file
     #   We could also render it to json, but json doesn't allow comments, which we want to add.
     vuestrings_json = json.dumps(vuestrings, indent=4)
     vuelangs_json = json.dumps(vuelangs, indent=4)

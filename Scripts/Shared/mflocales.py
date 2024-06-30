@@ -117,11 +117,12 @@ def get_translation(xcstrings: dict, key: str, preferred_locale: str, fall_back_
     if fall_back_to_next_best_language:
         
         available_locales = localizations.keys()
-        preferred_locales = [preferred_locale, source_locale] # The leftmost is the most preferred in babel.negotiate_locale
+        preferred_locales = [preferred_locale, source_locale, *available_locales] # The leftmost is the most preferred in babel.negotiate_locale
         translation_locale = babel.negotiate_locale(preferred_locales, available_locales) # What's the difference to babel.Locale.negotiate()?
         
         translation = localizations[translation_locale]['stringUnit']['value']
-        assert translation != None and len(translation) != 0
+        assert translation != None
+        # assert len(translation) != 0 # Not asserting this since sometimes translations can be empty strings
     else:
         translation_locale = preferred_locale
         translation = localizations.get(translation_locale, {}).get('stringUnit', {}).get('value', '')
