@@ -30,9 +30,20 @@ language_name_override_map = {
     }
 }
 
+path_to_xcodeproj = 'Mouse Fix.xcodeproj' # Remember to wrap this in quote when using with runCLT()
+
 #
 # Language stuff
 #
+def sorted_locales(locales, source_locale):
+    
+    """
+    - Sorts all the locales alphabetically by their display name, but puts the development aka source_locale (en) as the first language.
+    - We plan to use this sorting whenever there's a language picker. (On the website and in the language pickers)
+    """
+    smallest_char = "\u0000"
+    result = sorted(locales, key=lambda l: smallest_char if l == source_locale else language_tag_to_language_name(l, l, False))
+    return result
 
 def get_localization_progress(xcstring_objects: list[dict], translation_locales: list[str]) -> dict:
     
@@ -77,7 +88,7 @@ def get_localization_progress(xcstring_objects: list[dict], translation_locales:
     # Return
     return localization_progress
 
-def get_translation(xcstrings: dict, key: str, preferred_locale: str) -> tuple[str, str]:
+def get_translation(xcstrings: dict, key: str, preferred_locale: str, fall_back_to_next_best_language: bool = True) -> tuple[str, str]:
     
     """
     -> Retrieves a `translation` for key `key` from `xcstrings` for the `preferred_locale`
@@ -91,6 +102,8 @@ def get_translation(xcstrings: dict, key: str, preferred_locale: str) -> tuple[s
 
     Notes: 
     - The xcstrings dict is the content of an .xcstrings file which has been loaded using json.load()
+    - The fall_back_to_next_best_language option makes sense when you're rendering content - as we do when using this for markdown-template-compilation
+        The option doesn't make sense when we're converting one strings format to another - as we do when using this for the mmf-website - since in that case we want to convert the data, without changing the content.
     """
     
     assert xcstrings['version'] == '1.0' # Maybe we should also assert this in other places where we parse .xcstrings files
@@ -98,15 +111,22 @@ def get_translation(xcstrings: dict, key: str, preferred_locale: str) -> tuple[s
     source_locale = xcstrings['sourceLanguage']
     localizations = xcstrings['strings'][key]['localizations']
     
-    available_locales = localizations.keys()
-    preferred_locales = [preferred_locale, source_locale] # The leftmost is the most preferred in babel.negotiate_locale
-    best_locale = babel.negotiate_locale(preferred_locales, available_locales) # What's the difference to babel.Locale.negotiate()?
+    translation = None
+    translation_locale = None
     
-    translation = localizations[best_locale]['stringUnit']['value']
+    if fall_back_to_next_best_language:
+        
+        available_locales = localizations.keys()
+        preferred_locales = [preferred_locale, source_locale] # The leftmost is the most preferred in babel.negotiate_locale
+        translation_locale = babel.negotiate_locale(preferred_locales, available_locales) # What's the difference to babel.Locale.negotiate()?
+        
+        translation = localizations[translation_locale]['stringUnit']['value']
+        assert translation != None and len(translation) != 0
+    else:
+        translation_locale = preferred_locale
+        translation = localizations.get(translation_locale, {}).get('stringUnit', {}).get('value', '')
     
-    assert translation != None and len(translation) != 0
-    
-    return translation, best_locale
+    return translation, translation_locale
         
 
 def make_custom_xcstrings_visible_to_xcodebuild(path_to_xcodeproj: str, custom_xcstrings_paths: list) -> dict:
@@ -239,13 +259,13 @@ def undo_make_custom_xcstrings_visible_to_xcodebuild(undo_payload):
     return
     
 
-def find_locales(path_to_xcodeproj) -> tuple[str, list[str]]:
+def find_mmf_project_locales() -> tuple[str, list[str]]:
     
     """
     Returns the development locale of the xcode project as the first argument and the list of translation locales as the second argument
     """
     
-    pbxproject_json = json.loads(mfutils.runCLT(f"plutil -convert json -r -o - {path_to_xcodeproj}/project.pbxproj").stdout) # -r puts linebreaks into the json which makes it human readable, but is unnecessary here. `-o -` returns to stdout
+    pbxproject_json = json.loads(mfutils.runCLT(f"plutil -convert json -r -o - '{path_to_xcodeproj}/project.pbxproj'").stdout) # -r puts linebreaks into the json which makes it human readable, but is unnecessary here. `-o -` returns to stdout
     
     development_locale = None
     locales = None

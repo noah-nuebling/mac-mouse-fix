@@ -1,3 +1,60 @@
+#
+# Imports
+#
+# (Only import stdlib stuff -> we want to run this without installing requirements)
+# (Also don't import Shared stuff I think (?) since we want this to be independent of other stuff (not sure this requirement makes sense))
+
+import os
+import sys
+import glob
+import subprocess
+import re
+import json
+
+#
+# Constants
+#
+
+venv_path = "env"
+dotenv_path = ".env"
+
+# Command map
+
+custom_command_compile_markdown = "compile-markdown"
+
+subcommand_map = {
+    "upload-strings": "Scripts/UploadXCStrings",
+    custom_command_compile_markdown: "", # Custom logic which can't be described by a single path
+    
+    "sync-strings-internal": "Scripts/SyncXCStrings",
+    "markdown-generator-internal": "Scripts/MarkdownGenerator",
+    
+    "mmf-website-compile-strings": "Scripts/MMFWebsiteCompileStrings",
+}
+
+help_string = """
+Use ./run like this:
+
+    ./run <subcommand> <args>
+
+Known subcommands:
+
+    {}
+
+Provided subcommand:
+
+    {}
+
+"""
+
+def print_help_and_exit(subcommand, exit_code=1):
+    print(help_string.format(' | '.join(subcommand_map.keys()), subcommand))
+    exit(exit_code)
+
+
+#
+# Documentation
+#
 
 """
 
@@ -83,57 +140,6 @@ If you are not using ./run you can still run things like this:
 
 """
 
-#
-# Imports
-#
-# (Only import stdlib stuff -> we want to run this without installing requirements)
-# (Also don't import Shared stuff I think (?) since we want this to be independent of other stuff (not sure this requirement makes sense))
-
-import os
-import sys
-import glob
-import subprocess
-import re
-import json
-
-
-#
-# Constants
-#
-
-venv_path = "env"
-dotenv_path = ".env"
-
-# Command map
-
-custom_command_compile_markdown = "compile-markdown"
-
-subcommand_map = {
-    "upload-strings": "Scripts/UploadXCStrings",
-    custom_command_compile_markdown: "", # Custom logic which can't be described by a single path
-    
-    "sync-strings-internal": "Scripts/SyncXCStrings",
-    "markdown-generator-internal": "Scripts/MarkdownGenerator",
-}
-
-help_string = """
-Use .run like this:
-
-    ./run <subcommand> <args>
-
-Known subcommands:
-
-    {}
-
-Provided subcommand:
-
-    {}
-
-"""
-
-def print_help_and_exit(subcommand, exit_code=1):
-    print(help_string.format(' | '.join(subcommand_map.keys()), subcommand))
-    exit(exit_code)
 
 #
 # Dotenv
@@ -215,8 +221,28 @@ def main():
     # Make sure we're running in the mac-mouse-fix project folder
     assert os.path.basename(os.getcwd()) == 'mac-mouse-fix'
 
-    # Parse args
-
+    # Extract --target_repo arg
+    #
+    #   For this script to run properly, the cwd has to point to the mac-mouse-fix repo. 
+    #   When this script is supposed to work on another repo then we can set the --target_repo arg. 
+    #
+    #   This is intended to be used by the run.py script inside the mac-mouse-fix-website repo.
+    
+    target_repo = None
+    
+    repo_arg_index = None
+    for i, arg in enumerate(sys.argv):
+        if arg == '--target_repo':
+            repo_arg_index = i
+    
+    if repo_arg_index != None:
+        target_repo = sys.argv[repo_arg_index+1]
+    else:
+        target_repo = os.getcwd()
+    
+    # Log
+    print(f"Invoking run.py with cwd: {os.getcwd()}, target_repo: {target_repo}")
+    
     # Handle missing subcommand
     if len(sys.argv) < 2:
         print_help_and_exit('run.py: <no subcommand provided>')
@@ -257,28 +283,37 @@ def main():
     requiremements_path = requiremements_paths[0] if len(requiremements_paths) > 0 else None
     script_path = script_paths[0]
     
-    # Log
-    print(f"\nrun.py: Creating venv at ./{venv_path} ...")
+    python_interpreter = None
     
-    # Create venv
-    # Notes: 
-    # - subprocess.check_call throws an error if the command returns non-zero. Otherwise returns 0
-    # - text=True makes it so we can input the commmand as a single string of text instead of a list of args
-    # - shell=True I don't quite understand. Apparently it runs the commans in a 'spawned a shell process' and enables shells features such as pipes and wildcards.
-    #   - It apparently also poses a security risk, since e.g. if you pass 'rm -rf /*' then it can delete your entire computer or something
-    #   - To create and fill our venv shell=True seems to be necessary.
-    subprocess.check_call(f"python3 -m venv {venv_path}", text=True, shell=True)
-    
-    # Get python path for the venv
-    venv_python_path = os.path.join(venv_path, 'bin/python')
-    
-    if requiremements_path != None: # Not sure we even need to create a venv in this case
+    if requiremements_path != None:
         
+        # Log
+        print(f"\nrun.py: Creating venv at ./{venv_path} ...")
+        
+        # Create venv
+        # Notes: 
+        # - subprocess.check_call throws an error if the command returns non-zero. Otherwise returns 0
+        # - text=True makes it so we can input the commmand as a single string of text instead of a list of args
+        # - shell=True I don't quite understand. Apparently it runs the commans in a 'spawned a shell process' and enables shells features such as pipes and wildcards.
+        #   - It apparently also poses a security risk, since e.g. if you pass 'rm -rf /*' then it can delete your entire computer or something
+        #   - To create and fill our venv shell=True seems to be necessary.
+    
+        subprocess.check_call(f"python3 -m venv {venv_path}", text=True, shell=True)
+        
+        # Get python path for the venv
+        venv_python_path = os.path.join(venv_path, 'bin/python')
+            
         # Log
         print(f"\n Installing requirements from ./{requiremements_path} ...")
         
         # Install requirements    
         subprocess.check_call(f'./{venv_python_path} -m pip install -r "{requiremements_path}"', text=True, shell=True)
+        
+        # Tell the WORLD
+        python_interpreter = f'./{venv_python_path}'
+    
+    else:
+        python_interpreter = 'python3'
     
     # Log
     print(f"\nrun.py: Loading environ variables from ./{dotenv_path} ...")
@@ -299,13 +334,13 @@ def main():
     env_vars = os.environ | dotenv_vars
     
     # Log
-    print(f"run.py: Running script at ./{script_path} with arguments: {subcommand_args} using interpreter ./{venv_python_path} ...\n")
+    print(f"run.py: Running script at ./{script_path} with arguments: {subcommand_args} using interpreter {python_interpreter} ...\n")
     
     # Run script
     #   Notes:
     #   - We're passing env= here. If we don't do that, os.environ is automatically passed to the subprocess.
     
-    script_result = subprocess.run([venv_python_path, script_path, *subcommand_args], env=env_vars)
+    script_result = subprocess.run([python_interpreter, script_path, *subcommand_args], env=env_vars)
     
     # Log 
     #   Log the script output verbatim 

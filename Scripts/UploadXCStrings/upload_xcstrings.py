@@ -73,7 +73,7 @@ def main():
     # Get locales for this project
     print(f"Extracting locales from .xcodeproject ...")
     
-    development_locale, translation_locales = mflocales.find_locales('Mouse\ Fix.xcodeproj')
+    development_locale, translation_locales = mflocales.find_mmf_project_locales('Mouse\ Fix.xcodeproj')
     
     # Load all .xcstrings files
     print(f"Loading all .xcstring files ...\n")
