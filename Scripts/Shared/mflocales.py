@@ -111,46 +111,132 @@ def get_translation(xcstrings: dict, key: str, preferred_locale: str) -> tuple[s
 
 def make_custom_xcstrings_visible_to_xcodebuild(path_to_xcodeproj: str, custom_xcstrings_paths: list) -> dict:
     
-    # Load xcode project as json
-    #   I have no idea why plutil can do this - .pbxproj files aren't .plist files?
-    pbxproject_json = json.loads(mfutils.runCLT(f"plutil -convert json -r -o - {path_to_xcodeproj}/project.pbxproj").stdout)
+    """
+    This is sooo convoluted. But I guess I'm having fun. 
+    
+    Update: Gave up on this
+    
+    The point of this is to only make the strings inside Markdown.xcstrings 'visible' to Xcode while exporting.
+        The only way I know to prevent Xcode from deleting the content of Markdown.xcstrigns is by 
+        1. setting the strings' extractionState to manual 
+        2. Not having the file be part of any build target 
+            (aka not having the file 'visible' to Xcode. 'visible' is not the best term but that's what we mean)
+        
+        Simply setting the extractionState to manual would be a very simple and totally sufficient solution. We could still temporarily set it back to extracted_with_value while we sync the .xcstrings file. 
+        If we do that, the only disadvantage that I can think of is that Xcode wouldn't disable editing the English version of the string in the .xcstrings editing GUI. (A GUI which normally only I can see) 
+        -> This is really not important at all!
+        However, this very slight problem (and me being pretty nerdy) prompted me to implement this function to make the Markdown.xcstrings file temporarily 'visible' to Xcode, by editing the .pbxproject file.
+        This way, we can keep the file 'invisible' to Xcode normally, so that it doesn't attempt to delete its content, but then make the file 'visible' during exports, so that Xcode can properly extract the .xcloc files for us.
+        
+        -> This is totally unnecessary and quite hacky and brittle. We should just set the extractionState to manual inside Markdown.xcstrings. (But I don't want to)
+        
+        Update: If we do this, Xcode will STILL delete all the strings from Markdown.xcstrings as it's exporting .xcloc files. So we'd have to set the extractionState of every string to manual before exporting - on top of this 'visibility' stuff. 
+                It's getting too annoying. I'll just keep the state as 'manual' and keep the files visible to Xcode, and the temporarily set it to extracted_with_value as we're syncing the strings.
+        
+    """
+    
+    assert False
+    
+    # Extract data
+    pbxproj_path = f'{path_to_xcodeproj}/project.pbxproj'
+    
+    # Convert whole pbxproject file to json
+    #   - Xcode can still read the json version, but will convert it back to legacy plist seemingly as soon as it interacts with it.
+    #   - You can't seem to insert values into the proj file directly using plutil. This seems to be possible with PlistBuddy but that will 
+    #       convert the proj file into xml. So just converting to json to begin with seems to be easiest. 
+    #       See https://stackoverflow.com/questions/32133576/what-tools-support-editing-project-pbxproj-files
+    
+    mfutils.runCLT(f'plutil -convert json "{pbxproj_path}"')
+    
+    # Load xcode project json
+    pbxproject_json = json.loads(mfutils.runCLT(f"cat '{pbxproj_path}'").stdout)
         
     for xcstrings_path in custom_xcstrings_paths:
-
         # Find xcstrings file
         xcstrings_name = os.path.basename(xcstrings_path) # Just ignore the path, just use the name
         xcstrings_uuids = []
         for uuid, info in pbxproject_json['objects'].items():
             if info['isa'] == 'PBXFileReference' and info['path'] == xcstrings_name:
                 xcstrings_uuids.append(uuid)
+                break
         
     # Validate
     #   This will fail if the xcstrings file's name is not unique throughout the project, or if the xcstrings files doesn't exist in the project.
     assert len(xcstrings_uuids) == 1
     
     # Extract
-    xcstrings_uuid = xcstrings_uuids[0]
+    markdown_xcstrings_uuid = xcstrings_uuids[0]
     
     # Create PXBuildFile object
-    
-    build_file_key = mfutils.xcode_project_uuid()
+    build_file_uuid = mfutils.xcode_project_uuid()
     build_file_value = {
-         "fileRef" : xcstrings_uuid,
+         "fileRef" : markdown_xcstrings_uuid,
          "isa" : "PBXBuildFile"
-      },
+      }
     
-    # Insert PXBuildFile into xcode project
-    mfutils.runCLT(f"plutil -insert objects.{build_file_key} -json '{json.dumps(build_file_value)}' {path_to_xcodeproj}/project.pbxproj")
+    # Insert PXBuildFile into project
+    pbxproject_json['objects'][build_file_uuid] = build_file_value
+    
+    # Find build phase that adds resources
+    
+    build_phase_uuids = None
+    for uuid, info in pbxproject_json['objects'].items():
+        if info['isa'] == 'PBXNativeTarget' and info['name'] == 'Mac Mouse Fix':
+            build_phase_uuids = info['buildPhases']
+            break    
+    resources_build_phase_uuid = None
+    for uuid in build_phase_uuids:
+        info = pbxproject_json['objects'][uuid]
+        if info['isa'] == 'PBXResourcesBuildPhase':
+            resources_build_phase_uuid = uuid
+            break
+    
+    # Add PXBuildFile to PBXResourcesBuildPhase
+    pbxproject_json['objects'][resources_build_phase_uuid]['files'].append(build_file_uuid)
+            
+    # Write json back to file
+    with open(pbxproj_path, 'w') as file:
+        file.write(json.dumps(pbxproject_json, indent=4))
     
     # Create 'undo payload'
     #   Pass this to the undo function to undo the changes that this function made
     undo_payload = {
-        'project': path_to_xcodeproj,
-        'inserted_build_file_key': build_file_key,
+        'pbxproj_path': pbxproj_path,
+        'resources_build_phase_uuid': resources_build_phase_uuid,
+        'inserted_build_file_uuid': build_file_uuid,
     }
     
     # Return
     return undo_payload
+    
+def undo_make_custom_xcstrings_visible_to_xcodebuild(undo_payload):
+    
+    # Gave up on this
+    assert False
+    
+    # Extract
+    pbxproj_path = undo_payload['pbxproj_path']
+    build_file_uuid = undo_payload['inserted_build_file_uuid']
+    resources_build_phase_uuid = undo_payload['resources_build_phase_uuid']
+    
+    # Convert project to json
+    mfutils.runCLT(f'plutil -convert json "{pbxproj_path}"')
+    
+    # Load json
+    pbxproject_json = json.loads(mfutils.runCLT(f"cat '{pbxproj_path}'").stdout)
+    
+    # Remove build_file_object
+    del pbxproject_json['objects'][build_file_uuid]
+    
+    # Remove build_file_object from build_phase_object
+    pbxproject_json['objects'][resources_build_phase_uuid]['files'].remove(build_file_uuid)
+    
+    # Write to file
+    with open(pbxproj_path, 'w') as file:
+        file.write(json.dumps(pbxproject_json, indent=4))
+    
+    # Return
+    return
     
 
 def find_locales(path_to_xcodeproj) -> tuple[str, list[str]]:
