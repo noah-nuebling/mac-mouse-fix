@@ -40,6 +40,7 @@ Diese Leute haben viel mehr als den Standardpreis ausgegeben und mir einen **ung
 
 **Juni 2024**
 
+- 🇦🇺&nbsp;Jas - "Epic. Just epic."
 - 🇦🇹&nbsp;Samo&nbsp;Korošec
 - 🇺🇸&nbsp;Shawn&nbsp;Holmes
 - 🇮🇱&nbsp;סרגיי&nbsp;אגרונוב
