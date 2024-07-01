@@ -29,7 +29,7 @@ subcommand_map = {
     "sync-strings-internal": "Scripts/SyncXCStrings",
     "markdown-generator-internal": "Scripts/MarkdownGenerator",
     
-    "mmf-website-compile-strings": "Scripts/MMFWebsiteCompileStrings",
+    "mmf-website-compile-strings": "Scripts/MMFWebsiteCompileXCStrings",
 }
 
 help_string = """

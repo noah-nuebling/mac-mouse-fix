@@ -26,31 +26,88 @@ import random
 
 def clt_result_description(completed_process: subprocess.CompletedProcess) -> str:
     
-    data = {
-        'code': completed_process.returncode,
-        'stderr': completed_process.stderr,
-        'stdout': completed_process.stdout,
-    }
+    result = f"""\
+        
+code: {completed_process.returncode}
+
+stdout:
+{add_indent(completed_process.stdout, 2)}
+[[endstdout]]
+
+stderr:
+{add_indent(completed_process.stderr, 2)}
+[[endstderr]]
+
+"""
     
-    return json.dumps(data, indent=2)
+    return result
     
-def runCLT(command, cwd=None, exec='/bin/bash'):
+def runclt(command, cwd=None):
     
     """
-    I think subprocess.check_output does almost the same as this
+    Secure variant of the runclt_insecure method.
+    - shell=False makes this secure
     """
+    # Preprocess `command`
+    #   -> So that it works similar to as if shell=True (we can pass in the args as a single string) but yet we can keep shell=False
+    #   -> If one of your args contains spaces, escape it like this: 
+    #       .replace(' ', '\ ')
+    
+    commands = None
+    if type(command) is str:
+        commands = command.split(' ')
+    elif type(command) is list:
+        commands = command
+    
+    # Code from runclt_insecure
+    success_codes=[0]
+    if commands[0] == 'git' and commands[1] == 'diff': 
+        success_codes.append(1) # Git diff returns 1 if there's a difference
+    
+    clt_result = subprocess.run(commands, cwd=cwd, shell=False, text=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    assert clt_result.stderr == '' and clt_result.returncode in success_codes, f"Command \"{command}\" was run in cwd \"{cwd}\" and failed with result:\n{ clt_result_description(clt_result) }"
+    
+    clt_result.stdout = clt_result.stdout.strip() # The stdout sometimes has trailing newline character which we remove here.
+    
+    return clt_result.stdout
+
+def runclt_insecure(command, cwd=None, exec=None): 
+    
+    """
+    Notes:
+    
+    This is a SECURITY PROBLEM.
+    -> What makes this insecure is if we set shell=True on subprocess.run and then pass in user-generated strings. 
+        (If you don't pass in user generated strings, this is ok to use)
+    -> We replaced this with runclt(), renamed this func to runclt_insecure() and added these notes about security in the commit after b052473ad4a5efd9128f2934daf15bdbd0daf8a7
+    
+    Args that we're passing to subprocess.run():
+    - `shell=True`: Pass the args through a shell instead of invoking the clt directly. 
+        -> This allows you to pass the clt and args in a single string and also use several commands using ; or use shell features like | pipes.
+        -> If you turn this off, you have to pass the clt and args as a list of strings, which is annoying.
+        -> However, this is a SECURITY PROBLEM if we pass in any user-generated strings. -> Never use this without considering security
+    - `text=True`: Return stdout and stderr as string instead of bits
+    - `cwd=cwd`: Set the current working directory, which is passed to the CLT
+    - `executable=exec`: Replaces the program to execute. 
+        -> If shell=True, then this replaces the shell I think. Otherwise, I'm not sure.
+        -> We used to have this set to exec='/bin/bash'
+        -> I don't think we should set this
+        
+    """
+    
+    assert False
     
     success_codes=[0]
     if command.startswith('git diff'): 
         success_codes.append(1) # Git diff returns 1 if there's a difference
     
-    clt_result = subprocess.run(command, cwd=cwd, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True, executable=exec) # Not sure what `text` and `shell` does. Update: It seems that sheel is for passing the command in as a string instead of several args for several args to the clt, not sure though. We use cwd to run git commands at a differnt repo than the current workding directory
+    clt_result = subprocess.run(command, cwd=cwd, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True, executable=exec)
     
     assert clt_result.stderr == '' and clt_result.returncode in success_codes, f"Command \"{command}\", run in cwd \"{cwd}\"\nreturned: {clt_result_description(clt_result)}"
     
     clt_result.stdout = clt_result.stdout.strip() # The stdout sometimes has trailing newline character which we remove here.
     
-    return clt_result
+    return clt_result.stdout
 
 def run_git_command(repo_path, command):
     
