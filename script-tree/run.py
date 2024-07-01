@@ -21,15 +21,17 @@ dotenv_path = ".env"
 # Command map
 
 custom_command_compile_markdown = "compile-markdown"
-
 subcommand_map = {
-    "upload-strings": "Scripts/UploadXCStrings",
+    
+    'sync-scripts': f"./SyncScripts",
+    
+    "upload-strings": f"./UploadXCStrings",
     custom_command_compile_markdown: "", # Custom logic which can't be described by a single path
     
-    "sync-strings-internal": "Scripts/SyncXCStrings",
-    "markdown-generator-internal": "Scripts/MarkdownGenerator",
+    "sync-strings-internal": f"./SyncXCStrings",
+    "markdown-generator-internal": f"./MarkdownGenerator",
     
-    "mmf-website-compile-strings": "Scripts/MMFWebsiteCompileXCStrings",
+    "mmf-website-compile-strings": f"./MMFWebsiteCompileXCStrings",
 }
 
 help_string = """
@@ -272,10 +274,12 @@ def main():
         print('\nrun.py: Running markdown-generator-internal ...\n')
         subprocess.run(['python3', __file__, 'markdown-generator-internal', *subcommand_args])
         
-        exit(0)
+        exit(0)        
     
     # Find paths
-    script_folder = subcommand_map[subcommand]
+    scripts_dir = os.path.dirname(__file__) # Where the scripts folder is relative to the host repo. Assumes that run.py is at the root of the folder.
+    script_folder = os.path.join(scripts_dir, subcommand_map[subcommand]) # The folder where the script for this subcommand is.
+    script_folder = os.path.normpath(script_folder) # Normalize the path so it looks nicer when printing
     requiremements_paths = glob.glob(f'{script_folder}/*.txt')
     script_paths = glob.glob(f'{script_folder}/*.py')
     assert len(requiremements_paths) <= 1
@@ -283,8 +287,12 @@ def main():
     requiremements_path = requiremements_paths[0] if len(requiremements_paths) > 0 else None
     script_path = script_paths[0]
     
-    python_interpreter = None
+    # Add scripts_dir to args
+    subcommand_args += ['--scripts_dir', scripts_dir]
     
+    # Handle requirements
+    
+    python_interpreter = None
     if requiremements_path != None:
         
         # Log
