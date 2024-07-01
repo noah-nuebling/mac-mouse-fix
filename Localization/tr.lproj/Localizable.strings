@@ -1,0 +1,561 @@
+
+/* Note: Value for this key is defined in Localizable.stringsdict, not Localizable.strings */
+"capture-toast.body" = "<>";
+
+/* First draft: Content tracks finger movement */
+"natural-scrolling-hint" = "İçerik parmak hareketini izler";
+
+/* First draft: Open 'Security & Privacy' Preferences || Notes: The string for Ventura and later is defined in Interface Builder */
+"accessibility.settings-link.pre-ventura" = "Open 'Security & Privacy' Preferences";
+
+/* First draft: You're __already using__ the default setting for mice with __3 buttons__ */
+"already-using-defaults-toast.3" = "__3 düğmeli__ fareler için zaten varsayılan ayarı __kullanıyorsunuz__";
+
+/* First draft: You're __already using__ the default setting for mice with __5 buttons__ */
+"already-using-defaults-toast.5" = "__5 düğmeli__ fareler için zaten varsayılan ayarı __kullanıyorsunuz__";
+
+/* First draft: Version %@ || Note: %@ will be replaced by the app version, e.g. '3.0.0 (22027)' */
+"app-version" = "Version %@";
+
+/* First draft: <Rewind key> */
+"apple-key-fallback.backward" = "<Geri Sarma tuşu>";
+
+/* First draft: ⇪ */
+"apple-key-fallback.capslock" = "⇪";
+
+/* First draft: <Fast-Forward key> */
+"apple-key-fallback.forward" = "<Hızlı-İleri Sarma tuşu>";
+
+/* First draft: <Emoji Picker key> */
+"apple-key-fallback.globe" = "<Emoji Seçici tuşu>";
+
+/* First draft: <Increase Keyboard Brightness key> */
+"apple-key-fallback.light.max" = "<Klavye Parlaklığını Artırma tuşu>";
+
+/* First draft: <Decrease Keyboard Brightness key> */
+"apple-key-fallback.light.min" = "<Klavye Parlaklığını Azaltma tuşu>";
+
+/* First draft: <Spotlight key> */
+"apple-key-fallback.magnifyingglass" = "<Spotlight tuşu>";
+
+/* First draft: <Dictation key> */
+"apple-key-fallback.mic" = "<Dikte tuşu>";
+
+/* First draft: <Do Not Disturb key> */
+"apple-key-fallback.moon" = "<Rahatsız Etmeyin tuşu>";
+
+/* First draft: <Play or Pause key> */
+"apple-key-fallback.playpause" = "<Oynat veya Duraklat tuşu>";
+
+/* First draft: <Power key> */
+"apple-key-fallback.power" = "<Güç tuşu>";
+
+/* First draft: <Mission Control key> */
+"apple-key-fallback.rectangle.3.group" = "<Mission Control tuşu>";
+
+/* First draft: <Mute key> */
+"apple-key-fallback.speaker" = "<Sessize Alma tuşu>";
+
+/* First draft: <Decrease Volume key> */
+"apple-key-fallback.speaker.wave.1" = "<Sesi Azaltma tuşu>";
+
+/* First draft: <Increase Volume key> */
+"apple-key-fallback.speaker.wave.3" = "<Sesi Artırma tuşu>";
+
+/* First draft: <Launchpad key> */
+"apple-key-fallback.square.grid.3x2" = "<Launchpad tuşu>";
+
+/* First draft: <Increase Brightness key> */
+"apple-key-fallback.sun.max" = "<Parlaklığı Artırma tuşu>";
+
+/* First draft: <Decrease Brightness key> || Example usage: Works like pressing '<Decrease Brightness Key>' on an Apple keyboard. || Note: Unlike in the interface builder `.strings` files, in `Localizable.strings`, <> doesn't mean that the text is unused. I think the usage of <> here is a little weird, so let me know if you have a better idea! */
+"apple-key-fallback.sun.min" = "<Parlaklığı azaltma tuşu>"; 
+
+/* First draft: <Key without description> */
+"apple-key-fallback.unknown-key" = "<Açıklaması Olmayan tuş>";
+
+/* First draft: Cancel */
+"beta-alert.back" = "İptal";
+
+/* First draft: Beta versions can have many issues.\nDon't forget to give feedback when you run into one.\nThanks! */
+"beta-alert.body" = "Beta sürümlerinde birçok sorun olabilir.\nBir sorunla karşılaştığınızda geri bildirim vermeyi unutmayın.\nTeşekkürler!";
+
+/* First draft: Get Beta Versions */
+"beta-alert.confirm" = "Beta Sürümlerini Al";
+
+/* First draft: Get Beta Versions? */
+"beta-alert.title" = "Beta Sürümlerini Almak İster misiniz?";
+
+/* First draft: Click %@ + || Note: %@ will be a button name || Example where %@ is 'Button 4': Click Button 4 + Double Click and Drag Button 5 */
+"button-modifier.1" = "%@'ya Tıkla +";
+
+/* First draft: Double Click %@ +  */
+"button-modifier.2" = "%@'ya Çift Tıkla +";
+
+/* First draft: Triple Click %@ +  */
+"button-modifier.3" = "%@'ya Üç Tıkla +";
+
+/* First draft: Middle Button */
+"button-string.middle" = "Orta Düğme";
+
+/* First Draft: Button %@ */
+"button-string.numbered" = "%@ Düğmesi";
+
+/* First draft: Primary Button */
+"button-string.primary" = "Birincil Düğme";
+
+/* First draft: Secondary Button */
+"button-string.secondary" = "İkincil Düğme";
+
+/* First draft: Middle Mouse Button (also called Scroll Wheel Button or Mouse Button 3) || Example usage: Open links in a new tab, paste text in the Terminal, and more.\n \nWorks like clicking the Middle Mouse Button (also called the Scroll Wheel Button or Mouse Button 3) on a standard mouse. */
+"button-string.tool.middle" = "Orta Fare Düğmesi (Kaydırma Tekerleği Düğmesi veya Fare Düğmesi 3 olarak da adlandırılır)";
+
+/* First draft: Mouse Button %@ */
+"button-string.tool.numbered" = "Fare Düğmesi %@";
+
+/* First draft: Primary Mouse Button (also called Left Mouse Button or Mouse Button 1) */
+"button-string.tool.primary" = "Birincil Fare Düğmesi (Sol Fare Düğmesi veya Fare Düğmesi 1 olarak da adlandırılır)"; 
+
+/* First draft: Secondary Mouse Button (also called Right Mouse Button or Mouse Button 2) */
+"button-string.tool.secondary" = "İkincil Fare Düğmesi (Sağ Fare Düğmesi veya Fare Düğmesi 2 olarak da adlandırılır)";
+
+/* First draft: Get a mouse with 5+ buttons to unlock the full potential of Mac Mouse Fix! */
+"buy-mouse-alert.body" = "Mac Mouse Fix'in tüm potansiyelini ortaya çıkarmak için 5+ düğmeli bir fare edinin!";
+
+/* First draft: OK */
+"buy-mouse-alert.ok" = "Tamam"; 
+
+/* First draft: Your mouse only has 3 buttons */
+"buy-mouse-alert.title" = "Fareniz sadece 3 düğmeye sahip"; 
+
+/* Note: Value for this key is defined in Localizable.stringsdict, not Localizable.strings. || Note: The UI strings in .stringsdict have two lines. Only the first line is visible unless you start editing and then use the arrow keys to go to the second line. This is necessary to have linebreaks in .stringsdict since \n doesn't work. Use Option-Enter to insert these linebreaks. */
+"capture-toast.body.captured" = "<>";
+
+/* Note: Value for this key is defined in Localizable.stringsdict, not Localizable.strings */
+"capture-toast.body.uncaptured" = "<>";
+
+/* First draft: Learn More */
+"capture-toast.link" = "Daha Fazla Bilgi Edinin";
+
+/* First draft: Spaces & Mission Control */
+"drag-effect.dock-swipe" = "Spaces ve Mission Control";
+
+/* First draft: Move your mouse:\n - Up to show Mission Control\n - Down to show Application Windows\n - Left or Right to move between Spaces\n \nWorks like swiping with 3 fingers on an Apple Trackpad */
+"drag-effect.dock-swipe.hint" = "Farenizi hareket ettirin:\n - Mission Control'ü göstermek için yukarı\n - Uygulama Pencerelerini göstermek için aşağı\n - Spaces arasında geçiş yapmak için sola veya sağa\n \nApple Trackpad'de 3 parmakla kaydırma gibi çalışır";
+
+/* First draft: Scroll & Navigate */
+"drag-effect.scroll-swipe" = "Kaydır ve Gezin";
+
+/* First draft: Scroll freely by moving your mouse in any direction\n \nAlso Navigate between pages in Safari, delete messages in Mail and more by moving your mouse left and right\n \nWorks like swiping with 2 fingers on an Apple Trackpad */ 
+"drag-effect.scroll-swipe.hint" = "Farenizi herhangi bir yönde hareket ettirerek serbestçe kaydırın\n \nAyrıca farenizi sola ve sağa hareket ettirerek Safari'de sayfalar arasında gezinin, Mail'deki mesajları silin ve daha fazlasını yapın\n \nApple Trackpad'de 2 parmakla kaydırma gibi çalışır"; 
+
+/* First draft: Application Windows || Note: Under macOS Sonoma, this feature is called 'App Exposé' in Trackpad settings, but 'Application Windows' in Keyboard Shortcut settings and all other places I found. */
+"effect.app-expose" = "Uygulama Pencereleri";
+
+/* First draft: Show all windows of the active app */
+"effect.app-expose.hint" = "Etkin uygulamanın tüm pencerelerini göster";
+
+/* First draft:  Exclusive Keys */
+"effect.apple-keys-submenu" = " Özel Tuşlar";
+
+/* First draft: Choose keys that are only available on Apple keyboards */
+"effect.apple-keys-submenu.hint" = "Yalnızca Apple klavyelerinde bulunan tuşları seçin"; 
+
+/* First draft: Works like pressing '%@' on an Apple keyboard */
+"effect.apple-shortcut.hint" = "Bir Apple klavyesinde '%@' tuşuna basmak gibi çalışır";
+
+/* First draft: Back */
+"effect.back" = "Geri"; 
+
+/* First draft: Go back one page in Safari and other apps */
+"effect.back.hint" = "Safari ve diğer uygulamalarda bir sayfa geri git";
+
+/* First draft: Show Desktop */
+"effect.desktop" = "Masaüstünü Göster";
+
+/* First draft: Show the desktop */
+"effect.desktop.hint" = "Masaüstünü göster"; 
+
+/* First draft: Forward */
+"effect.forward" = "İleri"; 
+
+/* First draft: Go forward one page in Safari and other apps */
+"effect.forward.hint" = "Safari ve diğer uygulamalarda bir sayfa ileri git"; 
+
+/* First draft: Launchpad */
+"effect.launchpad" = "Launchpad";
+
+/* First draft: Open Launchpad */
+"effect.launchpad.hint" = "Launchpad'i aç"; 
+
+/* First draft: Move Left a Space */
+"effect.left-space" = "Bir Space Sola Git";
+
+/* First draft: Move one Space to the left */
+"effect.left-space.hint" = "Bir Space sola git"; 
+
+/* First draft: Look Up & Quick Look */
+"effect.look-up" = "Ara ve Hızlı Bak"; 
+
+/* First draft: Look up words in the Dictionary, Quick Look files in Finder, and more.\n \nWorks like a Force click on an Apple Trackpad. */
+"effect.look-up.hint" = "Sözlükte kelimeleri arayın, Finder'da dosyalara Hızlı Bakın ve daha fazlasını yapın.\n \nApple Trackpad'de Force tıklama gibi çalışır.";
+
+/* First draft: Middle Click */
+"effect.middle-click" = "Orta Tıklama"; 
+
+/* First draft: Open links in a new tab, paste text in the Terminal, and more.\n \nWorks like clicking %@ on a standard mouse. */
+"effect.middle-click.hint" = "Bağlantıları yeni sekmede açın, Terminal'e metin yapıştırın ve daha fazlasını yapın.\n \nStandart bir farede %@'ya tıklamak gibi çalışır.";
+
+/* First draft: Mission Control */
+"effect.mission-control" = "Mission Control";
+
+/* First draft: Show Mission Control */
+"effect.mission-control.hint" = "Mission Control'ü göster"; 
+
+/* First draft: Primary Click */
+"effect.primary-click" = "Birincil Tıklama"; 
+
+/* First draft: Works like clicking %@ on a standard mouse. */
+"effect.primary-click.hint" = "Standart bir farede %@'ya tıklamak gibi çalışır."; 
+
+/* First draft: Keyboard Shortcut... */
+"effect.record-shortcut" = "Klavye Kısayolu..."; 
+
+/* First draft: Type a keyboard shortcut, then use it from your mouse */
+"effect.record-shortcut.hint" = "Bir klavye kısayolu yazın, ardından farenizden kullanın"; 
+
+/* First draft: Move Right a Space */
+"effect.right-space" = "Bir Space Sağa Git"; 
+
+/* First draft: Move one Space to the right */
+"effect.right-space.hint" = "Bir Space sağa git"; 
+
+/* First draft: Secondary Click */
+"effect.secondary-click" = "İkincil Tıklama"; 
+
+/* First draft: Works like clicking %@ on a standard mouse. */
+"effect.secondary-click.hint" = "Standart bir farede %@'ya tıklamak gibi çalışır."; 
+
+/* First draft: Works like pressing '%@' on your keyboard */
+"effect.shortcut.hint" = "Klavyenizde '%@' tuşuna basmak gibi çalışır"; 
+
+/* First draft: Smart Zoom */
+"effect.smart-zoom" = "Akıllı Yakınlaştırma"; 
+
+/* First draft: Zoom in or out in Safari and other apps.\n \nWorks like a two-finger double tap on an Apple Trackpad. */
+"effect.smart-zoom.hint" = "Safari ve diğer uygulamalarda yakınlaştırın veya uzaklaştırın.\n \nApple Trackpad'de iki parmakla çift dokunma gibi çalışır."; 
+
+/* First draft: If you have **problems enabling** the app, click [here](https://github.com/noah-nuebling/mac-mouse-fix/discussions/861). */ 
+"enable-timeout-toast" = "Uygulamayı **etkinleştirme konusunda sorun yaşıyorsanız**, [buraya](https://github.com/noah-nuebling/mac-mouse-fix/discussions/861) tıklayın.";
+
+/* First draft: **Primary Mouse Button** can't be used\nPlease try another button */
+"forbidden-capture-toast.1" = "**Birincil Fare Düğmesi** kullanılamaz\nLütfen başka bir düğme deneyin";
+
+/* First draft: **Secondary Mouse Button** can't be used\nPlease try another button */
+"forbidden-capture-toast.2" = "**İkincil Fare Düğmesi** kullanılamaz\nLütfen başka bir düğme deneyin"; 
+
+/* First draft: Mac Mouse Fix is currently free in your country (%@) */
+"free-country" = "Mac Mouse Fix şu anda ülkenizde (%@) ücretsizdir"; 
+
+/* First draft: Mac Mouse Fix was **disabled** in System Settings\n\nTo enable Mac Mouse Fix:\n\n1. Go to [Login Items Settings](x-apple.systempreferences:com.apple.LoginItems-Settings.extension)\n2. Switch on \'Mac Mouse Fix.app\' */
+"is-disabled-toast" = "Mac Mouse Fix, Sistem Ayarları'nda **devre dışı bırakıldı**\n\nMac Mouse Fix'i etkinleştirmek için:\n\n1. [Giriş Öğeleri Ayarları'na](x-apple.systempreferences:com.apple.LoginItems-Settings.extension) gidin\n2. 'Mac Mouse Fix.app' seçeneğini açın";
+
+/* First draft: Mac Mouse Fix can't be enabled because there's __another version__ of Mac Mouse Fix present on your computer\n\nTo enable Mac Mouse Fix:\n\n1. Delete the [other version](%@)\n2. Empty the Bin\n3. Restart your Mac\n4. Try again! */
+"is-strange-helper-alert.body" = "Mac Mouse Fix, bilgisayarınızda __başka bir sürümü__ bulunduğundan etkinleştirilemiyor\n\nMac Mouse Fix'i etkinleştirmek için:\n\n1. [Diğer sürümü](%@) silin\n2. Çöp Kutusunu boşaltın\n3. Mac'inizi yeniden başlatın\n4. Tekrar deneyin!"; 
+
+/* First draft: Enabling Failed */ 
+"is-strange-helper-alert.title" = "Etkinleştirme Başarısız Oldu"; 
+
+/* First draft: ,  || Note: This string joins elements in a list except the second-to-last and last one. || Note: The first draft contains a space after the comma. */
+"join-list" = ", "; 
+
+/* First draft: %@ and %@ || Note: This format string joins the second-to-last element and the last elements in a list of items */
+"join-list.last" = "%@ ve %@"; 
+
+/* First draft: Activate License */
+"license-button.activate" = "Lisansı Etkinleştir"; 
+
+/* First draft: Deactivate License */
+"license-button.deactivate" = "Lisansı Devre Dışı Bırak"; 
+
+/* First draft: Your license has been **activated**! 🎉 */
+"license-toast.activate" = "Lisansınız **etkinleştirildi**! 🎉"; 
+
+/* First draft: This license has been activated **%d** times. The maximum is **%d**.\n\nBecause of this, the license has been invalidated. This is to prevent piracy. If you have other reasons for activating the license this many times, please excuse the inconvenience.\n\nJust [reach out](mailto:noah.n.public@gmail.com) and I will provide you with a new license! Thanks for understanding. */
+"license-toast.activation-overload" = "Bu lisans **%d** kez etkinleştirildi. Maksimum **%d**.\n\nBu nedenle lisans geçersiz kılındı. Bu, korsanlığı önlemek içindir. Lisansı bu kadar çok kez etkinleştirmeniz için başka nedenleriniz varsa, lütfen rahatsızlıktan dolayı özür dileriz.\n\n[Bizimle iletişime geçin](mailto:noah.n.public@gmail.com) ve size yeni bir lisans sağlayacağım! Anlayışınız için teşekkürler."; 
+
+/* First draft: This license is **already activated**! */
+"license-toast.already-active" = "Bu lisans **zaten etkin**!"; 
+
+/* First draft: Your license has been **deactivated** */
+"license-toast.deactivate" = "Lisansınız **devre dışı bırakıldı**"; 
+
+/* First draft: This license __could not be activated__ but Mac Mouse Fix is currently __free in your country__! */
+"license-toast.free-country" = "Bu lisans __etkinleştirilemedi__ ancak Mac Mouse Fix şu anda __ülkenizde ücretsiz__!"; 
+
+/* First draft: **An error with the licensing server occured**\n\nIt says:\n\n%@ */
+"license-toast.gumroad-error" = "**Lisans sunucusunda bir hata oluştu**\n\nŞöyle diyor:\n\n%@"; 
+
+/* First draft: **There is no connection to the internet**\n\nTry activating your license again when your computer is online. */
+"license-toast.no-internet" = "**İnternet bağlantısı yok**\n\nBilgisayarınız çevrimiçi olduğunda lisansınızı tekrar etkinleştirmeyi deneyin."; 
+
+/* First draft: **An unknown error occurred:**\n\n%@ */
+"license-toast.unknown-error" = "**Bilinmeyen bir hata oluştu:**\n\n%@";
+
+/* First draft: **'%@'** is not a known license key\n\nPlease try a different key */
+"license-toast.unknown-key" = "**'%@'** bilinen bir lisans anahtarı değil\n\nLütfen farklı bir anahtar deneyin"; 
+
+/* First draft: Activating your license failed for **unknown reasons**\n\nPlease write a **Bug Report** [here](https://noah-nuebling.github.io/mac-mouse-fix-feedback-assistant/?type=bug-report) */
+"license-toast.unknown-reason" = "Lisansınızı etkinleştirme işlemi **bilinmeyen nedenlerden dolayı** başarısız oldu\n\nLütfen [buradan](https://noah-nuebling.github.io/mac-mouse-fix-feedback-assistant/?type=bug-report) bir **Hata Raporu** yazın"; 
+
+/* First draft: Set speed under\n[%@ > Mouse > Scrolling Speed](%@) */
+"macos-scrolling-hint" = "Hızı şurada ayarlayın\n[%@ > Fare > Kaydırma Hızı](%@)";
+
+/* First draft: Back */
+"mail-alert.back" = "Geri"; 
+
+/* First draft: I read and appreciate all emails, even though I can't respond to all */
+"mail-alert.body" = "Hepsine cevap verebilmesem de tüm e-postaları okuyorum ve değer veriyorum"; 
+
+/* First draft: Write Email */
+"mail-alert.send" = "E-posta Yaz"; 
+
+/* First draft: Write an Email? */
+"mail-alert.title" = "E-posta Yazmak İster misiniz?"; 
+
+/* First draft: Command (⌘) */
+"modifer-key.tool.command" = "Command (⌘)"; 
+
+/* First draft: Control (^) */
+"modifer-key.tool.control" = "Control (^)"; 
+
+/* First draft: Option (⌥) */ 
+"modifer-key.tool.option" = "Option (⌥)"; 
+
+/* First draft: Shift (⇧) */
+"modifer-key.tool.shift" = "Shift (⇧)"; 
+
+/* First draft: Scroll precisely, even without a keyboard modifier,\nbymoving the scroll wheel _slowly_ || Note: The line break (\n) is there so the layout of the Scroll tab doesn't become too wide which looks weird. You can set it to your own taste. */
+"precise-scrolling-hint" = "Kaydırma tekerleğini _yavaşça_ hareket ettirerek, klavye değiştirici olmadan bile hassas bir şekilde kaydırın"; 
+
+/* First draft: Cancel */
+"restore-buttons-alert.back" = "İptal";
+
+/* First draft: Restore */
+"restore-buttons-alert.commit" = "Geri Yükle"; 
+
+/* First draft: Your __%@__ mouse says it has __%d__ buttons */
+"restore-buttons-alert.hint" = "__%@__ fareniz __%d__ düğmeye sahip olduğunu söylüyor"; 
+
+/* First draft: Mouse with 3 buttons */
+"restore-buttons-alert.radio1" = "3 düğmeli fare";
+
+/* First draft: Mouse with 5+ buttons */
+"restore-buttons-alert.radio2" = "5+ düğmeli fare";
+
+/* First draft: Restore Default for ... */
+"restore-buttons-alert.title" = "... İçin Varsayılanı Geri Yükle";
+
+/* First draft:  __Click here__ to load the recommended settings\nfor your __%@__ mouse || Note: The \n linebreak is so the popover doesn't become too wide. You can set it to your taste. || Note: In English, there needs to be a space at the start of this string otherwise the whole string will be bold. This might be a Ventura Bug */ 
+"restore-default-buttons-popover.body" = " __%@__ fareniz için önerilen ayarları yüklemek için __buraya tıklayın__";
+
+/* First draft: __Enabled__ Mac Mouse Fix for %1@\nIt had been disabled from the Menu Bar %2@ || Note: %1@ will be replaced by the list of enabled features, %2@ will be replaced by the menubar icon */
+"revive-toast" = "%1% için Mac Mouse Fix __etkinleştirildi__\nMenü Çubuğu %2% tarafından devre dışı bırakılmıştı";
+
+/* First draft: __Buttons__ */
+"revive-toast.feature-buttons" = " __Düğmeler__";
+
+/* First draft: __Scrolling__ */
+"revive-toast.feature-scrolling" = "__Kaydırma__";
+
+/* First draft: Desktop & Launchpad */
+"scroll-effect.4-pinch" = "Masaüstü ve Launchpad";
+
+/* First draft: Scroll up for Launchpad and down to show the Desktop\n \nWorks like Pinching with 4 fingers on an Apple Trackpad */
+"scroll-effect.4-pinch.hint" = "Launchpad için yukarı kaydırın ve Masaüstünü göstermek için aşağı kaydırın\n \nApple Trackpad'de 4 parmakla sıkıştırma gibi çalışır";
+
+/* First draft: App Switcher */
+"scroll-effect.app-switcher" = "Uygulama Değiştirici";
+
+/* First draft: Quickly switch between open apps\n \nWorks like holding Command (⌘) and then pressing Tab (⇥) on your keyboard */
+"scroll-effect.app-switcher.hint" = "Açık uygulamalar arasında hızlıca geçiş yapın\n \nKlavyenizde Command (⌘) tuşunu basılı tutup ardından Tab (⇥) tuşuna basmak gibi çalışır"; 
+
+/* First draft: Horizontal Scroll */
+"scroll-effect.horizontal" = "Yatay Kaydırma"; 
+
+/* First draft: Scroll left and right, navigate between pages in Safari, delete messages in Mail and more\n \nWorks like swiping horizontally with 2 fingers on an Apple Trackpad */
+"scroll-effect.horizontal.hint" = "Sola ve sağa kaydırın, Safari'de sayfalar arasında gezinin, Mail'deki mesajları silin ve daha fazlasını yapın\n \nApple Trackpad'de 2 parmakla yatay olarak kaydırma gibi çalışır"; 
+
+/* First draft: Precise Scroll */
+"scroll-effect.precise" = "Hassas Kaydırma"; 
+
+/* First draft: Scroll small distances and use sensitive UI elements with precision */ 
+"scroll-effect.precise.hint" = "Küçük mesafeleri kaydırın ve hassas UI öğelerini hassas bir şekilde kullanın"; 
+
+/* First draft: Rotate */
+"scroll-effect.rotate" = "Döndür"; 
+
+/* First draft: Rotate content in Apple Maps and other apps\n \nWorks like twisting with 2 fingers on an Apple Trackpad */
+"scroll-effect.rotate.hint" = "Apple Haritalar ve diğer uygulamalarda içeriği döndürün\n \nApple Trackpad'de 2 parmakla döndürme gibi çalışır"; 
+
+/* First draft: Move Between Spaces */
+"scroll-effect.spaces" = "Spaces Arasında Geçiş Yap";
+
+/* First draft: Scroll up to move left a Space and down to move right a Space\n \nWorks like swiping horizontally with 3 fingers on an Apple Trackpad */
+"scroll-effect.spaces.hint" = "Bir Space sola gitmek için yukarı kaydırın ve bir Space sağa gitmek için aşağı kaydırın\n \nApple Trackpad'de 3 parmakla yatay olarak kaydırma gibi çalışır"; 
+
+/* First draft: Swift Scroll */
+"scroll-effect.swift" = "Hızlı Kaydırma"; 
+
+/* First draft: Scroll long distances with minimal effort */
+"scroll-effect.swift.hint" = "Minimum çabayla uzun mesafeleri kaydırın"; 
+
+/* First draft: Zoom In or Out */
+"scroll-effect.zoom" = "Yakınlaştır veya Uzaklaştır"; 
+
+/* First draft: Zoom in or out in Safari, Maps and other apps\n \nWorks like pinching to zoom on an Apple trackpad */
+"scroll-effect.zoom.hint" = "Safari, Haritalar ve diğer uygulamalarda yakınlaştırın veya uzaklaştırın\n \nApple trackpad'de yakınlaştırmak için sıkıştırma gibi çalışır";
+
+/* First draft: System Settings */ 
+"system-settings-name" = "Sistem Ayarları"; 
+
+/* First draft: System Preferences */
+"system-settings-name.pre-ventura" = "Sistem Tercihleri";
+
+/* First draft: ⭐️ Thank you for buying Mac Mouse Fix! */
+"thanks.01" = "⭐️ Thank you for buying Mac Mouse Fix!";
+
+/* First draft: 🌟 Thanks for purchasing Mac Mouse Fix! */
+"thanks.02" = "🌟 Thanks for purchasing Mac Mouse Fix!";
+
+/* First draft: 🚀 Thanks for supporting Mac Mouse Fix! */
+"thanks.03" = "🚀 Thanks for supporting Mac Mouse Fix!";
+
+/* First draft: 🙌 Thanks for buying Mac Mouse Fix! */
+"thanks.04" = "🙌 Thank you for buying Mac Mouse Fix!";
+
+/* First draft: 🧠 Great purchasing decision! ;) */
+"thanks.05" = "🧠 Great purchasing decision! ;)";
+
+/* First draft: 🔥 Awesome taste in mouse fixing software! ;) */
+"thanks.06" = "🔥 Awesome taste in mouse fixing software! ;)";
+
+/* First draft: 💙 */
+"thanks.07" = "💙";
+
+/* First draft: :) <- My face when I saw you bought Mac Mouse Fix */
+"thanks.08" = ":) <- My face when I saw you bought Mac Mouse Fix";
+
+/* First draft: 👽 Share it with your Spacebook friends! */
+"thanks.09" = "👽 Share it with your Spacebook friends!";
+
+/* First draft: 🏂 Duckgang for life!! || Note: A lot of these are very personal. And weird. They are also super rare. Feel free to change them to anything you feel like to leave a little easter egg! */
+"thanks.10" = "🏂 Duckgang for life!!";
+
+/* First draft: 🚜 Watch where you're going :P */
+"thanks.11" = "🚜 Watch where you're going :P";
+
+/* First draft: 🐁 Not these mice, mom! */
+"thanks.12" = "🐁 Not these mice, mom!";
+
+/* First draft: 🐹 We should get him a bow tie. */
+"thanks.13" = "🐹 We should get him a bow tie.";
+
+/* First draft: 🇹🇷 Ey Kanka, tebrikler tebrikler! */
+"thanks.14" = "🇹🇷 Ey Kanka, tebrikler tebrikler!";
+
+/* First draft: 🥛 Whole milk of course! It's your birthday after all. */
+"thanks.15" = "🥛 Whole milk of course! It's your birthday after all.";
+
+/* First draft: 🎸 Not John Mayer (yet). Nevertheless mayor of hearts. */
+"thanks.16" = "🎸 Not John Mayer (yet). Nevertheless mayor of hearts.";
+
+/* First draft: 💃 1NEIN8NEIN */
+"thanks.17" = "💃 1NEIN8NEIN";
+
+/* First draft: 🦄 You may not want to save the world, but you're already saving mine :) */
+"thanks.18" = "🦄 You may not want to save the world, but you're already saving mine :)";
+
+/* First draft: 🏜️ Dankeschön, meine Frau... */
+"thanks.19" = "🏜️ Dankeschön, meine Frau...";
+
+/* First draft: 🌍 Universal Studios is probably not that great anyways... :) */
+"thanks.20" = "🌍 Universal Studios is probably not that great anyways... :)";
+
+/* First draft: 🐠 What... are... you? */
+"thanks.21" = "🐠 What... are... you?";
+
+/* First draft: 🖤 */
+"thanks.22" = "🖤";
+
+/* First draft: 🤍 */
+"thanks.23" = "🤍";
+
+/* First draft: 😎 Oh you're using Mac Mouse Fix? You must be pretty cool. */
+"thanks.24" = "😎 Oh you're using Mac Mouse Fix? You must be pretty cool.";
+
+/* First draft: 🌏 First the mice, then the world!! >:) */
+"thanks.25" = "🌏 First the mice, then the world!! >:)";
+
+/* First draft: Free day **%d/%d** */
+"trial-counter.active" = "Ücretsiz gün **%d/%d**"; 
+
+/* First draft: Free days are over */
+"trial-counter.expired" = "Ücretsiz günler sona erdi"; 
+
+/* First draft: Activate License */
+"trial-notif.activate-license-button" = "Lisansı Etkinleştir"; 
+
+/* First draft: Hi there! You've been using Mac Mouse Fix for **%d days** now. I hope you're enjoying it!\n\nIf you want to keep using Mac Mouse Fix, you can [buy it now](%@). */
+"trial-notif.body" = "Merhaba! **%d gündür** Mac Mouse Fix kullanıyorsunuz. Umarım keyif alıyorsunuzdur!\n\nMac Mouse Fix'i kullanmaya devam etmek istiyorsanız, [şimdi satın alabilirsiniz](%@).";
+
+/* First draft: Click %@ || Note: %@ will be a button name || Example where %@ is 'Button 5': ⌥⌘ Double Click Button 4 + Click Button 5 || Note: Most of the substrings that are used to build the Action Table Trigger Strings (this is one of those substrings) are capitalized in English because it's common to use 'title case' there. In your language, 'title case' might not be a thing, and so you might not want to capitalize these strings. The first letter of the trigger string will be programmatically capitalized in any language. */
+"trigger.click.1" = "%@'ya Tıkla";
+
+/* First draft: Double Click %@ */
+"trigger.click.2" = "%@'ya Çift Tıkla"; 
+
+/* First draft: Triple Click %@ */
+"trigger.click.3" = "%@ Üç Kez Tıklayın";
+
+/* First draft: Drag || Note: This substring will be emphasized in drag trigger strings like 'Double Click and Drag %@'. Make sure that spelling and capitalization matches exactly for the emphasis to work. */
+"trigger.drag-particle" = "Sürükle"; 
+
+/* First draft: Click and Drag %@ || Note: %@ will be a button name || example where %@ is 'Button 5': ⌥⌘ Triple Click Button 4 + Click and Drag Button 5 */
+"trigger.drag.1" = "%@ Tıklayın ve Sürükleyin";
+
+/* First draft: Double Click and Drag %@ */
+"trigger.drag.2" = "%@ Çift Tıklayın ve Sürükleyin"; 
+
+/* First draft: Triple Click and Drag %@ */ 
+"trigger.drag.3" = "%@ Üç Kez Tıklayın ve Sürükleyin"; 
+
+/* First draft: and Drag || Note: This will be used for Drag Actions that only need keyboard modifiers to be activated - not mouse buttons || Example: ⌥⌘ and Drag */
+"trigger.drag.flags" = "ve Sürükleyin";
+
+/* First draft: Hold %@ */
+"trigger.hold.1" = "%@ Basılı Tutun"; 
+
+/* First draft: Double Click and Hold %@ */ 
+"trigger.hold.2" = "%@ Çift Tıklayın ve Basılı Tutun"; 
+
+/* First draft: Triple Click and Hold %@ */
+"trigger.hold.3" = "%@ Üç Kez Tıklayın ve Basılı Tutun"; 
+
+/* First draft: Scroll || Note: This substring will be emphasized in scroll trigger strings like 'Triple Click and Scroll %@'. Make sure that spelling and capitalization matches exactly for the emphasis to work. */
+"trigger.scroll-particle" = "Kaydır"; 
+
+/* First draft: Click and Scroll %@ */
+"trigger.scroll.1" = "%@ Tıklayın ve Kaydırın";
+
+/* First draft: Double Click and Scroll %@ */
+"trigger.scroll.2" = "%@ Çift Tıklayın ve Kaydırın"; 
+
+/* First draft: Triple Click and Scroll %@ */
+"trigger.scroll.3" = "%@ Üç Kez Tıklayın ve Kaydırın"; 
+
+/* First draft: and Scroll || Example: ⌥⌘ and Scroll */
+"trigger.scroll.flags" = "ve Kaydırın"; 
+
+/* First draft: Type a Keyboard Shortcut */
+"type-shortcut-prompt" = "Bir Klavye Kısayolu Yazın";
