@@ -1,0 +1,3 @@
+[submodule "mac-mouse-fix-scripts"]
+	path = mac-mouse-fix-scripts
+	url = https://github.com/noah-nuebling/mac-mouse-fix-scripts
