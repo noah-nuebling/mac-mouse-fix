@@ -40,6 +40,10 @@ Thanks for your support! :)
 
 These people spent a lot more than the standard price and treated me to an **Incredible Milkshake**. (And some even left a message) Thanks for the _sugar rush_!
 
+**July 2024**
+
+- 🇬🇧&nbsp;Mark - "Excellent product, well worth paying for"
+
 **June 2024**
 
 - 🇦🇺&nbsp;Jas - "Epic. Just epic."

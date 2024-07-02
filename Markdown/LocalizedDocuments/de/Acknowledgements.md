@@ -38,6 +38,10 @@ Danke für euren Beitrag! :)
 
 Diese Leute haben viel mehr als den Standardpreis ausgegeben und mir einen **unglaublichen Milchshake** spendiert. (Und manche haben sogar eine Nachricht hinterlassen) Danke für den _Zucker-Kick_!
 
+**Juli 2024**
+
+- 🇬🇧&nbsp;Mark - "Excellent product, well worth paying for"
+
 **Juni 2024**
 
 - 🇦🇺&nbsp;Jas - "Epic. Just epic."
