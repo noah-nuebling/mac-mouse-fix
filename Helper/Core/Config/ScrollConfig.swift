@@ -314,7 +314,7 @@ import CocoaLumberjackSwift
     @objc lazy var consecutiveScrollSwipeMaxInterval: TimeInterval = {
         /// If more than `_consecutiveScrollSwipeIntervalMax` seconds passes between two scrollwheel swipes, then they aren't deemed consecutive.
         
-        let result = SharedUtilitySwift.eval {
+        let result: Double = SharedUtilitySwift.eval {
             
             switch animationCurve {
             case kMFScrollAnimationCurveNameNone: 325.0
@@ -332,7 +332,7 @@ import CocoaLumberjackSwift
     @objc lazy var consecutiveScrollSwipeMinTickSpeed: Double = {
         /// The ticks per second need to be at least `consecutiveScrollSwipeMinTickSpeed` to register a series of scrollswipes as consecutive
         
-        let result = SharedUtilitySwift.eval {
+        let result: Double = SharedUtilitySwift.eval {
             switch animationCurve {
             case kMFScrollAnimationCurveNameNone: 16.0
             case kMFScrollAnimationCurveNameLowInertia: 16.0
@@ -751,7 +751,7 @@ fileprivate func getAccelerationCurve(forSpeed speedArg: MFScrollSpeed, precise:
         }
     }
     
-    let speed_n = SharedUtilitySwift.eval {
+    let speed_n: Double = SharedUtilitySwift.eval {
         switch speedArg {
         case kMFScrollSpeedLow: 0.0
         case kMFScrollSpeedMedium: 0.5

@@ -17,6 +17,7 @@ import CocoaLumberjackSwift
     static func eval<V>(@SingleValueBuilder<V> _ value: () -> V) -> V {
         
         /// Src: https://forums.swift.org/t/how-to-assign-the-value-of-a-switch-statement-to-a-variable/50991/6
+        /// Under Xcode `16.0 beta 2 (16A5171r)` and macOS Sequoia Developer Beta 2, the Swift compiler started crashing unless we assigned a `: Type` to the variable we assign the result of this function to.
         
         value()
     }
