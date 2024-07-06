@@ -40,6 +40,7 @@ Diese Leute haben viel mehr als den Standardpreis ausgegeben und mir einen **ung
 
 **Juli 2024**
 
+- 🇦🇹&nbsp;René&nbsp;Schwaiger
 - 🇺🇸&nbsp;Mei&nbsp;Liu
 - 🇬🇧&nbsp;Jrh
 - 🇺🇸&nbsp;Erik&nbsp;E&nbsp;Sanchez
