@@ -40,6 +40,7 @@ Diese Leute haben viel mehr als den Standardpreis ausgegeben und mir einen **ung
 
 **Juli 2024**
 
+- 🇬🇧&nbsp;Dan&nbsp;Clarke
 - 🇧🇾&nbsp;Shahidkubik
 - 🇦🇹&nbsp;René&nbsp;Schwaiger
 - 🇺🇸&nbsp;Mei&nbsp;Liu
