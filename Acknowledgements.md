@@ -42,6 +42,7 @@ These people spent a lot more than the standard price and treated me to an **Inc
 
 **July 2024**
 
+- 🇪🇸&nbsp;Ecastillo
 - 🇺🇸&nbsp;N&nbsp;Spud - "Thanks!"
 - 🇬🇧&nbsp;Dan&nbsp;Clarke
 - 🇧🇾&nbsp;Shahidkubik

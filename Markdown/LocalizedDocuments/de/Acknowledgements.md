@@ -40,6 +40,7 @@ Diese Leute haben viel mehr als den Standardpreis ausgegeben und mir einen **ung
 
 **Juli 2024**
 
+- 🇪🇸&nbsp;Ecastillo
 - 🇺🇸&nbsp;N&nbsp;Spud - "Thanks!"
 - 🇬🇧&nbsp;Dan&nbsp;Clarke
 - 🇧🇾&nbsp;Shahidkubik
