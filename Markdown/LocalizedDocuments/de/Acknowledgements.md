@@ -40,6 +40,7 @@ Diese Leute haben viel mehr als den Standardpreis ausgegeben und mir einen **ung
 
 **Juli 2024**
 
+- 🇪🇬&nbsp;Mohamed&nbsp;Elzeni
 - 🇺🇸&nbsp;Ben&nbsp;C - "Thanks for such an amazing app!"
 - 🇪🇸&nbsp;Ecastillo
 - 🇺🇸&nbsp;N&nbsp;Spud - "Thanks!"
