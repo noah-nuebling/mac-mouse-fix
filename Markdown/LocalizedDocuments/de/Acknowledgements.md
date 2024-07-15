@@ -40,6 +40,7 @@ Diese Leute haben viel mehr als den Standardpreis ausgegeben und mir einen **ung
 
 **Juli 2024**
 
+- 🇺🇸&nbsp;Angus&nbsp;Sügna - "Great app! Apple should you it from you for millions!"
 - 🇪🇸&nbsp;Hector&nbsp;Bermudez
 - 🇺🇸&nbsp;John&nbsp;Lund - "You saved my sanity!"
 - 🇪🇬&nbsp;Mohamed&nbsp;Elzeni
