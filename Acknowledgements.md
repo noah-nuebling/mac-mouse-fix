@@ -42,6 +42,7 @@ These people spent a lot more than the standard price and treated me to an **Inc
 
 **July 2024**
 
+- 🇪🇸&nbsp;Hector&nbsp;Bermudez
 - 🇺🇸&nbsp;John&nbsp;Lund - "You saved my sanity!"
 - 🇪🇬&nbsp;Mohamed&nbsp;Elzeni
 - 🇺🇸&nbsp;Ben&nbsp;C - "Thanks for such an amazing app!"
