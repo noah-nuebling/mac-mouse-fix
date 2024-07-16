@@ -42,6 +42,7 @@ These people spent a lot more than the standard price and treated me to an **Inc
 
 **July 2024**
 
+- 🇨🇿&nbsp;David&nbsp;Krmela - "Helps me be more productive on mac, like when working on https://flagpedia.net 🚩♥️"
 - 🇧🇷&nbsp;Francisco&nbsp;Flores&nbsp;Montalvao
 - 🇺🇸&nbsp;Angus&nbsp;Sügna - "Great app! Apple should you it from you for millions!"
 - 🇪🇸&nbsp;Hector&nbsp;Bermudez
