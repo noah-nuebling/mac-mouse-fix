@@ -40,6 +40,7 @@ Diese Leute haben viel mehr als den Standardpreis ausgegeben und mir einen **ung
 
 **Juli 2024**
 
+- 🇭🇺&nbsp;Kiss&nbsp;Dávid - "Very useful productivity app, great job Noah!"
 - 🇧🇬&nbsp;Alexander&nbsp;Georgiev - "Awsome software"
 - 🇮🇳&nbsp;Namit&nbsp;Jain - "Although the app is free in India, I couldn’t help but support it. I tried many smooth scrolling apps, but this one was perfect!"
 - 🇨🇿&nbsp;David&nbsp;Krmela - "Helps me be more productive on mac, like when working on https://flagpedia.net 🚩♥️"
