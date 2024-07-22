@@ -42,6 +42,7 @@ These people spent a lot more than the standard price and treated me to an **Inc
 
 **July 2024**
 
+- 🇺🇸&nbsp;Tom&nbsp;Tostanoski - "(Insert progressive political statement here)"
 - 🇭🇺&nbsp;Kiss&nbsp;Dávid - "Very useful productivity app, great job Noah!"
 - 🇧🇬&nbsp;Alexander&nbsp;Georgiev - "Awsome software"
 - 🇮🇳&nbsp;Namit&nbsp;Jain - "Although the app is free in India, I couldn’t help but support it. I tried many smooth scrolling apps, but this one was perfect!"
