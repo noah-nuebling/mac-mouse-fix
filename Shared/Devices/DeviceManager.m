@@ -46,9 +46,6 @@ static NSMutableArray<Device *> *_attachedDevices;
 + (NSArray<Device *> *)attachedDevices {
     return _attachedDevices;
 }
-+ (id)__SWIFT_UNBRIDGED_attachedDevices {
-    return _attachedDevices;
-}
 
 static NSMutableDictionary<NSNumber *, Device *> *_iohidToAttachedCache;
 + (Device * _Nullable)attachedDeviceWithIOHIDDevice:(IOHIDDeviceRef)iohidDevice {

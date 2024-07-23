@@ -66,6 +66,8 @@
 #import <sys/types.h>
 #import "MFMessagePort.h"
 
+#import "NSString+Additions.h"
+
 #if IS_MAIN_APP
 #import "Mac_Mouse_Fix-Swift.h"
 #endif

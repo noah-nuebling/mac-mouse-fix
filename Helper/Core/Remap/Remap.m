@@ -30,13 +30,6 @@
 /// This used to be called `TransformationManager`. Renamed to `Remap` to unify terminology.
 /// Desired Terminology: The `remaps` are a map from `modifiers` -> `modifications`, where a `modification` is itself a map from `trigger ` -> `effect`. More on this in RemapSwizzler.swift
 ///
-/// On Swift Autobriding
-/// Swift automatically bridges Foundation-type args (like NSDictionary) to native Swift types which is super slow. At least for Dictionaries. We've found a way to prevent this:
-///  1. Use `MF_SWIFT_HIDDEN` on the original method declaration to hide it from Swift.
-///  2. Declare a new method that calls the old method. The signature is the same but the name is prefixed with `__SWIFT_UNBRIDGED_` and all autobridging argument types are replaced with `id`
-///  3. Create a Swift extension and implement a method that calls the `__SWIFT_UNBRIDGED_` implementation and itself takes Foundation types like NSDictionary as arguments
-///  -> Now you can call the ObjC method from Swift using foundation types as arguments directly, instead of being forced to use native Swift types which are then autobridged.
-///
 
 #pragma mark - Swizzled
 
@@ -64,20 +57,13 @@ static NSMutableDictionary *_swizzleCache = nil;
     }
 }
 
-+ (id _Nullable)__SWIFT_UNBRIDGED_modificationsWithModifiers:(id)modifiers {
-    return [self modificationsWithModifiers:modifiers];
-}
-
 #pragma mark - Storage
 
 #define USE_TEST_REMAPS NO
 static NSDictionary *_remaps;
 
-+ (NSDictionary *)remaps MF_SWIFT_HIDDEN {
++ (NSDictionary *)remaps {
     return _remaps;
-}
-+ (id)__SWIFT_UNBRIDGED_remaps {
-    return self.remaps;
 }
 
 + (void)setRemaps:(NSDictionary *)remapsDict {
@@ -393,11 +379,6 @@ BOOL _addModeIsEnabled = NO;
     /// ^ We did this to keep the remapping disabled for a little while after adding a new row, but it leads to adding several entries at once when trying to input button modification precondition, if you're not fast enough.
 
 }
-
-+ (void)__SWIFT_UNBRIDGED_sendAddModeFeedback:(id)payload {
-    [self sendAddModeFeedback:payload];
-}
-
 
 /// Using this to prevent payloads containing a modifiedDrag / modifiedScroll with a keyboard-modifier-only precondition, or an empty precondition from being sent to the main app
 /// Empty preconditions only happen when weird bugs occur so this is just an extra safety net for that

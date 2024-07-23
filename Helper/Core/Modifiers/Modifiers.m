@@ -194,10 +194,6 @@ CGEventRef _Nullable kbModsChanged(CGEventTapProxy proxy, CGEventType type, CGEv
     }
 }
 
-+ (void)__SWIFT_UNBRIDGED_buttonModsChangedTo:(id)newModifiers {
-    [self buttonModsChangedTo:newModifiers];
-}
-
 /// Helper for modifier change handling
 
 static void updateKBMods(CGEventRef  _Nullable event) {
@@ -256,10 +252,6 @@ static NSUInteger flagsFromEvent(CGEventRef _Nullable event) {
     }
     
     return _modifiers;
-}
-+ (id)__SWIFT_UNBRIDGED_modifiersWithEvent:(CGEventRef _Nullable)event {
-    
-    return [self modifiersWithEvent:event];
 }
 
 #pragma mark Handle mod usage

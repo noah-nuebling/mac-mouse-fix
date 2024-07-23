@@ -17,18 +17,15 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (class, readonly) BOOL addModeIsEnabled;
 
-+ (NSDictionary * _Nullable)modificationsWithModifiers:(NSDictionary *)modifiers MF_SWIFT_HIDDEN;
-+ (id _Nullable)__SWIFT_UNBRIDGED_modificationsWithModifiers:(id)modifiers;
++ (__DISABLE_SWIFT_BRIDGING(NSDictionary *) _Nullable)modificationsWithModifiers:(__DISABLE_SWIFT_BRIDGING(NSDictionary *))modifiers NS_REFINED_FOR_SWIFT;
 
 + (void)reload;
 
-+ (NSDictionary *)remaps MF_SWIFT_HIDDEN;
-+ (id)__SWIFT_UNBRIDGED_remaps;
++ (__DISABLE_SWIFT_BRIDGING(NSDictionary *))remaps NS_REFINED_FOR_SWIFT;
 
 + (BOOL)enableAddMode;
 + (BOOL)disableAddMode;
-+ (void)sendAddModeFeedback:(NSDictionary *)payload MF_SWIFT_HIDDEN;
-+ (void)__SWIFT_UNBRIDGED_sendAddModeFeedback:(id)payload;
++ (void)sendAddModeFeedback:(__DISABLE_SWIFT_BRIDGING(NSDictionary *))payload NS_REFINED_FOR_SWIFT;
 
 @end
 

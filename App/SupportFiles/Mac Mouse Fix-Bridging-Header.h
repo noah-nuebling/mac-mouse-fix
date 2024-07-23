@@ -47,6 +47,7 @@
 #import "NSScreen+Additions.h"
 #import "CaptureNotificationCreator.h"
 #import "NSString+Steganography.h"
+#import "NSString+Additions.h"
 
 
 #endif /* Mac_Mouse_Fix_Bridging_Header_h */

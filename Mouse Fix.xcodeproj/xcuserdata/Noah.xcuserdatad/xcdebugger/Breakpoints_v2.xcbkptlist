@@ -182,8 +182,8 @@
             filePath = "Shared/Devices/DeviceManager.m"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "254"
-            endingLineNumber = "254"
+            startingLineNumber = "251"
+            endingLineNumber = "251"
             landmarkName = "handleDeviceMatching(context, result, sender, device)"
             landmarkType = "9">
          </BreakpointContent>
@@ -198,8 +198,8 @@
             filePath = "Shared/Devices/DeviceManager.m"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "246"
-            endingLineNumber = "246"
+            startingLineNumber = "243"
+            endingLineNumber = "243"
             landmarkName = "handleDeviceMatching(context, result, sender, device)"
             landmarkType = "9">
          </BreakpointContent>

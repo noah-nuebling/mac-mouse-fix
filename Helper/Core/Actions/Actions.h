@@ -21,8 +21,7 @@ typedef enum {
 
 @interface Actions : NSObject
 
-+ (void)executeActionArray:(NSArray *)actionArray phase:(MFActionPhase)phase MF_SWIFT_HIDDEN;
-+ (void)__SWIFT_UNBRIDGED_executeActionArray:(id)actionArray phase:(MFActionPhase)phase;
++ (void)executeActionArray:(__DISABLE_SWIFT_BRIDGING(NSArray *))actionArray phase:(MFActionPhase)phase NS_REFINED_FOR_SWIFT;
 
 @end
 

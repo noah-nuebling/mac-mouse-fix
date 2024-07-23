@@ -17,8 +17,7 @@ NS_ASSUME_NONNULL_BEGIN
 @interface DeviceManager : NSObject
 
 
-+ (NSArray<Device *> *)attachedDevices MF_SWIFT_HIDDEN;
-+ (id)__SWIFT_UNBRIDGED_attachedDevices;
++ (__DISABLE_SWIFT_BRIDGING(NSArray<Device *> *))attachedDevices NS_REFINED_FOR_SWIFT;
 
 + (void)load_Manual;
 + (void)deconfigureDevices;

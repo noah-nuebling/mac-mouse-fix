@@ -9,6 +9,7 @@
 
 #import "NSString+Steganography.h"
 #import "NSAttributedString+Additions.h"
+#import "NSString+Additions.h"
 
 #if IS_MAIN_APP
 #import "Mac_Mouse_Fix-Swift.h"

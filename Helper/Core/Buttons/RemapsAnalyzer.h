@@ -22,13 +22,11 @@ NS_ASSUME_NONNULL_BEGIN
 
 #pragma mark For SwitchMaster
 
-+ (BOOL)modificationsModifyButtons:(NSDictionary *)modifications maxButton:(MFMouseButtonNumber)maxButton MF_SWIFT_HIDDEN;
-+ (BOOL)__SWIFT_UNBRIDGED_modificationsModifyButtons:(id)modifications maxButton:(int)maxButton;
++ (BOOL)modificationsModifyButtons:(__DISABLE_SWIFT_BRIDGING(NSDictionary *))modifications maxButton:(__DISABLE_SWIFT_BRIDGING_BASE(MFMouseButtonNumber, int))maxButton NS_REFINED_FOR_SWIFT;
 
-+ (BOOL)modificationsModifyScroll:(NSDictionary *)modifications MF_SWIFT_HIDDEN;
-+ (BOOL)modificationsModifyPointing:(NSDictionary *)modifications MF_SWIFT_HIDDEN;
-+ (BOOL)__SWIFT_UNBRIDGED_modificationsModifyScroll:(id)modifications;
-+ (BOOL)__SWIFT_UNBRIDGED_modificationsModifyPointing:(id)modifications;
++ (BOOL)modificationsModifyScroll:(__DISABLE_SWIFT_BRIDGING(NSDictionary *))modifications NS_REFINED_FOR_SWIFT;
++ (BOOL)modificationsModifyPointing:(__DISABLE_SWIFT_BRIDGING(NSDictionary *))modifications NS_REFINED_FOR_SWIFT;
+
 
 #pragma mark For Buttons.swift
 
@@ -36,33 +34,17 @@ NS_ASSUME_NONNULL_BEGIN
 /// Original declartions
 ///
 
-+ (void)assessMappingLandscapeWithButton:(NSNumber *)button
-                                   level:(NSNumber *)level
-         modificationsActingOnThisButton:(NSDictionary *)remapsActingOnThisButton
-                                  remaps:(NSDictionary *)remaps
++ (void)assessMappingLandscapeWithButton:(__DISABLE_SWIFT_BRIDGING(NSNumber *))button
+                                   level:(__DISABLE_SWIFT_BRIDGING(NSNumber *))level
+         modificationsActingOnThisButton:(__DISABLE_SWIFT_BRIDGING(NSDictionary *))remapsActingOnThisButton
+                                  remaps:(__DISABLE_SWIFT_BRIDGING(NSDictionary *))remaps
                            thisClickDoBe:(BOOL *)clickActionOfThisLevelExists
                             thisDownDoBe:(BOOL *)effectForMouseDownStateOfThisLevelExists
-                             greaterDoBe:(BOOL *)effectOfGreaterLevelExists MF_SWIFT_HIDDEN;
+                             greaterDoBe:(BOOL *)effectOfGreaterLevelExists NS_REFINED_FOR_SWIFT;
 
-+ (BOOL)effectExistsForButton:(NSNumber *)button remaps:(NSDictionary *)remaps modificationsActingOnButton:(NSDictionary *)effectiveRemaps MF_SWIFT_HIDDEN;
++ (BOOL)effectExistsForButton:(__DISABLE_SWIFT_BRIDGING(NSNumber *))button remaps:(__DISABLE_SWIFT_BRIDGING(NSDictionary *))remaps modificationsActingOnButton:(__DISABLE_SWIFT_BRIDGING(NSDictionary *))effectiveRemaps NS_REFINED_FOR_SWIFT;
 
-+ (NSInteger)maxLevelForButton:(NSNumber *)button remaps:(NSDictionary *)remaps modificationsActingOnThisButton:(NSDictionary *)modificationsActingOnThisButton MF_SWIFT_HIDDEN;
-
-///
-/// Typeless declarations to prevent slow swift autobridging
-///
-
-+ (void)__SWIFT_UNBRIDGED_assessMappingLandscapeWithButton:(id)button
-                                  level:(id)level
-        modificationsActingOnThisButton:(id)remapsActingOnThisButton
-                                 remaps:(id)remaps
-                          thisClickDoBe:(BOOL *)clickActionOfThisLevelExists
-                           thisDownDoBe:(BOOL *)effectForMouseDownStateOfThisLevelExists
-                            greaterDoBe:(BOOL *)effectOfGreaterLevelExists;
-
-+ (BOOL)__SWIFT_UNBRIDGED_effectExistsForButton:(id)button remaps:(id)remaps modificationsActingOnButton:(id)effectiveRemaps;
-
-+ (NSInteger)__SWIFT_UNBRIDGED_maxLevelForButton:(id)button remaps:(id)remaps modificationsActingOnThisButton:(id)modificationsActingOnThisButton;
++ (NSInteger)maxLevelForButton:(__DISABLE_SWIFT_BRIDGING(NSNumber *))button remaps:(__DISABLE_SWIFT_BRIDGING(NSDictionary *))remaps modificationsActingOnThisButton:(__DISABLE_SWIFT_BRIDGING(NSDictionary *))modificationsActingOnThisButton NS_REFINED_FOR_SWIFT;
 
 @end
 

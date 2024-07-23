@@ -8,6 +8,8 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "DisableSwiftBridging.h"
+
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -20,9 +22,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface NSString (MFSteganography)
 
-- (__swift_unbridge(NSString *))stringByAppendingStringAsSecretMessage:(NSString *)message;
-- (__swift_unbridge(NSString *))encodedAsSecretMessage;
-- (__swift_unbridge(NSArray<NSString *> *))secretMessages;
+- (__DISABLE_SWIFT_BRIDGING(NSString *))stringByAppendingStringAsSecretMessage:(NSString *)message;
+- (__DISABLE_SWIFT_BRIDGING(NSString *))encodedAsSecretMessage;
+- (__DISABLE_SWIFT_BRIDGING(NSArray<NSString *> *))secretMessages;
 
 + (NSString *)stringWithBinaryCharacters:(NSArray<NSArray<NSNumber *> *> *)characters;
 - (NSArray<NSArray<NSNumber *> *> *)binaryCharacters;

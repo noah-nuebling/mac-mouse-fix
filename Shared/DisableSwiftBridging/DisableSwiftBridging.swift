@@ -1,0 +1,121 @@
+//
+// --------------------------------------------------------------------------
+// DisableSwiftBridging.swift
+// Created for Mac Mouse Fix (https://github.com/noah-nuebling/mac-mouse-fix)
+// Created by Noah Nuebling in 2024
+// Licensed under Licensed under the MMF License (https://github.com/noah-nuebling/mac-mouse-fix/blob/master/License)
+// --------------------------------------------------------------------------
+//
+
+import Foundation
+
+/// On Swift Autobriding
+/// Swift automatically bridges Foundation-type args (like NSDictionary) to native Swift types which is super slow. At least for Dictionaries. We've found a way to prevent this:
+///
+/// 1. In your objc header file, wrap all autobridging argument/return types with the `__DISABLE_SWIFT_BRIDGING(<the type>)` macro. The macro will replace the type with `id` when swift is looking at it - which disables the autobridiging!
+/// 2. When importing the method in Swift, the type will now appear as `Any`. To make the type show up as the proper foundation type, mark the objc implementation with the `NS_REFINED_FOR_SWIFT` flag, then create a Swift extension and implement a method that calls the original, type-erased implementation, and itself takes Foundation types like NSDictionary as arguments.
+///  -> Now you can call the ObjC method from Swift using foundation types as arguments directly, instead of being forced to use native Swift types which are then autobridged.
+///
+/// Note:
+/// - There was an older, more convoluted approach using the `MF_SWIFT_HIDDEN` macro and the `__SWIFT_UNBRIDGED_` method prefix. We removed that in commit `729249905e8f49d7433420b2ce0bfe6338db389e`.
+/// - **TODO:** Test if the new approach actually prevents bridging (Check performance against the old approach)
+///
+
+
+extension NSString {
+    
+    func substring(withRegex regex: NSString) -> NSString {
+        return __substring(withRegex: regex) as! NSString
+    }
+    func attributed() -> NSAttributedString {
+        return __attributed() as! NSAttributedString
+    }
+    func firstCaptialized() -> NSString {
+        return __firstCapitalized() as! NSString
+    }
+    func stringByTrimmingWhiteSpace() -> NSString {
+        return __firstCapitalized() as! NSString
+    }
+    func string(byAddingIndent indent: NSInteger) -> NSString {
+        return __string(byAddingIndent: indent) as! NSString
+    }
+    func string(byPrependingWhitespace spaces: NSInteger) -> NSString {
+        return __string(byPrependingWhitespace: spaces) as! NSString
+    }
+}
+
+#if IS_HELPER
+
+extension Remap {
+    
+    static var remaps: NSDictionary {
+        return __remaps() as! NSDictionary
+    }
+    static func modifications(withModifiers modifiers: NSDictionary) -> NSDictionary? {
+        return __modifications(withModifiers: modifiers) as! NSDictionary?
+    }
+    static func sendAddModeFeedback(_ payload: NSDictionary) {
+        __sendAddModeFeedback(payload)
+    }
+}
+
+extension DeviceManager {
+    
+    static var attachedDevices: NSArray {
+        return __attachedDevices() as! NSArray
+    }
+}
+
+extension Modifiers {
+    
+    static func modifiers(with event: CGEvent?) -> NSMutableDictionary {
+        return __modifiers(with: event) as! NSMutableDictionary
+    }
+    
+    static func buttonModsChanged(to newMods: NSMutableArray) {
+        __buttonModsChanged(to: newMods)
+    }
+}
+
+extension ModifiedDrag {
+    
+    static func initializeDrag(withDict dict: NSDictionary) {
+        __initializeDrag(withDict: dict)
+    }
+}
+
+extension Actions {
+
+    static func executeActionArray(_ array: NSArray, phase: MFActionPhase) {
+        __executeActionArray(array, phase: phase)
+    }
+}
+
+extension RemapsAnalyzer {
+    
+    static func modificationsModifyButtons(_ modifications: NSDictionary, maxButton: Int32) -> Bool {
+        return __modificationsModifyButtons(modifications, maxButton: maxButton)
+    }
+    
+    static func modificationsModifyScroll(_ modifications: NSDictionary) -> Bool {
+        return __modificationsModifyScroll(modifications)
+    }
+    static func modificationsModifyPointing(_ modifications: NSDictionary) -> Bool {
+        return __modificationsModifyPointing(modifications)
+    }
+    
+    static func maxLevel(forButton button: NSNumber, remaps: NSDictionary, modificationsActingOnThisButton: NSDictionary) -> NSInteger {
+        return __maxLevel(forButton: button, remaps: remaps, modificationsActingOnThisButton: modificationsActingOnThisButton)
+    }
+    
+    static func effectExists(forButton button: NSNumber, remaps: NSDictionary, modificationsActingOnButton: NSDictionary) -> Bool {
+        return __effectExists(forButton: button, remaps: remaps, modificationsActingOnButton: modificationsActingOnButton)
+    }
+    
+    static func assessMappingLandscape(withButton button: NSNumber, level: NSNumber, modificationsActingOnThisButton: NSDictionary, remaps: NSDictionary, thisClickDoBe: UnsafeMutablePointer<ObjCBool>, thisDownDoBe: UnsafeMutablePointer<ObjCBool>, greaterDoBe: UnsafeMutablePointer<ObjCBool>) {
+        __assessMappingLandscape(withButton: button, level: level, modificationsActingOnThisButton: modificationsActingOnThisButton, remaps: remaps, thisClickDoBe: thisClickDoBe, thisDownDoBe: thisDownDoBe, greaterDoBe: greaterDoBe)
+    }
+    
+}
+
+#endif

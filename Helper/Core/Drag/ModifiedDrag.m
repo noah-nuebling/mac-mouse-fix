@@ -132,7 +132,7 @@ static ModifiedDragState _drag;
 //    }
 //}
 
-+ (void)initializeDragWithDict:(NSDictionary *)effectDict MF_SWIFT_HIDDEN {
++ (void)initializeDragWithDict:(NSDictionary *)effectDict {
     
     dispatch_async(_drag.queue, ^{
         
@@ -182,11 +182,6 @@ static ModifiedDragState _drag;
         initDragState_Unsafe();
     });
 }
-
-+ (void)__SWIFT_UNBRIDGED_initializeDragWithDict:(id)effectDict {
-    [self initializeDragWithDict:effectDict];
-}
-
 void initDragState_Unsafe(void) {
     
     _drag.origin = getRoundedPointerLocation();
