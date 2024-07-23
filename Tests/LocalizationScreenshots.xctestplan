@@ -47,7 +47,9 @@
     "areLocalizationScreenshotsEnabled" : true,
     "codeCoverage" : false,
     "commandLineArgumentEntries" : [
-
+      {
+        "argument" : "-MF_ANNOTATE_LOCALIZED_STRINGS"
+      }
     ],
     "preferredScreenCaptureFormat" : "screenshot",
     "targetForVariableExpansion" : {

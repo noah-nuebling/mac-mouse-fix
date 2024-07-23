@@ -64,11 +64,14 @@ struct ApplyMarkdown: MarkupVisitor {
     init(attributeBase: NSAttributedString? = nil) {
         
         /// Use the attributes from `attributeBase` as base and override them with the markdown styling where there is markdown styling
+        /// Note:
+        ///     Don't use String.count!
+        ///     The equivalent of NSString.length is String.unicodeScalars.count. String.count is something different (doesn't count all unicode characters as characters)
         
         if let base = attributeBase {
             self.base = base
             self.baseRaw = base.string as NSString
-            self.baseSearchRange = NSRange(location: 0, length: base.string.count)
+            self.baseSearchRange = NSRange(location: 0, length: baseRaw!.length)
         }
     }
     
@@ -76,7 +79,7 @@ struct ApplyMarkdown: MarkupVisitor {
     
     fileprivate mutating func descendInto(_ markup: Markup) -> ApplyMarkdown.Result {
         
-        let result = NSMutableAttributedString(string: "")
+        let result = NSMutableAttributedString()
         
         for child in markup.children {
             if let r = visit(child) {

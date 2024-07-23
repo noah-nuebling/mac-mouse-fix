@@ -11,7 +11,14 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface NSString (Steganography)
+@interface NSAttributedString (MFSteganography)
+
+- (NSAttributedString *)attributedStringByAppendingStringAsSecretMessage:(NSString *)message;
+- (NSArray<NSString *> *)secretMessages;
+
+@end
+
+@interface NSString (MFSteganography)
 
 - (NSString *)stringByAppendingStringAsSecretMessage:(NSString *)message;
 - (NSString *)encodedAsSecretMessage;

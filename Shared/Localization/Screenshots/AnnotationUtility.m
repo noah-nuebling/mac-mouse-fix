@@ -51,7 +51,8 @@ void swizzleMethod(Class class, SEL selector, InterceptorFactory interceptorFact
     ///     You can get the metaclass of a class `baseClass` by calling `object_getClass(baseClass)`.
     
     /// Log
-    NSLog(@"Swizzling [%s %s]", class_getName(class), sel_getName(selector));
+    ///     We're using NSLog instead of DDLogInfo, since we're usually swizzling from a [+ load] method where DDLog isn't available, yet.
+    NSLog(@"Info: Swizzling [%s %s]", class_getName(class), sel_getName(selector));
     
     /// Validate
     ///     Make sure `selector` is defined on class or one of its superclasses.
@@ -86,7 +87,7 @@ void swizzleMethod(Class class, SEL selector, InterceptorFactory interceptorFact
 void swizzleMethodOnClassAndSubclasses(Class baseClass, NSDictionary<MFClassSearchCriterion, id> *subclassSearchCriteria, SEL selector, InterceptorFactory interceptorFactory) {
 
     /// Log
-    NSLog(@"Swizzling [%s %s] including subclasses. subclassSearchCriteria: %@ (Class is in %s)", class_getName(baseClass), sel_getName(selector), subclassSearchCriteria, class_getImageName(baseClass));
+    NSLog(@"Info: Swizzling [%s %s] including subclasses. subclassSearchCriteria: %@ (Class is in %s)", class_getName(baseClass), sel_getName(selector), subclassSearchCriteria, class_getImageName(baseClass));
     
     /// Validate args
     assert(baseClass != nil);
@@ -129,7 +130,7 @@ void swizzleMethodOnClassAndSubclasses(Class baseClass, NSDictionary<MFClassSear
     
     /// Validate
     if (!someClassHasBeenSwizzled) {
-        NSLog(@"Error: Neither %@ nor any of the subclasses we found for it (%@) have been swizzled. This is probably because none of the processed classes implement a method for selector %s. We used the search criteria: %@", baseClass, subclasses, sel_getName(selector), subclassSearchCriteria);
+        DDLogWarn(@"Error: Neither %@ nor any of the subclasses we found for it (%@) have been swizzled. This is probably because none of the processed classes implement a method for selector %s. We used the search criteria: %@", baseClass, subclasses, sel_getName(selector), subclassSearchCriteria);
         assert(false);
     }
     
@@ -336,7 +337,7 @@ const char *searchFrameworkPath(const char *frameworkName) {
             int closeRet = dlclose(handle);
             if (closeRet != 0) {
                 char *error = dlerror();
-                NSLog(@"dlclose failed with error %s", error);
+                DDLogError(@"dlclose failed with error %s", error);
                 assert(false);
             }
         }
@@ -376,7 +377,7 @@ const char *searchFrameworkPath(const char *frameworkName) {
     free(imagePaths);
     
     if (result == NULL) {
-        NSLog(@"Error: Couldn't find framework with name %s", frameworkName);
+        DDLogWarn(@"Error: Couldn't find framework with name %s", frameworkName);
         assert(false);
     }
     return result;
@@ -530,7 +531,7 @@ NSRegularExpression *formatSpecifierRegex(void) {
     NSError *error;
     NSRegularExpression *regex = [[NSRegularExpression alloc] initWithPattern:pattern options:options error:&error];
     if (error != nil) {
-        NSLog(@"Failed to create formatSpeciferRegex. Error: %@", error);
+        DDLogError(@"Failed to create formatSpeciferRegex. Error: %@", error);
         assert(false);
     }
     
@@ -554,9 +555,6 @@ NSRegularExpression *formatStringRecognizer(NSString *localizedString) {
     ///     and capture everything except the literal chars from the localizedString inside the insertionPoint groups.
     localizedStringPattern = [NSString stringWithFormat:@"^%@%@%@$", insertionPoint, localizedStringPattern, insertionPoint];
     
-    /// TEST
-    NSLog(@"%@", localizedStringPattern);
-    
     /// Create regex
     ///     From new matching pattern
     NSRegularExpressionOptions regexOptions = NSRegularExpressionDotMatchesLineSeparators   /** Strings in insertion points might have linebreaks - still match those */
@@ -565,7 +563,7 @@ NSRegularExpression *formatStringRecognizer(NSString *localizedString) {
     NSError *error;
     NSRegularExpression *resultRegex = [NSRegularExpression regularExpressionWithPattern:localizedStringPattern options:regexOptions error:&error];
     if (error != nil) {
-        NSLog(@"Failed to create recognizer regex for localized string %@. Error: %@", localizedString, error);
+        DDLogError(@"Failed to create recognizer regex for localized string %@. Error: %@", localizedString, error);
         assert(false);
     }
     
@@ -627,7 +625,7 @@ NSString *typeNameFromEncoding(const char *typeEncoding) { /// Credit ChatGPT & 
         case 'b': baseTypeName = @"bit field"; break;
         case '?': baseTypeName = @"unknown"; break;
         default:
-            NSLog(@"typeEncoding: %s is unknown", typeEncoding);
+            DDLogWarn(@"typeEncoding: %s is unknown", typeEncoding);
             assert(false);
     }
     
@@ -642,16 +640,18 @@ NSString *typeNameFromEncoding(const char *typeEncoding) { /// Credit ChatGPT & 
     }
 }
 
-void listMethods(id obj) {
+NSString *listMethods(id obj) {
     
     /// This method prints a list of all methods defined on a class
     ///     (not its superclass) with decoded return types and argument types!
     ///     This is really handy for creating categories swizzles, or inspecting private classes.
     
+    NSMutableString *result = [NSMutableString string];
+    
     unsigned int methodCount = 0;
     Method *methods = class_copyMethodList([obj class], &methodCount);
     
-    NSLog(@"Methods for %@:", NSStringFromClass([obj class]));
+    [result appendFormat:@"Methods for %@:", NSStringFromClass([obj class])];
     for (unsigned int i = 0; i < methodCount; i++) {
         Method method = methods[i];
         SEL selector = method_getName(method);
@@ -665,22 +665,28 @@ void listMethods(id obj) {
             [argTypes addObject:typeNameFromEncoding(argType)];
         }
         
-        NSLog(@"(%@)%@ (%@)", typeNameFromEncoding(returnType), NSStringFromSelector(selector), [argTypes componentsJoinedByString:@", "]);
+        [result appendFormat:@"(%@)%@ (%@)", typeNameFromEncoding(returnType), NSStringFromSelector(selector), [argTypes componentsJoinedByString:@", "]];
     }
     
     free(methods);
+    
+    return result;
 }
 
-void printClassHierarchy(NSObject *obj) {
+NSString *listClassHierarchy(NSObject *obj) {
+    
+    NSMutableString *result = [NSMutableString string];
     
     /// Get the class of the object
     Class cls = object_getClass(obj);
 
-    NSLog(@"Class hierarchy of object %@:", obj);
+    [result appendFormat:@"Class hierarchy of object %@:", obj];
     while (cls) {
-        NSLog(@"Class: %@", NSStringFromClass(cls));
+        [result appendFormat:@"Class: %@", NSStringFromClass(cls)];
         cls = class_getSuperclass(cls);  /// Move to the superclass
     }
+    
+    return result;
 }
 
 @end

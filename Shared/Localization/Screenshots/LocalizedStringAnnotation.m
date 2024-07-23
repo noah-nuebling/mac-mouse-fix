@@ -9,19 +9,67 @@
 
 #import "LocalizedStringAnnotation.h"
 #import "AnnotationUtility.h"
+#import "NSString+Steganography.h"
+#import "SharedUtility.h"
 
 @implementation LocalizedStringAnnotation
 
-#if ANNOTATE_LOCALIZED_STRINGS
+@end
+
+@implementation NSBundle (MFAnnotation)
 
 + (void)load {
     
-    swizzleMethodOnClassAndSubclasses([NSBundle class], @{ @"framework": @"AppKit" }, @selector(<#selector#>), MakeInterceptorFactory(<#returnType#>, (<#argumentList#>), {
-        <#onInterception#>
+    /// Check
+    ///     Only swizzle when flag is set
+    if (![NSProcessInfo.processInfo.arguments containsObject:@"-MF_ANNOTATE_LOCALIZED_STRINGS"]) {
+        return;
+    }
+        
+    /// Swizzle
+    swizzleMethodOnClassAndSubclasses([self class], @{ @"framework": @"AppKit" }, @selector(localizedStringForKey:value:table:), MakeInterceptorFactory(NSString *, (NSString *key, NSString *value, NSString *table), {
+        
+        /// Call og
+        NSString *result = OGImpl(key, value, table);
+        
+        BOOL isOurBundle = [m_self isEqual:NSBundle.mainBundle];
+        if (isOurBundle) {
+            
+            /// Add secret message
+            NSString *secretMessage = stringf(@"mf-localization-key:%@", key);
+            result = [result stringByAppendingStringAsSecretMessage:secretMessage];
+            
+            /// Log
+            DDLogDebug(@"LocalizedStringAnnotation: Annotated: \"%@\": \"%@\" (%@)", key, result, table);
+        }
+        
+        /// Return
+        return result;
     }));
+    
+    swizzleMethodOnClassAndSubclasses([self class], @{ @"framework": @"AppKit" }, @selector(localizedAttributedStringForKey:value:table:), MakeInterceptorFactory(NSAttributedString *, (NSString *key, NSString *value, NSString *table), {
+        
+        /// Call og
+        NSAttributedString *result = OGImpl(key, value, table);
+        
+        BOOL isOurBundle = [m_self isEqual:NSBundle.mainBundle];
+        if (isOurBundle) {
+        
+            /// Add secret message
+            NSString *secretMessage = stringf(@"mf-localization-key:%@", key);
+            result = [result attributedStringByAppendingStringAsSecretMessage:secretMessage];
+            
+            /// Log
+            DDLogDebug(@"LocalizedStringAnnotation: Annotated: \"%@\": \"%@\" (%@)", key, result, table);
+        }
+        
+        /// Return
+        return result;
+    }));
+    
     
 }
 
-#endif
-
 @end
+
+

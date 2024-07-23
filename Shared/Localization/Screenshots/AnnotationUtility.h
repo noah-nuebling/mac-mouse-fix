@@ -79,8 +79,8 @@ NSRegularExpression *formatStringRecognizer(NSString *formatString);
 
 #pragma mark - objc introspection
 
-void listMethods(id obj);
-void printClassHierarchy(NSObject *obj);
+NSString *listMethods(id obj);
+NSString *listClassHierarchy(NSObject *obj);
 
 @end
 

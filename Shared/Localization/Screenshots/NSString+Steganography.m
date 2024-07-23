@@ -8,8 +8,30 @@
 //
 
 #import "NSString+Steganography.h"
+#import "NSAttributedString+Additions.h"
 
-@implementation NSString (Steganography)
+#if IS_MAIN_APP
+#import "Mac_Mouse_Fix-Swift.h"
+#elif IS_HELPER
+#import "Mac_Mouse_Fix_Helper-Swift.h"
+#endif
+
+@implementation NSAttributedString (MFSteganography)
+
+- (NSAttributedString *)attributedStringByAppendingStringAsSecretMessage:(NSString *)message {
+    NSString *encodedMessage = [message encodedAsSecretMessage];
+    NSAttributedString *result = [self attributedStringByAppending:encodedMessage.attributed];
+    return result;
+}
+
+- (NSArray<NSString *> *)secretMessages {
+    NSArray *result = [self.string secretMessages];
+    return result;
+}
+
+@end
+
+@implementation NSString (MFSteganography)
 
 ///
 /// Secret messages
