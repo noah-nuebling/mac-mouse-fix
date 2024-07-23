@@ -2,19 +2,6 @@
 # macOS stuff
 .DS_Store
 
-# All contents of folders named xcuserdata
-xcuserdata/
-
-# Carthage derived data
-# Carthage/
-
-# White-listing xcschemes folder. (.gitignore whitelisting is a huge hassle but this works)
-# -> We don't need this anymore, because instead we just moved the build schemes to shared
-# !Mouse Fix.xcodeproj/xcuserdata/
-# !Mouse Fix.xcodeproj/xcuserdata/Noah.xcuserdatad/
-# !Mouse Fix.xcodeproj/xcuserdata/Noah.xcuserdatad/xcschemes/*
-# Mouse Fix.xcodeproj/xcuserdata/Noah.xcuserdatad/xcdebugger/*
-
 # vscode
 #   Don't leak API keys in launch.json
 .vscode
@@ -29,3 +16,16 @@ gumroad_sales_cache.json
 
 # Password file
 sudopass.sh
+
+# All contents of folders named xcuserdata
+xcuserdata/
+
+# Carthage derived data
+# Carthage/
+
+# White-listing xcschemes folder. (.gitignore whitelisting is a huge hassle but this works)
+# -> We don't need this anymore, because instead we just moved the build schemes to shared
+# !Mouse Fix.xcodeproj/xcuserdata/
+# !Mouse Fix.xcodeproj/xcuserdata/Noah.xcuserdatad/
+# !Mouse Fix.xcodeproj/xcuserdata/Noah.xcuserdatad/xcschemes/*
+# Mouse Fix.xcodeproj/xcuserdata/Noah.xcuserdatad/xcdebugger/*
