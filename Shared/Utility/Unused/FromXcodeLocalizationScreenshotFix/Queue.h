@@ -7,6 +7,9 @@
 // --------------------------------------------------------------------------
 //
 
+/// We copied and adapted this fom MMF
+/// -> Should probably copy this back into MMF
+
 #import <Foundation/Foundation.h>
 
 NS_ASSUME_NONNULL_BEGIN
@@ -15,9 +18,12 @@ NS_ASSUME_NONNULL_BEGIN
 + (Queue<T> *)queue;
 - (void)enqueue:(T)obj;
 - (T)dequeue;
+- (NSArray <T>*)dequeueAll;
+- (NSArray <T>*)peekAll;
 - (T)peek;
 - (BOOL)isEmpty;
 - (int64_t)count;
+- (NSMutableArray <T>*)_rawStorage;
 @end
 
 NS_ASSUME_NONNULL_END

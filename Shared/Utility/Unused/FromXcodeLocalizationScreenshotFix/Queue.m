@@ -9,9 +9,9 @@
 
 #import "Queue.h"
 
-@implementation Queue
-
-NSMutableArray *_storage; /// FIXME: This is global state! How did this not lead to bugs? Edit: Ahh because this is not used anymore.
+@implementation Queue {
+    NSMutableArray *_storage;
+}
 
 + (id)queue {
     return [[Queue alloc] init];
@@ -43,4 +43,20 @@ NSMutableArray *_storage; /// FIXME: This is global state! How did this not lead
 - (int64_t)count {
     return _storage.count;
 }
+
+- (NSArray *)dequeueAll {
+    NSArray *result = [[_storage reverseObjectEnumerator] allObjects]; /// This also copies the object which I think is important so outsiders can't manipulate our `_storage`
+    [_storage removeAllObjects];
+    return result;
+}
+
+- (NSArray *)peekAll {
+    NSArray *result = [[_storage reverseObjectEnumerator] allObjects];
+    return result;
+}
+
+- (NSMutableArray *)_rawStorage { /// For outsiders to directly manipulate the underlying storage. Should probably not use `Queue` if this is necessary.
+    return _storage;
+}
+
 @end

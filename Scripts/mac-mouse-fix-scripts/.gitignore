@@ -1,0 +1,22 @@
+
+#
+# Copy-pasted from the mac-mouse-fix .gitignore on 23.07.2024
+#
+
+# macOS stuff
+.DS_Store
+
+# vscode
+#   Don't leak API keys in launch.json
+.vscode
+
+# Python stuff
+env
+venv
+__pycache__
+
+# Sensitive
+gumroad_sales_cache.json
+
+# Password file
+sudopass.sh

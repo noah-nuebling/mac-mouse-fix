@@ -44,6 +44,12 @@
 		4F44794628B62FA400AD1979 /* LicenseConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F44794428B62FA400AD1979 /* LicenseConfig.swift */; };
 		4F44FF042606D73D00926A5E /* MFMessagePort.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F44FF032606D73D00926A5E /* MFMessagePort.m */; };
 		4F44FF052606D73D00926A5E /* MFMessagePort.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F44FF032606D73D00926A5E /* MFMessagePort.m */; };
+		4F4C737D2C4FB06E001D97C3 /* NSString+Steganography.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F4C737C2C4FB06E001D97C3 /* NSString+Steganography.m */; };
+		4F4C737E2C4FB06E001D97C3 /* NSString+Steganography.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F4C737C2C4FB06E001D97C3 /* NSString+Steganography.m */; };
+		4F4C73D72C4FB3FA001D97C3 /* LocalizedStringAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F4C73D62C4FB3FA001D97C3 /* LocalizedStringAnnotation.m */; };
+		4F4C73D82C4FB3FA001D97C3 /* LocalizedStringAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F4C73D62C4FB3FA001D97C3 /* LocalizedStringAnnotation.m */; };
+		4F4C73FE2C4FB5D2001D97C3 /* AnnotationUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F4C73FD2C4FB5D2001D97C3 /* AnnotationUtility.m */; };
+		4F4C73FF2C4FB5D2001D97C3 /* AnnotationUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F4C73FD2C4FB5D2001D97C3 /* AnnotationUtility.m */; };
 		4F5971E52901763D00A32656 /* MathObjc.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F5971E42901763D00A32656 /* MathObjc.m */; };
 		4F5971E62901763D00A32656 /* MathObjc.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F5971E42901763D00A32656 /* MathObjc.m */; };
 		4F5C2F802885C5D0001B9B8A /* HelperState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F5C2F7F2885C5D0001B9B8A /* HelperState.swift */; };
@@ -254,8 +260,6 @@
 		4FF6654425F2C7B000689B77 /* HelperServices.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF6652F25F2C7B000689B77 /* HelperServices.m */; };
 		4FF6654525F2C7B000689B77 /* Locator.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF6653225F2C7B000689B77 /* Locator.m */; };
 		4FF6654625F2C7B000689B77 /* Locator.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF6653225F2C7B000689B77 /* Locator.m */; };
-		4FF6654B25F2C7B000689B77 /* Queue.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF6653A25F2C7B000689B77 /* Queue.m */; };
-		4FF6654C25F2C7B000689B77 /* Queue.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF6653A25F2C7B000689B77 /* Queue.m */; };
 		4FF6654D25F2C7B000689B77 /* SharedUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF6653B25F2C7B000689B77 /* SharedUtility.m */; };
 		4FF6654E25F2C7B000689B77 /* SharedUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF6653B25F2C7B000689B77 /* SharedUtility.m */; };
 		4FF6654F25F2C7B000689B77 /* NSArray+Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF6653D25F2C7B000689B77 /* NSArray+Additions.m */; };
@@ -1968,6 +1972,50 @@
 		4F44794428B62FA400AD1979 /* LicenseConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LicenseConfig.swift; sourceTree = "<group>"; };
 		4F44FF022606D73D00926A5E /* MFMessagePort.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MFMessagePort.h; sourceTree = "<group>"; };
 		4F44FF032606D73D00926A5E /* MFMessagePort.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MFMessagePort.m; sourceTree = "<group>"; };
+		4F4C737B2C4FB06E001D97C3 /* NSString+Steganography.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSString+Steganography.h"; sourceTree = "<group>"; };
+		4F4C737C2C4FB06E001D97C3 /* NSString+Steganography.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSString+Steganography.m"; sourceTree = "<group>"; };
+		4F4C73A92C4FB28C001D97C3 /* .gitmodules */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitmodules; sourceTree = "<group>"; };
+		4F4C73AA2C4FB299001D97C3 /* crowdin.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = crowdin.yml; sourceTree = "<group>"; };
+		4F4C73AC2C4FB2E1001D97C3 /* buildmd.py */ = {isa = PBXFileReference; lastKnownFileType = text.script.python; path = buildmd.py; sourceTree = "<group>"; };
+		4F4C73AD2C4FB2E1001D97C3 /* python_requirements.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = python_requirements.txt; sourceTree = "<group>"; };
+		4F4C73AF2C4FB2E1001D97C3 /* buildstrings.py */ = {isa = PBXFileReference; lastKnownFileType = text.script.python; path = buildstrings.py; sourceTree = "<group>"; };
+		4F4C73B12C4FB2E1001D97C3 /* requirements.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = requirements.txt; sourceTree = "<group>"; };
+		4F4C73B22C4FB2E1001D97C3 /* script.py */ = {isa = PBXFileReference; lastKnownFileType = text.script.python; path = script.py; sourceTree = "<group>"; };
+		4F4C73B42C4FB2E1001D97C3 /* requirements.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = requirements.txt; sourceTree = "<group>"; };
+		4F4C73B52C4FB2E1001D97C3 /* script.py */ = {isa = PBXFileReference; lastKnownFileType = text.script.python; path = script.py; sourceTree = "<group>"; };
+		4F4C73B72C4FB2E1001D97C3 /* Readme.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = Readme.md; sourceTree = "<group>"; };
+		4F4C73B92C4FB2E1001D97C3 /* mfgithub.cpython-312.pyc */ = {isa = PBXFileReference; lastKnownFileType = file; path = "mfgithub.cpython-312.pyc"; sourceTree = "<group>"; };
+		4F4C73BA2C4FB2E1001D97C3 /* mflocales.cpython-312.pyc */ = {isa = PBXFileReference; lastKnownFileType = file; path = "mflocales.cpython-312.pyc"; sourceTree = "<group>"; };
+		4F4C73BB2C4FB2E1001D97C3 /* mfutils.cpython-312.pyc */ = {isa = PBXFileReference; lastKnownFileType = file; path = "mfutils.cpython-312.pyc"; sourceTree = "<group>"; };
+		4F4C73BD2C4FB2E1001D97C3 /* __init__.py */ = {isa = PBXFileReference; lastKnownFileType = text.script.python; path = __init__.py; sourceTree = "<group>"; };
+		4F4C73BE2C4FB2E1001D97C3 /* mfgithub.py */ = {isa = PBXFileReference; lastKnownFileType = text.script.python; path = mfgithub.py; sourceTree = "<group>"; };
+		4F4C73BF2C4FB2E1001D97C3 /* mflocales.py */ = {isa = PBXFileReference; lastKnownFileType = text.script.python; path = mflocales.py; sourceTree = "<group>"; };
+		4F4C73C02C4FB2E1001D97C3 /* mflocales_old.py */ = {isa = PBXFileReference; lastKnownFileType = text.script.python; path = mflocales_old.py; sourceTree = "<group>"; };
+		4F4C73C12C4FB2E1001D97C3 /* mfutils.py */ = {isa = PBXFileReference; lastKnownFileType = text.script.python; path = mfutils.py; sourceTree = "<group>"; };
+		4F4C73C32C4FB2E1001D97C3 /* syncscripts.py */ = {isa = PBXFileReference; lastKnownFileType = text.script.python; path = syncscripts.py; sourceTree = "<group>"; };
+		4F4C73C52C4FB2E1001D97C3 /* sync_xcstrings.py */ = {isa = PBXFileReference; lastKnownFileType = text.script.python; path = sync_xcstrings.py; sourceTree = "<group>"; };
+		4F4C73C72C4FB2E1001D97C3 /* requirements.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = requirements.txt; sourceTree = "<group>"; };
+		4F4C73C82C4FB2E1001D97C3 /* uploadstrings.py */ = {isa = PBXFileReference; lastKnownFileType = text.script.python; path = uploadstrings.py; sourceTree = "<group>"; };
+		4F4C73CA2C4FB2E1001D97C3 /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
+		4F4C73CB2C4FB2E1001D97C3 /* ImportStrings.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = ImportStrings.md; sourceTree = "<group>"; };
+		4F4C73CC2C4FB2E1001D97C3 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		4F4C73CD2C4FB2E1001D97C3 /* run.py */ = {isa = PBXFileReference; lastKnownFileType = text.script.python; path = run.py; sourceTree = "<group>"; };
+		4F4C73CF2C4FB2E1001D97C3 /* .env */ = {isa = PBXFileReference; lastKnownFileType = text; path = .env; sourceTree = "<group>"; };
+		4F4C73D02C4FB2E1001D97C3 /* run */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = run; sourceTree = "<group>"; };
+		4F4C73D22C4FB2F7001D97C3 /* launch.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = launch.json; sourceTree = "<group>"; };
+		4F4C73D52C4FB3FA001D97C3 /* LocalizedStringAnnotation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LocalizedStringAnnotation.h; sourceTree = "<group>"; };
+		4F4C73D62C4FB3FA001D97C3 /* LocalizedStringAnnotation.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LocalizedStringAnnotation.m; sourceTree = "<group>"; };
+		4F4C73F22C4FB4C2001D97C3 /* KVPair.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KVPair.h; sourceTree = "<group>"; };
+		4F4C73F32C4FB4C2001D97C3 /* KVPair.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = KVPair.m; sourceTree = "<group>"; };
+		4F4C73F42C4FB4C2001D97C3 /* NSRunLoop+Additions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSRunLoop+Additions.h"; sourceTree = "<group>"; };
+		4F4C73F52C4FB4C2001D97C3 /* NSRunLoop+Additions.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSRunLoop+Additions.m"; sourceTree = "<group>"; };
+		4F4C73F62C4FB4C2001D97C3 /* TreeNode.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TreeNode.h; sourceTree = "<group>"; };
+		4F4C73F72C4FB4C2001D97C3 /* TreeNode.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TreeNode.m; sourceTree = "<group>"; };
+		4F4C73F92C4FB4E6001D97C3 /* Readme.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = Readme.md; sourceTree = "<group>"; };
+		4F4C73FA2C4FB570001D97C3 /* Queue.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Queue.h; sourceTree = "<group>"; };
+		4F4C73FB2C4FB570001D97C3 /* Queue.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Queue.m; sourceTree = "<group>"; };
+		4F4C73FC2C4FB5D2001D97C3 /* AnnotationUtility.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AnnotationUtility.h; sourceTree = "<group>"; };
+		4F4C73FD2C4FB5D2001D97C3 /* AnnotationUtility.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AnnotationUtility.m; sourceTree = "<group>"; };
 		4F5971E42901763D00A32656 /* MathObjc.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MathObjc.m; sourceTree = "<group>"; };
 		4F5C2F7F2885C5D0001B9B8A /* HelperState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelperState.swift; sourceTree = "<group>"; };
 		4F5F3EED2756DB0A00C350C0 /* RemapsOverrider_old_.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemapsOverrider_old_.swift; sourceTree = "<group>"; };
@@ -2231,11 +2279,9 @@
 		4FF6653325F2C7B000689B77 /* Constants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Constants.h; sourceTree = "<group>"; };
 		4FF6653825F2C7B000689B77 /* NSArray+Additions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSArray+Additions.h"; sourceTree = "<group>"; };
 		4FF6653925F2C7B000689B77 /* NSDictionary+Additions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDictionary+Additions.h"; sourceTree = "<group>"; };
-		4FF6653A25F2C7B000689B77 /* Queue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Queue.m; sourceTree = "<group>"; };
 		4FF6653B25F2C7B000689B77 /* SharedUtility.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SharedUtility.m; sourceTree = "<group>"; };
 		4FF6653D25F2C7B000689B77 /* NSArray+Additions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSArray+Additions.m"; sourceTree = "<group>"; };
 		4FF6653E25F2C7B000689B77 /* SharedUtility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SharedUtility.h; sourceTree = "<group>"; };
-		4FF6653F25F2C7B000689B77 /* Queue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Queue.h; sourceTree = "<group>"; };
 		4FF6654025F2C7B000689B77 /* NSDictionary+Additions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDictionary+Additions.m"; sourceTree = "<group>"; };
 		4FF665C025F2C92700689B77 /* OverridePanel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OverridePanel.h; sourceTree = "<group>"; };
 		4FF665C125F2C92700689B77 /* MFSegmentedControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MFSegmentedControl.m; sourceTree = "<group>"; };
@@ -2355,18 +2401,6 @@
 		4FFB5EFA2C2E78D30096AA3E /* Misappropriating XCStrings.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; name = "Misappropriating XCStrings.md"; path = "Localization/Misappropriating XCStrings.md"; sourceTree = SOURCE_ROOT; };
 		4FFB5F032C2FECDC0096AA3E /* Readme.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = Readme.md; sourceTree = "<group>"; };
 		4FFB5F042C2FECDD0096AA3E /* Acknowledgements.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = Acknowledgements.md; sourceTree = "<group>"; };
-		4FFB5F072C2FEE460096AA3E /* markdown_generator.py */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.python; path = markdown_generator.py; sourceTree = "<group>"; };
-		4FFB5F082C2FEE460096AA3E /* python_requirements.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = python_requirements.txt; sourceTree = "<group>"; };
-		4FFB5F0A2C2FEE460096AA3E /* requirements.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = requirements.txt; sourceTree = "<group>"; };
-		4FFB5F0B2C2FEE460096AA3E /* script.py */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.python; path = script.py; sourceTree = "<group>"; };
-		4FFB5F0D2C2FEE460096AA3E /* requirements.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = requirements.txt; sourceTree = "<group>"; };
-		4FFB5F0E2C2FEE460096AA3E /* script.py */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.python; path = script.py; sourceTree = "<group>"; };
-		4FFB5F122C2FEE460096AA3E /* __init__.py */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.python; path = __init__.py; sourceTree = "<group>"; };
-		4FFB5F132C2FEE460096AA3E /* shared.py */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.python; path = shared.py; sourceTree = "<group>"; };
-		4FFB5F152C2FEE460096AA3E /* sync_xcstrings.py */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.python; path = sync_xcstrings.py; sourceTree = "<group>"; };
-		4FFB5F172C2FEE460096AA3E /* requirements.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = requirements.txt; sourceTree = "<group>"; };
-		4FFB5F182C2FEE460096AA3E /* upload_xcstrings.py */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.python; path = upload_xcstrings.py; sourceTree = "<group>"; };
-		4FFB5F1A2C2FEE460096AA3E /* Readme.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = Readme.md; sourceTree = "<group>"; };
 		4FFBC5732667DCE4001D389B /* PrefixHeader.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PrefixHeader.pch; sourceTree = "<group>"; };
 		4FFBC5A6266977CA001D389B /* Mac Mouse Fix Helper-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Mac Mouse Fix Helper-Bridging-Header.h"; sourceTree = "<group>"; };
 		4FFBC5A7266977CA001D389B /* DoubleExponentialSmoother.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DoubleExponentialSmoother.swift; sourceTree = "<group>"; };
@@ -6284,18 +6318,21 @@
 		4F422EF023469B2B00AA6E22 /* Other */ = {
 			isa = PBXGroup;
 			children = (
-				4FFB5F1B2C2FEE460096AA3E /* Scripts */,
 				4F214C222B2E141900DD3957 /* Readme.md */,
 				4F2153272B2E150800DD3957 /* Acknowledgements.md */,
 				4F42304628CE6C1C003A41D3 /* License */,
 				4F0BDC722B446A3C00AE65C1 /* Markdown */,
 				4F909D1528A0C3D2009349A2 /* Localization */,
 				4F1793A725EEC8E500E8309B /* Frameworks */,
+				4F4C73D12C4FB2E1001D97C3 /* Scripts */,
 				4F39BC88263B68F400FDF692 /* xcconfig */,
-				4FEB6616279376C200E6A111 /* Notes */,
+				4F4C73AA2C4FB299001D97C3 /* crowdin.yml */,
+				4F4C73A92C4FB28C001D97C3 /* .gitmodules */,
 				4F214C212B2E140A00DD3957 /* .gitignore */,
 				4F214C232B2E144200DD3957 /* .git */,
 				4F2153222B2E145500DD3957 /* .github */,
+				4F4C73D32C4FB2F7001D97C3 /* .vscode */,
+				4FEB6616279376C200E6A111 /* Notes */,
 			);
 			name = Other;
 			sourceTree = "<group>";
@@ -6308,6 +6345,174 @@
 				4F2F0B2A28E6258B00246D59 /* MessagePortUtility.swift */,
 			);
 			path = MessagePort;
+			sourceTree = "<group>";
+		};
+		4F4C737A2C4FB04B001D97C3 /* Localization */ = {
+			isa = PBXGroup;
+			children = (
+				4F97DFFF298732E500012BAC /* LocalizationUtility.h */,
+				4F97E000298732E500012BAC /* LocalizationUtility.m */,
+				4F4C73D42C4FB3C7001D97C3 /* Screenshots */,
+			);
+			path = Localization;
+			sourceTree = "<group>";
+		};
+		4F4C73AE2C4FB2E1001D97C3 /* MarkdownGenerator */ = {
+			isa = PBXGroup;
+			children = (
+				4F4C73AC2C4FB2E1001D97C3 /* buildmd.py */,
+				4F4C73AD2C4FB2E1001D97C3 /* python_requirements.txt */,
+			);
+			path = MarkdownGenerator;
+			sourceTree = "<group>";
+		};
+		4F4C73B02C4FB2E1001D97C3 /* MMFWebsiteCompileXCStrings */ = {
+			isa = PBXGroup;
+			children = (
+				4F4C73AF2C4FB2E1001D97C3 /* buildstrings.py */,
+			);
+			path = MMFWebsiteCompileXCStrings;
+			sourceTree = "<group>";
+		};
+		4F4C73B32C4FB2E1001D97C3 /* StateOfLocalization */ = {
+			isa = PBXGroup;
+			children = (
+				4F4C73B12C4FB2E1001D97C3 /* requirements.txt */,
+				4F4C73B22C4FB2E1001D97C3 /* script.py */,
+			);
+			path = StateOfLocalization;
+			sourceTree = "<group>";
+		};
+		4F4C73B62C4FB2E1001D97C3 /* UpdateStrings */ = {
+			isa = PBXGroup;
+			children = (
+				4F4C73B42C4FB2E1001D97C3 /* requirements.txt */,
+				4F4C73B52C4FB2E1001D97C3 /* script.py */,
+			);
+			path = UpdateStrings;
+			sourceTree = "<group>";
+		};
+		4F4C73B82C4FB2E1001D97C3 /* Old */ = {
+			isa = PBXGroup;
+			children = (
+				4F4C73B32C4FB2E1001D97C3 /* StateOfLocalization */,
+				4F4C73B62C4FB2E1001D97C3 /* UpdateStrings */,
+				4F4C73B72C4FB2E1001D97C3 /* Readme.md */,
+			);
+			path = Old;
+			sourceTree = "<group>";
+		};
+		4F4C73BC2C4FB2E1001D97C3 /* __pycache__ */ = {
+			isa = PBXGroup;
+			children = (
+				4F4C73B92C4FB2E1001D97C3 /* mfgithub.cpython-312.pyc */,
+				4F4C73BA2C4FB2E1001D97C3 /* mflocales.cpython-312.pyc */,
+				4F4C73BB2C4FB2E1001D97C3 /* mfutils.cpython-312.pyc */,
+			);
+			path = __pycache__;
+			sourceTree = "<group>";
+		};
+		4F4C73C22C4FB2E1001D97C3 /* Shared */ = {
+			isa = PBXGroup;
+			children = (
+				4F4C73BC2C4FB2E1001D97C3 /* __pycache__ */,
+				4F4C73BD2C4FB2E1001D97C3 /* __init__.py */,
+				4F4C73BE2C4FB2E1001D97C3 /* mfgithub.py */,
+				4F4C73BF2C4FB2E1001D97C3 /* mflocales.py */,
+				4F4C73C02C4FB2E1001D97C3 /* mflocales_old.py */,
+				4F4C73C12C4FB2E1001D97C3 /* mfutils.py */,
+			);
+			path = Shared;
+			sourceTree = "<group>";
+		};
+		4F4C73C42C4FB2E1001D97C3 /* SyncScripts */ = {
+			isa = PBXGroup;
+			children = (
+				4F4C73C32C4FB2E1001D97C3 /* syncscripts.py */,
+			);
+			path = SyncScripts;
+			sourceTree = "<group>";
+		};
+		4F4C73C62C4FB2E1001D97C3 /* SyncXCStrings */ = {
+			isa = PBXGroup;
+			children = (
+				4F4C73C52C4FB2E1001D97C3 /* sync_xcstrings.py */,
+			);
+			path = SyncXCStrings;
+			sourceTree = "<group>";
+		};
+		4F4C73C92C4FB2E1001D97C3 /* UploadXCStrings */ = {
+			isa = PBXGroup;
+			children = (
+				4F4C73C72C4FB2E1001D97C3 /* requirements.txt */,
+				4F4C73C82C4FB2E1001D97C3 /* uploadstrings.py */,
+			);
+			path = UploadXCStrings;
+			sourceTree = "<group>";
+		};
+		4F4C73CE2C4FB2E1001D97C3 /* mac-mouse-fix-scripts */ = {
+			isa = PBXGroup;
+			children = (
+				4F4C73AE2C4FB2E1001D97C3 /* MarkdownGenerator */,
+				4F4C73B02C4FB2E1001D97C3 /* MMFWebsiteCompileXCStrings */,
+				4F4C73B82C4FB2E1001D97C3 /* Old */,
+				4F4C73C22C4FB2E1001D97C3 /* Shared */,
+				4F4C73C42C4FB2E1001D97C3 /* SyncScripts */,
+				4F4C73C62C4FB2E1001D97C3 /* SyncXCStrings */,
+				4F4C73C92C4FB2E1001D97C3 /* UploadXCStrings */,
+				4F4C73CA2C4FB2E1001D97C3 /* .gitignore */,
+				4F4C73CB2C4FB2E1001D97C3 /* ImportStrings.md */,
+				4F4C73CC2C4FB2E1001D97C3 /* README.md */,
+				4F4C73CD2C4FB2E1001D97C3 /* run.py */,
+			);
+			path = "mac-mouse-fix-scripts";
+			sourceTree = "<group>";
+		};
+		4F4C73D12C4FB2E1001D97C3 /* Scripts */ = {
+			isa = PBXGroup;
+			children = (
+				4F4C73CE2C4FB2E1001D97C3 /* mac-mouse-fix-scripts */,
+				4F4C73CF2C4FB2E1001D97C3 /* .env */,
+				4F4C73D02C4FB2E1001D97C3 /* run */,
+			);
+			path = Scripts;
+			sourceTree = "<group>";
+		};
+		4F4C73D32C4FB2F7001D97C3 /* .vscode */ = {
+			isa = PBXGroup;
+			children = (
+				4F4C73D22C4FB2F7001D97C3 /* launch.json */,
+			);
+			path = .vscode;
+			sourceTree = "<group>";
+		};
+		4F4C73D42C4FB3C7001D97C3 /* Screenshots */ = {
+			isa = PBXGroup;
+			children = (
+				4F4C73D52C4FB3FA001D97C3 /* LocalizedStringAnnotation.h */,
+				4F4C73D62C4FB3FA001D97C3 /* LocalizedStringAnnotation.m */,
+				4F4C737B2C4FB06E001D97C3 /* NSString+Steganography.h */,
+				4F4C737C2C4FB06E001D97C3 /* NSString+Steganography.m */,
+				4F4C73FC2C4FB5D2001D97C3 /* AnnotationUtility.h */,
+				4F4C73FD2C4FB5D2001D97C3 /* AnnotationUtility.m */,
+			);
+			path = Screenshots;
+			sourceTree = "<group>";
+		};
+		4F4C73F82C4FB4CA001D97C3 /* FromXcodeLocalizationScreenshotFix */ = {
+			isa = PBXGroup;
+			children = (
+				4F4C73F92C4FB4E6001D97C3 /* Readme.md */,
+				4F4C73F62C4FB4C2001D97C3 /* TreeNode.h */,
+				4F4C73F72C4FB4C2001D97C3 /* TreeNode.m */,
+				4F4C73F22C4FB4C2001D97C3 /* KVPair.h */,
+				4F4C73F32C4FB4C2001D97C3 /* KVPair.m */,
+				4F4C73F42C4FB4C2001D97C3 /* NSRunLoop+Additions.h */,
+				4F4C73F52C4FB4C2001D97C3 /* NSRunLoop+Additions.m */,
+				4F4C73FA2C4FB570001D97C3 /* Queue.h */,
+				4F4C73FB2C4FB570001D97C3 /* Queue.m */,
+			);
+			path = FromXcodeLocalizationScreenshotFix;
 			sourceTree = "<group>";
 		};
 		4F6F67A128A8188000C6C40F /* ButtonTab */ = {
@@ -6550,8 +6755,6 @@
 				4FFB5EFA2C2E78D30096AA3E /* Misappropriating XCStrings.md */,
 				4F909D1928A0C3D2009349A2 /* Localization Readme.md */,
 				4FA2F13C2C2B0932000C5535 /* Localizable.xcstrings */,
-				4F97DFFF298732E500012BAC /* LocalizationUtility.h */,
-				4F97E000298732E500012BAC /* LocalizationUtility.m */,
 			);
 			path = Localization;
 			sourceTree = "<group>";
@@ -6847,6 +7050,7 @@
 				4FD8607B266E65E9004F76C8 /* DerivedValueGenerator.swift old */,
 				4FD86081266E71A5004F76C8 /* DerivedValueGeneratorObjC.h old */,
 				4FD86082266E71A6004F76C8 /* DerivedValueGeneratorObjC.m old */,
+				4F4C73F82C4FB4CA001D97C3 /* FromXcodeLocalizationScreenshotFix */,
 			);
 			path = Unused;
 			sourceTree = "<group>";
@@ -6958,6 +7162,7 @@
 				4F9C14B527BAF202008A1479 /* IOKit */,
 				4F909D4228A0C4C2009349A2 /* Extensions */,
 				4FA40D1128A0D9FB00499E53 /* External */,
+				4F4C737A2C4FB04B001D97C3 /* Localization */,
 				4FF6653625F2C7B000689B77 /* Utility */,
 				4F7F47D528A6EFCF00290BBD /* Resources */,
 			);
@@ -6995,8 +7200,6 @@
 				4FE40B95283A49DD00880BEF /* SharedUtilitySwift.swift */,
 				4FDECCDC28A3E93100DDEE91 /* IsObjC.h */,
 				4FDECCDD28A3E93100DDEE91 /* IsObjC.m */,
-				4FF6653F25F2C7B000689B77 /* Queue.h */,
-				4FF6653A25F2C7B000689B77 /* Queue.m */,
 				4FD860A9266EC24E004F76C8 /* DerivedProperty.swift */,
 				4FF8C89D28955DC4007EC31F /* CoolTimer.swift */,
 				4FCEDC87292D6A8F00E7DA2A /* HashablePair.swift */,
@@ -7431,81 +7634,6 @@
 			path = Strings;
 			sourceTree = "<group>";
 		};
-		4FFB5F092C2FEE460096AA3E /* MarkdownGenerator */ = {
-			isa = PBXGroup;
-			children = (
-				4FFB5F072C2FEE460096AA3E /* markdown_generator.py */,
-				4FFB5F082C2FEE460096AA3E /* python_requirements.txt */,
-			);
-			path = MarkdownGenerator;
-			sourceTree = "<group>";
-		};
-		4FFB5F0C2C2FEE460096AA3E /* StateOfLocalization */ = {
-			isa = PBXGroup;
-			children = (
-				4FFB5F0A2C2FEE460096AA3E /* requirements.txt */,
-				4FFB5F0B2C2FEE460096AA3E /* script.py */,
-			);
-			path = StateOfLocalization;
-			sourceTree = "<group>";
-		};
-		4FFB5F0F2C2FEE460096AA3E /* UpdateStrings */ = {
-			isa = PBXGroup;
-			children = (
-				4FFB5F0D2C2FEE460096AA3E /* requirements.txt */,
-				4FFB5F0E2C2FEE460096AA3E /* script.py */,
-			);
-			path = UpdateStrings;
-			sourceTree = "<group>";
-		};
-		4FFB5F112C2FEE460096AA3E /* Old */ = {
-			isa = PBXGroup;
-			children = (
-				4FFB5F1A2C2FEE460096AA3E /* Readme.md */,
-				4FFB5F0C2C2FEE460096AA3E /* StateOfLocalization */,
-				4FFB5F0F2C2FEE460096AA3E /* UpdateStrings */,
-			);
-			path = Old;
-			sourceTree = "<group>";
-		};
-		4FFB5F142C2FEE460096AA3E /* Shared */ = {
-			isa = PBXGroup;
-			children = (
-				4FFB5F122C2FEE460096AA3E /* __init__.py */,
-				4FFB5F132C2FEE460096AA3E /* shared.py */,
-			);
-			path = Shared;
-			sourceTree = "<group>";
-		};
-		4FFB5F162C2FEE460096AA3E /* SyncXCStrings */ = {
-			isa = PBXGroup;
-			children = (
-				4FFB5F152C2FEE460096AA3E /* sync_xcstrings.py */,
-			);
-			path = SyncXCStrings;
-			sourceTree = "<group>";
-		};
-		4FFB5F192C2FEE460096AA3E /* UploadXCStrings */ = {
-			isa = PBXGroup;
-			children = (
-				4FFB5F182C2FEE460096AA3E /* upload_xcstrings.py */,
-				4FFB5F172C2FEE460096AA3E /* requirements.txt */,
-			);
-			path = UploadXCStrings;
-			sourceTree = "<group>";
-		};
-		4FFB5F1B2C2FEE460096AA3E /* Scripts */ = {
-			isa = PBXGroup;
-			children = (
-				4FFB5F142C2FEE460096AA3E /* Shared */,
-				4FFB5F092C2FEE460096AA3E /* MarkdownGenerator */,
-				4FFB5F192C2FEE460096AA3E /* UploadXCStrings */,
-				4FFB5F162C2FEE460096AA3E /* SyncXCStrings */,
-				4FFB5F112C2FEE460096AA3E /* Old */,
-			);
-			path = Scripts;
-			sourceTree = "<group>";
-		};
 		4FFBC56E2667DC76001D389B /* PrefixHeader */ = {
 			isa = PBXGroup;
 			children = (
@@ -7833,6 +7961,7 @@
 				4FA40D0F28A0D8EF00499E53 /* SubPixelator.m in Sources */,
 				4F44794528B62FA400AD1979 /* LicenseConfig.swift in Sources */,
 				4F97E001298732E500012BAC /* LocalizationUtility.m in Sources */,
+				4F4C73FE2C4FB5D2001D97C3 /* AnnotationUtility.m in Sources */,
 				4F39BC4A263B179200FDF692 /* AppState.m in Sources */,
 				4FBC943B260F8AA60062F186 /* MASShortcut.m in Sources */,
 				4F909D3B28A0C3D2009349A2 /* ModCaptureDeleteButton.swift in Sources */,
@@ -7848,6 +7977,7 @@
 				4FF6654E25F2C7B000689B77 /* SharedUtility.m in Sources */,
 				4F8FC13F275DC81900887A0C /* PrefixSwift.swift in Sources */,
 				4F8CE7012617738A00D70A76 /* AppTranslocationManager.m in Sources */,
+				4F4C73D72C4FB3FA001D97C3 /* LocalizedStringAnnotation.m in Sources */,
 				4FF665FE25F2C92700689B77 /* main.m in Sources */,
 				4F909D2528A0C3D2009349A2 /* TabViewController.swift in Sources */,
 				4F1B832D26081A5500AEAF37 /* CaptureNotificationCreator.m in Sources */,
@@ -7866,7 +7996,6 @@
 				4FF6660025F2C92700689B77 /* Hyperlink.m in Sources */,
 				4F909D2428A0C3D2009349A2 /* TabItemControllerProtocol.swift in Sources */,
 				4FDE75A428B25E1A00662314 /* String+Extensions.swift in Sources */,
-				4FF6654C25F2C7B000689B77 /* Queue.m in Sources */,
 				4FF8C89E28955DC4007EC31F /* CoolTimer.swift in Sources */,
 				4F909D3428A0C3D2009349A2 /* Replace.swift in Sources */,
 				4FF665ED25F2C92700689B77 /* MFSegmentedControl.m in Sources */,
@@ -7916,6 +8045,7 @@
 				4F909D3D28A0C3D2009349A2 /* ModCaptureTextField.swift in Sources */,
 				4F9E78BF26855BCF002C2309 /* Concurrency.swift in Sources */,
 				4F92A708260F4BF000529D1F /* RemapTableView.m in Sources */,
+				4F4C737E2C4FB06E001D97C3 /* NSString+Steganography.m in Sources */,
 				4FA40CF928A0CCCA00499E53 /* Bezier.swift in Sources */,
 				4F12952028D2D5E1009A49AB /* NSTextField+Extentions.swift in Sources */,
 				4FC8A7D728ACEB7B007DB982 /* NSString+Extensions.swift in Sources */,
@@ -7991,6 +8121,7 @@
 				4FF6669325F2C93A00689B77 /* TouchSimulator.m in Sources */,
 				4FFA4E4A28B7D3750062A1FE /* NSView+Extensions.swift in Sources */,
 				4F9E78E3268663B1002C2309 /* ExponentialSmoother.swift in Sources */,
+				4F4C73D82C4FB3FA001D97C3 /* LocalizedStringAnnotation.m in Sources */,
 				4F3A40AB266BBB6200436821 /* AccelerationBezier.swift in Sources */,
 				4FD860AA266EC24E004F76C8 /* DerivedProperty.swift in Sources */,
 				4FE6CBC428987E8B00B3E829 /* DynamicSystemAnimator.swift in Sources */,
@@ -8016,6 +8147,7 @@
 				4FF27DD82B95B108004744E1 /* Shorthands.swift in Sources */,
 				4FFA4E3A28B79D960062A1FE /* NSString+Extensions.swift in Sources */,
 				4F09284028B8101600BDC2FF /* TrialSection.swift in Sources */,
+				4F4C73FF2C4FB5D2001D97C3 /* AnnotationUtility.m in Sources */,
 				4F41506429255F880040BA7D /* NSImage+Additions.m in Sources */,
 				4FF6669225F2C93A00689B77 /* RoughScroll_old_.m in Sources */,
 				4FBDA14F27B241CE0030E4EA /* GlobalEventTapThread.m in Sources */,
@@ -8032,6 +8164,7 @@
 				4FF6668925F2C93A00689B77 /* Scroll.m in Sources */,
 				4FC55E31285E6F1F00F2FCCF /* GlobalDefaults.swift in Sources */,
 				4FF6669525F2C93A00689B77 /* ModifiedDrag.m in Sources */,
+				4F4C737D2C4FB06E001D97C3 /* NSString+Steganography.m in Sources */,
 				4FD86089266E819A004F76C8 /* Pointers.swift in Sources */,
 				4FFA4E4628B7D2960062A1FE /* Replace.swift in Sources */,
 				4FF6668825F2C93A00689B77 /* ButtonInputReceiver.m in Sources */,
@@ -8095,7 +8228,6 @@
 				4FFA4E3828B79D410062A1FE /* NSAttributedString+Additions.m in Sources */,
 				4FFA4E4228B7D2890062A1FE /* FadeAnimations.swift in Sources */,
 				4FAA5602293A41AF00BA782C /* BezierCappedAccelerationCurve.swift in Sources */,
-				4FF6654B25F2C7B000689B77 /* Queue.m in Sources */,
 				4F9C9B6B268A2D6F0083DED0 /* CircularBuffer.m in Sources */,
 				4FF8C8A32895AACB007EC31F /* Buttons.swift in Sources */,
 				4FF0255427B007FC00923107 /* ModifiedDragOutputFakeDrag.m in Sources */,
