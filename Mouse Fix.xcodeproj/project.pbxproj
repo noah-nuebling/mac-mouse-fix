@@ -80,9 +80,6 @@
 		4F8A8DBF287F7BBA00786BCC /* NaturalAccelerationCurve.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F8A8DBE287F7BBA00786BCC /* NaturalAccelerationCurve.swift */; };
 		4F8A8DC2287F967000786BCC /* TestAccelerationCurve.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F8A8DC1287F967000786BCC /* TestAccelerationCurve.swift */; };
 		4F8B01AC2C348A3A00F3AF8D /* AppUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F8B01AB2C348A3A00F3AF8D /* AppUITests.swift */; };
-		4F8B01AE2C348A3A00F3AF8D /* AppUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F8B01AD2C348A3A00F3AF8D /* AppUITestsLaunchTests.swift */; };
-		4F8B01BB2C348A5C00F3AF8D /* HelperUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F8B01BA2C348A5C00F3AF8D /* HelperUITests.swift */; };
-		4F8B01BD2C348A5C00F3AF8D /* HelperUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F8B01BC2C348A5C00F3AF8D /* HelperUITestsLaunchTests.swift */; };
 		4F8B7E6727B4E32600598B65 /* TouchAnimatorBase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F8B7E6627B4E32600598B65 /* TouchAnimatorBase.swift */; };
 		4F8CE7012617738A00D70A76 /* AppTranslocationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F8CE6FF2617738A00D70A76 /* AppTranslocationManager.m */; };
 		4F8CF95728686C0100BF5E55 /* PolynomialRegression.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F8CF94328686C0100BF5E55 /* PolynomialRegression.m */; };
@@ -2017,13 +2014,10 @@
 		4F8A8DBE287F7BBA00786BCC /* NaturalAccelerationCurve.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NaturalAccelerationCurve.swift; sourceTree = "<group>"; };
 		4F8A8DC0287F885D00786BCC /* Shorthands.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Shorthands.h; sourceTree = "<group>"; };
 		4F8A8DC1287F967000786BCC /* TestAccelerationCurve.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestAccelerationCurve.swift; sourceTree = "<group>"; };
-		4F8B01942C34862000F3AF8D /* TakeLocalizationScreenshots.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; path = TakeLocalizationScreenshots.xctestplan; sourceTree = "<group>"; };
+		4F8B01942C34862000F3AF8D /* LocalizationScreenshots.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; path = LocalizationScreenshots.xctestplan; sourceTree = "<group>"; };
 		4F8B01A92C348A3A00F3AF8D /* AppUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AppUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		4F8B01AB2C348A3A00F3AF8D /* AppUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppUITests.swift; sourceTree = "<group>"; };
-		4F8B01AD2C348A3A00F3AF8D /* AppUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		4F8B01B82C348A5C00F3AF8D /* HelperUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = HelperUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		4F8B01BA2C348A5C00F3AF8D /* HelperUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelperUITests.swift; sourceTree = "<group>"; };
-		4F8B01BC2C348A5C00F3AF8D /* HelperUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelperUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		4F8B7E6627B4E32600598B65 /* TouchAnimatorBase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TouchAnimatorBase.swift; sourceTree = "<group>"; };
 		4F8CE6FF2617738A00D70A76 /* AppTranslocationManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppTranslocationManager.m; sourceTree = "<group>"; };
 		4F8CE7002617738A00D70A76 /* AppTranslocationManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppTranslocationManager.h; sourceTree = "<group>"; };
@@ -6445,24 +6439,6 @@
 			path = Extern;
 			sourceTree = "<group>";
 		};
-		4F8B01AA2C348A3A00F3AF8D /* AppUITests */ = {
-			isa = PBXGroup;
-			children = (
-				4F8B01AB2C348A3A00F3AF8D /* AppUITests.swift */,
-				4F8B01AD2C348A3A00F3AF8D /* AppUITestsLaunchTests.swift */,
-			);
-			path = AppUITests;
-			sourceTree = "<group>";
-		};
-		4F8B01B92C348A5C00F3AF8D /* HelperUITests */ = {
-			isa = PBXGroup;
-			children = (
-				4F8B01BA2C348A5C00F3AF8D /* HelperUITests.swift */,
-				4F8B01BC2C348A5C00F3AF8D /* HelperUITestsLaunchTests.swift */,
-			);
-			path = HelperUITests;
-			sourceTree = "<group>";
-		};
 		4F8CE6FE2617738A00D70A76 /* AppTranslocation */ = {
 			isa = PBXGroup;
 			children = (
@@ -6670,9 +6646,8 @@
 		4FA1ACE025E85904007DB95B /* Tests */ = {
 			isa = PBXGroup;
 			children = (
-				4F8B01942C34862000F3AF8D /* TakeLocalizationScreenshots.xctestplan */,
-				4F8B01AA2C348A3A00F3AF8D /* AppUITests */,
-				4F8B01B92C348A5C00F3AF8D /* HelperUITests */,
+				4F8B01942C34862000F3AF8D /* LocalizationScreenshots.xctestplan */,
+				4F8B01AB2C348A3A00F3AF8D /* AppUITests.swift */,
 			);
 			path = Tests;
 			sourceTree = "<group>";
@@ -7835,7 +7810,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4F8B01AE2C348A3A00F3AF8D /* AppUITestsLaunchTests.swift in Sources */,
 				4F8B01AC2C348A3A00F3AF8D /* AppUITests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -7844,8 +7818,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4F8B01BD2C348A5C00F3AF8D /* HelperUITestsLaunchTests.swift in Sources */,
-				4F8B01BB2C348A5C00F3AF8D /* HelperUITests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

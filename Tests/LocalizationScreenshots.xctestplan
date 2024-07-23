@@ -67,17 +67,6 @@
         "identifier" : "4F8B01A82C348A3A00F3AF8D",
         "name" : "AppUITests"
       }
-    },
-    {
-      "enabled" : false,
-      "selectedTests" : [
-
-      ],
-      "target" : {
-        "containerPath" : "container:Mouse Fix.xcodeproj",
-        "identifier" : "4F8B01B72C348A5C00F3AF8D",
-        "name" : "HelperUITests"
-      }
     }
   ],
   "version" : 1
