@@ -237,6 +237,10 @@
 		4FE40B97283A49DD00880BEF /* SharedUtilitySwift.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FE40B95283A49DD00880BEF /* SharedUtilitySwift.swift */; };
 		4FE479E12933C87A00B75E9B /* ButtonModifiers.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FE479E02933C87A00B75E9B /* ButtonModifiers.m */; };
 		4FE6CBC428987E8B00B3E829 /* DynamicSystemAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FE6CBC328987E8A00B3E829 /* DynamicSystemAnimator.swift */; };
+		4FE78C342C4FFA2F00C54103 /* TreeNode.h in Sources */ = {isa = PBXBuildFile; fileRef = 4F4C73F62C4FB4C2001D97C3 /* TreeNode.h */; };
+		4FE78C352C4FFA2F00C54103 /* TreeNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F4C73F72C4FB4C2001D97C3 /* TreeNode.m */; };
+		4FE78C362C4FFA7A00C54103 /* NSString+Steganography.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F4C737C2C4FB06E001D97C3 /* NSString+Steganography.m */; };
+		4FE78C372C4FFA7C00C54103 /* NSString+Steganography.h in Sources */ = {isa = PBXBuildFile; fileRef = 4F4C737B2C4FB06E001D97C3 /* NSString+Steganography.h */; };
 		4FEA63CF2921510F00E464D6 /* NSImage+Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FEA63CD2921510E00E464D6 /* NSImage+Additions.m */; };
 		4FEB660F2793510300E6A111 /* CocoaLumberjack in Frameworks */ = {isa = PBXBuildFile; productRef = 4FEB660E2793510300E6A111 /* CocoaLumberjack */; };
 		4FEB66112793510800E6A111 /* CocoaLumberjackSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 4FEB66102793510800E6A111 /* CocoaLumberjackSwift */; };
@@ -336,13 +340,6 @@
 			proxyType = 1;
 			remoteGlobalIDString = 4F94F5ED25E5EC2500D9F24A;
 			remoteInfo = "Mac Mouse Fix";
-		};
-		4F8B01BE2C348A5C00F3AF8D /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 4FCECD7821092354001F1078 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 4FCECD7F21092354001F1078;
-			remoteInfo = "Mac Mouse Fix Helper";
 		};
 		4F94F73525E6138800D9F24A /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -2065,7 +2062,6 @@
 		4F8B01942C34862000F3AF8D /* LocalizationScreenshots.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; path = LocalizationScreenshots.xctestplan; sourceTree = "<group>"; };
 		4F8B01A92C348A3A00F3AF8D /* AppUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AppUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		4F8B01AB2C348A3A00F3AF8D /* AppUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppUITests.swift; sourceTree = "<group>"; };
-		4F8B01B82C348A5C00F3AF8D /* HelperUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = HelperUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		4F8B7E6627B4E32600598B65 /* TouchAnimatorBase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TouchAnimatorBase.swift; sourceTree = "<group>"; };
 		4F8CE6FF2617738A00D70A76 /* AppTranslocationManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppTranslocationManager.m; sourceTree = "<group>"; };
 		4F8CE7002617738A00D70A76 /* AppTranslocationManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppTranslocationManager.h; sourceTree = "<group>"; };
@@ -2246,6 +2242,7 @@
 		4FE479DF2933C87A00B75E9B /* ButtonModifiers.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ButtonModifiers.h; sourceTree = "<group>"; };
 		4FE479E02933C87A00B75E9B /* ButtonModifiers.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ButtonModifiers.m; sourceTree = "<group>"; };
 		4FE6CBC328987E8A00B3E829 /* DynamicSystemAnimator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DynamicSystemAnimator.swift; sourceTree = "<group>"; };
+		4FE78C382C4FFB0E00C54103 /* AppUITests-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "AppUITests-Bridging-Header.h"; sourceTree = "<group>"; };
 		4FE7A0DE28677AD600C33B37 /* Gain Curve Math.tex */ = {isa = PBXFileReference; lastKnownFileType = text; path = "Gain Curve Math.tex"; sourceTree = "<group>"; };
 		4FE8FC792929D8AC0002583B /* On Bundle Size.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "On Bundle Size.md"; sourceTree = "<group>"; };
 		4FEA63CD2921510E00E464D6 /* NSImage+Additions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSImage+Additions.m"; sourceTree = "<group>"; };
@@ -2414,13 +2411,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		4F8B01B52C348A5C00F3AF8D /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		4F94F5EB25E5EC2500D9F24A /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -2462,7 +2452,6 @@
 				4FA1FD8228A916B600D1C8EE /* NSShadow+Extensions.swift */,
 				4F12951F28D2D5E1009A49AB /* NSTextField+Extentions.swift */,
 				4F909D0928A0C3D2009349A2 /* UIAnimations */,
-				4FFA4E3928B79D8D0062A1FE /* Strings */,
 				4F8A44502925311B00361EFF /* Symbols.h */,
 				4F8A44512925311B00361EFF /* Symbols.m */,
 				4FA2F1252C29A11D000C5535 /* Notifications */,
@@ -6491,10 +6480,12 @@
 			children = (
 				4F4C73D52C4FB3FA001D97C3 /* LocalizedStringAnnotation.h */,
 				4F4C73D62C4FB3FA001D97C3 /* LocalizedStringAnnotation.m */,
-				4F4C737B2C4FB06E001D97C3 /* NSString+Steganography.h */,
-				4F4C737C2C4FB06E001D97C3 /* NSString+Steganography.m */,
 				4F4C73FC2C4FB5D2001D97C3 /* AnnotationUtility.h */,
 				4F4C73FD2C4FB5D2001D97C3 /* AnnotationUtility.m */,
+				4F4C737B2C4FB06E001D97C3 /* NSString+Steganography.h */,
+				4F4C737C2C4FB06E001D97C3 /* NSString+Steganography.m */,
+				4F4C73F62C4FB4C2001D97C3 /* TreeNode.h */,
+				4F4C73F72C4FB4C2001D97C3 /* TreeNode.m */,
 			);
 			path = Screenshots;
 			sourceTree = "<group>";
@@ -6503,8 +6494,6 @@
 			isa = PBXGroup;
 			children = (
 				4F4C73F92C4FB4E6001D97C3 /* Readme.md */,
-				4F4C73F62C4FB4C2001D97C3 /* TreeNode.h */,
-				4F4C73F72C4FB4C2001D97C3 /* TreeNode.m */,
 				4F4C73F22C4FB4C2001D97C3 /* KVPair.h */,
 				4F4C73F32C4FB4C2001D97C3 /* KVPair.m */,
 				4F4C73F42C4FB4C2001D97C3 /* NSRunLoop+Additions.h */,
@@ -6849,6 +6838,7 @@
 		4FA1ACE025E85904007DB95B /* Tests */ = {
 			isa = PBXGroup;
 			children = (
+				4FE78C382C4FFB0E00C54103 /* AppUITests-Bridging-Header.h */,
 				4F8B01942C34862000F3AF8D /* LocalizationScreenshots.xctestplan */,
 				4F8B01AB2C348A3A00F3AF8D /* AppUITests.swift */,
 			);
@@ -7005,7 +6995,6 @@
 				4FCECD8021092354001F1078 /* Mac Mouse Fix Helper.app */,
 				4F94F5EE25E5EC2500D9F24A /* Mac Mouse Fix.app */,
 				4F8B01A92C348A3A00F3AF8D /* AppUITests.xctest */,
-				4F8B01B82C348A5C00F3AF8D /* HelperUITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -7161,6 +7150,7 @@
 				4F09284128B8C71000BDC2FF /* UI */,
 				4F9C14B527BAF202008A1479 /* IOKit */,
 				4FA40D1128A0D9FB00499E53 /* External */,
+				4FFA4E3928B79D8D0062A1FE /* Strings */,
 				4F4C737A2C4FB04B001D97C3 /* Localization */,
 				4F909D4228A0C4C2009349A2 /* Extensions */,
 				4FF6653625F2C7B000689B77 /* Utility */,
@@ -7678,24 +7668,6 @@
 			productReference = 4F8B01A92C348A3A00F3AF8D /* AppUITests.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
 		};
-		4F8B01B72C348A5C00F3AF8D /* HelperUITests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 4F8B01C02C348A5C00F3AF8D /* Build configuration list for PBXNativeTarget "HelperUITests" */;
-			buildPhases = (
-				4F8B01B42C348A5C00F3AF8D /* Sources */,
-				4F8B01B52C348A5C00F3AF8D /* Frameworks */,
-				4F8B01B62C348A5C00F3AF8D /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				4F8B01BF2C348A5C00F3AF8D /* PBXTargetDependency */,
-			);
-			name = HelperUITests;
-			productName = HelperUITests;
-			productReference = 4F8B01B82C348A5C00F3AF8D /* HelperUITests.xctest */;
-			productType = "com.apple.product-type.bundle.ui-testing";
-		};
 		4F94F5ED25E5EC2500D9F24A /* Mac Mouse Fix */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 4F94F61225E5EC2800D9F24A /* Build configuration list for PBXNativeTarget "Mac Mouse Fix" */;
@@ -7770,10 +7742,6 @@
 						CreatedOnToolsVersion = 15.4;
 						TestTargetID = 4F94F5ED25E5EC2500D9F24A;
 					};
-					4F8B01B72C348A5C00F3AF8D = {
-						CreatedOnToolsVersion = 15.4;
-						TestTargetID = 4FCECD7F21092354001F1078;
-					};
 					4F94F5ED25E5EC2500D9F24A = {
 						CreatedOnToolsVersion = 12.2;
 					};
@@ -7812,20 +7780,12 @@
 				4F94F5ED25E5EC2500D9F24A /* Mac Mouse Fix */,
 				4FCECD7F21092354001F1078 /* Mac Mouse Fix Helper */,
 				4F8B01A82C348A3A00F3AF8D /* AppUITests */,
-				4F8B01B72C348A5C00F3AF8D /* HelperUITests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
 		4F8B01A72C348A3A00F3AF8D /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		4F8B01B62C348A5C00F3AF8D /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -7939,13 +7899,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				4F8B01AC2C348A3A00F3AF8D /* AppUITests.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		4F8B01B42C348A5C00F3AF8D /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
+				4FE78C342C4FFA2F00C54103 /* TreeNode.h in Sources */,
+				4FE78C352C4FFA2F00C54103 /* TreeNode.m in Sources */,
+				4FE78C372C4FFA7C00C54103 /* NSString+Steganography.h in Sources */,
+				4FE78C362C4FFA7A00C54103 /* NSString+Steganography.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -8250,11 +8207,6 @@
 			target = 4F94F5ED25E5EC2500D9F24A /* Mac Mouse Fix */;
 			targetProxy = 4F8B01AF2C348A3A00F3AF8D /* PBXContainerItemProxy */;
 		};
-		4F8B01BF2C348A5C00F3AF8D /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 4FCECD7F21092354001F1078 /* Mac Mouse Fix Helper */;
-			targetProxy = 4F8B01BE2C348A5C00F3AF8D /* PBXContainerItemProxy */;
-		};
 		4F94F73625E6138800D9F24A /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 4FCECD7F21092354001F1078 /* Mac Mouse Fix Helper */;
@@ -8337,6 +8289,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
 				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_OBJC_BRIDGING_HEADER = "Tests/AppUITests-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				TEST_TARGET_NAME = "Mac Mouse Fix";
 			};
@@ -8361,63 +8314,9 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.noah-nuebling.AppUITests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_OBJC_BRIDGING_HEADER = "Tests/AppUITests-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				TEST_TARGET_NAME = "Mac Mouse Fix";
-			};
-			name = Release;
-		};
-		4F8B01C12C348A5C00F3AF8D /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
-				CLANG_ENABLE_OBJC_WEAK = YES;
-				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				DEBUG_INFORMATION_FORMAT = dwarf;
-				DEVELOPMENT_TEAM = LM5Z78756B;
-				ENABLE_USER_SCRIPT_SANDBOXING = YES;
-				GCC_C_LANGUAGE_STANDARD = gnu17;
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"DEBUG=1",
-					"$(inherited)",
-				);
-				GENERATE_INFOPLIST_FILE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 14.5;
-				MARKETING_VERSION = 1.0;
-				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
-				MTL_FAST_MATH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.noah-nuebling.HelperUITests";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
-				SWIFT_EMIT_LOC_STRINGS = NO;
-				SWIFT_VERSION = 5.0;
-				TEST_TARGET_NAME = "Mac Mouse Fix Helper";
-			};
-			name = Debug;
-		};
-		4F8B01C22C348A5C00F3AF8D /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
-				CLANG_ENABLE_OBJC_WEAK = YES;
-				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = LM5Z78756B;
-				ENABLE_USER_SCRIPT_SANDBOXING = YES;
-				GCC_C_LANGUAGE_STANDARD = gnu17;
-				GENERATE_INFOPLIST_FILE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 14.5;
-				MARKETING_VERSION = 1.0;
-				MTL_FAST_MATH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.noah-nuebling.HelperUITests";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_EMIT_LOC_STRINGS = NO;
-				SWIFT_VERSION = 5.0;
-				TEST_TARGET_NAME = "Mac Mouse Fix Helper";
 			};
 			name = Release;
 		};
@@ -8728,15 +8627,6 @@
 			buildConfigurations = (
 				4F8B01B22C348A3A00F3AF8D /* Debug */,
 				4F8B01B32C348A3A00F3AF8D /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		4F8B01C02C348A5C00F3AF8D /* Build configuration list for PBXNativeTarget "HelperUITests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				4F8B01C12C348A5C00F3AF8D /* Debug */,
-				4F8B01C22C348A5C00F3AF8D /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

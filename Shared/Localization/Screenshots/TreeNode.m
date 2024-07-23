@@ -16,6 +16,53 @@
 
 @dynamic representedObject, childNodes, mutableChildNodes, parentNode;
 
++ (TreeNode<NSDictionary *> *)treeWithDictionary:(NSDictionary *)dictionary childrenKey:(NSString *)childrenKey {
+    
+    /// Note:
+    ///     Making this method to parse the XCUIElement.snapshot().dictionaryRepresentation. But might be useful for other stuff.
+    
+    /// Check children
+    BOOL childrenAreUsable = YES;
+    do {
+        
+        if (![dictionary[childrenKey] isKindOfClass:[NSArray class]]) {
+            childrenAreUsable = NO;
+            break;
+        }
+        
+        for (id child in dictionary[childrenKey]) {
+            
+            if ([child isKindOfClass:[NSArray class]]) {
+                childrenAreUsable = NO;
+                break;
+            }
+        }
+        
+    } while (0);
+    
+    /// Process children
+    NSMutableArray<TreeNode *> *childNodes = [NSMutableArray array];
+    if (childrenAreUsable) {
+        
+        /// Recursively construct child trees
+        for (NSDictionary *child in dictionary[childrenKey]) {
+            TreeNode *childNode = [self treeWithDictionary:child childrenKey:childrenKey];
+            [childNodes addObject:childNode];
+        }
+        
+        /// Remove children from dict
+        dictionary = dictionary.mutableCopy;
+        ((id)dictionary)[childrenKey] = nil;
+    }
+    
+    /// Create node
+    TreeNode<NSDictionary *> *node = [[TreeNode alloc] initWithRepresentedObject:dictionary];
+    [node.mutableChildNodes setArray:childNodes];
+    
+    /// Return
+    return node;
+}
+
 - (NSArray <TreeNode *> *)siblings {
     return self.parentNode.childNodes;
 }

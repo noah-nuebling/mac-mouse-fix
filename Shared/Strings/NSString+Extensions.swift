@@ -39,4 +39,15 @@ import Foundation
     @objc func stringByTrimmingWhiteSpace() -> NSString {
         return self.attributed().trimmingWhitespace().string as NSString /// This is pretty inefficient but probably doesn't matter
     }
+    
+    @objc func stringByAddingIndent(_ indent: Int) -> NSString {
+        let lines = self.components(separatedBy: "\n")
+        let paddedLines = lines.map { $0.stringByPrependingWhitespace(indent) }
+        return paddedLines. joined(separator: "\n")
+    }
+
+    @objc func stringByPrependingWhitespace(_ spaces: Int) -> NSString {
+        let whitespace = String(repeating: " ", count: spaces) as NSString
+        return whitespace.appending(self) as NSString
+    }
 }

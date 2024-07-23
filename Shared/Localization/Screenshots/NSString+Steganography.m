@@ -52,7 +52,6 @@ typedef NS_ENUM(UTF32Char, MFZeroWidthCharacter) {
     return [self stringByAppendingString:secretMessage];
 }
 
-
 - (NSString *)encodedAsSecretMessage {
     
     /// Returns `self` encoded as a zero-width string.

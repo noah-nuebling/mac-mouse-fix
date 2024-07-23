@@ -49,6 +49,9 @@ typedef NS_ENUM(NSInteger, MFTreeTraversal) {
 //@property (readonly, strong) NSMutableArray<TreeNode<T> *> *mutableChildNodes; /// This gives compiler warnings for some reason
 @property (nullable, readonly, weak) TreeNode<T> *parentNode;
 
+/// Tree Factories
++ (TreeNode<NSDictionary *> *)treeWithDictionary:(NSDictionary *)dictionary childrenKey:(NSString *)childrenKey;
+
 /// Convenience methods
 - (NSArray <TreeNode<T> *> *)siblings;
 - (TreeNode<T> *_Nullable)nextSibling;

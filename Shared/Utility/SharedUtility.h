@@ -18,6 +18,24 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+///
+/// On swift-unbridging
+///
+///     
+///
+
+#if defined(__swift__)
+#define SWIFT_COMPILING 1
+#else
+#define SWIFT_COMPILING 0
+#endif
+
+#if SWIFT_COMPILING
+#define __swift_unbridge(__type) id
+#else
+#define __swift_unbridge(__type) __type
+#endif
+
 #define stringf(format, ...) [NSString stringWithFormat:(format), ##__VA_ARGS__]
 
 /// Check if ptr is objc object

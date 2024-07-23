@@ -20,9 +20,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface NSString (MFSteganography)
 
-- (NSString *)stringByAppendingStringAsSecretMessage:(NSString *)message;
-- (NSString *)encodedAsSecretMessage;
-- (NSArray<NSString *> *)secretMessages;
+- (__swift_unbridge(NSString *))stringByAppendingStringAsSecretMessage:(NSString *)message;
+- (__swift_unbridge(NSString *))encodedAsSecretMessage;
+- (__swift_unbridge(NSArray<NSString *> *))secretMessages;
 
 + (NSString *)stringWithBinaryCharacters:(NSArray<NSArray<NSNumber *> *> *)characters;
 - (NSArray<NSArray<NSNumber *> *> *)binaryCharacters;

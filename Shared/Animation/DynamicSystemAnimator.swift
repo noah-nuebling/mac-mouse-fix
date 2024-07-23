@@ -67,7 +67,7 @@ import CocoaLumberjackSwift
     let sampleRate: Int = 6000 * 100
     
     /// State
-    var target: Double
+    var anchor: Double
     var x0: Double /// Last displacement
     var x0_: Double /// Last velocity
 //    var x0__: Double /// Last acceleration
@@ -104,7 +104,7 @@ import CocoaLumberjackSwift
         stopCallback = nil
         
         /// State
-        target = 0
+        anchor = 0
         x0 = 0
         x0_ = 0
 //        x0__ = 0
@@ -123,7 +123,7 @@ import CocoaLumberjackSwift
     
     @objc func resetState() {
         queue.async {
-            self.target = 0
+            self.anchor = 0
             self.x0 = 0
             self.x0_ = 0
 //            self.x0__ = 0
@@ -140,12 +140,13 @@ import CocoaLumberjackSwift
             /// Store stopCallback
             self.stopCallback = onComplete
             
-            /// Normalize displacement
+            /// Init position (x0) and anchor
+            ///     Normalize displacement
             ///     So the values don't grow to infinity and overflow
             self.x0 += distance
-            self.target = self.x0 /// x will go from target to 0
+            self.anchor = self.x0 /// x0 will go from anchor to 0
             
-            /// Reset velocity
+            /// Reset velocity (x0_)
             self.x0_ = 0.0
             
             /// Update state
@@ -205,7 +206,7 @@ import CocoaLumberjackSwift
             x0_ = x_
         }
         
-        /// Check end - based on distance to target & velocity
+        /// Check end - based on distance to anchor & velocity
         let isEnd = abs(x) <= epsilon && abs(x_) <= epsilon
         
         /// Debug
@@ -213,7 +214,7 @@ import CocoaLumberjackSwift
 //        DDLogDebug("SpringAnimation isEnding.")
         
         /// Call callback
-        callback(target - x) /// Becaues x actually goes from target to 0
+        callback(anchor - x) /// Because x actually goes from anchor to 0
         
         /// Update globals
         t0 = t
