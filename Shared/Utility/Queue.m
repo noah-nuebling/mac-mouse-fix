@@ -11,7 +11,7 @@
 
 @implementation Queue
 
-NSMutableArray *_storage;
+NSMutableArray *_storage; /// FIXME: This is global state! How did this not lead to bugs? Edit: Ahh because this is not used anymore.
 
 + (id)queue {
     return [[Queue alloc] init];
