@@ -42,6 +42,7 @@ These people spent a lot more than the standard price and treated me to an **Inc
 
 **July 2024**
 
+- 🇩🇪&nbsp;Vlad&nbsp;Negure - "XOXO"
 - 🇩🇪&nbsp;Nilfahrt
 - 🇺🇸&nbsp;Herorickymarroquin
 - 🇺🇸&nbsp;Bee&nbsp;Natural - "Thank you for Mac Mouse Fix"
