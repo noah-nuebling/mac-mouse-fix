@@ -12,17 +12,19 @@ import Foundation
 /// On Swift Autobriding
 /// Swift automatically bridges Foundation-type args (like NSDictionary) to native Swift types which is super slow. At least for Dictionaries. We've found a way to prevent this:
 ///
-/// 1. In your objc header file, wrap all autobridging argument/return types with the `__DISABLE_SWIFT_BRIDGING(<the type>)` macro. The macro will replace the type with `id` when swift is looking at it - which disables the autobridiging!
+/// 1. In your objc header file, wrap all autobridging argument/return types with the `(MF_SWIFT_UNBRIDGED(<the type>))` macro. The macro will replace the type with `id` when swift is looking at it - which disables the autobridiging!
 /// 2. When importing the method in Swift, the type will now appear as `Any`. To make the type show up as the proper foundation type, mark the objc implementation with the `NS_REFINED_FOR_SWIFT` flag, then create a Swift extension and implement a method that calls the original, type-erased implementation, and itself takes Foundation types like NSDictionary as arguments.
 ///  -> Now you can call the ObjC method from Swift using foundation types as arguments directly, instead of being forced to use native Swift types which are then autobridged.
 ///
 /// Note:
-/// - There was an older, more convoluted approach using the `MF_SWIFT_HIDDEN` macro and the `__SWIFT_UNBRIDGED_` method prefix. We removed that in commit `729249905e8f49d7433420b2ce0bfe6338db389e`.
+/// - There was an older, more convoluted approach using the `MF_SWIFT_HIDDEN` macro and the `__SWIFT_UNBRIDGED_` method prefix. We removed that in commit `83b93ad3f828764fa4d0e915857adf4623b4b155`.
 /// - **TODO:** Test if the new approach actually prevents bridging (Check performance against the old approach)
 ///
 
 
 extension NSString {
+    
+    /// NSString+Additions.h
     
     func substring(withRegex regex: NSString) -> NSString {
         return __substring(withRegex: regex) as! NSString
@@ -43,6 +45,39 @@ extension NSString {
         return __string(byPrependingWhitespace: spaces) as! NSString
     }
 }
+
+#if IS_MAIN_APP || IS_XC_TEST
+
+extension NSAttributedString {
+    
+    /// NSString+Steganography.h
+    
+    func attributedStringByAppendingString(asSecretMessage message: NSString) -> NSAttributedString {
+        return __attributedStringByAppendingString(asSecretMessage: message) as! NSAttributedString
+    }
+    func secretMessages() -> NSArray {
+        return __secretMessages() as! NSArray
+    }
+}
+
+extension NSString {
+    
+    /// NSString+Steganography.h
+    
+    func stringByAppendingString(asSecretMessage message: NSString) -> NSString {
+        return __stringByAppendingString(asSecretMessage: message) as! NSString
+    }
+    func encodedAsSecretMessage() -> NSString {
+        return __encodedAsSecretMessage() as! NSString
+    }
+    func secretMessages() -> NSArray {
+        return __secretMessages() as! NSArray
+    }
+    
+}
+
+#endif
+
 
 #if IS_HELPER
 

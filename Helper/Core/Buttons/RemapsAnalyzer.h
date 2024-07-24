@@ -22,10 +22,10 @@ NS_ASSUME_NONNULL_BEGIN
 
 #pragma mark For SwitchMaster
 
-+ (BOOL)modificationsModifyButtons:(__DISABLE_SWIFT_BRIDGING(NSDictionary *))modifications maxButton:(__DISABLE_SWIFT_BRIDGING_BASE(MFMouseButtonNumber, int))maxButton NS_REFINED_FOR_SWIFT;
++ (BOOL)modificationsModifyButtons:(MF_SWIFT_UNBRIDGED(NSDictionary *))modifications maxButton:(MF_SWIFT_UNBRIDGED_BASE(MFMouseButtonNumber, int))maxButton NS_REFINED_FOR_SWIFT;
 
-+ (BOOL)modificationsModifyScroll:(__DISABLE_SWIFT_BRIDGING(NSDictionary *))modifications NS_REFINED_FOR_SWIFT;
-+ (BOOL)modificationsModifyPointing:(__DISABLE_SWIFT_BRIDGING(NSDictionary *))modifications NS_REFINED_FOR_SWIFT;
++ (BOOL)modificationsModifyScroll:(MF_SWIFT_UNBRIDGED(NSDictionary *))modifications NS_REFINED_FOR_SWIFT;
++ (BOOL)modificationsModifyPointing:(MF_SWIFT_UNBRIDGED(NSDictionary *))modifications NS_REFINED_FOR_SWIFT;
 
 
 #pragma mark For Buttons.swift
@@ -34,17 +34,17 @@ NS_ASSUME_NONNULL_BEGIN
 /// Original declartions
 ///
 
-+ (void)assessMappingLandscapeWithButton:(__DISABLE_SWIFT_BRIDGING(NSNumber *))button
-                                   level:(__DISABLE_SWIFT_BRIDGING(NSNumber *))level
-         modificationsActingOnThisButton:(__DISABLE_SWIFT_BRIDGING(NSDictionary *))remapsActingOnThisButton
-                                  remaps:(__DISABLE_SWIFT_BRIDGING(NSDictionary *))remaps
++ (void)assessMappingLandscapeWithButton:(MF_SWIFT_UNBRIDGED(NSNumber *))button
+                                   level:(MF_SWIFT_UNBRIDGED(NSNumber *))level
+         modificationsActingOnThisButton:(MF_SWIFT_UNBRIDGED(NSDictionary *))remapsActingOnThisButton
+                                  remaps:(MF_SWIFT_UNBRIDGED(NSDictionary *))remaps
                            thisClickDoBe:(BOOL *)clickActionOfThisLevelExists
                             thisDownDoBe:(BOOL *)effectForMouseDownStateOfThisLevelExists
                              greaterDoBe:(BOOL *)effectOfGreaterLevelExists NS_REFINED_FOR_SWIFT;
 
-+ (BOOL)effectExistsForButton:(__DISABLE_SWIFT_BRIDGING(NSNumber *))button remaps:(__DISABLE_SWIFT_BRIDGING(NSDictionary *))remaps modificationsActingOnButton:(__DISABLE_SWIFT_BRIDGING(NSDictionary *))effectiveRemaps NS_REFINED_FOR_SWIFT;
++ (BOOL)effectExistsForButton:(MF_SWIFT_UNBRIDGED(NSNumber *))button remaps:(MF_SWIFT_UNBRIDGED(NSDictionary *))remaps modificationsActingOnButton:(MF_SWIFT_UNBRIDGED(NSDictionary *))effectiveRemaps NS_REFINED_FOR_SWIFT;
 
-+ (NSInteger)maxLevelForButton:(__DISABLE_SWIFT_BRIDGING(NSNumber *))button remaps:(__DISABLE_SWIFT_BRIDGING(NSDictionary *))remaps modificationsActingOnThisButton:(__DISABLE_SWIFT_BRIDGING(NSDictionary *))modificationsActingOnThisButton NS_REFINED_FOR_SWIFT;
++ (NSInteger)maxLevelForButton:(MF_SWIFT_UNBRIDGED(NSNumber *))button remaps:(MF_SWIFT_UNBRIDGED(NSDictionary *))remaps modificationsActingOnThisButton:(MF_SWIFT_UNBRIDGED(NSDictionary *))modificationsActingOnThisButton NS_REFINED_FOR_SWIFT;
 
 @end
 

@@ -12,13 +12,13 @@
 
 /// Define type-eraser macros
 
-#define __DISABLE_SWIFT_BRIDGING(__type) \
-    __DISABLE_SWIFT_BRIDGING_BASE(__type, id)
+#define MF_SWIFT_UNBRIDGED(__type) \
+    MF_SWIFT_UNBRIDGED_BASE(__type, id)
 
 #if defined(__swift__)
-#define __DISABLE_SWIFT_BRIDGING_BASE(__realType, __unbridgedBaseType) __unbridgedBaseType
+#define MF_SWIFT_UNBRIDGED_BASE(__realType, __nonBridgedBaseType) __nonBridgedBaseType
 #else
-#define __DISABLE_SWIFT_BRIDGING_BASE(__realType, __unbridgedBaseType) __realType
+#define MF_SWIFT_UNBRIDGED_BASE(__realType, __nonBridgedBaseType) __realType
 #endif
 
 #endif /* DisableSwiftBridging_h */

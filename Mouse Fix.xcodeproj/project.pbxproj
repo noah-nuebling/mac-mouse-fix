@@ -234,11 +234,12 @@
 		4FE78C342C4FFA2F00C54103 /* TreeNode.h in Sources */ = {isa = PBXBuildFile; fileRef = 4F4C73F62C4FB4C2001D97C3 /* TreeNode.h */; };
 		4FE78C352C4FFA2F00C54103 /* TreeNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F4C73F72C4FB4C2001D97C3 /* TreeNode.m */; };
 		4FE78C362C4FFA7A00C54103 /* NSString+Steganography.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F4C737C2C4FB06E001D97C3 /* NSString+Steganography.m */; };
-		4FE78C372C4FFA7C00C54103 /* NSString+Steganography.h in Sources */ = {isa = PBXBuildFile; fileRef = 4F4C737B2C4FB06E001D97C3 /* NSString+Steganography.h */; };
 		4FE78C3A2C50177800C54103 /* DisableSwiftBridging.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FE78C392C50177800C54103 /* DisableSwiftBridging.swift */; };
 		4FE78C3B2C50177800C54103 /* DisableSwiftBridging.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FE78C392C50177800C54103 /* DisableSwiftBridging.swift */; };
 		4FE78C442C502A5F00C54103 /* NSString+Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FE78C432C502A5F00C54103 /* NSString+Additions.m */; };
 		4FE78C452C502A5F00C54103 /* NSString+Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FE78C432C502A5F00C54103 /* NSString+Additions.m */; };
+		4FE78C462C50362800C54103 /* DisableSwiftBridging.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FE78C392C50177800C54103 /* DisableSwiftBridging.swift */; };
+		4FE78C472C50371200C54103 /* NSString+Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FE78C432C502A5F00C54103 /* NSString+Additions.m */; };
 		4FEA63CF2921510F00E464D6 /* NSImage+Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FEA63CD2921510E00E464D6 /* NSImage+Additions.m */; };
 		4FEB660F2793510300E6A111 /* CocoaLumberjack in Frameworks */ = {isa = PBXBuildFile; productRef = 4FEB660E2793510300E6A111 /* CocoaLumberjack */; };
 		4FEB66112793510800E6A111 /* CocoaLumberjackSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 4FEB66102793510800E6A111 /* CocoaLumberjackSwift */; };
@@ -6471,12 +6472,12 @@
 		4F4C73D42C4FB3C7001D97C3 /* Screenshots */ = {
 			isa = PBXGroup;
 			children = (
+				4F4C737B2C4FB06E001D97C3 /* NSString+Steganography.h */,
+				4F4C737C2C4FB06E001D97C3 /* NSString+Steganography.m */,
 				4F4C73D52C4FB3FA001D97C3 /* LocalizedStringAnnotation.h */,
 				4F4C73D62C4FB3FA001D97C3 /* LocalizedStringAnnotation.m */,
 				4F4C73FC2C4FB5D2001D97C3 /* AnnotationUtility.h */,
 				4F4C73FD2C4FB5D2001D97C3 /* AnnotationUtility.m */,
-				4F4C737B2C4FB06E001D97C3 /* NSString+Steganography.h */,
-				4F4C737C2C4FB06E001D97C3 /* NSString+Steganography.m */,
 				4F4C73F62C4FB4C2001D97C3 /* TreeNode.h */,
 				4F4C73F72C4FB4C2001D97C3 /* TreeNode.m */,
 			);
@@ -7899,8 +7900,9 @@
 				4F8B01AC2C348A3A00F3AF8D /* AppUITests.swift in Sources */,
 				4FE78C342C4FFA2F00C54103 /* TreeNode.h in Sources */,
 				4FE78C352C4FFA2F00C54103 /* TreeNode.m in Sources */,
-				4FE78C372C4FFA7C00C54103 /* NSString+Steganography.h in Sources */,
+				4FE78C462C50362800C54103 /* DisableSwiftBridging.swift in Sources */,
 				4FE78C362C4FFA7A00C54103 /* NSString+Steganography.m in Sources */,
+				4FE78C472C50371200C54103 /* NSString+Additions.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -8271,8 +8273,8 @@
 				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu17;
 				GCC_PREPROCESSOR_DEFINITIONS = (
-					"DEBUG=1",
 					"$(inherited)",
+					"IS_XC_TEST=1",
 				);
 				GENERATE_INFOPLIST_FILE = YES;
 				MACOSX_DEPLOYMENT_TARGET = 14.5;
@@ -8281,7 +8283,7 @@
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.noah-nuebling.AppUITests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) IS_XC_TEST";
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_OBJC_BRIDGING_HEADER = "Tests/AppUITests-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
@@ -8301,12 +8303,17 @@
 				DEVELOPMENT_TEAM = LM5Z78756B;
 				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"IS_XC_TEST=1",
+				);
 				GENERATE_INFOPLIST_FILE = YES;
 				MACOSX_DEPLOYMENT_TARGET = 14.5;
 				MARKETING_VERSION = 1.0;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.noah-nuebling.AppUITests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) IS_XC_TEST";
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_OBJC_BRIDGING_HEADER = "Tests/AppUITests-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;

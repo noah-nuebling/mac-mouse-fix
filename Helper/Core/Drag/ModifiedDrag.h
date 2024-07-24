@@ -82,7 +82,7 @@ typedef struct {
 
 //+ (NSDictionary *)initialModifiers;
 //+ (CGEventTapProxy)tapProxy;
-+ (void)initializeDragWithDict:(__DISABLE_SWIFT_BRIDGING(NSDictionary *))effectDict NS_REFINED_FOR_SWIFT;
++ (void)initializeDragWithDict:(MF_SWIFT_UNBRIDGED(NSDictionary *))effectDict NS_REFINED_FOR_SWIFT;
 
 //+ (void)modifiedScrollHasBeenUsed;
 

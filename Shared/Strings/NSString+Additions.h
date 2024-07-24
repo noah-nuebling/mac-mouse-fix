@@ -14,12 +14,12 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface NSString (Additions)
 
-- (__DISABLE_SWIFT_BRIDGING(NSString *))substringWithRegex:(__DISABLE_SWIFT_BRIDGING(NSString *))regex NS_REFINED_FOR_SWIFT;
-- (__DISABLE_SWIFT_BRIDGING(NSAttributedString *))attributed NS_REFINED_FOR_SWIFT;
-- (__DISABLE_SWIFT_BRIDGING(NSString *))firstCapitalized NS_REFINED_FOR_SWIFT;
-- (__DISABLE_SWIFT_BRIDGING(NSString *))stringByTrimmingWhiteSpace NS_REFINED_FOR_SWIFT;
-- (__DISABLE_SWIFT_BRIDGING(NSString *))stringByAddingIndent:(NSInteger)indent NS_REFINED_FOR_SWIFT;
-- (__DISABLE_SWIFT_BRIDGING(NSString *))stringByPrependingWhitespace:(NSInteger)spaces NS_REFINED_FOR_SWIFT;
+- (MF_SWIFT_UNBRIDGED(NSString *))substringWithRegex:(MF_SWIFT_UNBRIDGED(NSString *))regex NS_REFINED_FOR_SWIFT;
+- (MF_SWIFT_UNBRIDGED(NSAttributedString *))attributed NS_REFINED_FOR_SWIFT;
+- (MF_SWIFT_UNBRIDGED(NSString *))firstCapitalized NS_REFINED_FOR_SWIFT;
+- (MF_SWIFT_UNBRIDGED(NSString *))stringByTrimmingWhiteSpace NS_REFINED_FOR_SWIFT;
+- (MF_SWIFT_UNBRIDGED(NSString *))stringByAddingIndent:(NSInteger)indent NS_REFINED_FOR_SWIFT;
+- (MF_SWIFT_UNBRIDGED(NSString *))stringByPrependingWhitespace:(NSInteger)spaces NS_REFINED_FOR_SWIFT;
 
 @end
 

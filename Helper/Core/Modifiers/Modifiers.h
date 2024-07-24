@@ -47,9 +47,9 @@ typedef enum {
 + (void)setKeyboardModifierPriority:(MFModifierPriority)priority;
 + (void)setButtonModifierPriority:(MFModifierPriority)priority;
 
-+ (__DISABLE_SWIFT_BRIDGING(NSDictionary *))modifiersWithEvent:(CGEventRef _Nullable)event NS_REFINED_FOR_SWIFT;
++ (MF_SWIFT_UNBRIDGED(NSDictionary *))modifiersWithEvent:(CGEventRef _Nullable)event NS_REFINED_FOR_SWIFT;
 
-+ (void)buttonModsChangedTo:(__DISABLE_SWIFT_BRIDGING(ButtonModifierState))newModifiers NS_REFINED_FOR_SWIFT;
++ (void)buttonModsChangedTo:(MF_SWIFT_UNBRIDGED(ButtonModifierState))newModifiers NS_REFINED_FOR_SWIFT;
 
 + (void)handleModificationHasBeenUsed;
 

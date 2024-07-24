@@ -74,7 +74,9 @@ final class AppUITests: XCTestCase {
             
             
             do {
-                NSString(stringLiteral: "ab").
+                let secretMessage = NSString(stringLiteral: "ab").encodedAsSecretMessage()
+                
+                print(secretMessage)
                 
                 let dict = try app.snapshot().dictionaryRepresentation
                 let tree = TreeNode<NSDictionary>.tree(with: dict, childrenKey: "children")

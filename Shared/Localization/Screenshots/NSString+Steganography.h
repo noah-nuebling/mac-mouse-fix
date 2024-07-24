@@ -15,19 +15,25 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface NSAttributedString (MFSteganography)
 
-- (NSAttributedString *)attributedStringByAppendingStringAsSecretMessage:(NSString *)message;
-- (NSArray<NSString *> *)secretMessages;
+/// Interface
+
+- (MF_SWIFT_UNBRIDGED(NSAttributedString *))attributedStringByAppendingStringAsSecretMessage:(MF_SWIFT_UNBRIDGED(NSString *))message NS_REFINED_FOR_SWIFT;
+- (MF_SWIFT_UNBRIDGED(NSArray<NSString *> *))secretMessages NS_REFINED_FOR_SWIFT;
 
 @end
 
 @interface NSString (MFSteganography)
 
-- (__DISABLE_SWIFT_BRIDGING(NSString *))stringByAppendingStringAsSecretMessage:(NSString *)message;
-- (__DISABLE_SWIFT_BRIDGING(NSString *))encodedAsSecretMessage;
-- (__DISABLE_SWIFT_BRIDGING(NSArray<NSString *> *))secretMessages;
+/// Interface
 
-+ (NSString *)stringWithBinaryCharacters:(NSArray<NSArray<NSNumber *> *> *)characters;
-- (NSArray<NSArray<NSNumber *> *> *)binaryCharacters;
+- (MF_SWIFT_UNBRIDGED(NSString *))stringByAppendingStringAsSecretMessage:(MF_SWIFT_UNBRIDGED(NSString *))message NS_REFINED_FOR_SWIFT;
+- (MF_SWIFT_UNBRIDGED(NSString *))encodedAsSecretMessage NS_REFINED_FOR_SWIFT;
+- (MF_SWIFT_UNBRIDGED(NSArray<NSString *> *))secretMessages NS_REFINED_FOR_SWIFT;
+
+/// Internal
+
++ (NSString *)stringWithBinaryArray:(NSArray<NSArray<NSNumber *> *> *)characters;
+- (NSArray<NSArray<NSNumber *> *> *)binaryArray;
 
 + (NSString *)stringWithUTF32Characters:(NSArray<NSNumber *> *)characters;
 - (NSArray<NSNumber *> *)UTF32Characters;
