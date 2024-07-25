@@ -427,6 +427,7 @@
 		4F0C00372C525AC000C5D843 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		4F0C00382C525AC000C5D843 /* run.py */ = {isa = PBXFileReference; lastKnownFileType = text.script.python; path = run.py; sourceTree = "<group>"; };
 		4F0C003A2C525AC000C5D843 /* run */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = run; sourceTree = "<group>"; };
+		4F0C003C2C525F8500C5D843 /* Misappropriating XCStrings.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "Misappropriating XCStrings.md"; sourceTree = "<group>"; };
 		4F0CFFE62C51878500C5D843 /* MFDataClass.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MFDataClass.h; sourceTree = "<group>"; };
 		4F0CFFE72C51878500C5D843 /* MFDataClass.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MFDataClass.m; sourceTree = "<group>"; };
 		4F0CFFEC2C518CF600C5D843 /* MFDataClassImplementations.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MFDataClassImplementations.m; sourceTree = "<group>"; };
@@ -2394,7 +2395,6 @@
 		4FFA4E3F28B7D0120062A1FE /* SharedSFSymbols.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = SharedSFSymbols.xcassets; sourceTree = "<group>"; };
 		4FFAD8EF28677F94005DD496 /* PointerConfigObjC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PointerConfigObjC.h; sourceTree = "<group>"; };
 		4FFB5EF42C2E67690096AA3E /* Markdown.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Markdown.xcstrings; sourceTree = "<group>"; };
-		4FFB5EFA2C2E78D30096AA3E /* Misappropriating XCStrings.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; name = "Misappropriating XCStrings.md"; path = "Shared/Localization/Misappropriating XCStrings.md"; sourceTree = SOURCE_ROOT; };
 		4FFB5F032C2FECDC0096AA3E /* Readme.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = Readme.md; sourceTree = "<group>"; };
 		4FFB5F042C2FECDD0096AA3E /* Acknowledgements.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = Acknowledgements.md; sourceTree = "<group>"; };
 		4FFBC5732667DCE4001D389B /* PrefixHeader.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PrefixHeader.pch; sourceTree = "<group>"; };
@@ -2643,6 +2643,15 @@
 				4F0C00382C525AC000C5D843 /* run.py */,
 			);
 			path = "mac-mouse-fix-scripts";
+			sourceTree = "<group>";
+		};
+		4F0C003B2C525F6C00C5D843 /* Localization */ = {
+			isa = PBXGroup;
+			children = (
+				4F909D1928A0C3D2009349A2 /* Localization Readme.md */,
+				4F0C003C2C525F8500C5D843 /* Misappropriating XCStrings.md */,
+			);
+			path = Localization;
 			sourceTree = "<group>";
 		};
 		4F1793A725EEC8E500E8309B /* Frameworks */ = {
@@ -6452,8 +6461,6 @@
 			children = (
 				4F97DFFF298732E500012BAC /* LocalizationUtility.h */,
 				4F97E000298732E500012BAC /* LocalizationUtility.m */,
-				4FFB5EFA2C2E78D30096AA3E /* Misappropriating XCStrings.md */,
-				4F909D1928A0C3D2009349A2 /* Localization Readme.md */,
 				4FA2F13C2C2B0932000C5535 /* Localizable.xcstrings */,
 				4F4C73D42C4FB3C7001D97C3 /* Screenshots */,
 			);
@@ -7081,6 +7088,7 @@
 		4FEB6616279376C200E6A111 /* Notes */ = {
 			isa = PBXGroup;
 			children = (
+				4F0C003B2C525F6C00C5D843 /* Localization */,
 				4FEB6617279376C200E6A111 /* SymbolicHotKeys Reference.txt */,
 				4FEB6618279376C200E6A111 /* notes.md */,
 				4FE8FC792929D8AC0002583B /* On Bundle Size.md */,

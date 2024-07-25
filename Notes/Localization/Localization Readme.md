@@ -10,6 +10,8 @@
 
 ## Reflection on Localization System - June 2024
 
+(Update July 2024: We're implementing our own system now, the other stuff in this note is mostly outdated.)
+
 Today I tried some more TMS' (Translation Management Systems) with online editors and support for crowd-sourcing. I really don't want to commit to any of them. I don't think any are really great. I also came up with an idea for a custom solution that I think is going to be very good.
 
 Find more detailed reflection here:  
