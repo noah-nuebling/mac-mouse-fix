@@ -469,6 +469,8 @@ import CocoaLumberjackSwift
     
     @objc func copy(with zone: NSZone? = nil) -> Any {
         
+        /// TODO: Think about whether this could have todo with the weird scrolling crashes for MMF 3.0.2. Any race conditions or sth?
+        
         return SharedUtilitySwift.shallowCopy(ofObject: self)
     }
     
