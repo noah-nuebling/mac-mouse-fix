@@ -11,8 +11,6 @@ import Cocoa
 import CocoaLumberjackSwift
 
 @objc class SharedUtilitySwift: NSObject {
-
-    
     
     static func eval<V>(@SingleValueBuilder<V> _ value: () -> V) -> V {
         
