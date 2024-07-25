@@ -46,9 +46,10 @@
   "defaultOptions" : {
     "areLocalizationScreenshotsEnabled" : true,
     "codeCoverage" : false,
-    "commandLineArgumentEntries" : [
+    "environmentVariableEntries" : [
       {
-        "argument" : "-MF_ANNOTATE_LOCALIZED_STRINGS"
+        "key" : "MF_LOCALIZATION_SCREENSHOT_OUTPUT_DIR",
+        "value" : ".\/MFLocalizationScreenshotOutput"
       }
     ],
     "preferredScreenCaptureFormat" : "screenshot",

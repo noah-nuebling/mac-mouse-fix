@@ -12,7 +12,7 @@ import Foundation
 /// On Swift Autobriding
 /// Swift automatically bridges Foundation-type args (like NSDictionary) to native Swift types which is super slow. At least for Dictionaries. We've found a way to prevent this:
 ///
-/// 1. In your objc header file, wrap all autobridging argument/return types with the `(MF_SWIFT_UNBRIDGED(<the type>))` macro. The macro will replace the type with `id` when swift is looking at it - which disables the autobridiging!
+/// 1. In your objc header file, wrap all autobridging argument/return types with the `(MF_SWIFT_UNBRIDGED(<the type>))` macro. The macro will replace the type with `id` when swift is looking at it - which disables the autobridiging.
 /// 2. When importing the method in Swift, the type will now appear as `Any`. To make the type show up as the proper foundation type, mark the objc implementation with the `NS_REFINED_FOR_SWIFT` flag, then create a Swift extension and implement a method that calls the original, type-erased implementation, and itself takes Foundation types like NSDictionary as arguments.
 ///  -> Now you can call the ObjC method from Swift using foundation types as arguments directly, instead of being forced to use native Swift types which are then autobridged.
 ///
@@ -40,6 +40,9 @@ extension NSString {
     }
     func string(byAddingIndent indent: NSInteger) -> NSString {
         return __string(byAddingIndent: indent) as! NSString
+    }
+    func string(byAddingIndent indent: Int, withCharacter character: NSString) -> NSString {
+        return __string(byAddingIndent: indent, withCharacter: character) as! NSString
     }
     func string(byPrependingWhitespace spaces: NSInteger) -> NSString {
         return __string(byPrependingWhitespace: spaces) as! NSString

@@ -16,47 +16,37 @@
 
 @dynamic representedObject, childNodes, mutableChildNodes, parentNode;
 
-+ (TreeNode<NSDictionary *> *)treeWithDictionary:(NSDictionary *)dictionary childrenKey:(NSString *)childrenKey {
++ (TreeNode<NSObject *> *)treeWithKVCObject:(NSObject *)kvcObject childrenKey:(NSString *)childrenKey {
     
     /// Note:
-    ///     Making this method to parse the XCUIElement.snapshot().dictionaryRepresentation. But might be useful for other stuff.
+    ///     Making this method to parse the XCUIElement.snapshot(). But might be useful for other stuff.
+    
+    /// Get children
+    NSObject *children = [kvcObject valueForKey:childrenKey];
     
     /// Check children
-    BOOL childrenAreUsable = YES;
-    do {
-        
-        if (![dictionary[childrenKey] isKindOfClass:[NSArray class]]) {
-            childrenAreUsable = NO;
-            break;
-        }
-        
-        for (id child in dictionary[childrenKey]) {
-            
-            if ([child isKindOfClass:[NSArray class]]) {
-                childrenAreUsable = NO;
-                break;
-            }
-        }
-        
-    } while (0);
+    NSObject<NSFastEnumeration> *enumerableChildren = [children conformsToProtocol:@protocol(NSFastEnumeration)] ? (id)children : nil;
     
-    /// Process children
-    NSMutableArray<TreeNode *> *childNodes = [NSMutableArray array];
-    if (childrenAreUsable) {
-        
-        /// Recursively construct child trees
-        for (NSDictionary *child in dictionary[childrenKey]) {
-            TreeNode *childNode = [self treeWithDictionary:child childrenKey:childrenKey];
-            [childNodes addObject:childNode];
+    /// Remove children
+    if (enumerableChildren != nil) {
+        @try {
+            kvcObject = kvcObject.mutableCopy;
+        } @catch (NSException *exception) {
+            /// If this fails, then we're mutating the kvcObject, which is ok for the XCUIElement.snapshot case, but might be bad otherwise.
         }
-        
-        /// Remove children from dict
-        dictionary = dictionary.mutableCopy;
-        ((id)dictionary)[childrenKey] = nil;
+
+        [kvcObject setValue:nil forKey:childrenKey];
+    }
+    
+    /// Recursively construct child nodes
+    NSMutableArray<TreeNode *> *childNodes = [NSMutableArray array];
+    for (NSObject *child in enumerableChildren) {
+        TreeNode *childNode = [self treeWithKVCObject:child childrenKey:childrenKey];
+        [childNodes addObject:childNode];
     }
     
     /// Create node
-    TreeNode<NSDictionary *> *node = [[TreeNode alloc] initWithRepresentedObject:dictionary];
+    TreeNode<NSObject *> *node = [[TreeNode alloc] initWithRepresentedObject:kvcObject];
     [node.mutableChildNodes setArray:childNodes];
     
     /// Return
@@ -98,7 +88,7 @@
     
     for (TreeNode *child in self.childNodes) {
         NSString *childDescription = [child description];
-        childDescription = [childDescription stringByAddingIndent:indentDepth];
+        childDescription = [childDescription stringByAddingIndent:indentDepth withCharacter:@"·"]; /// Indenting with 'interpunct' character
         childDescription = [[@"- " stringByAppendingString:[childDescription substringFromIndex:indentDepth]] stringByPrependingWhitespace:indentDepth-2]; /// Add a bullet at the start of each child.
         [childStringArray addObject:childDescription];
     }

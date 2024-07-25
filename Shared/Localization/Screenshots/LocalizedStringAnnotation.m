@@ -36,7 +36,7 @@
         if (isOurBundle) {
             
             /// Add secret message
-            NSString *secretMessage = stringf(@"mf-localization-key:%@", key);
+            NSString *secretMessage = stringf(@"mf-secret-localization-key:%@", key);
             result = [result stringByAppendingStringAsSecretMessage:secretMessage];
             
             /// Log
@@ -56,7 +56,7 @@
         if (isOurBundle) {
         
             /// Add secret message
-            NSString *secretMessage = stringf(@"mf-localization-key:%@", key);
+            NSString *secretMessage = stringf(@"mf-secret-localization-key:%@", key);
             result = [result attributedStringByAppendingStringAsSecretMessage:secretMessage];
             
             /// Log

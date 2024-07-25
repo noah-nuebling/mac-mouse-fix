@@ -42,20 +42,28 @@
 }
 
 - (NSString *)stringByAddingIndent:(NSInteger)indent {
-    
-    NSArray *lines = [self componentsSeparatedByString:@"\n"];
-    NSMutableArray *paddedLines = [NSMutableArray arrayWithCapacity:[lines count]];
-    
-    for (NSString *line in lines) {
-        [paddedLines addObject:[line stringByPrependingWhitespace:indent]];
-    }
-    
-    return [paddedLines componentsJoinedByString:@"\n"];
+    return [self stringByAddingIndent:indent withCharacter:@" "];
 }
 
-- (NSString *)stringByPrependingWhitespace:(NSInteger)spaces {
-    NSString *whitespace = [@"" stringByPaddingToLength:spaces withString:@" " startingAtIndex:0];
-    return [whitespace stringByAppendingString:self];
+- (NSString *)stringByAddingIndent:(NSInteger)indent withCharacter:(NSString *)indentCharacter {
+    
+    /// Split self
+    NSArray *lines = [self componentsSeparatedByString:@"\n"];
+    
+    /// Create padding string
+    NSString *padding = [@"" stringByPaddingToLength:indent withString:indentCharacter startingAtIndex:0];
+    
+    /// Build padded lines
+    NSMutableArray *paddedLines = [NSMutableArray arrayWithCapacity:[lines count]];
+    for (NSString *line in lines) {
+        NSString *paddedLine = [NSString stringWithFormat:@"%@%@", padding, line];
+        [paddedLines addObject:paddedLine];
+    }
+    /// Join result
+    NSString *result = [paddedLines componentsJoinedByString:@"\n"];
+    
+    /// Return
+    return result;
 }
 
 @end

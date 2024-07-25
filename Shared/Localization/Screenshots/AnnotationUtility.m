@@ -665,7 +665,7 @@ NSString *listMethods(id obj) {
             [argTypes addObject:typeNameFromEncoding(argType)];
         }
         
-        [result appendFormat:@"(%@)%@ (%@)", typeNameFromEncoding(returnType), NSStringFromSelector(selector), [argTypes componentsJoinedByString:@", "]];
+        [result appendFormat:@"\n(%@)%@ (%@)", typeNameFromEncoding(returnType), NSStringFromSelector(selector), [argTypes componentsJoinedByString:@", "]];
     }
     
     free(methods);
@@ -682,7 +682,7 @@ NSString *listClassHierarchy(NSObject *obj) {
 
     [result appendFormat:@"Class hierarchy of object %@:", obj];
     while (cls) {
-        [result appendFormat:@"Class: %@", NSStringFromClass(cls)];
+        [result appendFormat:@"\nClass: %@", NSStringFromClass(cls)];
         cls = class_getSuperclass(cls);  /// Move to the superclass
     }
     
