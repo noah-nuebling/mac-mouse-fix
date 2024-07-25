@@ -146,6 +146,11 @@ final class AppUITests: XCTestCase {
                 /// Convert ax hierarchy to tree
                 let tree = TreeNode<XCUIElementSnapshot>.tree(withKVCObject: snapshot!, childrenKey: "children")
                 
+                /// TEST
+                let treeDescription = tree.description()
+                print("The tree: \(treeDescription)")
+                
+                
                 /// Find localizedStings
                 ///     & their metadata
                 var framesAndStringsAndKeys: [FrameAndStringsAndKeys] = []

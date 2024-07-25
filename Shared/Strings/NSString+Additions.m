@@ -50,19 +50,23 @@
     /// Split self
     NSArray *lines = [self componentsSeparatedByString:@"\n"];
     
-    /// Create padding string
-    NSString *padding = [@"" stringByPaddingToLength:indent withString:indentCharacter startingAtIndex:0];
-    
     /// Build padded lines
     NSMutableArray *paddedLines = [NSMutableArray arrayWithCapacity:[lines count]];
     for (NSString *line in lines) {
-        NSString *paddedLine = [NSString stringWithFormat:@"%@%@", padding, line];
+        NSString *paddedLine = [line stringByPrependingCharacter:indentCharacter count:indent];
         [paddedLines addObject:paddedLine];
     }
     /// Join result
     NSString *result = [paddedLines componentsJoinedByString:@"\n"];
     
     /// Return
+    return result;
+}
+
+- (NSString *)stringByPrependingCharacter:(NSString *)prependedCharacter count:(NSInteger)count {
+    /// Create padding string
+    NSString *padding = [@"" stringByPaddingToLength:count withString:prependedCharacter startingAtIndex:0];
+    NSString *result = [padding stringByAppendingString:self];
     return result;
 }
 

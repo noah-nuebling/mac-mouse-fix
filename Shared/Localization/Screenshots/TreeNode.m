@@ -80,7 +80,8 @@
 
 - (NSString *)description {
     
-    NSInteger indentDepth = 4;
+    NSInteger indentDepth = 2;
+    NSString *indentChar = self.indexPath.length >= 2 ? @"· " : @"  "; /// Indenting with 'interpunct' character on deeper nodes to make child-depth more apparent
     
     NSString *result = [self.representedObject description];
     
@@ -88,8 +89,8 @@
     
     for (TreeNode *child in self.childNodes) {
         NSString *childDescription = [child description];
-        childDescription = [childDescription stringByAddingIndent:indentDepth withCharacter:@"·"]; /// Indenting with 'interpunct' character
-        childDescription = [[@"- " stringByAppendingString:[childDescription substringFromIndex:indentDepth]] stringByPrependingWhitespace:indentDepth-2]; /// Add a bullet at the start of each child.
+        childDescription = [childDescription stringByAddingIndent:indentDepth withCharacter:indentChar];
+        childDescription = [[@"- " stringByAppendingString:[childDescription substringFromIndex:indentDepth]] stringByPrependingCharacter:indentChar count:indentDepth-2]; /// Add a bullet at the start of each child.
         [childStringArray addObject:childDescription];
     }
     NSString *childString = [childStringArray componentsJoinedByString:@"\n"];

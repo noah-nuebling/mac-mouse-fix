@@ -44,8 +44,8 @@ extension NSString {
     func string(byAddingIndent indent: Int, withCharacter character: NSString) -> NSString {
         return __string(byAddingIndent: indent, withCharacter: character) as! NSString
     }
-    func string(byPrependingWhitespace spaces: NSInteger) -> NSString {
-        return __string(byPrependingWhitespace: spaces) as! NSString
+    func string(byPrependingCharacter character: NSString, count: Int) -> NSString {
+        return __string(byPrependingCharacter: character, count: count) as! NSString
     }
 }
 
