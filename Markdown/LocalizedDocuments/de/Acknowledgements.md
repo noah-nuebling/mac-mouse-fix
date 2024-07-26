@@ -40,6 +40,7 @@ Diese Leute haben viel mehr als den Standardpreis ausgegeben und mir einen **ung
 
 **Juli 2024**
 
+- 🇬🇧&nbsp;Lukasz&nbsp;Wysocki - "My cat Truskawka approves of mouse fix!"
 - 🇺🇸&nbsp;Jesse&nbsp;Evers
 - 🇩🇪&nbsp;Vlad&nbsp;Negure - "XOXO"
 - 🇩🇪&nbsp;Nilfahrt
