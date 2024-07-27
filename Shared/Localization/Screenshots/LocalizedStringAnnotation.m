@@ -20,9 +20,14 @@
 
 @implementation NSBundle (MFAnnotation)
 
-+ (NSString *)annotationStringWithKey:(NSString *)key table:(NSString *)table {
++ (NSString *)annotationStringWithKey:(NSString *)key table:(NSString *_Nullable)table {
     
-    NSString *annotation = stringf(@"mfkey:%@:%@:", key, table); /// We keep this short to stay under the 512 character XCUITest limit. Breaks if key or table name contain `:`
+    /// Notes:
+    ///     - We keep the format string short to stay under the 512 character XCUITest limit.
+    ///     - Would breaks if key or table name contain `:`
+    ///     - If table is nill the formatted string would include literal "(null)", so we map to empty string.
+    
+    NSString *annotation = stringf(@"mfkey:%@:%@:", key, table ?: @"");
     NSString *secretMessage = [annotation encodedAsSecretMessage];
     return secretMessage;
     
@@ -66,7 +71,7 @@
         if (isOurBundle) {
         
             /// Add secret message
-            NSString *annotation = [self annotationStringWithKey:key table:table];
+            NSString *annotation = [self annotationStringWithKey:key table:table ?: @"Localizable"];
             result = [[annotation attributed] attributedStringByAppending:result];
             
             /// Log

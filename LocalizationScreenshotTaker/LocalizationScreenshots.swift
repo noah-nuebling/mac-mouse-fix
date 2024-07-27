@@ -9,8 +9,6 @@
 
 import XCTest
 
-
-
 final class LocalizationScreenshotClass: XCTestCase {
     
     ///
@@ -149,18 +147,20 @@ final class LocalizationScreenshotClass: XCTestCase {
         let toolbarButtons = window.toolbars.firstMatch.children(matching: .button) /// `window.toolbarButtons` doesn't work for some reason.
 
         /// Capture GeneralTab
+        toolbarButtons["general"].click() /// Need to click twice so that the test runner properly waits for the animation to finish
         toolbarButtons["general"].click()
-        Thread.sleep(forTimeInterval: 0.1)
         result.append(takeLocalizationScreenshot(of: window, name: "GeneralTab"))
 
         /// Capture ButtonsTab
         toolbarButtons["buttons"].click()
-        Thread.sleep(forTimeInterval: 0.1)
+        toolbarButtons["buttons"].click()
         result.append(takeLocalizationScreenshot(of: window, name: "ButtonsTab"))
+        
+        
         
         /// Capture ScrollingTab
         toolbarButtons["scrolling"].click()
-        Thread.sleep(forTimeInterval: 0.1)
+        toolbarButtons["scrolling"].click()
         result.append(takeLocalizationScreenshot(of: window, name: "ScrollingTab"))
         
         /// Capture PointerTab
@@ -169,7 +169,7 @@ final class LocalizationScreenshotClass: XCTestCase {
         
         /// Capture AboutTab
         toolbarButtons["about"].click()
-        Thread.sleep(forTimeInterval: 0.1)
+        toolbarButtons["about"].click()
         result.append(takeLocalizationScreenshot(of: window, name: "AboutTab"))
         
         /// Return
@@ -199,17 +199,21 @@ final class LocalizationScreenshotClass: XCTestCase {
                     let localizedString = str.string
                     for k in str.keys {
                         let stringKey = k.key
-                        let stringTable = k.table
+                        var stringTable = k.table
+                        
+                        /// Map empty table to "Localizable"
+                        ///     Otherwise the Xcode screenshot viewer breaks.
+                        if stringTable == "" { stringTable = "Localizable" }
                         
                         /// Duplicate screenshot
                         ///     Each stringKey needs its own, unique screenshot file, otherwise the Xcode viewer breaks and shows the same frame for every string key. (Tested under Xcode 15 stable & Xcode 16 Beta)
                         screenshotUsageCount += 1
-                        let screenshotName = "\(screenshotName).\(screenshotUsageCount).png"
+                        let screenshotName = "\(screenshotUsageCount).\(screenshotName).jpeg"
                         
                         /// Convert image
                         ///     In the WWDC demos they used jpeg, but .png is a bit higher res I think.
                         guard let bitmap = screenshot.image.representations.first as? NSBitmapImageRep else { fatalError() }
-                        let imageData = bitmap.representation(using: .png, properties: [:])
+                        let imageData = bitmap.representation(using: .jpeg, properties: [:])
                         
                         /// Store name -> screenshot mapping
                         screenshotNameToScreenshotDataMap[screenshotName] = imageData
