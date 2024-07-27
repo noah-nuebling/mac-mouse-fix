@@ -89,8 +89,14 @@ extension NSAnimatablePropertyContainer where Self: NSObject {
             }
             
             /// Make copy so we don't change the animation outside this scope
-            let animation = animation1!.copy() as! CABasicAnimation
+            var animation = animation1!.copy() as! CABasicAnimation
             
+            /// Do weird animation prototype stuff
+            ///     Necessary under macOS 15.0 Sequioa Beta. See declaration for more. Info.
+            if #available(macOS 15.0, *) {
+                animation = animation.forObject(base, key: keyPath, targetValue: newValue) as! CABasicAnimation
+            }
+
             /// Make animations round to integer to avoid jitter. This is useful for resize animations. But this breaks opacity animations.
             var doRoundToInt = false
             if (newValue as? NSRect) != nil { doRoundToInt = true }
@@ -177,6 +183,8 @@ extension NSAnimatablePropertyContainer where Self: NSObject {
             } else if let animationManager = NSAnimationManager.current() {
                 
                 /// Default: Use animationManager
+                
+                /// Call animationManager
                 animationManager.setTargetValue(newValue, for: base, keyPath: keyPath, animation: animation)
                 
             } else { /// Fallback
@@ -199,8 +207,9 @@ extension NSAnimatablePropertyContainer where Self: NSObject {
         }
     }
     
-    /// Get subobjects
     public subscript<S>(dynamicMember keyPath: String) -> ReactiveAnimatorPropertyProxy<U, S> {
+        
+        /// Get animators for properties of `base`
         let selfObject = base.value(forKeyPath: self.keyPath) as! U
         return ReactiveAnimatorPropertyProxy<U, S>(base: selfObject, keyPath: keyPath, type: type)
     }
