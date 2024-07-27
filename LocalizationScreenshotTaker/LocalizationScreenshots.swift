@@ -74,17 +74,19 @@ final class LocalizationScreenshotClass: XCTestCase {
     var app: XCUIApplication? = nil
     
     func testTakeLocalizationScreenshots() throws {
-        
+            
         /// Get output folder
         var outputDirectory: URL? = nil
-        let outputDirectoryPath = ProcessInfo.processInfo.environment[xcode_screenshot_taker_output_dir_variable]
-        if outputDirectoryPath != nil {
-            outputDirectory = URL(fileURLWithPath: outputDirectoryPath!).absoluteURL
-        }
-        if outputDirectoryPath == nil {
-            let currentWorkingDirectory = FileManager().temporaryDirectory
-            outputDirectory = currentWorkingDirectory.appending(component: "MFLocalizationScreenshotsFallbackOutputFolder")
-            print("No output directory provided. Using \(outputDirectory!) as a fallback.")
+        XCTContext.runActivity(named: "Get Output Folder") { activity in
+            let outputDirectoryPath = ProcessInfo.processInfo.environment[xcode_screenshot_taker_output_dir_variable]
+            if outputDirectoryPath != nil {
+                outputDirectory = URL(fileURLWithPath: outputDirectoryPath!).absoluteURL
+            }
+            if outputDirectoryPath == nil {
+                let currentWorkingDirectory = FileManager().temporaryDirectory
+                outputDirectory = currentWorkingDirectory.appending(component: "MFLocalizationScreenshotsFallbackOutputFolder")
+                print("No output directory provided. Using \(outputDirectory!) as a fallback.")
+            }
         }
         guard let outputDirectory = outputDirectory else { fatalError() }
         
@@ -96,17 +98,25 @@ final class LocalizationScreenshotClass: XCTestCase {
         app?.launchArguments.append(localizedStringAnnotationActivationArgumentForScreenshottedApp)
         
         /// TESTING
-        app?.launchArguments.append(contentsOf: ["-AppleLanguages", "(de)"])
+//        app?.launchArguments.append(contentsOf: ["-AppleLanguages", "(de)"])
         
         /// Launch the app
         app!.launch()
         
         /// Call core
-        navigateAppAndTakeScreenshots(outputDirectory)
+        var screenshotsAndMetaData: [ScreenshotAndMetadata?]? = nil
+        XCTContext.runActivity(named: "Take Screenshots") { activity in
+            screenshotsAndMetaData = navigateAppAndTakeScreenshots(outputDirectory)
+        }
+        
+        /// Write results
+        XCTContext.runActivity(named: "Write results") { activity in
+            writeResults(screenshotsAndMetaData!, outputDirectory)
+        }
     }
     
     
-    fileprivate func navigateAppAndTakeScreenshots( _ outputDirectory: URL) {
+    fileprivate func navigateAppAndTakeScreenshots( _ outputDirectory: URL) -> [ScreenshotAndMetadata?] {
 
         /// Declare result
         var result = [ScreenshotAndMetadata?]()
@@ -127,8 +137,7 @@ final class LocalizationScreenshotClass: XCTestCase {
             XCTWaiter().wait(for: [switchIsEnabled], timeout: 10.0)
         }
         
-        /// Capture GeneralTab
-        
+        /// TEST
         let tree: TreeNode<XCUIElementSnapshot>
         do {
              tree = try TreeNode<AnyObject>.tree(withKVCObject: window.snapshot(), childrenKey: "children") as! TreeNode<XCUIElementSnapshot>
@@ -136,27 +145,35 @@ final class LocalizationScreenshotClass: XCTestCase {
             
         }
         
-        window.toolbarButtons["general"].click()
+        /// Prep
+        let toolbarButtons = window.toolbars.firstMatch.children(matching: .button) /// `window.toolbarButtons` doesn't work for some reason.
+
+        /// Capture GeneralTab
+        toolbarButtons["general"].click()
+        Thread.sleep(forTimeInterval: 0.1)
         result.append(takeLocalizationScreenshot(of: window, name: "GeneralTab"))
 
         /// Capture ButtonsTab
-        window.toolbarButtons["buttons"].click()
+        toolbarButtons["buttons"].click()
+        Thread.sleep(forTimeInterval: 0.1)
         result.append(takeLocalizationScreenshot(of: window, name: "ButtonsTab"))
         
         /// Capture ScrollingTab
-        window.toolbarButtons["scrolling"].click()
+        toolbarButtons["scrolling"].click()
+        Thread.sleep(forTimeInterval: 0.1)
         result.append(takeLocalizationScreenshot(of: window, name: "ScrollingTab"))
         
         /// Capture PointerTab
-        window.toolbarButtons["pointer"].click()
-        result.append(takeLocalizationScreenshot(of: window, name: "PointerTab"))
+//        toolbarButtons["pointer"].click()
+//        result.append(takeLocalizationScreenshot(of: window, name: "PointerTab"))
         
         /// Capture AboutTab
-        window.toolbarButtons["about"].click()
+        toolbarButtons["about"].click()
+        Thread.sleep(forTimeInterval: 0.1)
         result.append(takeLocalizationScreenshot(of: window, name: "AboutTab"))
         
-        
-        writeResults(result, outputDirectory)
+        /// Return
+        return result
     }
     
     ///
@@ -243,6 +260,9 @@ final class LocalizationScreenshotClass: XCTestCase {
                 print("Error: Failed to screenshot to file: \((error as NSError).code) : \((error as NSError).domain)")
             }
         }
+        
+        /// Log
+        print("Wrote result to output directory \(outputDirectory.path())")
     }
     
     ///

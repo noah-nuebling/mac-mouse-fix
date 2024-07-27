@@ -586,6 +586,8 @@ NSString *listMethods(id obj) {
     /// This method prints a list of all methods defined on a class
     ///     (not its superclass) with decoded return types and argument types!
     ///     This is really handy for creating categories swizzles, or inspecting private classes.
+    ///
+    ///     TODO: It would probably be cool if this iterated the superclasses and listed their methods as well. 
     
     NSMutableString *result = [NSMutableString string];
     

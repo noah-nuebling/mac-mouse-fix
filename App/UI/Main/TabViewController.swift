@@ -240,8 +240,29 @@ class TabViewController: NSTabViewController {
         tabsAreConfigured = true
         
         ///
+        /// Give tabButtons axIdentifiers
+        ///
+        
+        /// Note: Writing this so we can click the button inside the screenshot-taking XCUITest
+        
+        if let toolbar = _getToolbar(self.window) {
+            
+            for item in toolbar.items {
+
+                if let itemViewer = _getToolbarItemViewer(item) {
+                    itemViewer.setAccessibilityIdentifier(item.itemIdentifier.rawValue)
+                } else {
+                    assert(false) /// We only need this for screenshot-taking, so we actually don't care if this fails in some edge cases. (Could even turn this whole thing off unless the app is started with the `-MF_ANNOTATE_LOCALIZED_STRINGS` arg)
+                }
+            }
+        } else {
+            assert(false)
+        }
+        
+        ///
         /// Hide Pointer tab (because it's unfinished and unused)
         ///
+        
         /// Notes:
         /// - (Under Ventura Beta) For some reason, `removeTabViewItem(pointerTab)` (and `tabView.removeTabViewItem()`) crashes here saying the item is not in the tabView. This doesn't make sense since it is found in the array `self.tabViewItems`. So instead we use the hacky coolHideTab() instead.
         /// - Maybe it's better to do this in viewWillAppear?
