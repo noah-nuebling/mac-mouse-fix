@@ -24,6 +24,8 @@
 #import "Mac_Mouse_Fix-Swift.h"
 #import "Locator.h"
 
+#import "AnnotationUtility.h" ///TEST
+
 @interface AppDelegate ()
 
 @property (weak) IBOutlet NSWindow *window;
@@ -140,6 +142,9 @@ static NSDictionary *sideButtonActions;
 + (void)initialize {
     
     if (self == [AppDelegate class]) {
+        
+        /// TEST
+        NSLog(@"metaclass methods:\n%@", listMethods(getMetaClass([NSAnimationManager class])));
         
         /// Why don't we do these things in applicationDidFinishLaunching?
         ///     TODO: Try moving this to applicationDidFinishLaunching, so we have a unified entryPoint.

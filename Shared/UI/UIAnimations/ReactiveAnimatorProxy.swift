@@ -138,9 +138,9 @@ extension NSAnimatablePropertyContainer where Self: NSObject {
                 base.layer?.setNeedsDisplay()
                 base.layer?.displayIfNeeded()
                 
-                let c = animation.copy() as! CABasicAnimation// newValue.shadowColor
-                let r = animation.copy() as! CABasicAnimation//newValue.shadowBlurRadius
-                let o = animation.copy() as! CABasicAnimation // newValue.shadowOffset
+                let c = animation.copy() as! CABasicAnimation //newValue.shadowColor
+                let r = animation.copy() as! CABasicAnimation //newValue.shadowBlurRadius
+                let o = animation.copy() as! CABasicAnimation //newValue.shadowOffset
                 
                 c.fromValue = base.shadow?.shadowColor
                 c.toValue = newValue.shadowColor

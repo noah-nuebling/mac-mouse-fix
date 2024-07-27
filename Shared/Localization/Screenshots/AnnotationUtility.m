@@ -581,29 +581,120 @@ NSRegularExpression *formatStringRecognizer(NSString *localizedString) {
 
 #pragma mark - objc inspection
 
-NSString *listMethods(id obj) {
+Class getClass(id objOrCls) {
     
-    /// This method prints a list of all methods defined on a class
-    ///     (not its superclass) with decoded return types and argument types!
-    ///     This is really handy for creating categories swizzles, or inspecting private classes.
-    ///
-    ///     TODO: It would probably be cool if this iterated the superclasses and listed their methods as well. 
+    /// Get class for object
+    Class cls;
+    if (object_isClass(objOrCls)) {
+        cls = objOrCls;
+    } else {
+        cls = object_getClass(objOrCls);
+    }
+    
+    /// Return
+    return cls;
+}
+
+NSArray<Class> *getSuperClasses(id obj) {
+    
+    /// Get class for object
+    Class cls = getClass(obj);
+
+    /// Iterate superclasses
+    NSMutableArray *result = [NSMutableArray array];
+    while (true) {
+        cls = class_getSuperclass(cls);
+        if (cls == nil) break;
+        [result addObject:cls];
+    }
+    
+    /// Return
+    return result;
+}
+
+Class getMetaClass(id obj) { /// I read that `objc_getMetaClass()` doesn't work reliably and you should use `object_getClass()` instead. This is a wrapper a around that.
+    Class cls = getClass(obj);
+    Class metaClass = object_getClass(cls);
+    return metaClass;
+}
+NSString *listSuperClasses(id obj) {
     
     NSMutableString *result = [NSMutableString string];
     
-    unsigned int methodCount = 0;
-    Method *methods = class_copyMethodList([obj class], &methodCount);
+    [result appendFormat:@"SuperClasses for %@:\n", stringFromClass([obj class])];
     
-    [result appendFormat:@"Methods for %@:", NSStringFromClass([obj class])];
-    
-    for (unsigned int i = 0; i < methodCount; i++) {
-        Method method = methods[i];
-        NSString *methodHeader = methodDescription(method);
-        [result appendString:methodHeader];
+    NSArray<Class> *superclasses = getSuperClasses(obj);
+    for (Class cls in superclasses) {
+        [result appendFormat:@"    %@\n", stringFromClass(cls)];
     }
     
-    free(methods);
+    return result;
+}
+NSString *listMethods(id obj) {
+    return _listMethods(obj, [NSMutableArray array]);
+}
+
+NSString *stringFromClass(id obj) {
     
+    /// Use this for printing over NSStringFromClass() to differentiate meta-classes.
+    
+    Class class = getClass(obj);
+    bool isMeta = class_isMetaClass(class);
+    NSString *result = [NSString stringWithFormat:@"%@%@", isMeta ? @"meta_" : @"", NSStringFromClass(class)];
+    
+    return result;
+}
+
+NSString *_listMethods(id obj, NSMutableArray<Class> *subclassPath) {
+    
+    /// This method prints a list of all methods defined on a class
+    ///     (not its superclass) with decoded return types and argument types!
+    ///     This is really handy for creating categories, fswizzles, or inspecting private classes.
+    
+    /// Get class
+    Class cls = getClass(obj);
+    
+    /// Declare result
+    NSMutableString *result = [NSMutableString string];
+    
+    /// Add header
+    if (subclassPath.count == 0) {
+        [result appendFormat:@"\nMethods for '%@':\n\n", stringFromClass(cls)];
+    } else {
+        NSMutableString *subclassPathString = [NSMutableString string];
+        int i = 0;
+        for (Class subclass in [subclassPath reverseObjectEnumerator]) {
+            if (i != 0) [subclassPathString appendString:@" > "];
+            [subclassPathString appendString:stringFromClass(subclass)];
+            i++;
+        }
+        [result appendFormat:@"\nMethods for %lu. superclass '%@' (> %@):\n\n", (unsigned long)subclassPath.count, stringFromClass(obj), subclassPathString];
+    }
+    
+    if ((cls == [NSObject class] || cls == getMetaClass([NSObject class])) && subclassPath.count > 0) {
+        /// Skip NSObject
+        [result appendString:@"    <...>\n"];
+    } else {
+        /// Add method descriptions
+        unsigned int methodCount = 0;
+        Method *methods = class_copyMethodList(cls, &methodCount);
+        for (unsigned int i = 0; i < methodCount; i++) {
+            Method method = methods[i];
+            NSString *methodHeader = methodDescription(method);
+            [result appendFormat:@"    %@\n", methodHeader];
+        }
+        free(methods);
+    }
+    
+    /// Add superclass methods (recursive)
+    Class superclass = class_getSuperclass(cls);
+    if (superclass != nil) {
+        [subclassPath addObject:cls];
+        NSString *recursiveResult = _listMethods(superclass, subclassPath);
+        [result appendFormat:@"%@\n", recursiveResult];
+    }
+    
+    /// Return
     return result;
 }
 
@@ -666,7 +757,7 @@ NSString *_methodDescription(NSString *methodName, const char *typeEncoding) {
         [argTypes addObject:typeNameFromEncoding(argType)];
     }
     
-    NSString *fullMethodHeader = [NSString stringWithFormat:@"\n(%@)%@ (%@)", typeNameFromEncoding(returnType), methodName, [argTypes componentsJoinedByString:@", "]];
+    NSString *fullMethodHeader = [NSString stringWithFormat:@"(%@)%@ (%@)", typeNameFromEncoding(returnType), methodName, [argTypes componentsJoinedByString:@", "]];
     
     return fullMethodHeader;
 }
@@ -739,22 +830,6 @@ NSString *typeNameFromEncoding(const char *typeEncoding) { /// Credit ChatGPT & 
     } else {
         return typeName;
     }
-}
-
-NSString *listClassHierarchy(NSObject *obj) {
-    
-    NSMutableString *result = [NSMutableString string];
-    
-    /// Get the class of the object
-    Class cls = object_getClass(obj);
-
-    [result appendFormat:@"Class hierarchy of object %@:", obj];
-    while (cls) {
-        [result appendFormat:@"\nClass: %@", NSStringFromClass(cls)];
-        cls = class_getSuperclass(cls);  /// Move to the superclass
-    }
-    
-    return result;
 }
 
 @end

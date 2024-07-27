@@ -6379,10 +6379,10 @@
 				4F4C73D62C4FB3FA001D97C3 /* LocalizedStringAnnotation.m */,
 				4F4C737B2C4FB06E001D97C3 /* NSString+Steganography.h */,
 				4F4C737C2C4FB06E001D97C3 /* NSString+Steganography.m */,
-				4F4C73FC2C4FB5D2001D97C3 /* AnnotationUtility.h */,
-				4F4C73FD2C4FB5D2001D97C3 /* AnnotationUtility.m */,
 				4F4C73F62C4FB4C2001D97C3 /* TreeNode.h */,
 				4F4C73F72C4FB4C2001D97C3 /* TreeNode.m */,
+				4F4C73FC2C4FB5D2001D97C3 /* AnnotationUtility.h */,
+				4F4C73FD2C4FB5D2001D97C3 /* AnnotationUtility.m */,
 			);
 			path = Screenshots;
 			sourceTree = "<group>";

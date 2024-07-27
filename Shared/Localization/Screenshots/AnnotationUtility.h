@@ -79,8 +79,14 @@ NSRegularExpression *formatStringRecognizer(NSString *formatString);
 
 #pragma mark - objc introspection
 
+NSArray<Class> *getSuperClasses(id obj);
+
+Class getMetaClass(id obj);
+
 NSString *listMethods(id obj);
-NSString *listClassHierarchy(NSObject *obj);
+NSString *listSuperClasses(id obj);
+NSString *listMethods(id obj);
+NSString *blockDescription(id block);
 
 @end
 
