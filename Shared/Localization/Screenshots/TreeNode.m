@@ -31,7 +31,7 @@
     if (enumerableChildren != nil) {
         @try {
             kvcObject = kvcObject.mutableCopy;
-        } @catch (NSException *exception) {
+        } @catch (id exception) {
             /// If this fails, then we're mutating the kvcObject, which is ok for the XCUIElement.snapshot case, but might be bad otherwise.
         }
 

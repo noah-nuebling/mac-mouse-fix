@@ -146,19 +146,39 @@ final class LocalizationScreenshotClass: XCTestCase {
         /// Prep
         let toolbarButtons = window.toolbars.firstMatch.children(matching: .button) /// `window.toolbarButtons` doesn't work for some reason.
 
+        ///
         /// Capture GeneralTab
+        ///
         toolbarButtons["general"].click() /// Need to click twice so that the test runner properly waits for the animation to finish
         toolbarButtons["general"].click()
         result.append(takeLocalizationScreenshot(of: window, name: "GeneralTab"))
 
+        ///
         /// Capture ButtonsTab
+        ///
         toolbarButtons["buttons"].click()
         toolbarButtons["buttons"].click()
         result.append(takeLocalizationScreenshot(of: window, name: "ButtonsTab"))
         
+        /// Click buttons
+        ///     (The two in the bottom left and bottom right)
+        for (i, button) in window.buttons.matching(NSPredicate(format: "identifier IN { 'buttonsOptions', 'buttonsRestoreDefaults' }")).allElementsBoundByIndex.enumerated() {
+            button.click()
+            result.append(takeLocalizationScreenshot(of: window, name: "ButtonsTab.button.\(i)"))
+            window.typeKey(.escape, modifierFlags: [])
+        }
         
+        /// Click popupButtons
+        ///     (Which let you pick the action in the remaps table)
+        for (i, popupButton) in window.popUpButtons.allElementsBoundByIndex.enumerated() {
+            popupButton.click()
+            result.append(takeLocalizationScreenshot(of: window, name: "ButtonsTab.popUpButton.\(i)"))
+            window.typeKey(.escape, modifierFlags: [])
+        }
         
+        ///
         /// Capture ScrollingTab
+        ///
         toolbarButtons["scrolling"].click()
         toolbarButtons["scrolling"].click()
         result.append(takeLocalizationScreenshot(of: window, name: "ScrollingTab"))
@@ -167,7 +187,9 @@ final class LocalizationScreenshotClass: XCTestCase {
 //        toolbarButtons["pointer"].click()
 //        result.append(takeLocalizationScreenshot(of: window, name: "PointerTab"))
         
+        ///
         /// Capture AboutTab
+        ///
         toolbarButtons["about"].click()
         toolbarButtons["about"].click()
         result.append(takeLocalizationScreenshot(of: window, name: "AboutTab"))
