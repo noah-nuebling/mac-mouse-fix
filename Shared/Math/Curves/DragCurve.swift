@@ -158,6 +158,7 @@ import Foundation
     }
 
     @objc init(coefficient: Double, exponent: Double, distance d: Double, stopSpeed vs: Double) {
+        ///
         /// Distance-based init
         ///
         /// This is quite similar to the `Initial-speed-based init`. Make sure to keep both in sync when you make changes.
@@ -227,6 +228,7 @@ import Foundation
     }
     
     @objc init(coefficient: Double, exponent: Double, initialSpeed v0_arg: Double, stopSpeed vs_arg: Double) {
+        
         /// Initial-speed-based init
         
         /// Speed will never reach 0 exactly so we need to specify `stopSpeed`, the speed at which we consider it stopped
@@ -299,7 +301,7 @@ import Foundation
 //        DDLogDebug("DragDurve initialized with v0: \(v0), distance int: \(self._distanceInterval), timeToStop: \(timeToStop)");
     }
     
-    /// v(t)
+    /// v(t) (velocity over time)
     ///     There are 3 important variables in the v(t) equation: v, t, and c
     ///         (Also a and b but they just define the shape of the curve, and we never need to solve for them)
     ///
@@ -351,7 +353,7 @@ import Foundation
     }
     
     
-    /// d(t)
+    /// d(t) (distance over time)
     ///     There are 4 important variables in the d(t) equation: d, t, c, and k
     ///         (Also a and b but we don't have functions for them)
     ///

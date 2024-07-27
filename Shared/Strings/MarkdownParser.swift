@@ -66,7 +66,7 @@ struct ApplyMarkdown: MarkupVisitor {
         /// Use the attributes from `attributeBase` as base and override them with the markdown styling where there is markdown styling
         /// Note:
         ///     Don't use String.count!
-        ///     The equivalent of NSString.length is String.unicodeScalars.count. String.count is something different (doesn't count all unicode characters as characters)
+        ///     The equivalent of NSString.length is String.unicodeScalars.count. (Or String.utf16.count, since NSString works in utf16?) String.count is something different (doesn't count all unicode characters as characters)
         
         if let base = attributeBase {
             self.base = base

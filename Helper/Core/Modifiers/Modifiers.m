@@ -42,7 +42,7 @@
 /// (At the time of writing, this change is not yet reflected in the other comments in this class.)`Modifiers` class now has a single `modifiers` instance var which is updated whenever modifiers change. When some module requests the current modifiers that instance var is simply returned. Before, the modifiers were recompiled each time they were requested. The whole idea of "modifier driven" and "trigger driven" modifications is now not used anymore. All modifications are in effect "modifier driven". This does mean we always listen to keyboard modifiers which is bad. But that will allow us to turn off other event interception dynamically. For example when the user has scrolling enhancements turned off we can turn the scrollwheel eventTap off but then when they hold a modifier for scroll-to-zoom we can dynamically turn the tap on again. Ideally we'd only tap into the keyboard mod event stream if there is such a situation where the keyboard mods can toggle another tap and otherwise turn the keyboard mod tap off. I'll look into that.
 ///
 /// Update:
-/// Most of this stuff is outdated now. Now, the MasterSwitch toggles between actively listening to modifiers vs passively retrieving them on request. The active listening simply notifies the SwitchMaster that the modifers changed.
+/// Most of this stuff is outdated now. Now, the SwitchMaster toggles between actively listening to modifiers vs passively retrieving them on request. The active listening simply notifies the SwitchMaster that the modifers changed.
 
 #pragma mark - Storage
 
@@ -99,7 +99,7 @@ static CFMachPortRef _kbModEventTap;
     /// NOTE:
     /// We can't passively retrieve the button mods, so we always need to actively listen to the buttons, even if the modifierPriority is `passive`.
     /// Also we don't only listen to buttons to use them as modifiers but also to use them as triggers.
-    /// As a consequence of this, we only toggle off some of the button modifier processing here if the button mods are completely unused and we don't toggle off the button input receiving entirely here at all. That is done by MasterSwitch when there are no effects for the buttons either as modifiers or as triggers.
+    /// As a consequence of this, we only toggle off some of the button modifier processing here if the button mods are completely unused and we don't toggle off the button input receiving entirely here at all. That is done by SwitchMaster when there are no effects for the buttons either as modifiers or as triggers.
     _btnModPriority = priority;
     Buttons.useButtonModifiers = _btnModPriority != kMFModifierPriorityUnused;
 }

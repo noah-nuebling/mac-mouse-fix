@@ -34,6 +34,7 @@
 ///
 /// Notes:
 ///     - We should consider replacing the remaps dict with this.
+///         (Or maybe a nested class structure defined in swift would be even nicer, but not sure if fast and objc compatible.)
 
 NS_ASSUME_NONNULL_BEGIN
 
