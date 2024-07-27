@@ -143,7 +143,7 @@ NSString *getExecutablePath(void) {
     
     /// Get the path of the current executable.
     
-    static uint32_t pathBufferSize = MAXPATHLEN; /// Make this static to store between invocations. For optimization, so we don't hit the fallback case over and over?
+    static uint32_t pathBufferSize = MAXPATHLEN; /// Make this static to store between invocations. For optimization, so we don't hit the fallback case over and over. Not sure if relevant.
     char *pathBuffer = malloc(pathBufferSize); if (pathBuffer == NULL) return NULL; /// ChatGPT and SO tells me to NULL-check my malloc, and that not doing it is "unsafe" and "bad programming". I'm annoyed because that seems extremely unnecessary, but ok.
     int ret = _NSGetExecutablePath(pathBuffer, &pathBufferSize);
     
@@ -201,7 +201,7 @@ NSString *getSymbol(void *address) {
 NSArray<Class> *searchClasses(NSDictionary<MFClassSearchCriterion, id> *criteria) {
     
     /// Searches classes in the objc runtime by different criteria.
-    ///     It think you should always at least specify a framework, otherwise might become quite slow.
+    ///     I think you should always at least specify a framework, otherwise might become quite slow.
     ///     This is largely a wrapper around `objc_enumerateClasses()`
     
     /// Validate
@@ -235,13 +235,14 @@ NSArray<Class> *searchClasses(NSDictionary<MFClassSearchCriterion, id> *criteria
     assert(criteriaMutable.count == 0);
     
     /// Preprocess namePrefix
+    ///     -> Convert it to c string
     const char *namePrefix = NULL;
     if (namePrefixNS) {
         namePrefix = [namePrefixNS cStringUsingEncoding:NSUTF8StringEncoding];
     }
     
     /// Preprocess frameworkName
-    ///     -> Get framwork paths
+    ///     -> Get framework paths
     
     unsigned int frameworkCount;
     const char **frameworkPaths = NULL;
@@ -249,7 +250,7 @@ NSArray<Class> *searchClasses(NSDictionary<MFClassSearchCriterion, id> *criteria
     if (frameworkNameNS != nil) {
         const char *frameworkName = [frameworkNameNS cStringUsingEncoding:NSUTF8StringEncoding];
         const char *frameworkPath = searchFrameworkPath(frameworkName);
-        frameworkPaths = malloc(sizeof(char *));
+        frameworkPaths = malloc(sizeof(char *)); /// We malloc here to keep memory situation symmetrical with the `objc_copyImageNames()` call.
         *frameworkPaths = frameworkPath;
         frameworkCount = 1;
     } else {
@@ -523,7 +524,7 @@ NSRegularExpression *formatSpecifierRegex(void) {
             "((?#<type>)[n])"
         ")"
     ")"
-    "|"  /// Percent sign (%%)
+    "|"  /// Escaped percent sign (%%)
     "((?#<escaped_percent>)%%)";
 
     
@@ -543,8 +544,10 @@ NSRegularExpression *formatStringRecognizer(NSString *localizedString) {
     /// TODO: FIX BUG: This function will treat escaped percent (%%) like a format specifer and replace it with with `.*`which is wrong.
     
     /// Turn the localizedString into a matching pattern
-    ///     By replacing format specifiers (e.g. `%d`) inside the localizedString with insertion point `.*?.
-    ///     This matching mattern should match any ui strings that are composed of the localized string.
+    ///     By replacing format specifiers (e.g. `%d`) inside the localizedString with insertion point `.*?`.
+    ///     This matching pattern should match any ui strings that are composed of the localized string.
+    /// Note: The notes and variable names are all about localizedStrings, but this should work on any c-style format string.
+    
     NSRegularExpression *specifierRegex = formatSpecifierRegex();
     NSString *localizedStringPattern = [NSRegularExpression escapedPatternForString:localizedString];
     NSString *insertionPoint = [NSRegularExpression escapedTemplateForString:@"(.*?)"]; /// Escaping this doesn't seem to do anything.
@@ -577,6 +580,94 @@ NSRegularExpression *formatStringRecognizer(NSString *localizedString) {
 }
 
 #pragma mark - objc inspection
+
+NSString *listMethods(id obj) {
+    
+    /// This method prints a list of all methods defined on a class
+    ///     (not its superclass) with decoded return types and argument types!
+    ///     This is really handy for creating categories swizzles, or inspecting private classes.
+    
+    NSMutableString *result = [NSMutableString string];
+    
+    unsigned int methodCount = 0;
+    Method *methods = class_copyMethodList([obj class], &methodCount);
+    
+    [result appendFormat:@"Methods for %@:", NSStringFromClass([obj class])];
+    
+    for (unsigned int i = 0; i < methodCount; i++) {
+        Method method = methods[i];
+        NSString *methodHeader = methodDescription(method);
+        [result appendString:methodHeader];
+    }
+    
+    free(methods);
+    
+    return result;
+}
+
+NSString *blockDescription(id block) {
+    
+    const char *typeEncoding = blockTypeEncoding(block);
+    NSString *result = _methodDescription(@"(^)", typeEncoding);
+    return result;
+}
+
+static const char *blockTypeEncoding(id blockObj) {
+    
+    /// Copied from: https://stackoverflow.com/a/10944983/10601702
+    
+    struct BlockDescriptor {
+        unsigned long reserved;
+        unsigned long size;
+        void *rest[1];
+    };
+
+    struct Block {
+        void *isa;
+        int flags;
+        int reserved;
+        void *invoke;
+        struct BlockDescriptor *descriptor;
+    };
+    
+    struct Block *block = (__bridge void *)blockObj;
+    struct BlockDescriptor *descriptor = block->descriptor;
+
+    int copyDisposeFlag = 1 << 25;
+    int signatureFlag = 1 << 30;
+
+    assert(block->flags & signatureFlag);
+
+    int index = 0;
+    if(block->flags & copyDisposeFlag)
+        index += 2;
+
+    return descriptor->rest[index];
+}
+
+NSString *methodDescription(Method method) {
+    
+    SEL selector = method_getName(method);
+    const char *typeEncoding = method_getTypeEncoding(method);
+    NSString *result = _methodDescription(NSStringFromSelector(selector), typeEncoding);
+    return result;
+}
+
+NSString *_methodDescription(NSString *methodName, const char *typeEncoding) {
+    
+    NSMethodSignature *signature = [NSMethodSignature signatureWithObjCTypes:typeEncoding];
+    const char *returnType = [signature methodReturnType];
+    long nOfArgs = [signature numberOfArguments];
+    NSMutableArray *argTypes = [NSMutableArray array];
+    for (int i = 2; i < nOfArgs; i++) { /// Start at 2 to skip the `self` and `_cmd` args
+        const char *argType = [signature getArgumentTypeAtIndex:i];
+        [argTypes addObject:typeNameFromEncoding(argType)];
+    }
+    
+    NSString *fullMethodHeader = [NSString stringWithFormat:@"\n(%@)%@ (%@)", typeNameFromEncoding(returnType), methodName, [argTypes componentsJoinedByString:@", "]];
+    
+    return fullMethodHeader;
+}
 
 NSString *typeNameFromEncoding(const char *typeEncoding) { /// Credit ChatGPT & Claude
     
@@ -625,52 +716,27 @@ NSString *typeNameFromEncoding(const char *typeEncoding) { /// Credit ChatGPT & 
         case 'b': baseTypeName = @"bit field"; break;
         case '?': baseTypeName = @"unknown"; break;
         default:
-            DDLogWarn(@"typeEncoding: %s is unknown", typeEncoding);
+            NSLog(@"typeEncoding: %s is unknown", typeEncoding);
             assert(false);
     }
+    index++;
     
+    /// Handle objc blocks (encoded as @?)
+    if (index <= (strlen(typeEncoding) - 1) && typeEncoding[index-1] == '@' && typeEncoding[index] == '?') {
+        baseTypeName = @"^block";
+        index++;
+    }
+    
+    /// Build result
     [typeName appendString:baseTypeName];
     
-    /// Handle additional type information
-    if (strlen(typeEncoding) > index + 1) {
+    if (index <= (strlen(typeEncoding) - 1)) {
+        /// Output any unhandled type information
         NSString *fullTypeEncoding = [NSString stringWithUTF8String:typeEncoding];
         return [NSString stringWithFormat:@"%@ [%@]", typeName, fullTypeEncoding];
     } else {
         return typeName;
     }
-}
-
-NSString *listMethods(id obj) {
-    
-    /// This method prints a list of all methods defined on a class
-    ///     (not its superclass) with decoded return types and argument types!
-    ///     This is really handy for creating categories swizzles, or inspecting private classes.
-    
-    NSMutableString *result = [NSMutableString string];
-    
-    unsigned int methodCount = 0;
-    Method *methods = class_copyMethodList([obj class], &methodCount);
-    
-    [result appendFormat:@"Methods for %@:", NSStringFromClass([obj class])];
-    for (unsigned int i = 0; i < methodCount; i++) {
-        Method method = methods[i];
-        SEL selector = method_getName(method);
-        char returnType[5000];
-        method_getReturnType(method, returnType, 5000);
-        unsigned int nOfArgs = method_getNumberOfArguments(method);
-        NSMutableArray *argTypes = [NSMutableArray array];
-        for (int i = 2; i < nOfArgs; i++) { /// Start at 2 to skip the `self` and `_cmd` args
-            char argType[5000];
-            method_getArgumentType(method, i, argType, 5000);
-            [argTypes addObject:typeNameFromEncoding(argType)];
-        }
-        
-        [result appendFormat:@"\n(%@)%@ (%@)", typeNameFromEncoding(returnType), NSStringFromSelector(selector), [argTypes componentsJoinedByString:@", "]];
-    }
-    
-    free(methods);
-    
-    return result;
 }
 
 NSString *listClassHierarchy(NSObject *obj) {

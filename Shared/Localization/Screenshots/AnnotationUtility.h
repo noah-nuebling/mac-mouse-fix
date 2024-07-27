@@ -30,7 +30,7 @@ typedef NSString * MFClassSearchCriterion NS_TYPED_ENUM;
 #define MFClassSearchCriterionSuperclass @"superclass"
 
 NSArray<Class> *searchClasses(NSDictionary<MFClassSearchCriterion, id> *criteria);
-BOOL classInheritsMethod(Class class, SEL selector);
+bool classInheritsMethod(Class class, SEL selector);
 
 #pragma mark - Swizzling
 
@@ -54,7 +54,7 @@ void swizzleMethodOnClassAndSubclasses(Class baseClass, NSDictionary<MFClassSear
     ^InterceptorBlock (Class m_originalClass, SEL m__cmd, __MethodReturnType (*m_originalImplementation)(id self, SEL _cmd APPEND_ARGS __MethodArguments)) /** Return type and args of the factory  block */ \
     {                                                                               /** Body of the factory block */ \
         return ^__MethodReturnType (id m_self APPEND_ARGS __MethodArguments)        /** Return type and args of the interceptor block */ \
-            __OnIntercept;                                                          /**  Body of the interceptor block - the code that the caller of the macro provided. This will be executed when the method is intercepted. Needs to be the varargs to prevent weird compiler errors. */ \
+            __OnIntercept;                                                          /**  Body of the interceptor block - the code that the caller of the macro provided. This will be executed when the method is intercepted. Needs to be the varargs (...) to prevent weird compiler errors. */ \
     } \
 
 /// Convenience macros

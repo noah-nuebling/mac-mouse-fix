@@ -10,6 +10,7 @@
 #import "NSString+Steganography.h"
 #import "NSAttributedString+Additions.h"
 #import "NSString+Additions.h"
+#import "BidirectionalMap.h"
 
 #if IS_MAIN_APP
 #import "Mac_Mouse_Fix-Swift.h"
@@ -41,34 +42,76 @@
 typedef NS_ENUM(UTF32Char, MFZeroWidthCharacter) {
     
     /// For steganography. Based on this readme https://github.com/Endrem/Zero-Width-Characters
+    MFZeroWidthCharacterSpace                       = 0x200B,       /// We use this as a control character to mark the start/end of a secret message.
+    MFZeroWidthCharacterNonJoiner                   = 0x200C,       /// We use this to encode 0
+    MFZeroWidthCharacterJoiner                      = 0x200D,       /// We use this to encode 1
     
-    MFZeroWidthCharacterSpace = 0x0000200b,     /// We use this to group 8 bits into a byte
-    MFZeroWidthCharacterNonJoiner = 0x0000200c, /// We use this to encode 0
-    MFZeroWidthCharacterJoiner = 0x0000200d,    /// We use this to encode 1
+    /// More values from https://mayadevbe.me/posts/projects/zw_steg/
+    MFZeroWidthCharacterWordJoiner                  = 0x2060,       /// We use this to encode 2
+    MFZeroWidthCharacterMongolianVowelSeparator     = 0x180E,       /// This one prints weirdly
+    MFZeroWidthCharacterRightToLeftMark             = 0x200F,
+    
+    /// More characters from: https://330k.github.io/misc_tools/unicode_steganography.html
+    MFZeroWidthCharacterLeftToRightMark             = 0x200E,
+    MFZeroWidthCharacterLeftToRightEmbedding        = 0x202A,
+    MFZeroWidthCharacterPopDirectionalFormatting    = 0x202C,
+    MFZeroWidthCharacterLeftToRightOverride         = 0x202D,
+    MFZeroWidthCharacterInvisibleTimes              = 0x2062,       /// We use this to encode 3
+    MFZeroWidthCharacterInvisibleSeparator          = 0x2063,
+    MFZeroWidthCharacterNoBreakSpace                = 0xFEFF,
+    
 };
 
+///
+/// Base-4 secret message encoding/decoding
+///
+
+- (NSArray *)secretMessageStartSequence {
+    NSArray *result = @[@0x200B, @0x200C, @0x200B, @0x200D, @0x200B]; /// 200B is only used in the start/end sequence not in the secretMessage's body
+    return result;
+}
+- (NSArray *)secretMessageEndSequence {
+    NSArray *result = @[@0x200B, @0x200D, @0x200B, @0x200C, @0x200B]; /// Inverse of the start sequence
+    return result;
+}
+
+- (BidirectionalMap<NSNumber *, NSNumber *> *)quaternaryDigitToZeroWidthCharacterMap {
+        
+    static BidirectionalMap *_characterMap = nil;
+    if (_characterMap == nil) {
+        _characterMap = [[BidirectionalMap alloc] initWithDictionary:@{
+            @-1:    @0x200B,
+            @0:     @0x200C,
+            @1:     @0x200D,
+            @2:     @0x2060,
+            @3:     @0x2062,
+        }];
+    }
+    
+    return _characterMap;
+}
 
 - (NSString *)stringByAppendingStringAsSecretMessage:(NSString *)message {
     NSString *secretMessage = [message encodedAsSecretMessage];
-    return [self stringByAppendingString:secretMessage];
+    NSString *result = [self stringByAppendingString:secretMessage];
+    return result;
 }
 
-
 - (NSArray<NSString *> *)secretMessages {
-
-    /// Finds any secret messages in `self`, dedodes them and returns them in an array
-    
+ 
     /// Declare result
     NSMutableArray *result = [NSMutableArray array];
     
     /// Finds secret messages in the string.
-    NSString *pattern = @"(?:\u200b[\u200c\u200d]{8})*\u200b"; /// Matches packets of 8 200c or 200d chars surrounded by 200b chars.
+    NSString *pattern = @"\u200B\u200C\u200B\u200D\u200B"           /// Start sequence
+                        "(?:(?:[\u200C\u200D\u2060\u2062]{4})*)"    /// Arbitrary sequence of the 4 characters encoding, 0,1,2,3. Sequence length needs to be divisible by 4 since 4 quaternary digits encode one UTF-8 char.
+                        "\u200B\u200D\u200B\u200C\u200B";           /// End sequence
+    
     NSRegularExpressionOptions expressionOptions = 0;
     NSRegularExpression *expression = [NSRegularExpression regularExpressionWithPattern:pattern options:expressionOptions error:nil];
     NSMatchingOptions matchingOptions = 0;
     NSArray<NSTextCheckingResult *> *matches = [expression matchesInString:self options:matchingOptions range:NSMakeRange(0, self.length)];
     
-    /// Decode the secret messages
     for (NSTextCheckingResult *match in matches) {
         NSRange r = [match range];
         NSString *encodedMessage = [self substringWithRange:r];
@@ -80,90 +123,88 @@ typedef NS_ENUM(UTF32Char, MFZeroWidthCharacter) {
     return result;
 }
 
-- (NSString *)encodedAsSecretMessage {
+- (NSString *)decodedAsSecretMessage {
+        
+    NSInteger startLength = [self secretMessageStartSequence].count;
+    NSInteger endLength = [self secretMessageEndSequence].count;
+    NSRange coreRange = NSMakeRange(startLength, self.length - startLength - endLength);
+    NSString *coreMessage = [self substringWithRange:coreRange];
     
-    /// Returns `self` encoded as a zero-width string.
-    ///     The result will contain a sequence of zero-width 200b, 200c, and 200d unicode characters.
-    ///     200c and 200d encode 0 and 1, while 200b serves as a divider between packets of 8 bits.
-    ///     This sequence of bytes represents the UTF8 encoding of `self`.
-    ///
-    ///     If we represent 200b as `B`, 200c as `c` and 200d as `d`, the resulting sequence might look like this:
-    ///         BccddcdddBddccddcdBdddcccdcB
-    ///
-
-    /// Get binary representation of self
-    NSArray *binaryArray = [self binaryArray];
-    
-    /// Convert binary to UTF32Char array containing invisible characters.
-    ///     Note: I don't think we'd have to be using UTF32 stuff here instead of UTF8
-    NSMutableArray<NSNumber *> *UTF32Result = [NSMutableArray array];
-    for (NSArray *byte in binaryArray) {
-        [UTF32Result addObject:@(MFZeroWidthCharacterSpace)];
-        for (NSNumber *bit in byte) {
-            if (bit.intValue == 0) {
-                [UTF32Result addObject:@(MFZeroWidthCharacterNonJoiner)];
-            } else if (bit.intValue == 1) {
-                [UTF32Result addObject:@(MFZeroWidthCharacterJoiner)];
-            } else {
-                assert(false);
-            }
-        }
+    NSMutableArray<NSNumber *> *quaternaryDigits = [NSMutableArray array];
+    for (NSNumber *character in [coreMessage UTF32Characters]) {
+        NSNumber *digit = [[self quaternaryDigitToZeroWidthCharacterMap] leftValueForRightValue:character];
+        [quaternaryDigits addObject:digit];
     }
-    [UTF32Result addObject:@(MFZeroWidthCharacterSpace)];
+    NSString *result = [NSString stringWithQuaternaryArray:quaternaryDigits];
     
-    /// Convert UTF32 char array to string
-    NSString *result = [NSString stringWithUTF32Characters:UTF32Result];
-    
-    /// Return
     return result;
 }
 
-- (NSString *)decodedAsSecretMessage {
+
+
+- (NSString *)encodedAsSecretMessage {
     
-    /// Decodes `self` if `self` is a message previously encoded with `encodedAsSecretMessage:`
-    ///     Don't use this on random strings.
-    ///     This function could crash if the string doesn't exactly follow the secret message encoding.
+    NSMutableArray *resultArray = [NSMutableArray array];
     
-    NSMutableArray<NSArray<NSNumber *> *> *resultArray = [NSMutableArray array];
+    [resultArray addObjectsFromArray:[self secretMessageStartSequence]];
     
-    NSMutableArray<NSNumber *> *latestByteArray = [NSMutableArray array];
-    
-    /// Get UTF32Char array for self
-    NSArray<NSNumber *> *UTF32Chars = [self UTF32Characters];
-    
-    /// Iterate UTF32 chars
-    BOOL isFirstIter = YES;
-    for (int i = 0; i < UTF32Chars.count; i++) {
-        
-        /// Get UTF32Char
-        UTF32Char c = [UTF32Chars[i] intValue];
-        
-        /// Append to result when we hit a byte divider
-        BOOL isByteDivider = i % 9 == 0;
-        if (isByteDivider) {
-            assert(c == MFZeroWidthCharacterSpace);
-            if (!isFirstIter) {
-                [resultArray addObject:latestByteArray];
-                latestByteArray = [NSMutableArray array];
-            }
-        } else {
-         
-            if (c == MFZeroWidthCharacterNonJoiner) {
-                [latestByteArray addObject:@(0)];
-            } else if (c == MFZeroWidthCharacterJoiner) {
-                [latestByteArray addObject:@(1)];
-            } else {
-                assert(false);
-            }
-        }
-        
-        isFirstIter = NO;
+    NSArray<NSNumber *> *digits = [self quaternaryArray];
+    for (NSNumber *digit in digits) {
+        NSNumber *zeroWidthCharacter = [[self quaternaryDigitToZeroWidthCharacterMap] rightValueForLeftValue:digit];
+        [resultArray addObject:zeroWidthCharacter];
     }
     
-    /// Convert binary array to string
-    NSString *result = [NSString stringWithBinaryArray:resultArray];
+    [resultArray addObjectsFromArray:[self secretMessageEndSequence]];
     
-    /// Return
+    NSString *result = [NSString stringWithUTF32Characters:resultArray];
+    
+    return result;
+}
+
+///
+/// Quaternary array conversion
+///
+
+- (NSArray<NSNumber *> *)quaternaryArray {
+    
+    /// Returns an array of @0, @1, @2, @3, which represents the quarternary encoding of the UTF8 encoding of `self`
+    
+    NSMutableArray *result = [NSMutableArray array];
+    
+    for (NSArray<NSNumber *> *byte in [self binaryArray]) {
+        
+        for (int i = 0; i < 8; i += 2) {
+            
+            int a = [byte[i] intValue];
+            int b = [byte[i+1] intValue];
+            int quart = (a << 1) + b;
+            assert(0 <= quart && quart <= 3);
+            
+            [result addObject:@(quart)];
+        }
+    }
+    
+    return result;
+}
+
++ (NSString *)stringWithQuaternaryArray:(NSArray<NSNumber *> *)digits {
+        
+    NSMutableArray<NSArray<NSNumber *> *> *binaryArray = [NSMutableArray array];
+    
+    for (int i = 0; i < digits.count; i += 4) {
+        
+        NSMutableArray *byte = [NSMutableArray array];
+        
+        for (int j = 0; j < 4; j++) {
+            int quartDigit = [digits[i+j] intValue];
+            [byte addObject:@((quartDigit & 2) != 0) ]; /// Measure large bit of quart digit
+            [byte addObject:@((quartDigit & 1) != 0)];  /// Measure small bit of quart digit
+        }
+        
+        [binaryArray addObject:byte];
+    }
+    
+    NSString *result = [self stringWithBinaryArray:binaryArray];
     return result;
 }
 
@@ -235,7 +276,7 @@ typedef NS_ENUM(UTF32Char, MFZeroWidthCharacter) {
     }
     
     /// Set last char to string terminator
-    resultCString[characters.count] = '\0';
+    resultCString[characters.count] = '\0'; /// Don't think this is necessary, since the last char should already be initialized to 0.
     
     /// Convert cString to NSString
     NSString *result = [NSString stringWithCString:resultCString encoding:NSUTF8StringEncoding];
@@ -303,4 +344,132 @@ typedef NS_ENUM(UTF32Char, MFZeroWidthCharacter) {
     return result;
 }
 
+///
+/// Older space-inefficient encoding
+///
+
+/// Discussion:
+///     This encoding uses just 2+1 zero-width characters, to create a base-2 encoding. There's a character limit of 512 in the UIStrings we can retrieve inside an XCUITest, which lead to problems,
+///     so we'll create a new base-4 encoding that will hopefully be space-efficient enough.
+
+- (NSString *)stringByAppendingStringAsSecretMessage_Inefficient:(NSString *)message {
+    NSString *secretMessage = [message encodedAsSecretMessage_Inefficient];
+    return [self stringByAppendingString:secretMessage];
+}
+
+
+- (NSArray<NSString *> *)secretMessages_Inefficient {
+
+    /// Finds any secret messages in `self`, dedodes them and returns them in an array
+    
+    /// Declare result
+    NSMutableArray *result = [NSMutableArray array];
+    
+    /// Finds secret messages in the string.
+    NSString *pattern = @"(?:\u200b[\u200c\u200d]{8})*\u200b"; /// Matches packets of 8 200c or 200d chars surrounded by 200b chars.
+    NSRegularExpressionOptions expressionOptions = 0;
+    NSRegularExpression *expression = [NSRegularExpression regularExpressionWithPattern:pattern options:expressionOptions error:nil];
+    NSMatchingOptions matchingOptions = 0;
+    NSArray<NSTextCheckingResult *> *matches = [expression matchesInString:self options:matchingOptions range:NSMakeRange(0, self.length)];
+    
+    /// Decode the secret messages
+    for (NSTextCheckingResult *match in matches) {
+        NSRange r = [match range];
+        NSString *encodedMessage = [self substringWithRange:r];
+        NSString *decodedMessage = [encodedMessage decodedAsSecretMessage_Inefficient];
+        [result addObject:decodedMessage];
+    }
+    
+    /// Return
+    return result;
+}
+
+- (NSString *)encodedAsSecretMessage_Inefficient {
+    
+    /// Returns `self` encoded as a zero-width string.
+    ///     The result will contain a sequence of zero-width 200b, 200c, and 200d unicode characters.
+    ///     200c and 200d encode 0 and 1, while 200b serves as a divider between packets of 8 bits.
+    ///     This sequence of bytes represents the UTF8 encoding of `self`.
+    ///
+    ///     If we represent 200b as `B`, 200c as `c` and 200d as `d`, the resulting sequence might look like this:
+    ///         BccddcdddBddccddcdBdddcccdcB
+    ///
+
+    /// Get binary representation of self
+    NSArray *binaryArray = [self binaryArray];
+    
+    /// Convert binary to UTF32Char array containing invisible characters.
+    ///     Note: I don't think we'd have to be using UTF32 stuff here instead of UTF8
+    NSMutableArray<NSNumber *> *UTF32Result = [NSMutableArray array];
+    for (NSArray *byte in binaryArray) {
+        [UTF32Result addObject:@(MFZeroWidthCharacterSpace)];
+        for (NSNumber *bit in byte) {
+            if (bit.intValue == 0) {
+                [UTF32Result addObject:@(MFZeroWidthCharacterNonJoiner)];
+            } else if (bit.intValue == 1) {
+                [UTF32Result addObject:@(MFZeroWidthCharacterJoiner)];
+            } else {
+                assert(false);
+            }
+        }
+    }
+    [UTF32Result addObject:@(MFZeroWidthCharacterSpace)];
+    
+    /// Convert UTF32 char array to string
+    NSString *result = [NSString stringWithUTF32Characters:UTF32Result];
+    
+    /// Return
+    return result;
+}
+
+- (NSString *)decodedAsSecretMessage_Inefficient {
+    
+    /// Decodes `self` if `self` is a message previously encoded with `encodedAsSecretMessage:`
+    ///     Don't use this on random strings.
+    ///     This function could crash if the string doesn't exactly follow the secret message encoding.
+    
+    NSMutableArray<NSArray<NSNumber *> *> *resultArray = [NSMutableArray array];
+    
+    NSMutableArray<NSNumber *> *latestByteArray = [NSMutableArray array];
+    
+    /// Get UTF32Char array for self
+    NSArray<NSNumber *> *UTF32Chars = [self UTF32Characters];
+    
+    /// Iterate UTF32 chars
+    BOOL isFirstIter = YES;
+    for (int i = 0; i < UTF32Chars.count; i++) {
+        
+        /// Get UTF32Char
+        UTF32Char c = [UTF32Chars[i] intValue];
+        
+        /// Append to result when we hit a byte divider
+        BOOL isByteDivider = i % 9 == 0;
+        if (isByteDivider) {
+            assert(c == MFZeroWidthCharacterSpace);
+            if (!isFirstIter) {
+                [resultArray addObject:latestByteArray];
+                latestByteArray = [NSMutableArray array];
+            }
+        } else {
+         
+            if (c == MFZeroWidthCharacterNonJoiner) {
+                [latestByteArray addObject:@(0)];
+            } else if (c == MFZeroWidthCharacterJoiner) {
+                [latestByteArray addObject:@(1)];
+            } else {
+                assert(false);
+            }
+        }
+        
+        isFirstIter = NO;
+    }
+    
+    /// Convert binary array to string
+    NSString *result = [NSString stringWithBinaryArray:resultArray];
+    
+    /// Return
+    return result;
+}
+
 @end
+

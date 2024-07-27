@@ -12,6 +12,8 @@
 		4F09284228B8C71C00BDC2FF /* Hyperlink.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF665E725F2C92700689B77 /* Hyperlink.m */; };
 		4F09284528B8E82B00BDC2FF /* LicenseSheetController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F09284328B8E82B00BDC2FF /* LicenseSheetController.swift */; };
 		4F09284828B8EE7200BDC2FF /* LicenseSheetController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4F09284A28B8EE7200BDC2FF /* LicenseSheetController.xib */; };
+		4F0C00422C53273200C5D843 /* BidirectionalMap.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F0C00412C53273200C5D843 /* BidirectionalMap.m */; };
+		4F0C00432C53273200C5D843 /* BidirectionalMap.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F0C00412C53273200C5D843 /* BidirectionalMap.m */; };
 		4F0CFFED2C518CF600C5D843 /* MFDataClassImplementations.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F0CFFEC2C518CF600C5D843 /* MFDataClassImplementations.m */; };
 		4F0CFFEE2C518CF600C5D843 /* MFDataClassImplementations.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F0CFFEC2C518CF600C5D843 /* MFDataClassImplementations.m */; };
 		4F12952028D2D5E1009A49AB /* NSTextField+Extentions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F12951F28D2D5E1009A49AB /* NSTextField+Extentions.swift */; };
@@ -19,6 +21,7 @@
 		4F143E462B2D1F5600FE4092 /* fallback_licenseinfo_config.json in Resources */ = {isa = PBXBuildFile; fileRef = 4F143E452B2D1F5600FE4092 /* fallback_licenseinfo_config.json */; };
 		4F143E472B2D1F5600FE4092 /* fallback_licenseinfo_config.json in Resources */ = {isa = PBXBuildFile; fileRef = 4F143E452B2D1F5600FE4092 /* fallback_licenseinfo_config.json */; };
 		4F17D2E1292A635200EB07CA /* SwitchMaster.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F17D2E0292A635200EB07CA /* SwitchMaster.swift */; };
+		4F18464D2C533B5900D5E835 /* BidirectionalMap.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F0C00412C53273200C5D843 /* BidirectionalMap.m */; };
 		4F1AFE972670EBA900ECA424 /* DragCurve.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F1AFE962670EBA900ECA424 /* DragCurve.swift */; };
 		4F1B83062606E68300AEAF37 /* RemapsAnalyzer.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F1B83052606E68300AEAF37 /* RemapsAnalyzer.m */; };
 		4F1B832D26081A5500AEAF37 /* CaptureNotificationCreator.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F1B832C26081A5500AEAF37 /* CaptureNotificationCreator.m */; };
@@ -402,32 +405,11 @@
 		4F0BDC832B446A3C00AE65C1 /* AppIconRound3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = AppIconRound3.png; sourceTree = "<group>"; };
 		4F0BDC842B446A3C00AE65C1 /* Apple-Keys-Demo.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = "Apple-Keys-Demo.gif"; sourceTree = "<group>"; };
 		4F0C00162C525AC000C5D843 /* .env */ = {isa = PBXFileReference; lastKnownFileType = text; path = .env; sourceTree = "<group>"; };
-		4F0C00172C525AC000C5D843 /* buildmd.py */ = {isa = PBXFileReference; lastKnownFileType = text.script.python; path = buildmd.py; sourceTree = "<group>"; };
-		4F0C00182C525AC000C5D843 /* python_requirements.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = python_requirements.txt; sourceTree = "<group>"; };
-		4F0C001A2C525AC000C5D843 /* buildstrings.py */ = {isa = PBXFileReference; lastKnownFileType = text.script.python; path = buildstrings.py; sourceTree = "<group>"; };
-		4F0C001C2C525AC000C5D843 /* requirements.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = requirements.txt; sourceTree = "<group>"; };
-		4F0C001D2C525AC000C5D843 /* script.py */ = {isa = PBXFileReference; lastKnownFileType = text.script.python; path = script.py; sourceTree = "<group>"; };
-		4F0C001F2C525AC000C5D843 /* requirements.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = requirements.txt; sourceTree = "<group>"; };
-		4F0C00202C525AC000C5D843 /* script.py */ = {isa = PBXFileReference; lastKnownFileType = text.script.python; path = script.py; sourceTree = "<group>"; };
-		4F0C00222C525AC000C5D843 /* Readme.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = Readme.md; sourceTree = "<group>"; };
-		4F0C00242C525AC000C5D843 /* mfgithub.cpython-312.pyc */ = {isa = PBXFileReference; lastKnownFileType = file; path = "mfgithub.cpython-312.pyc"; sourceTree = "<group>"; };
-		4F0C00252C525AC000C5D843 /* mflocales.cpython-312.pyc */ = {isa = PBXFileReference; lastKnownFileType = file; path = "mflocales.cpython-312.pyc"; sourceTree = "<group>"; };
-		4F0C00262C525AC000C5D843 /* mfutils.cpython-312.pyc */ = {isa = PBXFileReference; lastKnownFileType = file; path = "mfutils.cpython-312.pyc"; sourceTree = "<group>"; };
-		4F0C00282C525AC000C5D843 /* __init__.py */ = {isa = PBXFileReference; lastKnownFileType = text.script.python; path = __init__.py; sourceTree = "<group>"; };
-		4F0C00292C525AC000C5D843 /* mfgithub.py */ = {isa = PBXFileReference; lastKnownFileType = text.script.python; path = mfgithub.py; sourceTree = "<group>"; };
-		4F0C002A2C525AC000C5D843 /* mflocales.py */ = {isa = PBXFileReference; lastKnownFileType = text.script.python; path = mflocales.py; sourceTree = "<group>"; };
-		4F0C002B2C525AC000C5D843 /* mflocales_old.py */ = {isa = PBXFileReference; lastKnownFileType = text.script.python; path = mflocales_old.py; sourceTree = "<group>"; };
-		4F0C002C2C525AC000C5D843 /* mfutils.py */ = {isa = PBXFileReference; lastKnownFileType = text.script.python; path = mfutils.py; sourceTree = "<group>"; };
-		4F0C002E2C525AC000C5D843 /* syncscripts.py */ = {isa = PBXFileReference; lastKnownFileType = text.script.python; path = syncscripts.py; sourceTree = "<group>"; };
-		4F0C00302C525AC000C5D843 /* sync_xcstrings.py */ = {isa = PBXFileReference; lastKnownFileType = text.script.python; path = sync_xcstrings.py; sourceTree = "<group>"; };
-		4F0C00322C525AC000C5D843 /* requirements.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = requirements.txt; sourceTree = "<group>"; };
-		4F0C00332C525AC000C5D843 /* uploadstrings.py */ = {isa = PBXFileReference; lastKnownFileType = text.script.python; path = uploadstrings.py; sourceTree = "<group>"; };
-		4F0C00352C525AC000C5D843 /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
-		4F0C00362C525AC000C5D843 /* ImportStrings.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = ImportStrings.md; sourceTree = "<group>"; };
-		4F0C00372C525AC000C5D843 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
-		4F0C00382C525AC000C5D843 /* run.py */ = {isa = PBXFileReference; lastKnownFileType = text.script.python; path = run.py; sourceTree = "<group>"; };
 		4F0C003A2C525AC000C5D843 /* run */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = run; sourceTree = "<group>"; };
 		4F0C003C2C525F8500C5D843 /* Misappropriating XCStrings.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "Misappropriating XCStrings.md"; sourceTree = "<group>"; };
+		4F0C003D2C52BBA600C5D843 /* LocalizationScreenshotTaker.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = LocalizationScreenshotTaker.entitlements; sourceTree = "<group>"; };
+		4F0C00402C53273200C5D843 /* BidirectionalMap.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BidirectionalMap.h; sourceTree = "<group>"; };
+		4F0C00412C53273200C5D843 /* BidirectionalMap.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BidirectionalMap.m; sourceTree = "<group>"; };
 		4F0CFFE62C51878500C5D843 /* MFDataClass.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MFDataClass.h; sourceTree = "<group>"; };
 		4F0CFFE72C51878500C5D843 /* MFDataClass.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MFDataClass.m; sourceTree = "<group>"; };
 		4F0CFFEC2C518CF600C5D843 /* MFDataClassImplementations.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MFDataClassImplementations.m; sourceTree = "<group>"; };
@@ -435,6 +417,7 @@
 		4F143E452B2D1F5600FE4092 /* fallback_licenseinfo_config.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = fallback_licenseinfo_config.json; sourceTree = "<group>"; };
 		4F143E482B2D1FA500FE4092 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		4F17D2E0292A635200EB07CA /* SwitchMaster.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwitchMaster.swift; sourceTree = "<group>"; };
+		4F18466A2C53AD6D00D5E835 /* XCLoc Screenshot Structure.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "XCLoc Screenshot Structure.md"; sourceTree = "<group>"; };
 		4F18A85727BF6E0200A5703B /* IOHIDEvent-Reconstructed.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "IOHIDEvent-Reconstructed.h"; sourceTree = "<group>"; };
 		4F19F65E2906BB98007DE4CD /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		4F1AFE962670EBA900ECA424 /* DragCurve.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DragCurve.swift; sourceTree = "<group>"; };
@@ -2061,8 +2044,7 @@
 		4F8A8DBE287F7BBA00786BCC /* NaturalAccelerationCurve.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NaturalAccelerationCurve.swift; sourceTree = "<group>"; };
 		4F8A8DC0287F885D00786BCC /* Shorthands.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Shorthands.h; sourceTree = "<group>"; };
 		4F8A8DC1287F967000786BCC /* TestAccelerationCurve.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestAccelerationCurve.swift; sourceTree = "<group>"; };
-		4F8B01942C34862000F3AF8D /* LocalizationScreenshots.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; path = LocalizationScreenshots.xctestplan; sourceTree = "<group>"; };
-		4F8B01A92C348A3A00F3AF8D /* AppUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AppUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		4F8B01A92C348A3A00F3AF8D /* Localization Screenshot Taker.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Localization Screenshot Taker.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		4F8B01AB2C348A3A00F3AF8D /* AppUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppUITests.swift; sourceTree = "<group>"; };
 		4F8B7E6627B4E32600598B65 /* TouchAnimatorBase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TouchAnimatorBase.swift; sourceTree = "<group>"; };
 		4F8CE6FF2617738A00D70A76 /* AppTranslocationManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppTranslocationManager.m; sourceTree = "<group>"; };
@@ -2239,13 +2221,37 @@
 		4FE479DF2933C87A00B75E9B /* ButtonModifiers.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ButtonModifiers.h; sourceTree = "<group>"; };
 		4FE479E02933C87A00B75E9B /* ButtonModifiers.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ButtonModifiers.m; sourceTree = "<group>"; };
 		4FE6CBC328987E8A00B3E829 /* DynamicSystemAnimator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DynamicSystemAnimator.swift; sourceTree = "<group>"; };
-		4FE78C382C4FFB0E00C54103 /* AppUITests-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "AppUITests-Bridging-Header.h"; sourceTree = "<group>"; };
+		4FE78C382C4FFB0E00C54103 /* LocalizationScreenshotTaker-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "LocalizationScreenshotTaker-Bridging-Header.h"; sourceTree = "<group>"; };
 		4FE78C392C50177800C54103 /* DisableSwiftBridging.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisableSwiftBridging.swift; sourceTree = "<group>"; };
 		4FE78C3F2C5022C600C54103 /* DisableSwiftBridging.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DisableSwiftBridging.h; sourceTree = "<group>"; };
 		4FE78C422C502A5F00C54103 /* NSString+Additions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSString+Additions.h"; sourceTree = "<group>"; };
 		4FE78C432C502A5F00C54103 /* NSString+Additions.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSString+Additions.m"; sourceTree = "<group>"; };
 		4FE7A0DE28677AD600C33B37 /* Gain Curve Math.tex */ = {isa = PBXFileReference; lastKnownFileType = text; path = "Gain Curve Math.tex"; sourceTree = "<group>"; };
 		4FE8FC792929D8AC0002583B /* On Bundle Size.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "On Bundle Size.md"; sourceTree = "<group>"; };
+		4FEA2E4A2C5458CA00C86D67 /* buildmd.py */ = {isa = PBXFileReference; lastKnownFileType = text.script.python; path = buildmd.py; sourceTree = "<group>"; };
+		4FEA2E4B2C5458CA00C86D67 /* python_requirements.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = python_requirements.txt; sourceTree = "<group>"; };
+		4FEA2E4D2C5458CA00C86D67 /* buildstrings.py */ = {isa = PBXFileReference; lastKnownFileType = text.script.python; path = buildstrings.py; sourceTree = "<group>"; };
+		4FEA2E4F2C5458CA00C86D67 /* mfgithub.cpython-312.pyc */ = {isa = PBXFileReference; lastKnownFileType = file; path = "mfgithub.cpython-312.pyc"; sourceTree = "<group>"; };
+		4FEA2E502C5458CA00C86D67 /* mflocales.cpython-312.pyc */ = {isa = PBXFileReference; lastKnownFileType = file; path = "mflocales.cpython-312.pyc"; sourceTree = "<group>"; };
+		4FEA2E512C5458CA00C86D67 /* mfutils.cpython-312.pyc */ = {isa = PBXFileReference; lastKnownFileType = file; path = "mfutils.cpython-312.pyc"; sourceTree = "<group>"; };
+		4FEA2E532C5458CA00C86D67 /* __init__.py */ = {isa = PBXFileReference; lastKnownFileType = text.script.python; path = __init__.py; sourceTree = "<group>"; };
+		4FEA2E542C5458CA00C86D67 /* mfgithub.py */ = {isa = PBXFileReference; lastKnownFileType = text.script.python; path = mfgithub.py; sourceTree = "<group>"; };
+		4FEA2E552C5458CA00C86D67 /* mflocales.py */ = {isa = PBXFileReference; lastKnownFileType = text.script.python; path = mflocales.py; sourceTree = "<group>"; };
+		4FEA2E562C5458CA00C86D67 /* mflocales_old.py */ = {isa = PBXFileReference; lastKnownFileType = text.script.python; path = mflocales_old.py; sourceTree = "<group>"; };
+		4FEA2E572C5458CA00C86D67 /* mfutils.py */ = {isa = PBXFileReference; lastKnownFileType = text.script.python; path = mfutils.py; sourceTree = "<group>"; };
+		4FEA2E592C5458CA00C86D67 /* syncstrings.py */ = {isa = PBXFileReference; lastKnownFileType = text.script.python; path = syncstrings.py; sourceTree = "<group>"; };
+		4FEA2E5B2C5458CA00C86D67 /* requirements.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = requirements.txt; sourceTree = "<group>"; };
+		4FEA2E5C2C5458CA00C86D67 /* uploadstrings.py */ = {isa = PBXFileReference; lastKnownFileType = text.script.python; path = uploadstrings.py; sourceTree = "<group>"; };
+		4FEA2E5E2C5458CA00C86D67 /* requirements.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = requirements.txt; sourceTree = "<group>"; };
+		4FEA2E5F2C5458CA00C86D67 /* script.py */ = {isa = PBXFileReference; lastKnownFileType = text.script.python; path = script.py; sourceTree = "<group>"; };
+		4FEA2E612C5458CA00C86D67 /* syncscripts.py */ = {isa = PBXFileReference; lastKnownFileType = text.script.python; path = syncscripts.py; sourceTree = "<group>"; };
+		4FEA2E632C5458CA00C86D67 /* requirements.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = requirements.txt; sourceTree = "<group>"; };
+		4FEA2E642C5458CA00C86D67 /* script.py */ = {isa = PBXFileReference; lastKnownFileType = text.script.python; path = script.py; sourceTree = "<group>"; };
+		4FEA2E662C5458CA00C86D67 /* Readme.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = Readme.md; sourceTree = "<group>"; };
+		4FEA2E682C5458CA00C86D67 /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
+		4FEA2E692C5458CA00C86D67 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		4FEA2E6A2C5458CA00C86D67 /* run.py */ = {isa = PBXFileReference; lastKnownFileType = text.script.python; path = run.py; sourceTree = "<group>"; };
+		4FEA2E6B2C5458CA00C86D67 /* StringsImport.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = StringsImport.md; sourceTree = "<group>"; };
 		4FEA63CD2921510E00E464D6 /* NSImage+Additions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSImage+Additions.m"; sourceTree = "<group>"; };
 		4FEA63CE2921510E00E464D6 /* NSImage+Additions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSImage+Additions.h"; sourceTree = "<group>"; };
 		4FEB6617279376C200E6A111 /* SymbolicHotKeys Reference.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = "SymbolicHotKeys Reference.txt"; sourceTree = "<group>"; };
@@ -2534,124 +2540,14 @@
 			path = Media;
 			sourceTree = "<group>";
 		};
-		4F0C00192C525AC000C5D843 /* MarkdownGenerator */ = {
+		4F0C003B2C525F6C00C5D843 /* Localization Notes */ = {
 			isa = PBXGroup;
 			children = (
-				4F0C00172C525AC000C5D843 /* buildmd.py */,
-				4F0C00182C525AC000C5D843 /* python_requirements.txt */,
-			);
-			path = MarkdownGenerator;
-			sourceTree = "<group>";
-		};
-		4F0C001B2C525AC000C5D843 /* MMFWebsiteCompileXCStrings */ = {
-			isa = PBXGroup;
-			children = (
-				4F0C001A2C525AC000C5D843 /* buildstrings.py */,
-			);
-			path = MMFWebsiteCompileXCStrings;
-			sourceTree = "<group>";
-		};
-		4F0C001E2C525AC000C5D843 /* StateOfLocalization */ = {
-			isa = PBXGroup;
-			children = (
-				4F0C001C2C525AC000C5D843 /* requirements.txt */,
-				4F0C001D2C525AC000C5D843 /* script.py */,
-			);
-			path = StateOfLocalization;
-			sourceTree = "<group>";
-		};
-		4F0C00212C525AC000C5D843 /* UpdateStrings */ = {
-			isa = PBXGroup;
-			children = (
-				4F0C001F2C525AC000C5D843 /* requirements.txt */,
-				4F0C00202C525AC000C5D843 /* script.py */,
-			);
-			path = UpdateStrings;
-			sourceTree = "<group>";
-		};
-		4F0C00232C525AC000C5D843 /* Old */ = {
-			isa = PBXGroup;
-			children = (
-				4F0C001E2C525AC000C5D843 /* StateOfLocalization */,
-				4F0C00212C525AC000C5D843 /* UpdateStrings */,
-				4F0C00222C525AC000C5D843 /* Readme.md */,
-			);
-			path = Old;
-			sourceTree = "<group>";
-		};
-		4F0C00272C525AC000C5D843 /* __pycache__ */ = {
-			isa = PBXGroup;
-			children = (
-				4F0C00242C525AC000C5D843 /* mfgithub.cpython-312.pyc */,
-				4F0C00252C525AC000C5D843 /* mflocales.cpython-312.pyc */,
-				4F0C00262C525AC000C5D843 /* mfutils.cpython-312.pyc */,
-			);
-			path = __pycache__;
-			sourceTree = "<group>";
-		};
-		4F0C002D2C525AC000C5D843 /* Shared */ = {
-			isa = PBXGroup;
-			children = (
-				4F0C00272C525AC000C5D843 /* __pycache__ */,
-				4F0C00282C525AC000C5D843 /* __init__.py */,
-				4F0C00292C525AC000C5D843 /* mfgithub.py */,
-				4F0C002A2C525AC000C5D843 /* mflocales.py */,
-				4F0C002B2C525AC000C5D843 /* mflocales_old.py */,
-				4F0C002C2C525AC000C5D843 /* mfutils.py */,
-			);
-			path = Shared;
-			sourceTree = "<group>";
-		};
-		4F0C002F2C525AC000C5D843 /* SyncScripts */ = {
-			isa = PBXGroup;
-			children = (
-				4F0C002E2C525AC000C5D843 /* syncscripts.py */,
-			);
-			path = SyncScripts;
-			sourceTree = "<group>";
-		};
-		4F0C00312C525AC000C5D843 /* SyncXCStrings */ = {
-			isa = PBXGroup;
-			children = (
-				4F0C00302C525AC000C5D843 /* sync_xcstrings.py */,
-			);
-			path = SyncXCStrings;
-			sourceTree = "<group>";
-		};
-		4F0C00342C525AC000C5D843 /* UploadXCStrings */ = {
-			isa = PBXGroup;
-			children = (
-				4F0C00322C525AC000C5D843 /* requirements.txt */,
-				4F0C00332C525AC000C5D843 /* uploadstrings.py */,
-			);
-			path = UploadXCStrings;
-			sourceTree = "<group>";
-		};
-		4F0C00392C525AC000C5D843 /* mac-mouse-fix-scripts */ = {
-			isa = PBXGroup;
-			children = (
-				4F0C00192C525AC000C5D843 /* MarkdownGenerator */,
-				4F0C001B2C525AC000C5D843 /* MMFWebsiteCompileXCStrings */,
-				4F0C00232C525AC000C5D843 /* Old */,
-				4F0C002D2C525AC000C5D843 /* Shared */,
-				4F0C002F2C525AC000C5D843 /* SyncScripts */,
-				4F0C00312C525AC000C5D843 /* SyncXCStrings */,
-				4F0C00342C525AC000C5D843 /* UploadXCStrings */,
-				4F0C00352C525AC000C5D843 /* .gitignore */,
-				4F0C00362C525AC000C5D843 /* ImportStrings.md */,
-				4F0C00372C525AC000C5D843 /* README.md */,
-				4F0C00382C525AC000C5D843 /* run.py */,
-			);
-			path = "mac-mouse-fix-scripts";
-			sourceTree = "<group>";
-		};
-		4F0C003B2C525F6C00C5D843 /* Localization */ = {
-			isa = PBXGroup;
-			children = (
+				4F18466A2C53AD6D00D5E835 /* XCLoc Screenshot Structure.md */,
 				4F909D1928A0C3D2009349A2 /* Localization Readme.md */,
 				4F0C003C2C525F8500C5D843 /* Misappropriating XCStrings.md */,
 			);
-			path = Localization;
+			path = "Localization Notes";
 			sourceTree = "<group>";
 		};
 		4F1793A725EEC8E500E8309B /* Frameworks */ = {
@@ -6432,7 +6328,7 @@
 				4F0BDC722B446A3C00AE65C1 /* Markdown */,
 				4F39BC88263B68F400FDF692 /* xcconfig */,
 				4F4C73AA2C4FB299001D97C3 /* crowdin.yml */,
-				4F0C00392C525AC000C5D843 /* mac-mouse-fix-scripts */,
+				4FEA2E6C2C5458CA00C86D67 /* mac-mouse-fix-scripts */,
 				4F0C00162C525AC000C5D843 /* .env */,
 				4F0C003A2C525AC000C5D843 /* run */,
 				4F1793A725EEC8E500E8309B /* Frameworks */,
@@ -6441,7 +6337,8 @@
 				4F4C73A92C4FB28C001D97C3 /* .gitmodules */,
 				4F214C212B2E140A00DD3957 /* .gitignore */,
 				4F4C73D32C4FB2F7001D97C3 /* .vscode */,
-				4FEB6616279376C200E6A111 /* Notes */,
+				4F0C003B2C525F6C00C5D843 /* Localization Notes */,
+				4FEB6616279376C200E6A111 /* Various Notes */,
 			);
 			name = Other;
 			sourceTree = "<group>";
@@ -6825,14 +6722,13 @@
 			path = Notifications;
 			sourceTree = "<group>";
 		};
-		4FA1ACE025E85904007DB95B /* Tests */ = {
+		4FA1ACE025E85904007DB95B /* LocalizationScreenshotTaker */ = {
 			isa = PBXGroup;
 			children = (
-				4FE78C382C4FFB0E00C54103 /* AppUITests-Bridging-Header.h */,
-				4F8B01942C34862000F3AF8D /* LocalizationScreenshots.xctestplan */,
-				4F8B01AB2C348A3A00F3AF8D /* AppUITests.swift */,
+				4F0C003D2C52BBA600C5D843 /* LocalizationScreenshotTaker.entitlements */,
+				4FE78C382C4FFB0E00C54103 /* LocalizationScreenshotTaker-Bridging-Header.h */,
 			);
-			path = Tests;
+			path = LocalizationScreenshotTaker;
 			sourceTree = "<group>";
 		};
 		4FA2F1252C29A11D000C5535 /* Notifications */ = {
@@ -6973,7 +6869,8 @@
 				4FF665BE25F2C92700689B77 /* App */,
 				4FF6660725F2C93A00689B77 /* Helper */,
 				4F422EF023469B2B00AA6E22 /* Other */,
-				4FA1ACE025E85904007DB95B /* Tests */,
+				4FEA2E6D2C54ED2A00C86D67 /* Tests */,
+				4FA1ACE025E85904007DB95B /* LocalizationScreenshotTaker */,
 				4FCECD8121092354001F1078 /* Products */,
 				4FDECCD528A3A37800DDEE91 /* Frameworks */,
 			);
@@ -6984,7 +6881,7 @@
 			children = (
 				4FCECD8021092354001F1078 /* Mac Mouse Fix Helper.app */,
 				4F94F5EE25E5EC2500D9F24A /* Mac Mouse Fix.app */,
-				4F8B01A92C348A3A00F3AF8D /* AppUITests.xctest */,
+				4F8B01A92C348A3A00F3AF8D /* Localization Screenshot Taker.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -7085,15 +6982,133 @@
 			path = DisableSwiftBridging;
 			sourceTree = "<group>";
 		};
-		4FEB6616279376C200E6A111 /* Notes */ = {
+		4FEA2E4C2C5458CA00C86D67 /* MarkdownBuild */ = {
 			isa = PBXGroup;
 			children = (
-				4F0C003B2C525F6C00C5D843 /* Localization */,
+				4FEA2E4A2C5458CA00C86D67 /* buildmd.py */,
+				4FEA2E4B2C5458CA00C86D67 /* python_requirements.txt */,
+			);
+			path = MarkdownBuild;
+			sourceTree = "<group>";
+		};
+		4FEA2E4E2C5458CA00C86D67 /* MMFWebsite-StringsBuild */ = {
+			isa = PBXGroup;
+			children = (
+				4FEA2E4D2C5458CA00C86D67 /* buildstrings.py */,
+			);
+			path = "MMFWebsite-StringsBuild";
+			sourceTree = "<group>";
+		};
+		4FEA2E522C5458CA00C86D67 /* __pycache__ */ = {
+			isa = PBXGroup;
+			children = (
+				4FEA2E4F2C5458CA00C86D67 /* mfgithub.cpython-312.pyc */,
+				4FEA2E502C5458CA00C86D67 /* mflocales.cpython-312.pyc */,
+				4FEA2E512C5458CA00C86D67 /* mfutils.cpython-312.pyc */,
+			);
+			path = __pycache__;
+			sourceTree = "<group>";
+		};
+		4FEA2E582C5458CA00C86D67 /* Shared */ = {
+			isa = PBXGroup;
+			children = (
+				4FEA2E522C5458CA00C86D67 /* __pycache__ */,
+				4FEA2E532C5458CA00C86D67 /* __init__.py */,
+				4FEA2E542C5458CA00C86D67 /* mfgithub.py */,
+				4FEA2E552C5458CA00C86D67 /* mflocales.py */,
+				4FEA2E562C5458CA00C86D67 /* mflocales_old.py */,
+				4FEA2E572C5458CA00C86D67 /* mfutils.py */,
+			);
+			path = Shared;
+			sourceTree = "<group>";
+		};
+		4FEA2E5A2C5458CA00C86D67 /* StringsSync */ = {
+			isa = PBXGroup;
+			children = (
+				4FEA2E592C5458CA00C86D67 /* syncstrings.py */,
+			);
+			path = StringsSync;
+			sourceTree = "<group>";
+		};
+		4FEA2E5D2C5458CA00C86D67 /* StringsUpload */ = {
+			isa = PBXGroup;
+			children = (
+				4FEA2E5B2C5458CA00C86D67 /* requirements.txt */,
+				4FEA2E5C2C5458CA00C86D67 /* uploadstrings.py */,
+			);
+			path = StringsUpload;
+			sourceTree = "<group>";
+		};
+		4FEA2E602C5458CA00C86D67 /* StateOfLocalization */ = {
+			isa = PBXGroup;
+			children = (
+				4FEA2E5E2C5458CA00C86D67 /* requirements.txt */,
+				4FEA2E5F2C5458CA00C86D67 /* script.py */,
+			);
+			path = StateOfLocalization;
+			sourceTree = "<group>";
+		};
+		4FEA2E622C5458CA00C86D67 /* SyncScripts */ = {
+			isa = PBXGroup;
+			children = (
+				4FEA2E612C5458CA00C86D67 /* syncscripts.py */,
+			);
+			path = SyncScripts;
+			sourceTree = "<group>";
+		};
+		4FEA2E652C5458CA00C86D67 /* UpdateStrings */ = {
+			isa = PBXGroup;
+			children = (
+				4FEA2E632C5458CA00C86D67 /* requirements.txt */,
+				4FEA2E642C5458CA00C86D67 /* script.py */,
+			);
+			path = UpdateStrings;
+			sourceTree = "<group>";
+		};
+		4FEA2E672C5458CA00C86D67 /* z_Old */ = {
+			isa = PBXGroup;
+			children = (
+				4FEA2E602C5458CA00C86D67 /* StateOfLocalization */,
+				4FEA2E622C5458CA00C86D67 /* SyncScripts */,
+				4FEA2E652C5458CA00C86D67 /* UpdateStrings */,
+				4FEA2E662C5458CA00C86D67 /* Readme.md */,
+			);
+			path = z_Old;
+			sourceTree = "<group>";
+		};
+		4FEA2E6C2C5458CA00C86D67 /* mac-mouse-fix-scripts */ = {
+			isa = PBXGroup;
+			children = (
+				4FEA2E4C2C5458CA00C86D67 /* MarkdownBuild */,
+				4FEA2E4E2C5458CA00C86D67 /* MMFWebsite-StringsBuild */,
+				4FEA2E582C5458CA00C86D67 /* Shared */,
+				4FEA2E5A2C5458CA00C86D67 /* StringsSync */,
+				4FEA2E5D2C5458CA00C86D67 /* StringsUpload */,
+				4FEA2E672C5458CA00C86D67 /* z_Old */,
+				4FEA2E682C5458CA00C86D67 /* .gitignore */,
+				4FEA2E692C5458CA00C86D67 /* README.md */,
+				4FEA2E6A2C5458CA00C86D67 /* run.py */,
+				4FEA2E6B2C5458CA00C86D67 /* StringsImport.md */,
+			);
+			path = "mac-mouse-fix-scripts";
+			sourceTree = "<group>";
+		};
+		4FEA2E6D2C54ED2A00C86D67 /* Tests */ = {
+			isa = PBXGroup;
+			children = (
+				4F8B01AB2C348A3A00F3AF8D /* AppUITests.swift */,
+			);
+			path = Tests;
+			sourceTree = "<group>";
+		};
+		4FEB6616279376C200E6A111 /* Various Notes */ = {
+			isa = PBXGroup;
+			children = (
 				4FEB6617279376C200E6A111 /* SymbolicHotKeys Reference.txt */,
 				4FEB6618279376C200E6A111 /* notes.md */,
 				4FE8FC792929D8AC0002583B /* On Bundle Size.md */,
 			);
-			path = Notes;
+			path = "Various Notes";
 			sourceTree = "<group>";
 		};
 		4FF0255827B00F9700923107 /* ThreeFingerSwipe */ = {
@@ -7189,6 +7204,8 @@
 				4F0CFFE62C51878500C5D843 /* MFDataClass.h */,
 				4F0CFFE72C51878500C5D843 /* MFDataClass.m */,
 				4F0CFFEC2C518CF600C5D843 /* MFDataClassImplementations.m */,
+				4F0C00402C53273200C5D843 /* BidirectionalMap.h */,
+				4F0C00412C53273200C5D843 /* BidirectionalMap.m */,
 				4F8A8DC0287F885D00786BCC /* Shorthands.h */,
 				4FA06818291B2C4C00949B5F /* Shorthands.m */,
 				4FF27DD62B95B108004744E1 /* Shorthands.swift */,
@@ -7649,9 +7666,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		4F8B01A82C348A3A00F3AF8D /* AppUITests */ = {
+		4F8B01A82C348A3A00F3AF8D /* Localization Screenshot Taker */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 4F8B01B12C348A3A00F3AF8D /* Build configuration list for PBXNativeTarget "AppUITests" */;
+			buildConfigurationList = 4F8B01B12C348A3A00F3AF8D /* Build configuration list for PBXNativeTarget "Localization Screenshot Taker" */;
 			buildPhases = (
 				4F8B01A52C348A3A00F3AF8D /* Sources */,
 				4F8B01A62C348A3A00F3AF8D /* Frameworks */,
@@ -7662,9 +7679,9 @@
 			dependencies = (
 				4F8B01B02C348A3A00F3AF8D /* PBXTargetDependency */,
 			);
-			name = AppUITests;
+			name = "Localization Screenshot Taker";
 			productName = AppUITests;
-			productReference = 4F8B01A92C348A3A00F3AF8D /* AppUITests.xctest */;
+			productReference = 4F8B01A92C348A3A00F3AF8D /* Localization Screenshot Taker.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
 		};
 		4F94F5ED25E5EC2500D9F24A /* Mac Mouse Fix */ = {
@@ -7778,7 +7795,7 @@
 			targets = (
 				4F94F5ED25E5EC2500D9F24A /* Mac Mouse Fix */,
 				4FCECD7F21092354001F1078 /* Mac Mouse Fix Helper */,
-				4F8B01A82C348A3A00F3AF8D /* AppUITests */,
+				4F8B01A82C348A3A00F3AF8D /* Localization Screenshot Taker */,
 			);
 		};
 /* End PBXProject section */
@@ -7897,6 +7914,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4F18464D2C533B5900D5E835 /* BidirectionalMap.m in Sources */,
 				4F8B01AC2C348A3A00F3AF8D /* AppUITests.swift in Sources */,
 				4FE78C342C4FFA2F00C54103 /* TreeNode.h in Sources */,
 				4FE78C352C4FFA2F00C54103 /* TreeNode.m in Sources */,
@@ -7918,6 +7936,7 @@
 				4FA40D0F28A0D8EF00499E53 /* SubPixelator.m in Sources */,
 				4F44794528B62FA400AD1979 /* LicenseConfig.swift in Sources */,
 				4F97E001298732E500012BAC /* LocalizationUtility.m in Sources */,
+				4F0C00432C53273200C5D843 /* BidirectionalMap.m in Sources */,
 				4F4C73FE2C4FB5D2001D97C3 /* AnnotationUtility.m in Sources */,
 				4F39BC4A263B179200FDF692 /* AppState.m in Sources */,
 				4FBC943B260F8AA60062F186 /* MASShortcut.m in Sources */,
@@ -8174,6 +8193,7 @@
 				4FCEDC93292D765600E7DA2A /* Constants.swift in Sources */,
 				4FF6654325F2C7B000689B77 /* HelperServices.m in Sources */,
 				4FA994BE26678AC90007F003 /* ScrollAnalyzer.m in Sources */,
+				4F0C00422C53273200C5D843 /* BidirectionalMap.m in Sources */,
 				4F9C9B60268A29FE0083DED0 /* Smoother.swift in Sources */,
 				4FDE759F28B174E700662314 /* TrialCounter.swift in Sources */,
 				4FE479E12933C87A00B75E9B /* ButtonModifiers.m in Sources */,
@@ -8268,6 +8288,7 @@
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
 				CLANG_ENABLE_OBJC_WEAK = YES;
 				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CODE_SIGN_ENTITLEMENTS = LocalizationScreenshotTaker/LocalizationScreenshotTaker.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEBUG_INFORMATION_FORMAT = dwarf;
@@ -8283,11 +8304,11 @@
 				MARKETING_VERSION = 1.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.noah-nuebling.AppUITests";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.noah-nuebling.localization-screenshot-taker";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) IS_XC_TEST";
 				SWIFT_EMIT_LOC_STRINGS = NO;
-				SWIFT_OBJC_BRIDGING_HEADER = "Tests/AppUITests-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "LocalizationScreenshotTaker/LocalizationScreenshotTaker-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				TEST_TARGET_NAME = "Mac Mouse Fix";
 			};
@@ -8300,6 +8321,7 @@
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
 				CLANG_ENABLE_OBJC_WEAK = YES;
 				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CODE_SIGN_ENTITLEMENTS = LocalizationScreenshotTaker/LocalizationScreenshotTaker.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = LM5Z78756B;
@@ -8313,11 +8335,11 @@
 				MACOSX_DEPLOYMENT_TARGET = 14.5;
 				MARKETING_VERSION = 1.0;
 				MTL_FAST_MATH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.noah-nuebling.AppUITests";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.noah-nuebling.localization-screenshot-taker";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) IS_XC_TEST";
 				SWIFT_EMIT_LOC_STRINGS = NO;
-				SWIFT_OBJC_BRIDGING_HEADER = "Tests/AppUITests-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "LocalizationScreenshotTaker/LocalizationScreenshotTaker-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				TEST_TARGET_NAME = "Mac Mouse Fix";
 			};
@@ -8625,7 +8647,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		4F8B01B12C348A3A00F3AF8D /* Build configuration list for PBXNativeTarget "AppUITests" */ = {
+		4F8B01B12C348A3A00F3AF8D /* Build configuration list for PBXNativeTarget "Localization Screenshot Taker" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				4F8B01B22C348A3A00F3AF8D /* Debug */,

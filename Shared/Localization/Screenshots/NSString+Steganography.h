@@ -32,6 +32,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 /// Internal
 
+- (NSString *)decodedAsSecretMessage;
+
 + (NSString *)stringWithBinaryArray:(NSArray<NSArray<NSNumber *> *> *)characters;
 - (NSArray<NSArray<NSNumber *> *> *)binaryArray;
 

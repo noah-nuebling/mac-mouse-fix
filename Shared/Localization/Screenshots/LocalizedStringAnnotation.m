@@ -11,12 +11,22 @@
 #import "AnnotationUtility.h"
 #import "NSString+Steganography.h"
 #import "SharedUtility.h"
+#import "NSAttributedString+Additions.h"
+#import "NSString+Additions.h"
 
 @implementation LocalizedStringAnnotation
 
 @end
 
 @implementation NSBundle (MFAnnotation)
+
++ (NSString *)annotationStringWithKey:(NSString *)key table:(NSString *)table {
+    
+    NSString *annotation = stringf(@"mfkey:%@:%@:", key, table); /// We keep this short to stay under the 512 character XCUITest limit
+    NSString *secretMessage = [annotation encodedAsSecretMessage];
+    return secretMessage;
+    
+}
 
 + (void)load {
     
@@ -36,8 +46,8 @@
         if (isOurBundle) {
             
             /// Add secret message
-            NSString *secretMessage = stringf(@"mf-secret-localization-key:%@", key);
-            result = [result stringByAppendingStringAsSecretMessage:secretMessage];
+            NSString *annotation = [self annotationStringWithKey:key table:table];
+            result = [annotation stringByAppendingString:result]; /// We prepend the annotation because XCUITest will seemingly cut of the string at 512 chars. By putting the annotation first it should be before the cutoff.
             
             /// Log
             DDLogDebug(@"LocalizedStringAnnotation: Annotated: \"%@\": \"%@\" (%@)", key, result, table);
@@ -56,8 +66,8 @@
         if (isOurBundle) {
         
             /// Add secret message
-            NSString *secretMessage = stringf(@"mf-secret-localization-key:%@", key);
-            result = [result attributedStringByAppendingStringAsSecretMessage:secretMessage];
+            NSString *annotation = [self annotationStringWithKey:key table:table];
+            result = [[annotation attributed] attributedStringByAppending:result];
             
             /// Log
             DDLogDebug(@"LocalizedStringAnnotation: Annotated: \"%@\": \"%@\" (%@)", key, result, table);
@@ -68,6 +78,7 @@
     }));
     
     
+
 }
 
 @end
