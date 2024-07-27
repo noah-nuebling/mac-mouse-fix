@@ -45,7 +45,7 @@ final class LocalizationScreenshotClass: XCTestCase {
     /// Internal datatypes
     ///
     
-    struct ScreenshotAndMetadata {
+    struct ScreenshotAndMetadata { 
         let screenshot: XCUIScreenshot
         let metadata: Metadata
         struct Metadata {

@@ -22,7 +22,7 @@
 
 + (NSString *)annotationStringWithKey:(NSString *)key table:(NSString *)table {
     
-    NSString *annotation = stringf(@"mfkey:%@:%@:", key, table); /// We keep this short to stay under the 512 character XCUITest limit
+    NSString *annotation = stringf(@"mfkey:%@:%@:", key, table); /// We keep this short to stay under the 512 character XCUITest limit. Breaks if key or table name contain `:`
     NSString *secretMessage = [annotation encodedAsSecretMessage];
     return secretMessage;
     

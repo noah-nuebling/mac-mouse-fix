@@ -610,7 +610,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "156"
             endingLineNumber = "156"
-            landmarkName = "takeLocalizationScreenshot(withName:)"
+            landmarkName = "testTakeLocalizationScreenshots()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

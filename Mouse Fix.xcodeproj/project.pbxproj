@@ -89,7 +89,7 @@
 		4F8A8DBD287F203D00786BCC /* IOHIDAccelerationTable.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4F8A8DBC287F203D00786BCC /* IOHIDAccelerationTable.cpp */; };
 		4F8A8DBF287F7BBA00786BCC /* NaturalAccelerationCurve.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F8A8DBE287F7BBA00786BCC /* NaturalAccelerationCurve.swift */; };
 		4F8A8DC2287F967000786BCC /* TestAccelerationCurve.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F8A8DC1287F967000786BCC /* TestAccelerationCurve.swift */; };
-		4F8B01AC2C348A3A00F3AF8D /* AppUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F8B01AB2C348A3A00F3AF8D /* AppUITests.swift */; };
+		4F8B01AC2C348A3A00F3AF8D /* LocalizationScreenshots.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F8B01AB2C348A3A00F3AF8D /* LocalizationScreenshots.swift */; };
 		4F8B7E6727B4E32600598B65 /* TouchAnimatorBase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F8B7E6627B4E32600598B65 /* TouchAnimatorBase.swift */; };
 		4F8CE7012617738A00D70A76 /* AppTranslocationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F8CE6FF2617738A00D70A76 /* AppTranslocationManager.m */; };
 		4F8CF95728686C0100BF5E55 /* PolynomialRegression.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F8CF94328686C0100BF5E55 /* PolynomialRegression.m */; };
@@ -2045,7 +2045,7 @@
 		4F8A8DC0287F885D00786BCC /* Shorthands.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Shorthands.h; sourceTree = "<group>"; };
 		4F8A8DC1287F967000786BCC /* TestAccelerationCurve.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestAccelerationCurve.swift; sourceTree = "<group>"; };
 		4F8B01A92C348A3A00F3AF8D /* Localization Screenshot Taker.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Localization Screenshot Taker.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
-		4F8B01AB2C348A3A00F3AF8D /* AppUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppUITests.swift; sourceTree = "<group>"; };
+		4F8B01AB2C348A3A00F3AF8D /* LocalizationScreenshots.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalizationScreenshots.swift; sourceTree = "<group>"; };
 		4F8B7E6627B4E32600598B65 /* TouchAnimatorBase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TouchAnimatorBase.swift; sourceTree = "<group>"; };
 		4F8CE6FF2617738A00D70A76 /* AppTranslocationManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppTranslocationManager.m; sourceTree = "<group>"; };
 		4F8CE7002617738A00D70A76 /* AppTranslocationManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppTranslocationManager.h; sourceTree = "<group>"; };
@@ -6375,10 +6375,10 @@
 		4F4C73D42C4FB3C7001D97C3 /* Screenshots */ = {
 			isa = PBXGroup;
 			children = (
-				4F4C737B2C4FB06E001D97C3 /* NSString+Steganography.h */,
-				4F4C737C2C4FB06E001D97C3 /* NSString+Steganography.m */,
 				4F4C73D52C4FB3FA001D97C3 /* LocalizedStringAnnotation.h */,
 				4F4C73D62C4FB3FA001D97C3 /* LocalizedStringAnnotation.m */,
+				4F4C737B2C4FB06E001D97C3 /* NSString+Steganography.h */,
+				4F4C737C2C4FB06E001D97C3 /* NSString+Steganography.m */,
 				4F4C73FC2C4FB5D2001D97C3 /* AnnotationUtility.h */,
 				4F4C73FD2C4FB5D2001D97C3 /* AnnotationUtility.m */,
 				4F4C73F62C4FB4C2001D97C3 /* TreeNode.h */,
@@ -6725,6 +6725,7 @@
 		4FA1ACE025E85904007DB95B /* LocalizationScreenshotTaker */ = {
 			isa = PBXGroup;
 			children = (
+				4F8B01AB2C348A3A00F3AF8D /* LocalizationScreenshots.swift */,
 				4F0C003D2C52BBA600C5D843 /* LocalizationScreenshotTaker.entitlements */,
 				4FE78C382C4FFB0E00C54103 /* LocalizationScreenshotTaker-Bridging-Header.h */,
 			);
@@ -6869,7 +6870,6 @@
 				4FF665BE25F2C92700689B77 /* App */,
 				4FF6660725F2C93A00689B77 /* Helper */,
 				4F422EF023469B2B00AA6E22 /* Other */,
-				4FEA2E6D2C54ED2A00C86D67 /* Tests */,
 				4FA1ACE025E85904007DB95B /* LocalizationScreenshotTaker */,
 				4FCECD8121092354001F1078 /* Products */,
 				4FDECCD528A3A37800DDEE91 /* Frameworks */,
@@ -7091,14 +7091,6 @@
 				4FEA2E6B2C5458CA00C86D67 /* StringsImport.md */,
 			);
 			path = "mac-mouse-fix-scripts";
-			sourceTree = "<group>";
-		};
-		4FEA2E6D2C54ED2A00C86D67 /* Tests */ = {
-			isa = PBXGroup;
-			children = (
-				4F8B01AB2C348A3A00F3AF8D /* AppUITests.swift */,
-			);
-			path = Tests;
 			sourceTree = "<group>";
 		};
 		4FEB6616279376C200E6A111 /* Various Notes */ = {
@@ -7915,7 +7907,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				4F18464D2C533B5900D5E835 /* BidirectionalMap.m in Sources */,
-				4F8B01AC2C348A3A00F3AF8D /* AppUITests.swift in Sources */,
+				4F8B01AC2C348A3A00F3AF8D /* LocalizationScreenshots.swift in Sources */,
 				4FE78C342C4FFA2F00C54103 /* TreeNode.h in Sources */,
 				4FE78C352C4FFA2F00C54103 /* TreeNode.m in Sources */,
 				4FE78C462C50362800C54103 /* DisableSwiftBridging.swift in Sources */,
