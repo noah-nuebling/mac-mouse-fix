@@ -214,8 +214,8 @@
             filePath = "App/UI/Main/TabViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "131"
-            endingLineNumber = "131"
+            startingLineNumber = "212"
+            endingLineNumber = "212"
             landmarkName = "coolHideTab(identifier:window:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -611,6 +611,38 @@
             startingLineNumber = "156"
             endingLineNumber = "156"
             landmarkName = "testTakeLocalizationScreenshots()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "53438A20-12E0-4046-82A8-DD5F1B59D1E0"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "LocalizationScreenshotTaker/LocalizationScreenshots.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "152"
+            endingLineNumber = "152"
+            landmarkName = "navigateAppAndTakeScreenshots(_:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "75977D2C-83C1-4552-8C20-1691D26839CF"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "LocalizationScreenshotTaker/LocalizationScreenshots.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "139"
+            endingLineNumber = "139"
+            landmarkName = "navigateAppAndTakeScreenshots(_:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

@@ -39,20 +39,78 @@ class TabViewController: NSTabViewController {
     
     // MARK: Hacky tabView manipulation
     
+    func _getToolbar(_ w: NSWindow?) -> NSToolbar? {
+        
+        let window = w ?? MainAppState.shared.window
+        
+        if let window = window {
+            return window.toolbar
+        } else {
+            return nil
+        }
+    }
+    func _getIndexOfToolBarItem(_ identifier: NSToolbarItem.Identifier, _ toolbar: NSToolbar) -> Int? {
+        
+        var result: Int? = nil
+        for (i, item) in toolbar.items.enumerated() {
+            if item.itemIdentifier == identifier {
+                result = i
+                break;
+            }
+        }
+        return result
+    }
+    func _getToolbarItem(_ identifier: NSToolbarItem.Identifier, _ toolbar: NSToolbar) -> NSToolbarItem? {
+        var result: NSToolbarItem? = nil
+        for item in toolbar.items {
+            if item.itemIdentifier == identifier {
+                result = item
+                break;
+            }
+        }
+        return result
+    }
+    func _getToolbarItemViewer(_ item: NSToolbarItem) -> NSView? {
+        let result = SharedUtility.getPrivateValue(of: item, forName: "_itemViewer") as? NSView
+        return result
+    }
+    
     @objc public func coolSelectTab(identifier: String, window w: NSWindow? = nil) {
+        
+        ///
+        /// Summer 2024: macOS 15.0 Beta: Attempt at simpler implementation
+        /// (I hope this new method is backwards compatible, but I think so since we're using no more private ivars or methods.)
+        
+        /// Sometimes you need to pass in window, when you call this right after the window is created.
+        
+        /// Log
+        DDLogDebug("TBS switching to tab \(identifier), windowIsNil: \(w == nil)")
+        
+        /// Find toolbar item
+        guard let toolbar = self._getToolbar(w),
+              let item = _getToolbarItem(NSToolbarItem.Identifier(identifier), toolbar) else {
+            
+            assert(false)
+            return
+        }
+        
+        /// Update state on tabView and toolbar
+        toolbar.selectedItemIdentifier = NSToolbarItem.Identifier(identifier)
+        self.tabView.selectTabViewItem(withIdentifier: identifier)
+        
+        /// Return
+        return;
+        
+        ///
+        /// Old implementation
+        ///
         
         /// There's a library method `self.tabView.selectTabViewItem(withIdentifier:)`
         ///     but it doesn't change the selected toolbar button properly, so we have to use horrible hacks.
         /// Sometimes you need to pass in window, when you call this right after the window is created.
         
-        DDLogDebug("TBS switching to tab \(identifier), windowIsNil: \(w == nil)")
+        let window = w ?? MainAppState.shared.window
         
-        let window: NSWindow?
-        if w == nil {
-            window = MainAppState.shared.window
-        } else {
-            window = w
-        }
         guard let window = window, let tb = window.toolbar else { assert(false); return }
         let tbv = SharedUtility.getPrivateValue(of: tb, forName: "_toolbarView")
         
@@ -69,38 +127,61 @@ class TabViewController: NSTabViewController {
         assert(lvs.count > 0)
         
         var success = false
-    outerLoop: for v in lvs {
-        guard let item = SharedUtility.getPrivateValue(of: v, forName: "_item") as? NSToolbarItem else { assert(false); return }
-        if item.itemIdentifier.rawValue == identifier {
-            for sub in v.subviews {
-                if let sub = sub as? NSButton {
-                    
-                    sub.performClick(nil)
-                    
-                    success = true
-                    break outerLoop
+        outerLoop: for v in lvs {
+            guard let item = SharedUtility.getPrivateValue(of: v, forName: "_item") as? NSToolbarItem else { assert(false); return }
+            if item.itemIdentifier.rawValue == identifier {
+                for sub in v.subviews {
+                    if let sub = sub as? NSButton {
+                        
+                        sub.performClick(nil)
+                        
+                        success = true
+                        break outerLoop
+                    }
                 }
             }
         }
-    }
         assert(success)
     }
     
     @objc public func coolHideTab(identifier: String, window w: NSWindow? = nil) {
+        
+        ///
+        /// Summer 2024: macOS 15.0 Beta: Attempt at simpler implementation
+        ///
+        
+        /// This hides the button for selecting the tab in the UI
+        
+        /// Log
+        DDLogDebug("TBS hiding tab \(identifier), windowIsNil: \(w == nil)")
+        
+        /// Get toolbar & item
+        guard let toolbar = _getToolbar(w),
+              let itemIndex = _getIndexOfToolBarItem(NSToolbarItem.Identifier(identifier), toolbar) else {
+            
+            assert(false)
+            return
+        }
+        
+        /// Remove item
+        toolbar.removeItem(at: itemIndex)
+        
+        /// Return
+        return
+        
+        ///
+        /// Old implementation
+        ///
         
         /// This is copy pasted from `coolSelectTab()`
         /// Hides the tab button from the user, but the tab will still be displayed and we can switch from/to it programmatically
         
         DDLogDebug("TBS hiding tab \(identifier), windowIsNil: \(w == nil)")
         
-        let window: NSWindow?
-        if w == nil {
-            window = MainAppState.shared.window
-        } else {
-            window = w
-        }
+        let window = w ?? MainAppState.shared.window
         
-        guard let window = window, let tb = window.toolbar else { assert(false); return }
+        guard let window = window,
+              let tb = window.toolbar else { assert(false); return }
         let tbv = SharedUtility.getPrivateValue(of: tb, forName: "_toolbarView")
         
         let lvs: NSMutableArray?
@@ -108,7 +189,7 @@ class TabViewController: NSTabViewController {
         if #available(macOS 11.0, *) {
             lvs = SharedUtility.getPrivateValue(of: tbv, forName: "_layoutViews") as? NSMutableArray
         } else {
-            /// Note: Removing from `_layoutOrderedItemViewers` doesn't seem to do anything. But I feel like we might still want to remove from both `_toolbarOrderedItemViewers` and `_toolbarOrderedItemViewers` so the overall state is for sure valid, cause I don't get what the role of each of the two is.
+            /// Note: Removing from `_layoutOrderedItemViewers` doesn't seem to do anything. But I feel like we might still want to remove from both `_toolbarOrderedItemViewers` and `_toolbarOrderedItemViewers` (Edit: what?) so the overall state is for sure valid, cause I don't get what the role of each of the two is.
             lvs = SharedUtility.getPrivateValue(of: tbv, forName: "_toolbarOrderedItemViewers") as? NSMutableArray
         }
         
