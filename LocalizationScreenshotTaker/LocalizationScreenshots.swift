@@ -45,7 +45,7 @@ final class LocalizationScreenshotClass: XCTestCase {
     /// Internal datatypes
     ///
     
-    struct ScreenshotAndMetadata { 
+    struct ScreenshotAndMetadata {
         let screenshot: XCUIScreenshot
         let metadata: Metadata
         struct Metadata {
@@ -67,31 +67,13 @@ final class LocalizationScreenshotClass: XCTestCase {
     }
     
     ///
-    /// Lifecycle
-    ///
-    
-    override func setUpWithError() throws {
-        /// Put setup code here. This method is called before the invocation of each test method in the class.
-        
-        /// In UI tests it is usually best to stop immediately when a failure occurs.
-        continueAfterFailure = false
-    }
-    
-    override func tearDownWithError() throws {
-        /// Put teardown code here. This method is called after the invocation of each test method in the class.
-    }
-    
-    ///
-    /// Screenshots
+    /// Main routine
     ///
     
     
     var app: XCUIApplication? = nil
     
     func testTakeLocalizationScreenshots() throws {
-        
-        /// Declare local data
-        var screenshotsAndMetadata = [ScreenshotAndMetadata]()
         
         /// Get output folder
         var outputDirectory: URL? = nil
@@ -113,14 +95,27 @@ final class LocalizationScreenshotClass: XCTestCase {
         app = XCUIApplication()
         app?.launchArguments.append(localizedStringAnnotationActivationArgumentForScreenshottedApp)
         
+        /// TESTING
+        app?.launchArguments.append(contentsOf: ["-AppleLanguages", "(de)"])
+        
         /// Launch the app
         app!.launch()
+        
+        /// Call core
+        navigateAppAndTakeScreenshots(outputDirectory)
+    }
+    
+    
+    fileprivate func navigateAppAndTakeScreenshots( _ outputDirectory: URL) {
+
+        /// Declare result
+        var result = [ScreenshotAndMetadata?]()
         
         /// Find main window
         let window = app!.windows.firstMatch
         
         /// Find enable toggle
-        let switcherino = window.switches["enableToggle"]
+        let switcherino = window.switches["mfidEnableToggle"]
         let switcherinoExists = switcherino.waitForExistence(timeout: 10)
         XCTAssertTrue(switcherinoExists)
         
@@ -132,21 +127,50 @@ final class LocalizationScreenshotClass: XCTestCase {
             XCTWaiter().wait(for: [switchIsEnabled], timeout: 10.0)
         }
         
-        /// Capture MainTab
-        if let newLocalizationScreenshot = takeLocalizationScreenshot(of: window, name: "MainTab") {
-            screenshotsAndMetadata.append(newLocalizationScreenshot)
+        /// Capture GeneralTab
+        
+        let tree: TreeNode<XCUIElementSnapshot>
+        do {
+             tree = try TreeNode<AnyObject>.tree(withKVCObject: window.snapshot(), childrenKey: "children") as! TreeNode<XCUIElementSnapshot>
+        } catch {
+            
         }
         
-        /// Capture other tabs
-        /// ...
+        window.toolbarButtons["general"].click()
+        result.append(takeLocalizationScreenshot(of: window, name: "GeneralTab"))
+
+        /// Capture ButtonsTab
+        window.toolbarButtons["buttons"].click()
+        result.append(takeLocalizationScreenshot(of: window, name: "ButtonsTab"))
+        
+        /// Capture ScrollingTab
+        window.toolbarButtons["scrolling"].click()
+        result.append(takeLocalizationScreenshot(of: window, name: "ScrollingTab"))
+        
+        /// Capture PointerTab
+        window.toolbarButtons["pointer"].click()
+        result.append(takeLocalizationScreenshot(of: window, name: "PointerTab"))
+        
+        /// Capture AboutTab
+        window.toolbarButtons["about"].click()
+        result.append(takeLocalizationScreenshot(of: window, name: "AboutTab"))
+        
+        
+        writeResults(result, outputDirectory)
+    }
+    
+    ///
+    /// To-file-writing
+    ///
+    
+    fileprivate func writeResults(_ screenshotsAndMetadata: [ScreenshotAndMetadata?], _ outputDirectory: URL) {
         
         /// Convert screenshotsAndMetadata to localizedStringData.plist structure
-        
         var screenshotNameToScreenshotDataMap = [String: Data]()
-        
         var localizedStringData: LocalizedStringData = []
-        
         for scr in screenshotsAndMetadata {
+            
+            guard let scr = scr else { continue }
             
             var screenshotUsageCount = 0
             
@@ -188,7 +212,7 @@ final class LocalizationScreenshotClass: XCTestCase {
             }
         }
         
-        /// Create the output directory if it doesn't exist
+        /// Create the output directory
         let fileManager = FileManager.default
         if !fileManager.fileExists(atPath: outputDirectory.path()) {
             do {
