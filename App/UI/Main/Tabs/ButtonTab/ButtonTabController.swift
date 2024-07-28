@@ -48,8 +48,10 @@ import CocoaLumberjackSwift
         alert.messageText = NSLocalizedString("restore-buttons-alert.title", comment: "First draft: Restore Default for ...")
         alert.informativeText = ""
         
-        alert.addButton(withTitle: NSLocalizedString("restore-buttons-alert.commit", comment: "First draft: Restore"))
-        alert.addButton(withTitle: NSLocalizedString("restore-buttons-alert.back", comment: "First draft: Cancel"))
+        let restoreButton = alert.addButton(withTitle: NSLocalizedString("restore-buttons-alert.commit", comment: "First draft: Restore"))
+        let cancelButton = alert.addButton(withTitle: NSLocalizedString("restore-buttons-alert.back", comment: "First draft: Cancel"))
+        restoreButton.keyEquivalent = IBUtility.keyChar(forLiteral: "return")
+        cancelButton.keyEquivalent = IBUtility.keyChar(forLiteral: "escape")
         
         ///
         /// Get device info
@@ -274,6 +276,8 @@ import CocoaLumberjackSwift
             ///     - 1. Make it prettier / more readable by using custom layout and markdown formatting
             ///     - 2. Include links to top 3 recommended mice (and maybe a link to a longer list of recommended mice). Maybe get a brand deal with some good mouse manufacturer for promoting their products.
             ///     - 3. Maybe show a small/unbtrustive toast instead of an alert and have it link to the more complex content / recommendations
+            ///
+            /// Update Summer 2024: If you implement this don't forget to consider making this escape-dismissable, like most other sheets and alerts in the app.
             
             let showBuyMouseAlert = false
             

@@ -56,6 +56,7 @@
     
     NSDictionary *map = @{
         @"return": @(kReturnCharCode),
+        @"enter": @(kEnterCharCode),    /// Use return instead. Return is standard on macOS keyboard. Enter can only by typed by hitting function+return on a MacBook keyboard.
         @"escape": @(kEscapeCharCode),
         @"space": @(kSpaceCharCode),
         @"delete": @(kDeleteCharCode),

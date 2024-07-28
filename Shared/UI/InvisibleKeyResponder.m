@@ -22,26 +22,31 @@
 ///     - Optionally set the modifiers to a literal string specified in IBUtility such as "option" or "command, shift".
 /// - Set its action outlet to the function you want to be performed, when the user hits the key.
 ///
-/// See Apples article "Event Architecture" for more on keyEquivalents and how they interact with the responder chain.
+/// See Apple's article  EventOverview/EventArchitecture for more on keyEquivalents and how they interact with the responder chain.
 ///
 /// TODO:
-/// 1. Go through all the .xib files and programatically created sheets, windows, etc, and use this to make them dismissable with `escape` (That's what we built this for.) (At least make sheets and alerts dismissable, not sure about toasts and stuff.)
-///     - At the time of writing (summer 2024) we know that the following are already escape-dismissible: mail popup (bc we just added custom code), Buttons options sheet (because we added an InvisibleKeyResponder), restore defaults alert (already was dismissible, I think due to AppKit magic bc the back button is labled 'Cancel').
-///     - I can think of the following that we should update:
-///         - License sheet,
-///         - Authorizeaccessibility sheet
-///         - Restore defaults alert (make it dismissible with custom code instead of relying on AppKit magic)
-///         > Should perhaps also update (but probably not sure)
-///             - trial notifications (displayed by helper),
-///             - buy-mouse-alert,
-///             - Restore Defaults Popover ,
-///             - is-strange-helper-alert
-///             - general toasts,
-/// 2. Use our newfound knowledge of responder chains and stuff to stop the app from OUF ing when htting escape while there's nothing to dismiss.
-/// 3. Test if ClickableImageView still works after the refactor
-///     - on accesssibility sheet
-///     - on about tab
 ///
+/// 1. Go through all the .xib files and programatically created sheets, windows, etc, and use this to make them dismissable with `escape` (That's what we built this for.) (At least make sheets and alerts dismissable, not sure about toasts and stuff.)
+///     - I can think of the following that we should update:
+///         - x Buttons options sheet -> Done by adding an InvisibleKeyResponder subview with esc key-equivalent)
+///         - x mail popup -> Done by setting esc key-equivalent in code
+///         - x License sheet -> Done by setting esc key-equivalent on back-button
+///         - x Authorizeaccessibility sheet -> Already had esc key-equivalent on back-button
+///         - x restore-buttons-alert (Was seemingly already esc-dismissable due to AppKit magic when labling a button 'Cancel', but we set the key-equivalents in code to make sure..)
+///
+///     > Should perhaps also update (but not sure)
+///         - x Restore Defaults Popover  -> Not doing this (Reason: You wouldn't expect it to have keyboard focus)
+///         - x general toasts -> Not doing this (Reason: You wouldn't expect it to have keyboard focus)
+///         - x trial notifications (displayed by helper) -> Not doing this (Reason: Wouldn't expect this to have keyboard focus)
+///         - x buy-mouse-alert -> Not doing this (Reason: This isn't even implemented but we added a not in case we do implement it.)
+///         - x is-strange-helper-alert -> Not doing this. (Reason: The showPersistenNotificationWithTitle: is supposed to be hard to dismiss.)
+
+/// 2. Test if ClickableImageView still works after the refactor
+///     - x on accesssibility sheet
+///     - x on about tab
+/// 3. Other
+///     - x Use our newfound knowledge of responder chains and stuff to stop the app from OUF ing when htting escape while there's nothing to dismiss.
+///         (Couldn't figure out how to do this. Even if we override [NSResponder noResponderFor:] to prevent it from from beeping, [NSWindow doCommandBySelector:] will still beep, and we can't just override that bc it's doing important things.
 
 IB_DESIGNABLE
 @interface InvisibleKeyResponder ()

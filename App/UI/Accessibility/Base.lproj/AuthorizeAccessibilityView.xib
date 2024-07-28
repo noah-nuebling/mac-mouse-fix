@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="21507" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="23086.1" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="21507"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="23086.1"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -18,7 +18,7 @@
             <rect key="frame" x="0.0" y="0.0" width="443" height="314"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <subviews>
-                <textField horizontalHuggingPriority="1000" verticalHuggingPriority="750" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="3VE-AW-Zcd">
+                <textField focusRingType="none" horizontalHuggingPriority="1000" verticalHuggingPriority="750" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="3VE-AW-Zcd">
                     <rect key="frame" x="77" y="201" width="289" height="16"/>
                     <textFieldCell key="cell" lineBreakMode="clipping" alignment="center" title="Grant Accessibility Access to Mac Mouse Fix" id="OSk-Cl-izW">
                         <font key="font" metaFont="systemSemibold" size="13"/>
@@ -26,7 +26,7 @@
                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
-                <textField horizontalHuggingPriority="999" verticalHuggingPriority="750" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" verifyAmbiguity="off" translatesAutoresizingMaskIntoConstraints="NO" id="xUD-oJ-hdN" customClass="Hyperlink">
+                <textField focusRingType="none" horizontalHuggingPriority="999" verticalHuggingPriority="750" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" verifyAmbiguity="off" translatesAutoresizingMaskIntoConstraints="NO" id="xUD-oJ-hdN" customClass="Hyperlink">
                     <rect key="frame" x="114" y="125" width="216" height="16"/>
                     <textFieldCell key="cell" lineBreakMode="clipping" alignment="center" title="Open 'Privacy &amp; Security' Settings" id="9qp-gN-SZZ">
                         <font key="font" metaFont="message"/>
@@ -37,7 +37,7 @@
                         <userDefinedRuntimeAttribute type="string" keyPath="href" value="x-apple.systempreferences:com.apple.preference.security?Privacy_Accessibility"/>
                     </userDefinedRuntimeAttributes>
                 </textField>
-                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="8eQ-d3-USu">
+                <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="8eQ-d3-USu">
                     <rect key="frame" x="100" y="104" width="16" height="16"/>
                     <textFieldCell key="cell" lineBreakMode="clipping" alignment="right" title="2." id="RIR-VN-l6s">
                         <font key="font" metaFont="system"/>
@@ -45,7 +45,7 @@
                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
-                <textField horizontalHuggingPriority="1000" verticalHuggingPriority="750" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="9kK-bF-abK">
+                <textField focusRingType="none" horizontalHuggingPriority="1000" verticalHuggingPriority="750" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="9kK-bF-abK">
                     <rect key="frame" x="115" y="104" width="213" height="16"/>
                     <textFieldCell key="cell" lineBreakMode="clipping" alignment="center" title="Switch on 'Mac Mouse Fix Helper'" id="46z-Nd-nh4">
                         <font key="font" metaFont="system"/>
@@ -53,7 +53,7 @@
                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
-                <textField horizontalHuggingPriority="1000" verticalHuggingPriority="750" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="g4H-g7-Zd7" customClass="Hyperlink">
+                <textField focusRingType="none" horizontalHuggingPriority="1000" verticalHuggingPriority="750" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="g4H-g7-Zd7" customClass="Hyperlink">
                     <rect key="frame" x="205" y="65" width="33" height="14"/>
                     <textFieldCell key="cell" alignment="center" title="Help" id="04N-yp-Qg1">
                         <font key="font" metaFont="message" size="11"/>
@@ -64,7 +64,7 @@
                         <userDefinedRuntimeAttribute type="string" keyPath="href" value="https://github.com/noah-nuebling/mac-mouse-fix/discussions/101"/>
                     </userDefinedRuntimeAttributes>
                 </textField>
-                <textField horizontalHuggingPriority="1000" verticalHuggingPriority="750" horizontalCompressionResistancePriority="999" verticalCompressionResistancePriority="1000" verifyAmbiguity="off" translatesAutoresizingMaskIntoConstraints="NO" id="ehG-P7-Fzq">
+                <textField focusRingType="none" horizontalHuggingPriority="1000" verticalHuggingPriority="750" horizontalCompressionResistancePriority="999" verticalCompressionResistancePriority="1000" verifyAmbiguity="off" translatesAutoresizingMaskIntoConstraints="NO" id="ehG-P7-Fzq">
                     <rect key="frame" x="77" y="166" width="289" height="28"/>
                     <textFieldCell key="cell" alignment="center" title="Accessibility Access allows Mac Mouse Fix to intercept signals from your mouse and keyboard" id="0lz-be-kpl">
                         <font key="font" metaFont="message" size="11"/>
@@ -75,7 +75,7 @@
                         <userDefinedRuntimeAttribute type="string" keyPath="href" value="https://noah-nuebling.github.io/mac-mouse-fix-website/about/"/>
                     </userDefinedRuntimeAttributes>
                 </textField>
-                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="6N2-6y-5iB">
+                <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="6N2-6y-5iB">
                     <rect key="frame" x="101" y="125" width="14" height="16"/>
                     <textFieldCell key="cell" lineBreakMode="clipping" alignment="right" title="1." id="72q-sS-xMS">
                         <font key="font" metaFont="system"/>
