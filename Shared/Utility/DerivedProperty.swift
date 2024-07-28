@@ -27,7 +27,6 @@
 /// Also see CachedComputedPropertiesTests.xcodeproj
 
 import Foundation
-import CocoaLumberjackSwift
 
 // MARK: Base functions
 

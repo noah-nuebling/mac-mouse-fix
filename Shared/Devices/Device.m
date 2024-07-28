@@ -16,6 +16,7 @@
 #import "CFRuntime.h"
 #import "SharedUtility.h"
 #import <Cocoa/Cocoa.h>
+#import "Logging.h"
 
 /// TODO: Consider refactoring
 ///  - There is device specific state scattered around the program (I can think of the the ButtonStates in ButtonTriggerGenerator, as well as the ModifedDragStates in ModiferManager). This state should probably be owned by MFDevice instances instead.

@@ -10,7 +10,6 @@
 
 import Foundation
 import Cocoa
-import CocoaLumberjackSwift
 
 extension NSView {
     

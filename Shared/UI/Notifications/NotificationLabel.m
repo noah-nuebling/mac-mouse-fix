@@ -8,7 +8,7 @@
 //
 
 #import "NotificationLabel.h"
-#import "WannabePrefixHeader.h"
+#import "Logging.h"
 
 @implementation NotificationLabel
 

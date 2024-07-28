@@ -59,7 +59,6 @@
 ///     with ReactiveSwift but it ended up being too slow, and so we re-implemented the Reactive control flow using simple function calls. Now that we dropped support for older macOS versions, perhaps we could try using Combine for this. I heard it's fast.
 
 import Cocoa
-import CocoaLumberjackSwift
 import ReactiveSwift
 
 @objc class SwitchMaster: NSObject {

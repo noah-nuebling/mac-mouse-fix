@@ -8,7 +8,6 @@
 import Cocoa
 import ReactiveSwift
 import ReactiveCocoa
-import CocoaLumberjackSwift
 import Sparkle
 import ServiceManagement
 

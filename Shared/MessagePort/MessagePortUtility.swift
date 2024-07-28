@@ -8,7 +8,6 @@
 //
 
 import Foundation
-import CocoaLumberjackSwift
 import ReactiveSwift
 
 @objc class MessagePortUtility: NSObject {

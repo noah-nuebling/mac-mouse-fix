@@ -10,6 +10,7 @@
 #import "ButtonModifiers.h"
 #import "SharedUtility.h"
 #import "Modifiers.h"
+#import "Logging.h"
 
 @implementation ButtonModifiers {
     

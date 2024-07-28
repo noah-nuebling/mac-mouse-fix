@@ -8,6 +8,7 @@
 //
 
 #import <XCTest/XCUIElement.h>
+#import "AnnotationUtility.h"
 
 @interface XCUIElement (Swizzle)
 
@@ -17,10 +18,10 @@
 
 + (void)load {
     
-        
     swizzleMethodOnClassAndSubclasses([XCUIElement class], @{ @"framework": @"XCTest" }, @selector(screenshotFrame), MakeInterceptorFactory(NSRect, (), {
-        
-        OGImpl()
+        NSRect r = OGImpl();
+        r = NSMakeRect(r.origin.x - 10, r.origin.y - 10, r.size.width + 20, r.size.height + 20);
+        return r;
     }));
 }
 

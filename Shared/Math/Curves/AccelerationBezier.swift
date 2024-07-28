@@ -8,7 +8,6 @@
 //
 
 import Cocoa
-import CocoaLumberjackSwift
 
 
 /// With this class you can create a BezierCurve which is then linearly extrapolated after the last control point, and set to the minimum value before the first controlPoint

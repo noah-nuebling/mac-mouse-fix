@@ -8,6 +8,7 @@
 //
 
 #import <Foundation/Foundation.h>
+@import AppKit;
 @import CoreVideo;
 
 NS_ASSUME_NONNULL_BEGIN

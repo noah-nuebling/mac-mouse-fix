@@ -13,7 +13,6 @@
 #import <Carbon/Carbon.h>
 #import "MFMessagePort.h"
 #import "NSView+Additions.h"
-#import "WannabePrefixHeader.h"
 #import "Mac_Mouse_Fix-Swift.h"
 
 @interface KeyCaptureView ()

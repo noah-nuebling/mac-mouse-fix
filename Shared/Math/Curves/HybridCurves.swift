@@ -11,7 +11,6 @@
 /// This has the purpose of decelerating animations naturally, while still retaining complete control over the start of the animation.
 
 import Cocoa
-import CocoaLumberjackSwift
 
 // MARK: - BezierHybrid
 

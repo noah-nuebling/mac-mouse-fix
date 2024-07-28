@@ -21,7 +21,6 @@
 #import "NotificationLabel.h"
 #import "NSAttributedString+Additions.h"
 #import "LocalizationUtility.h"
-#import "WannabePrefixHeader.h"
 #import "Mac_Mouse_Fix-Swift.h"
 
 @interface ToastNotificationController ()

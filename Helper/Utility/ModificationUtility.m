@@ -17,6 +17,7 @@
 #import "CGSCursor.h"
 #include <sys/types.h>
 #include <sys/sysctl.h>
+#import "Logging.h"
 
 @implementation ModificationUtility
 

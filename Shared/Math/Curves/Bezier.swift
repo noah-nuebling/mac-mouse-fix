@@ -14,7 +14,6 @@
 
 import Cocoa
 import simd /// Vector stuff
-import CocoaLumberjackSwift /// Doesn't work for some reason
 //import ReactiveCocoa
 //import ReactiveSwift
 

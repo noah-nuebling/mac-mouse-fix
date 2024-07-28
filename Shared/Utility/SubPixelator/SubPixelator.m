@@ -17,6 +17,7 @@
 #import "SubPixelator.h"
 #import "SharedUtility.h"
 #import "MathObjc.h"
+#import "Logging.h"
 
 @interface SubPixelator ()
 @property (readwrite, assign, atomic) double accumulatedRoundingError;

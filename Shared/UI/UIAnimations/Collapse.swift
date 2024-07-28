@@ -17,7 +17,6 @@ import Foundation
 import ReactiveSwift
 import QuartzCore
 import AppKit
-import CocoaLumberjackSwift
 
 // MARK: - Helper stuff
 

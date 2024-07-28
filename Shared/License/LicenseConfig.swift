@@ -12,7 +12,6 @@
 /// The altPayLink, altQuickPayLink, and altPayLinkCountries params are meant to be used to provide an alternative payment method for users in China and Russia where Gumroad doesn't work properly at the moment. They are unused at the time of writing. The freeCountries parameter lists countries in which the app should be free. This is meant as a temporary solution until we implemented the alternative payment methods.
 
 import Cocoa
-import CocoaLumberjackSwift
 
 @objc class LicenseConfig: NSObject {
     

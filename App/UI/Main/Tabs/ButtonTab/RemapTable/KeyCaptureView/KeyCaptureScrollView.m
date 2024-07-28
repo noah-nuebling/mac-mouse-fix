@@ -8,7 +8,7 @@
 //
 
 #import "KeyCaptureScrollView.h"
-#import "WannabePrefixHeader.h"
+#import "Logging.h"
 
 @implementation KeyCaptureScrollView
 

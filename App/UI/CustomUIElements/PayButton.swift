@@ -10,7 +10,6 @@
 /// Following this tutoria:l https://www.advancedswift.com/flat-nsbutton-in-swift/
 
 import Cocoa
-import CocoaLumberjackSwift
 
 @IBDesignable @objc class PayButton: NSButton {
 

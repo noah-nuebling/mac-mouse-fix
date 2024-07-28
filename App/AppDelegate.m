@@ -23,6 +23,8 @@
 #import "NSAttributedString+Additions.h"
 #import "Mac_Mouse_Fix-Swift.h"
 #import "Locator.h"
+#import "Logging.h"
+#import "TestLogging.h" /// TEST
 
 @interface AppDelegate ()
 
@@ -144,9 +146,13 @@ static NSDictionary *sideButtonActions;
         /// Why don't we do these things in applicationDidFinishLaunching?
         ///     TODO: Try moving this to applicationDidFinishLaunching, so we have a unified entryPoint.
         
-        /// Setup CocoaLumberjack
-        [SharedUtility setupBasicCocoaLumberjackLogging];
-        DDLogInfo(@"Main App starting up...");     
+        /// Setup CocoaLumberjack logging
+        [Logging setUpDDLog];
+        DDLogInfo(@"Main App starting up...");
+        
+        /// TEST logging
+        [TestLogging doTestLogs_objc];
+        [TestLoggingSwift doTestLogs_swift];
         
         /// Remove restart the app untranslocated if it's currently translocated
         /// Need to call this before `MessagePort_App` is initialized, otherwise stuff breaks if app is translocated

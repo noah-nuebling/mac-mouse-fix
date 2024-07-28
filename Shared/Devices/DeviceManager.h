@@ -9,8 +9,8 @@
 
 #import <Foundation/Foundation.h>
 #import "Device.h"
-#import "WannabePrefixHeader.h"
 #import "Constants.h"
+#import "DisableSwiftBridging.h"
 
 NS_ASSUME_NONNULL_BEGIN
 

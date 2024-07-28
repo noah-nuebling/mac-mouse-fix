@@ -10,8 +10,8 @@
 #import "Hyperlink.h"
 #import "Utility_App.h"
 #import "AppDelegate.h"
-#import "WannabePrefixHeader.h"
 #import "SharedUtility.h"
+#import "Logging.h"
 
 IB_DESIGNABLE
 @interface Hyperlink ()

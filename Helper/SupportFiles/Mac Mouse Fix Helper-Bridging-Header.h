@@ -2,10 +2,10 @@
 //  Use this file to import your target's public headers that you would like to expose to Swift.
 //
 
+#import "Logging.h"
 #import "Constants.h"
 #import "VectorUtility.h"
 #import "MathObjc.h"
-#import "WannaBePrefixHeader.h"
 #import "DisplayLink.h"
 #import "AnimatorDeclarations.h"
 #import "Config.h"

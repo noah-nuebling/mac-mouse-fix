@@ -8,7 +8,6 @@
 //
 
 import Foundation
-import CocoaLumberjackSwift
 
 class TrialSectionManager {
     

@@ -8,7 +8,6 @@
 //
 
 #import <Cocoa/Cocoa.h>
-#import "WannaBePrefixHeader.h"
 #import "DeviceManager.h"
 
 int main(int argc, const char * argv[]) {

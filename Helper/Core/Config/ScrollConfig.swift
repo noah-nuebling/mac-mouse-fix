@@ -8,7 +8,6 @@
 //
 
 import Cocoa
-import CocoaLumberjackSwift
 
 @objc class ScrollConfig: NSObject, NSCopying /*, NSCoding*/ {
     

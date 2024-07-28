@@ -10,7 +10,6 @@
 /// Also see ToastNotifications in the mainApp. They work similarly.
 
 import Cocoa
-import CocoaLumberjackSwift
 
 class TrialNotificationController: NSWindowController {
 

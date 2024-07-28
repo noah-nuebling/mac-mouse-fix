@@ -9,7 +9,6 @@ import Cocoa
 import ReactiveSwift
 import ReactiveCocoa
 import AppKit
-import CocoaLumberjackSwift
 
 @available(macOS 11.0, *)
 class ScrollTabController: NSViewController {

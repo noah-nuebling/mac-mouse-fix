@@ -10,6 +10,8 @@
 #ifndef Mac_Mouse_Fix_Bridging_Header_h
 #define Mac_Mouse_Fix_Bridging_Header_h
 
+#import "Logging.h"
+
 #import "NSAnimationManager.h"
 #import "VectorUtility.h"
 #import "Constants.h"

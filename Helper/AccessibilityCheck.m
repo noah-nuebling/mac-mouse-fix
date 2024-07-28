@@ -131,7 +131,7 @@ static void signal_handler(int signal_number, siginfo_t *signal_info, void *cont
     }
     
     /// Set up CocoaLumberjack
-    [SharedUtility setupBasicCocoaLumberjackLogging];
+    [Logging setUpDDLog];
     DDLogInfo(@"Accessibility Check - Mac Mosue Fix begins logging excessively");
     
     
@@ -154,7 +154,6 @@ static void signal_handler(int signal_number, siginfo_t *signal_info, void *cont
     /// __Pre-check init__
     ///
     
-    [PrefixSwift initGlobalStuff];
     [MFMessagePort load_Manual];
     
     ///

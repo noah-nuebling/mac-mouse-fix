@@ -18,6 +18,7 @@
 #import "SharedUtility.h"
 #import "Constants.h"
 #import <Cocoa/Cocoa.h>
+#import "Logging.h"
 
 @implementation AppTranslocationManager
 

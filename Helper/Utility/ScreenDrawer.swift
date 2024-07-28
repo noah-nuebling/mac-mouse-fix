@@ -8,7 +8,6 @@
 //
 
 import Cocoa
-import CocoaLumberjackSwift
 
 @objc class ScreenDrawer: NSObject {
     /// This class can display graphics anywhere on the screen

@@ -15,7 +15,6 @@
 ///     - Using magic numbers everywhere, no comments, no whitespace, slightly hacky.
 
 import Foundation
-import CocoaLumberjackSwift
 
 /// Constants
 fileprivate let _periodMax = 50.0 /// Max ms between events that we could still consider a polling rate  (50 ms -> 20 Hz)

@@ -55,6 +55,15 @@
 		4F4C73D82C4FB3FA001D97C3 /* LocalizedStringAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F4C73D62C4FB3FA001D97C3 /* LocalizedStringAnnotation.m */; };
 		4F4C73FE2C4FB5D2001D97C3 /* AnnotationUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F4C73FD2C4FB5D2001D97C3 /* AnnotationUtility.m */; };
 		4F4C73FF2C4FB5D2001D97C3 /* AnnotationUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F4C73FD2C4FB5D2001D97C3 /* AnnotationUtility.m */; };
+		4F58FE002C56DE9B00926A00 /* Logging.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F58FDFF2C56DE9B00926A00 /* Logging.swift */; };
+		4F58FE022C56DE9B00926A00 /* Logging.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F58FDFF2C56DE9B00926A00 /* Logging.swift */; };
+		4F58FE032C56E65900926A00 /* AnnotationUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F4C73FD2C4FB5D2001D97C3 /* AnnotationUtility.m */; };
+		4F58FE062C56EA1300926A00 /* TestLogging.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F58FE052C56EA1300926A00 /* TestLogging.m */; };
+		4F58FE072C56EA1300926A00 /* TestLogging.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F58FE052C56EA1300926A00 /* TestLogging.m */; };
+		4F58FE082C56EA1300926A00 /* TestLogging.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F58FE052C56EA1300926A00 /* TestLogging.m */; };
+		4F58FE0A2C56EA2F00926A00 /* TestLogging.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F58FE092C56EA2F00926A00 /* TestLogging.swift */; };
+		4F58FE0B2C56EA2F00926A00 /* TestLogging.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F58FE092C56EA2F00926A00 /* TestLogging.swift */; };
+		4F58FE0C2C56EA2F00926A00 /* TestLogging.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F58FE092C56EA2F00926A00 /* TestLogging.swift */; };
 		4F5971E52901763D00A32656 /* MathObjc.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F5971E42901763D00A32656 /* MathObjc.m */; };
 		4F5971E62901763D00A32656 /* MathObjc.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F5971E42901763D00A32656 /* MathObjc.m */; };
 		4F5C2F802885C5D0001B9B8A /* HelperState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F5C2F7F2885C5D0001B9B8A /* HelperState.swift */; };
@@ -95,8 +104,6 @@
 		4F8CF95728686C0100BF5E55 /* PolynomialRegression.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F8CF94328686C0100BF5E55 /* PolynomialRegression.m */; };
 		4F8CF95B28686EA200BF5E55 /* DoublesMatrix.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F8CF94528686C0100BF5E55 /* DoublesMatrix.m */; };
 		4F8D2C5928A035EA0060F76F /* Mac Mouse Fix Helper.app in Copy MMF Helper */ = {isa = PBXBuildFile; fileRef = 4FCECD8021092354001F1078 /* Mac Mouse Fix Helper.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
-		4F8FC13F275DC81900887A0C /* PrefixSwift.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F8FC13E275DC81900887A0C /* PrefixSwift.swift */; };
-		4F8FC140275DC81900887A0C /* PrefixSwift.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F8FC13E275DC81900887A0C /* PrefixSwift.swift */; };
 		4F909CF028A0C3B7009349A2 /* MainAppState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F909CEF28A0C3B6009349A2 /* MainAppState.swift */; };
 		4F909D2128A0C3D2009349A2 /* GeneralTabController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F909CF628A0C3D2009349A2 /* GeneralTabController.swift */; };
 		4F909D2228A0C3D2009349A2 /* ScrollTabController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F909CF728A0C3D2009349A2 /* ScrollTabController.swift */; };
@@ -237,6 +244,9 @@
 		4FDECCDF28A3E93100DDEE91 /* IsObjC.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FDECCDD28A3E93100DDEE91 /* IsObjC.m */; };
 		4FE03A602BFF5F0600708454 /* CoolSUComparator.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FE03A5D2BFF5F0500708454 /* CoolSUComparator.m */; };
 		4FE03A612BFF5F0600708454 /* CoolSUUpdater.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FE03A5F2BFF5F0600708454 /* CoolSUUpdater.m */; };
+		4FE1A1B92C56A50100CE3347 /* Logging.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FE1A1B82C56A50100CE3347 /* Logging.m */; };
+		4FE1A1BA2C56A50100CE3347 /* Logging.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FE1A1B82C56A50100CE3347 /* Logging.m */; };
+		4FE1A1BB2C56A50100CE3347 /* Logging.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FE1A1B82C56A50100CE3347 /* Logging.m */; };
 		4FE40B96283A49DD00880BEF /* SharedUtilitySwift.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FE40B95283A49DD00880BEF /* SharedUtilitySwift.swift */; };
 		4FE40B97283A49DD00880BEF /* SharedUtilitySwift.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FE40B95283A49DD00880BEF /* SharedUtilitySwift.swift */; };
 		4FE479E12933C87A00B75E9B /* ButtonModifiers.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FE479E02933C87A00B75E9B /* ButtonModifiers.m */; };
@@ -2004,6 +2014,10 @@
 		4F4C73FB2C4FB570001D97C3 /* Queue.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Queue.m; sourceTree = "<group>"; };
 		4F4C73FC2C4FB5D2001D97C3 /* AnnotationUtility.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AnnotationUtility.h; sourceTree = "<group>"; };
 		4F4C73FD2C4FB5D2001D97C3 /* AnnotationUtility.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AnnotationUtility.m; sourceTree = "<group>"; };
+		4F58FDFF2C56DE9B00926A00 /* Logging.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Logging.swift; sourceTree = "<group>"; };
+		4F58FE042C56EA1300926A00 /* TestLogging.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TestLogging.h; sourceTree = "<group>"; };
+		4F58FE052C56EA1300926A00 /* TestLogging.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TestLogging.m; sourceTree = "<group>"; };
+		4F58FE092C56EA2F00926A00 /* TestLogging.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestLogging.swift; sourceTree = "<group>"; };
 		4F5971E42901763D00A32656 /* MathObjc.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MathObjc.m; sourceTree = "<group>"; };
 		4F5C2F7F2885C5D0001B9B8A /* HelperState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelperState.swift; sourceTree = "<group>"; };
 		4F5F3EED2756DB0A00C350C0 /* RemapsOverrider_old_.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemapsOverrider_old_.swift; sourceTree = "<group>"; };
@@ -2060,7 +2074,6 @@
 		4F8CF93C28686C0100BF5E55 /* DoublesMatrix.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DoublesMatrix.h; sourceTree = "<group>"; };
 		4F8CF94328686C0100BF5E55 /* PolynomialRegression.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PolynomialRegression.m; sourceTree = "<group>"; };
 		4F8CF94528686C0100BF5E55 /* DoublesMatrix.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DoublesMatrix.m; sourceTree = "<group>"; };
-		4F8FC13E275DC81900887A0C /* PrefixSwift.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrefixSwift.swift; sourceTree = "<group>"; };
 		4F909CEF28A0C3B6009349A2 /* MainAppState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainAppState.swift; sourceTree = "<group>"; };
 		4F909CF628A0C3D2009349A2 /* GeneralTabController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GeneralTabController.swift; sourceTree = "<group>"; };
 		4F909CF728A0C3D2009349A2 /* ScrollTabController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScrollTabController.swift; sourceTree = "<group>"; };
@@ -2169,7 +2182,6 @@
 		4FBC9439260F8AA60062F186 /* MASKeyCodes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MASKeyCodes.h; sourceTree = "<group>"; };
 		4FBDA14D27B241CE0030E4EA /* GlobalEventTapThread.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GlobalEventTapThread.h; sourceTree = "<group>"; };
 		4FBDA14E27B241CE0030E4EA /* GlobalEventTapThread.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GlobalEventTapThread.m; sourceTree = "<group>"; };
-		4FBE18BA2666EC4A002A6771 /* WannabePrefixHeader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WannabePrefixHeader.h; sourceTree = "<group>"; };
 		4FC55B962915652C00663B24 /* AlertCreator.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AlertCreator.h; sourceTree = "<group>"; };
 		4FC55B972915652C00663B24 /* AlertCreator.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AlertCreator.m; sourceTree = "<group>"; };
 		4FC55E2F285E6BF800F2FCCF /* GlobalDefaults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlobalDefaults.swift; sourceTree = "<group>"; };
@@ -2227,6 +2239,8 @@
 		4FE03A5D2BFF5F0500708454 /* CoolSUComparator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CoolSUComparator.m; sourceTree = "<group>"; };
 		4FE03A5E2BFF5F0500708454 /* CoolSUUpdater.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CoolSUUpdater.h; sourceTree = "<group>"; };
 		4FE03A5F2BFF5F0600708454 /* CoolSUUpdater.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CoolSUUpdater.m; sourceTree = "<group>"; };
+		4FE1A1B72C56A50100CE3347 /* Logging.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Logging.h; sourceTree = "<group>"; };
+		4FE1A1B82C56A50100CE3347 /* Logging.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Logging.m; sourceTree = "<group>"; };
 		4FE40B95283A49DD00880BEF /* SharedUtilitySwift.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharedUtilitySwift.swift; sourceTree = "<group>"; };
 		4FE479DF2933C87A00B75E9B /* ButtonModifiers.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ButtonModifiers.h; sourceTree = "<group>"; };
 		4FE479E02933C87A00B75E9B /* ButtonModifiers.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ButtonModifiers.m; sourceTree = "<group>"; };
@@ -2413,7 +2427,6 @@
 		4FFB5EF42C2E67690096AA3E /* Markdown.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Markdown.xcstrings; sourceTree = "<group>"; };
 		4FFB5F032C2FECDC0096AA3E /* Readme.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = Readme.md; sourceTree = "<group>"; };
 		4FFB5F042C2FECDD0096AA3E /* Acknowledgements.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = Acknowledgements.md; sourceTree = "<group>"; };
-		4FFBC5732667DCE4001D389B /* PrefixHeader.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PrefixHeader.pch; sourceTree = "<group>"; };
 		4FFBC5A6266977CA001D389B /* Mac Mouse Fix Helper-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Mac Mouse Fix Helper-Bridging-Header.h"; sourceTree = "<group>"; };
 		4FFBC5A7266977CA001D389B /* DoubleExponentialSmoother.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DoubleExponentialSmoother.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -6415,6 +6428,16 @@
 			path = FromXcodeLocalizationScreenshotFix;
 			sourceTree = "<group>";
 		};
+		4F58FE0D2C56EA7E00926A00 /* Tests */ = {
+			isa = PBXGroup;
+			children = (
+				4F58FE042C56EA1300926A00 /* TestLogging.h */,
+				4F58FE052C56EA1300926A00 /* TestLogging.m */,
+				4F58FE092C56EA2F00926A00 /* TestLogging.swift */,
+			);
+			path = Tests;
+			sourceTree = "<group>";
+		};
 		4F6F67A128A8188000C6C40F /* ButtonTab */ = {
 			isa = PBXGroup;
 			children = (
@@ -7159,7 +7182,7 @@
 			children = (
 				4FF6653325F2C7B000689B77 /* Constants.h */,
 				4FCEDC91292D765600E7DA2A /* Constants.swift */,
-				4FFBC56E2667DC76001D389B /* PrefixHeader */,
+				4FFBC56E2667DC76001D389B /* Logging */,
 				4FE78C412C5027A800C54103 /* DisableSwiftBridging */,
 				4F44FF012606D6FD00926A5E /* MessagePort */,
 				4FF6652C25F2C7B000689B77 /* HelperServices */,
@@ -7647,14 +7670,15 @@
 			path = Strings;
 			sourceTree = "<group>";
 		};
-		4FFBC56E2667DC76001D389B /* PrefixHeader */ = {
+		4FFBC56E2667DC76001D389B /* Logging */ = {
 			isa = PBXGroup;
 			children = (
-				4FFBC5732667DCE4001D389B /* PrefixHeader.pch */,
-				4FBE18BA2666EC4A002A6771 /* WannabePrefixHeader.h */,
-				4F8FC13E275DC81900887A0C /* PrefixSwift.swift */,
+				4FE1A1B72C56A50100CE3347 /* Logging.h */,
+				4FE1A1B82C56A50100CE3347 /* Logging.m */,
+				4F58FDFF2C56DE9B00926A00 /* Logging.swift */,
+				4F58FE0D2C56EA7E00926A00 /* Tests */,
 			);
-			path = PrefixHeader;
+			path = Logging;
 			sourceTree = "<group>";
 		};
 		4FFBC5B126697E8D001D389B /* Smoothing */ = {
@@ -7921,8 +7945,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4F58FE082C56EA1300926A00 /* TestLogging.m in Sources */,
 				4F18464D2C533B5900D5E835 /* BidirectionalMap.m in Sources */,
+				4FE1A1BB2C56A50100CE3347 /* Logging.m in Sources */,
+				4F58FE0A2C56EA2F00926A00 /* TestLogging.swift in Sources */,
 				4FAA3DBC2C56802E00CBA413 /* XCUIElement+Swizzle.m in Sources */,
+				4F58FE032C56E65900926A00 /* AnnotationUtility.m in Sources */,
 				4F8B01AC2C348A3A00F3AF8D /* LocalizationScreenshots.swift in Sources */,
 				4FE78C342C4FFA2F00C54103 /* TreeNode.h in Sources */,
 				4FE78C352C4FFA2F00C54103 /* TreeNode.m in Sources */,
@@ -7939,6 +7967,7 @@
 				4F909D2828A0C3D2009349A2 /* ResizingTabWindow.swift in Sources */,
 				4FA40CF728A0CCCA00499E53 /* Curve.swift in Sources */,
 				4FF6655225F2C7B000689B77 /* NSDictionary+Additions.m in Sources */,
+				4F58FE0B2C56EA2F00926A00 /* TestLogging.swift in Sources */,
 				4FAA3DAC2C55E94600CBA413 /* IBUtility.m in Sources */,
 				4F4150662927B6A40040BA7D /* AddField.swift in Sources */,
 				4FDE75A728B25FB300662314 /* NSAttributedString+Extensions.swift in Sources */,
@@ -7947,6 +7976,7 @@
 				4F97E001298732E500012BAC /* LocalizationUtility.m in Sources */,
 				4F0C00432C53273200C5D843 /* BidirectionalMap.m in Sources */,
 				4F4C73FE2C4FB5D2001D97C3 /* AnnotationUtility.m in Sources */,
+				4F58FE002C56DE9B00926A00 /* Logging.swift in Sources */,
 				4F39BC4A263B179200FDF692 /* AppState.m in Sources */,
 				4FBC943B260F8AA60062F186 /* MASShortcut.m in Sources */,
 				4F909D3B28A0C3D2009349A2 /* ModCaptureDeleteButton.swift in Sources */,
@@ -7961,7 +7991,6 @@
 				4F909D2228A0C3D2009349A2 /* ScrollTabController.swift in Sources */,
 				4F6F67A028A8141800C6C40F /* ButtonTabController.swift in Sources */,
 				4FF6654E25F2C7B000689B77 /* SharedUtility.m in Sources */,
-				4F8FC13F275DC81900887A0C /* PrefixSwift.swift in Sources */,
 				4F8CE7012617738A00D70A76 /* AppTranslocationManager.m in Sources */,
 				4F4C73D72C4FB3FA001D97C3 /* LocalizedStringAnnotation.m in Sources */,
 				4FF665FE25F2C92700689B77 /* main.m in Sources */,
@@ -8024,6 +8053,7 @@
 				4FC55B982915652C00663B24 /* AlertCreator.m in Sources */,
 				4FAD391426702CD4000CF4FA /* DerivedProperty.swift in Sources */,
 				4F909D2928A0C3D2009349A2 /* TabViewControllerDisabling.swift in Sources */,
+				4F58FE062C56EA1300926A00 /* TestLogging.m in Sources */,
 				4FCEDC92292D765600E7DA2A /* Constants.swift in Sources */,
 				4FA40D0E28A0D87200499E53 /* DynamicSystemAnimator.swift in Sources */,
 				4FB4FA202611DD6000806DDD /* KeyCaptureScrollView.m in Sources */,
@@ -8056,6 +8086,7 @@
 				4F909D3228A0C3D2009349A2 /* FadeAnimations.swift in Sources */,
 				4FA1FD8128A85FD100D1C8EE /* RemapTableElements.swift in Sources */,
 				4F7AB0552606698A0008055E /* UIStrings.m in Sources */,
+				4FE1A1BA2C56A50100CE3347 /* Logging.m in Sources */,
 				4FD9A7D128BA2A810006DF4B /* SecureStorage.swift in Sources */,
 				4F909D3028A0C3D2009349A2 /* ReactiveAnimatorProxy.swift in Sources */,
 				4FA40CF828A0CCCA00499E53 /* TestAccelerationCurve.swift in Sources */,
@@ -8098,6 +8129,7 @@
 				4FF6669625F2C93A00689B77 /* Actions.m in Sources */,
 				4FA9733B293F7643002B5C24 /* ScrollSpeedupCurve.swift in Sources */,
 				4FF0254E27AFF90800923107 /* ModifiedDragOutputThreeFingerSwipe.m in Sources */,
+				4F58FE022C56DE9B00926A00 /* Logging.swift in Sources */,
 				4F44FF042606D73D00926A5E /* MFMessagePort.m in Sources */,
 				4F0CFFED2C518CF600C5D843 /* MFDataClassImplementations.m in Sources */,
 				4F1D7F4728A4639800253407 /* MenuBarItem.swift in Sources */,
@@ -8105,6 +8137,7 @@
 				4FFA4E3628B795F30062A1FE /* LicenseUtility.swift in Sources */,
 				4F8B7E6727B4E32600598B65 /* TouchAnimatorBase.swift in Sources */,
 				4FA0681A291B2C4C00949B5F /* Shorthands.m in Sources */,
+				4F58FE0C2C56EA2F00926A00 /* TestLogging.swift in Sources */,
 				4FF6669325F2C93A00689B77 /* TouchSimulator.m in Sources */,
 				4FFA4E4A28B7D3750062A1FE /* NSView+Extensions.swift in Sources */,
 				4F9E78E3268663B1002C2309 /* ExponentialSmoother.swift in Sources */,
@@ -8159,9 +8192,10 @@
 				4FF6655125F2C7B000689B77 /* NSDictionary+Additions.m in Sources */,
 				4FF6668525F2C93A00689B77 /* Modifiers.m in Sources */,
 				4FD860CC266EF55A004F76C8 /* ScrollConfig.swift in Sources */,
-				4F8FC140275DC81900887A0C /* PrefixSwift.swift in Sources */,
+				4FE1A1B92C56A50100CE3347 /* Logging.m in Sources */,
 				4FFA4E4828B7D2E40062A1FE /* NSShadow+Extensions.swift in Sources */,
 				4F2CC58727B8D2300084AACE /* HybridCurves.swift in Sources */,
+				4F58FE072C56EA1300926A00 /* TestLogging.m in Sources */,
 				4F5C2F802885C5D0001B9B8A /* HelperState.swift in Sources */,
 				4F8A8DAD287EEF6200786BCC /* IOHIDAccelerationTableBridge.mm in Sources */,
 				4F3A40CB266C44D100436821 /* DisplayLink.m in Sources */,
@@ -8308,8 +8342,11 @@
 				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu17;
 				GCC_PREPROCESSOR_DEFINITIONS = (
-					"$(inherited)",
 					"IS_XC_TEST=1",
+					"REPLACE_COCOALUMBERJACK=1",
+					"$(inherited)",
+					"
+",
 				);
 				GENERATE_INFOPLIST_FILE = YES;
 				MACOSX_DEPLOYMENT_TARGET = 14.5;
@@ -8340,8 +8377,9 @@
 				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu17;
 				GCC_PREPROCESSOR_DEFINITIONS = (
-					"$(inherited)",
 					"IS_XC_TEST=1",
+					"REPLACE_COCOALUMBERJACK=1",
+					"$(inherited)",
 				);
 				GENERATE_INFOPLIST_FILE = YES;
 				MACOSX_DEPLOYMENT_TARGET = 14.5;

@@ -15,7 +15,6 @@
 
 import Foundation
 import Markdown
-import CocoaLumberjackSwift
 
 @objc class MarkdownParser: NSObject {
  

@@ -9,7 +9,7 @@
 
 #import "MFSegmentedControl.h"
 #import <Carbon/Carbon.h>
-#import "WannabePrefixHeader.h"
+#import "Logging.h"
 
 @interface MFSegmentedControl ()
 @property (nonatomic) IBInspectable NSNumber *keyEquivKC;

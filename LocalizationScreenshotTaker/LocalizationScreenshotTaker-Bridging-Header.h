@@ -14,11 +14,11 @@
 #ifndef AppUITests_Bridging_Header_h
 #define AppUITests_Bridging_Header_h
 
+#import "Logging.h"
 #import "TreeNode.h"
 #import "NSString+Steganography.h"
 #import "NSString+Additions.h"
 #import "DisableSwiftBridging.h"
 #import "MFDataClass.h"
-#import "IntrospectionUtility.h"
 
 #endif /* AppUITests_Bridging_Header_h */

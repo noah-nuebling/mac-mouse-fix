@@ -16,6 +16,7 @@
 #import "Modifiers.h"
 #import "Remap.h"
 #import "Constants.h"
+#import "Logging.h"
 
 @import Carbon;
 

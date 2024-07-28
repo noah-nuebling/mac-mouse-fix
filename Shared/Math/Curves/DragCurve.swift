@@ -7,7 +7,6 @@
 // --------------------------------------------------------------------------
 //
 
-import CocoaLumberjackSwift
 
 /**
  Models the the effects of drag forces. Drag forces are like friction forces, but magnitude depends on the current speed

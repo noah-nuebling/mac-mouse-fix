@@ -8,7 +8,6 @@
 //
 
 import Foundation
-import CocoaLumberjackSwift
 
 @objc class ButtonTabController: NSViewController, NSPopoverDelegate {
     

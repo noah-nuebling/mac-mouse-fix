@@ -13,6 +13,7 @@
 #import "SharedUtility.h"
 #import "NSAttributedString+Additions.h"
 #import "NSString+Additions.h"
+#import "Logging.h"
 
 @implementation LocalizedStringAnnotation
 

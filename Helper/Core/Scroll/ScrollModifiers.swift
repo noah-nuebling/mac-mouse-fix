@@ -8,7 +8,6 @@
 //
 
 import Cocoa
-import CocoaLumberjackSwift
 
 
 extension MFScrollModificationResult: Hashable {

@@ -25,6 +25,7 @@
 #import "SharedUtility.h"
 #import <Foundation/Foundation.h>
 #import "HelperUtility.h"
+#import "Logging.h"
 
 @implementation TouchSimulator
 

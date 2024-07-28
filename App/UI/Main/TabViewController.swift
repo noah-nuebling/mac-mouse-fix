@@ -10,7 +10,6 @@
 
 import Cocoa
 import SnapKit
-import CocoaLumberjackSwift
 
 class TabViewController: NSTabViewController {
     

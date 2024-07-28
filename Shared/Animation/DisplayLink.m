@@ -14,10 +14,10 @@
 
 #import "DisplayLink.h"
 #import <Cocoa/Cocoa.h>
-#import "WannabePrefixHeader.h"
 #import "NSScreen+Additions.h"
 #import "SharedUtility.h"
 #import "IOUtility.h"
+#import "Logging.h"
 
 #if IS_HELPER
 #import "HelperUtility.h"

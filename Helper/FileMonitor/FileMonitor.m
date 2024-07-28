@@ -15,6 +15,7 @@
 #import "Constants.h"
 #import "SharedUtility.h"
 #import "MFMessagePort.h"
+#import "Logging.h"
 
 @implementation FileMonitor
 

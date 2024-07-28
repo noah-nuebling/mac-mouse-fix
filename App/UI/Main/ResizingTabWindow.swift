@@ -6,7 +6,6 @@
 //
 
 import Cocoa
-import CocoaLumberjackSwift
 
 @objc class ResizingTabWindow: NSWindow {
     

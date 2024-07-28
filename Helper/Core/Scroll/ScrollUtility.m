@@ -13,6 +13,7 @@
 #import "IOHIDEventTypes.h"
 #import "SharedUtility.h"
 #import "ModificationUtility.h"
+#import "Logging.h"
 
 @implementation ScrollUtility
 

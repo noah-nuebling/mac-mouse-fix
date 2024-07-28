@@ -15,7 +15,6 @@
 ///     Switft does some weird bridging when when we call `state.add(NSDictionary(dictionaryLiteral:)`, that should be much faster in ObjC
 
 import Cocoa
-import CocoaLumberjackSwift
 
 private struct ButtonState: Equatable {
     var button: ButtonNumber

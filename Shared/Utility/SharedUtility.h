@@ -12,7 +12,6 @@
 #import "Constants.h"
 
 // Import WannabePrefixHeader.h here so we don't have to manually include it in as many places (not sure if bad practise)
-#import "WannabePrefixHeader.h"
 #import "Shorthands.h"
 #import <CoreVideo/CoreVideo.h>
 
@@ -60,7 +59,6 @@ int8_t sign(double x);
 + (NSString *)currentDispatchQueueDescription;
 + (void)printInvocationCountWithId:(NSString *)strId;
 + (BOOL)button:(NSNumber * _Nonnull)button isPartOfModificationPrecondition:(NSDictionary *)modificationPrecondition;
-+ (void)setupBasicCocoaLumberjackLogging;
 + (NSString *)binaryRepresentation:(unsigned int)value;
 + (void)resetDispatchGroupCount:(dispatch_group_t)group;
 

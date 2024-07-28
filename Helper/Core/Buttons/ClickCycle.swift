@@ -26,7 +26,6 @@
 
 /// Imports
 import Cocoa
-import CocoaLumberjackSwift
 
 /// Typedefs
 enum ClickCycleTriggerPhase: Int {

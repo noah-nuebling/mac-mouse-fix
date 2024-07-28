@@ -13,7 +13,6 @@
 #import "ToastNotificationController.h"
 #import "MFMessagePort.h"
 //#import "CaptureNotificationCreator.h" 
-#import "WannabePrefixHeader.h"
 #import "Mac_Mouse_Fix-Swift.h"
 
 @interface AuthorizeAccessibilityView ()

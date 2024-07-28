@@ -26,7 +26,6 @@
 /// - `[x]` Doesn't increment daysOfUse when using Trackpad
 
 import Cocoa
-import CocoaLumberjackSwift
 
 @objc class TrialCounter: NSObject {
     

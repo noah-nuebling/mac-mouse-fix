@@ -11,9 +11,9 @@
 #import "HelperUtility.h"
 #import "Constants.h"
 #import "ModificationUtility.h"
-#import "WannabePrefixHeader.h"
 #import "Locator.h"
 #import "SharedUtility.h"
+#import "Logging.h"
 
 @implementation HelperUtility
 

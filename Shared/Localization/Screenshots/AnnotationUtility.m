@@ -14,6 +14,7 @@
 #import "dlfcn.h"
 #import "objc/runtime.h"
 #import "mach-o/dyld.h"
+#import "Logging.h"
 
 ///
 /// Utility functions copied over from the xcode-localization-screenshot-fix repo

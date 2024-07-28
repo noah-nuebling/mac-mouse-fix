@@ -11,7 +11,7 @@
 /// Implementing this in objc because Swift generics can't be used in objc, but the other way around works
 
 #import "CircularBuffer.h"
-#import "WannabePrefixHeader.h"
+#import "Logging.h"
 
 @implementation CircularBuffer {
     /// Static vars

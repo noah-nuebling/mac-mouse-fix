@@ -8,8 +8,8 @@
 //
 
 #import "VectorUtility.h"
-#import "WannabePrefixHeader.h"
 #import "SharedUtility.h"
+#import "Logging.h"
 
 @implementation VectorUtility
 

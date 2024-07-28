@@ -15,7 +15,6 @@
 #import "ScrollUtility.h"
 #import "VectorUtility.h"
 #import "HelperUtility.h"
-#import "WannabePrefixHeader.h"
 #import "ScrollAnalyzer.h"
 #import "ScrollConfigObjC.h"
 #import <Cocoa/Cocoa.h>

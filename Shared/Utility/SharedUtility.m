@@ -10,10 +10,10 @@
 #import "SharedUtility.h"
 #import "Locator.h"
 #import "Config.h"
-#import "Config.h"
 #import "SharedUtility.h"
 @import AppKit.NSScreen;
 #import <objc/runtime.h>
+#import "Logging.h"
 
 @implementation SharedUtility
 
@@ -652,34 +652,7 @@ int8_t sign(double x) {
     return (0 < x) - (x < 0);
 }
 
-+ (void)setupBasicCocoaLumberjackLogging {
-    
-    /// Start logging to console and to Xcode output
-    /// Call this at the entry point of an app, so that DDLog statements work.
-    
-    /// Need to enable Console.app > Action > Include Info Messages & Include Debug Messages to see these messages in Console. See https://stackoverflow.com/questions/65205310/ddoslogger-sharedinstance-logging-only-seems-to-log-error-level-logging-in-conso
-    /// Will have to update instructions on Mac Mouse Fix Feedback Assistant when this releases.
-    
-    [DDLog addLogger:DDOSLogger.sharedInstance]; /// Use os_log // This should log to console and terminal and be faster than the old methods
-    
-    /// Set logging format
-    //    DDOSLogger.sharedInstance.logFormatter = DDLogFormatter.
-    
-    if ((NO) /*runningPreRelease()*/) {
-        
-        /// Setup logging  file
-        /// Copied this from https://github.com/CocoaLumberjack/CocoaLumberjack/blob/master/Documentation/GettingStarted.md
-        /// Haven't thought about whether the exact settings make sense.
-        
-        DDFileLogger *fileLogger = [[DDFileLogger alloc] init];
-        fileLogger.rollingFrequency = 60 * 60 * 24; /// 24 hour rolling
-        fileLogger.logFileManager.maximumNumberOfLogFiles = 2;
-        
-        [DDLog addLogger:fileLogger];
-        
-        DDLogInfo(@"Logging to directory: \'%@\'", fileLogger.logFileManager.logsDirectory);
-    }
-}
+
 
 + (NSString *)binaryRepresentation:(unsigned int)value {
     

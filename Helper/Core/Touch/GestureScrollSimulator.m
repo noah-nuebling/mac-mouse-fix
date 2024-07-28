@@ -16,7 +16,6 @@
 #import "VectorSubPixelator.h"
 #import "ModificationUtility.h"
 #import "Mac_Mouse_Fix_Helper-Swift.h"
-#import "WannabePrefixHeader.h"
 
 /**
  This generates fliud scroll events containing gesture data similar to the Apple Trackpad or Apple Magic Mouse driver.

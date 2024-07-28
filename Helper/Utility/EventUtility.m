@@ -7,7 +7,6 @@
 // --------------------------------------------------------------------------
 //
 
-#import "WannabePrefixHeader.h"
 
 #import "EventUtility.h"
 #import "MFHIDEventImports.h"
@@ -15,6 +14,7 @@
 #import "SharedUtility.h"
 #import "CGEventHIDEventBridge.h"
 #import "VectorUtility.h"
+#import "Logging.h"
 
 @implementation EventUtility
 
