@@ -50,6 +50,16 @@ DQ
                         <action selector="done:" target="-2" id="FQ1-f2-RTR"/>
                     </connections>
                 </button>
+                <customView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="8lq-H5-oKf" customClass="InvisibleKeyResponder">
+                    <rect key="frame" x="20" y="10" width="162" height="30"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <userDefinedRuntimeAttributes>
+                        <userDefinedRuntimeAttribute type="string" keyPath="keyEquivalent" value="escape"/>
+                    </userDefinedRuntimeAttributes>
+                    <connections>
+                        <action selector="done:" target="-2" id="GJn-jA-eMA"/>
+                    </connections>
+                </customView>
             </subviews>
             <constraints>
                 <constraint firstItem="5ry-fl-BuF" firstAttribute="top" secondItem="Hz6-mo-xeY" secondAttribute="top" constant="20" id="3dl-Ll-km1"/>
@@ -61,7 +71,7 @@ DQ
                 <constraint firstAttribute="bottom" secondItem="GPK-st-8lU" secondAttribute="bottom" constant="20" id="oLV-pt-L8D"/>
                 <constraint firstItem="5ry-fl-BuF" firstAttribute="leading" secondItem="Hz6-mo-xeY" secondAttribute="leading" constant="20" id="tEz-Qq-MUW"/>
             </constraints>
-            <point key="canvasLocation" x="297.5" y="206"/>
+            <point key="canvasLocation" x="297" y="206"/>
         </customView>
     </objects>
 </document>

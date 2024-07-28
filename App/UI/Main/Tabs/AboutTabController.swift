@@ -43,8 +43,10 @@ class AboutTabController: NSViewController {
         alert.messageText = NSLocalizedString("mail-alert.title", comment: "First draft: Write an Email?")
         alert.informativeText = NSLocalizedString("mail-alert.body", comment: "First draft: I read and appreciate all emails, even though I can't respond to all")
 //        alert.showsSuppressionButton = true
-        alert.addButton(withTitle: NSLocalizedString("mail-alert.send", comment: "First draft: Write Email"))
-        alert.addButton(withTitle: NSLocalizedString("mail-alert.back", comment: "First draft: Back"))
+        let sendButton = alert.addButton(withTitle: NSLocalizedString("mail-alert.send", comment: "First draft: Write Email"))
+        let backButton = alert.addButton(withTitle: NSLocalizedString("mail-alert.back", comment: "First draft: Back"))
+        sendButton.keyEquivalent = IBUtility.keyChar(forLiteral: "return")
+        backButton.keyEquivalent = IBUtility.keyChar(forLiteral: "escape")
         
         /// Set mail icon
         

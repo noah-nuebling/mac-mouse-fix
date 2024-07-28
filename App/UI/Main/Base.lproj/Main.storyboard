@@ -894,17 +894,17 @@ You can also *Double Click*, *Click and Drag* and [more]().</string>
                         <outlet property="view" destination="JEf-5U-AJf" id="jQD-XG-Ikk"/>
                     </connections>
                 </customObject>
-                <popover id="Cts-Zb-d93">
+                <popover id="Cts-Zb-d93" userLabel="Restore Defaults Popover">
                     <connections>
                         <outlet property="contentViewController" destination="f69-0B-qE6" id="8Kp-7C-UKC"/>
                     </connections>
                 </popover>
-                <viewController id="f69-0B-qE6" userLabel="Popover View Controller">
+                <viewController id="f69-0B-qE6" userLabel="Restore Defaults Popover Controller">
                     <connections>
                         <outlet property="view" destination="FHF-Ki-DbV" id="eZy-xK-tEo"/>
                     </connections>
                 </viewController>
-                <customView misplaced="YES" id="FHF-Ki-DbV" userLabel="Popover Content">
+                <customView misplaced="YES" id="FHF-Ki-DbV" userLabel="Restore Defaults Popover Content">
                     <rect key="frame" x="0.0" y="0.0" width="447" height="122"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <subviews>
