@@ -187,6 +187,7 @@
 		4FAA3DA92C55DF4F00CBA413 /* InvisibleKeyResponder.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FAA3DA72C55DF4F00CBA413 /* InvisibleKeyResponder.m */; };
 		4FAA3DAC2C55E94600CBA413 /* IBUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FAA3DAB2C55E94600CBA413 /* IBUtility.m */; };
 		4FAA3DAD2C55E94600CBA413 /* IBUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FAA3DAB2C55E94600CBA413 /* IBUtility.m */; };
+		4FAA3DBC2C56802E00CBA413 /* XCUIElement+Swizzle.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FAA3DBB2C56802E00CBA413 /* XCUIElement+Swizzle.m */; };
 		4FAA5601293A41AF00BA782C /* BezierCappedAccelerationCurve.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FAA5600293A41AF00BA782C /* BezierCappedAccelerationCurve.swift */; };
 		4FAA5602293A41AF00BA782C /* BezierCappedAccelerationCurve.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FAA5600293A41AF00BA782C /* BezierCappedAccelerationCurve.swift */; };
 		4FAD391426702CD4000CF4FA /* DerivedProperty.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FD860A9266EC24E004F76C8 /* DerivedProperty.swift */; };
@@ -2155,6 +2156,7 @@
 		4FAA3DA72C55DF4F00CBA413 /* InvisibleKeyResponder.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = InvisibleKeyResponder.m; sourceTree = "<group>"; };
 		4FAA3DAA2C55E94600CBA413 /* IBUtility.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IBUtility.h; sourceTree = "<group>"; };
 		4FAA3DAB2C55E94600CBA413 /* IBUtility.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = IBUtility.m; sourceTree = "<group>"; };
+		4FAA3DBB2C56802E00CBA413 /* XCUIElement+Swizzle.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "XCUIElement+Swizzle.m"; sourceTree = "<group>"; };
 		4FAA5600293A41AF00BA782C /* BezierCappedAccelerationCurve.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BezierCappedAccelerationCurve.swift; sourceTree = "<group>"; };
 		4FB4F9FC260FDBC800806DDD /* RemapTableUtility.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RemapTableUtility.h; sourceTree = "<group>"; };
 		4FB4F9FD260FDBC800806DDD /* RemapTableUtility.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RemapTableUtility.m; sourceTree = "<group>"; };
@@ -6738,6 +6740,7 @@
 			isa = PBXGroup;
 			children = (
 				4F8B01AB2C348A3A00F3AF8D /* LocalizationScreenshots.swift */,
+				4FAA3DBB2C56802E00CBA413 /* XCUIElement+Swizzle.m */,
 				4F0C003D2C52BBA600C5D843 /* LocalizationScreenshotTaker.entitlements */,
 				4FE78C382C4FFB0E00C54103 /* LocalizationScreenshotTaker-Bridging-Header.h */,
 			);
@@ -7156,8 +7159,8 @@
 			children = (
 				4FF6653325F2C7B000689B77 /* Constants.h */,
 				4FCEDC91292D765600E7DA2A /* Constants.swift */,
-				4FE78C412C5027A800C54103 /* DisableSwiftBridging */,
 				4FFBC56E2667DC76001D389B /* PrefixHeader */,
+				4FE78C412C5027A800C54103 /* DisableSwiftBridging */,
 				4F44FF012606D6FD00926A5E /* MessagePort */,
 				4FF6652C25F2C7B000689B77 /* HelperServices */,
 				4FDE757C28B0E35E00662314 /* License */,
@@ -7919,6 +7922,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				4F18464D2C533B5900D5E835 /* BidirectionalMap.m in Sources */,
+				4FAA3DBC2C56802E00CBA413 /* XCUIElement+Swizzle.m in Sources */,
 				4F8B01AC2C348A3A00F3AF8D /* LocalizationScreenshots.swift in Sources */,
 				4FE78C342C4FFA2F00C54103 /* TreeNode.h in Sources */,
 				4FE78C352C4FFA2F00C54103 /* TreeNode.m in Sources */,

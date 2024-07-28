@@ -822,7 +822,7 @@ You can also *Double Click*, *Click and Drag* and [more]().</string>
                                                 <attributedString key="userComments">
                                                     <fragment content="Buttons &gt; Options... Button"/>
                                                 </attributedString>
-                                                <accessibility identifier="buttonsOptions"/>
+                                                <accessibility identifier="axButtonsOptionsButton"/>
                                             </button>
                                             <button horizontalHuggingPriority="1000" verticalHuggingPriority="750" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="JHB-lg-H8e">
                                                 <rect key="frame" x="402" y="7" width="146" height="32"/>
@@ -830,7 +830,7 @@ You can also *Double Click*, *Click and Drag* and [more]().</string>
                                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                                     <font key="font" metaFont="system"/>
                                                 </buttonCell>
-                                                <accessibility identifier="buttonsRestoreDefaults"/>
+                                                <accessibility identifier="axButtonsRestoreDefaultsButton"/>
                                                 <connections>
                                                     <action selector="restoreDefaults:" target="d9S-X9-qM1" id="7oJ-cm-HM8"/>
                                                 </connections>
@@ -995,6 +995,7 @@ your __Logitech M720 Triathlon__.&gt;</string>
                                                         </items>
                                                     </menu>
                                                 </popUpButtonCell>
+                                                <accessibility identifier="axScrollingSmoothnessButton"/>
                                             </popUpButton>
                                         </subviews>
                                         <visibilityPriorities>
@@ -1134,6 +1135,7 @@ your __Logitech M720 Triathlon__.&gt;</string>
                                                         </items>
                                                     </menu>
                                                 </popUpButtonCell>
+                                                <accessibility identifier="axScrollingSpeedButton"/>
                                             </popUpButton>
                                         </subviews>
                                         <visibilityPriorities>
@@ -2072,6 +2074,7 @@ System Preferences &gt; Mouse &gt; Tracking speed </string>
                                                                 <integer key="value" value="30"/>
                                                             </userDefinedRuntimeAttribute>
                                                         </userDefinedRuntimeAttributes>
+                                                        <accessibility identifier="axAboutSendEmailButton"/>
                                                         <connections>
                                                             <action selector="sendEmail:" target="buH-zX-xXu" id="Tio-YK-38L"/>
                                                         </connections>

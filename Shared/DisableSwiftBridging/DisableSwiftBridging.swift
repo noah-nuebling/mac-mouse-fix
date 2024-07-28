@@ -17,7 +17,7 @@ import Foundation
 ///  -> Now you can call the ObjC method from Swift using foundation types as arguments directly, instead of being forced to use native Swift types which are then autobridged.
 ///
 /// Note:
-/// - There was an older, more convoluted approach using the `MF_SWIFT_HIDDEN` macro and the `__SWIFT_UNBRIDGED_` method prefix. We removed that in commit `83b93ad3f828764fa4d0e915857adf4623b4b155`.
+/// - There was an older, more convoluted approach using the `MF_SWIFT_HIDDEN` macro and the `__SWIFT_UNBRIDGED_` method name prefix. We removed that in commit `83b93ad3f828764fa4d0e915857adf4623b4b155`.
 /// - **TODO:** Test if the new approach actually prevents bridging (Check performance against the old approach)
 ///
 

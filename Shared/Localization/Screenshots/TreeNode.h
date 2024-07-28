@@ -50,7 +50,7 @@ typedef NS_ENUM(NSInteger, MFTreeTraversal) {
 @property (nullable, readonly, weak) TreeNode<T> *parentNode;
 
 /// Tree Factories
-+ (TreeNode<id> *)treeWithKVCObject:(id)kvcObject childrenKey:(NSString *)childrenKey;
++ (TreeNode<T> *)treeWithKVCObject:(T)kvcObject childrenKey:(NSString *)childrenKey;
 
 /// Convenience methods
 - (NSArray <TreeNode<T> *> *)siblings;

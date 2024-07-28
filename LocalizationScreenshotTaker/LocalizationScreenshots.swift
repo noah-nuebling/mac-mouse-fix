@@ -123,7 +123,7 @@ final class LocalizationScreenshotClass: XCTestCase {
         let window = app!.windows.firstMatch
         
         /// Find enable toggle
-        let switcherino = window.switches["mfidEnableToggle"]
+        let switcherino = window.switches["axEnableToggle"]
         let switcherinoExists = switcherino.waitForExistence(timeout: 10)
         XCTAssertTrue(switcherinoExists)
         
@@ -147,54 +147,89 @@ final class LocalizationScreenshotClass: XCTestCase {
         let toolbarButtons = window.toolbars.firstMatch.children(matching: .button) /// `window.toolbarButtons` doesn't work for some reason.
 
         ///
-        /// Capture GeneralTab
-        ///
-        toolbarButtons["general"].click() /// Need to click twice so that the test runner properly waits for the animation to finish
-        toolbarButtons["general"].click()
-        result.append(takeLocalizationScreenshot(of: window, name: "GeneralTab"))
-
-        ///
-        /// Capture ButtonsTab
+        /// Screenshot ButtonsTab
         ///
         toolbarButtons["buttons"].click()
         toolbarButtons["buttons"].click()
         result.append(takeLocalizationScreenshot(of: window, name: "ButtonsTab"))
         
-        /// Click buttons
-        ///     (The two in the bottom left and bottom right)
-        for (i, button) in window.buttons.matching(NSPredicate(format: "identifier IN { 'buttonsOptions', 'buttonsRestoreDefaults' }")).allElementsBoundByIndex.enumerated() {
-            button.click()
-            result.append(takeLocalizationScreenshot(of: window, name: "ButtonsTab.button.\(i)"))
-            window.typeKey(.escape, modifierFlags: [])
-        }
-        
-        /// Click popupButtons
+        /// Screenshot menus
         ///     (Which let you pick the action in the remaps table)
         for (i, popupButton) in window.popUpButtons.allElementsBoundByIndex.enumerated() {
             popupButton.click()
-            result.append(takeLocalizationScreenshot(of: window, name: "ButtonsTab.popUpButton.\(i)"))
-            window.typeKey(.escape, modifierFlags: [])
+            let menu = popupButton.menus.firstMatch
+            result.append(takeLocalizationScreenshot(of: menu, name: "ButtonsTab.menu.\(i)"))
+            hitEscape()
         }
         
-        ///
-        /// Capture ScrollingTab
-        ///
-        toolbarButtons["scrolling"].click()
-        toolbarButtons["scrolling"].click()
-        result.append(takeLocalizationScreenshot(of: window, name: "ScrollingTab"))
+        /// Screenshot sheets
+        ///     (The ones invoked by the two buttons in the bottom left and bottom right)
+        for (i, button) in window.buttons.matching(NSPredicate(format: "identifier IN %@", ["axButtonsOptionsButton", "axButtonsRestoreDefaultsButton"])).allElementsBoundByIndex.enumerated() {
+            button.click()
+            result.append(takeLocalizationScreenshot(of: window, name: "ButtonsTab.sheet.\(i)"))
+            hitEscape()
+        }
         
-        /// Capture PointerTab
-//        toolbarButtons["pointer"].click()
-//        result.append(takeLocalizationScreenshot(of: window, name: "PointerTab"))
+        /// TEST
+        return result
         
         ///
-        /// Capture AboutTab
+        /// Screenshot AboutTab
         ///
         toolbarButtons["about"].click()
         toolbarButtons["about"].click()
         result.append(takeLocalizationScreenshot(of: window, name: "AboutTab"))
         
+        /// Screenshot alerts
+        window.staticTexts["axAboutSendEmailButton"].firstMatch.click()
+        result.append(takeLocalizationScreenshot(of: window, name: "AboutTab.emailAlert"))
+        hitEscape()
+        
+        ///
+        /// Screenshot ScrollingTab
+        ///
+        toolbarButtons["scrolling"].click()
+        toolbarButtons["scrolling"].click()
+        result.append(takeLocalizationScreenshot(of: window, name: "ScrollingTab"))
+        
+        /// Screenshot states
+        for (i, popUpButton) in window.popUpButtons.allElementsBoundByIndex.enumerated() {
+            
+            /// Get menu items
+            popUpButton.click()
+            let menuItems = popUpButton.menuItems.allElementsBoundByIndex.enumerated()
+            hitEscape()
+            
+            /// Click menu items
+            for (j, menuItem) in menuItems {
+                popUpButton.click()
+                if (!menuItem.isHittable || !menuItem.isEnabled) {
+                    hitEscape()
+                    continue
+                }
+                menuItem.click()
+                result.append(takeLocalizationScreenshot(of: window, name: "ScrollingTab.state.\(i).\(j)"))
+            }
+        }
+        /// Screenshot menus
+        for (i, popUpButton) in window.popUpButtons.allElementsBoundByIndex.enumerated() {
+            popUpButton.click()
+            let menu = popUpButton.menus.firstMatch
+            result.append(takeLocalizationScreenshot(of: menu, name: "ScrollingTab.menu.\(i)"))
+            hitEscape()
+            
+        }
+        
+        ///
+        /// Screenshot GeneralTab
+        ///
+        toolbarButtons["general"].click() /// Need to click twice so that the test runner properly waits for the animation to finish
+        toolbarButtons["general"].click()
+        result.append(takeLocalizationScreenshot(of: window, name: "GeneralTab"))
+        
+        ///
         /// Return
+        ///
         return result
     }
     
@@ -428,4 +463,12 @@ final class LocalizationScreenshotClass: XCTestCase {
         }
     }
     
+    ///
+    /// Helper
+    ///
+    
+    
+    func hitEscape() {
+        app?.typeKey(.escape, modifierFlags: [])
+    }
 }

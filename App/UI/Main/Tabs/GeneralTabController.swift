@@ -70,7 +70,7 @@ class GeneralTabController: NSViewController {
         
         /// Add accessibility identifier for NSSwitch
         ///     Note: We use this from the XCUI tests to take localization screenshots.
-        self.enableToggle.setAccessibilityIdentifier("mfidEnableToggle")
+        self.enableToggle.setAccessibilityIdentifier("axEnableToggle")
         
         /// 
         /// Sync enabledToggle with Helper enabledState

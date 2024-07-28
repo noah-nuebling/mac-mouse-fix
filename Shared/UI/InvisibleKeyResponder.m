@@ -25,6 +25,7 @@
 /// See Apple's article  EventOverview/EventArchitecture for more on keyEquivalents and how they interact with the responder chain.
 ///
 /// TODO:
+///     (Update: Everything done)
 ///
 /// 1. Go through all the .xib files and programatically created sheets, windows, etc, and use this to make them dismissable with `escape` (That's what we built this for.) (At least make sheets and alerts dismissable, not sure about toasts and stuff.)
 ///     - I can think of the following that we should update:

@@ -19,5 +19,6 @@
 #import "NSString+Additions.h"
 #import "DisableSwiftBridging.h"
 #import "MFDataClass.h"
+#import "IntrospectionUtility.h"
 
 #endif /* AppUITests_Bridging_Header_h */
