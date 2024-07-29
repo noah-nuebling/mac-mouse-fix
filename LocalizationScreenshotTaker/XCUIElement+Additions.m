@@ -7,9 +7,9 @@
 // --------------------------------------------------------------------------
 //
 
-#import "XCUIElement+Swizzle.h"
+#import "XCUIElement+Additions.h"
 
-@implementation XCUIElement (Swizzle)
+@implementation XCUIElement (MFStuff)
 
 + (void)load {
     

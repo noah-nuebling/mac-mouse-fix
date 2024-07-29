@@ -168,7 +168,7 @@ final class LocalizationScreenshotClass: XCTestCase {
         /// Screenshot ButtonsTab
         ///
         toolbarButtons["buttons"].click()
-        toolbarButtons["buttons"].click()
+        coolWait()
         result.append(takeLocalizationScreenshot(of: window, name: "ButtonsTab"))
         
         /// Screenshot menus
@@ -184,6 +184,7 @@ final class LocalizationScreenshotClass: XCTestCase {
         ///     (The ones invoked by the two buttons in the bottom left and bottom right)
         for (i, button) in window.buttons.matching(NSPredicate(format: "identifier IN %@", ["axButtonsOptionsButton", "axButtonsRestoreDefaultsButton"])).allElementsBoundByIndex.enumerated() {
             button.click()
+            coolWait() /// Not necessary. Sheets have a native animation where XCUITest automatically correctly 
             result.append(takeLocalizationScreenshot(of: window, name: "ButtonsTab.sheet.\(i)"))
             hitEscape()
         }
@@ -192,7 +193,7 @@ final class LocalizationScreenshotClass: XCTestCase {
         /// Screenshot AboutTab
         ///
         toolbarButtons["about"].click()
-        toolbarButtons["about"].click()
+        coolWait()
         result.append(takeLocalizationScreenshot(of: window, name: "AboutTab"))
         
         /// Screenshot alerts
@@ -204,7 +205,7 @@ final class LocalizationScreenshotClass: XCTestCase {
         /// Screenshot ScrollingTab
         ///
         toolbarButtons["scrolling"].click()
-        toolbarButtons["scrolling"].click()
+        coolWait()
         result.append(takeLocalizationScreenshot(of: window, name: "ScrollingTab"))
         
         /// Screenshot states
@@ -214,8 +215,9 @@ final class LocalizationScreenshotClass: XCTestCase {
             popUpButton.click()
             let menuItems = popUpButton.menuItems.allElementsBoundByIndex.enumerated()
             hitEscape()
+            coolWait()
             
-            /// Click menu items
+            /// Click each menu item
             for (j, menuItem) in menuItems {
                 popUpButton.click()
                 if (!menuItem.isHittable || !menuItem.isEnabled) {
@@ -223,6 +225,7 @@ final class LocalizationScreenshotClass: XCTestCase {
                     continue
                 }
                 menuItem.click()
+                coolWait()
                 result.append(takeLocalizationScreenshot(of: window, name: "ScrollingTab.state.\(i).\(j)"))
             }
         }
@@ -239,7 +242,7 @@ final class LocalizationScreenshotClass: XCTestCase {
         /// Screenshot GeneralTab
         ///
         toolbarButtons["general"].click() /// Need to click twice so that the test runner properly waits for the animation to finish
-        toolbarButtons["general"].click()
+        coolWait()
         result.append(takeLocalizationScreenshot(of: window, name: "GeneralTab"))
         
         ///
@@ -280,7 +283,7 @@ final class LocalizationScreenshotClass: XCTestCase {
                         /// Duplicate screenshot
                         ///     Each stringKey needs its own, unique screenshot file, otherwise the Xcode viewer breaks and shows the same frame for every string key. (Tested under Xcode 15 stable & Xcode 16 Beta)
                         screenshotUsageCount += 1
-                        let screenshotName = "\(screenshotUsageCount).\(screenshotName).jpeg"
+                        let screenshotName = "copy-\(screenshotUsageCount).\(screenshotName).jpeg"
                         
                         /// Convert image
                         ///     In the WWDC demos they used jpeg, but .png is a bit higher res I think.
@@ -291,12 +294,17 @@ final class LocalizationScreenshotClass: XCTestCase {
                         screenshotNameToScreenshotDataMap[screenshotName] = imageData
                         
                         /// Store the encodable data (everything except the screenshot itself) to the localizedStringData datastructure
+                        var didAttachToExistingDatum = false
                         let newScreenshotData = LocalizedStringDatum.Screenshot(name: screenshotName, frame: NSStringFromRect(stringFrame))
-                        let existingDatums = localizedStringData.filter { datum in datum.stringKey == stringKey && datum.tableName == stringTable }
-                        assert(existingDatums.count <= 1)
-                        if var existingDatum = existingDatums.first {
-                            existingDatum.screenshots.append(newScreenshotData)
-                        } else {
+                        for (i, var existingDatum) in localizedStringData.enumerated() {
+                            if existingDatum.stringKey == stringKey && existingDatum.tableName == stringTable {
+                                existingDatum.screenshots.append(newScreenshotData)
+                                localizedStringData[i] = existingDatum /// Need to directly assign to index due to Swift value types
+                                assert(!didAttachToExistingDatum)
+                                didAttachToExistingDatum = true
+                            }
+                        }
+                        if !didAttachToExistingDatum {
                             let newDatum = LocalizedStringDatum(stringKey: stringKey, screenshots: [newScreenshotData], tableName: stringTable, bundlePath: "some/path", bundleID: "some.id")
                             localizedStringData.append(newDatum)
                         }
@@ -492,8 +500,11 @@ final class LocalizationScreenshotClass: XCTestCase {
     /// Helper
     ///
     
-    
     func hitEscape() {
         app?.typeKey(.escape, modifierFlags: [])
+    }
+    func coolWait() {
+        usleep(useconds_t(Double(USEC_PER_SEC) * 0.5))
+        app?._waitForQuiescence()
     }
 }

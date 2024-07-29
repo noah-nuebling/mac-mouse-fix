@@ -10,13 +10,15 @@
 #import <XCTest/XCUIElement.h>
 #import "AnnotationUtility.h"
 
-@interface XCUIScreen (Swizzle)
-
-- (CGDirectDisplayID)displayID;
-
+@interface XCUIApplication (MFStuff)
+- (void)_waitForQuiescence;
 @end
 
-@interface XCUIElement (Swizzle)
+@interface XCUIScreen (MFStuff)
+- (CGDirectDisplayID)displayID;
+@end
+
+@interface XCUIElement (MFStuff)
 
 - (NSRect)screenshotFrame;
 

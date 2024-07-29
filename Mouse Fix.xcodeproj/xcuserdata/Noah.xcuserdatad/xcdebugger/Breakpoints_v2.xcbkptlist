@@ -769,16 +769,32 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "6D36B6A2-3088-4AC3-BB36-9A8D6DF1F9A8"
+            uuid = "4FDB436A-F473-4214-BB51-962468592C67"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "LocalizationScreenshotTaker/LocalizationScreenshots.swift"
+            filePath = "App/UI/Main/Tabs/ButtonTab/RemapTable/RemapTableTranslator.m"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "349"
-            endingLineNumber = "349"
-            landmarkName = "takeLocalizationScreenshot(of:name:)"
+            startingLineNumber = "782"
+            endingLineNumber = "782"
+            landmarkName = "+getTriggerCellWithRowDict:row:"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "FA1E836C-858A-4A00-83B8-EE60EC25D149"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "App/UI/Main/Tabs/ButtonTab/RemapTable/RemapTableTranslator.m"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "787"
+            endingLineNumber = "787"
+            landmarkName = "+getTriggerCellWithRowDict:row:"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
