@@ -188,9 +188,6 @@ final class LocalizationScreenshotClass: XCTestCase {
             hitEscape()
         }
         
-        /// TEST
-        return result
-        
         ///
         /// Screenshot AboutTab
         ///

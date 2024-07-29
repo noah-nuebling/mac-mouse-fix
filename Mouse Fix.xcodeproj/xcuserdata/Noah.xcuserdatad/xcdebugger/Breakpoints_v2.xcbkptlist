@@ -776,9 +776,9 @@
             filePath = "LocalizationScreenshotTaker/LocalizationScreenshots.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "352"
-            endingLineNumber = "352"
-            landmarkName = "_takeLocalizationScreenshot(of:name:)"
+            startingLineNumber = "349"
+            endingLineNumber = "349"
+            landmarkName = "takeLocalizationScreenshot(of:name:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

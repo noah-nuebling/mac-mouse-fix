@@ -2012,7 +2012,6 @@
 		4F58FE042C56EA1300926A00 /* TestLogging.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TestLogging.h; sourceTree = "<group>"; };
 		4F58FE052C56EA1300926A00 /* TestLogging.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TestLogging.m; sourceTree = "<group>"; };
 		4F58FE092C56EA2F00926A00 /* TestLogging.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestLogging.swift; sourceTree = "<group>"; };
-		4F58FE0E2C571DA600926A00 /* CocoaLumberjack */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = CocoaLumberjack; path = "/Users/Noah/Library/Developer/Xcode/DerivedData/Mouse_Fix-ahqbyzbmudhlrygcyeksnrzoaapt/SourcePackages/checkouts/CocoaLumberjack"; sourceTree = "<absolute>"; };
 		4F5971E42901763D00A32656 /* MathObjc.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MathObjc.m; sourceTree = "<group>"; };
 		4F5C2F7F2885C5D0001B9B8A /* HelperState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelperState.swift; sourceTree = "<group>"; };
 		4F5F3EED2756DB0A00C350C0 /* RemapsOverrider_old_.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemapsOverrider_old_.swift; sourceTree = "<group>"; };
@@ -7002,7 +7001,6 @@
 			children = (
 				4FDECCD728A3A37800DDEE91 /* Sparkle.framework */,
 				4FDECCD828A3A37800DDEE91 /* README.md */,
-				4F58FE0E2C571DA600926A00 /* CocoaLumberjack */,
 			);
 			path = Frameworks;
 			sourceTree = "<group>";
