@@ -89,7 +89,7 @@ static double _toastAnimationOffset = 20;
         assert(showDuration == kMFToastDurationAutomatic);
         showDuration = message.length * 0.08 * [LocalizationUtility informationDensityOfCurrentLanguage];
     } else {
-        showDuration *= [LocalizationUtility informationDensityOfCurrentLanguage];
+        showDuration *= [LocalizationUtility informationDensityOfCurrentLanguage]; /// Why would we multiply with information density if the duration is specified by the caller? Note: this Is called with 10.0 at enable-timeout-toast, in all other cases it's called with automatic duration (Summer 2024)
     }
     
     /// Constants

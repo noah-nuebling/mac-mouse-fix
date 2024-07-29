@@ -85,7 +85,6 @@ Class getMetaClass(id obj);
 
 NSString *listMethods(id obj);
 NSString *listSuperClasses(id obj);
-NSString *listMethods(id obj);
 NSString *blockDescription(id block);
 
 

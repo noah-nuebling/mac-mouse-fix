@@ -25,7 +25,7 @@
     
     /// Notes:
     ///     - We keep the format string short to stay under the 512 character XCUITest limit.
-    ///     - Would breaks if key or table name contain `:`
+    ///     - Pattern recognition would break if key or table name contain `:`
     ///     - If table is nill the formatted string would include literal "(null)", so we map to empty string.
     
     NSString *annotation = stringf(@"mfkey:%@:%@:", key, table ?: @"");
@@ -48,7 +48,7 @@
         /// Call og
         NSString *result = OGImpl(key, value, table);
         
-        BOOL isOurBundle = [m_self isEqual:NSBundle.mainBundle];
+        BOOL isOurBundle = [m_self isEqual:NSBundle.mainBundle]; /// The system loads tons of strings from other bundles such as `AppKit`
         if (isOurBundle) {
             
             /// Add secret message
@@ -56,7 +56,7 @@
             result = [annotation stringByAppendingString:result]; /// We prepend the annotation because XCUITest will seemingly cut of the string at 512 chars. By putting the annotation first it should be before the cutoff.
             
             /// Log
-            DDLogDebug(@"LocalizedStringAnnotation: Annotated: \"%@\": \"%@\" (%@)", key, result, table);
+            DDLogDebug(@"LocalizedStringAnnotation: Annotated: \"%@\": \"%@\" (table: %@)", key, result, table);
         }
         
         /// Return
@@ -72,11 +72,11 @@
         if (isOurBundle) {
         
             /// Add secret message
-            NSString *annotation = [self annotationStringWithKey:key table:table ?: @"Localizable"];
+            NSString *annotation = [self annotationStringWithKey:key table:table];
             result = [[annotation attributed] attributedStringByAppending:result];
             
             /// Log
-            DDLogDebug(@"LocalizedStringAnnotation: Annotated: \"%@\": \"%@\" (%@)", key, result, table);
+            DDLogDebug(@"LocalizedStringAnnotation: Annotated: \"%@\": \"%@\" (table: %@)", key, result, table);
         }
         
         /// Return

@@ -35,13 +35,15 @@
     /// Returns 0 or an NSEventModifierFlag
     
     literalString = [literalString lowercaseString];
-    NSDictionary *map = @{
+    
+    const NSDictionary *map = @{
         @"shift": @(NSEventModifierFlagShift),
         @"command": @(NSEventModifierFlagCommand),
         @"option": @(NSEventModifierFlagOption),
         @"control": @(NSEventModifierFlagControl),
     };
     NSNumber *resultNS = map[literalString];
+    
     if (resultNS == nil) return 0;
     else return [resultNS intValue];
 }
@@ -54,7 +56,7 @@
     
     literalString = [literalString lowercaseString];
     
-    NSDictionary *map = @{
+    const NSDictionary *map = @{
         @"return": @(kReturnCharCode),
         @"enter": @(kEnterCharCode),    /// Use return instead. Return is standard on macOS keyboard. Enter can only by typed by hitting function+return on a MacBook keyboard.
         @"escape": @(kEscapeCharCode),
@@ -67,11 +69,8 @@
     };
     int resultChar = [map[literalString] intValue];
     
-    if (resultChar == 0) {
-        return nil;
-    } else {
-        return [NSString stringWithFormat:@"%c", resultChar];
-    }
+    if (resultChar == 0) return nil;
+    else return [NSString stringWithFormat:@"%c", resultChar];
 }
 
 @end

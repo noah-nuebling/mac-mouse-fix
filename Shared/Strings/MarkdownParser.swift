@@ -112,7 +112,7 @@ struct ApplyMarkdown: MarkupVisitor {
                 return base.attributedSubstring(from: range)
                 
             } else {
-                fatalError()
+                fatalError() /// Feels scary to have fatalError() here but never seems to cause any problems.
             }
             
         } else {

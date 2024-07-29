@@ -30,7 +30,7 @@
 /// 1. Go through all the .xib files and programatically created sheets, windows, etc, and use this to make them dismissable with `escape` (That's what we built this for.) (At least make sheets and alerts dismissable, not sure about toasts and stuff.)
 ///     - I can think of the following that we should update:
 ///         - x Buttons options sheet -> Done by adding an InvisibleKeyResponder subview with esc key-equivalent)
-///         - x mail popup -> Done by setting esc key-equivalent in code
+///         - x mail popup -> Done by setting esc key-equivalent on back button in code
 ///         - x License sheet -> Done by setting esc key-equivalent on back-button
 ///         - x Authorizeaccessibility sheet -> Already had esc key-equivalent on back-button
 ///         - x restore-buttons-alert (Was seemingly already esc-dismissable due to AppKit magic when labling a button 'Cancel', but we set the key-equivalents in code to make sure..)

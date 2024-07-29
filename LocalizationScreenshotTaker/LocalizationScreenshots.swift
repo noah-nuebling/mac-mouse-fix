@@ -83,13 +83,13 @@ final class LocalizationScreenshotClass: XCTestCase {
             if outputDirectoryPath == nil {
                 let currentWorkingDirectory = FileManager().temporaryDirectory
                 outputDirectory = currentWorkingDirectory.appending(component: "MFLocalizationScreenshotsFallbackOutputFolder")
-                print("No output directory provided. Using \(outputDirectory!) as a fallback.")
+                DDLogInfo("No output directory provided. Using \(outputDirectory!) as a fallback.")
             }
         }
         guard let outputDirectory = outputDirectory else { fatalError() }
         
         /// Log
-        print("Localization Screenshot Test Runner launched with output directory: \(xcode_screenshot_taker_output_dir_variable): \(outputDirectory)")
+        DDLogInfo("Localization Screenshot Test Runner launched with output directory: \(xcode_screenshot_taker_output_dir_variable): \(outputDirectory)")
         
         /// Prepare app
         app = XCUIApplication()
@@ -295,9 +295,9 @@ final class LocalizationScreenshotClass: XCTestCase {
         if !fileManager.fileExists(atPath: outputDirectory.path()) {
             do {
                 try fileManager.createDirectory(atPath: outputDirectory.path(), withIntermediateDirectories: true, attributes: nil)
-                print("Output directory created: \(outputDirectory)")
+                DDLogInfo("Output directory created: \(outputDirectory)")
             } catch {
-                print("Error creating output directory: \((error as NSError).code) : \((error as NSError).domain)") /// This is a weird attempt at getting a non-localized description of the string
+                DDLogInfo("Error creating output directory: \((error as NSError).code) : \((error as NSError).domain)") /// This is a weird attempt at getting a non-localized description of the string
                 return
             }
         }
@@ -309,7 +309,7 @@ final class LocalizationScreenshotClass: XCTestCase {
             let plistData = try PropertyListEncoder().encode(localizedStringData)
             try plistData.write(to: URL(fileURLWithPath: plistFilePath))
         } catch {
-            print("Error: Failed to write screenshot metadata to file as json: \(error) \((error as NSError).code) : \((error as NSError).domain)")
+            DDLogInfo("Error: Failed to write screenshot metadata to file as json: \(error) \((error as NSError).code) : \((error as NSError).domain)")
         }
         
         /// Write screenshots to file
@@ -318,12 +318,12 @@ final class LocalizationScreenshotClass: XCTestCase {
             do {
                 try screenshotData.write(to: URL(fileURLWithPath: filePath))
             } catch {
-                print("Error: Failed to screenshot to file: \((error as NSError).code) : \((error as NSError).domain)")
+                DDLogInfo("Error: Failed to screenshot to file: \((error as NSError).code) : \((error as NSError).domain)")
             }
         }
         
         /// Log
-        print("Wrote result to output directory \(outputDirectory.path())")
+        DDLogInfo("Wrote result to output directory \(outputDirectory.path())")
     }
     
     ///
@@ -336,7 +336,7 @@ final class LocalizationScreenshotClass: XCTestCase {
         do {
             result = try _takeLocalizationScreenshot(of: element, name: screenshotBaseName)
         } catch {
-            print("Taking Localization screenshot threw error: \(error)")
+            DDLogInfo("Taking Localization screenshot threw error: \(error)")
         }
         return result
     }
@@ -362,7 +362,7 @@ final class LocalizationScreenshotClass: XCTestCase {
         
         /// TEST
 //        let treeDescription = tree.description()
-//        print("The tree: \(treeDescription)")
+//        DDLogInfo("The tree: \(treeDescription)")
         
         /// Find localizedStings
         ///     & their metadata

@@ -17,7 +17,6 @@
 		4F0CFFED2C518CF600C5D843 /* MFDataClassImplementations.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F0CFFEC2C518CF600C5D843 /* MFDataClassImplementations.m */; };
 		4F0CFFEE2C518CF600C5D843 /* MFDataClassImplementations.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F0CFFEC2C518CF600C5D843 /* MFDataClassImplementations.m */; };
 		4F12952028D2D5E1009A49AB /* NSTextField+Extentions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F12951F28D2D5E1009A49AB /* NSTextField+Extentions.swift */; };
-		4F12952128D2D738009A49AB /* NSTextField+Extentions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F12951F28D2D5E1009A49AB /* NSTextField+Extentions.swift */; };
 		4F143E462B2D1F5600FE4092 /* fallback_licenseinfo_config.json in Resources */ = {isa = PBXBuildFile; fileRef = 4F143E452B2D1F5600FE4092 /* fallback_licenseinfo_config.json */; };
 		4F143E472B2D1F5600FE4092 /* fallback_licenseinfo_config.json in Resources */ = {isa = PBXBuildFile; fileRef = 4F143E452B2D1F5600FE4092 /* fallback_licenseinfo_config.json */; };
 		4F17D2E1292A635200EB07CA /* SwitchMaster.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F17D2E0292A635200EB07CA /* SwitchMaster.swift */; };
@@ -58,12 +57,10 @@
 		4F58FE002C56DE9B00926A00 /* Logging.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F58FDFF2C56DE9B00926A00 /* Logging.swift */; };
 		4F58FE022C56DE9B00926A00 /* Logging.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F58FDFF2C56DE9B00926A00 /* Logging.swift */; };
 		4F58FE032C56E65900926A00 /* AnnotationUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F4C73FD2C4FB5D2001D97C3 /* AnnotationUtility.m */; };
-		4F58FE062C56EA1300926A00 /* TestLogging.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F58FE052C56EA1300926A00 /* TestLogging.m */; };
-		4F58FE072C56EA1300926A00 /* TestLogging.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F58FE052C56EA1300926A00 /* TestLogging.m */; };
-		4F58FE082C56EA1300926A00 /* TestLogging.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F58FE052C56EA1300926A00 /* TestLogging.m */; };
-		4F58FE0A2C56EA2F00926A00 /* TestLogging.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F58FE092C56EA2F00926A00 /* TestLogging.swift */; };
-		4F58FE0B2C56EA2F00926A00 /* TestLogging.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F58FE092C56EA2F00926A00 /* TestLogging.swift */; };
-		4F58FE0C2C56EA2F00926A00 /* TestLogging.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F58FE092C56EA2F00926A00 /* TestLogging.swift */; };
+		4F58FE102C571DDD00926A00 /* CocoaLumberjack in Frameworks */ = {isa = PBXBuildFile; productRef = 4F58FE0F2C571DDD00926A00 /* CocoaLumberjack */; };
+		4F58FE122C571DE200926A00 /* CocoaLumberjackSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 4F58FE112C571DE200926A00 /* CocoaLumberjackSwift */; };
+		4F58FE132C57297400926A00 /* Logging.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F58FDFF2C56DE9B00926A00 /* Logging.swift */; };
+		4F58FE142C57BAFA00926A00 /* NSTextField+Extentions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F12951F28D2D5E1009A49AB /* NSTextField+Extentions.swift */; };
 		4F5971E52901763D00A32656 /* MathObjc.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F5971E42901763D00A32656 /* MathObjc.m */; };
 		4F5971E62901763D00A32656 /* MathObjc.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F5971E42901763D00A32656 /* MathObjc.m */; };
 		4F5C2F802885C5D0001B9B8A /* HelperState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F5C2F7F2885C5D0001B9B8A /* HelperState.swift */; };
@@ -263,8 +260,6 @@
 		4FEA63CF2921510F00E464D6 /* NSImage+Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FEA63CD2921510E00E464D6 /* NSImage+Additions.m */; };
 		4FEB660F2793510300E6A111 /* CocoaLumberjack in Frameworks */ = {isa = PBXBuildFile; productRef = 4FEB660E2793510300E6A111 /* CocoaLumberjack */; };
 		4FEB66112793510800E6A111 /* CocoaLumberjackSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 4FEB66102793510800E6A111 /* CocoaLumberjackSwift */; };
-		4FEB66132793510C00E6A111 /* CocoaLumberjack in Frameworks */ = {isa = PBXBuildFile; productRef = 4FEB66122793510C00E6A111 /* CocoaLumberjack */; };
-		4FEB66152793510F00E6A111 /* CocoaLumberjackSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 4FEB66142793510F00E6A111 /* CocoaLumberjackSwift */; };
 		4FEC9668278BBDC600548604 /* NSColor+Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FEC9667278BBDC600548604 /* NSColor+Additions.m */; };
 		4FF0254E27AFF90800923107 /* ModifiedDragOutputThreeFingerSwipe.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF0254D27AFF90800923107 /* ModifiedDragOutputThreeFingerSwipe.m */; };
 		4FF0255127B0033000923107 /* ModifiedDragOutputTwoFingerSwipe.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF0255027B0033000923107 /* ModifiedDragOutputTwoFingerSwipe.m */; };
@@ -346,7 +341,6 @@
 		4FFA4E4928B7D3750062A1FE /* NSView+Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F92A72C260F6C7800529D1F /* NSView+Additions.m */; };
 		4FFA4E4A28B7D3750062A1FE /* NSView+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F909D0428A0C3D2009349A2 /* NSView+Extensions.swift */; };
 		4FFBC5A8266977CA001D389B /* DoubleExponentialSmoother.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FFBC5A7266977CA001D389B /* DoubleExponentialSmoother.swift */; };
-		4FFE2894291B35AA0058ABE0 /* (null) in Sources */ = {isa = PBXBuildFile; };
 		4FFE2895291B35AA0058ABE0 /* (null) in Sources */ = {isa = PBXBuildFile; };
 /* End PBXBuildFile section */
 
@@ -2018,6 +2012,7 @@
 		4F58FE042C56EA1300926A00 /* TestLogging.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TestLogging.h; sourceTree = "<group>"; };
 		4F58FE052C56EA1300926A00 /* TestLogging.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TestLogging.m; sourceTree = "<group>"; };
 		4F58FE092C56EA2F00926A00 /* TestLogging.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestLogging.swift; sourceTree = "<group>"; };
+		4F58FE0E2C571DA600926A00 /* CocoaLumberjack */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = CocoaLumberjack; path = "/Users/Noah/Library/Developer/Xcode/DerivedData/Mouse_Fix-ahqbyzbmudhlrygcyeksnrzoaapt/SourcePackages/checkouts/CocoaLumberjack"; sourceTree = "<absolute>"; };
 		4F5971E42901763D00A32656 /* MathObjc.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MathObjc.m; sourceTree = "<group>"; };
 		4F5C2F7F2885C5D0001B9B8A /* HelperState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelperState.swift; sourceTree = "<group>"; };
 		4F5F3EED2756DB0A00C350C0 /* RemapsOverrider_old_.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemapsOverrider_old_.swift; sourceTree = "<group>"; };
@@ -2443,13 +2438,13 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4F58FE102C571DDD00926A00 /* CocoaLumberjack in Frameworks */,
 				4F39BC26263AC31600FDF692 /* Sparkle.framework in Frameworks */,
-				4FEB66132793510C00E6A111 /* CocoaLumberjack in Frameworks */,
 				4FC8A7D128AAF2EA007DB982 /* Markdown in Frameworks */,
 				4FA40CF228A0CA3900499E53 /* ReactiveCocoa in Frameworks */,
+				4F58FE122C571DE200926A00 /* CocoaLumberjackSwift in Frameworks */,
 				4F909D5128A0C6F3009349A2 /* SnapKit in Frameworks */,
 				4FA40CEF28A0CA0A00499E53 /* ReactiveSwift in Frameworks */,
-				4FEB66152793510F00E6A111 /* CocoaLumberjackSwift in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -7007,6 +7002,7 @@
 			children = (
 				4FDECCD728A3A37800DDEE91 /* Sparkle.framework */,
 				4FDECCD828A3A37800DDEE91 /* README.md */,
+				4F58FE0E2C571DA600926A00 /* CocoaLumberjack */,
 			);
 			path = Frameworks;
 			sourceTree = "<group>";
@@ -7734,12 +7730,12 @@
 			);
 			name = "Mac Mouse Fix";
 			packageProductDependencies = (
-				4FEB66122793510C00E6A111 /* CocoaLumberjack */,
-				4FEB66142793510F00E6A111 /* CocoaLumberjackSwift */,
 				4F909D5028A0C6F3009349A2 /* SnapKit */,
 				4FA40CEE28A0CA0A00499E53 /* ReactiveSwift */,
 				4FA40CF128A0CA3900499E53 /* ReactiveCocoa */,
 				4FC8A7D028AAF2EA007DB982 /* Markdown */,
+				4F58FE0F2C571DDD00926A00 /* CocoaLumberjack */,
+				4F58FE112C571DE200926A00 /* CocoaLumberjackSwift */,
 			);
 			productName = "Mac Mouse Fix";
 			productReference = 4F94F5EE25E5EC2500D9F24A /* Mac Mouse Fix.app */;
@@ -7945,11 +7941,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4F58FE082C56EA1300926A00 /* TestLogging.m in Sources */,
 				4F18464D2C533B5900D5E835 /* BidirectionalMap.m in Sources */,
 				4FE1A1BB2C56A50100CE3347 /* Logging.m in Sources */,
-				4F58FE0A2C56EA2F00926A00 /* TestLogging.swift in Sources */,
 				4FAA3DBC2C56802E00CBA413 /* XCUIElement+Swizzle.m in Sources */,
+				4F58FE132C57297400926A00 /* Logging.swift in Sources */,
 				4F58FE032C56E65900926A00 /* AnnotationUtility.m in Sources */,
 				4F8B01AC2C348A3A00F3AF8D /* LocalizationScreenshots.swift in Sources */,
 				4FE78C342C4FFA2F00C54103 /* TreeNode.h in Sources */,
@@ -7967,7 +7962,6 @@
 				4F909D2828A0C3D2009349A2 /* ResizingTabWindow.swift in Sources */,
 				4FA40CF728A0CCCA00499E53 /* Curve.swift in Sources */,
 				4FF6655225F2C7B000689B77 /* NSDictionary+Additions.m in Sources */,
-				4F58FE0B2C56EA2F00926A00 /* TestLogging.swift in Sources */,
 				4FAA3DAC2C55E94600CBA413 /* IBUtility.m in Sources */,
 				4F4150662927B6A40040BA7D /* AddField.swift in Sources */,
 				4FDE75A728B25FB300662314 /* NSAttributedString+Extensions.swift in Sources */,
@@ -8053,7 +8047,6 @@
 				4FC55B982915652C00663B24 /* AlertCreator.m in Sources */,
 				4FAD391426702CD4000CF4FA /* DerivedProperty.swift in Sources */,
 				4F909D2928A0C3D2009349A2 /* TabViewControllerDisabling.swift in Sources */,
-				4F58FE062C56EA1300926A00 /* TestLogging.m in Sources */,
 				4FCEDC92292D765600E7DA2A /* Constants.swift in Sources */,
 				4FA40D0E28A0D87200499E53 /* DynamicSystemAnimator.swift in Sources */,
 				4FB4FA202611DD6000806DDD /* KeyCaptureScrollView.m in Sources */,
@@ -8077,7 +8070,6 @@
 				4FAA5601293A41AF00BA782C /* BezierCappedAccelerationCurve.swift in Sources */,
 				4FA40D1028A0D8F100499E53 /* VectorSubPixelator.m in Sources */,
 				4FA40D0228A0CE5B00499E53 /* VectorUtility.m in Sources */,
-				4FFE2894291B35AA0058ABE0 /* (null) in Sources */,
 				4FF27DD72B95B108004744E1 /* Shorthands.swift in Sources */,
 				4F319CBB26252A2D004E5F63 /* ButtonGroupRowView.m in Sources */,
 				4F79A82B2605074000076A7E /* NSAttributedString+Additions.m in Sources */,
@@ -8137,7 +8129,6 @@
 				4FFA4E3628B795F30062A1FE /* LicenseUtility.swift in Sources */,
 				4F8B7E6727B4E32600598B65 /* TouchAnimatorBase.swift in Sources */,
 				4FA0681A291B2C4C00949B5F /* Shorthands.m in Sources */,
-				4F58FE0C2C56EA2F00926A00 /* TestLogging.swift in Sources */,
 				4FF6669325F2C93A00689B77 /* TouchSimulator.m in Sources */,
 				4FFA4E4A28B7D3750062A1FE /* NSView+Extensions.swift in Sources */,
 				4F9E78E3268663B1002C2309 /* ExponentialSmoother.swift in Sources */,
@@ -8195,7 +8186,6 @@
 				4FE1A1B92C56A50100CE3347 /* Logging.m in Sources */,
 				4FFA4E4828B7D2E40062A1FE /* NSShadow+Extensions.swift in Sources */,
 				4F2CC58727B8D2300084AACE /* HybridCurves.swift in Sources */,
-				4F58FE072C56EA1300926A00 /* TestLogging.m in Sources */,
 				4F5C2F802885C5D0001B9B8A /* HelperState.swift in Sources */,
 				4F8A8DAD287EEF6200786BCC /* IOHIDAccelerationTableBridge.mm in Sources */,
 				4F3A40CB266C44D100436821 /* DisplayLink.m in Sources */,
@@ -8211,6 +8201,7 @@
 				4F1AFE972670EBA900ECA424 /* DragCurve.swift in Sources */,
 				4FF6669125F2C93A00689B77 /* ScrollUtility.m in Sources */,
 				4FE78C442C502A5F00C54103 /* NSString+Additions.m in Sources */,
+				4F58FE142C57BAFA00926A00 /* NSTextField+Extentions.swift in Sources */,
 				4FF666A825F2C93A00689B77 /* DeviceManager.m in Sources */,
 				4FF8C89F28955DC4007EC31F /* CoolTimer.swift in Sources */,
 				4FF6669B25F2C93A00689B77 /* AppDelegate.m in Sources */,
@@ -8253,7 +8244,6 @@
 				4FF0255427B007FC00923107 /* ModifiedDragOutputFakeDrag.m in Sources */,
 				4F7F47C528A5A01600290BBD /* ReactiveConfig.swift in Sources */,
 				4FF8C89A28955491007EC31F /* ClickCycle.swift in Sources */,
-				4F12952128D2D738009A49AB /* NSTextField+Extentions.swift in Sources */,
 				4FDECCDF28A3E93100DDEE91 /* IsObjC.m in Sources */,
 				4FA83A2E268288D900F3A31B /* PointerConfig.swift in Sources */,
 				4FE78C3B2C50177800C54103 /* DisableSwiftBridging.swift in Sources */,
@@ -8355,7 +8345,7 @@
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.noah-nuebling.localization-screenshot-taker";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) IS_XC_TEST";
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) IS_XC_TEST REPLACE_COCOALUMBERJACK";
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_OBJC_BRIDGING_HEADER = "LocalizationScreenshotTaker/LocalizationScreenshotTaker-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
@@ -8387,7 +8377,7 @@
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.noah-nuebling.localization-screenshot-taker";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) IS_XC_TEST";
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) IS_XC_TEST REPLACE_COCOALUMBERJACK";
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_OBJC_BRIDGING_HEADER = "LocalizationScreenshotTaker/LocalizationScreenshotTaker-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
@@ -8779,6 +8769,16 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		4F58FE0F2C571DDD00926A00 /* CocoaLumberjack */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 4F1757BB2675955B009FCB47 /* XCRemoteSwiftPackageReference "CocoaLumberjack" */;
+			productName = CocoaLumberjack;
+		};
+		4F58FE112C571DE200926A00 /* CocoaLumberjackSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 4F1757BB2675955B009FCB47 /* XCRemoteSwiftPackageReference "CocoaLumberjack" */;
+			productName = CocoaLumberjackSwift;
+		};
 		4F7F47CD28A5B5EC00290BBD /* ReactiveSwift */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 4FA40CED28A0CA0A00499E53 /* XCRemoteSwiftPackageReference "ReactiveSwift" */;
@@ -8820,16 +8820,6 @@
 			productName = CocoaLumberjack;
 		};
 		4FEB66102793510800E6A111 /* CocoaLumberjackSwift */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 4F1757BB2675955B009FCB47 /* XCRemoteSwiftPackageReference "CocoaLumberjack" */;
-			productName = CocoaLumberjackSwift;
-		};
-		4FEB66122793510C00E6A111 /* CocoaLumberjack */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 4F1757BB2675955B009FCB47 /* XCRemoteSwiftPackageReference "CocoaLumberjack" */;
-			productName = CocoaLumberjack;
-		};
-		4FEB66142793510F00E6A111 /* CocoaLumberjackSwift */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 4F1757BB2675955B009FCB47 /* XCRemoteSwiftPackageReference "CocoaLumberjack" */;
 			productName = CocoaLumberjackSwift;

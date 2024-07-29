@@ -151,8 +151,8 @@ static NSDictionary *sideButtonActions;
         DDLogInfo(@"Main App starting up...");
         
         /// TEST logging
-        [TestLogging doTestLogs_objc];
-        [TestLoggingSwift doTestLogs_swift];
+//        [TestLogging doTestLogs_objc];
+//        [TestLoggingSwift doTestLogs_swift];
         
         /// Remove restart the app untranslocated if it's currently translocated
         /// Need to call this before `MessagePort_App` is initialized, otherwise stuff breaks if app is translocated

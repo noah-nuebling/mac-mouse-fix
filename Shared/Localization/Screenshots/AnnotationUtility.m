@@ -52,7 +52,7 @@ void swizzleMethod(Class class, SEL selector, InterceptorFactory interceptorFact
     ///     You can get the metaclass of a class `baseClass` by calling `object_getClass(baseClass)`.
     
     /// Log
-    ///     We're using NSLog instead of DDLogInfo, since we're usually swizzling from a [+ load] method where DDLog isn't available, yet.
+    ///     We're using NSLog instead of DDLogInfo, since we're usually swizzling from a [+ load] method where DDLog isn't available, yet. (Need to call [Logging setUpDDLog] first)
     NSLog(@"Info: Swizzling [%s %s]", class_getName(class), sel_getName(selector));
     
     /// Validate
@@ -202,8 +202,14 @@ NSString *getSymbol(void *address) {
 NSArray<Class> *searchClasses(NSDictionary<MFClassSearchCriterion, id> *criteria) {
     
     /// Searches classes in the objc runtime by different criteria.
-    ///     I think you should always at least specify a framework, otherwise might become quite slow.
+    ///     I think you should always at least specify a framework, otherwise might be relatively slow.
     ///     This is largely a wrapper around `objc_enumerateClasses()`
+    ///
+    /// Notes:
+    /// - I just did some testing with `namePrefix` searchCriterion set to our class `LoggingSwift` and it doesn't seem to work (Summer 2024, macOS Sequoia Beta)
+    /// - Benchmark: Finding a subclass defined in the current executable took 1.2ms (Summer 2024, macOS Sequoia Beta)
+    ///     -> I wrote this for hacking, but I think it should be ok to use in our producttion code.
+    /// - The `@"framework"` search criterion can be a name of a system framework such as "AppKit" or an absolute path to an image such as the `executablePath` of the current process, which will only search classes that were declared in the current executable. If The `@"framework"` is empty, all framworks in the runtime will be searched which can be slow but useful for hacking and exploring and stuff. The underlying `objc_enumerateClasses` searches the caller's image when passing in NULL but this class can only search the callers image by passing the callers executablePath to `objc_enumerateClasses`. Not sure if that's bad for performance. Now that we use this in production code, it would probably be better to define a special constant like `__mfall__` that searches all frameworks and have the null-case be to only search the callers image, just like `objc_enumerateClasses`. But honestly the performance impact is probably negligible.
     
     /// Validate
     assert([criteria isKindOfClass:[NSDictionary class]]);
@@ -228,12 +234,14 @@ NSArray<Class> *searchClasses(NSDictionary<MFClassSearchCriterion, id> *criteria
     
     /// Validate
     /// - no extra/misspelled criteria
-    NSMutableDictionary *criteriaMutable = criteria.mutableCopy;
-    criteriaMutable[MFClassSearchCriterionProtocol] = nil;
-    criteriaMutable[MFClassSearchCriterionSuperclass] = nil;
-    criteriaMutable[MFClassSearchCriterionClassNamePrefix] = nil;
-    criteriaMutable[MFClassSearchCriterionFrameworkName] = nil;
-    assert(criteriaMutable.count == 0);
+    #if DEBUG
+        NSMutableDictionary *criteriaMutable = criteria.mutableCopy;
+        criteriaMutable[MFClassSearchCriterionProtocol] = nil;
+        criteriaMutable[MFClassSearchCriterionSuperclass] = nil;
+        criteriaMutable[MFClassSearchCriterionClassNamePrefix] = nil;
+        criteriaMutable[MFClassSearchCriterionFrameworkName] = nil;
+        assert(criteriaMutable.count == 0);
+    #endif
     
     /// Preprocess namePrefix
     ///     -> Convert it to c string
@@ -249,7 +257,7 @@ NSArray<Class> *searchClasses(NSDictionary<MFClassSearchCriterion, id> *criteria
     const char **frameworkPaths = NULL;
     
     if (frameworkNameNS != nil) {
-        const char *frameworkName = [frameworkNameNS cStringUsingEncoding:NSUTF8StringEncoding];
+        const char *frameworkName = [frameworkNameNS cStringUsingEncoding:NSUTF8StringEncoding]; /// `char *` wil never be empty bc we map empty NSString to nil above.
         const char *frameworkPath = searchFrameworkPath(frameworkName);
         frameworkPaths = malloc(sizeof(char *)); /// We malloc here to keep memory situation symmetrical with the `objc_copyImageNames()` call.
         *frameworkPaths = frameworkPath;
@@ -265,6 +273,10 @@ NSArray<Class> *searchClasses(NSDictionary<MFClassSearchCriterion, id> *criteria
     for (int i = 0; i < frameworkCount; i++) {
         const char *frameworkPath = frameworkPaths[i];
         frameworkHandles[i] = dlopen(frameworkPath, RTLD_LAZY | RTLD_GLOBAL); /// Maybe we could/should use `RTLD_NOLOAD` here for better performance?
+        if (frameworkHandles[i] == NULL) {
+            NSLog(@"Error: dlopen failed to open framework at path %s with error %s", frameworkPath, dlerror());
+            assert(false);
+        }
         assert(frameworkHandles[i] != NULL);
     }
     
@@ -272,9 +284,11 @@ NSArray<Class> *searchClasses(NSDictionary<MFClassSearchCriterion, id> *criteria
     NSMutableArray *result = [NSMutableArray array];
     
     for (int i = 0; i < frameworkCount; i++) {
+            
+        if (frameworkHandles[i] == NULL) continue;
         
         if (@available(macOS 13.0, *)) {
-            objc_enumerateClasses(frameworkHandles[i], namePrefix, protocol, baseClass, ^(Class _Nonnull aClass, BOOL * _Nonnull stop){
+            objc_enumerateClasses(frameworkHandles[i], namePrefix, protocol, baseClass, ^(Class _Nonnull aClass, BOOL * _Nonnull stop) {
                 [result addObject:aClass];
             });
         } else {
@@ -311,6 +325,11 @@ const char *searchFrameworkPath(const char *frameworkName) {
     ///   "Note: If the main executable is a set[ug]id binary or codesigned with
     ///   entitlements, then all environment variables are ignored, and only a full
     ///   path can be used."
+    
+    /// If frameworkName looks like an absolute path, then return it verbatim
+    if (frameworkName[0] == '/') { /// This crashes if we pass an empty name
+        return frameworkName;
+    }
     
     /// Preprocess framework name
     char *frameworkSubpath = NULL;
@@ -480,9 +499,9 @@ NSRegularExpression *formatSpecifierRegex(void) {
     
     /// Regex pattern that matches format specifiers such as %d in format strings.
     /// Notes:
-    /// - \ and % are doubled to escape them.
+    /// - \ and % are doubled to escape them in the string literal.
     ///     Update: Removed doubling on % as I don't think that's necessary.
-    /// - Matches escaped percent `%%` in a string inside the `escaped_percent` group.
+    /// - Matches escaped percent `%%` inside the `escaped_percent` capture group.
     ///     The content of this group is **not** part of a format specifier, and needs to be filtered out by the client.
     /// - Based on this regex101 pattern: https://regex101.com/r/lu3nWp/
     ///     Not sure this was the best way to translate the pattern. We had to remove the `(?<groupnames>)` and add `(?#comments)` instead.
@@ -649,8 +668,8 @@ NSString *stringFromClass(id obj) {
 NSString *_listMethods(id obj, NSMutableArray<Class> *subclassPath) {
     
     /// This method prints a list of all methods defined on a class
-    ///     (not its superclass) with decoded return types and argument types!
-    ///     This is really handy for creating categories, fswizzles, or inspecting private classes.
+    ///     with decoded return types and argument types!
+    ///     This is really handy for creating categories, swizzles, or inspecting private classes.
     
     /// Get class
     Class cls = getClass(obj);
@@ -700,6 +719,8 @@ NSString *_listMethods(id obj, NSMutableArray<Class> *subclassPath) {
 }
 
 NSString *blockDescription(id block) {
+    
+    /// Returns the decoded method signature of an objc block
     
     const char *typeEncoding = blockTypeEncoding(block);
     NSString *result = _methodDescription(@"(^)", typeEncoding);
@@ -810,7 +831,7 @@ NSString *typeNameFromEncoding(const char *typeEncoding) { /// Credit ChatGPT & 
         case 'b': baseTypeName = @"bit field"; break;
         case '?': baseTypeName = @"unknown"; break;
         default:
-            NSLog(@"typeEncoding: %s is unknown", typeEncoding);
+            NSLog(@"Error: typeEncoding: %s is unknown", typeEncoding);
             assert(false);
     }
     index++;
