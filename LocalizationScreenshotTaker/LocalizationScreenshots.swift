@@ -68,11 +68,13 @@ final class LocalizationScreenshotClass: XCTestCase {
     /// Main routine
     ///
     
-    
     var app: XCUIApplication? = nil
     
     func testTakeLocalizationScreenshots() throws {
-            
+        
+        /// Configure test
+        self.continueAfterFailure = false
+        
         /// Get output folder
         var outputDirectory: URL? = nil
         XCTContext.runActivity(named: "Get Output Folder") { activity in
@@ -119,8 +121,24 @@ final class LocalizationScreenshotClass: XCTestCase {
         /// Declare result
         var result = [ScreenshotAndMetadata?]()
         
+        /// Find screen
+        let screen = NSScreen.main!
+        
         /// Find main window
         let window = app!.windows.firstMatch
+        
+        /// Center the window
+        ///     So screenshots don't get cut off or menu's compressed by screen edge
+        ///     Update: Can't get this to work properly
+//        let targetX = screen.frame.midX - window.frame.width/2.0 /// In screenspace
+//        let targetY = screen.frame.midY - window.frame.height/2.0
+//        let deltaX = targetX - window.frame.minX
+//        let deltaY = targetY - window.frame.minY
+//        let normalizedDeltaX = deltaX / window.frame.width
+//        let normalizedDeltaY = deltaY / window.frame.height
+//        let dragStart = window.coordinate(withNormalizedOffset: .init(dx: 0.5, dy: 0.1))
+//        let dragEnd = window.coordinate(withNormalizedOffset: .init(dx: 0.5 + normalizedDeltaX, dy: normalizedDeltaY))
+//        dragStart.click(forDuration: 0, thenDragTo: dragEnd, withVelocity: .fast, thenHoldForDuration: 0)
         
         /// Find enable toggle
         let switcherino = window.switches["axEnableToggle"]
@@ -143,7 +161,7 @@ final class LocalizationScreenshotClass: XCTestCase {
             
         }
         
-        /// Prep
+        /// Find tabButtons
         let toolbarButtons = window.toolbars.firstMatch.children(matching: .button) /// `window.toolbarButtons` doesn't work for some reason.
 
         ///
@@ -349,6 +367,16 @@ final class LocalizationScreenshotClass: XCTestCase {
         /// Take screenshot
         let screenshot = topLevelElement.screenshot()
         
+        /// Get screenshot frame
+        let screenshotFrame = topLevelElement.screenshotFrame()
+        
+        /// Validate screenshot frame
+        let displayBounds: CGRect = CGDisplayBounds(topLevelElement.screen().displayID()); /// Not sure if we should be flipping the coords
+        let screenshotFrameOnScreenArea = screenshotFrame.intersection(displayBounds)
+        if !screenshotFrame.equalTo(screenshotFrameOnScreenArea)  {
+            XCTFail("Error: Screenshot would be cut off by the edge of the screen. Move the window to the center of the screen to prevent this.")
+        }
+        
         /// Get snapshot of ax hierarchy of topLevelElement
         let snapshot: XCUIElementSnapshot?
         do {
@@ -423,14 +451,14 @@ final class LocalizationScreenshotClass: XCTestCase {
                 continue
             }
             
-            /// Convert from screen coordinate system to screenshotted element's coordinate system
+            /// Convert from screen coordinate system to screenshot's coordinate system
             ///     This is a few pixels off from what I measured with PixelSnap 2 and the values in Interface Builder, but that should be ok.
-            frame = NSRect(x: frame.minX - topLevelElement.frame.minX,
-                           y: frame.minY - topLevelElement.frame.minY,
+            frame = NSRect(x: frame.minX - screenshotFrame.minX,
+                           y: frame.minY - screenshotFrame.minY,
                            width: frame.width,
                            height: frame.height)
             
-            /// Convert to screenshot coords
+            /// Scale to screenshot resulution
             ///     The screenshot will usually have double resolution compared the internal coordinate system. Retina stuff I think.
             let bsf = NSScreen.screens[0].backingScaleFactor /// Not sure it matters which screen we use.
             frame = NSRect(x: bsf*frame.minX,

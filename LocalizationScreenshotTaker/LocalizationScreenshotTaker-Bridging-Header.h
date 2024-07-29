@@ -20,5 +20,6 @@
 #import "NSString+Additions.h"
 #import "DisableSwiftBridging.h"
 #import "MFDataClass.h"
+#import "XCUIElement+Swizzle.h"
 
 #endif /* AppUITests_Bridging_Header_h */

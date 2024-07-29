@@ -7,20 +7,38 @@
 // --------------------------------------------------------------------------
 //
 
-#import <XCTest/XCUIElement.h>
-#import "AnnotationUtility.h"
-
-@interface XCUIElement (Swizzle)
-
-@end
+#import "XCUIElement+Swizzle.h"
 
 @implementation XCUIElement (Swizzle)
 
 + (void)load {
     
+    ///
+    /// Extend screenshots beyond Elements bounds
+    ///
+    
+    /// Notes:
+    /// - We want to do this so there's context for localizers about where an NSMenu appears inside the app (If you just screenshot the entire parent window, the NSMenu will be cut off if it extendes beyond the window bounds, but if you screenshot the NSMenu, there is no context.)
+    /// - If the `screenshotFrame` we output includes off-screen areas, those will automatically be cut off, and it won't lead to problems.
+    
     swizzleMethodOnClassAndSubclasses([XCUIElement class], @{ @"framework": @"XCTest" }, @selector(screenshotFrame), MakeInterceptorFactory(NSRect, (), {
+        
+        /// Call original implementation
         NSRect r = OGImpl();
-        r = NSMakeRect(r.origin.x - 10, r.origin.y - 10, r.size.width + 20, r.size.height + 20);
+        
+        /// Determine screenshot extension
+        double extension = 0;
+        if (((XCUIElement *)m_self).elementType == XCUIElementTypeMenu) {
+            extension = 100;
+        } else {
+            extension = 0;
+        }
+        
+        /// Extend frame
+        if (extension > 0) {
+            r = NSMakeRect(r.origin.x - extension, r.origin.y - extension, r.size.width + 2*extension, r.size.height + 2*extension);
+        }        
+        /// Return
         return r;
     }));
 }
