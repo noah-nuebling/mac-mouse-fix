@@ -42,7 +42,7 @@
 typedef NS_ENUM(UTF32Char, MFZeroWidthCharacter) {
     
     /// For steganography. Based on this readme https://github.com/Endrem/Zero-Width-Characters
-    MFZeroWidthCharacterSpace                       = 0x200B,       /// We use this as a control character to mark the start/end of a secret message.
+    MFZeroWidthCharacterSpace                       = 0x200B,       /// This one get removed when we apply stripWhitespace()
     MFZeroWidthCharacterNonJoiner                   = 0x200C,       /// We use this to encode 0
     MFZeroWidthCharacterJoiner                      = 0x200D,       /// We use this to encode 1
     
@@ -57,7 +57,7 @@ typedef NS_ENUM(UTF32Char, MFZeroWidthCharacter) {
     MFZeroWidthCharacterPopDirectionalFormatting    = 0x202C,
     MFZeroWidthCharacterLeftToRightOverride         = 0x202D,
     MFZeroWidthCharacterInvisibleTimes              = 0x2062,       /// We use this to encode 3
-    MFZeroWidthCharacterInvisibleSeparator          = 0x2063,
+    MFZeroWidthCharacterInvisibleSeparator          = 0x2063,       /// We use this as a control character to mark the start/end of a secret message.
     MFZeroWidthCharacterNoBreakSpace                = 0xFEFF,
     
 };
@@ -67,11 +67,11 @@ typedef NS_ENUM(UTF32Char, MFZeroWidthCharacter) {
 ///
 
 - (NSArray *)secretMessageStartSequence {
-    NSArray *result = @[@0x200B, @0x200C, @0x200B, @0x200D, @0x200B]; /// 200B is only used in the start/end sequence not in the secretMessage's body
+    NSArray *result = @[@0x2063, @0x200C, @0x2063, @0x200D, @0x2063]; /// 2063 is only used in the start/end sequence not in the secretMessage's body
     return result;
 }
 - (NSArray *)secretMessageEndSequence {
-    NSArray *result = @[@0x200B, @0x200D, @0x200B, @0x200C, @0x200B]; /// Inverse of the start sequence
+    NSArray *result = @[@0x2063, @0x200D, @0x2063, @0x200C, @0x2063]; /// Inverse of the start sequence
     return result;
 }
 
@@ -80,7 +80,7 @@ typedef NS_ENUM(UTF32Char, MFZeroWidthCharacter) {
     static BidirectionalMap *_characterMap = nil;
     if (_characterMap == nil) {
         _characterMap = [[BidirectionalMap alloc] initWithDictionary:@{
-            @-1:    @0x200B,
+            @-1:    @0x2063,
             @0:     @0x200C,
             @1:     @0x200D,
             @2:     @0x2060,
@@ -103,9 +103,9 @@ typedef NS_ENUM(UTF32Char, MFZeroWidthCharacter) {
     NSMutableArray *result = [NSMutableArray array];
     
     /// Finds secret messages in the string.
-    NSString *pattern = @"\u200B\u200C\u200B\u200D\u200B"           /// Start sequence
+    NSString *pattern = @"\u2063\u200C\u2063\u200D\u2063"           /// Start sequence
                         "(?:(?:[\u200C\u200D\u2060\u2062]{4})*)"    /// Arbitrary sequence of the 4 characters encoding, 0,1,2,3. Sequence length needs to be divisible by 4 since 4 quaternary digits encode one UTF-8 char.
-                        "\u200B\u200D\u200B\u200C\u200B";           /// End sequence
+                        "\u2063\u200D\u2063\u200C\u2063";           /// End sequence
     
     NSRegularExpressionOptions expressionOptions = 0;
     NSRegularExpression *expression = [NSRegularExpression regularExpressionWithPattern:pattern options:expressionOptions error:nil];

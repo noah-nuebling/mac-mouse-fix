@@ -95,6 +95,8 @@
 }
 
 + (NSString *)getKeyboardModifierString:(CGEventFlags)flags {
+    /// TODO: Maybe make this localizable.
+    ///     See macOS keyboard shortcut help article in Korean (uses different convention for showing shortcuts) https://support.apple.com/ko-kr/102650
     NSString *kb = @"";
     CGEventFlags f = flags;
     kb = [NSString stringWithFormat:@"%@%@%@%@",
