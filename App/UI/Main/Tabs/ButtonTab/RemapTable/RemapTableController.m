@@ -20,7 +20,7 @@
 #import "NSTextField+Additions.h"
 #import "UIStrings.h"
 #import "MFMessagePort.h"
-#import "CaptureNotificationCreator.h"
+#import "CaptureToasts.h"
 #import "RemapTableTranslator.h"
 #import "NSView+Additions.h"
 #import "KeyCaptureView.h"
@@ -405,7 +405,7 @@ static void updateBorderColor(RemapTableController *object, BOOL isInitialAppear
     /// Capture notifs
     ///     These are too long and obnoxious and not really helpful in this situation.
 //    NSSet *capturedButtonsAfter = [RemapTableUtility getCapturedButtons];
-//    [CaptureNotificationCreator showButtonCaptureNotificationWithBeforeSet:capturedButtonsBefore afterSet:capturedButtonsAfter];
+//    [CaptureToasts showButtonCaptureToastWithBeforeSet:capturedButtonsBefore afterSet:capturedButtonsAfter];
 }
 
 #pragma mark - Delegate & Controller
@@ -557,7 +557,7 @@ static void updateBorderColor(RemapTableController *object, BOOL isInitialAppear
     
     /// Capture notifs
     NSSet *capturedButtonsAfter = [RemapTableUtility getCapturedButtonsAndExcludeButtonsThatAreOnlyCapturedByModifier:NO];
-    [CaptureNotificationCreator showButtonCaptureNotificationWithBeforeSet:capturedButtonsBefore afterSet:capturedButtonsAfter];
+    [CaptureToasts showButtonCaptureToastWithBeforeSet:capturedButtonsBefore afterSet:capturedButtonsAfter];
 }
 
 - (void)addButtonAction {
@@ -653,10 +653,10 @@ static void updateBorderColor(RemapTableController *object, BOOL isInitialAppear
     /// Capture notifs
     /// 
     NSSet<NSNumber *> *capturedButtonsAfter = [RemapTableUtility getCapturedButtonsAndExcludeButtonsThatAreOnlyCapturedByModifier:NO];
-    [CaptureNotificationCreator showButtonCaptureNotificationWithBeforeSet:capturedButtonsBefore afterSet:capturedButtonsAfter];
+    [CaptureToasts showButtonCaptureToastWithBeforeSet:capturedButtonsBefore afterSet:capturedButtonsAfter];
     
 //    if ([capturedButtonsBefore isEqual:capturedButtonsAfter]) {
-        // If they aren't equal then `showButtonCaptureNotificationWithBeforeSet:` will show a notification
+        // If they aren't equal then `showButtonCaptureToastWithBeforeSet:` will show a notification
         //      This notification will not be interactable if we also open the popup button menu.
 //        [popUpButton performSelector:@selector(performClick:) withObject:nil afterDelay:0.2];
 //    }

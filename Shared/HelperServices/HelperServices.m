@@ -173,7 +173,7 @@
             
             /// Unregister if enabling
             /// - This is necessary for enabling to work after updating to new version in the same place while the old helper is still running
-            /// - removeServiceWithIdentifier() also works for this, but it leads to the helper weirdly enabling twice which causes the `is-strange-helper-toast` message to be shown twice
+            /// - removeServiceWithIdentifier() also works for this, but it leads to the helper weirdly enabling twice which causes the `is-strange-helper-alert` message to be shown twice
             
             if (enable) {
                 [self enableHelper_SM:NO];

@@ -1,6 +1,6 @@
 //
 // --------------------------------------------------------------------------
-// MFNotificationOverlayController.m
+// ToastController.m
 // Created for Mac Mouse Fix (https://github.com/noah-nuebling/mac-mouse-fix)
 // Created by Noah Nuebling in 2021
 // Licensed under the MMF License (https://github.com/noah-nuebling/mac-mouse-fix/blob/master/License)
@@ -13,38 +13,38 @@
 
 /// Also see `TrialNotificationController.swift`
 
-#import "ToastNotificationController.h"
+#import "ToastController.h"
 #import "AppDelegate.h"
 #import "Utility_App.h"
-#import "ToastNotification.h"
+#import "Toast.h"
 //#import "NSTextField+Additions.h"
 #import "NotificationLabel.h"
 #import "NSAttributedString+Additions.h"
 #import "LocalizationUtility.h"
 #import "Mac_Mouse_Fix-Swift.h"
 
-@interface ToastNotificationController ()
+@interface ToastController ()
 
 @property (unsafe_unretained) IBOutlet NotificationLabel *label;
 
 @end
 
-@implementation ToastNotificationController {
+@implementation ToastController {
 }
 
-static ToastNotificationController *_instance;
+static ToastController *_instance;
 static NSDictionary *_labelAttributesFromIB;
 static id _localEventMonitor;
 
 + (void)initialize {
     
-    if (self == [ToastNotificationController class]) {
+    if (self == [ToastController class]) {
         
         /// Setup window closing notification
         [NSNotificationCenter.defaultCenter addObserver:self selector:@selector(windowResignKey:) name:NSWindowDidResignKeyNotification object:nil];
         
         /// Setup notfication window
-        _instance = [[ToastNotificationController alloc] initWithWindowNibName:@"ToastNotification"];
+        _instance = [[ToastController alloc] initWithWindowNibName:@"Toast"];
         
         NSPanel *w = (NSPanel *)_instance.window;
         
@@ -70,6 +70,12 @@ static double _animationDurationFadeIn = 0.3;
 static double _animationDurationFadeOut = 0.2;
 static double _toastAnimationOffset = 20;
 
+typedef enum {
+    kToastNotificationAlignmentTopMiddle, /// Only kToastNotificationAlignmentTopMiddle is used.
+    kToastNotificationAlignmentBottomRight,
+    kToastNotificationAlignmentBottomMiddle,
+} ToastNotificationAlignment;
+
 /// Convenience function
 + (void)attachNotificationWithMessage:(NSAttributedString *)message toWindow:(NSWindow *)window forDuration:(NSTimeInterval)showDuration {
     
@@ -89,7 +95,7 @@ static double _toastAnimationOffset = 20;
         assert(showDuration == kMFToastDurationAutomatic);
         showDuration = message.length * 0.08 * [LocalizationUtility informationDensityOfCurrentLanguage];
     } else {
-        showDuration *= [LocalizationUtility informationDensityOfCurrentLanguage]; /// Why would we multiply with information density if the duration is specified by the caller? Note: this Is called with 10.0 at enable-timeout-toast, in all other cases it's called with automatic duration (Summer 2024)
+        showDuration *= [LocalizationUtility informationDensityOfCurrentLanguage]; /// Why would we multiply with information density if the duration is specified by the caller? Note: this Is called with 10.0 at k-enable-timeout-toast, in all other cases it's called with automatic duration (Summer 2024)
     }
     
     /// Constants
@@ -367,7 +373,7 @@ static void cleanupForNotificationClose(void) {
     /// This could also lead to weird behaviour whhen a notification starts to display while the Mac Mouse Fix window it attaches to is not in the foreground
     /// What we really want to do here is to close the notification as soon as the window whcih is it's parent becomes invisible, but I haven't found a way to do that. So we're resorting to tracking key status.
     /// This hacky solution might cause more weirdness and jank than it's worth.
-    /// Edit: Under MMF 3 there are situations where it's sometimes nice if the Toast still stays up when the app is in the background. E.g. the `is-strange-helper-toast` contains a list of instruction containing a link into Finder. When you click the link it's nice if the instructions stay up. -> Consider changing / removing this
+    /// Edit: Under MMF 3 there are situations where it's sometimes nice if the Toast still stays up when the app is in the background. E.g. the `is-strange-helper-alert` contains a list of instruction containing a link into Finder. When you click the link it's nice if the instructions stay up. -> Consider changing / removing this
     
     NSWindow *closedWindow = notification.object;
     
@@ -380,7 +386,7 @@ static void cleanupForNotificationClose(void) {
 #pragma mark - Other interface
 
 + (NSFont *)defaultFont {
-    /// At the time of writing this is only used from outside ToastNotificationController not inside - so I hope this is correct! Should we use `labelFontSize` instead?
+    /// At the time of writing this is only used from outside ToastController not inside - so I hope this is correct! Should we use `labelFontSize` instead?
     return [NSFont systemFontOfSize:NSFont.systemFontSize];
 }
 

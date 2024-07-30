@@ -21,7 +21,6 @@ import Foundation
 /// - **TODO:** Test if the new approach actually prevents bridging (Check performance against the old approach)
 ///
 
-
 extension NSString {
     
     /// NSString+Additions.h
@@ -36,7 +35,7 @@ extension NSString {
         return __firstCapitalized() as! NSString
     }
     func stringByTrimmingWhiteSpace() -> NSString {
-        return __firstCapitalized() as! NSString
+        return __stringByTrimmingWhiteSpace() as! NSString
     }
     func string(byAddingIndent indent: NSInteger) -> NSString {
         return __string(byAddingIndent: indent) as! NSString

@@ -1,22 +1,22 @@
 //
 // --------------------------------------------------------------------------
-// CaptureNotifications.m
+// CaptureToasts.m
 // Created for Mac Mouse Fix (https://github.com/noah-nuebling/mac-mouse-fix)
 // Created by Noah Nuebling in 2021
 // Licensed under the MMF License (https://github.com/noah-nuebling/mac-mouse-fix/blob/master/License)
 // --------------------------------------------------------------------------
 //
 
-#import "CaptureNotificationCreator.h"
+#import "CaptureToasts.h"
 #import "UIStrings.h"
 #import "NSArray+Additions.h"
 #import "NSAttributedString+Additions.h"
-#import "ToastNotificationController.h"
+#import "ToastController.h"
 #import "AppDelegate.h"
 #import "SharedUtility.h"
 #import "Mac_Mouse_Fix-Swift.h"
 
-@implementation CaptureNotificationCreator
+@implementation CaptureToasts
 
 typedef enum {
     
@@ -33,16 +33,16 @@ typedef enum {
 
 #define hintSeparatorSize 4.0
 
-+ (void)showScrollWheelCaptureNotification:(BOOL)hasBeenCaptured {
++ (void)showScrollWheelCaptureToast:(BOOL)hasBeenCaptured {
     
     /// Create toast body
     NSAttributedString *body = createSimpleNotificationBody(hasBeenCaptured, kMFCapturedInputTypeScroll);
     
     /// Show notification
-    [ToastNotificationController attachNotificationWithMessage:body toWindow:MainAppState.shared.window forDuration:kMFToastDurationAutomatic];
+    [ToastController attachNotificationWithMessage:body toWindow:MainAppState.shared.window forDuration:kMFToastDurationAutomatic];
 }
 
-+ (void)showButtonCaptureNotificationWithBeforeSet:(NSSet<NSNumber *> *)beforeSet afterSet:(NSSet<NSNumber *> *)afterSet {
++ (void)showButtonCaptureToastWithBeforeSet:(NSSet<NSNumber *> *)beforeSet afterSet:(NSSet<NSNumber *> *)afterSet {
     
     /// Called by [RemapTableController - addRowWithHelperPayload:]
     /// Creates notifications to inform the user about newly caputred / uncaptured buttons after the user added a new row to the remapsTable
@@ -76,10 +76,10 @@ typedef enum {
         NSArray<NSString *> *capturedButtonStringArray = buttonStringArrayFromButtonNumberArray(capturedArray);
         
         /// Create toast body
-        NSAttributedString * body = createButtonsNotificationBody(capturedButtonStringArray, uncapturedButtonStringArray);
+        NSAttributedString *body = createButtonsNotificationBody(capturedButtonStringArray, uncapturedButtonStringArray);
         
         /// Show notification
-        [ToastNotificationController attachNotificationWithMessage:body toWindow:MainAppState.shared.window forDuration:kMFToastDurationAutomatic];
+        [ToastController attachNotificationWithMessage:body toWindow:MainAppState.shared.window forDuration:kMFToastDurationAutomatic];
     }
 }
 

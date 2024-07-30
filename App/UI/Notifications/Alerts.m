@@ -1,13 +1,13 @@
 //
 // --------------------------------------------------------------------------
-// AlertCreator.m
+// Alerts.m
 // Created for Mac Mouse Fix (https://github.com/noah-nuebling/mac-mouse-fix)
 // Created by Noah Nuebling in 2022
 // Licensed under the MMF License (https://github.com/noah-nuebling/mac-mouse-fix/blob/master/License)
 // --------------------------------------------------------------------------
 //
 
-#import "AlertCreator.h"
+#import "Alerts.h"
 #import "NSAttributedString+Additions.h"
 
 #pragma mark - NSAlert subclass
@@ -79,9 +79,9 @@
 
 @end
 
-#pragma mark - AlertCreator
+#pragma mark - Alerts class
 
-@implementation AlertCreator
+@implementation Alerts
 
 
 + (void)showStrangeHelperMessageWithStrangeURL:(NSString *)strangeURL {

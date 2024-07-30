@@ -134,7 +134,7 @@ class GeneralTabController: NSViewController {
                             
                             /// Extend the enable timeout if the CPU is busy.
                             /// Notes:
-                            /// -  We added this so the enableTimeout isn't triggered when the computer is starting up. I think what we really wanna be doing here is wait for all the login items to start before starting the enableTimeout. The login items are only started after most of the windows are restored. The CPU usage is an okay way to detect this startup sequence but far from perfect. The CPU usage will continute to be high during startup after the login items have been started. Also CPU can be high in other circumstances. CPU usage will be high in more cases than the ones we want to detect. But I think it's better to show enable-timeout-toast too little than too much since I don't want to confuse/clutter up normal users with it and users that actually can't enable Mac Mouse Fix are gonna find the toast, even if it doesn't show up 100% consistently.
+                            /// -  We added this so the enableTimeout isn't triggered when the computer is starting up. I think what we really wanna be doing here is wait for all the login items to start before starting the enableTimeout. The login items are only started after most of the windows are restored. The CPU usage is an okay way to detect this startup sequence but far from perfect. The CPU usage will continute to be high during startup after the login items have been started. Also CPU can be high in other circumstances. CPU usage will be high in more cases than the ones we want to detect. But I think it's better to show `k-enable-timeout-toast` too little than too much since I don't want to confuse/clutter up normal users with it and users that actually can't enable Mac Mouse Fix are gonna find the toast, even if it doesn't show up 100% consistently.
                             /// - It's conceivable that on weaker machines the CPU usage never goes below our thrwshold and therefore the enable-timeout-message is never shown.
                             
                             if let cpuUsage = Utility_App.cpuUsage(includingNice: false) {
@@ -161,15 +161,8 @@ class GeneralTabController: NSViewController {
                             enableTimeoutDisposable?.dispose()
                             
                             /// Show user feedback
-                            /// Notes:
-                            /// - TODO: Adjust the link after writing the guide.
-                            /// - We put a period at the end of this UI string. Usually we don't put periods for short UI strings, but it just feels wrong in this case?
-                            /// - The default duration `kMFToastDurationAutomatic` felt too short in this case. I wonder why that is? I think this toast is one of, if not the shortest toasts - maybe it has to do with that? Maybe it feels like it should display longer, because there's a delay until it shows up so it's harder to get back to? Maybe our tastes for how long the toasts should be changed? Maybe we should adjust the formula for `kMFToastDurationAutomatic`?
+                            Toasts.showSimpleToast(name: "k-enable-timeout-toast")
                             
-                            if let window = NSApp.mainWindow {
-                                let rawMessage = NSLocalizedString("enable-timeout-toast", comment: "First draft: If you have **problems enabling** the app, click&nbsp;[here](https://github.com/noah-nuebling/mac-mouse-fix/discussions/861).")
-                                ToastNotificationController.attachNotification(withMessage: NSMutableAttributedString(coolMarkdown: rawMessage)!, to: window, forDuration: 10.0)
-                            }
                         })
                         enableTimeoutTimer?.resume()
                         
@@ -179,19 +172,10 @@ class GeneralTabController: NSViewController {
                         
                         guard let error = error else { assert(false); return }
                         
-                        var messageRaw = ""
-                        if #available(macOS 13.0, *), error.domain == "SMAppServiceErrorDomain", error.code == 1 {
-                            messageRaw = NSLocalizedString("is-disabled-toast", comment: "First draft: Mac Mouse Fix was **disabled** in System Settings\n\nTo enable Mac Mouse Fix:\n\n1. Go to [Login Items Settings](x-apple.systempreferences:com.apple.LoginItems-Settings.extension)\n2. Switch on \'Mac Mouse Fix.app\'")
-                        }
                         
-                        if messageRaw != "" {
-                            let message = NSMutableAttributedString(coolMarkdown: messageRaw)
-                            DispatchQueue.main.async { /// UI stuff needs to be called from the main thread
-                                if let window = NSApp.mainWindow, let message = message {
-                                    ToastNotificationController.attachNotification(withMessage: message, to: window, forDuration: kMFToastDurationAutomatic)
-                                }
-                            }
+                        if #available(macOS 13.0, *), error.domain == "SMAppServiceErrorDomain", error.code == 1 {
                             
+                            Toasts.showSimpleToast(name: "k-is-disabled-toast")
                         }
                     }
                 })

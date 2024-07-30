@@ -141,15 +141,11 @@ import Foundation
                     
                     /// Display already using notifications
                     
-                    let messageRaw: String
-                    if selectedPreset == 3 {
-                        messageRaw = NSLocalizedString("already-using-defaults-toast.3", comment: "First draft: You're __already using__ the default setting for mice with __3 buttons__")
+                    if selectedPreset == 3 {    
+                        Toasts.showSimpleToast(name: "k-already-using-defaults-toast.3")
                     } else {
-                        messageRaw = NSLocalizedString("already-using-defaults-toast.5", comment: "First draft: You're __already using__ the default setting for mice with __5 buttons__")
-                    }
-                    let message = NSAttributedString(coolMarkdown: messageRaw)!
-                    DispatchQueue.main.async {
-                        ToastNotificationController.attachNotification(withMessage: message, to: MainAppState.shared.window!, forDuration: kMFToastDurationAutomatic)
+                        
+                        Toasts.showSimpleToast(name: "k-already-using-defaults-toast.5")
                     }
                     return
                 }
@@ -328,7 +324,7 @@ import Foundation
             commitConfig()
             
             /// Show user feedback
-            ToastCreator.showReviveToast(showButtons: buttonsAreKilled, showScroll: scrollIsKilled)
+            Toasts.showReviveToast(showButtons: buttonsAreKilled, showScroll: scrollIsKilled)
         }
     }
     
@@ -609,19 +605,15 @@ import Foundation
     ///     TODO: Use format strings and shared functions from UIStrings.m to obtain button names
 
     override func mouseUp(with event: NSEvent) {
+        
         if !pointerIsInsideAddField { return }
         
-        let messageRaw = NSLocalizedString("forbidden-capture-toast.1", comment: "First draft: **Primary Mouse Button** can't be used\nPlease try another button")
-        let message = NSAttributedString(coolMarkdown: messageRaw)!;
-        
-        ToastNotificationController.attachNotification(withMessage: message, to: MainAppState.shared.window!, forDuration: kMFToastDurationAutomatic)
+        Toasts.showSimpleToast(name: "k-forbidden-capture-toast.1")
     }
     override func rightMouseUp(with event: NSEvent) {
+        
         if !pointerIsInsideAddField { return }
         
-        let messageRaw = NSLocalizedString("forbidden-capture-toast.2", comment: "First draft: **Secondary Mouse Button** can't be used\nPlease try another button")
-        let message = NSAttributedString(coolMarkdown: messageRaw)!;
-        
-        ToastNotificationController.attachNotification(withMessage: message, to: MainAppState.shared.window!, forDuration: kMFToastDurationAutomatic)
+        Toasts.showSimpleToast(name: "k-forbidden-capture-toast.2")
     }
 }

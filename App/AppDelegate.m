@@ -15,7 +15,7 @@
 #import "AuthorizeAccessibilityView.h"
 #import "HelperServices.h"
 #import "SharedUtility.h"
-#import "ToastNotificationController.h"
+#import "ToastController.h"
 #import "NSView+Additions.h"
 #import "AppTranslocationManager.h"
 #import <Sparkle/Sparkle.h>

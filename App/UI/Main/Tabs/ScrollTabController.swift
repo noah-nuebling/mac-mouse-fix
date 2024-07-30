@@ -79,7 +79,7 @@ class ScrollTabController: NSViewController {
             
             /// Show message to user
 
-            ToastCreator.showReviveToast(showButtons: false, showScroll: true)
+            Toasts.showReviveToast(showButtons: false, showScroll: true)
         }
     }
     
@@ -204,10 +204,10 @@ class ScrollTabController: NSViewController {
                 DDLogDebug("ScrollTab - smooth: \(smooth0)->\(smooth1) reverse: \(reverse0)->\(reverse1) speed: \(speed0)->\(speed1) horizontal: \(horizontal0)->\(horizontal1) zoom: \(zoom0)->\(zoom1) swift: \(swift0)->\(swift1) precise: \(precise0)->\(precise1)")
                 
                 if wasCaptured && !isCaptured {
-                    CaptureNotificationCreator.showScrollWheelCaptureNotification(false)
+                    CaptureToasts.showScrollWheelCaptureToast(false)
                 }
                 if !wasCaptured && isCaptured {
-                    CaptureNotificationCreator.showScrollWheelCaptureNotification(true)
+                    CaptureToasts.showScrollWheelCaptureToast(true)
                 }
             }
         }

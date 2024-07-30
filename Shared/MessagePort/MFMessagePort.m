@@ -18,7 +18,7 @@
 #if IS_MAIN_APP
 #import "Mac_Mouse_Fix-Swift.h"
 #import "KeyCaptureView.h"
-#import "AlertCreator.h"
+#import "Alerts.h"
 #endif
 
 #if IS_HELPER
