@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="23086.1" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="B8D-0N-5wS">
+<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="23089" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="B8D-0N-5wS">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="23086.1"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="23089"/>
         <capability name="Image references" minToolsVersion="12.0"/>
         <capability name="System colors introduced in macOS 10.14" minToolsVersion="10.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -20,6 +20,7 @@
                                     <items>
                                         <menuItem title="About Mac Mouse Fix" id="u9F-yq-WC3">
                                             <modifierMask key="keyEquivalentModifierMask"/>
+                                            <accessibility identifier="axMenuItemAboutMacMouseFix"/>
                                             <connections>
                                                 <action selector="openAboutTab:" target="Voe-Tx-rLC" id="HWV-dp-GPx"/>
                                             </connections>
@@ -27,12 +28,14 @@
                                         <menuItem isSeparatorItem="YES" id="EZF-ln-4YN"/>
                                         <menuItem title="Activate License..." id="YBT-Ar-F4S">
                                             <modifierMask key="keyEquivalentModifierMask"/>
+                                            <accessibility identifier="axMenuItemActivateLicense"/>
                                             <connections>
                                                 <action selector="activateLicense:" target="Voe-Tx-rLC" id="zHH-gf-IUB"/>
                                             </connections>
                                         </menuItem>
                                         <menuItem title="Buy Mac Mouse Fix..." id="d0g-07-PaJ">
                                             <modifierMask key="keyEquivalentModifierMask"/>
+                                            <accessibility identifier="axMenuItemBuyMacMouseFix"/>
                                             <connections>
                                                 <action selector="buyMMF:" target="Voe-Tx-rLC" id="LM6-60-RNE"/>
                                             </connections>
@@ -40,6 +43,7 @@
                                         <menuItem isSeparatorItem="YES" id="er1-Mw-t0o"/>
                                         <menuItem title="Check for Updates..." id="3pt-ka-lxV">
                                             <modifierMask key="keyEquivalentModifierMask"/>
+                                            <accessibility identifier="axMenuItemCheckForUpdates"/>
                                             <connections>
                                                 <action selector="checkForUpdates:" target="0Vp-JG-nY6" id="M6c-Iz-PQZ"/>
                                             </connections>
@@ -48,33 +52,39 @@
                                         <menuItem title="Services" id="Gr8-qh-oGd">
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                             <menu key="submenu" title="Services" systemMenu="services" id="X8q-Nk-Fwr"/>
+                                            <accessibility identifier="axMenuItemServices"/>
                                         </menuItem>
                                         <menuItem isSeparatorItem="YES" id="3A5-gM-eM7"/>
                                         <menuItem title="Hide Mac Mouse Fix" keyEquivalent="h" id="Bnm-ze-Mca">
+                                            <accessibility identifier="axMenuItemHideMacMouseFix"/>
                                             <connections>
                                                 <action selector="hide:" target="Ady-hI-5gd" id="DvG-O9-en1"/>
                                             </connections>
                                         </menuItem>
                                         <menuItem title="Hide Others" keyEquivalent="h" id="Rlr-89-4fc">
                                             <modifierMask key="keyEquivalentModifierMask" option="YES" command="YES"/>
+                                            <accessibility identifier="axMenuItemHideOthers"/>
                                             <connections>
                                                 <action selector="hideOtherApplications:" target="Ady-hI-5gd" id="Y8Y-9m-Zpe"/>
                                             </connections>
                                         </menuItem>
                                         <menuItem title="Show All" id="fGs-UI-L0d">
                                             <modifierMask key="keyEquivalentModifierMask"/>
+                                            <accessibility identifier="axMenuItemShowAll"/>
                                             <connections>
                                                 <action selector="unhideAllApplications:" target="Ady-hI-5gd" id="pl9-uK-Xa1"/>
                                             </connections>
                                         </menuItem>
                                         <menuItem isSeparatorItem="YES" id="Zd5-PO-XF4"/>
                                         <menuItem title="Quit Mac Mouse Fix" keyEquivalent="q" id="UeD-ND-tYj">
+                                            <accessibility identifier="axMenuItemQuitMacMouseFix"/>
                                             <connections>
                                                 <action selector="terminate:" target="Ady-hI-5gd" id="rFO-NZ-0iA"/>
                                             </connections>
                                         </menuItem>
                                     </items>
                                 </menu>
+                                <accessibility identifier="axMenuBarItemMacMouseFix"/>
                             </menuItem>
                             <menuItem title="Edit" id="6Yt-gG-Nf9">
                                 <modifierMask key="keyEquivalentModifierMask"/>
@@ -373,6 +383,7 @@
                                                 <attributedString key="userComments">
                                                     <fragment content="General &gt; Show in Menu Bar Toggle"/>
                                                 </attributedString>
+                                                <accessibility identifier="axShowInMenuBarToggle"/>
                                             </button>
                                             <customView horizontalHuggingPriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="hr6-ym-FE1" userLabel="MenuBarIndent">
                                                 <rect key="frame" x="0.0" y="107" width="245" height="28"/>
@@ -418,6 +429,7 @@ smooth scrolling</string>
                                                 <attributedString key="userComments">
                                                     <fragment content="General &gt; Check for Updates Toggle"/>
                                                 </attributedString>
+                                                <accessibility identifier="axCheckForUpdatesToggle"/>
                                             </button>
                                             <customView horizontalHuggingPriority="999" verticalHuggingPriority="999" horizontalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="ojq-7M-UaO" userLabel="Updates extra section">
                                                 <rect key="frame" x="0.0" y="0.0" width="381" height="50"/>
@@ -434,6 +446,7 @@ smooth scrolling</string>
                                                                 <attributedString key="userComments">
                                                                     <fragment content="General &gt; Get Beta Versions Toggle"/>
                                                                 </attributedString>
+                                                                <accessibility identifier="axGetBetaVersionsToggle"/>
                                                             </button>
                                                             <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="tvD-Xi-viR" customClass="MarkdownTextField" customModule="Mac_Mouse_Fix" customModuleProvider="target">
                                                                 <rect key="frame" x="-2" y="0.0" width="234" height="28"/>
@@ -539,7 +552,7 @@ this window</string>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <subviews>
                                                 <imageView identifier="PlusIcon" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Jod-JU-J5j">
-                                                    <rect key="frame" x="240" y="38" width="60" height="67"/>
+                                                    <rect key="frame" x="240" y="38.5" width="60" height="66.5"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                                     <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyUpOrDown" image="plus" catalog="system" id="EyU-is-YRF"/>
                                                     <color key="contentTintColor" name="placeholderTextColor" catalog="System" colorSpace="catalog"/>
@@ -1827,7 +1840,7 @@ System Preferences &gt; Mouse &gt; Tracking speed </string>
                                                 <rect key="frame" x="282" y="0.0" width="847" height="50"/>
                                                 <subviews>
                                                     <imageView horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="tsR-bT-Bpt">
-                                                        <rect key="frame" x="4" y="16" width="18" height="19"/>
+                                                        <rect key="frame" x="4" y="15.5" width="18" height="20"/>
                                                         <imageCell key="cell" refusesFirstResponder="YES" alignment="left" id="yRU-7Y-mLd">
                                                             <imageReference key="image" image="exclamationmark.shield" catalog="system" symbolScale="default"/>
                                                         </imageCell>
@@ -1874,7 +1887,7 @@ System Preferences &gt; Mouse &gt; Tracking speed </string>
                                                 <rect key="frame" x="1270" y="0.0" width="706" height="50"/>
                                                 <subviews>
                                                     <imageView horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="FUu-Vm-nqE">
-                                                        <rect key="frame" x="3" y="17" width="20" height="17"/>
+                                                        <rect key="frame" x="3" y="16.5" width="20.5" height="18"/>
                                                         <imageCell key="cell" refusesFirstResponder="YES" alignment="left" id="Upm-7C-ya2">
                                                             <imageReference key="image" image="arrow.triangle.branch" catalog="system" symbolScale="default"/>
                                                         </imageCell>
@@ -1940,7 +1953,7 @@ System Preferences &gt; Mouse &gt; Tracking speed </string>
                                                 <rect key="frame" x="282" y="0.0" width="847" height="50"/>
                                                 <subviews>
                                                     <imageView horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="qKl-We-pTD">
-                                                        <rect key="frame" x="2" y="16" width="23" height="19"/>
+                                                        <rect key="frame" x="2" y="15" width="23.5" height="20"/>
                                                         <imageCell key="cell" refusesFirstResponder="YES" alignment="left" id="a3K-g3-5Cx">
                                                             <imageReference key="image" image="rectangle.3.group.bubble.left" catalog="system" symbolScale="default"/>
                                                         </imageCell>
@@ -1987,7 +2000,7 @@ System Preferences &gt; Mouse &gt; Tracking speed </string>
                                                 <rect key="frame" x="1270" y="0.0" width="706" height="50"/>
                                                 <subviews>
                                                     <imageView horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="hg9-F7-AIO">
-                                                        <rect key="frame" x="4" y="16" width="19" height="19"/>
+                                                        <rect key="frame" x="3" y="15.5" width="20" height="20"/>
                                                         <imageCell key="cell" refusesFirstResponder="YES" alignment="left" id="mRY-c2-9LL">
                                                             <imageReference key="image" image="safari" catalog="system" symbolScale="default"/>
                                                         </imageCell>
@@ -2053,7 +2066,7 @@ System Preferences &gt; Mouse &gt; Tracking speed </string>
                                                 <rect key="frame" x="282" y="0.0" width="847" height="50"/>
                                                 <subviews>
                                                     <imageView horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="0K0-uH-MRf">
-                                                        <rect key="frame" x="3" y="17" width="20" height="18"/>
+                                                        <rect key="frame" x="3" y="16.5" width="20.5" height="19"/>
                                                         <imageCell key="cell" refusesFirstResponder="YES" alignment="left" id="vQT-JM-cWN">
                                                             <imageReference key="image" image="heart.text.square" catalog="system" symbolScale="default"/>
                                                         </imageCell>
@@ -2103,7 +2116,7 @@ System Preferences &gt; Mouse &gt; Tracking speed </string>
                                                 <rect key="frame" x="1270" y="0.0" width="706" height="50"/>
                                                 <subviews>
                                                     <imageView horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="BDB-tM-gQU">
-                                                        <rect key="frame" x="6" y="17" width="14" height="18"/>
+                                                        <rect key="frame" x="6" y="16.5" width="14.5" height="19"/>
                                                         <imageCell key="cell" refusesFirstResponder="YES" alignment="left" id="B37-zq-ffR">
                                                             <imageReference key="image" image="questionmark" catalog="system" symbolScale="default"/>
                                                         </imageCell>
@@ -2183,7 +2196,7 @@ System Preferences &gt; Mouse &gt; Tracking speed </string>
                                                 <rect key="frame" x="282" y="0.0" width="847" height="50"/>
                                                 <subviews>
                                                     <imageView horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="dMC-Ih-72R">
-                                                        <rect key="frame" x="1" y="14" width="24" height="25"/>
+                                                        <rect key="frame" x="1" y="13.5" width="24.5" height="26"/>
                                                         <imageCell key="cell" refusesFirstResponder="YES" alignment="left" id="vYQ-bb-0Rj">
                                                             <imageReference key="image" image="hands.sparkles" catalog="system" symbolScale="default"/>
                                                         </imageCell>
@@ -2312,7 +2325,7 @@ System Preferences &gt; Mouse &gt; Tracking speed </string>
                                                         <rect key="frame" x="1020" y="12" width="219" height="189"/>
                                                         <subviews>
                                                             <imageView horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="Qse-14-whX">
-                                                                <rect key="frame" x="2" y="86" width="21" height="18"/>
+                                                                <rect key="frame" x="2" y="85.5" width="21" height="19"/>
                                                                 <constraints>
                                                                     <constraint firstAttribute="width" constant="21" id="RSh-9n-AMC"/>
                                                                     <constraint firstAttribute="height" constant="9" id="hqs-Af-z3e"/>
@@ -2463,21 +2476,21 @@ System Preferences &gt; Mouse &gt; Tracking speed </string>
     <resources>
         <image name="AppIconRoundFromHelper-deleteThis" width="128" height="128"/>
         <image name="LittleMilkshakeOutlines" width="116" height="128"/>
-        <image name="arrow.triangle.branch" catalog="system" width="16" height="14"/>
-        <image name="arrow.up.and.down" catalog="system" width="12" height="15"/>
+        <image name="arrow.triangle.branch" catalog="system" width="15" height="14"/>
+        <image name="arrow.up.and.down" catalog="system" width="11" height="15"/>
         <image name="arrow.uturn.backward.circle.fill" catalog="system" width="15" height="15"/>
-        <image name="calendar" catalog="system" width="17" height="14"/>
+        <image name="calendar" catalog="system" width="16" height="14"/>
         <image name="cursorarrow" catalog="system" width="11" height="16"/>
-        <image name="exclamationmark.shield" catalog="system" width="15" height="15"/>
+        <image name="exclamationmark.shield" catalog="system" width="14" height="15"/>
         <image name="gearshape" catalog="system" width="16" height="16"/>
-        <image name="hands.sparkles" catalog="system" width="19" height="20"/>
-        <image name="heart.text.square" catalog="system" width="16" height="14"/>
+        <image name="hands.sparkles" catalog="system" width="18" height="20"/>
+        <image name="heart.text.square" catalog="system" width="15" height="14"/>
         <image name="info.circle" catalog="system" width="15" height="15"/>
-        <image name="minus" catalog="system" width="15" height="4"/>
-        <image name="plus" catalog="system" width="15" height="13"/>
-        <image name="questionmark" catalog="system" width="11" height="15"/>
-        <image name="rectangle" catalog="system" width="19" height="14"/>
-        <image name="rectangle.3.group.bubble.left" catalog="system" width="18" height="16"/>
+        <image name="minus" catalog="system" width="14" height="4"/>
+        <image name="plus" catalog="system" width="14" height="13"/>
+        <image name="questionmark" catalog="system" width="10" height="15"/>
+        <image name="rectangle" catalog="system" width="18" height="14"/>
+        <image name="rectangle.3.group.bubble.left" catalog="system" width="17" height="16"/>
         <image name="safari" catalog="system" width="15" height="15"/>
         <image name="xmark.circle.fill" catalog="system" width="15" height="15"/>
     </resources>

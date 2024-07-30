@@ -398,6 +398,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		4F0028012C58303B00CDB9D0 /* LocalizationScreenshotTakerTestPlan.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; name = LocalizationScreenshotTakerTestPlan.xctestplan; path = LocalizationScreenshotTaker/LocalizationScreenshotTakerTestPlan.xctestplan; sourceTree = SOURCE_ROOT; };
 		4F02C71C2899448900ED0AA8 /* OutputCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OutputCoordinator.swift; sourceTree = "<group>"; };
 		4F02C7202899453200ED0AA8 /* OutputCoordinator.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OutputCoordinator.h; sourceTree = "<group>"; };
 		4F09283E28B8101600BDC2FF /* TrialSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrialSection.swift; sourceTree = "<group>"; };
@@ -6760,6 +6761,7 @@
 				4F8B01AB2C348A3A00F3AF8D /* LocalizationScreenshots.swift */,
 				4F0B8B172C58156F002715FF /* XCUIElement+Additions.h */,
 				4FAA3DBB2C56802E00CBA413 /* XCUIElement+Additions.m */,
+				4F0028012C58303B00CDB9D0 /* LocalizationScreenshotTakerTestPlan.xctestplan */,
 				4F0C003D2C52BBA600C5D843 /* LocalizationScreenshotTaker.entitlements */,
 				4FE78C382C4FFB0E00C54103 /* LocalizationScreenshotTaker-Bridging-Header.h */,
 			);

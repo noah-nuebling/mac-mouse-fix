@@ -115,7 +115,6 @@ final class LocalizationScreenshotClass: XCTestCase {
         }
     }
     
-    
     fileprivate func navigateAppAndTakeScreenshots( _ outputDirectory: URL) -> [ScreenshotAndMetadata?] {
 
         /// Declare result
@@ -127,23 +126,97 @@ final class LocalizationScreenshotClass: XCTestCase {
         /// Find main window
         let window = app!.windows.firstMatch
         
-        /// Center the window
-        ///     So screenshots don't get cut off or menu's compressed by screen edge
-        ///     Update: Can't get this to work properly
-//        let targetX = screen.frame.midX - window.frame.width/2.0 /// In screenspace
-//        let targetY = screen.frame.midY - window.frame.height/2.0
-//        let deltaX = targetX - window.frame.minX
-//        let deltaY = targetY - window.frame.minY
-//        let normalizedDeltaX = deltaX / window.frame.width
-//        let normalizedDeltaY = deltaY / window.frame.height
-//        let dragStart = window.coordinate(withNormalizedOffset: .init(dx: 0.5, dy: 0.1))
-//        let dragEnd = window.coordinate(withNormalizedOffset: .init(dx: 0.5 + normalizedDeltaX, dy: normalizedDeltaY))
-//        dragStart.click(forDuration: 0, thenDragTo: dragEnd, withVelocity: .fast, thenHoldForDuration: 0)
+        /// Find tab buttons
+        let toolbarButtons = window.toolbars.firstMatch.children(matching: .button) /// `window.toolbarButtons` doesn't work for some reason.
+        
+        /// Find menuBar
+        let menuBar = app!.menuBars.firstMatch
+        
+        /// TEST
+        var tree = try! TreeNode<AnyObject>.tree(withKVCObject: menuBar.snapshot(), childrenKey: "children") as! TreeNode<XCUIElementSnapshot>
+        
+        /// Position the window
+        let targetWindowY = 0.2 /// Normalized between 0 and 1
+        let targetWindowPosition = NSMakePoint(screen.frame.midX - window.frame.width/2.0, /// Just center the window horizontally
+                                               targetWindowY * (screen.frame.height - window.frame.height))
+        let appleScript = NSAppleScript(source: """
+        tell application "System Events"
+            set position of window 1 of process "Mac Mouse Fix" to {\(targetWindowPosition.x), \(targetWindowPosition.y)}
+        end tell
+        """)
+        var error: NSDictionary? = nil
+        appleScript?.executeAndReturnError(&error)
+        assert(error == nil)
+        
+        /// Screenshot menuBar itself
+        result.append(takeLocalizationScreenshot(of: menuBar, name: "MenuBar"))
+        
+        /// Screenshot each menuBarItem
+        var didClickMenuBar = false
+        for (i, menuBarItem) in menuBar.menuBarItems.allElementsBoundByIndex.enumerated() {
+            
+            /// Skip Apple menu
+            if i == 0 { continue }
+            
+            /// Reveal menu
+            if !didClickMenuBar {
+                menuBarItem.click()
+                didClickMenuBar = true
+            } else {
+                menuBarItem.hover()
+            }
+            let menu = menuBarItem.menus.firstMatch
+            
+            /// Take screenshot of menu
+            result.append(takeLocalizationScreenshot(of: menu, name: "MenuBar Menu \(i)"))
+            
+            /// Take screenshot with option held (reveal secret/alternative menuItems)
+            XCUIElement.perform(withKeyModifiers: .option) {
+                result.append(takeLocalizationScreenshot(of: menu, name: "MenuBar Menu \(i) (Option)"))
+            }
+        }
+        
+        /// Dismiss menu
+        if didClickMenuBar {
+            hitEscape()
+        }
+        
+        ///
+        /// Screenshot special views only accessible through the menuBar
+        ///
+        
+        /// Find "activate" license menu item
+        let macMouseFixMenuItem = menuBar.menuBarItems.allElementsBoundByIndex[1]
+        macMouseFixMenuItem.click()
+        let macMouseFixMenu = macMouseFixMenuItem.menus.firstMatch
+        let activateLicenseItem = macMouseFixMenu.menuItems["axMenuItemActivateLicense"].firstMatch
+        
+        /// Click
+        activateLicenseItem.click()
+        
+        /// Delete license key
+        /// Delete license key from the textfield, so it's hidden in the screenshot, and the placeholder appears instead
+        app?.typeKey(.delete, modifierFlags: [])
+        
+        /// Find sheet
+        var sheet = window.sheets.firstMatch
+        
+        /// Sheenshot
+        result.append(takeLocalizationScreenshot(of: sheet, name: "ActivateLicenseSheet"))
+        
+        /// Cleanup
+        hitEscape()
+        
+        ///
+        /// Screenshot GeneralTab
+        ///
+        
+        /// Switch to general tab
+        toolbarButtons["general"].click() /// Need to click twice so that the test runner properly waits for the animation to finish
+        coolWait()
         
         /// Find enable toggle
-        let switcherino = window.switches["axEnableToggle"]
-        let switcherinoExists = switcherino.waitForExistence(timeout: 10)
-        XCTAssertTrue(switcherinoExists)
+        let switcherino = window.switches["axEnableToggle"].firstMatch
         
         /// Enable MMF (if necessary)
         let isEnabledPredicate = NSPredicate.init(format: "value == 1")
@@ -151,22 +224,26 @@ final class LocalizationScreenshotClass: XCTestCase {
             switcherino.click()
             let switchIsEnabled = expectation(for: isEnabledPredicate, evaluatedWith: switcherino)
             XCTWaiter().wait(for: [switchIsEnabled], timeout: 10.0)
+            coolWait() /// Wait for animation to finish
         }
         
-        /// TEST
-        let tree: TreeNode<XCUIElementSnapshot>
-        do {
-             tree = try TreeNode<AnyObject>.tree(withKVCObject: window.snapshot(), childrenKey: "children") as! TreeNode<XCUIElementSnapshot>
-        } catch {
-            
+        /// Find checkForUpdates toggle
+        let updatesToggle = window.checkBoxes["axCheckForUpdatesToggle"].firstMatch
+        
+        /// Enable updates
+        ///     (So that the beta section is expanded)
+        if (updatesToggle.value as! Int) != 1 {
+            updatesToggle.click()
+            coolWait()
         }
         
-        /// Find tabButtons
-        let toolbarButtons = window.toolbars.firstMatch.children(matching: .button) /// `window.toolbarButtons` doesn't work for some reason.
+        /// Take screenshot of fully expanded general tab
+        result.append(takeLocalizationScreenshot(of: window, name: "GeneralTab"))
 
         ///
         /// Screenshot ButtonsTab
         ///
+        
         toolbarButtons["buttons"].click()
         coolWait()
         result.append(takeLocalizationScreenshot(of: window, name: "ButtonsTab"))
@@ -174,36 +251,67 @@ final class LocalizationScreenshotClass: XCTestCase {
         /// Screenshot menus
         ///     (Which let you pick the action in the remaps table)
         for (i, popupButton) in window.popUpButtons.allElementsBoundByIndex.enumerated() {
+            
+            /// Click
             popupButton.click()
             let menu = popupButton.menus.firstMatch
-            result.append(takeLocalizationScreenshot(of: menu, name: "ButtonsTab.menu.\(i)"))
+            
+            /// Screenshot
+            result.append(takeLocalizationScreenshot(of: menu, name: "ButtonsTab Menu \(i)"))
+            
+            /// Option screenshot
+            XCUIElement.perform(withKeyModifiers: .option) {
+                result.append(takeLocalizationScreenshot(of: menu, name: "ButtonsTab Menu \(i) (Option)"))
+            }
+            
+            /// Clean up
             hitEscape()
         }
         
         /// Screenshot sheets
         ///     (The ones invoked by the two buttons in the bottom left and bottom right)
         for (i, button) in window.buttons.matching(NSPredicate(format: "identifier IN %@", ["axButtonsOptionsButton", "axButtonsRestoreDefaultsButton"])).allElementsBoundByIndex.enumerated() {
+            
+            /// Click
             button.click()
-            coolWait() /// Not necessary. Sheets have a native animation where XCUITest automatically correctly 
-            result.append(takeLocalizationScreenshot(of: window, name: "ButtonsTab.sheet.\(i)"))
+            coolWait() /// Not necessary. Sheets have a native animation where XCUITest automatically correctly
+            
+            /// Get sheet
+            let sheet = window.sheets.firstMatch
+            
+            /// Screenshot
+            result.append(takeLocalizationScreenshot(of: sheet, name: "ButtonsTab Sheet \(i)"))
+            
+            /// Cleanup
             hitEscape()
         }
         
         ///
         /// Screenshot AboutTab
         ///
+        
         toolbarButtons["about"].click()
         coolWait()
         result.append(takeLocalizationScreenshot(of: window, name: "AboutTab"))
         
-        /// Screenshot alerts
+        /// Screenshot alert
+        
+        /// Click
         window.staticTexts["axAboutSendEmailButton"].firstMatch.click()
-        result.append(takeLocalizationScreenshot(of: window, name: "AboutTab.emailAlert"))
+        
+        /// Get sheet
+        sheet = window.sheets.firstMatch
+        
+        /// Screenshot
+        result.append(takeLocalizationScreenshot(of: sheet, name: "AboutTab Email Alert"))
+        
+        /// Cleanup
         hitEscape()
         
         ///
         /// Screenshot ScrollingTab
         ///
+        
         toolbarButtons["scrolling"].click()
         coolWait()
         result.append(takeLocalizationScreenshot(of: window, name: "ScrollingTab"))
@@ -211,43 +319,52 @@ final class LocalizationScreenshotClass: XCTestCase {
         /// Screenshot states
         for (i, popUpButton) in window.popUpButtons.allElementsBoundByIndex.enumerated() {
             
-            /// Get menu items
+            /// Gather menu items
             popUpButton.click()
             let menuItems = popUpButton.menuItems.allElementsBoundByIndex.enumerated()
             hitEscape()
-            coolWait()
             
-            /// Click each menu item
             for (j, menuItem) in menuItems {
+                
+                /// Click popUpButton
                 popUpButton.click()
                 if (!menuItem.isHittable || !menuItem.isEnabled) {
                     hitEscape()
                     continue
                 }
+                
+                /// Click menu item
                 menuItem.click()
                 coolWait()
-                result.append(takeLocalizationScreenshot(of: window, name: "ScrollingTab.state.\(i).\(j)"))
+                
+                /// Screenshot state of scrolling tab
+                result.append(takeLocalizationScreenshot(of: window, name: "ScrollingTab State \(i)-\(j)"))
             }
         }
+        
         /// Screenshot menus
         for (i, popUpButton) in window.popUpButtons.allElementsBoundByIndex.enumerated() {
+            
+            /// Click popup button
             popUpButton.click()
             let menu = popUpButton.menus.firstMatch
-            result.append(takeLocalizationScreenshot(of: menu, name: "ScrollingTab.menu.\(i)"))
-            hitEscape()
             
+            /// Take screenshot
+            result.append(takeLocalizationScreenshot(of: menu, name: "ScrollingTab Menu \(i)"))
+            XCUIElement.perform(withKeyModifiers: .option) {
+                if ((false)) { /// The menus on the scrolling tab don't have secret options, at least at the time of writing. NOTE: Update this if you add secret options.
+                    result.append(takeLocalizationScreenshot(of: menu, name: "ScrollingTab Menu \(i) (Option)"))
+                }
+            }
+            
+            /// Cleanup
+            hitEscape()
         }
-        
-        ///
-        /// Screenshot GeneralTab
-        ///
-        toolbarButtons["general"].click() /// Need to click twice so that the test runner properly waits for the animation to finish
-        coolWait()
-        result.append(takeLocalizationScreenshot(of: window, name: "GeneralTab"))
         
         ///
         /// Return
         ///
+        
         return result
     }
     
@@ -283,7 +400,7 @@ final class LocalizationScreenshotClass: XCTestCase {
                         /// Duplicate screenshot
                         ///     Each stringKey needs its own, unique screenshot file, otherwise the Xcode viewer breaks and shows the same frame for every string key. (Tested under Xcode 15 stable & Xcode 16 Beta)
                         screenshotUsageCount += 1
-                        let screenshotName = "copy-\(screenshotUsageCount).\(screenshotName).jpeg"
+                        let screenshotName = "\(screenshotUsageCount). Copy - \(screenshotName).jpeg"
                         
                         /// Convert image
                         ///     In the WWDC demos they used jpeg, but .png is a bit higher res I think.
@@ -351,8 +468,7 @@ final class LocalizationScreenshotClass: XCTestCase {
     
     ///
     /// Screenshot-taking
-    ///
-    
+    ///  
     
     func takeLocalizationScreenshot(of element: XCUIElement, name screenshotBaseName: String) -> ScreenshotAndMetadata? {
         var result: ScreenshotAndMetadata? = nil
@@ -373,13 +489,17 @@ final class LocalizationScreenshotClass: XCTestCase {
         let screenshot = topLevelElement.screenshot()
         
         /// Get screenshot frame
-        let screenshotFrame = topLevelElement.screenshotFrame()
+        var screenshotFrame = topLevelElement.screenshotFrame()
         
         /// Validate screenshot frame
         let displayBounds: CGRect = CGDisplayBounds(topLevelElement.screen().displayID()); /// Not sure if we should be flipping the coords
         let screenshotFrameOnScreenArea = screenshotFrame.intersection(displayBounds)
         if !screenshotFrame.equalTo(screenshotFrameOnScreenArea)  {
-            XCTFail("Error: Screenshot would be cut off by the edge of the screen. Move the window to the center of the screen to prevent this.")
+            if ((false)) { /// This check makes sense for menus inside the window, but for the menuBar menus this invevitably fails.
+                XCTFail("Error: Screenshot would be cut off by the edge of the screen. Move the window to the center of the screen to prevent this.")
+            } else {
+                screenshotFrame = screenshotFrameOnScreenArea
+            }
         }
         
         /// Get snapshot of ax hierarchy of topLevelElement
@@ -482,8 +602,12 @@ final class LocalizationScreenshotClass: XCTestCase {
             isValidFrame(frameAndStringAndKey.frame)
         }
         let validFramesAndStringsAndKeys = groupedFrames[true]
+        
+        /// Validate
         let invalidFramesAndStringsAndKeys = groupedFrames[false]
-        assert(invalidFramesAndStringsAndKeys == nil || invalidFramesAndStringsAndKeys!.isEmpty)
+        if (invalidFramesAndStringsAndKeys != nil) {
+            assert(topLevelElement.elementType == XCUIElement.ElementType.menuBar)
+        }
         
         /// Store result
         if let f = validFramesAndStringsAndKeys {

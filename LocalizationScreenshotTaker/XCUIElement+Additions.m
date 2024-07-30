@@ -26,9 +26,15 @@
         /// Call original implementation
         NSRect r = OGImpl();
         
+        /// Get self
+        XCUIElement *self = m_self;
+        
         /// Determine screenshot extension
         double extension = 0;
-        if (((XCUIElement *)m_self).elementType == XCUIElementTypeMenu) {
+        if (self.elementType == XCUIElementTypeMenu) {
+            extension = 100;
+            
+        } else if (self.elementType == XCUIElementTypeSheet) {
             extension = 100;
         } else {
             extension = 0;
