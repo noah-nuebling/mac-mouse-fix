@@ -7,12 +7,6 @@
 // --------------------------------------------------------------------------
 //
 
-/// This class is used to communicate between the MainApp and the Helper.
-///     More or less works like a function call across processes.
-/// Notes:
-/// - Can't be named MessagePort because there's already a class in Foundation with that name
-/// - This is a wrapper around CFMessagePort, which itself is a wrapper around mach ports. This was one of the first things we wrote for Mac Mouse Fix. Don't remember why we didn't use the higher level NSMachPort or directly use the low level mach_port C APIs. 
-
 #import "MFMessagePort.h"
 #import <Cocoa/Cocoa.h>
 #import "Constants.h"
@@ -33,186 +27,52 @@
 #import "KeyCaptureMode.h"
 #endif
 
+/// This class is used to communicate between the MainApp and the Helper.
+///     More or less works like a function call across processes.
+/// Notes:
+/// - Can't be named MessagePort because there's already a class in Foundation with that name
+/// - This is a wrapper around CFMessagePort, which itself is a wrapper around mach ports. This was one of the first things we wrote for Mac Mouse Fix. Don't remember why we didn't use the higher level NSMachPort or directly use the low level mach_port C APIs.
+///
+/// Discussion / confusion:
+///     We used to do use `load` instead of `initialize` but that lead to issues when restarting the app if it's translocated:
+///     If the app detects that it is translocated, it will restart itself at the untranslocated location,  after removing the quarantine flags from itself. It starts a copy of itself while it's still running, and only then does it terminate itself. If the message port is already 'claimed' by the translocated instances when it starts the     untranslocated copy, then the untranslocated copy can't 'claim' the message port for itself, which leads to things like the accessiblity screen not working.
+///     I hope that moving using `initialize` instead of `load` if `IS_MAIN_APP` should fix this and work just fine for everything else. I don't know why we used load to begin with.
+///     Edit: I don't remember why we moved to `load_Manual` now, but it works fine
+///
+/// Event older Notes:
+///     Notes from mainApp:
+///         On Catalina, creating the local Port returns NULL and throws a permission denied error. Trying to schedule it with the runloop yields a crash.
+///         But even if you just skip the runloop scheduling it still works somehow!
+
+///     Notes from Helper:
+///         CFMessagePortCreateRunLoopSource() used to crash when another instance of MMF Helper was already running.
+///         It would log this: `*** CFMessagePort: bootstrap_register(): failed 1100 (0x44c) 'Permission denied', port = 0x1b03, name = 'com.nuebling.mac-mouse-fix.helper'`
+///         I think the reason for this message is that the existing instance would already 'occupy' the kMFBundleIDHelper name.
+///         Checking if `localPort != nil` should detect this case
+
 @implementation MFMessagePort
-
-#pragma mark - Handle incoming messages
-
-static CFDataRef _Nullable didReceiveMessage(CFMessagePortRef port, SInt32 messageID, CFDataRef data, void *info) {
-    
-    assert(runningMainApp() || runningHelper());
-    
-    NSDictionary *messageDict = [NSKeyedUnarchiver unarchiveObjectWithData:(__bridge NSData *)data];
-    
-    NSString *message = messageDict[kMFMessageKeyMessage];
-    NSObject *payload = messageDict[kMFMessageKeyPayload];
-    
-    DDLogInfo(@"Received Message: %@ with payload: %@", message, payload);
-    
-    NSObject *response = nil;
-    
-#if IS_MAIN_APP
-    
-#pragma mark MainApp
- 
-//    if ([message isEqualToString:@"addModeEnabled"]) {
-//        [MainAppState.shared.buttonTabController handleAddModeEnabled];
-//    } else if ([message isEqualToString:@"addModeDisabled"]) {
-//        [MainAppState.shared.buttonTabController handleAddModeDisabled];
-    if ([message isEqualToString:@"addModeFeedback"]) {
-        [MainAppState.shared.buttonTabController handleAddModeFeedbackWithPayload:(NSDictionary *)payload];
-    } else if ([message isEqualToString:@"keyCaptureModeFeedback"]) {
-        [KeyCaptureView handleKeyCaptureModeFeedbackWithPayload:(NSDictionary *)payload isSystemDefinedEvent:NO];
-    } else if ([message isEqualToString:@"keyCaptureModeFeedbackWithSystemEvent"]) {
-        [KeyCaptureView handleKeyCaptureModeFeedbackWithPayload:(NSDictionary *)payload isSystemDefinedEvent:YES];
-    } else if ([message isEqualToString:@"helperEnabledWithNoAccessibility"]) {
-        
-        BOOL isStrange = false;
-        if (@available(macOS 13, *)) {
-            isStrange = [MessagePortUtility.shared checkHelperStrangenessReactWithPayload:payload];
-        }
-        if (!isStrange) {
-            [AuthorizeAccessibilityView add];
-        }
-    } else if ([message isEqualToString:@"helperEnabled"]) {
-        
-        BOOL isStrange = false;
-        if (@available(macOS 13, *)) {
-            isStrange = [MessagePortUtility.shared checkHelperStrangenessReactWithPayload:payload];
-        }
-        
-        if (!isStrange) { /// Helper matches mainApp instance.
-            
-            /// Bring mainApp for foreground
-            /// In some places like when the accessibilitySheet is dismissed, we have other methods for bringing mainApp to the foreground that might be unnecessary now that we're doing this. Edit: We stopped the accessibiility enabling code from activating the app.
-            [NSApp activateIgnoringOtherApps:YES];
-            
-            /// Dismiss accessibilitySheet
-            ///     This is unnecessary under Ventura since `activateIgnoringOtherApps` will trigger `ResizingTabWindowController.windowDidBecomeMain()` which will also call `[AuthorizeAccessibilityView remove]`. But it's better to be safe and explicit about this.
-            [AuthorizeAccessibilityView remove];
-            
-            /// Notify rest of the app
-            [EnabledState.shared reactToDidBecomeEnabled];
-        }
-        
-        
-    } else if ([message isEqualToString:@"helperDisabled"]) {
-        [EnabledState.shared reactToDidBecomeDisabled];
-    } else if ([message isEqualToString:@"configFileChanged"]) {
-        [Config loadFileAndUpdateStates];
-    }
-    
-#elif IS_HELPER
-
-#pragma mark HelperApp
-    
-    if ([message isEqualToString:@"configFileChanged"]) {
-        [Config loadFileAndUpdateStates];
-    } else if ([message isEqualToString:@"terminate"]) {
-//        [NSApp.delegate applicationWillTerminate:[[NSNotification alloc] init]]; /// This creates an infinite loop or something? The statement below is never executed.
-        [NSApp terminate:NULL];
-    } else if ([message isEqualToString:@"checkAccessibility"]) {
-        BOOL isTrusted = [AccessibilityCheck checkAccessibilityAndUpdateSystemSettings];
-        response = @(isTrusted);
-    } else if ([message isEqualToString:@"enableAddMode"]) {
-        BOOL success = [Remap enableAddMode];
-        response = @(success); 
-    } else if ([message isEqualToString:@"disableAddMode"]) {
-        BOOL success = [Remap disableAddMode];
-        response = @(success);
-    } else if ([message isEqualToString:@"enableKeyCaptureMode"]) {
-        [KeyCaptureMode enable];
-    } else if ([message isEqualToString:@"disableKeyCaptureMode"]) {
-        [KeyCaptureMode disable];
-    } else if ([message isEqualToString:@"getActiveDeviceInfo"]) {
-        Device *dev = HelperState.shared.activeDevice;
-        if (dev != NULL) {
-            
-            response = @{
-                @"name": dev.name == nil ? @"" : dev.name,
-                @"manufacturer": dev.manufacturer == nil ? @"" : dev.manufacturer,
-                @"nOfButtons": @(dev.nOfButtons),
-            };
-        }
-    } else if ([message isEqualToString:@"updateActiveDeviceWithEventSenderID"]) {
-        
-        /// We can't just pass over the CGEvent from the mainApp because the senderID isn't stored when serializing CGEvents
-        
-        uint64_t senderID = [(NSNumber *)payload unsignedIntegerValue];
-        [HelperState.shared updateActiveDeviceWithEventSenderID:senderID];
-        
-    } else if ([message isEqualToString:@"getBundleVersion"]) {
-        response = @(Locator.bundleVersion);
-//    } else if ([message isEqualToString:@"getBundleVersion"]) {
-//        response = @(Locator.bundleVersion);
-    } else {
-        DDLogInfo(@"Unknown message received: %@", message);
-    }
-    
-#else
-    abort();
-#endif
-    
-    if (response != nil) {
-         return (__bridge_retained CFDataRef)[NSKeyedArchiver archivedDataWithRootObject:response];
-     }
-
-     return NULL;
-}
-
-
-#pragma mark - Setup port
 
 + (void)load_Manual {
     
-    /// This sets up a local port for listening for incoming messages
+    #pragma mark - Init
     
-    /// Notes from Helper:
-    /// I'm not sure this is supposed to be `load_Manual` instead of load
+    /// Set up a local port for listening for incoming messages
     
-    /// Notes from mainApp:
-    /// We used to do this in `load` but that lead to issues when restarting the app if it's translocated
-    /// If the app detects that it is translocated, it will restart itself at the untranslocated location,  after removing the quarantine flags from itself. It starts a copy of itself while it's still running, and only then does it terminate itself. If the message port is already 'claimed' by the translocated instances when it starts the untranslocated copy, then the untranslocated copy can't 'claim' the message port for itself, which leads to things like the accessiblity screen not working.
-    /// I hope that moving using `initialize` instead of `load` if `IS_MAIN_APP` should fix this and work just fine for everything else. I don't know why we used load to begin with.
-    /// Edit: I don't remember why we moved to `load_Manual` now, but it works fine
-    
+    /// Validate
     assert(runningMainApp() || runningHelper());
     
+    /// Log
     DDLogInfo(@"Initializing MessagePort...");
     
-    CFMessagePortRef localPort =
-    CFMessagePortCreateLocal(kCFAllocatorDefault,
-                             (__bridge CFStringRef)(runningMainApp() ? kMFBundleIDApp : kMFBundleIDHelper),
-                             didReceiveMessage,
-                             nil,
-                             NULL);
-    
+    /// Create port
+    CFStringRef messagePortName = (__bridge CFStringRef)(runningMainApp() ? kMFBundleIDApp : kMFBundleIDHelper);
+    CFMessagePortRef localPort = CFMessagePortCreateLocal(kCFAllocatorDefault, messagePortName, didReceiveMessage, nil, NULL);
+
+    /// Log
     DDLogInfo(@"Created localPort: %@", localPort);
     
-    /// Setting the name here instead of when creating the port creates some super weird behavior, too.
-//    CFMessagePortSetName(localPort, CFSTR("com.nuebling.mousefix.port"));
-    
-    
-    if (localPort != NULL) {
-        
-        /// Notes from mainApp:
-        /// On CatalinM, creating the local Port returns NULL and throws a permission denied error. Trying to schedule it with the runloop yields a crash.
-        /// But even if you just skip the runloop scheduling it still works somehow!
-        
-        /// Notes from Helper:
-        /// CFMessagePortCreateRunLoopSource() used to crash when another instance of MMF Helper was already running.
-        /// It would log this: `*** CFMessagePort: bootstrap_register(): failed 1100 (0x44c) 'Permission denied', port = 0x1b03, name = 'com.nuebling.mac-mouse-fix.helper'`
-        /// I think the reason for this messate is that the existing instance would already 'occupy' the kMFBundleIDHelper name.
-        /// Checking if `localPort != nil` should detect this case
-        
-        CFRunLoopSourceRef runLoopSource =
-            CFMessagePortCreateRunLoopSource(kCFAllocatorDefault, localPort, 0);
-        
-        CFRunLoopAddSource(CFRunLoopGetMain(),
-                           runLoopSource,
-                           kCFRunLoopCommonModes);
-        
-        CFRelease(runLoopSource);
-    } else {
+    /// Validate
+    if (localPort == nil) {
         
         if (runningMainApp()) {
             DDLogInfo(@"Failed to create a local message port. It will probably work anyway for some reason");
@@ -221,37 +81,180 @@ static CFDataRef _Nullable didReceiveMessage(CFMessagePortRef port, SInt32 messa
             @throw [NSException exceptionWithName:@"NoMessagePortException" reason:@"Couldn't create a local CFMessagePort. Can't function properly without local CFMessagePort" userInfo:nil];
         }
         
+        return;
     }
+        
+    /// Add message port to main runLoop
+    CFRunLoopSourceRef runLoopSource = CFMessagePortCreateRunLoopSource(kCFAllocatorDefault, localPort, 0);
+    CFRunLoopAddSource(CFRunLoopGetMain(), runLoopSource, kCFRunLoopCommonModes);
+    CFRelease(runLoopSource);
 }
 
-#pragma mark - Send messages
-
-
-+ (NSObject *_Nullable)sendMessage:(NSString * _Nonnull)message withPayload:(NSObject <NSCoding> * _Nullable)payload waitForReply:(BOOL)waitForReply {
+static CFDataRef _Nullable didReceiveMessage(CFMessagePortRef port, SInt32 messageID, CFDataRef data, void *info) {
+    
+    #pragma mark Receive messages
     
     /// Validate
     assert(runningMainApp() || runningHelper());
     
+    /// Decode message
+    NSDictionary *messageDict = [NSKeyedUnarchiver unarchiveObjectWithData:(__bridge NSData *)data];
+    NSString *message = messageDict[kMFMessageKeyMessage];
+    NSObject *payload = messageDict[kMFMessageKeyPayload];
+    
+    /// Log
+    DDLogInfo(@"Received Message: %@ with payload: %@", message, payload);
+    
+    /// Process message
+    __block NSObject *response = nil;
+    
+#if IS_MAIN_APP
+ 
+    const NSDictionary<NSString *, void (^)(void)> *commandMap = @{
+    
+        @"addModeFeedback": ^{
+            [MainAppState.shared.buttonTabController handleAddModeFeedbackWithPayload:(NSDictionary *)payload];
+        },
+        @"keyCaptureModeFeedback": ^{
+            [KeyCaptureView handleKeyCaptureModeFeedbackWithPayload:(NSDictionary *)payload isSystemDefinedEvent:NO];
+        },
+        @"keyCaptureModeFeedbackWithSystemEvent": ^{
+            [KeyCaptureView handleKeyCaptureModeFeedbackWithPayload:(NSDictionary *)payload isSystemDefinedEvent:YES];
+        },
+        @"helperEnabledWithNoAccessibility": ^{
+            
+            BOOL isStrange = false;
+            if (@available(macOS 13, *)) {
+                isStrange = [MessagePortUtility.shared checkHelperStrangenessReactWithPayload:payload];
+            }
+            if (!isStrange) {
+                [AuthorizeAccessibilityView add];
+            }
+        },
+        @"helperEnabled": ^{
+            
+            BOOL isStrange = false;
+            if (@available(macOS 13, *)) {
+                isStrange = [MessagePortUtility.shared checkHelperStrangenessReactWithPayload:payload];
+            }
+            
+            if (!isStrange) { /// Helper matches mainApp instance.
+                
+                /// Bring mainApp for foreground
+                /// In some places like when the accessibilitySheet is dismissed, we have other methods for bringing mainApp to the foreground that might be unnecessary now that we're doing this. Edit: We stopped the accessibiility enabling code from activating the app.
+                [NSApp activateIgnoringOtherApps:YES];
+                
+                /// Dismiss accessibilitySheet
+                ///     This is unnecessary under Ventura since `activateIgnoringOtherApps` will trigger `ResizingTabWindowController.windowDidBecomeMain()` which will also call `[AuthorizeAccessibilityView remove]`. But it's better to be safe and explicit about this.
+                [AuthorizeAccessibilityView remove];
+                
+                /// Notify rest of the app
+                [EnabledState.shared reactToDidBecomeEnabled];
+            }
+            
+        },
+        @"helperDisabled": ^{
+            [EnabledState.shared reactToDidBecomeDisabled];
+        },
+        @"configFileChanged": ^{
+            [Config loadFileAndUpdateStates];
+        },
+    };
+
+#elif IS_HELPER
+    
+    const NSDictionary<NSString *, void (^)(void)> *commandMap = @{
+        @"configFileChanged": ^{
+            [Config loadFileAndUpdateStates];
+        },
+        @"terminate": ^{
+//            [NSApp.delegate applicationWillTerminate:[[NSNotification alloc] init]]; /// This creates an infinite loop or something? The statement below is never executed.
+            [NSApp terminate:NULL];
+        },
+        @"checkAccessibility": ^{
+            BOOL isTrusted = [AccessibilityCheck checkAccessibilityAndUpdateSystemSettings];
+            response = @(isTrusted);
+        },
+        @"enableAddMode": ^{
+            BOOL success = [Remap enableAddMode];
+            response = @(success);
+        },
+        @"disableAddMode": ^{
+            BOOL success = [Remap disableAddMode];
+            response = @(success);
+        },
+        @"enableKeyCaptureMode": ^{
+            [KeyCaptureMode enable];
+        },
+        @"disableKeyCaptureMode": ^{
+            [KeyCaptureMode disable];
+        },
+        @"getActiveDeviceInfo": ^{
+            
+            Device *dev = HelperState.shared.activeDevice;
+            if (dev != NULL) {
+                
+                response = @{
+                    @"name": dev.name == nil ? @"" : dev.name,
+                    @"manufacturer": dev.manufacturer == nil ? @"" : dev.manufacturer,
+                    @"nOfButtons": @(dev.nOfButtons),
+                };
+            }
+        },
+        @"updateActiveDeviceWithEventSenderID": ^{
+            /// We can't just pass over the CGEvent from the mainApp because the senderID isn't stored when serializing CGEvents
+            uint64_t senderID = [(NSNumber *)payload unsignedIntegerValue];
+            [HelperState.shared updateActiveDeviceWithEventSenderID:senderID];
+        },
+        @"getBundleVersion": ^{
+            response = @(Locator.bundleVersion);
+        },
+    };
+    
+#else
+    abort();
+#endif
+    
+    /// Execute command
+    void (^command)(void) = commandMap[message];
+    if (command != nil) {
+        command();
+    } else {
+        DDLogInfo(@"Unknown message received: %@", message);
+    }
+    
+    /// Return response
+    if (response != nil) {
+         return (__bridge_retained CFDataRef)[NSKeyedArchiver archivedDataWithRootObject:response];
+    } else {
+        return NULL;
+    }
+}
+
++ (NSObject *_Nullable)sendMessage:(NSString * _Nonnull)message withPayload:(NSObject<NSCoding> * _Nullable)payload toRemotePort:(NSString *)remotePortName waitForReply:(BOOL)waitForReply {
+    
+    #pragma mark Send messages
+    
     /// Get remote port
     /// Note: We can't just create the port once and cache it, trying to send with that port will yield ``kCFMessagePortIsInvalid``
-    
-    NSString *remotePortName = runningMainApp() ? kMFBundleIDHelper : kMFBundleIDApp;
     CFMessagePortRef remotePort = CFMessagePortCreateRemote(kCFAllocatorDefault, (__bridge CFStringRef)remotePortName);
 
+    /// Validate
     if (remotePort == NULL) {
         DDLogInfo(@"Can't send message \'%@\', because there is no CFMessagePort", message);
         return nil;
     }
     
+    /// Setup callback when port is invalidated
+    ///     Not sure why we're doing this.
     CFMessagePortSetInvalidationCallBack(remotePort, invalidationCallback);
 
     /// Create message dict
-    
     NSDictionary *messageDict;
     if (payload) {
         messageDict = @{
             kMFMessageKeyMessage: message,
-            kMFMessageKeyPayload: payload, /// This crashes if payload is nil for some reason
+            kMFMessageKeyPayload: payload,
         };
     } else {
         messageDict = @{
@@ -259,43 +262,66 @@ static CFDataRef _Nullable didReceiveMessage(CFMessagePortRef port, SInt32 messa
         };
     }
     
+    /// Log
     DDLogInfo(@"Sending message: %@ with payload: %@ from bundle: %@ via message port", message, payload, NSBundle.mainBundle.bundleIdentifier);
     
     /// Send message
-    
     SInt32 messageID = 0x420666; /// Arbitrary
     CFDataRef messageData = (__bridge CFDataRef)[NSKeyedArchiver archivedDataWithRootObject:messageDict];
     CFTimeInterval sendTimeout = 0.0;
     CFTimeInterval recieveTimeout = 0.0;
     CFStringRef replyMode = NULL;
-    CFDataRef returnData = NULL;
+    CFDataRef responseData = NULL;
     if (waitForReply) {
-//        sendTimeout = 1.0;
+        sendTimeout = 0.0;
         recieveTimeout = 1.0;
         replyMode = kCFRunLoopDefaultMode;
     }
-
-    SInt32 status = CFMessagePortSendRequest(remotePort, messageID, messageData, sendTimeout, recieveTimeout, replyMode, &returnData);
+    SInt32 status = CFMessagePortSendRequest(remotePort, messageID, messageData, sendTimeout, recieveTimeout, replyMode, &responseData);
+    
+    /// Release port
     CFRelease(remotePort);
     
-    /// Handle errors & response
-    
+    /// Handle errors
     if (status != 0) {
         DDLogError(@"Non-zero CFMessagePortSendRequest status: %d", status);
         return nil;
     }
     
-    NSObject *returnObject = nil;
-    if (returnData != NULL && waitForReply /*&& status == 0*/) {
-        returnObject = [NSKeyedUnarchiver unarchiveObjectWithData:(__bridge NSData *)returnData];
+    /// Decode response
+    NSObject *response = nil;
+    if (responseData != NULL && waitForReply) {
+        response = [NSKeyedUnarchiver unarchiveObjectWithData:(__bridge NSData *)responseData];
     }
     
-    /// Return
+    /// Return response
+    return response;
+}
+
+///
+/// Helper stuff
+///
+
++ (NSObject *_Nullable)sendMessage:(NSString *)message withPayload:(NSObject<NSCoding> *)payload waitForReply:(BOOL)replyExpected {
+        
+    /// Convenience wrapper
+    ///     Automatically sends the message to the helper if the mainApp is the sender, and sends to the mainApp if the helper is the sender.
     
-    return returnObject;
+    /// Validate
+    assert(runningMainApp() || runningHelper());
+    
+    /// Get remote port name
+    NSString *remotePortName = runningMainApp() ? kMFBundleIDHelper : kMFBundleIDApp;
+    
+    /// Call core
+    NSObject *response = [self sendMessage:message withPayload:payload toRemotePort:remotePortName waitForReply:replyExpected];
+    
+    /// Return
+    return response;
 }
 
 void invalidationCallback(CFMessagePortRef ms, void *info) {
+    /// Log state
     DDLogInfo(@"Remote MessagePort invalidated in %@", runningHelper() ? @"Helper" : @"MainApp");
 }
 
