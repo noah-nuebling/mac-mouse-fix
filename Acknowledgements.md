@@ -42,6 +42,7 @@ These people spent a lot more than the standard price and treated me to an **Inc
 
 **July 2024**
 
+- 🇵🇹&nbsp;Marcoafbarbosa
 - 🇺🇸&nbsp;Jdf - "Thank you for making my computer life easier! :-)"
 - 🇺🇸&nbsp;Wade&nbsp;Johnson - "This is a high quality app that really increases my productivity. Enjoy your milkshake Noah!"
 - 🇩🇪&nbsp;Udo&nbsp;Schneider
