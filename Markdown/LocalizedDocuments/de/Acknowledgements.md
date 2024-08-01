@@ -38,6 +38,10 @@ Danke für euren Beitrag! :)
 
 Diese Leute haben viel mehr als den Standardpreis ausgegeben und mir einen **unglaublichen Milchshake** spendiert. (Und manche haben sogar eine Nachricht hinterlassen) Danke für den _Zucker-Kick_!
 
+**August 2024**
+
+- 🇫🇷&nbsp;Thibaud&nbsp;Duthoit - "Awesome soft, allowed me to use an ergonomic mouse (and save me from a lot of pain)"
+
 **Juli 2024**
 
 - 🇵🇹&nbsp;Marcoafbarbosa

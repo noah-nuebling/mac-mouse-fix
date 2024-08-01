@@ -40,6 +40,10 @@ Thanks for your support! :)
 
 These people spent a lot more than the standard price and treated me to an **Incredible Milkshake**. (And some even left a message) Thanks for the _sugar rush_!
 
+**August 2024**
+
+- 🇫🇷&nbsp;Thibaud&nbsp;Duthoit - "Awesome soft, allowed me to use an ergonomic mouse (and save me from a lot of pain)"
+
 **July 2024**
 
 - 🇵🇹&nbsp;Marcoafbarbosa
