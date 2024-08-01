@@ -40,6 +40,7 @@ Diese Leute haben viel mehr als den Standardpreis ausgegeben und mir einen **ung
 
 **August 2024**
 
+- 🇺🇸&nbsp;Shane&nbsp;T - "Thank you for MMF, and thank you for offering lifetime licenses vs. a subscription!"
 - 🇫🇷&nbsp;Thibaud&nbsp;Duthoit - "Awesome soft, allowed me to use an ergonomic mouse (and save me from a lot of pain)"
 
 **Juli 2024**
