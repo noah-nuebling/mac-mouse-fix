@@ -42,6 +42,7 @@ These people spent a lot more than the standard price and treated me to an **Inc
 
 **August 2024**
 
+- 🇺🇸&nbsp;Samuel
 - 🇧🇷&nbsp;Igor&nbsp;Oliveira&nbsp;Rodrigues - "Thank you for allowing me to use any mouse i want without being locked into the Apple ecosystem"
 - 🇺🇸&nbsp;Shane&nbsp;T - "Thank you for MMF, and thank you for offering lifetime licenses vs. a subscription!"
 - 🇫🇷&nbsp;Thibaud&nbsp;Duthoit - "Awesome soft, allowed me to use an ergonomic mouse (and save me from a lot of pain)"
