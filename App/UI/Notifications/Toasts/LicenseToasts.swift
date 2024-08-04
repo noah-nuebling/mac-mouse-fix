@@ -14,7 +14,7 @@ import Foundation
     @objc static func showDeactivationToast() {
         let messageRaw = NSLocalizedString("license-toast.deactivate", comment: "First draft: Your license has been **deactivated**")
         let message = NSAttributedString(coolMarkdown: messageRaw)!
-        ToastController.attachNotification(withMessage: message, to: MainAppState.shared.window!, forDuration: kMFToastDurationAutomatic)
+        ToastController.attachNotification(withMessage: message, to: MainAppState.shared.frontMostWindowOrSheet!, forDuration: kMFToastDurationAutomatic)
     }
     
     @objc static func showSuccessToast(_ licenseReason: MFLicenseReason, _ userDidChangeLicenseKey: Bool) {
@@ -38,7 +38,7 @@ import Foundation
             fatalError()
         }
         
-        ToastController.attachNotification(withMessage: NSAttributedString(coolMarkdown: message)!, to: MainAppState.shared.window!, forDuration: kMFToastDurationAutomatic)
+        ToastController.attachNotification(withMessage: NSAttributedString(coolMarkdown: message)!, to: MainAppState.shared.frontMostWindowOrSheet!, forDuration: kMFToastDurationAutomatic)
     }
     
     @objc static func showErrorToast(_ error: NSError?, _ licenseKey: String) {
@@ -90,7 +90,7 @@ import Foundation
         
         assert(message != "")
         
-        ToastController.attachNotification(withMessage: NSAttributedString(coolMarkdown: message)!, to: MainAppState.shared.window!, forDuration: kMFToastDurationAutomatic)
+        ToastController.attachNotification(withMessage: NSAttributedString(coolMarkdown: message)!, to: MainAppState.shared.frontMostWindowOrSheet!, forDuration: kMFToastDurationAutomatic)
     }
     
 }

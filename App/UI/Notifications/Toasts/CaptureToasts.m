@@ -260,7 +260,7 @@ static NSString *getLocalizedString(MFCapturedInputType inputType, NSString *sim
         map = @{
             
             @"captured.body": NSLocalizedString(@"capture-toast.scroll.captured.body", @"First draft: **Scrolling** is now captured by Mac Mouse Fix."),
-            @"captured.hint": NSLocalizedString(@"capture-toast.scroll.captured.hint", @"First draft: "),
+            @"captured.hint": @"", /// NSLocalizedString(@"capture-toast.scroll.captured.hint", @"First draft: "),
             
             @"uncaptured.body": NSLocalizedString(@"capture-toast.scroll.uncaptured.body", @"First draft: **Scrolling** is no longer captured by Mac Mouse Fix."),
             @"uncaptured.hint": NSLocalizedString(@"capture-toast.scroll.uncaptured.hint", @"First draft: Scrolling now works as if Mac Mouse Fix was disabled."),

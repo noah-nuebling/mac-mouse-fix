@@ -27,9 +27,9 @@
     
     // Trying to dismiss the notification window on click, but this doesn't work
     
-//    if (_localEventMonitor == nil) {
+//    if (_localClickMonitor == nil) {
 //
-//        _localEventMonitor = [NSEvent addLocalMonitorForEventsMatchingMask:NSEventMaskLeftMouseDown handler:^NSEvent * _Nullable(NSEvent * _Nonnull event) {
+//        _localClickMonitor = [NSEvent addLocalMonitorForEventsMatchingMask:NSEventMaskLeftMouseDown handler:^NSEvent * _Nullable(NSEvent * _Nonnull event) {
 //
 //            // Dismiss notification on click
 //            NSView *viewUnderMousePointer = [AppDelegate.mainWindow.contentView hitTest:event.locationInWindow];

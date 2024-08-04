@@ -30,6 +30,21 @@ import ReactiveSwift
         }
         return result
     }
+    
+    @objc var frontMostWindowOrSheet: NSWindow? {
+        
+        /// Returns either the mainWindow of the app or the sheet alert that is attached to it.
+        ///     I suspect this might be unreliable during times when a modal is being attached/detached.
+        
+        let window = self.window
+        if let sheet = window?.attachedSheet {
+            return sheet
+        } else {
+            return window
+        }
+        
+    }
+    
     @objc var appDelegate: AppDelegate {
         return NSApp.delegate as! AppDelegate
     }

@@ -19,7 +19,7 @@
     
     /// Notes:
     /// - We want to do this so there's context for localizers about where an NSMenu appears inside the app (If you just screenshot the entire parent window, the NSMenu will be cut off if it extendes beyond the window bounds, but if you screenshot the NSMenu, there is no context.)
-    /// - If the `screenshotFrame` we output includes off-screen areas, those will automatically be cut off, and it won't lead to problems.
+    /// - If the `screenshotFrame` we output includes off-screen areas, those will automatically be excluded from the screenshots that the XCUI framework takes.
     
     swizzleMethodOnClassAndSubclasses([XCUIElement class], @{ @"framework": @"XCTest" }, @selector(screenshotFrame), MakeInterceptorFactory(NSRect, (), {
         
@@ -33,8 +33,9 @@
         double extension = 0;
         if (self.elementType == XCUIElementTypeMenu) {
             extension = 100;
-            
         } else if (self.elementType == XCUIElementTypeSheet) {
+            extension = 100;
+        } else if (self.elementType == XCUIElementTypeDialog) { /// Our toastNotifications appear as dialog elements. Not sure how the classification works
             extension = 100;
         } else {
             extension = 0;

@@ -66,11 +66,11 @@ typedef NS_ENUM(UTF32Char, MFZeroWidthCharacter) {
 /// Base-4 secret message encoding/decoding
 ///
 
-- (NSArray *)secretMessageStartSequence {
+- (NSArray<NSNumber *> *)secretMessageStartSequence {
     NSArray *result = @[@0x2063, @0x200C, @0x2063, @0x200D, @0x2063]; /// 2063 is only used in the start/end sequence not in the secretMessage's body
     return result;
 }
-- (NSArray *)secretMessageEndSequence {
+- (NSArray<NSNumber *> *)secretMessageEndSequence {
     NSArray *result = @[@0x2063, @0x200D, @0x2063, @0x200C, @0x2063]; /// Inverse of the start sequence
     return result;
 }
@@ -102,7 +102,7 @@ typedef NS_ENUM(UTF32Char, MFZeroWidthCharacter) {
     /// Declare result
     NSMutableArray *result = [NSMutableArray array];
     
-    /// Finds secret messages in the string.
+    /// Find secret messages in the string.
     NSString *pattern = @"\u2063\u200C\u2063\u200D\u2063"           /// Start sequence
                         "(?:(?:[\u200C\u200D\u2060\u2062]{4})*)"    /// Arbitrary sequence of the 4 characters encoding, 0,1,2,3. Sequence length needs to be divisible by 4 since 4 quaternary digits encode one UTF-8 char.
                         "\u2063\u200D\u2063\u200C\u2063";           /// End sequence
@@ -112,6 +112,7 @@ typedef NS_ENUM(UTF32Char, MFZeroWidthCharacter) {
     NSMatchingOptions matchingOptions = 0;
     NSArray<NSTextCheckingResult *> *matches = [expression matchesInString:self options:matchingOptions range:NSMakeRange(0, self.length)];
     
+    /// Decode the messages
     for (NSTextCheckingResult *match in matches) {
         NSRange r = [match range];
         NSString *encodedMessage = [self substringWithRange:r];
@@ -146,6 +147,7 @@ typedef NS_ENUM(UTF32Char, MFZeroWidthCharacter) {
     
     NSMutableArray *resultArray = [NSMutableArray array];
     
+    [resultArray addObject:@(MFZeroWidthCharacterSpace)]; /// Add space to prevent breaking markdown __emphasis__ but it doesn't work.
     [resultArray addObjectsFromArray:[self secretMessageStartSequence]];
     
     NSArray<NSNumber *> *digits = [self quaternaryArray];
@@ -155,6 +157,7 @@ typedef NS_ENUM(UTF32Char, MFZeroWidthCharacter) {
     }
     
     [resultArray addObjectsFromArray:[self secretMessageEndSequence]];
+    [resultArray addObject:@(MFZeroWidthCharacterSpace)];
     
     NSString *result = [NSString stringWithUTF32Characters:resultArray];
     
@@ -197,7 +200,7 @@ typedef NS_ENUM(UTF32Char, MFZeroWidthCharacter) {
         
         for (int j = 0; j < 4; j++) {
             int quartDigit = [digits[i+j] intValue];
-            [byte addObject:@((quartDigit & 2) != 0) ]; /// Measure large bit of quart digit
+            [byte addObject:@((quartDigit & 2) != 0)]; /// Measure large bit of quart digit
             [byte addObject:@((quartDigit & 1) != 0)];  /// Measure small bit of quart digit
         }
         

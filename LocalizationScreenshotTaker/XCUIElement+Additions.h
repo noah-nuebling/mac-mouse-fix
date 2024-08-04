@@ -10,6 +10,10 @@
 #import <XCTest/XCUIElement.h>
 #import "AnnotationUtility.h"
 
+///
+/// Use `listMethods([XCUIElement class])` in the lldb console to easily discover private methods
+///
+
 @interface XCUIApplication (MFStuff)
 - (void)_waitForQuiescence;
 @end
@@ -19,6 +23,8 @@
 @end
 
 @interface XCUIElement (MFStuff)
+
+- (id)identifier;
 
 - (NSRect)screenshotFrame;
 

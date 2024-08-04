@@ -108,6 +108,14 @@ final class LocalizationScreenshotClass: XCTestCase {
         XCTContext.runActivity(named: "Take Screenshots") { activity in
             screenshotsAndMetaData = navigateAppAndTakeScreenshots(outputDirectory)
         }
+        /// Validate with app
+        XCTContext.runActivity(named: "Validate Completeness") { activity in
+            /// We only validate toasts, if we add a new screen or other UI to the app that should be screenshotted, we don't have a way to detect that here.
+            let didShowAllToasts = (MFMessagePort.sendMessage("didShowAllToasts", withPayload: nil, toRemotePort: kMFBundleIDApp, waitForReply: true) as! NSNumber).boolValue
+            if (!didShowAllToasts) {
+                XCTFail("The app says we missed screenshotting some toast notifications.")
+            }
+        }
         
         /// Write results
         XCTContext.runActivity(named: "Write results") { activity in
@@ -119,6 +127,27 @@ final class LocalizationScreenshotClass: XCTestCase {
 
         /// Declare result
         var result = [ScreenshotAndMetadata?]()
+        
+        /// Define toast-screenshotting helper closure
+        let takeToastScreenshots = { (toastSection: String, screenshotNameFormat: String) -> [ScreenshotAndMetadata?] in
+            
+            var toastScreenshots = [ScreenshotAndMetadata?]()
+            var i = 0
+            while true {
+                let moreToastsToGo = MFMessagePort.sendMessage("showNextTestToastWithSection", withPayload: (toastSection as NSString), toRemotePort: kMFBundleIDApp, waitForReply: true)
+                self.coolWait()
+                let toastWindow = self.app!.dialogs["axToastWindow"].firstMatch
+                toastScreenshots.append(self.takeLocalizationScreenshot(of: toastWindow, name: String(format: screenshotNameFormat, i)))
+                if (moreToastsToGo == nil || (moreToastsToGo! as! NSNumber).boolValue == false) {
+                    break;
+                }
+                i += 1
+            }
+            
+            self.hitEscape()
+            
+            return toastScreenshots
+        }
         
         /// Find screen
         let screen = NSScreen.main!
@@ -132,9 +161,6 @@ final class LocalizationScreenshotClass: XCTestCase {
         /// Find menuBar
         let menuBar = app!.menuBars.firstMatch
         
-        /// TEST
-        var tree = try! TreeNode<AnyObject>.tree(withKVCObject: menuBar.snapshot(), childrenKey: "children") as! TreeNode<XCUIElementSnapshot>
-        
         /// Position the window
         let targetWindowY = 0.2 /// Normalized between 0 and 1
         let targetWindowPosition = NSMakePoint(screen.frame.midX - window.frame.width/2.0, /// Just center the window horizontally
@@ -147,6 +173,46 @@ final class LocalizationScreenshotClass: XCTestCase {
         var error: NSDictionary? = nil
         appleScript?.executeAndReturnError(&error)
         assert(error == nil)
+        
+        ///
+        /// Screenshot GeneralTab
+        ///
+        
+        /// Switch to general tab
+        toolbarButtons["general"].click() /// Need to click twice so that the test runner properly waits for the animation to finish
+        coolWait()
+        
+        /// Find enable toggle
+        let switcherino = window.switches["axEnableToggle"].firstMatch
+        
+        /// Enable MMF (if necessary)
+        let isEnabledPredicate = NSPredicate.init(format: "value == 1")
+        if (isEnabledPredicate.evaluate(with: switcherino) == false) {
+            switcherino.click()
+            let switchIsEnabled = expectation(for: isEnabledPredicate, evaluatedWith: switcherino)
+            XCTWaiter().wait(for: [switchIsEnabled], timeout: 10.0)
+            coolWait() /// Wait for animation to finish
+        }
+        
+        /// Find checkForUpdates toggle
+        let updatesToggle = window.checkBoxes["axCheckForUpdatesToggle"].firstMatch
+        
+        /// Enable updates
+        ///     (So that the beta section is expanded)
+        if (updatesToggle.value as! Int) != 1 {
+            updatesToggle.click()
+            coolWait()
+        }
+        
+        /// Take screenshot of fully expanded general tab
+        result.append(takeLocalizationScreenshot(of: window, name: "GeneralTab"))
+
+        /// Screenshot toasts
+        result.append(contentsOf: takeToastScreenshots("general", "GeneralTab Toast %d"))
+        
+        ///
+        /// Screenshot menubar
+        ///
         
         /// Screenshot menuBar itself
         result.append(takeLocalizationScreenshot(of: menuBar, name: "MenuBar"))
@@ -204,42 +270,12 @@ final class LocalizationScreenshotClass: XCTestCase {
         /// Sheenshot
         result.append(takeLocalizationScreenshot(of: sheet, name: "ActivateLicenseSheet"))
         
-        /// Cleanup
+        /// Screenshot toasts
+        result.append(contentsOf: takeToastScreenshots("licensesheet", "ActivateLicenseSheet Toast %d"))
+        
+        /// Cleanup licenseSheet
         hitEscape()
         
-        ///
-        /// Screenshot GeneralTab
-        ///
-        
-        /// Switch to general tab
-        toolbarButtons["general"].click() /// Need to click twice so that the test runner properly waits for the animation to finish
-        coolWait()
-        
-        /// Find enable toggle
-        let switcherino = window.switches["axEnableToggle"].firstMatch
-        
-        /// Enable MMF (if necessary)
-        let isEnabledPredicate = NSPredicate.init(format: "value == 1")
-        if (isEnabledPredicate.evaluate(with: switcherino) == false) {
-            switcherino.click()
-            let switchIsEnabled = expectation(for: isEnabledPredicate, evaluatedWith: switcherino)
-            XCTWaiter().wait(for: [switchIsEnabled], timeout: 10.0)
-            coolWait() /// Wait for animation to finish
-        }
-        
-        /// Find checkForUpdates toggle
-        let updatesToggle = window.checkBoxes["axCheckForUpdatesToggle"].firstMatch
-        
-        /// Enable updates
-        ///     (So that the beta section is expanded)
-        if (updatesToggle.value as! Int) != 1 {
-            updatesToggle.click()
-            coolWait()
-        }
-        
-        /// Take screenshot of fully expanded general tab
-        result.append(takeLocalizationScreenshot(of: window, name: "GeneralTab"))
-
         ///
         /// Screenshot ButtonsTab
         ///
@@ -268,7 +304,7 @@ final class LocalizationScreenshotClass: XCTestCase {
             hitEscape()
         }
         
-        /// Screenshot sheets
+        /// Screenshot buttonsTab sheets
         ///     (The ones invoked by the two buttons in the bottom left and bottom right)
         for (i, button) in window.buttons.matching(NSPredicate(format: "identifier IN %@", ["axButtonsOptionsButton", "axButtonsRestoreDefaultsButton"])).allElementsBoundByIndex.enumerated() {
             
@@ -285,6 +321,9 @@ final class LocalizationScreenshotClass: XCTestCase {
             /// Cleanup
             hitEscape()
         }
+        
+        /// Screenshots ButtonsTab toasts
+        result.append(contentsOf: takeToastScreenshots("buttons", "ButtonsTab Toast %d"))
         
         ///
         /// Screenshot AboutTab
@@ -342,7 +381,7 @@ final class LocalizationScreenshotClass: XCTestCase {
             }
         }
         
-        /// Screenshot menus
+        /// Screenshot scrollingTab menus
         for (i, popUpButton) in window.popUpButtons.allElementsBoundByIndex.enumerated() {
             
             /// Click popup button
@@ -360,6 +399,9 @@ final class LocalizationScreenshotClass: XCTestCase {
             /// Cleanup
             hitEscape()
         }
+        
+        /// Screenshots ScrollingTab toasts
+        result.append(contentsOf: takeToastScreenshots("scrolling", "ScrollingTab Toast %d"))
         
         ///
         /// Return
@@ -437,7 +479,7 @@ final class LocalizationScreenshotClass: XCTestCase {
                 try fileManager.createDirectory(atPath: outputDirectory.path(), withIntermediateDirectories: true, attributes: nil)
                 DDLogInfo("Output directory created: \(outputDirectory)")
             } catch {
-                DDLogInfo("Error creating output directory: \((error as NSError).code) : \((error as NSError).domain)") /// This is a weird attempt at getting a non-localized description of the string
+                XCTFail("Error creating output directory: \((error as NSError).code) : \((error as NSError).domain)") /// This is a weird attempt at getting a non-localized description of the string
                 return
             }
         }
@@ -449,7 +491,7 @@ final class LocalizationScreenshotClass: XCTestCase {
             let plistData = try PropertyListEncoder().encode(localizedStringData)
             try plistData.write(to: URL(fileURLWithPath: plistFilePath))
         } catch {
-            DDLogInfo("Error: Failed to write screenshot metadata to file as json: \(error) \((error as NSError).code) : \((error as NSError).domain)")
+            XCTFail("Error: Failed to write screenshot metadata to file as json: \(error) \((error as NSError).code) : \((error as NSError).domain)")
         }
         
         /// Write screenshots to file
@@ -458,7 +500,7 @@ final class LocalizationScreenshotClass: XCTestCase {
             do {
                 try screenshotData.write(to: URL(fileURLWithPath: filePath))
             } catch {
-                DDLogInfo("Error: Failed to screenshot to file: \((error as NSError).code) : \((error as NSError).domain)")
+                XCTFail("Error: Failed to screenshot to file: \((error as NSError).code) : \((error as NSError).domain)")
             }
         }
         
@@ -583,7 +625,7 @@ final class LocalizationScreenshotClass: XCTestCase {
                            width: frame.width,
                            height: frame.height)
             
-            /// Scale to screenshot resulution
+            /// Scale to screenshot resolution
             ///     The screenshot will usually have double resolution compared the internal coordinate system. Retina stuff I think.
             let bsf = NSScreen.screens[0].backingScaleFactor /// Not sure it matters which screen we use.
             frame = NSRect(x: bsf*frame.minX,

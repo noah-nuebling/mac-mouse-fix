@@ -36,6 +36,7 @@
 		4F39BC27263AC31600FDF692 /* Sparkle.framework in Embed Sparkle (Redundant with Link Binary Phase?) */ = {isa = PBXBuildFile; fileRef = 4F39BC24263AC2E800FDF692 /* Sparkle.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		4F39BC3B263AF2B000FDF692 /* SparkleUpdaterController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F39BC3A263AF2B000FDF692 /* SparkleUpdaterController.m */; };
 		4F39BC4A263B179200FDF692 /* AppState.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F39BC49263B179200FDF692 /* AppState.m */; };
+		4F3A10E92C5ED9E50054B89E /* SharedUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF6653B25F2C7B000689B77 /* SharedUtility.m */; };
 		4F3A40AB266BBB6200436821 /* AccelerationBezier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F3A40AA266BBB6200436821 /* AccelerationBezier.swift */; };
 		4F3A40B1266BBC5000436821 /* Curve.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F3A40B0266BBC5000436821 /* Curve.swift */; };
 		4F3A40CB266C44D100436821 /* DisplayLink.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F3A40CA266C44D100436821 /* DisplayLink.m */; };
@@ -49,6 +50,8 @@
 		4F44FF042606D73D00926A5E /* MFMessagePort.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F44FF032606D73D00926A5E /* MFMessagePort.m */; };
 		4F44FF052606D73D00926A5E /* MFMessagePort.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F44FF032606D73D00926A5E /* MFMessagePort.m */; };
 		4F47C11C2C58931B009F6CE7 /* LicenseToasts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F47C11B2C58931B009F6CE7 /* LicenseToasts.swift */; };
+		4F47C11E2C58AD2E009F6CE7 /* ToastTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F47C11D2C58AD2E009F6CE7 /* ToastTests.swift */; };
+		4F47C11F2C58B321009F6CE7 /* MFMessagePort.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F44FF032606D73D00926A5E /* MFMessagePort.m */; };
 		4F4C737D2C4FB06E001D97C3 /* NSString+Steganography.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F4C737C2C4FB06E001D97C3 /* NSString+Steganography.m */; };
 		4F4C737E2C4FB06E001D97C3 /* NSString+Steganography.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F4C737C2C4FB06E001D97C3 /* NSString+Steganography.m */; };
 		4F4C73D72C4FB3FA001D97C3 /* LocalizedStringAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F4C73D62C4FB3FA001D97C3 /* LocalizedStringAnnotation.m */; };
@@ -1994,6 +1997,7 @@
 		4F44FF022606D73D00926A5E /* MFMessagePort.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MFMessagePort.h; sourceTree = "<group>"; };
 		4F44FF032606D73D00926A5E /* MFMessagePort.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MFMessagePort.m; sourceTree = "<group>"; };
 		4F47C11B2C58931B009F6CE7 /* LicenseToasts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LicenseToasts.swift; sourceTree = "<group>"; };
+		4F47C11D2C58AD2E009F6CE7 /* ToastTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToastTests.swift; sourceTree = "<group>"; };
 		4F4C737B2C4FB06E001D97C3 /* NSString+Steganography.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSString+Steganography.h"; sourceTree = "<group>"; };
 		4F4C737C2C4FB06E001D97C3 /* NSString+Steganography.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSString+Steganography.m"; sourceTree = "<group>"; };
 		4F4C73A92C4FB28C001D97C3 /* .gitmodules */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitmodules; sourceTree = "<group>"; };
@@ -6889,6 +6893,7 @@
 		4FC55B93291564C200663B24 /* Toasts */ = {
 			isa = PBXGroup;
 			children = (
+				4F47C11D2C58AD2E009F6CE7 /* ToastTests.swift */,
 				4FCABCF62933A7090018E538 /* Toasts.swift */,
 				4F1B832B26081A5400AEAF37 /* CaptureToasts.h */,
 				4F1B832C26081A5500AEAF37 /* CaptureToasts.m */,
@@ -7947,8 +7952,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				4F18464D2C533B5900D5E835 /* BidirectionalMap.m in Sources */,
+				4F3A10E92C5ED9E50054B89E /* SharedUtility.m in Sources */,
 				4FE1A1BB2C56A50100CE3347 /* Logging.m in Sources */,
 				4FAA3DBC2C56802E00CBA413 /* XCUIElement+Additions.m in Sources */,
+				4F47C11F2C58B321009F6CE7 /* MFMessagePort.m in Sources */,
 				4F58FE132C57297400926A00 /* Logging.swift in Sources */,
 				4F58FE032C56E65900926A00 /* AnnotationUtility.m in Sources */,
 				4F8B01AC2C348A3A00F3AF8D /* LocalizationScreenshots.swift in Sources */,
@@ -8099,6 +8106,7 @@
 				4FA40D1228A10E1900499E53 /* NSScreen+Additions.m in Sources */,
 				4F47C11C2C58931B009F6CE7 /* LicenseToasts.swift in Sources */,
 				4FF665FD25F2C92700689B77 /* AuthorizeAccessibilityView.m in Sources */,
+				4F47C11E2C58AD2E009F6CE7 /* ToastTests.swift in Sources */,
 				4F854D7C2789146900B46E9D /* NSMenu+NSMenu_Additions.m in Sources */,
 				4F92A72D260F6C7800529D1F /* NSView+Additions.m in Sources */,
 				4F92A73A260F73C600529D1F /* KeyCaptureView.m in Sources */,

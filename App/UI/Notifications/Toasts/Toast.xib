@@ -18,7 +18,7 @@
             <windowStyleMask key="styleMask" titled="YES" fullSizeContentView="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
             <rect key="contentRect" x="167" y="106" width="202" height="38"/>
-            <rect key="screenRect" x="0.0" y="0.0" width="1680" height="1025"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="2560" height="1415"/>
             <view key="contentView" id="Vvh-MN-Ozv">
                 <rect key="frame" x="0.0" y="0.0" width="202" height="38"/>
                 <autoresizingMask key="autoresizingMask"/>
@@ -75,10 +75,11 @@
                     </visualEffectView>
                 </subviews>
             </view>
+            <accessibility identifier="axToastWindow"/>
             <connections>
                 <outlet property="delegate" destination="-2" id="DNG-3l-gE4"/>
             </connections>
-            <point key="canvasLocation" x="1235" y="-353"/>
+            <point key="canvasLocation" x="1226" y="-347"/>
         </window>
         <customObject id="Hm0-rM-QPq" customClass="NotificationLabel"/>
     </objects>

@@ -14,6 +14,7 @@
 #import "Locator.h"
 #import "HelperServices.h"
 #import "Locator.h"
+#import "Logging.h"
 
 #if IS_MAIN_APP
 #import "Mac_Mouse_Fix-Swift.h"
@@ -107,10 +108,11 @@ static CFDataRef _Nullable didReceiveMessage(CFMessagePortRef port, SInt32 messa
     
     /// Process message
     __block NSObject *response = nil;
+    const NSDictionary<NSString *, void (^)(void)> *commandMap;
     
 #if IS_MAIN_APP
  
-    const NSDictionary<NSString *, void (^)(void)> *commandMap = @{
+     commandMap = @{
     
         @"addModeFeedback": ^{
             [MainAppState.shared.buttonTabController handleAddModeFeedbackWithPayload:(NSDictionary *)payload];
@@ -159,11 +161,19 @@ static CFDataRef _Nullable didReceiveMessage(CFMessagePortRef port, SInt32 messa
         @"configFileChanged": ^{
             [Config loadFileAndUpdateStates];
         },
+        @"showNextTestToastWithSection": ^{
+            BOOL moreToastsToGo = [ToastTests showNextTestToastWithSection:(id)payload]; /// If this is true, we haven't ran out of test-toasts for this section, yet.
+            response = @(moreToastsToGo);
+        },
+        @"didShowAllToasts": ^{
+            BOOL didShowAll = [ToastTests didShowAllToasts]; /// If this is true, we haven't ran out of test-toasts yet.
+            response = @(didShowAll);
+        }
     };
 
 #elif IS_HELPER
     
-    const NSDictionary<NSString *, void (^)(void)> *commandMap = @{
+    commandMap = @{
         @"configFileChanged": ^{
             [Config loadFileAndUpdateStates];
         },

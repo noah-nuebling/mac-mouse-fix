@@ -27,10 +27,25 @@
     ///     - We keep the format string short to stay under the 512 character XCUITest limit.
     ///     - Pattern recognition would break if key or table name contain `:`
     ///     - If table is nill the formatted string would include literal "(null)", so we map to empty string.
+    ///     - I've seen our' current secretMessage encoding break the UI text a little bit:
+    ///         - Markdown __underscore emphasis__ is not parsed anymore - (we had the same issue with chinese - the `__` syntax  requires spaces to work while `**` does not. ZeroWidthSpace is not enough. We should just switch over to using `**`)
+    ///         - Markdown parsing normally removes anything over a double linebreak. But not when the secretMessage is in the blank space.
+    ///         - Pluralized localizedStrings break from our annotations it seems. They render as `%#@someidentifier@` after being formatted. Perhaps if we put the annotation to the string's end for strings starting with %#@, that could fix it?
     
     NSString *annotation = stringf(@"mfkey:%@:%@:", key, table ?: @"");
     NSString *secretMessage = [annotation encodedAsSecretMessage];
     return secretMessage;
+    
+}
+
++ (void)setUnderlyingString:(NSString *)underlyingString toLocalizedString:(id)localizedString {
+    [localizedString setValue:underlyingString forKey:@"original"];
+    NSMutableDictionary *config = [[localizedString valueForKeyPath:@"config"] mutableCopy];
+    config[@"NSStringLocalizedFormatKey"] = underlyingString;
+    [localizedString setValue:config forKey:@"config"];
+}
+
+void doBreak(NSString *context) {
     
 }
 
@@ -53,7 +68,16 @@
             
             /// Add secret message
             NSString *annotation = [self annotationStringWithKey:key table:table];
-            result = [annotation stringByAppendingString:result]; /// We prepend the annotation because XCUITest will seemingly cut of the string at 512 chars. By putting the annotation first it should be before the cutoff.
+            NSString *annotatedString = [annotation stringByAppendingString:result];
+            
+            
+            if ([result isKindOfClass:NSClassFromString(@"__NSLocalizedString")]) {
+                /// Add secret message to pluralized strings (`__NSLocalizedString` class)
+                [self setUnderlyingString:annotatedString toLocalizedString:result];
+            } else {
+                /// Default case
+                result = annotatedString; /// We prepend the annotation because XCUITest will seemingly cut of the string at 512 chars. By putting the annotation first it should be before the cutoff.
+            }
             
             /// Log
             DDLogDebug(@"LocalizedStringAnnotation: Annotated: \"%@\": \"%@\" (table: %@)", key, result, table);
@@ -73,7 +97,15 @@
         
             /// Add secret message
             NSString *annotation = [self annotationStringWithKey:key table:table];
-            result = [[annotation attributed] attributedStringByAppending:result];
+            NSAttributedString *annotatedString = [[annotation attributed] attributedStringByAppending:result];
+            
+            if ([result isKindOfClass:NSClassFromString(@"__NSLocalizedString")]) {
+                assert(false); /// Don't know how to handle this.
+                result = annotatedString;
+            } else {
+                /// Default case
+                result = annotatedString;
+            }
             
             /// Log
             DDLogDebug(@"LocalizedStringAnnotation: Annotated: \"%@\": \"%@\" (table: %@)", key, result, table);

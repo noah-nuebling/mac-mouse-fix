@@ -21,5 +21,7 @@
 #import "DisableSwiftBridging.h"
 #import "MFDataClass.h"
 #import "XCUIElement+Additions.h"
+#import "MFMessagePort.h"
+#import "Constants.h"
 
 #endif /* AppUITests_Bridging_Header_h */

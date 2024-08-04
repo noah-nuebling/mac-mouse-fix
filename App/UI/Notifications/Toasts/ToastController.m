@@ -34,7 +34,8 @@
 
 static ToastController *_instance;
 static NSDictionary *_labelAttributesFromIB;
-static id _localEventMonitor;
+static id _localClickMonitor;
+static id _localEscapeKeyMonitor;
 
 + (void)initialize {
     
@@ -118,6 +119,10 @@ typedef enum {
         sideMargin = 5;
         _toastAnimationOffset = -20;
     } else assert(false);
+    
+    /// Close existing notification
+    ///     This is a TEST to maybe prevent seeming raceconditions seen during our LocalizationScreenshot tests where the escapeKey monitor seemingly never got removed after screenshotting toasts on the licensesheet window.
+    [self closeNotificationWithFadeOut];
     
     /// Execution
     
@@ -222,7 +227,7 @@ typedef enum {
     [NSAnimationContext endGrouping];
     
     /// Close if user clicks elsewhere
-    _localEventMonitor = [NSEvent addLocalMonitorForEventsMatchingMask:(NSEventMaskLeftMouseDown) handler:^NSEvent * _Nullable(NSEvent * _Nonnull event) {
+    _localClickMonitor = [NSEvent addLocalMonitorForEventsMatchingMask:(NSEventMaskLeftMouseDown) handler:^NSEvent * _Nullable(NSEvent * _Nonnull event) {
         
         NSPoint loc = NSEvent.mouseLocation;
         
@@ -234,15 +239,35 @@ typedef enum {
         NSPoint locWindow = [MainAppState.shared.window convertRectFromScreen:(NSRect){.origin=loc}].origin; /// convertPointFromScreen: only available in 10.12+
         NSPoint locContentView = [mainContentView convertPoint:locWindow fromView:nil];
         
+        /// Analyze where the user clicked
         BOOL locIsOverNotification = [NSWindow windowNumberAtPoint:NSEvent.mouseLocation belowWindowWithWindowNumber:0] == _instance.window.windowNumber; /// So notification isn't dismissed when we click on it. Not sure if necessary when we're using `locIsOverMainWindowContentView`.
         BOOL locIsOverMainWindowContentView = [mainContentView hitTest:locContentView] != nil; /// So that we can drag the window by its titlebar without dismissing the notification.
         
+        /// Close the notification
         if (!locIsOverNotification && locIsOverMainWindowContentView) {
             [_showDurationTimer invalidate];
             [self closeNotificationWithFadeOut];
         }
         
+        /// Pass through event
         return event;
+    }];
+    
+    /// Close if user hits escape
+    ///     Adding this to more easily automate the UI for our localizationScreenshots, but I think it's also nice UX.
+    _localEscapeKeyMonitor = [NSEvent addLocalMonitorForEventsMatchingMask:(NSEventMaskKeyDown) handler:^NSEvent * _Nullable(NSEvent * _Nonnull event) {
+        
+        /// Guard: is escape key
+        BOOL isEscape = event.keyCode == kVK_Escape;
+        if (!isEscape) return event;
+        
+        /// Close the notification
+        [_showDurationTimer invalidate];
+        [self closeNotificationWithFadeOut];
+        
+        /// Don't pass through event
+        ///     Otherwise we get NSBeep'ed
+        return nil;
     }];
     
     /// Track mouse hover
@@ -351,10 +376,14 @@ static void cleanupForNotificationClose(void) {
     
     /// Helper function for closing the notification
     
-    /// Remove the local event monitor
-    if (_localEventMonitor != nil) {
-        [NSEvent removeMonitor:_localEventMonitor];
-        _localEventMonitor = nil;
+    /// Remove the local event monitors
+    if (_localClickMonitor != nil) {
+        [NSEvent removeMonitor:_localClickMonitor];
+        _localClickMonitor = nil;
+    }
+    if (_localEscapeKeyMonitor != nil) {
+        [NSEvent removeMonitor:_localEscapeKeyMonitor];
+        _localEscapeKeyMonitor = nil;
     }
     
     /// Remove the tracking area

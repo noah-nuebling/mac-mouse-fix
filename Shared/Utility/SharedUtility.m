@@ -238,6 +238,11 @@ static void iteratePropertiesOn(id obj, void(^callback)(objc_property_t property
 
 bool runningPreRelease(void) {
 
+#if IS_XC_TEST
+    assert(false);
+    return true;
+#else
+    
     /// Caching this seems excessive but it's called a lot and actually has a huge performance impact. We also moved to from ObjC to being a pure C function because that improves performance of the app by a few percentage points.
     
     static BOOL _isCached = NO;
@@ -276,12 +281,13 @@ bool runningPreRelease(void) {
         /// Return
         return _runningPrerelease;
     }
+#endif
 }
 
 #pragma mark - Check which executable is running
 /// TODO: Maybe move this to `Locator.m`
 
-bool runningMainApp(void) {
+inline bool runningMainApp(void) {
     
 #if IS_MAIN_APP
     return true;
@@ -290,7 +296,7 @@ bool runningMainApp(void) {
 
 //    return [NSBundle.mainBundle.bundleIdentifier isEqual:kMFBundleIDApp];
 }
-bool runningHelper(void) {
+inline bool runningHelper(void) {
     
 #if IS_HELPER
     return true;
