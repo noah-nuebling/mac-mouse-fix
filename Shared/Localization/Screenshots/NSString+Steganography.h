@@ -29,6 +29,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (MF_SWIFT_UNBRIDGED(NSString *))stringByAppendingStringAsSecretMessage:(MF_SWIFT_UNBRIDGED(NSString *))message NS_REFINED_FOR_SWIFT;
 - (MF_SWIFT_UNBRIDGED(NSString *))encodedAsSecretMessage NS_REFINED_FOR_SWIFT;
 - (MF_SWIFT_UNBRIDGED(NSArray<NSString *> *))secretMessages NS_REFINED_FOR_SWIFT;
+- (MF_SWIFT_UNBRIDGED(NSString *))withoutSecretMessages NS_REFINED_FOR_SWIFT;
 
 /// Internal
 

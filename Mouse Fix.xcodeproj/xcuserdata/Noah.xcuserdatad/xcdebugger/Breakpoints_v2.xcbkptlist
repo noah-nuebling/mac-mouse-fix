@@ -214,8 +214,8 @@
             filePath = "App/UI/Main/TabViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "210"
-            endingLineNumber = "210"
+            startingLineNumber = "212"
+            endingLineNumber = "212"
             landmarkName = "coolHideTab(identifier:window:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -731,8 +731,8 @@
             filePath = "App/UI/Main/TabViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "502"
-            endingLineNumber = "502"
+            startingLineNumber = "504"
+            endingLineNumber = "504"
             landmarkName = "tabView(_:didSelect:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -813,17 +813,33 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "983A95F4-71FC-4BFE-9F65-73C76165EE25"
-            shouldBeEnabled = "Yes"
+            uuid = "EC6EEABF-70B2-49B9-A1CC-46367A6E3987"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "App/UI/Notifications/Toasts/ToastTests.swift"
+            filePath = "App/UI/Notifications/Toasts/CaptureToasts.m"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "30"
-            endingLineNumber = "30"
-            landmarkName = "testLists"
-            landmarkType = "24">
+            startingLineNumber = "160"
+            endingLineNumber = "160"
+            landmarkName = "createButtonsNotificationBody(capturedItemArray, uncapturedItemArray)"
+            landmarkType = "9">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "BC7D6B57-DD74-4636-9FBD-B3D02EA71FBD"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "LocalizationScreenshotTaker/LocalizationScreenshots.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "262"
+            endingLineNumber = "262"
+            landmarkName = "navigateAppAndTakeScreenshots(_:)"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

@@ -14,13 +14,14 @@
 #ifndef AppUITests_Bridging_Header_h
 #define AppUITests_Bridging_Header_h
 
+#import "XCUIElement+Additions.h"
+
 #import "Logging.h"
 #import "TreeNode.h"
 #import "NSString+Steganography.h"
 #import "NSString+Additions.h"
 #import "DisableSwiftBridging.h"
 #import "MFDataClass.h"
-#import "XCUIElement+Additions.h"
 #import "MFMessagePort.h"
 #import "Constants.h"
 

@@ -157,11 +157,11 @@ static NSAttributedString *createButtonsNotificationBody(NSArray<NSString *> *ca
     assert(capturedBodyRaw.length > 0 && uncapturedBodyRaw.length > 0);
     
     /// Handle hint being @"(null)"
-    ///     Explanation: If we try to format an NSLocalizedString with an integer that is not defined in the .stringsdict, then the result is @"(null)". We sometimes want to do this for testing purposes.
-    if ([capturedHintRaw isEqual:@"(null)"]) {
+    ///     Explanation: If we try to format an NSLocalizedString with an integer that is not defined in the .xcstrings file, then the result is @"(null)". We sometimes want to do this for testing purposes.
+    if ([capturedHintRaw.withoutSecretMessages isEqual:@"(null)"]) {
         capturedHintRaw = @"";
     }
-    if ([uncapturedHintRaw isEqual:@"(null)"]) {
+    if ([uncapturedHintRaw.withoutSecretMessages isEqual:@"(null)"]) {
         uncapturedHintRaw = @"";
     }
     
@@ -248,11 +248,10 @@ static NSString *getLocalizedString(MFCapturedInputType inputType, NSString *sim
     if (inputType == kMFCapturedInputTypeButtons) {
         map = @{
             
-            @"captured.body": NSLocalizedString(@"capture-toast.buttons.captured.body", @"Note: Value for this key is defined in Localizable.stringsdict, not Localizable.strings. || Note: The core idea that we want to convey here is that, from now on, the button is being 'intercepted' by Mac Mouse Fix. We used the word 'capture' instead of 'intercept' since it sounds friendlier in English. In your language, you might want to use something closer to 'intercept'."),
-            @"captured.hint": NSLocalizedString(@"capture-toast.buttons.captured.hint", @"Note: Value for this key is defined in Localizable.stringsdict, not Localizable.strings"),
-            
-            @"uncaptured.body": NSLocalizedString(@"capture-toast.buttons.uncaptured.body", @"Note: Value for this key is defined in Localizable.stringsdict, not Localizable.strings"),
-            @"uncaptured.hint": NSLocalizedString(@"capture-toast.buttons.uncaptured.hint", @"Note: Value for this key is defined in Localizable.stringsdict, not Localizable.strings"),
+            @"captured.body": NSLocalizedString(@"capture-toast.buttons.captured.body", @"First draft - One: %@ is now captured by Mac Mouse Fix. || First draft - Other: %@ are now captured by Mac Mouse Fix. || Note: The core idea that we want to convey here is that, from now on, the button is being 'intercepted' by Mac Mouse Fix. We used the word 'capture' instead of 'intercept' since it sounds friendlier in English. In your language, you might want to use something closer to 'intercept'."),
+            @"captured.hint": NSLocalizedString(@"capture-toast.buttons.captured.hint", @"First draft - One: Other apps can't see the button anymore. || First draft - Other: Other apps can't see these buttons anymore."),
+            @"uncaptured.body": NSLocalizedString(@"capture-toast.buttons.uncaptured.body", @"First draft - One: %@ is no longer captured by Mac Mouse Fix. || First draft - Other: %@ are no longer captured by Mac Mouse Fix."),
+            @"uncaptured.hint": NSLocalizedString(@"capture-toast.buttons.uncaptured.hint", @"First draft - One: The button now works as if Mac Mouse Fix was disabled. || First draft - Other: These buttons now work as if Mac Mouse Fix was disabled."),
             
             @"link": NSLocalizedString(@"capture-toast.buttons.link", @"First draft: [Learn More](https://github.com/noah-nuebling/mac-mouse-fix/discussions/112)"),
         };

@@ -218,8 +218,6 @@ import ReactiveCocoa
     private func updateAppearance() {
         /// This is called whenever `content` changes, but also in some other spots
         
-        print("Update appearance")
-        
         /// Update appearance based on content
         
         let contentString = self.getString(fromFlags: self.content.value)

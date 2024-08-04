@@ -108,6 +108,8 @@ class TabViewController: NSTabViewController {
         ///     but it doesn't change the selected toolbar button properly, so we have to use horrible hacks.
         /// Sometimes you need to pass in window, when you call this right after the window is created.
         
+        let window = w ?? MainAppState.shared.window
+        
         guard let window = window, let tb = window.toolbar else { assert(false); return }
         let tbv = SharedUtility.getPrivateValue(of: tb, forName: "_toolbarView")
         

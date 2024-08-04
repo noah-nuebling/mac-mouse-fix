@@ -97,20 +97,43 @@ typedef NS_ENUM(UTF32Char, MFZeroWidthCharacter) {
     return result;
 }
 
+static NSRegularExpression *secretMessageRegex(void) {
+    
+    /// Define pattern
+    NSString *pattern = @"\u2063\u200C\u2063\u200D\u2063"           /// Start sequence
+    "(?:(?:[\u200C\u200D\u2060\u2062]{4})*)"    /// Arbitrary sequence of the 4 characters encoding, 0,1,2,3. Sequence length needs to be divisible by 4 since 4 quaternary digits encode one UTF-8 char.
+    "\u2063\u200D\u2063\u200C\u2063";           /// End sequence
+    
+    /// Create regex
+    NSRegularExpressionOptions expressionOptions = 0;
+    NSRegularExpression *expression = [NSRegularExpression regularExpressionWithPattern:pattern options:expressionOptions error:nil];
+    
+    /// Return
+    return expression;
+}
+
+- (NSString *)withoutSecretMessages {
+    
+    /// Find secretMessages
+    NSRegularExpression *regex = secretMessageRegex();
+    NSMatchingOptions matchingOptions = 0;
+    
+    /// Remove secretMessages
+    NSString *result = [regex stringByReplacingMatchesInString:self options:matchingOptions range:NSMakeRange(0, self.length) withTemplate:@""];
+    
+    /// Return
+    return result;
+}
+
 - (NSArray<NSString *> *)secretMessages {
  
     /// Declare result
     NSMutableArray *result = [NSMutableArray array];
     
     /// Find secret messages in the string.
-    NSString *pattern = @"\u2063\u200C\u2063\u200D\u2063"           /// Start sequence
-                        "(?:(?:[\u200C\u200D\u2060\u2062]{4})*)"    /// Arbitrary sequence of the 4 characters encoding, 0,1,2,3. Sequence length needs to be divisible by 4 since 4 quaternary digits encode one UTF-8 char.
-                        "\u2063\u200D\u2063\u200C\u2063";           /// End sequence
-    
-    NSRegularExpressionOptions expressionOptions = 0;
-    NSRegularExpression *expression = [NSRegularExpression regularExpressionWithPattern:pattern options:expressionOptions error:nil];
+    NSRegularExpression *regex = secretMessageRegex();
     NSMatchingOptions matchingOptions = 0;
-    NSArray<NSTextCheckingResult *> *matches = [expression matchesInString:self options:matchingOptions range:NSMakeRange(0, self.length)];
+    NSArray<NSTextCheckingResult *> *matches = [regex matchesInString:self options:matchingOptions range:NSMakeRange(0, self.length)];
     
     /// Decode the messages
     for (NSTextCheckingResult *match in matches) {
@@ -147,7 +170,7 @@ typedef NS_ENUM(UTF32Char, MFZeroWidthCharacter) {
     
     NSMutableArray *resultArray = [NSMutableArray array];
     
-    [resultArray addObject:@(MFZeroWidthCharacterSpace)]; /// Add space to prevent breaking markdown __emphasis__ but it doesn't work.
+//    [resultArray addObject:@(MFZeroWidthCharacterSpace)]; /// Add space to prevent breaking markdown __emphasis__ but it doesn't work, also breaks our `[string.withoutSecretMessages isEqual:@"(null)]"` checks.
     [resultArray addObjectsFromArray:[self secretMessageStartSequence]];
     
     NSArray<NSNumber *> *digits = [self quaternaryArray];
@@ -157,7 +180,7 @@ typedef NS_ENUM(UTF32Char, MFZeroWidthCharacter) {
     }
     
     [resultArray addObjectsFromArray:[self secretMessageEndSequence]];
-    [resultArray addObject:@(MFZeroWidthCharacterSpace)];
+//    [resultArray addObject:@(MFZeroWidthCharacterSpace)];
     
     NSString *result = [NSString stringWithUTF32Characters:resultArray];
     
@@ -354,6 +377,7 @@ typedef NS_ENUM(UTF32Char, MFZeroWidthCharacter) {
 /// Discussion:
 ///     This encoding uses just 2+1 zero-width characters, to create a base-2 encoding. There's a character limit of 512 in the UIStrings we can retrieve inside an XCUITest, which lead to problems,
 ///     so we'll create a new base-4 encoding that will hopefully be space-efficient enough.
+///     Update: There we still problems on some strings so we found a new solution: We get the raw AXUIElement from the XCUIElement through private methods and get the string from there - it doesn't have the 512 character limit. Now we could theoretically use the simpler binary encoding again. But it the quaternary one also works fine.
 
 - (NSString *)stringByAppendingStringAsSecretMessage_Inefficient:(NSString *)message {
     NSString *secretMessage = [message encodedAsSecretMessage_Inefficient];

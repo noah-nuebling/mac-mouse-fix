@@ -75,6 +75,9 @@ extension NSString {
     func secretMessages() -> NSArray {
         return __secretMessages() as! NSArray
     }
+    func withoutSecretMessages() -> NSString {
+        return __withoutSecretMessages() as! NSString
+    }
     
 }
 

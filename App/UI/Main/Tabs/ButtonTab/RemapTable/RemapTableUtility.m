@@ -122,7 +122,7 @@
     ///         -> So as we can see, these edge cases are wayyy to complicated to explain exactly
     ///         -> And users (as far as I understand) usually just want to know: "How do I make the middle button work normally", or "How do I use this alongside MOS, or another mouse app", and for those cases, understanding all the details really doesn't matter.
     ///
-    ///         -> So for the captureNotifications, we should just align with the simple explanation, and we should not try to align with the exact reality of when things are captured or uncaptured. (Which we could do by tapping into the SwitchMaster)
+    ///         -> So for the captureToasts, we should just align with the simple explanation, and we should not try to align with the exact reality of when things are captured or uncaptured. (Which we could do by tapping into the SwitchMaster)
     ///             - Especially in the buttons case I think the simple explanation is ok, because worst case, we tell the user to do 'more' than is necessary to uncapture a button, which won't lead to any problems for the user (You could say it's just a little trick that they don't know)
     ///             - In the scrollwheel case, it's different, since in the worst case, we don't tell the user everything that is necessary to uncapture the scrollwheel in all scenarios, which could lead to problems.
     ///                 - Based on this, I think it does make sense to maybe extend the simple explanation from what was discussed above: Just include "remove the modifiers at the bottom of the scroll tab" in our simple explanation. Because those modifiers might lead to interference when using MOS or another mouse app.

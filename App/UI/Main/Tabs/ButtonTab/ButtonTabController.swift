@@ -64,6 +64,8 @@ import Foundation
         
         let radio1 = NSButton(radioButtonWithTitle: NSLocalizedString("restore-buttons-alert.radio1", comment: "First draft: Mouse with 3 buttons"), target: self, action: #selector(nullAction(sender:)))
         let radio2 = NSButton(radioButtonWithTitle: NSLocalizedString("restore-buttons-alert.radio2", comment: "First draft: Mouse with 5+ buttons"), target: self, action: #selector(nullAction(sender:)))
+        radio1.setAccessibilityIdentifier("axRestoreButtons3")
+        radio2.setAccessibilityIdentifier("axRestoreButtons5")
         
         let radioStack = NSStackView(views: [radio1, radio2])
         

@@ -1244,6 +1244,7 @@ your __Logitech M720 Triathlon__.&gt;</string>
                                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                                     <font key="font" metaFont="system"/>
                                                 </buttonCell>
+                                                <accessibility identifier="axScrollingRestoreDefaultModifiersButton"/>
                                             </button>
                                             <gridView horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" xPlacement="none" yPlacement="none" rowAlignment="none" rowSpacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="93c-HE-afM">
                                                 <rect key="frame" x="59" y="0.0" width="232" height="70"/>

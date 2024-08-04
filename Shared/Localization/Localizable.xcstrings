@@ -1929,7 +1929,7 @@
       }
     },
     "capture-toast.buttons.captured.body" : {
-      "comment" : "Note: Value for this key is defined in Localizable.stringsdict, not Localizable.strings. || Note: The core idea that we want to convey here is that, from now on, the button is being 'intercepted' by Mac Mouse Fix. We used the word 'capture' instead of 'intercept' since it sounds friendlier in English. In your language, you might want to use something closer to 'intercept'.",
+      "comment" : "First draft - One: %@ is now captured by Mac Mouse Fix. || First draft - Other: %@ are now captured by Mac Mouse Fix. || Note: The core idea that we want to convey here is that, from now on, the button is being 'intercepted' by Mac Mouse Fix. We used the word 'capture' instead of 'intercept' since it sounds friendlier in English. In your language, you might want to use something closer to 'intercept'.",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -2141,7 +2141,7 @@
       }
     },
     "capture-toast.buttons.captured.hint" : {
-      "comment" : "Note: Value for this key is defined in Localizable.stringsdict, not Localizable.strings",
+      "comment" : "First draft - One: Other apps can't see the button anymore. || First draft - Other: Other apps can't see these buttons anymore.",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -2418,7 +2418,7 @@
       }
     },
     "capture-toast.buttons.uncaptured.body" : {
-      "comment" : "Note: Value for this key is defined in Localizable.stringsdict, not Localizable.strings",
+      "comment" : "First draft - One: %@ is no longer captured by Mac Mouse Fix. || First draft - Other: %@ are no longer captured by Mac Mouse Fix.",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -2630,7 +2630,7 @@
       }
     },
     "capture-toast.buttons.uncaptured.hint" : {
-      "comment" : "Note: Value for this key is defined in Localizable.stringsdict, not Localizable.strings",
+      "comment" : "First draft - One: The button now works as if Mac Mouse Fix was disabled. || First draft - Other: These buttons now work as if Mac Mouse Fix was disabled.",
       "localizations" : {
         "de" : {
           "stringUnit" : {

@@ -7,11 +7,24 @@
 // --------------------------------------------------------------------------
 //
 
-#import <XCTest/XCUIElement.h>
+@import XCTest;
+
 #import "AnnotationUtility.h"
+
+NS_ASSUME_NONNULL_BEGIN
 
 ///
 /// Use `listMethods([XCUIElement class])` in the lldb console to easily discover private methods
+///
+
+///
+/// Other
+///
+
+AXUIElementRef copyAXUIElementForXCElementSnapshot(id<XCUIElementSnapshot> snapshot);
+
+///
+/// Extending public interfaces
 ///
 
 @interface XCUIApplication (MFStuff)
@@ -31,5 +44,7 @@
 - (XCUIApplication *)application;
 - (XCUIDevice *)device;
 - (XCUIScreen *)screen;
-
 @end
+
+
+NS_ASSUME_NONNULL_END

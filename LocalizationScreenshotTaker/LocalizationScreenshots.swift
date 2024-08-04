@@ -95,6 +95,7 @@ final class LocalizationScreenshotClass: XCTestCase {
         
         /// Prepare app
         app = XCUIApplication()
+//        app?.launchArguments.append(contentsOf: ["-AppleInterfaceStyle", "Dark"])
         app?.launchArguments.append(localizedStringAnnotationActivationArgumentForScreenshottedApp)
         
         /// TESTING
@@ -175,12 +176,8 @@ final class LocalizationScreenshotClass: XCTestCase {
         assert(error == nil)
         
         ///
-        /// Screenshot GeneralTab
+        /// Enable MMF
         ///
-        
-        /// Switch to general tab
-        toolbarButtons["general"].click() /// Need to click twice so that the test runner properly waits for the animation to finish
-        coolWait()
         
         /// Find enable toggle
         let switcherino = window.switches["axEnableToggle"].firstMatch
@@ -194,11 +191,87 @@ final class LocalizationScreenshotClass: XCTestCase {
             coolWait() /// Wait for animation to finish
         }
         
-        /// Find checkForUpdates toggle
-        let updatesToggle = window.checkBoxes["axCheckForUpdatesToggle"].firstMatch
+        ///
+        /// Screenshot ButtonsTab
+        ///
+        
+        toolbarButtons["buttons"].click()
+        coolWait()
+        
+        /// Screenshot states
+        let restoreDefaultsButton = window.buttons["axButtonsRestoreDefaultsButton"].firstMatch
+        assert(restoreDefaultsButton.exists)
+        restoreDefaultsButton.click()
+        let restoreDefaultsSheet = window.sheets.firstMatch
+        let restoreDefaultsRadioButtons = restoreDefaultsSheet.radioButtons.allElementsBoundByIndex
+        for (i, radioButton) in restoreDefaultsSheet.radioButtons.allElementsBoundByIndex.reversed().enumerated() { /// Reversed for debugging
+            radioButton.click()
+            hitReturn()
+            hitEscape() /// Close any toasts
+            result.append(takeLocalizationScreenshot(of: window, name: "ButtonsTab State \(i)"))
+            restoreDefaultsButton.click() /// Open the sheet back up
+        }
+        
+        /// Go to default state
+        ///     (Default settings for 5+ buttons)
+        let defaultRadioButton = restoreDefaultsSheet.radioButtons["axRestoreButtons5"]
+        assert(defaultRadioButton.exists)
+        defaultRadioButton.click()
+        hitReturn()
+        hitEscape()
+        
+        /// Screenshot menus
+        ///     (Which let you pick the action in the remaps table)
+        for (i, popupButton) in window.popUpButtons.allElementsBoundByIndex.enumerated() {
+            
+            /// Click
+            popupButton.click()
+            let menu = popupButton.menus.firstMatch
+            
+            /// Screenshot
+            result.append(takeLocalizationScreenshot(of: menu, name: "ButtonsTab Menu \(i)"))
+            
+            /// Option screenshot
+            XCUIElement.perform(withKeyModifiers: .option) {
+                result.append(takeLocalizationScreenshot(of: menu, name: "ButtonsTab Menu \(i) (Option)"))
+            }
+            
+            /// Clean up
+            hitEscape()
+        }
+        
+        /// Screenshot buttonsTab sheets
+        ///     (The ones invoked by the two buttons in the bottom left and bottom right)
+        for (i, button) in window.buttons.matching(NSPredicate(format: "identifier IN %@", ["axButtonsOptionsButton", "axButtonsRestoreDefaultsButton"])).allElementsBoundByIndex.enumerated() {
+            
+            /// Click
+            button.click()
+            coolWait() /// Not necessary. Sheets have a native animation where XCUITest automatically correctly
+            
+            /// Get sheet
+            let sheet = window.sheets.firstMatch
+            
+            /// Screenshot
+            result.append(takeLocalizationScreenshot(of: sheet, name: "ButtonsTab Sheet \(i)"))
+            
+            /// Cleanup
+            hitEscape()
+        }
+        
+        /// Screenshots ButtonsTab toasts
+        result.append(contentsOf: takeToastScreenshots("buttons", "ButtonsTab Toast %d"))
+        
+        ///
+        /// Screenshot GeneralTab
+        ///
+        
+        /// Switch to general tab
+        toolbarButtons["general"].click()
+        coolWait() /// Need to wait so that the test runner properly waits for the animation to finish
         
         /// Enable updates
         ///     (So that the beta section is expanded)
+        let updatesToggle = window.checkBoxes["axCheckForUpdatesToggle"].firstMatch
         if (updatesToggle.value as! Int) != 1 {
             updatesToggle.click()
             coolWait()
@@ -275,56 +348,7 @@ final class LocalizationScreenshotClass: XCTestCase {
         
         /// Cleanup licenseSheet
         hitEscape()
-        
-        ///
-        /// Screenshot ButtonsTab
-        ///
-        
-        toolbarButtons["buttons"].click()
-        coolWait()
-        result.append(takeLocalizationScreenshot(of: window, name: "ButtonsTab"))
-        
-        /// Screenshot menus
-        ///     (Which let you pick the action in the remaps table)
-        for (i, popupButton) in window.popUpButtons.allElementsBoundByIndex.enumerated() {
-            
-            /// Click
-            popupButton.click()
-            let menu = popupButton.menus.firstMatch
-            
-            /// Screenshot
-            result.append(takeLocalizationScreenshot(of: menu, name: "ButtonsTab Menu \(i)"))
-            
-            /// Option screenshot
-            XCUIElement.perform(withKeyModifiers: .option) {
-                result.append(takeLocalizationScreenshot(of: menu, name: "ButtonsTab Menu \(i) (Option)"))
-            }
-            
-            /// Clean up
-            hitEscape()
-        }
-        
-        /// Screenshot buttonsTab sheets
-        ///     (The ones invoked by the two buttons in the bottom left and bottom right)
-        for (i, button) in window.buttons.matching(NSPredicate(format: "identifier IN %@", ["axButtonsOptionsButton", "axButtonsRestoreDefaultsButton"])).allElementsBoundByIndex.enumerated() {
-            
-            /// Click
-            button.click()
-            coolWait() /// Not necessary. Sheets have a native animation where XCUITest automatically correctly
-            
-            /// Get sheet
-            let sheet = window.sheets.firstMatch
-            
-            /// Screenshot
-            result.append(takeLocalizationScreenshot(of: sheet, name: "ButtonsTab Sheet \(i)"))
-            
-            /// Cleanup
-            hitEscape()
-        }
-        
-        /// Screenshots ButtonsTab toasts
-        result.append(contentsOf: takeToastScreenshots("buttons", "ButtonsTab Toast %d"))
-        
+
         ///
         /// Screenshot AboutTab
         ///
@@ -353,7 +377,12 @@ final class LocalizationScreenshotClass: XCTestCase {
         
         toolbarButtons["scrolling"].click()
         coolWait()
-        result.append(takeLocalizationScreenshot(of: window, name: "ScrollingTab"))
+        
+        /// Initialize state of tab
+        let restoreDefaultModsButton = window.buttons["axScrollingRestoreDefaultModifiersButton"].firstMatch
+        if restoreDefaultModsButton.exists {
+            restoreDefaultModsButton.click()
+        }
         
         /// Screenshot states
         for (i, popUpButton) in window.popUpButtons.allElementsBoundByIndex.enumerated() {
@@ -567,15 +596,29 @@ final class LocalizationScreenshotClass: XCTestCase {
             /// Unpack node
             let node = nodeAsAny as! TreeNode<XCUIElementSnapshot>
             let nodeSnapshot = node.representedObject!
+                
+            /// Get the underlying AXUIElement
+            ///     (since its strings dont have 512 character limit we see in the nodeSnapshot.dictionaryRepresentation())
+            ///     (We made a bunch of other decisions based on the 512 character limit, such as using space-efficient quaternaryEncoding for the secretMessages, now the limit doesn't exist anymore.)
+            let axuiElement = copyAXUIElementForXCElementSnapshot(nodeSnapshot).takeRetainedValue()
             
-            /// Get secret messages
+            /// Get all attr names
+            var attrNames: CFArray?
+            AXUIElementCopyAttributeNames(axuiElement, &attrNames)
+            
+            /// Iterate attr names and get secret messages
             var localizedStrings = [ScreenshotAndMetadata.Metadata.Frame.String_]()
-            for value in nodeSnapshot.dictionaryRepresentation.values {
+            for attrName in (attrNames! as NSArray) {
+                
+                /// Get axAttr value
+                var attrValue: CFTypeRef?
+                AXUIElementCopyAttributeValue(axuiElement, (attrName as! CFString), &attrValue)
                 
                 /// Check: Is it a string?
-                guard let string = value as? String else {
+                guard let string = attrValue as? String else {
                     continue
                 }
+                
                 /// Extract any secret messages
                 let secretMessages = string.secretMessages() as! [NSString]
                 
@@ -668,6 +711,9 @@ final class LocalizationScreenshotClass: XCTestCase {
     
     func hitEscape() {
         app?.typeKey(.escape, modifierFlags: [])
+    }
+    func hitReturn() {
+        app?.typeKey(.return, modifierFlags: [])
     }
     func coolWait() {
         usleep(useconds_t(Double(USEC_PER_SEC) * 0.5))

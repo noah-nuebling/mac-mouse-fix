@@ -27,8 +27,8 @@ import Foundation
         "buttons": Toasts.simpleToastMap_Buttons.values + [
             
             { Toasts.showReviveToast(showButtons: true, showScroll: false) },
-//            { CaptureToasts.showButtonCaptureToastWith(before: [], after: [3]) }, /// The pluralized localizedStrings break from our annotations it seems.
-//            { CaptureToasts.showButtonCaptureToastWith(before: [5], after: []) },
+            { CaptureToasts.showButtonCaptureToastWith(before: [], after: [3]) },
+            { CaptureToasts.showButtonCaptureToastWith(before: [5], after: []) },
         ],
         "scrolling": Toasts.simpleToastMap_Scrolling.values + [
             

@@ -8,6 +8,22 @@
 //
 
 #import "XCUIElement+Additions.h"
+@import XCTest;
+
+
+
+AXUIElementRef copyAXUIElementForXCElementSnapshot(id<XCUIElementSnapshot> snapshot) {
+    
+    /// Retrieve the AXUIElement for a snapshot
+    ///     I couldn't create `interface`es for the private classes of the intermediate objects  (XCAccessibilityElement and XCElementSnapshot) due to linker errors, so we're just using `performSelector:`.
+    
+    NSObject *xcAccessibilityElement = (NSObject *)[(id)snapshot performSelector:@selector(accessibilityElement)];
+    AXUIElementRef axuiElement = (__bridge AXUIElementRef)[xcAccessibilityElement performSelector:@selector(AXUIElement)];
+    CFRetain(axuiElement); /// This is what `__bridge_transfer` does.
+    
+    return axuiElement;
+}
+
 
 @implementation XCUIElement (MFStuff)
 

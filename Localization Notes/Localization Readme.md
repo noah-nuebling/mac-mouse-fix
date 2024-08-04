@@ -4,10 +4,6 @@
 
 - NotePlan [[MMF - i18n]]
 
-## Tips for Localizers
-
-- Enter a linebreak in .stringsdict using option + enter. '\n' doesn't work.
-
 ## Reflection on Localization System - June 2024
 
 (Update July 2024: We're implementing our own system now, the other stuff in this note is mostly outdated.)
@@ -139,3 +135,7 @@ TODO: We're using `en` as language ID for English and `de` as language ID for Ge
     - It uses Azure Translation. Should be free or extremely cheap but is a bit of work to set up. 
 
 Conclusion: Didn't end up doing this.
+
+## Tips for Localizers (Outdated)
+
+- Enter a linebreak in .stringsdict using option + enter. '\n' doesn't work.

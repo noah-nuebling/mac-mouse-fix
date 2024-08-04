@@ -24,13 +24,13 @@
 + (NSString *)annotationStringWithKey:(NSString *)key table:(NSString *_Nullable)table {
     
     /// Notes:
-    ///     - We keep the format string short to stay under the 512 character XCUITest limit.
+    ///     - We keep the format string short to stay under the 512 character XCUITest limit. (Update: We removed the limit by getting the raw AXUIElement)
     ///     - Pattern recognition would break if key or table name contain `:`
     ///     - If table is nill the formatted string would include literal "(null)", so we map to empty string.
     ///     - I've seen our' current secretMessage encoding break the UI text a little bit:
     ///         - Markdown __underscore emphasis__ is not parsed anymore - (we had the same issue with chinese - the `__` syntax  requires spaces to work while `**` does not. ZeroWidthSpace is not enough. We should just switch over to using `**`)
     ///         - Markdown parsing normally removes anything over a double linebreak. But not when the secretMessage is in the blank space.
-    ///         - Pluralized localizedStrings break from our annotations it seems. They render as `%#@someidentifier@` after being formatted. Perhaps if we put the annotation to the string's end for strings starting with %#@, that could fix it?
+    ///         - Pluralized localizedStrings break from our annotations it seems. Update: Fixed.
     
     NSString *annotation = stringf(@"mfkey:%@:%@:", key, table ?: @"");
     NSString *secretMessage = [annotation encodedAsSecretMessage];
@@ -38,11 +38,21 @@
     
 }
 
-+ (void)setUnderlyingString:(NSString *)underlyingString toLocalizedString:(id)localizedString {
-    [localizedString setValue:underlyingString forKey:@"original"];
-    NSMutableDictionary *config = [[localizedString valueForKeyPath:@"config"] mutableCopy];
+id nsLocalizedStringBySwappingOutUnderlyingString(id nsLocalizedString, NSString *underlyingString) {
+    
+    ///   Swaps out the underlying string of an `__NSLocalizedString` instance
+    ///     Notes:
+    ///     - `__NSLocalizedString` Is a private subclass for NSMutableString, which I've seen used for pluralized localized strings. When you use it as a format string, magic things happen and you get the correctly pluralized version.
+    ///     - If a pluralized string is retrieved from the bundle multiple times, it always seems to return the same, mutable `__NSLocalizedString` instance. (That's why we copy the instance here before modifying it.)
+    
+    nsLocalizedString = [nsLocalizedString copy];
+    
+    [nsLocalizedString setValue:underlyingString forKey:@"original"];
+    NSMutableDictionary *config = [[nsLocalizedString valueForKeyPath:@"config"] mutableCopy];
     config[@"NSStringLocalizedFormatKey"] = underlyingString;
-    [localizedString setValue:config forKey:@"config"];
+    [nsLocalizedString setValue:config forKey:@"config"];
+    
+    return nsLocalizedString;
 }
 
 void doBreak(NSString *context) {
@@ -68,15 +78,13 @@ void doBreak(NSString *context) {
             
             /// Add secret message
             NSString *annotation = [self annotationStringWithKey:key table:table];
-            NSString *annotatedString = [annotation stringByAppendingString:result];
+            NSString *annotatedString = [annotation stringByAppendingString:result]; /// We prepend the annotation because XCUITest will seemingly cut of the string at 512 chars. By putting the annotation first it should be before the cutoff. (Update: Removed the 512 character cutoff.)
             
-            
+            /// Handle pluralized strings
             if ([result isKindOfClass:NSClassFromString(@"__NSLocalizedString")]) {
-                /// Add secret message to pluralized strings (`__NSLocalizedString` class)
-                [self setUnderlyingString:annotatedString toLocalizedString:result];
+                result = nsLocalizedStringBySwappingOutUnderlyingString(result, annotatedString);
             } else {
-                /// Default case
-                result = annotatedString; /// We prepend the annotation because XCUITest will seemingly cut of the string at 512 chars. By putting the annotation first it should be before the cutoff.
+                result = annotatedString;
             }
             
             /// Log
@@ -94,17 +102,14 @@ void doBreak(NSString *context) {
         
         BOOL isOurBundle = [m_self isEqual:NSBundle.mainBundle];
         if (isOurBundle) {
-        
+            
             /// Add secret message
             NSString *annotation = [self annotationStringWithKey:key table:table];
-            NSAttributedString *annotatedString = [[annotation attributed] attributedStringByAppending:result];
+            result = [[annotation attributed] attributedStringByAppending:result];
             
+            /// Handle pluralized strings
             if ([result isKindOfClass:NSClassFromString(@"__NSLocalizedString")]) {
                 assert(false); /// Don't know how to handle this.
-                result = annotatedString;
-            } else {
-                /// Default case
-                result = annotatedString;
             }
             
             /// Log
