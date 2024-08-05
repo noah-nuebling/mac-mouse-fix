@@ -13,6 +13,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface LocalizedStringAnnotation : NSObject
 
++ (void)swizzleNSBundle;
+
 @end
 
 NS_ASSUME_NONNULL_END

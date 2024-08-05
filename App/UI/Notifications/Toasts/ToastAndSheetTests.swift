@@ -9,7 +9,10 @@
 
 import Foundation
 
-@objc class ToastTests: NSObject {
+@objc class ToastAndSheetTests: NSObject {
+    
+    /// This file opens up toast, sheets, and perhaps at some pointer other places in the UI, which are not otherwise easily reachable for the localizationScreenshot testRunner.
+    ///     The testRunner can send a message to the mainApp process, and then we open up the toast/sheet/etc in response.
     
     static var testIndexes = [
         "general": 0,
@@ -22,7 +25,7 @@ import Foundation
     static let testLists = [
      
         "general": Toasts.simpleToastMap_General.values + [
-            
+            { AuthorizeAccessibilityView.add() }
         ],
         "buttons": Toasts.simpleToastMap_Buttons.values + [
             
@@ -48,7 +51,7 @@ import Foundation
         ],
     ]
     
-    @objc class func showNextTestToast(section: String) -> Bool {
+    @objc class func showNextTest(section: String) -> Bool {
         
         /// Extract
         let testList = testLists[section]!
@@ -73,7 +76,7 @@ import Foundation
         return moreToastsToGo
     }
     
-    @objc class func didShowAllToasts() -> Bool {
+    @objc class func didShowAllToastsAndSheets() -> Bool {
         
         var result = true
         

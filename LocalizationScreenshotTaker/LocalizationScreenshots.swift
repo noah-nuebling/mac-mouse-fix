@@ -72,6 +72,10 @@ final class LocalizationScreenshotClass: XCTestCase {
     
     func testTakeLocalizationScreenshots() throws {
         
+        // --------------------------
+        // MARK: Main
+        // --------------------------
+        
         /// Configure test
         self.continueAfterFailure = false
         
@@ -90,42 +94,101 @@ final class LocalizationScreenshotClass: XCTestCase {
         }
         guard let outputDirectory = outputDirectory else { fatalError() }
         
+        /// Declare result
+        var screenshotsAndMetaData: [ScreenshotAndMetadata?] = []
+        
         /// Log
         DDLogInfo("Localization Screenshot Test Runner launched with output directory: \(xcode_screenshot_taker_output_dir_variable): \(outputDirectory)")
         
-        /// Prepare app
-        app = XCUIApplication()
-//        app?.launchArguments.append(contentsOf: ["-AppleInterfaceStyle", "Dark"])
-        app?.launchArguments.append(localizedStringAnnotationActivationArgumentForScreenshottedApp)
+        var mainApp: XCUIApplication
+        mainApp = XCUIApplication()
         
-        /// TESTING
-//        app?.launchArguments.append(contentsOf: ["-AppleLanguages", "(de)"])
+        /// Prepare helper app
+        ///     We should launch the helper first, and not let the app enable it, so we can control its launchArguments.
+        let helperPath = (mainApp.value(forKey:"path") as! NSString).appendingPathComponent("Contents/Library/LoginItems/Mac Mouse Fix Helper.app")
+        let helperApp = XCUIApplication(url: URL(fileURLWithPath: helperPath))
+        helperApp.launchArguments.append(localizedStringAnnotationActivationArgumentForScreenshottedApp)
+        helperApp.launch()
         
-        /// Launch the app
-        app!.launch()
+        /// Prepare mainApp
+        mainApp.launchArguments.append(localizedStringAnnotationActivationArgumentForScreenshottedApp) /// `["-AppleLanguages", "(de)"]`
+        mainApp.launch()
         
-        /// Call core
-        var screenshotsAndMetaData: [ScreenshotAndMetadata?]? = nil
-        XCTContext.runActivity(named: "Take Screenshots") { activity in
-            screenshotsAndMetaData = navigateAppAndTakeScreenshots(outputDirectory)
+        ///
+        /// Helper
+        ///
+        
+        /// Take helper screenshots
+        app = helperApp
+        XCTContext.runActivity(named: "Take Helper Screenshots") { activity in
+            screenshotsAndMetaData.append(contentsOf: navigateHelperAppAndTakeScreenshots(outputDirectory))
         }
-        /// Validate with app
+        
+        ///
+        /// Main App
+        ///
+        
+        /// Take mainApp screenshots
+        app = mainApp
+        XCTContext.runActivity(named: "Take MainApp Screenshots") { activity in
+            let newScreenshotsAndMetaData = navigateAppAndTakeScreenshots(outputDirectory)
+            screenshotsAndMetaData.append(contentsOf: newScreenshotsAndMetaData)
+        }
+        /// Validate with mainApp
         XCTContext.runActivity(named: "Validate Completeness") { activity in
-            /// We only validate toasts, if we add a new screen or other UI to the app that should be screenshotted, we don't have a way to detect that here.
-            let didShowAllToasts = (MFMessagePort.sendMessage("didShowAllToasts", withPayload: nil, toRemotePort: kMFBundleIDApp, waitForReply: true) as! NSNumber).boolValue
-            if (!didShowAllToasts) {
+            /// We only validate toasts. if we add a new screen or other UI to the app that should be screenshotted, we don't have a way to detect that here.
+            let didShowAllToastsAndSheets = (MFMessagePort.sendMessage("didShowAllToastsAndSheets", withPayload: nil, toRemotePort: kMFBundleIDApp, waitForReply: true) as! NSNumber).boolValue
+            if (!didShowAllToastsAndSheets) {
                 XCTFail("The app says we missed screenshotting some toast notifications.")
             }
         }
         
+        ///
         /// Write results
+        ///
+        
         XCTContext.runActivity(named: "Write results") { activity in
-            writeResults(screenshotsAndMetaData!, outputDirectory)
+            writeResults(screenshotsAndMetaData, outputDirectory)
         }
     }
     
+    // --------------------------
+    // MARK: Helper Screenshots
+    // --------------------------
+    
+    fileprivate func navigateHelperAppAndTakeScreenshots( _ outputDirectory: URL) -> [ScreenshotAndMetadata?] {
+        
+        /// Declare result
+        var result = [ScreenshotAndMetadata?]()
+        
+        /// Get menuBarItem
+        let statusItem = app!.statusItems.firstMatch
+        
+        if (!statusItem.exists) {
+            XCTFail("Couldn't get the the menuBarItem. Make sure to switch on 'Show in MenuBar' before running the test")
+        }
+        
+        /// Take screenshot
+        statusItem.click()
+        let menu = statusItem.menus.firstMatch
+        assert(menu.exists)
+        let screenshot = takeLocalizationScreenshot(of: menu, name: "Status Item Menu")
+        assert(screenshot != nil)
+        result.append(screenshot)
+        
+        /// Cleanup
+        hitEscape()
+        
+        /// Return
+        return result
+    }
+    
+    // --------------------------
+    // MARK: Main App Screenshots
+    // --------------------------
+    
     fileprivate func navigateAppAndTakeScreenshots( _ outputDirectory: URL) -> [ScreenshotAndMetadata?] {
-
+        
         /// Declare result
         var result = [ScreenshotAndMetadata?]()
         
@@ -135,10 +198,13 @@ final class LocalizationScreenshotClass: XCTestCase {
             var toastScreenshots = [ScreenshotAndMetadata?]()
             var i = 0
             while true {
-                let moreToastsToGo = MFMessagePort.sendMessage("showNextTestToastWithSection", withPayload: (toastSection as NSString), toRemotePort: kMFBundleIDApp, waitForReply: true)
+                let moreToastsToGo = MFMessagePort.sendMessage("showNextToastOrSheetWithSection", withPayload: (toastSection as NSString), toRemotePort: kMFBundleIDApp, waitForReply: true)
                 self.coolWait()
-                let toastWindow = self.app!.dialogs["axToastWindow"].firstMatch
-                toastScreenshots.append(self.takeLocalizationScreenshot(of: toastWindow, name: String(format: screenshotNameFormat, i)))
+                var transientWindow = self.app!.dialogs["axToastWindow"].firstMatch
+                if !transientWindow.exists {
+                    transientWindow = self.app!.sheets.firstMatch /// If there's no toast, see if it's a sheet
+                }
+                toastScreenshots.append(self.takeLocalizationScreenshot(of: transientWindow, name: String(format: screenshotNameFormat, i)))
                 if (moreToastsToGo == nil || (moreToastsToGo! as! NSNumber).boolValue == false) {
                     break;
                 }
@@ -176,90 +242,21 @@ final class LocalizationScreenshotClass: XCTestCase {
         assert(error == nil)
         
         ///
-        /// Enable MMF
+        /// Validate that the app is enabled
         ///
+        
+        /// Go to general tab
+        toolbarButtons["general"].click()
+        coolWait()
         
         /// Find enable toggle
         let switcherino = window.switches["axEnableToggle"].firstMatch
         
-        /// Enable MMF (if necessary)
-        let isEnabledPredicate = NSPredicate.init(format: "value == 1")
-        if (isEnabledPredicate.evaluate(with: switcherino) == false) {
-            switcherino.click()
-            let switchIsEnabled = expectation(for: isEnabledPredicate, evaluatedWith: switcherino)
-            XCTWaiter().wait(for: [switchIsEnabled], timeout: 10.0)
-            coolWait() /// Wait for animation to finish
+        /// Assert that the app is enabled
+        ///     We're launching the helper directly from the testRunner, so we can pass it arguments
+        if ((switcherino.value as! Int) != 1) {
+            XCTFail("Error: The app does not seem to be enabled, the test should do this automatically")
         }
-        
-        ///
-        /// Screenshot ButtonsTab
-        ///
-        
-        toolbarButtons["buttons"].click()
-        coolWait()
-        
-        /// Screenshot states
-        let restoreDefaultsButton = window.buttons["axButtonsRestoreDefaultsButton"].firstMatch
-        assert(restoreDefaultsButton.exists)
-        restoreDefaultsButton.click()
-        let restoreDefaultsSheet = window.sheets.firstMatch
-        let restoreDefaultsRadioButtons = restoreDefaultsSheet.radioButtons.allElementsBoundByIndex
-        for (i, radioButton) in restoreDefaultsSheet.radioButtons.allElementsBoundByIndex.reversed().enumerated() { /// Reversed for debugging
-            radioButton.click()
-            hitReturn()
-            hitEscape() /// Close any toasts
-            result.append(takeLocalizationScreenshot(of: window, name: "ButtonsTab State \(i)"))
-            restoreDefaultsButton.click() /// Open the sheet back up
-        }
-        
-        /// Go to default state
-        ///     (Default settings for 5+ buttons)
-        let defaultRadioButton = restoreDefaultsSheet.radioButtons["axRestoreButtons5"]
-        assert(defaultRadioButton.exists)
-        defaultRadioButton.click()
-        hitReturn()
-        hitEscape()
-        
-        /// Screenshot menus
-        ///     (Which let you pick the action in the remaps table)
-        for (i, popupButton) in window.popUpButtons.allElementsBoundByIndex.enumerated() {
-            
-            /// Click
-            popupButton.click()
-            let menu = popupButton.menus.firstMatch
-            
-            /// Screenshot
-            result.append(takeLocalizationScreenshot(of: menu, name: "ButtonsTab Menu \(i)"))
-            
-            /// Option screenshot
-            XCUIElement.perform(withKeyModifiers: .option) {
-                result.append(takeLocalizationScreenshot(of: menu, name: "ButtonsTab Menu \(i) (Option)"))
-            }
-            
-            /// Clean up
-            hitEscape()
-        }
-        
-        /// Screenshot buttonsTab sheets
-        ///     (The ones invoked by the two buttons in the bottom left and bottom right)
-        for (i, button) in window.buttons.matching(NSPredicate(format: "identifier IN %@", ["axButtonsOptionsButton", "axButtonsRestoreDefaultsButton"])).allElementsBoundByIndex.enumerated() {
-            
-            /// Click
-            button.click()
-            coolWait() /// Not necessary. Sheets have a native animation where XCUITest automatically correctly
-            
-            /// Get sheet
-            let sheet = window.sheets.firstMatch
-            
-            /// Screenshot
-            result.append(takeLocalizationScreenshot(of: sheet, name: "ButtonsTab Sheet \(i)"))
-            
-            /// Cleanup
-            hitEscape()
-        }
-        
-        /// Screenshots ButtonsTab toasts
-        result.append(contentsOf: takeToastScreenshots("buttons", "ButtonsTab Toast %d"))
         
         ///
         /// Screenshot GeneralTab
@@ -350,6 +347,76 @@ final class LocalizationScreenshotClass: XCTestCase {
         hitEscape()
 
         ///
+        /// Screenshot ButtonsTab
+        ///
+        
+        toolbarButtons["buttons"].click()
+        coolWait()
+        
+        /// Screenshot states
+        let restoreDefaultsButton = window.buttons["axButtonsRestoreDefaultsButton"].firstMatch
+        assert(restoreDefaultsButton.exists)
+        restoreDefaultsButton.click()
+        let restoreDefaultsSheet = window.sheets.firstMatch
+        let restoreDefaultsRadioButtons = restoreDefaultsSheet.radioButtons.allElementsBoundByIndex
+        for (i, radioButton) in restoreDefaultsSheet.radioButtons.allElementsBoundByIndex.reversed().enumerated() { /// Reversed for debugging
+            radioButton.click()
+            hitReturn()
+            hitEscape() /// Close any toasts
+            result.append(takeLocalizationScreenshot(of: window, name: "ButtonsTab State \(i)"))
+            restoreDefaultsButton.click() /// Open the sheet back up
+        }
+        
+        /// Go to default state
+        ///     (Default settings for 5+ buttons)
+        let defaultRadioButton = restoreDefaultsSheet.radioButtons["axRestoreButtons5"]
+        assert(defaultRadioButton.exists)
+        defaultRadioButton.click()
+        hitReturn()
+        hitEscape()
+        
+        /// Screenshot menus
+        ///     (Which let you pick the action in the remaps table)
+        for (i, popupButton) in window.popUpButtons.allElementsBoundByIndex.enumerated() {
+            
+            /// Click
+            popupButton.click()
+            let menu = popupButton.menus.firstMatch
+            
+            /// Screenshot
+            result.append(takeLocalizationScreenshot(of: menu, name: "ButtonsTab Menu \(i)"))
+            
+            /// Option screenshot
+            XCUIElement.perform(withKeyModifiers: .option) {
+                result.append(takeLocalizationScreenshot(of: menu, name: "ButtonsTab Menu \(i) (Option)"))
+            }
+            
+            /// Clean up
+            hitEscape()
+        }
+        
+        /// Screenshot buttonsTab sheets
+        ///     (The ones invoked by the two buttons in the bottom left and bottom right)
+        for (i, button) in window.buttons.matching(NSPredicate(format: "identifier IN %@", ["axButtonsOptionsButton", "axButtonsRestoreDefaultsButton"])).allElementsBoundByIndex.enumerated() {
+            
+            /// Click
+            button.click()
+            coolWait() /// Not necessary. Sheets have a native animation where XCUITest automatically correctly
+            
+            /// Get sheet
+            let sheet = window.sheets.firstMatch
+            
+            /// Screenshot
+            result.append(takeLocalizationScreenshot(of: sheet, name: "ButtonsTab Sheet \(i)"))
+            
+            /// Cleanup
+            hitEscape()
+        }
+        
+        /// Screenshots ButtonsTab toasts
+        result.append(contentsOf: takeToastScreenshots("buttons", "ButtonsTab Toast %d"))
+        
+        ///
         /// Screenshot AboutTab
         ///
         
@@ -439,9 +506,9 @@ final class LocalizationScreenshotClass: XCTestCase {
         return result
     }
     
-    ///
-    /// To-file-writing
-    ///
+    // --------------------------
+    // MARK: Write results
+    // --------------------------
     
     fileprivate func writeResults(_ screenshotsAndMetadata: [ScreenshotAndMetadata?], _ outputDirectory: URL) {
         
@@ -537,9 +604,9 @@ final class LocalizationScreenshotClass: XCTestCase {
         DDLogInfo("Wrote result to output directory \(outputDirectory.path())")
     }
     
-    ///
-    /// Screenshot-taking
-    ///  
+    // --------------------------
+    // MARK: Take Screenshot
+    // --------------------------
     
     func takeLocalizationScreenshot(of element: XCUIElement, name screenshotBaseName: String) -> ScreenshotAndMetadata? {
         var result: ScreenshotAndMetadata? = nil
@@ -553,6 +620,8 @@ final class LocalizationScreenshotClass: XCTestCase {
     
     func _takeLocalizationScreenshot(of topLevelElement: XCUIElement, name screenshotBaseName: String) throws -> ScreenshotAndMetadata? {
             
+
+        
         /// Windows and the menuBar are examples of topLevelElements
         ///     If we screenshot them separately we can screenshot all the UI our app is displaying without screenshotting the whole screen.
         
@@ -682,16 +751,17 @@ final class LocalizationScreenshotClass: XCTestCase {
         
         /// Filter out invalid frames
         ///     Sometimes elements will show up in the hierarchy that have frame size zero. (Update: Do they?)
-        let isValidFrame = { (frame: NSRect) in frame.width != 0 && frame.height != 0 }
         let groupedFrames = Dictionary(grouping: framesAndStringsAndKeys) { frameAndStringAndKey in
-            isValidFrame(frameAndStringAndKey.frame)
+            let isValidFrame = frameAndStringAndKey.frame.width >= 5 && frameAndStringAndKey.frame.height >= 5 /// hidden (zero-height) menu items show up with height 2 - want to filter them out
+            return isValidFrame
         }
         let validFramesAndStringsAndKeys = groupedFrames[true]
         
         /// Validate
         let invalidFramesAndStringsAndKeys = groupedFrames[false]
         if (invalidFramesAndStringsAndKeys != nil) {
-            assert(topLevelElement.elementType == XCUIElement.ElementType.menuBar)
+            assert(topLevelElement.elementType == XCUIElement.ElementType.menuBar ||
+                   topLevelElement.elementType == XCUIElement.ElementType.menu)
         }
         
         /// Store result
@@ -705,9 +775,9 @@ final class LocalizationScreenshotClass: XCTestCase {
         }
     }
     
-    ///
-    /// Helper
-    ///
+    // --------------------------
+    // MARK: Helper
+    // --------------------------
     
     func hitEscape() {
         app?.typeKey(.escape, modifierFlags: [])

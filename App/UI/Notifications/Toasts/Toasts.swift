@@ -13,6 +13,7 @@ import Foundation
     
     /// Define map
     ///     Maps are split up by tab for localization screenshot automation
+    ///     Having 2 string constants to take care of per toast (e.g. "k-enable-timeout-toast" and "enable-timeout-toast") is a bit annoying. At least we have an error message we try to pass in an unknown `k-...` string.
     
     static let simpleToastMap_General = [
         "k-enable-timeout-toast": {

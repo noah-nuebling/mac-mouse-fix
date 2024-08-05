@@ -161,12 +161,12 @@ static CFDataRef _Nullable didReceiveMessage(CFMessagePortRef port, SInt32 messa
         @"configFileChanged": ^{
             [Config loadFileAndUpdateStates];
         },
-        @"showNextTestToastWithSection": ^{
-            BOOL moreToastsToGo = [ToastTests showNextTestToastWithSection:(id)payload]; /// If this is true, we haven't ran out of test-toasts for this section, yet.
+        @"showNextToastOrSheetWithSection": ^{
+            BOOL moreToastsToGo = [ToastAndSheetTests showNextTestWithSection:(id)payload]; /// If this is true, we haven't ran out of test-toasts for this section, yet.
             response = @(moreToastsToGo);
         },
-        @"didShowAllToasts": ^{
-            BOOL didShowAll = [ToastTests didShowAllToasts]; /// If this is true, we haven't ran out of test-toasts yet.
+        @"didShowAllToastsAndSheets": ^{
+            BOOL didShowAll = [ToastAndSheetTests didShowAllToastsAndSheets];
             response = @(didShowAll);
         }
     };

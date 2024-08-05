@@ -36,7 +36,7 @@ bool classInheritsMethod(Class class, SEL selector);
 
 /// Typedefs
 
-typedef id InterceptorBlock;
+typedef id InterceptorBlock; /// Will be passed into `imp_implementationWithBlock`
 typedef IMP OriginalImplementation;
 typedef InterceptorBlock _Nonnull (^InterceptorFactory)(Class originalClass, SEL originalSelector, OriginalImplementation _Nonnull originalImplementation);
 

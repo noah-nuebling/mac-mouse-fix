@@ -50,7 +50,7 @@
 		4F44FF042606D73D00926A5E /* MFMessagePort.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F44FF032606D73D00926A5E /* MFMessagePort.m */; };
 		4F44FF052606D73D00926A5E /* MFMessagePort.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F44FF032606D73D00926A5E /* MFMessagePort.m */; };
 		4F47C11C2C58931B009F6CE7 /* LicenseToasts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F47C11B2C58931B009F6CE7 /* LicenseToasts.swift */; };
-		4F47C11E2C58AD2E009F6CE7 /* ToastTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F47C11D2C58AD2E009F6CE7 /* ToastTests.swift */; };
+		4F47C11E2C58AD2E009F6CE7 /* ToastAndSheetTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F47C11D2C58AD2E009F6CE7 /* ToastAndSheetTests.swift */; };
 		4F47C11F2C58B321009F6CE7 /* MFMessagePort.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F44FF032606D73D00926A5E /* MFMessagePort.m */; };
 		4F4C737D2C4FB06E001D97C3 /* NSString+Steganography.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F4C737C2C4FB06E001D97C3 /* NSString+Steganography.m */; };
 		4F4C737E2C4FB06E001D97C3 /* NSString+Steganography.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F4C737C2C4FB06E001D97C3 /* NSString+Steganography.m */; };
@@ -1997,7 +1997,7 @@
 		4F44FF022606D73D00926A5E /* MFMessagePort.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MFMessagePort.h; sourceTree = "<group>"; };
 		4F44FF032606D73D00926A5E /* MFMessagePort.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MFMessagePort.m; sourceTree = "<group>"; };
 		4F47C11B2C58931B009F6CE7 /* LicenseToasts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LicenseToasts.swift; sourceTree = "<group>"; };
-		4F47C11D2C58AD2E009F6CE7 /* ToastTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToastTests.swift; sourceTree = "<group>"; };
+		4F47C11D2C58AD2E009F6CE7 /* ToastAndSheetTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToastAndSheetTests.swift; sourceTree = "<group>"; };
 		4F4C737B2C4FB06E001D97C3 /* NSString+Steganography.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSString+Steganography.h"; sourceTree = "<group>"; };
 		4F4C737C2C4FB06E001D97C3 /* NSString+Steganography.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSString+Steganography.m"; sourceTree = "<group>"; };
 		4F4C73A92C4FB28C001D97C3 /* .gitmodules */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitmodules; sourceTree = "<group>"; };
@@ -6893,7 +6893,7 @@
 		4FC55B93291564C200663B24 /* Toasts */ = {
 			isa = PBXGroup;
 			children = (
-				4F47C11D2C58AD2E009F6CE7 /* ToastTests.swift */,
+				4F47C11D2C58AD2E009F6CE7 /* ToastAndSheetTests.swift */,
 				4FCABCF62933A7090018E538 /* Toasts.swift */,
 				4F1B832B26081A5400AEAF37 /* CaptureToasts.h */,
 				4F1B832C26081A5500AEAF37 /* CaptureToasts.m */,
@@ -8106,7 +8106,7 @@
 				4FA40D1228A10E1900499E53 /* NSScreen+Additions.m in Sources */,
 				4F47C11C2C58931B009F6CE7 /* LicenseToasts.swift in Sources */,
 				4FF665FD25F2C92700689B77 /* AuthorizeAccessibilityView.m in Sources */,
-				4F47C11E2C58AD2E009F6CE7 /* ToastTests.swift in Sources */,
+				4F47C11E2C58AD2E009F6CE7 /* ToastAndSheetTests.swift in Sources */,
 				4F854D7C2789146900B46E9D /* NSMenu+NSMenu_Additions.m in Sources */,
 				4F92A72D260F6C7800529D1F /* NSView+Additions.m in Sources */,
 				4F92A73A260F73C600529D1F /* KeyCaptureView.m in Sources */,

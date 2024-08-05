@@ -17,10 +17,6 @@
 
 @implementation LocalizedStringAnnotation
 
-@end
-
-@implementation NSBundle (MFAnnotation)
-
 + (NSString *)annotationStringWithKey:(NSString *)key table:(NSString *_Nullable)table {
     
     /// Notes:
@@ -59,16 +55,10 @@ void doBreak(NSString *context) {
     
 }
 
-+ (void)load {
-    
-    /// Check
-    ///     Only swizzle when flag is set
-    if (![NSProcessInfo.processInfo.arguments containsObject:@"-MF_ANNOTATE_LOCALIZED_STRINGS"]) {
-        return;
-    }
++ (void)swizzleNSBundle {
         
     /// Swizzle
-    swizzleMethodOnClassAndSubclasses([self class], @{ @"framework": @"AppKit" }, @selector(localizedStringForKey:value:table:), MakeInterceptorFactory(NSString *, (NSString *key, NSString *value, NSString *table), {
+    swizzleMethodOnClassAndSubclasses([NSBundle class], @{ @"framework": @"AppKit" }, @selector(localizedStringForKey:value:table:), MakeInterceptorFactory(NSString *, (NSString *key, NSString *value, NSString *table), {
         
         /// Call og
         NSString *result = OGImpl(key, value, table);
@@ -87,6 +77,9 @@ void doBreak(NSString *context) {
                 result = annotatedString;
             }
             
+            /// TEST
+            doBreak(result);
+            
             /// Log
             DDLogDebug(@"LocalizedStringAnnotation: Annotated: \"%@\": \"%@\" (table: %@)", key, result, table);
         }
@@ -95,7 +88,7 @@ void doBreak(NSString *context) {
         return result;
     }));
     
-    swizzleMethodOnClassAndSubclasses([self class], @{ @"framework": @"AppKit" }, @selector(localizedAttributedStringForKey:value:table:), MakeInterceptorFactory(NSAttributedString *, (NSString *key, NSString *value, NSString *table), {
+    swizzleMethodOnClassAndSubclasses([NSBundle class], @{ @"framework": @"AppKit" }, @selector(localizedAttributedStringForKey:value:table:), MakeInterceptorFactory(NSAttributedString *, (NSString *key, NSString *value, NSString *table), {
         
         /// Call og
         NSAttributedString *result = OGImpl(key, value, table);

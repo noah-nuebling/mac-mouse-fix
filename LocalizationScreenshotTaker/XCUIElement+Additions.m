@@ -45,24 +45,46 @@ AXUIElementRef copyAXUIElementForXCElementSnapshot(id<XCUIElementSnapshot> snaps
         /// Get self
         XCUIElement *self = m_self;
         
-        /// Determine screenshot extension
-        double extension = 0;
-        if (self.elementType == XCUIElementTypeMenu) {
-            extension = 100;
-        } else if (self.elementType == XCUIElementTypeSheet) {
-            extension = 100;
-        } else if (self.elementType == XCUIElementTypeDialog) { /// Our toastNotifications appear as dialog elements. Not sure how the classification works
-            extension = 100;
+        if (self.elementType == XCUIElementTypeMenuBar) {
+            
+            /// Get the range of the menuBar where menuItems appear
+            ///     This doesn't include the statusItems on the right (Wifi controls etc) which we want to exclude from the screenshot.
+            NSArray *menuBarItems = [[self childrenMatchingType:XCUIElementTypeMenuBarItem] allElementsBoundByAccessibilityElement];
+            XCUIElement *lastItem = menuBarItems.lastObject;
+            XCUIElement *firstItem = menuBarItems.firstObject;
+            NSRect firstItemFrame = [firstItem frame];
+            NSRect lastItemFrame = [lastItem frame];
+            double minItemX = firstItemFrame.origin.x;
+            double maxItemX = lastItemFrame.origin.x + lastItemFrame.size.width;
+            
+            /// Update the screenshot frame
+            r.size.width = maxItemX - minItemX;
+            r.origin.x = minItemX;
+            
+            /// Return
+            return r;
+            
         } else {
-            extension = 0;
-        }
         
-        /// Extend frame
-        if (extension > 0) {
-            r = NSMakeRect(r.origin.x - extension, r.origin.y - extension, r.size.width + 2*extension, r.size.height + 2*extension);
-        }        
-        /// Return
-        return r;
+            /// Determine screenshot extension
+            double extension = 0;
+            if (self.elementType == XCUIElementTypeMenu) {
+                extension = 100;
+            } else if (self.elementType == XCUIElementTypeSheet) {
+                extension = 100;
+            } else if (self.elementType == XCUIElementTypeDialog) { /// Our toastNotifications appear as dialog elements. Not sure how the classification works
+                extension = 100;
+            } else {
+                extension = 0;
+            }
+            
+            /// Extend frame
+            if (extension > 0) {
+                r = NSMakeRect(r.origin.x - extension, r.origin.y - extension, r.size.width + 2*extension, r.size.height + 2*extension);
+            }
+            /// Return
+            return r;
+        }
     }));
 }
 

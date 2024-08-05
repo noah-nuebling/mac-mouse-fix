@@ -79,9 +79,8 @@ IOHIDDeviceRef _Nullable getSendingDeviceWithSenderID(uint64_t senderID) {
     }
     
     IOHIDDeviceRef iohidDevice = copySendingDevice_Reliable(senderID);
-    assert(iohidDevice != NULL);
     
-    _hidDeviceCache[@(senderID)] = (__bridge_transfer id _Nullable)(iohidDevice);
+    _hidDeviceCache[@(senderID)] = (__bridge_transfer id _Nullable)(iohidDevice); /// Should we do this when the iohidDevice is NULL?
     
     return iohidDevice;
 }
@@ -109,7 +108,7 @@ IOHIDDeviceRef copySendingDevice_Faster(uint64_t senderID) {
     return iohidDevice;
 }
 
-IOHIDDeviceRef copySendingDevice_Reliable(uint64_t senderID) {
+IOHIDDeviceRef _Nullable copySendingDevice_Reliable(uint64_t senderID) {
     /// This iterates all parents of the service which send the hidEvent until it finds one that it can convert to and IOHIDDevice.
     /// Calling IOHIDDeviceCreate() on all these non-hid device is super slow unfortunately.
     
@@ -124,8 +123,15 @@ IOHIDDeviceRef copySendingDevice_Reliable(uint64_t senderID) {
         return (iohidDevice == NULL); /// Keep going while device not found
     }];
     
-    assert(iohidDevice != NULL);
+    /// Validate
+    if (runningPreRelease()) {
+        BOOL isTakingLocalizationScreenshots = [NSProcessInfo.processInfo.arguments containsObject:@"-MF_ANNOTATE_LOCALIZED_STRINGS"];
+        if (!isTakingLocalizationScreenshots) {
+            assert(iohidDevice != NULL); /// NULL for events sent by localizedScreenshot XCUITest runner, otherwise shouldn't be NULL.
+        }
+    }
     
+    /// Return
     return iohidDevice;
 }
 

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="21507" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="23089" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="21507"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="23089"/>
         <capability name="Image references" minToolsVersion="12.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -30,15 +30,15 @@
                 <subviews>
                     <button translatesAutoresizingMaskIntoConstraints="NO" id="G5r-ur-mKW">
                         <rect key="frame" x="8" y="133" width="21" height="32"/>
-                        <constraints>
-                            <constraint firstAttribute="width" constant="21" id="oeg-mC-Djd"/>
-                            <constraint firstAttribute="height" constant="21" id="vXa-wf-59f"/>
-                        </constraints>
                         <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" imagePosition="only" alignment="center" inset="2" id="KlD-L6-oTv">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="system"/>
                             <imageReference key="image" image="xmark.circle.fill" catalog="system" symbolScale="large"/>
                         </buttonCell>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="21" id="oeg-mC-Djd"/>
+                            <constraint firstAttribute="height" constant="21" id="vXa-wf-59f"/>
+                        </constraints>
                         <connections>
                             <action selector="closeButtonClick:" target="-2" id="kz5-1X-lpT"/>
                         </connections>
@@ -108,9 +108,11 @@
                                 </constraints>
                                 <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="calendar" catalog="system" id="AmN-iK-1Qh"/>
                                 <color key="contentTintColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                                <symbolConfiguration key="symbolConfiguration" scale="large" weight="medium"/>
+                                <symbolConfiguration key="symbolConfiguration" scale="large" weight="medium">
+                                    <nil key="locale"/>
+                                </symbolConfiguration>
                             </imageView>
-                            <textField horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="Pkf-ky-K1B">
+                            <textField focusRingType="none" horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="Pkf-ky-K1B">
                                 <rect key="frame" x="24" y="0.0" width="124" height="15"/>
                                 <textFieldCell key="cell" title="&lt;Test period is over&gt;" id="MLf-Ko-XPe">
                                     <font key="font" metaFont="cellTitle"/>
@@ -157,14 +159,16 @@
                         </buttonCell>
                     </button>
                     <imageView horizontalHuggingPriority="1000" verticalHuggingPriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="dws-t5-lGs">
-                        <rect key="frame" x="294" y="18.5" width="21" height="20"/>
+                        <rect key="frame" x="294" y="18" width="21" height="20"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="21" id="CTU-7R-biq"/>
                             <constraint firstAttribute="height" constant="9" id="yLb-LD-UYT"/>
                         </constraints>
                         <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="bag" catalog="system" id="flZ-Uz-gOX"/>
                         <color key="contentTintColor" name="systemBlueColor" catalog="System" colorSpace="catalog"/>
-                        <symbolConfiguration key="symbolConfiguration" scale="large" weight="medium"/>
+                        <symbolConfiguration key="symbolConfiguration" scale="large" weight="medium">
+                            <nil key="locale"/>
+                        </symbolConfiguration>
                     </imageView>
                 </subviews>
                 <constraints>
