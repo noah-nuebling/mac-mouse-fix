@@ -42,6 +42,7 @@ These people spent a lot more than the standard price and treated me to an **Inc
 
 **August 2024**
 
+- 🇺🇸&nbsp;Big&nbsp;Daver - "KAMALA 2024 & 2028!!"
 - 🇺🇸&nbsp;Mark&nbsp;R&nbsp;Labbe
 - 🇺🇸&nbsp;Samuel
 - 🇧🇷&nbsp;Igor&nbsp;Oliveira&nbsp;Rodrigues - "Thank you for allowing me to use any mouse i want without being locked into the Apple ecosystem"
