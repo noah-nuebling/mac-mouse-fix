@@ -53,14 +53,14 @@ import Foundation
             ToastController.attachNotification(withMessage: message, to: MainAppState.shared.window!, forDuration: kMFToastDurationAutomatic)
         },
         "k-already-using-defaults-toast.3": {
-            let messageRaw = NSLocalizedString("already-using-defaults-toast.3", comment: "First draft: You're __already using__ the default setting for mice with __3 buttons__")
+            let messageRaw = NSLocalizedString("already-using-defaults-toast.3", comment: "First draft: You're **already using** the default setting for mice with **3 buttons**")
             let message = NSAttributedString(coolMarkdown: messageRaw)!
             DispatchQueue.main.async {
                 ToastController.attachNotification(withMessage: message, to: MainAppState.shared.window!, forDuration: kMFToastDurationAutomatic)
             }
         },
         "k-already-using-defaults-toast.5": {
-            let messageRaw = NSLocalizedString("already-using-defaults-toast.5", comment: "First draft: You're __already using__ the default setting for mice with __5 buttons__")
+            let messageRaw = NSLocalizedString("already-using-defaults-toast.5", comment: "First draft: You're **already using** the default setting for mice with **5+ buttons**")
             let message = NSAttributedString(coolMarkdown: messageRaw)!
             DispatchQueue.main.async {
                 ToastController.attachNotification(withMessage: message, to: MainAppState.shared.window!, forDuration: kMFToastDurationAutomatic)
@@ -100,15 +100,15 @@ import Foundation
         /// Get revived-features string
         var revivedFeaturesList: [String] = []
         if showButtons {
-            revivedFeaturesList.append(NSLocalizedString("revive-toast.feature-buttons", comment: "First draft: __Buttons__"))
+            revivedFeaturesList.append(NSLocalizedString("revive-toast.feature-buttons", comment: "First draft: **Buttons** || Note: Will be inserted into the revive-toast"))
         }
         if showScroll {
-            revivedFeaturesList.append(NSLocalizedString("revive-toast.feature-scrolling", comment: "First draft: __Scrolling__"))
+            revivedFeaturesList.append(NSLocalizedString("revive-toast.feature-scrolling", comment: "First draft: **Scrolling**"))
         }
         let revivedFeatures = UIStrings.naturalLanguageList(fromStringArray: revivedFeaturesList)
         
         /// Build message string
-        let messageRaw = String(format: NSLocalizedString("revive-toast", comment: "First draft: __Enabled__ Mac Mouse Fix for %1@\nIt had been disabled from the Menu Bar %2@ || Note: %1@ will be replaced by the list of enabled features, %2@ will be replaced by the menubar icon"), revivedFeatures, "%@")
+        let messageRaw = String(format: NSLocalizedString("revive-toast", comment: "First draft: **Enabled** Mac Mouse Fix for %1@\nIt had been disabled from the Menu Bar %2@ || Note: %1@ will be replaced by the list of enabled features, %2@ will be replaced by the menubar icon || Note: This feature is for quickly activating/deactivating features of Mac Mouse Fix when using incompatible apps. In your language, it may make sense to use a different translation for 'enable' in this context than for the 'Enable Mac Mouse Fix' switch."), revivedFeatures, "%@")
         var message = NSAttributedString(coolMarkdown: messageRaw)!
         let symbolString = Symbols.string(withSymbolName: "CoolMenuBarIcon", stringFallback: "<Mac Mouse Fix Menu Bar Item>", font: ToastController.defaultFont()) ///NSAttributedString(symbol: "CoolMenuBarIcon", hPadding: 0.0, vOffset: -6, fallback: "<Mac Mouse Fix Menu Bar Item>")
         message = NSAttributedString(attributedFormat: message, args: [symbolString])

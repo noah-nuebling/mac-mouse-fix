@@ -1,5 +1,10 @@
 # Markdown readme
 
+Note:
+- The strings in Markdown.xcstrings are set to 'manual' to prevent Xcode from deleting them. However they are actually managed by our mac-mouse-fix-scripts scripts and updated based on the markdown templates. Any manual edits will be overridden!
+
+# vvv This is all old and probably outdated vvv
+
 This folder contains stuff for generating user-facing markdown documents. At the time of writing, that's `Acknowledgements.md` and `Readme.md`.
 
 The idea of the stuff in this folder is to generate/update markdown files based on a python script + templates. We use github actions (See `.github/workflows/...`) to automatically run the python scripts. We're currently using this to automatically update the acknowledgements as people buy the app. The readme isn't automatically rendered through GitHub Actions at the moment.

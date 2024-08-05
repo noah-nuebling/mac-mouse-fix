@@ -95,7 +95,8 @@
             "value" : "<Scroll precisely by moving the scroll wheel slowly>"
           }
         }
-      }
+      },
+      "shouldTranslate" : false
     },
     "1TU-wL-skT.title" : {
       "comment" : "Class = \"NSMenuItem\"; title = \"Undo\"; ObjectID = \"1TU-wL-skT\";",
@@ -335,7 +336,8 @@
             "value" : "<Mission Control and Spaces>"
           }
         }
-      }
+      },
+      "shouldTranslate" : false
     },
     "4gx-d0-WNb.title" : {
       "comment" : "Class = \"NSMenuItem\"; title = \"Off\"; ObjectID = \"4gx-d0-WNb\"; Note = \"Scrolling > Smoothness > Off Option\";",
@@ -434,7 +436,7 @@
       }
     },
     "5yb-g8-Kcg.title" : {
-      "comment" : "Class = \"NSTextFieldCell\"; title = \"Write a Feature Request\"; ObjectID = \"5yb-g8-Kcg\";",
+      "comment" : "Class = \"NSTextFieldCell\"; title = \"Write a Feature Request\"; ObjectID = \"5yb-g8-Kcg\"; Note = \"About > Feature Request Link\";",
       "extractionState" : "extracted_with_value",
       "localizations" : {
         "de" : {
@@ -626,7 +628,7 @@
       }
     },
     "8pi-FV-zYE.title" : {
-      "comment" : "Class = \"NSTextFieldCell\"; title = \"Acknowledgements\"; ObjectID = \"8pi-FV-zYE\";",
+      "comment" : "Class = \"NSTextFieldCell\"; title = \"Acknowledgements\"; ObjectID = \"8pi-FV-zYE\"; Note = \"About > Acknowledgements Link\";",
       "extractionState" : "extracted_with_value",
       "localizations" : {
         "de" : {
@@ -767,7 +769,8 @@
             "value" : "<Version - (-)>"
           }
         }
-      }
+      },
+      "shouldTranslate" : false
     },
     "97W-3h-SSc.title" : {
       "comment" : "Class = \"NSMenuItem\"; title = \"High\"; ObjectID = \"97W-3h-SSc\"; Note = \"Scrolling > Smoothness > High Option\";",
@@ -866,7 +869,7 @@
       }
     },
     "AHn-zX-g4d.title" : {
-      "comment" : "Class = \"NSTextFieldCell\"; title = \"Move between pages in Safari by scrolling horizontally, and more\"; ObjectID = \"AHn-zX-g4d\"; Note = \"Scrolling > Trackpad Interactions > Hint\";",
+      "comment" : "Class = \"NSTextFieldCell\"; title = \"Move between pages in Safari by scrolling horizontally, and more\"; ObjectID = \"AHn-zX-g4d\"; Note = \"Scrolling > Trackpad Simulation Toggle > Hint || NOTE: this text will automaticlly linebreak to adapt to the width of the Scrolling Tab. You don't need to set linebreaks to make it look correct.\";",
       "extractionState" : "extracted_with_value",
       "localizations" : {
         "de" : {
@@ -914,12 +917,12 @@
       }
     },
     "AqN-zN-yDS.title" : {
-      "comment" : "Class = \"NSTextFieldCell\"; title = \"Lets you quickly turn off or on features like\\nsmooth scrolling\"; ObjectID = \"AqN-zN-yDS\";",
+      "comment" : "Class = \"NSTextFieldCell\"; title = \"Lets you quickly turn off or on features like\\nsmooth scrolling\"; ObjectID = \"AqN-zN-yDS\"; Note = \"General > Show in Menu Bar Toggle > Hint || NOTE: There's a linebreak here to prevent the General Tab from becoming too wide, which looks weird. You can set the linebreak to your own taste || As a guideline: If text in your language is typically around 1.5x longer than English, then make the lines 1.5x longer than English.\";",
       "extractionState" : "extracted_with_value",
       "localizations" : {
         "de" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "Lässt dich schnell Features wie\nflüssiges Scrollen an- und abschalten"
           }
         },
@@ -931,31 +934,31 @@
         },
         "ko" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "부드러운 스크롤과 같은 기능을 손쉽게 켜거나\n끌 수 있습니다."
           }
         },
         "vi" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "Cho phép bạn tắt hoặc bật nhanh các tính năng như\ncuộn mượt mà"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "让您快速关闭或开启平滑滚动等功能"
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "讓您快速關閉或開啟平滑捲動等功能"
           }
         },
         "zh-HK" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "讓你快速關閉或開啟平滑捲動等功能"
           }
         }
@@ -1058,7 +1061,7 @@
       }
     },
     "bew-ni-FnZ.title" : {
-      "comment" : "Class = \"NSTextFieldCell\"; title = \"Mac Mouse Fix will stay enabled after you close it\"; ObjectID = \"bew-ni-FnZ\";",
+      "comment" : "Class = \"NSTextFieldCell\"; title = \"Mac Mouse Fix will stay enabled after you close it\"; ObjectID = \"bew-ni-FnZ\"; Note = \"General > Enable Mac Mouse Fix Toggle > Hint\";",
       "extractionState" : "extracted_with_value",
       "localizations" : {
         "de" : {
@@ -1106,7 +1109,7 @@
       }
     },
     "bGk-tB-fcH.title" : {
-      "comment" : "Class = \"NSTextFieldCell\"; title = \"Mac Mouse Fix\"; ObjectID = \"bGk-tB-fcH\";",
+      "comment" : "Class = \"NSTextFieldCell\"; title = \"Mac Mouse Fix\"; ObjectID = \"bGk-tB-fcH\"; Note = \"About > Mac Mouse Fix Label\";",
       "extractionState" : "extracted_with_value",
       "localizations" : {
         "de" : {
@@ -1154,7 +1157,7 @@
       }
     },
     "bgk-wr-o8T.title" : {
-      "comment" : "Class = \"NSButtonCell\"; title = \"Don't remind me again\"; ObjectID = \"bgk-wr-o8T\";",
+      "comment" : "Class = \"NSButtonCell\"; title = \"Don't remind me again\"; ObjectID = \"bgk-wr-o8T\"; Note = \"Restore Defaults Popover > Don't Remind Toggle > Label || Note: This is displayed under the `restore-default-buttons-popover.body` text from Localizable.xcstrings\";",
       "extractionState" : "extracted_with_value",
       "localizations" : {
         "de" : {
@@ -1346,7 +1349,7 @@
       }
     },
     "bQf-qv-mvB.title" : {
-      "comment" : "Class = \"NSTextFieldCell\"; title = \"File a Bug Report\"; ObjectID = \"bQf-qv-mvB\";",
+      "comment" : "Class = \"NSTextFieldCell\"; title = \"File a Bug Report\"; ObjectID = \"bQf-qv-mvB\"; Note = \"About > Bug Report Link\";",
       "extractionState" : "extracted_with_value",
       "localizations" : {
         "de" : {
@@ -1439,7 +1442,8 @@
             "value" : "<Initial Tab Controller>"
           }
         }
-      }
+      },
+      "shouldTranslate" : false
     },
     "buH-zX-xXu.title" : {
       "comment" : "Class = \"NSViewController\"; title = \"About\"; ObjectID = \"buH-zX-xXu\"; Note = \"About Tab Title\";",
@@ -1583,7 +1587,8 @@
             "value" : "<Day 2/14 of your test period>"
           }
         }
-      }
+      },
+      "shouldTranslate" : false
     },
     "d0g-07-PaJ.title" : {
       "comment" : "Class = \"NSMenuItem\"; title = \"Buy Mac Mouse Fix...\"; ObjectID = \"d0g-07-PaJ\";",
@@ -1970,7 +1975,7 @@
       }
     },
     "eVc-l9-Z0h.title" : {
-      "comment" : "Class = \"NSTextFieldCell\"; title = \"Get Help\"; ObjectID = \"eVc-l9-Z0h\";",
+      "comment" : "Class = \"NSTextFieldCell\"; title = \"Get Help\"; ObjectID = \"eVc-l9-Z0h\"; Note = \"About > Help Link\";",
       "extractionState" : "extracted_with_value",
       "localizations" : {
         "de" : {
@@ -2258,52 +2263,53 @@
       }
     },
     "g5F-ZO-vGZ.title" : {
-      "comment" : "Class = \"NSTextFieldCell\"; title = \"<Click \\\"__Restore Defaults...__\\\" to load the recommended settings for \\nyour __Logitech M720 Triathlon__.>\"; ObjectID = \"g5F-ZO-vGZ\";",
+      "comment" : "Class = \"NSTextFieldCell\"; title = \"<Click \\\"**Restore Defaults...**\\\" to load the recommended settings for \\nyour **Logitech M720 Triathlon**.>\"; ObjectID = \"g5F-ZO-vGZ\";",
       "extractionState" : "extracted_with_value",
       "localizations" : {
         "de" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "<>"
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "new",
-            "value" : "<Click \"__Restore Defaults...__\" to load the recommended settings for \nyour __Logitech M720 Triathlon__.>"
+            "value" : "<Click \"**Restore Defaults...**\" to load the recommended settings for \nyour **Logitech M720 Triathlon**.>"
           }
         },
         "ko" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "<Click \"__Restore Defaults...__\" to load the recommended settings for \nyour __Logitech M720 Triathlon__.>"
           }
         },
         "vi" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "<Nhấp \"__Khôi phục mặc định...__\" để tải thiết lập mặc định cho \n __Logitech M720 Triathlon__ của bạn.>"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "<Click \"__Restore Defaults...__\" to load the recommended settings for \nyour __Logitech M720 Triathlon__.>"
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "<Click \"__Restore Defaults...__\" to load the recommended settings for \nyour __Logitech M720 Triathlon__.>"
           }
         },
         "zh-HK" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "<Click \"__Restore Defaults...__\" to load the recommended settings for \nyour __Logitech M720 Triathlon__.>"
           }
         }
-      }
+      },
+      "shouldTranslate" : false
     },
     "g9N-Za-8Ss.label" : {
       "comment" : "Class = \"NSTabViewItem\"; label = \"<Initial>\"; ObjectID = \"g9N-Za-8Ss\";",
@@ -2351,7 +2357,8 @@
             "value" : "<Initial>"
           }
         }
-      }
+      },
+      "shouldTranslate" : false
     },
     "gK0-1z-Pjv.title" : {
       "comment" : "Class = \"NSButtonCell\"; title = \"Reverse Direction\"; ObjectID = \"gK0-1z-Pjv\"; Note = \"Scrolling > Reverse Scroll Direction Toggle\";",
@@ -2447,7 +2454,8 @@
             "value" : "<Effect>"
           }
         }
-      }
+      },
+      "shouldTranslate" : false
     },
     "Gr8-qh-oGd.title" : {
       "comment" : "Class = \"NSMenuItem\"; title = \"Services\"; ObjectID = \"Gr8-qh-oGd\";",
@@ -3023,7 +3031,8 @@
             "value" : "<Click and Drag Button 3>"
           }
         }
-      }
+      },
+      "shouldTranslate" : false
     },
     "l7d-al-Y14.title" : {
       "comment" : "Class = \"NSTextFieldCell\"; title = \"Speed:\"; ObjectID = \"l7d-al-Y14\"; Note = \"Scrolling > Scroll Speed Label\";",
@@ -3122,7 +3131,7 @@
       }
     },
     "lrw-Lp-nQ4.title" : {
-      "comment" : "Class = \"NSButtonCell\"; title = \"Restore Defaults...\"; ObjectID = \"lrw-Lp-nQ4\";",
+      "comment" : "Class = \"NSButtonCell\"; title = \"Restore Defaults...\"; ObjectID = \"lrw-Lp-nQ4\"; Note = \"Buttons > Restore Defaults... Button\";",
       "extractionState" : "extracted_with_value",
       "localizations" : {
         "de" : {
@@ -3314,7 +3323,7 @@
       }
     },
     "mWQ-i7-vza.ibShadowedToolTip" : {
-      "comment" : "Class = \"NSImageView\"; ibShadowedToolTip = \"Hold Command (⌘) and Shift (⇧), then click this icon to reveal Mac Mouse Fix's configuration file in Finder\"; ObjectID = \"mWQ-i7-vza\";",
+      "comment" : "Class = \"NSImageView\"; ibShadowedToolTip = \"Hold Command (⌘) and Shift (⇧), then click this icon to reveal Mac Mouse Fix's configuration file in Finder\"; ObjectID = \"mWQ-i7-vza\"; Note = \"About Tab > Mac Mouse Fix Icon > Tooltip\";",
       "extractionState" : "extracted_with_value",
       "localizations" : {
         "de" : {
@@ -3362,7 +3371,7 @@
       }
     },
     "N7H-9j-DIr.title" : {
-      "comment" : "Class = \"NSTextFieldCell\"; title = \"Move the mouse pointer inside the '+' field, then *Click* a mouse button to assign an action to it.\\nYou can also *Double Click*, *Click and Drag* and [more]().\"; ObjectID = \"N7H-9j-DIr\"; Note = \"Buttons > Add Field Hint || It's better to use * instead of _ for emphasis. _ causes problems in some languages like Chinese.\";",
+      "comment" : "Class = \"NSTextFieldCell\"; title = \"Move the mouse pointer inside the '+' field, then *Click* a mouse button to assign an action to it.\\nYou can also *Double Click*, *Click and Drag* and [more]().\"; ObjectID = \"N7H-9j-DIr\"; Note = \"Buttons > Add Field Hint\";",
       "extractionState" : "extracted_with_value",
       "localizations" : {
         "de" : {
@@ -3410,7 +3419,7 @@
       }
     },
     "N65-aN-Hxp.title" : {
-      "comment" : "Class = \"NSButtonCell\"; title = \"Trackpad Simulation\"; ObjectID = \"N65-aN-Hxp\"; Note = \"Scroll > Trackpad Interactions\";",
+      "comment" : "Class = \"NSButtonCell\"; title = \"Trackpad Simulation\"; ObjectID = \"N65-aN-Hxp\"; Note = \"Scroll > Trackpad Simulation Toggle\";",
       "extractionState" : "extracted_with_value",
       "localizations" : {
         "de" : {
@@ -3551,7 +3560,8 @@
             "value" : "<Trigger>"
           }
         }
-      }
+      },
+      "shouldTranslate" : false
     },
     "oEX-Tp-9Cv.title" : {
       "comment" : "Class = \"NSMenuItem\"; title = \"Select All\"; ObjectID = \"oEX-Tp-9Cv\";",
@@ -3602,7 +3612,7 @@
       }
     },
     "Ozk-o9-C4a.title" : {
-      "comment" : "Class = \"NSTextFieldCell\"; title = \"Visit the Website\"; ObjectID = \"Ozk-o9-C4a\";",
+      "comment" : "Class = \"NSTextFieldCell\"; title = \"Visit the Website\"; ObjectID = \"Ozk-o9-C4a\"; Note = \"About > Website Link\";",
       "extractionState" : "extracted_with_value",
       "localizations" : {
         "de" : {
@@ -3698,7 +3708,7 @@
       }
     },
     "pMz-a0-1UQ.title" : {
-      "comment" : "Class = \"NSTextFieldCell\"; title = \"Created by Noah Nuebling\"; ObjectID = \"pMz-a0-1UQ\";",
+      "comment" : "Class = \"NSTextFieldCell\"; title = \"Created by Noah Nuebling\"; ObjectID = \"pMz-a0-1UQ\"; Note = \"About > Created By Label\";",
       "extractionState" : "extracted_with_value",
       "localizations" : {
         "de" : {
@@ -3791,10 +3801,11 @@
             "value" : "<Box>"
           }
         }
-      }
+      },
+      "shouldTranslate" : false
     },
     "QaW-cc-uzc.title" : {
-      "comment" : "Class = \"NSTextFieldCell\"; title = \"Send Me an Email\"; ObjectID = \"QaW-cc-uzc\";",
+      "comment" : "Class = \"NSTextFieldCell\"; title = \"Send Me an Email\"; ObjectID = \"QaW-cc-uzc\"; Note = \"About > Send Email Link\";",
       "extractionState" : "extracted_with_value",
       "localizations" : {
         "de" : {
@@ -3935,7 +3946,8 @@
             "value" : "<⌘⇧⌥⌃ + Triple Click and Drag Button 3>"
           }
         }
-      }
+      },
+      "shouldTranslate" : false
     },
     "rFn-h3-0EN.title" : {
       "comment" : "Class = \"NSMenuItem\"; title = \"Cut\"; ObjectID = \"rFn-h3-0EN\";",
@@ -4271,15 +4283,16 @@
             "value" : "<0.6x>"
           }
         }
-      }
+      },
+      "shouldTranslate" : false
     },
     "SaY-fF-d1s.title" : {
-      "comment" : "Class = \"NSTextFieldCell\"; title = \"You'll be notified of updates when you open\\nthis window\"; ObjectID = \"SaY-fF-d1s\";",
+      "comment" : "Class = \"NSTextFieldCell\"; title = \"You'll be notified of updates when you open\\nthis window\"; ObjectID = \"SaY-fF-d1s\"; Note = \"General > Check for Updates Toggle > Hint || NOTE: There's a linebreak here to prevent the General Tab from becoming too wide, which looks weird. You can set the linebreak to your own taste || As a guideline: If text in your language is typically around 1.5x longer than English, then make the lines 1.5x longer than English.\";",
       "extractionState" : "extracted_with_value",
       "localizations" : {
         "de" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "Du wirst über Updates benachrichtigt werden,\nwenn du dieses Fenster öffnest"
           }
         },
@@ -4291,31 +4304,31 @@
         },
         "ko" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "이 창을 열 때마다 업데이트를 확인합니다."
           }
         },
         "vi" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "Bạn sẽ được thông báo về các cập nhật khi bạn mở\ncửa sổ này"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "当您打开这个窗口时，您会收到更新通知"
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "當您打開這個視窗時，您會收到更新項目通知"
           }
         },
         "zh-HK" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "當你開啟這個視窗時，你會收到更新項目通知"
           }
         }
@@ -4466,7 +4479,7 @@
       }
     },
     "TrI-uu-DEN.title" : {
-      "comment" : "Class = \"NSTextFieldCell\"; title = \"Buy Me a Milkshake :)\"; ObjectID = \"TrI-uu-DEN\";",
+      "comment" : "Class = \"NSTextFieldCell\"; title = \"Buy Me a Milkshake :)\"; ObjectID = \"TrI-uu-DEN\"; Note = \"About > Milkshake Link\";",
       "extractionState" : "extracted_with_value",
       "localizations" : {
         "de" : {
@@ -4751,7 +4764,8 @@
             "value" : "<Text Cell>"
           }
         }
-      }
+      },
+      "shouldTranslate" : false
     },
     "wJW-hQ-lUc.title" : {
       "comment" : "Class = \"NSTextFieldCell\"; title = \"High\"; ObjectID = \"wJW-hQ-lUc\"; Note = \"Pointer > Sensitivity Slider > High Label\";",
@@ -5090,7 +5104,7 @@
       }
     },
     "ZMA-p0-2lf.title" : {
-      "comment" : "Class = \"NSTextFieldCell\"; title = \"Check It Out on GitHub\"; ObjectID = \"ZMA-p0-2lf\";",
+      "comment" : "Class = \"NSTextFieldCell\"; title = \"Check It Out on GitHub\"; ObjectID = \"ZMA-p0-2lf\"; Note = \"About > GitHub Link\";",
       "extractionState" : "extracted_with_value",
       "localizations" : {
         "de" : {
@@ -5183,7 +5197,8 @@
             "value" : "<Button X>"
           }
         }
-      }
+      },
+      "shouldTranslate" : false
     },
     "zwX-Pv-OOK.title" : {
       "comment" : "Class = \"NSTextFieldCell\"; title = \"<Text Cell>\"; ObjectID = \"zwX-Pv-OOK\";",
@@ -5231,7 +5246,8 @@
             "value" : "<Text Cell>"
           }
         }
-      }
+      },
+      "shouldTranslate" : false
     }
   },
   "version" : "1.0"

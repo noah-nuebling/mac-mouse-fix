@@ -116,9 +116,11 @@ class ScrollTabController: NSViewController {
         /// Precise
         /// Notes:
         /// - Why do we generate the preciseHint text in code instead of setting it in IB?
+        /// - TODO: Determine line-width programmatically. (We're telling translators to set the line break to their own taste, to make the layout look good, but now that we expect localizers to use .xcloc files instead of running the app that might be difficult.)
+        ///     -> Do the same thing for all hint strings with linebreaks.
         precise.bindingTarget <~ preciseToggle.reactive.boolValues
         preciseToggle.reactive.boolValue <~ precise.producer
-        let preciseHintRaw = NSLocalizedString("precise-scrolling-hint", comment: "First draft: Scroll precisely, even without a keyboard modifier,\nbymoving the scroll wheel _slowly_ || Note: The line break (\n) is there so the layout of the Scroll tab doesn't become too wide which looks weird. You can set it to your own taste.")
+        let preciseHintRaw = NSLocalizedString("precise-scrolling-hint", comment: "First draft: Scroll precisely, even without a keyboard modifier,\nby moving the scroll wheel *slowly* || Note: The line break is there so the layout of the Scroll tab doesn't become too wide which looks weird. You can set it to your own taste. || As a guideline: If text in your language is typically around 1.5x longer than English, then make the lines 1.5x longer than English.")
         preciseHint.attributedStringValue = NSAttributedString(attributedMarkdown: preciseHintRaw.attributed().fillingOutBaseAsHint())!
         
         /// Generate macOS hint string

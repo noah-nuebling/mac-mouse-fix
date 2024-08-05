@@ -2505,10 +2505,10 @@
 		4F0BDC722B446A3C00AE65C1 /* Markdown */ = {
 			isa = PBXGroup;
 			children = (
+				4F0BDC812B446A3C00AE65C1 /* MarkdownReadme.md */,
 				4FFB5EF42C2E67690096AA3E /* Markdown.xcstrings */,
 				4F0BDC762B446A3C00AE65C1 /* Templates */,
 				4F0BDC7D2B446A3C00AE65C1 /* LocalizedDocuments */,
-				4F0BDC812B446A3C00AE65C1 /* MarkdownReadme.md */,
 				4F0BDC822B446A3C00AE65C1 /* Media */,
 			);
 			path = Markdown;

@@ -95,7 +95,8 @@
             "value" : "<App Compat hint>"
           }
         }
-      }
+      },
+      "shouldTranslate" : false
     },
     "KQ8-8Q-u6c.title" : {
       "comment" : "Class = \"NSMenuItem\"; title = \"Scrolling\"; ObjectID = \"KQ8-8Q-u6c\";",
@@ -239,7 +240,8 @@
             "value" : "<App Compat title>"
           }
         }
-      }
+      },
+      "shouldTranslate" : false
     },
     "qF8-UG-CW7.title" : {
       "comment" : "Class = \"NSTextFieldCell\"; title = \"Quickly disable Mac Mouse Fix features so you can work with apps that aren't compatible yet\"; ObjectID = \"qF8-UG-CW7\";",

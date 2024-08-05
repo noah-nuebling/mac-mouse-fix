@@ -72,7 +72,7 @@ import Foundation
         var hint: CoolNSTextField? = nil
         if let nOfButtons = nOfButtons {
             
-            let hintStringRaw = String(format: NSLocalizedString("restore-buttons-alert.hint", comment: "First draft: Your __%@__ mouse says it has __%d__ buttons"), name!, nOfButtons)
+            let hintStringRaw = String(format: NSLocalizedString("restore-buttons-alert.hint", comment: "First draft: Your **%@** mouse says it has **%d** buttons || Note: '%@' will be replaced with a name for the mouse, such as 'Logitech M720 Triathlon'"), name!, nOfButtons)
             
 //            let hintString = NSAttributedString(coolMarkdown: hintStringRaw)?.settingSecondaryLabelColor(forSubstring: nil).settingFontSize(NSFont.smallSystemFontSize).aligningSubstring(nil, alignment: .center).trimmingWhitespace()
             let hintString = NSAttributedString(coolMarkdown: hintStringRaw)?.adding(.secondaryLabelColor, for: nil).settingFontSize(NSFont.smallSystemFontSize).adding(.center, for: nil).trimmingWhitespace()
@@ -274,7 +274,9 @@ import Foundation
             ///     - 2. Include links to top 3 recommended mice (and maybe a link to a longer list of recommended mice). Maybe get a brand deal with some good mouse manufacturer for promoting their products.
             ///     - 3. Maybe show a small/unbtrustive toast instead of an alert and have it link to the more complex content / recommendations
             ///
-            /// Update Summer 2024: If you implement this don't forget to consider making this escape-dismissable, like most other sheets and alerts in the app.
+            /// Update Summer 2024:
+            /// -  If you implement this don't forget to consider making this escape-dismissable, like most other sheets and alerts in the app.
+            /// - Also probably move this into ToastAndSheetTests if you implement this.
             
             let showBuyMouseAlert = false
             
@@ -470,8 +472,11 @@ import Foundation
             
             /// Setup body text
             ///     There used to be different text based on whether your were using a 3 button or a 5 button mouse, but we've simplified that now
+            /// I wrote this note: "In English, there needs to be a space at the start of this string otherwise the whole string will be bold. This might be a Ventura Bug"
+            ///     -> I think this problem will be resolved by us using `**` instead of `__` for emphasis.
+            /// TODO: The 'Don't remind me again' checkbox at the bottom of the popover is loaded directly from the nib file. So it's localizable string is in a totally different place. This might be confusing for localizers.
             
-            let message = String(format: NSLocalizedString("restore-default-buttons-popover.body", comment: "First draft:  __Click here__ to load the recommended settings\nfor your __%@__ mouse || Note: The \n linebreak is so the popover doesn't become too wide. You can set it to your taste. || Note: In English, there needs to be a space at the start of this string otherwise the whole string will be bold. This might be a Ventura Bug"), deviceName)
+            let message = String(format: NSLocalizedString("restore-default-buttons-popover.body", comment: "First draft:  **Click here** to load the recommended settings\nfor your mouse (**%@**) || Note: The \n linebreak is so the popover doesn't become too wide. You can set it to your taste. || As a guideline: If text in your language is typically around 1.5x longer than English, then make the lines 1.5x longer than English."), deviceName)
             
             if let attributes = restoreDefaultPopover_stringAttributesFromIB, let newString = NSAttributedString(coolMarkdown: message, fillOutBase: false)?.addingStringAttributes(asBase: attributes) {
                 

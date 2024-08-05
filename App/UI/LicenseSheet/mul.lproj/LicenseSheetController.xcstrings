@@ -95,7 +95,8 @@
             "value" : "<Activate License>"
           }
         }
-      }
+      },
+      "shouldTranslate" : false
     },
     "JJv-GH-7io.placeholderString" : {
       "comment" : "Class = \"NSTextFieldCell\"; placeholderString = \"Enter Your License Key\"; ObjectID = \"JJv-GH-7io\";",

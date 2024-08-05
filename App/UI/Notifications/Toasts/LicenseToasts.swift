@@ -31,7 +31,7 @@ import Foundation
             }
             
         } else if licenseReason == kMFLicenseReasonFreeCountry {
-            message = NSLocalizedString("license-toast.free-country", comment: "First draft: This license __could not be activated__ but Mac Mouse Fix is currently __free in your country__!")
+            message = NSLocalizedString("license-toast.free-country", comment: "First draft: This license **could not be activated** but Mac Mouse Fix is currently **free in your country**!")
         } else if licenseReason == kMFLicenseReasonForce {
             message = "FORCE_LICENSED flag is active"
         } else {
