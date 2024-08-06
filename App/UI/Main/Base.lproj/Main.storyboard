@@ -404,7 +404,7 @@ smooth scrolling</string>
                                                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                             <attributedString key="userComments">
                                                                 <fragment>
-                                                                    <string key="content">General &gt; Show in Menu Bar Toggle &gt; Hint || NOTE: There's a linebreak here to prevent the General Tab from becoming too wide, which looks weird. You can set the linebreak to your own taste || As a guideline: If text in your language is typically around 1.5x longer than English, then make the lines 1.5x longer than English.</string>
+                                                                    <string key="content">General &gt; Show in Menu Bar Toggle &gt; Hint || NOTE: There's a linebreak here to prevent the General Tab from becoming too wide, which looks weird. You can set the linebreak to your own taste || As a guideline: If text in your language is typically around 1.5x longer than English, then make the lines around 1.5x longer than English.</string>
                                                                 </fragment>
                                                             </attributedString>
                                                         </textFieldCell>
@@ -469,7 +469,7 @@ this window</string>
                                                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                                     <attributedString key="userComments">
                                                                         <fragment>
-                                                                            <string key="content">General &gt; Check for Updates Toggle &gt; Hint || NOTE: There's a linebreak here to prevent the General Tab from becoming too wide, which looks weird. You can set the linebreak to your own taste || As a guideline: If text in your language is typically around 1.5x longer than English, then make the lines 1.5x longer than English.</string>
+                                                                            <string key="content">General &gt; Check for Updates Toggle &gt; Hint || NOTE: There's a linebreak here to prevent the General Tab from becoming too wide, which looks weird. You can set the linebreak to your own taste || As a guideline: If text in your language is typically around 1.5x longer than English, then make the lines around 1.5x longer than English.</string>
                                                                         </fragment>
                                                                     </attributedString>
                                                                 </textFieldCell>

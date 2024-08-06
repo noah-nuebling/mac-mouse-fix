@@ -205,6 +205,7 @@
 		4FBDA14F27B241CE0030E4EA /* GlobalEventTapThread.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FBDA14E27B241CE0030E4EA /* GlobalEventTapThread.m */; };
 		4FC55B982915652C00663B24 /* Alerts.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FC55B972915652C00663B24 /* Alerts.m */; };
 		4FC55E31285E6F1F00F2FCCF /* GlobalDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FC55E2F285E6BF800F2FCCF /* GlobalDefaults.swift */; };
+		4FC56DAD2C61A01300CCB98C /* CoolSFSymbols.otf in Resources */ = {isa = PBXBuildFile; fileRef = 4FC56DAC2C61A01300CCB98C /* CoolSFSymbols.otf */; };
 		4FC8A7CD28AAF1BC007DB982 /* MarkdownParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FC8A7CC28AAF1BC007DB982 /* MarkdownParser.swift */; };
 		4FC8A7CE28AAF1BC007DB982 /* MarkdownParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FC8A7CC28AAF1BC007DB982 /* MarkdownParser.swift */; };
 		4FC8A7D128AAF2EA007DB982 /* Markdown in Frameworks */ = {isa = PBXBuildFile; productRef = 4FC8A7D028AAF2EA007DB982 /* Markdown */; };
@@ -2187,6 +2188,8 @@
 		4FC55B962915652C00663B24 /* Alerts.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Alerts.h; sourceTree = "<group>"; };
 		4FC55B972915652C00663B24 /* Alerts.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Alerts.m; sourceTree = "<group>"; };
 		4FC55E2F285E6BF800F2FCCF /* GlobalDefaults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlobalDefaults.swift; sourceTree = "<group>"; };
+		4FC56DAA2C6199EA00CCB98C /* createsfsymbols.py */ = {isa = PBXFileReference; lastKnownFileType = text.script.python; path = createsfsymbols.py; sourceTree = "<group>"; };
+		4FC56DAC2C61A01300CCB98C /* CoolSFSymbols.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = CoolSFSymbols.otf; sourceTree = "<group>"; };
 		4FC7D5D82B455A60002AED77 /* update-state-of-localization.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = "update-state-of-localization.yml"; sourceTree = "<group>"; };
 		4FC8A7CC28AAF1BC007DB982 /* MarkdownParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarkdownParser.swift; sourceTree = "<group>"; };
 		4FC8A7D428ABDEFD007DB982 /* MFClipView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MFClipView.swift; sourceTree = "<group>"; };
@@ -6907,6 +6910,14 @@
 			path = Toasts;
 			sourceTree = "<group>";
 		};
+		4FC56DAB2C6199EA00CCB98C /* SFSymbolsCreate */ = {
+			isa = PBXGroup;
+			children = (
+				4FC56DAA2C6199EA00CCB98C /* createsfsymbols.py */,
+			);
+			path = SFSymbolsCreate;
+			sourceTree = "<group>";
+		};
 		4FCECD7721092354001F1078 = {
 			isa = PBXGroup;
 			children = (
@@ -7123,6 +7134,7 @@
 		4FEA2E6C2C5458CA00C86D67 /* mac-mouse-fix-scripts */ = {
 			isa = PBXGroup;
 			children = (
+				4FC56DAB2C6199EA00CCB98C /* SFSymbolsCreate */,
 				4FEA2E4C2C5458CA00C86D67 /* MarkdownBuild */,
 				4FEA2E4E2C5458CA00C86D67 /* MMFWebsite-StringsBuild */,
 				4FEA2E582C5458CA00C86D67 /* Shared */,
@@ -7304,6 +7316,7 @@
 			children = (
 				4F7D97A428AEB14A00C11E79 /* README.md */,
 				4F7D97A228AEB04D00C11E79 /* Westfalia-Regular.otf */,
+				4FC56DAC2C61A01300CCB98C /* CoolSFSymbols.otf */,
 				4FF665D525F2C92700689B77 /* Assets.xcassets */,
 				4F854D7D2789266A00B46E9D /* SFSymbols.xcassets */,
 			);
@@ -7849,6 +7862,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4FC56DAD2C61A01300CCB98C /* CoolSFSymbols.otf in Resources */,
 				4FA2F13D2C2B0932000C5535 /* Localizable.xcstrings in Resources */,
 				4F9E59972672A67F004E75F7 /* default_config.plist in Resources */,
 				4FF6654225F2C7B000689B77 /* default_launchd.plist in Resources */,
@@ -8423,6 +8437,7 @@
 				);
 				INFOPLIST_FILE = App/SupportFiles/Info.plist;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
+				MACOSX_DEPLOYMENT_TARGET = 10.14.4;
 				MARKETING_VERSION = 3.0.3;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
@@ -8458,6 +8473,7 @@
 				);
 				INFOPLIST_FILE = App/SupportFiles/Info.plist;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
+				MACOSX_DEPLOYMENT_TARGET = 10.14.4;
 				MARKETING_VERSION = 3.0.3;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.nuebling.mac-mouse-fix";

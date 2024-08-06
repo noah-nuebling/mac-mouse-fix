@@ -142,7 +142,7 @@
     
     if (type == kMFSystemEventTypeBrightnessDown) {
         symbolName = @"sun.min";
-        stringFallback = NSLocalizedString(@"apple-key-fallback.sun.min", @"First draft: <Decrease Brightness key> || Example usage: Works like pressing '<Decrease Brightness Key>' on an Apple keyboard. || Note: Unlike in the interface builder `.strings` files, in `Localizable.strings`, <> doesn't mean that the text is unused. I think the usage of <> here is a little weird, so let me know if you have a better idea!");
+        stringFallback = NSLocalizedString(@"apple-key-fallback.sun.min", @"First draft: <Decrease Brightness key> || Example usage: Works like pressing '<Decrease Brightness Key>' on an Apple keyboard. || Note 1: Unlike in the interface builder `.strings` files, in `Localizable.xcstrings`, <> doesn't mean that the text is unused. I think the usage of <> here is a little weird, so let me know if you have a better idea! || Note 2: These strings are fallbacks to represent special keys found Apple keyboards ... TODO: Finish or delete this note ");
     } else if (type == kMFSystemEventTypeBrightnessUp) {
         symbolName = @"sun.max";
         stringFallback = NSLocalizedString(@"apple-key-fallback.sun.max" , @"First draft: <Increase Brightness key>");
@@ -192,6 +192,8 @@
     ///   - This approach is preferable to Approach 1 because we don't need a stringFallback for the tooltip and because it simplifies the code a lot.
     ///   - However, I tested this under macOS Big Sur, and it didn't work – before I installed the SF Symbois app. After installing the app, it started working perfectly. Not sure what's going on there.
     ///     Also see the discussion on this GH pull request with @groverlynn: https://github.com/noah-nuebling/mac-mouse-fix/pull/385
+    
+    /// When you add a new symbol here: update createsfsymbols.py in mac-mouse-fix-scripts and export the CoolSFSymbols.otf font again!
     
 //    NSString *keyStrRaw;
 //

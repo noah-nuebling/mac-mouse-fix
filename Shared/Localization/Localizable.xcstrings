@@ -989,7 +989,7 @@
       }
     },
     "apple-key-fallback.sun.min" : {
-      "comment" : "First draft: <Decrease Brightness key> || Example usage: Works like pressing '<Decrease Brightness Key>' on an Apple keyboard. || Note: Unlike in the interface builder `.strings` files, in `Localizable.strings`, <> doesn't mean that the text is unused. I think the usage of <> here is a little weird, so let me know if you have a better idea!",
+      "comment" : "First draft: <Decrease Brightness key> || Example usage: Works like pressing '<Decrease Brightness Key>' on an Apple keyboard. || Note: Unlike in the interface builder `.strings` files, in `Localizable.xcstrings`, <> doesn't mean that the text is unused. I think the usage of <> here is a little weird, so let me know if you have a better idea!",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -6274,7 +6274,7 @@
       }
     },
     "precise-scrolling-hint" : {
-      "comment" : "First draft: Scroll precisely, even without a keyboard modifier,\nby moving the scroll wheel *slowly* || Note: The line break is there so the layout of the Scroll tab doesn't become too wide which looks weird. You can set it to your own taste. || As a guideline: If text in your language is typically around 1.5x longer than English, then make the lines 1.5x longer than English.",
+      "comment" : "First draft: Scroll precisely, even without a keyboard modifier,\nby moving the scroll wheel *slowly* || Note: The line break is there so the layout of the Scroll tab doesn't become too wide which looks weird. You can set it to your own taste. || As a guideline: If text in your language is typically around 1.5x longer than English, then make the lines around 1.5x longer than English.",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -6603,12 +6603,12 @@
       }
     },
     "restore-default-buttons-popover.body" : {
-      "comment" : "First draft:  **Click here** to load the recommended settings\nfor your mouse (**%@**) || Note: The \n linebreak is so the popover doesn't become too wide. You can set it to your taste. || As a guideline: If text in your language is typically around 1.5x longer than English, then make the lines 1.5x longer than English.",
+      "comment" : "First draft:  **Click here** to load the recommended settings\nfor your mouse (**%@**) || Note: The \n linebreak is so the popover doesn't become too wide. You can set it to your taste. || As a guideline: If text in your language is typically around 1.5x longer than English, then make the lines around 1.5x longer than English.",
       "localizations" : {
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "**Klicke hier** um die empfohlenen Einstellungen\nfür deine Maus zu laden (**%@** )"
+            "value" : "**Klicke hier** um die empfohlenen Einstellungen\nfür deine Maus zu laden (**%@**)"
           }
         },
         "en" : {

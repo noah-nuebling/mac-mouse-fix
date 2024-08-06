@@ -917,7 +917,7 @@
       }
     },
     "AqN-zN-yDS.title" : {
-      "comment" : "Class = \"NSTextFieldCell\"; title = \"Lets you quickly turn off or on features like\\nsmooth scrolling\"; ObjectID = \"AqN-zN-yDS\"; Note = \"General > Show in Menu Bar Toggle > Hint || NOTE: There's a linebreak here to prevent the General Tab from becoming too wide, which looks weird. You can set the linebreak to your own taste || As a guideline: If text in your language is typically around 1.5x longer than English, then make the lines 1.5x longer than English.\";",
+      "comment" : "Class = \"NSTextFieldCell\"; title = \"Lets you quickly turn off or on features like\\nsmooth scrolling\"; ObjectID = \"AqN-zN-yDS\"; Note = \"General > Show in Menu Bar Toggle > Hint || NOTE: There's a linebreak here to prevent the General Tab from becoming too wide, which looks weird. You can set the linebreak to your own taste || As a guideline: If text in your language is typically around 1.5x longer than English, then make the lines around 1.5x longer than English.\";",
       "extractionState" : "extracted_with_value",
       "localizations" : {
         "de" : {
@@ -4287,7 +4287,7 @@
       "shouldTranslate" : false
     },
     "SaY-fF-d1s.title" : {
-      "comment" : "Class = \"NSTextFieldCell\"; title = \"You'll be notified of updates when you open\\nthis window\"; ObjectID = \"SaY-fF-d1s\"; Note = \"General > Check for Updates Toggle > Hint || NOTE: There's a linebreak here to prevent the General Tab from becoming too wide, which looks weird. You can set the linebreak to your own taste || As a guideline: If text in your language is typically around 1.5x longer than English, then make the lines 1.5x longer than English.\";",
+      "comment" : "Class = \"NSTextFieldCell\"; title = \"You'll be notified of updates when you open\\nthis window\"; ObjectID = \"SaY-fF-d1s\"; Note = \"General > Check for Updates Toggle > Hint || NOTE: There's a linebreak here to prevent the General Tab from becoming too wide, which looks weird. You can set the linebreak to your own taste || As a guideline: If text in your language is typically around 1.5x longer than English, then make the lines around 1.5x longer than English.\";",
       "extractionState" : "extracted_with_value",
       "localizations" : {
         "de" : {
