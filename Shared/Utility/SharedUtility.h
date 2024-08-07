@@ -17,6 +17,9 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+/// Define shorthand for string formatting
+///  Notes:
+///     - Don't use `stringf(@"%s", some_c_string)`, it breaks for emojis and you can just use `@(some_c_string)` instead.
 #define stringf(format, ...) [NSString stringWithFormat:(format), ##__VA_ARGS__]
 
 /// Check if ptr is objc object

@@ -245,7 +245,7 @@ class AboutTabController: NSViewController {
                     (NSLocalizedString("thanks.09", comment: "First draft: 👽 Share it with your Spacebook friends!"), weight: 0.05),
                     
                     /// Extremely rare
-                    (NSLocalizedString("thanks.10", comment: "First draft: 🏂 Duckgang for life!! || Note: A lot of these are very personal. And weird. They are also super rare. Feel free to change them to anything you feel like to leave a little easter egg!"), weight: 0.01),
+                    (NSLocalizedString("thanks.10", comment: "First draft: 🏂 Duckgang for life!! || Note: The weird ones are really rare. Feel free to change them to anything you feel like to leave a little easter egg!"), weight: 0.01),
                     (NSLocalizedString("thanks.11", comment: "First draft: 🚜 Watch where you're going :P"), weight: 0.01),
                     (NSLocalizedString("thanks.12", comment: "First draft: 🐁 Not these mice, mom!"), weight: 0.01),
                     (NSLocalizedString("thanks.13", comment: "First draft: 🐹 We should get him a bow tie."), weight: 0.01),
@@ -325,7 +325,7 @@ class AboutTabController: NSViewController {
             if #available(macOS 11.0, *) {
                 self.moneyCellImage.symbolConfiguration = .init(pointSize: 13, weight: .medium, scale: .large)
             }
-            self.moneyCellImage.image = Symbols.image(withSymbolName: "bag")
+            self.moneyCellImage.image = SFSymbolStrings.image(withSymbolName: "bag")
             
             /// Swap out link -> payButton
             

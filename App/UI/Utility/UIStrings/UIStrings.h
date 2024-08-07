@@ -19,13 +19,13 @@ NS_ASSUME_NONNULL_BEGIN
 
 + (NSString * _Nullable)flagEmoji:(NSString *)countryCode;
 + (NSString *)systemSettingsName;
-+ (NSString *)stringForKeyCode:(NSInteger)keyCode;
+//+ (NSString *)stringForKeyCode:(NSInteger)keyCode;
 + (NSString *)getButtonString:(MFMouseButtonNumber)buttonNumber;
 + (NSString *)getButtonStringToolTip:(MFMouseButtonNumber)buttonNumber;
 + (NSString *)getKeyboardModifierString:(CGEventFlags)flags;
 + (NSString *)getKeyboardModifierStringToolTip:(CGEventFlags)flags;
 + (NSAttributedString *)getStringForKeyCode:(CGKeyCode)keyCode flags:(CGEventFlags)flags font:(NSFont *)font;
-+ (NSAttributedString *)getStringForSystemDefinedEvent:(MFSystemDefinedEventType)type flags:(CGEventFlags)flags font:(NSFont *)font;
++ (NSAttributedString *)getStringForSystemDefinedEvent:(MFSystemDefinedEventType)systemDefinedEventType flags:(CGEventFlags)flags font:(NSFont *)font;
 //+ (NSAttributedString *)stringWithSymbol:(NSString *)symbolName fallback:(NSString *)fallbackString;
 + (NSString *)naturalLanguageListFromStringArray:(NSArray<NSString *> *)stringArray;
 //+ (void)centerImageAttachment:(NSTextAttachment *)attachment image:(NSImage *)image font:(NSFont *)font;

@@ -1,6 +1,6 @@
 //
 // --------------------------------------------------------------------------
-// Symbols.h
+// SFSymbolStrings.h
 // Created for Mac Mouse Fix (https://github.com/noah-nuebling/mac-mouse-fix)
 // Created by Noah Nuebling in 2022
 // Licensed under the MMF License (https://github.com/noah-nuebling/mac-mouse-fix/blob/master/License)
@@ -12,7 +12,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface Symbols : NSObject
+@interface SFSymbolStrings : NSObject
 
 + (NSAttributedString *)keyStringWithSymbol:(NSString *)symbolName fallbackString:(NSString *)fallbackString font:(NSFont *)font;
 + (NSAttributedString *)stringWithSymbolName:(NSString *)symbolName stringFallback:(NSString *)fallbackString font:(NSFont *)font;

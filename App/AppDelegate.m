@@ -25,6 +25,7 @@
 #import "Locator.h"
 #import "Logging.h"
 #import "LocalizedStringAnnotation.h"
+#import "CoolSFSymbolsFont.h"
 
 
 @interface AppDelegate ()
@@ -143,6 +144,10 @@ static NSDictionary *sideButtonActions;
 + (void)load {
     
     /// Stuff that needs to happen happen early. Only use this with good reason. Use `applicationDidFinishLaunching:`. instead.
+    
+    /// Install font
+    ///     Reason for doing this in `load`: We can install/uninstall the font while running the app and it works just fine, but we want this available early for validation: While the nib loads it uses the characters in this font, and it wants to validate that the characters are actually available.
+    [CoolSFSymbolsFont installFont];
     
     /// Annotate localized strings
     ///     Reason for doing this in `load`: Swizzling needs to happen before any nib files are loaded so the strings from the nib files get annotated. I assume that in `applicationDidFinishLaunching:` the nib files are already loaded.
@@ -318,7 +323,11 @@ static NSDictionary *sideButtonActions;
 - (NSApplicationTerminateReply)applicationShouldTerminate:(NSApplication *)sender {
     DDLogInfo(@"Mac Mouse Fix should terminate");
 
-
+    /// Uninstall fonts
+    ///     Perhaps consider using sigaction() to install a SIGTERM handler instead of this. That would also work if the process is killed.
+    [CoolSFSymbolsFont uninstallFont];
+    
+    /// Terminate
     return NSTerminateNow;
 }
 

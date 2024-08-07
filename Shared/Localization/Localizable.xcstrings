@@ -191,6 +191,7 @@
     },
     "apple-key-fallback.backward" : {
       "comment" : "First draft: <Rewind key>",
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -238,6 +239,7 @@
     },
     "apple-key-fallback.capslock" : {
       "comment" : "First draft: ⇪",
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -285,6 +287,7 @@
     },
     "apple-key-fallback.forward" : {
       "comment" : "First draft: <Fast-Forward key>",
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -332,6 +335,7 @@
     },
     "apple-key-fallback.globe" : {
       "comment" : "First draft: <Emoji Picker key>",
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -379,6 +383,7 @@
     },
     "apple-key-fallback.light.max" : {
       "comment" : "First draft: <Increase Keyboard Brightness key>",
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -426,6 +431,7 @@
     },
     "apple-key-fallback.light.min" : {
       "comment" : "First draft: <Decrease Keyboard Brightness key>",
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -473,6 +479,7 @@
     },
     "apple-key-fallback.magnifyingglass" : {
       "comment" : "First draft: <Spotlight key>",
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -520,6 +527,7 @@
     },
     "apple-key-fallback.mic" : {
       "comment" : "First draft: <Dictation key>",
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -567,6 +575,7 @@
     },
     "apple-key-fallback.moon" : {
       "comment" : "First draft: <Do Not Disturb key>",
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -614,6 +623,7 @@
     },
     "apple-key-fallback.playpause" : {
       "comment" : "First draft: <Play or Pause key>",
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -661,6 +671,7 @@
     },
     "apple-key-fallback.power" : {
       "comment" : "First draft: <Power key>",
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -708,6 +719,7 @@
     },
     "apple-key-fallback.rectangle.3.group" : {
       "comment" : "First draft: <Mission Control key>",
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -755,6 +767,7 @@
     },
     "apple-key-fallback.speaker" : {
       "comment" : "First draft: <Mute key>",
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -802,6 +815,7 @@
     },
     "apple-key-fallback.speaker.wave.1" : {
       "comment" : "First draft: <Decrease Volume key>",
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -849,6 +863,7 @@
     },
     "apple-key-fallback.speaker.wave.3" : {
       "comment" : "First draft: <Increase Volume key>",
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -896,6 +911,7 @@
     },
     "apple-key-fallback.square.grid.3x2" : {
       "comment" : "First draft: <Launchpad key>",
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -943,6 +959,7 @@
     },
     "apple-key-fallback.sun.max" : {
       "comment" : "First draft: <Increase Brightness key>",
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -990,6 +1007,7 @@
     },
     "apple-key-fallback.sun.min" : {
       "comment" : "First draft: <Decrease Brightness key> || Example usage: Works like pressing '<Decrease Brightness Key>' on an Apple keyboard. || Note: Unlike in the interface builder `.strings` files, in `Localizable.xcstrings`, <> doesn't mean that the text is unused. I think the usage of <> here is a little weird, so let me know if you have a better idea!",
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -1037,6 +1055,7 @@
     },
     "apple-key-fallback.unknown-key" : {
       "comment" : "First draft: <Key without description>",
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -1127,7 +1146,8 @@
             "value" : "取消"
           }
         }
-      }
+      },
+      "shouldTranslate" : false
     },
     "beta-alert.body" : {
       "comment" : "First draft: Beta versions can have many issues.\nDon't forget to give feedback when you run into one.\nThanks!",
@@ -1174,7 +1194,8 @@
             "value" : "Beta版可能有許多問題。不要忘記回報你遇到的問題。多謝！"
           }
         }
-      }
+      },
+      "shouldTranslate" : false
     },
     "beta-alert.confirm" : {
       "comment" : "First draft: Get Beta Versions",
@@ -1221,7 +1242,8 @@
             "value" : "取得Beta版"
           }
         }
-      }
+      },
+      "shouldTranslate" : false
     },
     "beta-alert.title" : {
       "comment" : "First draft: Get Beta Versions?",
@@ -1268,7 +1290,8 @@
             "value" : "取得Beta版？"
           }
         }
-      }
+      },
+      "shouldTranslate" : false
     },
     "button-modifier.1" : {
       "comment" : "First draft: Click %@ + || Note: %@ will be a button name || Example where %@ is 'Button 4': Click Button 4 + Double Click and Drag Button 5",
@@ -8083,7 +8106,7 @@
       }
     },
     "thanks.10" : {
-      "comment" : "First draft: 🏂 Duckgang for life!! || Note: A lot of these are very personal. And weird. They are also super rare. Feel free to change them to anything you feel like to leave a little easter egg!",
+      "comment" : "First draft: 🏂 Duckgang for life!! || Note: The weird ones are really rare. Feel free to change them to anything you feel like to leave a little easter egg!",
       "localizations" : {
         "de" : {
           "stringUnit" : {

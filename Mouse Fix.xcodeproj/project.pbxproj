@@ -27,6 +27,11 @@
 		4F1C51DA260543DD007F4930 /* NSTextField+Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F1C51D9260543DD007F4930 /* NSTextField+Additions.m */; };
 		4F1D58192881D880002EB119 /* CombinedLinearCurve.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F1D58182881D880002EB119 /* CombinedLinearCurve.swift */; };
 		4F1D7F4728A4639800253407 /* MenuBarItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F1D7F4628A4639800253407 /* MenuBarItem.swift */; };
+		4F2281112C62A36300B9FFEC /* SFSymbolStrings.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F8A44512925311B00361EFF /* SFSymbolStrings.m */; };
+		4F262CF22C64B6E000773789 /* MarkdownParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F262CF02C64B6DF00773789 /* MarkdownParser.m */; };
+		4F262CF32C64B6E000773789 /* MarkdownParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F262CF02C64B6DF00773789 /* MarkdownParser.m */; };
+		4F262D262C64E06500773789 /* libcmark.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4F262D222C64E05A00773789 /* libcmark.a */; };
+		4F262D272C64E06500773789 /* libcmark.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4F262D222C64E05A00773789 /* libcmark.a */; };
 		4F2CC58727B8D2300084AACE /* HybridCurves.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F2CC58627B8D2300084AACE /* HybridCurves.swift */; };
 		4F2CC58927B8DA8B0084AACE /* Line.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F2CC58827B8DA8B0084AACE /* Line.swift */; };
 		4F2F0B2B28E6258B00246D59 /* MessagePortUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F2F0B2A28E6258B00246D59 /* MessagePortUtility.swift */; };
@@ -93,8 +98,7 @@
 		4F85C05128BBDBDC00E96E9C /* NSImageView+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F85C04F28BBDBDC00E96E9C /* NSImageView+Extensions.swift */; };
 		4F85C05428BBE6FA00E96E9C /* TrialSectionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F85C05328BBE6FA00E96E9C /* TrialSectionManager.swift */; };
 		4F85C05528BBE6FA00E96E9C /* TrialSectionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F85C05328BBE6FA00E96E9C /* TrialSectionManager.swift */; };
-		4F8A44522925311B00361EFF /* Symbols.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F8A44512925311B00361EFF /* Symbols.m */; };
-		4F8A44532925311B00361EFF /* Symbols.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F8A44512925311B00361EFF /* Symbols.m */; };
+		4F8A44522925311B00361EFF /* SFSymbolStrings.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F8A44512925311B00361EFF /* SFSymbolStrings.m */; };
 		4F8A8DAD287EEF6200786BCC /* IOHIDAccelerationTableBridge.mm in Sources */ = {isa = PBXBuildFile; fileRef = 4F8A8DAC287EEF6200786BCC /* IOHIDAccelerationTableBridge.mm */; };
 		4F8A8DBD287F203D00786BCC /* IOHIDAccelerationTable.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4F8A8DBC287F203D00786BCC /* IOHIDAccelerationTable.cpp */; };
 		4F8A8DBF287F7BBA00786BCC /* NaturalAccelerationCurve.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F8A8DBE287F7BBA00786BCC /* NaturalAccelerationCurve.swift */; };
@@ -205,16 +209,13 @@
 		4FBDA14F27B241CE0030E4EA /* GlobalEventTapThread.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FBDA14E27B241CE0030E4EA /* GlobalEventTapThread.m */; };
 		4FC55B982915652C00663B24 /* Alerts.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FC55B972915652C00663B24 /* Alerts.m */; };
 		4FC55E31285E6F1F00F2FCCF /* GlobalDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FC55E2F285E6BF800F2FCCF /* GlobalDefaults.swift */; };
-		4FC56DAD2C61A01300CCB98C /* CoolSFSymbols.otf in Resources */ = {isa = PBXBuildFile; fileRef = 4FC56DAC2C61A01300CCB98C /* CoolSFSymbols.otf */; };
-		4FC8A7CD28AAF1BC007DB982 /* MarkdownParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FC8A7CC28AAF1BC007DB982 /* MarkdownParser.swift */; };
-		4FC8A7CE28AAF1BC007DB982 /* MarkdownParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FC8A7CC28AAF1BC007DB982 /* MarkdownParser.swift */; };
-		4FC8A7D128AAF2EA007DB982 /* Markdown in Frameworks */ = {isa = PBXBuildFile; productRef = 4FC8A7D028AAF2EA007DB982 /* Markdown */; };
-		4FC8A7D328AAF900007DB982 /* Markdown in Frameworks */ = {isa = PBXBuildFile; productRef = 4FC8A7D228AAF900007DB982 /* Markdown */; };
 		4FC8A7D528ABDEFE007DB982 /* MFClipView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FC8A7D428ABDEFD007DB982 /* MFClipView.swift */; };
 		4FC8A7D928AD3FC7007DB982 /* RemapTableCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FC8A7D828AD3FC7007DB982 /* RemapTableCellView.swift */; };
 		4FCA07D625F3129B00BFE209 /* RemapTableController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FCA07D525F3129B00BFE209 /* RemapTableController.m */; };
 		4FCABCF72933A7090018E538 /* Toasts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FCABCF62933A7090018E538 /* Toasts.swift */; };
 		4FCC03352757B181002E5A57 /* ScreenDrawer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FCC03322757A50C002E5A57 /* ScreenDrawer.swift */; };
+		4FCC354D2C6296FF009E1908 /* CoolSFSymbolsFont.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FC56DB32C625B9300CCB98C /* CoolSFSymbolsFont.m */; };
+		4FCC354F2C629F0F009E1908 /* CoolSFSymbols.otf in Resources */ = {isa = PBXBuildFile; fileRef = 4FCC354E2C629F0F009E1908 /* CoolSFSymbols.otf */; };
 		4FCEDC88292D6A8F00E7DA2A /* HashablePair.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FCEDC87292D6A8F00E7DA2A /* HashablePair.swift */; };
 		4FCEDC89292D6A8F00E7DA2A /* HashablePair.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FCEDC87292D6A8F00E7DA2A /* HashablePair.swift */; };
 		4FCEDC92292D765600E7DA2A /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FCEDC91292D765600E7DA2A /* Constants.swift */; };
@@ -1970,6 +1971,13 @@
 		4F2153262B2E145500DD3957 /* config.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = config.yml; sourceTree = "<group>"; };
 		4F2153272B2E150800DD3957 /* Acknowledgements.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = Acknowledgements.md; sourceTree = "<group>"; };
 		4F2153282B2E155300DD3957 /* update-acknowledgements.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = "update-acknowledgements.yml"; sourceTree = "<group>"; };
+		4F262CEF2C64B6DF00773789 /* MarkdownParser.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MarkdownParser.h; sourceTree = "<group>"; };
+		4F262CF02C64B6DF00773789 /* MarkdownParser.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MarkdownParser.m; sourceTree = "<group>"; };
+		4F262D102C64E05A00773789 /* cmark_export.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = cmark_export.h; sourceTree = "<group>"; };
+		4F262D112C64E05A00773789 /* cmark_version.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = cmark_version.h; sourceTree = "<group>"; };
+		4F262D152C64E05A00773789 /* cmark.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = cmark.h; sourceTree = "<group>"; };
+		4F262D222C64E05A00773789 /* libcmark.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libcmark.a; sourceTree = "<group>"; };
+		4F262D242C64E05A00773789 /* Noah's Readme.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "Noah's Readme.md"; sourceTree = "<group>"; };
 		4F2CC58627B8D2300084AACE /* HybridCurves.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HybridCurves.swift; sourceTree = "<group>"; };
 		4F2CC58827B8DA8B0084AACE /* Line.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Line.swift; sourceTree = "<group>"; };
 		4F2F0B2A28E6258B00246D59 /* MessagePortUtility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessagePortUtility.swift; sourceTree = "<group>"; };
@@ -2057,8 +2065,8 @@
 		4F854D7D2789266A00B46E9D /* SFSymbols.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = SFSymbols.xcassets; sourceTree = "<group>"; };
 		4F85C04F28BBDBDC00E96E9C /* NSImageView+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSImageView+Extensions.swift"; sourceTree = "<group>"; };
 		4F85C05328BBE6FA00E96E9C /* TrialSectionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrialSectionManager.swift; sourceTree = "<group>"; };
-		4F8A44502925311B00361EFF /* Symbols.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Symbols.h; sourceTree = "<group>"; };
-		4F8A44512925311B00361EFF /* Symbols.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Symbols.m; sourceTree = "<group>"; };
+		4F8A44502925311B00361EFF /* SFSymbolStrings.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SFSymbolStrings.h; sourceTree = "<group>"; };
+		4F8A44512925311B00361EFF /* SFSymbolStrings.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SFSymbolStrings.m; sourceTree = "<group>"; };
 		4F8A8DAC287EEF6200786BCC /* IOHIDAccelerationTableBridge.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = IOHIDAccelerationTableBridge.mm; sourceTree = "<group>"; };
 		4F8A8DB0287EEF9B00786BCC /* IOHIDAccelerationTableBridge.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = IOHIDAccelerationTableBridge.hpp; sourceTree = "<group>"; };
 		4F8A8DBA287EFB3400786BCC /* IOHIDAccelerationTable.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = IOHIDAccelerationTable.hpp; sourceTree = "<group>"; };
@@ -2189,9 +2197,10 @@
 		4FC55B972915652C00663B24 /* Alerts.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Alerts.m; sourceTree = "<group>"; };
 		4FC55E2F285E6BF800F2FCCF /* GlobalDefaults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlobalDefaults.swift; sourceTree = "<group>"; };
 		4FC56DAA2C6199EA00CCB98C /* createsfsymbols.py */ = {isa = PBXFileReference; lastKnownFileType = text.script.python; path = createsfsymbols.py; sourceTree = "<group>"; };
-		4FC56DAC2C61A01300CCB98C /* CoolSFSymbols.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = CoolSFSymbols.otf; sourceTree = "<group>"; };
+		4FC56DB22C625B9300CCB98C /* CoolSFSymbolsFont.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CoolSFSymbolsFont.h; sourceTree = "<group>"; };
+		4FC56DB32C625B9300CCB98C /* CoolSFSymbolsFont.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CoolSFSymbolsFont.m; sourceTree = "<group>"; };
 		4FC7D5D82B455A60002AED77 /* update-state-of-localization.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = "update-state-of-localization.yml"; sourceTree = "<group>"; };
-		4FC8A7CC28AAF1BC007DB982 /* MarkdownParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarkdownParser.swift; sourceTree = "<group>"; };
+		4FC8A7CC28AAF1BC007DB982 /* MarkdownParser_old.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarkdownParser_old.swift; sourceTree = "<group>"; };
 		4FC8A7D428ABDEFD007DB982 /* MFClipView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MFClipView.swift; sourceTree = "<group>"; };
 		4FC8A7D828AD3FC7007DB982 /* RemapTableCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemapTableCellView.swift; sourceTree = "<group>"; };
 		4FCA07D425F3129B00BFE209 /* RemapTableController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RemapTableController.h; sourceTree = "<group>"; };
@@ -2201,6 +2210,7 @@
 		4FCB260B29312A020066EE56 /* ButtonInputReceiver_old.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ButtonInputReceiver_old.h; sourceTree = "<group>"; };
 		4FCB260C29312A020066EE56 /* ButtonInputReceiver_old.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ButtonInputReceiver_old.m; sourceTree = "<group>"; };
 		4FCC03322757A50C002E5A57 /* ScreenDrawer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScreenDrawer.swift; sourceTree = "<group>"; };
+		4FCC354E2C629F0F009E1908 /* CoolSFSymbols.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = CoolSFSymbols.otf; sourceTree = "<group>"; };
 		4FCECD8021092354001F1078 /* Mac Mouse Fix Helper.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Mac Mouse Fix Helper.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		4FCEDC87292D6A8F00E7DA2A /* HashablePair.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HashablePair.swift; sourceTree = "<group>"; };
 		4FCEDC91292D765600E7DA2A /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
@@ -2448,9 +2458,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4F262D262C64E06500773789 /* libcmark.a in Frameworks */,
 				4F58FE102C571DDD00926A00 /* CocoaLumberjack in Frameworks */,
 				4F39BC26263AC31600FDF692 /* Sparkle.framework in Frameworks */,
-				4FC8A7D128AAF2EA007DB982 /* Markdown in Frameworks */,
 				4FA40CF228A0CA3900499E53 /* ReactiveCocoa in Frameworks */,
 				4F58FE122C571DE200926A00 /* CocoaLumberjackSwift in Frameworks */,
 				4F909D5128A0C6F3009349A2 /* SnapKit in Frameworks */,
@@ -2463,8 +2473,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				4FEB660F2793510300E6A111 /* CocoaLumberjack in Frameworks */,
+				4F262D272C64E06500773789 /* libcmark.a in Frameworks */,
 				4F7F47D028A5B5F200290BBD /* ReactiveCocoa in Frameworks */,
-				4FC8A7D328AAF900007DB982 /* Markdown in Frameworks */,
 				4F7F47CE28A5B5EC00290BBD /* ReactiveSwift in Frameworks */,
 				4FEB66112793510800E6A111 /* CocoaLumberjackSwift in Frameworks */,
 			);
@@ -2489,8 +2499,7 @@
 				4FA1FD8228A916B600D1C8EE /* NSShadow+Extensions.swift */,
 				4F12951F28D2D5E1009A49AB /* NSTextField+Extentions.swift */,
 				4F909D0928A0C3D2009349A2 /* UIAnimations */,
-				4F8A44502925311B00361EFF /* Symbols.h */,
-				4F8A44512925311B00361EFF /* Symbols.m */,
+				4FC56DB52C62610300CCB98C /* Symbols */,
 				4FA2F1252C29A11D000C5535 /* Notifications */,
 			);
 			path = UI;
@@ -6321,6 +6330,44 @@
 			path = ISSUE_TEMPLATE;
 			sourceTree = "<group>";
 		};
+		4F262CD92C64B6BB00773789 /* MarkdownParser */ = {
+			isa = PBXGroup;
+			children = (
+				4F262CEF2C64B6DF00773789 /* MarkdownParser.h */,
+				4F262CF02C64B6DF00773789 /* MarkdownParser.m */,
+				4FC8A7CC28AAF1BC007DB982 /* MarkdownParser_old.swift */,
+			);
+			path = MarkdownParser;
+			sourceTree = "<group>";
+		};
+		4F262D212C64E05A00773789 /* headers */ = {
+			isa = PBXGroup;
+			children = (
+				4F262D152C64E05A00773789 /* cmark.h */,
+				4F262D102C64E05A00773789 /* cmark_export.h */,
+				4F262D112C64E05A00773789 /* cmark_version.h */,
+			);
+			path = headers;
+			sourceTree = "<group>";
+		};
+		4F262D232C64E05A00773789 /* branch-cjk */ = {
+			isa = PBXGroup;
+			children = (
+				4F262D212C64E05A00773789 /* headers */,
+				4F262D222C64E05A00773789 /* libcmark.a */,
+			);
+			path = "branch-cjk";
+			sourceTree = "<group>";
+		};
+		4F262D252C64E05A00773789 /* cmark */ = {
+			isa = PBXGroup;
+			children = (
+				4F262D232C64E05A00773789 /* branch-cjk */,
+				4F262D242C64E05A00773789 /* Noah's Readme.md */,
+			);
+			path = cmark;
+			sourceTree = "<group>";
+		};
 		4F2A1FA726042ACB0067691A /* TrialNotifications */ = {
 			isa = PBXGroup;
 			children = (
@@ -6910,12 +6957,24 @@
 			path = Toasts;
 			sourceTree = "<group>";
 		};
-		4FC56DAB2C6199EA00CCB98C /* SFSymbolsCreate */ = {
+		4FC56DAB2C6199EA00CCB98C /* SFSymbolsFontCreate */ = {
 			isa = PBXGroup;
 			children = (
 				4FC56DAA2C6199EA00CCB98C /* createsfsymbols.py */,
 			);
-			path = SFSymbolsCreate;
+			path = SFSymbolsFontCreate;
+			sourceTree = "<group>";
+		};
+		4FC56DB52C62610300CCB98C /* Symbols */ = {
+			isa = PBXGroup;
+			children = (
+				4F8A44502925311B00361EFF /* SFSymbolStrings.h */,
+				4F8A44512925311B00361EFF /* SFSymbolStrings.m */,
+				4FC56DB22C625B9300CCB98C /* CoolSFSymbolsFont.h */,
+				4FC56DB32C625B9300CCB98C /* CoolSFSymbolsFont.m */,
+				4FCC354E2C629F0F009E1908 /* CoolSFSymbols.otf */,
+			);
+			path = Symbols;
 			sourceTree = "<group>";
 		};
 		4FCECD7721092354001F1078 = {
@@ -7022,6 +7081,7 @@
 		4FDECCD528A3A37800DDEE91 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				4F262D252C64E05A00773789 /* cmark */,
 				4FDECCD728A3A37800DDEE91 /* Sparkle.framework */,
 				4FDECCD828A3A37800DDEE91 /* README.md */,
 			);
@@ -7134,7 +7194,7 @@
 		4FEA2E6C2C5458CA00C86D67 /* mac-mouse-fix-scripts */ = {
 			isa = PBXGroup;
 			children = (
-				4FC56DAB2C6199EA00CCB98C /* SFSymbolsCreate */,
+				4FC56DAB2C6199EA00CCB98C /* SFSymbolsFontCreate */,
 				4FEA2E4C2C5458CA00C86D67 /* MarkdownBuild */,
 				4FEA2E4E2C5458CA00C86D67 /* MMFWebsite-StringsBuild */,
 				4FEA2E582C5458CA00C86D67 /* Shared */,
@@ -7316,7 +7376,6 @@
 			children = (
 				4F7D97A428AEB14A00C11E79 /* README.md */,
 				4F7D97A228AEB04D00C11E79 /* Westfalia-Regular.otf */,
-				4FC56DAC2C61A01300CCB98C /* CoolSFSymbols.otf */,
 				4FF665D525F2C92700689B77 /* Assets.xcassets */,
 				4F854D7D2789266A00B46E9D /* SFSymbols.xcassets */,
 			);
@@ -7684,7 +7743,7 @@
 				4F79A82A2605074000076A7E /* NSAttributedString+Additions.m */,
 				4FDE75A628B25FB300662314 /* NSAttributedString+Extensions.swift */,
 				4FDE75A328B25E1A00662314 /* String+Extensions.swift */,
-				4FC8A7CC28AAF1BC007DB982 /* MarkdownParser.swift */,
+				4F262CD92C64B6BB00773789 /* MarkdownParser */,
 			);
 			path = Strings;
 			sourceTree = "<group>";
@@ -7756,7 +7815,6 @@
 				4F909D5028A0C6F3009349A2 /* SnapKit */,
 				4FA40CEE28A0CA0A00499E53 /* ReactiveSwift */,
 				4FA40CF128A0CA3900499E53 /* ReactiveCocoa */,
-				4FC8A7D028AAF2EA007DB982 /* Markdown */,
 				4F58FE0F2C571DDD00926A00 /* CocoaLumberjack */,
 				4F58FE112C571DE200926A00 /* CocoaLumberjackSwift */,
 			);
@@ -7784,7 +7842,6 @@
 				4FEB66102793510800E6A111 /* CocoaLumberjackSwift */,
 				4F7F47CD28A5B5EC00290BBD /* ReactiveSwift */,
 				4F7F47CF28A5B5F200290BBD /* ReactiveCocoa */,
-				4FC8A7D228AAF900007DB982 /* Markdown */,
 			);
 			productName = "Mouse Remap Helper";
 			productReference = 4FCECD8021092354001F1078 /* Mac Mouse Fix Helper.app */;
@@ -7837,7 +7894,6 @@
 				4F909D4F28A0C6F3009349A2 /* XCRemoteSwiftPackageReference "SnapKit" */,
 				4FA40CED28A0CA0A00499E53 /* XCRemoteSwiftPackageReference "ReactiveSwift" */,
 				4FA40CF028A0CA3900499E53 /* XCRemoteSwiftPackageReference "ReactiveCocoa" */,
-				4FC8A7CF28AAF2EA007DB982 /* XCRemoteSwiftPackageReference "swift-markdown" */,
 			);
 			productRefGroup = 4FCECD8121092354001F1078 /* Products */;
 			projectDirPath = "";
@@ -7862,7 +7918,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4FC56DAD2C61A01300CCB98C /* CoolSFSymbols.otf in Resources */,
+				4FCC354F2C629F0F009E1908 /* CoolSFSymbols.otf in Resources */,
 				4FA2F13D2C2B0932000C5535 /* Localizable.xcstrings in Resources */,
 				4F9E59972672A67F004E75F7 /* default_config.plist in Resources */,
 				4FF6654225F2C7B000689B77 /* default_launchd.plist in Resources */,
@@ -8037,6 +8093,7 @@
 				4FA40CFF28A0CCCB00499E53 /* DragCurve.swift in Sources */,
 				4FE03A602BFF5F0600708454 /* CoolSUComparator.m in Sources */,
 				4FA40CFA28A0CCCA00499E53 /* PolynomialCappedAccelerationCurve.swift in Sources */,
+				4FCC354D2C6296FF009E1908 /* CoolSFSymbolsFont.m in Sources */,
 				4F7F47CB28A5A03100290BBD /* ReactiveConfig.swift in Sources */,
 				4FCEDC88292D6A8F00E7DA2A /* HashablePair.swift in Sources */,
 				4FE78C452C502A5F00C54103 /* NSString+Additions.m in Sources */,
@@ -8067,6 +8124,7 @@
 				4F909D2328A0C3D2009349A2 /* PointerTabController.swift in Sources */,
 				4FDE75A128B2397600662314 /* PayButton.swift in Sources */,
 				4F0CFFEE2C518CF600C5D843 /* MFDataClassImplementations.m in Sources */,
+				4F262CF32C64B6E000773789 /* MarkdownParser.m in Sources */,
 				4FCA07D625F3129B00BFE209 /* RemapTableController.m in Sources */,
 				4F44FF052606D73D00926A5E /* MFMessagePort.m in Sources */,
 				4FA40D0B28A0D87200499E53 /* DisplayLink.m in Sources */,
@@ -8085,10 +8143,9 @@
 				4F4C737E2C4FB06E001D97C3 /* NSString+Steganography.m in Sources */,
 				4FA40CF928A0CCCA00499E53 /* Bezier.swift in Sources */,
 				4F12952028D2D5E1009A49AB /* NSTextField+Extentions.swift in Sources */,
-				4FC8A7CD28AAF1BC007DB982 /* MarkdownParser.swift in Sources */,
 				4F09284528B8E82B00BDC2FF /* LicenseSheetController.swift in Sources */,
 				4F909D3E28A0C3D2009349A2 /* SensitivityDisplay.swift in Sources */,
-				4F8A44522925311B00361EFF /* Symbols.m in Sources */,
+				4F8A44522925311B00361EFF /* SFSymbolStrings.m in Sources */,
 				4F909D4528A0C4C2009349A2 /* NSArray+Extensions.swift in Sources */,
 				4FA8A30A28A9508C001E740F /* ButtonOptionsViewController.swift in Sources */,
 				4F85C05028BBDBDC00E96E9C /* NSImageView+Extensions.swift in Sources */,
@@ -8140,7 +8197,6 @@
 				4FFA4E4428B7D28E0062A1FE /* ConstraintUtility.swift in Sources */,
 				4FF0255727B0091700923107 /* ModifiedDragOutputAddMode.m in Sources */,
 				4FF0255127B0033000923107 /* ModifiedDragOutputTwoFingerSwipe.m in Sources */,
-				4FC8A7CE28AAF1BC007DB982 /* MarkdownParser.swift in Sources */,
 				4FF6654D25F2C7B000689B77 /* SharedUtility.m in Sources */,
 				4FF6668225F2C93A00689B77 /* Config.m in Sources */,
 				4FFBC5A8266977CA001D389B /* DoubleExponentialSmoother.swift in Sources */,
@@ -8178,6 +8234,7 @@
 				4FF6669D25F2C93A00689B77 /* AccessibilityCheck.m in Sources */,
 				4F85C05128BBDBDC00E96E9C /* NSImageView+Extensions.swift in Sources */,
 				4FA13FC428B3A2E0005C68FC /* TrialNotificationController.swift in Sources */,
+				4F262CF22C64B6E000773789 /* MarkdownParser.m in Sources */,
 				4FF0255F27B013A100923107 /* PointerFreeze.m in Sources */,
 				4FF666A725F2C93A00689B77 /* Device.m in Sources */,
 				4FD9A7D228BA2A8A0006DF4B /* SecureStorage.swift in Sources */,
@@ -8186,6 +8243,7 @@
 				4F09284028B8101600BDC2FF /* TrialSection.swift in Sources */,
 				4F4C73FF2C4FB5D2001D97C3 /* AnnotationUtility.m in Sources */,
 				4F41506429255F880040BA7D /* NSImage+Additions.m in Sources */,
+				4F2281112C62A36300B9FFEC /* SFSymbolStrings.m in Sources */,
 				4FF6669225F2C93A00689B77 /* RoughScroll_old_.m in Sources */,
 				4FBDA14F27B241CE0030E4EA /* GlobalEventTapThread.m in Sources */,
 				4FF6669825F2C93A00689B77 /* SubPixelator.m in Sources */,
@@ -8219,7 +8277,6 @@
 				4F3A40CB266C44D100436821 /* DisplayLink.m in Sources */,
 				4FF6669925F2C93A00689B77 /* VectorSubPixelator.m in Sources */,
 				4FDE75AA28B269AE00662314 /* Randomizer.swift in Sources */,
-				4F8A44532925311B00361EFF /* Symbols.m in Sources */,
 				4F626E99292A842D00E6FFD5 /* KeyCaptureMode.m in Sources */,
 				4FFA4E3B28B79D980062A1FE /* String+Extensions.swift in Sources */,
 				4FF0BD4B266A8B7E003935EA /* Bezier.swift in Sources */,
@@ -8437,6 +8494,10 @@
 				);
 				INFOPLIST_FILE = App/SupportFiles/Info.plist;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Frameworks/**",
+				);
 				MACOSX_DEPLOYMENT_TARGET = 10.14.4;
 				MARKETING_VERSION = 3.0.3;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
@@ -8473,6 +8534,10 @@
 				);
 				INFOPLIST_FILE = App/SupportFiles/Info.plist;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Frameworks/**",
+				);
 				MACOSX_DEPLOYMENT_TARGET = 10.14.4;
 				MARKETING_VERSION = 3.0.3;
 				MTL_FAST_MATH = YES;
@@ -8666,7 +8731,11 @@
 				);
 				INFOPLIST_FILE = Helper/SupportFiles/Info.plist;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
-				LIBRARY_SEARCH_PATHS = "$(inherited)";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Frameworks/**",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 10.14.4;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.nuebling.mac-mouse-fix.helper";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -8702,7 +8771,11 @@
 				);
 				INFOPLIST_FILE = Helper/SupportFiles/Info.plist;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
-				LIBRARY_SEARCH_PATHS = "$(inherited)";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Frameworks/**",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 10.14.4;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.nuebling.mac-mouse-fix.helper";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -8788,14 +8861,6 @@
 				minimumVersion = 12.0.0;
 			};
 		};
-		4FC8A7CF28AAF2EA007DB982 /* XCRemoteSwiftPackageReference "swift-markdown" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/apple/swift-markdown";
-			requirement = {
-				branch = main;
-				kind = branch;
-			};
-		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -8833,16 +8898,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 4FA40CF028A0CA3900499E53 /* XCRemoteSwiftPackageReference "ReactiveCocoa" */;
 			productName = ReactiveCocoa;
-		};
-		4FC8A7D028AAF2EA007DB982 /* Markdown */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 4FC8A7CF28AAF2EA007DB982 /* XCRemoteSwiftPackageReference "swift-markdown" */;
-			productName = Markdown;
-		};
-		4FC8A7D228AAF900007DB982 /* Markdown */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 4FC8A7CF28AAF2EA007DB982 /* XCRemoteSwiftPackageReference "swift-markdown" */;
-			productName = Markdown;
 		};
 		4FEB660E2793510300E6A111 /* CocoaLumberjack */ = {
 			isa = XCSwiftPackageProductDependency;

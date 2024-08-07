@@ -16,7 +16,7 @@
 import Foundation
 import Markdown
 
-@objc class MarkdownParser: NSObject {
+@objc class MarkdownParser_old: NSObject {
  
     @objc static func attributedString(markdown: String) -> NSAttributedString? {
         

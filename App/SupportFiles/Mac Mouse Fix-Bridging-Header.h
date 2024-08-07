@@ -44,7 +44,7 @@
 #import "RemapTableUtility.h"
 #import "Alerts.h"
 #import "Shorthands.h"
-#import "Symbols.h"
+#import "SFSymbolStrings.h"
 #import "NSView+Additions.h"
 #import "NSScreen+Additions.h"
 #import "CaptureToasts.h"

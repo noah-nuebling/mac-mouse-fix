@@ -108,7 +108,7 @@
 //        /// Create add menu
 //        NSMenuItem *addItem = [[NSMenuItem alloc] init];
 //        addItem.title = @"Add"; //// TODO:  Localize this
-//        addItem.image =  [Symbols imageWithSymbolName:@"plus.square"];
+//        addItem.image =  [SFSymbolStrings imageWithSymbolName:@"plus.square"];
 //        addItem.target = self.delegate;
 //        addItem.action = @selector(addButtonAction);
 //        

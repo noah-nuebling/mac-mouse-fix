@@ -40,7 +40,7 @@
 #import "Hyperlink.h"
 #import "HelperServices.h"
 #import "Shorthands.h"
-#import "Symbols.h"
+#import "SFSymbolStrings.h"
 #import "NSView+Additions.h"
 #import "NSScreen+Additions.h"
 #import "Device.h"

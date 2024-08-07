@@ -1,26 +1,40 @@
 //
 // --------------------------------------------------------------------------
-// Symbols.m
+// SFSymbolStrings.m
 // Created for Mac Mouse Fix (https://github.com/noah-nuebling/mac-mouse-fix)
 // Created by Noah Nuebling in 2022
 // Licensed under the MMF License (https://github.com/noah-nuebling/mac-mouse-fix/blob/master/License)
 // --------------------------------------------------------------------------
 //
 
-#import "Symbols.h"
+#import "SFSymbolStrings.h"
 #import "NSAttributedString+Additions.h"
 #import "NSImage+Additions.h"
 
-@implementation Symbols
+///
+/// This file offers methods for creating NSAttributedString instances that display an SFSymbol through an NSImage Attachment.
+///
+/// Fallback mechanism:
+///     There's a fallback mechanism where we set some plain NSString as the accessibilityDescription of the attached NSImage. Then we can use `[NSAttributedString(Additions) -stringWithAttachmentDescriptions]` to convert the NSAttributedString to a pure NSString but with the NSImage attachments replaced by their respective `accessibilityDescription`.
+///
+///     How we use this features is that we're setting the fallbackString of the SF Symbol image  to the unicode character for the SF Symbol. Then we ship a special font with MMF that can render those unicode characters. This allows us to use SF Symbols even inside of tooltips, where NSAttributedStrings are not possible.
+///     Before this improved fallback mechanism was introduced (as I'm writing the new fallback mechanism, 3.0.2 is the latest release) we used to fallback to strings that looked like `<Increase Brightness Key>`. At the time of writing, we only really use this fallback stuff to display tooltips containing SF Symbols that appear on Apple Keyboard Keys.
+///
+/// Discussion:
+///     Now that we ship the special font (CoolSFSymbols.otf), which can display SF Symbol unicode characters, you might think we'd want to do away with the NSImage attachments for displaying SFSymbols altogether. We might do that at some point, however, for now I wanna stick with the tried and true method, also, we already spent a lot of time perfecting the way that the NSImage attachments render and I think using unicode might be worse. Also, the more symbols we wanna render with CoolSFSymbols.otf the bigger we have to make the font file, althogh it'll probably stay very small (currently at 6 KB, able to render 10-20 symbols at regular weight.)
+///
+
+@implementation SFSymbolStrings
 
 #pragma mark - Lvl 1 - Symbol strings
 
 + (NSAttributedString *)keyStringWithSymbol:(NSString *)symbolName fallbackString:(NSString *)fallbackString font:(NSFont *)font {
     
     /// This is intended specifically to display keyboad keys for the `Keyboard Shortcut...` feature
+    /// Update: Unused now since we use CoolSFSymbols.otf to display sfSymbols representing keys on an Apple Keyboard, in a way that also works in plaintext (tooltips.)
     
     /// Call core
-    NSAttributedString *string = [Symbols stringWithSymbolName:symbolName stringFallback:fallbackString font:font];
+    NSAttributedString *string = [SFSymbolStrings stringWithSymbolName:symbolName stringFallback:fallbackString font:font];
     
     /// Check darkmode
     BOOL isDarkmode = NO;
@@ -49,7 +63,7 @@
     /// `font` is used to vertically align the symbol with the text
     
     BOOL usingBundledFallback;
-    NSImage *symbol = [Symbols imageWithSymbolName:symbolName accessibilityDescription:stringFallback usingBundledFallback:&usingBundledFallback];
+    NSImage *symbol = [SFSymbolStrings imageWithSymbolName:symbolName accessibilityDescription:stringFallback usingBundledFallback:&usingBundledFallback];
     
     /// Early return
     ///     If no symbol is found anywhere, just return the fallback string
@@ -87,7 +101,7 @@
         }
         
         /// Fix font alignment
-        [Symbols centerImageAttachment:symbolAttachment image:symbol font:font offsetX:alignmentOffsetX offsetY: alignmentOffsetY];
+        [SFSymbolStrings centerImageAttachment:symbolAttachment image:symbol font:font offsetX:alignmentOffsetX offsetY: alignmentOffsetY];
     }
     
     /// Create textAttachment -> String
@@ -105,13 +119,13 @@
     
     BOOL usingBundledFallback;
     NSString *description = symbolName; /// This is bad, but we don't really support accessibility at the moment anyways.
-    return [Symbols imageWithSymbolName:symbolName accessibilityDescription:description usingBundledFallback:&usingBundledFallback];
+    return [SFSymbolStrings imageWithSymbolName:symbolName accessibilityDescription:description usingBundledFallback:&usingBundledFallback];
 }
 
 + (NSImage *_Nullable)imageWithSymbolName:(NSString *)symbolName accessibilityDescription:(NSString *)description {
     
     BOOL usingBundledFallback;
-    return [Symbols imageWithSymbolName:symbolName accessibilityDescription:description usingBundledFallback:&usingBundledFallback];
+    return [SFSymbolStrings imageWithSymbolName:symbolName accessibilityDescription:description usingBundledFallback:&usingBundledFallback];
 }
 
 + (NSImage *_Nullable)imageWithSymbolName:(NSString *)symbolName accessibilityDescription:(NSString *)description usingBundledFallback:(BOOL *)usingBundledFallback {
@@ -158,7 +172,7 @@
 ///     Not totally sure this belongs here
 
 + (void)centerImageAttachment:(NSTextAttachment *)attachment image:(NSImage *)image font:(NSFont *)font {
-    [Symbols centerImageAttachment:attachment image:image font:font offsetX:0.0 offsetY:0.0];
+    [SFSymbolStrings centerImageAttachment:attachment image:image font:font offsetX:0.0 offsetY:0.0];
 }
 
 + (void)centerImageAttachment:(NSTextAttachment *)attachment image:(NSImage *)image font:(NSFont *)font offsetX:(double)offsetX offsetY:(double)offsetY {

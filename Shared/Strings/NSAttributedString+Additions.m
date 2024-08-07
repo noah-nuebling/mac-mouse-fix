@@ -9,6 +9,7 @@
 
 #import "NSAttributedString+Additions.h"
 #import <Cocoa/Cocoa.h>
+#import "MarkdownParser/MarkdownParser.h"
 
 #if IS_MAIN_APP
 #import "Mac_Mouse_Fix-Swift.h"
@@ -23,6 +24,10 @@
 #pragma mark Trim whitespace
 
 - (NSAttributedString *)attributedStringByCapitalizingFirst {
+    
+    if (self.length == 0) {
+        return self.copy;
+    }
     
     NSMutableAttributedString *s = self.mutableCopy;
     [s replaceCharactersInRange:NSMakeRange(0, 1) withString:[[s.string substringToIndex:1] localizedUppercaseString]];
@@ -192,7 +197,7 @@
 
 + (NSAttributedString *)stringWithSymbol:(NSString * _Nonnull)symbolName hPadding:(CGFloat)hPadding vOffset:(CGFloat)baselineOffset fallback:(NSString * _Nonnull)fallbackString {
     
-    /// Use Symbols.string() instead of this
+    /// Use SFSymbolStrings instead of this
     
     abort();
     
@@ -550,9 +555,11 @@ void assignAttributedStringKeepingBase(NSAttributedString *_Nonnull *_Nonnull as
 
 - (NSAttributedString *)attributedStringByAddingFont:(NSFont *)font forRange:(const NSRangePointer _Nullable)range {
     
-    return [self attributedStringByAddingStringAttributes:@{
+    NSAttributedString *result = [self attributedStringByAddingStringAttributes:@{
         NSFontAttributeName: font,
     } forRange:range];
+    
+    return result;
 }
 
 
@@ -756,7 +763,6 @@ void assignAttributedStringKeepingBase(NSAttributedString *_Nonnull *_Nonnull as
     
     ///  Weight is a double between -1 and 1
     ///  You can use predefined constants starting with NSFontWeight, such as NSFontWeightBold
-    
     return [self attributedStringByAddingFontTraits:@{
         NSFontWeightTrait: @(weight),
     } forRange:range];
