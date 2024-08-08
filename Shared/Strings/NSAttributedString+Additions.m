@@ -294,19 +294,113 @@
 #pragma mark Determine size
 
 - (NSSize)sizeAtMaxWidth:(CGFloat)maxWidth {
-    /// Copied from here https://stackoverflow.com/a/33903242/10601702
     
-    NSTextContainer *textContainer = [[NSTextContainer alloc] initWithSize:CGSizeMake(maxWidth, CGFLOAT_MAX)];
-    NSLayoutManager *layoutManager = [[NSLayoutManager alloc] init];
-    [layoutManager addTextContainer:textContainer];
+    /// Notes:
+    /// - Why didn't we use the native `boundingRectWithSize:`? Was there really no way to make it work? Well this works so no need to change it.
     
-    NSTextStorage *textStorage = [[NSTextStorage alloc] initWithAttributedString:self];
-    [textStorage addLayoutManager:layoutManager];
-    [layoutManager glyphRangeForTextContainer:textContainer];
-    
-    NSSize size = [layoutManager usedRectForTextContainer:textContainer].size;
-    
-    return size;
+    if (@available(macOS 12.0, *)) {
+        
+        /// TextKit 2 Implementation
+        ///     v2 APIs were introduced in macOS 12
+        ///     See WWDC intro: https://developer.apple.com/videos/play/wwdc2021/10061/
+        
+        ///
+        /// Create objects
+        ///
+        
+        /// Create v2 layoutMgr
+        NSTextLayoutManager *textLayoutManager = [[NSTextLayoutManager alloc] init];
+        
+        /// Create v2 contentMgr
+        NSTextContentStorage *textContentStorage = [[NSTextContentStorage alloc] init];
+        
+        /// Create container
+        NSTextContainer *textContainer = [[NSTextContainer alloc] initWithSize:CGSizeMake(maxWidth, CGFLOAT_MAX)]; /// `initWithContainerSize:` was deprecated in macOS 12
+        
+        ///
+        /// Link objects
+        ///
+        
+        /// Link contentMgr -> self
+        [textContentStorage setAttributedString:self];
+        
+        /// Link layoutMgr -> container
+        [textLayoutManager setTextContainer:textContainer];
+        
+        /// Link layoutMgr -> contentMgr
+        [textLayoutManager replaceTextContentManager:textContentStorage];
+        [textContentStorage setPrimaryTextLayoutManager:textLayoutManager]; /// Not sure if necessary
+        
+        ///
+        /// Get size from layoutMgr
+        ///
+        
+        /// On options:
+        ///     - `NSTextLayoutFragmentEnumerationOptionsEnsuresExtraLineFragment` is for ensuring layout consistency with editable text, which we don't need here.
+        ///     - `NSTextLayoutFragmentEnumerationOptionsEstimatesSize` is a faster, but less accurate alternative to `NSTextLayoutFragmentEnumerationOptionsEnsuresLayout`
+        
+        __block NSRect resultRect = NSZeroRect;
+        NSTextLayoutFragmentEnumerationOptions enumerationOptions = NSTextLayoutFragmentEnumerationOptionsEnsuresLayout;
+        [textLayoutManager enumerateTextLayoutFragmentsFromLocation:nil options:enumerationOptions usingBlock:^BOOL(NSTextLayoutFragment * _Nonnull layoutFragment) {
+            resultRect = NSUnionRect(resultRect, layoutFragment.layoutFragmentFrame);
+            return YES;
+        }];
+        
+        ///
+        /// Return
+        ///
+        return resultRect.size;
+        
+    } else {
+
+        /// TextKit v1 implementation
+        ///     Originally Copied from here https://stackoverflow.com/a/33903242/10601702
+        
+        ///
+        /// Create objects
+        ///
+        
+        /// Create layoutMgr
+        NSLayoutManager *layoutManager = [[NSLayoutManager alloc] init];
+
+        /// Create content
+        NSTextStorage *textStorage = [[NSTextStorage alloc] init];
+        
+        /// Create container
+        NSTextContainer *textContainer = [[NSTextContainer alloc] initWithSize:CGSizeMake(maxWidth, CGFLOAT_MAX)];
+
+        
+        ///
+        /// Link objects
+        ///
+        
+        /// Link content -> self
+        [textStorage setAttributedString:self]; /// This needs to happen before other linking steps, otherwise it won't work. Not sure why.
+        
+        /// Link layoutMgr -> container
+        [layoutManager addTextContainer:textContainer];
+        
+        /// Link layoutMgr -> content
+        [layoutManager replaceTextStorage:textStorage];
+        [textStorage addLayoutManager:layoutManager]; /// Not sure if necessary
+
+        ///
+        /// Force glyph generation & layout
+        ///
+        NSInteger numberOfGlyphs = [layoutManager numberOfGlyphs];                  /// Forces glyph generation
+        [layoutManager ensureLayoutForGlyphRange:NSMakeRange(0, numberOfGlyphs)];   /// Forces layout
+        
+        ///
+        /// Get size from layoutMgr
+        ///
+        NSSize size = [layoutManager usedRectForTextContainer:textContainer].size;
+        
+        ///
+        /// Return
+        ///
+        return size;
+    }
+
 }
 
 - (NSSize)sizeAtMaxWidthOld:(CGFloat)maxWidth {

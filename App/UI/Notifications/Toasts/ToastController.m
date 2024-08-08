@@ -171,10 +171,12 @@ typedef enum {
     CGFloat maxTextWidth = mainW.frame.size.width - 2*sideMargin - leftInset - rightInset;
     NSSize newTextSize = [_instance.label.attributedString sizeAtMaxWidth:maxTextWidth];
     
-    /// Setting actual width for newLabelSize. See https://stackoverflow.com/questions/13621084/boundingrectwithsize-for-nsattributedstring-returning-wrong-size
-    ///  ... Actually this breaks short "Primary Mouse Button can't be used" notifications.
-//    CGFloat padding = label.textContainer.lineFragmentPadding;
-//    newLabelSize.width -= padding * 2;
+    /// Adjust newTextSize for lineFragmentPadding.
+    ///     See https://stackoverflow.com/questions/13621084/boundingrectwithsize-for-nsattributedstring-returning-wrong-size
+    ///     ... Actually this breaks short "Primary Mouse Button can't be used" notifications.
+    ///     Update: Seems necessary after updating sizeAtMaxWidth to new TextKit 2 methods. ... Update2: And it works perfectly with the TextKit 1 methods as well after we fixed them.
+    CGFloat padding = _instance.label.textContainer.lineFragmentPadding; /// TESTING
+    newTextSize.width += padding * 2;
     
     /// Calculate new window frame
     NSSize newWindowSize = NSMakeSize(newTextSize.width + leftInset + rightInset, newTextSize.height + topInset + bottomInset);
