@@ -42,6 +42,7 @@ These people spent a lot more than the standard price and treated me to an **Inc
 
 **August 2024**
 
+- 🇦🇹&nbsp;Christoph&nbsp;Frederik
 - 🇺🇸&nbsp;Anonymous
 - 🇬🇧&nbsp;James&nbsp;Hogg - "Grateful for Noah's dedication to improving our Mac experience. This project is a game-changer - thank you for your hard work and innovation."
 - 🇺🇸&nbsp;Big&nbsp;Daver - "KAMALA 2024 & 2028!!"
