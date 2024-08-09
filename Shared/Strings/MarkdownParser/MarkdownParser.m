@@ -345,6 +345,10 @@ static NSAttributedString *attributedStringWithMarkdown(NSAttributedString *src,
                 } else {
                     /// Get attributed substring of src which contains the same text as `node_text`
                     ///     By appending the attributed substring of src to dst instead of appending `node_text` directly, we effectively carry over the string attributes from src into dst
+                    ///
+                    ///     Note: To find the correct substring it might be more efficient faster to use the private NSBigMutableString which seemingly uses unicode characters along with
+                    ///     `cmark_node_get_[...]_column()` and `cmark_node_get_[...]_line()` APIs which also uses unicode characters afaik.
+                    
                     NSRange src_range = [src.string rangeOfString:node_text options:0 range:src_search_range];
                     NSAttributedString *src_substr = [src attributedSubstringFromRange:src_range];
                     dst = [dst attributedStringByAppending:src_substr];

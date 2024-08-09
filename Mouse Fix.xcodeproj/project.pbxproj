@@ -93,7 +93,7 @@
 		4F7F47D328A6EFC800290BBD /* SharedAssets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4F7F47D228A6EFC800290BBD /* SharedAssets.xcassets */; };
 		4F7F47D428A6EFC800290BBD /* SharedAssets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4F7F47D228A6EFC800290BBD /* SharedAssets.xcassets */; };
 		4F854D7C2789146900B46E9D /* NSMenu+NSMenu_Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F854D7B2789146900B46E9D /* NSMenu+NSMenu_Additions.m */; };
-		4F854D7E2789266A00B46E9D /* SFSymbols.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4F854D7D2789266A00B46E9D /* SFSymbols.xcassets */; };
+		4F854D7E2789266A00B46E9D /* MainAppSFSymbols.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4F854D7D2789266A00B46E9D /* MainAppSFSymbols.xcassets */; };
 		4F85C05028BBDBDC00E96E9C /* NSImageView+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F85C04F28BBDBDC00E96E9C /* NSImageView+Extensions.swift */; };
 		4F85C05128BBDBDC00E96E9C /* NSImageView+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F85C04F28BBDBDC00E96E9C /* NSImageView+Extensions.swift */; };
 		4F85C05428BBE6FA00E96E9C /* TrialSectionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F85C05328BBE6FA00E96E9C /* TrialSectionManager.swift */; };
@@ -292,7 +292,7 @@
 		4FF665ED25F2C92700689B77 /* MFSegmentedControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF665C125F2C92700689B77 /* MFSegmentedControl.m */; };
 		4FF665EE25F2C92700689B77 /* OverridePanel.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF665C225F2C92700689B77 /* OverridePanel.m */; };
 		4FF665EF25F2C92700689B77 /* ScrollOverridePanel.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4FF665C325F2C92700689B77 /* ScrollOverridePanel.xib */; };
-		4FF665F725F2C92700689B77 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4FF665D525F2C92700689B77 /* Assets.xcassets */; };
+		4FF665F725F2C92700689B77 /* MainAppAssets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4FF665D525F2C92700689B77 /* MainAppAssets.xcassets */; };
 		4FF665FA25F2C92700689B77 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF665DB25F2C92700689B77 /* AppDelegate.m */; };
 		4FF665FD25F2C92700689B77 /* AuthorizeAccessibilityView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF665E025F2C92700689B77 /* AuthorizeAccessibilityView.m */; };
 		4FF665FE25F2C92700689B77 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF665E325F2C92700689B77 /* main.m */; };
@@ -301,7 +301,7 @@
 		4FF6660225F2C92700689B77 /* ClickableImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF665EB25F2C92700689B77 /* ClickableImageView.m */; };
 		4FF6668125F2C93A00689B77 /* FileMonitor.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF6660925F2C93A00689B77 /* FileMonitor.m */; };
 		4FF6668225F2C93A00689B77 /* Config.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF6660E25F2C93A00689B77 /* Config.m */; };
-		4FF6668325F2C93A00689B77 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4FF6661025F2C93A00689B77 /* Assets.xcassets */; };
+		4FF6668325F2C93A00689B77 /* HelperAssets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4FF6661025F2C93A00689B77 /* HelperAssets.xcassets */; };
 		4FF6668525F2C93A00689B77 /* Modifiers.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF6661725F2C93A00689B77 /* Modifiers.m */; };
 		4FF6668825F2C93A00689B77 /* ButtonInputReceiver.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF6661E25F2C93A00689B77 /* ButtonInputReceiver.m */; };
 		4FF6668925F2C93A00689B77 /* Scroll.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF6662125F2C93A00689B77 /* Scroll.m */; };
@@ -2056,13 +2056,12 @@
 		4F7AB0532606698A0008055E /* UIStrings.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UIStrings.h; sourceTree = "<group>"; };
 		4F7AB0542606698A0008055E /* UIStrings.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = UIStrings.m; sourceTree = "<group>"; };
 		4F7D97A228AEB04D00C11E79 /* Westfalia-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Westfalia-Regular.otf"; sourceTree = "<group>"; };
-		4F7D97A428AEB14A00C11E79 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		4F7D97A528AEB2EE00C11E79 /* AboutTabController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutTabController.swift; sourceTree = "<group>"; };
 		4F7F47D228A6EFC800290BBD /* SharedAssets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = SharedAssets.xcassets; sourceTree = "<group>"; };
-		4F7F47D628A6F00300290BBD /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		4F7F47D628A6F00300290BBD /* Readme.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = Readme.md; sourceTree = "<group>"; };
 		4F854D7A2789146900B46E9D /* NSMenu+NSMenu_Additions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSMenu+NSMenu_Additions.h"; sourceTree = "<group>"; };
 		4F854D7B2789146900B46E9D /* NSMenu+NSMenu_Additions.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSMenu+NSMenu_Additions.m"; sourceTree = "<group>"; };
-		4F854D7D2789266A00B46E9D /* SFSymbols.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = SFSymbols.xcassets; sourceTree = "<group>"; };
+		4F854D7D2789266A00B46E9D /* MainAppSFSymbols.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = MainAppSFSymbols.xcassets; sourceTree = "<group>"; };
 		4F85C04F28BBDBDC00E96E9C /* NSImageView+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSImageView+Extensions.swift"; sourceTree = "<group>"; };
 		4F85C05328BBE6FA00E96E9C /* TrialSectionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrialSectionManager.swift; sourceTree = "<group>"; };
 		4F8A44502925311B00361EFF /* SFSymbolStrings.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SFSymbolStrings.h; sourceTree = "<group>"; };
@@ -2331,7 +2330,7 @@
 		4FF665C325F2C92700689B77 /* ScrollOverridePanel.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ScrollOverridePanel.xib; sourceTree = "<group>"; };
 		4FF665C425F2C92700689B77 /* MFSegmentedControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MFSegmentedControl.h; sourceTree = "<group>"; };
 		4FF665C525F2C92700689B77 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
-		4FF665D525F2C92700689B77 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		4FF665D525F2C92700689B77 /* MainAppAssets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = MainAppAssets.xcassets; sourceTree = "<group>"; };
 		4FF665DB25F2C92700689B77 /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		4FF665DE25F2C92700689B77 /* AuthorizeAccessibilityView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AuthorizeAccessibilityView.h; sourceTree = "<group>"; };
 		4FF665E025F2C92700689B77 /* AuthorizeAccessibilityView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AuthorizeAccessibilityView.m; sourceTree = "<group>"; };
@@ -2349,7 +2348,7 @@
 		4FF6660B25F2C93A00689B77 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		4FF6660D25F2C93A00689B77 /* Config.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Config.h; sourceTree = "<group>"; };
 		4FF6660E25F2C93A00689B77 /* Config.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Config.m; sourceTree = "<group>"; };
-		4FF6661025F2C93A00689B77 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		4FF6661025F2C93A00689B77 /* HelperAssets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = HelperAssets.xcassets; sourceTree = "<group>"; };
 		4FF6661625F2C93A00689B77 /* Modifiers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Modifiers.h; sourceTree = "<group>"; };
 		4FF6661725F2C93A00689B77 /* Modifiers.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Modifiers.m; sourceTree = "<group>"; };
 		4FF6661925F2C93A00689B77 /* ButtonTriggerGenerator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ButtonTriggerGenerator.m; sourceTree = "<group>"; };
@@ -2499,7 +2498,6 @@
 				4FA1FD8228A916B600D1C8EE /* NSShadow+Extensions.swift */,
 				4F12951F28D2D5E1009A49AB /* NSTextField+Extentions.swift */,
 				4F909D0928A0C3D2009349A2 /* UIAnimations */,
-				4FC56DB52C62610300CCB98C /* Symbols */,
 				4FA2F1252C29A11D000C5535 /* Notifications */,
 			);
 			path = UI;
@@ -6594,9 +6592,10 @@
 		4F7F47D528A6EFCF00290BBD /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				4F7F47D228A6EFC800290BBD /* SharedAssets.xcassets */,
-				4FFA4E3F28B7D0120062A1FE /* SharedSFSymbols.xcassets */,
-				4F7F47D628A6F00300290BBD /* README.md */,
+				4F7F47D628A6F00300290BBD /* Readme.md */,
+				4F7D97A228AEB04D00C11E79 /* Westfalia-Regular.otf */,
+				4F9A06D12C66105600902FB8 /* Assets */,
+				4FC56DB52C62610300CCB98C /* SFSymbols */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -6768,6 +6767,16 @@
 				4FEA63CD2921510E00E464D6 /* NSImage+Additions.m */,
 			);
 			path = Extensions;
+			sourceTree = "<group>";
+		};
+		4F9A06D12C66105600902FB8 /* Assets */ = {
+			isa = PBXGroup;
+			children = (
+				4F7F47D228A6EFC800290BBD /* SharedAssets.xcassets */,
+				4FF665D525F2C92700689B77 /* MainAppAssets.xcassets */,
+				4FF6661025F2C93A00689B77 /* HelperAssets.xcassets */,
+			);
+			path = Assets;
 			sourceTree = "<group>";
 		};
 		4F9C14B527BAF202008A1479 /* IOKit */ = {
@@ -6965,16 +6974,18 @@
 			path = SFSymbolsFontCreate;
 			sourceTree = "<group>";
 		};
-		4FC56DB52C62610300CCB98C /* Symbols */ = {
+		4FC56DB52C62610300CCB98C /* SFSymbols */ = {
 			isa = PBXGroup;
 			children = (
+				4F854D7D2789266A00B46E9D /* MainAppSFSymbols.xcassets */,
+				4FFA4E3F28B7D0120062A1FE /* SharedSFSymbols.xcassets */,
 				4F8A44502925311B00361EFF /* SFSymbolStrings.h */,
 				4F8A44512925311B00361EFF /* SFSymbolStrings.m */,
+				4FCC354E2C629F0F009E1908 /* CoolSFSymbols.otf */,
 				4FC56DB22C625B9300CCB98C /* CoolSFSymbolsFont.h */,
 				4FC56DB32C625B9300CCB98C /* CoolSFSymbolsFont.m */,
-				4FCC354E2C629F0F009E1908 /* CoolSFSymbols.otf */,
 			);
-			path = Symbols;
+			path = SFSymbols;
 			sourceTree = "<group>";
 		};
 		4FCECD7721092354001F1078 = {
@@ -7342,7 +7353,6 @@
 				4FF665C625F2C92700689B77 /* Update */,
 				4FF665E525F2C92700689B77 /* Utility */,
 				4F909D3F28A0C411009349A2 /* Experiments */,
-				4FF665D425F2C92700689B77 /* Resources */,
 				4FF665E125F2C92700689B77 /* SupportFiles */,
 			);
 			path = App;
@@ -7369,17 +7379,6 @@
 				4FE03A5F2BFF5F0600708454 /* CoolSUUpdater.m */,
 			);
 			path = Update;
-			sourceTree = "<group>";
-		};
-		4FF665D425F2C92700689B77 /* Resources */ = {
-			isa = PBXGroup;
-			children = (
-				4F7D97A428AEB14A00C11E79 /* README.md */,
-				4F7D97A228AEB04D00C11E79 /* Westfalia-Regular.otf */,
-				4FF665D525F2C92700689B77 /* Assets.xcassets */,
-				4F854D7D2789266A00B46E9D /* SFSymbols.xcassets */,
-			);
-			path = Resources;
 			sourceTree = "<group>";
 		};
 		4FF665DC25F2C92700689B77 /* Accessibility */ = {
@@ -7425,7 +7424,6 @@
 				4FF6660825F2C93A00689B77 /* FileMonitor */,
 				4F78CEF22904414B0030086C /* UI */,
 				4FF6663F25F2C93A00689B77 /* Utility */,
-				4FF6660F25F2C93A00689B77 /* Resources */,
 				4FF6664D25F2C93A00689B77 /* SupportFiles */,
 			);
 			path = Helper;
@@ -7454,14 +7452,6 @@
 				4FE7A0DE28677AD600C33B37 /* Gain Curve Math.tex */,
 			);
 			path = Config;
-			sourceTree = "<group>";
-		};
-		4FF6660F25F2C93A00689B77 /* Resources */ = {
-			isa = PBXGroup;
-			children = (
-				4FF6661025F2C93A00689B77 /* Assets.xcassets */,
-			);
-			path = Resources;
 			sourceTree = "<group>";
 		};
 		4FF6661425F2C93A00689B77 /* Core */ = {
@@ -7923,9 +7913,9 @@
 				4F9E59972672A67F004E75F7 /* default_config.plist in Resources */,
 				4FF6654225F2C7B000689B77 /* default_launchd.plist in Resources */,
 				4F143E462B2D1F5600FE4092 /* fallback_licenseinfo_config.json in Resources */,
-				4F854D7E2789266A00B46E9D /* SFSymbols.xcassets in Resources */,
+				4F854D7E2789266A00B46E9D /* MainAppSFSymbols.xcassets in Resources */,
 				4F7F47D328A6EFC800290BBD /* SharedAssets.xcassets in Resources */,
-				4FF665F725F2C92700689B77 /* Assets.xcassets in Resources */,
+				4FF665F725F2C92700689B77 /* MainAppAssets.xcassets in Resources */,
 				4FFA4E4028B7D0610062A1FE /* SharedSFSymbols.xcassets in Resources */,
 				4F909D2728A0C3D2009349A2 /* Main.storyboard in Resources */,
 				4F09284828B8EE7200BDC2FF /* LicenseSheetController.xib in Resources */,
@@ -7945,7 +7935,7 @@
 				4FA2F13E2C2B0932000C5535 /* Localizable.xcstrings in Resources */,
 				4FF6654125F2C7B000689B77 /* default_launchd.plist in Resources */,
 				4F143E472B2D1F5600FE4092 /* fallback_licenseinfo_config.json in Resources */,
-				4FF6668325F2C93A00689B77 /* Assets.xcassets in Resources */,
+				4FF6668325F2C93A00689B77 /* HelperAssets.xcassets in Resources */,
 				4FFA4E4128B7D0610062A1FE /* SharedSFSymbols.xcassets in Resources */,
 				4F7F47D428A6EFC800290BBD /* SharedAssets.xcassets in Resources */,
 				4FA13FC328B3A2DB005C68FC /* TrialNotificationController.xib in Resources */,
