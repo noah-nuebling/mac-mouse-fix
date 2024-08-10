@@ -47,7 +47,8 @@
             "value" : "指標"
           }
         }
-      }
+      },
+      "shouldTranslate" : false
     },
     "1nK-vb-jNz.title" : {
       "comment" : "Class = \"NSTextFieldCell\"; title = \"<Scroll precisely by moving the scroll wheel slowly>\"; ObjectID = \"1nK-vb-jNz\";",
@@ -153,7 +154,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Frag die Community oder schaue dir Guides an…"
+            "value" : "Frag die Community oder schau dir Guides an…"
           }
         },
         "en" : {
@@ -240,7 +241,8 @@
             "value" : "加速："
           }
         }
-      }
+      },
+      "shouldTranslate" : false
     },
     "3pt-ka-lxV.title" : {
       "comment" : "Class = \"NSMenuItem\"; title = \"Check for Updates...\"; ObjectID = \"3pt-ka-lxV\";",
@@ -1298,7 +1300,8 @@
             "value" : "中"
           }
         }
-      }
+      },
+      "shouldTranslate" : false
     },
     "Bnm-ze-Mca.title" : {
       "comment" : "Class = \"NSMenuItem\"; title = \"Hide Mac Mouse Fix\"; ObjectID = \"Bnm-ze-Mca\";",
@@ -1539,7 +1542,8 @@
             "value" : "macOS"
           }
         }
-      }
+      },
+      "shouldTranslate" : false
     },
     "cul-5Z-iUo.title" : {
       "comment" : "Class = \"NSTextFieldCell\"; title = \"<Day 2/14 of your test period>\"; ObjectID = \"cul-5Z-iUo\";",
@@ -1732,7 +1736,8 @@
             "value" : "低"
           }
         }
-      }
+      },
+      "shouldTranslate" : false
     },
     "DtT-YF-gUn.title" : {
       "comment" : "Class = \"NSTextFieldCell\"; title = \"Set acceleration under \\nSystem Preferences > Mouse > Tracking speed \"; ObjectID = \"DtT-YF-gUn\"; Note = \"Pointer > Acceleration > macOS Option > Hint\";",
@@ -1780,7 +1785,8 @@
             "value" : "設定加速：\n系統偏好設定 > 滑鼠 > 軌跡速度"
           }
         }
-      }
+      },
+      "shouldTranslate" : false
     },
     "DVS-lH-VBH.title" : {
       "comment" : "Class = \"NSMenu\"; title = \"Help\"; ObjectID = \"DVS-lH-VBH\";",
@@ -2599,7 +2605,8 @@
             "value" : "低"
           }
         }
-      }
+      },
+      "shouldTranslate" : false
     },
     "hSC-BE-EZJ.title" : {
       "comment" : "Class = \"NSMenuItem\"; title = \"Mac Mouse Fix\"; ObjectID = \"hSC-BE-EZJ\";",
@@ -3128,7 +3135,8 @@
             "value" : "指標"
           }
         }
-      }
+      },
+      "shouldTranslate" : false
     },
     "lrw-Lp-nQ4.title" : {
       "comment" : "Class = \"NSButtonCell\"; title = \"Restore Defaults...\"; ObjectID = \"lrw-Lp-nQ4\"; Note = \"Buttons > Restore Defaults... Button\";",
@@ -3340,31 +3348,31 @@
         },
         "ko" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "Hold Command (⌘) and Shift (⇧), then click this icon to reveal the Mac Mouse Fix configuration file in Finder"
           }
         },
         "vi" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "Hold Command (⌘) and Shift (⇧), then click this icon to reveal the Mac Mouse Fix configuration file in Finder"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "Hold Command (⌘) and Shift (⇧), then click this icon to reveal the Mac Mouse Fix configuration file in Finder"
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "Hold Command (⌘) and Shift (⇧), then click this icon to reveal the Mac Mouse Fix configuration file in Finder"
           }
         },
         "zh-HK" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "Hold Command (⌘) and Shift (⇧), then click this icon to reveal the Mac Mouse Fix configuration file in Finder"
           }
         }
@@ -3705,7 +3713,8 @@
             "value" : "關"
           }
         }
-      }
+      },
+      "shouldTranslate" : false
     },
     "pMz-a0-1UQ.title" : {
       "comment" : "Class = \"NSTextFieldCell\"; title = \"Created by Noah Nuebling\"; ObjectID = \"pMz-a0-1UQ\"; Note = \"About > Created By Label\";",
@@ -4380,7 +4389,8 @@
             "value" : "高"
           }
         }
-      }
+      },
+      "shouldTranslate" : false
     },
     "SjO-Dq-CEX.title" : {
       "comment" : "Class = \"NSTextFieldCell\"; title = \"Smoothness:\"; ObjectID = \"SjO-Dq-CEX\"; Note = \"Scrolling > Smoothness Label\";",
@@ -4813,7 +4823,8 @@
             "value" : "高"
           }
         }
-      }
+      },
+      "shouldTranslate" : false
     },
     "X8q-Nk-Fwr.title" : {
       "comment" : "Class = \"NSMenu\"; title = \"Services\"; ObjectID = \"X8q-Nk-Fwr\";",
@@ -4909,7 +4920,8 @@
             "value" : "靈敏度："
           }
         }
-      }
+      },
+      "shouldTranslate" : false
     },
     "YBT-Ar-F4S.title" : {
       "comment" : "Class = \"NSMenuItem\"; title = \"Activate License...\"; ObjectID = \"YBT-Ar-F4S\";",
@@ -5005,7 +5017,8 @@
             "value" : "中"
           }
         }
-      }
+      },
+      "shouldTranslate" : false
     },
     "Yyg-LD-A1v.title" : {
       "comment" : "Class = \"NSMenu\"; title = \"Mac Mouse Fix\"; ObjectID = \"Yyg-LD-A1v\";",

@@ -2044,7 +2044,7 @@
         },
         "ko" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "%@ %#@captured@"
           },
           "substitutions" : {
@@ -2071,7 +2071,7 @@
         },
         "vi" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "%@ %#@captured@"
           },
           "substitutions" : {
@@ -2104,7 +2104,7 @@
         },
         "zh-Hans" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "%@ %#@captured@"
           },
           "substitutions" : {
@@ -2131,7 +2131,7 @@
         },
         "zh-Hant" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "%@ %#@captured@"
           },
           "substitutions" : {
@@ -2158,7 +2158,7 @@
         },
         "zh-HK" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "%@ %#@captured@"
           },
           "substitutions" : {
@@ -2256,7 +2256,7 @@
         },
         "ko" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "%#@hint@"
           },
           "substitutions" : {
@@ -2283,7 +2283,7 @@
         },
         "vi" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "%#@hint@"
           },
           "substitutions" : {
@@ -2316,7 +2316,7 @@
         },
         "zh-Hans" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "%#@hint@"
           },
           "substitutions" : {
@@ -2349,7 +2349,7 @@
         },
         "zh-Hant" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "%#@hint@"
           },
           "substitutions" : {
@@ -2382,7 +2382,7 @@
         },
         "zh-HK" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "%#@hint@"
           },
           "substitutions" : {
@@ -2432,31 +2432,31 @@
         },
         "ko" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "[더 알아보기](https://github.com/noah-nuebling/mac-mouse-fix/discussions/112)"
           }
         },
         "vi" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "[Đọc thêm](https://github.com/noah-nuebling/mac-mouse-fix/discussions/112)"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "[了解更多](https://github.com/noah-nuebling/mac-mouse-fix/discussions/112)"
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "[進一步瞭解](https://github.com/noah-nuebling/mac-mouse-fix/discussions/112)"
           }
         },
         "zh-HK" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "[了解更多](https://github.com/noah-nuebling/mac-mouse-fix/discussions/112)"
           }
         }
@@ -2533,7 +2533,7 @@
         },
         "ko" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "%@ %#@uncaptured@"
           },
           "substitutions" : {
@@ -2560,7 +2560,7 @@
         },
         "vi" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "%@ %#@uncaptured@"
           },
           "substitutions" : {
@@ -2593,7 +2593,7 @@
         },
         "zh-Hans" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "%@ %#@uncaptured@"
           },
           "substitutions" : {
@@ -2620,7 +2620,7 @@
         },
         "zh-Hant" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "%@ %#@uncaptured@"
           },
           "substitutions" : {
@@ -2647,7 +2647,7 @@
         },
         "zh-HK" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "%@ %#@uncaptured@"
           },
           "substitutions" : {
@@ -2745,7 +2745,7 @@
         },
         "ko" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "%#@hint@"
           },
           "substitutions" : {
@@ -2778,7 +2778,7 @@
         },
         "vi" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "%#@hint@"
           },
           "substitutions" : {
@@ -2811,7 +2811,7 @@
         },
         "zh-Hans" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "%#@hint@"
           },
           "substitutions" : {
@@ -2844,7 +2844,7 @@
         },
         "zh-Hant" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "%#@hint@"
           },
           "substitutions" : {
@@ -2877,7 +2877,7 @@
         },
         "zh-HK" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "%#@hint@"
           },
           "substitutions" : {
@@ -2927,31 +2927,31 @@
         },
         "ko" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "capture-toast.scroll.captured.body"
           }
         },
         "vi" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "capture-toast.scroll.captured.body"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "capture-toast.scroll.captured.body"
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "capture-toast.scroll.captured.body"
           }
         },
         "zh-HK" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "capture-toast.scroll.captured.body"
           }
         }
@@ -2974,31 +2974,31 @@
         },
         "ko" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "capture-toast.scroll.captured.hint"
           }
         },
         "vi" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "capture-toast.scroll.captured.hint"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "capture-toast.scroll.captured.hint"
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "capture-toast.scroll.captured.hint"
           }
         },
         "zh-HK" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "capture-toast.scroll.captured.hint"
           }
         }
@@ -3021,31 +3021,31 @@
         },
         "ko" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "[더 알아보기](https://github.com/noah-nuebling/mac-mouse-fix/discussions/112)"
           }
         },
         "vi" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "[Đọc thêm](https://github.com/noah-nuebling/mac-mouse-fix/discussions/112)"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "[了解更多](https://github.com/noah-nuebling/mac-mouse-fix/discussions/112)"
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "[進一步瞭解](https://github.com/noah-nuebling/mac-mouse-fix/discussions/112)"
           }
         },
         "zh-HK" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "[了解更多](https://github.com/noah-nuebling/mac-mouse-fix/discussions/112)"
           }
         }
@@ -3068,31 +3068,31 @@
         },
         "ko" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "capture-toast.scroll.uncaptured.body"
           }
         },
         "vi" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "capture-toast.scroll.uncaptured.body"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "capture-toast.scroll.uncaptured.body"
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "capture-toast.scroll.uncaptured.body"
           }
         },
         "zh-HK" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "capture-toast.scroll.uncaptured.body"
           }
         }
@@ -3115,55 +3115,32 @@
         },
         "ko" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "capture-toast.scroll.uncaptured.hint"
           }
         },
         "vi" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "capture-toast.scroll.uncaptured.hint"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "capture-toast.scroll.uncaptured.hint"
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "capture-toast.scroll.uncaptured.hint"
           }
         },
         "zh-HK" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "capture-toast.scroll.uncaptured.hint"
-          }
-        }
-      }
-    },
-    "Chocolate" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "巧克力"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "巧克力"
-          }
-        },
-        "zh-HK" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "朱古力"
           }
         }
       }
@@ -4360,7 +4337,7 @@
         },
         "ko" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "effect.primary-click"
           }
         },
@@ -4372,19 +4349,19 @@
         },
         "zh-Hans" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "effect.primary-click"
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "effect.primary-click"
           }
         },
         "zh-HK" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "effect.primary-click"
           }
         }
@@ -4407,7 +4384,7 @@
         },
         "ko" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "effect.primary-click.hint"
           }
         },
@@ -4419,19 +4396,19 @@
         },
         "zh-Hans" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "effect.primary-click.hint"
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "effect.primary-click.hint"
           }
         },
         "zh-HK" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "effect.primary-click.hint"
           }
         }
@@ -4642,7 +4619,7 @@
         },
         "ko" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "effect.secondary-click"
           }
         },
@@ -4654,19 +4631,19 @@
         },
         "zh-Hans" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "effect.secondary-click"
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "effect.secondary-click"
           }
         },
         "zh-HK" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "effect.secondary-click"
           }
         }
@@ -4689,7 +4666,7 @@
         },
         "ko" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "effect.secondary-click.hint"
           }
         },
@@ -4701,19 +4678,19 @@
         },
         "zh-Hans" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "effect.secondary-click.hint"
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "effect.secondary-click.hint"
           }
         },
         "zh-HK" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "effect.secondary-click.hint"
           }
         }
@@ -4877,31 +4854,31 @@
         },
         "ko" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "enable-timeout-toast"
           }
         },
         "vi" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "enable-timeout-toast"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "enable-timeout-toast"
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "enable-timeout-toast"
           }
         },
         "zh-HK" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "enable-timeout-toast"
           }
         }
@@ -5759,42 +5736,42 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "**'%@'** ist kein bekannter Lizenzschlüssel\n\nBitte versuche einen anderen Schlüssel"
+            "value" : "**'%@'** ist kein gültiger Lizenzschlüssel\n\nStelle sicher, dass du deinen Schlüssel genau so eingibst, wie du ihn erhalten hast, ohne führende oder nachfolgende Leerzeichen, Zeilenumbrüche oder andere extra Zeichen."
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "**'%@'** is not a known license key\n\nPlease try a different key"
+            "value" : "**'%@'** is not a valid license key\n\nMake sure you enter your key exactly as you received it, without leading or trailing spaces, line breaks, or other extra characters."
           }
         },
         "ko" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "**'%@'** 키는 올바르지 않은 라이센스 키입니다.\n\n다시 입력하십시오."
           }
         },
         "vi" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "Không thể xác định **'%@'** là một khóa kích hoạt\n\nVui lòng thử một khóa khác"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "**“%@”**并不是已知的许可证。\n请换一个许可证再试。"
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "**「%@」**並不是已知的許可證。\n請換一個許可證再試。"
           }
         },
         "zh-HK" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "**「%@」**並不是已知的許可證。\n請換一個許可證再試。"
           }
         }
@@ -7583,29 +7560,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "在Safari、地圖和其他應用程式中放大或縮小\n \n效果相當於在Apple觸控板上兩指分開或收合"
-          }
-        }
-      }
-    },
-    "Strawberry" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "草莓"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "草莓"
-          }
-        },
-        "zh-HK" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "士多啤梨"
           }
         }
       }
@@ -9862,29 +9816,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "輸入鍵盤快捷鍵"
-          }
-        }
-      }
-    },
-    "Vanilla" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "香草"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "香草"
-          }
-        },
-        "zh-HK" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "香草"
           }
         }
       }

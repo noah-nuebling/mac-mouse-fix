@@ -57,6 +57,8 @@
 		4F47C11C2C58931B009F6CE7 /* LicenseToasts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F47C11B2C58931B009F6CE7 /* LicenseToasts.swift */; };
 		4F47C11E2C58AD2E009F6CE7 /* ToastAndSheetTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F47C11D2C58AD2E009F6CE7 /* ToastAndSheetTests.swift */; };
 		4F47C11F2C58B321009F6CE7 /* MFMessagePort.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F44FF032606D73D00926A5E /* MFMessagePort.m */; };
+		4F4B5FFA2C67D1BF004051D3 /* InfoPlist.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 4F4B5FF92C67D1BF004051D3 /* InfoPlist.xcstrings */; };
+		4F4B5FFC2C67D1BF004051D3 /* InfoPlist.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 4F4B5FFB2C67D1BF004051D3 /* InfoPlist.xcstrings */; };
 		4F4C737D2C4FB06E001D97C3 /* NSString+Steganography.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F4C737C2C4FB06E001D97C3 /* NSString+Steganography.m */; };
 		4F4C737E2C4FB06E001D97C3 /* NSString+Steganography.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F4C737C2C4FB06E001D97C3 /* NSString+Steganography.m */; };
 		4F4C73D72C4FB3FA001D97C3 /* LocalizedStringAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F4C73D62C4FB3FA001D97C3 /* LocalizedStringAnnotation.m */; };
@@ -2007,6 +2009,8 @@
 		4F44FF032606D73D00926A5E /* MFMessagePort.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MFMessagePort.m; sourceTree = "<group>"; };
 		4F47C11B2C58931B009F6CE7 /* LicenseToasts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LicenseToasts.swift; sourceTree = "<group>"; };
 		4F47C11D2C58AD2E009F6CE7 /* ToastAndSheetTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToastAndSheetTests.swift; sourceTree = "<group>"; };
+		4F4B5FF92C67D1BF004051D3 /* InfoPlist.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = InfoPlist.xcstrings; sourceTree = "<group>"; };
+		4F4B5FFB2C67D1BF004051D3 /* InfoPlist.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = InfoPlist.xcstrings; sourceTree = "<group>"; };
 		4F4C737B2C4FB06E001D97C3 /* NSString+Steganography.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSString+Steganography.h"; sourceTree = "<group>"; };
 		4F4C737C2C4FB06E001D97C3 /* NSString+Steganography.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSString+Steganography.m"; sourceTree = "<group>"; };
 		4F4C73A92C4FB28C001D97C3 /* .gitmodules */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitmodules; sourceTree = "<group>"; };
@@ -7398,6 +7402,7 @@
 				4FBC9442260F8AB10062F186 /* External */,
 				4FF665E225F2C92700689B77 /* App.entitlements */,
 				4FF665E425F2C92700689B77 /* Info.plist */,
+				4F4B5FF92C67D1BF004051D3 /* InfoPlist.xcstrings */,
 			);
 			path = SupportFiles;
 			sourceTree = "<group>";
@@ -7623,6 +7628,7 @@
 				4FF6664E25F2C93A00689B77 /* Helper.entitlements */,
 				4FF6665225F2C93A00689B77 /* External */,
 				4FF6667825F2C93A00689B77 /* Info.plist */,
+				4F4B5FFB2C67D1BF004051D3 /* InfoPlist.xcstrings */,
 			);
 			path = SupportFiles;
 			sourceTree = "<group>";
@@ -7920,6 +7926,7 @@
 				4F909D2728A0C3D2009349A2 /* Main.storyboard in Resources */,
 				4F09284828B8EE7200BDC2FF /* LicenseSheetController.xib in Resources */,
 				4FD148CC28AA423F00FE688C /* AuthorizeAccessibilityView.xib in Resources */,
+				4F4B5FFA2C67D1BF004051D3 /* InfoPlist.xcstrings in Resources */,
 				4F79A7EF26042E2E00076A7E /* Toast.xib in Resources */,
 				4FA1FD7F28A847BF00D1C8EE /* DeletableTableCellView.xib in Resources */,
 				4FF665EF25F2C92700689B77 /* ScrollOverridePanel.xib in Resources */,
@@ -7938,6 +7945,7 @@
 				4FF6668325F2C93A00689B77 /* HelperAssets.xcassets in Resources */,
 				4FFA4E4128B7D0610062A1FE /* SharedSFSymbols.xcassets in Resources */,
 				4F7F47D428A6EFC800290BBD /* SharedAssets.xcassets in Resources */,
+				4F4B5FFC2C67D1BF004051D3 /* InfoPlist.xcstrings in Resources */,
 				4FA13FC328B3A2DB005C68FC /* TrialNotificationController.xib in Resources */,
 				4FD148C728AA416700FE688C /* MenuBarItem.xib in Resources */,
 				4FD148D628AA43E900FE688C /* MainMenu.xib in Resources */,
