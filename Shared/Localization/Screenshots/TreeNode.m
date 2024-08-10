@@ -29,10 +29,15 @@
     
     /// Remove children
     if (enumerableChildren != nil) {
-        @try {
+        
+        if ((NO) && [kvcObject isKindOfClass:NSClassFromString(@"XCElementSnapshot")]) {
+            /// Testing: Dont' copy
+        } else if ([kvcObject respondsToSelector:@selector(mutableCopyWithZone:)]) {
             kvcObject = kvcObject.mutableCopy;
-        } @catch (id exception) {
-            /// If this fails, then we're mutating the kvcObject, which is ok for the XCUIElement.snapshot case, but might be bad otherwise.
+        } else if ([kvcObject respondsToSelector:@selector(copyWithZone:)]) {
+            kvcObject = kvcObject.copy;
+        } else {
+            assert(false); /// If we can't copy, then we'd be mutating the passed in kvcObject, which might be bad.
         }
 
         [kvcObject setValue:nil forKey:childrenKey];

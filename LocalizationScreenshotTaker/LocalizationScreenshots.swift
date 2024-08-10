@@ -173,7 +173,7 @@ final class LocalizationScreenshotClass: XCTestCase {
         let menu = statusItem.menus.firstMatch
         assert(menu.exists)
         let screenshot = takeLocalizationScreenshot(of: menu, name: "Status Item Menu")
-        assert(screenshot != nil)
+        XCTAssert(screenshot != nil, "Could not take screenshots with any localization data for Status Bar Item. Perhaps, the Helper App was compiled without localizedString annotations?")
         result.append(screenshot)
         
         /// Cleanup

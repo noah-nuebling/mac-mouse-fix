@@ -17,6 +17,7 @@ IB_DESIGNABLE
 @interface Hyperlink ()
 
 @property (nonatomic) IBInspectable NSString *href;
+@property (nonatomic) NSString *href_future; /// Unused. We set this in IB in some places to remind us to update the href at some point.
 
 /// TrackingArea padding
 ///     Extends the area that can be clicked to open the link beyond the frame of the link text.
