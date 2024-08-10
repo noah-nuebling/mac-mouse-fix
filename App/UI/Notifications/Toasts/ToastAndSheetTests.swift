@@ -32,6 +32,7 @@ import Foundation
             { Toasts.showReviveToast(showButtons: true, showScroll: false) },
             { CaptureToasts.showButtonCaptureToastWith(before: [], after: [3]) },
             { CaptureToasts.showButtonCaptureToastWith(before: [5], after: []) },
+            /// Missing: restore-default-buttons-popover
         ],
         "scrolling": Toasts.simpleToastMap_Scrolling.values + [
             

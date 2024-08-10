@@ -2,7 +2,7 @@
   "sourceLanguage" : "en",
   "strings" : {
     "accessibility.settings-link.pre-ventura" : {
-      "comment" : "First draft: Open 'Security & Privacy' Preferences || Notes: The string for Ventura and later is defined in Interface Builder",
+      "comment" : "First draft: Open 'Security & Privacy' Preferences || Notes: 'System Preferences' were renamed to 'System Settings' in macOS Ventura. The string for Ventura and later is defined in another file.",
       "localizations" : {
         "de" : {
           "stringUnit" : {

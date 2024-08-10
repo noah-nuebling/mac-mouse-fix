@@ -58,7 +58,7 @@ AuthorizeAccessibilityView *_accViewController;
     [super viewDidLoad];
     
     if (@available(macOS 13.0, *)) { } else {
-        self.openSettingsLink.stringValue = NSLocalizedString(@"accessibility.settings-link.pre-ventura", @"First draft: Open 'Security & Privacy' Preferences || Notes: The string for Ventura and later is defined in Interface Builder");
+        self.openSettingsLink.stringValue = NSLocalizedString(@"accessibility.settings-link.pre-ventura", @"First draft: Open 'Security & Privacy' Preferences || Notes: 'System Preferences' were renamed to 'System Settings' in macOS Ventura. The string for Ventura and later is defined in another file.");
     }
 }
 
