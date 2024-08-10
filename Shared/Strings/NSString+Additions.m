@@ -36,7 +36,9 @@
     
     return [[[firstChar capitalizedString] stringByAppendingString:rest] copy]; /// Why copy?
 }
-
+- (NSString *)stringByRemovingAllWhiteSpace {
+    return [self.attributed attributedStringByRemovingAllWhitespace].string;
+}
 - (NSString *)stringByTrimmingWhiteSpace {
     return [[[self attributed] attributedStringByTrimmingWhitespace] string];
 }

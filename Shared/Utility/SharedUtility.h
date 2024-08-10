@@ -22,6 +22,39 @@ NS_ASSUME_NONNULL_BEGIN
 ///     - Don't use `stringf(@"%s", some_c_string)`, it breaks for emojis and you can just use `@(some_c_string)` instead.
 #define stringf(format, ...) [NSString stringWithFormat:(format), ##__VA_ARGS__]
 
+
+/// Shorthand for Benchmarks
+/// Example usage:
+///     ```
+///     MFBenchmarkBegin(coolBench);
+///     <code to measure>
+///     DDLogDebug(@"%s", MFBenchmarkResult(coolBench));
+///     ```
+/// Example output:
+///     `MFBenchmark coolBench: 0.002750 ms - Average: 0.025277 ms (11 samples)`
+
+#define MFBenchmarkBegin(__benchmarkName) \
+    CFTimeInterval m_benchmarkTimestampStart_##__benchmarkName = CACurrentMediaTime();
+
+#define MFBenchmarkResult(__bn) \
+    ({ \
+        CFTimeInterval m_benchmarkTimestampEnd_##__bn = CACurrentMediaTime(); \
+        CFTimeInterval m_benchmarkDiff_##__bn = m_benchmarkTimestampEnd_##__bn - m_benchmarkTimestampStart_##__bn; \
+        \
+        static NSInteger m_benchmarkNOfSamples_##__bn = 0; \
+        static CFTimeInterval m_benchmarkAverage_##__bn = -1; \
+        m_benchmarkNOfSamples_##__bn += 1; \
+        if (m_benchmarkNOfSamples_##__bn == 1) { \
+            m_benchmarkAverage_##__bn = m_benchmarkDiff_##__bn; \
+        } else { \
+            m_benchmarkAverage_##__bn = (m_benchmarkDiff_##__bn/m_benchmarkNOfSamples_##__bn) + ((m_benchmarkAverage_##__bn/m_benchmarkNOfSamples_##__bn)*(m_benchmarkNOfSamples_##__bn-1)); \
+        } \
+        \
+        static char m_benchmarkResult_##__bn[512]; \
+        snprintf(m_benchmarkResult_##__bn, sizeof(m_benchmarkResult_##__bn), "MFBenchmark %s: %f ms - Average: %f ms (%ld samples)", #__bn, m_benchmarkDiff_##__bn*1000.0, m_benchmarkAverage_##__bn*1000.0, (long)m_benchmarkNOfSamples_##__bn); \
+        m_benchmarkResult_##__bn; \
+    })
+
 /// Check if ptr is objc object
 ///     Copied from https://opensource.apple.com/source/CF/CF-635/CFInternal.h
 #define CF_IS_TAGGED_OBJ(PTR)    ((uintptr_t)(PTR) & 0x1)

@@ -35,76 +35,180 @@
     return s;
 }
 
+- (NSAttributedString *)attributedStringByRemovingAllWhitespace {
+    
+    ///
+    /// Remove all whitespace and newline chars from the string
+    ///
+    
+    NSCharacterSet *whitespaceAndNewlineChars = NSCharacterSet.whitespaceAndNewlineCharacterSet;
+    
+    NSMutableAttributedString *s = self.mutableCopy;
+    NSRange searchRange = NSMakeRange(0, s.length);
+    
+    while (true) {
+        NSRange whitespace = [s.string rangeOfCharacterFromSet:whitespaceAndNewlineChars options:0 range:searchRange];
+        if (whitespace.location == NSNotFound) break;
+        [s deleteCharactersInRange:whitespace];
+        searchRange = NSMakeRange(whitespace.location, s.length - whitespace.location);
+        assert(searchRange.location + searchRange.length == s.length); /// End of the search range should always be the end of the string
+    }
+    
+    return s;
+}
+
 - (NSAttributedString *)attributedStringByTrimmingWhitespace {
     
     /// Deletes leading, trailing, and duplicate whitespace from a string.
+    ///     Also removes leading and trailling newlines (but not duplicate newlines)
     ///     "Trimming" should maybe be "stripping"? Trimming usually only refers to cutting off the leading and trailing.
+    ///     
+    ///     Performance:
+    ///     - I was somehow worrying about the performance of this but I used an MFBenchmark and it takes 0.003 ms on averate (3/1000 of a millisecond), so nothing to worry about.
+    
     
     /// Mutable copy
-    NSMutableAttributedString *s = self.mutableCopy;
+    NSMutableAttributedString *s = [self mutableCopy];
     
-    /// Declare chars to trim
-    NSCharacterSet *whitespaceChars = NSCharacterSet.whitespaceCharacterSet; /// I don't think this contains linebreaks? Not sure.
-    
-    /// Loop forwards
-    ///     Remove leading
-    
-    while (true) {
-        
-        /// Get next whitespace
-        NSRange whitespace = [s.string rangeOfCharacterFromSet:whitespaceChars];
-        
-        /// Remove whitespace if leading
-        ///     Break if no leading whitespace
-        if (whitespace.location == 0) {
-            [s deleteCharactersInRange: whitespace];
-        } else {
-            break;
-        }
+    /// Handle edge case
+    if (self.length == 0) {
+        return s;
     }
     
-    /// Loop backwards
-    ///     Remove trailing and duplicates
+    /// Declare chars to trim
+    NSCharacterSet *whitespaceChars = NSCharacterSet.whitespaceCharacterSet;
+    NSCharacterSet *whitespaceAndNewlineChars = NSCharacterSet.whitespaceAndNewlineCharacterSet;
     
-    NSRange lastWhitespace = NSMakeRange(NSNotFound, 0);
-    NSRange searchRange = NSMakeRange(0, s.length);
+    /// Count leading whitespace
+    NSInteger i = 0;
     while (true) {
         
-        /// Get next range
-        NSRange whitespace = [s.string rangeOfCharacterFromSet:whitespaceChars options:NSBackwardsSearch range:searchRange];
+        /// Break
+        if (i >= s.length) break;
+        
+        /// Get c
+        unichar c = [s.string characterAtIndex:i];
         
         /// Break
-        if (whitespace.location == NSNotFound) {
-            break;
+        BOOL isWhitespace = [whitespaceAndNewlineChars characterIsMember:c];
+        if (!isWhitespace) break;
+        
+        /// Increment
+        i++;
+    }
+    /// Remove leading whitespace
+    if (i > 0) {
+        [s deleteCharactersInRange:NSMakeRange(0, i)];
+    }
+    
+    if ((YES)) {
+        
+        ///
+        /// New implementation
+        ///
+        
+        /// Count trailing whitespace
+        i = s.length - 1;
+        while (true) {
+            
+            /// Break
+            if (i < 0) break;
+            
+            /// Get c
+            unichar c = [s.string characterAtIndex:i];
+            
+            /// Break
+            BOOL isWhitespace = [whitespaceAndNewlineChars characterIsMember:c];
+            if (!isWhitespace) break;
+            
+            /// Decrement
+            i--;
+        }
+        /// Remove trailling whitespace
+        if (i < s.length - 1) {
+            NSInteger nOfTraillingWhitespaces = (s.length - 1) - i; /// We started i at s.length-1, and decremented it for every whitespace char we found.
+            NSRange trailingWSRange = NSMakeRange(s.length - nOfTraillingWhitespaces, nOfTraillingWhitespaces);
+            assert(trailingWSRange.location + trailingWSRange.length == s.length); /// The range should end at the end of the string.
+            [s deleteCharactersInRange:trailingWSRange];
         }
         
-        /// Delete things
-        
-        BOOL deletedWhitespace = YES;
-        
-        if (NSMaxRange(whitespace) - 1 == s.length - 1) {
+        /// Remove duplicates
+        ///     Note how we're using `whitespaceChars` here not `whitespaceAndNewlineChars`. Since we don't want to remove double linebreaks.
+        ///     This
+        NSInteger i = 0;
+        while (true) {
             
-            /// Delete trailing
-            [s deleteCharactersInRange:whitespace];
+            /// Break
+            ///     Only continue if there are at least two chars left in the string that we haven't looked at
+            BOOL cIsBeforeLastChar = i < s.length - 1;
+            if (!cIsBeforeLastChar) break;
             
-        } else if (NSMaxRange(whitespace) == lastWhitespace.location) {
-            
-            /// Delete consecutive
-            [s deleteCharactersInRange:whitespace];
-            
-        } else {
-            deletedWhitespace = NO;
+            /// Check `str[i]` isWhitespace?
+            unichar c = [s.string characterAtIndex:i];
+            BOOL cIsWhitespace = [whitespaceChars characterIsMember:c];
+            if (cIsWhitespace) {
+                
+                /// Check `str[i+1]` isWhitespace?
+                unichar d = [s.string characterAtIndex:i+1];
+                BOOL dIsWhitespace = [whitespaceChars characterIsMember:d];
+                if (dIsWhitespace) {
+                    /// Found duplicate whitespace - delete the first one!
+                    [s deleteCharactersInRange:NSMakeRange(i, 1)];
+                } else {
+                    /// Found non-duplicate whitespace
+                    i++;
+                }
+            } else {
+                /// Found non-whitespace
+                i++;
+            }
         }
         
-        /// Update search range
-        ///     This makes the new search range go up to, but not include, the whitespace char we just processed
-        searchRange = NSMakeRange(searchRange.location, whitespace.location);
+    } else { /// If NO
         
-        /// Update last
-        if (!deletedWhitespace) {
-            lastWhitespace = whitespace;
-        } else {
-            lastWhitespace.location -= 1;
+        /// Old backwards looping implementation
+        ///     (Might be more efficient, since it does duplicate removal and removal of trailing chars in one, but it's harder to read, and doesn't let us apply different character sets for trailing removal vs duplicate removal)
+        
+        NSRange lastWhitespace = NSMakeRange(NSNotFound, 0);
+        NSRange searchRange = NSMakeRange(0, s.length);
+        while (true) {
+            
+            /// Get next range
+            NSRange whitespace = [s.string rangeOfCharacterFromSet:whitespaceChars options:NSBackwardsSearch range:searchRange];
+            
+            /// Break
+            if (whitespace.location == NSNotFound) {
+                break;
+            }
+            
+            /// Delete things
+            
+            BOOL deletedWhitespace = YES;
+            
+            if (NSMaxRange(whitespace) - 1 == s.length - 1) {
+                
+                /// Delete trailing
+                [s deleteCharactersInRange:whitespace];
+                
+            } else if (NSMaxRange(whitespace) == lastWhitespace.location) {
+                
+                /// Delete consecutive
+                [s deleteCharactersInRange:whitespace];
+                
+            } else {
+                deletedWhitespace = NO;
+            }
+            
+            /// Update search range
+            ///     This makes the new search range go up to, but not include, the whitespace char we just processed
+            searchRange = NSMakeRange(searchRange.location, whitespace.location);
+            
+            /// Update last
+            if (!deletedWhitespace) {
+                lastWhitespace = whitespace;
+            } else {
+                lastWhitespace.location -= 1;
+            }
         }
     }
     

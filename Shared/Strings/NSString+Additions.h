@@ -17,6 +17,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (MF_SWIFT_UNBRIDGED(NSString *))substringWithRegex:(MF_SWIFT_UNBRIDGED(NSString *))regex NS_REFINED_FOR_SWIFT;
 - (MF_SWIFT_UNBRIDGED(NSAttributedString *))attributed NS_REFINED_FOR_SWIFT;
 - (MF_SWIFT_UNBRIDGED(NSString *))firstCapitalized NS_REFINED_FOR_SWIFT;
+- (MF_SWIFT_UNBRIDGED(NSString *))stringByRemovingAllWhiteSpace NS_REFINED_FOR_SWIFT;
 - (MF_SWIFT_UNBRIDGED(NSString *))stringByTrimmingWhiteSpace NS_REFINED_FOR_SWIFT;
 - (MF_SWIFT_UNBRIDGED(NSString *))stringByAddingIndent:(NSInteger)indent NS_REFINED_FOR_SWIFT;
 - (MF_SWIFT_UNBRIDGED(NSString *))stringByAddingIndent:(NSInteger)indent withCharacter:(MF_SWIFT_UNBRIDGED(NSString *))indentCharacter NS_REFINED_FOR_SWIFT;

@@ -897,8 +897,8 @@
             filePath = "Shared/Strings/NSAttributedString+Additions.m"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "345"
-            endingLineNumber = "345"
+            startingLineNumber = "449"
+            endingLineNumber = "449"
             landmarkName = "-sizeAtMaxWidth:"
             landmarkType = "7">
          </BreakpointContent>

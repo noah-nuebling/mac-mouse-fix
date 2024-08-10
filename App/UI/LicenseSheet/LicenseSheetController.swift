@@ -152,7 +152,7 @@ import Cocoa
     func controlTextDidChange(_ obj: Notification) {
         
         /// Trim whitespace
-        licenseField.stringValue = (licenseField.stringValue as NSString).stringByTrimmingWhiteSpace() as String
+        licenseField.stringValue = (licenseField.stringValue as NSString).stringByRemovingAllWhiteSpace() as String
         
         /// Update UI
         updateUIToLicenseField()

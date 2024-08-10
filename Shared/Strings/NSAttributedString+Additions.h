@@ -19,6 +19,7 @@ NS_ASSUME_NONNULL_BEGIN
 void assignAttributedStringKeepingBase(NSAttributedString *_Nonnull *_Nonnull assignee, NSAttributedString *newValue);
 
 - (NSAttributedString *)attributedStringByCapitalizingFirst;
+- (NSAttributedString *)attributedStringByRemovingAllWhitespace;
 - (NSAttributedString *)attributedStringByTrimmingWhitespace;
 
 - (NSAttributedString *)attributedStringByAppending:(NSAttributedString *)string;

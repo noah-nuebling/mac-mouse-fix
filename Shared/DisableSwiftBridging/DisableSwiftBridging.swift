@@ -34,6 +34,9 @@ extension NSString {
     func firstCaptialized() -> NSString {
         return __firstCapitalized() as! NSString
     }
+    func stringByRemovingAllWhiteSpace() -> NSString {
+        return __stringByRemovingAllWhiteSpace() as! NSString
+    }
     func stringByTrimmingWhiteSpace() -> NSString {
         return __stringByTrimmingWhiteSpace() as! NSString
     }
