@@ -50,7 +50,7 @@
       }
     },
     "IK8-Rj-beO.title" : {
-      "comment" : "Class = \"NSButtonCell\"; title = \"<Activate License>\"; ObjectID = \"IK8-Rj-beO\";",
+      "comment" : "Class = \"NSButtonCell\"; title = \"<Activate License>\"; ObjectID = \"IK8-Rj-beO\"; Note = \"NOTE: This is a placeholder string, the real string is found in the strings file called \\\"Localizable\\\"\";",
       "extractionState" : "extracted_with_value",
       "localizations" : {
         "de" : {

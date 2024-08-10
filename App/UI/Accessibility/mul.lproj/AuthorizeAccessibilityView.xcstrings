@@ -194,7 +194,7 @@
       }
     },
     "72q-sS-xMS.title" : {
-      "comment" : "Class = \"NSTextFieldCell\"; title = \"1.\"; ObjectID = \"72q-sS-xMS\";",
+      "comment" : "Class = \"NSTextFieldCell\"; title = \"1.\"; ObjectID = \"72q-sS-xMS\"; Note = \"NOTE: This is the prefix for the *first* list item, in the list of steps that users can take to 'Grant Accessibility Access to Mac Mouse Fix'.\";",
       "extractionState" : "extracted_with_value",
       "localizations" : {
         "de" : {
@@ -338,7 +338,7 @@
       }
     },
     "RIR-VN-l6s.title" : {
-      "comment" : "Class = \"NSTextFieldCell\"; title = \"2.\"; ObjectID = \"RIR-VN-l6s\";",
+      "comment" : "Class = \"NSTextFieldCell\"; title = \"2.\"; ObjectID = \"RIR-VN-l6s\"; Note = \"NOTE: This is the prefix for the *second* list item, in the list of steps that users can take to 'Grant Accessibility Access to Mac Mouse Fix'.\";",
       "extractionState" : "extracted_with_value",
       "localizations" : {
         "de" : {

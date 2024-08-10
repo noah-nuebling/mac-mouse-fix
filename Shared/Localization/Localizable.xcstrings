@@ -2,7 +2,7 @@
   "sourceLanguage" : "en",
   "strings" : {
     "accessibility.settings-link.pre-ventura" : {
-      "comment" : "First draft: Open 'Security & Privacy' Preferences || Notes: 'System Preferences' were renamed to 'System Settings' in macOS Ventura. The string for Ventura and later is defined in another file.",
+      "comment" : "First draft: Open 'Security & Privacy' Preferences || Note: 'System Preferences' were renamed to 'System Settings' in macOS Ventura. The string for Ventura and later is defined in another file. Note 2: This is one of the steps recommended to the user to 'Grant Accessibility Access to Mac Mouse Fix'. All the related strings have keys that start with 'accessiblity.'",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -49,7 +49,7 @@
       }
     },
     "already-using-defaults-toast.3" : {
-      "comment" : "First draft: You're **already using** the default setting for mice with **3 buttons**",
+      "comment" : "First draft: You're **already using** the default setting for mice with **3 buttons** || Note: This text is displayed in a notification after the user tries to load the default settings for mice with 3 buttons on the Buttons Tab.",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -1454,7 +1454,7 @@
       }
     },
     "button-string.middle" : {
-      "comment" : "First draft: Middle Button",
+      "comment" : "First draft: Middle Button || Note: This is capitalized in English since we use 'title case' there. In your language, 'title case' might not be a thing, and you might *not* want to capitalize this. If this string appears at the start of a line, it will be capitalized programmatically.",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -1974,7 +1974,7 @@
       "shouldTranslate" : false
     },
     "capture-toast.buttons.captured.body" : {
-      "comment" : "First draft - One: %@ is now captured by Mac Mouse Fix. || First draft - Other: %@ are now captured by Mac Mouse Fix. || Note: The core idea that we want to convey here is that, from now on, the button is being 'intercepted' by Mac Mouse Fix. We used the word 'capture' instead of 'intercept' since it sounds friendlier in English. In your language, you might want to use something closer to 'intercept'.",
+      "comment" : "Note: This is a 'pluralizable' string, which means it has different versions depending on how many buttons the string is talking about. || First draft - One: %@ is now captured by Mac Mouse Fix. || First draft - Other: %@ are now captured by Mac Mouse Fix. || Note: The core idea that we want to convey here is that, from now on, the button is being 'intercepted' by Mac Mouse Fix. We used the word 'capture' instead of 'intercept' since it sounds friendlier in English. In your language, you might want to use something closer to 'intercept'.",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -2186,7 +2186,7 @@
       }
     },
     "capture-toast.buttons.captured.hint" : {
-      "comment" : "First draft - One: Other apps can't see the button anymore. || First draft - Other: Other apps can't see these buttons anymore.",
+      "comment" : "Note: This is a 'pluralizable' string || First draft - One: Other apps can't see the button anymore. || First draft - Other: Other apps can't see these buttons anymore.",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -2463,7 +2463,7 @@
       }
     },
     "capture-toast.buttons.uncaptured.body" : {
-      "comment" : "First draft - One: %@ is no longer captured by Mac Mouse Fix. || First draft - Other: %@ are no longer captured by Mac Mouse Fix.",
+      "comment" : "Note: This is a 'pluralizable' string || First draft - One: %@ is no longer captured by Mac Mouse Fix. || First draft - Other: %@ are no longer captured by Mac Mouse Fix.",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -2675,7 +2675,7 @@
       }
     },
     "capture-toast.buttons.uncaptured.hint" : {
-      "comment" : "First draft - One: The button now works as if Mac Mouse Fix was disabled. || First draft - Other: These buttons now work as if Mac Mouse Fix was disabled.",
+      "comment" : "Note: This is a 'pluralizable' string || First draft - One: The button now works as if Mac Mouse Fix was disabled. || First draft - Other: These buttons now work as if Mac Mouse Fix was disabled.",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -3357,7 +3357,7 @@
       }
     },
     "effect.app-expose" : {
-      "comment" : "First draft: Application Windows || Note: Under macOS Sonoma, this feature is called 'App Exposé' in Trackpad settings, but 'Application Windows' in Keyboard Shortcut settings and all other places I found.",
+      "comment" : "First draft: Application Windows || Note: Under macOS Sonoma, this feature is called 'App Exposé' in Trackpad settings, but 'Application Windows' in Keyboard Shortcut settings, and other places I found. I also saw 'Show all windows of the front app' and 'Show all open windows for the current app' in Apple's documentation. I went with 'Application Windows' because it's short and 'Exposé' felt like like an outdated term. If you have to make a similar decision, it's up to your own best judgement.",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -3451,7 +3451,7 @@
       }
     },
     "effect.apple-keys-submenu" : {
-      "comment" : "First draft:  Exclusive Keys",
+      "comment" : "First draft:  Exclusive Keys || Note: This is the title for a hidden submenu that lets you remap your buttons to keyboard keys that only appear on Apple Keyboards such as the 'Brightness Up' or 'Do Not Disturb' keys. ",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -4861,7 +4861,7 @@
       }
     },
     "enable-timeout-toast" : {
-      "comment" : "First draft: If you have **problems enabling** the app, click&nbsp;[here](https://github.com/noah-nuebling/mac-mouse-fix/discussions/861).",
+      "comment" : "First draft: If you have **problems enabling** the app, click&nbsp;[here](https://github.com/noah-nuebling/mac-mouse-fix/discussions/861). || Note: The nbsp part inserts a non-breaking-space character, which prevents the last word from being orphaned on the last line. See HTML Character Entities.",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -6319,7 +6319,7 @@
       }
     },
     "precise-scrolling-hint" : {
-      "comment" : "First draft: Scroll precisely, even without a keyboard modifier,\nby moving the scroll wheel *slowly* || Note: The line break is there so the layout of the Scroll tab doesn't become too wide which looks weird. You can set it to your own taste. || As a guideline: If text in your language is typically around 1.5x longer than English, then make the lines around 1.5x longer than English.",
+      "comment" : "First draft: Scroll precisely, even without a keyboard modifier,\nby moving the scroll wheel *slowly* || Note: The line break is there so the layout of the Scroll tab doesn't become too wide which looks weird. You can set the linebreak to your own taste. || Hint: if text in your language is typically around X times longer than English, then the lines here probably should not be much longer than X times the English version.",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -6648,7 +6648,7 @@
       }
     },
     "restore-default-buttons-popover.body" : {
-      "comment" : "First draft:  **Click here** to load the recommended settings\nfor your mouse (**%@**) || Note: The \n linebreak is so the popover doesn't become too wide. You can set it to your taste. || As a guideline: If text in your language is typically around 1.5x longer than English, then make the lines around 1.5x longer than English.",
+      "comment" : "First draft:  **Click here** to load the recommended settings\nfor your mouse (**%@**) || Note: The \n linebreak is so the popover doesn't become too wide. You can set the linebreak to your own taste. || Hint: if text in your language is typically around X times longer than English, then the lines here probably should not be much longer than X times the English version.",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -6695,7 +6695,7 @@
       }
     },
     "revive-toast" : {
-      "comment" : "First draft: **Enabled** Mac Mouse Fix for %1@\nIt had been disabled from the Menu Bar %2@ || Note: %1@ will be replaced by the list of enabled features, %2@ will be replaced by the menubar icon || Note: This feature is for quickly activating/deactivating features of Mac Mouse Fix when using incompatible apps. In your language, it may make sense to use a different translation for 'enable' in this context than for the 'Enable Mac Mouse Fix' switch.",
+      "comment" : "First draft: **Enabled** Mac Mouse Fix for %1@\nIt had been disabled from the Menu Bar %2@ || Note: %1@ will be replaced by the list of enabled features, %2@ will be replaced by the menubar icon || Note: The described feature lets you disable Mac Mouse Fix's effect on your mouse-buttons/scroll-wheel directly from the menubar. This is to help people use apps that are incompatible with Mac Mouse Fix. In your language, it may make sense to use a different translation for 'enable' in this context than in the context of the 'Enable Mac Mouse Fix' switch. It's up to your own best judgement.",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -9068,7 +9068,7 @@
       }
     },
     "trigger.click.1" : {
-      "comment" : "First draft: Click %@ || Note: %@ will be a button name || Example where %@ is 'Button 5': ⌥⌘ Double Click Button 4 + Click Button 5 || Note: Most of the substrings that are used to build the Action Table Trigger Strings (this is one of those substrings) are capitalized in English because it's common to use 'title case' there. In your language, 'title case' might not be a thing, and so you might not want to capitalize these strings. The first letter of the trigger string will be programmatically capitalized in any language.",
+      "comment" : "First draft: Click %@ || Note: %@ will be replaced by a button name (or by nothing, if the button name can be inferred from context.) || Example where %@ is 'Button 5': ⌥⌘ Double Click Button 4 + Click Button 5 || Note: Most of the substrings that are used to build the Action Table Trigger Strings (this is one of those substrings) are capitalized in English because it's common to use 'title case' there. In your language, 'title case' might not be a thing, and so you might not want to capitalize these strings. The first letter of the trigger string will be programmatically capitalized in any language.",
       "localizations" : {
         "de" : {
           "stringUnit" : {

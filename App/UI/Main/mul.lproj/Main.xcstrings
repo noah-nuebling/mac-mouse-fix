@@ -869,7 +869,7 @@
       }
     },
     "AHn-zX-g4d.title" : {
-      "comment" : "Class = \"NSTextFieldCell\"; title = \"Move between pages in Safari by scrolling horizontally, and more\"; ObjectID = \"AHn-zX-g4d\"; Note = \"Scrolling > Trackpad Simulation Toggle > Hint || NOTE: this text will automaticlly linebreak to adapt to the width of the Scrolling Tab. You don't need to set linebreaks to make it look correct.\";",
+      "comment" : "Class = \"NSTextFieldCell\"; title = \"Move between pages in Safari by scrolling horizontally, and more\"; ObjectID = \"AHn-zX-g4d\"; Note = \"Scrolling > Trackpad Simulation Toggle > Hint || NOTE: this text will automaticlly linebreak to adapt to the width of the Scrolling Tab. You don't need to set linebreaks to make it look correct. || NOTE 2: There are multiple screenshots for this text. If you're using Xcode, click the arrows in the QuickLook window to see them.\";",
       "extractionState" : "extracted_with_value",
       "localizations" : {
         "de" : {
@@ -917,7 +917,7 @@
       }
     },
     "AqN-zN-yDS.title" : {
-      "comment" : "Class = \"NSTextFieldCell\"; title = \"Lets you quickly turn off or on features like\\nsmooth scrolling\"; ObjectID = \"AqN-zN-yDS\"; Note = \"General > Show in Menu Bar Toggle > Hint || NOTE: There's a linebreak here to prevent the General Tab from becoming too wide, which looks weird. You can set the linebreak to your own taste || As a guideline: If text in your language is typically around 1.5x longer than English, then make the lines around 1.5x longer than English.\";",
+      "comment" : "Class = \"NSTextFieldCell\"; title = \"Lets you quickly turn off or on features like\\nsmooth scrolling\"; ObjectID = \"AqN-zN-yDS\"; Note = \"General > Show in Menu Bar Toggle > Hint || NOTE: There's a linebreak here to prevent the General Tab from becoming too wide, which looks weird. You can set the linebreak to your own taste. || Hint: if text in your language is typically around X times longer than English, then the lines here probably should not be much longer than X times the English version.\";",
       "extractionState" : "extracted_with_value",
       "localizations" : {
         "de" : {
@@ -1157,7 +1157,7 @@
       }
     },
     "bgk-wr-o8T.title" : {
-      "comment" : "Class = \"NSButtonCell\"; title = \"Don't remind me again\"; ObjectID = \"bgk-wr-o8T\"; Note = \"Restore Defaults Popover > Don't Remind Toggle > Label || Note: This is displayed under the `restore-default-buttons-popover.body` text from Localizable.xcstrings\";",
+      "comment" : "Class = \"NSButtonCell\"; title = \"Don't remind me again\"; ObjectID = \"bgk-wr-o8T\"; Note = \"Restore Defaults Popover > Don't Remind Toggle > Label || NOTE: This is the label for a checkbox letting the user tell the app not to be reminded again to load the recommended button settings for their mouse. || NOTE 2: This text is displayed below the text with the key `restore-default-buttons-popover.body`, which is defined in Localizable.xcstrings\";",
       "extractionState" : "extracted_with_value",
       "localizations" : {
         "de" : {
@@ -4287,7 +4287,7 @@
       "shouldTranslate" : false
     },
     "SaY-fF-d1s.title" : {
-      "comment" : "Class = \"NSTextFieldCell\"; title = \"You'll be notified of updates when you open\\nthis window\"; ObjectID = \"SaY-fF-d1s\"; Note = \"General > Check for Updates Toggle > Hint || NOTE: There's a linebreak here to prevent the General Tab from becoming too wide, which looks weird. You can set the linebreak to your own taste || As a guideline: If text in your language is typically around 1.5x longer than English, then make the lines around 1.5x longer than English.\";",
+      "comment" : "Class = \"NSTextFieldCell\"; title = \"You'll be notified of updates when you open\\nthis window\"; ObjectID = \"SaY-fF-d1s\"; Note = \"General > Check for Updates Toggle > Hint || NOTE: There's a linebreak here to prevent the General Tab from becoming too wide, which looks weird. You can set the linebreak to your own taste. || Hint: if text in your language is typically around X times longer than English, then the lines here probably should not be much longer than X times the English version.\";",
       "extractionState" : "extracted_with_value",
       "localizations" : {
         "de" : {
