@@ -404,7 +404,7 @@ smooth scrolling</string>
                                                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                             <attributedString key="userComments">
                                                                 <fragment>
-                                                                    <string key="content">General &gt; Show in Menu Bar Toggle &gt; Hint || NOTE: There's a linebreak here to prevent the General Tab from becoming too wide, which looks weird. You can set the linebreak to your own taste || As a guideline: If text in your language is typically around 1.5x longer than English, then make the lines around 1.5x longer than English.</string>
+                                                                    <string key="content">General &gt; Show in Menu Bar Toggle &gt; Hint || NOTE: There's a linebreak here to prevent the General Tab from becoming too wide, which looks weird. You can set the linebreak to your own taste. || Hint: if text in your language is typically around X times longer than English, then the lines here probably should not be much longer than X times the English version.</string>
                                                                 </fragment>
                                                             </attributedString>
                                                         </textFieldCell>
@@ -469,7 +469,7 @@ this window</string>
                                                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                                     <attributedString key="userComments">
                                                                         <fragment>
-                                                                            <string key="content">General &gt; Check for Updates Toggle &gt; Hint || NOTE: There's a linebreak here to prevent the General Tab from becoming too wide, which looks weird. You can set the linebreak to your own taste || As a guideline: If text in your language is typically around 1.5x longer than English, then make the lines around 1.5x longer than English.</string>
+                                                                            <string key="content">General &gt; Check for Updates Toggle &gt; Hint || NOTE: There's a linebreak here to prevent the General Tab from becoming too wide, which looks weird. You can set the linebreak to your own taste. || Hint: if text in your language is typically around X times longer than English, then the lines here probably should not be much longer than X times the English version.</string>
                                                                         </fragment>
                                                                     </attributedString>
                                                                 </textFieldCell>
@@ -947,7 +947,7 @@ You can also *Double Click*, *Click and Drag* and [more]().</string>
                                 <font key="font" metaFont="system"/>
                                 <attributedString key="userComments">
                                     <fragment>
-                                        <string key="content">Restore Defaults Popover &gt; Don't Remind Toggle &gt; Label || Note: This is displayed under the `restore-default-buttons-popover.body` text from Localizable.xcstrings</string>
+                                        <string key="content">Restore Defaults Popover &gt; Don't Remind Toggle &gt; Label || NOTE: This is the label for a checkbox letting the user tell the app not to be reminded again to load the recommended button settings for their mouse. || NOTE 2: This text is displayed below the text with the key `restore-default-buttons-popover.body`, which is defined in Localizable.xcstrings</string>
                                     </fragment>
                                 </attributedString>
                             </buttonCell>
@@ -1074,7 +1074,7 @@ your **Logitech M720 Triathlon**.&gt;</string>
                                                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                             <attributedString key="userComments">
                                                                 <fragment>
-                                                                    <string key="content">Scrolling &gt; Trackpad Simulation Toggle &gt; Hint || NOTE: this text will automaticlly linebreak to adapt to the width of the Scrolling Tab. You don't need to set linebreaks to make it look correct.</string>
+                                                                    <string key="content">Scrolling &gt; Trackpad Simulation Toggle &gt; Hint || NOTE: this text will automaticlly linebreak to adapt to the width of the Scrolling Tab. You don't need to set linebreaks to make it look correct. || NOTE 2: There are multiple screenshots for this text. If you're using Xcode, click the arrows in the QuickLook window to see them.</string>
                                                                 </fragment>
                                                             </attributedString>
                                                         </textFieldCell>

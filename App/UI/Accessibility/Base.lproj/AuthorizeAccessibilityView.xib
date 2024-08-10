@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="23086.1" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="23089" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="23086.1"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="23089"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -43,6 +43,11 @@
                         <font key="font" metaFont="system"/>
                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                        <attributedString key="userComments">
+                            <fragment>
+                                <string key="content">NOTE: This is the prefix for the *second* list item, in the list of steps that users can take to 'Grant Accessibility Access to Mac Mouse Fix'.</string>
+                            </fragment>
+                        </attributedString>
                     </textFieldCell>
                 </textField>
                 <textField focusRingType="none" horizontalHuggingPriority="1000" verticalHuggingPriority="750" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="9kK-bF-abK">
@@ -81,6 +86,11 @@
                         <font key="font" metaFont="system"/>
                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                        <attributedString key="userComments">
+                            <fragment>
+                                <string key="content">NOTE: This is the prefix for the *first* list item, in the list of steps that users can take to 'Grant Accessibility Access to Mac Mouse Fix'.</string>
+                            </fragment>
+                        </attributedString>
                     </textFieldCell>
                 </textField>
                 <customView horizontalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="qKg-sx-Ymx">

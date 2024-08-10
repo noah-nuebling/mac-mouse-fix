@@ -182,7 +182,7 @@ static NSArray *getOneShotEffectsTable(NSDictionary *rowDict) {
                   kMFActionDictKeyType: kMFActionDictTypeSymbolicHotkey,
                   kMFActionDictKeyGenericVariant: @(kMFSHMissionControl)
         }}, /// I removed actions that are redundant to the Click and Drag for Spaces & Mission Control feature in 3.0.0 Beta 6 but  people complained https://github.com/noah-nuebling/mac-mouse-fix/issues?q=is%3Aissue+label%3A%223.0.0+Beta+6+Removed+Actions%22
-        @{@"ui": NSLocalizedString(@"effect.app-expose", @"First draft: Application Windows || Note: Under macOS Sonoma, this feature is called 'App Exposé' in Trackpad settings, but 'Application Windows' in Keyboard Shortcut settings and all other places I found."), @"tool": NSLocalizedString(@"effect.app-expose.hint", @"First draft: Show all windows of the active app"), @"dict": @{
+        @{@"ui": NSLocalizedString(@"effect.app-expose", @"First draft: Application Windows || Note: Under macOS Sonoma, this feature is called 'App Exposé' in Trackpad settings, but 'Application Windows' in Keyboard Shortcut settings, and other places I found. I also saw 'Show all windows of the front app' and 'Show all open windows for the current app' in Apple's documentation. I went with 'Application Windows' because it's short and 'Exposé' felt like like an outdated term. If you have to make a similar decision, it's up to your own best judgement."), @"tool": NSLocalizedString(@"effect.app-expose.hint", @"First draft: Show all windows of the active app"), @"dict": @{
                   kMFActionDictKeyType: kMFActionDictTypeSymbolicHotkey,
                   kMFActionDictKeyGenericVariant: @(kMFSHAppExpose)
         }},
@@ -316,7 +316,7 @@ static NSArray *getOneShotEffectsTable(NSDictionary *rowDict) {
     }
     
     [oneShotEffectsTable insertObject:@{
-        @"ui": NSLocalizedString(@"effect.apple-keys-submenu", @"First draft:  Exclusive Keys"),
+        @"ui": NSLocalizedString(@"effect.apple-keys-submenu", @"First draft:  Exclusive Keys || Note: This is the title for a hidden submenu that lets you remap your buttons to keyboard keys that only appear on Apple Keyboards such as the 'Brightness Up' or 'Do Not Disturb' keys. "),
         @"tool": NSLocalizedString(@"effect.apple-keys-submenu.hint", @"First draft: Choose keys that are only available on Apple keyboards"),
         @"alternate": @YES,
         @"submenu": submenu
@@ -738,7 +738,7 @@ static NSString *effectNameForRowDict(NSDictionary * _Nonnull rowDict) {
         /// Declare map
         
         NSDictionary *map = @{
-            @[@(1), @"click"]:  NSLocalizedString(@"trigger.click.1",   @"First draft: Click %@ || Note: %@ will be a button name || Example where %@ is 'Button 5': ⌥⌘ Double Click Button 4 + Click Button 5 || Note: Most of the substrings that are used to build the Action Table Trigger Strings (this is one of those substrings) are capitalized in English because it's common to use 'title case' there. In your language, 'title case' might not be a thing, and so you might not want to capitalize these strings. The first letter of the trigger string will be programmatically capitalized in any language."),
+            @[@(1), @"click"]:  NSLocalizedString(@"trigger.click.1",   @"First draft: Click %@ || Note: %@ will be replaced by a button name (or by nothing, if the button name can be inferred from context.) || Example where %@ is 'Button 5': ⌥⌘ Double Click Button 4 + Click Button 5 || Note: Most of the substrings that are used to build the Action Table Trigger Strings (this is one of those substrings) are capitalized in English because it's common to use 'title case' there. In your language, 'title case' might not be a thing, and so you might not want to capitalize these strings. The first letter of the trigger string will be programmatically capitalized in any language."),
             
             @[@(2), @"click"]:  NSLocalizedString(@"trigger.click.2",   @"First draft: Double Click %@"),
             @[@(3), @"click"]:  NSLocalizedString(@"trigger.click.3",   @"First draft: Triple Click %@"),

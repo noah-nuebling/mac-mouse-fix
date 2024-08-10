@@ -153,13 +153,13 @@
         },
         "en" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "Version %@"
           }
         },
         "ko" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "app-version"
           }
         },
@@ -171,19 +171,19 @@
         },
         "zh-Hans" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "app-version"
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "app-version"
           }
         },
         "zh-HK" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "app-version"
           }
         }
@@ -191,7 +191,7 @@
     },
     "apple-key-fallback.backward" : {
       "comment" : "First draft: <Rewind key>",
-      "extractionState" : "stale",
+      "extractionState" : "manual",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -235,11 +235,12 @@
             "value" : "􀊉〔回帶鍵〕"
           }
         }
-      }
+      },
+      "shouldTranslate" : false
     },
     "apple-key-fallback.capslock" : {
       "comment" : "First draft: ⇪",
-      "extractionState" : "stale",
+      "extractionState" : "manual",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -283,11 +284,12 @@
             "value" : "⇪"
           }
         }
-      }
+      },
+      "shouldTranslate" : false
     },
     "apple-key-fallback.forward" : {
       "comment" : "First draft: <Fast-Forward key>",
-      "extractionState" : "stale",
+      "extractionState" : "manual",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -331,11 +333,12 @@
             "value" : "􀊋〔快轉鍵〕"
           }
         }
-      }
+      },
+      "shouldTranslate" : false
     },
     "apple-key-fallback.globe" : {
       "comment" : "First draft: <Emoji Picker key>",
-      "extractionState" : "stale",
+      "extractionState" : "manual",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -379,11 +382,12 @@
             "value" : "􀆪〔表情符號選擇器鍵〕"
           }
         }
-      }
+      },
+      "shouldTranslate" : false
     },
     "apple-key-fallback.light.max" : {
       "comment" : "First draft: <Increase Keyboard Brightness key>",
-      "extractionState" : "stale",
+      "extractionState" : "manual",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -427,11 +431,12 @@
             "value" : "􀇮〔調高鍵盤亮度鍵〕"
           }
         }
-      }
+      },
+      "shouldTranslate" : false
     },
     "apple-key-fallback.light.min" : {
       "comment" : "First draft: <Decrease Keyboard Brightness key>",
-      "extractionState" : "stale",
+      "extractionState" : "manual",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -475,11 +480,12 @@
             "value" : "􀇭〔調低鍵盤亮度鍵〕"
           }
         }
-      }
+      },
+      "shouldTranslate" : false
     },
     "apple-key-fallback.magnifyingglass" : {
       "comment" : "First draft: <Spotlight key>",
-      "extractionState" : "stale",
+      "extractionState" : "manual",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -523,11 +529,12 @@
             "value" : "􀊫〔Spotlight鍵〕"
           }
         }
-      }
+      },
+      "shouldTranslate" : false
     },
     "apple-key-fallback.mic" : {
       "comment" : "First draft: <Dictation key>",
-      "extractionState" : "stale",
+      "extractionState" : "manual",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -571,11 +578,12 @@
             "value" : "􀊰〔聽寫鍵〕"
           }
         }
-      }
+      },
+      "shouldTranslate" : false
     },
     "apple-key-fallback.moon" : {
       "comment" : "First draft: <Do Not Disturb key>",
-      "extractionState" : "stale",
+      "extractionState" : "manual",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -619,11 +627,12 @@
             "value" : "􀆹〔請勿打擾鍵〕"
           }
         }
-      }
+      },
+      "shouldTranslate" : false
     },
     "apple-key-fallback.playpause" : {
       "comment" : "First draft: <Play or Pause key>",
-      "extractionState" : "stale",
+      "extractionState" : "manual",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -667,11 +676,12 @@
             "value" : "􀊇〔播放／暫停鍵〕"
           }
         }
-      }
+      },
+      "shouldTranslate" : false
     },
     "apple-key-fallback.power" : {
       "comment" : "First draft: <Power key>",
-      "extractionState" : "stale",
+      "extractionState" : "manual",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -715,11 +725,12 @@
             "value" : "􀆨〔電源鍵〕"
           }
         }
-      }
+      },
+      "shouldTranslate" : false
     },
     "apple-key-fallback.rectangle.3.group" : {
       "comment" : "First draft: <Mission Control key>",
-      "extractionState" : "stale",
+      "extractionState" : "manual",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -763,11 +774,12 @@
             "value" : "􀇴〔指揮中心鍵〕"
           }
         }
-      }
+      },
+      "shouldTranslate" : false
     },
     "apple-key-fallback.speaker" : {
       "comment" : "First draft: <Mute key>",
-      "extractionState" : "stale",
+      "extractionState" : "manual",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -811,11 +823,12 @@
             "value" : "􀊠〔靜音鍵〕"
           }
         }
-      }
+      },
+      "shouldTranslate" : false
     },
     "apple-key-fallback.speaker.wave.1" : {
       "comment" : "First draft: <Decrease Volume key>",
-      "extractionState" : "stale",
+      "extractionState" : "manual",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -859,11 +872,12 @@
             "value" : "􀊤〔調低音量鍵〕"
           }
         }
-      }
+      },
+      "shouldTranslate" : false
     },
     "apple-key-fallback.speaker.wave.3" : {
       "comment" : "First draft: <Increase Volume key>",
-      "extractionState" : "stale",
+      "extractionState" : "manual",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -907,11 +921,12 @@
             "value" : "􀊨〔調高音量鍵〕"
           }
         }
-      }
+      },
+      "shouldTranslate" : false
     },
     "apple-key-fallback.square.grid.3x2" : {
       "comment" : "First draft: <Launchpad key>",
-      "extractionState" : "stale",
+      "extractionState" : "manual",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -955,11 +970,12 @@
             "value" : "􀇵〔啟動台鍵〕"
           }
         }
-      }
+      },
+      "shouldTranslate" : false
     },
     "apple-key-fallback.sun.max" : {
       "comment" : "First draft: <Increase Brightness key>",
-      "extractionState" : "stale",
+      "extractionState" : "manual",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -1003,11 +1019,12 @@
             "value" : "􀆭〔調高顯示器亮度鍵〕"
           }
         }
-      }
+      },
+      "shouldTranslate" : false
     },
     "apple-key-fallback.sun.min" : {
       "comment" : "First draft: <Decrease Brightness key> || Example usage: Works like pressing '<Decrease Brightness Key>' on an Apple keyboard. || Note: Unlike in the interface builder `.strings` files, in `Localizable.xcstrings`, <> doesn't mean that the text is unused. I think the usage of <> here is a little weird, so let me know if you have a better idea!",
-      "extractionState" : "stale",
+      "extractionState" : "manual",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -1051,11 +1068,12 @@
             "value" : "􀆫〔調低顯示器亮度鍵〕"
           }
         }
-      }
+      },
+      "shouldTranslate" : false
     },
     "apple-key-fallback.unknown-key" : {
       "comment" : "First draft: <Key without description>",
-      "extractionState" : "stale",
+      "extractionState" : "manual",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -1099,7 +1117,8 @@
             "value" : "〔沒有描述的按鍵〕"
           }
         }
-      }
+      },
+      "shouldTranslate" : false
     },
     "beta-alert.back" : {
       "comment" : "First draft: Cancel",
@@ -1855,7 +1874,8 @@
             "value" : "換一個五鍵或多鍵滑鼠來釋放Mac Mouse Fix的所有潛能"
           }
         }
-      }
+      },
+      "shouldTranslate" : false
     },
     "buy-mouse-alert.ok" : {
       "comment" : "First draft: OK",
@@ -1902,7 +1922,8 @@
             "value" : "好"
           }
         }
-      }
+      },
+      "shouldTranslate" : false
     },
     "buy-mouse-alert.title" : {
       "comment" : "First draft: Your mouse only has 3 buttons",
@@ -1949,7 +1970,8 @@
             "value" : "你的滑鼠只有三個按鈕"
           }
         }
-      }
+      },
+      "shouldTranslate" : false
     },
     "capture-toast.buttons.captured.body" : {
       "comment" : "First draft - One: %@ is now captured by Mac Mouse Fix. || First draft - Other: %@ are now captured by Mac Mouse Fix. || Note: The core idea that we want to convey here is that, from now on, the button is being 'intercepted' by Mac Mouse Fix. We used the word 'capture' instead of 'intercept' since it sounds friendlier in English. In your language, you might want to use something closer to 'intercept'.",

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="23086.1" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="23089" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="23086.1"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="23089"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -41,6 +41,9 @@
                         <string key="keyEquivalent" base64-UTF8="YES">
 DQ
 </string>
+                        <attributedString key="userComments">
+                            <fragment content="NOTE: This is a placeholder string, the real string is found in the strings file called &quot;Localizable&quot;"/>
+                        </attributedString>
                     </buttonCell>
                     <connections>
                         <action selector="activateLicense:" target="-2" id="rJK-MN-eWE"/>

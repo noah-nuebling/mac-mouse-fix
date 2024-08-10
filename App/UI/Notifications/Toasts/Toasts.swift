@@ -25,7 +25,7 @@ import Foundation
             /// - Why are we dispatching `k-is-disabled-toast` to the main thread by not this? (They are called from almost the same place)
             
             if let window = NSApp.mainWindow {
-                let rawMessage = NSLocalizedString("enable-timeout-toast", comment: "First draft: If you have **problems enabling** the app, click&nbsp;[here](https://github.com/noah-nuebling/mac-mouse-fix/discussions/861).")
+                let rawMessage = NSLocalizedString("enable-timeout-toast", comment: "First draft: If you have **problems enabling** the app, click&nbsp;[here](https://github.com/noah-nuebling/mac-mouse-fix/discussions/861). || Note: The nbsp part inserts a non-breaking-space character, which prevents the last word from being orphaned on the last line. See HTML Character Entities.")
                 ToastController.attachNotification(withMessage: NSMutableAttributedString(coolMarkdown: rawMessage)!, to: window, forDuration: 10.0)
                 
             }
@@ -53,7 +53,7 @@ import Foundation
             ToastController.attachNotification(withMessage: message, to: MainAppState.shared.window!, forDuration: kMFToastDurationAutomatic)
         },
         "k-already-using-defaults-toast.3": {
-            let messageRaw = NSLocalizedString("already-using-defaults-toast.3", comment: "First draft: You're **already using** the default setting for mice with **3 buttons**")
+            let messageRaw = NSLocalizedString("already-using-defaults-toast.3", comment: "First draft: You're **already using** the default setting for mice with **3 buttons** || Note: This text is displayed in a notification after the user tries to load the default settings for mice with 3 buttons on the Buttons Tab.")
             let message = NSAttributedString(coolMarkdown: messageRaw)!
             DispatchQueue.main.async {
                 ToastController.attachNotification(withMessage: message, to: MainAppState.shared.window!, forDuration: kMFToastDurationAutomatic)
@@ -108,7 +108,7 @@ import Foundation
         let revivedFeatures = UIStrings.naturalLanguageList(fromStringArray: revivedFeaturesList)
         
         /// Build message string
-        let messageRaw = String(format: NSLocalizedString("revive-toast", comment: "First draft: **Enabled** Mac Mouse Fix for %1@\nIt had been disabled from the Menu Bar %2@ || Note: %1@ will be replaced by the list of enabled features, %2@ will be replaced by the menubar icon || Note: This feature is for quickly activating/deactivating features of Mac Mouse Fix when using incompatible apps. In your language, it may make sense to use a different translation for 'enable' in this context than for the 'Enable Mac Mouse Fix' switch."), revivedFeatures, "%@")
+        let messageRaw = String(format: NSLocalizedString("revive-toast", comment: "First draft: **Enabled** Mac Mouse Fix for %1@\nIt had been disabled from the Menu Bar %2@ || Note: %1@ will be replaced by the list of enabled features, %2@ will be replaced by the menubar icon || Note: The described feature lets you disable Mac Mouse Fix's effect on your mouse-buttons/scroll-wheel directly from the menubar. This is to help people use apps that are incompatible with Mac Mouse Fix. In your language, it may make sense to use a different translation for 'enable' in this context than in the context of the 'Enable Mac Mouse Fix' switch. It's up to your own best judgement."), revivedFeatures, "%@")
         var message = NSAttributedString(coolMarkdown: messageRaw)!
         let symbolString = SFSymbolStrings.string(withSymbolName: "CoolMenuBarIcon", stringFallback: "<Mac Mouse Fix Menu Bar Item>", font: ToastController.defaultFont()) ///NSAttributedString(symbol: "CoolMenuBarIcon", hPadding: 0.0, vOffset: -6, fallback: "<Mac Mouse Fix Menu Bar Item>")
         message = NSAttributedString(attributedFormat: message, args: [symbolString])

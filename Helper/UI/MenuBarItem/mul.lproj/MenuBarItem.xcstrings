@@ -289,7 +289,8 @@
             "value" : "快速停用Mac Mouse Fix功能以便使用不相容的App"
           }
         }
-      }
+      },
+      "shouldTranslate" : false
     },
     "UrY-I2-S82.title" : {
       "comment" : "Class = \"NSTextFieldCell\"; title = \"Enable for...\"; ObjectID = \"UrY-I2-S82\";",
@@ -337,7 +338,8 @@
             "value" : "啟用⋯"
           }
         }
-      }
+      },
+      "shouldTranslate" : false
     }
   },
   "version" : "1.0"
