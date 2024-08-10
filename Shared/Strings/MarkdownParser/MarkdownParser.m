@@ -307,8 +307,9 @@ static NSAttributedString *attributedStringWithMarkdown(NSAttributedString *src,
                 
                 assert(did_enter); /// Leaf node
                 /// Explanation:
-                ///     We wrap unused placeholder strings in IB with `<angle brackets>`. This is parsed as a `CMARK_NODE_HTML_BLOCK`.
+                ///     We wrap unused placeholder strings in IB with `<angle brackets>`. This is parsed as a `CMARK_NODE_HTML_BLOCK`. (Or `CMARK_NODE_HTML_INLINE`)
                 ///     We attach these to dst to give users at least some context in case these placeholders make it through to the UI.
+                ///
                 dst = [dst attributedStringByAppending:@(cmark_node_get_literal(node)).attributed];
             },
             @(CMARK_NODE_CUSTOM_BLOCK): ^{
@@ -385,7 +386,13 @@ static NSAttributedString *attributedStringWithMarkdown(NSAttributedString *src,
             @(CMARK_NODE_HTML_INLINE): ^{       /// 🍁
                 
                 assert(did_enter); /// Leaf node
-                assert(false); /// Don't know how to handle
+                
+                /// Append literal
+                ///     Explanation: See `CMARK_NODE_HTML_BLOCK`
+                NSString *literal = @(cmark_node_get_literal(node));
+                if (literal != nil && literal.length > 0) {
+                    dst = [dst attributedStringByAppending:literal.attributed];
+                }
                 
             },
             @(CMARK_NODE_CUSTOM_INLINE): ^{
@@ -415,7 +422,6 @@ static NSAttributedString *attributedStringWithMarkdown(NSAttributedString *src,
                 }
             },
             @(CMARK_NODE_IMAGE): ^{             /// == `CMARK_NODE_LAST_INLINE`
-                
                 assert(false); /// Don't know how to handle
                 
             }
