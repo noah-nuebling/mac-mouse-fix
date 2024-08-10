@@ -42,6 +42,7 @@ These people spent a lot more than the standard price and treated me to an **Inc
 
 **August 2024**
 
+- 🇺🇸&nbsp;George&nbsp;Taylor
 - 🇺🇸&nbsp;Manuel&nbsp;Olguín&nbsp;Muñoz - "Absolutely fantastic little app!"
 - 🇩🇪&nbsp;Yaroslav&nbsp;Sokolov - "Thanks!"
 - 🇦🇹&nbsp;Christoph&nbsp;Frederik
