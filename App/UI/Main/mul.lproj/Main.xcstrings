@@ -153,7 +153,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Frag die Community & schau dir Guides an"
+            "value" : "Frag die Community oder schaue dir Guides an…"
           }
         },
         "en" : {
@@ -922,8 +922,8 @@
       "localizations" : {
         "de" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Lässt dich schnell Features wie\nflüssiges Scrollen an- und abschalten"
+            "state" : "translated",
+            "value" : "Lässt dich schnell Features wie \nflüssiges Scrollen an- und abschalten"
           }
         },
         "en" : {
@@ -971,7 +971,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Hauptmenü?? Was ist dies?"
+            "value" : "Hauptmenü"
           }
         },
         "en" : {
@@ -1981,7 +1981,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Bekomme Hilfe"
+            "value" : "Hilfe bekommen"
           }
         },
         "en" : {
