@@ -42,6 +42,7 @@ These people spent a lot more than the standard price and treated me to an **Inc
 
 **August 2024**
 
+- 🇺🇸&nbsp;Erulastiel - "tummy time"
 - 🇨🇦&nbsp;Novy
 - 🇺🇸&nbsp;Jason&nbsp;Currin
 - 🇺🇸&nbsp;Anthony&nbsp;Lanuza - "You've made it possible to use a mouse with all the options provided by a trackpad. Truly amazing. Thank you!"
