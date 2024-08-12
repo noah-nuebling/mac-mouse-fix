@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 60;
+	objectVersion = 70;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -424,8 +424,6 @@
 		4F0BDC792B446A3C00AE65C1 /* readme_template.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = readme_template.md; sourceTree = "<group>"; };
 		4F0BDC7B2B446A3C00AE65C1 /* acknowledgements_template.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = acknowledgements_template.md; sourceTree = "<group>"; };
 		4F0BDC7C2B446A3C00AE65C1 /* readme_template.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = readme_template.md; sourceTree = "<group>"; };
-		4F0BDC7F2B446A3C00AE65C1 /* Readme.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = Readme.md; sourceTree = "<group>"; };
-		4F0BDC802B446A3C00AE65C1 /* Acknowledgements.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = Acknowledgements.md; sourceTree = "<group>"; };
 		4F0BDC812B446A3C00AE65C1 /* MarkdownReadme.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = MarkdownReadme.md; sourceTree = "<group>"; };
 		4F0BDC832B446A3C00AE65C1 /* AppIconRound3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = AppIconRound3.png; sourceTree = "<group>"; };
 		4F0BDC842B446A3C00AE65C1 /* Apple-Keys-Demo.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = "Apple-Keys-Demo.gif"; sourceTree = "<group>"; };
@@ -2463,6 +2461,10 @@
 		4FFBC5A7266977CA001D389B /* DoubleExponentialSmoother.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DoubleExponentialSmoother.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
+/* Begin PBXFileSystemSynchronizedRootGroup section */
+		4F1668042C6AA96A009E4924 /* LocalizedDocuments */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = LocalizedDocuments; sourceTree = "<group>"; };
+/* End PBXFileSystemSynchronizedRootGroup section */
+
 /* Begin PBXFrameworksBuildPhase section */
 		4F1667C62C6A6717009E4924 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
@@ -2543,7 +2545,7 @@
 				4F0BDC812B446A3C00AE65C1 /* MarkdownReadme.md */,
 				4FFB5EF42C2E67690096AA3E /* Markdown.xcstrings */,
 				4F0BDC762B446A3C00AE65C1 /* Templates */,
-				4F0BDC7D2B446A3C00AE65C1 /* LocalizedDocuments */,
+				4F1668042C6AA96A009E4924 /* LocalizedDocuments */,
 				4F0BDC822B446A3C00AE65C1 /* Media */,
 			);
 			path = Markdown;
@@ -2576,23 +2578,6 @@
 				4F0BDC7C2B446A3C00AE65C1 /* readme_template.md */,
 			);
 			path = "en-US";
-			sourceTree = "<group>";
-		};
-		4F0BDC7D2B446A3C00AE65C1 /* LocalizedDocuments */ = {
-			isa = PBXGroup;
-			children = (
-				4F0BDC7E2B446A3C00AE65C1 /* de */,
-			);
-			path = LocalizedDocuments;
-			sourceTree = "<group>";
-		};
-		4F0BDC7E2B446A3C00AE65C1 /* de */ = {
-			isa = PBXGroup;
-			children = (
-				4F0BDC7F2B446A3C00AE65C1 /* Readme.md */,
-				4F0BDC802B446A3C00AE65C1 /* Acknowledgements.md */,
-			);
-			path = de;
 			sourceTree = "<group>";
 		};
 		4F0BDC822B446A3C00AE65C1 /* Media */ = {

@@ -98,11 +98,11 @@ It offers amazingly natural and polished gestures and smooth scrolling that let 
 It lets you do almost anything right from your mouse with its powerful customization options that are so simple and intuitive that anyone can use them.
 -->
 
-## {{Features||readme.features.title||}}
+```
+key: readme.features
+```
+## Features
 
-```
-key: readme.features.body
-```
 See the [website](https://noah-nuebling.github.io/mac-mouse-fix-website#trackpad) for an overview of the features of Mac Mouse Fix, including video demos!
 
 For more details, see the <a href=https://github.com/noah-nuebling/mac-mouse-fix/releases>Releases</a>.
@@ -120,11 +120,11 @@ Major features were introduced in these versions:
 | 3.0.0
 -->
 
-## {{Installation||readme.install.title||}}
+```
+key: readme.install
+```
+## Installation
 
-```
-key: readme.install.body
-```
 Download the latest version of Mac Mouse Fix on the [website](http://noah-nuebling.github.io/mac-mouse-fix-website/).
 
 You can also install Mac Mouse Fix through [Homebrew](https://brew.sh/)! Just type the following command into the terminal:
@@ -138,11 +138,11 @@ You can download older versions of Mac Mouse Fix under [Releases](https://github
 comment: 
 ```
 
-## {{macOS compatibility||readme.macos-compat.title||}}
+```
+key: readme.macos-compat
+```
+## macOS compatibility
 
-```
-key: readme.macos-compat.body
-```
 The latest version of Mac Mouse Fix is made for **macOS 11 Big Sur** or later.
   
 If you're on macOS **10.15 Catalina**, macOS **10.14 Mojave**, or macOS **10.13 High Sierra**, you can use the [latest version of Mac Mouse Fix 2](https://noah-nuebling.github.io/redirection-service?message=&target=mmf2-latest). Mac Mouse Fix 3.0.0 and later might still work on your machine, but they will have visual issues and some features might not work properly.
@@ -152,22 +152,22 @@ If you're on macOS **10.12 Sierra**, or **10.11 El Capitan**, you can use Mac Mo
 comment: 
 ```
 
-## {{Pricing||readme.price.title||}}
+```
+key: readme.price
+```
+## Pricing
 
-```
-key: readme.price.body
-```
 See the [website](https://noah-nuebling.github.io/mac-mouse-fix-website#price) for an overview of the pricing for Mac Mouse Fix 3.\
 Mac Mouse Fix 2 and below will remain free forever.
 ```
 comment:
 ```
 
-## {{Uninstallation||readme.uninstall.title||}}
+```
+key: readme.uninstall
+```
+## Uninstallation
 
-```
-key: readme.uninstall.body
-```
 Uninstall Mac Mouse Fix by simply moving it to the bin. 
 
 However, there will be files left on your system. To get rid of these files I recommend the awesome [AppCleaner by FreeMacSoft](https://freemacsoft.net/appcleaner/).
@@ -177,11 +177,11 @@ Under macOS, it is not feasible for apps to delete these leftover files by thems
 comment:
 ```
 
-## {{What people say||readme.what-people-say.title||}}
+```
+key: readme.what-people-say
+```
+## What people say
 
-```
-key: readme.what-people-say.body
-```
 Thanks so much to everyone sharing their excitement about Mac Mouse Fix!\
 On the [website](http://noah-nuebling.github.io/mac-mouse-fix-website/) you can find a collection of nice things people have said about the app.
 ```
@@ -198,7 +198,13 @@ These cool articles were written about MMF
 - (?If you know about other coverage of MMF let me know?) 
 -->
 
-## {{Tips||readme.tips.title||}}
+```
+key: readme.tips
+```
+## Tips
+```
+comment:
+```
 
 - {{**Manage windows with a simple Click and Drag**||readme.tips.swish.title||}}
 
@@ -229,7 +235,13 @@ These cool articles were written about MMF
   comment: 
   ```
 
-## {{Questions||readme.questions.title||}}
+```
+key: readme.questions
+```
+## Questions
+```
+comment:
+```
 
 - {{**Is Mac Mouse Fix native on Apple Silicon?**||readme.questions.apple-silicon.title||}}
     
@@ -406,11 +418,11 @@ These cool articles were written about MMF
   comment: 
   ```
 
-## {{How you can contribute||readme.contributing.title||}}
+```
+key: readme.contributing
+```
+## How you can contribute
 
-```
-key: readme.contributing.body
-```
 There are several ways to help the project.\
 Check out the [Acknowledgements]({language_root}Acknowledgements.md) for more info on who has already contributed!
 ```

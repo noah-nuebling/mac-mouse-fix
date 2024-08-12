@@ -6,22 +6,23 @@
   {{[Help translate Mac Mouse Fix to different languages!](https://github.com/noah-nuebling/mac-mouse-fix/discussions/731)||markdown.translate-prompt||}}
 </details>
 
-# {{🙌 Acknowledgements||acknowledgements.intro.title||This is the title for the acknowledgements document which gives credit to people who have helped the project!}}
+```
+key: acknowledgements.intro
+```
+# 🙌 Acknowledgements
 
-```
-key: acknowledgements.intro.body
-```
 Big thanks to everyone using Mac Mouse Fix and providing feedback. It's awesome and highly motivating to see so many people enjoy and engage with something I created.
 
 I want to especially thank the people and projects named in this document.
 ```
 comment: This is the intro for the acknowledgements document
 ```
-## {{🌏 Translations||acknowledgements.translations.title||}}
 
 ```
-key: acknowledgements.translations.body
+key: acknowledgements.translations
 ```
+## 🌏 Translations
+
 Thanks for bringing Mac Mouse Fix to people around the globe!
 
 - 🇨🇳 Chinese translations by [@groverlynn](https://github.com/groverlynn)
@@ -31,11 +32,11 @@ Thanks for bringing Mac Mouse Fix to people around the globe!
 comment:
 ```
 
-## {{💰 Money||acknowledgements.money.title||}}
+```
+key: acknowledgements.money
+```
+## 💰 Money
 
-```
-key: acknowledgements.money.body
-```
 <!-- Thanks so much to everyone who bought me a milkshake and to all {sales_count} people who bought Mac Mouse Fix! Ya'll are the bomb. Thanks to you I can spend lots of time on sth I love doing. -->
 
 Thanks so much to everyone who treated me to a milkshake and to all **{sales_count}** people who bought Mac Mouse Fix.
@@ -46,27 +47,45 @@ People who supported me by spending more than the standard price on Mac Mouse Fi
 comment:
 ```
 
-### {{⭐️ Generous Contributors||acknowledgements.money.generous.title||}}
+```
+key: acknowledgements.money.generous
+```
+### ⭐️ Generous Contributors
 
-{{Thanks for your support! :)||acknowledgements.money.generous.body||}}
+Thanks for your support! :)
+```
+comment:
+```
 
 {generous}
 
-### {{🚀 Very Generous Contributors||acknowledgements.money.very-generous.title||}}
+```
+key: acknowledgements.money.very-generous
+```
+### 🚀 Very Generous Contributors
 
-{{These people spent a lot more than the standard price and treated me to an **Incredible Milkshake**. (And some even left a message) Thanks for the _sugar rush_!||acknowledgements.money.very-generous.body||}}
+These people spent a lot more than the standard price and treated me to an **Incredible Milkshake**. (And some even left a message) Thanks for the *sugar rush*!
+```
+comment:
+```
 
 {very_generous}
 
-### {{❤️ GitHub Sponsors||acknowledgements.money.github-sponsors.title||}}
+```
+key: acknowledgements.money.github-sponsors
+```
+### ❤️ GitHub Sponsors
 
-{{**Huge thanks** to [everyone](https://github.com/sponsors/noah-nuebling#sponsors) sponsoring me on GitHub! Hopefully I can get that milkshake factory one day thanks to you. :)||acknowledgements.money.github-sponsors.body||}}
-
-### {{✨ PayPal Donations||acknowledgements.money.paypal-donations.title||}}
+**Huge thanks** to [everyone](https://github.com/sponsors/noah-nuebling#sponsors) sponsoring me on GitHub! Hopefully I can get that milkshake factory one day thanks to you. :)
+```
+comment:
+```
 
 ```
-key: acknowledgements.money.paypal-donations.body
+key: acknowledgements.money.paypal-donations
 ```
+### ✨ PayPal Donations
+
 Lots of generous people bought me milkshakes on PayPal when Mac Mouse Fix was still entirely free. As thanks, I will provide you with a free license. Just shoot me an email with "Free License" in the subject and attach a screenshot of your donation. Thank you!
 
 *I might be slow to respond. If you already bought the app, just let me know the email that you bought the app with, and I will refund you.*
@@ -75,13 +94,19 @@ comment:
 ```
 <!-- It's truly incredibly helpful to have some predictable monthly income. -->
 
-## {{👾 Other Software||acknowledgements.software||}}
-
-{{**Software** that inspired Mac Mouse Fix:||acknowledgements.software.inspiration.title||}}
+```
+key: acknowledgements.software
+```
+## 👾 Other Software
+```
+comment:
+```
 
 ```
-key: acknowledgements.software.inspiration.body
+key: acknowledgements.software.inspiration
 ```
+**Software** that inspired Mac Mouse Fix:
+
 - [SteerMouse](https://plentycom.jp/en/steermouse/index.html) - Pioneering mouse software for Mac, inspiring many features. There were moments when I thought "this is probably not possible", but then I saw "oh, SteerMouse does it", and three years later, I figured out how to implement it, too.
 - [Calftrail Touch](https://github.com/calftrail/Touch) - The foundation for the "reverse engineering" work which powers Mac Mouse Fix's best-in-class and first-of-a-kind trackpad simulation!
 - [MOS](https://mos.caldis.me/) - Mac Mouse Fix's "High Scroll-Smoothness" option, the "App-Specific Settings" implementation, and more were inspired by MOS.
@@ -92,11 +117,11 @@ key: acknowledgements.software.inspiration.body
 comment:
 ```
 
-{{Mac Mouse Fix was built with the help of these **great libraries**:||acknowledgements.software.libraries.title||}}
+```
+key: acknowledgements.software.libraries
+```
+Mac Mouse Fix was built with the help of these **great libraries**:
 
-```
-key: acknowledgements.software.libraries.body
-```
 - [ReactiveSwift](https://github.com/ReactiveCocoa/ReactiveSwift) - Streams of values over time tailored for Swift
 - [CocoaLumberjack](https://github.com/CocoaLumberjack/CocoaLumberjack) - Fast & simple, yet powerful & flexible logging
 - [Swift Markdown](https://github.com/apple/swift-markdown) - Parse, build, edit, and analyze Markdown documents
