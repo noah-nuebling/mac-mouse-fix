@@ -74,7 +74,7 @@ You can now test the <a href="https://github.com/noah-nuebling/mac-mouse-fix/rel
 <div align="center">
     <table>
         <th><a href=https://noah-nuebling.github.io/mac-mouse-fix-website>Website&nbsp;↗</a></th>
-        <td><a href=https://github.com/noah-nuebling/mac-mouse-fix/issues/new/choose>Help&nbsp;&&nbsp;Feedback</a></td>
+        <td><a href=https://github.com/noah-nuebling/mac-mouse-fix/issues/new/choose>Help&nbsp;&amp;&nbsp;Feedback</a></td>
         <td><a href=https://github.com/noah-nuebling/mac-mouse-fix/releases>Releases</a></td>
         <td><a href="../../../Markdown/LocalizedDocuments/vi/Acknowledgements.md">Acknowledgements</a></td> <!-- If you translate this, remember to link to the right language version -->
     </table>
@@ -227,7 +227,7 @@ These cool articles were written about MMF
   
   Mac Mouse Fix works very well with most mice. However, on certain mice designed to be used with proprietary driver software like Logitech Options, Mac Mouse Fix can't recognize all the buttons at the moment. 
   
-  That's because these mice communicate with your computer using a special, proprietary protocol, instead of the standard USB protocol.
+  That's because these mice communicate with your computer using a special, proprietary protocol, instead of the standard USB protocol. \
   I would love to add full compatibility for these mice at some point, but it's a ton of work and it won't be coming soon.
 
 - **Is the Magic Mouse supported?**
