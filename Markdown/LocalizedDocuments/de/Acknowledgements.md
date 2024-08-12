@@ -40,6 +40,7 @@ Diese Leute haben viel mehr als den Standardpreis ausgegeben und mir einen **ung
 
 **August 2024**
 
+- 🇨🇦&nbsp;Novy
 - 🇺🇸&nbsp;Jason&nbsp;Currin
 - 🇺🇸&nbsp;Anthony&nbsp;Lanuza - "You've made it possible to use a mouse with all the options provided by a trackpad. Truly amazing. Thank you!"
 - 🇺🇸&nbsp;George&nbsp;Taylor
