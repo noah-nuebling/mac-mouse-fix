@@ -19,6 +19,12 @@
 		4F12952028D2D5E1009A49AB /* NSTextField+Extentions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F12951F28D2D5E1009A49AB /* NSTextField+Extentions.swift */; };
 		4F143E462B2D1F5600FE4092 /* fallback_licenseinfo_config.json in Resources */ = {isa = PBXBuildFile; fileRef = 4F143E452B2D1F5600FE4092 /* fallback_licenseinfo_config.json */; };
 		4F143E472B2D1F5600FE4092 /* fallback_licenseinfo_config.json in Resources */ = {isa = PBXBuildFile; fileRef = 4F143E452B2D1F5600FE4092 /* fallback_licenseinfo_config.json */; };
+		4F1667E62C6A6782009E4924 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F1667DD2C6A6782009E4924 /* AppDelegate.m */; };
+		4F1667E72C6A6782009E4924 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F1667DF2C6A6782009E4924 /* main.m */; };
+		4F1667E92C6A679F009E4924 /* Readme.md in Resources */ = {isa = PBXBuildFile; fileRef = 4F1667E82C6A679F009E4924 /* Readme.md */; };
+		4F1667EB2C6A6C5E009E4924 /* XCStringsDummyApp-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4F1667EA2C6A6C5E009E4924 /* XCStringsDummyApp-Info.plist */; };
+		4F1667ED2C6A6D5F009E4924 /* Markdown.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 4FFB5EF42C2E67690096AA3E /* Markdown.xcstrings */; };
+		4F1667EF2C6A6EA0009E4924 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4F1667EE2C6A6EA0009E4924 /* MainMenu.xib */; };
 		4F17D2E1292A635200EB07CA /* SwitchMaster.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F17D2E0292A635200EB07CA /* SwitchMaster.swift */; };
 		4F18464D2C533B5900D5E835 /* BidirectionalMap.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F0C00412C53273200C5D843 /* BidirectionalMap.m */; };
 		4F1AFE972670EBA900ECA424 /* DragCurve.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F1AFE962670EBA900ECA424 /* DragCurve.swift */; };
@@ -435,6 +441,14 @@
 		4F12951F28D2D5E1009A49AB /* NSTextField+Extentions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSTextField+Extentions.swift"; sourceTree = "<group>"; };
 		4F143E452B2D1F5600FE4092 /* fallback_licenseinfo_config.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = fallback_licenseinfo_config.json; sourceTree = "<group>"; };
 		4F143E482B2D1FA500FE4092 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		4F1667C92C6A6717009E4924 /* XCStringsDummyApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = XCStringsDummyApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		4F1667DC2C6A6782009E4924 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		4F1667DD2C6A6782009E4924 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		4F1667DF2C6A6782009E4924 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		4F1667E22C6A6782009E4924 /* xcstrings_dummy_app.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = xcstrings_dummy_app.entitlements; sourceTree = "<group>"; };
+		4F1667E82C6A679F009E4924 /* Readme.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = Readme.md; sourceTree = "<group>"; };
+		4F1667EA2C6A6C5E009E4924 /* XCStringsDummyApp-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "XCStringsDummyApp-Info.plist"; sourceTree = "<group>"; };
+		4F1667EE2C6A6EA0009E4924 /* MainMenu.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MainMenu.xib; sourceTree = "<group>"; };
 		4F17D2E0292A635200EB07CA /* SwitchMaster.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwitchMaster.swift; sourceTree = "<group>"; };
 		4F18466A2C53AD6D00D5E835 /* XCLoc Screenshot Structure.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "XCLoc Screenshot Structure.md"; sourceTree = "<group>"; };
 		4F18A85727BF6E0200A5703B /* IOHIDEvent-Reconstructed.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "IOHIDEvent-Reconstructed.h"; sourceTree = "<group>"; };
@@ -2450,6 +2464,13 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		4F1667C62C6A6717009E4924 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		4F8B01A62C348A3A00F3AF8D /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -2591,6 +2612,20 @@
 				4F0C003C2C525F8500C5D843 /* Misappropriating XCStrings.md */,
 			);
 			path = "Localization Notes";
+			sourceTree = "<group>";
+		};
+		4F1667E32C6A6782009E4924 /* XCStringsDummyApp */ = {
+			isa = PBXGroup;
+			children = (
+				4F1667E82C6A679F009E4924 /* Readme.md */,
+				4F1667EA2C6A6C5E009E4924 /* XCStringsDummyApp-Info.plist */,
+				4F1667E22C6A6782009E4924 /* xcstrings_dummy_app.entitlements */,
+				4F1667DF2C6A6782009E4924 /* main.m */,
+				4F1667DC2C6A6782009E4924 /* AppDelegate.h */,
+				4F1667DD2C6A6782009E4924 /* AppDelegate.m */,
+				4F1667EE2C6A6EA0009E4924 /* MainMenu.xib */,
+			);
+			path = XCStringsDummyApp;
 			sourceTree = "<group>";
 		};
 		4F1793A725EEC8E500E8309B /* Frameworks */ = {
@@ -7000,6 +7035,7 @@
 				4FF6660725F2C93A00689B77 /* Helper */,
 				4F422EF023469B2B00AA6E22 /* Other */,
 				4FA1ACE025E85904007DB95B /* LocalizationScreenshotTaker */,
+				4F1667E32C6A6782009E4924 /* XCStringsDummyApp */,
 				4FCECD8121092354001F1078 /* Products */,
 				4FDECCD528A3A37800DDEE91 /* Frameworks */,
 			);
@@ -7011,6 +7047,7 @@
 				4FCECD8021092354001F1078 /* Mac Mouse Fix Helper.app */,
 				4F94F5EE25E5EC2500D9F24A /* Mac Mouse Fix.app */,
 				4F8B01A92C348A3A00F3AF8D /* Localization Screenshot Taker.xctest */,
+				4F1667C92C6A6717009E4924 /* XCStringsDummyApp.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -7771,6 +7808,25 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		4F1667C82C6A6717009E4924 /* XCStringsDummyApp */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 4F1667D92C6A671A009E4924 /* Build configuration list for PBXNativeTarget "XCStringsDummyApp" */;
+			buildPhases = (
+				4F1667C52C6A6717009E4924 /* Sources */,
+				4F1667C62C6A6717009E4924 /* Frameworks */,
+				4F1667C72C6A6717009E4924 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = XCStringsDummyApp;
+			packageProductDependencies = (
+			);
+			productName = "xcstrings dummy target";
+			productReference = 4F1667C92C6A6717009E4924 /* XCStringsDummyApp.app */;
+			productType = "com.apple.product-type.application";
+		};
 		4F8B01A82C348A3A00F3AF8D /* Localization Screenshot Taker */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 4F8B01B12C348A3A00F3AF8D /* Build configuration list for PBXNativeTarget "Localization Screenshot Taker" */;
@@ -7857,6 +7913,9 @@
 				LastUpgradeCheck = 1400;
 				ORGANIZATIONNAME = "Noah Nuebling";
 				TargetAttributes = {
+					4F1667C82C6A6717009E4924 = {
+						CreatedOnToolsVersion = 16.0;
+					};
 					4F8B01A82C348A3A00F3AF8D = {
 						CreatedOnToolsVersion = 15.4;
 						TestTargetID = 4F94F5ED25E5EC2500D9F24A;
@@ -7898,11 +7957,23 @@
 				4F94F5ED25E5EC2500D9F24A /* Mac Mouse Fix */,
 				4FCECD7F21092354001F1078 /* Mac Mouse Fix Helper */,
 				4F8B01A82C348A3A00F3AF8D /* Localization Screenshot Taker */,
+				4F1667C82C6A6717009E4924 /* XCStringsDummyApp */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		4F1667C72C6A6717009E4924 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4F1667EB2C6A6C5E009E4924 /* XCStringsDummyApp-Info.plist in Resources */,
+				4F1667ED2C6A6D5F009E4924 /* Markdown.xcstrings in Resources */,
+				4F1667EF2C6A6EA0009E4924 /* MainMenu.xib in Resources */,
+				4F1667E92C6A679F009E4924 /* Readme.md in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		4F8B01A72C348A3A00F3AF8D /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -8015,6 +8086,15 @@
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		4F1667C52C6A6717009E4924 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4F1667E62C6A6782009E4924 /* AppDelegate.m in Sources */,
+				4F1667E72C6A6782009E4924 /* main.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		4F8B01A52C348A3A00F3AF8D /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -8400,6 +8480,80 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		4F1667D62C6A671A009E4924 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CODE_SIGN_ENTITLEMENTS = XCStringsDummyApp/xcstrings_dummy_app.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = LM5Z78756B;
+				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = "${SRCROOT}/XCStringsDummyApp/XCStringsDummyApp-Info.plist";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2024 Noah Nuebling. All rights reserved.";
+				INFOPLIST_KEY_NSMainNibFile = MainMenu;
+				INFOPLIST_KEY_NSPrincipalClass = NSApplication;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 15.0;
+				MARKETING_VERSION = 1.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.nuebling.xcstrings-dummy-app";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+			};
+			name = Debug;
+		};
+		4F1667D72C6A671A009E4924 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CODE_SIGN_ENTITLEMENTS = XCStringsDummyApp/xcstrings_dummy_app.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = LM5Z78756B;
+				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				INFOPLIST_FILE = "${SRCROOT}/XCStringsDummyApp/XCStringsDummyApp-Info.plist";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2024 Noah Nuebling. All rights reserved.";
+				INFOPLIST_KEY_NSMainNibFile = MainMenu;
+				INFOPLIST_KEY_NSPrincipalClass = NSApplication;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 15.0;
+				MARKETING_VERSION = 1.0;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.nuebling.xcstrings-dummy-app";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+			};
+			name = Release;
+		};
 		4F8B01B22C348A3A00F3AF8D /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -8788,6 +8942,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		4F1667D92C6A671A009E4924 /* Build configuration list for PBXNativeTarget "XCStringsDummyApp" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				4F1667D62C6A671A009E4924 /* Debug */,
+				4F1667D72C6A671A009E4924 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		4F8B01B12C348A3A00F3AF8D /* Build configuration list for PBXNativeTarget "Localization Screenshot Taker" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
