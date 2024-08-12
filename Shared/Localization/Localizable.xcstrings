@@ -2054,13 +2054,13 @@
                 "plural" : {
                   "other" : {
                     "stringUnit" : {
-                      "state" : "translated",
+                      "state" : "needs_review",
                       "value" : "은 이제 Mac Mouse Fix에서 캡처합니다."
                     }
                   },
                   "zero" : {
                     "stringUnit" : {
-                      "state" : "translated",
+                      "state" : "needs_review",
                       "value" : ""
                     }
                   }
@@ -2081,19 +2081,19 @@
                 "plural" : {
                   "one" : {
                     "stringUnit" : {
-                      "state" : "translated",
+                      "state" : "needs_review",
                       "value" : "đã được ghi nhận bởi Mac Mouse Fix."
                     }
                   },
                   "other" : {
                     "stringUnit" : {
-                      "state" : "translated",
+                      "state" : "needs_review",
                       "value" : "đã được ghi nhận bởi Mac Mouse Fix."
                     }
                   },
                   "zero" : {
                     "stringUnit" : {
-                      "state" : "translated",
+                      "state" : "needs_review",
                       "value" : ""
                     }
                   }
@@ -2114,13 +2114,13 @@
                 "plural" : {
                   "other" : {
                     "stringUnit" : {
-                      "state" : "translated",
+                      "state" : "needs_review",
                       "value" : "被Mac Mouse Fix捕获到。"
                     }
                   },
                   "zero" : {
                     "stringUnit" : {
-                      "state" : "translated",
+                      "state" : "needs_review",
                       "value" : ""
                     }
                   }
@@ -2141,13 +2141,13 @@
                 "plural" : {
                   "other" : {
                     "stringUnit" : {
-                      "state" : "translated",
+                      "state" : "needs_review",
                       "value" : "被Mac Mouse Fix擷取到。"
                     }
                   },
                   "zero" : {
                     "stringUnit" : {
-                      "state" : "translated",
+                      "state" : "needs_review",
                       "value" : ""
                     }
                   }
@@ -2168,13 +2168,13 @@
                 "plural" : {
                   "other" : {
                     "stringUnit" : {
-                      "state" : "translated",
+                      "state" : "needs_review",
                       "value" : "被Mac Mouse Fix截取到。"
                     }
                   },
                   "zero" : {
                     "stringUnit" : {
-                      "state" : "translated",
+                      "state" : "needs_review",
                       "value" : ""
                     }
                   }
@@ -2231,13 +2231,13 @@
               "formatSpecifier" : "d",
               "variations" : {
                 "plural" : {
-                  "onee" : {
+                  "one" : {
                     "stringUnit" : {
                       "state" : "translated",
                       "value" : "Other apps can't see the button anymore."
                     }
                   },
-                  "otherr" : {
+                  "other" : {
                     "stringUnit" : {
                       "state" : "translated",
                       "value" : "Other apps can't see these buttons anymore."
@@ -2266,13 +2266,13 @@
                 "plural" : {
                   "other" : {
                     "stringUnit" : {
-                      "state" : "translated",
+                      "state" : "needs_review",
                       "value" : "다른 앱에서는 더 이상 캡처하지 못합니다."
                     }
                   },
                   "zero" : {
                     "stringUnit" : {
-                      "state" : "translated",
+                      "state" : "needs_review",
                       "value" : ""
                     }
                   }
@@ -2293,19 +2293,19 @@
                 "plural" : {
                   "one" : {
                     "stringUnit" : {
-                      "state" : "translated",
+                      "state" : "needs_review",
                       "value" : ""
                     }
                   },
                   "other" : {
                     "stringUnit" : {
-                      "state" : "translated",
+                      "state" : "needs_review",
                       "value" : ""
                     }
                   },
                   "zero" : {
                     "stringUnit" : {
-                      "state" : "translated",
+                      "state" : "needs_review",
                       "value" : ""
                     }
                   }
@@ -2326,19 +2326,19 @@
                 "plural" : {
                   "one" : {
                     "stringUnit" : {
-                      "state" : "translated",
+                      "state" : "needs_review",
                       "value" : ""
                     }
                   },
                   "other" : {
                     "stringUnit" : {
-                      "state" : "translated",
+                      "state" : "needs_review",
                       "value" : ""
                     }
                   },
                   "zero" : {
                     "stringUnit" : {
-                      "state" : "translated",
+                      "state" : "needs_review",
                       "value" : ""
                     }
                   }
@@ -2359,19 +2359,19 @@
                 "plural" : {
                   "one" : {
                     "stringUnit" : {
-                      "state" : "translated",
+                      "state" : "needs_review",
                       "value" : ""
                     }
                   },
                   "other" : {
                     "stringUnit" : {
-                      "state" : "translated",
+                      "state" : "needs_review",
                       "value" : ""
                     }
                   },
                   "zero" : {
                     "stringUnit" : {
-                      "state" : "translated",
+                      "state" : "needs_review",
                       "value" : ""
                     }
                   }
@@ -2392,19 +2392,19 @@
                 "plural" : {
                   "one" : {
                     "stringUnit" : {
-                      "state" : "translated",
+                      "state" : "needs_review",
                       "value" : ""
                     }
                   },
                   "other" : {
                     "stringUnit" : {
-                      "state" : "translated",
+                      "state" : "needs_review",
                       "value" : ""
                     }
                   },
                   "zero" : {
                     "stringUnit" : {
-                      "state" : "translated",
+                      "state" : "needs_review",
                       "value" : ""
                     }
                   }
@@ -2543,13 +2543,13 @@
                 "plural" : {
                   "other" : {
                     "stringUnit" : {
-                      "state" : "translated",
+                      "state" : "needs_review",
                       "value" : "은 더 이상 Mac Mouse Fix에서 캡처하지 않습니다."
                     }
                   },
                   "zero" : {
                     "stringUnit" : {
-                      "state" : "translated",
+                      "state" : "needs_review",
                       "value" : ""
                     }
                   }
@@ -2570,19 +2570,19 @@
                 "plural" : {
                   "one" : {
                     "stringUnit" : {
-                      "state" : "translated",
+                      "state" : "needs_review",
                       "value" : "không còn ghi nhận bởi Mac Mouse Fix."
                     }
                   },
                   "other" : {
                     "stringUnit" : {
-                      "state" : "translated",
+                      "state" : "needs_review",
                       "value" : "không còn ghi nhận bởi Mac Mouse Fix."
                     }
                   },
                   "zero" : {
                     "stringUnit" : {
-                      "state" : "translated",
+                      "state" : "needs_review",
                       "value" : ""
                     }
                   }
@@ -2603,13 +2603,13 @@
                 "plural" : {
                   "other" : {
                     "stringUnit" : {
-                      "state" : "translated",
+                      "state" : "needs_review",
                       "value" : "不再被Mac Mouse Fix所捕获。"
                     }
                   },
                   "zero" : {
                     "stringUnit" : {
-                      "state" : "translated",
+                      "state" : "needs_review",
                       "value" : ""
                     }
                   }
@@ -2630,13 +2630,13 @@
                 "plural" : {
                   "other" : {
                     "stringUnit" : {
-                      "state" : "translated",
+                      "state" : "needs_review",
                       "value" : "不再被Mac Mouse Fix所擷取。"
                     }
                   },
                   "zero" : {
                     "stringUnit" : {
-                      "state" : "translated",
+                      "state" : "needs_review",
                       "value" : ""
                     }
                   }
@@ -2657,13 +2657,13 @@
                 "plural" : {
                   "other" : {
                     "stringUnit" : {
-                      "state" : "translated",
+                      "state" : "needs_review",
                       "value" : "不再被Mac Mouse Fix所截取。"
                     }
                   },
                   "zero" : {
                     "stringUnit" : {
-                      "state" : "translated",
+                      "state" : "needs_review",
                       "value" : ""
                     }
                   }
@@ -2755,19 +2755,19 @@
                 "plural" : {
                   "one" : {
                     "stringUnit" : {
-                      "state" : "translated",
+                      "state" : "needs_review",
                       "value" : ""
                     }
                   },
                   "other" : {
                     "stringUnit" : {
-                      "state" : "translated",
+                      "state" : "needs_review",
                       "value" : ""
                     }
                   },
                   "zero" : {
                     "stringUnit" : {
-                      "state" : "translated",
+                      "state" : "needs_review",
                       "value" : ""
                     }
                   }
@@ -2788,19 +2788,19 @@
                 "plural" : {
                   "one" : {
                     "stringUnit" : {
-                      "state" : "translated",
+                      "state" : "needs_review",
                       "value" : ""
                     }
                   },
                   "other" : {
                     "stringUnit" : {
-                      "state" : "translated",
+                      "state" : "needs_review",
                       "value" : ""
                     }
                   },
                   "zero" : {
                     "stringUnit" : {
-                      "state" : "translated",
+                      "state" : "needs_review",
                       "value" : ""
                     }
                   }
@@ -2821,19 +2821,19 @@
                 "plural" : {
                   "one" : {
                     "stringUnit" : {
-                      "state" : "translated",
+                      "state" : "needs_review",
                       "value" : ""
                     }
                   },
                   "other" : {
                     "stringUnit" : {
-                      "state" : "translated",
+                      "state" : "needs_review",
                       "value" : ""
                     }
                   },
                   "zero" : {
                     "stringUnit" : {
-                      "state" : "translated",
+                      "state" : "needs_review",
                       "value" : ""
                     }
                   }
@@ -2854,19 +2854,19 @@
                 "plural" : {
                   "one" : {
                     "stringUnit" : {
-                      "state" : "translated",
+                      "state" : "needs_review",
                       "value" : ""
                     }
                   },
                   "other" : {
                     "stringUnit" : {
-                      "state" : "translated",
+                      "state" : "needs_review",
                       "value" : ""
                     }
                   },
                   "zero" : {
                     "stringUnit" : {
-                      "state" : "translated",
+                      "state" : "needs_review",
                       "value" : ""
                     }
                   }
@@ -2887,19 +2887,19 @@
                 "plural" : {
                   "one" : {
                     "stringUnit" : {
-                      "state" : "translated",
+                      "state" : "needs_review",
                       "value" : ""
                     }
                   },
                   "other" : {
                     "stringUnit" : {
-                      "state" : "translated",
+                      "state" : "needs_review",
                       "value" : ""
                     }
                   },
                   "zero" : {
                     "stringUnit" : {
-                      "state" : "translated",
+                      "state" : "needs_review",
                       "value" : ""
                     }
                   }
@@ -3002,7 +3002,8 @@
             "value" : "capture-toast.scroll.captured.hint"
           }
         }
-      }
+      },
+      "shouldTranslate" : false
     },
     "capture-toast.scroll.link" : {
       "comment" : "First draft: [Learn More](https://github.com/noah-nuebling/mac-mouse-fix/discussions/112)",
