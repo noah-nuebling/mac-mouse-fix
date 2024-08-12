@@ -32,6 +32,10 @@ NS_ASSUME_NONNULL_BEGIN
 ///     ```
 /// Example output:
 ///     `MFBenchmark coolBench: 0.002750 ms - Average: 0.025277 ms (11 samples)`
+///
+/// Explanation of weird macro syntax:
+/// - `({...})` is a GCC statement expression.
+///- `__bn` is the benchmark name `##` appends it to a variable name, `#__bn` turns it into a c-string.
 
 #define MFBenchmarkBegin(__benchmarkName) \
     CFTimeInterval m_benchmarkTimestampStart_##__benchmarkName = CACurrentMediaTime();

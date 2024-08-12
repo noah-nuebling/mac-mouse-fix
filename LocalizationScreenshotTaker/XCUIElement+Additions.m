@@ -8,18 +8,23 @@
 //
 
 #import "XCUIElement+Additions.h"
+#import "objc/runtime.h"
 @import XCTest;
 
+/// Wrappers for Swift
+///     We can't import `XCElementSnapshot` into Swift - due to linker errors - and so we have to expose these wrappers using`id<XCUIElementSnapshot>` to Swift instead.)
 
-
-AXUIElementRef copyAXUIElementForXCElementSnapshot(id<XCUIElementSnapshot> snapshot) {
+XCUIHitPointResult *hitPointForSnapshot_ForSwift(id<XCUIElementSnapshot>snapshot, id *idk) {
+    XCUIHitPointResult *hitPoint = [(XCElementSnapshot *)snapshot hitPoint:idk];
+    return hitPoint;
+}
+AXUIElementRef getAXUIElementForXCElementSnapshot(id<XCUIElementSnapshot> snapshot) {
     
     /// Retrieve the AXUIElement for a snapshot
-    ///     I couldn't create `interface`es for the private classes of the intermediate objects  (XCAccessibilityElement and XCElementSnapshot) due to linker errors, so we're just using `performSelector:`.
+    ///     Should we retain the AXUIElement?
     
-    NSObject *xcAccessibilityElement = (NSObject *)[(id)snapshot performSelector:@selector(accessibilityElement)];
-    AXUIElementRef axuiElement = (__bridge AXUIElementRef)[xcAccessibilityElement performSelector:@selector(AXUIElement)];
-    CFRetain(axuiElement); /// This is what `__bridge_transfer` does.
+    XCAccessibilityElement *xcAccessibilityElement = [(XCElementSnapshot *)snapshot accessibilityElement];
+    AXUIElementRef axuiElement = (__bridge AXUIElementRef)[xcAccessibilityElement AXUIElement];
     
     return axuiElement;
 }
@@ -74,6 +79,8 @@ AXUIElementRef copyAXUIElementForXCElementSnapshot(id<XCUIElementSnapshot> snaps
                 extension = 100;
             } else if (self.elementType == XCUIElementTypeDialog) { /// Our toastNotifications appear as dialog elements. Not sure how the classification works
                 extension = 100;
+            } else if (self.elementType == XCUIElementTypePopover) {
+                extension = 90;                                    /// Popovers already have an extended screenshot frame naturally
             } else {
                 extension = 0;
             }

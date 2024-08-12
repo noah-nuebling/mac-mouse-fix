@@ -66,8 +66,11 @@ import Foundation
                     if let gumroadMessage = error.userInfo["message"] as! String? {
                         
                         switch gumroadMessage {
+                        /// Discussion:
+                        ///     The `license-toast.unknown-key` error message used to just say `**'%@'** is not a known license key\n\nPlease try a different key` which felt a little rude or unhelpful for people who misspelled the key, or accidentally pasted/entered a newline (which I sometimes received support requests about)
+                        ///     So we added the tip to remove whitespace in the error message. But then, we also made it impossible to enter any whitespace into the licenseKey textfield to begin with, so giving the tip to remove whitespace is a little unnecessary now. But I already wrote this and it sounds friendlier than just saying 'check if you misspelled' - I think? Might change this later.
                         case "That license does not exist for the provided product.":
-                            let messageFormat = NSLocalizedString("license-toast.unknown-key", comment: "First draft: **'%@'** is not a known license key\n\nPlease try a different key")
+                            let messageFormat = NSLocalizedString("license-toast.unknown-key", comment: "First draft: **'%@'** is not a valid license key\n\nMake sure you enter your key exactly as you received it, without leading or trailing spaces, line breaks, or other extra characters.")
                             message = String(format: messageFormat, licenseKey)
                         default:
                             let messageFormat = NSLocalizedString("license-toast.gumroad-error", comment: "First draft: **An error with the licensing server occured**\n\nIt says:\n\n%@")

@@ -22,7 +22,7 @@ import Foundation
         "licensesheet": 0,
     ]
     
-    static let testLists = [
+    static let testLists: [String: Array<() -> ()>] = [
      
         "general": Toasts.simpleToastMap_General.values + [
             { AuthorizeAccessibilityView.add() }
@@ -32,7 +32,8 @@ import Foundation
             { Toasts.showReviveToast(showButtons: true, showScroll: false) },
             { CaptureToasts.showButtonCaptureToastWith(before: [], after: [3]) },
             { CaptureToasts.showButtonCaptureToastWith(before: [5], after: []) },
-            /// Missing: restore-default-buttons-popover
+            { () -> () in MainAppState.shared.buttonTabController?.showRestoreDefaultPopover(deviceName: "Tecknet 2.4G Wireless", nOfButtons: 3, usedButtons: Set([4, 5])); return },
+            { () -> () in MainAppState.shared.buttonTabController?.showRestoreDefaultPopover(deviceName: "Dierya Falcon M1SE Honeycomb", nOfButtons: 5, usedButtons: Set([3])); return },
         ],
         "scrolling": Toasts.simpleToastMap_Scrolling.values + [
             

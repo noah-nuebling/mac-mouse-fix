@@ -67,8 +67,18 @@ final class LocalizationScreenshotClass: XCTestCase {
     ///
     /// Main routine
     ///
-    
-    var app: XCUIApplication? = nil
+    var appSnap: XCUIElementSnapshot? = nil /// This probably get out of date when the app state changes
+    var appAXUIElement: AXUIElement? = nil  /// This doesn't get out of date I think
+    var _app: XCUIApplication? = nil
+    var app: XCUIApplication? {
+        get { _app }
+        set {
+            _app = newValue
+            appSnap = try! app!.snapshot()
+            appAXUIElement = getAXUIElementForXCElementSnapshot(appSnap!)!.takeUnretainedValue()
+        }
+    }
+    var alreadyLoggedHitTestFailers: [AXUIElement] = []
     
     func testTakeLocalizationScreenshots() throws {
         
@@ -173,7 +183,7 @@ final class LocalizationScreenshotClass: XCTestCase {
         let menu = statusItem.menus.firstMatch
         assert(menu.exists)
         let screenshot = takeLocalizationScreenshot(of: menu, name: "Status Item Menu")
-        XCTAssert(screenshot != nil, "Could not take screenshots with any localization data for Status Bar Item. Perhaps, the Helper App was compiled without localizedString annotations?")
+        XCTAssert(screenshot != nil, "Could not take screenshots with any localization data for Status Bar Item. Perhaps, the Helper App was started without the localizedString annotation argument? (If so, close the helper and let this test-runner start it)")
         result.append(screenshot)
         
         /// Cleanup
@@ -198,21 +208,79 @@ final class LocalizationScreenshotClass: XCTestCase {
             var toastScreenshots = [ScreenshotAndMetadata?]()
             var i = 0
             while true {
+                
+                /// Display next toast/sheet/popover
                 let moreToastsToGo = MFMessagePort.sendMessage("showNextToastOrSheetWithSection", withPayload: (toastSection as NSString), toRemotePort: kMFBundleIDApp, waitForReply: true)
-                self.coolWait()
-                var transientWindow = self.app!.dialogs["axToastWindow"].firstMatch
-                if !transientWindow.exists {
-                    transientWindow = self.app!.sheets.firstMatch /// If there's no toast, see if it's a sheet
+                self.coolWait() /// Wait for appear animation
+                
+                /// TEST
+//                print("lastWasToast: \(lastWasToast)")
+//                let snap = try! self.app!.snapshot()
+//                let tree = TreeNode.tree(withKVCObject: snap, childrenKey: "children")
+//                let toastWindowSnap = try! self.app!.dialogs["axToastWindow"].firstMatch.snapshot()
+//                let toastWindowScreenshot = self.app!.dialogs["axToastWindow"].firstMatch.screenshot()
+//                let testExist = self.app!.dialogs["axToastWindow"].firstMatch.exists
+                
+                /// Find transient window
+                ///     Explanation for .isHittable usage:
+                ///         When we fade out the toasts, we just set their alphaValue to 0, but they still exist in the view- and accessibility-hierarchy.
+                ///         When the alphaValue is 0, `.isHittable` becomes false. That is it the easiest way I found to discern whether a toast is actually being displayed.
+                var isToast = false
+                var isPopover = false
+                var isSheet = false
+                
+                var transientUIElement = self.app!.dialogs["axToastWindow"].firstMatch /// Check for toast
+                if transientUIElement.exists && transientUIElement.isHittable {
+                    isToast = true
+                } else {
+                    transientUIElement = self.app!.popovers.firstMatch /// Check for popover
+                    if transientUIElement.exists && transientUIElement.isHittable {
+                        isPopover = true
+                    } else {
+                        transientUIElement = self.app!.sheets.firstMatch /// Check for sheet
+                        if transientUIElement.exists && transientUIElement.isHittable {
+                            isSheet = true
+                        } else {
+                            assert(false)
+                        }
+                    }
                 }
-                toastScreenshots.append(self.takeLocalizationScreenshot(of: transientWindow, name: String(format: screenshotNameFormat, i)))
+                
+                if isToast {
+                    
+                    /// Take toast screenshot
+                    toastScreenshots.append(self.takeLocalizationScreenshot(of: transientUIElement, name: String(format: screenshotNameFormat, i)))
+                    
+                    /// Dismiss toast
+                    /// Note:
+                    ///     We don't have to do this between toasts, because toasts automatically dismiss themselves before another toast comes in.
+                    ///     Leveraging would allow us to speed up the test runs.
+                    ///     Problem is that when we don't dismiss the toast that makes the isToast, isSheet, isPopover detection more difficult.
+                    self.hitEscape()
+                    self.coolWait()
+                
+                } else if isPopover || isSheet {
+                    
+                    /// Take sheet screenshot
+                    toastScreenshots.append(self.takeLocalizationScreenshot(of: transientUIElement, name: String(format: screenshotNameFormat, i)))
+
+                    /// Dismiss sheet
+                    self.hitEscape()
+                    self.coolWait()
+                } else {
+                    assert(false)
+                }
+                
+                /// Break
                 if (moreToastsToGo == nil || (moreToastsToGo! as! NSNumber).boolValue == false) {
                     break;
                 }
+                
+                /// Increment
                 i += 1
             }
             
-            self.hitEscape()
-            
+            /// Return
             return toastScreenshots
         }
         
@@ -257,6 +325,80 @@ final class LocalizationScreenshotClass: XCTestCase {
         if ((switcherino.value as! Int) != 1) {
             XCTFail("Error: The app does not seem to be enabled, the test should do this automatically")
         }
+        
+        ///
+        /// Screenshot ButtonsTab
+        ///
+        
+        toolbarButtons["buttons"].click()
+        coolWait()
+        
+        /// Dismiss restoreDefaultsPopover, in case it pops up.
+        hitEscape()
+        coolWait()
+        
+        /// Screenshot states
+        let restoreDefaultsButton = window.buttons["axButtonsRestoreDefaultsButton"].firstMatch
+        assert(restoreDefaultsButton.exists)
+        restoreDefaultsButton.click()
+        let restoreDefaultsSheet = window.sheets.firstMatch
+        let restoreDefaultsRadioButtons = restoreDefaultsSheet.radioButtons.allElementsBoundByIndex
+        for (i, radioButton) in restoreDefaultsSheet.radioButtons.allElementsBoundByIndex.reversed().enumerated() { /// Reversed for debugging
+            radioButton.click()
+            hitReturn()
+            hitEscape() /// Close any toasts
+            result.append(takeLocalizationScreenshot(of: window, name: "ButtonsTab State \(i)"))
+            restoreDefaultsButton.click() /// Open the sheet back up
+        }
+        
+        /// Go to default state
+        ///     (Default settings for 5+ buttons)
+        let defaultRadioButton = restoreDefaultsSheet.radioButtons["axRestoreButtons5"]
+        assert(defaultRadioButton.exists)
+        defaultRadioButton.click()
+        hitReturn()
+        hitEscape()
+        
+        /// Screenshot menus
+        ///     (Which let you pick the action in the remaps table)
+        for (i, popupButton) in window.popUpButtons.allElementsBoundByIndex.enumerated() {
+            
+            /// Click
+            popupButton.click()
+            let menu = popupButton.menus.firstMatch
+            
+            /// Screenshot
+            result.append(takeLocalizationScreenshot(of: menu, name: "ButtonsTab Menu \(i)"))
+            
+            /// Option screenshot
+            XCUIElement.perform(withKeyModifiers: .option) {
+                result.append(takeLocalizationScreenshot(of: menu, name: "ButtonsTab Menu \(i) (Option)"))
+            }
+            
+            /// Clean up
+            hitEscape()
+        }
+        
+        /// Screenshot buttonsTab sheets
+        ///     (The ones invoked by the two buttons in the bottom left and bottom right)
+        for (i, button) in window.buttons.matching(NSPredicate(format: "identifier IN %@", ["axButtonsOptionsButton", "axButtonsRestoreDefaultsButton"])).allElementsBoundByIndex.enumerated() {
+            
+            /// Click
+            button.click()
+            coolWait() /// Not necessary. Sheets have a native animation where XCUITest automatically correctly
+            
+            /// Get sheet
+            let sheet = window.sheets.firstMatch
+            
+            /// Screenshot
+            result.append(takeLocalizationScreenshot(of: sheet, name: "ButtonsTab Sheet \(i)"))
+            
+            /// Cleanup
+            hitEscape()
+        }
+        
+        /// Screenshots ButtonsTab toasts
+        result.append(contentsOf: takeToastScreenshots("buttons", "ButtonsTab Toast %d"))
         
         ///
         /// Screenshot GeneralTab
@@ -345,76 +487,6 @@ final class LocalizationScreenshotClass: XCTestCase {
         
         /// Cleanup licenseSheet
         hitEscape()
-
-        ///
-        /// Screenshot ButtonsTab
-        ///
-        
-        toolbarButtons["buttons"].click()
-        coolWait()
-        
-        /// Screenshot states
-        let restoreDefaultsButton = window.buttons["axButtonsRestoreDefaultsButton"].firstMatch
-        assert(restoreDefaultsButton.exists)
-        restoreDefaultsButton.click()
-        let restoreDefaultsSheet = window.sheets.firstMatch
-        let restoreDefaultsRadioButtons = restoreDefaultsSheet.radioButtons.allElementsBoundByIndex
-        for (i, radioButton) in restoreDefaultsSheet.radioButtons.allElementsBoundByIndex.reversed().enumerated() { /// Reversed for debugging
-            radioButton.click()
-            hitReturn()
-            hitEscape() /// Close any toasts
-            result.append(takeLocalizationScreenshot(of: window, name: "ButtonsTab State \(i)"))
-            restoreDefaultsButton.click() /// Open the sheet back up
-        }
-        
-        /// Go to default state
-        ///     (Default settings for 5+ buttons)
-        let defaultRadioButton = restoreDefaultsSheet.radioButtons["axRestoreButtons5"]
-        assert(defaultRadioButton.exists)
-        defaultRadioButton.click()
-        hitReturn()
-        hitEscape()
-        
-        /// Screenshot menus
-        ///     (Which let you pick the action in the remaps table)
-        for (i, popupButton) in window.popUpButtons.allElementsBoundByIndex.enumerated() {
-            
-            /// Click
-            popupButton.click()
-            let menu = popupButton.menus.firstMatch
-            
-            /// Screenshot
-            result.append(takeLocalizationScreenshot(of: menu, name: "ButtonsTab Menu \(i)"))
-            
-            /// Option screenshot
-            XCUIElement.perform(withKeyModifiers: .option) {
-                result.append(takeLocalizationScreenshot(of: menu, name: "ButtonsTab Menu \(i) (Option)"))
-            }
-            
-            /// Clean up
-            hitEscape()
-        }
-        
-        /// Screenshot buttonsTab sheets
-        ///     (The ones invoked by the two buttons in the bottom left and bottom right)
-        for (i, button) in window.buttons.matching(NSPredicate(format: "identifier IN %@", ["axButtonsOptionsButton", "axButtonsRestoreDefaultsButton"])).allElementsBoundByIndex.enumerated() {
-            
-            /// Click
-            button.click()
-            coolWait() /// Not necessary. Sheets have a native animation where XCUITest automatically correctly
-            
-            /// Get sheet
-            let sheet = window.sheets.firstMatch
-            
-            /// Screenshot
-            result.append(takeLocalizationScreenshot(of: sheet, name: "ButtonsTab Sheet \(i)"))
-            
-            /// Cleanup
-            hitEscape()
-        }
-        
-        /// Screenshots ButtonsTab toasts
-        result.append(contentsOf: takeToastScreenshots("buttons", "ButtonsTab Toast %d"))
         
         ///
         /// Screenshot AboutTab
@@ -665,18 +737,18 @@ final class LocalizationScreenshotClass: XCTestCase {
             /// Unpack node
             let node = nodeAsAny as! TreeNode<XCUIElementSnapshot>
             let nodeSnapshot = node.representedObject!
-                
+                    
             /// Get the underlying AXUIElement
             ///     (since its strings dont have 512 character limit we see in the nodeSnapshot.dictionaryRepresentation())
             ///     (We made a bunch of other decisions based on the 512 character limit, such as using space-efficient quaternaryEncoding for the secretMessages, now the limit doesn't exist anymore.)
-            let axuiElement = copyAXUIElementForXCElementSnapshot(nodeSnapshot).takeRetainedValue()
+            let axuiElement = getAXUIElementForXCElementSnapshot(nodeSnapshot)!.takeUnretainedValue()
             
             /// Get all attr names
             var attrNames: CFArray?
             AXUIElementCopyAttributeNames(axuiElement, &attrNames)
             
-            /// Iterate attr names and get secret messages
-            var localizedStrings = [ScreenshotAndMetadata.Metadata.Frame.String_]()
+            /// Iterate attr names and get their values + any secret messages
+            var stringsAndSecretMessages: [String: [NSString]] = [:]
             for attrName in (attrNames! as NSArray) {
                 
                 /// Get axAttr value
@@ -691,7 +763,24 @@ final class LocalizationScreenshotClass: XCTestCase {
                 /// Extract any secret messages
                 let secretMessages = string.secretMessages() as! [NSString]
                 
-                /// Extract localization key+table from each secret message
+                /// Skip if no secret messages
+                if secretMessages.count == 0 {
+                    continue
+                }
+                
+                /// Store secret mesages
+                stringsAndSecretMessages[string] = secretMessages
+            }
+            
+            /// Skip
+            ///     If this node doesn't have secretMessages
+            if stringsAndSecretMessages.count == 0 {
+                continue
+            }
+            
+            /// Extract localization key+table from each secret message
+            var localizedStrings = [ScreenshotAndMetadata.Metadata.Frame.String_]()
+            for (string, secretMessages) in stringsAndSecretMessages {
                 var localizationKeys = [ScreenshotAndMetadata.Metadata.Frame.String_.KeyAndTable]()
                 for secretMessage in secretMessages {
                     let secretMessage = secretMessage as String
@@ -711,11 +800,11 @@ final class LocalizationScreenshotClass: XCTestCase {
                         localizationKeys.append(n)
                     }
                 }
-                
                 /// Append to result
                 if localizationKeys.count > 0 {
                     localizedStrings.append(ScreenshotAndMetadata.Metadata.Frame.String_(string: string, keys: localizationKeys))
                 }
+                
             }
             
             /// Guard: No localizedStrings for this node
@@ -727,6 +816,33 @@ final class LocalizationScreenshotClass: XCTestCase {
             var frame = nodeSnapshot.frame
             guard frame != .zero else {
                 assert(false)
+                continue
+            }
+            
+            /// Guard: hitTest
+            ///     This slows down the screenshot-taking noticably, so we're trying to do this as late as possible (after all the other filters)
+            ///     What we really want to know is whether the element will be visible in our screenshots, but hit-testing like this is the closest I can find.
+            /// Discussion:
+            ///     We call `AXUIElementCopyElementAtPosition()` with the hitPoint that the element represented by `node` reports to have, and see if it returns a different element. If so, we assume that the element is
+            ///     invisible or covered up by another element.
+            ///     This successfully filters out alternate NSMenuItems, collapsed and swapped out stackViews (See Collapse.swift), and perhaps more.
+            ///     I'm not sure if there are any false positives. Update: There don't seem to be.
+            /// Alternatives:
+            ///     The core of this is `AXUIElementCopyElementAtPosition()`, which is a little slow.
+            ///     We also tried to use `XCUIHitPointResult.isHittable()` but that still returns true for the hidden/obscured elements we want to filter out.
+            ///     We also tried to use the private `-[XCElementSnapshot hitTest]:`, but I think I couldn't figure out how to use it correctly, before we found the `AXUIElementCopyElementAtPosition()` approach.
+            var hittedAXUIElement: AXUIElement? = nil
+            var idk: AnyObject? = nil
+            let hitPoint: XCUIHitPointResult = hitPointForSnapshot_ForSwift(nodeSnapshot, &idk)!
+            assert(idk == nil)
+            let rawHitPoint: NSPoint = hitPoint.hitPoint()
+            AXUIElementCopyElementAtPosition(appAXUIElement!, Float(rawHitPoint.x), Float(rawHitPoint.y), &hittedAXUIElement) /// This is a little slow
+            if let hittedAXUIElement = hittedAXUIElement, hittedAXUIElement == axuiElement {
+            } else {
+                if !alreadyLoggedHitTestFailers.contains(axuiElement) {
+                    print("HitTest Failed: Skipping annotation of element: \(nodeSnapshot) || Skipped keys: \(localizedStrings.flatMap { s in s.keys.map { k in k.key } })") /// If hitTest fails, the element is probably invisible or covered by another element.
+                    alreadyLoggedHitTestFailers.append(axuiElement) /// We want to log all the elements that are filtered out due to failed hitTests - to check if there are any false positives. (Check if we still end up with correct annotations for those hitTestFailers in the resulting .xcloc file)
+                }
                 continue
             }
             
@@ -750,9 +866,10 @@ final class LocalizationScreenshotClass: XCTestCase {
         }
         
         /// Filter out invalid frames
-        ///     Sometimes elements will show up in the hierarchy that have frame size zero. (Update: Do they?)
+        ///     - Hidden (zero-height) menu items show up with height 2 - want to filter them out
+        ///     - Update: The hitTest already filters the zero-height elements out, so this is unnecessary now.
         let groupedFrames = Dictionary(grouping: framesAndStringsAndKeys) { frameAndStringAndKey in
-            let isValidFrame = frameAndStringAndKey.frame.width >= 5 && frameAndStringAndKey.frame.height >= 5 /// hidden (zero-height) menu items show up with height 2 - want to filter them out
+            let isValidFrame = frameAndStringAndKey.frame.width >= 5 && frameAndStringAndKey.frame.height >= 5
             return isValidFrame
         }
         let validFramesAndStringsAndKeys = groupedFrames[true]

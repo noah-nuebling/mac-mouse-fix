@@ -5731,7 +5731,7 @@
       }
     },
     "license-toast.unknown-key" : {
-      "comment" : "First draft: **'%@'** is not a known license key\n\nPlease try a different key",
+      "comment" : "First draft: **'%@'** is not a valid license key\n\nMake sure you enter your key exactly as you received it, without leading or trailing spaces, line breaks, or other extra characters.",
       "localizations" : {
         "de" : {
           "stringUnit" : {

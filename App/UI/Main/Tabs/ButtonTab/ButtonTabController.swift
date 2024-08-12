@@ -408,7 +408,7 @@ import Foundation
     
     private var restoreDefaultPopover_stringAttributesFromIB: [NSAttributedString.Key : Any]? = nil
     
-    fileprivate func showRestoreDefaultPopover(deviceName: String, nOfButtons: Int, usedButtons: Set<NSNumber>) {
+    func showRestoreDefaultPopover(deviceName: String, nOfButtons: Int, usedButtons: Set<NSNumber>) {
         
         /// This is a helper for `viewDidAppear()`
         
@@ -443,12 +443,14 @@ import Foundation
             
             show5Button = true
         }
+        
         if config("Other.dontRemindToRestoreDefault3") as? Bool ?? false {
             show3Button = false
         }
         if config("Other.dontRemindToRestoreDefault5") as? Bool ?? false {
             show5Button = false
         }
+        
         assert(!(show3Button && show5Button))
         
         ///
@@ -491,22 +493,34 @@ import Foundation
             
             /// Close on click
             ///     By intercepting events
-            self.popoverMonitor = NSEvent.addLocalMonitorForEvents(matching: .leftMouseDown) { event in
-                
-                /// Check click on window
-                let clickedOnWindow = self.view.hitTest(event.locationInWindow) != nil
-                
-                /// Check click on popover
-                let popupView = self.restoreDefaultPopover.contentViewController?.view
-                let locInScreen = NSEvent.mouseLocation
-                let locInPopupWindow = popupView?.window?.convertPoint(fromScreen: locInScreen)
-                var clickedOnPopover = false
-                if let loc = locInPopupWindow {
-                    clickedOnPopover = popupView?.hitTest(loc) != nil
+            self.popoverMonitor = NSEvent.addLocalMonitorForEvents(matching: [.leftMouseDown, .keyDown]) { event in
+                    
+                var shouldClose: Bool
+                var shouldPassThroughEvent: Bool = true
+                if event.type == .keyDown {
+                    /// Handle keydown
+                    shouldClose = (event.keyCode == kVK_Escape)
+                    shouldPassThroughEvent = false /// Otherwise there's an NSBeep
+                } else {
+                    /// Handle clicks
+                    /// Check click on window
+                    let clickedOnWindow = self.view.hitTest(event.locationInWindow) != nil
+                    
+                    /// Check click on popover
+                    let popupView = self.restoreDefaultPopover.contentViewController?.view
+                    let locInScreen = NSEvent.mouseLocation
+                    let locInPopupWindow = popupView?.window?.convertPoint(fromScreen: locInScreen)
+                    var clickedOnPopover = false
+                    if let loc = locInPopupWindow {
+                        clickedOnPopover = popupView?.hitTest(loc) != nil
+                    }
+                    
+                    /// Set shouldClose
+                    shouldClose = clickedOnWindow && !clickedOnPopover
                 }
-                
+
                 /// Close popover
-                if clickedOnWindow && !clickedOnPopover {
+                if shouldClose {
                     
                     /// Store user choice about not being reminded again
                     //  TODO: Now that the UI message doesn't contain info about how many buttons the users mouse has and how that doesn't fit the current settings, it's kind of weird to make the don't remind based on button number. Intuitively it should maybe be based on mouse model? Not sure.
@@ -535,7 +549,7 @@ import Foundation
                 }
                 
                 /// Return intercepted event
-                return event
+                return shouldPassThroughEvent ? event : nil
             }
         }
     }
