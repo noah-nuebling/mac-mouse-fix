@@ -2556,8 +2556,7 @@
 			children = (
 				4FFB5F042C2FECDD0096AA3E /* Acknowledgements.md */,
 				4FFB5F032C2FECDC0096AA3E /* Readme.md */,
-				4F0BDC772B446A3C00AE65C1 /* de */,
-				4F0BDC7A2B446A3C00AE65C1 /* en-US */,
+				4F1668052C6AC116009E4924 /* Old (for reference) */,
 			);
 			path = Templates;
 			sourceTree = "<group>";
@@ -2611,6 +2610,15 @@
 				4F1667EE2C6A6EA0009E4924 /* MainMenu.xib */,
 			);
 			path = XCStringsDummyApp;
+			sourceTree = "<group>";
+		};
+		4F1668052C6AC116009E4924 /* Old (for reference) */ = {
+			isa = PBXGroup;
+			children = (
+				4F0BDC772B446A3C00AE65C1 /* de */,
+				4F0BDC7A2B446A3C00AE65C1 /* en-US */,
+			);
+			path = "Old (for reference)";
 			sourceTree = "<group>";
 		};
 		4F1793A725EEC8E500E8309B /* Frameworks */ = {
