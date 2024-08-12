@@ -61,11 +61,11 @@ You can now test the <a href="https://github.com/noah-nuebling/mac-mouse-fix/rel
 <div align="center">
     <table>
         <th><a href={{https://noah-nuebling.github.io/mac-mouse-fix-website||readme.intro.links.website.url||}}>{{Website&nbsp;↗||readme.intro.links.website.text||}}</a></th>
-        <td><a href={{https://github.com/noah-nuebling/mac-mouse-fix/issues/new/choose||readme.intro.links.help.url||}}>{{Help&nbsp;&&nbsp;Feedback||readme.intro.links.help.text||}}</a></td>
+        <td><a href={{https://github.com/noah-nuebling/mac-mouse-fix/issues/new/choose||readme.intro.links.help.url||}}>{{Help&nbsp;&amp;&nbsp;Feedback||readme.intro.links.help.text||&nbsp; creates a 'non-breaking-space' character. &amp; creates an ampersand (&) character}}</a></td>
         <td><a href={{https://github.com/noah-nuebling/mac-mouse-fix/releases||readme.intro.links.releases.url||}}>{{Releases||readme.intro.links.releases.text||}}</a></td>
         <td><a href="{{{language_root}Acknowledgements.md||readme.intro.links.acknowledgements.url||We should determine this link through code not translators}}">{{Acknowledgements||readme.intro.links.acknowledgements.text||}}</a></td> <!-- If you translate this, remember to link to the right language version -->
     </table>
-    <img src="{{https://img.shields.io/github/downloads/noah-nuebling/mac-mouse-fix/total?label=Downloads&color=25c65f||readme.intro.downloads-badge-url||You can test this url in your browser. You can change the 'Downloads' label by editing the text inside the URL after `label=`. Use url encoding for special chars. E.g. `%20` to insert spaces. - We should do this through code not translators.}}">
+    <img src="{{https://img.shields.io/github/downloads/noah-nuebling/mac-mouse-fix/total?label=Downloads&color=25c65f||readme.intro.downloads-badge-url||You can test this url in your browser. You can change the 'Downloads' label by editing the text inside the URL after `label=`. Use url encoding for special chars. E.g. `%20` to insert spaces. (We should do this through code not translators.)}}">
 </div>
 
 <br>
@@ -295,7 +295,7 @@ These cool articles were written about MMF
 
   Mac Mouse Fix works very well with most mice. However, on certain mice designed to be used with proprietary driver software like Logitech Options, Mac Mouse Fix can't recognize all the buttons at the moment. 
   
-  That's because these mice communicate with your computer using a special, proprietary protocol, instead of the standard USB protocol.
+  That's because these mice communicate with your computer using a special, proprietary protocol, instead of the standard USB protocol. \
   I would love to add full compatibility for these mice at some point, but it's a ton of work and it won't be coming soon.
   ```
   comment: 
