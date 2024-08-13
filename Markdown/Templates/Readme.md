@@ -1,34 +1,34 @@
-<!-- This README is greatly inspired by / stolen from sindresorhus/Gifski and sindresorhus/caprine -->
+  <!-- This README is greatly inspired by / stolen from sindresorhus/Gifski and sindresorhus/caprine -->
 
-<!-- ||| Ideas / Unused / Comments ||| -->
+  <!-- ||| Ideas / Unused / Comments ||| -->
 
-<!-- 
+  <!-- 
 
-Section ideas: 
-- 
+    Section ideas: 
+    - 
 
-Steal from these READMEs:
-- https://github.com/exelban/stats
-- sindresorhus/Gifski
-- sindresorhus/caprine
+    Steal from these READMEs:
+    - https://github.com/exelban/stats
+    - sindresorhus/Gifski
+    - sindresorhus/caprine
 
-Centered screenshot:
-````
-<div align="center"><img src="Markdown/Media/MMF-Buttons-Screenshot.png" width="600" height="auto"></div>
-````
+    Centered screenshot:
+    ````
+    <div align="center"><img src="Markdown/Media/MMF-Buttons-Screenshot.png" width="600" height="auto"></div>
+    ````
 
-Link section with pipe-symbols instead of html table:
-```
-<h3 align="center">
-<a href=https://noah-nuebling.github.io/mac-mouse-fix-website>Download</a> |
-<a href=https://github.com/noah-nuebling/mac-mouse-fix/releases>Releases</a> |
-<a href=https://github.com/noah-nuebling/mac-mouse-fix/discussions>Help &  Feedback</a>
-</h3>
-```
+    Link section with pipe-symbols instead of html table:
+    ```
+    <h3 align="center">
+    <a href=https://noah-nuebling.github.io/mac-mouse-fix-website>Download</a> |
+    <a href=https://github.com/noah-nuebling/mac-mouse-fix/releases>Releases</a> |
+    <a href=https://github.com/noah-nuebling/mac-mouse-fix/discussions>Help &  Feedback</a>
+    </h3>
+    ```
 
--->
+  -->
 
-<!-- ||| Language picker ||| -->
+  <!-- ||| Language picker ||| -->
 
 <details>
   <summary>󠁧󠁿{current_language}</summary>
@@ -37,18 +37,18 @@ Link section with pipe-symbols instead of html table:
   {{[Help translate Mac Mouse Fix to different languages!](https://github.com/noah-nuebling/mac-mouse-fix/discussions/731)||markdown.translate-prompt||}}
 </details>
 
-<!-- ||| Head Section ||| -->
+  <!-- ||| Head Section ||| -->
 
-<!--
-<table align="center"><td>
-You can now test the <a href="https://github.com/noah-nuebling/mac-mouse-fix/releases/">Mac Mouse Fix 3 Beta!</a>
-</td></table>
--->
+  <!--
+    <table align="center"><td>
+    You can now test the <a href="https://github.com/noah-nuebling/mac-mouse-fix/releases/">Mac Mouse Fix 3 Beta!</a>
+    </td></table>
+  -->
 
 <br>
 
 <div align="center">
-    <a href="https://noah-nuebling.github.io/mac-mouse-fix-website">
+    <a href="{{https://noah-nuebling.github.io/mac-mouse-fix-website||readme.intro.links.website.url||}}">
         <img src="{repo_root}Markdown/Media/AppIconRound3.png" width="200" height="auto">
     </a>
     <h1>{{Mac Mouse Fix||readme.intro.title||}}</h1>  
@@ -72,10 +72,10 @@ You can now test the <a href="https://github.com/noah-nuebling/mac-mouse-fix/rel
 <br>
 <br>
 <br>
-<!--Use this extra br when theres text above the first header (Edit: I think by "first header" I meant the h1 saying "Mac Mouse Fix", but not sure) -->
-<!-- <br> -->
+  <!--Use this extra br when theres text above the first header (Edit: I think by "first header" I meant the h1 saying "Mac Mouse Fix", but not sure) -->
+  <!-- <br> -->
 
-<!-- ||| Intro Text ||| -->
+  <!-- ||| Intro Text ||| -->
 
 ```
 key: readme.intro.body
@@ -89,14 +89,14 @@ For more information on how exactly Mac Mouse Fix enhances your mouse, visit the
 comment: 
 ```
 
-<!--
-easy, efficient, natural and pleasant
-Better than an Apple Trackpad or a Logitech MX Master. (These are often considered some of the best input devices for Macs)
+  <!--
+    easy, efficient, natural and pleasant
+    Better than an Apple Trackpad or a Logitech MX Master. (These are often considered some of the best input devices for Macs)
 
-It offers amazingly natural and polished gestures and smooth scrolling that let you breeze through macOS just like an Apple Trackpad.
+    It offers amazingly natural and polished gestures and smooth scrolling that let you breeze through macOS just like an Apple Trackpad.
 
-It lets you do almost anything right from your mouse with its powerful customization options that are so simple and intuitive that anyone can use them.
--->
+    It lets you do almost anything right from your mouse with its powerful customization options that are so simple and intuitive that anyone can use them.
+  -->
 
 ```
 key: readme.features
@@ -105,20 +105,20 @@ key: readme.features
 
 See the [website](https://noah-nuebling.github.io/mac-mouse-fix-website#trackpad) for an overview of the features of Mac Mouse Fix, including video demos!
 
-For more details, see the <a href=https://github.com/noah-nuebling/mac-mouse-fix/releases>Releases</a>.
+For more details, see the [Releases](https://github.com/noah-nuebling/mac-mouse-fix/releases).
 ```
 comment:
 ```
 
-<!--
-Major features were introduced in these versions:
+  <!--
+    Major features were introduced in these versions:
 
-[0.9](https://github.com/noah-nuebling/mac-mouse-fix/releases/tag/0.9.0)
-| [1.0.0](https://github.com/noah-nuebling/mac-mouse-fix/releases/tag/1.0.0)
-| [2.0.0](https://github.com/noah-nuebling/mac-mouse-fix/releases/tag/2.0.0)
-| [2.1.0](https://github.com/noah-nuebling/mac-mouse-fix/releases/tag/2.1.0)
-| 3.0.0
--->
+    [0.9](https://github.com/noah-nuebling/mac-mouse-fix/releases/tag/0.9.0)
+    | [1.0.0](https://github.com/noah-nuebling/mac-mouse-fix/releases/tag/1.0.0)
+    | [2.0.0](https://github.com/noah-nuebling/mac-mouse-fix/releases/tag/2.0.0)
+    | [2.1.0](https://github.com/noah-nuebling/mac-mouse-fix/releases/tag/2.1.0)
+    | 3.0.0
+  -->
 
 ```
 key: readme.install
@@ -157,7 +157,7 @@ key: readme.price
 ```
 ## Pricing
 
-See the [website](https://noah-nuebling.github.io/mac-mouse-fix-website#price) for an overview of the pricing for Mac Mouse Fix 3.\
+See the [website](https://noah-nuebling.github.io/mac-mouse-fix-website#price) for an overview of the pricing for Mac Mouse Fix 3.<br>
 Mac Mouse Fix 2 and below will remain free forever.
 ```
 comment:
@@ -182,21 +182,21 @@ key: readme.what-people-say
 ```
 ## What people say
 
-Thanks so much to everyone sharing their excitement about Mac Mouse Fix!\
+Thanks so much to everyone sharing their excitement about Mac Mouse Fix!<br>
 On the [website](http://noah-nuebling.github.io/mac-mouse-fix-website/) you can find a collection of nice things people have said about the app.
 ```
 comment:
 ```
 
-<!-- 
-These cool articles were written about MMF
+  <!-- 
+    These cool articles were written about MMF
 
-- That YouTube video (so sick)
-- Lifehacker
-- Blib blob (Japanese)
-- Not CNET review
-- (?If you know about other coverage of MMF let me know?) 
--->
+    - That YouTube video (so sick)
+    - Lifehacker
+    - Blib blob (Japanese)
+    - Not CNET review
+    - (?If you know about other coverage of MMF let me know?) 
+  -->
 
 ```
 key: readme.tips
@@ -229,11 +229,11 @@ comment:
   even special keys only found on Apple keyboards that let you control Screen Brightness, Audio Volume, Media Playback, and more.
 
   If you don't have an Apple keyboard at hand, **hold Option (⌥)** to choose the special Apple keys.
-
-  <img src="{repo_root}Markdown/Media/Apple-Keys-Demo.gif" width="700">
   ```
   comment: 
   ```
+
+  <img src="{repo_root}Markdown/Media/Apple-Keys-Demo.gif" width="700">
 
 ```
 key: readme.questions
@@ -258,7 +258,7 @@ comment:
   ```
   key: readme.questions.click-delay.body
   ```
-  When you click, Mac Mouse Fix might wait to see if you're going to double click.\
+  When you click, Mac Mouse Fix might wait to see if you're going to double click.<br>
   To remove the delay for a button, delete any "Double Click" actions for that button.
   ```
   comment: 
@@ -269,7 +269,7 @@ comment:
   ```
   key: readme.questions.blender.body
   ```
-  In 3D apps like Blender, you normally Click and Drag the Middle Mouse Button to orbit around objects.\
+  In 3D apps like Blender, you normally Click and Drag the Middle Mouse Button to orbit around objects.<br>
   But if you assign actions to the Middle Mouse Button in Mac Mouse Fix, then this won't work anymore.
   
   To solve this, I know of 2 options:
@@ -286,7 +286,7 @@ comment:
   ```
   Yes! Just choose the 'Spaces & Mission Control' Action and then Click and Drag *down*.
 
-  If this doesn't work, it's likely because the 'App Exposé' trackpad gesture is disabled on your Mac.\
+  If this doesn't work, it's likely because the 'App Exposé' trackpad gesture is disabled on your Mac.<br>
   You can enable the gesture under System Settings or by running the following command in the terminal:
 
   ```
@@ -296,7 +296,7 @@ comment:
   comment: 
   ```
   
-  <!-- NOTES: Maybe we should automate this. For context, see Issue https://github.com/noah-nuebling/mac-mouse-fix/issues/387 -->
+    <!-- NOTES: Maybe we should automate this. For context, see Issue https://github.com/noah-nuebling/mac-mouse-fix/issues/387 -->
 
 - {{**Is my mouse supported?**||readme.questions.mouse-support.title||}}
 
@@ -307,7 +307,7 @@ comment:
 
   Mac Mouse Fix works very well with most mice. However, on certain mice designed to be used with proprietary driver software like Logitech Options, Mac Mouse Fix can't recognize all the buttons at the moment. 
   
-  That's because these mice communicate with your computer using a special, proprietary protocol, instead of the standard USB protocol. \
+  That's because these mice communicate with your computer using a special, proprietary protocol, instead of the standard USB protocol.<br>
   I would love to add full compatibility for these mice at some point, but it's a ton of work and it won't be coming soon.
   ```
   comment: 
@@ -323,21 +323,21 @@ comment:
   comment: 
   ```
   
-  <!-- You can use SteerMouse or proprietary driver like Logitech Options instead. -->
+    <!-- You can use SteerMouse or proprietary driver like Logitech Options instead. -->
 
 
-<!--
-- **How many buttons should my mouse have?**
+    <!--
+      - **How many buttons should my mouse have?**
 
-  To get the best experience I recommend using Mac Mouse Fix with a mouse that has at least 5 buttons. If your mouse has fewer than 5 buttons, Mac Mouse Fix still provides rich functionality and a great experience, but some features will be less easy to access compared to a 5-button mouse. With a 5-button mouse, you can really breeze through macOS in a way that's just as nice as an Apple Trackpad!
-  
-  To learn more, see the [trackpad section](https://noah-nuebling.github.io/mac-mouse-fix-website#trackpad) on the website.
+        To get the best experience I recommend using Mac Mouse Fix with a mouse that has at least 5 buttons. If your mouse has fewer than 5 buttons, Mac Mouse Fix still provides rich functionality and a great experience, but some features will be less easy to access compared to a 5-button mouse. With a 5-button mouse, you can really breeze through macOS in a way that's just as nice as an Apple Trackpad!
+        
+        To learn more, see the [trackpad section](https://noah-nuebling.github.io/mac-mouse-fix-website#trackpad) on the website.
 
 
-- **Mouse brands**
+      - **Mouse brands**
 
-  I'm not the biggest expert on mouse hardware, but I do have quite a collection now, thanks to my work on Mac Mouse Fix! If I had to make a recommendation for what mouse to buy for the best experience with Mac Mouse fix, I'd say get a smaller, chinese brand on Amazon. In my experience, these mice often have better build quality at a fraction of the price of a big brand mouse like Logitech or Roccat. Also, some models of bigger manufacturers like Logitech are made to be used with their proprietary driver software, and they won't be fully compatible with Mac Mouse Fix. If you buy a smaller brand, you can usually be sure, that they will work flawlessly with non-proprietary drivers like Mac Mouse Fix.
--->
+        I'm not the biggest expert on mouse hardware, but I do have quite a collection now, thanks to my work on Mac Mouse Fix! If I had to make a recommendation for what mouse to buy for the best experience with Mac Mouse fix, I'd say get a smaller, chinese brand on Amazon. In my experience, these mice often have better build quality at a fraction of the price of a big brand mouse like Logitech or Roccat. Also, some models of bigger manufacturers like Logitech are made to be used with their proprietary driver software, and they won't be fully compatible with Mac Mouse Fix. If you buy a smaller brand, you can usually be sure, that they will work flawlessly with non-proprietary drivers like Mac Mouse Fix.
+    -->
 
 - {{**Are tiltable scroll wheels supported?**||readme.questions.tilt-wheel.title||}}
 
@@ -349,7 +349,7 @@ comment:
   comment: 
   ```
   
-  <!-- This is so hard, because it would require reprogramming the mouse so that it sends button-signals instead of sending scroll-signals, when you tilt the scroll wheel. And to reprogram the mouse, would require communicating with the it through the custom vendor-specific protocol. And that's not easy. For many mice it's not even possible. -->
+    <!-- This is so hard, because it would require reprogramming the mouse so that it sends button-signals instead of sending scroll-signals, when you tilt the scroll wheel. And to reprogram the mouse, would require communicating with the it through the custom vendor-specific protocol. And that's not easy. For many mice it's not even possible. -->
 
 - {{**Turning off pointer acceleration**||readme.questions.pointer-acceleration.title||}}
 
@@ -401,12 +401,12 @@ comment:
   comment: 
   ```
 
-  <!--
-    , and I don't plan to change that at any point.
-  
-    This also means you can use Mac Mouse Fix for free by building it from source and disabling the licensing checks. That's perfectly fine, I just discourage sharing these cracked versions online.\
-    And of course, on the next update, you'll get a non-cracked version which means you'll have to do this again for every update. (Or just pay $1.99 for the greatest mouse driver ever! :)
-  -->
+    <!--
+      , and I don't plan to change that at any point.
+    
+      This also means you can use Mac Mouse Fix for free by building it from source and disabling the licensing checks. That's perfectly fine, I just discourage sharing these cracked versions online.<br>
+      And of course, on the next update, you'll get a non-cracked version which means you'll have to do this again for every update. (Or just pay $1.99 for the greatest mouse driver ever! :)
+    -->
 
 - {{**Can I get Mac Mouse Fix for free if I already donated?**||readme.questions.free-for-donators.title||}}
 
@@ -423,18 +423,18 @@ key: readme.contributing
 ```
 ## How you can contribute
 
-There are several ways to help the project.\
+There are several ways to help the project.<br>
 Check out the [Acknowledgements]({language_root}Acknowledgements.md) for more info on who has already contributed!
 ```
 comment:
 ```
 
-<!--
-- **Spreading the word**
+  <!--
+    - **Spreading the word**
 
-  If you simply talk about Mac Mouse Fix on the internet or elsewhere, that is very helpful for the project.
+      If you simply talk about Mac Mouse Fix on the internet or elsewhere, that is very helpful for the project.
 
--->
+  -->
 
 - {{**Giving feedback**||readme.contributing.feedback.title||}}
     
@@ -466,7 +466,7 @@ comment:
   ```
   Mac Mouse Fix is available in English, German as well as the languages listed in the [Acknowledgements]({language_root}Acknowledgements.md).
 
-  If you would like to **help translate the project**, see the [Localization Guide](https://github.com/noah-nuebling/mac-mouse-fix/discussions/731).\
+  If you would like to **help translate the project**, see the [Localization Guide](https://github.com/noah-nuebling/mac-mouse-fix/discussions/731).<br>
   If you want to **report missing or suboptimal translations**, that's also very helpful. The best way to report problems is by commenting under the [Localization Guide](https://github.com/noah-nuebling/mac-mouse-fix/discussions/731).
   ```
   comment: 
@@ -474,75 +474,80 @@ comment:
 
 - {{**Contributing code**||readme.contributing.code.title||}}
 
+    <!-- 
+      Old note from readme.contributing.code.body:
+      I should mention people who contributed code on the acknowledgements page. They are already in the update notes. 
+    -->
+
   ```
   key: readme.contributing.code.body
   ```
   If you would like to contribute code, that's awesome! I'll be happy about any [pull requests](https://github.com/noah-nuebling/mac-mouse-fix/pulls).
   
   However, I might not accept all pull requests. If you want to make sure that your work is not wasted, you can submit an initial pull request that only *describes* the changes you want to make, but contains little or no code. Then I can give you feedback and tell you if I would adopt the changes you want to make in that way.
-  <!-- NOTE: I should mention people who contributed code on the acknowledgements page. They are already in the update notes. -->
   ```
   comment: 
   ```
 
 {{**Thank you** to everyone who has already contributed and supported me in trying to make the best mouse driver *of all time*! :)🚀||readme.contributing.footer||}}
 
-<!--
+  <!--
 
-## Background
+    ## Background
 
-<details>
-  <summary>Background</summary>
+    <details>
+      <summary>Background</summary>
 
-<br>
-Hi I'm Noah!
+    <br>
+    Hi I'm Noah!
 
-#### Initial Release
+    #### Initial Release
 
-In 2019, during my first semester break, I released Mac Mouse Fix - a simple way to make your mouse better! It was a simple portfolio/passion project and I didn't really expect people to use it, but people ended up really liking it and even bought me some milkshakes, which was a great feeling! :) Here's what I wrote on the Mac Mouse Fix website back then:
+    In 2019, during my first semester break, I released Mac Mouse Fix - a simple way to make your mouse better! It was a simple portfolio/passion project and I didn't really expect people to use it, but people ended up really liking it and even bought me some milkshakes, which was a great feeling! :) Here's what I wrote on the Mac Mouse Fix website back then:
 
-> My name is Noah and I made Mac Mouse Fix. When I started this project I was completely new to software development, but with the power of Google, Stack Overflow, and Apple's Developer Documentation at my fingertips I managed to learn what is necessary to deliver a solid little app that I hope will be useful for you guys. Working on Mac Mouse Fix made me discover a passion for programming, and led me to enroll in a Computer Science Degree at college, which has been awesome so far. I probably won't have a lot of time to work on Mac Mouse Fix during the semester, but please feel free to make your own contributions to Mac Mouse Fix on GitHub!
+    > My name is Noah and I made Mac Mouse Fix. When I started this project I was completely new to software development, but with the power of Google, Stack Overflow, and Apple's Developer Documentation at my fingertips I managed to learn what is necessary to deliver a solid little app that I hope will be useful for you guys. Working on Mac Mouse Fix made me discover a passion for programming, and led me to enroll in a Computer Science Degree at college, which has been awesome so far. I probably won't have a lot of time to work on Mac Mouse Fix during the semester, but please feel free to make your own contributions to Mac Mouse Fix on GitHub!
 
-I think what people really appreciated about the first version of Mac Mouse Fix was that it was free and very simple and felt almost like a native part of macOS. The feature-set was quite limited but well-implemented and people who only wanted those features were really happy with the app.
+    I think what people really appreciated about the first version of Mac Mouse Fix was that it was free and very simple and felt almost like a native part of macOS. The feature-set was quite limited but well-implemented and people who only wanted those features were really happy with the app.
 
-#### Mac Mouse Fix 2 & Innovations
+    #### Mac Mouse Fix 2 & Innovations
 
-After that, I kept developing Mac Mouse Fix on and off between my studies. I discovered ways of simulating Apple Trackpad gestures that were never previously discovered, as far as I know. And I also developed a really innovative UI for remapping mouse buttons that is both more simple and more flexible than anything I've seen before. 
+    After that, I kept developing Mac Mouse Fix on and off between my studies. I discovered ways of simulating Apple Trackpad gestures that were never previously discovered, as far as I know. And I also developed a really innovative UI for remapping mouse buttons that is both more simple and more flexible than anything I've seen before. 
 
-I released the coolest benefits of these innovations with Mac Mouse Fix 2 in 2020. It let you Click and Drag to use Mission Control and Spaces in a way that feels just as fluid and native as swiping on a Trackpad, and it also let you do 7 things with just one button and allowed for endless customizations due to the super nice remapping UI.
+    I released the coolest benefits of these innovations with Mac Mouse Fix 2 in 2020. It let you Click and Drag to use Mission Control and Spaces in a way that feels just as fluid and native as swiping on a Trackpad, and it also let you do 7 things with just one button and allowed for endless customizations due to the super nice remapping UI.
 
-I also figured out how to adjust the pointer speed under macOS which no software could do before except for SteerMouse and its spin-off CursorSense. Unfortunately, I haven't been able to release features based on this technology, yet, but because Mac Mouse Fix is open source, other apps like LinearMouse have been able to ship features based on the things I discovered back then.
+    I also figured out how to adjust the pointer speed under macOS which no software could do before except for SteerMouse and its spin-off CursorSense. Unfortunately, I haven't been able to release features based on this technology, yet, but because Mac Mouse Fix is open source, other apps like LinearMouse have been able to ship features based on the things I discovered back then.
 
-#### Mac Mouse Fix 3 & Mental Health
+    #### Mac Mouse Fix 3 & Mental Health
 
-After Mac Mouse Fix 2 was released, I kept working on the project during semester breaks. My goal was now to turn Mac Mouse Fix into a full-fledged Trackpad replacement. All the pieces were almost in place to let Mac Mouse Fix bring all the smooth Gestures and workflows that people are used to from a Trackpad to any cheap mouse.
+    After Mac Mouse Fix 2 was released, I kept working on the project during semester breaks. My goal was now to turn Mac Mouse Fix into a full-fledged Trackpad replacement. All the pieces were almost in place to let Mac Mouse Fix bring all the smooth Gestures and workflows that people are used to from a Trackpad to any cheap mouse.
 
-So I began working on the necessary features to make this a reality. I was close, but making it really good ended up being much harder than I anticipated. I worked for months, discovering low-level hacks in macOS and implementing complex maths to finally end up with a system that allows you to use **all** the Trackpad gestures straight from your mouse in a way that feels just as polished, intuitive and seamless as a real Trackpad!
+    So I began working on the necessary features to make this a reality. I was close, but making it really good ended up being much harder than I anticipated. I worked for months, discovering low-level hacks in macOS and implementing complex maths to finally end up with a system that allows you to use **all** the Trackpad gestures straight from your mouse in a way that feels just as polished, intuitive and seamless as a real Trackpad!
 
-I also developed an innovative, beautifully animated UI for Mac Mouse Fix that dynamically hides or shows UI elements to provide powerful customization options while being super simple to use. In my opinion, the UI provides some of the sleekest, nicest settings of any app on macOS.
+    I also developed an innovative, beautifully animated UI for Mac Mouse Fix that dynamically hides or shows UI elements to provide powerful customization options while being super simple to use. In my opinion, the UI provides some of the sleekest, nicest settings of any app on macOS.
 
-(Sorry if I'm tooting my own horn too much here, but I think it's really cool)
+    (Sorry if I'm tooting my own horn too much here, but I think it's really cool)
 
-Especially since around the time that I released Mac Mouse Fix 2, I have unfortunately struggled a lot with my mental health. And after starting University with really good grades and a nice social life, I unfortunately became too depressed and anxious to finish my degree. Due to my autism and mental health issues, I think I also unfortunately won't be able to hold a normal job anytime soon.\
-However, I have a lot of passion for working on Mac Mouse Fix and I think I can do it well, despite my mental health struggles. So I made the plan to try to be financially independent through app development. In Fall of 2023, I set my sights towards working on Mac Mouse Fix full-time and slowly, but deliberately turning it into the best mouse driver ever (🚀🚀🚀) and an app that any Mac user with a mouse can appreciate and benefit from. 
+    Especially since around the time that I released Mac Mouse Fix 2, I have unfortunately struggled a lot with my mental health. And after starting University with really good grades and a nice social life, I unfortunately became too depressed and anxious to finish my degree. Due to my autism and mental health issues, I think I also unfortunately won't be able to hold a normal job anytime soon.<br>
+    However, I have a lot of passion for working on Mac Mouse Fix and I think I can do it well, despite my mental health struggles. So I made the plan to try to be financially independent through app development. In Fall of 2023, I set my sights towards working on Mac Mouse Fix full-time and slowly, but deliberately turning it into the best mouse driver ever (🚀🚀🚀) and an app that any Mac user with a mouse can appreciate and benefit from. 
 
-I released Mac Mouse Fix 3 in 2023 with the tagline 'Make Your $10 Mouse Better Than an Apple Trackpad!'. It's free for 30 days and costs $1.99 to own. I hope that's a fair price that anyone can afford while allowing me to make a living. So far it looks like I can live off of the sales revenues! Meaning that I can keep working on Mac Mouse Fix full time and turn it into the best app that I possibly can.
+    I released Mac Mouse Fix 3 in 2023 with the tagline 'Make Your $10 Mouse Better Than an Apple Trackpad!'. It's free for 30 days and costs $1.99 to own. I hope that's a fair price that anyone can afford while allowing me to make a living. So far it looks like I can live off of the sales revenues! Meaning that I can keep working on Mac Mouse Fix full time and turn it into the best app that I possibly can.
 
-Thanks so much to everyone for their support, be it through financial support, by giving constructive feedback, or by simply sharing their excitement about the app with me. Thanks! :) <3
+    Thanks so much to everyone for their support, be it through financial support, by giving constructive feedback, or by simply sharing their excitement about the app with me. Thanks! :) <3
 
-Noah\
-(January 7th 2023)
+    Noah<br>
+    (January 7th 2023)
 
--->
+  -->
 
-<!--
+  <!--
 
-  I also updated the UI to house all the options for the new features that were - and will be - added. In my opinion, the UI provides some of the sleekest and most beautiful settings of any app on macOS. On first glance it looks very much like any native macOS app, but there are beautiful animations throughout giving it a highly polished feel, and you will only see options that are relevant to you at the moment, because the UI smartly hides and reveals sections based on context. This way I hope I can retain the extremely simple and intuitive setup of older versions of MMF while still providing options for many features.
-  
-  In the process of that I also had to completely rewrite large parts of the Mac Mouse Fix source code such as the entire scrolling system.
-  
-  I also created an innovative new UI for Mac Mouse Fix that feels extremely polished, allows for housing much more options, while still being extremely simple to use, and feeling like a better version of native macOS settings UIs. The UI dynamically resizes itself, and it hides and reveals options with beautiful animations. That way, the UI is as simple and clean and non-overwhelming as possible while still providing a lot more options than before, and the animations make it feel really beautiful and dynamic.
--->
+    I also updated the UI to house all the options for the new features that were - and will be - added. In my opinion, the UI provides some of the sleekest and most beautiful settings of any app on macOS. On first glance it looks very much like any native macOS app, but there are beautiful animations throughout giving it a highly polished feel, and you will only see options that are relevant to you at the moment, because the UI smartly hides and reveals sections based on context. This way I hope I can retain the extremely simple and intuitive setup of older versions of MMF while still providing options for many features.
+    
+    In the process of that I also had to completely rewrite large parts of the Mac Mouse Fix source code such as the entire scrolling system.
+    
+    I also created an innovative new UI for Mac Mouse Fix that feels extremely polished, allows for housing much more options, while still being extremely simple to use, and feeling like a better version of native macOS settings UIs. The UI dynamically resizes itself, and it hides and reveals options with beautiful animations. That way, the UI is as simple and clean and non-overwhelming as possible while still providing a lot more options than before, and the animations make it feel really beautiful and dynamic.
+
+  -->
 
 
 </details>

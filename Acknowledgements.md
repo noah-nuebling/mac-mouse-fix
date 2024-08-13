@@ -27,12 +27,17 @@ Thanks for bringing Mac Mouse Fix to people around the globe!
 - 🇰🇷 Korean translations by [@jeongtae](https://github.com/jeongtae)
 - 🇻🇳 Vietnamese translations by [@nghlt](https://github.com/nghlt)
 
+<!-- 
+  Old stuff from Money section:
+
+  Thanks so much to everyone who bought me a milkshake and to all 10100+ people who bought Mac Mouse Fix! Ya'll are the bomb. Thanks to you I can spend lots of time on sth I love doing.
+  You make me me feel like there are many generous people out there who appreciate the app and want to support it, and thanks to you, I can spend more time on something I love doing. 
+-->
+
 ## 💰 Money
 
-<!-- Thanks so much to everyone who bought me a milkshake and to all 10000+ people who bought Mac Mouse Fix! Ya'll are the bomb. Thanks to you I can spend lots of time on sth I love doing. -->
-
-Thanks so much to everyone who treated me to a milkshake and to all **10000+** people who bought Mac Mouse Fix.
-Thanks to you, I can spend lots of time doing something I love. <!-- You make me me feel like there are many generous people out there who appreciate the app and want to support it, and thanks to you, I can spend more time on something I love doing. -->
+Thanks so much to everyone who treated me to a milkshake and to all **10100+** people who bought Mac Mouse Fix.
+Thanks to you, I can spend lots of time doing something I love. 
 
 People who supported me by spending more than the standard price on Mac Mouse Fix receive a special mention here:
 
@@ -48,6 +53,8 @@ These people spent a lot more than the standard price and treated me to an **Inc
 
 **August 2024**
 
+- 🇦🇺&nbsp;Carlos&nbsp;Dyonisio - "This is honestly worth 5x what I paid. Thank you! https://dyonis.io/"
+- 🇺🇸&nbsp;Erulastiel - "tummy time"
 - 🇨🇦&nbsp;Novy
 - 🇺🇸&nbsp;Jason&nbsp;Currin
 - 🇺🇸&nbsp;Anthony&nbsp;Lanuza - "You've made it possible to use a mouse with all the options provided by a trackpad. Truly amazing. Thank you!"
@@ -423,7 +430,7 @@ These people spent a lot more than the standard price and treated me to an **Inc
 
 ### ❤️ GitHub Sponsors
 
-**Huge thanks** to [everyone](https://github.com/sponsors/noah-nuebling#sponsors) sponsoring me on GitHub! Hopefully I can get that milkshake factory one day thanks to you. :)
+**Huge thanks** to [anyone](https://github.com/sponsors/noah-nuebling#sponsors) sponsoring me on GitHub! Hopefully I can get that milkshake factory one day thanks to you. :)
 
 ### ✨ PayPal Donations
 
@@ -456,6 +463,9 @@ Mac Mouse Fix was built with the help of these **great libraries**:
   [Update and statistics scripts](https://github.com/noah-nuebling/mac-mouse-fix/blob/update-feed/requirements.txt) | [Markdown generator script](Markdown/Code/python_requirements.txt) | [.strings file sync script](Localization/Code/UpdateStrings/requirements.txt) | ["State of Localization" script](Localization/Code/StateOfLocalization/requirements.txt)
 - Dependencies of the [Mac Mouse Fix Feedback Assistant](https://noah-nuebling.github.io/mac-mouse-fix-feedback-assistant/) web app [here](https://github.com/noah-nuebling/mac-mouse-fix-feedback-assistant/blob/master/package.json)
 - Dependencies of the [Mac Mouse Fix Website](https://noah-nuebling.github.io/mac-mouse-fix-website/) are available [here](https://github.com/noah-nuebling/mac-mouse-fix-website/blob/main/package.json)
+
+<!-- ^^^ Note: The double space after <br> is not necessary for the formatting to work here, so we don't have to tell localizers.
+          (If you use actual linebreaks instead of <br> I think it is sometimes necessary.) -->
 
 <!--
 

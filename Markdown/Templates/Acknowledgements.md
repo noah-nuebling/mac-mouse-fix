@@ -32,15 +32,20 @@ Thanks for bringing Mac Mouse Fix to people around the globe!
 comment:
 ```
 
+<!-- 
+  Old stuff from Money section:
+
+  Thanks so much to everyone who bought me a milkshake and to all {sales_count} people who bought Mac Mouse Fix! Ya'll are the bomb. Thanks to you I can spend lots of time on sth I love doing.
+  You make me me feel like there are many generous people out there who appreciate the app and want to support it, and thanks to you, I can spend more time on something I love doing. 
+-->
+
 ```
 key: acknowledgements.money
 ```
 ## 💰 Money
 
-<!-- Thanks so much to everyone who bought me a milkshake and to all {sales_count} people who bought Mac Mouse Fix! Ya'll are the bomb. Thanks to you I can spend lots of time on sth I love doing. -->
-
 Thanks so much to everyone who treated me to a milkshake and to all **{sales_count}** people who bought Mac Mouse Fix.
-Thanks to you, I can spend lots of time doing something I love. <!-- You make me me feel like there are many generous people out there who appreciate the app and want to support it, and thanks to you, I can spend more time on something I love doing. -->
+Thanks to you, I can spend lots of time doing something I love. 
 
 People who supported me by spending more than the standard price on Mac Mouse Fix receive a special mention here:
 ```
@@ -76,7 +81,7 @@ key: acknowledgements.money.github-sponsors
 ```
 ### ❤️ GitHub Sponsors
 
-**Huge thanks** to [everyone](https://github.com/sponsors/noah-nuebling#sponsors) sponsoring me on GitHub! Hopefully I can get that milkshake factory one day thanks to you. :)
+**Huge thanks** to [anyone](https://github.com/sponsors/noah-nuebling#sponsors) sponsoring me on GitHub! Hopefully I can get that milkshake factory one day thanks to you. :)
 ```
 comment:
 ```
@@ -134,8 +139,11 @@ Mac Mouse Fix was built with the help of these **great libraries**:
 - Dependencies of the [Mac Mouse Fix Feedback Assistant](https://noah-nuebling.github.io/mac-mouse-fix-feedback-assistant/) web app [here](https://github.com/noah-nuebling/mac-mouse-fix-feedback-assistant/blob/master/package.json)
 - Dependencies of the [Mac Mouse Fix Website](https://noah-nuebling.github.io/mac-mouse-fix-website/) are available [here](https://github.com/noah-nuebling/mac-mouse-fix-website/blob/main/package.json)
 ```
-comment: 
+comment: Don't forget the `<br>`, it inserts a lineBReak.
 ```
+
+<!-- ^^^ Note: The double space after <br> is not necessary for the formatting to work here, so we don't have to tell localizers.
+          (If you use actual linebreaks instead of <br> I think it is sometimes necessary.) -->
 
 <!--
 
