@@ -42,6 +42,7 @@ These people spent a lot more than the standard price and treated me to an **Inc
 
 **August 2024**
 
+- 🇺🇸&nbsp;Ryan&nbsp;Mechelke - "Great app! Thanks for fixing Mac's frustratingly lacking mouse settings :)"
 - 🇦🇺&nbsp;Carlos&nbsp;Dyonisio - "This is honestly worth 5x what I paid. Thank you! https://dyonis.io/"
 - 🇺🇸&nbsp;Erulastiel - "tummy time"
 - 🇨🇦&nbsp;Novy
