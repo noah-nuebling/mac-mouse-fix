@@ -40,6 +40,7 @@ Diese Leute haben viel mehr als den Standardpreis ausgegeben und mir einen **ung
 
 **August 2024**
 
+- 🇩🇪&nbsp;Robin
 - 🇺🇸&nbsp;Odie&nbsp;Coyote - "Amazing little App!"
 - 🇸🇪&nbsp;David&nbsp;Silverlind
 - 🇺🇸&nbsp;Ryan&nbsp;Mechelke - "Great app! Thanks for fixing Mac's frustratingly lacking mouse settings :)"
