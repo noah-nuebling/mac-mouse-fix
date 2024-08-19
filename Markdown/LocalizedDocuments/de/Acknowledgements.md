@@ -40,6 +40,7 @@ Diese Leute haben viel mehr als den Standardpreis ausgegeben und mir einen **ung
 
 **August 2024**
 
+- 🇨🇭&nbsp;Noé&nbsp;Gogniat
 - 🇦🇹&nbsp;Anonymous - "Thank you for that super helpful extension!"
 - 🇦🇺&nbsp;Bikram&nbsp;S - "Code is modern magic spells"
 - 🇩🇪&nbsp;Robin
