@@ -42,6 +42,7 @@ These people spent a lot more than the standard price and treated me to an **Inc
 
 **August 2024**
 
+- 🇦🇹&nbsp;Anonymous - "Thank you for that super helpful extension!"
 - 🇦🇺&nbsp;Bikram&nbsp;S - "Code is modern magic spells"
 - 🇩🇪&nbsp;Robin
 - 🇺🇸&nbsp;Odie&nbsp;Coyote - "Amazing little App!"
