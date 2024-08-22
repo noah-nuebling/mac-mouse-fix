@@ -2041,6 +2041,7 @@
 		4F4C73FB2C4FB570001D97C3 /* Queue.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Queue.m; sourceTree = "<group>"; };
 		4F4C73FC2C4FB5D2001D97C3 /* AnnotationUtility.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AnnotationUtility.h; sourceTree = "<group>"; };
 		4F4C73FD2C4FB5D2001D97C3 /* AnnotationUtility.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AnnotationUtility.m; sourceTree = "<group>"; };
+		4F52FAA42C775A57003C2821 /* Last State of Localization.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "Last State of Localization.md"; sourceTree = "<group>"; };
 		4F58FDFF2C56DE9B00926A00 /* Logging.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Logging.swift; sourceTree = "<group>"; };
 		4F58FE042C56EA1300926A00 /* TestLogging.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TestLogging.h; sourceTree = "<group>"; };
 		4F58FE052C56EA1300926A00 /* TestLogging.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TestLogging.m; sourceTree = "<group>"; };
@@ -2593,6 +2594,7 @@
 			children = (
 				4F18466A2C53AD6D00D5E835 /* XCLoc Screenshot Structure.md */,
 				4F909D1928A0C3D2009349A2 /* Localization Readme.md */,
+				4F52FAA42C775A57003C2821 /* Last State of Localization.md */,
 				4F0C003C2C525F8500C5D843 /* Misappropriating XCStrings.md */,
 			);
 			path = "Localization Notes";
