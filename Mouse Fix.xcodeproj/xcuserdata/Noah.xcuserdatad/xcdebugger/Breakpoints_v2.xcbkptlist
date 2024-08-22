@@ -68,12 +68,12 @@
             symbolName = "*0x104691bac">
             <Locations>
                <Location
-                  uuid = "ACC7838B-F96A-489D-830E-4626316689A9 - af430f596873dcd2"
+                  uuid = "ACC7838B-F96A-489D-830E-4626316689A9 - 94bfa2fd2d542345"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
-                  symbolName = "data"
-                  moduleName = "libRPAC.dylib"
+                  symbolName = "*0x104691bac"
+                  moduleName = "libsystem_pthread.dylib"
                   usesParentBreakpointCondition = "Yes">
                </Location>
             </Locations>
@@ -88,15 +88,6 @@
             continueAfterRunningActions = "No"
             symbolName = "*0x104691ba4">
             <Locations>
-               <Location
-                  uuid = "187147BD-8BDF-4FB3-B2EA-1A14A4F1B9FC - af430f596873dcd2"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "data"
-                  moduleName = "libRPAC.dylib"
-                  usesParentBreakpointCondition = "Yes">
-               </Location>
             </Locations>
          </BreakpointContent>
       </BreakpointProxy>

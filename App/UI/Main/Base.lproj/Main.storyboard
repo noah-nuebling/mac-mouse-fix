@@ -1812,7 +1812,9 @@ System Preferences &gt; Mouse &gt; Tracking speed </string>
                                                     <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                     <attributedString key="userComments">
-                                                        <fragment content="About &gt; Mac Mouse Fix Label"/>
+                                                        <fragment>
+                                                            <mutableString key="content">NOTE: About &gt; Mac Mouse Fix Label || NOTE TO SELF: We don't mark 'Mac Mouse Fix' and 'macOS' strings as 'Do Not Translate' since in some languages they might be adjusted. E.g. in Arabic, 'macOS' is usually referred to as 'نظام macOS' (= 'macOS system') inside the UI.</mutableString>
+                                                        </fragment>
                                                     </attributedString>
                                                 </textFieldCell>
                                             </textField>
