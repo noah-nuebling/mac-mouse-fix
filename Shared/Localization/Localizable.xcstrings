@@ -1752,31 +1752,31 @@
         },
         "ko" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "마우스 주 버튼(또는 왼쪽 마우스 버튼 및 마우스 1번 버튼)"
           }
         },
         "vi" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "Nút chính (còn gọi là Nút chuột trái hoặc Nút số 1)"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "鼠标主键（又称鼠标左键或鼠标按钮１）"
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "主要滑鼠按鈕（又稱滑鼠左側按鈕或滑鼠按鈕１）"
           }
         },
         "zh-HK" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "主要滑鼠按鈕（又稱滑鼠左側按鈕或滑鼠按鈕１）"
           }
         }
@@ -1799,31 +1799,31 @@
         },
         "ko" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "마우스 보조 버튼(또는 오른쪽 마우스 버튼 및 마우스 2번 버튼)"
           }
         },
         "vi" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "Nút phụ (còn gọi là Nút chuột phải hoặc Nút số 2)"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "鼠标辅键（又称鼠标右键或鼠标按钮２）"
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "輔助滑鼠按鈕（又稱滑鼠右側按鈕或滑鼠按鈕２）"
           }
         },
         "zh-HK" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "輔助滑鼠按鈕（又稱滑鼠右側按鈕或滑鼠按鈕２）"
           }
         }
@@ -4103,7 +4103,7 @@
         },
         "ko" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "사전에서 단어를 찾아보거나, Finder에서 파일을 훑어보는 등의 동작을 수행합니다.\n \n이는 Apple 트랙패드에서 세게 클릭하는 것과 같습니다."
           }
         },
@@ -4115,19 +4115,19 @@
         },
         "zh-Hans" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "查询词典、在Finder中“快速查看”等。\n \n作用相当于在Apple触控板上用单指用力点按。"
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "查詢辭典、於Finder中「快速查看」等。\n \n作用相當於在Apple觸控式軌跡板上用一指用力長按。"
           }
         },
         "zh-HK" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "查詢辭典、在Finder「快速查看」等。\n \n作用相當於在Apple觸控板上用一指用力長按。"
           }
         }
@@ -6077,7 +6077,7 @@
         },
         "ko" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "Command (⌘)"
           }
         },
@@ -6124,7 +6124,7 @@
         },
         "ko" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "Control (^)"
           }
         },
@@ -6171,7 +6171,7 @@
         },
         "ko" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "Option (⌥)"
           }
         },
@@ -6218,7 +6218,7 @@
         },
         "ko" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "Shift (⇧)"
           }
         },

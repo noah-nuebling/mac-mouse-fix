@@ -3396,31 +3396,31 @@
         },
         "ko" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "마우스 포인터를 '+' 영역 위에 두고, 마우스 버튼을 *클릭*하여 액션을 할당할 수 있습니다.\n*이중 클릭*이나 *클릭 및 드래그* [등의]() 동작도 가능합니다."
           }
         },
         "vi" : {
           "stringUnit" : {
-            "state" : "translated",
-            "value" : "Di chuyển con trỏ chuột vào trong ô '+', sau đó _kích_ một nút của chuột để gáng một hành động cho nó.  Bạn cũng có thể _kích đôi_, _kích và kéo_ và [nhiều hành động khác](). Đừng ngại khám phá nhé."
+            "state" : "needs_review",
+            "value" : "Di chuyển con trỏ chuột vào trong ô '+', sau đó *kích* một nút của chuột để gáng một hành động cho nó.  Bạn cũng có thể *kích đôi*, *kích và kéo* và [nhiều hành động khác](). Đừng ngại khám phá nhé."
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "移动鼠标指针到“+”区域内，然后点按鼠标按钮来指定动作。  您也可以连按、点按并拖移、执行[更多]()操作。"
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "移動滑鼠指標到「+」區域內，然後按一下滑鼠按鈕來指定動作。  您也可以按兩下、按一下並拖移、執行[更多]()動作。"
           }
         },
         "zh-HK" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "移動滑鼠指標到「+」區域內，然後按一下滑鼠按鈕來指定動作。  你也可以按兩下、按一下並拖移、執行[更多]()動作。"
           }
         }
