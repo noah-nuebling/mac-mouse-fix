@@ -150,7 +150,7 @@
         },
         "en" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "new",
             "value" : "Mac Mouse Fix was built with the help of these **great libraries**:\n\n- [ReactiveSwift](https://github.com/ReactiveCocoa/ReactiveSwift) - Streams of values over time tailored for Swift\n- [CocoaLumberjack](https://github.com/CocoaLumberjack/CocoaLumberjack) - Fast & simple, yet powerful & flexible logging\n- [Swift Markdown](https://github.com/apple/swift-markdown) - Parse, build, edit, and analyze Markdown documents\n- [Sparkle](https://github.com/sparkle-project/Sparkle) - A software update framework for macOS\n- [SnapKit](https://github.com/SnapKit/SnapKit) - Making Auto Layout easy on both iOS and macOS\n- [MASShortcut](https://github.com/shpakovski/MASShortcut) - API and user interface for recording, storing & using system-wide keyboard shortcuts\n- [CGSInternal](https://github.com/NUIKit/CGSInternal) - A collection of private CoreGraphics routines\n- Dependencies of Mac Mouse Fix's scripts:<br>\n  [Update and statistics scripts](https://github.com/noah-nuebling/mac-mouse-fix/blob/update-feed/requirements.txt) | [Markdown generator script]({repo_root}Markdown/Code/python_requirements.txt) | [.strings file sync script]({repo_root}Localization/Code/UpdateStrings/requirements.txt) | [\"State of Localization\" script]({repo_root}Localization/Code/StateOfLocalization/requirements.txt)\n- Dependencies of the [Mac Mouse Fix Feedback Assistant](https://noah-nuebling.github.io/mac-mouse-fix-feedback-assistant/) web app [here](https://github.com/noah-nuebling/mac-mouse-fix-feedback-assistant/blob/master/package.json)\n- Dependencies of the [Mac Mouse Fix Website](https://noah-nuebling.github.io/mac-mouse-fix-website/) are available [here](https://github.com/noah-nuebling/mac-mouse-fix-website/blob/main/package.json)"
           }
         }
@@ -167,7 +167,7 @@
         },
         "en" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "new",
             "value" : "## 🌏 Translations\n\nThanks for bringing Mac Mouse Fix to people around the globe!\n\n- 🇨🇳 Chinese translations by [@groverlynn](https://github.com/groverlynn)\n- 🇰🇷 Korean translations by [@jeongtae](https://github.com/jeongtae)\n- 🇻🇳 Vietnamese translations by [@nghlt](https://github.com/nghlt)"
           }
         }
@@ -801,7 +801,7 @@
         },
         "en" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "new",
             "value" : "Mac Mouse Fix does not have ads, and it does not collect any personal information about you.\n\nHowever, at the moment that you buy the app, the sales provider Gumroad.com collects some personal info, such as your email address, and this info is visible to me. This is necessary to be able to issue refunds, send a license key to your email, etc. I cannot turn this off. To learn more about the data collected when you buy Mac Mouse Fix, see the [Gumroad Privacy Policy](https://gumroad.com/privacy)."
           }
         }
