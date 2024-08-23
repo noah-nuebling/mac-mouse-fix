@@ -7939,7 +7939,6 @@
 				"zh-Hans",
 				ko,
 				vi,
-				af,
 				ar,
 				ca,
 				cs,
@@ -7958,7 +7957,6 @@
 				"pt-PT",
 				ro,
 				ru,
-				"sr-Latn",
 				es,
 				sv,
 				tr,
@@ -7966,14 +7964,6 @@
 				th,
 				id,
 				hi,
-				ne,
-				bn,
-				fa,
-				am,
-				my,
-				km,
-				sw,
-				ha,
 			);
 			mainGroup = 4FCECD7721092354001F1078;
 			packageReferences = (
