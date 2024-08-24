@@ -42,6 +42,7 @@ These people spent a lot more than the standard price and treated me to an **Inc
 
 **August 2024**
 
+- 🇺🇸&nbsp;Brandonrike
 - 🇨🇦&nbsp;Matteo&nbsp;Veglia - "Finally I can delete Logi Options+"
 - 🇺🇸&nbsp;Kohl
 - 🇨🇭&nbsp;Noé&nbsp;Gogniat

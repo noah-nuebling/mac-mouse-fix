@@ -40,6 +40,7 @@ Diese Leute haben viel mehr als den Standardpreis ausgegeben und mir einen **ung
 
 **August 2024**
 
+- 🇺🇸&nbsp;Brandonrike
 - 🇨🇦&nbsp;Matteo&nbsp;Veglia - "Finally I can delete Logi Options+"
 - 🇺🇸&nbsp;Kohl
 - 🇨🇭&nbsp;Noé&nbsp;Gogniat
