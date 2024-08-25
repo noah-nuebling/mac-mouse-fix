@@ -40,6 +40,7 @@ Diese Leute haben viel mehr als den Standardpreis ausgegeben und mir einen **ung
 
 **August 2024**
 
+- 🇺🇸&nbsp;Ryan&nbsp;Ludemann
 - 🇯🇵&nbsp;Tatsuma&nbsp;Hashizume
 - 🇺🇸&nbsp;Brandonrike
 - 🇨🇦&nbsp;Matteo&nbsp;Veglia - "Finally I can delete Logi Options+"
