@@ -740,13 +740,13 @@ static NSString *effectNameForRowDict(NSDictionary * _Nonnull rowDict) {
         /// Declare map
         
         NSDictionary *map = @{
-            @[@(1), @"click"]:  NSLocalizedString(@"trigger.click.1",   @"First draft: Click %@ || NOTE: %@ will be replaced by a button name (or by nothing, if the button name can be inferred from context.) || EXAMPLE where %@ is 'Button 5': ⌥⌘ Double Click Button 4 + Click Button 5 || NOTE 2: Most of the substrings that are used to build the Action Table Trigger Strings (this is one of those substrings) are capitalized in English because it's common to use 'title case' there. In your language, 'title case' might not be a thing, and so you might not want to capitalize these strings. The first letter of the trigger string will be programmatically capitalized in any language."),
+            @[@(1), @"click"]:  NSLocalizedString(@"trigger.substring.click.1",   @"First draft: Click %@ || NOTE: This 'substring' will be combined with other substrings to form the 'Action Table Trigger Strings' which show up on the left side of the Action Table || NOTE 2: '%@' will be replaced by a mouse button name (or by nothing, if the button name can be inferred from context.) || EXAMPLE of an Action Table Trigger String, which is composed of this and other substrings, where '%@' in this substring was replaced by 'Button 5': ⌥⌘ Double Click Button 4 + Click Button 5 || NOTE 3: Most of the substrings that are used to build the Action Table Trigger Strings (this is one of those substrings) are capitalized in English because it's common to use 'title case' there. In your language, 'title case' might not be a thing, and so you might not want to capitalize these substrings. The first letter of the Action Table Trigger String will be programmatically capitalized in any language."),
             
-            @[@(2), @"click"]:  NSLocalizedString(@"trigger.click.2",   @"First draft: Double Click %@"),
-            @[@(3), @"click"]:  NSLocalizedString(@"trigger.click.3",   @"First draft: Triple Click %@"),
-            @[@(1), @"hold"]:   NSLocalizedString(@"trigger.hold.1",    @"First draft: Hold %@"),
-            @[@(2), @"hold"]:   NSLocalizedString(@"trigger.hold.2",    @"First draft: Double Click and Hold %@"),
-            @[@(3), @"hold"]:   NSLocalizedString(@"trigger.hold.3",    @"First draft: Triple Click and Hold %@"),
+            @[@(2), @"click"]:  NSLocalizedString(@"trigger.substring.click.2",   @"First draft: Double Click %@ || NOTE: You might not want to capitalize this and other strings whose key starts with 'trigger.substring.' We only capitalize these strings in English because we use 'title case' there, which is not common in most languages aside from English. For more info, see the comments on 'trigger.substring.click.1'"),
+            @[@(3), @"click"]:  NSLocalizedString(@"trigger.substring.click.3",   @"First draft: Triple Click %@"),
+            @[@(1), @"hold"]:   NSLocalizedString(@"trigger.substring.hold.1",    @"First draft: Hold %@"),
+            @[@(2), @"hold"]:   NSLocalizedString(@"trigger.substring.hold.2",    @"First draft: Double Click and Hold %@"),
+            @[@(3), @"hold"]:   NSLocalizedString(@"trigger.substring.hold.3",    @"First draft: Triple Click and Hold %@"),
         };
         
         /// Get string
@@ -765,6 +765,11 @@ static NSString *effectNameForRowDict(NSDictionary * _Nonnull rowDict) {
         /// Drag or scroll trigger
         ///
         
+        /// Note:
+        /// - 26.08.2024: The 'Action Table Trigger String' and 'substring' and 'title case' concepts and the consequences for how the substrings should be captialized are a bit hard to explain to localizers.
+        ///             And I saw the Brazilian, French and Vietnamese localizers all captialize the substrings, even though none of those languages have something akin to 'title case'.
+        ///             Today, we added `.substring.` in the keys and and added very extensive comments to hopefully help with that.
+        
         /// TODO: Comment below is obsolete. Remove.
         /// We need part of the modification precondition to form the main trigger string here.
         ///  E.g. if our precondition for a modified drag is single click button 3, followed by double click button 4, we want the string to be "Click Middle Button + Double Click and Drag Button 4", where the "Click Middle Button + " substring follows the format of a regular modification precondition string (we compute those further down) but the "Double Click and Drag Button 4" substring, which is also called the "trigger string" follows a different format which we compute here.
@@ -774,17 +779,17 @@ static NSString *effectNameForRowDict(NSDictionary * _Nonnull rowDict) {
         /// Define maps
         
         NSDictionary *map = @{
-            @[@(1), @"_drag"]:      NSLocalizedString(@"trigger.drag.1",    @"First draft: Click and Drag %@ || Note: %@ will be a button name || example where %@ is 'Button 5': ⌥⌘ Triple Click Button 4 + Click and Drag Button 5"),
-            @[@(2), @"_drag"]:      NSLocalizedString(@"trigger.drag.2",    @"First draft: Double Click and Drag %@"),
-            @[@(3), @"_drag"]:      NSLocalizedString(@"trigger.drag.3",    @"First draft: Triple Click and Drag %@"),
-            @[@(1), @"_scroll"]:    NSLocalizedString(@"trigger.scroll.1",  @"First draft: Click and Scroll %@"),
-            @[@(2), @"_scroll"]:    NSLocalizedString(@"trigger.scroll.2",  @"First draft: Double Click and Scroll %@"),
-            @[@(3), @"_scroll"]:    NSLocalizedString(@"trigger.scroll.3",  @"First draft: Triple Click and Scroll %@"),
+            @[@(1), @"_drag"]:      NSLocalizedString(@"trigger.substring.drag.1",    @"First draft: Click and Drag %@ || Note: %@ will be a button name || example where %@ is 'Button 5': ⌥⌘ Triple Click Button 4 + Click and Drag Button 5"),
+            @[@(2), @"_drag"]:      NSLocalizedString(@"trigger.substring.drag.2",    @"First draft: Double Click and Drag %@"),
+            @[@(3), @"_drag"]:      NSLocalizedString(@"trigger.substring.drag.3",    @"First draft: Triple Click and Drag %@"),
+            @[@(1), @"_scroll"]:    NSLocalizedString(@"trigger.substring.scroll.1",  @"First draft: Click and Scroll %@"),
+            @[@(2), @"_scroll"]:    NSLocalizedString(@"trigger.substring.scroll.2",  @"First draft: Double Click and Scroll %@"),
+            @[@(3), @"_scroll"]:    NSLocalizedString(@"trigger.substring.scroll.3",  @"First draft: Triple Click and Scroll %@"),
         };
         
         NSDictionary *onlyFlagsMap = @{
-            @"_drag":   NSLocalizedString(@"trigger.drag.flags", @"First draft: and Drag || Note: This will be used for Drag Actions that only need keyboard modifiers to be activated - not mouse buttons || Example: ⌥⌘ and Drag"),
-            @"_scroll": NSLocalizedString(@"trigger.scroll.flags", @"First draft: and Scroll || Example: ⌥⌘ and Scroll"),
+            @"_drag":   NSLocalizedString(@"trigger.substring.drag.flags", @"First draft: and Drag || Note: This will be used for Drag Actions that only need keyboard modifiers to be activated - not mouse buttons || Example: ⌥⌘ and Drag"),
+            @"_scroll": NSLocalizedString(@"trigger.substring.scroll.flags", @"First draft: and Scroll || Example: ⌥⌘ and Scroll"),
         };
         
         /// Use maps
@@ -803,9 +808,12 @@ static NSString *effectNameForRowDict(NSDictionary * _Nonnull rowDict) {
         tr = tr_.attributed;
         
         /// Slighly emphasize `Drag` and `Scroll` for better legibility
+        ///     Notes:
+        ///     - 26.08.2024: I saw the French and Brazillian loclizers not capitalize and spell the drag-particles exactly as they are in the trigger.substring.[...] strings.
+        ///                 So we added more extensive comments and added `.z.` in the key so that translators see the drag-particles *after* the trigger.substring.[...] strings - hopefully making it more understandable how the particles affect the substrings.
         
-        NSString *dragParticle =    NSLocalizedString(@"trigger.drag-particle",  @"First draft: Drag || Note: This substring will be emphasized in drag trigger strings like 'Double Click and Drag %@'. Make sure that spelling and capitalization matches exactly for the emphasis to work.");
-        NSString *scrollParticle =  NSLocalizedString(@"trigger.scroll-particle", @"First draft: Scroll || Note: This substring will be emphasized in scroll trigger strings like 'Triple Click and Scroll %@'. Make sure that spelling and capitalization matches exactly for the emphasis to work.");
+        NSString *dragParticle =    NSLocalizedString(@"trigger.z.drag-particle",  @"First draft: Drag || NOTE: This word will be emphasized in 'Action Table Trigger Strings' such as 'Double Click and Drag %@'. For the emphasis to work, make sure that spelling and capitalization matches *exactly* with how this word is used in strings whose keys begin with 'trigger.substring.drag.[...]'");
+        NSString *scrollParticle =  NSLocalizedString(@"trigger.z.scroll-particle", @"First draft: Scroll || NOTE: This word will be emphasized in 'Action Table Trigger Strings' such as 'Triple Click and Scroll %@'. For the emphasis to work, make sure that spelling and capitalization matches *exactly* with how this word is used in the strings whose keys begin with 'trigger.substring.scroll.[...]'");
         
         tr = [tr attributedStringByAddingSemiBoldForSubstring:dragParticle];
         tr = [tr attributedStringByAddingSemiBoldForSubstring:scrollParticle];
