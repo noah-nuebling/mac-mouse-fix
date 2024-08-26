@@ -23,6 +23,12 @@
             "value" : "포인터"
           }
         },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ponteiro"
+          }
+        },
         "vi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -70,6 +76,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "<Scroll precisely by moving the scroll wheel slowly>"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "<Role com precisão movendo a roda de rolagem lentamente>"
           }
         },
         "vi" : {
@@ -121,6 +133,12 @@
             "value" : "실행 취소"
           }
         },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Desfazer"
+          }
+        },
         "vi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -169,6 +187,12 @@
             "value" : "커뮤니티에서 질문 또는 정보 얻기..."
           }
         },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Veja os Guias ou pergunte à Comunidade..."
+          }
+        },
         "vi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -215,6 +239,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "가속도:"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aceleração:"
           }
         },
         "vi" : {
@@ -266,6 +296,12 @@
             "value" : "업데이트 확인..."
           }
         },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Verificar atualizações..."
+          }
+        },
         "vi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -312,6 +348,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "<Mission Control and Spaces>"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "<Mission Control e Spaces>"
           }
         },
         "vi" : {
@@ -363,6 +405,12 @@
             "value" : "끔"
           }
         },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Desligar"
+          }
+        },
         "vi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -409,6 +457,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "정밀하게 스크롤"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Precisão"
           }
         },
         "vi" : {
@@ -459,6 +513,12 @@
             "value" : "기능개선 요청하기"
           }
         },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Solicite um Recurso"
+          }
+        },
         "vi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -505,6 +565,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "삭제"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Deletar"
           }
         },
         "vi" : {
@@ -555,6 +621,12 @@
             "value" : "수평 스크롤"
           }
         },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Rolar horizontalmente"
+          }
+        },
         "vi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -601,6 +673,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "편집"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Editar"
           }
         },
         "vi" : {
@@ -651,6 +729,12 @@
             "value" : "법적 공지"
           }
         },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Reconhecimentos"
+          }
+        },
         "vi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -699,6 +783,12 @@
             "value" : "보통"
           }
         },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Regular"
+          }
+        },
         "vi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -745,6 +835,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "<Version - (-)>"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "<Versão - (-)>"
           }
         },
         "vi" : {
@@ -796,6 +892,12 @@
             "value" : "부드럽게"
           }
         },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Alto"
+          }
+        },
         "vi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -842,6 +944,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "정밀 스크롤"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Role com Precisão"
           }
         },
         "vi" : {
@@ -892,6 +1000,12 @@
             "value" : "Safari에서 수평 스크롤 등의 동작을 통해 페이지 간에\n이동합니다."
           }
         },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mova-se entre as páginas do Safari rolando horizontalmente e muito mais"
+          }
+        },
         "vi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -938,6 +1052,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "부드러운 스크롤과 같은 기능을 손쉽게 켜거나\n끌 수 있습니다."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Permite ativar ou desativar rapidamente recursos como\nrolagem suave"
           }
         },
         "vi" : {
@@ -988,6 +1108,12 @@
             "value" : "메인 메뉴"
           }
         },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Menu Principal"
+          }
+        },
         "vi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1034,6 +1160,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "모두 앞으로 가져오기"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Trazer tudo para frente"
           }
         },
         "vi" : {
@@ -1084,6 +1216,12 @@
             "value" : "Mac Mouse Fix는 창을 닫아도 동작합니다."
           }
         },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "O Mac Mouse Fix continuará ativo mesmo depois que você fechá-lo"
+          }
+        },
         "vi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1127,6 +1265,12 @@
           }
         },
         "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mac Mouse Fix"
+          }
+        },
+        "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Mac Mouse Fix"
@@ -1180,6 +1324,12 @@
             "value" : "다시 알리지 않기"
           }
         },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Não me lembre mais disso"
+          }
+        },
         "vi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1228,6 +1378,12 @@
             "value" : "빠름"
           }
         },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Alto"
+          }
+        },
         "vi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1274,6 +1430,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "보통"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Médio"
           }
         },
         "vi" : {
@@ -1325,6 +1487,12 @@
             "value" : "Mac Mouse Fix 가리기"
           }
         },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ocultar o Mac Mouse Fix"
+          }
+        },
         "vi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1373,6 +1541,12 @@
             "value" : "버그 제보하기"
           }
         },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Reportar um problema"
+          }
+        },
         "vi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1419,6 +1593,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "<Initial Tab Controller>"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "<Controlador de guia inicial>"
           }
         },
         "vi" : {
@@ -1470,6 +1650,12 @@
             "value" : "정보"
           }
         },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sobre"
+          }
+        },
         "vi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1513,6 +1699,12 @@
           }
         },
         "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "macOS"
+          }
+        },
+        "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "macOS"
@@ -1567,6 +1759,12 @@
             "value" : "<Day 2/14 of your test period>"
           }
         },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "<Este é o dia 2/14 do seu período de testes>"
+          }
+        },
         "vi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1614,6 +1812,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Mac Mouse Fix 구입..."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Adquirir o Mac Mouse Fix..."
           }
         },
         "vi" : {
@@ -1664,6 +1868,12 @@
             "value" : "버튼"
           }
         },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Botões"
+          }
+        },
         "vi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1710,6 +1920,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "낮음"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Baixo"
           }
         },
         "vi" : {
@@ -1810,6 +2026,12 @@
             "value" : "도움말"
           }
         },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ajuda"
+          }
+        },
         "vi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1856,6 +2078,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "보통"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Médio"
           }
         },
         "vi" : {
@@ -1906,6 +2134,12 @@
             "value" : "일반"
           }
         },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Geral"
+          }
+        },
         "vi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1952,6 +2186,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "고속 스크롤"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Role rapidamente"
           }
         },
         "vi" : {
@@ -2002,6 +2242,12 @@
             "value" : "도움말 보기"
           }
         },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Obter ajuda"
+          }
+        },
         "vi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2048,6 +2294,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "모두 보기"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Exibir tudo"
           }
         },
         "vi" : {
@@ -2098,6 +2350,12 @@
             "value" : "윈도우"
           }
         },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Janela"
+          }
+        },
         "vi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2144,6 +2402,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "도움말"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ajuda"
           }
         },
         "vi" : {
@@ -2194,6 +2458,12 @@
             "value" : "느림"
           }
         },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Baixo"
+          }
+        },
         "vi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2237,6 +2507,12 @@
           }
         },
         "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "macOS"
+          }
+        },
+        "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "macOS"
@@ -2339,6 +2615,12 @@
             "value" : "<Initial>"
           }
         },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "<Inicial>"
+          }
+        },
         "vi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2388,6 +2670,12 @@
             "value" : "방향 반전"
           }
         },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Direção reversa"
+          }
+        },
         "vi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2434,6 +2722,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "<Effect>"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "<Efeito>"
           }
         },
         "vi" : {
@@ -2485,6 +2779,12 @@
             "value" : "서비스"
           }
         },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Serviços"
+          }
+        },
         "vi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2531,6 +2831,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "확대/축소"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aumentar ou diminuir zoom"
           }
         },
         "vi" : {
@@ -2581,6 +2887,12 @@
             "value" : "낮음"
           }
         },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Baixo"
+          }
+        },
         "vi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2625,6 +2937,12 @@
           }
         },
         "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mac Mouse Fix"
+          }
+        },
+        "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Mac Mouse Fix"
@@ -2678,6 +2996,12 @@
             "value" : "옵션..."
           }
         },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Opções..."
+          }
+        },
         "vi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2724,6 +3048,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "복사하기"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Copiar"
           }
         },
         "vi" : {
@@ -2774,6 +3104,12 @@
             "value" : "실행 복귀"
           }
         },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Refazer"
+          }
+        },
         "vi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2820,6 +3156,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "메뉴 막대에서 보기"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mostrar na Barra de Menus"
           }
         },
         "vi" : {
@@ -2870,6 +3212,12 @@
             "value" : "윈도우"
           }
         },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Janela"
+          }
+        },
         "vi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2913,6 +3261,12 @@
           }
         },
         "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mac Mouse Fix"
+          }
+        },
+        "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Mac Mouse Fix"
@@ -2966,6 +3320,12 @@
             "value" : "스크롤"
           }
         },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Rolagem"
+          }
+        },
         "vi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3012,6 +3372,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "<Click and Drag Button 3>"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "<Clique e arraste o Botão 3>"
           }
         },
         "vi" : {
@@ -3063,6 +3429,12 @@
             "value" : "속도:"
           }
         },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Velocidade:"
+          }
+        },
         "vi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3109,6 +3481,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "포인터"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ponteiro"
           }
         },
         "vi" : {
@@ -3160,6 +3538,12 @@
             "value" : "기본값으로 재설정..."
           }
         },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Restaurar padrões..."
+          }
+        },
         "vi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3206,6 +3590,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "편집"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Editar"
           }
         },
         "vi" : {
@@ -3256,6 +3646,12 @@
             "value" : "베타 버전 가져오기"
           }
         },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Testar versões Beta"
+          }
+        },
         "vi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3302,6 +3698,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "버튼"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Botões"
           }
         },
         "vi" : {
@@ -3400,6 +3802,12 @@
             "value" : "마우스 포인터를 '+' 영역 위에 두고, 마우스 버튼을 *클릭*하여 액션을 할당할 수 있습니다.\n*이중 클릭*이나 *클릭 및 드래그* [등의]() 동작도 가능합니다."
           }
         },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mova o ponteiro do mouse dentro do campo '+' e *Clique* em um botão do mouse para atribuir uma ação a ele.\nVocê também pode dar *Clique Duplo*, *Arrastar e Soltar* e [mais]()."
+          }
+        },
         "vi" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -3446,6 +3854,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "트랙패드 시뮬레이션"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Simulação de Trackpad"
           }
         },
         "vi" : {
@@ -3496,6 +3910,12 @@
             "value" : "최소화"
           }
         },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Minimizar"
+          }
+        },
         "vi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3542,6 +3962,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "<Trigger>"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "<Acionar>"
           }
         },
         "vi" : {
@@ -3593,6 +4019,12 @@
             "value" : "전체 선택"
           }
         },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Selecionar tudo"
+          }
+        },
         "vi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3641,6 +4073,12 @@
             "value" : "웹사이트 방문하기"
           }
         },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Visite o site"
+          }
+        },
         "vi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3687,6 +4125,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "끔"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Desligar"
           }
         },
         "vi" : {
@@ -3738,6 +4182,12 @@
             "value" : "Noah Nuebling 제작"
           }
         },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Criado por Noah Nuebling"
+          }
+        },
         "vi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3784,6 +4234,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "<Box>"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "<Campo>"
           }
         },
         "vi" : {
@@ -3835,6 +4291,12 @@
             "value" : "이메일 보내기"
           }
         },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Envie uma mensagem"
+          }
+        },
         "vi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3883,6 +4345,12 @@
             "value" : "스크롤"
           }
         },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Rolagem"
+          }
+        },
         "vi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3929,6 +4397,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "<⌘⇧⌥⌃ + Triple Click and Drag Button 3>"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "<⌘⇧⌥⌃ + Clique Triplo e Arrastar o Botão 3>"
           }
         },
         "vi" : {
@@ -3980,6 +4454,12 @@
             "value" : "오려두기"
           }
         },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cortar"
+          }
+        },
         "vi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4026,6 +4506,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "일반"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Geral"
           }
         },
         "vi" : {
@@ -4076,6 +4562,12 @@
             "value" : "기타 가리기"
           }
         },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ocultar outros"
+          }
+        },
         "vi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4122,6 +4614,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Mac Mouse Fix 사용"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ativar o Mac Mouse Fix"
           }
         },
         "vi" : {
@@ -4172,6 +4670,12 @@
             "value" : "닫기"
           }
         },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Fechar"
+          }
+        },
         "vi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4220,6 +4724,12 @@
             "value" : "붙여넣기"
           }
         },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Colar"
+          }
+        },
         "vi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4263,6 +4773,12 @@
           }
         },
         "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "<0.6x>"
+          }
+        },
+        "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "<0.6x>"
@@ -4317,6 +4833,12 @@
             "value" : "이 창을 열 때마다 업데이트를 확인합니다."
           }
         },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Você será notificado sobre atualizações ao abrir\nesta janela"
+          }
+        },
         "vi" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -4363,6 +4885,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "높음"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Alto"
           }
         },
         "vi" : {
@@ -4414,6 +4942,12 @@
             "value" : "부드러운 스크롤:"
           }
         },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Suavidade:"
+          }
+        },
         "vi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4460,6 +4994,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "업데이트 확인"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Verificar atualizações"
           }
         },
         "vi" : {
@@ -4510,6 +5050,12 @@
             "value" : "밀크쉐이크 사주기 :)"
           }
         },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Me compre um Milkshake :)"
+          }
+        },
         "vi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4556,6 +5102,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Mac Mouse Fix에 관하여"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sobre o Mac Mouse Fix"
           }
         },
         "vi" : {
@@ -4606,6 +5158,12 @@
             "value" : "Mac Mouse Fix 종료"
           }
         },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Fechar o Mac Mouse Fix"
+          }
+        },
         "vi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4652,6 +5210,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "보조 키:"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Modificadores de teclado:"
           }
         },
         "vi" : {
@@ -4702,6 +5266,12 @@
             "value" : "정보"
           }
         },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sobre"
+          }
+        },
         "vi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4748,6 +5318,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "<Text Cell>"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "<Célula de Texto>"
           }
         },
         "vi" : {
@@ -4799,6 +5375,12 @@
             "value" : "높음"
           }
         },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Alto"
+          }
+        },
         "vi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4848,6 +5430,12 @@
             "value" : "서비스"
           }
         },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Serviços"
+          }
+        },
         "vi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4894,6 +5482,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "민감도:"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sensibilidade:"
           }
         },
         "vi" : {
@@ -4945,6 +5539,12 @@
             "value" : "라이센스 활성화..."
           }
         },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ativar Licença..."
+          }
+        },
         "vi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4993,6 +5593,12 @@
             "value" : "보통"
           }
         },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Médio"
+          }
+        },
         "vi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -5037,6 +5643,12 @@
           }
         },
         "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mac Mouse Fix"
+          }
+        },
+        "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Mac Mouse Fix"
@@ -5090,6 +5702,12 @@
             "value" : "확대/축소"
           }
         },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zoom"
+          }
+        },
         "vi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -5136,6 +5754,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "GitHub에서 보기"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Confira no GitHub"
           }
         },
         "vi" : {
@@ -5186,6 +5810,12 @@
             "value" : "<Button X>"
           }
         },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "<Botão X>"
+          }
+        },
         "vi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -5233,6 +5863,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "<Text Cell>"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "<Célula de Texto>"
           }
         },
         "vi" : {

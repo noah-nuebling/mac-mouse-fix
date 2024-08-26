@@ -23,6 +23,12 @@
             "value" : "뒤로"
           }
         },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Voltar"
+          }
+        },
         "vi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -69,6 +75,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "<Activate License>"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "<Ativar Licença>"
           }
         },
         "vi" : {
@@ -118,6 +130,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "라이센스 키를 입력하세요."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Digite a sua Chave de Ativação"
           }
         },
         "vi" : {

@@ -22,6 +22,12 @@
             "value" : "'보안 및 개인 정보 보호' 설정 열기"
           }
         },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Abrir 'Privacidade e Segurança' em Ajustes do Sistema"
+          }
+        },
         "vi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -67,6 +73,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "이미 **3개 버튼**의 마우스에 해당하는 기본 설정을 사용 중입니다."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Você **já está usando** a configuração padrão para mouses com **3 botões**"
           }
         },
         "vi" : {
@@ -116,6 +128,12 @@
             "value" : "이미 **5개 버튼**의 마우스에 해당하는 기본 설정을 사용 중입니다."
           }
         },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Você **já está usando** a configuração padrão para mouses com **5 botões**"
+          }
+        },
         "vi" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -161,6 +179,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "app-version"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Versão %@"
           }
         },
         "vi" : {
@@ -211,6 +235,12 @@
             "value" : "<되감기 키>"
           }
         },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "<Retroceder>"
+          }
+        },
         "vi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -257,6 +287,12 @@
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
+            "value" : "⇪"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
             "value" : "⇪"
           }
         },
@@ -309,6 +345,12 @@
             "value" : "<빨리감기 키>"
           }
         },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "<Avanço Rápido>"
+          }
+        },
         "vi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -356,6 +398,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "<이모티콘 키>"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "<Seletor de Emoji>"
           }
         },
         "vi" : {
@@ -407,6 +455,12 @@
             "value" : "<키보드 밝기 증가 키>"
           }
         },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "<Aumentar o Brilho do Teclado>"
+          }
+        },
         "vi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -454,6 +508,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "<키보드 밝기 감소 키>"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "<Diminuir o Brilho do Teclado>"
           }
         },
         "vi" : {
@@ -505,6 +565,12 @@
             "value" : "<Spotlight 키>"
           }
         },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "<Spotlight>"
+          }
+        },
         "vi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -552,6 +618,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "<마이크 키>"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "<Ditado>"
           }
         },
         "vi" : {
@@ -603,6 +675,12 @@
             "value" : "<방해금지 모드 키>"
           }
         },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "<Não Perturbe>"
+          }
+        },
         "vi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -650,6 +728,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "<재생 또는 일시정지 키>"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "<Play ou Pausa>"
           }
         },
         "vi" : {
@@ -701,6 +785,12 @@
             "value" : "<전원 키>"
           }
         },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "<Botão de Energia>"
+          }
+        },
         "vi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -748,6 +838,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "<Mission Control 키>"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "<Mission Control>"
           }
         },
         "vi" : {
@@ -799,6 +895,12 @@
             "value" : "<음소거 키>"
           }
         },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "<Mudo>"
+          }
+        },
         "vi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -846,6 +948,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "<음량 감소 키>"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "<Diminuir Volume>"
           }
         },
         "vi" : {
@@ -897,6 +1005,12 @@
             "value" : "<음량 증가 키>"
           }
         },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "<Aumentar Volume>"
+          }
+        },
         "vi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -944,6 +1058,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "<Launchpad 키>"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "<Launchpad>"
           }
         },
         "vi" : {
@@ -995,6 +1115,12 @@
             "value" : "<밝기 증가 키>"
           }
         },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "<Aumentar o Brilho>"
+          }
+        },
         "vi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1042,6 +1168,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "<밝기 감소 키>"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "<Diminuir o Brilho>"
           }
         },
         "vi" : {
@@ -1093,6 +1225,12 @@
             "value" : "<설명 없는 키>"
           }
         },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "<Tecla sem Descrição>"
+          }
+        },
         "vi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1139,6 +1277,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "취소"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Cancelar"
           }
         },
         "vi" : {
@@ -1189,6 +1333,12 @@
             "value" : "베타 버전을 사용하면 여러 문제를 겪을 수 있습니다.\n문제를 발견하시는 경우 의견을 보내주세요.\n감사합니다!"
           }
         },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "As versões de Testes (também chamadas de Beta) podem apresentar falhas.\nCaso encontre alguma, por favor envie um Feedback.\nObrigado!"
+          }
+        },
         "vi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1235,6 +1385,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "베타 버전 가져오기"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Obter versões de Teste"
           }
         },
         "vi" : {
@@ -1285,6 +1441,12 @@
             "value" : "베타 버전 가져오기"
           }
         },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Deseja obter as versões de Teste?"
+          }
+        },
         "vi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1331,6 +1493,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "%@ 클릭 +"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Clique %@ +"
           }
         },
         "vi" : {
@@ -1380,6 +1548,12 @@
             "value" : "%@ 이중 클릭 +"
           }
         },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Duplo Clique %@ +"
+          }
+        },
         "vi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1425,6 +1599,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "%@ 삼중 클릭 +"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Triplo Clique %@ +"
           }
         },
         "vi" : {
@@ -1474,6 +1654,12 @@
             "value" : "가운데 버튼"
           }
         },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Botão do Meio"
+          }
+        },
         "vi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1519,6 +1705,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "%@번 버튼"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Botão %@"
           }
         },
         "vi" : {
@@ -1568,6 +1760,12 @@
             "value" : "주 버튼"
           }
         },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Botão Primário"
+          }
+        },
         "vi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1613,6 +1811,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "보조 버튼"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Botão Secundário"
           }
         },
         "vi" : {
@@ -1662,6 +1866,12 @@
             "value" : "마우스 가운데 버튼(또는 스크롤 휠 버튼 및 마우스 3번 버튼)"
           }
         },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Botão do Meio do Mouse (também chamado de Botão da de Rolagem ou 3º Botão do Mouse)"
+          }
+        },
         "vi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1707,6 +1917,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "마우스 %@번 버튼"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Botão do Mouse %@"
           }
         },
         "vi" : {
@@ -1756,6 +1972,12 @@
             "value" : "마우스 주 버튼(또는 왼쪽 마우스 버튼 및 마우스 1번 버튼)"
           }
         },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Botão Primário do Mouse (também chamado de Botão Esquerdo ou 1º Botão do Mouse)"
+          }
+        },
         "vi" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -1803,6 +2025,12 @@
             "value" : "마우스 보조 버튼(또는 오른쪽 마우스 버튼 및 마우스 2번 버튼)"
           }
         },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Botão Secundário do Mouse (também chamado de Botão Direito ou 2º Botão do Mouse)"
+          }
+        },
         "vi" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -1848,6 +2076,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "5개 이상의 버튼이 있는 마우스를 사용하면, Mac Mouse Fix의 기능을 최대로 활용할 수 있습니다!"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Obtenha um Mouse com mais de 5 botões para desbloquear todo o potencial do Mac Mouse Fix!"
           }
         },
         "vi" : {
@@ -1898,6 +2132,12 @@
             "value" : "확인"
           }
         },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "OK"
+          }
+        },
         "vi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1944,6 +2184,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "사용자 마우스는 버튼이 3개입니다."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Seu Mouse tem apenas 3 botões"
           }
         },
         "vi" : {
@@ -2061,6 +2307,39 @@
                   "zero" : {
                     "stringUnit" : {
                       "state" : "needs_review",
+                      "value" : ""
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%@ %#@captured@"
+          },
+          "substitutions" : {
+            "captured" : {
+              "formatSpecifier" : "d",
+              "variations" : {
+                "plural" : {
+                  "one" : {
+                    "stringUnit" : {
+                      "state" : "needs_review",
+                      "value" : "foi capturado pelo Mac Mouse Fix."
+                    }
+                  },
+                  "other" : {
+                    "stringUnit" : {
+                      "state" : "needs_review",
+                      "value" : "foram capturados pelo Mac Mouse Fix."
+                    }
+                  },
+                  "zero" : {
+                    "stringUnit" : {
+                      "state" : "translated",
                       "value" : ""
                     }
                   }
@@ -2281,6 +2560,39 @@
             }
           }
         },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%#@hint@"
+          },
+          "substitutions" : {
+            "hint" : {
+              "formatSpecifier" : "d",
+              "variations" : {
+                "plural" : {
+                  "one" : {
+                    "stringUnit" : {
+                      "state" : "needs_review",
+                      "value" : "Outros aplicativos não veem mais isso."
+                    }
+                  },
+                  "other" : {
+                    "stringUnit" : {
+                      "state" : "needs_review",
+                      "value" : "Outros aplicativos não conseguem mais vê-los."
+                    }
+                  },
+                  "zero" : {
+                    "stringUnit" : {
+                      "state" : "translated",
+                      "value" : ""
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
         "vi" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -2436,6 +2748,12 @@
             "value" : "[더 알아보기](https://github.com/noah-nuebling/mac-mouse-fix/discussions/112)"
           }
         },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Saber mais"
+          }
+        },
         "vi" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -2550,6 +2868,39 @@
                   "zero" : {
                     "stringUnit" : {
                       "state" : "needs_review",
+                      "value" : ""
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ %#@uncaptured@"
+          },
+          "substitutions" : {
+            "uncaptured" : {
+              "formatSpecifier" : "d",
+              "variations" : {
+                "plural" : {
+                  "one" : {
+                    "stringUnit" : {
+                      "state" : "needs_review",
+                      "value" : "não é mais capturado pelo Mac Mouse Fix."
+                    }
+                  },
+                  "other" : {
+                    "stringUnit" : {
+                      "state" : "needs_review",
+                      "value" : "não são mais capturados pelo Mac Mouse Fix."
+                    }
+                  },
+                  "zero" : {
+                    "stringUnit" : {
+                      "state" : "translated",
                       "value" : ""
                     }
                   }
@@ -2768,6 +3119,39 @@
                   "zero" : {
                     "stringUnit" : {
                       "state" : "needs_review",
+                      "value" : ""
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%#@hint@"
+          },
+          "substitutions" : {
+            "hint" : {
+              "formatSpecifier" : "d",
+              "variations" : {
+                "plural" : {
+                  "one" : {
+                    "stringUnit" : {
+                      "state" : "new",
+                      "value" : ""
+                    }
+                  },
+                  "other" : {
+                    "stringUnit" : {
+                      "state" : "new",
+                      "value" : ""
+                    }
+                  },
+                  "zero" : {
+                    "stringUnit" : {
+                      "state" : "translated",
                       "value" : ""
                     }
                   }
@@ -3167,6 +3551,12 @@
             "value" : "Spaces 및 Mission Control"
           }
         },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Spaces e Mission Control"
+          }
+        },
         "vi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3212,6 +3602,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "마우스를 움직여 다음 동작을 수행합니다.:\n - 위로 올리면 Mission Control을 엽니다.\n - 아래로 내리면 현재 앱에 대해 열린 모든 윈도우를 보여줍니다.\n - 좌우로 움직이면 생성한 Spaces 사이를 이동합니다.\n \n이는 Apple 트랙패드에서 세 손가락으로 스와이프하는 것과 같습니다."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Mova o Mouse:\n - Para cima para mostrar o Mission Control\n - Para baixo para mostrar as Janelas do Aplicativo Aberto\n - Esquerda ou Direita para mover entre os Espaços da Mesa\n \nFunciona como deslizar com três dedos em um Trackpad da Apple"
           }
         },
         "vi" : {
@@ -3261,6 +3657,12 @@
             "value" : "스크롤 및 탐색"
           }
         },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Role e Navegue"
+          }
+        },
         "vi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3306,6 +3708,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "마우스가 움직이는 방향대로 자유롭게 스크롤합니다.\n \n마우스를 좌우로 이동하면 Safari에서는 페이지를 쓸어넘길 수 있으며, Mail에선 메시지를 삭제할 수도 있습니다.\n \n이는 Apple 트랙패드에서 두 손가락으로 스와이프하는 것과 같습니다."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Role livremente movendo o Mouse para qualquer direção\n \nNavegue também entre páginas do Safari, exclua mensagens no Mail e muito mais, movendo o Mouse para a esquerda e para a direita\n \nFunciona como deslizar com dois dedos em um Trackpad da Apple"
           }
         },
         "vi" : {
@@ -3355,6 +3763,12 @@
             "value" : "앱 윈도우"
           }
         },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Janelas do Aplicativo"
+          }
+        },
         "vi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3400,6 +3814,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "현재 앱에 대해 열린 모든 윈도우를 보여줍니다."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Exibir todas as Janelas do Aplicativo ativo"
           }
         },
         "vi" : {
@@ -3449,6 +3869,12 @@
             "value" : " 전용 키"
           }
         },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : " Teclas Exclusivas"
+          }
+        },
         "vi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3494,6 +3920,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Apple 키보드에서만 사용 가능한 키를 선택하세요."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Escolha teclas que estão disponíveis apenas em teclados Apple"
           }
         },
         "vi" : {
@@ -3543,6 +3975,12 @@
             "value" : "Apple 키보드 상의 '%@'를 누르는 것처럼 동작합니다."
           }
         },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Funciona como pressionar '%@' em um teclado Apple"
+          }
+        },
         "vi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3588,6 +4026,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "뒤로"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Voltar"
           }
         },
         "vi" : {
@@ -3637,6 +4081,12 @@
             "value" : "Safari 등의 앱에서 이전 페이지로 전환합니다."
           }
         },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Volte uma página no Safari e em outros aplicativos"
+          }
+        },
         "vi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3682,6 +4132,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "데스크탑 보기"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Exibir Mesa"
           }
         },
         "vi" : {
@@ -3731,6 +4187,12 @@
             "value" : "데스크탑 화면을 봅니다."
           }
         },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Exibe a Mesa"
+          }
+        },
         "vi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3776,6 +4238,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "앞으로"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Avançar"
           }
         },
         "vi" : {
@@ -3825,6 +4293,12 @@
             "value" : "Safari 등의 앱에서 다음 페이지로 전환합니다."
           }
         },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Avance uma página no Safari e em outros aplicativos"
+          }
+        },
         "vi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3869,6 +4343,12 @@
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
+            "value" : "Launchpad"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
             "value" : "Launchpad"
           }
         },
@@ -3919,6 +4399,12 @@
             "value" : "Launchpad를 엽니다."
           }
         },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Abrir Launchpad"
+          }
+        },
         "vi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3964,6 +4450,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "좌측 Space로 이동"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Mova para a Mesa à esquerda"
           }
         },
         "vi" : {
@@ -4013,6 +4505,12 @@
             "value" : "좌측 Space로 이동합니다."
           }
         },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Mova para a Mesa à esquerda criada no Mission Control"
+          }
+        },
         "vi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4058,6 +4556,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "찾아보기 및 데이터 탐색기"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Pesquisa e Visualização Rápida"
           }
         },
         "vi" : {
@@ -4107,6 +4611,12 @@
             "value" : "사전에서 단어를 찾아보거나, Finder에서 파일을 훑어보는 등의 동작을 수행합니다.\n \n이는 Apple 트랙패드에서 세게 클릭하는 것과 같습니다."
           }
         },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Procure palavras no Dicionário, visualize arquivos sem abrir no Finder e muito mais.\n \nFunciona como um Force Touch em um Trackpad da Apple."
+          }
+        },
         "vi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4152,6 +4662,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "휠 클릭"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Botão do Meio"
           }
         },
         "vi" : {
@@ -4201,6 +4717,12 @@
             "value" : "링크를 새로운 탭에서 열거나, 터미널에서 텍스트를 붙여넣는 등의 동작을 수행합니다.\n \n이는 표준 마우스에서 %@를 클릭하는 것과 같습니다."
           }
         },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Abra links em uma nova aba, cole texto no Terminal e muito mais.\n \nFunciona como clicar %@ em um Mouse padrão."
+          }
+        },
         "vi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4245,6 +4767,12 @@
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
+            "value" : "Mission Control"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
             "value" : "Mission Control"
           }
         },
@@ -4295,6 +4823,12 @@
             "value" : "Mission Control을 엽니다."
           }
         },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Exibir o Mission Control"
+          }
+        },
         "vi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4340,6 +4874,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "effect.primary-click"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Clique Primário"
           }
         },
         "vi" : {
@@ -4389,6 +4929,12 @@
             "value" : "effect.primary-click.hint"
           }
         },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Funciona como clicar em %@ em um Mouse padrão."
+          }
+        },
         "vi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4434,6 +4980,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "키보드 단축키..."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Atalhos de Teclado..."
           }
         },
         "vi" : {
@@ -4483,6 +5035,12 @@
             "value" : "입력한 키를 마우스를 통해 사용합니다."
           }
         },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Digite um atalho de teclado e use-o com o Mouse"
+          }
+        },
         "vi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4528,6 +5086,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "우측 Space로 이동"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Mova para a Mesa à direita"
           }
         },
         "vi" : {
@@ -4577,6 +5141,12 @@
             "value" : "우측 Space로 이동합니다."
           }
         },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Mova para a Mesa à esquerda"
+          }
+        },
         "vi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4622,6 +5192,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "effect.secondary-click"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Clique Secundário"
           }
         },
         "vi" : {
@@ -4671,6 +5247,12 @@
             "value" : "effect.secondary-click.hint"
           }
         },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Funciona como clicar em %@ em um Mouse padrão."
+          }
+        },
         "vi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4716,6 +5298,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "키보드 상의 '%@'를 누르는 것처럼 동작합니다."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Funciona como pressionar '%@' no teclado"
           }
         },
         "vi" : {
@@ -4765,6 +5353,12 @@
             "value" : "스마트 확대/축소"
           }
         },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Zoom Inteligente"
+          }
+        },
         "vi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4810,6 +5404,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Safari 등의 앱에서 콘텐츠를 확대하거나 축소합니다.\n \n이는 Apple 트랙패드에서 두 손가락으로 이중 탭하는 것과 같습니다."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Amplie ou reduza o zoom no Safari e em outros apps.\n \nFunciona como um toque duplo com dois dedos em um Trackpad da Apple."
           }
         },
         "vi" : {
@@ -4906,6 +5506,12 @@
             "value" : "**마우스 주 버튼**은 사용할 수 없습니다.\n다른 버튼으로 다시 시도하십시오."
           }
         },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "**O Botão Primário do Mouse** não pode ser utilizado\nTente outro botão"
+          }
+        },
         "vi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4951,6 +5557,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "**마우스 보조 버튼**은 사용할 수 없습니다.\n다른 버튼으로 다시 시도하십시오."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "**O Botão Secundário do Mouse** não pode ser utilizado\nTente outro botão"
           }
         },
         "vi" : {
@@ -5000,6 +5612,12 @@
             "value" : "사용자 국가(%@)에서 Mac Mouse Fix는 현재 무료로 제공됩니다."
           }
         },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Atualmente, o Mac Mouse Fix está gratuito em seu país (%@)"
+          }
+        },
         "vi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -5045,6 +5663,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "시스템 설정에서 Mac Mouse Fix가 **비활성화**되어있습니다.\n\nMac Mouse Fix를 사용하려면 다음 절차를 따르십시오:\n\n1. [로그인 항목 설정](x-apple.systempreferences:com.apple.LoginItems-Settings.extension)을 엽니다.\n2. 'Mac Mouse Fix.app' 항목을 허용합니다."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "O Mac Mouse Fix foi **desativado** nos Ajustes do Sistema\n\nPara ativá-lo:\n\n1. Vá para [Itens de Início](x-apple.systempreferences:com.apple.LoginItems-Settings.extension )\n2. Ative 'Mac Mouse Fix.app'"
           }
         },
         "vi" : {
@@ -5094,6 +5718,12 @@
             "value" : "컴퓨터에 **다른 버전의 앱**이 발견되어 Mac Mouse Fix를 사용할 수 없습니다.\n\nMac Mouse Fix를 사용하려면 다음 절차를 따르십시오:\n\n1. [다른 버전](%@)을 제거합니다.\n2. 휴지통을 비웁니다.\n3. Mac을 재시동합니다.\n4. 다시 시도합니다."
           }
         },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "O Mac Mouse Fix não pode ser Ativado porque há **outra versão** do Mac Mouse Fix presente em seu computador\n\nPara ativar o Mac Mouse Fix:\n\n1. Exclua a [outra versão](%@)\n2. Esvazie a Lixeira\n3. Reinicie o seu Mac\n4. Tente novamente!"
+          }
+        },
         "vi" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -5139,6 +5769,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "활성화 실패"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Falha na Ativação"
           }
         },
         "vi" : {
@@ -5188,6 +5824,12 @@
             "value" : ", "
           }
         },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : ","
+          }
+        },
         "vi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -5233,6 +5875,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "%@ 및 %@"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "%@ e %@"
           }
         },
         "vi" : {
@@ -5282,6 +5930,12 @@
             "value" : "라이센스 활성화"
           }
         },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Ativar Licença"
+          }
+        },
         "vi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -5327,6 +5981,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "라이센스 비활성화"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Desativar Licença"
           }
         },
         "vi" : {
@@ -5376,6 +6036,12 @@
             "value" : "라이센스가 **활성화**되었습니다! 🎉"
           }
         },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Sua Licença foi **Ativada**! 🎉"
+          }
+        },
         "vi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -5421,6 +6087,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "이 라이센스는 **%d회** 활성화되어있으며, 최대 **%d회**까지만 활성화할 수 있습니다.\n\n불법 복제 방지를 위해 라이센스는 무효화되었습니다.\n\n동일한 라이센스를 여러번 활성화해야할 다른 이유가 있을 경우, [연락](mailto:noah.n.public@gmail.com) 주시면 새 라이센스를 발급해드리겠습니다. 이해해주셔서 감사합니다."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Esta licença foi ativada **%d** vezes, sendo que o máximo permitido é **%d** vezes.\n\nPara evitarmos pirataria, tivemos que invalidar esta licença. Se você tiver outros motivos para ativar a licença várias vezes, pedimos nossas sinceras desculpas e recomendamos que você [entre em contato](mailto:noah.n.public@gmail.com) para receber uma nova licença! Obrigado pela compreensão."
           }
         },
         "vi" : {
@@ -5470,6 +6142,12 @@
             "value" : "이 라이센스는 **이미 활성화**되어있습니다!"
           }
         },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Esta licença **já está ativada**!"
+          }
+        },
         "vi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -5515,6 +6193,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "라이센스가 **비활성화**되었습니다."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Sua licença foi **desativada**"
           }
         },
         "vi" : {
@@ -5564,6 +6248,12 @@
             "value" : "라이센스가 **활성화되지 않았습니다**. 사용자 국가에서는 현재 **무료로 사용 가능**합니다."
           }
         },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Esta licença **não pôde ser ativada**, mas o Mac Mouse Fix está **gratuito em seu país**!"
+          }
+        },
         "vi" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -5609,6 +6299,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "**라이센스 서버 에러가 발생하였습니다.**\n\n에러 정보:\n\n%@"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "**Ocorreu um erro com o Servidor de Ativação**\n\nDescrição:\n\n%@"
           }
         },
         "vi" : {
@@ -5658,6 +6354,12 @@
             "value" : "**인터넷 연결이 없습니다.**\n\n컴퓨터를 인터넷에 연결한 후에 다시 시도하십시오."
           }
         },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "**Não há conexão com a Internet**\n\nTente ativar sua licença novamente quando seu computador estiver online."
+          }
+        },
         "vi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -5703,6 +6405,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "**알 수 없는 에러가 발생하였습니다:**\n\n%@"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "**Ocorreu um erro desconhecido:**\n\n%@"
           }
         },
         "vi" : {
@@ -5752,6 +6460,12 @@
             "value" : "**'%@'** 키는 올바르지 않은 라이센스 키입니다.\n\n다시 입력하십시오."
           }
         },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "**'%@'** não é uma chave de licença válida\n\nTente uma chave diferente"
+          }
+        },
         "vi" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -5797,6 +6511,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "**알 수 없는 이유**로 라이센스를 활성화하지 못했습니다.\n\n[여기](https://noah-nuebling.github.io/mac-mouse-fix-feedback-assistant/?type=bug-report)에서 **버그 제보**를 작성해주십시오."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "A ativação da sua Licença falhou por **motivos desconhecidos**\n\nPor favor, envie um **Relatório de Bug** [aqui](https://noah-nuebling.github.io/mac-mouse-fix-feedback-assistant/ ?type=relatório de bug)"
           }
         },
         "vi" : {
@@ -5846,6 +6566,12 @@
             "value" : "[%@ > 마우스 > 스크롤 속도](%@)에서 속도를 설정합니다."
           }
         },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Defina a velocidade em\n[%@ > Mouse > Velocidade da Rolagem](%@)"
+          }
+        },
         "vi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -5891,6 +6617,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "뒤로"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Voltar"
           }
         },
         "vi" : {
@@ -5940,6 +6672,12 @@
             "value" : "전부 답장할 수는 없지만, 항상 모든 이메일을 읽어보고 있습니다."
           }
         },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Leio e aprecio todos os e-mails, faço o possível para responder todos"
+          }
+        },
         "vi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -5985,6 +6723,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "이메일 작성"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Escreva um Email"
           }
         },
         "vi" : {
@@ -6034,6 +6778,12 @@
             "value" : "이메일 보내기"
           }
         },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Deseja escrever um Email?"
+          }
+        },
         "vi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -6076,6 +6826,12 @@
           }
         },
         "ko" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Command (⌘)"
+          }
+        },
+        "pt-BR" : {
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Command (⌘)"
@@ -6128,6 +6884,12 @@
             "value" : "Control (^)"
           }
         },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Control (^)"
+          }
+        },
         "vi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -6175,6 +6937,12 @@
             "value" : "Option (⌥)"
           }
         },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Option (⌥)"
+          }
+        },
         "vi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -6217,6 +6985,12 @@
           }
         },
         "ko" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Shift (⇧)"
+          }
+        },
+        "pt-BR" : {
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Shift (⇧)"
@@ -6270,6 +7044,12 @@
             "value" : "손가락이 움직임이는 방향에 따라 콘텐츠가 이동됩니다."
           }
         },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "O conteúdo rastreia o movimento dos dedos"
+          }
+        },
         "vi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -6315,6 +7095,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "스크롤을 *천천히* 움직이는 경우, 보조 키를 사용하지 않더라도\n정밀하게 스크롤합니다."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Role com precisão, mesmo sem um modificador de teclado,\nmovendo a roda de rolagem *lentamente*"
           }
         },
         "vi" : {
@@ -6364,6 +7150,12 @@
             "value" : "취소"
           }
         },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Cancelar"
+          }
+        },
         "vi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -6409,6 +7201,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "재설정"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Restaurar"
           }
         },
         "vi" : {
@@ -6458,6 +7256,12 @@
             "value" : "사용자의 **%@** 마우스에서 **%d개**의 버튼이 감지되었습니다."
           }
         },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Seu Mouse **%@** diz que tem **%d** botões"
+          }
+        },
         "vi" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -6503,6 +7307,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "3버튼 마우스"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Mouse com 3 botões"
           }
         },
         "vi" : {
@@ -6552,6 +7362,12 @@
             "value" : "5버튼 이상의 마우스"
           }
         },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Mouse com mais de 5 botões"
+          }
+        },
         "vi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -6597,6 +7413,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "마우스에 맞는 기본값으로 재설정"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Restaurar Padrão para ..."
           }
         },
         "vi" : {
@@ -6646,6 +7468,12 @@
             "value" : " **여기를 누르면** 사용자 마우스(**%@**)에 대한 추천 설정을 적용합니다."
           }
         },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "**Clique aqui** para carregar as configurações recomendadas\npara seu Mouse **%@**"
+          }
+        },
         "vi" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -6691,6 +7519,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "%1@에 대한 Mac Mouse Fix 동작이 **다시 활성화**되었습니다.\n이는 사용자에 의해 메뉴 막대 %2@ 에서 수동으로 비활성화되어있었습니다."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "**Habilitado** Mac Mouse Fix para %1@\nEle foi desabilitado na barra de menu %2@"
           }
         },
         "vi" : {
@@ -6740,6 +7574,12 @@
             "value" : " **버튼**"
           }
         },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "**Botões**"
+          }
+        },
         "vi" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -6785,6 +7625,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "**스크롤**"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "**Rolagem**"
           }
         },
         "vi" : {
@@ -6834,6 +7680,12 @@
             "value" : "데스크탑 및 Launchpad"
           }
         },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Mesa e Launchpad"
+          }
+        },
         "vi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -6879,6 +7731,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "위로 스크롤하면 Launchpad를 열며, 아래로 스크롤하면 데스크탑 화면을 봅니다.\n \n이는 Apple 트랙패드에서 네 손가락을 오므리거나 펼치는 것과 같습니다."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Role para cima para acessar o Launchpad e para baixo para exibir a Mesa\n \nFunciona como pinçar com quatro dedos em um Trackpad da Apple"
           }
         },
         "vi" : {
@@ -6928,6 +7786,12 @@
             "value" : "앱 전환"
           }
         },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Alternador de Aplicativos"
+          }
+        },
         "vi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -6973,6 +7837,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "열려있는 앱 사이를 빠르게 전환합니다.\n \n이는 키보드의 Command (⌘) 키 및 Tab (⇥) 키를 누르는 것과 같습니다."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Alterne rapidamente entre aplicativos abertosem Funciona como segurar Command (⌘) e pressionar Tab (⇥) no teclado"
           }
         },
         "vi" : {
@@ -7022,6 +7892,12 @@
             "value" : "수평 스크롤"
           }
         },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Rolagem horizontal"
+          }
+        },
         "vi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -7067,6 +7943,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "좌우로 스크롤하여 Safari에서는 페이지를 쓸어넘길 수 있으며, Mail에선 메시지를 삭제할 수도 있습니다.\n \n이는 Apple 트랙패드에서 두 손가락으로 스와이프하는 것과 같습니다."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Role para a esquerda e para a direita, navegue entre páginas no Safari, exclua mensagens no Mail e muito mais\n \nFunciona como deslizar horizontalmente com dois dedos em um Trackpad da Apple"
           }
         },
         "vi" : {
@@ -7116,6 +7998,12 @@
             "value" : "정밀 스크롤"
           }
         },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Rolagem precisa"
+          }
+        },
         "vi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -7161,6 +8049,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "짧은 거리를 스크롤하여 민감한 UI 요소를 정밀하게 조작할 수 있습니다."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Role pequenas distâncias e use elementos sensíveis da interface do usuário com precisão"
           }
         },
         "vi" : {
@@ -7210,6 +8104,12 @@
             "value" : "회전"
           }
         },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Girar"
+          }
+        },
         "vi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -7255,6 +8155,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "지도 등의 앱에서 콘텐츠를 회전시킵니다.\n \n이는 Apple 트랙패드에서 두 손가락으로 회전시키는 것과 같습니다."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Girar conteúdo no Apple Maps e em outros apps\n \nFunciona como girar com dois dedos em um Trackpad da Apple"
           }
         },
         "vi" : {
@@ -7304,6 +8210,12 @@
             "value" : "Spaces 간 이동"
           }
         },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Mover entre Espaços"
+          }
+        },
         "vi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -7349,6 +8261,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "위로 스크롤하면 좌측 Space로 이동하며, 아래로 스크롤하면 우측 스페이스로 이동합니다.\n \n이는 Apple 트랙패드에서 세 손가락으로 수평 스와이프하는 것과 같습니다."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Role para cima para mover um espaço para a esquerda e para baixo para mover um espaço para a direitain Funciona como deslizar horizontalmente com 3 dedos em um Trackpad da Apple"
           }
         },
         "vi" : {
@@ -7398,6 +8316,12 @@
             "value" : "고속 스크롤"
           }
         },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Rolagem rápida"
+          }
+        },
         "vi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -7443,6 +8367,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "적은 움직임으로 먼 거리를 스크롤합니다."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Percorra longas distâncias com o mínimo esforço"
           }
         },
         "vi" : {
@@ -7492,6 +8422,12 @@
             "value" : "확대/축소"
           }
         },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Aumentar ou diminuir zoom"
+          }
+        },
         "vi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -7537,6 +8473,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Safari, 지도 등의 앱에서 콘텐츠를 확대 또는 축소합니다.\n \n이는 Apple 트랙패드에서 두 손가락을 오므리거나 펼쳐서 확대 또는 축소하는 것과 같습니다."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Aumentar ou diminuir o zoom no Safari, no Maps e em outros apps\n \nFunciona como pinçar para ampliar em um Trackpad da Apple"
           }
         },
         "vi" : {
@@ -7586,6 +8528,12 @@
             "value" : "시스템 설정"
           }
         },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Ajustes Sistema"
+          }
+        },
         "vi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -7631,6 +8579,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "시스템 환경설정"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Preferências do Sistema"
           }
         },
         "vi" : {
@@ -7680,6 +8634,12 @@
             "value" : "⭐️ Mac Mouse Fix를 구입해주셔서 감사합니다!"
           }
         },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "⭐️ Obrigado por adquirir o Mac Mouse Fix!"
+          }
+        },
         "vi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -7725,6 +8685,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "🌟 Mac Mouse Fix를 결제해주셔서 감사합니다!"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "🌟 Obrigado por adquirir o Mac Mouse Fix!"
           }
         },
         "vi" : {
@@ -7774,6 +8740,12 @@
             "value" : "🚀 Mac Mouse Fix를 지원해주셔서 감사합니다!"
           }
         },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "🚀 Obrigado por apoiar o Mac Mouse Fix!"
+          }
+        },
         "vi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -7819,6 +8791,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "🙌 Mac Mouse Fix를 구입해주셔서 감사합니다!"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "🙌 Obrigado por adquirir o Mac Mouse Fix!"
           }
         },
         "vi" : {
@@ -7868,6 +8846,12 @@
             "value" : "🧠 잘 사셨어요! ;)"
           }
         },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "🧠 Ótima decisão de compra! ;)"
+          }
+        },
         "vi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -7915,6 +8899,12 @@
             "value" : "🔥 이 앱, 마우스 참 잘 고치네! ;)"
           }
         },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "🔥 Gosto incrível em software de Mouse! ;)"
+          }
+        },
         "vi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -7959,6 +8949,12 @@
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
+            "value" : "💙"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
             "value" : "💙"
           }
         },
@@ -8009,6 +9005,12 @@
             "value" : ":) <- Mac Mouse Fix를 구입해주신걸 본 제 표정이에요."
           }
         },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : ":) <- Minha expressão quando vi que você comprou o Mac Mouse Fix"
+          }
+        },
         "vi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -8054,6 +9056,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "👽 Spacebook 친구분들께도 공유해주세요!"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "👽 Compartilhe com seus amigos do Spacebook!"
           }
         },
         "vi" : {
@@ -8103,6 +9111,12 @@
             "value" : "🏂 Duckgang 영원해줘!!"
           }
         },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "🏂 Aproveite a vida!!"
+          }
+        },
         "vi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -8148,6 +9162,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "🚜 조심히 가세요 :P"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "🚜 Deus ajuda quem cedo madruga :P"
           }
         },
         "vi" : {
@@ -8197,6 +9217,12 @@
             "value" : "🐁 아 엄마 이 마우스 말고!"
           }
         },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "🫕 Toda panela tem sua tampa!"
+          }
+        },
         "vi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -8242,6 +9268,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "🐹 나비넥타이를 좀 사줘야겠네요."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "📚 Não julgue um livro pela capa."
           }
         },
         "vi" : {
@@ -8291,6 +9323,12 @@
             "value" : "🇹🇷 Ey Kanka, tebrikler tebrikler!"
           }
         },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "🕊️ Mais vale um pássaro na mão do que dois voando!"
+          }
+        },
         "vi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -8336,6 +9374,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "🥛 생일에 마시는 생우유예요!"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "🥛 Não adianta chorar pelo leite derramado."
           }
         },
         "vi" : {
@@ -8385,6 +9429,12 @@
             "value" : "🎸 존 메이어까지는 (아직)아니지만, 마음은 mayer입니다."
           }
         },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "🎤 Quem canta seus males espanta."
+          }
+        },
         "vi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -8430,6 +9480,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "💃 1NEIN8NEIN"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "🏝️ O descanso é tão importante quanto o trabalho..."
           }
         },
         "vi" : {
@@ -8479,6 +9535,12 @@
             "value" : "🦄 당신이 세상을 구하고 싶으시지는 않을지 모르지만, 적어도 저는 구해주고 계세요 :)"
           }
         },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "🦄 Você pode não querer salvar o mundo, mas já está salvando o meu :)"
+          }
+        },
         "vi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -8524,6 +9586,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "🏜️ Dankeschön, meine Frau..."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "🏆 É dando que se recebe..."
           }
         },
         "vi" : {
@@ -8573,6 +9641,12 @@
             "value" : "🌍 유니버설 스튜디오도 이만큼 대단하지는 않을 것 같아요... :)"
           }
         },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "🌍 A pressa é inimiga da perfeição... :)"
+          }
+        },
         "vi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -8620,6 +9694,12 @@
             "value" : "🐠 What... are... you?"
           }
         },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "🐠 Que dia, hein!?"
+          }
+        },
         "vi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -8664,6 +9744,12 @@
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
+            "value" : "🖤"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
             "value" : "🖤"
           }
         },
@@ -8714,6 +9800,12 @@
             "value" : "🤍"
           }
         },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "🤍"
+          }
+        },
         "vi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -8759,6 +9851,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "😎 오, Mac Mouse Fix 쓰시네요? 뭘 좀 아시는 분!"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "😎 Eitaaaa, você está usando o Mac Mouse Fix!? Com certeza você é uma pessoa incrível."
           }
         },
         "vi" : {
@@ -8808,6 +9906,12 @@
             "value" : "🌏 태초에 마우스가 있었고, 그 후에 세상 열렸다!! >:)"
           }
         },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "🌏 Cuide do nosso Planeta!! >:)"
+          }
+        },
         "vi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -8853,6 +9957,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "무료 체험 기간 **%d/%d**일"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Dias restantes **%d/%d**"
           }
         },
         "vi" : {
@@ -8902,6 +10012,12 @@
             "value" : "무료 체험 기간이 끝났습니다."
           }
         },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "A versão de testes terminou"
+          }
+        },
         "vi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -8947,6 +10063,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "라이센스 활성화"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Ativar Licença"
           }
         },
         "vi" : {
@@ -8996,6 +10118,12 @@
             "value" : "안녕하세요! Mac Mouse Fix를 **%d일째** 사용 중입니다.\n\n사용해주셔서 감사드리며, Mac Mouse Fix를 계속 사용하시려면 [구입](%@)해주십시오."
           }
         },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Olá! Você está usando o Mac Mouse Fix há **%d dias**. Espero que você esteja gostando!\n\nSe quiser continuar usando o Mac Mouse Fix, você pode [comprá-lo agora](%@)."
+          }
+        },
         "vi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -9041,6 +10169,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "%@ 클릭"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Clique %@"
           }
         },
         "vi" : {
@@ -9090,6 +10224,12 @@
             "value" : "%@ 이중 클릭"
           }
         },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Duplo Clique %@"
+          }
+        },
         "vi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -9135,6 +10275,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "%@ 삼중 클릭"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Triplo Clique %@"
           }
         },
         "vi" : {
@@ -9184,6 +10330,12 @@
             "value" : "드래그"
           }
         },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "arraste"
+          }
+        },
         "vi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -9229,6 +10381,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "클릭 및 %@ 드래그"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Clique e arraste %@"
           }
         },
         "vi" : {
@@ -9278,6 +10436,12 @@
             "value" : "이중 클릭 및 %@ 드래그"
           }
         },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Clique duas vezes e arraste %@"
+          }
+        },
         "vi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -9323,6 +10487,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "삼중 클릭 및 %@ 드래그"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Clique três vezes e arraste %@"
           }
         },
         "vi" : {
@@ -9372,6 +10542,12 @@
             "value" : "및 드래그"
           }
         },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "e arraste"
+          }
+        },
         "vi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -9417,6 +10593,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "%@ 유지"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Segure %@"
           }
         },
         "vi" : {
@@ -9466,6 +10648,12 @@
             "value" : "이중 클릭 및 %@ 유지"
           }
         },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Clique duas vezes e segure %@"
+          }
+        },
         "vi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -9511,6 +10699,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "삼중 클릭 및 %@ 유지"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Clique três vezes e segure %@"
           }
         },
         "vi" : {
@@ -9560,6 +10754,12 @@
             "value" : "스크롤"
           }
         },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Rolagem"
+          }
+        },
         "vi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -9605,6 +10805,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "클릭 및 %@ 스크롤"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Clique e role %@"
           }
         },
         "vi" : {
@@ -9654,6 +10860,12 @@
             "value" : "이중 클릭 및 %@ 스크롤"
           }
         },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Clique duas vezes e role %@"
+          }
+        },
         "vi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -9699,6 +10911,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "삼중 클릭 및 %@ 스크롤"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Clique três vezes e role %@"
           }
         },
         "vi" : {
@@ -9748,6 +10966,12 @@
             "value" : "및 스크롤"
           }
         },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "e role"
+          }
+        },
         "vi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -9793,6 +11017,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "키를 입력하세요."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Digite um atalho de teclado"
           }
         },
         "vi" : {

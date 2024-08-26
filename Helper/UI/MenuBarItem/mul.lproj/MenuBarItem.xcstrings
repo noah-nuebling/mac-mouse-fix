@@ -23,6 +23,12 @@
             "value" : "버튼"
           }
         },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Botões"
+          }
+        },
         "vi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -69,6 +75,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "<App Compat hint>"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "<Dica de compatibilidade de aplicativos>"
           }
         },
         "vi" : {
@@ -120,6 +132,12 @@
             "value" : "스크롤"
           }
         },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Rolagem"
+          }
+        },
         "vi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -168,6 +186,12 @@
             "value" : "Mac Mouse Fix 열기..."
           }
         },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Abrir Mac Mouse Fix..."
+          }
+        },
         "vi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -214,6 +238,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "<App Compat title>"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "<Compatibilidade de Aplicativos>"
           }
         },
         "vi" : {
@@ -265,6 +295,12 @@
             "value" : "호환되지 않는 앱을 사용하기 위해 Mac Mouse Fix 기능을 빠르게 비활성화합니다."
           }
         },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Desative rapidamente os recursos do Mac Mouse Fix para poder trabalhar com aplicativos que ainda não são compatíveis"
+          }
+        },
         "vi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -312,6 +348,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "기능 활성화"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ativado para..."
           }
         },
         "vi" : {

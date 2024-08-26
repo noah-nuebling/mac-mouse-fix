@@ -23,6 +23,12 @@
             "value" : "Mac Mouse Fix가 마우스 및 키보드 신호에 접근하려면 손쉬운 사용 접근 권한이 필요합니다."
           }
         },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "O Acesso à Acessibilidade permite que o Mac Mouse Fix intercepte sinais do mouse e do teclado"
+          }
+        },
         "vi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -69,6 +75,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "도움말"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ajuda"
           }
         },
         "vi" : {
@@ -119,6 +131,12 @@
             "value" : "'개인정보 보호 및 보안' 설정을 엽니다."
           }
         },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Abrir ajustes de 'Privacidade e Segurança'"
+          }
+        },
         "vi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -167,6 +185,12 @@
             "value" : "'Mac Mouse Fix Helper' 항목을 허용합니다."
           }
         },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ativar o 'Ajudante do Controlador de guia inicial do Mac Mouse Fix'"
+          }
+        },
         "vi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -210,6 +234,12 @@
           }
         },
         "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "1."
+          }
+        },
+        "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "1."
@@ -263,6 +293,12 @@
             "value" : "Finder에서 'Mac Mouse Fix Helper.app' 파일 위치를 열어보려면 Shift (⇧) 키를 누른 상태에서 이 아이콘을 클릭하세요."
           }
         },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Segure Shift (⇧) e clique neste ícone para revelar 'Mac Mouse Fix Helper.app' no Finder"
+          }
+        },
         "vi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -311,6 +347,12 @@
             "value" : "Mac Mouse Fix에 손쉬운 사용 접근 권한 허용"
           }
         },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Conceda o acesso de acessibilidade ao Mac Mouse Fix"
+          }
+        },
         "vi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -354,6 +396,12 @@
           }
         },
         "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "2."
+          }
+        },
+        "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "2."
@@ -405,6 +453,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "취소"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cancelar"
           }
         },
         "vi" : {

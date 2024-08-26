@@ -23,6 +23,12 @@
             "value" : "완료"
           }
         },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Concluído"
+          }
+        },
         "vi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -71,6 +77,12 @@
             "value" : "트랙볼 마우스에 적합한 옵션입니다."
           }
         },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Recomendado para Trackball Mice"
+          }
+        },
         "vi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -117,6 +129,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "'클릭 및 드래그' 제스처 시 마우스 포인터 잠금"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bloquear o ponteiro do mouse durante gestos de 'Cliquar e Arrastar'"
           }
         },
         "vi" : {
