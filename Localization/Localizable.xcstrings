@@ -16,6 +16,12 @@
             "value" : "Open 'Security & Privacy' Preferences"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ouvrir les préférences « Sécurité et confidentialité »"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -175,6 +181,12 @@
             "value" : "Version %@"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Version %@"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -224,6 +236,12 @@
           }
         },
         "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "<Rewind key>"
+          }
+        },
+        "fr" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "<Rewind key>"
@@ -284,6 +302,12 @@
             "value" : "⇪"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "⇪"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -334,6 +358,12 @@
           }
         },
         "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "<Fast-Forward key>"
+          }
+        },
+        "fr" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "<Fast-Forward key>"
@@ -394,6 +424,12 @@
             "value" : "<Emoji Picker key>"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "<Emoji Picker key>"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -444,6 +480,12 @@
           }
         },
         "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "<Increase Keyboard Brightness key>"
+          }
+        },
+        "fr" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "<Increase Keyboard Brightness key>"
@@ -504,6 +546,12 @@
             "value" : "<Decrease Keyboard Brightness key>"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "<Decrease Keyboard Brightness key>"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -554,6 +602,12 @@
           }
         },
         "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "<Spotlight key>"
+          }
+        },
+        "fr" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "<Spotlight key>"
@@ -614,6 +668,12 @@
             "value" : "<Dictation key>"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "<Dictation key>"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -664,6 +724,12 @@
           }
         },
         "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "<Do Not Disturb key>"
+          }
+        },
+        "fr" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "<Do Not Disturb key>"
@@ -724,6 +790,12 @@
             "value" : "<Play or Pause key>"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "<Play or Pause key>"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -774,6 +846,12 @@
           }
         },
         "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "<Power key>"
+          }
+        },
+        "fr" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "<Power key>"
@@ -834,6 +912,12 @@
             "value" : "<Mission Control key>"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "<Mission Control key>"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -884,6 +968,12 @@
           }
         },
         "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "<Mute key>"
+          }
+        },
+        "fr" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "<Mute key>"
@@ -944,6 +1034,12 @@
             "value" : "<Decrease Volume key>"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "<Decrease Volume key>"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -994,6 +1090,12 @@
           }
         },
         "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "<Increase Volume key>"
+          }
+        },
+        "fr" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "<Increase Volume key>"
@@ -1054,6 +1156,12 @@
             "value" : "<Launchpad key>"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "<Launchpad key>"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1104,6 +1212,12 @@
           }
         },
         "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "<Increase Brightness key>"
+          }
+        },
+        "fr" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "<Increase Brightness key>"
@@ -1164,6 +1278,12 @@
             "value" : "<Decrease Brightness key>"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "<Decrease Brightness key>"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1214,6 +1334,12 @@
           }
         },
         "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "<Key without description>"
+          }
+        },
+        "fr" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "<Key without description>"
@@ -1273,6 +1399,12 @@
             "value" : "Cancel"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Annuler"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1325,6 +1457,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Beta versions can have many issues.\nDon't forget to give feedback when you run into one.\nThanks!"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Les versions bêta peuvent contenir de nombreux problèmes.\nN'oubliez pas de nous fournir un retour lorsque vous en rencontrez un.\nMerci !"
           }
         },
         "ko" : {
@@ -1381,6 +1519,12 @@
             "value" : "Get Beta Versions"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Recevoir les versions bêta"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1433,6 +1577,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Get Beta Versions?"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Recevoir les versions bêta ?"
           }
         },
         "ko" : {
@@ -1489,6 +1639,12 @@
             "value" : "Click %@ +"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Clic %@ +"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1540,6 +1696,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Double Click %@ +"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Double-clic %@ +"
           }
         },
         "ko" : {
@@ -1595,6 +1757,12 @@
             "value" : "Triple Click %@ +"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Triple-clic %@ +"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1646,6 +1814,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Middle Button"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bouton du milieu"
           }
         },
         "ko" : {
@@ -1701,6 +1875,12 @@
             "value" : "Button %@"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bouton %@"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1752,6 +1932,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Primary Button"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bouton principal"
           }
         },
         "ko" : {
@@ -1807,6 +1993,12 @@
             "value" : "Secondary Button"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bouton secondaire"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1858,6 +2050,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Middle Mouse Button (also called Scroll Wheel Button or Mouse Button 3)"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bouton central de la souris (aussi appelé bouton de la molette de défilement ou Bouton de souris 3)"
           }
         },
         "ko" : {
@@ -1913,6 +2111,12 @@
             "value" : "Mouse Button %@"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bouton de souris %@"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1964,6 +2168,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Primary Mouse Button (also called Left Mouse Button or Mouse Button 1)"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bouton principal de la souris (aussi appelé bouton de souris gauche ou Bouton de souris 1)"
           }
         },
         "ko" : {
@@ -2019,6 +2229,12 @@
             "value" : "Secondary Mouse Button (also called Right Mouse Button or Mouse Button 2)"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bouton secondaire de la souris (aussi appelé bouton de souris droit ou Bouton de souris 2)"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -2072,6 +2288,12 @@
             "value" : "Get a mouse with 5+ buttons to unlock the full potential of Mac Mouse Fix!"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Procurez-vous une souris avec plus de 5 boutons pour débloquer le plein potentiel de Mac Mouse Fix !"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2121,6 +2343,12 @@
           }
         },
         "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "OK"
+          }
+        },
+        "fr" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "OK"
@@ -2178,6 +2406,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Your mouse only has 3 buttons"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Votre souris n'a que 3 boutons"
           }
         },
         "ko" : {
@@ -2275,6 +2509,39 @@
                     "stringUnit" : {
                       "state" : "translated",
                       "value" : "are now captured by Mac Mouse Fix."
+                    }
+                  },
+                  "zero" : {
+                    "stringUnit" : {
+                      "state" : "translated",
+                      "value" : ""
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%@ %#@captured@"
+          },
+          "substitutions" : {
+            "captured" : {
+              "formatSpecifier" : "d",
+              "variations" : {
+                "plural" : {
+                  "one" : {
+                    "stringUnit" : {
+                      "state" : "needs_review",
+                      "value" : "a été capturé par Mac Mouse Fix."
+                    }
+                  },
+                  "other" : {
+                    "stringUnit" : {
+                      "state" : "needs_review",
+                      "value" : "ont été capturés par Mac Mouse Fix."
                     }
                   },
                   "zero" : {
@@ -2533,6 +2800,39 @@
             }
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%#@hint@"
+          },
+          "substitutions" : {
+            "hint" : {
+              "formatSpecifier" : "d",
+              "variations" : {
+                "plural" : {
+                  "one" : {
+                    "stringUnit" : {
+                      "state" : "new",
+                      "value" : ""
+                    }
+                  },
+                  "other" : {
+                    "stringUnit" : {
+                      "state" : "new",
+                      "value" : ""
+                    }
+                  },
+                  "zero" : {
+                    "stringUnit" : {
+                      "state" : "new",
+                      "value" : ""
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -2742,6 +3042,12 @@
             "value" : "[Learn More](https://github.com/noah-nuebling/mac-mouse-fix/discussions/112)"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "[En savoir plus](https://github.com/noah-nuebling/mac-mouse-fix/discussions/112)"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -2751,7 +3057,7 @@
         "pt-BR" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Saber mais"
+            "value" : "[Saber mais](https://github.com/noah-nuebling/mac-mouse-fix/discussions/112)"
           }
         },
         "vi" : {
@@ -2836,6 +3142,39 @@
                     "stringUnit" : {
                       "state" : "translated",
                       "value" : "are no longer captured by Mac Mouse Fix."
+                    }
+                  },
+                  "zero" : {
+                    "stringUnit" : {
+                      "state" : "translated",
+                      "value" : ""
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%@ %#@uncaptured@"
+          },
+          "substitutions" : {
+            "uncaptured" : {
+              "formatSpecifier" : "d",
+              "variations" : {
+                "plural" : {
+                  "one" : {
+                    "stringUnit" : {
+                      "state" : "needs_review",
+                      "value" : "n'est plus capturé par Mac Mouse Fix."
+                    }
+                  },
+                  "other" : {
+                    "stringUnit" : {
+                      "state" : "needs_review",
+                      "value" : "ne sont plus capturés par Mac Mouse Fix."
                     }
                   },
                   "zero" : {
@@ -3086,6 +3425,39 @@
                   "zero" : {
                     "stringUnit" : {
                       "state" : "translated",
+                      "value" : ""
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%#@hint@"
+          },
+          "substitutions" : {
+            "hint" : {
+              "formatSpecifier" : "d",
+              "variations" : {
+                "plural" : {
+                  "one" : {
+                    "stringUnit" : {
+                      "state" : "new",
+                      "value" : "The button now works as if Mac Mouse Fix was disabled."
+                    }
+                  },
+                  "other" : {
+                    "stringUnit" : {
+                      "state" : "new",
+                      "value" : "These buttons now work as if Mac Mouse Fix was disabled."
+                    }
+                  },
+                  "zero" : {
+                    "stringUnit" : {
+                      "state" : "new",
                       "value" : ""
                     }
                   }
@@ -3404,10 +3776,22 @@
             "value" : "[Learn More](https://github.com/noah-nuebling/mac-mouse-fix/discussions/112)"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "[En savoir plus](https://github.com/noah-nuebling/mac-mouse-fix/discussions/112)"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "[더 알아보기](https://github.com/noah-nuebling/mac-mouse-fix/discussions/112)"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "[Saber mais](https://github.com/noah-nuebling/mac-mouse-fix/discussions/112)"
           }
         },
         "vi" : {
@@ -3545,6 +3929,12 @@
             "value" : "Spaces & Mission Control"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Espaces & Mission Control"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3596,6 +3986,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Move your mouse:\n - Up to show Mission Control\n - Down to show Application Windows\n - Left or Right to move between Spaces\n \nWorks like swiping with 3 fingers on an Apple Trackpad"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Déplacer votre souris :\n - Vers le haut pour afficher Mission Control\n - Vers le bas pour afficher Fenêtres de l'application\n - Vers la gauche ou la droite pour passer d'un espace à un autre\n \nFonctionne comme le balayage à 3 doigts sur un Trackpad Apple"
           }
         },
         "ko" : {
@@ -3651,6 +4047,12 @@
             "value" : "Scroll & Navigate"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Défiler & naviguer"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3702,6 +4104,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Scroll freely by moving your mouse in any direction\n \nAlso Navigate between pages in Safari, delete messages in Mail and more by moving your mouse left and right\n \nWorks like swiping with 2 fingers on an Apple Trackpad"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Défiler librement en déplaçant votre souris dans n'importe quelle direction\n \nPeut aussi naviguer entre les pages dans Safari, supprimer les messages dans Mail et bien plus en bougeant votre souris à gauche ou à droite\n \nFonctionne comme le balayage avec 2 doigts sur un Trackpad Apple"
           }
         },
         "ko" : {
@@ -3757,6 +4165,12 @@
             "value" : "Application Windows"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Fenêtres de l'application"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3808,6 +4222,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Show all windows of the active app"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Afficher toutes les fenêtres de l'application active"
           }
         },
         "ko" : {
@@ -3863,6 +4283,12 @@
             "value" : " Exclusive Keys"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Touches exclusives "
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3914,6 +4340,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Choose keys that are only available on Apple keyboards"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Choisir les touches uniquement disponibles sur les claviers Apple"
           }
         },
         "ko" : {
@@ -3969,6 +4401,12 @@
             "value" : "Works like pressing '%@' on an Apple keyboard"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Fonctionne comme en appuyant sur « %@ » sur un clavier Apple"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4020,6 +4458,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Back"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Vers l'arrière"
           }
         },
         "ko" : {
@@ -4075,6 +4519,12 @@
             "value" : "Go back one page in Safari and other apps"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Revenir en arrière d'une page dans Safari et d'autres apps"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4126,6 +4576,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Show Desktop"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Afficher le bureau"
           }
         },
         "ko" : {
@@ -4181,6 +4637,12 @@
             "value" : "Show the desktop"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Afficher le bureau"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4232,6 +4694,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Forward"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Vers l'avant"
           }
         },
         "ko" : {
@@ -4287,6 +4755,12 @@
             "value" : "Go forward one page in Safari and other apps"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Avancer d'une page sur Safari et d'autres apps"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4335,6 +4809,12 @@
           }
         },
         "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Launchpad"
+          }
+        },
+        "fr" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Launchpad"
@@ -4393,6 +4873,12 @@
             "value" : "Open Launchpad"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ouvrir le Launchpad"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4444,6 +4930,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Move Left a Space"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Déplacer vers le bureau de gauche"
           }
         },
         "ko" : {
@@ -4499,6 +4991,12 @@
             "value" : "Move one Space to the left"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Se déplacer d'un espace vers la gauche"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4550,6 +5048,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Look Up & Quick Look"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Rechercher & Coup d'œil"
           }
         },
         "ko" : {
@@ -4605,6 +5109,12 @@
             "value" : "Look up words in the Dictionary, Quick Look files in Finder, and more.\n \nWorks like a Force click on an Apple Trackpad."
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Rechercher des mots dans le Dictionnaire, Coup d'œil sur les fichiers dans le Finder et bien plus.\n \nFonctionne comme le clic forcé sur un Trackpad Apple."
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -4656,6 +5166,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Middle Click"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Clic du milieu"
           }
         },
         "ko" : {
@@ -4711,6 +5227,12 @@
             "value" : "Open links in a new tab, paste text in the Terminal, and more.\n \nWorks like clicking %@ on a standard mouse."
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ouvrir les liens dans un nouvel onglet, coller du texte dans le Terminal et bien plus.\n \nFonctionne comme le clic sur le %@ sur une souris standard."
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4759,6 +5281,12 @@
           }
         },
         "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mission Control"
+          }
+        },
+        "fr" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Mission Control"
@@ -4817,6 +5345,12 @@
             "value" : "Show Mission Control"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Afficher Mission Control"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4868,6 +5402,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Primary Click"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Clic principal"
           }
         },
         "ko" : {
@@ -4923,6 +5463,12 @@
             "value" : "Works like clicking %@ on a standard mouse."
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Fonctionne comme le clic sur le %@ sur une souris standard."
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -4974,6 +5520,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Keyboard Shortcut..."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Raccourci clavier..."
           }
         },
         "ko" : {
@@ -5029,6 +5581,12 @@
             "value" : "Type a keyboard shortcut, then use it from your mouse"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tapez un raccourci clavier, puis utilisez-le depuis votre souris"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -5080,6 +5638,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Move Right a Space"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Déplacer vers le bureau de droite"
           }
         },
         "ko" : {
@@ -5135,6 +5699,12 @@
             "value" : "Move one Space to the right"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Se déplacer d'un espace vers la droite"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -5186,6 +5756,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Secondary Click"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Clic secondaire"
           }
         },
         "ko" : {
@@ -5241,6 +5817,12 @@
             "value" : "Works like clicking %@ on a standard mouse."
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Fonctionne comme le clic sur le %@ sur une souris standard."
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -5292,6 +5874,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Works like pressing '%@' on your keyboard"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Fonctionne comme en appuyant sur « %@ » sur votre clavier"
           }
         },
         "ko" : {
@@ -5347,6 +5935,12 @@
             "value" : "Smart Zoom"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zoom intelligent"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -5398,6 +5992,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Zoom in or out in Safari and other apps.\n \nWorks like a two-finger double tap on an Apple Trackpad."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zoom en avant ou en arrière dans Safari et d'autres apps.\n \nFonctionne comme un Toucher deux fois sur un Trackpad Apple."
           }
         },
         "ko" : {
@@ -5453,6 +6053,12 @@
             "value" : "If you have **problems enabling** the app, click&nbsp;[here](https://github.com/noah-nuebling/mac-mouse-fix/discussions/861)."
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Si vous rencontrez des **problèmes pour activer** l'app, cliquez&nbsp;[ici](https://github.com/noah-nuebling/mac-mouse-fix/discussions/861)."
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -5498,6 +6104,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "**Primary Mouse Button** can't be used\nPlease try another button"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Le **bouton principal de la souris** ne peut pas être utilisé\nVeuillez essayer un autre bouton"
           }
         },
         "ko" : {
@@ -5553,6 +6165,12 @@
             "value" : "**Secondary Mouse Button** can't be used\nPlease try another button"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Le **bouton secondaire de la souris** ne peut pas être utilisé\nVeuillez essayer un autre bouton"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -5606,6 +6224,12 @@
             "value" : "Mac Mouse Fix is currently free in your country (%@)"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mac Mouse Fix est actuellement gratuit dans votre pays (%@)"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -5657,6 +6281,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Mac Mouse Fix was **disabled** in System Settings\n\nTo enable Mac Mouse Fix:\n\n1. Go to [Login Items Settings](x-apple.systempreferences:com.apple.LoginItems-Settings.extension)\n2. Switch on 'Mac Mouse Fix.app'"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mac Mouse Fix a été **désactivé** dans les Réglages Système\n\nPour activer Mac Mouse Fix :\n\n1. Se rendre dans les [paramètres Ouverture](x-apple.systempreferences:com.apple.LoginItems-Settings.extension)\n2. Activer « Mac Mouse Fix.app »"
           }
         },
         "ko" : {
@@ -5765,6 +6395,12 @@
             "value" : "Enabling Failed"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "L'activation a échoué"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -5813,6 +6449,12 @@
           }
         },
         "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : ", "
+          }
+        },
+        "fr" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : ", "
@@ -5871,6 +6513,12 @@
             "value" : "%@ and %@"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ et %@"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -5922,6 +6570,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Activate License"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Activer la licence"
           }
         },
         "ko" : {
@@ -5977,6 +6631,12 @@
             "value" : "Deactivate License"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Désactiver la licence"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -6028,6 +6688,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Your license has been **activated**! 🎉"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Votre licence a été **activée** ! 🎉"
           }
         },
         "ko" : {
@@ -6083,6 +6749,12 @@
             "value" : "This license has been activated **%d** times. The maximum is **%d**.\n\nBecause of this, the license has been invalidated. This is to prevent piracy. If you have other reasons for activating the license this many times, please excuse the inconvenience.\n\nJust [reach out](mailto:noah.n.public@gmail.com) and I will provide you with a new license! Thanks for understanding."
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cette licence a été activée **%d** fois. Le maximum est de **%d**.\n\nÀ cause de cela, la licence a été invalidée. Ceci permet d'éviter le piratage. Si vous avez d'autres raisons d'activer la licence autant de fois, veuillez m'excuser.\n\nIl suffit de [me contacter](mailto:noah.n.public@gmail.com) et je vous fournirai une nouvelle licence ! Merci de votre compréhension."
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -6136,6 +6808,12 @@
             "value" : "This license is **already activated**!"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cette licence est **déjà activée** !"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -6187,6 +6865,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Your license has been **deactivated**"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Votre licence a été **désactivée**"
           }
         },
         "ko" : {
@@ -6295,6 +6979,12 @@
             "value" : "**An error with the licensing server occured**\n\nIt says:\n\n%@"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "**Une erreur avec le serveur de licences s'est produite**\n\nElle dit :\n\n%@"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -6348,6 +7038,12 @@
             "value" : "**There is no connection to the internet**\n\nTry activating your license again when your computer is online."
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "**Il n'y a pas de connexion à Internet**\n\nRéessayer d'activer votre licence quand votre ordinateur sera à nouveau en ligne."
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -6399,6 +7095,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "**An unknown error occurred:**\n\n%@"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "**Une erreur inconnue s'est produite :**\n\n%@"
           }
         },
         "ko" : {
@@ -6507,6 +7209,12 @@
             "value" : "Activating your license failed for **unknown reasons**\n\nPlease write a **Bug Report** [here](https://noah-nuebling.github.io/mac-mouse-fix-feedback-assistant/?type=bug-report)"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "L'activation de votre licence a échoué pour des *raisons inconnues**\n\nVeuillez **signaler le bug** [ici](https://noah-nuebling.github.io/mac-mouse-fix-feedback-assistant/?type=bug-report)"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -6558,6 +7266,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Set speed under\n[%@ > Mouse > Scrolling Speed](%@)"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Définir la vitesse sous\n[%@ > Souris > Vitesse de déplacement](%@)"
           }
         },
         "ko" : {
@@ -6613,6 +7327,12 @@
             "value" : "Back"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Retour"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -6664,6 +7384,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "I read and appreciate all emails, even though I can't respond to all"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Je lis et j'apprécie tous vos e-mails, même si je ne peux pas répondre à tout le monde"
           }
         },
         "ko" : {
@@ -6719,6 +7445,12 @@
             "value" : "Write Email"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Écrire un e-mail"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -6770,6 +7502,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Write an Email?"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Écrire un e-mail ?"
           }
         },
         "ko" : {
@@ -6825,6 +7563,12 @@
             "value" : "Command (⌘)"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Commande (⌘)"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -6878,6 +7622,12 @@
             "value" : "Control (^)"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Contrôle (^)"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -6926,6 +7676,12 @@
           }
         },
         "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Option (⌥)"
+          }
+        },
+        "fr" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Option (⌥)"
@@ -6984,6 +7740,12 @@
             "value" : "Shift (⇧)"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Maj (⇧)"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -7036,6 +7798,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Content tracks finger movement"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Le contenu suit le mouvement du doigt"
           }
         },
         "ko" : {
@@ -7144,6 +7912,12 @@
             "value" : "Cancel"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Annuler"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -7195,6 +7969,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Restore"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Restaurer"
           }
         },
         "ko" : {
@@ -7303,6 +8083,12 @@
             "value" : "Mouse with 3 buttons"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Une souris avec 3 boutons"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -7356,6 +8142,12 @@
             "value" : "Mouse with 5+ buttons"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Une souris avec plus de 5 boutons"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -7407,6 +8199,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Restore Default for ..."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Restaurer les réglages par défaut pour ..."
           }
         },
         "ko" : {
@@ -7674,6 +8472,12 @@
             "value" : "Desktop & Launchpad"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bureau & Launchpad"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -7725,6 +8529,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Scroll up for Launchpad and down to show the Desktop\n \nWorks like Pinching with 4 fingers on an Apple Trackpad"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Défiler vers le haut pour le Launchpad et vers le bas pour afficher le Burean \nFonctionne comme le pincement avec 4 doigts sur un Trackpad Apple"
           }
         },
         "ko" : {
@@ -7780,6 +8590,12 @@
             "value" : "App Switcher"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Basculement entre apps"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -7831,6 +8647,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Quickly switch between open apps\n \nWorks like holding Command (⌘) and then pressing Tab (⇥) on your keyboard"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Basculer rapidement entre les apps ouvertes\n \nFonctionne comme en maintenant Commande (⌘) et en appuyant sur Tab (⇥) sur votre clavier"
           }
         },
         "ko" : {
@@ -7886,6 +8708,12 @@
             "value" : "Horizontal Scroll"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Défilement horizontal"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -7937,6 +8765,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Scroll left and right, navigate between pages in Safari, delete messages in Mail and more\n \nWorks like swiping horizontally with 2 fingers on an Apple Trackpad"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Défiler sur la gauche et la droite, naviguer entre les pages sur Safari, supprimer les messages dans Mail et bien plus\n \nFonctionne comme le balayage horizontal avec un Trackpad Apple"
           }
         },
         "ko" : {
@@ -7992,6 +8826,12 @@
             "value" : "Precise Scroll"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Défilement précis"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -8043,6 +8883,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Scroll small distances and use sensitive UI elements with precision"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Défiler de petites distances et utiliser des éléments d'IU sensibles avec précision"
           }
         },
         "ko" : {
@@ -8098,6 +8944,12 @@
             "value" : "Rotate"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pivoter"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -8149,6 +9001,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Rotate content in Apple Maps and other apps\n \nWorks like twisting with 2 fingers on an Apple Trackpad"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pivoter le contenu dans Apple Plans et d'autres apps\n \nFonctionne comme si l'on tournait avec deux doigts sur un Trackpad Apple"
           }
         },
         "ko" : {
@@ -8204,6 +9062,12 @@
             "value" : "Move Between Spaces"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Déplacer entre les espaces"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -8255,6 +9119,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Scroll up to move left a Space and down to move right a Space\n \nWorks like swiping horizontally with 3 fingers on an Apple Trackpad"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Défiler vers le haut pour se déplacer d'un espace vers la gauche et vers le bas pour se déplacer d'un espace vers la droite\n \nFonctionne comme le balayage horizontal avec 3 doigts sur un Trackpad Apple"
           }
         },
         "ko" : {
@@ -8310,6 +9180,12 @@
             "value" : "Swift Scroll"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Défilement rapide"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -8361,6 +9237,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Scroll long distances with minimal effort"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Défiler de longues distances avec un effort minimal"
           }
         },
         "ko" : {
@@ -8416,6 +9298,12 @@
             "value" : "Zoom In or Out"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zoom avant ou arrière"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -8467,6 +9355,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Zoom in or out in Safari, Maps and other apps\n \nWorks like pinching to zoom on an Apple trackpad"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zoomer en avant ou en arrière dans Safari, Plans et d'autres apps\n \nFonctionne comme le pincement pour zoomer sur un Trackpad Apple"
           }
         },
         "ko" : {
@@ -8522,6 +9416,12 @@
             "value" : "System Settings"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Réglages Système"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -8573,6 +9473,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "System Preferences"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Préférences Système"
           }
         },
         "ko" : {
@@ -8628,6 +9534,12 @@
             "value" : "⭐️ Thank you for buying Mac Mouse Fix!"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "⭐️ Merci d'avoir acheté Mac Mouse Fix !"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -8679,6 +9591,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "🌟 Thanks for purchasing Mac Mouse Fix!"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "🌟 Merci d'avoir acheté Mac Mouse Fix !"
           }
         },
         "ko" : {
@@ -8734,6 +9652,12 @@
             "value" : "🚀 Thanks for supporting Mac Mouse Fix!"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "🚀 Merci de soutenir Mac Mouse Fix !"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -8785,6 +9709,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "🙌 Thank you for buying Mac Mouse Fix!"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "🙌 Merci d'avoir acheté Mac Mouse Fix !"
           }
         },
         "ko" : {
@@ -8840,6 +9770,12 @@
             "value" : "🧠 Great purchasing decision! ;)"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "🧠 Une excellente décision d'achat ! ;)"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -8893,6 +9829,12 @@
             "value" : "🔥 Awesome taste in mouse fixing software! ;)"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "🔥 Excellent goût dans les logiciels permettant d'améliorer les souris ! ;)"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -8941,6 +9883,12 @@
           }
         },
         "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "💙"
+          }
+        },
+        "fr" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "💙"
@@ -8999,6 +9947,12 @@
             "value" : ":) <- My face when I saw you bought Mac Mouse Fix"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : ":) <- Mon visgage lorsque je vois que vous avez acheté Mac Mouse Fix"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -9050,6 +10004,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "👽 Share it with your Spacebook friends!"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "👽 Partagez-le avec vos amis Spacebook !"
           }
         },
         "ko" : {
@@ -9105,6 +10065,12 @@
             "value" : "🏂 Duckgang for life!!"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "🧼 Se laver les mains en sortant des toilettes n'est pas facultatif :D"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -9156,6 +10122,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "🚜 Watch where you're going :P"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "🚜 Regardez où vous allez :P"
           }
         },
         "ko" : {
@@ -9211,6 +10183,12 @@
             "value" : "🐁 Not these mice, mom!"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "🐁 Non, pas cette souris, maman !"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -9264,6 +10242,12 @@
             "value" : "🐹 We should get him a bow tie."
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "🐹 Nous devrions lui offrir un nœud papillon."
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -9312,6 +10296,12 @@
           }
         },
         "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "🇹🇷 Ey Kanka, tebrikler tebrikler!"
+          }
+        },
+        "fr" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "🇹🇷 Ey Kanka, tebrikler tebrikler!"
@@ -9370,6 +10360,12 @@
             "value" : "🥛 Whole milk of course! It's your birthday after all."
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "🥛 Du lait entier, bien sûr ! C'est ton anniversaire après tout."
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -9423,6 +10419,12 @@
             "value" : "🎸 Not John Mayer (yet). Nevertheless mayor of hearts."
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "🎸 Pas (encore) John Mayer. Néanmoins, le maire des cœurs."
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -9471,6 +10473,12 @@
           }
         },
         "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "💃 1NEIN8NEIN"
+          }
+        },
+        "fr" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "💃 1NEIN8NEIN"
@@ -9529,6 +10537,12 @@
             "value" : "🦄 You may not want to save the world, but you're already saving mine :)"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "🦄 Vous ne voulez peut-être pas sauver le monde, mais vous sauvez au moins le mien :)"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -9577,6 +10591,12 @@
           }
         },
         "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "🏜️ Dankeschön, meine Frau..."
+          }
+        },
+        "fr" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "🏜️ Dankeschön, meine Frau..."
@@ -9635,6 +10655,12 @@
             "value" : "🌍 Universal Studios is probably not that great anyways... :)"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "🌍 Universal Studios n'est probablement plus aussi bon de toute façon... :)"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -9688,6 +10714,12 @@
             "value" : "🐠 What... are... you?"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "🐠 Qu'êtes... vous?"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -9736,6 +10768,12 @@
           }
         },
         "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "🖤"
+          }
+        },
+        "fr" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "🖤"
@@ -9794,6 +10832,12 @@
             "value" : "🤍"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "🤍"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -9845,6 +10889,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "😎 Oh you're using Mac Mouse Fix? You must be pretty cool."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "😎 Oh tu utilises Mac Mouse Fix? Tu dois être sacrément cool."
           }
         },
         "ko" : {
@@ -9900,6 +10950,12 @@
             "value" : "🌏 First the mice, then the world!! >:)"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "🌏 D'abord la souris, ensuite le monde !! >:)"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -9951,6 +11007,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Free day **%d/%d**"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Jour gratuit **%d/%d**"
           }
         },
         "ko" : {
@@ -10006,6 +11068,12 @@
             "value" : "Free days are over"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Les jours offerts sont terminés"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -10057,6 +11125,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Activate License"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Activer une licence"
           }
         },
         "ko" : {
@@ -10112,6 +11186,12 @@
             "value" : "Hi there! You've been using Mac Mouse Fix for **%d days** now. I hope you're enjoying it!\n\nIf you want to keep using Mac Mouse Fix, you can [buy it now](%@)."
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Bonjour ! Vous avez utilisé Mac Mouse Fix pendant maintenant **%d jours**. J'espère que vous l'appréciez !\n\nSi vous voulez continuer d'utiliser Mac Mouse Fix, vous pouvez [l'acheter maintenant](%@)."
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -10165,6 +11245,12 @@
             "value" : "Click %@"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "clic %@"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -10174,7 +11260,7 @@
         "pt-BR" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Clique %@"
+            "value" : "clique %@"
           }
         },
         "vi" : {
@@ -10218,6 +11304,12 @@
             "value" : "Double Click %@"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "double-clic %@"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -10227,7 +11319,7 @@
         "pt-BR" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Duplo Clique %@"
+            "value" : "duplo clique %@"
           }
         },
         "vi" : {
@@ -10271,6 +11363,12 @@
             "value" : "Triple Click %@"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "triple-clic %@"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -10280,7 +11378,7 @@
         "pt-BR" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Triplo Clique %@"
+            "value" : "triplo clique %@"
           }
         },
         "vi" : {
@@ -10322,6 +11420,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Drag"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "glissement"
           }
         },
         "ko" : {
@@ -10377,6 +11481,12 @@
             "value" : "Click and Drag %@"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "clic et glissement %@"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -10386,7 +11496,7 @@
         "pt-BR" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Clique e arraste %@"
+            "value" : "clique e arraste %@"
           }
         },
         "vi" : {
@@ -10430,6 +11540,12 @@
             "value" : "Double Click and Drag %@"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "double-clic et glissement %@"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -10439,7 +11555,7 @@
         "pt-BR" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Clique duas vezes e arraste %@"
+            "value" : "clique duas vezes e arraste %@"
           }
         },
         "vi" : {
@@ -10483,6 +11599,12 @@
             "value" : "Triple Click and Drag %@"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "triple-clic et glissement %@"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -10492,7 +11614,7 @@
         "pt-BR" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Clique três vezes e arraste %@"
+            "value" : "clique três vezes e arraste %@"
           }
         },
         "vi" : {
@@ -10534,6 +11656,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "and Drag"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "et glissement"
           }
         },
         "ko" : {
@@ -10589,6 +11717,12 @@
             "value" : "Hold %@"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "maintien %@"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -10598,7 +11732,7 @@
         "pt-BR" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Segure %@"
+            "value" : "segure %@"
           }
         },
         "vi" : {
@@ -10642,6 +11776,12 @@
             "value" : "Double Click and Hold %@"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "double-clic et maintien %@"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -10651,7 +11791,7 @@
         "pt-BR" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Clique duas vezes e segure %@"
+            "value" : "clique duas vezes e segure %@"
           }
         },
         "vi" : {
@@ -10695,6 +11835,12 @@
             "value" : "Triple Click and Hold %@"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "triple-clic et maintien %@"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -10704,7 +11850,7 @@
         "pt-BR" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Clique três vezes e segure %@"
+            "value" : "clique três vezes e segure %@"
           }
         },
         "vi" : {
@@ -10748,6 +11894,12 @@
             "value" : "Scroll"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "défilement"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -10757,7 +11909,7 @@
         "pt-BR" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Rolagem"
+            "value" : "role"
           }
         },
         "vi" : {
@@ -10801,6 +11953,12 @@
             "value" : "Click and Scroll %@"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "clic et défilement %@"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -10810,7 +11968,7 @@
         "pt-BR" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Clique e role %@"
+            "value" : "clique e role %@"
           }
         },
         "vi" : {
@@ -10854,6 +12012,12 @@
             "value" : "Double Click and Scroll %@"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "double-clic et défilement %@"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -10863,7 +12027,7 @@
         "pt-BR" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Clique duas vezes e role %@"
+            "value" : "clique duas vezes e role %@"
           }
         },
         "vi" : {
@@ -10907,6 +12071,12 @@
             "value" : "Triple Click and Scroll %@"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "triple-clic et défilement %@"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -10916,7 +12086,7 @@
         "pt-BR" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Clique três vezes e role %@"
+            "value" : "clique três vezes e role %@"
           }
         },
         "vi" : {
@@ -10958,6 +12128,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "and Scroll"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "et défilement"
           }
         },
         "ko" : {
@@ -11011,6 +12187,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Type a Keyboard Shortcut"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Taper le raccourci clavier"
           }
         },
         "ko" : {

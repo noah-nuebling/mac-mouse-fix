@@ -740,7 +740,7 @@ static NSString *effectNameForRowDict(NSDictionary * _Nonnull rowDict) {
         /// Declare map
         
         NSDictionary *map = @{
-            @[@(1), @"click"]:  NSLocalizedString(@"trigger.click.1",   @"First draft: Click %@ || Note: %@ will be replaced by a button name (or by nothing, if the button name can be inferred from context.) || Example where %@ is 'Button 5': ⌥⌘ Double Click Button 4 + Click Button 5 || Note: Most of the substrings that are used to build the Action Table Trigger Strings (this is one of those substrings) are capitalized in English because it's common to use 'title case' there. In your language, 'title case' might not be a thing, and so you might not want to capitalize these strings. The first letter of the trigger string will be programmatically capitalized in any language."),
+            @[@(1), @"click"]:  NSLocalizedString(@"trigger.click.1",   @"First draft: Click %@ || NOTE: %@ will be replaced by a button name (or by nothing, if the button name can be inferred from context.) || EXAMPLE where %@ is 'Button 5': ⌥⌘ Double Click Button 4 + Click Button 5 || NOTE 2: Most of the substrings that are used to build the Action Table Trigger Strings (this is one of those substrings) are capitalized in English because it's common to use 'title case' there. In your language, 'title case' might not be a thing, and so you might not want to capitalize these strings. The first letter of the trigger string will be programmatically capitalized in any language."),
             
             @[@(2), @"click"]:  NSLocalizedString(@"trigger.click.2",   @"First draft: Double Click %@"),
             @[@(3), @"click"]:  NSLocalizedString(@"trigger.click.3",   @"First draft: Triple Click %@"),

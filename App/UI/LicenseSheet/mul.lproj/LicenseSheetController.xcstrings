@@ -17,6 +17,12 @@
             "value" : "Back"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Back"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -69,6 +75,12 @@
           "stringUnit" : {
             "state" : "new",
             "value" : "<Activate License>"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "<Activer la licence>"
           }
         },
         "ko" : {
@@ -124,6 +136,12 @@
           "stringUnit" : {
             "state" : "new",
             "value" : "Enter Your License Key"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Saisir votre clé de licence"
           }
         },
         "ko" : {

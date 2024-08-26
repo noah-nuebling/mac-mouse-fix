@@ -17,6 +17,12 @@
             "value" : "Buttons"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Boutons"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -68,6 +74,12 @@
         "en" : {
           "stringUnit" : {
             "state" : "new",
+            "value" : "<App Compat hint>"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
             "value" : "<App Compat hint>"
           }
         },
@@ -126,6 +138,12 @@
             "value" : "Scrolling"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Défilement"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -180,6 +198,12 @@
             "value" : "Open Mac Mouse Fix..."
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ouvrir Mac Mouse Fix..."
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -231,6 +255,12 @@
         "en" : {
           "stringUnit" : {
             "state" : "new",
+            "value" : "<App Compat title>"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
             "value" : "<App Compat title>"
           }
         },
@@ -289,6 +319,12 @@
             "value" : "Quickly disable Mac Mouse Fix features so you can work with apps that aren't compatible yet"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Désactiver rapidement les fonctionnalités Mac Mouse Fix pour pouvoir travailler avec les apps qui ne sont pas encore compatibles"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -342,6 +378,12 @@
           "stringUnit" : {
             "state" : "new",
             "value" : "Enable for..."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Activer pour..."
           }
         },
         "ko" : {

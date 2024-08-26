@@ -17,6 +17,12 @@
             "value" : "Done"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Terminé"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -71,6 +77,12 @@
             "value" : "Recommended for Trackball Mice"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Recommandé pour les souris « Trackball »"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -123,6 +135,12 @@
           "stringUnit" : {
             "state" : "new",
             "value" : "Lock Mouse Pointer During 'Click and Drag' Gestures"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Verrouiller le pointeur de la souris pendant les gestes « Cliquer et lâcher »"
           }
         },
         "ko" : {

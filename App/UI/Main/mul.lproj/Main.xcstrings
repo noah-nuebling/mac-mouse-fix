@@ -17,6 +17,12 @@
             "value" : "Pointer"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pointeur"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -70,6 +76,12 @@
           "stringUnit" : {
             "state" : "new",
             "value" : "<Scroll precisely by moving the scroll wheel slowly>"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "<Défilez précisement en bougeant la molette de défilement doucement>"
           }
         },
         "ko" : {
@@ -127,6 +139,12 @@
             "value" : "Undo"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Annuler"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -181,6 +199,12 @@
             "value" : "View Guides or Ask the Community..."
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Consulter les guides ou demander à la communauté..."
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -233,6 +257,12 @@
           "stringUnit" : {
             "state" : "new",
             "value" : "Acceleration:"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Accélération :"
           }
         },
         "ko" : {
@@ -290,6 +320,12 @@
             "value" : "Check for Updates..."
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Vérifier les mises à jour..."
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -341,6 +377,12 @@
         "en" : {
           "stringUnit" : {
             "state" : "new",
+            "value" : "<Mission Control and Spaces>"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
             "value" : "<Mission Control and Spaces>"
           }
         },
@@ -399,6 +441,12 @@
             "value" : "Off"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Désactivée"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -451,6 +499,12 @@
           "stringUnit" : {
             "state" : "new",
             "value" : "Precision"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Précision"
           }
         },
         "ko" : {
@@ -507,6 +561,12 @@
             "value" : "Write a Feature Request"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Demander une nouvelle fonctionnalité"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -559,6 +619,12 @@
           "stringUnit" : {
             "state" : "new",
             "value" : "Delete"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Supprimer"
           }
         },
         "ko" : {
@@ -615,6 +681,12 @@
             "value" : "Scroll Horizontally"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Défiler à l'horizontal"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -667,6 +739,12 @@
           "stringUnit" : {
             "state" : "new",
             "value" : "Edit"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Modifier"
           }
         },
         "ko" : {
@@ -723,6 +801,12 @@
             "value" : "Acknowledgements"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Remerciements"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -777,6 +861,12 @@
             "value" : "Regular"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Normale"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -828,6 +918,12 @@
         "en" : {
           "stringUnit" : {
             "state" : "new",
+            "value" : "<Version - (-)>"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
             "value" : "<Version - (-)>"
           }
         },
@@ -886,6 +982,12 @@
             "value" : "High"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Importante"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -938,6 +1040,12 @@
           "stringUnit" : {
             "state" : "new",
             "value" : "Scroll Precisely"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Défiler avec précision"
           }
         },
         "ko" : {
@@ -994,6 +1102,12 @@
             "value" : "Move between pages in Safari by scrolling horizontally, and more"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Déplacez-vous entre les pages dans Safari en défilant horizontalement, et bien plus"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1048,6 +1162,12 @@
             "value" : "Lets you quickly turn off or on features like\nsmooth scrolling"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Permet d'activer ou de désactiver rapidement\nles fonctionnalités comme le défilement doux"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -1099,6 +1219,12 @@
         "en" : {
           "stringUnit" : {
             "state" : "new",
+            "value" : "Main Menu"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
             "value" : "Main Menu"
           }
         },
@@ -1156,6 +1282,12 @@
             "value" : "Bring All to Front"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tout ramener au premier plan"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1210,6 +1342,12 @@
             "value" : "Mac Mouse Fix will stay enabled after you close it"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mac Mouse Fix restera activé après l'avoir fermé"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1261,6 +1399,12 @@
         "en" : {
           "stringUnit" : {
             "state" : "new",
+            "value" : "Mac Mouse Fix"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
             "value" : "Mac Mouse Fix"
           }
         },
@@ -1318,6 +1462,12 @@
             "value" : "Don't remind me again"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ne plus me le rappeler"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1372,6 +1522,12 @@
             "value" : "High"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Rapide"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1424,6 +1580,12 @@
           "stringUnit" : {
             "state" : "new",
             "value" : "Medium"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Moyenne"
           }
         },
         "ko" : {
@@ -1481,6 +1643,12 @@
             "value" : "Hide Mac Mouse Fix"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Masquer Mac Mouse Fix"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1535,6 +1703,12 @@
             "value" : "File a Bug Report"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Signaler un bug"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1586,6 +1760,12 @@
         "en" : {
           "stringUnit" : {
             "state" : "new",
+            "value" : "<Initial Tab Controller>"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
             "value" : "<Initial Tab Controller>"
           }
         },
@@ -1644,6 +1824,12 @@
             "value" : "About"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "À propos"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1695,6 +1881,12 @@
         "en" : {
           "stringUnit" : {
             "state" : "new",
+            "value" : "macOS"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
             "value" : "macOS"
           }
         },
@@ -1753,6 +1945,12 @@
             "value" : "<Day 2/14 of your test period>"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "<Day 2/14 of your test period>"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1806,6 +2004,12 @@
           "stringUnit" : {
             "state" : "new",
             "value" : "Buy Mac Mouse Fix..."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Acheter Mac Mouse Fix..."
           }
         },
         "ko" : {
@@ -1862,6 +2066,12 @@
             "value" : "Buttons"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Boutons"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1914,6 +2124,12 @@
           "stringUnit" : {
             "state" : "new",
             "value" : "Low"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Faible"
           }
         },
         "ko" : {
@@ -1971,6 +2187,12 @@
             "value" : "Set acceleration under \nSystem Preferences > Mouse > Tracking speed "
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Définir l'accélération sous \nPréférences Système > Souris >  Mouse > Vitesse de déplacement "
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2018,6 +2240,12 @@
           "stringUnit" : {
             "state" : "new",
             "value" : "Help"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aide"
           }
         },
         "ko" : {
@@ -2074,6 +2302,12 @@
             "value" : "Medium"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Modérée"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2126,6 +2360,12 @@
           "stringUnit" : {
             "state" : "new",
             "value" : "General"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Général"
           }
         },
         "ko" : {
@@ -2182,6 +2422,12 @@
             "value" : "Scroll Swiftly"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Défiler rapidement"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2234,6 +2480,12 @@
           "stringUnit" : {
             "state" : "new",
             "value" : "Get Help"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Obtenir de l'aide"
           }
         },
         "ko" : {
@@ -2290,6 +2542,12 @@
             "value" : "Show All"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tout afficher"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2342,6 +2600,12 @@
           "stringUnit" : {
             "state" : "new",
             "value" : "Window"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Fenêtre"
           }
         },
         "ko" : {
@@ -2398,6 +2662,12 @@
             "value" : "Help"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aide"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2452,6 +2722,12 @@
             "value" : "Low"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Lente"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2503,6 +2779,12 @@
         "en" : {
           "stringUnit" : {
             "state" : "new",
+            "value" : "macOS"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
             "value" : "macOS"
           }
         },
@@ -2609,6 +2891,12 @@
             "value" : "<Initial>"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "<Initial>"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2664,6 +2952,12 @@
             "value" : "Reverse Direction"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Défilement naturel"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2715,6 +3009,12 @@
         "en" : {
           "stringUnit" : {
             "state" : "new",
+            "value" : "<Effect>"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
             "value" : "<Effect>"
           }
         },
@@ -2773,6 +3073,12 @@
             "value" : "Services"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Services"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2827,6 +3133,12 @@
             "value" : "Zoom In or Out"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zoomer ou dézoomer"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2879,6 +3191,12 @@
           "stringUnit" : {
             "state" : "new",
             "value" : "Low"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Faible"
           }
         },
         "ko" : {
@@ -2936,6 +3254,12 @@
             "value" : "Mac Mouse Fix"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mac Mouse Fix"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2987,6 +3311,12 @@
         "en" : {
           "stringUnit" : {
             "state" : "new",
+            "value" : "Options..."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
             "value" : "Options..."
           }
         },
@@ -3044,6 +3374,12 @@
             "value" : "Copy"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Copier"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3096,6 +3432,12 @@
           "stringUnit" : {
             "state" : "new",
             "value" : "Redo"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Annuler"
           }
         },
         "ko" : {
@@ -3152,6 +3494,12 @@
             "value" : "Show in Menu Bar"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Afficher dans la barre des menus"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3206,6 +3554,12 @@
             "value" : "Window"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Fenêtre"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3257,6 +3611,12 @@
         "en" : {
           "stringUnit" : {
             "state" : "new",
+            "value" : "Mac Mouse Fix"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
             "value" : "Mac Mouse Fix"
           }
         },
@@ -3314,6 +3674,12 @@
             "value" : "Scrolling"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Défilement"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3365,6 +3731,12 @@
         "en" : {
           "stringUnit" : {
             "state" : "new",
+            "value" : "<Click and Drag Button 3>"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
             "value" : "<Click and Drag Button 3>"
           }
         },
@@ -3423,6 +3795,12 @@
             "value" : "Speed:"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Vitesse :"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3474,6 +3852,12 @@
         "en" : {
           "stringUnit" : {
             "state" : "new",
+            "value" : "Pointer"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
             "value" : "Pointer"
           }
         },
@@ -3532,6 +3916,12 @@
             "value" : "Restore Defaults..."
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Restaurer les paramètres par défaut..."
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3584,6 +3974,12 @@
           "stringUnit" : {
             "state" : "new",
             "value" : "Edit"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Édition"
           }
         },
         "ko" : {
@@ -3640,6 +4036,12 @@
             "value" : "Get Beta Versions"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Recevoir les versions bêta"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3692,6 +4094,12 @@
           "stringUnit" : {
             "state" : "new",
             "value" : "Buttons"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Boutons"
           }
         },
         "ko" : {
@@ -3796,6 +4204,12 @@
             "value" : "Move the mouse pointer inside the '+' field, then *Click* a mouse button to assign an action to it.\nYou can also *Double Click*, *Click and Drag* and [more]()."
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Déplacez le pointeur de la souris à l'intérieur du champ « + », puis *cliquez* sur un bouton de la souris pour lui affecter une action.\nVous pouvez aussi utiliser le *double-clic*, le *clic et déplacement* et [bien d'autres]()."
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -3848,6 +4262,12 @@
           "stringUnit" : {
             "state" : "new",
             "value" : "Trackpad Simulation"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Simulation du trackpad"
           }
         },
         "ko" : {
@@ -3904,6 +4324,12 @@
             "value" : "Minimize"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Minimiser"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3955,6 +4381,12 @@
         "en" : {
           "stringUnit" : {
             "state" : "new",
+            "value" : "<Trigger>"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
             "value" : "<Trigger>"
           }
         },
@@ -4013,6 +4445,12 @@
             "value" : "Select All"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tout sélectionner"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4067,6 +4505,12 @@
             "value" : "Visit the Website"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Visiter le site web"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4118,6 +4562,12 @@
         "en" : {
           "stringUnit" : {
             "state" : "new",
+            "value" : "Off"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
             "value" : "Off"
           }
         },
@@ -4176,6 +4626,12 @@
             "value" : "Created by Noah Nuebling"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Créé par Noah Nuebling"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4227,6 +4683,12 @@
         "en" : {
           "stringUnit" : {
             "state" : "new",
+            "value" : "<Box>"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
             "value" : "<Box>"
           }
         },
@@ -4285,6 +4747,12 @@
             "value" : "Send Me an Email"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "M'envoyer un e-mail"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4339,6 +4807,12 @@
             "value" : "Scrolling"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Défilement"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4391,6 +4865,12 @@
           "stringUnit" : {
             "state" : "new",
             "value" : "<⌘⇧⌥⌃ + Triple Click and Drag Button 3>"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "<⌘⇧⌥⌃ + Triple-clic et glisser Bouton 3>"
           }
         },
         "ko" : {
@@ -4448,6 +4928,12 @@
             "value" : "Cut"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Couper"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4500,6 +4986,12 @@
           "stringUnit" : {
             "state" : "new",
             "value" : "General"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Général"
           }
         },
         "ko" : {
@@ -4556,6 +5048,12 @@
             "value" : "Hide Others"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Masquer les autres"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4608,6 +5106,12 @@
           "stringUnit" : {
             "state" : "new",
             "value" : "Enable Mac Mouse Fix"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Activer Mac Mouse Fix"
           }
         },
         "ko" : {
@@ -4664,6 +5168,12 @@
             "value" : "Close"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Fermer"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4718,6 +5228,12 @@
             "value" : "Paste"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Coller"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4769,6 +5285,12 @@
         "en" : {
           "stringUnit" : {
             "state" : "new",
+            "value" : "<0.6x>"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
             "value" : "<0.6x>"
           }
         },
@@ -4827,6 +5349,12 @@
             "value" : "You'll be notified of updates when you open\nthis window"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Vous serez prévenu d'une nouvelle mise à jour\n lorsque vous ouvrirez cette fenêtre"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -4879,6 +5407,12 @@
           "stringUnit" : {
             "state" : "new",
             "value" : "High"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Élevée"
           }
         },
         "ko" : {
@@ -4936,6 +5470,12 @@
             "value" : "Smoothness:"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Douceur :"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4988,6 +5528,12 @@
           "stringUnit" : {
             "state" : "new",
             "value" : "Check for Updates"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Vérifier les mises à jour"
           }
         },
         "ko" : {
@@ -5044,6 +5590,12 @@
             "value" : "Buy Me a Milkshake :)"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Achetez-moi un milkshake :)"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -5096,6 +5648,12 @@
           "stringUnit" : {
             "state" : "new",
             "value" : "About Mac Mouse Fix"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "À propos de Mac Mouse Fix"
           }
         },
         "ko" : {
@@ -5152,6 +5710,12 @@
             "value" : "Quit Mac Mouse Fix"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Quitter Mac Mouse Fix"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -5204,6 +5768,12 @@
           "stringUnit" : {
             "state" : "new",
             "value" : "Keyboard Modifiers:"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Raccourcis clavier :"
           }
         },
         "ko" : {
@@ -5260,6 +5830,12 @@
             "value" : "About"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "À propos"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -5311,6 +5887,12 @@
         "en" : {
           "stringUnit" : {
             "state" : "new",
+            "value" : "<Text Cell>"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
             "value" : "<Text Cell>"
           }
         },
@@ -5369,6 +5951,12 @@
             "value" : "High"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Élevée"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -5421,6 +6009,12 @@
         "en" : {
           "stringUnit" : {
             "state" : "new",
+            "value" : "Services"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
             "value" : "Services"
           }
         },
@@ -5478,6 +6072,12 @@
             "value" : "Sensitivity:"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sensibilité :"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -5533,6 +6133,12 @@
             "value" : "Activate License..."
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Activer une licence..."
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -5585,6 +6191,12 @@
           "stringUnit" : {
             "state" : "new",
             "value" : "Medium"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Moyenne"
           }
         },
         "ko" : {
@@ -5642,6 +6254,12 @@
             "value" : "Mac Mouse Fix"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mac Mouse Fix"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -5694,6 +6312,12 @@
           "stringUnit" : {
             "state" : "new",
             "value" : "Zoom"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Réduire/agrandir"
           }
         },
         "ko" : {
@@ -5750,6 +6374,12 @@
             "value" : "Check It Out on GitHub"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Voir sur GitHub"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -5801,6 +6431,12 @@
         "en" : {
           "stringUnit" : {
             "state" : "new",
+            "value" : "<Button X>"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
             "value" : "<Button X>"
           }
         },
@@ -5856,6 +6492,12 @@
         "en" : {
           "stringUnit" : {
             "state" : "new",
+            "value" : "<Text Cell>"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
             "value" : "<Text Cell>"
           }
         },
