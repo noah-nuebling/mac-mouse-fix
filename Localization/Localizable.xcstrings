@@ -81,6 +81,12 @@
             "value" : "You're **already using** the default setting for mice with **3 buttons**"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Vous **utilisez déjà** le réglage par défaut pour une souris avec **3 boutons**"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -155,7 +161,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "**5 düğmeli** fareler için zaten varsayılan ayarı **kullanıyorsunuz**"
+            "value" : "**5+ düğmeli** fareler için zaten varsayılan ayarı **kullanıyorsunuz**"
           }
         },
         "vi" : {
@@ -6978,6 +6984,12 @@
             "value" : "Mac Mouse Fix can't be enabled because there's **another version** of Mac Mouse Fix present on your computer\n\nTo enable Mac Mouse Fix:\n\n1. Delete the [other version](%@)\n2. Empty the Bin\n3. Restart your Mac\n4. Try again!"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Mac Mouse Fix ne peut pas être activé car une **autre version** de Mac Mouse Fix est présente sur votre ordinateur\n\nPour activer Mac Mouse Fix :\n\n1. Supprimer l'[autre version](%@)\n2. Vider la corbeille\n3. Redémarrer votre Mac\n4. Réessayer !"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -7622,6 +7634,12 @@
             "value" : "This license could not be activated** but Mac Mouse Fix is currently **free in your country**!"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Cette licence **n’a pas pu être activée** mais Mac Mouse Fix est actuellement **gratuit dans votre pays** !"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -7874,6 +7892,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "**'%@'** is not a valid license key\n\nMake sure you enter your key exactly as you received it, without leading or trailing spaces, line breaks, or other extra characters."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "**« %@ »** n'est pas une clé de licence connue\n\nVeuillez essayer une clé différente"
           }
         },
         "ko" : {
@@ -8651,6 +8675,12 @@
             "value" : "Scroll precisely, even without a keyboard modifier,\nby moving the scroll wheel *slowly*"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Défiler précisement, même sans un raccourci clavier,\nen bougeant la molette de défilement *doucement*"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -8838,6 +8868,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Your **%@** mouse says it has **%d** buttons"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Votre souris **%@** dit qu'elle a **%d** boutons"
           }
         },
         "ko" : {
@@ -9094,6 +9130,12 @@
             "value" : "**Click here** to load the recommended settings\nfor your mouse (**%@**)"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : " **Cliquer ici** pour charger les paramètres recommandés\npour votre souris **%@**"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -9151,6 +9193,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "**Enabled** Mac Mouse Fix for %1@\nIt had been disabled from the Menu Bar %2@"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Mac Mouse Fix **activé** pour %1@\nIl a été désactivé depuis la barre des menus %2@"
           }
         },
         "ko" : {
@@ -9212,6 +9260,12 @@
             "value" : "**Buttons**"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "**Boutons**"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -9269,6 +9323,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "**Scrolling**"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "**Défilement**"
           }
         },
         "ko" : {
