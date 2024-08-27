@@ -246,41 +246,69 @@ static NSMutableDictionary *_swipeInfo;
     /// Send events
     ///
     
+    DDLogDebug(@"TouchSimulator: Sending dockSwipe with phase %d with events: %@ %@", phase, e30, e29);
+    
     CGEventPost(kCGSessionEventTap, e30); /// Not sure if order matters
     CGEventPost(kCGSessionEventTap, e29);
     
-    if (phase == kIOHIDEventPhaseEnded || phase == kIOHIDEventPhaseCancelled) {
+    if (phase == kIOHIDEventPhaseBegan) {
+        
+        dispatch_async(dispatch_get_main_queue(), ^{
+            
+            /// Invalidate scheduled double-send
+            /// Notes:
+            ///     - We invalidate the double/triple send timers here, since otherwise, the double/triple sent end events can cancel the new gesture.
+            ///     - Docs say timers must be scheduled and invalidated from the same thread. That's why we dispatch to the main thread.
+            ///     - Threading is a bit messy. We should have a unified output-event thread, where we do all this.
+            
+            if (_doubleSendTimer != nil) [_doubleSendTimer invalidate];
+            if (_tripleSendTimer != nil) [_tripleSendTimer invalidate];
+            _doubleSendTimer = nil;
+            _tripleSendTimer = nil;
+        });
+        
+    } else if (phase == kIOHIDEventPhaseEnded || phase == kIOHIDEventPhaseCancelled) {
 
-        /// Double-send events
+        /// Double-send end-events
         /// Notes:
         ///     - The inital dockSwipe event we post will be ignored by the system when it is under load (I called this the "stuck bug" in other places). Sending the event again with a delay of 200ms (0.2s) gets it unstuck almost always. Sending the event twice gives us the best of both responsiveness and reliability.
         ///     - In Scroll.m, even with sending the event again after 0.2 seconds, the stuck bug still happens a bunch for some reason. Even though this almost completely eliminates the bug in ModifiedDrag. Sending it again after 0.5 seconds works better but still sometimes happens. Edit: Doesn't happen anymore on M1.
 
         /// Put the events into a dict
-        ///     Note: Using `__bridge_transfer` should make it so the events are released when the dict is autoreleased, which is when the timer that the dict gets stored in is invalidated. Edit: We were using `__bridge` instead of `__bridge_transfer` in MMF 3.0.0 Beta 6. I changed it now, but I wonder why this didn't lead to problems?
+        ///     Note: The `events` dict retains the events, and the timers retain the `events` dict -> Once the timers are invalidated, the events are automatically released.
+        ///     Edit: We didn't release the events in MMF 3.0.0 Beta 6. I wonder why I didn't notice this? (Should leak a little bit of memory.) We then moved to using `__bridge_transfer`
+        ///                 On 28.08.2024 we moved to using `__bridge` and simply calling `CFRelease()` afterwards. (That's the same as using `__bridge_transfer`, which I find confusing.)
 
-        NSDictionary *events = @{@"e30": (__bridge_transfer id)e30, @"e29": (__bridge_transfer id)e29};
-
-        /// Invalidate existing timers
+        NSDictionary *events = @{@"e30": (__bridge id)e30, @"e29": (__bridge id)e29};
+        
+        /// Dispatch to main queue
         /// Notes:
-        ///     - Docs say timers must be scheduled and invalidated from the same thread. Are we doing that?
+        ///     - 27.08.2024 (macOS Sequoia Beta) - The double/triple send didn't work. I fixed it by adding  `dispatch_async(dispatch_get_main_queue()`. Not sure how long this had been broken.
+        ///     - Not sure it's ideal for responsivity to do this on the main thread. I feel like we should simplify the threading so there are 4 threads: input events, output events, ui (main thread) and background (stuff like checking for updates)
         
-        if (_doubleSendTimer != nil) [_doubleSendTimer invalidate];
-        if (_tripleSendTimer != nil) [_tripleSendTimer invalidate];
-
-        /// Schedule new timers
-
-        _doubleSendTimer = [NSTimer scheduledTimerWithTimeInterval:0.2 target:self selector:@selector(dockSwipeTimerFired:) userInfo:events repeats:NO];
-        _tripleSendTimer = [NSTimer scheduledTimerWithTimeInterval:0.5 target:self selector:@selector(dockSwipeTimerFired:) userInfo:events repeats:NO];
-    } else {
+        dispatch_async(dispatch_get_main_queue(), ^{
             
-        ///
-        /// Release events
-        ///
+            /// Invalidate existing timers
+            /// Notes:
+            ///     - Docs say timers must be scheduled and invalidated from the same thread. We should be doing that since we dispatch everything to the main queue
+            
+            if (_doubleSendTimer != nil) [_doubleSendTimer invalidate];
+            if (_tripleSendTimer != nil) [_tripleSendTimer invalidate];
+
+            /// Schedule new timers
+            
+            _doubleSendTimer = [NSTimer scheduledTimerWithTimeInterval:0.2 target:self selector:@selector(dockSwipeTimerFired:) userInfo:events repeats:NO];
+            _tripleSendTimer = [NSTimer scheduledTimerWithTimeInterval:0.5 target:self selector:@selector(dockSwipeTimerFired:) userInfo:events repeats:NO];
+        });
         
-        CFRelease(e29);
-        CFRelease(e30);
     }
+    
+    ///
+    /// Release events
+    ///
+    
+    CFRelease(e29);
+    CFRelease(e30);
     
     ///
     /// Update state
@@ -294,6 +322,8 @@ static NSMutableDictionary *_swipeInfo;
     NSDictionary *events = timer.userInfo;
     CGEventRef e30 = (__bridge CGEventRef)events[@"e30"];
     CGEventRef e29 = (__bridge CGEventRef)events[@"e29"];
+    
+    DDLogDebug(@"TouchSimulator: Sending dockSwipe end (Double/Triple) with events: %@ %@", e30, e29);
     
     CGEventPost(kCGSessionEventTap, e30);
     CGEventPost(kCGSessionEventTap, e29);
