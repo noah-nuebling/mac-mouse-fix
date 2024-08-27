@@ -60,9 +60,9 @@
 + (NSString *)getButtonString:(MFMouseButtonNumber)buttonNumber {
     
     NSDictionary *buttonNumberToUIString = @{
-        @1: NSLocalizedString(@"button-string.primary",     @"First draft: Primary Button"),
+        @1: NSLocalizedString(@"button-string.primary",     @"First draft: Primary Button || Note: All the 'button-string.[...]' strings should be lowercase unless there's a specific reason to capitalize them. In English, that reason is that we're using 'title case', but 'title case' is not a thing in most languages. Please see the comments on 'trigger.substring.button-modifier.2' for more."),
         @2: NSLocalizedString(@"button-string.secondary",   @"First draft: Secondary Button"),
-        @3: NSLocalizedString(@"button-string.middle",      @"First draft: Middle Button || Note: This is capitalized in English since we use 'title case' there. In your language, 'title case' might not be a thing, and you might *not* want to capitalize this. If this string appears at the start of a line, it will be capitalized programmatically."),
+        @3: NSLocalizedString(@"button-string.middle",      @"First draft: Middle Button"), /// || Note: This is capitalized in English since we use 'title case' there. In your language, 'title case' might not be a thing, and you might *not* want to capitalize this. If this string appears at the start of a line, it will be capitalized programmatically.
     };
     NSString *buttonStr = buttonNumberToUIString[@(buttonNumber)];
     if (!buttonStr) {

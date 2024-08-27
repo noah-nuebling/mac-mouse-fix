@@ -1792,203 +1792,8 @@
       },
       "shouldTranslate" : false
     },
-    "button-modifier.1" : {
-      "comment" : "First draft: Click %@ + || Note: %@ will be a button name || Example where %@ is 'Button 4': Click Button 4 + Double Click and Drag Button 5",
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "%@ klicken + "
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Click %@ +"
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Clic %@ +"
-          }
-        },
-        "ko" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "%@ 클릭 +"
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Clique %@ +"
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "%@'ya Tıkla +"
-          }
-        },
-        "vi" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Kích %@ +"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "点按%@＋"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "按一下%@＋"
-          }
-        },
-        "zh-HK" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "按一下%@＋"
-          }
-        }
-      }
-    },
-    "button-modifier.2" : {
-      "comment" : "First draft: Double Click %@ + ",
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "%@ doppelklicken + "
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Double Click %@ +"
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Double-clic %@ +"
-          }
-        },
-        "ko" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "%@ 이중 클릭 +"
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Duplo Clique %@ +"
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "%@'ya Çift Tıkla +"
-          }
-        },
-        "vi" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Kích đúp %@ +"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "连按%@＋"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "按兩下%@＋"
-          }
-        },
-        "zh-HK" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "按兩下%@＋"
-          }
-        }
-      }
-    },
-    "button-modifier.3" : {
-      "comment" : "First draft: Triple Click %@ + ",
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "%@ dreifach klicken + "
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Triple Click %@ +"
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Triple-clic %@ +"
-          }
-        },
-        "ko" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "%@ 삼중 클릭 +"
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Triplo Clique %@ +"
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "%@'ya Üç Tıkla +"
-          }
-        },
-        "vi" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Kích ba lần %@ +"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "连按三下%@＋"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "按三下%@＋"
-          }
-        },
-        "zh-HK" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "按三下%@＋"
-          }
-        }
-      }
-    },
     "button-string.middle" : {
-      "comment" : "First draft: Middle Button || Note: This is capitalized in English since we use 'title case' there. In your language, 'title case' might not be a thing, and you might *not* want to capitalize this. If this string appears at the start of a line, it will be capitalized programmatically.",
+      "comment" : "First draft: Middle Button",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -2118,7 +1923,7 @@
       }
     },
     "button-string.primary" : {
-      "comment" : "First draft: Primary Button",
+      "comment" : "First draft: Primary Button || Note: All the 'button-string.[...]' strings should be lowercase unless there's a specific reason to capitalize them. In English, that reason is that we're using 'title case', but 'title case' is not a thing in most languages. Please see the comments on 'trigger.substring.button-modifier.2' for more.",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -12430,8 +12235,203 @@
         }
       }
     },
+    "trigger.substring.button-modifier.1" : {
+      "comment" : "First draft: Click %@ + || Note: %@ will be a button name || Example where %@ is 'Button 4': Click Button 4 + Double Click and Drag Button 5",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ klicken + "
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Click %@ +"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "clic %@ +"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ 클릭 +"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Clique %@ +"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "%@'ya Tıkla +"
+          }
+        },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Kích %@ +"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "点按%@＋"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "按一下%@＋"
+          }
+        },
+        "zh-HK" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "按一下%@＋"
+          }
+        }
+      }
+    },
+    "trigger.substring.button-modifier.2" : {
+      "comment" : "First draft: Double Click %@ + || Note: All the \"trigger.substring.[...]\" strings should be lowercase unless there's a specific reason to capitalize them. In English, that reason is that we're using \"Title Case\", but this isn't common in other languages. For example, in German, the substring \"Double Click %@ +\" should be localized as \"doppelklicke %@ +\" and \"Click and Drag %@\" as \"klicke %@ und ziehe\". Notice that not even the first word is capitalized in German. That's because these substrings are joined programmatically to create a combined string. The substrings start with a lowercase letter, to avoid random capitalization in the middle of the combined string. The first word of the combined string will be capitalized programmatically. Therefore, unless your language has special capitalization rules (such as \"Title Case\" in English), these substrings should probably be all-lowercase, just like German. (Or, if you use a non-standard way to capitalize I think that's also ok, as long as it's reasonably consistent) I know this is a bit complicated, but I hope it's still understandable! If anything's unclear, please let me know and I'll try to explain it and improve these comments. Thank you.",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ doppelklicken + "
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Double Click %@ +"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "double-clic %@ +"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ 이중 클릭 +"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Duplo Clique %@ +"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "%@'ya Çift Tıkla +"
+          }
+        },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Kích đúp %@ +"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "连按%@＋"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "按兩下%@＋"
+          }
+        },
+        "zh-HK" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "按兩下%@＋"
+          }
+        }
+      }
+    },
+    "trigger.substring.button-modifier.3" : {
+      "comment" : "First draft: Triple Click %@ + ",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ dreifach klicken + "
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Triple Click %@ +"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "triple-clic %@ +"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ 삼중 클릭 +"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Triplo Clique %@ +"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "%@'ya Üç Tıkla +"
+          }
+        },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Kích ba lần %@ +"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "连按三下%@＋"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "按三下%@＋"
+          }
+        },
+        "zh-HK" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "按三下%@＋"
+          }
+        }
+      }
+    },
     "trigger.substring.click.1" : {
-      "comment" : "First draft: Click %@ || NOTE: This 'substring' will be combined with other substrings to form the 'Action Table Trigger Strings' which show up on the left side of the Action Table || NOTE 2: '%@' will be replaced by a mouse button name (or by nothing, if the button name can be inferred from context.) || EXAMPLE of an Action Table Trigger String, which is composed of this and other substrings, where '%@' in this substring was replaced by 'Button 5': ⌥⌘ Double Click Button 4 + Click Button 5 || NOTE 3: Most of the substrings that are used to build the Action Table Trigger Strings (this is one of those substrings) are capitalized in English because it's common to use 'title case' there. In your language, 'title case' might not be a thing, and so you might not want to capitalize these substrings. The first letter of the Action Table Trigger String will be programmatically capitalized in any language.",
+      "comment" : "First draft: Click %@ || Note: \"%@\" will be replaced by a button name (or by nothing, if the button name can be inferred from context) || Example where %@ is \"Button 5\": ⌥⌘ Double Click Button 4 + Click Button 5",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -12496,7 +12496,7 @@
       }
     },
     "trigger.substring.click.2" : {
-      "comment" : "First draft: Double Click %@ || NOTE: You might not want to capitalize this and other strings whose key starts with 'trigger.substring.' We only capitalize these strings in English because we use 'title case' there, which is not common in most languages aside from English. For more info, see the comments on 'trigger.substring.click.1'",
+      "comment" : "First draft: Double Click %@",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -12626,7 +12626,7 @@
       }
     },
     "trigger.substring.drag.1" : {
-      "comment" : "First draft: Click and Drag %@ || Note: %@ will be a button name || example where %@ is 'Button 5': ⌥⌘ Triple Click Button 4 + Click and Drag Button 5",
+      "comment" : "First draft: Click and Drag %@",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -12886,7 +12886,7 @@
       }
     },
     "trigger.substring.hold.1" : {
-      "comment" : "First draft: Hold %@",
+      "comment" : "First draft: Hold %@ || Remember: All the \"trigger.substring.[...]\" strings should normally be all-lowercase. For an explanation, see the comment for the key \"trigger.substring.button-modifier.2\"",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -13341,7 +13341,7 @@
       }
     },
     "trigger.z.drag-particle" : {
-      "comment" : "First draft: Drag || NOTE: This word will be emphasized in 'Action Table Trigger Strings' such as 'Double Click and Drag %@'. For the emphasis to work, make sure that spelling and capitalization matches *exactly* with how this word is used in strings whose keys begin with 'trigger.substring.drag.[...]'",
+      "comment" : "First draft: Drag || Note: This word will be emphasized in strings such as \"Double Click and Drag %@\". For the emphasis to work, make sure that spelling and capitalization matches *exactly* with how this word is used in strings whose keys begin with \"trigger.substring.drag.[...]\"",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -13400,7 +13400,7 @@
       }
     },
     "trigger.z.scroll-particle" : {
-      "comment" : "First draft: Scroll || NOTE: This word will be emphasized in 'Action Table Trigger Strings' such as 'Triple Click and Scroll %@'. For the emphasis to work, make sure that spelling and capitalization matches *exactly* with how this word is used in the strings whose keys begin with 'trigger.substring.scroll.[...]'",
+      "comment" : "First draft: Scroll || Note: This word will be emphasized in strings such as \"Click and Scroll %@\". For the emphasis to work, make sure that spelling and capitalization matches *exactly* with how this word is used in the strings whose keys begin with \"trigger.substring.scroll.[...]\"",
       "localizations" : {
         "de" : {
           "stringUnit" : {

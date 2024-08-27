@@ -740,11 +740,11 @@ static NSString *effectNameForRowDict(NSDictionary * _Nonnull rowDict) {
         /// Declare map
         
         NSDictionary *map = @{
-            @[@(1), @"click"]:  NSLocalizedString(@"trigger.substring.click.1",   @"First draft: Click %@ || NOTE: This 'substring' will be combined with other substrings to form the 'Action Table Trigger Strings' which show up on the left side of the Action Table || NOTE 2: '%@' will be replaced by a mouse button name (or by nothing, if the button name can be inferred from context.) || EXAMPLE of an Action Table Trigger String, which is composed of this and other substrings, where '%@' in this substring was replaced by 'Button 5': ⌥⌘ Double Click Button 4 + Click Button 5 || NOTE 3: Most of the substrings that are used to build the Action Table Trigger Strings (this is one of those substrings) are capitalized in English because it's common to use 'title case' there. In your language, 'title case' might not be a thing, and so you might not want to capitalize these substrings. The first letter of the Action Table Trigger String will be programmatically capitalized in any language."),
+            @[@(1), @"click"]:  NSLocalizedString(@"trigger.substring.click.1",   @"First draft: Click %@ || Note: \"%@\" will be replaced by a button name (or by nothing, if the button name can be inferred from context) || Example where %@ is \"Button 5\": ⌥⌘ Double Click Button 4 + Click Button 5"), /// || NOTE: This 'substring' will be combined with other substrings to form the 'Action Table Trigger Strings' which show up on the left side of the Action Table || NOTE 2: '%@' will be replaced by a mouse button name (or by nothing, if the button name can be inferred from context.) || EXAMPLE of an Action Table Trigger String, which is composed of this and other substrings, where '%@' in this substring was replaced by 'Button 5': ⌥⌘ Double Click Button 4 + Click Button 5 || NOTE 3: Most of the substrings that are used to build the Action Table Trigger Strings (this is one of those substrings) are capitalized in English because it's common to use 'Title Case' there. In your language, 'Title Case' might not be a thing, and so you might not want to capitalize these substrings. The first letter of the Action Table Trigger String will be programmatically capitalized in any language."),
             
-            @[@(2), @"click"]:  NSLocalizedString(@"trigger.substring.click.2",   @"First draft: Double Click %@ || NOTE: You might not want to capitalize this and other strings whose key starts with 'trigger.substring.' We only capitalize these strings in English because we use 'title case' there, which is not common in most languages aside from English. For more info, see the comments on 'trigger.substring.click.1'"),
+            @[@(2), @"click"]:  NSLocalizedString(@"trigger.substring.click.2",   @"First draft: Double Click %@"), ///|| NOTE: You might not want to capitalize this and other strings whose key starts with 'trigger.substring.' We only capitalize these strings in English because we use 'Title Case' there, which is not common in most languages aside from English. For more info, see the comments on 'trigger.substring.click.1'"),
             @[@(3), @"click"]:  NSLocalizedString(@"trigger.substring.click.3",   @"First draft: Triple Click %@"),
-            @[@(1), @"hold"]:   NSLocalizedString(@"trigger.substring.hold.1",    @"First draft: Hold %@"),
+            @[@(1), @"hold"]:   NSLocalizedString(@"trigger.substring.hold.1",    @"First draft: Hold %@ || Remember: All the \"trigger.substring.[...]\" strings should normally be all-lowercase. For an explanation, see the comment for the key \"trigger.substring.button-modifier.2\""),
             @[@(2), @"hold"]:   NSLocalizedString(@"trigger.substring.hold.2",    @"First draft: Double Click and Hold %@"),
             @[@(3), @"hold"]:   NSLocalizedString(@"trigger.substring.hold.3",    @"First draft: Triple Click and Hold %@"),
         };
@@ -766,8 +766,8 @@ static NSString *effectNameForRowDict(NSDictionary * _Nonnull rowDict) {
         ///
         
         /// Note:
-        /// - 26.08.2024: The 'Action Table Trigger String' and 'substring' and 'title case' concepts and the consequences for how the substrings should be captialized are a bit hard to explain to localizers.
-        ///             And I saw the Brazilian, French and Vietnamese localizers all captialize the substrings, even though none of those languages have something akin to 'title case'.
+        /// - 26.08.2024: The 'Action Table Trigger String' and 'substring' and 'Title Case' concepts and the consequences for how the substrings should be captialized are a bit hard to explain to localizers.
+        ///             And I saw the Brazilian, French and Vietnamese localizers all captialize the substrings, even though none of those languages have something akin to 'Title Case'.
         ///             Today, we added `.substring.` in the keys and and added very extensive comments to hopefully help with that.
         
         /// TODO: Comment below is obsolete. Remove.
@@ -779,7 +779,7 @@ static NSString *effectNameForRowDict(NSDictionary * _Nonnull rowDict) {
         /// Define maps
         
         NSDictionary *map = @{
-            @[@(1), @"_drag"]:      NSLocalizedString(@"trigger.substring.drag.1",    @"First draft: Click and Drag %@ || Note: %@ will be a button name || example where %@ is 'Button 5': ⌥⌘ Triple Click Button 4 + Click and Drag Button 5"),
+            @[@(1), @"_drag"]:      NSLocalizedString(@"trigger.substring.drag.1",    @"First draft: Click and Drag %@"), /// (Removed the note because it's redundant with other notes. ) /// Note: %@ will be replaced by a mouse button name (or by nothing if it can be inferred from context) || Example where %@ is 'Button 5': ⌥⌘ Triple Click Button 4 + Click and Drag Button 5"),
             @[@(2), @"_drag"]:      NSLocalizedString(@"trigger.substring.drag.2",    @"First draft: Double Click and Drag %@"),
             @[@(3), @"_drag"]:      NSLocalizedString(@"trigger.substring.drag.3",    @"First draft: Triple Click and Drag %@"),
             @[@(1), @"_scroll"]:    NSLocalizedString(@"trigger.substring.scroll.1",  @"First draft: Click and Scroll %@"),
@@ -812,8 +812,8 @@ static NSString *effectNameForRowDict(NSDictionary * _Nonnull rowDict) {
         ///     - 26.08.2024: I saw the French and Brazillian loclizers not capitalize and spell the drag-particles exactly as they are in the trigger.substring.[...] strings.
         ///                 So we added more extensive comments and added `.z.` in the key so that translators see the drag-particles *after* the trigger.substring.[...] strings - hopefully making it more understandable how the particles affect the substrings.
         
-        NSString *dragParticle =    NSLocalizedString(@"trigger.z.drag-particle",  @"First draft: Drag || NOTE: This word will be emphasized in 'Action Table Trigger Strings' such as 'Double Click and Drag %@'. For the emphasis to work, make sure that spelling and capitalization matches *exactly* with how this word is used in strings whose keys begin with 'trigger.substring.drag.[...]'");
-        NSString *scrollParticle =  NSLocalizedString(@"trigger.z.scroll-particle", @"First draft: Scroll || NOTE: This word will be emphasized in 'Action Table Trigger Strings' such as 'Triple Click and Scroll %@'. For the emphasis to work, make sure that spelling and capitalization matches *exactly* with how this word is used in the strings whose keys begin with 'trigger.substring.scroll.[...]'");
+        NSString *dragParticle =    NSLocalizedString(@"trigger.z.drag-particle",  @"First draft: Drag || Note: This word will be emphasized in strings such as \"Double Click and Drag %@\". For the emphasis to work, make sure that spelling and capitalization matches *exactly* with how this word is used in strings whose keys begin with \"trigger.substring.drag.[...]\""); // || Note: This word will be emphasized in 'Action Table Trigger Strings' such as 'Double Click and Drag %@'. For the emphasis to work, make sure that spelling and capitalization matches *exactly* with how this word is used in strings whose keys begin with 'trigger.substring.drag.[...]'");
+        NSString *scrollParticle =  NSLocalizedString(@"trigger.z.scroll-particle", @"First draft: Scroll || Note: This word will be emphasized in strings such as \"Click and Scroll %@\". For the emphasis to work, make sure that spelling and capitalization matches *exactly* with how this word is used in the strings whose keys begin with \"trigger.substring.scroll.[...]\"");
         
         tr = [tr attributedStringByAddingSemiBoldForSubstring:dragParticle];
         tr = [tr attributedStringByAddingSemiBoldForSubstring:scrollParticle];
@@ -842,11 +842,16 @@ static NSString *effectNameForRowDict(NSDictionary * _Nonnull rowDict) {
         
         NSString *buttonModString;
         if (lvl.intValue == 1) {
-            buttonModString = stringf(NSLocalizedString(@"button-modifier.1", @"First draft: Click %@ + || Note: %@ will be a button name || Example where %@ is 'Button 4': Click Button 4 + Double Click and Drag Button 5"), buttonStr);
+            buttonModString = stringf(NSLocalizedString(@"trigger.substring.button-modifier.1", @"First draft: Click %@ + || Note: %@ will be a button name || Example where %@ is 'Button 4': Click Button 4 + Double Click and Drag Button 5"), buttonStr);
         } else if (lvl.intValue == 2) {
-            buttonModString = stringf(NSLocalizedString(@"button-modifier.2", @"First draft: Double Click %@ + "), buttonStr);
+            /// Notes:
+            ///     - We put the detailed localizer hints for the "trigger.substring.[...]" strings here because:
+            ///         - It shows up close to the top of the "trigger.substrings.[...]" in the .xcstrings file, when sorting alphabetically.
+            ///         - If we put the explanation on the very first of the "trigger.substrings" ("trigger.substring.button-modifier.1"), then we'd have multiple "|| Note:" sections in the same string comment - I think this increases chances of localizers missing the notes.
+            ///     - Our examples of the German strings are slightly wrong - we altered them to better be able to drive home the point that not even the first word of the string should be capitalized.
+            buttonModString = stringf(NSLocalizedString(@"trigger.substring.button-modifier.2", @"First draft: Double Click %@ + || Note: All the \"trigger.substring.[...]\" strings should be lowercase unless there's a specific reason to capitalize them. In English, that reason is that we're using \"Title Case\", but this isn't common in other languages. For example, in German, the substring \"Double Click %@ +\" should be localized as \"doppelklicke %@ +\" and \"Click and Drag %@\" as \"klicke %@ und ziehe\". Notice that not even the first word is capitalized in German. That's because these substrings are joined programmatically to create a combined string. The substrings start with a lowercase letter, to avoid random capitalization in the middle of the combined string. The first word of the combined string will be capitalized programmatically. Therefore, unless your language has special capitalization rules (such as \"Title Case\" in English), these substrings should probably be all-lowercase, just like German. (Or, if you use a non-standard way to capitalize I think that's also ok, as long as it's reasonably consistent) I know this is a bit complicated, but I hope it's still understandable! If anything's unclear, please let me know and I'll try to explain it and improve these comments. Thank you."), buttonStr);
         } else if (lvl.intValue == 3) {
-            buttonModString = stringf(NSLocalizedString(@"button-modifier.3", @"First draft: Triple Click %@ + "), buttonStr);
+            buttonModString = stringf(NSLocalizedString(@"trigger.substring.button-modifier.3", @"First draft: Triple Click %@ + "), buttonStr);
         } else {
             @throw [NSException exceptionWithName:@"Invalid click level" reason:@"Modification precondition contains undisplayable click level" userInfo:@{@"Trigger dict containing invalid value": triggerGeneric}];
         }
