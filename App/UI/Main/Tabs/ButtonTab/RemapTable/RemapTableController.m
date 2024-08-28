@@ -687,7 +687,7 @@ static void updateBorderColor(RemapTableController *object, BOOL isInitialAppear
         MFMouseButtonNumber groupButtonNumber = [RemapTableUtility triggerButtonForRow:self.groupedDataModel[row+1]];
         NSTableCellView *buttonGroupCell = [self.tableView makeViewWithIdentifier:@"buttonGroupCell" owner:self];
         NSTextField *groupTextField = (NSTextField *)buttonGroupCell.nextKeyView;
-        groupTextField.stringValue = stringf(@"  %@", [UIStrings getButtonString:groupButtonNumber].firstCapitalized);
+        groupTextField.stringValue = stringf(@"  %@", [UIStrings getButtonString:groupButtonNumber context:kMFButtonStringUsageContextActionTableGroupRow].firstCapitalized);
         
         if (@available(macOS 11.0, *)) { } else {
             

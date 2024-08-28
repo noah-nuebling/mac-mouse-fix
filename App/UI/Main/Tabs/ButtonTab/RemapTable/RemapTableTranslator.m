@@ -838,7 +838,7 @@ static NSString *effectNameForRowDict(NSDictionary * _Nonnull rowDict) {
         NSNumber *btn = buttonPress[kMFButtonModificationPreconditionKeyButtonNumber];
         NSNumber *lvl = buttonPress[kMFButtonModificationPreconditionKeyClickLevel];
         NSString *buttonStr;
-        buttonStr = [UIStrings getButtonString:btn.intValue];
+        buttonStr = [UIStrings getButtonString:btn.intValue context:kMFButtonStringUsageContextActionTableTriggerSubstring];
         
         NSString *buttonModString;
         if (lvl.intValue == 1) {
@@ -880,7 +880,7 @@ static NSString *effectNameForRowDict(NSDictionary * _Nonnull rowDict) {
         
         /// Display main button – only if there *are* button modifiers
         
-        NSAttributedString *mainButton = [UIStrings getButtonString:btn.intValue].attributed;
+        NSAttributedString *mainButton = [UIStrings getButtonString:btn.intValue context:kMFButtonStringUsageContextActionTableTriggerSubstring].attributed;
         mainButton = [mainButton attributedStringByAddingColor:NSColor.secondaryLabelColor forRange:NULL];
         tr = [NSAttributedString attributedStringWithAttributedFormat:tr args:@[mainButton]];
         

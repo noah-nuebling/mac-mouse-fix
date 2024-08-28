@@ -17,11 +17,17 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface UIStrings : NSObject
 
+typedef enum {
+    kMFButtonStringUsageContextActionTableTriggerSubstring,
+    kMFButtonStringUsageContextActionTableGroupRow,
+    kMFButtonStringUsageContextCaptureNotification,
+} MFButtonStringUsageContext;
+
 + (NSString * _Nullable)flagEmoji:(NSString *)countryCode;
 + (NSString *)systemSettingsName;
 //+ (NSString *)stringForKeyCode:(NSInteger)keyCode;
-+ (NSString *)getButtonString:(MFMouseButtonNumber)buttonNumber;
-+ (NSString *)getButtonStringToolTip:(MFMouseButtonNumber)buttonNumber;
++ (NSString *)getButtonString:(MFMouseButtonNumber)buttonNumber context:(MFButtonStringUsageContext)context;
+//+ (NSString *)getButtonStringToolTip:(MFMouseButtonNumber)buttonNumber;
 + (NSString *)getKeyboardModifierString:(CGEventFlags)flags;
 + (NSString *)getKeyboardModifierStringToolTip:(CGEventFlags)flags;
 + (NSAttributedString *)getStringForKeyCode:(CGKeyCode)keyCode flags:(CGEventFlags)flags font:(NSFont *)font;

@@ -57,20 +57,60 @@
     }
 }
 
-+ (NSString *)getButtonString:(MFMouseButtonNumber)buttonNumber {
++ (NSString *)getButtonString:(MFMouseButtonNumber)buttonNumber context:(MFButtonStringUsageContext)context {
     
-    /// Note:
-    ///     These button strings are in 'Title Case' in English. If we need a non-titlecase version, we need to restructure this.
+    /// Notes:
+    ///     - Having all these different strings for the same buttons, creates extra room for inconsistencies on the side of localizers - so we should do our best with comments and organization of the .xcloc files to help them avoid inconsistencies!
+    ///     - Why do we define different button-name strings depending on context?:
+    ///         - In some languages the button names have to be inflected differently depending on context.
+    ///             -> E.g. if we were using Knopf (masculine) instead of Taste (feminine) in German it would have to be "Mittlerer Knopf" in the group row but "Mittleren Knopf klicken und ziehen" in the trigger string.
+    ///         - Also in English we might wanna use title case in some contexts but not in others (although I'm sorta leaning towards using the same capitalization everywhere? Might make it easier to parse visually.)
     
-    NSDictionary *buttonNumberToUIString = @{
-        @1: NSLocalizedString(@"button-name.primary",     @"First draft: Primary Button"),
-        @2: NSLocalizedString(@"button-name.secondary",   @"First draft: Secondary Button"),
-        @3: NSLocalizedString(@"button-name.middle",      @"First draft: Middle Button "),
-    };
-    NSString *buttonStr = buttonNumberToUIString[@(buttonNumber)];
-    if (!buttonStr) {
-        buttonStr = stringf(NSLocalizedString(@"button-name.numbered", @"First Draft: Button %@ || Note: All the \"button-name.[...]\" strings should be lowercase unless there's a specific reason to capitalize some words. For example, in Vietnamese, \"Middle Button\" should be localized as \"nút giữa\". Note that not even the first letter is capitalized. That's because the button names will appear in the middle of other pieces of text, and we don't want a randomly capitalized button name in the middle of that text. In English, we capitalize because we're using \"Title Case\", but this isn't common in other languages. So for most languages, these strings should probably be all-lowercase, just like Vietnamese. Exceptions: Some languages have special capitalization rules similar to English \"Title Case\". For example, German always capitalizes all nouns, so therefore \"Middle Button\" should be localized as \"mittlere Taste\" in German. Please see the comment on \"trigger.substring.button-modifier.2\" for more info."), @(buttonNumber)); /// Note to self: We put the long comment on the 'numbered'-button-string since that shows up second in the .xcstrings file under alphabetic sorting. We think putting it second has the highest changes of the localizers noticing the comment. Since, if it's first, they might be busy processing "oh here's a new set of strings" /// Old note: || Note: This is capitalized in English since we use 'title case' there. In your language, 'title case' might not be a thing, and you might *not* want to capitalize this. If this string appears at the start of a line, it will be capitalized programmatically.
+    /// Get map
+    ///     According to context.
+    
+    NSDictionary *map;
+    
+    if (context == kMFButtonStringUsageContextActionTableTriggerSubstring) {
+        
+        map = @{
+            @1: NSLocalizedString(@"trigger.substring.button-name.primary",     @"First draft: Primary Button"),
+            @2: NSLocalizedString(@"trigger.substring.button-name.secondary",   @"First draft: Secondary Button"),
+            @3: NSLocalizedString(@"trigger.substring.button-name.middle",      @"First draft: Middle Button || Remember: All the \"trigger.substring.[...]\" strings should normally be all-lowercase. For an explanation, see the comment for the key \"trigger.substring.button-modifier.2\""),
+            @-1: NSLocalizedString(@"trigger.substring.button-name.numbered",   @"First Draft: Button %@"), /// Note to self: Removed the old notes (see later in this line) after giving the trigger.substring. prefix to these string keys, since we're already explaining the capitalization on other `trigger.substring.[...]` comments. || Old notes: All the \"button-name.[...]\" strings should be lowercase unless there's a specific reason to capitalize some words. For example, in Vietnamese, \"Middle Button\" should be localized as \"nút giữa\". Note that not even the first letter is capitalized. That's because the button names will appear in the middle of other pieces of text, and we don't want a randomly capitalized button name in the middle of that text. In English, we capitalize because we're using \"Title Case\", but this isn't common in other languages. So for most languages, these strings should probably be all-lowercase, just like Vietnamese. Exceptions: Some languages have special capitalization rules similar to English \"Title Case\". For example, German always capitalizes all nouns, so therefore \"Middle Button\" should be localized as \"mittlere Taste\" in German. Please see the comment on \"trigger.substring.button-modifier.2\" for more info."), /// Note to self: We put the long comment on the 'numbered'-button-string since that shows up second in the .xcstrings file under alphabetic sorting. We think putting it second has the highest changes of the localizers noticing the comment. Since, if it's first, they might be busy processing "oh here's a new set of strings" /// Old note: || Note: This is capitalized in English since we use 'title case' there. In your language, 'title case' might not be a thing, and you might *not* want to capitalize this. If this string appears at the start of a line, it will be capitalized programmatically.
+        };
+        
+    } else if (context == kMFButtonStringUsageContextActionTableGroupRow) {
+        
+        map = @{
+            @1: NSLocalizedString(@"trigger.y.group-row.button-name.primary",     @"First draft: Primary Button"), /// The '.y.' is just used to group things in the .xcstrings file. Not sure if smart.
+            @2: NSLocalizedString(@"trigger.y.group-row.button-name.secondary",   @"First draft: Secondary Button"),
+            @3: NSLocalizedString(@"trigger.y.group-row.button-name.middle",      @"First draft: Middle Button || Note: The trigger.y.group-row.button-name.[...] strings names are used in the Action Table as headers to group together actions which are triggered by the same button."),
+            @-1: NSLocalizedString(@"trigger.y.group-row.button-name.numbered",   @"First Draft: Button %@ || Note: For visual consistency, capitalization of the these button-name strings should probably follow the capitalization of the trigger.substring.button-name.[...] strings. - You might want to fill those out first to figure out the capitalization, and then come back to fill out the button-names here. (This is just a guideline, if you have a specific reason to deviate it's up to your best judgement.)"),
+        };
+        
+    } else if (context == kMFButtonStringUsageContextCaptureNotification) {
+        
+        map = @{
+            @1: NSLocalizedString(@"capture-toast.button-name.primary",     @"First draft: Primary Button"),
+            @2: NSLocalizedString(@"capture-toast.button-name.secondary",   @"First draft: Secondary Button"),
+            @3: NSLocalizedString(@"capture-toast.button-name.middle",      @"First draft: Middle Button || Note: These button names will be inserted into other \"capture-toast.[...]\" strings. Example: Middle Button and Button 4 are now captured by Mac Mouse Fix."),
+            @-1: NSLocalizedString(@"capture-toast.button-name.numbered",   @"First Draft: Button %@ || Note: For visual consistency, capitalization of the these button-name strings should probably follow the capitalization of the trigger.substring.button-name.[...] strings. - You might want to fill those out first to figure out the capitalization, and then come back to fill out the button-names here. (This is just a guideline, if you have a specific reason to deviate it's up to your best judgement.)"),
+        };
+        
+    } else {
+        assert(false);
+        return nil;
     }
+
+    /// Query map
+    NSString *buttonStr = map[@(buttonNumber)];
+    if (!buttonStr) {
+        NSString *buttonStrFormat = map[@-1];
+        buttonStr = stringf(buttonStrFormat, @(buttonNumber));
+    }
+    
+    /// Return
     return buttonStr;
 }
 
