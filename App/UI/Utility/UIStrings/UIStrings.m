@@ -59,14 +59,17 @@
 
 + (NSString *)getButtonString:(MFMouseButtonNumber)buttonNumber {
     
+    /// Note:
+    ///     These button strings are in 'Title Case' in English. If we need a non-titlecase version, we need to restructure this.
+    
     NSDictionary *buttonNumberToUIString = @{
-        @1: NSLocalizedString(@"button-string.primary",     @"First draft: Primary Button || Note: All the 'button-string.[...]' strings should be lowercase unless there's a specific reason to capitalize them. In English, that reason is that we're using 'title case', but 'title case' is not a thing in most languages. Please see the comments on 'trigger.substring.button-modifier.2' for more."),
-        @2: NSLocalizedString(@"button-string.secondary",   @"First draft: Secondary Button"),
-        @3: NSLocalizedString(@"button-string.middle",      @"First draft: Middle Button"), /// || Note: This is capitalized in English since we use 'title case' there. In your language, 'title case' might not be a thing, and you might *not* want to capitalize this. If this string appears at the start of a line, it will be capitalized programmatically.
+        @1: NSLocalizedString(@"button-name.primary",     @"First draft: Primary Button"),
+        @2: NSLocalizedString(@"button-name.secondary",   @"First draft: Secondary Button"),
+        @3: NSLocalizedString(@"button-name.middle",      @"First draft: Middle Button "),
     };
     NSString *buttonStr = buttonNumberToUIString[@(buttonNumber)];
     if (!buttonStr) {
-        buttonStr = stringf(NSLocalizedString(@"button-string.numbered", @"First Draft: Button %@"), @(buttonNumber));
+        buttonStr = stringf(NSLocalizedString(@"button-name.numbered", @"First Draft: Button %@ || Note: All the \"button-name.[...]\" strings should be lowercase unless there's a specific reason to capitalize some words. For example, in Vietnamese, \"Middle Button\" should be localized as \"nút giữa\". Note that not even the first letter is capitalized. That's because the button names will appear in the middle of other pieces of text, and we don't want a randomly capitalized button name in the middle of that text. In English, we capitalize because we're using \"Title Case\", but this isn't common in other languages. So for most languages, these strings should probably be all-lowercase, just like Vietnamese. Exceptions: Some languages have special capitalization rules similar to English \"Title Case\". For example, German always capitalizes all nouns, so therefore \"Middle Button\" should be localized as \"mittlere Taste\" in German. Please see the comment on \"trigger.substring.button-modifier.2\" for more info."), @(buttonNumber)); /// Note to self: We put the long comment on the 'numbered'-button-string since that shows up second in the .xcstrings file under alphabetic sorting. We think putting it second has the highest changes of the localizers noticing the comment. Since, if it's first, they might be busy processing "oh here's a new set of strings" /// Old note: || Note: This is capitalized in English since we use 'title case' there. In your language, 'title case' might not be a thing, and you might *not* want to capitalize this. If this string appears at the start of a line, it will be capitalized programmatically.
     }
     return buttonStr;
 }
@@ -88,13 +91,13 @@
     #if 0
     
     NSDictionary *buttonNumberToUIString = @{
-        @1: xxxNSLocalizedString(@"button-string.tool.primary",   @"First draft: Primary Mouse Button (also called Left Mouse Button or Mouse Button 1)"),
-        @2: xxxNSLocalizedString(@"button-string.tool.secondary", @"First draft: Secondary Mouse Button (also called Right Mouse Button or Mouse Button 2)"),
-        @3: xxxNSLocalizedString(@"button-string.tool.middle",    @"First draft: Middle Mouse Button (also called Scroll Wheel Button or Mouse Button 3) || Example usage: Open links in a new tab, paste text in the Terminal, and more.\n \nWorks like clicking the Middle Mouse Button (also called the Scroll Wheel Button or Mouse Button 3) on a standard mouse."),
+        @1: xxxNSLocalizedString(@"button-name.tool.primary",   @"First draft: Primary Mouse Button (also called Left Mouse Button or Mouse Button 1)"),
+        @2: xxxNSLocalizedString(@"button-name.tool.secondary", @"First draft: Secondary Mouse Button (also called Right Mouse Button or Mouse Button 2)"),
+        @3: xxxNSLocalizedString(@"button-name.tool.middle",    @"First draft: Middle Mouse Button (also called Scroll Wheel Button or Mouse Button 3) || Example usage: Open links in a new tab, paste text in the Terminal, and more.\n \nWorks like clicking the Middle Mouse Button (also called the Scroll Wheel Button or Mouse Button 3) on a standard mouse."),
     };
     NSString *buttonStr = buttonNumberToUIString[@(buttonNumber)];
     if (!buttonStr) {
-        buttonStr = stringf(xxxNSLocalizedString(@"button-string.tool.numbered", @"First draft: Mouse Button %@"), @(buttonNumber));
+        buttonStr = stringf(xxxNSLocalizedString(@"button-name.tool.numbered", @"First draft: Mouse Button %@"), @(buttonNumber));
     }
     return buttonStr;
     
