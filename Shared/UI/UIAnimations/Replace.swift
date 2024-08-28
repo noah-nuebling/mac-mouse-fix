@@ -29,7 +29,7 @@ extension NSView {
 class ReplaceAnimations {
     
     /// Storage
-    
+    ///     28.08.2024: This seems to be unused.
     private static var _fadeInDelayDispatchQueues: [NSView: DispatchQueue] = [:]
     private static func fadeInDelayDispatchQueue(forView view: NSView) -> DispatchQueue {
         if let cachedQueue = _fadeInDelayDispatchQueues[view] {
