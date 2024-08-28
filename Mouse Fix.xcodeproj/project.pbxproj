@@ -233,7 +233,6 @@
 		4FD148CC28AA423F00FE688C /* AuthorizeAccessibilityView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4FD148CE28AA423F00FE688C /* AuthorizeAccessibilityView.xib */; };
 		4FD148D128AA428000FE688C /* ButtonOptionsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4FD148D328AA428000FE688C /* ButtonOptionsViewController.xib */; };
 		4FD148D628AA43E900FE688C /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4FD148D528AA43E900FE688C /* MainMenu.xib */; };
-		4FD3250728E2810200256967 /* Device.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF6667A25F2C93A00689B77 /* Device.m */; };
 		4FD66E0827BB553800F67559 /* CGEventHIDEventBridge.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FD66E0727BB553800F67559 /* CGEventHIDEventBridge.m */; };
 		4FD66E0B27BB9BAE00F67559 /* EventUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FD66E0A27BB9BAE00F67559 /* EventUtility.m */; };
 		4FD86089266E819A004F76C8 /* Pointers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FD86088266E819A004F76C8 /* Pointers.swift */; };
@@ -8197,7 +8196,6 @@
 				4F909D3C28A0C3D2009349A2 /* ModCaptureFieldEditor.swift in Sources */,
 				4FFA4E3528B795F30062A1FE /* LicenseUtility.swift in Sources */,
 				4F3E067E26A2F97D000C9E06 /* URLMenuItem.m in Sources */,
-				4FD3250728E2810200256967 /* Device.m in Sources */,
 				4FE03A612BFF5F0600708454 /* CoolSUUpdater.m in Sources */,
 				4FF6660225F2C92700689B77 /* ClickableImageView.m in Sources */,
 				4F7D97A628AEB2EE00C11E79 /* AboutTabController.swift in Sources */,
