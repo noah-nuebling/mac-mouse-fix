@@ -42,6 +42,7 @@ These people spent a lot more than the standard price and treated me to an **Inc
 
 **August 2024**
 
+- 🇺🇸&nbsp;Applepay&nbsp;Greedless284
 - 🇺🇸&nbsp;Ryan&nbsp;Ludemann
 - 🇯🇵&nbsp;Tatsuma&nbsp;Hashizume
 - 🇺🇸&nbsp;Brandonrike
