@@ -73,16 +73,32 @@
 
 + (NSString *)getButtonStringToolTip:(MFMouseButtonNumber)buttonNumber {
     
+    /// Unused:
+    ///     28.08.2024: Unused since separating these strings out didn't really make sense for the following reasons:
+    ///              - The strings were only used in one place. (For the effect.primary-click, effect.secondary-click, etc. tooltips)
+    ///              - We wanted to use these long button names in longer, more descriptive texts, where we'd wanna use them in full sentences like "works like clicking the Primary Mouse Button (also called ...)".
+    ///                 But in German that doesn't always work, since we have to put the button names into different grammatical cases depending on context. ("Funktioniert wie das Klicken der Primären Maustaste" (auch genannt ...)")
+    ///
+    ///              Lesson: Make localized strings as non-modular and non-reused as possible, to give localizers more control over how the English strings are translated in different contexts.
+    ///                 This goes against the general intuitions you have as a programmer, but it really makes sense.
+    
+    assert(false);
+    return nil;
+    
+    #if 0
+    
     NSDictionary *buttonNumberToUIString = @{
-        @1: NSLocalizedString(@"button-string.tool.primary",   @"First draft: Primary Mouse Button (also called Left Mouse Button or Mouse Button 1)"),
-        @2: NSLocalizedString(@"button-string.tool.secondary", @"First draft: Secondary Mouse Button (also called Right Mouse Button or Mouse Button 2)"),
-        @3: NSLocalizedString(@"button-string.tool.middle",    @"First draft: Middle Mouse Button (also called Scroll Wheel Button or Mouse Button 3) || Example usage: Open links in a new tab, paste text in the Terminal, and more.\n \nWorks like clicking the Middle Mouse Button (also called the Scroll Wheel Button or Mouse Button 3) on a standard mouse."),
+        @1: xxxNSLocalizedString(@"button-string.tool.primary",   @"First draft: Primary Mouse Button (also called Left Mouse Button or Mouse Button 1)"),
+        @2: xxxNSLocalizedString(@"button-string.tool.secondary", @"First draft: Secondary Mouse Button (also called Right Mouse Button or Mouse Button 2)"),
+        @3: xxxNSLocalizedString(@"button-string.tool.middle",    @"First draft: Middle Mouse Button (also called Scroll Wheel Button or Mouse Button 3) || Example usage: Open links in a new tab, paste text in the Terminal, and more.\n \nWorks like clicking the Middle Mouse Button (also called the Scroll Wheel Button or Mouse Button 3) on a standard mouse."),
     };
     NSString *buttonStr = buttonNumberToUIString[@(buttonNumber)];
     if (!buttonStr) {
-        buttonStr = stringf(NSLocalizedString(@"button-string.tool.numbered", @"First draft: Mouse Button %@"), @(buttonNumber));
+        buttonStr = stringf(xxxNSLocalizedString(@"button-string.tool.numbered", @"First draft: Mouse Button %@"), @(buttonNumber));
     }
     return buttonStr;
+    
+    #endif
 }
 
 + (NSString *)getKeyboardModifierString:(CGEventFlags)flags {

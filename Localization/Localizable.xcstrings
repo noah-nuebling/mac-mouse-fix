@@ -2052,73 +2052,9 @@
         }
       }
     },
-    "button-string.tool.middle" : {
-      "comment" : "First draft: Middle Mouse Button (also called Scroll Wheel Button or Mouse Button 3) || Example usage: Open links in a new tab, paste text in the Terminal, and more.\n \nWorks like clicking the Middle Mouse Button (also called the Scroll Wheel Button or Mouse Button 3) on a standard mouse.",
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Mittlere Maustaste (auch genannt Scrollradtaste oder Maustaste 3)"
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Middle Mouse Button (also called Scroll Wheel Button or Mouse Button 3)"
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Bouton central de la souris (aussi appelé bouton de la molette de défilement ou Bouton de souris 3)"
-          }
-        },
-        "ko" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "마우스 가운데 버튼(또는 스크롤 휠 버튼 및 마우스 3번 버튼)"
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Botão do Meio do Mouse (também chamado de Botão da de Rolagem ou 3º Botão do Mouse)"
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Orta Fare Düğmesi (Kaydırma Tekerleği Düğmesi veya Fare Düğmesi 3 olarak da adlandırılır)"
-          }
-        },
-        "vi" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Nút giữa (còn gọi là Con lăn hoặc Nút số 3)"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "鼠标中键（又称鼠标滚轮键或鼠标按钮３）"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "滑鼠中間鍵（又稱滑鼠滾輪按鈕或滑鼠按鈕３）"
-          }
-        },
-        "zh-HK" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "滑鼠中間鍵（又稱滑鼠滾輪按鈕或滑鼠按鈕３）"
-          }
-        }
-      }
-    },
     "button-string.tool.numbered" : {
       "comment" : "First draft: Mouse Button %@",
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -2178,136 +2114,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "滑鼠按鈕%@"
-          }
-        }
-      }
-    },
-    "button-string.tool.primary" : {
-      "comment" : "First draft: Primary Mouse Button (also called Left Mouse Button or Mouse Button 1)",
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Primäre Maustaste (auch genannt linke Maustaste oder Maustaste 1)"
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Primary Mouse Button (also called Left Mouse Button or Mouse Button 1)"
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Bouton principal de la souris (aussi appelé bouton de souris gauche ou Bouton de souris 1)"
-          }
-        },
-        "ko" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "마우스 주 버튼(또는 왼쪽 마우스 버튼 및 마우스 1번 버튼)"
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Botão Primário do Mouse (também chamado de Botão Esquerdo ou 1º Botão do Mouse)"
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Birincil Fare Düğmesi (Sol Fare Düğmesi veya Fare Düğmesi 1 olarak da adlandırılır)"
-          }
-        },
-        "vi" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Nút chính (còn gọi là Nút chuột trái hoặc Nút số 1)"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "鼠标主键（又称鼠标左键或鼠标按钮１）"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "主要滑鼠按鈕（又稱滑鼠左側按鈕或滑鼠按鈕１）"
-          }
-        },
-        "zh-HK" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "主要滑鼠按鈕（又稱滑鼠左側按鈕或滑鼠按鈕１）"
-          }
-        }
-      }
-    },
-    "button-string.tool.secondary" : {
-      "comment" : "First draft: Secondary Mouse Button (also called Right Mouse Button or Mouse Button 2)",
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Sekundäre Maustaste (auch genannt rechte Maustaste oder Maustaste 2)"
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Secondary Mouse Button (also called Right Mouse Button or Mouse Button 2)"
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Bouton secondaire de la souris (aussi appelé bouton de souris droit ou Bouton de souris 2)"
-          }
-        },
-        "ko" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "마우스 보조 버튼(또는 오른쪽 마우스 버튼 및 마우스 2번 버튼)"
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Botão Secundário do Mouse (também chamado de Botão Direito ou 2º Botão do Mouse)"
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "İkincil Fare Düğmesi (Sağ Fare Düğmesi veya Fare Düğmesi 2 olarak da adlandırılır)"
-          }
-        },
-        "vi" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Nút phụ (còn gọi là Nút chuột phải hoặc Nút số 2)"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "鼠标辅键（又称鼠标右键或鼠标按钮２）"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "輔助滑鼠按鈕（又稱滑鼠右側按鈕或滑鼠按鈕２）"
-          }
-        },
-        "zh-HK" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "輔助滑鼠按鈕（又稱滑鼠右側按鈕或滑鼠按鈕２）"
           }
         }
       }
@@ -4376,7 +4182,7 @@
       }
     },
     "effect.app-expose" : {
-      "comment" : "First draft: Application Windows || Note: Under macOS Sonoma, this feature is called 'App Exposé' in Trackpad settings, but 'Application Windows' in Keyboard Shortcut settings, and other places I found. I also saw 'Show all windows of the front app' and 'Show all open windows for the current app' in Apple's documentation. I went with 'Application Windows' because it's short and 'Exposé' felt like like an outdated term. If you have to make a similar decision, it's up to your own best judgement.",
+      "comment" : "First draft: Application Windows || Note: Under macOS Sonoma, this feature is called 'App Exposé' in trackpad settings, but 'Application Windows' in Keyboard Shortcut settings, and other places I found. I also saw 'Show all windows of the front app' and 'Show all open windows for the current app' in Apple's documentation. I went with 'Application Windows' because it's short and 'Exposé' felt like like an outdated term. If you have to make a similar decision, it's up to your own best judgement.",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -5480,7 +5286,7 @@
         }
       }
     },
-    "effect.middle-click" : {
+    "effect.click.middle" : {
       "comment" : "First draft: Middle Click",
       "localizations" : {
         "de" : {
@@ -5545,31 +5351,31 @@
         }
       }
     },
-    "effect.middle-click.hint" : {
-      "comment" : "First draft: Open links in a new tab, paste text in the Terminal, and more.\n \nWorks like clicking %@ on a standard mouse.",
+    "effect.click.middle.hint" : {
+      "comment" : "First draft: Open links in a new tab, paste text in the Terminal, and more.\n \nWorks like clicking the middle mouse button (also called scroll wheel button or mouse button 3) on a standard mouse.",
       "localizations" : {
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Öffne Links in einem neuen Tab, setze Text im Terminal ein, und mehr.\n \nFunktioniert wie klicken von %@ bei einer Standard-Maus."
+            "value" : "Öffne Links in einem neuen Tab, setze Text im Terminal ein, und mehr.\n \nFunktioniert wie das Klicken der mittleren Maustaste (auch genannt Scrollradtaste oder Maustaste 3) bei einer Standard-Maus."
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Open links in a new tab, paste text in the Terminal, and more.\n \nWorks like clicking %@ on a standard mouse."
+            "value" : "Open links in a new tab, paste text in the Terminal, and more.\n \nWorks like clicking the middle mouse button (also called scroll wheel button or mouse button 3) on a standard mouse."
           }
         },
         "fr" : {
           "stringUnit" : {
-            "state" : "translated",
-            "value" : "Ouvrir les liens dans un nouvel onglet, coller du texte dans le Terminal et bien plus.\n \nFonctionne comme le clic sur le %@ sur une souris standard."
+            "state" : "needs_review",
+            "value" : "Ouvrir les liens dans un nouvel onglet, coller du texte dans le Terminal et bien plus.\n \nFonctionne comme le clic sur le Bouton central de la souris (aussi appelé bouton de la molette de défilement ou Bouton de souris 3) sur une souris standard."
           }
         },
         "ko" : {
           "stringUnit" : {
-            "state" : "translated",
-            "value" : "링크를 새로운 탭에서 열거나, 터미널에서 텍스트를 붙여넣는 등의 동작을 수행합니다.\n \n이는 표준 마우스에서 %@를 클릭하는 것과 같습니다."
+            "state" : "needs_review",
+            "value" : "링크를 새로운 탭에서 열거나, 터미널에서 텍스트를 붙여넣는 등의 동작을 수행합니다.\n \n이는 표준 마우스에서 마우스 가운데 버튼(또는 스크롤 휠 버튼 및 마우스 3번 버튼)를 클릭하는 것과 같습니다."
           }
         },
         "pt-BR" : {
@@ -5580,32 +5386,32 @@
         },
         "tr" : {
           "stringUnit" : {
-            "state" : "translated",
-            "value" : "Bağlantıları yeni sekmede açın, Terminal'e metin yapıştırın ve daha fazlasını yapın.\n \nStandart bir farede %@'ya tıklamak gibi çalışır."
+            "state" : "needs_review",
+            "value" : "Bağlantıları yeni sekmede açın, Terminal'e metin yapıştırın ve daha fazlasını yapın.\n \nStandart bir farede Orta Fare Düğmesi (Kaydırma Tekerleği Düğmesi veya Fare Düğmesi 3 olarak da adlandırılır)'ya tıklamak gibi çalışır."
           }
         },
         "vi" : {
           "stringUnit" : {
-            "state" : "translated",
-            "value" : "Mở liên kết trong thẻ mới, dán chữ vào Terminal, và nhiều hơn.\n \nHoạt động như kích vào nút %@ trên chuột."
+            "state" : "needs_review",
+            "value" : "Mở liên kết trong thẻ mới, dán chữ vào Terminal, và nhiều hơn.\n \nHoạt động như kích vào nút Nút giữa (còn gọi là Con lăn hoặc Nút số 3) trên chuột."
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
-            "state" : "translated",
-            "value" : "以新标签页打开链接、在“终端”中粘贴文字等。\n \n作用相当于在标准鼠标上点按%@。"
+            "state" : "needs_review",
+            "value" : "以新标签页打开链接、在“终端”中粘贴文字等。\n \n作用相当于在标准鼠标上点按鼠标中键（又称鼠标滚轮键或鼠标按钮３）。"
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
-            "state" : "translated",
-            "value" : "以新標籤頁打開連結、於終端機中貼上文字等。\n \n作用相當於在標準滑鼠上按一下%@。"
+            "state" : "needs_review",
+            "value" : "以新標籤頁打開連結、於終端機中貼上文字等。\n \n作用相當於在標準滑鼠上按一下滑鼠中間鍵（又稱滑鼠滾輪按鈕或滑鼠按鈕３）。"
           }
         },
         "zh-HK" : {
           "stringUnit" : {
-            "state" : "translated",
-            "value" : "以新分頁開啟連結、在終端機裏貼上文字等。\n \n作用相當於在標準滑鼠上按一下%@。"
+            "state" : "needs_review",
+            "value" : "以新分頁開啟連結、在終端機裏貼上文字等。\n \n作用相當於在標準滑鼠上按一下滑鼠中間鍵（又稱滑鼠滾輪按鈕或滑鼠按鈕３）。"
           }
         }
       }
@@ -5740,7 +5546,7 @@
         }
       }
     },
-    "effect.primary-click" : {
+    "effect.click.primary" : {
       "comment" : "First draft: Primary Click",
       "localizations" : {
         "de" : {
@@ -5805,31 +5611,31 @@
         }
       }
     },
-    "effect.primary-click.hint" : {
-      "comment" : "First draft: Works like clicking %@ on a standard mouse.",
+    "effect.click.primary.hint" : {
+      "comment" : "First draft: Works like clicking the primary mouse button (also called left mouse button or mouse button 1) on a standard mouse.",
       "localizations" : {
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Funktioniert wie klicken von %@ bei einer Standard-Maus."
+            "value" : "Funktioniert wie das Klicken der primären Maustaste (auch genannt linke Maustaste oder Maustaste 1) bei einer Standard-Maus."
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Works like clicking %@ on a standard mouse."
+            "value" : "Works like clicking the primary mouse button (also called left button or mouse button 1) on a standard mouse."
           }
         },
         "fr" : {
           "stringUnit" : {
-            "state" : "translated",
-            "value" : "Fonctionne comme le clic sur le %@ sur une souris standard."
+            "state" : "needs_review",
+            "value" : "Fonctionne comme le clic sur le Bouton principal de la souris (aussi appelé bouton de souris gauche ou Bouton de souris 1) sur une souris standard."
           }
         },
         "ko" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "effect.primary-click.hint"
+            "value" : "… 마우스 주 버튼(또는 왼쪽 마우스 버튼 및 마우스 1번 버튼) …"
           }
         },
         "pt-BR" : {
@@ -5840,32 +5646,32 @@
         },
         "tr" : {
           "stringUnit" : {
-            "state" : "translated",
-            "value" : "Standart bir farede %@'ya tıklamak gibi çalışır."
+            "state" : "needs_review",
+            "value" : "Standart bir farede Birincil Fare Düğmesi (Sol Fare Düğmesi veya Fare Düğmesi 1 olarak da adlandırılır)'ya tıklamak gibi çalışır."
           }
         },
         "vi" : {
           "stringUnit" : {
-            "state" : "translated",
-            "value" : "Hoạt động như kích vào nút %@ trên chuột."
+            "state" : "needs_review",
+            "value" : "Hoạt động như kích vào nút Nút chính (còn gọi là Nút chuột trái hoặc Nút số 1) trên chuột."
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "effect.primary-click.hint"
+            "value" : "… 鼠标主键（又称鼠标左键或鼠标按钮１） …"
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "effect.primary-click.hint"
+            "value" : "… 主要滑鼠按鈕（又稱滑鼠左側按鈕或滑鼠按鈕１） ..."
           }
         },
         "zh-HK" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "effect.primary-click.hint"
+            "value" : "... 主要滑鼠按鈕（又稱滑鼠左側按鈕或滑鼠按鈕１） ..."
           }
         }
       }
@@ -6130,7 +5936,7 @@
         }
       }
     },
-    "effect.secondary-click" : {
+    "effect.click.secondary" : {
       "comment" : "First draft: Secondary Click",
       "localizations" : {
         "de" : {
@@ -6195,31 +6001,31 @@
         }
       }
     },
-    "effect.secondary-click.hint" : {
-      "comment" : "First draft: Works like clicking %@ on a standard mouse.",
+    "effect.click.secondary.hint" : {
+      "comment" : "First draft: Works like clicking the secondary mouse button (also called right mouse button or mouse button 2) on a standard mouse.",
       "localizations" : {
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Funktioniert wie klicken von %@ bei einer Standard-Maus."
+            "value" : "Funktioniert wie das Klicken der sekundären Maustaste (auch genannt rechte Maustaste oder Maustaste 2) bei einer Standard-Maus."
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Works like clicking %@ on a standard mouse."
+            "value" : "Works like clicking the secondary mouse button (also called right mouse button or mouse button 2) on a standard mouse."
           }
         },
         "fr" : {
           "stringUnit" : {
-            "state" : "translated",
-            "value" : "Fonctionne comme le clic sur le %@ sur une souris standard."
+            "state" : "needs_review",
+            "value" : "Fonctionne comme le clic sur le Bouton secondaire de la souris (aussi appelé bouton de souris droit ou Bouton de souris 2) sur une souris standard."
           }
         },
         "ko" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "effect.secondary-click.hint"
+            "value" : "… 마우스 보조 버튼(또는 오른쪽 마우스 버튼 및 마우스 2번 버튼) …"
           }
         },
         "pt-BR" : {
@@ -6230,32 +6036,32 @@
         },
         "tr" : {
           "stringUnit" : {
-            "state" : "translated",
-            "value" : "Standart bir farede %@'ya tıklamak gibi çalışır."
+            "state" : "needs_review",
+            "value" : "Standart bir farede İkincil Fare Düğmesi (Sağ Fare Düğmesi veya Fare Düğmesi 2 olarak da adlandırılır)'ya tıklamak gibi çalışır."
           }
         },
         "vi" : {
           "stringUnit" : {
-            "state" : "translated",
-            "value" : "Hoạt động như kích vào nút %@ trên chuột."
+            "state" : "needs_review",
+            "value" : "Hoạt động như kích vào nút Nút phụ (còn gọi là Nút chuột phải hoặc Nút số 2) trên chuột."
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "effect.secondary-click.hint"
+            "value" : "… 鼠标辅键（又称鼠标右键或鼠标按钮２） …"
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "effect.secondary-click.hint"
+            "value" : "… 輔助滑鼠按鈕（又稱滑鼠右側按鈕或滑鼠按鈕２） ..."
           }
         },
         "zh-HK" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "effect.secondary-click.hint"
+            "value" : "… 輔助滑鼠按鈕（又稱滑鼠右側按鈕或滑鼠按鈕２） ..."
           }
         }
       }

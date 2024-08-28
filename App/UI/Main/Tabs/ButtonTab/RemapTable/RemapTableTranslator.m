@@ -142,8 +142,8 @@ static NSArray *getOneShotEffectsTable(NSDictionary *rowDict) {
         @{@"ui": NSLocalizedString(@"effect.smart-zoom", @"First draft: Smart Zoom"), @"tool": NSLocalizedString(@"effect.smart-zoom.hint", @"First draft: Zoom in or out in Safari and other apps.\n \nWorks like a two-finger double tap on an Apple Trackpad."), @"dict": @{
                   kMFActionDictKeyType: kMFActionDictTypeSmartZoom,
         }},
-        @{@"ui": NSLocalizedString(@"effect.primary-click", @"First draft: Primary Click"),
-          @"tool": stringf(NSLocalizedString(@"effect.primary-click.hint", @"First draft: Works like clicking %@ on a standard mouse."), [UIStrings getButtonStringToolTip:1]),
+        @{@"ui": NSLocalizedString(@"effect.click.primary", @"First draft: Primary Click"),
+          @"tool": NSLocalizedString(@"effect.click.primary.hint", @"First draft: Works like clicking the primary mouse button (also called left mouse button or mouse button 1) on a standard mouse."),
           @"hideable": @YES,
           @"dict": @{
               kMFActionDictKeyType: kMFActionDictTypeMouseButtonClicks,
@@ -151,8 +151,8 @@ static NSArray *getOneShotEffectsTable(NSDictionary *rowDict) {
               kMFActionDictKeyMouseButtonClicksVariantNumberOfClicks: @1,
           }
         },
-        @{@"ui": NSLocalizedString(@"effect.secondary-click", @"First draft: Secondary Click"),
-          @"tool": stringf(NSLocalizedString(@"effect.secondary-click.hint", @"First draft: Works like clicking %@ on a standard mouse."), [UIStrings getButtonStringToolTip:2]),
+        @{@"ui": NSLocalizedString(@"effect.click.secondary", @"First draft: Secondary Click"),
+          @"tool": NSLocalizedString(@"effect.click.secondary.hint", @"First draft: Works like clicking the secondary mouse button (also called right mouse button or mouse button 2) on a standard mouse."),
           @"hideable": @YES,
           @"dict": @{
               kMFActionDictKeyType: kMFActionDictTypeMouseButtonClicks,
@@ -160,8 +160,8 @@ static NSArray *getOneShotEffectsTable(NSDictionary *rowDict) {
               kMFActionDictKeyMouseButtonClicksVariantNumberOfClicks: @1,
           }
         },
-        @{@"ui": NSLocalizedString(@"effect.middle-click", @"First draft: Middle Click"),
-          @"tool": stringf(NSLocalizedString(@"effect.middle-click.hint", @"First draft: Open links in a new tab, paste text in the Terminal, and more.\n \nWorks like clicking %@ on a standard mouse."), [UIStrings getButtonStringToolTip:3]),
+        @{@"ui": NSLocalizedString(@"effect.click.middle", @"First draft: Middle Click"),
+          @"tool": NSLocalizedString(@"effect.click.middle.hint", @"First draft: Open links in a new tab, paste text in the Terminal, and more.\n \nWorks like clicking the middle mouse button (also called scroll wheel button or mouse button 3) on a standard mouse."),
           @"dict": @{
               kMFActionDictKeyType: kMFActionDictTypeMouseButtonClicks,
               kMFActionDictKeyMouseButtonClicksVariantButtonNumber: @3,
@@ -182,7 +182,7 @@ static NSArray *getOneShotEffectsTable(NSDictionary *rowDict) {
                   kMFActionDictKeyType: kMFActionDictTypeSymbolicHotkey,
                   kMFActionDictKeyGenericVariant: @(kMFSHMissionControl)
         }}, /// I removed actions that are redundant to the Click and Drag for Spaces & Mission Control feature in 3.0.0 Beta 6 but  people complained https://github.com/noah-nuebling/mac-mouse-fix/issues?q=is%3Aissue+label%3A%223.0.0+Beta+6+Removed+Actions%22
-        @{@"ui": NSLocalizedString(@"effect.app-expose", @"First draft: Application Windows || Note: Under macOS Sonoma, this feature is called 'App Exposé' in Trackpad settings, but 'Application Windows' in Keyboard Shortcut settings, and other places I found. I also saw 'Show all windows of the front app' and 'Show all open windows for the current app' in Apple's documentation. I went with 'Application Windows' because it's short and 'Exposé' felt like like an outdated term. If you have to make a similar decision, it's up to your own best judgement."), @"tool": NSLocalizedString(@"effect.app-expose.hint", @"First draft: Show all windows of the active app"), @"dict": @{
+        @{@"ui": NSLocalizedString(@"effect.app-expose", @"First draft: Application Windows || Note: Under macOS Sonoma, this feature is called 'App Exposé' in trackpad settings, but 'Application Windows' in Keyboard Shortcut settings, and other places I found. I also saw 'Show all windows of the front app' and 'Show all open windows for the current app' in Apple's documentation. I went with 'Application Windows' because it's short and 'Exposé' felt like like an outdated term. If you have to make a similar decision, it's up to your own best judgement."), @"tool": NSLocalizedString(@"effect.app-expose.hint", @"First draft: Show all windows of the active app"), @"dict": @{
                   kMFActionDictKeyType: kMFActionDictTypeSymbolicHotkey,
                   kMFActionDictKeyGenericVariant: @(kMFSHAppExpose)
         }},

@@ -22,6 +22,11 @@ NS_ASSUME_NONNULL_BEGIN
 ///     - Don't use `stringf(@"%s", some_c_string)`, it breaks for emojis and you can just use `@(some_c_string)` instead.
 #define stringf(format, ...) [NSString stringWithFormat:(format), ##__VA_ARGS__]
 
+/// Define xxxNSLocalizedString,
+///     which is replaced with nothing by the preprocessor.
+///     The purpose of this is to 'turn off' NSLocalizedString() statements that we don't need at the moment.
+
+#define xxxNSLocalizedString(...)
 
 /// Shorthand for Benchmarks
 /// Example usage:
