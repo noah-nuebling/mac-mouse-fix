@@ -107,6 +107,17 @@ Detailed Reflection:
     - In build scheme, set argument `-NSConstraintBasedLayoutVisualizeMutuallyExclusiveConstraints YES`
     - In build scheme set pseudo language (e.g. double length)
 - NSLocalizedString() convention: Example: `NSLocalizedString("enabled-toggle.hint", comment: "First draft: Mac Mouse Fix will stay enabled after you close it || Note: Some useful note")`
+    - Update 29.08.2024: 
+        New convention:
+            `NSLocalizedString("enabled-toggle.hint", comment: "Note: Some useful note")`
+        Explanation:
+            We removed all the 'First draft:' stuff from the NSLocalizedString comment fields on 29.08.2024 in commit 0238020f56ddc0778605de23341876b631abebd8. 
+            We originally added the 'First draft:' stuff so that localizers could see the English strings right in line as they are editing a .strings file. 
+            However, with the new .xcstrings and .xcloc files, this is not needed anymore, since those show the English strings right in line by themselves.
+        Sidenote: 
+            The 'First draft:' strings were really just the original English strings. We called them 'First draft:' so that we were not promising the reader that 
+                it's exactly the English string - in case we messed up keeping the 'First draft:' in sync with the real English string in the English .strings file.
+                -> But none of this stuff matters anymore now because we removed the 'First draft:' strings.
 
 ## Notes
 

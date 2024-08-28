@@ -497,7 +497,7 @@ static NSMutableAttributedString *symbolStringWithModifierPrefix(NSString *modif
         
         NSArray *firstStrings = sa;
         
-        NSString *join = NSLocalizedString(@"join-list", @"Note: This string joins elements in a list except the second-to-last and last one. || Note: The first draft contains a space after the comma.");
+        NSString *join = NSLocalizedString(@"join-list", @"Note: This string joins elements in a list except the second-to-last and last one. || Note: The English string contains a space after the comma.");
         NSString *joinLast = NSLocalizedString(@"join-list.last", @"Note: This format string joins the second-to-last element and the last elements in a list of items");
         
         outString = stringf(joinLast, [firstStrings componentsJoinedByString:join], lastString);
