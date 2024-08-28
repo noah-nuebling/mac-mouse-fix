@@ -75,31 +75,31 @@ static NSArray *getScrollEffectsTable() {
     ///     If you change effects tables, update the config version in **default_config.plist**. Otherwise there might be crash-loops after upgrading/downgrading.
     
     NSArray *scrollEffectsTable = @[
-        @{@"ui": NSLocalizedString(@"scroll-effect.4-pinch", @"First draft: Desktop & Launchpad") , @"tool": NSLocalizedString(@"scroll-effect.4-pinch.hint", @"First draft: Scroll up for Launchpad and down to show the Desktop\n \nWorks like Pinching with 4 fingers on an Apple Trackpad"), @"dict": @{
+        @{@"ui": NSLocalizedString(@"scroll-effect.4-pinch", @"") , @"tool": NSLocalizedString(@"scroll-effect.4-pinch.hint", @""), @"dict": @{
             kMFModifiedScrollDictKeyEffectModificationType: kMFModifiedScrollEffectModificationTypeFourFingerPinch
         }},
-        @{@"ui": NSLocalizedString(@"scroll-effect.spaces", @"First draft: Move Between Spaces"), @"tool": NSLocalizedString(@"scroll-effect.spaces.hint", @"First draft: Scroll up to move left a Space and down to move right a Space\n \nWorks like swiping horizontally with 3 fingers on an Apple Trackpad"), @"dict": @{
+        @{@"ui": NSLocalizedString(@"scroll-effect.spaces", @""), @"tool": NSLocalizedString(@"scroll-effect.spaces.hint", @""), @"dict": @{
             kMFModifiedScrollDictKeyEffectModificationType: kMFModifiedScrollEffectModificationTypeThreeFingerSwipeHorizontal
         }}, /// Removed this in 3.0.0 Beta 6 but MAK1023 wanted it back https://github.com/noah-nuebling/mac-mouse-fix/discussions/495. Should remove this once Click and Drag for Spaces & Mission Control is an adequate replacement for MAK1023.
         separatorEffectsTableEntry(),
-        @{@"ui": NSLocalizedString(@"scroll-effect.zoom", @"First draft: Zoom In or Out"), @"tool": NSLocalizedString(@"scroll-effect.zoom.hint", @"First draft: Zoom in or out in Safari, Maps and other apps\n \nWorks like pinching to zoom on an Apple trackpad") , @"dict": @{
+        @{@"ui": NSLocalizedString(@"scroll-effect.zoom", @""), @"tool": NSLocalizedString(@"scroll-effect.zoom.hint", @"") , @"dict": @{
             kMFModifiedScrollDictKeyEffectModificationType: kMFModifiedScrollEffectModificationTypeZoom
         }},
-        @{@"ui": NSLocalizedString(@"scroll-effect.horizontal", @"First draft: Horizontal Scroll"), @"tool": NSLocalizedString(@"scroll-effect.horizontal.hint", @"First draft: Scroll left and right, navigate between pages in Safari, delete messages in Mail and more\n \nWorks like swiping horizontally with 2 fingers on an Apple Trackpad"), @"dict": @{
+        @{@"ui": NSLocalizedString(@"scroll-effect.horizontal", @""), @"tool": NSLocalizedString(@"scroll-effect.horizontal.hint", @""), @"dict": @{
             kMFModifiedScrollDictKeyEffectModificationType: kMFModifiedScrollEffectModificationTypeHorizontalScroll
         }},
-        @{@"ui": NSLocalizedString(@"scroll-effect.rotate", @"First draft: Rotate"), @"hideable": @NO, @"tool": NSLocalizedString(@"scroll-effect.rotate.hint", @"First draft: Rotate content in Apple Maps and other apps\n \nWorks like twisting with 2 fingers on an Apple Trackpad"), @"dict": @{
+        @{@"ui": NSLocalizedString(@"scroll-effect.rotate", @""), @"hideable": @NO, @"tool": NSLocalizedString(@"scroll-effect.rotate.hint", @""), @"dict": @{
             kMFModifiedScrollDictKeyEffectModificationType: kMFModifiedScrollEffectModificationTypeRotate
         }}, /// We only have this option so the menu layout looks better. I can't really think of a usecase
         separatorEffectsTableEntry(),
-        @{@"ui": NSLocalizedString(@"scroll-effect.swift", @"First draft: Swift Scroll"), @"tool": NSLocalizedString(@"scroll-effect.swift.hint", @"First draft: Scroll long distances with minimal effort"), @"dict": @{
+        @{@"ui": NSLocalizedString(@"scroll-effect.swift", @""), @"tool": NSLocalizedString(@"scroll-effect.swift.hint", @""), @"dict": @{
             kMFModifiedScrollDictKeyInputModificationType: kMFModifiedScrollInputModificationTypeQuickScroll
         }},
-        @{@"ui": NSLocalizedString(@"scroll-effect.precise", @"First draft: Precise Scroll"), @"tool": NSLocalizedString(@"scroll-effect.precise.hint", @"First draft: Scroll small distances and use sensitive UI elements with precision"), @"dict": @{
+        @{@"ui": NSLocalizedString(@"scroll-effect.precise", @""), @"tool": NSLocalizedString(@"scroll-effect.precise.hint", @""), @"dict": @{
             kMFModifiedScrollDictKeyInputModificationType: kMFModifiedScrollInputModificationTypePrecisionScroll
         }},
 //        separatorEffectsTableEntry(),
-//        @{@"ui": NSLocalizedString(@"scroll-effect.app-switcher", @"First draft: App Switcher"), @"tool": NSLocalizedString(@"scroll-effect.app-switcher.hint", @"First draft: Quickly switch between open apps\n \nWorks like holding Command (⌘) and then pressing Tab (⇥) on your keyboard"), @"dict": @{
+//        @{@"ui": NSLocalizedString(@"scroll-effect.app-switcher", @""), @"tool": NSLocalizedString(@"scroll-effect.app-switcher.hint", @""), @"dict": @{
 //            kMFModifiedScrollDictKeyEffectModificationType: kMFModifiedScrollEffectModificationTypeCommandTab
 //        }},
         
@@ -108,10 +108,10 @@ static NSArray *getScrollEffectsTable() {
 }
 static NSArray *getDragEffectsTable() {
     NSArray *dragEffectsTable = @[
-        @{@"ui": NSLocalizedString(@"drag-effect.dock-swipe", @"First draft: Spaces & Mission Control"), @"tool": NSLocalizedString(@"drag-effect.dock-swipe.hint", @"First draft: Move your mouse:\n - Up to show Mission Control\n - Down to show Application Windows\n - Left or Right to move between Spaces\n \nWorks like swiping with 3 fingers on an Apple Trackpad") , @"dict": @{
+        @{@"ui": NSLocalizedString(@"drag-effect.dock-swipe", @""), @"tool": NSLocalizedString(@"drag-effect.dock-swipe.hint", @"") , @"dict": @{
                   kMFModifiedDragDictKeyType: kMFModifiedDragTypeThreeFingerSwipe,
         }},
-        @{@"ui": NSLocalizedString(@"drag-effect.scroll-swipe", @"First draft: Scroll & Navigate"), @"tool": NSLocalizedString(@"drag-effect.scroll-swipe.hint", @"First draft: Scroll freely by moving your mouse in any direction\n \nAlso Navigate between pages in Safari, delete messages in Mail and more by moving your mouse left and right\n \nWorks like swiping with 2 fingers on an Apple Trackpad") , @"dict": @{
+        @{@"ui": NSLocalizedString(@"drag-effect.scroll-swipe", @""), @"tool": NSLocalizedString(@"drag-effect.scroll-swipe.hint", @"") , @"dict": @{
                   kMFModifiedDragDictKeyType: kMFModifiedDragTypeTwoFingerSwipe,
         }},
 //        separatorEffectsTableEntry(),
@@ -135,15 +135,15 @@ static NSArray *getOneShotEffectsTable(NSDictionary *rowDict) {
     NSDictionary *selectedEffect = rowDict[kMFRemapsKeyEffect];
     
     NSMutableArray *oneShotEffectsTable = @[
-        @{@"ui": NSLocalizedString(@"effect.look-up", @"First draft: Look Up & Quick Look"), @"tool": NSLocalizedString(@"effect.look-up.hint", @"First draft: Look up words in the Dictionary, Quick Look files in Finder, and more.\n \nWorks like a Force click on an Apple Trackpad."), @"dict": @{
+        @{@"ui": NSLocalizedString(@"effect.look-up", @""), @"tool": NSLocalizedString(@"effect.look-up.hint", @""), @"dict": @{
                   kMFActionDictKeyType: kMFActionDictTypeSymbolicHotkey,
                   kMFActionDictKeyGenericVariant: @(kMFSHLookUp)
         }},
-        @{@"ui": NSLocalizedString(@"effect.smart-zoom", @"First draft: Smart Zoom"), @"tool": NSLocalizedString(@"effect.smart-zoom.hint", @"First draft: Zoom in or out in Safari and other apps.\n \nWorks like a two-finger double tap on an Apple Trackpad."), @"dict": @{
+        @{@"ui": NSLocalizedString(@"effect.smart-zoom", @""), @"tool": NSLocalizedString(@"effect.smart-zoom.hint", @""), @"dict": @{
                   kMFActionDictKeyType: kMFActionDictTypeSmartZoom,
         }},
-        @{@"ui": NSLocalizedString(@"effect.click.primary", @"First draft: Primary Click"),
-          @"tool": NSLocalizedString(@"effect.click.primary.hint", @"First draft: Works like clicking the primary mouse button (also called left mouse button or mouse button 1) on a standard mouse."),
+        @{@"ui": NSLocalizedString(@"effect.click.primary", @""),
+          @"tool": NSLocalizedString(@"effect.click.primary.hint", @""),
           @"hideable": @YES,
           @"dict": @{
               kMFActionDictKeyType: kMFActionDictTypeMouseButtonClicks,
@@ -151,8 +151,8 @@ static NSArray *getOneShotEffectsTable(NSDictionary *rowDict) {
               kMFActionDictKeyMouseButtonClicksVariantNumberOfClicks: @1,
           }
         },
-        @{@"ui": NSLocalizedString(@"effect.click.secondary", @"First draft: Secondary Click"),
-          @"tool": NSLocalizedString(@"effect.click.secondary.hint", @"First draft: Works like clicking the secondary mouse button (also called right mouse button or mouse button 2) on a standard mouse."),
+        @{@"ui": NSLocalizedString(@"effect.click.secondary", @""),
+          @"tool": NSLocalizedString(@"effect.click.secondary.hint", @""),
           @"hideable": @YES,
           @"dict": @{
               kMFActionDictKeyType: kMFActionDictTypeMouseButtonClicks,
@@ -160,8 +160,8 @@ static NSArray *getOneShotEffectsTable(NSDictionary *rowDict) {
               kMFActionDictKeyMouseButtonClicksVariantNumberOfClicks: @1,
           }
         },
-        @{@"ui": NSLocalizedString(@"effect.click.middle", @"First draft: Middle Click"),
-          @"tool": NSLocalizedString(@"effect.click.middle.hint", @"First draft: Open links in a new tab, paste text in the Terminal, and more.\n \nWorks like clicking the middle mouse button (also called scroll wheel button or mouse button 3) on a standard mouse."),
+        @{@"ui": NSLocalizedString(@"effect.click.middle", @""),
+          @"tool": NSLocalizedString(@"effect.click.middle.hint", @""),
           @"dict": @{
               kMFActionDictKeyType: kMFActionDictTypeMouseButtonClicks,
               kMFActionDictKeyMouseButtonClicksVariantButtonNumber: @3,
@@ -169,43 +169,43 @@ static NSArray *getOneShotEffectsTable(NSDictionary *rowDict) {
           }
         },
         separatorEffectsTableEntry(),
-        @{@"ui": NSLocalizedString(@"effect.back", @"First draft: Back"), @"tool": NSLocalizedString(@"effect.back.hint", @"First draft: Go back one page in Safari and other apps"), @"dict": @{
+        @{@"ui": NSLocalizedString(@"effect.back", @""), @"tool": NSLocalizedString(@"effect.back.hint", @""), @"dict": @{
                   kMFActionDictKeyType: kMFActionDictTypeNavigationSwipe,
                   kMFActionDictKeyGenericVariant: kMFNavigationSwipeVariantLeft
         }},
-        @{@"ui": NSLocalizedString(@"effect.forward", @"First draft: Forward"), @"tool": NSLocalizedString(@"effect.forward.hint", @"First draft: Go forward one page in Safari and other apps"), @"dict": @{
+        @{@"ui": NSLocalizedString(@"effect.forward", @""), @"tool": NSLocalizedString(@"effect.forward.hint", @""), @"dict": @{
                   kMFActionDictKeyType: kMFActionDictTypeNavigationSwipe,
                   kMFActionDictKeyGenericVariant: kMFNavigationSwipeVariantRight
         }},
         separatorEffectsTableEntry(),
-        @{@"ui": NSLocalizedString(@"effect.mission-control", @"First draft: Mission Control"), @"tool": NSLocalizedString(@"effect.mission-control.hint", @"First draft: Show Mission Control"), @"dict": @{
+        @{@"ui": NSLocalizedString(@"effect.mission-control", @""), @"tool": NSLocalizedString(@"effect.mission-control.hint", @""), @"dict": @{
                   kMFActionDictKeyType: kMFActionDictTypeSymbolicHotkey,
                   kMFActionDictKeyGenericVariant: @(kMFSHMissionControl)
         }}, /// I removed actions that are redundant to the Click and Drag for Spaces & Mission Control feature in 3.0.0 Beta 6 but  people complained https://github.com/noah-nuebling/mac-mouse-fix/issues?q=is%3Aissue+label%3A%223.0.0+Beta+6+Removed+Actions%22
-        @{@"ui": NSLocalizedString(@"effect.app-expose", @"First draft: Application Windows || Note: Under macOS Sonoma, this feature is called 'App Exposé' in trackpad settings, but 'Application Windows' in Keyboard Shortcut settings, and other places I found. I also saw 'Show all windows of the front app' and 'Show all open windows for the current app' in Apple's documentation. I went with 'Application Windows' because it's short and 'Exposé' felt like like an outdated term. If you have to make a similar decision, it's up to your own best judgement."), @"tool": NSLocalizedString(@"effect.app-expose.hint", @"First draft: Show all windows of the active app"), @"dict": @{
+        @{@"ui": NSLocalizedString(@"effect.app-expose", @"Note: Under macOS Sonoma, this feature is called 'App Exposé' in trackpad settings, but 'Application Windows' in Keyboard Shortcut settings, and other places I found. I also saw 'Show all windows of the front app' and 'Show all open windows for the current app' in Apple's documentation. I went with 'Application Windows' because it's short and 'Exposé' felt like like an outdated term. If you have to make a similar decision, it's up to your own best judgement."), @"tool": NSLocalizedString(@"effect.app-expose.hint", @""), @"dict": @{
                   kMFActionDictKeyType: kMFActionDictTypeSymbolicHotkey,
                   kMFActionDictKeyGenericVariant: @(kMFSHAppExpose)
         }},
-        @{@"ui": NSLocalizedString(@"effect.desktop", @"First draft: Show Desktop"), @"tool": NSLocalizedString(@"effect.desktop.hint", @"First draft: Show the desktop"), @"dict": @{
+        @{@"ui": NSLocalizedString(@"effect.desktop", @""), @"tool": NSLocalizedString(@"effect.desktop.hint", @""), @"dict": @{
                   kMFActionDictKeyType: kMFActionDictTypeSymbolicHotkey,
                   kMFActionDictKeyGenericVariant: @(kMFSHShowDesktop)
         }},
         separatorEffectsTableEntry(),
-        @{@"ui": NSLocalizedString(@"effect.launchpad", @"First draft: Launchpad"), @"tool": NSLocalizedString(@"effect.launchpad.hint", @"First draft: Open Launchpad"), @"dict": @{
+        @{@"ui": NSLocalizedString(@"effect.launchpad", @""), @"tool": NSLocalizedString(@"effect.launchpad.hint", @""), @"dict": @{
                   kMFActionDictKeyType: kMFActionDictTypeSymbolicHotkey,
                   kMFActionDictKeyGenericVariant: @(kMFSHLaunchpad)
         }},
         separatorEffectsTableEntry(),
-        @{@"ui": NSLocalizedString(@"effect.left-space", @"First draft: Move Left a Space"), @"tool": NSLocalizedString(@"effect.left-space.hint", @"First draft: Move one Space to the left"), @"dict": @{
+        @{@"ui": NSLocalizedString(@"effect.left-space", @""), @"tool": NSLocalizedString(@"effect.left-space.hint", @""), @"dict": @{
                   kMFActionDictKeyType: kMFActionDictTypeSymbolicHotkey,
                   kMFActionDictKeyGenericVariant: @(kMFSHMoveLeftASpace)
         }},
-        @{@"ui": NSLocalizedString(@"effect.right-space", @"First draft: Move Right a Space"), @"tool": NSLocalizedString(@"effect.right-space.hint", @"First draft: Move one Space to the right"), @"dict": @{
+        @{@"ui": NSLocalizedString(@"effect.right-space", @""), @"tool": NSLocalizedString(@"effect.right-space.hint", @""), @"dict": @{
                   kMFActionDictKeyType: kMFActionDictTypeSymbolicHotkey,
                   kMFActionDictKeyGenericVariant: @(kMFSHMoveRightASpace)
         }},
         separatorEffectsTableEntry(),
-        @{@"ui": NSLocalizedString(@"effect.record-shortcut", @"First draft: Keyboard Shortcut..."), @"tool": NSLocalizedString(@"effect.record-shortcut.hint", @"First draft: Type a keyboard shortcut, then use it from your mouse"), @"keyCaptureEntry": @YES},
+        @{@"ui": NSLocalizedString(@"effect.record-shortcut", @""), @"tool": NSLocalizedString(@"effect.record-shortcut.hint", @""), @"keyCaptureEntry": @YES},
     ].mutableCopy;
     
     /// Insert button specific entry
@@ -267,7 +267,7 @@ static NSArray *getOneShotEffectsTable(NSDictionary *rowDict) {
         /// Create and insert new entry
         [oneShotEffectsTable insertObject:@{
             @"uiAttributed": shortcutString,
-            @"tool": stringf(NSLocalizedString(@"effect.shortcut.hint", @"First draft: Works like pressing '%@' on your keyboard"), shortcutStringRaw),
+            @"tool": stringf(NSLocalizedString(@"effect.shortcut.hint", @""), shortcutStringRaw),
             @"dict": selectedEffect,
             @"indentation": @1,
         } atIndex:shortcutIndex];
@@ -309,15 +309,15 @@ static NSArray *getOneShotEffectsTable(NSDictionary *rowDict) {
             NSString *shortcutStringRaw = [shortcutString stringWithAttachmentDescriptions];
             [submenu addObject:@{
                 @"uiAttributed": shortcutString,
-                @"tool": stringf(NSLocalizedString(@"effect.apple-shortcut.hint", @"First draft: Works like pressing '%@' on an Apple keyboard"), shortcutStringRaw),
+                @"tool": stringf(NSLocalizedString(@"effect.apple-shortcut.hint", @""), shortcutStringRaw),
                 @"dict": actionDict
             }];
         }
     }
     
     [oneShotEffectsTable insertObject:@{
-        @"ui": NSLocalizedString(@"effect.apple-keys-submenu", @"First draft:  Exclusive Keys || Note: This is the title for a hidden submenu that lets you remap your buttons to keyboard keys that only appear on Apple Keyboards such as the 'Brightness Up' or 'Do Not Disturb' keys. "),
-        @"tool": NSLocalizedString(@"effect.apple-keys-submenu.hint", @"First draft: Choose keys that are only available on Apple keyboards"),
+        @"ui": NSLocalizedString(@"effect.apple-keys-submenu", @"Note: This is the title for a hidden submenu that lets you remap your buttons to keyboard keys that only appear on Apple Keyboards such as the 'Brightness Up' or 'Do Not Disturb' keys. "),
+        @"tool": NSLocalizedString(@"effect.apple-keys-submenu.hint", @""),
         @"alternate": @YES,
         @"submenu": submenu
     } atIndex:keyCaptureIndex+1];
@@ -740,13 +740,13 @@ static NSString *effectNameForRowDict(NSDictionary * _Nonnull rowDict) {
         /// Declare map
         
         NSDictionary *map = @{
-            @[@(1), @"click"]:  NSLocalizedString(@"trigger.substring.click.1",   @"First draft: Click %@ || Note: \"%@\" will be replaced by a button name (or by nothing, if the button name can be inferred from context) || Example where %@ is \"Button 5\": ⌥⌘ Double Click Button 4 + Click Button 5"), /// || NOTE: This 'substring' will be combined with other substrings to form the 'Action Table Trigger Strings' which show up on the left side of the Action Table || NOTE 2: '%@' will be replaced by a mouse button name (or by nothing, if the button name can be inferred from context.) || EXAMPLE of an Action Table Trigger String, which is composed of this and other substrings, where '%@' in this substring was replaced by 'Button 5': ⌥⌘ Double Click Button 4 + Click Button 5 || NOTE 3: Most of the substrings that are used to build the Action Table Trigger Strings (this is one of those substrings) are capitalized in English because it's common to use 'Title Case' there. In your language, 'Title Case' might not be a thing, and so you might not want to capitalize these substrings. The first letter of the Action Table Trigger String will be programmatically capitalized in any language."),
+            @[@(1), @"click"]:  NSLocalizedString(@"trigger.substring.click.1",   @"Note: \"%@\" will be replaced by a button name (or by nothing, if the button name can be inferred from context) || Example where %@ is \"Button 5\": ⌥⌘ Double Click Button 4 + Click Button 5"), /// || NOTE: This 'substring' will be combined with other substrings to form the 'Action Table Trigger Strings' which show up on the left side of the Action Table || NOTE 2: '%@' will be replaced by a mouse button name (or by nothing, if the button name can be inferred from context.) || EXAMPLE of an Action Table Trigger String, which is composed of this and other substrings, where '%@' in this substring was replaced by 'Button 5': ⌥⌘ Double Click Button 4 + Click Button 5 || NOTE 3: Most of the substrings that are used to build the Action Table Trigger Strings (this is one of those substrings) are capitalized in English because it's common to use 'Title Case' there. In your language, 'Title Case' might not be a thing, and so you might not want to capitalize these substrings. The first letter of the Action Table Trigger String will be programmatically capitalized in any language."),
             
-            @[@(2), @"click"]:  NSLocalizedString(@"trigger.substring.click.2",   @"First draft: Double Click %@"), ///|| NOTE: You might not want to capitalize this and other strings whose key starts with 'trigger.substring.' We only capitalize these strings in English because we use 'Title Case' there, which is not common in most languages aside from English. For more info, see the comments on 'trigger.substring.click.1'"),
-            @[@(3), @"click"]:  NSLocalizedString(@"trigger.substring.click.3",   @"First draft: Triple Click %@"),
-            @[@(1), @"hold"]:   NSLocalizedString(@"trigger.substring.hold.1",    @"First draft: Hold %@ || Remember: All the \"trigger.substring.[...]\" strings should normally be all-lowercase. For an explanation, see the comment for the key \"trigger.substring.button-modifier.2\""),
-            @[@(2), @"hold"]:   NSLocalizedString(@"trigger.substring.hold.2",    @"First draft: Double Click and Hold %@"),
-            @[@(3), @"hold"]:   NSLocalizedString(@"trigger.substring.hold.3",    @"First draft: Triple Click and Hold %@"),
+            @[@(2), @"click"]:  NSLocalizedString(@"trigger.substring.click.2",   @""), ///|| NOTE: You might not want to capitalize this and other strings whose key starts with 'trigger.substring.' We only capitalize these strings in English because we use 'Title Case' there, which is not common in most languages aside from English. For more info, see the comments on 'trigger.substring.click.1'"),
+            @[@(3), @"click"]:  NSLocalizedString(@"trigger.substring.click.3",   @""),
+            @[@(1), @"hold"]:   NSLocalizedString(@"trigger.substring.hold.1",    @"Remember: All the \"trigger.substring.[...]\" strings should normally be all-lowercase. For an explanation, see the comment for the key \"trigger.substring.button-modifier.2\""),
+            @[@(2), @"hold"]:   NSLocalizedString(@"trigger.substring.hold.2",    @""),
+            @[@(3), @"hold"]:   NSLocalizedString(@"trigger.substring.hold.3",    @""),
         };
         
         /// Get string
@@ -779,17 +779,17 @@ static NSString *effectNameForRowDict(NSDictionary * _Nonnull rowDict) {
         /// Define maps
         
         NSDictionary *map = @{
-            @[@(1), @"_drag"]:      NSLocalizedString(@"trigger.substring.drag.1",    @"First draft: Click and Drag %@"), /// (Removed the note because it's redundant with other notes. ) /// Note: %@ will be replaced by a mouse button name (or by nothing if it can be inferred from context) || Example where %@ is 'Button 5': ⌥⌘ Triple Click Button 4 + Click and Drag Button 5"),
-            @[@(2), @"_drag"]:      NSLocalizedString(@"trigger.substring.drag.2",    @"First draft: Double Click and Drag %@"),
-            @[@(3), @"_drag"]:      NSLocalizedString(@"trigger.substring.drag.3",    @"First draft: Triple Click and Drag %@"),
-            @[@(1), @"_scroll"]:    NSLocalizedString(@"trigger.substring.scroll.1",  @"First draft: Click and Scroll %@"),
-            @[@(2), @"_scroll"]:    NSLocalizedString(@"trigger.substring.scroll.2",  @"First draft: Double Click and Scroll %@"),
-            @[@(3), @"_scroll"]:    NSLocalizedString(@"trigger.substring.scroll.3",  @"First draft: Triple Click and Scroll %@"),
+            @[@(1), @"_drag"]:      NSLocalizedString(@"trigger.substring.drag.1",    @""), /// (Removed the note because it's redundant with other notes. ) /// Note: %@ will be replaced by a mouse button name (or by nothing if it can be inferred from context) || Example where %@ is 'Button 5': ⌥⌘ Triple Click Button 4 + Click and Drag Button 5"),
+            @[@(2), @"_drag"]:      NSLocalizedString(@"trigger.substring.drag.2",    @""),
+            @[@(3), @"_drag"]:      NSLocalizedString(@"trigger.substring.drag.3",    @""),
+            @[@(1), @"_scroll"]:    NSLocalizedString(@"trigger.substring.scroll.1",  @""),
+            @[@(2), @"_scroll"]:    NSLocalizedString(@"trigger.substring.scroll.2",  @""),
+            @[@(3), @"_scroll"]:    NSLocalizedString(@"trigger.substring.scroll.3",  @""),
         };
         
         NSDictionary *onlyFlagsMap = @{
-            @"_drag":   NSLocalizedString(@"trigger.substring.drag.flags", @"First draft: and Drag || Note: This will be used for Drag Actions that only need keyboard modifiers to be activated - not mouse buttons || Example: ⌥⌘ and Drag"),
-            @"_scroll": NSLocalizedString(@"trigger.substring.scroll.flags", @"First draft: and Scroll || Example: ⌥⌘ and Scroll"),
+            @"_drag":   NSLocalizedString(@"trigger.substring.drag.flags", @"Note: This will be used for Drag Actions that only need keyboard modifiers to be activated - not mouse buttons || Example: ⌥⌘ and Drag"),
+            @"_scroll": NSLocalizedString(@"trigger.substring.scroll.flags", @"Example: ⌥⌘ and Scroll"),
         };
         
         /// Use maps
@@ -812,8 +812,8 @@ static NSString *effectNameForRowDict(NSDictionary * _Nonnull rowDict) {
         ///     - 26.08.2024: I saw the French and Brazillian loclizers not capitalize and spell the drag-particles exactly as they are in the trigger.substring.[...] strings.
         ///                 So we added more extensive comments and added `.z.` in the key so that translators see the drag-particles *after* the trigger.substring.[...] strings - hopefully making it more understandable how the particles affect the substrings.
         
-        NSString *dragParticle =    NSLocalizedString(@"trigger.z.drag-particle",  @"First draft: Drag || Note: This word will be emphasized in strings such as \"Double Click and Drag %@\". For the emphasis to work, make sure that spelling and capitalization matches *exactly* with how this word is used in strings whose keys begin with \"trigger.substring.drag.[...]\""); // || Note: This word will be emphasized in 'Action Table Trigger Strings' such as 'Double Click and Drag %@'. For the emphasis to work, make sure that spelling and capitalization matches *exactly* with how this word is used in strings whose keys begin with 'trigger.substring.drag.[...]'");
-        NSString *scrollParticle =  NSLocalizedString(@"trigger.z.scroll-particle", @"First draft: Scroll || Note: This word will be emphasized in strings such as \"Click and Scroll %@\". For the emphasis to work, make sure that spelling and capitalization matches *exactly* with how this word is used in the strings whose keys begin with \"trigger.substring.scroll.[...]\"");
+        NSString *dragParticle =    NSLocalizedString(@"trigger.z.drag-particle",  @"Note: This word will be emphasized in strings such as \"Double Click and Drag %@\". For the emphasis to work, make sure that spelling and capitalization matches *exactly* with how this word is used in strings whose keys begin with \"trigger.substring.drag.[...]\""); // || Note: This word will be emphasized in 'Action Table Trigger Strings' such as 'Double Click and Drag %@'. For the emphasis to work, make sure that spelling and capitalization matches *exactly* with how this word is used in strings whose keys begin with 'trigger.substring.drag.[...]'");
+        NSString *scrollParticle =  NSLocalizedString(@"trigger.z.scroll-particle", @"Note: This word will be emphasized in strings such as \"Click and Scroll %@\". For the emphasis to work, make sure that spelling and capitalization matches *exactly* with how this word is used in the strings whose keys begin with \"trigger.substring.scroll.[...]\"");
         
         tr = [tr attributedStringByAddingSemiBoldForSubstring:dragParticle];
         tr = [tr attributedStringByAddingSemiBoldForSubstring:scrollParticle];
@@ -842,16 +842,16 @@ static NSString *effectNameForRowDict(NSDictionary * _Nonnull rowDict) {
         
         NSString *buttonModString;
         if (lvl.intValue == 1) {
-            buttonModString = stringf(NSLocalizedString(@"trigger.substring.button-modifier.1", @"First draft: Click %@ + || Note: %@ will be a button name || Example where %@ is 'Button 4': Click Button 4 + Double Click and Drag Button 5"), buttonStr);
+            buttonModString = stringf(NSLocalizedString(@"trigger.substring.button-modifier.1", @"Note: %@ will be a button name || Example where %@ is 'Button 4': Click Button 4 + Double Click and Drag Button 5"), buttonStr);
         } else if (lvl.intValue == 2) {
             /// Notes:
             ///     - We put the detailed localizer hints for the "trigger.substring.[...]" strings here because:
             ///         - It shows up close to the top of the "trigger.substrings.[...]" in the .xcstrings file, when sorting alphabetically.
             ///         - If we put the explanation on the very first of the "trigger.substrings" ("trigger.substring.button-modifier.1"), then we'd have multiple "|| Note:" sections in the same string comment - I think this increases chances of localizers missing the notes.
             ///     - Our examples of the German strings are slightly wrong - we altered them to better be able to drive home the point that not even the first word of the string should be capitalized.
-            buttonModString = stringf(NSLocalizedString(@"trigger.substring.button-modifier.2", @"First draft: Double Click %@ + || Note: All the \"trigger.substring.[...]\" strings should be lowercase unless there's a specific reason to capitalize them. In English, that reason is that we're using \"Title Case\", but this isn't common in other languages. For example, in German, the substring \"Double Click %@ +\" should be localized as \"doppelklicke %@ +\" and \"Click and Drag %@\" as \"klicke %@ und ziehe\". Notice that not even the first word is capitalized in German. That's because these substrings are joined programmatically to create a combined string. The substrings start with a lowercase letter, to avoid random capitalization in the middle of the combined string. The first word of the combined string will be capitalized programmatically. Therefore, unless your language has special capitalization rules (such as \"Title Case\" in English), these substrings should probably be all-lowercase, just like German. (Or, if you use a non-standard way to capitalize I think that's also ok, as long as it's reasonably consistent) I know this is a bit complicated, but I hope it's still understandable! If anything's unclear, please let me know and I'll try to explain it and improve these comments. Thank you."), buttonStr);
+            buttonModString = stringf(NSLocalizedString(@"trigger.substring.button-modifier.2", @"Note: All the \"trigger.substring.[...]\" strings should be lowercase unless there's a specific reason to capitalize them. In English, that reason is that we're using \"Title Case\", but this isn't common in other languages. For example, in German, the substring \"Double Click %@ +\" should be localized as \"doppelklicke %@ +\" and \"Click and Drag %@\" as \"klicke %@ und ziehe\". Notice that not even the first word is capitalized in German. That's because these substrings are joined programmatically to create a combined string. The substrings start with a lowercase letter, to avoid random capitalization in the middle of the combined string. The first word of the combined string will be capitalized programmatically. Therefore, unless your language has special capitalization rules (such as \"Title Case\" in English), these substrings should probably be all-lowercase, just like German. (Or, if you use a non-standard way to capitalize I think that's also ok, as long as it's reasonably consistent) I know this is a bit complicated, but I hope it's still understandable! If anything's unclear, please let me know and I'll try to explain it and improve these comments. Thank you."), buttonStr);
         } else if (lvl.intValue == 3) {
-            buttonModString = stringf(NSLocalizedString(@"trigger.substring.button-modifier.3", @"First draft: Triple Click %@ + "), buttonStr);
+            buttonModString = stringf(NSLocalizedString(@"trigger.substring.button-modifier.3", @""), buttonStr);
         } else {
             @throw [NSException exceptionWithName:@"Invalid click level" reason:@"Modification precondition contains undisplayable click level" userInfo:@{@"Trigger dict containing invalid value": triggerGeneric}];
         }

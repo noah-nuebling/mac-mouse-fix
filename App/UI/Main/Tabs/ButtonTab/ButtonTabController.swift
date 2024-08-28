@@ -44,11 +44,11 @@ import Foundation
         
         let alert = NSAlert()
         alert.alertStyle = .informational
-        alert.messageText = NSLocalizedString("restore-buttons-alert.title", comment: "First draft: Restore Default for ...")
+        alert.messageText = NSLocalizedString("restore-buttons-alert.title", comment: "")
         alert.informativeText = ""
         
-        let restoreButton = alert.addButton(withTitle: NSLocalizedString("restore-buttons-alert.commit", comment: "First draft: Restore"))
-        let cancelButton = alert.addButton(withTitle: NSLocalizedString("restore-buttons-alert.back", comment: "First draft: Cancel"))
+        let restoreButton = alert.addButton(withTitle: NSLocalizedString("restore-buttons-alert.commit", comment: ""))
+        let cancelButton = alert.addButton(withTitle: NSLocalizedString("restore-buttons-alert.back", comment: ""))
         restoreButton.keyEquivalent = IBUtility.keyChar(forLiteral: "return")
         cancelButton.keyEquivalent = IBUtility.keyChar(forLiteral: "escape")
         
@@ -62,8 +62,8 @@ import Foundation
         /// Add accessoryView
         ///
         
-        let radio1 = NSButton(radioButtonWithTitle: NSLocalizedString("restore-buttons-alert.radio1", comment: "First draft: Mouse with 3 buttons"), target: self, action: #selector(nullAction(sender:)))
-        let radio2 = NSButton(radioButtonWithTitle: NSLocalizedString("restore-buttons-alert.radio2", comment: "First draft: Mouse with 5+ buttons"), target: self, action: #selector(nullAction(sender:)))
+        let radio1 = NSButton(radioButtonWithTitle: NSLocalizedString("restore-buttons-alert.radio1", comment: ""), target: self, action: #selector(nullAction(sender:)))
+        let radio2 = NSButton(radioButtonWithTitle: NSLocalizedString("restore-buttons-alert.radio2", comment: ""), target: self, action: #selector(nullAction(sender:)))
         radio1.setAccessibilityIdentifier("axRestoreButtons3")
         radio2.setAccessibilityIdentifier("axRestoreButtons5")
         
@@ -72,7 +72,7 @@ import Foundation
         var hint: CoolNSTextField? = nil
         if let nOfButtons = nOfButtons {
             
-            let hintStringRaw = String(format: NSLocalizedString("restore-buttons-alert.hint", comment: "First draft: Your **%@** mouse says it has **%d** buttons || Note: '%@' will be replaced with a name for the mouse, such as 'Logitech M720 Triathlon'"), name!, nOfButtons)
+            let hintStringRaw = String(format: NSLocalizedString("restore-buttons-alert.hint", comment: "Note: '%@' will be replaced with a name for the mouse, such as 'Logitech M720 Triathlon'"), name!, nOfButtons)
             
 //            let hintString = NSAttributedString(coolMarkdown: hintStringRaw)?.settingSecondaryLabelColor(forSubstring: nil).settingFontSize(NSFont.smallSystemFontSize).aligningSubstring(nil, alignment: .center).trimmingWhitespace()
             let hintString = NSAttributedString(coolMarkdown: hintStringRaw)?.adding(.secondaryLabelColor, for: nil).settingFontSize(NSFont.smallSystemFontSize).adding(.center, for: nil).trimmingWhitespace()
@@ -286,10 +286,10 @@ import Foundation
                 
                 let alert = NSAlert()
                 alert.alertStyle = .informational
-                alert.messageText = NSLocalizedString("buy-mouse-alert.title", comment: "First draft: Your mouse only has 3 buttons")
-                alert.informativeText = NSLocalizedString("buy-mouse-alert.body", comment: "First draft: Get a mouse with 5+ buttons to unlock the full potential of Mac Mouse Fix!")
+                alert.messageText = NSLocalizedString("buy-mouse-alert.title", comment: "")
+                alert.informativeText = NSLocalizedString("buy-mouse-alert.body", comment: "")
 //                alert.showsSuppressionButton = true
-                alert.addButton(withTitle: NSLocalizedString("buy-mouse-alert.ok", comment: "First draft: OK"))
+                alert.addButton(withTitle: NSLocalizedString("buy-mouse-alert.ok", comment: ""))
                 
                 /// Display alert
                 guard let window = MainAppState.shared.window else { return }
@@ -478,7 +478,7 @@ import Foundation
             ///     -> I think this problem will be resolved by us using `**` instead of `__` for emphasis.
             /// TODO: The 'Don't remind me again' checkbox at the bottom of the popover is loaded directly from the nib file. So it's localizable string is in a totally different place. This might be confusing for localizers.
             
-            let message = String(format: NSLocalizedString("restore-default-buttons-popover.body", comment: "First draft:  **Click here** to load the recommended settings\nfor your mouse (**%@**) || Note: The \n linebreak is so the popover doesn't become too wide. You can set the linebreak to your own taste. || Hint: if text in your language is typically around X times longer than English, then the lines here probably should not be much longer than X times the English version."), deviceName)
+            let message = String(format: NSLocalizedString("restore-default-buttons-popover.body", comment: "Note: The \n linebreak is so the popover doesn't become too wide. You can set the linebreak to your own taste. || Hint: if text in your language is typically around X times longer than English, then the lines here probably should not be much longer than X times the English version."), deviceName)
             
             if let attributes = restoreDefaultPopover_stringAttributesFromIB, let newString = NSAttributedString(coolMarkdown: message, fillOutBase: false)?.addingStringAttributes(asBase: attributes) {
                 

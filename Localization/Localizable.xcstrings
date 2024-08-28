@@ -2,7 +2,7 @@
   "sourceLanguage" : "en",
   "strings" : {
     "accessibility.settings-link.pre-ventura" : {
-      "comment" : "First draft: Open 'Security & Privacy' Preferences || Note: 'System Preferences' were renamed to 'System Settings' in macOS Ventura. The string for Ventura and later is defined in another file. Note 2: This is one of the steps recommended to the user to 'Grant Accessibility Access to Mac Mouse Fix'. All the related strings have keys that start with 'accessiblity.'",
+      "comment" : "Note: 'System Preferences' were renamed to 'System Settings' in macOS Ventura. The string for Ventura and later is defined in another file. Note 2: This is one of the steps recommended to the user to 'Grant Accessibility Access to Mac Mouse Fix'. All the related strings have keys that start with 'accessiblity.'",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -67,7 +67,7 @@
       }
     },
     "already-using-defaults-toast.3" : {
-      "comment" : "First draft: You're **already using** the default setting for mice with **3 buttons** || Note: This text is displayed in a notification after the user tries to load the default settings for mice with 3 buttons on the Buttons Tab.",
+      "comment" : "Note: This text is displayed in a notification after the user tries to load the default settings for mice with 3 buttons on the Buttons Tab.",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -132,7 +132,7 @@
       }
     },
     "already-using-defaults-toast.5" : {
-      "comment" : "First draft: You're **already using** the default setting for mice with **5+ buttons**",
+      "comment" : "",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -191,7 +191,7 @@
       }
     },
     "app-version" : {
-      "comment" : "First draft: Version %@ || Note: %@ will be replaced by the app version, e.g. '3.0.0 (22027)'",
+      "comment" : "Note: %@ will be replaced by the app version, e.g. '3.0.0 (22027)'",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -256,7 +256,7 @@
       }
     },
     "apple-key-fallback.backward" : {
-      "comment" : "First draft: <Rewind key>",
+      "comment" : "",
       "extractionState" : "manual",
       "localizations" : {
         "de" : {
@@ -323,7 +323,7 @@
       "shouldTranslate" : false
     },
     "apple-key-fallback.capslock" : {
-      "comment" : "First draft: ⇪",
+      "comment" : "",
       "extractionState" : "manual",
       "localizations" : {
         "de" : {
@@ -390,7 +390,7 @@
       "shouldTranslate" : false
     },
     "apple-key-fallback.forward" : {
-      "comment" : "First draft: <Fast-Forward key>",
+      "comment" : "",
       "extractionState" : "manual",
       "localizations" : {
         "de" : {
@@ -457,7 +457,7 @@
       "shouldTranslate" : false
     },
     "apple-key-fallback.globe" : {
-      "comment" : "First draft: <Emoji Picker key>",
+      "comment" : "",
       "extractionState" : "manual",
       "localizations" : {
         "de" : {
@@ -524,7 +524,7 @@
       "shouldTranslate" : false
     },
     "apple-key-fallback.light.max" : {
-      "comment" : "First draft: <Increase Keyboard Brightness key>",
+      "comment" : "",
       "extractionState" : "manual",
       "localizations" : {
         "de" : {
@@ -591,7 +591,7 @@
       "shouldTranslate" : false
     },
     "apple-key-fallback.light.min" : {
-      "comment" : "First draft: <Decrease Keyboard Brightness key>",
+      "comment" : "",
       "extractionState" : "manual",
       "localizations" : {
         "de" : {
@@ -658,7 +658,7 @@
       "shouldTranslate" : false
     },
     "apple-key-fallback.magnifyingglass" : {
-      "comment" : "First draft: <Spotlight key>",
+      "comment" : "",
       "extractionState" : "manual",
       "localizations" : {
         "de" : {
@@ -725,7 +725,7 @@
       "shouldTranslate" : false
     },
     "apple-key-fallback.mic" : {
-      "comment" : "First draft: <Dictation key>",
+      "comment" : "",
       "extractionState" : "manual",
       "localizations" : {
         "de" : {
@@ -792,7 +792,7 @@
       "shouldTranslate" : false
     },
     "apple-key-fallback.moon" : {
-      "comment" : "First draft: <Do Not Disturb key>",
+      "comment" : "",
       "extractionState" : "manual",
       "localizations" : {
         "de" : {
@@ -859,7 +859,7 @@
       "shouldTranslate" : false
     },
     "apple-key-fallback.playpause" : {
-      "comment" : "First draft: <Play or Pause key>",
+      "comment" : "",
       "extractionState" : "manual",
       "localizations" : {
         "de" : {
@@ -926,7 +926,7 @@
       "shouldTranslate" : false
     },
     "apple-key-fallback.power" : {
-      "comment" : "First draft: <Power key>",
+      "comment" : "",
       "extractionState" : "manual",
       "localizations" : {
         "de" : {
@@ -993,7 +993,7 @@
       "shouldTranslate" : false
     },
     "apple-key-fallback.rectangle.3.group" : {
-      "comment" : "First draft: <Mission Control key>",
+      "comment" : "",
       "extractionState" : "manual",
       "localizations" : {
         "de" : {
@@ -1060,7 +1060,7 @@
       "shouldTranslate" : false
     },
     "apple-key-fallback.speaker" : {
-      "comment" : "First draft: <Mute key>",
+      "comment" : "",
       "extractionState" : "manual",
       "localizations" : {
         "de" : {
@@ -1127,7 +1127,7 @@
       "shouldTranslate" : false
     },
     "apple-key-fallback.speaker.wave.1" : {
-      "comment" : "First draft: <Decrease Volume key>",
+      "comment" : "",
       "extractionState" : "manual",
       "localizations" : {
         "de" : {
@@ -1194,7 +1194,7 @@
       "shouldTranslate" : false
     },
     "apple-key-fallback.speaker.wave.3" : {
-      "comment" : "First draft: <Increase Volume key>",
+      "comment" : "",
       "extractionState" : "manual",
       "localizations" : {
         "de" : {
@@ -1261,7 +1261,7 @@
       "shouldTranslate" : false
     },
     "apple-key-fallback.square.grid.3x2" : {
-      "comment" : "First draft: <Launchpad key>",
+      "comment" : "",
       "extractionState" : "manual",
       "localizations" : {
         "de" : {
@@ -1328,7 +1328,7 @@
       "shouldTranslate" : false
     },
     "apple-key-fallback.sun.max" : {
-      "comment" : "First draft: <Increase Brightness key>",
+      "comment" : "",
       "extractionState" : "manual",
       "localizations" : {
         "de" : {
@@ -1395,7 +1395,7 @@
       "shouldTranslate" : false
     },
     "apple-key-fallback.sun.min" : {
-      "comment" : "First draft: <Decrease Brightness key> || Example usage: Works like pressing '<Decrease Brightness Key>' on an Apple keyboard. || Note: Unlike in the interface builder `.strings` files, in `Localizable.xcstrings`, <> doesn't mean that the text is unused. I think the usage of <> here is a little weird, so let me know if you have a better idea!",
+      "comment" : "",
       "extractionState" : "manual",
       "localizations" : {
         "de" : {
@@ -1462,7 +1462,7 @@
       "shouldTranslate" : false
     },
     "apple-key-fallback.unknown-key" : {
-      "comment" : "First draft: <Key without description>",
+      "comment" : "",
       "extractionState" : "manual",
       "localizations" : {
         "de" : {
@@ -1529,7 +1529,7 @@
       "shouldTranslate" : false
     },
     "beta-alert.back" : {
-      "comment" : "First draft: Cancel",
+      "comment" : "",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -1595,7 +1595,7 @@
       "shouldTranslate" : false
     },
     "beta-alert.body" : {
-      "comment" : "First draft: Beta versions can have many issues.\nDon't forget to give feedback when you run into one.\nThanks!",
+      "comment" : "",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -1661,7 +1661,7 @@
       "shouldTranslate" : false
     },
     "beta-alert.confirm" : {
-      "comment" : "First draft: Get Beta Versions",
+      "comment" : "",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -1727,7 +1727,7 @@
       "shouldTranslate" : false
     },
     "beta-alert.title" : {
-      "comment" : "First draft: Get Beta Versions?",
+      "comment" : "",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -1793,7 +1793,7 @@
       "shouldTranslate" : false
     },
     "button-name.tool.numbered" : {
-      "comment" : "First draft: Mouse Button %@",
+      "comment" : "",
       "extractionState" : "stale",
       "localizations" : {
         "de" : {
@@ -1859,7 +1859,7 @@
       }
     },
     "buy-mouse-alert.body" : {
-      "comment" : "First draft: Get a mouse with 5+ buttons to unlock the full potential of Mac Mouse Fix!",
+      "comment" : "",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -1925,7 +1925,7 @@
       "shouldTranslate" : false
     },
     "buy-mouse-alert.ok" : {
-      "comment" : "First draft: OK",
+      "comment" : "",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -1991,7 +1991,7 @@
       "shouldTranslate" : false
     },
     "buy-mouse-alert.title" : {
-      "comment" : "First draft: Your mouse only has 3 buttons",
+      "comment" : "",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -2057,7 +2057,7 @@
       "shouldTranslate" : false
     },
     "capture-toast.button-name.middle" : {
-      "comment" : "First draft: Middle Button || Note: These button names will be inserted into other \"capture-toast.[...]\" strings. Example: Middle Button and Button 4 are now captured by Mac Mouse Fix.",
+      "comment" : "Note: These button names will be inserted into other \"capture-toast.[...]\" strings. Example: Middle Button and Button 4 are now captured by Mac Mouse Fix.",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -2116,7 +2116,7 @@
       }
     },
     "capture-toast.button-name.numbered" : {
-      "comment" : "First Draft: Button %@ || Note: For visual consistency, capitalization of the these button-name strings should probably follow the capitalization of the trigger.substring.button-name.[...] strings. - You might want to fill those out first to figure out the capitalization, and then come back to fill out the button-names here. (This is just a guideline, if you have a specific reason to deviate it's up to your best judgement.)",
+      "comment" : "Note: For visual consistency, capitalization of the these button-name strings should probably follow the capitalization of the trigger.substring.button-name.[...] strings. - You might want to fill those out first to figure out the capitalization, and then come back to fill out the button-names here. (This is just a guideline, if you have a specific reason to deviate it's up to your best judgement.)",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -2175,7 +2175,7 @@
       }
     },
     "capture-toast.button-name.primary" : {
-      "comment" : "First draft: Primary Button",
+      "comment" : "",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -2234,7 +2234,7 @@
       }
     },
     "capture-toast.button-name.secondary" : {
-      "comment" : "First draft: Secondary Button",
+      "comment" : "",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -2933,7 +2933,7 @@
       }
     },
     "capture-toast.buttons.link" : {
-      "comment" : "First draft: [Learn More](https://github.com/noah-nuebling/mac-mouse-fix/discussions/112)",
+      "comment" : "",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -3644,7 +3644,7 @@
       }
     },
     "capture-toast.scroll.captured.body" : {
-      "comment" : "First draft: **Scrolling** is now captured by Mac Mouse Fix.",
+      "comment" : "",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -3691,7 +3691,7 @@
       }
     },
     "capture-toast.scroll.captured.hint" : {
-      "comment" : "First draft: ",
+      "comment" : "",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -3739,7 +3739,7 @@
       "shouldTranslate" : false
     },
     "capture-toast.scroll.link" : {
-      "comment" : "First draft: [Learn More](https://github.com/noah-nuebling/mac-mouse-fix/discussions/112)",
+      "comment" : "",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -3804,7 +3804,7 @@
       }
     },
     "capture-toast.scroll.uncaptured.body" : {
-      "comment" : "First draft: **Scrolling** is no longer captured by Mac Mouse Fix.",
+      "comment" : "",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -3851,7 +3851,7 @@
       }
     },
     "capture-toast.scroll.uncaptured.hint" : {
-      "comment" : "First draft: Scrolling now works as if Mac Mouse Fix was disabled.",
+      "comment" : "",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -3898,7 +3898,7 @@
       }
     },
     "drag-effect.dock-swipe" : {
-      "comment" : "First draft: Spaces & Mission Control",
+      "comment" : "",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -3963,7 +3963,7 @@
       }
     },
     "drag-effect.dock-swipe.hint" : {
-      "comment" : "First draft: Move your mouse:\n - Up to show Mission Control\n - Down to show Application Windows\n - Left or Right to move between Spaces\n \nWorks like swiping with 3 fingers on an Apple Trackpad",
+      "comment" : "",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -4028,7 +4028,7 @@
       }
     },
     "drag-effect.scroll-swipe" : {
-      "comment" : "First draft: Scroll & Navigate",
+      "comment" : "",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -4093,7 +4093,7 @@
       }
     },
     "drag-effect.scroll-swipe.hint" : {
-      "comment" : "First draft: Scroll freely by moving your mouse in any direction\n \nAlso Navigate between pages in Safari, delete messages in Mail and more by moving your mouse left and right\n \nWorks like swiping with 2 fingers on an Apple Trackpad",
+      "comment" : "",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -4158,7 +4158,7 @@
       }
     },
     "effect.app-expose" : {
-      "comment" : "First draft: Application Windows || Note: Under macOS Sonoma, this feature is called 'App Exposé' in trackpad settings, but 'Application Windows' in Keyboard Shortcut settings, and other places I found. I also saw 'Show all windows of the front app' and 'Show all open windows for the current app' in Apple's documentation. I went with 'Application Windows' because it's short and 'Exposé' felt like like an outdated term. If you have to make a similar decision, it's up to your own best judgement.",
+      "comment" : "Note: Under macOS Sonoma, this feature is called 'App Exposé' in trackpad settings, but 'Application Windows' in Keyboard Shortcut settings, and other places I found. I also saw 'Show all windows of the front app' and 'Show all open windows for the current app' in Apple's documentation. I went with 'Application Windows' because it's short and 'Exposé' felt like like an outdated term. If you have to make a similar decision, it's up to your own best judgement.",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -4223,7 +4223,7 @@
       }
     },
     "effect.app-expose.hint" : {
-      "comment" : "First draft: Show all windows of the active app",
+      "comment" : "",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -4288,7 +4288,7 @@
       }
     },
     "effect.apple-keys-submenu" : {
-      "comment" : "First draft:  Exclusive Keys || Note: This is the title for a hidden submenu that lets you remap your buttons to keyboard keys that only appear on Apple Keyboards such as the 'Brightness Up' or 'Do Not Disturb' keys. ",
+      "comment" : "Note: This is the title for a hidden submenu that lets you remap your buttons to keyboard keys that only appear on Apple Keyboards such as the 'Brightness Up' or 'Do Not Disturb' keys. ",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -4353,7 +4353,7 @@
       }
     },
     "effect.apple-keys-submenu.hint" : {
-      "comment" : "First draft: Choose keys that are only available on Apple keyboards",
+      "comment" : "",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -4418,7 +4418,7 @@
       }
     },
     "effect.apple-shortcut.hint" : {
-      "comment" : "First draft: Works like pressing '%@' on an Apple keyboard",
+      "comment" : "",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -4483,7 +4483,7 @@
       }
     },
     "effect.back" : {
-      "comment" : "First draft: Back",
+      "comment" : "",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -4548,7 +4548,7 @@
       }
     },
     "effect.back.hint" : {
-      "comment" : "First draft: Go back one page in Safari and other apps",
+      "comment" : "",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -4613,7 +4613,7 @@
       }
     },
     "effect.click.middle" : {
-      "comment" : "First draft: Middle Click",
+      "comment" : "",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -4678,7 +4678,7 @@
       }
     },
     "effect.click.middle.hint" : {
-      "comment" : "First draft: Open links in a new tab, paste text in the Terminal, and more.\n \nWorks like clicking the middle mouse button (also called scroll wheel button or mouse button 3) on a standard mouse.",
+      "comment" : "",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -4743,7 +4743,7 @@
       }
     },
     "effect.click.primary" : {
-      "comment" : "First draft: Primary Click",
+      "comment" : "",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -4808,7 +4808,7 @@
       }
     },
     "effect.click.primary.hint" : {
-      "comment" : "First draft: Works like clicking the primary mouse button (also called left mouse button or mouse button 1) on a standard mouse.",
+      "comment" : "",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -4873,7 +4873,7 @@
       }
     },
     "effect.click.secondary" : {
-      "comment" : "First draft: Secondary Click",
+      "comment" : "",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -4938,7 +4938,7 @@
       }
     },
     "effect.click.secondary.hint" : {
-      "comment" : "First draft: Works like clicking the secondary mouse button (also called right mouse button or mouse button 2) on a standard mouse.",
+      "comment" : "",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -5003,7 +5003,7 @@
       }
     },
     "effect.desktop" : {
-      "comment" : "First draft: Show Desktop",
+      "comment" : "",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -5068,7 +5068,7 @@
       }
     },
     "effect.desktop.hint" : {
-      "comment" : "First draft: Show the desktop",
+      "comment" : "",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -5133,7 +5133,7 @@
       }
     },
     "effect.forward" : {
-      "comment" : "First draft: Forward",
+      "comment" : "",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -5198,7 +5198,7 @@
       }
     },
     "effect.forward.hint" : {
-      "comment" : "First draft: Go forward one page in Safari and other apps",
+      "comment" : "",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -5263,7 +5263,7 @@
       }
     },
     "effect.launchpad" : {
-      "comment" : "First draft: Launchpad",
+      "comment" : "",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -5328,7 +5328,7 @@
       }
     },
     "effect.launchpad.hint" : {
-      "comment" : "First draft: Open Launchpad",
+      "comment" : "",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -5393,7 +5393,7 @@
       }
     },
     "effect.left-space" : {
-      "comment" : "First draft: Move Left a Space",
+      "comment" : "",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -5458,7 +5458,7 @@
       }
     },
     "effect.left-space.hint" : {
-      "comment" : "First draft: Move one Space to the left",
+      "comment" : "",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -5523,7 +5523,7 @@
       }
     },
     "effect.look-up" : {
-      "comment" : "First draft: Look Up & Quick Look",
+      "comment" : "",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -5588,7 +5588,7 @@
       }
     },
     "effect.look-up.hint" : {
-      "comment" : "First draft: Look up words in the Dictionary, Quick Look files in Finder, and more.\n \nWorks like a Force click on an Apple Trackpad.",
+      "comment" : "",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -5653,7 +5653,7 @@
       }
     },
     "effect.mission-control" : {
-      "comment" : "First draft: Mission Control",
+      "comment" : "",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -5718,7 +5718,7 @@
       }
     },
     "effect.mission-control.hint" : {
-      "comment" : "First draft: Show Mission Control",
+      "comment" : "",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -5783,7 +5783,7 @@
       }
     },
     "effect.record-shortcut" : {
-      "comment" : "First draft: Keyboard Shortcut...",
+      "comment" : "",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -5848,7 +5848,7 @@
       }
     },
     "effect.record-shortcut.hint" : {
-      "comment" : "First draft: Type a keyboard shortcut, then use it from your mouse",
+      "comment" : "",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -5913,7 +5913,7 @@
       }
     },
     "effect.right-space" : {
-      "comment" : "First draft: Move Right a Space",
+      "comment" : "",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -5978,7 +5978,7 @@
       }
     },
     "effect.right-space.hint" : {
-      "comment" : "First draft: Move one Space to the right",
+      "comment" : "",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -6043,7 +6043,7 @@
       }
     },
     "effect.shortcut.hint" : {
-      "comment" : "First draft: Works like pressing '%@' on your keyboard",
+      "comment" : "",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -6108,7 +6108,7 @@
       }
     },
     "effect.smart-zoom" : {
-      "comment" : "First draft: Smart Zoom",
+      "comment" : "",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -6173,7 +6173,7 @@
       }
     },
     "effect.smart-zoom.hint" : {
-      "comment" : "First draft: Zoom in or out in Safari and other apps.\n \nWorks like a two-finger double tap on an Apple Trackpad.",
+      "comment" : "",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -6238,7 +6238,7 @@
       }
     },
     "enable-timeout-toast" : {
-      "comment" : "First draft: If you have **problems enabling** the app, click&nbsp;[here](https://github.com/noah-nuebling/mac-mouse-fix/discussions/861). || Note: The nbsp part inserts a non-breaking-space character, which prevents the last word from being orphaned on the last line. See HTML Character Entities.",
+      "comment" : "Note: The nbsp part inserts a non-breaking-space character, which prevents the last word from being orphaned on the last line. See HTML Character Entities.",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -6297,7 +6297,7 @@
       }
     },
     "forbidden-capture-toast.1" : {
-      "comment" : "First draft: **Primary Mouse Button** can't be used\nPlease try another button",
+      "comment" : "",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -6362,7 +6362,7 @@
       }
     },
     "forbidden-capture-toast.2" : {
-      "comment" : "First draft: **Secondary Mouse Button** can't be used\nPlease try another button",
+      "comment" : "",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -6427,7 +6427,7 @@
       }
     },
     "free-country" : {
-      "comment" : "First draft: Mac Mouse Fix is currently free in your country (%@)",
+      "comment" : "",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -6492,7 +6492,7 @@
       }
     },
     "is-disabled-toast" : {
-      "comment" : "First draft: Mac Mouse Fix was **disabled** in System Settings\n\nTo enable Mac Mouse Fix:\n\n1. Go to [Login Items Settings](x-apple.systempreferences:com.apple.LoginItems-Settings.extension)\n2. Switch on 'Mac Mouse Fix.app'",
+      "comment" : "",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -6557,7 +6557,7 @@
       }
     },
     "is-strange-helper-alert.body" : {
-      "comment" : "First draft: Mac Mouse Fix can't be enabled because there's **another version** of Mac Mouse Fix present on your computer\n\nTo enable Mac Mouse Fix:\n\n1. Delete the [other version](%@)\n2. Empty the Bin\n3. Restart your Mac\n4. Try again!",
+      "comment" : "",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -6622,7 +6622,7 @@
       }
     },
     "is-strange-helper-alert.title" : {
-      "comment" : "First draft: Enabling Failed",
+      "comment" : "",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -6687,7 +6687,7 @@
       }
     },
     "join-list" : {
-      "comment" : "First draft: ,  || Note: This string joins elements in a list except the second-to-last and last one. || Note: The first draft contains a space after the comma.",
+      "comment" : "Note: This string joins elements in a list except the second-to-last and last one. || Note: The first draft contains a space after the comma.",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -6752,7 +6752,7 @@
       }
     },
     "join-list.last" : {
-      "comment" : "First draft: %@ and %@ || Note: This format string joins the second-to-last element and the last elements in a list of items",
+      "comment" : "Note: This format string joins the second-to-last element and the last elements in a list of items",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -6817,7 +6817,7 @@
       }
     },
     "license-button.activate" : {
-      "comment" : "First draft: Activate License",
+      "comment" : "",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -6882,7 +6882,7 @@
       }
     },
     "license-button.deactivate" : {
-      "comment" : "First draft: Deactivate License",
+      "comment" : "",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -6947,7 +6947,7 @@
       }
     },
     "license-toast.activate" : {
-      "comment" : "First draft: Your license has been **activated**! 🎉",
+      "comment" : "",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -7012,7 +7012,7 @@
       }
     },
     "license-toast.activation-overload" : {
-      "comment" : "First draft: This license has been activated **%d** times. The maximum is **%d**.\n\nBecause of this, the license has been invalidated. This is to prevent piracy. If you have other reasons for activating the license this many times, please excuse the inconvenience.\n\nJust [reach out](mailto:noah.n.public@gmail.com) and I will provide you with a new license! Thanks for understanding.",
+      "comment" : "",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -7077,7 +7077,7 @@
       }
     },
     "license-toast.already-active" : {
-      "comment" : "First draft: This license is **already activated**!",
+      "comment" : "",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -7142,7 +7142,7 @@
       }
     },
     "license-toast.deactivate" : {
-      "comment" : "First draft: Your license has been **deactivated**",
+      "comment" : "",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -7207,7 +7207,7 @@
       }
     },
     "license-toast.free-country" : {
-      "comment" : "First draft: This license **could not be activated** but Mac Mouse Fix is currently **free in your country**!",
+      "comment" : "",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -7272,7 +7272,7 @@
       }
     },
     "license-toast.gumroad-error" : {
-      "comment" : "First draft: **An error with the licensing server occured**\n\nIt says:\n\n%@",
+      "comment" : "",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -7337,7 +7337,7 @@
       }
     },
     "license-toast.no-internet" : {
-      "comment" : "First draft: **There is no connection to the internet**\n\nTry activating your license again when your computer is online.",
+      "comment" : "",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -7402,7 +7402,7 @@
       }
     },
     "license-toast.unknown-error" : {
-      "comment" : "First draft: **An unknown error occurred:**\n\n%@",
+      "comment" : "",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -7467,7 +7467,7 @@
       }
     },
     "license-toast.unknown-key" : {
-      "comment" : "First draft: **'%@'** is not a valid license key\n\nMake sure you enter your key exactly as you received it, without leading or trailing spaces, line breaks, or other extra characters.",
+      "comment" : "",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -7532,7 +7532,7 @@
       }
     },
     "license-toast.unknown-reason" : {
-      "comment" : "First draft: Activating your license failed for **unknown reasons**\n\nPlease write a **Bug Report** [here](https://noah-nuebling.github.io/mac-mouse-fix-feedback-assistant/?type=bug-report)",
+      "comment" : "",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -7597,7 +7597,7 @@
       }
     },
     "macos-scrolling-hint" : {
-      "comment" : "First draft: Set speed under\n[%@ > Mouse > Scrolling Speed](%@)",
+      "comment" : "",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -7662,7 +7662,7 @@
       }
     },
     "mail-alert.back" : {
-      "comment" : "First draft: Back",
+      "comment" : "",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -7727,7 +7727,7 @@
       }
     },
     "mail-alert.body" : {
-      "comment" : "First draft: I read and appreciate all emails, even though I can't respond to all",
+      "comment" : "",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -7792,7 +7792,7 @@
       }
     },
     "mail-alert.send" : {
-      "comment" : "First draft: Write Email",
+      "comment" : "",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -7857,7 +7857,7 @@
       }
     },
     "mail-alert.title" : {
-      "comment" : "First draft: Write an Email?",
+      "comment" : "",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -7922,7 +7922,7 @@
       }
     },
     "modifer-key.tool.command" : {
-      "comment" : "First draft: Command (⌘)",
+      "comment" : "",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -7987,7 +7987,7 @@
       }
     },
     "modifer-key.tool.control" : {
-      "comment" : "First draft: Control (^)",
+      "comment" : "",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -8052,7 +8052,7 @@
       }
     },
     "modifer-key.tool.option" : {
-      "comment" : "First draft: Option (⌥)",
+      "comment" : "",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -8117,7 +8117,7 @@
       }
     },
     "modifer-key.tool.shift" : {
-      "comment" : "First draft: Shift (⇧)",
+      "comment" : "",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -8182,7 +8182,7 @@
       }
     },
     "natural-scrolling-hint" : {
-      "comment" : "First draft: Content tracks finger movement",
+      "comment" : "",
       "extractionState" : "manual",
       "localizations" : {
         "de" : {
@@ -8248,7 +8248,7 @@
       }
     },
     "precise-scrolling-hint" : {
-      "comment" : "First draft: Scroll precisely, even without a keyboard modifier,\nby moving the scroll wheel *slowly* || Note: The line break is there so the layout of the Scroll tab doesn't become too wide which looks weird. You can set the linebreak to your own taste. || Hint: if text in your language is typically around X times longer than English, then the lines here probably should not be much longer than X times the English version.",
+      "comment" : "Note: The line break is there so the layout of the Scroll tab doesn't become too wide which looks weird. You can set the linebreak to your own taste. || Hint: if text in your language is typically around X times longer than English, then the lines here probably should not be much longer than X times the English version.",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -8313,7 +8313,7 @@
       }
     },
     "restore-buttons-alert.back" : {
-      "comment" : "First draft: Cancel",
+      "comment" : "",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -8378,7 +8378,7 @@
       }
     },
     "restore-buttons-alert.commit" : {
-      "comment" : "First draft: Restore",
+      "comment" : "",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -8443,7 +8443,7 @@
       }
     },
     "restore-buttons-alert.hint" : {
-      "comment" : "First draft: Your **%@** mouse says it has **%d** buttons || Note: '%@' will be replaced with a name for the mouse, such as 'Logitech M720 Triathlon'",
+      "comment" : "Note: '%@' will be replaced with a name for the mouse, such as 'Logitech M720 Triathlon'",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -8508,7 +8508,7 @@
       }
     },
     "restore-buttons-alert.radio1" : {
-      "comment" : "First draft: Mouse with 3 buttons",
+      "comment" : "",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -8573,7 +8573,7 @@
       }
     },
     "restore-buttons-alert.radio2" : {
-      "comment" : "First draft: Mouse with 5+ buttons",
+      "comment" : "",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -8638,7 +8638,7 @@
       }
     },
     "restore-buttons-alert.title" : {
-      "comment" : "First draft: Restore Default for ...",
+      "comment" : "",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -8703,7 +8703,7 @@
       }
     },
     "restore-default-buttons-popover.body" : {
-      "comment" : "First draft:  **Click here** to load the recommended settings\nfor your mouse (**%@**) || Note: The \n linebreak is so the popover doesn't become too wide. You can set the linebreak to your own taste. || Hint: if text in your language is typically around X times longer than English, then the lines here probably should not be much longer than X times the English version.",
+      "comment" : "Note: The \n linebreak is so the popover doesn't become too wide. You can set the linebreak to your own taste. || Hint: if text in your language is typically around X times longer than English, then the lines here probably should not be much longer than X times the English version.",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -8768,7 +8768,7 @@
       }
     },
     "revive-toast" : {
-      "comment" : "First draft: **Enabled** Mac Mouse Fix for %1@\nIt had been disabled from the Menu Bar %2@ || Note: %1@ will be replaced by the list of enabled features, %2@ will be replaced by the menubar icon || Note: The described feature lets you disable Mac Mouse Fix's effect on your mouse-buttons/scroll-wheel directly from the menubar. This is to help people use apps that are incompatible with Mac Mouse Fix. In your language, it may make sense to use a different translation for 'enable' in this context than in the context of the 'Enable Mac Mouse Fix' switch. It's up to your own best judgement.",
+      "comment" : "Note: %1@ will be replaced by the list of enabled features, %2@ will be replaced by the menubar icon || Note: The described feature lets you disable Mac Mouse Fix's effect on your mouse-buttons/scroll-wheel directly from the menubar. This is to help people use apps that are incompatible with Mac Mouse Fix. In your language, it may make sense to use a different translation for 'enable' in this context than in the context of the 'Enable Mac Mouse Fix' switch. It's up to your own best judgement.",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -8833,7 +8833,7 @@
       }
     },
     "revive-toast.feature-buttons" : {
-      "comment" : "First draft: **Buttons** || Note: Will be inserted into the revive-toast",
+      "comment" : "Note: Will be inserted into the revive-toast",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -8898,7 +8898,7 @@
       }
     },
     "revive-toast.feature-scrolling" : {
-      "comment" : "First draft: **Scrolling**",
+      "comment" : "",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -8963,7 +8963,7 @@
       }
     },
     "scroll-effect.4-pinch" : {
-      "comment" : "First draft: Desktop & Launchpad",
+      "comment" : "",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -9028,7 +9028,7 @@
       }
     },
     "scroll-effect.4-pinch.hint" : {
-      "comment" : "First draft: Scroll up for Launchpad and down to show the Desktop\n \nWorks like Pinching with 4 fingers on an Apple Trackpad",
+      "comment" : "",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -9093,7 +9093,7 @@
       }
     },
     "scroll-effect.app-switcher" : {
-      "comment" : "First draft: App Switcher",
+      "comment" : "",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -9158,7 +9158,7 @@
       }
     },
     "scroll-effect.app-switcher.hint" : {
-      "comment" : "First draft: Quickly switch between open apps\n \nWorks like holding Command (⌘) and then pressing Tab (⇥) on your keyboard",
+      "comment" : "",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -9223,7 +9223,7 @@
       }
     },
     "scroll-effect.horizontal" : {
-      "comment" : "First draft: Horizontal Scroll",
+      "comment" : "",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -9288,7 +9288,7 @@
       }
     },
     "scroll-effect.horizontal.hint" : {
-      "comment" : "First draft: Scroll left and right, navigate between pages in Safari, delete messages in Mail and more\n \nWorks like swiping horizontally with 2 fingers on an Apple Trackpad",
+      "comment" : "",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -9353,7 +9353,7 @@
       }
     },
     "scroll-effect.precise" : {
-      "comment" : "First draft: Precise Scroll",
+      "comment" : "",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -9418,7 +9418,7 @@
       }
     },
     "scroll-effect.precise.hint" : {
-      "comment" : "First draft: Scroll small distances and use sensitive UI elements with precision",
+      "comment" : "",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -9483,7 +9483,7 @@
       }
     },
     "scroll-effect.rotate" : {
-      "comment" : "First draft: Rotate",
+      "comment" : "",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -9548,7 +9548,7 @@
       }
     },
     "scroll-effect.rotate.hint" : {
-      "comment" : "First draft: Rotate content in Apple Maps and other apps\n \nWorks like twisting with 2 fingers on an Apple Trackpad",
+      "comment" : "",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -9613,7 +9613,7 @@
       }
     },
     "scroll-effect.spaces" : {
-      "comment" : "First draft: Move Between Spaces",
+      "comment" : "",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -9678,7 +9678,7 @@
       }
     },
     "scroll-effect.spaces.hint" : {
-      "comment" : "First draft: Scroll up to move left a Space and down to move right a Space\n \nWorks like swiping horizontally with 3 fingers on an Apple Trackpad",
+      "comment" : "",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -9743,7 +9743,7 @@
       }
     },
     "scroll-effect.swift" : {
-      "comment" : "First draft: Swift Scroll",
+      "comment" : "",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -9808,7 +9808,7 @@
       }
     },
     "scroll-effect.swift.hint" : {
-      "comment" : "First draft: Scroll long distances with minimal effort",
+      "comment" : "",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -9873,7 +9873,7 @@
       }
     },
     "scroll-effect.zoom" : {
-      "comment" : "First draft: Zoom In or Out",
+      "comment" : "",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -9938,7 +9938,7 @@
       }
     },
     "scroll-effect.zoom.hint" : {
-      "comment" : "First draft: Zoom in or out in Safari, Maps and other apps\n \nWorks like pinching to zoom on an Apple trackpad",
+      "comment" : "",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -10003,7 +10003,7 @@
       }
     },
     "system-settings-name" : {
-      "comment" : "First draft: System Settings",
+      "comment" : "",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -10068,7 +10068,7 @@
       }
     },
     "system-settings-name.pre-ventura" : {
-      "comment" : "First draft: System Preferences",
+      "comment" : "",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -10133,7 +10133,7 @@
       }
     },
     "thanks.01" : {
-      "comment" : "First draft: ⭐️ Thank you for buying Mac Mouse Fix!",
+      "comment" : "",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -10198,7 +10198,7 @@
       }
     },
     "thanks.02" : {
-      "comment" : "First draft: 🌟 Thanks for purchasing Mac Mouse Fix!",
+      "comment" : "",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -10263,7 +10263,7 @@
       }
     },
     "thanks.03" : {
-      "comment" : "First draft: 🚀 Thanks for supporting Mac Mouse Fix!",
+      "comment" : "",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -10328,7 +10328,7 @@
       }
     },
     "thanks.04" : {
-      "comment" : "First draft: 🙌 Thanks for buying Mac Mouse Fix!",
+      "comment" : "",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -10393,7 +10393,7 @@
       }
     },
     "thanks.05" : {
-      "comment" : "First draft: 🧠 Great purchasing decision! ;)",
+      "comment" : "",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -10458,7 +10458,7 @@
       }
     },
     "thanks.06" : {
-      "comment" : "First draft: 🔥 Awesome taste in mouse fixing software! ;)",
+      "comment" : "",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -10523,7 +10523,7 @@
       }
     },
     "thanks.07" : {
-      "comment" : "First draft: 💙",
+      "comment" : "",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -10588,7 +10588,7 @@
       }
     },
     "thanks.08" : {
-      "comment" : "First draft: :) <- My face when I saw you bought Mac Mouse Fix",
+      "comment" : "",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -10653,7 +10653,7 @@
       }
     },
     "thanks.09" : {
-      "comment" : "First draft: 👽 Share it with your Spacebook friends!",
+      "comment" : "",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -10718,7 +10718,7 @@
       }
     },
     "thanks.10" : {
-      "comment" : "First draft: 🏂 Duckgang for life!! || Note: The weird ones are really rare. Feel free to change them to anything you feel like to leave a little easter egg!",
+      "comment" : "Note: The weird ones are really rare. Feel free to change them to anything you feel like to leave a little easter egg!",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -10783,7 +10783,7 @@
       }
     },
     "thanks.11" : {
-      "comment" : "First draft: 🚜 Watch where you're going :P",
+      "comment" : "",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -10848,7 +10848,7 @@
       }
     },
     "thanks.12" : {
-      "comment" : "First draft: 🐁 Not these mice, mom!",
+      "comment" : "",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -10913,7 +10913,7 @@
       }
     },
     "thanks.13" : {
-      "comment" : "First draft: 🐹 We should get him a bow tie.",
+      "comment" : "",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -10978,7 +10978,7 @@
       }
     },
     "thanks.14" : {
-      "comment" : "First draft: 🇹🇷 Ey Kanka, tebrikler tebrikler!",
+      "comment" : "",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -11043,7 +11043,7 @@
       }
     },
     "thanks.15" : {
-      "comment" : "First draft: 🥛 Whole milk of course! It's your birthday after all.",
+      "comment" : "",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -11108,7 +11108,7 @@
       }
     },
     "thanks.16" : {
-      "comment" : "First draft: 🎸 Not John Mayer (yet). Nevertheless mayor of hearts.",
+      "comment" : "",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -11173,7 +11173,7 @@
       }
     },
     "thanks.17" : {
-      "comment" : "First draft: 💃 1NEIN8NEIN",
+      "comment" : "",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -11238,7 +11238,7 @@
       }
     },
     "thanks.18" : {
-      "comment" : "First draft: 🦄 You may not want to save the world, but you're already saving mine :)",
+      "comment" : "",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -11303,7 +11303,7 @@
       }
     },
     "thanks.19" : {
-      "comment" : "First draft: 🏜️ Dankeschön, meine Frau...",
+      "comment" : "",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -11368,7 +11368,7 @@
       }
     },
     "thanks.20" : {
-      "comment" : "First draft: 🌍 Universal Studios is probably not that great anyways... :)",
+      "comment" : "",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -11433,7 +11433,7 @@
       }
     },
     "thanks.21" : {
-      "comment" : "First draft: 🐠 What... are... you?",
+      "comment" : "",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -11498,7 +11498,7 @@
       }
     },
     "thanks.22" : {
-      "comment" : "First draft: 🖤",
+      "comment" : "",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -11563,7 +11563,7 @@
       }
     },
     "thanks.23" : {
-      "comment" : "First draft: 🤍",
+      "comment" : "",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -11628,7 +11628,7 @@
       }
     },
     "thanks.24" : {
-      "comment" : "First draft: 😎 Oh you're using Mac Mouse Fix? You must be pretty cool.",
+      "comment" : "",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -11693,7 +11693,7 @@
       }
     },
     "thanks.25" : {
-      "comment" : "First draft: 🌏 First the mice, then the world!! >:)",
+      "comment" : "",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -11758,7 +11758,7 @@
       }
     },
     "trial-counter.active" : {
-      "comment" : "First draft: Free day **%d/%d**",
+      "comment" : "",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -11823,7 +11823,7 @@
       }
     },
     "trial-counter.expired" : {
-      "comment" : "First draft: Free days are over",
+      "comment" : "",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -11888,7 +11888,7 @@
       }
     },
     "trial-notif.activate-license-button" : {
-      "comment" : "First draft: Activate License",
+      "comment" : "",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -11953,7 +11953,7 @@
       }
     },
     "trial-notif.body" : {
-      "comment" : "First draft: Hi there! You've been using Mac Mouse Fix for **%d days** now. I hope you're enjoying it!\n\nIf you want to keep using Mac Mouse Fix, you can [buy it now](%@).",
+      "comment" : "",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -12018,7 +12018,7 @@
       }
     },
     "trigger.substring.button-modifier.1" : {
-      "comment" : "First draft: Click %@ + || Note: %@ will be a button name || Example where %@ is 'Button 4': Click Button 4 + Double Click and Drag Button 5",
+      "comment" : "Note: %@ will be a button name || Example where %@ is 'Button 4': Click Button 4 + Double Click and Drag Button 5",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -12083,7 +12083,7 @@
       }
     },
     "trigger.substring.button-modifier.2" : {
-      "comment" : "First draft: Double Click %@ + || Note: All the \"trigger.substring.[...]\" strings should be lowercase unless there's a specific reason to capitalize them. In English, that reason is that we're using \"Title Case\", but this isn't common in other languages. For example, in German, the substring \"Double Click %@ +\" should be localized as \"doppelklicke %@ +\" and \"Click and Drag %@\" as \"klicke %@ und ziehe\". Notice that not even the first word is capitalized in German. That's because these substrings are joined programmatically to create a combined string. The substrings start with a lowercase letter, to avoid random capitalization in the middle of the combined string. The first word of the combined string will be capitalized programmatically. Therefore, unless your language has special capitalization rules (such as \"Title Case\" in English), these substrings should probably be all-lowercase, just like German. (Or, if you use a non-standard way to capitalize I think that's also ok, as long as it's reasonably consistent) I know this is a bit complicated, but I hope it's still understandable! If anything's unclear, please let me know and I'll try to explain it and improve these comments. Thank you.",
+      "comment" : "Note: All the \"trigger.substring.[...]\" strings should be lowercase unless there's a specific reason to capitalize them. In English, that reason is that we're using \"Title Case\", but this isn't common in other languages. For example, in German, the substring \"Double Click %@ +\" should be localized as \"doppelklicke %@ +\" and \"Click and Drag %@\" as \"klicke %@ und ziehe\". Notice that not even the first word is capitalized in German. That's because these substrings are joined programmatically to create a combined string. The substrings start with a lowercase letter, to avoid random capitalization in the middle of the combined string. The first word of the combined string will be capitalized programmatically. Therefore, unless your language has special capitalization rules (such as \"Title Case\" in English), these substrings should probably be all-lowercase, just like German. (Or, if you use a non-standard way to capitalize I think that's also ok, as long as it's reasonably consistent) I know this is a bit complicated, but I hope it's still understandable! If anything's unclear, please let me know and I'll try to explain it and improve these comments. Thank you.",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -12148,7 +12148,7 @@
       }
     },
     "trigger.substring.button-modifier.3" : {
-      "comment" : "First draft: Triple Click %@ + ",
+      "comment" : "",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -12213,7 +12213,7 @@
       }
     },
     "trigger.substring.button-name.middle" : {
-      "comment" : "First draft: Middle Button || Remember: All the \"trigger.substring.[...]\" strings should normally be all-lowercase. For an explanation, see the comment for the key \"trigger.substring.button-modifier.2\"",
+      "comment" : "Remember: All the \"trigger.substring.[...]\" strings should normally be all-lowercase. For an explanation, see the comment for the key \"trigger.substring.button-modifier.2\"",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -12272,7 +12272,7 @@
       }
     },
     "trigger.substring.button-name.numbered" : {
-      "comment" : "First Draft: Button %@",
+      "comment" : "",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -12331,7 +12331,7 @@
       }
     },
     "trigger.substring.button-name.primary" : {
-      "comment" : "First draft: Primary Button",
+      "comment" : "",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -12390,7 +12390,7 @@
       }
     },
     "trigger.substring.button-name.secondary" : {
-      "comment" : "First draft: Secondary Button",
+      "comment" : "",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -12449,7 +12449,7 @@
       }
     },
     "trigger.substring.click.1" : {
-      "comment" : "First draft: Click %@ || Note: \"%@\" will be replaced by a button name (or by nothing, if the button name can be inferred from context) || Example where %@ is \"Button 5\": ⌥⌘ Double Click Button 4 + Click Button 5",
+      "comment" : "Note: \"%@\" will be replaced by a button name (or by nothing, if the button name can be inferred from context) || Example where %@ is \"Button 5\": ⌥⌘ Double Click Button 4 + Click Button 5",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -12514,7 +12514,7 @@
       }
     },
     "trigger.substring.click.2" : {
-      "comment" : "First draft: Double Click %@",
+      "comment" : "",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -12579,7 +12579,7 @@
       }
     },
     "trigger.substring.click.3" : {
-      "comment" : "First draft: Triple Click %@",
+      "comment" : "",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -12644,7 +12644,7 @@
       }
     },
     "trigger.substring.drag.1" : {
-      "comment" : "First draft: Click and Drag %@",
+      "comment" : "",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -12709,7 +12709,7 @@
       }
     },
     "trigger.substring.drag.2" : {
-      "comment" : "First draft: Double Click and Drag %@",
+      "comment" : "",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -12774,7 +12774,7 @@
       }
     },
     "trigger.substring.drag.3" : {
-      "comment" : "First draft: Triple Click and Drag %@",
+      "comment" : "",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -12839,7 +12839,7 @@
       }
     },
     "trigger.substring.drag.flags" : {
-      "comment" : "First draft: and Drag || Note: This will be used for Drag Actions that only need keyboard modifiers to be activated - not mouse buttons || Example: ⌥⌘ and Drag",
+      "comment" : "Note: This will be used for Drag Actions that only need keyboard modifiers to be activated - not mouse buttons || Example: ⌥⌘ and Drag",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -12904,7 +12904,7 @@
       }
     },
     "trigger.substring.hold.1" : {
-      "comment" : "First draft: Hold %@ || Remember: All the \"trigger.substring.[...]\" strings should normally be all-lowercase. For an explanation, see the comment for the key \"trigger.substring.button-modifier.2\"",
+      "comment" : "Remember: All the \"trigger.substring.[...]\" strings should normally be all-lowercase. For an explanation, see the comment for the key \"trigger.substring.button-modifier.2\"",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -12969,7 +12969,7 @@
       }
     },
     "trigger.substring.hold.2" : {
-      "comment" : "First draft: Double Click and Hold %@",
+      "comment" : "",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -13034,7 +13034,7 @@
       }
     },
     "trigger.substring.hold.3" : {
-      "comment" : "First draft: Triple Click and Hold %@",
+      "comment" : "",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -13099,7 +13099,7 @@
       }
     },
     "trigger.substring.scroll.1" : {
-      "comment" : "First draft: Click and Scroll %@",
+      "comment" : "",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -13164,7 +13164,7 @@
       }
     },
     "trigger.substring.scroll.2" : {
-      "comment" : "First draft: Double Click and Scroll %@",
+      "comment" : "",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -13229,7 +13229,7 @@
       }
     },
     "trigger.substring.scroll.3" : {
-      "comment" : "First draft: Triple Click and Scroll %@",
+      "comment" : "",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -13294,7 +13294,7 @@
       }
     },
     "trigger.substring.scroll.flags" : {
-      "comment" : "First draft: and Scroll || Example: ⌥⌘ and Scroll",
+      "comment" : "Example: ⌥⌘ and Scroll",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -13359,7 +13359,7 @@
       }
     },
     "trigger.y.group-row.button-name.middle" : {
-      "comment" : "First draft: Middle Button || Note: The trigger.y.group-row.button-name.[...] strings names are used in the Action Table as headers to group together actions which are triggered by the same button.",
+      "comment" : "Note: The trigger.y.group-row.button-name.[...] strings names are used in the Action Table as headers to group together actions which are triggered by the same button.",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -13418,7 +13418,7 @@
       }
     },
     "trigger.y.group-row.button-name.numbered" : {
-      "comment" : "First Draft: Button %@ || Note: For visual consistency, capitalization of the these button-name strings should probably follow the capitalization of the trigger.substring.button-name.[...] strings. - You might want to fill those out first to figure out the capitalization, and then come back to fill out the button-names here. (This is just a guideline, if you have a specific reason to deviate it's up to your best judgement.)",
+      "comment" : "Note: For visual consistency, capitalization of the these button-name strings should probably follow the capitalization of the trigger.substring.button-name.[...] strings. - You might want to fill those out first to figure out the capitalization, and then come back to fill out the button-names here. (This is just a guideline, if you have a specific reason to deviate it's up to your best judgement.)",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -13477,7 +13477,7 @@
       }
     },
     "trigger.y.group-row.button-name.primary" : {
-      "comment" : "First draft: Primary Button",
+      "comment" : "",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -13536,7 +13536,7 @@
       }
     },
     "trigger.y.group-row.button-name.secondary" : {
-      "comment" : "First draft: Secondary Button",
+      "comment" : "",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -13595,7 +13595,7 @@
       }
     },
     "trigger.z.drag-particle" : {
-      "comment" : "First draft: Drag || Note: This word will be emphasized in strings such as \"Double Click and Drag %@\". For the emphasis to work, make sure that spelling and capitalization matches *exactly* with how this word is used in strings whose keys begin with \"trigger.substring.drag.[...]\"",
+      "comment" : "Note: This word will be emphasized in strings such as \"Double Click and Drag %@\". For the emphasis to work, make sure that spelling and capitalization matches *exactly* with how this word is used in strings whose keys begin with \"trigger.substring.drag.[...]\"",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -13654,7 +13654,7 @@
       }
     },
     "trigger.z.scroll-particle" : {
-      "comment" : "First draft: Scroll || Note: This word will be emphasized in strings such as \"Click and Scroll %@\". For the emphasis to work, make sure that spelling and capitalization matches *exactly* with how this word is used in the strings whose keys begin with \"trigger.substring.scroll.[...]\"",
+      "comment" : "Note: This word will be emphasized in strings such as \"Click and Scroll %@\". For the emphasis to work, make sure that spelling and capitalization matches *exactly* with how this word is used in the strings whose keys begin with \"trigger.substring.scroll.[...]\"",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -13713,7 +13713,7 @@
       }
     },
     "type-shortcut-prompt" : {
-      "comment" : "First draft: Type a Keyboard Shortcut",
+      "comment" : "",
       "localizations" : {
         "de" : {
           "stringUnit" : {

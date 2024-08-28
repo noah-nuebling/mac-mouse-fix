@@ -58,7 +58,7 @@ AuthorizeAccessibilityView *_accViewController;
     [super viewDidLoad];
     
     if (@available(macOS 13.0, *)) { } else {
-        self.openSettingsLink.stringValue = NSLocalizedString(@"accessibility.settings-link.pre-ventura", @"First draft: Open 'Security & Privacy' Preferences || Note: 'System Preferences' were renamed to 'System Settings' in macOS Ventura. The string for Ventura and later is defined in another file. Note 2: This is one of the steps recommended to the user to 'Grant Accessibility Access to Mac Mouse Fix'. All the related strings have keys that start with 'accessiblity.'");
+        self.openSettingsLink.stringValue = NSLocalizedString(@"accessibility.settings-link.pre-ventura", @"Note: 'System Preferences' were renamed to 'System Settings' in macOS Ventura. The string for Ventura and later is defined in another file. Note 2: This is one of the steps recommended to the user to 'Grant Accessibility Access to Mac Mouse Fix'. All the related strings have keys that start with 'accessiblity.'");
     }
 }
 

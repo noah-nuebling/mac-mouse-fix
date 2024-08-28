@@ -12,7 +12,7 @@ import Foundation
 @objc class LicenseToasts: NSObject {
     
     @objc static func showDeactivationToast() {
-        let messageRaw = NSLocalizedString("license-toast.deactivate", comment: "First draft: Your license has been **deactivated**")
+        let messageRaw = NSLocalizedString("license-toast.deactivate", comment: "")
         let message = NSAttributedString(coolMarkdown: messageRaw)!
         ToastController.attachNotification(withMessage: message, to: MainAppState.shared.frontMostWindowOrSheet!, forDuration: kMFToastDurationAutomatic)
     }
@@ -25,13 +25,13 @@ import Foundation
         if licenseReason == kMFLicenseReasonValidLicense {
             
             if userDidChangeLicenseKey {
-                message = NSLocalizedString("license-toast.activate", comment: "First draft: Your license has been **activated**! 🎉")
+                message = NSLocalizedString("license-toast.activate", comment: "")
             } else {
-                message = NSLocalizedString("license-toast.already-active", comment: "First draft: This license is **already activated**!")
+                message = NSLocalizedString("license-toast.already-active", comment: "")
             }
             
         } else if licenseReason == kMFLicenseReasonFreeCountry {
-            message = NSLocalizedString("license-toast.free-country", comment: "First draft: This license **could not be activated** but Mac Mouse Fix is currently **free in your country**!")
+            message = NSLocalizedString("license-toast.free-country", comment: "")
         } else if licenseReason == kMFLicenseReasonForce {
             message = "FORCE_LICENSED flag is active"
         } else {
@@ -49,7 +49,7 @@ import Foundation
         if let error = error {
             
             if error.domain == NSURLErrorDomain {
-                message = NSLocalizedString("license-toast.no-internet", comment: "First draft: **There is no connection to the internet**\n\nTry activating your license again when your computer is online.")
+                message = NSLocalizedString("license-toast.no-internet", comment: "")
             } else if error.domain == MFLicenseErrorDomain {
                 
                 switch Int32(error.code) {
@@ -58,7 +58,7 @@ import Foundation
                     
                     let nOfActivations = error.userInfo["nOfActivations"] as! Int
                     let maxActivations = error.userInfo["maxActivations"] as! Int
-                    let messageFormat = NSLocalizedString("license-toast.activation-overload", comment: "First draft: This license has been activated **%d** times. The maximum is **%d**.\n\nBecause of this, the license has been invalidated. This is to prevent piracy. If you have other reasons for activating the license this many times, please excuse the inconvenience.\n\nJust [reach out](mailto:noah.n.public@gmail.com) and I will provide you with a new license! Thanks for understanding.")
+                    let messageFormat = NSLocalizedString("license-toast.activation-overload", comment: "")
                     message = String(format: messageFormat, nOfActivations, maxActivations)
                     
                 case kMFLicenseErrorCodeGumroadServerResponseError:
@@ -70,10 +70,10 @@ import Foundation
                         ///     The `license-toast.unknown-key` error message used to just say `**'%@'** is not a known license key\n\nPlease try a different key` which felt a little rude or unhelpful for people who misspelled the key, or accidentally pasted/entered a newline (which I sometimes received support requests about)
                         ///     So we added the tip to remove whitespace in the error message. But then, we also made it impossible to enter any whitespace into the licenseKey textfield to begin with, so giving the tip to remove whitespace is a little unnecessary now. But I already wrote this and it sounds friendlier than just saying 'check if you misspelled' - I think? Might change this later.
                         case "That license does not exist for the provided product.":
-                            let messageFormat = NSLocalizedString("license-toast.unknown-key", comment: "First draft: **'%@'** is not a valid license key\n\nMake sure you enter your key exactly as you received it, without leading or trailing spaces, line breaks, or other extra characters.")
+                            let messageFormat = NSLocalizedString("license-toast.unknown-key", comment: "")
                             message = String(format: messageFormat, licenseKey)
                         default:
-                            let messageFormat = NSLocalizedString("license-toast.gumroad-error", comment: "First draft: **An error with the licensing server occured**\n\nIt says:\n\n%@")
+                            let messageFormat = NSLocalizedString("license-toast.gumroad-error", comment: "")
                             message = String(format: messageFormat, gumroadMessage)
                         }
                     }
@@ -83,12 +83,12 @@ import Foundation
                 }
                 
             } else {
-                let messageFormat = NSLocalizedString("license-toast.unknown-error", comment: "First draft: **An unknown error occurred:**\n\n%@")
+                let messageFormat = NSLocalizedString("license-toast.unknown-error", comment: "")
                 message = String(format: messageFormat, error.description)
             }
             
         } else {
-            message = NSLocalizedString("license-toast.unknown-reason", comment: "First draft: Activating your license failed for **unknown reasons**\n\nPlease write a **Bug Report** [here](https://noah-nuebling.github.io/mac-mouse-fix-feedback-assistant/?type=bug-report)")
+            message = NSLocalizedString("license-toast.unknown-reason", comment: "")
         }
         
         assert(message != "")

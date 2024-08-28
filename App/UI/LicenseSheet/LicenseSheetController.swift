@@ -166,7 +166,7 @@ import Cocoa
         let isEmpty = key.isEmpty
         let isDifferent = key != initialKey
         
-        activateLicenseButton.title = NSLocalizedString("license-button.activate", comment: "First draft: Activate License")
+        activateLicenseButton.title = NSLocalizedString("license-button.activate", comment: "")
         activateLicenseButton.isEnabled = true
         activateLicenseButton.bezelColor = nil
         activateLicenseButton.keyEquivalent = "\r"
@@ -175,7 +175,7 @@ import Cocoa
             if !isDifferent {
                 activateLicenseButton.isEnabled = false
             } else {
-                activateLicenseButton.title = NSLocalizedString("license-button.deactivate", comment: "First draft: Deactivate License")
+                activateLicenseButton.title = NSLocalizedString("license-button.deactivate", comment: "")
                 activateLicenseButton.bezelColor = .systemRed
                 activateLicenseButton.keyEquivalent = ""
             }

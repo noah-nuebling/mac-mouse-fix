@@ -253,18 +253,18 @@ static NSString *getLocalizedString(MFCapturedInputType inputType, NSString *sim
             @"uncaptured.body": NSLocalizedString(@"capture-toast.buttons.uncaptured.body", @"Note: This is a 'pluralizable' string || First draft - One: %@ is no longer captured by Mac Mouse Fix. || First draft - Other: %@ are no longer captured by Mac Mouse Fix."),
             @"uncaptured.hint": NSLocalizedString(@"capture-toast.buttons.uncaptured.hint", @"Note: This is a 'pluralizable' string || First draft - One: The button now works as if Mac Mouse Fix was disabled. || First draft - Other: These buttons now work as if Mac Mouse Fix was disabled."),
             
-            @"link": NSLocalizedString(@"capture-toast.buttons.link", @"First draft: [Learn More](https://github.com/noah-nuebling/mac-mouse-fix/discussions/112)"),
+            @"link": NSLocalizedString(@"capture-toast.buttons.link", @""),
         };
     } else if (inputType == kMFCapturedInputTypeScroll) {
         map = @{
             
-            @"captured.body": NSLocalizedString(@"capture-toast.scroll.captured.body", @"First draft: **Scrolling** is now captured by Mac Mouse Fix."),
-            @"captured.hint": @"", /// NSLocalizedString(@"capture-toast.scroll.captured.hint", @"First draft: "),
+            @"captured.body": NSLocalizedString(@"capture-toast.scroll.captured.body", @""),
+            @"captured.hint": @"", /// NSLocalizedString(@"capture-toast.scroll.captured.hint", @""),
             
-            @"uncaptured.body": NSLocalizedString(@"capture-toast.scroll.uncaptured.body", @"First draft: **Scrolling** is no longer captured by Mac Mouse Fix."),
-            @"uncaptured.hint": NSLocalizedString(@"capture-toast.scroll.uncaptured.hint", @"First draft: Scrolling now works as if Mac Mouse Fix was disabled."),
+            @"uncaptured.body": NSLocalizedString(@"capture-toast.scroll.uncaptured.body", @""),
+            @"uncaptured.hint": NSLocalizedString(@"capture-toast.scroll.uncaptured.hint", @""),
             
-            @"link": NSLocalizedString(@"capture-toast.scroll.link", @"First draft: [Learn More](https://github.com/noah-nuebling/mac-mouse-fix/discussions/112)"),
+            @"link": NSLocalizedString(@"capture-toast.scroll.link", @""),
         };
     } else {
         assert(false); /// We haven't implemented the other inputTypes, yet.

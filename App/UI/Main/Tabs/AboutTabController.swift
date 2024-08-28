@@ -40,11 +40,11 @@ class AboutTabController: NSViewController {
         
         let alert = NSAlert()
         alert.alertStyle = .informational
-        alert.messageText = NSLocalizedString("mail-alert.title", comment: "First draft: Write an Email?")
-        alert.informativeText = NSLocalizedString("mail-alert.body", comment: "First draft: I read and appreciate all emails, even though I can't respond to all")
+        alert.messageText = NSLocalizedString("mail-alert.title", comment: "")
+        alert.informativeText = NSLocalizedString("mail-alert.body", comment: "")
 //        alert.showsSuppressionButton = true
-        let sendButton = alert.addButton(withTitle: NSLocalizedString("mail-alert.send", comment: "First draft: Write Email"))
-        let backButton = alert.addButton(withTitle: NSLocalizedString("mail-alert.back", comment: "First draft: Back"))
+        let sendButton = alert.addButton(withTitle: NSLocalizedString("mail-alert.send", comment: ""))
+        let backButton = alert.addButton(withTitle: NSLocalizedString("mail-alert.back", comment: ""))
         sendButton.keyEquivalent = IBUtility.keyChar(forLiteral: "return")
         backButton.keyEquivalent = IBUtility.keyChar(forLiteral: "escape")
         
@@ -89,7 +89,7 @@ class AboutTabController: NSViewController {
         ///     (Note: Don't use NSLocalizedStringggg real name in comments or BartyCrouch gets confused.)
         ///  - We're handling the case that the `app-version` key doesn't exist here, because we're adding the version-format stuff right before the 3.0.0 release, and the Korean and Chinese translations don't contain the 'app-version' key, yet.
         
-        let versionFormat = NSLocalizedString("app-version", comment: "First draft: Version %@ || Note: %@ will be replaced by the app version, e.g. '3.0.0 (22027)'")
+        let versionFormat = NSLocalizedString("app-version", comment: "Note: %@ will be replaced by the app version, e.g. '3.0.0 (22027)'")
         let versionFormatExists = versionFormat.count != 0 && versionFormat != "app-version"
         let versionNumbers = "\(Locator.bundleVersionShort()) (\(Locator.bundleVersion()))"
         versionField.stringValue = versionFormatExists ? String(format: versionFormat, versionNumbers) : versionNumbers
@@ -215,7 +215,7 @@ class AboutTabController: NSViewController {
                 
                 let countryString = String(format: "%@ %@", countryName, flag)
                 
-                message = String(format: NSLocalizedString("free-country", comment: "First draft: Mac Mouse Fix is currently free in your country (%@)"), countryString)
+                message = String(format: NSLocalizedString("free-country", comment: ""), countryString)
                 
             case kMFLicenseReasonForce:
                 message = "The app will appear to be licensed due to the FORCE_LICENSED flag"
@@ -230,37 +230,37 @@ class AboutTabController: NSViewController {
                 message = Randomizer.select(from: [
                     
                     /// Common
-                    (NSLocalizedString("thanks.01", comment: "First draft: ⭐️ Thank you for buying Mac Mouse Fix!"), weight: 1),
-                    (NSLocalizedString("thanks.02", comment: "First draft: 🌟 Thanks for purchasing Mac Mouse Fix!"), weight: 1),
-                    (NSLocalizedString("thanks.03", comment: "First draft: 🚀 Thanks for supporting Mac Mouse Fix!"), weight: 1),
-                    (NSLocalizedString("thanks.04", comment: "First draft: 🙌 Thanks for buying Mac Mouse Fix!"), weight: 1),
+                    (NSLocalizedString("thanks.01", comment: ""), weight: 1),
+                    (NSLocalizedString("thanks.02", comment: ""), weight: 1),
+                    (NSLocalizedString("thanks.03", comment: ""), weight: 1),
+                    (NSLocalizedString("thanks.04", comment: ""), weight: 1),
                     
                     /// Rare
-                    (NSLocalizedString("thanks.05", comment: "First draft: 🧠 Great purchasing decision! ;)"), weight: 0.1),
-                    (NSLocalizedString("thanks.06", comment: "First draft: 🔥 Awesome taste in mouse fixing software! ;)"), weight: 0.1),
-                    (NSLocalizedString("thanks.07", comment: "First draft: 💙"), weight: 0.1),
-                    (NSLocalizedString("thanks.08", comment: "First draft: :) <- My face when I saw you bought Mac Mouse Fix"), weight: 0.1),
+                    (NSLocalizedString("thanks.05", comment: ""), weight: 0.1),
+                    (NSLocalizedString("thanks.06", comment: ""), weight: 0.1),
+                    (NSLocalizedString("thanks.07", comment: ""), weight: 0.1),
+                    (NSLocalizedString("thanks.08", comment: ""), weight: 0.1),
                     
                     /// Very rare
-                    (NSLocalizedString("thanks.09", comment: "First draft: 👽 Share it with your Spacebook friends!"), weight: 0.05),
+                    (NSLocalizedString("thanks.09", comment: ""), weight: 0.05),
                     
                     /// Extremely rare
-                    (NSLocalizedString("thanks.10", comment: "First draft: 🏂 Duckgang for life!! || Note: The weird ones are really rare. Feel free to change them to anything you feel like to leave a little easter egg!"), weight: 0.01),
-                    (NSLocalizedString("thanks.11", comment: "First draft: 🚜 Watch where you're going :P"), weight: 0.01),
-                    (NSLocalizedString("thanks.12", comment: "First draft: 🐁 Not these mice, mom!"), weight: 0.01),
-                    (NSLocalizedString("thanks.13", comment: "First draft: 🐹 We should get him a bow tie."), weight: 0.01),
-                    (NSLocalizedString("thanks.14", comment: "First draft: 🇹🇷 Ey Kanka, tebrikler tebrikler!"), weight: 0.01),
-                    (NSLocalizedString("thanks.15", comment: "First draft: 🥛 Whole milk of course! It's your birthday after all."), weight: 0.01),
-                    (NSLocalizedString("thanks.16", comment: "First draft: 🎸 Not John Mayer (yet). Nevertheless mayor of hearts."), weight: 0.01),
-                    (NSLocalizedString("thanks.17", comment: "First draft: 💃 1NEIN8NEIN"), weight: 0.01),
-                    (NSLocalizedString("thanks.18", comment: "First draft: 🦄 You may not want to save the world, but you're already saving mine :)"), weight: 0.01),
-                    (NSLocalizedString("thanks.19", comment: "First draft: 🏜️ Dankeschön, meine Frau..."), weight: 0.01),
-                    (NSLocalizedString("thanks.20", comment: "First draft: 🌍 Universal Studios is probably not that great anyways... :)"), weight: 0.01),
-                    (NSLocalizedString("thanks.21", comment: "First draft: 🐠 What... are... you?"), weight: 0.01),
-                    (NSLocalizedString("thanks.22", comment: "First draft: 🖤"), weight: 0.01),
-                    (NSLocalizedString("thanks.23", comment: "First draft: 🤍"), weight: 0.01),
-                    (NSLocalizedString("thanks.24", comment: "First draft: 😎 Oh you're using Mac Mouse Fix? You must be pretty cool."), weight: 0.01),
-                    (NSLocalizedString("thanks.25", comment: "First draft: 🌏 First the mice, then the world!! >:)"), weight: 0.01),
+                    (NSLocalizedString("thanks.10", comment: "Note: The weird ones are really rare. Feel free to change them to anything you feel like to leave a little easter egg!"), weight: 0.01),
+                    (NSLocalizedString("thanks.11", comment: ""), weight: 0.01),
+                    (NSLocalizedString("thanks.12", comment: ""), weight: 0.01),
+                    (NSLocalizedString("thanks.13", comment: ""), weight: 0.01),
+                    (NSLocalizedString("thanks.14", comment: ""), weight: 0.01),
+                    (NSLocalizedString("thanks.15", comment: ""), weight: 0.01),
+                    (NSLocalizedString("thanks.16", comment: ""), weight: 0.01),
+                    (NSLocalizedString("thanks.17", comment: ""), weight: 0.01),
+                    (NSLocalizedString("thanks.18", comment: ""), weight: 0.01),
+                    (NSLocalizedString("thanks.19", comment: ""), weight: 0.01),
+                    (NSLocalizedString("thanks.20", comment: ""), weight: 0.01),
+                    (NSLocalizedString("thanks.21", comment: ""), weight: 0.01),
+                    (NSLocalizedString("thanks.22", comment: ""), weight: 0.01),
+                    (NSLocalizedString("thanks.23", comment: ""), weight: 0.01),
+                    (NSLocalizedString("thanks.24", comment: ""), weight: 0.01),
+                    (NSLocalizedString("thanks.25", comment: ""), weight: 0.01),
                     
                     /// Mom
                     ("💖❤️❤️❤️ Für Beate :)", weight: 0.005),
