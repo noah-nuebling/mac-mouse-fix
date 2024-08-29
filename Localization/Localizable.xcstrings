@@ -2466,12 +2466,6 @@
               "formatSpecifier" : "d",
               "variations" : {
                 "plural" : {
-                  "one" : {
-                    "stringUnit" : {
-                      "state" : "needs_review",
-                      "value" : "%@ đã được ghi nhận bởi Mac Mouse Fix."
-                    }
-                  },
                   "other" : {
                     "stringUnit" : {
                       "state" : "needs_review",
@@ -2725,12 +2719,6 @@
               "formatSpecifier" : "d",
               "variations" : {
                 "plural" : {
-                  "one" : {
-                    "stringUnit" : {
-                      "state" : "needs_review",
-                      "value" : ""
-                    }
-                  },
                   "other" : {
                     "stringUnit" : {
                       "state" : "needs_review",
@@ -2753,12 +2741,6 @@
               "formatSpecifier" : "d",
               "variations" : {
                 "plural" : {
-                  "one" : {
-                    "stringUnit" : {
-                      "state" : "needs_review",
-                      "value" : ""
-                    }
-                  },
                   "other" : {
                     "stringUnit" : {
                       "state" : "needs_review",
@@ -2781,12 +2763,6 @@
               "formatSpecifier" : "d",
               "variations" : {
                 "plural" : {
-                  "one" : {
-                    "stringUnit" : {
-                      "state" : "needs_review",
-                      "value" : ""
-                    }
-                  },
                   "other" : {
                     "stringUnit" : {
                       "state" : "needs_review",
@@ -2809,12 +2785,6 @@
               "formatSpecifier" : "d",
               "variations" : {
                 "plural" : {
-                  "one" : {
-                    "stringUnit" : {
-                      "state" : "needs_review",
-                      "value" : ""
-                    }
-                  },
                   "other" : {
                     "stringUnit" : {
                       "state" : "needs_review",
@@ -3068,12 +3038,6 @@
               "formatSpecifier" : "d",
               "variations" : {
                 "plural" : {
-                  "one" : {
-                    "stringUnit" : {
-                      "state" : "needs_review",
-                      "value" : "%@ không còn ghi nhận bởi Mac Mouse Fix."
-                    }
-                  },
                   "other" : {
                     "stringUnit" : {
                       "state" : "needs_review",
@@ -3250,12 +3214,6 @@
               "formatSpecifier" : "d",
               "variations" : {
                 "plural" : {
-                  "one" : {
-                    "stringUnit" : {
-                      "state" : "needs_review",
-                      "value" : ""
-                    }
-                  },
                   "other" : {
                     "stringUnit" : {
                       "state" : "needs_review",
@@ -3334,12 +3292,6 @@
               "formatSpecifier" : "d",
               "variations" : {
                 "plural" : {
-                  "one" : {
-                    "stringUnit" : {
-                      "state" : "needs_review",
-                      "value" : ""
-                    }
-                  },
                   "other" : {
                     "stringUnit" : {
                       "state" : "needs_review",
@@ -3362,12 +3314,6 @@
               "formatSpecifier" : "d",
               "variations" : {
                 "plural" : {
-                  "one" : {
-                    "stringUnit" : {
-                      "state" : "needs_review",
-                      "value" : ""
-                    }
-                  },
                   "other" : {
                     "stringUnit" : {
                       "state" : "needs_review",
@@ -3390,12 +3336,6 @@
               "formatSpecifier" : "d",
               "variations" : {
                 "plural" : {
-                  "one" : {
-                    "stringUnit" : {
-                      "state" : "needs_review",
-                      "value" : ""
-                    }
-                  },
                   "other" : {
                     "stringUnit" : {
                       "state" : "needs_review",
@@ -3418,12 +3358,6 @@
               "formatSpecifier" : "d",
               "variations" : {
                 "plural" : {
-                  "one" : {
-                    "stringUnit" : {
-                      "state" : "needs_review",
-                      "value" : ""
-                    }
-                  },
                   "other" : {
                     "stringUnit" : {
                       "state" : "needs_review",
