@@ -2293,15 +2293,15 @@
       }
     },
     "capture-toast.buttons.captured.body" : {
-      "comment" : "Note: This is a 'pluralizable' string, which means it has different versions depending on how many buttons the string is talking about. Click the disclosure triangle (>) edit the different versions of the string. Do not localize \"@captured\" - it's a placeholder.",
+      "comment" : "Note: This is a \"pluralizable\" string, which means it has different versions depending on how many buttons the string is talking about. Click the disclosure triangles (>) to edit the different versions of the string. Do not localize \"@pluralizable\" - it's a placeholder. || Note 2: \"%@\" will be replaced by the names of the captured buttons. Example where those buttons are \"Middle Button\" and \"Button 4\": Middle Button and Button 4 are now captured by Mac Mouse Fix.",
       "localizations" : {
         "de" : {
           "stringUnit" : {
-            "state" : "translated",
-            "value" : "%#@captured@"
+            "state" : "needs_review",
+            "value" : "%#@pluralizable@"
           },
           "substitutions" : {
-            "captured" : {
+            "pluralizable" : {
               "formatSpecifier" : "d",
               "variations" : {
                 "plural" : {
@@ -2331,10 +2331,10 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "%#@captured@"
+            "value" : "%#@pluralizable@"
           },
           "substitutions" : {
-            "captured" : {
+            "pluralizable" : {
               "formatSpecifier" : "d",
               "variations" : {
                 "plural" : {
@@ -2363,11 +2363,11 @@
         },
         "fr" : {
           "stringUnit" : {
-            "state" : "translated",
-            "value" : "%#@captured@"
+            "state" : "needs_review",
+            "value" : "%#@pluralizable@"
           },
           "substitutions" : {
-            "captured" : {
+            "pluralizable" : {
               "formatSpecifier" : "d",
               "variations" : {
                 "plural" : {
@@ -2396,11 +2396,11 @@
         },
         "ko" : {
           "stringUnit" : {
-            "state" : "translated",
-            "value" : "%#@captured@"
+            "state" : "needs_review",
+            "value" : "%#@pluralizable@"
           },
           "substitutions" : {
-            "captured" : {
+            "pluralizable" : {
               "formatSpecifier" : "d",
               "variations" : {
                 "plural" : {
@@ -2423,11 +2423,11 @@
         },
         "pt-BR" : {
           "stringUnit" : {
-            "state" : "translated",
-            "value" : "%#@captured@"
+            "state" : "needs_review",
+            "value" : "%#@pluralizable@"
           },
           "substitutions" : {
-            "captured" : {
+            "pluralizable" : {
               "formatSpecifier" : "d",
               "variations" : {
                 "plural" : {
@@ -2456,11 +2456,11 @@
         },
         "tr" : {
           "stringUnit" : {
-            "state" : "translated",
-            "value" : "%#@captured@"
+            "state" : "needs_review",
+            "value" : "%#@pluralizable@"
           },
           "substitutions" : {
-            "captured" : {
+            "pluralizable" : {
               "formatSpecifier" : "d",
               "variations" : {
                 "plural" : {
@@ -2489,11 +2489,11 @@
         },
         "vi" : {
           "stringUnit" : {
-            "state" : "translated",
-            "value" : "%#@captured@"
+            "state" : "needs_review",
+            "value" : "%#@pluralizable@"
           },
           "substitutions" : {
-            "captured" : {
+            "pluralizable" : {
               "formatSpecifier" : "d",
               "variations" : {
                 "plural" : {
@@ -2522,11 +2522,11 @@
         },
         "zh-Hans" : {
           "stringUnit" : {
-            "state" : "translated",
-            "value" : "%#@captured@"
+            "state" : "needs_review",
+            "value" : "%#@pluralizable@"
           },
           "substitutions" : {
-            "captured" : {
+            "pluralizable" : {
               "formatSpecifier" : "d",
               "variations" : {
                 "plural" : {
@@ -2549,11 +2549,11 @@
         },
         "zh-Hant" : {
           "stringUnit" : {
-            "state" : "translated",
-            "value" : "%#@captured@"
+            "state" : "needs_review",
+            "value" : "%#@pluralizable@"
           },
           "substitutions" : {
-            "captured" : {
+            "pluralizable" : {
               "formatSpecifier" : "d",
               "variations" : {
                 "plural" : {
@@ -2576,11 +2576,11 @@
         },
         "zh-HK" : {
           "stringUnit" : {
-            "state" : "translated",
-            "value" : "%#@captured@"
+            "state" : "needs_review",
+            "value" : "%#@pluralizable@"
           },
           "substitutions" : {
-            "captured" : {
+            "pluralizable" : {
               "formatSpecifier" : "d",
               "variations" : {
                 "plural" : {
@@ -2604,15 +2604,15 @@
       }
     },
     "capture-toast.buttons.captured.hint" : {
-      "comment" : "Note: The core idea that we want to convey with these ui strings is that, from now on, the button is being 'intercepted' by Mac Mouse Fix. We used the word 'capture' instead of 'intercept' since it sounds friendlier in English. In your language, you might want to use something closer to 'intercept'.",
+      "comment" : "Note: The core idea that we want to convey with these ui strings is that, from now on, the button is being 'intercepted' by Mac Mouse Fix. We used the word 'capture' instead of 'intercept' since I think it sounds nicer in English. In your language, you might want to use something closer to 'intercept'.",
       "localizations" : {
         "de" : {
           "stringUnit" : {
-            "state" : "translated",
-            "value" : "%#@hint@"
+            "state" : "needs_review",
+            "value" : "%#@pluralizable@"
           },
           "substitutions" : {
-            "hint" : {
+            "pluralizable" : {
               "formatSpecifier" : "d",
               "variations" : {
                 "plural" : {
@@ -2642,10 +2642,10 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "%#@hint@"
+            "value" : "%#@pluralizable@"
           },
           "substitutions" : {
-            "hint" : {
+            "pluralizable" : {
               "formatSpecifier" : "d",
               "variations" : {
                 "plural" : {
@@ -2675,10 +2675,10 @@
         "fr" : {
           "stringUnit" : {
             "state" : "new",
-            "value" : "%#@hint@"
+            "value" : "%#@pluralizable@"
           },
           "substitutions" : {
-            "hint" : {
+            "pluralizable" : {
               "formatSpecifier" : "d",
               "variations" : {
                 "plural" : {
@@ -2708,10 +2708,10 @@
         "ko" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "%#@hint@"
+            "value" : "%#@pluralizable@"
           },
           "substitutions" : {
-            "hint" : {
+            "pluralizable" : {
               "formatSpecifier" : "d",
               "variations" : {
                 "plural" : {
@@ -2735,10 +2735,10 @@
         "pt-BR" : {
           "stringUnit" : {
             "state" : "new",
-            "value" : "%#@hint@"
+            "value" : "%#@pluralizable@"
           },
           "substitutions" : {
-            "hint" : {
+            "pluralizable" : {
               "formatSpecifier" : "d",
               "variations" : {
                 "plural" : {
@@ -2768,10 +2768,10 @@
         "tr" : {
           "stringUnit" : {
             "state" : "new",
-            "value" : "%#@hint@"
+            "value" : "%#@pluralizable@"
           },
           "substitutions" : {
-            "hint" : {
+            "pluralizable" : {
               "formatSpecifier" : "d",
               "variations" : {
                 "plural" : {
@@ -2801,10 +2801,10 @@
         "vi" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "%#@hint@"
+            "value" : "%#@pluralizable@"
           },
           "substitutions" : {
-            "hint" : {
+            "pluralizable" : {
               "formatSpecifier" : "d",
               "variations" : {
                 "plural" : {
@@ -2834,10 +2834,10 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "%#@hint@"
+            "value" : "%#@pluralizable@"
           },
           "substitutions" : {
-            "hint" : {
+            "pluralizable" : {
               "formatSpecifier" : "d",
               "variations" : {
                 "plural" : {
@@ -2867,10 +2867,10 @@
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "%#@hint@"
+            "value" : "%#@pluralizable@"
           },
           "substitutions" : {
-            "hint" : {
+            "pluralizable" : {
               "formatSpecifier" : "d",
               "variations" : {
                 "plural" : {
@@ -2900,10 +2900,10 @@
         "zh-HK" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "%#@hint@"
+            "value" : "%#@pluralizable@"
           },
           "substitutions" : {
-            "hint" : {
+            "pluralizable" : {
               "formatSpecifier" : "d",
               "variations" : {
                 "plural" : {
@@ -2998,15 +2998,15 @@
       }
     },
     "capture-toast.buttons.uncaptured.body" : {
-      "comment" : "Note: %@ will be replaced by the names of the no-longer-captured buttons. Example those buttons are 'Middle Button' and 'Button 4': Middle Button and Button 4 are no longer captured by Mac Mouse Fix.",
+      "comment" : ".",
       "localizations" : {
         "de" : {
           "stringUnit" : {
-            "state" : "translated",
-            "value" : "%#@uncaptured@"
+            "state" : "needs_review",
+            "value" : "%#@pluralizable@"
           },
           "substitutions" : {
-            "uncaptured" : {
+            "pluralizable" : {
               "formatSpecifier" : "d",
               "variations" : {
                 "plural" : {
@@ -3036,10 +3036,10 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "%#@uncaptured@"
+            "value" : "%#@pluralizable@"
           },
           "substitutions" : {
-            "uncaptured" : {
+            "pluralizable" : {
               "formatSpecifier" : "d",
               "variations" : {
                 "plural" : {
@@ -3068,11 +3068,11 @@
         },
         "fr" : {
           "stringUnit" : {
-            "state" : "translated",
-            "value" : "%#@uncaptured@"
+            "state" : "needs_review",
+            "value" : "%#@pluralizable@"
           },
           "substitutions" : {
-            "uncaptured" : {
+            "pluralizable" : {
               "formatSpecifier" : "d",
               "variations" : {
                 "plural" : {
@@ -3101,11 +3101,11 @@
         },
         "ko" : {
           "stringUnit" : {
-            "state" : "translated",
-            "value" : "%#@uncaptured@"
+            "state" : "needs_review",
+            "value" : "%#@pluralizable@"
           },
           "substitutions" : {
-            "uncaptured" : {
+            "pluralizable" : {
               "formatSpecifier" : "d",
               "variations" : {
                 "plural" : {
@@ -3128,11 +3128,11 @@
         },
         "pt-BR" : {
           "stringUnit" : {
-            "state" : "translated",
-            "value" : "%#@uncaptured@"
+            "state" : "needs_review",
+            "value" : "%#@pluralizable@"
           },
           "substitutions" : {
-            "uncaptured" : {
+            "pluralizable" : {
               "formatSpecifier" : "d",
               "variations" : {
                 "plural" : {
@@ -3161,11 +3161,11 @@
         },
         "tr" : {
           "stringUnit" : {
-            "state" : "translated",
-            "value" : "%#@uncaptured@"
+            "state" : "needs_review",
+            "value" : "%#@pluralizable@"
           },
           "substitutions" : {
-            "uncaptured" : {
+            "pluralizable" : {
               "formatSpecifier" : "d",
               "variations" : {
                 "plural" : {
@@ -3194,11 +3194,11 @@
         },
         "vi" : {
           "stringUnit" : {
-            "state" : "translated",
-            "value" : "%#@uncaptured@"
+            "state" : "needs_review",
+            "value" : "%#@pluralizable@"
           },
           "substitutions" : {
-            "uncaptured" : {
+            "pluralizable" : {
               "formatSpecifier" : "d",
               "variations" : {
                 "plural" : {
@@ -3227,11 +3227,11 @@
         },
         "zh-Hans" : {
           "stringUnit" : {
-            "state" : "translated",
-            "value" : "%#@uncaptured@"
+            "state" : "needs_review",
+            "value" : "%#@pluralizable@"
           },
           "substitutions" : {
-            "uncaptured" : {
+            "pluralizable" : {
               "formatSpecifier" : "d",
               "variations" : {
                 "plural" : {
@@ -3254,11 +3254,11 @@
         },
         "zh-Hant" : {
           "stringUnit" : {
-            "state" : "translated",
-            "value" : "%#@uncaptured@"
+            "state" : "needs_review",
+            "value" : "%#@pluralizable@"
           },
           "substitutions" : {
-            "uncaptured" : {
+            "pluralizable" : {
               "formatSpecifier" : "d",
               "variations" : {
                 "plural" : {
@@ -3281,11 +3281,11 @@
         },
         "zh-HK" : {
           "stringUnit" : {
-            "state" : "translated",
-            "value" : "%#@uncaptured@"
+            "state" : "needs_review",
+            "value" : "%#@pluralizable@"
           },
           "substitutions" : {
-            "uncaptured" : {
+            "pluralizable" : {
               "formatSpecifier" : "d",
               "variations" : {
                 "plural" : {
@@ -3309,15 +3309,15 @@
       }
     },
     "capture-toast.buttons.uncaptured.hint" : {
-      "comment" : " ",
+      "comment" : ".",
       "localizations" : {
         "de" : {
           "stringUnit" : {
-            "state" : "translated",
-            "value" : "%#@hint@"
+            "state" : "needs_review",
+            "value" : "%#@pluralizable@"
           },
           "substitutions" : {
-            "hint" : {
+            "pluralizable" : {
               "formatSpecifier" : "d",
               "variations" : {
                 "plural" : {
@@ -3347,10 +3347,10 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "%#@hint@"
+            "value" : "%#@pluralizable@"
           },
           "substitutions" : {
-            "hint" : {
+            "pluralizable" : {
               "formatSpecifier" : "d",
               "variations" : {
                 "plural" : {
@@ -3380,10 +3380,10 @@
         "fr" : {
           "stringUnit" : {
             "state" : "new",
-            "value" : "%#@hint@"
+            "value" : "%#@pluralizable@"
           },
           "substitutions" : {
-            "hint" : {
+            "pluralizable" : {
               "formatSpecifier" : "d",
               "variations" : {
                 "plural" : {
@@ -3413,10 +3413,10 @@
         "ko" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "%#@hint@"
+            "value" : "%#@pluralizable@"
           },
           "substitutions" : {
-            "hint" : {
+            "pluralizable" : {
               "formatSpecifier" : "d",
               "variations" : {
                 "plural" : {
@@ -3445,11 +3445,11 @@
         },
         "pt-BR" : {
           "stringUnit" : {
-            "state" : "translated",
-            "value" : "%#@hint@"
+            "state" : "needs_review",
+            "value" : "%#@pluralizable@"
           },
           "substitutions" : {
-            "hint" : {
+            "pluralizable" : {
               "formatSpecifier" : "d",
               "variations" : {
                 "plural" : {
@@ -3479,10 +3479,10 @@
         "tr" : {
           "stringUnit" : {
             "state" : "new",
-            "value" : "%#@hint@"
+            "value" : "%#@pluralizable@"
           },
           "substitutions" : {
-            "hint" : {
+            "pluralizable" : {
               "formatSpecifier" : "d",
               "variations" : {
                 "plural" : {
@@ -3512,10 +3512,10 @@
         "vi" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "%#@hint@"
+            "value" : "%#@pluralizable@"
           },
           "substitutions" : {
-            "hint" : {
+            "pluralizable" : {
               "formatSpecifier" : "d",
               "variations" : {
                 "plural" : {
@@ -3545,10 +3545,10 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "%#@hint@"
+            "value" : "%#@pluralizable@"
           },
           "substitutions" : {
-            "hint" : {
+            "pluralizable" : {
               "formatSpecifier" : "d",
               "variations" : {
                 "plural" : {
@@ -3578,10 +3578,10 @@
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "%#@hint@"
+            "value" : "%#@pluralizable@"
           },
           "substitutions" : {
-            "hint" : {
+            "pluralizable" : {
               "formatSpecifier" : "d",
               "variations" : {
                 "plural" : {
@@ -3611,10 +3611,10 @@
         "zh-HK" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "%#@hint@"
+            "value" : "%#@pluralizable@"
           },
           "substitutions" : {
-            "hint" : {
+            "pluralizable" : {
               "formatSpecifier" : "d",
               "variations" : {
                 "plural" : {
