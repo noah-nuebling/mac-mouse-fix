@@ -72,7 +72,7 @@ import Foundation
         var hint: CoolNSTextField? = nil
         if let nOfButtons = nOfButtons {
             
-            let hintStringRaw = String(format: NSLocalizedString("restore-buttons-alert.hint", comment: "Note: '%@' will be replaced with a name for the mouse, such as 'Logitech M720 Triathlon'"), name!, nOfButtons)
+            let hintStringRaw = String(format: NSLocalizedString("restore-buttons-alert.hint", comment: "Note: '%@' will be the name of the mouse, such as 'Logitech M720 Triathlon'"), name!, nOfButtons)
             
 //            let hintString = NSAttributedString(coolMarkdown: hintStringRaw)?.settingSecondaryLabelColor(forSubstring: nil).settingFontSize(NSFont.smallSystemFontSize).aligningSubstring(nil, alignment: .center).trimmingWhitespace()
             let hintString = NSAttributedString(coolMarkdown: hintStringRaw)?.adding(.secondaryLabelColor, for: nil).settingFontSize(NSFont.smallSystemFontSize).adding(.center, for: nil).trimmingWhitespace()

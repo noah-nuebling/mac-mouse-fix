@@ -25,7 +25,7 @@ import Foundation
             /// - Why are we dispatching `k-is-disabled-toast` to the main thread by not this? (They are called from almost the same place)
             
             if let window = NSApp.mainWindow {
-                let rawMessage = NSLocalizedString("enable-timeout-toast", comment: "Note: The nbsp part inserts a non-breaking-space character, which prevents the last word from being orphaned on the last line. &nbsp; is an \"HTML Character Entity\".")
+                let rawMessage = NSLocalizedString("enable-timeout-toast", comment: "Note: The \"&nbsp;\" part inserts a non-breaking-space character, which prevents the last word from being orphaned on the last line. \"&nbsp;\" is a so called \"HTML Character Entity\".")
                 ToastController.attachNotification(withMessage: NSMutableAttributedString(coolMarkdown: rawMessage)!, to: window, forDuration: 10.0)
                 
             }
@@ -43,7 +43,7 @@ import Foundation
     ]
     static let simpleToastMap_Buttons = [
         "k-forbidden-capture-toast.1": {
-            let messageRaw = NSLocalizedString("forbidden-capture-toast.1", comment: "")
+            let messageRaw = NSLocalizedString("forbidden-capture-toast.1", comment: "Note: This message shows when the user tries to assign an action to the primary mouse button (aka left click) inside Mac Mouse Fix.")
             let message = NSAttributedString(coolMarkdown: messageRaw)!;
             ToastController.attachNotification(withMessage: message, to: MainAppState.shared.window!, forDuration: kMFToastDurationAutomatic)
         },
@@ -100,7 +100,7 @@ import Foundation
         /// Get revived-features string
         var revivedFeaturesList: [String] = []
         if showButtons {
-            revivedFeaturesList.append(NSLocalizedString("revive-toast.feature-buttons", comment: "Note: Will be inserted into the revive-toast"))
+            revivedFeaturesList.append(NSLocalizedString("revive-toast.feature-buttons", comment: "Note: This string will be inserted into the \"revive-toast\" message"))
         }
         if showScroll {
             revivedFeaturesList.append(NSLocalizedString("revive-toast.feature-scrolling", comment: ""))
@@ -108,7 +108,7 @@ import Foundation
         let revivedFeatures = UIStrings.naturalLanguageList(fromStringArray: revivedFeaturesList)
         
         /// Build message string
-        let messageRaw = String(format: NSLocalizedString("revive-toast", comment: "Note: %1@ will be replaced by the list of enabled features, %2@ will be replaced by the menubar icon || Note: The described feature lets you disable Mac Mouse Fix's effect on your mouse-buttons/scroll-wheel directly from the menubar. This is to help people use apps that are incompatible with Mac Mouse Fix. In your language, it may make sense to use a different translation for 'enable' in this context than in the context of the 'Enable Mac Mouse Fix' switch. It's up to your own best judgement."), revivedFeatures, "%@")
+        let messageRaw = String(format: NSLocalizedString("revive-toast", comment: "Note: %1@ will be the list of enabled features, %2@ will be the menubar icon || Note: The described feature lets you disable Mac Mouse Fix's effect on your mouse-buttons/scroll-wheel directly from the menubar. This is to help people use apps that are incompatible with Mac Mouse Fix. In your language, it may make sense to use a different translation for 'enable' in this context than in the context of the 'Enable Mac Mouse Fix' switch."), revivedFeatures, "%@")
         var message = NSAttributedString(coolMarkdown: messageRaw)!
         let symbolString = SFSymbolStrings.string(withSymbolName: "CoolMenuBarIcon", stringFallback: "<Mac Mouse Fix Menu Bar Item>", font: ToastController.defaultFont()) ///NSAttributedString(symbol: "CoolMenuBarIcon", hPadding: 0.0, vOffset: -6, fallback: "<Mac Mouse Fix Menu Bar Item>")
         message = NSAttributedString(attributedFormat: message, args: [symbolString])

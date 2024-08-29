@@ -191,7 +191,7 @@
       }
     },
     "app-version" : {
-      "comment" : "Note: %@ will be replaced by the app version, e.g. '3.0.0 (22027)'",
+      "comment" : "Note: %@ will be the app version, e.g. '3.0.0 (22027)'",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -2317,7 +2317,7 @@
       }
     },
     "capture-toast.buttons.captured.body" : {
-      "comment" : "Note: This is a \"pluralizable\" string, which means it has different versions depending on how many buttons the string is talking about. Click the disclosure triangles (>) to edit the different versions of the string. Do not localize \"@pluralizable\" - it's a placeholder. || Note 2: \"%@\" will be replaced by the names of the captured buttons. Example where those buttons are \"Middle Button\" and \"Button 4\": Middle Button and Button 4 are now captured by Mac Mouse Fix.",
+      "comment" : "Note: This is a \"pluralizable\" string, which means it has different versions depending on how many buttons the string is talking about. Click the disclosure triangles (>) to edit the different versions of the string. Do not localize \"@pluralizable\" - it's a placeholder. || Note 2: \"%@\" will be the names of the captured buttons. Example where those buttons are \"Middle Button\" and \"Button 4\": Middle Button and Button 4 are now captured by Mac Mouse Fix.",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -3876,7 +3876,7 @@
       }
     },
     "effect.app-expose" : {
-      "comment" : "Note: Under macOS Sonoma, this feature is called 'App Exposé' in trackpad settings, but 'Application Windows' in Keyboard Shortcut settings, and other places I found. I also saw 'Show all windows of the front app' and 'Show all open windows for the current app' in Apple's documentation. I went with 'Application Windows' because it's short and 'Exposé' felt like like an outdated term. If you have to make a similar decision, it's up to your own best judgement.",
+      "comment" : "Note: Under macOS Sonoma, this feature is called 'App Exposé' in trackpad settings, but 'Application Windows' in Keyboard Shortcut settings, and other places I found. I also saw 'Show all windows of the front app' and 'Show all open windows for the current app' in Apple's documentation. I went with 'Application Windows' because it's short and 'Exposé' felt like like an outdated term.",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -5306,7 +5306,7 @@
       }
     },
     "effect.look-up.hint" : {
-      "comment" : "",
+      "comment" : "Note: 'Force click' looks a bit weirdly capitalized but it's exactly how Apple spells it on their support website.",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -5956,7 +5956,7 @@
       }
     },
     "enable-timeout-toast" : {
-      "comment" : "Note: The nbsp part inserts a non-breaking-space character, which prevents the last word from being orphaned on the last line. &nbsp; is an \"HTML Character Entity\".",
+      "comment" : "Note: The \"&nbsp;\" part inserts a non-breaking-space character, which prevents the last word from being orphaned on the last line. \"&nbsp;\" is a so called \"HTML Character Entity\".",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -6015,7 +6015,7 @@
       }
     },
     "forbidden-capture-toast.1" : {
-      "comment" : "",
+      "comment" : "Note: This message shows when the user tries to assign an action to the primary mouse button (aka left click) inside Mac Mouse Fix.",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -6470,7 +6470,7 @@
       }
     },
     "join-list.last" : {
-      "comment" : "Note: This format string joins the second-to-last element and the last elements in a list of items",
+      "comment" : "Note: This format string joins the second-to-last element and the last element in a list of items",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -8161,7 +8161,7 @@
       }
     },
     "restore-buttons-alert.hint" : {
-      "comment" : "Note: '%@' will be replaced with a name for the mouse, such as 'Logitech M720 Triathlon'",
+      "comment" : "Note: '%@' will be the name of the mouse, such as 'Logitech M720 Triathlon'",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -8486,7 +8486,7 @@
       }
     },
     "revive-toast" : {
-      "comment" : "Note: %1@ will be replaced by the list of enabled features, %2@ will be replaced by the menubar icon || Note: The described feature lets you disable Mac Mouse Fix's effect on your mouse-buttons/scroll-wheel directly from the menubar. This is to help people use apps that are incompatible with Mac Mouse Fix. In your language, it may make sense to use a different translation for 'enable' in this context than in the context of the 'Enable Mac Mouse Fix' switch. It's up to your own best judgement.",
+      "comment" : "Note: %1@ will be the list of enabled features, %2@ will be the menubar icon || Note: The described feature lets you disable Mac Mouse Fix's effect on your mouse-buttons/scroll-wheel directly from the menubar. This is to help people use apps that are incompatible with Mac Mouse Fix. In your language, it may make sense to use a different translation for 'enable' in this context than in the context of the 'Enable Mac Mouse Fix' switch.",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -8551,7 +8551,7 @@
       }
     },
     "revive-toast.feature-buttons" : {
-      "comment" : "Note: Will be inserted into the revive-toast",
+      "comment" : "Note: This string will be inserted into the \"revive-toast\" message",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -9721,7 +9721,7 @@
       }
     },
     "system-settings-name" : {
-      "comment" : "",
+      "comment" : "Note: The name of the system settings app in macOS 13 Ventura and later.",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -9786,7 +9786,7 @@
       }
     },
     "system-settings-name.pre-ventura" : {
-      "comment" : "",
+      "comment" : "Note: The name of the system settings app in macOS 12 Monterey and below.",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -11931,7 +11931,7 @@
       }
     },
     "trigger.substring.button-name.middle" : {
-      "comment" : "Remember: All the \"trigger.substring.[...]\" strings should normally be all-lowercase. For an explanation, see the comment for the key \"trigger.substring.button-modifier.2\"",
+      "comment" : ".",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -12191,7 +12191,7 @@
       }
     },
     "trigger.substring.click.1" : {
-      "comment" : "Note: \"%@\" will be replaced by a button name (or by nothing, if the button name can be inferred from context) || Example where %@ is \"Button 5\": ⌥⌘ Double Click Button 4 + Click Button 5",
+      "comment" : "Note: \"%@\" will be a button name (or nothing, if the button name can be inferred from context) || Example where %@ is \"Button 5\": ⌥⌘ Double Click Button 4 + Click Button 5",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -12646,7 +12646,7 @@
       }
     },
     "trigger.substring.hold.1" : {
-      "comment" : "Remember: All the \"trigger.substring.[...]\" strings should normally be all-lowercase. For an explanation, see the comment for the key \"trigger.substring.button-modifier.2\"",
+      "comment" : "Remember: All these strings that start with \"trigger.substring.[...]\" should be all-lowercase in most languages. For an explanation, see the comment for the key \"trigger.substring.button-modifier.2\"",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -13101,7 +13101,7 @@
       }
     },
     "trigger.y.group-row.button-name.middle" : {
-      "comment" : "Note: The trigger.y.group-row.button-name.[...] strings names are used in the Action Table as headers to group together actions which are triggered by the same button. (See the screenshots in the .xcloc file if this doesn't make sense)",
+      "comment" : "Note: The \"trigger.y.group-row.button-name.[...]\" button names are used as headers to group together actions (e.g. 'Mission Control' or 'Scroll & Navigate') which are triggered by the same button. (I hope this is understandable! If not, please let me know so I can improve this. Thank you.)",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -13166,7 +13166,7 @@
       }
     },
     "trigger.y.group-row.button-name.numbered" : {
-      "comment" : "Note: For visual consistency, capitalization of the these button-name strings should probably follow the capitalization of the trigger.substring.button-name.[...] strings. - You might want to fill those out first to figure out the capitalization, and then come back to fill out the button-names here. (This is just a guideline, if you have a specific reason to deviate it's up to your best judgement.)",
+      "comment" : "Note: For visual consistency, capitalization of the these button-name strings should probably follow the capitalization of the trigger.substring.button-name.[...] strings. - If you haven't filled those out, yet, you might want to fill them out first to figure out the capitalization, and then come back to fill out the button-names here. (This is just a guideline, if you have a specific reason to deviate it's up to your best judgement.)",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -13361,7 +13361,7 @@
       }
     },
     "trigger.z.drag-particle" : {
-      "comment" : "Note: This word will be emphasized in strings such as \"Double Click and Drag %@\". For the emphasis to work, make sure that spelling and capitalization matches *exactly* with how this word is used in strings whose keys begin with \"trigger.substring.drag.[...]\"",
+      "comment" : "Note: This word will be emphasized in strings such as \"Double Click and Drag %@\". For the emphasis to work, make sure that spelling and capitalization matches *exactly* with how this word is used in strings whose keys begin with \"trigger.substring.drag.[...]\". If this this is not possible in your language, please let me know so I can adjust the code. Thank you.",
       "localizations" : {
         "de" : {
           "stringUnit" : {

@@ -51,9 +51,9 @@
 + (NSString *)systemSettingsName {
     
     if (@available(macOS 13.0, *)) {
-        return NSLocalizedString(@"system-settings-name", @"");
+        return NSLocalizedString(@"system-settings-name", @"Note: The name of the system settings app in macOS 13 Ventura and later.");
     } else {
-        return NSLocalizedString(@"system-settings-name.pre-ventura", @"");
+        return NSLocalizedString(@"system-settings-name.pre-ventura", @"Note: The name of the system settings app in macOS 12 Monterey and below.");
     }
 }
 
@@ -76,7 +76,7 @@
         map = @{
             @1: NSLocalizedString(@"trigger.substring.button-name.primary",     @""),
             @2: NSLocalizedString(@"trigger.substring.button-name.secondary",   @""),
-            @3: NSLocalizedString(@"trigger.substring.button-name.middle",      @"Remember: All the \"trigger.substring.[...]\" strings should normally be all-lowercase. For an explanation, see the comment for the key \"trigger.substring.button-modifier.2\""),
+            @3: NSLocalizedString(@"trigger.substring.button-name.middle",      @"."),
             @-1: NSLocalizedString(@"trigger.substring.button-name.numbered",   @""), /// Note to self: Removed the old notes (see later in this line) after giving the trigger.substring. prefix to these string keys, since we're already explaining the capitalization on other `trigger.substring.[...]` comments. || Old notes: All the \"button-name.[...]\" strings should be lowercase unless there's a specific reason to capitalize some words. For example, in Vietnamese, \"Middle Button\" should be localized as \"nút giữa\". Note that not even the first letter is capitalized. That's because the button names will appear in the middle of other pieces of text, and we don't want a randomly capitalized button name in the middle of that text. In English, we capitalize because we're using \"Title Case\", but this isn't common in other languages. So for most languages, these strings should probably be all-lowercase, just like Vietnamese. Exceptions: Some languages have special capitalization rules similar to English \"Title Case\". For example, German always capitalizes all nouns, so therefore \"Middle Button\" should be localized as \"mittlere Taste\" in German. Please see the comment on \"trigger.substring.button-modifier.2\" for more info."), /// Note to self: We put the long comment on the 'numbered'-button-string since that shows up second in the .xcstrings file under alphabetic sorting. We think putting it second has the highest changes of the localizers noticing the comment. Since, if it's first, they might be busy processing "oh here's a new set of strings" /// Old note: || Note: This is capitalized in English since we use 'title case' there. In your language, 'title case' might not be a thing, and you might *not* want to capitalize this. If this string appears at the start of a line, it will be capitalized programmatically.
         };
         
@@ -85,8 +85,8 @@
         map = @{
             @1: NSLocalizedString(@"trigger.y.group-row.button-name.primary",     @""), /// The '.y.' is just used to group things in the .xcstrings file. Not sure if smart.
             @2: NSLocalizedString(@"trigger.y.group-row.button-name.secondary",   @""),
-            @3: NSLocalizedString(@"trigger.y.group-row.button-name.middle",      @"Note: The trigger.y.group-row.button-name.[...] strings names are used in the Action Table as headers to group together actions which are triggered by the same button. (See the screenshots in the .xcloc file if this doesn't make sense)"),
-            @-1: NSLocalizedString(@"trigger.y.group-row.button-name.numbered",   @"Note: For visual consistency, capitalization of the these button-name strings should probably follow the capitalization of the trigger.substring.button-name.[...] strings. - You might want to fill those out first to figure out the capitalization, and then come back to fill out the button-names here. (This is just a guideline, if you have a specific reason to deviate it's up to your best judgement.)"),
+            @3: NSLocalizedString(@"trigger.y.group-row.button-name.middle",      @"Note: The \"trigger.y.group-row.button-name.[...]\" button names are used as headers to group together actions (e.g. 'Mission Control' or 'Scroll & Navigate') which are triggered by the same button. (I hope this is understandable! If not, please let me know so I can improve this. Thank you.)"),
+            @-1: NSLocalizedString(@"trigger.y.group-row.button-name.numbered",   @"Note: For visual consistency, capitalization of the these button-name strings should probably follow the capitalization of the trigger.substring.button-name.[...] strings. - If you haven't filled those out, yet, you might want to fill them out first to figure out the capitalization, and then come back to fill out the button-names here. (This is just a guideline, if you have a specific reason to deviate it's up to your best judgement.)"),
         };
         
     } else if (context == kMFButtonStringUsageContextCaptureNotification) {
@@ -498,7 +498,7 @@ static NSMutableAttributedString *symbolStringWithModifierPrefix(NSString *modif
         NSArray *firstStrings = sa;
         
         NSString *join = NSLocalizedString(@"join-list", @"Note: This string joins elements in a list except the second-to-last and last one. || Note: The English string contains a space after the comma.");
-        NSString *joinLast = NSLocalizedString(@"join-list.last", @"Note: This format string joins the second-to-last element and the last elements in a list of items");
+        NSString *joinLast = NSLocalizedString(@"join-list.last", @"Note: This format string joins the second-to-last element and the last element in a list of items");
         
         outString = stringf(joinLast, [firstStrings componentsJoinedByString:join], lastString);
     } else {
