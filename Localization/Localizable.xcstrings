@@ -2083,6 +2083,12 @@
             "value" : "가운데 버튼"
           }
         },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Botão do Meio"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -2140,6 +2146,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "%@번 버튼"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Botão %@"
           }
         },
         "tr" : {
@@ -2201,6 +2213,12 @@
             "value" : "주 버튼"
           }
         },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Botão Primário"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -2260,6 +2278,12 @@
             "value" : "보조 버튼"
           }
         },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Botão Secundário"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -2316,8 +2340,7 @@
                       "state" : "needs_review",
                       "value" : "%@ werden jetzt von Mac Mouse Fix abgefangen."
                     }
-                  },
-                  
+                  }
                 }
               }
             }
@@ -2344,7 +2367,7 @@
                       "state" : "translated",
                       "value" : "%@ are now captured by Mac Mouse Fix."
                     }
-                  },
+                  }
                 }
               }
             }
@@ -2371,8 +2394,7 @@
                       "state" : "needs_review",
                       "value" : "%@ ont été capturés par Mac Mouse Fix."
                     }
-                  },
-                  
+                  }
                 }
               }
             }
@@ -2393,8 +2415,7 @@
                       "state" : "needs_review",
                       "value" : "%@ 은 이제 Mac Mouse Fix에서 캡처합니다."
                     }
-                  },
-                  
+                  }
                 }
               }
             }
@@ -2421,8 +2442,7 @@
                       "state" : "needs_review",
                       "value" : "%@ foram capturados pelo Mac Mouse Fix."
                     }
-                  },
-                  
+                  }
                 }
               }
             }
@@ -2449,8 +2469,7 @@
                       "state" : "new",
                       "value" : ""
                     }
-                  },
-                  
+                  }
                 }
               }
             }
@@ -2471,8 +2490,7 @@
                       "state" : "needs_review",
                       "value" : "%@ đã được ghi nhận bởi Mac Mouse Fix."
                     }
-                  },
-                  
+                  }
                 }
               }
             }
@@ -2493,8 +2511,7 @@
                       "state" : "needs_review",
                       "value" : "%@被Mac Mouse Fix捕获到。"
                     }
-                  },
-                  
+                  }
                 }
               }
             }
@@ -2515,8 +2532,7 @@
                       "state" : "needs_review",
                       "value" : "%@被Mac Mouse Fix擷取到。"
                     }
-                  },
-                  
+                  }
                 }
               }
             }
@@ -2537,8 +2553,7 @@
                       "state" : "needs_review",
                       "value" : "%@被Mac Mouse Fix截取到。"
                     }
-                  },
-                  
+                  }
                 }
               }
             }
@@ -2570,8 +2585,7 @@
                       "state" : "translated",
                       "value" : "Andere Apps können sie nicht mehr sehen."
                     }
-                  },
-                  
+                  }
                 }
               }
             }
@@ -2598,7 +2612,7 @@
                       "state" : "translated",
                       "value" : "Other apps can't see these buttons anymore."
                     }
-                  },
+                  }
                 }
               }
             }
@@ -2625,7 +2639,7 @@
                       "state" : "new",
                       "value" : ""
                     }
-                  },
+                  }
                 }
               }
             }
@@ -2646,8 +2660,7 @@
                       "state" : "needs_review",
                       "value" : "다른 앱에서는 더 이상 캡처하지 못합니다."
                     }
-                  },
-                  
+                  }
                 }
               }
             }
@@ -2674,8 +2687,7 @@
                       "state" : "needs_review",
                       "value" : "Outros aplicativos não conseguem mais vê-los."
                     }
-                  },
-                
+                  }
                 }
               }
             }
@@ -2702,8 +2714,7 @@
                       "state" : "new",
                       "value" : ""
                     }
-                  },
-                  
+                  }
                 }
               }
             }
@@ -2724,8 +2735,7 @@
                       "state" : "needs_review",
                       "value" : ""
                     }
-                  },
-                  
+                  }
                 }
               }
             }
@@ -2746,8 +2756,7 @@
                       "state" : "needs_review",
                       "value" : ""
                     }
-                  },
-                  
+                  }
                 }
               }
             }
@@ -2768,8 +2777,7 @@
                       "state" : "needs_review",
                       "value" : ""
                     }
-                  },
-                  
+                  }
                 }
               }
             }
@@ -2790,8 +2798,7 @@
                       "state" : "needs_review",
                       "value" : ""
                     }
-                  },
-                  
+                  }
                 }
               }
             }
@@ -2888,8 +2895,7 @@
                       "state" : "needs_review",
                       "value" : "%@ werden nicht länger von Mac Mouse Fix abgefangen."
                     }
-                  },
-                  
+                  }
                 }
               }
             }
@@ -2916,7 +2922,7 @@
                       "state" : "translated",
                       "value" : "%@ are no longer captured by Mac Mouse Fix."
                     }
-                  },
+                  }
                 }
               }
             }
@@ -2943,8 +2949,7 @@
                       "state" : "needs_review",
                       "value" : "%@ ne sont plus capturés par Mac Mouse Fix."
                     }
-                  },
-                  
+                  }
                 }
               }
             }
@@ -2965,8 +2970,7 @@
                       "state" : "needs_review",
                       "value" : "%@ 은 더 이상 Mac Mouse Fix에서 캡처하지 않습니다."
                     }
-                  },
-                  
+                  }
                 }
               }
             }
@@ -2993,8 +2997,7 @@
                       "state" : "needs_review",
                       "value" : "%@ não são mais capturados pelo Mac Mouse Fix."
                     }
-                  },
-                  
+                  }
                 }
               }
             }
@@ -3021,8 +3024,7 @@
                       "state" : "new",
                       "value" : ""
                     }
-                  },
-                  
+                  }
                 }
               }
             }
@@ -3043,8 +3045,7 @@
                       "state" : "needs_review",
                       "value" : "%@ không còn ghi nhận bởi Mac Mouse Fix."
                     }
-                  },
-                  
+                  }
                 }
               }
             }
@@ -3065,8 +3066,7 @@
                       "state" : "needs_review",
                       "value" : "%@不再被Mac Mouse Fix所捕获。"
                     }
-                  },
-                  
+                  }
                 }
               }
             }
@@ -3087,8 +3087,7 @@
                       "state" : "needs_review",
                       "value" : "%@不再被Mac Mouse Fix所擷取。"
                     }
-                  },
-                  
+                  }
                 }
               }
             }
@@ -3109,8 +3108,7 @@
                       "state" : "needs_review",
                       "value" : "%@不再被Mac Mouse Fix所截取。"
                     }
-                  },
-                  
+                  }
                 }
               }
             }
@@ -3142,8 +3140,7 @@
                       "state" : "translated",
                       "value" : "Die Tasten funktionieren jetzt, als wäre Mac Mouse Fix ausgeschaltet."
                     }
-                  },
-                  
+                  }
                 }
               }
             }
@@ -3170,7 +3167,7 @@
                       "state" : "translated",
                       "value" : "These buttons now work as if Mac Mouse Fix was disabled."
                     }
-                  },
+                  }
                 }
               }
             }
@@ -3197,8 +3194,7 @@
                       "state" : "new",
                       "value" : "These buttons now work as if Mac Mouse Fix was disabled."
                     }
-                  },
-                  
+                  }
                 }
               }
             }
@@ -3219,8 +3215,7 @@
                       "state" : "needs_review",
                       "value" : ""
                     }
-                  },
-                  
+                  }
                 }
               }
             }
@@ -3247,8 +3242,7 @@
                       "state" : "new",
                       "value" : ""
                     }
-                  },
-                  
+                  }
                 }
               }
             }
@@ -3275,8 +3269,7 @@
                       "state" : "new",
                       "value" : ""
                     }
-                  },
-                  
+                  }
                 }
               }
             }
@@ -3297,8 +3290,7 @@
                       "state" : "needs_review",
                       "value" : ""
                     }
-                  },
-                  
+                  }
                 }
               }
             }
@@ -3319,8 +3311,7 @@
                       "state" : "needs_review",
                       "value" : ""
                     }
-                  },
-                  
+                  }
                 }
               }
             }
@@ -3341,8 +3332,7 @@
                       "state" : "needs_review",
                       "value" : ""
                     }
-                  },
-                  
+                  }
                 }
               }
             }
@@ -3363,8 +3353,7 @@
                       "state" : "needs_review",
                       "value" : ""
                     }
-                  },
-                  
+                  }
                 }
               }
             }
@@ -4436,7 +4425,7 @@
         "pt-BR" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Abra links em uma nova aba, cole texto no Terminal e muito mais.\n \nFunciona como clicar %@ em um Mouse padrão."
+            "value" : "Abra links em uma nova aba, cole texto no Terminal e muito mais.\n \nFunciona como clicar Botão do Meio do Mouse (também chamado de Botão da de Rolagem ou 3º Botão do Mouse) em um Mouse padrão."
           }
         },
         "tr" : {
@@ -4566,7 +4555,7 @@
         "pt-BR" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Funciona como clicar em %@ em um Mouse padrão."
+            "value" : "Funciona como clicar em Botão Primário do Mouse (também chamado de Botão Esquerdo ou 1º Botão do Mouse) em um Mouse padrão."
           }
         },
         "tr" : {
@@ -4696,7 +4685,7 @@
         "pt-BR" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Funciona como clicar em %@ em um Mouse padrão."
+            "value" : "Funciona como clicar em Botão Secundário do Mouse (também chamado de Botão Direito ou 2º Botão do Mouse) em um Mouse padrão."
           }
         },
         "tr" : {
@@ -11968,6 +11957,12 @@
             "value" : "가운데 버튼"
           }
         },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Botão do Meio"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -12025,6 +12020,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "%@번 버튼"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Botão %@"
           }
         },
         "tr" : {
@@ -12086,6 +12087,12 @@
             "value" : "주 버튼"
           }
         },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Botão Primário"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -12143,6 +12150,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "보조 버튼"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Botão Secundário"
           }
         },
         "tr" : {
@@ -13114,6 +13127,12 @@
             "value" : "가운데 버튼"
           }
         },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Botão do Meio"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -13171,6 +13190,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "%@번 버튼"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Botão %@"
           }
         },
         "tr" : {
@@ -13232,6 +13257,12 @@
             "value" : "주 버튼"
           }
         },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Botão Primário"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -13289,6 +13320,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "보조 버튼"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Botão Secundário"
           }
         },
         "tr" : {
