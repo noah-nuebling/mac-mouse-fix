@@ -2317,12 +2317,7 @@
                       "value" : "%@ werden jetzt von Mac Mouse Fix abgefangen."
                     }
                   },
-                  "zero" : {
-                    "stringUnit" : {
-                      "state" : "translated",
-                      "value" : ""
-                    }
-                  }
+                  
                 }
               }
             }
@@ -2350,12 +2345,6 @@
                       "value" : "%@ are now captured by Mac Mouse Fix."
                     }
                   },
-                  "zero" : {
-                    "stringUnit" : {
-                      "state" : "translated",
-                      "value" : ""
-                    }
-                  }
                 }
               }
             }
@@ -2383,12 +2372,7 @@
                       "value" : "%@ ont été capturés par Mac Mouse Fix."
                     }
                   },
-                  "zero" : {
-                    "stringUnit" : {
-                      "state" : "translated",
-                      "value" : ""
-                    }
-                  }
+                  
                 }
               }
             }
@@ -2410,12 +2394,7 @@
                       "value" : "%@ 은 이제 Mac Mouse Fix에서 캡처합니다."
                     }
                   },
-                  "zero" : {
-                    "stringUnit" : {
-                      "state" : "needs_review",
-                      "value" : ""
-                    }
-                  }
+                  
                 }
               }
             }
@@ -2443,12 +2422,7 @@
                       "value" : "%@ foram capturados pelo Mac Mouse Fix."
                     }
                   },
-                  "zero" : {
-                    "stringUnit" : {
-                      "state" : "translated",
-                      "value" : ""
-                    }
-                  }
+                  
                 }
               }
             }
@@ -2476,12 +2450,7 @@
                       "value" : ""
                     }
                   },
-                  "zero" : {
-                    "stringUnit" : {
-                      "state" : "new",
-                      "value" : ""
-                    }
-                  }
+                  
                 }
               }
             }
@@ -2509,12 +2478,7 @@
                       "value" : "%@ đã được ghi nhận bởi Mac Mouse Fix."
                     }
                   },
-                  "zero" : {
-                    "stringUnit" : {
-                      "state" : "needs_review",
-                      "value" : ""
-                    }
-                  }
+                  
                 }
               }
             }
@@ -2536,12 +2500,7 @@
                       "value" : "%@被Mac Mouse Fix捕获到。"
                     }
                   },
-                  "zero" : {
-                    "stringUnit" : {
-                      "state" : "needs_review",
-                      "value" : ""
-                    }
-                  }
+                  
                 }
               }
             }
@@ -2563,12 +2522,7 @@
                       "value" : "%@被Mac Mouse Fix擷取到。"
                     }
                   },
-                  "zero" : {
-                    "stringUnit" : {
-                      "state" : "needs_review",
-                      "value" : ""
-                    }
-                  }
+                  
                 }
               }
             }
@@ -2590,12 +2544,7 @@
                       "value" : "%@被Mac Mouse Fix截取到。"
                     }
                   },
-                  "zero" : {
-                    "stringUnit" : {
-                      "state" : "needs_review",
-                      "value" : ""
-                    }
-                  }
+                  
                 }
               }
             }
@@ -2628,12 +2577,7 @@
                       "value" : "Andere Apps können sie nicht mehr sehen."
                     }
                   },
-                  "zero" : {
-                    "stringUnit" : {
-                      "state" : "translated",
-                      "value" : ""
-                    }
-                  }
+                  
                 }
               }
             }
@@ -2661,12 +2605,6 @@
                       "value" : "Other apps can't see these buttons anymore."
                     }
                   },
-                  "zero" : {
-                    "stringUnit" : {
-                      "state" : "translated",
-                      "value" : ""
-                    }
-                  }
                 }
               }
             }
@@ -2694,12 +2632,6 @@
                       "value" : ""
                     }
                   },
-                  "zero" : {
-                    "stringUnit" : {
-                      "state" : "new",
-                      "value" : ""
-                    }
-                  }
                 }
               }
             }
@@ -2721,12 +2653,7 @@
                       "value" : "다른 앱에서는 더 이상 캡처하지 못합니다."
                     }
                   },
-                  "zero" : {
-                    "stringUnit" : {
-                      "state" : "needs_review",
-                      "value" : ""
-                    }
-                  }
+                  
                 }
               }
             }
@@ -2754,12 +2681,7 @@
                       "value" : "Outros aplicativos não conseguem mais vê-los."
                     }
                   },
-                  "zero" : {
-                    "stringUnit" : {
-                      "state" : "translated",
-                      "value" : ""
-                    }
-                  }
+                
                 }
               }
             }
@@ -2787,12 +2709,7 @@
                       "value" : ""
                     }
                   },
-                  "zero" : {
-                    "stringUnit" : {
-                      "state" : "new",
-                      "value" : ""
-                    }
-                  }
+                  
                 }
               }
             }
@@ -2820,12 +2737,7 @@
                       "value" : ""
                     }
                   },
-                  "zero" : {
-                    "stringUnit" : {
-                      "state" : "needs_review",
-                      "value" : ""
-                    }
-                  }
+                  
                 }
               }
             }
@@ -2853,12 +2765,7 @@
                       "value" : ""
                     }
                   },
-                  "zero" : {
-                    "stringUnit" : {
-                      "state" : "needs_review",
-                      "value" : ""
-                    }
-                  }
+                  
                 }
               }
             }
@@ -2886,12 +2793,7 @@
                       "value" : ""
                     }
                   },
-                  "zero" : {
-                    "stringUnit" : {
-                      "state" : "needs_review",
-                      "value" : ""
-                    }
-                  }
+                  
                 }
               }
             }
@@ -2919,12 +2821,7 @@
                       "value" : ""
                     }
                   },
-                  "zero" : {
-                    "stringUnit" : {
-                      "state" : "needs_review",
-                      "value" : ""
-                    }
-                  }
+                  
                 }
               }
             }
@@ -3022,12 +2919,7 @@
                       "value" : "%@ werden nicht länger von Mac Mouse Fix abgefangen."
                     }
                   },
-                  "zero" : {
-                    "stringUnit" : {
-                      "state" : "translated",
-                      "value" : ""
-                    }
-                  }
+                  
                 }
               }
             }
@@ -3055,12 +2947,6 @@
                       "value" : "%@ are no longer captured by Mac Mouse Fix."
                     }
                   },
-                  "zero" : {
-                    "stringUnit" : {
-                      "state" : "translated",
-                      "value" : ""
-                    }
-                  }
                 }
               }
             }
@@ -3088,12 +2974,7 @@
                       "value" : "%@ ne sont plus capturés par Mac Mouse Fix."
                     }
                   },
-                  "zero" : {
-                    "stringUnit" : {
-                      "state" : "translated",
-                      "value" : ""
-                    }
-                  }
+                  
                 }
               }
             }
@@ -3115,12 +2996,7 @@
                       "value" : "%@ 은 더 이상 Mac Mouse Fix에서 캡처하지 않습니다."
                     }
                   },
-                  "zero" : {
-                    "stringUnit" : {
-                      "state" : "needs_review",
-                      "value" : ""
-                    }
-                  }
+                  
                 }
               }
             }
@@ -3148,12 +3024,7 @@
                       "value" : "%@ não são mais capturados pelo Mac Mouse Fix."
                     }
                   },
-                  "zero" : {
-                    "stringUnit" : {
-                      "state" : "translated",
-                      "value" : ""
-                    }
-                  }
+                  
                 }
               }
             }
@@ -3181,12 +3052,7 @@
                       "value" : ""
                     }
                   },
-                  "zero" : {
-                    "stringUnit" : {
-                      "state" : "new",
-                      "value" : ""
-                    }
-                  }
+                  
                 }
               }
             }
@@ -3214,12 +3080,7 @@
                       "value" : "%@ không còn ghi nhận bởi Mac Mouse Fix."
                     }
                   },
-                  "zero" : {
-                    "stringUnit" : {
-                      "state" : "needs_review",
-                      "value" : ""
-                    }
-                  }
+                  
                 }
               }
             }
@@ -3241,12 +3102,7 @@
                       "value" : "%@不再被Mac Mouse Fix所捕获。"
                     }
                   },
-                  "zero" : {
-                    "stringUnit" : {
-                      "state" : "needs_review",
-                      "value" : ""
-                    }
-                  }
+                  
                 }
               }
             }
@@ -3268,12 +3124,7 @@
                       "value" : "%@不再被Mac Mouse Fix所擷取。"
                     }
                   },
-                  "zero" : {
-                    "stringUnit" : {
-                      "state" : "needs_review",
-                      "value" : ""
-                    }
-                  }
+                  
                 }
               }
             }
@@ -3295,12 +3146,7 @@
                       "value" : "%@不再被Mac Mouse Fix所截取。"
                     }
                   },
-                  "zero" : {
-                    "stringUnit" : {
-                      "state" : "needs_review",
-                      "value" : ""
-                    }
-                  }
+                  
                 }
               }
             }
@@ -3333,12 +3179,7 @@
                       "value" : "Die Tasten funktionieren jetzt, als wäre Mac Mouse Fix ausgeschaltet."
                     }
                   },
-                  "zero" : {
-                    "stringUnit" : {
-                      "state" : "translated",
-                      "value" : ""
-                    }
-                  }
+                  
                 }
               }
             }
@@ -3366,12 +3207,6 @@
                       "value" : "These buttons now work as if Mac Mouse Fix was disabled."
                     }
                   },
-                  "zero" : {
-                    "stringUnit" : {
-                      "state" : "translated",
-                      "value" : ""
-                    }
-                  }
                 }
               }
             }
@@ -3399,12 +3234,7 @@
                       "value" : "These buttons now work as if Mac Mouse Fix was disabled."
                     }
                   },
-                  "zero" : {
-                    "stringUnit" : {
-                      "state" : "new",
-                      "value" : ""
-                    }
-                  }
+                  
                 }
               }
             }
@@ -3432,12 +3262,7 @@
                       "value" : ""
                     }
                   },
-                  "zero" : {
-                    "stringUnit" : {
-                      "state" : "needs_review",
-                      "value" : ""
-                    }
-                  }
+                  
                 }
               }
             }
@@ -3465,12 +3290,7 @@
                       "value" : ""
                     }
                   },
-                  "zero" : {
-                    "stringUnit" : {
-                      "state" : "translated",
-                      "value" : ""
-                    }
-                  }
+                  
                 }
               }
             }
@@ -3498,12 +3318,7 @@
                       "value" : ""
                     }
                   },
-                  "zero" : {
-                    "stringUnit" : {
-                      "state" : "new",
-                      "value" : ""
-                    }
-                  }
+                  
                 }
               }
             }
@@ -3531,12 +3346,7 @@
                       "value" : ""
                     }
                   },
-                  "zero" : {
-                    "stringUnit" : {
-                      "state" : "needs_review",
-                      "value" : ""
-                    }
-                  }
+                  
                 }
               }
             }
@@ -3564,12 +3374,7 @@
                       "value" : ""
                     }
                   },
-                  "zero" : {
-                    "stringUnit" : {
-                      "state" : "needs_review",
-                      "value" : ""
-                    }
-                  }
+                  
                 }
               }
             }
@@ -3597,12 +3402,7 @@
                       "value" : ""
                     }
                   },
-                  "zero" : {
-                    "stringUnit" : {
-                      "state" : "needs_review",
-                      "value" : ""
-                    }
-                  }
+                  
                 }
               }
             }
@@ -3630,12 +3430,7 @@
                       "value" : ""
                     }
                   },
-                  "zero" : {
-                    "stringUnit" : {
-                      "state" : "needs_review",
-                      "value" : ""
-                    }
-                  }
+                  
                 }
               }
             }
