@@ -85,7 +85,7 @@
         map = @{
             @1: NSLocalizedString(@"trigger.y.group-row.button-name.primary",     @""), /// The '.y.' is just used to group things in the .xcstrings file. Not sure if smart.
             @2: NSLocalizedString(@"trigger.y.group-row.button-name.secondary",   @""),
-            @3: NSLocalizedString(@"trigger.y.group-row.button-name.middle",      @"Note: The trigger.y.group-row.button-name.[...] strings names are used in the Action Table as headers to group together actions which are triggered by the same button."),
+            @3: NSLocalizedString(@"trigger.y.group-row.button-name.middle",      @"Note: The trigger.y.group-row.button-name.[...] strings names are used in the Action Table as headers to group together actions which are triggered by the same button. (See the screenshots in the .xcloc file if this doesn't make sense)"),
             @-1: NSLocalizedString(@"trigger.y.group-row.button-name.numbered",   @"Note: For visual consistency, capitalization of the these button-name strings should probably follow the capitalization of the trigger.substring.button-name.[...] strings. - You might want to fill those out first to figure out the capitalization, and then come back to fill out the button-names here. (This is just a guideline, if you have a specific reason to deviate it's up to your best judgement.)"),
         };
         

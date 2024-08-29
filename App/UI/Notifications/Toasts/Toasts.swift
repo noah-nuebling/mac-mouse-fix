@@ -25,7 +25,7 @@ import Foundation
             /// - Why are we dispatching `k-is-disabled-toast` to the main thread by not this? (They are called from almost the same place)
             
             if let window = NSApp.mainWindow {
-                let rawMessage = NSLocalizedString("enable-timeout-toast", comment: "Note: The nbsp part inserts a non-breaking-space character, which prevents the last word from being orphaned on the last line. See HTML Character Entities.")
+                let rawMessage = NSLocalizedString("enable-timeout-toast", comment: "Note: The nbsp part inserts a non-breaking-space character, which prevents the last word from being orphaned on the last line. &nbsp; is an \"HTML Character Entity\".")
                 ToastController.attachNotification(withMessage: NSMutableAttributedString(coolMarkdown: rawMessage)!, to: window, forDuration: 10.0)
                 
             }
@@ -53,7 +53,7 @@ import Foundation
             ToastController.attachNotification(withMessage: message, to: MainAppState.shared.window!, forDuration: kMFToastDurationAutomatic)
         },
         "k-already-using-defaults-toast.3": {
-            let messageRaw = NSLocalizedString("already-using-defaults-toast.3", comment: "Note: This text is displayed in a notification after the user tries to load the default settings for mice with 3 buttons on the Buttons Tab.")
+            let messageRaw = NSLocalizedString("already-using-defaults-toast.3", comment: "") /// Old note: (Removed because doesn't help localizers I think. We dont' wanna train localizers to ignore comments, so we don't want useless ones.) "Note: This text is displayed in a notification after the user tries to load the default settings for mice with 3 buttons on the Buttons Tab.")
             let message = NSAttributedString(coolMarkdown: messageRaw)!
             DispatchQueue.main.async {
                 ToastController.attachNotification(withMessage: message, to: MainAppState.shared.window!, forDuration: kMFToastDurationAutomatic)

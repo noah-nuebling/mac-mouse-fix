@@ -2,7 +2,7 @@
   "sourceLanguage" : "en",
   "strings" : {
     "accessibility.settings-link.pre-ventura" : {
-      "comment" : "Note: 'System Preferences' were renamed to 'System Settings' in macOS Ventura. The string for Ventura and later is defined in another file. Note 2: This is one of the steps recommended to the user to 'Grant Accessibility Access to Mac Mouse Fix'. All the related strings have keys that start with 'accessiblity.'",
+      "comment" : "Note: 'System Preferences' were renamed to 'System Settings' in macOS Ventura. The string for Ventura and later is defined in another file, this is the string for earlier versions || Example: 1. Open 'Security & Privacy' Preferences 2. Switch on 'Mac Mouse Fix Helper'",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -2293,12 +2293,12 @@
       }
     },
     "capture-toast.buttons.captured.body" : {
-      "comment" : "Note: This is a 'pluralizable' string, which means it has different versions depending on how many buttons the string is talking about. Click the disclosure triangle (>) edit the different versions of the string.",
+      "comment" : "Note: This is a 'pluralizable' string, which means it has different versions depending on how many buttons the string is talking about. Click the disclosure triangle (>) edit the different versions of the string. Do not localize \"@captured\" - it's a placeholder.",
       "localizations" : {
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "%@ %#@captured@"
+            "value" : "%#@captured@"
           },
           "substitutions" : {
             "captured" : {
@@ -2307,14 +2307,14 @@
                 "plural" : {
                   "one" : {
                     "stringUnit" : {
-                      "state" : "translated",
-                      "value" : "wird jetzt von Mac Mouse Fix abgefangen."
+                      "state" : "needs_review",
+                      "value" : "%@ wird jetzt von Mac Mouse Fix abgefangen."
                     }
                   },
                   "other" : {
                     "stringUnit" : {
-                      "state" : "translated",
-                      "value" : "werden jetzt von Mac Mouse Fix abgefangen."
+                      "state" : "needs_review",
+                      "value" : "%@ werden jetzt von Mac Mouse Fix abgefangen."
                     }
                   },
                   "zero" : {
@@ -2331,7 +2331,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "%@ %#@captured@"
+            "value" : "%#@captured@"
           },
           "substitutions" : {
             "captured" : {
@@ -2341,13 +2341,13 @@
                   "one" : {
                     "stringUnit" : {
                       "state" : "translated",
-                      "value" : "is now captured by Mac Mouse Fix."
+                      "value" : "%@ is now captured by Mac Mouse Fix."
                     }
                   },
                   "other" : {
                     "stringUnit" : {
                       "state" : "translated",
-                      "value" : "are now captured by Mac Mouse Fix."
+                      "value" : "%@ are now captured by Mac Mouse Fix."
                     }
                   },
                   "zero" : {
@@ -2363,8 +2363,8 @@
         },
         "fr" : {
           "stringUnit" : {
-            "state" : "new",
-            "value" : "%@ %#@captured@"
+            "state" : "translated",
+            "value" : "%#@captured@"
           },
           "substitutions" : {
             "captured" : {
@@ -2374,13 +2374,13 @@
                   "one" : {
                     "stringUnit" : {
                       "state" : "needs_review",
-                      "value" : "a été capturé par Mac Mouse Fix."
+                      "value" : "%@ a été capturé par Mac Mouse Fix."
                     }
                   },
                   "other" : {
                     "stringUnit" : {
                       "state" : "needs_review",
-                      "value" : "ont été capturés par Mac Mouse Fix."
+                      "value" : "%@ ont été capturés par Mac Mouse Fix."
                     }
                   },
                   "zero" : {
@@ -2396,8 +2396,8 @@
         },
         "ko" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "%@ %#@captured@"
+            "state" : "translated",
+            "value" : "%#@captured@"
           },
           "substitutions" : {
             "captured" : {
@@ -2407,7 +2407,7 @@
                   "other" : {
                     "stringUnit" : {
                       "state" : "needs_review",
-                      "value" : "은 이제 Mac Mouse Fix에서 캡처합니다."
+                      "value" : "%@ 은 이제 Mac Mouse Fix에서 캡처합니다."
                     }
                   },
                   "zero" : {
@@ -2423,8 +2423,8 @@
         },
         "pt-BR" : {
           "stringUnit" : {
-            "state" : "new",
-            "value" : "%@ %#@captured@"
+            "state" : "translated",
+            "value" : "%#@captured@"
           },
           "substitutions" : {
             "captured" : {
@@ -2434,13 +2434,13 @@
                   "one" : {
                     "stringUnit" : {
                       "state" : "needs_review",
-                      "value" : "foi capturado pelo Mac Mouse Fix."
+                      "value" : "%@ foi capturado pelo Mac Mouse Fix."
                     }
                   },
                   "other" : {
                     "stringUnit" : {
                       "state" : "needs_review",
-                      "value" : "foram capturados pelo Mac Mouse Fix."
+                      "value" : "%@ foram capturados pelo Mac Mouse Fix."
                     }
                   },
                   "zero" : {
@@ -2456,8 +2456,8 @@
         },
         "tr" : {
           "stringUnit" : {
-            "state" : "new",
-            "value" : "%@ %#@captured@"
+            "state" : "translated",
+            "value" : "%#@captured@"
           },
           "substitutions" : {
             "captured" : {
@@ -2489,8 +2489,8 @@
         },
         "vi" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "%@ %#@captured@"
+            "state" : "translated",
+            "value" : "%#@captured@"
           },
           "substitutions" : {
             "captured" : {
@@ -2500,13 +2500,13 @@
                   "one" : {
                     "stringUnit" : {
                       "state" : "needs_review",
-                      "value" : "đã được ghi nhận bởi Mac Mouse Fix."
+                      "value" : "%@ đã được ghi nhận bởi Mac Mouse Fix."
                     }
                   },
                   "other" : {
                     "stringUnit" : {
                       "state" : "needs_review",
-                      "value" : "đã được ghi nhận bởi Mac Mouse Fix."
+                      "value" : "%@ đã được ghi nhận bởi Mac Mouse Fix."
                     }
                   },
                   "zero" : {
@@ -2522,8 +2522,8 @@
         },
         "zh-Hans" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "%@ %#@captured@"
+            "state" : "translated",
+            "value" : "%#@captured@"
           },
           "substitutions" : {
             "captured" : {
@@ -2533,7 +2533,7 @@
                   "other" : {
                     "stringUnit" : {
                       "state" : "needs_review",
-                      "value" : "被Mac Mouse Fix捕获到。"
+                      "value" : "%@被Mac Mouse Fix捕获到。"
                     }
                   },
                   "zero" : {
@@ -2549,8 +2549,8 @@
         },
         "zh-Hant" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "%@ %#@captured@"
+            "state" : "translated",
+            "value" : "%#@captured@"
           },
           "substitutions" : {
             "captured" : {
@@ -2560,7 +2560,7 @@
                   "other" : {
                     "stringUnit" : {
                       "state" : "needs_review",
-                      "value" : "被Mac Mouse Fix擷取到。"
+                      "value" : "%@被Mac Mouse Fix擷取到。"
                     }
                   },
                   "zero" : {
@@ -2576,8 +2576,8 @@
         },
         "zh-HK" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "%@ %#@captured@"
+            "state" : "translated",
+            "value" : "%#@captured@"
           },
           "substitutions" : {
             "captured" : {
@@ -2587,7 +2587,7 @@
                   "other" : {
                     "stringUnit" : {
                       "state" : "needs_review",
-                      "value" : "被Mac Mouse Fix截取到。"
+                      "value" : "%@被Mac Mouse Fix截取到。"
                     }
                   },
                   "zero" : {
@@ -2604,7 +2604,7 @@
       }
     },
     "capture-toast.buttons.captured.hint" : {
-      "comment" : "Note: The core idea that we want to convey here is that, from now on, the button is being 'intercepted' by Mac Mouse Fix. We used the word 'capture' instead of 'intercept' since it sounds friendlier in English. In your language, you might want to use something closer to 'intercept'.",
+      "comment" : "Note: The core idea that we want to convey with these ui strings is that, from now on, the button is being 'intercepted' by Mac Mouse Fix. We used the word 'capture' instead of 'intercept' since it sounds friendlier in English. In your language, you might want to use something closer to 'intercept'.",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -2998,12 +2998,12 @@
       }
     },
     "capture-toast.buttons.uncaptured.body" : {
-      "comment" : "Note: This is a 'pluralizable' string || First draft - One: %@ is no longer captured by Mac Mouse Fix. || First draft - Other: %@ are no longer captured by Mac Mouse Fix.",
+      "comment" : "Note: %@ will be replaced by the names of the no-longer-captured buttons. Example those buttons are 'Middle Button' and 'Button 4': Middle Button and Button 4 are no longer captured by Mac Mouse Fix.",
       "localizations" : {
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "%@ %#@uncaptured@"
+            "value" : "%#@uncaptured@"
           },
           "substitutions" : {
             "uncaptured" : {
@@ -3012,14 +3012,14 @@
                 "plural" : {
                   "one" : {
                     "stringUnit" : {
-                      "state" : "translated",
-                      "value" : "wird nicht länger von Mac Mouse Fix abgefangen."
+                      "state" : "needs_review",
+                      "value" : "%@ wird nicht länger von Mac Mouse Fix abgefangen."
                     }
                   },
                   "other" : {
                     "stringUnit" : {
-                      "state" : "translated",
-                      "value" : "werden nicht länger von Mac Mouse Fix abgefangen."
+                      "state" : "needs_review",
+                      "value" : "%@ werden nicht länger von Mac Mouse Fix abgefangen."
                     }
                   },
                   "zero" : {
@@ -3036,7 +3036,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "%@ %#@uncaptured@"
+            "value" : "%#@uncaptured@"
           },
           "substitutions" : {
             "uncaptured" : {
@@ -3046,13 +3046,13 @@
                   "one" : {
                     "stringUnit" : {
                       "state" : "translated",
-                      "value" : "is no longer captured by Mac Mouse Fix."
+                      "value" : "%@ is no longer captured by Mac Mouse Fix."
                     }
                   },
                   "other" : {
                     "stringUnit" : {
                       "state" : "translated",
-                      "value" : "are no longer captured by Mac Mouse Fix."
+                      "value" : "%@ are no longer captured by Mac Mouse Fix."
                     }
                   },
                   "zero" : {
@@ -3068,8 +3068,8 @@
         },
         "fr" : {
           "stringUnit" : {
-            "state" : "new",
-            "value" : "%@ %#@uncaptured@"
+            "state" : "translated",
+            "value" : "%#@uncaptured@"
           },
           "substitutions" : {
             "uncaptured" : {
@@ -3079,13 +3079,13 @@
                   "one" : {
                     "stringUnit" : {
                       "state" : "needs_review",
-                      "value" : "n'est plus capturé par Mac Mouse Fix."
+                      "value" : "%@ n'est plus capturé par Mac Mouse Fix."
                     }
                   },
                   "other" : {
                     "stringUnit" : {
                       "state" : "needs_review",
-                      "value" : "ne sont plus capturés par Mac Mouse Fix."
+                      "value" : "%@ ne sont plus capturés par Mac Mouse Fix."
                     }
                   },
                   "zero" : {
@@ -3101,8 +3101,8 @@
         },
         "ko" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "%@ %#@uncaptured@"
+            "state" : "translated",
+            "value" : "%#@uncaptured@"
           },
           "substitutions" : {
             "uncaptured" : {
@@ -3112,7 +3112,7 @@
                   "other" : {
                     "stringUnit" : {
                       "state" : "needs_review",
-                      "value" : "은 더 이상 Mac Mouse Fix에서 캡처하지 않습니다."
+                      "value" : "%@ 은 더 이상 Mac Mouse Fix에서 캡처하지 않습니다."
                     }
                   },
                   "zero" : {
@@ -3129,7 +3129,7 @@
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "%@ %#@uncaptured@"
+            "value" : "%#@uncaptured@"
           },
           "substitutions" : {
             "uncaptured" : {
@@ -3139,13 +3139,13 @@
                   "one" : {
                     "stringUnit" : {
                       "state" : "needs_review",
-                      "value" : "não é mais capturado pelo Mac Mouse Fix."
+                      "value" : "%@ não é mais capturado pelo Mac Mouse Fix."
                     }
                   },
                   "other" : {
                     "stringUnit" : {
                       "state" : "needs_review",
-                      "value" : "não são mais capturados pelo Mac Mouse Fix."
+                      "value" : "%@ não são mais capturados pelo Mac Mouse Fix."
                     }
                   },
                   "zero" : {
@@ -3161,8 +3161,8 @@
         },
         "tr" : {
           "stringUnit" : {
-            "state" : "new",
-            "value" : "%@ %#@uncaptured@"
+            "state" : "translated",
+            "value" : "%#@uncaptured@"
           },
           "substitutions" : {
             "uncaptured" : {
@@ -3194,8 +3194,8 @@
         },
         "vi" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "%@ %#@uncaptured@"
+            "state" : "translated",
+            "value" : "%#@uncaptured@"
           },
           "substitutions" : {
             "uncaptured" : {
@@ -3205,13 +3205,13 @@
                   "one" : {
                     "stringUnit" : {
                       "state" : "needs_review",
-                      "value" : "không còn ghi nhận bởi Mac Mouse Fix."
+                      "value" : "%@ không còn ghi nhận bởi Mac Mouse Fix."
                     }
                   },
                   "other" : {
                     "stringUnit" : {
                       "state" : "needs_review",
-                      "value" : "không còn ghi nhận bởi Mac Mouse Fix."
+                      "value" : "%@ không còn ghi nhận bởi Mac Mouse Fix."
                     }
                   },
                   "zero" : {
@@ -3227,8 +3227,8 @@
         },
         "zh-Hans" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "%@ %#@uncaptured@"
+            "state" : "translated",
+            "value" : "%#@uncaptured@"
           },
           "substitutions" : {
             "uncaptured" : {
@@ -3238,7 +3238,7 @@
                   "other" : {
                     "stringUnit" : {
                       "state" : "needs_review",
-                      "value" : "不再被Mac Mouse Fix所捕获。"
+                      "value" : "%@不再被Mac Mouse Fix所捕获。"
                     }
                   },
                   "zero" : {
@@ -3254,8 +3254,8 @@
         },
         "zh-Hant" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "%@ %#@uncaptured@"
+            "state" : "translated",
+            "value" : "%#@uncaptured@"
           },
           "substitutions" : {
             "uncaptured" : {
@@ -3265,7 +3265,7 @@
                   "other" : {
                     "stringUnit" : {
                       "state" : "needs_review",
-                      "value" : "不再被Mac Mouse Fix所擷取。"
+                      "value" : "%@不再被Mac Mouse Fix所擷取。"
                     }
                   },
                   "zero" : {
@@ -3281,8 +3281,8 @@
         },
         "zh-HK" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "%@ %#@uncaptured@"
+            "state" : "translated",
+            "value" : "%#@uncaptured@"
           },
           "substitutions" : {
             "uncaptured" : {
@@ -3292,7 +3292,7 @@
                   "other" : {
                     "stringUnit" : {
                       "state" : "needs_review",
-                      "value" : "不再被Mac Mouse Fix所截取。"
+                      "value" : "%@不再被Mac Mouse Fix所截取。"
                     }
                   },
                   "zero" : {
@@ -3309,7 +3309,7 @@
       }
     },
     "capture-toast.buttons.uncaptured.hint" : {
-      "comment" : "Note: This is a 'pluralizable' string || First draft - One: The button now works as if Mac Mouse Fix was disabled. || First draft - Other: These buttons now work as if Mac Mouse Fix was disabled.",
+      "comment" : " ",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -6238,7 +6238,7 @@
       }
     },
     "enable-timeout-toast" : {
-      "comment" : "Note: The nbsp part inserts a non-breaking-space character, which prevents the last word from being orphaned on the last line. See HTML Character Entities.",
+      "comment" : "Note: The nbsp part inserts a non-breaking-space character, which prevents the last word from being orphaned on the last line. &nbsp; is an \"HTML Character Entity\".",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -8703,7 +8703,7 @@
       }
     },
     "restore-default-buttons-popover.body" : {
-      "comment" : "Note: The \n linebreak is so the popover doesn't become too wide. You can set the linebreak to your own taste. || Hint: if text in your language is typically around X times longer than English, then the lines here probably should not be much longer than X times the English version.",
+      "comment" : "Note: The linebreak is so the popover doesn't become too wide. You can set the linebreak to your own taste. || Hint: if text in your language is typically around X times longer than English, then the lines here probably should not be much longer than X times the English version.",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -13359,7 +13359,7 @@
       }
     },
     "trigger.y.group-row.button-name.middle" : {
-      "comment" : "Note: The trigger.y.group-row.button-name.[...] strings names are used in the Action Table as headers to group together actions which are triggered by the same button.",
+      "comment" : "Note: The trigger.y.group-row.button-name.[...] strings names are used in the Action Table as headers to group together actions which are triggered by the same button. (See the screenshots in the .xcloc file if this doesn't make sense)",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -13741,7 +13741,7 @@
         },
         "pt-BR" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Digite um atalho de teclado"
           }
         },
