@@ -42,6 +42,7 @@ These people spent a lot more than the standard price and treated me to an **Inc
 
 **August 2024**
 
+- 🇫🇮&nbsp;Jvk - "I didn't know how much I'd miss it until it was gone."
 - 🇺🇸&nbsp;Krischan - "Well done! Finally found the elegant solution after wasting time on the cumbersome ones."
 - 🇺🇸&nbsp;Applepay&nbsp;Greedless284
 - 🇺🇸&nbsp;Ryan&nbsp;Ludemann
