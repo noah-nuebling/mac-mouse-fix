@@ -18,6 +18,7 @@ I want to especially thank the people and projects named in this document.
 comment: This is the intro for the acknowledgements document
 ```
 
+<a name="translations"></a> 
 ```
 key: acknowledgements.translations
 ```
@@ -39,6 +40,7 @@ comment:
   You make me me feel like there are many generous people out there who appreciate the app and want to support it, and thanks to you, I can spend more time on something I love doing. 
 -->
 
+<a name="money"></a> 
 ```
 key: acknowledgements.money
 ```
@@ -52,6 +54,7 @@ People who supported me by spending more than the standard price on Mac Mouse Fi
 comment:
 ```
 
+<a name="generous-contributors"></a> 
 ```
 key: acknowledgements.money.generous
 ```
@@ -64,6 +67,7 @@ comment:
 
 {generous}
 
+<a name="very-generous-contributors"></a> 
 ```
 key: acknowledgements.money.very-generous
 ```
@@ -76,6 +80,7 @@ comment:
 
 {very_generous}
 
+<a name="github-sponsors"></a> 
 ```
 key: acknowledgements.money.github-sponsors
 ```
@@ -86,6 +91,7 @@ key: acknowledgements.money.github-sponsors
 comment:
 ```
 
+<a name="paypal-donations"></a> 
 ```
 key: acknowledgements.money.paypal-donations
 ```
@@ -99,6 +105,7 @@ comment:
 ```
 <!-- It's truly incredibly helpful to have some predictable monthly income. -->
 
+<a name="other-software"></a> 
 ```
 key: acknowledgements.software
 ```

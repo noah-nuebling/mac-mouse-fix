@@ -98,6 +98,16 @@ comment:
     It lets you do almost anything right from your mouse with its powerful customization options that are so simple and intuitive that anyone can use them.
   -->
 
+<!-- 
+  Note: We make these anchor link (`<a name="somename"></a>`) non-localizable, so that we can link to a specific section of the document in a language-agnostic way. 
+    Example: 
+      Linking into the German document with `https://github.com/noah-nuebling/mac-mouse-fix/blob/master/Markdown/LocalizedDocuments/de/Readme.md#macos-compatibility`
+      will work, even though the `## macOS compatibility` header is localized to `## macOS Kompatibilität` in German. If we didn't have the anchor links, we'd have to localize the link itself `[...]/LocalizedDocuments/de/Readme.md#macos-kompatibilität` - that's the problem that the anchor links solve.
+    Other:  
+      #macos-compatibility is called a 'url fragment identifier'
+-->
+
+<a name="features"></a> 
 ```
 key: readme.features
 ```
@@ -120,6 +130,7 @@ comment:
     | 3.0.0
   -->
 
+<a name="installation"></a>
 ```
 key: readme.install
 ```
@@ -138,6 +149,7 @@ You can download older versions of Mac Mouse Fix under [Releases](https://github
 comment: 
 ```
 
+<a name="macos-compatibility"></a>
 ```
 key: readme.macos-compat
 ```
@@ -152,6 +164,7 @@ If you're on macOS **10.12 Sierra**, or **10.11 El Capitan**, you can use Mac Mo
 comment: 
 ```
 
+<a name="pricing"></a> 
 ```
 key: readme.price
 ```
@@ -163,6 +176,7 @@ Mac Mouse Fix 2 and below will remain free forever.
 comment:
 ```
 
+<a name="uninstallation"></a> 
 ```
 key: readme.uninstall
 ```
@@ -177,6 +191,7 @@ Under macOS, it is not feasible for apps to delete these leftover files by thems
 comment:
 ```
 
+<a name="what-people-say"></a> 
 ```
 key: readme.what-people-say
 ```
@@ -198,6 +213,7 @@ comment:
     - (?If you know about other coverage of MMF let me know?) 
   -->
 
+<a name="tips"></a> 
 ```
 key: readme.tips
 ```
@@ -235,6 +251,7 @@ comment:
 
   <img src="{repo_root}Markdown/Media/Apple-Keys-Demo.gif" width="700">
 
+<a name="questions"></a> 
 ```
 key: readme.questions
 ```
@@ -418,6 +435,7 @@ comment:
   comment: 
   ```
 
+<a name="how-you-can-contribute"></a> 
 ```
 key: readme.contributing
 ```
@@ -492,7 +510,7 @@ comment:
 {{**Thank you** to everyone who has already contributed and supported me in trying to make the best mouse driver *of all time*! :)🚀||readme.contributing.footer||}}
 
   <!--
-
+    <a name="background"></a> 
     ## Background
 
     <details>
