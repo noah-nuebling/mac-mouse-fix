@@ -73,6 +73,7 @@ extern inline bool _objc_isTaggedPointer(const void *ptr);     /// Copied from h
 
 typedef void(*MFCTLCallback)(NSTask *task, NSPipe *output, NSError *error);
 
+NSString *getMFRedirectionServiceLink(NSString *_Nonnull target, NSString *_Nullable message, NSDictionary *_Nullable otherQueryParamsDict);
 CFTimeInterval machTimeToSeconds(uint64_t tsMach);
 uint64_t secondsToMachTime(CFTimeInterval tsSeconds);
 NSException * _Nullable tryCatch(void (^tryBlock)(void));
