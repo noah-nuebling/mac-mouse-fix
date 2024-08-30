@@ -41,11 +41,33 @@ To help translate it, click <a align="center" href="https://github.com/noah-nueb
   <summary>󠁧󠁿🇭🇰 中文（香港)</summary>
     
   [🇬🇧 English](../../../Readme.md)\
+  [🇦🇩 Català](../../../Markdown/LocalizedDocuments/ca/Readme.md)\
   [🇩🇪 Deutsch](../../../Markdown/LocalizedDocuments/de/Readme.md)\
+  [🇪🇸 Español](../../../Markdown/LocalizedDocuments/es/Readme.md)\
+  [🇫🇷 Français](../../../Markdown/LocalizedDocuments/fr/Readme.md)\
+  [🇮🇩 Indonesia](../../../Markdown/LocalizedDocuments/id/Readme.md)\
+  [🇮🇹 Italiano](../../../Markdown/LocalizedDocuments/it/Readme.md)\
+  [🇭🇺 Magyar](../../../Markdown/LocalizedDocuments/hu/Readme.md)\
+  [🇳🇱 Nederlands](../../../Markdown/LocalizedDocuments/nl/Readme.md)\
+  [🇵🇱 Polski](../../../Markdown/LocalizedDocuments/pl/Readme.md)\
+  [🇧🇷 Português (Brasil)](../../../Markdown/LocalizedDocuments/pt-BR/Readme.md)\
+  [🇵🇹 Português (Portugal)](../../../Markdown/LocalizedDocuments/pt-PT/Readme.md)\
+  [🇷🇴 Română](../../../Markdown/LocalizedDocuments/ro/Readme.md)\
+  [🇸🇪 Svenska](../../../Markdown/LocalizedDocuments/sv/Readme.md)\
   [🇻🇳 Tiếng Việt](../../../Markdown/LocalizedDocuments/vi/Readme.md)\
+  [🇹🇷 Türkçe](../../../Markdown/LocalizedDocuments/tr/Readme.md)\
+  [🇨🇿 Čeština](../../../Markdown/LocalizedDocuments/cs/Readme.md)\
+  [🇬🇷 Ελληνικά](../../../Markdown/LocalizedDocuments/el/Readme.md)\
+  [🇷🇺 Русский](../../../Markdown/LocalizedDocuments/ru/Readme.md)\
+  [🇺🇦 Українська](../../../Markdown/LocalizedDocuments/uk/Readme.md)\
+  [🇮🇱 עברית](../../../Markdown/LocalizedDocuments/he/Readme.md)\
+  [🇸🇦 العربية](../../../Markdown/LocalizedDocuments/ar/Readme.md)\
+  [🇮🇳 हिन्दी](../../../Markdown/LocalizedDocuments/hi/Readme.md)\
+  [🇹🇭 ไทย](../../../Markdown/LocalizedDocuments/th/Readme.md)\
   [🇨🇳 中文 (简体)](../../../Markdown/LocalizedDocuments/zh-Hans/Readme.md)\
   [🇨🇳 中文 (繁體)](../../../Markdown/LocalizedDocuments/zh-Hant/Readme.md)\
   **🇭🇰 中文（香港)**\
+  [🇯🇵 日本語](../../../Markdown/LocalizedDocuments/ja/Readme.md)\
   [🇰🇷 한국어](../../../Markdown/LocalizedDocuments/ko/Readme.md)\
   [Help translate Mac Mouse Fix to different languages!](https://github.com/noah-nuebling/mac-mouse-fix/discussions/731)
 </details>
@@ -105,6 +127,16 @@ For more information on how exactly Mac Mouse Fix enhances your mouse, visit the
     It lets you do almost anything right from your mouse with its powerful customization options that are so simple and intuitive that anyone can use them.
   -->
 
+<!-- 
+  Note: We make these anchor link (`<a name="somename"></a>`) non-localizable, so that we can link to a specific section of the document in a language-agnostic way. 
+    Example: 
+      Linking into the German document with `https://github.com/noah-nuebling/mac-mouse-fix/blob/master/Markdown/LocalizedDocuments/de/Readme.md#macos-compatibility`
+      will work, even though the `## macOS compatibility` header is localized to `## macOS Kompatibilität` in German. If we didn't have the anchor links, we'd have to localize the link itself `[...]/LocalizedDocuments/de/Readme.md#macos-kompatibilität` - that's the problem that the anchor links solve.
+    Other:  
+      #macos-compatibility is called a 'url fragment identifier'
+-->
+
+<a name="features"></a> 
 ## Features
 
 See the [website](https://noah-nuebling.github.io/mac-mouse-fix-website#trackpad) for an overview of the features of Mac Mouse Fix, including video demos!
@@ -121,6 +153,7 @@ For more details, see the [Releases](https://github.com/noah-nuebling/mac-mouse-
     | 3.0.0
   -->
 
+<a name="installation"></a>
 ## Installation
 
 Download the latest version of Mac Mouse Fix on the [website](http://noah-nuebling.github.io/mac-mouse-fix-website/).
@@ -133,6 +166,7 @@ brew install mac-mouse-fix
 
 You can download older versions of Mac Mouse Fix under [Releases](https://github.com/noah-nuebling/mac-mouse-fix/releases).
 
+<a name="macos-compatibility"></a>
 ## macOS compatibility
 
 The latest version of Mac Mouse Fix is made for **macOS 11 Big Sur** or later.
@@ -141,11 +175,13 @@ If you're on macOS **10.15 Catalina**, macOS **10.14 Mojave**, or macOS **10.13 
     
 If you're on macOS **10.12 Sierra**, or **10.11 El Capitan**, you can use Mac Mouse Fix [2.2.0](https://github.com/noah-nuebling/mac-mouse-fix/releases/tag/2.2.0) or below.
 
+<a name="pricing"></a> 
 ## Pricing
 
 See the [website](https://noah-nuebling.github.io/mac-mouse-fix-website#price) for an overview of the pricing for Mac Mouse Fix 3.<br>
 Mac Mouse Fix 2 and below will remain free forever.
 
+<a name="uninstallation"></a> 
 ## Uninstallation
 
 Uninstall Mac Mouse Fix by simply moving it to the bin. 
@@ -154,6 +190,7 @@ However, there will be files left on your system. To get rid of these files I re
 
 Under macOS, it is not feasible for apps to delete these leftover files by themselves when you delete the app. That's why I highly recommend using an app like AppCleaner.
 
+<a name="what-people-say"></a> 
 ## What people say
 
 Thanks so much to everyone sharing their excitement about Mac Mouse Fix!<br>
@@ -169,6 +206,7 @@ On the [website](http://noah-nuebling.github.io/mac-mouse-fix-website/) you can 
     - (?If you know about other coverage of MMF let me know?) 
   -->
 
+<a name="tips"></a> 
 ## Tips
 
 - **Manage windows with a simple Click and Drag**
@@ -188,6 +226,7 @@ On the [website](http://noah-nuebling.github.io/mac-mouse-fix-website/) you can 
 
   <img src="../../../Markdown/Media/Apple-Keys-Demo.gif" width="700">
 
+<a name="questions"></a> 
 ## Questions
 
 - **Is Mac Mouse Fix native on Apple Silicon?**
@@ -293,6 +332,7 @@ On the [website](http://noah-nuebling.github.io/mac-mouse-fix-website/) you can 
 
     Yes! See the [Acknowledgements](../../../Markdown/LocalizedDocuments/zh-HK/Acknowledgements.md#-paypal-donations) for more info.
 
+<a name="how-you-can-contribute"></a> 
 ## How you can contribute
 
 There are several ways to help the project.<br>
@@ -337,7 +377,7 @@ Check out the [Acknowledgements](../../../Markdown/LocalizedDocuments/zh-HK/Ackn
 **Thank you** to everyone who has already contributed and supported me in trying to make the best mouse driver *of all time*! :)🚀
 
   <!--
-
+    <a name="background"></a> 
     ## Background
 
     <details>

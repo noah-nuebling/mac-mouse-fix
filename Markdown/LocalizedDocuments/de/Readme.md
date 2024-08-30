@@ -35,11 +35,33 @@
   <summary>󠁧󠁿🇩🇪 Deutsch</summary>
     
   [🇬🇧 English](../../../Readme.md)\
+  [🇦🇩 Català](../../../Markdown/LocalizedDocuments/ca/Readme.md)\
   **🇩🇪 Deutsch**\
+  [🇪🇸 Español](../../../Markdown/LocalizedDocuments/es/Readme.md)\
+  [🇫🇷 Français](../../../Markdown/LocalizedDocuments/fr/Readme.md)\
+  [🇮🇩 Indonesia](../../../Markdown/LocalizedDocuments/id/Readme.md)\
+  [🇮🇹 Italiano](../../../Markdown/LocalizedDocuments/it/Readme.md)\
+  [🇭🇺 Magyar](../../../Markdown/LocalizedDocuments/hu/Readme.md)\
+  [🇳🇱 Nederlands](../../../Markdown/LocalizedDocuments/nl/Readme.md)\
+  [🇵🇱 Polski](../../../Markdown/LocalizedDocuments/pl/Readme.md)\
+  [🇧🇷 Português (Brasil)](../../../Markdown/LocalizedDocuments/pt-BR/Readme.md)\
+  [🇵🇹 Português (Portugal)](../../../Markdown/LocalizedDocuments/pt-PT/Readme.md)\
+  [🇷🇴 Română](../../../Markdown/LocalizedDocuments/ro/Readme.md)\
+  [🇸🇪 Svenska](../../../Markdown/LocalizedDocuments/sv/Readme.md)\
   [🇻🇳 Tiếng Việt](../../../Markdown/LocalizedDocuments/vi/Readme.md)\
+  [🇹🇷 Türkçe](../../../Markdown/LocalizedDocuments/tr/Readme.md)\
+  [🇨🇿 Čeština](../../../Markdown/LocalizedDocuments/cs/Readme.md)\
+  [🇬🇷 Ελληνικά](../../../Markdown/LocalizedDocuments/el/Readme.md)\
+  [🇷🇺 Русский](../../../Markdown/LocalizedDocuments/ru/Readme.md)\
+  [🇺🇦 Українська](../../../Markdown/LocalizedDocuments/uk/Readme.md)\
+  [🇮🇱 עברית](../../../Markdown/LocalizedDocuments/he/Readme.md)\
+  [🇸🇦 العربية](../../../Markdown/LocalizedDocuments/ar/Readme.md)\
+  [🇮🇳 हिन्दी](../../../Markdown/LocalizedDocuments/hi/Readme.md)\
+  [🇹🇭 ไทย](../../../Markdown/LocalizedDocuments/th/Readme.md)\
   [🇨🇳 中文 (简体)](../../../Markdown/LocalizedDocuments/zh-Hans/Readme.md)\
   [🇨🇳 中文 (繁體)](../../../Markdown/LocalizedDocuments/zh-Hant/Readme.md)\
   [🇭🇰 中文（香港)](../../../Markdown/LocalizedDocuments/zh-HK/Readme.md)\
+  [🇯🇵 日本語](../../../Markdown/LocalizedDocuments/ja/Readme.md)\
   [🇰🇷 한국어](../../../Markdown/LocalizedDocuments/ko/Readme.md)\
   [Help translate Mac Mouse Fix to different languages!](https://github.com/noah-nuebling/mac-mouse-fix/discussions/731)
 </details>
@@ -99,6 +121,16 @@ Für mehr Info darüber, wie genau Mac Mouse Fix deine Maus verbessert, besuche 
     It lets you do almost anything right from your mouse with its powerful customization options that are so simple and intuitive that anyone can use them.
   -->
 
+<!-- 
+  Note: We make these anchor link (`<a name="somename"></a>`) non-localizable, so that we can link to a specific section of the document in a language-agnostic way. 
+    Example: 
+      Linking into the German document with `https://github.com/noah-nuebling/mac-mouse-fix/blob/master/Markdown/LocalizedDocuments/de/Readme.md#macos-compatibility`
+      will work, even though the `## macOS compatibility` header is localized to `## macOS Kompatibilität` in German. If we didn't have the anchor links, we'd have to localize the link itself `[...]/LocalizedDocuments/de/Readme.md#macos-kompatibilität` - that's the problem that the anchor links solve.
+    Other:  
+      #macos-compatibility is called a 'url fragment identifier'
+-->
+
+<a name="features"></a> 
 ## Funktionen
 
 Siehe die [Website](https://noah-nuebling.github.io/mac-mouse-fix-website#trackpad) für einen Überblick über die Funktionen von Mac Mouse Fix, einschließlich Videodemos!
@@ -115,6 +147,7 @@ Mehr Details findest du unter [Releases](https://github.com/noah-nuebling/mac-mo
     | 3.0.0
   -->
 
+<a name="installation"></a>
 ## Installation
 
 Lade die neueste Version von Mac Mouse Fix auf der [Website](http://noah-nuebling.github.io/mac-mouse-fix-website/) herunter.
@@ -127,6 +160,7 @@ brew install mac-mouse-fix
 
 Ältere Versionen von Mac Mouse Fix kannst du unter [Releases](https://github.com/noah-nuebling/mac-mouse-fix/releases) herunterladen.
 
+<a name="macos-compatibility"></a>
 ## macOS-Kompatibilität
 
 Die neueste Version von Mac Mouse Fix ist für **macOS 11 Big Sur** oder später gemacht.
@@ -135,11 +169,13 @@ Wenn du macOS **10.15 Catalina**, macOS **10.14 Mojave** oder macOS **10.13 High
 
 Wenn du macOS **10.12 Sierra** oder **10.11 El Capitan** benutzt, kannst du Mac Mouse Fix [2.2.0](https://github.com/noah-nuebling/mac-mouse-fix/releases/tag/2.2.0) oder früher verwenden.
 
+<a name="pricing"></a> 
 ## Preisgestaltung
 
 Einen Überblick über die Preisgestaltung von Mac Mouse Fix 3 findest du auf der [Website](https://noah-nuebling.github.io/mac-mouse-fix-website#price).<br>
 Mac Mouse Fix 2 und früher bleiben für immer kostenlos.
 
+<a name="uninstallation"></a> 
 ## Deinstallation
 
 Deinstalliere Mac Mouse Fix, indem du es einfach in den Papierkorb verschiebst.
@@ -148,6 +184,7 @@ Es werden jedoch Dateien auf deinem System zurückbleiben. Um diese Dateien zu e
 
 Unter macOS ist es für Apps nicht machbar, diese hinterlassenen Dateien selbst zu löschen, wenn du die App löschst. Deshalb empfehle ich wärmstens die Verwendung einer App wie AppCleaner.
 
+<a name="what-people-say"></a> 
 ## Was die Leute sagen
 
 Vielen Dank an alle, die ihre Begeisterung über Mac Mouse Fix geteilt haben!<br>
@@ -163,6 +200,7 @@ Auf der [Website](http://noah-nuebling.github.io/mac-mouse-fix-website/) kannst 
     - (?If you know about other coverage of MMF let me know?) 
   -->
 
+<a name="tips"></a> 
 ## Tipps
 
 - **Fenster einfach per Klicken und Ziehen verwalten**
@@ -182,6 +220,7 @@ Auf der [Website](http://noah-nuebling.github.io/mac-mouse-fix-website/) kannst 
 
   <img src="../../../Markdown/Media/Apple-Keys-Demo.gif" width="700">
 
+<a name="questions"></a> 
 ## Fragen
 
 - **Läuft Mac Mouse Fix nativ auf Apple Silicon?**
@@ -290,6 +329,7 @@ Auf der [Website](http://noah-nuebling.github.io/mac-mouse-fix-website/) kannst 
 
     Ja! Siehe die [Danksagungen](../../../Markdown/LocalizedDocuments/de/Acknowledgements.md#-paypal-donations) für mehr Informationen.
 
+<a name="how-you-can-contribute"></a> 
 ## Wie du beitragen kannst
 
 Es gibt einige Möglichkeiten, das Projekt zu unterstützen.<br>
@@ -334,7 +374,7 @@ Schau dir die [Danksagungen](../../../Markdown/LocalizedDocuments/de/Acknowledge
 **Danke** an alle, die bereits beigetragen und mich bei meinem Versuch unterstützt haben, den besten Maustreiber *aller Zeiten* zu machen! :)🚀
 
   <!--
-
+    <a name="background"></a> 
     ## Background
 
     <details>
