@@ -13,9 +13,16 @@ NS_ASSUME_NONNULL_BEGIN
 
 typedef NS_ENUM(NSInteger, MFLinkID) {
     
+    /// Note:
+    ///     The names of these enum cases orient themselves after the redirection-service target names (See https://github.com/noah-nuebling/redirection-service/tree/main)
+    ///     (We use the redirection-service to implement these unless there's a reason not to. For example for mailto:-links we don't want to have to open the browser to then open the redirection-service just to then open the Mail app.)
+    
     /// General
     kMFLinkIDMacOSSettingsLoginItems,
     kMFLinkIDMailToNoah,
+    
+    /// Feedback
+    kMFLinkIDFeedbackBugReport,
     
     /// Guides
     kMFLinkIDCapturedButtonsGuide,
@@ -25,8 +32,6 @@ typedef NS_ENUM(NSInteger, MFLinkID) {
 };
 
 @interface Links : NSObject
-
-
 
 + (NSString *_Nullable)link:(MFLinkID)linkID;
 

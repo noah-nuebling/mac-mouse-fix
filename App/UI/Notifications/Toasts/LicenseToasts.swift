@@ -89,6 +89,7 @@ import Foundation
             
         } else {
             message = NSLocalizedString("license-toast.unknown-reason", comment: "")
+            message = String(format: message, (Links.link(MFLinkID.feedbackBugReport) ?? ""))
         }
         
         assert(message != "")

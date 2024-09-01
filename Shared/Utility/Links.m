@@ -9,6 +9,7 @@
 
 #import "Links.h"
 #import "SharedUtility.h"
+#import "Logging.h"
 
 @implementation Links
 
@@ -20,6 +21,8 @@
     
     switch (linkID) {
             
+        /// General
+            
         case kMFLinkIDMacOSSettingsLoginItems:
             result = @"x-apple.systempreferences:com.apple.LoginItems-Settings.extension"; /// Don't use redirection service so the browser isn't opened.
             break;
@@ -27,9 +30,17 @@
         case kMFLinkIDMailToNoah:
             result = @"mailto:noah.n.public@gmail.com";
             break;
+        
+        /// Feedback
+            
+        case kMFLinkIDFeedbackBugReport:
+            result = redirectionServiceLink(@"mmf-feedback-bug-report", nil, nil, @{ @"locale": NSLocale.currentLocale.localeIdentifier }); ///  https://noah-nuebling.github.io/mac-mouse-fix-feedback-assistant/?type=bug-report
+            
+            break;
+        /// Guides
             
         case kMFLinkIDCapturedButtonsGuide:
-            result = [Links redirectionServiceLinkWithTarget:@"mmf-captured-buttons-guide" params:@{ @"locale": NSLocale.currentLocale.localeIdentifier }];
+            result = redirectionServiceLink(@"mmf-captured-buttons-guide", nil, nil, @{ @"locale": NSLocale.currentLocale.localeIdentifier });
             break;
         
         case kMFLinkIDCapturedScrollingGuide:
@@ -38,21 +49,19 @@
             break;
             
         case kMFLinkIDVenturaEnablingGuide:
-            result = [Links redirectionServiceLinkWithTarget:@"mmf-ventura-enabling-guide" params:@{ @"locale": NSLocale.currentLocale.localeIdentifier }]; /// https://github.com/noah-nuebling/mac-mouse-fix/discussions/861
+            result = redirectionServiceLink(@"mmf-ventura-enabling-guide", nil, nil, @{ @"locale": NSLocale.currentLocale.localeIdentifier }); /// https://github.com/noah-nuebling/mac-mouse-fix/discussions/861
             break;
             
         default:
             break;
     }
     
+    DDLogDebug(@"Links.m: Generated link: %lld -> %@", (long long)linkID, result);
+    
     return result;
 }
 
-+ (NSString *)redirectionServiceLinkWithTarget:(NSString *_Nonnull)target params:(NSDictionary *_Nullable)params {
-    return [Links redirectionServiceLinkWithTarget:target message:nil pageTitle:nil params:params];
-}
-
-+ (NSString *)redirectionServiceLinkWithTarget:(NSString *_Nonnull)target message:(NSString *_Nullable)message pageTitle:(NSString *_Nullable)pageTitle params:(NSDictionary *_Nullable)otherQueryParamsDict {
+static NSString *redirectionServiceLink(NSString *_Nonnull target, NSString *_Nullable message, NSString *_Nullable pageTitle, NSDictionary *_Nullable otherQueryParamsDict) {
     
     /// Construct a link for our 'redirection service' website.
     ///
@@ -63,7 +72,7 @@
     ///
     ///  Usage example:
     ///     ```
-    ///     [Links redirectionServiceLinkWithTarget:@"mailto-noah" message:@"One Second..." pageTitle:@"Redirecting..." params:@{
+    ///     redirectionServiceLinkWithTarget(@"mailto-noah", @"One Second...", @"Redirecting...", @{
     ///         @"subject": @"Cool Beans",
     ///         @"body":    @"aaaaa",
     ///     }];
@@ -89,7 +98,7 @@
     
     /// Define helper function
     NSString *(^percentEscaped)(NSString *) = ^(NSString *str){
-        return [str stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]];
+        return [str stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]]; /// We use a percent escape specifically for url-queries (Everything after `/?`)
     };
     
     /// Preprocess message
@@ -109,9 +118,10 @@
         
         /// Validate
         assert([key isKindOfClass:[NSString class]]);
+        assert(key.length > 0);
         assert([value isKindOfClass:[NSString class]]);
         
-        /// Encode
+        /// Escape
         NSString *keyEscaped = percentEscaped(key);
         NSString *valueEscaped = percentEscaped(value);
         

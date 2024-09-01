@@ -7254,62 +7254,62 @@
       "localizations" : {
         "de" : {
           "stringUnit" : {
-            "state" : "translated",
-            "value" : "Die Aktivierung deiner Lizenz ist aus **unbekannten Gründen** gescheitert\n\nBitte schreibe [hier](https://noah-nuebling.github.io/mac-mouse-fix-feedback-assistant/?type=bug-report) einen Fehlerbericht"
+            "state" : "needs_review",
+            "value" : "Die Aktivierung deiner Lizenz ist aus **unbekannten Gründen** gescheitert\n\nBitte schreibe [hier](%@) einen Fehlerbericht"
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Activating your license failed for **unknown reasons**\n\nPlease write a **Bug Report** [here](https://noah-nuebling.github.io/mac-mouse-fix-feedback-assistant/?type=bug-report)"
+            "value" : "Activating your license failed for **unknown reasons**\n\nPlease write a **Bug Report** [here](%@)"
           }
         },
         "fr" : {
           "stringUnit" : {
-            "state" : "translated",
-            "value" : "L'activation de votre licence a échoué pour des *raisons inconnues**\n\nVeuillez **signaler le bug** [ici](https://noah-nuebling.github.io/mac-mouse-fix-feedback-assistant/?type=bug-report)"
+            "state" : "needs_review",
+            "value" : "L'activation de votre licence a échoué pour des *raisons inconnues**\n\nVeuillez **signaler le bug** [ici](%@)"
           }
         },
         "ko" : {
           "stringUnit" : {
-            "state" : "translated",
-            "value" : "**알 수 없는 이유**로 라이센스를 활성화하지 못했습니다.\n\n[여기](https://noah-nuebling.github.io/mac-mouse-fix-feedback-assistant/?type=bug-report)에서 **버그 제보**를 작성해주십시오."
+            "state" : "needs_review",
+            "value" : "**알 수 없는 이유**로 라이센스를 활성화하지 못했습니다.\n\n[여기](%@)에서 **버그 제보**를 작성해주십시오."
           }
         },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "A ativação da sua Licença falhou por **motivos desconhecidos**\n\nPor favor, envie um **Relatório de Bug** [aqui](https://noah-nuebling.github.io/mac-mouse-fix-feedback-assistant/ ?type=relatório de bug)"
+            "value" : "A ativação da sua Licença falhou por **motivos desconhecidos**\n\nPor favor, envie um **Relatório de Bug** [aqui](%@)"
           }
         },
         "tr" : {
           "stringUnit" : {
-            "state" : "translated",
-            "value" : "Lisansınızı etkinleştirme işlemi **bilinmeyen nedenlerden dolayı** başarısız oldu\n\nLütfen [buradan](https://noah-nuebling.github.io/mac-mouse-fix-feedback-assistant/?type=bug-report) bir **Hata Raporu** yazın"
+            "state" : "needs_review",
+            "value" : "Lisansınızı etkinleştirme işlemi **bilinmeyen nedenlerden dolayı** başarısız oldu\n\nLütfen [buradan](%@) bir **Hata Raporu** yazın"
           }
         },
         "vi" : {
           "stringUnit" : {
-            "state" : "translated",
-            "value" : "Kích hoạt thất bạn do một **lỗi không xác định**\n\nVui lòng gửi một **Báo cáo lỗi** [tại đây](https://noah-nuebling.github.io/mac-mouse-fix-feedback-assistant/?type=bug-report)"
+            "state" : "needs_review",
+            "value" : "Kích hoạt thất bạn do một **lỗi không xác định**\n\nVui lòng gửi một **Báo cáo lỗi** [tại đây](%@)"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
-            "state" : "translated",
-            "value" : "由于**未知的原因**，许可证激活失败。\n\n请到[这里](https://noah-nuebling.github.io/mac-mouse-fix-feedback-assistant/?type=bug-report)提交**错误报告**"
+            "state" : "needs_review",
+            "value" : "由于**未知的原因**，许可证激活失败。\n\n请到[这里](%@)提交**错误报告**"
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
-            "state" : "translated",
-            "value" : "由於**未知的原因**，許可證啟用失敗。\n\n請到[這裡](https://noah-nuebling.github.io/mac-mouse-fix-feedback-assistant/?type=bug-report)回報**錯誤**"
+            "state" : "needs_review",
+            "value" : "由於**未知的原因**，許可證啟用失敗。\n\n請到[這裡](%@)回報**錯誤**"
           }
         },
         "zh-HK" : {
           "stringUnit" : {
-            "state" : "translated",
-            "value" : "由於**未知的原因**，許可證啟用失敗。\n\n請到[這裏](https://noah-nuebling.github.io/mac-mouse-fix-feedback-assistant/?type=bug-report)報告**錯誤**"
+            "state" : "needs_review",
+            "value" : "由於**未知的原因**，許可證啟用失敗。\n\n請到[這裏](%@)報告**錯誤**"
           }
         }
       }
