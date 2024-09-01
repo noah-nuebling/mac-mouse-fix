@@ -20,21 +20,33 @@
     NSDictionary<NSString *, NSString *(^)(void)> *map = @{
             
             /// `macmousefix:...` links
-            kMFLinkIDMMFActivate: ^{
+            kMFLinkIDMMFLActivate: ^{
                 return @"macmousefix:activate";
             },
             
-            /// General
+            /// Local links
+            ///     Don't use redirection service for these so the browser isn't opened.
             kMFLinkIDMacOSSettingsLoginItems: ^{
-                return @"x-apple.systempreferences:com.apple.LoginItems-Settings.extension"; /// Don't use redirection service so the browser isn't opened.
+                return @"x-apple.systempreferences:com.apple.LoginItems-Settings.extension";
             },
             kMFLinkIDMailToNoah: ^{
                 return @"mailto:noah.n.public@gmail.com";
             },
             
+            /// Main places
+            kMFLinkIDWebsite: ^{
+                return @"https://macmousefix.com/"; /// No need for redirection-service since this has javascript to adapt its locale to the user's browser settings, and if we ever change the domain, we'll set up a redirect directly on the page.
+            },
+            kMFLinkIDGitHub: ^{
+                return redirectionServiceLink(@"mmf-github-readme", nil, nil, @{ @"locale": NSLocale.currentLocale.localeIdentifier });
+            },
+            
             /// Feedback
             kMFLinkIDFeedbackBugReport: ^{
                 return redirectionServiceLink(@"mmf-feedback-bug-report", nil, nil, @{ @"locale": NSLocale.currentLocale.localeIdentifier }); ///  https://noah-nuebling.github.io/mac-mouse-fix-feedback-assistant/?type=bug-report
+            },
+            kMFLinkIDFeedbackFeatureRequest: ^{
+                return redirectionServiceLink(@"mmf-feedback-feature-request", nil, nil, @{ @"locale": NSLocale.currentLocale.localeIdentifier });
             },
             
             /// Guides

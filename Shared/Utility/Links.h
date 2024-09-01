@@ -25,14 +25,19 @@ NS_ASSUME_NONNULL_BEGIN
 
 typedef NSString * MFLinkID;
 
-/// 'macmousefix:...'
-#define kMFLinkIDMMFActivate @"MMFActivate"
+/// 'macmousefix:...' links
+#define kMFLinkIDMMFLActivate @"MMFLActivate"
 
-/// General
+/// Local links
 #define kMFLinkIDMacOSSettingsLoginItems @"MacOSSettingsLoginItems"
 #define kMFLinkIDMailToNoah @"MailToNoah"
 
+/// Main places
+#define kMFLinkIDWebsite @"Website"
+#define kMFLinkIDGitHub @"GitHub"
+
 /// Feedback
+#define kMFLinkIDFeedbackFeatureRequest @"FeedbackFeatureRequest"
 #define kMFLinkIDFeedbackBugReport @"FeedbackBugReport"
 
 /// Guides

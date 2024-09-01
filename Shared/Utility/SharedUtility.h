@@ -107,7 +107,7 @@ extern inline bool _objc_isTaggedPointer(const void *ptr);     /// Copied from h
 ///     and then define the underlying NSString values inside the .m file. However, using static is easier since it lets us declare everything in one place and I'm sure the performance difference is negligible.
 ///
 /// Probably don't use this:
-///     Using `NS_TYPED_ENUM` makes swift rename the cases. E.g. `kMFLinkIDCapturedButtonsGuide` -> `MFLinkID.capturedButtonsGuide`. However this breaks for some of our cases (MMFActivate), and makes it harder to search the project for usages of the cases.
+///     Using `NS_TYPED_ENUM` makes swift rename the cases. E.g. `kMFLinkIDCapturedButtonsGuide` -> `MFLinkID.capturedButtonsGuide`. However this breaks for some of our cases (MMFLActivate), and makes it harder to search the project for usages of the cases.
 ///     The main benefit of this is that Swift lets you omit the enum name (so you just have to type `.capturedButtonsGuide` instead of `MFLinkID.capturedButtonsGuide`), but omitting stuff like that makes compile time slower afaik, which I really want to prevent - so I wouldn't do that anyways. (Swift compile times are painfully slow)
 ///     So in conclusion - we don't want the renaming.
 ///

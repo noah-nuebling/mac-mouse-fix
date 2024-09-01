@@ -157,7 +157,7 @@ class TrialSectionManager {
                 /// Setup hyperlink
                 
                 let linkTitle = NSLocalizedString("trial-notif.activate-license-button", comment: "")
-                let link = Hyperlink(title: linkTitle, linkID: kMFLinkIDMMFActivate, alwaysTracking: true, leftPadding: 30)
+                let link = Hyperlink(title: linkTitle, linkID: kMFLinkIDMMFLActivate, alwaysTracking: true, leftPadding: 30)
                 link?.font = NSFont.systemFont(ofSize: 13, weight: .regular)
                 
                 link?.translatesAutoresizingMaskIntoConstraints = false
