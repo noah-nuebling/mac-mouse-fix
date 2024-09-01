@@ -6210,66 +6210,66 @@
       }
     },
     "is-disabled-toast" : {
-      "comment" : "",
+      "comment" : "Note: The \"Login Items Settings\" can be found at \"System Settings > General > Login Items & Extensions\" under macOS 13 Ventura and later. You should probably use the same terminology that is used inside macOS' System Settings here.",
       "localizations" : {
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Mac Mouse Fix wurde in den Systemeinstellungen **deaktiviert**\n\nUm Mac Mouse Fix zu aktivieren:\n\n1. Öffne die [Anmeldeobjekte-Einstellungen](x-apple.systempreferences:com.apple.LoginItems-Settings.extension)\n2. Aktiviere 'Mac Mouse Fix.app'"
+            "value" : "Mac Mouse Fix wurde in den Systemeinstellungen **deaktiviert**\n\nUm Mac Mouse Fix zu aktivieren:\n\n1. Öffne die [Anmeldeobjekte-Einstellungen](%@)\n2. Aktiviere 'Mac Mouse Fix.app'"
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Mac Mouse Fix was **disabled** in System Settings\n\nTo enable Mac Mouse Fix:\n\n1. Go to [Login Items Settings](x-apple.systempreferences:com.apple.LoginItems-Settings.extension)\n2. Switch on 'Mac Mouse Fix.app'"
+            "value" : "Mac Mouse Fix was **disabled** in System Settings\n\nTo enable Mac Mouse Fix:\n\n1. Go to [Login Items Settings](%@)\n2. Switch on 'Mac Mouse Fix.app'"
           }
         },
         "fr" : {
           "stringUnit" : {
-            "state" : "translated",
-            "value" : "Mac Mouse Fix a été **désactivé** dans les Réglages Système\n\nPour activer Mac Mouse Fix :\n\n1. Se rendre dans les [paramètres Ouverture](x-apple.systempreferences:com.apple.LoginItems-Settings.extension)\n2. Activer « Mac Mouse Fix.app »"
+            "state" : "needs_review",
+            "value" : "Mac Mouse Fix a été **désactivé** dans les Réglages Système\n\nPour activer Mac Mouse Fix :\n\n1. Se rendre dans les [paramètres Ouverture](%@)\n2. Activer « Mac Mouse Fix.app »"
           }
         },
         "ko" : {
           "stringUnit" : {
-            "state" : "translated",
-            "value" : "시스템 설정에서 Mac Mouse Fix가 **비활성화**되어있습니다.\n\nMac Mouse Fix를 사용하려면 다음 절차를 따르십시오:\n\n1. [로그인 항목 설정](x-apple.systempreferences:com.apple.LoginItems-Settings.extension)을 엽니다.\n2. 'Mac Mouse Fix.app' 항목을 허용합니다."
+            "state" : "needs_review",
+            "value" : "시스템 설정에서 Mac Mouse Fix가 **비활성화**되어있습니다.\n\nMac Mouse Fix를 사용하려면 다음 절차를 따르십시오:\n\n1. [로그인 항목 설정](%@)을 엽니다.\n2. 'Mac Mouse Fix.app' 항목을 허용합니다."
           }
         },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "O Mac Mouse Fix foi **desativado** nos Ajustes do Sistema\n\nPara ativá-lo:\n\n1. Vá para [Itens de Início](x-apple.systempreferences:com.apple.LoginItems-Settings.extension )\n2. Ative 'Mac Mouse Fix.app'"
+            "value" : "O Mac Mouse Fix foi **desativado** nos Ajustes do Sistema\n\nPara ativá-lo:\n\n1. Vá para [Itens de Início](%@)\n2. Ative 'Mac Mouse Fix.app'"
           }
         },
         "tr" : {
           "stringUnit" : {
-            "state" : "translated",
-            "value" : "Mac Mouse Fix, Sistem Ayarları'nda **devre dışı bırakıldı**\n\nMac Mouse Fix'i etkinleştirmek için:\n\n1. [Giriş Öğeleri Ayarları'na](x-apple.systempreferences:com.apple.LoginItems-Settings.extension) gidin\n2. 'Mac Mouse Fix.app' seçeneğini açın"
+            "state" : "needs_review",
+            "value" : "Mac Mouse Fix, Sistem Ayarları'nda **devre dışı bırakıldı**\n\nMac Mouse Fix'i etkinleştirmek için:\n\n1. [Giriş Öğeleri Ayarları'na](%@) gidin\n2. 'Mac Mouse Fix.app' seçeneğini açın"
           }
         },
         "vi" : {
           "stringUnit" : {
-            "state" : "translated",
-            "value" : "Mac Mouse Fix đã **tắt** trong System Settings\n\nĐể mở lại Mac Mouse Fix:\n\n1. Đi đến [Login Items Settings](x-apple.systempreferences:com.apple.LoginItems-Settings.extension)\n2. Bật 'Mac Mouse Fix.app'"
+            "state" : "needs_review",
+            "value" : "Mac Mouse Fix đã **tắt** trong System Settings\n\nĐể mở lại Mac Mouse Fix:\n\n1. Đi đến [Login Items Settings](%@)\n2. Bật 'Mac Mouse Fix.app'"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
-            "state" : "translated",
-            "value" : "系统偏好设置中已**禁用**Mac Mouse Fix\n\n若要启用Mac Mouse Fix：\n\n⒈前往[登录项](x-apple.systempreferences:com.apple.LoginItems-Settings.extension)\n⒉开启“Mac Mouse Fix.app”"
+            "state" : "needs_review",
+            "value" : "系统偏好设置中已**禁用**Mac Mouse Fix\n\n若要启用Mac Mouse Fix：\n\n⒈前往[登录项](%@)\n⒉开启“Mac Mouse Fix.app”"
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
-            "state" : "translated",
-            "value" : "系統偏好設定中已**禁用**Mac Mouse Fix\n\n若要啟用Mac Mouse Fix：\n\n⒈前往[登入項目](x-apple.systempreferences:com.apple.LoginItems-Settings.extension)\n⒉開啟「Mac Mouse Fix.app」"
+            "state" : "needs_review",
+            "value" : "系統偏好設定中已**禁用**Mac Mouse Fix\n\n若要啟用Mac Mouse Fix：\n\n⒈前往[登入項目](%@)\n⒉開啟「Mac Mouse Fix.app」"
           }
         },
         "zh-HK" : {
           "stringUnit" : {
-            "state" : "translated",
-            "value" : "系統偏好設定中已**禁用**Mac Mouse Fix\n\n若要啟用Mac Mouse Fix：\n\n⒈前往[登入項目](x-apple.systempreferences:com.apple.LoginItems-Settings.extension)\n⒉開啟「Mac Mouse Fix.app」"
+            "state" : "needs_review",
+            "value" : "系統偏好設定中已**禁用**Mac Mouse Fix\n\n若要啟用Mac Mouse Fix：\n\n⒈前往[登入項目](%@)\n⒉開啟「Mac Mouse Fix.app」"
           }
         }
       }

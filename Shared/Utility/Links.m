@@ -20,8 +20,12 @@
     
     switch (linkID) {
             
+        case kMFLinkIDMacOSSettingsLoginItems:
+            result = @"x-apple.systempreferences:com.apple.LoginItems-Settings.extension"; /// Don't use redirection service so the browser isn't opened.
+            break;
+            
         case kMFLinkIDMailToNoah:
-            result = @"mailto:noah.n.public@gmail.com"; /// Don't use redirection service so the browser isn't opened.
+            result = @"mailto:noah.n.public@gmail.com";
             break;
             
         case kMFLinkIDCapturedButtonsGuide:

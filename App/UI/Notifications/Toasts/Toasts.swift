@@ -32,7 +32,8 @@ import Foundation
             }
         },
         "k-is-disabled-toast": {
-            let messageRaw = NSLocalizedString("is-disabled-toast", comment: "")
+            var messageRaw = NSLocalizedString("is-disabled-toast", comment: "Note: The \"Login Items Settings\" can be found at \"System Settings > General > Login Items & Extensions\" under macOS 13 Ventura and later. You should probably use the same terminology that is used inside macOS' System Settings here.")
+            messageRaw = String(format: messageRaw, Links.link(MFLinkID.macOSSettingsLoginItems) ?? "")
             
             let message = NSMutableAttributedString(coolMarkdown: messageRaw)
             DispatchQueue.main.async { /// UI stuff needs to be called from the main thread
