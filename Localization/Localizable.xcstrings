@@ -5961,19 +5961,19 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Wenn du **Probleme** hast, die App **einzuschalten**, klicke&nbsp;[hier](https://github.com/noah-nuebling/mac-mouse-fix/discussions/861)."
+            "value" : "Wenn du **Probleme** hast, die App **einzuschalten**, klicke&nbsp;[hier](%@)."
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "If you have **problems enabling** the app, click&nbsp;[here](https://github.com/noah-nuebling/mac-mouse-fix/discussions/861)."
+            "value" : "If you have **problems enabling** the app, click&nbsp;[here](%@)."
           }
         },
         "fr" : {
           "stringUnit" : {
-            "state" : "translated",
-            "value" : "Si vous rencontrez des **problèmes pour activer** l'app, cliquez&nbsp;[ici](https://github.com/noah-nuebling/mac-mouse-fix/discussions/861)."
+            "state" : "needs_review",
+            "value" : "Si vous rencontrez des **problèmes pour activer** l'app, cliquez&nbsp;[ici](%@)."
           }
         },
         "ko" : {
@@ -5984,8 +5984,8 @@
         },
         "tr" : {
           "stringUnit" : {
-            "state" : "translated",
-            "value" : "Uygulamayı **etkinleştirme konusunda sorun yaşıyorsanız**, [buraya](https://github.com/noah-nuebling/mac-mouse-fix/discussions/861) tıklayın."
+            "state" : "needs_review",
+            "value" : "Uygulamayı **etkinleştirme konusunda sorun yaşıyorsanız**, [buraya](%@) tıklayın."
           }
         },
         "vi" : {

@@ -29,12 +29,12 @@
             break;
         
         case kMFLinkIDCapturedScrollingGuide:
-            /// We don't have a
+            assert(false); /// We don't have a guide for scroll-capturing atm (01.09.2024) I think we probably don't need one unless people have frequent questions.
             result = nil;
             break;
             
         case kMFLinkIDVenturaEnablingGuide:
-            result = [Links redirectionServiceLinkWithTarget:@"mmf-ventura-enabling-guide" params:@{ @"locale": NSLocale.currentLocale.localeIdentifier }];
+            result = [Links redirectionServiceLinkWithTarget:@"mmf-ventura-enabling-guide" params:@{ @"locale": NSLocale.currentLocale.localeIdentifier }]; /// https://github.com/noah-nuebling/mac-mouse-fix/discussions/861
             break;
             
         default:
@@ -69,6 +69,8 @@
     ///     ```
     ///     https://noah-nuebling.github.io/redirection-service?message=One%20Second...&page-title=Redirecting...&target=mailto-noah&body=aaaaa&subject=Cool%20Beans
     ///     ```
+    ///
+    ///     (Note: We should actually use the redirection service for mailto-links, since that opens a browser window, instead of opening the mail app directly.)
     
     /// Guard target
     if (target == nil || target.length == 0) {

@@ -11,9 +11,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface Links : NSObject
-
-typedef enum {
+typedef NS_ENUM(NSInteger, MFLinkID) {
     
     /// General
     kMFLinkIDMailToNoah,
@@ -23,7 +21,11 @@ typedef enum {
     kMFLinkIDCapturedScrollingGuide,
     kMFLinkIDVenturaEnablingGuide,
     
-} MFLinkID;
+};
+
+@interface Links : NSObject
+
+
 
 + (NSString *_Nullable)link:(MFLinkID)linkID;
 
