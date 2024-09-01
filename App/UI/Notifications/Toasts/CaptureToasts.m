@@ -14,6 +14,7 @@
 #import "ToastController.h"
 #import "AppDelegate.h"
 #import "SharedUtility.h"
+#import "Links.h"
 #import "Mac_Mouse_Fix-Swift.h"
 
 @implementation CaptureToasts
@@ -103,7 +104,8 @@ static NSAttributedString *createSimpleNotificationBody(BOOL didGetCaptured, MFC
     assert(rawBody.length > 0);
     
     /// Get learn more string
-    NSAttributedString *learnMoreString = [NSAttributedString attributedStringWithCoolMarkdown:getLocalizedString(inputType, @"link")];
+    NSString *learnMoreStringRaw = getLocalizedString(inputType, @"link");
+    NSAttributedString *learnMoreString = learnMoreStringRaw ? [NSAttributedString attributedStringWithCoolMarkdown:learnMoreStringRaw] : nil;
     
     /// Apply markdown to rawBody
     NSAttributedString *body = [NSAttributedString attributedStringWithCoolMarkdown:rawBody];
@@ -120,8 +122,10 @@ static NSAttributedString *createSimpleNotificationBody(BOOL didGetCaptured, MFC
     }
     
     /// Attach learnMore string
-    NSAttributedString *separator = @"\n\n".attributed;
-    body = [[body attributedStringByAppending:separator] attributedStringByAppending:learnMoreString];
+    if (learnMoreString != nil && learnMoreString.length > 0) {
+        NSAttributedString *separator = @"\n\n".attributed;
+        body = [[body attributedStringByAppending:separator] attributedStringByAppending:learnMoreString];
+    }
     
     /// Return
     return body;
@@ -264,7 +268,7 @@ static NSString *getLocalizedString(MFCapturedInputType inputType, NSString *sim
             @"uncaptured.body": NSLocalizedString(@"capture-toast.scroll.uncaptured.body", @""),
             @"uncaptured.hint": NSLocalizedString(@"capture-toast.scroll.uncaptured.hint", @""),
             
-            @"link": NSLocalizedString(@"capture-toast.scroll.link", @""),
+//            @"link": NSLocalizedString(@"capture-toast.scroll.link", @""),
         };
     } else {
         assert(false); /// We haven't implemented the other inputTypes, yet.
@@ -274,8 +278,19 @@ static NSString *getLocalizedString(MFCapturedInputType inputType, NSString *sim
     /// Get value from the map
     NSString *result = map[simpleKey];
     
-    /// Validate
-    assert(result != nil);
+    /// Insert url
+    if ([simpleKey isEqual:@"link"] && result != nil && result.length > 0) {
+        NSString *linkURL = nil;
+        if (inputType == kMFCapturedInputTypeButtons) {
+            linkURL = [Links link:kMFLinkIDCapturedButtonsGuide];
+        } else if (inputType == kMFCapturedInputTypeScroll) {
+            linkURL = @"";
+        } else {
+            assert(false);
+            linkURL = @"";
+        }
+        result = stringf(result, linkURL);
+    }
     
     /// Return
     return result;

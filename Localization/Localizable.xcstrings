@@ -2812,61 +2812,61 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "[Erfahre mehr](https://github.com/noah-nuebling/mac-mouse-fix/discussions/112)"
+            "value" : "[Erfahre mehr](%@)"
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "[Learn More](https://github.com/noah-nuebling/mac-mouse-fix/discussions/112)"
+            "value" : "[Learn More](%@)"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "[En savoir plus](https://github.com/noah-nuebling/mac-mouse-fix/discussions/112)"
+            "value" : "[En savoir plus](%@)"
           }
         },
         "ko" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "[더 알아보기](https://github.com/noah-nuebling/mac-mouse-fix/discussions/112)"
+            "value" : "[더 알아보기](%@)"
           }
         },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "[Saber mais](https://github.com/noah-nuebling/mac-mouse-fix/discussions/112)"
+            "value" : "[Saber mais](%@)"
           }
         },
         "tr" : {
           "stringUnit" : {
-            "state" : "translated",
-            "value" : "Daha Fazla Bilgi Edinin"
+            "state" : "needs_review",
+            "value" : "[Daha Fazla Bilgi Edinin](%@)"
           }
         },
         "vi" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "[Đọc thêm](https://github.com/noah-nuebling/mac-mouse-fix/discussions/112)"
+            "value" : "[Đọc thêm](%@)"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "[了解更多](https://github.com/noah-nuebling/mac-mouse-fix/discussions/112)"
+            "value" : "[了解更多](%@)"
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "[進一步瞭解](https://github.com/noah-nuebling/mac-mouse-fix/discussions/112)"
+            "value" : "[進一步瞭解](%@)"
           }
         },
         "zh-HK" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "[了解更多](https://github.com/noah-nuebling/mac-mouse-fix/discussions/112)"
+            "value" : "[了解更多](%@)"
           }
         }
       }
@@ -3462,61 +3462,61 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "[Erfahre mehr](https://github.com/noah-nuebling/mac-mouse-fix/discussions/112)"
+            "value" : "[Erfahre mehr](%@)"
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "[Learn More](https://github.com/noah-nuebling/mac-mouse-fix/discussions/112)"
+            "value" : "[Learn More](%@)"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "[En savoir plus](https://github.com/noah-nuebling/mac-mouse-fix/discussions/112)"
+            "value" : "[En savoir plus](%@)"
           }
         },
         "ko" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "[더 알아보기](https://github.com/noah-nuebling/mac-mouse-fix/discussions/112)"
+            "value" : "[더 알아보기](%@)"
           }
         },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "[Saber mais](https://github.com/noah-nuebling/mac-mouse-fix/discussions/112)"
+            "value" : "[Saber mais](%@)"
           }
         },
         "tr" : {
           "stringUnit" : {
-            "state" : "translated",
-            "value" : "Daha Fazla Bilgi Edinin"
+            "state" : "needs_review",
+            "value" : "[Daha Fazla Bilgi Edinin](%@)"
           }
         },
         "vi" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "[Đọc thêm](https://github.com/noah-nuebling/mac-mouse-fix/discussions/112)"
+            "value" : "[Đọc thêm](%@)"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "[了解更多](https://github.com/noah-nuebling/mac-mouse-fix/discussions/112)"
+            "value" : "[了解更多](%@)"
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "[進一步瞭解](https://github.com/noah-nuebling/mac-mouse-fix/discussions/112)"
+            "value" : "[進一步瞭解](%@)"
           }
         },
         "zh-HK" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "[了解更多](https://github.com/noah-nuebling/mac-mouse-fix/discussions/112)"
+            "value" : "[了解更多](%@)"
           }
         }
       }

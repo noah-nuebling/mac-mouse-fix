@@ -1137,6 +1137,10 @@ void assignAttributedStringKeepingBase(NSAttributedString *_Nonnull *_Nonnull as
     
     /// Notes:
     /// - The is the style of the small grey 'hint' texts we see all over the the General Tab and other Tabs. However those are mostly defined inside Interface Builder.
+    /// - Problem: .secondaryLabelColor seems to look good on NSTextFields but in NSTextViews, it's really dim in darkmode.
+    ///     - (As of 30.08.2024, macOS Sequoia Beta)
+    ///     - .systemGrayColor seems to look better, maybe we should switch to that if this isn't resolved.
+    ///     - Our ToastNotifications use NSTextViews to be able to display links properly.
     
     NSAttributedString *ret = self.copy;
     ret = [ret attributedStringBySettingFontSize:NSFont.smallSystemFontSize];
