@@ -8,6 +8,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "SharedUtility.h"
 
 ///
 /// Let's you easily declare objc dataclasses like this:
@@ -57,11 +58,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 #define MFDataProp(__typeAndName) \
     @property (nonatomic, strong, readwrite, nullable) __typeAndName;
-
-/// Helper macros
-///     To implement the other macros
-
-#define UNPACK(args...) args
 
 #pragma mark - Base superclass
 

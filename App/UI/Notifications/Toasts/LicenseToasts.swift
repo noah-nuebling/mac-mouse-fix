@@ -59,7 +59,7 @@ import Foundation
                     let nOfActivations = error.userInfo["nOfActivations"] as! Int
                     let maxActivations = error.userInfo["maxActivations"] as! Int
                     let messageFormat = NSLocalizedString("license-toast.activation-overload", comment: "Note: \"%2$d\", \"%3$d\", and \"%1$@\" are so-called \"C Format Specifers\". They will be replaced by numbers or text when the program runs. Make sure to type the format specifiers exactly like in English so that the text-replacement-code works correctly.")
-                    message = String(format: messageFormat, (Links.link(MFLinkID.mailToNoah) ?? ""), nOfActivations, maxActivations)
+                    message = String(format: messageFormat, (Links.link(kMFLinkIDMailToNoah) ?? ""), nOfActivations, maxActivations)
                     
                 case kMFLicenseErrorCodeGumroadServerResponseError:
                     
@@ -89,7 +89,7 @@ import Foundation
             
         } else {
             message = NSLocalizedString("license-toast.unknown-reason", comment: "")
-            message = String(format: message, (Links.link(MFLinkID.feedbackBugReport) ?? ""))
+            message = String(format: message, (Links.link(kMFLinkIDFeedbackBugReport) ?? ""))
         }
         
         assert(message != "")

@@ -63,12 +63,6 @@ void swizzleMethodOnClassAndSubclasses(Class baseClass, NSDictionary<MFClassSear
 #define OGImpl(args...) \
     m_originalImplementation(m_self, m__cmd APPEND_ARGS(args))
 
-/// Helper macros
-///     To implementation the main macros
-
-#define UNPACK(args...) args /// This allows us to include `,` inside an argument to a macro (but the argument then needs to be wrapped inside `()` by the caller of the macro )
-#define APPEND_ARGS(args...) , ## args /// This is like UNPACK but it also automatically inserts a comma before the args. The ## deletes the comma, if `args` is empty. I have no idea why. But this lets us nicely append args to an existing list of arguments in a function call or function header.
-
 #pragma mark - Recursions
 
 void countRecursions(id recursionDepthKey, void (^workload)(NSInteger recursionDepth));

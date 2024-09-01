@@ -17,46 +17,43 @@
 
 + (NSString *_Nullable)link:(MFLinkID)linkID {
     
-    NSString *result = nil;
+    NSDictionary<NSString *, NSString *(^)(void)> *map = @{
+            
+            /// `macmousefix:...` links
+            kMFLinkIDMMFActivate: ^{
+                return @"macmousefix:activate";
+            },
+            
+            /// General
+            kMFLinkIDMacOSSettingsLoginItems: ^{
+                return @"x-apple.systempreferences:com.apple.LoginItems-Settings.extension"; /// Don't use redirection service so the browser isn't opened.
+            },
+            kMFLinkIDMailToNoah: ^{
+                return @"mailto:noah.n.public@gmail.com";
+            },
+            
+            /// Feedback
+            kMFLinkIDFeedbackBugReport: ^{
+                return redirectionServiceLink(@"mmf-feedback-bug-report", nil, nil, @{ @"locale": NSLocale.currentLocale.localeIdentifier }); ///  https://noah-nuebling.github.io/mac-mouse-fix-feedback-assistant/?type=bug-report
+            },
+            
+            /// Guides
+            kMFLinkIDCapturedButtonsGuide: ^{
+                return redirectionServiceLink(@"mmf-captured-buttons-guide", nil, nil, @{ @"locale": NSLocale.currentLocale.localeIdentifier });
+            },
+            kMFLinkIDCapturedScrollingGuide: ^{
+                assert(false); /// We don't have a guide for scroll-capturing atm (01.09.2024) I think we probably don't need one unless people have frequent questions.
+                return nil;
+            },
+            kMFLinkIDVenturaEnablingGuide: ^{
+                return redirectionServiceLink(@"mmf-ventura-enabling-guide", nil, nil, @{ @"locale": NSLocale.currentLocale.localeIdentifier }); /// https://github.com/noah-nuebling/mac-mouse-fix/discussions/861
+            },
+    };
     
-    switch (linkID) {
-            
-        /// General
-            
-        case kMFLinkIDMacOSSettingsLoginItems:
-            result = @"x-apple.systempreferences:com.apple.LoginItems-Settings.extension"; /// Don't use redirection service so the browser isn't opened.
-            break;
-            
-        case kMFLinkIDMailToNoah:
-            result = @"mailto:noah.n.public@gmail.com";
-            break;
-        
-        /// Feedback
-            
-        case kMFLinkIDFeedbackBugReport:
-            result = redirectionServiceLink(@"mmf-feedback-bug-report", nil, nil, @{ @"locale": NSLocale.currentLocale.localeIdentifier }); ///  https://noah-nuebling.github.io/mac-mouse-fix-feedback-assistant/?type=bug-report
-            
-            break;
-        /// Guides
-            
-        case kMFLinkIDCapturedButtonsGuide:
-            result = redirectionServiceLink(@"mmf-captured-buttons-guide", nil, nil, @{ @"locale": NSLocale.currentLocale.localeIdentifier });
-            break;
-        
-        case kMFLinkIDCapturedScrollingGuide:
-            assert(false); /// We don't have a guide for scroll-capturing atm (01.09.2024) I think we probably don't need one unless people have frequent questions.
-            result = nil;
-            break;
-            
-        case kMFLinkIDVenturaEnablingGuide:
-            result = redirectionServiceLink(@"mmf-ventura-enabling-guide", nil, nil, @{ @"locale": NSLocale.currentLocale.localeIdentifier }); /// https://github.com/noah-nuebling/mac-mouse-fix/discussions/861
-            break;
-            
-        default:
-            break;
-    }
+    NSString *(^getter)(void) = map[linkID];
+    NSString *result = getter ? getter() : nil;
     
-    DDLogDebug(@"Links.m: Generated link: %lld -> %@", (long long)linkID, result);
+    DDLogDebug(@"Links.m: Generated link: %@ -> %@", linkID, result);
     
     return result;
 }

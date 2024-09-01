@@ -26,14 +26,14 @@ import Foundation
             
             if let window = NSApp.mainWindow {
                 var rawMessage = NSLocalizedString("enable-timeout-toast", comment: "Note: The \"&nbsp;\" part inserts a non-breaking-space character, which prevents the last word from being orphaned on the last line. \"&nbsp;\" is a so called \"HTML Character Entity\".")
-                rawMessage = String(format: rawMessage, Links.link(MFLinkID.venturaEnablingGuide) ?? "")
+                rawMessage = String(format: rawMessage, Links.link(kMFLinkIDVenturaEnablingGuide) ?? "")
                 ToastController.attachNotification(withMessage: NSMutableAttributedString(coolMarkdown: rawMessage)!, to: window, forDuration: 10.0)
                 
             }
         },
         "k-is-disabled-toast": {
             var messageRaw = NSLocalizedString("is-disabled-toast", comment: "Note: The \"Login Items Settings\" can be found at \"System Settings > General > Login Items & Extensions\" under macOS 13 Ventura and later. You should probably use the same terminology that is used inside macOS' System Settings here.")
-            messageRaw = String(format: messageRaw, Links.link(MFLinkID.macOSSettingsLoginItems) ?? "")
+            messageRaw = String(format: messageRaw, Links.link(kMFLinkIDMacOSSettingsLoginItems) ?? "")
             
             let message = NSMutableAttributedString(coolMarkdown: messageRaw)
             DispatchQueue.main.async { /// UI stuff needs to be called from the main thread

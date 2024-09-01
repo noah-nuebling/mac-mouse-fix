@@ -16,7 +16,10 @@
 IB_DESIGNABLE
 @interface Hyperlink ()
 
-@property (nonatomic) IBInspectable NSString *href;
+#define testtt(typename) typename
+
+@property (nonatomic) IBInspectable NSString *MFLinkID; /// This is actually an `MFLinkID`, but IBInspectable only works when set the type to literally `NSString *`
+@property (nonatomic) IBInspectable NSString *href; /// Unused. Moved to using linkIDs instead.
 @property (nonatomic) NSString *href_future; /// Unused. We set this in IB in some places to remind us to update the href at some point.
 
 /// TrackingArea padding
@@ -52,14 +55,14 @@ IB_DESIGNABLE
     return self;
 }
 
-+ (instancetype)hyperlinkWithTitle:(NSString *)title url:(NSString *)href alwaysTracking:(BOOL)alwaysTracking leftPadding:(int)leftPadding {
++ (instancetype)hyperlinkWithTitle:(NSString *)title linkID:(MFLinkID)linkID alwaysTracking:(BOOL)alwaysTracking leftPadding:(int)leftPadding {
     
     /// Init from code
     
     Hyperlink *link = [Hyperlink labelWithString:title];
     link.textColor = [NSColor linkColor];
     link.font = [NSFont systemFontOfSize:NSFont.systemFontSize];
-    link.href = href;
+    link.MFLinkID = linkID;
     link.leftPadding = leftPadding;
     
     link->_alwaysTracking = alwaysTracking;
@@ -205,17 +208,21 @@ IB_DESIGNABLE
     
     /// Get info
     BOOL hasAction = self.action != nil;
-    BOOL hasLink = _href != nil && ![_href isEqual:@""];
+    NSString *link = [Links link:_MFLinkID]; /// We could cache this for performance.
+    BOOL hasLink = link != nil && link.length > 0;
     
     /// Validate
     assert(hasAction || hasLink);
     assert(!(hasAction && hasLink));
     
+    /// Validate 2
+    assert(_href == nil); /// We moved over to using `_MFLinkID`  instead.
+    
     /// Send action / open link
     if (hasAction) {
         [self sendAction:self.action to:self.target];
     } else {
-        [[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:_href]];
+        [[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:link]];
     }
 }
 
