@@ -40,6 +40,10 @@ Thanks for your support! :)
 
 These people spent a lot more than the standard price and treated me to an **Incredible Milkshake**. (And some even left a message) Thanks for the _sugar rush_!
 
+**September 2024**
+
+- 🇦🇺&nbsp;Tom
+
 **August 2024**
 
 - 🇫🇷&nbsp;Victor&nbsp;Careil
