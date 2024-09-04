@@ -40,6 +40,7 @@ Diese Leute haben viel mehr als den Standardpreis ausgegeben und mir einen **ung
 
 **September 2024**
 
+- 🇳🇴&nbsp;Henning&nbsp;F
 - 🇨🇭&nbsp;Veeam&nbsp;Software
 - 🇹🇭&nbsp;Rindhewat
 - 🇦🇺&nbsp;Tom
