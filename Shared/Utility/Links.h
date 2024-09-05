@@ -47,7 +47,7 @@ typedef NSString * MFLinkID;
 #define kMFLinkIDFeedbackBugReport @"FeedbackBugReport"
 
 /// Guides
-
+#define kMFLinkIDGuidesAndCommunity @"GuidesAndCommunity"
 #define kMFLinkIDGuides @"Guides"
 #define kMFLinkIDCapturedButtonsGuide @"CapturedButtonsGuide"
 #define kMFLinkIDCapturedScrollingGuide @"CapturedScrollingGuide"

@@ -16,11 +16,9 @@
 IB_DESIGNABLE
 @interface Hyperlink ()
 
-#define testtt(typename) typename
-
-@property (nonatomic) IBInspectable NSString *MFLinkID; /// This is actually an `MFLinkID`, but IBInspectable only works when set the type to literally `NSString *`
-@property (nonatomic) IBInspectable NSString *href; /// Unused. Moved to using linkIDs instead.
-@property (nonatomic) NSString *href_future; /// Unused. We set this in IB in some places to remind us to update the href at some point.
+@property (nonatomic) IBInspectable NSString *MFLinkID;     /// This is actually an `MFLinkID`, but IBInspectable only works when set the type to literally `NSString *`
+@property (nonatomic) NSString *href;                       /// Unused. Moved to using linkIDs instead.
+@property (nonatomic) NSString *href_future;                /// Unused. We set this in IB in some places to remind us to update the href at some point.
 
 /// TrackingArea padding
 ///     Extends the area that can be clicked to open the link beyond the frame of the link text.
@@ -53,6 +51,13 @@ IB_DESIGNABLE
         _alwaysTracking = NO;
     }
     return self;
+}
+
+- (void)awakeFromNib {
+    
+    /// Validate
+    ///     Do this in awakeFromNib since the IB values aren't set yet inside initWithCoder:
+    assert(_href == nil || _href.length == 0); /// We moved over to using `_MFLinkID`  instead.
 }
 
 + (instancetype)hyperlinkWithTitle:(NSString *)title linkID:(MFLinkID)linkID alwaysTracking:(BOOL)alwaysTracking leftPadding:(int)leftPadding {
@@ -214,9 +219,6 @@ IB_DESIGNABLE
     /// Validate
     assert(hasAction || hasLink);
     assert(!(hasAction && hasLink));
-    
-    /// Validate 2
-    assert(_href == nil); /// We moved over to using `_MFLinkID`  instead.
     
     /// Send action / open link
     if (hasAction) {

@@ -65,14 +65,17 @@
             
             /// Guides
             
-            kMFLinkIDVenturaEnablingGuide: ^{
-                return redirectionServiceLink(@"mmf-ventura-enabling-guide", nil, nil, @{ @"locale": currentLocale }); /// https://github.com/noah-nuebling/mac-mouse-fix/discussions/861
+            kMFLinkIDGuidesAndCommunity: ^{
+                return redirectionServiceLink(@"mmf-guides-and-community", nil, nil, @{ @"locale": currentLocale });
             },
             kMFLinkIDGuides: ^{
                 return redirectionServiceLink(@"mmf-guides", nil, nil, @{ @"locale": currentLocale }); /// https://github.com/noah-nuebling/mac-mouse-fix/discussions/categories/guides
             },
             kMFLinkIDCapturedButtonsGuide: ^{
                 return redirectionServiceLink(@"mmf-captured-buttons-guide", nil, nil, @{ @"locale": currentLocale });
+            },
+            kMFLinkIDVenturaEnablingGuide: ^{
+                return redirectionServiceLink(@"mmf-ventura-enabling-guide", nil, nil, @{ @"locale": currentLocale }); /// https://github.com/noah-nuebling/mac-mouse-fix/discussions/861
             },
             
             kMFLinkIDCapturedScrollingGuide: ^{
@@ -108,7 +111,7 @@ static NSString *redirectionServiceLink(NSString *_Nonnull target, NSString *_Nu
     ///
     ///     ... which would construct the link:
     ///     ```
-    ///     https://noah-nuebling.github.io/redirection-service?message=One%20Second...&page-title=Redirecting...&target=mailto-noah&body=aaaaa&subject=Cool%20Beans
+    ///     https://noah-nuebling.github.io/redirection-service/?message=One%20Second...&page-title=Redirecting...&target=mailto-noah&body=aaaaa&subject=Cool%20Beans
     ///     ```
     ///
     ///     (Note: We should actually use the redirection service for mailto-links, since that opens a browser window, instead of opening the mail app directly.)
