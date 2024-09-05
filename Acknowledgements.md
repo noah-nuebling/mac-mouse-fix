@@ -42,6 +42,7 @@ These people spent a lot more than the standard price and treated me to an **Inc
 
 **September 2024**
 
+- 🇨🇿&nbsp;David&nbsp;Kopecky
 - 🇳🇴&nbsp;Henning&nbsp;F
 - 🇨🇭&nbsp;Veeam&nbsp;Software
 - 🇹🇭&nbsp;Rindhewat
