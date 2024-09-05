@@ -28,6 +28,10 @@ typedef NSString * MFLinkID;
 /// 'macmousefix:...' links
 #define kMFLinkIDMMFLActivate @"MMFLActivate"
 
+/// General
+
+#define kMFLinkIDBuyMeAMilkshake @"BuyMeAMilkshake"
+
 /// Local links
 #define kMFLinkIDMacOSSettingsLoginItems @"MacOSSettingsLoginItems"
 #define kMFLinkIDMailToNoah @"MailToNoah"
@@ -35,14 +39,19 @@ typedef NSString * MFLinkID;
 /// Main places
 #define kMFLinkIDWebsite @"Website"
 #define kMFLinkIDGitHub @"GitHub"
+#define kMFLinkIDAcknowledgements @"Acknowledgements"
+#define kMFLinkIDLocalizationContribution @"LocalizationContribution"
 
 /// Feedback
 #define kMFLinkIDFeedbackFeatureRequest @"FeedbackFeatureRequest"
 #define kMFLinkIDFeedbackBugReport @"FeedbackBugReport"
 
 /// Guides
+
+#define kMFLinkIDGuides @"Guides"
 #define kMFLinkIDCapturedButtonsGuide @"CapturedButtonsGuide"
 #define kMFLinkIDCapturedScrollingGuide @"CapturedScrollingGuide"
+
 #define kMFLinkIDVenturaEnablingGuide @"VenturaEnablingGuide"
 
 

@@ -21,12 +21,18 @@
     
     NSDictionary<NSString *, NSString *(^)(void)> *map = @{
             
-            /// `macmousefix:...` links
+            /// `macmousefix:` links
             kMFLinkIDMMFLActivate: ^{
                 return @"macmousefix:activate";
             },
             
-            /// Local links
+            /// General
+            
+            kMFLinkIDBuyMeAMilkshake: ^{
+                return redirectionServiceLink(@"buy-me-a-milkshake", nil, nil, @{ @"locale": currentLocale });
+            },
+            
+            /// Non-browser links
             ///     Don't use redirection service for these so the browser isn't opened.
             kMFLinkIDMacOSSettingsLoginItems: ^{
                 return @"x-apple.systempreferences:com.apple.LoginItems-Settings.extension";
@@ -40,7 +46,13 @@
                 return @"https://macmousefix.com/"; /// No need for redirection-service since this has javascript to adapt its locale to the user's browser settings, and if we ever change the domain, we'll set up a redirect directly on the page.
             },
             kMFLinkIDGitHub: ^{
-                return redirectionServiceLink(@"mmf-github-readme", nil, nil, @{ @"locale": currentLocale });
+                return redirectionServiceLink(@"mmf-github", nil, nil, @{ @"locale": currentLocale });
+            },
+            kMFLinkIDAcknowledgements: ^{
+                return redirectionServiceLink(@"mmf-acknowledgements", nil, nil, @{ @"locale": currentLocale }); /// https://github.com/noah-nuebling/mac-mouse-fix/blob/master/Acknowledgements.md
+            },
+            kMFLinkIDLocalizationContribution: ^{
+                return redirectionServiceLink(@"mmf-localization-contribution", nil, nil, @{ @"locale": currentLocale });
             },
             
             /// Feedback
@@ -52,15 +64,20 @@
             },
             
             /// Guides
+            
+            kMFLinkIDVenturaEnablingGuide: ^{
+                return redirectionServiceLink(@"mmf-ventura-enabling-guide", nil, nil, @{ @"locale": currentLocale }); /// https://github.com/noah-nuebling/mac-mouse-fix/discussions/861
+            },
+            kMFLinkIDGuides: ^{
+                return redirectionServiceLink(@"mmf-guides", nil, nil, @{ @"locale": currentLocale }); /// https://github.com/noah-nuebling/mac-mouse-fix/discussions/categories/guides
+            },
             kMFLinkIDCapturedButtonsGuide: ^{
                 return redirectionServiceLink(@"mmf-captured-buttons-guide", nil, nil, @{ @"locale": currentLocale });
             },
+            
             kMFLinkIDCapturedScrollingGuide: ^{
                 assert(false); /// We don't have a guide for scroll-capturing atm (01.09.2024) I think we probably don't need one unless people have frequent questions.
                 return nil;
-            },
-            kMFLinkIDVenturaEnablingGuide: ^{
-                return redirectionServiceLink(@"mmf-ventura-enabling-guide", nil, nil, @{ @"locale": currentLocale }); /// https://github.com/noah-nuebling/mac-mouse-fix/discussions/861
             },
     };
     
