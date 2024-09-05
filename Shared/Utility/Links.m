@@ -95,7 +95,7 @@ static NSString *redirectionServiceLink(NSString *_Nonnull target, NSString *_Nu
     ///
     /// `target` determines the destination of the redirect. Possible values are documented here: https://github.com/noah-nuebling/redirection-service
     /// `message` is shown in the browser window while redirecting. We usually use nil.
-    /// `pageTitle` is shown inside the tab button while redirecting. We usually use nil. (The redirection service will fall back to `...` as of 30.08.2024)
+    /// `pageTitle` is shown inside the tab button while redirecting. We usually use nil. (The redirection service will fall back to `Mac Mouse Fix...` as of 05.09.2024)
     /// `otherQueryParams` is a dict of other url query params that apply to the given`target`.
     ///
     ///  Usage example:
@@ -158,7 +158,7 @@ static NSString *redirectionServiceLink(NSString *_Nonnull target, NSString *_Nu
     }
     
     /// Construct result
-    NSString *result = stringf(@"https://noah-nuebling.github.io/redirection-service?message=%@&page-title=%@&target=%@%@", message, pageTitle, target, otherQueryParamsStr);
+    NSString *result = stringf(@"https://redirect.macmousefix.com?message=%@&page-title=%@&target=%@%@", message, pageTitle, target, otherQueryParamsStr); //stringf(@"https://noah-nuebling.github.io/redirection-service?message=%@&page-title=%@&target=%@%@", message, pageTitle, target, otherQueryParamsStr);
     
     /// Return
     return result;
