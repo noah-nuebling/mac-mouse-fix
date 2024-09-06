@@ -74,7 +74,7 @@ import Cocoa
         } else {
             /// Trial still active
                 
-            let b = NSLocalizedString("trial-counter.active", comment: "")
+            let b = NSLocalizedString("trial-counter.active", comment: "Note: If you think \"x/y\" looks unnatural in your language you could also use something like \"x of y\"")
             base = String(format: b, daysOfUse, trialDays)
         }
         

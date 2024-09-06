@@ -14,6 +14,8 @@
 ///
 /// This file offers methods for creating NSAttributedString instances that display an SFSymbol through an NSImage Attachment.
 ///
+/// It's also used to create NSAttributedStrings containing custom symbols (E.g. "CoolMenuBarIcon" as of 06.09.2024) (Therefore, perhaps, we should change the class name to not contain 'SFSymbols' )
+///
 /// Fallback mechanism:
 ///     There's a fallback mechanism where we set some plain NSString as the accessibilityDescription of the attached NSImage. Then we can use `[NSAttributedString(Additions) -stringWithAttachmentDescriptions]` to convert the NSAttributedString to a pure NSString but with the NSImage attachments replaced by their respective `accessibilityDescription`.
 ///

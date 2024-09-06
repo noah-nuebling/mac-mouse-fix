@@ -6470,66 +6470,66 @@
       }
     },
     "join-list.last" : {
-      "comment" : "Note: This format string joins the second-to-last element and the last element in a list of items",
+      "comment" : "Note: This format string joins the second-to-last element and the last element in a list of items || Note: \"%1$@\" will be replaced by the second-to-last element, and \"%2$@\" will be replaced by the last element.",
       "localizations" : {
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "%@ und %@"
+            "value" : "%1$@ und %2$@"
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "%@ and %@"
+            "value" : "%1$@ and %2$@"
           }
         },
         "fr" : {
           "stringUnit" : {
-            "state" : "translated",
-            "value" : "%@ et %@"
+            "state" : "needs_review",
+            "value" : "%1$@ et %2$@"
           }
         },
         "ko" : {
           "stringUnit" : {
-            "state" : "translated",
-            "value" : "%@ 및 %@"
+            "state" : "needs_review",
+            "value" : "%1$@ 및 %2$@"
           }
         },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "%@ e %@"
+            "value" : "%1$@ e %2$@"
           }
         },
         "tr" : {
           "stringUnit" : {
-            "state" : "translated",
-            "value" : "%@ ve %@"
+            "state" : "needs_review",
+            "value" : "%1$@ ve %2$@"
           }
         },
         "vi" : {
           "stringUnit" : {
-            "state" : "translated",
-            "value" : "%@ và %@"
+            "state" : "needs_review",
+            "value" : "%1$@ và %2$@"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
-            "state" : "translated",
-            "value" : "%@、%@"
+            "state" : "needs_review",
+            "value" : "%1$@、%2$@"
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
-            "state" : "translated",
-            "value" : "%@、%@"
+            "state" : "needs_review",
+            "value" : "%1$@、%2$@"
           }
         },
         "zh-HK" : {
           "stringUnit" : {
-            "state" : "translated",
-            "value" : "%@、%@"
+            "state" : "needs_review",
+            "value" : "%1$@、%2$@"
           }
         }
       }
@@ -7320,61 +7320,61 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Stelle das Tempo ein unter\n[%@ > Maus > Scrolltempo](%@)"
+            "value" : "Stelle das Tempo ein unter\n[%1$@ > Maus > Scrolltempo](%2$@)"
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Set speed under\n[%@ > Mouse > Scrolling Speed](%@)"
+            "value" : "Set speed under\n[%1$@ > Mouse > Scrolling Speed](%2$@)"
           }
         },
         "fr" : {
           "stringUnit" : {
-            "state" : "translated",
-            "value" : "Définir la vitesse sous\n[%@ > Souris > Vitesse de déplacement](%@)"
+            "state" : "needs_review",
+            "value" : "Définir la vitesse sous\n[%1$@ > Souris > Vitesse de déplacement](%2$@)"
           }
         },
         "ko" : {
           "stringUnit" : {
-            "state" : "translated",
-            "value" : "[%@ > 마우스 > 스크롤 속도](%@)에서 속도를 설정합니다."
+            "state" : "needs_review",
+            "value" : "[%1$@ > 마우스 > 스크롤 속도](%2$@)에서 속도를 설정합니다."
           }
         },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Defina a velocidade em\n[%@ > Mouse > Velocidade da Rolagem](%@)"
+            "value" : "Defina a velocidade em\n[%1$@ > Mouse > Velocidade da Rolagem](%2$@)"
           }
         },
         "tr" : {
           "stringUnit" : {
-            "state" : "translated",
-            "value" : "Hızı şurada ayarlayın\n[%@ > Fare > Kaydırma Hızı](%@)"
+            "state" : "needs_review",
+            "value" : "Hızı şurada ayarlayın\n[%1$@ > Fare > Kaydırma Hızı](%2$@)"
           }
         },
         "vi" : {
           "stringUnit" : {
-            "state" : "translated",
-            "value" : "Thiết lập tốc độ tại \n[%@ > Chuột > Tốc độ di chuyển](%@)"
+            "state" : "needs_review",
+            "value" : "Thiết lập tốc độ tại \n[%1$@ > Chuột > Tốc độ di chuyển](%2$@)"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
-            "state" : "translated",
-            "value" : "设置速度：\n[%@ > 鼠标 > 滚动速度](%@)"
+            "state" : "needs_review",
+            "value" : "设置速度：\n[%1$@ > 鼠标 > 滚动速度](%2$@)"
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
-            "state" : "translated",
-            "value" : "設定速度：\n[%@ > 滑鼠 > 捲動速度](%@)"
+            "state" : "needs_review",
+            "value" : "設定速度：\n[%1$@ > 滑鼠 > 捲動速度](%2$@)"
           }
         },
         "zh-HK" : {
           "stringUnit" : {
-            "state" : "translated",
-            "value" : "設定速度：\n[%@ > 滑鼠 > 捲動速度](%@)"
+            "state" : "needs_review",
+            "value" : "設定速度：\n[%1$@ > 滑鼠 > 捲動速度](%2$@)"
           }
         }
       }
@@ -8161,66 +8161,66 @@
       }
     },
     "restore-buttons-alert.hint" : {
-      "comment" : "Note: '%@' will be the name of the mouse, such as 'Logitech M720 Triathlon'",
+      "comment" : "Note: '%1$@' will be the name of the mouse, such as 'Logitech M720 Triathlon'",
       "localizations" : {
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Deine Maus (**%@**) sagt, dass sie **%d** Tasten hat"
+            "value" : "Deine Maus (**%1$@**) sagt, dass sie **%2$d** Tasten hat"
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Your mouse (**%@**) says it has **%d** buttons"
+            "value" : "Your mouse (**%1$@**) says it has **%2$d** buttons"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Votre souris **%@** dit qu'elle a **%d** boutons"
+            "value" : "Votre souris **%1$@** dit qu'elle a **%2$d** boutons"
           }
         },
         "ko" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "사용자의 **%@** 마우스에서 **%d개**의 버튼이 감지되었습니다."
+            "value" : "사용자의 **%1$@** 마우스에서 **%2$d개**의 버튼이 감지되었습니다."
           }
         },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Seu Mouse **%@** diz que tem **%d** botões"
+            "value" : "Seu Mouse **%1$@** diz que tem **%2$d** botões"
           }
         },
         "tr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "**%@** fareniz **%d** düğmeye sahip olduğunu söylüyor"
+            "value" : "**%1$@** fareniz **%2$d** düğmeye sahip olduğunu söylüyor"
           }
         },
         "vi" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Chuột **%@** của bạn có **%d** nút"
+            "value" : "Chuột **%1$@** của bạn có **%2$d** nút"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "您的**%@**鼠标回报了**%d**个按钮"
+            "value" : "您的**%1$@**鼠标回报了**%2$d**个按钮"
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "您的**%@**滑鼠回報了**%d**個按鈕"
+            "value" : "您的**%1$@**滑鼠回報了**%2$d**個按鈕"
           }
         },
         "zh-HK" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "你的**%@**滑鼠回報了**%d**個按鈕"
+            "value" : "你的**%1$@**滑鼠回報了**%2$d**個按鈕"
           }
         }
       }
@@ -8486,66 +8486,66 @@
       }
     },
     "revive-toast" : {
-      "comment" : "Note: %1@ will be the list of enabled features, %2@ will be the menubar icon || Note: The described feature lets you disable Mac Mouse Fix's effect on your mouse-buttons/scroll-wheel directly from the menubar. This is to help people use apps that are incompatible with Mac Mouse Fix. In your language, it may make sense to use a different translation for 'enable' in this context than in the context of the 'Enable Mac Mouse Fix' switch.",
+      "comment" : "Note: \"%1$@\" will be the list of enabled features, \"%2$@\" will be the menubar icon || Note: The described feature lets you disable Mac Mouse Fix's effect on your mouse-buttons/scroll-wheel directly from the menubar. This is to help people use apps that are incompatible with Mac Mouse Fix. In your language, it may make sense to use a different translation for 'enable' in this context than in the context of the 'Enable Mac Mouse Fix' switch.",
       "localizations" : {
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Mac Mouse Fix **aktiviert** für %1@\nEs war in der Menüleiste %2@ deakiviert worden"
+            "value" : "Mac Mouse Fix **aktiviert** für %1$@\nEs war in der Menüleiste %2$@ deaktiviert worden"
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "**Enabled** Mac Mouse Fix for %1@\nIt had been disabled from the Menu Bar %2@"
+            "value" : "**Enabled** Mac Mouse Fix for %1$@\nIt had been disabled from the Menu Bar %2$@"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Mac Mouse Fix **activé** pour %1@\nIl a été désactivé depuis la barre des menus %2@"
+            "value" : "Mac Mouse Fix **activé** pour %1$@\nIl a été désactivé depuis la barre des menus %2$@"
           }
         },
         "ko" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "%1@에 대한 Mac Mouse Fix 동작이 **다시 활성화**되었습니다.\n이는 사용자에 의해 메뉴 막대 %2@ 에서 수동으로 비활성화되어있었습니다."
+            "value" : "%1$@에 대한 Mac Mouse Fix 동작이 **다시 활성화**되었습니다.\n이는 사용자에 의해 메뉴 막대 %2$@ 에서 수동으로 비활성화되어있었습니다."
           }
         },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "**Habilitado** Mac Mouse Fix para %1@\nEle foi desabilitado na barra de menu %2@"
+            "value" : "**Habilitado** Mac Mouse Fix para %1$@\nEle foi desabilitado na barra de menu %2$@"
           }
         },
         "tr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "%1@ için Mac Mouse Fix **etkinleştirildi**\nMenü Çubuğu %2@ tarafından devre dışı bırakılmıştı"
+            "value" : "%1$@ için Mac Mouse Fix **etkinleştirildi**\nMenü Çubuğu %2$@ tarafından devre dışı bırakılmıştı"
           }
         },
         "vi" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "**Đã kích hoạt** Mac Mouse Fix trong %1@\nNó đã bị bất hoạt từ thanh menu %2@"
+            "value" : "**Đã kích hoạt** Mac Mouse Fix trong %1$@\nNó đã bị bất hoạt từ thanh menu %2$@"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "**已启用**Mac Mouse Fix调校：%1@\n此前由菜单栏%2@停用"
+            "value" : "**已启用**Mac Mouse Fix调校：%1$@\n此前由菜单栏%2$@停用"
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "**已啟用**Mac Mouse Fix調校：%1@\n此前由選單列%2@停用"
+            "value" : "**已啟用**Mac Mouse Fix調校：%1$@\n此前由選單列%2$@停用"
           }
         },
         "zh-HK" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "**已啟用**Mac Mouse Fix調校：%1@\n此前由選單列%2@停用"
+            "value" : "**已啟用**Mac Mouse Fix調校：%1$@\n此前由選單列%2$@停用"
           }
         }
       }
@@ -11476,66 +11476,66 @@
       }
     },
     "trial-counter.active" : {
-      "comment" : "",
+      "comment" : "Note: If you think \"x/y\" looks unnatural in your language you could also use something like \"x of y\"",
       "localizations" : {
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Kostenloser Tag **%d/%d**"
+            "value" : "Kostenloser Tag **%1$d/%2$d**"
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Free day **%d/%d**"
+            "value" : "Free day **%1$d/%2$d**"
           }
         },
         "fr" : {
           "stringUnit" : {
-            "state" : "translated",
-            "value" : "Jour gratuit **%d/%d**"
+            "state" : "needs_review",
+            "value" : "Jour gratuit **%1$d/%2$d**"
           }
         },
         "ko" : {
           "stringUnit" : {
-            "state" : "translated",
-            "value" : "무료 체험 기간 **%d/%d**일"
+            "state" : "needs_review",
+            "value" : "무료 체험 기간 **%1$d/%2$d**일"
           }
         },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Dias restantes **%d/%d**"
+            "value" : "Dias restantes **%1$d/%2$d**"
           }
         },
         "tr" : {
           "stringUnit" : {
-            "state" : "translated",
-            "value" : "Ücretsiz gün **%d/%d**"
+            "state" : "needs_review",
+            "value" : "Ücretsiz gün **%1$d/%2$d**"
           }
         },
         "vi" : {
           "stringUnit" : {
-            "state" : "translated",
-            "value" : "Bạn đang dùng thử miễn phí **%d/%d** ngày"
+            "state" : "needs_review",
+            "value" : "Bạn đang dùng thử miễn phí **%1$d/%2$d** ngày"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
-            "state" : "translated",
-            "value" : "免费期第**%d／%d**天"
+            "state" : "needs_review",
+            "value" : "免费期第**%1$d／%2$d**天"
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
-            "state" : "translated",
-            "value" : "免費期第**%d／%d**天"
+            "state" : "needs_review",
+            "value" : "免費期第**%1$d／%2$d**天"
           }
         },
         "zh-HK" : {
           "stringUnit" : {
-            "state" : "translated",
-            "value" : "免費期第**%d／%d**天"
+            "state" : "needs_review",
+            "value" : "免費期第**%1$d／%2$d**天"
           }
         }
       }
@@ -11676,61 +11676,61 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Hi! Du verwendest Mac Mouse Fix jetzt seit **%d Tagen**. Ich hoffe, es gefällt dir!\n\nWenn du Mac Mouse Fix auch weiter verwenden willst, kannst du es dir [jetzt kaufen](%@)."
+            "value" : "Hi! Du verwendest Mac Mouse Fix jetzt seit **%1$d Tagen**. Ich hoffe, es gefällt dir!\n\nWenn du Mac Mouse Fix auch weiter verwenden willst, kannst du es dir [jetzt kaufen](%2$@)."
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Hi there! You've been using Mac Mouse Fix for **%d days** now. I hope you're enjoying it!\n\nIf you want to keep using Mac Mouse Fix, you can [buy it now](%@)."
+            "value" : "Hi there! You've been using Mac Mouse Fix for **%1$d days** now. I hope you're enjoying it!\n\nIf you want to keep using Mac Mouse Fix, you can [buy it now](%2$@)."
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Bonjour ! Vous avez utilisé Mac Mouse Fix pendant maintenant **%d jours**. J'espère que vous l'appréciez !\n\nSi vous voulez continuer d'utiliser Mac Mouse Fix, vous pouvez [l'acheter maintenant](%@)."
+            "value" : "Bonjour ! Vous avez utilisé Mac Mouse Fix pendant maintenant **%1$d jours**. J'espère que vous l'appréciez !\n\nSi vous voulez continuer d'utiliser Mac Mouse Fix, vous pouvez [l'acheter maintenant](%2$@)."
           }
         },
         "ko" : {
           "stringUnit" : {
-            "state" : "translated",
-            "value" : "안녕하세요! Mac Mouse Fix를 **%d일째** 사용 중입니다.\n\n사용해주셔서 감사드리며, Mac Mouse Fix를 계속 사용하시려면 [구입](%@)해주십시오."
+            "state" : "needs_review",
+            "value" : "안녕하세요! Mac Mouse Fix를 **%1$d일째** 사용 중입니다.\n\n사용해주셔서 감사드리며, Mac Mouse Fix를 계속 사용하시려면 [구입](%2$@)해주십시오."
           }
         },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Olá! Você está usando o Mac Mouse Fix há **%d dias**. Espero que você esteja gostando!\n\nSe quiser continuar usando o Mac Mouse Fix, você pode [comprá-lo agora](%@)."
+            "value" : "Olá! Você está usando o Mac Mouse Fix há **%1$d dias**. Espero que você esteja gostando!\n\nSe quiser continuar usando o Mac Mouse Fix, você pode [comprá-lo agora](%2$@)."
           }
         },
         "tr" : {
           "stringUnit" : {
-            "state" : "translated",
-            "value" : "Merhaba! **%d gündür** Mac Mouse Fix kullanıyorsunuz. Umarım keyif alıyorsunuzdur!\n\nMac Mouse Fix'i kullanmaya devam etmek istiyorsanız, [şimdi satın alabilirsiniz](%@)."
+            "state" : "needs_review",
+            "value" : "Merhaba! **%1$d gündür** Mac Mouse Fix kullanıyorsunuz. Umarım keyif alıyorsunuzdur!\n\nMac Mouse Fix'i kullanmaya devam etmek istiyorsanız, [şimdi satın alabilirsiniz](%2$@)."
           }
         },
         "vi" : {
           "stringUnit" : {
-            "state" : "translated",
-            "value" : "Xin chào! Bạn đã sử dụng Mac Mouse Fix được **%d ngày**. Mong rằng bạn sẽ thích nó!\n\nNếu bạn muốn tiếp tục sử dụng Mac Mouse Fix, bạn có thể [mua ngay](%@)."
+            "state" : "needs_review",
+            "value" : "Xin chào! Bạn đã sử dụng Mac Mouse Fix được **%1$d ngày**. Mong rằng bạn sẽ thích nó!\n\nNếu bạn muốn tiếp tục sử dụng Mac Mouse Fix, bạn có thể [mua ngay](%2$@)."
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
-            "state" : "translated",
-            "value" : "您好！您使用Mac Mouse Fix已经有**%d天**了。希望您喜欢这个软件！\n\n如果您想要继续使用Mac Mouse Fix，不妨[立即购买](%@)。"
+            "state" : "needs_review",
+            "value" : "您好！您使用Mac Mouse Fix已经有**%1$d天**了。希望您喜欢这个软件！\n\n如果您想要继续使用Mac Mouse Fix，不妨[立即购买](%2$@)。"
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
-            "state" : "translated",
-            "value" : "您好！您使用Mac Mouse Fix已經有**%d天**了。希望您喜歡這個軟體！\n\n如果您想要繼續使用Mac Mouse Fix，不妨[立刻購買](%@)。"
+            "state" : "needs_review",
+            "value" : "您好！您使用Mac Mouse Fix已經有**%1$d天**了。希望您喜歡這個軟體！\n\n如果您想要繼續使用Mac Mouse Fix，不妨[立刻購買](%2$@)。"
           }
         },
         "zh-HK" : {
           "stringUnit" : {
-            "state" : "translated",
-            "value" : "你好！你使用Mac Mouse Fix已經有**%d天**了。希望你喜歡這個軟件！\n\n如果你想要繼續使用Mac Mouse Fix，不妨[即刻購買](%@)。"
+            "state" : "needs_review",
+            "value" : "你好！你使用Mac Mouse Fix已經有**%1$d天**了。希望你喜歡這個軟件！\n\n如果你想要繼續使用Mac Mouse Fix，不妨[即刻購買](%2$@)。"
           }
         }
       }

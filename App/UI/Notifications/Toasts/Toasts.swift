@@ -110,7 +110,7 @@ import Foundation
         let revivedFeatures = UIStrings.naturalLanguageList(fromStringArray: revivedFeaturesList)
         
         /// Build message string
-        let messageRaw = String(format: NSLocalizedString("revive-toast", comment: "Note: %1@ will be the list of enabled features, %2@ will be the menubar icon || Note: The described feature lets you disable Mac Mouse Fix's effect on your mouse-buttons/scroll-wheel directly from the menubar. This is to help people use apps that are incompatible with Mac Mouse Fix. In your language, it may make sense to use a different translation for 'enable' in this context than in the context of the 'Enable Mac Mouse Fix' switch."), revivedFeatures, "%@")
+        let messageRaw = String(format: NSLocalizedString("revive-toast", comment: "Note: \"%1$@\" will be the list of enabled features, \"%2$@\" will be the menubar icon || Note: The described feature lets you disable Mac Mouse Fix's effect on your mouse-buttons/scroll-wheel directly from the menubar. This is to help people use apps that are incompatible with Mac Mouse Fix. In your language, it may make sense to use a different translation for 'enable' in this context than in the context of the 'Enable Mac Mouse Fix' switch."), revivedFeatures, "%@")
         var message = NSAttributedString(coolMarkdown: messageRaw)!
         let symbolString = SFSymbolStrings.string(withSymbolName: "CoolMenuBarIcon", stringFallback: "<Mac Mouse Fix Menu Bar Item>", font: ToastController.defaultFont()) ///NSAttributedString(symbol: "CoolMenuBarIcon", hPadding: 0.0, vOffset: -6, fallback: "<Mac Mouse Fix Menu Bar Item>")
         message = NSAttributedString(attributedFormat: message, args: [symbolString])
