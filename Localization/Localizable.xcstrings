@@ -8166,13 +8166,13 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Deine **%@** Maus sagt dass sie **%d** Tasten hat"
+            "value" : "Deine Maus (**%@**) sagt, dass sie **%d** Tasten hat"
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Your **%@** mouse says it has **%d** buttons"
+            "value" : "Your mouse (**%@**) says it has **%d** buttons"
           }
         },
         "fr" : {
@@ -8426,7 +8426,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "**Klicke hier** um die empfohlenen Einstellungen\nfür deine Maus zu laden (**%@**)"
+            "value" : "**Klicke hier**, um die empfohlenen Einstellungen\nfür deine Maus zu laden (**%@**)"
           }
         },
         "en" : {

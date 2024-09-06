@@ -957,7 +957,7 @@ You can also *Double Click*, *Click and Drag* and [more]().</string>
                             <textFieldCell key="cell" lineBreakMode="clipping" allowsUndo="NO" alignment="center" id="g5F-ZO-vGZ">
                                 <font key="font" usesAppearanceFont="YES"/>
                                 <string key="title">&lt;Click "**Restore Defaults...**" to load the recommended settings for 
-your **Logitech M720 Triathlon**.&gt;</string>
+your mouse. (**Logitech M720 Triathlon**)&gt;</string>
                                 <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                 <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                             </textFieldCell>
@@ -1677,7 +1677,7 @@ System Preferences &gt; Mouse &gt; Tracking speed </string>
                                                     <color key="textColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
                                                     <color key="backgroundColor" red="0.11764705882352941" green="0.11764705882352941" blue="0.11764705882352941" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <attributedString key="userComments">
-                                                        <fragment content="Pointer &gt; Acceleration &gt; macOS Option &gt; Hint"/>
+                                                        <fragment content="Pointer &gt; Acceleration &gt; macOS Option &gt; Hint || Note: Don't forget to use the pre/post Ventura System Settings name."/>
                                                     </attributedString>
                                                 </textFieldCell>
                                             </textField>

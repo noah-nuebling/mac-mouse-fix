@@ -2172,7 +2172,7 @@
       "shouldTranslate" : false
     },
     "DtT-YF-gUn.title" : {
-      "comment" : "Class = \"NSTextFieldCell\"; title = \"Set acceleration under \\nSystem Preferences > Mouse > Tracking speed \"; ObjectID = \"DtT-YF-gUn\"; Note = \"Pointer > Acceleration > macOS Option > Hint\";",
+      "comment" : "Class = \"NSTextFieldCell\"; title = \"Set acceleration under \\nSystem Preferences > Mouse > Tracking speed \"; ObjectID = \"DtT-YF-gUn\"; Note = \"Pointer > Acceleration > macOS Option > Hint || Note: Don't forget to use the pre/post Ventura System Settings name.\";",
       "extractionState" : "extracted_with_value",
       "localizations" : {
         "de" : {
@@ -2827,7 +2827,7 @@
       }
     },
     "g5F-ZO-vGZ.title" : {
-      "comment" : "Class = \"NSTextFieldCell\"; title = \"<Click \\\"**Restore Defaults...**\\\" to load the recommended settings for \\nyour **Logitech M720 Triathlon**.>\"; ObjectID = \"g5F-ZO-vGZ\";",
+      "comment" : "Class = \"NSTextFieldCell\"; title = \"<Click \\\"**Restore Defaults...**\\\" to load the recommended settings for \\nyour mouse. (**Logitech M720 Triathlon**)>\"; ObjectID = \"g5F-ZO-vGZ\";",
       "extractionState" : "extracted_with_value",
       "localizations" : {
         "de" : {
@@ -2839,7 +2839,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "new",
-            "value" : "<Click \"**Restore Defaults...**\" to load the recommended settings for \nyour **Logitech M720 Triathlon**.>"
+            "value" : "<Click \"**Restore Defaults...**\" to load the recommended settings for \nyour mouse. (**Logitech M720 Triathlon**)>"
           }
         },
         "ko" : {
