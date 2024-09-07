@@ -515,7 +515,7 @@ Mac Mouse Fix wurde mithilfe dieser **hervorragenden Softwarebibliotheken** erst
 - Abhängigkeiten der Skripte von Mac Mouse Fix:<br>
   [Update- und Statistikskripte](https://github.com/noah-nuebling/mac-mouse-fix/blob/update-feed/requirements.txt) | [Markdown-Generierungsskript](../../../Markdown/Code/python_requirements.txt) | [.strings-Datei Synchronisierungsskript](../../../Localization/Code/UpdateStrings/requirements.txt) | ["State of Localization"-Skript](../../../Localization/Code/StateOfLocalization/requirements.txt)
 - Abhängigkeiten der [Mac Mouse Fix Feedback Assistant](https://noah-nuebling.github.io/mac-mouse-fix-feedback-assistant/) Web-App [hier](https://github.com/noah-nuebling/mac-mouse-fix-feedback-assistant/blob/master/package.json)
-- Abhängigkeiten der [Mac Mouse Fix Website](https://noah-nuebling.github.io/mac-mouse-fix-website/) findest du [hier](https://github.com/noah-nuebling/mac-mouse-fix-website/blob/main/package.json)
+- Abhängigkeiten der [Mac Mouse Fix Website](https://macmousefix.com/) findest du [hier](https://github.com/noah-nuebling/mac-mouse-fix-website/blob/main/package.json)
 
 <!-- ^^^ Note: The double space after <br> is not necessary for the formatting to work here, so we don't have to tell localizers.
           (If you use actual linebreaks instead of <br> I think it is sometimes necessary.) -->

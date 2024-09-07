@@ -21,7 +21,7 @@
     Link section with pipe-symbols instead of html table:
     ```
     <h3 align="center">
-    <a href=https://noah-nuebling.github.io/mac-mouse-fix-website>Download</a> |
+    <a href=https://macmousefix.com/>Download</a> |
     <a href=https://github.com/noah-nuebling/mac-mouse-fix/releases>Releases</a> |
     <a href=https://github.com/noah-nuebling/mac-mouse-fix/discussions>Help &  Feedback</a>
     </h3>
@@ -110,7 +110,7 @@ Mac Mouse Fix ist eine App, die deine Maus besser macht.
 
 Ich möchte Mac Mouse Fix zum besten Maustreiber *aller Zeiten* machen! Derzeit fehlen noch einige Funktionen, aber ich denke es macht jetzt schon **normale Mäuse** in einiger Hinsicht **zu den besten Eingabegeräten für Macs**! Auf dem selben Level oder sogar besser als ein Apple Trackpad oder eine Logitech MX Master Maus.
 
-Für mehr Info darüber, wie genau Mac Mouse Fix deine Maus verbessert, besuche die [Website](https://noah-nuebling.github.io/mac-mouse-fix-website).
+Für mehr Info darüber, wie genau Mac Mouse Fix deine Maus verbessert, besuche die [Website](https://macmousefix.com/).
 
   <!--
     easy, efficient, natural and pleasant
@@ -122,7 +122,7 @@ Für mehr Info darüber, wie genau Mac Mouse Fix deine Maus verbessert, besuche 
   -->
 
 <!-- 
-  Note: We make these anchor link (`<a name="somename"></a>`) non-localizable, so that we can link to a specific section of the document in a language-agnostic way. 
+  Note: We make these anchor links (`<a name="somename"></a>`) non-localizable, so that we can link to a specific section of the document in a language-agnostic way. 
     Example: 
       Linking into the German document with `https://github.com/noah-nuebling/mac-mouse-fix/blob/master/Markdown/LocalizedDocuments/de/Readme.md#macos-compatibility`
       will work, even though the `## macOS compatibility` header is localized to `## macOS Kompatibilität` in German. If we didn't have the anchor links, we'd have to localize the link itself `[...]/LocalizedDocuments/de/Readme.md#macos-kompatibilität` - that's the problem that the anchor links solve.
@@ -133,7 +133,7 @@ Für mehr Info darüber, wie genau Mac Mouse Fix deine Maus verbessert, besuche 
 <a name="features"></a> 
 ## Funktionen
 
-Siehe die [Website](https://noah-nuebling.github.io/mac-mouse-fix-website#trackpad) für einen Überblick über die Funktionen von Mac Mouse Fix, einschließlich Videodemos!
+Siehe die [Website](https://macmousefix.com/#trackpad) für einen Überblick über die Funktionen von Mac Mouse Fix, einschließlich Videodemos!
 
 Mehr Details findest du unter [Releases](https://github.com/noah-nuebling/mac-mouse-fix/releases).
 
@@ -150,7 +150,7 @@ Mehr Details findest du unter [Releases](https://github.com/noah-nuebling/mac-mo
 <a name="installation"></a>
 ## Installation
 
-Lade die neueste Version von Mac Mouse Fix auf der [Website](http://noah-nuebling.github.io/mac-mouse-fix-website/) herunter.
+Lade die neueste Version von Mac Mouse Fix auf der [Website](https://macmousefix.com/) herunter.
 
 Du kannst Mac Mouse Fix auch über [Homebrew](https://brew.sh/) installieren! Gib einfach den folgenden Befehl in das Terminal ein:
 
@@ -165,14 +165,14 @@ brew install mac-mouse-fix
 
 Die neueste Version von Mac Mouse Fix ist für **macOS 11 Big Sur** oder später gemacht.
 
-Wenn du macOS **10.15 Catalina**, macOS **10.14 Mojave** oder macOS **10.13 High Sierra** benutzt, kannst du die [neueste Version von Mac Mouse Fix 2](https://noah-nuebling.github.io/redirection-service?message=&target=mmf2-latest) verwenden. Mac Mouse Fix 3.0.0 und später könnten vielleicht auch noch auf deinem Gerät funktionieren, aber sie werden visuelle Probleme haben und einige Funktionen werden eventuell nicht richtig funktionieren.
+Wenn du macOS **10.15 Catalina**, macOS **10.14 Mojave** oder macOS **10.13 High Sierra** benutzt, kannst du die [neueste Version von Mac Mouse Fix 2](https://redirect.macmousefix.com/?message=&target=mmf2-latest&locale=de) verwenden. Mac Mouse Fix 3.0.0 und später könnten vielleicht auch noch auf deinem Gerät funktionieren, aber sie werden visuelle Probleme haben und einige Funktionen werden eventuell nicht richtig funktionieren.
 
 Wenn du macOS **10.12 Sierra** oder **10.11 El Capitan** benutzt, kannst du Mac Mouse Fix [2.2.0](https://github.com/noah-nuebling/mac-mouse-fix/releases/tag/2.2.0) oder früher verwenden.
 
 <a name="pricing"></a> 
 ## Preisgestaltung
 
-Einen Überblick über die Preisgestaltung von Mac Mouse Fix 3 findest du auf der [Website](https://noah-nuebling.github.io/mac-mouse-fix-website#price).<br>
+Einen Überblick über die Preisgestaltung von Mac Mouse Fix 3 findest du auf der [Website](https://macmousefix.com/#price).<br>
 Mac Mouse Fix 2 und früher bleiben für immer kostenlos.
 
 <a name="uninstallation"></a> 
@@ -188,7 +188,7 @@ Unter macOS ist es für Apps nicht machbar, diese hinterlassenen Dateien selbst 
 ## Was die Leute sagen
 
 Vielen Dank an alle, die ihre Begeisterung über Mac Mouse Fix geteilt haben!<br>
-Auf der [Website](http://noah-nuebling.github.io/mac-mouse-fix-website/) kannst du eine Sammlung schöner Dinge, die Leute über die App gesagt haben, finden.
+Auf der [Website](https://macmousefix.com/) kannst du eine Sammlung schöner Dinge, die Leute über die App gesagt haben, finden.
 
   <!-- 
     These cool articles were written about MMF
@@ -275,7 +275,7 @@ Auf der [Website](http://noah-nuebling.github.io/mac-mouse-fix-website/) kannst 
 
         To get the best experience I recommend using Mac Mouse Fix with a mouse that has at least 5 buttons. If your mouse has fewer than 5 buttons, Mac Mouse Fix still provides rich functionality and a great experience, but some features will be less easy to access compared to a 5-button mouse. With a 5-button mouse, you can really breeze through macOS in a way that's just as nice as an Apple Trackpad!
         
-        To learn more, see the [trackpad section](https://noah-nuebling.github.io/mac-mouse-fix-website#trackpad) on the website.
+        To learn more, see the [trackpad section](https://macmousefix.com/#trackpad) on the website.
 
 
       - **Mouse brands**
