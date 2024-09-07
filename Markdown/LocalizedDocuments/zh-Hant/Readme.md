@@ -41,34 +41,8 @@ To help translate it, click <a align="center" href="https://github.com/noah-nueb
   <summary>󠁧󠁿🇨🇳 中文 (繁體)</summary>
     
   [🇬🇧 English](../../../Readme.md)\
-  [🇦🇩 Català](../../../Markdown/LocalizedDocuments/ca/Readme.md)\
   [🇩🇪 Deutsch](../../../Markdown/LocalizedDocuments/de/Readme.md)\
-  [🇪🇸 Español](../../../Markdown/LocalizedDocuments/es/Readme.md)\
-  [🇫🇷 Français](../../../Markdown/LocalizedDocuments/fr/Readme.md)\
-  [🇮🇩 Indonesia](../../../Markdown/LocalizedDocuments/id/Readme.md)\
-  [🇮🇹 Italiano](../../../Markdown/LocalizedDocuments/it/Readme.md)\
-  [🇭🇺 Magyar](../../../Markdown/LocalizedDocuments/hu/Readme.md)\
-  [🇳🇱 Nederlands](../../../Markdown/LocalizedDocuments/nl/Readme.md)\
-  [🇵🇱 Polski](../../../Markdown/LocalizedDocuments/pl/Readme.md)\
-  [🇧🇷 Português (Brasil)](../../../Markdown/LocalizedDocuments/pt-BR/Readme.md)\
-  [🇵🇹 Português (Portugal)](../../../Markdown/LocalizedDocuments/pt-PT/Readme.md)\
-  [🇷🇴 Română](../../../Markdown/LocalizedDocuments/ro/Readme.md)\
-  [🇸🇪 Svenska](../../../Markdown/LocalizedDocuments/sv/Readme.md)\
-  [🇻🇳 Tiếng Việt](../../../Markdown/LocalizedDocuments/vi/Readme.md)\
-  [🇹🇷 Türkçe](../../../Markdown/LocalizedDocuments/tr/Readme.md)\
-  [🇨🇿 Čeština](../../../Markdown/LocalizedDocuments/cs/Readme.md)\
-  [🇬🇷 Ελληνικά](../../../Markdown/LocalizedDocuments/el/Readme.md)\
-  [🇷🇺 Русский](../../../Markdown/LocalizedDocuments/ru/Readme.md)\
-  [🇺🇦 Українська](../../../Markdown/LocalizedDocuments/uk/Readme.md)\
-  [🇮🇱 עברית](../../../Markdown/LocalizedDocuments/he/Readme.md)\
-  [🇸🇦 العربية](../../../Markdown/LocalizedDocuments/ar/Readme.md)\
-  [🇮🇳 हिन्दी](../../../Markdown/LocalizedDocuments/hi/Readme.md)\
-  [🇹🇭 ไทย](../../../Markdown/LocalizedDocuments/th/Readme.md)\
-  [🇨🇳 中文 (简体)](../../../Markdown/LocalizedDocuments/zh-Hans/Readme.md)\
   **🇨🇳 中文 (繁體)**\
-  [🇭🇰 中文（香港)](../../../Markdown/LocalizedDocuments/zh-HK/Readme.md)\
-  [🇯🇵 日本語](../../../Markdown/LocalizedDocuments/ja/Readme.md)\
-  [🇰🇷 한국어](../../../Markdown/LocalizedDocuments/ko/Readme.md)\
   [Help translate Mac Mouse Fix to different languages!](https://github.com/noah-nuebling/mac-mouse-fix/discussions/731)
 </details>
 

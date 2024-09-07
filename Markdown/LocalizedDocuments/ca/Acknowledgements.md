@@ -12,32 +12,6 @@ To help translate it, click <a align="center" href="https://github.com/noah-nueb
   [🇬🇧 English](../../../Acknowledgements.md)\
   **🇦🇩 Català**\
   [🇩🇪 Deutsch](../../../Markdown/LocalizedDocuments/de/Acknowledgements.md)\
-  [🇪🇸 Español](../../../Markdown/LocalizedDocuments/es/Acknowledgements.md)\
-  [🇫🇷 Français](../../../Markdown/LocalizedDocuments/fr/Acknowledgements.md)\
-  [🇮🇩 Indonesia](../../../Markdown/LocalizedDocuments/id/Acknowledgements.md)\
-  [🇮🇹 Italiano](../../../Markdown/LocalizedDocuments/it/Acknowledgements.md)\
-  [🇭🇺 Magyar](../../../Markdown/LocalizedDocuments/hu/Acknowledgements.md)\
-  [🇳🇱 Nederlands](../../../Markdown/LocalizedDocuments/nl/Acknowledgements.md)\
-  [🇵🇱 Polski](../../../Markdown/LocalizedDocuments/pl/Acknowledgements.md)\
-  [🇧🇷 Português (Brasil)](../../../Markdown/LocalizedDocuments/pt-BR/Acknowledgements.md)\
-  [🇵🇹 Português (Portugal)](../../../Markdown/LocalizedDocuments/pt-PT/Acknowledgements.md)\
-  [🇷🇴 Română](../../../Markdown/LocalizedDocuments/ro/Acknowledgements.md)\
-  [🇸🇪 Svenska](../../../Markdown/LocalizedDocuments/sv/Acknowledgements.md)\
-  [🇻🇳 Tiếng Việt](../../../Markdown/LocalizedDocuments/vi/Acknowledgements.md)\
-  [🇹🇷 Türkçe](../../../Markdown/LocalizedDocuments/tr/Acknowledgements.md)\
-  [🇨🇿 Čeština](../../../Markdown/LocalizedDocuments/cs/Acknowledgements.md)\
-  [🇬🇷 Ελληνικά](../../../Markdown/LocalizedDocuments/el/Acknowledgements.md)\
-  [🇷🇺 Русский](../../../Markdown/LocalizedDocuments/ru/Acknowledgements.md)\
-  [🇺🇦 Українська](../../../Markdown/LocalizedDocuments/uk/Acknowledgements.md)\
-  [🇮🇱 עברית](../../../Markdown/LocalizedDocuments/he/Acknowledgements.md)\
-  [🇸🇦 العربية](../../../Markdown/LocalizedDocuments/ar/Acknowledgements.md)\
-  [🇮🇳 हिन्दी](../../../Markdown/LocalizedDocuments/hi/Acknowledgements.md)\
-  [🇹🇭 ไทย](../../../Markdown/LocalizedDocuments/th/Acknowledgements.md)\
-  [🇨🇳 中文 (简体)](../../../Markdown/LocalizedDocuments/zh-Hans/Acknowledgements.md)\
-  [🇨🇳 中文 (繁體)](../../../Markdown/LocalizedDocuments/zh-Hant/Acknowledgements.md)\
-  [🇭🇰 中文（香港)](../../../Markdown/LocalizedDocuments/zh-HK/Acknowledgements.md)\
-  [🇯🇵 日本語](../../../Markdown/LocalizedDocuments/ja/Acknowledgements.md)\
-  [🇰🇷 한국어](../../../Markdown/LocalizedDocuments/ko/Acknowledgements.md)\
   [Help translate Mac Mouse Fix to different languages!](https://github.com/noah-nuebling/mac-mouse-fix/discussions/731)
 </details>
 
