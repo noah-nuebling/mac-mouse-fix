@@ -48,7 +48,7 @@
 <br>
 
 <div align="center">
-    <a href="{{https://noah-nuebling.github.io/mac-mouse-fix-website||readme.intro.links.website.url||}}">
+    <a href="https://macmousefix.com/">
         <img src="{repo_root}Markdown/Media/AppIconRound3.png" width="200" height="auto">
     </a>
     <h1>{{Mac Mouse Fix||readme.intro.title||}}</h1>  
@@ -60,12 +60,12 @@
 
 <div align="center">
     <table>
-        <th><a href={{https://noah-nuebling.github.io/mac-mouse-fix-website||readme.intro.links.website.url||}}>{{Website&nbsp;↗||readme.intro.links.website.text||}}</a></th>
-        <td><a href={{https://github.com/noah-nuebling/mac-mouse-fix/issues/new/choose||readme.intro.links.help.url||}}>{{Help&nbsp;&amp;&nbsp;Feedback||readme.intro.links.help.text||&nbsp; creates a 'non-breaking-space' character. &amp; creates an ampersand (&) character}}</a></td>
-        <td><a href={{https://github.com/noah-nuebling/mac-mouse-fix/releases||readme.intro.links.releases.url||}}>{{Releases||readme.intro.links.releases.text||}}</a></td>
-        <td><a href="{{{language_root}Acknowledgements.md||readme.intro.links.acknowledgements.url||We should determine this link through code not translators}}">{{Acknowledgements||readme.intro.links.acknowledgements.text||}}</a></td> <!-- If you translate this, remember to link to the right language version -->
+        <th><a href=https://macmousefix.com/>{{Website&nbsp;↗||readme.intro.links.website.text||}}</a></th>
+        <td><a href=https://redirect.macmousefix.com/?target=mmf-help-and-feedback&locale={locale_code}>{{Help&nbsp;&amp;&nbsp;Feedback||readme.intro.links.help.text||&nbsp; creates a 'non-breaking-space' character. &amp; creates an ampersand (&) character}}</a></td> <!-- Note: Should probably use direct link instead of redirection-service: https://github.com/noah-nuebling/mac-mouse-fix/issues/new/choose -->
+        <td><a href=https://redirect.macmousefix.com/?target=mmf-releases&locale={locale_code}>{{Releases||readme.intro.links.releases.text||}}</a></td> <!-- Note: Should probably use direct link instead of redirection-service: https://github.com/noah-nuebling/mac-mouse-fix/releases -->
+        <td><a href="{language_root}Acknowledgements.md">{{Acknowledgements||readme.intro.links.acknowledgements.text||}}</a></td> 
     </table>
-    <img src="{{https://img.shields.io/github/downloads/noah-nuebling/mac-mouse-fix/total?label=Downloads&color=25c65f||readme.intro.downloads-badge-url||You can test this url in your browser. You can change the 'Downloads' label by editing the text inside the URL after `label=`. Use url encoding for special chars. E.g. `%20` to insert spaces. (We should do this through code not translators.)}}">
+    <img src="https://img.shields.io/github/downloads/noah-nuebling/mac-mouse-fix/total?color=25c65f&label={{Downloads||readme.intro.downloads-badge-label||}}">
 </div>
 
 <br>

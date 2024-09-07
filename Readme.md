@@ -77,7 +77,7 @@
 <br>
 
 <div align="center">
-    <a href="https://noah-nuebling.github.io/mac-mouse-fix-website">
+    <a href="https://macmousefix.com/">
         <img src="Markdown/Media/AppIconRound3.png" width="200" height="auto">
     </a>
     <h1>Mac Mouse Fix</h1>  
@@ -89,12 +89,12 @@
 
 <div align="center">
     <table>
-        <th><a href=https://noah-nuebling.github.io/mac-mouse-fix-website>Website&nbsp;↗</a></th>
-        <td><a href=https://github.com/noah-nuebling/mac-mouse-fix/issues/new/choose>Help&nbsp;&amp;&nbsp;Feedback</a></td>
-        <td><a href=https://github.com/noah-nuebling/mac-mouse-fix/releases>Releases</a></td>
-        <td><a href="Acknowledgements.md">Acknowledgements</a></td> <!-- If you translate this, remember to link to the right language version -->
+        <th><a href=https://macmousefix.com/>Website&nbsp;↗</a></th>
+        <td><a href=https://redirect.macmousefix.com/?target=mmf-help-and-feedback&locale=en>Help&nbsp;&amp;&nbsp;Feedback</a></td> <!-- Note: Should probably use direct link instead of redirection-service: https://github.com/noah-nuebling/mac-mouse-fix/issues/new/choose -->
+        <td><a href=https://redirect.macmousefix.com/?target=mmf-releases&locale=en>Releases</a></td> <!-- Note: Should probably use direct link instead of redirection-service: https://github.com/noah-nuebling/mac-mouse-fix/releases -->
+        <td><a href="Acknowledgements.md">Acknowledgements</a></td> 
     </table>
-    <img src="https://img.shields.io/github/downloads/noah-nuebling/mac-mouse-fix/total?label=Downloads&color=25c65f">
+    <img src="https://img.shields.io/github/downloads/noah-nuebling/mac-mouse-fix/total?color=25c65f&label=Downloads">
 </div>
 
 <br>

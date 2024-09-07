@@ -58,14 +58,14 @@
       "localizations" : {
         "de" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "### ❤️ GitHub Sponsoren\n\nRiesiges Dankeschön an [jeden](https://github.com/sponsors/noah-nuebling#sponsors) der mich auf GitHub sponsert! Hoffentlich kann ich mir eines Tages dank euch die Milchshakefabrik kaufen. :)"
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "new",
-            "value" : "### ❤️ GitHub Sponsors\n\n**Huge thanks** to [anyone](https://github.com/sponsors/noah-nuebling#sponsors) sponsoring me on GitHub! Hopefully I can get that milkshake factory one day thanks to you. :)"
+            "value" : "### ❤️ GitHub Sponsors\n\n**Huge thanks** to [anyone]({url}) sponsoring me on GitHub! Hopefully I can get that milkshake factory one day thanks to you. :)"
           }
         }
       }
@@ -126,14 +126,14 @@
       "localizations" : {
         "de" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "**Software**, die Mac Mouse Fix inspiriert hat:\n\n- [SteerMouse](https://plentycom.jp/en/steermouse/index.html) - Wegweisende Maus-Software für Mac, die viele Funktionen inspiriert hat. Es gab Momente, in denen ich dachte: \"Das ist wahrscheinlich unmöglich\", aber dann hab ich gesehen \"oh, SteerMouse macht es\", und drei Jahre später habe ich herausgefunden, wie ich es auch umsetzen kann.\n- [Calftrail Touch](https://github.com/calftrail/Touch) - Die Grundlage für die \"Reverse Engineering\"-Arbeit, die Mac Mouse Fix's erstklassige und einzigartige Trackpad-Simulation ermöglicht!\n- [SensibleSideButtons](https://github.com/archagon/sensible-side-buttons) - Ich habe den Code für eine frühe Implementierung der Funktion \"Gehe eine Seite vor/zurück in Safari und anderen Apps\" von SensibleSideButtons kopiert und bin dadurch auch auf das Calftrail Touch-Projekt gestoßen.\n- [MOS](https://mos.caldis.me/) - Viele Funktionen von Mac Mouse Fix, wie die Option \"Hohe Scroll-Flüssigkeit\" und die Implementierung des \"App-spezifische Einstellungen\" features, wurden von MOS inspiriert.\n- [Gifski](https://github.com/sindresorhus/Gifski) - Hat das Design und den Inhalt des [Readme.md](<{language_root}Readme.md>) von Mac Mouse Fix stark inspiriert.\n- [Vue Issue Helper](https://new-issue.vuejs.org/) - Grundlage für das Design und die technische Umsetzung von [Mac Mouse Fix Feedback Assistant](https://noah-nuebling.github.io/mac-mouse-fix-feedback-assistant/)."
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "new",
-            "value" : "**Software** that inspired Mac Mouse Fix:\n\n- [SteerMouse](https://plentycom.jp/en/steermouse/index.html) - Pioneering mouse software for Mac, inspiring many features. There were moments when I thought \"this is probably not possible\", but then I saw \"oh, SteerMouse does it\", and three years later, I figured out how to implement it, too.\n- [Calftrail Touch](https://github.com/calftrail/Touch) - The foundation for the \"reverse engineering\" work which powers Mac Mouse Fix's best-in-class and first-of-a-kind trackpad simulation!\n- [MOS](https://mos.caldis.me/) - Mac Mouse Fix's \"High Scroll-Smoothness\" option, the \"App-Specific Settings\" implementation, and more were inspired by MOS.\n- [SensibleSideButtons](https://github.com/archagon/sensible-side-buttons) - I copied its code for an early implementation of the \"Go back/forward one page in Safari and other apps\" feature, and also led me to discover the Calftrail Touch project.\n- [Gifski](https://github.com/sindresorhus/Gifski) - Greatly inspired the design and content of the [Readme.md]({language_root}Readme.md) for Mac Mouse Fix.\n- [Vue Issue Helper](https://new-issue.vuejs.org/) - Foundation for the design and technical implementation of [Mac Mouse Fix Feedback Assistant](https://noah-nuebling.github.io/mac-mouse-fix-feedback-assistant/)."
+            "value" : "**Software** that inspired Mac Mouse Fix:\n\n- [SteerMouse]({url_1}) - Pioneering mouse software for Mac, inspiring many features. There were moments when I thought \"this is probably not possible\", but then I saw \"oh, SteerMouse does it\", and three years later, I figured out how to implement it, too.\n- [Calftrail Touch]({url_2}) - The foundation for the \"reverse engineering\" work which powers Mac Mouse Fix's best-in-class and first-of-a-kind trackpad simulation!\n- [MOS]({url_3}) - Mac Mouse Fix's \"High Scroll-Smoothness\" option, the \"App-Specific Settings\" implementation, and more were inspired by MOS.\n- [SensibleSideButtons]({url_4}) - I copied its code for an early implementation of the \"Go back/forward one page in Safari and other apps\" feature, and also led me to discover the Calftrail Touch project.\n- [Gifski]({url_5}) - Greatly inspired the design and content of the [Readme.md]({url_6}) for Mac Mouse Fix.\n- [Vue Issue Helper]({url_7}) - Foundation for the design and technical implementation of [Mac Mouse Fix Feedback Assistant]({url_8})."
           }
         }
       }
@@ -144,14 +144,14 @@
       "localizations" : {
         "de" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "Mac Mouse Fix wurde mithilfe dieser **hervorragenden Softwarebibliotheken** erstellt:\n\n- [ReactiveSwift](https://github.com/ReactiveCocoa/ReactiveSwift) - Ströme von Werten im Laufe der Zeit. Maßgeschneidert für Swift.\n- [CocoaLumberjack](https://github.com/CocoaLumberjack/CocoaLumberjack) - Schnelles und einfaches, aber leistungsstarkes und flexibles Logging-System.\n- [Swift Markdown](https://github.com/apple/swift-markdown) - Analysiere, erstelle, bearbeite und analysiere Markdown-Dokumente.\n- [Sparkle](https://github.com/sparkle-project/Sparkle) - Ein Software-Update-Framework für macOS.\n- [SnapKit](https://github.com/SnapKit/SnapKit) - Macht Auto Layout sowohl auf iOS als auch auf OS X einfach.\n- [MASShortcut](https://github.com/shpakovski/MASShortcut) - API und Benutzeroberfläche zum Aufzeichnen, Speichern und Verwenden systemweiter Tastenkürzel\n- [CGSInternal](https://github.com/NUIKit/CGSInternal) - Eine Sammlung privater CoreGraphics-Routinen\n- Abhängigkeiten der Skripte von Mac Mouse Fix:<br>\n  [Update- und Statistikskripte](https://github.com/noah-nuebling/mac-mouse-fix/blob/update-feed/requirements.txt) | [Markdown-Generierungsskript]({repo_root}Markdown/Code/python_requirements.txt) | [.strings-Datei Synchronisierungsskript]({repo_root}Localization/Code/UpdateStrings/requirements.txt) | [\"State of Localization\"-Skript]({repo_root}Localization/Code/StateOfLocalization/requirements.txt)\n- Abhängigkeiten der [Mac Mouse Fix Feedback Assistant](https://noah-nuebling.github.io/mac-mouse-fix-feedback-assistant/) Web-App [hier](https://github.com/noah-nuebling/mac-mouse-fix-feedback-assistant/blob/master/package.json)\n- Abhängigkeiten der [Mac Mouse Fix Website](https://noah-nuebling.github.io/mac-mouse-fix-website/) findest du [hier](https://github.com/noah-nuebling/mac-mouse-fix-website/blob/main/package.json)"
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "new",
-            "value" : "Mac Mouse Fix was built with the help of these **great libraries**:\n\n- [ReactiveSwift](https://github.com/ReactiveCocoa/ReactiveSwift) - Streams of values over time tailored for Swift\n- [CocoaLumberjack](https://github.com/CocoaLumberjack/CocoaLumberjack) - Fast & simple, yet powerful & flexible logging\n- [Swift Markdown](https://github.com/apple/swift-markdown) - Parse, build, edit, and analyze Markdown documents\n- [Sparkle](https://github.com/sparkle-project/Sparkle) - A software update framework for macOS\n- [SnapKit](https://github.com/SnapKit/SnapKit) - Making Auto Layout easy on both iOS and macOS\n- [MASShortcut](https://github.com/shpakovski/MASShortcut) - API and user interface for recording, storing & using system-wide keyboard shortcuts\n- [CGSInternal](https://github.com/NUIKit/CGSInternal) - A collection of private CoreGraphics routines\n- Dependencies of Mac Mouse Fix's scripts:<br>\n  [Update and statistics scripts](https://github.com/noah-nuebling/mac-mouse-fix/blob/update-feed/requirements.txt) | [Markdown generator script]({repo_root}Markdown/Code/python_requirements.txt) | [.strings file sync script]({repo_root}Localization/Code/UpdateStrings/requirements.txt) | [\"State of Localization\" script]({repo_root}Localization/Code/StateOfLocalization/requirements.txt)\n- Dependencies of the [Mac Mouse Fix Feedback Assistant](https://noah-nuebling.github.io/mac-mouse-fix-feedback-assistant/) web app [here](https://github.com/noah-nuebling/mac-mouse-fix-feedback-assistant/blob/master/package.json)\n- Dependencies of the [Mac Mouse Fix Website](https://noah-nuebling.github.io/mac-mouse-fix-website/) are available [here](https://github.com/noah-nuebling/mac-mouse-fix-website/blob/main/package.json)"
+            "value" : "Mac Mouse Fix was built with the help of these **great libraries**:\n\n- [ReactiveSwift]({url_1}) - Streams of values over time tailored for Swift\n- [CocoaLumberjack]({url_2}) - Fast & simple, yet powerful & flexible logging\n- [Swift Markdown]({url_3}) - Parse, build, edit, and analyze Markdown documents\n- [Sparkle]({url_4}) - A software update framework for macOS\n- [SnapKit]({url_5}) - Making Auto Layout easy on both iOS and macOS\n- [MASShortcut]({url_6}) - API and user interface for recording, storing & using system-wide keyboard shortcuts\n- [CGSInternal]({url_7}) - A collection of private CoreGraphics routines\n- Dependencies of Mac Mouse Fix's scripts:<br>\n  [Update and statistics scripts]({url_8}) | [Markdown generator script]({url_9}) | [.strings file sync script]({url_10}) | [\"State of Localization\" script]({url_11})\n- Dependencies of the [Mac Mouse Fix Feedback Assistant]({url_12}) web app [here]({url_13})\n- Dependencies of the [Mac Mouse Fix Website]({url_14}) are available [here]({url_15})"
           }
         }
       }
@@ -161,14 +161,14 @@
       "localizations" : {
         "de" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "## 🌏 Übersetzungen\n\nDanke, dass ihr Mac Mouse Fix zu Menschen auf der ganzen Welt gebracht habt.\n\n- 🇨🇳 Chinesische Übersetzungen von [@groverlynn](https://github.com/groverlynn)\n- 🇰🇷 Koreanische Übersetzungen von [@jeongtae](https://github.com/jeongtae)\n- 🇻🇳 Vietnamesische Übersetzungen von [@nghlt](https://github.com/nghlt)"
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "new",
-            "value" : "## 🌏 Translations\n\nThanks for bringing Mac Mouse Fix to people around the globe!\n\n- 🇨🇳 Chinese translations by [@groverlynn](https://github.com/groverlynn)\n- 🇰🇷 Korean translations by [@jeongtae](https://github.com/jeongtae)\n- 🇻🇳 Vietnamese translations by [@nghlt](https://github.com/nghlt)"
+            "value" : "## 🌏 Translations\n\nThanks for bringing Mac Mouse Fix to people around the globe!\n\n- 🇨🇳 Chinese translations by [@groverlynn]({url_1})\n- 🇰🇷 Korean translations by [@jeongtae]({url_2})\n- 🇻🇳 Vietnamese translations by [@nghlt]({url_3})"
           }
         }
       }
@@ -178,14 +178,14 @@
       "localizations" : {
         "de" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "[Help translate Mac Mouse Fix to different languages!](https://github.com/noah-nuebling/mac-mouse-fix/discussions/731)"
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "new",
-            "value" : "[Help translate Mac Mouse Fix to different languages!](https://github.com/noah-nuebling/mac-mouse-fix/discussions/731)"
+            "value" : "[Help translate Mac Mouse Fix to different languages!]({url})"
           }
         }
       },
@@ -196,14 +196,14 @@
       "localizations" : {
         "de" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "## Wie du beitragen kannst\n\nEs gibt einige Möglichkeiten, das Projekt zu unterstützen.<br>\nSchau dir die [Danksagungen]({language_root}Acknowledgements.md) an, um mehr darüber zu erfahren, wer bereits beigetragen hat!"
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "new",
-            "value" : "## How you can contribute\n\nThere are several ways to help the project.<br>\nCheck out the [Acknowledgements]({language_root}Acknowledgements.md) for more info on who has already contributed!"
+            "value" : "## How you can contribute\n\nThere are several ways to help the project.<br>\nCheck out the [Acknowledgements]({url}) for more info on who has already contributed!"
           }
         }
       }
@@ -213,14 +213,14 @@
       "localizations" : {
         "de" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "Wenn du Code beitragen möchtest, ist das super! Ich freue mich über alle [Pull-Requests](https://github.com/noah-nuebling/mac-mouse-fix/pulls).\n  \nAllerdings werde ich vielleicht nicht alle Pull-Requests akzeptieren. Wenn du sicherstellen willst, dass deine Arbeit nicht umsonst ist, kannst du einen ersten Pull-Request stellen, der nur die Änderungen *beschreibt*, die du vornehmen möchtest, jedoch keinen, oder nur wenig Code enthält. Dann kann ich dir Feedback geben und dir sagen, ob ich die Änderungen, die du vornehmen möchtest, so übernehmen würde."
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "new",
-            "value" : "If you would like to contribute code, that's awesome! I'll be happy about any [pull requests](https://github.com/noah-nuebling/mac-mouse-fix/pulls).\n\nHowever, I might not accept all pull requests. If you want to make sure that your work is not wasted, you can submit an initial pull request that only *describes* the changes you want to make, but contains little or no code. Then I can give you feedback and tell you if I would adopt the changes you want to make in that way."
+            "value" : "If you would like to contribute code, that's awesome! I'll be happy about any [pull requests]({url}).\n\nHowever, I might not accept all pull requests. If you want to make sure that your work is not wasted, you can submit an initial pull request that only *describes* the changes you want to make, but contains little or no code. Then I can give you feedback and tell you if I would adopt the changes you want to make in that way."
           }
         }
       }
@@ -247,14 +247,14 @@
       "localizations" : {
         "de" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "Du kannst helfen, indem du deine **Ideen**, **Probleme** und **Rückmeldungen** über den [Feedback-Assistenten](https://noah-nuebling.github.io/mac-mouse-fix-feedback-assistant/?type=bug-report) teilst."
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "new",
-            "value" : "You can help by sharing your **ideas**, **issues** and **feedback** via the [Feedback Assistant](https://noah-nuebling.github.io/mac-mouse-fix-feedback-assistant/?type=bug-report)."
+            "value" : "You can help by sharing your **ideas**, **issues** and **feedback** via the [Feedback Assistant]({url})."
           }
         }
       }
@@ -298,14 +298,14 @@
       "localizations" : {
         "de" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "Ich hoffe, mich finanziell durch Mac Mouse Fix erhalten zu können. So kann ich weiter an dem Projekt arbeiten und es verbessern. Wenn du dabei helfen möchtest, kannst du:\n1. Mac Mouse Fix kaufen, indem du auf den Button in der App klickst oder [hier](https://noahnuebling.gumroad.com/l/mmfinappusd).\n2. Mir auf PayPal ein [Trinkgeld](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=ARSTVR6KFB524&source=url&lc=en_US) geben. Ich verdiene nicht viel Geld damit, aber es ist immer nett und motivierend, eine Spende zu erhalten.\n3. Mich auf GitHub [sponsorn](https://github.com/sponsors/noah-nuebling). Ein monatlicher Beitrag ist eine großartige Möglichkeit, das Projekt zu unterstützen und mir dabei zu helfen, ein stabileres Einkommen zu haben."
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "new",
-            "value" : "I hope to be able to sustain myself financially through Mac Mouse Fix. That way, I can keep improving and working on the app. If you would like to help, you can:\n1. Buy Mac Mouse Fix by clicking the button in the app, or clicking [here](https://noahnuebling.gumroad.com/l/mmfinappusd).\n2. [Tip me](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=ARSTVR6KFB524&source=url&lc=en_US) on PayPal. I don't get a lot of money from this, but it's always cute and motivating to get a donation.\n3. [Sponsor me](https://github.com/sponsors/noah-nuebling) on GitHub. A monthly sponsorship is a great way to support the project and help me have a more stable income."
+            "value" : "I hope to be able to sustain myself financially through Mac Mouse Fix. That way, I can keep improving and working on the app. If you would like to help, you can:\n1. Buy Mac Mouse Fix by clicking the button in the app, or clicking [here]({url_1}).\n2. [Tip me]({url_2}) on PayPal. I don't get a lot of money from this, but it's always cute and motivating to get a donation.\n3. [Sponsor me]({url_3}) on GitHub. A monthly sponsorship is a great way to support the project and help me have a more stable income."
           }
         }
       }
@@ -332,14 +332,14 @@
       "localizations" : {
         "de" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "Mac Mouse Fix ist auf Englisch und Deutsch verfügbar, sowie den Sprachen, die in den [Danksagungen]({language_root}Acknowledgements.md) aufgelistet sind.\n  \nWenn du **beim Übersetzen des Projekts helfen** möchtest, sieh dir das [Localization Guide](https://github.com/noah-nuebling/mac-mouse-fix/discussions/731) an.<br>\nWenn du **fehlende oder suboptimale Übersetzungen** melden möchtest, ist das auch sehr hilfreich! Die beste Art um Probleme zu melden, ist einen Kommentar unter dem [Localization Guide](https://github.com/noah-nuebling/mac-mouse-fix/discussions/731) zu hinterlassen."
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "new",
-            "value" : "Mac Mouse Fix is available in English, German as well as the languages listed in the [Acknowledgements]({language_root}Acknowledgements.md).\n\nIf you would like to **help translate the project**, see the [Localization Guide](https://github.com/noah-nuebling/mac-mouse-fix/discussions/731).<br>\nIf you want to **report missing or suboptimal translations**, that's also very helpful. The best way to report problems is by commenting under the [Localization Guide](https://github.com/noah-nuebling/mac-mouse-fix/discussions/731)."
+            "value" : "Mac Mouse Fix is available in English, German as well as the languages listed in the [Acknowledgements]({url_1}).\n\nIf you would like to **help translate the project**, see the [Localization Guide]({url_2}).<br>\nIf you want to **report missing or suboptimal translations**, that's also very helpful. The best way to report problems is by commenting under the [Localization Guide]({url_3})."
           }
         }
       }
@@ -366,14 +366,14 @@
       "localizations" : {
         "de" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "## Funktionen\n\nSiehe die [Website](https://noah-nuebling.github.io/mac-mouse-fix-website#trackpad) für einen Überblick über die Funktionen von Mac Mouse Fix, einschließlich Videodemos!\n\nMehr Details findest du unter [Releases](https://github.com/noah-nuebling/mac-mouse-fix/releases>Releases)."
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "new",
-            "value" : "## Features\n\nSee the [website](https://noah-nuebling.github.io/mac-mouse-fix-website#trackpad) for an overview of the features of Mac Mouse Fix, including video demos!\n\nFor more details, see the [Releases](https://github.com/noah-nuebling/mac-mouse-fix/releases)."
+            "value" : "## Features\n\nSee the [website]({url_1}) for an overview of the features of Mac Mouse Fix, including video demos!\n\nFor more details, see the [Releases]({url_2})."
           }
         }
       }
@@ -383,14 +383,14 @@
       "localizations" : {
         "de" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "## Installation\n\nLade die neueste Version von Mac Mouse Fix auf der [Website](http://noah-nuebling.github.io/mac-mouse-fix-website/) herunter.\n\nDu kannst Mac Mouse Fix auch über [Homebrew](https://brew.sh/) installieren! Gib einfach den folgenden Befehl in das Terminal ein:\n\n```bash\nbrew install mac-mouse-fix\n```\n\nÄltere Versionen von Mac Mouse Fix kannst du unter [Releases](https://github.com/noah-nuebling/mac-mouse-fix/releases) herunterladen."
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "new",
-            "value" : "## Installation\n\nDownload the latest version of Mac Mouse Fix on the [website](http://noah-nuebling.github.io/mac-mouse-fix-website/).\n\nYou can also install Mac Mouse Fix through [Homebrew](https://brew.sh/)! Just type the following command into the terminal:\n\n```bash\nbrew install mac-mouse-fix\n```\n\nYou can download older versions of Mac Mouse Fix under [Releases](https://github.com/noah-nuebling/mac-mouse-fix/releases)."
+            "value" : "## Installation\n\nDownload the latest version of Mac Mouse Fix on the [website]({url_1}).\n\nYou can also install Mac Mouse Fix through [Homebrew]({url_2})! Just type the following command into the terminal:\n\n```bash\nbrew install mac-mouse-fix\n```\n\nYou can download older versions of Mac Mouse Fix under [Releases]({url_3})."
           }
         }
       }
@@ -400,32 +400,31 @@
       "localizations" : {
         "de" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "Mac Mouse Fix ist eine App, die deine Maus besser macht.\n\nIch möchte Mac Mouse Fix zum besten Maustreiber *aller Zeiten* machen! Derzeit fehlen noch einige Funktionen, aber ich denke es macht jetzt schon **normale Mäuse** in einiger Hinsicht **zu den besten Eingabegeräten für Macs**! Auf dem selben Level oder sogar besser als ein Apple Trackpad oder eine Logitech MX Master Maus.\n\nFür mehr Info darüber, wie genau Mac Mouse Fix deine Maus verbessert, besuche die [Website](https://noah-nuebling.github.io/mac-mouse-fix-website)."
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "new",
-            "value" : "Mac Mouse Fix is an app that makes your mouse better.\n\nI want to turn Mac Mouse Fix into the best mouse driver *of all time*! Some features are still missing at the moment, but I think it already **turns regular mice into the best input devices for Macs** in some ways. At the same level or even better than an Apple Trackpad or a Logitech MX Master mouse.\n\nFor more information on how exactly Mac Mouse Fix enhances your mouse, visit the [website](https://noah-nuebling.github.io/mac-mouse-fix-website)."
+            "value" : "Mac Mouse Fix is an app that makes your mouse better.\n\nI want to turn Mac Mouse Fix into the best mouse driver *of all time*! Some features are still missing at the moment, but I think it already **turns regular mice into the best input devices for Macs** in some ways. At the same level or even better than an Apple Trackpad or a Logitech MX Master mouse.\n\nFor more information on how exactly Mac Mouse Fix enhances your mouse, visit the [website]({url})."
           }
         }
       }
     },
-    "readme.intro.downloads-badge-url" : {
-      "comment" : "You can test this url in your browser. You can change the 'Downloads' label by editing the text inside the URL after `label=`. Use url encoding for special chars. E.g. `%20` to insert spaces. (We should do this through code not translators.)",
+    "readme.intro.downloads-badge-label" : {
       "extractionState" : "manual",
       "localizations" : {
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "https://img.shields.io/github/downloads/noah-nuebling/mac-mouse-fix/total?label=Downloads&color=25c65f"
+            "value" : "Downloads"
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "new",
-            "value" : "https://img.shields.io/github/downloads/noah-nuebling/mac-mouse-fix/total?label=Downloads&color=25c65f"
+            "value" : "Downloads"
           }
         }
       }
@@ -447,25 +446,6 @@
         }
       }
     },
-    "readme.intro.links.acknowledgements.url" : {
-      "comment" : "We should determine this link through code not translators",
-      "extractionState" : "manual",
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "{language_root}Acknowledgements.md"
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "{language_root}Acknowledgements.md"
-          }
-        }
-      },
-      "shouldTranslate" : false
-    },
     "readme.intro.links.help.text" : {
       "comment" : "&nbsp; creates a 'non-breaking-space' character. &amp; creates an ampersand (&) character",
       "extractionState" : "manual",
@@ -480,23 +460,6 @@
           "stringUnit" : {
             "state" : "new",
             "value" : "Help&nbsp;&amp;&nbsp;Feedback"
-          }
-        }
-      }
-    },
-    "readme.intro.links.help.url" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "https://github.com/noah-nuebling/mac-mouse-fix/issues/new/choose"
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "https://github.com/noah-nuebling/mac-mouse-fix/issues/new/choose"
           }
         }
       }
@@ -518,23 +481,6 @@
         }
       }
     },
-    "readme.intro.links.releases.url" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "https://github.com/noah-nuebling/mac-mouse-fix/releases"
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "https://github.com/noah-nuebling/mac-mouse-fix/releases"
-          }
-        }
-      }
-    },
     "readme.intro.links.website.text" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -548,23 +494,6 @@
           "stringUnit" : {
             "state" : "new",
             "value" : "Website&nbsp;↗"
-          }
-        }
-      }
-    },
-    "readme.intro.links.website.url" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "https://noah-nuebling.github.io/mac-mouse-fix-website"
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "https://noah-nuebling.github.io/mac-mouse-fix-website"
           }
         }
       }
@@ -608,14 +537,14 @@
       "localizations" : {
         "de" : {
           "stringUnit" : {
-            "state" : "translated",
-            "value" : "## macOS-Kompatibilität\n\nDie neueste Version von Mac Mouse Fix ist für **macOS 11 Big Sur** oder später gemacht.\n\nWenn du macOS **10.15 Catalina**, macOS **10.14 Mojave** oder macOS **10.13 High Sierra** benutzt, kannst du die [neueste Version von Mac Mouse Fix 2](https://noah-nuebling.github.io/redirection-service?message=&target=mmf2-latest) verwenden. Mac Mouse Fix 3.0.0 und später könnten vielleicht auch noch auf deinem Gerät funktionieren, aber sie werden visuelle Probleme haben und einige Funktionen werden eventuell nicht richtig funktionieren.\n\nWenn du macOS **10.12 Sierra** oder **10.11 El Capitan** benutzt, kannst du Mac Mouse Fix [2.2.0](https://github.com/noah-nuebling/mac-mouse-fix/releases/tag/2.2.0) oder früher verwenden."
+            "state" : "needs_review",
+            "value" : "## macOS-Kompatibilität\n\nDie neueste Version von Mac Mouse Fix ist für **macOS 11 Big Sur** oder später gemacht.\n\nWenn du macOS **10.15 Catalina**, macOS **10.14 Mojave** oder macOS **10.13 High Sierra** benutzt, kannst du die [neueste Version von Mac Mouse Fix 2]([[redirect:mmf2-latest]]) verwenden. Mac Mouse Fix 3.0.0 und später könnten vielleicht auch noch auf deinem Gerät funktionieren, aber sie werden visuelle Probleme haben und einige Funktionen werden eventuell nicht richtig funktionieren.\n\nWenn du macOS **10.12 Sierra** oder **10.11 El Capitan** benutzt, kannst du Mac Mouse Fix [2.2.0](https://github.com/noah-nuebling/mac-mouse-fix/releases/tag/2.2.0) oder früher verwenden."
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "new",
-            "value" : "## macOS compatibility\n\nThe latest version of Mac Mouse Fix is made for **macOS 11 Big Sur** or later.\n  \nIf you're on macOS **10.15 Catalina**, macOS **10.14 Mojave**, or macOS **10.13 High Sierra**, you can use the [latest version of Mac Mouse Fix 2](https://noah-nuebling.github.io/redirection-service?message=&target=mmf2-latest). Mac Mouse Fix 3.0.0 and later might still work on your machine, but they will have visual issues and some features might not work properly.\n    \nIf you're on macOS **10.12 Sierra**, or **10.11 El Capitan**, you can use Mac Mouse Fix [2.2.0](https://github.com/noah-nuebling/mac-mouse-fix/releases/tag/2.2.0) or below."
+            "value" : "## macOS compatibility\n\nThe latest version of Mac Mouse Fix is made for **macOS 11 Big Sur** or later.\n  \nIf you're on macOS **10.15 Catalina**, macOS **10.14 Mojave**, or macOS **10.13 High Sierra**, you can use the [latest version of Mac Mouse Fix 2]({url_1}). Mac Mouse Fix 3.0.0 and later might still work on your machine, but they will have visual issues and some features might not work properly.\n    \nIf you're on macOS **10.12 Sierra**, or **10.11 El Capitan**, you can use Mac Mouse Fix [2.2.0]({url_2}) or below."
           }
         }
       }
@@ -625,14 +554,14 @@
       "localizations" : {
         "de" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "## Preisgestaltung\n\nEinen Überblick über die Preisgestaltung von Mac Mouse Fix 3 findest du auf der [Website](https://noah-nuebling.github.io/mac-mouse-fix-website#price).<br>\nMac Mouse Fix 2 und früher bleiben für immer kostenlos."
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "new",
-            "value" : "## Pricing\n\nSee the [website](https://noah-nuebling.github.io/mac-mouse-fix-website#price) for an overview of the pricing for Mac Mouse Fix 3.<br>\nMac Mouse Fix 2 and below will remain free forever."
+            "value" : "## Pricing\n\nSee the [website]({url}) for an overview of the pricing for Mac Mouse Fix 3.<br>\nMac Mouse Fix 2 and below will remain free forever."
           }
         }
       }
@@ -727,14 +656,14 @@
       "localizations" : {
         "de" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "In 3D-Apps wie Blender kreist man normalerweise um Objekte, indem man die mittlere Maustaste klickt und zieht.<br>\nAber wenn du in Mac Mouse Fix der mittleren Maustaste Aktionen zuweist, dann funktioniert das nicht mehr.\n  \nUm das zu lösen, gibt es 2 Optionen, von denen ich weiß:\n1. Weise für eine der Tasten deiner Maus das klicken und ziehen der \"Scrollen & Navigieren\" Funktion zu. Diese Funktion simuliert das Wischen mit 2 Fingern auf einem Apple Trackpad. Das erlaubt dir, unter anderem, in 3D-Apps zu kreisen!\n2. *Gebe* die mittlere Maustaste *frei*, indem du alle ihr in Mac Mouse Fix zugewiesenen Aktionen löschst. Siehe [diese Anleitung](https://github.com/noah-nuebling/mac-mouse-fix/discussions/112) für weitere Informationen."
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "new",
-            "value" : "In 3D apps like Blender, you normally Click and Drag the Middle Mouse Button to orbit around objects.<br>\nBut if you assign actions to the Middle Mouse Button in Mac Mouse Fix, then this won't work anymore.\n\nTo solve this, I know of 2 options:\n1. Assign clicking and dragging one of the buttons of your mouse to the \"Scroll & Navigate\" feature. This feature simulates swiping with 2 fingers on an Apple Trackpad. This will, among other things, let you orbit in 3D apps! \n2. *Uncapture* the Middle Mouse Button by deleting all actions assigned to it in Mac Mouse Fix. See [this guide](https://github.com/noah-nuebling/mac-mouse-fix/discussions/112) for more info."
+            "value" : "In 3D apps like Blender, you normally Click and Drag the Middle Mouse Button to orbit around objects.<br>\nBut if you assign actions to the Middle Mouse Button in Mac Mouse Fix, then this won't work anymore.\n\nTo solve this, I know of 2 options:\n1. Assign clicking and dragging one of the buttons of your mouse to the \"Scroll & Navigate\" feature. This feature simulates swiping with 2 fingers on an Apple Trackpad. This will, among other things, let you orbit in 3D apps! \n2. *Uncapture* the Middle Mouse Button by deleting all actions assigned to it in Mac Mouse Fix. See [this guide]({url}) for more info."
           }
         }
       }
@@ -795,14 +724,14 @@
       "localizations" : {
         "de" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "Mac Mouse Fix hat keine Werbung und sammelt keine persönlichen Informationen über dich.\n\nJedoch sammelt der Verkaufsanbieter Gumroad.com im Moment des Kaufs von Mac Mouse Fix einige persönliche Informationen, wie z.B. deine E-Mail-Adresse. Diese Informationen sind für mich sichtbar. Die Informationen sind notwendig, um Rückerstattungen ausstellen zu können, dir einen Lizenzschlüssel per E-Mail zu senden, usw. Ich kann diese Datensammlung nicht deaktivieren. Um mehr über die gesammelten Daten beim Kauf von Mac Mouse Fix zu erfahren, siehe die [Datenschutzrichtlinie](https://gumroad.com/privacy) von Gumroad.\n"
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "new",
-            "value" : "Mac Mouse Fix does not have ads, and it does not collect any personal information about you.\n\nHowever, at the moment that you buy the app, the sales provider Gumroad.com collects some personal info, such as your email address, and this info is visible to me. This is necessary to be able to issue refunds, send a license key to your email, etc. I cannot turn this off. To learn more about the data collected when you buy Mac Mouse Fix, see the [Gumroad Privacy Policy](https://gumroad.com/privacy)."
+            "value" : "Mac Mouse Fix does not have ads, and it does not collect any personal information about you.\n\nHowever, at the moment that you buy the app, the sales provider Gumroad.com collects some personal info, such as your email address, and this info is visible to me. This is necessary to be able to issue refunds, send a license key to your email, etc. I cannot turn this off. To learn more about the data collected when you buy Mac Mouse Fix, see the [Gumroad Privacy Policy]({url})."
           }
         }
       }
@@ -829,14 +758,14 @@
       "localizations" : {
         "de" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "Ja! Siehe die [Danksagungen]({language_root}Acknowledgements.md#-paypal-donations) für mehr Informationen."
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "new",
-            "value" : "Yes! See the [Acknowledgements]({language_root}Acknowledgements.md#-paypal-donations) for more info."
+            "value" : "Yes! See the [Acknowledgements]({url}) for more info."
           }
         }
       }
@@ -931,14 +860,14 @@
       "localizations" : {
         "de" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "Ja, Mac Mouse Fix wird weiterhin Open Source sein!\n\nIch ermutige jeden, den Quellcode von Mac Mouse Fix in eigenen Projekten zu verwenden, solange sie keine einfache Kopie von Mac Mouse Fix veröffentlichen.\n\nErfahre mehr über die Details in der [MMF License](https://github.com/noah-nuebling/mac-mouse-fix/blob/master/License), unter der Mac Mouse Fix 3 und spätere Versionen lizenziert sind.\n"
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "new",
-            "value" : "Yes, Mac Mouse Fix will still be open source!\n\nI encourage anyone to use the source code of Mac Mouse Fix in their own projects, as long as they don't release a simple copy of Mac Mouse Fix.\n\nLearn about the details in the [MMF License](https://github.com/noah-nuebling/mac-mouse-fix/blob/master/License) which Mac Mouse Fix 3 and later are licensed under."
+            "value" : "Yes, Mac Mouse Fix will still be open source!\n\nI encourage anyone to use the source code of Mac Mouse Fix in their own projects, as long as they don't release a simple copy of Mac Mouse Fix.\n\nLearn about the details in the [MMF License]({url}) which Mac Mouse Fix 3 and later are licensed under."
           }
         }
       }
@@ -1118,14 +1047,14 @@
       "localizations" : {
         "de" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "[Swish](https://highlyopinionated.co/swish/) ist meine bevorzugte Methode, um Fenster unter macOS zu verwalten. Es ermöglicht dir, mit einem einfachen Wischen auf dem Trackpad jedes Fenster so zu positionieren, dass es die Hälfte, ein Viertel oder den ganzen Bildschirm einnimmt.\n\nSwish ist für Trackpad-Gesten konzipiert, aber mit Mac Mouse Fix kannst du es von jeder Drittanbieter-Maus aus verwenden! Öffne dazu einfach Mac Mouse Fix und stelle für eine beliebige Taste die \"Klicken und Ziehen\" Aktion auf \"Scrollen & Navigieren\", dann kannst du Fenster mit einem einfachen Klicken und Ziehen positionieren.\n\nAlles was du mit durch Wischen mit 2 Fingern auf einem Apple Trackpad machen kannst funktioniert genau so gut mit der \"Scrollen & Navigieren\" Funktion in Mac Mouse Fix."
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "new",
-            "value" : "[Swish](https://highlyopinionated.co/swish/) is my favorite way to manage windows on macOS. With a simple swipe on your trackpad, it lets you position any window so it takes up half, a quarter, or the whole screen.\n\nSwish is designed for trackpad gestures, but with Mac Mouse Fix you can use it from any third-party mouse! Just go to Mac Mouse Fix and set any buttons \"Click and Drag\" action to \"Scroll & Navigate\" and then you can snap windows with a simple Click and Drag.\n\nAnything you can do with a two-finger swipe on an Apple trackpad works just as well with the \"Scroll & Navigate\" feature in Mac Mouse Fix."
+            "value" : "[Swish]({url}) is my favorite way to manage windows on macOS. With a simple swipe on your trackpad, it lets you position any window so it takes up half, a quarter, or the whole screen.\n\nSwish is designed for trackpad gestures, but with Mac Mouse Fix you can use it from any third-party mouse! Just go to Mac Mouse Fix and set any buttons \"Click and Drag\" action to \"Scroll & Navigate\" and then you can snap windows with a simple Click and Drag.\n\nAnything you can do with a two-finger swipe on an Apple trackpad works just as well with the \"Scroll & Navigate\" feature in Mac Mouse Fix."
           }
         }
       }
@@ -1152,14 +1081,14 @@
       "localizations" : {
         "de" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "## Deinstallation\n\nDeinstalliere Mac Mouse Fix, indem du es einfach in den Papierkorb verschiebst.\n\nEs werden jedoch Dateien auf deinem System zurückbleiben. Um diese Dateien zu entfernen, empfehle ich den großartigen [AppCleaner von FreeMacSoft](https://freemacsoft.net/appcleaner/).\n\nUnter macOS ist es für Apps nicht machbar, diese hinterlassenen Dateien selbst zu löschen, wenn du die App löschst. Deshalb empfehle ich wärmstens die Verwendung einer App wie AppCleaner."
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "new",
-            "value" : "## Uninstallation\n\nUninstall Mac Mouse Fix by simply moving it to the bin. \n\nHowever, there will be files left on your system. To get rid of these files I recommend the awesome [AppCleaner by FreeMacSoft](https://freemacsoft.net/appcleaner/).\n\nUnder macOS, it is not feasible for apps to delete these leftover files by themselves when you delete the app. That's why I highly recommend using an app like AppCleaner."
+            "value" : "## Uninstallation\n\nUninstall Mac Mouse Fix by simply moving it to the bin. \n\nHowever, there will be files left on your system. To get rid of these files I recommend the awesome [AppCleaner by FreeMacSoft]({url}).\n\nUnder macOS, it is not feasible for apps to delete these leftover files by themselves when you delete the app. That's why I highly recommend using an app like AppCleaner."
           }
         }
       }
@@ -1169,14 +1098,14 @@
       "localizations" : {
         "de" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "## Was die Leute sagen\n\nVielen Dank an alle, die ihre Begeisterung über Mac Mouse Fix geteilt haben!<br>\nAuf der [Website](http://noah-nuebling.github.io/mac-mouse-fix-website/) kannst du eine Sammlung schöner Dinge, die Leute über die App gesagt haben, finden."
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "new",
-            "value" : "## What people say\n\nThanks so much to everyone sharing their excitement about Mac Mouse Fix!<br>\nOn the [website](http://noah-nuebling.github.io/mac-mouse-fix-website/) you can find a collection of nice things people have said about the app."
+            "value" : "## What people say\n\nThanks so much to everyone sharing their excitement about Mac Mouse Fix!<br>\nOn the [website]({url}) you can find a collection of nice things people have said about the app."
           }
         }
       }
