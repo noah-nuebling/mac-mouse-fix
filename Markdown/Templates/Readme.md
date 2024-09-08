@@ -69,12 +69,12 @@
 
 <div align="center">
     <table>
-        <th><a href=https://macmousefix.com/>{{Website&nbsp;↗||readme.intro.links.website.text||}}</a></th>
-        <td><a href=https://redirect.macmousefix.com/?target=mmf-help-and-feedback&locale={locale_code}>{{Help&nbsp;&amp;&nbsp;Feedback||readme.intro.links.help.text||Note: &nbsp; creates a 'non-breaking-space' character. &amp; creates an ampersand (&) character}}</a></td> <!-- Note: Should probably use direct link instead of redirection-service: https://github.com/noah-nuebling/mac-mouse-fix/issues/new/choose -->
-        <td><a href=https://redirect.macmousefix.com/?target=mmf-releases&locale={locale_code}>{{Releases||readme.intro.links.releases.text||}}</a></td> <!-- Note: Should probably use direct link instead of redirection-service: https://github.com/noah-nuebling/mac-mouse-fix/releases -->
-        <td><a href="{language_root}Acknowledgements.md">{{Acknowledgements||readme.intro.links.acknowledgements.text||}}</a></td> 
+        <th><a href=https://macmousefix.com/>{{Website&nbsp;↗||readme.intro.links.website||}}</a></th>
+        <td><a href=https://redirect.macmousefix.com/?target=mmf-help-and-feedback&locale={locale_code}>{{Help&nbsp;&amp;&nbsp;Feedback||readme.intro.links.help||Note: &nbsp; creates a so called 'non-breaking-space' character, which is like a normal space that prevents line breaks. &amp; creates an ampersand (&) character}}</a></td> <!-- Note: Should probably use direct link instead of redirection-service: https://github.com/noah-nuebling/mac-mouse-fix/issues/new/choose -->
+        <td><a href=https://redirect.macmousefix.com/?target=mmf-releases&locale={locale_code}>{{Releases||readme.intro.links.releases||}}</a></td> <!-- Note: Should probably use direct link instead of redirection-service: https://github.com/noah-nuebling/mac-mouse-fix/releases -->
+        <td><a href="{language_root}Acknowledgements.md">{{Acknowledgements||readme.intro.links.acknowledgements||}}</a></td> 
     </table>
-    <img src="https://img.shields.io/github/downloads/noah-nuebling/mac-mouse-fix/total?color=25c65f&label={{Downloads||readme.intro.downloads-badge-label||}}">
+    <img src="https://img.shields.io/github/downloads/noah-nuebling/mac-mouse-fix/total?color=25c65f&label={{Downloads||readme.intro.downloads-badge-label||Note: This label will be shown next to a box containing the number of times Mac Mouse Fix has been downloaded so far }}">
 </div>
 
 <br>
@@ -231,7 +231,7 @@ key: readme.tips
 comment:
 ```
 
-- {{**Manage windows with a simple Click and Drag**||readme.tips.swish.title||}}
+- {{**Manage windows with a simple Click and Drag**||readme.tips.swish||}}
 
   ```
   key: readme.tips.swish.body
@@ -245,7 +245,7 @@ comment:
   comment:  
   ```
 
-- {{**Control Screen Brightness, Audio Volume, or Media Playback right from your mouse**||readme.tips.apple-keys.title||}}
+- {{**Control Screen Brightness, Audio Volume, or Media Playback right from your mouse**||readme.tips.apple-keys||}}
 
   ```
   key: readme.tips.apple-keys.body
@@ -269,7 +269,7 @@ key: readme.questions
 comment:
 ```
 
-- {{**Is Mac Mouse Fix native on Apple Silicon?**||readme.questions.apple-silicon.title||}}
+- {{**Is Mac Mouse Fix native on Apple Silicon?**||readme.questions.apple-silicon||}}
     
   ```
   key: readme.questions.apple-silicon.body
@@ -279,7 +279,7 @@ comment:
   comment: 
   ```
 
-- {{**Why is there a delay when I click?**||readme.questions.click-delay.title||}}
+- {{**Why is there a delay when I click?**||readme.questions.click-delay||}}
 
   ```
   key: readme.questions.click-delay.body
@@ -290,7 +290,7 @@ comment:
   comment: 
   ```
 
-- {{**How can I orbit around objects in 3D apps like Blender?**||readme.questions.blender.title||}}
+- {{**How can I orbit around objects in 3D apps like Blender?**||readme.questions.blender||}}
 
   ```
   key: readme.questions.blender.body
@@ -305,7 +305,7 @@ comment:
   comment: 
   ```
 
-- {{**Can I open App Exposé through a Click and Drag Gesture?**||readme.questions.app-expose.title||}} <!-- Note: We're using App Exposé here and Application Windows in MMF. Not sure that's great. I felt this was clearer though. -->
+- {{**Can I open App Exposé through a Click and Drag Gesture?**||readme.questions.app-expose||}} <!-- Note: We're using App Exposé here and Application Windows in MMF. Not sure that's great. I felt this was clearer though. -->
 
   ```
   key: readme.questions.app-expose.body
@@ -324,7 +324,7 @@ comment:
   
     <!-- NOTES: Maybe we should automate this. For context, see Issue https://github.com/noah-nuebling/mac-mouse-fix/issues/387 -->
 
-- {{**Is my mouse supported?**||readme.questions.mouse-support.title||}}
+- {{**Is my mouse supported?**||readme.questions.mouse-support||}}
 
   ```
   key: readme.questions.mouse-support.body
@@ -339,7 +339,7 @@ comment:
   comment: 
   ```
 
-- {{**Is the Magic Mouse supported?**||readme.questions.magic-mouse-support.title||}}
+- {{**Is the Magic Mouse supported?**||readme.questions.magic-mouse-support||}}
 
   ```
   key: readme.questions.magic-mouse-support.body
@@ -365,7 +365,7 @@ comment:
         I'm not the biggest expert on mouse hardware, but I do have quite a collection now, thanks to my work on Mac Mouse Fix! If I had to make a recommendation for what mouse to buy for the best experience with Mac Mouse fix, I'd say get a smaller, chinese brand on Amazon. In my experience, these mice often have better build quality at a fraction of the price of a big brand mouse like Logitech or Roccat. Also, some models of bigger manufacturers like Logitech are made to be used with their proprietary driver software, and they won't be fully compatible with Mac Mouse Fix. If you buy a smaller brand, you can usually be sure, that they will work flawlessly with non-proprietary drivers like Mac Mouse Fix.
     -->
 
-- {{**Are tiltable scroll wheels supported?**||readme.questions.tilt-wheel.title||}}
+- {{**Are tiltable scroll wheels supported?**||readme.questions.tilt-wheel||}}
 
   ```
   key: readme.questions.tilt-wheel.body
@@ -377,7 +377,7 @@ comment:
   
     <!-- This is so hard, because it would require reprogramming the mouse so that it sends button-signals instead of sending scroll-signals, when you tilt the scroll wheel. And to reprogram the mouse, would require communicating with the it through the custom vendor-specific protocol. And that's not easy. For many mice it's not even possible. -->
 
-- {{**Turning off pointer acceleration**||readme.questions.pointer-acceleration.title||}}
+- {{**Turning off pointer acceleration**||readme.questions.pointer-acceleration||}}
 
   ```
   key: readme.questions.pointer-acceleration.body
@@ -389,7 +389,7 @@ comment:
   comment: 
   ```
 
-- {{**Does Mac Mouse Fix collect my data?**||readme.questions.data-collection.title||}}
+- {{**Does Mac Mouse Fix collect my data?**||readme.questions.data-collection||}}
 
   ```
   key: readme.questions.data-collection.body
@@ -401,7 +401,7 @@ comment:
   comment: 
   ```
 
-- {{**Is there a refund policy?**||readme.questions.refund-policy.title||}}
+- {{**Is there a refund policy?**||readme.questions.refund-policy||}}
 
   ```
   key: readme.questions.refund-policy.body
@@ -413,7 +413,7 @@ comment:
   comment: 
   ```
 
-- {{**Will Mac Mouse Fix still be Open Source now that it's monetized?**||readme.questions.open-source.title||}}
+- {{**Will Mac Mouse Fix still be Open Source now that it's monetized?**||readme.questions.open-source||}}
 
   ```
   key: readme.questions.open-source.body
@@ -434,7 +434,7 @@ comment:
       And of course, on the next update, you'll get a non-cracked version which means you'll have to do this again for every update. (Or just pay $1.99 for the greatest mouse driver ever! :)
     -->
 
-- {{**Can I get Mac Mouse Fix for free if I already donated?**||readme.questions.free-for-donators.title||}}
+- {{**Can I get Mac Mouse Fix for free if I already donated?**||readme.questions.free-for-donators||}}
 
   ```
   key: readme.questions.free-for-donators.body
@@ -463,7 +463,7 @@ comment:
 
   -->
 
-- {{**Giving feedback**||readme.contributing.feedback.title||}}
+- {{**Giving feedback**||readme.contributing.feedback||}}
     
   ```
   key: readme.contributing.feedback.body
@@ -473,7 +473,7 @@ comment:
   comment: 
   ```
 
-- {{**Contributing money**||readme.contributing.money.title||}}
+- {{**Contributing money**||readme.contributing.money||}}
   
   ```
   key: readme.contributing.money.body
@@ -486,7 +486,7 @@ comment:
   comment: 
   ```
 
-- {{**Adding translations**||readme.contributing.translations.title||}}
+- {{**Adding translations**||readme.contributing.translations||}}
   
   ```
   key: readme.contributing.translations.body
@@ -499,7 +499,7 @@ comment:
   comment: 
   ```
 
-- {{**Contributing code**||readme.contributing.code.title||}}
+- {{**Contributing code**||readme.contributing.code||}}
 
     <!-- 
       Old note from readme.contributing.code.body:

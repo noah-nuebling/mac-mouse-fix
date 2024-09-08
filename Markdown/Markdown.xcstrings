@@ -260,6 +260,23 @@
         }
       }
     },
+    "readme.contributing.code" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "**Code beitragen**"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "**Contributing code**"
+          }
+        }
+      }
+    },
     "readme.contributing.code.body" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -277,19 +294,19 @@
         }
       }
     },
-    "readme.contributing.code.title" : {
+    "readme.contributing.feedback" : {
       "extractionState" : "manual",
       "localizations" : {
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "**Code beitragen**"
+            "value" : "**Feedback geben**"
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "new",
-            "value" : "**Contributing code**"
+            "value" : "**Giving feedback**"
           }
         }
       }
@@ -311,23 +328,6 @@
         }
       }
     },
-    "readme.contributing.feedback.title" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "**Feedback geben**"
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "**Giving feedback**"
-          }
-        }
-      }
-    },
     "readme.contributing.footer" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -341,6 +341,23 @@
           "stringUnit" : {
             "state" : "new",
             "value" : "**Thank you** to everyone who has already contributed and supported me in trying to make the best mouse driver *of all time*! :)🚀"
+          }
+        }
+      }
+    },
+    "readme.contributing.money" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "**Geld beitragen**"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "**Contributing money**"
           }
         }
       }
@@ -362,19 +379,19 @@
         }
       }
     },
-    "readme.contributing.money.title" : {
+    "readme.contributing.translations" : {
       "extractionState" : "manual",
       "localizations" : {
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "**Geld beitragen**"
+            "value" : "**Übersetzungen hinzufügen**"
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "new",
-            "value" : "**Contributing money**"
+            "value" : "**Adding translations**"
           }
         }
       }
@@ -392,23 +409,6 @@
           "stringUnit" : {
             "state" : "new",
             "value" : "Mac Mouse Fix is available in English, German as well as the languages listed in the [Acknowledgements]({url_1}).\n\nIf you would like to **help translate the project**, see the [Localization Guide]({url_2}).<br>\nIf you want to **report missing or suboptimal translations**, that's also very helpful. The best way to report problems is by commenting under the [Localization Guide]({url_3})."
-          }
-        }
-      }
-    },
-    "readme.contributing.translations.title" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "**Übersetzungen hinzufügen**"
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "**Adding translations**"
           }
         }
       }
@@ -465,6 +465,7 @@
       }
     },
     "readme.intro.downloads-badge-label" : {
+      "comment" : "Note: This label will be shown next to a box containing the number of times Mac Mouse Fix has been downloaded so far",
       "extractionState" : "manual",
       "localizations" : {
         "de" : {
@@ -481,7 +482,7 @@
         }
       }
     },
-    "readme.intro.links.acknowledgements.text" : {
+    "readme.intro.links.acknowledgements" : {
       "extractionState" : "manual",
       "localizations" : {
         "de" : {
@@ -498,8 +499,8 @@
         }
       }
     },
-    "readme.intro.links.help.text" : {
-      "comment" : "Note: &nbsp; creates a 'non-breaking-space' character. &amp; creates an ampersand (&) character",
+    "readme.intro.links.help" : {
+      "comment" : "Note: &nbsp; creates a so called 'non-breaking-space' character, which is like a normal space that prevents line breaks. &amp; creates an ampersand (&) character",
       "extractionState" : "manual",
       "localizations" : {
         "de" : {
@@ -516,7 +517,7 @@
         }
       }
     },
-    "readme.intro.links.releases.text" : {
+    "readme.intro.links.releases" : {
       "extractionState" : "manual",
       "localizations" : {
         "de" : {
@@ -533,7 +534,7 @@
         }
       }
     },
-    "readme.intro.links.website.text" : {
+    "readme.intro.links.website" : {
       "extractionState" : "manual",
       "localizations" : {
         "de" : {
@@ -635,6 +636,23 @@
         }
       }
     },
+    "readme.questions.app-expose" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "**Kann ich App Exposé durch eine Klick-und-Zieh-Geste öffnen?** <!-- Hinweis: Wir verwenden hier App Exposé und in MMF ‘Programmfenster’. Nicht sicher, ob das gut ist. Ich fand das allerdings klarer. -->"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "**Can I open App Exposé through a Click and Drag Gesture?**"
+          }
+        }
+      }
+    },
     "readme.questions.app-expose.body" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -652,19 +670,19 @@
         }
       }
     },
-    "readme.questions.app-expose.title" : {
+    "readme.questions.apple-silicon" : {
       "extractionState" : "manual",
       "localizations" : {
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "**Kann ich App Exposé durch eine Klick-und-Zieh-Geste öffnen?** <!-- Hinweis: Wir verwenden hier App Exposé und in MMF ‘Programmfenster’. Nicht sicher, ob das gut ist. Ich fand das allerdings klarer. -->"
+            "value" : "**Läuft Mac Mouse Fix nativ auf Apple Silicon?**"
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "new",
-            "value" : "**Can I open App Exposé through a Click and Drag Gesture?**"
+            "value" : "**Is Mac Mouse Fix native on Apple Silicon?**"
           }
         }
       }
@@ -686,19 +704,19 @@
         }
       }
     },
-    "readme.questions.apple-silicon.title" : {
+    "readme.questions.blender" : {
       "extractionState" : "manual",
       "localizations" : {
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "**Läuft Mac Mouse Fix nativ auf Apple Silicon?**"
+            "value" : "**Wie kann ich in 3D-Apps wie Blender um Objekte kreisen?**"
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "new",
-            "value" : "**Is Mac Mouse Fix native on Apple Silicon?**"
+            "value" : "**How can I orbit around objects in 3D apps like Blender?**"
           }
         }
       }
@@ -720,19 +738,19 @@
         }
       }
     },
-    "readme.questions.blender.title" : {
+    "readme.questions.click-delay" : {
       "extractionState" : "manual",
       "localizations" : {
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "**Wie kann ich in 3D-Apps wie Blender um Objekte kreisen?**"
+            "value" : "**Warum gibt es eine Verzögerung, wenn ich klicke?**"
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "new",
-            "value" : "**How can I orbit around objects in 3D apps like Blender?**"
+            "value" : "**Why is there a delay when I click?**"
           }
         }
       }
@@ -754,19 +772,19 @@
         }
       }
     },
-    "readme.questions.click-delay.title" : {
+    "readme.questions.data-collection" : {
       "extractionState" : "manual",
       "localizations" : {
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "**Warum gibt es eine Verzögerung, wenn ich klicke?**"
+            "value" : "**Sammelt Mac Mouse Fix meine Daten?**"
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "new",
-            "value" : "**Why is there a delay when I click?**"
+            "value" : "**Does Mac Mouse Fix collect my data?**"
           }
         }
       }
@@ -788,19 +806,19 @@
         }
       }
     },
-    "readme.questions.data-collection.title" : {
+    "readme.questions.free-for-donators" : {
       "extractionState" : "manual",
       "localizations" : {
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "**Sammelt Mac Mouse Fix meine Daten?**"
+            "value" : "**Kann ich Mac Mouse Fix kostenlos bekommen, wenn ich bereits gespendet habe?**"
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "new",
-            "value" : "**Does Mac Mouse Fix collect my data?**"
+            "value" : "**Can I get Mac Mouse Fix for free if I already donated?**"
           }
         }
       }
@@ -822,19 +840,19 @@
         }
       }
     },
-    "readme.questions.free-for-donators.title" : {
+    "readme.questions.magic-mouse-support" : {
       "extractionState" : "manual",
       "localizations" : {
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "**Kann ich Mac Mouse Fix kostenlos bekommen, wenn ich bereits gespendet habe?**"
+            "value" : "**Wird die Magic Mouse unterstützt?**"
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "new",
-            "value" : "**Can I get Mac Mouse Fix for free if I already donated?**"
+            "value" : "**Is the Magic Mouse supported?**"
           }
         }
       }
@@ -856,19 +874,19 @@
         }
       }
     },
-    "readme.questions.magic-mouse-support.title" : {
+    "readme.questions.mouse-support" : {
       "extractionState" : "manual",
       "localizations" : {
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "**Wird die Magic Mouse unterstützt?**"
+            "value" : "**Wird meine Maus unterstützt?**"
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "new",
-            "value" : "**Is the Magic Mouse supported?**"
+            "value" : "**Is my mouse supported?**"
           }
         }
       }
@@ -890,19 +908,19 @@
         }
       }
     },
-    "readme.questions.mouse-support.title" : {
+    "readme.questions.open-source" : {
       "extractionState" : "manual",
       "localizations" : {
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "**Wird meine Maus unterstützt?**"
+            "value" : "**Wird Mac Mouse Fix weiterhin Open Source sein, jetzt da es monetarisiert ist?**"
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "new",
-            "value" : "**Is my mouse supported?**"
+            "value" : "**Will Mac Mouse Fix still be Open Source now that it's monetized?**"
           }
         }
       }
@@ -924,19 +942,19 @@
         }
       }
     },
-    "readme.questions.open-source.title" : {
+    "readme.questions.pointer-acceleration" : {
       "extractionState" : "manual",
       "localizations" : {
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "**Wird Mac Mouse Fix weiterhin Open Source sein, jetzt da es monetarisiert ist?**"
+            "value" : "**Zeigerbeschleunigung ausschalten**"
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "new",
-            "value" : "**Will Mac Mouse Fix still be Open Source now that it's monetized?**"
+            "value" : "**Turning off pointer acceleration**"
           }
         }
       }
@@ -958,19 +976,19 @@
         }
       }
     },
-    "readme.questions.pointer-acceleration.title" : {
+    "readme.questions.refund-policy" : {
       "extractionState" : "manual",
       "localizations" : {
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "**Zeigerbeschleunigung ausschalten**"
+            "value" : "**Gibt es eine Rückerstattungsrichtlinie?**"
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "new",
-            "value" : "**Turning off pointer acceleration**"
+            "value" : "**Is there a refund policy?**"
           }
         }
       }
@@ -992,19 +1010,19 @@
         }
       }
     },
-    "readme.questions.refund-policy.title" : {
+    "readme.questions.tilt-wheel" : {
       "extractionState" : "manual",
       "localizations" : {
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "**Gibt es eine Rückerstattungsrichtlinie?**"
+            "value" : "**Werden kippbare Scrollräder unterstützt?**"
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "new",
-            "value" : "**Is there a refund policy?**"
+            "value" : "**Are tiltable scroll wheels supported?**"
           }
         }
       }
@@ -1026,23 +1044,6 @@
         }
       }
     },
-    "readme.questions.tilt-wheel.title" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "**Werden kippbare Scrollräder unterstützt?**"
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "**Are tiltable scroll wheels supported?**"
-          }
-        }
-      }
-    },
     "readme.tips" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -1056,6 +1057,23 @@
           "stringUnit" : {
             "state" : "new",
             "value" : "## Tips"
+          }
+        }
+      }
+    },
+    "readme.tips.apple-keys" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "**Bildschirmhelligkeit, Audio-Lautstärke oder Medienwiedergabe direkt von deiner Maus aus steuern**"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "**Control Screen Brightness, Audio Volume, or Media Playback right from your mouse**"
           }
         }
       }
@@ -1077,19 +1095,19 @@
         }
       }
     },
-    "readme.tips.apple-keys.title" : {
+    "readme.tips.swish" : {
       "extractionState" : "manual",
       "localizations" : {
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "**Bildschirmhelligkeit, Audio-Lautstärke oder Medienwiedergabe direkt von deiner Maus aus steuern**"
+            "value" : "**Fenster einfach per Klicken und Ziehen verwalten**"
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "new",
-            "value" : "**Control Screen Brightness, Audio Volume, or Media Playback right from your mouse**"
+            "value" : "**Manage windows with a simple Click and Drag**"
           }
         }
       }
@@ -1107,23 +1125,6 @@
           "stringUnit" : {
             "state" : "new",
             "value" : "[Swish]({url}) is my favorite way to manage windows on macOS. With a simple swipe on your trackpad, it lets you position any window so it takes up half, a quarter, or the whole screen.\n\nSwish is designed for trackpad gestures, but with Mac Mouse Fix you can use it from any third-party mouse! Just go to Mac Mouse Fix and set any buttons \"Click and Drag\" action to \"Scroll & Navigate\" and then you can snap windows with a simple Click and Drag.\n\nAnything you can do with a two-finger swipe on an Apple trackpad works just as well with the \"Scroll & Navigate\" feature in Mac Mouse Fix."
-          }
-        }
-      }
-    },
-    "readme.tips.swish.title" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "**Fenster einfach per Klicken und Ziehen verwalten**"
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "**Manage windows with a simple Click and Drag**"
           }
         }
       }
