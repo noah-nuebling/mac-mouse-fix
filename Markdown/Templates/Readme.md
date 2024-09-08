@@ -28,13 +28,22 @@
 
   -->
 
+<!-- ||| Localization Progress ||| -->
+
+{% if show_localization_progress %}
+<table align="center"><td align="center">
+<!-- Note: Having an empty line after <td> lets us use md syntax inside the HTML block! -->
+
+{{This document is `{localization_progress}` translated into `{current_language}`<br>To help translate, click [here](https://github.com/noah-nuebling/mac-mouse-fix/discussions/731)!||localization.progress.readme||}}</td></table>
+{% endif %}
+
   <!-- ||| Language picker ||| -->
 
 <details>
   <summary>󠁧󠁿{current_language}</summary>
     
 {language_list}
-  {{[Help translate Mac Mouse Fix to different languages!](https://github.com/noah-nuebling/mac-mouse-fix/discussions/731)||markdown.translate-prompt||}}
+  {{[Help translate Mac Mouse Fix to different languages!](https://github.com/noah-nuebling/mac-mouse-fix/discussions/731)||localization.translate-prompt.readme||}}
 </details>
 
   <!-- ||| Head Section ||| -->
@@ -61,7 +70,7 @@
 <div align="center">
     <table>
         <th><a href=https://macmousefix.com/>{{Website&nbsp;↗||readme.intro.links.website.text||}}</a></th>
-        <td><a href=https://redirect.macmousefix.com/?target=mmf-help-and-feedback&locale={locale_code}>{{Help&nbsp;&amp;&nbsp;Feedback||readme.intro.links.help.text||&nbsp; creates a 'non-breaking-space' character. &amp; creates an ampersand (&) character}}</a></td> <!-- Note: Should probably use direct link instead of redirection-service: https://github.com/noah-nuebling/mac-mouse-fix/issues/new/choose -->
+        <td><a href=https://redirect.macmousefix.com/?target=mmf-help-and-feedback&locale={locale_code}>{{Help&nbsp;&amp;&nbsp;Feedback||readme.intro.links.help.text||Note: &nbsp; creates a 'non-breaking-space' character. &amp; creates an ampersand (&) character}}</a></td> <!-- Note: Should probably use direct link instead of redirection-service: https://github.com/noah-nuebling/mac-mouse-fix/issues/new/choose -->
         <td><a href=https://redirect.macmousefix.com/?target=mmf-releases&locale={locale_code}>{{Releases||readme.intro.links.releases.text||}}</a></td> <!-- Note: Should probably use direct link instead of redirection-service: https://github.com/noah-nuebling/mac-mouse-fix/releases -->
         <td><a href="{language_root}Acknowledgements.md">{{Acknowledgements||readme.intro.links.acknowledgements.text||}}</a></td> 
     </table>

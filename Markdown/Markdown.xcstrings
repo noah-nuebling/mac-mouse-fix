@@ -2,7 +2,7 @@
   "sourceLanguage" : "en",
   "strings" : {
     "acknowledgements.intro" : {
-      "comment" : "This is the intro for the acknowledgements document",
+      "comment" : "Note: This is the intro for the acknowledgements document",
       "extractionState" : "manual",
       "localizations" : {
         "de" : {
@@ -20,6 +20,7 @@
       }
     },
     "acknowledgements.money" : {
+      "comment" : "Note: {sales_count} will be replaced by the number of times Mac Mouse Fix has been sold. Make sure to type \"{sales_count}\" exactly like in the original for the text-replacement to work.",
       "extractionState" : "manual",
       "localizations" : {
         "de" : {
@@ -54,6 +55,7 @@
       }
     },
     "acknowledgements.money.github-sponsors" : {
+      "comment" : "Note: {url} will be replaced by the link to the \"GitHub Sponsors\" website. Make sure to type \"{url}\" exactly like in the original for the text-replacement to work.",
       "extractionState" : "manual",
       "localizations" : {
         "de" : {
@@ -139,7 +141,7 @@
       }
     },
     "acknowledgements.software.libraries" : {
-      "comment" : "Don't forget the `<br>`, it inserts a lineBReak.",
+      "comment" : "Note: Don't forget the `<br>`, it inserts a lineBReak.",
       "extractionState" : "manual",
       "localizations" : {
         "de" : {
@@ -173,13 +175,47 @@
         }
       }
     },
-    "markdown.translate-prompt" : {
+    "localization.progress.acknowledgements" : {
       "extractionState" : "manual",
       "localizations" : {
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "[Help translate Mac Mouse Fix to different languages!]({url})"
+            "value" : "Dieses Dokument ist zu `{localization_progress}` übersetzt nach `{current_language}`<br>\nUm beim Übersetzen zu helfen, klicke [hier]({url})!"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "This document is `{localization_progress}` translated into `{current_language}`<br>To help translate, click [here]({url})!"
+          }
+        }
+      }
+    },
+    "localization.progress.readme" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dieses Dokument ist zu `{localization_progress}` übersetzt nach `{current_language}`<br>\nUm beim Übersetzen zu helfen, klicke [hier]({url})!"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "This document is `{localization_progress}` translated into `{current_language}`<br>To help translate, click [here]({url})!"
+          }
+        }
+      }
+    },
+    "localization.translate-prompt.acknowledgements" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "[Helfe dabei, Mac Mouse Fix in verschiedene Sprachen zu übersetzen!]({url})"
           }
         },
         "en" : {
@@ -188,8 +224,24 @@
             "value" : "[Help translate Mac Mouse Fix to different languages!]({url})"
           }
         }
-      },
-      "shouldTranslate" : false
+      }
+    },
+    "localization.translate-prompt.readme" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "[Helfe dabei, Mac Mouse Fix in verschiedene Sprachen zu übersetzen!]({url})"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "[Help translate Mac Mouse Fix to different languages!]({url})"
+          }
+        }
+      }
     },
     "readme.contributing" : {
       "extractionState" : "manual",
@@ -447,7 +499,7 @@
       }
     },
     "readme.intro.links.help.text" : {
-      "comment" : "&nbsp; creates a 'non-breaking-space' character. &amp; creates an ampersand (&) character",
+      "comment" : "Note: &nbsp; creates a 'non-breaking-space' character. &amp; creates an ampersand (&) character",
       "extractionState" : "manual",
       "localizations" : {
         "de" : {

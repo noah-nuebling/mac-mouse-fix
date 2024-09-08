@@ -29,6 +29,10 @@
 
   -->
 
+<!-- ||| Localization Progress ||| -->
+
+
+
   <!-- ||| Language picker ||| -->
 
 <details>
@@ -36,7 +40,7 @@
     
   [🇬🇧 English](../../../Readme.md)\
   **🇩🇪 Deutsch**\
-  [Help translate Mac Mouse Fix to different languages!](https://github.com/noah-nuebling/mac-mouse-fix/discussions/731)
+  [Helfe dabei, Mac Mouse Fix in verschiedene Sprachen zu übersetzen!](https://github.com/noah-nuebling/mac-mouse-fix/discussions/731)
 </details>
 
   <!-- ||| Head Section ||| -->
