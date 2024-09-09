@@ -34,7 +34,7 @@
 <table align="center"><td align="center">
 <!-- Note: Having an empty line after <td> lets us use md syntax inside the HTML block! -->
 
-{{This document is `{localization_progress}` translated into `{current_language}`<br>To help translate, click [here](https://github.com/noah-nuebling/mac-mouse-fix/discussions/731)!||localization.progress.readme||}}</td></table>
+{{This document is `{localization_progress}` translated into `{current_language}`<br>To help translate, click [here](https://github.com/noah-nuebling/mac-mouse-fix/discussions/731)!||localization.progress||}}</td></table>
 {% endif %}
 
   <!-- ||| Language picker ||| -->
@@ -43,7 +43,7 @@
   <summary>󠁧󠁿{current_language}</summary>
     
 {language_list}
-  {{[Help translate Mac Mouse Fix to different languages!](https://github.com/noah-nuebling/mac-mouse-fix/discussions/731)||localization.translate-prompt.readme||}}
+  {{[Help translate Mac Mouse Fix to different languages!](https://github.com/noah-nuebling/mac-mouse-fix/discussions/731)||localization.translate-prompt||}}
 </details>
 
   <!-- ||| Head Section ||| -->

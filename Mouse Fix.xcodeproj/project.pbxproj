@@ -23,7 +23,6 @@
 		4F1667E72C6A6782009E4924 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F1667DF2C6A6782009E4924 /* main.m */; };
 		4F1667E92C6A679F009E4924 /* Readme.md in Resources */ = {isa = PBXBuildFile; fileRef = 4F1667E82C6A679F009E4924 /* Readme.md */; };
 		4F1667EB2C6A6C5E009E4924 /* XCStringsDummyApp-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4F1667EA2C6A6C5E009E4924 /* XCStringsDummyApp-Info.plist */; };
-		4F1667ED2C6A6D5F009E4924 /* Markdown.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 4FFB5EF42C2E67690096AA3E /* Markdown.xcstrings */; };
 		4F1667EF2C6A6EA0009E4924 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4F1667EE2C6A6EA0009E4924 /* MainMenu.xib */; };
 		4F17D2E1292A635200EB07CA /* SwitchMaster.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F17D2E0292A635200EB07CA /* SwitchMaster.swift */; };
 		4F18464D2C533B5900D5E835 /* BidirectionalMap.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F0C00412C53273200C5D843 /* BidirectionalMap.m */; };
@@ -2462,14 +2461,25 @@
 		4FFA4E3428B795F30062A1FE /* LicenseUtility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LicenseUtility.swift; sourceTree = "<group>"; };
 		4FFA4E3F28B7D0120062A1FE /* SharedSFSymbols.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = SharedSFSymbols.xcassets; sourceTree = "<group>"; };
 		4FFAD8EF28677F94005DD496 /* PointerConfigObjC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PointerConfigObjC.h; sourceTree = "<group>"; };
-		4FFB5EF42C2E67690096AA3E /* Markdown.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Markdown.xcstrings; sourceTree = "<group>"; };
 		4FFB5F032C2FECDC0096AA3E /* Readme.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = Readme.md; sourceTree = "<group>"; };
 		4FFB5F042C2FECDD0096AA3E /* Acknowledgements.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = Acknowledgements.md; sourceTree = "<group>"; };
 		4FFBC5A6266977CA001D389B /* Mac Mouse Fix Helper-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Mac Mouse Fix Helper-Bridging-Header.h"; sourceTree = "<group>"; };
 		4FFBC5A7266977CA001D389B /* DoubleExponentialSmoother.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DoubleExponentialSmoother.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		4F14C0B22C8EFA6E002502BB /* PBXFileSystemSynchronizedBuildFileExceptionSet */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Acknowledgements.xcstrings,
+				Readme.xcstrings,
+			);
+			target = 4F1667C82C6A6717009E4924 /* XCStringsDummyApp */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
 /* Begin PBXFileSystemSynchronizedRootGroup section */
+		4F14C0AF2C8EFA43002502BB /* Strings */ = {isa = PBXFileSystemSynchronizedRootGroup; exceptions = (4F14C0B22C8EFA6E002502BB /* PBXFileSystemSynchronizedBuildFileExceptionSet */, ); explicitFileTypes = {}; explicitFolders = (); path = Strings; sourceTree = "<group>"; };
 		4F1668042C6AA96A009E4924 /* LocalizedDocuments */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = LocalizedDocuments; sourceTree = "<group>"; };
 /* End PBXFileSystemSynchronizedRootGroup section */
 
@@ -2550,8 +2560,8 @@
 		4F0BDC722B446A3C00AE65C1 /* Markdown */ = {
 			isa = PBXGroup;
 			children = (
+				4F14C0AF2C8EFA43002502BB /* Strings */,
 				4F0BDC812B446A3C00AE65C1 /* MarkdownReadme.md */,
-				4FFB5EF42C2E67690096AA3E /* Markdown.xcstrings */,
 				4F0BDC762B446A3C00AE65C1 /* Templates */,
 				4F1668042C6AA96A009E4924 /* LocalizedDocuments */,
 				4F0BDC822B446A3C00AE65C1 /* Media */,
@@ -7996,7 +8006,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				4F1667EB2C6A6C5E009E4924 /* XCStringsDummyApp-Info.plist in Resources */,
-				4F1667ED2C6A6D5F009E4924 /* Markdown.xcstrings in Resources */,
 				4F1667EF2C6A6EA0009E4924 /* MainMenu.xib in Resources */,
 				4F1667E92C6A679F009E4924 /* Readme.md in Resources */,
 			);
