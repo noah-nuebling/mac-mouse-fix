@@ -2,6 +2,7 @@
   "sourceLanguage" : "en",
   "strings" : {
     "01:localization.progress" : {
+      "comment" : ".",
       "extractionState" : "manual",
       "localizations" : {
         "de" : {
@@ -19,6 +20,7 @@
       }
     },
     "02:localization.translate-prompt" : {
+      "comment" : "Note: {url} will be replaced by a link. Make sure to type \"{url}\" exactly like in the original for the text-replacement to work.",
       "extractionState" : "manual",
       "localizations" : {
         "de" : {
@@ -36,7 +38,7 @@
       }
     },
     "03:intro" : {
-      "comment" : "Note: This is the intro for the acknowledgements document",
+      "comment" : ".",
       "extractionState" : "manual",
       "localizations" : {
         "de" : {
@@ -123,7 +125,7 @@
       }
     },
     "08:money.github-sponsors" : {
-      "comment" : "Note: {url} will be replaced by the link to the \"GitHub Sponsors\" website. Make sure to type \"{url}\" exactly like in the original for the text-replacement to work.",
+      "comment" : ".",
       "extractionState" : "manual",
       "localizations" : {
         "de" : {
@@ -192,7 +194,7 @@
       }
     },
     "12:software.libraries" : {
-      "comment" : "Note: Don't forget the `<br>`, it inserts a lineBReak.",
+      "comment" : "Note: Don't forget the `<br>`, it inserts a line<br>eak.",
       "extractionState" : "manual",
       "localizations" : {
         "de" : {

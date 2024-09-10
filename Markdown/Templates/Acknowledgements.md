@@ -5,14 +5,14 @@
 <table align="center"><td align="center">
 <!-- Note: Having an empty line after <td> lets us use md syntax inside the HTML block! -->
 
-{{This document is `{localization_progress}` translated into `{current_language}`<br>To help translate, click [here](https://github.com/noah-nuebling/mac-mouse-fix/discussions/731)!||localization.progress||}}</td></table>
+{{This document is `{localization_progress}` translated into `{current_language}`<br>To help translate, click [here](https://github.com/noah-nuebling/mac-mouse-fix/discussions/731)!||localization.progress||.}}</td></table>
 {% endif %}
 
 <details>
   <summary>󠁧󠁿{current_language}</summary>
   
 {language_list}
-  {{[Help translate Mac Mouse Fix to different languages!](https://github.com/noah-nuebling/mac-mouse-fix/discussions/731)||localization.translate-prompt||}}
+  {{[Help translate Mac Mouse Fix to different languages!](https://github.com/noah-nuebling/mac-mouse-fix/discussions/731)||localization.translate-prompt||Note: {url} will be replaced by a link. Make sure to type "{url}" exactly like in the original for the text-replacement to work.}}
 </details>
 
 ```
@@ -24,7 +24,7 @@ Big thanks to everyone using Mac Mouse Fix and providing feedback. It's awesome 
 
 I want to especially thank the people and projects named in this document.
 ```
-comment: Note: This is the intro for the acknowledgements document
+comment: .
 ```
 
 <a name="translations"></a> 
@@ -97,7 +97,7 @@ key: money.github-sponsors
 
 **Huge thanks** to [anyone](https://github.com/sponsors/noah-nuebling#sponsors) sponsoring me on GitHub! Hopefully I can get that milkshake factory one day thanks to you. :)
 ```
-comment: Note: {url} will be replaced by the link to the "GitHub Sponsors" website. Make sure to type "{url}" exactly like in the original for the text-replacement to work.
+comment: .
 ```
 
 <a name="paypal-donations"></a> 
@@ -155,7 +155,7 @@ Mac Mouse Fix was built with the help of these **great libraries**:
 - Dependencies of the [Mac Mouse Fix Feedback Assistant](https://noah-nuebling.github.io/mac-mouse-fix-feedback-assistant/) web app [here](https://github.com/noah-nuebling/mac-mouse-fix-feedback-assistant/blob/master/package.json)
 - Dependencies of the [Mac Mouse Fix Website](https://macmousefix.com/) are available [here](https://github.com/noah-nuebling/mac-mouse-fix-website/blob/main/package.json)
 ```
-comment: Note: Don't forget the `<br>`, it inserts a lineBReak.
+comment: Note: Don't forget the `<br>`, it inserts a line<br>eak.
 ```
 
 <!-- ^^^ Note: The double space after <br> is not necessary for the formatting to work here, so we don't have to tell localizers.
