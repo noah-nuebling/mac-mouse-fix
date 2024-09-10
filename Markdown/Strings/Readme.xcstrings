@@ -35,7 +35,7 @@
         }
       }
     },
-    "03:readme.intro.title" : {
+    "03:intro.title" : {
       "extractionState" : "manual",
       "localizations" : {
         "de" : {
@@ -52,7 +52,7 @@
         }
       }
     },
-    "04:readme.intro.subtitle" : {
+    "04:intro.subtitle" : {
       "extractionState" : "manual",
       "localizations" : {
         "de" : {
@@ -69,7 +69,7 @@
         }
       }
     },
-    "05:readme.intro.links.website" : {
+    "05:intro.links.website" : {
       "extractionState" : "manual",
       "localizations" : {
         "de" : {
@@ -86,7 +86,7 @@
         }
       }
     },
-    "06:readme.intro.links.help" : {
+    "06:intro.links.help" : {
       "comment" : "Note: &nbsp; creates a so called 'non-breaking-space' character, which is like a normal space that prevents line breaks. &amp; creates an ampersand (&) character",
       "extractionState" : "manual",
       "localizations" : {
@@ -104,7 +104,7 @@
         }
       }
     },
-    "07:readme.intro.links.releases" : {
+    "07:intro.links.releases" : {
       "extractionState" : "manual",
       "localizations" : {
         "de" : {
@@ -121,7 +121,7 @@
         }
       }
     },
-    "08:readme.intro.links.acknowledgements" : {
+    "08:intro.links.acknowledgements" : {
       "extractionState" : "manual",
       "localizations" : {
         "de" : {
@@ -138,7 +138,7 @@
         }
       }
     },
-    "09:readme.intro.downloads-badge-label" : {
+    "09:intro.downloads-badge-label" : {
       "comment" : "Note: This label will be shown next to a box containing the number of times Mac Mouse Fix has been downloaded so far",
       "extractionState" : "manual",
       "localizations" : {
@@ -156,7 +156,7 @@
         }
       }
     },
-    "10:readme.tips.swish" : {
+    "10:tips.swish" : {
       "extractionState" : "manual",
       "localizations" : {
         "de" : {
@@ -173,7 +173,7 @@
         }
       }
     },
-    "11:readme.tips.apple-keys" : {
+    "11:tips.apple-keys" : {
       "extractionState" : "manual",
       "localizations" : {
         "de" : {
@@ -190,7 +190,7 @@
         }
       }
     },
-    "12:readme.questions.apple-silicon" : {
+    "12:questions.apple-silicon" : {
       "extractionState" : "manual",
       "localizations" : {
         "de" : {
@@ -207,7 +207,7 @@
         }
       }
     },
-    "13:readme.questions.click-delay" : {
+    "13:questions.click-delay" : {
       "extractionState" : "manual",
       "localizations" : {
         "de" : {
@@ -224,7 +224,7 @@
         }
       }
     },
-    "14:readme.questions.blender" : {
+    "14:questions.blender" : {
       "extractionState" : "manual",
       "localizations" : {
         "de" : {
@@ -241,7 +241,7 @@
         }
       }
     },
-    "15:readme.questions.app-expose" : {
+    "15:questions.app-expose" : {
       "extractionState" : "manual",
       "localizations" : {
         "de" : {
@@ -258,7 +258,7 @@
         }
       }
     },
-    "16:readme.questions.mouse-support" : {
+    "16:questions.mouse-support" : {
       "extractionState" : "manual",
       "localizations" : {
         "de" : {
@@ -275,7 +275,7 @@
         }
       }
     },
-    "17:readme.questions.magic-mouse-support" : {
+    "17:questions.magic-mouse-support" : {
       "extractionState" : "manual",
       "localizations" : {
         "de" : {
@@ -292,7 +292,7 @@
         }
       }
     },
-    "18:readme.questions.tilt-wheel" : {
+    "18:questions.tilt-wheel" : {
       "extractionState" : "manual",
       "localizations" : {
         "de" : {
@@ -309,7 +309,7 @@
         }
       }
     },
-    "19:readme.questions.pointer-acceleration" : {
+    "19:questions.pointer-acceleration" : {
       "extractionState" : "manual",
       "localizations" : {
         "de" : {
@@ -326,7 +326,7 @@
         }
       }
     },
-    "20:readme.questions.data-collection" : {
+    "20:questions.data-collection" : {
       "extractionState" : "manual",
       "localizations" : {
         "de" : {
@@ -343,7 +343,7 @@
         }
       }
     },
-    "21:readme.questions.refund-policy" : {
+    "21:questions.refund-policy" : {
       "extractionState" : "manual",
       "localizations" : {
         "de" : {
@@ -360,7 +360,7 @@
         }
       }
     },
-    "22:readme.questions.open-source" : {
+    "22:questions.open-source" : {
       "extractionState" : "manual",
       "localizations" : {
         "de" : {
@@ -377,7 +377,7 @@
         }
       }
     },
-    "23:readme.questions.free-for-donators" : {
+    "23:questions.free-for-donators" : {
       "extractionState" : "manual",
       "localizations" : {
         "de" : {
@@ -394,7 +394,7 @@
         }
       }
     },
-    "24:readme.contributing.feedback" : {
+    "24:contributing.feedback" : {
       "extractionState" : "manual",
       "localizations" : {
         "de" : {
@@ -411,7 +411,7 @@
         }
       }
     },
-    "25:readme.contributing.money" : {
+    "25:contributing.money" : {
       "extractionState" : "manual",
       "localizations" : {
         "de" : {
@@ -428,7 +428,7 @@
         }
       }
     },
-    "26:readme.contributing.translations" : {
+    "26:contributing.translations" : {
       "extractionState" : "manual",
       "localizations" : {
         "de" : {
@@ -445,7 +445,7 @@
         }
       }
     },
-    "27:readme.contributing.code" : {
+    "27:contributing.code" : {
       "extractionState" : "manual",
       "localizations" : {
         "de" : {
@@ -462,7 +462,7 @@
         }
       }
     },
-    "28:readme.contributing.footer" : {
+    "28:contributing.footer" : {
       "extractionState" : "manual",
       "localizations" : {
         "de" : {
@@ -479,7 +479,7 @@
         }
       }
     },
-    "29:readme.intro.body" : {
+    "29:intro.body" : {
       "extractionState" : "manual",
       "localizations" : {
         "de" : {
@@ -496,7 +496,7 @@
         }
       }
     },
-    "30:readme.features" : {
+    "30:features" : {
       "extractionState" : "manual",
       "localizations" : {
         "de" : {
@@ -513,7 +513,7 @@
         }
       }
     },
-    "31:readme.install" : {
+    "31:install" : {
       "extractionState" : "manual",
       "localizations" : {
         "de" : {
@@ -530,7 +530,7 @@
         }
       }
     },
-    "32:readme.macos-compat" : {
+    "32:macos-compat" : {
       "extractionState" : "manual",
       "localizations" : {
         "de" : {
@@ -547,7 +547,7 @@
         }
       }
     },
-    "33:readme.price" : {
+    "33:price" : {
       "extractionState" : "manual",
       "localizations" : {
         "de" : {
@@ -564,7 +564,7 @@
         }
       }
     },
-    "34:readme.uninstall" : {
+    "34:uninstall" : {
       "extractionState" : "manual",
       "localizations" : {
         "de" : {
@@ -581,7 +581,7 @@
         }
       }
     },
-    "35:readme.what-people-say" : {
+    "35:what-people-say" : {
       "extractionState" : "manual",
       "localizations" : {
         "de" : {
@@ -598,7 +598,7 @@
         }
       }
     },
-    "36:readme.tips" : {
+    "36:tips" : {
       "extractionState" : "manual",
       "localizations" : {
         "de" : {
@@ -615,7 +615,7 @@
         }
       }
     },
-    "37:readme.tips.swish.body" : {
+    "37:tips.swish.body" : {
       "extractionState" : "manual",
       "localizations" : {
         "de" : {
@@ -632,7 +632,7 @@
         }
       }
     },
-    "38:readme.tips.apple-keys.body" : {
+    "38:tips.apple-keys.body" : {
       "extractionState" : "manual",
       "localizations" : {
         "de" : {
@@ -649,7 +649,7 @@
         }
       }
     },
-    "39:readme.questions" : {
+    "39:questions" : {
       "extractionState" : "manual",
       "localizations" : {
         "de" : {
@@ -666,7 +666,7 @@
         }
       }
     },
-    "40:readme.questions.apple-silicon.body" : {
+    "40:questions.apple-silicon.body" : {
       "extractionState" : "manual",
       "localizations" : {
         "de" : {
@@ -683,7 +683,7 @@
         }
       }
     },
-    "41:readme.questions.click-delay.body" : {
+    "41:questions.click-delay.body" : {
       "extractionState" : "manual",
       "localizations" : {
         "de" : {
@@ -700,7 +700,7 @@
         }
       }
     },
-    "42:readme.questions.blender.body" : {
+    "42:questions.blender.body" : {
       "extractionState" : "manual",
       "localizations" : {
         "de" : {
@@ -717,7 +717,7 @@
         }
       }
     },
-    "43:readme.questions.app-expose.body" : {
+    "43:questions.app-expose.body" : {
       "extractionState" : "manual",
       "localizations" : {
         "de" : {
@@ -734,7 +734,7 @@
         }
       }
     },
-    "44:readme.questions.mouse-support.body" : {
+    "44:questions.mouse-support.body" : {
       "extractionState" : "manual",
       "localizations" : {
         "de" : {
@@ -751,7 +751,7 @@
         }
       }
     },
-    "45:readme.questions.magic-mouse-support.body" : {
+    "45:questions.magic-mouse-support.body" : {
       "extractionState" : "manual",
       "localizations" : {
         "de" : {
@@ -768,7 +768,7 @@
         }
       }
     },
-    "46:readme.questions.tilt-wheel.body" : {
+    "46:questions.tilt-wheel.body" : {
       "extractionState" : "manual",
       "localizations" : {
         "de" : {
@@ -785,7 +785,7 @@
         }
       }
     },
-    "47:readme.questions.pointer-acceleration.body" : {
+    "47:questions.pointer-acceleration.body" : {
       "extractionState" : "manual",
       "localizations" : {
         "de" : {
@@ -802,7 +802,7 @@
         }
       }
     },
-    "48:readme.questions.data-collection.body" : {
+    "48:questions.data-collection.body" : {
       "extractionState" : "manual",
       "localizations" : {
         "de" : {
@@ -819,7 +819,7 @@
         }
       }
     },
-    "49:readme.questions.refund-policy.body" : {
+    "49:questions.refund-policy.body" : {
       "extractionState" : "manual",
       "localizations" : {
         "de" : {
@@ -836,7 +836,7 @@
         }
       }
     },
-    "50:readme.questions.open-source.body" : {
+    "50:questions.open-source.body" : {
       "extractionState" : "manual",
       "localizations" : {
         "de" : {
@@ -853,7 +853,7 @@
         }
       }
     },
-    "51:readme.questions.free-for-donators.body" : {
+    "51:questions.free-for-donators.body" : {
       "extractionState" : "manual",
       "localizations" : {
         "de" : {
@@ -870,7 +870,7 @@
         }
       }
     },
-    "52:readme.contributing" : {
+    "52:contributing" : {
       "extractionState" : "manual",
       "localizations" : {
         "de" : {
@@ -887,7 +887,7 @@
         }
       }
     },
-    "53:readme.contributing.feedback.body" : {
+    "53:contributing.feedback.body" : {
       "extractionState" : "manual",
       "localizations" : {
         "de" : {
@@ -904,7 +904,7 @@
         }
       }
     },
-    "54:readme.contributing.money.body" : {
+    "54:contributing.money.body" : {
       "extractionState" : "manual",
       "localizations" : {
         "de" : {
@@ -921,7 +921,7 @@
         }
       }
     },
-    "55:readme.contributing.translations.body" : {
+    "55:contributing.translations.body" : {
       "extractionState" : "manual",
       "localizations" : {
         "de" : {
@@ -938,7 +938,7 @@
         }
       }
     },
-    "56:readme.contributing.code.body" : {
+    "56:contributing.code.body" : {
       "extractionState" : "manual",
       "localizations" : {
         "de" : {

@@ -35,7 +35,7 @@
         }
       }
     },
-    "03:acknowledgements.intro" : {
+    "03:intro" : {
       "comment" : "Note: This is the intro for the acknowledgements document",
       "extractionState" : "manual",
       "localizations" : {
@@ -53,7 +53,7 @@
         }
       }
     },
-    "04:acknowledgements.translations" : {
+    "04:translations" : {
       "extractionState" : "manual",
       "localizations" : {
         "de" : {
@@ -70,7 +70,7 @@
         }
       }
     },
-    "05:acknowledgements.money" : {
+    "05:money" : {
       "comment" : "Note: {sales_count} will be replaced by the number of times Mac Mouse Fix has been sold. Make sure to type \"{sales_count}\" exactly like in the original for the text-replacement to work.",
       "extractionState" : "manual",
       "localizations" : {
@@ -88,7 +88,7 @@
         }
       }
     },
-    "06:acknowledgements.money.generous" : {
+    "06:money.generous" : {
       "extractionState" : "manual",
       "localizations" : {
         "de" : {
@@ -105,7 +105,7 @@
         }
       }
     },
-    "07:acknowledgements.money.very-generous" : {
+    "07:money.very-generous" : {
       "extractionState" : "manual",
       "localizations" : {
         "de" : {
@@ -122,7 +122,7 @@
         }
       }
     },
-    "08:acknowledgements.money.github-sponsors" : {
+    "08:money.github-sponsors" : {
       "comment" : "Note: {url} will be replaced by the link to the \"GitHub Sponsors\" website. Make sure to type \"{url}\" exactly like in the original for the text-replacement to work.",
       "extractionState" : "manual",
       "localizations" : {
@@ -140,7 +140,7 @@
         }
       }
     },
-    "09:acknowledgements.money.paypal-donations" : {
+    "09:money.paypal-donations" : {
       "extractionState" : "manual",
       "localizations" : {
         "de" : {
@@ -157,7 +157,7 @@
         }
       }
     },
-    "10:acknowledgements.software" : {
+    "10:software" : {
       "extractionState" : "manual",
       "localizations" : {
         "de" : {
@@ -174,7 +174,7 @@
         }
       }
     },
-    "11:acknowledgements.software.inspiration" : {
+    "11:software.inspiration" : {
       "extractionState" : "manual",
       "localizations" : {
         "de" : {
@@ -191,7 +191,7 @@
         }
       }
     },
-    "12:acknowledgements.software.libraries" : {
+    "12:software.libraries" : {
       "comment" : "Note: Don't forget the `<br>`, it inserts a lineBReak.",
       "extractionState" : "manual",
       "localizations" : {

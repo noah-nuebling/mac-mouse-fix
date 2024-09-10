@@ -60,8 +60,8 @@
     <a href="https://macmousefix.com/">
         <img src="{repo_root}Markdown/Media/AppIconRound3.png" width="200" height="auto">
     </a>
-    <h1>{{Mac Mouse Fix||readme.intro.title||}}</h1>  
-    <p>{{Make Your $10 Mouse Better Than an Apple Trackpad!||readme.intro.subtitle||}}</p>
+    <h1>{{Mac Mouse Fix||intro.title||}}</h1>  
+    <p>{{Make Your $10 Mouse Better Than an Apple Trackpad!||intro.subtitle||}}</p>
 </div>
 
 <br>
@@ -69,12 +69,12 @@
 
 <div align="center">
     <table>
-        <th><a href=https://macmousefix.com/>{{Website&nbsp;↗||readme.intro.links.website||}}</a></th>
-        <td><a href=https://redirect.macmousefix.com/?target=mmf-help-and-feedback&locale={locale_code}>{{Help&nbsp;&amp;&nbsp;Feedback||readme.intro.links.help||Note: &nbsp; creates a so called 'non-breaking-space' character, which is like a normal space that prevents line breaks. &amp; creates an ampersand (&) character}}</a></td> <!-- Note: Should probably use direct link instead of redirection-service: https://github.com/noah-nuebling/mac-mouse-fix/issues/new/choose -->
-        <td><a href=https://redirect.macmousefix.com/?target=mmf-releases&locale={locale_code}>{{Releases||readme.intro.links.releases||}}</a></td> <!-- Note: Should probably use direct link instead of redirection-service: https://github.com/noah-nuebling/mac-mouse-fix/releases -->
-        <td><a href="{language_root}Acknowledgements.md">{{Acknowledgements||readme.intro.links.acknowledgements||}}</a></td> 
+        <th><a href=https://macmousefix.com/>{{Website&nbsp;↗||intro.links.website||}}</a></th>
+        <td><a href=https://redirect.macmousefix.com/?target=mmf-help-and-feedback&locale={locale_code}>{{Help&nbsp;&amp;&nbsp;Feedback||intro.links.help||Note: &nbsp; creates a so called 'non-breaking-space' character, which is like a normal space that prevents line breaks. &amp; creates an ampersand (&) character}}</a></td> <!-- Note: Should probably use direct link instead of redirection-service: https://github.com/noah-nuebling/mac-mouse-fix/issues/new/choose -->
+        <td><a href=https://redirect.macmousefix.com/?target=mmf-releases&locale={locale_code}>{{Releases||intro.links.releases||}}</a></td> <!-- Note: Should probably use direct link instead of redirection-service: https://github.com/noah-nuebling/mac-mouse-fix/releases -->
+        <td><a href="{language_root}Acknowledgements.md">{{Acknowledgements||intro.links.acknowledgements||}}</a></td> 
     </table>
-    <img src="https://img.shields.io/github/downloads/noah-nuebling/mac-mouse-fix/total?color=25c65f&label={{Downloads||readme.intro.downloads-badge-label||Note: This label will be shown next to a box containing the number of times Mac Mouse Fix has been downloaded so far }}">
+    <img src="https://img.shields.io/github/downloads/noah-nuebling/mac-mouse-fix/total?color=25c65f&label={{Downloads||intro.downloads-badge-label||Note: This label will be shown next to a box containing the number of times Mac Mouse Fix has been downloaded so far }}">
 </div>
 
 <br>
@@ -87,7 +87,7 @@
   <!-- ||| Intro Text ||| -->
 
 ```
-key: readme.intro.body
+key: intro.body
 ```
 Mac Mouse Fix is an app that makes your mouse better.
 
@@ -118,7 +118,7 @@ comment:
 
 <a name="features"></a> 
 ```
-key: readme.features
+key: features
 ```
 ## Features
 
@@ -141,7 +141,7 @@ comment:
 
 <a name="installation"></a>
 ```
-key: readme.install
+key: install
 ```
 ## Installation
 
@@ -160,7 +160,7 @@ comment:
 
 <a name="macos-compatibility"></a>
 ```
-key: readme.macos-compat
+key: macos-compat
 ```
 ## macOS compatibility
 
@@ -175,7 +175,7 @@ comment:
 
 <a name="pricing"></a> 
 ```
-key: readme.price
+key: price
 ```
 ## Pricing
 
@@ -187,7 +187,7 @@ comment:
 
 <a name="uninstallation"></a> 
 ```
-key: readme.uninstall
+key: uninstall
 ```
 ## Uninstallation
 
@@ -202,7 +202,7 @@ comment:
 
 <a name="what-people-say"></a> 
 ```
-key: readme.what-people-say
+key: what-people-say
 ```
 ## What people say
 
@@ -224,17 +224,17 @@ comment:
 
 <a name="tips"></a> 
 ```
-key: readme.tips
+key: tips
 ```
 ## Tips
 ```
 comment:
 ```
 
-- {{**Manage windows with a simple Click and Drag**||readme.tips.swish||}}
+- {{**Manage windows with a simple Click and Drag**||tips.swish||}}
 
   ```
-  key: readme.tips.swish.body
+  key: tips.swish.body
   ```
   [Swish](https://highlyopinionated.co/swish/) is my favorite way to manage windows on macOS. With a simple swipe on your trackpad, it lets you position any window so it takes up half, a quarter, or the whole screen.
 
@@ -245,10 +245,10 @@ comment:
   comment:  
   ```
 
-- {{**Control Screen Brightness, Audio Volume, or Media Playback right from your mouse**||readme.tips.apple-keys||}}
+- {{**Control Screen Brightness, Audio Volume, or Media Playback right from your mouse**||tips.apple-keys||}}
 
   ```
-  key: readme.tips.apple-keys.body
+  key: tips.apple-keys.body
   ```
   Mac Mouse Fix lets you use **any key on your keyboard** directly from your mouse -
   even special keys only found on Apple keyboards that let you control Screen Brightness, Audio Volume, Media Playback, and more.
@@ -262,27 +262,27 @@ comment:
 
 <a name="questions"></a> 
 ```
-key: readme.questions
+key: questions
 ```
 ## Questions
 ```
 comment:
 ```
 
-- {{**Is Mac Mouse Fix native on Apple Silicon?**||readme.questions.apple-silicon||}}
+- {{**Is Mac Mouse Fix native on Apple Silicon?**||questions.apple-silicon||}}
     
   ```
-  key: readme.questions.apple-silicon.body
+  key: questions.apple-silicon.body
   ```
   Yes, Mac Mouse Fix runs 100% native on Apple Silicon.
   ```
   comment: 
   ```
 
-- {{**Why is there a delay when I click?**||readme.questions.click-delay||}}
+- {{**Why is there a delay when I click?**||questions.click-delay||}}
 
   ```
-  key: readme.questions.click-delay.body
+  key: questions.click-delay.body
   ```
   When you click, Mac Mouse Fix might wait to see if you're going to double click.<br>
   To remove the delay for a button, delete any "Double Click" actions for that button.
@@ -290,10 +290,10 @@ comment:
   comment: 
   ```
 
-- {{**How can I orbit around objects in 3D apps like Blender?**||readme.questions.blender||}}
+- {{**How can I orbit around objects in 3D apps like Blender?**||questions.blender||}}
 
   ```
-  key: readme.questions.blender.body
+  key: questions.blender.body
   ```
   In 3D apps like Blender, you normally Click and Drag the Middle Mouse Button to orbit around objects.<br>
   But if you assign actions to the Middle Mouse Button in Mac Mouse Fix, then this won't work anymore.
@@ -305,10 +305,10 @@ comment:
   comment: 
   ```
 
-- {{**Can I open App Exposé through a Click and Drag Gesture?**||readme.questions.app-expose||}} <!-- Note: We're using App Exposé here and Application Windows in MMF. Not sure that's great. I felt this was clearer though. -->
+- {{**Can I open App Exposé through a Click and Drag Gesture?**||questions.app-expose||}} <!-- Note: We're using App Exposé here and Application Windows in MMF. Not sure that's great. I felt this was clearer though. -->
 
   ```
-  key: readme.questions.app-expose.body
+  key: questions.app-expose.body
   ```
   Yes! Just choose the 'Spaces & Mission Control' Action and then Click and Drag *down*.
 
@@ -324,10 +324,10 @@ comment:
   
     <!-- NOTES: Maybe we should automate this. For context, see Issue https://github.com/noah-nuebling/mac-mouse-fix/issues/387 -->
 
-- {{**Is my mouse supported?**||readme.questions.mouse-support||}}
+- {{**Is my mouse supported?**||questions.mouse-support||}}
 
   ```
-  key: readme.questions.mouse-support.body
+  key: questions.mouse-support.body
   ```
   Short answer: Probably. If you want to know for sure, it's best to download Mac Mouse Fix and try it out.
 
@@ -339,10 +339,10 @@ comment:
   comment: 
   ```
 
-- {{**Is the Magic Mouse supported?**||readme.questions.magic-mouse-support||}}
+- {{**Is the Magic Mouse supported?**||questions.magic-mouse-support||}}
 
   ```
-  key: readme.questions.magic-mouse-support.body
+  key: questions.magic-mouse-support.body
   ```
   I might add features in the future which enhance the Apple Magic Mouse, but currently, Mac Mouse Fix has no effect on it.
   ```
@@ -365,10 +365,10 @@ comment:
         I'm not the biggest expert on mouse hardware, but I do have quite a collection now, thanks to my work on Mac Mouse Fix! If I had to make a recommendation for what mouse to buy for the best experience with Mac Mouse fix, I'd say get a smaller, chinese brand on Amazon. In my experience, these mice often have better build quality at a fraction of the price of a big brand mouse like Logitech or Roccat. Also, some models of bigger manufacturers like Logitech are made to be used with their proprietary driver software, and they won't be fully compatible with Mac Mouse Fix. If you buy a smaller brand, you can usually be sure, that they will work flawlessly with non-proprietary drivers like Mac Mouse Fix.
     -->
 
-- {{**Are tiltable scroll wheels supported?**||readme.questions.tilt-wheel||}}
+- {{**Are tiltable scroll wheels supported?**||questions.tilt-wheel||}}
 
   ```
-  key: readme.questions.tilt-wheel.body
+  key: questions.tilt-wheel.body
   ```
   Some mice let you tilt the scroll wheel left or right to scroll horizontally. Mac Mouse Fix will make this feel more natural and easy to control. However, it's not currently possible to trigger other actions, such as switching between desktops, by tilting the scroll wheel. I'd love to implement this feature at some point, but it's a ton of work and it won't be coming soon.
   ```
@@ -377,10 +377,10 @@ comment:
   
     <!-- This is so hard, because it would require reprogramming the mouse so that it sends button-signals instead of sending scroll-signals, when you tilt the scroll wheel. And to reprogram the mouse, would require communicating with the it through the custom vendor-specific protocol. And that's not easy. For many mice it's not even possible. -->
 
-- {{**Turning off pointer acceleration**||readme.questions.pointer-acceleration||}}
+- {{**Turning off pointer acceleration**||questions.pointer-acceleration||}}
 
   ```
-  key: readme.questions.pointer-acceleration.body
+  key: questions.pointer-acceleration.body
   ```
   Mac Mouse Fix doesn't let you turn off the pointer acceleration, but if you're on **macOS 14 Sonoma** or later, you can turn off the pointer acceleration under `System Settings > Mouse > Advanced... > Pointer acceleration`.
 
@@ -389,10 +389,10 @@ comment:
   comment: 
   ```
 
-- {{**Does Mac Mouse Fix collect my data?**||readme.questions.data-collection||}}
+- {{**Does Mac Mouse Fix collect my data?**||questions.data-collection||}}
 
   ```
-  key: readme.questions.data-collection.body
+  key: questions.data-collection.body
   ```
   Mac Mouse Fix does not have ads, and it does not collect any personal information about you.
 
@@ -401,10 +401,10 @@ comment:
   comment: 
   ```
 
-- {{**Is there a refund policy?**||readme.questions.refund-policy||}}
+- {{**Is there a refund policy?**||questions.refund-policy||}}
 
   ```
-  key: readme.questions.refund-policy.body
+  key: questions.refund-policy.body
   ```
   There is no official refund policy, but the app is free for 30 days.
   
@@ -413,10 +413,10 @@ comment:
   comment: 
   ```
 
-- {{**Will Mac Mouse Fix still be Open Source now that it's monetized?**||readme.questions.open-source||}}
+- {{**Will Mac Mouse Fix still be Open Source now that it's monetized?**||questions.open-source||}}
 
   ```
-  key: readme.questions.open-source.body
+  key: questions.open-source.body
   ```
   Yes, Mac Mouse Fix will still be open source!
 
@@ -434,10 +434,10 @@ comment:
       And of course, on the next update, you'll get a non-cracked version which means you'll have to do this again for every update. (Or just pay $1.99 for the greatest mouse driver ever! :)
     -->
 
-- {{**Can I get Mac Mouse Fix for free if I already donated?**||readme.questions.free-for-donators||}}
+- {{**Can I get Mac Mouse Fix for free if I already donated?**||questions.free-for-donators||}}
 
   ```
-  key: readme.questions.free-for-donators.body
+  key: questions.free-for-donators.body
   ```
   Yes! See the [Acknowledgements]({language_root}Acknowledgements.md#-paypal-donations) for more info.
   ```
@@ -446,7 +446,7 @@ comment:
 
 <a name="how-you-can-contribute"></a> 
 ```
-key: readme.contributing
+key: contributing
 ```
 ## How you can contribute
 
@@ -463,20 +463,20 @@ comment:
 
   -->
 
-- {{**Giving feedback**||readme.contributing.feedback||}}
+- {{**Giving feedback**||contributing.feedback||}}
     
   ```
-  key: readme.contributing.feedback.body
+  key: contributing.feedback.body
   ```
   You can help by sharing your **ideas**, **issues** and **feedback** via the [Feedback Assistant](https://noah-nuebling.github.io/mac-mouse-fix-feedback-assistant/?type=bug-report).
   ```
   comment: 
   ```
 
-- {{**Contributing money**||readme.contributing.money||}}
+- {{**Contributing money**||contributing.money||}}
   
   ```
-  key: readme.contributing.money.body
+  key: contributing.money.body
   ```
   I hope to be able to sustain myself financially through Mac Mouse Fix. That way, I can keep improving and working on the app. If you would like to help, you can:
   1. Buy Mac Mouse Fix by clicking the button in the app, or clicking [here](https://noahnuebling.gumroad.com/l/mmfinappusd).
@@ -486,10 +486,10 @@ comment:
   comment: 
   ```
 
-- {{**Adding translations**||readme.contributing.translations||}}
+- {{**Adding translations**||contributing.translations||}}
   
   ```
-  key: readme.contributing.translations.body
+  key: contributing.translations.body
   ```
   Mac Mouse Fix is available in English, German as well as the languages listed in the [Acknowledgements]({language_root}Acknowledgements.md).
 
@@ -499,15 +499,15 @@ comment:
   comment: 
   ```
 
-- {{**Contributing code**||readme.contributing.code||}}
+- {{**Contributing code**||contributing.code||}}
 
     <!-- 
-      Old note from readme.contributing.code.body:
+      Old note from contributing.code.body:
       I should mention people who contributed code on the acknowledgements page. They are already in the update notes. 
     -->
 
   ```
-  key: readme.contributing.code.body
+  key: contributing.code.body
   ```
   If you would like to contribute code, that's awesome! I'll be happy about any [pull requests](https://github.com/noah-nuebling/mac-mouse-fix/pulls).
   
@@ -516,7 +516,7 @@ comment:
   comment: 
   ```
 
-{{**Thank you** to everyone who has already contributed and supported me in trying to make the best mouse driver *of all time*! :)🚀||readme.contributing.footer||}}
+{{**Thank you** to everyone who has already contributed and supported me in trying to make the best mouse driver *of all time*! :)🚀||contributing.footer||}}
 
   <!--
     <a name="background"></a> 

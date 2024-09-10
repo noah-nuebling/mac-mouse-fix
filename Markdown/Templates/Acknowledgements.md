@@ -16,7 +16,7 @@
 </details>
 
 ```
-key: acknowledgements.intro
+key: intro
 ```
 # 🙌 Acknowledgements
 
@@ -29,7 +29,7 @@ comment: Note: This is the intro for the acknowledgements document
 
 <a name="translations"></a> 
 ```
-key: acknowledgements.translations
+key: translations
 ```
 ## 🌏 Translations
 
@@ -51,7 +51,7 @@ comment:
 
 <a name="money"></a> 
 ```
-key: acknowledgements.money
+key: money
 ```
 ## 💰 Money
 
@@ -65,7 +65,7 @@ comment: Note: {sales_count} will be replaced by the number of times Mac Mouse F
 
 <a name="generous-contributors"></a> 
 ```
-key: acknowledgements.money.generous
+key: money.generous
 ```
 ### ⭐️ Generous Contributors
 
@@ -78,7 +78,7 @@ comment:
 
 <a name="very-generous-contributors"></a> 
 ```
-key: acknowledgements.money.very-generous
+key: money.very-generous
 ```
 ### 🚀 Very Generous Contributors
 
@@ -91,7 +91,7 @@ comment:
 
 <a name="github-sponsors"></a> 
 ```
-key: acknowledgements.money.github-sponsors
+key: money.github-sponsors
 ```
 ### ❤️ GitHub Sponsors
 
@@ -102,7 +102,7 @@ comment: Note: {url} will be replaced by the link to the "GitHub Sponsors" websi
 
 <a name="paypal-donations"></a> 
 ```
-key: acknowledgements.money.paypal-donations
+key: money.paypal-donations
 ```
 ### ✨ PayPal Donations
 
@@ -116,7 +116,7 @@ comment:
 
 <a name="other-software"></a> 
 ```
-key: acknowledgements.software
+key: software
 ```
 ## 👾 Other Software
 ```
@@ -124,7 +124,7 @@ comment:
 ```
 
 ```
-key: acknowledgements.software.inspiration
+key: software.inspiration
 ```
 **Software** that inspired Mac Mouse Fix:
 
@@ -139,7 +139,7 @@ comment:
 ```
 
 ```
-key: acknowledgements.software.libraries
+key: software.libraries
 ```
 Mac Mouse Fix was built with the help of these **great libraries**:
 
