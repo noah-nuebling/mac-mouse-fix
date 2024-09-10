@@ -42,6 +42,7 @@ These people spent a lot more than the standard price and treated me to an **Inc
 
 **September 2024**
 
+- 🇸🇬&nbsp;Hongshi&nbsp;Tan
 - 🇹🇼&nbsp;Leo
 - 🇫🇮&nbsp;Paavo&nbsp;K
 - 🇨🇿&nbsp;David&nbsp;Kopecky

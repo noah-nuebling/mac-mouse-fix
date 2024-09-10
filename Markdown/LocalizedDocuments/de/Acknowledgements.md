@@ -40,6 +40,7 @@ Diese Leute haben viel mehr als den Standardpreis ausgegeben und mir einen **ung
 
 **September 2024**
 
+- 🇸🇬&nbsp;Hongshi&nbsp;Tan
 - 🇹🇼&nbsp;Leo
 - 🇫🇮&nbsp;Paavo&nbsp;K
 - 🇨🇿&nbsp;David&nbsp;Kopecky
