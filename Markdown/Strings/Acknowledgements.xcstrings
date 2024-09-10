@@ -1,7 +1,41 @@
 {
   "sourceLanguage" : "en",
   "strings" : {
-    "acknowledgements.intro" : {
+    "01:localization.progress" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dieses Dokument ist zu `{localization_progress}` übersetzt nach `{current_language}`<br>\nUm beim Übersetzen zu helfen, klicke [hier]({url})!"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "This document is `{localization_progress}` translated into `{current_language}`<br>To help translate, click [here]({url})!"
+          }
+        }
+      }
+    },
+    "02:localization.translate-prompt" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "[Helfe dabei, Mac Mouse Fix in verschiedene Sprachen zu übersetzen!]({url})"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "[Help translate Mac Mouse Fix to different languages!]({url})"
+          }
+        }
+      }
+    },
+    "03:acknowledgements.intro" : {
       "comment" : "Note: This is the intro for the acknowledgements document",
       "extractionState" : "manual",
       "localizations" : {
@@ -19,7 +53,24 @@
         }
       }
     },
-    "acknowledgements.money" : {
+    "04:acknowledgements.translations" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "## 🌏 Übersetzungen\n\nDanke, dass ihr Mac Mouse Fix zu Menschen auf der ganzen Welt gebracht habt.\n\n- 🇨🇳 Chinesische Übersetzungen von [@groverlynn]({url_1})\n- 🇰🇷 Koreanische Übersetzungen von [@jeongtae]({url_2})\n- 🇻🇳 Vietnamesische Übersetzungen von [@nghlt]({url_3})"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "## 🌏 Translations\n\nThanks for bringing Mac Mouse Fix to people around the globe!\n\n- 🇨🇳 Chinese translations by [@groverlynn]({url_1})\n- 🇰🇷 Korean translations by [@jeongtae]({url_2})\n- 🇻🇳 Vietnamese translations by [@nghlt]({url_3})"
+          }
+        }
+      }
+    },
+    "05:acknowledgements.money" : {
       "comment" : "Note: {sales_count} will be replaced by the number of times Mac Mouse Fix has been sold. Make sure to type \"{sales_count}\" exactly like in the original for the text-replacement to work.",
       "extractionState" : "manual",
       "localizations" : {
@@ -37,7 +88,7 @@
         }
       }
     },
-    "acknowledgements.money.generous" : {
+    "06:acknowledgements.money.generous" : {
       "extractionState" : "manual",
       "localizations" : {
         "de" : {
@@ -54,7 +105,24 @@
         }
       }
     },
-    "acknowledgements.money.github-sponsors" : {
+    "07:acknowledgements.money.very-generous" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "### 🚀 Sehr Großzügige Unterstützer\n\nDiese Leute haben viel mehr als den Standardpreis ausgegeben und mir einen **unglaublichen Milchshake** spendiert. (Und manche haben sogar eine Nachricht hinterlassen) Danke für den *Zucker-Kick*!"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "### 🚀 Very Generous Contributors\n\nThese people spent a lot more than the standard price and treated me to an **Incredible Milkshake**. (And some even left a message) Thanks for the *sugar rush*!"
+          }
+        }
+      }
+    },
+    "08:acknowledgements.money.github-sponsors" : {
       "comment" : "Note: {url} will be replaced by the link to the \"GitHub Sponsors\" website. Make sure to type \"{url}\" exactly like in the original for the text-replacement to work.",
       "extractionState" : "manual",
       "localizations" : {
@@ -72,7 +140,7 @@
         }
       }
     },
-    "acknowledgements.money.paypal-donations" : {
+    "09:acknowledgements.money.paypal-donations" : {
       "extractionState" : "manual",
       "localizations" : {
         "de" : {
@@ -89,24 +157,7 @@
         }
       }
     },
-    "acknowledgements.money.very-generous" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "### 🚀 Sehr Großzügige Unterstützer\n\nDiese Leute haben viel mehr als den Standardpreis ausgegeben und mir einen **unglaublichen Milchshake** spendiert. (Und manche haben sogar eine Nachricht hinterlassen) Danke für den *Zucker-Kick*!"
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "### 🚀 Very Generous Contributors\n\nThese people spent a lot more than the standard price and treated me to an **Incredible Milkshake**. (And some even left a message) Thanks for the *sugar rush*!"
-          }
-        }
-      }
-    },
-    "acknowledgements.software" : {
+    "10:acknowledgements.software" : {
       "extractionState" : "manual",
       "localizations" : {
         "de" : {
@@ -123,7 +174,7 @@
         }
       }
     },
-    "acknowledgements.software.inspiration" : {
+    "11:acknowledgements.software.inspiration" : {
       "extractionState" : "manual",
       "localizations" : {
         "de" : {
@@ -140,7 +191,7 @@
         }
       }
     },
-    "acknowledgements.software.libraries" : {
+    "12:acknowledgements.software.libraries" : {
       "comment" : "Note: Don't forget the `<br>`, it inserts a lineBReak.",
       "extractionState" : "manual",
       "localizations" : {
@@ -154,57 +205,6 @@
           "stringUnit" : {
             "state" : "new",
             "value" : "Mac Mouse Fix was built with the help of these **great libraries**:\n\n- [ReactiveSwift]({url_1}) - Streams of values over time tailored for Swift\n- [CocoaLumberjack]({url_2}) - Fast & simple, yet powerful & flexible logging\n- [Swift Markdown]({url_3}) - Parse, build, edit, and analyze Markdown documents\n- [Sparkle]({url_4}) - A software update framework for macOS\n- [SnapKit]({url_5}) - Making Auto Layout easy on both iOS and macOS\n- [MASShortcut]({url_6}) - API and user interface for recording, storing & using system-wide keyboard shortcuts\n- [CGSInternal]({url_7}) - A collection of private CoreGraphics routines\n- Dependencies of Mac Mouse Fix's scripts:<br>\n  [Update and statistics scripts]({url_8}) | [Markdown generator script]({url_9}) | [.strings file sync script]({url_10}) | [\"State of Localization\" script]({url_11})\n- Dependencies of the [Mac Mouse Fix Feedback Assistant]({url_12}) web app [here]({url_13})\n- Dependencies of the [Mac Mouse Fix Website]({url_14}) are available [here]({url_15})"
-          }
-        }
-      }
-    },
-    "acknowledgements.translations" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "## 🌏 Übersetzungen\n\nDanke, dass ihr Mac Mouse Fix zu Menschen auf der ganzen Welt gebracht habt.\n\n- 🇨🇳 Chinesische Übersetzungen von [@groverlynn]({url_1})\n- 🇰🇷 Koreanische Übersetzungen von [@jeongtae]({url_2})\n- 🇻🇳 Vietnamesische Übersetzungen von [@nghlt]({url_3})"
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "## 🌏 Translations\n\nThanks for bringing Mac Mouse Fix to people around the globe!\n\n- 🇨🇳 Chinese translations by [@groverlynn]({url_1})\n- 🇰🇷 Korean translations by [@jeongtae]({url_2})\n- 🇻🇳 Vietnamese translations by [@nghlt]({url_3})"
-          }
-        }
-      }
-    },
-    "localization.progress" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Dieses Dokument ist zu `{localization_progress}` übersetzt nach `{current_language}`<br>\nUm beim Übersetzen zu helfen, klicke [hier]({url})!"
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "This document is `{localization_progress}` translated into `{current_language}`<br>To help translate, click [here]({url})!"
-          }
-        }
-      }
-    },
-    "localization.translate-prompt" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "[Helfe dabei, Mac Mouse Fix in verschiedene Sprachen zu übersetzen!]({url})"
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "[Help translate Mac Mouse Fix to different languages!]({url})"
           }
         }
       }
