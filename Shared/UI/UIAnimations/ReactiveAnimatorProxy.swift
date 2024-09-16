@@ -89,7 +89,7 @@ extension NSAnimatablePropertyContainer where Self: NSObject {
             }
             
             /// Make copy so we don't change the animation outside this scope
-            let animation = animation1!.copy() as! CABasicAnimation
+            var animation = animation1!.copy() as! CABasicAnimation
             
             /// Make animations round to integer to avoid jitter. This is useful for resize animations. But this breaks opacity animations.
             var doRoundToInt = false
@@ -175,6 +175,12 @@ extension NSAnimatablePropertyContainer where Self: NSObject {
                 base.add(animation, forKey: "transform")
                 
             } else if let animationManager = NSAnimationManager.current() {
+                
+                /// macOS 15 Sequoia fix
+                ///     - Backported this from the feature-strings-catalog branch into the master branch. See the feature-strings-catalog branch for more info. (last updated: 16.09.2024)
+                if #available(macOS 15.0, *) {
+                    animation = animation.forObject(base, key: keyPath, targetValue: newValue) as! CABasicAnimation
+                }
                 
                 /// Default: Use animationManager
                 animationManager.setTargetValue(newValue, for: base, keyPath: keyPath, animation: animation)

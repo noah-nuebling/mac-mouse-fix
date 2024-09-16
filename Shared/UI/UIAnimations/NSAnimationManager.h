@@ -17,6 +17,7 @@
 /// -> It works!!
 
 #import <AppKit/AppKit.h>
+@import QuartzCore.CAAnimation;
 
 #ifndef NSAnimationManager_h
 #define NSAnimationManager_h
@@ -51,6 +52,15 @@
 
 /// Dealloc
 - (void)dealloc;
+
+@end
+
+@interface CAAnimation (MF_NSPrototypeAnimation)
+
+/// Animation prototype resolution
+///     - Necessary under macOS 15 Sequoia
+///     - Backported this from the feature-strings-catalog branch into the master branch. See the feature-strings-catalog branch for more info. (last updated: 16.09.2024)
+- (CAAnimation *)animationForObject:(id)object key:(NSString *)keyPath targetValue:(id)targetValue API_AVAILABLE(macos(15.0));
 
 @end
 
