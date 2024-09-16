@@ -444,6 +444,10 @@ void Handle_FSEventStreamCallback(ConstFSEventStreamRef streamRef, void *clientC
             
             if (currentVersion == 21) {
                 
+                /// 21 -> 22
+                ///     (21 is used in MMF 3.0.0 I think)
+                ///     (22 is used in MMF 3.0.2 I think)
+                
                 DDLogInfo(@"repairConfig: Upgrading configVersion from 21 to 22...");
                 
                 /// Move lastUseDate from config to SecureStorage.
@@ -455,9 +459,13 @@ void Handle_FSEventStreamCallback(ConstFSEventStreamRef streamRef, void *clientC
                 
             } else if (currentVersion == 22) {
                 
+                /// 22 -> 23
+                ///     (23 is used in MMF 3.0.2 and 3.0.3)
+                
                 DDLogInfo(@"repairConfig: Upgrading configVersion from 22 to 23...");
                 
                 /// Replace default config for 3 buttons
+                ///     Note: Maybe we should hardcode the replacement config for 3 buttons? Because the `defaultConfig` might change on future versions.
                 NSObject *d = [defaultConfig objectForCoolKeyPath:@"Constants.defaultRemaps.threeButtons"];
                 setConfig(@"Constants.defaultRemaps.threeButtons", d);
                 

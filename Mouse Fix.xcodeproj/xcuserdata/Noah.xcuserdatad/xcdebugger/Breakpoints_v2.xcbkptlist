@@ -352,10 +352,40 @@
             filePath = "Shared/Config/Config.m"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "452"
-            endingLineNumber = "452"
+            startingLineNumber = "456"
+            endingLineNumber = "456"
             landmarkName = "-repairConfigWithReason:info:"
             landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "B8DE2901-2223-4ACD-BAD5-4AAC7C61E8BC - e07cc887d84fba4e"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "-[Config repairConfigWithReason:info:]"
+                  moduleName = "Mac Mouse Fix.debug.dylib"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/Noah/Desktop/mmf-stuff/mac-mouse-fix/Shared/Config/Config.m"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "456"
+                  endingLineNumber = "456">
+               </Location>
+               <Location
+                  uuid = "B8DE2901-2223-4ACD-BAD5-4AAC7C61E8BC - e07cc887d84fba4e"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "-[Config repairConfigWithReason:info:]"
+                  moduleName = "Mac Mouse Fix.debug.dylib"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/Noah/Desktop/mmf-stuff/mac-mouse-fix/Shared/Config/Config.m"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "456"
+                  endingLineNumber = "456">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
