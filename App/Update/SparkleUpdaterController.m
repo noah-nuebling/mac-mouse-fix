@@ -155,7 +155,7 @@ int getMajorVersion(NSString *version) {
         ///     - I thought Sparkle would already filter older versions out before passing the appcast to this method, but apparently not.
         ///     - I think I based this assumption on reading the Sparkle 2 source code. Maybe it's different here since we're on Sparkle 1
         ///     - I think if we return an update for which Sparkle determines that it's invalid due to skippedUpdates, minimumAutoupdateVersion and minimumOSVersion, then Sparkle will just not display the update we return. But not sure. Update: Seems to be true based on my tests.
-        if ([comparator compareVersion:currentVersion withBuildNumber:@(currentBuildNumber) 
+        if ([comparator compareVersion:currentVersion withBuildNumber:@(currentBuildNumber)
                              toVersion:version withBuildNumber:@(buildNumber)] != NSOrderedAscending) {
             
             /// Log
@@ -251,18 +251,33 @@ int getMajorVersion(NSString *version) {
     ///     Note: This should prevent an **obscure edge case**, which is explained in the other place where where we delete `SUSkippedMinorVersionKey`.
     [NSUserDefaults.standardUserDefaults removeObjectForKey:SUSkippedMinorVersionKey];
     
-    /// Return an update
+    /// Get update
+    SUAppcastItem *result = nil;
     if (bestMajorUpdate != nil) {
-        return bestMajorUpdate;
+        DDLogInfo(@"UPDATER: Choosing to return bestMajorUpdate to Sparkle");
+        result = bestMajorUpdate;
+        
     } else if (bestMinorUpdate != nil) {
         /// Note that, in case there's a major *and* a minor update, only the major update will be displayed. But if the user skips the major update, the app will immediately check for upates again and then present the minor update.
-        return bestMinorUpdate;
+        DDLogInfo(@"UPDATER: Choosing to return bestMinorUpdate to Sparkle");
+        result = bestMinorUpdate;
+        
     } else if (latestUnshowableUpdate != nil) {
-        return latestUnshowableUpdate;  /// Newest update which Sparkle (1.26.0) won't present to the user. Explanation where this variable is filled.
+        DDLogInfo(@"UPDATER: Choosing to return latestUnshowableUpdate to Sparkle");
+        result = latestUnshowableUpdate;  /// Newest update which Sparkle (1.26.0) won't present to the user. Explanation where this variable is filled.
+        
     } else {
-        DDLogInfo(@"UPDATER: WARN: Returning nil appcastItem to Sparkle because we couldn't find a latestUnshowableUpdate. This normally shouldn't happen I think, except if the build number of this build is very low.");
-        return [[SUAppcastItem alloc] init];    /// If we return nil Sparkle (1.26.0) will just show the latest udpate to the user which we want to avoid.
+        DDLogInfo(@"UPDATER: WARN: Returning empty appcastItem to Sparkle because we couldn't find a latestUnshowableUpdate. This normally shouldn't happen I think, except if the build number of this build is very low.");
+        result = [[SUAppcastItem alloc] init];    /// If we return nil Sparkle (1.26.0) will just show the latest update to the user which we want to avoid. Note: Why don't we just always do this, (return an empty appcastItem) instead of returning the latestUnshowableUpdate? Won't that have the same effect of Sparkle not showing an update to the user?
     }
+    
+    /// Log
+    DDLogInfo(@"UPDATER: Returning update to Sparkle: %@ (%@)%@", result.displayVersionString, result.versionString,
+              ([result.versionString integerValue] > currentBuildNumber) ? @"" :
+              stringf(@" - but the build number of the update is not greater than the current build number (%ld) so Sparkle 1.27 won't display it.", (long)currentBuildNumber));
+    
+    /// Return
+    return result;
 }
 
 - (void)updater:(SUUpdater *)updater userDidSkipThisVersion:(SUAppcastItem *)item {
@@ -344,3 +359,4 @@ int getMajorVersion(NSString *version) {
 }
 
 @end
+
