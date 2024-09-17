@@ -356,50 +356,6 @@
             endingLineNumber = "456"
             landmarkName = "-repairConfigWithReason:info:"
             landmarkType = "7">
-            <Locations>
-               <Location
-                  uuid = "B8DE2901-2223-4ACD-BAD5-4AAC7C61E8BC - e07cc887d84fba4e"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "-[Config repairConfigWithReason:info:]"
-                  moduleName = "Mac Mouse Fix.debug.dylib"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/Noah/Desktop/mmf-stuff/mac-mouse-fix/Shared/Config/Config.m"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "456"
-                  endingLineNumber = "456">
-               </Location>
-               <Location
-                  uuid = "B8DE2901-2223-4ACD-BAD5-4AAC7C61E8BC - e07cc887d84fba4e"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "-[Config repairConfigWithReason:info:]"
-                  moduleName = "Mac Mouse Fix.debug.dylib"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/Noah/Desktop/mmf-stuff/mac-mouse-fix/Shared/Config/Config.m"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "456"
-                  endingLineNumber = "456">
-               </Location>
-               <Location
-                  uuid = "B8DE2901-2223-4ACD-BAD5-4AAC7C61E8BC - b57883f71533d3d1"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "-[Config repairConfigWithReason:info:]"
-                  moduleName = "Mac Mouse Fix"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/Noah/Desktop/mmf-stuff/mac-mouse-fix/Shared/Config/Config.m"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "456"
-                  endingLineNumber = "456">
-               </Location>
-            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -444,8 +400,8 @@
             filePath = "Shared/Animation/DisplayLink.m"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "843"
-            endingLineNumber = "843"
+            startingLineNumber = "853"
+            endingLineNumber = "853"
             landmarkName = "parseTimeStamp(ts)"
             landmarkType = "9">
          </BreakpointContent>
@@ -460,8 +416,8 @@
             filePath = "Shared/Animation/DisplayLink.m"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "499"
-            endingLineNumber = "499"
+            startingLineNumber = "507"
+            endingLineNumber = "507"
             landmarkName = "displayLinkCallback(displayLink, inNow, inOutputTime, flagsIn, flagsOut, displayLinkContext)"
             landmarkType = "9">
          </BreakpointContent>
@@ -476,8 +432,8 @@
             filePath = "Shared/Animation/DisplayLink.m"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "487"
-            endingLineNumber = "487"
+            startingLineNumber = "495"
+            endingLineNumber = "495"
             landmarkName = "displayLinkCallback(displayLink, inNow, inOutputTime, flagsIn, flagsOut, displayLinkContext)"
             landmarkType = "9">
          </BreakpointContent>
@@ -556,8 +512,8 @@
             filePath = "Helper/Core/Scroll/Scroll.m"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "657"
-            endingLineNumber = "657"
+            startingLineNumber = "664"
+            endingLineNumber = "664"
             landmarkName = "heavyProcessing(event, scrollDeltaAxis1, scrollDeltaAxis2, tickTS)"
             landmarkType = "9">
          </BreakpointContent>
@@ -572,8 +528,8 @@
             filePath = "Helper/Core/Scroll/Scroll.m"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "653"
-            endingLineNumber = "653"
+            startingLineNumber = "660"
+            endingLineNumber = "660"
             landmarkName = "heavyProcessing(event, scrollDeltaAxis1, scrollDeltaAxis2, tickTS)"
             landmarkType = "9">
          </BreakpointContent>
@@ -604,8 +560,8 @@
             filePath = "Helper/Core/Scroll/Scroll.m"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "598"
-            endingLineNumber = "598"
+            startingLineNumber = "605"
+            endingLineNumber = "605"
             landmarkName = "heavyProcessing(event, scrollDeltaAxis1, scrollDeltaAxis2, tickTS)"
             landmarkType = "9">
          </BreakpointContent>
@@ -656,6 +612,68 @@
             endingLineNumber = "391"
             landmarkName = "-repairConfigWithReason:info:"
             landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "4E0445BE-A809-4A74-95DE-82868086DA84"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Shared/Animation/DisplayLink.m"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "375"
+            endingLineNumber = "375"
+            landmarkName = "-linkToDisplayUnderMousePointerWithEvent:"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "4E0445BE-A809-4A74-95DE-82868086DA84 - 13ab8f0030201d7"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "__55-[DisplayLink linkToDisplayUnderMousePointerWithEvent:]_block_invoke"
+                  moduleName = "Mac Mouse Fix Helper.debug.dylib"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/Noah/Desktop/mmf-stuff/mac-mouse-fix/Shared/Animation/DisplayLink.m"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "377"
+                  endingLineNumber = "377">
+               </Location>
+               <Location
+                  uuid = "4E0445BE-A809-4A74-95DE-82868086DA84 - 13ab8f003020011"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "__55-[DisplayLink linkToDisplayUnderMousePointerWithEvent:]_block_invoke"
+                  moduleName = "Mac Mouse Fix Helper.debug.dylib"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/Noah/Desktop/mmf-stuff/mac-mouse-fix/Shared/Animation/DisplayLink.m"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "379"
+                  endingLineNumber = "379">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "E354D39D-F0D5-4AE5-8DD7-6191448CCF02"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Shared/MessagePort/MFMessagePort.m"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "89"
+            endingLineNumber = "89"
+            landmarkName = "didReceiveMessage(port, messageID, data, info)"
+            landmarkType = "9">
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

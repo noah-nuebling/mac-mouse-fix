@@ -129,7 +129,7 @@ NSString *runningApplicationDescription(NSRunningApplication *app) {
     NSArray<NSRunningApplication *> *apps = [NSRunningApplication runningApplicationsWithBundleIdentifier:kMFBundleIDApp];
     
     for (NSRunningApplication *app in apps) {
-        [app activateWithOptions:NSApplicationActivateIgnoringOtherApps];
+        [app activateWithOptions:NSApplicationActivateIgnoringOtherApps]; /// Note: `NSApplicationActivateIgnoringOtherApps` is deprecated under macOS 15 Sequoia, so it's good we're not using this anymore (as of Sep 2024)
     }
 }
 

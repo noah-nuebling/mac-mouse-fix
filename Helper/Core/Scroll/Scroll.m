@@ -327,7 +327,11 @@ static void heavyProcessing(CGEventRef event, int64_t scrollDeltaAxis1, int64_t 
         [HelperState.shared updateActiveDeviceWithEvent:event];
         
         /// Update mouse did move
-        ///     Note: We need this in MMF 3 to update the displayLink to the current display
+        ///     Note: (17.09.2024) We need this in MMF 3, otherwise the displayLink never updates to another display (ScrollUtility.mouseDidMove must be true for the displayLink to update)
+        ///             Discussion:
+        ///             - This code comes from MMF 2 iirc. We originally commented this out for MMF 3.0.0, but re-activated it for 3.0.3.
+        ///                 -> We commented it out since we thought we didn't need it since there are no app-specific settings anymore in MMF 3. However, I overlooked the display-link-updating stuff, which makes it so this is still needed under MMF 3.
+        ///             - Having this state stored inside of ScrollUtility instead of a variable defined in Scroll.m is pretty weird, and might have contributed to us commenting it out for MMF 3 even though it was still used.
         [ScrollUtility updateMouseDidMoveWithEvent:event];
         
         /// Update application Overrides
@@ -528,7 +532,10 @@ static void heavyProcessing(CGEventRef event, int64_t scrollDeltaAxis1, int64_t 
             assert(valueLeftVec.x == 0 || valueLeftVec.y == 0);
             
             /// Link to main screen
-            ///     This used to be above in the `isFirstConsecutive` section. Maybe it fits better there?
+            ///     - This used to be above in the `isFirstConsecutive` section. Maybe it fits better there?
+            ///     - (Sep 2024) This code was dead in MMF 3.0.0 - 3.0.2. It was re-activated in 3.0.3 by adding `[ScrollUtility updateMouseDidMoveWithEvent:]` in Scroll.m which was commented out. I really hope this doesn't lead to any new race-conditions / crashes. I tested it superficially, and I tried to think it through and didn't find issues, also people who used the 3.0.2-vcoba-2 build didn't seem to experience crashes, and that build had this change. That makes me relatively confident.
+            ///     - (Sep 2024) There's a race condition on `ScrollUtility.mouseDidMove`, since `startWithParams:` dispatches async to another queue than the queue where .mouseDidMove is updated. (The heavyProcessing queue.)
+            ///                         However, this should not lead to grave problems. Worst case, the `[_animator linkToMainScreen_Unsafe]` is not called even though the mouse moved, or it might be called several times in a row, even though the mouse didn't actually move in between.
             if (ScrollUtility.mouseDidMove && !isRunning) {
                 /// Update animator to currently used display
                 [_animator linkToMainScreen_Unsafe];

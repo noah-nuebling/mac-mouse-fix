@@ -71,7 +71,7 @@ typedef enum {
         
         /// Setup queue
         dispatch_queue_attr_t attrs = dispatch_queue_attr_make_with_qos_class(DISPATCH_QUEUE_SERIAL, QOS_CLASS_USER_INTERACTIVE, -1);
-        _displayLinkQueue = dispatch_queue_create("com.nuebling.mac-mouse-fix.helper.display-link", attrs);
+        _displayLinkQueue = dispatch_queue_create("com.nuebling.mac-mouse-fix.helper.display-link", attrs); /// TODO: Remove .helper from the queue name. This is used in the mainApp, too.
         
         /// Setup internal CVDisplayLink
         [self setUpNewDisplayLinkWithActiveDisplays];
@@ -99,9 +99,11 @@ typedef enum {
 - (void)setUpNewDisplayLinkWithActiveDisplays {
     
     if (_displayLink != nil) {
+        DDLogDebug(@"displayLink: Deleting existing CVDisplayLink.");
         CVDisplayLinkStop(_displayLink);
         CVDisplayLinkRelease(_displayLink);
     }
+    DDLogDebug(@"displayLink: Creating new CVDisplayLink.");
     CVDisplayLinkCreateWithActiveCGDisplays(&_displayLink);
     CVDisplayLinkSetOutputCallback(_displayLink, displayLinkCallback, (__bridge void * _Nullable)(self));
 }
@@ -348,6 +350,7 @@ typedef enum {
 }
 
 - (void)linkToMainScreen_Unsafe {
+    
     /// Simple alternative to .`linkToDisplayUnderMousePointerWithEvent:`.
     /// TODO: Test which is faster
     
@@ -357,9 +360,11 @@ typedef enum {
 - (void)linkToDisplayUnderMousePointerWithEvent:(CGEventRef _Nullable)event {
     
     /// Notes:
-    /// - What do we use for animations instead of this? (I think this would be appropriate to use for event sending, not for animation) - how do we link an animator driven by DisplayLink.m to the display where the animation takes place?
-    /// TODO:
-    /// - Actually use this instead of `linkToMainScreen` and test if this new version works
+    /// - This is unused (as of 17.09.2024, MMF 3.0.3)
+    ///     -> Which leads to the scroll-scheduling updating to a new screen, only once the key window is on that screen (since we use linkToMainScreen() instead of this.)
+    ///     - TODO: actually use this instead of `linkToMainScreen` and test if this new version works.
+    /// - I think this would be appropriate to use for event sending, not for animation, since it's based on a CGEvent) - For animation we need another approach.
+    ///     - (But I think if we move over from the deprecated CVDisplayLink to the new CADisplayLink, we'll have to use a different approach anyways.)
     
 #if IS_HELPER
     
@@ -440,6 +445,9 @@ typedef enum {
     
     /// Set new display
     CGError cgErr = CVDisplayLinkSetCurrentCGDisplay(_displayLink, displayID);
+    
+    /// Log
+    DDLogDebug(@"displayLink: Set link to display %d. Error: %d", displayID, cgErr);
     
     if (cgErr) {
         assert(false);
@@ -714,6 +722,8 @@ static CVReturn displayLinkCallback(CVDisplayLinkRef displayLink, const CVTimeSt
                 workload(timeInfo);
             });
         } else {
+            DDLogError(@"Don't use special scheduling without extensive testing. This caused regressions in scrolling stutteriness in some scenarios and even crashes I think (See 3.0.2-vcoba stuff: https://github.com/noah-nuebling/mac-mouse-fix/issues/875, and 3.0.2 crashes: https://github.com/noah-nuebling/mac-mouse-fix/issues/988)");
+            assert(false);
             dispatch_after(dispatch_time(DISPATCH_TIME_NOW, NSEC_PER_SEC*workDelay), self->_displayLinkQueue, ^{ /// Schedule the workload to run after `workDelay`
                 workload(timeInfo);
             });
