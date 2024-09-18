@@ -5,3 +5,7 @@
     - The generate_appcasts.py script will go through all releases, and look at their related commits. Within those, it'll look into [ProjectRoot]/xcconfig/Base.xcconfig and search for the value to MACOSX_DEPLOYMENT_TARGET in there.
         - So if we refactor Base.xcconfig, we need to adjust the generate_appcasts.py script, too
 
+- (Sep 2024) Considered adding NDEBUG preprocessor macro like we did for MMF 3.0.3 to prevent assert() failures from crashing in release builds.
+    However, MMF 2 never seems to crash anyways, and I'm worried that, if we don't crash when there's an assert failure 
+        while processing the launchd.plist or config.plist files, then perhaps those could get corrupted leading to worse issues than a crash...
+        I'd just rather not touch this stuff and so decided against adding the NDEBUG flag under MMF 2.
