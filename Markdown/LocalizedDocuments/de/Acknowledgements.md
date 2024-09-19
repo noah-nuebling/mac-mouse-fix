@@ -40,6 +40,7 @@ Diese Leute haben viel mehr als den Standardpreis ausgegeben und mir einen **ung
 
 **September 2024**
 
+- 🇺🇸&nbsp;Kevin&nbsp;Lloyd - "Thanks for making this! Keep up the great work!"
 - 🇺🇸&nbsp;Joe&nbsp;Skinner
 - 🇮🇹&nbsp;Sebastian&nbsp;Sergio&nbsp;Malara - "This should be installed as soon as you first boot your Mac"
 - 🇺🇸&nbsp;Dave&nbsp;Magoon - "Thank you! Great App!"
