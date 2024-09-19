@@ -42,6 +42,7 @@ These people spent a lot more than the standard price and treated me to an **Inc
 
 **September 2024**
 
+- 🇺🇸&nbsp;Joe&nbsp;Skinner
 - 🇮🇹&nbsp;Sebastian&nbsp;Sergio&nbsp;Malara - "This should be installed as soon as you first boot your Mac"
 - 🇺🇸&nbsp;Dave&nbsp;Magoon - "Thank you! Great App!"
 - 🇯🇵&nbsp;Fantasticworkspace
