@@ -6,6 +6,1145 @@
     <description>Stable releases of Mac Mouse Fix</description>
     <language>en</language>
         <item>
+        <title>3.0.3 available!</title>
+        <pubDate>2024-09-19T08:44:29Z</pubDate>
+        <sparkle:minimumSystemVersion>10.14.4</sparkle:minimumSystemVersion>
+        <description><![CDATA[
+            <!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>-</title>
+  <style>
+    html {
+      color: #1a1a1a;
+      background-color: #fdfdfd;
+    }
+    body {
+      margin: 0 auto;
+      max-width: 36em;
+      padding-left: 50px;
+      padding-right: 50px;
+      padding-top: 50px;
+      padding-bottom: 50px;
+      hyphens: auto;
+      overflow-wrap: break-word;
+      text-rendering: optimizeLegibility;
+      font-kerning: normal;
+    }
+    @media (max-width: 600px) {
+      body {
+        font-size: 0.9em;
+        padding: 12px;
+      }
+      h1 {
+        font-size: 1.8em;
+      }
+    }
+    @media print {
+      html {
+        background-color: white;
+      }
+      body {
+        background-color: transparent;
+        color: black;
+        font-size: 12pt;
+      }
+      p, h2, h3 {
+        orphans: 3;
+        widows: 3;
+      }
+      h2, h3, h4 {
+        page-break-after: avoid;
+      }
+    }
+    p {
+      margin: 1em 0;
+    }
+    a {
+      color: #1a1a1a;
+    }
+    a:visited {
+      color: #1a1a1a;
+    }
+    img {
+      max-width: 100%;
+    }
+    svg {
+      height: auto;
+      max-width: 100%;
+    }
+    h1, h2, h3, h4, h5, h6 {
+      margin-top: 1.4em;
+    }
+    h5, h6 {
+      font-size: 1em;
+      font-style: italic;
+    }
+    h6 {
+      font-weight: normal;
+    }
+    ol, ul {
+      padding-left: 1.7em;
+      margin-top: 1em;
+    }
+    li > ol, li > ul {
+      margin-top: 0;
+    }
+    blockquote {
+      margin: 1em 0 1em 1.7em;
+      padding-left: 1em;
+      border-left: 2px solid #e6e6e6;
+      color: #606060;
+    }
+    code {
+      font-family: Menlo, Monaco, Consolas, 'Lucida Console', monospace;
+      font-size: 85%;
+      margin: 0;
+      hyphens: manual;
+    }
+    pre {
+      margin: 1em 0;
+      overflow: auto;
+    }
+    pre code {
+      padding: 0;
+      overflow: visible;
+      overflow-wrap: normal;
+    }
+    .sourceCode {
+     background-color: transparent;
+     overflow: visible;
+    }
+    hr {
+      background-color: #1a1a1a;
+      border: none;
+      height: 1px;
+      margin: 1em 0;
+    }
+    table {
+      margin: 1em 0;
+      border-collapse: collapse;
+      width: 100%;
+      overflow-x: auto;
+      display: block;
+      font-variant-numeric: lining-nums tabular-nums;
+    }
+    table caption {
+      margin-bottom: 0.75em;
+    }
+    tbody {
+      margin-top: 0.5em;
+      border-top: 1px solid #1a1a1a;
+      border-bottom: 1px solid #1a1a1a;
+    }
+    th {
+      border-top: 1px solid #1a1a1a;
+      padding: 0.25em 0.5em 0.25em 0.5em;
+    }
+    td {
+      padding: 0.125em 0.5em 0.25em 0.5em;
+    }
+    header {
+      margin-bottom: 4em;
+      text-align: center;
+    }
+    #TOC li {
+      list-style: none;
+    }
+    #TOC ul {
+      padding-left: 1.3em;
+    }
+    #TOC > ul {
+      padding-left: 0;
+    }
+    #TOC a:not(:hover) {
+      text-decoration: none;
+    }
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+  </style>
+  
+
+  <style>
+
+      /* Following this tutorial: https://devilgate.org/blog/2012/07/02/tip-using-pandoc-to-create-truly-standalone-html-files/ */
+
+      :root {
+          font-size: 10px; /* 1 rem is this much */
+          padding: 0 0 0 0;
+          background-color: transparent; /* pandoc automatically applies styling where the bg is white. So we need to override that. */
+      }
+
+      body {
+          background-color: transparent;
+          margin: 0 1.2rem 2.0rem 1.2rem;
+          padding: 0;
+          font-family: -apple-system;
+          font-size: 1.3rem;
+
+          line-height: 1.15em;
+      }
+
+      h1, h2, h3, h4, h5, h6 {
+          line-height: 1.15em;
+      }
+
+      h1:after, h2:after {
+          content:' ';
+          display: block;
+          border: 0.5px solid rgba(0, 0, 0, 0.12);
+      }
+      h1:after {
+          margin: 0.6rem 0 0 0;
+      }
+      h2:after {
+          margin: 0.4rem 0 0 0;
+      }
+
+      h1 {
+          font-size: 2.2rem;
+          margin: 2.2rem 0 1.3rem -0.0rem;
+      }
+
+      h2 {
+          font-size: 1.7rem;
+          margin: 2.0rem 0 1.7rem -0.0rem;
+      }
+
+      h3 {
+          font-size: 1.3rem;
+          margin: 1.5rem 0 0.0rem -0.0rem;
+      }
+      h4 {
+          font-size: 1.0rem;
+          margin: 1.5rem 0 0.0rem -0.0rem;
+      }
+      h5 {
+          font-size: 0.8rem;
+          margin: 1.5rem 0 0.0rem -0.0rem;
+          font-style: italic;
+      }
+
+      p {
+          margin: 1.1rem 0 1.1rem 0;
+          font-size: 1.1rem;
+      }
+
+      a, a:visited {
+          color: rgba(43, 102, 211, 1.0) /* Obtained by colorpicking `Hyperlink`s in MMF */
+      }
+
+      ul {
+          padding: 0 0 0 1.5rem;
+          margin: 1.0rem 0 1.0rem 0.5rem;
+      }
+      ul ul {
+          margin: 0.6rem 0 -0.6rem 0;
+          padding: 0 0 0 2.1rem;
+      }
+
+      li {
+          padding: 0 0 0.6rem 0;
+
+          font-size: 1.1rem;
+      }
+
+      code {
+          padding: 0.2rem 0.5rem;
+          border-radius: 0.5rem;
+          background-color: rgba(0, 0, 75, 0.09);
+      }
+      div.sourceCode {
+          
+          padding: 1.6rem 1.5rem;
+          border-radius: 1.1rem; /*0.3rem;*/
+          background-color: rgba(0, 0, 75, 0.055);
+      }
+
+      blockquote {
+          margin-inline-start: unset;
+          border-width: 0.25rem;
+      }
+
+      blockquote.markdown-alert {
+          color: unset;
+      }
+
+      blockquote.markdown-alert.note { /* These colors are copied from the source code at https://github.com/orgs/community/discussions/16925 */
+          border-left-color: #0969da;
+      }
+      blockquote.markdown-alert.tip {
+          border-left-color: #1a7f37;
+      }
+      blockquote.markdown-alert.important {
+          border-left-color: #8250df;
+      }
+      blockquote.markdown-alert.warning {
+          border-left-color: #bf8700;
+      }
+
+      blockquote.markdown-alert.caution {
+          border-left-color: #cf222e;
+      }
+
+      blockquote.markdown-alert > .markdown-alert-title {
+          font-size: 1.2rem;
+      }
+
+      blockquote.markdown-alert.note > .markdown-alert-title {
+          color: #0969da;
+      }
+      blockquote.markdown-alert.tip > .markdown-alert-title {
+          color: #1a7f37;
+      }
+      blockquote.markdown-alert.important > .markdown-alert-title {
+          color: #8250df;
+      }
+      blockquote.markdown-alert.warning > .markdown-alert-title {
+          color: #9a6700;
+      }
+      blockquote.markdown-alert.caution > .markdown-alert-title {
+          color: #d1242f;
+      }
+
+      .annotation {
+          font-size: 1.1rem;
+      }
+      img {
+          max-width: 100%;
+          height: auto;
+          
+          border-radius: 1.0rem;
+          box-shadow: 0 0.2rem 0.4rem 0.0rem rgba(0, 0, 0, 0.15), 0 0.2rem 1.7rem 0.0rem rgba(0, 0, 0, 0.15);
+
+          display: block;
+          margin: 1.4rem auto 1.8rem auto;
+      }
+
+      hr {
+          border: none;
+          height: 3px;
+          background-color: rgba(0, 0, 0, 0.12);
+
+          margin: 1.7rem 0 1.7rem 0;
+      }
+
+      @media (prefers-color-scheme: light) {
+
+          /* I don't think we need this. Light is just the default, right? */
+
+          h1 {
+              color: #272727;
+          }
+
+          a {
+              color: #0948be;
+          }
+      }
+
+      @media (prefers-color-scheme: dark) {
+
+          body {
+              /* background-color: #1e1e1e;  */
+              /* ^ Sparkle background is still bright when we have `background-color: transparent` even with darkmode active. 
+                  This is the color of the text field background in Apple Mail on macOS 11 BigSur 
+                  
+                  Edit: This was because pandoc made the background white, which we've overriden now. So now this is not necessary anymore. Might want to reenable for testing in Safari.
+                  */
+
+              color: rgba(255, 255, 255, 0.9); /* For headers */
+          }
+
+          li, p {
+              color:rgba(255, 255, 255, 0.8);
+          }
+          a, a:visited { /* Need to include a:visited otherwise it will be set by pandoc */
+              color: #3586FF;
+          }
+          hr {
+              background-color: rgba(255, 255, 255, 0.15);
+          }
+          code {
+              background-color: rgba(255, 255, 255, 0.16);
+          }
+          div.sourceCode {
+              background-color: rgba(255, 255, 255, 0.08);
+          }
+
+          h1:after, h2:after {
+              content:' ';
+              display: block;
+              border: 0.5px solid rgba(255, 255, 255, 0.15);
+          }
+      }
+
+  </style>
+  <script>
+
+  document.addEventListener("DOMContentLoaded", function() {
+    
+    // Implement special blockquote styles from GitHub Markdown. See https://github.com/orgs/community/discussions/16925
+
+    // Create map from `blockquote start` to `css classes that we attach to that blockquote`
+    // Notes: 
+    //  - Most symbols that we tried(︕⚠ⓘ❗︎ℹ️⚠️💡) look really weird. The only good-looking one is ⚠. Using SF Symbols or the GitHub svg symbols would be better.
+
+
+    const map = {
+      '[!NOTE]':      {
+        'class': 'markdown-alert note',
+        'title': "⚠ Note",             
+      },
+      '[!TIP]':       {
+        'class': 'markdown-alert tip',
+        'title': "⚠ Tip",
+      },
+      '[!IMPORTANT]': {
+        'class': 'markdown-alert important',
+        'title': "⚠ Important",
+      },
+      '[!WARNING]':   {
+        'class': 'markdown-alert warning',
+        'title': "⚠ Warning",
+      },
+      '[!CAUTION]':   {
+        'class': 'markdown-alert caution',
+        'title': "⚠ Caution",
+      },
+    };
+
+    // Edit blockquotes, according to the map
+
+    for (blockquote of document.querySelectorAll("blockquote")) {
+      for (key in map) {
+
+        if (blockquote.innerText.startsWith(key)) {
+
+          // Remove the [!NOTE] key from the content
+          blockquote.innerHTML = blockquote.innerHTML.replace(key, "").trim(); // This only replaces the first occurence. Src: https://stackoverflow.com/questions/3214886/javascript-replace-only-replaces-first-match
+
+          // Remove weird extra linebreaks
+          //  Explanation: If you put more than one space after [!CAUTION], then pandoc will insert weird extra linebreaks, which will mess up formatting. This fixes that.
+          if (blockquote.firstChild.innerHTML.startsWith("<br>")){
+            blockquote.firstChild.innerHTML = blockquote.firstChild.innerHTML.replace("<br>", "");
+          }
+          // Add classes
+          const newClasses = map[key]['class'].split(" ")
+          blockquote.classList.add(...newClasses);
+
+          // Insert element for holding the title (The title says sth like "ⓘ Note")
+          const titleP = document.createElement('p')
+          titleP.className = 'markdown-alert-title'
+          titleP.innerText = map[key]['title']
+
+          blockquote.prepend(titleP)
+        }
+      }
+    };
+  });
+
+  </script>
+</head>
+<body>
+<p><strong>Note to Mac Mouse Fix 2 Users</strong></p>
+<p>With the introduction of Mac Mouse Fix 3, the pricing model of the
+app has changed:</p>
+<ul>
+<li><strong>Mac Mouse Fix 2</strong><br />
+Remains 100% free, and I plan to keep supporting it.<br />
+<strong>Skip this update</strong> to keep using Mac Mouse Fix 2.
+Download the latest version of Mac Mouse Fix 2 <a
+href="https://redirect.macmousefix.com/?target=mmf2-latest">here</a>.</li>
+<li><strong>Mac Mouse Fix 3</strong><br />
+Free for 30 days, costs a few dollars to own.<br />
+<strong>Update now</strong> to get Mac Mouse Fix 3!</li>
+</ul>
+<p>You can learn more about the pricing and features of Mac Mouse Fix 3
+on the <a href="https://macmousefix.com/">new website</a>.</p>
+<p>Thanks for using Mac Mouse Fix! :)</p>
+<hr />
+<p>Mac Mouse Fix <strong>3.0.3</strong> is ready for macOS 15 Sequoia.
+It also fixes some stability issues and provides several small
+improvements.</p>
+<h3 id="macos-15-sequoia-support">macOS 15 Sequoia support</h3>
+<p>The app now works properly under macOS 15 Sequoia!</p>
+<ul>
+<li>Most UI animations were broken under macOS 15 Sequoia. Now
+everything’s working properly again!</li>
+<li>The source code is now buildable under macOS 15 Sequoia. Before,
+there were issues with the Swift compiler preventing the app from
+building.</li>
+</ul>
+<h3 id="addressing-scroll-crashes">Addressing scroll crashes</h3>
+<p>Since Mac Mouse Fix 3.0.2 there were <a
+href="https://github.com/noah-nuebling/mac-mouse-fix/issues/988">multiple
+reports</a> of Mac Mouse Fix periodically disabling and re-enabling
+itself while scrolling. This was caused by crashes of the ‘Mac Mouse Fix
+Helper’ background app. This update attempts to fix these crashes, with
+the following changes:</p>
+<ul>
+<li>The scrolling mechanism will try to recover and keep running instead
+of crashing, when it encounters the edge case that seems to have led to
+these crashes.</li>
+<li>I changed the way that unexpected states are handled in the app more
+generally: Instead of always crashing immediately, the app will now try
+to recover from unexpected states in many cases.
+<!-- - This is achieved by adding the `NDEBUG` compiler flag, and restructuring some code that uses so-called `assert` statements. -->
+<ul>
+<li>This change contributes to the fixes for the scroll crashes
+described above. It might also prevent other crashes.</li>
+</ul></li>
+</ul>
+<p>Sidenote: I could never reproduce these crashes on my machine, and
+I’m still not sure what caused them, but based on the reports I
+received, this update should prevent any crashes. If you still
+experience crashes while scrolling or if you <em>did</em> experience
+crashes under 3.0.2, it would be valuable if you shared your experience
+in GitHub Issue <a
+href="https://github.com/noah-nuebling/mac-mouse-fix/issues/988">988</a>.
+This would help me understand the issue and improve Mac Mouse Fix. Thank
+you!</p>
+<h3 id="addressing-scroll-stutters">Addressing scroll stutters</h3>
+<p>In 3.0.2 I made changes to how Mac Mouse Fix sends scroll events to
+the system in an attempt to reduce scroll stutters likely caused by
+issues with Apple’s VSync APIs.</p>
+<p>However, after more extensive testing and feedback, it seems that the
+new mechanism in 3.0.2 makes scrolling smoother in some scenarios but
+more stuttery in others. Especially in Firefox it seemed to be
+noticeably worse.<br />
+Overall, it was not clear that the new mechanism actually improved
+scroll stutters across the board. Also, it might have contributed to the
+scroll crashes described above.</p>
+<p>That’s why I disabled the new mechanism and reverted the VSync
+mechanism for scroll events back to how it was in Mac Mouse Fix 3.0.0
+and 3.0.1.</p>
+<p>See GitHub Issue <a
+href="https://github.com/noah-nuebling/mac-mouse-fix/issues/875">#875</a>
+for more info.</p>
+<h3 id="refund">Refund</h3>
+<p>I am sorry for the trouble related to the scrolling changes in 3.0.1
+and 3.0.2. I vastly underestimated the problems that would come with
+that, and I was slow to address these issues. I’ll do my best to learn
+from this experience and be more careful with such changes in the
+future. I’d also like to offer anyone affected a refund. Just click <a
+href="https://redirect.macmousefix.com/?target=mmf-apply-for-refund">here</a>
+if you’re interested.</p>
+<h3 id="smarter-update-mechanism">Smarter update mechanism</h3>
+<p>These changes were brought over from Mac Mouse Fix <a
+href="https://github.com/noah-nuebling/mac-mouse-fix/releases/tag/2.2.4">2.2.4</a>
+and <a
+href="https://github.com/noah-nuebling/mac-mouse-fix/releases/tag/2.2.5">2.2.5</a>.
+Check out their release notes to learn more about the details. Here’s a
+summary:</p>
+<ul>
+<li>There’s a new, smarter mechanism that decides which update to show
+the user.</li>
+<li>Switched from using the Sparkle 1.26.0 update framework to the
+latest Sparkle <a
+href="https://github.com/sparkle-project/Sparkle/releases/tag/1.27.3">1.27.3</a>.</li>
+<li>The window that the app displays to inform you that a new version of
+Mac Mouse Fix is available now supports JavaScript, which allows for
+nicer formatting of the update notes.</li>
+</ul>
+<h3 id="other-improvements-bug-fixes">Other Improvements &amp; Bug
+Fixes</h3>
+<ul>
+<li>Fixed an issue where the app price and related info would be
+displayed incorrectly on the ‘About’ tab in some cases.</li>
+<li>Fixed an issue where the mechanism for syncing the smooth scrolling
+with the display refresh rate didn’t work properly while using multiple
+displays.</li>
+<li>Lots of minor under-the-hood cleanup and improvements.</li>
+</ul>
+<!-- - Maybe other things I forgot to mention. -->
+<!--
+
+DRAFT:
+
+- Updated fallback_licenseinfo_config.json. This should prevent issue where price is shown wrong sometimes, and free countries aren't free (when the app has never connected to the internet or the licenseinfo cache is lost (forgot where it's cached?))
+- Fixed UI animations which broke under macOS 15 Sequoia. By using new mechanism in private APIs that we use to get beautiful animations to prepare the animations.
+- Changes to the scrolling mechanism to attempt to fix crashes (https://github.com/noah-nuebling/mac-mouse-fix/issues/988)
+    - Don't know why this happened and could never ever reproduce the crashes on my machine, but the code it more robust now and tries to recover if it ends up in a weird state instead of crashing.
+- Added NDEBUG compiler flag for releases. This prevents the app from crashing on assert() failures. Made some internal restructuring to make this possible (returns and exit(1) in some places) - Overall more robust - Might fix other crashes as well. This also contributed to the scroll crashes (https://github.com/noah-nuebling/mac-mouse-fix/issues/988)
+
+v-coba-commit: ebce9d423b063015b112aa0011e8175e3a64c8ac
+v-coba-cleanup-commit: 1625562b53743fd4f273393cb58dfe647a65bfc1
+
+- Fixed code for syncing scrolling with the display refresh rate when there are multiple monitors.
+    - Change that caused this is just that [ScrollUtility updateMouseDidMoveWithEvent:event] is now being called in Scroll.m
+- Changed the displayLinkCallback() scheduling back to the native scheduling (which was used pre 3.0.2 and in the original 3.0.2-v-coba build) This should improve scrolling in some scenarios, e.g. in Firefox, but also might worsen scrolling performance in other scenarios. Overall it should be more stable though and less prone to introducing bugs in the rest of the scrolling system.
+- Mostly rewrote the scheduling code inside displayLinkCallback() to be more flexible and clear. (and other changes to scrolling system. Is that good?) (commit 1625562b53743fd4f273393cb58dfe647a65bfc1 )
+    - TODO: Review this. Review: Outside of displayLinkCallback()` we seem to have only reordered things and added some comments. TODO2: Review the current scheduling code.
+
+- Implemented new mechanism for deciding which update to present to the user:
+    - If you skip a major update (2.x.x -> 3.x.x), you'll still be notified of new minor updates (2.0.1 -> 2.0.2)
+    - If you skip a minor update, you'll still be notified when the next minor update comes out, or when there's a major update.
+    - When updating to a new major version, you'll always update to the first stable release first (such as 3.0.0, or 4.0.0) even when there's a newer point release available. That's so you can see the changelog for the x.0.0 version which might contain all the new features of the major version and other important info for people updating from a previous major version (such as the info about the pricing changes which people updating from MMF 2.x.x directly to 3.0.1, or 3.0.2 didn't see at all)
+    - (Brought over changes from 2.2.4)
+        - Enabled javascript inside update notes. This lets us display alert-style blockquote ala GitHub markdown.
+        - ... 
+
+- Made some changes to the code base to prevent Swift 6 compiler crashes, which makes the app buildable with the latest Xcode toolchain.
+- Lots of under the hood cleanup and improvements.
+
+-->
+</body>
+</html>
+
+        ]]>
+        </description>
+        <enclosure
+            url="https://github.com/noah-nuebling/mac-mouse-fix/releases/download/3.0.3/MacMouseFixApp.zip"
+            sparkle:version="22854"
+            sparkle:shortVersionString="3.0.3"
+            sparkle:edSignature="x0zHVTgpqijq7RkqlCibpiMQi5Ykb7Ikk8gEux/2dGfUY81Gz7ZEBknwDDIMYKkxuOsgjPVsZPuHEh56Pn8KBg==" length="7224915"
+            type="application/octet-stream"
+        />
+    </item>
+    <item>
+        <title>2.2.5 available!</title>
+        <pubDate>2024-09-18T14:52:35Z</pubDate>
+        <sparkle:minimumSystemVersion>10.13</sparkle:minimumSystemVersion>
+        <description><![CDATA[
+            <!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>-</title>
+  <style>
+    html {
+      color: #1a1a1a;
+      background-color: #fdfdfd;
+    }
+    body {
+      margin: 0 auto;
+      max-width: 36em;
+      padding-left: 50px;
+      padding-right: 50px;
+      padding-top: 50px;
+      padding-bottom: 50px;
+      hyphens: auto;
+      overflow-wrap: break-word;
+      text-rendering: optimizeLegibility;
+      font-kerning: normal;
+    }
+    @media (max-width: 600px) {
+      body {
+        font-size: 0.9em;
+        padding: 12px;
+      }
+      h1 {
+        font-size: 1.8em;
+      }
+    }
+    @media print {
+      html {
+        background-color: white;
+      }
+      body {
+        background-color: transparent;
+        color: black;
+        font-size: 12pt;
+      }
+      p, h2, h3 {
+        orphans: 3;
+        widows: 3;
+      }
+      h2, h3, h4 {
+        page-break-after: avoid;
+      }
+    }
+    p {
+      margin: 1em 0;
+    }
+    a {
+      color: #1a1a1a;
+    }
+    a:visited {
+      color: #1a1a1a;
+    }
+    img {
+      max-width: 100%;
+    }
+    svg {
+      height: auto;
+      max-width: 100%;
+    }
+    h1, h2, h3, h4, h5, h6 {
+      margin-top: 1.4em;
+    }
+    h5, h6 {
+      font-size: 1em;
+      font-style: italic;
+    }
+    h6 {
+      font-weight: normal;
+    }
+    ol, ul {
+      padding-left: 1.7em;
+      margin-top: 1em;
+    }
+    li > ol, li > ul {
+      margin-top: 0;
+    }
+    blockquote {
+      margin: 1em 0 1em 1.7em;
+      padding-left: 1em;
+      border-left: 2px solid #e6e6e6;
+      color: #606060;
+    }
+    code {
+      font-family: Menlo, Monaco, Consolas, 'Lucida Console', monospace;
+      font-size: 85%;
+      margin: 0;
+      hyphens: manual;
+    }
+    pre {
+      margin: 1em 0;
+      overflow: auto;
+    }
+    pre code {
+      padding: 0;
+      overflow: visible;
+      overflow-wrap: normal;
+    }
+    .sourceCode {
+     background-color: transparent;
+     overflow: visible;
+    }
+    hr {
+      background-color: #1a1a1a;
+      border: none;
+      height: 1px;
+      margin: 1em 0;
+    }
+    table {
+      margin: 1em 0;
+      border-collapse: collapse;
+      width: 100%;
+      overflow-x: auto;
+      display: block;
+      font-variant-numeric: lining-nums tabular-nums;
+    }
+    table caption {
+      margin-bottom: 0.75em;
+    }
+    tbody {
+      margin-top: 0.5em;
+      border-top: 1px solid #1a1a1a;
+      border-bottom: 1px solid #1a1a1a;
+    }
+    th {
+      border-top: 1px solid #1a1a1a;
+      padding: 0.25em 0.5em 0.25em 0.5em;
+    }
+    td {
+      padding: 0.125em 0.5em 0.25em 0.5em;
+    }
+    header {
+      margin-bottom: 4em;
+      text-align: center;
+    }
+    #TOC li {
+      list-style: none;
+    }
+    #TOC ul {
+      padding-left: 1.3em;
+    }
+    #TOC > ul {
+      padding-left: 0;
+    }
+    #TOC a:not(:hover) {
+      text-decoration: none;
+    }
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+  </style>
+  
+
+  <style>
+
+      /* Following this tutorial: https://devilgate.org/blog/2012/07/02/tip-using-pandoc-to-create-truly-standalone-html-files/ */
+
+      :root {
+          font-size: 10px; /* 1 rem is this much */
+          padding: 0 0 0 0;
+          background-color: transparent; /* pandoc automatically applies styling where the bg is white. So we need to override that. */
+      }
+
+      body {
+          background-color: transparent;
+          margin: 0 1.2rem 2.0rem 1.2rem;
+          padding: 0;
+          font-family: -apple-system;
+          font-size: 1.3rem;
+
+          line-height: 1.15em;
+      }
+
+      h1, h2, h3, h4, h5, h6 {
+          line-height: 1.15em;
+      }
+
+      h1:after, h2:after {
+          content:' ';
+          display: block;
+          border: 0.5px solid rgba(0, 0, 0, 0.12);
+      }
+      h1:after {
+          margin: 0.6rem 0 0 0;
+      }
+      h2:after {
+          margin: 0.4rem 0 0 0;
+      }
+
+      h1 {
+          font-size: 2.2rem;
+          margin: 2.2rem 0 1.3rem -0.0rem;
+      }
+
+      h2 {
+          font-size: 1.7rem;
+          margin: 2.0rem 0 1.7rem -0.0rem;
+      }
+
+      h3 {
+          font-size: 1.3rem;
+          margin: 1.5rem 0 0.0rem -0.0rem;
+      }
+      h4 {
+          font-size: 1.0rem;
+          margin: 1.5rem 0 0.0rem -0.0rem;
+      }
+      h5 {
+          font-size: 0.8rem;
+          margin: 1.5rem 0 0.0rem -0.0rem;
+          font-style: italic;
+      }
+
+      p {
+          margin: 1.1rem 0 1.1rem 0;
+          font-size: 1.1rem;
+      }
+
+      a, a:visited {
+          color: rgba(43, 102, 211, 1.0) /* Obtained by colorpicking `Hyperlink`s in MMF */
+      }
+
+      ul {
+          padding: 0 0 0 1.5rem;
+          margin: 1.0rem 0 1.0rem 0.5rem;
+      }
+      ul ul {
+          margin: 0.6rem 0 -0.6rem 0;
+          padding: 0 0 0 2.1rem;
+      }
+
+      li {
+          padding: 0 0 0.6rem 0;
+
+          font-size: 1.1rem;
+      }
+
+      code {
+          padding: 0.2rem 0.5rem;
+          border-radius: 0.5rem;
+          background-color: rgba(0, 0, 75, 0.09);
+      }
+      div.sourceCode {
+          
+          padding: 1.6rem 1.5rem;
+          border-radius: 1.1rem; /*0.3rem;*/
+          background-color: rgba(0, 0, 75, 0.055);
+      }
+
+      blockquote {
+          margin-inline-start: unset;
+          border-width: 0.25rem;
+      }
+
+      blockquote.markdown-alert {
+          color: unset;
+      }
+
+      blockquote.markdown-alert.note { /* These colors are copied from the source code at https://github.com/orgs/community/discussions/16925 */
+          border-left-color: #0969da;
+      }
+      blockquote.markdown-alert.tip {
+          border-left-color: #1a7f37;
+      }
+      blockquote.markdown-alert.important {
+          border-left-color: #8250df;
+      }
+      blockquote.markdown-alert.warning {
+          border-left-color: #bf8700;
+      }
+
+      blockquote.markdown-alert.caution {
+          border-left-color: #cf222e;
+      }
+
+      blockquote.markdown-alert > .markdown-alert-title {
+          font-size: 1.2rem;
+      }
+
+      blockquote.markdown-alert.note > .markdown-alert-title {
+          color: #0969da;
+      }
+      blockquote.markdown-alert.tip > .markdown-alert-title {
+          color: #1a7f37;
+      }
+      blockquote.markdown-alert.important > .markdown-alert-title {
+          color: #8250df;
+      }
+      blockquote.markdown-alert.warning > .markdown-alert-title {
+          color: #9a6700;
+      }
+      blockquote.markdown-alert.caution > .markdown-alert-title {
+          color: #d1242f;
+      }
+
+      .annotation {
+          font-size: 1.1rem;
+      }
+      img {
+          max-width: 100%;
+          height: auto;
+          
+          border-radius: 1.0rem;
+          box-shadow: 0 0.2rem 0.4rem 0.0rem rgba(0, 0, 0, 0.15), 0 0.2rem 1.7rem 0.0rem rgba(0, 0, 0, 0.15);
+
+          display: block;
+          margin: 1.4rem auto 1.8rem auto;
+      }
+
+      hr {
+          border: none;
+          height: 3px;
+          background-color: rgba(0, 0, 0, 0.12);
+
+          margin: 1.7rem 0 1.7rem 0;
+      }
+
+      @media (prefers-color-scheme: light) {
+
+          /* I don't think we need this. Light is just the default, right? */
+
+          h1 {
+              color: #272727;
+          }
+
+          a {
+              color: #0948be;
+          }
+      }
+
+      @media (prefers-color-scheme: dark) {
+
+          body {
+              /* background-color: #1e1e1e;  */
+              /* ^ Sparkle background is still bright when we have `background-color: transparent` even with darkmode active. 
+                  This is the color of the text field background in Apple Mail on macOS 11 BigSur 
+                  
+                  Edit: This was because pandoc made the background white, which we've overriden now. So now this is not necessary anymore. Might want to reenable for testing in Safari.
+                  */
+
+              color: rgba(255, 255, 255, 0.9); /* For headers */
+          }
+
+          li, p {
+              color:rgba(255, 255, 255, 0.8);
+          }
+          a, a:visited { /* Need to include a:visited otherwise it will be set by pandoc */
+              color: #3586FF;
+          }
+          hr {
+              background-color: rgba(255, 255, 255, 0.15);
+          }
+          code {
+              background-color: rgba(255, 255, 255, 0.16);
+          }
+          div.sourceCode {
+              background-color: rgba(255, 255, 255, 0.08);
+          }
+
+          h1:after, h2:after {
+              content:' ';
+              display: block;
+              border: 0.5px solid rgba(255, 255, 255, 0.15);
+          }
+      }
+
+  </style>
+  <script>
+
+  document.addEventListener("DOMContentLoaded", function() {
+    
+    // Implement special blockquote styles from GitHub Markdown. See https://github.com/orgs/community/discussions/16925
+
+    // Create map from `blockquote start` to `css classes that we attach to that blockquote`
+    // Notes: 
+    //  - Most symbols that we tried(︕⚠ⓘ❗︎ℹ️⚠️💡) look really weird. The only good-looking one is ⚠. Using SF Symbols or the GitHub svg symbols would be better.
+
+
+    const map = {
+      '[!NOTE]':      {
+        'class': 'markdown-alert note',
+        'title': "⚠ Note",             
+      },
+      '[!TIP]':       {
+        'class': 'markdown-alert tip',
+        'title': "⚠ Tip",
+      },
+      '[!IMPORTANT]': {
+        'class': 'markdown-alert important',
+        'title': "⚠ Important",
+      },
+      '[!WARNING]':   {
+        'class': 'markdown-alert warning',
+        'title': "⚠ Warning",
+      },
+      '[!CAUTION]':   {
+        'class': 'markdown-alert caution',
+        'title': "⚠ Caution",
+      },
+    };
+
+    // Edit blockquotes, according to the map
+
+    for (blockquote of document.querySelectorAll("blockquote")) {
+      for (key in map) {
+
+        if (blockquote.innerText.startsWith(key)) {
+
+          // Remove the [!NOTE] key from the content
+          blockquote.innerHTML = blockquote.innerHTML.replace(key, "").trim(); // This only replaces the first occurence. Src: https://stackoverflow.com/questions/3214886/javascript-replace-only-replaces-first-match
+
+          // Remove weird extra linebreaks
+          //  Explanation: If you put more than one space after [!CAUTION], then pandoc will insert weird extra linebreaks, which will mess up formatting. This fixes that.
+          if (blockquote.firstChild.innerHTML.startsWith("<br>")){
+            blockquote.firstChild.innerHTML = blockquote.firstChild.innerHTML.replace("<br>", "");
+          }
+          // Add classes
+          const newClasses = map[key]['class'].split(" ")
+          blockquote.classList.add(...newClasses);
+
+          // Insert element for holding the title (The title says sth like "ⓘ Note")
+          const titleP = document.createElement('p')
+          titleP.className = 'markdown-alert-title'
+          titleP.innerText = map[key]['title']
+
+          blockquote.prepend(titleP)
+        }
+      }
+    };
+  });
+
+  </script>
+</head>
+<body>
+<p>Mac Mouse Fix <strong>2.2.5</strong> features improvements to the
+update-mechanism, and it’s ready for macOS 15 Sequoia!</p>
+<h3 id="new-sparkle-update-framework">New Sparkle update framework</h3>
+<p>Mac Mouse Fix uses the <a
+href="https://sparkle-project.org/">Sparkle</a> update framework to help
+provide a great updating experience.</p>
+<p>With 2.2.5, Mac Mouse Fix switches from using Sparkle 1.26.0 to the
+latest Sparkle <a
+href="https://github.com/sparkle-project/Sparkle/releases/tag/1.27.3">1.27.3</a>,
+containing security fixes, localization improvements and more.
+<!-- localization improvements don't matter for MMF 2, only MMF 3 since that's localized. --></p>
+<h3 id="smarter-update-mechanism">Smarter update mechanism</h3>
+<p>There’s a new mechanism that decides which update to show the user.
+The behavior changed in these ways:</p>
+<ol type="1">
+<li>After you skip a <strong>major</strong> update (such as 2.2.5 -&gt;
+3.0.0), you’ll still be notified of new <strong>minor</strong> updates
+(such as 2.2.5 -&gt; 2.2.6).
+<ul>
+<li>This allows you to easily stay on Mac Mouse Fix 2 while still
+receiving updates, as discussed in GitHub Issue <a
+href="https://github.com/noah-nuebling/mac-mouse-fix/issues/962">#962</a>.</li>
+</ul></li>
+<li>Instead of showing the update to the latest release, Mac Mouse Fix
+will now show you the update to the first release of the latest major
+version.
+<ul>
+<li>Example: If you’re using MMF 2, and MMF 3.4.5 is the latest version,
+the app will now show you the first version of MMF 3 (3.0.0), instead of
+the latest version (3.4.5). This way, all MMF 2 users see the MMF 3.0.0
+changelog before switching to MMF 3.</li>
+<li>Discussion:
+<ul>
+<li>The main motivation behind this is that, earlier this year, many MMF
+2 users updated directly from MMF 2 to MMF 3.0.1, or 3.0.2. Since they
+never saw the 3.0.0 changelog, they missed any info about the pricing
+changes between MMF 2 and MMF 3 (MMF 3 no longer being 100% free). So
+when MMF 3 suddenly said they need to pay to continue using the app,
+some were - understandably - a bit confused and upset.</li>
+<li>Disadvantage: If you just want to update to the latest version,
+you’ll now have to update twice in some cases. This is slightly
+inefficient, but it should still only take a few seconds. And since this
+makes the changes between major versions much more transparent, I think
+it’s a sensible tradeoff.</li>
+</ul></li>
+</ul></li>
+</ol>
+<h3 id="macos-15-sequoia-support">macOS 15 Sequoia support</h3>
+<p>Mac Mouse Fix 2.2.5 will work great on the new macOS 15 Sequoia -
+just like 2.2.4 did.</p>
+<hr />
+<p>Also check out the previous release <a
+href="https://github.com/noah-nuebling/mac-mouse-fix/releases/tag/2.2.4"><strong>2.2.4</strong></a>.</p>
+<p><em>If you have trouble enabling Mac Mouse Fix after updating, please
+check out the <a
+href="https://github.com/noah-nuebling/mac-mouse-fix/discussions/861">‘Enabling
+Mac Mouse Fix’ Guide</a>.</em></p>
+</body>
+</html>
+
+        ]]>
+        </description>
+        <enclosure
+            url="https://github.com/noah-nuebling/mac-mouse-fix/releases/download/2.2.5/MacMouseFixApp.zip"
+            sparkle:version="7631"
+            sparkle:shortVersionString="2.2.5"
+            sparkle:edSignature="G6csTrCTYt69rexM9bZydS8wwWR2nU+8r3agBJhIXdlyKzorPddPiTlmLsNnUx4iLzNNZFRT1ZWr+hVqUoITBA==" length="2489731"
+            type="application/octet-stream"
+        />
+    </item>
+    <item>
         <title>2.2.4 available!</title>
         <pubDate>2024-05-19T13:56:53Z</pubDate>
         <sparkle:minimumSystemVersion>10.13</sparkle:minimumSystemVersion>
@@ -1004,7 +2143,7 @@ app has changed:</p>
 Remains 100% free, and I plan to keep supporting it.<br />
 <strong>Skip this update</strong> to keep using Mac Mouse Fix 2.
 Download the latest version of Mac Mouse Fix 2 <a
-href="https://noah-nuebling.github.io/redirection-service?target=mmf2-latest">here</a>.</li>
+href="https://redirect.macmousefix.com/?target=mmf2-latest">here</a>.</li>
 <li><strong>Mac Mouse Fix 3</strong><br />
 Free for 30 days, costs a few dollars to own.<br />
 <strong>Update now</strong> to get Mac Mouse Fix 3!</li>
@@ -1025,13 +2164,13 @@ update notes for 3.0.2 to make it harder to miss that Mac Mouse Fix 3
 isn’t free anymore.</p>
 <p>I also want to offer a <strong>refund</strong> to anyone who felt
 negatively affected by this. Please <a
-href="https://noah-nuebling.github.io/redirection-service?message=&amp;target=mailto-noah&amp;subject=Mac%20Mouse%20Fix%20Refund&amp;body=Hi%20there%21%20To%20request%20a%20refund%2C%20please%20answer%20the%20following%20questions%2C%20and%20then%20send%20off%20this%20email%3A%0A%0A%2A%2AWhy%20are%20you%20requesting%20a%20refund%3F%2A%2A%0A%0A%28Fill%20in%20here%29%0A%0A%2A%2AWhat%20is%20the%20email%20address%20where%20you%20received%20your%20license%20key%3F%2A%2A%0A%0A%28Fill%20in%20here%29%0A%0A%2A%2AAnything%20else%20you%27d%20like%20to%20say%3F%2A%2A%0A%0A%28Fill%20in%20here%29%0A%0A---%0A%0AI%27ll%20do%20my%20best%20to%20get%20back%20to%20you%20soon%2C%20and%20to%20improve%20the%20experience%20of%20using%20Mac%20Mouse%20Fix.%20%0AI%20hope%20a%20refund%20is%20an%20ok%20solution%20for%20you%2C%20and%20thank%20you%20for%20your%20feedback.">click
+href="https://redirect.macmousefix.com/?target=mmf-apply-for-refund">click
 here</a> to apply for it.</p>
 <p>Again, I’m sorry about the trouble, and I hope everyone is ok with
 this as a solution!</p>
 <p>The latest version of Mac Mouse Fix 2 stays entirely free, and you
 can download it <a
-href="https://noah-nuebling.github.io/redirection-service?target=mmf2-latest">here</a>.</p>
+href="https://redirect.macmousefix.com/?target=mmf2-latest">here</a>.</p>
 <!--
 
 To get the refund, please [send me an email](<https://noah-nuebling.github.io/redirection-service?message=&target=mailto-noah&subject=Mac Mouse Fix Refund>) with "Mac Mouse Fix Refund" in the subject. Inside the message, include the email address where you received your license key and the reason why you're requesting the refund.
@@ -2198,6 +3337,7 @@ Bringing together many features that I’ve worked on for a long time to
 finally deliver this awesome value proposition:</p>
 <p><strong>Make your $10 mouse better than an Apple
 Trackpad!</strong></p>
+<h2 id="new-features">New Features</h2>
 <!-- Mac Mouse Fix 3 features amazing new **trackpad-like scrolling**, a beautiful **new UI**, and many **new gestures**.\ -->
 <p>Check out <strong>all the new features</strong> at the <a
 href="http://macmousefix.com/">new website</a>!</p>
