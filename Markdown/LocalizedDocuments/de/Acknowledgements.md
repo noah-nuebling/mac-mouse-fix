@@ -40,6 +40,7 @@ Diese Leute haben viel mehr als den Standardpreis ausgegeben und mir einen **ung
 
 **September 2024**
 
+- 🇨🇦&nbsp;Andrew - "This is my personal favorite mac mouse app. Only one that gives me smooth scrolling with a regular mouse. Thank you so much!"
 - 🇺🇸&nbsp;Kevin&nbsp;Lloyd - "Thanks for making this! Keep up the great work!"
 - 🇺🇸&nbsp;Joe&nbsp;Skinner
 - 🇮🇹&nbsp;Sebastian&nbsp;Sergio&nbsp;Malara - "This should be installed as soon as you first boot your Mac"
