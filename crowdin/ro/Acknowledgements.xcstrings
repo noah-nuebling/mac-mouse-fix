@@ -1,0 +1,2304 @@
+{
+  "sourceLanguage" : "en",
+  "strings" : {
+    "01:localization.progress" : {
+      "comment" : ".",
+      "extractionState" : "manual",
+      "localizations" : {
+        "af" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "This document is `{localization_progress}` translated into `{current_language}`<br>To help translate, click [here]({url})!"
+          }
+        },
+        "ar" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "This document is `{localization_progress}` translated into `{current_language}`<br>To help translate, click [here]({url})!"
+          }
+        },
+        "ca" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "This document is `{localization_progress}` translated into `{current_language}`<br>To help translate, click [here]({url})!"
+          }
+        },
+        "cs" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "This document is `{localization_progress}` translated into `{current_language}`<br>To help translate, click [here]({url})!"
+          }
+        },
+        "da" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "This document is `{localization_progress}` translated into `{current_language}`<br>To help translate, click [here]({url})!"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dieses Dokument ist zu `{localization_progress}` übersetzt nach `{current_language}`<br>\nUm beim Übersetzen zu helfen, klicke [hier]({url})!"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "This document is `{localization_progress}` translated into `{current_language}`<br>To help translate, click [here]({url})!"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "This document is `{localization_progress}` translated into `{current_language}`<br>To help translate, click [here]({url})!"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "This document is `{localization_progress}` translated into `{current_language}`<br>To help translate, click [here]({url})!"
+          }
+        },
+        "fi" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "This document is `{localization_progress}` translated into `{current_language}`<br>To help translate, click [here]({url})!"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "This document is `{localization_progress}` translated into `{current_language}`<br>To help translate, click [here]({url})!"
+          }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "This document is `{localization_progress}` translated into `{current_language}`<br>To help translate, click [here]({url})!"
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "This document is `{localization_progress}` translated into `{current_language}`<br>To help translate, click [here]({url})!"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "This document is `{localization_progress}` translated into `{current_language}`<br>To help translate, click [here]({url})!"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "This document is `{localization_progress}` translated into `{current_language}`<br>To help translate, click [here]({url})!"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "This document is `{localization_progress}` translated into `{current_language}`<br>To help translate, click [here]({url})!"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "This document is `{localization_progress}` translated into `{current_language}`<br>To help translate, click [here]({url})!"
+          }
+        },
+        "no" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "This document is `{localization_progress}` translated into `{current_language}`<br>To help translate, click [here]({url})!"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "This document is `{localization_progress}` translated into `{current_language}`<br>To help translate, click [here]({url})!"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "This document is `{localization_progress}` translated into `{current_language}`<br>To help translate, click [here]({url})!"
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "This document is `{localization_progress}` translated into `{current_language}`<br>To help translate, click [here]({url})!"
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "This document is `{localization_progress}` translated into `{current_language}`<br>To help translate, click [here]({url})!"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "This document is `{localization_progress}` translated into `{current_language}`<br>To help translate, click [here]({url})!"
+          }
+        },
+        "sr" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "This document is `{localization_progress}` translated into `{current_language}`<br>To help translate, click [here]({url})!"
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "This document is `{localization_progress}` translated into `{current_language}`<br>To help translate, click [here]({url})!"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "This document is `{localization_progress}` translated into `{current_language}`<br>To help translate, click [here]({url})!"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "This document is `{localization_progress}` translated into `{current_language}`<br>To help translate, click [here]({url})!"
+          }
+        },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "This document is `{localization_progress}` translated into `{current_language}`<br>To help translate, click [here]({url})!"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "This document is `{localization_progress}` translated into `{current_language}`<br>To help translate, click [here]({url})!"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "This document is `{localization_progress}` translated into `{current_language}`<br>To help translate, click [here]({url})!"
+          }
+        },
+        "zh-Hant-HK" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "This document is `{localization_progress}` translated into `{current_language}`<br>To help translate, click [here]({url})!"
+          }
+        }
+      }
+    },
+    "02:localization.translate-prompt" : {
+      "comment" : "Note: {url} will be replaced by a link. Make sure to type \"{url}\" exactly like in the original for the text-replacement to work.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "af" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "[Help translate Mac Mouse Fix to different languages!]({url})"
+          }
+        },
+        "ar" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "[Help translate Mac Mouse Fix to different languages!]({url})"
+          }
+        },
+        "ca" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "[Help translate Mac Mouse Fix to different languages!]({url})"
+          }
+        },
+        "cs" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "[Help translate Mac Mouse Fix to different languages!]({url})"
+          }
+        },
+        "da" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "[Help translate Mac Mouse Fix to different languages!]({url})"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "[Helfe dabei, Mac Mouse Fix in verschiedene Sprachen zu übersetzen!]({url})"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "[Help translate Mac Mouse Fix to different languages!]({url})"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "[Help translate Mac Mouse Fix to different languages!]({url})"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "[Help translate Mac Mouse Fix to different languages!]({url})"
+          }
+        },
+        "fi" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "[Help translate Mac Mouse Fix to different languages!]({url})"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "[Help translate Mac Mouse Fix to different languages!]({url})"
+          }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "[Help translate Mac Mouse Fix to different languages!]({url})"
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "[Help translate Mac Mouse Fix to different languages!]({url})"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "[Help translate Mac Mouse Fix to different languages!]({url})"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "[Help translate Mac Mouse Fix to different languages!]({url})"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "[Help translate Mac Mouse Fix to different languages!]({url})"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "[Help translate Mac Mouse Fix to different languages!]({url})"
+          }
+        },
+        "no" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "[Help translate Mac Mouse Fix to different languages!]({url})"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "[Help translate Mac Mouse Fix to different languages!]({url})"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "[Help translate Mac Mouse Fix to different languages!]({url})"
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "[Help translate Mac Mouse Fix to different languages!]({url})"
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "[Help translate Mac Mouse Fix to different languages!]({url})"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "[Help translate Mac Mouse Fix to different languages!]({url})"
+          }
+        },
+        "sr" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "[Help translate Mac Mouse Fix to different languages!]({url})"
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "[Help translate Mac Mouse Fix to different languages!]({url})"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "[Help translate Mac Mouse Fix to different languages!]({url})"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "[Help translate Mac Mouse Fix to different languages!]({url})"
+          }
+        },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "[Help translate Mac Mouse Fix to different languages!]({url})"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "[Help translate Mac Mouse Fix to different languages!]({url})"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "[Help translate Mac Mouse Fix to different languages!]({url})"
+          }
+        },
+        "zh-Hant-HK" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "[Help translate Mac Mouse Fix to different languages!]({url})"
+          }
+        }
+      }
+    },
+    "03:intro" : {
+      "comment" : ".",
+      "extractionState" : "manual",
+      "localizations" : {
+        "af" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "# 🙌 Acknowledgements\n\nBig thanks to everyone using Mac Mouse Fix and providing feedback. It's awesome and highly motivating to see so many people enjoy and engage with something I created.\n\nI want to especially thank the people and projects named in this document."
+          }
+        },
+        "ar" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "# 🙌 Acknowledgements\n\nBig thanks to everyone using Mac Mouse Fix and providing feedback. It's awesome and highly motivating to see so many people enjoy and engage with something I created.\n\nI want to especially thank the people and projects named in this document."
+          }
+        },
+        "ca" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "# 🙌 Acknowledgements\n\nBig thanks to everyone using Mac Mouse Fix and providing feedback. It's awesome and highly motivating to see so many people enjoy and engage with something I created.\n\nI want to especially thank the people and projects named in this document."
+          }
+        },
+        "cs" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "# 🙌 Acknowledgements\n\nBig thanks to everyone using Mac Mouse Fix and providing feedback. It's awesome and highly motivating to see so many people enjoy and engage with something I created.\n\nI want to especially thank the people and projects named in this document."
+          }
+        },
+        "da" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "# 🙌 Acknowledgements\n\nBig thanks to everyone using Mac Mouse Fix and providing feedback. It's awesome and highly motivating to see so many people enjoy and engage with something I created.\n\nI want to especially thank the people and projects named in this document."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "# 🙌 Danksagungen\n\nVielen Dank an alle, die Mac Mouse Fix benutzen und Feedback geben. Es ist großartig und eine riesige Motivation zu sehen, wie so viele Leute sich mit etwas befassen und sich darüber freuen, was ich gemacht habe.\n\nIch möchte mich besonders bei den Menschen und Projekten bedanken, die in diesem Dokument aufgeführt sind."
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "# 🙌 Acknowledgements\n\nBig thanks to everyone using Mac Mouse Fix and providing feedback. It's awesome and highly motivating to see so many people enjoy and engage with something I created.\n\nI want to especially thank the people and projects named in this document."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "# 🙌 Acknowledgements\n\nBig thanks to everyone using Mac Mouse Fix and providing feedback. It's awesome and highly motivating to see so many people enjoy and engage with something I created.\n\nI want to especially thank the people and projects named in this document."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "# 🙌 Acknowledgements\n\nBig thanks to everyone using Mac Mouse Fix and providing feedback. It's awesome and highly motivating to see so many people enjoy and engage with something I created.\n\nI want to especially thank the people and projects named in this document."
+          }
+        },
+        "fi" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "# 🙌 Acknowledgements\n\nBig thanks to everyone using Mac Mouse Fix and providing feedback. It's awesome and highly motivating to see so many people enjoy and engage with something I created.\n\nI want to especially thank the people and projects named in this document."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "# 🙌 Acknowledgements\n\nBig thanks to everyone using Mac Mouse Fix and providing feedback. It's awesome and highly motivating to see so many people enjoy and engage with something I created.\n\nI want to especially thank the people and projects named in this document."
+          }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "# 🙌 Acknowledgements\n\nBig thanks to everyone using Mac Mouse Fix and providing feedback. It's awesome and highly motivating to see so many people enjoy and engage with something I created.\n\nI want to especially thank the people and projects named in this document."
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "# 🙌 Acknowledgements\n\nBig thanks to everyone using Mac Mouse Fix and providing feedback. It's awesome and highly motivating to see so many people enjoy and engage with something I created.\n\nI want to especially thank the people and projects named in this document."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "# 🙌 Acknowledgements\n\nBig thanks to everyone using Mac Mouse Fix and providing feedback. It's awesome and highly motivating to see so many people enjoy and engage with something I created.\n\nI want to especially thank the people and projects named in this document."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "# 🙌 Acknowledgements\n\nBig thanks to everyone using Mac Mouse Fix and providing feedback. It's awesome and highly motivating to see so many people enjoy and engage with something I created.\n\nI want to especially thank the people and projects named in this document."
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "# 🙌 Acknowledgements\n\nBig thanks to everyone using Mac Mouse Fix and providing feedback. It's awesome and highly motivating to see so many people enjoy and engage with something I created.\n\nI want to especially thank the people and projects named in this document."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "# 🙌 Acknowledgements\n\nBig thanks to everyone using Mac Mouse Fix and providing feedback. It's awesome and highly motivating to see so many people enjoy and engage with something I created.\n\nI want to especially thank the people and projects named in this document."
+          }
+        },
+        "no" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "# 🙌 Acknowledgements\n\nBig thanks to everyone using Mac Mouse Fix and providing feedback. It's awesome and highly motivating to see so many people enjoy and engage with something I created.\n\nI want to especially thank the people and projects named in this document."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "# 🙌 Acknowledgements\n\nBig thanks to everyone using Mac Mouse Fix and providing feedback. It's awesome and highly motivating to see so many people enjoy and engage with something I created.\n\nI want to especially thank the people and projects named in this document."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "# 🙌 Acknowledgements\n\nBig thanks to everyone using Mac Mouse Fix and providing feedback. It's awesome and highly motivating to see so many people enjoy and engage with something I created.\n\nI want to especially thank the people and projects named in this document."
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "# 🙌 Acknowledgements\n\nBig thanks to everyone using Mac Mouse Fix and providing feedback. It's awesome and highly motivating to see so many people enjoy and engage with something I created.\n\nI want to especially thank the people and projects named in this document."
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "# 🙌 Acknowledgements\n\nBig thanks to everyone using Mac Mouse Fix and providing feedback. It's awesome and highly motivating to see so many people enjoy and engage with something I created.\n\nI want to especially thank the people and projects named in this document."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "# 🙌 Acknowledgements\n\nBig thanks to everyone using Mac Mouse Fix and providing feedback. It's awesome and highly motivating to see so many people enjoy and engage with something I created.\n\nI want to especially thank the people and projects named in this document."
+          }
+        },
+        "sr" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "# 🙌 Acknowledgements\n\nBig thanks to everyone using Mac Mouse Fix and providing feedback. It's awesome and highly motivating to see so many people enjoy and engage with something I created.\n\nI want to especially thank the people and projects named in this document."
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "# 🙌 Acknowledgements\n\nBig thanks to everyone using Mac Mouse Fix and providing feedback. It's awesome and highly motivating to see so many people enjoy and engage with something I created.\n\nI want to especially thank the people and projects named in this document."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "# 🙌 Acknowledgements\n\nBig thanks to everyone using Mac Mouse Fix and providing feedback. It's awesome and highly motivating to see so many people enjoy and engage with something I created.\n\nI want to especially thank the people and projects named in this document."
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "# 🙌 Acknowledgements\n\nBig thanks to everyone using Mac Mouse Fix and providing feedback. It's awesome and highly motivating to see so many people enjoy and engage with something I created.\n\nI want to especially thank the people and projects named in this document."
+          }
+        },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "# 🙌 Acknowledgements\n\nBig thanks to everyone using Mac Mouse Fix and providing feedback. It's awesome and highly motivating to see so many people enjoy and engage with something I created.\n\nI want to especially thank the people and projects named in this document."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "# 🙌 Acknowledgements\n\nBig thanks to everyone using Mac Mouse Fix and providing feedback. It's awesome and highly motivating to see so many people enjoy and engage with something I created.\n\nI want to especially thank the people and projects named in this document."
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "# 🙌 Acknowledgements\n\nBig thanks to everyone using Mac Mouse Fix and providing feedback. It's awesome and highly motivating to see so many people enjoy and engage with something I created.\n\nI want to especially thank the people and projects named in this document."
+          }
+        },
+        "zh-Hant-HK" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "# 🙌 Acknowledgements\n\nBig thanks to everyone using Mac Mouse Fix and providing feedback. It's awesome and highly motivating to see so many people enjoy and engage with something I created.\n\nI want to especially thank the people and projects named in this document."
+          }
+        }
+      }
+    },
+    "04:translations" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "af" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "## 🌏 Translations\n\nThanks for bringing Mac Mouse Fix to people around the globe!\n\n- 🇨🇳 Chinese translations by [@groverlynn]({url_1})\n- 🇰🇷 Korean translations by [@jeongtae]({url_2})\n- 🇻🇳 Vietnamese translations by [@nghlt]({url_3})"
+          }
+        },
+        "ar" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "## 🌏 Translations\n\nThanks for bringing Mac Mouse Fix to people around the globe!\n\n- 🇨🇳 Chinese translations by [@groverlynn]({url_1})\n- 🇰🇷 Korean translations by [@jeongtae]({url_2})\n- 🇻🇳 Vietnamese translations by [@nghlt]({url_3})"
+          }
+        },
+        "ca" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "## 🌏 Translations\n\nThanks for bringing Mac Mouse Fix to people around the globe!\n\n- 🇨🇳 Chinese translations by [@groverlynn]({url_1})\n- 🇰🇷 Korean translations by [@jeongtae]({url_2})\n- 🇻🇳 Vietnamese translations by [@nghlt]({url_3})"
+          }
+        },
+        "cs" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "## 🌏 Translations\n\nThanks for bringing Mac Mouse Fix to people around the globe!\n\n- 🇨🇳 Chinese translations by [@groverlynn]({url_1})\n- 🇰🇷 Korean translations by [@jeongtae]({url_2})\n- 🇻🇳 Vietnamese translations by [@nghlt]({url_3})"
+          }
+        },
+        "da" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "## 🌏 Translations\n\nThanks for bringing Mac Mouse Fix to people around the globe!\n\n- 🇨🇳 Chinese translations by [@groverlynn]({url_1})\n- 🇰🇷 Korean translations by [@jeongtae]({url_2})\n- 🇻🇳 Vietnamese translations by [@nghlt]({url_3})"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "## 🌏 Übersetzungen\n\nDanke, dass ihr Mac Mouse Fix zu Menschen auf der ganzen Welt gebracht habt.\n\n- 🇨🇳 Chinesische Übersetzungen von [@groverlynn]({url_1})\n- 🇰🇷 Koreanische Übersetzungen von [@jeongtae]({url_2})\n- 🇻🇳 Vietnamesische Übersetzungen von [@nghlt]({url_3})"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "## 🌏 Translations\n\nThanks for bringing Mac Mouse Fix to people around the globe!\n\n- 🇨🇳 Chinese translations by [@groverlynn]({url_1})\n- 🇰🇷 Korean translations by [@jeongtae]({url_2})\n- 🇻🇳 Vietnamese translations by [@nghlt]({url_3})"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "## 🌏 Translations\n\nThanks for bringing Mac Mouse Fix to people around the globe!\n\n- 🇨🇳 Chinese translations by [@groverlynn]({url_1})\n- 🇰🇷 Korean translations by [@jeongtae]({url_2})\n- 🇻🇳 Vietnamese translations by [@nghlt]({url_3})"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "## 🌏 Translations\n\nThanks for bringing Mac Mouse Fix to people around the globe!\n\n- 🇨🇳 Chinese translations by [@groverlynn]({url_1})\n- 🇰🇷 Korean translations by [@jeongtae]({url_2})\n- 🇻🇳 Vietnamese translations by [@nghlt]({url_3})"
+          }
+        },
+        "fi" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "## 🌏 Translations\n\nThanks for bringing Mac Mouse Fix to people around the globe!\n\n- 🇨🇳 Chinese translations by [@groverlynn]({url_1})\n- 🇰🇷 Korean translations by [@jeongtae]({url_2})\n- 🇻🇳 Vietnamese translations by [@nghlt]({url_3})"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "## 🌏 Translations\n\nThanks for bringing Mac Mouse Fix to people around the globe!\n\n- 🇨🇳 Chinese translations by [@groverlynn]({url_1})\n- 🇰🇷 Korean translations by [@jeongtae]({url_2})\n- 🇻🇳 Vietnamese translations by [@nghlt]({url_3})"
+          }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "## 🌏 Translations\n\nThanks for bringing Mac Mouse Fix to people around the globe!\n\n- 🇨🇳 Chinese translations by [@groverlynn]({url_1})\n- 🇰🇷 Korean translations by [@jeongtae]({url_2})\n- 🇻🇳 Vietnamese translations by [@nghlt]({url_3})"
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "## 🌏 Translations\n\nThanks for bringing Mac Mouse Fix to people around the globe!\n\n- 🇨🇳 Chinese translations by [@groverlynn]({url_1})\n- 🇰🇷 Korean translations by [@jeongtae]({url_2})\n- 🇻🇳 Vietnamese translations by [@nghlt]({url_3})"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "## 🌏 Translations\n\nThanks for bringing Mac Mouse Fix to people around the globe!\n\n- 🇨🇳 Chinese translations by [@groverlynn]({url_1})\n- 🇰🇷 Korean translations by [@jeongtae]({url_2})\n- 🇻🇳 Vietnamese translations by [@nghlt]({url_3})"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "## 🌏 Translations\n\nThanks for bringing Mac Mouse Fix to people around the globe!\n\n- 🇨🇳 Chinese translations by [@groverlynn]({url_1})\n- 🇰🇷 Korean translations by [@jeongtae]({url_2})\n- 🇻🇳 Vietnamese translations by [@nghlt]({url_3})"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "## 🌏 Translations\n\nThanks for bringing Mac Mouse Fix to people around the globe!\n\n- 🇨🇳 Chinese translations by [@groverlynn]({url_1})\n- 🇰🇷 Korean translations by [@jeongtae]({url_2})\n- 🇻🇳 Vietnamese translations by [@nghlt]({url_3})"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "## 🌏 Translations\n\nThanks for bringing Mac Mouse Fix to people around the globe!\n\n- 🇨🇳 Chinese translations by [@groverlynn]({url_1})\n- 🇰🇷 Korean translations by [@jeongtae]({url_2})\n- 🇻🇳 Vietnamese translations by [@nghlt]({url_3})"
+          }
+        },
+        "no" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "## 🌏 Translations\n\nThanks for bringing Mac Mouse Fix to people around the globe!\n\n- 🇨🇳 Chinese translations by [@groverlynn]({url_1})\n- 🇰🇷 Korean translations by [@jeongtae]({url_2})\n- 🇻🇳 Vietnamese translations by [@nghlt]({url_3})"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "## 🌏 Translations\n\nThanks for bringing Mac Mouse Fix to people around the globe!\n\n- 🇨🇳 Chinese translations by [@groverlynn]({url_1})\n- 🇰🇷 Korean translations by [@jeongtae]({url_2})\n- 🇻🇳 Vietnamese translations by [@nghlt]({url_3})"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "## 🌏 Translations\n\nThanks for bringing Mac Mouse Fix to people around the globe!\n\n- 🇨🇳 Chinese translations by [@groverlynn]({url_1})\n- 🇰🇷 Korean translations by [@jeongtae]({url_2})\n- 🇻🇳 Vietnamese translations by [@nghlt]({url_3})"
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "## 🌏 Translations\n\nThanks for bringing Mac Mouse Fix to people around the globe!\n\n- 🇨🇳 Chinese translations by [@groverlynn]({url_1})\n- 🇰🇷 Korean translations by [@jeongtae]({url_2})\n- 🇻🇳 Vietnamese translations by [@nghlt]({url_3})"
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "## 🌏 Translations\n\nThanks for bringing Mac Mouse Fix to people around the globe!\n\n- 🇨🇳 Chinese translations by [@groverlynn]({url_1})\n- 🇰🇷 Korean translations by [@jeongtae]({url_2})\n- 🇻🇳 Vietnamese translations by [@nghlt]({url_3})"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "## 🌏 Translations\n\nThanks for bringing Mac Mouse Fix to people around the globe!\n\n- 🇨🇳 Chinese translations by [@groverlynn]({url_1})\n- 🇰🇷 Korean translations by [@jeongtae]({url_2})\n- 🇻🇳 Vietnamese translations by [@nghlt]({url_3})"
+          }
+        },
+        "sr" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "## 🌏 Translations\n\nThanks for bringing Mac Mouse Fix to people around the globe!\n\n- 🇨🇳 Chinese translations by [@groverlynn]({url_1})\n- 🇰🇷 Korean translations by [@jeongtae]({url_2})\n- 🇻🇳 Vietnamese translations by [@nghlt]({url_3})"
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "## 🌏 Translations\n\nThanks for bringing Mac Mouse Fix to people around the globe!\n\n- 🇨🇳 Chinese translations by [@groverlynn]({url_1})\n- 🇰🇷 Korean translations by [@jeongtae]({url_2})\n- 🇻🇳 Vietnamese translations by [@nghlt]({url_3})"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "## 🌏 Translations\n\nThanks for bringing Mac Mouse Fix to people around the globe!\n\n- 🇨🇳 Chinese translations by [@groverlynn]({url_1})\n- 🇰🇷 Korean translations by [@jeongtae]({url_2})\n- 🇻🇳 Vietnamese translations by [@nghlt]({url_3})"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "## 🌏 Translations\n\nThanks for bringing Mac Mouse Fix to people around the globe!\n\n- 🇨🇳 Chinese translations by [@groverlynn]({url_1})\n- 🇰🇷 Korean translations by [@jeongtae]({url_2})\n- 🇻🇳 Vietnamese translations by [@nghlt]({url_3})"
+          }
+        },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "## 🌏 Translations\n\nThanks for bringing Mac Mouse Fix to people around the globe!\n\n- 🇨🇳 Chinese translations by [@groverlynn]({url_1})\n- 🇰🇷 Korean translations by [@jeongtae]({url_2})\n- 🇻🇳 Vietnamese translations by [@nghlt]({url_3})"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "## 🌏 Translations\n\nThanks for bringing Mac Mouse Fix to people around the globe!\n\n- 🇨🇳 Chinese translations by [@groverlynn]({url_1})\n- 🇰🇷 Korean translations by [@jeongtae]({url_2})\n- 🇻🇳 Vietnamese translations by [@nghlt]({url_3})"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "## 🌏 Translations\n\nThanks for bringing Mac Mouse Fix to people around the globe!\n\n- 🇨🇳 Chinese translations by [@groverlynn]({url_1})\n- 🇰🇷 Korean translations by [@jeongtae]({url_2})\n- 🇻🇳 Vietnamese translations by [@nghlt]({url_3})"
+          }
+        },
+        "zh-Hant-HK" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "## 🌏 Translations\n\nThanks for bringing Mac Mouse Fix to people around the globe!\n\n- 🇨🇳 Chinese translations by [@groverlynn]({url_1})\n- 🇰🇷 Korean translations by [@jeongtae]({url_2})\n- 🇻🇳 Vietnamese translations by [@nghlt]({url_3})"
+          }
+        }
+      }
+    },
+    "05:money" : {
+      "comment" : "Note: {sales_count} will be replaced by the number of times Mac Mouse Fix has been sold. Make sure to type \"{sales_count}\" exactly like in the original for the text-replacement to work.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "af" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "## 💰 Money\n\nThanks so much to everyone who treated me to a milkshake and to all **{sales_count}** people who bought Mac Mouse Fix.\nThanks to you, I can spend lots of time doing something I love. \n\nPeople who supported me by spending more than the standard price on Mac Mouse Fix receive a special mention here:"
+          }
+        },
+        "ar" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "## 💰 Money\n\nThanks so much to everyone who treated me to a milkshake and to all **{sales_count}** people who bought Mac Mouse Fix.\nThanks to you, I can spend lots of time doing something I love. \n\nPeople who supported me by spending more than the standard price on Mac Mouse Fix receive a special mention here:"
+          }
+        },
+        "ca" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "## 💰 Money\n\nThanks so much to everyone who treated me to a milkshake and to all **{sales_count}** people who bought Mac Mouse Fix.\nThanks to you, I can spend lots of time doing something I love. \n\nPeople who supported me by spending more than the standard price on Mac Mouse Fix receive a special mention here:"
+          }
+        },
+        "cs" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "## 💰 Money\n\nThanks so much to everyone who treated me to a milkshake and to all **{sales_count}** people who bought Mac Mouse Fix.\nThanks to you, I can spend lots of time doing something I love. \n\nPeople who supported me by spending more than the standard price on Mac Mouse Fix receive a special mention here:"
+          }
+        },
+        "da" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "## 💰 Money\n\nThanks so much to everyone who treated me to a milkshake and to all **{sales_count}** people who bought Mac Mouse Fix.\nThanks to you, I can spend lots of time doing something I love. \n\nPeople who supported me by spending more than the standard price on Mac Mouse Fix receive a special mention here:"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "## 💰 Geld\n\nVielen Dank an alle, die mir einen Milchshake spendiert haben, und an alle **{sales_count}** Personen, die Mac Mouse Fix gekauft haben.\nDank euch kann ich viel Zeit mit etwas verbringen, das ich sehr gerne mache.\n\nMenschen, die mich durch den Kauf von Mac Mouse Fix zu einem höheren Preis als dem Standardpreis unterstützt haben, erhalten hier eine besondere Erwähnung:"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "## 💰 Money\n\nThanks so much to everyone who treated me to a milkshake and to all **{sales_count}** people who bought Mac Mouse Fix.\nThanks to you, I can spend lots of time doing something I love. \n\nPeople who supported me by spending more than the standard price on Mac Mouse Fix receive a special mention here:"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "## 💰 Money\n\nThanks so much to everyone who treated me to a milkshake and to all **{sales_count}** people who bought Mac Mouse Fix.\nThanks to you, I can spend lots of time doing something I love. \n\nPeople who supported me by spending more than the standard price on Mac Mouse Fix receive a special mention here:"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "## 💰 Money\n\nThanks so much to everyone who treated me to a milkshake and to all **{sales_count}** people who bought Mac Mouse Fix.\nThanks to you, I can spend lots of time doing something I love. \n\nPeople who supported me by spending more than the standard price on Mac Mouse Fix receive a special mention here:"
+          }
+        },
+        "fi" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "## 💰 Money\n\nThanks so much to everyone who treated me to a milkshake and to all **{sales_count}** people who bought Mac Mouse Fix.\nThanks to you, I can spend lots of time doing something I love. \n\nPeople who supported me by spending more than the standard price on Mac Mouse Fix receive a special mention here:"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "## 💰 Money\n\nThanks so much to everyone who treated me to a milkshake and to all **{sales_count}** people who bought Mac Mouse Fix.\nThanks to you, I can spend lots of time doing something I love. \n\nPeople who supported me by spending more than the standard price on Mac Mouse Fix receive a special mention here:"
+          }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "## 💰 Money\n\nThanks so much to everyone who treated me to a milkshake and to all **{sales_count}** people who bought Mac Mouse Fix.\nThanks to you, I can spend lots of time doing something I love. \n\nPeople who supported me by spending more than the standard price on Mac Mouse Fix receive a special mention here:"
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "## 💰 Money\n\nThanks so much to everyone who treated me to a milkshake and to all **{sales_count}** people who bought Mac Mouse Fix.\nThanks to you, I can spend lots of time doing something I love. \n\nPeople who supported me by spending more than the standard price on Mac Mouse Fix receive a special mention here:"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "## 💰 Money\n\nThanks so much to everyone who treated me to a milkshake and to all **{sales_count}** people who bought Mac Mouse Fix.\nThanks to you, I can spend lots of time doing something I love. \n\nPeople who supported me by spending more than the standard price on Mac Mouse Fix receive a special mention here:"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "## 💰 Money\n\nThanks so much to everyone who treated me to a milkshake and to all **{sales_count}** people who bought Mac Mouse Fix.\nThanks to you, I can spend lots of time doing something I love. \n\nPeople who supported me by spending more than the standard price on Mac Mouse Fix receive a special mention here:"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "## 💰 Money\n\nThanks so much to everyone who treated me to a milkshake and to all **{sales_count}** people who bought Mac Mouse Fix.\nThanks to you, I can spend lots of time doing something I love. \n\nPeople who supported me by spending more than the standard price on Mac Mouse Fix receive a special mention here:"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "## 💰 Money\n\nThanks so much to everyone who treated me to a milkshake and to all **{sales_count}** people who bought Mac Mouse Fix.\nThanks to you, I can spend lots of time doing something I love. \n\nPeople who supported me by spending more than the standard price on Mac Mouse Fix receive a special mention here:"
+          }
+        },
+        "no" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "## 💰 Money\n\nThanks so much to everyone who treated me to a milkshake and to all **{sales_count}** people who bought Mac Mouse Fix.\nThanks to you, I can spend lots of time doing something I love. \n\nPeople who supported me by spending more than the standard price on Mac Mouse Fix receive a special mention here:"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "## 💰 Money\n\nThanks so much to everyone who treated me to a milkshake and to all **{sales_count}** people who bought Mac Mouse Fix.\nThanks to you, I can spend lots of time doing something I love. \n\nPeople who supported me by spending more than the standard price on Mac Mouse Fix receive a special mention here:"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "## 💰 Money\n\nThanks so much to everyone who treated me to a milkshake and to all **{sales_count}** people who bought Mac Mouse Fix.\nThanks to you, I can spend lots of time doing something I love. \n\nPeople who supported me by spending more than the standard price on Mac Mouse Fix receive a special mention here:"
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "## 💰 Money\n\nThanks so much to everyone who treated me to a milkshake and to all **{sales_count}** people who bought Mac Mouse Fix.\nThanks to you, I can spend lots of time doing something I love. \n\nPeople who supported me by spending more than the standard price on Mac Mouse Fix receive a special mention here:"
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "## 💰 Money\n\nThanks so much to everyone who treated me to a milkshake and to all **{sales_count}** people who bought Mac Mouse Fix.\nThanks to you, I can spend lots of time doing something I love. \n\nPeople who supported me by spending more than the standard price on Mac Mouse Fix receive a special mention here:"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "## 💰 Money\n\nThanks so much to everyone who treated me to a milkshake and to all **{sales_count}** people who bought Mac Mouse Fix.\nThanks to you, I can spend lots of time doing something I love. \n\nPeople who supported me by spending more than the standard price on Mac Mouse Fix receive a special mention here:"
+          }
+        },
+        "sr" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "## 💰 Money\n\nThanks so much to everyone who treated me to a milkshake and to all **{sales_count}** people who bought Mac Mouse Fix.\nThanks to you, I can spend lots of time doing something I love. \n\nPeople who supported me by spending more than the standard price on Mac Mouse Fix receive a special mention here:"
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "## 💰 Money\n\nThanks so much to everyone who treated me to a milkshake and to all **{sales_count}** people who bought Mac Mouse Fix.\nThanks to you, I can spend lots of time doing something I love. \n\nPeople who supported me by spending more than the standard price on Mac Mouse Fix receive a special mention here:"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "## 💰 Money\n\nThanks so much to everyone who treated me to a milkshake and to all **{sales_count}** people who bought Mac Mouse Fix.\nThanks to you, I can spend lots of time doing something I love. \n\nPeople who supported me by spending more than the standard price on Mac Mouse Fix receive a special mention here:"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "## 💰 Money\n\nThanks so much to everyone who treated me to a milkshake and to all **{sales_count}** people who bought Mac Mouse Fix.\nThanks to you, I can spend lots of time doing something I love. \n\nPeople who supported me by spending more than the standard price on Mac Mouse Fix receive a special mention here:"
+          }
+        },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "## 💰 Money\n\nThanks so much to everyone who treated me to a milkshake and to all **{sales_count}** people who bought Mac Mouse Fix.\nThanks to you, I can spend lots of time doing something I love. \n\nPeople who supported me by spending more than the standard price on Mac Mouse Fix receive a special mention here:"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "## 💰 Money\n\nThanks so much to everyone who treated me to a milkshake and to all **{sales_count}** people who bought Mac Mouse Fix.\nThanks to you, I can spend lots of time doing something I love. \n\nPeople who supported me by spending more than the standard price on Mac Mouse Fix receive a special mention here:"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "## 💰 Money\n\nThanks so much to everyone who treated me to a milkshake and to all **{sales_count}** people who bought Mac Mouse Fix.\nThanks to you, I can spend lots of time doing something I love. \n\nPeople who supported me by spending more than the standard price on Mac Mouse Fix receive a special mention here:"
+          }
+        },
+        "zh-Hant-HK" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "## 💰 Money\n\nThanks so much to everyone who treated me to a milkshake and to all **{sales_count}** people who bought Mac Mouse Fix.\nThanks to you, I can spend lots of time doing something I love. \n\nPeople who supported me by spending more than the standard price on Mac Mouse Fix receive a special mention here:"
+          }
+        }
+      }
+    },
+    "06:money.generous" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "af" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "### ⭐️ Generous Contributors\n\nThanks for your support! :)"
+          }
+        },
+        "ar" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "### ⭐️ Generous Contributors\n\nThanks for your support! :)"
+          }
+        },
+        "ca" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "### ⭐️ Generous Contributors\n\nThanks for your support! :)"
+          }
+        },
+        "cs" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "### ⭐️ Generous Contributors\n\nThanks for your support! :)"
+          }
+        },
+        "da" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "### ⭐️ Generous Contributors\n\nThanks for your support! :)"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "### ⭐️ Großzügige Unterstützer\n\nDanke für euren Beitrag! :)"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "### ⭐️ Generous Contributors\n\nThanks for your support! :)"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "### ⭐️ Generous Contributors\n\nThanks for your support! :)"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "### ⭐️ Generous Contributors\n\nThanks for your support! :)"
+          }
+        },
+        "fi" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "### ⭐️ Generous Contributors\n\nThanks for your support! :)"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "### ⭐️ Generous Contributors\n\nThanks for your support! :)"
+          }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "### ⭐️ Generous Contributors\n\nThanks for your support! :)"
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "### ⭐️ Generous Contributors\n\nThanks for your support! :)"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "### ⭐️ Generous Contributors\n\nThanks for your support! :)"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "### ⭐️ Generous Contributors\n\nThanks for your support! :)"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "### ⭐️ Generous Contributors\n\nThanks for your support! :)"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "### ⭐️ Generous Contributors\n\nThanks for your support! :)"
+          }
+        },
+        "no" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "### ⭐️ Generous Contributors\n\nThanks for your support! :)"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "### ⭐️ Generous Contributors\n\nThanks for your support! :)"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "### ⭐️ Generous Contributors\n\nThanks for your support! :)"
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "### ⭐️ Generous Contributors\n\nThanks for your support! :)"
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "### ⭐️ Generous Contributors\n\nThanks for your support! :)"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "### ⭐️ Generous Contributors\n\nThanks for your support! :)"
+          }
+        },
+        "sr" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "### ⭐️ Generous Contributors\n\nThanks for your support! :)"
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "### ⭐️ Generous Contributors\n\nThanks for your support! :)"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "### ⭐️ Generous Contributors\n\nThanks for your support! :)"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "### ⭐️ Generous Contributors\n\nThanks for your support! :)"
+          }
+        },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "### ⭐️ Generous Contributors\n\nThanks for your support! :)"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "### ⭐️ Generous Contributors\n\nThanks for your support! :)"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "### ⭐️ Generous Contributors\n\nThanks for your support! :)"
+          }
+        },
+        "zh-Hant-HK" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "### ⭐️ Generous Contributors\n\nThanks for your support! :)"
+          }
+        }
+      }
+    },
+    "07:money.very-generous" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "af" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "### 🚀 Very Generous Contributors\n\nThese people spent a lot more than the standard price and treated me to an **Incredible Milkshake**. (And some even left a message) Thanks for the *sugar rush*!"
+          }
+        },
+        "ar" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "### 🚀 Very Generous Contributors\n\nThese people spent a lot more than the standard price and treated me to an **Incredible Milkshake**. (And some even left a message) Thanks for the *sugar rush*!"
+          }
+        },
+        "ca" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "### 🚀 Very Generous Contributors\n\nThese people spent a lot more than the standard price and treated me to an **Incredible Milkshake**. (And some even left a message) Thanks for the *sugar rush*!"
+          }
+        },
+        "cs" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "### 🚀 Very Generous Contributors\n\nThese people spent a lot more than the standard price and treated me to an **Incredible Milkshake**. (And some even left a message) Thanks for the *sugar rush*!"
+          }
+        },
+        "da" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "### 🚀 Very Generous Contributors\n\nThese people spent a lot more than the standard price and treated me to an **Incredible Milkshake**. (And some even left a message) Thanks for the *sugar rush*!"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "### 🚀 Sehr Großzügige Unterstützer\n\nDiese Leute haben viel mehr als den Standardpreis ausgegeben und mir einen **unglaublichen Milchshake** spendiert. (Und manche haben sogar eine Nachricht hinterlassen) Danke für den *Zucker-Kick*!"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "### 🚀 Very Generous Contributors\n\nThese people spent a lot more than the standard price and treated me to an **Incredible Milkshake**. (And some even left a message) Thanks for the *sugar rush*!"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "### 🚀 Very Generous Contributors\n\nThese people spent a lot more than the standard price and treated me to an **Incredible Milkshake**. (And some even left a message) Thanks for the *sugar rush*!"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "### 🚀 Very Generous Contributors\n\nThese people spent a lot more than the standard price and treated me to an **Incredible Milkshake**. (And some even left a message) Thanks for the *sugar rush*!"
+          }
+        },
+        "fi" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "### 🚀 Very Generous Contributors\n\nThese people spent a lot more than the standard price and treated me to an **Incredible Milkshake**. (And some even left a message) Thanks for the *sugar rush*!"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "### 🚀 Very Generous Contributors\n\nThese people spent a lot more than the standard price and treated me to an **Incredible Milkshake**. (And some even left a message) Thanks for the *sugar rush*!"
+          }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "### 🚀 Very Generous Contributors\n\nThese people spent a lot more than the standard price and treated me to an **Incredible Milkshake**. (And some even left a message) Thanks for the *sugar rush*!"
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "### 🚀 Very Generous Contributors\n\nThese people spent a lot more than the standard price and treated me to an **Incredible Milkshake**. (And some even left a message) Thanks for the *sugar rush*!"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "### 🚀 Very Generous Contributors\n\nThese people spent a lot more than the standard price and treated me to an **Incredible Milkshake**. (And some even left a message) Thanks for the *sugar rush*!"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "### 🚀 Very Generous Contributors\n\nThese people spent a lot more than the standard price and treated me to an **Incredible Milkshake**. (And some even left a message) Thanks for the *sugar rush*!"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "### 🚀 Very Generous Contributors\n\nThese people spent a lot more than the standard price and treated me to an **Incredible Milkshake**. (And some even left a message) Thanks for the *sugar rush*!"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "### 🚀 Very Generous Contributors\n\nThese people spent a lot more than the standard price and treated me to an **Incredible Milkshake**. (And some even left a message) Thanks for the *sugar rush*!"
+          }
+        },
+        "no" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "### 🚀 Very Generous Contributors\n\nThese people spent a lot more than the standard price and treated me to an **Incredible Milkshake**. (And some even left a message) Thanks for the *sugar rush*!"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "### 🚀 Very Generous Contributors\n\nThese people spent a lot more than the standard price and treated me to an **Incredible Milkshake**. (And some even left a message) Thanks for the *sugar rush*!"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "### 🚀 Very Generous Contributors\n\nThese people spent a lot more than the standard price and treated me to an **Incredible Milkshake**. (And some even left a message) Thanks for the *sugar rush*!"
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "### 🚀 Very Generous Contributors\n\nThese people spent a lot more than the standard price and treated me to an **Incredible Milkshake**. (And some even left a message) Thanks for the *sugar rush*!"
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "### 🚀 Very Generous Contributors\n\nThese people spent a lot more than the standard price and treated me to an **Incredible Milkshake**. (And some even left a message) Thanks for the *sugar rush*!"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "### 🚀 Very Generous Contributors\n\nThese people spent a lot more than the standard price and treated me to an **Incredible Milkshake**. (And some even left a message) Thanks for the *sugar rush*!"
+          }
+        },
+        "sr" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "### 🚀 Very Generous Contributors\n\nThese people spent a lot more than the standard price and treated me to an **Incredible Milkshake**. (And some even left a message) Thanks for the *sugar rush*!"
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "### 🚀 Very Generous Contributors\n\nThese people spent a lot more than the standard price and treated me to an **Incredible Milkshake**. (And some even left a message) Thanks for the *sugar rush*!"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "### 🚀 Very Generous Contributors\n\nThese people spent a lot more than the standard price and treated me to an **Incredible Milkshake**. (And some even left a message) Thanks for the *sugar rush*!"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "### 🚀 Very Generous Contributors\n\nThese people spent a lot more than the standard price and treated me to an **Incredible Milkshake**. (And some even left a message) Thanks for the *sugar rush*!"
+          }
+        },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "### 🚀 Very Generous Contributors\n\nThese people spent a lot more than the standard price and treated me to an **Incredible Milkshake**. (And some even left a message) Thanks for the *sugar rush*!"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "### 🚀 Very Generous Contributors\n\nThese people spent a lot more than the standard price and treated me to an **Incredible Milkshake**. (And some even left a message) Thanks for the *sugar rush*!"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "### 🚀 Very Generous Contributors\n\nThese people spent a lot more than the standard price and treated me to an **Incredible Milkshake**. (And some even left a message) Thanks for the *sugar rush*!"
+          }
+        },
+        "zh-Hant-HK" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "### 🚀 Very Generous Contributors\n\nThese people spent a lot more than the standard price and treated me to an **Incredible Milkshake**. (And some even left a message) Thanks for the *sugar rush*!"
+          }
+        }
+      }
+    },
+    "08:money.github-sponsors" : {
+      "comment" : ".",
+      "extractionState" : "manual",
+      "localizations" : {
+        "af" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "### ❤️ GitHub Sponsors\n\n**Huge thanks** to [anyone]({url}) sponsoring me on GitHub! Hopefully I can get that milkshake factory one day thanks to you. :)"
+          }
+        },
+        "ar" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "### ❤️ GitHub Sponsors\n\n**Huge thanks** to [anyone]({url}) sponsoring me on GitHub! Hopefully I can get that milkshake factory one day thanks to you. :)"
+          }
+        },
+        "ca" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "### ❤️ GitHub Sponsors\n\n**Huge thanks** to [anyone]({url}) sponsoring me on GitHub! Hopefully I can get that milkshake factory one day thanks to you. :)"
+          }
+        },
+        "cs" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "### ❤️ GitHub Sponsors\n\n**Huge thanks** to [anyone]({url}) sponsoring me on GitHub! Hopefully I can get that milkshake factory one day thanks to you. :)"
+          }
+        },
+        "da" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "### ❤️ GitHub Sponsors\n\n**Huge thanks** to [anyone]({url}) sponsoring me on GitHub! Hopefully I can get that milkshake factory one day thanks to you. :)"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "### ❤️ GitHub Sponsoren\n\nRiesiges Dankeschön an [jeden]({url}) der mich auf GitHub sponsert! Hoffentlich kann ich mir eines Tages dank euch die Milchshakefabrik kaufen. :)"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "### ❤️ GitHub Sponsors\n\n**Huge thanks** to [anyone]({url}) sponsoring me on GitHub! Hopefully I can get that milkshake factory one day thanks to you. :)"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "### ❤️ GitHub Sponsors\n\n**Huge thanks** to [anyone]({url}) sponsoring me on GitHub! Hopefully I can get that milkshake factory one day thanks to you. :)"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "### ❤️ GitHub Sponsors\n\n**Huge thanks** to [anyone]({url}) sponsoring me on GitHub! Hopefully I can get that milkshake factory one day thanks to you. :)"
+          }
+        },
+        "fi" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "### ❤️ GitHub Sponsors\n\n**Huge thanks** to [anyone]({url}) sponsoring me on GitHub! Hopefully I can get that milkshake factory one day thanks to you. :)"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "### ❤️ GitHub Sponsors\n\n**Huge thanks** to [anyone]({url}) sponsoring me on GitHub! Hopefully I can get that milkshake factory one day thanks to you. :)"
+          }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "### ❤️ GitHub Sponsors\n\n**Huge thanks** to [anyone]({url}) sponsoring me on GitHub! Hopefully I can get that milkshake factory one day thanks to you. :)"
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "### ❤️ GitHub Sponsors\n\n**Huge thanks** to [anyone]({url}) sponsoring me on GitHub! Hopefully I can get that milkshake factory one day thanks to you. :)"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "### ❤️ GitHub Sponsors\n\n**Huge thanks** to [anyone]({url}) sponsoring me on GitHub! Hopefully I can get that milkshake factory one day thanks to you. :)"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "### ❤️ GitHub Sponsors\n\n**Huge thanks** to [anyone]({url}) sponsoring me on GitHub! Hopefully I can get that milkshake factory one day thanks to you. :)"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "### ❤️ GitHub Sponsors\n\n**Huge thanks** to [anyone]({url}) sponsoring me on GitHub! Hopefully I can get that milkshake factory one day thanks to you. :)"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "### ❤️ GitHub Sponsors\n\n**Huge thanks** to [anyone]({url}) sponsoring me on GitHub! Hopefully I can get that milkshake factory one day thanks to you. :)"
+          }
+        },
+        "no" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "### ❤️ GitHub Sponsors\n\n**Huge thanks** to [anyone]({url}) sponsoring me on GitHub! Hopefully I can get that milkshake factory one day thanks to you. :)"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "### ❤️ GitHub Sponsors\n\n**Huge thanks** to [anyone]({url}) sponsoring me on GitHub! Hopefully I can get that milkshake factory one day thanks to you. :)"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "### ❤️ GitHub Sponsors\n\n**Huge thanks** to [anyone]({url}) sponsoring me on GitHub! Hopefully I can get that milkshake factory one day thanks to you. :)"
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "### ❤️ GitHub Sponsors\n\n**Huge thanks** to [anyone]({url}) sponsoring me on GitHub! Hopefully I can get that milkshake factory one day thanks to you. :)"
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "### ❤️ GitHub Sponsors\n\n**Huge thanks** to [anyone]({url}) sponsoring me on GitHub! Hopefully I can get that milkshake factory one day thanks to you. :)"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "### ❤️ GitHub Sponsors\n\n**Huge thanks** to [anyone]({url}) sponsoring me on GitHub! Hopefully I can get that milkshake factory one day thanks to you. :)"
+          }
+        },
+        "sr" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "### ❤️ GitHub Sponsors\n\n**Huge thanks** to [anyone]({url}) sponsoring me on GitHub! Hopefully I can get that milkshake factory one day thanks to you. :)"
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "### ❤️ GitHub Sponsors\n\n**Huge thanks** to [anyone]({url}) sponsoring me on GitHub! Hopefully I can get that milkshake factory one day thanks to you. :)"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "### ❤️ GitHub Sponsors\n\n**Huge thanks** to [anyone]({url}) sponsoring me on GitHub! Hopefully I can get that milkshake factory one day thanks to you. :)"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "### ❤️ GitHub Sponsors\n\n**Huge thanks** to [anyone]({url}) sponsoring me on GitHub! Hopefully I can get that milkshake factory one day thanks to you. :)"
+          }
+        },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "### ❤️ GitHub Sponsors\n\n**Huge thanks** to [anyone]({url}) sponsoring me on GitHub! Hopefully I can get that milkshake factory one day thanks to you. :)"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "### ❤️ GitHub Sponsors\n\n**Huge thanks** to [anyone]({url}) sponsoring me on GitHub! Hopefully I can get that milkshake factory one day thanks to you. :)"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "### ❤️ GitHub Sponsors\n\n**Huge thanks** to [anyone]({url}) sponsoring me on GitHub! Hopefully I can get that milkshake factory one day thanks to you. :)"
+          }
+        },
+        "zh-Hant-HK" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "### ❤️ GitHub Sponsors\n\n**Huge thanks** to [anyone]({url}) sponsoring me on GitHub! Hopefully I can get that milkshake factory one day thanks to you. :)"
+          }
+        }
+      }
+    },
+    "09:money.paypal-donations" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "af" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "### ✨ PayPal Donations\n\nLots of generous people bought me milkshakes on PayPal when Mac Mouse Fix was still entirely free. As thanks, I will provide you with a free license. Just shoot me an email with \"Free License\" in the subject and attach a screenshot of your donation. Thank you!\n\n*I might be slow to respond. If you already bought the app, just let me know the email that you bought the app with, and I will refund you.*"
+          }
+        },
+        "ar" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "### ✨ PayPal Donations\n\nLots of generous people bought me milkshakes on PayPal when Mac Mouse Fix was still entirely free. As thanks, I will provide you with a free license. Just shoot me an email with \"Free License\" in the subject and attach a screenshot of your donation. Thank you!\n\n*I might be slow to respond. If you already bought the app, just let me know the email that you bought the app with, and I will refund you.*"
+          }
+        },
+        "ca" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "### ✨ PayPal Donations\n\nLots of generous people bought me milkshakes on PayPal when Mac Mouse Fix was still entirely free. As thanks, I will provide you with a free license. Just shoot me an email with \"Free License\" in the subject and attach a screenshot of your donation. Thank you!\n\n*I might be slow to respond. If you already bought the app, just let me know the email that you bought the app with, and I will refund you.*"
+          }
+        },
+        "cs" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "### ✨ PayPal Donations\n\nLots of generous people bought me milkshakes on PayPal when Mac Mouse Fix was still entirely free. As thanks, I will provide you with a free license. Just shoot me an email with \"Free License\" in the subject and attach a screenshot of your donation. Thank you!\n\n*I might be slow to respond. If you already bought the app, just let me know the email that you bought the app with, and I will refund you.*"
+          }
+        },
+        "da" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "### ✨ PayPal Donations\n\nLots of generous people bought me milkshakes on PayPal when Mac Mouse Fix was still entirely free. As thanks, I will provide you with a free license. Just shoot me an email with \"Free License\" in the subject and attach a screenshot of your donation. Thank you!\n\n*I might be slow to respond. If you already bought the app, just let me know the email that you bought the app with, and I will refund you.*"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "### ✨ PayPal Spenden\n\nViele großzügige Leute haben mir auf PayPal Milchshakes spendiert, als Mac Mouse Fix noch komplett kostenlos war. Als Dankeschön könnt ihr eine kostenlose Lizenz bekommen. Schickt mir einfach eine E-Mail mit \"Free License\" im Betreff und hängt einen Screenshot der Spende an. Danke euch!\n\n*Es dauert vielleicht eine Weile, bis ich antworte. Wenn ihr die App schon gekauft habt, dann lasst mich wissen, mit welcher E-Mail, und ich erstatte euch den Betrag zurück.*"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "### ✨ PayPal Donations\n\nLots of generous people bought me milkshakes on PayPal when Mac Mouse Fix was still entirely free. As thanks, I will provide you with a free license. Just shoot me an email with \"Free License\" in the subject and attach a screenshot of your donation. Thank you!\n\n*I might be slow to respond. If you already bought the app, just let me know the email that you bought the app with, and I will refund you.*"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "### ✨ PayPal Donations\n\nLots of generous people bought me milkshakes on PayPal when Mac Mouse Fix was still entirely free. As thanks, I will provide you with a free license. Just shoot me an email with \"Free License\" in the subject and attach a screenshot of your donation. Thank you!\n\n*I might be slow to respond. If you already bought the app, just let me know the email that you bought the app with, and I will refund you.*"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "### ✨ PayPal Donations\n\nLots of generous people bought me milkshakes on PayPal when Mac Mouse Fix was still entirely free. As thanks, I will provide you with a free license. Just shoot me an email with \"Free License\" in the subject and attach a screenshot of your donation. Thank you!\n\n*I might be slow to respond. If you already bought the app, just let me know the email that you bought the app with, and I will refund you.*"
+          }
+        },
+        "fi" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "### ✨ PayPal Donations\n\nLots of generous people bought me milkshakes on PayPal when Mac Mouse Fix was still entirely free. As thanks, I will provide you with a free license. Just shoot me an email with \"Free License\" in the subject and attach a screenshot of your donation. Thank you!\n\n*I might be slow to respond. If you already bought the app, just let me know the email that you bought the app with, and I will refund you.*"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "### ✨ PayPal Donations\n\nLots of generous people bought me milkshakes on PayPal when Mac Mouse Fix was still entirely free. As thanks, I will provide you with a free license. Just shoot me an email with \"Free License\" in the subject and attach a screenshot of your donation. Thank you!\n\n*I might be slow to respond. If you already bought the app, just let me know the email that you bought the app with, and I will refund you.*"
+          }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "### ✨ PayPal Donations\n\nLots of generous people bought me milkshakes on PayPal when Mac Mouse Fix was still entirely free. As thanks, I will provide you with a free license. Just shoot me an email with \"Free License\" in the subject and attach a screenshot of your donation. Thank you!\n\n*I might be slow to respond. If you already bought the app, just let me know the email that you bought the app with, and I will refund you.*"
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "### ✨ PayPal Donations\n\nLots of generous people bought me milkshakes on PayPal when Mac Mouse Fix was still entirely free. As thanks, I will provide you with a free license. Just shoot me an email with \"Free License\" in the subject and attach a screenshot of your donation. Thank you!\n\n*I might be slow to respond. If you already bought the app, just let me know the email that you bought the app with, and I will refund you.*"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "### ✨ PayPal Donations\n\nLots of generous people bought me milkshakes on PayPal when Mac Mouse Fix was still entirely free. As thanks, I will provide you with a free license. Just shoot me an email with \"Free License\" in the subject and attach a screenshot of your donation. Thank you!\n\n*I might be slow to respond. If you already bought the app, just let me know the email that you bought the app with, and I will refund you.*"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "### ✨ PayPal Donations\n\nLots of generous people bought me milkshakes on PayPal when Mac Mouse Fix was still entirely free. As thanks, I will provide you with a free license. Just shoot me an email with \"Free License\" in the subject and attach a screenshot of your donation. Thank you!\n\n*I might be slow to respond. If you already bought the app, just let me know the email that you bought the app with, and I will refund you.*"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "### ✨ PayPal Donations\n\nLots of generous people bought me milkshakes on PayPal when Mac Mouse Fix was still entirely free. As thanks, I will provide you with a free license. Just shoot me an email with \"Free License\" in the subject and attach a screenshot of your donation. Thank you!\n\n*I might be slow to respond. If you already bought the app, just let me know the email that you bought the app with, and I will refund you.*"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "### ✨ PayPal Donations\n\nLots of generous people bought me milkshakes on PayPal when Mac Mouse Fix was still entirely free. As thanks, I will provide you with a free license. Just shoot me an email with \"Free License\" in the subject and attach a screenshot of your donation. Thank you!\n\n*I might be slow to respond. If you already bought the app, just let me know the email that you bought the app with, and I will refund you.*"
+          }
+        },
+        "no" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "### ✨ PayPal Donations\n\nLots of generous people bought me milkshakes on PayPal when Mac Mouse Fix was still entirely free. As thanks, I will provide you with a free license. Just shoot me an email with \"Free License\" in the subject and attach a screenshot of your donation. Thank you!\n\n*I might be slow to respond. If you already bought the app, just let me know the email that you bought the app with, and I will refund you.*"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "### ✨ PayPal Donations\n\nLots of generous people bought me milkshakes on PayPal when Mac Mouse Fix was still entirely free. As thanks, I will provide you with a free license. Just shoot me an email with \"Free License\" in the subject and attach a screenshot of your donation. Thank you!\n\n*I might be slow to respond. If you already bought the app, just let me know the email that you bought the app with, and I will refund you.*"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "### ✨ PayPal Donations\n\nLots of generous people bought me milkshakes on PayPal when Mac Mouse Fix was still entirely free. As thanks, I will provide you with a free license. Just shoot me an email with \"Free License\" in the subject and attach a screenshot of your donation. Thank you!\n\n*I might be slow to respond. If you already bought the app, just let me know the email that you bought the app with, and I will refund you.*"
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "### ✨ PayPal Donations\n\nLots of generous people bought me milkshakes on PayPal when Mac Mouse Fix was still entirely free. As thanks, I will provide you with a free license. Just shoot me an email with \"Free License\" in the subject and attach a screenshot of your donation. Thank you!\n\n*I might be slow to respond. If you already bought the app, just let me know the email that you bought the app with, and I will refund you.*"
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "### ✨ PayPal Donations\n\nLots of generous people bought me milkshakes on PayPal when Mac Mouse Fix was still entirely free. As thanks, I will provide you with a free license. Just shoot me an email with \"Free License\" in the subject and attach a screenshot of your donation. Thank you!\n\n*I might be slow to respond. If you already bought the app, just let me know the email that you bought the app with, and I will refund you.*"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "### ✨ PayPal Donations\n\nLots of generous people bought me milkshakes on PayPal when Mac Mouse Fix was still entirely free. As thanks, I will provide you with a free license. Just shoot me an email with \"Free License\" in the subject and attach a screenshot of your donation. Thank you!\n\n*I might be slow to respond. If you already bought the app, just let me know the email that you bought the app with, and I will refund you.*"
+          }
+        },
+        "sr" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "### ✨ PayPal Donations\n\nLots of generous people bought me milkshakes on PayPal when Mac Mouse Fix was still entirely free. As thanks, I will provide you with a free license. Just shoot me an email with \"Free License\" in the subject and attach a screenshot of your donation. Thank you!\n\n*I might be slow to respond. If you already bought the app, just let me know the email that you bought the app with, and I will refund you.*"
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "### ✨ PayPal Donations\n\nLots of generous people bought me milkshakes on PayPal when Mac Mouse Fix was still entirely free. As thanks, I will provide you with a free license. Just shoot me an email with \"Free License\" in the subject and attach a screenshot of your donation. Thank you!\n\n*I might be slow to respond. If you already bought the app, just let me know the email that you bought the app with, and I will refund you.*"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "### ✨ PayPal Donations\n\nLots of generous people bought me milkshakes on PayPal when Mac Mouse Fix was still entirely free. As thanks, I will provide you with a free license. Just shoot me an email with \"Free License\" in the subject and attach a screenshot of your donation. Thank you!\n\n*I might be slow to respond. If you already bought the app, just let me know the email that you bought the app with, and I will refund you.*"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "### ✨ PayPal Donations\n\nLots of generous people bought me milkshakes on PayPal when Mac Mouse Fix was still entirely free. As thanks, I will provide you with a free license. Just shoot me an email with \"Free License\" in the subject and attach a screenshot of your donation. Thank you!\n\n*I might be slow to respond. If you already bought the app, just let me know the email that you bought the app with, and I will refund you.*"
+          }
+        },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "### ✨ PayPal Donations\n\nLots of generous people bought me milkshakes on PayPal when Mac Mouse Fix was still entirely free. As thanks, I will provide you with a free license. Just shoot me an email with \"Free License\" in the subject and attach a screenshot of your donation. Thank you!\n\n*I might be slow to respond. If you already bought the app, just let me know the email that you bought the app with, and I will refund you.*"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "### ✨ PayPal Donations\n\nLots of generous people bought me milkshakes on PayPal when Mac Mouse Fix was still entirely free. As thanks, I will provide you with a free license. Just shoot me an email with \"Free License\" in the subject and attach a screenshot of your donation. Thank you!\n\n*I might be slow to respond. If you already bought the app, just let me know the email that you bought the app with, and I will refund you.*"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "### ✨ PayPal Donations\n\nLots of generous people bought me milkshakes on PayPal when Mac Mouse Fix was still entirely free. As thanks, I will provide you with a free license. Just shoot me an email with \"Free License\" in the subject and attach a screenshot of your donation. Thank you!\n\n*I might be slow to respond. If you already bought the app, just let me know the email that you bought the app with, and I will refund you.*"
+          }
+        },
+        "zh-Hant-HK" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "### ✨ PayPal Donations\n\nLots of generous people bought me milkshakes on PayPal when Mac Mouse Fix was still entirely free. As thanks, I will provide you with a free license. Just shoot me an email with \"Free License\" in the subject and attach a screenshot of your donation. Thank you!\n\n*I might be slow to respond. If you already bought the app, just let me know the email that you bought the app with, and I will refund you.*"
+          }
+        }
+      }
+    },
+    "10:software" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "af" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "## 👾 Other Software"
+          }
+        },
+        "ar" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "## 👾 Other Software"
+          }
+        },
+        "ca" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "## 👾 Other Software"
+          }
+        },
+        "cs" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "## 👾 Other Software"
+          }
+        },
+        "da" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "## 👾 Other Software"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "## 👾 Andere Software"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "## 👾 Other Software"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "## 👾 Other Software"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "## 👾 Other Software"
+          }
+        },
+        "fi" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "## 👾 Other Software"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "## 👾 Other Software"
+          }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "## 👾 Other Software"
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "## 👾 Other Software"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "## 👾 Other Software"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "## 👾 Other Software"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "## 👾 Other Software"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "## 👾 Other Software"
+          }
+        },
+        "no" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "## 👾 Other Software"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "## 👾 Other Software"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "## 👾 Other Software"
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "## 👾 Other Software"
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "## 👾 Other Software"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "## 👾 Other Software"
+          }
+        },
+        "sr" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "## 👾 Other Software"
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "## 👾 Other Software"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "## 👾 Other Software"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "## 👾 Other Software"
+          }
+        },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "## 👾 Other Software"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "## 👾 Other Software"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "## 👾 Other Software"
+          }
+        },
+        "zh-Hant-HK" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "## 👾 Other Software"
+          }
+        }
+      }
+    },
+    "11:software.inspiration" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "af" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "**Software** that inspired Mac Mouse Fix:\n\n- [SteerMouse]({url_1}) - Pioneering mouse software for Mac, inspiring many features. There were moments when I thought \"this is probably not possible\", but then I saw \"oh, SteerMouse does it\", and three years later, I figured out how to implement it, too.\n- [Calftrail Touch]({url_2}) - The foundation for the \"reverse engineering\" work which powers Mac Mouse Fix's best-in-class and first-of-a-kind trackpad simulation!\n- [MOS]({url_3}) - Mac Mouse Fix's \"High Scroll-Smoothness\" option, the \"App-Specific Settings\" implementation, and more were inspired by MOS.\n- [SensibleSideButtons]({url_4}) - I copied its code for an early implementation of the \"Go back/forward one page in Safari and other apps\" feature, and also led me to discover the Calftrail Touch project.\n- [Gifski]({url_5}) - Greatly inspired the design and content of the [Readme.md]({url_6}) for Mac Mouse Fix.\n- [Vue Issue Helper]({url_7}) - Foundation for the design and technical implementation of [Mac Mouse Fix Feedback Assistant]({url_8})."
+          }
+        },
+        "ar" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "**Software** that inspired Mac Mouse Fix:\n\n- [SteerMouse]({url_1}) - Pioneering mouse software for Mac, inspiring many features. There were moments when I thought \"this is probably not possible\", but then I saw \"oh, SteerMouse does it\", and three years later, I figured out how to implement it, too.\n- [Calftrail Touch]({url_2}) - The foundation for the \"reverse engineering\" work which powers Mac Mouse Fix's best-in-class and first-of-a-kind trackpad simulation!\n- [MOS]({url_3}) - Mac Mouse Fix's \"High Scroll-Smoothness\" option, the \"App-Specific Settings\" implementation, and more were inspired by MOS.\n- [SensibleSideButtons]({url_4}) - I copied its code for an early implementation of the \"Go back/forward one page in Safari and other apps\" feature, and also led me to discover the Calftrail Touch project.\n- [Gifski]({url_5}) - Greatly inspired the design and content of the [Readme.md]({url_6}) for Mac Mouse Fix.\n- [Vue Issue Helper]({url_7}) - Foundation for the design and technical implementation of [Mac Mouse Fix Feedback Assistant]({url_8})."
+          }
+        },
+        "ca" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "**Software** that inspired Mac Mouse Fix:\n\n- [SteerMouse]({url_1}) - Pioneering mouse software for Mac, inspiring many features. There were moments when I thought \"this is probably not possible\", but then I saw \"oh, SteerMouse does it\", and three years later, I figured out how to implement it, too.\n- [Calftrail Touch]({url_2}) - The foundation for the \"reverse engineering\" work which powers Mac Mouse Fix's best-in-class and first-of-a-kind trackpad simulation!\n- [MOS]({url_3}) - Mac Mouse Fix's \"High Scroll-Smoothness\" option, the \"App-Specific Settings\" implementation, and more were inspired by MOS.\n- [SensibleSideButtons]({url_4}) - I copied its code for an early implementation of the \"Go back/forward one page in Safari and other apps\" feature, and also led me to discover the Calftrail Touch project.\n- [Gifski]({url_5}) - Greatly inspired the design and content of the [Readme.md]({url_6}) for Mac Mouse Fix.\n- [Vue Issue Helper]({url_7}) - Foundation for the design and technical implementation of [Mac Mouse Fix Feedback Assistant]({url_8})."
+          }
+        },
+        "cs" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "**Software** that inspired Mac Mouse Fix:\n\n- [SteerMouse]({url_1}) - Pioneering mouse software for Mac, inspiring many features. There were moments when I thought \"this is probably not possible\", but then I saw \"oh, SteerMouse does it\", and three years later, I figured out how to implement it, too.\n- [Calftrail Touch]({url_2}) - The foundation for the \"reverse engineering\" work which powers Mac Mouse Fix's best-in-class and first-of-a-kind trackpad simulation!\n- [MOS]({url_3}) - Mac Mouse Fix's \"High Scroll-Smoothness\" option, the \"App-Specific Settings\" implementation, and more were inspired by MOS.\n- [SensibleSideButtons]({url_4}) - I copied its code for an early implementation of the \"Go back/forward one page in Safari and other apps\" feature, and also led me to discover the Calftrail Touch project.\n- [Gifski]({url_5}) - Greatly inspired the design and content of the [Readme.md]({url_6}) for Mac Mouse Fix.\n- [Vue Issue Helper]({url_7}) - Foundation for the design and technical implementation of [Mac Mouse Fix Feedback Assistant]({url_8})."
+          }
+        },
+        "da" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "**Software** that inspired Mac Mouse Fix:\n\n- [SteerMouse]({url_1}) - Pioneering mouse software for Mac, inspiring many features. There were moments when I thought \"this is probably not possible\", but then I saw \"oh, SteerMouse does it\", and three years later, I figured out how to implement it, too.\n- [Calftrail Touch]({url_2}) - The foundation for the \"reverse engineering\" work which powers Mac Mouse Fix's best-in-class and first-of-a-kind trackpad simulation!\n- [MOS]({url_3}) - Mac Mouse Fix's \"High Scroll-Smoothness\" option, the \"App-Specific Settings\" implementation, and more were inspired by MOS.\n- [SensibleSideButtons]({url_4}) - I copied its code for an early implementation of the \"Go back/forward one page in Safari and other apps\" feature, and also led me to discover the Calftrail Touch project.\n- [Gifski]({url_5}) - Greatly inspired the design and content of the [Readme.md]({url_6}) for Mac Mouse Fix.\n- [Vue Issue Helper]({url_7}) - Foundation for the design and technical implementation of [Mac Mouse Fix Feedback Assistant]({url_8})."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "**Software**, die Mac Mouse Fix inspiriert hat:\n\n- [SteerMouse]({url_1}) - Wegweisende Maus-Software für Mac, die viele Funktionen inspiriert hat. Es gab Momente, in denen ich dachte: \"Das ist wahrscheinlich unmöglich\", aber dann hab ich gesehen \"oh, SteerMouse macht es\", und drei Jahre später habe ich herausgefunden, wie ich es auch umsetzen kann.\n- [Calftrail Touch]({url_2}) - Die Grundlage für die \"Reverse Engineering\"-Arbeit, die Mac Mouse Fix's erstklassige und einzigartige Trackpad-Simulation ermöglicht!\n- [MOS]({url_3}) - Viele Funktionen von Mac Mouse Fix, wie die Option \"Hohe Scroll-Flüssigkeit\" und die Implementierung des \"App-spezifische Einstellungen\" features, wurden von MOS inspiriert.\n- [SensibleSideButtons]({url_4}) - Ich habe den Code für eine frühe Implementierung der Funktion \"Gehe eine Seite vor/zurück in Safari und anderen Apps\" von SensibleSideButtons kopiert und bin dadurch auch auf das Calftrail Touch-Projekt gestoßen.\n- [Gifski]({url_5}) - Hat das Design und den Inhalt des [Readme.md]({url_6}) von Mac Mouse Fix stark inspiriert.\n- [Vue Issue Helper]({url_7}) - Grundlage für das Design und die technische Umsetzung von [Mac Mouse Fix Feedback Assistant]({url_8})."
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "**Software** that inspired Mac Mouse Fix:\n\n- [SteerMouse]({url_1}) - Pioneering mouse software for Mac, inspiring many features. There were moments when I thought \"this is probably not possible\", but then I saw \"oh, SteerMouse does it\", and three years later, I figured out how to implement it, too.\n- [Calftrail Touch]({url_2}) - The foundation for the \"reverse engineering\" work which powers Mac Mouse Fix's best-in-class and first-of-a-kind trackpad simulation!\n- [MOS]({url_3}) - Mac Mouse Fix's \"High Scroll-Smoothness\" option, the \"App-Specific Settings\" implementation, and more were inspired by MOS.\n- [SensibleSideButtons]({url_4}) - I copied its code for an early implementation of the \"Go back/forward one page in Safari and other apps\" feature, and also led me to discover the Calftrail Touch project.\n- [Gifski]({url_5}) - Greatly inspired the design and content of the [Readme.md]({url_6}) for Mac Mouse Fix.\n- [Vue Issue Helper]({url_7}) - Foundation for the design and technical implementation of [Mac Mouse Fix Feedback Assistant]({url_8})."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "**Software** that inspired Mac Mouse Fix:\n\n- [SteerMouse]({url_1}) - Pioneering mouse software for Mac, inspiring many features. There were moments when I thought \"this is probably not possible\", but then I saw \"oh, SteerMouse does it\", and three years later, I figured out how to implement it, too.\n- [Calftrail Touch]({url_2}) - The foundation for the \"reverse engineering\" work which powers Mac Mouse Fix's best-in-class and first-of-a-kind trackpad simulation!\n- [MOS]({url_3}) - Mac Mouse Fix's \"High Scroll-Smoothness\" option, the \"App-Specific Settings\" implementation, and more were inspired by MOS.\n- [SensibleSideButtons]({url_4}) - I copied its code for an early implementation of the \"Go back/forward one page in Safari and other apps\" feature, and also led me to discover the Calftrail Touch project.\n- [Gifski]({url_5}) - Greatly inspired the design and content of the [Readme.md]({url_6}) for Mac Mouse Fix.\n- [Vue Issue Helper]({url_7}) - Foundation for the design and technical implementation of [Mac Mouse Fix Feedback Assistant]({url_8})."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "**Software** that inspired Mac Mouse Fix:\n\n- [SteerMouse]({url_1}) - Pioneering mouse software for Mac, inspiring many features. There were moments when I thought \"this is probably not possible\", but then I saw \"oh, SteerMouse does it\", and three years later, I figured out how to implement it, too.\n- [Calftrail Touch]({url_2}) - The foundation for the \"reverse engineering\" work which powers Mac Mouse Fix's best-in-class and first-of-a-kind trackpad simulation!\n- [MOS]({url_3}) - Mac Mouse Fix's \"High Scroll-Smoothness\" option, the \"App-Specific Settings\" implementation, and more were inspired by MOS.\n- [SensibleSideButtons]({url_4}) - I copied its code for an early implementation of the \"Go back/forward one page in Safari and other apps\" feature, and also led me to discover the Calftrail Touch project.\n- [Gifski]({url_5}) - Greatly inspired the design and content of the [Readme.md]({url_6}) for Mac Mouse Fix.\n- [Vue Issue Helper]({url_7}) - Foundation for the design and technical implementation of [Mac Mouse Fix Feedback Assistant]({url_8})."
+          }
+        },
+        "fi" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "**Software** that inspired Mac Mouse Fix:\n\n- [SteerMouse]({url_1}) - Pioneering mouse software for Mac, inspiring many features. There were moments when I thought \"this is probably not possible\", but then I saw \"oh, SteerMouse does it\", and three years later, I figured out how to implement it, too.\n- [Calftrail Touch]({url_2}) - The foundation for the \"reverse engineering\" work which powers Mac Mouse Fix's best-in-class and first-of-a-kind trackpad simulation!\n- [MOS]({url_3}) - Mac Mouse Fix's \"High Scroll-Smoothness\" option, the \"App-Specific Settings\" implementation, and more were inspired by MOS.\n- [SensibleSideButtons]({url_4}) - I copied its code for an early implementation of the \"Go back/forward one page in Safari and other apps\" feature, and also led me to discover the Calftrail Touch project.\n- [Gifski]({url_5}) - Greatly inspired the design and content of the [Readme.md]({url_6}) for Mac Mouse Fix.\n- [Vue Issue Helper]({url_7}) - Foundation for the design and technical implementation of [Mac Mouse Fix Feedback Assistant]({url_8})."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "**Software** that inspired Mac Mouse Fix:\n\n- [SteerMouse]({url_1}) - Pioneering mouse software for Mac, inspiring many features. There were moments when I thought \"this is probably not possible\", but then I saw \"oh, SteerMouse does it\", and three years later, I figured out how to implement it, too.\n- [Calftrail Touch]({url_2}) - The foundation for the \"reverse engineering\" work which powers Mac Mouse Fix's best-in-class and first-of-a-kind trackpad simulation!\n- [MOS]({url_3}) - Mac Mouse Fix's \"High Scroll-Smoothness\" option, the \"App-Specific Settings\" implementation, and more were inspired by MOS.\n- [SensibleSideButtons]({url_4}) - I copied its code for an early implementation of the \"Go back/forward one page in Safari and other apps\" feature, and also led me to discover the Calftrail Touch project.\n- [Gifski]({url_5}) - Greatly inspired the design and content of the [Readme.md]({url_6}) for Mac Mouse Fix.\n- [Vue Issue Helper]({url_7}) - Foundation for the design and technical implementation of [Mac Mouse Fix Feedback Assistant]({url_8})."
+          }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "**Software** that inspired Mac Mouse Fix:\n\n- [SteerMouse]({url_1}) - Pioneering mouse software for Mac, inspiring many features. There were moments when I thought \"this is probably not possible\", but then I saw \"oh, SteerMouse does it\", and three years later, I figured out how to implement it, too.\n- [Calftrail Touch]({url_2}) - The foundation for the \"reverse engineering\" work which powers Mac Mouse Fix's best-in-class and first-of-a-kind trackpad simulation!\n- [MOS]({url_3}) - Mac Mouse Fix's \"High Scroll-Smoothness\" option, the \"App-Specific Settings\" implementation, and more were inspired by MOS.\n- [SensibleSideButtons]({url_4}) - I copied its code for an early implementation of the \"Go back/forward one page in Safari and other apps\" feature, and also led me to discover the Calftrail Touch project.\n- [Gifski]({url_5}) - Greatly inspired the design and content of the [Readme.md]({url_6}) for Mac Mouse Fix.\n- [Vue Issue Helper]({url_7}) - Foundation for the design and technical implementation of [Mac Mouse Fix Feedback Assistant]({url_8})."
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "**Software** that inspired Mac Mouse Fix:\n\n- [SteerMouse]({url_1}) - Pioneering mouse software for Mac, inspiring many features. There were moments when I thought \"this is probably not possible\", but then I saw \"oh, SteerMouse does it\", and three years later, I figured out how to implement it, too.\n- [Calftrail Touch]({url_2}) - The foundation for the \"reverse engineering\" work which powers Mac Mouse Fix's best-in-class and first-of-a-kind trackpad simulation!\n- [MOS]({url_3}) - Mac Mouse Fix's \"High Scroll-Smoothness\" option, the \"App-Specific Settings\" implementation, and more were inspired by MOS.\n- [SensibleSideButtons]({url_4}) - I copied its code for an early implementation of the \"Go back/forward one page in Safari and other apps\" feature, and also led me to discover the Calftrail Touch project.\n- [Gifski]({url_5}) - Greatly inspired the design and content of the [Readme.md]({url_6}) for Mac Mouse Fix.\n- [Vue Issue Helper]({url_7}) - Foundation for the design and technical implementation of [Mac Mouse Fix Feedback Assistant]({url_8})."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "**Software** that inspired Mac Mouse Fix:\n\n- [SteerMouse]({url_1}) - Pioneering mouse software for Mac, inspiring many features. There were moments when I thought \"this is probably not possible\", but then I saw \"oh, SteerMouse does it\", and three years later, I figured out how to implement it, too.\n- [Calftrail Touch]({url_2}) - The foundation for the \"reverse engineering\" work which powers Mac Mouse Fix's best-in-class and first-of-a-kind trackpad simulation!\n- [MOS]({url_3}) - Mac Mouse Fix's \"High Scroll-Smoothness\" option, the \"App-Specific Settings\" implementation, and more were inspired by MOS.\n- [SensibleSideButtons]({url_4}) - I copied its code for an early implementation of the \"Go back/forward one page in Safari and other apps\" feature, and also led me to discover the Calftrail Touch project.\n- [Gifski]({url_5}) - Greatly inspired the design and content of the [Readme.md]({url_6}) for Mac Mouse Fix.\n- [Vue Issue Helper]({url_7}) - Foundation for the design and technical implementation of [Mac Mouse Fix Feedback Assistant]({url_8})."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "**Software** that inspired Mac Mouse Fix:\n\n- [SteerMouse]({url_1}) - Pioneering mouse software for Mac, inspiring many features. There were moments when I thought \"this is probably not possible\", but then I saw \"oh, SteerMouse does it\", and three years later, I figured out how to implement it, too.\n- [Calftrail Touch]({url_2}) - The foundation for the \"reverse engineering\" work which powers Mac Mouse Fix's best-in-class and first-of-a-kind trackpad simulation!\n- [MOS]({url_3}) - Mac Mouse Fix's \"High Scroll-Smoothness\" option, the \"App-Specific Settings\" implementation, and more were inspired by MOS.\n- [SensibleSideButtons]({url_4}) - I copied its code for an early implementation of the \"Go back/forward one page in Safari and other apps\" feature, and also led me to discover the Calftrail Touch project.\n- [Gifski]({url_5}) - Greatly inspired the design and content of the [Readme.md]({url_6}) for Mac Mouse Fix.\n- [Vue Issue Helper]({url_7}) - Foundation for the design and technical implementation of [Mac Mouse Fix Feedback Assistant]({url_8})."
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "**Software** that inspired Mac Mouse Fix:\n\n- [SteerMouse]({url_1}) - Pioneering mouse software for Mac, inspiring many features. There were moments when I thought \"this is probably not possible\", but then I saw \"oh, SteerMouse does it\", and three years later, I figured out how to implement it, too.\n- [Calftrail Touch]({url_2}) - The foundation for the \"reverse engineering\" work which powers Mac Mouse Fix's best-in-class and first-of-a-kind trackpad simulation!\n- [MOS]({url_3}) - Mac Mouse Fix's \"High Scroll-Smoothness\" option, the \"App-Specific Settings\" implementation, and more were inspired by MOS.\n- [SensibleSideButtons]({url_4}) - I copied its code for an early implementation of the \"Go back/forward one page in Safari and other apps\" feature, and also led me to discover the Calftrail Touch project.\n- [Gifski]({url_5}) - Greatly inspired the design and content of the [Readme.md]({url_6}) for Mac Mouse Fix.\n- [Vue Issue Helper]({url_7}) - Foundation for the design and technical implementation of [Mac Mouse Fix Feedback Assistant]({url_8})."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "**Software** that inspired Mac Mouse Fix:\n\n- [SteerMouse]({url_1}) - Pioneering mouse software for Mac, inspiring many features. There were moments when I thought \"this is probably not possible\", but then I saw \"oh, SteerMouse does it\", and three years later, I figured out how to implement it, too.\n- [Calftrail Touch]({url_2}) - The foundation for the \"reverse engineering\" work which powers Mac Mouse Fix's best-in-class and first-of-a-kind trackpad simulation!\n- [MOS]({url_3}) - Mac Mouse Fix's \"High Scroll-Smoothness\" option, the \"App-Specific Settings\" implementation, and more were inspired by MOS.\n- [SensibleSideButtons]({url_4}) - I copied its code for an early implementation of the \"Go back/forward one page in Safari and other apps\" feature, and also led me to discover the Calftrail Touch project.\n- [Gifski]({url_5}) - Greatly inspired the design and content of the [Readme.md]({url_6}) for Mac Mouse Fix.\n- [Vue Issue Helper]({url_7}) - Foundation for the design and technical implementation of [Mac Mouse Fix Feedback Assistant]({url_8})."
+          }
+        },
+        "no" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "**Software** that inspired Mac Mouse Fix:\n\n- [SteerMouse]({url_1}) - Pioneering mouse software for Mac, inspiring many features. There were moments when I thought \"this is probably not possible\", but then I saw \"oh, SteerMouse does it\", and three years later, I figured out how to implement it, too.\n- [Calftrail Touch]({url_2}) - The foundation for the \"reverse engineering\" work which powers Mac Mouse Fix's best-in-class and first-of-a-kind trackpad simulation!\n- [MOS]({url_3}) - Mac Mouse Fix's \"High Scroll-Smoothness\" option, the \"App-Specific Settings\" implementation, and more were inspired by MOS.\n- [SensibleSideButtons]({url_4}) - I copied its code for an early implementation of the \"Go back/forward one page in Safari and other apps\" feature, and also led me to discover the Calftrail Touch project.\n- [Gifski]({url_5}) - Greatly inspired the design and content of the [Readme.md]({url_6}) for Mac Mouse Fix.\n- [Vue Issue Helper]({url_7}) - Foundation for the design and technical implementation of [Mac Mouse Fix Feedback Assistant]({url_8})."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "**Software** that inspired Mac Mouse Fix:\n\n- [SteerMouse]({url_1}) - Pioneering mouse software for Mac, inspiring many features. There were moments when I thought \"this is probably not possible\", but then I saw \"oh, SteerMouse does it\", and three years later, I figured out how to implement it, too.\n- [Calftrail Touch]({url_2}) - The foundation for the \"reverse engineering\" work which powers Mac Mouse Fix's best-in-class and first-of-a-kind trackpad simulation!\n- [MOS]({url_3}) - Mac Mouse Fix's \"High Scroll-Smoothness\" option, the \"App-Specific Settings\" implementation, and more were inspired by MOS.\n- [SensibleSideButtons]({url_4}) - I copied its code for an early implementation of the \"Go back/forward one page in Safari and other apps\" feature, and also led me to discover the Calftrail Touch project.\n- [Gifski]({url_5}) - Greatly inspired the design and content of the [Readme.md]({url_6}) for Mac Mouse Fix.\n- [Vue Issue Helper]({url_7}) - Foundation for the design and technical implementation of [Mac Mouse Fix Feedback Assistant]({url_8})."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "**Software** that inspired Mac Mouse Fix:\n\n- [SteerMouse]({url_1}) - Pioneering mouse software for Mac, inspiring many features. There were moments when I thought \"this is probably not possible\", but then I saw \"oh, SteerMouse does it\", and three years later, I figured out how to implement it, too.\n- [Calftrail Touch]({url_2}) - The foundation for the \"reverse engineering\" work which powers Mac Mouse Fix's best-in-class and first-of-a-kind trackpad simulation!\n- [MOS]({url_3}) - Mac Mouse Fix's \"High Scroll-Smoothness\" option, the \"App-Specific Settings\" implementation, and more were inspired by MOS.\n- [SensibleSideButtons]({url_4}) - I copied its code for an early implementation of the \"Go back/forward one page in Safari and other apps\" feature, and also led me to discover the Calftrail Touch project.\n- [Gifski]({url_5}) - Greatly inspired the design and content of the [Readme.md]({url_6}) for Mac Mouse Fix.\n- [Vue Issue Helper]({url_7}) - Foundation for the design and technical implementation of [Mac Mouse Fix Feedback Assistant]({url_8})."
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "**Software** that inspired Mac Mouse Fix:\n\n- [SteerMouse]({url_1}) - Pioneering mouse software for Mac, inspiring many features. There were moments when I thought \"this is probably not possible\", but then I saw \"oh, SteerMouse does it\", and three years later, I figured out how to implement it, too.\n- [Calftrail Touch]({url_2}) - The foundation for the \"reverse engineering\" work which powers Mac Mouse Fix's best-in-class and first-of-a-kind trackpad simulation!\n- [MOS]({url_3}) - Mac Mouse Fix's \"High Scroll-Smoothness\" option, the \"App-Specific Settings\" implementation, and more were inspired by MOS.\n- [SensibleSideButtons]({url_4}) - I copied its code for an early implementation of the \"Go back/forward one page in Safari and other apps\" feature, and also led me to discover the Calftrail Touch project.\n- [Gifski]({url_5}) - Greatly inspired the design and content of the [Readme.md]({url_6}) for Mac Mouse Fix.\n- [Vue Issue Helper]({url_7}) - Foundation for the design and technical implementation of [Mac Mouse Fix Feedback Assistant]({url_8})."
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "**Software** that inspired Mac Mouse Fix:\n\n- [SteerMouse]({url_1}) - Pioneering mouse software for Mac, inspiring many features. There were moments when I thought \"this is probably not possible\", but then I saw \"oh, SteerMouse does it\", and three years later, I figured out how to implement it, too.\n- [Calftrail Touch]({url_2}) - The foundation for the \"reverse engineering\" work which powers Mac Mouse Fix's best-in-class and first-of-a-kind trackpad simulation!\n- [MOS]({url_3}) - Mac Mouse Fix's \"High Scroll-Smoothness\" option, the \"App-Specific Settings\" implementation, and more were inspired by MOS.\n- [SensibleSideButtons]({url_4}) - I copied its code for an early implementation of the \"Go back/forward one page in Safari and other apps\" feature, and also led me to discover the Calftrail Touch project.\n- [Gifski]({url_5}) - Greatly inspired the design and content of the [Readme.md]({url_6}) for Mac Mouse Fix.\n- [Vue Issue Helper]({url_7}) - Foundation for the design and technical implementation of [Mac Mouse Fix Feedback Assistant]({url_8})."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "**Software** that inspired Mac Mouse Fix:\n\n- [SteerMouse]({url_1}) - Pioneering mouse software for Mac, inspiring many features. There were moments when I thought \"this is probably not possible\", but then I saw \"oh, SteerMouse does it\", and three years later, I figured out how to implement it, too.\n- [Calftrail Touch]({url_2}) - The foundation for the \"reverse engineering\" work which powers Mac Mouse Fix's best-in-class and first-of-a-kind trackpad simulation!\n- [MOS]({url_3}) - Mac Mouse Fix's \"High Scroll-Smoothness\" option, the \"App-Specific Settings\" implementation, and more were inspired by MOS.\n- [SensibleSideButtons]({url_4}) - I copied its code for an early implementation of the \"Go back/forward one page in Safari and other apps\" feature, and also led me to discover the Calftrail Touch project.\n- [Gifski]({url_5}) - Greatly inspired the design and content of the [Readme.md]({url_6}) for Mac Mouse Fix.\n- [Vue Issue Helper]({url_7}) - Foundation for the design and technical implementation of [Mac Mouse Fix Feedback Assistant]({url_8})."
+          }
+        },
+        "sr" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "**Software** that inspired Mac Mouse Fix:\n\n- [SteerMouse]({url_1}) - Pioneering mouse software for Mac, inspiring many features. There were moments when I thought \"this is probably not possible\", but then I saw \"oh, SteerMouse does it\", and three years later, I figured out how to implement it, too.\n- [Calftrail Touch]({url_2}) - The foundation for the \"reverse engineering\" work which powers Mac Mouse Fix's best-in-class and first-of-a-kind trackpad simulation!\n- [MOS]({url_3}) - Mac Mouse Fix's \"High Scroll-Smoothness\" option, the \"App-Specific Settings\" implementation, and more were inspired by MOS.\n- [SensibleSideButtons]({url_4}) - I copied its code for an early implementation of the \"Go back/forward one page in Safari and other apps\" feature, and also led me to discover the Calftrail Touch project.\n- [Gifski]({url_5}) - Greatly inspired the design and content of the [Readme.md]({url_6}) for Mac Mouse Fix.\n- [Vue Issue Helper]({url_7}) - Foundation for the design and technical implementation of [Mac Mouse Fix Feedback Assistant]({url_8})."
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "**Software** that inspired Mac Mouse Fix:\n\n- [SteerMouse]({url_1}) - Pioneering mouse software for Mac, inspiring many features. There were moments when I thought \"this is probably not possible\", but then I saw \"oh, SteerMouse does it\", and three years later, I figured out how to implement it, too.\n- [Calftrail Touch]({url_2}) - The foundation for the \"reverse engineering\" work which powers Mac Mouse Fix's best-in-class and first-of-a-kind trackpad simulation!\n- [MOS]({url_3}) - Mac Mouse Fix's \"High Scroll-Smoothness\" option, the \"App-Specific Settings\" implementation, and more were inspired by MOS.\n- [SensibleSideButtons]({url_4}) - I copied its code for an early implementation of the \"Go back/forward one page in Safari and other apps\" feature, and also led me to discover the Calftrail Touch project.\n- [Gifski]({url_5}) - Greatly inspired the design and content of the [Readme.md]({url_6}) for Mac Mouse Fix.\n- [Vue Issue Helper]({url_7}) - Foundation for the design and technical implementation of [Mac Mouse Fix Feedback Assistant]({url_8})."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "**Software** that inspired Mac Mouse Fix:\n\n- [SteerMouse]({url_1}) - Pioneering mouse software for Mac, inspiring many features. There were moments when I thought \"this is probably not possible\", but then I saw \"oh, SteerMouse does it\", and three years later, I figured out how to implement it, too.\n- [Calftrail Touch]({url_2}) - The foundation for the \"reverse engineering\" work which powers Mac Mouse Fix's best-in-class and first-of-a-kind trackpad simulation!\n- [MOS]({url_3}) - Mac Mouse Fix's \"High Scroll-Smoothness\" option, the \"App-Specific Settings\" implementation, and more were inspired by MOS.\n- [SensibleSideButtons]({url_4}) - I copied its code for an early implementation of the \"Go back/forward one page in Safari and other apps\" feature, and also led me to discover the Calftrail Touch project.\n- [Gifski]({url_5}) - Greatly inspired the design and content of the [Readme.md]({url_6}) for Mac Mouse Fix.\n- [Vue Issue Helper]({url_7}) - Foundation for the design and technical implementation of [Mac Mouse Fix Feedback Assistant]({url_8})."
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "**Software** that inspired Mac Mouse Fix:\n\n- [SteerMouse]({url_1}) - Pioneering mouse software for Mac, inspiring many features. There were moments when I thought \"this is probably not possible\", but then I saw \"oh, SteerMouse does it\", and three years later, I figured out how to implement it, too.\n- [Calftrail Touch]({url_2}) - The foundation for the \"reverse engineering\" work which powers Mac Mouse Fix's best-in-class and first-of-a-kind trackpad simulation!\n- [MOS]({url_3}) - Mac Mouse Fix's \"High Scroll-Smoothness\" option, the \"App-Specific Settings\" implementation, and more were inspired by MOS.\n- [SensibleSideButtons]({url_4}) - I copied its code for an early implementation of the \"Go back/forward one page in Safari and other apps\" feature, and also led me to discover the Calftrail Touch project.\n- [Gifski]({url_5}) - Greatly inspired the design and content of the [Readme.md]({url_6}) for Mac Mouse Fix.\n- [Vue Issue Helper]({url_7}) - Foundation for the design and technical implementation of [Mac Mouse Fix Feedback Assistant]({url_8})."
+          }
+        },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "**Software** that inspired Mac Mouse Fix:\n\n- [SteerMouse]({url_1}) - Pioneering mouse software for Mac, inspiring many features. There were moments when I thought \"this is probably not possible\", but then I saw \"oh, SteerMouse does it\", and three years later, I figured out how to implement it, too.\n- [Calftrail Touch]({url_2}) - The foundation for the \"reverse engineering\" work which powers Mac Mouse Fix's best-in-class and first-of-a-kind trackpad simulation!\n- [MOS]({url_3}) - Mac Mouse Fix's \"High Scroll-Smoothness\" option, the \"App-Specific Settings\" implementation, and more were inspired by MOS.\n- [SensibleSideButtons]({url_4}) - I copied its code for an early implementation of the \"Go back/forward one page in Safari and other apps\" feature, and also led me to discover the Calftrail Touch project.\n- [Gifski]({url_5}) - Greatly inspired the design and content of the [Readme.md]({url_6}) for Mac Mouse Fix.\n- [Vue Issue Helper]({url_7}) - Foundation for the design and technical implementation of [Mac Mouse Fix Feedback Assistant]({url_8})."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "**Software** that inspired Mac Mouse Fix:\n\n- [SteerMouse]({url_1}) - Pioneering mouse software for Mac, inspiring many features. There were moments when I thought \"this is probably not possible\", but then I saw \"oh, SteerMouse does it\", and three years later, I figured out how to implement it, too.\n- [Calftrail Touch]({url_2}) - The foundation for the \"reverse engineering\" work which powers Mac Mouse Fix's best-in-class and first-of-a-kind trackpad simulation!\n- [MOS]({url_3}) - Mac Mouse Fix's \"High Scroll-Smoothness\" option, the \"App-Specific Settings\" implementation, and more were inspired by MOS.\n- [SensibleSideButtons]({url_4}) - I copied its code for an early implementation of the \"Go back/forward one page in Safari and other apps\" feature, and also led me to discover the Calftrail Touch project.\n- [Gifski]({url_5}) - Greatly inspired the design and content of the [Readme.md]({url_6}) for Mac Mouse Fix.\n- [Vue Issue Helper]({url_7}) - Foundation for the design and technical implementation of [Mac Mouse Fix Feedback Assistant]({url_8})."
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "**Software** that inspired Mac Mouse Fix:\n\n- [SteerMouse]({url_1}) - Pioneering mouse software for Mac, inspiring many features. There were moments when I thought \"this is probably not possible\", but then I saw \"oh, SteerMouse does it\", and three years later, I figured out how to implement it, too.\n- [Calftrail Touch]({url_2}) - The foundation for the \"reverse engineering\" work which powers Mac Mouse Fix's best-in-class and first-of-a-kind trackpad simulation!\n- [MOS]({url_3}) - Mac Mouse Fix's \"High Scroll-Smoothness\" option, the \"App-Specific Settings\" implementation, and more were inspired by MOS.\n- [SensibleSideButtons]({url_4}) - I copied its code for an early implementation of the \"Go back/forward one page in Safari and other apps\" feature, and also led me to discover the Calftrail Touch project.\n- [Gifski]({url_5}) - Greatly inspired the design and content of the [Readme.md]({url_6}) for Mac Mouse Fix.\n- [Vue Issue Helper]({url_7}) - Foundation for the design and technical implementation of [Mac Mouse Fix Feedback Assistant]({url_8})."
+          }
+        },
+        "zh-Hant-HK" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "**Software** that inspired Mac Mouse Fix:\n\n- [SteerMouse]({url_1}) - Pioneering mouse software for Mac, inspiring many features. There were moments when I thought \"this is probably not possible\", but then I saw \"oh, SteerMouse does it\", and three years later, I figured out how to implement it, too.\n- [Calftrail Touch]({url_2}) - The foundation for the \"reverse engineering\" work which powers Mac Mouse Fix's best-in-class and first-of-a-kind trackpad simulation!\n- [MOS]({url_3}) - Mac Mouse Fix's \"High Scroll-Smoothness\" option, the \"App-Specific Settings\" implementation, and more were inspired by MOS.\n- [SensibleSideButtons]({url_4}) - I copied its code for an early implementation of the \"Go back/forward one page in Safari and other apps\" feature, and also led me to discover the Calftrail Touch project.\n- [Gifski]({url_5}) - Greatly inspired the design and content of the [Readme.md]({url_6}) for Mac Mouse Fix.\n- [Vue Issue Helper]({url_7}) - Foundation for the design and technical implementation of [Mac Mouse Fix Feedback Assistant]({url_8})."
+          }
+        }
+      }
+    },
+    "12:software.libraries" : {
+      "comment" : "Note: Don't forget the `<br>`, it inserts a line<br>eak.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "af" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Mac Mouse Fix was built with the help of these **great libraries**:\n\n- [ReactiveSwift]({url_1}) - Streams of values over time tailored for Swift\n- [CocoaLumberjack]({url_2}) - Fast & simple, yet powerful & flexible logging\n- [Swift Markdown]({url_3}) - Parse, build, edit, and analyze Markdown documents\n- [Sparkle]({url_4}) - A software update framework for macOS\n- [SnapKit]({url_5}) - Making Auto Layout easy on both iOS and macOS\n- [MASShortcut]({url_6}) - API and user interface for recording, storing & using system-wide keyboard shortcuts\n- [CGSInternal]({url_7}) - A collection of private CoreGraphics routines\n- Dependencies of Mac Mouse Fix's scripts:<br>\n  [Update and statistics scripts]({url_8}) | [Markdown generator script]({url_9}) | [.strings file sync script]({url_10}) | [\"State of Localization\" script]({url_11})\n- Dependencies of the [Mac Mouse Fix Feedback Assistant]({url_12}) web app [here]({url_13})\n- Dependencies of the [Mac Mouse Fix Website]({url_14}) are available [here]({url_15})"
+          }
+        },
+        "ar" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Mac Mouse Fix was built with the help of these **great libraries**:\n\n- [ReactiveSwift]({url_1}) - Streams of values over time tailored for Swift\n- [CocoaLumberjack]({url_2}) - Fast & simple, yet powerful & flexible logging\n- [Swift Markdown]({url_3}) - Parse, build, edit, and analyze Markdown documents\n- [Sparkle]({url_4}) - A software update framework for macOS\n- [SnapKit]({url_5}) - Making Auto Layout easy on both iOS and macOS\n- [MASShortcut]({url_6}) - API and user interface for recording, storing & using system-wide keyboard shortcuts\n- [CGSInternal]({url_7}) - A collection of private CoreGraphics routines\n- Dependencies of Mac Mouse Fix's scripts:<br>\n  [Update and statistics scripts]({url_8}) | [Markdown generator script]({url_9}) | [.strings file sync script]({url_10}) | [\"State of Localization\" script]({url_11})\n- Dependencies of the [Mac Mouse Fix Feedback Assistant]({url_12}) web app [here]({url_13})\n- Dependencies of the [Mac Mouse Fix Website]({url_14}) are available [here]({url_15})"
+          }
+        },
+        "ca" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Mac Mouse Fix was built with the help of these **great libraries**:\n\n- [ReactiveSwift]({url_1}) - Streams of values over time tailored for Swift\n- [CocoaLumberjack]({url_2}) - Fast & simple, yet powerful & flexible logging\n- [Swift Markdown]({url_3}) - Parse, build, edit, and analyze Markdown documents\n- [Sparkle]({url_4}) - A software update framework for macOS\n- [SnapKit]({url_5}) - Making Auto Layout easy on both iOS and macOS\n- [MASShortcut]({url_6}) - API and user interface for recording, storing & using system-wide keyboard shortcuts\n- [CGSInternal]({url_7}) - A collection of private CoreGraphics routines\n- Dependencies of Mac Mouse Fix's scripts:<br>\n  [Update and statistics scripts]({url_8}) | [Markdown generator script]({url_9}) | [.strings file sync script]({url_10}) | [\"State of Localization\" script]({url_11})\n- Dependencies of the [Mac Mouse Fix Feedback Assistant]({url_12}) web app [here]({url_13})\n- Dependencies of the [Mac Mouse Fix Website]({url_14}) are available [here]({url_15})"
+          }
+        },
+        "cs" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Mac Mouse Fix was built with the help of these **great libraries**:\n\n- [ReactiveSwift]({url_1}) - Streams of values over time tailored for Swift\n- [CocoaLumberjack]({url_2}) - Fast & simple, yet powerful & flexible logging\n- [Swift Markdown]({url_3}) - Parse, build, edit, and analyze Markdown documents\n- [Sparkle]({url_4}) - A software update framework for macOS\n- [SnapKit]({url_5}) - Making Auto Layout easy on both iOS and macOS\n- [MASShortcut]({url_6}) - API and user interface for recording, storing & using system-wide keyboard shortcuts\n- [CGSInternal]({url_7}) - A collection of private CoreGraphics routines\n- Dependencies of Mac Mouse Fix's scripts:<br>\n  [Update and statistics scripts]({url_8}) | [Markdown generator script]({url_9}) | [.strings file sync script]({url_10}) | [\"State of Localization\" script]({url_11})\n- Dependencies of the [Mac Mouse Fix Feedback Assistant]({url_12}) web app [here]({url_13})\n- Dependencies of the [Mac Mouse Fix Website]({url_14}) are available [here]({url_15})"
+          }
+        },
+        "da" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Mac Mouse Fix was built with the help of these **great libraries**:\n\n- [ReactiveSwift]({url_1}) - Streams of values over time tailored for Swift\n- [CocoaLumberjack]({url_2}) - Fast & simple, yet powerful & flexible logging\n- [Swift Markdown]({url_3}) - Parse, build, edit, and analyze Markdown documents\n- [Sparkle]({url_4}) - A software update framework for macOS\n- [SnapKit]({url_5}) - Making Auto Layout easy on both iOS and macOS\n- [MASShortcut]({url_6}) - API and user interface for recording, storing & using system-wide keyboard shortcuts\n- [CGSInternal]({url_7}) - A collection of private CoreGraphics routines\n- Dependencies of Mac Mouse Fix's scripts:<br>\n  [Update and statistics scripts]({url_8}) | [Markdown generator script]({url_9}) | [.strings file sync script]({url_10}) | [\"State of Localization\" script]({url_11})\n- Dependencies of the [Mac Mouse Fix Feedback Assistant]({url_12}) web app [here]({url_13})\n- Dependencies of the [Mac Mouse Fix Website]({url_14}) are available [here]({url_15})"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mac Mouse Fix wurde mithilfe dieser **hervorragenden Softwarebibliotheken** erstellt:\n\n- [ReactiveSwift]({url_1}) - Ströme von Werten im Laufe der Zeit. Maßgeschneidert für Swift.\n- [CocoaLumberjack]({url_2}) - Schnelles und einfaches, aber leistungsstarkes und flexibles Logging-System.\n- [Swift Markdown]({url_3}) - Analysiere, erstelle, bearbeite und analysiere Markdown-Dokumente.\n- [Sparkle]({url_4}) - Ein Software-Update-Framework für macOS.\n- [SnapKit]({url_5}) - Macht Auto Layout sowohl auf iOS als auch auf OS X einfach.\n- [MASShortcut]({url_6}) - API und Benutzeroberfläche zum Aufzeichnen, Speichern und Verwenden systemweiter Tastenkürzel\n- [CGSInternal]({url_7}) - Eine Sammlung privater CoreGraphics-Routinen\n- Abhängigkeiten der Skripte von Mac Mouse Fix:<br>\n  [Update- und Statistikskripte]({url_8}) | [Markdown-Generierungsskript]({url_9}) | [.strings-Datei Synchronisierungsskript]({url_10}) | [\"State of Localization\"-Skript]({url_11})\n- Abhängigkeiten der [Mac Mouse Fix Feedback Assistant]({url_12}) Web-App [hier]({url_13})\n- Abhängigkeiten der [Mac Mouse Fix Website]({url_14}) findest du [hier]({url_15})"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Mac Mouse Fix was built with the help of these **great libraries**:\n\n- [ReactiveSwift]({url_1}) - Streams of values over time tailored for Swift\n- [CocoaLumberjack]({url_2}) - Fast & simple, yet powerful & flexible logging\n- [Swift Markdown]({url_3}) - Parse, build, edit, and analyze Markdown documents\n- [Sparkle]({url_4}) - A software update framework for macOS\n- [SnapKit]({url_5}) - Making Auto Layout easy on both iOS and macOS\n- [MASShortcut]({url_6}) - API and user interface for recording, storing & using system-wide keyboard shortcuts\n- [CGSInternal]({url_7}) - A collection of private CoreGraphics routines\n- Dependencies of Mac Mouse Fix's scripts:<br>\n  [Update and statistics scripts]({url_8}) | [Markdown generator script]({url_9}) | [.strings file sync script]({url_10}) | [\"State of Localization\" script]({url_11})\n- Dependencies of the [Mac Mouse Fix Feedback Assistant]({url_12}) web app [here]({url_13})\n- Dependencies of the [Mac Mouse Fix Website]({url_14}) are available [here]({url_15})"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Mac Mouse Fix was built with the help of these **great libraries**:\n\n- [ReactiveSwift]({url_1}) - Streams of values over time tailored for Swift\n- [CocoaLumberjack]({url_2}) - Fast & simple, yet powerful & flexible logging\n- [Swift Markdown]({url_3}) - Parse, build, edit, and analyze Markdown documents\n- [Sparkle]({url_4}) - A software update framework for macOS\n- [SnapKit]({url_5}) - Making Auto Layout easy on both iOS and macOS\n- [MASShortcut]({url_6}) - API and user interface for recording, storing & using system-wide keyboard shortcuts\n- [CGSInternal]({url_7}) - A collection of private CoreGraphics routines\n- Dependencies of Mac Mouse Fix's scripts:<br>\n  [Update and statistics scripts]({url_8}) | [Markdown generator script]({url_9}) | [.strings file sync script]({url_10}) | [\"State of Localization\" script]({url_11})\n- Dependencies of the [Mac Mouse Fix Feedback Assistant]({url_12}) web app [here]({url_13})\n- Dependencies of the [Mac Mouse Fix Website]({url_14}) are available [here]({url_15})"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Mac Mouse Fix was built with the help of these **great libraries**:\n\n- [ReactiveSwift]({url_1}) - Streams of values over time tailored for Swift\n- [CocoaLumberjack]({url_2}) - Fast & simple, yet powerful & flexible logging\n- [Swift Markdown]({url_3}) - Parse, build, edit, and analyze Markdown documents\n- [Sparkle]({url_4}) - A software update framework for macOS\n- [SnapKit]({url_5}) - Making Auto Layout easy on both iOS and macOS\n- [MASShortcut]({url_6}) - API and user interface for recording, storing & using system-wide keyboard shortcuts\n- [CGSInternal]({url_7}) - A collection of private CoreGraphics routines\n- Dependencies of Mac Mouse Fix's scripts:<br>\n  [Update and statistics scripts]({url_8}) | [Markdown generator script]({url_9}) | [.strings file sync script]({url_10}) | [\"State of Localization\" script]({url_11})\n- Dependencies of the [Mac Mouse Fix Feedback Assistant]({url_12}) web app [here]({url_13})\n- Dependencies of the [Mac Mouse Fix Website]({url_14}) are available [here]({url_15})"
+          }
+        },
+        "fi" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Mac Mouse Fix was built with the help of these **great libraries**:\n\n- [ReactiveSwift]({url_1}) - Streams of values over time tailored for Swift\n- [CocoaLumberjack]({url_2}) - Fast & simple, yet powerful & flexible logging\n- [Swift Markdown]({url_3}) - Parse, build, edit, and analyze Markdown documents\n- [Sparkle]({url_4}) - A software update framework for macOS\n- [SnapKit]({url_5}) - Making Auto Layout easy on both iOS and macOS\n- [MASShortcut]({url_6}) - API and user interface for recording, storing & using system-wide keyboard shortcuts\n- [CGSInternal]({url_7}) - A collection of private CoreGraphics routines\n- Dependencies of Mac Mouse Fix's scripts:<br>\n  [Update and statistics scripts]({url_8}) | [Markdown generator script]({url_9}) | [.strings file sync script]({url_10}) | [\"State of Localization\" script]({url_11})\n- Dependencies of the [Mac Mouse Fix Feedback Assistant]({url_12}) web app [here]({url_13})\n- Dependencies of the [Mac Mouse Fix Website]({url_14}) are available [here]({url_15})"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Mac Mouse Fix was built with the help of these **great libraries**:\n\n- [ReactiveSwift]({url_1}) - Streams of values over time tailored for Swift\n- [CocoaLumberjack]({url_2}) - Fast & simple, yet powerful & flexible logging\n- [Swift Markdown]({url_3}) - Parse, build, edit, and analyze Markdown documents\n- [Sparkle]({url_4}) - A software update framework for macOS\n- [SnapKit]({url_5}) - Making Auto Layout easy on both iOS and macOS\n- [MASShortcut]({url_6}) - API and user interface for recording, storing & using system-wide keyboard shortcuts\n- [CGSInternal]({url_7}) - A collection of private CoreGraphics routines\n- Dependencies of Mac Mouse Fix's scripts:<br>\n  [Update and statistics scripts]({url_8}) | [Markdown generator script]({url_9}) | [.strings file sync script]({url_10}) | [\"State of Localization\" script]({url_11})\n- Dependencies of the [Mac Mouse Fix Feedback Assistant]({url_12}) web app [here]({url_13})\n- Dependencies of the [Mac Mouse Fix Website]({url_14}) are available [here]({url_15})"
+          }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Mac Mouse Fix was built with the help of these **great libraries**:\n\n- [ReactiveSwift]({url_1}) - Streams of values over time tailored for Swift\n- [CocoaLumberjack]({url_2}) - Fast & simple, yet powerful & flexible logging\n- [Swift Markdown]({url_3}) - Parse, build, edit, and analyze Markdown documents\n- [Sparkle]({url_4}) - A software update framework for macOS\n- [SnapKit]({url_5}) - Making Auto Layout easy on both iOS and macOS\n- [MASShortcut]({url_6}) - API and user interface for recording, storing & using system-wide keyboard shortcuts\n- [CGSInternal]({url_7}) - A collection of private CoreGraphics routines\n- Dependencies of Mac Mouse Fix's scripts:<br>\n  [Update and statistics scripts]({url_8}) | [Markdown generator script]({url_9}) | [.strings file sync script]({url_10}) | [\"State of Localization\" script]({url_11})\n- Dependencies of the [Mac Mouse Fix Feedback Assistant]({url_12}) web app [here]({url_13})\n- Dependencies of the [Mac Mouse Fix Website]({url_14}) are available [here]({url_15})"
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Mac Mouse Fix was built with the help of these **great libraries**:\n\n- [ReactiveSwift]({url_1}) - Streams of values over time tailored for Swift\n- [CocoaLumberjack]({url_2}) - Fast & simple, yet powerful & flexible logging\n- [Swift Markdown]({url_3}) - Parse, build, edit, and analyze Markdown documents\n- [Sparkle]({url_4}) - A software update framework for macOS\n- [SnapKit]({url_5}) - Making Auto Layout easy on both iOS and macOS\n- [MASShortcut]({url_6}) - API and user interface for recording, storing & using system-wide keyboard shortcuts\n- [CGSInternal]({url_7}) - A collection of private CoreGraphics routines\n- Dependencies of Mac Mouse Fix's scripts:<br>\n  [Update and statistics scripts]({url_8}) | [Markdown generator script]({url_9}) | [.strings file sync script]({url_10}) | [\"State of Localization\" script]({url_11})\n- Dependencies of the [Mac Mouse Fix Feedback Assistant]({url_12}) web app [here]({url_13})\n- Dependencies of the [Mac Mouse Fix Website]({url_14}) are available [here]({url_15})"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Mac Mouse Fix was built with the help of these **great libraries**:\n\n- [ReactiveSwift]({url_1}) - Streams of values over time tailored for Swift\n- [CocoaLumberjack]({url_2}) - Fast & simple, yet powerful & flexible logging\n- [Swift Markdown]({url_3}) - Parse, build, edit, and analyze Markdown documents\n- [Sparkle]({url_4}) - A software update framework for macOS\n- [SnapKit]({url_5}) - Making Auto Layout easy on both iOS and macOS\n- [MASShortcut]({url_6}) - API and user interface for recording, storing & using system-wide keyboard shortcuts\n- [CGSInternal]({url_7}) - A collection of private CoreGraphics routines\n- Dependencies of Mac Mouse Fix's scripts:<br>\n  [Update and statistics scripts]({url_8}) | [Markdown generator script]({url_9}) | [.strings file sync script]({url_10}) | [\"State of Localization\" script]({url_11})\n- Dependencies of the [Mac Mouse Fix Feedback Assistant]({url_12}) web app [here]({url_13})\n- Dependencies of the [Mac Mouse Fix Website]({url_14}) are available [here]({url_15})"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Mac Mouse Fix was built with the help of these **great libraries**:\n\n- [ReactiveSwift]({url_1}) - Streams of values over time tailored for Swift\n- [CocoaLumberjack]({url_2}) - Fast & simple, yet powerful & flexible logging\n- [Swift Markdown]({url_3}) - Parse, build, edit, and analyze Markdown documents\n- [Sparkle]({url_4}) - A software update framework for macOS\n- [SnapKit]({url_5}) - Making Auto Layout easy on both iOS and macOS\n- [MASShortcut]({url_6}) - API and user interface for recording, storing & using system-wide keyboard shortcuts\n- [CGSInternal]({url_7}) - A collection of private CoreGraphics routines\n- Dependencies of Mac Mouse Fix's scripts:<br>\n  [Update and statistics scripts]({url_8}) | [Markdown generator script]({url_9}) | [.strings file sync script]({url_10}) | [\"State of Localization\" script]({url_11})\n- Dependencies of the [Mac Mouse Fix Feedback Assistant]({url_12}) web app [here]({url_13})\n- Dependencies of the [Mac Mouse Fix Website]({url_14}) are available [here]({url_15})"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Mac Mouse Fix was built with the help of these **great libraries**:\n\n- [ReactiveSwift]({url_1}) - Streams of values over time tailored for Swift\n- [CocoaLumberjack]({url_2}) - Fast & simple, yet powerful & flexible logging\n- [Swift Markdown]({url_3}) - Parse, build, edit, and analyze Markdown documents\n- [Sparkle]({url_4}) - A software update framework for macOS\n- [SnapKit]({url_5}) - Making Auto Layout easy on both iOS and macOS\n- [MASShortcut]({url_6}) - API and user interface for recording, storing & using system-wide keyboard shortcuts\n- [CGSInternal]({url_7}) - A collection of private CoreGraphics routines\n- Dependencies of Mac Mouse Fix's scripts:<br>\n  [Update and statistics scripts]({url_8}) | [Markdown generator script]({url_9}) | [.strings file sync script]({url_10}) | [\"State of Localization\" script]({url_11})\n- Dependencies of the [Mac Mouse Fix Feedback Assistant]({url_12}) web app [here]({url_13})\n- Dependencies of the [Mac Mouse Fix Website]({url_14}) are available [here]({url_15})"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Mac Mouse Fix was built with the help of these **great libraries**:\n\n- [ReactiveSwift]({url_1}) - Streams of values over time tailored for Swift\n- [CocoaLumberjack]({url_2}) - Fast & simple, yet powerful & flexible logging\n- [Swift Markdown]({url_3}) - Parse, build, edit, and analyze Markdown documents\n- [Sparkle]({url_4}) - A software update framework for macOS\n- [SnapKit]({url_5}) - Making Auto Layout easy on both iOS and macOS\n- [MASShortcut]({url_6}) - API and user interface for recording, storing & using system-wide keyboard shortcuts\n- [CGSInternal]({url_7}) - A collection of private CoreGraphics routines\n- Dependencies of Mac Mouse Fix's scripts:<br>\n  [Update and statistics scripts]({url_8}) | [Markdown generator script]({url_9}) | [.strings file sync script]({url_10}) | [\"State of Localization\" script]({url_11})\n- Dependencies of the [Mac Mouse Fix Feedback Assistant]({url_12}) web app [here]({url_13})\n- Dependencies of the [Mac Mouse Fix Website]({url_14}) are available [here]({url_15})"
+          }
+        },
+        "no" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Mac Mouse Fix was built with the help of these **great libraries**:\n\n- [ReactiveSwift]({url_1}) - Streams of values over time tailored for Swift\n- [CocoaLumberjack]({url_2}) - Fast & simple, yet powerful & flexible logging\n- [Swift Markdown]({url_3}) - Parse, build, edit, and analyze Markdown documents\n- [Sparkle]({url_4}) - A software update framework for macOS\n- [SnapKit]({url_5}) - Making Auto Layout easy on both iOS and macOS\n- [MASShortcut]({url_6}) - API and user interface for recording, storing & using system-wide keyboard shortcuts\n- [CGSInternal]({url_7}) - A collection of private CoreGraphics routines\n- Dependencies of Mac Mouse Fix's scripts:<br>\n  [Update and statistics scripts]({url_8}) | [Markdown generator script]({url_9}) | [.strings file sync script]({url_10}) | [\"State of Localization\" script]({url_11})\n- Dependencies of the [Mac Mouse Fix Feedback Assistant]({url_12}) web app [here]({url_13})\n- Dependencies of the [Mac Mouse Fix Website]({url_14}) are available [here]({url_15})"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Mac Mouse Fix was built with the help of these **great libraries**:\n\n- [ReactiveSwift]({url_1}) - Streams of values over time tailored for Swift\n- [CocoaLumberjack]({url_2}) - Fast & simple, yet powerful & flexible logging\n- [Swift Markdown]({url_3}) - Parse, build, edit, and analyze Markdown documents\n- [Sparkle]({url_4}) - A software update framework for macOS\n- [SnapKit]({url_5}) - Making Auto Layout easy on both iOS and macOS\n- [MASShortcut]({url_6}) - API and user interface for recording, storing & using system-wide keyboard shortcuts\n- [CGSInternal]({url_7}) - A collection of private CoreGraphics routines\n- Dependencies of Mac Mouse Fix's scripts:<br>\n  [Update and statistics scripts]({url_8}) | [Markdown generator script]({url_9}) | [.strings file sync script]({url_10}) | [\"State of Localization\" script]({url_11})\n- Dependencies of the [Mac Mouse Fix Feedback Assistant]({url_12}) web app [here]({url_13})\n- Dependencies of the [Mac Mouse Fix Website]({url_14}) are available [here]({url_15})"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Mac Mouse Fix was built with the help of these **great libraries**:\n\n- [ReactiveSwift]({url_1}) - Streams of values over time tailored for Swift\n- [CocoaLumberjack]({url_2}) - Fast & simple, yet powerful & flexible logging\n- [Swift Markdown]({url_3}) - Parse, build, edit, and analyze Markdown documents\n- [Sparkle]({url_4}) - A software update framework for macOS\n- [SnapKit]({url_5}) - Making Auto Layout easy on both iOS and macOS\n- [MASShortcut]({url_6}) - API and user interface for recording, storing & using system-wide keyboard shortcuts\n- [CGSInternal]({url_7}) - A collection of private CoreGraphics routines\n- Dependencies of Mac Mouse Fix's scripts:<br>\n  [Update and statistics scripts]({url_8}) | [Markdown generator script]({url_9}) | [.strings file sync script]({url_10}) | [\"State of Localization\" script]({url_11})\n- Dependencies of the [Mac Mouse Fix Feedback Assistant]({url_12}) web app [here]({url_13})\n- Dependencies of the [Mac Mouse Fix Website]({url_14}) are available [here]({url_15})"
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Mac Mouse Fix was built with the help of these **great libraries**:\n\n- [ReactiveSwift]({url_1}) - Streams of values over time tailored for Swift\n- [CocoaLumberjack]({url_2}) - Fast & simple, yet powerful & flexible logging\n- [Swift Markdown]({url_3}) - Parse, build, edit, and analyze Markdown documents\n- [Sparkle]({url_4}) - A software update framework for macOS\n- [SnapKit]({url_5}) - Making Auto Layout easy on both iOS and macOS\n- [MASShortcut]({url_6}) - API and user interface for recording, storing & using system-wide keyboard shortcuts\n- [CGSInternal]({url_7}) - A collection of private CoreGraphics routines\n- Dependencies of Mac Mouse Fix's scripts:<br>\n  [Update and statistics scripts]({url_8}) | [Markdown generator script]({url_9}) | [.strings file sync script]({url_10}) | [\"State of Localization\" script]({url_11})\n- Dependencies of the [Mac Mouse Fix Feedback Assistant]({url_12}) web app [here]({url_13})\n- Dependencies of the [Mac Mouse Fix Website]({url_14}) are available [here]({url_15})"
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Mac Mouse Fix was built with the help of these **great libraries**:\n\n- [ReactiveSwift]({url_1}) - Streams of values over time tailored for Swift\n- [CocoaLumberjack]({url_2}) - Fast & simple, yet powerful & flexible logging\n- [Swift Markdown]({url_3}) - Parse, build, edit, and analyze Markdown documents\n- [Sparkle]({url_4}) - A software update framework for macOS\n- [SnapKit]({url_5}) - Making Auto Layout easy on both iOS and macOS\n- [MASShortcut]({url_6}) - API and user interface for recording, storing & using system-wide keyboard shortcuts\n- [CGSInternal]({url_7}) - A collection of private CoreGraphics routines\n- Dependencies of Mac Mouse Fix's scripts:<br>\n  [Update and statistics scripts]({url_8}) | [Markdown generator script]({url_9}) | [.strings file sync script]({url_10}) | [\"State of Localization\" script]({url_11})\n- Dependencies of the [Mac Mouse Fix Feedback Assistant]({url_12}) web app [here]({url_13})\n- Dependencies of the [Mac Mouse Fix Website]({url_14}) are available [here]({url_15})"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Mac Mouse Fix was built with the help of these **great libraries**:\n\n- [ReactiveSwift]({url_1}) - Streams of values over time tailored for Swift\n- [CocoaLumberjack]({url_2}) - Fast & simple, yet powerful & flexible logging\n- [Swift Markdown]({url_3}) - Parse, build, edit, and analyze Markdown documents\n- [Sparkle]({url_4}) - A software update framework for macOS\n- [SnapKit]({url_5}) - Making Auto Layout easy on both iOS and macOS\n- [MASShortcut]({url_6}) - API and user interface for recording, storing & using system-wide keyboard shortcuts\n- [CGSInternal]({url_7}) - A collection of private CoreGraphics routines\n- Dependencies of Mac Mouse Fix's scripts:<br>\n  [Update and statistics scripts]({url_8}) | [Markdown generator script]({url_9}) | [.strings file sync script]({url_10}) | [\"State of Localization\" script]({url_11})\n- Dependencies of the [Mac Mouse Fix Feedback Assistant]({url_12}) web app [here]({url_13})\n- Dependencies of the [Mac Mouse Fix Website]({url_14}) are available [here]({url_15})"
+          }
+        },
+        "sr" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Mac Mouse Fix was built with the help of these **great libraries**:\n\n- [ReactiveSwift]({url_1}) - Streams of values over time tailored for Swift\n- [CocoaLumberjack]({url_2}) - Fast & simple, yet powerful & flexible logging\n- [Swift Markdown]({url_3}) - Parse, build, edit, and analyze Markdown documents\n- [Sparkle]({url_4}) - A software update framework for macOS\n- [SnapKit]({url_5}) - Making Auto Layout easy on both iOS and macOS\n- [MASShortcut]({url_6}) - API and user interface for recording, storing & using system-wide keyboard shortcuts\n- [CGSInternal]({url_7}) - A collection of private CoreGraphics routines\n- Dependencies of Mac Mouse Fix's scripts:<br>\n  [Update and statistics scripts]({url_8}) | [Markdown generator script]({url_9}) | [.strings file sync script]({url_10}) | [\"State of Localization\" script]({url_11})\n- Dependencies of the [Mac Mouse Fix Feedback Assistant]({url_12}) web app [here]({url_13})\n- Dependencies of the [Mac Mouse Fix Website]({url_14}) are available [here]({url_15})"
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Mac Mouse Fix was built with the help of these **great libraries**:\n\n- [ReactiveSwift]({url_1}) - Streams of values over time tailored for Swift\n- [CocoaLumberjack]({url_2}) - Fast & simple, yet powerful & flexible logging\n- [Swift Markdown]({url_3}) - Parse, build, edit, and analyze Markdown documents\n- [Sparkle]({url_4}) - A software update framework for macOS\n- [SnapKit]({url_5}) - Making Auto Layout easy on both iOS and macOS\n- [MASShortcut]({url_6}) - API and user interface for recording, storing & using system-wide keyboard shortcuts\n- [CGSInternal]({url_7}) - A collection of private CoreGraphics routines\n- Dependencies of Mac Mouse Fix's scripts:<br>\n  [Update and statistics scripts]({url_8}) | [Markdown generator script]({url_9}) | [.strings file sync script]({url_10}) | [\"State of Localization\" script]({url_11})\n- Dependencies of the [Mac Mouse Fix Feedback Assistant]({url_12}) web app [here]({url_13})\n- Dependencies of the [Mac Mouse Fix Website]({url_14}) are available [here]({url_15})"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Mac Mouse Fix was built with the help of these **great libraries**:\n\n- [ReactiveSwift]({url_1}) - Streams of values over time tailored for Swift\n- [CocoaLumberjack]({url_2}) - Fast & simple, yet powerful & flexible logging\n- [Swift Markdown]({url_3}) - Parse, build, edit, and analyze Markdown documents\n- [Sparkle]({url_4}) - A software update framework for macOS\n- [SnapKit]({url_5}) - Making Auto Layout easy on both iOS and macOS\n- [MASShortcut]({url_6}) - API and user interface for recording, storing & using system-wide keyboard shortcuts\n- [CGSInternal]({url_7}) - A collection of private CoreGraphics routines\n- Dependencies of Mac Mouse Fix's scripts:<br>\n  [Update and statistics scripts]({url_8}) | [Markdown generator script]({url_9}) | [.strings file sync script]({url_10}) | [\"State of Localization\" script]({url_11})\n- Dependencies of the [Mac Mouse Fix Feedback Assistant]({url_12}) web app [here]({url_13})\n- Dependencies of the [Mac Mouse Fix Website]({url_14}) are available [here]({url_15})"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Mac Mouse Fix was built with the help of these **great libraries**:\n\n- [ReactiveSwift]({url_1}) - Streams of values over time tailored for Swift\n- [CocoaLumberjack]({url_2}) - Fast & simple, yet powerful & flexible logging\n- [Swift Markdown]({url_3}) - Parse, build, edit, and analyze Markdown documents\n- [Sparkle]({url_4}) - A software update framework for macOS\n- [SnapKit]({url_5}) - Making Auto Layout easy on both iOS and macOS\n- [MASShortcut]({url_6}) - API and user interface for recording, storing & using system-wide keyboard shortcuts\n- [CGSInternal]({url_7}) - A collection of private CoreGraphics routines\n- Dependencies of Mac Mouse Fix's scripts:<br>\n  [Update and statistics scripts]({url_8}) | [Markdown generator script]({url_9}) | [.strings file sync script]({url_10}) | [\"State of Localization\" script]({url_11})\n- Dependencies of the [Mac Mouse Fix Feedback Assistant]({url_12}) web app [here]({url_13})\n- Dependencies of the [Mac Mouse Fix Website]({url_14}) are available [here]({url_15})"
+          }
+        },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Mac Mouse Fix was built with the help of these **great libraries**:\n\n- [ReactiveSwift]({url_1}) - Streams of values over time tailored for Swift\n- [CocoaLumberjack]({url_2}) - Fast & simple, yet powerful & flexible logging\n- [Swift Markdown]({url_3}) - Parse, build, edit, and analyze Markdown documents\n- [Sparkle]({url_4}) - A software update framework for macOS\n- [SnapKit]({url_5}) - Making Auto Layout easy on both iOS and macOS\n- [MASShortcut]({url_6}) - API and user interface for recording, storing & using system-wide keyboard shortcuts\n- [CGSInternal]({url_7}) - A collection of private CoreGraphics routines\n- Dependencies of Mac Mouse Fix's scripts:<br>\n  [Update and statistics scripts]({url_8}) | [Markdown generator script]({url_9}) | [.strings file sync script]({url_10}) | [\"State of Localization\" script]({url_11})\n- Dependencies of the [Mac Mouse Fix Feedback Assistant]({url_12}) web app [here]({url_13})\n- Dependencies of the [Mac Mouse Fix Website]({url_14}) are available [here]({url_15})"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Mac Mouse Fix was built with the help of these **great libraries**:\n\n- [ReactiveSwift]({url_1}) - Streams of values over time tailored for Swift\n- [CocoaLumberjack]({url_2}) - Fast & simple, yet powerful & flexible logging\n- [Swift Markdown]({url_3}) - Parse, build, edit, and analyze Markdown documents\n- [Sparkle]({url_4}) - A software update framework for macOS\n- [SnapKit]({url_5}) - Making Auto Layout easy on both iOS and macOS\n- [MASShortcut]({url_6}) - API and user interface for recording, storing & using system-wide keyboard shortcuts\n- [CGSInternal]({url_7}) - A collection of private CoreGraphics routines\n- Dependencies of Mac Mouse Fix's scripts:<br>\n  [Update and statistics scripts]({url_8}) | [Markdown generator script]({url_9}) | [.strings file sync script]({url_10}) | [\"State of Localization\" script]({url_11})\n- Dependencies of the [Mac Mouse Fix Feedback Assistant]({url_12}) web app [here]({url_13})\n- Dependencies of the [Mac Mouse Fix Website]({url_14}) are available [here]({url_15})"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Mac Mouse Fix was built with the help of these **great libraries**:\n\n- [ReactiveSwift]({url_1}) - Streams of values over time tailored for Swift\n- [CocoaLumberjack]({url_2}) - Fast & simple, yet powerful & flexible logging\n- [Swift Markdown]({url_3}) - Parse, build, edit, and analyze Markdown documents\n- [Sparkle]({url_4}) - A software update framework for macOS\n- [SnapKit]({url_5}) - Making Auto Layout easy on both iOS and macOS\n- [MASShortcut]({url_6}) - API and user interface for recording, storing & using system-wide keyboard shortcuts\n- [CGSInternal]({url_7}) - A collection of private CoreGraphics routines\n- Dependencies of Mac Mouse Fix's scripts:<br>\n  [Update and statistics scripts]({url_8}) | [Markdown generator script]({url_9}) | [.strings file sync script]({url_10}) | [\"State of Localization\" script]({url_11})\n- Dependencies of the [Mac Mouse Fix Feedback Assistant]({url_12}) web app [here]({url_13})\n- Dependencies of the [Mac Mouse Fix Website]({url_14}) are available [here]({url_15})"
+          }
+        },
+        "zh-Hant-HK" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Mac Mouse Fix was built with the help of these **great libraries**:\n\n- [ReactiveSwift]({url_1}) - Streams of values over time tailored for Swift\n- [CocoaLumberjack]({url_2}) - Fast & simple, yet powerful & flexible logging\n- [Swift Markdown]({url_3}) - Parse, build, edit, and analyze Markdown documents\n- [Sparkle]({url_4}) - A software update framework for macOS\n- [SnapKit]({url_5}) - Making Auto Layout easy on both iOS and macOS\n- [MASShortcut]({url_6}) - API and user interface for recording, storing & using system-wide keyboard shortcuts\n- [CGSInternal]({url_7}) - A collection of private CoreGraphics routines\n- Dependencies of Mac Mouse Fix's scripts:<br>\n  [Update and statistics scripts]({url_8}) | [Markdown generator script]({url_9}) | [.strings file sync script]({url_10}) | [\"State of Localization\" script]({url_11})\n- Dependencies of the [Mac Mouse Fix Feedback Assistant]({url_12}) web app [here]({url_13})\n- Dependencies of the [Mac Mouse Fix Website]({url_14}) are available [here]({url_15})"
+          }
+        }
+      }
+    }
+  },
+  "version" : "1.0"
+}
