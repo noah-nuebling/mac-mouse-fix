@@ -42,6 +42,7 @@ These people spent a lot more than the standard price and treated me to an **Inc
 
 **September 2024**
 
+- 🇺🇸&nbsp;Cesar - "a must have app"
 - 🇩🇪&nbsp;Ripzhead - "Love it."
 - 🇬🇧&nbsp;Michael - "Thanks for a great value product!"
 - 🇨🇦&nbsp;Andrew - "This is my personal favorite mac mouse app. Only one that gives me smooth scrolling with a regular mouse. Thank you so much!"
