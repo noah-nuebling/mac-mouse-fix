@@ -91,6 +91,42 @@ static MFModifierPriority _btnModPriority;
 static CFMachPortRef _kbModEventTap;
 
 + (void)setKeyboardModifierPriority:(MFModifierPriority)priority {
+    
+    /// Sep 2024 - I just saw a crash report in console on CGEventTapEnable(). Here's the interesting part of the stack trace:
+    ///     ```
+    ///     CoreFoundation                             0x191048124 __CFCheckCFInfoPACSignature + 4
+    ///     CoreFoundation                             0x190f8b898 CFMachPortGetContext + 28
+    ///     SkyLight                                   0x196ba2808 SLEventTapEnable + 68
+    ///     Mac Mouse Fix Helper.debug.dylib           0x100a3e100 +[Modifiers setKeyboardModifierPriority:] + 64 (Modifiers.m:95)
+    ///     Mac Mouse Fix Helper.debug.dylib           0x100a8f07c SwitchMaster.toggleKbModTap() + 1836 (SwitchMaster.swift:450)
+    ///     Mac Mouse Fix Helper.debug.dylib           0x100a8c440 SwitchMaster.helperStateChanged() + 248 (SwitchMaster.swift:184)
+    ///     Mac Mouse Fix Helper.debug.dylib           0x100accc0c closure #1 in HelperState.init() + 64 (HelperState.swift:23)
+    ///     ```
+    ///     Discussion:
+    ///         - The helper's build-number was 24405, that was probably the feature-strings-catalog branch - the master branch is currently around 22000 (master around the 3.0.3 release right now.) (I'm writing this on the master branch.)
+    ///         - This crash actually appeared like 10 times within 1.5 hours, but I didn't notice anything.
+    ///         - This might be a quirk in macOS (I've seen a lot of weird crashes lately on macOS 15.0) or there might be a race condition on the initialization process.
+    ///         - We plan to create a unified 'input thread' that handles all the input coming from the user synchronously. Maybe that could help here as well if this is a race-condition.
+    ///
+    ///         A part of those 10 consecutive crashes that occured withing 1.5 hours were actually a slightly different crash:
+    ///
+    ///         ```
+    ///         CoreFoundation                             0x191048124 __CFCheckCFInfoPACSignature + 4
+    ///         CoreFoundation                             0x190f8b898 CFMachPortGetContext + 28
+    ///         SkyLight                                   0x196ba2808 SLEventTapEnable + 68
+    ///         Mac Mouse Fix Helper.debug.dylib           0x10110fadc +[Modifiers setKeyboardModifierPriority:] + 80 (Modifiers.m:95)
+    ///         Mac Mouse Fix Helper.debug.dylib           0x1011678d4 SwitchMaster.toggleKbModTap() + 272 (SwitchMaster.swift:423)
+    ///         Mac Mouse Fix Helper.debug.dylib           0x1011660a0 SwitchMaster.remapsChanged(remaps:) + 476 (SwitchMaster.swift:286)
+    ///         Mac Mouse Fix Helper.debug.dylib           0x101166208 @objc SwitchMaster.remapsChanged(remaps:) + 52
+    ///         Mac Mouse Fix Helper.debug.dylib           0x1010ec060 +[Remap setRemaps:] + 328 (Remap.m:91)
+    ///         Mac Mouse Fix Helper.debug.dylib           0x1010ecfb4 +[Remap reload] + 3748 (Remap.m:242)
+    ///         Mac Mouse Fix Helper.debug.dylib           0x1010e33d4 +[Config updateDerivedStates] + 100 (Config.m:153)
+    ///         Mac Mouse Fix Helper.debug.dylib           0x1010e3364 +[Config loadFileAndUpdateStates] + 88 (Config.m:133)
+    ///         Mac Mouse Fix Helper.debug.dylib           0x1010e8138 __didReceiveMessage_block_invoke + 52 (MFMessagePort.m:178)
+    ///         Mac Mouse Fix Helper.debug.dylib           0x1010e75d4 didReceiveMessage + 1732 (MFMessagePort.m:231)
+    ///         ```
+    ///         -> The build number I saw for these was 24400 and 24402
+    
     _kbModPriority = priority;
     CGEventTapEnable(_kbModEventTap, _kbModPriority == kMFModifierPriorityActiveListen);
 }
