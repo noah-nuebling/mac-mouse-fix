@@ -29,14 +29,22 @@
             /// General
             
             kMFLinkIDBuyMeAMilkshake: ^{
-                return redirectionServiceLink(@"buy-me-a-milkshake", nil, nil, @{ @"locale": currentLocale });
+                return redirectionServiceLink(@"buy-me-a-milkshake", nil, nil, @{ @"locale": currentLocale }); /// Note: We might want to move this link to GitHub Sponsors (https://github.com/sponsors/noah-nuebling) at some point.
             },
             
             /// Non-browser links
             ///     Don't use redirection service for these so the browser isn't opened.
             kMFLinkIDMacOSSettingsLoginItems: ^{
+                /// Note: This is used on the 'is-disabled-toast' toast, which we only need to show on macOS 13 Ventura and later (Because it lets you disable background items from the system settings.)
                 return @"x-apple.systempreferences:com.apple.LoginItems-Settings.extension";
             },
+            kMFLinkIDMacOSSettingsPrivacyAndSecurity: ^{
+                /// Notes:
+                /// - This is used on the accessibility sheet.
+                /// - This link works on pre-Ventura *System Preferences* as well as Ventura-and-later *System Settings*. Evidence that this works pre-Ventura: This link shows up on a GitHub Gist which documents pre-Ventura System Preferences urls: https://gist.github.com/rmcdongit/f66ff91e0dad78d4d6346a75ded4b751
+                return @"x-apple.systempreferences:com.apple.preference.security?Privacy_Accessibility";
+            },
+            
             kMFLinkIDMailToNoah: ^{
                 return @"mailto:noah.n.public@gmail.com";
             },
@@ -63,9 +71,13 @@
                 return redirectionServiceLink(@"mmf-feedback-feature-request", nil, nil, @{ @"locale": currentLocale });
             },
             
-            /// Guides
+            /// Help
+            kMFLinkIDAuthorizeAccessibilityHelp: ^{ /// This link is opened when clicking `Help` on the Accessibility Sheet.
+                return redirectionServiceLink(@"mmf-authorize-accessibility-help", nil, nil, @{ @"locale": currentLocale }); /// https://github.com/noah-nuebling/mac-mouse-fix/discussions/101
+            },
             
-            kMFLinkIDGuidesAndCommunity: ^{
+            /// Guides
+            kMFLinkIDGuidesAndCommunity: ^{ /// Note: This link is found under `Help > View Guides or Ask the Community` and links to the GitHub Discussions page (as of Sep 2024) I'm not sure it makes sense to put this in the redirection-service, as it's very specific.
                 return redirectionServiceLink(@"mmf-guides-and-community", nil, nil, @{ @"locale": currentLocale });
             },
             kMFLinkIDGuides: ^{

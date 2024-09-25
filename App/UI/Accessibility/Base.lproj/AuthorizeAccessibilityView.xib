@@ -34,7 +34,7 @@
                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                     <userDefinedRuntimeAttributes>
-                        <userDefinedRuntimeAttribute type="string" keyPath="href" value="x-apple.systempreferences:com.apple.preference.security?Privacy_Accessibility"/>
+                        <userDefinedRuntimeAttribute type="string" keyPath="MFLinkID" value="MacOSSettingsPrivacyAndSecurity"/>
                     </userDefinedRuntimeAttributes>
                 </textField>
                 <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="8eQ-d3-USu">
@@ -66,7 +66,7 @@
                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                     <userDefinedRuntimeAttributes>
-                        <userDefinedRuntimeAttribute type="string" keyPath="href" value="https://github.com/noah-nuebling/mac-mouse-fix/discussions/101"/>
+                        <userDefinedRuntimeAttribute type="string" keyPath="MFLinkID" value="AuthorizeAccessibilityHelp"/>
                     </userDefinedRuntimeAttributes>
                 </textField>
                 <textField focusRingType="none" horizontalHuggingPriority="1000" verticalHuggingPriority="750" horizontalCompressionResistancePriority="999" verticalCompressionResistancePriority="1000" verifyAmbiguity="off" translatesAutoresizingMaskIntoConstraints="NO" id="ehG-P7-Fzq">

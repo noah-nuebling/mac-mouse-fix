@@ -29,11 +29,11 @@ typedef NSString * MFLinkID;
 #define kMFLinkIDMMFLActivate @"MMFLActivate"
 
 /// General
-
 #define kMFLinkIDBuyMeAMilkshake @"BuyMeAMilkshake"
 
 /// Local links
 #define kMFLinkIDMacOSSettingsLoginItems @"MacOSSettingsLoginItems"
+#define kMFLinkIDMacOSSettingsPrivacyAndSecurity @"MacOSSettingsPrivacyAndSecurity"
 #define kMFLinkIDMailToNoah @"MailToNoah"
 
 /// Main places
@@ -45,6 +45,9 @@ typedef NSString * MFLinkID;
 /// Feedback
 #define kMFLinkIDFeedbackFeatureRequest @"FeedbackFeatureRequest"
 #define kMFLinkIDFeedbackBugReport @"FeedbackBugReport"
+
+/// Help
+#define kMFLinkIDAuthorizeAccessibilityHelp @"AuthorizeAccessibilityHelp"
 
 /// Guides
 #define kMFLinkIDGuidesAndCommunity @"GuidesAndCommunity"

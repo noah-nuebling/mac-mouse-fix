@@ -2325,7 +2325,6 @@ System Preferences &gt; Mouse &gt; Tracking speed </string>
                                                             <userDefinedRuntimeAttribute type="number" keyPath="leftPadding">
                                                                 <integer key="value" value="30"/>
                                                             </userDefinedRuntimeAttribute>
-                                                            <userDefinedRuntimeAttribute type="string" keyPath="href_future" value="https://github.com/sponsors/noah-nuebling"/>
                                                             <userDefinedRuntimeAttribute type="string" keyPath="MFLinkID" value="BuyMeAMilkshake"/>
                                                         </userDefinedRuntimeAttributes>
                                                     </textField>

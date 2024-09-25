@@ -64,7 +64,7 @@ AuthorizeAccessibilityView *_accViewController;
 
 - (IBAction)AuthorizeButton:(NSButton *)sender {
     
-    /// This is done in IB instead now.
+    /// This is defined in IB instead now. 
     
     assert(false);
     
