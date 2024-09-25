@@ -40,6 +40,7 @@ Diese Leute haben viel mehr als den Standardpreis ausgegeben und mir einen **ung
 
 **September 2024**
 
+- 🇲🇽&nbsp;Francisco&nbsp;Villarreal - "No te rindas cabrón!"
 - 🇺🇸&nbsp;Cesar - "a must have app"
 - 🇩🇪&nbsp;Ripzhead - "Love it."
 - 🇬🇧&nbsp;Michael - "Thanks for a great value product!"
