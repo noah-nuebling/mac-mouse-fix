@@ -94,6 +94,12 @@ static CFMachPortRef _kbModEventTap;
     
     /// Sep 2024 - I just saw a crash report in console on CGEventTapEnable(). Here's the interesting part of the stack trace:
     ///     ```
+    ///     Exception Type:        EXC_BAD_ACCESS (SIGSEGV)
+    ///     Exception Codes:       KERN_INVALID_ADDRESS at 0x0000000000000008
+    ///     Exception Codes:       0x0000000000000001, 0x0000000000000008
+    ///
+    ///     [...]
+    ///
     ///     CoreFoundation                             0x191048124 __CFCheckCFInfoPACSignature + 4
     ///     CoreFoundation                             0x190f8b898 CFMachPortGetContext + 28
     ///     SkyLight                                   0x196ba2808 SLEventTapEnable + 68
@@ -107,8 +113,14 @@ static CFMachPortRef _kbModEventTap;
     ///         - This crash actually appeared like 10 times within 1.5 hours, but I didn't notice anything.
     ///         - This might be a quirk in macOS (I've seen a lot of weird crashes lately on macOS 15.0) or there might be a race condition on the initialization process.
     ///         - We plan to create a unified 'input thread' that handles all the input coming from the user synchronously. Maybe that could help here as well if this is a race-condition.
+    ///         - Update (2 days later - 27.09.2024) on one of these crashes (not sure if it was exactly the one I discussed above but the stack-track looked the same) I saw the following timestamps:
+    ///             "captureTime" : "2024-09-25 11:57:41.3923 +0200",
+    ///             "procLaunch" : "2024-09-25 11:49:20.5558 +0200",
+    ///             "uptime" : 94000,
+    ///              -> So the process had been running for a while which is a bit weird considering that that the crash happened from an init function. (But maybe I just hadn't used a mouse so far so that's why it was just initing? No clue.)
+    ///              -> But also, the stack trace below doesn't have any init functions ... and I really can't think of a way that CGEventTapEnable() could crash other than if the eventTap is NULL or not initialized... Idk. I don't get it. Problem for future Noah.
     ///
-    ///         A part of those 10 consecutive crashes that occured withing 1.5 hours were actually a slightly different crash:
+    ///         A part of those 10 consecutive crashes that occured within 1.5 hours were the same crash triggered by a different stack trace:
     ///
     ///         ```
     ///         CoreFoundation                             0x191048124 __CFCheckCFInfoPACSignature + 4
@@ -126,6 +138,10 @@ static CFMachPortRef _kbModEventTap;
     ///         Mac Mouse Fix Helper.debug.dylib           0x1010e75d4 didReceiveMessage + 1732 (MFMessagePort.m:231)
     ///         ```
     ///         -> The build number I saw for these was 24400 and 24402
+    ///
+    /// Solution ideas:
+    ///  1. If this crash is due to some race conditions or logic errors causing `_kbModEventTap` to be uninitialized or NULL here - try to fix that stuff.
+    ///  2. Otherwise check whether `_kbModEventTap` is valid and non-NULL before calling CGEventTapEnable.
     
     _kbModPriority = priority;
     CGEventTapEnable(_kbModEventTap, _kbModPriority == kMFModifierPriorityActiveListen);
