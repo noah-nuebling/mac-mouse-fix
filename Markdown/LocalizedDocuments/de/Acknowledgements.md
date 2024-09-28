@@ -40,6 +40,7 @@ Diese Leute haben viel mehr als den Standardpreis ausgegeben und mir einen **ung
 
 **September 2024**
 
+- 🇩🇪&nbsp;Stefan&nbsp;Jerg
 - 🇦🇺&nbsp;Liam&nbsp;Jones
 - 🇺🇸&nbsp;Andrew&nbsp;Selbie
 - 🇲🇽&nbsp;Francisco&nbsp;Villarreal - "No te rindas cabrón!"

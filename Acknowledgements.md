@@ -42,6 +42,7 @@ These people spent a lot more than the standard price and treated me to an **Inc
 
 **September 2024**
 
+- 🇩🇪&nbsp;Stefan&nbsp;Jerg
 - 🇦🇺&nbsp;Liam&nbsp;Jones
 - 🇺🇸&nbsp;Andrew&nbsp;Selbie
 - 🇲🇽&nbsp;Francisco&nbsp;Villarreal - "No te rindas cabrón!"
