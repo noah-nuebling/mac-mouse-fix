@@ -656,8 +656,8 @@
             filePath = "Helper/AccessibilityCheck.m"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "227"
-            endingLineNumber = "227"
+            startingLineNumber = "107"
+            endingLineNumber = "107"
             landmarkName = "+load"
             landmarkType = "7">
          </BreakpointContent>
@@ -676,6 +676,22 @@
             endingLineNumber = "24"
             landmarkName = "-applicationWillTerminate:"
             landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "D8AA1D70-F682-4AB1-B068-38295858FD81"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Helper/UNIXSignals.m"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "105"
+            endingLineNumber = "105"
+            landmarkName = "termination_signal_handler(signal_number, signal_info, context)"
+            landmarkType = "9">
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

@@ -12,6 +12,7 @@
 		4F09284228B8C71C00BDC2FF /* Hyperlink.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF665E725F2C92700689B77 /* Hyperlink.m */; };
 		4F09284528B8E82B00BDC2FF /* LicenseSheetController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F09284328B8E82B00BDC2FF /* LicenseSheetController.swift */; };
 		4F09284828B8EE7200BDC2FF /* LicenseSheetController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4F09284A28B8EE7200BDC2FF /* LicenseSheetController.xib */; };
+		4F12523E2CA9421600A079BD /* UNIXSignals.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F12523D2CA9421600A079BD /* UNIXSignals.m */; };
 		4F12952028D2D5E1009A49AB /* NSTextField+Extentions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F12951F28D2D5E1009A49AB /* NSTextField+Extentions.swift */; };
 		4F12952128D2D738009A49AB /* NSTextField+Extentions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F12951F28D2D5E1009A49AB /* NSTextField+Extentions.swift */; };
 		4F143E462B2D1F5600FE4092 /* fallback_licenseinfo_config.json in Resources */ = {isa = PBXBuildFile; fileRef = 4F143E452B2D1F5600FE4092 /* fallback_licenseinfo_config.json */; };
@@ -415,6 +416,8 @@
 		4F0BDC812B446A3C00AE65C1 /* MarkdownReadme.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = MarkdownReadme.md; sourceTree = "<group>"; };
 		4F0BDC832B446A3C00AE65C1 /* AppIconRound3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = AppIconRound3.png; sourceTree = "<group>"; };
 		4F0BDC842B446A3C00AE65C1 /* Apple-Keys-Demo.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = "Apple-Keys-Demo.gif"; sourceTree = "<group>"; };
+		4F12523C2CA9421600A079BD /* UNIXSignals.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UNIXSignals.h; sourceTree = "<group>"; };
+		4F12523D2CA9421600A079BD /* UNIXSignals.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = UNIXSignals.m; sourceTree = "<group>"; };
 		4F12951F28D2D5E1009A49AB /* NSTextField+Extentions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSTextField+Extentions.swift"; sourceTree = "<group>"; };
 		4F143E452B2D1F5600FE4092 /* fallback_licenseinfo_config.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = fallback_licenseinfo_config.json; sourceTree = "<group>"; };
 		4F143E482B2D1FA500FE4092 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
@@ -7198,6 +7201,8 @@
 				4FF6664625F2C93A00689B77 /* AppDelegate.m */,
 				4FF6664C25F2C93A00689B77 /* AccessibilityCheck.h */,
 				4FF6664B25F2C93A00689B77 /* AccessibilityCheck.m */,
+				4F12523C2CA9421600A079BD /* UNIXSignals.h */,
+				4F12523D2CA9421600A079BD /* UNIXSignals.m */,
 				4FF6661425F2C93A00689B77 /* Core */,
 				4FF6660825F2C93A00689B77 /* FileMonitor */,
 				4F78CEF22904414B0030086C /* UI */,
@@ -8097,6 +8102,7 @@
 				4FF6654F25F2C7B000689B77 /* NSArray+Additions.m in Sources */,
 				4FFA4E4328B7D28C0062A1FE /* ReactiveAnimatorProxy.swift in Sources */,
 				4FF6654525F2C7B000689B77 /* Locator.m in Sources */,
+				4F12523E2CA9421600A079BD /* UNIXSignals.m in Sources */,
 				4F5F3EF12756EC0400C350C0 /* RemapSwizzler.m in Sources */,
 				4FD66E0B27BB9BAE00F67559 /* EventUtility.m in Sources */,
 				4FFA4E3C28B79D9B0062A1FE /* NSAttributedString+Extensions.swift in Sources */,
