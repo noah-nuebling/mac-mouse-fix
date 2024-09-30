@@ -40,6 +40,7 @@ Diese Leute haben viel mehr als den Standardpreis ausgegeben und mir einen **ung
 
 **September 2024**
 
+- 🇧🇷&nbsp;Nathan&nbsp;E - "This cured my depression. Honestly though, thank you for this. It's an absolute lifesaver."
 - 🇨🇭&nbsp;João&nbsp;Moreno
 - 🇸🇪&nbsp;Www&nbsp;Gardendal&nbsp;Com - "Thank you Lord Jesus Christ, for Noah making this app arise!"
 - 🇩🇪&nbsp;Stefan&nbsp;Jerg
