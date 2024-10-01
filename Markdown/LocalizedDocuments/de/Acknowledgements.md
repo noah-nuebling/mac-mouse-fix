@@ -38,6 +38,10 @@ Danke für euren Beitrag! :)
 
 Diese Leute haben viel mehr als den Standardpreis ausgegeben und mir einen **unglaublichen Milchshake** spendiert. (Und manche haben sogar eine Nachricht hinterlassen) Danke für den _Zucker-Kick_!
 
+**Oktober 2024**
+
+- 🇺🇸&nbsp;Jesse&nbsp;Whitehouse - "This has become indispensable to my workflow. The easiest $10 I've spent for a computer utility since I discovered Browserosaurus."
+
 **September 2024**
 
 - 🇧🇷&nbsp;Nathan&nbsp;E - "This cured my depression. Honestly though, thank you for this. It's an absolute lifesaver."

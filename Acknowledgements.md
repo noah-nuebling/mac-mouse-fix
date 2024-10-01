@@ -40,6 +40,10 @@ Thanks for your support! :)
 
 These people spent a lot more than the standard price and treated me to an **Incredible Milkshake**. (And some even left a message) Thanks for the _sugar rush_!
 
+**October 2024**
+
+- 🇺🇸&nbsp;Jesse&nbsp;Whitehouse - "This has become indispensable to my workflow. The easiest $10 I've spent for a computer utility since I discovered Browserosaurus."
+
 **September 2024**
 
 - 🇧🇷&nbsp;Nathan&nbsp;E - "This cured my depression. Honestly though, thank you for this. It's an absolute lifesaver."
