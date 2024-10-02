@@ -40,6 +40,7 @@ Diese Leute haben viel mehr als den Standardpreis ausgegeben und mir einen **ung
 
 **Oktober 2024**
 
+- 🇱🇹&nbsp;Martin - "Love these small apps that do just one thing, and do it so well. Worth every penny."
 - 🇺🇸&nbsp;Jesse&nbsp;Whitehouse - "This has become indispensable to my workflow. The easiest $10 I've spent for a computer utility since I discovered Browserosaurus."
 
 **September 2024**
