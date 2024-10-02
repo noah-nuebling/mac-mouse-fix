@@ -40,6 +40,7 @@ Diese Leute haben viel mehr als den Standardpreis ausgegeben und mir einen **ung
 
 **Oktober 2024**
 
+- 🇵🇱&nbsp;Szymon - "Rewelacja! W końcu można sensownie korzystać z alternatywnych myszy, z płynnym przewijaniem i programowalnymi przyciskami."
 - 🇬🇧&nbsp;Andu
 - 🇬🇧&nbsp;Jon&nbsp;Linklater&nbsp;Johnson
 - 🇱🇹&nbsp;Martin - "Love these small apps that do just one thing, and do it so well. Worth every penny."
