@@ -42,6 +42,7 @@ These people spent a lot more than the standard price and treated me to an **Inc
 
 **October 2024**
 
+- 🇬🇧&nbsp;Andu
 - 🇬🇧&nbsp;Jon&nbsp;Linklater&nbsp;Johnson
 - 🇱🇹&nbsp;Martin - "Love these small apps that do just one thing, and do it so well. Worth every penny."
 - 🇺🇸&nbsp;Jesse&nbsp;Whitehouse - "This has become indispensable to my workflow. The easiest $10 I've spent for a computer utility since I discovered Browserosaurus."
