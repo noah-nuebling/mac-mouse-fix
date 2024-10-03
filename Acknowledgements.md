@@ -42,6 +42,7 @@ These people spent a lot more than the standard price and treated me to an **Inc
 
 **October 2024**
 
+- 🇨🇿&nbsp;Michal&nbsp;Krause - "Great app, highly recommended!"
 - 🇨🇭&nbsp;Veeam&nbsp;Software&nbsp;Group&nbsp;Gmbh
 - 🇵🇱&nbsp;Szymon - "Rewelacja! W końcu można sensownie korzystać z alternatywnych myszy, z płynnym przewijaniem i programowalnymi przyciskami."
 - 🇬🇧&nbsp;Andu
