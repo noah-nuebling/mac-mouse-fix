@@ -12,7 +12,7 @@
 		4F09284228B8C71C00BDC2FF /* Hyperlink.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF665E725F2C92700689B77 /* Hyperlink.m */; };
 		4F09284528B8E82B00BDC2FF /* LicenseSheetController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F09284328B8E82B00BDC2FF /* LicenseSheetController.swift */; };
 		4F09284828B8EE7200BDC2FF /* LicenseSheetController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4F09284A28B8EE7200BDC2FF /* LicenseSheetController.xib */; };
-		4F12523E2CA9421600A079BD /* UNIXSignals.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F12523D2CA9421600A079BD /* UNIXSignals.m */; };
+		4F12525C2CAA88A400A079BD /* UNIXSignals.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F12523D2CA9421600A079BD /* UNIXSignals.m */; };
 		4F12952028D2D5E1009A49AB /* NSTextField+Extentions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F12951F28D2D5E1009A49AB /* NSTextField+Extentions.swift */; };
 		4F12952128D2D738009A49AB /* NSTextField+Extentions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F12951F28D2D5E1009A49AB /* NSTextField+Extentions.swift */; };
 		4F143E462B2D1F5600FE4092 /* fallback_licenseinfo_config.json in Resources */ = {isa = PBXBuildFile; fileRef = 4F143E452B2D1F5600FE4092 /* fallback_licenseinfo_config.json */; };
@@ -8083,6 +8083,7 @@
 				4FDE75AA28B269AE00662314 /* Randomizer.swift in Sources */,
 				4F8A44532925311B00361EFF /* Symbols.m in Sources */,
 				4F626E99292A842D00E6FFD5 /* KeyCaptureMode.m in Sources */,
+				4F12525C2CAA88A400A079BD /* UNIXSignals.m in Sources */,
 				4FFA4E3B28B79D980062A1FE /* String+Extensions.swift in Sources */,
 				4FF0BD4B266A8B7E003935EA /* Bezier.swift in Sources */,
 				4FA13FC228B3A2D3005C68FC /* TrialNotificationWindow.swift in Sources */,
@@ -8102,7 +8103,6 @@
 				4FF6654F25F2C7B000689B77 /* NSArray+Additions.m in Sources */,
 				4FFA4E4328B7D28C0062A1FE /* ReactiveAnimatorProxy.swift in Sources */,
 				4FF6654525F2C7B000689B77 /* Locator.m in Sources */,
-				4F12523E2CA9421600A079BD /* UNIXSignals.m in Sources */,
 				4F5F3EF12756EC0400C350C0 /* RemapSwizzler.m in Sources */,
 				4FD66E0B27BB9BAE00F67559 /* EventUtility.m in Sources */,
 				4FFA4E3C28B79D9B0062A1FE /* NSAttributedString+Extensions.swift in Sources */,

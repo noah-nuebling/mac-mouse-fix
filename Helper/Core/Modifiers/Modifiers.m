@@ -142,6 +142,50 @@ static CFMachPortRef _kbModEventTap;
     /// Solution ideas:
     ///  1. If this crash is due to some race conditions or logic errors causing `_kbModEventTap` to be uninitialized or NULL here - try to fix that stuff.
     ///  2. Otherwise check whether `_kbModEventTap` is valid and non-NULL before calling CGEventTapEnable.
+    ///
+    /// Update:
+    ///     (03.10.2024)
+    ///     I just caught what looks exactly like crash of the second stacktrace (the one that starts with `didReceiveMessage` at MFMessagePort.m:231) in the debugger. `didReceiveMessage` handled the message `@"configFileChanged"`,
+    ///         (this is not at line 231 though - not sure what's going on there, I feel like the line numbers in the crash report aren't accurate)
+    ///         The build number is 22875, we're still on the master branch, where we recently shipped 3.0.3.
+    ///         IIRC, when the crash happened, I was on the AccessibilitySheet in the mainApp, and from that I conclude that the helper didn't have accessibility permissions.
+    ///     Tthrough examining the program state, I concluded that most likely, the "Post-check init" in AccessibilityCheck.m had not run. yet, meaning that most of the `load_Manual` methods hadn't been called, leading to all these modules being uninitialized and having many NULL values for their state.
+    ///         `_kbModEventTap` was one of those pieces of state that was still NULL, due to not being initialized, yet.
+    ///         This explains, why `CGEventTapEnable` crashed, since we're passing NULL to it as the event tap.
+    ///     Based on this, I think this crash can happen either:
+    ///         1. When the helper is started up without accessibility permissions, (causing it to not do the "Post-check init" at all, since the Post-check init would crash without accessibility permissions.)
+    ///             and then receives a message that causes interaction with one of the uninitialized modules (in this case the Modifiers.m module).
+    ///         2. When the helper is started up normally, but it receives a message interacting with an uninitialized module,  right after it initializes the message port, but right before it can initialize the module.
+    ///             This is sort of a race condition.
+    /// Solution Ideas:
+    ///     1. We could use traditional `+ initializate` methods instead of ` + load_Manual`. Those would trigger as soon as anybody tries to interact with the module, so we would never interact with an uninitialized module.
+    ///         This has downsides:
+    ///         - We have non-deterministic initialization order, which might introduce further complicated bugs.
+    ///         - We'd then still have to check whether we already have accessibilityAccess before interacting with the "Post-check init" modules, otherwise they'd crash when we try to initialize them. (Trying to create a CGEventTaps without AccessibilityAccess permissions crashes IIRC. This is the whole reason for the "Post-check" init stuff.)
+    ///             So I feel like we'd have to do the same amount of 'manual work' just in a different way? Haven't really thought this through.
+    ///     2. I think the following would be a comprehensive solution:
+    ///         We give all of the modules that the MFMessagePort.m interacts with an 'I am initialized' field. (Or at least give that field to all the "Post-check init" modules which are possibly not yet initialized when the MFMessagePort is already running.)
+    ///         Then, inside the MFMessagePort, before interacting with the module, we query whether it's initialized, yet.
+    ///         1. If the module is initialized: We interact with it normally
+    ///         2. If the module is *not* initialized: We don't interact with the module and send a special 'not-yet-initialized' response back to the message-sender.
+    ///             This special response lets the message sender respond to the situation (e.g. by trying to send the message again 500ms second later.)
+    ///         On second thought:
+    ///             If we do this, there could still be race-conditions and bugs: E.g. when the MFMessagePort interacts with a module that is already initialized, but then that module tries to interact with another module that is not yet initialized - that module could still crash and be buggy.
+    ///             To solve this, we could perhaps have a global variable that says 'the Helper process is *entirely* initialized', which will be set after the "Post-check init" has completed. Then, inside the MFMessagePort,
+    ///                 we create a minimal whitelist of necessary messages that are handled before the entire Helper is initialized, and all other messages are ignored until the helper process is entirely initialized.
+    ///                 Then we need to manually ensure that these explicitly whitelisted messages are pre-init-interaction safe (as described in Solution Idea 3.), but for all the other messages we can just assume that everything is initialized when they are handled.
+    ///     3. Make all the 'Post-check init' modules 'pre-init-interaction safe', meaning that, if they're interacted with, before they are initialized, they don't crash, and instead just do nothing or return NULL or something.
+    ///         However, I think this is worse than idea `2.`, because:
+    ///         1. We'd have to make sure that every entry point of every module that MFMessagePort ever interacts with is 'safe' in this way, which feels like hard to keep track of
+    ///         2. Not sure how we'd implement notifying the messageSender that their message was ignored because a module wasn't initialized, yet. If we dont' do this, that could lead to other bugs or inconsistent behaviour.
+    ///         3. (Forgot what I wanted to write here.)
+    ///     4. We could add an 'accessibilityAccessEnabled state to the SwitchMaster, and make it so that, when there's no accessibilityAccess, the SwitchMaster does not try to enable any CGEventTaps. That would also prevent this specific crash. But I'm not sure this would prevent all related bugs and crashes. I think solution idea 2. seems a bit more robust.
+    ///
+    ///     Side idea:
+    ///         Instead of notiying the message sender that the message was ignored, we could do a system that saves the received messages in a queue until the helper is fully initialized - and then we handle the the messages.
+    ///             My intuition is though that this complicates things, and has higher likelyhood to lead to weird unexpected behaviour or bugs.
+    ///
+    /// TODO: Implement Solution Idea 2.
     
     _kbModPriority = priority;
     CGEventTapEnable(_kbModEventTap, _kbModPriority == kMFModifierPriorityActiveListen);
