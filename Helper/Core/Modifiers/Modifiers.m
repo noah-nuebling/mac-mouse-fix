@@ -185,7 +185,7 @@ static CFMachPortRef _kbModEventTap;
     ///         Instead of notiying the message sender that the message was ignored, we could do a system that saves the received messages in a queue until the helper is fully initialized - and then we handle the the messages.
     ///             My intuition is though that this complicates things, and has higher likelyhood to lead to weird unexpected behaviour or bugs.
     ///
-    /// TODO: Implement Solution Idea 2.
+    /// TODO: @crash Implement Solution Idea 2.
     
     _kbModPriority = priority;
     CGEventTapEnable(_kbModEventTap, _kbModPriority == kMFModifierPriorityActiveListen);

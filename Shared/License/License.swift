@@ -516,7 +516,7 @@ fileprivate class Gumroad: NSObject {
             
             do {
                 /// Parse response as dict
-                let dict: [String: Any] = try JSONSerialization.jsonObject(with: data, options: []) as! [String : Any] /// I've seen an error from a user where the JSON parsing failed. Maybe we could address this through using `options: [.fragmentsAllowed]`? Maybe we could store the raw string from server on the error and show that in case the serialization fails to debug more easily? See mail where user had the serialization-based error: message:<CAA7L-uPZUyVntBTXTeJJ0SOCpeHNPnEzYo2C3wqtdbFTG0e_7A@mail.gmail.com>
+                let dict: [String: Any] = try JSONSerialization.jsonObject(with: data, options: []) as! [String : Any] /// I've seen an error from a user where the JSON parsing failed. Maybe we could address this through using `options: [.fragmentsAllowed]`? Maybe we could store the raw string from server on the error and show that in case the serialization fails to debug more easily? See mail where user had the serialization-based error: message:<CAA7L-uPZUyVntBTXTeJJ0SOCpeHNPnEzYo2C3wqtdbFTG0e_7A@mail.gmail.com> || TODO: @UX fix this.
                 
                 /// Map non-success response to error
                 guard let s = dict["success"], s is Bool, s as! Bool == true else {
