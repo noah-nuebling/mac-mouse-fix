@@ -9,8 +9,49 @@
 
 import Cocoa
 
-@objc class LicenseUtility: NSObject {
+func MFCatch<R, E>(_ workload: () throws(E) -> R) -> (R?, E?) {
+    
+    /// (Sync version)
+    
+    /// Explanation:
+    ///     Takes a throwing closure `workload` as its argument.
+    ///     Runs `workload` and catches any errors it might throw.
+    ///     Returns a tuple of the result and the thrown error. Exactly one of the two will be nil.
+    ///
+    ///     This is very similar to Swift's native `Result` type, but it's simpler, and easier to integrate into our existing completion-handler-based asynchronous code for handling licensing stuff.
+    
+    var result: R? = nil
+    var error: E? = nil
+    
+    do {
+        result = try workload()
+    } catch let e {
+        error = e
+    }
+    
+    return (result, error)
+}
 
+func MFCatch<R, E>(_ workload: () async throws(E) -> R) async -> (R?, E?) {
+    
+    /// (Async version)
+    ///
+    /// Explanation:
+    ///     This is like the regular MFCatch function, but it works in an async context
+    
+    var result: R? = nil
+    var error: E? = nil
+    
+    do {
+        result = try await workload()
+    } catch let e {
+        error = e
+    }
+    
+    return (result, error)
+}
+
+@objc class LicenseUtility: NSObject {
     
     @objc static func buyMMF(licenseConfig: LicenseConfig, locale: Locale, useQuickLink: Bool) {
         

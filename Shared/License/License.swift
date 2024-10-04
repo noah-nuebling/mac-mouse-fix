@@ -399,8 +399,8 @@ extension MFLicenseAndTrialState: Equatable {
 
 // MARK: Gumroad api wrapper
 
-fileprivate class Gumroad: NSObject {
-        
+class Gumroad: NSObject {
+    
     //
     // MARK: Lvl 1
     //
@@ -436,28 +436,28 @@ fileprivate class Gumroad: NSObject {
             completionHandler(isValidKey, activations, data, error, urlResponse)
         }
         
-        
-        sendGumroadAPIRequest(method: "/licenses/verify",
-                              args: ["product_permalink": productPermalink,
-                                     "license_key": key,
-                                     "increment_uses_count": incrementUsageCount ? "true" : "false"],
-                              completionHandler: { data, error, urlResponse in
+        /// Start an async-context
+        ///     Notes:
+        ///     - We're using .detached because .init schedules on the current Actor according to the docs. We're not trying to use any Actors.
+        ///     - The `priority:` really depends on where this is called from. Sometimes it should be`.userInitiated` and sometimes`.background`
+        Task.detached(priority: .userInitiated, operation: {
             
-            if let message = error?.userInfo["message"] as? NSString, message == "That license does not exist for the provided product." {
+            var (serverResponse, error, urlResponse) = await sendGumroadAPIRequest(method: "/licenses/verify",
+                                                                             args: ["product_permalink": productPermalink,
+                                                                                    "license_key": key,
+                                                                                    "increment_uses_count": incrementUsageCount ? "true" : "false"])
+            
+            if  let message = error?.userInfo["message"] as? NSString,
+                message == "That license does not exist for the provided product." {
                 
                 /// If license doesn't exist for new product, try old product
-                
-                sendGumroadAPIRequest(method: "/licenses/verify",
-                                      args: ["product_permalink": productPermalinkOld,
-                                             "license_key": key,
-                                             "increment_uses_count": incrementUsageCount ? "true" : "false"],
-                                      completionHandler: { data, error, urlResponse in
-                    workload(error, data, urlResponse)
-                })
-                
-            } else {
-                workload(error, data, urlResponse)
+                (serverResponse, error, urlResponse) = await sendGumroadAPIRequest(method: "/licenses/verify",
+                                                                                 args: ["product_permalink": productPermalinkOld,
+                                                                                        "license_key": key,
+                                                                                        "increment_uses_count": incrementUsageCount ? "true" : "false"])
             }
+            
+            workload(error, serverResponse, urlResponse)
         })
     }
     
@@ -468,9 +468,12 @@ fileprivate class Gumroad: NSObject {
         
         fatalError()
         
-        sendGumroadAPIRequest(method: "/licenses/decrement_uses_count",
-                              args: ["access_token": accessToken, "product_permalink": productPermalink,"license_key": key],
-                              completionHandler: completionHandler)
+        Task {
+            let (serverResponse, error, urlResponse) = await sendGumroadAPIRequest(method: "/licenses/decrement_uses_count",
+                                                args: ["access_token": accessToken, "product_permalink": productPermalink,"license_key": key])
+            
+            completionHandler(serverResponse, error, urlResponse)
+        }
     }
     
     //
@@ -483,107 +486,105 @@ fileprivate class Gumroad: NSObject {
     
     /// Functions
     
-    private static func sendGumroadAPIRequest(method: String, args: [String: Any], completionHandler: @escaping (_ serverResponse: [String: Any]?, _ error: NSError?, _ urlResponse: URLResponse?) -> ()) {
+    private static func sendGumroadAPIRequest(method: String, args: [String: Any]) async -> (serverResponse: [String: Any]?, error: NSError?, urlResponse: URLResponse?) {
         
         /// Note: The response data never contains the secret access token, so you can print the return values for debugging
         
         /// Create request
+        let request = self.createAPIRequest(requestURL: gumroadAPIURL.appending(method), args: args)
         
-        let request = gumroadAPIRequest(method: method, args: args)
+        /// Get server response
+        let (result, error_) = await MFCatch { try await URLSession.shared.data(for: request) }
+        let (data, urlResponse) = result ?? (nil, nil)
         
+        /// Cast to NSError
+        ///     I think if the error is not an NSError, it just becomes nil instead.
+        ///     Maybe we should handle that case. Note: If you do handle it, don't forget the do catch below.
+        let error = error_ as NSError?
         
-        /// Send request
-
-        let task = URLSession.shared.dataTask(with: request) { data, urlResponse, error in
-            
-            /// Handle response
-            
-            /// Cast to NSError
-            ///     I think if the error is not an NSError, it just becomes nil instead.
-            ///     Maybe we should handle that case. Note: If you do handle it, don't forget the do catch below.
-            let error = error as NSError?
-            
-            /// Guard null response
-            
-            guard
-                let data = data,
-                let urlResponse = urlResponse,
-                error == nil
-            else {
-                completionHandler(nil, error, urlResponse)
-                return
-            }
-            
-            do {
-                /// Parse response as dict
-                let dict: [String: Any] = try JSONSerialization.jsonObject(with: data, options: []) as! [String : Any] /// I've seen an error from a user where the JSON parsing failed. Maybe we could address this through using `options: [.fragmentsAllowed]`? Maybe we could store the raw string from server on the error and show that in case the serialization fails to debug more easily? See mail where user had the serialization-based error: message:<CAA7L-uPZUyVntBTXTeJJ0SOCpeHNPnEzYo2C3wqtdbFTG0e_7A@mail.gmail.com> || TODO: @UX fix this.
-                
-                /// Map non-success response to error
-                guard let s = dict["success"], s is Bool, s as! Bool == true else {
-                    let error = NSError(domain: MFLicenseErrorDomain, code: Int(kMFLicenseErrorCodeGumroadServerResponseError), userInfo: dict)
-                    completionHandler(dict, error, urlResponse)
-                    return
-                }
-                
-                /// Success!
-                /// Call the callback!
-                completionHandler(dict, error, urlResponse)
-                
-            } catch {
-                
-                /// Cast to NSError
-                let error = error as NSError?
-                
-                /// Guard not convertible to dict
-                completionHandler(nil, error, urlResponse) /// This is the `error` from the catch statement not the closure argument
-            }
+        /// Guard error/nil
+        
+        guard
+            let data = data,
+            let urlResponse = urlResponse,
+            error == nil
+        else {
+            return (nil, error, urlResponse)
         }
         
-        task.resume()
+        do {
+            /// Parse response as JSON dict
+            let dict: [String: Any] = try JSONSerialization.jsonObject(with: data, options: []) as! [String : Any] /// I've seen an error from a user where the JSON parsing failed. Maybe we could address this through using `options: [.fragmentsAllowed]`? Maybe we could store the raw string from server on the error and show that in case the serialization fails to debug more easily? See mail where user had the serialization-based error: message:<CAA7L-uPZUyVntBTXTeJJ0SOCpeHNPnEzYo2C3wqtdbFTG0e_7A@mail.gmail.com> || TODO: @UX fix this.
+            
+            /// Map non-success response to error
+            ///     TODO: Consider just returning the data as it is and mapping the server responses to errors at a higher level in the processing chain? That way it might be more transparent where the errors come from.
+            guard let s = dict["success"], s is Bool, s as! Bool == true else {
+                let error = NSError(domain: MFLicenseErrorDomain, code: Int(kMFLicenseErrorCodeGumroadServerResponseError), userInfo: dict)
+                return (dict, error, urlResponse)
+            }
+            
+            /// Success!
+            /// Call the callback!
+            return (dict, error, urlResponse)
+            
+        } catch let e {
+            
+            /// Cast to NSError
+            let error = e as NSError?
+            
+            /// Guard not convertible to dict
+            return (nil, error, urlResponse) /// Note that this is the `error` from the catch statement (json serialization) not the server response
+        }
     }
     
-    private static func gumroadAPIRequest(method: String, args: [String: Any]) -> URLRequest {
+    // MARK: - Reusable API stuff
+        
+    static func createAPIRequest(requestURL: String, args: [String: Any]) -> URLRequest {
         
         /// Also see: https://stackoverflow.com/questions/26364914/http-request-in-swift-with-post-method
         
         /// Create basic request
-        let requestURL = gumroadAPIURL.appending(method)
         var request = URLRequest(url: URL(string: requestURL)!, cachePolicy: .reloadIgnoringLocalAndRemoteCacheData, timeoutInterval: 10.0)
         request.httpMethod = "POST"
         
         /// Set header fields
         ///     Probably unnecessary
+        request.setValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type") /// Make it use in-url params
+        request.setValue("application/json", forHTTPHeaderField: "Accept") /// Make it return a dict
         
-        /// Make it use in-url params
-        request.setValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
+        /// Create query string from the args
+        ///     Notes:
+        ///     - You can also do this using the URLComponents API. but apparently it doesn't correctly escape '+' characters, so not using it that.
+        ///     - .Since we're sending the args in the request body instead of as part of the URL, does it really make sense to convert it to a queryString first?
+        let queryString = args.asQueryString()
         
-        /// Make it return a dict
-        request.setValue("application/json", forHTTPHeaderField: "Accept")
-        
-        /// Set message body
-        
-        /// Create query string from dict and set to request
-        ///     You can also do this using URLComponents API. but apparently it doesn't correctly escape '+' characters, so not using it that.
-        request.httpBody = args.percentEncoded()
+        /// Store the query string in the request body
+        request.httpBody = queryString.data(using: .utf8)
         
         /// Return
-        
         return request
     }
 }
-
+    
 // MARK: - URL handling helper stuff
 ///  Src: https://stackoverflow.com/a/26365148/10601702
 
 extension Dictionary {
-    func percentEncoded() -> Data? {
-        map { key, value in
+    func asQueryString() -> String {
+        
+        /// Turn the dictionary into a URL ?query-string
+        ///     See https://en.wikipedia.org/wiki/Query_string
+        ///     (Not including the leading `?` that usually comes between a URL and the query string.)
+        
+        let a: [String] = map { key, value in
             let escapedKey = "\(key)".addingPercentEncoding(withAllowedCharacters: .urlQueryValueAllowed) ?? ""
             let escapedValue = "\(value)".addingPercentEncoding(withAllowedCharacters: .urlQueryValueAllowed) ?? ""
             return escapedKey + "=" + escapedValue
         }
-        .joined(separator: "&")
-        .data(using: .utf8)
+        
+        let b: String = a.joined(separator: "&")
+        
+        return b
     }
 }
 
