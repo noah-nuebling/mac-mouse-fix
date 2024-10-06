@@ -310,8 +310,15 @@ extension MFLicenseAndTrialState: Equatable {
         }
         
         /// Ask gumroad to verify
-        Gumroad.getLicenseInfo(key, incrementUsageCount: incrementUsageCount) { isValidKey, nOfActivations, serverResponse, error, urlResponse in
+        
+        /// Start an async-context
+        ///     Notes:
+        ///     - We're using .detached because .init schedules on the current Actor according to the docs. We're not trying to use any Actors.
+        ///     - The `priority:` really depends on where this is called from. Sometimes it should be`.userInitiated` and sometimes`.background`
+        Task.detached(priority: .userInitiated, operation: {
             
+            let (isValidKey, nOfActivations, serverResponse, error, urlResponse) = await Gumroad.getLicenseInfo(key, incrementUsageCount: incrementUsageCount)
+                
             if isValidKey { /// Gumroad says the license is valid
                 
                 /// Validate activation count
@@ -322,14 +329,14 @@ extension MFLicenseAndTrialState: Equatable {
                 }
                 
                 if !validActivationCount {
-
+                    
                     let error = NSError(domain: MFLicenseErrorDomain, code: Int(kMFLicenseErrorCodeInvalidNumberOfActivations), userInfo: ["nOfActivations": nOfActivations ?? -1, "maxActivations": licenseConfig.maxActivations])
                     
                     wrapUp(false, kMFValueFreshnessFresh, error, licenseConfig, completionHandler)
                     return
                 }
-                    
-                    
+                
+                
                 /// Is licensed!
                 
                 wrapUp(true, kMFValueFreshnessFresh, nil, licenseConfig, completionHandler)
@@ -365,7 +372,7 @@ extension MFLicenseAndTrialState: Equatable {
                     return
                 }
             }
-        }
+        })
     }
     
     // MARK: Cache interface
@@ -415,70 +422,56 @@ class Gumroad: NSObject {
     
     /// Functions
     
-    static func getLicenseInfo(_ key: String, incrementUsageCount: Bool, completionHandler: @escaping (_ isValidKey: Bool, _ nOfActivations: Int?, _ serverResponse: [String: Any]?, _ error: NSError?, _ urlResponse: URLResponse?) -> ()) {
+    static func getLicenseInfo(_ key: String, incrementUsageCount: Bool) async -> (isValidKey: Bool, nOfActivations: Int?, serverResponse: [String: Any]?, error: NSError?, urlResponse: URLResponse?) {
+            
+        var (serverResponse, error, urlResponse) = await sendDictionaryBasedAPIRequest(requestURL: gumroadAPIURL.appending("/licenses/verify"),
+                                                                               args: ["product_permalink": productPermalink,
+                                                                                      "license_key": key,
+                                                                                      "increment_uses_count": incrementUsageCount ? "true" : "false"])
         
-        let workload = { (_ error: NSError?, _ serverResponse: [String : Any]?, _ urlResponse: URLResponse?) in
+        if  let message = error?.userInfo["message"] as? NSString,
+            message == "That license does not exist for the provided product." {
             
-            /// Guard:  Error
-            if error != nil {
-                completionHandler(false, nil, serverResponse, error, urlResponse)
-                return
-            }
-            
-            /// Unwrap serverResponse
-            guard let serverResponse = serverResponse else {
-                fatalError("The serverResponse was nil even though the error was also nil. There's something wrong in our code.")
-            }
-            
-            /// Guard: Map non-success response to error
-            ///         - Maybe we should map the server responses to errors at a higher level in the processing chain. With the goal to centralize the knowledge about how the Gumroad server response should be structured in one place in the code.
-            guard
-                let success = (serverResponse["success"] as? Bool), /// We expect the Gumroad response to have a boolean field called "success" which tells us whether the license was successfully validated or something went wrong.
-                success == true
-            else {
-                let error = NSError(domain: MFLicenseErrorDomain,
-                                    code: Int(kMFLicenseErrorCodeGumroadServerResponseError),
-                                    userInfo: serverResponse)
-                
-                completionHandler(false, nil, serverResponse, error, urlResponse)
-                return
-            }
-            
-            /// Gather info from response dict
-            ///     None of these should be null but we're checking the extracted data one level above.
-            ///     (So it's maybe a little unnecessary that we extract data at all at this level)
-            ///     TODO: Maybe we should consider merging lvl 1 and lvl 2 since lvl 2 really only does the data validation)
-            
-            let isValidKey = serverResponse["success"] as? Bool ?? false
-            let activations = serverResponse["uses"] as? Int
-            
-            /// Call completions handler
-            completionHandler(isValidKey, activations, serverResponse, error, urlResponse)
+            /// If license doesn't exist for new product, try old product
+            (serverResponse, error, urlResponse) = await sendDictionaryBasedAPIRequest(requestURL: gumroadAPIURL.appending("/licenses/verify"),
+                                                                               args: ["product_permalink": productPermalinkOld,
+                                                                                      "license_key": key,
+                                                                                      "increment_uses_count": incrementUsageCount ? "true" : "false"])
         }
         
-        /// Start an async-context
-        ///     Notes:
-        ///     - We're using .detached because .init schedules on the current Actor according to the docs. We're not trying to use any Actors.
-        ///     - The `priority:` really depends on where this is called from. Sometimes it should be`.userInitiated` and sometimes`.background`
-        Task.detached(priority: .userInitiated, operation: {
+        /// Guard:  Error
+        if error != nil {
+            return (false, nil, serverResponse, error, urlResponse)
+        }
+        
+        /// Unwrap serverResponse
+        guard let serverResponse = serverResponse else {
+            fatalError("The serverResponse was nil even though the error was also nil. There's something wrong in our code.")
+        }
+        
+        /// Guard: Map non-success response to error
+        ///         - Maybe we should map the server responses to errors at a higher level in the processing chain. With the goal to centralize the knowledge about how the Gumroad server response should be structured in one place in the code.
+        guard
+            let success = (serverResponse["success"] as? Bool), /// We expect the Gumroad response to have a boolean field called "success" which tells us whether the license was successfully validated or something went wrong.
+            success == true
+        else {
+            let error = NSError(domain: MFLicenseErrorDomain,
+                                code: Int(kMFLicenseErrorCodeGumroadServerResponseError),
+                                userInfo: serverResponse)
             
-            var (serverResponse, error, urlResponse) = await sendDictionaryBasedAPIRequest(requestURL: gumroadAPIURL.appending("/licenses/verify"),
-                                                                                   args: ["product_permalink": productPermalink,
-                                                                                          "license_key": key,
-                                                                                          "increment_uses_count": incrementUsageCount ? "true" : "false"])
-            
-            if  let message = error?.userInfo["message"] as? NSString,
-                message == "That license does not exist for the provided product." {
-                
-                /// If license doesn't exist for new product, try old product
-                (serverResponse, error, urlResponse) = await sendDictionaryBasedAPIRequest(requestURL: gumroadAPIURL.appending("/licenses/verify"),
-                                                                                   args: ["product_permalink": productPermalinkOld,
-                                                                                          "license_key": key,
-                                                                                          "increment_uses_count": incrementUsageCount ? "true" : "false"])
-            }
-            
-            workload(error, serverResponse, urlResponse)
-        })
+            return (false, nil, serverResponse, error, urlResponse)
+        }
+        
+        /// Gather info from response dict
+        ///     None of these should be null but we're checking the extracted data one level above.
+        ///     (So it's maybe a little unnecessary that we extract data at all at this level)
+        ///     TODO: Maybe we should consider merging lvl 1 and lvl 2 since lvl 2 really only does the data validation)
+        
+        let isValidKey = serverResponse["success"] as? Bool ?? false
+        let activations = serverResponse["uses"] as? Int
+        
+        /// Call completions handler
+        return (isValidKey, activations, serverResponse, error, urlResponse)
     }
     
     private static func decrementUsageCount(key: String, accessToken: String, completionHandler: @escaping (_ serverResponse: [String: Any]?, _ error: NSError?, _ urlResponse: URLResponse?) -> ()) {
