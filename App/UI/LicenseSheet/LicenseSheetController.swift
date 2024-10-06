@@ -8,6 +8,7 @@
 //
 
 import Cocoa
+import CocoaLumberjackSwift
 
 @objc class LicenseSheetController: NSViewController, NSTextFieldDelegate {
 
@@ -184,14 +185,38 @@ import Cocoa
                         
                     case kMFLicenseErrorCodeInvalidNumberOfActivations:
                         
-                        let nOfActivations = error.userInfo["nOfActivations"] as! Int
-                        let maxActivations = error.userInfo["maxActivations"] as! Int
+                        let nOfActivations = (error.userInfo["nOfActivations"] as? Int) ?? -1
+                        let maxActivations = (error.userInfo["maxActivations"] as? Int) ?? -1
                         let messageFormat = NSLocalizedString("license-toast.activation-overload", comment: "First draft: This license has been activated **%d** times. The maximum is **%d**.\n\nBecause of this, the license has been invalidated. This is to prevent piracy. If you have other reasons for activating the license this many times, please excuse the inconvenience.\n\nJust [reach out](mailto:noah.n.public@gmail.com) and I will provide you with a new license! Thanks for understanding.")
                         message = String(format: messageFormat, nOfActivations, maxActivations)
+                    
+                    case kMFLicenseErrorCodeServerResponseInvalid:
+                        
+                        /// Sidenote:
+                        ///     We added this localizedStringKey on the master branch inside .strings files, while we already replaced all the .strings files with .xcstrings files on the feature-strings-catalog branch. -- Don't forget to port this string over, when you merge the master changes into feature-strings-catalog! (Last updated: Oct 2024)
+                        let messageFormat = NSLocalizedString("license-toast.server-response-invalid", comment: "First draft: **There was an issue with the licensing server**\n\nPlease try again later.\n\nIf the issue persists, please reach out to me [here](mailto:noah.n.public@gmail.com).")
+                        message = String(messageFormat)
+                        
+                        do {
+                            /// Log extended debug info to the console.
+                            ///     We're not showing this to the user, since it's verbose and confusing and the error is on Gumroad's end and should be resolved in time.
+                            
+                            /// Clean up debug info
+                            ///     The HTTPHeaders in the urlResponse contain some perhaps-**sensitive information** which we wanna remove, before logging.
+                            ///     (Specifically, there seems to be some 'session cookie' field that might be sensitive - although we're not consciously using any session-stuff in the code - we're just making one-off POST requests to the Gumroad API without authentication, so it's weird. But better to be safe about this stuff if I don't understand it I guess.)
+                            var debugInfoDict = error.userInfo
+                            if let urlResponse = debugInfoDict["urlResponse"] as? HTTPURLResponse {
+                                debugInfoDict["urlResponse"] = (["url": (urlResponse.url ?? ""), "status": (urlResponse.statusCode)] as [String: Any])
+                            }
+                            /// Log debug info
+                            var debugInfo: String = ""
+                            dump(debugInfoDict, to:&debugInfo)
+                            DDLogError("Received invalid Gumroad server response. Debug info:\n\n\(debugInfo)")
+                        }
                         
                     case kMFLicenseErrorCodeGumroadServerResponseError:
                         
-                        if let gumroadMessage = error.userInfo["message"] as! String? {
+                        if let gumroadMessage = error.userInfo["message"] as? String {
                             
                             switch gumroadMessage {
                             case "That license does not exist for the provided product.":
@@ -218,6 +243,9 @@ import Cocoa
             
             assert(message != "")
             
+            /// Display Toast
+            ///     Notes:
+            ///     - Why are we using `self.view.window` here, and `MainAppState.shared.window` in other places? IIRC `MainAppState` is safer and works in more cases whereas self.view.window might be nil in more edge cases IIRC (e.g. when the LicenseSheet is just being loaded or sth? I don't know anymore.)
             ToastNotificationController.attachNotification(withMessage: NSAttributedString(coolMarkdown: message)!, to: self.view.window!, forDuration: kMFToastDurationAutomatic)
             
         }
@@ -265,7 +293,7 @@ import Cocoa
         
         /// Load existing key into licenseField
         var key: String = ""
-        if let k = SecureStorage.get("License.key") as! String? {
+        if let k = SecureStorage.get("License.key") as? String {
             key = k
         }
         licenseField.stringValue = key

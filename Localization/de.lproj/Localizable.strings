@@ -299,6 +299,9 @@
 /* First draft: **There is no connection to the internet**\n\nTry activating your license again when your computer is online. */
 "license-toast.no-internet" = "**Es besteht keine Verbindung zum Internet**\n\nProbiere nochmal, deine Lizenz zu aktivieren, wenn dein Computer online ist.";
 
+/* First draft: **There was an issue with the licensing server**\n\nPlease try again later.\n\nIf the issue persists, please reach out to me [here](mailto:noah.n.public@gmail.com). */
+"license-toast.server-response-invalid" = "**Es gab ein Problem beim Lizenzserver**\n\nBitte versuche es später noch einmal.\n\nWenn das Problem weiterhin besteht, kontaktiere mich bitte [hier](mailto:noah.n.public@gmail.com).";
+
 /* First draft: **An unknown error occurred:**\n\n%@ */
 "license-toast.unknown-error" = "**Ein unbekannter Fehler ist aufgetreten:**\n\n%@";
 

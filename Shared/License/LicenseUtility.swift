@@ -19,6 +19,7 @@ func MFCatch<R, E>(_ workload: () throws(E) -> R) -> (R?, E?) {
     ///     Returns a tuple of the result and the thrown error. Exactly one of the two will be nil.
     ///
     ///     This is very similar to Swift's native `Result` type, but it's simpler, and easier to integrate into our existing completion-handler-based asynchronous code for handling licensing stuff.
+    ///         Update: I did have a bit of trouble keeping in mind that exactly one out of `error` and `result` is nil. Maybe using Swift's native `Result` would actually be easier for me.
     
     var result: R? = nil
     var error: E? = nil

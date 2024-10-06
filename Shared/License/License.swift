@@ -488,53 +488,114 @@ class Gumroad: NSObject {
     
     private static func sendGumroadAPIRequest(method: String, args: [String: Any]) async -> (serverResponse: [String: Any]?, error: NSError?, urlResponse: URLResponse?) {
         
-        /// Note: The response data never contains the secret access token, so you can print the return values for debugging
+        /// Notes:
+        ///     - The response data never contains the secret access token, so you can print the return values for debugging
+        ///         Update: (Oct 2024) What does this mean? We have no access token I'm aware of. What's the source for this? Also what about other sensitive data aside from an "access token" - e.g. the users license key? Are we sure there's not sensitive data in the server responses?
+        ///     - On **return values**:
+        ///         - If and only if there's an error, the `error` field in the return tuple will be non-nil. The other return fields will be filled with as much info as possible, even in case of an error. (Last updated: Oct 2024)
+        ///     - On our usage of **errors**:
+        ///         - We're analyzing the servers response and mapping certain server responses to errors right in this function. (as of Oct 2024)
+        ///             -> I'm not sure this is good - maybe we should instead return the server's data as-is and map the server responses to errors at a higher level in the processing chain. Then we could sort of centralize the knowledge about how the Gumroad server response should be structured in one place in the code. However, catching and creating the error ASAP might also have advantages?
+        ///         - We return an `NSError` from this function
+        ///             Why do we do that? (instead of returning a native Swift error)
+        ///             1. We create our custom errors via  `NSError(domain:code:userInfo:)` which seems to be the easiest way to do that.
+        ///             2. NSError is compatible with all our code (even objc, although the licensing code is all swift, so not sure how useful this is)
+        ///             3. The swift APIs give us native swift errors, but the internet says, that *all* swift errors are convertible to NSError via `as NSError?` - so we should never lose information by just converting everything to NSError and having our functions return that.
+        ///                 The source that the internet people cite is this Swift evolution proposal (which I don't really understand): https://github.com/swiftlang/swift-evolution/blob/main/proposals/0112-nserror-bridging.md
         
+        ///
         /// Create request
+        ///
+        
         let request = self.createAPIRequest(requestURL: gumroadAPIURL.appending(method), args: args)
         
+        ///
         /// Get server response
+        ///
+        
         let (result, error_) = await MFCatch { try await URLSession.shared.data(for: request) }
-        let (data, urlResponse) = result ?? (nil, nil)
+        let (serverData, urlResponse) = result ?? (nil, nil)
         
-        /// Cast to NSError
-        ///     I think if the error is not an NSError, it just becomes nil instead.
-        ///     Maybe we should handle that case. Note: If you do handle it, don't forget the do catch below.
-        let error = error_ as NSError?
+        /// Guard: No URL error
+        ///     Note: We have special logic for displaying the `NSURLErrorDomain` errors, so we don't wrap this in a custom `MFLicenseErrorDomain` error.
+        if let urlError = error_ {
+            return (nil, (urlError as NSError?), urlResponse)
+        }
         
-        /// Guard error/nil
-        
+        /// Guard: server response is nil
+        ///     ... despite there being no URL error - Not sure this can ever happen
+        ///     Notes:
+        ///     - The urlResponse, which we return in the NSError's userInfo, contains some perhaps-sensitive data, but we're stripping that out before printing the error. For more info, see where the error is printed. (last updated: Oct 2024).
         guard
-            let data = data,
-            let urlResponse = urlResponse,
-            error == nil
+            var serverData = serverData,
+            let urlResponse = urlResponse
         else {
+            assert(false) /// I'm not sure this can actually happen.
+            
+            let error = NSError(domain: MFLicenseErrorDomain,
+                                code: Int(kMFLicenseErrorCodeServerResponseInvalid),
+                                userInfo: ["data": (serverData ?? "<nil>"),
+                                           "urlResponse": (urlResponse ?? "<nil>"),
+                                           "dataAsUTF8": (String(data: (serverData ?? Data()), encoding: .utf8) ?? "")])
             return (nil, error, urlResponse)
         }
         
-        do {
-            /// Parse response as JSON dict
-            let dict: [String: Any] = try JSONSerialization.jsonObject(with: data, options: []) as! [String : Any] /// I've seen an error from a user where the JSON parsing failed. Maybe we could address this through using `options: [.fragmentsAllowed]`? Maybe we could store the raw string from server on the error and show that in case the serialization fails to debug more easily? See mail where user had the serialization-based error: message:<CAA7L-uPZUyVntBTXTeJJ0SOCpeHNPnEzYo2C3wqtdbFTG0e_7A@mail.gmail.com> || TODO: @UX fix this.
+        /// TEST
+        serverData = "abds;afjksd;f".data(using: .utf8)!
+        
+        ///
+        /// Parse response as JSON dict
+        ///
+        
+        let (jsonObject, error__) = MFCatch { try JSONSerialization.jsonObject(with: serverData, options: []) }
+        
+        /// Guard: No JSON serialization error
+        ///     Notes:
+        ///     - I've seen this error happen, see [this mail](message:<CAA7L-uPZUyVntBTXTeJJ0SOCpeHNPnEzYo2C3wqtdbFTG0e_7A@mail.gmail.com>)
+        ///     - We thought about using `options: [.fragmentsAllowed]` to prevent the JSONSerialization error in some cases, but then the resulting Swift object wouldn't have the expected structure so we'd get further errors down the line. So it's best to just throw an error ASAP I think.
+        ///     - If the `serverData` is not a UTF8 string, then it won't be added to NSError's userInfo here. JSON data could be UTF-8, UTF-16LE, UTF-16BE, UTF-32LE or UTF-32BE - JSONSerialization detects the encoding automatically, but Swift doesn't expose a simple way to do that. So we're just hoping that the string from the server is utf8 (last updated: Oct 2024)
+        
+        if let jsonError = error__ {
             
-            /// Map non-success response to error
-            ///     TODO: Consider just returning the data as it is and mapping the server responses to errors at a higher level in the processing chain? That way it might be more transparent where the errors come from.
-            guard let s = dict["success"], s is Bool, s as! Bool == true else {
-                let error = NSError(domain: MFLicenseErrorDomain, code: Int(kMFLicenseErrorCodeGumroadServerResponseError), userInfo: dict)
-                return (dict, error, urlResponse)
-            }
+            assert(jsonObject == nil)
+            assert(error__ != nil)
             
-            /// Success!
-            /// Call the callback!
-            return (dict, error, urlResponse)
-            
-        } catch let e {
-            
-            /// Cast to NSError
-            let error = e as NSError?
-            
-            /// Guard not convertible to dict
-            return (nil, error, urlResponse) /// Note that this is the `error` from the catch statement (json serialization) not the server response
+            let error = NSError(domain: MFLicenseErrorDomain,
+                                code: Int(kMFLicenseErrorCodeServerResponseInvalid),
+                                userInfo: ["data": serverData,
+                                           "urlResponse": urlResponse,
+                                           "dataAsUTF8": (String(data: serverData, encoding: .utf8) ?? ""),
+                                           "jsonSerializationError": jsonError])
+            return (nil, error, urlResponse)
         }
+        assert(jsonObject != nil)
+        assert(error__ == nil)
+        
+        /// Guard: JSON from server is a acually dict
+        guard let jsonDict = jsonObject as? [String: Any] else {
+            let error = NSError(domain: MFLicenseErrorDomain,
+                                code: Int(kMFLicenseErrorCodeServerResponseInvalid),
+                                userInfo: ["data": serverData,
+                                           "urlResponse": urlResponse,
+                                           "jsonSerializationResult": (jsonObject ?? "")])
+            return (nil, error, urlResponse)
+        }
+        
+        /// Guard: Map non-success response to error
+        guard
+            let success = (jsonDict["success"] as? Bool), /// We expect the Gumroad response to have a boolean field called "success" which tells us whether the license was successfully validated or something went wrong.
+            success == true
+        else {
+            let error = NSError(domain: MFLicenseErrorDomain,
+                                code: Int(kMFLicenseErrorCodeGumroadServerResponseError),
+                                userInfo: jsonDict)
+            return (jsonDict, error, urlResponse)
+        }
+        
+        ///
+        /// Success!
+        ///     Return the values
+        return (jsonDict, nil, urlResponse)
     }
     
     // MARK: - Reusable API stuff
@@ -543,8 +604,13 @@ class Gumroad: NSObject {
         
         /// Also see: https://stackoverflow.com/questions/26364914/http-request-in-swift-with-post-method
         
+        /// Get url object
+        guard let requestURL_ = URL(string: requestURL) else {
+            fatalError("Tried to create API request with unconvertible URL string: \(requestURL)")
+        }
+        
         /// Create basic request
-        var request = URLRequest(url: URL(string: requestURL)!, cachePolicy: .reloadIgnoringLocalAndRemoteCacheData, timeoutInterval: 10.0)
+        var request = URLRequest(url: requestURL_, cachePolicy: .reloadIgnoringLocalAndRemoteCacheData, timeoutInterval: 10.0)
         request.httpMethod = "POST"
         
         /// Set header fields

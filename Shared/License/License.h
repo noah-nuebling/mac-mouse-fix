@@ -49,9 +49,10 @@ typedef struct {
 
 //#define kMFLicenseErrorCodeMismatchedEmails 1 /// Not using emails for authentication anymore. Just licenseKeys
 #define kMFLicenseErrorCodeInvalidNumberOfActivations 2
-#define kMFLicenseErrorCodeGumroadServerResponseError 3
-#define kMFLicenseErrorCodeKeyNotFound 4
-#define kMFLicenseErrorCodeNoInternetAndNoCache 5
+#define kMFLicenseErrorCodeGumroadServerResponseError 3         /// The Gumroad server has responded with `success: false`
+#define kMFLicenseErrorCodeServerResponseInvalid 4              /// The server response does not follow the expected format.
+#define kMFLicenseErrorCodeKeyNotFound 5
+#define kMFLicenseErrorCodeNoInternetAndNoCache 6
 
 //#define kMFLicenseErrorCodeLicensedDueToForceFlag 6
 //#define kMFLicenseErrorCodeLicensedDueToFreeCountry 7

@@ -299,6 +299,9 @@
 /* First draft: **There is no connection to the internet**\n\nTry activating your license again when your computer is online. */
 "license-toast.no-internet" = "**인터넷 연결이 없습니다.**\n\n컴퓨터를 인터넷에 연결한 후에 다시 시도하십시오.";
 
+/* First draft: **There was an issue with the licensing server**\n\nPlease try again later.\n\nIf the issue persists, please reach out to me [here](mailto:noah.n.public@gmail.com). */
+"license-toast.server-response-invalid" = "license-toast.server-response-invalid";
+
 /* First draft: **An unknown error occurred:**\n\n%@ */
 "license-toast.unknown-error" = "**알 수 없는 에러가 발생하였습니다:**\n\n%@";
 
