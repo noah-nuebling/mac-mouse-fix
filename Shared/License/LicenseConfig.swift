@@ -24,39 +24,51 @@ import CocoaLumberjackSwift
     
     /// Async init
     
-    @objc static func get(onComplete: @escaping (LicenseConfig) -> ()) {
-        
-        
-        /// Create garbage instance
-        
-        let instance = LicenseConfig()
+    @objc static func get() async -> (LicenseConfig) {
         
         /// Download licenseConfig.json
+        ///     Notes:
+        ///     - We used to use `URLSession.shared.download(...)` here but `URLSession.shared.data()` is better, since it returns the data directly instead of returning the url of a downloaded file. This should be more efficient. `.download` is more for large files and background downloads I think, not for a 2KB JSON file.
+        ///     - Is it really the best choice to disable allll caching? I guess it might prevent errors and inconsistencies?
         
-        let request = URLRequest(url: URL(string: licenseConfigAddress)!, cachePolicy: .reloadIgnoringLocalAndRemoteCacheData, timeoutInterval: 10.0)
+        /// Define constants
+        let cachePolicy = NSURLRequest.CachePolicy.reloadIgnoringLocalAndRemoteCacheData
+        let timeout = 10.0
         
-        let task = URLSession.shared.downloadTask(with: request) { url, urlResponse, error in
+        do {
             
-            /// Try to extract instance from downloaded data
-            if let url = url {
-                do {
-                    let dict = try dictFromJSON(url)
-                    try instance.fillFromDict(dict)
-                    LicenseConfig.configCache = dict
-                    instance.freshness = kMFValueFreshnessFresh
-                    onComplete(instance)
-                    return
-                } catch { }
+            /// Perform request
+            let request = URLRequest(url: URL(string: licenseConfigAddress)!, cachePolicy: cachePolicy, timeoutInterval: timeout)
+            let (serverData, urlResponse) = try await URLSession.shared.data(for: request)
+            
+            /// Parse result as JSON
+            let dict = try JSONSerialization.jsonObject(with: serverData, options: [])
+            guard let dict = dict as? [String: Any] else {
+                throw NSError(
+                    domain: MFLicenseConfigErrorDomain,
+                    code: Int(kMFLicenseConfigErrorCodeInvalidDict),
+                    userInfo: ["downloadedFrom": urlResponse.url ?? "<no url>", "serverResponse": String(data: serverData, encoding: .utf8) ?? "<not decodable as utf8 string>"]
+                )
             }
             
-            /// Log
-            DDLogInfo("Failed to get LicenseConfig from internet, using cache instead...")
+            /// Try to extract instance from JSON 
+            let instance = LicenseConfig()
+            try instance.fillFromDict(dict)
+            instance.freshness = kMFValueFreshnessFresh
             
-            /// Downloading failed, use cache instead
-            onComplete(getCached())
+            /// Update cache
+            LicenseConfig.configCache = dict
+            
+            /// Return
+            return instance
+            
+        } catch let e {
+            /// Log
+            DDLogInfo("Failed to get LicenseConfig from internet, using cache instead...\nError: \(e)")
         }
         
-        task.resume()
+        /// Downloading failed, use cache instead
+        return getCached()
     }
     
     /// Cached init
@@ -77,13 +89,13 @@ import CocoaLumberjackSwift
             DDLogError("Failed to fill LicenseConfig instance from cache with error \(error). Falling back to hardcoded.")
         }
         
-        /// Use fallback if no cache
+        /// Use fallback file if no cache
                 
         if !instance.isFilled {
             
             do {
                 let url = Bundle.main.url(forResource: "fallback_licenseinfo_config", withExtension: "json")!
-                let dict = try dictFromJSON(url)
+                let dict = try dictFromJSONFile(url)
                 try instance.fillFromDict(dict)
                 instance.freshness = kMFValueFreshnessFallback
             } catch {
@@ -189,7 +201,7 @@ import CocoaLumberjackSwift
     
     /// Helper funcs
 
-    private static func dictFromJSON(_ jsonURL: URL) throws -> [String: Any] {
+    private static func dictFromJSONFile(_ jsonURL: URL) throws -> [String: Any] {
         
         /// Extract dict from json url
         

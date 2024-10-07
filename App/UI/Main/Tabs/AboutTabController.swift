@@ -126,15 +126,16 @@ class AboutTabController: NSViewController {
         /// This is called on load and when the user activates/deactivates their license.
         /// - It would be cleaner and prettier if we used a reactive architecture where you have some global master license state that all the UI that depends on it subscribes to. Buttt we really only have UI that depends on the license state here on the about tab, so that would be overengineering. On the other hand we need to store the AboutTabController instance in MainAppState for global access if we don't use th reactive architecture which is also a little ugly.
         
-        LicenseConfig.get { licenseConfig in
-            License.checkLicenseAndTrial(licenseConfig: licenseConfig, completionHandler: { license, error in
+        Task.detached(priority: .userInitiated, operation: {
+            
+            let licenseConfig = await LicenseConfig.get()
+            let (license, error) = await License.checkLicenseAndTrial(licenseConfig: licenseConfig)
                 
-                DispatchQueue.main.async {
-                    self.updateUI(licenseConfig: licenseConfig, license: license)
-                }
-                
-            })
-        }
+            DispatchQueue.main.async {
+                self.updateUI(licenseConfig: licenseConfig, license: license)
+            }
+                                
+        })
     }
     
     func updateUI(licenseConfig: LicenseConfig, license: MFLicenseAndTrialState) {

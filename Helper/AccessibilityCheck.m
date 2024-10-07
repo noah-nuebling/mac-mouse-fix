@@ -216,11 +216,13 @@
         ///
         /// Note:
         /// - It would make sense to do this before the accessibility check, but calling this before the Post-check init crashes because of some stupid stuff. The stupid stuff is I I think the [Trial load_Manual] calls some other stuff that writes the isLicensed state to config and then when the config is commited that tries to updates the scroll module but it isn't initialized, yet so it crashes. If we structured things better we could do this before Post-check init but it's not important enough.
-        /// - If the helper is started because the user flipped the switch (not because the computer just started or something), then `triggeredByUser` should probably be `YES`. But it's currently unused anyways.
+        /// - If the helper is started because the user flipped the switch (not because the computer just started or something), then `triggeredByUser` should probably be `YES`.
+        ///     - Update: (Oct 2024) right now, we're using `triggeredByUser:NO` here, which makes it so the async tasks (loading the licenseConfig from the internet and talking to the Gumroad API) are performed with `priority: .background`.
+        ///         This leads to some delay between when the Helper is started and when it is locked down. If that delay is too long it could make for a weird experience. But right now it only seems to take a fraction of a second.
         
         [TrialCounter load_Manual];
         
-        [LicenseConfig getOnComplete:^(LicenseConfig * _Nonnull licenseConfig) {
+        [LicenseConfig getWithCompletionHandler:^(LicenseConfig * _Nonnull licenseConfig) {
             [License checkAndReactWithLicenseConfig:licenseConfig triggeredByUser:NO];
         }];
         

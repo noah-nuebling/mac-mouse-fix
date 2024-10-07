@@ -61,62 +61,66 @@ import CocoaLumberjackSwift
         if !runningHelper() { return }
         
         /// Real init
-        
-        /// Get licenseConfig
-        ///     Note: Getting the licenseConfig is unnecessary if the app is licenseed. That's because all that the licenseState() func needs the licenseConfig for is to check the number of trialDays. And if the app is licensed, we don't need to check for the trialDays.
-        
-        LicenseConfig.get { licenseConfig in
             
+        /// Start an async-context
+        ///     Notes:
+        ///     - We're using .detached because .init schedules on the current Actor according to the docs. We're not trying to use any Actors.
+        ///     - Using priority .background because it makes sense?
+        Task.detached(priority: .background, operation: {
+            
+            /// Get licenseConfig
+            ///     Note: Getting the licenseConfig is unnecessary if the app is licensed. That's because all that the licenseState() func needs the licenseConfig for is to check the number of trialDays. And if the app is licensed, we don't need to check for the trialDays.
+            let licenseConfig = await LicenseConfig.get()
+        
             /// Check licensing state
-            License.checkLicenseAndTrial(licenseConfig: licenseConfig) { license, error in
+            let (license, _) = await License.checkLicenseAndTrial(licenseConfig: licenseConfig)
+            
+            if license.isLicensed.boolValue {
                 
-                if license.isLicensed.boolValue {
-                    
-                    /// Do nothing if licensed
-                    
-                } else if !license.trialIsActive.boolValue {
-                    
-                    /// Not licensed and trial expired -> do nothing
-                    ///     In this case AccessibilityCheck.m will perform the lockDown, by calling `License.runCheckAndReact()`
-                    
-                } else {
-                    
-                    /// Trial period is active!
-                    
-                    /// Set trialActive flag
-                    self.trialIsActive = true
-                    
-                    /// Init hasBeeUsedToday
-                    self.hasBeenUsedToday = false
-                    if let lastUseDate = TrialCounter.lastUseDate as? NSDate {
-                        let now = Date.init(timeIntervalSinceNow: 0)
-                        let a = Calendar.current.dateComponents([.day, .month, .year], from: lastUseDate as Date)
-                        let b = Calendar.current.dateComponents([.day, .month, .year], from: now)
-                        let isSameDay = a.day == b.day && a.month == b.month && a.year == b.year
-                        if isSameDay {
-                            self.hasBeenUsedToday = true
-                        }
+                /// Do nothing if licensed
+                
+            } else if !license.trialIsActive.boolValue {
+                
+                /// Not licensed and trial expired -> do nothing
+                ///     In this case AccessibilityCheck.m will perform the lockDown, by calling `License.runCheckAndReact()`
+                
+            } else {
+                
+                /// Trial period is active!
+                
+                /// Set trialActive flag
+                self.trialIsActive = true
+                
+                /// Init hasBeeUsedToday
+                self.hasBeenUsedToday = false
+                if let lastUseDate = TrialCounter.lastUseDate as? NSDate {
+                    let now = Date.init(timeIntervalSinceNow: 0)
+                    let a = Calendar.current.dateComponents([.day, .month, .year], from: lastUseDate as Date)
+                    let b = Calendar.current.dateComponents([.day, .month, .year], from: now)
+                    let isSameDay = a.day == b.day && a.month == b.month && a.year == b.year
+                    if isSameDay {
+                        self.hasBeenUsedToday = true
                     }
-                    
-                    /// Init daily timer
-                    ///     Notes:
-                    ///     - Is fired at 00:00 on the next day, and in 24 hour periods after that. We could also just do 24 hour periods without making sure it's always fired at 00:00. But I think it's a little nicer and more consistent from a user experience standpoint to have it reset at 00:00.
-                    ///     - When the computer sleeps the timer is not fired. But it's fired after it wakes up. This shouldn't cause any problems.
-                    ///
-                    let secondsPerDay = 24*60*60
-                    let nextDay = Date(timeIntervalSinceNow: TimeInterval(secondsPerDay))
-                    let nextDayBreak = Calendar.current.startOfDay(for: nextDay)
-                    self.daily = Timer(fire: nextDayBreak, interval: TimeInterval(secondsPerDay), repeats: true) { timer in
-                        DDLogInfo("Daily trial timer fired")
-                        self.hasBeenUsedToday = false
-                    }
-                    
-                    /// Schedule daily timer
-                    ///     Not sure if .default or .common is better here. Default might be a little more efficicent but maybe it doesn't work in some cases?
-                    RunLoop.main.add(self.daily, forMode: .common)
                 }
+                
+                /// Init daily timer
+                ///     Notes:
+                ///     - Is fired at 00:00 on the next day, and in 24 hour periods after that. We could also just do 24 hour periods without making sure it's always fired at 00:00. But I think it's a little nicer and more consistent from a user experience standpoint to have it reset at 00:00.
+                ///     - When the computer sleeps the timer is not fired. But it's fired after it wakes up. This shouldn't cause any problems.
+                ///
+                let secondsPerDay = 24*60*60
+                let nextDay = Date(timeIntervalSinceNow: TimeInterval(secondsPerDay))
+                let nextDayBreak = Calendar.current.startOfDay(for: nextDay)
+                self.daily = Timer(fire: nextDayBreak, interval: TimeInterval(secondsPerDay), repeats: true) { timer in
+                    DDLogInfo("Daily trial timer fired")
+                    self.hasBeenUsedToday = false
+                }
+                
+                /// Schedule daily timer
+                ///     Not sure if .default or .common is better here. Default might be a little more efficicent but maybe it doesn't work in some cases?
+                RunLoop.main.add(self.daily, forMode: .common)
             }
-        }
+        })
     }
     
     /// Vars
@@ -160,9 +164,10 @@ import CocoaLumberjackSwift
         /// Only react to use once a day
         if hasBeenUsedToday { return }
         
-        DispatchQueue.global(qos: .background).async {
+        Task.detached(priority: .background, operation: {
             
             /// Dispatching to another queue here because there was an obscure concurrency crash when trying to debug something. This is not necessary for normal operation but it shouldn't hurt.
+            ///     Update: (Oct 2024) now using `Task` instead of dispatch queue so we can use async/await
             
             /// Update state
             ///     Should we check whether the date has actually changed?
@@ -171,11 +176,10 @@ import CocoaLumberjackSwift
             TrialCounter.daysOfUse += 1
             
             /// Get updated licenseConfig
-            LicenseConfig.get { licenseConfig in
+            let licenseConfig = await LicenseConfig.get()
                 
-                /// Display UI & lock down helper if necessary
-                License.checkAndReact(licenseConfig: licenseConfig, triggeredByUser: false)
-            }
-        }
+            /// Display UI & lock down helper if necessary
+            License.checkAndReact(licenseConfig: licenseConfig, triggeredByUser: false)
+        })
     }
 }

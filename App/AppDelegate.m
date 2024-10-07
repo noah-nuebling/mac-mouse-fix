@@ -44,12 +44,12 @@
 
 - (IBAction)buyMMF:(id)sender {
     
-    [LicenseConfig getOnComplete:^(LicenseConfig * _Nonnull licenseConfig) {
+    [LicenseConfig getWithCompletionHandler:^(LicenseConfig * _Nonnull licenseConfig) {
             
-            NSLocale *locale = NSLocale.currentLocale;
-            BOOL useQuickLink = NO;
-            
-            [LicenseUtility buyMMFWithLicenseConfig:licenseConfig locale:locale useQuickLink:useQuickLink];
+        NSLocale *locale = NSLocale.currentLocale;
+        BOOL useQuickLink = NO;
+        
+        [LicenseUtility buyMMFWithLicenseConfig:licenseConfig locale:locale useQuickLink:useQuickLink];
     }];
 }
 

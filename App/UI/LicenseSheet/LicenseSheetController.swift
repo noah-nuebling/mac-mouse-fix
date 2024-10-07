@@ -84,60 +84,59 @@ import CocoaLumberjackSwift
         ///
         
         /// Display loading indicator
+        ///     Note: Not necessary, the UI response is super fast
         
         /// Ask server
         /// Notes:
-        /// - We could also use cached LicenseConfig, if we update it once on app start.
-        /// - We're totally curcumventing License.swift. It was designed as mainly a wrapper around Gumroad.swift, but we're using Gumroad.swift directly. Not sure why, but it made sense while writing this.
-        ///     -> Should mayebe overthink what the role of License.swift is.
+        /// - Instead of getting the licenseConfig every time, we could also use cached LicenseConfig, if we update it once on app start. The `URLSession` class that `LicenseConfig.get()` uses internally also has built-in caching. Maybe we should use that?
         
-        LicenseConfig.get { licenseConfig in
+        Task.detached(priority: .userInitiated, operation: {
+            
+            let licenseConfig = await LicenseConfig.get()
             
             if isDifferent {
                 
-                License.activateLicense(key: key, licenseConfig: licenseConfig) { isLicensed, freshness, licenseReason, error in
+                let (isLicensed, freshness, licenseReason, error) = await License.activateLicense(key: key, licenseConfig: licenseConfig)
                     
-                    /// By checking for valueFreshness we filter out the case where there's no internet but the cache still tells us it's licensed
-                    ///     Note:
-                    ///     The way things are currently set up this leads to weird behaviour when activating a license without internet in freeCountries: If the cache says it's licensed, users will get the no internet error, but if the cache says it's not licensed. Users will get the it's free in your country message. This is because the freeCountry overrides inside activateLicense only take effect if isLicensed is false. This is slightly weird but it's such a small edge case that I don't think it matters. Although it hints that it might be more logical to change the logic for applying the freeCountry overrides.
+                /// By checking for valueFreshness we filter out the case where there's no internet but the cache still tells us it's licensed
+                ///     Note:
+                ///     The way things are currently set up this leads to weird behaviour when activating a license without internet in freeCountries: If the cache says it's licensed, users will get the no internet error, but if the cache says it's not licensed. Users will get the it's free in your country message. This is because the freeCountry overrides inside activateLicense only take effect if isLicensed is false. This is slightly weird but it's such a small edge case that I don't think it matters. Although it hints that it might be more logical to change the logic for applying the freeCountry overrides.
+                
+                let success = isLicensed && (freshness == kMFValueFreshnessFresh)
+                
+                /// Store new licenseKey
+                if success && licenseReason == kMFLicenseReasonValidLicense {
+                    SecureStorage.set("License.key", value: key)
+                }
+                
+                /// Dispatch to main because UI stuff needs to be controlled by main
+                DispatchQueue.main.async {
                     
-                    let success = isLicensed && (freshness == kMFValueFreshnessFresh)
+                    /// Display user feedback
+                    self.displayUserFeedback(success: success, licenseReason: licenseReason, error: error, key: key, userChangedKey: isDifferent)
                     
-                    /// Store new licenseKey
-                    if success && licenseReason == kMFLicenseReasonValidLicense {
-                        SecureStorage.set("License.key", value: key)
-                    }
-                    
-                    /// Dispatch to main because UI stuff needs to be controlled by main
-                    DispatchQueue.main.async {
-                        
-                        /// Display user feedback
-                        self.displayUserFeedback(success: success, licenseReason: licenseReason, error: error, key: key, userChangedKey: isDifferent)
-                        
-                        /// Wrap up
-                        onComplete()
-                    }
+                    /// Wrap up
+                    onComplete()
                 }
                 
             } else {
                 
-                License.checkLicense(key: key, licenseConfig: licenseConfig) { isLicensed, freshness, licenseReason, error in
+                let (isLicensed, freshness, licenseReason, error) = await License.checkLicense(key: key, licenseConfig: licenseConfig)
                     
-                    /// Should we check for valueFreshness here?
-                    let success = isLicensed
+                /// Should we check for valueFreshness here?
+                let success = isLicensed
+                
+                DispatchQueue.main.async {
                     
-                    DispatchQueue.main.async {
-                        
-                        /// Display user feedback
-                        self.displayUserFeedback(success: success, licenseReason: licenseReason, error: error, key: key, userChangedKey: isDifferent)
-                        
-                        /// Wrap up
-                        onComplete()
-                    }
+                    /// Display user feedback
+                    self.displayUserFeedback(success: success, licenseReason: licenseReason, error: error, key: key, userChangedKey: isDifferent)
+                    
+                    /// Wrap up
+                    onComplete()
                 }
             }
             
-        }
+        })
     }
     
     /// Helper for activateLicense
