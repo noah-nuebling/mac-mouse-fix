@@ -42,6 +42,7 @@ These people spent a lot more than the standard price and treated me to an **Inc
 
 **October 2024**
 
+- 🇸🇬&nbsp;Jane&nbsp;Shi
 - 🇺🇸&nbsp;Gabe
 - 🇨🇿&nbsp;Michal&nbsp;Krause - "Great app, highly recommended!"
 - 🇨🇭&nbsp;Veeam&nbsp;Software&nbsp;Group&nbsp;Gmbh
