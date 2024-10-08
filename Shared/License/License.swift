@@ -257,10 +257,12 @@ extension MFLicenseAndTrialState: Equatable {
                                                                                               "license_key": key,
                                                                                               "increment_uses_count": incrementUsageCount ? "true" : "false"])
                 
-                if let message = error?.userInfo["message"] as? NSString,
+                if
+                    let message = serverResponse?["message"] as? NSString,
                     message == "That license does not exist for the provided product." {
-                    
-                    /// !!! TODO: @bug This is broken now, since we moved the "Map non-success response to error" step below. Dangeroussss. I hope we didn't break anything else during the refactors.
+                   
+                    /// Validate
+                    assert((serverResponse?["success"] as? Bool) == false)
                     
                     /// If license doesn't exist for new product, try old product
                     (serverResponse, error, urlResponse) = await sendDictionaryBasedAPIRequest(requestURL: gumroadAPIURL.appending("/licenses/verify"),
