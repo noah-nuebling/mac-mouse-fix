@@ -40,6 +40,7 @@ Diese Leute haben viel mehr als den Standardpreis ausgegeben und mir einen **ung
 
 **Oktober 2024**
 
+- 🇮🇹&nbsp;Marco&nbsp;Mura
 - 🇸🇬&nbsp;Jane&nbsp;Shi
 - 🇺🇸&nbsp;Gabe
 - 🇨🇿&nbsp;Michal&nbsp;Krause - "Great app, highly recommended!"
