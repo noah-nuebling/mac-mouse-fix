@@ -68,7 +68,7 @@ extension MFLicenseAndTrialState: Equatable {
                 if license.trialIsActive.boolValue {
                     
                     /// Trial still active -> do nothing
-                    //      TODO: Maybe display small reminder after half of trial is over? Or when there's one week of the trial left?
+                    //      TODO: @UX Maybe display small reminder after half of trial is over? Or when there's one week of the trial left?
                     
                 } else {
                     
@@ -205,14 +205,14 @@ extension MFLicenseAndTrialState: Equatable {
         /// Step One
         ///
         
-        /// StepOne decides whether the license is valid or not
+        /// StepOne gets ground-truth values about the license
         
         let stepOneResult: (isLicensed: Bool, freshness: MFValueFreshness, error: NSError?)
         
         stepOne: do {
             
             /// Get key
-            ///     From secure storage if `keyArg` == nil
+            ///     From arg or from secure storage if `keyArg` == nil
             
             var key: String
             
@@ -232,10 +232,17 @@ extension MFLicenseAndTrialState: Equatable {
                 
                 key = keyStorage
             }
+            ///
+            /// Step 1.1: Ask gumroad to verify
+            ///
             
-            /// Ask gumroad to verify
-            func gumroad_getLicenseInfo(_ key: String, incrementUsageCount: Bool) async -> (isValidKey: Bool, nOfActivations: Int?, serverResponse: [String: Any]?, error: NSError?, urlResponse: URLResponse?) {
-                    
+            /// Notes:
+            ///     (Oct 8 2023) serverResponse and urlResponse don't seem to be used. We could remove them from the result tuple I think.
+            
+            let gumroadResult: (isValidKey: Bool, nOfActivations: Int?, serverResponse: [String: Any]?, error: NSError?, urlResponse: URLResponse?)
+            
+            askGumroad: do {
+                
                 /// Constants
                 /// Notes:
                 /// - `mmfinapp` was used during the MMF 3 Beta. It was using € which you can't change, so we had to create a new product in Gumroad `mmfinappusd`
@@ -244,13 +251,16 @@ extension MFLicenseAndTrialState: Equatable {
                 let productPermalinkOld = "mmfinapp"
                 let productPermalink = "mmfinappusd"
                 
+                /// Talk to Gumroad
                 var (serverResponse, error, urlResponse) = await sendDictionaryBasedAPIRequest(requestURL: gumroadAPIURL.appending("/licenses/verify"),
                                                                                        args: ["product_permalink": productPermalink,
                                                                                               "license_key": key,
                                                                                               "increment_uses_count": incrementUsageCount ? "true" : "false"])
                 
-                if  let message = error?.userInfo["message"] as? NSString,
+                if let message = error?.userInfo["message"] as? NSString,
                     message == "That license does not exist for the provided product." {
+                    
+                    /// !!! TODO: @bug This is broken now, since we moved the "Map non-success response to error" step below. Dangeroussss. I hope we didn't break anything else during the refactors.
                     
                     /// If license doesn't exist for new product, try old product
                     (serverResponse, error, urlResponse) = await sendDictionaryBasedAPIRequest(requestURL: gumroadAPIURL.appending("/licenses/verify"),
@@ -261,7 +271,8 @@ extension MFLicenseAndTrialState: Equatable {
                 
                 /// Guard:  Error
                 if error != nil {
-                    return (false, nil, serverResponse, error, urlResponse)
+                    gumroadResult = (false, nil, serverResponse, error, urlResponse)
+                    break askGumroad
                 }
                 
                 /// Unwrap serverResponse
@@ -270,7 +281,6 @@ extension MFLicenseAndTrialState: Equatable {
                 }
                 
                 /// Guard: Map non-success response to error
-                ///         - Maybe we should map the server responses to errors at a higher level in the processing chain. With the goal to centralize the knowledge about how the Gumroad server response should be structured in one place in the code.
                 guard
                     let success = (serverResponse["success"] as? Bool), /// We expect the Gumroad response to have a boolean field called "success" which tells us whether the license was successfully validated or something went wrong.
                     success == true
@@ -279,35 +289,40 @@ extension MFLicenseAndTrialState: Equatable {
                                         code: Int(kMFLicenseErrorCodeGumroadServerResponseError),
                                         userInfo: serverResponse)
                     
-                    return (false, nil, serverResponse, error, urlResponse)
+                    gumroadResult = (false, nil, serverResponse, error, urlResponse)
+                    break askGumroad
                 }
                 
                 /// Gather info from response dict
                 ///     None of these should be null but we're checking the extracted data one level above.
                 ///     (So it's maybe a little unnecessary that we extract data at all at this level)
-                ///     TODO: Maybe we should consider merging lvl 1 and lvl 2 since lvl 2 really only does the data validation)
+                ///     TODO: @clean Maybe we should consider merging lvl 1 and lvl 2 since lvl 2 really only does the data validation)
                 
                 let isValidKey = serverResponse["success"] as? Bool ?? false
                 let activations = serverResponse["uses"] as? Int
                 
-                /// Call completions handler
-                return (isValidKey, activations, serverResponse, error, urlResponse)
-            }
+                /// Return
+                gumroadResult = (isValidKey, activations, serverResponse, error, urlResponse)
+                break askGumroad
             
-            let (isValidKey, nOfActivations, serverResponse, error, urlResponse) = await gumroad_getLicenseInfo(key, incrementUsageCount: incrementUsageCount)
+            } /// End of askGumroad
             
-            if isValidKey { /// Gumroad says the license is valid
+            ///
+            /// Parse serverResult
+            ///
+            
+            if gumroadResult.isValidKey { /// Gumroad says the license is valid
                 
                 /// Validate activation count
                 
                 var validActivationCount = false
-                if let a = nOfActivations, a <= licenseConfig.maxActivations {
+                if let a = gumroadResult.nOfActivations, a <= licenseConfig.maxActivations {
                     validActivationCount = true
                 }
                 
                 if !validActivationCount {
                     
-                    let error = NSError(domain: MFLicenseErrorDomain, code: Int(kMFLicenseErrorCodeInvalidNumberOfActivations), userInfo: ["nOfActivations": nOfActivations ?? -1, "maxActivations": licenseConfig.maxActivations])
+                    let error = NSError(domain: MFLicenseErrorDomain, code: Int(kMFLicenseErrorCodeInvalidNumberOfActivations), userInfo: ["nOfActivations": gumroadResult.nOfActivations ?? -1, "maxActivations": licenseConfig.maxActivations])
                     
                     stepOneResult = (false, kMFValueFreshnessFresh, error)
                     break stepOne
@@ -321,10 +336,12 @@ extension MFLicenseAndTrialState: Equatable {
                 
             } else { /// Gumroad says key is not valid
                 
-                if let error = error,
+                if let error = gumroadResult.error,
                    error.domain == NSURLErrorDomain {
                     
                     /// Failed due to internet issues -> try cache
+                    ///     TODO: @bug If there's an issue with retrieving license state from the server that isn't captured in an `NSURLErrorDomain` error, e.g. the Gumroad server returns some invalid data that we can't parse as JSON (I've that before in a screenshot from a user), then we would just (incorrectly) decide that the license is invalid and not look at the cache.
+                    ///         Instead, maybe we should check if we received a *definitive* 'success: true' or 'success: false' value from the server. And if not, we'd ask the cache instead.
                     
                     if let isLicensedCache = config("License.isLicensedCache") as? Bool {
                         
@@ -345,7 +362,7 @@ extension MFLicenseAndTrialState: Equatable {
                 } else {
                     
                     /// Failed despite good internet connection -> Is actually unlicensed
-                    stepOneResult = (false, kMFValueFreshnessFresh, error) /// Pass through the error from Gumroad / AWS
+                    stepOneResult = (false, kMFValueFreshnessFresh, gumroadResult.error) /// Pass through the error from Gumroad / AWS
                     break stepOne
                 }
             }
@@ -354,6 +371,9 @@ extension MFLicenseAndTrialState: Equatable {
         ///
         /// Step Two
         ///
+        
+        /// stepTwo does some "post-processing" of the values from stepOne
+        ///     -> It overrides the "ground-truth" values in case there are special conditions and creates a 'licenseReason' value based on different factors.
         
         /// Validate stepOne results
         
@@ -367,7 +387,7 @@ extension MFLicenseAndTrialState: Equatable {
         
         var isLicensed = stepOneResult.isLicensed
         var freshness = stepOneResult.freshness
-        var error = stepOneResult.error
+        let error = stepOneResult.error
         
         var licenseReason = kMFLicenseReasonUnknown
         
@@ -423,11 +443,18 @@ extension MFLicenseAndTrialState: Equatable {
             }
         }
         
+        ///
         /// Cache stuff
+        ///
+        
+        /// Note: Why are we caching *after* the license-value-overrides of stepTwo: If the user is in a freeCountry, we wouldn't want the app to only be licensed as long as they're online. That's why the isLicensedCache should be set after the overrides.
+        
         self.isLicensedCache = isLicensed
         self.licenseReasonCache = licenseReason
 
+        ///
         /// Return result
+        ///
         return (isLicensed, freshness, licenseReason, error)
     }
     
@@ -474,7 +501,7 @@ func gumroad_decrementUsageCount(key: String, accessToken: String, completionHan
 func sendDictionaryBasedAPIRequest(requestURL: String, args: [String: Any]) async -> (serverResponse: [String: Any]?, error: NSError?, urlResponse: URLResponse?) {
     
     /// Overview:
-    ///     Essentially, we send a dict to a URL, and get a json dict back
+    ///     Essentially, we send a json dict to a URL, and get a json dict back
     ///         (We also get an `error` back, if the request times out or something)
     ///         (We also get a `urlResponse` object back, which contains the HTTP status codes and stuff. Not sure if we use this) (as of Oct 2024)
     ///     We plan to use this to interact with the JSON-dict-based Gumroad APIs as well as our custom AWS APIs - which will also be JSON-dict based
