@@ -40,6 +40,7 @@ Diese Leute haben viel mehr als den Standardpreis ausgegeben und mir einen **ung
 
 **Oktober 2024**
 
+- 🇵🇹&nbsp;João&nbsp;Morais
 - 🇮🇹&nbsp;Marco&nbsp;Mura
 - 🇸🇬&nbsp;Jane&nbsp;Shi
 - 🇺🇸&nbsp;Gabe
