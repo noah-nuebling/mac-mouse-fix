@@ -624,8 +624,8 @@
             filePath = "Shared/License/License.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "285"
-            endingLineNumber = "285"
+            startingLineNumber = "288"
+            endingLineNumber = "288"
             landmarkName = "_checkLicense(key:licenseConfig:incrementUsageCount:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -640,8 +640,8 @@
             filePath = "Shared/License/License.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "284"
-            endingLineNumber = "284"
+            startingLineNumber = "287"
+            endingLineNumber = "287"
             landmarkName = "_checkLicense(key:licenseConfig:incrementUsageCount:)"
             landmarkType = "7">
          </BreakpointContent>

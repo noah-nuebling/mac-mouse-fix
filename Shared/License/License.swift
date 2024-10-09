@@ -233,11 +233,11 @@ extension MFLicenseAndTrialState: Equatable {
                 key = keyStorage
             }
             ///
-            /// Step 1.1: Ask gumroad to verify
+            /// Step 1.1: Ask the license server to verify the license
             ///
             
             /// Notes:
-            ///     - (Oct 8 2023) serverResponse and urlResponse don't seem to be used. We could remove them from the result tuple I think.
+            ///     - (Oct 8 2023) serverResponseDict and urlResponse don't seem to be used. We could remove them from the `parsedServerResponse` result tuple I think.
             ///
             /// Test Licenses:
             ///     (Please don't use these test licenses. If you need a free one, just reach out to me. Thank you.)
@@ -264,9 +264,11 @@ extension MFLicenseAndTrialState: Equatable {
                 case unsure  ///  The server didn't say whether the license is valid or not.
             }
             
-            let gumroadResult: (isValidKey: LicenseValidityFromServer, nOfActivations: Int?, serverResponse: [String: Any]?, error: NSError?, urlResponse: URLResponse?)
+            let parsedServerResponse: (isValidKey: LicenseValidityFromServer, nOfActivations: Int?, serverResponseDict: [String: Any]?, error: NSError?, urlResponse: URLResponse?)
             
-            askGumroad: do {
+            askServer: do {
+                
+                /// Ask the Gumroad license verification server
                 
                 /// Constants
                 /// Notes:
@@ -277,21 +279,21 @@ extension MFLicenseAndTrialState: Equatable {
                 let productPermalink = "mmfinappusd"
                 
                 /// Talk to Gumroad
-                var (serverResponse, communicationError, urlResponse) = await sendDictionaryBasedAPIRequest(requestURL: gumroadAPIURL.appending("/licenses/verify"),
+                var (serverResponseDict, communicationError, urlResponse) = await sendDictionaryBasedAPIRequest(requestURL: gumroadAPIURL.appending("/licenses/verify"),
                                                                                        args: ["product_permalink": productPermalink,
                                                                                               "license_key": key,
                                                                                               "increment_uses_count": incrementUsageCount ? "true" : "false"])
                 
                 if
-                    let message = serverResponse?["message"] as? NSString,
+                    let message = serverResponseDict?["message"] as? NSString,
                     message == "That license does not exist for the provided product." {
                    
                     /// Validate
-                    assert((serverResponse?["success"] as? Bool) == false)
+                    assert((serverResponseDict?["success"] as? Bool) == false)
                     assert((urlResponse as? HTTPURLResponse)?.statusCode == 404)
                     
                     /// If license doesn't exist for new product, try old product
-                    (serverResponse, communicationError, urlResponse) = await sendDictionaryBasedAPIRequest(requestURL: gumroadAPIURL.appending("/licenses/verify"),
+                    (serverResponseDict, communicationError, urlResponse) = await sendDictionaryBasedAPIRequest(requestURL: gumroadAPIURL.appending("/licenses/verify"),
                                                                                        args: ["product_permalink": productPermalinkOld,
                                                                                               "license_key": key,
                                                                                               "increment_uses_count": incrementUsageCount ? "true" : "false"])
@@ -300,26 +302,26 @@ extension MFLicenseAndTrialState: Equatable {
                 /// Guard:  Error
                 ///     with the server communication
                 if communicationError != nil {
-                    gumroadResult = (.unsure, nil, serverResponse, communicationError, urlResponse)
-                    break askGumroad
+                    parsedServerResponse = (.unsure, nil, serverResponseDict, communicationError, urlResponse)
+                    break askServer
                 }
                 
-                /// Unwrap serverResponse
-                guard let serverResponse = serverResponse else {
-                    fatalError("The serverResponse was nil even though the error was also nil. There's something wrong in our code.")
+                /// Unwrap serverResponseDict
+                guard let serverResponseDict = serverResponseDict else {
+                    fatalError("The serverResponseDict was nil even though the error was also nil. There's something wrong in our code.")
                 }
                 
                 /// Map server responses to error
                 ///     The communication with the server was successful but the servers response indicates that something went wrong.
                 var responseError: NSError? = nil
-                if (serverResponse["success"] as? Bool) != true { /// We expect the Gumroad response to have a boolean field called "success" which tells us whether the license was successfully validated or something went wrong.
+                if (serverResponseDict["success"] as? Bool) != true { /// We expect the Gumroad response to have a boolean field called "success" which tells us whether the license was successfully validated or something went wrong.
                     responseError = NSError(domain: MFLicenseErrorDomain,
                                     code: Int(kMFLicenseErrorCodeGumroadServerResponseError),
-                                    userInfo: serverResponse)
+                                    userInfo: serverResponseDict)
                 }
                 
                 ///
-                /// Extract data from serverResponse
+                /// Extract data from serverResponseDict
                 ///
                 
                 /// Determine if _server_ said whether the _key_ is valid
@@ -338,7 +340,7 @@ extension MFLicenseAndTrialState: Equatable {
                 ///         If instead, we have a false positive on `.unsure` then we just fall back to the cached value for whether the app is licensed or not, which should make for a much less disruptive user experience.
                 ///         Actually, as I'm working on this, (Oct 9 2024) I got a [GitHub Issue](https://github.com/noah-nuebling/mac-mouse-fix/issues/1136) from a user saying they regularly have their app locked down and they have to re-enter their license. (I think I also saw reports like this before.) Hopefully that stuff will be fixed now!
                 
-                let serverSuccess: Bool? = serverResponse["success"] as? Bool
+                let serverSuccess: Bool? = serverResponseDict["success"] as? Bool
                 var isValidKey: LicenseValidityFromServer
                 if      (serverSuccess == true)     { isValidKey = .valid }
                 else if (serverSuccess == nil)      { isValidKey = .unsure }
@@ -347,33 +349,33 @@ extension MFLicenseAndTrialState: Equatable {
                     else                                                    { isValidKey = .unsure }
                 } else                              { fatalError("This cannot happen") }
                 
-                /// Gather nOfActivations from serverResponse
-                let activations = serverResponse["uses"] as? Int
+                /// Gather nOfActivations from serverResponseDict
+                let activations = serverResponseDict["uses"] as? Int
                 
                 /// Return
-                gumroadResult = (isValidKey, activations, serverResponse, responseError, urlResponse)
-                break askGumroad
+                parsedServerResponse = (isValidKey, activations, serverResponseDict, responseError, urlResponse)
+                break askServer
             
-            } /// End of askGumroad
+            } /// End of askServer
             
             ///
             /// Parse serverResult
             ///
             
-            if gumroadResult.isValidKey == .valid {
+            if parsedServerResponse.isValidKey == .valid {
                 
-                /// Gumroad says the license is valid
+                /// Server says the license is valid
                 
                 /// Validate activation count
                 
                 var validActivationCount = false
-                if let a = gumroadResult.nOfActivations, a <= licenseConfig.maxActivations {
+                if let a = parsedServerResponse.nOfActivations, a <= licenseConfig.maxActivations {
                     validActivationCount = true
                 }
                 
                 if !validActivationCount {
                     
-                    let error = NSError(domain: MFLicenseErrorDomain, code: Int(kMFLicenseErrorCodeInvalidNumberOfActivations), userInfo: ["nOfActivations": gumroadResult.nOfActivations ?? -1, "maxActivations": licenseConfig.maxActivations])
+                    let error = NSError(domain: MFLicenseErrorDomain, code: Int(kMFLicenseErrorCodeInvalidNumberOfActivations), userInfo: ["nOfActivations": parsedServerResponse.nOfActivations ?? -1, "maxActivations": licenseConfig.maxActivations])
                     
                     stepOneResult = (false, kMFValueFreshnessFresh, error)
                     break stepOne
@@ -385,15 +387,15 @@ extension MFLicenseAndTrialState: Equatable {
                 stepOneResult = (true, kMFValueFreshnessFresh, nil)
                 break stepOne
                 
-            } else if gumroadResult.isValidKey == .unsure {
+            } else if parsedServerResponse.isValidKey == .unsure {
                 
-                /// Gumroad did not say whether the key is valid or not
+                /// The server did not say whether the key is valid or not
                 ///     -> fall back to cache
                 
                 if let isLicensedCache = config("License.isLicensedCache") as? Bool {
                     
                     /// Fall back to cache
-                    stepOneResult = (isLicensedCache, kMFValueFreshnessCached, gumroadResult.error)
+                    stepOneResult = (isLicensedCache, kMFValueFreshnessCached, parsedServerResponse.error) /// Pass through the error from previous step
                     break stepOne
                     
                 } else {
@@ -406,11 +408,11 @@ extension MFLicenseAndTrialState: Equatable {
                     break stepOne
                 }
                 
-            } else if gumroadResult.isValidKey == .invalid {
+            } else if parsedServerResponse.isValidKey == .invalid {
                 
-                /// Gumroad definitively said that the key is invalid
+                /// The server *definitively* said that the key is invalid
                 
-                stepOneResult = (false, kMFValueFreshnessFresh, gumroadResult.error) /// Pass through the error from Gumroad / AWS
+                stepOneResult = (false, kMFValueFreshnessFresh, parsedServerResponse.error) /// Pass through the error from previous step
                 break stepOne
                 
             } else {
@@ -540,7 +542,7 @@ extension MFLicenseAndTrialState: Equatable {
 
 // MARK: Api wrapper
 
-func gumroad_decrementUsageCount(key: String, accessToken: String, completionHandler: @escaping (_ serverResponse: [String: Any]?, _ error: NSError?, _ urlResponse: URLResponse?) -> ()) {
+func gumroad_decrementUsageCount(key: String, accessToken: String, completionHandler: @escaping (_ serverResponseDict: [String: Any]?, _ error: NSError?, _ urlResponse: URLResponse?) -> ()) {
     
     /// Meant to free a use of the license when the user deactivates it
     /// We won't do this because we'd need to implement oauth and it's not that imporant
@@ -549,7 +551,7 @@ func gumroad_decrementUsageCount(key: String, accessToken: String, completionHan
     fatalError()
 }
 
-func sendDictionaryBasedAPIRequest(requestURL: String, args: [String: Any]) async -> (serverResponse: [String: Any]?, communicationError: NSError?, urlResponse: URLResponse?) {
+func sendDictionaryBasedAPIRequest(requestURL: String, args: [String: Any]) async -> (serverResponseDict: [String: Any]?, communicationError: NSError?, urlResponse: URLResponse?) {
     
     /// Overview:
     ///     Essentially, we send a json dict to a URL, and get a json dict back
