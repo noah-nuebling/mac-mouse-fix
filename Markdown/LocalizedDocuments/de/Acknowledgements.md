@@ -40,6 +40,7 @@ Diese Leute haben viel mehr als den Standardpreis ausgegeben und mir einen **ung
 
 **Oktober 2024**
 
+- 🇦🇺&nbsp;Matthew&nbsp;Schinckel
 - 🇫🇷&nbsp;Yohan - "Really usefull for mac user without magic mouse. Many thanks"
 - 🇵🇹&nbsp;João&nbsp;Morais
 - 🇮🇹&nbsp;Marco&nbsp;Mura
