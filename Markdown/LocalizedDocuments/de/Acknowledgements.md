@@ -40,6 +40,7 @@ Diese Leute haben viel mehr als den Standardpreis ausgegeben und mir einen **ung
 
 **Oktober 2024**
 
+- 🇧🇷&nbsp;Vinicius&nbsp;Ventura
 - 🇺🇸&nbsp;Kenny&nbsp;G&nbsp;The&nbsp;Wizard&nbsp;Of&nbsp;Osgood
 - 🇺🇸&nbsp;Dsoundmn
 - 🇺🇸&nbsp;Marissa&nbsp;Caponera
