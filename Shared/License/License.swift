@@ -27,13 +27,18 @@ import Cocoa
 
 // MARK: - License.h extensions
 
-extension MFLicenseAndTrialState: Equatable {
-    public static func == (lhs: MFLicenseAndTrialState, rhs: MFLicenseAndTrialState) -> Bool {
+extension MFLicenseAndTrialState {
+
+    override open func isEqual(_ other: Any?) -> Bool {
         /// Note:
         /// - We don't check for freshness because it makes sense.
         /// - We also don't check for trialIsOver directly, because it's derived from trialDays and daysOfUse
         /// - Should we check for licenseReason equality here? I can't remember how this is used. Edit: This is used in AboutTabController to check whether to update the UI. So we need to check for licenseReason as well
-        lhs.isLicensed.boolValue == rhs.isLicensed.boolValue && lhs.licenseReason == rhs.licenseReason && lhs.daysOfUse == rhs.daysOfUse && lhs.trialDays == rhs.trialDays
+        guard let other = other as? MFLicenseAndTrialState else { return false }
+        return self.isLicensed == other.isLicensed &&
+               self.licenseReason == other.licenseReason &&
+               self.daysOfUse == other.daysOfUse &&
+               self.trialDays == other.trialDays
     }
 }
 
@@ -57,7 +62,7 @@ extension MFLicenseAndTrialState: Equatable {
             /// Get licensing state
             let (license, _) = await checkLicenseAndTrial(licenseConfig: licenseConfig)
             
-            if license.isLicensed.boolValue {
+            if license.isLicensed {
                 
                 /// Do nothing if licensed
                 return
@@ -65,7 +70,7 @@ extension MFLicenseAndTrialState: Equatable {
             } else {
                 
                 /// Not licensed -> check trial
-                if license.trialIsActive.boolValue {
+                if license.trialIsActive {
                     
                     /// Trial still active -> do nothing
                     //      TODO: @UX Maybe display small reminder after half of trial is over? Or when there's one week of the trial left?
@@ -138,7 +143,7 @@ extension MFLicenseAndTrialState: Equatable {
         
         /// Return assmbled license + trial info
         
-        let result = MFLicenseAndTrialState(isLicensed: ObjCBool(isLicensed), freshness: kMFValueFreshnessCached, licenseReason: licenseReason, daysOfUse: Int32(daysOfUse), daysOfUseUI: Int32(daysOfUseUI), trialDays: Int32(trialDays), trialIsActive: ObjCBool(trialIsActive))
+        let result = MFLicenseAndTrialState(isLicensed: isLicensed, freshness: kMFValueFreshnessCached, licenseReason: licenseReason, daysOfUse: Int32(daysOfUse), daysOfUseUI: Int32(daysOfUseUI), trialDays: Int32(trialDays), trialIsActive: trialIsActive)
         return result
         
     }
@@ -166,7 +171,7 @@ extension MFLicenseAndTrialState: Equatable {
         
         /// Return assmbled license + trial info
         
-        let result = MFLicenseAndTrialState(isLicensed: ObjCBool(isLicensed), freshness: freshness, licenseReason: licenseReason, daysOfUse: Int32(daysOfUse), daysOfUseUI: Int32(daysOfUseUI), trialDays: Int32(trialDays), trialIsActive: ObjCBool(trialIsActive))
+        let result = MFLicenseAndTrialState(isLicensed: isLicensed, freshness: freshness, licenseReason: licenseReason, daysOfUse: Int32(daysOfUse), daysOfUseUI: Int32(daysOfUseUI), trialDays: Int32(trialDays), trialIsActive: trialIsActive)
         
         return (result, error)
     }

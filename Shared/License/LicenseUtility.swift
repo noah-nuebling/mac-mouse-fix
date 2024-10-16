@@ -98,7 +98,7 @@ func MFCatch<R, E>(_ workload: () async throws(E) -> R) async -> (R?, E?) {
     @objc static func trialCounterString(licenseConfig: LicenseConfig, license: MFLicenseAndTrialState) -> NSAttributedString {
         
         /// Guard unlicensed
-        assert(!license.isLicensed.boolValue)
+        assert(!license.isLicensed)
         
         /// Get trial state
         ///     We can also get `trialDays` from MFLicenseAndTrialState, which is sort of redundant`
@@ -108,7 +108,7 @@ func MFCatch<R, E>(_ workload: () async throws(E) -> R) async -> (R?, E?) {
         /// Build base string
         
         let base: String
-        if !license.trialIsActive.boolValue {
+        if !license.trialIsActive {
             /// Trial expired
             
             base = NSLocalizedString("trial-counter.expired", comment: "First draft: Free days are over")

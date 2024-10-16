@@ -44,7 +44,7 @@ class TrialSectionManager {
         
         /// Setup image
 
-        let imageName = license.trialIsActive.boolValue ? "calendar" : "calendar"/*"hourglass.tophalf.filled"*/
+        let imageName = license.trialIsActive ? "calendar" : "calendar"/*"hourglass.tophalf.filled"*/
         
         if #available(macOS 11.0, *) {
             currentSection.imageView!.symbolConfiguration = .init(pointSize: 13, weight: .regular, scale: .large)

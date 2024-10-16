@@ -12,6 +12,8 @@
 #ifndef License_h
 #define License_h
 
+#import "MFDataClass.h"
+
 typedef enum {
     kMFValueFreshnessNone,
     kMFValueFreshnessFresh,
@@ -27,15 +29,14 @@ typedef enum {
     kMFLicenseReasonFreeCountry, /// Licensed since it's used in country like China or Russia where you can't pay for the app
 } MFLicenseReason;
 
-typedef struct {
-    BOOL isLicensed;
-    MFValueFreshness freshness;
-    MFLicenseReason licenseReason;
-    int daysOfUse;
-    int daysOfUseUI;
-    int trialDays;
-    BOOL trialIsActive;
-} MFLicenseAndTrialState;
+MFDataClassInterface7(MFDataClassBase, MFLicenseAndTrialState,
+                          assign, BOOL,                isLicensed,
+                          assign, MFValueFreshness,    freshness,
+                          assign, MFLicenseReason,     licenseReason,
+                          assign, int,                 daysOfUse,
+                          assign, int,                 daysOfUseUI,
+                          assign, int,                 trialDays,
+                          assign, BOOL,                trialIsActive)
 
 /// Define custom errors
 ///     Notes:

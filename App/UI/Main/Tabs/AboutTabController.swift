@@ -149,7 +149,7 @@ class AboutTabController: NSViewController {
             self.view.removeTrackingArea(trackingArea)
         }
         
-        if license.isLicensed.boolValue {
+        if license.isLicensed {
             
             ///
             /// Replace payButton with milkshake link
@@ -293,7 +293,7 @@ class AboutTabController: NSViewController {
 //            trialSectionManager!.trialSection.textField!.heightAnchor.constraint(equalToConstant: 20).isActive = true
 
             
-            if license.trialIsActive.boolValue {
+            if license.trialIsActive {
                 
                 /// Update layout
                 ///     So tracking area frames / bounds are correct

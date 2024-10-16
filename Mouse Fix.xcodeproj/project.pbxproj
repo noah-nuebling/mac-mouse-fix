@@ -47,6 +47,10 @@
 		4F44794628B62FA400AD1979 /* LicenseConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F44794428B62FA400AD1979 /* LicenseConfig.swift */; };
 		4F44FF042606D73D00926A5E /* MFMessagePort.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F44FF032606D73D00926A5E /* MFMessagePort.m */; };
 		4F44FF052606D73D00926A5E /* MFMessagePort.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F44FF032606D73D00926A5E /* MFMessagePort.m */; };
+		4F5170152CBFD75C0018D388 /* MFDataClassImpls.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F5170142CBFD75C0018D388 /* MFDataClassImpls.m */; };
+		4F5170162CBFD75C0018D388 /* MFDataClassImpls.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F5170142CBFD75C0018D388 /* MFDataClassImpls.m */; };
+		4F5170182CBFD7660018D388 /* MFDataClass.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F5170172CBFD7660018D388 /* MFDataClass.m */; };
+		4F5170192CBFD7660018D388 /* MFDataClass.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F5170172CBFD7660018D388 /* MFDataClass.m */; };
 		4F5971E52901763D00A32656 /* MathObjc.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F5971E42901763D00A32656 /* MathObjc.m */; };
 		4F5971E62901763D00A32656 /* MathObjc.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F5971E42901763D00A32656 /* MathObjc.m */; };
 		4F5C2F802885C5D0001B9B8A /* HelperState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F5C2F7F2885C5D0001B9B8A /* HelperState.swift */; };
@@ -1988,6 +1992,9 @@
 		4F44794428B62FA400AD1979 /* LicenseConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LicenseConfig.swift; sourceTree = "<group>"; };
 		4F44FF022606D73D00926A5E /* MFMessagePort.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MFMessagePort.h; sourceTree = "<group>"; };
 		4F44FF032606D73D00926A5E /* MFMessagePort.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MFMessagePort.m; sourceTree = "<group>"; };
+		4F5170142CBFD75C0018D388 /* MFDataClassImpls.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MFDataClassImpls.m; sourceTree = "<group>"; };
+		4F5170172CBFD7660018D388 /* MFDataClass.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MFDataClass.m; sourceTree = "<group>"; };
+		4F51701A2CBFD7730018D388 /* MFDataClass.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MFDataClass.h; sourceTree = "<group>"; };
 		4F5971E42901763D00A32656 /* MathObjc.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MathObjc.m; sourceTree = "<group>"; };
 		4F5C2F7F2885C5D0001B9B8A /* HelperState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelperState.swift; sourceTree = "<group>"; };
 		4F5F3EED2756DB0A00C350C0 /* RemapsOverrider_old_.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemapsOverrider_old_.swift; sourceTree = "<group>"; };
@@ -7093,6 +7100,9 @@
 		4FF6653625F2C7B000689B77 /* Utility */ = {
 			isa = PBXGroup;
 			children = (
+				4F51701A2CBFD7730018D388 /* MFDataClass.h */,
+				4F5170172CBFD7660018D388 /* MFDataClass.m */,
+				4F5170142CBFD75C0018D388 /* MFDataClassImpls.m */,
 				4F8A8DC0287F885D00786BCC /* Shorthands.h */,
 				4FA06818291B2C4C00949B5F /* Shorthands.m */,
 				4FF27DD62B95B108004744E1 /* Shorthands.swift */,
@@ -7904,6 +7914,7 @@
 				4F7D97A628AEB2EE00C11E79 /* AboutTabController.swift in Sources */,
 				4F79A81C2604317200076A7E /* ToastNotificationController.m in Sources */,
 				4F909D2E28A0C3D2009349A2 /* NSControl+Extensions.swift in Sources */,
+				4F5170192CBFD7660018D388 /* MFDataClass.m in Sources */,
 				4F39BC3B263AF2B000FDF692 /* SparkleUpdaterController.m in Sources */,
 				4FA40D0028A0CCCB00499E53 /* CombinedLinearCurve.swift in Sources */,
 				4F85C05428BBE6FA00E96E9C /* TrialSectionManager.swift in Sources */,
@@ -7939,6 +7950,7 @@
 				4FA40CF928A0CCCA00499E53 /* Bezier.swift in Sources */,
 				4F12952028D2D5E1009A49AB /* NSTextField+Extentions.swift in Sources */,
 				4FC8A7D728ACEB7B007DB982 /* NSString+Extensions.swift in Sources */,
+				4F5170162CBFD75C0018D388 /* MFDataClassImpls.m in Sources */,
 				4FC8A7CD28AAF1BC007DB982 /* MarkdownParser.swift in Sources */,
 				4F09284528B8E82B00BDC2FF /* LicenseSheetController.swift in Sources */,
 				4F909D3E28A0C3D2009349A2 /* SensitivityDisplay.swift in Sources */,
@@ -8058,6 +8070,7 @@
 				4FBDA14F27B241CE0030E4EA /* GlobalEventTapThread.m in Sources */,
 				4FF6669825F2C93A00689B77 /* SubPixelator.m in Sources */,
 				4F44794328B55F6300AD1979 /* CAAnimation+Extensions.swift in Sources */,
+				4F5170182CBFD7660018D388 /* MFDataClass.m in Sources */,
 				4FE40B97283A49DD00880BEF /* SharedUtilitySwift.swift in Sources */,
 				4F8A8DC2287F967000786BCC /* TestAccelerationCurve.swift in Sources */,
 				4FF0BD51266AC10C003935EA /* Math.swift in Sources */,
@@ -8087,6 +8100,7 @@
 				4FF6669925F2C93A00689B77 /* VectorSubPixelator.m in Sources */,
 				4FCB260E293147CD0066EE56 /* ModifiedDrag.swift in Sources */,
 				4FDE75AA28B269AE00662314 /* Randomizer.swift in Sources */,
+				4F5170152CBFD75C0018D388 /* MFDataClassImpls.m in Sources */,
 				4F8A44532925311B00361EFF /* Symbols.m in Sources */,
 				4F626E99292A842D00E6FFD5 /* KeyCaptureMode.m in Sources */,
 				4F12525C2CAA88A400A079BD /* UNIXSignals.m in Sources */,
