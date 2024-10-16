@@ -42,6 +42,7 @@ These people spent a lot more than the standard price and treated me to an **Inc
 
 **October 2024**
 
+- 🇺🇸&nbsp;John&nbsp;Desmarteau - "Great app - thanks for making this."
 - 🇧🇷&nbsp;Vinicius&nbsp;Ventura
 - 🇺🇸&nbsp;Kenny&nbsp;G&nbsp;The&nbsp;Wizard&nbsp;Of&nbsp;Osgood
 - 🇺🇸&nbsp;Dsoundmn
