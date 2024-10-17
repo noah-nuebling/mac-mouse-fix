@@ -26,7 +26,7 @@
 - (instancetype)initWithCoder:(NSCoder *)coder {
     self = [super init];
     if (self) {
-        for (NSString *key in self.allPropertyNames) {
+        for (NSString *key in self.class.allPropertyNames) {
             id value = [coder decodeObjectForKey:key];
             if (value) {
                 [self setValue:value forKey:key];
@@ -38,7 +38,7 @@
 }
 
 - (void)encodeWithCoder:(NSCoder *)coder {
-    for (NSString *key in self.allPropertyNames) {
+    for (NSString *key in self.class.allPropertyNames) {
         id value = [self valueForKey:key];
         if (value) {
             [coder encodeObject:value forKey:key];
@@ -50,7 +50,7 @@
 - (id)copyWithZone:(NSZone *)zone {
     MFDataClassBase *copy = [[[self class] allocWithZone:zone] init];
     if (copy) {
-        for (NSString *key in self.allPropertyNames) {
+        for (NSString *key in self.class.allPropertyNames) {
             id value = [self valueForKey:key];
             if (value) {
                 if ([[self class] propertyIsValueType:key]) {
@@ -74,35 +74,16 @@
     if (self == object) {
         return YES;
     }
-    if (![object isKindOfClass:[MFDataClassBase class]]) {
+    if (object_getClass(self) != object_getClass(object)) { /// Note: Is this a valid way to compare class-equality? TODO: Check our Swizzling code to see how we do it there.
         return NO;
     }
     
-    /// Unwrap
+    /// Unwrap other
     MFDataClassBase *other = (MFDataClassBase *)object;
     
-    /// Get propertyNames
-    NSArray<NSString *> *propertyNames = self.allPropertyNames;
-    
-    /// Compare propertyNames
-    ///     Discussion: This makes it so instances of different `MFDataClass` subclasses can be considered equal if they have the exact same propertyNames and propertyValues. Not sure this is actually useful.
-    BOOL propertyNamesMatch;
-    if (object_getClass(self) == object_getClass(other)) { /// Note: Is this a valid way to compare class-equality? TODO: Check our Swizzling code to see how we do it there.
-        propertyNamesMatch = YES; /// If the class is the same, the propertyNames have to be the same, too
-    } else {
-        propertyNamesMatch = [propertyNames isEqual:other.allPropertyNames];
-    }
-    if (!propertyNamesMatch) {
+    /// Compare propertyValues
+    if (![self.propertyValuesForEqualityComparison isEqual:other.propertyValuesForEqualityComparison]) {
         return NO;
-    }
-    
-    /// Compare propertyValues.
-    for (NSString *key in propertyNames) {
-        id selfValue = [self valueForKey:key];
-        id otherValue = [other valueForKey:key];
-        if (selfValue != otherValue && ![selfValue isEqual:otherValue]) {
-            return NO;
-        }
     }
     
     /// Passed all tests!
@@ -110,15 +91,8 @@
 }
 
 - (NSUInteger)hash {
-
-    NSUInteger hash = 0;
-
-    for (NSString *key in self.allPropertyNames) {
-        id value = [self valueForKey:key];
-        hash ^= [value hash];
-    }
-    
-    return hash;
+    NSUInteger result = self.propertyValuesForEqualityComparison.hash;
+    return result;
 }
 
 /// Utility
@@ -142,7 +116,7 @@
     return !isObjectType;
 }
 
-- (NSArray<NSString *> *_Nonnull)allPropertyNames {
++ (NSArray<NSString *> *_Nonnull)allPropertyNames {
     
     /// Notes:
     /// - This is used by almost all other methods - We could maybe do some caching here to speed things up
@@ -171,7 +145,7 @@
     
     NSMutableArray *result = [NSMutableArray array];
     
-    for (NSString *propertyName in self.allPropertyNames) {
+    for (NSString *propertyName in self.class.allPropertyNames) {
         id propertyValue = [self valueForKey:propertyName];
         [result addObject:propertyValue];
     }
@@ -179,11 +153,23 @@
     return result;
 }
 
+- (NSArray<id> *_Nonnull)propertyValuesForEqualityComparison; {
+
+    /// Client code can override this (in a category) to easily change the definition of equality
+    ///     (This will also automatically change `hash`, so that hashing and equality definitions match.)
+    ///     On property order:
+    ///         The order of the property values in the returned array needs to always be the same, otherwise our equality and hash methods that depend on this will break.
+    ///         For the default implementation this should be ensured since the underlying function `class_copyPropertyList()` seems to output the properties in deterministic order based on my testing.
+    ///         If order ever does cause breakage, perhaps we could return an `NSSet` instead of `NSArray`
+    ///
+    return [self allPropertyValues];
+}
+
 - (NSDictionary<NSString *, NSObject *> *_Nonnull)asDictionary {
     
     /// Using the KVC method `setValuesForKeysWithDictionary:` for the 'opposite' of this method.
     
-    NSDictionary *result = [self dictionaryWithValuesForKeys:self.allPropertyNames];
+    NSDictionary *result = [self dictionaryWithValuesForKeys:self.class.allPropertyNames];
     return result;
 }
 

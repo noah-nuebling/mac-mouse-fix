@@ -88,7 +88,7 @@ class TrialNotificationController: NSWindowController {
     
     var firstAppearance = true
     
-    @objc func open(licenseConfig: LicenseConfig, license: MFLicenseAndTrialState, triggeredByUser: Bool) {
+    @objc func open(licenseConfig: LicenseConfig, licenseState: MFLicenseState, trialState: MFTrialState, triggeredByUser: Bool) {
         
         /// Validate
         
@@ -138,12 +138,12 @@ class TrialNotificationController: NSWindowController {
             
             /// Init the trialSection
             trialSectionManager = TrialSectionManager(self.trialSection)
-            trialSectionManager.startManaging(licenseConfig: licenseConfig, license: license)
+            trialSectionManager.startManaging(licenseConfig: licenseConfig, licenseState: licenseState, trialState: trialState)
             
             /// Set the bodyString
             
             let bodyBase = NSLocalizedString("trial-notif.body", comment: "First draft: Hi there! You've been using Mac Mouse Fix for **%d days** now. I hope you're enjoying it!\n\nIf you want to keep using Mac Mouse Fix, you can [buy it now](%@).")
-            let bodyFormatted = String(format: bodyBase, license.daysOfUseUI, licenseConfig.quickPayLink)
+            let bodyFormatted = String(format: bodyBase, trialState.daysOfUseUI, licenseConfig.quickPayLink)
             let bodyMarkdown = NSAttributedString(coolMarkdown: bodyFormatted)!
             body.textStorage?.setAttributedString(bodyMarkdown)
             

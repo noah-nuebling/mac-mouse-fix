@@ -28,7 +28,8 @@ class AboutTabController: NSViewController {
     var payButtonwrapperConstraints: [NSLayoutConstraint] = []
     
     var currentLicenseConfig: LicenseConfig? = nil
-    var currentLicense: MFLicenseAndTrialState? = nil
+    var currentLicenseState: MFLicenseState? = nil
+    var currentTrialState: MFTrialState? = nil
 
     var trackingArea: NSTrackingArea? = nil
     
@@ -99,14 +100,15 @@ class AboutTabController: NSViewController {
         /// Get licensing info
         ///     Notes:
         ///     - Not using the completionHandler of `Licensing.licensingState` here since it's asynchronous. However, calling `licensingState()` will update isLicensed and then the UI will update. We could also have separated ConfigValue for the daysOfUse config value, but I don't think it'll be noticable if that doesn't update totally correctl
+        ///         - Update: Oct 2024: This is totally outdated and I don't know what it means anymore.
         
         /// Get cache
         let cachedLicenseConfig = LicenseConfig.getCached()
-        let cachedLicense = License.checkLicenseAndTrialCached(licenseConfig: cachedLicenseConfig)
+        let (cachedLicenseState, cachedTrialState) = License.checkLicenseAndTrialCached(licenseConfig: cachedLicenseConfig)
         
-        /// 1. Set UI to cache
-        updateUI(licenseConfig: cachedLicenseConfig, license: cachedLicense)
-            
+        /// Step 1: Set UI to cache
+        updateUI(licenseConfig: cachedLicenseConfig, licenseState: cachedLicenseState, trialState: cachedTrialState)
+        
         /// 2. Get real values and update UI again
 //        updateUIToCurrentLicense()
         
@@ -115,7 +117,10 @@ class AboutTabController: NSViewController {
     /// Did appear
     
     override func viewDidAppear() {
-        /// 2. Get real values and update UI
+        /// Step 2: Get real values and update UI
+        ///     Notes:
+        ///         - Why are we doing step 2 in viewDidAppear() and step 1 in viewDidLoad()?
+        ///         - viewDidAppear() is called twice upon app launch for some reason (Oct 2024)
         updateUIToCurrentLicense()
     }
     
@@ -124,32 +129,43 @@ class AboutTabController: NSViewController {
     func updateUIToCurrentLicense() {
             
         /// This is called on load and when the user activates/deactivates their license.
-        /// - It would be cleaner and prettier if we used a reactive architecture where you have some global master license state that all the UI that depends on it subscribes to. Buttt we really only have UI that depends on the license state here on the about tab, so that would be overengineering. On the other hand we need to store the AboutTabController instance in MainAppState for global access if we don't use th reactive architecture which is also a little ugly.
+        /// - It would be cleaner and prettier if we used a reactive architecture where you have some global master license state that all the UI that depends on it subscribes to. Buttt we really only have UI that depends on the license state here on the about tab, so that would be overengineering. On the other hand we need to store the AboutTabController instance in MainAppState for global access if we don't use the reactive architecture which is also a little ugly.
         
         Task.detached(priority: .userInitiated, operation: {
             
             let licenseConfig = await LicenseConfig.get()
-            let (license, error) = await License.checkLicenseAndTrial(licenseConfig: licenseConfig)
+            let (licenseState, trialState, error) = await License.checkLicenseAndTrial(licenseConfig: licenseConfig)
                 
             DispatchQueue.main.async {
-                self.updateUI(licenseConfig: licenseConfig, license: license)
+                self.updateUI(licenseConfig: licenseConfig, licenseState: licenseState, trialState: trialState)
             }
-                                
         })
     }
     
-    func updateUI(licenseConfig: LicenseConfig, license: MFLicenseAndTrialState) {
+    func updateUI(licenseConfig: LicenseConfig, licenseState: MFLicenseState, trialState: MFTrialState) {
         
-        /// Guard no change
-        if currentLicenseConfig?.isEqual(to: licenseConfig) ?? false && currentLicense == license { return }
-        currentLicenseConfig = licenseConfig; currentLicense = license
+        /// Guard: no change from 'current' values
+        ///     This prevents unnecessary rerendering of the UI when this function is called several times with the same arguments. (Which we expect to happen - this function is first supposed to be called with cached LicenseState and then with the real LicenseState from the server - as soon as that's available.)
+        let licenseConfigChanged = currentLicenseConfig != licenseConfig
+        let licenseStateChanged = currentLicenseState != licenseState
+        let trialStateChanged = currentTrialState != trialState
+        
+        if !licenseConfigChanged && !licenseStateChanged && !trialStateChanged {
+            return
+        }
+        
+        /// Update 'current' values
+        ///     Note: We don't need to copy the values before we store them into the `current...` variables, because we know we never modify those values after creation.
+        currentLicenseConfig = licenseConfig
+        currentLicenseState = licenseState
+        currentTrialState = trialState
         
         /// Deactivate tracking area
         if let trackingArea = self.trackingArea {
             self.view.removeTrackingArea(trackingArea)
         }
         
-        if license.isLicensed {
+        if licenseState.isLicensed {
             
             ///
             /// Replace payButton with milkshake link
@@ -192,7 +208,7 @@ class AboutTabController: NSViewController {
             
             var message: String = "Something went wrong! You shouldn't be seeing this."
             
-            switch license.licenseReason {
+            switch licenseState.licenseReason {
                 
             case kMFLicenseReasonFreeCountry:
                 
@@ -284,7 +300,7 @@ class AboutTabController: NSViewController {
             ///
             
             /// Begin managing
-            trialSectionManager?.startManaging(licenseConfig: licenseConfig, license: license)
+            trialSectionManager?.startManaging(licenseConfig: licenseConfig, licenseState: licenseState, trialState: trialState)
             
             /// Set textfield height
             ///     Necessary for y centering. Not sure why
@@ -293,7 +309,7 @@ class AboutTabController: NSViewController {
 //            trialSectionManager!.trialSection.textField!.heightAnchor.constraint(equalToConstant: 20).isActive = true
 
             
-            if license.trialIsActive {
+            if trialState.trialIsActive {
                 
                 /// Update layout
                 ///     So tracking area frames / bounds are correct

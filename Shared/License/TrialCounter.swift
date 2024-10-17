@@ -73,13 +73,13 @@ import CocoaLumberjackSwift
             let licenseConfig = await LicenseConfig.get()
         
             /// Check licensing state
-            let (license, _) = await License.checkLicenseAndTrial(licenseConfig: licenseConfig)
+            let (licenseState, trialState, _) = await License.checkLicenseAndTrial(licenseConfig: licenseConfig)
             
-            if license.isLicensed {
+            if licenseState.isLicensed {
                 
                 /// Do nothing if licensed
                 
-            } else if !license.trialIsActive {
+            } else if !trialState.trialIsActive {
                 
                 /// Not licensed and trial expired -> do nothing
                 ///     In this case AccessibilityCheck.m will perform the lockDown, by calling `License.runCheckAndReact()`

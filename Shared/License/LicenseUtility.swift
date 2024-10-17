@@ -95,20 +95,21 @@ func MFCatch<R, E>(_ workload: () async throws(E) -> R) async -> (R?, E?) {
         }
     }
     
-    @objc static func trialCounterString(licenseConfig: LicenseConfig, license: MFLicenseAndTrialState) -> NSAttributedString {
+    @objc static func trialCounterString(licenseConfig: LicenseConfig, licenseState: MFLicenseState, trialState: MFTrialState) -> NSAttributedString {
         
         /// Guard unlicensed
-        assert(!license.isLicensed)
+        ///     Note: Perhaps we should return an error UI string here, so it is more obvious to the user that sth went wrong and they can file a bug report?
+        assert(!licenseState.isLicensed, "Error: The app is licensed, yet we're trying to display the trialCounterString")
+        
         
         /// Get trial state
-        ///     We can also get `trialDays` from MFLicenseAndTrialState, which is sort of redundant`
+        ///     Note: We can also get `trialDays` from `trialState` instead of `licenseConfig`, which is sort of redundant
         let trialDays = Int(licenseConfig.trialDays)
-        let daysOfUse = Int(license.daysOfUseUI)
+        let daysOfUseUI = trialState.daysOfUseUI
         
         /// Build base string
-        
         let base: String
-        if !license.trialIsActive {
+        if !trialState.trialIsActive {
             /// Trial expired
             
             base = NSLocalizedString("trial-counter.expired", comment: "First draft: Free days are over")
@@ -117,7 +118,7 @@ func MFCatch<R, E>(_ workload: () async throws(E) -> R) async -> (R?, E?) {
             /// Trial still active
                 
             let b = NSLocalizedString("trial-counter.active", comment: "First draft: Free day **%d/%d**")
-            base = String(format: b, daysOfUse, trialDays)
+            base = String(format: b, daysOfUseUI, trialDays)
         }
         
         /// Apply markdown

@@ -13,9 +13,9 @@
 ///
 /// Let's you easily create objc dataclasses like this:
 ///     ```
-///     MFDataClass3(MFDataClassBase, MFAddress, strong, NSString * _Nonnull,   city,
-///                                              strong, NSString *_Nullable,   street,
-///                                              assign, long,                  zipcode)))
+///     MFDataClass3(MFDataClassBase, MFAddress, (strong, readwrite), NSString * _Nonnull,   city,
+///                                              (strong, readonly),  NSString *_Nullable,   street,
+///                                              (assign, readwrite), long,                  zipcode)))
 ///     ```
 ///     -> This will create a dataclass `MFAddress` with 3 properties: `city`, `street`, and `zipcode`
 ///         (Use `MFDataClass3(...)` to create a dataclass with `3` properties, `MFDataClass4(...)` to create a dataclass with `4` properties, and so on...)
@@ -23,15 +23,15 @@
 /// -> This will only work in an .m file. To export a dataClass inside an .h file:
 ///     Put this in the .h file:        (it generates an objc`@interface`)
 ///         ```
-///         MFDataClassInterface3(MFDataClassBase, MFAddress, strong, NSString * _Nonnull,   city,
-///                                                           strong, NSString *_Nullable,   street,
-///                                                           assign, long,                  zipcode)))
+///         MFDataClassInterface3(MFDataClassBase, MFAddress, (strong, readwrite), NSString * _Nonnull,   city,
+///                                                           (strong, readonly),  NSString *_Nullable,   street,
+///                                                           (assign, readwrite), long,                  zipcode)))
 ///         ```
 ///     Put this in the .m file:        (it generates an objc `@implementation`)
 ///         ```
-///         MFDataClassImplementation3(MFDataClassBase, MFAddress, strong, NSString * _Nonnull,   city,
-///                                                                strong, NSString *_Nullable,   street,
-///                                                                assign, long,                  zipcode)))
+///         MFDataClassImplementation3(MFDataClassBase, MFAddress, (strong, readwrite), NSString * _Nonnull,   city,
+///                                                                (strong, readonly),  NSString *_Nullable,   street,
+///                                                                (assign, readwrite), long,                  zipcode)))
 ///         ```
 ///
 ///     -> Make sure to keep the implementation and the interface in sync!
@@ -59,8 +59,15 @@
 ///             However, Non-Object types which are not *auto-boxed* in an `NSValue` by the Key-Value-Coding APIs will *not* work properly with `MFDataClass`.
 ///                 (E.g. c unions won't work from what I heard, but any custom structs and c-numbers-types should work according to the docs).
 ///             Docs: (KeyValueCoding - Representing Non-Object Values) https://developer.apple.com/library/archive/documentation/Cocoa/Conceptual/KeyValueCoding/DataTypes.html#//apple_ref/doc/uid/20002171-BAJEAIEE)
-///    - The `Setter Semantics` of each property needs to be specified. Always use`assign` for non-object types. Generally use `strong` for objects. Other possible values for objects are `weak`, `copy`, and `retain`, but I'm not sure it ever makes sense to use them for `MFDataClass` properties.
-///    - As for other` property attributes`, aside from the `Setter Semantics`: They *cannot* be specified by the user: Instead we always use `nonatomic`, and `readwrite` for every attribute. Also, we don't specifiy nullability. (not specifying nullability in the the property attributes lets us specify it in the type instead, which is more flexible).
+///    - Property attributes:
+///         1. `atomic` may not be specified. (We always set it to `nonatomic` automatically - We do this because I don't ever want to use atomic, and if left unspecified, objc defaults to atomic.)
+///         All other property attributes can be specified. Here are some tips/guidelines:
+///         2. `strong` or `assign` should be specified.
+///             Always use`assign` for non-object types. Generally use `strong` for objects. Other possible values for objects are `weak`, `copy`, and `retain`, but I'm not sure it ever makes sense to use them for `MFDataClass` properties.
+///             These values specify the so called 'setter semantics'.
+///         3. `readonly` or `readwrite` may be specified. (If left unspecified it defaults to `readwrite`)
+///         4. `nullable` or `nonnull` may be specified. But I recommend to specify nullability in the type instead (by using `_Nullable` or `_Nonnull`) - this is more flexible and consistent.
+///         -> So in conclusion: Generally, specify strong/assign and readonly/readwrite.
 ///         More info on `Setter Semantics` and other objc `property attributes` in the docs: https://developer.apple.com/library/archive/documentation/Cocoa/Conceptual/ObjectiveC/Chapters/ocProperties.html
 ///    - Nullability of properties can be specified by using `_Nonnull` or `_Nullable` inside the type of a property. This will translate to optional / non-optional types when importing the `MFDataClass` into Swift.
 ///    - Thread safety: These dataclasses are not thread safe. Use locks or dispatch queues to prevent concurrent access while modifying the properties of a dataclass instance.
@@ -78,12 +85,17 @@
 #pragma mark - Base superclass
 
 @interface MFDataClassBase : NSObject<NSCopying, NSCoding>
-- (NSArray<NSString *> * _Nonnull)allPropertyNames;
++ (NSArray<NSString *> * _Nonnull)allPropertyNames;
 - (NSArray<id> *_Nonnull)allPropertyValues;
+- (NSArray<id> *_Nonnull)propertyValuesForEqualityComparison; /// You can override this to easily change the definition of equality. If, instead, you override `isEqual:` manually, you also need to override `- hash` manually to match.
 - (NSDictionary<NSString *, NSObject *> *_Nonnull)asDictionary;
 @end
 
 #pragma mark - Macros
+
+/// Helper macros
+
+#define UNPACK(packedStuff...) packedStuff
 
 /// These macros let you easily create an `MFDataClass` with n properties.
 
@@ -96,18 +108,18 @@
     @interface __className : __superClassName \
     @end
 
-#define MFDataClassImplementation0(__className) \
+#define MFDataClassImplementation0(__superClassName, __className) \
     @implementation __className \
     @end
 
 /// 1 property
-#define MFDataClass1(__superClassName, __className, __setterSemanticsForProperty1, __typeForProperty1, __nameForProperty1) \
-    MFDataClassInterface1(__superClassName, __className, __setterSemanticsForProperty1, __typeForProperty1, __nameForProperty1) \
-    MFDataClassImplementation1(__superClassName, __className, __setterSemanticsForProperty1, __typeForProperty1, __nameForProperty1)
+#define MFDataClass1(__superClassName, __className, __attributesForProperty1, __typeForProperty1, __nameForProperty1) \
+    MFDataClassInterface1(__superClassName, __className, __attributesForProperty1, __typeForProperty1, __nameForProperty1) \
+    MFDataClassImplementation1(__superClassName, __className, __attributesForProperty1, __typeForProperty1, __nameForProperty1)
 
 #define MFDataClassInterface1(__superClassName, __className, s1, t1, n1) \
     @interface __className : __superClassName \
-    @property (nonatomic, readwrite, s1) t1 n1; \
+    @property (nonatomic, UNPACK s1) t1 n1; \
     - (instancetype _Nonnull)init NS_UNAVAILABLE; \
     - (instancetype _Nonnull)initWith_ ## n1:(t1)n1 \
                                           NS_DESIGNATED_INITIALIZER \
@@ -126,18 +138,18 @@
     @end
     
 /// 2 properties
-#define MFDataClass2(__superClassName, __className, __setterSemanticsForProperty1, __typeForProperty1, __nameForProperty1, \
-                                                    __setterSemanticsForProperty2, __typeForProperty2, __nameForProperty2) \
-    MFDataClassInterface2(__superClassName, __className, __setterSemanticsForProperty1, __typeForProperty1, __nameForProperty1, \
-                                                         __setterSemanticsForProperty2, __typeForProperty2, __nameForProperty2) \
-    MFDataClassImplementation2(__superClassName, __className, __setterSemanticsForProperty1, __typeForProperty1, __nameForProperty1, \
-                                                              __setterSemanticsForProperty2, __typeForProperty2, __nameForProperty2)
+#define MFDataClass2(__superClassName, __className, __attributesForProperty1, __typeForProperty1, __nameForProperty1, \
+                                                    __attributesForProperty2, __typeForProperty2, __nameForProperty2) \
+    MFDataClassInterface2(__superClassName, __className, __attributesForProperty1, __typeForProperty1, __nameForProperty1, \
+                                                         __attributesForProperty2, __typeForProperty2, __nameForProperty2) \
+    MFDataClassImplementation2(__superClassName, __className, __attributesForProperty1, __typeForProperty1, __nameForProperty1, \
+                                                              __attributesForProperty2, __typeForProperty2, __nameForProperty2)
 
 #define MFDataClassInterface2(__superClassName, __className, s1, t1, n1, \
                                                              s2, t2, n2) \
     @interface __className : __superClassName \
-    @property (nonatomic, readwrite, s1) t1 n1; \
-    @property (nonatomic, readwrite, s2) t2 n2; \
+    @property (nonatomic, UNPACK s1) t1 n1; \
+    @property (nonatomic, UNPACK s2) t2 n2; \
     - (instancetype _Nonnull)init NS_UNAVAILABLE; \
     - (instancetype _Nonnull)initWith_ ## n1:(t1)n1 \
                                           n2:(t2)n2 \
@@ -160,23 +172,23 @@
     @end
 
 /// 3 properties
-#define MFDataClass3(__superClassName, __className, __setterSemanticsForProperty1, __typeForProperty1, __nameForProperty1, \
-                                                    __setterSemanticsForProperty2, __typeForProperty2, __nameForProperty2, \
-                                                    __setterSemanticsForProperty3, __typeForProperty3, __nameForProperty3) \
-    MFDataClassInterface3(__superClassName, __className, __setterSemanticsForProperty1, __typeForProperty1, __nameForProperty1, \
-                                                         __setterSemanticsForProperty2, __typeForProperty2, __nameForProperty2, \
-                                                         __setterSemanticsForProperty3, __typeForProperty3, __nameForProperty3) \
-    MFDataClassImplementation3(__superClassName, __className, __setterSemanticsForProperty1, __typeForProperty1, __nameForProperty1, \
-                                                              __setterSemanticsForProperty2, __typeForProperty2, __nameForProperty2, \
-                                                              __setterSemanticsForProperty3, __typeForProperty3, __nameForProperty3)
+#define MFDataClass3(__superClassName, __className, __attributesForProperty1, __typeForProperty1, __nameForProperty1, \
+                                                    __attributesForProperty2, __typeForProperty2, __nameForProperty2, \
+                                                    __attributesForProperty3, __typeForProperty3, __nameForProperty3) \
+    MFDataClassInterface3(__superClassName, __className, __attributesForProperty1, __typeForProperty1, __nameForProperty1, \
+                                                         __attributesForProperty2, __typeForProperty2, __nameForProperty2, \
+                                                         __attributesForProperty3, __typeForProperty3, __nameForProperty3) \
+    MFDataClassImplementation3(__superClassName, __className, __attributesForProperty1, __typeForProperty1, __nameForProperty1, \
+                                                              __attributesForProperty2, __typeForProperty2, __nameForProperty2, \
+                                                              __attributesForProperty3, __typeForProperty3, __nameForProperty3)
 
 #define MFDataClassInterface3(__superClassName, __className, s1, t1, n1, \
                                                              s2, t2, n2, \
                                                              s3, t3, n3) \
     @interface __className : __superClassName \
-    @property (nonatomic, readwrite, s1) t1 n1; \
-    @property (nonatomic, readwrite, s2) t2 n2; \
-    @property (nonatomic, readwrite, s3) t3 n3; \
+    @property (nonatomic, UNPACK s1) t1 n1; \
+    @property (nonatomic, UNPACK s2) t2 n2; \
+    @property (nonatomic, UNPACK s3) t3 n3; \
     - (instancetype _Nonnull)init NS_UNAVAILABLE; \
     - (instancetype _Nonnull)initWith_ ## n1:(t1)n1 \
                                           n2:(t2)n2 \
@@ -203,28 +215,28 @@
     @end
 
 /// 4 properties
-#define MFDataClass4(__superClassName, __className, __setterSemanticsForProperty1, __typeForProperty1, __nameForProperty1, \
-                                                    __setterSemanticsForProperty2, __typeForProperty2, __nameForProperty2, \
-                                                    __setterSemanticsForProperty3, __typeForProperty3, __nameForProperty3, \
-                                                    __setterSemanticsForProperty4, __typeForProperty4, __nameForProperty4) \
-    MFDataClassInterface4(__superClassName, __className, __setterSemanticsForProperty1, __typeForProperty1, __nameForProperty1, \
-                                                         __setterSemanticsForProperty2, __typeForProperty2, __nameForProperty2, \
-                                                         __setterSemanticsForProperty3, __typeForProperty3, __nameForProperty3, \
-                                                         __setterSemanticsForProperty4, __typeForProperty4, __nameForProperty4) \
-    MFDataClassImplementation4(__superClassName, __className, __setterSemanticsForProperty1, __typeForProperty1, __nameForProperty1, \
-                                                              __setterSemanticsForProperty2, __typeForProperty2, __nameForProperty2, \
-                                                              __setterSemanticsForProperty3, __typeForProperty3, __nameForProperty3, \
-                                                              __setterSemanticsForProperty4, __typeForProperty4, __nameForProperty4)
+#define MFDataClass4(__superClassName, __className, __attributesForProperty1, __typeForProperty1, __nameForProperty1, \
+                                                    __attributesForProperty2, __typeForProperty2, __nameForProperty2, \
+                                                    __attributesForProperty3, __typeForProperty3, __nameForProperty3, \
+                                                    __attributesForProperty4, __typeForProperty4, __nameForProperty4) \
+    MFDataClassInterface4(__superClassName, __className, __attributesForProperty1, __typeForProperty1, __nameForProperty1, \
+                                                         __attributesForProperty2, __typeForProperty2, __nameForProperty2, \
+                                                         __attributesForProperty3, __typeForProperty3, __nameForProperty3, \
+                                                         __attributesForProperty4, __typeForProperty4, __nameForProperty4) \
+    MFDataClassImplementation4(__superClassName, __className, __attributesForProperty1, __typeForProperty1, __nameForProperty1, \
+                                                              __attributesForProperty2, __typeForProperty2, __nameForProperty2, \
+                                                              __attributesForProperty3, __typeForProperty3, __nameForProperty3, \
+                                                              __attributesForProperty4, __typeForProperty4, __nameForProperty4)
 
 #define MFDataClassInterface4(__superClassName, __className, s1, t1, n1, \
                                                              s2, t2, n2, \
                                                              s3, t3, n3, \
                                                              s4, t4, n4) \
     @interface __className : __superClassName \
-    @property (nonatomic, readwrite, s1) t1 n1; \
-    @property (nonatomic, readwrite, s2) t2 n2; \
-    @property (nonatomic, readwrite, s3) t3 n3; \
-    @property (nonatomic, readwrite, s4) t4 n4; \
+    @property (nonatomic, UNPACK s1) t1 n1; \
+    @property (nonatomic, UNPACK s2) t2 n2; \
+    @property (nonatomic, UNPACK s3) t3 n3; \
+    @property (nonatomic, UNPACK s4) t4 n4; \
     - (instancetype _Nonnull)init NS_UNAVAILABLE; \
     - (instancetype _Nonnull)initWith_ ## n1:(t1)n1 \
                                           n2:(t2)n2 \
@@ -255,21 +267,21 @@
     @end
 
 /// 5 properties
-#define MFDataClass5(__superClassName, __className, __setterSemanticsForProperty1, __typeForProperty1, __nameForProperty1, \
-                                                    __setterSemanticsForProperty2, __typeForProperty2, __nameForProperty2, \
-                                                    __setterSemanticsForProperty3, __typeForProperty3, __nameForProperty3, \
-                                                    __setterSemanticsForProperty4, __typeForProperty4, __nameForProperty4, \
-                                                    __setterSemanticsForProperty5, __typeForProperty5, __nameForProperty5) \
-    MFDataClassInterface5(__superClassName, __className, __setterSemanticsForProperty1, __typeForProperty1, __nameForProperty1, \
-                                                         __setterSemanticsForProperty2, __typeForProperty2, __nameForProperty2, \
-                                                         __setterSemanticsForProperty3, __typeForProperty3, __nameForProperty3, \
-                                                         __setterSemanticsForProperty4, __typeForProperty4, __nameForProperty4, \
-                                                         __setterSemanticsForProperty5, __typeForProperty5, __nameForProperty5) \
-    MFDataClassImplementation5(__superClassName, __className, __setterSemanticsForProperty1, __typeForProperty1, __nameForProperty1, \
-                                                              __setterSemanticsForProperty2, __typeForProperty2, __nameForProperty2, \
-                                                              __setterSemanticsForProperty3, __typeForProperty3, __nameForProperty3, \
-                                                              __setterSemanticsForProperty4, __typeForProperty4, __nameForProperty4, \
-                                                              __setterSemanticsForProperty5, __typeForProperty5, __nameForProperty5)
+#define MFDataClass5(__superClassName, __className, __attributesForProperty1, __typeForProperty1, __nameForProperty1, \
+                                                    __attributesForProperty2, __typeForProperty2, __nameForProperty2, \
+                                                    __attributesForProperty3, __typeForProperty3, __nameForProperty3, \
+                                                    __attributesForProperty4, __typeForProperty4, __nameForProperty4, \
+                                                    __attributesForProperty5, __typeForProperty5, __nameForProperty5) \
+    MFDataClassInterface5(__superClassName, __className, __attributesForProperty1, __typeForProperty1, __nameForProperty1, \
+                                                         __attributesForProperty2, __typeForProperty2, __nameForProperty2, \
+                                                         __attributesForProperty3, __typeForProperty3, __nameForProperty3, \
+                                                         __attributesForProperty4, __typeForProperty4, __nameForProperty4, \
+                                                         __attributesForProperty5, __typeForProperty5, __nameForProperty5) \
+    MFDataClassImplementation5(__superClassName, __className, __attributesForProperty1, __typeForProperty1, __nameForProperty1, \
+                                                              __attributesForProperty2, __typeForProperty2, __nameForProperty2, \
+                                                              __attributesForProperty3, __typeForProperty3, __nameForProperty3, \
+                                                              __attributesForProperty4, __typeForProperty4, __nameForProperty4, \
+                                                              __attributesForProperty5, __typeForProperty5, __nameForProperty5)
 
 #define MFDataClassInterface5(__superClassName, __className, s1, t1, n1, \
                                                              s2, t2, n2, \
@@ -277,11 +289,11 @@
                                                              s4, t4, n4, \
                                                              s5, t5, n5) \
     @interface __className : __superClassName \
-    @property (nonatomic, readwrite, s1) t1 n1; \
-    @property (nonatomic, readwrite, s2) t2 n2; \
-    @property (nonatomic, readwrite, s3) t3 n3; \
-    @property (nonatomic, readwrite, s4) t4 n4; \
-    @property (nonatomic, readwrite, s5) t5 n5; \
+    @property (nonatomic, UNPACK s1) t1 n1; \
+    @property (nonatomic, UNPACK s2) t2 n2; \
+    @property (nonatomic, UNPACK s3) t3 n3; \
+    @property (nonatomic, UNPACK s4) t4 n4; \
+    @property (nonatomic, UNPACK s5) t5 n5; \
     - (instancetype _Nonnull)init NS_UNAVAILABLE; \
     - (instancetype _Nonnull)initWith_ ## n1:(t1)n1 \
                                           n2:(t2)n2 \
@@ -316,24 +328,24 @@
     @end
 
 /// 6 properties
-#define MFDataClass6(__superClassName, __className, __setterSemanticsForProperty1, __typeForProperty1, __nameForProperty1, \
-                                                    __setterSemanticsForProperty2, __typeForProperty2, __nameForProperty2, \
-                                                    __setterSemanticsForProperty3, __typeForProperty3, __nameForProperty3, \
-                                                    __setterSemanticsForProperty4, __typeForProperty4, __nameForProperty4, \
-                                                    __setterSemanticsForProperty5, __typeForProperty5, __nameForProperty5, \
-                                                    __setterSemanticsForProperty6, __typeForProperty6, __nameForProperty6) \
-    MFDataClassInterface6(__superClassName, __className, __setterSemanticsForProperty1, __typeForProperty1, __nameForProperty1, \
-                                                         __setterSemanticsForProperty2, __typeForProperty2, __nameForProperty2, \
-                                                         __setterSemanticsForProperty3, __typeForProperty3, __nameForProperty3, \
-                                                         __setterSemanticsForProperty4, __typeForProperty4, __nameForProperty4, \
-                                                         __setterSemanticsForProperty5, __typeForProperty5, __nameForProperty5, \
-                                                         __setterSemanticsForProperty6, __typeForProperty6, __nameForProperty6) \
-    MFDataClassImplementation6(__superClassName, __className, __setterSemanticsForProperty1, __typeForProperty1, __nameForProperty1, \
-                                                              __setterSemanticsForProperty2, __typeForProperty2, __nameForProperty2, \
-                                                              __setterSemanticsForProperty3, __typeForProperty3, __nameForProperty3, \
-                                                              __setterSemanticsForProperty4, __typeForProperty4, __nameForProperty4, \
-                                                              __setterSemanticsForProperty5, __typeForProperty5, __nameForProperty5, \
-                                                              __setterSemanticsForProperty6, __typeForProperty6, __nameForProperty6)
+#define MFDataClass6(__superClassName, __className, __attributesForProperty1, __typeForProperty1, __nameForProperty1, \
+                                                    __attributesForProperty2, __typeForProperty2, __nameForProperty2, \
+                                                    __attributesForProperty3, __typeForProperty3, __nameForProperty3, \
+                                                    __attributesForProperty4, __typeForProperty4, __nameForProperty4, \
+                                                    __attributesForProperty5, __typeForProperty5, __nameForProperty5, \
+                                                    __attributesForProperty6, __typeForProperty6, __nameForProperty6) \
+    MFDataClassInterface6(__superClassName, __className, __attributesForProperty1, __typeForProperty1, __nameForProperty1, \
+                                                         __attributesForProperty2, __typeForProperty2, __nameForProperty2, \
+                                                         __attributesForProperty3, __typeForProperty3, __nameForProperty3, \
+                                                         __attributesForProperty4, __typeForProperty4, __nameForProperty4, \
+                                                         __attributesForProperty5, __typeForProperty5, __nameForProperty5, \
+                                                         __attributesForProperty6, __typeForProperty6, __nameForProperty6) \
+    MFDataClassImplementation6(__superClassName, __className, __attributesForProperty1, __typeForProperty1, __nameForProperty1, \
+                                                              __attributesForProperty2, __typeForProperty2, __nameForProperty2, \
+                                                              __attributesForProperty3, __typeForProperty3, __nameForProperty3, \
+                                                              __attributesForProperty4, __typeForProperty4, __nameForProperty4, \
+                                                              __attributesForProperty5, __typeForProperty5, __nameForProperty5, \
+                                                              __attributesForProperty6, __typeForProperty6, __nameForProperty6)
 
 #define MFDataClassInterface6(__superClassName, __className, s1, t1, n1, \
                                                              s2, t2, n2, \
@@ -342,12 +354,12 @@
                                                              s5, t5, n5, \
                                                              s6, t6, n6) \
     @interface __className : __superClassName \
-    @property (nonatomic, readwrite, s1) t1 n1; \
-    @property (nonatomic, readwrite, s2) t2 n2; \
-    @property (nonatomic, readwrite, s3) t3 n3; \
-    @property (nonatomic, readwrite, s4) t4 n4; \
-    @property (nonatomic, readwrite, s5) t5 n5; \
-    @property (nonatomic, readwrite, s6) t6 n6; \
+    @property (nonatomic, UNPACK s1) t1 n1; \
+    @property (nonatomic, UNPACK s2) t2 n2; \
+    @property (nonatomic, UNPACK s3) t3 n3; \
+    @property (nonatomic, UNPACK s4) t4 n4; \
+    @property (nonatomic, UNPACK s5) t5 n5; \
+    @property (nonatomic, UNPACK s6) t6 n6; \
     - (instancetype _Nonnull)init NS_UNAVAILABLE; \
     - (instancetype _Nonnull)initWith_ ## n1:(t1)n1 \
                                           n2:(t2)n2 \
@@ -386,27 +398,27 @@
     @end
 
 /// 7 properties
-#define MFDataClass7(__superClassName, __className, __setterSemanticsForProperty1, __typeForProperty1, __nameForProperty1, \
-                                                    __setterSemanticsForProperty2, __typeForProperty2, __nameForProperty2, \
-                                                    __setterSemanticsForProperty3, __typeForProperty3, __nameForProperty3, \
-                                                    __setterSemanticsForProperty4, __typeForProperty4, __nameForProperty4, \
-                                                    __setterSemanticsForProperty5, __typeForProperty5, __nameForProperty5, \
-                                                    __setterSemanticsForProperty6, __typeForProperty6, __nameForProperty6, \
-                                                    __setterSemanticsForProperty7, __typeForProperty7, __nameForProperty7) \
-    MFDataClassInterface7(__superClassName, __className, __setterSemanticsForProperty1, __typeForProperty1, __nameForProperty1, \
-                                                         __setterSemanticsForProperty2, __typeForProperty2, __nameForProperty2, \
-                                                         __setterSemanticsForProperty3, __typeForProperty3, __nameForProperty3, \
-                                                         __setterSemanticsForProperty4, __typeForProperty4, __nameForProperty4, \
-                                                         __setterSemanticsForProperty5, __typeForProperty5, __nameForProperty5, \
-                                                         __setterSemanticsForProperty6, __typeForProperty6, __nameForProperty6, \
-                                                         __setterSemanticsForProperty7, __typeForProperty7, __nameForProperty7) \
-    MFDataClassImplementation7(__superClassName, __className, __setterSemanticsForProperty1, __typeForProperty1, __nameForProperty1, \
-                                                              __setterSemanticsForProperty2, __typeForProperty2, __nameForProperty2, \
-                                                              __setterSemanticsForProperty3, __typeForProperty3, __nameForProperty3, \
-                                                              __setterSemanticsForProperty4, __typeForProperty4, __nameForProperty4, \
-                                                              __setterSemanticsForProperty5, __typeForProperty5, __nameForProperty5, \
-                                                              __setterSemanticsForProperty6, __typeForProperty6, __nameForProperty6, \
-                                                              __setterSemanticsForProperty7, __typeForProperty7, __nameForProperty7)
+#define MFDataClass7(__superClassName, __className, __attributesForProperty1, __typeForProperty1, __nameForProperty1, \
+                                                    __attributesForProperty2, __typeForProperty2, __nameForProperty2, \
+                                                    __attributesForProperty3, __typeForProperty3, __nameForProperty3, \
+                                                    __attributesForProperty4, __typeForProperty4, __nameForProperty4, \
+                                                    __attributesForProperty5, __typeForProperty5, __nameForProperty5, \
+                                                    __attributesForProperty6, __typeForProperty6, __nameForProperty6, \
+                                                    __attributesForProperty7, __typeForProperty7, __nameForProperty7) \
+    MFDataClassInterface7(__superClassName, __className, __attributesForProperty1, __typeForProperty1, __nameForProperty1, \
+                                                         __attributesForProperty2, __typeForProperty2, __nameForProperty2, \
+                                                         __attributesForProperty3, __typeForProperty3, __nameForProperty3, \
+                                                         __attributesForProperty4, __typeForProperty4, __nameForProperty4, \
+                                                         __attributesForProperty5, __typeForProperty5, __nameForProperty5, \
+                                                         __attributesForProperty6, __typeForProperty6, __nameForProperty6, \
+                                                         __attributesForProperty7, __typeForProperty7, __nameForProperty7) \
+    MFDataClassImplementation7(__superClassName, __className, __attributesForProperty1, __typeForProperty1, __nameForProperty1, \
+                                                              __attributesForProperty2, __typeForProperty2, __nameForProperty2, \
+                                                              __attributesForProperty3, __typeForProperty3, __nameForProperty3, \
+                                                              __attributesForProperty4, __typeForProperty4, __nameForProperty4, \
+                                                              __attributesForProperty5, __typeForProperty5, __nameForProperty5, \
+                                                              __attributesForProperty6, __typeForProperty6, __nameForProperty6, \
+                                                              __attributesForProperty7, __typeForProperty7, __nameForProperty7)
 
 #define MFDataClassInterface7(__superClassName, __className, s1, t1, n1, \
                                                              s2, t2, n2, \
@@ -416,13 +428,13 @@
                                                              s6, t6, n6, \
                                                              s7, t7, n7) \
     @interface __className : __superClassName \
-    @property (nonatomic, readwrite, s1) t1 n1; \
-    @property (nonatomic, readwrite, s2) t2 n2; \
-    @property (nonatomic, readwrite, s3) t3 n3; \
-    @property (nonatomic, readwrite, s4) t4 n4; \
-    @property (nonatomic, readwrite, s5) t5 n5; \
-    @property (nonatomic, readwrite, s6) t6 n6; \
-    @property (nonatomic, readwrite, s7) t7 n7; \
+    @property (nonatomic, UNPACK s1) t1 n1; \
+    @property (nonatomic, UNPACK s2) t2 n2; \
+    @property (nonatomic, UNPACK s3) t3 n3; \
+    @property (nonatomic, UNPACK s4) t4 n4; \
+    @property (nonatomic, UNPACK s5) t5 n5; \
+    @property (nonatomic, UNPACK s6) t6 n6; \
+    @property (nonatomic, UNPACK s7) t7 n7; \
     - (instancetype _Nonnull)init NS_UNAVAILABLE; \
     - (instancetype _Nonnull)initWith_ ## n1:(t1)n1 \
                                           n2:(t2)n2 \
@@ -465,30 +477,30 @@
     @end
 
 /// 8 properties
-#define MFDataClass8(__superClassName, __className, __setterSemanticsForProperty1, __typeForProperty1, __nameForProperty1, \
-                                                    __setterSemanticsForProperty2, __typeForProperty2, __nameForProperty2, \
-                                                    __setterSemanticsForProperty3, __typeForProperty3, __nameForProperty3, \
-                                                    __setterSemanticsForProperty4, __typeForProperty4, __nameForProperty4, \
-                                                    __setterSemanticsForProperty5, __typeForProperty5, __nameForProperty5, \
-                                                    __setterSemanticsForProperty6, __typeForProperty6, __nameForProperty6, \
-                                                    __setterSemanticsForProperty7, __typeForProperty7, __nameForProperty7, \
-                                                    __setterSemanticsForProperty8, __typeForProperty8, __nameForProperty8) \
-    MFDataClassInterface8(__superClassName, __className, __setterSemanticsForProperty1, __typeForProperty1, __nameForProperty1, \
-                                                         __setterSemanticsForProperty2, __typeForProperty2, __nameForProperty2, \
-                                                         __setterSemanticsForProperty3, __typeForProperty3, __nameForProperty3, \
-                                                         __setterSemanticsForProperty4, __typeForProperty4, __nameForProperty4, \
-                                                         __setterSemanticsForProperty5, __typeForProperty5, __nameForProperty5, \
-                                                         __setterSemanticsForProperty6, __typeForProperty6, __nameForProperty6, \
-                                                         __setterSemanticsForProperty7, __typeForProperty7, __nameForProperty7, \
-                                                         __setterSemanticsForProperty8, __typeForProperty8, __nameForProperty8) \
-    MFDataClassImplementation8(__superClassName, __className, __setterSemanticsForProperty1, __typeForProperty1, __nameForProperty1, \
-                                                              __setterSemanticsForProperty2, __typeForProperty2, __nameForProperty2, \
-                                                              __setterSemanticsForProperty3, __typeForProperty3, __nameForProperty3, \
-                                                              __setterSemanticsForProperty4, __typeForProperty4, __nameForProperty4, \
-                                                              __setterSemanticsForProperty5, __typeForProperty5, __nameForProperty5, \
-                                                              __setterSemanticsForProperty6, __typeForProperty6, __nameForProperty6, \
-                                                              __setterSemanticsForProperty7, __typeForProperty7, __nameForProperty7, \
-                                                              __setterSemanticsForProperty8, __typeForProperty8, __nameForProperty8) \
+#define MFDataClass8(__superClassName, __className, __attributesForProperty1, __typeForProperty1, __nameForProperty1, \
+                                                    __attributesForProperty2, __typeForProperty2, __nameForProperty2, \
+                                                    __attributesForProperty3, __typeForProperty3, __nameForProperty3, \
+                                                    __attributesForProperty4, __typeForProperty4, __nameForProperty4, \
+                                                    __attributesForProperty5, __typeForProperty5, __nameForProperty5, \
+                                                    __attributesForProperty6, __typeForProperty6, __nameForProperty6, \
+                                                    __attributesForProperty7, __typeForProperty7, __nameForProperty7, \
+                                                    __attributesForProperty8, __typeForProperty8, __nameForProperty8) \
+    MFDataClassInterface8(__superClassName, __className, __attributesForProperty1, __typeForProperty1, __nameForProperty1, \
+                                                         __attributesForProperty2, __typeForProperty2, __nameForProperty2, \
+                                                         __attributesForProperty3, __typeForProperty3, __nameForProperty3, \
+                                                         __attributesForProperty4, __typeForProperty4, __nameForProperty4, \
+                                                         __attributesForProperty5, __typeForProperty5, __nameForProperty5, \
+                                                         __attributesForProperty6, __typeForProperty6, __nameForProperty6, \
+                                                         __attributesForProperty7, __typeForProperty7, __nameForProperty7, \
+                                                         __attributesForProperty8, __typeForProperty8, __nameForProperty8) \
+    MFDataClassImplementation8(__superClassName, __className, __attributesForProperty1, __typeForProperty1, __nameForProperty1, \
+                                                              __attributesForProperty2, __typeForProperty2, __nameForProperty2, \
+                                                              __attributesForProperty3, __typeForProperty3, __nameForProperty3, \
+                                                              __attributesForProperty4, __typeForProperty4, __nameForProperty4, \
+                                                              __attributesForProperty5, __typeForProperty5, __nameForProperty5, \
+                                                              __attributesForProperty6, __typeForProperty6, __nameForProperty6, \
+                                                              __attributesForProperty7, __typeForProperty7, __nameForProperty7, \
+                                                              __attributesForProperty8, __typeForProperty8, __nameForProperty8) \
 
 #define MFDataClassInterface8(__superClassName, __className, s1, t1, n1, \
                                                              s2, t2, n2, \
@@ -499,14 +511,14 @@
                                                              s7, t7, n7, \
                                                              s8, t8, n8) \
     @interface __className : __superClassName \
-    @property (nonatomic, readwrite, s1) t1 n1; \
-    @property (nonatomic, readwrite, s2) t2 n2; \
-    @property (nonatomic, readwrite, s3) t3 n3; \
-    @property (nonatomic, readwrite, s4) t4 n4; \
-    @property (nonatomic, readwrite, s5) t5 n5; \
-    @property (nonatomic, readwrite, s6) t6 n6; \
-    @property (nonatomic, readwrite, s7) t7 n7; \
-    @property (nonatomic, readwrite, s8) t8 n8; \
+    @property (nonatomic, UNPACK s1) t1 n1; \
+    @property (nonatomic, UNPACK s2) t2 n2; \
+    @property (nonatomic, UNPACK s3) t3 n3; \
+    @property (nonatomic, UNPACK s4) t4 n4; \
+    @property (nonatomic, UNPACK s5) t5 n5; \
+    @property (nonatomic, UNPACK s6) t6 n6; \
+    @property (nonatomic, UNPACK s7) t7 n7; \
+    @property (nonatomic, UNPACK s8) t8 n8; \
     - (instancetype _Nonnull)init NS_UNAVAILABLE; \
     - (instancetype _Nonnull)initWith_ ## n1:(t1)n1 \
                                           n2:(t2)n2 \
@@ -553,33 +565,33 @@
     @end
 
 /// 9 properties
-#define MFDataClass9(__superClassName, __className, __setterSemanticsForProperty1, __typeForProperty1, __nameForProperty1, \
-                                                    __setterSemanticsForProperty2, __typeForProperty2, __nameForProperty2, \
-                                                    __setterSemanticsForProperty3, __typeForProperty3, __nameForProperty3, \
-                                                    __setterSemanticsForProperty4, __typeForProperty4, __nameForProperty4, \
-                                                    __setterSemanticsForProperty5, __typeForProperty5, __nameForProperty5, \
-                                                    __setterSemanticsForProperty6, __typeForProperty6, __nameForProperty6, \
-                                                    __setterSemanticsForProperty7, __typeForProperty7, __nameForProperty7, \
-                                                    __setterSemanticsForProperty8, __typeForProperty8, __nameForProperty8, \
-                                                    __setterSemanticsForProperty9, __typeForProperty9, __nameForProperty9) \
-    MFDataClassInterface9(__superClassName, __className, __setterSemanticsForProperty1, __typeForProperty1, __nameForProperty1, \
-                                                         __setterSemanticsForProperty2, __typeForProperty2, __nameForProperty2, \
-                                                         __setterSemanticsForProperty3, __typeForProperty3, __nameForProperty3, \
-                                                         __setterSemanticsForProperty4, __typeForProperty4, __nameForProperty4, \
-                                                         __setterSemanticsForProperty5, __typeForProperty5, __nameForProperty5, \
-                                                         __setterSemanticsForProperty6, __typeForProperty6, __nameForProperty6, \
-                                                         __setterSemanticsForProperty7, __typeForProperty7, __nameForProperty7, \
-                                                         __setterSemanticsForProperty8, __typeForProperty8, __nameForProperty8, \
-                                                         __setterSemanticsForProperty9, __typeForProperty9, __nameForProperty9) \
-    MFDataClassImplementation9(__superClassName, __className, __setterSemanticsForProperty1, __typeForProperty1, __nameForProperty1, \
-                                                              __setterSemanticsForProperty2, __typeForProperty2, __nameForProperty2, \
-                                                              __setterSemanticsForProperty3, __typeForProperty3, __nameForProperty3, \
-                                                              __setterSemanticsForProperty4, __typeForProperty4, __nameForProperty4, \
-                                                              __setterSemanticsForProperty5, __typeForProperty5, __nameForProperty5, \
-                                                              __setterSemanticsForProperty6, __typeForProperty6, __nameForProperty6, \
-                                                              __setterSemanticsForProperty7, __typeForProperty7, __nameForProperty7, \
-                                                              __setterSemanticsForProperty8, __typeForProperty8, __nameForProperty8, \
-                                                              __setterSemanticsForProperty9, __typeForProperty9, __nameForProperty9)
+#define MFDataClass9(__superClassName, __className, __attributesForProperty1, __typeForProperty1, __nameForProperty1, \
+                                                    __attributesForProperty2, __typeForProperty2, __nameForProperty2, \
+                                                    __attributesForProperty3, __typeForProperty3, __nameForProperty3, \
+                                                    __attributesForProperty4, __typeForProperty4, __nameForProperty4, \
+                                                    __attributesForProperty5, __typeForProperty5, __nameForProperty5, \
+                                                    __attributesForProperty6, __typeForProperty6, __nameForProperty6, \
+                                                    __attributesForProperty7, __typeForProperty7, __nameForProperty7, \
+                                                    __attributesForProperty8, __typeForProperty8, __nameForProperty8, \
+                                                    __attributesForProperty9, __typeForProperty9, __nameForProperty9) \
+    MFDataClassInterface9(__superClassName, __className, __attributesForProperty1, __typeForProperty1, __nameForProperty1, \
+                                                         __attributesForProperty2, __typeForProperty2, __nameForProperty2, \
+                                                         __attributesForProperty3, __typeForProperty3, __nameForProperty3, \
+                                                         __attributesForProperty4, __typeForProperty4, __nameForProperty4, \
+                                                         __attributesForProperty5, __typeForProperty5, __nameForProperty5, \
+                                                         __attributesForProperty6, __typeForProperty6, __nameForProperty6, \
+                                                         __attributesForProperty7, __typeForProperty7, __nameForProperty7, \
+                                                         __attributesForProperty8, __typeForProperty8, __nameForProperty8, \
+                                                         __attributesForProperty9, __typeForProperty9, __nameForProperty9) \
+    MFDataClassImplementation9(__superClassName, __className, __attributesForProperty1, __typeForProperty1, __nameForProperty1, \
+                                                              __attributesForProperty2, __typeForProperty2, __nameForProperty2, \
+                                                              __attributesForProperty3, __typeForProperty3, __nameForProperty3, \
+                                                              __attributesForProperty4, __typeForProperty4, __nameForProperty4, \
+                                                              __attributesForProperty5, __typeForProperty5, __nameForProperty5, \
+                                                              __attributesForProperty6, __typeForProperty6, __nameForProperty6, \
+                                                              __attributesForProperty7, __typeForProperty7, __nameForProperty7, \
+                                                              __attributesForProperty8, __typeForProperty8, __nameForProperty8, \
+                                                              __attributesForProperty9, __typeForProperty9, __nameForProperty9)
 
 #define MFDataClassInterface9(__superClassName, __className, s1, t1, n1, \
                                                              s2, t2, n2, \
@@ -591,15 +603,15 @@
                                                              s8, t8, n8, \
                                                              s9, t9, n9) \
     @interface __className : __superClassName \
-    @property (nonatomic, readwrite, s1) t1 n1; \
-    @property (nonatomic, readwrite, s2) t2 n2; \
-    @property (nonatomic, readwrite, s3) t3 n3; \
-    @property (nonatomic, readwrite, s4) t4 n4; \
-    @property (nonatomic, readwrite, s5) t5 n5; \
-    @property (nonatomic, readwrite, s6) t6 n6; \
-    @property (nonatomic, readwrite, s7) t7 n7; \
-    @property (nonatomic, readwrite, s8) t8 n8; \
-    @property (nonatomic, readwrite, s9) t9 n9; \
+    @property (nonatomic, UNPACK s1) t1 n1; \
+    @property (nonatomic, UNPACK s2) t2 n2; \
+    @property (nonatomic, UNPACK s3) t3 n3; \
+    @property (nonatomic, UNPACK s4) t4 n4; \
+    @property (nonatomic, UNPACK s5) t5 n5; \
+    @property (nonatomic, UNPACK s6) t6 n6; \
+    @property (nonatomic, UNPACK s7) t7 n7; \
+    @property (nonatomic, UNPACK s8) t8 n8; \
+    @property (nonatomic, UNPACK s9) t9 n9; \
     - (instancetype _Nonnull)init NS_UNAVAILABLE; \
     - (instancetype _Nonnull)initWith_ ## n1:(t1)n1 \
                                           n2:(t2)n2 \
@@ -650,36 +662,36 @@
     @end
 
 /// 10 properties
-#define MFDataClass10(__superClassName, __className, __setterSemanticsForProperty1, __typeForProperty1, __nameForProperty1, \
-                                                     __setterSemanticsForProperty2, __typeForProperty2, __nameForProperty2, \
-                                                     __setterSemanticsForProperty3, __typeForProperty3, __nameForProperty3, \
-                                                     __setterSemanticsForProperty4, __typeForProperty4, __nameForProperty4, \
-                                                     __setterSemanticsForProperty5, __typeForProperty5, __nameForProperty5, \
-                                                     __setterSemanticsForProperty6, __typeForProperty6, __nameForProperty6, \
-                                                     __setterSemanticsForProperty7, __typeForProperty7, __nameForProperty7, \
-                                                     __setterSemanticsForProperty8, __typeForProperty8, __nameForProperty8, \
-                                                     __setterSemanticsForProperty9, __typeForProperty9, __nameForProperty9, \
-                                                     __setterSemanticsForProperty10, __typeForProperty10, __nameForProperty10) \
-    MFDataClassInterface10(__superClassName, __className, __setterSemanticsForProperty1, __typeForProperty1, __nameForProperty1, \
-                                                          __setterSemanticsForProperty2, __typeForProperty2, __nameForProperty2, \
-                                                          __setterSemanticsForProperty3, __typeForProperty3, __nameForProperty3, \
-                                                          __setterSemanticsForProperty4, __typeForProperty4, __nameForProperty4, \
-                                                          __setterSemanticsForProperty5, __typeForProperty5, __nameForProperty5, \
-                                                          __setterSemanticsForProperty6, __typeForProperty6, __nameForProperty6, \
-                                                          __setterSemanticsForProperty7, __typeForProperty7, __nameForProperty7, \
-                                                          __setterSemanticsForProperty8, __typeForProperty8, __nameForProperty8, \
-                                                          __setterSemanticsForProperty9, __typeForProperty9, __nameForProperty9, \
-                                                          __setterSemanticsForProperty10, __typeForProperty10, __nameForProperty10) \
-    MFDataClassImplementation10(__superClassName, __className, __setterSemanticsForProperty1, __typeForProperty1, __nameForProperty1, \
-                                                               __setterSemanticsForProperty2, __typeForProperty2, __nameForProperty2, \
-                                                               __setterSemanticsForProperty3, __typeForProperty3, __nameForProperty3, \
-                                                               __setterSemanticsForProperty4, __typeForProperty4, __nameForProperty4, \
-                                                               __setterSemanticsForProperty5, __typeForProperty5, __nameForProperty5, \
-                                                               __setterSemanticsForProperty6, __typeForProperty6, __nameForProperty6, \
-                                                               __setterSemanticsForProperty7, __typeForProperty7, __nameForProperty7, \
-                                                               __setterSemanticsForProperty8, __typeForProperty8, __nameForProperty8, \
-                                                               __setterSemanticsForProperty9, __typeForProperty9, __nameForProperty9, \
-                                                               __setterSemanticsForProperty10, __typeForProperty10, __nameForProperty10)
+#define MFDataClass10(__superClassName, __className, __attributesForProperty1, __typeForProperty1, __nameForProperty1, \
+                                                     __attributesForProperty2, __typeForProperty2, __nameForProperty2, \
+                                                     __attributesForProperty3, __typeForProperty3, __nameForProperty3, \
+                                                     __attributesForProperty4, __typeForProperty4, __nameForProperty4, \
+                                                     __attributesForProperty5, __typeForProperty5, __nameForProperty5, \
+                                                     __attributesForProperty6, __typeForProperty6, __nameForProperty6, \
+                                                     __attributesForProperty7, __typeForProperty7, __nameForProperty7, \
+                                                     __attributesForProperty8, __typeForProperty8, __nameForProperty8, \
+                                                     __attributesForProperty9, __typeForProperty9, __nameForProperty9, \
+                                                     __attributesForProperty10, __typeForProperty10, __nameForProperty10) \
+    MFDataClassInterface10(__superClassName, __className, __attributesForProperty1, __typeForProperty1, __nameForProperty1, \
+                                                          __attributesForProperty2, __typeForProperty2, __nameForProperty2, \
+                                                          __attributesForProperty3, __typeForProperty3, __nameForProperty3, \
+                                                          __attributesForProperty4, __typeForProperty4, __nameForProperty4, \
+                                                          __attributesForProperty5, __typeForProperty5, __nameForProperty5, \
+                                                          __attributesForProperty6, __typeForProperty6, __nameForProperty6, \
+                                                          __attributesForProperty7, __typeForProperty7, __nameForProperty7, \
+                                                          __attributesForProperty8, __typeForProperty8, __nameForProperty8, \
+                                                          __attributesForProperty9, __typeForProperty9, __nameForProperty9, \
+                                                          __attributesForProperty10, __typeForProperty10, __nameForProperty10) \
+    MFDataClassImplementation10(__superClassName, __className, __attributesForProperty1, __typeForProperty1, __nameForProperty1, \
+                                                               __attributesForProperty2, __typeForProperty2, __nameForProperty2, \
+                                                               __attributesForProperty3, __typeForProperty3, __nameForProperty3, \
+                                                               __attributesForProperty4, __typeForProperty4, __nameForProperty4, \
+                                                               __attributesForProperty5, __typeForProperty5, __nameForProperty5, \
+                                                               __attributesForProperty6, __typeForProperty6, __nameForProperty6, \
+                                                               __attributesForProperty7, __typeForProperty7, __nameForProperty7, \
+                                                               __attributesForProperty8, __typeForProperty8, __nameForProperty8, \
+                                                               __attributesForProperty9, __typeForProperty9, __nameForProperty9, \
+                                                               __attributesForProperty10, __typeForProperty10, __nameForProperty10)
 
 #define MFDataClassInterface10(__superClassName, __className, s1, t1, n1, \
                                                               s2, t2, n2, \
@@ -692,16 +704,16 @@
                                                               s9, t9, n9, \
                                                               s10, t10, n10) \
     @interface __className : __superClassName \
-    @property (nonatomic, readwrite, s1) t1 n1; \
-    @property (nonatomic, readwrite, s2) t2 n2; \
-    @property (nonatomic, readwrite, s3) t3 n3; \
-    @property (nonatomic, readwrite, s4) t4 n4; \
-    @property (nonatomic, readwrite, s5) t5 n5; \
-    @property (nonatomic, readwrite, s6) t6 n6; \
-    @property (nonatomic, readwrite, s7) t7 n7; \
-    @property (nonatomic, readwrite, s8) t8 n8; \
-    @property (nonatomic, readwrite, s9) t9 n9; \
-    @property (nonatomic, readwrite, s10) t10 n10; \
+    @property (nonatomic, UNPACK s1) t1 n1; \
+    @property (nonatomic, UNPACK s2) t2 n2; \
+    @property (nonatomic, UNPACK s3) t3 n3; \
+    @property (nonatomic, UNPACK s4) t4 n4; \
+    @property (nonatomic, UNPACK s5) t5 n5; \
+    @property (nonatomic, UNPACK s6) t6 n6; \
+    @property (nonatomic, UNPACK s7) t7 n7; \
+    @property (nonatomic, UNPACK s8) t8 n8; \
+    @property (nonatomic, UNPACK s9) t9 n9; \
+    @property (nonatomic, UNPACK s10) t10 n10; \
     - (instancetype _Nonnull)init NS_UNAVAILABLE; \
     - (instancetype _Nonnull)initWith_ ## n1:(t1)n1 \
                                           n2:(t2)n2 \
@@ -756,39 +768,39 @@
     @end
 
 /// 11 properties
-#define MFDataClass11(__superClassName, __className, __setterSemanticsForProperty1, __typeForProperty1, __nameForProperty1, \
-                                                     __setterSemanticsForProperty2, __typeForProperty2, __nameForProperty2, \
-                                                     __setterSemanticsForProperty3, __typeForProperty3, __nameForProperty3, \
-                                                     __setterSemanticsForProperty4, __typeForProperty4, __nameForProperty4, \
-                                                     __setterSemanticsForProperty5, __typeForProperty5, __nameForProperty5, \
-                                                     __setterSemanticsForProperty6, __typeForProperty6, __nameForProperty6, \
-                                                     __setterSemanticsForProperty7, __typeForProperty7, __nameForProperty7, \
-                                                     __setterSemanticsForProperty8, __typeForProperty8, __nameForProperty8, \
-                                                     __setterSemanticsForProperty9, __typeForProperty9, __nameForProperty9, \
-                                                     __setterSemanticsForProperty10, __typeForProperty10, __nameForProperty10, \
-                                                     __setterSemanticsForProperty11, __typeForProperty11, __nameForProperty11) \
-    MFDataClassInterface11(__superClassName, __className, __setterSemanticsForProperty1, __typeForProperty1, __nameForProperty1, \
-                                                          __setterSemanticsForProperty2, __typeForProperty2, __nameForProperty2, \
-                                                          __setterSemanticsForProperty3, __typeForProperty3, __nameForProperty3, \
-                                                          __setterSemanticsForProperty4, __typeForProperty4, __nameForProperty4, \
-                                                          __setterSemanticsForProperty5, __typeForProperty5, __nameForProperty5, \
-                                                          __setterSemanticsForProperty6, __typeForProperty6, __nameForProperty6, \
-                                                          __setterSemanticsForProperty7, __typeForProperty7, __nameForProperty7, \
-                                                          __setterSemanticsForProperty8, __typeForProperty8, __nameForProperty8, \
-                                                          __setterSemanticsForProperty9, __typeForProperty9, __nameForProperty9, \
-                                                          __setterSemanticsForProperty10, __typeForProperty10, __nameForProperty10, \
-                                                          __setterSemanticsForProperty11, __typeForProperty11, __nameForProperty11) \
-    MFDataClassImplementation11(__superClassName, __className, __setterSemanticsForProperty1, __typeForProperty1, __nameForProperty1, \
-                                                               __setterSemanticsForProperty2, __typeForProperty2, __nameForProperty2, \
-                                                               __setterSemanticsForProperty3, __typeForProperty3, __nameForProperty3, \
-                                                               __setterSemanticsForProperty4, __typeForProperty4, __nameForProperty4, \
-                                                               __setterSemanticsForProperty5, __typeForProperty5, __nameForProperty5, \
-                                                               __setterSemanticsForProperty6, __typeForProperty6, __nameForProperty6, \
-                                                               __setterSemanticsForProperty7, __typeForProperty7, __nameForProperty7, \
-                                                               __setterSemanticsForProperty8, __typeForProperty8, __nameForProperty8, \
-                                                               __setterSemanticsForProperty9, __typeForProperty9, __nameForProperty9, \
-                                                               __setterSemanticsForProperty10, __typeForProperty10, __nameForProperty10, \
-                                                               __setterSemanticsForProperty11, __typeForProperty11, __nameForProperty11)
+#define MFDataClass11(__superClassName, __className, __attributesForProperty1, __typeForProperty1, __nameForProperty1, \
+                                                     __attributesForProperty2, __typeForProperty2, __nameForProperty2, \
+                                                     __attributesForProperty3, __typeForProperty3, __nameForProperty3, \
+                                                     __attributesForProperty4, __typeForProperty4, __nameForProperty4, \
+                                                     __attributesForProperty5, __typeForProperty5, __nameForProperty5, \
+                                                     __attributesForProperty6, __typeForProperty6, __nameForProperty6, \
+                                                     __attributesForProperty7, __typeForProperty7, __nameForProperty7, \
+                                                     __attributesForProperty8, __typeForProperty8, __nameForProperty8, \
+                                                     __attributesForProperty9, __typeForProperty9, __nameForProperty9, \
+                                                     __attributesForProperty10, __typeForProperty10, __nameForProperty10, \
+                                                     __attributesForProperty11, __typeForProperty11, __nameForProperty11) \
+    MFDataClassInterface11(__superClassName, __className, __attributesForProperty1, __typeForProperty1, __nameForProperty1, \
+                                                          __attributesForProperty2, __typeForProperty2, __nameForProperty2, \
+                                                          __attributesForProperty3, __typeForProperty3, __nameForProperty3, \
+                                                          __attributesForProperty4, __typeForProperty4, __nameForProperty4, \
+                                                          __attributesForProperty5, __typeForProperty5, __nameForProperty5, \
+                                                          __attributesForProperty6, __typeForProperty6, __nameForProperty6, \
+                                                          __attributesForProperty7, __typeForProperty7, __nameForProperty7, \
+                                                          __attributesForProperty8, __typeForProperty8, __nameForProperty8, \
+                                                          __attributesForProperty9, __typeForProperty9, __nameForProperty9, \
+                                                          __attributesForProperty10, __typeForProperty10, __nameForProperty10, \
+                                                          __attributesForProperty11, __typeForProperty11, __nameForProperty11) \
+    MFDataClassImplementation11(__superClassName, __className, __attributesForProperty1, __typeForProperty1, __nameForProperty1, \
+                                                               __attributesForProperty2, __typeForProperty2, __nameForProperty2, \
+                                                               __attributesForProperty3, __typeForProperty3, __nameForProperty3, \
+                                                               __attributesForProperty4, __typeForProperty4, __nameForProperty4, \
+                                                               __attributesForProperty5, __typeForProperty5, __nameForProperty5, \
+                                                               __attributesForProperty6, __typeForProperty6, __nameForProperty6, \
+                                                               __attributesForProperty7, __typeForProperty7, __nameForProperty7, \
+                                                               __attributesForProperty8, __typeForProperty8, __nameForProperty8, \
+                                                               __attributesForProperty9, __typeForProperty9, __nameForProperty9, \
+                                                               __attributesForProperty10, __typeForProperty10, __nameForProperty10, \
+                                                               __attributesForProperty11, __typeForProperty11, __nameForProperty11)
 
 #define MFDataClassInterface11(__superClassName, __className, s1, t1, n1, \
                                                               s2, t2, n2, \
@@ -802,17 +814,17 @@
                                                               s10, t10, n10, \
                                                               s11, t11, n11) \
     @interface __className : __superClassName \
-    @property (nonatomic, readwrite, s1) t1 n1; \
-    @property (nonatomic, readwrite, s2) t2 n2; \
-    @property (nonatomic, readwrite, s3) t3 n3; \
-    @property (nonatomic, readwrite, s4) t4 n4; \
-    @property (nonatomic, readwrite, s5) t5 n5; \
-    @property (nonatomic, readwrite, s6) t6 n6; \
-    @property (nonatomic, readwrite, s7) t7 n7; \
-    @property (nonatomic, readwrite, s8) t8 n8; \
-    @property (nonatomic, readwrite, s9) t9 n9; \
-    @property (nonatomic, readwrite, s10) t10 n10; \
-    @property (nonatomic, readwrite, s11) t11 n11; \
+    @property (nonatomic, UNPACK s1) t1 n1; \
+    @property (nonatomic, UNPACK s2) t2 n2; \
+    @property (nonatomic, UNPACK s3) t3 n3; \
+    @property (nonatomic, UNPACK s4) t4 n4; \
+    @property (nonatomic, UNPACK s5) t5 n5; \
+    @property (nonatomic, UNPACK s6) t6 n6; \
+    @property (nonatomic, UNPACK s7) t7 n7; \
+    @property (nonatomic, UNPACK s8) t8 n8; \
+    @property (nonatomic, UNPACK s9) t9 n9; \
+    @property (nonatomic, UNPACK s10) t10 n10; \
+    @property (nonatomic, UNPACK s11) t11 n11; \
     - (instancetype _Nonnull)init NS_UNAVAILABLE; \
     - (instancetype _Nonnull)initWith_ ## n1:(t1)n1 \
                                           n2:(t2)n2 \
@@ -871,42 +883,42 @@
     @end
     
 /// 12 properties
-#define MFDataClass12(__superClassName, __className, __setterSemanticsForProperty1, __typeForProperty1, __nameForProperty1, \
-                                                     __setterSemanticsForProperty2, __typeForProperty2, __nameForProperty2, \
-                                                     __setterSemanticsForProperty3, __typeForProperty3, __nameForProperty3, \
-                                                     __setterSemanticsForProperty4, __typeForProperty4, __nameForProperty4, \
-                                                     __setterSemanticsForProperty5, __typeForProperty5, __nameForProperty5, \
-                                                     __setterSemanticsForProperty6, __typeForProperty6, __nameForProperty6, \
-                                                     __setterSemanticsForProperty7, __typeForProperty7, __nameForProperty7, \
-                                                     __setterSemanticsForProperty8, __typeForProperty8, __nameForProperty8, \
-                                                     __setterSemanticsForProperty9, __typeForProperty9, __nameForProperty9, \
-                                                     __setterSemanticsForProperty10, __typeForProperty10, __nameForProperty10, \
-                                                     __setterSemanticsForProperty11, __typeForProperty11, __nameForProperty11, \
-                                                     __setterSemanticsForProperty12, __typeForProperty12, __nameForProperty12) \
-    MFDataClassInterface12(__superClassName, __className, __setterSemanticsForProperty1, __typeForProperty1, __nameForProperty1, \
-                                                          __setterSemanticsForProperty2, __typeForProperty2, __nameForProperty2, \
-                                                          __setterSemanticsForProperty3, __typeForProperty3, __nameForProperty3, \
-                                                          __setterSemanticsForProperty4, __typeForProperty4, __nameForProperty4, \
-                                                          __setterSemanticsForProperty5, __typeForProperty5, __nameForProperty5, \
-                                                          __setterSemanticsForProperty6, __typeForProperty6, __nameForProperty6, \
-                                                          __setterSemanticsForProperty7, __typeForProperty7, __nameForProperty7, \
-                                                          __setterSemanticsForProperty8, __typeForProperty8, __nameForProperty8, \
-                                                          __setterSemanticsForProperty9, __typeForProperty9, __nameForProperty9, \
-                                                          __setterSemanticsForProperty10, __typeForProperty10, __nameForProperty10, \
-                                                          __setterSemanticsForProperty11, __typeForProperty11, __nameForProperty11, \
-                                                          __setterSemanticsForProperty12, __typeForProperty12, __nameForProperty12) \
-    MFDataClassImplementation12(__superClassName, __className, __setterSemanticsForProperty1, __typeForProperty1, __nameForProperty1, \
-                                                               __setterSemanticsForProperty2, __typeForProperty2, __nameForProperty2, \
-                                                               __setterSemanticsForProperty3, __typeForProperty3, __nameForProperty3, \
-                                                               __setterSemanticsForProperty4, __typeForProperty4, __nameForProperty4, \
-                                                               __setterSemanticsForProperty5, __typeForProperty5, __nameForProperty5, \
-                                                               __setterSemanticsForProperty6, __typeForProperty6, __nameForProperty6, \
-                                                               __setterSemanticsForProperty7, __typeForProperty7, __nameForProperty7, \
-                                                               __setterSemanticsForProperty8, __typeForProperty8, __nameForProperty8, \
-                                                               __setterSemanticsForProperty9, __typeForProperty9, __nameForProperty9, \
-                                                               __setterSemanticsForProperty10, __typeForProperty10, __nameForProperty10, \
-                                                               __setterSemanticsForProperty11, __typeForProperty11, __nameForProperty11, \
-                                                               __setterSemanticsForProperty12, __typeForProperty12, __nameForProperty12)
+#define MFDataClass12(__superClassName, __className, __attributesForProperty1, __typeForProperty1, __nameForProperty1, \
+                                                     __attributesForProperty2, __typeForProperty2, __nameForProperty2, \
+                                                     __attributesForProperty3, __typeForProperty3, __nameForProperty3, \
+                                                     __attributesForProperty4, __typeForProperty4, __nameForProperty4, \
+                                                     __attributesForProperty5, __typeForProperty5, __nameForProperty5, \
+                                                     __attributesForProperty6, __typeForProperty6, __nameForProperty6, \
+                                                     __attributesForProperty7, __typeForProperty7, __nameForProperty7, \
+                                                     __attributesForProperty8, __typeForProperty8, __nameForProperty8, \
+                                                     __attributesForProperty9, __typeForProperty9, __nameForProperty9, \
+                                                     __attributesForProperty10, __typeForProperty10, __nameForProperty10, \
+                                                     __attributesForProperty11, __typeForProperty11, __nameForProperty11, \
+                                                     __attributesForProperty12, __typeForProperty12, __nameForProperty12) \
+    MFDataClassInterface12(__superClassName, __className, __attributesForProperty1, __typeForProperty1, __nameForProperty1, \
+                                                          __attributesForProperty2, __typeForProperty2, __nameForProperty2, \
+                                                          __attributesForProperty3, __typeForProperty3, __nameForProperty3, \
+                                                          __attributesForProperty4, __typeForProperty4, __nameForProperty4, \
+                                                          __attributesForProperty5, __typeForProperty5, __nameForProperty5, \
+                                                          __attributesForProperty6, __typeForProperty6, __nameForProperty6, \
+                                                          __attributesForProperty7, __typeForProperty7, __nameForProperty7, \
+                                                          __attributesForProperty8, __typeForProperty8, __nameForProperty8, \
+                                                          __attributesForProperty9, __typeForProperty9, __nameForProperty9, \
+                                                          __attributesForProperty10, __typeForProperty10, __nameForProperty10, \
+                                                          __attributesForProperty11, __typeForProperty11, __nameForProperty11, \
+                                                          __attributesForProperty12, __typeForProperty12, __nameForProperty12) \
+    MFDataClassImplementation12(__superClassName, __className, __attributesForProperty1, __typeForProperty1, __nameForProperty1, \
+                                                               __attributesForProperty2, __typeForProperty2, __nameForProperty2, \
+                                                               __attributesForProperty3, __typeForProperty3, __nameForProperty3, \
+                                                               __attributesForProperty4, __typeForProperty4, __nameForProperty4, \
+                                                               __attributesForProperty5, __typeForProperty5, __nameForProperty5, \
+                                                               __attributesForProperty6, __typeForProperty6, __nameForProperty6, \
+                                                               __attributesForProperty7, __typeForProperty7, __nameForProperty7, \
+                                                               __attributesForProperty8, __typeForProperty8, __nameForProperty8, \
+                                                               __attributesForProperty9, __typeForProperty9, __nameForProperty9, \
+                                                               __attributesForProperty10, __typeForProperty10, __nameForProperty10, \
+                                                               __attributesForProperty11, __typeForProperty11, __nameForProperty11, \
+                                                               __attributesForProperty12, __typeForProperty12, __nameForProperty12)
 
 #define MFDataClassInterface12(__superClassName, __className, s1, t1, n1, \
                                                               s2, t2, n2, \
@@ -921,18 +933,18 @@
                                                               s11, t11, n11, \
                                                               s12, t12, n12) \
     @interface __className : __superClassName \
-    @property (nonatomic, readwrite, s1) t1 n1; \
-    @property (nonatomic, readwrite, s2) t2 n2; \
-    @property (nonatomic, readwrite, s3) t3 n3; \
-    @property (nonatomic, readwrite, s4) t4 n4; \
-    @property (nonatomic, readwrite, s5) t5 n5; \
-    @property (nonatomic, readwrite, s6) t6 n6; \
-    @property (nonatomic, readwrite, s7) t7 n7; \
-    @property (nonatomic, readwrite, s8) t8 n8; \
-    @property (nonatomic, readwrite, s9) t9 n9; \
-    @property (nonatomic, readwrite, s10) t10 n10; \
-    @property (nonatomic, readwrite, s11) t11 n11; \
-    @property (nonatomic, readwrite, s12) t12 n12; \
+    @property (nonatomic, UNPACK s1) t1 n1; \
+    @property (nonatomic, UNPACK s2) t2 n2; \
+    @property (nonatomic, UNPACK s3) t3 n3; \
+    @property (nonatomic, UNPACK s4) t4 n4; \
+    @property (nonatomic, UNPACK s5) t5 n5; \
+    @property (nonatomic, UNPACK s6) t6 n6; \
+    @property (nonatomic, UNPACK s7) t7 n7; \
+    @property (nonatomic, UNPACK s8) t8 n8; \
+    @property (nonatomic, UNPACK s9) t9 n9; \
+    @property (nonatomic, UNPACK s10) t10 n10; \
+    @property (nonatomic, UNPACK s11) t11 n11; \
+    @property (nonatomic, UNPACK s12) t12 n12; \
     - (instancetype _Nonnull)init NS_UNAVAILABLE; \
     - (instancetype _Nonnull)initWith_ ## n1:(t1)n1 \
                                           n2:(t2)n2 \
@@ -995,45 +1007,45 @@
     @end
 
 /// 13 properties
-#define MFDataClass13(__superClassName, __className, __setterSemanticsForProperty1, __typeForProperty1, __nameForProperty1, \
-                                                     __setterSemanticsForProperty2, __typeForProperty2, __nameForProperty2, \
-                                                     __setterSemanticsForProperty3, __typeForProperty3, __nameForProperty3, \
-                                                     __setterSemanticsForProperty4, __typeForProperty4, __nameForProperty4, \
-                                                     __setterSemanticsForProperty5, __typeForProperty5, __nameForProperty5, \
-                                                     __setterSemanticsForProperty6, __typeForProperty6, __nameForProperty6, \
-                                                     __setterSemanticsForProperty7, __typeForProperty7, __nameForProperty7, \
-                                                     __setterSemanticsForProperty8, __typeForProperty8, __nameForProperty8, \
-                                                     __setterSemanticsForProperty9, __typeForProperty9, __nameForProperty9, \
-                                                     __setterSemanticsForProperty10, __typeForProperty10, __nameForProperty10, \
-                                                     __setterSemanticsForProperty11, __typeForProperty11, __nameForProperty11, \
-                                                     __setterSemanticsForProperty12, __typeForProperty12, __nameForProperty12, \
-                                                     __setterSemanticsForProperty13, __typeForProperty13, __nameForProperty13) \
-    MFDataClassInterface13(__superClassName, __className, __setterSemanticsForProperty1, __typeForProperty1, __nameForProperty1, \
-                                                          __setterSemanticsForProperty2, __typeForProperty2, __nameForProperty2, \
-                                                          __setterSemanticsForProperty3, __typeForProperty3, __nameForProperty3, \
-                                                          __setterSemanticsForProperty4, __typeForProperty4, __nameForProperty4, \
-                                                          __setterSemanticsForProperty5, __typeForProperty5, __nameForProperty5, \
-                                                          __setterSemanticsForProperty6, __typeForProperty6, __nameForProperty6, \
-                                                          __setterSemanticsForProperty7, __typeForProperty7, __nameForProperty7, \
-                                                          __setterSemanticsForProperty8, __typeForProperty8, __nameForProperty8, \
-                                                          __setterSemanticsForProperty9, __typeForProperty9, __nameForProperty9, \
-                                                          __setterSemanticsForProperty10, __typeForProperty10, __nameForProperty10, \
-                                                          __setterSemanticsForProperty11, __typeForProperty11, __nameForProperty11, \
-                                                          __setterSemanticsForProperty12, __typeForProperty12, __nameForProperty12, \
-                                                          __setterSemanticsForProperty13, __typeForProperty13, __nameForProperty13) \
-    MFDataClassImplementation13(__superClassName, __className, __setterSemanticsForProperty1, __typeForProperty1, __nameForProperty1, \
-                                                               __setterSemanticsForProperty2, __typeForProperty2, __nameForProperty2, \
-                                                               __setterSemanticsForProperty3, __typeForProperty3, __nameForProperty3, \
-                                                               __setterSemanticsForProperty4, __typeForProperty4, __nameForProperty4, \
-                                                               __setterSemanticsForProperty5, __typeForProperty5, __nameForProperty5, \
-                                                               __setterSemanticsForProperty6, __typeForProperty6, __nameForProperty6, \
-                                                               __setterSemanticsForProperty7, __typeForProperty7, __nameForProperty7, \
-                                                               __setterSemanticsForProperty8, __typeForProperty8, __nameForProperty8, \
-                                                               __setterSemanticsForProperty9, __typeForProperty9, __nameForProperty9, \
-                                                               __setterSemanticsForProperty10, __typeForProperty10, __nameForProperty10, \
-                                                               __setterSemanticsForProperty11, __typeForProperty11, __nameForProperty11, \
-                                                               __setterSemanticsForProperty12, __typeForProperty12, __nameForProperty12, \
-                                                               __setterSemanticsForProperty13, __typeForProperty13, __nameForProperty13)
+#define MFDataClass13(__superClassName, __className, __attributesForProperty1, __typeForProperty1, __nameForProperty1, \
+                                                     __attributesForProperty2, __typeForProperty2, __nameForProperty2, \
+                                                     __attributesForProperty3, __typeForProperty3, __nameForProperty3, \
+                                                     __attributesForProperty4, __typeForProperty4, __nameForProperty4, \
+                                                     __attributesForProperty5, __typeForProperty5, __nameForProperty5, \
+                                                     __attributesForProperty6, __typeForProperty6, __nameForProperty6, \
+                                                     __attributesForProperty7, __typeForProperty7, __nameForProperty7, \
+                                                     __attributesForProperty8, __typeForProperty8, __nameForProperty8, \
+                                                     __attributesForProperty9, __typeForProperty9, __nameForProperty9, \
+                                                     __attributesForProperty10, __typeForProperty10, __nameForProperty10, \
+                                                     __attributesForProperty11, __typeForProperty11, __nameForProperty11, \
+                                                     __attributesForProperty12, __typeForProperty12, __nameForProperty12, \
+                                                     __attributesForProperty13, __typeForProperty13, __nameForProperty13) \
+    MFDataClassInterface13(__superClassName, __className, __attributesForProperty1, __typeForProperty1, __nameForProperty1, \
+                                                          __attributesForProperty2, __typeForProperty2, __nameForProperty2, \
+                                                          __attributesForProperty3, __typeForProperty3, __nameForProperty3, \
+                                                          __attributesForProperty4, __typeForProperty4, __nameForProperty4, \
+                                                          __attributesForProperty5, __typeForProperty5, __nameForProperty5, \
+                                                          __attributesForProperty6, __typeForProperty6, __nameForProperty6, \
+                                                          __attributesForProperty7, __typeForProperty7, __nameForProperty7, \
+                                                          __attributesForProperty8, __typeForProperty8, __nameForProperty8, \
+                                                          __attributesForProperty9, __typeForProperty9, __nameForProperty9, \
+                                                          __attributesForProperty10, __typeForProperty10, __nameForProperty10, \
+                                                          __attributesForProperty11, __typeForProperty11, __nameForProperty11, \
+                                                          __attributesForProperty12, __typeForProperty12, __nameForProperty12, \
+                                                          __attributesForProperty13, __typeForProperty13, __nameForProperty13) \
+    MFDataClassImplementation13(__superClassName, __className, __attributesForProperty1, __typeForProperty1, __nameForProperty1, \
+                                                               __attributesForProperty2, __typeForProperty2, __nameForProperty2, \
+                                                               __attributesForProperty3, __typeForProperty3, __nameForProperty3, \
+                                                               __attributesForProperty4, __typeForProperty4, __nameForProperty4, \
+                                                               __attributesForProperty5, __typeForProperty5, __nameForProperty5, \
+                                                               __attributesForProperty6, __typeForProperty6, __nameForProperty6, \
+                                                               __attributesForProperty7, __typeForProperty7, __nameForProperty7, \
+                                                               __attributesForProperty8, __typeForProperty8, __nameForProperty8, \
+                                                               __attributesForProperty9, __typeForProperty9, __nameForProperty9, \
+                                                               __attributesForProperty10, __typeForProperty10, __nameForProperty10, \
+                                                               __attributesForProperty11, __typeForProperty11, __nameForProperty11, \
+                                                               __attributesForProperty12, __typeForProperty12, __nameForProperty12, \
+                                                               __attributesForProperty13, __typeForProperty13, __nameForProperty13)
 
 #define MFDataClassInterface13(__superClassName, __className, s1, t1, n1, \
                                                               s2, t2, n2, \
@@ -1049,19 +1061,19 @@
                                                               s12, t12, n12, \
                                                               s13, t13, n13) \
     @interface __className : __superClassName \
-    @property (nonatomic, readwrite, s1) t1 n1; \
-    @property (nonatomic, readwrite, s2) t2 n2; \
-    @property (nonatomic, readwrite, s3) t3 n3; \
-    @property (nonatomic, readwrite, s4) t4 n4; \
-    @property (nonatomic, readwrite, s5) t5 n5; \
-    @property (nonatomic, readwrite, s6) t6 n6; \
-    @property (nonatomic, readwrite, s7) t7 n7; \
-    @property (nonatomic, readwrite, s8) t8 n8; \
-    @property (nonatomic, readwrite, s9) t9 n9; \
-    @property (nonatomic, readwrite, s10) t10 n10; \
-    @property (nonatomic, readwrite, s11) t11 n11; \
-    @property (nonatomic, readwrite, s12) t12 n12; \
-    @property (nonatomic, readwrite, s13) t13 n13; \
+    @property (nonatomic, UNPACK s1) t1 n1; \
+    @property (nonatomic, UNPACK s2) t2 n2; \
+    @property (nonatomic, UNPACK s3) t3 n3; \
+    @property (nonatomic, UNPACK s4) t4 n4; \
+    @property (nonatomic, UNPACK s5) t5 n5; \
+    @property (nonatomic, UNPACK s6) t6 n6; \
+    @property (nonatomic, UNPACK s7) t7 n7; \
+    @property (nonatomic, UNPACK s8) t8 n8; \
+    @property (nonatomic, UNPACK s9) t9 n9; \
+    @property (nonatomic, UNPACK s10) t10 n10; \
+    @property (nonatomic, UNPACK s11) t11 n11; \
+    @property (nonatomic, UNPACK s12) t12 n12; \
+    @property (nonatomic, UNPACK s13) t13 n13; \
     - (instancetype _Nonnull)init NS_UNAVAILABLE; \
     - (instancetype _Nonnull)initWith_ ## n1:(t1)n1 \
                                           n2:(t2)n2 \
@@ -1128,48 +1140,48 @@
     @end
     
 /// 14 properties
-#define MFDataClass14(__superClassName, __className, __setterSemanticsForProperty1, __typeForProperty1, __nameForProperty1, \
-                                                     __setterSemanticsForProperty2, __typeForProperty2, __nameForProperty2, \
-                                                     __setterSemanticsForProperty3, __typeForProperty3, __nameForProperty3, \
-                                                     __setterSemanticsForProperty4, __typeForProperty4, __nameForProperty4, \
-                                                     __setterSemanticsForProperty5, __typeForProperty5, __nameForProperty5, \
-                                                     __setterSemanticsForProperty6, __typeForProperty6, __nameForProperty6, \
-                                                     __setterSemanticsForProperty7, __typeForProperty7, __nameForProperty7, \
-                                                     __setterSemanticsForProperty8, __typeForProperty8, __nameForProperty8, \
-                                                     __setterSemanticsForProperty9, __typeForProperty9, __nameForProperty9, \
-                                                     __setterSemanticsForProperty10, __typeForProperty10, __nameForProperty10, \
-                                                     __setterSemanticsForProperty11, __typeForProperty11, __nameForProperty11, \
-                                                     __setterSemanticsForProperty12, __typeForProperty12, __nameForProperty12, \
-                                                     __setterSemanticsForProperty13, __typeForProperty13, __nameForProperty13, \
-                                                     __setterSemanticsForProperty14, __typeForProperty14, __nameForProperty14) \
-    MFDataClassInterface14(__superClassName, __className, __setterSemanticsForProperty1, __typeForProperty1, __nameForProperty1, \
-                                                          __setterSemanticsForProperty2, __typeForProperty2, __nameForProperty2, \
-                                                          __setterSemanticsForProperty3, __typeForProperty3, __nameForProperty3, \
-                                                          __setterSemanticsForProperty4, __typeForProperty4, __nameForProperty4, \
-                                                          __setterSemanticsForProperty5, __typeForProperty5, __nameForProperty5, \
-                                                          __setterSemanticsForProperty6, __typeForProperty6, __nameForProperty6, \
-                                                          __setterSemanticsForProperty7, __typeForProperty7, __nameForProperty7, \
-                                                          __setterSemanticsForProperty8, __typeForProperty8, __nameForProperty8, \
-                                                          __setterSemanticsForProperty9, __typeForProperty9, __nameForProperty9, \
-                                                          __setterSemanticsForProperty10, __typeForProperty10, __nameForProperty10, \
-                                                          __setterSemanticsForProperty11, __typeForProperty11, __nameForProperty11, \
-                                                          __setterSemanticsForProperty12, __typeForProperty12, __nameForProperty12, \
-                                                          __setterSemanticsForProperty13, __typeForProperty13, __nameForProperty13, \
-                                                          __setterSemanticsForProperty14, __typeForProperty14, __nameForProperty14) \
-    MFDataClassImplementation14(__superClassName, __className, __setterSemanticsForProperty1, __typeForProperty1, __nameForProperty1, \
-                                                               __setterSemanticsForProperty2, __typeForProperty2, __nameForProperty2, \
-                                                               __setterSemanticsForProperty3, __typeForProperty3, __nameForProperty3, \
-                                                               __setterSemanticsForProperty4, __typeForProperty4, __nameForProperty4, \
-                                                               __setterSemanticsForProperty5, __typeForProperty5, __nameForProperty5, \
-                                                               __setterSemanticsForProperty6, __typeForProperty6, __nameForProperty6, \
-                                                               __setterSemanticsForProperty7, __typeForProperty7, __nameForProperty7, \
-                                                               __setterSemanticsForProperty8, __typeForProperty8, __nameForProperty8, \
-                                                               __setterSemanticsForProperty9, __typeForProperty9, __nameForProperty9, \
-                                                               __setterSemanticsForProperty10, __typeForProperty10, __nameForProperty10, \
-                                                               __setterSemanticsForProperty11, __typeForProperty11, __nameForProperty11, \
-                                                               __setterSemanticsForProperty12, __typeForProperty12, __nameForProperty12, \
-                                                               __setterSemanticsForProperty13, __typeForProperty13, __nameForProperty13, \
-                                                               __setterSemanticsForProperty14, __typeForProperty14, __nameForProperty14)
+#define MFDataClass14(__superClassName, __className, __attributesForProperty1, __typeForProperty1, __nameForProperty1, \
+                                                     __attributesForProperty2, __typeForProperty2, __nameForProperty2, \
+                                                     __attributesForProperty3, __typeForProperty3, __nameForProperty3, \
+                                                     __attributesForProperty4, __typeForProperty4, __nameForProperty4, \
+                                                     __attributesForProperty5, __typeForProperty5, __nameForProperty5, \
+                                                     __attributesForProperty6, __typeForProperty6, __nameForProperty6, \
+                                                     __attributesForProperty7, __typeForProperty7, __nameForProperty7, \
+                                                     __attributesForProperty8, __typeForProperty8, __nameForProperty8, \
+                                                     __attributesForProperty9, __typeForProperty9, __nameForProperty9, \
+                                                     __attributesForProperty10, __typeForProperty10, __nameForProperty10, \
+                                                     __attributesForProperty11, __typeForProperty11, __nameForProperty11, \
+                                                     __attributesForProperty12, __typeForProperty12, __nameForProperty12, \
+                                                     __attributesForProperty13, __typeForProperty13, __nameForProperty13, \
+                                                     __attributesForProperty14, __typeForProperty14, __nameForProperty14) \
+    MFDataClassInterface14(__superClassName, __className, __attributesForProperty1, __typeForProperty1, __nameForProperty1, \
+                                                          __attributesForProperty2, __typeForProperty2, __nameForProperty2, \
+                                                          __attributesForProperty3, __typeForProperty3, __nameForProperty3, \
+                                                          __attributesForProperty4, __typeForProperty4, __nameForProperty4, \
+                                                          __attributesForProperty5, __typeForProperty5, __nameForProperty5, \
+                                                          __attributesForProperty6, __typeForProperty6, __nameForProperty6, \
+                                                          __attributesForProperty7, __typeForProperty7, __nameForProperty7, \
+                                                          __attributesForProperty8, __typeForProperty8, __nameForProperty8, \
+                                                          __attributesForProperty9, __typeForProperty9, __nameForProperty9, \
+                                                          __attributesForProperty10, __typeForProperty10, __nameForProperty10, \
+                                                          __attributesForProperty11, __typeForProperty11, __nameForProperty11, \
+                                                          __attributesForProperty12, __typeForProperty12, __nameForProperty12, \
+                                                          __attributesForProperty13, __typeForProperty13, __nameForProperty13, \
+                                                          __attributesForProperty14, __typeForProperty14, __nameForProperty14) \
+    MFDataClassImplementation14(__superClassName, __className, __attributesForProperty1, __typeForProperty1, __nameForProperty1, \
+                                                               __attributesForProperty2, __typeForProperty2, __nameForProperty2, \
+                                                               __attributesForProperty3, __typeForProperty3, __nameForProperty3, \
+                                                               __attributesForProperty4, __typeForProperty4, __nameForProperty4, \
+                                                               __attributesForProperty5, __typeForProperty5, __nameForProperty5, \
+                                                               __attributesForProperty6, __typeForProperty6, __nameForProperty6, \
+                                                               __attributesForProperty7, __typeForProperty7, __nameForProperty7, \
+                                                               __attributesForProperty8, __typeForProperty8, __nameForProperty8, \
+                                                               __attributesForProperty9, __typeForProperty9, __nameForProperty9, \
+                                                               __attributesForProperty10, __typeForProperty10, __nameForProperty10, \
+                                                               __attributesForProperty11, __typeForProperty11, __nameForProperty11, \
+                                                               __attributesForProperty12, __typeForProperty12, __nameForProperty12, \
+                                                               __attributesForProperty13, __typeForProperty13, __nameForProperty13, \
+                                                               __attributesForProperty14, __typeForProperty14, __nameForProperty14)
 
 #define MFDataClassInterface14(__superClassName, __className, s1, t1, n1, \
                                                               s2, t2, n2, \
@@ -1186,20 +1198,20 @@
                                                               s13, t13, n13, \
                                                               s14, t14, n14) \
     @interface __className : __superClassName \
-    @property (nonatomic, readwrite, s1) t1 n1; \
-    @property (nonatomic, readwrite, s2) t2 n2; \
-    @property (nonatomic, readwrite, s3) t3 n3; \
-    @property (nonatomic, readwrite, s4) t4 n4; \
-    @property (nonatomic, readwrite, s5) t5 n5; \
-    @property (nonatomic, readwrite, s6) t6 n6; \
-    @property (nonatomic, readwrite, s7) t7 n7; \
-    @property (nonatomic, readwrite, s8) t8 n8; \
-    @property (nonatomic, readwrite, s9) t9 n9; \
-    @property (nonatomic, readwrite, s10) t10 n10; \
-    @property (nonatomic, readwrite, s11) t11 n11; \
-    @property (nonatomic, readwrite, s12) t12 n12; \
-    @property (nonatomic, readwrite, s13) t13 n13; \
-    @property (nonatomic, readwrite, s14) t14 n14; \
+    @property (nonatomic, UNPACK s1) t1 n1; \
+    @property (nonatomic, UNPACK s2) t2 n2; \
+    @property (nonatomic, UNPACK s3) t3 n3; \
+    @property (nonatomic, UNPACK s4) t4 n4; \
+    @property (nonatomic, UNPACK s5) t5 n5; \
+    @property (nonatomic, UNPACK s6) t6 n6; \
+    @property (nonatomic, UNPACK s7) t7 n7; \
+    @property (nonatomic, UNPACK s8) t8 n8; \
+    @property (nonatomic, UNPACK s9) t9 n9; \
+    @property (nonatomic, UNPACK s10) t10 n10; \
+    @property (nonatomic, UNPACK s11) t11 n11; \
+    @property (nonatomic, UNPACK s12) t12 n12; \
+    @property (nonatomic, UNPACK s13) t13 n13; \
+    @property (nonatomic, UNPACK s14) t14 n14; \
     - (instancetype _Nonnull)init NS_UNAVAILABLE; \
     - (instancetype _Nonnull)initWith_ ## n1:(t1)n1 \
                                           n2:(t2)n2 \
@@ -1270,51 +1282,51 @@
     @end
 
 /// 15 properties
-#define MFDataClass15(__superClassName, __className, __setterSemanticsForProperty1, __typeForProperty1, __nameForProperty1, \
-                                                     __setterSemanticsForProperty2, __typeForProperty2, __nameForProperty2, \
-                                                     __setterSemanticsForProperty3, __typeForProperty3, __nameForProperty3, \
-                                                     __setterSemanticsForProperty4, __typeForProperty4, __nameForProperty4, \
-                                                     __setterSemanticsForProperty5, __typeForProperty5, __nameForProperty5, \
-                                                     __setterSemanticsForProperty6, __typeForProperty6, __nameForProperty6, \
-                                                     __setterSemanticsForProperty7, __typeForProperty7, __nameForProperty7, \
-                                                     __setterSemanticsForProperty8, __typeForProperty8, __nameForProperty8, \
-                                                     __setterSemanticsForProperty9, __typeForProperty9, __nameForProperty9, \
-                                                     __setterSemanticsForProperty10, __typeForProperty10, __nameForProperty10, \
-                                                     __setterSemanticsForProperty11, __typeForProperty11, __nameForProperty11, \
-                                                     __setterSemanticsForProperty12, __typeForProperty12, __nameForProperty12, \
-                                                     __setterSemanticsForProperty13, __typeForProperty13, __nameForProperty13, \
-                                                     __setterSemanticsForProperty14, __typeForProperty14, __nameForProperty14, \
-                                                     __setterSemanticsForProperty15, __typeForProperty15, __nameForProperty15) \
-    MFDataClassInterface15(__superClassName, __className, __setterSemanticsForProperty1, __typeForProperty1, __nameForProperty1, \
-                                                          __setterSemanticsForProperty2, __typeForProperty2, __nameForProperty2, \
-                                                          __setterSemanticsForProperty3, __typeForProperty3, __nameForProperty3, \
-                                                          __setterSemanticsForProperty4, __typeForProperty4, __nameForProperty4, \
-                                                          __setterSemanticsForProperty5, __typeForProperty5, __nameForProperty5, \
-                                                          __setterSemanticsForProperty6, __typeForProperty6, __nameForProperty6, \
-                                                          __setterSemanticsForProperty7, __typeForProperty7, __nameForProperty7, \
-                                                          __setterSemanticsForProperty8, __typeForProperty8, __nameForProperty8, \
-                                                          __setterSemanticsForProperty9, __typeForProperty9, __nameForProperty9, \
-                                                          __setterSemanticsForProperty10, __typeForProperty10, __nameForProperty10, \
-                                                          __setterSemanticsForProperty11, __typeForProperty11, __nameForProperty11, \
-                                                          __setterSemanticsForProperty12, __typeForProperty12, __nameForProperty12, \
-                                                          __setterSemanticsForProperty13, __typeForProperty13, __nameForProperty13, \
-                                                          __setterSemanticsForProperty14, __typeForProperty14, __nameForProperty14, \
-                                                          __setterSemanticsForProperty15, __typeForProperty15, __nameForProperty15) \
-    MFDataClassImplementation15(__superClassName, __className, __setterSemanticsForProperty1, __typeForProperty1, __nameForProperty1, \
-                                                               __setterSemanticsForProperty2, __typeForProperty2, __nameForProperty2, \
-                                                               __setterSemanticsForProperty3, __typeForProperty3, __nameForProperty3, \
-                                                               __setterSemanticsForProperty4, __typeForProperty4, __nameForProperty4, \
-                                                               __setterSemanticsForProperty5, __typeForProperty5, __nameForProperty5, \
-                                                               __setterSemanticsForProperty6, __typeForProperty6, __nameForProperty6, \
-                                                               __setterSemanticsForProperty7, __typeForProperty7, __nameForProperty7, \
-                                                               __setterSemanticsForProperty8, __typeForProperty8, __nameForProperty8, \
-                                                               __setterSemanticsForProperty9, __typeForProperty9, __nameForProperty9, \
-                                                               __setterSemanticsForProperty10, __typeForProperty10, __nameForProperty10, \
-                                                               __setterSemanticsForProperty11, __typeForProperty11, __nameForProperty11, \
-                                                               __setterSemanticsForProperty12, __typeForProperty12, __nameForProperty12, \
-                                                               __setterSemanticsForProperty13, __typeForProperty13, __nameForProperty13, \
-                                                               __setterSemanticsForProperty14, __typeForProperty14, __nameForProperty14, \
-                                                               __setterSemanticsForProperty15, __typeForProperty15, __nameForProperty15)
+#define MFDataClass15(__superClassName, __className, __attributesForProperty1, __typeForProperty1, __nameForProperty1, \
+                                                     __attributesForProperty2, __typeForProperty2, __nameForProperty2, \
+                                                     __attributesForProperty3, __typeForProperty3, __nameForProperty3, \
+                                                     __attributesForProperty4, __typeForProperty4, __nameForProperty4, \
+                                                     __attributesForProperty5, __typeForProperty5, __nameForProperty5, \
+                                                     __attributesForProperty6, __typeForProperty6, __nameForProperty6, \
+                                                     __attributesForProperty7, __typeForProperty7, __nameForProperty7, \
+                                                     __attributesForProperty8, __typeForProperty8, __nameForProperty8, \
+                                                     __attributesForProperty9, __typeForProperty9, __nameForProperty9, \
+                                                     __attributesForProperty10, __typeForProperty10, __nameForProperty10, \
+                                                     __attributesForProperty11, __typeForProperty11, __nameForProperty11, \
+                                                     __attributesForProperty12, __typeForProperty12, __nameForProperty12, \
+                                                     __attributesForProperty13, __typeForProperty13, __nameForProperty13, \
+                                                     __attributesForProperty14, __typeForProperty14, __nameForProperty14, \
+                                                     __attributesForProperty15, __typeForProperty15, __nameForProperty15) \
+    MFDataClassInterface15(__superClassName, __className, __attributesForProperty1, __typeForProperty1, __nameForProperty1, \
+                                                          __attributesForProperty2, __typeForProperty2, __nameForProperty2, \
+                                                          __attributesForProperty3, __typeForProperty3, __nameForProperty3, \
+                                                          __attributesForProperty4, __typeForProperty4, __nameForProperty4, \
+                                                          __attributesForProperty5, __typeForProperty5, __nameForProperty5, \
+                                                          __attributesForProperty6, __typeForProperty6, __nameForProperty6, \
+                                                          __attributesForProperty7, __typeForProperty7, __nameForProperty7, \
+                                                          __attributesForProperty8, __typeForProperty8, __nameForProperty8, \
+                                                          __attributesForProperty9, __typeForProperty9, __nameForProperty9, \
+                                                          __attributesForProperty10, __typeForProperty10, __nameForProperty10, \
+                                                          __attributesForProperty11, __typeForProperty11, __nameForProperty11, \
+                                                          __attributesForProperty12, __typeForProperty12, __nameForProperty12, \
+                                                          __attributesForProperty13, __typeForProperty13, __nameForProperty13, \
+                                                          __attributesForProperty14, __typeForProperty14, __nameForProperty14, \
+                                                          __attributesForProperty15, __typeForProperty15, __nameForProperty15) \
+    MFDataClassImplementation15(__superClassName, __className, __attributesForProperty1, __typeForProperty1, __nameForProperty1, \
+                                                               __attributesForProperty2, __typeForProperty2, __nameForProperty2, \
+                                                               __attributesForProperty3, __typeForProperty3, __nameForProperty3, \
+                                                               __attributesForProperty4, __typeForProperty4, __nameForProperty4, \
+                                                               __attributesForProperty5, __typeForProperty5, __nameForProperty5, \
+                                                               __attributesForProperty6, __typeForProperty6, __nameForProperty6, \
+                                                               __attributesForProperty7, __typeForProperty7, __nameForProperty7, \
+                                                               __attributesForProperty8, __typeForProperty8, __nameForProperty8, \
+                                                               __attributesForProperty9, __typeForProperty9, __nameForProperty9, \
+                                                               __attributesForProperty10, __typeForProperty10, __nameForProperty10, \
+                                                               __attributesForProperty11, __typeForProperty11, __nameForProperty11, \
+                                                               __attributesForProperty12, __typeForProperty12, __nameForProperty12, \
+                                                               __attributesForProperty13, __typeForProperty13, __nameForProperty13, \
+                                                               __attributesForProperty14, __typeForProperty14, __nameForProperty14, \
+                                                               __attributesForProperty15, __typeForProperty15, __nameForProperty15)
 
 #define MFDataClassInterface15(__superClassName, __className, s1, t1, n1, \
                                                               s2, t2, n2, \
@@ -1332,21 +1344,21 @@
                                                               s14, t14, n14, \
                                                               s15, t15, n15) \
     @interface __className : __superClassName \
-    @property (nonatomic, readwrite, s1) t1 n1; \
-    @property (nonatomic, readwrite, s2) t2 n2; \
-    @property (nonatomic, readwrite, s3) t3 n3; \
-    @property (nonatomic, readwrite, s4) t4 n4; \
-    @property (nonatomic, readwrite, s5) t5 n5; \
-    @property (nonatomic, readwrite, s6) t6 n6; \
-    @property (nonatomic, readwrite, s7) t7 n7; \
-    @property (nonatomic, readwrite, s8) t8 n8; \
-    @property (nonatomic, readwrite, s9) t9 n9; \
-    @property (nonatomic, readwrite, s10) t10 n10; \
-    @property (nonatomic, readwrite, s11) t11 n11; \
-    @property (nonatomic, readwrite, s12) t12 n12; \
-    @property (nonatomic, readwrite, s13) t13 n13; \
-    @property (nonatomic, readwrite, s14) t14 n14; \
-    @property (nonatomic, readwrite, s15) t15 n15; \
+    @property (nonatomic, UNPACK s1) t1 n1; \
+    @property (nonatomic, UNPACK s2) t2 n2; \
+    @property (nonatomic, UNPACK s3) t3 n3; \
+    @property (nonatomic, UNPACK s4) t4 n4; \
+    @property (nonatomic, UNPACK s5) t5 n5; \
+    @property (nonatomic, UNPACK s6) t6 n6; \
+    @property (nonatomic, UNPACK s7) t7 n7; \
+    @property (nonatomic, UNPACK s8) t8 n8; \
+    @property (nonatomic, UNPACK s9) t9 n9; \
+    @property (nonatomic, UNPACK s10) t10 n10; \
+    @property (nonatomic, UNPACK s11) t11 n11; \
+    @property (nonatomic, UNPACK s12) t12 n12; \
+    @property (nonatomic, UNPACK s13) t13 n13; \
+    @property (nonatomic, UNPACK s14) t14 n14; \
+    @property (nonatomic, UNPACK s15) t15 n15; \
     - (instancetype _Nonnull)init NS_UNAVAILABLE; \
     - (instancetype _Nonnull)initWith_ ## n1:(t1)n1 \
                                           n2:(t2)n2 \

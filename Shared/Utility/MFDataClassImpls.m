@@ -9,6 +9,7 @@
 
 ///
 /// This file is a place to put `MFDataClassImplementationX(...)` macros that don't have a better place.
+///     Update: We probably won't use this. Maybe we should put some info from these comments into MFDataClass.h and then delete this file.
 ///
 /// `MFDataClassImplementationX(...)` macros are a necessary evil.
 ///     ... Ideally, we could define an `MFDataClass` with just one macro invocation. Instead we have to use two macro invocations if we want to import an `MFDataClass` into different files:
@@ -35,21 +36,29 @@
 ///         That way, the `@implementation` is only imported into one .m file, and encountered exactly once by the compiler, solving the `duplicate symbol` errors.
 ///     -> The benefit of this approach is that we don't have to use the 2 separate `MFDataClassInterfaceX(...)` and `MFDataClassImplementationX()` macros. Instead we can just use one `MFDataClassX()` macro to define everything in the .h file.
 ///         But the disadvantage is that we have to manually make sure that there's exactly one .m file that turns on the implementation-code-generation before importing the .h file. And when defining `MFDataClass`es inside an .m file we'd also have to make sure that we turn on the `@implementation` generation.
-///         Overall it just feels kinda hacky and confusing, and I think it's simpler to just use the two separate `MFDataClassInterfaceX(...)` and `MFDataClassImplementationX()`  macros and put one in the .h and one in the .m file. It's 'duplicated code' but we can pretty easily copy-paste stuff to keep things in-sync, so it should be fine.
+///         Overall it just feels kinda hacky and confusing, and I think it's more typing but simpler to understand to just use the two separate `MFDataClassInterfaceX(...)` and `MFDataClassImplementationX()`  macros and put one in the .h and one in the .m file. It's 'duplicated code' but we can pretty easily copy-paste stuff to keep things in-sync, so it should be fine.
 ///
 /// Sidenote:
 ///     We need to import all the headers where the `MFDataClassInterfaceX()` definitions live for the `MFDataClassImplementationX()` macros to work.
 
 
-#import "MFDataClass.h"
+//#import "MFDataClass.h"
 
 /// License.h implementations
-#import "License.h"
-MFDataClassImplementation7(MFDataClassBase, MFLicenseAndTrialState,
-                              assign, BOOL,                isLicensed,
-                              assign, MFValueFreshness,    freshness,
-                              assign, MFLicenseReason,     licenseReason,
-                              assign, int,                 daysOfUse,
-                              assign, int,                 daysOfUseUI,
-                              assign, int,                 trialDays,
-                              assign, BOOL,                trialIsActive)
+///     (We moved these into `License.m`)
+//#import "License.h"
+//MFDataClassImplementation0(MFDataClassBase, MFLicenseMetadata)
+//MFDataClassImplementation0(MFLicenseMetadata, MFLicenseMetadataGumroadV0)
+//MFDataClassImplementation0(MFLicenseMetadata, MFLicenseMetadataGumroadV1)
+//MFDataClassImplementation0(MFLicenseMetadata, MFLicenseMetadataHyperWorkV1)
+//MFDataClassImplementation3(MFDataClassBase, MFLicenseState,   assign, bool,               isLicensed,
+//                                                              assign, MFValueFreshness,   freshness,
+//                                                              assign, MFLicenseReason,    licenseReason)
+//
+//MFDataClassImplementation4(MFDataClassBase, MFTrialState,     assign, NSInteger,  daysOfUse,
+//                                                              assign, NSInteger,  daysOfUseUI,
+//                                                              assign, NSInteger,  trialDays,
+//                                                              assign, bool,       trialIsActive)
+
+//MFDataClassImplementation2(MFDataClassBase, MFLicenseAndTrialState, strong, MFLicenseState * _Nonnull,    license,
+//                                                                    strong, MFTrialState * _Nonnull,      trial)

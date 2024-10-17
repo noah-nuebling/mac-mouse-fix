@@ -25,23 +25,6 @@
 
 import Cocoa
 
-// MARK: - License.h extensions
-
-extension MFLicenseAndTrialState {
-
-    override open func isEqual(_ other: Any?) -> Bool {
-        /// Note:
-        /// - We don't check for freshness because it makes sense.
-        /// - We also don't check for trialIsOver directly, because it's derived from trialDays and daysOfUse
-        /// - Should we check for licenseReason equality here? I can't remember how this is used. Edit: This is used in AboutTabController to check whether to update the UI. So we need to check for licenseReason as well
-        guard let other = other as? MFLicenseAndTrialState else { return false }
-        return self.isLicensed == other.isLicensed &&
-               self.licenseReason == other.licenseReason &&
-               self.daysOfUse == other.daysOfUse &&
-               self.trialDays == other.trialDays
-    }
-}
-
 // MARK: - Main class
 
 @objc class License: NSObject {
@@ -60,9 +43,9 @@ extension MFLicenseAndTrialState {
         Task.detached(priority: (triggeredByUser ? .userInitiated : .background), operation: {
             
             /// Get licensing state
-            let (license, _) = await checkLicenseAndTrial(licenseConfig: licenseConfig)
+            let (licenseState, trialState, _) = await checkLicenseAndTrial(licenseConfig: licenseConfig)
             
-            if license.isLicensed {
+            if licenseState.isLicensed {
                 
                 /// Do nothing if licensed
                 return
@@ -70,7 +53,7 @@ extension MFLicenseAndTrialState {
             } else {
                 
                 /// Not licensed -> check trial
-                if license.trialIsActive {
+                if trialState.trialIsActive {
                     
                     /// Trial still active -> do nothing
                     //      TODO: @UX Maybe display small reminder after half of trial is over? Or when there's one week of the trial left?
@@ -99,7 +82,7 @@ extension MFLicenseAndTrialState {
                         
                         /// Show trialNotification
                         DispatchQueue.main.async {
-                            TrialNotificationController.shared.open(licenseConfig: licenseConfig, license: license, triggeredByUser: triggeredByUser)
+                            TrialNotificationController.shared.open(licenseConfig: licenseConfig, licenseState: licenseState, trialState: trialState, triggeredByUser: triggeredByUser)
                         }
                         
                         /// Lock helper
@@ -116,47 +99,40 @@ extension MFLicenseAndTrialState {
     
     /// These functions assemble info about the trial and the license.
     
-    @objc static func checkLicenseAndTrialCached(licenseConfig: LicenseConfig) -> MFLicenseAndTrialState {
+    static func checkLicenseAndTrialCached(licenseConfig: LicenseConfig) -> (licenseState: MFLicenseState, trialState: MFTrialState) {
         
-        /// This function only looks at the cache even if there is an internet connection. While this functions sister-function `checkLicenseAndTrial(licenseConfig:completionHandler:)` retrieves info from the cache only as a fallback if it can't get current info from the internet.
+        /// This function only looks at the cache even if there is an internet connection. While this functions sister-function `checkLicenseAndTrial()` retrieves info from the cache only as a fallback if it can't get current info from the internet.
         /// In contrast to the sister function, this function is guaranteed to return immediately since it doesn't load stuff from the internet.
         /// We want this in some places where we need some info immediately to display UI to the user.
-        /// The content of this function is largely copy pasted from `licenseState(licenseConfig:completionHandler:)` which is sort of ugly.
         
-        /// Get cache
-        ///     Note: Here, we fall back to false and don't throw errors if there is no cache, but in `licenseState(licenseConfig:)` we do throw an error. Does this have a reason?
-        
-        let isLicensed = self.isLicensedCache
-        let licenseReason = self.licenseReasonCache
-        
+        /// Get licenseState from cache
+        ///     Note: Here, we we don't throw errors and just silently go to to the fallback if there's no cache, but in the normal (async) `checkLicenseAndTrial()` we do return an error. Does this make sense?
+        let licenseState = MFLicenseState(isLicensed: self.isLicensedCache,
+                                          freshness: kMFValueFreshnessCached,
+                                          licenseReason: self.licenseReasonCache)
         /// Get trial info
-#if FORCE_EXPIRED
-        let daysOfUse = licenseConfig.trialDays + 1
-#elseif FORCE_NOT_EXPIRED
-        let daysOfUse = 0
-#else
-        let daysOfUse = TrialCounter.daysOfUse
-#endif
-        let trialDays = licenseConfig.trialDays
-        let trialIsActive = daysOfUse <= trialDays
-        let daysOfUseUI = SharedUtilitySwift.clip(daysOfUse, betweenLow: 1, high: trialDays)
+        let trialState = checkTrial(licenseConfig)
         
-        /// Return assmbled license + trial info
-        
-        let result = MFLicenseAndTrialState(isLicensed: isLicensed, freshness: kMFValueFreshnessCached, licenseReason: licenseReason, daysOfUse: Int32(daysOfUse), daysOfUseUI: Int32(daysOfUseUI), trialDays: Int32(trialDays), trialIsActive: trialIsActive)
-        return result
+        /// Return
+        return (licenseState, trialState)
         
     }
     
-    @objc static func checkLicenseAndTrial(licenseConfig: LicenseConfig) async -> (license: MFLicenseAndTrialState, error: NSError?) {
+    @objc static func checkLicenseAndTrial(licenseConfig: LicenseConfig) async -> (licenseState: MFLicenseState, trialState: MFTrialState, error: NSError?) {
         
         /// At the time of writing, we only use licenseConfig to get the maxActivations.
         ///     Since we get licenseConfig via the internet this might be worth rethinking if it's necessary. We made a similar comment somewhere else but I forgot where.
         
-        /// Check license
-        let (isLicensed, freshness, licenseReason, error) = await checkLicense(licenseConfig: licenseConfig)
-            
-        /// Get trial info
+        /// Call base functions
+        let (licenseState, error) = await checkLicense(licenseConfig: licenseConfig)
+        let trialState = checkTrial(licenseConfig)
+        
+        /// Return
+        return (licenseState, trialState, error)
+    }
+    
+    @objc static func checkTrial(_ licenseConfig: LicenseConfig) -> MFTrialState {
+        
 #if FORCE_EXPIRED
         let daysOfUse = licenseConfig.trialDays + 1
 #elseif FORCE_NOT_EXPIRED
@@ -169,11 +145,14 @@ extension MFLicenseAndTrialState {
         let trialIsActive = daysOfUse <= trialDays
         let daysOfUseUI = SharedUtilitySwift.clip(daysOfUse, betweenLow: 1, high: trialDays)
         
-        /// Return assmbled license + trial info
+        let result = MFTrialState(
+            daysOfUse: daysOfUse,
+            daysOfUseUI: daysOfUseUI,
+            trialDays: trialDays,
+            trialIsActive: trialIsActive
+        )
         
-        let result = MFLicenseAndTrialState(isLicensed: isLicensed, freshness: freshness, licenseReason: licenseReason, daysOfUse: Int32(daysOfUse), daysOfUseUI: Int32(daysOfUseUI), trialDays: Int32(trialDays), trialIsActive: trialIsActive)
-        
-        return (result, error)
+        return result
     }
     
     // MARK: Lvl 1
@@ -181,30 +160,30 @@ extension MFLicenseAndTrialState {
     /// Wrapper for `_checkLicense` that sets incrementUsageCount to false and automatically retrieves the licenseKey from secure storage
     ///     Meant to be used by the rest of the app except LicenseSheet
     
-    static func checkLicense(licenseConfig: LicenseConfig) async -> (isLicensed: Bool, freshness: MFValueFreshness, licenseReason: MFLicenseReason, error: NSError?) {
+    static func checkLicense(licenseConfig: LicenseConfig) async -> (licenseState: MFLicenseState, error: NSError?) {
         
         /// Setting key to nil so it's retrieved from secureStorage
         return await _checkLicense(key: nil, licenseConfig: licenseConfig, incrementUsageCount: false)
     }
-
+    
     /// Wrappers for `_checkLicense` that set incrementUsageCount to true / false.
     ///     Meant to be used by LicenseSheet
     
-    static func checkLicense(key: String, licenseConfig: LicenseConfig) async -> (isLicensed: Bool, freshness: MFValueFreshness, licenseReason: MFLicenseReason, error: NSError?) {
+    static func checkLicense(key: String, licenseConfig: LicenseConfig) async -> (licenseState: MFLicenseState, error: NSError?) {
         
         return await _checkLicense(key: key, licenseConfig: licenseConfig, incrementUsageCount: false)
     }
     
-    static func activateLicense(key: String, licenseConfig: LicenseConfig) async -> (isLicensed: Bool, freshness: MFValueFreshness, licenseReason: MFLicenseReason, error: NSError?) {
+    static func activateLicense(key: String, licenseConfig: LicenseConfig) async -> (licenseState: MFLicenseState, error: NSError?) {
         
         return await _checkLicense(key: key, licenseConfig: licenseConfig, incrementUsageCount: true)
     }
     
     // MARK: Lvl 0
     
-    /// `_checkLicense` is a core function that has as many arguments and returns as much information about the license state as possible. The rest of this class is mostly wrappers for this function
+    /// `_checkLicense` is a core function that has as many arguments and returns as much information about the license state as possible.
     
-    private static func _checkLicense(key keyArg: String?, licenseConfig: LicenseConfig, incrementUsageCount: Bool) async -> (isLicensed: Bool, freshness: MFValueFreshness, licenseReason: MFLicenseReason, error: NSError?) {
+    private static func _checkLicense(key keyArg: String?, licenseConfig: LicenseConfig, incrementUsageCount: Bool) async -> (licenseState: MFLicenseState, error: NSError?) {
         
         ///
         /// Step One
@@ -302,6 +281,9 @@ extension MFLicenseAndTrialState {
                                                                                        args: ["product_permalink": productPermalinkOld,
                                                                                               "license_key": key,
                                                                                               "increment_uses_count": incrementUsageCount ? "true" : "false"])
+                    /// Update flag (To later determine licenseType)
+//                    usedOldEuroProduct = true
+                    
                 }
                 
                 /// Guard:  Error
@@ -326,8 +308,24 @@ extension MFLicenseAndTrialState {
                 }
                 
                 ///
-                /// Extract data from serverResponseDict
+                /// Parse data
                 ///
+//
+                /// vvv We plan to add the licenseType and metadata fields later
+                
+//                /// Determine licenseType
+//                let licenseType = usedOldEuroProduct ? kMFLicenseTypeGumroadV0 : kMFLicenseTypeGumroadV1
+//                
+//                /// Gather metadata
+//                let metadata: MFLicenseMetadata
+//                if (licenseType == kMFLicenseTypeGumroadV0) {
+//                    metadata = MFLicenseMetadataGumroadV0()
+//                    /// ... Fill in metadata fields here if we add that eventually
+//                } else if (licenseType == kMFLicenseTypeGumroadV1) {
+//                    metadata = MFLicenseMetadataGumroadV1()
+//                } else {
+//                    fatalError("This cannot happen")
+//                }
                 
                 /// Determine if _server_ said whether the _key_ is valid
                 ///     Explanation: The Gumroad license-verification API just gives us a boolean 'success' field. As I understand, `success: true` always means that the license is *definitively* valid.
@@ -339,6 +337,7 @@ extension MFLicenseAndTrialState {
                 ///                 - For *unknown* licenses the server sends the message: "That license does not exist for the provided product."
                 ///                 - For *disabled* licensed, the server sends the message: "This license key has been disabled."
                 ///                 ... But I won't change that now cause I'm too lazy to think this through and I think 404 will also work.
+                ///             Update: The Gumroad docs also say "You will receive a 404 response code with an error message if verification fails." - so checking 404 seems to be the way (Src: https://help.gumroad.com/article/76-license-keys.html)
                 ///     Considerations:
                 ///         Generally, we want to err on the side of `LicenseValidityFromServer.unsure`, and only use `LicenseValidityFromServer.invalid` when we're *absolutely* sure that the license is invalid.
                 ///         That's because if we set the value to`.invalid` we consider the app *definitively*unlicensed and then lock it down immediately (in case the free days have been used up), which makes for a really annoying user experience if there's a false positive on `.invalid` due to an internal server error or something.
@@ -357,7 +356,7 @@ extension MFLicenseAndTrialState {
                 /// Gather nOfActivations from serverResponseDict
                 let activations = serverResponseDict["uses"] as? Int
                 
-                /// Return
+                /// Return parsed values
                 parsedServerResponse = (isValidKey, activations, serverResponseDict, responseError, urlResponse)
                 break askServer
             
@@ -397,7 +396,7 @@ extension MFLicenseAndTrialState {
                 /// The server did not say whether the key is valid or not
                 ///     -> fall back to cache
                 
-                if let isLicensedCache = config("License.isLicensedCache") as? Bool {
+                if let isLicensedCache = config("License.isLicensedCache") as? Bool { /// Note: We need to get this from the config directly, because our dedicated caching function uses a fallback value automatically which we wanna avoid. We should unify this.
                     
                     /// Fall back to cache
                     stepOneResult = (isLicensedCache, kMFValueFreshnessCached, parsedServerResponse.error) /// Pass through the error from previous step
@@ -451,14 +450,17 @@ extension MFLicenseAndTrialState {
         
         if isLicensed {
             
-            /// Get licenseReason from cache if value isn't fresh
+            /// Get rest of the values from cache if isLicensed isn't fresh
+            ///     The way we load the cache 'in two steps' is really weird and bad I think.
             
             if freshness == kMFValueFreshnessFresh {
                 licenseReason = kMFLicenseReasonValidLicense
             } else if freshness == kMFValueFreshnessCached {
                 licenseReason = self.licenseReasonCache
+            } else if (freshness == kMFValueFreshnessFallback) {
+                assert(false);
             } else {
-                assert(false) /// Don't think this could ever happen, not totally sure though
+                assert(false); /// Don't think this could ever happen, not totally sure though
             }
             
         } else { /// Unlicensed
@@ -506,19 +508,19 @@ extension MFLicenseAndTrialState {
         ///
         
         /// Note: Why are we caching *after* the license-value-overrides of stepTwo: If the user is in a freeCountry, we wouldn't want the app to only be licensed as long as they're online. That's why the isLicensedCache should be set after the overrides.
-        
         self.isLicensedCache = isLicensed
         self.licenseReasonCache = licenseReason
 
         ///
         /// Return result
         ///
-        return (isLicensed, freshness, licenseReason, error)
+        let stepTwoResult = MFLicenseState(isLicensed: isLicensed, freshness: freshness, licenseReason: licenseReason)
+        return (stepTwoResult, error)
     }
     
     // MARK: Cache interface
     
-    /// Not totally sure why we're caching these specific things. But it's the info we need to display the UI and so on properly
+    /// We're caching all fields of the MFLicenseState (since that comes from the server which might not always be available) - except for the licenseFreshness which denotes the origin of the data.
     
     private static var licenseReasonCache: MFLicenseReason {
         get {

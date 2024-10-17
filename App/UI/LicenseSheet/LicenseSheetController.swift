@@ -96,7 +96,10 @@ import CocoaLumberjackSwift
             
             if isDifferent {
                 
-                let (isLicensed, freshness, licenseReason, error) = await License.activateLicense(key: key, licenseConfig: licenseConfig)
+                let (state, error) = await License.activateLicense(key: key, licenseConfig: licenseConfig)
+                let isLicensed = state.isLicensed
+                let freshness = state.freshness
+                let licenseReason = state.licenseReason
                     
                 /// By checking for valueFreshness we filter out the case where there's no internet but the cache still tells us it's licensed
                 ///     Note:
@@ -121,7 +124,10 @@ import CocoaLumberjackSwift
                 
             } else {
                 
-                let (isLicensed, freshness, licenseReason, error) = await License.checkLicense(key: key, licenseConfig: licenseConfig)
+                let (state, error) = await License.checkLicense(key: key, licenseConfig: licenseConfig)
+                let isLicensed = state.isLicensed
+                let freshness = state.freshness
+                let licenseReason = state.licenseReason
                     
                 /// Should we check for valueFreshness here?
                 let success = isLicensed

@@ -152,25 +152,64 @@ import CocoaLumberjackSwift
     }
     
     /// Equatability
+    func propertyValuesForEqualityComparison() -> [any Hashable & Equatable] {
+        
+        ///    This function defines which properties we consider for equality-checking. Both the `isEqual()` and the `hash` methods are defined in terms of this.
+        ///         This pattern is copied from the `MFDataClass` implementation. (Perhaps we should turn this into an MFDataClass?)
+        ///
+        ///     Notes:
+        ///    - We don't check `freshness` because it describes the origin of the data (cache, server, etc) and, in a sense, isn't itself part of the data we're trying to represent.
+        ///    - We don't check for `isFilled` because its an internal variable we use to manage when to use fallback or cache values, it's not part of the actual data we're trying to represent.
+        ///    - All other properties should be checked - don't forget to update this when adding new properties!
     
-    override func isEqual(to object: Any?) -> Bool {
+        return [self.maxActivations,
+                self.trialDays,
+                self.price,
+                self.payLink,
+                self.quickPayLink,
+                self.altPayLink,
+                self.altQuickPayLink,
+                self.altPayLinkCountries,
+                self.freeCountries]
+    }
+    
+    override func isEqual(_ object: Any?) -> Bool {
         
-        /// Notes:
-        ///    - We don't check freshness and isFilled because it makes sense
-        ///    - Overriding == directly doesn't work for some reason. Use isEqual to compare instead of == (unless == maps to isEqual anyways - not sure)
+        ///    - We override `isEqual()`.
+        ///         In Swift we can still use `==` as it maps to `isEqual()` for `NSObject` subclasses.
+        ///         Sidenotes:
+        ///         - I also tried overriding `==` directly, but it didn't work for some reason.
+        ///         - I accidentally overrode isEqual(to:) instead of isEqual() causing great confusion (it breaks the `==` operator in Swift.)
+            
+        /// Helper function
+        ///     (ridiculous Swift hacks bc Swift stinky)
+        func genericIsEqual<A: Equatable>(_ lhs: A, _ rhs: Any) -> Bool {
+            return lhs == (rhs as? A)
+        }
         
-        let object = object as! LicenseConfig
+        /// Trivial cases
+        guard let other = object as? LicenseConfig else { assert(false); return false }
+        if self === other { return true } /// Check pointer-equality
         
-        let result = self.maxActivations == object.maxActivations
-                        && self.trialDays == object.trialDays
-                        && self.price == object.price
-                        && self.payLink == object.payLink
-                        && self.quickPayLink == object.quickPayLink
-                        && self.altPayLink == object.altPayLink
-                        && self.altQuickPayLink == object.altQuickPayLink
-                        && self.altPayLinkCountries == object.altPayLinkCountries
-                        && self.freeCountries == object.freeCountries
-                    
+        /// Get values to compare
+        let selfList = self.propertyValuesForEqualityComparison()
+        let otherList = other.propertyValuesForEqualityComparison()
+        
+        /// Check equality
+        if selfList.count != otherList.count { assert(false); return false }
+        for (v1, v2) in zip(selfList, otherList) {
+            if !genericIsEqual(v1, v2) { return false }
+        }
+        
+        /// Passed all tests!
+        return true
+    }
+    
+    override var hash: Int {
+        var result: Int = 0
+        for v in self.propertyValuesForEqualityComparison() {
+            result ^= v.hashValue
+        }
         return result
     }
     

@@ -35,7 +35,7 @@ class TrialSectionManager {
     
     /// Start and stop
     
-    func startManaging(licenseConfig: LicenseConfig, license: MFLicenseAndTrialState) {
+    func startManaging(licenseConfig: LicenseConfig, licenseState: MFLicenseState, trialState: MFTrialState) {
         
         /// Make initialSection current
         showInitial(animate: false)
@@ -43,8 +43,7 @@ class TrialSectionManager {
         /// Style intialSection
         
         /// Setup image
-
-        let imageName = license.trialIsActive ? "calendar" : "calendar"/*"hourglass.tophalf.filled"*/
+        let imageName = trialState.trialIsActive ? "calendar" : "calendar" /*"hourglass.tophalf.filled"*/
         
         if #available(macOS 11.0, *) {
             currentSection.imageView!.symbolConfiguration = .init(pointSize: 13, weight: .regular, scale: .large)
@@ -52,7 +51,7 @@ class TrialSectionManager {
         currentSection.imageView!.image = Symbols.image(withSymbolName: imageName)
         
         /// Set string
-        currentSection.textField!.attributedStringValue = LicenseUtility.trialCounterString(licenseConfig: licenseConfig, license: license)
+        currentSection.textField!.attributedStringValue = LicenseUtility.trialCounterString(licenseConfig: licenseConfig, licenseState: licenseState, trialState: trialState)
         
         /// Set height
         ///     This wasn't necessary under Ventura but under Monterey the textField is too high otherwise
