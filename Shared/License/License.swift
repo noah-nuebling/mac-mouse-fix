@@ -248,7 +248,7 @@ import Cocoa
                 case unsure  ///  The server didn't say whether the license is valid or not.
             }
             
-            let parsedServerResponse: (isValidKey: LicenseValidityFromServer, nOfActivations: Int?, serverResponseDict: [String: Any]?, error: NSError?, urlResponse: URLResponse?)
+            var parsedServerResponse: (isValidKey: LicenseValidityFromServer, nOfActivations: Int?, serverResponseDict: [String: Any]?, error: NSError?, urlResponse: URLResponse?)
             
             askServer: do {
                 
@@ -362,6 +362,15 @@ import Cocoa
             
             } /// End of askServer
             
+            /// Server 'post-processing': Validate activation count
+            if parsedServerResponse.isValidKey == .valid {
+                var isSuspiciousActivationCount = (parsedServerResponse.nOfActivations ?? Int.max) > licenseConfig.maxActivations
+                if isSuspiciousActivationCount {
+                    parsedServerResponse.error = NSError(domain: MFLicenseErrorDomain, code: Int(kMFLicenseErrorCodeInvalidNumberOfActivations), userInfo: ["nOfActivations": parsedServerResponse.nOfActivations ?? -1, "maxActivations": licenseConfig.maxActivations])
+                    parsedServerResponse.isValidKey = .invalid
+                }
+            }
+            
             ///
             /// Parse serverResult
             ///
@@ -369,22 +378,6 @@ import Cocoa
             if parsedServerResponse.isValidKey == .valid {
                 
                 /// Server says the license is valid
-                
-                /// Validate activation count
-                
-                var validActivationCount = false
-                if let a = parsedServerResponse.nOfActivations, a <= licenseConfig.maxActivations {
-                    validActivationCount = true
-                }
-                
-                if !validActivationCount {
-                    
-                    let error = NSError(domain: MFLicenseErrorDomain, code: Int(kMFLicenseErrorCodeInvalidNumberOfActivations), userInfo: ["nOfActivations": parsedServerResponse.nOfActivations ?? -1, "maxActivations": licenseConfig.maxActivations])
-                    
-                    stepOneResult = (false, kMFValueFreshnessFresh, error)
-                    break stepOne
-                }
-                
                 
                 /// Is licensed!
                 
