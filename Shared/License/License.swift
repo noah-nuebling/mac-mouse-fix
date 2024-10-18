@@ -216,160 +216,11 @@ import Cocoa
                 
                 key = keyStorage
             }
-            ///
-            /// Step 1.1: Ask the license server to verify the license
-            ///
             
-            /// Notes:
-            ///     - (Oct 8 2023) serverResponseDict and urlResponse don't seem to be used. We could remove them from the `parsedServerResponse` result tuple I think.
             ///
-            /// Test Licenses:
-            ///     (Please don't use these test licenses. If you need a free one, just reach out to me. Thank you.)
+            /// Ask licenseServer(s)
             ///
-            /// **Gumroad $**
-            /// E3309D7A-7270486C-BA426A87-813EB7B4
-            ///
-            /// **Gumroad € (old)**
-            /// 535BD2E5-8CF54E9A-8AD642E5-B5934AF8
-            ///
-            /// **Gumroad $ Disabled**
-            /// 0C720579-4ED54F18-ABE90A69-15DA6190
-            ///
-            /// **AWS**
-            /// ...
-            ///
-            /// **AWS Hyperwork**
-            /// ...
-
-            
-            enum LicenseValidityFromServer {
-                case valid   ///  The server said that the license is valid
-                case invalid ///  The server said that the license is invalid
-                case unsure  ///  The server didn't say whether the license is valid or not.
-            }
-            
-            var parsedServerResponse: (isValidKey: LicenseValidityFromServer, nOfActivations: Int?, serverResponseDict: [String: Any]?, error: NSError?, urlResponse: URLResponse?)
-            
-            askServer: do {
-                
-                /// Ask the Gumroad license verification server
-                
-                /// Constants
-                /// Notes:
-                /// - `mmfinapp` was used during the MMF 3 Beta. It was using € which you can't change, so we had to create a new product in Gumroad `mmfinappusd`
-                
-                let gumroadAPIURL = "https://api.gumroad.com/v2"
-                let productPermalinkOld = "mmfinapp"
-                let productPermalink = "mmfinappusd"
-                
-                /// Talk to Gumroad
-                var (serverResponseDict, communicationError, urlResponse) = await sendDictionaryBasedAPIRequest(requestURL: gumroadAPIURL.appending("/licenses/verify"),
-                                                                                       args: ["product_permalink": productPermalink,
-                                                                                              "license_key": key,
-                                                                                              "increment_uses_count": incrementUsageCount ? "true" : "false"])
-                
-                if
-                    let message = serverResponseDict?["message"] as? NSString,
-                    message == "That license does not exist for the provided product." {
-                   
-                    /// Validate
-                    assert((serverResponseDict?["success"] as? Bool) == false)
-                    assert((urlResponse as? HTTPURLResponse)?.statusCode == 404)
-                    
-                    /// If license doesn't exist for new product, try old product
-                    (serverResponseDict, communicationError, urlResponse) = await sendDictionaryBasedAPIRequest(requestURL: gumroadAPIURL.appending("/licenses/verify"),
-                                                                                       args: ["product_permalink": productPermalinkOld,
-                                                                                              "license_key": key,
-                                                                                              "increment_uses_count": incrementUsageCount ? "true" : "false"])
-                    /// Update flag (To later determine licenseType)
-//                    usedOldEuroProduct = true
-                    
-                }
-                
-                /// Guard:  Error
-                ///     with the server communication
-                if communicationError != nil {
-                    parsedServerResponse = (.unsure, nil, serverResponseDict, communicationError, urlResponse)
-                    break askServer
-                }
-                
-                /// Unwrap serverResponseDict
-                guard let serverResponseDict = serverResponseDict else {
-                    fatalError("The serverResponseDict was nil even though the error was also nil. There's something wrong in our code.")
-                }
-                
-                /// Map server responses to error
-                ///     The communication with the server was successful but the servers response indicates that something went wrong.
-                var responseError: NSError? = nil
-                if (serverResponseDict["success"] as? Bool) != true { /// We expect the Gumroad response to have a boolean field called "success" which tells us whether the license was successfully validated or something went wrong.
-                    responseError = NSError(domain: MFLicenseErrorDomain,
-                                    code: Int(kMFLicenseErrorCodeGumroadServerResponseError),
-                                    userInfo: serverResponseDict)
-                }
-                
-                ///
-                /// Parse data
-                ///
-//
-                /// vvv We plan to add the licenseType and metadata fields later
-                
-//                /// Determine licenseType
-//                let licenseType = usedOldEuroProduct ? kMFLicenseTypeGumroadV0 : kMFLicenseTypeGumroadV1
-//                
-//                /// Gather metadata
-//                let metadata: MFLicenseMetadata
-//                if (licenseType == kMFLicenseTypeGumroadV0) {
-//                    metadata = MFLicenseMetadataGumroadV0()
-//                    /// ... Fill in metadata fields here if we add that eventually
-//                } else if (licenseType == kMFLicenseTypeGumroadV1) {
-//                    metadata = MFLicenseMetadataGumroadV1()
-//                } else {
-//                    fatalError("This cannot happen")
-//                }
-                
-                /// Determine if _server_ said whether the _key_ is valid
-                ///     Explanation: The Gumroad license-verification API just gives us a boolean 'success' field. As I understand, `success: true` always means that the license is *definitively* valid.
-                ///         However, `success: false` could mean different things. For example, as I understand `success` could be `false` in case we send them wrong parameters (the documentation suggests this) or in case there's an internal server error on Gumroads part (this is my speculation).
-                ///         That's why, we check for status code `404` - it seems to be how the server tells us that the license in question is *definitively* invalid. I tested this, (In Oct 2024) and it returns status 404 in case of an unknown license *and* in case of a disabled license. And from what I can think of, those are all the possible ways that a license can be *definitely* invalid.
-                ///             Sidenotes:
-                ///             - The 404 code doesn't really semantically make sense to signify a disabled license - it normally stands for 'Not Found') - but that's how the Gumroad API seems to work.
-                ///             - Actually, even the 404 code mighttt lead to false positives. To be even more granular, we could check for the specific messages that we know the servers sends when a license is unknown or disabled:
-                ///                 - For *unknown* licenses the server sends the message: "That license does not exist for the provided product."
-                ///                 - For *disabled* licensed, the server sends the message: "This license key has been disabled."
-                ///                 ... But I won't change that now cause I'm too lazy to think this through and I think 404 will also work.
-                ///             Update: The Gumroad docs also say "You will receive a 404 response code with an error message if verification fails." - so checking 404 seems to be the way (Src: https://help.gumroad.com/article/76-license-keys.html)
-                ///     Considerations:
-                ///         Generally, we want to err on the side of `LicenseValidityFromServer.unsure`, and only use `LicenseValidityFromServer.invalid` when we're *absolutely* sure that the license is invalid.
-                ///         That's because if we set the value to`.invalid` we consider the app *definitively*unlicensed and then lock it down immediately (in case the free days have been used up), which makes for a really annoying user experience if there's a false positive on `.invalid` due to an internal server error or something.
-                ///         If instead, we have a false positive on `.unsure` then we just fall back to the cached value for whether the app is licensed or not, which should make for a much less disruptive user experience.
-                ///         Actually, as I'm working on this, (Oct 9 2024) I got a [GitHub Issue](https://github.com/noah-nuebling/mac-mouse-fix/issues/1136) from a user saying they regularly have their app locked down and they have to re-enter their license. (I think I also saw reports like this before.) Hopefully that stuff will be fixed now!
-                
-                let serverSuccess: Bool? = serverResponseDict["success"] as? Bool
-                var isValidKey: LicenseValidityFromServer
-                if      (serverSuccess == true)     { isValidKey = .valid }
-                else if (serverSuccess == nil)      { isValidKey = .unsure }
-                else if (serverSuccess == false) {
-                    if (urlResponse as? HTTPURLResponse)?.statusCode == 404 { isValidKey = .invalid }
-                    else                                                    { isValidKey = .unsure }
-                } else                              { fatalError("This cannot happen") }
-                
-                /// Gather nOfActivations from serverResponseDict
-                let activations = serverResponseDict["uses"] as? Int
-                
-                /// Return parsed values
-                parsedServerResponse = (isValidKey, activations, serverResponseDict, responseError, urlResponse)
-                break askServer
-            
-            } /// End of askServer
-            
-            /// Server 'post-processing': Validate activation count
-            if parsedServerResponse.isValidKey == .valid {
-                var isSuspiciousActivationCount = (parsedServerResponse.nOfActivations ?? Int.max) > licenseConfig.maxActivations
-                if isSuspiciousActivationCount {
-                    parsedServerResponse.error = NSError(domain: MFLicenseErrorDomain, code: Int(kMFLicenseErrorCodeInvalidNumberOfActivations), userInfo: ["nOfActivations": parsedServerResponse.nOfActivations ?? -1, "maxActivations": licenseConfig.maxActivations])
-                    parsedServerResponse.isValidKey = .invalid
-                }
-            }
+            let parsedServerResponse = await askLicenseServers(key: key, incrementUsageCount: incrementUsageCount, licenseConfig: licenseConfig)
             
             ///
             /// Parse serverResult
@@ -510,7 +361,7 @@ import Cocoa
         let stepTwoResult = MFLicenseState(isLicensed: isLicensed, freshness: freshness, licenseReason: licenseReason)
         return (stepTwoResult, error)
     }
-    
+
     // MARK: Cache interface
     
     /// We're caching all fields of the MFLicenseState (since that comes from the server which might not always be available) - except for the licenseFreshness which denotes the origin of the data.
@@ -538,18 +389,181 @@ import Cocoa
             commitConfig()
         }
     }
+    
+    // MARK: License server interface
+
+    private enum LicenseValidityFromServer {
+        case valid   ///  The server said that the license is valid
+        case invalid ///  The server said that the license is invalid
+        case unsure  ///  The server didn't say whether the license is valid or not.
+    }
+
+    private static func askLicenseServers(key: String, incrementUsageCount: Bool, licenseConfig: LicenseConfig) async -> (isValidKey: LicenseValidityFromServer, nOfActivations: Int?, serverResponseDict: [String: Any]?, error: NSError?, urlResponse: URLResponse?) {
+        ///
+        /// Step 1.1: Ask the license server(s) to verify the license
+        ///
+        
+        /// Notes:
+        ///     - (Oct 8 2023) serverResponseDict and urlResponse don't seem to be used. We could remove them from the `parsedServerResponse` result tuple I think.
+        ///
+        /// Test Licenses:
+        ///     (Please don't use these test licenses. If you need a free one, just reach out to me. Thank you.)
+        ///
+        /// **Gumroad $**
+        /// E3309D7A-7270486C-BA426A87-813EB7B4
+        ///
+        /// **Gumroad € (old)**
+        /// 535BD2E5-8CF54E9A-8AD642E5-B5934AF8
+        ///
+        /// **Gumroad $ Disabled**
+        /// 0C720579-4ED54F18-ABE90A69-15DA6190
+        ///
+        /// **AWS**
+        /// ...
+        ///
+        /// **AWS Hyperwork**
+        /// ...
+        
+        var parsedServerResponse: (isValidKey: LicenseValidityFromServer, nOfActivations: Int?, serverResponseDict: [String: Any]?, error: NSError?, urlResponse: URLResponse?)
+        
+        askServer: do {
+            
+            /// Ask the Gumroad license verification server
+            
+            /// Constants
+            /// Notes:
+            /// - `mmfinapp` was used during the MMF 3 Beta. It was using € which you can't change, so we had to create a new product in Gumroad `mmfinappusd`
+            
+            let gumroadAPIURL = "https://api.gumroad.com/v2"
+            let productPermalinkOld = "mmfinapp"
+            let productPermalink = "mmfinappusd"
+            
+            /// Talk to Gumroad
+            var (serverResponseDict, communicationError, urlResponse) = await sendDictionaryBasedAPIRequest(requestURL: gumroadAPIURL.appending("/licenses/verify"),
+                                                                                   args: ["product_permalink": productPermalink,
+                                                                                          "license_key": key,
+                                                                                          "increment_uses_count": incrementUsageCount ? "true" : "false"])
+            
+            if
+                let message = serverResponseDict?["message"] as? NSString,
+                message == "That license does not exist for the provided product." {
+               
+                /// Validate
+                assert((serverResponseDict?["success"] as? Bool) == false)
+                assert((urlResponse as? HTTPURLResponse)?.statusCode == 404)
+                
+                /// If license doesn't exist for new product, try old product
+                (serverResponseDict, communicationError, urlResponse) = await sendDictionaryBasedAPIRequest(requestURL: gumroadAPIURL.appending("/licenses/verify"),
+                                                                                   args: ["product_permalink": productPermalinkOld,
+                                                                                          "license_key": key,
+                                                                                          "increment_uses_count": incrementUsageCount ? "true" : "false"])
+                /// Update flag (To later determine licenseType)
+    //                    usedOldEuroProduct = true
+                
+            }
+            
+            /// Guard:  Error
+            ///     with the server communication
+            if communicationError != nil {
+                parsedServerResponse = (.unsure, nil, serverResponseDict, communicationError, urlResponse)
+                break askServer
+            }
+            
+            /// Unwrap serverResponseDict
+            guard let serverResponseDict = serverResponseDict else {
+                fatalError("The serverResponseDict was nil even though the error was also nil. There's something wrong in our code.")
+            }
+            
+            /// Map server responses to error
+            ///     The communication with the server was successful but the servers response indicates that something went wrong.
+            var responseError: NSError? = nil
+            if (serverResponseDict["success"] as? Bool) != true { /// We expect the Gumroad response to have a boolean field called "success" which tells us whether the license was successfully validated or something went wrong.
+                responseError = NSError(domain: MFLicenseErrorDomain,
+                                code: Int(kMFLicenseErrorCodeGumroadServerResponseError),
+                                userInfo: serverResponseDict)
+            }
+            
+            ///
+            /// Parse data
+            ///
+    //
+            /// vvv We plan to add the licenseType and metadata fields later
+            
+    //                /// Determine licenseType
+    //                let licenseType = usedOldEuroProduct ? kMFLicenseTypeGumroadV0 : kMFLicenseTypeGumroadV1
+    //
+    //                /// Gather metadata
+    //                let metadata: MFLicenseMetadata
+    //                if (licenseType == kMFLicenseTypeGumroadV0) {
+    //                    metadata = MFLicenseMetadataGumroadV0()
+    //                    /// ... Fill in metadata fields here if we add that eventually
+    //                } else if (licenseType == kMFLicenseTypeGumroadV1) {
+    //                    metadata = MFLicenseMetadataGumroadV1()
+    //                } else {
+    //                    fatalError("This cannot happen")
+    //                }
+            
+            /// Determine if _server_ said whether the _key_ is valid
+            ///     Explanation: The Gumroad license-verification API just gives us a boolean 'success' field. As I understand, `success: true` always means that the license is *definitively* valid.
+            ///         However, `success: false` could mean different things. For example, as I understand `success` could be `false` in case we send them wrong parameters (the documentation suggests this) or in case there's an internal server error on Gumroads part (this is my speculation).
+            ///         That's why, we check for status code `404` - it seems to be how the server tells us that the license in question is *definitively* invalid. I tested this, (In Oct 2024) and it returns status 404 in case of an unknown license *and* in case of a disabled license. And from what I can think of, those are all the possible ways that a license can be *definitely* invalid.
+            ///             Sidenotes:
+            ///             - The 404 code doesn't really semantically make sense to signify a disabled license - it normally stands for 'Not Found') - but that's how the Gumroad API seems to work.
+            ///             - Actually, even the 404 code mighttt lead to false positives. To be even more granular, we could check for the specific messages that we know the servers sends when a license is unknown or disabled:
+            ///                 - For *unknown* licenses the server sends the message: "That license does not exist for the provided product."
+            ///                 - For *disabled* licensed, the server sends the message: "This license key has been disabled."
+            ///                 ... But I won't change that now cause I'm too lazy to think this through and I think 404 will also work.
+            ///             Update: The Gumroad docs also say "You will receive a 404 response code with an error message if verification fails." - so checking 404 seems to be the way (Src: https://help.gumroad.com/article/76-license-keys.html)
+            ///     Considerations:
+            ///         Generally, we want to err on the side of `LicenseValidityFromServer.unsure`, and only use `LicenseValidityFromServer.invalid` when we're *absolutely* sure that the license is invalid.
+            ///         That's because if we set the value to`.invalid` we consider the app *definitively*unlicensed and then lock it down immediately (in case the free days have been used up), which makes for a really annoying user experience if there's a false positive on `.invalid` due to an internal server error or something.
+            ///         If instead, we have a false positive on `.unsure` then we just fall back to the cached value for whether the app is licensed or not, which should make for a much less disruptive user experience.
+            ///         Actually, as I'm working on this, (Oct 9 2024) I got a [GitHub Issue](https://github.com/noah-nuebling/mac-mouse-fix/issues/1136) from a user saying they regularly have their app locked down and they have to re-enter their license. (I think I also saw reports like this before.) Hopefully that stuff will be fixed now!
+            
+            let serverSuccess: Bool? = serverResponseDict["success"] as? Bool
+            var isValidKey: LicenseValidityFromServer
+            if      (serverSuccess == true)     { isValidKey = .valid }
+            else if (serverSuccess == nil)      { isValidKey = .unsure }
+            else if (serverSuccess == false) {
+                if (urlResponse as? HTTPURLResponse)?.statusCode == 404 { isValidKey = .invalid }
+                else                                                    { isValidKey = .unsure }
+            } else                              { fatalError("This cannot happen") }
+            
+            /// Gather nOfActivations from serverResponseDict
+            let activations = serverResponseDict["uses"] as? Int
+            
+            /// Return parsed values
+            parsedServerResponse = (isValidKey, activations, serverResponseDict, responseError, urlResponse)
+            break askServer
+        
+        } /// End of askServer
+        
+        /// Server 'post-processing': Validate activation count
+        if parsedServerResponse.isValidKey == .valid {
+            var isSuspiciousActivationCount = (parsedServerResponse.nOfActivations ?? Int.max) > licenseConfig.maxActivations
+            if isSuspiciousActivationCount {
+                parsedServerResponse.error = NSError(domain: MFLicenseErrorDomain, code: Int(kMFLicenseErrorCodeInvalidNumberOfActivations), userInfo: ["nOfActivations": parsedServerResponse.nOfActivations ?? -1, "maxActivations": licenseConfig.maxActivations])
+                parsedServerResponse.isValidKey = .invalid
+            }
+        }
+        
+        /// Return
+        return parsedServerResponse
+    }
+
+    func gumroad_decrementUsageCount(key: String, accessToken: String, completionHandler: @escaping (_ serverResponseDict: [String: Any]?, _ error: NSError?, _ urlResponse: URLResponse?) -> ()) {
+        
+        /// Meant to free a use of the license when the user deactivates it
+        /// We won't do this because we'd need to implement oauth and it's not that imporant
+        ///    (If we wanted to do this, the API is `/licenses/decrement_uses_count`)
+        
+        fatalError()
+    }
 }
 
-// MARK: Api wrapper
-
-func gumroad_decrementUsageCount(key: String, accessToken: String, completionHandler: @escaping (_ serverResponseDict: [String: Any]?, _ error: NSError?, _ urlResponse: URLResponse?) -> ()) {
-    
-    /// Meant to free a use of the license when the user deactivates it
-    /// We won't do this because we'd need to implement oauth and it's not that imporant
-    ///    (If we wanted to do this, the API is `/licenses/decrement_uses_count`)
-    
-    fatalError()
-}
+///
+/// Helper
+///
 
 func sendDictionaryBasedAPIRequest(requestURL: String, args: [String: Any]) async -> (serverResponseDict: [String: Any]?, communicationError: NSError?, urlResponse: URLResponse?) {
     
