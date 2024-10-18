@@ -181,19 +181,24 @@ import Cocoa
     
     // MARK: Lvl 0
     
-    /// `_checkLicense` is a core function that has as many arguments and returns as much information about the license state as possible.
-    
     private static func _checkLicense(key keyArg: String?, licenseConfig: LicenseConfig, incrementUsageCount: Bool) async -> (licenseState: MFLicenseState, error: NSError?) {
         
+        /// This function determines the current licenseState of the application.
+        ///     To do this, it checks the licenseServer, cache, fallback values, and special conditions
+        
+        /// Discussion:
+        /// - On thread safety: (Oct 2024) This function accesses the following shared state: `SecureStorage` values and cached values (which are stored in `config.plist`).
+        ///     > As long as `Config` and `SecureStorage` accesses are thread safe, I thinkk this function should be thread-safe, too? (Not entirely sure.)
+        ///     > Otherwise we might want to ensure that License.swift is always accessed from the same thread/queue, (probably main thread would be fine )or if that's not possible - use locks.
+        
+        var result: MFLicenseState?
+        var resultError: NSError?
+        
         ///
-        /// Step One
+        /// Check if the license key is valid
         ///
         
-        /// StepOne gets ground-truth values about the license
-        
-        let stepOneResult: (isLicensed: Bool, freshness: MFValueFreshness, error: NSError?)
-        
-        stepOne: do {
+        checkLicenseKeyValidity: do {
             
             /// Get key
             ///     From arg or from secure storage if `keyArg` == nil
@@ -203,163 +208,96 @@ import Cocoa
             if let keyArg = keyArg {
                 key = keyArg
             } else {
-                guard let keyStorage = SecureStorage.get("License.key") as! String? else {
+                guard let keyStorage = SecureStorage.get("License.key") as? String else {
                     
                     /// No key provided in function arg and no key found in secure storage
                     
                     /// Return unlicensed
-                    let error = NSError(domain: MFLicenseErrorDomain, code: Int(kMFLicenseErrorCodeKeyNotFound))
-                    stepOneResult = (false, kMFValueFreshnessFresh, error)
-                    break stepOne
+                    ///     If there's no key provided
+                    ///     Note: Perhaps we should also do this if the licenseKey is an emptyString?
+                    result = MFLicenseState(isLicensed: false, freshness: kMFValueFreshnessFresh, licenseReason: kMFLicenseReasonNone)
+                    resultError = NSError(domain: MFLicenseErrorDomain, code: Int(kMFLicenseErrorCodeKeyNotFound))
+                    break checkLicenseKeyValidity
                     
                 }
                 
                 key = keyStorage
             }
             
-            ///
             /// Ask licenseServer(s)
-            ///
-            let parsedServerResponse = await askLicenseServers(key: key, incrementUsageCount: incrementUsageCount, licenseConfig: licenseConfig)
+            (result, resultError) = await askLicenseServers(key: key, incrementUsageCount: incrementUsageCount, licenseConfig: licenseConfig)
             
-            ///
-            /// Parse serverResult
-            ///
-            
-            if parsedServerResponse.isValidKey == .valid {
-                
-                /// Server says the license is valid
-                
-                /// Is licensed!
-                
-                stepOneResult = (true, kMFValueFreshnessFresh, nil)
-                break stepOne
-                
-            } else if parsedServerResponse.isValidKey == .unsure {
-                
-                /// The server did not say whether the key is valid or not
-                ///     -> fall back to cache
+            /// Fall back
+            ///     In case the server did not say whether the key is valid or not
+            if result == nil {
                 
                 if let isLicensedCache = config("License.isLicensedCache") as? Bool { /// Note: We need to get this from the config directly, because our dedicated caching function uses a fallback value automatically which we wanna avoid. We should unify this.
                     
-                    /// Fall back to cache
-                    stepOneResult = (isLicensedCache, kMFValueFreshnessCached, parsedServerResponse.error) /// Pass through the error from previous step
-                    break stepOne
+                    /// Fall back to *cache*
+                    ///     Note that we're not overriding the `resultError` here, so the error from the server will be retained.
+                    result = MFLicenseState(isLicensed: self.isLicensedCache,
+                                            freshness: kMFValueFreshnessCached,
+                                            licenseReason: self.licenseReasonCache)
+                    break checkLicenseKeyValidity
                     
                 } else {
                     
-                    /// There's no cache
-                    let error = NSError(domain: MFLicenseErrorDomain,
-                                        code: Int(kMFLicenseErrorCodeNoInternetAndNoCache))
-                    
-                    stepOneResult = (false, kMFValueFreshnessFallback, error)
-                    break stepOne
+                    /// Fallback to hardcoded fallback values
+                    resultError = NSError(domain: MFLicenseErrorDomain,
+                                          code: Int(kMFLicenseErrorCodeNoInternetAndNoCache)) /// Not sure this error is useful, especially since it overrides the serverError, which might prevent useful feedback from being displayed to the user. Alsooo, `kMFValueFreshnessFallback` already carries the same information as this error doesn't it?
+                    result = MFLicenseState(isLicensed: false,
+                                            freshness: kMFValueFreshnessFallback,
+                                            licenseReason: kMFLicenseReasonNone)
+                    break checkLicenseKeyValidity
                 }
-                
-            } else if parsedServerResponse.isValidKey == .invalid {
-                
-                /// The server *definitively* said that the key is invalid
-                
-                stepOneResult = (false, kMFValueFreshnessFresh, parsedServerResponse.error) /// Pass through the error from previous step
-                break stepOne
-                
-            } else {
-                fatalError("LicenseValidity value is not part of enum (This can never happen)")
             }
-        } /// end of stepOne
+            
+            
+        } /// end of checkLicenseKeyValidity
         
-        ///
-        /// Step Two
-        ///
-        
-        /// stepTwo does some "post-processing" of the values from stepOne
-        ///     -> It overrides the "ground-truth" values in case there are special conditions and creates a 'licenseReason' value based on different factors.
-        ///     Update: ... but stepOne also does similar 'postProcessing' already. I don't really know what the difference is. Maybe we should try to unify the two steps?
-        
-        /// Validate stepOne results
-        
-        assert(stepOneResult.freshness != kMFValueFreshnessNone)
-        if stepOneResult.freshness == kMFValueFreshnessFresh && stepOneResult.isLicensed {
-            assert(stepOneResult.error == nil)
+        /// Unwrap the result
+        guard var result = result else {
+            fatalError("Something in our code is wrong. MFLicenseState is nil even though we should've assigned a hardcoded fallback value at the very least.")
         }
         
-        /// Create mutable copies of stepOneResults
-        ///     -> so we can override them
+        /// Validate checkLicenseKeyValidity result
+        assert(result.freshness != kMFValueFreshnessNone)
+        assert(result.licenseReason != kMFLicenseReasonUnknown)
+        if result.isLicensed &&
+           (result.freshness == kMFValueFreshnessFresh) { assert(resultError == nil) }
         
-        var isLicensed = stepOneResult.isLicensed
-        var freshness = stepOneResult.freshness
-        let error = stepOneResult.error
-        
-        var licenseReason = kMFLicenseReasonUnknown
-        
-        if isLicensed {
+        /// Implement other `MFLicenseReason`s
+        ///     Aside from `ValidLicense`
+        ///     Note: Instead of using a licenseReason, we could also pass that info through the error. That might be better since we'd have one less argument and the the errors can also contain dicts with custom info. Maybe you could think about the error as it's used currently as the "unlicensed reason"
+        if result.isLicensed == false {
             
-            /// Get rest of the values from cache if isLicensed isn't fresh
-            ///     The way we load the cache 'in two steps' is really weird and bad I think.
-            
-            if freshness == kMFValueFreshnessFresh {
-                licenseReason = kMFLicenseReasonValidLicense
-            } else if freshness == kMFValueFreshnessCached {
-                licenseReason = self.licenseReasonCache
-            } else if (freshness == kMFValueFreshnessFallback) {
-                assert(false);
-            } else {
-                assert(false); /// Don't think this could ever happen, not totally sure though
-            }
-            
-        } else { /// Unlicensed
-            
-            /// Init license reason
-            
-            licenseReason = kMFLicenseReasonNone
-            
-            /// Override isLicensed
-            
-            /// Notes:
-            /// - Instead of using licenseReason, we could also pass that info through the error. That might be better since we'd have one less argument and the the errors can also contain dicts with custom info. Maybe you could think about the error as it's used currently as the "unlicensed reason"
-            
-            overrideWorkload: do {
+            overrideLicenseState: do {
 
-                /// Implement `FORCE_LICENSED` flag
+                /// Implement `kMFLicenseReasonForce`
                 ///     See License.swift comments for more info
-                
 #if FORCE_LICENSED
-                isLicensed = true
-                freshness = kMFValueFreshnessFresh
-                licenseReason = kMFLicenseReasonForce
-                break overrideWorkload
+                result = MFLicenseState(isLicensed: true, freshness: kMFValueFreshnessFresh, licenseReason: kMFLicenseReasonForce)
+                break overrideLicenseState
 #endif
-                /// Implement freeCountries
+                /// Implement `kMFLicenseReasonFreeCountry`
                 var isFreeCountry = false
-                
-                if let code = LicenseUtility.currentRegionCode() {
+                if let code = LicenseUtility.currentRegionCode() { /// ChatGPT said currentRegionCode() might not be thread safe? I don't think we should worry about that, but not entirelyyy sure.
                     isFreeCountry = licenseConfig.freeCountries.contains(code)
                 }
-                
                 if isFreeCountry {
-                        
-                    isLicensed = true
-                    freshness = kMFValueFreshnessFresh
-                    licenseReason = kMFLicenseReasonFreeCountry
-                    
-                    break overrideWorkload
+                    result = MFLicenseState(isLicensed: true, freshness: kMFValueFreshnessFresh, licenseReason: kMFLicenseReasonFreeCountry)
+                    break overrideLicenseState
                 }
             }
         }
         
-        ///
         /// Cache stuff
-        ///
-        
-        /// Note: Why are we caching *after* the license-value-overrides of stepTwo: If the user is in a freeCountry, we wouldn't want the app to only be licensed as long as they're online. That's why the isLicensedCache should be set after the overrides.
-        self.isLicensedCache = isLicensed
-        self.licenseReasonCache = licenseReason
+        ///     Note: Why are we caching *after* the license-value-overrides of stepTwo: If the user is in a freeCountry, we wouldn't want the app to only be licensed as long as they're online. That's why the isLicensedCache should be set after the overrides.
+        self.isLicensedCache = result.isLicensed
+        self.licenseReasonCache = result.licenseReason
 
-        ///
         /// Return result
-        ///
-        let stepTwoResult = MFLicenseState(isLicensed: isLicensed, freshness: freshness, licenseReason: licenseReason)
-        return (stepTwoResult, error)
+        return (result, resultError)
     }
 
     // MARK: Cache interface
@@ -392,19 +330,9 @@ import Cocoa
     
     // MARK: License server interface
 
-    private enum LicenseValidityFromServer {
-        case valid   ///  The server said that the license is valid
-        case invalid ///  The server said that the license is invalid
-        case unsure  ///  The server didn't say whether the license is valid or not.
-    }
-
-    private static func askLicenseServers(key: String, incrementUsageCount: Bool, licenseConfig: LicenseConfig) async -> (isValidKey: LicenseValidityFromServer, nOfActivations: Int?, serverResponseDict: [String: Any]?, error: NSError?, urlResponse: URLResponse?) {
-        ///
-        /// Step 1.1: Ask the license server(s) to verify the license
-        ///
-        
-        /// Notes:
-        ///     - (Oct 8 2023) serverResponseDict and urlResponse don't seem to be used. We could remove them from the `parsedServerResponse` result tuple I think.
+    private static func askLicenseServers(key: String, incrementUsageCount: Bool, licenseConfig: LicenseConfig) async -> (licenseState: MFLicenseState?, error: NSError?) {
+    
+        /// This function tries to retrieve the MFLicenseState from the known licenseServers.
         ///
         /// Test Licenses:
         ///     (Please don't use these test licenses. If you need a free one, just reach out to me. Thank you.)
@@ -424,7 +352,13 @@ import Cocoa
         /// **AWS Hyperwork**
         /// ...
         
-        var parsedServerResponse: (isValidKey: LicenseValidityFromServer, nOfActivations: Int?, serverResponseDict: [String: Any]?, error: NSError?, urlResponse: URLResponse?)
+        enum LicenseValidityFromServer {
+            case valid   ///  The server said that the license is valid
+            case invalid ///  The server said that the license is invalid
+            case unsure  ///  The server didn't say whether the license is valid or not.
+        }
+        
+        var parsedServerResponse: (isValidKey: LicenseValidityFromServer, nOfActivations: Int?, error: NSError?)
         
         askServer: do {
             
@@ -465,7 +399,7 @@ import Cocoa
             /// Guard:  Error
             ///     with the server communication
             if communicationError != nil {
-                parsedServerResponse = (.unsure, nil, serverResponseDict, communicationError, urlResponse)
+                parsedServerResponse = (.unsure, nil, communicationError)
                 break askServer
             }
             
@@ -533,12 +467,12 @@ import Cocoa
             let activations = serverResponseDict["uses"] as? Int
             
             /// Return parsed values
-            parsedServerResponse = (isValidKey, activations, serverResponseDict, responseError, urlResponse)
+            parsedServerResponse = (isValidKey, activations, responseError)
             break askServer
         
         } /// End of askServer
         
-        /// Server 'post-processing': Validate activation count
+        /// 'Post-processing' on the parsedServerResponse: Validate activation count
         if parsedServerResponse.isValidKey == .valid {
             var isSuspiciousActivationCount = (parsedServerResponse.nOfActivations ?? Int.max) > licenseConfig.maxActivations
             if isSuspiciousActivationCount {
@@ -547,8 +481,20 @@ import Cocoa
             }
         }
         
+        /// Assemble result
+        let resultError = parsedServerResponse.error
+        let result: MFLicenseState?
+        switch parsedServerResponse.isValidKey {
+        case .unsure:
+            result = nil
+        case .invalid:
+            result = MFLicenseState(isLicensed: false, freshness: kMFValueFreshnessFresh, licenseReason: kMFLicenseReasonNone)
+        case .valid:
+            result = MFLicenseState(isLicensed: true, freshness: kMFValueFreshnessFresh, licenseReason: kMFLicenseReasonValidLicense)
+        }
+        
         /// Return
-        return parsedServerResponse
+        return (result, resultError)
     }
 
     func gumroad_decrementUsageCount(key: String, accessToken: String, completionHandler: @escaping (_ serverResponseDict: [String: Any]?, _ error: NSError?, _ urlResponse: URLResponse?) -> ()) {

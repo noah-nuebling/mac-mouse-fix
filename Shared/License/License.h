@@ -18,7 +18,7 @@
 /// Define enums
 
 typedef enum {
-    kMFValueFreshnessNone,
+    kMFValueFreshnessNone,      /// TODO: Rename to `Unknown` for consistency with `MFLicenseReason`
     kMFValueFreshnessFresh,     /// Value comes straight from the source-of-truth                (likely a server on the internet)
     kMFValueFreshnessCached,    /// Value comes from a cache                                             (likely because the source of truth is not accessible)
     kMFValueFreshnessFallback,  /// Value comes from a list of fallback values                      (likely because neither the server nor the cache are accessible)
@@ -26,7 +26,7 @@ typedef enum {
 
 typedef enum {
     kMFLicenseReasonUnknown,
-    kMFLicenseReasonNone,           /// Unlicensed
+    kMFLicenseReasonNone,           /// Unlicensed (TODO: Rename to `NotLicensed` for better clarity (I often confuse `None` with `Unknown`))
     kMFLicenseReasonValidLicense,   /// Normally licensed
     kMFLicenseReasonForce,          /// Licensed due to `FORCE_LICENSED` compilation flag
     kMFLicenseReasonFreeCountry,    /// Licensed since it's used in country like China or Russia where you can't pay for the app
@@ -113,7 +113,7 @@ MFDataClassInterface4(MFDataClassBase, MFTrialState,     (assign, readonly), NSI
 #define kMFLicenseErrorCodeGumroadServerResponseError 3         /// The Gumroad server has responded with `success: false`
 #define kMFLicenseErrorCodeServerResponseInvalid 4              /// The server response does not follow the expected format.
 #define kMFLicenseErrorCodeKeyNotFound 5
-#define kMFLicenseErrorCodeNoInternetAndNoCache 6
+#define kMFLicenseErrorCodeNoInternetAndNoCache 6               /// Oct 2024: Should rename this to noServerAndNoCache - since there are other reasons that we might not get a clear response from the server about whether a license is valid or not
 
 //#define kMFLicenseErrorCodeLicensedDueToForceFlag 6
 //#define kMFLicenseErrorCodeLicensedDueToFreeCountry 7
