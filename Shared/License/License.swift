@@ -105,11 +105,13 @@ import Cocoa
         /// In contrast to the sister function, this function is guaranteed to return immediately since it doesn't load stuff from the internet.
         /// We want this in some places where we need some info immediately to display UI to the user.
         
-        /// Get licenseState from cache
-        ///     Note: Here, we we don't throw errors and just silently go to to the fallback if there's no cache, but in the normal (async) `checkLicenseAndTrial()` we do return an error. Does this make sense?
-        let licenseState = MFLicenseState(isLicensed: self.isLicensedCache,
-                                          freshness: kMFValueFreshnessCached,
-                                          licenseReason: self.licenseReasonCache)
+        /// Get licenseState from cache / fallback
+        ///     Note:
+        ///         - Here, we we don't throw errors and just silently go to to the fallback if there's no cache, but in the normal (async) `checkLicenseAndTrial()` we do return an error. Does this make sense?
+        ///           Update: Yes I think it makes sense: We only use errors to be able to display feedback to the user. This function is meant to get the licenseAndTrialState quickly to render a UI - when we don't have time to wait for a serverResponse. Not a scenario where we'd wanna display errors to the user.
+        ///                     Another way to think about it: We only want to inform the user when something goes wrong at the 'source of truth' for the licenseState which is the server. Not if there's some internal issue making the cache invalid.
+        let licenseState = self.licenseStateCache ?? self.licenseStateFallback
+        
         /// Get trial info
         let trialState = checkTrial(licenseConfig)
         
@@ -201,57 +203,36 @@ import Cocoa
         checkLicenseKeyValidity: do {
             
             /// Get key
-            ///     From arg or from secure storage if `keyArg` == nil
+            ///     From arg or from secure storage
             
-            var key: String
-            
-            if let keyArg = keyArg {
-                key = keyArg
-            } else {
-                guard let keyStorage = SecureStorage.get("License.key") as? String else {
+            guard let key = keyArg ?? (SecureStorage.get("License.key") as? String) else {
                     
-                    /// No key provided in function arg and no key found in secure storage
-                    
-                    /// Return unlicensed
-                    ///     If there's no key provided
-                    ///     Note: Perhaps we should also do this if the licenseKey is an emptyString?
-                    result = MFLicenseState(isLicensed: false, freshness: kMFValueFreshnessFresh, licenseReason: kMFLicenseReasonNone)
-                    resultError = NSError(domain: MFLicenseErrorDomain, code: Int(kMFLicenseErrorCodeKeyNotFound))
-                    break checkLicenseKeyValidity
-                    
-                }
+                /// No key provided in function arg and no key found in secure storage
                 
-                key = keyStorage
+                /// Return unlicensed
+                ///     Notes:
+                ///     - Perhaps we should also do this if the licenseKey is an emptyString?
+                ///     - Does it really make sense to return an error here? We don't display any errors to the user based on this, since on the licenseSheet, the user is always going to enter a licenseKey before getting feedback about licensing issues I think, so maybe we should treat this as an 'internal error' and not return an NSError.
+                result = MFLicenseState(isLicensed: false, freshness: kMFValueFreshnessFresh, licenseReason: kMFLicenseReasonNone)
+                resultError = NSError(domain: MFLicenseErrorDomain, code: Int(kMFLicenseErrorCodeKeyNotFound))
+                break checkLicenseKeyValidity
             }
             
             /// Ask licenseServer(s)
             (result, resultError) = await askLicenseServers(key: key, incrementUsageCount: incrementUsageCount, licenseConfig: licenseConfig)
             
-            /// Fall back
+            /// Fall back to cache
             ///     In case the server did not say whether the key is valid or not
             if result == nil {
-                
-                if let isLicensedCache = config("License.isLicensedCache") as? Bool { /// Note: We need to get this from the config directly, because our dedicated caching function uses a fallback value automatically which we wanna avoid. We should unify this.
-                    
-                    /// Fall back to *cache*
-                    ///     Note that we're not overriding the `resultError` here, so the error from the server will be retained.
-                    result = MFLicenseState(isLicensed: self.isLicensedCache,
-                                            freshness: kMFValueFreshnessCached,
-                                            licenseReason: self.licenseReasonCache)
-                    break checkLicenseKeyValidity
-                    
-                } else {
-                    
-                    /// Fallback to hardcoded fallback values
-                    resultError = NSError(domain: MFLicenseErrorDomain,
-                                          code: Int(kMFLicenseErrorCodeNoInternetAndNoCache)) /// Not sure this error is useful, especially since it overrides the serverError, which might prevent useful feedback from being displayed to the user. Alsooo, `kMFValueFreshnessFallback` already carries the same information as this error doesn't it?
-                    result = MFLicenseState(isLicensed: false,
-                                            freshness: kMFValueFreshnessFallback,
-                                            licenseReason: kMFLicenseReasonNone)
-                    break checkLicenseKeyValidity
-                }
+                result = self.licenseStateCache
             }
             
+            /// Fall back to hardcoded
+            if result == nil {
+                resultError = NSError(domain: MFLicenseErrorDomain,
+                                      code: Int(kMFLicenseErrorCodeNoInternetAndNoCache)) /// Not sure this error is useful, especially since it overrides the serverError, which might prevent useful feedback from being displayed to the user. Alsooo, `kMFValueFreshnessFallback` already carries the same information as this error doesn't it? Update: The problem of overriding the serverError doesn't occur in practise because the app always checks the server and fills the cache on startup - before the user opens the licenseSheet where they might see license-related error messages. (As of Oct 19 - I think once we introduce offline validation this might not be true anymore.)
+                result = self.licenseStateFallback
+            }
             
         } /// end of checkLicenseKeyValidity
         
@@ -291,40 +272,58 @@ import Cocoa
             }
         }
         
-        /// Cache stuff
-        ///     Note: Why are we caching *after* the license-value-overrides of stepTwo: If the user is in a freeCountry, we wouldn't want the app to only be licensed as long as they're online. That's why the isLicensedCache should be set after the overrides.
-        self.isLicensedCache = result.isLicensed
-        self.licenseReasonCache = result.licenseReason
+        /// Cache result
+        ///     Note:
+        ///     - Doesn't really make sense that we cache *after* the license-value-overrides - The cache exists to substitute server values when the licenseServer isn't accessible.
+        ///     - Also, if isLicensed is false, the MFLicenseState doesn't really hold any interesting info, so perhaps we could just delete the cache in that case, instead of caching all the uninteresting values?
+        self.licenseStateCache = result
 
         /// Return result
         return (result, resultError)
     }
-
+    
+    // MARK: Fallback interface
+    
+    private static let licenseStateFallback: MFLicenseState = MFLicenseState(isLicensed: false,
+                                                                             freshness: kMFValueFreshnessFallback,
+                                                                             licenseReason: kMFLicenseReasonNone)
+    
     // MARK: Cache interface
     
-    /// We're caching all fields of the MFLicenseState (since that comes from the server which might not always be available) - except for the licenseFreshness which denotes the origin of the data.
-    
-    private static var licenseReasonCache: MFLicenseReason {
-        get {
-            if let licenseReasonRaw = config("License.licenseReasonCache") as? UInt32 {
-                return MFLicenseReason(licenseReasonRaw)
-            } else {
-                return kMFLicenseReasonUnknown
+    private static var licenseStateCache: MFLicenseState? {
+        
+        set {
+            /// Note:
+            ///     We're caching all the fields of the `MFLicenseState` (since that all depends on the licenseServer's evaluation, which might not always be available, requiring us to fall back to cached values)
+            ///         It's unnecessary to cache the `MFLicenseState.freshness` value since that indicates the orgin of the data - server, cache, or fallback - and isn't really "part of the data" itself.
+            ///         However, removing the value before caching requires extra lines of code, and doesn't have practical benefit, so we don't bother.
+            
+            guard let newValue = newValue else {
+                assert(false, "Setting the cache to nil is undefined behavior");
+                return
             }
-        }
-        set {
-            let licenseReasonRaw = newValue.rawValue
-            setConfig("License.licenseReasonCache", licenseReasonRaw as NSObject)
+            
+            let cacheDict = newValue.asDictionary()
+            setConfig("License.licenseStateCache", cacheDict as NSObject)
             commitConfig()
         }
-    }
-    private static var isLicensedCache: Bool {
         get {
-            return config("License.isLicensedCache") as? Bool ?? false
-        }
-        set {
-            setConfig("License.isLicensedCache", newValue as NSObject)
-            commitConfig()
+            
+            guard let cacheDict = config("License.licenseStateCache") as? NSDictionary else {
+                return nil
+            }
+            
+            guard let isLicensed        = cacheDict["isLicensed"] as? Bool,  /// Make sure to keep these dict keys like "isLicensed" exactly in sync with the property names of MFLicenseState for this to work
+                  let licenseReason     = cacheDict["licenseReason"] as? MFLicenseReason
+            else {
+                return nil
+            }
+            
+            let result = MFLicenseState(isLicensed: isLicensed,
+                                        freshness: kMFValueFreshnessCached, /// Note that we use all values from cache except for freshness
+                                        licenseReason: licenseReason)
+
+            return result
         }
     }
     
@@ -333,18 +332,22 @@ import Cocoa
     private static func askLicenseServers(key: String, incrementUsageCount: Bool, licenseConfig: LicenseConfig) async -> (licenseState: MFLicenseState?, error: NSError?) {
     
         /// This function tries to retrieve the MFLicenseState from the known licenseServers.
+        ///     If we don't receive clear information from any of the licenseServers about whether the license is valid or not, we return `nil`
         ///
         /// Test Licenses:
         ///     (Please don't use these test licenses. If you need a free one, just reach out to me. Thank you.)
         ///
         /// **Gumroad $**
-        /// E3309D7A-7270486C-BA426A87-813EB7B4
+        /// `E3309D7A-7270486C-BA426A87-813EB7B4`
         ///
         /// **Gumroad € (old)**
-        /// 535BD2E5-8CF54E9A-8AD642E5-B5934AF8
+        /// ``
         ///
         /// **Gumroad $ Disabled**
-        /// 0C720579-4ED54F18-ABE90A69-15DA6190
+        /// `0C720579-4ED54F18-ABE90A69-15DA6190`
+        ///
+        /// **Gumroad € (old) with suspicious activation count**
+        /// `535BD2E5-8CF54E9A-8AD642E5-B5934AF8`
         ///
         /// **AWS**
         /// ...
@@ -474,7 +477,7 @@ import Cocoa
         
         /// 'Post-processing' on the parsedServerResponse: Validate activation count
         if parsedServerResponse.isValidKey == .valid {
-            var isSuspiciousActivationCount = (parsedServerResponse.nOfActivations ?? Int.max) > licenseConfig.maxActivations
+            let isSuspiciousActivationCount = (parsedServerResponse.nOfActivations ?? Int.max) > licenseConfig.maxActivations
             if isSuspiciousActivationCount {
                 parsedServerResponse.error = NSError(domain: MFLicenseErrorDomain, code: Int(kMFLicenseErrorCodeInvalidNumberOfActivations), userInfo: ["nOfActivations": parsedServerResponse.nOfActivations ?? -1, "maxActivations": licenseConfig.maxActivations])
                 parsedServerResponse.isValidKey = .invalid

@@ -16,43 +16,43 @@
 #import "MFDataClass.h"
 
 /// Define enums
+///     Note: Using simple consts instead of actual C enums because Swift is annoying about those.
+///             How is it annoying? For example, you cannot simply cast integers to enums in Swift using `as?` - that always fails. Instead you have to use `init(rawValue:)` to create a special 'enum case struct instance' or something.
+///             However, those initializers *never* fail even if you pass in values outside the enum range. So this serves no discernable purpose except being confusing.
+///             What's extra confusing: If you declare the enums using `NS_ENUM`, or `NS_CLOSED_ENUM` in C, then`init(rawValue:)` in Swift will have have an optional return type (indicating that it's failable) but it will never actually fail. Which is extraaa confusing. (Tested this Oct 2024)
+///             -> Because of these drawbacks, we just define a set of constants, instead of an actual enum. That way the behavior in Swift should be simple and consistent and match C.
 
-typedef enum {
-    kMFValueFreshnessNone,      /// TODO: Rename to `Unknown` for consistency with `MFLicenseReason`
-    kMFValueFreshnessFresh,     /// Value comes straight from the source-of-truth                (likely a server on the internet)
-    kMFValueFreshnessCached,    /// Value comes from a cache                                             (likely because the source of truth is not accessible)
-    kMFValueFreshnessFallback,  /// Value comes from a list of fallback values                      (likely because neither the server nor the cache are accessible)
-} MFValueFreshness;
+typedef NSInteger MFValueFreshness;
+    static const MFValueFreshness kMFValueFreshnessNone     = 0;  /// TODO: Rename to `Unknown` for consistency with `MFLicenseReason`
+    static const MFValueFreshness kMFValueFreshnessFresh    = 1;  /// Value comes straight from the source-of-truth                (likely a server on the internet)
+    static const MFValueFreshness kMFValueFreshnessCached   = 2;  /// Value comes from a cache                                             (likely because the source of truth is not accessible)
+    static const MFValueFreshness kMFValueFreshnessFallback = 3;  /// Value comes from a list of fallback values                      (likely because neither the server nor the cache are accessible)
 
-typedef enum {
-    kMFLicenseReasonUnknown,
-    kMFLicenseReasonNone,           /// Unlicensed (TODO: Rename to `NotLicensed` for better clarity (I often confuse `None` with `Unknown`))
-    kMFLicenseReasonValidLicense,   /// Normally licensed
-    kMFLicenseReasonForce,          /// Licensed due to `FORCE_LICENSED` compilation flag
-    kMFLicenseReasonFreeCountry,    /// Licensed since it's used in country like China or Russia where you can't pay for the app
-} MFLicenseReason;
+typedef NSInteger MFLicenseReason;
+    static const MFLicenseReason kMFLicenseReasonUnknown        = 0;
+    static const MFLicenseReason kMFLicenseReasonNone           = 1;   /// Unlicensed (TODO: Rename to `NotLicensed` for better clarity (I often confuse `None` with `Unknown`))
+    static const MFLicenseReason kMFLicenseReasonValidLicense   = 2;   /// Normally licensed
+    static const MFLicenseReason kMFLicenseReasonForce          = 3;   /// Licensed due to `FORCE_LICENSED` compilation flag
+    static const MFLicenseReason kMFLicenseReasonFreeCountry    = 4;   /// Licensed since it's used in country like China or Russia where you can't pay for the app
 
-typedef enum {
-    
-    kMFLicenseTypeUnknown,
-    
+typedef NSInteger MFLicenseType;
+    static const MFLicenseType kMFLicenseTypeUnknown = 0;
+
     /// Standard licenses
-    kMFLicenseTypeGumroadV0,            /// Old Euro-based licenses that were sold on Gumroad during the MMF 3 Beta.
-    kMFLicenseTypeGumroadV1,            /// Standard USD-based Gumroad licenses that were sold on Gumroad after MMF 3 Beta 6 (IIRC).
-//    kMFLicenseTypePaddleV1,           /// Standard MMF 3 licenses that we plan to sell on Paddle, verified through our AWS API. (This is the plan as of Oct 2024)
+    static const MFLicenseType kMFLicenseTypeGumroadV0 = 1;              /// Old Euro-based licenses that were sold on Gumroad during the MMF 3 Beta.
+    static const MFLicenseType kMFLicenseTypeGumroadV1 = 2;              /// Standard USD-based Gumroad licenses that were sold on Gumroad after MMF 3 Beta 6 (IIRC).
+    //const MFLicenseType kMFLicenseTypePaddleV1 = 3;               /// Standard MMF 3 licenses that we plan to sell on Paddle, verified through our AWS API. (This is the plan as of Oct 2024)
 
     /// Special licenses
-    kMFLicenseTypeHyperWorkV1,                /// Licenses issued by HyperWork mouse company and verified through our AWS API.
-//    kMFLicenseTypeBusinessV1,               /// Perhaps we could introduce a license type for businesses. You could buy multiple/multiseat licenses, and perhaps it would be more expensive / subscription based?. (Sidenote: This licenseType includes `V1`, but not sure that makes sense. The only practical application for 'versioning' the licenseTypes like that I can think of is for paid upgrades, but that doesn't make sense for a subscription-based license I think, but I guess versioning doesn't hurt)
+    static const MFLicenseType kMFLicenseTypeHyperWorkV1 = 4;            /// Licenses issued by HyperWork mouse company and verified through our AWS API.
+    //const MFLicenseType kMFLicenseTypeBusinessV1 = 5;             /// Perhaps we could introduce a license type for businesses. You could buy multiple/multiseat licenses, and perhaps it would be more expensive / subscription based?. (Sidenote: This licenseType includes `V1`, but not sure that makes sense. The only practical application for 'versioning' the licenseTypes like that I can think of is for paid upgrades, but that doesn't make sense for a subscription-based license I think, but I guess versioning doesn't hurt)
 
     /// V2 licenses:
     ///     Explanation:
     ///     If we ever want to introduce a paid update we could add new V2 licenses
     ///     and then make the old V1 licenses incompatible with the newest version of Mac Mouse Fix.
-//    kMFLicenseTypeGumroadV2,
-//    kMFLicenseTypePaddleV2,
-
-} MFLicenseType;
+    //const MFLicenseType kMFLicenseTypeGumroadV2 = 6;
+    //const MFLicenseType kMFLicenseTypePaddleV2 = 7;
 
 ///
 /// Define metadata classes
@@ -100,27 +100,23 @@ MFDataClassInterface4(MFDataClassBase, MFTrialState,     (assign, readonly), NSI
 
 /// Define custom errors
 ///     Notes:
-///     - Using simple #define instead of enums because Swift is annoying about those
 ///     - Most of these are thrown in Gumroad.swift, but `kMFLicenseErrorCodeNoInternetAndNoCache` and `kMFLicenseErrorCodeEmailAndKeyNotFound` are thrown in Licensing.swift.
 ///     - Overall these should cover everything that can go wrong. With the `kMFLicenseErrorCodeGumroadServerResponseError` catching all the weird edge cases like a refunded license.
 ///     - The `kMFLicenseErrorCodeGumroadServerResponseError` also catches the case when a user just enters a wrong license.
 ///     - These could be used to inform the user about what's wrong.
 
-#define MFLicenseErrorDomain @"MFLicenseErrorDomain"
+static const NSErrorDomain _Nonnull MFLicenseErrorDomain = @"MFLicenseErrorDomain";
+typedef NSInteger MFLicenseErrorCode;
+    //const MFLicenseErrorCode kMFLicenseErrorCodeMismatchedEmails               = 1;       /// Not using emails for authentication anymore. Just licenseKeys
+    static const MFLicenseErrorCode kMFLicenseErrorCodeInvalidNumberOfActivations   = 2;
+    static const MFLicenseErrorCode kMFLicenseErrorCodeGumroadServerResponseError   = 3;    /// The Gumroad server has responded with `success: false`
+    static const MFLicenseErrorCode kMFLicenseErrorCodeServerResponseInvalid        = 4;    /// The server response does not follow the expected format.
+    static const MFLicenseErrorCode kMFLicenseErrorCodeKeyNotFound                  = 5;
+    static const MFLicenseErrorCode kMFLicenseErrorCodeNoInternetAndNoCache         = 6;    /// Oct 2024: Should rename this to noServerAndNoCache - since there are other reasons that we might not get a clear response from the server about whether a license is valid or not
 
-//#define kMFLicenseErrorCodeMismatchedEmails 1 /// Not using emails for authentication anymore. Just licenseKeys
-#define kMFLicenseErrorCodeInvalidNumberOfActivations 2
-#define kMFLicenseErrorCodeGumroadServerResponseError 3         /// The Gumroad server has responded with `success: false`
-#define kMFLicenseErrorCodeServerResponseInvalid 4              /// The server response does not follow the expected format.
-#define kMFLicenseErrorCodeKeyNotFound 5
-#define kMFLicenseErrorCodeNoInternetAndNoCache 6               /// Oct 2024: Should rename this to noServerAndNoCache - since there are other reasons that we might not get a clear response from the server about whether a license is valid or not
-
-//#define kMFLicenseErrorCodeLicensedDueToForceFlag 6
-//#define kMFLicenseErrorCodeLicensedDueToFreeCountry 7
-
-#define MFLicenseConfigErrorDomain @"MFLicenseConfigErrorDomain"
-#define kMFLicenseConfigErrorCodeInvalidDict 1
-
+static const NSErrorDomain _Nonnull MFLicenseConfigErrorDomain = @"MFLicenseConfigErrorDomain";
+typedef NSInteger MFLicenseConfigErrorCode;
+    static const MFLicenseConfigErrorCode kMFLicenseConfigErrorCodeInvalidDict = 1;
 
 #endif /* License_h */
 

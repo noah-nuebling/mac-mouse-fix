@@ -186,7 +186,7 @@ import CocoaLumberjackSwift
                     message = NSLocalizedString("license-toast.no-internet", comment: "First draft: **There is no connection to the internet**\n\nTry activating your license again when your computer is online.")
                 } else if error.domain == MFLicenseErrorDomain {
                     
-                    switch Int32(error.code) {
+                    switch error.code as MFLicenseErrorCode {
                         
                     case kMFLicenseErrorCodeInvalidNumberOfActivations:
                         
