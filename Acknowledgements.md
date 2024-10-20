@@ -42,6 +42,7 @@ These people spent a lot more than the standard price and treated me to an **Inc
 
 **October 2024**
 
+- 🇸🇬&nbsp;Wesley&nbsp;Lemuel&nbsp;Pribadi
 - 🇺🇸&nbsp;Quinn&nbsp;E&nbsp;Mood
 - 🇺🇸&nbsp;John&nbsp;Desmarteau - "Great app - thanks for making this."
 - 🇧🇷&nbsp;Vinicius&nbsp;Ventura

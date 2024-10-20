@@ -40,6 +40,7 @@ Diese Leute haben viel mehr als den Standardpreis ausgegeben und mir einen **ung
 
 **Oktober 2024**
 
+- 🇸🇬&nbsp;Wesley&nbsp;Lemuel&nbsp;Pribadi
 - 🇺🇸&nbsp;Quinn&nbsp;E&nbsp;Mood
 - 🇺🇸&nbsp;John&nbsp;Desmarteau - "Great app - thanks for making this."
 - 🇧🇷&nbsp;Vinicius&nbsp;Ventura
