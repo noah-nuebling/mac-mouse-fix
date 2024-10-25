@@ -40,6 +40,7 @@ Diese Leute haben viel mehr als den Standardpreis ausgegeben und mir einen **ung
 
 **Oktober 2024**
 
+- 🇩🇪&nbsp;Frank&nbsp;Steinborn
 - 🇺🇸&nbsp;∞&nbsp;42&nbsp;∞ - "I am my brother's keeper."
 - 🇸🇷&nbsp;Jairaj&nbsp;Budhu
 - 🇸🇬&nbsp;Wesley&nbsp;Lemuel&nbsp;Pribadi
