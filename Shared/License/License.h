@@ -23,80 +23,75 @@
 ///             -> Because of these drawbacks, we just define a set of constants, instead of an actual enum. That way the behavior in Swift should be simple and consistent and match C.
 
 typedef NSInteger MFValueFreshness;
-    static const MFValueFreshness kMFValueFreshnessNone     = 0;  /// TODO: Rename to `Unknown` for consistency with `MFLicenseReason`
-    static const MFValueFreshness kMFValueFreshnessFresh    = 1;  /// Value comes straight from the source-of-truth                (likely a server on the internet)
-    static const MFValueFreshness kMFValueFreshnessCached   = 2;  /// Value comes from a cache                                             (likely because the source of truth is not accessible)
-    static const MFValueFreshness kMFValueFreshnessFallback = 3;  /// Value comes from a list of fallback values                      (likely because neither the server nor the cache are accessible)
+    static const MFValueFreshness kMFValueFreshnessNone     = 0;  // TODO: Rename to `Unknown` for consistency with other enums (?)
+    static const MFValueFreshness kMFValueFreshnessFresh    = 1;  // Value comes straight from the source-of-truth                (likely a server on the internet)
+    static const MFValueFreshness kMFValueFreshnessCached   = 2;  // Value comes from a cache                                     (likely because the source of truth is not accessible)
+    static const MFValueFreshness kMFValueFreshnessFallback = 3;  // Value comes from a list of fallback values                   (likely because neither the server nor the cache are accessible)
+                                                                  
+///
+/// Define licenseTypeInfo classes
+///     There are different types of licenses.
+///         Each of the `MFLicenseTypeInfo` subclasses identifies a license type.
+///         Additionaly, the `MFLicenseTypeInfo` instance properties may hold *additional metadata* relevant for the license type.
+///
+///     This 'metadata' could be useful to adjust the app's behaviour. For example:
+///         - Showing a special thank-you message or other easter eggs for people who bought the 'generous' or 'very generous' tiers of a standard license.
+///         - Showing the name of the HyperWork mouse that came with the currently active MMF license
+///         - For a subscription-based business license:
+///             - Saving the expiration date of the subscription, so that we can check-in with the licenseServer upon license expiration (And before expiration, we would do offline validation)
+///             - Saving the business name, so we can show "Licensed to business: Amazon" or something like that on the About tab.
+///
+///     Sidenote on *Metadata Particles*:
+///         There might be repeated metadata fields between the different `MFLicenseTypeInfo` classes.
+///         We were thinking of introducing an extra level of abstraction, where we group the metadataFields into collections called 'MetadataParticles'
+///         which can be reused between licenseTypes. E.g. There'd be a `MFLicenseTypeInfoParticleSeats` particle which is present in the metadata for every licenseType that has multiple seats. It might contain the fields `usedUpSeats` and `nOfSeats` or something like that.
+///         However, I decided that this extra abstraction layer is kinda unnecessary and overcomplicates things. Instead, we can just use keyValueCoding to access the repeated metadata fields across the different metadata classes in a uniform way.
+///         For example we might use `[license.metadata valueForKey:@"nOfSeats"]` to get the `nOfSeats` regardless of which exact `MFLicenseTypeInfo` class is being used.
+///
 
-typedef NSInteger MFLicenseReason;
-    static const MFLicenseReason kMFLicenseReasonUnknown        = 0;
-    static const MFLicenseReason kMFLicenseReasonNone           = 1;   /// Unlicensed (TODO: Rename to `NotLicensed` for better clarity (I often confuse `None` with `Unknown`))
-    static const MFLicenseReason kMFLicenseReasonValidLicense   = 2;   /// Normally licensed
-    static const MFLicenseReason kMFLicenseReasonForce          = 3;   /// Licensed due to `FORCE_LICENSED` compilation flag
-    static const MFLicenseReason kMFLicenseReasonFreeCountry    = 4;   /// Licensed since it's used in country like China or Russia where you can't pay for the app
+/// licenseTypeInfo dataclasses
 
-typedef NSInteger MFLicenseType;
-    static const MFLicenseType kMFLicenseTypeUnknown = 0;
-
+MFDataClassInterface0(MFDataClassBase, MFLicenseTypeInfo)
+    
+    MFDataClassInterface0(MFLicenseTypeInfo, MFLicenseTypeInfoNotLicensed)
+    
+    /// Special conditions
+    MFDataClassInterface1(MFLicenseTypeInfo, MFLicenseTypeInfoFreeCountry,               /// Licensed since it's used in country like China or Russia where you can't pay for the app
+                          readonly, strong, nonnull, NSString *, regionCode)
+    MFDataClassInterface0(MFLicenseTypeInfo, MFLicenseTypeInfoForce)                     /// Licensed due to `FORCE_LICENSED` compilation flag
+    
     /// Standard licenses
-    static const MFLicenseType kMFLicenseTypeGumroadV0 = 1;              /// Old Euro-based licenses that were sold on Gumroad during the MMF 3 Beta.
-    static const MFLicenseType kMFLicenseTypeGumroadV1 = 2;              /// Standard USD-based Gumroad licenses that were sold on Gumroad after MMF 3 Beta 6 (IIRC).
-    //const MFLicenseType kMFLicenseTypePaddleV1 = 3;               /// Standard MMF 3 licenses that we plan to sell on Paddle, verified through our AWS API. (This is the plan as of Oct 2024)
-
+    MFDataClassInterface0(MFLicenseTypeInfo, MFLicenseTypeInfoGumroadV0)                /// Old Euro-based licenses that were sold on Gumroad during the MMF 3 Beta.
+    MFDataClassInterface0(MFLicenseTypeInfo, MFLicenseTypeInfoGumroadV1)                /// Standard USD-based Gumroad licenses that were sold on Gumroad after MMF 3 Beta 6 (IIRC).
+    MFDataClassInterface0(MFLicenseTypeInfo, MFLicenseTypeInfoPaddleV1)                 /// Standard MMF 3 licenses that we plan to sell on Paddle, verified through our AWS API. (This is the plan as of Oct 2024)
+    
     /// Special licenses
-    static const MFLicenseType kMFLicenseTypeHyperWorkV1 = 4;            /// Licenses issued by HyperWork mouse company and verified through our AWS API.
-    //const MFLicenseType kMFLicenseTypeBusinessV1 = 5;             /// Perhaps we could introduce a license type for businesses. You could buy multiple/multiseat licenses, and perhaps it would be more expensive / subscription based?. (Sidenote: This licenseType includes `V1`, but not sure that makes sense. The only practical application for 'versioning' the licenseTypes like that I can think of is for paid upgrades, but that doesn't make sense for a subscription-based license I think, but I guess versioning doesn't hurt)
+    MFDataClassInterface1(MFLicenseTypeInfo, MFLicenseTypeInfoHyperWorkV1,              /// Licenses issued by HyperWork mouse company and verified through our AWS API.
+                          readonly, strong, nonnull, NSString *, deviceSerialNumber)
+    MFDataClassInterface0(MFLicenseTypeInfo, MFLicenseTypeInfoGumroadBusinessV1)        /// Perhaps we could introduce a license type for businesses. You could buy multiple/multiseat licenses, and perhaps it would be more expensive / subscription based?. (Sidenote: This licenseType includes `V1`, but not sure that makes sense. The only practical application for 'versioning' the licenseTypes like that I can think of is for paid upgrades, but that doesn't make sense for a subscription-based license I think, but I guess versioning doesn't hurt)
 
     /// V2 licenses:
     ///     Explanation:
     ///     If we ever want to introduce a paid update we could add new V2 licenses
     ///     and then make the old V1 licenses incompatible with the newest version of Mac Mouse Fix.
-    //const MFLicenseType kMFLicenseTypeGumroadV2 = 6;
-    //const MFLicenseType kMFLicenseTypePaddleV2 = 7;
+    MFDataClassInterface0(MFLicenseTypeInfo, MFLicenseTypeInfoGumroadV2)
+    MFDataClassInterface0(MFLicenseTypeInfo, MFLicenseTypeInfoPaddleV2)
 
-///
-/// Define metadata classes
-///
+    /// Constant attributes
+    ///     ... for each licenseType. More info in the implementation.
+    BOOL MFLicenseTypeIsPersonallyPurchased(MFLicenseTypeInfo *_Nonnull info);
+    BOOL MFLicenseTypeRequiresValidLicenseKey(MFLicenseTypeInfo *_Nonnull info);
 
-///     There's exactly one `MFLicenseMetadata` class per 'licenseType' - it holds the relevant metadata for licenses of type `licenseType`.
-///
-///     This 'metadata' could be useful to adjust the app's behaviour. For example:
-///         - Showing a special thank-you message or other easter eggs for people who bought the 'generous' or 'very generous' tiers of a standard license.
-///         - Showing the name of the HyperWork mouse that came with the currently active MMF license
-///         - Saving the expiration date of a subscription-based business license, so that we can check-in with the licenseServer upon license expiration (And before expiration, we would do offline validation)
-///
-///     Sidenote on *Metadata Particles*:
-///         There might be repeated metadata fields between the different licenseTypes.
-///         We were thinking of introducing an extra level of abstraction, where we group the metadataFields into collections called 'MetadataParticles'
-///         which can be reused between licenseTypes. E.g. There'd be a `MFLicenseMetadataParticleSeats` particle which is present in the metadata for every licenseType that has multiple seats. It might contain the fields `usedUpSeats` and `nOfSeats` or something like that.
-///         However, I decided that this extra abstraction layer is kinda unnecessary and overcomplicates things. Instead, we can just use keyValueCoding to access the repeated metadata fields across the different metadata classes in a uniform way.
-///         For example we might use `[license.metadata valueForKey:@"nOfSeats"]` to get the `nOfSeats` regardless of which exact metadata class is being used.
-///
+/// Top-level dataclasses
 
-MFDataClassInterface0(MFDataClassBase, MFLicenseMetadata)
+MFDataClassInterface3(MFDataClassBase, MFLicenseState,   readonly, assign,        , BOOL,                          isLicensed,
+                                                         readonly, assign,        , MFValueFreshness,              freshness,
+                                                         readonly, strong, nonnull, MFLicenseTypeInfo *,           licenseTypeInfo)
 
-/// Standard licenses
-MFDataClassInterface0(MFLicenseMetadata, MFLicenseMetadataGumroadV0)
-MFDataClassInterface0(MFLicenseMetadata, MFLicenseMetadataGumroadV1)
-
-/// Special licenses
-MFDataClassInterface0(MFLicenseMetadata, MFLicenseMetadataHyperWorkV1)
-//MFDataClass0(MFLicenseMetadata, MFLicenseMetadataBusinessV1) /// We thought about adding the number of seats, a `subscriptionIsPaidForUntil` field (which determines when we need to check in with the licenseServer again to check if the subscription is ongoing.), and a `licensedTo` field in case we want to display the business name on the About tab.
-
-///
-/// Define top-level dataclasses
-///
-
-MFDataClassInterface3(MFDataClassBase, MFLicenseState,   (assign, readonly), BOOL,               isLicensed,
-                                                         (assign, readonly), MFValueFreshness,   freshness,
-                                                         (assign, readonly), MFLicenseReason,    licenseReason)
-//                                                assign, MFLicenseType, licenseType,
-//                                                strong, MFLicenseMetadata * _Nonnull, metadata) /// Note: We wanna add the `licenseType` and `metadata` fields later.
-
-MFDataClassInterface4(MFDataClassBase, MFTrialState,     (assign, readonly), NSInteger,  daysOfUse,
-                                                         (assign, readonly), NSInteger,  daysOfUseUI,
-                                                         (assign, readonly), NSInteger,  trialDays,
-                                                         (assign, readonly), BOOL,       trialIsActive)
+MFDataClassInterface4(MFDataClassBase, MFTrialState,     readonly, assign,        , NSInteger,  daysOfUse,
+                                                         readonly, assign,        , NSInteger,  daysOfUseUI,
+                                                         readonly, assign,        , NSInteger,  trialDays,
+                                                         readonly, assign,        , BOOL,       trialIsActive)
 
 /// Define custom errors
 ///     Notes:

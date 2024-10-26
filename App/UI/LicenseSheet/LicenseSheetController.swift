@@ -99,7 +99,7 @@ import CocoaLumberjackSwift
                 let (state, error) = await License.activateLicense(key: key, licenseConfig: licenseConfig)
                 let isLicensed = state.isLicensed
                 let freshness = state.freshness
-                let licenseReason = state.licenseReason
+                let licenseTypeInfo = state.licenseTypeInfo
                     
                 /// By checking for valueFreshness we filter out the case where there's no internet but the cache still tells us it's licensed
                 ///     Note:
@@ -108,7 +108,7 @@ import CocoaLumberjackSwift
                 let success = isLicensed && (freshness == kMFValueFreshnessFresh)
                 
                 /// Store new licenseKey
-                if success && licenseReason == kMFLicenseReasonValidLicense {
+                if success && MFLicenseTypeRequiresValidLicenseKey(licenseTypeInfo) {
                     SecureStorage.set("License.key", value: key)
                 }
                 
@@ -116,7 +116,7 @@ import CocoaLumberjackSwift
                 DispatchQueue.main.async {
                     
                     /// Display user feedback
-                    self.displayUserFeedback(success: success, licenseReason: licenseReason, error: error, key: key, userChangedKey: isDifferent)
+                    self.displayUserFeedback(success: success, licenseTypeInfo: licenseTypeInfo, error: error, key: key, userChangedKey: isDifferent)
                     
                     /// Wrap up
                     onComplete()
@@ -127,7 +127,7 @@ import CocoaLumberjackSwift
                 let (state, error) = await License.checkLicense(key: key, licenseConfig: licenseConfig)
                 let isLicensed = state.isLicensed
                 let freshness = state.freshness
-                let licenseReason = state.licenseReason
+                let licenseTypeInfo = state.licenseTypeInfo
                     
                 /// Should we check for valueFreshness here?
                 let success = isLicensed
@@ -135,7 +135,7 @@ import CocoaLumberjackSwift
                 DispatchQueue.main.async {
                     
                     /// Display user feedback
-                    self.displayUserFeedback(success: success, licenseReason: licenseReason, error: error, key: key, userChangedKey: isDifferent)
+                    self.displayUserFeedback(success: success, licenseTypeInfo: licenseTypeInfo, error: error, key: key, userChangedKey: isDifferent)
                     
                     /// Wrap up
                     onComplete()
@@ -147,7 +147,7 @@ import CocoaLumberjackSwift
     
     /// Helper for activateLicense
     
-    fileprivate func displayUserFeedback(success: Bool, licenseReason: MFLicenseReason, error: NSError?, key: String, userChangedKey: Bool) {
+    fileprivate func displayUserFeedback(success: Bool, licenseTypeInfo: MFLicenseTypeInfo, error: NSError?, key: String, userChangedKey: Bool) {
         
         if success {
             
@@ -157,20 +157,25 @@ import CocoaLumberjackSwift
             /// Show message
             let message: String
             
-            if licenseReason == kMFLicenseReasonValidLicense {
-                
+            switch licenseTypeInfo {
+            case is MFLicenseTypeInfoFreeCountry:
+                message = NSLocalizedString("license-toast.free-country", comment: "First draft: This license __could not be activated__ but Mac Mouse Fix is currently __free in your country__!")
+            case is MFLicenseTypeInfoForce:
+                message = "FORCE_LICENSED flag is active"
+            default:
+            
+                /// Validate:
+                ///     license is one of the licenseTypes that requires entering a valid license key.
+                if !MFLicenseTypeRequiresValidLicenseKey(licenseTypeInfo) {
+                    DDLogError("Error: Will display default 'license has been activated' message but license has type that doesn't require valid license key (how can you 'activate' a license without a license key?) Type of the license: \(type(of: licenseTypeInfo))")
+                    assert(false)
+                }
+            
                 if userChangedKey {
                     message = NSLocalizedString("license-toast.activate", comment: "First draft: Your license has been **activated**! 🎉")
                 } else {
                     message = NSLocalizedString("license-toast.already-active", comment: "First draft: This license is **already activated**!")
                 }
-                
-            } else if licenseReason == kMFLicenseReasonFreeCountry {
-                message = NSLocalizedString("license-toast.free-country", comment: "First draft: This license __could not be activated__ but Mac Mouse Fix is currently __free in your country__!")
-            } else if licenseReason == kMFLicenseReasonForce {
-                message = "FORCE_LICENSED flag is active"
-            } else {
-                fatalError()
             }
 
             ToastNotificationController.attachNotification(withMessage: NSAttributedString(coolMarkdown: message)!, to: MainAppState.shared.window!, forDuration: kMFToastDurationAutomatic)

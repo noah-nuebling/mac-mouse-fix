@@ -24,6 +24,7 @@
 ///         There is a currentLicenseState var held by License.swift. It's a reactive signal provider, and all the UI that depends on it simply subscribes to it. We init the currentLicenseState to the cache. We update it on app start and when we know it changed due the trial expiring or the user activating their license or something. This should more efficient and much cleaner and should behave better in edge cases. But right now it's not worth implementing because it won't make much of a practical difference to the user.
 
 import Cocoa
+import CocoaLumberjackSwift
 
 // MARK: - Main class
 
@@ -213,7 +214,7 @@ import Cocoa
                 ///     Notes:
                 ///     - Perhaps we should also do this if the licenseKey is an emptyString?
                 ///     - Does it really make sense to return an error here? We don't display any errors to the user based on this, since on the licenseSheet, the user is always going to enter a licenseKey before getting feedback about licensing issues I think, so maybe we should treat this as an 'internal error' and not return an NSError.
-                result = MFLicenseState(isLicensed: false, freshness: kMFValueFreshnessFresh, licenseReason: kMFLicenseReasonNone)
+                result = MFLicenseState(isLicensed: false, freshness: kMFValueFreshnessFresh, licenseTypeInfo: MFLicenseTypeInfoNotLicensed())
                 resultError = NSError(domain: MFLicenseErrorDomain, code: Int(kMFLicenseErrorCodeKeyNotFound))
                 break checkLicenseKeyValidity
             }
@@ -243,7 +244,7 @@ import Cocoa
         
         /// Validate checkLicenseKeyValidity result
         assert(result.freshness != kMFValueFreshnessNone)
-        assert(result.licenseReason != kMFLicenseReasonUnknown)
+        if result.isLicensed { assert(!(result.licenseTypeInfo is MFLicenseTypeInfoNotLicensed)) }
         if result.isLicensed &&
            (result.freshness == kMFValueFreshnessFresh) { assert(resultError == nil) }
         
@@ -257,17 +258,16 @@ import Cocoa
                 /// Implement `kMFLicenseReasonForce`
                 ///     See License.swift comments for more info
 #if FORCE_LICENSED
-                result = MFLicenseState(isLicensed: true, freshness: kMFValueFreshnessFresh, licenseReason: kMFLicenseReasonForce)
+                result = MFLicenseState(isLicensed: true, freshness: kMFValueFreshnessFresh, licenseTypeInfo: MFLIcenseTypeInfoForce())
                 break overrideLicenseState
 #endif
                 /// Implement `kMFLicenseReasonFreeCountry`
-                var isFreeCountry = false
-                if let code = LicenseUtility.currentRegionCode() { /// ChatGPT said currentRegionCode() might not be thread safe? I don't think we should worry about that, but not entirelyyy sure.
-                    isFreeCountry = licenseConfig.freeCountries.contains(code)
-                }
-                if isFreeCountry {
-                    result = MFLicenseState(isLicensed: true, freshness: kMFValueFreshnessFresh, licenseReason: kMFLicenseReasonFreeCountry)
-                    break overrideLicenseState
+                if let regionCode = LicenseUtility.currentRegionCode() { /// ChatGPT said currentRegionCode() might not be thread safe? I don't think we should worry about that, but not entirelyyy sure.
+                    let isFreeCountry = licenseConfig.freeCountries.contains(regionCode)
+                    if isFreeCountry {
+                        result = MFLicenseState(isLicensed: true, freshness: kMFValueFreshnessFresh, licenseTypeInfo: MFLicenseTypeInfoFreeCountry(regionCode: regionCode))
+                        break overrideLicenseState
+                    }
                 }
             }
         }
@@ -275,6 +275,7 @@ import Cocoa
         /// Cache result
         ///     Note:
         ///     - Doesn't really make sense that we cache *after* the license-value-overrides - The cache exists to substitute server values when the licenseServer isn't accessible.
+        ///     - Also doesn't make sense to cache values we retrieved from the cache / from the fallback
         ///     - Also, if isLicensed is false, the MFLicenseState doesn't really hold any interesting info, so perhaps we could just delete the cache in that case, instead of caching all the uninteresting values?
         self.licenseStateCache = result
 
@@ -286,7 +287,7 @@ import Cocoa
     
     private static let licenseStateFallback: MFLicenseState = MFLicenseState(isLicensed: false,
                                                                              freshness: kMFValueFreshnessFallback,
-                                                                             licenseReason: kMFLicenseReasonNone)
+                                                                             licenseTypeInfo: MFLicenseTypeInfoNotLicensed())
     
     // MARK: Cache interface
     
@@ -298,31 +299,56 @@ import Cocoa
             ///         It's unnecessary to cache the `MFLicenseState.freshness` value since that indicates the orgin of the data - server, cache, or fallback - and isn't really "part of the data" itself.
             ///         However, removing the value before caching requires extra lines of code, and doesn't have practical benefit, so we don't bother.
             
+            /// Validate input
             guard let newValue = newValue else {
-                assert(false, "Setting the cache to nil is undefined behavior");
+                DDLogError("Setting the cache to nil is undefined behavior")
+                assert(false);
                 return
             }
             
-            let cacheDict = newValue.asDictionary()
-            setConfig("License.licenseStateCache", cacheDict as NSObject)
+            /// Archive object
+            ///     (Oct 2024) The archive is pure data.
+            ///         It would be more transparent / introspectable / debuggable if we created a dictionary
+            ///         -> ... and inserted that into the configDict so that way you could clearly see the structure of the archive even just reading config.plist (which the archive will be stored inside of.)
+            ///         -> It should be possible to extend MFDataClass to encode / decode itself from a nested dictionary with all the same security checks that our secure decoding currently has (nil validation and type validation)
+            ///             ... But I'm not sure how to handle nested structures of NSCoding objects ... we might need NSKeyedUnarchiver for that.
+            ///         -> Also, it's not that bad for the MFLicenseState cache to be obscure because we want it to be reasonably annoying to hack it so the app thinks it's licensed
+            let (cacheData, error) = MFCatch { try NSKeyedArchiver.archivedData(withRootObject: newValue, requiringSecureCoding: true) }
+            guard let cacheData = cacheData else {
+                DDLogError("Archiving MFLicenseState for caching failed with error: \(error.debugDescription). Don't think this should ever happen.")
+                assert(false)
+                return
+            }
+            
+            /// Store data
+            setConfig("License.licenseStateCache", cacheData as NSObject)
             commitConfig()
         }
         get {
             
-            guard let cacheDict = config("License.licenseStateCache") as? NSDictionary else {
+            /// Get data
+            guard let cacheData = config("License.licenseStateCache") as? Data else {
+                DDLogDebug("No licenseStateCache Data found")
                 return nil
             }
             
-            guard let isLicensed        = cacheDict["isLicensed"] as? Bool,  /// Make sure to keep these dict keys like "isLicensed" exactly in sync with the property names of MFLicenseState for this to work
-                  let licenseReason     = cacheDict["licenseReason"] as? MFLicenseReason
-            else {
+            /// Unarchive
+            ///     Note: (Oct 2024: Note that coder.requiresSecureCoding is turned on here implicitly.
+            ///         -> This is somewhat slower and pretty unnecessary here I think since hackers would have to tamper with the (locally stored) cache to perform an 'object substitution' or 'nil insertion' attack. And if they can modify local files, they already have full control over the system.)
+            ///         -> I guess another possible benefit of the nil/type checks is if we change MFLicenseState in the future and we forget to handle that explicitly, then we would just return nil here in some cases instead of returning an invalid object that might crash the app because of unexpected type/nullability
+            let (licenseState, decodingError) = MFCatch { try NSKeyedUnarchiver.unarchivedObject(ofClass: MFLicenseState.self, from: cacheData) }
+            guard let licenseState = licenseState,
+                  let licenseState = licenseState else { /// Unwrap twice because double-optional
+                DDLogDebug("Failed to decode licenseStateCache data. Error: \(decodingError.debugDescription)")
                 return nil
             }
             
-            let result = MFLicenseState(isLicensed: isLicensed,
-                                        freshness: kMFValueFreshnessCached, /// Note that we use all values from cache except for freshness
-                                        licenseReason: licenseReason)
+            /// Override freshness
+            let result = MFLicenseState(isLicensed: licenseState.isLicensed,
+                                        freshness: kMFValueFreshnessCached,     /// Note that we use all values from cache except for freshness
+                                        licenseTypeInfo: licenseState.licenseTypeInfo)
 
+            /// Return
             return result
         }
     }
@@ -361,7 +387,7 @@ import Cocoa
             case unsure  ///  The server didn't say whether the license is valid or not.
         }
         
-        var parsedServerResponse: (isValidKey: LicenseValidityFromServer, nOfActivations: Int?, error: NSError?)
+        var parsedServerResponse: (isValidKey: LicenseValidityFromServer, licenseTypeInfo: MFLicenseTypeInfo?, nOfActivations: Int?, error: NSError?)
         
         askServer: do {
             
@@ -380,10 +406,13 @@ import Cocoa
                                                                                    args: ["product_permalink": productPermalink,
                                                                                           "license_key": key,
                                                                                           "increment_uses_count": incrementUsageCount ? "true" : "false"])
-            
-            if
-                let message = serverResponseDict?["message"] as? NSString,
-                message == "That license does not exist for the provided product." {
+            /// Fallback to old euro product
+            var usedOldEuroProduct = false
+            if let message = serverResponseDict?["message"] as? NSString,
+               message == "That license does not exist for the provided product." {
+               
+                /// Update flag
+                usedOldEuroProduct = true
                
                 /// Validate
                 assert((serverResponseDict?["success"] as? Bool) == false)
@@ -394,15 +423,13 @@ import Cocoa
                                                                                    args: ["product_permalink": productPermalinkOld,
                                                                                           "license_key": key,
                                                                                           "increment_uses_count": incrementUsageCount ? "true" : "false"])
-                /// Update flag (To later determine licenseType)
-    //                    usedOldEuroProduct = true
                 
             }
             
             /// Guard:  Error
             ///     with the server communication
             if communicationError != nil {
-                parsedServerResponse = (.unsure, nil, communicationError)
+                parsedServerResponse = (.unsure, nil, nil, communicationError)
                 break askServer
             }
             
@@ -410,6 +437,13 @@ import Cocoa
             guard let serverResponseDict = serverResponseDict else {
                 fatalError("The serverResponseDict was nil even though the error was also nil. There's something wrong in our code.")
             }
+            
+            ///
+            /// Parse server response
+            ///
+            
+            /// Determine licenseType
+            let licenseTypeInfo: MFLicenseTypeInfo = usedOldEuroProduct ? MFLicenseTypeInfoGumroadV0() : MFLicenseTypeInfoGumroadV1()
             
             /// Map server responses to error
             ///     The communication with the server was successful but the servers response indicates that something went wrong.
@@ -419,26 +453,6 @@ import Cocoa
                                 code: Int(kMFLicenseErrorCodeGumroadServerResponseError),
                                 userInfo: serverResponseDict)
             }
-            
-            ///
-            /// Parse data
-            ///
-    //
-            /// vvv We plan to add the licenseType and metadata fields later
-            
-    //                /// Determine licenseType
-    //                let licenseType = usedOldEuroProduct ? kMFLicenseTypeGumroadV0 : kMFLicenseTypeGumroadV1
-    //
-    //                /// Gather metadata
-    //                let metadata: MFLicenseMetadata
-    //                if (licenseType == kMFLicenseTypeGumroadV0) {
-    //                    metadata = MFLicenseMetadataGumroadV0()
-    //                    /// ... Fill in metadata fields here if we add that eventually
-    //                } else if (licenseType == kMFLicenseTypeGumroadV1) {
-    //                    metadata = MFLicenseMetadataGumroadV1()
-    //                } else {
-    //                    fatalError("This cannot happen")
-    //                }
             
             /// Determine if _server_ said whether the _key_ is valid
             ///     Explanation: The Gumroad license-verification API just gives us a boolean 'success' field. As I understand, `success: true` always means that the license is *definitively* valid.
@@ -470,7 +484,7 @@ import Cocoa
             let activations = serverResponseDict["uses"] as? Int
             
             /// Return parsed values
-            parsedServerResponse = (isValidKey, activations, responseError)
+            parsedServerResponse = (isValidKey, licenseTypeInfo, activations, responseError)
             break askServer
         
         } /// End of askServer
@@ -491,9 +505,12 @@ import Cocoa
         case .unsure:
             result = nil
         case .invalid:
-            result = MFLicenseState(isLicensed: false, freshness: kMFValueFreshnessFresh, licenseReason: kMFLicenseReasonNone)
+            result = MFLicenseState(isLicensed: false, freshness: kMFValueFreshnessFresh, licenseTypeInfo: MFLicenseTypeInfoNotLicensed())
         case .valid:
-            result = MFLicenseState(isLicensed: true, freshness: kMFValueFreshnessFresh, licenseReason: kMFLicenseReasonValidLicense)
+            guard let licenseTypeInfo = parsedServerResponse.licenseTypeInfo else {
+                fatalError("Something in our code is wrong. We determined the licenseKey to be valid but licenseTypeInfo is nil.")
+            }
+            result = MFLicenseState(isLicensed: true, freshness: kMFValueFreshnessFresh, licenseTypeInfo: licenseTypeInfo)
         }
         
         /// Return
