@@ -40,6 +40,7 @@ Diese Leute haben viel mehr als den Standardpreis ausgegeben und mir einen **ung
 
 **Oktober 2024**
 
+- 🇺🇸&nbsp;Minseo&nbsp;Kim - "So much better than MOS!!! You deserve so much more than $3 :)"
 - 🇩🇪&nbsp;Frank&nbsp;Steinborn
 - 🇺🇸&nbsp;∞&nbsp;42&nbsp;∞ - "I am my brother's keeper."
 - 🇸🇷&nbsp;Jairaj&nbsp;Budhu
