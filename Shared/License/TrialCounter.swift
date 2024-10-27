@@ -70,7 +70,7 @@ import CocoaLumberjackSwift
             
             /// Get licenseConfig
             ///     Note: Getting the licenseConfig is unnecessary if the app is licensed. That's because all that the licenseState() func needs the licenseConfig for is to check the number of trialDays. And if the app is licensed, we don't need to check for the trialDays.
-            let licenseConfig = await LicenseConfig.get()
+            let licenseConfig = await GetLicenseConfig.get()
         
             /// Check licensing state
             let (licenseState, trialState, _) = await License.checkLicenseAndTrial(licenseConfig: licenseConfig)
@@ -176,7 +176,7 @@ import CocoaLumberjackSwift
             TrialCounter.daysOfUse += 1
             
             /// Get updated licenseConfig
-            let licenseConfig = await LicenseConfig.get()
+            let licenseConfig = await GetLicenseConfig.get()
                 
             /// Display UI & lock down helper if necessary
             License.checkAndReact(licenseConfig: licenseConfig, triggeredByUser: false)

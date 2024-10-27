@@ -92,11 +92,11 @@ import CocoaLumberjackSwift
         
         Task.detached(priority: .userInitiated, operation: {
             
-            let licenseConfig = await LicenseConfig.get()
+            let licenseConfig = await GetLicenseConfig.get()
             
             if isDifferent {
                 
-                let (state, error) = await License.activateLicense(key: key, licenseConfig: licenseConfig)
+                let (state, error) = await GetLicenseState.activateLicense(key: key, licenseConfig: licenseConfig)
                 let isLicensed = state.isLicensed
                 let freshness = state.freshness
                 let licenseTypeInfo = state.licenseTypeInfo
@@ -124,7 +124,7 @@ import CocoaLumberjackSwift
                 
             } else {
                 
-                let (state, error) = await License.checkLicense(key: key, licenseConfig: licenseConfig)
+                let (state, error) = await GetLicenseState.checkLicense(key: key, licenseConfig: licenseConfig)
                 let isLicensed = state.isLicensed
                 let freshness = state.freshness
                 let licenseTypeInfo = state.licenseTypeInfo

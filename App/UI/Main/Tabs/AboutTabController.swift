@@ -104,7 +104,7 @@ class AboutTabController: NSViewController {
         ///         - Update: Oct 2024: This is totally outdated and I don't know what it means anymore.
         
         /// Get cache
-        let cachedLicenseConfig = LicenseConfig.getOffline()
+        let cachedLicenseConfig = GetLicenseConfig.getOffline()
         let (cachedLicenseState, cachedTrialState) = License.checkLicenseAndTrialCached(licenseConfig: cachedLicenseConfig)
         
         /// Step 1: Set UI to cache
@@ -134,7 +134,7 @@ class AboutTabController: NSViewController {
         
         Task.detached(priority: .userInitiated, operation: {
             
-            let licenseConfig = await LicenseConfig.get()
+            let licenseConfig = await GetLicenseConfig.get()
             let (licenseState, trialState, error) = await License.checkLicenseAndTrial(licenseConfig: licenseConfig)
                 
             DispatchQueue.main.async {

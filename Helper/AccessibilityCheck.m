@@ -222,7 +222,7 @@
         
         [TrialCounter load_Manual];
         
-        [LicenseConfig getWithCompletionHandler:^(MFLicenseConfig * _Nonnull licenseConfig) {
+        [GetLicenseConfig getWithCompletionHandler:^(MFLicenseConfig * _Nonnull licenseConfig) {
             [License checkAndReactWithLicenseConfig:licenseConfig triggeredByUser:NO];
         }];
         

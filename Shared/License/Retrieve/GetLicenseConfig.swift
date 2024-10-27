@@ -1,48 +1,30 @@
 //
 // --------------------------------------------------------------------------
-// LicenseConfig.swift
+// GetLicenseConfig.swift
 // Created for Mac Mouse Fix (https://github.com/noah-nuebling/mac-mouse-fix)
-// Created by Noah Nuebling in 2022
-// Licensed under the MMF License (https://github.com/noah-nuebling/mac-mouse-fix/blob/master/License)
+// Created by Noah Nuebling in 2024
+// Licensed under Licensed under the MMF License (https://github.com/noah-nuebling/mac-mouse-fix/blob/master/License)
 // --------------------------------------------------------------------------
 //
 
-/// Notes:
-/// - This class retrieves instances of the MFLicenseConfig dataclass
-
-import Cocoa
 import CocoaLumberjackSwift
 
-@objc class LicenseConfig : NSObject {
+@objc class GetLicenseConfig : NSObject {
     
+    /// -> This class retrieves instances of the `MFLicenseConfig` dataclass
     
-    /// Public interface
-    
+    /// Main interface
     @objc static func get() async -> MFLicenseConfig {
         
-        var result = await licenseConfigFromServer()
-        
-        if result == nil {
-            result = licenseConfigCached()
-        }
-        if result == nil {
-            result = licenseConfigFallback()
-        }
-        
-        return result! /// Force unwrapping because we're always at least getting the fallback - so this can't be nil.
+        let result = (await licenseConfigFromServer()) ?? licenseConfigCached() ?? licenseConfigFallback()
+        return result
     }
     
     @objc static func getOffline() -> MFLicenseConfig {
     
-        var result = licenseConfigCached()
-        
-        if result == nil {
-            result = licenseConfigFallback()
-        }
-        
-        return result!
+        let result = licenseConfigCached() ?? licenseConfigFallback()
+        return result
     }
-    
     
     /// Server/cache/fallback interfaces
     
