@@ -58,57 +58,52 @@ import CocoaLumberjackSwift
         let cachePolicy = NSURLRequest.CachePolicy.reloadIgnoringLocalAndRemoteCacheData
         let timeout = 10.0
         
-        do {
-            
-            /// Perform request
-            let request = URLRequest(url: licenseConfigURL, cachePolicy: cachePolicy, timeoutInterval: timeout)
-            let (serverData, urlResponse) = try await URLSession.shared.data(for: request)
-            
-            /// Convert jsonData to dict
-            guard let dict = try JSONSerialization.jsonObject(with: serverData, options: []) as? NSDictionary else { /// Sidenote: We used to cast to `NSMutableDictionary` here but that fails unless using the`.mutableContainers` option. Don't understand Swift casting.
-                throw NSError(
-                    domain: MFLicenseConfigErrorDomain,
-                    code: Int(kMFLicenseConfigErrorCodeInvalidDict),
-                    userInfo: ["downloadedFrom": urlResponse.url ?? "<no url>",
-                               "statusCode": (urlResponse as? HTTPURLResponse)?.statusCode ?? "<no status code>",
-                               "serverResponse": String(data: serverData, encoding: .utf8) ?? "<not decodable as utf8 string>"]
-                )
-            }
-            
-            /// Instantiate
-            let result = try MFLicenseConfig(jsonDictionary: NSMutableDictionary(dictionary: dict), freshness: kMFValueFreshnessFresh, requireSecureCoding: true)
-            
-            /// Update cache
-            self._licenseConfigDictCache = dict
-            
-            /// Return
-            return result
-            
-        } catch let e {
-            /// Log
-            DDLogInfo("Failed to get MFLicenseConfig from internet, using cache instead...\nError: \(e)")
+        /// Perform request
+        let request = URLRequest(url: licenseConfigURL, cachePolicy: cachePolicy, timeoutInterval: timeout)
+        let (requestResult, requestError) = await MFCatch { try await URLSession.shared.data(for: request) }
+        guard let requestResult = requestResult else {
+            DDLogInfo("Failed to get MFLicenseConfig from server. Request error: \(requestError ?? "<nil>")")
+            return nil
+        }
+        let (serverData, urlResponse) = requestResult
+        
+        /// Convert jsonData to dict
+        let (jsonObject, serializationError) = MFCatch { try JSONSerialization.jsonObject(with: serverData, options: []) }
+        guard let dict = jsonObject as? NSDictionary else { /// Sidenote: We used to cast to `NSMutableDictionary` here but that fails unless using the`.mutableContainers` option. Don't understand Swift casting.
+            DDLogInfo("Failed to get MFLicenseConfig from server. Serialization error: \(serializationError ?? "<nil>"). jsonObject: \(jsonObject ?? "<nil>"). URLResponse: \(urlResponse)")
+            return nil
         }
         
-        return nil
+        /// Instantiate
+        let (result, instantiationError) = MFCatch { try MFLicenseConfig(jsonDictionary: NSMutableDictionary(dictionary: dict), freshness: kMFValueFreshnessFresh, requireSecureCoding: true) }
+        guard let result = result else {
+            DDLogInfo("Failed to get MFLicenseConfig from server. Instantiation error: \(instantiationError ?? "<nil>"). jsonDict: \(dict). URLResponse: \(urlResponse)")
+            return nil
+        }
+        
+        /// Update cache
+        self._licenseConfigDictCache = dict
+        
+        /// Return
+        return result
     }
     
     private static func licenseConfigCached() -> MFLicenseConfig? {
         
-        /// Declare
-        var instance: MFLicenseConfig? = nil
-        
-        /// Fill from cache
-
-        do {
-            if let cachedDict = self._licenseConfigDictCache, cachedDict.count > 0 {
-                instance = try MFLicenseConfig(jsonDictionary: NSMutableDictionary(dictionary: cachedDict), freshness: kMFValueFreshnessCached, requireSecureCoding: true)
-            } else {
-                throw NSError(domain: "MFPlaceholderErrorDomain", code: 123456789, userInfo: ["message": "Couldn't load dict from config. (Probably because there is no dict in config)"])
-            }
-        } catch {
-            DDLogError("Falling back to hardcoded because filling MFLicenseConfig instance from cache failed with error:\n\(error). ")
+        /// Get underlying cache dict
+        guard let cachedDict = self._licenseConfigDictCache, cachedDict.count > 0 else {
+            DDLogInfo("Failed to get MFLicenseConfig dict from cache. (Probably because there is no cache entry or it's empty or it has the wrong type.)")
+            return nil
         }
         
+        /// Instantiate
+        let (instance, error) = MFCatch { try MFLicenseConfig(jsonDictionary: NSMutableDictionary(dictionary: cachedDict), freshness: kMFValueFreshnessCached, requireSecureCoding: true) }
+        guard let instance = instance else {
+            DDLogInfo("Failed to get MFLicenseConfig from cache. Instantiating failed with error:\n\(error ?? "<nil>").")
+            return nil
+        }
+        
+        /// Return
         return instance
     }
     
@@ -132,6 +127,10 @@ import CocoaLumberjackSwift
         /// Cache for the JSON config file we download from the website
         ///     We could store this as JSON bits, JSON text or `encodeWithCoder:` bits. But storing it as a dict makes the config.plist the most readable, which is nicer for debuggability.
         ///         Howeverrrr, when storing it in a readable manner, that might make hacks really easy when we do offline validation, because you could just increase the trialDays to 999? Should keep this in mind and make sure it's not super easy to hack.
+        
+        /// On thread safety:
+        ///     The config cache is shared mutable state, which might lead to a race condition!
+        ///     I think if `config()` `setConfig()` and `commitConfig()` are threadsafe then this should be threadsafe as well?
         
         set {
             
