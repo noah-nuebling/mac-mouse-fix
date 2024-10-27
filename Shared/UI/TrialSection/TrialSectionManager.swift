@@ -35,7 +35,7 @@ class TrialSectionManager {
     
     /// Start and stop
     
-    func startManaging(licenseConfig: LicenseConfig, licenseState: MFLicenseState, trialState: MFTrialState) {
+    func startManaging(licenseConfig: MFLicenseConfig, licenseState: MFLicenseState, trialState: MFTrialState) {
         
         /// Make initialSection current
         showInitial(animate: false)

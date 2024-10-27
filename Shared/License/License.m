@@ -14,9 +14,7 @@
 
 #import "License.h"
 
-///
-/// MARK: MFDataClass implementations
-///
+/// - MARK: MFDataClass implementations
 
 /// licenseTypeInfo dataclasses
 
@@ -56,85 +54,151 @@ MFDataClassImplement4(MFDataClassBase, MFTrialState,     readonly, assign,      
                                                          readonly, assign,        , NSInteger,  daysOfUseUI,
                                                          readonly, assign,        , NSInteger,  trialDays,
                                                          readonly, assign,        , BOOL,       trialIsActive)
+    
+MFDataClassImplement10(MFDataClassBase, MFLicenseConfig,    readonly, assign,        , MFValueFreshness     , freshness,
+                                                            readonly, assign,        , NSInteger            , maxActivations,
+                                                            /// ^^ Define max activations
+                                                            ///     I want people to activate MMF on as many of their machines  as they'd like.
+                                                            ///     This is just so you can't just share one email address + license key combination on some forum and have everyone use that forever. This is probably totally unnecessary.
+                                                            readonly, assign,        , NSInteger            , trialDays,
+                                                            readonly, assign,        , NSInteger            , price,
+                                                            readonly, strong, nonnull, NSString *           , payLink,
+                                                            readonly, strong, nonnull, NSString *           , quickPayLink,
+                                                            readonly, strong, nonnull, NSString *           , altPayLink,
+                                                            readonly, strong, nonnull, NSString *           , altQuickPayLink,
+                                                            readonly, strong, nonnull, NSArray<NSString *> *, altPayLinkCountries,
+                                                            readonly, strong, nonnull, NSArray<NSString *> *, freeCountries)
 
-/// MARK: MFDataClass extensions
+/// MARK: - MFDataClass extensions
 
-/// Define constant attributes of licenseTypes
+/// MARK: licenseState extensions
 
-@implementation MFLicenseTypeInfo (ConstantAttributes)
+@implementation MFLicenseState (Extensions)
 
-BOOL MFLicenseTypeIsPersonallyPurchased(MFLicenseTypeInfo *_Nonnull info) {
+    - (NSArray<id> *)propertyValuesForEqualityComparison {
 
-    /// Tells us whether the user had to actively, personally purchase Mac Mouse Fix to obtain this type of license.
-    
-    if (info == nil) { assert(false); return NO; }
-    
-    if (info.class == MFLicenseTypeInfoFreeCountry.class)        return NO;
-    if (info.class == MFLicenseTypeInfoForce.class)              return NO;
-    if (info.class == MFLicenseTypeInfoGumroadV0.class)          return YES;
-    if (info.class == MFLicenseTypeInfoGumroadV1.class)          return YES;
-    if (info.class == MFLicenseTypeInfoPaddleV1.class)           return YES;
-    if (info.class == MFLicenseTypeInfoHyperWorkV1.class)        return NO;
-    if (info.class == MFLicenseTypeInfoGumroadBusinessV1.class)  return NO;
-    
-    
-    assert(false);
-    DDLogError(@"IsPersonallyPurchased is not defined for licenseType: %@. Defaulting to YES", info.class);
-    return YES;
-}
+        /// Define equality for MFLicenseState
+        /// Reasoning:
+        /// - We compare all fields except for the `freshness` field - the idea is that the `freshness` determines the *origin* of the data, but, in some sense, isn't *itself* part of the data.
+        ///     Also, practically, on the `AboutTabController`, we always first render the UI based on cached values, then we try to load the real values from the server, and then, unless the server data is mismatched with the cache, we don't want to rerender the UI (This would be problematic since the Thank You message at the bottom of the About Tab would then be set to something else) (As of Oct 2024)
 
-BOOL MFLicenseTypeRequiresValidLicenseKey(MFLicenseTypeInfo *_Nonnull info) {
-    
-    /// Tells us whether the user has to enter a valid licenseKey to activate the application under this licenseType
-    
-    if (info == nil) { assert(false); return NO; }
-    
-    if (info.class == MFLicenseTypeInfoFreeCountry.class)        return NO;
-    if (info.class == MFLicenseTypeInfoForce.class)              return NO;
-    if (info.class == MFLicenseTypeInfoGumroadV0.class)          return YES;
-    if (info.class == MFLicenseTypeInfoGumroadV1.class)          return YES;
-    if (info.class == MFLicenseTypeInfoPaddleV1.class)           return YES;
-    if (info.class == MFLicenseTypeInfoHyperWorkV1.class)        return YES;
-    if (info.class == MFLicenseTypeInfoGumroadBusinessV1.class)  return YES;
-    
-    assert(false);
-    DDLogError(@"RequiresValidLicenseKey is not defined for licenseType: %@. Defaulting to YES (since most licenseTypes will probably require a valid license key.)", info.class);
-    return YES;
-}
+        /// Sidenotes:
+        ///     Places where we check equality (as of Oct 2024)
+        ///         1. `AboutTabController.updateUI()`
+        ///             -> We first perform an equality check on `MFLicenseState`, `MFTrialState` and `MFLicenseConfig` and only update the UI, if the state has changed.
+        ///         2. Perhaps other places I forgot about?
+
+        return @[@(self->_isLicensed), self->_licenseTypeInfo ?: NSNull.null]; /// `_licenseTypeInfo` is currently not nullable (as of Oct 2024), but we still fallback to NSNull just in case.
+    }
 
 @end
 
-/// Redefine equality
+/// MARK: trialState extensions
 
-/// Sidenotes:
-///     Places where we check equality (as of Oct 2024)
-///         1. `AboutTabController.updateUI()`
-///             -> We first perform an equality check on `MFLicenseAndTrialState`, and only update the UI, if the state has changed.
-///         2. Perhaps other places I forgot about?
+@implementation MFTrialState (Extensions)
 
-@implementation MFLicenseState (CustomEquality)
- 
-- (NSArray<id> *)propertyValuesForEqualityComparison {
+    - (NSArray<id> *)propertyValuesForEqualityComparison {
 
-    /// Define equality for MFLicenseState
-    /// Reasoning:
-    /// - We compare all fields except for the `freshness` field - the idea is that the `freshness` determines the *origin* of the data, but, in some sense, isn't *itself* part of the data.
-    ///     Also, practically, on the `AboutTabController`, we always first render the UI based on cached values, then we try to load the real values from the server, and then, unless the server data is mismatched with the cache, we don't want to rerender the UI (This would be problematic since the Thank You message at the bottom of the About Tab would then be set to something else) (As of Oct 2024)
+        /// Define equality for the MFTrialState
+        /// Notes:
+        /// - We compare all fields except for `daysOfUseUI` and `trialIsActive`, because those are directly derived from the other fields
 
-    return @[@(self->_isLicensed), self->_licenseTypeInfo ?: NSNull.null]; /// `_licenseTypeInfo` is currently not nullable (as of Oct 2024), but we still fallback to NSNull just in case.
-}
+        return @[@(self->_daysOfUse), @(self->_trialDays)]; /// Don't forget that trying to `@(box)` nil crashes for some types like `char *`
+    }
 
 @end
 
-@implementation MFTrialState (CustomEquality)
+/// MARK: licenseConfig extensions
 
-- (NSArray<id> *)propertyValuesForEqualityComparison {
+@implementation MFLicenseConfig (Extensions)
 
-    /// Define equality for the MFTrialState
-    /// Notes:
-    /// - We compare all fields except for `daysOfUseUI` and `trialIsActive`, because those are directly derived from the other fields
+    NSString *_Nonnull MFLicenseConfigFormattedPrice(MFLicenseConfig *_Nonnull config) {
+        /// Note - why USD?: We're selling in $ because you can't include tax in price on Gumroad, and with $ ppl expect that more.
+        NSString *result = stringf(@"$%.2f", ((double)config.price)/100.0);
+        return result;
+    }
 
-    return @[@(self->_daysOfUse), @(self->_trialDays)]; /// Don't forget that trying to `@(box)` nil crashes for some types like `char *`
-}
+    - (instancetype _Nullable)initWithJSONDictionary:(NSMutableDictionary *_Nonnull)dict freshness:(MFValueFreshness)freshness requireSecureCoding:(BOOL)requireSecureCoding error:(NSError *__autoreleasing _Nullable * _Nullable)errorPtr {
+        
+        ///     Explanation: The licenseConfig json dicts we retrieve from the server / cache / fallback don't have a 'freshness' field, but our MFLicenseConfig dataclass does. We need to add `freshness` in advance so our underlying `initWithDictionary:` initializer doesn't fail due to missing fields.
+        ///         -> Don't use the underlying `initWithDictionary:requireSecureCoding:error:` initializer directly without setting the 'freshness' - it will probably fail.
+        
+        /// Set freshness
+        dict[@"freshness"] = @(freshness);
+        
+        /// Call underlying init
+        self = [self initWithDictionary:dict requireSecureCoding:requireSecureCoding error:errorPtr];
+        
+        /// Return
+        return self;
+    }
+
+
+    - (NSArray<id> *)propertyValuesForEqualityComparison {
+
+        ///    This function defines which properties we consider for equality-checking on MFLicenseConfig
+        ///
+        ///     Notes:
+        ///    - We don't check `freshness` because it describes the origin of the data (cache, server, etc) and, in a sense, isn't itself part of the data we're trying to represent.
+        ///    - All other properties should be checked - don't forget to update this when adding new properties!
+        ///    Sidenotes: (from the old Swift implementation)
+        ///    - I also tried overriding `==` directly, but it didn't work for some reason.
+        ///    - I accidentally overrode isEqual(to:) instead of isEqual() causing great confusion (it breaks the `==` operator in Swift.)-
+
+        return @[@(self->_maxActivations),
+                 @(self->_trialDays),
+                 @(self->_price),
+                 self->_payLink                ?: NSNull.null, /// None of these are currently nullable (as of Oct 2024) but we still fall back to NSNull just in case we change things later.
+                 self->_quickPayLink           ?: NSNull.null,
+                 self->_altPayLink             ?: NSNull.null,
+                 self->_altQuickPayLink        ?: NSNull.null,
+                 self->_altPayLinkCountries    ?: NSNull.null,
+                 self->_freeCountries          ?: NSNull.null];
+    }
+
+@end
+
+/// MARK: licenseType extensions
+
+@implementation MFLicenseTypeInfo (Extensions)
+
+    BOOL MFLicenseTypeIsPersonallyPurchased(MFLicenseTypeInfo *_Nonnull info) {
+
+        /// Tells us whether the user had to actively, personally purchase Mac Mouse Fix to obtain this type of license.
+        
+        if (info == nil) { assert(false); return NO; }
+        
+        if (info.class == MFLicenseTypeInfoFreeCountry.class)        return NO;
+        if (info.class == MFLicenseTypeInfoForce.class)              return NO;
+        if (info.class == MFLicenseTypeInfoGumroadV0.class)          return YES;
+        if (info.class == MFLicenseTypeInfoGumroadV1.class)          return YES;
+        if (info.class == MFLicenseTypeInfoPaddleV1.class)           return YES;
+        if (info.class == MFLicenseTypeInfoHyperWorkV1.class)        return NO;
+        if (info.class == MFLicenseTypeInfoGumroadBusinessV1.class)  return NO; /// Don't forget to add definitions here when you add a new dataclass!
+        
+        
+        assert(false);
+        DDLogError(@"IsPersonallyPurchased is not defined for licenseType: %@. Defaulting to YES", info.class);
+        return YES;
+    }
+
+    BOOL MFLicenseTypeRequiresValidLicenseKey(MFLicenseTypeInfo *_Nonnull info) {
+        
+        /// Tells us whether the user has to enter a valid licenseKey to activate the application under this licenseType
+        
+        if (info == nil) { assert(false); return NO; }
+        
+        if (info.class == MFLicenseTypeInfoFreeCountry.class)        return NO;
+        if (info.class == MFLicenseTypeInfoForce.class)              return NO;
+        if (info.class == MFLicenseTypeInfoGumroadV0.class)          return YES;
+        if (info.class == MFLicenseTypeInfoGumroadV1.class)          return YES;
+        if (info.class == MFLicenseTypeInfoPaddleV1.class)           return YES;
+        if (info.class == MFLicenseTypeInfoHyperWorkV1.class)        return YES;
+        if (info.class == MFLicenseTypeInfoGumroadBusinessV1.class)  return YES;
+        
+        assert(false);
+        DDLogError(@"RequiresValidLicenseKey is not defined for licenseType: %@. Defaulting to YES (since most licenseTypes will probably require a valid license key.)", info.class);
+        return YES;
+    }
 
 @end

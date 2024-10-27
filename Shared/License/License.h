@@ -15,7 +15,7 @@
 
 #import "MFDataClass.h"
 
-/// Define enums
+/// MARK: Enums
 ///     Note: Using simple consts instead of actual C enums because Swift is annoying about those.
 ///             How is it annoying? For example, you cannot simply cast integers to enums in Swift using `as?` - that always fails. Instead you have to use `init(rawValue:)` to create a special 'enum case struct instance' or something.
 ///             However, those initializers *never* fail even if you pass in values outside the enum range. So this serves no discernable purpose except being confusing.
@@ -27,8 +27,9 @@ typedef NSInteger MFValueFreshness;
     static const MFValueFreshness kMFValueFreshnessFresh    = 1;  // Value comes straight from the source-of-truth                (likely a server on the internet)
     static const MFValueFreshness kMFValueFreshnessCached   = 2;  // Value comes from a cache                                     (likely because the source of truth is not accessible)
     static const MFValueFreshness kMFValueFreshnessFallback = 3;  // Value comes from a list of fallback values                   (likely because neither the server nor the cache are accessible)
-                                                                  
-///
+            
+/// MARK: Dataclasses
+
 /// Define licenseTypeInfo classes
 ///     There are different types of licenses.
 ///         Each of the `MFLicenseTypeInfo` subclasses identifies a license type.
@@ -77,11 +78,6 @@ MFDataClassInterface0(MFDataClassBase, MFLicenseTypeInfo)
     MFDataClassInterface0(MFLicenseTypeInfo, MFLicenseTypeInfoGumroadV2)
     MFDataClassInterface0(MFLicenseTypeInfo, MFLicenseTypeInfoPaddleV2)
 
-    /// Constant attributes
-    ///     ... for each licenseType. More info in the implementation.
-    BOOL MFLicenseTypeIsPersonallyPurchased(MFLicenseTypeInfo *_Nonnull info);
-    BOOL MFLicenseTypeRequiresValidLicenseKey(MFLicenseTypeInfo *_Nonnull info);
-
 /// Top-level dataclasses
 
 MFDataClassInterface3(MFDataClassBase, MFLicenseState,   readonly, assign,        , BOOL,                          isLicensed,
@@ -92,8 +88,37 @@ MFDataClassInterface4(MFDataClassBase, MFTrialState,     readonly, assign,      
                                                          readonly, assign,        , NSInteger,  daysOfUseUI,
                                                          readonly, assign,        , NSInteger,  trialDays,
                                                          readonly, assign,        , BOOL,       trialIsActive)
+    
+/// Note: MFLicenseConfig abstracts away licensing params like the trialDuration or the price. At the time of writing the configuration is loaded from macmousefix.com. This allows us to easily change parameters like the price displayed in the app for all users.
+MFDataClassInterface10(MFDataClassBase, MFLicenseConfig,    readonly, assign,        , MFValueFreshness     , freshness,
+                                                            readonly, assign,        , NSInteger            , maxActivations,
+                                                            /// ^^ Define max activations
+                                                            ///     I want people to activate MMF on as many of their machines  as they'd like.
+                                                            ///     This is just so you can't just share one email address + license key combination on some forum and have everyone use that forever. This is probably totally unnecessary.
+                                                            readonly, assign,        , NSInteger            , trialDays,
+                                                            readonly, assign,        , NSInteger            , price,
+                                                            readonly, strong, nonnull, NSString *           , payLink,
+                                                            readonly, strong, nonnull, NSString *           , quickPayLink,
+                                                            readonly, strong, nonnull, NSString *           , altPayLink,
+                                                            readonly, strong, nonnull, NSString *           , altQuickPayLink,
+                                                            readonly, strong, nonnull, NSArray<NSString *> *, altPayLinkCountries,
+                                                            readonly, strong, nonnull, NSArray<NSString *> *, freeCountries)
+                                                            /// ^^ The altPayLink, altQuickPayLink, and altPayLinkCountries params are meant to be used to provide an alternative payment method for users in China and Russia where Gumroad doesn't work properly at the moment. They are unused at the time of writing. The freeCountries parameter lists countries in which the app should be free. This is meant as a temporary solution until we implemented the alternative payment methods.
 
-/// Define custom errors
+/// MARK: Dataclass extensions
+///     Explanations in the .m file
+
+@interface MFLicenseTypeInfo (Extensions)
+    BOOL MFLicenseTypeIsPersonallyPurchased(MFLicenseTypeInfo *_Nonnull info);
+    BOOL MFLicenseTypeRequiresValidLicenseKey(MFLicenseTypeInfo *_Nonnull info);
+@end
+
+@interface MFLicenseConfig (Extensions)
+    NSString *_Nonnull MFLicenseConfigFormattedPrice(MFLicenseConfig *_Nonnull config);
+    - (instancetype _Nullable)initWithJSONDictionary:(NSMutableDictionary *_Nonnull)dict freshness:(MFValueFreshness)freshness requireSecureCoding:(BOOL)requireSecureCoding error:(NSError *__autoreleasing _Nullable * _Nullable)errorPtr;
+@end
+
+/// MARK: Custom errors
 ///     Notes:
 ///     - Most of these are thrown in Gumroad.swift, but `kMFLicenseErrorCodeNoInternetAndNoCache` and `kMFLicenseErrorCodeEmailAndKeyNotFound` are thrown in Licensing.swift.
 ///     - Overall these should cover everything that can go wrong. With the `kMFLicenseErrorCodeGumroadServerResponseError` catching all the weird edge cases like a refunded license.

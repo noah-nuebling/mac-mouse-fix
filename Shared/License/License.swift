@@ -19,7 +19,7 @@
 /// Note: It seems you need to __clean the build folder__ after changing the flags for them to take effect. (Under Ventura Beta)
 
 /// # __ Problems with the current architecture__ surrounding License.swift
-///     Currently, when we want to get the licensing state, we always use two functions in tandem: LicenseConfig.get() and License.licenseState() (which takes the licenseConfig as input). Each of the 2 functions get their info asynchronously from some server and we need to call them both to get the full state. Both modules also provide "cached" versions of these functions whose perk is that they return synchronously, so we can use them, when we need to quickly draw a UI that the user has requested. The problem is, that we call the async functions in several different places in the app where we could be reusing information, and also we need to do some manual "hey update yourself since the licensing has changed" calls to keep everything in sync. This also leads us to just reload the about tab whenever it is opened which is kind of unnecessary, and it still breaks when you have the about tab open while the trial expires.
+///     Currently, when we want to get the licensing state, we always use two functions in tandem: MFLicenseConfig.get() and License.licenseState() (which takes the licenseConfig as input). Each of the 2 functions get their info asynchronously from some server and we need to call them both to get the full state. Both modules also provide "cached" versions of these functions whose perk is that they return synchronously, so we can use them, when we need to quickly draw a UI that the user has requested. The problem is, that we call the async functions in several different places in the app where we could be reusing information, and also we need to do some manual "hey update yourself since the licensing has changed" calls to keep everything in sync. This also leads us to just reload the about tab whenever it is opened which is kind of unnecessary, and it still breaks when you have the about tab open while the trial expires.
 ///     -> So here's a __better idea__ for the architecture:
 ///         There is a currentLicenseState var held by License.swift. It's a reactive signal provider, and all the UI that depends on it simply subscribes to it. We init the currentLicenseState to the cache. We update it on app start and when we know it changed due the trial expiring or the user activating their license or something. This should more efficient and much cleaner and should behave better in edge cases. But right now it's not worth implementing because it won't make much of a practical difference to the user.
 
@@ -32,7 +32,7 @@ import CocoaLumberjackSwift
     
     // MARK: Lvl 3
     
-    @objc static func checkAndReact(licenseConfig: LicenseConfig, triggeredByUser: Bool) {
+    @objc static func checkAndReact(licenseConfig: MFLicenseConfig, triggeredByUser: Bool) {
         
         /// This runs a check and then if necessary it:
         /// - ... shows some feedback about the licensing state to the user
@@ -100,7 +100,7 @@ import CocoaLumberjackSwift
     
     /// These functions assemble info about the trial and the license.
     
-    static func checkLicenseAndTrialCached(licenseConfig: LicenseConfig) -> (licenseState: MFLicenseState, trialState: MFTrialState) {
+    static func checkLicenseAndTrialCached(licenseConfig: MFLicenseConfig) -> (licenseState: MFLicenseState, trialState: MFTrialState) {
         
         /// This function only looks at the cache even if there is an internet connection. While this functions sister-function `checkLicenseAndTrial()` retrieves info from the cache only as a fallback if it can't get current info from the internet.
         /// In contrast to the sister function, this function is guaranteed to return immediately since it doesn't load stuff from the internet.
@@ -121,7 +121,7 @@ import CocoaLumberjackSwift
         
     }
     
-    @objc static func checkLicenseAndTrial(licenseConfig: LicenseConfig) async -> (licenseState: MFLicenseState, trialState: MFTrialState, error: NSError?) {
+    @objc static func checkLicenseAndTrial(licenseConfig: MFLicenseConfig) async -> (licenseState: MFLicenseState, trialState: MFTrialState, error: NSError?) {
         
         /// At the time of writing, we only use licenseConfig to get the maxActivations.
         ///     Since we get licenseConfig via the internet this might be worth rethinking if it's necessary. We made a similar comment somewhere else but I forgot where.
@@ -134,7 +134,7 @@ import CocoaLumberjackSwift
         return (licenseState, trialState, error)
     }
     
-    @objc static func checkTrial(_ licenseConfig: LicenseConfig) -> MFTrialState {
+    @objc static func checkTrial(_ licenseConfig: MFLicenseConfig) -> MFTrialState {
         
 #if FORCE_EXPIRED
         let daysOfUse = licenseConfig.trialDays + 1
@@ -163,7 +163,7 @@ import CocoaLumberjackSwift
     /// Wrapper for `_checkLicense` that sets incrementUsageCount to false and automatically retrieves the licenseKey from secure storage
     ///     Meant to be used by the rest of the app except LicenseSheet
     
-    static func checkLicense(licenseConfig: LicenseConfig) async -> (licenseState: MFLicenseState, error: NSError?) {
+    static func checkLicense(licenseConfig: MFLicenseConfig) async -> (licenseState: MFLicenseState, error: NSError?) {
         
         /// Setting key to nil so it's retrieved from secureStorage
         return await _checkLicense(key: nil, licenseConfig: licenseConfig, incrementUsageCount: false)
@@ -172,19 +172,19 @@ import CocoaLumberjackSwift
     /// Wrappers for `_checkLicense` that set incrementUsageCount to true / false.
     ///     Meant to be used by LicenseSheet
     
-    static func checkLicense(key: String, licenseConfig: LicenseConfig) async -> (licenseState: MFLicenseState, error: NSError?) {
+    static func checkLicense(key: String, licenseConfig: MFLicenseConfig) async -> (licenseState: MFLicenseState, error: NSError?) {
         
         return await _checkLicense(key: key, licenseConfig: licenseConfig, incrementUsageCount: false)
     }
     
-    static func activateLicense(key: String, licenseConfig: LicenseConfig) async -> (licenseState: MFLicenseState, error: NSError?) {
+    static func activateLicense(key: String, licenseConfig: MFLicenseConfig) async -> (licenseState: MFLicenseState, error: NSError?) {
         
         return await _checkLicense(key: key, licenseConfig: licenseConfig, incrementUsageCount: true)
     }
     
     // MARK: Lvl 0
     
-    private static func _checkLicense(key keyArg: String?, licenseConfig: LicenseConfig, incrementUsageCount: Bool) async -> (licenseState: MFLicenseState, error: NSError?) {
+    private static func _checkLicense(key keyArg: String?, licenseConfig: MFLicenseConfig, incrementUsageCount: Bool) async -> (licenseState: MFLicenseState, error: NSError?) {
         
         /// This function determines the current licenseState of the application.
         ///     To do this, it checks the licenseServer, cache, fallback values, and special conditions
@@ -308,11 +308,11 @@ import CocoaLumberjackSwift
             
             /// Archive object
             ///     (Oct 2024) The archive is pure data.
-            ///         It would be more transparent / introspectable / debuggable if we created a dictionary
+            ///         It would be more transparent / introspectable / debuggable if we created a dictionary (or a human readable string)
             ///         -> ... and inserted that into the configDict so that way you could clearly see the structure of the archive even just reading config.plist (which the archive will be stored inside of.)
-            ///         -> It should be possible to extend MFDataClass to encode / decode itself from a nested dictionary with all the same security checks that our secure decoding currently has (nil validation and type validation)
-            ///             ... But I'm not sure how to handle nested structures of NSCoding objects ... we might need NSKeyedUnarchiver for that.
-            ///         -> Also, it's not that bad for the MFLicenseState cache to be obscure because we want it to be reasonably annoying to hack it so the app thinks it's licensed
+            ///         -> Update: We extended MFDataClass to encode / decode itself from a dictionary with all the same security checks that our secure decoding currently has (nil validation and type validation)
+            ///             ... But this approach won't work here because we have an MFDataClass nested in another MFDataClass.
+            ///         -> Also, I guess it's not that bad for the MFLicenseState cache to be obscure because we want it to be reasonably annoying to hack it such that the app thinks it's licensed even though it's not.
             let (cacheData, error) = MFCatch { try NSKeyedArchiver.archivedData(withRootObject: newValue, requiringSecureCoding: true) }
             guard let cacheData = cacheData else {
                 DDLogError("Archiving MFLicenseState for caching failed with error: \(error.debugDescription). Don't think this should ever happen.")
@@ -355,7 +355,7 @@ import CocoaLumberjackSwift
     
     // MARK: License server interface
 
-    private static func askLicenseServers(key: String, incrementUsageCount: Bool, licenseConfig: LicenseConfig) async -> (licenseState: MFLicenseState?, error: NSError?) {
+    private static func askLicenseServers(key: String, incrementUsageCount: Bool, licenseConfig: MFLicenseConfig) async -> (licenseState: MFLicenseState?, error: NSError?) {
     
         /// This function tries to retrieve the MFLicenseState from the known licenseServers.
         ///     If we don't receive clear information from any of the licenseServers about whether the license is valid or not, we return `nil`

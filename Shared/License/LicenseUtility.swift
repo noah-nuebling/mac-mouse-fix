@@ -54,7 +54,7 @@ func MFCatch<R, E>(_ workload: () async throws(E) -> R) async -> (R?, E?) {
 
 @objc class LicenseUtility: NSObject {
     
-    @objc static func buyMMF(licenseConfig: LicenseConfig, locale: Locale, useQuickLink: Bool) {
+    @objc static func buyMMF(licenseConfig: MFLicenseConfig, locale: Locale, useQuickLink: Bool) {
         
         /// Originally implemented this in ObjC but lead to weird linker errors
         
@@ -95,7 +95,7 @@ func MFCatch<R, E>(_ workload: () async throws(E) -> R) async -> (R?, E?) {
         }
     }
     
-    @objc static func trialCounterString(licenseConfig: LicenseConfig, licenseState: MFLicenseState, trialState: MFTrialState) -> NSAttributedString {
+    @objc static func trialCounterString(licenseConfig: MFLicenseConfig, licenseState: MFLicenseState, trialState: MFTrialState) -> NSAttributedString {
         
         /// Guard unlicensed
         ///     Note: Perhaps we should return an error UI string here, so it is more obvious to the user that sth went wrong and they can file a bug report?

@@ -28,7 +28,7 @@ class AboutTabController: NSViewController {
     var payButtonWrapper: NSView? = nil
     var payButtonwrapperConstraints: [NSLayoutConstraint] = []
     
-    var currentLicenseConfig: LicenseConfig? = nil
+    var currentLicenseConfig: MFLicenseConfig? = nil
     var currentLicenseState: MFLicenseState? = nil
     var currentTrialState: MFTrialState? = nil
 
@@ -143,7 +143,7 @@ class AboutTabController: NSViewController {
         })
     }
     
-    func updateUI(licenseConfig: LicenseConfig, licenseState: MFLicenseState, trialState: MFTrialState) {
+    func updateUI(licenseConfig: MFLicenseConfig, licenseState: MFLicenseState, trialState: MFTrialState) {
         
         /// Guard: no change from 'current' values
         ///     This prevents unnecessary rerendering of the UI when this function is called several times with the same arguments. (Which we expect to happen - this function is first supposed to be called with cached LicenseState and then with the real LicenseState from the server - as soon as that's available.)
@@ -352,7 +352,7 @@ class AboutTabController: NSViewController {
             
             /// Create paybutton
             
-            let payButton = PayButton(title: licenseConfig.formattedPrice, action: {
+            let payButton = PayButton(title: MFLicenseConfigFormattedPrice(licenseConfig), action: {
                 LicenseUtility.buyMMF(licenseConfig: licenseConfig, locale: Locale.current, useQuickLink: false)
             })
             

@@ -256,7 +256,7 @@
             /// Guard valueNotFound
             if (![coder containsValueForKey:key]) {
                 assert(false);
-                [coder failWithError:[NSError errorWithDomain:NSCocoaErrorDomain code:NSCoderValueNotFoundError userInfo:@{ @"message": stringf(@"No value found while decoding %@.%@", [self class], key) }]];
+                [coder failWithError:[NSError errorWithDomain:NSCocoaErrorDomain code:NSCoderValueNotFoundError userInfo:@{ @"message": stringf(@"No value found for key while decoding %@.%@", [self class], key) }]];
                 return nil;
             }
             

@@ -88,7 +88,7 @@ class TrialNotificationController: NSWindowController {
     
     var firstAppearance = true
     
-    @objc func open(licenseConfig: LicenseConfig, licenseState: MFLicenseState, trialState: MFTrialState, triggeredByUser: Bool) {
+    @objc func open(licenseConfig: MFLicenseConfig, licenseState: MFLicenseState, trialState: MFTrialState, triggeredByUser: Bool) {
         
         /// Validate
         
@@ -130,9 +130,7 @@ class TrialNotificationController: NSWindowController {
             /// Init the payButton
             /// May be more elegant to do this from IB directly but whatever
             ///     Use the quickPayLink for ASAP checkout if the users' flow has been interrupted
-            payButton.realInit(title: licenseConfig.formattedPrice) {
-                let useQuickLink = !triggeredByUser
-                
+            payButton.realInit(title: MFLicenseConfigFormattedPrice(licenseConfig)) {
                 LicenseUtility.buyMMF(licenseConfig: licenseConfig, locale: Locale.current, useQuickLink: !triggeredByUser)
             }
             
