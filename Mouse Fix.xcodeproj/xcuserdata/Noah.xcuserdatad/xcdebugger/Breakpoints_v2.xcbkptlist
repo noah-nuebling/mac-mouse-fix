@@ -24,7 +24,7 @@
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
             uuid = "EB181984-2B29-40D9-8C84-68A148E71CD5"
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Shared/License/License.swift"
@@ -40,7 +40,7 @@
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
             uuid = "3EEE5B77-890A-4E97-99BC-13D25846DD6D"
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Shared/License/License.swift"
@@ -56,7 +56,7 @@
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
             uuid = "20934E6B-41A7-4542-BFC6-EA087CCE697F"
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Shared/License/License.swift"
@@ -72,7 +72,7 @@
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
             uuid = "B5A205FA-4D52-4F6A-9120-02F70FD31FA5"
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Shared/License/License.swift"
@@ -82,6 +82,52 @@
             endingLineNumber = "328"
             landmarkName = "licenseStateCache"
             landmarkType = "24">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "68C3C7EB-C115-42AD-8538-84E9D4A979FC"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Shared/License/License.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "283"
+            endingLineNumber = "283"
+            landmarkName = "_checkLicense(key:licenseConfig:incrementUsageCount:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "68C3C7EB-C115-42AD-8538-84E9D4A979FC - e1e8a00f2561d036"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(1) suspend resume partial function for static Mac_Mouse_Fix.License._checkLicense(key: Swift.Optional&lt;Swift.String&gt;, licenseConfig: Mac_Mouse_Fix.LicenseConfig, incrementUsageCount: Swift.Bool) async -&gt; (licenseState: __C.MFLicenseState, error: Swift.Optional&lt;__C.NSError&gt;)"
+                  moduleName = "Mac Mouse Fix.debug.dylib"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/Noah/Desktop/mmf-stuff/mac-mouse-fix/Shared/License/License.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "283"
+                  endingLineNumber = "283">
+               </Location>
+               <Location
+                  uuid = "68C3C7EB-C115-42AD-8538-84E9D4A979FC - f8c64d4dee901430"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(3) suspend resume partial function for static Mac_Mouse_Fix.License._checkLicense(key: Swift.Optional&lt;Swift.String&gt;, licenseConfig: Mac_Mouse_Fix.LicenseConfig, incrementUsageCount: Swift.Bool) async -&gt; (licenseState: __C.MFLicenseState, error: Swift.Optional&lt;__C.NSError&gt;)"
+                  moduleName = "Mac Mouse Fix.debug.dylib"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/Noah/Desktop/mmf-stuff/mac-mouse-fix/Shared/License/License.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "283"
+                  endingLineNumber = "283">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

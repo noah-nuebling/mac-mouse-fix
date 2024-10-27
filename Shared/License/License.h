@@ -99,6 +99,13 @@ MFDataClassInterface4(MFDataClassBase, MFTrialState,     readonly, assign,      
 ///     - Overall these should cover everything that can go wrong. With the `kMFLicenseErrorCodeGumroadServerResponseError` catching all the weird edge cases like a refunded license.
 ///     - The `kMFLicenseErrorCodeGumroadServerResponseError` also catches the case when a user just enters a wrong license.
 ///     - These could be used to inform the user about what's wrong.
+///
+///     General:
+///         - We should probably clean up our use of NSErrorDomain (+ errorCodes +  NSExceptionName)
+///             -> There's only one NSCocoaErrorDomain. So there should probably only one `MFErr` error domain.
+///             -> We also use 12345689 or -1 or whatever as the error codes in several places. We should probably at least introduce `kMFErrorCodeUnspecified` to clean that stuff up.
+///             -> (Since we're not writing a library and not displaying user feedback for 95% of the errors, we don't need specific error codes because we don't implement any handling logic - it's just for debugging purposes.)
+///             -> Maybe we should also introduce a single `NSExceptionName`:`kMFExceptionNameUnspecified`
 
 static const NSErrorDomain _Nonnull MFLicenseErrorDomain = @"MFLicenseErrorDomain";
 typedef NSInteger MFLicenseErrorCode;

@@ -96,10 +96,19 @@
 #pragma mark - Base superclass
 
 @interface MFDataClassBase : NSObject<NSCopying, /*NSCoding,*/ NSSecureCoding>
+
+/// Properties
 + (NSArray<NSString *> * _Nonnull)allPropertyNames;
 - (NSArray<id> *_Nonnull)allPropertyValues;
 - (NSArray<id> *_Nonnull)propertyValuesForEqualityComparison; /// You can override this to easily change the definition of equality. If, instead, you override `isEqual:` manually, you also need to override `- hash` manually to match.
+
+/// Dict & JSON encoding
 - (NSDictionary<NSString *, NSObject *> *_Nonnull)asDictionary;
+- (instancetype _Nullable)initWithDictionary:(NSDictionary *_Nonnull)dict requireSecureCoding:(BOOL)requireSecureCoding error:(NSError *__autoreleasing _Nullable * _Nullable)errorPtr;
+- (NSData *_Nullable)asJSONWithError:(NSError *__autoreleasing _Nullable *_Nullable)errorPtr;
+- (instancetype _Nullable)initWithJSON:(NSData *_Nonnull)jsonData requireSecureCoding:(BOOL)requireSecureCoding error:(NSError *__autoreleasing _Nullable * _Nullable)errorPtr;
+
+/// Validation
 + (void)onLoadValidation; /// This is called in `+ load` to validate the definition of the `MFDataClass` (only in debug builds). Do not call this yourself.
 @end
 

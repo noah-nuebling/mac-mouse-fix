@@ -9,6 +9,7 @@
 
 #import "MFDataClass.h"
 @import ObjectiveC.runtime;
+#import "MFDataClassDictionaryDecoder.h"
 
 @implementation MFDataClassBase
 
@@ -179,8 +180,8 @@
 
 // - MARK: Protocol implementations
 
-// MARK: NSCoding / NSSecureCoding protocol
-    
+// MARK: NSSecureCoding protocol
+
 + (BOOL)supportsSecureCoding {
     /// I think we only support secureCoding if all properties have types that also conform to `NSSecureCoding`? Not sure what happens if this is not the case. But I thinkkk it would just fail gracefully, and still work when we turn `.requiresSecureCoding` off.
     ///     Update: In `+ load` we now do validation that properties support `NSSecureCoding`.
@@ -304,8 +305,8 @@
             /// Guard decoding error
             ///     Depending on the `coder.decodingFailurePolicy`, `decodeObjectOfClass:` might either throw and error or just set `coder.error` and then continue execution, so we check for that here.
             if (coder.error != nil) {
-                assert(false); /// We don't need to call `failWithError:` since the coder already has an error.
-                return nil;
+                assert(false);
+                return nil; /// We don't need to call `failWithError:` since the coder already has an error.
             }
             
             /// Check type
@@ -345,7 +346,7 @@
                 /// Check if types match
                 if (strcmp(nsValueTypeEncoding, propertyTypeEncoding) != 0) {
                     assert(false);
-                    [coder failWithError:[NSError errorWithDomain:NSCocoaErrorDomain code:NSCoderInvalidValueError userInfo:@{ @"message": stringf(@"Type mismatch while decoding non-object property %@.%@. Expected: %s. Found: %s", [self class], key, propertyTypeEncoding, nsValue.objCType) }]];
+                    [coder failWithError:[NSError errorWithDomain:NSCocoaErrorDomain code:NSCoderInvalidValueError userInfo:@{ @"message": stringf(@"Type mismatch while decoding non-object property %@.%@. Expected: %s. Found: %s", [self class], key, propertyTypeEncoding, nsValueTypeEncoding) }]];
                     return nil;
                 }
             }
@@ -463,15 +464,6 @@
     return [self allPropertyValues];
 }
 
-- (NSDictionary<NSString *, NSObject *> *_Nonnull)asDictionary {
-    
-    /// Using the KVC method `setValuesForKeysWithDictionary:` for the 'opposite' of this method. (Although that probably doesn't have type and nullability checks so maybe shouldn't be used)
-    ///     Sidenote: `dictionaryWithValuesForKeys:` will automatically substitue `nil` for `NSNull`
-    
-    NSDictionary *result = [self dictionaryWithValuesForKeys:self.class.allPropertyNames];
-    return result;
-}
-
 /// MARK: - Property analysis
 ///     We use this for validation in `- initWithCoder:`
 ///     Big picture: (As of Oct 2024)
@@ -521,6 +513,52 @@ NSString *_Nullable typeEncodingForProperty(NSString *_Nullable propertyAttribut
     const char *attributes = property_getAttributes(property);
     if (attributes == NULL) return nil;
     return @(attributes);
+}
+
+// MARK: NSDictionary & JSON conversion
+
+- (NSData *_Nullable)asJSONWithError:(NSError *__autoreleasing _Nullable *_Nullable)errorPtr {
+    NSDictionary *dict = [self asDictionary];
+    NSData *result = [NSJSONSerialization dataWithJSONObject:dict options:0 error:errorPtr];
+    return result;
+}
+
+- (instancetype _Nullable)initWithJSON:(NSData *_Nonnull)jsonData requireSecureCoding:(BOOL)requireSecureCoding error:(NSError *__autoreleasing _Nullable * _Nullable)errorPtr {
+    if (!jsonData) return nil;
+    NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:jsonData options:0 error:errorPtr];
+    if (!dict) return nil;
+    self = [self initWithDictionary:dict requireSecureCoding:requireSecureCoding error:errorPtr];
+    return self;
+}
+
+- (NSDictionary<NSString *, NSObject *> *_Nonnull)asDictionary {
+    NSDictionary *result = [self dictionaryWithValuesForKeys:self.class.allPropertyNames]; /// Note that `dictionaryWithValuesForKeys:` will automatically substitue `nil` for `NSNull`
+    return result;
+}
+
+- (instancetype _Nullable)initWithDictionary:(NSDictionary *_Nonnull)dict requireSecureCoding:(BOOL)requireSecureCoding error:(NSError *__autoreleasing _Nullable * _Nullable)errorPtr {
+    
+    /// Create an instance from a dictionary.
+    ///     If `requireSecureCoding` is enabled, then all of the validation mechanisms from `initWithCoder:` are turned on.
+    ///     Values that should be nil are expected to be `NSNull` in the dict.
+    
+    if (!dict) return nil;
+    
+    if (!requireSecureCoding) {
+    
+        /// Non-validated decode
+        self = [super init];
+        if (!self) return nil;
+        [self setValuesForKeysWithDictionary:dict]; /// This is a standard KVC method, meant to be the inverse of `dictionaryWithValuesForKeys:`
+        return self;
+        
+    } else {
+        /// 'Secure' decode
+        NSCoder *decoder = [[MFDataClassDictionaryDecoder alloc] initForReadingFromDict:dict requiresSecureCoding:YES];
+        self = [self initWithCoder:decoder];
+        if (errorPtr) *errorPtr = decoder.error;
+        return self;
+    }
 }
 
 /// MARK: Property-nullability analysis
