@@ -15,33 +15,57 @@ import CocoaLumberjackSwift
 
 @objc class LicenseConfig : NSObject {
     
-    /// Constants
     
-    static var licenseConfigAddress: String {
-        "\(kMFWebsiteRepoAddressRaw)/\(kMFLicenseInfoURLSub)"
+    /// Public interface
+    
+    @objc static func get() async -> MFLicenseConfig {
+        
+        var result = await licenseConfigFromServer()
+        
+        if result == nil {
+            result = licenseConfigCached()
+        }
+        if result == nil {
+            result = licenseConfigFallback()
+        }
+        
+        return result! /// Force unwrapping because we're always at least getting the fallback - so this can't be nil.
     }
     
-    /// Async init
+    @objc static func getOffline() -> MFLicenseConfig {
     
-    @objc static func get() async -> (MFLicenseConfig) {
+        var result = licenseConfigCached()
         
+        if result == nil {
+            result = licenseConfigFallback()
+        }
+        
+        return result!
+    }
+    
+    
+    /// Server/cache/fallback interfaces
+    
+    private static func licenseConfigFromServer() async -> MFLicenseConfig? {
+    
         /// Download MFLicenseConfig.json
         ///     Notes:
         ///     - We used to use `URLSession.shared.download(...)` here but `URLSession.shared.data()` is better, since it returns the data directly instead of returning the url of a downloaded file. This should be more efficient. `.download` is more for large files and background downloads I think, not for a 2KB JSON file.
         ///     - Is it really the best choice to disable allll caching? I guess it might prevent errors and inconsistencies?
         
         /// Define constants
+        let licenseConfigURL = URL(string: "\(kMFWebsiteRepoAddressRaw)/\(kMFLicenseInfoURLSub)")!
         let cachePolicy = NSURLRequest.CachePolicy.reloadIgnoringLocalAndRemoteCacheData
         let timeout = 10.0
         
         do {
             
             /// Perform request
-            let request = URLRequest(url: URL(string: licenseConfigAddress)!, cachePolicy: cachePolicy, timeoutInterval: timeout)
+            let request = URLRequest(url: licenseConfigURL, cachePolicy: cachePolicy, timeoutInterval: timeout)
             let (serverData, urlResponse) = try await URLSession.shared.data(for: request)
             
             /// Convert jsonData to dict
-            guard let dict = try (JSONSerialization.jsonObject(with: serverData, options: []) as? NSDictionary) else { /// Sidenote: We used to cast to `NSMutableDictionary` here but that fails unless using the`.mutableContainers` option. Don't understand Swift casting.
+            guard let dict = try JSONSerialization.jsonObject(with: serverData, options: []) as? NSDictionary else { /// Sidenote: We used to cast to `NSMutableDictionary` here but that fails unless using the`.mutableContainers` option. Don't understand Swift casting.
                 throw NSError(
                     domain: MFLicenseConfigErrorDomain,
                     code: Int(kMFLicenseConfigErrorCodeInvalidDict),
@@ -55,7 +79,7 @@ import CocoaLumberjackSwift
             let result = try MFLicenseConfig(jsonDictionary: NSMutableDictionary(dictionary: dict), freshness: kMFValueFreshnessFresh, requireSecureCoding: true)
             
             /// Update cache
-            self.configCache = dict
+            self._licenseConfigDictCache = dict
             
             /// Return
             return result
@@ -65,13 +89,10 @@ import CocoaLumberjackSwift
             DDLogInfo("Failed to get MFLicenseConfig from internet, using cache instead...\nError: \(e)")
         }
         
-        /// Downloading failed, use cache instead
-        return getCached()
+        return nil
     }
     
-    /// Cached init
-    
-    @objc static func getCached() -> MFLicenseConfig {
+    private static func licenseConfigCached() -> MFLicenseConfig? {
         
         /// Declare
         var instance: MFLicenseConfig? = nil
@@ -79,7 +100,7 @@ import CocoaLumberjackSwift
         /// Fill from cache
 
         do {
-            if let cachedDict = self.configCache, cachedDict.count > 0 {
+            if let cachedDict = self._licenseConfigDictCache, cachedDict.count > 0 {
                 instance = try MFLicenseConfig(jsonDictionary: NSMutableDictionary(dictionary: cachedDict), freshness: kMFValueFreshnessCached, requireSecureCoding: true)
             } else {
                 throw NSError(domain: "MFPlaceholderErrorDomain", code: 123456789, userInfo: ["message": "Couldn't load dict from config. (Probably because there is no dict in config)"])
@@ -88,34 +109,29 @@ import CocoaLumberjackSwift
             DDLogError("Falling back to hardcoded because filling MFLicenseConfig instance from cache failed with error:\n\(error). ")
         }
         
-        /// Use fallback file if no cache
-                
-        if instance == nil {
-            
-            do {
-                let url = Bundle.main.url(forResource: "fallback_licenseinfo_config", withExtension: "json")! /// Do forced cast here because we need some fallback. If this fails somethings totally wrong, so we should crash
-                let data = try Data(contentsOf: url, options: [])
-                let dict = try JSONSerialization.jsonObject(with: data, options: []) as! NSDictionary
-                instance = try MFLicenseConfig(jsonDictionary: NSMutableDictionary(dictionary: dict), freshness: kMFValueFreshnessFallback, requireSecureCoding: true)
-            } catch {
-                fatalError("Loading licenseConfig from fallback failed (this should never happen). Error: \(error)")
-            }
-        }
-        
-        
-        
-        /// Return
-        return instance! /// Force unwrap because it can't be nil since we always fill the variable with the fallback values at least
+        return instance
     }
     
-    /// Static vars / convenience
-    ///     Note: See `TrialCounter.swift` for notes on UserDefaults.
+    private static func licenseConfigFallback() -> MFLicenseConfig {
+        
+        do {
+            let url = Bundle.main.url(forResource: "fallback_licenseinfo_config", withExtension: "json")! /// Do forced cast here because we need some fallback. If this fails somethings totally wrong, so we should crash
+            let data = try Data(contentsOf: url, options: [])
+            let dict = try JSONSerialization.jsonObject(with: data, options: []) as! NSDictionary
+            let instance = try MFLicenseConfig(jsonDictionary: NSMutableDictionary(dictionary: dict), freshness: kMFValueFreshnessFallback, requireSecureCoding: true)
+            return instance
+        } catch {
+            fatalError("Loading licenseConfig from fallback failed (this should never happen). Error:\n\(error)")
+        }
+    }
     
-    fileprivate static var configCache: NSDictionary? {
+    /// Underlying cache
+    
+    private static var _licenseConfigDictCache: NSDictionary? {
         
         /// Cache for the JSON config file we download from the website
-        ///     We could store this as JSON data, JSON plaintext or `encodeWithCoder:` data. But storing it as a dict makes the config.plist the most readable, which is nicer for debuggability.
-        ///         Howeverrrr, when storing it as plaintext, that might make hacks really easy when we do offline validation, because you could just increase the trialDays to 999? Should keep this in mind and make sure super easy hacks aren't possible.
+        ///     We could store this as JSON bits, JSON text or `encodeWithCoder:` bits. But storing it as a dict makes the config.plist the most readable, which is nicer for debuggability.
+        ///         Howeverrrr, when storing it in a readable manner, that might make hacks really easy when we do offline validation, because you could just increase the trialDays to 999? Should keep this in mind and make sure it's not super easy to hack.
         
         set {
             

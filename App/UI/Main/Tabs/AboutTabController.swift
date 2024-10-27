@@ -104,7 +104,7 @@ class AboutTabController: NSViewController {
         ///         - Update: Oct 2024: This is totally outdated and I don't know what it means anymore.
         
         /// Get cache
-        let cachedLicenseConfig = LicenseConfig.getCached()
+        let cachedLicenseConfig = LicenseConfig.getOffline()
         let (cachedLicenseState, cachedTrialState) = License.checkLicenseAndTrialCached(licenseConfig: cachedLicenseConfig)
         
         /// Step 1: Set UI to cache
