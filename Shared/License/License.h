@@ -109,8 +109,8 @@ MFDataClassInterface10(MFDataClassBase, MFLicenseConfig,    readonly, assign,   
 ///     Explanations in the .m file
 
 @interface MFLicenseTypeInfo (Extensions)
-    BOOL MFLicenseTypeIsPersonallyPurchased(MFLicenseTypeInfo *_Nonnull info);
-    BOOL MFLicenseTypeRequiresValidLicenseKey(MFLicenseTypeInfo *_Nonnull info);
+    BOOL MFLicenseTypeIsPersonallyPurchased(MFLicenseTypeInfo *_Nullable info);
+    BOOL MFLicenseTypeRequiresValidLicenseKey(MFLicenseTypeInfo *_Nullable info);
 @end
 
 @interface MFLicenseConfig (Extensions)
@@ -138,8 +138,8 @@ typedef NSInteger MFLicenseErrorCode;
     static const MFLicenseErrorCode kMFLicenseErrorCodeInvalidNumberOfActivations   = 2;
     static const MFLicenseErrorCode kMFLicenseErrorCodeGumroadServerResponseError   = 3;    /// The Gumroad server has responded with `success: false`
     static const MFLicenseErrorCode kMFLicenseErrorCodeServerResponseInvalid        = 4;    /// The server response does not follow the expected format.
-    static const MFLicenseErrorCode kMFLicenseErrorCodeKeyNotFound                  = 5;
-    static const MFLicenseErrorCode kMFLicenseErrorCodeNoInternetAndNoCache         = 6;    /// Oct 2024: Should rename this to noServerAndNoCache - since there are other reasons that we might not get a clear response from the server about whether a license is valid or not
+//    static const MFLicenseErrorCode kMFLicenseErrorCodeKeyNotFound                  = 5;
+//    static const MFLicenseErrorCode kMFLicenseErrorCodeNoInternetAndNoCache         = 6;    /// Oct 2024: Should rename this to noServerAndNoCache - since there are other reasons that we might not get a clear response from the server about whether a license is valid or not
 
 static const NSErrorDomain _Nonnull MFLicenseConfigErrorDomain = @"MFLicenseConfigErrorDomain";
 typedef NSInteger MFLicenseConfigErrorCode;

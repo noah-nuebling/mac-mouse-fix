@@ -35,7 +35,7 @@ class TrialSectionManager {
     
     /// Start and stop
     
-    func startManaging(licenseConfig: MFLicenseConfig, licenseState: MFLicenseState, trialState: MFTrialState) {
+    func startManaging(licenseConfig: MFLicenseConfig, trialState: MFTrialState) {
         
         /// Make initialSection current
         showInitial(animate: false)
@@ -51,7 +51,7 @@ class TrialSectionManager {
         currentSection.imageView!.image = Symbols.image(withSymbolName: imageName)
         
         /// Set string
-        currentSection.textField!.attributedStringValue = LicenseUtility.trialCounterString(licenseConfig: licenseConfig, licenseState: licenseState, trialState: trialState)
+        currentSection.textField!.attributedStringValue = LicenseUtility.trialCounterString(licenseConfig: licenseConfig, trialState: trialState)
         
         /// Set height
         ///     This wasn't necessary under Ventura but under Monterey the textField is too high otherwise

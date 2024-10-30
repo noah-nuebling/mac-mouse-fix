@@ -136,7 +136,7 @@ class TrialNotificationController: NSWindowController {
             
             /// Init the trialSection
             trialSectionManager = TrialSectionManager(self.trialSection)
-            trialSectionManager.startManaging(licenseConfig: licenseConfig, licenseState: licenseState, trialState: trialState)
+            trialSectionManager.startManaging(licenseConfig: licenseConfig, trialState: trialState)
             
             /// Set the bodyString
             

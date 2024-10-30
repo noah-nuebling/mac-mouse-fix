@@ -40,7 +40,7 @@ import CocoaLumberjackSwift
         
         let onComplete = {
             self.isProcessing = false
-            MainAppState.shared.aboutTabController?.updateUIToCurrentLicense() /// Would much more efficient to pass in the license here
+            MainAppState.shared.aboutTabController?.updateUIToCurrentLicense() /// Probably outdated comment: (as of Oct 2024) Would much more efficient to pass in the license here
             MFMessagePort.sendMessage("terminate", withPayload: nil, waitForReply: false) /// Restart helper
         }
         
@@ -87,59 +87,64 @@ import CocoaLumberjackSwift
         ///     Note: Not necessary, the UI response is super fast
         
         /// Ask server
-        /// Notes:
-        /// - Instead of getting the licenseConfig every time, we could also use cached LicenseConfig, if we update it once on app start. The `URLSession` class that `LicenseConfig.get()` uses internally also has built-in caching. Maybe we should use that?
         
         Task.detached(priority: .userInitiated, operation: {
             
+            /// Get licenseConfig
+            /// Notes:
+            /// - Instead of getting the licenseConfig every time, we could also use cached LicenseConfig, if we update it once on app start. The `URLSession` class that `LicenseConfig.get()` uses internally also has built-in caching. Maybe we should use that?
+            ///     Update: (Oct 2024) GetLicenseConfig.get() now internally uses inMemoryCache. See implementation for more.
             let licenseConfig = await GetLicenseConfig.get()
             
-            if isDifferent {
+            /// Determine if this is a licenseKey *activation* or just a *check*
+            ///     We activate if this is a a fresh licenseKey, different from the key that was already activated and stored. Meaning that the user changed the licenseKey in the textbox before they clicked "Activate License"
+            let isActivation = isDifferent
+            
+            /// Ask licenseServer
+            let (state, serverError) = await GetLicenseState.licenseStateFromServer(key: key,
+                                                                                    incrementUsageCount: isActivation, /// Increasing the usageCount is the main difference between activating and checking a license
+                                                                                    licenseConfig: licenseConfig)
+            /// Determine success
+            /// Notes:
+            ///     (The following note is outdated as of Oct 2024 because we're now directly using the lower-level function to talk the licenseServer, instead of using the higher-level function that applies freeCountry overrides and stuff.)
+            ///     - By checking for valueFreshness we filter out the case where there's no internet but the cache still tells us it's licensed
+            ///         The way things are currently set up this leads to weird behaviour when activating a license without internet in freeCountries: If the cache says it's licensed, users will get the no internet error, but if the cache says it's not licensed. Users will get the it's free in your country message. This is because the freeCountry overrides inside activateLicense only take effect if isLicensed is false. This is slightly weird but it's such a small edge case that I don't think it matters. Although it hints that it might be more logical to change the logic for applying the freeCountry overrides.
+            let isValidLicense = state?.isLicensed ?? false
+            
+            /// Store new licenseKey
+            if isActivation && isValidLicense {
                 
-                let (state, error) = await GetLicenseState.activateLicense(key: key, licenseConfig: licenseConfig)
-                let isLicensed = state.isLicensed
-                let freshness = state.freshness
-                let licenseTypeInfo = state.licenseTypeInfo
-                    
-                /// By checking for valueFreshness we filter out the case where there's no internet but the cache still tells us it's licensed
-                ///     Note:
-                ///     The way things are currently set up this leads to weird behaviour when activating a license without internet in freeCountries: If the cache says it's licensed, users will get the no internet error, but if the cache says it's not licensed. Users will get the it's free in your country message. This is because the freeCountry overrides inside activateLicense only take effect if isLicensed is false. This is slightly weird but it's such a small edge case that I don't think it matters. Although it hints that it might be more logical to change the logic for applying the freeCountry overrides.
-                
-                let success = isLicensed && (freshness == kMFValueFreshnessFresh)
-                
-                /// Store new licenseKey
-                if success && MFLicenseTypeRequiresValidLicenseKey(licenseTypeInfo) {
-                    SecureStorage.set("License.key", value: key)
+                /// Validate
+                if !MFLicenseTypeRequiresValidLicenseKey(state?.licenseTypeInfo) {
+                    DDLogError("Error: Will store licenseKey but license has type that doesn't appear to require valid license key. (Doesn't make sense) License state: \(state ?? "<nil>")")
+                    assert(false)
                 }
                 
-                /// Dispatch to main because UI stuff needs to be controlled by main
-                DispatchQueue.main.async {
-                    
-                    /// Display user feedback
-                    self.displayUserFeedback(success: success, licenseTypeInfo: licenseTypeInfo, error: error, key: key, userChangedKey: isDifferent)
-                    
-                    /// Wrap up
-                    onComplete()
-                }
+                /// Store
+                SecureStorage.set("License.key", value: key)
+            }
+            /// Get licenseState override
+            ///     Explanation: Even if the server says the license is not valid, there might be special conditions that render the app activated regardless - and we wanna tell the user about this.
+            let licenseStateOverride = isValidLicense ? nil : await GetLicenseState.licenseStateFromOverrides()
+        
+            /// Validate
+            if let override = licenseStateOverride {
+                assert(override.isLicensed == true)
+            }
+            
+            /// Dispatch to mainThread because UI stuff needs to be controlled by main
+            DispatchQueue.main.async {
+            
+                /// Display user feedback
+                self.displayUserFeedback(isValidLicense: isValidLicense,
+                                         licenseTypeInfo: state?.licenseTypeInfo,
+                                         licenseTypeInfoOverride: licenseStateOverride?.licenseTypeInfo,
+                                         error: serverError,
+                                         key: key,
+                                         isActivation: isActivation)
                 
-            } else {
-                
-                let (state, error) = await GetLicenseState.checkLicense(key: key, licenseConfig: licenseConfig)
-                let isLicensed = state.isLicensed
-                let freshness = state.freshness
-                let licenseTypeInfo = state.licenseTypeInfo
-                    
-                /// Should we check for valueFreshness here?
-                let success = isLicensed
-                
-                DispatchQueue.main.async {
-                    
-                    /// Display user feedback
-                    self.displayUserFeedback(success: success, licenseTypeInfo: licenseTypeInfo, error: error, key: key, userChangedKey: isDifferent)
-                    
-                    /// Wrap up
-                    onComplete()
-                }
+                /// Wrap up
+                onComplete()
             }
             
         })
@@ -147,44 +152,58 @@ import CocoaLumberjackSwift
     
     /// Helper for activateLicense
     
-    fileprivate func displayUserFeedback(success: Bool, licenseTypeInfo: MFLicenseTypeInfo, error: NSError?, key: String, userChangedKey: Bool) {
+    fileprivate func displayUserFeedback(isValidLicense: Bool, licenseTypeInfo: MFLicenseTypeInfo?, licenseTypeInfoOverride: MFLicenseTypeInfo?, error: NSError?, key: String, isActivation: Bool) {
         
-        if success {
+        /// Validate
+        if (isValidLicense) {
+            assert(licenseTypeInfo != nil)
+        }
+        
+        if isValidLicense /** server says the license is valid */ {
             
             /// Dismiss
             LicenseSheetController.remove()
             
-            /// Show message
+            /// Validate:
+            ///     license is one of the licenseTypes that requires entering a valid license key.
+            if !MFLicenseTypeRequiresValidLicenseKey(licenseTypeInfo) {
+                DDLogError("Error: Will display default 'license has been activated' message but license has type that doesn't require valid license key (how can you 'activate' a license without a license key?) Type of the license: \(type(of: licenseTypeInfo))")
+                assert(false)
+            }
+            
             let message: String
-            
-            switch licenseTypeInfo {
-            case is MFLicenseTypeInfoFreeCountry:
-                message = NSLocalizedString("license-toast.free-country", comment: "First draft: This license __could not be activated__ but Mac Mouse Fix is currently __free in your country__!")
-            case is MFLicenseTypeInfoForce:
-                message = "FORCE_LICENSED flag is active"
-            default:
-            
-                /// Validate:
-                ///     license is one of the licenseTypes that requires entering a valid license key.
-                if !MFLicenseTypeRequiresValidLicenseKey(licenseTypeInfo) {
-                    DDLogError("Error: Will display default 'license has been activated' message but license has type that doesn't require valid license key (how can you 'activate' a license without a license key?) Type of the license: \(type(of: licenseTypeInfo))")
-                    assert(false)
-                }
-            
-                if userChangedKey {
-                    message = NSLocalizedString("license-toast.activate", comment: "First draft: Your license has been **activated**! 🎉")
-                } else {
-                    message = NSLocalizedString("license-toast.already-active", comment: "First draft: This license is **already activated**!")
-                }
+            if isActivation {
+                message = NSLocalizedString("license-toast.activate", comment: "First draft: Your license has been **activated**! 🎉")
+            } else {
+                message = NSLocalizedString("license-toast.already-active", comment: "First draft: This license is **already activated**!")
             }
 
-            ToastNotificationController.attachNotification(withMessage: NSAttributedString(coolMarkdown: message)!, to: MainAppState.shared.window!, forDuration: kMFToastDurationAutomatic)
+            ToastNotificationController.attachNotification(withMessage: NSAttributedString(coolMarkdown: message)!,
+                                                           to: MainAppState.shared.window!, /// Is it safe to force-unwrap this?
+                                                           forDuration: kMFToastDurationAutomatic)
             
-        } else /** failed to activate */ {
+        } else /** server failed to validate license */ {
             
             /// Show message
-            var message = ""
+            var message: String = ""
             
+            if let override = licenseTypeInfoOverride {
+                
+                switch override {
+                case is MFLicenseTypeInfoFreeCountry:
+                    message = NSLocalizedString("license-toast.free-country", comment: "First draft: This license __could not be activated__ but Mac Mouse Fix is currently __free in your country__!")
+                case is MFLicenseTypeInfoForce:
+                    message = "FORCE_LICENSED flag is active"
+                default: /// Default case: I think this can only happen if we forget to update this switch-statement after adding a new override.
+                    assert(false)
+                    DDLogError("Mac Mouse Fix appears to be licensed due to an override, but the specific override is not known:\n\(override)")
+                    message = "This license could not be activated but Mac Mouse Fix appears to be licensed due to some special condition that I forgot to write a message for. (Please [report this](https://noah-nuebling.github.io/mac-mouse-fix-feedback-assistant/?type=bug-report) as a bug. Thank you!)"
+                }
+                
+            } else {
+            
+            /// Show server error
+        
             if let error = error {
                 
                 if error.domain == NSURLErrorDomain {
@@ -240,15 +259,17 @@ import CocoaLumberjackSwift
                         
                     default:
                         assert(false)
+                        message = "" /// Note: Don't need error handling for this i guess because it will only happen if we forget to implement handling for one of our own MFLicenseError codes.
                     }
                     
                 } else {
                     let messageFormat = NSLocalizedString("license-toast.unknown-error", comment: "First draft: **An unknown error occurred:**\n\n%@")
-                    message = String(format: messageFormat, error.description)
+                    message = String(format: messageFormat, error.description) /// Should we use `error.localizedDescription` `.localizedRecoveryOptions` or similar here?
                 }
                 
             } else {
                 message = NSLocalizedString("license-toast.unknown-reason", comment: "First draft: Activating your license failed for **unknown reasons**\n\nPlease write a **Bug Report** [here](https://noah-nuebling.github.io/mac-mouse-fix-feedback-assistant/?type=bug-report)")
+            }
             }
             
             assert(message != "")
@@ -256,7 +277,9 @@ import CocoaLumberjackSwift
             /// Display Toast
             ///     Notes:
             ///     - Why are we using `self.view.window` here, and `MainAppState.shared.window` in other places? IIRC `MainAppState` is safer and works in more cases whereas self.view.window might be nil in more edge cases IIRC (e.g. when the LicenseSheet is just being loaded or sth? I don't know anymore.)
-            ToastNotificationController.attachNotification(withMessage: NSAttributedString(coolMarkdown: message)!, to: self.view.window!, forDuration: kMFToastDurationAutomatic)
+            ToastNotificationController.attachNotification(withMessage: NSAttributedString(coolMarkdown: message)!,
+                                                           to: self.view.window!, /// Note: (Oct 2024) Might not wanna force-unwrap this
+                                                           forDuration: kMFToastDurationAutomatic)
             
         }
     }
@@ -301,6 +324,10 @@ import CocoaLumberjackSwift
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        /// Note:
+        ///     (Oct 2024) This is the only thing that updates `self.initialKey`. After activating a new key, this needs to be called, otherwise things break.
+        ///         TODO: Check if this is always called after activating a new key.
+        
         /// Load existing key into licenseField
         var key: String = ""
         if let k = SecureStorage.get("License.key") as? String {
@@ -340,7 +367,7 @@ import CocoaLumberjackSwift
     
     /// Define errors
     
-    private enum LicenseSheetError: Error {
-    case noChange
-    }
+//    private enum LicenseSheetError: Error {
+//    case noChange
+//    }
 }

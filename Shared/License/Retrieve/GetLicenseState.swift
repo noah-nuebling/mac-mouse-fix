@@ -14,87 +14,72 @@ import CocoaLumberjackSwift
     /// -> This class retrieves instances of the `MFLicenseConfig` dataclass
     
     static func checkLicenseOffline() -> MFLicenseState {
-        let result = self.licenseStateCache ?? self.licenseStateFallback
+        let result = self.licenseStateFromCache() ?? self.licenseStateFromFallback
         return result
     }
     
-    static func checkLicense(licenseConfig: MFLicenseConfig) async -> (licenseState: MFLicenseState, error: NSError?) {
-    
-        /// Wrappers for `_checkLicense` that sets incrementUsageCount to false and automatically retrieves the licenseKey from secure storage
-        ///     Meant to be used by the rest of the app except LicenseSheet
-        
-        /// Setting key to nil so it's retrieved from secureStorage
-        return await _checkLicense(key: nil, licenseConfig: licenseConfig, incrementUsageCount: false)
-    }
-    
-    /// Wrappers for `_checkLicense` that set incrementUsageCount to true / false.
-    ///     Meant to be used by LicenseSheet
-    
-    static func checkLicense(key: String, licenseConfig: MFLicenseConfig) async -> (licenseState: MFLicenseState, error: NSError?) {
-        
-        return await _checkLicense(key: key, licenseConfig: licenseConfig, incrementUsageCount: false)
-    }
-    
-    static func activateLicense(key: String, licenseConfig: MFLicenseConfig) async -> (licenseState: MFLicenseState, error: NSError?) {
-        
-        return await _checkLicense(key: key, licenseConfig: licenseConfig, incrementUsageCount: true)
-    }
-    
-    private static func _checkLicense(key keyArg: String?, licenseConfig: MFLicenseConfig, incrementUsageCount: Bool) async -> (licenseState: MFLicenseState, error: NSError?) {
+    public static func checkLicense() async -> MFLicenseState {
         
         /// This function determines the current licenseState of the application.
-        ///     To do this, it checks the licenseServer, cache, fallback values, and special conditions
-        
+        ///     To do this, it checks the `licenseServer`, `cache`, `fallback` values, and `special conditions`
+        ///
         /// Discussion:
-        /// - On thread safety: (Oct 2024) This function accesses the following shared state: `SecureStorage` values and cached values (which are stored in `config.plist`).
-        ///     > As long as `Config` and `SecureStorage` accesses are thread safe, I thinkk this function should be thread-safe, too? (Not entirely sure.)
-        ///     > Otherwise we might want to ensure that License.swift is always accessed from the same thread/queue, (probably main thread would be fine )or if that's not possible - use locks.
+        ///     On offline validation:
+        ///         For a basic explanation of our offline-validation plan, read `GetLicenseConfig.licenseConfigFromServer()`
+        ///         This function will try to avoid internet connections if possible to enable totally offline operation of the app under standard conditions.
+        ///             - For the return value (`MFLicenseState`): this function will look at the `cache` first, (using SHA-256 hashing for validation) and only if that fails will it ask the `licenseServer` and then the other sources.
+        ///             - As discussed elsewhere, throughout the app, we only retrieve the `MFLicenseConfig` if necessary to minimize internet connections. In this function, if the offline retrieval & validation of the `MFLicenseStates` succeeds, then this function does not need the `MFLicenseConfig` at all - therefore it's totally offline in that case (as of Oct 2024)
+    
+        ///     On thread safety: (Oct 2024) This function accesses the following shared state: `SecureStorage` values and cached values (which are stored in `config.plist`).
+        ///         > As long as `Config` and `SecureStorage` accesses are thread safe, I thinkk this function should be thread-safe, too? (Not entirely sure.)
+        ///      > Otherwise we might want to ensure that License.swift is always accessed from the same thread/queue, (probably main thread would be fine) or if that's not possible - use locks. (Update: Locks can't be used in async contexts in Swift, but the Swift package `groue/Semaphore` - which we discussed elsewhere - might fix this.)
         
         var result: MFLicenseState?
-        var resultError: NSError?
+        var serverError: NSError?
         
-        ///
         /// Check if the license key is valid
-        ///
         
         checkLicenseKeyValidity: do {
             
             /// Get key
-            ///     From arg or from secure storage
+            ///     from secure storage
             
-            guard let key = keyArg ?? (SecureStorage.get("License.key") as? String) else {
+            guard let key = SecureStorage.get("License.key") as? String else {
                     
-                /// No key provided in function arg and no key found in secure storage
+                /// No key found in secure storage
                 
                 /// Return unlicensed
-                ///     Notes:
-                ///     - Perhaps we should also do this if the licenseKey is an emptyString?
-                ///     - Does it really make sense to return an error here? We don't display any errors to the user based on this, since on the licenseSheet, the user is always going to enter a licenseKey before getting feedback about licensing issues I think, so maybe we should treat this as an 'internal error' and not return an NSError.
+                ///     Note: Perhaps we should also do this if the licenseKey is an emptyString?
                 result = MFLicenseState(isLicensed: false, freshness: kMFValueFreshnessFresh, licenseTypeInfo: MFLicenseTypeInfoNotLicensed())
-                resultError = NSError(domain: MFLicenseErrorDomain, code: Int(kMFLicenseErrorCodeKeyNotFound))
+                DDLogInfo("GetLicenseState: No license key was found in the secureStorage.\n(This is now just a log message. Would formerly return NSError with code kMFLicenseErrorCodeKeyNotFound)")
                 break checkLicenseKeyValidity
             }
             
-            /// Ask licenseServer(s)
-            (result, resultError) = await askLicenseServers(key: key, incrementUsageCount: incrementUsageCount, licenseConfig: licenseConfig)
+            /// Gather licenseConfig
+            let licenseConfig = await GetLicenseConfig.get()
             
-            /// Fall back to cache
-            ///     In case the server did not say whether the key is valid or not
-            if result == nil {
-                result = self.licenseStateCache
+            /// Ask licenseServer(s)
+            (result, serverError) = await licenseStateFromServer(key: key, incrementUsageCount: false, licenseConfig: licenseConfig)
+        
+            /// Log errors
+            if let error = serverError {
+                DDLogInfo("GetLicenseState: LicenseServer API responded with error: \(error)")
             }
             
-            /// Fall back to hardcoded
-            if result == nil {
-                resultError = NSError(domain: MFLicenseErrorDomain,
-                                      code: Int(kMFLicenseErrorCodeNoInternetAndNoCache)) /// Not sure this error is useful, especially since it overrides the serverError, which might prevent useful feedback from being displayed to the user. Alsooo, `kMFValueFreshnessFallback` already carries the same information as this error doesn't it? Update: The problem of overriding the serverError doesn't occur in practise because the app always checks the server and fills the cache on startup - before the user opens the licenseSheet where they might see license-related error messages. (As of Oct 19 - I think once we introduce offline validation this might not be true anymore.)
-                result = self.licenseStateFallback
+            /// Fall back to cache / hardcoded
+            ///     In case the server did not say whether the key is valid or not
+            result = result ?? self.licenseStateFromCache() ?? self.licenseStateFromFallback
+            
+            /// Log fallback
+            if result?.freshness != kMFValueFreshnessFresh {
+                DDLogInfo("GetLicenseState: Using cached/hardcoded licenseState:\(result ?? "<nil>")\n(This is now just a log message. Would formerly return NSError with code: kMFLicenseErrorCodeNoInternetAndNoCache")
             }
             
         } /// end of checkLicenseKeyValidity
         
-        /// Unwrap the result
-        guard var result = result else {
+        /// Unwrap the MFLicenseState
+        guard var result = result
+        else {
             fatalError("Something in our code is wrong. MFLicenseState is nil even though we should've assigned a hardcoded fallback value at the very least.")
         }
         
@@ -102,63 +87,58 @@ import CocoaLumberjackSwift
         assert(result.freshness != kMFValueFreshnessNone)
         if result.isLicensed { assert(!(result.licenseTypeInfo is MFLicenseTypeInfoNotLicensed)) }
         if result.isLicensed &&
-           (result.freshness == kMFValueFreshnessFresh) { assert(resultError == nil) }
+           result.freshness == kMFValueFreshnessFresh { assert(serverError == nil) }
         
-        /// Implement other `MFLicenseReason`s
-        ///     Aside from `ValidLicense`
-        ///     Note: Instead of using a licenseReason, we could also pass that info through the error. That might be better since we'd have one less argument and the the errors can also contain dicts with custom info. Maybe you could think about the error as it's used currently as the "unlicensed reason"
+        /// Implement special licenseTypes that don't require a valid license key
+        ///     we also call these special licenseTypes "special conditions" or "overrides"
         if result.isLicensed == false {
-            
-            overrideLicenseState: do {
+            if let override = await licenseStateFromOverrides() {
+                result = override
+            }
+        }
 
-                /// Implement `kMFLicenseReasonForce`
-                ///     See License.swift comments for more info
-#if FORCE_LICENSED
-                result = MFLicenseState(isLicensed: true, freshness: kMFValueFreshnessFresh, licenseTypeInfo: MFLIcenseTypeInfoForce())
-                break overrideLicenseState
-#endif
-                /// Implement `kMFLicenseReasonFreeCountry`
-                if let regionCode = LicenseUtility.currentRegionCode() { /// ChatGPT said currentRegionCode() might not be thread safe? I don't think we should worry about that, but not entirelyyy sure.
-                    let isFreeCountry = licenseConfig.freeCountries.contains(regionCode)
-                    if isFreeCountry {
-                        result = MFLicenseState(isLicensed: true, freshness: kMFValueFreshnessFresh, licenseTypeInfo: MFLicenseTypeInfoFreeCountry(regionCode: regionCode))
-                        break overrideLicenseState
-                    }
-                }
+        /// Return result
+        return result
+    }
+    
+    /// Server/cache/fallback/overrides interfaces
+    
+    public static func licenseStateFromOverrides() async -> MFLicenseState? {
+        
+        /// Old notes:
+        ///     - (This note is totally outdated as of Oct 2024 ->) Instead of using a licenseReason, we could also pass that info through the error. That might be better since we'd have one less argument and the the errors can also contain dicts with custom info. Maybe you could think about the error as it's used currently as the "unlicensed reason"
+        
+        /// Implement `FORCE_LICENSED` flag
+        ///     See License.swift comments for more info
+        
+        #if FORCE_LICENSED
+        return MFLicenseState(isLicensed: true, freshness: kMFValueFreshnessFresh, licenseTypeInfo: MFLicenseTypeInfoForce())
+        #endif
+        
+        /// Implement freeCountries
+        
+        if let regionCode = LicenseUtility.currentRegionCode() { /// ChatGPT said currentRegionCode() might not be thread safe? I don't think we should worry about that, but not entirelyyy sure.
+            let config = await GetLicenseConfig.get() /// This makes an internet connection - therefore we should probably check this "override" after the others - to avoid any non-essential internet connections.
+            let isFreeCountry = config.freeCountries.contains(regionCode)
+            if isFreeCountry {
+                return MFLicenseState(isLicensed: true, freshness: kMFValueFreshnessFresh, licenseTypeInfo: MFLicenseTypeInfoFreeCountry(regionCode: regionCode))
             }
         }
         
-        /// Cache result
-        ///     Note:
-        ///     - Doesn't really make sense that we cache *after* the license-value-overrides - The cache exists to substitute server values when the licenseServer isn't accessible.
-        ///     - Also doesn't make sense to cache values we retrieved from the cache / from the fallback
-        ///     - Also, if isLicensed is false, the MFLicenseState doesn't really hold any interesting info, so perhaps we could just delete the cache in that case, instead of caching all the uninteresting values?
-        self.licenseStateCache = result
-
-        /// Return result
-        return (result, resultError)
+        /// Default case - no overrides
+        return nil
     }
     
-    /// Server/cache/fallback interfaces
-    
-    private static let licenseStateFallback: MFLicenseState = MFLicenseState(isLicensed: false,
+    private static let licenseStateFromFallback: MFLicenseState = MFLicenseState(isLicensed: false,
                                                                              freshness: kMFValueFreshnessFallback,
                                                                              licenseTypeInfo: MFLicenseTypeInfoNotLicensed())
     
-    private static var licenseStateCache: MFLicenseState? {
-        
-        set {
+    private static func storeLicenseStateInCache(_ newValue: MFLicenseState) {
+    
             /// Note:
             ///     We're caching all the fields of the `MFLicenseState` (since that all depends on the licenseServer's evaluation, which might not always be available, requiring us to fall back to cached values)
             ///         It's unnecessary to cache the `MFLicenseState.freshness` value since that indicates the orgin of the data - server, cache, or fallback - and isn't really "part of the data" itself.
             ///         However, removing the value before caching requires extra lines of code, and doesn't have practical benefit, so we don't bother.
-            
-            /// Validate input
-            guard let newValue = newValue else {
-                DDLogError("Setting the cache to nil is undefined behavior")
-                assert(false);
-                return
-            }
             
             /// Archive object
             ///     (Oct 2024) The archive is pure data.
@@ -177,8 +157,9 @@ import CocoaLumberjackSwift
             /// Store data
             setConfig("License.licenseStateCache", cacheData as NSObject)
             commitConfig()
-        }
-        get {
+    }
+    
+    private static func licenseStateFromCache() -> MFLicenseState? {
             
             /// Get data
             guard let cacheData = config("License.licenseStateCache") as? Data else {
@@ -204,10 +185,9 @@ import CocoaLumberjackSwift
 
             /// Return
             return result
-        }
     }
 
-    private static func askLicenseServers(key: String, incrementUsageCount: Bool, licenseConfig: MFLicenseConfig) async -> (licenseState: MFLicenseState?, error: NSError?) {
+    public static func licenseStateFromServer(key: String, incrementUsageCount: Bool, licenseConfig: MFLicenseConfig) async -> (licenseState: MFLicenseState?, error: NSError?) {
     
         /// This function tries to retrieve the MFLicenseState from the known licenseServers.
         ///     If we don't receive clear information from any of the licenseServers about whether the license is valid or not, we return `nil`
@@ -316,12 +296,12 @@ import CocoaLumberjackSwift
             ///                 - For *unknown* licenses the server sends the message: "That license does not exist for the provided product."
             ///                 - For *disabled* licensed, the server sends the message: "This license key has been disabled."
             ///                 ... But I won't change that now cause I'm too lazy to think this through and I think 404 will also work.
-            ///             Update: The Gumroad docs also say "You will receive a 404 response code with an error message if verification fails." - so checking 404 seems to be the way (Src: https://help.gumroad.com/article/76-license-keys.html)
+            ///             Update: The Gumroad docs say "You will receive a 404 response code with an error message if verification fails." - so checking 404 seems to be the way (Src: https://help.gumroad.com/article/76-license-keys.html)
             ///     Considerations:
             ///         Generally, we want to err on the side of `LicenseValidityFromServer.unsure`, and only use `LicenseValidityFromServer.invalid` when we're *absolutely* sure that the license is invalid.
             ///         That's because if we set the value to`.invalid` we consider the app *definitively*unlicensed and then lock it down immediately (in case the free days have been used up), which makes for a really annoying user experience if there's a false positive on `.invalid` due to an internal server error or something.
             ///         If instead, we have a false positive on `.unsure` then we just fall back to the cached value for whether the app is licensed or not, which should make for a much less disruptive user experience.
-            ///         Actually, as I'm working on this, (Oct 9 2024) I got a [GitHub Issue](https://github.com/noah-nuebling/mac-mouse-fix/issues/1136) from a user saying they regularly have their app locked down and they have to re-enter their license. (I think I also saw reports like this before.) Hopefully that stuff will be fixed now!
+            ///         Actually, as I'm working on this, (Oct 9 2024) I got a [GitHub Issue](https://github.com/noah-nuebling/mac-mouse-fix/issues/1136) from a user saying they regularly have their app locked down and they have to re-enter their license. (I think I also saw reports like this before.) Hopefully that stuff is fixed now.
             
             let serverSuccess: Bool? = serverResponseDict["success"] as? Bool
             var isValidKey: LicenseValidityFromServer
@@ -363,6 +343,16 @@ import CocoaLumberjackSwift
                 fatalError("Something in our code is wrong. We determined the licenseKey to be valid but licenseTypeInfo is nil.")
             }
             result = MFLicenseState(isLicensed: true, freshness: kMFValueFreshnessFresh, licenseTypeInfo: licenseTypeInfo)
+        }
+        
+                    
+        /// Update cache
+        ///     Notes:
+        ///     - The cache exists to substitute server values when the licenseServer isn't accessible. (Update: Or when we don't want to talk to the licenseServer and instead we wanna do offline validation in order to minimize internet connections and enhance privacy.)
+        ///     - If isLicensed is false, the MFLicenseState doesn't really hold any interesting info, so perhaps we could just delete the cache in that case, instead of caching all the uninteresting values? Then we'd fallback to the hardcoded fallback values which will also make the app unlicensed - so the behavior should be the same.
+        ///     - We used to fill the cache at the end of `checkLicense()`. Discussion: That's sort of unnecessary since we end up caching values that just came out of the cache/fallback. However, caching override-MFLicenseStates like the freeCountry one might be sort of useful for extra robustness. E.g. if the app is licensed under a freeCountry license where that freeCountry isn't included in the hardcoded fallback, and then the internet and the licenseConfig cache goes away, then the user can't use the app anymore. Whereas when we cache the override-MFLicenseStates here, then that would serve as an extra failsafe making the app usable even if those other two things go away (I think at least - not entirely sure.)
+        if let result = result {
+            self.storeLicenseStateInCache(result)
         }
         
         /// Return

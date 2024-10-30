@@ -14,6 +14,7 @@ import CocoaLumberjackSwift
     /// -> This class retrieves instances of the `MFLicenseConfig` dataclass
     
     /// Main interface
+    
     @objc static func get() async -> MFLicenseConfig {
         
         let result = (await licenseConfigFromServer()) ?? licenseConfigCached() ?? licenseConfigFallback()
@@ -28,19 +29,52 @@ import CocoaLumberjackSwift
     
     /// Server/cache/fallback interfaces
     
+    @Atomic private static var inMemoryCache: MFLicenseConfig? = nil /// We should really be using a semaphore or mutex, but Swift async doesn't allow that (bc Swift is stinky). Using atomic should be ok. More on this below. (Oct 2024)
     private static func licenseConfigFromServer() async -> MFLicenseConfig? {
     
-        /// Download MFLicenseConfig.json
-        ///     Notes:
-        ///     - We used to use `URLSession.shared.download(...)` here but `URLSession.shared.data()` is better, since it returns the data directly instead of returning the url of a downloaded file. This should be more efficient. `.download` is more for large files and background downloads I think, not for a 2KB JSON file.
-        ///     - Is it really the best choice to disable allll caching? I guess it might prevent errors and inconsistencies?
+        /// Use in-memory cache
+        ///     Explanation:
+        ///         We wanna do offline validation. That means we want to avoid internet connections in our licensing code unless absolutely necessary.
+        ///             We do this to protect user's privacy. Before, there was a potential for Gumroad, GitHub, or their infrastructure providers (like Microsoft Azure, or AWS) to possibly track MMF user's behavior due to the regular web-requests sent by Mac Mouse Fix.
+        ///             See https://github.com/noah-nuebling/mac-mouse-fix/issues/976
+        ///         There are two pieces of data that our licensing code retrieves where the source-of-truth is a server (Meaning we need to connect to the internet to get the real data):
+        ///             Those two pieces of data are:`MFLicenseState` and `MFLicenseConfig`.
+        ///         For the `MFLicenseState` we prevent internet connections by always asking the on-disk cache before asking the server, and that cache we validate using the licenseKey and an SHA-256 hash. That way we know that the data we get from the cache is pretty up-to-date and matches the stored licenseKey.
+        ///         For the `MFLicenseConfig` we prevent internet connections by getting it only if needed. It's not needed at all on the code-path where the aforementioned offline validation succeeds and we end up using the `MFLicenseState` retrieved from the on-disk cache.
+        ///             -> "Getting it only if needed" means that our code is structured so that any branch in our control-flow that needs the "MFLicenseConfig" gets it right in that branch instead of getting it from the parent scope/caller. However this means there are lots independent of branches of our control flow that request the MFLicenseConfig.
+        ///             -> To prevent lots of back-to-back downloads of the MFLicenseConfig from the server from all those different control-flow branches, we do an `inMemoryCache` here. This makes it so that the `MFLicenseConfig` is only downloaded from the server *once* per app-start. All subsequent retrieveals of the MFLicenseConfig come from the `inMemoryCache` instead of the server.
+        ///             -> Discussion:
+        ///                 We couldn't do this kind of caching for the `MFLicenseState` since that might change while the app is running. E.g. when the user activates a new license, then the whole licenseState changes. I think the licenseState could even change under our feet if the user changes the license on another device, and then the licenseKey is synced to our device via iCloud.
+        ///                 However, this in-memory cache should be totally acceptable for `MFLicenseConfig`, because we only expect the licenseConfig to change every couple of weeks at most, and I think it's never crucial for it to change while the app is running. It's still nice for it to have the chance to update every time the app is launched though. If we never update it, there might be problems in the long term. E.g. we might end up with a dead link when the user clicks on `Mac Mouse Fix > Buy Mac Mouse Fix...` if we ever move the checkout page.
+        ///
+        ///         What's the difference between the inMemoryCache and the normal cache?
+        ///             The normal cache persists the licenseState on disk and is meant for when there is no way to reach the server, because the internet is down.
+        ///             The inMemoryCache is deleted after the app is closed and is meant to prevent duplicate, back-to-back downloads of the licenseConfig from the server.
+        ///
+        ///         Thread safety of the `inMemoryCache`
+        ///             (As of Oct 2024) Currently we're just making the `inMemoryCache` atomic to prevent some race conditions, but we still might download the licenseConfig multiple times in a row, if this function is called multiple times before the `inMemoryCache` is filled.
+        ///                          This isn't catastrophic so we'll just leave it for now. To solve this race condition we'd ideally lock this whole function with a mutex or semaphore, but Swift doesn't seem to allow that in async contexts (bc it's stinky)
+        ///                          The best way I know to solve this race condition would be using the Swift package `groue/Semaphore` which *would* let us use a semaphore in an async context.
+        ///         Thread safety in general:
+        ///             Aside from the `inMemoryCache`, the only other shared piece of state that `GetLicenseConfig.swift` deals with is `_licenseConfigDictCache` (that's the on-disk cache as opposed to the `inMemoryCache`). Its thread safety is discussed where it's declared.
+        ///
+        ///         Caveats:
+        ///             If we ever accidentally retrieve the `MFLicenseConfig` on the 'golden path' where we successfully offline validate the `MFLicenseState`, then our offline validation wouldn't be entirely offline anymore.  To monitor this, we could observe the `"GetLicenseConfig inMemoryCache:..."` logs which are sent below.
+        
+        if let c = inMemoryCache {
+            DDLogInfo("GetLicenseConfig inMemoryCache: Using inMemoryCache instead of retrieving the MFLicenseConfig from the server again.")
+            return c
+        }
+        DDLogInfo("GetLicenseConfig inMemoryCache: Retrieving the MFLicenseConfig from the server...")
         
         /// Define constants
+        ///     Note: Is it really the best choice to disable allll caching using the `NSURLRequest.CachePolicy`? I guess it might prevent errors and inconsistencies?
         let licenseConfigURL = URL(string: "\(kMFWebsiteRepoAddressRaw)/\(kMFLicenseInfoURLSub)")!
         let cachePolicy = NSURLRequest.CachePolicy.reloadIgnoringLocalAndRemoteCacheData
         let timeout = 10.0
         
         /// Perform request
+        ///     Note: We used to use `URLSession.shared.download(...)` here but `URLSession.shared.data()` is better, since it returns the data directly instead of returning the url of a downloaded file. This should be more efficient. `.download` is more for large files and background downloads I think, not for a 2KB JSON file.
         let request = URLRequest(url: licenseConfigURL, cachePolicy: cachePolicy, timeoutInterval: timeout)
         let (requestResult, requestError) = await MFCatch { try await URLSession.shared.data(for: request) }
         guard let requestResult = requestResult else {
@@ -63,8 +97,9 @@ import CocoaLumberjackSwift
             return nil
         }
         
-        /// Update cache
+        /// Update caches
         self._licenseConfigDictCache = dict
+        self.inMemoryCache = result
         
         /// Return
         return result
@@ -102,7 +137,7 @@ import CocoaLumberjackSwift
         }
     }
     
-    /// Underlying cache
+    /// Underlying on-disk cache
     
     private static var _licenseConfigDictCache: NSDictionary? {
         

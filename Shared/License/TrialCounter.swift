@@ -67,13 +67,9 @@ import CocoaLumberjackSwift
         ///     - We're using .detached because .init schedules on the current Actor according to the docs. We're not trying to use any Actors.
         ///     - Using priority .background because it makes sense?
         Task.detached(priority: .background, operation: {
-            
-            /// Get licenseConfig
-            ///     Note: Getting the licenseConfig is unnecessary if the app is licensed. That's because all that the licenseState() func needs the licenseConfig for is to check the number of trialDays. And if the app is licensed, we don't need to check for the trialDays.
-            let licenseConfig = await GetLicenseConfig.get()
         
             /// Check licensing state
-            let (licenseState, trialState, _) = await License.checkLicenseAndTrial(licenseConfig: licenseConfig)
+            let (licenseState, trialState) = await License.checkLicenseAndTrial()
             
             if licenseState.isLicensed {
                 
@@ -91,7 +87,7 @@ import CocoaLumberjackSwift
                 /// Set trialActive flag
                 self.trialIsActive = true
                 
-                /// Init hasBeeUsedToday
+                /// Init hasBeenUsedToday
                 self.hasBeenUsedToday = false
                 if let lastUseDate = TrialCounter.lastUseDate as? NSDate {
                     let now = Date.init(timeIntervalSinceNow: 0)
@@ -153,7 +149,7 @@ import CocoaLumberjackSwift
     @objc func handleUse() {
         
         /// Debug
-        DDLogDebug("handling use in trial")
+        DDLogDebug("TrialCounter.handleUse() called. trialIsActive: \(trialIsActive) | hasBeenUsedToday: \(hasBeenUsedToday) | lastUseDate: \(TrialCounter.lastUseDate ?? "<nil>") | daysOfUse: \(TrialCounter.daysOfUse)")
         
         /// Guard not running helper
         assert(runningHelper())
@@ -170,16 +166,16 @@ import CocoaLumberjackSwift
             ///     Update: (Oct 2024) now using `Task` instead of dispatch queue so we can use async/await
             
             /// Update state
-            ///     Should we check whether the date has actually changed?
+            ///     Notes:
+            ///     - Should we validate that the date has actually changed?
+            ///     - (Oct 2024) This is shared mutable state. Can there be race conditions? How bad would their effect be? I saw we are already wrapping  self.hasBeenUsedToday with @Atomic, so we seem to have given this some thought, but it's not documented.
             self.hasBeenUsedToday = true
             TrialCounter.lastUseDate = Date(timeIntervalSinceNow: 0.0)
             TrialCounter.daysOfUse += 1
-            
-            /// Get updated licenseConfig
-            let licenseConfig = await GetLicenseConfig.get()
                 
             /// Display UI & lock down helper if necessary
-            License.checkAndReact(licenseConfig: licenseConfig, triggeredByUser: false)
+            ///     Note: In this code branch, we already know that the app is not licensed, that the trial is active, and that, therefore, we'll need to load the licenseConfig to obtain the trialDuration -> Perhaps we should pass this information into the called function? As it is, the called function has to re-gather this info independently.
+            License.checkAndReact(triggeredByUser: false)
         })
     }
 }

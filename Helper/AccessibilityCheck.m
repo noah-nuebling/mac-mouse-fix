@@ -221,10 +221,7 @@
         ///         This leads to some delay between when the Helper is started and when it is locked down. If that delay is too long it could make for a weird experience. But right now it only seems to take a fraction of a second.
         
         [TrialCounter load_Manual];
-        
-        [GetLicenseConfig getWithCompletionHandler:^(MFLicenseConfig * _Nonnull licenseConfig) {
-            [License checkAndReactWithLicenseConfig:licenseConfig triggeredByUser:NO];
-        }];
+        [License checkAndReactWithTriggeredByUser:NO];
         
         ///
         /// Debug & testing

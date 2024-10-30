@@ -28,11 +28,12 @@ class AboutTabController: NSViewController {
     var payButtonWrapper: NSView? = nil
     var payButtonwrapperConstraints: [NSLayoutConstraint] = []
     
+    var currentIsLicensed: Bool? = nil
     var currentLicenseConfig: MFLicenseConfig? = nil
     var currentLicenseState: MFLicenseState? = nil
     var currentTrialState: MFTrialState? = nil
 
-    var trackingArea: NSTrackingArea? = nil
+    private var trackingArea: NSTrackingArea? = nil
     
     /// IBActions
     
@@ -104,11 +105,14 @@ class AboutTabController: NSViewController {
         ///         - Update: Oct 2024: This is totally outdated and I don't know what it means anymore.
         
         /// Get cache
-        let cachedLicenseConfig = GetLicenseConfig.getOffline()
-        let (cachedLicenseState, cachedTrialState) = License.checkLicenseAndTrialCached(licenseConfig: cachedLicenseConfig)
+        let (cachedLicenseConfig, cachedLicenseState, cachedTrialState) = License.checkLicenseAndTrialOffline()
         
         /// Step 1: Set UI to cache
-        updateUI(licenseConfig: cachedLicenseConfig, licenseState: cachedLicenseState, trialState: cachedTrialState)
+        if cachedLicenseState.isLicensed {
+            updateUI_WithIsLicensedTrue(licenseState: cachedLicenseState) /// Don't dispatch to main here bc this should already be running on main (?)
+        } else {
+            updateUI_WithIsLicensedFalse(licenseConfig: cachedLicenseConfig, trialState: cachedTrialState)
+        }
         
         /// 2. Get real values and update UI again
 //        updateUIToCurrentLicense()
@@ -134,39 +138,39 @@ class AboutTabController: NSViewController {
         
         Task.detached(priority: .userInitiated, operation: {
             
-            let licenseConfig = await GetLicenseConfig.get()
-            let (licenseState, trialState, error) = await License.checkLicenseAndTrial(licenseConfig: licenseConfig)
+            let (licenseState, trialState) = await License.checkLicenseAndTrial()
                 
-            DispatchQueue.main.async {
-                self.updateUI(licenseConfig: licenseConfig, licenseState: licenseState, trialState: trialState)
+            if licenseState.isLicensed {
+                DispatchQueue.main.async { self.updateUI_WithIsLicensedTrue(licenseState: licenseState) } /// Dispatch to main bc UI updates need to run on main.
+            } else {
+                let licenseConfig = await GetLicenseConfig.get() /// Only get the licenseConfig if the app *is not* licensed - that way, if the app *is* licensed through offline validation, we can avoid all internet connections.
+                DispatchQueue.main.async { self.updateUI_WithIsLicensedFalse(licenseConfig: licenseConfig, trialState: trialState) }
             }
         })
     }
     
-    func updateUI(licenseConfig: MFLicenseConfig, licenseState: MFLicenseState, trialState: MFTrialState) {
+    func updateUI_WithIsLicensedTrue(licenseState: MFLicenseState) {
         
-        /// Guard: no change from 'current' values
-        ///     This prevents unnecessary rerendering of the UI when this function is called several times with the same arguments. (Which we expect to happen - this function is first supposed to be called with cached LicenseState and then with the real LicenseState from the server - as soon as that's available.)
-        let licenseConfigChanged = currentLicenseConfig != licenseConfig
-        let licenseStateChanged = currentLicenseState != licenseState
-        let trialStateChanged = currentTrialState != trialState
-        
-        if !licenseConfigChanged && !licenseStateChanged && !trialStateChanged {
-            return
-        }
-        
-        /// Update 'current' values
-        ///     Note: We don't need to copy the values before we store them into the `current...` variables, because we know we never modify those values after creation.
-        currentLicenseConfig = licenseConfig
-        currentLicenseState = licenseState
-        currentTrialState = trialState
-        
-        /// Deactivate tracking area
-        if let trackingArea = self.trackingArea {
-            self.view.removeTrackingArea(trackingArea)
-        }
-        
-        if licenseState.isLicensed {
+            /// Also see `updateUI_WithIsLicensedFalse()` - the first few lines are logically identical and should be kept in sync
+            
+            /// Guard: no change from 'current' values
+            ///     This prevents unnecessary rerendering of the UI when this function is called several times with the same arguments. (Which we expect to happen - this function is first supposed to be called with cached LicenseState and then with the real LicenseState from the server - as soon as that's available.)
+            let isLicensed = true
+            if currentIsLicensed == isLicensed &&
+               currentLicenseState == licenseState
+            {
+                return
+            }
+            
+            /// Update 'current' values
+            ///     Note: We don't need to copy the values before we store them into the `current...` variables, because they are immutable
+            currentIsLicensed = isLicensed
+            currentLicenseState = licenseState
+            
+            /// Deactivate tracking area
+            if let trackingArea = self.trackingArea {
+                self.view.removeTrackingArea(trackingArea)
+            }
             
             ///
             /// Replace payButton with milkshake link
@@ -298,27 +302,51 @@ class AboutTabController: NSViewController {
             
             /// Remove calendar image
             trialSectionManager!.currentSection.imageView!.image = nil
+        
+    }
+    
+    func updateUI_WithIsLicensedFalse(licenseConfig: MFLicenseConfig, trialState: MFTrialState) {
+        
+            /// Also see `updateUI_WithIsLicensedTrue()` - the first few lines are logically identical and should be kept in sync
             
-        } else /** not licensed */ {
+            /// Guard: no change from 'current' values
+            let isLicensed = false
+            if currentIsLicensed == isLicensed &&
+               currentLicenseConfig == licenseConfig &&
+               currentTrialState == trialState
+            {
+                return
+            }
+            
+            /// Update 'current' values
+            ///     Note: We don't need to copy the values before we store them into the `current...` variables, because they are immutable
+            currentIsLicensed = isLicensed
+            currentLicenseConfig = licenseConfig
+            currentTrialState = trialState
+            
+            /// Deactivate tracking area
+            if let trackingArea = self.trackingArea {
+                self.view.removeTrackingArea(trackingArea)
+            }
             
             ///
             /// Setup trial section
             ///
             
             /// Begin managing
-            trialSectionManager?.startManaging(licenseConfig: licenseConfig, licenseState: licenseState, trialState: trialState)
+            trialSectionManager?.startManaging(licenseConfig: licenseConfig, trialState: trialState)
             
             /// Set textfield height
             ///     Necessary for y centering. Not sure why
             ///     Edit: Not necessary anymore since we're using the trialSectionManager. Not sure why.
             
-//            trialSectionManager!.trialSection.textField!.heightAnchor.constraint(equalToConstant: 20).isActive = true
+    //        trialSectionManager!.trialSection.textField!.heightAnchor.constraint(equalToConstant: 20).isActive = true
 
-            
             if trialState.trialIsActive {
                 
                 /// Update layout
                 ///     So tracking area frames / bounds are correct
+                ///     Update: (Oct 2024) I think we don't need the tracking areas anymore? IIRC they were originally used to change from displaying "Day x/30" to "Click here to Activate License" on hover. But we ended up turning the hover effect off. So I think the tracking areas might not be necessary
                 trialSectionManager?.currentSection.needsLayout = true
                 trialSectionManager?.currentSection.superview?.needsLayout = true
                 trialSectionManager?.currentSection.superview?.layoutSubtreeIfNeeded()
@@ -330,7 +358,7 @@ class AboutTabController: NSViewController {
             }
             else { /// Trial has expired
                 
-                /// Always show activate button
+                /// Always show activateLicense button
                 trialSectionManager?.showAlternate(animate: false)
             }
             
@@ -398,8 +426,7 @@ class AboutTabController: NSViewController {
             
             /// Hide link
             self.moneyCellLink.isHidden = true
-            
-        }
+        
     }
     
     /// Tracking area calllbacks

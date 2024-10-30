@@ -162,11 +162,16 @@ MFDataClassImplement10(MFDataClassBase, MFLicenseConfig,    readonly, assign,   
 
 @implementation MFLicenseTypeInfo (Extensions)
 
-    BOOL MFLicenseTypeIsPersonallyPurchased(MFLicenseTypeInfo *_Nonnull info) {
+    BOOL MFLicenseTypeIsPersonallyPurchased(MFLicenseTypeInfo *_Nullable info) {
 
         /// Tells us whether the user had to actively, personally purchase Mac Mouse Fix to obtain this type of license.
         
-        if (info == nil) { assert(false); return NO; }
+        if (info == nil ||
+            info.class == MFLicenseTypeInfoNotLicensed.class)
+        {
+            assert(false);
+            return NO;
+        }
         
         if (info.class == MFLicenseTypeInfoFreeCountry.class)        return NO;
         if (info.class == MFLicenseTypeInfoForce.class)              return NO;
@@ -182,11 +187,16 @@ MFDataClassImplement10(MFDataClassBase, MFLicenseConfig,    readonly, assign,   
         return YES;
     }
 
-    BOOL MFLicenseTypeRequiresValidLicenseKey(MFLicenseTypeInfo *_Nonnull info) {
+    BOOL MFLicenseTypeRequiresValidLicenseKey(MFLicenseTypeInfo *_Nullable info) {
         
         /// Tells us whether the user has to enter a valid licenseKey to activate the application under this licenseType
         
-        if (info == nil) { assert(false); return NO; }
+        if (info == nil ||
+            info.class == MFLicenseTypeInfoNotLicensed.class)
+        {
+            assert(false);
+            return NO;
+        }
         
         if (info.class == MFLicenseTypeInfoFreeCountry.class)        return NO;
         if (info.class == MFLicenseTypeInfoForce.class)              return NO;
