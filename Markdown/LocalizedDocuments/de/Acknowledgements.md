@@ -40,6 +40,7 @@ Diese Leute haben viel mehr als den Standardpreis ausgegeben und mir einen **ung
 
 **Oktober 2024**
 
+- 🇯🇵&nbsp;Suttang
 - 🇺🇸&nbsp;Transistor - "We do a touch of skylarking"
 - 🇺🇸&nbsp;Minseo&nbsp;Kim - "So much better than MOS!!! You deserve so much more than $3 :)"
 - 🇩🇪&nbsp;Frank&nbsp;Steinborn
