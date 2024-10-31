@@ -42,6 +42,7 @@ These people spent a lot more than the standard price and treated me to an **Inc
 
 **October 2024**
 
+- 🇺🇸&nbsp;Elizabeth&nbsp;Brown
 - 🇯🇵&nbsp;Suttang
 - 🇺🇸&nbsp;Transistor - "We do a touch of skylarking"
 - 🇺🇸&nbsp;Minseo&nbsp;Kim - "So much better than MOS!!! You deserve so much more than $3 :)"
