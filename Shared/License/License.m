@@ -80,7 +80,7 @@ MFDataClassImplement10(MFDataClassBase, MFLicenseConfig,    readonly, assign,   
         /// Define equality for MFLicenseState
         /// Reasoning:
         /// - We compare all fields except for the `freshness` field - the idea is that the `freshness` determines the *origin* of the data, but, in some sense, isn't *itself* part of the data.
-        ///     Also, practically, on the `AboutTabController`, we always first render the UI based on cached values, then we try to load the real values from the server, and then, unless the server data is mismatched with the cache, we don't want to rerender the UI (This would be problematic since the Thank You message at the bottom of the About Tab would then be set to something else) (As of Oct 2024)
+        ///     Also, practically, on the `AboutTabController`, we always first render the UI based on cached values, then we try to load the real values from the server, and then, unless the server data is mismatched with the cache, we don't want to rerender the UI (This would be problematic since the Thank You message at the bottom of the About Tab would then be re-shuffled to something else) (As of Oct 2024)
 
         /// Sidenotes:
         ///     Places where we check equality (as of Oct 2024)
@@ -142,7 +142,7 @@ MFDataClassImplement10(MFDataClassBase, MFLicenseConfig,    readonly, assign,   
         ///    - We don't check `freshness` because it describes the origin of the data (cache, server, etc) and, in a sense, isn't itself part of the data we're trying to represent.
         ///    - All other properties should be checked - don't forget to update this when adding new properties!
         ///    Sidenotes: (from the old Swift implementation)
-        ///    - I also tried overriding `==` directly, but it didn't work for some reason.
+        ///    - I also tried overriding `==` directly instead of `isEqual:`, but it didn't work for some reason. (`==` normally just maps to`isEqual:`, so this is weird.)
         ///    - I accidentally overrode isEqual(to:) instead of isEqual() causing great confusion (it breaks the `==` operator in Swift.)-
 
         return @[@(self->_maxActivations),
@@ -179,7 +179,7 @@ MFDataClassImplement10(MFDataClassBase, MFLicenseConfig,    readonly, assign,   
         if (info.class == MFLicenseTypeInfoGumroadV1.class)          return YES;
         if (info.class == MFLicenseTypeInfoPaddleV1.class)           return YES;
         if (info.class == MFLicenseTypeInfoHyperWorkV1.class)        return NO;
-        if (info.class == MFLicenseTypeInfoGumroadBusinessV1.class)  return NO; /// Don't forget to add definitions here when you add a new dataclass!
+        if (info.class == MFLicenseTypeInfoGumroadBusinessV1.class)  return NO; /// Don't forget to add definitions here when you add a new licenseType!
         
         
         assert(false);

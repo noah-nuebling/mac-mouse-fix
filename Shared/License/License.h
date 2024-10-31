@@ -89,12 +89,12 @@ MFDataClassInterface4(MFDataClassBase, MFTrialState,     readonly, assign,      
                                                          readonly, assign,        , NSInteger,  trialDays,
                                                          readonly, assign,        , BOOL,       trialIsActive)
     
-/// Note: MFLicenseConfig abstracts away licensing params like the trialDuration or the price. At the time of writing the configuration is loaded from macmousefix.com. This allows us to easily change parameters like the price displayed in the app for all users.
+/// Note: MFLicenseConfig abstracts away licensing params like the trialDuration or the price. At the time of writing (Oct 2024) the configuration is loaded from macmousefix.com. This allows us to easily change parameters like the price displayed in the app for all users.
 MFDataClassInterface10(MFDataClassBase, MFLicenseConfig,    readonly, assign,        , MFValueFreshness     , freshness,
                                                             readonly, assign,        , NSInteger            , maxActivations,
                                                             /// ^^ Define max activations
                                                             ///     I want people to activate MMF on as many of their machines  as they'd like.
-                                                            ///     This is just so you can't just share one email address + license key combination on some forum and have everyone use that forever. This is probably totally unnecessary.
+                                                            ///     This is just so you can't just share one licenseKey on some forum and have everyone use that forever. This is probably totally unnecessary.
                                                             readonly, assign,        , NSInteger            , trialDays,
                                                             readonly, assign,        , NSInteger            , price,
                                                             readonly, strong, nonnull, NSString *           , payLink,
@@ -129,13 +129,13 @@ MFDataClassInterface10(MFDataClassBase, MFLicenseConfig,    readonly, assign,   
 ///         - We should probably clean up our use of NSErrorDomain (+ errorCodes +  NSExceptionName)
 ///             -> There's only one NSCocoaErrorDomain. So there should probably only one `MFErr` error domain.
 ///             -> We also use 12345689 or -1 or whatever as the error codes in several places. We should probably at least introduce `kMFErrorCodeUnspecified` to clean that stuff up.
-///             -> (Since we're not writing a library and not displaying user feedback for 95% of the errors, we don't need specific error codes because we don't implement any handling logic - it's just for debugging purposes.)
+///             -> (Since we're not writing a library and not displaying user feedback for 95% of the errors, we don't need specific error codes because we don't implement any handling logic - it's just for debugging purposes.) (But then on the other hand, why not just log the errors directly instead of throwing them if they are just for debugging purposes?)
 ///             -> Maybe we should also introduce a single `NSExceptionName`:`kMFExceptionNameUnspecified`
 
 static const NSErrorDomain _Nonnull MFLicenseErrorDomain = @"MFLicenseErrorDomain";
 typedef NSInteger MFLicenseErrorCode;
     //const MFLicenseErrorCode kMFLicenseErrorCodeMismatchedEmails               = 1;       /// Not using emails for authentication anymore. Just licenseKeys
-    static const MFLicenseErrorCode kMFLicenseErrorCodeInvalidNumberOfActivations   = 2;
+    static const MFLicenseErrorCode kMFLicenseErrorCodeInvalidNumberOfActivations   = 2;    /// The license is valid as per the server but it has been activated a suspicious number of times.\
     static const MFLicenseErrorCode kMFLicenseErrorCodeGumroadServerResponseError   = 3;    /// The Gumroad server has responded with `success: false`
     static const MFLicenseErrorCode kMFLicenseErrorCodeServerResponseInvalid        = 4;    /// The server response does not follow the expected format.
 //    static const MFLicenseErrorCode kMFLicenseErrorCodeKeyNotFound                  = 5;

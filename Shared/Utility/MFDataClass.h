@@ -63,7 +63,7 @@
 ///         For copying, encoding, hashing, and equality-checking of the `MFDataClass` to work properly, all of its properties need to implement `NSCopying`, `NSSecureCoding`, `- hash` and `- isEqual`.
 ///         Non-Object types should also work for the most part, since they can be boxed in an `NSValue` object which implements all the aforementioned protocols and methods out-of-the-box
 ///             However, Non-Object types which are not *auto-boxed* in an `NSValue` by the Key-Value-Coding APIs will *not* work properly with `MFDataClass`.
-///                 (E.g. c unions won't work from what I heard, but any custom structs and c-numbers-types should work according to the docs).
+///                 (E.g. c unions won't work from what I heard, but any custom structs and c-number-types should work according to the docs).
 ///             Docs: (KeyValueCoding - Representing Non-Object Values) https://developer.apple.com/library/archive/documentation/Cocoa/Conceptual/KeyValueCoding/DataTypes.html#//apple_ref/doc/uid/20002171-BAJEAIEE)
 ///    - Property attributes:
 ///         1. `atomic` cannot be specified. (We always set it to `nonatomic` automatically - We do this because I don't ever want to use atomic, and if left unspecified, objc defaults to atomic.)
@@ -73,8 +73,8 @@
 ///             These values specify the so called "Setter Semantics".
 ///         3. `readonly` or `readwrite` should be specified. (Can also be left blank to default to readwrite.)
 ///         4. `nullable` or `nonnull` needs to be specified for objects and pointers, but needs to be left blank for anything else.
-///             The Objective-C runtime cannot tell us whether a property is `nullable/nonnull` so we need to always specify nullability in the `MFDataClassX()` macros for objects and pointers. The macros then store the information for runtime access. This way we can access all property attributes at runtime.
-///             Discussion: Normally, I find it more elegant to specify nullability as part of the type system (using `_Nonnull`/`_Nullable`) instead of as property attributes (using `nullable`/`nonnull`) - but for the sake of manually storing `nullable`/`nonnull` for runtime access, this works better.
+///             The Objective-C runtime cannot tell us whether a property is `nullable/nonnull` so we need to always specify nullability in the `MFDataClassX()` macros for objects and pointers. The macros then store the information in a method for runtime access. This way we can access all property attributes at runtime.
+///             Discussion: Normally, I find it nicer to specify nullability as part of the type system (using `_Nonnull`/`_Nullable`) instead of as property attributes (using `nullable`/`nonnull`) - but for the sake of manually storing `nullable`/`nonnull` for runtime access, this works better.
 ///         -> So in conclusion: Generally, specify readonly/readwrite, strong/assign, nullable/nonnull/blank.
 ///         More info on `Setter Semantics` and other objc `property attributes` in the docs: https://developer.apple.com/library/archive/documentation/Cocoa/Conceptual/ObjectiveC/Chapters/ocProperties.html
 ///    - Thread safety: These dataclasses are not thread safe. Use locks or dispatch queues to prevent concurrent access while modifying the properties of a dataclass instance.
@@ -90,8 +90,8 @@
 ///         - After thinking about it I think it isn't really that useful for us... but now we already wrote the code.
 ///         - Read more about NSSecureCoding in `MFDataClass.m > initWithCoding:`
 ///     - I heard some stuff that values inside objc collections may never change their hash after they are in the collection or something. But also the hash always needs to be equal if two objects are equal afaik. So I guess mutating objects inside objc collections is never allowed by this logic? That would also apply to MFDataClass of course. Should look into this more.
-///     - We should consider replacing the remapsDict (Which is a big nested `NSDictionary`that represents the mouse-button-to-action-mappings inside the Mac Mouse Fix Helper process) with a nested set of `MFDataClass` instances. That would make it less scary to work with.
-///         (Or maybe a nested class structure defined in swift would be even nicer, but not sure if fast and objc compatible.)
+///     - We should consider replacing the remapsDict (Which is a big nested `NSDictionary`that represents the mouse-button-to-action mappings inside the Mac Mouse Fix Helper process) with a nested set of `MFDataClass` instances. That would make it less scary to work with.
+///         (Or maybe a nested struct definition in swift would be even nicer, but not sure if fast and objc compatible. Nested class definition in Swift might also bne nice but afaik you can't autogenerate initializers and NSCoding/NSCopying/isEqual: support like you can with Swift structs and with MFDataClass)
 
 #pragma mark - Base superclass
 
@@ -120,7 +120,7 @@ static const NSExceptionName _Nonnull MFDataClassInvalidDefinitionException = @"
 
 /// Helper macros
 
-#define UNPACK(packedStuff...) packedStuff
+//#define UNPACK(packedStuff...) packedStuff
 
 /// These macros let you easily create an `MFDataClass` with n properties.
 

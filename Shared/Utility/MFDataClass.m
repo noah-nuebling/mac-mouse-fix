@@ -365,7 +365,7 @@
     /// Notes:
     /// - By copying all properties, we do a 'deeper' copy than e.g. `[NSArray -copy]`.
     ///     Perhaps we can rationalize this by thinking: MFDataClass is like an "object-version" of a struct. Structs behave like they are 'deep-copying', so MFDataClass should, as well. Also, shallow copying and then swapping / adding some members to the copy feels more useful on NSArray, since it's a 'more dynamic' datatype (?)
-    /// - (Oct 2024) Immutable values can just return themselves instead of a copy and noone will notice. Could we determine whether we are immutable and leverage that for optimization? (We probably could by checking `property_getAttributes()` for whether all our properties are readonly.)
+    /// - (Oct 2024) Immutable values can just return themselves instead of a copy and noone will notice. Could we determine whether we are immutable and leverage that for optimization? (We probably could by checking `property_getAttributes()` for whether all our properties are `readonly`.)
 
     MFDataClassBase *copy = [[[self class] allocWithZone:zone] init];
     if (copy) {
@@ -495,7 +495,7 @@ NSString *_Nullable typeEncodingForProperty(NSString *_Nullable propertyAttribut
     NSInteger typeEncodingStart = typeEncodingPre + 1;
     NSInteger typeEncodingEnd = typeEncodingPost - 1;
     if (typeEncodingEnd - typeEncodingStart <= -1) {
-        assert(false); /// Type encoding has *less* than zero characters. Don't think this can ever happen except if objc runtime is broken or we get wrong input. Think this can only happen if `,` occurs before `T` in the string.
+        assert(false); /// Type encoding has less than zero characters (?) Don't think this can ever happen except if objc runtime is broken or we get wrong input. Think this can only happen if `,` occurs before `T` in the string (?)
         return nil;
     }
     
