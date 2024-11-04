@@ -42,6 +42,7 @@ These people spent a lot more than the standard price and treated me to an **Inc
 
 **November 2024**
 
+- 🇺🇸&nbsp;Vote&nbsp;Byroads0R
 - 🇨🇭&nbsp;Lionel - "Bloody simple and effective"
 - 🇪🇸&nbsp;Josep&nbsp;Marti - "Hackakure es mi pastor, nada me falta"
 
