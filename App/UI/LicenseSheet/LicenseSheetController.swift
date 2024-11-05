@@ -17,7 +17,7 @@ import CocoaLumberjackSwift
     private static var openInstance: LicenseSheetController? = nil
     
     private var initialKey: String? = nil
-    private var isProcessing = false
+    @Atomic private var isProcessing = false /// Not sure atomic is necessary
     
     /// IBActions & outlets
     
@@ -40,7 +40,7 @@ import CocoaLumberjackSwift
         
         let onComplete = {
             self.isProcessing = false
-            MainAppState.shared.aboutTabController?.updateUIToCurrentLicense() /// Probably outdated comment: (as of Oct 2024) Would much more efficient to pass in the license here
+            MainAppState.shared.aboutTabController?.updateUIToCurrentLicense() /// This might be sorta inefficient. Could we optimize by only calling this in certain cases or passing in our MFLicenseState?
             MFMessagePort.sendMessage("terminate", withPayload: nil, waitForReply: false) /// Restart helper
         }
         
@@ -93,7 +93,7 @@ import CocoaLumberjackSwift
             /// Get licenseConfig
             /// Notes:
             /// - Instead of getting the licenseConfig every time, we could also use cached LicenseConfig, if we update it once on app start. The `URLSession` class that `LicenseConfig.get()` uses internally also has built-in caching. Maybe we should use that?
-            ///     Update: (Oct 2024) GetLicenseConfig.get() now internally uses inMemoryCache. See implementation for more.
+            ///     Update: (Oct 2024) GetLicenseConfig.get() now internally uses `inMemoryCache`. See implementation for more.
             let licenseConfig = await GetLicenseConfig.get()
             
             /// Determine if this is a licenseKey *activation* or just a *check*
@@ -101,8 +101,9 @@ import CocoaLumberjackSwift
             let isActivation = isDifferent
             
             /// Ask licenseServer
+            ///     Note: (Nov 2024) If the licenseServer responds with a clear "yes"/"no" to the question "is this licenseValid", then the cache will get overriden with the server's response, which I think is desirable? (So we don't keep using old cached values after activating a new license.)
             let (state, serverError) = await GetLicenseState.licenseStateFromServer(key: key,
-                                                                                    incrementUsageCount: isActivation, /// Increasing the usageCount is the main difference between activating and checking a license
+                                                                                    incrementActivationCount: isActivation, /// Increasing the activationCount (aka usageCount) is the main difference between activating and checking a license
                                                                                     licenseConfig: licenseConfig)
             /// Determine success
             /// Notes:

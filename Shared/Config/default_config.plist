@@ -28,10 +28,12 @@
 	</dict>
 	<key>License</key>
 	<dict>
-		<key>licenseStateCache</key>
-		<dict/>
 		<key>configCache</key>
 		<dict/>
+		<key>licenseStateCache</key>
+		<data></data>
+		<key>licenseStateCacheHash</key>
+		<data></data>
 	</dict>
 	<key>General</key>
 	<dict>

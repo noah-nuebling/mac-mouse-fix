@@ -17,6 +17,8 @@
 ///     This is specifically made to work with MFDataClass,
 ///         with some extensions it might be usable with other classes that implement `NSCoding`?
 ///
+/// Update: (Nov 2024) I've come to understand NSCoder a bit better since writing this. So some of the comments here might be out of date or the code might be non-optimal. (But it works)
+///         See `MFCoding.m` for latest understanding of NSCoder.
 
 #import "MFDataClassDictionaryDecoder.h"
 #import "SharedUtility.h"
@@ -25,7 +27,7 @@
 
 - (NSSet<Class> *)allowedClasses { return _allowedClasses; }
 - (BOOL)requiresSecureCoding { return _requiresSecureCoding; }
-- (NSDecodingFailurePolicy)decodingFailurePolicy { return NSDecodingFailurePolicySetErrorAndReturn; }
+- (NSDecodingFailurePolicy)decodingFailurePolicy { return NSDecodingFailurePolicySetErrorAndReturn; } /// Why are we hardcoding this? The user of this decoder should be able to determine this.
 - (unsigned int)systemVersion { return 0; } /// No idea what this is or how to use it, but the docs told me to override this IIRC
 - (BOOL)allowsKeyedCoding { return YES; }
 - (NSError *)error { return _error; }

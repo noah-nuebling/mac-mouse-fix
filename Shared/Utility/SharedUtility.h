@@ -14,11 +14,35 @@
 // Import WannabePrefixHeader.h here so we don't have to manually include it in as many places (not sure if bad practise)
 #import "WannabePrefixHeader.h"
 #import "Shorthands.h"
+#import "MFDefer.h"
+
 #import <CoreVideo/CoreVideo.h>
 
 NS_ASSUME_NONNULL_BEGIN
 
-#define stringf(format, ...) [NSString stringWithFormat:(format), ##__VA_ARGS__]
+/// `threadlocal()` creates/gets an object whose state is retained between invocations of your method/function (if those invocations are running on the same thread)
+///     This is pretty similar to a `static __thread` variable, but for objc objects instead of POD (plain old data)
+///     Use mutable types for this to be useful.
+///     Example usage:
+///      ```
+///      NSMutableArray *arr = threadlocal(NSMutableArray);
+///      [arr addObject:@"a"];
+///      NSLog("%@", arr); // Will print more and more "a" strings as this code is invoked multiple times on the same thread.
+///      ```
+
+#define threadlocal(__className) \
+    (__className *) \
+    ({ \
+        static const uintptr_t dictKey = (uintptr_t)&dictKey; \
+        __className *result = NSThread.currentThread.threadDictionary[@(dictKey)]; /** Boxing the dictKey every time might be a little inefficient */\
+        if (result == nil || ![result isKindOfClass:[__className class]]) { /** This `isKindOfClass:` check is probably unnecessary and a bit inefficient */ \
+            result = [[__className alloc] init]; \
+            NSThread.currentThread.threadDictionary[@(dictKey)] = result; \
+        } \
+        result; \
+    })
+
+#define stringf(format, ...) [NSString stringWithFormat:(format), ## __VA_ARGS__]
 
 /// Check if ptr is objc object
 ///     Copied from https://opensource.apple.com/source/CF/CF-635/CFInternal.h

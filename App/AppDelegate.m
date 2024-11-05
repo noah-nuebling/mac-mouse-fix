@@ -44,7 +44,7 @@
 
 - (IBAction)buyMMF:(id)sender {
     
-    [GetLicenseConfig getWithCompletionHandler:^(MFLicenseConfig * _Nonnull licenseConfig) {
+    [GetLicenseConfig getWith_callingFunc:NSStringFromSelector(_cmd) completionHandler:^(MFLicenseConfig * _Nonnull licenseConfig) {
             
         NSLocale *locale = NSLocale.currentLocale;
         BOOL useQuickLink = NO;

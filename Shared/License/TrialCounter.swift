@@ -42,6 +42,7 @@ import CocoaLumberjackSwift
     
     @objc static func load_Manual() {
         /// Need to use loadManual() because the initialization does network calls and is async. So we need initialization to be done way before handleUse() is called for the first time, because otherwise the trialIsActive and hasBeenUsedToday flags will be wrong.
+        ///     -> Don't think this is a watertight protection against this race-condition. TODO: Think about: 1. How to prevent the race cond. 2. Whether the race cond is acceptable.
         let _ = TrialCounter.shared
     }
     @objc override init() {
@@ -69,13 +70,18 @@ import CocoaLumberjackSwift
         Task.detached(priority: .background, operation: {
         
             /// Check licensing state
-            let (licenseState, trialState) = await License.checkLicenseAndTrial()
+            let licenseState = await GetLicenseState.get()
             
             if licenseState.isLicensed {
                 
                 /// Do nothing if licensed
                 
-            } else if !trialState.trialIsActive {
+            } else {
+        
+            let licenseConfig = await GetLicenseConfig.get()
+            let trialState = GetTrialState.get(licenseConfig)
+        
+            if !trialState.trialIsActive {
                 
                 /// Not licensed and trial expired -> do nothing
                 ///     In this case AccessibilityCheck.m will perform the lockDown, by calling `License.runCheckAndReact()`
@@ -115,6 +121,7 @@ import CocoaLumberjackSwift
                 /// Schedule daily timer
                 ///     Not sure if .default or .common is better here. Default might be a little more efficicent but maybe it doesn't work in some cases?
                 RunLoop.main.add(self.daily, forMode: .common)
+                }
             }
         })
     }

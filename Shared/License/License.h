@@ -135,7 +135,7 @@ MFDataClassInterface10(MFDataClassBase, MFLicenseConfig,    readonly, assign,   
 static const NSErrorDomain _Nonnull MFLicenseErrorDomain = @"MFLicenseErrorDomain";
 typedef NSInteger MFLicenseErrorCode;
     //const MFLicenseErrorCode kMFLicenseErrorCodeMismatchedEmails               = 1;       /// Not using emails for authentication anymore. Just licenseKeys
-    static const MFLicenseErrorCode kMFLicenseErrorCodeInvalidNumberOfActivations   = 2;    /// The license is valid as per the server but it has been activated a suspicious number of times.\
+    static const MFLicenseErrorCode kMFLicenseErrorCodeInvalidNumberOfActivations   = 2;    /// The license is valid as per the server but it has been activated a suspicious number of times.
     static const MFLicenseErrorCode kMFLicenseErrorCodeGumroadServerResponseError   = 3;    /// The Gumroad server has responded with `success: false`
     static const MFLicenseErrorCode kMFLicenseErrorCodeServerResponseInvalid        = 4;    /// The server response does not follow the expected format.
 //    static const MFLicenseErrorCode kMFLicenseErrorCodeKeyNotFound                  = 5;

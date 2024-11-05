@@ -42,7 +42,7 @@ import CocoaLumberjackSwift
         Task.detached(priority: (triggeredByUser ? .userInitiated : .background), operation: {
             
             /// Get licensing state
-            let (licenseState, trialState) = await checkLicenseAndTrial()
+            let licenseState = await GetLicenseState.get()
             
             if licenseState.isLicensed {
                 
@@ -50,6 +50,10 @@ import CocoaLumberjackSwift
                 return
                 
             } else {
+                
+                /// Get stuff
+                let licenseConfig = await GetLicenseConfig.get()  /// This makes an internet connection, so we wanna avoid calling it unless necessary. Read more in the definition.
+                let trialState = GetTrialState.get(licenseConfig)
                 
                 /// Not licensed -> check trial
                 if trialState.trialIsActive {
@@ -79,9 +83,6 @@ import CocoaLumberjackSwift
                         /// Only compile if helper (Otherwise there are linker errors)
                         #if IS_HELPER
                         
-                        /// Get licenseConfig
-                        let licenseConfig = await GetLicenseConfig.get() /// This makes an internet connection, so we wanna avoid calling it unless necessary. Read more in the definition.
-                        
                         /// Show trialNotification
                         DispatchQueue.main.async {
                             TrialNotificationController.shared.open(licenseConfig: licenseConfig, licenseState: licenseState, trialState: trialState, triggeredByUser: triggeredByUser)
@@ -97,51 +98,30 @@ import CocoaLumberjackSwift
         })
     }
     
-    // MARK: Lvl 2
-    
-    /// These functions assemble info about the trial and the license.
-    
-    static func checkLicenseAndTrialOffline() -> (licenseConfig: MFLicenseConfig, licenseState: MFLicenseState, trialState: MFTrialState) {
+    static func checkLicenseAndTrial_Preliminary() -> (licenseConfig: MFLicenseConfig, licenseState: MFLicenseState, trialState: MFTrialState) {
         
-        /// This function retrieves the license-and-trial state of the app without ever making an internet connection
-        /// Discussion:
-        ///     The 'proper' function' for retrieving the license-and-trial state tries to retrieve the data from the `server`, `cache`, or `fallback`,  while this function will only ever look at the `cache` or `fallback`.
-        ///     Because the function never talks to the server, it is guaranteed to return immediately, and it's not marked with `async`
-        ///     We made this function so we can immediately render our UIs using probably-correct data upon app-start, without having to wait for the server. Then, when the more-probably-correct data comes in (which might have been retrieved from the server) we update the UIs.
+        /// This gets *preliminary* values for the 3 pieces of license-related data we want to share throughout the app:
+        ///     `MFLicenseConfig` `MFLicenseState`, and `MFTrialState`
+        ///
+        /// The preliminary values should be replaced ASAP by properly validated values which can be obtained by the following APIs:
+        ///     - `GetLicenseConfig.get()`,
+        ///     - `GetLicenseState.get()`
+        ///     - `GetTrialState.get(licenseConfig)`
+        ///
+        /// The advantage of the preliminary values is that we don't need to wait for them. They are guaranteed to be obtained immediately, while the proper values might be obtained through making server connections which we'll have to wait for.
+        /// -> The preliminary values can be used to immediately render our UIs upon app startup, without having to wait for a web server's response.
+        ///
+        /// Sidenote:
+        ///     - The preliminary values are obtained and returned from this function all-at-once. For the proper values, they should be obtained only as needed in order to avoid unnecessary internet connections.
         
-        /// Get licenseState from cache / fallback
-        let licenseState = GetLicenseState.checkLicenseOffline()
-        
-        /// Get licenseConfig from cache / fallback
-        ///     Discussion: Here we return the `licenseConfig` but in the non-offline sister function `.checkLicenseAndTrial()` we *don't* return `licenseConfig` so that we can avoid retrieving it unless necessary, which lets us minimize the internet connections we make.
-        ///              Why not return the cached/fallback version of the licenseConfig in the sister function to avoid internet connections? Because if we always return the cached values they will probably become outdated at some point, which might cause problems - the point of the sister-function is to give us reasonably up-to-date values that we can use long term, while this function here gives us potentially-stale values that we use temporarily while the app starts up. (This is a a bad explanation, I don't fully understand what I'm saying.)
-        ///              However, since this method here is expected to return potentially-outdated offline values it seems to make sense to just return the offline licenseConfig for convenience, instead of mirroring the exact return-signature of the non-offline sister function. Yap yap yap I'm bad at writing.
-        let licenseConfig = GetLicenseConfig.getOffline()
-        
-        /// Get trial state using cache / fallback
-        ///     Note: I think if `licenseState.isLicensed == true`, then we don't ever wanna look at the trial state. Maybe we should just return trialState == nil in that case?
-        ///             ... But on second thought I think that's an unnecessary optimization. Generally, our philosophy on optimization of the UI code is: Don't optimize for performance, ever. It never seems to matter no matter how braindead our algorithms are.
+
+        let licenseState = GetLicenseState.get_Preliminary()
+        let licenseConfig = GetLicenseConfig.get_Preliminary()
         let trialState = GetTrialState.get(licenseConfig)
         
         /// Return
         return (licenseConfig, licenseState, trialState)
         
-    }
-    
-    @objc static func checkLicenseAndTrial() async -> (licenseState: MFLicenseState, trialState: MFTrialState) {
-        
-        /// Various notes:
-        ///     - Getting the licenseConfig is unnecessary if the app is licensed. That's because all that the licenseState() func needs the licenseConfig for is to check the number of trialDays. And if the app is licensed, we don't need to check for the trialDays.
-        
-        /// Get licenseState
-        let licenseState = await GetLicenseState.checkLicense()
-        
-        /// Get trialState
-        let licenseConfig = await GetLicenseConfig.get()
-        let trialState = GetTrialState.get(licenseConfig)
-        
-        /// Return
-        return (licenseState, trialState)
     }
     
     func gumroad_decrementUsageCount(key: String, accessToken: String, completionHandler: @escaping (_ serverResponseDict: [String: Any]?, _ error: NSError?, _ urlResponse: URLResponse?) -> ()) {

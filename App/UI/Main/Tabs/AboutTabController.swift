@@ -105,7 +105,7 @@ class AboutTabController: NSViewController {
         ///         - Update: Oct 2024: This is totally outdated and I don't know what it means anymore.
         
         /// Get cache
-        let (cachedLicenseConfig, cachedLicenseState, cachedTrialState) = License.checkLicenseAndTrialOffline()
+        let (cachedLicenseConfig, cachedLicenseState, cachedTrialState) = License.checkLicenseAndTrial_Preliminary()
         
         /// Step 1: Set UI to cache
         if cachedLicenseState.isLicensed {
@@ -138,12 +138,13 @@ class AboutTabController: NSViewController {
         
         Task.detached(priority: .userInitiated, operation: {
             
-            let (licenseState, trialState) = await License.checkLicenseAndTrial()
+            let licenseState = await GetLicenseState.get()
                 
             if licenseState.isLicensed {
                 DispatchQueue.main.async { self.updateUI_WithIsLicensedTrue(licenseState: licenseState) } /// Dispatch to main bc UI updates need to run on main.
             } else {
                 let licenseConfig = await GetLicenseConfig.get() /// Only get the licenseConfig if the app *is not* licensed - that way, if the app *is* licensed through offline validation, we can avoid all internet connections.
+                let trialState = GetTrialState.get(licenseConfig)
                 DispatchQueue.main.async { self.updateUI_WithIsLicensedFalse(licenseConfig: licenseConfig, trialState: trialState) }
             }
         })
