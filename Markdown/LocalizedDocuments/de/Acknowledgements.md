@@ -40,6 +40,7 @@ Diese Leute haben viel mehr als den Standardpreis ausgegeben und mir einen **ung
 
 **November 2024**
 
+- 🇩🇪&nbsp;Volodymyr&nbsp;Gorlov
 - 🇺🇸&nbsp;Vote&nbsp;Byroads0R
 - 🇨🇭&nbsp;Lionel - "Bloody simple and effective"
 - 🇪🇸&nbsp;Josep&nbsp;Marti - "Hackakure es mi pastor, nada me falta"
