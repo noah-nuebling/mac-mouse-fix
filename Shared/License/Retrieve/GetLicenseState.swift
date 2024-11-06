@@ -158,7 +158,7 @@ import CryptoKit
                                                                                  freshness: kMFValueFreshnessFallback,
                                                                                  licenseTypeInfo: MFLicenseTypeInfoNotLicensed())
     
-    private static func getHashForOfflineCacheValidation(licenseStateData: Data, licenseKey: String, deviceUID: Data) -> Data {
+    private static func getHashForOfflineCacheValidation(licenseState: Data, licenseKey: String, deviceUID: Data) -> Data {
             
             /// Our offline validation mechanism for the `MFLicenseState` - which relies on this hashing function - ensures data-integrity and prevents easy tampering by users. All without making an internet connection.
             ///     Input values:
@@ -180,7 +180,7 @@ import CryptoKit
             ///         This would probably work. We don't need the hashes to be cryptographically secure at all.
             
             var hashFunction = SHA256.init() /// SHA256 is totally overkill we just need someee simple hash to prevent tampering and ensure data integrity. It doesn't need to be cryptographically secure at all.
-            hashFunction.update(data: licenseStateData)
+            hashFunction.update(data: licenseState)
             hashFunction.update(data: licenseKey.data(using: .utf8) ?? Data())
             hashFunction.update(data: deviceUID)
             let hashDigest = hashFunction.finalize()
@@ -191,31 +191,28 @@ import CryptoKit
     
     private static func storeLicenseStateInCache(_ newValue: MFLicenseState, licenseKey: String, deviceUID: Data) {
     
-            /// Note:
+            /// Which fields of MFLicenseState to cache?
             ///     We're caching all the fields of the `MFLicenseState`. It's an offline substitute for the data we would receive from a license server.
             ///         It's unnecessary to cache the `MFLicenseState.freshness` value since that indicates the orgin of the data - server, cache, or fallback - and isn't really "part of the data" itself.
             ///         However, removing the value before caching requires extra lines of code, and doesn't have practical benefit, so we don't bother.
             
             /// Archive the object
-            ///     (Oct 2024) The archive is pure data.
-            ///         It would be more transparent / introspectable / debuggable if we created a dictionary (or a human readable string) for storage inside config.plist
-            ///         We don't need the archive to be non-human-readable since the hashing is already enought tamper-protection.
-            ///
-            ///         TODO: Consider using `MFCoding` to serialize the object as a dictionary or an XML string for better transparency / debuggability.
-            
-            let (cacheData, error) = MFCatch { try NSKeyedArchiver.archivedData(withRootObject: newValue, requiringSecureCoding: true) }
-            guard let licenseStateData = cacheData else {
-                DDLogError("Archiving MFLicenseState for caching failed with error: \(error.debugDescription). Don't think this should ever happen.")
+            ///     The archive is an xml string, (instead of the default: binary data) for bit better debuggability and perhaps being less ominous/intransparent for the users.
+            let xmlData = MFEncode(newValue, requireSecureCoding: true, plistFormat: .xml) as Data?
+            guard let xmlData = xmlData,
+                  let xmlString = NSString(data: xmlData, encoding: NSUTF8StringEncoding)
+            else {
+                DDLogError("MFLicenseState xmlString for caching came out as nil. Don't think this should ever happen.")
                 assert(false)
                 return
             }
             
             /// Calculate hash
-            let hashData = self.getHashForOfflineCacheValidation(licenseStateData: licenseStateData, licenseKey: licenseKey, deviceUID: deviceUID)
+            let hash = self.getHashForOfflineCacheValidation(licenseState: xmlData, licenseKey: licenseKey, deviceUID: deviceUID)
             
             /// Store data
-            setConfig("License.licenseStateCache", licenseStateData as NSObject)
-            setConfig("License.licenseStateCacheHash", hashData as NSObject)
+            setConfig("License.licenseStateCache", xmlString as NSObject)
+            setConfig("License.licenseStateCacheHash", hash as NSObject)
             commitConfig()
     }
     
@@ -224,8 +221,10 @@ import CryptoKit
             /// Note: If the argument `enableOfflineValidation` is set to `false`, then all the other arguments are ignored - they only exist for the offlineValidation
             
             /// Get cached licenseState data
-            guard let cachedLicenseStateData = config("License.licenseStateCache") as? Data else {
-                DDLogDebug("licenseState not found in cache")
+            guard let cachedXMLString = config("License.licenseStateCache") as? NSString,
+                  let cachedXMLData = cachedXMLString.data(using: NSUTF8StringEncoding)
+            else {
+                DDLogDebug("MFLicenseState XML data could not be extracted from cache") /// Don't make this an error log because this is pretty expected if we simply haven't cached anything, yet
                 return nil
             }
             
@@ -244,12 +243,12 @@ import CryptoKit
                 
                     /// Calculate fresh hash
                     ///     for cached licenseState
-                    let hash = self.getHashForOfflineCacheValidation(licenseStateData: cachedLicenseStateData, licenseKey: licenseKey, deviceUID: deviceUID)
+                    let hash = self.getHashForOfflineCacheValidation(licenseState: cachedXMLData, licenseKey: licenseKey, deviceUID: deviceUID)
                     
                     /// Compare hashes
                     ///     If this fails, then at least one of the hashing input-values (licenseState, licenseKey and deviceUID) has changed since the cache was stored. (Or the cachedHash itself changed.)
                     if (hash != cachedHash) {
-                        DDLogDebug("Offline validation failed: The hashes don't match.")
+                        DDLogError("Offline validation failed: The hashes don't match.")
                         success = false
                         break offlineValidation
                     }
@@ -271,13 +270,12 @@ import CryptoKit
             }
             
             /// Unarchive
-            ///     Note: (Oct 2024: Note that coder.requiresSecureCoding is turned on here implicitly.
-            ///         -> This is somewhat slower and pretty unnecessary here I think since hackers would have to tamper with the (locally stored) cache to perform an 'object substitution' or 'nil insertion' attack. And if they can modify local files, they already have full control over the system.)
+            ///     Note: (Nov 2024) Note that requireSecureCoding is turned on here.
+            ///         -> This is somewhat slower and pretty unnecessary here I think since hackers would have to tamper with the (locally stored) cache to perform an 'object substitution' or 'nil insertion' attack. (Which are what secureCoding on MFDataClass protects against) And if they can modify local files, they already have full control over the system.)
             ///         -> I guess another possible benefit of the nil/type checks is if we change MFLicenseState in the future and we forget to handle that explicitly, then we would just return nil here in some cases instead of returning an invalid object that might crash the app because of unexpected type/nullability
-            let (licenseState, decodingError) = MFCatch { try NSKeyedUnarchiver.unarchivedObject(ofClass: MFLicenseState.self, from: cachedLicenseStateData) }
-            guard let licenseState = licenseState,
-                  let licenseState = licenseState else { /// Unwrap twice because double-optional
-                DDLogDebug("Failed to decode licenseStateCache data. Error: \(decodingError.debugDescription)")
+            let licenseState = MFDecode(cachedXMLData as NSData, requireSecureCoding: true, expectedClasses: [MFLicenseState.self]) as? MFLicenseState
+            guard let licenseState = licenseState else {
+                DDLogError("Failed to decode licenseStateCache data.")
                 return nil
             }
             

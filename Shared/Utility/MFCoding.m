@@ -115,6 +115,7 @@ NSData *MFEncode(NSObject<NSCoding> *codable, BOOL requireSecureCoding, NSProper
     
     /// Log errors
     if (!result || exception) {
+        assert(false); /// In our app, encoding should only ever fail to due programmer error I think. 
         DDLogError(@"MFEncode: NSKeyedArchiver encoding problem. Exception: %@", exception);
     }
     
