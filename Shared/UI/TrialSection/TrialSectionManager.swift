@@ -155,6 +155,7 @@ class TrialSectionManager {
                 newSection.imageView?.image = image
                 
                 /// Setup hyperlink
+                ///     I've heard of the activate link not working for some people. I think I even experienced it, once. Perhaps, the app's ability to handle `macmousefix:` links breaks sometimes. Feels like it might be a bug/security feature in macOS?
                 
                 let linkTitle = NSLocalizedString("trial-notif.activate-license-button", comment: "First draft: Activate License")
                 let linkAddress = "macmousefix:activate"
