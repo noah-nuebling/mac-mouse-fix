@@ -117,7 +117,7 @@
             
             NSArray<Protocol *> *protocols = @[@protocol(NSSecureCoding),
                                                @protocol(NSCopying),
-                                               @protocol(NSObject)]; /// We can't really confirm that the object properly implements `isEqual:` and `hash` since they are part of the `NSObject` protocol which everybody implements;
+                                               @protocol(NSObject)]; /// We can't really confirm that the object properly implements `isEqual:` since that's part of the `NSObject` protocol which everybody implements;
             
             for (Protocol *protocol in protocols) {
                 if (![theClass conformsToProtocol:protocol]) {
@@ -398,19 +398,49 @@
     
     /// Unwrap other
     MFDataClassBase *other = (MFDataClassBase *)object;
+        
+    /// Compare hash
+    ///     Disabling because: At best this would be an optimization, but i think it might slow things down here. Also if the class matches, we already know the hash matches, since the hash is independent of internal object state (As of Nov 2024)
+    if ((false) &&
+        [self hash] != [other hash])
+    {
+        return NO;
+    }
     
-    /// Compare propertyValues
-    if (![self.propertyValuesForEqualityComparison isEqual:other.propertyValuesForEqualityComparison]) {
+    /// Compare internal state
+    if (![self.internalStateForEqualityComparison isEqual:other.internalStateForEqualityComparison]) {
         return NO;
     }
     
     /// Passed all tests!
     return YES;
 }
+- (NSObject *_Nonnull)internalStateForEqualityComparison {
+
+    /// Client code can override this (in a category) to easily change the definition of equality between two instances of the same MFDataClass
+    ///     On nil:
+    ///         If you override this with an NSArray of propertyValues, don't forget to substitute nil values with `[NSNull null]`. Trying to insert nil into an array will crash and stuff!
+    ///
+    ///     Background: (Nov 2024)
+    ///         We made this method primarily so we have one simple way to update both `-isEqual` and `-hash` correctly.
+    ///         However, we've since made `-hash` independent of internal instance state, so this doesn't affect `-hash` anymore.
+    ///         Therefore, now, it might be better to just override `-isEqual` directly instead of overriding this? Maybe we should remove this?
+    
+    return [self allPropertyValues];
+}
 
 - (NSUInteger)hash {
-    NSUInteger result = self.propertyValuesForEqualityComparison.hash;
-    return result;
+
+    /// Why use propertyCount as -hash?
+    ///     - `-hash` needs to not change while an object is in a collection. For mutable objects, this can only be achieved by a) not putting them into collections b) making hash independent of the mutable internal state of the object.
+    ///         - Src: `-hash` docs: https://developer.apple.com/documentation/objectivec/1418956-nsobject/1418859-hash
+    ///     - NSDictionary also simply uses the number of elements as its hash. So this should be ok.
+    ///
+    /// If you need a real hash:
+    ///     (... that depends on the instance's internal state), you can encode the instance to data and then use Apple's crypto frameworks.
+
+    NSUInteger propertyCount = [[[self class] allPropertyNames] count];
+    return propertyCount;
 }
 
 /// MARK: Override NSObject description
@@ -422,7 +452,7 @@
     if (propNames.count > 0) {
     
         /// Check for circular refs
-        ///     This prevents infinite loops if there are circular references in the datastructure. But [NSDictionary -description] seems to just infinite-loop in this case and that was never a problem... Maybe this was overkill.
+        ///     This prevents infinite loops if there are circular references in the datastructure. But [NSDictionary -description] seems to just infinite-loop in this case... Maybe this was overkill.
         NSMutableArray *visitedObjects = threadlocal(NSMutableArray);
         NSNumber *s = @((uintptr_t)self); /// We cast self to an NSNumber so that we effectively do pointer-based equality checking instead of using the full `-isEqual` implementation.
         BOOL didFindCircularRef = [visitedObjects containsObject:s];
@@ -498,6 +528,11 @@
 }
 
 - (NSArray<id> *_Nonnull)allPropertyValues {
+
+    ///     On property order: (Nov 2024)
+    ///         The order of these property values needs to always be the same, otherwise `-isEqual:` will break.
+    ///         I think it should be fine since the underlying function `class_copyPropertyList()` seems to output the properties in deterministic order based on my testing.
+    ///         If order ever does cause breakage, perhaps we could sort the propertyValues or change our `-isEqual:` logic.
     
     NSMutableArray *result = [NSMutableArray array];
     
@@ -508,21 +543,6 @@
     }
     
     return result;
-}
-
-- (NSArray<id> *_Nonnull)propertyValuesForEqualityComparison {
-
-    /// Client code can override this (in a category) to easily change the definition of equality
-    ///     (This will also automatically change `hash`, so that hashing and equality definitions match.)
-    ///     On property order:
-    ///         The order of the property values in the returned array needs to always be the same, otherwise our equality and hash methods that depend on this will break.
-    ///         For the default implementation this should be ensured since the underlying function `class_copyPropertyList()` seems to output the properties in deterministic order based on my testing.
-    ///         If order ever does cause breakage, perhaps we could return an `NSSet` instead of `NSArray`, or sort inside `allPropertyNames` before returning - so that we ensure we always access the properties in the same order.
-    ///
-    ///     On nil:
-    ///         If you override this, don't forget to substitute nil values with `[NSNull null]`. Trying to insert nil into an array will crash and stuff!
-    
-    return [self allPropertyValues];
 }
 
 /// MARK: - Property analysis

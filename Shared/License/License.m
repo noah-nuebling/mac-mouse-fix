@@ -75,12 +75,12 @@ MFDataClassImplement10(MFDataClassBase, MFLicenseConfig,    readonly, assign,   
 
 @implementation MFLicenseState (Extensions)
 
-    - (NSArray<id> *)propertyValuesForEqualityComparison {
+    - (NSObject *)internalStateForEqualityComparison {
 
         /// Define equality for MFLicenseState
         /// Reasoning:
         /// - We compare all fields except for the `freshness` field - the idea is that the `freshness` determines the *origin* of the data, but, in some sense, isn't *itself* part of the data.
-        ///     Also, practically, on the `AboutTabController`, we always first render the UI based on cached values, then we try to load the real values from the server, and then, unless the server data is mismatched with the cache, we don't want to rerender the UI (This would be problematic since the Thank You message at the bottom of the About Tab would then be re-shuffled to something else) (As of Oct 2024)
+        ///     Also, practically, on the `AboutTabController`, we always first render the UI based on cached values, then we try to load the real values from the server, and then, unless the server data is mismatched with the cache, we don't want to rerender the UI - if we compared on the freshness, we could never detect that the data from the server is the same as from the cache) (As of Oct 2024)
 
         /// Sidenotes:
         ///     Places where we check equality (as of Oct 2024)
@@ -88,7 +88,8 @@ MFDataClassImplement10(MFDataClassBase, MFLicenseConfig,    readonly, assign,   
         ///             -> We first perform an equality check on `MFLicenseState`, `MFTrialState` and `MFLicenseConfig` and only update the UI, if the state has changed.
         ///         2. Perhaps other places I forgot about?
 
-        return @[@(self->_isLicensed), self->_licenseTypeInfo ?: NSNull.null]; /// `_licenseTypeInfo` is currently not nullable (as of Oct 2024), but we still fallback to NSNull just in case.
+        return @[@(self->_isLicensed),
+                 self->_licenseTypeInfo ?: NSNull.null]; /// `_licenseTypeInfo` is currently not nullable (as of Oct 2024), but we still fallback to NSNull just in case.
     }
 
 @end
@@ -97,13 +98,14 @@ MFDataClassImplement10(MFDataClassBase, MFLicenseConfig,    readonly, assign,   
 
 @implementation MFTrialState (Extensions)
 
-    - (NSArray<id> *)propertyValuesForEqualityComparison {
+    - (NSObject *)internalStateForEqualityComparison {
 
         /// Define equality for the MFTrialState
         /// Notes:
         /// - We compare all fields except for `daysOfUseUI` and `trialIsActive`, because those are directly derived from the other fields
 
-        return @[@(self->_daysOfUse), @(self->_trialDays)]; /// Don't forget that trying to `@(box)` nil crashes for some types like `char *`
+        return @[@(self->_daysOfUse),
+                 @(self->_trialDays)]; /// Don't forget that trying to `@(box)` nil crashes for some types like `char *`
     }
 
 @end
@@ -120,8 +122,8 @@ MFDataClassImplement10(MFDataClassBase, MFLicenseConfig,    readonly, assign,   
 
     - (instancetype _Nullable)initWithJSONDictionary:(NSMutableDictionary *_Nonnull)dict freshness:(MFValueFreshness)freshness requireSecureCoding:(BOOL)requireSecureCoding error:(NSError *__autoreleasing _Nullable * _Nullable)errorPtr {
         
-        ///     Explanation: The licenseConfig json dicts we retrieve from the server / cache / fallback don't have a 'freshness' field, but our MFLicenseConfig dataclass does. We need to add `freshness` in advance so our underlying `initWithDictionary:` initializer doesn't fail due to missing fields.
-        ///         -> Don't use the underlying `initWithDictionary:requireSecureCoding:error:` initializer directly without setting the 'freshness' - it will probably fail.
+        ///     Explanation: The licenseConfig json dicts we retrieve from the server / cache / fallback *do not* have a 'freshness' field, but our MFLicenseConfig dataclass does.
+        ///                We need to add `freshness` in advance so our underlying `initWithDictionary:requireSecureCoding:error:` initializer doesn't fail due to missing fields. (or perhaps it would even produce an invalid object if secureCoding is off?)
         
         /// Set freshness
         dict[@"freshness"] = @(freshness);
@@ -134,16 +136,17 @@ MFDataClassImplement10(MFDataClassBase, MFLicenseConfig,    readonly, assign,   
     }
 
 
-    - (NSArray<id> *)propertyValuesForEqualityComparison {
+    - (NSObject *)internalStateForEqualityComparison {
 
         ///    This function defines which properties we consider for equality-checking on MFLicenseConfig
         ///
         ///     Notes:
         ///    - We don't check `freshness` because it describes the origin of the data (cache, server, etc) and, in a sense, isn't itself part of the data we're trying to represent.
         ///    - All other properties should be checked - don't forget to update this when adding new properties!
+        ///
         ///    Sidenotes: (from the old Swift implementation)
         ///    - I also tried overriding `==` directly instead of `isEqual:`, but it didn't work for some reason. (`==` normally just maps to`isEqual:`, so this is weird.)
-        ///    - I accidentally overrode isEqual(to:) instead of isEqual() causing great confusion (it breaks the `==` operator in Swift.)-
+        ///    - I accidentally overrode isEqual(to:) instead of isEqual() causing great confusion (it breaks the `==` operator in Swift.)
 
         return @[@(self->_maxActivations),
                  @(self->_trialDays),

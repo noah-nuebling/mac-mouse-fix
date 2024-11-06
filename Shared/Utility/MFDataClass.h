@@ -100,7 +100,7 @@
 /// Properties
 + (NSArray<NSString *> * _Nonnull)allPropertyNames;
 - (NSArray<id> *_Nonnull)allPropertyValues;
-- (NSArray<id> *_Nonnull)propertyValuesForEqualityComparison; /// You can override this to easily change the definition of equality. If, instead, you override `isEqual:` manually, you also need to override `- hash` manually to match.
+- (NSObject *_Nonnull)internalStateForEqualityComparison; /// You can override this to easily change the definition of equality between two instances of the same MFDataClass. You can also override `isEqual:` directly.
 
 /// Dict & JSON encoding
 - (NSDictionary<NSString *, NSObject *> *_Nonnull)asDictionary;
