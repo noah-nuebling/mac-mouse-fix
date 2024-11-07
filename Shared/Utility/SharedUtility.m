@@ -584,6 +584,8 @@ bool runningHelper(void) {
 }
 
 + (id)deepCopyOf:(id)object {
+
+    /// TODO: Replace this with the error-returning implementation (below)
     
     /// Check nil
     if (object == nil) return nil;
@@ -601,6 +603,8 @@ bool runningHelper(void) {
     /// The simpler default methods only work with `NSSecureCoding` objects. This implementation also works with `NSCoding` objects.
     /// Src:  https://developer.apple.com/forums/thread/107533
     /// Edit: This is actually superrrr slow. Was the old one this slow as well? Edit2: I think the old one was also very slow.
+    ///
+    /// TODO: Use MFEncode() and MFDecode() instead of this.
     
     assert(original != nil);
     

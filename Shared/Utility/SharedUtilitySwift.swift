@@ -73,7 +73,7 @@ import CocoaLumberjackSwift
         let result = try NSKeyedArchiver.archivedData(withRootObject: object, requiringSecureCoding: false)
         return result
     }
-    static func insecureUnarchive(data: Data) throws -> NSCoding {
+    static func insecureUnarchive(data: Data) throws -> NSCoding { /// TODO: Replace this with MFEncode() / MFDecode()
         
         let unarchiver = try NSKeyedUnarchiver(forReadingFrom: data)
         unarchiver.requiresSecureCoding = false

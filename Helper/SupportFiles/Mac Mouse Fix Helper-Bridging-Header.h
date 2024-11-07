@@ -45,5 +45,7 @@
 #import "NSScreen+Additions.h"
 #import "Device.h"
 #import "ButtonModifiers.h"
+#import "MacAddress.h"
+#import "MFCoding.h"
 
 //#import <CocoaLumberjack/CocoaLumberjack.h> /// Importing CocoaLumberjack/Swift with CocoaPods breaks my project. Can't use macros when importing this.

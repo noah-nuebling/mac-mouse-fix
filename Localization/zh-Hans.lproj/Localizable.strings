@@ -308,6 +308,9 @@
 /* First draft: **There is no connection to the internet**\n\nTry activating your license again when your computer is online. */
 "license-toast.no-internet" = "**没有接入互联网**\n\n当您的电脑接入互联网时再次尝试激活许可证。";
 
+/* First draft: **There was an issue with the licensing server**\n\nPlease try again later.\n\nIf the issue persists, please reach out to me [here](mailto:noah.n.public@gmail.com). */
+"license-toast.server-response-invalid" = "license-toast.server-response-invalid";
+
 /* First draft: **An unknown error occurred:**\n\n%@ */
 "license-toast.unknown-error" = "**发生了未知错误：**\n\n%@";
 

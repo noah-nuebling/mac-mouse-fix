@@ -138,7 +138,7 @@ class ClickCycle: NSObject {
             /// Gather state
             let cycleIsDead = (state == nil)
             var buttonIsDifferent = false
-            if !cycleIsDead {
+            if !cycleIsDead { /// Note (Sep 2024): I think only calculating buttonIsDifferent when !cycleIsDead is an optimization, but not sure.
                 buttonIsDifferent = button != state!.button || device != state!.device
             }
             
@@ -194,6 +194,36 @@ class ClickCycle: NSObject {
             /// Consider using DispatchSourceTimer instead
             /// We need to start timers from main. Async dispatching to main caused race conditions.
             /// Edit: Asserting Thread.isMainThread now since we're think it's a good idea for all input (clicks, drags, and scrolls) to be handled synchronously / on the the same thread - ideally the main thread so things are also synced with the NSTimers. (Could also use another mechanism instead of NSTimers?). Handling things on different threads leads to inconsistent triggering of gestures when the computer is slow.
+            /// Update (Sep 2024): are we sure we can't simply use NSTimer on another thread than the main thread? I'd like to move all the input handling over to a single thread as much as possible. I think this would be much nicer both to avoid race conditions and crashes and to ensure we're always handling the users inputs in the order they performed them (When using click and drag while the computer is slow, the order that the clicks and mouse-moves are handled is sometimes wrong I think.)
+            
+            /// ---
+            /// Sep 2024 I just saw a crash in the console:
+            /// Thread 5 Crashed::  Dispatch queue: com.nuebling.mac-mouse-fix.buttons
+            /// ```
+            /// Mac Mouse Fix Helper                     0x104873850 Swift runtime failure: Unexpectedly found nil while unwrapping an Optional value + 0 [inlined]
+            /// Mac Mouse Fix Helper                     0x104873850 closure #1 in closure #1 in closure #1 in ClickCycle.handleClick(device:button:downNotUp:maxClickLevel:triggerCallback:) + 528
+            /// Mac Mouse Fix Helper                     0x104871d44 thunk for @escaping @callee_guaranteed @Sendable () -> () + 28
+            /// ```
+            /// Discussion: (last updated: Sep 2024)
+            /// - The helper build number was 22854 which matches with the 3.0.3 release.
+            /// - I assume this was due to the forceful optional unwrapping of `self.state!` failing in the `scheduledTimer` callbacks below.
+            ///     - We set `self.state` to nil regularly whenever we call `self.kill()`, however this should also invalidate the timers, which should prevent them from firing and executing the code that crashed, so I think there must be a race condition or other error.
+            ///         Thoughts on where the error could come from:
+            ///             - `self.kill()` is invoked by all the other input handling code (modified drag, modified scroll, and keyboardModifier handling I think), I believe that not all of those run on the main thread.
+            ///             1. This might lead to a race condition
+            ///                 -> Explanation: The timer callback might be fired shortly before kill() sets `state` to nil and invalidates the timers.
+            ///             2. This might lead to the NSTimers not being invalidated properly
+            ///                 (NSTimer docs say that timers need to be invalidated from the same thread on which they are started, and I don't think we're always doing that)
+            ///             - Sidenote: I think we wrote the ClickCycle file basically just not trying to make it thread safe, since for other parts of the app we meticulously made everything thread safe using DispatchQueues, but then that lead to months of debugging deadlocks and stuff like that. So with ClickCycle I just thought
+            ///                    'what if I don't use locks to make this thread safe and instead I just try to make it still work fine in case there are race conditions - also, race conditions should be rare anyways, since user input is generally spaced out in time.'
+            ///                    IIRC I used this approach for Mac Mouse Fix 1 and 2, since I didn't even know what 'thread safe' meant at that point. And it has also worked quite well for ClickCycle so far, with this being the first crash I see - but using force unwrapping (the ! operator) on `state!` is sort of a mistake under that design philosophy, since it crashes when there's a race condition instead of smoothly recovering.
+            ///         Solution ideas:
+            ///            1. Move all input processing to a single, dedicated thread (I want to do this anyways.)
+            ///                 - My understanding of the current threading situation: (Sep 2024) we process buttonInputs partially on the mainThread and partially on the 'buttonQueue', other inputProcessing modules such as the modifiedDrag also interact with this module by triggering `ClickCycle.kill()`. modifiedDrag runs on the `GlobalEventTapThread`, but then also dispatches to a special `_drag.queue`, which I don't currently understand the purpose of. So it's really a bit all-over-the-place, and the `NSTimer.invalidate()` method inside `ClickCycle.kill()` is probably not always being called from the same thread, which could cause problems according to the docs.
+            ///            2. Remove all force unwrapping `!` from ClickCycle and instead do nil checks and then smoothly recover if state == nil.
+            ///
+            /// TODO: @crash fix this. 
+            ///
             
             assert(Thread.isMainThread)
             
