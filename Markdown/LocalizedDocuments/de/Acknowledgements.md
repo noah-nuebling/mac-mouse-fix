@@ -40,6 +40,7 @@ Diese Leute haben viel mehr als den Standardpreis ausgegeben und mir einen **ung
 
 **November 2024**
 
+- 🇩🇪&nbsp;Alexander&nbsp;Bock
 - 🇺🇸&nbsp;Eduardo&nbsp;Fonseca
 - 🇩🇪&nbsp;Volodymyr&nbsp;Gorlov
 - 🇺🇸&nbsp;Vote&nbsp;Byroads0R
