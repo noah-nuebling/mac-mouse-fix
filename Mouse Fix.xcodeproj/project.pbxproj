@@ -177,6 +177,7 @@
 		4FA40D0F28A0D8EF00499E53 /* SubPixelator.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF6664025F2C93A00689B77 /* SubPixelator.m */; };
 		4FA40D1028A0D8F100499E53 /* VectorSubPixelator.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF6664125F2C93A00689B77 /* VectorSubPixelator.m */; };
 		4FA40D1228A10E1900499E53 /* NSScreen+Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F3A40D9266C5BDF00436821 /* NSScreen+Additions.m */; };
+		4FA5F08E2CE4CEF800ED2354 /* SymbolicHotKeys.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FA5F08D2CE4CEF800ED2354 /* SymbolicHotKeys.m */; };
 		4FA83A29268271E200F3A31B /* PointerSpeed.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FA83A28268271E200F3A31B /* PointerSpeed.m */; };
 		4FA83A2E268288D900F3A31B /* PointerConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FA83A2D268288D900F3A31B /* PointerConfig.swift */; };
 		4FA8A30A28A9508C001E740F /* ButtonOptionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FA8A30828A9508C001E740F /* ButtonOptionsViewController.swift */; };
@@ -2156,6 +2157,8 @@
 		4FA1FD8028A85FD100D1C8EE /* RemapTableElements.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemapTableElements.swift; sourceTree = "<group>"; };
 		4FA1FD8228A916B600D1C8EE /* NSShadow+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSShadow+Extensions.swift"; sourceTree = "<group>"; };
 		4FA40CF528A0CBA600499E53 /* Mac Mouse Fix-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Mac Mouse Fix-Bridging-Header.h"; sourceTree = "<group>"; };
+		4FA5F08C2CE4CEF800ED2354 /* SymbolicHotKeys.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SymbolicHotKeys.h; sourceTree = "<group>"; };
+		4FA5F08D2CE4CEF800ED2354 /* SymbolicHotKeys.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SymbolicHotKeys.m; sourceTree = "<group>"; };
 		4FA83A27268271E200F3A31B /* PointerSpeed.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PointerSpeed.h; sourceTree = "<group>"; };
 		4FA83A28268271E200F3A31B /* PointerSpeed.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PointerSpeed.m; sourceTree = "<group>"; };
 		4FA83A2D268288D900F3A31B /* PointerConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PointerConfig.swift; sourceTree = "<group>"; };
@@ -7417,6 +7420,8 @@
 			children = (
 				4FF6663A25F2C93A00689B77 /* Actions.h */,
 				4FF6663B25F2C93A00689B77 /* Actions.m */,
+				4FA5F08C2CE4CEF800ED2354 /* SymbolicHotKeys.h */,
+				4FA5F08D2CE4CEF800ED2354 /* SymbolicHotKeys.m */,
 				4FCEDC80292CDC8300E7DA2A /* Actions.swift */,
 			);
 			path = Actions;
@@ -8183,6 +8188,7 @@
 				4F5F3EF12756EC0400C350C0 /* RemapSwizzler.m in Sources */,
 				4FD66E0B27BB9BAE00F67559 /* EventUtility.m in Sources */,
 				4FFA4E3C28B79D9B0062A1FE /* NSAttributedString+Extensions.swift in Sources */,
+				4FA5F08E2CE4CEF800ED2354 /* SymbolicHotKeys.m in Sources */,
 				4FF666A925F2C93A00689B77 /* HelperUtility.m in Sources */,
 				4FDE759B28B1401400662314 /* License.swift in Sources */,
 				4FCC03352757B181002E5A57 /* ScreenDrawer.swift in Sources */,
