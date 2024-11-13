@@ -8,12 +8,12 @@
 //
 
 /**
-    System features such as 'Open Mission Control' have an associated number which is called the *SymbolicHotKey* or SHK.
-    *SymbolicHotKey* APIs are used by macOS to map keyboard shortcuts and mouse buttons to these system features.
+    System features such as 'Open Mission Control' have an associated identifier which is called the *SymbolicHotKey* or SHK.
+    In macOS' APIs, *SymbolicHotKeys* are used to map keyboard shortcuts and mouse buttons to the associated system features.
     
     We hijack the SHK system to trigger macOS features programmatically.
     
-    Steps:
+    Steps: (Nov 2024)
          1. Look up which keyboard shortcut is associated with the system feature we want to trigger
          2. (If there is no usable keyboard shortcut, modify the `keyboard shortcut -> system feature` map.)
          3. Simulate the keyboard shortcut – which will trigger the desired system feature
@@ -21,11 +21,12 @@
          
     Alternatives:
         - There are also SHKs for mouse buttons – not only for keyboard shortcuts. We could possibly use those directly.
-            (Src: /Users/Noah/Library/Preferences/com.apple.symbolichotkeys.plist)
+            (Src: the `type: button` entries inside ~/Library/Preferences/com.apple.symbolichotkeys.plist)
         - In IOKit there's `IOHIDEventCreateSymbolicHotKeyEvent()` - this sounds like a promising way to simplify triggering of SHKs
-            (But we'd first have to figure out how to use that function and how to convert from `IOHIDEvent` to `CGEvent`, so it might take a while. Also see `CGEventHIDEventBridge.h`)
-        - HIToolbox APIs such as`CopySymbolicHotKeys()`
-            I think these are more for registering new SHKs for the current app, not for modifying global SHK.
+            (But we'd first have to figure out how to use that function and how to convert from `IOHIDEvent` to `CGEvent`, so it might take a while.)
+            (Also see `CGEventHIDEventBridge.h`)
+        - Public HIToolbox APIs such as`CopySymbolicHotKeys()`
+            I think these are more for registering new SHKs for the current app, not for modifying global SHK – but I haven't tested them, yet.
     
      Discussion:
          We implemented the SymbolicHotKey stuff really early in development (for MMF 1) the Apple Note below documents some of our thinking at the time.
@@ -82,10 +83,20 @@
 
 @implementation SymbolicHotKeys
 
-CG_EXTERN CGError CGSGetSymbolicHotKeyValue(CGSSymbolicHotKey hotKey, unichar *outKeyEquivalent, unichar *outVirtualKeyCode, CGSModifierFlags *outModifiers);
+/// Define extern CGS function
+///     All the other extern functions we need are already defined in `CGSHotKeys.h`
 CG_EXTERN CGError CGSSetSymbolicHotKeyValue(CGSSymbolicHotKey hotKey, unichar keyEquivalent, CGKeyCode virtualKeyCode, CGSModifierFlags modifiers);
 
 + (void)post:(CGSSymbolicHotKey)shk {
+
+    /// Thread safety:
+    ///     (Last updated: Nov 2024)
+    ///     AFAIK, the only shared mutable state are the `CGS` functions that modify the global SHK configuration. The only two 'entry points' of this file which could produce simultaneous accesses to this shared state are the `+post:` and `+restoreSymbolicHotkeyParameters_timerCallback:` methods.
+    ///     If we locked those two 'entry points' with a mutex and then never acquire another lock while holding that mutex, then our code should be guaranteed race condition and deadlock free.
+    ///     However, I don't know whether functions such as `CGSSetSymbolicHotKeyValue()` acquire a lock or not, so I'm not confident that there can never be a deadlock if we used mutexes here.
+    ///     -> I think the better solution would be to make sure that all the 'entry points' simply run on the same runLoop/thread. Alternatively, we could async dispatch to a dispatchQueue, but controlling the runLoop would be simpler and cleaner I think.
+
+    DDLogDebug(@"SymbolicHotKeys: `+post:` running on thread: %@", NSThread.currentThread);
     
     unichar keyEquivalent;
     CGKeyCode keyCode;
@@ -140,19 +151,21 @@ CG_EXTERN CGError CGSSetSymbolicHotKeyValue(CGSSymbolicHotKey hotKey, unichar ke
 
 + (void)restoreSymbolicHotkeyParameters_timerCallback:(NSTimer *)timer {
     
-    CGSSymbolicHotKey shk = [timer.userInfo[@"shk"] intValue];
-    BOOL enabled = [timer.userInfo[@"enabled"] boolValue];
+    DDLogDebug(@"SymbolicHotKeys: timerCallback running on thread: %@", NSThread.currentThread);
     
+    CGSSymbolicHotKey shk = [timer.userInfo[@"shk"] intValue];
+    
+    /// Restore enabled-state
+    BOOL enabled = [timer.userInfo[@"enabled"] boolValue];
     CGSSetSymbolicHotKeyEnabled(shk, enabled);
     
+    /// Restore old (unusable) binding
     BOOL oldIsBindingIsUsable = [timer.userInfo[@"oldIsBindingIsUsable"] boolValue];
-    
     if (!oldIsBindingIsUsable) {
-        /// Restore old, unusable binding
         unichar kEq = [timer.userInfo[@"keyEquivalent"] unsignedShortValue];
         CGKeyCode kCode = [timer.userInfo[@"virtualKeyCode"] unsignedIntValue];
         CGSModifierFlags mod = [timer.userInfo[@"flags"] intValue];
-    CGSSetSymbolicHotKeyValue(shk, kEq, kCode, mod);
+        CGSSetSymbolicHotKeyValue(shk, kEq, kCode, mod);
     }
 }
 
@@ -165,7 +178,7 @@ static void postKeyboardEventsForSymbolicHotkey(CGKeyCode keyCode, CGSModifierFl
     CGEventRef keyUp = CGEventCreateKeyboardEvent(NULL, keyCode, false);
     CGEventSetFlags(keyDown, (CGEventFlags)modifierFlags);
     CGEventFlags originalModifierFlags = getModifierFlags();
-    CGEventSetFlags(keyUp, originalModifierFlags); // Restore original keyboard modifier flags state on key up. This seems to fix `[Modifiers getCurrentModifiers]`
+    CGEventSetFlags(keyUp, originalModifierFlags); /// Restore original keyboard modifier flags state on key up. This seems to fix `[Modifiers getCurrentModifiers]`
     
     /// Send key events
     CGEventPost(tapLoc, keyDown);
@@ -183,7 +196,7 @@ static BOOL shkBindingIsUsable(CGKeyCode keyCode, unichar keyEquivalent) {
     
     /// Check if keyCode matches char
     ///  Why we do this:
-    ///     (For context for this comment, see postSymbolicHotkey() - where this function is called)
+    ///     (For context for this comment, see `+post:` - where this function is called)
     ///     When using a 'non-standard' keyboard layout, then the keycodes for certain keyboard shortcuts can change.
     ///         This is because keycodes seem to be hard mapped to physical keys on the keyboard. But the character values for those keys depend on the keyboard mapping. For example, with a German layout, the characters for the 'Y' and 'Z' keys will be swapped. Therefore the key that produces 'Z' will have a different keycode with the German layout vs the English layout. Therefore the keycodes that trigger certain keyboard shortcuts also change when changing the keyboard layout.
     ///     Now the problem is, that CGSGetSymbolicHotKeyValue() doesn't take this into account. It always returns the keycode for the 'standard' layout, not the current layout.
@@ -219,7 +232,7 @@ static BOOL getCharsForKeyCode(CGKeyCode keyCode, NSString **chars) {
     /// Get chars for a given keycode. Based on currently active keyboard layout
     /// Returns success
     ///
-    /// TODO: Think about putting this into some utility class
+    /// Note: Think about putting this into some utility class
     
     /// Init result
     
