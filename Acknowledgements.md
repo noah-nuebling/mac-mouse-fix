@@ -42,6 +42,7 @@ These people spent a lot more than the standard price and treated me to an **Inc
 
 **November 2024**
 
+- 🇯🇵&nbsp;Daigo&nbsp;Kobayashi - "kobayasi.daigo0604@gmail.com"
 - 🇺🇸&nbsp;Josue&nbsp;Torres&nbsp;Fonseca - "Mac Mouse Fix is a very well built, easy to use, and versatile product that finally makes it easy to use a third party mouse without losing all of the great gestures available when using the Macbook trackpad. 10/10 would recommend."
 - 🇩🇪&nbsp;Alexander&nbsp;Bock
 - 🇺🇸&nbsp;Eduardo&nbsp;Fonseca
