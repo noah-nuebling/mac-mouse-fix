@@ -44,6 +44,26 @@ NS_ASSUME_NONNULL_BEGIN
 
 #define stringf(format, ...) [NSString stringWithFormat:(format), ## __VA_ARGS__]
 
+#define binarystring(__v) /** This is a macro to make this function generic. The output string's width will automatically match the byte count of the input type (by using sizeof()) */\
+    (NSString *) \
+    ({ \
+        typeof(__v) m_value = __v; /** We call it `m_value` so there's no conflict in case `__v` is `value`. `m_` stands for `macro`. */ \
+        int nibble_size = 8; \
+        int nibble_count = sizeof(m_value)*8 / nibble_size; \
+        int bit_str_len = (nibble_count * (nibble_size+1)) - 1; \
+        char bit_str[bit_str_len + 1]; \
+        bit_str[bit_str_len] = '\0'; /** Null terminator */ \
+        for (int i = bit_str_len-1; i >= 0; i--) { \
+            if (i % (nibble_size+1) == nibble_size) { /** Add a space every `nibble_size` bits for better legibility */ \
+                bit_str[i] = ' '; \
+            } else { \
+                bit_str[i] = (m_value & 1) ? '1' : '0'; \
+                m_value = m_value >> 1; \
+            } \
+        } \
+        [NSString stringWithUTF8String:bit_str]; \
+    })
+
 /// Check if ptr is objc object
 ///     Copied from https://opensource.apple.com/source/CF/CF-635/CFInternal.h
 #define CF_IS_TAGGED_OBJ(PTR)    ((uintptr_t)(PTR) & 0x1)
@@ -85,7 +105,6 @@ int8_t sign(double x);
 + (void)printInvocationCountWithId:(NSString *)strId;
 + (BOOL)button:(NSNumber * _Nonnull)button isPartOfModificationPrecondition:(NSDictionary *)modificationPrecondition;
 + (void)setupBasicCocoaLumberjackLogging;
-+ (NSString *)binaryRepresentation:(unsigned int)value;
 + (void)resetDispatchGroupCount:(dispatch_group_t)group;
 
 @end

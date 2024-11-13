@@ -837,7 +837,7 @@ static NSError *makeWritable(NSString *itemPath) {
         
         /// Debug
         
-        DDLogInfo(@"Changed permissions of %@ from %@ to %@", itemPath,  [SharedUtility binaryRepresentation:(int)oldPermissions], [SharedUtility binaryRepresentation:(int)newPermissions]);
+        DDLogInfo(@"Changed permissions of %@ from %@ to %@", itemPath, binarystring((int)oldPermissions), binarystring((int)newPermissions));
         /// ^ Binary representation doesn't really help. This is almost impossible to parse visually.
     }
     

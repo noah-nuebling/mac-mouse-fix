@@ -102,6 +102,7 @@
           (f & kCGEventFlagMaskAlternate ?  @"⌥" : @""),
           (f & kCGEventFlagMaskShift ?      @"⇧" : @""),
           (f & kCGEventFlagMaskCommand ?    @"⌘" : @"")];
+//          (f & (1 << 23) ?                  @"🌎": @"")]; /// Globe/fn key
 
     return kb;
 }

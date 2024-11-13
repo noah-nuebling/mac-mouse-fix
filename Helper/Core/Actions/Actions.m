@@ -156,6 +156,70 @@ static void postKeyboardShortcut(CGKeyCode keyCode, CGSModifierFlags modifierFla
 
 #pragma mark - SymbolicHotkeys
 
+/**
+    System features such as 'Open Mission Control' have an associated number which is called the *SymbolicHotKey* or SHK.
+    *SymbolicHotKey* APIs are used by macOS to map keyboard shortcuts and mouse buttons to these system features.
+    
+    We hijack the SHK system to trigger macOS features programmatically.
+    
+    To do this we
+         1. Look up which keyboard shortcut is associated with the system feature we want to trigger
+         2. (If there is no usable keyboard shortcut, modify the `keyboard shortcut -> system feature` map.)
+         3. Simulate the keyboard shortcut – triggering the desired system feature.
+         4. (In case it was modified - reset the `keyboard shortcut -> system feature` map.)
+         
+    Alternatives:
+        - There are also SHKs for mouse buttons – not only for keyboard shortcuts. We could possibly use those directly.
+            (Src: /Users/Noah/Library/Preferences/com.apple.symbolichotkeys.plist)
+        - In IOKit there's `IOHIDEventCreateSymbolicHotKeyEvent()` - this sounds like a promising way to simplify triggering of SHKs
+            (But we'd first have to figure out how to use that function and how to convert from `IOHIDEvent` to `CGEvent`, so it might take a while. Also see `CGEventHIDEventBridge.h`)
+    
+     Discussion:
+         We implemented the SymbolicHotKey stuff really early in development (for MMF 1) and I don't remember how I came up with this.
+    
+     Original Apple Note from 22.11.2018:
+     
+        Switching Spaces through Private API
+
+        - [x] SOLVED - using symbolic hotkey private api
+
+        Ways to go forward:
+        * Try to really understand how other apps do it
+        * Use CGSConnection.h to create custom symbolic hotkey, which we then trigger via CGEvent
+            * private API not fully documented, pretty sure that we’d have to overridde existing hotkey, and/or activate it globally
+        * Find way to make CGSSpace.h work properly
+            * feel like I tried everything
+        * Try to find, reverse engineer and emulate executable that parses symbolic hotkeys
+            * (harrrrrd)
+
+        Keyboard Shortcut Preferences File
+        /Users/Noah/Library/Preferences/com.apple.symbolichotkeys.plist
+
+        control key mask:
+        * 0x040000:	262144
+        * 0x840000:	8650752
+
+        * left space: 		79
+        * right space:		81
+        * mission control: 	32
+        * show all windows: 	33
+
+        GitHub Projects that can do it:
+
+            * [Demo of Spaces API discovered through RE](https://gist.github.com/puffnfresh/4054059) - old, no switching
+            * [Spaces.h](https://github.com/NUIKit/CGSInternal/blob/master/CGSSpace.h) - “header for private Spaces Routines”
+
+            * [hs._asm.undocumented.spaces](https://github.com/asmagill/hs._asm.undocumented.spaces) - Hammerspoon module for Space Switching functionality (built on Spaces.h) - relies on killing Dock, no animtions
+            * [Hammerspoon](https://github.com/Hammerspoon/hammerspoon/tree/0.9.70) - “bridge between macOS and Lua Lang” (built on hs._asm.)
+
+            * [Silica](https://github.com/ianyh/Silica/blob/master/Silica/CGSSpaces.h) - “window management framework” (interacts with private API but doesn't do space switching I believe)
+            * [Amethyst](https://github.com/ianyh/Amethyst) - “window manager app” - “built on Silica”
+
+        Steer Mouse Reverse Engineering:
+            PS804ActionClass
+
+     */
+
 static void postKeyboardEventsForSymbolicHotkey(CGKeyCode keyCode, CGSModifierFlags modifierFlags) {
     
     CGEventTapLocation tapLoc = kCGSessionEventTap;
@@ -187,6 +251,8 @@ static void postSymbolicHotkey(CGSSymbolicHotKey shk) {
     
     BOOL hotkeyIsEnabled = CGSIsSymbolicHotKeyEnabled(shk);
     BOOL oldBindingIsUsable = shkBindingIsUsable(keyCode, keyEquivalent);
+    
+    DDLogDebug(@"Actions: hotkeyIsEnabled: %d, oldBindingIsUsable: %d", hotkeyIsEnabled, oldBindingIsUsable);
     
     if (!hotkeyIsEnabled) {
         CGSSetSymbolicHotKeyEnabled(shk, true);
@@ -260,6 +326,7 @@ BOOL shkBindingIsUsable(CGKeyCode keyCode, unichar keyEquivalent) {
     ///     When using a 'non-standard' keyboard layout, then the keycodes for certain keyboard shortcuts can change.
     ///         This is because keycodes seem to be hard mapped to physical keys on the keyboard. But the character values for those keys depend on the keyboard mapping. For example, with a German layout, the characters for the 'Y' and 'Z' keys will be swapped. Therefore the key that produces 'Z' will have a different keycode with the German layout vs the English layout. Therefore the keycodes that trigger certain keyboard shortcuts also change when changing the keyboard layout.
     ///     Now the problem is, that CGSGetSymbolicHotKeyValue() doesn't take this into account. It always returns the keycode for the 'standard' layout, not the current layout.
+    ///         (Update Nov 2024: I think this 'keycode for the standard layout' is called the 'virtual keycode')
     ///     Possible solutions:
     ///         1. Find an alternative function to CGSGetSymbolicHotKeyValue() that works properly.
     ///             - Problem: CGSInternal project on GH doesn't offer an alternative, so this probably involves reverse engineering Apple libraries -> a lot of work
@@ -274,7 +341,6 @@ BOOL shkBindingIsUsable(CGKeyCode keyCode, unichar keyEquivalent) {
     ///             - I like this idea
     ///             -> We went with this approach
     ///
-    ///     -> I'm not sure what the 'standard' layout is. I think the only 'standard' layout is the one that maps all keys to what it says on the keycaps. Or maybe the 'standard' layout is the US American layout. Not sure.
     
     NSString *chars;
     getCharsForKeyCode(keyCode, &chars);

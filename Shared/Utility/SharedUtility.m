@@ -685,22 +685,6 @@ int8_t sign(double x) {
     }
 }
 
-+ (NSString *)binaryRepresentation:(unsigned int)value {
-    
-    long nibbleCount = sizeof(value) * 2;
-    NSMutableString *bitString = [NSMutableString stringWithCapacity:nibbleCount * 5];
-    
-    for (long index = 4 * nibbleCount - 1; index >= 0; index--)
-    {
-        [bitString appendFormat:@"%i", value & (1 << index) ? 1 : 0];
-        if (index % 4 == 0)
-        {
-            [bitString appendString:@" "];
-        }
-    }
-    return bitString;
-}
-
 + (void)resetDispatchGroupCount:(dispatch_group_t)group {
     /// Reset smoothing group counter to 0
     /// This doesn't work, don't use this.
