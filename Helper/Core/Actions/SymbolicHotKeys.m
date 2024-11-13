@@ -26,7 +26,7 @@
             (But we'd first have to figure out how to use that function and how to convert from `IOHIDEvent` to `CGEvent`, so it might take a while.)
             (Also see `CGEventHIDEventBridge.h`)
         - Public HIToolbox APIs such as`CopySymbolicHotKeys()`
-            I think these are more for registering new SHKs for the current app, not for modifying global SHK – but I haven't tested them, yet.
+            I think these are more for registering new SHKs for the current app, not for modifying/triggering global SHK – but I haven't tested them, yet.
     
      Discussion:
          We implemented the SymbolicHotKey stuff really early in development (for MMF 1) the Apple Note below documents some of our thinking at the time.
@@ -80,12 +80,45 @@
 #import "SymbolicHotKeys.h"
 #import "HelperUtility.h"
 #import <Carbon/Carbon.h>
+#import "SharedUtility.h"
 
 @implementation SymbolicHotKeys
 
 /// Define extern CGS function
 ///     All the other extern functions we need are already defined in `CGSHotKeys.h`
 CG_EXTERN CGError CGSSetSymbolicHotKeyValue(CGSSymbolicHotKey hotKey, unichar keyEquivalent, CGKeyCode virtualKeyCode, CGSModifierFlags modifiers);
+
+
+/**
+    Define constants
+     
+    On the `kEmpty` constants:
+        When you call `CGSGetSymbolicHotKeyValue()` on a SHK which is assigned to `none` by macOS, you see the following values:
+        ```
+        keyEquivalent:      65535
+        virtualKeyCode:     65535
+        modifierFlags:      0
+        ```
+        (When you 'Restore Defaults', macOS assigns 'Show Launchpad' to 'none' - that's how I could find these values.)
+    
+    We call these values the 'empty' values.
+    Note that `65535 == (1<<16)-1` - it's the largest number that fits into an unsigned 16 bit int.
+    
+    On `keyEquivalent`:
+        CGSGetSymbolicHotKeyValue() seems to spit out 65535 as the keyEquivalent when it can't find an actual keyEquivalent unicode character (Which is commonly the case, e.g. for arrow keys.)
+        -> So we're using it in the same way - signalling that there is no keyEquivalent. In my testing the keyBinding always showed up as 'none' under the `Keyboard Shortcut...` System Settings (Using macOS Sequoia 15.1) which seems appropriate.
+          (But if you map an SHK to an arrow key it will also have the 65535 keyEquivalent but show up as an arrow instead of 'none' in System Settings. Not sure how that works.)
+    On `modifierFlags`:
+        Setting this to the 'empty' value (0) renders the SHK unusable. I'm basing this on old comments and vague memories, but I'm but not sure.
+    On`virtualKeyCode`
+        Not sure what happens when this is set to its 'empty' value (65535). But based on logic, I think either `keyEquivalent` or `virtualKeyCode` need to be non-empty for the system to have any chance to map a keyboardEvent to the `symbolicHotKey` that these values belong to.
+
+ */
+
+#define kEmptyKeyEquivalent ((unichar)65535)
+#define kEmptyVKC           ((CGKeyCode)65535)
+#define kEmptyModifierFlags ((CGSModifierFlags)0)
+#define kOutOfReachVKC      ((CGKeyCode)400)             /// VirtualKeyCodes (VKCs) on my keyboard go up to like 125, but we use 400 just to be safely out of reach of a real kb
 
 + (void)post:(CGSSymbolicHotKey)shk {
 
@@ -96,17 +129,17 @@ CG_EXTERN CGError CGSSetSymbolicHotKeyValue(CGSSymbolicHotKey hotKey, unichar ke
     ///     However, I don't know whether functions such as `CGSSetSymbolicHotKeyValue()` acquire a lock or not, so I'm not confident that there can never be a deadlock if we used mutexes here.
     ///     -> I think the better solution would be to make sure that all the 'entry points' simply run on the same runLoop/thread. Alternatively, we could async dispatch to a dispatchQueue, but controlling the runLoop would be simpler and cleaner I think.
 
-    DDLogDebug(@"SymbolicHotKeys: `+post:` running on thread: %@", NSThread.currentThread);
+    DDLogDebug(@"[SymbolicHotKeys +post:] running on thread: %@", NSThread.currentThread);
     
     unichar keyEquivalent;
-    CGKeyCode keyCode;
+    CGKeyCode virtualKeyCode;
     CGSModifierFlags modifierFlags;
-    CGSGetSymbolicHotKeyValue(shk, &keyEquivalent, &keyCode, &modifierFlags);
+    CGSGetSymbolicHotKeyValue(shk, &keyEquivalent, &virtualKeyCode, &modifierFlags);
     
     BOOL hotkeyIsEnabled = CGSIsSymbolicHotKeyEnabled(shk);
-    BOOL oldBindingIsUsable = shkBindingIsUsable(keyCode, keyEquivalent);
+    BOOL oldBindingIsUsable = shkBindingIsUsable(virtualKeyCode, keyEquivalent, modifierFlags);
     
-    DDLogDebug(@"[SymbolicHotKeys +post]: hotkeyIsEnabled: %d, oldBindingIsUsable: %d", hotkeyIsEnabled, oldBindingIsUsable);
+    DDLogDebug(@"[SymbolicHotKeys +post:] hotkeyIsEnabled: %d, oldBindingIsUsable: %d,\nkeyEquivalent: %d, VKC: %d, modifierFlags: %@", hotkeyIsEnabled, oldBindingIsUsable, keyEquivalent, virtualKeyCode, binarystring(modifierFlags));
     
     if (!hotkeyIsEnabled) {
         CGSSetSymbolicHotKeyEnabled(shk, true);
@@ -114,40 +147,38 @@ CG_EXTERN CGError CGSSetSymbolicHotKeyValue(CGSSymbolicHotKey hotKey, unichar ke
     if (!oldBindingIsUsable) {
         
         /// Temporarily set a usable binding for our shk
-        unichar newKeyEquivalent = 65535; /// Tried to put an 'ö' face but it didn't work
-        CGKeyCode newKeyCode = (CGKeyCode)shk + 400; /// Keycodes on my keyboard go up to like 125, but we use 400 just to be safely out of reach for a real kb
-        CGSModifierFlags newModifierFlags = 10485760; /// 0 Didn't work in my testing. This seems to be the 'empty' CGSModifierFlags value, used to signal that no modifiers are pressed. TODO: Test if this works
-        CGError err = CGSSetSymbolicHotKeyValue(shk, newKeyEquivalent, newKeyCode, newModifierFlags);
+        unichar newKeyEquivalent = kEmptyKeyEquivalent;
+        CGKeyCode newVirtualKeyCode = kOutOfReachVKC + (CGKeyCode)shk;
+        CGSModifierFlags newModifierFlags = kCGSNumericPadKeyMask | kCGSFunctionKeyMask; /// Not sure how we arrived at this but it works. 0 (aka `kEmptyModifierFlags`) didn't work in my testing. I think that's to prevent directly remapping a normal key like 'P' to Mission Control without any modifiers being held. (Function keys can be directly mapped to features like Mission Control, but they also have their own 'modfier flag' – kCGSFunctionKeyMask. Little weird.)
+        CGError err = CGSSetSymbolicHotKeyValue(shk, newKeyEquivalent, newVirtualKeyCode, newModifierFlags);
         if (err != kCGErrorSuccess) {
-            DDLogError(@"Error setting shk params: %d", err);
-            /// TODO: Do again or something if setting shk goes wrong?
-    }
+            DDLogError(@"Error setting shk params: %d", err); /// We still post the keyboard events in this case, bc maybe it will still worked despite the error?
+        }
     
-        /// Post keyboard events trigger shk
-        postKeyboardEventsForSymbolicHotkey(newKeyCode, newModifierFlags);
+        /// Post keyboard events
+        postKeyboardEventsForSymbolicHotKey(newVirtualKeyCode, keyEquivalent, newModifierFlags);
     } else {
             
-        /// Post keyboard events trigger shk
-        postKeyboardEventsForSymbolicHotkey(keyCode, modifierFlags);
+        /// Post keyboard events
+        postKeyboardEventsForSymbolicHotKey(virtualKeyCode, keyEquivalent, modifierFlags);
     }
     
     /// Restore original binding after short delay
-    if (!hotkeyIsEnabled || !oldBindingIsUsable) { /// Only really need to restore hotKeyIsEnabled. But the other stuff doesn't hurt. Edit: now that we override oldBindingIsUsable to be false, we always need to restore.
+    if (!hotkeyIsEnabled || !oldBindingIsUsable) {
         [NSTimer scheduledTimerWithTimeInterval:0.05
                                          target:[SymbolicHotKeys class]
                                        selector:@selector(restoreSymbolicHotkeyParameters_timerCallback:)
                                        userInfo:@{
                                            @"enabled": @(hotkeyIsEnabled),
-                                           @"oldIsBindingIsUsable": @(oldBindingIsUsable),
+                                           @"oldBindingIsUsable": @(oldBindingIsUsable),
                                            @"shk": @(shk),
                                            @"keyEquivalent": @(keyEquivalent),
-                                           @"virtualKeyCode": @(keyCode),
+                                           @"virtualKeyCode": @(virtualKeyCode),
                                            @"flags": @(modifierFlags),
                                        }
                                         repeats:NO];
     }
 }
-
 
 + (void)restoreSymbolicHotkeyParameters_timerCallback:(NSTimer *)timer {
     
@@ -159,9 +190,10 @@ CG_EXTERN CGError CGSSetSymbolicHotKeyValue(CGSSymbolicHotKey hotKey, unichar ke
     BOOL enabled = [timer.userInfo[@"enabled"] boolValue];
     CGSSetSymbolicHotKeyEnabled(shk, enabled);
     
-    /// Restore old (unusable) binding
-    BOOL oldIsBindingIsUsable = [timer.userInfo[@"oldIsBindingIsUsable"] boolValue];
-    if (!oldIsBindingIsUsable) {
+    /// Restore old "unusable" binding
+    ///     We wanna do this for the case that the binding *is* actually usable with a physical keyboard, but "unusable" for our code due to keyboard layout complications (See `shkBindingIsUsable()`)
+    BOOL oldBindingIsUsable = [timer.userInfo[@"oldBindingIsUsable"] boolValue];
+    if (!oldBindingIsUsable) {
         unichar kEq = [timer.userInfo[@"keyEquivalent"] unsignedShortValue];
         CGKeyCode kCode = [timer.userInfo[@"virtualKeyCode"] unsignedIntValue];
         CGSModifierFlags mod = [timer.userInfo[@"flags"] intValue];
@@ -169,15 +201,19 @@ CG_EXTERN CGError CGSSetSymbolicHotKeyValue(CGSSymbolicHotKey hotKey, unichar ke
     }
 }
 
-static void postKeyboardEventsForSymbolicHotkey(CGKeyCode keyCode, CGSModifierFlags modifierFlags) {
+static void postKeyboardEventsForSymbolicHotKey(CGKeyCode virtualKeyCode, unichar keyEquivalent, CGSModifierFlags modifierFlags) {
     
-    CGEventTapLocation tapLoc = kCGSessionEventTap;
+    /// Constants
+    const CGEventTapLocation tapLoc = kCGSessionEventTap;
+    const CGEventSourceRef source = NULL;
     
     /// Create key events
-    CGEventRef keyDown = CGEventCreateKeyboardEvent(NULL, keyCode, true);
-    CGEventRef keyUp = CGEventCreateKeyboardEvent(NULL, keyCode, false);
+    CGEventRef keyDown = CGEventCreateKeyboardEvent(source, virtualKeyCode, true);
+    CGEventRef keyUp = CGEventCreateKeyboardEvent(source, virtualKeyCode, false);
+    
+    /// Set modifierFlags
+    CGEventFlags originalModifierFlags = getModifierFlagsWithEvent(keyDown);
     CGEventSetFlags(keyDown, (CGEventFlags)modifierFlags);
-    CGEventFlags originalModifierFlags = getModifierFlags();
     CGEventSetFlags(keyUp, originalModifierFlags); /// Restore original keyboard modifier flags state on key up. This seems to fix `[Modifiers getCurrentModifiers]`
     
     /// Send key events
@@ -188,79 +224,123 @@ static void postKeyboardEventsForSymbolicHotkey(CGKeyCode keyCode, CGSModifierFl
     CFRelease(keyUp);
 }
 
-static BOOL shkBindingIsUsable(CGKeyCode keyCode, unichar keyEquivalent) {
+static BOOL shkBindingIsUsable(CGKeyCode virtualKeyCode, unichar keyEquivalent, CGSModifierFlags modifierFlags) {
     
-    /// Check if keyCode is reasonable
-    
-    if (keyCode >= 400) return NO;
-    
-    /// Check if keyCode matches char
-    ///  Why we do this:
-    ///     (For context for this comment, see `+post:` - where this function is called)
-    ///     When using a 'non-standard' keyboard layout, then the keycodes for certain keyboard shortcuts can change.
-    ///         This is because keycodes seem to be hard mapped to physical keys on the keyboard. But the character values for those keys depend on the keyboard mapping. For example, with a German layout, the characters for the 'Y' and 'Z' keys will be swapped. Therefore the key that produces 'Z' will have a different keycode with the German layout vs the English layout. Therefore the keycodes that trigger certain keyboard shortcuts also change when changing the keyboard layout.
-    ///     Now the problem is, that CGSGetSymbolicHotKeyValue() doesn't take this into account. It always returns the keycode for the 'standard' layout, not the current layout.
-    ///         (Update Nov 2024: I think this 'keycode for the standard layout' is called the 'virtual keycode')
-    ///     Possible solutions:
-    ///         1. Find an alternative function to CGSGetSymbolicHotKeyValue() that works properly.
-    ///             - Problem: CGSInternal project on GH doesn't offer an alternative, so this probably involves reverse engineering Apple libraries -> a lot of work
-    ///         2. Build a custom function that translates the keyEquivalent that CGSGetSymbolicHotKeyValue() returns into the correct keyCode according to the current layout.
-    ///             - Problem: Some shortcuts may not have keyEquivalents
-    ///             - Problem: There doesn't seem to be an API for this. UCKeyTranslate only translates keyCode -> char not char -> keyCode
-    ///         3. Always assign a specific keyCode and then use that.
-    ///             - We achieve this simply by overriding oldBindingIsUsable = NO -> It's easy
-    ///             - Problem: This is around 30% - 100% slower when a functioning keyCode already exists.
-    ///         4. Check if the combination of keyCode and keyEquivalent that CGSGetSymbolicHotKeyValue() returns corresponds to the current layout. If not, declare unusable
-    ///             - This is like 3. but more optimized.
-    ///             - I like this idea
-    ///             -> We went with this approach
+    /// Discussion
     ///
+    /// Why check if a binding `isUsable`?
+    ///     If there's an existing, usable binding for an SHK, then it's most efficient to use that.
+    ///         Creating a new binding is around 30% - 100% slower in my testing.
+    ///
+    ///     However, we should err on the side of creating a new binding, if we're not sure that the binding `isUsable`. (Because otherwise the SHK might not be triggered correctly.)
+    ///
+    /// Why check if `virtualKeyCode` matches the `keyEquivalent`?
+    ///     Explanation of basic concepts:
+    ///     A VKC is specific to a hardware key, but does not necessarily correspond to a specific character on the keyboard. The VKC can be mapped to a unicode character using a keyboard layout.
+    ///     The `keyEquivalent` is supposed to be the actual letter/symbol on the keyboard as a unicode character.
+    ///     The `CGS...SymbolicHotKey...()` APIs seem to be defined in terms of a keyEquivalent *and* a VKC.
+    ///
+    ///     Based on my observations, the keyEquivalent takes precendence over the VKC.
+    ///     That means, if you're using a German layout, the 'Y' key on the keyboard might have VKC 222, and on a US layout the 'Y' key might have VKC 333, but if Mission Control is mapped to Command-D, then it will still work under both keyboard layouts, because the system cares about the keyEquivalent (D) more than the VKC (222 or 333)
+    ///
+    ///     However, for our programmatic triggering of SymbolicHotKeys, this is problematic, because we simply create a CGEvent with a VKC and then send it. After we send the event, macOS will seemingly translate the VKC to a keyEquivalent unicode char, using the current keyboard layout. Then it will decide whether to execute the SHK based on whether the keyEquivalent it computed from the event matches the keyEquivalent defined for a SHK.
+    ///
+    ///     Possible solutions:
+    ///         1. Use `CGEventKeyboardSetUnicodeString()` to explicitly set the keyEquivalent on the events we send to try and prevent macOS from computing the keyEquivalent itself based on the current keyboard layout. -> I tested this and it didn't seem to work.
+    ///             The docs are pretty relevant: https://developer.apple.com/documentation/coregraphics/1456028-cgeventkeyboardsetunicodestring
+    ///         2. Send the events with a custom `CGEventSource`, which we configure using `CGEventSourceSetKeyboardType()` to try and force macOS' SHK handling code to use some default keyboard layout instead of the current keyboard layout. -> Tested this, didn't work.
+    ///             Sidenote: About the keyboardType values for CGEventSourceSetKeyboardTypeBased() and LMGetKbdType() APIs – I based them on the old Gestalt.h header mentioned here: https://stackoverflow.com/questions/54428368/get-keyboard-type-macos-and-detect-built-in-onscreen-or-usb
+    ///         3. Find/Build a function that maps `(keyEquivalent, currentKeyboardLayout) -> virtualKeyCode`
+    ///             Then we could create a CGEvent with the exact `virtualKeyCode` that macOS' SHK handling code will convert to the correct `keyEquivalent` and therefore correctly triggers the SHK we desire.
+    ///             This should always work. However, Apple only provides `UCKeyTranslate()` which maps `(virtualKeyCode, currentKeyboardLayout) -> keyEquivalent`. (The inverse of what we want)
+    ///                 To invert it we'd have to iterate over all `virtualKeyCode`s and apply `UCKeyTranslate()` to every single one, until we find the `keyEquivalent` we're looking for. This seems annoying.
+    ///         4. Check whether the combination of `virtualKeyCode` and `keyEquivalent` that CGSGetSymbolicHotKeyValue() returns, corresponds to the current layout.
+    ///             If yes, then we can simply create our CGEvent with that `virtualKeyCode` - this should always be translated to the correct `keyEquivalent` by macOS' SHK handling code - and therefore correctly trigger the SHK.
+    ///             Otherwise, just declare the binding 'unusable' (return NO from this function) – then we will create a fresh SHK binding that doesn't have a `keyEquivalent` at all - only a `virtualKeyCode`. This means processing is independent of the current keyboardLayout, and the SHK should always be triggered correctly. This is slower but it should ensure consistency.
+    ///             -> **We went with this approach**
+    ///
+    /// Alternatives:
+    ///     - (Since we implemented solution 4.) the goal of this is to see whether a CGEvent, constructed using `virtualKeyCode`, would successfully cause macOS to trigger the desired SHK.
+    ///       -> Alternatively we might use `SLSIsEventMatchingSymbolicHotKey()` to find this out.
+    ///       -> You can find interesting functions by typing this in LLDB: `image lookup -r -n SymbolicHotKey`
+
+    /// Check if VKC is empty
+    if (virtualKeyCode == kEmptyVKC) { /// Can the `virtualKeyCode` ever be empty with only the `keyEquivalent` filled? Logically it should work, but I've never seen that.
+        DDLogDebug(@"SymbolicHotKeys: isUsable: Not usable due to empty VKC");
+        return NO;
+    }
     
-    NSString *chars;
-    getCharsForKeyCode(keyCode, &chars);
+    /// Check if VKC is out of reach
+    ///     We don't need to check for this, because while an 'out of reach' VKC can (probably) never be triggered with a real keyboard, we should still be able to trigger it programmatically.
+    if ((false)) {
+        if (virtualKeyCode >= kOutOfReachVKC) {
+            DDLogDebug(@"SymbolicHotKeys: isUsable: Not usable due to out-of-reach VKC");
+            return NO;
+        }
+    }
     
-    /// Check if keyCode and keyEquivalent (the args to this function) match the current keyboard layout
+    /// Check if flags are empty
+    if (modifierFlags == kEmptyModifierFlags) {
+        DDLogDebug(@"SymbolicHotKeys: isUsable: Not usable due to empty modifierFlags");
+        return NO;
+    }
     
-    if (chars.length != 1) return NO;
-    if (keyEquivalent != [chars characterAtIndex:0]) return NO;
+    /// Check if flags are unexpected
+    if ((false)) { /// It seems there need to be some flags for the SHK to be triggered successfully, but I'm not sure these are all the possible flags - so we're turning this test off to avoid false negatives for the 'isUsable' question.
+        if (1 != (modifierFlags & (kCGSAlphaShiftKeyMask|kCGSShiftKeyMask|kCGSControlKeyMask|kCGSAlternateKeyMask|kCGSCommandKeyMask|kCGSNumericPadKeyMask|kCGSHelpKeyMask|kCGSFunctionKeyMask))) {
+            DDLogDebug(@"SymbolicHotKeys: isUsable: Not usable due to unexpected modifierFlags: %d", modifierFlags);
+            return NO;
+        }
+    }
     
-    /// Return
+    /// Check if the VKC matches the keyEquivalent
+    ///     under the current keyboard layout
+    if (keyEquivalent != kEmptyKeyEquivalent) { /// If there is no `keyEquivalent` then macOS will use the VKC instead and everything should work fine. Otherwise, the `keyEquivalent` needs to match.
+        NSString *chars = getCharsForVirtualKeyCode(virtualKeyCode);
+        if (!chars || chars.length != 1) {
+            DDLogDebug(@"SymbolicHotKeys: isUsable: Not usable due to empty charsForVKC");
+            return NO;
+        }
+        if (keyEquivalent != [chars characterAtIndex:0]) {
+            DDLogDebug(@"SymbolicHotKeys: isUsable: Not usable due to char mismatch: keyEquivalent: %c, charsForVKC: %@", keyEquivalent, chars);
+            return NO;
+        }
+    }
+    
+    /// Passed all tests
     return YES;
 }
 
-static BOOL getCharsForKeyCode(CGKeyCode keyCode, NSString **chars) {
-    /// Get chars for a given keycode. Based on currently active keyboard layout
-    /// Returns success
+static NSString *_Nullable getCharsForVirtualKeyCode(CGKeyCode keyCode) {
+
+    /// Get chars for a virtualKeyCode – based on currently active keyboard layout.
+    /// Returns nil to indicate failure.
     ///
-    /// Note: Think about putting this into some utility class
-    
-    /// Init result
-    
-    *chars = @"";
+    /// Notes:
+    /// - Think about putting this into some utility class
+    ///     - The MASShortcut code which we're using also implements a UCKeyTranslate() wrapper. Maybe we should use that?
+    /// - Here's a pretty competent-looking implementation of a UCKeyTranslate() wrapper (ended up in OpenEmu) https://stackoverflow.com/a/8263841/10601702
+
     
     /// Get layout
     
     const UCKeyboardLayout *layout = NULL;
     
     TISInputSourceRef inputSource = TISCopyCurrentKeyboardInputSource() /*TISCopyCurrentKeyboardLayoutInputSource()*/; /// Not sure what's better
-    
-    if (inputSource != NULL) {
+    MFDefer ^{ if (inputSource) CFRelease(inputSource); };
+    if (inputSource) {
         CFDataRef layoutData = TISGetInputSourceProperty(inputSource, kTISPropertyUnicodeKeyLayoutData);
-        if (layoutData != NULL) {
+        if (layoutData) {
             layout = (UCKeyboardLayout *)CFDataGetBytePtr(layoutData);
         }
     }
     
-    if (layout == NULL) {
-        *chars = @"";
-        if (inputSource != NULL) {
-            CFRelease(inputSource);
-        }
-        return NO;
+    if (!layout) {
+        DDLogError(@"Failed to get UCKeyboardLayout");
+        return nil;
     }
     
     /// Get other input params
-    
     UInt16 keyCodeForLayout = keyCode;
     UInt16 keyAction = kUCKeyActionDisplay; /// Should maybe be using kUCKeyActionDown instead. Some SO poster said it works better.
     UInt32 modifierKeyState = 0; /// The keyEquivalent arg is not affected by modifier flags. It's always lower case despite Shift, etc... That's why we can just set this to 0.
@@ -275,23 +355,17 @@ static BOOL getCharsForKeyCode(CGKeyCode keyCode, NSString **chars) {
     UniChar unicodeString[maxStringLength];
     
     /// Translate
-    
     OSStatus r = UCKeyTranslate(layout, keyCodeForLayout, keyAction, modifierKeyState, keyboardType, keyTranslateOptions, &deadKeyState, maxStringLength, &actualStringLength, unicodeString);
     
     /// Check errors
     if (r != noErr) {
         DDLogError(@"UCKeyTranslate() failed with error code: %d", r);
-        *chars = @"";
-        CFRelease(inputSource);
-        return NO;
+        return nil;
     }
     
-    /// Get result
-    *chars = [NSString stringWithCharacters:unicodeString length:actualStringLength];
-    /// Release inputSource
-    CFRelease(inputSource);
-    /// Return success
-    return YES;
+    /// Return
+    NSString *result = [NSString stringWithCharacters:unicodeString length:actualStringLength];
+    return result;
 }
 
 @end
