@@ -40,6 +40,7 @@ Diese Leute haben viel mehr als den Standardpreis ausgegeben und mir einen **ung
 
 **November 2024**
 
+- 🇺🇸&nbsp;Bscheck
 - 🇵🇪&nbsp;Yemboyq - "Gracias Noah Eres el Mejor"
 - 🇺🇸&nbsp;Brent&nbsp;Cameron - "ingenio humano"
 - 🇯🇵&nbsp;Daigo&nbsp;Kobayashi - "kobayasi.daigo0604@gmail.com"
