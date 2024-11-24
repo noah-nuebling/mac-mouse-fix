@@ -42,6 +42,7 @@ These people spent a lot more than the standard price and treated me to an **Inc
 
 **November 2024**
 
+- 🇺🇸&nbsp;Plugnpl4Y
 - 🇺🇸&nbsp;Jonathan&nbsp;Solomon
 - 🇦🇺&nbsp;Brendan
 - 🇹🇳&nbsp;Ahmed&nbsp;Amakhzanji - "Fixed my problem, deserves an epic milkshake."
