@@ -40,6 +40,7 @@ Diese Leute haben viel mehr als den Standardpreis ausgegeben und mir einen **ung
 
 **November 2024**
 
+- 🇭🇺&nbsp;Logitech&nbsp;Is&nbsp;W⚓
 - 🇺🇸&nbsp;Plugnpl4Y
 - 🇺🇸&nbsp;Jonathan&nbsp;Solomon
 - 🇦🇺&nbsp;Brendan
