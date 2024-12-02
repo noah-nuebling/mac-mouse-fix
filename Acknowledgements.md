@@ -42,6 +42,7 @@ These people spent a lot more than the standard price and treated me to an **Inc
 
 **December 2024**
 
+- 🇺🇸&nbsp;David&nbsp;Docspring - "You make mac mouse support suck less and for that I appreciate you <3"
 - 🇩🇪&nbsp;Jochen&nbsp;Klar
 
 **November 2024**
