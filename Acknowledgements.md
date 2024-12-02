@@ -40,6 +40,10 @@ Thanks for your support! :)
 
 These people spent a lot more than the standard price and treated me to an **Incredible Milkshake**. (And some even left a message) Thanks for the _sugar rush_!
 
+**December 2024**
+
+- 🇩🇪&nbsp;Jochen&nbsp;Klar
+
 **November 2024**
 
 - 🇺🇸&nbsp;Daniel&nbsp;Francisco&nbsp;Valdez
