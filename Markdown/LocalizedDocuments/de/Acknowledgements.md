@@ -40,6 +40,7 @@ Diese Leute haben viel mehr als den Standardpreis ausgegeben und mir einen **ung
 
 **Dezember 2024**
 
+- 🇨🇿&nbsp;Pavel&nbsp;Švéda - "Díky! / Thanks!"
 - 🇺🇸&nbsp;David&nbsp;Docspring - "You make mac mouse support suck less and for that I appreciate you <3"
 - 🇩🇪&nbsp;Jochen&nbsp;Klar
 
