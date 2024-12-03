@@ -40,6 +40,7 @@ Diese Leute haben viel mehr als den Standardpreis ausgegeben und mir einen **ung
 
 **Dezember 2024**
 
+- 🇺🇸&nbsp;Collin&nbsp;Legault - "If you have the means, always support good developers. Pay it forward."
 - 🇬🇧&nbsp;Peter - "Love the mouse fix. Makes scrolling so much more enjoyable and makes mapping buttons to keyboard shortcuts super easy. Love it!"
 - 🇨🇿&nbsp;Pavel&nbsp;Švéda - "Díky! / Thanks!"
 - 🇺🇸&nbsp;David&nbsp;Docspring - "You make mac mouse support suck less and for that I appreciate you <3"
