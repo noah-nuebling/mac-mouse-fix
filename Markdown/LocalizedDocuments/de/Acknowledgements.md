@@ -40,6 +40,8 @@ Diese Leute haben viel mehr als den Standardpreis ausgegeben und mir einen **ung
 
 **Dezember 2024**
 
+- 🇳🇬&nbsp;Praise&nbsp;Dare - "I'm addicted! My trial ended a few minutes and the moments I'll have to spend before gaining access again feel like absolute agony. I've gotten so spoiled by this mouse driver that I simply can't bear to use my mouse as it is."
+- 🇨🇦&nbsp;Sierra
 - 🇺🇸&nbsp;Collin&nbsp;Legault - "If you have the means, always support good developers. Pay it forward."
 - 🇬🇧&nbsp;Peter - "Love the mouse fix. Makes scrolling so much more enjoyable and makes mapping buttons to keyboard shortcuts super easy. Love it!"
 - 🇨🇿&nbsp;Pavel&nbsp;Švéda - "Díky! / Thanks!"
