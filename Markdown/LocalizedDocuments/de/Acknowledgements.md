@@ -40,6 +40,7 @@ Diese Leute haben viel mehr als den Standardpreis ausgegeben und mir einen **ung
 
 **Dezember 2024**
 
+- 🇫🇮&nbsp;Simo - "Awesome work!"
 - 🇿🇦&nbsp;Iain
 - 🇨🇭&nbsp;5Hero - "Noah, you’re our savior! Apple should hire you to implement this in their next macOS! Thank you, sir!"
 - 🇺🇸&nbsp;Jeff&nbsp;Mcc
