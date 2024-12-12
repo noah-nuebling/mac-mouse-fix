@@ -42,6 +42,7 @@ These people spent a lot more than the standard price and treated me to an **Inc
 
 **December 2024**
 
+- 🇺🇸&nbsp;Zunigene - "Thanks for the freedom of spyware!"
 - 🇦🇺&nbsp;Clown&nbsp;Baby&nbsp;Boo
 - 🇫🇮&nbsp;Simo - "Awesome work!"
 - 🇿🇦&nbsp;Iain
