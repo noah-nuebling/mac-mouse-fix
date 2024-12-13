@@ -40,6 +40,7 @@ Diese Leute haben viel mehr als den Standardpreis ausgegeben und mir einen **ung
 
 **Dezember 2024**
 
+- 🇺🇸&nbsp;Jonathan&nbsp;Adams
 - 🇺🇸&nbsp;Brynls - "Live once, but bring joy endlessly. Be a good human."
 - 🇩🇪&nbsp;H&nbsp;Kohnen
 - 🇺🇸&nbsp;Pete&nbsp;Eigel
