@@ -40,6 +40,7 @@ Diese Leute haben viel mehr als den Standardpreis ausgegeben und mir einen **ung
 
 **Dezember 2024**
 
+- 🇺🇸&nbsp;Kode54 - "Thanks for this glorious alternative to a 480MB Electron app."
 - 🇨🇿&nbsp;Zdeněk&nbsp;Kohout - "youtube.com/@zkpiano"
 - 🇺🇸&nbsp;Jonathan&nbsp;Adams
 - 🇺🇸&nbsp;Brynls - "Live once, but bring joy endlessly. Be a good human."
