@@ -42,6 +42,7 @@ These people spent a lot more than the standard price and treated me to an **Inc
 
 **December 2024**
 
+- 🇺🇦&nbsp;Ruslan
 - 🇺🇸&nbsp;Kode54 - "Thanks for this glorious alternative to a 480MB Electron app."
 - 🇨🇿&nbsp;Zdeněk&nbsp;Kohout - "youtube.com/@zkpiano"
 - 🇺🇸&nbsp;Jonathan&nbsp;Adams
