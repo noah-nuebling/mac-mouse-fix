@@ -40,6 +40,7 @@ Diese Leute haben viel mehr als den Standardpreis ausgegeben und mir einen **ung
 
 **Dezember 2024**
 
+- 🇩🇪&nbsp;Tygat - "A very handsome tool. Best wishes!"
 - 🇺🇦&nbsp;Ruslan
 - 🇺🇸&nbsp;Kode54 - "Thanks for this glorious alternative to a 480MB Electron app."
 - 🇨🇿&nbsp;Zdeněk&nbsp;Kohout - "youtube.com/@zkpiano"
