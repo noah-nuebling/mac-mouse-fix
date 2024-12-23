@@ -40,6 +40,7 @@ Diese Leute haben viel mehr als den Standardpreis ausgegeben und mir einen **ung
 
 **Dezember 2024**
 
+- 🇺🇸&nbsp;Anonymous - "Thank you for making my Mac much more usable"
 - 🇭🇷&nbsp;Hryhorii - "Vydria"
 - 🇩🇪&nbsp;Tygat - "A very handsome tool. Best wishes!"
 - 🇺🇦&nbsp;Ruslan
