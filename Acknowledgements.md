@@ -42,6 +42,7 @@ These people spent a lot more than the standard price and treated me to an **Inc
 
 **December 2024**
 
+- 🇮🇩&nbsp;Griko&nbsp;Nibras - "logitech peripheral softwares suck"
 - 🇩🇪&nbsp;So&nbsp;Wohnung&nbsp;0L
 - 🇦🇺&nbsp;Stefan&nbsp;Bulatovic - "You're the best Noah. Merry X-mas."
 - 🇺🇸&nbsp;Anonymous - "Thank you for making my Mac much more usable"
