@@ -42,6 +42,7 @@ These people spent a lot more than the standard price and treated me to an **Inc
 
 **December 2024**
 
+- 🇩🇪&nbsp;Darcy&nbsp;Messenger
 - 🇺🇦&nbsp;Polarfox
 - 🇮🇩&nbsp;Griko&nbsp;Nibras - "logitech peripheral softwares suck"
 - 🇩🇪&nbsp;So&nbsp;Wohnung&nbsp;0L
