@@ -40,6 +40,7 @@ Diese Leute haben viel mehr als den Standardpreis ausgegeben und mir einen **ung
 
 **Dezember 2024**
 
+- 🇺🇸&nbsp;Benji&nbsp;/&nbsp;Thespian77
 - 🇩🇪&nbsp;Darcy&nbsp;Messenger
 - 🇺🇦&nbsp;Polarfox
 - 🇮🇩&nbsp;Griko&nbsp;Nibras - "logitech peripheral softwares suck"
