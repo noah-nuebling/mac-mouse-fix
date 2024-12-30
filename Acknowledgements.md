@@ -42,6 +42,7 @@ These people spent a lot more than the standard price and treated me to an **Inc
 
 **December 2024**
 
+- 🇸🇬&nbsp;Gy - "Absolutely love it!! Thanks for bring this to everyone and make it love one-time purchase!"
 - 🇺🇸&nbsp;Sylvia&nbsp;Korzekwa - "Workers solidarity!"
 - 🇺🇸&nbsp;Benji&nbsp;/&nbsp;Thespian77
 - 🇩🇪&nbsp;Darcy&nbsp;Messenger
