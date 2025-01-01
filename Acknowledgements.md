@@ -40,6 +40,10 @@ Thanks for your support! :)
 
 These people spent a lot more than the standard price and treated me to an **Incredible Milkshake**. (And some even left a message) Thanks for the _sugar rush_!
 
+**January 2025**
+
+- 🇸🇦&nbsp;Yahya&nbsp;Alfaifi - "I just purchased your app and wanted to say how excited I am about it! It looks fantastic, and I can’t wait to dive in. Congratulations on bringing your vision to life—keep up the great work!"
+
 **December 2024**
 
 - 🇸🇬&nbsp;Gy - "Absolutely love it!! Thanks for bring this to everyone and make it love one-time purchase!"

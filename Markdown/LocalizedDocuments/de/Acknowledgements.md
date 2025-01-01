@@ -38,6 +38,10 @@ Danke für euren Beitrag! :)
 
 Diese Leute haben viel mehr als den Standardpreis ausgegeben und mir einen **unglaublichen Milchshake** spendiert. (Und manche haben sogar eine Nachricht hinterlassen) Danke für den _Zucker-Kick_!
 
+**Januar 2025**
+
+- 🇸🇦&nbsp;Yahya&nbsp;Alfaifi - "I just purchased your app and wanted to say how excited I am about it! It looks fantastic, and I can’t wait to dive in. Congratulations on bringing your vision to life—keep up the great work!"
+
 **Dezember 2024**
 
 - 🇸🇬&nbsp;Gy - "Absolutely love it!! Thanks for bring this to everyone and make it love one-time purchase!"
