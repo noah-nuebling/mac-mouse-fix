@@ -40,6 +40,7 @@ Diese Leute haben viel mehr als den Standardpreis ausgegeben und mir einen **ung
 
 **Januar 2025**
 
+- 🇰🇷&nbsp;Jeong&nbsp;Da&nbsp;Woon
 - 🇳🇴&nbsp;Andreas - "Great tool, thanks!"
 - 🇺🇸&nbsp;Tim
 - 🇨🇭&nbsp;Lukas&nbsp;Müller
