@@ -42,6 +42,7 @@ These people spent a lot more than the standard price and treated me to an **Inc
 
 **January 2025**
 
+- 🇺🇸&nbsp;Jvicini
 - 🇸🇬&nbsp;Lucas&nbsp;Kim
 - 🇸🇦&nbsp;Yahya&nbsp;Alfaifi - "I just purchased your app and wanted to say how excited I am about it! It looks fantastic, and I can’t wait to dive in. Congratulations on bringing your vision to life—keep up the great work!"
 
