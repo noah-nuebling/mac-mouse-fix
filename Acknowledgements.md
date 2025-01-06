@@ -42,6 +42,7 @@ These people spent a lot more than the standard price and treated me to an **Inc
 
 **January 2025**
 
+- 🇺🇸&nbsp;Tim
 - 🇨🇭&nbsp;Lukas&nbsp;Müller
 - 🇺🇸&nbsp;Jvicini
 - 🇸🇬&nbsp;Lucas&nbsp;Kim
