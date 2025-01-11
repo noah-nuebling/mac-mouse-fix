@@ -40,6 +40,7 @@ Diese Leute haben viel mehr als den Standardpreis ausgegeben und mir einen **ung
 
 **Januar 2025**
 
+- 🇺🇸&nbsp;Matt&nbsp;Day - "Thanks, Noah!"
 - 🇰🇷&nbsp;Jeong&nbsp;Da&nbsp;Woon
 - 🇳🇴&nbsp;Andreas - "Great tool, thanks!"
 - 🇺🇸&nbsp;Tim
