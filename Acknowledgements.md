@@ -42,6 +42,7 @@ These people spent a lot more than the standard price and treated me to an **Inc
 
 **January 2025**
 
+- 🇩🇪&nbsp;Johannes&nbsp;Große
 - 🇮🇩&nbsp;Muh&nbsp;Alif&nbsp;Gayfari
 - 🇺🇸&nbsp;Matt&nbsp;Day - "Thanks, Noah!"
 - 🇰🇷&nbsp;Jeong&nbsp;Da&nbsp;Woon
