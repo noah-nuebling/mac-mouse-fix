@@ -40,6 +40,7 @@ Diese Leute haben viel mehr als den Standardpreis ausgegeben und mir einen **ung
 
 **Januar 2025**
 
+- 🇩🇪&nbsp;Thorsten&nbsp;Diercks
 - 🇩🇪&nbsp;Johannes&nbsp;Große
 - 🇮🇩&nbsp;Muh&nbsp;Alif&nbsp;Gayfari
 - 🇺🇸&nbsp;Matt&nbsp;Day - "Thanks, Noah!"
