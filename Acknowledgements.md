@@ -42,6 +42,7 @@ These people spent a lot more than the standard price and treated me to an **Inc
 
 **January 2025**
 
+- 🇺🇸&nbsp;Spezant
 - 🇺🇸&nbsp;Omar&nbsp;Del&nbsp;Rio
 - 🇩🇪&nbsp;Thorsten&nbsp;Diercks
 - 🇩🇪&nbsp;Johannes&nbsp;Große

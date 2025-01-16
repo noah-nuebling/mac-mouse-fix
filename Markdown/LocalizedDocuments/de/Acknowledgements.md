@@ -40,6 +40,7 @@ Diese Leute haben viel mehr als den Standardpreis ausgegeben und mir einen **ung
 
 **Januar 2025**
 
+- 🇺🇸&nbsp;Spezant
 - 🇺🇸&nbsp;Omar&nbsp;Del&nbsp;Rio
 - 🇩🇪&nbsp;Thorsten&nbsp;Diercks
 - 🇩🇪&nbsp;Johannes&nbsp;Große
