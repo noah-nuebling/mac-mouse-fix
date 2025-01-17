@@ -40,6 +40,7 @@ Diese Leute haben viel mehr als den Standardpreis ausgegeben und mir einen **ung
 
 **Januar 2025**
 
+- 🇮🇩&nbsp;Aa&nbsp;Uji
 - 🇦🇺&nbsp;Amal - "Big ups to indie developers and not making this a subscription!"
 - 🇵🇹&nbsp;Danny
 - 🇺🇸&nbsp;Spezant
