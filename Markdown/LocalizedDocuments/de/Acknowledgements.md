@@ -40,6 +40,7 @@ Diese Leute haben viel mehr als den Standardpreis ausgegeben und mir einen **ung
 
 **Januar 2025**
 
+- 🇺🇸&nbsp;Aavery - "Noah, I have only been using Mac Mouse Fix for 3 days and I absolutely love it. Keep up the great work!"
 - 🇩🇪&nbsp;Raimund&nbsp;Beischl - "Diese App ist einfach nur zu Empfehlen"
 - 🇹🇼&nbsp;Ryan&nbsp;Liu - "Is really helpful"
 - 🇮🇩&nbsp;Aa&nbsp;Uji
