@@ -40,6 +40,7 @@ Diese Leute haben viel mehr als den Standardpreis ausgegeben und mir einen **ung
 
 **Januar 2025**
 
+- 🇵🇱&nbsp;Gabriel - "This small app is a gamechanger for using 3rd party mouses. At this point it should be by default in MacOS"
 - 🇺🇸&nbsp;Paul&nbsp;Buchholz
 - 🇺🇸&nbsp;Jason&nbsp;Honzell - "great work!"
 - 🇺🇸&nbsp;Brian&nbsp;Boshar - "Ya did swell. Gold Star for you Noah!"
