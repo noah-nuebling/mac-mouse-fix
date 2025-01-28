@@ -14,8 +14,83 @@
 #import "SharedUtility.h"
 @import AppKit.NSScreen;
 #import <objc/runtime.h>
+#import "MFSemaphore.h"
 
 @implementation SharedUtility
+
+#pragma mark - runLoops
+
+void MFCFRunLoopPerform(CFRunLoopRef _Nonnull rl, NSArray<NSRunLoopMode> *_Nullable modes, void (^_Nonnull workload)(void)) {
+    
+    /// Usage:
+    ///     `modes` arg:
+    ///     - Pass nil to fall back to the default value.
+    ///     - You can also pass a single NSRunLoopMode (instead of an array of NSRunLoopModes)
+    
+    /// Meta-Discussion: Which API to use to perform stuff on a different runLoop?
+    ///     - `dispatch_async()`? Maybe, but only works on the mainRunLoop (?). Also I'd like to use the lower-level APIs directly. It also doesn't let us control the runLoopMode.
+    ///     - `-[NSRunLoop performInModes:block:]`? Maybe, but the docs say NSRunLoop APIs aren't thread-safe.
+    ///         Sidenote: Uses CFRunLoopPerformBlock() under-the-hood.
+    ///         Sidenote: The simpler variant -[NSRunLoop performBlock:] only runs in the default mode based on my assembly-investigations.
+    ///     - `-[NSObject performSelector: onThread:...]`? Should work, is flexible (can be delayed, and canceled just like NSTimer, can also be awaited like `dispatch_sync`) but the API is cumbersome for simple stuff.
+    ///     - `CFRunLoopPerformBlock()`? >> Yes sounds good. <<
+    ///
+    /// Sidenote: NSRunLoop vs CFRunLoop:
+    ///     They are not the same. NSRunLoop is a higher-level wrapper around CFRunLoop. Every NSThread has an NSRunLoop. NSRunLoop APIs are generally not thread safe (according to the docs), while CFRunLoop APIs seem to be.
+    ///
+    /// Discussion: Which runLoop mode(s) to use?
+    ///     In MMF, we're usually processing user input. When we run that stuff on the mainThread, we want it to have the highest priority on the thread to maximize responsiveness.
+    ///     Using `NSRunLoopCommonModes`, our workload runs if the runLoop is in default, modal, or eventTracking mode (by default) (Source: https://developer.apple.com/library/archive/documentation/Cocoa/Conceptual/Multithreading/RunLoopManagement/RunLoopManagement.html#//apple_ref/doc/uid/10000057i-CH16)
+    ///     To run our workload with higher priority, we can run our workload in *all modes*.
+    ///     To run our workload with *even higher* priority, we could run the runLoop in a custom mode. But I'm not sure how to do that [Jan 2025]
+    ///
+    /// Thread-safety:
+    ///     Should be pretty thread-safe as far as I can tell.
+    ///
+    /// Future plans:
+    ///     TODO: (Over time) Replace uses of `dispatch_async()` with MFCFRunLoopPerform().
+    ///     (Also (over time): remove DispatchQueues in favour of NSThread and NSRunLoop – so we can reduce thread count and gain more control over threading behavior.)
+    
+    if (modes && modes.count == 0) {
+        assert(false && "modes should not be an empty array. Pass nil for the default value.");
+        modes = nil;
+    }
+    if (!modes) {
+        if ((1))    modes = (id)NSRunLoopCommonModes;                       /// Using CommonModes should grant our workload pretty high priorty || Note that we're passing the mode directly (instead of passing an array of modes) – that also works.
+        else        modes = CFBridgingRelease(CFRunLoopCopyAllModes(rl));   /// Passing all modes should grant our workload very high priority. Could this lead to unforseen problems? ... Not using this for now out of fear and terror. Ahhhhh.
+    }
+    CFRunLoopPerformBlock(rl, (__bridge void *)modes, workload);
+    CFRunLoopWakeUp(rl);
+}
+
+bool MFCFRunLoopPerform_sync(CFRunLoopRef _Nonnull rl, NSArray<NSRunLoopMode> *_Nullable modes, NSTimeInterval timeout, void (^_Nonnull workload)(void)) {
+    
+    /// Variant of MFCFRunLoopPerform which waits for the workload to complete (or does the workload immediately if `rl` is the current runLoop.)
+    ///     Sort of an analog to `dispatch_sync()` (if `MFCFRunLoopPerform()` was `dispatch_async()`)
+    ///     Returns `true` if waiting timed out. `false` otherwise.
+    ///     Pass `timeout <= 0` to disable the timeout.
+    ///
+    /// Caution: If you don't pass a timeout, this can lead to deadlocks!
+    ///     (Deadlocks can happen if you're waiting for a thread which (indirectly) waits for you. As long as `workload` doesn't wait for anything/acquire any locks, there can't be deadlocks.)
+    
+    bool didTimeOut = false;
+    
+    if (CFEqual(rl, CFRunLoopGetCurrent())) {
+        workload();
+        return didTimeOut;
+    }
+    
+    NSDate *timeoutDate = (timeout <= 0) ? nil : [NSDate dateWithTimeIntervalSinceNow:timeout]; /// We calculate the timeoutDate early in the function, so that it's accurate. Not sure if that's silly.
+    
+    MFSemaphore *semaphore = [[MFSemaphore alloc] initWithUnits:0];
+    MFCFRunLoopPerform(rl, modes, ^{
+        workload();
+        [semaphore releaseUnit];
+    });
+    didTimeOut = [semaphore acquireUnit:timeoutDate];
+    
+    return didTimeOut;
+}
 
 #pragma mark - Time
 

@@ -30,10 +30,10 @@
             filePath = "Helper/Core/Actions/SymbolicHotKeys.m"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "201"
-            endingLineNumber = "201"
-            landmarkName = "postKeyboardEventsForSymbolicHotKey(virtualKeyCode, keyEquivalent, modifierFlags)"
-            landmarkType = "9">
+            startingLineNumber = "200"
+            endingLineNumber = "200"
+            landmarkName = "+post:"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -46,9 +46,9 @@
             filePath = "Helper/Core/Actions/SymbolicHotKeys.m"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "229"
-            endingLineNumber = "229"
-            landmarkName = "shkBindingIsUsable(virtualKeyCode, keyEquivalent, modifierFlags)"
+            startingLineNumber = "228"
+            endingLineNumber = "228"
+            landmarkName = "postKeyboardEventsForSymbolicHotKey(virtualKeyCode, keyEquivalent, modifierFlags)"
             landmarkType = "9">
          </BreakpointContent>
       </BreakpointProxy>
@@ -62,10 +62,123 @@
             filePath = "Helper/Core/Actions/SymbolicHotKeys.m"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "268"
-            endingLineNumber = "268"
+            startingLineNumber = "267"
+            endingLineNumber = "267"
             landmarkName = "shkBindingIsUsable(virtualKeyCode, keyEquivalent, modifierFlags)"
             landmarkType = "9">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.SymbolicBreakpoint">
+         <BreakpointContent
+            uuid = "EF361B1F-AFB1-4396-822D-BF348149D02C"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            symbolName = "-[NSRunLoop(NSRunLoop) performBlock:]"
+            moduleName = "">
+            <Locations>
+               <Location
+                  uuid = "EF361B1F-AFB1-4396-822D-BF348149D02C - d3194f1c05a8fafa"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "-[NSRunLoop(NSRunLoop) performBlock:]"
+                  moduleName = "Foundation"
+                  usesParentBreakpointCondition = "Yes">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.AddressBreakpoint">
+         <BreakpointContent
+            uuid = "F31B56FE-F56C-483D-B860-09F4DDEEEAB8"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            symbolName = "*0x1a015f494">
+            <Locations>
+               <Location
+                  uuid = "F31B56FE-F56C-483D-B860-09F4DDEEEAB8 - 5b337f416f340d"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "*0x1a015f494"
+                  usesParentBreakpointCondition = "Yes">
+               </Location>
+               <Location
+                  uuid = "F31B56FE-F56C-483D-B860-09F4DDEEEAB8 - 5b337f416f340d"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "*0x1a015f494"
+                  usesParentBreakpointCondition = "Yes">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.SymbolicBreakpoint">
+         <BreakpointContent
+            uuid = "71E2290F-1434-4DEC-974E-12F0FFA7E854"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            symbolName = "performInModes:"
+            moduleName = "">
+            <Locations>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.SymbolicBreakpoint">
+         <BreakpointContent
+            uuid = "32DE85D4-DBCC-4424-B667-C5417FE840CC"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            symbolName = "performInModes:block:"
+            moduleName = "">
+            <Locations>
+               <Location
+                  uuid = "32DE85D4-DBCC-4424-B667-C5417FE840CC - f7931676bcf61ead"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "-[NSRunLoop(NSRunLoop) performInModes:block:]"
+                  moduleName = "Foundation"
+                  usesParentBreakpointCondition = "Yes">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.AddressBreakpoint">
+         <BreakpointContent
+            uuid = "3BADBBDD-DA8B-4A29-883B-F56FB39D9A3A"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            symbolName = "*0x1a015f520">
+            <Locations>
+               <Location
+                  uuid = "3BADBBDD-DA8B-4A29-883B-F56FB39D9A3A - 5b337f511f8f03"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "*0x1a015f520"
+                  usesParentBreakpointCondition = "Yes">
+               </Location>
+               <Location
+                  uuid = "3BADBBDD-DA8B-4A29-883B-F56FB39D9A3A - 5b337f511f8f03"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "*0x1a015f520"
+                  usesParentBreakpointCondition = "Yes">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

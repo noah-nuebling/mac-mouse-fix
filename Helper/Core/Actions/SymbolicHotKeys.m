@@ -106,92 +106,111 @@ CG_EXTERN CGError CGSSetSymbolicHotKeyValue(CGSSymbolicHotKey hotKey, unichar ke
 
 + (void)post:(CGSSymbolicHotKey)shk {
 
-    /// Thread safety:
-    ///     (Last updated: Nov 2024)
-    ///     AFAIK, the only shared mutable state are the `CGS` functions that modify the global SHK configuration. The only two 'entry points' of this file which could produce simultaneous accesses to this shared state are the `+post:` and `+restoreSymbolicHotkeyParameters_timerCallback:` methods.
-    ///     If we locked those two 'entry points' with a mutex and then never acquire another lock while holding that mutex, then our code should be guaranteed race condition and deadlock free.
-    ///     However, I don't know whether functions such as `CGSSetSymbolicHotKeyValue()` acquire a lock or not, so I'm not confident that there can never be a deadlock if we used mutexes here.
-    ///     -> I think the better solution would be to make sure that all the 'entry points' simply run on the same runLoop/thread. Alternatively, we could async dispatch to a dispatchQueue, but controlling the runLoop would be simpler and cleaner I think.
-
-    DDLogDebug(@"[SymbolicHotKeys +post:] running on thread: %@", NSThread.currentThread);
+    DDLogDebug(@"[SymbolicHotKeys +post:] called on thread: %@", NSThread.currentThread);
     
-    unichar keyEquivalent;
-    CGKeyCode virtualKeyCode;
-    CGSModifierFlags modifierFlags;
-    CGSGetSymbolicHotKeyValue(shk, &keyEquivalent, &virtualKeyCode, &modifierFlags);
-    
-    BOOL hotkeyIsEnabled = CGSIsSymbolicHotKeyEnabled(shk);
-    BOOL oldBindingIsUsable = shkBindingIsUsable(virtualKeyCode, keyEquivalent, modifierFlags);
-    
-    DDLogDebug(@"[SymbolicHotKeys +post:] hotkeyIsEnabled: %d, oldBindingIsUsable: %d,\nkeyEquivalent: %d, VKC: %d, modifierFlags: %@", hotkeyIsEnabled, oldBindingIsUsable, keyEquivalent, virtualKeyCode, binarystring(modifierFlags));
-    
-    if (!hotkeyIsEnabled) {
-        CGSSetSymbolicHotKeyEnabled(shk, true);
-    }
-    if (!oldBindingIsUsable) {
+    MFCFRunLoopPerform(CFRunLoopGetMain(), nil, ^{ /// Should we use the `_sync` variant here? Might be more responsive? 
         
-        /// Temporarily set a usable binding for our shk
-        unichar newKeyEquivalent = kMFKeyEquivalentNull;
-        CGKeyCode newVirtualKeyCode = kMFVK_OutOfReach + (CGKeyCode)shk;
-        CGSModifierFlags newModifierFlags = kCGSNumericPadKeyMask | kCGSFunctionKeyMask;
-        /// ^ Why use fn flag? The fn flag indicates either the fn modifier being held or a function key being pressed.
-        ///     1. Function keys can be directly mapped to features like Mission Control.
-        ///     2. Normal keys like 'P' cannot be mapped to features like Mission Control without any modifiers being held.
-        ///     -> The fn flag should solve both of these cases.
-        ///     Testing: 0 (aka `kEmptyModifierFlags`) didn't work in my testing. Using fn or fn | numpad flags worked in my testing.
-        ///     Note In older MMF versions, we used numpad | fn flags – probably because we saw that those are eternalmods of the arrow keys. But I don't think numpad really makes sense here (?) Still, it works, so we're leaving it.
-        ///     Note:
-        ///         In the new keyboard simulation code we built inside `EventLoggerForBrad`, we have more sophisticated logic for this stuff, which will completely replace this.
-        ///         TODO: Maybe merge this note into EventLoggerForBrad before we replace this?
-        CGError err = CGSSetSymbolicHotKeyValue(shk, newKeyEquivalent, newVirtualKeyCode, newModifierFlags);
-        if (err != kCGErrorSuccess) {
-            DDLogError(@"Error setting shk params: %d", err); /// We still post the keyboard events in this case, bc maybe it will still worked despite the error?
+        /// Run everything on mainThread
+        ///     Reasons:
+        ///         1. Reason:To check which vkc we gotta simulate to trigger a given shk, we need to inspect the current keyboard layout. The relevant APIs for this (The `TIS` aka TextInputSources APIs) should only be called from the main thread according to the docs.
+        ///             > And I've also seen a crash around this (Which is described elsewhere. Search for `kTISPropertyInputSourceIsASCIICapable`.)
+        ///         2. Reason: We use an NSTimer below - the scheduling logic is simpler if this runs on the main runLoop.
+        ///         -> Just dispatching everything to the mainthread here seems simplest.
+        ///
+        ///     Outdated notes on thread safety: (from before we dispatched everything to the mainThread.) (Last updated: Nov 2024)
+        ///         AFAIK, the only shared mutable state are the `CGS` functions that modify the global SHK configuration. The only two 'entry points' of this file which could produce simultaneous accesses to this shared state are the `+post:` and `+restoreSymbolicHotkeyParameters_timerCallback:` methods.
+        ///         If we locked those two 'entry points' with a mutex and then never acquire another lock while holding that mutex, then our code should be guaranteed race condition and deadlock free.
+        ///         However, I don't know whether functions such as `CGSSetSymbolicHotKeyValue()` acquire a lock or not, so I'm not confident that there can never be a deadlock if we used mutexes here.
+        ///         -> I think the better solution would be to make sure that all the 'entry points' simply run on the same runLoop/thread. Alternatively, we could async dispatch to a dispatchQueue, but controlling the runLoop would be simpler and cleaner I think.
+        ///
+        ///  TODO: Merge this note ^ and (the dispatching to the CFRunLoopGetMain()) into EventLoggerForBrad before we replace this.
+       
+        unichar keyEquivalent;
+        CGKeyCode virtualKeyCode;
+        CGSModifierFlags modifierFlags;
+        CGSGetSymbolicHotKeyValue(shk, &keyEquivalent, &virtualKeyCode, &modifierFlags);
+        
+        BOOL hotkeyIsEnabled = CGSIsSymbolicHotKeyEnabled(shk);
+        BOOL oldBindingIsUsable = shkBindingIsUsable(virtualKeyCode, keyEquivalent, modifierFlags);
+        
+        DDLogDebug(@"[SymbolicHotKeys +post:] hotkeyIsEnabled: %d, oldBindingIsUsable: %d,\nkeyEquivalent: %d, VKC: %d, modifierFlags: %@", hotkeyIsEnabled, oldBindingIsUsable, keyEquivalent, virtualKeyCode, binarystring(modifierFlags));
+        
+        if (!hotkeyIsEnabled) {
+            CGSSetSymbolicHotKeyEnabled(shk, true);
         }
-    
-        /// Post keyboard events
-        postKeyboardEventsForSymbolicHotKey(newVirtualKeyCode, keyEquivalent, newModifierFlags);
-    } else {
+        if (!oldBindingIsUsable) {
             
-        /// Post keyboard events
-        postKeyboardEventsForSymbolicHotKey(virtualKeyCode, keyEquivalent, modifierFlags);
-    }
-    
-    /// Restore original binding after short delay
-    if (!hotkeyIsEnabled || !oldBindingIsUsable) {
-        [NSTimer scheduledTimerWithTimeInterval:0.05
-                                         target:[SymbolicHotKeys class]
-                                       selector:@selector(restoreSymbolicHotkeyParameters_timerCallback:)
-                                       userInfo:@{
-                                           @"enabled": @(hotkeyIsEnabled),
-                                           @"oldBindingIsUsable": @(oldBindingIsUsable),
-                                           @"shk": @(shk),
-                                           @"keyEquivalent": @(keyEquivalent),
-                                           @"virtualKeyCode": @(virtualKeyCode),
-                                           @"flags": @(modifierFlags),
-                                       }
-                                        repeats:NO];
-    }
-}
-
-+ (void)restoreSymbolicHotkeyParameters_timerCallback:(NSTimer *)timer {
-    
-    DDLogDebug(@"SymbolicHotKeys: timerCallback running on thread: %@", NSThread.currentThread);
-    
-    CGSSymbolicHotKey shk = [timer.userInfo[@"shk"] intValue];
-    
-    /// Restore enabled-state
-    BOOL enabled = [timer.userInfo[@"enabled"] boolValue];
-    CGSSetSymbolicHotKeyEnabled(shk, enabled);
-    
-    /// Restore old "unusable" binding
-    ///     We wanna do this for the case that the binding *is* actually usable with a physical keyboard, but "unusable" for our code due to keyboard layout complications (See `shkBindingIsUsable()`)
-    BOOL oldBindingIsUsable = [timer.userInfo[@"oldBindingIsUsable"] boolValue];
-    if (!oldBindingIsUsable) {
-        unichar kEq = [timer.userInfo[@"keyEquivalent"] unsignedShortValue];
-        CGKeyCode kCode = [timer.userInfo[@"virtualKeyCode"] unsignedIntValue];
-        CGSModifierFlags mod = [timer.userInfo[@"flags"] intValue];
-        CGSSetSymbolicHotKeyValue(shk, kEq, kCode, mod);
-    }
+            /// Temporarily set a usable binding for our shk
+            unichar newKeyEquivalent = kMFKeyEquivalentNull;
+            CGKeyCode newVirtualKeyCode = kMFVK_OutOfReach + (CGKeyCode)shk;
+            CGSModifierFlags newModifierFlags = kCGSNumericPadKeyMask | kCGSFunctionKeyMask;
+            /// ^ Why use fn flag? The fn flag indicates either the fn modifier being held or a function key being pressed.
+            ///     1. Function keys can be directly mapped to features like Mission Control.
+            ///     2. Normal keys like 'P' cannot be mapped to features like Mission Control without any modifiers being held.
+            ///     -> The fn flag should solve both of these cases.
+            ///     Testing: 0 (aka `kEmptyModifierFlags`) didn't work in my testing. Using fn or fn | numpad flags worked in my testing.
+            ///     Note In older MMF versions, we used numpad | fn flags – probably because we saw that those are eternalmods of the arrow keys. But I don't think numpad really makes sense here (?) Still, it works, so we're leaving it.
+            ///     Note:
+            ///         In the new keyboard simulation code we built inside `EventLoggerForBrad`, we have more sophisticated logic for this stuff, which will completely replace this.
+            ///         TODO: Maybe merge this note into EventLoggerForBrad before we replace this?
+            CGError err = CGSSetSymbolicHotKeyValue(shk, newKeyEquivalent, newVirtualKeyCode, newModifierFlags);
+            if (err != kCGErrorSuccess) {
+                DDLogError(@"Error setting shk params: %d", err); /// We still post the keyboard events in this case, bc maybe it will still worked despite the error?
+            }
+        
+            /// Post keyboard events
+            postKeyboardEventsForSymbolicHotKey(newVirtualKeyCode, keyEquivalent, newModifierFlags);
+        } else {
+                
+            /// Post keyboard events
+            postKeyboardEventsForSymbolicHotKey(virtualKeyCode, keyEquivalent, modifierFlags);
+        }
+        
+        /// Restore original binding after short delay
+        ///     TODO: Merge this cleaned up NSTimer code into EventLoggerForBrad before we replace this.
+        ///         (-> Also, don't forget to consider adding a semaphore or NSOperationQueue or sth to ensure correct order-of-operations. See `Bookmark aka Todo.md` inside EventLoggerForBrad.)
+        if (!hotkeyIsEnabled || !oldBindingIsUsable) {
+            
+            /// Get runLoop
+            CFRunLoopRef rl = CFRunLoopGetCurrent();
+            
+            if ((0)) { /// Unnecessary, since we're now scheduling all this stuff to run on the main runLoop
+                /// Check runLoop
+                CFStringRef rlMode = CFRunLoopCopyCurrentMode(rl);
+                MFDefer ^{ if (rlMode) CFRelease(rlMode); };
+                bool rlIsRunning = rlMode != NULL;
+                
+                /// Fallback to main runLoop
+                if (!rlIsRunning) {
+                    DDLogWarn(@"Current thread's rl is not running. Using main rl instead.");
+                    /// ^ If our threading architecture wasn't scuffed, this should never happen. But it currently does [Jan 2025] for shk's mapped to a single click when there's a double click action. (If that shk's binding is 'unusable' or disabled.)
+                    ///     – that's because the single click trigger then runs on the `com.nuebling.mac-mouse-fix.buttons` queue which doesn't have a rl.
+                    ///     (Note if you wanna test this: The LookUp shk (Command-Control-D) is 'unusable' under the Dvorak layout – which should cause this codepath to be executed.)
+                    rl = CFRunLoopGetMain();
+                }
+            }
+            
+            /// Create timer
+            NSTimer *timer = [NSTimer timerWithTimeInterval:50.0/1000.0 repeats:NO block:^(NSTimer * _Nonnull timer) {
+                
+                /// Log
+                DDLogDebug(@"SymbolicHotKeys: timerCallback running on thread: %@", NSThread.currentThread);
+                
+                /// Restore enabled-state
+                CGSSetSymbolicHotKeyEnabled(shk, hotkeyIsEnabled);
+                
+                /// Restore old "unusable" binding
+                ///     We wanna do this for the case that the binding *is* actually usable with a physical keyboard, but "unusable" for our code due to keyboard layout complications (See `shkBindingIsUsable()`)
+                if (!oldBindingIsUsable) {
+                    CGSSetSymbolicHotKeyValue(shk, keyEquivalent, virtualKeyCode, modifierFlags);
+                }
+            }];
+            
+            /// Schedule timer
+            CFRunLoopAddTimer(rl, (__bridge CFRunLoopTimerRef)timer, kCFRunLoopCommonModes);
+        }
+       
+    });
 }
 
 static void postKeyboardEventsForSymbolicHotKey(CGKeyCode virtualKeyCode, unichar keyEquivalent, CGSModifierFlags modifierFlags) {
@@ -226,7 +245,7 @@ const MFKeyboardType kMFKeyboardTypeNull = 0;
 
 static BOOL shkBindingIsUsable(CGKeyCode virtualKeyCode, unichar keyEquivalent, CGSModifierFlags modifierFlags) {
     
-    /// TODO: Copy over docs from EventLoggerForBrad (Or just replace entire function.)
+    /// TODO: Copy over docs from EventLoggerForBrad (Or just replace entire function, which should have the same result.)
 
     /// Check if VKC is empty
     if (virtualKeyCode == kMFVK_Null) { /// Can the `virtualKeyCode` ever be empty with only the `keyEquivalent` filled? Logically it should work, but I've never seen that.
@@ -501,8 +520,22 @@ TISInputSourceRef MFTISCopyKeyboardShortcutInputSourceForKeyboardLayoutInputSour
     ///     - As of [Dec 2024] this implements the `ABC Layout Fallback Mechanism` which is extensively discussed elsewhere.
     ///         > Basically: If `inputSource` arg is 'ASCIICapable' we will return it as is, otherwise it will return the `ABC` inputSource.
     ///     - Note: The returned inputSource will have +1 reference count and needs to be released by the caller.
-
+    
     /// Check ASCII capability
+    /// TODO: Keep these notes when merging EventLoggerForBrad into this.
+    /// `Crash`:
+    ///     I've seen this crash due to a `dispatch_assert_queue` inside TSMGetInputSourceProperty().
+    ///     Message: `BUG IN CLIENT OF LIBDISPATCH: Assertion failed: Block was expected to execute on queue [com.apple.main-thread (0x20870fdc0)]`
+    ///     However, I only saw this happen, if:
+    ///         - I have a debugger attached (weird)
+    ///         - This is running on the `com.nuebling.mac-mouse-fix.buttons` queue. (make sense I think? Cause otherwise it was running on the mainthread I think.)
+    ///     Relevant note from Apple's TextInputSources.h:
+    ///         Mac OS X threading:
+    ///         TextInputSources API is not thread safe. If you are a UI application, you must call TextInputSources API on the main thread.
+    ///         If you are a non-UI application (such as a cmd-line tool or a launchagent that does not run an event loop), you must not call TextInputSources API from multiple
+    ///         threads concurrently.
+    ///             > Noah's comment: ... But shouldn't reading an immutable property, such as 'ASCIICapable' be fine, even if the API is not technically thread safe?
+    
     bool isASCIICapable = MFTISInputSourcePropertyIsTrue(inputSource, kTISPropertyInputSourceIsASCIICapable);
     
     /// Get result

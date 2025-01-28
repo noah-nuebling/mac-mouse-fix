@@ -19,6 +19,8 @@
 		4F143E472B2D1F5600FE4092 /* fallback_licenseinfo_config.json in Resources */ = {isa = PBXBuildFile; fileRef = 4F143E452B2D1F5600FE4092 /* fallback_licenseinfo_config.json */; };
 		4F17D2E1292A635200EB07CA /* SwitchMaster.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F17D2E0292A635200EB07CA /* SwitchMaster.swift */; };
 		4F1AFE972670EBA900ECA424 /* DragCurve.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F1AFE962670EBA900ECA424 /* DragCurve.swift */; };
+		4F1B418F2D49960E00026C94 /* MFSemaphore.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F1B418E2D49960E00026C94 /* MFSemaphore.m */; };
+		4F1B41902D49960E00026C94 /* MFSemaphore.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F1B418E2D49960E00026C94 /* MFSemaphore.m */; };
 		4F1B83062606E68300AEAF37 /* RemapsAnalyzer.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F1B83052606E68300AEAF37 /* RemapsAnalyzer.m */; };
 		4F1B832D26081A5500AEAF37 /* CaptureNotificationCreator.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F1B832C26081A5500AEAF37 /* CaptureNotificationCreator.m */; };
 		4F1C51DA260543DD007F4930 /* NSTextField+Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F1C51D9260543DD007F4930 /* NSTextField+Additions.m */; };
@@ -460,6 +462,8 @@
 		4F18A85727BF6E0200A5703B /* IOHIDEvent-Reconstructed.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "IOHIDEvent-Reconstructed.h"; sourceTree = "<group>"; };
 		4F19F65E2906BB98007DE4CD /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		4F1AFE962670EBA900ECA424 /* DragCurve.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DragCurve.swift; sourceTree = "<group>"; };
+		4F1B418D2D49960E00026C94 /* MFSemaphore.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MFSemaphore.h; sourceTree = "<group>"; };
+		4F1B418E2D49960E00026C94 /* MFSemaphore.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MFSemaphore.m; sourceTree = "<group>"; };
 		4F1B83042606E68300AEAF37 /* RemapsAnalyzer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RemapsAnalyzer.h; sourceTree = "<group>"; };
 		4F1B83052606E68300AEAF37 /* RemapsAnalyzer.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RemapsAnalyzer.m; sourceTree = "<group>"; };
 		4F1B832B26081A5400AEAF37 /* CaptureNotificationCreator.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CaptureNotificationCreator.h; sourceTree = "<group>"; };
@@ -7169,6 +7173,8 @@
 				4FF27DD62B95B108004744E1 /* Shorthands.swift */,
 				4FF6653E25F2C7B000689B77 /* SharedUtility.h */,
 				4FF6653B25F2C7B000689B77 /* SharedUtility.m */,
+				4F1B418D2D49960E00026C94 /* MFSemaphore.h */,
+				4F1B418E2D49960E00026C94 /* MFSemaphore.m */,
 				4F428D002CD80462006322AB /* MFCoding.h */,
 				4F428D012CD80462006322AB /* MFCoding.m */,
 				4F428D072CD8C688006322AB /* MFCoding.swift */,
@@ -8034,6 +8040,7 @@
 				4F85C05028BBDBDC00E96E9C /* NSImageView+Extensions.swift in Sources */,
 				4F37FAD825FDFDC5004C34C4 /* MFScrollView.m in Sources */,
 				4F428D082CD8C688006322AB /* MFCoding.swift in Sources */,
+				4F1B418F2D49960E00026C94 /* MFSemaphore.m in Sources */,
 				4FAA5601293A41AF00BA782C /* BezierCappedAccelerationCurve.swift in Sources */,
 				4FA40D1028A0D8F100499E53 /* VectorSubPixelator.m in Sources */,
 				4FA40D0228A0CE5B00499E53 /* VectorUtility.m in Sources */,
@@ -8190,6 +8197,7 @@
 				4F1AFE972670EBA900ECA424 /* DragCurve.swift in Sources */,
 				4FF6669125F2C93A00689B77 /* ScrollUtility.m in Sources */,
 				4FB8B29B2CCEBAEB00A5A580 /* GetLicenseConfig.swift in Sources */,
+				4F1B41902D49960E00026C94 /* MFSemaphore.m in Sources */,
 				4FF666A825F2C93A00689B77 /* DeviceManager.m in Sources */,
 				4FF8C89F28955DC4007EC31F /* CoolTimer.swift in Sources */,
 				4FF6669B25F2C93A00689B77 /* AppDelegate.m in Sources */,
