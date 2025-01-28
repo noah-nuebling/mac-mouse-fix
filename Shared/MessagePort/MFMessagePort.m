@@ -12,6 +12,20 @@
 /// Notes:
 /// - Can't be named MessagePort because there's already a class in Foundation with that name
 /// - This is a wrapper around CFMessagePort, which itself is a wrapper around mach ports. This was one of the first things we wrote for Mac Mouse Fix. Don't remember why we didn't use the higher level NSMachPort or directly use the low level mach_port C APIs. 
+///
+/// TODO:
+///     Make this secure.
+///     Ideas: ([Since Dec 2024]])
+///         1. Switch from CFMessagePort to NSMachPort
+///             - then get the **audit token** from the mach message, then use `SecTaskCreateWithAuditToken()` and `SecTaskCopySigningIdentifier()` to get the 'signingID' of the message sender.
+///                 (I speculate that) the 'signingID' is NULL if the app isn't signed, and otherwise is the bundleID. BundleID's are unique among signed apps I think. If these assumptions are true this should let us confidently identify the message sender as "not a hacker".
+///             - Given the sender's **PID** we could also check that the relative path between us and the helper matches our expectations. This might not add additional protection against hackers, but it would also solve the "Strange Helper" issues (Although IIRC I don't see those anymore since macOS 15 Sequoia)
+///         2. Use NSSecureCoding to unarchive our objects.
+///             - Might be a bit annoying / verbose to deal with on the receiving end.
+///             - Not sure how much this would help (NSSecureCoding only enforces that you specify which classes may be decoded from the archive – but theres probably lots of other things about the message we should validate to actually make things secure. Discussed this more in MFDataClass implementation.)
+///     Also see:
+///         - Dennis Babkin blog about mach messaging in macOS, with "Security Considerations" section:
+///             https://dennisbabkin.com/blog/?t=interprocess-communication-using-mach-messages-for-macos
 
 #import "MFMessagePort.h"
 #import <Cocoa/Cocoa.h>
@@ -271,6 +285,7 @@ static CFDataRef _Nullable didReceiveMessage(CFMessagePortRef port, SInt32 messa
     CFTimeInterval recieveTimeout = 0.0;
     CFStringRef replyMode = NULL;
     CFDataRef returnData = NULL;
+    
     if (waitForReply) {
 //        sendTimeout = 1.0;
         recieveTimeout = 1.0;

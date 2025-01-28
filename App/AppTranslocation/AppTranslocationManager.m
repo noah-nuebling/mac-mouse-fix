@@ -29,6 +29,10 @@ CFURLRef getAppURL(void) {
 /// \discussion We should probably do some more error handling, and use `dlclose()` to prevent memory leak. But this is only called once and it works fine so whatevs.
 void *getFunctionFromSecurityFramework(const char *functionName) {
     
+    /// TODO:
+    ///     Remove this. Just use `extern` for linking undocumented symbols.
+    ///     - Based on what we learned when implementing `EventLoggerForBrad > PrivateFunctions.m`, dlsym() should almost never be necessary.
+    
     /// Open security framework
     void *handle = NULL;
     handle = dlopen("/System/Library/Frameworks/Security.framework/Security", RTLD_LAZY);

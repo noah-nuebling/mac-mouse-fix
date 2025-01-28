@@ -15,6 +15,7 @@
 #import "NSAttributedString+Additions.h"
 #import "Symbols.h"
 #import "Mac_Mouse_Fix-Swift.h"
+#import "SymbolicHotKeys.h"
 
 @implementation UIStrings
 
@@ -29,26 +30,45 @@
 
 + (NSString * _Nullable)flagEmoji:(NSString *)countryCode {
     
-    /// Src: https://stackoverflow.com/a/34995291
+    /// Based on: https://stackoverflow.com/a/34995291
     
-    int base = 127462 - 65;
-
-    wchar_t bytes[2] = {
-        base + [countryCode characterAtIndex:0],
-        base + [countryCode characterAtIndex:1]
+    /// Check null and validate length
+    if (!countryCode || countryCode.length != 2) {
+        assert(false && "Expecting two-letter ISO country code");
+        return nil;
+    }
+    
+    /// Extract chars
+    char16_t chars[2];
+    [countryCode getCharacters:chars range:NSMakeRange(0, 2)];
+    
+    /// Guard: Chars are all uppercase letters
+    #define isUpperCaseLetter(char) ('A' <= (char) && (char) <= 'Z')
+    if (!isUpperCaseLetter(chars[0]) || !isUpperCaseLetter(chars[1])) {
+        assert(false && "Expecting two-letter ISO country code");
+        return nil;
+    }
+    #undef isUpperCaseLetter
+    
+    /// Transform to pair of regional indicator chars
+    char32_t bytes[2] = {
+        U'🇦' + (chars[0] - 'A'),
+        U'🇦' + (chars[1] - 'A')
     };
-
-    return [[NSString alloc] initWithBytes:bytes
-                                    length:countryCode.length * sizeof(wchar_t)
-                                  encoding:NSUTF32LittleEndianStringEncoding];
+    
+    /// Make string
+    NSString *result = [[NSString alloc] initWithBytes:bytes
+                                                length:sizeof(bytes)
+                                              encoding:NSUTF32StringEncoding];
+    
+    /// Return
+    return result;
 }
-
 
 /// Other code for obtaining UI strings found in RemapTableController
 /// Function for getting extended button string for tooltips found in RemapTableController
 
 + (NSString *)systemSettingsName {
-    
     if (@available(macOS 13.0, *)) {
         return NSLocalizedString(@"system-settings-name", @"First draft: System Settings");
     } else {
@@ -98,11 +118,12 @@
     NSString *kb = @"";
     CGEventFlags f = flags;
     kb = [NSString stringWithFormat:@"%@%@%@%@",
-          (f & kCGEventFlagMaskControl ?    @"^" : @""),
-          (f & kCGEventFlagMaskAlternate ?  @"⌥" : @""),
-          (f & kCGEventFlagMaskShift ?      @"⇧" : @""),
-          (f & kCGEventFlagMaskCommand ?    @"⌘" : @"")];
-//          (f & (1 << 23) ?                  @"🌎": @"")]; /// Globe/fn key
+           (f & kCGEventFlagMaskControl ?    @"^" : @"")
+          ,(f & kCGEventFlagMaskAlternate ?  @"⌥" : @"")
+          ,(f & kCGEventFlagMaskShift ?      @"⇧" : @"")
+          ,(f & kCGEventFlagMaskCommand ?    @"⌘" : @"")
+//          ,(f & kCGEventFlagMaskSecondaryFn ?@"🌎": @"")  /// Caution: Due to eternalmods, the fn flag doesn't always indicate that the fn/globe key is held. – See EventLoggerForBrad.
+          ];
 
     return kb;
 }
@@ -258,7 +279,9 @@ static CGSSymbolicHotKey _highestSymbolicHotKeyInCache = 0;
         if (symbolicHotkey == nil) {
             
             CGSSymbolicHotKey shk = _highestSymbolicHotKeyInCache;
-            while (shk < 512) { /// 512 is arbitrary
+            while (shk < 512) {
+                /// ^ 512 is arbitrary
+                /// TODO: Define/Set this to a well-considered constant based on our experiments inside EventLoggerForBrad
                                 
                 unichar keyEquivalent;
                 CGKeyCode virtualKeyCode;
@@ -277,6 +300,7 @@ static CGSSymbolicHotKey _highestSymbolicHotKeyInCache = 0;
                 _hotKeyCache[@(virtualKeyCode)][@(modifiers)] = @(shk);
                 
                 /// Check if shk is what we're looking for.
+                ///     TODO: Check if this shk's `modifiers` actually fit the `flags` arg (?)
                 if (((CGKeyCode)virtualKeyCode) == keyCode) {
                     symbolicHotkey = @(shk);
                     break;

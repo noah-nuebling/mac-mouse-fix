@@ -523,7 +523,7 @@ bool runningHelper(void) {
     /// Src: https://stackoverflow.com/questions/19884363/in-objective-c-os-x-is-the-global-display-coordinate-space-used-by-quartz-d
     
     /// Get zero screen
-    NSScreen *zeroScreen = NSScreen.screens[0];
+    NSScreen *zeroScreen = NSScreen.screens[0]; /// TODO: Simplify/optimize this: Use [NSScreen +_zeroScreenHeight]
     CGFloat screenHeight = zeroScreen.frame.size.height;
     
     /// Extract values

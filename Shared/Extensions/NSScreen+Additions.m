@@ -18,6 +18,8 @@
 
 + (NSScreen * _Nullable)screenUnderMousePointerWithEvent:(CGEventRef _Nullable)event {
     
+    /// TODO: Simplify / optimize this: Use [NSScreen +_screenAtPoint:]
+    
 #if IS_HELPER
     
     CGDirectDisplayID displayID;
@@ -32,6 +34,8 @@
 }
 
 + (NSScreen * _Nullable)screenWithDisplayID:(CGDirectDisplayID)displayID {
+
+    /// TODO: Simplify/optimize this: Use [NSScreen +_screenForScreenNumber:]
     
     for (NSScreen *screen in NSScreen.screens) {
         if (screen.displayID == displayID)

@@ -233,6 +233,7 @@ CGEventRef _Nullable kbModsChanged(CGEventTapProxy proxy, CGEventType type, CGEv
     /// Notes:
     /// - We can't use CGEventCreate() here for the source of the keyboard modifers, because the kbMods won't be up-to-date.
     /// -> Idea: This might be because we're using a passive listener eventTap?
+    ///     ... Update: No I think CGEventCreate(NULL) uses the `CombinedSessionState` which only updates after the event has passed through the window server, not when we intercept it (I think.) ... Update 2: This comment doesn't make sense – getting flags from CGEventCreate(NULL) is up-to-date, but getting flags from the intercepted `event` doesn't work.
     
     NSUInteger newFlags = flagsFromEvent(event);
     

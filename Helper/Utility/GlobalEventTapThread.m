@@ -11,6 +11,9 @@
 ///     The main runLoop works fine but I suspect that it might cause higher CPU use to put all eventTap onto the main runLoop
 ///     Specifically I'm trying to get the CPU usage for twoFingerModifiedDrag lower
 ///     Edit: This does decrease CPU use! But only slightly.
+///
+///     Edit2: (Dec 2024) I think since the `twoFingerModifiedDrag` draws a fake mouse pointer (necessarily, on the mainthread), with relatively high CPU usag,  it's probably good to put inputProcessing on a separate thread to ensure responsiveness.
+///             Also, all processing of input events should be on the same thread (so on this thread, not the mainthread or some dispatchqueue) to prevent race conditions and problems where events are processed in the wrong order. (I think see order-of-events problems during click-and-drag sometimes under MMF 3.0.3. – seems like clicks and drags are processed on different threads. (?) Also, doubleclicks are – stupidly – processed on the mainthread iirc, (Mightt be wrong, don't remember how this stuff works anymore – but the threading architecture is terrible and overcomplicated.))
 
 #import "GlobalEventTapThread.h"
 
@@ -84,6 +87,9 @@ static NSCondition *_threadIsInitializedSignal;
     
     /// Run the runLoop
     ///     This thread is blocked by the runLoop now
+    ///     TODO: Add an autoreleasepool to this runLoop to prevent abandoned memory. See:
+    ///         - Example implementation: https://stackoverflow.com/questions/11436826/how-to-manage-the-autorelease-pool-of-a-nsrunloop-running-in-a-secondary-thread
+    ///         - Quinn eskimo on abandoned memory: https://developer.apple.com/forums/thread/716261
     while (true) {
         CFRunLoopRun();
     }

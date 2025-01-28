@@ -149,7 +149,16 @@ CG_EXTERN CGError CGSSetSymbolicHotKeyValue(CGSSymbolicHotKey hotKey, unichar ke
         /// Temporarily set a usable binding for our shk
         unichar newKeyEquivalent = kEmptyKeyEquivalent;
         CGKeyCode newVirtualKeyCode = kOutOfReachVKC + (CGKeyCode)shk;
-        CGSModifierFlags newModifierFlags = kCGSNumericPadKeyMask | kCGSFunctionKeyMask; /// Not sure how we arrived at this but it works. 0 (aka `kEmptyModifierFlags`) didn't work in my testing. I think that's to prevent directly remapping a normal key like 'P' to Mission Control without any modifiers being held. (Function keys can be directly mapped to features like Mission Control, but they also have their own 'modfier flag' – kCGSFunctionKeyMask. Little weird.)
+        CGSModifierFlags newModifierFlags = kCGSNumericPadKeyMask | kCGSFunctionKeyMask;
+        /// ^ Why use fn flag? The fn flag indicates either the fn modifier being held or a function key being pressed.
+        ///     1. Function keys can be directly mapped to features like Mission Control.
+        ///     2. Normal keys like 'P' cannot be mapped to features like Mission Control without any modifiers being held.
+        ///     -> The fn flag should solve both of these cases.
+        ///     Testing: 0 (aka `kEmptyModifierFlags`) didn't work in my testing. Using fn or fn | numpad flags worked in my testing.
+        ///     Note In older MMF versions, we used numpad | fn flags – probably because we saw that those are eternalmods of the arrow keys. But I don't think numpad really makes sense here (?) Still, it works, so we're leaving it.
+        ///     Note:
+        ///         In the new keyboard simulation code we built inside `EventLoggerForBrad`, we have more sophisticated logic for this stuff, which will completely replace this.
+        ///         TODO: Maybe merge this note into EventLoggerForBrad before we replace this?
         CGError err = CGSSetSymbolicHotKeyValue(shk, newKeyEquivalent, newVirtualKeyCode, newModifierFlags);
         if (err != kCGErrorSuccess) {
             DDLogError(@"Error setting shk params: %d", err); /// We still post the keyboard events in this case, bc maybe it will still worked despite the error?

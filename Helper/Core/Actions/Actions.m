@@ -115,7 +115,7 @@ static void postSystemDefinedEvent(MFSystemDefinedEventType type, NSEventModifie
     NSTimeInterval ts = [ModificationUtility nsTimeStamp];
     NSEvent *e = [NSEvent otherEventWithType:14 location:loc modifierFlags:modifierFlags timestamp:ts windowNumber:-1 context:nil subtype:8 data1:downData data2:-1];
     
-    CGEventPost(tapLoc, e.CGEvent);
+    CGEventPost(tapLoc, e.CGEvent); /// `.CGEvent` "Returns an autoreleased CGEvent" -> Make sure there's an autoreleasepool when calling this!
     
     /// Post key up
     ts = [ModificationUtility nsTimeStamp];

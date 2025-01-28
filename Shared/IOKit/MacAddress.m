@@ -151,7 +151,7 @@ io_service_t copy_io_service(const char *name, BOOL wantBuiltIn) {
         /// Check isBuiltin
         if (isBuiltInCF &&
             CFGetTypeID(isBuiltInCF) == CFBooleanGetTypeID() &&
-            CFBooleanGetValue(isBuiltInCF) == wantBuiltIn)
+            CFBooleanGetValue(isBuiltInCF) == wantBuiltIn)      /// Random sidenote: If wantBuiltInt wasn't a variable we could just use `CFEqual()`
         {
             IOObjectRetain(candidate); /// Due to this, the retainCount of the result should come out to 1 after the function returns.
             result = candidate;
