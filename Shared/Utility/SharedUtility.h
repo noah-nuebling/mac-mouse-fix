@@ -42,7 +42,12 @@ NS_ASSUME_NONNULL_BEGIN
         result; \
     })
 
+/// String (f)ormatting convenience.
 #define stringf(format, ...) [NSString stringWithFormat:(format), ## __VA_ARGS__]
+
+/// array count convenience
+///     TODO: (This is a dependency of shkBindingIsUsable) Remove this when copying over EventLoggerForBrad macros
+#define arrcount(x) (sizeof(x) / sizeof((x)[0]))
 
 #define binarystring(__v) /** This is a macro to make this function generic. The output string's width will automatically match the byte count of the input type (by using sizeof()) */\
     (NSString *) \

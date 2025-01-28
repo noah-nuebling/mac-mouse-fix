@@ -92,33 +92,17 @@ CG_EXTERN CGError CGSSetSymbolicHotKeyValue(CGSSymbolicHotKey hotKey, unichar ke
 /**
     Define constants
      
-    On the `kEmpty` constants:
-        When you call `CGSGetSymbolicHotKeyValue()` on a SHK which is assigned to `none` by macOS, you see the following values:
-        ```
-        keyEquivalent:      65535
-        virtualKeyCode:     65535
-        modifierFlags:      0
-        ```
-        (When you 'Restore Defaults', macOS assigns 'Show Launchpad' to 'none' - that's how I could find these values.)
-    
-    We call these values the 'empty' values.
-    Note that `65535 == (1<<16)-1` - it's the largest number that fits into an unsigned 16 bit int.
-    
-    On `keyEquivalent`:
-        CGSGetSymbolicHotKeyValue() seems to spit out 65535 as the keyEquivalent when it can't find an actual keyEquivalent unicode character (Which is commonly the case, e.g. for arrow keys.)
-        -> So we're using it in the same way - signalling that there is no keyEquivalent. In my testing the keyBinding always showed up as 'none' under the `Keyboard Shortcut...` System Settings (Using macOS Sequoia 15.1) which seems appropriate.
-          (But if you map an SHK to an arrow key it will also have the 65535 keyEquivalent but show up as an arrow instead of 'none' in System Settings. Not sure how that works.)
-    On `modifierFlags`:
-        Setting this to the 'empty' value (0) renders the SHK unusable. I'm basing this on old comments and vague memories, but I'm but not sure.
-    On`virtualKeyCode`
-        Not sure what happens when this is set to its 'empty' value (65535). But based on logic, I think either `keyEquivalent` or `virtualKeyCode` need to be non-empty for the system to have any chance to map a keyboardEvent to the `symbolicHotKey` that these values belong to.
+        TODO: (This is a dependency of shkBindingIsUsable) Delete this when copying over KeyboardSimulator.h from EventLoggerForBrad.
 
  */
 
-#define kEmptyKeyEquivalent ((unichar)65535)
-#define kEmptyVKC           ((CGKeyCode)65535)
-#define kEmptyModifierFlags ((CGSModifierFlags)0)
-#define kOutOfReachVKC      ((CGKeyCode)400)             /// VirtualKeyCodes (VKCs) on my keyboard go up to like 125, but we use 400 just to be safely out of reach of a real kb
+    #define kMFKeyEquivalentNull            ((unichar)65535)
+    #define kMFModifierFlagsNull            (0)                          /// We're using this with the types `CGSModifierFlags` and `CGEventFlags`
+    #define kMFVK_Null                      ((CGKeyCode)65535)
+    #define kMFHIDUsage_KeyboardNull        ((uint16_t)0)                /// Related constants are defined in IOKit e.g. `kHIDUsage_KeyboardA`
+
+/// Define 'outOfReach' vkc
+    #define kMFVK_OutOfReach                ((CGKeyCode)400)             /// I don't think I've seen a vkc above 200 produced by my keyboard, but we use 400 just to be safely out of reach of a real kb
 
 + (void)post:(CGSSymbolicHotKey)shk {
 
@@ -147,8 +131,8 @@ CG_EXTERN CGError CGSSetSymbolicHotKeyValue(CGSSymbolicHotKey hotKey, unichar ke
     if (!oldBindingIsUsable) {
         
         /// Temporarily set a usable binding for our shk
-        unichar newKeyEquivalent = kEmptyKeyEquivalent;
-        CGKeyCode newVirtualKeyCode = kOutOfReachVKC + (CGKeyCode)shk;
+        unichar newKeyEquivalent = kMFKeyEquivalentNull;
+        CGKeyCode newVirtualKeyCode = kMFVK_OutOfReach + (CGKeyCode)shk;
         CGSModifierFlags newModifierFlags = kCGSNumericPadKeyMask | kCGSFunctionKeyMask;
         /// ^ Why use fn flag? The fn flag indicates either the fn modifier being held or a function key being pressed.
         ///     1. Function keys can be directly mapped to features like Mission Control.
@@ -233,65 +217,37 @@ static void postKeyboardEventsForSymbolicHotKey(CGKeyCode virtualKeyCode, unicha
     CFRelease(keyUp);
 }
 
+/// Define MFKeyboardType stuff
+///     TODO: (This is a dependency of shkBindingIsUsable) Delete this when copying over MFKeyboardSimulationData.h from EventLoggerForBrad
+typedef CGEventSourceKeyboardType MFKeyboardType;
+extern MFKeyboardType SLSGetLastUsedKeyboardID(void); /// Not sure about sizeof(returnType). `LMGetKbdType()` is `UInt8`, but `CGEventSourceKeyboardType` is `uint32_t` - both seem to contain the same constants though.
+#define MFKeyboardTypeCurrent() ((MFKeyboardType)SLSGetLastUsedKeyboardID())
+const MFKeyboardType kMFKeyboardTypeNull = 0;
+
 static BOOL shkBindingIsUsable(CGKeyCode virtualKeyCode, unichar keyEquivalent, CGSModifierFlags modifierFlags) {
     
-    /// Discussion
-    ///
-    /// Why check if a binding `isUsable`?
-    ///     If there's an existing, usable binding for an SHK, then it's most efficient to use that.
-    ///         Creating a new binding is around 30% - 100% slower in my testing.
-    ///
-    ///     However, we should err on the side of creating a new binding, if we're not sure that the binding `isUsable`. (Because otherwise the SHK might not be triggered correctly.)
-    ///
-    /// Why check if `virtualKeyCode` matches the `keyEquivalent`?
-    ///     Explanation of basic concepts:
-    ///     A VKC is specific to a hardware key, but does not necessarily correspond to a specific character on the keyboard. The VKC can be mapped to a unicode character using a keyboard layout.
-    ///     The `keyEquivalent` is supposed to be the actual letter/symbol on the keyboard as a unicode character.
-    ///     The `CGS...SymbolicHotKey...()` APIs seem to be defined in terms of a keyEquivalent *and* a VKC.
-    ///
-    ///     Based on my observations, the keyEquivalent takes precendence over the VKC.
-    ///     That means, if you're using a German layout, the 'Y' key on the keyboard might have VKC 222, and on a US layout the 'Y' key might have VKC 333, but if Mission Control is mapped to Command-D, then it will still work under both keyboard layouts, because the system cares about the keyEquivalent (D) more than the VKC (222 or 333)
-    ///
-    ///     However, for our programmatic triggering of SymbolicHotKeys, this is problematic, because we simply create a CGEvent with a VKC and then send it. After we send the event, macOS will seemingly translate the VKC to a keyEquivalent unicode char, using the current keyboard layout. Then it will decide whether to execute the SHK based on whether the keyEquivalent it computed from the event matches the keyEquivalent defined for a SHK.
-    ///
-    ///     Possible solutions:
-    ///         1. Use `CGEventKeyboardSetUnicodeString()` to explicitly set the keyEquivalent on the events we send to try and prevent macOS from computing the keyEquivalent itself based on the current keyboard layout. -> I tested this and it didn't seem to work.
-    ///             The docs are pretty relevant: https://developer.apple.com/documentation/coregraphics/1456028-cgeventkeyboardsetunicodestring
-    ///         2. Send the events with a custom `CGEventSource`, which we configure using `CGEventSourceSetKeyboardType()` to try and force macOS' SHK handling code to use some default keyboard layout instead of the current keyboard layout. -> Tested this, didn't work.
-    ///             Sidenote: About the keyboardType values for CGEventSourceSetKeyboardTypeBased() and LMGetKbdType() APIs – I based them on the old Gestalt.h header mentioned here: https://stackoverflow.com/questions/54428368/get-keyboard-type-macos-and-detect-built-in-onscreen-or-usb
-    ///         3. Find/Build a function that maps `(keyEquivalent, currentKeyboardLayout) -> virtualKeyCode`
-    ///             Then we could create a CGEvent with the exact `virtualKeyCode` that macOS' SHK handling code will convert to the correct `keyEquivalent` and therefore correctly triggers the SHK we desire.
-    ///             This should always work. However, Apple only provides `UCKeyTranslate()` which maps `(virtualKeyCode, currentKeyboardLayout) -> keyEquivalent`. (The inverse of what we want)
-    ///                 To invert it we'd have to iterate over all `virtualKeyCode`s and apply `UCKeyTranslate()` to every single one, until we find the `keyEquivalent` we're looking for. This seems annoying.
-    ///         4. Check whether the combination of `virtualKeyCode` and `keyEquivalent` that CGSGetSymbolicHotKeyValue() returns, corresponds to the current layout.
-    ///             If yes, then we can simply create our CGEvent with that `virtualKeyCode` - this should always be translated to the correct `keyEquivalent` by macOS' SHK handling code - and therefore correctly trigger the SHK.
-    ///             Otherwise, just declare the binding 'unusable' (return NO from this function) – then we will create a fresh SHK binding that doesn't have a `keyEquivalent` at all - only a `virtualKeyCode`. This means processing is independent of the current keyboardLayout, and the SHK should always be triggered correctly. This is slower but it should ensure consistency.
-    ///             -> **We went with this approach**
-    ///
-    /// Alternatives:
-    ///     - (Since we implemented solution 4.) the goal of this is to see whether a CGEvent, constructed using `virtualKeyCode`, would successfully cause macOS to trigger the desired SHK.
-    ///       -> Alternatively we might use `SLSIsEventMatchingSymbolicHotKey()` to find this out.
-    ///       -> You can find interesting functions by typing this in LLDB: `image lookup -r -n SymbolicHotKey`
+    /// TODO: Copy over docs from EventLoggerForBrad (Or just replace entire function.)
 
     /// Check if VKC is empty
-    if (virtualKeyCode == kEmptyVKC) { /// Can the `virtualKeyCode` ever be empty with only the `keyEquivalent` filled? Logically it should work, but I've never seen that.
+    if (virtualKeyCode == kMFVK_Null) { /// Can the `virtualKeyCode` ever be empty with only the `keyEquivalent` filled? Logically it should work, but I've never seen that.
         DDLogDebug(@"SymbolicHotKeys: isUsable: Not usable due to empty VKC");
         return NO;
     }
     
     /// Check if VKC is out of reach
-    ///     We don't need to check for this, because while an 'out of reach' VKC can (probably) never be triggered with a real keyboard, we should still be able to trigger it programmatically.
-    if ((false)) {
-        if (virtualKeyCode >= kOutOfReachVKC) {
+    if ((false)) { /// We don't need to check for this, because while an 'out of reach' VKC can (probably) never be triggered with a real keyboard, we should still be able to trigger it programmatically.
+        if (virtualKeyCode >= kMFVK_OutOfReach) {
             DDLogDebug(@"SymbolicHotKeys: isUsable: Not usable due to out-of-reach VKC");
             return NO;
         }
     }
     
     /// Check if flags are empty
-    if (modifierFlags == kEmptyModifierFlags) {
-        DDLogDebug(@"SymbolicHotKeys: isUsable: Not usable due to empty modifierFlags");
-        return NO;
+    if ((false)) { /// Empty flags are sometimes expected and necessary for the SHK to work. E.g. 188, which has VKC 179 and is equivalent to hitting the globe key.
+        if (modifierFlags == kMFModifierFlagsNull) {
+            DDLogDebug(@"SymbolicHotKeys: isUsable: Not usable due to empty modifierFlags");
+            return NO;
+        }
     }
     
     /// Check if flags are unexpected
@@ -303,15 +259,18 @@ static BOOL shkBindingIsUsable(CGKeyCode virtualKeyCode, unichar keyEquivalent, 
     }
     
     /// Check if the VKC matches the keyEquivalent
-    ///     under the current keyboard layout
-    if (keyEquivalent != kEmptyKeyEquivalent) { /// If there is no `keyEquivalent` then macOS will use the VKC instead and everything should work fine. Otherwise, the `keyEquivalent` needs to match.
-        NSString *chars = getCharsForVirtualKeyCode(virtualKeyCode);
-        if (!chars || chars.length != 1) {
+    ///     under the current keyboardLayout and current keyboardType
+    if (keyEquivalent != kMFKeyEquivalentNull) { /// If there is no `keyEquivalent` for a CGSHotKey then macOS will use the VKC instead and everything should work fine. Otherwise, the `keyEquivalent` needs to match.
+        
+        UInt8 kbType = MFKeyboardTypeCurrent();
+        const UCKeyboardLayout *layout = getCurrentKeyboardLayoutForKbShortcuts();
+        NSString *nomodsChars = getStrForVKC(kbType, layout, virtualKeyCode, kMFModifierFlagsNull); /// Should we also check the `shiftChars`, additionally to the `nomodsChars`? We do that in the regular keyboardSimulator code. Contra: I think it should be rare for SHKs to be defined in terms of a 'shiftKeyEquivalent'...? Not sure.
+        if (!nomodsChars || nomodsChars.length != 1) {
             DDLogDebug(@"SymbolicHotKeys: isUsable: Not usable due to empty charsForVKC");
             return NO;
         }
-        if (keyEquivalent != [chars characterAtIndex:0]) {
-            DDLogDebug(@"SymbolicHotKeys: isUsable: Not usable due to char mismatch: keyEquivalent: %c, charsForVKC: %@", keyEquivalent, chars);
+        if (keyEquivalent != [nomodsChars characterAtIndex:0]) {
+            DDLogDebug(@"SymbolicHotKeys: isUsable: Not usable due to char mismatch: keyEquivalent: %c, charsForVKC: %@", keyEquivalent, nomodsChars);
             return NO;
         }
     }
@@ -320,60 +279,279 @@ static BOOL shkBindingIsUsable(CGKeyCode virtualKeyCode, unichar keyEquivalent, 
     return YES;
 }
 
-static NSString *_Nullable getCharsForVirtualKeyCode(CGKeyCode keyCode) {
+#pragma mark - Random helper macros
 
-    /// Get chars for a virtualKeyCode – based on currently active keyboard layout.
-    /// Returns nil to indicate failure.
-    ///
+/// TODO: (This is a dependency of shkBindingIsUsable) Delete these when you copy over all the macros from EventLoggerForBrad
+
+/// Convenience macro
+#define MFTISInputSourcePropertyIsTrue(src, prop) ({ \
+    CFTypeRef a = TISGetInputSourceProperty((src), (prop)); \
+    bool b = a && CFEqual(a, kCFBooleanTrue); \
+    b; \
+})
+
+/// NULL-safe wrappers around common CF methods
+#define MFCFRetain(cf)           (typeof(cf))  ({ __auto_type __cf = (cf); (!__cf ? NULL : CFRetain(__cf)); })                                                                  /// NULL-safe CFRetain || Note: Is a macro not a function for generic typing.
+#define MFCFAutorelease(cf)      (typeof(cf))  ({ __auto_type __cf = (cf); (!__cf ? NULL : CFAutorelease(__cf)); })                                                             /// NULL-safe CFAutorelease || Dicussion: Probably use CFBridgingRelease() instead (it is already NULL safe I think.). Autorelease might be bad since autoreleasepools aren't available in all contexts. E.g. when using `dispatch_async` with a queue that doesn't autorelease. Or when running on a CFRunLoop which doesn't drain a pool after every iteration. (Like the mainLoop does) See Quinn "The Eskimo"s write up: https://developer.apple.com/forums/thread/716261
+#define MFCFRelease(cf)          (void)        ({ __auto_type __cf = (cf); if (__cf) CFRelease(__cf); })                                                                        /// NULL-safe CFRelease
+#define MFCFEqual(cf1, cf2)      (Boolean)     ({ __auto_type __cf1 = (cf1); __auto_type __cf2 = (cf2); ((__cf1 == __cf2) || (__cf1 && __cf2 && CFEqual(__cf1, __cf2))); })     /// NULL-safe CFEqual
+
+#pragma mark - Keyboard layout helper function
+
+/// TODO: (This is a dependency of shkBindingIsUsable) Remove this when copying over KeyboardSimulator.m from EventLoggerForBrad
+
+NSString *getStrForVKC(MFKeyboardType keyboardType, const UCKeyboardLayout *keyboardLayout, CGKeyCode vkc, CGEventFlags flags) {
+
+    /// Get chars for a virtualKeyCode
+    ///     Wrapper around `UCKeyTranslate()`
+    ///     This is a pure function with no dependencies on any state except the passed-in args (as of Dec 2024)
+    /// Usage:
+    ///     For the arg `keyboardType`: default to using `kMFKeyboardTypeCurrent`
+    /// Nil returns:
+    ///     Return `nil` to indicate `failure`.
+    ///     Return `@""` for virtualKeyCodes of non-character-generating keys, e.g. delete, leftarrow, F11, command, control (while UCKeyTranslate() returns weird Control characters for those keys.)
+    /// Alternatives for UCKeyTranslate:
+    ///     1. `CGEventKeyboardGetUnicodeString()` – seems to give the same results as UCKeyTranslate, except that it doesn't work with deadKeys..
+    ///     2. `[NSEvent -charactersByApplyingModifiers:]` - I think it's better suited for higher-level UI code. Read more below under  """If we use `[NSEvent -charactersByApplyingModifiers:]`"""
     /// Notes:
-    /// - Think about putting this into some utility class
-    ///     - The MASShortcut code which we're using also implements a UCKeyTranslate() wrapper. Maybe we should use that?
-    /// - Here's a pretty competent-looking implementation of a UCKeyTranslate() wrapper (ended up in OpenEmu) https://stackoverflow.com/a/8263841/10601702
-
+    ///     - The MASShortcut code which we're using in MMF also implements a UCKeyTranslate() wrapper. Maybe we should use that?
+    /// - Based on:
+    ///     - https://stackoverflow.com/a/8263841/10601702 (ended up in OpenEmu)
+    ///     - https://chromium.googlesource.com/chromium/src/+/66.0.3359.158/ui/events/keycodes/keyboard_code_conversion_mac.mm (Chromium usage of UCKeyTranslate())
     
-    /// Get layout
-    
-    const UCKeyboardLayout *layout = NULL;
-    
-    TISInputSourceRef inputSource = TISCopyCurrentKeyboardInputSource() /*TISCopyCurrentKeyboardLayoutInputSource()*/; /// Not sure what's better
-    MFDefer ^{ if (inputSource) CFRelease(inputSource); };
-    if (inputSource) {
-        CFDataRef layoutData = TISGetInputSourceProperty(inputSource, kTISPropertyUnicodeKeyLayoutData);
-        if (layoutData) {
-            layout = (UCKeyboardLayout *)CFDataGetBytePtr(layoutData);
-        }
-    }
-    
-    if (!layout) {
-        DDLogError(@"Failed to get UCKeyboardLayout");
+    /// NULL safety
+    if (keyboardType == kMFKeyboardTypeNull || keyboardLayout == NULL || vkc == kMFVK_Null) { /// Not sure if necessary (UCKeyTranslate might fail anyways?)
+        DDLogError(@"Some input is unexpectedly NULL, %d, %p, %d", keyboardType, keyboardLayout, vkc);
+        assert(false);
         return nil;
     }
     
+    /// Get modifierKeyState
+    ///     See UCKeyTranslate() docs.
+    UInt32 modifierKeyState = 0;
+    if (flags & kCGEventFlagMaskCommand)    modifierKeyState |= cmdKey;
+    if (flags & kCGEventFlagMaskShift)      modifierKeyState |= shiftKey;
+    if (flags & kCGEventFlagMaskAlphaShift) modifierKeyState |= alphaLock;
+    if (flags & kCGEventFlagMaskAlternate)  modifierKeyState |= optionKey;
+    if (flags & kCGEventFlagMaskControl)    modifierKeyState |= controlKey;
+    modifierKeyState = (modifierKeyState >> 8) & 0xFF;
+    
     /// Get other input params
-    UInt16 keyCodeForLayout = keyCode;
-    UInt16 keyAction = kUCKeyActionDisplay; /// Should maybe be using kUCKeyActionDown instead. Some SO poster said it works better.
-    UInt32 modifierKeyState = 0; /// The keyEquivalent arg is not affected by modifier flags. It's always lower case despite Shift, etc... That's why we can just set this to 0.
-    UInt32 keyboardType = LMGetKbdType(); 
-    OptionBits keyTranslateOptions = kUCKeyTranslateNoDeadKeysBit /*kUCKeyTranslateNoDeadKeysMask*/; /// Not sure what's correct. Edit: Obv mask is not appropriate here.
+    UInt16 keyAction = kUCKeyActionDisplay;    /// Note: Not sure whether to use `kUCKeyActionDown` or `kUCKeyActionDisplay`. Some SO poster said `Down` works better, but in my testing `Display` returns the unicode of dead keys immediately, without having to translate `kVK_Space` right after to get the dead key's unicode char.
+    OptionBits keyTranslateOptions = 0; /*kUCKeyTranslateNoDeadKeysMask*/; /// Dont' forget: Don't use `kUCKeyTranslateNoDeadKeysBit` directly, it's just 0. (Use the mask instead) || Not sure we need deadKey states when using `kUCKeyActionDisplay`
     
     /// Declare return buffers
-    
     UInt32 deadKeyState = 0;
-    UniCharCount maxStringLength = 4; /// 1 Should be enough I think
+    const UniCharCount maxStringLength = 255; /// I've never seen this be more than 1. I guess some Chinese characters would perhaps take up more than one 16 bit codepoint? Or maybe this is larger for combined chars involving dead keys? Docs say "This may be a value of up to 255, although it would be rare to get more than 4 characters."
     UniCharCount actualStringLength = 0;
-    UniChar unicodeString[maxStringLength];
+    UniChar unicodeString[maxStringLength+1];
     
     /// Translate
-    OSStatus r = UCKeyTranslate(layout, keyCodeForLayout, keyAction, modifierKeyState, keyboardType, keyTranslateOptions, &deadKeyState, maxStringLength, &actualStringLength, unicodeString);
+    OSStatus r = UCKeyTranslate(keyboardLayout, vkc, keyAction, modifierKeyState, keyboardType, keyTranslateOptions, &deadKeyState, maxStringLength, &actualStringLength, unicodeString);
+    
+    /// Handle deadKeys
+    ///     Afaik, dead keys are keyPresses that don't produce a character, but instead modify the character produced by the next keyPress.
+    ///     An example is the accent key next to the backspace key on the German QWERTZ layout.
+    ///         See: https://stackoverflow.com/questions/8263618/convert-virtual-key-code-to-unicode-string/8263841#8263841
+    ///     On macOS, you can enter the unicode character of the deadKey itself by pressing space after pressing the deadKey.
+    ///     That's why we're passing `kVK_Space` to UCKeyTranslate here – it gives us the unicode character for the deadKey
+    ///         -> Based on my testing, when using `kUCKeyActionDisplay` instead of `kUCKeyActionDown` then this is not necessary – at least for the aforementioned accent key on the German layout.
+    
+    if (deadKeyState && keyAction != kUCKeyActionDisplay) {
+        DDLogDebug(@"KeyboardSimulator.m: DeadKeyState is non-zero. Translating space to produce the character for the dead key. String so far: '%@' (Should be empty), deadKeyState: %d\n", [NSString stringWithCharacters:unicodeString length:actualStringLength], deadKeyState);
+        r = UCKeyTranslate(keyboardLayout, kVK_Space, kUCKeyActionDown, modifierKeyState, keyboardType, keyTranslateOptions, &deadKeyState, maxStringLength, &actualStringLength, unicodeString);
+    }
     
     /// Check errors
     if (r != noErr) {
-        DDLogError(@"UCKeyTranslate() failed with error code: %d", r);
+        DDLogError(@"KeyboardSimulator.m: UCKeyTranslate() failed with error code: %d", r);
         return nil;
+    }
+    
+    /// Handle controlCharacters
+    ///     Notes:
+    ///     - UCKeyTranslate returns controlCharacters for all non-character-generating keys except modifier keys – e.g. F11, enter, delete, arrow keys, esc, pagedown, etc...
+    ///     - If we create an NSString directly with the controlCharacters it prints using ASCII caret notation. e.g. `kFunctionKeyCharCode` prints as `\^P` (See Wikipedia: https://en.wikipedia.org/wiki/Caret_notation)
+    ///     - Interesting: All the ASCII control characters I've seen UCKeyTranslate output correspond with 'MacRoman' character codes found in an HIToolbox enum. The 'MacRoman' character names also seem to correspond with the pressed key.
+    ///         - E.g. Pressing F11 produces the `kFunctionKeyCharCode` MacRoman character.
+    ///         - Many of the MacRoman characters also line up with the ASCII control characters semantically. E.g. `kReturnCharCode == 13 == (carriage return)`
+    ///             (where `kReturnCharCode` is the macRoman character and `(carriage return)` is an ASCII control character.)
+    ///
+    ///     - If we use `[NSEvent -charactersByApplyingModifiers:]` instead of UCKeyTranslate, we get `NS` constants instead of these macRoman characters when pressing non-character-generating keys. E.g. `NSBackspaceCharacter` or `NSF7FunctionKey`.
+    ///         - Use cases: These `NS` constants seem well-suited for displaying a kb-key / shortcut in the UI for users (Maybe we can use it in place of the code we copied from MASShortcut in MMF?). The HIToolBox MacRoman constants don't really seem useful for much – so we're filtering them out.
+    ///         - My feeling: For our lower-level, non-UI, kb-shortcut code, I think we should use vkc's to identify non-character-generating keys. And ignore the output of UCKeyTranslate unless it outputs a normal ascii character that can be used to trigger a kb shortcut independent of the current keyboard layout.
+    ///             IIRC, This is also how macOS seems to handle things – at least for system-wide keyboard shortcuts – looking at the output of `CGSGetSymbolicHotKeyValue()` – it seems to set the keyEquivalent to `UINT16_MAX` unless it's a normal ascii character, and otherwise uses the VKC (IIRC). On the other hand, NSMenuItem, which implements in-app kb shortcuts has a Unicode character associated with every key on the keyboard, and shortcuts seem to only be defined in terms of these characters. So not sure.
+
+    const bool filterOutControlCharacters = true; /// Set this to 'false' for debugging
+    static NSString *macRomanCharToPlaceholderMap[] = {
+      [kNullCharCode]                           = @"<Null>",
+      [kHomeCharCode]                           = @"<Home>",
+      [kEnterCharCode]                          = @"<Enter>",
+      [kEndCharCode]                            = @"<End>",
+      [kHelpCharCode]                           = @"<Help>",
+      [kBellCharCode]                           = @"<Bell>",
+      [kBackspaceCharCode]                      = @"<Backspace>",
+      [kTabCharCode]                            = @"<Tab>",
+      [kLineFeedCharCode]                       = @"<LineFeed>",
+      [kVerticalTabCharCode|kPageUpCharCode]    = @"<VerticalTab|PageUp>",
+      [kFormFeedCharCode|kPageDownCharCode]     = @"<FormFeed|PageDown>",
+      [kReturnCharCode]                         = @"<Return>",
+      [kFunctionKeyCharCode]                    = @"<FunctionKey>",
+      [kCommandCharCode]                        = @"<Command>",
+      [kCheckCharCode]                          = @"<Check>",
+      [kDiamondCharCode]                        = @"<Diamond>",
+      [kAppleLogoCharCode]                      = @"<AppleLogo>",
+      [kEscapeCharCode|kClearCharCode]          = @"<Escape|Clear>",
+      [kLeftArrowCharCode]                      = @"<LeftArrow>",
+      [kRightArrowCharCode]                     = @"<RightArrow>",
+      [kUpArrowCharCode]                        = @"<UpArrow>",
+      [kDownArrowCharCode]                      = @"<DownArrow>",
+      [kSpaceCharCode]                          = @"<Space>", /// This is not a control character, it's unicode ' ' (space)
+      [kDeleteCharCode]                         = @"<Delete>",
+      [kBulletCharCode]                         = @"<Bullet>", /// This is not a control character, it:s unicode '¥'
+      [kNonBreakingSpaceCharCode]               = @"<NonBreakingSpace>", /// This is not a control character, it's unicode 'Ê' || Note: kNonBreakingSpaceCharCode is 202, which makes the map a bit memory inefficient.
+    };
+    
+    if (actualStringLength > 0) {
+        unichar c = unicodeString[0];
+        if ([NSCharacterSet.controlCharacterSet characterIsMember:c]) {
+            if (filterOutControlCharacters) {
+                return @""; /// emptyString matches the return value we see from UCKeyTranslate for modifier keys. That way all non-character-generating keys output emptyString.
+            } else {
+                if (c < arrcount(macRomanCharToPlaceholderMap) && macRomanCharToPlaceholderMap[c] != NULL) {
+                    return macRomanCharToPlaceholderMap[c]; /// Output a placeholder based on our MacRoman character map
+                } else {
+                    DDLogError(@"Control character %c not covered by our macRoman map.", c);
+                    assert(false);
+                    return [NSString stringWithCharacters:unicodeString length:actualStringLength]; /// Output the UCKeyTranslate output directly. The control character will print (at least in the console) using ASCII caret notation.
+                }
+            }
+        }
     }
     
     /// Return
     NSString *result = [NSString stringWithCharacters:unicodeString length:actualStringLength];
+    return result;
+}
+
+#pragma mark - Keyboard layouts
+/// Helper functions
+/// TODO: (This is a dependency of shkBindingIsUsable) Delete this when you copy over KeyboardSimulator.m from EventLoggerForBrad
+
+const UCKeyboardLayout *getCurrentKeyboardLayoutForKbShortcuts(void) {
+    
+    /// Convenience wrapper around lower-level functions
+    
+    /// Get keyboardLayout inputSource
+    TISInputSourceRef inputSource = TISCopyCurrentKeyboardLayoutInputSource();
+    MFDefer ^{ MFCFRelease(inputSource); };
+    
+    /// Get keyboardShortcut inputSource
+    TISInputSourceRef inputSource2 = MFTISCopyKeyboardShortcutInputSourceForKeyboardLayoutInputSource(inputSource);
+    MFDefer ^{ MFCFRelease(inputSource2); };
+    
+    /// Extract layout ptr
+    const UCKeyboardLayout *layout = MFTISGetLayoutPointerFromInputSource(inputSource2);
+    assert(layout != NULL);
+    
+    /// Return
+    return layout;
+}
+
+const UCKeyboardLayout *getKeyboardLayoutForKbShortcutsWithID(NSString *keyboardLayoutInputSourceID) {
+    
+    /// Convenience wrapper around lower-level functions
+    
+    /// Get inputSource for passed-in ID
+    TISInputSourceRef keyboardLayoutInputSource = MFTISCopyInputSourceWithID(keyboardLayoutInputSourceID);
+    MFDefer ^{ MFCFRelease(keyboardLayoutInputSource); };
+    
+    /// Validate
+    
+    /// Check NULL
+    if (!keyboardLayoutInputSource) {
+        assert(false);
+        return NULL;
+    }
+    /// Check if the passed-in inputSource is really a keyboardLayout
+    #define isKeyboardLayout(__src) \
+        MFCFEqual(kTISTypeKeyboardLayout, TISGetInputSourceProperty(__src, kTISPropertyInputSourceType))
+    
+    if (!isKeyboardLayout(keyboardLayoutInputSource)) {
+        assert(false);
+        return NULL;
+    }
+    
+    /// Get keyboardShortcut inputSource
+    TISInputSourceRef keyboardShortcutInputSource = MFTISCopyKeyboardShortcutInputSourceForKeyboardLayoutInputSource(keyboardLayoutInputSource);
+    MFDefer ^{ MFCFRelease(keyboardShortcutInputSource); };
+    
+    /// Extract layout ptr
+    const UCKeyboardLayout *result = MFTISGetLayoutPointerFromInputSource(keyboardShortcutInputSource);
+    assert(result != NULL);
+    
+    /// Return
+    return result;
+}
+
+
+TISInputSourceRef MFTISCopyKeyboardShortcutInputSourceForKeyboardLayoutInputSource(TISInputSourceRef _Nonnull inputSource) {
+    
+    /// Given a keyboardLayout-containing inputSource A, gets the inputSource B containing the keyboardLayout that is used by macOS to resolve keyboard shortcuts.
+    ///     - As of [Dec 2024] this implements the `ABC Layout Fallback Mechanism` which is extensively discussed elsewhere.
+    ///         > Basically: If `inputSource` arg is 'ASCIICapable' we will return it as is, otherwise it will return the `ABC` inputSource.
+    ///     - Note: The returned inputSource will have +1 reference count and needs to be released by the caller.
+
+    /// Check ASCII capability
+    bool isASCIICapable = MFTISInputSourcePropertyIsTrue(inputSource, kTISPropertyInputSourceIsASCIICapable);
+    
+    /// Get result
+    TISInputSourceRef result = NULL;
+    if (isASCIICapable) {
+        /// Use the passed-in inputSource
+        result = (void *)CFRetain(inputSource); /// Retain so that `result` has the expected +1 reference count
+    } else {
+        /// Fallback to 'ABC' layout
+        result = MFTISCopyInputSourceWithID(@"com.apple.keylayout.ABC");
+    }
+    
+    /// Validate
+    ///     We could fallback to the 'current' (aka most-recently-used in my testing) ascii capable layout using `TISCopyCurrentASCIICapableKeyboardLayoutInputSource()`
+    assert(result != NULL); /// Don't think this can happen.
+    
+    /// Return
+    return result;
+}
+
+const UCKeyboardLayout * MFTISGetLayoutPointerFromInputSource(TISInputSourceRef inputSource) {
+    
+    /// I feel like there's probably some private function which does this faster / easier.
+    ///     Notes:
+    ///     - According to the `kTISPropertyUnicodeKeyLayoutData` docs, this will simply return NULL if the inputSource is not of type `kTISTypeKeyboardLayout`.
+    
+    const UCKeyboardLayout *layout = NULL;
+    if (inputSource) {
+        CFDataRef layoutData = TISGetInputSourceProperty(inputSource, kTISPropertyUnicodeKeyLayoutData);
+        if (layoutData) {
+            layout = (const UCKeyboardLayout *)CFDataGetBytePtr(layoutData);
+        }
+    }
+    
+    assert(layout && "KeyboardSimulator.m: Failed to get UCKeyboardLayout"); /// I think this can only happen if: We pass in NULL or an invalid inputSource, or an inputSource that is not of type keyboardLayout.
+    
+    return layout; /// Based on my testing, there's no memory corruption errors by returning the pointer to the layout. Even if we store the layoutPointer and then change the input source  – the pointer stays valid. ––– However it might be safer to malloc the layout or return the CFDataRef instead of this.
+}
+
+TISInputSourceRef MFTISCopyInputSourceWithID(NSString *inputSourceID) {
+
+    /// Helper function for `getCurrentKeyboardLayoutForKbShortcuts()`
+
+    static const Boolean includeAllInstalled = true;
+    NSDictionary *matchingDict = @{ (id)kTISPropertyInputSourceID: inputSourceID };
+    
+    NSArray *inputSourceList = CFBridgingRelease(TISCreateInputSourceList((__bridge CFDictionaryRef)matchingDict, includeAllInstalled));
+    TISInputSourceRef result = (void *)CFBridgingRetain([inputSourceList firstObject]);
+    
     return result;
 }
 

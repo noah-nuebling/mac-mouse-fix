@@ -24,6 +24,9 @@
 		4F1C51DA260543DD007F4930 /* NSTextField+Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F1C51D9260543DD007F4930 /* NSTextField+Additions.m */; };
 		4F1D58192881D880002EB119 /* CombinedLinearCurve.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F1D58182881D880002EB119 /* CombinedLinearCurve.swift */; };
 		4F1D7F4728A4639800253407 /* MenuBarItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F1D7F4628A4639800253407 /* MenuBarItem.swift */; };
+		4F28B7F62D49141F006928A6 /* SkyLight.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4F28B7F52D49141E006928A6 /* SkyLight.framework */; };
+		4F28B7F82D49144E006928A6 /* SkyLight.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4F28B7F52D49141E006928A6 /* SkyLight.framework */; };
+		4F28B7F92D49144E006928A6 /* SkyLight.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 4F28B7F52D49141E006928A6 /* SkyLight.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		4F2CC58727B8D2300084AACE /* HybridCurves.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F2CC58627B8D2300084AACE /* HybridCurves.swift */; };
 		4F2CC58927B8DA8B0084AACE /* Line.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F2CC58827B8DA8B0084AACE /* Line.swift */; };
 		4F2F0B2B28E6258B00246D59 /* MessagePortUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F2F0B2A28E6258B00246D59 /* MessagePortUtility.swift */; };
@@ -373,6 +376,17 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
+		4F28B7FA2D49144E006928A6 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				4F28B7F92D49144E006928A6 /* SkyLight.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		4F9111F8289FF25D00D2DD8C /* Copy sm_launchd.plist */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
@@ -1979,6 +1993,7 @@
 		4F2153262B2E145500DD3957 /* config.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = config.yml; sourceTree = "<group>"; };
 		4F2153272B2E150800DD3957 /* Acknowledgements.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = Acknowledgements.md; sourceTree = "<group>"; };
 		4F2153282B2E155300DD3957 /* update-acknowledgements.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = "update-acknowledgements.yml"; sourceTree = "<group>"; };
+		4F28B7F52D49141E006928A6 /* SkyLight.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SkyLight.framework; path = ../../../../../../System/Library/PrivateFrameworks/SkyLight.framework; sourceTree = "<group>"; };
 		4F2CC58627B8D2300084AACE /* HybridCurves.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HybridCurves.swift; sourceTree = "<group>"; };
 		4F2CC58827B8DA8B0084AACE /* Line.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Line.swift; sourceTree = "<group>"; };
 		4F2F0B2A28E6258B00246D59 /* MessagePortUtility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessagePortUtility.swift; sourceTree = "<group>"; };
@@ -2467,6 +2482,7 @@
 				4FA40CF228A0CA3900499E53 /* ReactiveCocoa in Frameworks */,
 				4F909D5128A0C6F3009349A2 /* SnapKit in Frameworks */,
 				4F39BC26263AC31600FDF692 /* Sparkle.framework in Frameworks */,
+				4F28B7F62D49141F006928A6 /* SkyLight.framework in Frameworks */,
 				4FA40CEF28A0CA0A00499E53 /* ReactiveSwift in Frameworks */,
 				4FEB66152793510F00E6A111 /* CocoaLumberjackSwift in Frameworks */,
 			);
@@ -2495,6 +2511,7 @@
 				4FC8A7D328AAF900007DB982 /* Markdown in Frameworks */,
 				4F7F47CE28A5B5EC00290BBD /* ReactiveSwift in Frameworks */,
 				4FEB66112793510800E6A111 /* CocoaLumberjackSwift in Frameworks */,
+				4F28B7F82D49144E006928A6 /* SkyLight.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -7041,6 +7058,7 @@
 		4FDECCD528A3A37800DDEE91 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				4F28B7F52D49141E006928A6 /* SkyLight.framework */,
 				4FDECCD728A3A37800DDEE91 /* Sparkle.framework */,
 				4FDECCD828A3A37800DDEE91 /* README.md */,
 			);
@@ -7700,6 +7718,7 @@
 				4FCECD7C21092354001F1078 /* Sources */,
 				4FCECD7D21092354001F1078 /* Frameworks */,
 				4FCECD7E21092354001F1078 /* Resources */,
+				4F28B7FA2D49144E006928A6 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -8380,6 +8399,10 @@
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) IS_MAIN_APP";
 				SWIFT_OBJC_BRIDGING_HEADER = "App/SupportFiles/Mac Mouse Fix-Bridging-Header.h";
+				SYSTEM_FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(SYSTEM_LIBRARY_DIR)/PrivateFrameworks",
+				);
 			};
 			name = Debug;
 		};
@@ -8414,6 +8437,10 @@
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) IS_MAIN_APP";
 				SWIFT_OBJC_BRIDGING_HEADER = "App/SupportFiles/Mac Mouse Fix-Bridging-Header.h";
+				SYSTEM_FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(SYSTEM_LIBRARY_DIR)/PrivateFrameworks",
+				);
 			};
 			name = Release;
 		};
@@ -8698,6 +8725,10 @@
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) IS_HELPER";
 				SWIFT_OBJC_BRIDGING_HEADER = "Helper/SupportFiles/Mac Mouse Fix Helper-Bridging-Header.h";
 				SWIFT_PRECOMPILE_BRIDGING_HEADER = YES;
+				SYSTEM_FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(SYSTEM_LIBRARY_DIR)/PrivateFrameworks",
+				);
 				USER_HEADER_SEARCH_PATHS = "\"$(SRCROOT)/Helper/SupportFiles/External\"";
 			};
 			name = Debug;
@@ -8736,6 +8767,10 @@
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) IS_HELPER";
 				SWIFT_OBJC_BRIDGING_HEADER = "Helper/SupportFiles/Mac Mouse Fix Helper-Bridging-Header.h";
 				SWIFT_PRECOMPILE_BRIDGING_HEADER = YES;
+				SYSTEM_FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(SYSTEM_LIBRARY_DIR)/PrivateFrameworks",
+				);
 				USER_HEADER_SEARCH_PATHS = "\"$(SRCROOT)/Helper/SupportFiles/External\"";
 			};
 			name = Release;

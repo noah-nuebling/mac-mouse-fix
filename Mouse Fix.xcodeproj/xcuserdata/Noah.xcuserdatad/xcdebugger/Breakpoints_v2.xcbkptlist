@@ -30,9 +30,41 @@
             filePath = "Helper/Core/Actions/SymbolicHotKeys.m"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "217"
-            endingLineNumber = "217"
+            startingLineNumber = "201"
+            endingLineNumber = "201"
             landmarkName = "postKeyboardEventsForSymbolicHotKey(virtualKeyCode, keyEquivalent, modifierFlags)"
+            landmarkType = "9">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "B802559C-9978-4F14-BBA9-2D4566354DC4"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Helper/Core/Actions/SymbolicHotKeys.m"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "229"
+            endingLineNumber = "229"
+            landmarkName = "shkBindingIsUsable(virtualKeyCode, keyEquivalent, modifierFlags)"
+            landmarkType = "9">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "50D8EBFB-89B3-486D-A7C7-CE77BB91CC20"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Helper/Core/Actions/SymbolicHotKeys.m"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "268"
+            endingLineNumber = "268"
+            landmarkName = "shkBindingIsUsable(virtualKeyCode, keyEquivalent, modifierFlags)"
             landmarkType = "9">
          </BreakpointContent>
       </BreakpointProxy>
