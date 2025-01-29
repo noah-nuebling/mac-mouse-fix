@@ -40,6 +40,7 @@ Diese Leute haben viel mehr als den Standardpreis ausgegeben und mir einen **ung
 
 **Januar 2025**
 
+- 🇩🇪&nbsp;Lars - "Thank you for your work! I mean it. I have X-Mouse-Button Control for Windows and contributed there as well. If you can, please add an option to disable Mac Mouse Fix, when certain Apps are running that require the 'original' mouse behavior! Thank You!"
 - 🇦🇺&nbsp;Hetong&nbsp;Jiang - "Love MMF3, Love you Noah"
 - 🇺🇸&nbsp;Pranjal&nbsp;Raihan - "The world is a better place because of you!"
 - 🇵🇱&nbsp;Gabriel - "This small app is a gamechanger for using 3rd party mouses. At this point it should be by default in MacOS"
