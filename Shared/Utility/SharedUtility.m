@@ -190,7 +190,6 @@ NSException * _Nullable tryCatch(void (^tryBlock)(void)) {
     /// Name
     const char *className = class_getName(class);
     
-    
     /// Properties
     NSMutableArray *properties = [NSMutableArray array];
     
@@ -355,6 +354,7 @@ bool runningPreRelease(void) {
 
 #pragma mark - Check which executable is running
 /// TODO: Maybe move this to `Locator.m`
+/// TODO: Make these NS_INLINE
 
 bool runningMainApp(void) {
     

@@ -30,19 +30,25 @@ MFDataClassImplement0(MFDataClassBase, MFLicenseTypeInfo)
     /// Standard licenses
     MFDataClassImplement0(MFLicenseTypeInfo, MFLicenseTypeInfoGumroadV0)                /// Old Euro-based licenses that were sold on Gumroad during the MMF 3 Beta.
     MFDataClassImplement0(MFLicenseTypeInfo, MFLicenseTypeInfoGumroadV1)                /// Standard USD-based Gumroad licenses that were sold on Gumroad after MMF 3 Beta 6 (IIRC).
-    MFDataClassImplement0(MFLicenseTypeInfo, MFLicenseTypeInfoPaddleV1)                 /// Standard MMF 3 licenses that we plan to sell on Paddle, verified through our AWS API. (This is the plan as of Oct 2024)
+    #if 0
+        MFDataClassImplement0(MFLicenseTypeInfo, MFLicenseTypeInfoPaddleV1)                 /// Standard MMF 3 licenses that we plan to sell on Paddle, verified through our AWS API. (This is the plan as of Oct 2024)
+    #endif
     
     /// Special licenses
-    MFDataClassImplement1(MFLicenseTypeInfo, MFLicenseTypeInfoHyperWorkV1,              /// Licenses issued by HyperWork mouse company and verified through our AWS API.
-                          readonly, strong, nonnull, NSString *, deviceSerialNumber)
-    MFDataClassImplement0(MFLicenseTypeInfo, MFLicenseTypeInfoGumroadBusinessV1)        /// Perhaps we could introduce a license type for businesses. You could buy multiple/multiseat licenses, and perhaps it would be more expensive / subscription based?. (Sidenote: This licenseType includes `V1`, but not sure that makes sense. The only practical application for 'versioning' the licenseTypes like that I can think of is for paid upgrades, but that doesn't make sense for a subscription-based license I think, but I guess versioning doesn't hurt)
+    #if 0
+        MFDataClassImplement1(MFLicenseTypeInfo, MFLicenseTypeInfoHyperWorkV1,              /// Licenses issued by HyperWork mouse company and verified through our AWS API.
+                            readonly, strong, nonnull, NSString *, deviceSerialNumber)
+        MFDataClassImplement0(MFLicenseTypeInfo, MFLicenseTypeInfoGumroadBusinessV1)        /// Perhaps we could introduce a license type for businesses. You could buy multiple/multiseat licenses, and perhaps it would be more expensive / subscription based?. (Sidenote: This licenseType includes `V1`, but not sure that makes sense. The only practical application for 'versioning' the licenseTypes like that I can think of is for paid upgrades, but that doesn't make sense for a subscription-based license I think, but I guess versioning doesn't hurt)
+    #endif
 
     /// V2 licenses:
     ///     Explanation:
     ///     If we ever want to introduce a paid update we could add new V2 licenses
     ///     and then make the old V1 licenses incompatible with the newest version of Mac Mouse Fix.
-    MFDataClassImplement0(MFLicenseTypeInfo, MFLicenseTypeInfoGumroadV2)
-    MFDataClassImplement0(MFLicenseTypeInfo, MFLicenseTypeInfoPaddleV2)
+    #if 0
+        MFDataClassImplement0(MFLicenseTypeInfo, MFLicenseTypeInfoGumroadV2)
+        MFDataClassImplement0(MFLicenseTypeInfo, MFLicenseTypeInfoPaddleV2)
+    #endif
 
 /// Top-level dataclasses
 
@@ -124,6 +130,10 @@ MFDataClassImplement10(MFDataClassBase, MFLicenseConfig,    readonly, assign,   
         
         ///     Explanation: The licenseConfig json dicts we retrieve from the server / cache / fallback *do not* have a 'freshness' field, but our MFLicenseConfig dataclass does.
         ///                We need to add `freshness` in advance so our underlying `initWithDictionary:requireSecureCoding:error:` initializer doesn't fail due to missing fields. (or perhaps it would even produce an invalid object if secureCoding is off?)
+        ///                We also need to add `MFDataClass_DictArchiveKey_ClassName` so the underlying initializer knows exactly which MFDataClass to instantiate.
+        
+        /// Set class
+        dict[MFDataClass_DictArchiveKey_ClassName] = self.className;
         
         /// Set freshness
         dict[@"freshness"] = @(freshness);
@@ -180,9 +190,12 @@ MFDataClassImplement10(MFDataClassBase, MFLicenseConfig,    readonly, assign,   
         if (info.class == MFLicenseTypeInfoForce.class)              return NO;
         if (info.class == MFLicenseTypeInfoGumroadV0.class)          return YES;
         if (info.class == MFLicenseTypeInfoGumroadV1.class)          return YES;
+        
+        #if 0
         if (info.class == MFLicenseTypeInfoPaddleV1.class)           return YES;
         if (info.class == MFLicenseTypeInfoHyperWorkV1.class)        return NO;
         if (info.class == MFLicenseTypeInfoGumroadBusinessV1.class)  return NO; /// Don't forget to add definitions here when you add a new licenseType!
+        #endif
         
         
         assert(false);
@@ -205,9 +218,11 @@ MFDataClassImplement10(MFDataClassBase, MFLicenseConfig,    readonly, assign,   
         if (info.class == MFLicenseTypeInfoForce.class)              return NO;
         if (info.class == MFLicenseTypeInfoGumroadV0.class)          return YES;
         if (info.class == MFLicenseTypeInfoGumroadV1.class)          return YES;
+        #if 0
         if (info.class == MFLicenseTypeInfoPaddleV1.class)           return YES;
         if (info.class == MFLicenseTypeInfoHyperWorkV1.class)        return YES;
         if (info.class == MFLicenseTypeInfoGumroadBusinessV1.class)  return YES;
+        #endif
         
         assert(false);
         DDLogError(@"RequiresValidLicenseKey is not defined for licenseType: %@. Defaulting to YES (since most licenseTypes will probably require a valid license key.)", info.class);

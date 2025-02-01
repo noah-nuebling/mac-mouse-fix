@@ -23,6 +23,8 @@
 #import "MFDataClassDictionaryDecoder.h"
 #import "SharedUtility.h"
 
+#import "objc/runtime.h"
+
 @implementation MFDataClassDictionaryDecoder
 
 - (NSSet<Class> *)allowedClasses { return _allowedClasses; }
@@ -62,9 +64,10 @@
 }
 
 - (id)decodeObjectOfClasses:(NSSet<Class> *)classes forKey:(NSString *)key {
-    self->_allowedClasses = classes;
+    /// Note: `decodeObjectOfClass:` will call this (I think - [Jan 2025])
+    _allowedClasses = classes;
     id result = [self decodeObjectForKey:key];
-    self->_allowedClasses = [NSSet set]; /// Reset allowed classes - Not sure this is necessary / makes sense
+    _allowedClasses = [NSSet set]; /// Reset allowed classes - Not sure this is necessary / makes sense
     return result;
 }
 
@@ -77,13 +80,15 @@
 
     id result = _dict[key];
     
-    /// NSNull in the dict represents nil in the encoded object.
-    if (result == NSNull.null) return nil;
+    /// Handle nil
+    ///     Note how we never apply the allowedClasses typeChecks for nil values (Does this align with NSKeyedUnarchiver behavior?)
+    if (result == nil) return nil;
+    if (result == NSNull.null) return nil; /// NSNull in the dict represents nil in the encoded object. || Clients can use `containsValueForKey:` to disambiguate.
     
     if (self.requiresSecureCoding) {
         
         BOOL isOfAllowedType = NO;
-        for (Class allowedClass in [self allowedClasses]) {
+        for (Class allowedClass in [self allowedClasses]) { /// We could replace with the cool and awesome anysatisfy() macro
             if ([result isKindOfClass:allowedClass]) {
                 isOfAllowedType = YES;
                 break;
@@ -100,6 +105,34 @@
         }
     }
     
+    return result;
+}
+
+- (NSDictionary *)underlyingDict {
+    /// This is for debugging purposes. Generally, use `decodeObjectForKey:` to query the dict.
+    return self->_dict;
+}
+
+- (NSString *)description {
+
+    assert(false); /// Unused
+    
+    NSMutableString *result = [NSMutableString string];
+    
+    [result appendFormat:@"<MFDataClassDictionaryDecoder> {"];
+    
+    unsigned int nIvars;
+    Ivar *ivars = class_copyIvarList(self.class, &nIvars);
+    MFDefer ^{ free(ivars); };
+    
+    for (int i = 0; i < nIvars; i++) {
+        NSString *ivarName = @(ivar_getName(ivars[i]));
+        id value = [self valueForKey:ivarName];
+        [result appendFormat:@"\n    %@ = %@;", ivarName, value];
+    }
+    
+    [result appendFormat:@"\n}"];
+
     return result;
 }
 

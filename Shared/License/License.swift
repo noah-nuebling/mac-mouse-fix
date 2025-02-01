@@ -39,7 +39,8 @@ import CocoaLumberjackSwift
         /// Start an async-context
         ///     Notes:
         ///     - We're using .detached because .init schedules on the current Actor according to the docs. We're not trying to use any Actors.
-        Task.detached(priority: (triggeredByUser ? .userInitiated : .background), operation: {
+        ///     - @MainActor so all licensing code runs on the main thread.
+        Task.detached(priority: (triggeredByUser ? .userInitiated : .background), operation: { @MainActor in
             
             /// Get licensing state
             let licenseState = await GetLicenseState.get()
@@ -114,7 +115,6 @@ import CocoaLumberjackSwift
         /// Sidenote:
         ///     - The preliminary values are obtained and returned from this function all-at-once. For the proper values, they should be obtained only as needed in order to avoid unnecessary internet connections.
         
-
         let licenseState = GetLicenseState.get_Preliminary()
         let licenseConfig = GetLicenseConfig.get_Preliminary()
         let trialState = GetTrialState.get(licenseConfig)
@@ -128,7 +128,7 @@ import CocoaLumberjackSwift
         
         /// Meant to free a use of the license when the user deactivates it
         /// We won't do this because we'd need to implement oauth and it's not that imporant
-        ///    (If we wanted to do this, the API is `/licenses/decrement_uses_count`)
+        ///    (If we wanted to do this, the Gumroad API endpoint is `/licenses/decrement_uses_count`)
         
         fatalError()
     }

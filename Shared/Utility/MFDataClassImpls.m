@@ -42,7 +42,7 @@
 ///     We need to import all the headers where the `MFDataClassInterfaceX()` definitions live for the `MFDataClassImplementX()` macros to work.
 
 
-//#import "MFDataClass.h"
+#import "MFDataClass.h"
 
 /// License.h implementations
 ///     (We moved these into `License.m`)
@@ -62,3 +62,6 @@
 
 //MFDataClassImplement2(MFDataClassBase, MFLicenseAndTrialState, strong, MFLicenseState * _Nonnull,    license,
 //                                                                    strong, MFTrialState * _Nonnull,      trial)
+
+
+//MFDataClass1(MFDataClassBase, DataClassCStringTest, readonly, assign, nonnull, const char *, cstring);

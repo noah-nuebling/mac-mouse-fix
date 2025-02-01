@@ -21,6 +21,8 @@
 		4F1AFE972670EBA900ECA424 /* DragCurve.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F1AFE962670EBA900ECA424 /* DragCurve.swift */; };
 		4F1B418F2D49960E00026C94 /* MFSemaphore.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F1B418E2D49960E00026C94 /* MFSemaphore.m */; };
 		4F1B41902D49960E00026C94 /* MFSemaphore.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F1B418E2D49960E00026C94 /* MFSemaphore.m */; };
+		4F1B41A52D4BACBA00026C94 /* NSData+Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F1B41A42D4BACBA00026C94 /* NSData+Additions.m */; };
+		4F1B41A62D4BACBA00026C94 /* NSData+Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F1B41A42D4BACBA00026C94 /* NSData+Additions.m */; };
 		4F1B83062606E68300AEAF37 /* RemapsAnalyzer.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F1B83052606E68300AEAF37 /* RemapsAnalyzer.m */; };
 		4F1B832D26081A5500AEAF37 /* CaptureNotificationCreator.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F1B832C26081A5500AEAF37 /* CaptureNotificationCreator.m */; };
 		4F1C51DA260543DD007F4930 /* NSTextField+Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F1C51D9260543DD007F4930 /* NSTextField+Additions.m */; };
@@ -464,6 +466,9 @@
 		4F1AFE962670EBA900ECA424 /* DragCurve.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DragCurve.swift; sourceTree = "<group>"; };
 		4F1B418D2D49960E00026C94 /* MFSemaphore.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MFSemaphore.h; sourceTree = "<group>"; };
 		4F1B418E2D49960E00026C94 /* MFSemaphore.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MFSemaphore.m; sourceTree = "<group>"; };
+		4F1B41A32D4BACBA00026C94 /* NSData+Additions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSData+Additions.h"; sourceTree = "<group>"; };
+		4F1B41A42D4BACBA00026C94 /* NSData+Additions.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSData+Additions.m"; sourceTree = "<group>"; };
+		4F1B41A72D4C06AC00026C94 /* CodeStyle.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = CodeStyle.md; sourceTree = "<group>"; };
 		4F1B83042606E68300AEAF37 /* RemapsAnalyzer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RemapsAnalyzer.h; sourceTree = "<group>"; };
 		4F1B83052606E68300AEAF37 /* RemapsAnalyzer.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RemapsAnalyzer.m; sourceTree = "<group>"; };
 		4F1B832B26081A5400AEAF37 /* CaptureNotificationCreator.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CaptureNotificationCreator.h; sourceTree = "<group>"; };
@@ -6701,17 +6706,19 @@
 		4F909D4228A0C4C2009349A2 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				4F1B41A32D4BACBA00026C94 /* NSData+Additions.h */,
+				4F1B41A42D4BACBA00026C94 /* NSData+Additions.m */,
 				4F3A40D8266C5BDF00436821 /* NSScreen+Additions.h */,
 				4F3A40D9266C5BDF00436821 /* NSScreen+Additions.m */,
 				4FF6653825F2C7B000689B77 /* NSArray+Additions.h */,
 				4FF6653D25F2C7B000689B77 /* NSArray+Additions.m */,
 				4FF6653925F2C7B000689B77 /* NSDictionary+Additions.h */,
 				4FF6654025F2C7B000689B77 /* NSDictionary+Additions.m */,
+				4FEA63CE2921510E00E464D6 /* NSImage+Additions.h */,
+				4FEA63CD2921510E00E464D6 /* NSImage+Additions.m */,
 				4F909D4328A0C4C2009349A2 /* NSArray+Extensions.swift */,
 				4F909D4428A0C4C2009349A2 /* Collection+Extensions.swift */,
 				4F85C04F28BBDBDC00E96E9C /* NSImageView+Extensions.swift */,
-				4FEA63CE2921510E00E464D6 /* NSImage+Additions.h */,
-				4FEA63CD2921510E00E464D6 /* NSImage+Additions.m */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -7075,6 +7082,7 @@
 				4FEB6617279376C200E6A111 /* SymbolicHotKeys Reference.txt */,
 				4FEB6618279376C200E6A111 /* notes.md */,
 				4FE8FC792929D8AC0002583B /* On Bundle Size & Deployment Target.md */,
+				4F1B41A72D4C06AC00026C94 /* CodeStyle.md */,
 			);
 			path = Notes;
 			sourceTree = "<group>";
@@ -7931,6 +7939,7 @@
 			files = (
 				4F909D2828A0C3D2009349A2 /* ResizingTabWindow.swift in Sources */,
 				4FA40CF728A0CCCA00499E53 /* Curve.swift in Sources */,
+				4F1B41A52D4BACBA00026C94 /* NSData+Additions.m in Sources */,
 				4FF6655225F2C7B000689B77 /* NSDictionary+Additions.m in Sources */,
 				4F4150662927B6A40040BA7D /* AddField.swift in Sources */,
 				4FDE75A728B25FB300662314 /* NSAttributedString+Extensions.swift in Sources */,
@@ -8238,6 +8247,7 @@
 				4FFA4E4228B7D2890062A1FE /* FadeAnimations.swift in Sources */,
 				4FAA5602293A41AF00BA782C /* BezierCappedAccelerationCurve.swift in Sources */,
 				4FF6654B25F2C7B000689B77 /* Queue.m in Sources */,
+				4F1B41A62D4BACBA00026C94 /* NSData+Additions.m in Sources */,
 				4F9C9B6B268A2D6F0083DED0 /* CircularBuffer.m in Sources */,
 				4FF8C8A32895AACB007EC31F /* Buttons.swift in Sources */,
 				4FB8B2982CCEBADA00A5A580 /* GetLicenseState.swift in Sources */,

@@ -88,7 +88,11 @@ import CocoaLumberjackSwift
         
         /// Ask server
         
-        Task.detached(priority: .userInitiated, operation: {
+        /// Start an async context
+        /// Notes
+        /// - @MainActor so all licensing code runs on the mainthread.
+        
+        Task.detached(priority: .userInitiated, operation: { @MainActor in
             
             /// Get licenseConfig
             /// Notes:
@@ -360,7 +364,7 @@ import CocoaLumberjackSwift
     
     @objc static func remove() {
         
-        guard let tabViewController = MainAppState.shared.tabViewController else { assert(false); return }
+        guard let tabViewController = MainAppState.shared.tabViewController else { assert(false); return } /// [Jan 2025] Just saw this assert(false) with a debugger attached, but didn't investigate further. Didn't see it after, so seems to be very rare.
         tabViewController.dismiss(openInstance!)
         
         openInstance = nil

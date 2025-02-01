@@ -99,6 +99,10 @@ NSData *_Nullable get_mac_address(void) {
     /// Cast
     NSData *result = (__bridge NSData *)macAddress;
     
+    /// Make sure result is not empty
+    ///     (Not sure if necessary)
+    if (result && result.length == 0) result = nil;
+    
     /// Return
     return result;
 }

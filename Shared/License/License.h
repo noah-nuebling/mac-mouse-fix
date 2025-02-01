@@ -40,11 +40,11 @@ typedef NSInteger MFValueFreshness;
 ///         - Showing the name of the HyperWork mouse that came with the currently active MMF license
 ///         - For a subscription-based business license:
 ///             - Saving the expiration date of the subscription, so that we can check-in with the licenseServer upon license expiration (And before expiration, we would do offline validation)
-///             - Saving the business name, so we can show "Licensed to business: Amazon" or something like that on the About tab.
+///             - Saving the business name, so we can show "Licensed to business: SpaceX" or something like that on the About tab.
 ///
 ///     Sidenote on *Metadata Particles*:
 ///         There might be repeated metadata fields between the different `MFLicenseTypeInfo` classes.
-///         We were thinking of introducing an extra level of abstraction, where we group the metadataFields into collections called 'MetadataParticles'
+///         We were thinking of introducing an extra level of abstraction, where we group the metadata fields into collections called 'MetadataParticles'
 ///         which can be reused between licenseTypes. E.g. There'd be a `MFLicenseTypeInfoParticleSeats` particle which is present in the metadata for every licenseType that has multiple seats. It might contain the fields `usedUpSeats` and `nOfSeats` or something like that.
 ///         However, I decided that this extra abstraction layer is kinda unnecessary and overcomplicates things. Instead, we can just use keyValueCoding to access the repeated metadata fields across the different metadata classes in a uniform way.
 ///         For example we might use `[license.metadata valueForKey:@"nOfSeats"]` to get the `nOfSeats` regardless of which exact `MFLicenseTypeInfo` class is being used.
@@ -64,19 +64,26 @@ MFDataClassInterface0(MFDataClassBase, MFLicenseTypeInfo)
     /// Standard licenses
     MFDataClassInterface0(MFLicenseTypeInfo, MFLicenseTypeInfoGumroadV0)                /// Old Euro-based licenses that were sold on Gumroad during the MMF 3 Beta.
     MFDataClassInterface0(MFLicenseTypeInfo, MFLicenseTypeInfoGumroadV1)                /// Standard USD-based Gumroad licenses that were sold on Gumroad after MMF 3 Beta 6 (IIRC).
-    MFDataClassInterface0(MFLicenseTypeInfo, MFLicenseTypeInfoPaddleV1)                 /// Standard MMF 3 licenses that we plan to sell on Paddle, verified through our AWS API. (This is the plan as of Oct 2024)
+    
+    #if 0
+        MFDataClassInterface0(MFLicenseTypeInfo, MFLicenseTypeInfoPaddleV1)                 /// Standard MMF 3 licenses that we plan to sell on Paddle, verified through our AWS API. (This is the plan as of Oct 2024)
+    #endif
     
     /// Special licenses
-    MFDataClassInterface1(MFLicenseTypeInfo, MFLicenseTypeInfoHyperWorkV1,              /// Licenses issued by HyperWork mouse company and verified through our AWS API.
-                          readonly, strong, nonnull, NSString *, deviceSerialNumber)
-    MFDataClassInterface0(MFLicenseTypeInfo, MFLicenseTypeInfoGumroadBusinessV1)        /// Perhaps we could introduce a license type for businesses. You could buy multiple/multiseat licenses, and perhaps it would be more expensive / subscription based?. (Sidenote: This licenseType includes `V1`, but not sure that makes sense. The only practical application for 'versioning' the licenseTypes like that I can think of is for paid upgrades, but that doesn't make sense for a subscription-based license I think, but I guess versioning doesn't hurt)
+    #if 0
+        MFDataClassInterface1(MFLicenseTypeInfo, MFLicenseTypeInfoHyperWorkV1,              /// Licenses issued by HyperWork mouse company and verified through our AWS API.
+                            readonly, strong, nonnull, NSString *, deviceSerialNumber)
+        MFDataClassInterface0(MFLicenseTypeInfo, MFLicenseTypeInfoGumroadBusinessV1)        /// Perhaps we could introduce a license type for businesses. You could buy multiple/multiseat licenses, and perhaps it would be more expensive / subscription based?. (Sidenote: This licenseType includes `V1`, but not sure that makes sense. The only practical application for 'versioning' the licenseTypes like that I can think of is for paid upgrades, but that doesn't make sense for a subscription-based license I think, but I guess versioning doesn't hurt)
+    #endif
 
     /// V2 licenses:
     ///     Explanation:
     ///     If we ever want to introduce a paid update we could add new V2 licenses
     ///     and then make the old V1 licenses incompatible with the newest version of Mac Mouse Fix.
-    MFDataClassInterface0(MFLicenseTypeInfo, MFLicenseTypeInfoGumroadV2)
-    MFDataClassInterface0(MFLicenseTypeInfo, MFLicenseTypeInfoPaddleV2)
+    #if 0
+        MFDataClassInterface0(MFLicenseTypeInfo, MFLicenseTypeInfoGumroadV2)
+        MFDataClassInterface0(MFLicenseTypeInfo, MFLicenseTypeInfoPaddleV2)
+    #endif
 
 /// Top-level dataclasses
 

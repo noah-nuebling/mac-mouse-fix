@@ -67,7 +67,8 @@ import CocoaLumberjackSwift
         ///     Notes:
         ///     - We're using .detached because .init schedules on the current Actor according to the docs. We're not trying to use any Actors.
         ///     - Using priority .background because it makes sense?
-        Task.detached(priority: .background, operation: {
+        ///     - @MainActor so all Licensing code runs on the main-thread
+        Task.detached(priority: .background, operation: { @MainActor in
         
             /// Check licensing state
             let licenseState = await GetLicenseState.get()
@@ -167,10 +168,13 @@ import CocoaLumberjackSwift
         /// Only react to use once a day
         if hasBeenUsedToday { return }
         
-        Task.detached(priority: .background, operation: {
-            
-            /// Dispatching to another queue here because there was an obscure concurrency crash when trying to debug something. This is not necessary for normal operation but it shouldn't hurt.
-            ///     Update: (Oct 2024) now using `Task` instead of dispatch queue so we can use async/await
+        /// Start an async context
+        /// Notes:
+        /// - Old note: Dispatching to another queue here because there was an obscure concurrency crash when trying to debug something. This is not necessary for normal operation but it shouldn't hurt.
+        ///     Update: (Oct 2024) now using `Task` instead of dispatch queue so we can use async/await
+        /// - Update: Now using @MainActor so all licensing code runs on the mainthread. (Hope that won't bring back the 'obscure concurrency crash'?)
+        
+        Task.detached(priority: .background, operation: { @MainActor in
             
             /// Update state
             ///     Notes:

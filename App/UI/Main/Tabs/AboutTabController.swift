@@ -136,7 +136,11 @@ class AboutTabController: NSViewController {
         /// This is called on load and when the user activates/deactivates their license.
         /// - It would be cleaner and prettier if we used a reactive architecture where you have some global master license state that all the UI that depends on it subscribes to. Buttt we really only have UI that depends on the license state here on the about tab, so that would be overengineering. On the other hand we need to store the AboutTabController instance in MainAppState for global access if we don't use the reactive architecture which is also a little ugly.
         
-        Task.detached(priority: .userInitiated, operation: {
+        
+        /// Start an async context
+        /// Notes:
+        /// - @MainActor so all licensing code runs on the mainthread.
+        Task.detached(priority: .userInitiated, operation: { @MainActor in
             
             let licenseState = await GetLicenseState.get()
                 

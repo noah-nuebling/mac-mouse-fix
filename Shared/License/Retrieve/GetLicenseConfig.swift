@@ -42,10 +42,10 @@ import CocoaLumberjackSwift
     @Atomic private static var inMemoryCache: MFLicenseConfig? = nil /// We should really be using a semaphore or mutex, but Swift async doesn't allow that (bc Swift is stinky). Using atomic should be ok. More on this below. (Oct 2024)
     private static func licenseConfigFromServer() async -> MFLicenseConfig? {
     
-        ///     Explanation of our offline validation strategy:
+        ///     Explanation of our offline validation strategy: [Nov 2024]
         ///         We wanna do offline validation. That means we want to avoid internet connections in our licensing code unless absolutely necessary.
         ///             We do this to protect user's privacy.
-        ///                 Before, evertime the mainApp/helper launched, it would:
+        ///                 Before, (in the latest version, MMF 3.0.3) every time the mainApp/helper launched, it would:
         ///                     1. Download the licenseConfig from macmousefix.com - which is hosted by GitHub, owned by Microsoft.
         ///                     2. Ask the Gumroad API whether the licenseKey is valid - which is probably hosted by AWS or Azure or something.
         ///                 AFAIK there is a possibility that any of the involved parties could track MMF user's behavior due to these web-requests. Gumroad could've possibly even correlated the licenseKey to personal data. (Since Gumroad handles payments and generation of the licenseKeys.)
@@ -97,7 +97,7 @@ import CocoaLumberjackSwift
         let request = URLRequest(url: licenseConfigURL, cachePolicy: cachePolicy, timeoutInterval: timeout)
         let (requestResult, requestError) = await MFCatch { try await URLSession.shared.data(for: request) }
         guard let requestResult = requestResult else {
-            DDLogError("Failed to get MFLicenseConfig from server. Request error: \(requestError ?? "<nil>")")
+            DDLogError("GetLicenseConfig: Failed to get MFLicenseConfig from server. Request error: \(requestError ?? "<nil>")")
             return nil
         }
         let (serverData, urlResponse) = requestResult
@@ -105,7 +105,7 @@ import CocoaLumberjackSwift
         /// Convert jsonData to dict
         let (jsonObject, serializationError) = MFCatch { try JSONSerialization.jsonObject(with: serverData, options: []) }
         guard let dict = jsonObject as? NSDictionary else { /// Sidenote: We used to cast to `NSMutableDictionary` here but that fails unless using the`.mutableContainers` option for `JSONSerialization`. Don't understand Swift casting.
-            DDLogError("Failed to get MFLicenseConfig from server. Serialization error: \(serializationError ?? "<nil>"). jsonObject: \(jsonObject ?? "<nil>"). URLResponse: \(urlResponse)")
+            DDLogError("GetLicenseConfig: Failed to get MFLicenseConfig from server. Serialization error: \(serializationError ?? "<nil>"). jsonObject: \(jsonObject ?? "<nil>"). URLResponse: \(urlResponse)")
             return nil
         }
         
@@ -114,7 +114,7 @@ import CocoaLumberjackSwift
                                                                          freshness: kMFValueFreshnessFresh,
                                                                          requireSecureCoding: true) }
         guard let result = result else {
-            DDLogError("Failed to get MFLicenseConfig from server. Instantiation error: \(instantiationError ?? "<nil>"). jsonDict: \(dict). URLResponse: \(urlResponse)")
+            DDLogError("GetLicenseConfig: Failed to get MFLicenseConfig from server. Instantiation error: \(instantiationError ?? "<nil>"). jsonDict: \(dict). URLResponse: \(urlResponse)")
             return nil
         }
         
@@ -130,7 +130,7 @@ import CocoaLumberjackSwift
         
         /// Get underlying cache dict
         guard let cachedDict = self._licenseConfigDictCache, cachedDict.count > 0 else {
-            DDLogError("Failed to get MFLicenseConfig dict from cache. (Probably because there is no cache entry or it's empty or it has the wrong type.)")
+            DDLogError("GetLicenseConfig: Failed to get MFLicenseConfig dict from cache. (Probably because there is no cache entry or it's empty or it has the wrong type.)")
             return nil
         }
         
@@ -139,7 +139,7 @@ import CocoaLumberjackSwift
                                                               freshness: kMFValueFreshnessCached,
                                                               requireSecureCoding: true) }
         guard let instance = instance else {
-            DDLogError("Failed to get MFLicenseConfig from cache. Instantiating failed with error:\n\(error ?? "<nil>").")
+            DDLogError("GetLicenseConfig: Failed to get MFLicenseConfig from cache. Instantiating failed with error:\n\(error ?? "<nil>").")
             return nil
         }
         
@@ -178,7 +178,7 @@ import CocoaLumberjackSwift
             
             guard let newValue = newValue else {
                 assert(false)
-                DDLogError("Setting the licenseConfigCache to nil is undefined and does nothing.")
+                DDLogError("GetLicenseConfig: Setting the licenseConfigCache to nil is undefined and does nothing.")
                 return
             }
             
