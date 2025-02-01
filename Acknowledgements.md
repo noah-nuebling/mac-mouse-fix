@@ -40,6 +40,10 @@ Thanks for your support! :)
 
 These people spent a lot more than the standard price and treated me to an **Incredible Milkshake**. (And some even left a message) Thanks for the _sugar rush_!
 
+**February 2025**
+
+- 🇺🇸&nbsp;T0Nytw0Tapz - "Good on ya"
+
 **January 2025**
 
 - 🇩🇪&nbsp;Lars - "Thank you for your work! I mean it. I have X-Mouse-Button Control for Windows and contributed there as well. If you can, please add an option to disable Mac Mouse Fix, when certain Apps are running that require the 'original' mouse behavior! Thank You!"
