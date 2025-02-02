@@ -7,6 +7,8 @@
 // --------------------------------------------------------------------------
 //
 
+#pragma once
+
 #import <Foundation/Foundation.h>
 #import "SharedUtility.h"
 
@@ -155,9 +157,9 @@ static const NSExceptionName _Nonnull MFDataClassInvalidDefinitionException = @"
 #define MFDataClassImplement1(__superClassName, __className, w1, s1, u1, t1, n1) \
     @implementation __className \
     + (void)load { [self onLoadValidation]; } \
-    + (NSString *_Nullable)rawNullabilityOfProperty:(NSString *_Nullable)propertyName { \
+    + (NSString *_Nullable)rawNullabilityAndTypeOfProperty:(NSString *_Nullable)propertyName { \
         return @{ \
-            @(#n1):     @(#u1), \
+            @(#n1):     @[@(#u1), @(#t1)], \
         }[propertyName]; \
     } \
     - (instancetype _Nonnull)initWith_ ## n1:(u1 t1)n1 \
@@ -193,10 +195,10 @@ static const NSExceptionName _Nonnull MFDataClassInvalidDefinitionException = @"
                                                              w2, s2, u2, t2, n2) \
     @implementation __className \
     + (void)load { [self onLoadValidation]; } \
-    + (NSString *_Nullable)rawNullabilityOfProperty:(NSString *_Nullable)propertyName { \
+    + (NSString *_Nullable)rawNullabilityAndTypeOfProperty:(NSString *_Nullable)propertyName { \
         return @{ \
-            @(#n1):     @(#u1), \
-            @(#n2):     @(#u2), \
+            @(#n1):     @[@(#u1), @(#t1)], \
+            @(#n2):     @[@(#u2), @(#t2)], \
         }[propertyName]; \
     } \
     - (instancetype _Nonnull)initWith_ ## n1:(u1 t1)n1 \
@@ -241,11 +243,11 @@ static const NSExceptionName _Nonnull MFDataClassInvalidDefinitionException = @"
                                                              w3, s3, u3, t3, n3) \
     @implementation __className \
     + (void)load { [self onLoadValidation]; } \
-    + (NSString *_Nullable)rawNullabilityOfProperty:(NSString *_Nullable)propertyName { \
+    + (NSString *_Nullable)rawNullabilityAndTypeOfProperty:(NSString *_Nullable)propertyName { \
         return @{ \
-            @(#n1):     @(#u1), \
-            @(#n2):     @(#u2), \
-            @(#n3):     @(#u3), \
+            @(#n1):     @[@(#u1), @(#t1)], \
+            @(#n2):     @[@(#u2), @(#t2)], \
+            @(#n3):     @[@(#u3), @(#t3)], \
         }[propertyName]; \
     } \
     - (instancetype _Nonnull)initWith_ ## n1:(u1 t1)n1 \
@@ -299,12 +301,12 @@ static const NSExceptionName _Nonnull MFDataClassInvalidDefinitionException = @"
                                                              w4, s4, u4, t4, n4) \
     @implementation __className \
     + (void)load { [self onLoadValidation]; } \
-    + (NSString *_Nullable)rawNullabilityOfProperty:(NSString *_Nullable)propertyName { \
+    + (NSString *_Nullable)rawNullabilityAndTypeOfProperty:(NSString *_Nullable)propertyName { \
         return @{ \
-            @(#n1):     @(#u1), \
-            @(#n2):     @(#u2), \
-            @(#n3):     @(#u3), \
-            @(#n4):     @(#u4), \
+            @(#n1):     @[@(#u1), @(#t1)], \
+            @(#n2):     @[@(#u2), @(#t2)], \
+            @(#n3):     @[@(#u3), @(#t3)], \
+            @(#n4):     @[@(#u4), @(#t4)], \
         }[propertyName]; \
     } \
     - (instancetype _Nonnull)initWith_ ## n1:(u1 t1)n1 \
@@ -367,13 +369,13 @@ static const NSExceptionName _Nonnull MFDataClassInvalidDefinitionException = @"
                                                              w5, s5, u5, t5, n5) \
     @implementation __className \
     + (void)load { [self onLoadValidation]; } \
-    + (NSString *_Nullable)rawNullabilityOfProperty:(NSString *_Nullable)propertyName { \
+    + (NSString *_Nullable)rawNullabilityAndTypeOfProperty:(NSString *_Nullable)propertyName { \
         return @{ \
-            @(#n1):     @(#u1), \
-            @(#n2):     @(#u2), \
-            @(#n3):     @(#u3), \
-            @(#n4):     @(#u4), \
-            @(#n5):     @(#u5), \
+            @(#n1):     @[@(#u1), @(#t1)], \
+            @(#n2):     @[@(#u2), @(#t2)], \
+            @(#n3):     @[@(#u3), @(#t3)], \
+            @(#n4):     @[@(#u4), @(#t4)], \
+            @(#n5):     @[@(#u5), @(#t5)], \
         }[propertyName]; \
     } \
     - (instancetype _Nonnull)initWith_ ## n1:(u1 t1)n1 \
@@ -445,14 +447,14 @@ static const NSExceptionName _Nonnull MFDataClassInvalidDefinitionException = @"
                                                              w6, s6, u6, t6, n6) \
     @implementation __className \
     + (void)load { [self onLoadValidation]; } \
-    + (NSString *_Nullable)rawNullabilityOfProperty:(NSString *_Nullable)propertyName { \
+    + (NSString *_Nullable)rawNullabilityAndTypeOfProperty:(NSString *_Nullable)propertyName { \
         return @{ \
-            @(#n1):     @(#u1), \
-            @(#n2):     @(#u2), \
-            @(#n3):     @(#u3), \
-            @(#n4):     @(#u4), \
-            @(#n5):     @(#u5), \
-            @(#n6):     @(#u6), \
+            @(#n1):     @[@(#u1), @(#t1)], \
+            @(#n2):     @[@(#u2), @(#t2)], \
+            @(#n3):     @[@(#u3), @(#t3)], \
+            @(#n4):     @[@(#u4), @(#t4)], \
+            @(#n5):     @[@(#u5), @(#t5)], \
+            @(#n6):     @[@(#u6), @(#t6)], \
         }[propertyName]; \
     } \
     - (instancetype _Nonnull)initWith_ ## n1:(u1 t1)n1 \
@@ -533,15 +535,15 @@ static const NSExceptionName _Nonnull MFDataClassInvalidDefinitionException = @"
                                                              w7, s7, u7, t7, n7) \
     @implementation __className \
     + (void)load { [self onLoadValidation]; } \
-    + (NSString *_Nullable)rawNullabilityOfProperty:(NSString *_Nullable)propertyName { \
+    + (NSString *_Nullable)rawNullabilityAndTypeOfProperty:(NSString *_Nullable)propertyName { \
         return @{ \
-            @(#n1):     @(#u1), \
-            @(#n2):     @(#u2), \
-            @(#n3):     @(#u3), \
-            @(#n4):     @(#u4), \
-            @(#n5):     @(#u5), \
-            @(#n6):     @(#u6), \
-            @(#n7):     @(#u7), \
+            @(#n1):     @[@(#u1), @(#t1)], \
+            @(#n2):     @[@(#u2), @(#t2)], \
+            @(#n3):     @[@(#u3), @(#t3)], \
+            @(#n4):     @[@(#u4), @(#t4)], \
+            @(#n5):     @[@(#u5), @(#t5)], \
+            @(#n6):     @[@(#u6), @(#t6)], \
+            @(#n7):     @[@(#u7), @(#t7)], \
         }[propertyName]; \
     } \
     - (instancetype _Nonnull)initWith_ ## n1:(u1 t1)n1 \
@@ -631,16 +633,16 @@ static const NSExceptionName _Nonnull MFDataClassInvalidDefinitionException = @"
                                                              w8, s8, u8, t8, n8) \
     @implementation __className \
     + (void)load { [self onLoadValidation]; } \
-    + (NSString *_Nullable)rawNullabilityOfProperty:(NSString *_Nullable)propertyName { \
+    + (NSString *_Nullable)rawNullabilityAndTypeOfProperty:(NSString *_Nullable)propertyName { \
         return @{ \
-            @(#n1):     @(#u1), \
-            @(#n2):     @(#u2), \
-            @(#n3):     @(#u3), \
-            @(#n4):     @(#u4), \
-            @(#n5):     @(#u5), \
-            @(#n6):     @(#u6), \
-            @(#n7):     @(#u7), \
-            @(#n8):     @(#u8), \
+            @(#n1):     @[@(#u1), @(#t1)], \
+            @(#n2):     @[@(#u2), @(#t2)], \
+            @(#n3):     @[@(#u3), @(#t3)], \
+            @(#n4):     @[@(#u4), @(#t4)], \
+            @(#n5):     @[@(#u5), @(#t5)], \
+            @(#n6):     @[@(#u6), @(#t6)], \
+            @(#n7):     @[@(#u7), @(#t7)], \
+            @(#n8):     @[@(#u8), @(#t8)], \
         }[propertyName]; \
     } \
     - (instancetype _Nonnull)initWith_ ## n1:(u1 t1)n1 \
@@ -739,17 +741,17 @@ static const NSExceptionName _Nonnull MFDataClassInvalidDefinitionException = @"
                                                              w9, s9, u9, t9, n9) \
     @implementation __className \
     + (void)load { [self onLoadValidation]; } \
-    + (NSString *_Nullable)rawNullabilityOfProperty:(NSString *_Nullable)propertyName { \
+    + (NSString *_Nullable)rawNullabilityAndTypeOfProperty:(NSString *_Nullable)propertyName { \
         return @{ \
-            @(#n1):     @(#u1), \
-            @(#n2):     @(#u2), \
-            @(#n3):     @(#u3), \
-            @(#n4):     @(#u4), \
-            @(#n5):     @(#u5), \
-            @(#n6):     @(#u6), \
-            @(#n7):     @(#u7), \
-            @(#n8):     @(#u8), \
-            @(#n9):     @(#u9), \
+            @(#n1):     @[@(#u1), @(#t1)], \
+            @(#n2):     @[@(#u2), @(#t2)], \
+            @(#n3):     @[@(#u3), @(#t3)], \
+            @(#n4):     @[@(#u4), @(#t4)], \
+            @(#n5):     @[@(#u5), @(#t5)], \
+            @(#n6):     @[@(#u6), @(#t6)], \
+            @(#n7):     @[@(#u7), @(#t7)], \
+            @(#n8):     @[@(#u8), @(#t8)], \
+            @(#n9):     @[@(#u9), @(#t9)], \
         }[propertyName]; \
     } \
     - (instancetype _Nonnull)initWith_ ## n1:(u1 t1)n1 \
@@ -857,18 +859,18 @@ static const NSExceptionName _Nonnull MFDataClassInvalidDefinitionException = @"
                                                               w10, s10, u10, t10, n10) \
     @implementation __className \
     + (void)load { [self onLoadValidation]; } \
-    + (NSString *_Nullable)rawNullabilityOfProperty:(NSString *_Nullable)propertyName { \
+    + (NSString *_Nullable)rawNullabilityAndTypeOfProperty:(NSString *_Nullable)propertyName { \
         return @{ \
-            @(#n1):     @(#u1), \
-            @(#n2):     @(#u2), \
-            @(#n3):     @(#u3), \
-            @(#n4):     @(#u4), \
-            @(#n5):     @(#u5), \
-            @(#n6):     @(#u6), \
-            @(#n7):     @(#u7), \
-            @(#n8):     @(#u8), \
-            @(#n9):     @(#u9), \
-            @(#n10):    @(#u10), \
+            @(#n1):     @[@(#u1), @(#t1)], \
+            @(#n2):     @[@(#u2), @(#t2)], \
+            @(#n3):     @[@(#u3), @(#t3)], \
+            @(#n4):     @[@(#u4), @(#t4)], \
+            @(#n5):     @[@(#u5), @(#t5)], \
+            @(#n6):     @[@(#u6), @(#t6)], \
+            @(#n7):     @[@(#u7), @(#t7)], \
+            @(#n8):     @[@(#u8), @(#t8)], \
+            @(#n9):     @[@(#u9), @(#t9)], \
+            @(#n10):    @[@(#u10), @(#t10)], \
         }[propertyName]; \
     } \
     - (instancetype _Nonnull)initWith_ ## n1:(u1 t1)n1 \
@@ -985,19 +987,19 @@ static const NSExceptionName _Nonnull MFDataClassInvalidDefinitionException = @"
                                                               w11, s11, u11, t11, n11) \
     @implementation __className \
     + (void)load { [self onLoadValidation]; } \
-    + (NSString *_Nullable)rawNullabilityOfProperty:(NSString *_Nullable)propertyName { \
+    + (NSString *_Nullable)rawNullabilityAndTypeOfProperty:(NSString *_Nullable)propertyName { \
         return @{ \
-            @(#n1):     @(#u1), \
-            @(#n2):     @(#u2), \
-            @(#n3):     @(#u3), \
-            @(#n4):     @(#u4), \
-            @(#n5):     @(#u5), \
-            @(#n6):     @(#u6), \
-            @(#n7):     @(#u7), \
-            @(#n8):     @(#u8), \
-            @(#n9):     @(#u9), \
-            @(#n10):    @(#u10), \
-            @(#n11):    @(#u11), \
+            @(#n1):     @[@(#u1), @(#t1)], \
+            @(#n2):     @[@(#u2), @(#t2)], \
+            @(#n3):     @[@(#u3), @(#t3)], \
+            @(#n4):     @[@(#u4), @(#t4)], \
+            @(#n5):     @[@(#u5), @(#t5)], \
+            @(#n6):     @[@(#u6), @(#t6)], \
+            @(#n7):     @[@(#u7), @(#t7)], \
+            @(#n8):     @[@(#u8), @(#t8)], \
+            @(#n9):     @[@(#u9), @(#t9)], \
+            @(#n10):    @[@(#u10), @(#t10)], \
+            @(#n11):    @[@(#u11), @(#t11)], \
         }[propertyName]; \
     } \
     - (instancetype _Nonnull)initWith_ ## n1:(u1 t1)n1 \
@@ -1123,20 +1125,20 @@ static const NSExceptionName _Nonnull MFDataClassInvalidDefinitionException = @"
                                                               w12, s12, u12, t12, n12) \
     @implementation __className \
     + (void)load { [self onLoadValidation]; } \
-    + (NSString *_Nullable)rawNullabilityOfProperty:(NSString *_Nullable)propertyName { \
+    + (NSString *_Nullable)rawNullabilityAndTypeOfProperty:(NSString *_Nullable)propertyName { \
         return @{ \
-            @(#n1):     @(#u1), \
-            @(#n2):     @(#u2), \
-            @(#n3):     @(#u3), \
-            @(#n4):     @(#u4), \
-            @(#n5):     @(#u5), \
-            @(#n6):     @(#u6), \
-            @(#n7):     @(#u7), \
-            @(#n8):     @(#u8), \
-            @(#n9):     @(#u9), \
-            @(#n10):    @(#u10), \
-            @(#n11):    @(#u11), \
-            @(#n12):    @(#u12), \
+            @(#n1):     @[@(#u1), @(#t1)], \
+            @(#n2):     @[@(#u2), @(#t2)], \
+            @(#n3):     @[@(#u3), @(#t3)], \
+            @(#n4):     @[@(#u4), @(#t4)], \
+            @(#n5):     @[@(#u5), @(#t5)], \
+            @(#n6):     @[@(#u6), @(#t6)], \
+            @(#n7):     @[@(#u7), @(#t7)], \
+            @(#n8):     @[@(#u8), @(#t8)], \
+            @(#n9):     @[@(#u9), @(#t9)], \
+            @(#n10):    @[@(#u10), @(#t10)], \
+            @(#n11):    @[@(#u11), @(#t11)], \
+            @(#n12):    @[@(#u12), @(#t12)], \
         }[propertyName]; \
     } \
     - (instancetype _Nonnull)initWith_ ## n1:(u1 t1)n1 \
@@ -1271,21 +1273,21 @@ static const NSExceptionName _Nonnull MFDataClassInvalidDefinitionException = @"
                                                               w13, s13, u13, t13, n13) \
     @implementation __className \
     + (void)load { [self onLoadValidation]; } \
-    + (NSString *_Nullable)rawNullabilityOfProperty:(NSString *_Nullable)propertyName { \
+    + (NSString *_Nullable)rawNullabilityAndTypeOfProperty:(NSString *_Nullable)propertyName { \
         return @{ \
-            @(#n1):     @(#u1), \
-            @(#n2):     @(#u2), \
-            @(#n3):     @(#u3), \
-            @(#n4):     @(#u4), \
-            @(#n5):     @(#u5), \
-            @(#n6):     @(#u6), \
-            @(#n7):     @(#u7), \
-            @(#n8):     @(#u8), \
-            @(#n9):     @(#u9), \
-            @(#n10):    @(#u10), \
-            @(#n11):    @(#u11), \
-            @(#n12):    @(#u12), \
-            @(#n13):    @(#u13), \
+            @(#n1):     @[@(#u1), @(#t1)], \
+            @(#n2):     @[@(#u2), @(#t2)], \
+            @(#n3):     @[@(#u3), @(#t3)], \
+            @(#n4):     @[@(#u4), @(#t4)], \
+            @(#n5):     @[@(#u5), @(#t5)], \
+            @(#n6):     @[@(#u6), @(#t6)], \
+            @(#n7):     @[@(#u7), @(#t7)], \
+            @(#n8):     @[@(#u8), @(#t8)], \
+            @(#n9):     @[@(#u9), @(#t9)], \
+            @(#n10):    @[@(#u10), @(#t10)], \
+            @(#n11):    @[@(#u11), @(#t11)], \
+            @(#n12):    @[@(#u12), @(#t12)], \
+            @(#n13):    @[@(#u13), @(#t13)], \
         }[propertyName]; \
     } \
     - (instancetype _Nonnull)initWith_ ## n1:(u1 t1)n1 \
@@ -1429,22 +1431,22 @@ static const NSExceptionName _Nonnull MFDataClassInvalidDefinitionException = @"
                                                               w14, s14, u14, t14, n14) \
     @implementation __className \
     + (void)load { [self onLoadValidation]; } \
-    + (NSString *_Nullable)rawNullabilityOfProperty:(NSString *_Nullable)propertyName { \
+    + (NSString *_Nullable)rawNullabilityAndTypeOfProperty:(NSString *_Nullable)propertyName { \
         return @{ \
-            @(#n1):     @(#u1), \
-            @(#n2):     @(#u2), \
-            @(#n3):     @(#u3), \
-            @(#n4):     @(#u4), \
-            @(#n5):     @(#u5), \
-            @(#n6):     @(#u6), \
-            @(#n7):     @(#u7), \
-            @(#n8):     @(#u8), \
-            @(#n9):     @(#u9), \
-            @(#n10):    @(#u10), \
-            @(#n11):    @(#u11), \
-            @(#n12):    @(#u12), \
-            @(#n13):    @(#u13), \
-            @(#n14):    @(#u14), \
+            @(#n1):     @[@(#u1), @(#t1)], \
+            @(#n2):     @[@(#u2), @(#t2)], \
+            @(#n3):     @[@(#u3), @(#t3)], \
+            @(#n4):     @[@(#u4), @(#t4)], \
+            @(#n5):     @[@(#u5), @(#t5)], \
+            @(#n6):     @[@(#u6), @(#t6)], \
+            @(#n7):     @[@(#u7), @(#t7)], \
+            @(#n8):     @[@(#u8), @(#t8)], \
+            @(#n9):     @[@(#u9), @(#t9)], \
+            @(#n10):    @[@(#u10), @(#t10)], \
+            @(#n11):    @[@(#u11), @(#t11)], \
+            @(#n12):    @[@(#u12), @(#t12)], \
+            @(#n13):    @[@(#u13), @(#t13)], \
+            @(#n14):    @[@(#u14), @(#t14)], \
         }[propertyName]; \
     } \
     - (instancetype _Nonnull)initWith_ ## n1:(u1 t1)n1 \
@@ -1597,23 +1599,23 @@ static const NSExceptionName _Nonnull MFDataClassInvalidDefinitionException = @"
                                                               w15, s15, u15, t15, n15) \
     @implementation __className \
     + (void)load { [self onLoadValidation]; } \
-    + (NSString *_Nullable)rawNullabilityOfProperty:(NSString *_Nullable)propertyName { \
+    + (NSString *_Nullable)rawNullabilityAndTypeOfProperty:(NSString *_Nullable)propertyName { \
         return @{ \
-            @(#n1):     @(#u1), \
-            @(#n2):     @(#u2), \
-            @(#n3):     @(#u3), \
-            @(#n4):     @(#u4), \
-            @(#n5):     @(#u5), \
-            @(#n6):     @(#u6), \
-            @(#n7):     @(#u7), \
-            @(#n8):     @(#u8), \
-            @(#n9):     @(#u9), \
-            @(#n10):    @(#u10), \
-            @(#n11):    @(#u11), \
-            @(#n12):    @(#u12), \
-            @(#n13):    @(#u13), \
-            @(#n14):    @(#u14), \
-            @(#n15):    @(#u15), \
+            @(#n1):     @[@(#u1), @(#t1)], \
+            @(#n2):     @[@(#u2), @(#t2)], \
+            @(#n3):     @[@(#u3), @(#t3)], \
+            @(#n4):     @[@(#u4), @(#t4)], \
+            @(#n5):     @[@(#u5), @(#t5)], \
+            @(#n6):     @[@(#u6), @(#t6)], \
+            @(#n7):     @[@(#u7), @(#t7)], \
+            @(#n8):     @[@(#u8), @(#t8)], \
+            @(#n9):     @[@(#u9), @(#t9)], \
+            @(#n10):    @[@(#u10), @(#t10)], \
+            @(#n11):    @[@(#u11), @(#t11)], \
+            @(#n12):    @[@(#u12), @(#t12)], \
+            @(#n13):    @[@(#u13), @(#t13)], \
+            @(#n14):    @[@(#u14), @(#t14)], \
+            @(#n15):    @[@(#u15), @(#t15)], \
         }[propertyName]; \
     } \
     - (instancetype _Nonnull)initWith_ ## n1:(u1 t1)n1 \

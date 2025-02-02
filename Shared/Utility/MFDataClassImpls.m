@@ -65,3 +65,8 @@
 
 
 //MFDataClass1(MFDataClassBase, DataClassCStringTest, readonly, assign, nonnull, const char *, cstring);
+
+
+//@interface GenericsTest : NSObject
+//@property(readonly, retain, nonnull, nonatomic) NSDictionary<__kindof const NSObject *, NSString *> *genericArray;
+//@end

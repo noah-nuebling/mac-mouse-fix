@@ -21,22 +21,6 @@
 ///     -> Because of this, we don't need much primitive-value-specific code - NSValue and KVC does it all for us!
 ///         (Where 'primitive-value' refers to any non-object value that KVC is compatible with, such as c numbers and structs. Other c types like unions don't work with KVC I heard, and therefore might break `MFDataClass`.) (Update: We now validate inside `+ load` that there are no unions.)
 
-/// Definitions
-
-/// isclass macro
-/// Behavior:
-///     isclass(x, classname) works on both normal objects and class objects.
-///         If `x` is a normal object:                  Checks whether *the class of x*  is equivalent to, or a subclass of, the class called `classname`
-///         If `x` is a class-object:                    Checks whether *x itself*             is equivalent to, or a subclass of, the class called `classname`
-///         -> Therefore, this replaces both isKindOfClass: and isSubclassOfClass:
-/// Why does this work?
-///     On a normal object:    `class` returns the class-object, and `object_getClass()` also returns the class-object.
-///     On a class-object:       `class` returns the class-object, but `object_getClass()` returns the *meta-class-object*.
-/// Performance:
-///     Not how much slower this is compared to isKindOfClass: or isSubclassOfClass:. Prolly not significant.
-
-#define isclass(x, classname) [[(x) class] isKindOfClass:object_getClass([classname class])]
-
 // MARK: (Almost) compile time validation
 
 + (void)onLoadValidation {
@@ -100,7 +84,7 @@
         ///         -> ! Keep the nullability in the `@@implementation` and `@@interface` macros synchronized!
         ///             ... otherwise, these validations here won't ensure correctness.
         BOOL isNullableType = propertyHasTypeThatSupportsNullability(typeEncoding);
-        NSString *rawNullability = [self rawNullabilityOfProperty:propertyName];
+        NSString *rawNullability = [self rawNullabilityAndTypeOfProperty:propertyName][0];
         if (rawNullability == nil) {
             [NSException raise:NSInternalInconsistencyException format:@"Raw nullability string of property %@.%@ was nil. (This should never happen, no matter how the MFDataClass is defined.)", self, propertyName];
         }
@@ -264,7 +248,7 @@
     ///     Actually, I can think of another reason that our nullability and type validation could be useful aside from protecting against hacker attacks: When you change the layout of an MFDataClass between MMF versions.
     ///     In this case, ideally you would version your MFDataClasses and then validate that the version number matches. However, in the absence of deliberate versioning, our nullability and type checks should at least prevent loading of outdated MFDataClasses from producing any crashes in the code due to unexpected nil values or unexpected types inside the MFDataClass.
     ///         However there could still be problems, so we should probably version our MFDataClasses.
-    ///         TODO: (Should maybe update our MFDataClass macros to include a version arg.)
+    ///         TODO: (Should maybe update our MFDataClass macros to include a version arg?)
     ///
     
     if (isclass(coder, MFDataClassDictionaryDecoder)) {
@@ -468,7 +452,7 @@
             decodeValueResult = value;
         }
         
-        /// Convert dict to MFDataClass
+        /// Convert decoded dict to MFDataClass
         ///     In case we're decoding a nested dictionary into an MFDataClass hierarchy
         if (isclass(coder, MFDataClassDictionaryDecoder)    &&
             expectedClass_DataClassNotDict != nil           &&
@@ -495,6 +479,107 @@
     
     return self;
 }
+
+
+/// Crazy code: Parse raw property type strings to automatically decode properties that contain unstructured nested datastructures which themselves contain MFDataClass instances.
+///     (NSArrays and NSDictionaries which contain an MFDataClass.)
+#if 0
+    if (isclass(coder, MFDataClassDictionaryDecoder)) {
+        void (^__block recurse)(id archiveNode, NSString *rawTypeInfo) =
+        ^void                  (id archiveNode, NSString *rawTypeInfo) {
+        
+            /// Parse raw type info
+            NSScanner *scanner = [NSScanner scannerWithString:rawTypeInfo];
+            while (1) {
+                
+                NSString *topType;
+                NSArray<NSString *> *childTypes;
+                
+                /// Find topType
+                while (1) {
+                    if (scanner.atEnd) break;
+                    NSString *identifier = nil;
+                    bool foundMatches = [scanner scanUpToCharactersFromSet:NSCharacterSet.cIdentifierCharacterSet_Start intoString:nil];
+                         foundMatches = [scanner scanCharactersFromSet:NSCharacterSet.cIdentifierCharacterSet_Continue intoString:&identifier]; /// This assumes that `_Continue` superset of `_Start`.
+                    if (identifier && NSClassFromString(identifier)) { /// Find first identifier that is a valid class name. This makes us skip keywords like `const` or `__kindof` that can appear before the class name.
+                        topType = identifier;
+                        break;
+                    }
+                }
+                
+                /// Parse generic specializations
+                NSMutableArray<NSString *> *specs = nil;
+                if (!scanner.atEnd) {
+                    specs = [NSMutableArray array];
+                    [scanner scanUpToString:@"<" intoString:nil]; /// Skip everything between the topType and `<`
+                    int bracketBalance = 0;
+                    NSUInteger i, j;
+                    i = j = scanner.scanLocation;
+                    while (1) {
+                        unichar c = [rawTypeInfo characterAtIndex:j];
+                        if      (c == '<') bracketBalance++;
+                        else if (c == '>') bracketBalance--;
+                        else if (c == ',') {
+                            [specs addObject:[rawTypeInfo substringWithRange:NSMakeRange(i, j+1)]];
+                            i = j;
+                        }
+                        if (bracketBalance <= 0) {
+                            [specs addObject:[rawTypeInfo substringWithRange:NSMakeRange(i, j+1)]];
+                            break;
+                        }
+                        j++;
+                    }
+                }
+                
+                /// Recurse
+                if (specs) {
+                    if (specs.count == 0) {
+                        /// Do nothing
+                    }
+                    else if (specs.count == 1) {
+                        if (isclass(archiveNode, NSArray)) {
+                            for (id obj in archiveNode) recurse(obj, specs[0]);
+                            if (coder.error) return;
+                        } else {
+                            assert(false);
+                        }
+                    }
+                    else if (specs.count == 2) {
+                        if (isclass(archiveNode, NSDictionary)) {
+                            for (id obj in ((NSDictionary *)archiveNode).allKeys)   recurse(obj, specs[0]);
+                            for (id obj in ((NSDictionary *)archiveNode).allValues) recurse(obj, specs[1]);
+                            if (coder.error) return;
+                        } else {
+                            assert(false);
+                        }
+                    }
+                    else {
+                        assert(false);
+                    }
+                }
+                
+                /// Convert dict to MFDataClass
+                if (isclass(topType, MFDataClassBase)) {
+                    if (!isclass(archiveNode, NSDictionary)) {
+                        assert(false);
+                    }
+                    else {
+                        /// Init
+                        NSError *err;
+                        archiveNode = [((MFDataClassBase *)[NSClassFromString(topType) alloc]) initWithDictionary:archiveNode requireSecureCoding:coder.requiresSecureCoding error:&err];
+                        if (err) {
+                            [coder failWithError:err];
+                            return;
+                        }
+                    }
+                }
+            }
+        };
+        recurse([((MFDataClassDictionaryDecoder *)coder) underlyingDict], [self.class rawNullabilityAndTypeOfProperty:key][1]);
+        if (coder.error) return nil; /// `recurse()` can fail and set coder.error
+    }
+
+#endif
 
 // MARK: NSCopying Protocol
 - (id)copyWithZone:(NSZone *)zone {
@@ -836,7 +921,7 @@ NSString *_Nullable typeEncodingForProperty(NSString *_Nullable propertyAttribut
 
 + (BOOL)propertyIsAllowedToBeNil:(NSString *)propertyName {
     
-    NSString *nullabilityString = [self rawNullabilityOfProperty:propertyName];
+    NSString *nullabilityString = [self rawNullabilityAndTypeOfProperty:propertyName][0];
     BOOL result = [nullabilityString isEqual:@"nullable"];
     
     return result;
@@ -855,11 +940,14 @@ NSString *_Nullable typeEncodingForProperty(NSString *_Nullable propertyAttribut
     ///         Now, inside `+ load`, we validate that the nullabilityString is empty if and only if the property type does *not* support nullability. For types that support nullability, nullability needs to be specified explicitly. This gets rid of the ambiguity of `@""`, letting us simplify this code a lot.
 }
 
-+ (NSString *_Nullable)rawNullabilityOfProperty:(NSString *_Nullable)propertyName {
++ (NSArray<NSString *> *_Nullable)rawNullabilityAndTypeOfProperty:(NSString *_Nullable)propertyName {
     ///
-    /// Returns stringified version of the nullability attribute - exactly as it's been passed into the `MFDataClassX(...)` macro.
+    /// Returns a tuple (NSArray) of
+    ///     1. stringified version of the nullability attribute
+    ///     2. stringified version of the type
+    ///      - exactly as they've been passed into the `MFDataClassX(...)` macro.
     ///
-    /// Possible outputs:
+    /// Possible outputs for the nullability:
     ///     ```
     ///     - @"nullable"
     ///     - @"nonnull"
@@ -868,15 +956,17 @@ NSString *_Nullable typeEncodingForProperty(NSString *_Nullable propertyAttribut
     ///     - @""                       (We return this if: Nullability was left empty in the property definition)
     ///     - nil                       (We return this if: No property was found for `propertyName`)
     ///     ```
+    /// Meta:
+    ///     This method gives us all the interesting property info that we cannot get from the objc runtime introspection (from `property_getAttributes()`)
+    ///     Specifically, the objc runtime:
+    ///     - Doesn't contain any info about nullability
+    ///     - Doesn't contain info about lightweight generics. E.g. if the type of a prop is `NSArray<NSNumber *> *`, then the `<NSNumber *>` part is completely invisible to the objc runtime
+    ///         (Afaik that's why they are called "lightweight" generics – exactly because they don't interact with the objc runtime.)
     ///
-    /// We just raise an exception / return nil here because implementing this properly here is impossible.
-    /// Instead we override this method in the `MFDataClassImplementX()` macros.
-    /// -> That's necessary because nullability info is not accessible through objc runtime introspection.
-    /// -> Info about *all other* property attributes seems to be available through runtime introspection (e.g. whether the property is `strong`, `assign`, `nonatomic`, what type it has, etc.)
-    ///     -> That other info can be accessed at runtime through `property_getAttributes()`
+    ///     Because retrieving this stuff at runtime, we just raise an exception / return nil here, and instead override this method inside the `MFDataClassImplementX()` macros.
     ///
     /// On nullable input:
-    ///     We use the `propertyName` input value as a dictionary-key in the subclass overrides of this method. When indexing an NSDictionary with nil it seems to just returns nil. So this should be safe.
+    ///     We use the `propertyName` input value as a dictionary-key in the subclass overrides of this method. When indexing an NSDictionary with nil it just returns nil. So is safe.
     
     [NSException raise:NSInternalInconsistencyException format:@"MFDataClassX(...) macros must override %@ without calling super.", NSStringFromSelector(_cmd)];
     return nil; /// This line will never be reached

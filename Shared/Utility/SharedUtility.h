@@ -7,6 +7,8 @@
 // --------------------------------------------------------------------------
 //
 
+#pragma once
+
 #import <CoreGraphics/CoreGraphics.h>
 //#import <Foundation/Foundation.h>
 #import "Constants.h"
@@ -19,6 +21,20 @@
 #import <CoreVideo/CoreVideo.h>
 
 NS_ASSUME_NONNULL_BEGIN
+
+/// isclass macro
+/// Behavior:
+///     isclass(x, classname) works on both normal objects and class objects.
+///         If `x` is a normal object:                  Checks whether *the class of x*  is equivalent to, or a subclass of, the class called `classname`
+///         If `x` is a class-object:                    Checks whether *x itself*             is equivalent to, or a subclass of, the class called `classname`
+///         -> Therefore, this replaces both isKindOfClass: and isSubclassOfClass:
+/// Why does this work?
+///     On a normal object:    `class` returns the class-object, and `object_getClass()` also returns the class-object.
+///     On a class-object:       `class` returns the class-object, but `object_getClass()` returns the *meta-class-object*.
+/// Performance:
+///     Not how much slower this is compared to isKindOfClass: or isSubclassOfClass:. Prolly not significant.
+
+#define isclass(x, classname) [[(x) class] isKindOfClass:object_getClass([classname class])]
 
 /// `threadlocal()` creates/gets an object whose state is retained between invocations of your method/function (if those invocations are running on the same thread)
 ///     This is pretty similar to a `static __thread` variable, but for objc objects instead of POD (plain old data)
@@ -44,10 +60,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 /// String (f)ormatting convenience.
 #define stringf(format, ...) [NSString stringWithFormat:(format), ## __VA_ARGS__]
-
-/// array count convenience
-///     TODO: (This is a dependency of shkBindingIsUsable) Remove this when copying over EventLoggerForBrad macros
-#define arrcount(x) (sizeof(x) / sizeof((x)[0]))
 
 #define binarystring(__v) /** This is a macro to make this function generic. The output string's width will automatically match the byte count of the input type (by using sizeof()) */\
     (NSString *) \
