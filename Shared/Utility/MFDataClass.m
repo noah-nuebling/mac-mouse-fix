@@ -10,6 +10,7 @@
 #import "MFDataClass.h"
 @import ObjectiveC.runtime;
 #import "MFDataClassDictionaryDecoder.h"
+#import "EventLoggerForBradMacros.h"
 
 @implementation MFDataClassBase
 
@@ -251,67 +252,6 @@
     ///         TODO: (Should maybe update our MFDataClass macros to include a version arg?)
     ///
     
-    if (isclass(coder, MFDataClassDictionaryDecoder)) {
-        ///
-        /// (MFDataClassDictionaryDecoder means we're decoding an MFDataClass hierarchy from a nested dictionary)
-        ///
-        /// Get MFDataClass to instantiate from the dict archive
-        ///     On letting the dict specify the class to instantiate: [Jan 2025]
-        ///         If this fails, we could theoretically fall back to just creating an instance of self.class.
-        ///         but that's bad in case our code expects us to instantiate a specific *subclass* of self.class. (That's the case for MFLicenseTypeInfo, where we never wanna instantiate the 0-prop base class, only its subclasses.)
-        ///
-        /// Meta discussion on dict archives
-        ///     On architecture: [Feb 2025]
-        ///         We could possibly move all the MFDataClassDictionaryDecoder-specific code into MFDataClassDictionaryDecoder. Then MFDataClassDictionaryDecoder might be able to decode any kind of class-hierarchy from a nested dictionary. (Not just MFDataClasses)
-        ///         ... But doing it like this was easier and works for our purposes.
-        ///         ... Also, the idea originally was that MFDataClassDictionaryDecoder does as little as possible and essentially just wraps an NSDictionary. Maybe it's a good idea to keep it that way.
-        ///
-        ///     Meta: c structs and arrays
-        ///         Out of NSArray and MFDataClass we should be able to build any interesting arrangement of data. They would serve as an object-based alterative to arrays and structs from C.
-        ///
-        ///     On `NSArray<SomeMFDataClass *> *`
-        ///         [Feb 2025] If one of self's properties is an NSArray that contains MFDataClass instances, we aren't able to properly encode/decode that here.
-        ///             To implement `NSArray<SomeMFDataClass *> *` decoding with *automatic* secureCoding support, I think we'd have to update the MFDataClass macros, since the objc runtime doesn't have access to lightweight generics (in this case, we'd wanna access `<SomeMFDataClass *>`)
-        ///             ... However, currently we don't need `NSArray<MFDataClass *> *` support, so we don't implement it, yet.
-        ///             A (possibly) more practical alternative to trying to get the lightweight generic info into runtime using macros, would be to override initWithDictionary: in a category for the MFDataClass in question, and to then set the MFDictionaryDecoder's "allowedClasses" in there. This would be 'manual' secureCoding support, but that should still be ok.
-        ///
-        ///             Sidenote: Same is true for `NSDictionary<SomeMFDataClass *>` – We also can't decode that here, but I think we'd never wanna use NSDictionary over MFDataClass in our archivable datastructures.
-        
-        id __tmp = coder;
-        MFDataClassDictionaryDecoder *coder = __tmp;
-        if (![coder containsValueForKey:MFDataClass_DictArchiveKey_ClassName]) {
-            [coder failWithError:[NSError errorWithDomain:NSCocoaErrorDomain code:NSCoderInvalidValueError userInfo:@{ @"message": stringf(@"MFDataClass name missing from the dictionary archive (%@).", coder.underlyingDict) }]];
-            return nil;
-        }
-        NSString *clsName = [coder decodeObjectOfClass:NSString.class forKey:MFDataClass_DictArchiveKey_ClassName];
-        if (coder.error != nil) {
-            return nil; /// We don't need to failWithError: here since the coder already has an error.
-        }
-        Class cls = NSClassFromString(clsName);
-        if (!cls) {
-            [coder failWithError:[NSError errorWithDomain:NSCocoaErrorDomain code:NSCoderInvalidValueError userInfo:@{ @"message": stringf(@"No class object currently loaded for MFDataClass name '%@' which is specified in dictionary archive (%@)", clsName, coder.underlyingDict) }]];
-            return nil;
-        }
-        if (!isclass(cls, self.class)) {
-            [coder failWithError:[NSError errorWithDomain:NSCocoaErrorDomain code:NSCoderInvalidValueError userInfo:@{ @"message": stringf(@"The MFDataClass retrieved from the dictionary archive (%@) is not a subclass of the class we're trying to initialize (%@)", cls, self.class) }]];
-            return nil;
-        }
-        
-        /// Turn self into an instance of cls
-        if (cls != self.class) {
-            self = [cls alloc];
-            if ((0)) {
-                /// Why do this instead of just setting `self = [cls alloc]` and then letting our method continue?
-                ///     Pro: Ensure correctness in case cls has a custom implementation of `initWithCoder:`
-                ///         Also note: The [super init] call below might call the wrong implementation in this case. That's because super is resolved at compile time. However, if cls had a custom initWithCoder: implementation, we'd already be running the wrong implementation by this point, so the super resolution is a moot point.
-                ///     Contra: This is a bit inefficient, since `initWithCoder:` checks self.class against `MFDataClass_DictArchiveKey_ClassName` again.
-                ///     Contra: We probably never need a custom `initWithCoder:` implementation – the goal is to share 1 generic impl across all MFDataClasses)
-                self = [self initWithCoder:coder];
-                return self;
-            }
-        }
-    }
-    
     self = [super init];
     if (!self) return nil;
     
@@ -454,18 +394,61 @@
         
         /// Convert decoded dict to MFDataClass
         ///     In case we're decoding a nested dictionary into an MFDataClass hierarchy
-        if (isclass(coder, MFDataClassDictionaryDecoder)    &&
+        ifcast(coder, MFDataClassDictionaryDecoder)
+        if (
             expectedClass_DataClassNotDict != nil           &&
             isclass(decodeValueResult, NSDictionary)        &&  /// This is redundant, I think (Except maybe if this can be nil?)
             isclass(expectedClass, NSDictionary)            &&  /// This is redundant [Feb 2025]
             1                                               )
         {
-            /// Create MFDataClass instance
+        
+            /// Get exact MFDataClass to instantiate from the dict archive
+            Class cls;
+            ({
+                
+                /// General info: MFDataClassDictionaryDecoder means we're decoding an MFDataClass hierarchy from a nested dictionary
+                ///
+                /// On letting the dict specify the class to instantiate: [Jan 2025]
+                ///     If this fails, we could theoretically fall back to just creating an instance of self.class.
+                ///     but that's bad in case our code expects us to instantiate a specific *subclass* of self.class. (That's the case for MFLicenseTypeInfo, where we never wanna instantiate the 0-prop base class, only its subclasses.)
+                ///
+                /// Meta discussion on dict archives
+                ///     On architecture: [Feb 2025]
+                ///         We could possibly move all the MFDataClassDictionaryDecoder-specific code into MFDataClassDictionaryDecoder. Then MFDataClassDictionaryDecoder might be able to decode any kind of class-hierarchy from a nested dictionary. (Not just MFDataClasses)
+                ///         ... But doing it like this was easier and works for our purposes.
+                ///         ... Also, the idea originally was that MFDataClassDictionaryDecoder does as little as possible and essentially just wraps an NSDictionary. Maybe it's a good idea to keep it that way.
+                ///
+                ///     Meta: c structs and arrays
+                ///         Out of NSArray and MFDataClass we should be able to build any interesting arrangement of data. They would serve as an object-based alterative to arrays and structs from C.
+                ///
+                ///     On `NSArray<SomeMFDataClass *> *`
+                ///         [Feb 2025] If one of self's properties is an NSArray that contains MFDataClass instances, we aren't able to properly encode/decode that here.
+                ///             To implement `NSArray<SomeMFDataClass *> *` decoding with *automatic* secureCoding support, I think we'd have to update the MFDataClass macros, since the objc runtime doesn't have access to lightweight generics (in this case, we'd wanna access `<SomeMFDataClass *>`)
+                ///             ... However, currently we don't need `NSArray<MFDataClass *> *` support, so we don't implement it, yet.
+                ///             A (possibly) more practical alternative to trying to get the lightweight generic info into runtime using macros, would be to override initWithDictionary: in a category for the MFDataClass in question, and to then set the MFDictionaryDecoder's "allowedClasses" in there. This would be 'manual' secureCoding support, but that should still be ok.
+                ///
+                ///             Sidenote: Same is true for `NSDictionary<SomeMFDataClass *>` – We also can't decode that here, but I think we'd never wanna use NSDictionary over MFDataClass in our archivable datastructures.
+              
+                #define failWithError(code_, messageAndFormatArgs...) ({ \
+                    [coder failWithError:[NSError errorWithDomain:NSCocoaErrorDomain code:(code_) userInfo:@{ @"message": stringf(messageAndFormatArgs) }]]; \
+                    return nil; \
+                })
+                
+                NSString *archivedClassName = decodeValueResult[MFDataClass_DictArchiveKey_ClassName];
+                if (!archivedClassName)                     failWithError(NSCoderReadCorruptError, @"MFDataClass name missing from the dictionary archive (%@).", coder.underlyingDict);
+                if (!isclass(archivedClassName, NSString))  failWithError(NSCoderReadCorruptError, @"MFDataClass name extracted from dictionary archive is not an NSString. Is %@. Archive: %@", archivedClassName.className, coder.underlyingDict);
+                
+                cls = NSClassFromString(archivedClassName);
+                if (!cls)                                           failWithError(NSCoderReadCorruptError, @"No class object currently loaded for MFDataClass name '%@' which is specified in dictionary archive (%@)", archivedClassName, coder.underlyingDict);
+                if (!isclass(cls, expectedClass_DataClassNotDict))  failWithError(NSCoderReadCorruptError, @"The MFDataClass retrieved from the dictionary archive (%@) is not a subclass of the class we're expecting (%@)", cls, expectedClass_DataClassNotDict);
+            });
+        
+            /// Recurse – Create new MFDataClass instance
             ///     Note: `initWithDictionary:` creates a new coder. Couldn't we reuse the current coder somehow? Usually only 1 coder is used during decoding I think.
             NSError *err;
-            decodeValueResult = [((MFDataClassBase *)[expectedClass_DataClassNotDict alloc]) initWithDictionary:decodeValueResult
-                                                                                            requireSecureCoding:coder.requiresSecureCoding
-                                                                                                          error:&err];
+            decodeValueResult = [((MFDataClassBase *)[cls alloc]) initWithDictionary:decodeValueResult
+                                                                 requireSecureCoding:coder.requiresSecureCoding
+                                                                               error:&err];
             if (err) {
                 [coder failWithError:err];
                 return nil;
