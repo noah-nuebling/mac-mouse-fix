@@ -70,7 +70,7 @@ import CryptoKit
             }
             
             /// 1. Ask cache
-            var deviceUID = get_mac_address()
+            let deviceUID = get_mac_address()
             if deviceUID == nil { DDLogWarn("GetLicenseState: Failed to get deviceUID for offline validation. (Offline validation should still work normally as long as we *always consistently* fail to retrieve the deviceUID on this device. (Because then we'll always consistently pass nil))") }
             result = self.licenseStateFromCache(licenseKey: key,
                                                 deviceUID: deviceUID,
@@ -238,7 +238,7 @@ import CryptoKit
             ///         It's unnecessary to cache the `MFLicenseState.freshness` value since that indicates the orgin of the data - server, cache, or fallback - and isn't really "part of the data" itself.
             ///         However, removing the value before caching requires extra lines of code, and doesn't have practical benefit, so we don't bother.
             
-            if ((false)) { /// Old approach – Archive into an xml string using MFEncode
+            #if false  /// Old approach – Archive into an xml string using MFEncode
                 /// Archive the object
                 ///     The archive is an xml string, (instead of the default: binary data) for bit better debuggability and perhaps being less ominous/intransparent for the users.
                 let xmlData = MFEncode(newValue, requireSecureCoding: true, plistFormat: .xml) as Data?
@@ -249,7 +249,7 @@ import CryptoKit
                     assert(false)
                     return
                 }
-            }
+            #endif
             
             /// Validate
             if !newValue.isLicensed { assert(false, "Use deleteLicenseStateFromCache() to set the cache to !isLicensed – So we can understand the control flow better.") }
@@ -528,7 +528,7 @@ import CryptoKit
             self.deleteLicenseStateFromCache(commitConfig: true)
         }
         if result?.isLicensed == true {
-            var deviceUID = get_mac_address() /// To understand this, also see the other place where we call `get_mac_address()` in this file [Feb 2025]
+            let deviceUID = get_mac_address() /// To understand this, also see the other place where we call `get_mac_address()` in this file [Feb 2025]
             if deviceUID == nil { DDLogWarn("GetLicenseState: Want to cache licenseState from the server, but getting device MAC address failed.") } /// Why are we logging this instead of returning an error? The returned errors are specifically to display feedback to the user on the LicenseSheet about the server's assessment of the licenseKey. Aside from this UI feedback, I think returning errors is overkill.
             self.storeLicenseStateInCache(result!, licenseKey: key, deviceUID: deviceUID)
         }

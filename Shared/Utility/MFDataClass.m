@@ -268,17 +268,30 @@
     ///
     
     if (isclass(coder, MFDataClassDictionaryDecoder)) {
-        
-        /// Get MFDataClass to instantiate from the dict archive (if we're decoding an MFDataClass hierarchy from a nested dictionary)
+        ///
+        /// (MFDataClassDictionaryDecoder means we're decoding an MFDataClass hierarchy from a nested dictionary)
+        ///
+        /// Get MFDataClass to instantiate from the dict archive
         ///     On letting the dict specify the class to instantiate: [Jan 2025]
         ///         If this fails, we could theoretically fall back to just creating an instance of self.class.
         ///         but that's bad in case our code expects us to instantiate a specific *subclass* of self.class. (That's the case for MFLicenseTypeInfo, where we never wanna instantiate the 0-prop base class, only its subclasses.)
         ///
+        /// Meta discussion on dict archives
         ///     On architecture: [Feb 2025]
         ///         We could possibly move all the MFDataClassDictionaryDecoder-specific code into MFDataClassDictionaryDecoder. Then MFDataClassDictionaryDecoder might be able to decode any kind of class-hierarchy from a nested dictionary. (Not just MFDataClasses)
         ///         ... But doing it like this was easier and works for our purposes.
         ///         ... Also, the idea originally was that MFDataClassDictionaryDecoder does as little as possible and essentially just wraps an NSDictionary. Maybe it's a good idea to keep it that way.
-        
+        ///
+        ///     Meta: c structs and arrays
+        ///         Out of NSArray and MFDataClass we should be able to build any interesting arrangement of data. They would serve as an object-based alterative to arrays and structs from C.
+        ///
+        ///     On `NSArray<SomeMFDataClass *> *`
+        ///         [Feb 2025] If one of self's properties is an NSArray that contains MFDataClass instances, we aren't able to properly encode/decode that here.
+        ///             To implement `NSArray<SomeMFDataClass *> *` decoding with *automatic* secureCoding support, I think we'd have to update the MFDataClass macros, since the objc runtime doesn't have access to lightweight generics (in this case, we'd wanna access `<SomeMFDataClass *>`)
+        ///             ... However, currently we don't need `NSArray<MFDataClass *> *` support, so we don't implement it, yet.
+        ///             A (possibly) more practical alternative to trying to get the lightweight generic info into runtime using macros, would be to override initWithDictionary: in a category for the MFDataClass in question, and to then set the MFDictionaryDecoder's "allowedClasses" in there. This would be 'manual' secureCoding support, but that should still be ok.
+        ///
+        ///             Sidenote: Same is true for `NSDictionary<SomeMFDataClass *>` – We also can't decode that here, but I think we'd never wanna use NSDictionary over MFDataClass in our archivable datastructures.
         
         id __tmp = coder;
         MFDataClassDictionaryDecoder *coder = __tmp;
@@ -736,12 +749,14 @@ NSString *_Nullable typeEncodingForProperty(NSString *_Nullable propertyAttribut
 ///     When we did wanna create an MFDataClass based on JSON, we wrote a specialized function for that MFDataClass which used `asDictionaryWithRequireSecureCoding:` under the hood.)
 #if 0
     - (NSData *_Nullable)asJSONWithRequireSecureCoding:(BOOL)requireSecureCoding error:(NSError *__autoreleasing _Nullable *_Nullable)errorPtr {
+        if (errorPtr) *errorPtr = nil; // Init error
         NSDictionary *dict = [self asDictionaryWithRequireSecureCoding:requireSecureCoding];
         NSData *result = [NSJSONSerialization dataWithJSONObject:dict options:0 error:errorPtr];
         return result;
     }
 
     - (instancetype _Nullable)initWithJSON:(NSData *_Nonnull)jsonData requireSecureCoding:(BOOL)requireSecureCoding error:(NSError *__autoreleasing _Nullable * _Nullable)errorPtr {
+        if (errorPtr) *errorPtr = nil; /// Init error
         if (!jsonData) return nil;
         NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:jsonData options:0 error:errorPtr];
         if (!dict) return nil;
@@ -812,7 +827,7 @@ NSString *_Nullable typeEncodingForProperty(NSString *_Nullable propertyAttribut
         /// Decode using `initWithCoder:`
         NSCoder *decoder = [[MFDataClassDictionaryDecoder alloc] initForReadingFromDict:dict requiresSecureCoding:requireSecureCoding];
         self = [self initWithCoder:decoder];
-        if (errorPtr) *errorPtr = decoder.error;
+        if (errorPtr) *errorPtr = decoder.error; /// Make sure not to let `*errorPtr` uninitialized
         return self;
     }
 }
