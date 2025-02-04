@@ -1,6 +1,11 @@
 # CodeStyle
 
 
+## #pragma once
+
+We don't actually need `#pragma once`, since we're using `#import` everywhere, 
+which already solves the duplicate-header-inclusion problem.
+
 ## Enums
 
 [Jan 2025] I just thought about how to best define and name enums, and I think this is pretty good:

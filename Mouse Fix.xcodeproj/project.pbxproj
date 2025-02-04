@@ -33,6 +33,8 @@
 		4F28B7F92D49144E006928A6 /* SkyLight.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 4F28B7F52D49141E006928A6 /* SkyLight.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		4F2CC58727B8D2300084AACE /* HybridCurves.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F2CC58627B8D2300084AACE /* HybridCurves.swift */; };
 		4F2CC58927B8DA8B0084AACE /* Line.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F2CC58827B8DA8B0084AACE /* Line.swift */; };
+		4F2E8FD32D52229100689058 /* NSCoderErrors.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F2E8FD22D52229100689058 /* NSCoderErrors.m */; };
+		4F2E8FD42D52229100689058 /* NSCoderErrors.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F2E8FD22D52229100689058 /* NSCoderErrors.m */; };
 		4F2F0B2B28E6258B00246D59 /* MessagePortUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F2F0B2A28E6258B00246D59 /* MessagePortUtility.swift */; };
 		4F319CBB26252A2D004E5F63 /* ButtonGroupRowView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F319CBA26252A2D004E5F63 /* ButtonGroupRowView.m */; };
 		4F37FAD825FDFDC5004C34C4 /* MFScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F37FAD725FDFDC4004C34C4 /* MFScrollView.m */; };
@@ -2008,6 +2010,8 @@
 		4F2CC58627B8D2300084AACE /* HybridCurves.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HybridCurves.swift; sourceTree = "<group>"; };
 		4F2CC58827B8DA8B0084AACE /* Line.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Line.swift; sourceTree = "<group>"; };
 		4F2E8FAC2D4FBD8200689058 /* EventLoggerForBradMacros.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EventLoggerForBradMacros.h; sourceTree = "<group>"; };
+		4F2E8FD12D52229100689058 /* NSCoderErrors.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NSCoderErrors.h; sourceTree = "<group>"; };
+		4F2E8FD22D52229100689058 /* NSCoderErrors.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NSCoderErrors.m; sourceTree = "<group>"; };
 		4F2F0B2A28E6258B00246D59 /* MessagePortUtility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessagePortUtility.swift; sourceTree = "<group>"; };
 		4F319CB926252A2D004E5F63 /* ButtonGroupRowView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ButtonGroupRowView.h; sourceTree = "<group>"; };
 		4F319CBA26252A2D004E5F63 /* ButtonGroupRowView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ButtonGroupRowView.m; sourceTree = "<group>"; };
@@ -7180,6 +7184,8 @@
 				4F5170172CBFD7660018D388 /* MFDataClass.m */,
 				4FB8B2932CCDB94F00A5A580 /* MFDataClassDictionaryDecoder.h */,
 				4FB8B2942CCDB94F00A5A580 /* MFDataClassDictionaryDecoder.m */,
+				4F2E8FD12D52229100689058 /* NSCoderErrors.h */,
+				4F2E8FD22D52229100689058 /* NSCoderErrors.m */,
 				4FDB5F482D4F85A900164F97 /* NSCharacterSet+Additions.h */,
 				4FDB5F492D4F85A900164F97 /* NSCharacterSet+Additions.m */,
 				4F5170142CBFD75C0018D388 /* MFDataClassImpls.m */,
@@ -8039,6 +8045,7 @@
 				4FA40D0E28A0D87200499E53 /* DynamicSystemAnimator.swift in Sources */,
 				4FB4FA202611DD6000806DDD /* KeyCaptureScrollView.m in Sources */,
 				4F909D4728A0C4C2009349A2 /* Collection+Extensions.swift in Sources */,
+				4F2E8FD42D52229100689058 /* NSCoderErrors.m in Sources */,
 				4FC8A7D528ABDEFE007DB982 /* MFClipView.swift in Sources */,
 				4F909D2628A0C3D2009349A2 /* ViewController.m in Sources */,
 				4F909D3D28A0C3D2009349A2 /* ModCaptureTextField.swift in Sources */,
@@ -8188,6 +8195,7 @@
 				4FD86089266E819A004F76C8 /* Pointers.swift in Sources */,
 				4FFA4E4628B7D2960062A1FE /* Replace.swift in Sources */,
 				4FF6668825F2C93A00689B77 /* ButtonInputReceiver.m in Sources */,
+				4F2E8FD32D52229100689058 /* NSCoderErrors.m in Sources */,
 				4FF6669025F2C93A00689B77 /* ScrollModifiers_old_.m in Sources */,
 				4FCEDC89292D6A8F00E7DA2A /* HashablePair.swift in Sources */,
 				4FF6655125F2C7B000689B77 /* NSDictionary+Additions.m in Sources */,

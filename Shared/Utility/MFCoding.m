@@ -22,12 +22,14 @@
 ///     -> To avoid this weirdness, we just decided to write our own Swift wrappers.
 ///     -
 ///     > Update:
-///         We just print errors now instead of returning them so this might be unnecessary now? But the Swift wrappers also allow us to turn off / revert automatic swfit briding until we merge with a version of the repo that has `MF_SWIFT_UNBRIDGED` so we can do it properly.
+///         We just print errors now instead of returning them so this might be unnecessary now?
+///         But the Swift wrappers also allow us to turn off / revert automatic swift briding until we merge with a version of the repo that has `MF_SWIFT_UNBRIDGED` so we can do it properly.
+///         TODO: Adopt `MF_SWIFT_UNBRIDGED`
 ///
 /// Note on handling errors & exception:
 ///     After thinking and being confused for hours about NSCoder error handling, finally, I think I understand it a bit better:
-///     I think originally, the NSArchiver APIs were written for ObjC, and they only threw exceptions, they never returned errors. But Swift doesn't support catching exceptions, it only supports returning errors. (`throws` is just syntax sugar for returning an error. ObjC exceptions work like C++ exceptions internally and do crazy stuff like unwinding the stack.)
-///     So, for Swift compatibility, they added new APIs that return errors, but they only added them for some things so now, everything is a terrible frankensteins monster of throwing exceptions and returning errors.
+///     I think originally, the NSArchiver APIs were written for ObjC, and they only threw exceptions, they never returned errors. But Swift doesn't support throwing/catching exceptions, it only supports returning errors. (`throws` is just syntax sugar for returning an error. ObjC exceptions work like C++ exceptions internally and do crazy stuff like unwinding the stack.)
+///     So, for Swift compatibility, they added new APIs that return errors to NSCoder, but they only added them for some things so now, everything is a terrible frankensteins monster of throwing exceptions and returning errors.
 ///
 ///     For *de*coding:     (Which you'd normally do using NSKeyed*Un*archiver)
 ///         There seem to be 3 aspects of decoding that were being transitioned from Exception-throwing to error-returning:

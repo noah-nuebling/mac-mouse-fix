@@ -7,22 +7,101 @@
 // --------------------------------------------------------------------------
 //
 
-#pragma once
+/// ------------------------
 
+/// Import dependencies
+///     Note: Maybe we should keep imports minimal for better compile-times, since SharedUtility.h is imported in many places?
 #import <CoreGraphics/CoreGraphics.h>
 //#import <Foundation/Foundation.h>
 #import "Constants.h"
-
-// Import WannabePrefixHeader.h here so we don't have to manually include it in as many places (not sure if bad practise)
-#import "WannabePrefixHeader.h"
 #import "Shorthands.h"
+#import <CoreVideo/CoreVideo.h>
+#import "objc/runtime.h"
+
+/// Import WannabePrefixHeader.h here so we don't have to manually include it in as many places (not sure if bad practise)
+#import "WannabePrefixHeader.h"
+
+/// Import other stuff so we don't have to import it in so many places
 #import "MFDefer.h"
 
-#import <CoreVideo/CoreVideo.h>
+/// -------------------------
 
 NS_ASSUME_NONNULL_BEGIN
 
-/// isclass macro
+/// `bcase()`/`bdefault`/`fcase()`/`fdefault` macros
+///     - Use these inside switches instead of `case` and `default` for more concise syntax
+///     - `bcase()` automatically (b)reaks after each case! (Treat this as the default)
+///     - If you ever do need to (f)all through, use `fcase()`.
+///
+/// Example usage:
+///     ```
+///     switch (x) {
+///         bcase (A):          doA();
+///         bcase (B, C):       doBC();
+///         fcase (D):          doBCD();
+///         bdefault:           doDefault();
+///     }
+///     ```
+///     ... This expands to:
+///         ```
+///         switch (x) {
+///             break; case A:          doA();      // The leading break statement is simply ignored
+///             break; case B: case C:  doBC();
+///                    case D:          doBCD();    // Since we used fcase(), there's no break statement, and we (f)all through from the previous case.
+///             break; default:         doDefault();
+///         }
+///         ```
+///     ... Which is equivalent to the traditional style of writing this switch:
+///         ```
+///         switch (x) {
+///             case A:
+///                 doA();
+///                 break;
+///             case B:
+///             case C:
+///                 doBC();
+///             case D:
+///                 doBCD();
+///                 break;
+///             default:
+///                 doDefault();
+///         }
+///         ```
+/// Meta:
+///     - [Feb 2025]
+///         These macros are a bit complex for what they do – you could achieve similar conciseness and clarity for 95% of cases (ha ha) with a simple `#define bcase break; case`.
+///         However, then you'd still have to use `case` both to match multiple values *and* to get fallthrough behavior.
+///         I think using bcase by default, fcase to get fallthrough, and using comma-separated-list to match multiple values is significantly nicer and clearer.
+///         -> So we'll stick with this complicated implementation for now.
+///             That way we can do anything we'd ever wanna do with switches using `bcase()`/`bdefault`/`fcase()`/`fdefault`– which has very clear semantics, and we'd never have to go back to using the raw `case` keyword for anything.
+
+/// (f)allthrough variants
+
+#define fdefault \
+    default
+
+#define _fcase_1(x)             case x
+#define _fcase_2(x, rest)       case x: _fcase_1(rest)
+#define _fcase_3(x, rest...)    case x: _fcase_2(rest)
+#define _fcase_4(x, rest...)    case x: _fcase_3(rest)
+#define _fcase_5(x, rest...)    case x: _fcase_4(rest)
+#define _fcase_6(x, rest...)    case x: _fcase_5(rest)
+#define _fcase_7(x, rest...)    case x: _fcase_6(rest) /** 7 should be more than enough */
+
+#define _fcase_selector(arg1, arg2, arg3, arg4, arg5, arg6, arg7, macroname, ...) macroname
+
+#define fcase(firstvalue, ...) \
+    _fcase_selector(firstvalue __VA_OPT__(,) __VA_ARGS__, _fcase_7, _fcase_6, _fcase_5, _fcase_4, _fcase_3, _fcase_2, _fcase_1)(firstvalue __VA_OPT__(,) __VA_ARGS__)
+
+/// (b)reaking variants
+
+#define bdefault \
+    break; fdefault
+
+#define bcase(firstvalue, ...) \
+    break; fcase(firstvalue __VA_OPT__(,) __VA_ARGS__)
+
+/// `isclass` macro
 /// Behavior:
 ///     isclass(x, classname) works on both normal objects and class objects.
 ///         If `x` is a normal object:                  Checks whether *the class of x*  is equivalent to, or a subclass of, the class called `classname`

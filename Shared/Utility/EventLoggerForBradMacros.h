@@ -7,8 +7,6 @@
 // --------------------------------------------------------------------------
 //
 
-#pragma once
-
 /// This file contains macros from EventLoggerForBrad that we copy pasted over, before properly merging the EventLoggerForBrad code into MMF.
 ///     TODO: Remove this when copying over EventLoggerForBrad macros
 
@@ -38,9 +36,9 @@
 ///         }
 ///         ```
     
-#define scopedvar(declaration...)                                                                   /** vararg... so the declaration may contain commas without being interpreted as multiple macro args */\
-    for (int __scopedvar_oncetoken = 0;     !__scopedvar_oncetoken;)                                \
-    for (declaration;                       !__scopedvar_oncetoken; __scopedvar_oncetoken = 1)      \
+#define scopedvar(declaration...)                                                                       /** vararg... so the declaration may contain commas without being interpreted as multiple macro args */\
+    for (int __scopedvar_oncetoken = 0;     !__scopedvar_oncetoken;)                                    \
+    for (declaration;                       !__scopedvar_oncetoken; __scopedvar_oncetoken = 1)          
 
 #define scoped_preprocess(statements...) /** Untested. Not well thought-through. Don't use this. Could perhaps be useful for validation or compile-time-checks of a scopedvar(). Since this is an if statement, the macro args could also easily prevent the scope from being executed entirely. */\
     if (({ statements }))
@@ -68,6 +66,7 @@
 ///     id obj = @"hello";
 ///     ifcastn(obj, NSString, str) {               // Rename obj to str inside the scope
 ///         NSLog(@"Length: %lu", str.length);
+///         obj = nil;                              // obj can be overriden (it would be shadowed when using ifcast()) || TODO:  Consider removing ifcast() to make this less error-prone.
 ///     }
 ///     ```
 /// 3. if-else-statement
@@ -97,10 +96,10 @@
 ///
 ///         ... Actually not that much boilerplate –> Probably shouldn't use these macros.
 
-#define ifcastn(varname, classname, newvarname)                                                 \
-    if (varname && [varname isKindOfClass:[classname class]])                                   \
-    scopedvar(id __ifcast_temp                                              = varname)          /** The temp var allows us to shadow `varname` if `newvarname` == `varname` */\
-    scopedvar(classname *_Nonnull __attribute__((unused)) newvarname        = __ifcast_temp)    /** 1. Notice `_Nonnull`. We're not only guaranteed the class but also the non-null-ity of newvarname || 2. Notice __attribute__((unused)) – it turns off warnings when the macro user doesn't use newvarname. */\
+#define ifcastn(varname, classname, newvarname)                                                         \
+    if (varname && [varname isKindOfClass:[classname class]])                                           \
+        scopedvar(id __ifcast_temp = varname)                                                           /** The temp var allows us to shadow `varname` if `newvarname` == `varname` */\
+            scopedvar(const classname *_Nonnull __attribute__((unused)) newvarname = __ifcast_temp)     /** 1. Notice `_Nonnull`. We're not only guaranteed the class but also the non-null-ity of newvarname || 2. Notice __attribute__((unused)) – it turns off warnings when the macro user doesn't use newvarname. */\
 
 #define ifcast(varname, classname)  \
     ifcastn(varname, classname, varname)
@@ -108,10 +107,10 @@
 /// ifcastp & ifcastpn
 ///     Works just like ifcast & ifcastn but for objc protocols instead of classes.
 
-#define ifcastpn(varname, protocolname, newvarname)                                                         \
-    if (varname && [varname conformsToProtocol:@protocol(protocolname)])                                    \
-    scopedvar(id __ifcast_temp                                                      = varname)              \
-    scopedvar(id<protocolname> _Nonnull __attribute__((unused)) newvarname          = __ifcast_temp)
+#define ifcastpn(varname, protocolname, newvarname)                                                             \
+    if (varname && [varname conformsToProtocol:@protocol(protocolname)])                                        \
+        scopedvar(id __ifcast_temp = varname)                                                                   \
+            scopedvar(const id<protocolname> _Nonnull __attribute__((unused)) newvarname = __ifcast_temp)
 
 #define ifcastp(varname, protocolname)  \
     ifcastpn(varname, protocolname, varname)

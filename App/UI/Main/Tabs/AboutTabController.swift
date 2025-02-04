@@ -126,6 +126,8 @@ class AboutTabController: NSViewController {
         ///     Notes:
         ///         - Why are we doing step 2 in viewDidAppear() and step 1 in viewDidLoad()?
         ///         - viewDidAppear() is called twice upon app launch for some reason (Oct 2024)
+        ///             Testing: [Jan 2025] seems like the two calls are a few hundred ms apart, so debouncing is prolly not the best choice?
+        
         updateUIToCurrentLicense()
     }
     

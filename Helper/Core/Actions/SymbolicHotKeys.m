@@ -81,6 +81,7 @@
 #import "HelperUtility.h"
 #import <Carbon/Carbon.h>
 #import "SharedUtility.h"
+#import "EventLoggerForBradMacros.h"
 
 @implementation SymbolicHotKeys
 

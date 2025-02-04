@@ -9,16 +9,7 @@
 
 #import <Foundation/Foundation.h>
 
-NS_ASSUME_NONNULL_BEGIN
-
-@interface MFDataClassDictionaryDecoder : NSCoder {
-    NSDictionary *_Nonnull _dict;
-    BOOL _requiresSecureCoding;
-    NSSet<Class> *_allowedClasses;
-    NSError *_error;
-}
+@interface MFDataClassDictionaryDecoder : NSCoder
 - (instancetype)initForReadingFromDict:(NSDictionary *)dict requiresSecureCoding:(BOOL)requiresSecureCoding;
 - (NSDictionary *)underlyingDict;
 @end
-
-NS_ASSUME_NONNULL_END

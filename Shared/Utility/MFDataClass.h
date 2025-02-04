@@ -7,8 +7,6 @@
 // --------------------------------------------------------------------------
 //
 
-#pragma once
-
 #import <Foundation/Foundation.h>
 #import "SharedUtility.h"
 
