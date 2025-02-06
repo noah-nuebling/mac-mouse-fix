@@ -42,6 +42,7 @@ These people spent a lot more than the standard price and treated me to an **Inc
 
 **February 2025**
 
+- 🇺🇸&nbsp;Greg&nbsp;Smith - "Support your indie Mac Developer!"
 - 🇭🇺&nbsp;Tóth&nbsp;Tivadar
 - 🇲🇽&nbsp;Ignacio&nbsp;Aguirre - "Works nice! thank you"
 - 🇺🇸&nbsp;T0Nytw0Tapz - "Good on ya"
