@@ -40,6 +40,7 @@ Diese Leute haben viel mehr als den Standardpreis ausgegeben und mir einen **ung
 
 **Februar 2025**
 
+- 🇭🇺&nbsp;Tóth&nbsp;Tivadar
 - 🇲🇽&nbsp;Ignacio&nbsp;Aguirre - "Works nice! thank you"
 - 🇺🇸&nbsp;T0Nytw0Tapz - "Good on ya"
 
