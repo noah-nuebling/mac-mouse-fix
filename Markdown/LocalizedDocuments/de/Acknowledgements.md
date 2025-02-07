@@ -40,6 +40,7 @@ Diese Leute haben viel mehr als den Standardpreis ausgegeben und mir einen **ung
 
 **Februar 2025**
 
+- 🇺🇸&nbsp;August - "RSI pain forced me to switch from trackpad to mouse, and your app made it possible to keep all my precious shortcuts. Can't thank you enough!"
 - 🇺🇸&nbsp;Greg&nbsp;Smith - "Support your indie Mac Developer!"
 - 🇭🇺&nbsp;Tóth&nbsp;Tivadar
 - 🇲🇽&nbsp;Ignacio&nbsp;Aguirre - "Works nice! thank you"
