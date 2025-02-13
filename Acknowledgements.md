@@ -42,6 +42,7 @@ These people spent a lot more than the standard price and treated me to an **Inc
 
 **February 2025**
 
+- 🇺🇸&nbsp;Tim&nbsp;Colling - "A great little utility, better than the Logitech app!"
 - 🇬🇧&nbsp;Ashb - "Thank you for building better software than what we get from these billon dollar firms who make mouses. You have made my life better and more productive."
 - 🇺🇸&nbsp;August - "RSI pain forced me to switch from trackpad to mouse, and your app made it possible to keep all my precious shortcuts. Can't thank you enough!"
 - 🇺🇸&nbsp;Greg&nbsp;Smith - "Support your indie Mac Developer!"
