@@ -11,6 +11,7 @@
 ///     Use this file only for stuff that's shitty / not possible in Swift
 
 #import <Foundation/Foundation.h>
+#import "MFPlistEncoder.h"
 
 #import "License.h"
 
@@ -126,7 +127,7 @@ MFDataClassImplement10(MFDataClassBase, MFLicenseConfig,    readonly, assign,   
         return result;
     }
 
-    - (instancetype _Nullable)initWithJSONDictionary:(NSMutableDictionary *_Nonnull)dict freshness:(MFValueFreshness)freshness requireSecureCoding:(BOOL)requireSecureCoding error:(NSError *__autoreleasing _Nullable * _Nullable)errorPtr {
+    - (instancetype _Nullable)initWithJSONDictionary:(NSMutableDictionary *_Nonnull)dict freshness:(MFValueFreshness)freshness requireSecureCoding:(BOOL)requireSecureCoding {
         
         ///     Explanation: The licenseConfig json dicts we retrieve from the server / cache / fallback *do not* have a 'freshness' field, but our MFLicenseConfig dataclass does.
         ///                We need to add `freshness` in advance so our underlying `initWithDictionary:requireSecureCoding:error:` initializer doesn't fail due to missing fields. (or perhaps it would even produce an invalid object if secureCoding is off?)
@@ -139,7 +140,7 @@ MFDataClassImplement10(MFDataClassBase, MFLicenseConfig,    readonly, assign,   
         dict[@"freshness"] = @(freshness);
         
         /// Call underlying init
-        self = [self initWithDictionary:dict requireSecureCoding:requireSecureCoding error:errorPtr];
+        self = [self initWithDictionary:dict requireSecureCoding:requireSecureCoding];
         
         /// Return
         return self;

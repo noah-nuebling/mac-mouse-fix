@@ -80,20 +80,25 @@
 ///         More info on `Setter Semantics` and other objc `property attributes` in the docs: https://developer.apple.com/library/archive/documentation/Cocoa/Conceptual/ObjectiveC/Chapters/ocProperties.html
 ///    - Thread safety: These dataclasses are not thread safe. Use locks or dispatch queues to prevent concurrent access while modifying the properties of a dataclass instance.
 ///    - The implemenation macros (`MFDataClassImplementX(...)`) actually don't use many of their arguments, such as the superclass and the setterSemantics. They have these extra arguments so that the arguments match exactly with corresponding interface-macros (`MFDataClassInterfaceX(...)`)  which allows for easy copy-pasting.
+///     - The  -[hash] is just the number of properties. This allows MFDataClass instances to be stored in objc collections. -[NSDictionary hash] behaves the same way.
+///         To get a real **cryptographic hash** you should serialize the MFDataClass instance to data and then use a real hash-function on that. (Doing that inside GetLicenseState.swift as of [Jan 2025])
 ///
-///  Sidenotes:
-///     - If we didn't autogenerate initializers, then implementing the macros could be 30 lines of code instead of 1000 - because we wouldn't have to write a separate macro for each possible number of properties.
+///  Implementation Sidenotes:
+///     - Is this overcomplicated?
+///         If we didn't autogenerate initializers, then implementing the macros could be 30 lines of code instead of 1000 - because we wouldn't have to write a separate macro for each possible number of properties.
 ///         Why did we still do it?
 ///         - Initializers bring nice compile-time-checks: When you add a new property to an `MFDataClass()` you'll get a compiler error if you forget to initialize the new property somewhere, which wouldn't be possible without initializers I think.
 ///         - Initializers let us have properties that are definitely never `null`, which lets us import those properties as non-optionals into Swift - that's nicer to deal with.
 ///         - These many lines of macros are actually quite simple and repetitive and we can just let an LLM generate them.
+///             -> Update [Feb 2025] we've since added the +rawNullabilityAndTypeOfProperty: methods which also require separate macros.
 ///     - Like half of the code in `MFDataClass.m` is to implement `NSSecureCoding`
 ///         - After thinking about it I think it isn't really that useful for us... but now we already wrote the code.
-///         - Read more about NSSecureCoding in `MFDataClass.m > initWithCoding:`
-///     - The  - hash is just the number of properties. This allows MFDataClass instances to be stored in objc collections. -[NSDictionary hash] behaves the same way.
-///         To get a real __cryptographic hash__ we're converting to a dict and then applying PropertyListSerialization and then a real hash-function. (Doing that inside GetLicenseState.swift as of [Jan 2025]) Not sure that's the best way.
-///     - We should consider replacing the remapsDict (Which is a big nested `NSDictionary`that represents the mouse-button-to-action mappings inside the Mac Mouse Fix Helper process) with a nested set of `MFDataClass` instances. That would make it less scary to work with. (Although honestly it's been surprisingly fine, even though the compiler doesn't know the structure of this big nested dict at all.)
-///         (Or maybe a nested struct definition in swift would be even nicer, but not sure if fast and objc compatible. Nested class definition in Swift might also be nice but afaik you can't autogenerate initializers and NSCoding/NSCopying/isEqual: support like you can with Swift structs and with MFDataClass)
+///         - Read more about NSSecureCoding MFCoding.m
+///
+/// Meta:
+/// - Use like C struct and array: Out of NSArray and MFDataClass we should be able to build any interesting arrangement of data. They would serve as an object-based alterative to array (NSArray) and struct (MFDataClass) from C.
+/// - We should consider replacing the remapsDict (Which is a big nested `NSDictionary`that represents the mouse-button-to-action mappings inside the Mac Mouse Fix Helper process) with a nested set of `MFDataClass` instances. That would make it less scary to work with. (Although honestly it's been surprisingly fine, even though the compiler doesn't know the structure of this big nested dict at all.)
+///     (Or maybe a nested struct definition in swift would be even nicer, but not sure if fast and objc compatible. Nested class definition in Swift might also be nice but afaik you can't autogenerate initializers and NSCoding/NSCopying/-isEqual: support like you can with Swift structs and with MFDataClass)
 
 #pragma mark - Base superclass
 
@@ -108,7 +113,7 @@
 
 /// Dict encoding
 - (NSDictionary<NSString *, NSObject *> *_Nonnull)asDictionaryWithRequireSecureCoding:(BOOL)requireSecureCoding;
-- (instancetype _Nullable)initWithDictionary:(NSDictionary *_Nonnull)dict requireSecureCoding:(BOOL)requireSecureCoding error:(NSError *__autoreleasing _Nullable * _Nullable)errorPtr;
+- (instancetype _Nullable)initWithDictionary:(NSDictionary *_Nonnull)dict requireSecureCoding:(BOOL)requireSecureCoding;
 
 /// Validation
 + (void)onLoadValidation; /// This is called in `+ load` to validate the definition of the `MFDataClass` (only in debug builds). Do not call this yourself.
@@ -117,7 +122,6 @@
 
 #pragma mark - Constants
 
-#define MFDataClass_DictArchiveKey_ClassName @"___MFDataClass_ClassName___"     /// Key used in MFDataClass dictionary archives to specify the class that the dictionary should be unarchived into.
 static const NSExceptionName _Nonnull MFDataClassInvalidDefinitionException = @"MFDataClassInvalidDefinitionException"; /// This exception is raised if we find the dataclass definition to be invalid inside `+ load`
 
 #pragma mark - Macros
@@ -127,7 +131,7 @@ static const NSExceptionName _Nonnull MFDataClassInvalidDefinitionException = @"
 /// 0 properties
 #define MFDataClass0(__superClassName, __className) \
     MFDataClassInterface0(__superClassName, __className) \
-    MFDataClassImplement0(__className)
+    MFDataClassImplement0(__className, __className)
 
 #define MFDataClassInterface0(__superClassName, __className) \
     @interface __className : __superClassName \

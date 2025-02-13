@@ -35,6 +35,8 @@
 		4F2CC58927B8DA8B0084AACE /* Line.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F2CC58827B8DA8B0084AACE /* Line.swift */; };
 		4F2E8FD32D52229100689058 /* NSCoderErrors.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F2E8FD22D52229100689058 /* NSCoderErrors.m */; };
 		4F2E8FD42D52229100689058 /* NSCoderErrors.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F2E8FD22D52229100689058 /* NSCoderErrors.m */; };
+		4F2E8FD72D52877F00689058 /* MFPlistEncoder.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F2E8FD62D52877F00689058 /* MFPlistEncoder.m */; };
+		4F2E8FD82D52877F00689058 /* MFPlistEncoder.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F2E8FD62D52877F00689058 /* MFPlistEncoder.m */; };
 		4F2F0B2B28E6258B00246D59 /* MessagePortUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F2F0B2A28E6258B00246D59 /* MessagePortUtility.swift */; };
 		4F319CBB26252A2D004E5F63 /* ButtonGroupRowView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F319CBA26252A2D004E5F63 /* ButtonGroupRowView.m */; };
 		4F37FAD825FDFDC5004C34C4 /* MFScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F37FAD725FDFDC4004C34C4 /* MFScrollView.m */; };
@@ -165,6 +167,8 @@
 		4FA1FD7F28A847BF00D1C8EE /* DeletableTableCellView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4FA1FD7E28A847BF00D1C8EE /* DeletableTableCellView.xib */; };
 		4FA1FD8128A85FD100D1C8EE /* RemapTableElements.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FA1FD8028A85FD100D1C8EE /* RemapTableElements.swift */; };
 		4FA1FD8328A916B600D1C8EE /* NSShadow+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FA1FD8228A916B600D1C8EE /* NSShadow+Extensions.swift */; };
+		4FA398FD2D56409A003A4BEE /* TreeNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FA398FC2D56409A003A4BEE /* TreeNode.m */; };
+		4FA398FE2D56409A003A4BEE /* TreeNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FA398FC2D56409A003A4BEE /* TreeNode.m */; };
 		4FA40CEF28A0CA0A00499E53 /* ReactiveSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 4FA40CEE28A0CA0A00499E53 /* ReactiveSwift */; };
 		4FA40CF228A0CA3900499E53 /* ReactiveCocoa in Frameworks */ = {isa = PBXBuildFile; productRef = 4FA40CF128A0CA3900499E53 /* ReactiveCocoa */; };
 		4FA40CF628A0CCC600499E53 /* Math.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FF0BD50266AC10C003935EA /* Math.swift */; };
@@ -197,8 +201,8 @@
 		4FAD391426702CD4000CF4FA /* DerivedProperty.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FD860A9266EC24E004F76C8 /* DerivedProperty.swift */; };
 		4FB4F9FE260FDBC800806DDD /* RemapTableUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FB4F9FD260FDBC800806DDD /* RemapTableUtility.m */; };
 		4FB4FA202611DD6000806DDD /* KeyCaptureScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FB4FA1F2611DD6000806DDD /* KeyCaptureScrollView.m */; };
-		4FB8B2952CCDB94F00A5A580 /* MFDataClassDictionaryDecoder.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FB8B2942CCDB94F00A5A580 /* MFDataClassDictionaryDecoder.m */; };
-		4FB8B2962CCDB94F00A5A580 /* MFDataClassDictionaryDecoder.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FB8B2942CCDB94F00A5A580 /* MFDataClassDictionaryDecoder.m */; };
+		4FB8B2952CCDB94F00A5A580 /* MFPlistDecoder.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FB8B2942CCDB94F00A5A580 /* MFPlistDecoder.m */; };
+		4FB8B2962CCDB94F00A5A580 /* MFPlistDecoder.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FB8B2942CCDB94F00A5A580 /* MFPlistDecoder.m */; };
 		4FB8B2982CCEBADA00A5A580 /* GetLicenseState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FB8B2972CCEBAD300A5A580 /* GetLicenseState.swift */; };
 		4FB8B2992CCEBADA00A5A580 /* GetLicenseState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FB8B2972CCEBAD300A5A580 /* GetLicenseState.swift */; };
 		4FB8B29B2CCEBAEB00A5A580 /* GetLicenseConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FB8B29A2CCEBAE100A5A580 /* GetLicenseConfig.swift */; };
@@ -2012,6 +2016,10 @@
 		4F2E8FAC2D4FBD8200689058 /* EventLoggerForBradMacros.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EventLoggerForBradMacros.h; sourceTree = "<group>"; };
 		4F2E8FD12D52229100689058 /* NSCoderErrors.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NSCoderErrors.h; sourceTree = "<group>"; };
 		4F2E8FD22D52229100689058 /* NSCoderErrors.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NSCoderErrors.m; sourceTree = "<group>"; };
+		4F2E8FD52D52877F00689058 /* MFPlistEncoder.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MFPlistEncoder.h; sourceTree = "<group>"; };
+		4F2E8FD62D52877F00689058 /* MFPlistEncoder.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MFPlistEncoder.m; sourceTree = "<group>"; };
+		4F2E8FE12D53EB8D00689058 /* MFOnceMacro.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MFOnceMacro.h; sourceTree = "<group>"; };
+		4F2E8FE22D53EB8D00689058 /* MFOnceMacro.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MFOnceMacro.m; sourceTree = "<group>"; };
 		4F2F0B2A28E6258B00246D59 /* MessagePortUtility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessagePortUtility.swift; sourceTree = "<group>"; };
 		4F319CB926252A2D004E5F63 /* ButtonGroupRowView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ButtonGroupRowView.h; sourceTree = "<group>"; };
 		4F319CBA26252A2D004E5F63 /* ButtonGroupRowView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ButtonGroupRowView.m; sourceTree = "<group>"; };
@@ -2187,6 +2195,8 @@
 		4FA1FD7E28A847BF00D1C8EE /* DeletableTableCellView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DeletableTableCellView.xib; sourceTree = "<group>"; };
 		4FA1FD8028A85FD100D1C8EE /* RemapTableElements.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemapTableElements.swift; sourceTree = "<group>"; };
 		4FA1FD8228A916B600D1C8EE /* NSShadow+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSShadow+Extensions.swift"; sourceTree = "<group>"; };
+		4FA398FB2D564094003A4BEE /* TreeNode.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TreeNode.h; sourceTree = "<group>"; };
+		4FA398FC2D56409A003A4BEE /* TreeNode.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TreeNode.m; sourceTree = "<group>"; };
 		4FA40CF528A0CBA600499E53 /* Mac Mouse Fix-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Mac Mouse Fix-Bridging-Header.h"; sourceTree = "<group>"; };
 		4FA5F08C2CE4CEF800ED2354 /* SymbolicHotKeys.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SymbolicHotKeys.h; sourceTree = "<group>"; };
 		4FA5F08D2CE4CEF800ED2354 /* SymbolicHotKeys.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SymbolicHotKeys.m; sourceTree = "<group>"; };
@@ -2203,8 +2213,8 @@
 		4FB4FA1E2611DD6000806DDD /* KeyCaptureScrollView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KeyCaptureScrollView.h; sourceTree = "<group>"; };
 		4FB4FA1F2611DD6000806DDD /* KeyCaptureScrollView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = KeyCaptureScrollView.m; sourceTree = "<group>"; };
 		4FB5FE8A27AE563F0092C9B4 /* MFScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MFScrollView.h; sourceTree = "<group>"; };
-		4FB8B2932CCDB94F00A5A580 /* MFDataClassDictionaryDecoder.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MFDataClassDictionaryDecoder.h; sourceTree = "<group>"; };
-		4FB8B2942CCDB94F00A5A580 /* MFDataClassDictionaryDecoder.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MFDataClassDictionaryDecoder.m; sourceTree = "<group>"; };
+		4FB8B2932CCDB94F00A5A580 /* MFPlistDecoder.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MFPlistDecoder.h; sourceTree = "<group>"; };
+		4FB8B2942CCDB94F00A5A580 /* MFPlistDecoder.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MFPlistDecoder.m; sourceTree = "<group>"; };
 		4FB8B2972CCEBAD300A5A580 /* GetLicenseState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetLicenseState.swift; sourceTree = "<group>"; };
 		4FB8B29A2CCEBAE100A5A580 /* GetLicenseConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetLicenseConfig.swift; sourceTree = "<group>"; };
 		4FB8B29D2CCEBB1000A5A580 /* GetTrialState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetTrialState.swift; sourceTree = "<group>"; };
@@ -2244,6 +2254,8 @@
 		4FCEDC87292D6A8F00E7DA2A /* HashablePair.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HashablePair.swift; sourceTree = "<group>"; };
 		4FCEDC91292D765600E7DA2A /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		4FCEDC94292EB41700E7DA2A /* DeviceManagerSwift.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceManagerSwift.swift; sourceTree = "<group>"; };
+		4FD031572D5927DE000EA331 /* MFDeepCopyCoder.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MFDeepCopyCoder.h; sourceTree = "<group>"; };
+		4FD031582D5927DE000EA331 /* MFDeepCopyCoder.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MFDeepCopyCoder.m; sourceTree = "<group>"; };
 		4FD0A71027B295F600FFCD12 /* GeneralConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeneralConfig.swift; sourceTree = "<group>"; };
 		4FD148C628AA414100FE688C /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Main.strings; sourceTree = "<group>"; };
 		4FD148C828AA416700FE688C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/MenuBarItem.xib; sourceTree = "<group>"; };
@@ -6715,6 +6727,8 @@
 		4F909D4228A0C4C2009349A2 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				4FDB5F482D4F85A900164F97 /* NSCharacterSet+Additions.h */,
+				4FDB5F492D4F85A900164F97 /* NSCharacterSet+Additions.m */,
 				4F1B41A32D4BACBA00026C94 /* NSData+Additions.h */,
 				4F1B41A42D4BACBA00026C94 /* NSData+Additions.m */,
 				4F3A40D8266C5BDF00436821 /* NSScreen+Additions.h */,
@@ -7180,26 +7194,32 @@
 		4FF6653625F2C7B000689B77 /* Utility */ = {
 			isa = PBXGroup;
 			children = (
-				4F51701A2CBFD7730018D388 /* MFDataClass.h */,
-				4F5170172CBFD7660018D388 /* MFDataClass.m */,
-				4FB8B2932CCDB94F00A5A580 /* MFDataClassDictionaryDecoder.h */,
-				4FB8B2942CCDB94F00A5A580 /* MFDataClassDictionaryDecoder.m */,
-				4F2E8FD12D52229100689058 /* NSCoderErrors.h */,
-				4F2E8FD22D52229100689058 /* NSCoderErrors.m */,
-				4FDB5F482D4F85A900164F97 /* NSCharacterSet+Additions.h */,
-				4FDB5F492D4F85A900164F97 /* NSCharacterSet+Additions.m */,
-				4F5170142CBFD75C0018D388 /* MFDataClassImpls.m */,
-				4F8A8DC0287F885D00786BCC /* Shorthands.h */,
-				4FA06818291B2C4C00949B5F /* Shorthands.m */,
-				4FF27DD62B95B108004744E1 /* Shorthands.swift */,
 				4FF6653E25F2C7B000689B77 /* SharedUtility.h */,
 				4FF6653B25F2C7B000689B77 /* SharedUtility.m */,
-				4F2E8FAC2D4FBD8200689058 /* EventLoggerForBradMacros.h */,
-				4F1B418D2D49960E00026C94 /* MFSemaphore.h */,
-				4F1B418E2D49960E00026C94 /* MFSemaphore.m */,
+				4F51701A2CBFD7730018D388 /* MFDataClass.h */,
+				4F5170172CBFD7660018D388 /* MFDataClass.m */,
+				4F5170142CBFD75C0018D388 /* MFDataClassImpls.m */,
 				4F428D002CD80462006322AB /* MFCoding.h */,
 				4F428D012CD80462006322AB /* MFCoding.m */,
 				4F428D072CD8C688006322AB /* MFCoding.swift */,
+				4F2E8FD52D52877F00689058 /* MFPlistEncoder.h */,
+				4F2E8FD62D52877F00689058 /* MFPlistEncoder.m */,
+				4FB8B2932CCDB94F00A5A580 /* MFPlistDecoder.h */,
+				4FB8B2942CCDB94F00A5A580 /* MFPlistDecoder.m */,
+				4F2E8FD12D52229100689058 /* NSCoderErrors.h */,
+				4F2E8FD22D52229100689058 /* NSCoderErrors.m */,
+				4FD031572D5927DE000EA331 /* MFDeepCopyCoder.h */,
+				4FD031582D5927DE000EA331 /* MFDeepCopyCoder.m */,
+				4FA398FB2D564094003A4BEE /* TreeNode.h */,
+				4FA398FC2D56409A003A4BEE /* TreeNode.m */,
+				4F8A8DC0287F885D00786BCC /* Shorthands.h */,
+				4FA06818291B2C4C00949B5F /* Shorthands.m */,
+				4FF27DD62B95B108004744E1 /* Shorthands.swift */,
+				4F2E8FAC2D4FBD8200689058 /* EventLoggerForBradMacros.h */,
+				4F2E8FE12D53EB8D00689058 /* MFOnceMacro.h */,
+				4F2E8FE22D53EB8D00689058 /* MFOnceMacro.m */,
+				4F1B418D2D49960E00026C94 /* MFSemaphore.h */,
+				4F1B418E2D49960E00026C94 /* MFSemaphore.m */,
 				4F428CFF2CD6690F006322AB /* MFDefer.h */,
 				4FE40B95283A49DD00880BEF /* SharedUtilitySwift.swift */,
 				4FDECCDC28A3E93100DDEE91 /* IsObjC.h */,
@@ -7977,7 +7997,7 @@
 				4F428CE72CD3D608006322AB /* MacAddress.m in Sources */,
 				4F8CE7012617738A00D70A76 /* AppTranslocationManager.m in Sources */,
 				4FF665FE25F2C92700689B77 /* main.m in Sources */,
-				4FB8B2962CCDB94F00A5A580 /* MFDataClassDictionaryDecoder.m in Sources */,
+				4FB8B2962CCDB94F00A5A580 /* MFPlistDecoder.m in Sources */,
 				4F909D2528A0C3D2009349A2 /* TabViewController.swift in Sources */,
 				4F1B832D26081A5500AEAF37 /* CaptureNotificationCreator.m in Sources */,
 				4FC8A7D928AD3FC7007DB982 /* RemapTableCellView.swift in Sources */,
@@ -8017,6 +8037,7 @@
 				4F7D97A628AEB2EE00C11E79 /* AboutTabController.swift in Sources */,
 				4F79A81C2604317200076A7E /* ToastNotificationController.m in Sources */,
 				4F909D2E28A0C3D2009349A2 /* NSControl+Extensions.swift in Sources */,
+				4FA398FE2D56409A003A4BEE /* TreeNode.m in Sources */,
 				4F5170192CBFD7660018D388 /* MFDataClass.m in Sources */,
 				4F39BC3B263AF2B000FDF692 /* SparkleUpdaterController.m in Sources */,
 				4FA40D0028A0CCCB00499E53 /* CombinedLinearCurve.swift in Sources */,
@@ -8073,6 +8094,7 @@
 				4FF27DD72B95B108004744E1 /* Shorthands.swift in Sources */,
 				4F319CBB26252A2D004E5F63 /* ButtonGroupRowView.m in Sources */,
 				4F79A82B2605074000076A7E /* NSAttributedString+Additions.m in Sources */,
+				4F2E8FD72D52877F00689058 /* MFPlistEncoder.m in Sources */,
 				4FA40CFD28A0CCCB00499E53 /* AccelerationBezier.swift in Sources */,
 				4F909D3228A0C3D2009349A2 /* FadeAnimations.swift in Sources */,
 				4FA1FD8128A85FD100D1C8EE /* RemapTableElements.swift in Sources */,
@@ -8145,10 +8167,11 @@
 				4F8B7E6727B4E32600598B65 /* TouchAnimatorBase.swift in Sources */,
 				4FA0681A291B2C4C00949B5F /* Shorthands.m in Sources */,
 				4FF6669325F2C93A00689B77 /* TouchSimulator.m in Sources */,
-				4FB8B2952CCDB94F00A5A580 /* MFDataClassDictionaryDecoder.m in Sources */,
+				4FB8B2952CCDB94F00A5A580 /* MFPlistDecoder.m in Sources */,
 				4FFA4E4A28B7D3750062A1FE /* NSView+Extensions.swift in Sources */,
 				4F9E78E3268663B1002C2309 /* ExponentialSmoother.swift in Sources */,
 				4F3A40AB266BBB6200436821 /* AccelerationBezier.swift in Sources */,
+				4F2E8FD82D52877F00689058 /* MFPlistEncoder.m in Sources */,
 				4FD860AA266EC24E004F76C8 /* DerivedProperty.swift in Sources */,
 				4FE6CBC428987E8B00B3E829 /* DynamicSystemAnimator.swift in Sources */,
 				4FF6669725F2C93A00689B77 /* Remap.m in Sources */,
@@ -8230,6 +8253,7 @@
 				4FF6669B25F2C93A00689B77 /* AppDelegate.m in Sources */,
 				4FF1DC7A2CC1130700A839AB /* License.m in Sources */,
 				4FFA4E4728B7D2980062A1FE /* Animate.swift in Sources */,
+				4FA398FD2D56409A003A4BEE /* TreeNode.m in Sources */,
 				4FDE75A228B2397600662314 /* PayButton.swift in Sources */,
 				4F09284228B8C71C00BDC2FF /* Hyperlink.m in Sources */,
 				4F9E78D02685E30C002C2309 /* GestureScrollSimulator.m in Sources */,

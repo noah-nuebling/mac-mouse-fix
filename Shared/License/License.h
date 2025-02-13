@@ -52,7 +52,7 @@ typedef NSInteger MFValueFreshness;
 
 /// licenseTypeInfo dataclasses
 
-MFDataClassInterface0(MFDataClassBase, MFLicenseTypeInfo)
+MFDataClassInterface0(MFDataClassBase, MFLicenseTypeInfo)                               /// The empty base-class. Tip: Make sure to never instantiate this (e.g. from an archive) since our code doesn't expect that.
     
     MFDataClassInterface0(MFLicenseTypeInfo, MFLicenseTypeInfoNotLicensed)
     
@@ -122,7 +122,7 @@ MFDataClassInterface10(MFDataClassBase, MFLicenseConfig,    readonly, assign,   
 
 @interface MFLicenseConfig (Extensions)
     NSString *_Nonnull MFLicenseConfigFormattedPrice(MFLicenseConfig *_Nonnull config);
-    - (instancetype _Nullable)initWithJSONDictionary:(NSMutableDictionary *_Nonnull)dict freshness:(MFValueFreshness)freshness requireSecureCoding:(BOOL)requireSecureCoding error:(NSError *__autoreleasing _Nullable * _Nullable)errorPtr;
+    - (instancetype _Nullable)initWithJSONDictionary:(NSMutableDictionary *_Nonnull)dict freshness:(MFValueFreshness)freshness requireSecureCoding:(BOOL)requireSecureCoding;
 @end
 
 /// MARK: Custom errors

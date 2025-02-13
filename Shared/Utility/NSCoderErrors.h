@@ -19,3 +19,18 @@ NSError *_Nonnull       MFNSCoderErrorMake(NSInteger code, NSString *_Nullable r
 NSException *_Nonnull   MFNSCoderExceptionMake(NSInteger code, NSString *_Nullable reason, NSExceptionName _Nonnull name);
 NSError *_Nonnull       MFNSCoderErrorMake_FromException(NSException *_Nonnull exception);
 NSException *_Nonnull   MFNSCoderExceptionMake_FromError(NSError *_Nonnull error);
+
+/// NSCoder subclass
+///     with better error handling
+@interface NSCoder_WithNiceErrors : NSCoder {
+    @public
+    NSError *_Nullable      _error                  ; /// We use the public ivars in place of setters in the subclasses. Not sure this is bad, but ok.
+    NSDecodingFailurePolicy _decodingFailurePolicy  ;
+}
+
+- (NSDecodingFailurePolicy) decodingFailurePolicy   ;
+- (NSError *_Nullable)      error                   ;
+
+- (void)_failWithErrorCode: (NSInteger)code reason: (NSString *_Nullable)reason;
+
+@end

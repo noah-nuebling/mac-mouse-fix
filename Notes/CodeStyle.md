@@ -3,26 +3,46 @@
 
 ## #pragma once
 
-We don't actually need `#pragma once`, since we're using `#import` everywhere, 
+[Feb 2025] We don't actually need `#pragma once`, since we're using `#import` everywhere, 
 which already solves the duplicate-header-inclusion problem.
+
+## `NS_ASSUME_NONNULL`
+
+Don't use this. We usually wan't our objc methods to be nullable/null-safe. 
+When we return nil from a method, it's is actually dangerous if Swift imports it as a non-optional.
+
+Unfortunately there's only `NS_ASSUME_NONNULL` and no `NS_ASSUME_NULLABLE`.
+
+## Spaces in objc methods
+
+[Feb 2025] Gnustep code puts spaces after: (the)colons in objc methods 
+    See https://github.com/gnustep/libs-base/blob/a043cb077cc6e4ef9cf7d27b4883ff971331b800/Source/NSDictionary.m#L320
+    This is more readable than the typical Apple style I think. Especially with nested method calls.
+    Maybe I'll make a habit of this.
+    
+    Example:
+        Gnu style:   `[aCoder encodeObject: [self objectForKey: key] forKey: s];`
+        Apple style: `[aCoder encodeObject:[self objectForKey:key] forKey:s];`
+        -> Gnu makes it easier to see all the parts that belong to a method signature, and where the nested call starts/ends. 
 
 ## Enums
 
 [Jan 2025] I just thought about how to best define and name enums, and I think this is pretty good:
     ```
     typedef enum : int {
-        kMFMyEnum_First,
-        kMFMyEnum_Second,
-        kMFMyEnum_Third,
+        kMFMyEnum_First  = 0,
+        kMFMyEnum_Second = 1,
+        kMFMyEnum_Third  = 2,
     } MFMyEnum;
     
     NSString *MFMyEnum_ToString(MFMyEnum case) {
-        static const NString *strings[] = {
+        static const NString *strings[] = {  
             [kMFMyEnum_First]  = @"First",
             [kMFMyEnum_Second] = @"Second",
             [kMFMyEnum_Third]  = @"Third",
         };
-        return safeindex(strings, arrcount(strings), case, stringf(@"%d", case));
+        NSString *result = safeindex(strings, arrcount(strings), case, nil);
+        return result ?: stringf(@"%d", case);
     }
     ```
 

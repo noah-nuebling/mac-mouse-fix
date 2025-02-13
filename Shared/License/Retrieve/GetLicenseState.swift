@@ -337,9 +337,9 @@ import CryptoKit
             ///         -> I guess another possible benefit of the nil/type checks is if we change MFLicenseState in the future and we forget to handle that explicitly, then we would just return nil here in some cases instead of returning an invalid object that might crash the app because of unexpected type/nullability
             ///     Very Random sidenote:
             ///         When we used to cache the MFLicenseState as an NSCoder archive instead of a dictionary, we used to use MFDecode() here – Don't forget that MFDecode() exists!
-            let (licenseState, error) = MFCatch { try MFLicenseState(dictionary: cachedDict as! [AnyHashable: Any], requireSecureCoding: true) }
+            let licenseState = MFLicenseState(dictionary: cachedDict as! [AnyHashable: Any], requireSecureCoding: true)
             guard let licenseState else {
-                DDLogError("GetLicenseState: Decode licenseState from chached dict failed with error: \(error ?? "<nil>")")
+                DDLogError("GetLicenseState: Initializing MFLicenseState using cached dict failed.")
                 return nil
             }
             

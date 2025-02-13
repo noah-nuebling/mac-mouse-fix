@@ -19,7 +19,7 @@
     NSCondition *_condition;
 };
 
-- (instancetype)initWithUnits:(int)nOfUnits {
+- (instancetype) initWithUnits: (int)nOfUnits {
     self = [super init];
     if (!self) return nil;
     _freeUnits = nOfUnits;
@@ -27,16 +27,16 @@
     return self;
 }
 
-- (bool)acquireUnit:(NSDate *_Nullable)timeLimit {
+- (bool) acquireUnit: (NSDate *_Nullable)timeLimit {
     
     [_condition lock];
     _freeUnits--; /// Claim a unit
     bool didTimeOut = false;
     while (_freeUnits < 0) { /// Wait if the claimed unit is not available. (aka, while `_freeUnits` is negative) || Nice property: If `_freeUnits < 0`, then `abs(_freeUnits)` is the number of threads waiting for a unit.
-        if (!timeLimit) {
+        if (!timeLimit)
             [_condition wait];
-        } else {
-            didTimeOut = ![_condition waitUntilDate:timeLimit];
+        else {
+            didTimeOut = ![_condition waitUntilDate: timeLimit];
             if (didTimeOut) break;
             /// Note: Other implementations increment `_freeUnits` on timeout. We don't. With our implementation, the caller must simply make sure that `acquireUnit:` and `releaseUnit` invocations are balanced. (Regardless of whether `acquireUnit:` times out or not)
         }
@@ -45,10 +45,10 @@
     
     return didTimeOut;
 }
-- (void)releaseUnit {
+- (void) releaseUnit {
     [_condition lock];
     _freeUnits++;           /// Release a unit
-    [_condition signal];    /// You can also call `broadcast` to wake up all waiters. But I don't think we need that here. (Since we're only freeing one resource?)
+    [_condition signal];    /// You can also call `broadcast` to wake up all waiters. But I don't think we need that here. (Since we're only freeing one unit?)
     [_condition unlock];
 }
 

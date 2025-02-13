@@ -8,10 +8,10 @@
 //
 
 /// This file contains macros from EventLoggerForBrad that we copy pasted over, before properly merging the EventLoggerForBrad code into MMF.
-///     TODO: Remove this when copying over EventLoggerForBrad macros
+///     TODO: Merge these when copying over EventLoggerForBrad macros
 
-/// array count convenience
-#define arrcount(x) (sizeof(x) / sizeof((x)[0]))
+/// Changes since copying this from EventLoggerForBrad:
+///     Updated ifcastn and ifcastpn to properly prevent trying to set the inner variable by moving `const` to the appropriate place in the declaration.
 
 /// scopedvar - helper macro
 /// What:   Insert a variable declaration into the following scope.
@@ -30,8 +30,8 @@
 ///     2. With { braces }
 ///         ```
 ///         scopedvar(NSMutableString *str = [NSMutableString string]) {    // str only exists inside { ... }
-///             [str appendString:@"Hello"];
-///             [str appendString:@" World"];
+///             [str appendString: @"Hello"];
+///             [str appendString: @" World"];
 ///             NSLog(@"%@", str);
 ///         }
 ///         ```
@@ -64,9 +64,9 @@
 /// 2. ifcastn
 ///     ```
 ///     id obj = @"hello";
-///     ifcastn(obj, NSString, str) {               // Rename obj to str inside the scope
+///     ifcastn(obj, NSString, str) {               // Re(n)ame obj to str inside the scope
 ///         NSLog(@"Length: %lu", str.length);
-///         obj = nil;                              // obj can be overriden (it would be shadowed when using ifcast()) || TODO:  Consider removing ifcast() to make this less error-prone.
+///         obj = nil;                              // obj can be overriden (it would be shadowed when using ifcast())
 ///     }
 ///     ```
 /// 3. if-else-statement
@@ -83,9 +83,9 @@
 ///
 ///     Equivalent macro-free code: (more boilerplate)
 ///         ```
-///         if      ([obj isKindOfClass:[NSArray class]])        NSLog(@"Array: %@", ((NSArray *)obj).firstObject);
-///         else if ([obj isKindOfClass:[NSDictionary class]])   NSLog(@"Dict: %@", ((NSDictionary *)obj).allKeys);
-///         else if ([obj isKindOfClass:[NSString class]])
+///         if      ([obj isKindOfClass: [NSArray class]])        NSLog(@"Array: %@", ((NSArray *)obj).firstObject);
+///         else if ([obj isKindOfClass: [NSDictionary class]])   NSLog(@"Dict: %@", ((NSDictionary *)obj).allKeys);
+///         else if ([obj isKindOfClass: [NSString class]])
 ///         {
 ///             NSString *str = (id)obj;
 ///             NSString *upper = [str uppercaseString];
@@ -97,9 +97,9 @@
 ///         ... Actually not that much boilerplate –> Probably shouldn't use these macros.
 
 #define ifcastn(varname, classname, newvarname)                                                         \
-    if (varname && [varname isKindOfClass:[classname class]])                                           \
-        scopedvar(id __ifcast_temp = varname)                                                           /** The temp var allows us to shadow `varname` if `newvarname` == `varname` */\
-            scopedvar(const classname *_Nonnull __attribute__((unused)) newvarname = __ifcast_temp)     /** 1. Notice `_Nonnull`. We're not only guaranteed the class but also the non-null-ity of newvarname || 2. Notice __attribute__((unused)) – it turns off warnings when the macro user doesn't use newvarname. */\
+    if (varname && [varname isKindOfClass: [classname class]])                                          \
+        scopedvar(id __ifcast_temp = varname)                                                           /** The temp var allows us to shadow `varname` if `newvarname` == `varname` */ \
+            scopedvar(classname *_Nonnull const __attribute__((unused)) newvarname = __ifcast_temp)     /** 1. Notice `_Nonnull`. We're not only guaranteed the class but also the non-null-ity of newvarname || 2. Notice __attribute__((unused)) – it turns off warnings when the macro user doesn't use newvarname. 3. Notice `const` it warns the user when they try to override the inner variable. (Since they're probably trying to override the outer one.) */ \
 
 #define ifcast(varname, classname)  \
     ifcastn(varname, classname, varname)
@@ -108,9 +108,9 @@
 ///     Works just like ifcast & ifcastn but for objc protocols instead of classes.
 
 #define ifcastpn(varname, protocolname, newvarname)                                                             \
-    if (varname && [varname conformsToProtocol:@protocol(protocolname)])                                        \
+    if (varname && [varname conformsToProtocol: @protocol(protocolname)])                                        \
         scopedvar(id __ifcast_temp = varname)                                                                   \
-            scopedvar(const id<protocolname> _Nonnull __attribute__((unused)) newvarname = __ifcast_temp)
+            scopedvar(id<protocolname> _Nonnull const __attribute__((unused)) newvarname = __ifcast_temp)
 
 #define ifcastp(varname, protocolname)  \
     ifcastpn(varname, protocolname, varname)

@@ -9,9 +9,13 @@
 
 #import "MFDataClass.h"
 @import ObjectiveC.runtime;
-#import "MFDataClassDictionaryDecoder.h"
+#import "MFPlistDecoder.h"
 #import "EventLoggerForBradMacros.h"
 #import "NSCoderErrors.h"
+#import "MFCoding.h"
+#import "TreeNode.h"
+
+#import "NSCharacterSet+Additions.h"
 
 @implementation MFDataClassBase
 
@@ -21,7 +25,7 @@
 ///         Source: Apple Docs: KeyValueCoding - Representing Non-Object Values: https://developer.apple.com/library/archive/documentation/Cocoa/Conceptual/KeyValueCoding/DataTypes.html#//apple_ref/doc/uid/20002171-BAJEAIEE
 ///     `NSValue` (and its subclass `NSNumber`) also adopt the `NSCopying` and `NSSecureCoding` protocols. On top of this, NSValue also implements the`hash` and `isEqual:`methods in a proper way (and it works even if you box custom structs - From my limited testing).
 ///     -> Because of this, we don't need much primitive-value-specific code - NSValue and KVC does it all for us!
-///         (Where 'primitive-value' refers to any non-object value that KVC is compatible with, such as c numbers and structs. Other c types like unions don't work with KVC I heard, and therefore might break `MFDataClass`.) (Update: We now validate inside `+ load` that there are no unions.)
+///         (Where 'primitive-value' refers to any non-object value that KVC is compatible with, such as c numbers and structs. Other c types like unions don't work with KVC I heard, and therefore might break `MFDataClass`.) (Update: We now validate inside +load that there are no unions and stuff.)
 
 // MARK: (Almost) compile time validation
 
@@ -196,100 +200,92 @@
 
 // MARK: NSSecureCoding protocol
 
-+ (BOOL)supportsSecureCoding {
++ (BOOL) supportsSecureCoding {
     /// I think we only support secureCoding if all properties have types that also conform to `NSSecureCoding`? Not sure what happens if this is not the case. But I thinkkk it would just fail gracefully, and still work when we turn `.requiresSecureCoding` off.
-    ///     Update: In `+ load` we now do validation that properties support `NSSecureCoding`.
+    ///     Update: In +load we now do validation that properties support `NSSecureCoding`.
     return YES;
 }
 
-- (void)encodeWithCoder:(NSCoder *)coder { /// You don't call these encoding/decoding methods directly, instead you use an NSCoder subclass or (`MFEncode()` / `MFDecode()`)
+- (void) encodeWithCoder: (NSCoder *)coder { /// You don't call these encoding/decoding methods directly, instead you use an NSCoder subclass or (`MFEncode()` / `MFDecode()`)
     for (NSString *key in self.class.allPropertyNames) {
-        id value = [self valueForKey:key];
-        if (value) {
-            [coder encodeObject:value forKey:key];
-        }
+        id value = [self valueForKey: key];
+        [coder encodeObject: value forKey: key]; /// We also encode nil values.
     }
 }
+
+/// Helper macros for decoding failures
+///     Explanation: See MFCoding.m NSCoderErrors.m
+
+#define failWithError(code_, messageAndFormatArgs...) ({                               \
+    [coder failWithError:MFNSCoderErrorMake((code_), stringf(messageAndFormatArgs))];  \
+    return nil;                                                                        \
+})
+
+- (instancetype) initWithCoder: (NSCoder *)coder {
     
-- (instancetype)initWithCoder:(NSCoder *)coder {
-    
-    /// Also see:
-    ///     Apple WWDC 2018 Session 222 "Data You Can Trust": https://devstreaming-cdn.apple.com/videos/wwdc/2018/222krhixqaeggyrn33/222/222_hd_data_you_can_trust.mp4?
-    ///         (This has been deleted from the Apple page for some reason, but their CDN still has the video)
-    ///         -> This explains how and why to use `NSSecureCoding`
+    /// Also see: MFCoding.m for explanation of relevant concepts.
     ///
-    /// On `NSSecureCoding`: (Last updated: Oct 2024)
-    ///     I thought about this a bit and I think NSSecureCoding and how Apple communicates it is a bit weird / ineffective.
-    ///     As I understand the core problem, basically there's a possibility that, between encoding and decoding an object, the encoded data could be manipulated by attackers in malicious ways. (serialization attack)
-    ///     1. First of all, when your encoded data comes from a controlled, trusted source, (like from the user's library as it is the case for the config.plist file of Mac Mouse Fix), then validating the high level data like this is unnecessary.
-    ///         That's because accidental data corruption would result in an invalid archive with extremely high likelyhood, so if you successfully unarchived your entire object graph, any further validation is only helpful for guarding against *deliberate* tampering by hackers - which is not a concern if the data comes from a trusted source.
-    ///     2. Secondly, the `NSSecureCoding` documentation only speaks about validating that the decoded object's `classes` are what you expect.
-    ///         However, this is not enough to prevent malicious tampering. For example if you decode a URL, that could be replaced by a hacker with a phishing URL and even if you implement `NSSecureCoding` exactly as advertised by Apple, that wouldn't help at all.
-    ///         For some reason Apple only focuses on class-substitution attacks with `NSSecureCoding`.
-    ///             There is one thing that's special about class-substitution-attacks which warrants implementing a special API, but doesn't seem to warrant focusing the entire `NSSecureCoding` protocol around it and pushing everyone to adopt it:
-    ///                 The thing that's special is that: For all other types of validation except for matching-class-validation, you can make the decoding watertight against attackers by validating the decoded values *after* they come out of the decoder.
-    ///                 But when decoding objects, their `- init` or `+ load` methods could already produce side-effects before you can validate whether the object is of the right class.
-    ///                 -> So this opens a possible attack vector, (which would be very hard to do anything useful with since the hacker could still only instantiate classes which are already defined in your application, and could only work with their `- initWithCoder`, `+ initialize` or `+ load` methods.)
-    ///                     This attack-vector cannot be closed by traditional validation methods where you validate the class *after* it comes out of the decoder so that's why `NSCoder - decodeObjectOfClass:` exists. It makes sense.
-    ///     -> So I understand why `decodeObjectOfClass:` exists - it makes it possible to make your decoding process *totally* watertight against attackers, *if* you use it alongside more extensive validation.
-    ///     -> But the only thing that `NSSecureCoding` does is tell/require you to use `decodeObjectOfClass:`. And Apple seems to basically push everybody to use `NSSecureCoding` all the time.
-    ///         This doesn't make sense to me because:
-    ///         If you have a trusted source for the data, `decodeObjectOfClass:`/`NSSecureCoding` is basically entirely unnecessary.
-    ///         If you have an untrusted source, just adopting `decodeObjectOfClass:`/`NSSecureCoding` is by far not enough to make things really watertight against attacks, but Apple doesn't seem to mention this in the `NSSecureCoding` docs.
+    /// Here, we're implementing **autogenerated validation** for decoded values.
+    ///     As discussed inside MFCoding.m, validation of decoded values is not a solution for any problem except when the archives are coming from an *untrusted source*. When that is the case, these autogenerated validations are *not enough* to actually ensure security.
+    ///     The automated validations might improve robustness a bit (in case of hacker-attacks or in case of trying to decode an outdated archive.). But they shouldn't be relied on for anything.
+    ///     If you really need protections against hacker attacks, implement **custom validation**. If you need to handle outdated archives, implement **versioning** -> This is explained in detail in MFCoding.m
     ///
-    /// About the validation we do here: (Last updated: Oct 2024)
-    ///     For `MFDataClass` we're validating **nullability** and **type** of every decoded property.
-    ///     As explained in the `NSSecureCoding` section, this is pretty unnecessary unless we're decoding data from an untrusted source.
-    ///     If we are decoding data from an untrusted source, then we should probably do additional, custom validation, because the nullability and type checks are not enough to make things actually secure.
-    ///         -> We could do additional, custom validation by creating a category for an `MFDataClass`.)
-    ///         -> Untrusted data is not a concern for Mac Mouse Fix currently.
-    ///             But perhaps in the future it will be? E.g. if we promote sharing config.plist files between users?
-    ///             Update: [Jan 2025] Actually, we are dealing with untrusted data because anyone can send data to our message ports.
+    ///     (Sidenote: You turn on validations by setting coder.requiresSecureCoding = YES)
     ///
-    /// Update:
-    ///     Actually, I can think of another reason that our nullability and type validation could be useful aside from protecting against hacker attacks: When you change the layout of an MFDataClass between MMF versions.
-    ///     In this case, ideally you would version your MFDataClasses and then validate that the version number matches. However, in the absence of deliberate versioning, our nullability and type checks should at least prevent loading of outdated MFDataClasses from producing any crashes in the code due to unexpected nil values or unexpected types inside the MFDataClass.
-    ///         However there could still be problems, so we should probably version our MFDataClasses.
-    ///         TODO: (Should maybe update our MFDataClass macros to include a version arg?)
+    /// What exactly does the **autogenerated validation** here do?
+    ///     We do all of the validations that are feasible to do automatically, given the declaration of the MFDataClass:
+    ///     We validate:            (as of [Feb 2025])
+    ///         1. That the coder contains a key for each property name
+    ///         2. That the decoded value is not nil, unless the property is declared as `nullable`.
+    ///         3. That the type of the decoded value matches the type signature of the property.
+    ///             - For lightweight generics, the exact structure of the decoded object-tree isn't validated. E.g. if the property's type is (`NSDictionary<NSString *, NSNumber *> *`) but we decode
+    ///                 a dict with swapped key and value-types (`NSDictionary<NSNumber *, NSString *> *`), then this method will *not* fail the decode. If you need that validation, you need to implement *custom validation*.
     ///
-    
-    #define failWithError(code_, messageAndFormatArgs...) ({                               \
-        [coder failWithError:MFNSCoderErrorMake((code_), stringf(messageAndFormatArgs))];  \
-        return nil;                                                                        \
-    })
+    ///         > If any of these validations fail, the entire decode fails.
+    ///
+    /// How to implement **custom validation**?
+    ///     > Basically, override this method (-initWithCoder:) in a MFDataClass category.
+    ///     Implementation tips:
+    ///         - On KVC boxing:
+    ///             Be wary that [MFDataClassBase initWithCoder:] and [MFDataClassBase encodeWithCoder:] uses KVC to get/set property values, which auto-boxes/unboxes all non-object values.
+    ///             Speculation: NSCoder methods like [NSCoder decodeIntForKey:] might be used to conveniently unbox values, but I haven't tested that.
+    ///         - In your implementation, call [super initWithCoder:] to reuse and extend the default validation. (duh)
+    ///     Discussion: Why the boilerplate of overriding -[initWithCoder:] entirely?
+    ///             We could instead have an overrideable -validateValue:forProperty: method (Or the standard KVC method -validateValue:forKey:error: ?) – and have that be called by -initWithCoder:
+    ///             However, I think simply overriding -initWithCoder: is less annoying and more flexible due to the "allowedClasses" shenanigans that NSSecureCoding requires.
     
     self = [super init];
     if (!self) return nil;
     
     for (NSString *key in self.class.allPropertyNames) {
     
-        
-        
         if (!coder.requiresSecureCoding) {
             
             /// Non-secure decoding
             ///  -> Do absolutely no validation -> Should be a bit faster. Can't think of other reasons to use this. Not sure the speed ever matters.
-            id _Nullable value = [coder decodeObjectForKey:key];
+            id _Nullable value = [coder decodeObjectForKey: key];
             
             /// Store the decoded value inside the self.key property
-            [self setValue:value forKey:key];
+            [self setValue: value forKey: key];
         }
         
         else if (coder.requiresSecureCoding) {
         
+            /// Validated/"secure" decoding
+
             /// Guard valueNotFound
             if (![coder containsValueForKey:key]) {
                 assert(false);
                 failWithError(NSCoderValueNotFoundError, @"No value found for key while decoding %@.%@", [self class], key);
             }
-        
+            
             /// Get typeinfo for the self.key property
             NSString *typeEncoding;     /// The type of the self.key property
             BOOL isNonObjectValue = 0;  /// Whether self.key is an object or of primitive type. || Initializing this to silence compiler warnings (which don't make sense)
             Class expectedClass;        /// The class of the object we're expecting to retrieve from the archive for "key"
-        
+            
             ({
-        
+                
                 /// Get typeEncoding
                 NSString *propertyAttributes = [[self class] attributesForProperty:key];
                 typeEncoding = typeEncodingForProperty(propertyAttributes);
@@ -324,15 +320,21 @@
                 }
             });
             
-            /// Note: Omg KVC has a method `validateValue:forKey:error:`! Maybe that could've replaced all this stuff? ... Nope that's for custom validation, not auto-validation. See https://developer.apple.com/library/archive/documentation/Cocoa/Conceptual/KeyValueCoding/ValidatingProperties.html#//apple_ref/doc/uid/10000107i-CH18-SW1
+            /// Get allowed classes for "secure" decoding
+            NSMutableSet<Class> *allowedClasses = [[NSMutableSet alloc] initWithObjects: expectedClass, nil];
+            if (!isNonObjectValue) {
+                /// Get additional typeinfo about lightweight generics from raw type string
+                NSSet<Class> *additionalClasses = [self.class classesFromRawTypeStringOfProperty: key];
+                [allowedClasses unionSet: additionalClasses];
+            }
             
             /// Decode value
             ///     (Using NSSecureCoding method)
             ///     The decoder will `failWithError:` automatically, if there's a type mismatch or the decoded object does not implement `NSSecureCoding`.
             ///     -> That is, if `coder.requiresSecureCoding == true`
             ///     -> If `coder.requiresSecureCoding == false` then this would do no checks while decoding the object. `expectedClass` would be ignored.
-        
-            id _Nullable value = [coder decodeObjectOfClass:expectedClass forKey:key];
+            
+            id _Nullable value = [coder decodeObjectOfClasses: allowedClasses forKey: key];
             
             /// Guard decoding error
             ///     Depending on the `coder.decodingFailurePolicy`, `decodeObjectOfClass:` might either throw and error or just set `coder.error` and then continue execution, so we check for that here.
@@ -343,7 +345,7 @@
             
             /// Check type
             if (((0)) && !coder.requiresSecureCoding) { /// Why `((0))`?: If `requiresSecureCoding` is true, `decodeObjectOfClass:` will have already checked the type, so we can skip this. Update: These checks are not helpful if `requiresSecureCoding` is turned off. See the discussion above on `NSSecureCoding`
-                if (value != nil && ![value isKindOfClass:expectedClass]) {
+                if (value != nil && ![value isKindOfClass: expectedClass]) {
                     assert(false);
                     failWithError(NSCoderReadCorruptError, @"Class mismatch while decoding %@.%@: Expected: %@. Found: %@", [self class], key, expectedClass, [value class]);
                 }
@@ -359,12 +361,12 @@
             
             /// Check boxed type
             if (isNonObjectValue) {
-            
+                
                 /// Cast to NSValue
                 NSValue *nsValue = (NSValue *)value;
                 
                 /// Get type encodings
-                const char *propertyTypeEncoding = [typeEncoding cStringUsingEncoding:NSUTF8StringEncoding];
+                const char *propertyTypeEncoding = [typeEncoding cStringUsingEncoding: NSUTF8StringEncoding];
                 const char *nsValueTypeEncoding = [nsValue objCType];
                 
                 /// Special case: Booleans
@@ -379,11 +381,12 @@
                 }
             }
             
-            /// Passed all security checks!
+            /// Passed all validations!
             ///     > Store the decoded value inside the self.key property
-            [self setValue:value forKey:key];
-        
-        } /// End of `if (coder.requiresSecureCoding)`
+            ///     Note that this is a KVC function which will automatically unbox the value (if it's an NSValue)
+            [self setValue: value forKey: key];
+            
+        }   /// End of `if (coder.requiresSecureCoding)`
     
     } /// End of self.allPropertyNames iteration
     
@@ -482,12 +485,12 @@
     
         /// Check for circular refs
         ///     This prevents infinite loops if there are circular references in the datastructure. But [NSDictionary -description] seems to just infinite-loop in this case... Maybe this was overkill.
-        NSMutableArray *visitedObjects = threadlocal(NSMutableArray);
+        NSMutableArray *visitedObjects = threadobject([[NSMutableArray alloc] init]);
         NSNumber *s = @((uintptr_t)self); /// We cast self to an NSNumber so that we effectively do pointer-based equality checking instead of using the full `-isEqual` implementation.
-        BOOL didFindCircularRef = [visitedObjects containsObject:s];
+        BOOL didFindCircularRef = [visitedObjects containsObject: s];
         [visitedObjects addObject:s];
         MFDefer ^{
-            assert([[visitedObjects lastObject] isEqual:s]);
+            assert([[visitedObjects lastObject] isEqual: s]);
             [visitedObjects removeLastObject];
         };
         
@@ -514,12 +517,13 @@
     
         
     /// Assemble result
-    NSString *(^addIndent)(NSString *) = ^(NSString *input) {
-        return [input stringByReplacingOccurrencesOfString:@"(\n|^)(.)" /// Match the string start (`^`) and line breaks (`\n`) if they're followed by at least one character (`.`) (That way we skip empty lines)      (General regex explanation: Parentheses `(...)` create a 'capture group')
+    __auto_type addIndent = ^NSString * (NSString *input) {
+        return [input stringByReplacingOccurrencesOfString:@"(^|\n)(.)" /// Match the string start (`^`) and line breaks (`\n`) if they're followed by at least one character (`.`) (That way we skip empty lines)      (General regex explanation: Parentheses `(...)` create a 'capture group')
                                                 withString:@"$1    $2"  /// Insert spaces between 1: the string-start / line break (`\n|^`) and 2: the first character of the line (`.`)                                                   (General regex explanation: `$2` is a 'backreference' to the 2nd 'capture group')
                                                    options:NSRegularExpressionSearch
                                                      range:NSMakeRange(0, input.length)];
     };
+    
     NSString *result;
     if ([content containsString:@"\n"]) {
         result = stringf(@"<%@> {\n%@\n}", NSStringFromClass(self.class), addIndent(content));
@@ -532,7 +536,7 @@
 }
 
 /// MARK: Utility
-+ (NSArray<NSString *> *_Nonnull)allPropertyNames {
++ (NSArray<NSString *> *_Nonnull) allPropertyNames {
     
     /// Notes:
     /// - On caching:
@@ -540,17 +544,31 @@
     ///     But don't forget: If we do a naive cache and just return the same NSArray every time, then this will break if properties are added at runtime.
     ///     (Update: [Feb 2025] I'm pretty sure we never ever wanna add properties at runtime to an MFDataClass. Perhaps we would use `objc_setAssociatedObject()` to do something similar.)
     
+    /// Create cache
+    NSCache *cache = staticobject([[NSCache alloc] init]);
+    NSString *cacheKey = [self className];
+    
+    /// Retrieve cache
+    id resultFromCache = [cache objectForKey: cacheKey]; /// NSCache is thread-safe
+    if (resultFromCache) return resultFromCache;
+    
+    /// Calculate fresh
     NSMutableArray *result = [NSMutableArray array];
+    ({
+        unsigned int propertyCount, i;
+        objc_property_t *properties = class_copyPropertyList([self class], &propertyCount);
+        MFDefer ^{ free(properties); };
+        
+        for (i = 0; i < propertyCount; i++) {
+            const char *propName = property_getName(properties[i]);
+            if (propName) [result addObject: @(propName)]; /// Converting to NSString every time might be a bit slow? ... Update: now we gotta cache!
+        }
+    });
     
-    unsigned int propertyCount, i;
-    objc_property_t *properties = class_copyPropertyList([self class], &propertyCount);
-    MFDefer ^{ free(properties); };
+    /// Store cache
+    [cache setObject: result forKey: cacheKey];
     
-    for (i = 0; i < propertyCount; i++) {
-        const char *propName = property_getName(properties[i]);
-        if (propName) [result addObject:@(propName)]; /// Converting to NSString every time might be a bit slow?
-    }
-    
+    /// Return
     return result;
 }
 
@@ -606,6 +624,7 @@ NSString *_Nullable typeEncodingForProperty(NSString *_Nullable propertyAttribut
     if (propertyAttributes == nil) return nil;
     
     /// Extract the type encoding string
+    ///     TODO: Use NSScanner, it's much better suited for this.
     NSInteger typeEncodingPre = [propertyAttributes rangeOfString:@"T" options:NSLiteralSearch].location;
     NSInteger typeEncodingPost = [propertyAttributes rangeOfString:@"," options:NSLiteralSearch].location;
     if (typeEncodingPre == NSNotFound || typeEncodingPost == NSNotFound) {
@@ -640,7 +659,7 @@ NSString *_Nullable typeEncodingForProperty(NSString *_Nullable propertyAttribut
 // MARK: NSDictionary & JSON conversion
 
 /// (Note: [Jan 2025] Disabled the JSON conversion code, since it was unused.
-///     When we did wanna create an MFDataClass based on JSON, we wrote a specialized function for that MFDataClass which used `asDictionaryWithRequireSecureCoding:` under the hood.)
+///     When we did wanna create an MFDataClass based on JSON (it was MFLicenseConfig), we wrote a specialized method (it was -[initWithJSONDictionary:]) for that MFDataClass which used these dictionary-encoding methods under-the-hood.
 #if 0
     - (NSData *_Nullable)asJSONWithRequireSecureCoding:(BOOL)requireSecureCoding error:(NSError *__autoreleasing _Nullable *_Nullable)errorPtr {
         if (errorPtr) *errorPtr = nil; // Init error
@@ -659,37 +678,41 @@ NSString *_Nullable typeEncodingForProperty(NSString *_Nullable propertyAttribut
     }
 #endif
 
-- (NSDictionary<NSString *, NSObject *> *_Nonnull)asDictionaryWithRequireSecureCoding:(BOOL)requireSecureCoding {
+- (NSDictionary<NSString *, NSObject *> *_Nonnull) asDictionaryWithRequireSecureCoding: (BOOL)requireSecureCoding {
     
     /// Creates a dictionary archive of the MFDataClass hierarchy starting at self
-    ///     (exactly in the format that [self initWithDictionary:] expects)
-    /// Note: We used to use the standard KVC method `dictionaryWithValuesForKeys:` but it cannot recursively convert nested hierarchies of MFDataClass objects.
+    ///     Sidenote: We used to simply use the standard KVC method `dictionaryWithValuesForKeys:` but it cannot recursively convert nested hierarchies of MFDataClass objects.
     
+    id resultDict = MFEncode(self, requireSecureCoding, kMFEncoding_NSDictionary);
+    return resultDict;
+    
+    #if 0 /// Old implementation
     NSMutableDictionary *resultDict = [NSMutableDictionary dictionary];
-
     for (NSString *propName in self.class.allPropertyNames) {
         id value = [self valueForKey:propName];
         if (requireSecureCoding && ![value conformsToProtocol:@protocol(NSSecureCoding)])
             assert(false && "The value doesn't support secure coding. Don't think this should ever happen since we're already validating this in `+ load`."); /// We don't throw fancy errors. This is just so that, during development, we don't accidentally decide to encode stuff we can't decode later.
-        if (!value) value = NSNull.null; /// [Jan 2025] Represent nil with NSNull in the dict. MFDataClassDictionaryDecoder does the inverse conversion.
+        if (!value) value = NSNull.null; /// [Jan 2025] Represent nil with NSNull in the dict. MFPlistDecoder does the inverse conversion.
         if (isclass(value, MFDataClassBase)) value = [(MFDataClassBase *)value asDictionaryWithRequireSecureCoding:requireSecureCoding]; /// Recurse
         resultDict[propName] = value;
     }
-    
     resultDict[MFDataClass_DictArchiveKey_ClassName] = NSStringFromClass(self.class);
-    
-    return resultDict;
+    #endif
 }
 
-- (instancetype _Nullable)initWithDictionary:(NSDictionary *_Nonnull)dict requireSecureCoding:(BOOL)requireSecureCoding error:(NSError *__autoreleasing _Nullable * _Nullable)errorPtr {
+- (instancetype _Nullable) initWithDictionary: (NSDictionary *_Nonnull)dict requireSecureCoding: (BOOL)requireSecureCoding {
     
     /// Create an instance from a dictionary.
     ///     If `requireSecureCoding` is enabled, then all of the validation mechanisms from `initWithCoder:` are turned on.
     ///     Values that should be nil are expected to be `NSNull` in the dict.
     
     if (!dict) { assert(false); return nil; }
+        
+    self = (id)MFDecode(dict, requireSecureCoding, MFNSSetMake(self.class), kMFEncoding_NSDictionary);
+    return self;
     
-    if ((0) && !requireSecureCoding) {
+    #if 0 /// Old implementation
+    if (!requireSecureCoding) {
         
         /// Note: Why did we write an extra codepath for non-validated decoding? ... disabled this codepath.
         /// TODO: Delete this
@@ -705,9 +728,9 @@ NSString *_Nullable typeEncodingForProperty(NSString *_Nullable propertyAttribut
             if (value == nil)           assert(false && "The dictionary archive didn't have a value defined for all property names. The dictionary archive is probably invalid or outdated.");
             if (value == NSNull.null)   value = nil;
             if (isclass(value, NSDictionary)) {
-                Class propClass = NSClassFromString(classNameForProperty([typeEncodingForProperty([self.class attributesForProperty:propName]) cStringUsingEncoding:NSUTF8StringEncoding]));
+                Class propClass = NSClassFromString(classNameForProperty([typeEncodingForProperty([self.class attributesForProperty: propName]) cStringUsingEncoding: NSUTF8StringEncoding]));
                 if (isclass(propClass, MFDataClassBase)) {
-                    value = [((MFDataClassBase *)[propClass alloc]) initWithDictionary:value requireSecureCoding:NO error:errorPtr]; /// Recurse.
+                    value = [((MFDataClassBase *)[propClass alloc]) initWithDictionary: value requireSecureCoding: NO error: errorPtr]; /// Recurse.
                     if (errorPtr && *errorPtr) return nil; /// Not totally sure this is appropriate. I mean if secure coding is disabled, initWithDictionary: doesn't set any errors anyways?
                 }
             }
@@ -716,22 +739,18 @@ NSString *_Nullable typeEncodingForProperty(NSString *_Nullable propertyAttribut
         
         return self;
         
-    } else {
-    
-        /// Decode using `initWithCoder:`
-        NSCoder *decoder = [[MFDataClassDictionaryDecoder alloc] initForReadingFromDict:dict requiresSecureCoding:requireSecureCoding];
-        self = [self initWithCoder:decoder];
-        if (errorPtr) *errorPtr = decoder.error; /// Make sure not to let `*errorPtr` uninitialized
-        return self;
     }
+    #endif
 }
+
+
 
 /// MARK: Property-nullability analysis
 
-+ (BOOL)propertyIsAllowedToBeNil:(NSString *)propertyName {
++ (BOOL) propertyIsAllowedToBeNil: (NSString *)propertyName {
     
-    NSString *nullabilityString = [self rawNullabilityAndTypeOfProperty:propertyName][0];
-    BOOL result = [nullabilityString isEqual:@"nullable"];
+    NSString *nullabilityString = [self rawNullabilityAndTypeOfProperty: propertyName][0];
+    BOOL result = [nullabilityString isEqual: @"nullable"];
     
     return result;
     
@@ -749,7 +768,7 @@ NSString *_Nullable typeEncodingForProperty(NSString *_Nullable propertyAttribut
     ///         Now, inside `+ load`, we validate that the nullabilityString is empty if and only if the property type does *not* support nullability. For types that support nullability, nullability needs to be specified explicitly. This gets rid of the ambiguity of `@""`, letting us simplify this code a lot.
 }
 
-+ (NSArray<NSString *> *_Nullable)rawNullabilityAndTypeOfProperty:(NSString *_Nullable)propertyName {
++ (NSArray<NSString *> *_Nullable) rawNullabilityAndTypeOfProperty: (NSString *_Nullable)propertyName {
     ///
     /// Returns a tuple (NSArray) of
     ///     1. stringified version of the nullability attribute
@@ -800,7 +819,7 @@ BOOL propertyHasTypeThatSupportsNullability(NSString *_Nullable typeEncoding) {
     [typeEncoding getCharacters:chars];
     
     unichar c = chars[0];
-    if (c == 'r') c = chars[1]; /// Skip lead 'const' encoding.
+    if (c == 'r') c = chars[1]; /// Skip lead 'const' encoding. This shouldn't crash except if the typeEncoding is malformed, which we never expect.
     BOOL result = c == '^' || c == '@' || c == '*';
     
     return result;
@@ -835,7 +854,6 @@ NSString *_Nullable classNameForProperty(const char *_Nullable typeEncoding) {
     ///
     /// TODO: Perhaps use NSScanner instead of this low-level c-string stuff
     ///     (Might be easier.)
-    
     
     /// Check NULL
     if (typeEncoding == NULL) { /// `strlen()` segfaults if you pass it NULL
@@ -873,4 +891,173 @@ NSString *_Nullable classNameForProperty(const char *_Nullable typeEncoding) {
     return @(classEncoding);
 }
 
++ (NSSet<Class> *) classesFromRawTypeStringOfProperty: (NSString *)propName {
+    
+    /// This is a convenience/cached wrapper around `extractClassesFromRawTypeString()`
+    ///     Why parse the tree into a set?
+    ///         `extractClassesFromRawTypeString()` returns a tree. We parse it into an NSSet here, since that's what -[NSCoder decodeObjectOfClasses:forKey:] expects.
+    ///         We could theoretically use the tree directly, to validate the internal structure of the decoded values.
+    ///             But this would require us to hardcode special rules for different generic datatypes. E.g. for `NSDictionary<NSNumber *, NSString *> *`,
+    ///             we'd have to hardcode that the decoded value x needs to be an NSDictionary, all elements of [x allKeys] need to be NSNumber, and all elements of [x allValues] need to be NSString.
+    ///             > We'd have to manually write different code for every generic type > I don't think it's worth it, especially since automatic validation isn't that useful anyways as explained in MFCoding.m (This calls into question this whole lightweight-generics parsing here. But I guess it was fun.)
+    
+    /// Get cache
+    NSCache *cache      = staticobject([[NSCache alloc] init]);
+    NSString *cacheKey  = stringf(@"%@.%@", [self className], propName);
+    
+    /// Retrieve cached
+    id cached = [cache objectForKey: cacheKey];
+    if (cached) return cached;
+    
+    /// Calculate fresh
+    NSMutableSet<Class> *result = [[NSMutableSet alloc] init];
+    NSString *rawTypeString = [self rawNullabilityAndTypeOfProperty: propName][1];
+    TreeNode *tree = extractClassesFromRawTypeString(rawTypeString);
+     
+    for (TreeNode<Class> *node in tree.depthFirstEnumerator) {
+        Class cls = [node representedObject];
+        if (cls) [result addObject: cls];
+    }
+    
+    /// Store in cache
+    [cache setObject: result forKey: cacheKey];
+
+    /// Return
+    return result;
+}
+
+TreeNode<Class> *_Nonnull extractClassesFromRawTypeString(NSString *_Nonnull rawTypeString) {
+        
+    /// Crazy code: Parse `rawTypeString` to get lightweight generics classes.
+    ///      ('rawTypeString's are extracted straight from the source code via macros, instead of coming from the objc runtime)
+    ///     Explanation/Discussion:
+    ///     If we have an MFDataClass property declared with type `NSArray<NSArray<MFLicenseState * > * > *` (matrix of MFLicenseState),
+    ///         then we could completely autogenerate NSSecureCoding conformance for that class, if we can extract all the classes from the type string.
+    ///         (In the objc runtime this would just show up as `NSArray`, since lightweight <generics> get lost after compilation.)
+    ///     Otherwise we have to manually define a list of -[allowedClasses] to make NSSecureCoding decoding work.
+    ///
+    /// Why not use objc runtime?
+    ///     - We need to use macros to get the `rawTypeString`, since the objc runtime typeinfo doesn't contain info about lightweight generics – which we need for this to work.
+    ///
+    /// Return value format:
+    ///     The returned tree cannot be nil, but the values contained in the individual nodes of the tree may be nil if parsing the corresponding section of the rawTypeString into a Class object failed.
+    
+    if (!rawTypeString || [rawTypeString length] == 0) {
+        assert(false);
+        return [[TreeNode alloc] initWithRepresentedObject: nil];
+    }
+        
+    /// Declare result
+    TreeNode<Class> *result = nil;
+        
+    /// Declare reusable var
+    bool scannerDidScan;
+        
+    /// Create scanner
+    NSScanner *scanner = [NSScanner scannerWithString: rawTypeString];
+    
+    /// Find topClass
+    Class topClass = nil;
+    while (1) {
+    
+        if (scanner.atEnd) break;
+        
+        /// Find next c identifier
+        NSUInteger lastLocation = [scanner scanLocation];
+        NSString *skippedChars;
+        scannerDidScan = [scanner scanUpToCharactersFromSet: NSCharacterSet.cIdentifierCharacterSet_Start intoString: &skippedChars];
+        
+        if ([skippedChars containsString: @"<"]) { /// Don't scan past generic specializations.
+            /// Discussion: In this case, the topClass is nil, but we'll still try to keep parsing the generic specialization – I guess for robustness/debugging.
+            [scanner setScanLocation: lastLocation];
+            break;
+        }
+        
+        if (scanner.atEnd) break;
+        
+        /// Parse found c identifier
+        NSString *identifier = nil;
+        scannerDidScan = [scanner scanCharactersFromSet: NSCharacterSet.cIdentifierCharacterSet_Continue intoString: &identifier]; /// This assumes that `_Continue` is a   superset of `_Start`.
+        Class cls = nil;
+        if (identifier && (cls = NSClassFromString(identifier))) { /// Find first identifier that is a valid class name. This makes us skip keywords like `const` or `__kindof` that can appear before the class name.
+            topClass = cls;
+            break;
+        }
+    }
+        
+    /// Create tree node
+    result = [[TreeNode alloc] initWithRepresentedObject: topClass];
+    
+    /// Parse generic specializations
+    ///     Note: Since the syntax for protocols and generics is the same (< ... > ), this will also catch protocols.
+    ///     But then NSClassFromString() should fail on the protocols name and the tree node for the protocol should end up containing nil – which is fine.
+    
+    NSMutableArray<NSString *> *specializations = [NSMutableArray array];
+    do {
+        
+        if (scanner.atEnd) break;
+        scannerDidScan = [scanner scanUpToString: @"<" intoString: nil]; /// Skip everything between the topClass and the generic specialization
+        if (scanner.atEnd) break;
+        
+        ({
+            
+            unichar chars[rawTypeString.length]; /// Put the string on the stack for convenience and speed (?)
+            [rawTypeString getCharacters: chars];
+        
+            int bracketBalance = 0;
+            NSUInteger i, j;
+            i = j = scanner.scanLocation;
+            
+            for ( ;; j++) {
+                
+                if (j >= arrcount(chars)) { assert(false); break; } /// Failsafe so we don't infinite-loop/segfault
+                
+                if      (chars[j] == '<')  bracketBalance++; /// Guaranteed to hit this during first iteration.
+                else if (chars[j] == '>')  bracketBalance--;
+                
+                else if (chars[j] == ',' && bracketBalance == 1) {
+                    [specializations addObject: [rawTypeString substringWithRange: rangefromto(i+1, j-1)]];
+                    i = j;
+                }
+                if (bracketBalance <= 0) {
+                    [specializations addObject: [rawTypeString substringWithRange: rangefromto(i+1, j-1)]];
+                    break;
+                }
+            }
+            
+            assert(bracketBalance == 0);
+        });
+        
+    } while (0);
+    
+    /// Recurse
+    ///     Note: We expect 1 specializations for NSArray, and 2 for NSDictionary. I've never seen 3 or more.
+    for (NSString *spec in specializations) {
+        TreeNode *child = extractClassesFromRawTypeString(spec);
+        [[result mutableChildNodes] addObject: child];
+    }
+    
+    /// Return
+    return result;
+}
+
 @end
+
+#define MF_TEST 0
+
+#if MF_TEST
+    @interface MFDataClass_RandomLoadTests : NSObject @end
+    @implementation MFDataClass_RandomLoadTests
+
+    + (void)load {
+        __attribute__((unused))
+            const NSDictionary<NSDictionary<NSString *, __kindof NSArray<NSString *> *> *, NSArray<const NSDate *> *> *const
+            aaa = nil;
+        NSString  *typeStr = @"const NSDictionary<NSDictionary<NSString *,NSArray<NSStringgggg *> *> *,NSArray<const NSDate *>*>*const";
+        NSString  *typeStr_nospace = @"NSDictionary<NSDictionary<NSString,NSArray<NSString>>,NSArray<NSDate>>const";
+        TreeNode *parsed = parseRawTypeString(typeStr);
+        TreeNode *parsed_nospace = parseRawTypeString(typeStr_nospace);
+        NSLog(@"TEST: parsed rawTypeString:\n%@\nnospace:\n%@", parsed, parsed_nospace);
+    }
+    @end
+#endif

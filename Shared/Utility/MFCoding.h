@@ -7,15 +7,21 @@
 // --------------------------------------------------------------------------
 //
 
-/// All object pointers in this file are nullable.
-///     Unfortunately there's only `NS_ASSUME_NONNULL` and no `NS_ASSUME_NULLABLE`.
-///     Afaik, these will all be imported into Swift as implicitly unwrapped optionals. We we write a proper Swift wrapper that handles optionals correctly.
-
 #import <Foundation/Foundation.h>
 
 @interface MFCoding : NSObject
 
-NSData *MFEncode(NSObject<NSCoding> *codable, BOOL requireSecureCoding, NSPropertyListFormat plistFormat) NS_REFINED_FOR_SWIFT;
-NSObject<NSCoding> *MFDecode(NSData *data, BOOL requireSecureCoding, NSArray<Class> *expectedClasses) NS_REFINED_FOR_SWIFT;
+typedef enum: CFIndex {
+    /// NSKeyedArchiver encodings
+    kMFEncoding_NSData_OpenStep        =     kCFPropertyListOpenStepFormat,
+    kMFEncoding_NSData_XML             =     kCFPropertyListXMLFormat_v1_0,
+    kMFEncoding_NSData_Binary          =     kCFPropertyListBinaryFormat_v1_0,
+    
+    /// MFDataClassDictionary encoding
+    kMFEncoding_NSDictionary,
+} MFEncoding;
+
+id _Nullable MFEncode(NSObject<NSCoding> *_Nonnull codable, BOOL requireSecureCoding, MFEncoding outputArchiveFormat) NS_REFINED_FOR_SWIFT;
+id<NSCoding> _Nullable MFDecode(id _Nonnull archive, BOOL requireSecureCoding, NSSet<Class> *_Nullable expectedClasses, MFEncoding inputArchiveFormat) NS_REFINED_FOR_SWIFT;
 
 @end

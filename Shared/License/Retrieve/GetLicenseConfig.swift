@@ -110,11 +110,12 @@ import CocoaLumberjackSwift
         }
         
         /// Instantiate
-        let (result, instantiationError) = MFCatch { try MFLicenseConfig(jsonDictionary: NSMutableDictionary(dictionary: dict),
-                                                                         freshness: kMFValueFreshnessFresh,
-                                                                         requireSecureCoding: true) }
+        let result = MFLicenseConfig(jsonDictionary: NSMutableDictionary(dictionary: dict),
+                                     freshness: kMFValueFreshnessFresh,
+                                     requireSecureCoding: true)
+
         guard let result = result else {
-            DDLogError("GetLicenseConfig: Failed to get MFLicenseConfig from server. Instantiation error: \(instantiationError ?? "<nil>"). jsonDict: \(dict). URLResponse: \(urlResponse)")
+            DDLogError("GetLicenseConfig: Failed to instantiate MFLicenseConfig from jsonDict received from server: \(dict). URLResponse: \(urlResponse)")
             return nil
         }
         
@@ -135,11 +136,11 @@ import CocoaLumberjackSwift
         }
         
         /// Instantiate
-        let (instance, error) = MFCatch { try MFLicenseConfig(jsonDictionary: NSMutableDictionary(dictionary: cachedDict),
-                                                              freshness: kMFValueFreshnessCached,
-                                                              requireSecureCoding: true) }
+        let instance = MFLicenseConfig(jsonDictionary: NSMutableDictionary(dictionary: cachedDict),
+                                       freshness: kMFValueFreshnessCached,
+                                       requireSecureCoding: true)
         guard let instance = instance else {
-            DDLogError("GetLicenseConfig: Failed to get MFLicenseConfig from cache. Instantiating failed with error:\n\(error ?? "<nil>").")
+            DDLogError("GetLicenseConfig: Failed to instantiate MFLicenseConfig from cached dict: \(cachedDict).")
             return nil
         }
         
@@ -153,10 +154,11 @@ import CocoaLumberjackSwift
             let url = Bundle.main.url(forResource: "fallback_licenseinfo_config", withExtension: "json")! /// Do forced cast here because we need some fallback. If this fails somethings totally wrong, so we should crash
             let data = try Data(contentsOf: url, options: [])
             let dict = try JSONSerialization.jsonObject(with: data, options: []) as! NSDictionary
-            let instance = try MFLicenseConfig(jsonDictionary: NSMutableDictionary(dictionary: dict), freshness: kMFValueFreshnessFallback, requireSecureCoding: true)
+            let instance = MFLicenseConfig(jsonDictionary: NSMutableDictionary(dictionary: dict), freshness: kMFValueFreshnessFallback, requireSecureCoding: true)
+            guard let instance else { throw MFNSErrorBasicMake("MFLicenseConfig initializer returned nil.") }
             return instance
         } catch {
-            fatalError("Loading licenseConfig from fallback failed (this should never happen). Error:\n\(error)")
+            fatalError("Loading licenseConfig from fallback failed (this should never happen). Error:\n\(error).")
         }
     }
     

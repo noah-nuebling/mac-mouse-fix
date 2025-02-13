@@ -14,23 +14,24 @@
 
 #pragma mark - Convenience macros
 
-#define makeCharSet(str) ({                                                 \
-    __block NSCharacterSet *result = nil;                                   \
+#define makeCharSet(str) (NSCharacterSet *) ({                                                 \
+    static NSCharacterSet *result = nil;                                    \
     static dispatch_once_t onceToken;                                       \
     dispatch_once(&onceToken, ^{                                            \
-        result = [NSCharacterSet characterSetWithCharactersInString:(str)]; \
+        result = [NSCharacterSet characterSetWithCharactersInString: (str)];\
     });                                                                     \
     result;                                                                 \
 })
 
-#define mergeCharSets(sets...) ({                           /** Variadic (...) so that the sets arg can contain commas. */\
-    __block NSMutableCharacterSet *result = nil;            \
+#define mergeCharSets(sets...) (NSCharacterSet *) ({        /** Variadic (...) so that the sets arg can contain commas. */\
+    static NSMutableCharacterSet *result = nil;             \
     static dispatch_once_t onceToken;                       \
     dispatch_once(&onceToken, ^{                            \
         result = [[NSMutableCharacterSet alloc] init];      \
         for (NSCharacterSet *set in (sets)) {               \
-            [result formUnionWithCharacterSet:set];         \
+            [result formUnionWithCharacterSet: set];        \
         }                                                   \
+        result = [result copy];                             /** Make immutable || IIRC the docs mention that immutable characterSets are more efficient.*/\
     });                                                     \
     result;                                                 \
 })                                                          \
@@ -78,7 +79,6 @@
 }
 
 + (NSCharacterSet *)cIdentifierCharacterSet_Continue {
-    
     /// Allowed characters for the non-first characters of a c identifier
     NSCharacterSet *result = mergeCharSets(@[
         self.asciiLetterCharacterSet,

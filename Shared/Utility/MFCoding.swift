@@ -14,17 +14,18 @@
 
 import Foundation
 
-func MFEncode(_ codable: NSObject & NSCoding, requireSecureCoding: Bool, plistFormat: PropertyListSerialization.PropertyListFormat) -> NSData? {
+func MFEncode(_ codable: NSObject & NSCoding, requireSecureCoding: Bool, encoding: MFEncoding) -> Any? {
     let result = __MFEncode(codable,
                             requireSecureCoding,
-                            plistFormat)
-                            as NSData?
+                            encoding)
+                            as Any?
     return result
 }
-func MFDecode(_ data: NSData, requireSecureCoding: Bool, expectedClasses: [AnyClass]?) -> (NSObject & NSCoding)? {
+func MFDecode(_ data: NSData, requireSecureCoding: Bool, expectedClasses: [AnyClass]?, encoding: MFEncoding) -> (NSObject & NSCoding)? {
     let result = __MFDecode(data as Data,
                             requireSecureCoding,
-                            expectedClasses)
+                            expectedClasses == nil ? nil : Set(expectedClasses as! [AnyHashable]), /// Make sure to only pass in objc `Class` objects, otherwise this might crash I think.
+                            encoding)
                             as! (NSObject & NSCoding)?
 
     return result

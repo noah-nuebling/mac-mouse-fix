@@ -32,7 +32,7 @@ void MFCFRunLoopPerform(CFRunLoopRef _Nonnull rl, NSArray<NSRunLoopMode> *_Nulla
     ///     - `-[NSRunLoop performInModes:block:]`? Maybe, but the docs say NSRunLoop APIs aren't thread-safe.
     ///         Sidenote: Uses CFRunLoopPerformBlock() under-the-hood.
     ///         Sidenote: The simpler variant -[NSRunLoop performBlock:] only runs in the default mode based on my assembly-investigations.
-    ///     - `-[NSObject performSelector: onThread:...]`? Should work, is flexible (can be delayed, and canceled just like NSTimer, can also be awaited like `dispatch_sync`) but the API is cumbersome for simple stuff.
+    ///     - `-[NSObject performSelector:onThread:...]`? Should work, is flexible (can be delayed, and canceled just like NSTimer, can also be awaited like `dispatch_sync`) but the API is cumbersome for simple stuff. - maybe we could wrap it?
     ///     - `CFRunLoopPerformBlock()`? >> Yes sounds good. <<
     ///
     /// Sidenote: NSRunLoop vs CFRunLoop:
@@ -80,14 +80,14 @@ bool MFCFRunLoopPerform_sync(CFRunLoopRef _Nonnull rl, NSArray<NSRunLoopMode> *_
         return didTimeOut;
     }
     
-    NSDate *timeoutDate = (timeout <= 0) ? nil : [NSDate dateWithTimeIntervalSinceNow:timeout]; /// We calculate the timeoutDate early in the function, so that it's accurate. Not sure if that's silly.
+    NSDate *timeoutDate = (timeout <= 0) ? nil : [NSDate dateWithTimeIntervalSinceNow: timeout]; /// We calculate the timeoutDate early in the function, so that it's accurate. Not sure if that's silly.
     
-    MFSemaphore *semaphore = [[MFSemaphore alloc] initWithUnits:0];
+    MFSemaphore *semaphore = [[MFSemaphore alloc] initWithUnits: 0];
     MFCFRunLoopPerform(rl, modes, ^{
         workload();
         [semaphore releaseUnit];
     });
-    didTimeOut = [semaphore acquireUnit:timeoutDate];
+    didTimeOut = [semaphore acquireUnit: timeoutDate]; /// We completely block the current thread/runloop. Do the waiting `-[NSObject performSelector:onThread:...]` APIs do that, too?
     
     return didTimeOut;
 }
@@ -618,11 +618,11 @@ bool runningHelper(void) {
 
 #pragma mark - Deep copies
 
-+ (id)deepMutableCopyOf:(id)object {
++ (id) deepMutableCopyOf: (id)object {
     
     /// NSPropertyListSerialization fails for our remapDict because we're using NSNumber as dictionary keys. CFPropertyListCreateDeepCopy doesn't work either.
     ///     So we're doing this manually...
-    /// Edit: Doesn't NSKeyedArchiver work? Is it about making it mutable?
+    /// Edit: Doesn't NSPropertyListSerialization work? That can also create mutable containers. Maybe this is faster though.
         
     if ([object isKindOfClass:NSDictionary.class]) {
         ///
@@ -677,8 +677,9 @@ bool runningHelper(void) {
     /// Copied this from the Swift implementation in SharedUtilitySwift, since the Swift implementation wasn't compatible with ObjC. We still like to keep both around since the Swift version is nicer with it's generic types. Maybe generics are also possible in this form in ObjC but I don't know how.
     /// The simpler default methods only work with `NSSecureCoding` objects. This implementation also works with `NSCoding` objects.
     /// Src:  https://developer.apple.com/forums/thread/107533
-    /// Edit: This is actually superrrr slow. Was the old one this slow as well? Edit2: I think the old one was also very slow.
-    ///
+    /// Performance: This is actually superrrr slow. Was the old one this slow as well? Edit: I think the old one was also very slow.
+    ///     Edit: [Feb 2025] I implemented a custom MFDeepCopyCoder but I could only make it 20% faster than the NSKeyedArchiver. Maybe NSKeyedArchver got faster, or keyed archiving/unarchiving of objc objects is just inherently slow?
+    ///     Edit: [Feb 2025] Also, is manual recursion (Which we use in `deepMutableCopyOf:`) perhaps faster than an archiver? MFDeepCopyCoder was doing recursion like that afaik, so maybe not.
     /// TODO: Use MFEncode() and MFDecode() instead of this.
     
     assert(original != nil);
@@ -712,9 +713,9 @@ bool runningHelper(void) {
     for (id<NSCopying> key in src) {
         NSObject *dstVal = dst[key];
         NSObject *srcVal = src[key];
-        if ([srcVal isKindOfClass:[NSDictionary class]] || [srcVal isKindOfClass:[NSMutableDictionary class]]) { // Not sure if checking for mutable dict AND dict is necessary
+        if ([srcVal isKindOfClass: [NSDictionary class]] || [srcVal isKindOfClass: [NSMutableDictionary class]]) { // Not sure if checking for mutable dict AND dict is necessary
             /// Nested dictionary found. Recursing.
-            NSDictionary *recursionResult = [self dictionaryWithOverridesAppliedFrom:(NSDictionary *)srcVal to:(NSDictionary *)dstVal];
+            NSDictionary *recursionResult = [self dictionaryWithOverridesAppliedFrom: (NSDictionary *)srcVal to: (NSDictionary *)dstVal];
             dstMutable[key] = recursionResult;
         } else {
             // Leaf found
@@ -724,7 +725,7 @@ bool runningHelper(void) {
     return dstMutable;
 }
 
-+ (int8_t)signOf:(double)x { /// TODO: Remove this in favor of sign(double x)
++ (int8_t) signOf: (double)x { /// TODO: Remove this in favor of sign(double x)
     return sign(x);
 }
 int8_t sign(double x) {
