@@ -40,6 +40,7 @@ Diese Leute haben viel mehr als den Standardpreis ausgegeben und mir einen **ung
 
 **Februar 2025**
 
+- 🇺🇸&nbsp;Lauren&nbsp;Anderson
 - 🇨🇦&nbsp;Philippe&nbsp;Ballandras - "My eyes thank you for the easy zoom functionality. Great work and simply works. Gotta love and support OSS."
 - 🇺🇸&nbsp;Tim&nbsp;Colling - "A great little utility, better than the Logitech app!"
 - 🇬🇧&nbsp;Ashb - "Thank you for building better software than what we get from these billon dollar firms who make mouses. You have made my life better and more productive."
