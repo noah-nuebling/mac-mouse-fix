@@ -42,6 +42,7 @@ These people spent a lot more than the standard price and treated me to an **Inc
 
 **February 2025**
 
+- 🇺🇸&nbsp;Jj&nbsp;L - "Pikachuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuu"
 - 🇬🇧&nbsp;Demi - "The Sims 4 on mac would be nothing without you!!!"
 - 🇺🇸&nbsp;Lauren&nbsp;Anderson
 - 🇨🇦&nbsp;Philippe&nbsp;Ballandras - "My eyes thank you for the easy zoom functionality. Great work and simply works. Gotta love and support OSS."
