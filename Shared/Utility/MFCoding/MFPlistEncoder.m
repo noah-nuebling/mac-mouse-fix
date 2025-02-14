@@ -1,6 +1,6 @@
 //
 // --------------------------------------------------------------------------
-//MFPlistEncoder.m
+// MFPlistEncoder.m
 // Created for Mac Mouse Fix (https://github.com/noah-nuebling/mac-mouse-fix)
 // Created by Noah Nuebling in 2025
 // Licensed under Licensed under the MMF License (https://github.com/noah-nuebling/mac-mouse-fix/blob/master/License)
@@ -132,12 +132,12 @@
     MFDefer ^{ if (didAddToVisitedObjects) [visitedObjects removeLastObject]; };
     
     /// Encode nil
-    ///     ... as `kkMFPlist_Nil` which is a special string – and therefore a plist type.
+    ///     ... as `kMFPlistCoder_Nil` which is a special string – and therefore a plist type.
     /// Notes:
     /// - We don't need special handling for NSNull (represents nil in NSArray/NSDictionary) because it's not a plist type and therefore gets encoded just like any non-plist object.
     /// - If we return actual nil here, that indicates failure, and should only be done through `failWithError()` [Feb 2025]
     if (!obj)
-        return kkMFPlist_Nil;
+        return kMFPlistCoder_Nil;
     
     /// Encoding substitutions
     ///     Ask the object if it wants to replace itself or its class before encoding
@@ -191,7 +191,7 @@
             propagateError();
             
             /// Store obj's class in the archive
-            result[MFDataClass_DictArchiveKey_ClassName] = [classForCoder className];
+            result[kMFPlistCoder_ClassName] = [classForCoder className];
             
         }
         else {
@@ -214,7 +214,7 @@
                 for (id elm in arr) {
                     id e = [self _encodeObjectToPlist:elm];
                     propagateError();
-                    if (!e) failWithError(kMFNSCoderError_InternalInconsistency, @"nil slipped through propagateError(). (nil only signals errors. Actual nil values in the object hierarchy should be encoded with kkMFPlist_Nil.)");
+                    if (!e) failWithError(kMFNSCoderError_InternalInconsistency, @"nil slipped through propagateError(). (nil only signals errors. Actual nil values in the object hierarchy should be encoded with kMFPlistCoder_Nil.)");
                     [result addObject: e];
                 }
                 
@@ -272,7 +272,7 @@ bool MFPlistIsValidNode(id _Nullable obj) {
             CFDateGetTypeID(),
             CFBooleanGetTypeID(),
             CFNumberGetTypeID(),
-            0                                   /// Zero-terminated
+            0                         /// Zero-terminated
         };
         tids = malloc(sizeof(temp));  /// Strategic memory leak
         memcpy(tids, temp, sizeof(temp));

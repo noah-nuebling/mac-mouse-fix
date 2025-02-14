@@ -163,15 +163,15 @@
     if (!MFPlistIsValidNode(valueFromArchive))
         failWithError(NSCoderReadCorruptError, @"The plist archive is corrupt. Plist node to be decoded (%@) is not a valid plist node.", valueFromArchive);
     
-    /// Handle `kMFPlist_Nil`
+    /// Handle `kMFPlistCoder_Nil`
     ///
-    /// Explanation: `kMFPlist_Nil` in the archive represents nil in the encoded object.
+    /// Explanation: `kMFPlistCoder_Nil` in the archive represents nil in the encoded object.
     ///     - Clients can use `containsValueForKey:` to disambiguate between values that are missing from the archive, and values that are encoded as nil.
     /// Notes:
     ///     - We never apply the allowedClasses typeChecks for nil values (Does this align with NSKeyedUnarchiver behavior?)
     ///     - NSNull (represents nil in NSArray/NSDictionary) is encoded in our archive as a regular non-plist object, so we don't need special handling for it.
     
-    if ([valueFromArchive isEqual: kkMFPlist_Nil]) return nil;
+    if ([valueFromArchive isEqual: kMFPlistCoder_Nil]) return nil;
     
     /// Get result class
     Class resultClass = [valueFromArchive class];
@@ -181,7 +181,7 @@
             
             /// If the dict is encoding a non-plist class's instance, get that class.
             
-            NSString *archivedClassName = dictFromArchive[MFDataClass_DictArchiveKey_ClassName];
+            NSString *archivedClassName = dictFromArchive[kMFPlistCoder_ClassName];
             
             if (!archivedClassName) /// class name is missing from the dictionary, it must just be a normal dictionary, not an archive of a non-plist type
                 break;

@@ -343,9 +343,13 @@
                 return nil; /// We don't need to call `failWithError()` since the coder already has an error.
             }
             
-            /// Check type
-            if (((0)) && !coder.requiresSecureCoding) { /// Why `((0))`?: If `requiresSecureCoding` is true, `decodeObjectOfClass:` will have already checked the type, so we can skip this. Update: These checks are not helpful if `requiresSecureCoding` is turned off. See the discussion above on `NSSecureCoding`
-                if (value != nil && ![value isKindOfClass: expectedClass]) {
+            /// Check if value is of 'expectedClass'
+            ///     -decodeObjectOfClasses:key: already validates something similar. But this is helpful in case the 'hierarchy' of classes in the decoded value is unexpected.
+            ///     E.g. If we expect a dictionary of arrays but we get an array of dictionaries, this check would catch it.
+            ///     However, this only validates the top-level type. if an unexpected type occurs deeper in the decoded value, then this won't help. E.g. if we expect a dictionary of arrays but get a dictionary of dictionaries this won't catch it.
+            ///         To handle that, we'd have to more closely analyze the syntax tree that the -classesFromRawTypeStringOfProperty: result is based on. Learn more in that implementation.
+            if (allowedClasses.count > 1) {
+                if (value != nil && !isclass(value, expectedClass)) {
                     assert(false);
                     failWithError(NSCoderReadCorruptError, @"Class mismatch while decoding %@.%@: Expected: %@. Found: %@", [self class], key, expectedClass, [value class]);
                 }
@@ -366,13 +370,18 @@
                 NSValue *nsValue = (NSValue *)value;
                 
                 /// Get type encodings
-                const char *propertyTypeEncoding = [typeEncoding cStringUsingEncoding: NSUTF8StringEncoding];
+                const char *propertyTypeEncoding = [typeEncoding cStringUsingEncoding: NSUTF8StringEncoding]; /// Why are we boxing here? Perhaps we should handle all these type encoding strings as `const char *` instead of boxing/converting them back and forth?
                 const char *nsValueTypeEncoding = [nsValue objCType];
                 
                 /// Special case: Booleans
-                if (strcmp(propertyTypeEncoding, "B") == 0) { /// For boolean properties, the decoded NSValue seems to just use 'c' (char) while the property encoding uses 'B' (boolean). I also checked `ivar_getTypeEncoding()` and it's also `B` so won't help. Possible explanation: This Apple doc says that BOOL is char on macOS for historical reasons: https://developer.apple.com/library/archive/documentation/Cocoa/Conceptual/KeyValueCoding/DataTypes.html#//apple_ref/doc/uid/20002171-BAJEAIEE
+                ///     For boolean properties, the decoded NSValue seems to just use 'c' (char) while the property encoding uses 'B' (boolean). I also checked `ivar_getTypeEncoding()` and it's also `B` so won't help.
+                ///     Possible explanation: This Apple doc says that BOOL is char on macOS for historical reasons: https://developer.apple.com/library/archive/documentation/Cocoa/Conceptual/KeyValueCoding/DataTypes.html#//apple_ref/doc/uid/20002171-BAJEAIEE
+                if (strcmp(propertyTypeEncoding, "B") == 0) {
                     propertyTypeEncoding = "c";
                 }
+                #if !TARGET_OS_OSX
+                static_assert(false, "Our bool code probably only handles macOS");
+                #endif
                 
                 /// Check if types match
                 if (strcmp(nsValueTypeEncoding, propertyTypeEncoding) != 0) {
@@ -456,7 +465,7 @@
     ///         We made this method primarily so we have one simple way to update both `-isEqual` and `-hash` correctly.
     ///         However, we've since made `-hash` independent of internal instance state, so this doesn't affect `-hash` anymore.
     ///         Therefore, now, it might be better to just override `-isEqual` directly instead of overriding this? Maybe we should remove this?
-    ///         Idea: Maybe we could replace this with an easily overridable `isEqualToDataClass:` method, which is called by `isEqual:` (similar to NSString's `isEqualToString:`)
+    ///         Idea: Maybe we could replace this with an easily overridable `isEqualToDataClass:` method, which compares internal state and which is called by `isEqual:` (similar to NSString's `isEqualToString:`)
     
     return [self allPropertyValues];
 }
@@ -496,7 +505,7 @@
         
         /// Get description of props
         if ((0)) {
-            content = [self asDictionaryWithRequireSecureCoding:NO].description;
+            content = [self asPlistWithRequireSecureCoding: NO].description;
         } else if (didFindCircularRef) {
             content = @"<This object has appeared in the description before. Stopping here to prevent infinite recursion.>";
         } else {
@@ -656,14 +665,14 @@ NSString *_Nullable typeEncodingForProperty(NSString *_Nullable propertyAttribut
     return @(attributes);
 }
 
-// MARK: NSDictionary & JSON conversion
+// MARK: Plist & JSON conversion
 
 /// (Note: [Jan 2025] Disabled the JSON conversion code, since it was unused.
 ///     When we did wanna create an MFDataClass based on JSON (it was MFLicenseConfig), we wrote a specialized method (it was -[initWithJSONDictionary:]) for that MFDataClass which used these dictionary-encoding methods under-the-hood.
 #if 0
     - (NSData *_Nullable)asJSONWithRequireSecureCoding:(BOOL)requireSecureCoding error:(NSError *__autoreleasing _Nullable *_Nullable)errorPtr {
         if (errorPtr) *errorPtr = nil; // Init error
-        NSDictionary *dict = [self asDictionaryWithRequireSecureCoding:requireSecureCoding];
+        NSDictionary *dict = [self asPlistWithRequireSecureCoding:requireSecureCoding];
         NSData *result = [NSJSONSerialization dataWithJSONObject:dict options:0 error:errorPtr];
         return result;
     }
@@ -673,77 +682,36 @@ NSString *_Nullable typeEncodingForProperty(NSString *_Nullable propertyAttribut
         if (!jsonData) return nil;
         NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:jsonData options:0 error:errorPtr];
         if (!dict) return nil;
-        self = [self initWithDictionary:dict requireSecureCoding:requireSecureCoding error:errorPtr];
+        self = [self initWithPlist:dict requireSecureCoding:requireSecureCoding error:errorPtr];
         return self;
     }
 #endif
 
-- (NSDictionary<NSString *, NSObject *> *_Nonnull) asDictionaryWithRequireSecureCoding: (BOOL)requireSecureCoding {
+- (NSDictionary<NSString *, NSObject *> *_Nonnull) asPlistWithRequireSecureCoding: (BOOL)requireSecureCoding {
     
-    /// Creates a dictionary archive of the MFDataClass hierarchy starting at self
-    ///     Sidenote: We used to simply use the standard KVC method `dictionaryWithValuesForKeys:` but it cannot recursively convert nested hierarchies of MFDataClass objects.
+    /// Converts self to a dictionary by applying "Plist" encoding.
+    ///
+    /// Why does 'Plist' encoding create an NSDictionary?
+    ///     This uses MFPlistEncoder which will convert every node in the object-graph that is not already a plist type to an NSDictionary with string keys. Since MFDataClass instances are not plist types, the root of the object graph (`self`) will be converted to an NSDictionary.
+    ///
+    /// Alternatives:
+    ///     For 'surface-level' dictionary-conversion that doesn't affect the property-values you can use standard KVC methods. Example: `[self dictionaryWithValuesForKeys: [[self class] allPropertyNames]]`
+    ///     You can also create a plist object-graph using NSKeyedArchiver instead of MFPlistEncoder, but it won't be easily human readable. See MFPlistEncoder.m
     
-    id resultDict = MFEncode(self, requireSecureCoding, kMFEncoding_NSDictionary);
+    id resultDict = MFEncode(self, requireSecureCoding, kMFEncoding_MFPlist);
     return resultDict;
-    
-    #if 0 /// Old implementation
-    NSMutableDictionary *resultDict = [NSMutableDictionary dictionary];
-    for (NSString *propName in self.class.allPropertyNames) {
-        id value = [self valueForKey:propName];
-        if (requireSecureCoding && ![value conformsToProtocol:@protocol(NSSecureCoding)])
-            assert(false && "The value doesn't support secure coding. Don't think this should ever happen since we're already validating this in `+ load`."); /// We don't throw fancy errors. This is just so that, during development, we don't accidentally decide to encode stuff we can't decode later.
-        if (!value) value = NSNull.null; /// [Jan 2025] Represent nil with NSNull in the dict. MFPlistDecoder does the inverse conversion.
-        if (isclass(value, MFDataClassBase)) value = [(MFDataClassBase *)value asDictionaryWithRequireSecureCoding:requireSecureCoding]; /// Recurse
-        resultDict[propName] = value;
-    }
-    resultDict[MFDataClass_DictArchiveKey_ClassName] = NSStringFromClass(self.class);
-    #endif
 }
 
-- (instancetype _Nullable) initWithDictionary: (NSDictionary *_Nonnull)dict requireSecureCoding: (BOOL)requireSecureCoding {
+- (instancetype _Nullable) initWithPlist: (NSDictionary<NSString *, NSObject *> *_Nonnull)dict requireSecureCoding: (BOOL)requireSecureCoding {
     
-    /// Create an instance from a dictionary.
+    /// Create an instance from a plist-object-graph.
     ///     If `requireSecureCoding` is enabled, then all of the validation mechanisms from `initWithCoder:` are turned on.
-    ///     Values that should be nil are expected to be `NSNull` in the dict.
     
     if (!dict) { assert(false); return nil; }
         
-    self = (id)MFDecode(dict, requireSecureCoding, MFNSSetMake(self.class), kMFEncoding_NSDictionary);
+    self = (id)MFDecode(dict, requireSecureCoding, MFNSSetMake(self.class), kMFEncoding_MFPlist);
     return self;
-    
-    #if 0 /// Old implementation
-    if (!requireSecureCoding) {
-        
-        /// Note: Why did we write an extra codepath for non-validated decoding? ... disabled this codepath.
-        /// TODO: Delete this
-        assert(false); /// Untested.
-        
-        /// Non-validated decode
-        ///     Note: We used to use `setValuesForKeysWithDictionary:` here. It's a standard KVC method, meant to be the inverse of `dictionaryWithValuesForKeys:`, but it can't handle nested hierarchies of MFDataClass instances.
-        self = [super init];
-        if (!self) return nil;
-        
-        for (NSString *propName in self.class.allPropertyNames) {
-            id value = dict[propName];
-            if (value == nil)           assert(false && "The dictionary archive didn't have a value defined for all property names. The dictionary archive is probably invalid or outdated.");
-            if (value == NSNull.null)   value = nil;
-            if (isclass(value, NSDictionary)) {
-                Class propClass = NSClassFromString(classNameForProperty([typeEncodingForProperty([self.class attributesForProperty: propName]) cStringUsingEncoding: NSUTF8StringEncoding]));
-                if (isclass(propClass, MFDataClassBase)) {
-                    value = [((MFDataClassBase *)[propClass alloc]) initWithDictionary: value requireSecureCoding: NO error: errorPtr]; /// Recurse.
-                    if (errorPtr && *errorPtr) return nil; /// Not totally sure this is appropriate. I mean if secure coding is disabled, initWithDictionary: doesn't set any errors anyways?
-                }
-            }
-            [self setValue:value forKey:propName];
-        }
-        
-        return self;
-        
-    }
-    #endif
 }
-
-
 
 /// MARK: Property-nullability analysis
 

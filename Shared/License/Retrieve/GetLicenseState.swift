@@ -254,8 +254,8 @@ import CryptoKit
             /// Validate
             if !newValue.isLicensed { assert(false, "Use deleteLicenseStateFromCache() to set the cache to !isLicensed – So we can understand the control flow better.") }
             
-            /// Convert MFDataClass object to dict
-            let dict = newValue.asDictionary(withRequireSecureCoding: true)
+            /// Convert MFDataClass object to plist dict
+            let dict = newValue.asPlist(withRequireSecureCoding: true)
             
             /// Calculate hash
             ///     Note: [Jan 2025] Need to use `.xml` instead of `.binary`. to make the data (and with it the hash) deterministic. Not sure why. We might be relying on an implementation detail here.
@@ -335,10 +335,11 @@ import CryptoKit
             ///     Note: (Nov 2024) Note that requireSecureCoding is turned on here.
             ///         -> This is somewhat slower and pretty unnecessary here I think since hackers would have to tamper with the (locally stored) cache to perform an 'object substitution' or 'nil insertion' attack. (Which are what secureCoding on MFDataClass protects against) And if they can modify local files, they already have full control over the system.)
             ///         -> I guess another possible benefit of the nil/type checks is if we change MFLicenseState in the future and we forget to handle that explicitly, then we would just return nil here in some cases instead of returning an invalid object that might crash the app because of unexpected type/nullability
-            ///     Very Random sidenote:
-            ///         When we used to cache the MFLicenseState as an NSCoder archive instead of a dictionary, we used to use MFDecode() here – Don't forget that MFDecode() exists!
-            let licenseState = MFLicenseState(dictionary: cachedDict as! [AnyHashable: Any], requireSecureCoding: true)
-            guard let licenseState else {
+            ///             ... But we should just introduce versioning to handle this properly. More on this in MFCoding.m > "On validation of decoded values"
+            guard
+                let cachedDict = cachedDict as? [String: NSObject], /// ([Feb 2025] We're first casting to NSDictionary and then to [String: NSObject], which is then Swift auto-bridged back to NSDictionary. Does that make sense?)
+                let licenseState = MFLicenseState(plist: cachedDict, requireSecureCoding: true)
+            else {
                 DDLogError("GetLicenseState: Initializing MFLicenseState using cached dict failed.")
                 return nil
             }
@@ -521,17 +522,18 @@ import CryptoKit
         /// Update cache
         ///     See discussion in deleteLicenseStateFromCache()
         
-        if (result?.isLicensed == nil) {
+        if      result?.isLicensed == nil {
             /// Don't update the cache if the server didn't give a clear yes/no about whether the license is valid.
         }
-        if result?.isLicensed == false {
+        else if result?.isLicensed == false {
             self.deleteLicenseStateFromCache(commitConfig: true)
         }
-        if result?.isLicensed == true {
+        else if result?.isLicensed == true {
             let deviceUID = get_mac_address() /// To understand this, also see the other place where we call `get_mac_address()` in this file [Feb 2025]
             if deviceUID == nil { DDLogWarn("GetLicenseState: Want to cache licenseState from the server, but getting device MAC address failed.") } /// Why are we logging this instead of returning an error? The returned errors are specifically to display feedback to the user on the LicenseSheet about the server's assessment of the licenseKey. Aside from this UI feedback, I think returning errors is overkill.
             self.storeLicenseStateInCache(result!, licenseKey: key, deviceUID: deviceUID)
         }
+        else { fatalError() }
         
         /// Return
         return (result, resultError)

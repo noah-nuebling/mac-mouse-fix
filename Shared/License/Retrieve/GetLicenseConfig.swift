@@ -74,10 +74,20 @@ import CocoaLumberjackSwift
         ///         Thread safety in general:
         ///             Aside from the `inMemoryCache`, the only other shared piece of state that `GetLicenseConfig.swift` deals with is `_licenseConfigDictCache` (that's the on-disk cache as opposed to the `inMemoryCache`). Its thread safety is discussed where it's declared.
         ///
+        ///         Update: [Feb 2025] on Thread safety:
+        ///             We now use @MainActor to put all the Licensing code on the main thread (I think). This should prevent race conditions.
+        ///                 Therefore the considerations above might be outdated.
+        ///
         ///         Caveats
         ///             - Right now we could easily break offline validation, if we accidentally retrieve `MFLicenseConfig` on the 'golden path' where we launch the app and successfully offline-validate the `MFLicenseState`. If we do that, then our offline validation wouldn't be offline anymore, because `MFLicenseConfig` is downloaded from the web.
         ///                 - To catch such programmer-errors we could we could observe the `"GetLicenseConfig..."` logs which are sent below.
         ///                 - Alternatively we could make such mistakes impossible by changing the architecture so that there is only one source for both the `MFLicenseConfig` and the `MFLicenseState`. Then, when the `MFLicenseState` is successfully retrieved and validated offline, we'd also simply retrieve the `MFLicenseConfig` offline (from our cache) and return both of those together. However, then we'd perhaps run into issues where the `MFLicenseConfig` is never updated and grows stale perhaps producing a dead link under `Mac Mouse Fix > Buy Mac Mouse Fix...` (This problem is discussed above) -> Overall I think our current approach is better because it prioritizes data-integrity. And to have totally -offline validation, we just need to be mindful of only retrieving `MFLicenseConfig` if necessary.
+        ///
+        ///         Testing [Feb 2025]:
+        ///             Testing with Little Snitch, we see 0 network traffic when:
+        ///                 - Starting "Mac Mouse Fix.app"              (Licensed and with "Check for updates" disabled.)
+        ///                 - Disabling and re-enabling the helper    (Licensed)
+        ///                 -> Nice!
         
         /// Use in-memory cache
         if let c = inMemoryCache {

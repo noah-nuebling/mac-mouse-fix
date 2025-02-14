@@ -173,8 +173,8 @@
             filePath = "Shared/License/Retrieve/GetLicenseState.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "523"
-            endingLineNumber = "523"
+            startingLineNumber = "524"
+            endingLineNumber = "524"
             landmarkName = "licenseStateFromServer(key:incrementActivationCount:licenseConfig:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -205,9 +205,9 @@
             filePath = "Shared/Utility/MFDataClass.m"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "712"
-            endingLineNumber = "712"
-            landmarkName = "-initWithDictionary:requireSecureCoding:"
+            startingLineNumber = "713"
+            endingLineNumber = "713"
+            landmarkName = "-initWithPlist:requireSecureCoding:"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -358,8 +358,8 @@
             filePath = "Shared/Utility/MFDataClass.m"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "945"
-            endingLineNumber = "945"
+            startingLineNumber = "913"
+            endingLineNumber = "913"
             landmarkName = "extractClassesFromRawTypeString(rawTypeString)"
             landmarkType = "9">
          </BreakpointContent>
@@ -374,8 +374,8 @@
             filePath = "Shared/Utility/MFDataClass.m"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1041"
-            endingLineNumber = "1041"
+            startingLineNumber = "1009"
+            endingLineNumber = "1009"
             landmarkName = "extractClassesFromRawTypeString(rawTypeString)"
             landmarkType = "9">
          </BreakpointContent>
@@ -406,8 +406,8 @@
             filePath = "Shared/Utility/MFDeepCopyCoder.m"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "253"
-            endingLineNumber = "253"
+            startingLineNumber = "255"
+            endingLineNumber = "255"
             landmarkName = "-_decodeEncoding:"
             landmarkType = "7">
          </BreakpointContent>
@@ -422,8 +422,8 @@
             filePath = "Shared/Utility/MFDeepCopyCoder.m"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "337"
-            endingLineNumber = "337"
+            startingLineNumber = "339"
+            endingLineNumber = "339"
             landmarkName = "-decodeObjectForKey:"
             landmarkType = "7">
          </BreakpointContent>
@@ -438,8 +438,8 @@
             filePath = "Shared/Utility/MFDeepCopyCoder.m"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "374"
-            endingLineNumber = "374"
+            startingLineNumber = "376"
+            endingLineNumber = "376"
             landmarkName = "-decodeObjectForKey:"
             landmarkType = "7">
          </BreakpointContent>
@@ -454,10 +454,48 @@
             filePath = "Shared/Utility/MFDeepCopyCoder.m"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "383"
-            endingLineNumber = "383"
+            startingLineNumber = "385"
+            endingLineNumber = "385"
             landmarkName = "-encodeObject:forKey:"
             landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "A8A5B8CC-74BA-468D-A5B2-2AA3ED7A0241"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Shared/License/Retrieve/GetLicenseConfig.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "91"
+            endingLineNumber = "91"
+            landmarkName = "licenseConfigFromServer()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.SymbolicBreakpoint">
+         <BreakpointContent
+            uuid = "98255900-E8C1-4EA4-9147-A7F3AB717B0D"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            symbolName = "-[NSURLSession dataTaskWithRequest:]"
+            moduleName = "">
+            <Locations>
+               <Location
+                  uuid = "98255900-E8C1-4EA4-9147-A7F3AB717B0D - 47f31cc1019f9921"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "-[NSURLSession dataTaskWithRequest:]"
+                  moduleName = "CFNetwork"
+                  usesParentBreakpointCondition = "Yes">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

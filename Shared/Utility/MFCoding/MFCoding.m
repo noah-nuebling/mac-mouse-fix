@@ -71,7 +71,7 @@
 ///         I'm wondering - how do the NSKeyedArchiver API convert NSException to NSError? Can/should we reuse that mechanism? For now we're just logging the exceptions but if we ever want to handle them it might be nice to reuse that conversion mechanism.
 ///
 /// On validation of decoded values:
-///     On **NSSecureCoding**: (Last updated: Feb 2025) (This discussion used to be at `MFDataClass.m > initWithCoding:`)
+///     On **NSSecureCoding**: (Last updated: [Feb 2025]) (This discussion used to be at `MFDataClass.m > initWithCoding:`)
 ///         The **core problem** that NSSecureCoding tries to address, is basically that there's a possibility that, between encoding and decoding an object, the encoded data could be manipulated by attackers in malicious ways. (serialization attack)
 ///             > To prevent the hackers from realizing their mischievous plans, you can **validate** the decoded data.
 ///             > This can only happen for **untrusted sources** of data. When your encoded data comes from a **trusted source**, (like the user's library, as is the case for config.plist in Mac Mouse Fix), then its not feasable for any hacker to manipulate the archived data before we load it.
@@ -114,14 +114,8 @@
 ///             - Can't think of anything else.
 ///
 ///         Should we implement custom validation for MMF?
-///             Currently, the most practical solution is to not have untrusted sources. [Feb 2025]
-///             Once we're forced to have untrusted sources, custom validation is probably necessary for some fields of the loaded datastructures (Probably MFDataClasses) – so that we're totally secure against hackers.
-///
-///     Also see:
-///         - Apple WWDC 2018 Session 222 "Data You Can Trust": https://devstreaming-cdn.apple.com/videos/wwdc/2018/222krhixqaeggyrn33/222/222_hd_data_you_can_trust.mp4?
-///             (This has been deleted from the Apple page for some reason, but their CDN still has the video)
-///             -> This explains how and why to use `NSSecureCoding`
-///
+///             - Currently, the most practical solution is to not have untrusted sources. [Feb 2025]
+///             - Once we're forced to have untrusted sources, custom validation is probably necessary for some fields of the loaded datastructures (Probably MFDataClasses) – so that we're totally secure against hackers.
 ///
 /// Learnings from MFDeepCopyCoder:
 ///     (We tried to implement our own coder for deep-copying, but it sucked, but we learned some stuff that is relevant for **deep copying** and **other custom coders**)
@@ -133,11 +127,16 @@
 ///         Problem is also described in this GitHub Gist from 8 years ago: https://gist.github.com/Tricertops/354e443283d50497912cd7a1e8c884a1
 ///         What does this mean for our implementations?
 ///             - If we try to implement encoding of cyclical object graphs in our custom coder, we'd run into the same problem.
-///             - Solution: The only solution I could think of is to box the circularly-referenced parent in an NSProxy, and then swap out the boxed instance, if -initWithCoder: or -awakeAfterUsingCoder: return a different instance.
+///             - Solution: The only solution I could think of is to box the circularly-referenced parent in an NSProxy, then give that proxy to the child, instead of giving the parent directly, and finally swaping out the boxed instance, if -[parent initWithCoder:] or -[parent awakeAfterUsingCoder:] return a different instance.
 ///             - ... But it's probably better to just not support cyclical object-graphs unless necessary.
 ///
-/// Here's the Apple reference on "Archives and Serialization":
-///     https://developer.apple.com/library/archive/documentation/Cocoa/Conceptual/Archiving/Articles/serializing.html#//apple_ref/doc/uid/20000952-BABBEJEE
+/// Also see:
+///     - Apple reference on "Archives and Serialization":
+///         https://developer.apple.com/library/archive/documentation/Cocoa/Conceptual/Archiving/Articles/serializing.html#//apple_ref/doc/uid/20000952-BABBEJEE
+///     - WWDC talk about `NSSecureCoding`:
+///         WWDC 2018 Session 222 "Data You Can Trust": https://devstreaming-cdn.apple.com/videos/wwdc/2018/222krhixqaeggyrn33/222/222_hd_data_you_can_trust.mp4?
+///         (This has been deleted from the Apple page for some reason, but their CDN still has the video)
+///         -> This explains how and why to use `NSSecureCoding`
 
 #import "MFCoding.h"
 #import "WannaBePrefixHeader.h"
@@ -148,21 +147,17 @@
 
 @implementation MFCoding
 
-/// NSKeyedArchiver wrappers
+/// NSCoder wrappers
 
 NSData *MFEncode(NSObject<NSCoding> *codable, BOOL requireSecureCoding, MFEncoding outputArchiveFormat) {
     
-    /// On the `outputFormat` argument:
-    ///     Default to using `outputFormat = NSPropertyListBinaryFormat_v1_0` - it should be the most efficient.
-    ///     When using `outputFormat = NSPropertyListXMLFormat_v1_0` you can pass the result to [NSString -initWithData:] to get a human-readable XML string, which might be useful for debugging / transparency for users.
-    ///
-    /// On the `requireSecureCoding` argument:
+    /// On the `requireSecureCoding` arg:
     ///     Enabling secureCoding for an *en*code is pretty unnecessary.
     ///     secureCoding enables additional checks during *de*coding. When you enable it for *en*coding, it doesn't really do anything. The encoded data won't change.
     ///         The only thing it does is it will fail the encode, if the encoded data does not support being *de*coded with secureCoding enabled.
-    ///         So the only benefit is that we ensure we fail "early" (during the encode) if we can predict that the decode would fail.
-    ///             -> I don't know when that's ever important. Wnen it's not important you can leave `requireSecureCoding` off.
-    ///         (The object-graph 'supports secureCoding' if all of the objects in the graph which will be encoded conform to the NSSecureCoding protocol.)
+    ///         So the only benefit is that we ensure we fail "early" (during the encode) if we can predict that the *de*code would fail.
+    ///             -> I don't know when that's ever important. When it's not important you can leave `requireSecureCoding` off.
+    ///         (The object-graph 'supports secureCoding' if all of the objects in the graph (that will actually be encoded) conform to the NSSecureCoding protocol.)
     
     /// Null safety
     if (!codable) return nil; /// This may not be necessary as `NSKeyedArchiver` might behave well if we pass it nil. (Ideally it would just return nil and populate the error)
@@ -171,10 +166,10 @@ NSData *MFEncode(NSObject<NSCoding> *codable, BOOL requireSecureCoding, MFEncodi
     NSCoder *encoder;
     ({
         switch (outputArchiveFormat) {
-            bcase(kMFEncoding_NSData_XML, kMFEncoding_NSData_Binary, kMFEncoding_NSData_OpenStep): {
+            bcase(kMFEncoding_NSKeyed_XML, kMFEncoding_NSKeyed_Binary): {
                 encoder = [NSKeyedArchiver alloc];
             }
-            bcase(kMFEncoding_NSDictionary): {
+            bcase(kMFEncoding_MFPlist): {
                 encoder = [MFPlistEncoder alloc];
             }
         }
@@ -229,7 +224,7 @@ NSData *MFEncode(NSObject<NSCoding> *codable, BOOL requireSecureCoding, MFEncodi
 
 id<NSCoding> MFDecode(id archive, BOOL requireSecureCoding, NSSet<Class> *_Nullable expectedClasses, MFEncoding inputArchiveFormat) {
     
-    /// On the `requireSecureCoding` argument:
+    /// On the `requireSecureCoding` arg:
     ///     Leave it off, unless you're decoding data from an *untrusted source* where there's a possibility that a hacker has created/modified the data. E.g. user-submitted data downloaded from a web server.
     ///     > Explanation: See the top of this file under `On **NSSecureCoding**`
     ///
@@ -255,10 +250,10 @@ id<NSCoding> MFDecode(id archive, BOOL requireSecureCoding, NSSet<Class> *_Nulla
     ({
         switch (inputArchiveFormat) {
         
-        bcase(kMFEncoding_NSData_XML, kMFEncoding_NSData_Binary, kMFEncoding_NSData_OpenStep):
+        bcase(kMFEncoding_NSKeyed_XML, kMFEncoding_NSKeyed_Binary):
             decoder = [NSKeyedUnarchiver alloc];
         
-        bcase(kMFEncoding_NSDictionary):
+        bcase(kMFEncoding_MFPlist):
             decoder = [MFPlistDecoder alloc];
         }
     });
@@ -295,7 +290,7 @@ id<NSCoding> MFDecode(id archive, BOOL requireSecureCoding, NSSet<Class> *_Nulla
     
     /// Unarchive
     ///     Note: We could also use the 'topLevel' APIs to automatically convert internally propagated exceptions into errors.
-    ///     However, based on my testing [Feb 2025] this doesn't catch all exceptions. (I tested MFPlistDecoder – exceptions thrown by `[failWithError:]`  were caught, but when I directly used @throw during decoding, it wasn't caught.)
+    ///     However, based on my testing [Feb 2025] this doesn't catch all exceptions. (I tested MFPlistDecoder – exceptions thrown by -[failWithError:]  were caught, but when I directly used @throw during decoding, it wasn't caught.)
     NSObject<NSCoding> *result;
     NSException *exception;
     ({
@@ -420,7 +415,7 @@ MFDataClass2(MFDataClassBase, TestOuter,
         /// Test encoding failure
         __auto_type unencodable_block = ^{ NSLog(@"MFCoding: Get blocked!"); };
         if ((0)) {
-            NSDictionary *block_archive = MFEncode((id)unencodable_block, true, kMFEncoding_NSDictionary);
+            NSDictionary *block_archive = MFEncode((id)unencodable_block, true, kMFEncoding_MFPlist);
         }
             
         /// Test NSKeyedArchiver NSException -> NSError conversion
@@ -438,7 +433,7 @@ MFDataClass2(MFDataClassBase, TestOuter,
                 (id)[NSNull null],
             ] nullableString: @"Not nil"];
 
-        NSDictionary *archive = MFEncode(outer, true, kMFEncoding_NSDictionary);
+        NSDictionary *archive = MFEncode(outer, true, kMFEncoding_MFPlist);
         NSLog(@"MFCoding: TestOuter archive: %@", archive);
         
         TestOuter *reconstructed = (id)MFDecode(archive, true, MFNSSetMake([TestOuter class], [NSNull null]));

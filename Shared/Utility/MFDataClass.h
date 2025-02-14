@@ -48,7 +48,7 @@
 ///
 /// The resulting dataclass will adhere to the `NSCopying`, and `NSSecureCoding` protocols. It will also respond properly to `- isEqual:` and `- hash`.
 /// You can also get a list of all property names using `- allPropertyNames` and use those names as keys for Key-Value-Coding methods such as `- valueForKey:` and `- setValue:ForKey:`
-///     -> So you can kinda treat `MFDataClass` instances like a dictionary and dynamically access everything! You can also get an actual dictionary representing the object using the `- asDictionaryWithRequireSecureCoding:` method.
+///     -> So you can kinda treat `MFDataClass` instances like a dictionary and dynamically access everything! You can also get an actual dictionary representing the object-graph using the `- asPlistWithRequireSecureCoding:` method.
 ///
 /// Under DEBUG builds, immediately after the program loads (Inside `+ load`), the MFDataClass will do pretty extensive validation of your definition to catch any pitfalls.
 ///     We validate things such as whether all the properties support NSCopying (which is necessary for copying of the dataclass to work) or whether the dataclass actually inherits from `MFDataClassBase`.
@@ -107,13 +107,13 @@
 /// TODO: Make these methods SWIFT_UNBRIDGED for efficiency
 
 /// Properties
-+ (NSArray<NSString *> * _Nonnull)allPropertyNames;
-- (NSArray<id> *_Nonnull)allPropertyValues;
-- (NSObject *_Nonnull)internalStateForEqualityComparison; /// You can override this to easily change the definition of equality between two instances of the same MFDataClass. You can also override `isEqual:` directly.
++ (NSArray<NSString *> * _Nonnull) allPropertyNames;
+- (NSArray<id> *_Nonnull) allPropertyValues;
+- (NSObject *_Nonnull) internalStateForEqualityComparison; /// You can override this to easily change the definition of equality between two instances of the same MFDataClass. You can also override `isEqual:` directly.
 
-/// Dict encoding
-- (NSDictionary<NSString *, NSObject *> *_Nonnull)asDictionaryWithRequireSecureCoding:(BOOL)requireSecureCoding;
-- (instancetype _Nullable)initWithDictionary:(NSDictionary *_Nonnull)dict requireSecureCoding:(BOOL)requireSecureCoding;
+/// Plist conversion
+- (NSDictionary<NSString *, NSObject *> *_Nonnull) asPlistWithRequireSecureCoding: (BOOL)requireSecureCoding;
+- (instancetype _Nullable) initWithPlist: (NSDictionary<NSString *, NSObject *> *_Nonnull)dict requireSecureCoding: (BOOL)requireSecureCoding;
 
 /// Validation
 + (void)onLoadValidation; /// This is called in `+ load` to validate the definition of the `MFDataClass` (only in debug builds). Do not call this yourself.

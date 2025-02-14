@@ -7011,6 +7011,24 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		4FD031CB2D5EAAA7000EA331 /* MFCoding */ = {
+			isa = PBXGroup;
+			children = (
+				4F428D002CD80462006322AB /* MFCoding.h */,
+				4F428D012CD80462006322AB /* MFCoding.m */,
+				4F428D072CD8C688006322AB /* MFCoding.swift */,
+				4F2E8FD52D52877F00689058 /* MFPlistEncoder.h */,
+				4F2E8FD62D52877F00689058 /* MFPlistEncoder.m */,
+				4FB8B2932CCDB94F00A5A580 /* MFPlistDecoder.h */,
+				4FB8B2942CCDB94F00A5A580 /* MFPlistDecoder.m */,
+				4F2E8FD12D52229100689058 /* NSCoderErrors.h */,
+				4F2E8FD22D52229100689058 /* NSCoderErrors.m */,
+				4FD031572D5927DE000EA331 /* MFDeepCopyCoder.h */,
+				4FD031582D5927DE000EA331 /* MFDeepCopyCoder.m */,
+			);
+			path = MFCoding;
+			sourceTree = "<group>";
+		};
 		4FD15B5328DB791D001445DD /* FailedExperiments */ = {
 			isa = PBXGroup;
 			children = (
@@ -7199,17 +7217,7 @@
 				4F51701A2CBFD7730018D388 /* MFDataClass.h */,
 				4F5170172CBFD7660018D388 /* MFDataClass.m */,
 				4F5170142CBFD75C0018D388 /* MFDataClassImpls.m */,
-				4F428D002CD80462006322AB /* MFCoding.h */,
-				4F428D012CD80462006322AB /* MFCoding.m */,
-				4F428D072CD8C688006322AB /* MFCoding.swift */,
-				4F2E8FD52D52877F00689058 /* MFPlistEncoder.h */,
-				4F2E8FD62D52877F00689058 /* MFPlistEncoder.m */,
-				4FB8B2932CCDB94F00A5A580 /* MFPlistDecoder.h */,
-				4FB8B2942CCDB94F00A5A580 /* MFPlistDecoder.m */,
-				4F2E8FD12D52229100689058 /* NSCoderErrors.h */,
-				4F2E8FD22D52229100689058 /* NSCoderErrors.m */,
-				4FD031572D5927DE000EA331 /* MFDeepCopyCoder.h */,
-				4FD031582D5927DE000EA331 /* MFDeepCopyCoder.m */,
+				4FD031CB2D5EAAA7000EA331 /* MFCoding */,
 				4FA398FB2D564094003A4BEE /* TreeNode.h */,
 				4FA398FC2D56409A003A4BEE /* TreeNode.m */,
 				4F8A8DC0287F885D00786BCC /* Shorthands.h */,

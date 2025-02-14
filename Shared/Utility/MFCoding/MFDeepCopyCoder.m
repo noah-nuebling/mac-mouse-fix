@@ -13,6 +13,8 @@
 
 /// The interesting learnings from this have been moved to other files like MFCoding.m and MFPlistDecoder
 /// > **You can delete this.**
+///
+/// Optimization Idea: We used NSDictionary as the archive. Perhapsss using NSMapTable would've been faster? ... But I don't really think so since I think the only overhead of NSDictionary is to call -hash and -isEqual: and -copy on the keys, which were all immutable NSStrings in our case (So it should be very fast.)
 
 #if 0 /// Unused
 
