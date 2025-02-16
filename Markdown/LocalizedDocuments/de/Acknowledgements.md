@@ -40,6 +40,7 @@ Diese Leute haben viel mehr als den Standardpreis ausgegeben und mir einen **ung
 
 **Februar 2025**
 
+- 🇨🇿&nbsp;Jan&nbsp;Polášek - "Thank you for saving me from the Logi Options hell."
 - 🇦🇺&nbsp;Luke - "I hope you enjoy your milkshake"
 - 🇰🇷&nbsp;Jihwan&nbsp;Lee - "Echosystem"
 - 🇺🇸&nbsp;Jj&nbsp;L - "Pikachuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuu"
