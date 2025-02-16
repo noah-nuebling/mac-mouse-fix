@@ -113,6 +113,9 @@ io_service_t copy_io_service(const char *name, BOOL wantBuiltIn) {
     ///     Returns an IOService with the name `name` and with a `kIOBuiltin` property that must match `wantBuiltIn`.
     ///     The caller must release the return value (unless it's 0 aka `IO_OBJECT_NULL`)
     
+    /// Performance:
+    ///     [Feb 2025] Instruments says `get_mac_address()` is relatively slow and takes 100% of the time in our `GetLicenseState.get()` calls (If I understand correctly). IOServiceGetMatchingServices() takes 100% inside `get_mac_address()`. But it's only called once on my M1 MBA (finds a builtin en0 – the first thing we check for) so not sure how to optimize, except by caching.
+    
     /// Get default port
     ///     `kIOMasterPortDefault` is a constant that tells functions to get the default master port themselves.
     ///      We could get the real default master port ourselves by using `IOMasterPort(MACH_PORT_NULL, &default_port)`. That might be more efficient.

@@ -26,7 +26,21 @@
 
 /// -------------------------
 
-NS_ASSUME_NONNULL_BEGIN
+/// `nowarn_begin()` and `nowarn_end()` macros:
+///     Temporarily disable all clang warnings (-Weverything).
+///     Example usage:
+///     ```
+///     nowarn_begin();
+///     <Code that triggers warnings>
+///     nowarn_end();
+///     ```
+
+#define nowarn_begin()                                      \
+    _Pragma("clang diagnostic push")                        \
+    _Pragma("clang diagnostic ignored \"-Weverything\"")    \
+
+#define nowarn_end()                                        \
+    _Pragma("clang diagnostic pop")
 
 /// `_isobject()` – internal helper macro.
 ///     Check if an expression evaluates to an objc object.
@@ -136,13 +150,19 @@ NS_ASSUME_NONNULL_BEGIN
 ///     On a class-object:       `class` returns the class-object, but `object_getClass()` returns the *meta-class-object*.
 /// Performance:
 ///     Not how much slower this is compared to [isKindOfClass:] or [isSubclassOfClass:]. Prolly not significant.
+/// Alternative implementation:
+///     `[[(x) class] isSubclassOfClass: [classname class]]`
+///         -> Isn't that a simpler way to achieve the same thing?
+///         Meta: I think I used `object_getClass()` because I read somewhere that it is safer than some alternative.
+///             I though the alternative might be `-isSubclassOfClass:` but I think the alternative was actually `objc_getMetaClass()` and I read about this here: https://stackoverflow.com/a/20833446/10601702
+///
 
 #define isclass(x, classname) \
     [[(x) class] isKindOfClass: object_getClass([classname class])]
 
 /// `isprotocol` macro
 ///     - Works on normal objects and class objects just like `isclass()`
-///     - The docs say this is slow, and to use [respondsToSelector:] instead See: https://developer.apple.com/documentation/objectivec/nsobject/1418893-conformstoprotocol?language=objc
+///     - The docs say this is slow, and to use -[respondsToSelector:] instead See: https://developer.apple.com/documentation/objectivec/nsobject/1418893-conformstoprotocol?language=objc
 
 #define isprotocol(x, protocolname) \
     [[x class] conformsToProtocol: @protocol(protocolname)]
@@ -234,23 +254,23 @@ NS_ASSUME_NONNULL_BEGIN
         [NSString stringWithUTF8String: bit_str]; \
     })
 
+/// Check if ptr is objc object
+///     Copied from https://opensource.apple.com/source/CF/CF-635/CFInternal.h
+///     Also see: https://blog.timac.org/2016/1124-testing-if-an-arbitrary-pointer-is-a-valid-objective-c-object/
+#define CF_IS_TAGGED_OBJ(PTR)    ((uintptr_t)(PTR) & 0x1)
+
 /// 'Basic' NSErrors
 ///     Use this to create an NSError (which is the most universally compatible type of error across Swift and objc afaik), and you only need to specify a "reason" string – no "error domain" or "error code" or additional info.
 NS_INLINE NSError *_Nonnull MFNSErrorBasicMake(NSString *_Nonnull reason) {
-    return [[NSError alloc] initWithDomain: @"" code: 0 userInfo: @{@"reason": reason}];
+    return [[NSError alloc] initWithDomain: @"" code: 0 userInfo: @{ @"reason": reason }];
 }
 NS_INLINE NSString *_Nullable MFNSErrorBasicGetReason(NSError *_Nonnull error) {
     return error.userInfo[@"reason"];
 }
 
-/// Check if ptr is objc object
-///     Copied from https://opensource.apple.com/source/CF/CF-635/CFInternal.h
-#define CF_IS_TAGGED_OBJ(PTR)    ((uintptr_t)(PTR) & 0x1)
-extern inline bool _objc_isTaggedPointer(const void *ptr);     /// Copied from https://blog.timac.org/2016/1124-testing-if-an-arbitrary-pointer-is-a-valid-objective-c-object/
-
 @interface SharedUtility : NSObject
 
-typedef void(*MFCTLCallback)(NSTask *task, NSPipe *output, NSError *error);
+NS_ASSUME_NONNULL_BEGIN
 
 void MFCFRunLoopPerform(CFRunLoopRef _Nonnull rl, NSArray<NSRunLoopMode> *_Nullable modes, void (^_Nonnull workload)(void));
 bool MFCFRunLoopPerform_sync(CFRunLoopRef _Nonnull rl, NSArray<NSRunLoopMode> *_Nullable modes, NSTimeInterval timeout, void (^_Nonnull workload)(void));
@@ -288,9 +308,9 @@ int8_t sign(double x);
 + (void)setupBasicCocoaLumberjackLogging;
 + (void)resetDispatchGroupCount:(dispatch_group_t)group;
 
-@end
-
 NS_ASSUME_NONNULL_END
+
+@end
 
 /// -------------------------------------
 ///     Macros that are tooo crazy

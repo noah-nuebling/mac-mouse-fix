@@ -12,20 +12,21 @@
 #import "EventLoggerForBradMacros.h"
 #import "NSCoderErrors.h"
 #import "MFPlistEncoder.h"
+#import "SimpleUnboxing.h"
 
 #import "objc/runtime.h"
 
 #pragma mark - Failure macros
 ///     !! Keep in sync with MFPlistEncoder !!
 
-#define failWithError(code_, messageAndFormatArgs...) ({                                \
+#define failWithError(code_, messageAndFormatArgs...) ({                         \
     [self _failWithErrorCode: (code_) reason: stringf(messageAndFormatArgs)];    \
-    return nil;                                                                         \
+    return nil;                                                                  \
 })
 
-#define propagateError(returnVal) ({        \
-    if (self->_error)                       \
-        return (returnVal);                 \
+#define propagateError() ({         \
+    if (self->_error)               \
+        return nil;                 \
 })
 
 #define returnIfAlreadyFailed(returnVal) ({ /** I think I read in some Apple docs, that after the first failWithError(), the decoder should stop decoding any further values. That's what this is for. */ \
@@ -148,7 +149,7 @@
     
     /// Decode value
     id decoded = [self _decodeObjectFromPlist: valueFromArchive]; /// Possibly recurse
-    propagateError(nil);
+    propagateError();
     
     /// Return
     return decoded;
@@ -206,8 +207,23 @@
         } while(0);
     });
     
+    if (!decodeUsing_InitWithCoder) {
+        
+        /// Make resultClass *mutable* for raw plist nodes
+        ///     Because we always put the mutable subclass into the decoded object-graph
+        ///
+        ///     Also, concretely, the allowedClasses check below would fail if we don't do this.
+        ///     Explanation in `MFPlistIsValidNode()` as of [Feb 2025]
+        
+        if      (isclass(resultClass, NSArray))          resultClass = [NSMutableArray class];
+        else if (isclass(resultClass, NSDictionary))     resultClass = [NSMutableDictionary class];
+        else if (isclass(resultClass, NSData))           resultClass = [NSMutableData class];
+        else if (isclass(resultClass, NSString))         resultClass = [NSMutableString class];
+        /// The 2 other plist classes (NSNumber and NSDate) don't have mutable subclasses.
+    };
+    
     /// Validate  resultClass' protocol conformance
-    ///     Note: Only need to do this here since, in all other codepaths, we already know we're dealing with plist types, which support NSSecureCoding.
+    ///     Note: Only need to do this if `decodeUsing_InitWithCoder` since otherwise, we already know we're dealing with plist types, which support NSSecureCoding.
     if (decodeUsing_InitWithCoder) {
     
         if (self->_requiresSecureCoding) {
@@ -266,7 +282,7 @@
             result = [result awakeAfterUsingCoder: self];
             
             /// Propagate error
-            propagateError(nil);
+            propagateError();
             
             /// Validate: [initWithCoder:] result != nil
             ///     These validations are getting out of hand.
@@ -274,49 +290,79 @@
         }
         else {
         
-            /// Decode plist type
+            /// Decode raw plist node
+            ///
+            /// On mutable handling:
+            ///     When decoding raw plist nodes, we always instantiate the mutable subclasses (NSMutableArray and NSMutableString, ...).
+            ///     Explanation in `MFPlistIsValidNode()` as of [Feb 2025]
             
-            /// On mutability: We always create mutable containers! Don't think this causes problems
-            
-            ifcastn(valueFromArchive, NSArray, arrFromArchive) {
+            ifcastn(valueFromArchive, NSArray, arr) {
                 /// Plist container - NSArray
-                result = [NSMutableArray array];
-                for (id elm in arrFromArchive) {
-                    id d = [self _decodeObjectFromPlist: elm];              /// Recurse
-                    propagateError(nil);
-                    if (!d) failWithError(NSCoderReadCorruptError, @"Decoded nil for encoded NSArray element (%@). But NSArray can't store nil.", elm);
-                    [result addObject: d];
+                
+                id __unsafe_unretained objects[arr.count];
+                [arr getObjects: objects];
+                
+                id resultObjects[arrcount(objects)];
+                
+                for (NSUInteger i = 0; i < arrcount(objects); i++) {
+                    id d = [self _decodeObjectFromPlist: objects[i]];   /// Recurse
+                    propagateError();
+                    if (!d) failWithError(NSCoderReadCorruptError, @"Decoded nil for encoded NSArray element (%@). But NSArray can't store nil.", objects[i]);
+                    resultObjects[i] = d;
                 }
+                
+                result = [[NSMutableArray alloc] initWithObjects: resultObjects count: arrcount(resultObjects)];
             }
-            else ifcastn(valueFromArchive, NSDictionary, dictFromArchive) {
+            else ifcastn(valueFromArchive, NSDictionary, dict) {
                 /// Plist container - NSDictionary
-                result = [NSMutableDictionary dictionary];
-                for (NSString *key in dictFromArchive) {                            /// Note: Due to earlier plist validation, we know that all dict keys are strings here
-                    id d = [self _decodeObjectFromPlist: dictFromArchive[key]];     /// Recurse
-                    propagateError(nil);
-                    if (!d) failWithError(NSCoderReadCorruptError, @"Decoded nil for encoded NSDictionary value (%@). But NSDictionary can't store nil.", dictFromArchive[key]);
-                    result[key] = d;
+                
+                id __unsafe_unretained keys[dict.count];
+                id __unsafe_unretained objects[arrcount(keys)];
+                [dict getObjects: objects andKeys: keys];
+                
+                id resultObjects[arrcount(objects)];
+                
+                for (NSUInteger i = 0; i < arrcount(objects); i++) {
+                    id d = [self _decodeObjectFromPlist: objects[i]];   /// Recurse
+                    propagateError();
+                    if (!d) failWithError(NSCoderReadCorruptError, @"Decoded nil for encoded NSDictionary value (%@). But NSDictionary can't store nil.", objects[i]);
+                    resultObjects[i] = d;
                 }
+                
+                result = [[NSMutableDictionary alloc] initWithObjects: resultObjects forKeys: keys count: arrcount(keys)]; /// Note how we're making an NS*Mutable*Dictionary
             }
             else {
-                /// Plist is not a container – just return it directly.
-                result = valueFromArchive; /// Note: The decoded object will share objects with the archive. This should be ok for our purposes. You can always make a deep copy.
+                /// Plist is leaf
+                ///     > make mutable copy (If possible)
+                ///
+                /// Also see:
+                ///     Explanation of mutable-subclass handling in `MFPlistIsValidNode()` as of [Feb 2025]
+                ///
+                /// Why make a -[mutableCopy] if valueFromArchive is already mutable?
+                ///     (instead of simply returning a reference without copying?)
+                ///     > Because it would prevent issues, in case we decode an object, and then mutate its mutable NSData or NSString members. That would also mutate the archive if we don't make a copy. Not sure we'd ever do that but it might lead to subtle bugs.
+                
+                if (isclass(valueFromArchive, NSData)   ||
+                    isclass(valueFromArchive, NSString) ) /// NSData and NSString are the only leaf plist types with mutable subclasses. NSDate and NSNumber don't have mutable subclasses.
+                {
+                    result = [valueFromArchive mutableCopy];
+                }
+                else {
+                    assert(isclass(valueFromArchive, NSDate)    ||
+                           isclass(valueFromArchive, NSNumber)  );
+                    
+                    result = [valueFromArchive copy]; /// On an immutable value, calling -[copy] shouldn't do anything. It should just return the receiver. But NSNumber and NSDate do implement NSCopying, so not sure if copying does something important after all.
+                }
             }
         }
     });
     
-    /// Standardize plist container classes
-    ///     Kind of a hack to make the later `isclass(result, resultClass)` validation work. Also [valueFromArchive class] might be a cluster class like `__NSArray0`. Not sure if that could cause problems if we try to `initWithCoder:` on a cluster subclass?
-    ///     Not sure what we're doing.... Maybe we should just turn off the isclass(result, resultClass) check
-    if (isclass(resultClass, NSArray))
-        resultClass = [NSMutableArray class];
-    else if (isclass(resultClass, NSDictionary))
-        resultClass = [NSDictionary class];
+    /// Validate [result class]
+    if (runningPreRelease()) /// Not running this in release builds since I'm not sure it makes sense, and I don't want the decode to fail over incorrect and unnecessary validation.
+        if (self->_requiresSecureCoding)
+            if (!isclass(result, resultClass))
+                failWithError(kMFNSCoderError_InternalInconsistency, @"decoding result %@ with class %@ is not of expected class: %@. plist node found in archive: %@", result, [result class], resultClass, valueFromArchive); /// Note that [result class] could be a subclass of resultClass in case [[resultClass alloc] initWithCoder:] returned a subclass of resultClass. I think that can happen for class-clusters.
     
-    /// Validate
-    if (!isclass(result, resultClass))
-        failWithError(kMFNSCoderError_InternalInconsistency, @"decoding result %@ with class %@ is not of expected class: %@. plist node found in archive: %@", result, [result class], resultClass, valueFromArchive); /// Note that [result class] could be a subclass of resultClass in case [[resultClass alloc] initWithCoder:] returned a subclass of resultClass. I think that can happen for class-clusters.
-
     /// Return
     return result;
 }

@@ -182,7 +182,7 @@ NSData *MFEncode(NSObject<NSCoding> *codable, BOOL requireSecureCoding, MFEncodi
     }
     else {
         encoder = [((MFPlistEncoder *)encoder) initRequiringSecureCoding: requireSecureCoding
-                                                                         failurePolicy: NSDecodingFailurePolicyRaiseException];
+                                                           failurePolicy: NSDecodingFailurePolicyRaiseException];
     }
     
     /// Archive
@@ -273,8 +273,8 @@ id<NSCoding> MFDecode(id archive, BOOL requireSecureCoding, NSSet<Class> *_Nulla
     else if (isclass(decoder, MFPlistDecoder)) {
     
         decoder = [((MFPlistDecoder *)decoder) initForReadingFromPlist: archive
-                                                                requiresSecureCoding: requireSecureCoding
-                                                                       failurePolicy: NSDecodingFailurePolicyRaiseException];
+                                                  requiresSecureCoding: requireSecureCoding
+                                                         failurePolicy: NSDecodingFailurePolicyRaiseException];
         if (!decoder) {
             assert(false && "MFDecode: MFPlistDecoder initialization failed. This should never happen.");
             return nil;
@@ -390,19 +390,22 @@ id<NSCoding> MFDecodeFromArchiveDict(NSDictionary *archiveDict, BOOL requireSecu
 
 #pragma mark - Load Tests
 
-#define MF_TEST 0 /** Using `MF_TEST` consistently seems like a nice convention to make these random, scattered tests greppable. */
+#define MF_TEST 0 /** Using `MF_TEST` consistently seems like a nice convention to make these random, scattered load-tests greppable. */
 
 #if MF_TEST
 
 #import "MFDataClass.h"
 
+@interface MFNSStringXYZ : NSString @end /// Trying to test encoding/decoding of a custom subclass but it's too annoying to make the subclass work.
+@implementation MFNSStringXYZ @end
+
 MFDataClass0(MFDataClassBase, TestInner)
 
-
-
-MFDataClass2(MFDataClassBase, TestOuter,
-            readonly, strong, nonnull, NSArray<TestInner *> *,  inners   ,
-            readonly, strong, nullable, NSString *,             nullableString      );
+MFDataClass4(MFDataClassBase, TestOuter,
+            readonly, strong, nonnull,  NSArray<TestInner *> *,         inners              ,
+            readonly, strong, nullable, NSString *,                     nullableString      ,
+            readonly, strong, nonnull,  NSMutableArray<NSString *> *,   mutableArray        ,
+            readonly, strong, nonnull,  NSArray<NSMutableString *> *,   mutableStrings      );
 
 
 
@@ -412,8 +415,10 @@ MFDataClass2(MFDataClassBase, TestOuter,
     
     MFCFRunLoopPerform(CFRunLoopGetMain(), nil, ^{ /// Delay, so that CocoaLumberjack gets initialized (?)
     
+        #define Log(x...) NSLog(@"MFCoding Loadtests: " x)
+    
         /// Test encoding failure
-        __auto_type unencodable_block = ^{ NSLog(@"MFCoding: Get blocked!"); };
+        __auto_type unencodable_block = ^{ Log(@"Get blocked!"); };
         if ((0)) {
             NSDictionary *block_archive = MFEncode((id)unencodable_block, true, kMFEncoding_MFPlist);
         }
@@ -422,22 +427,29 @@ MFDataClass2(MFDataClassBase, TestOuter,
         if ((0)) {
             NSError *err;
             [NSKeyedArchiver archivedDataWithRootObject: unencodable_block requiringSecureCoding: true error: &err];
-            NSLog(@"MFCoding: NSKeyedArchiver error: %@", err);
+            Log(@"NSKeyedArchiver error: %@", err);
         }
         
         /// Test MFDataClass encode/decode
         TestOuter *outer =
-            [[TestOuter alloc] initWith_inners: @[
-                [[TestInner alloc] init],
-                [[TestInner alloc] init],
-                (id)[NSNull null],
-            ] nullableString: @"Not nil"];
+            [[TestOuter alloc] initWith_inners:
+                                               @[
+                                                    [[TestInner alloc] init],
+                                                    [[TestInner alloc] init],
+                                                    (id)[NSNull null],
+                                                ]
+                                nullableString: (1) ? nil : @"Not nil"
+                                  mutableArray: (0) ? nil : @[@"a", @"b", @"c"].mutableCopy
+                                mutableStrings: @[@"d".mutableCopy, @"e".mutableCopy, @"f".mutableCopy /*, @1 */]
+            ];
 
         NSDictionary *archive = MFEncode(outer, true, kMFEncoding_MFPlist);
-        NSLog(@"MFCoding: TestOuter archive: %@", archive);
+        Log(@"TestOuter archive: %@", archive);
         
-        TestOuter *reconstructed = (id)MFDecode(archive, true, MFNSSetMake([TestOuter class], [NSNull null]));
-        NSLog(@"MFCoding: TestOuter reconstructed: %@", reconstructed);
+        TestOuter *reconstructed = (id)MFDecode(archive, true, MFNSSetMake([TestOuter class], [NSNull class]), kMFEncoding_MFPlist);
+        Log(@"TestOuter reconstructed: %@", reconstructed);
+        
+        #undef Log
         
     });
     

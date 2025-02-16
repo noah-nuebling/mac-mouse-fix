@@ -2059,6 +2059,7 @@
 		4F5F3EEF2756DD1200C350C0 /* RemapSwizzler.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RemapSwizzler.h; sourceTree = "<group>"; };
 		4F5F3EF02756EC0400C350C0 /* RemapSwizzler.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RemapSwizzler.m; sourceTree = "<group>"; };
 		4F5F3EF22756F1DB00C350C0 /* ScrollModifiers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrollModifiers.swift; sourceTree = "<group>"; };
+		4F5FC0612D6206E3009DCF10 /* SimpleUnboxing.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SimpleUnboxing.h; sourceTree = "<group>"; };
 		4F616D6027BDCD56004A6A72 /* ScrollConfigTesting.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = ScrollConfigTesting.md; sourceTree = "<group>"; };
 		4F626E97292A842D00E6FFD5 /* KeyCaptureMode.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KeyCaptureMode.h; sourceTree = "<group>"; };
 		4F626E98292A842D00E6FFD5 /* KeyCaptureMode.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = KeyCaptureMode.m; sourceTree = "<group>"; };
@@ -7214,6 +7215,8 @@
 			children = (
 				4FF6653E25F2C7B000689B77 /* SharedUtility.h */,
 				4FF6653B25F2C7B000689B77 /* SharedUtility.m */,
+				4FE40B95283A49DD00880BEF /* SharedUtilitySwift.swift */,
+				4F5FC0612D6206E3009DCF10 /* SimpleUnboxing.h */,
 				4F51701A2CBFD7730018D388 /* MFDataClass.h */,
 				4F5170172CBFD7660018D388 /* MFDataClass.m */,
 				4F5170142CBFD75C0018D388 /* MFDataClassImpls.m */,
@@ -7229,7 +7232,6 @@
 				4F1B418D2D49960E00026C94 /* MFSemaphore.h */,
 				4F1B418E2D49960E00026C94 /* MFSemaphore.m */,
 				4F428CFF2CD6690F006322AB /* MFDefer.h */,
-				4FE40B95283A49DD00880BEF /* SharedUtilitySwift.swift */,
 				4FDECCDC28A3E93100DDEE91 /* IsObjC.h */,
 				4FDECCDD28A3E93100DDEE91 /* IsObjC.m */,
 				4FF6653F25F2C7B000689B77 /* Queue.h */,

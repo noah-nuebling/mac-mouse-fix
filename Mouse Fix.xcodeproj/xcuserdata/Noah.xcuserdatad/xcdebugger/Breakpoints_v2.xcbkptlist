@@ -205,8 +205,8 @@
             filePath = "Shared/Utility/MFDataClass.m"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "713"
-            endingLineNumber = "713"
+            startingLineNumber = "715"
+            endingLineNumber = "715"
             landmarkName = "-initWithPlist:requireSecureCoding:"
             landmarkType = "7">
          </BreakpointContent>
@@ -358,8 +358,8 @@
             filePath = "Shared/Utility/MFDataClass.m"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "913"
-            endingLineNumber = "913"
+            startingLineNumber = "915"
+            endingLineNumber = "915"
             landmarkName = "extractClassesFromRawTypeString(rawTypeString)"
             landmarkType = "9">
          </BreakpointContent>
@@ -374,8 +374,8 @@
             filePath = "Shared/Utility/MFDataClass.m"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1009"
-            endingLineNumber = "1009"
+            startingLineNumber = "1011"
+            endingLineNumber = "1011"
             landmarkName = "extractClassesFromRawTypeString(rawTypeString)"
             landmarkType = "9">
          </BreakpointContent>
@@ -464,7 +464,7 @@
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
             uuid = "A8A5B8CC-74BA-468D-A5B2-2AA3ED7A0241"
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Shared/License/Retrieve/GetLicenseConfig.swift"
@@ -494,6 +494,98 @@
                   symbolName = "-[NSURLSession dataTaskWithRequest:]"
                   moduleName = "CFNetwork"
                   usesParentBreakpointCondition = "Yes">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "FE4187F2-C9D0-4246-B1C4-AB168A4EC729"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Shared/Utility/MFCoding/MFPlistDecoder.m"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "180"
+            endingLineNumber = "180"
+            landmarkName = "-_decodeObjectFromPlist:"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "5B66E1F4-382C-4674-8E72-D9CEB923602B"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Shared/Utility/MFCoding/MFPlistEncoder.m"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "428"
+            endingLineNumber = "428"
+            landmarkName = "MFPlistIsValidNode(obj)"
+            landmarkType = "9">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "152AA766-9403-4596-920D-21296FE3D3F8"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Shared/Utility/MFCoding/MFCoding.m"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "451"
+            endingLineNumber = "451"
+            landmarkName = "+load"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "152AA766-9403-4596-920D-21296FE3D3F8 - 858a0b8659fe4e7"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "__27+[TestOuter(loaddddd) load]_block_invoke"
+                  moduleName = "Mac Mouse Fix.debug.dylib"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/Noah/Desktop/mmf-stuff/mac-mouse-fix/Shared/Utility/MFCoding/MFCoding.m"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "451"
+                  endingLineNumber = "451">
+               </Location>
+               <Location
+                  uuid = "152AA766-9403-4596-920D-21296FE3D3F8 - 858a0b8659fe4e7"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "__27+[TestOuter(loaddddd) load]_block_invoke"
+                  moduleName = "Mac Mouse Fix.debug.dylib"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/Noah/Desktop/mmf-stuff/mac-mouse-fix/Shared/Utility/MFCoding/MFCoding.m"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "451"
+                  endingLineNumber = "451">
+               </Location>
+               <Location
+                  uuid = "152AA766-9403-4596-920D-21296FE3D3F8 - 858a0b8659fe49a"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "__27+[TestOuter(loaddddd) load]_block_invoke"
+                  moduleName = "Mac Mouse Fix.debug.dylib"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/Noah/Desktop/mmf-stuff/mac-mouse-fix/Shared/Utility/MFCoding/MFCoding.m"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "454"
+                  endingLineNumber = "454">
                </Location>
             </Locations>
          </BreakpointContent>

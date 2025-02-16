@@ -262,7 +262,7 @@
         if (!coder.requiresSecureCoding) {
             
             /// Non-secure decoding
-            ///  -> Do absolutely no validation -> Should be a bit faster. Can't think of other reasons to use this. Not sure the speed ever matters.
+            ///  -> Do absolutely no validation -> Should be a bit faster. Can't think of other reasons to use this. Not sure the speed ever matters. (But not sure the 'security' ever matters for us either. Read more in MFCoding.m)
             id _Nullable value = [coder decodeObjectForKey: key];
             
             /// Store the decoded value inside the self.key property
@@ -287,7 +287,7 @@
             ({
                 
                 /// Get typeEncoding
-                NSString *propertyAttributes = [[self class] attributesForProperty:key];
+                NSString *propertyAttributes = [[self class] attributesForProperty: key];
                 typeEncoding = typeEncodingForProperty(propertyAttributes);
                 
                 /// Guard no typeEncoding
@@ -298,15 +298,17 @@
                 }
                 
                 /// Get className
-                NSString *className = classNameForProperty([typeEncoding cStringUsingEncoding:NSUTF8StringEncoding]);
+                NSString *className = classNameForProperty([typeEncoding cStringUsingEncoding: NSUTF8StringEncoding]);
                 
                 /// Edge case: unspecified object type
                 ///     If the property is declared with an unspecified object type, then our type validation code won't work.
                 ///     We're already validating this in `+ load` - so this should never happen.
                 ///     Note: We already validate this in the onLoadValidation -> Remove this.
-                if ([className isEqual:@"id"]) {
-                    assert(false);
-                    failWithError(kMFNSCoderError_InternalInconsistency, @"Internal inconsistency: Property %@.%@ with attributes: %@ seems to have unspecified object type (likely declared with `id`).", [self class], key, propertyAttributes);
+                if ((0)) {
+                    if ([className isEqual:@"id"]) {
+                        assert(false);
+                        failWithError(kMFNSCoderError_InternalInconsistency, @"Internal inconsistency: Property %@.%@ with attributes: %@ seems to have unspecified object type (likely declared with `id`).", [self class], key, propertyAttributes);
+                    }
                 }
                 
                 /// Parse className
@@ -328,16 +330,16 @@
                 [allowedClasses unionSet: additionalClasses];
             }
             
-            /// Decode value
+            /// Recurse / decode value
             ///     (Using NSSecureCoding method)
             ///     The decoder will `failWithError:` automatically, if there's a type mismatch or the decoded object does not implement `NSSecureCoding`.
             ///     -> That is, if `coder.requiresSecureCoding == true`
-            ///     -> If `coder.requiresSecureCoding == false` then this would do no checks while decoding the object. `expectedClass` would be ignored.
+            ///     -> If `coder.requiresSecureCoding == false` then this would do no checks while decoding the object. `allowedClasses` would be ignored.
             
             id _Nullable value = [coder decodeObjectOfClasses: allowedClasses forKey: key];
             
-            /// Guard decoding error
-            ///     Depending on the `coder.decodingFailurePolicy`, `decodeObjectOfClass:` might either throw and error or just set `coder.error` and then continue execution, so we check for that here.
+            /// Propagate decoding error
+            ///     Depending on the `coder.decodingFailurePolicy`, `decodeObjectOfClass:` might either throw and error or just set `coder.error` and then return, so we check for that here.
             if (coder.error != nil) {
                 assert(false);
                 return nil; /// We don't need to call `failWithError()` since the coder already has an error.
@@ -356,7 +358,7 @@
             }
             
             /// Get nullability
-            BOOL isAllowedToBeNil = [[self class] propertyIsAllowedToBeNil:key];
+            BOOL isAllowedToBeNil = [[self class] propertyIsAllowedToBeNil: key];
             
             if ((value == nil) && !isAllowedToBeNil) {
                 assert(false);
@@ -368,14 +370,14 @@
                 
                 /// Cast to NSValue
                 NSValue *nsValue = (NSValue *)value;
-                
+
                 /// Get type encodings
-                const char *propertyTypeEncoding = [typeEncoding cStringUsingEncoding: NSUTF8StringEncoding]; /// Why are we boxing here? Perhaps we should handle all these type encoding strings as `const char *` instead of boxing/converting them back and forth?
+                const char *propertyTypeEncoding = [typeEncoding cStringUsingEncoding: NSUTF8StringEncoding]; /// Why are we boxing here? Perhaps we should handle all these type encoding strings as `const char *` instead of boxing/converting them back and forth? Or use NSSimpleCString as a more lightweight wrapper? ... Eh benchmark first before optimizing though.
                 const char *nsValueTypeEncoding = [nsValue objCType];
                 
                 /// Special case: Booleans
                 ///     For boolean properties, the decoded NSValue seems to just use 'c' (char) while the property encoding uses 'B' (boolean). I also checked `ivar_getTypeEncoding()` and it's also `B` so won't help.
-                ///     Possible explanation: This Apple doc says that BOOL is char on macOS for historical reasons: https://developer.apple.com/library/archive/documentation/Cocoa/Conceptual/KeyValueCoding/DataTypes.html#//apple_ref/doc/uid/20002171-BAJEAIEE
+                ///     Possible explanation: This KVC doc says that BOOL is char on macOS for historical reasons: https://developer.apple.com/library/archive/documentation/Cocoa/Conceptual/KeyValueCoding/DataTypes.html#//apple_ref/doc/uid/20002171-BAJEAIEE
                 if (strcmp(propertyTypeEncoding, "B") == 0) {
                     propertyTypeEncoding = "c";
                 }
@@ -397,25 +399,25 @@
             
         }   /// End of `if (coder.requiresSecureCoding)`
     
-    } /// End of self.allPropertyNames iteration
+    } /// End of self.class.allPropertyNames iteration
     
     return self;
 }
 
 // MARK: NSCopying Protocol
-- (id)copyWithZone:(NSZone *)zone {
+- (id) copyWithZone: (NSZone *)zone {
     
     /// Notes:
     /// - By copying all properties, we do a 'deeper' copy than e.g. `[NSArray -copy]`.
-    ///     Perhaps we can rationalize this by thinking: MFDataClass is like an "object-version" of a struct. Structs behave like they are 'deep-copying', so MFDataClass should, as well. Also, shallow copying and then swapping / adding some members to the copy feels more useful on NSArray, since it's a 'more dynamic' datatype (?)
-    /// - (Oct 2024) Immutable values can just return themselves instead of a copy and noone will notice. Could we determine whether we are immutable and leverage that for optimization? (We probably could by checking `property_getAttributes()` for whether all our properties are `readonly`.)
+    ///     Perhaps we can rationalize this by thinking: MFDataClass is like an "object-version" of a struct. Structs behave like they are 'deep-copying', so MFDataClass should, as well. (Althouth we're only copying 1 layer deep) Also, shallow copying and then swapping / adding some members to the copy feels more useful on NSArray, since it's a 'more dynamic' datatype (?)
+    /// - [Oct 2024] Immutable values can just return themselves instead of a copy and noone will notice. Could we determine whether we are immutable and leverage that for optimization? (We probably could by checking `property_getAttributes()` for whether all our properties are `readonly`.) (But what if the props themselves are mutable?)
 
-    MFDataClassBase *copy = [[[self class] allocWithZone:zone] init];
+    MFDataClassBase *copy = [[[self class] allocWithZone: zone] init];
     if (copy) {
         for (NSString *key in self.class.allPropertyNames) {
             id value = [self valueForKey:key];
             if (value) {
-                [copy setValue:[value copyWithZone:zone] forKey:key]; /// Non-object-specific logic is not necessary, since `NSValue` and `NSNumber` (which our non-object values will be boxed in by KVC) adopt the `NSCopying` protocol. But also, NSNumber and NSValue are immutable so `- copyWithZone:` might just `return self` and not do anything and not cause any overhead?
+                [copy setValue: [value copyWithZone: zone] forKey: key]; /// Non-object-specific logic is not necessary, since `NSValue` and `NSNumber` (which our non-object values will be boxed in by KVC) adopt the `NSCopying` protocol. But also, NSNumber and NSValue are immutable so `- copyWithZone:` might just `return self` and not do anything and not cause any overhead?
             }
         }
     }
@@ -423,7 +425,7 @@
 }
 
 // MARK: Override NSObject Equality/Hashing methods:
-- (BOOL)isEqual:(id)object {
+- (BOOL) isEqual: (id)object {
     
     /// Trivial cases
     if (object == nil) {
@@ -455,7 +457,7 @@
     /// Passed all tests!
     return YES;
 }
-- (NSObject *_Nonnull)internalStateForEqualityComparison {
+- (NSObject *_Nonnull) internalStateForEqualityComparison {
 
     /// Client code can override this (in a category) to easily change the definition of equality between two instances of the same MFDataClass
     ///     On nil:
@@ -470,7 +472,7 @@
     return [self allPropertyValues];
 }
 
-- (NSUInteger)hash {
+- (NSUInteger) hash {
 
     /// Why use propertyCount as -hash?
     ///     - `-hash` needs to not change while an object is in a collection. For mutable objects, this can only be achieved by a) not putting them into collections b) making hash independent of the mutable internal state of the object.
@@ -486,7 +488,7 @@
 
 /// MARK: Override NSObject description
 
-- (NSString *)description {
+- (NSString *) description {
 
     NSString *content = @"";
     NSArray<NSString *> *propNames = [self.class allPropertyNames];
@@ -497,7 +499,7 @@
         NSMutableArray *visitedObjects = threadobject([[NSMutableArray alloc] init]);
         NSNumber *s = @((uintptr_t)self); /// We cast self to an NSNumber so that we effectively do pointer-based equality checking instead of using the full `-isEqual` implementation.
         BOOL didFindCircularRef = [visitedObjects containsObject: s];
-        [visitedObjects addObject:s];
+        [visitedObjects addObject: s];
         MFDefer ^{
             assert([[visitedObjects lastObject] isEqual: s]);
             [visitedObjects removeLastObject];
@@ -513,7 +515,7 @@
             
             for (int i = 0; i < propNames.count; i++) {
                 NSString *name = propNames[i];
-                NSString *_Nullable value = [[self valueForKey:name] description]; /// If this is nil, NSString will just insert "(null)" iirc || `-description` is the recursive call that might cause infinite loops if there are circular refs
+                NSString *_Nullable value = [[self valueForKey: name] description]; /// If this is nil, NSString will just insert "(null)" iirc || `-description` is the recursive call that might cause infinite loops if there are circular refs
                 [_content appendFormat:@"%@: %@", name, value];
                 bool isNotLast = (i < propNames.count - 1);
                 if (isNotLast) {
@@ -570,7 +572,7 @@
         
         for (i = 0; i < propertyCount; i++) {
             const char *propName = property_getName(properties[i]);
-            if (propName) [result addObject: @(propName)]; /// Converting to NSString every time might be a bit slow? ... Update: now we gotta cache!
+            if (propName) [result addObject: @(propName)]; /// Converting to NSString every time might be a bit slow? ... Update: now we got a cache!
         }
     });
     
@@ -581,7 +583,7 @@
     return result;
 }
 
-- (NSArray<id> *_Nonnull)allPropertyValues {
+- (NSArray<id> *_Nonnull) allPropertyValues {
 
     ///     On property order: (Nov 2024)
     ///         The order of these property values needs to always be the same, otherwise `-isEqual:` will break.
@@ -591,9 +593,9 @@
     NSMutableArray *result = [NSMutableArray array];
     
     for (NSString *propertyName in self.class.allPropertyNames) {
-        id propertyValue = [self valueForKey:propertyName];
+        id propertyValue = [self valueForKey: propertyName];
         propertyValue = propertyValue ?: [NSNull null]; /// Adding nil into an array causes an exception!
-        [result addObject:propertyValue];
+        [result addObject: propertyValue];
     }
     
     return result;
@@ -634,8 +636,8 @@ NSString *_Nullable typeEncodingForProperty(NSString *_Nullable propertyAttribut
     
     /// Extract the type encoding string
     ///     TODO: Use NSScanner, it's much better suited for this.
-    NSInteger typeEncodingPre = [propertyAttributes rangeOfString:@"T" options:NSLiteralSearch].location;
-    NSInteger typeEncodingPost = [propertyAttributes rangeOfString:@"," options:NSLiteralSearch].location;
+    NSInteger typeEncodingPre = [propertyAttributes rangeOfString: @"T" options: NSLiteralSearch].location;
+    NSInteger typeEncodingPost = [propertyAttributes rangeOfString: @"," options: NSLiteralSearch].location;
     if (typeEncodingPre == NSNotFound || typeEncodingPost == NSNotFound) {
         assert(false); /// I think this should never happen unless objc runtime is broken or we got a wrong input value
         return nil;
@@ -650,15 +652,15 @@ NSString *_Nullable typeEncodingForProperty(NSString *_Nullable propertyAttribut
     }
     
     NSRange typeEncodingRange = NSMakeRange(typeEncodingStart, typeEncodingLen);
-    NSString *typeEncoding = [propertyAttributes substringWithRange:typeEncodingRange];
+    NSString *typeEncoding = [propertyAttributes substringWithRange: typeEncodingRange];
     
     /// Return
     return typeEncoding;
 }
 
-+ (NSString *_Nullable)attributesForProperty:(NSString *_Nullable)propertyName {
++ (NSString *_Nullable) attributesForProperty: (NSString *_Nullable)propertyName {
     if (propertyName == nil) return nil;
-    objc_property_t property = class_getProperty(self, [propertyName cStringUsingEncoding:NSUTF8StringEncoding]); /// Why UTF8? Quote from Objective-C runtime docs: `All char * in the runtime API should be considered to have UTF-8 encoding.`
+    objc_property_t property = class_getProperty(self, [propertyName cStringUsingEncoding: NSUTF8StringEncoding]); /// Why UTF8? Quote from Objective-C runtime docs: `All char * in the runtime API should be considered to have UTF-8 encoding.`
     if (property == nil) return nil;
     const char *attributes = property_getAttributes(property);
     if (attributes == NULL) return nil;
@@ -764,7 +766,7 @@ NSString *_Nullable typeEncodingForProperty(NSString *_Nullable propertyAttribut
     /// On nullable input:
     ///     We use the `propertyName` input value as a dictionary-key in the subclass overrides of this method. When indexing an NSDictionary with nil it just returns nil. So is safe.
     
-    [NSException raise:NSInternalInconsistencyException format:@"MFDataClassX(...) macros must override %@ without calling super.", NSStringFromSelector(_cmd)];
+    [NSException raise: NSInternalInconsistencyException format: @"MFDataClassX(...) macros must override %@ without calling super.", NSStringFromSelector(_cmd)];
     return nil; /// This line will never be reached
 }
 
@@ -784,7 +786,7 @@ BOOL propertyHasTypeThatSupportsNullability(NSString *_Nullable typeEncoding) {
     }
     
     unichar chars[typeEncoding.length];
-    [typeEncoding getCharacters:chars];
+    [typeEncoding getCharacters: chars];
     
     unichar c = chars[0];
     if (c == 'r') c = chars[1]; /// Skip lead 'const' encoding. This shouldn't crash except if the typeEncoding is malformed, which we never expect.

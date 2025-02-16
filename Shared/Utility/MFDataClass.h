@@ -58,7 +58,7 @@
 /// Details:
 ///     - When creating a new `MFDataClass`, you have to specifiy the superclass. (This is all validated in `+ load`, as of Oct 2024)
 ///         - Default to using `MFDataClassBase` as the superclass.
-///         - You can also create a dataclass with **0 properties** and use that as the superclass for other dataclasses. Dataclasses with 0 properties don't really do anything, except serve as superclasses to group other dataclasses together.
+///         - You can also create a dataclass with **0 properties** and use that as the superclass for other dataclasses. Dataclasses with 0 properties don't really do anything, except serve as superclasses to group other dataclasses together in a way that the type system understands.
 ///         - Dataclasses with 1 or more properties shouldn't be used as superclasses of other dataclasses, since that will break the initializers. Nest dataclasses in other dataclasses instead of trying to inherit properties from another dataclass.
 ///     - Restrictions on property types: (This is all validated in `+ load`, as of Oct 2024)
 ///         For copying, encoding, hashing, and equality-checking of the `MFDataClass` to work properly, all of its properties need to implement `NSCopying`, `NSSecureCoding`, `- hash` and `- isEqual`.
@@ -90,13 +90,13 @@
 ///         - Initializers bring nice compile-time-checks: When you add a new property to an `MFDataClass()` you'll get a compiler error if you forget to initialize the new property somewhere, which wouldn't be possible without initializers I think.
 ///         - Initializers let us have properties that are definitely never `null`, which lets us import those properties as non-optionals into Swift - that's nicer to deal with.
 ///         - These many lines of macros are actually quite simple and repetitive and we can just let an LLM generate them.
-///             -> Update [Feb 2025] we've since added the +rawNullabilityAndTypeOfProperty: methods which also require separate macros.
+///             -> Update [Feb 2025] we've since added the +rawNullabilityAndTypeOfProperty: methods which also require separate macros for each possible number of arguments, and which is necessary for some automatic decoding validations.
 ///     - Like half of the code in `MFDataClass.m` is to implement `NSSecureCoding`
 ///         - After thinking about it I think it isn't really that useful for us... but now we already wrote the code.
-///         - Read more about NSSecureCoding MFCoding.m
+///         - Read more about our thoughts on NSSecureCoding in `MFCoding.m`
 ///
 /// Meta:
-/// - Use like C struct and array: Out of NSArray and MFDataClass we should be able to build any interesting arrangement of data. They would serve as an object-based alterative to array (NSArray) and struct (MFDataClass) from C.
+/// - Out of NSArray and MFDataClass we should be able to build any interesting arrangement of data. They would serve as an object-based alterative to array (> NSArray) and struct (> MFDataClass) from C.
 /// - We should consider replacing the remapsDict (Which is a big nested `NSDictionary`that represents the mouse-button-to-action mappings inside the Mac Mouse Fix Helper process) with a nested set of `MFDataClass` instances. That would make it less scary to work with. (Although honestly it's been surprisingly fine, even though the compiler doesn't know the structure of this big nested dict at all.)
 ///     (Or maybe a nested struct definition in swift would be even nicer, but not sure if fast and objc compatible. Nested class definition in Swift might also be nice but afaik you can't autogenerate initializers and NSCoding/NSCopying/-isEqual: support like you can with Swift structs and with MFDataClass)
 

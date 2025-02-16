@@ -132,8 +132,10 @@ CFTimeInterval machTimeToSeconds(uint64_t tsMach) {
 #pragma mark - Catch NSException in Swift
 
 NSException * _Nullable tryCatch(void (^tryBlock)(void)) {
+    
     /// Src: https://stackoverflow.com/a/32991585/10601702
     ///     Haven't tested this.
+    ///     Might be better to return a struct with the exception and the block result?
     
     NSException *e = nil;
     @try {

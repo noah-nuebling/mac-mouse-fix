@@ -9,12 +9,14 @@
 
 /// This is was an experiment. (Last updated [Feb 2025])
 /// We tried to create an NSCoder optimized for deep-copying, by simply converting the object-graph to a nested NSDictionary and back.
-///     However, this was only around 20% than using NSKeyedArchiver and NSKeyedUnarchiver for deep-copying for my simple tests. So the maintenance overhead seems not worth it.
+///     However, this was only around 20% faster than using NSKeyedArchiver and NSKeyedUnarchiver for deep-copying for my simple tests. So the maintenance overhead seems not worth it.
 
 /// The interesting learnings from this have been moved to other files like MFCoding.m and MFPlistDecoder
 /// > **You can delete this.**
 ///
-/// Optimization Idea: We used NSDictionary as the archive. Perhapsss using NSMapTable would've been faster? ... But I don't really think so since I think the only overhead of NSDictionary is to call -hash and -isEqual: and -copy on the keys, which were all immutable NSStrings in our case (So it should be very fast.)
+/// Optimization Ideas I had afterwards: (Before we actually delete this, we could try these)
+///     - We used NSDictionary as the archive. Perhapsss using NSMapTable would've been faster? ... But I don't really think so since I think the only overhead of NSDictionary is to call -hash and -isEqual: and -copy on the keys, which were all immutable NSStrings in our case (So it should be very fast.)
+///     - We used NSMutableArray and NSMutableDictionary when encoding/decoding plist container archive nodes. Instead we could put the contained objects on the stack to manipulate them (Doing that in MFPlistCoder as of [Feb 2025])
 
 #if 0 /// Unused
 
@@ -391,7 +393,7 @@
 
 + (void) load {
     
-    /// Test by Claude
+    /// Test by Claude AI
     
     #define Log(x...) NSLog(@"MFDeepCopyCoder LoadTest: " x);
     
