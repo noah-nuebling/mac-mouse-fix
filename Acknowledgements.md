@@ -42,6 +42,7 @@ These people spent a lot more than the standard price and treated me to an **Inc
 
 **February 2025**
 
+- 🇺🇸&nbsp;Tomohiro&nbsp;Soejima
 - 🇨🇿&nbsp;Jan&nbsp;Polášek - "Thank you for saving me from the Logi Options hell."
 - 🇦🇺&nbsp;Luke - "I hope you enjoy your milkshake"
 - 🇰🇷&nbsp;Jihwan&nbsp;Lee - "Echosystem"
