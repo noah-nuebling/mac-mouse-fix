@@ -215,6 +215,7 @@ static double _toastAnimationOffset = 20;
     [NSAnimationContext endGrouping];
     
     /// Close if user clicks elsewhere
+    ///     Note: We haven't merged those changes to master, yet, but on the feature-strings-catalog branch, we are also closing via escape-key and NOT closing automatically if the user hovers the cursor over the notification.
     _localEventMonitor = [NSEvent addLocalMonitorForEventsMatchingMask:(NSEventMaskLeftMouseDown) handler:^NSEvent * _Nullable(NSEvent * _Nonnull event) {
         
         NSPoint loc = NSEvent.mouseLocation;
