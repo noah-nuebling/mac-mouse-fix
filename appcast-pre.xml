@@ -6,6 +6,664 @@
     <description>Prereleases of Mac Mouse Fix</description>
     <language>en</language>
         <item>
+        <title>3.0.4 Beta 1 available!</title>
+        <pubDate>2025-02-18T23:34:44Z</pubDate>
+        <sparkle:minimumSystemVersion>10.15.0</sparkle:minimumSystemVersion>
+        <description><![CDATA[
+            <!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>-</title>
+  <style>
+    html {
+      color: #1a1a1a;
+      background-color: #fdfdfd;
+    }
+    body {
+      margin: 0 auto;
+      max-width: 36em;
+      padding-left: 50px;
+      padding-right: 50px;
+      padding-top: 50px;
+      padding-bottom: 50px;
+      hyphens: auto;
+      overflow-wrap: break-word;
+      text-rendering: optimizeLegibility;
+      font-kerning: normal;
+    }
+    @media (max-width: 600px) {
+      body {
+        font-size: 0.9em;
+        padding: 12px;
+      }
+      h1 {
+        font-size: 1.8em;
+      }
+    }
+    @media print {
+      html {
+        background-color: white;
+      }
+      body {
+        background-color: transparent;
+        color: black;
+        font-size: 12pt;
+      }
+      p, h2, h3 {
+        orphans: 3;
+        widows: 3;
+      }
+      h2, h3, h4 {
+        page-break-after: avoid;
+      }
+    }
+    p {
+      margin: 1em 0;
+    }
+    a {
+      color: #1a1a1a;
+    }
+    a:visited {
+      color: #1a1a1a;
+    }
+    img {
+      max-width: 100%;
+    }
+    svg {
+      height: auto;
+      max-width: 100%;
+    }
+    h1, h2, h3, h4, h5, h6 {
+      margin-top: 1.4em;
+    }
+    h5, h6 {
+      font-size: 1em;
+      font-style: italic;
+    }
+    h6 {
+      font-weight: normal;
+    }
+    ol, ul {
+      padding-left: 1.7em;
+      margin-top: 1em;
+    }
+    li > ol, li > ul {
+      margin-top: 0;
+    }
+    blockquote {
+      margin: 1em 0 1em 1.7em;
+      padding-left: 1em;
+      border-left: 2px solid #e6e6e6;
+      color: #606060;
+    }
+    code {
+      font-family: Menlo, Monaco, Consolas, 'Lucida Console', monospace;
+      font-size: 85%;
+      margin: 0;
+      hyphens: manual;
+    }
+    pre {
+      margin: 1em 0;
+      overflow: auto;
+    }
+    pre code {
+      padding: 0;
+      overflow: visible;
+      overflow-wrap: normal;
+    }
+    .sourceCode {
+     background-color: transparent;
+     overflow: visible;
+    }
+    hr {
+      background-color: #1a1a1a;
+      border: none;
+      height: 1px;
+      margin: 1em 0;
+    }
+    table {
+      margin: 1em 0;
+      border-collapse: collapse;
+      width: 100%;
+      overflow-x: auto;
+      display: block;
+      font-variant-numeric: lining-nums tabular-nums;
+    }
+    table caption {
+      margin-bottom: 0.75em;
+    }
+    tbody {
+      margin-top: 0.5em;
+      border-top: 1px solid #1a1a1a;
+      border-bottom: 1px solid #1a1a1a;
+    }
+    th {
+      border-top: 1px solid #1a1a1a;
+      padding: 0.25em 0.5em 0.25em 0.5em;
+    }
+    td {
+      padding: 0.125em 0.5em 0.25em 0.5em;
+    }
+    header {
+      margin-bottom: 4em;
+      text-align: center;
+    }
+    #TOC li {
+      list-style: none;
+    }
+    #TOC ul {
+      padding-left: 1.3em;
+    }
+    #TOC > ul {
+      padding-left: 0;
+    }
+    #TOC a:not(:hover) {
+      text-decoration: none;
+    }
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+  </style>
+  
+
+  <style>
+
+      /* Following this tutorial: https://devilgate.org/blog/2012/07/02/tip-using-pandoc-to-create-truly-standalone-html-files/ */
+
+      :root {
+          font-size: 10px; /* 1 rem is this much */
+          padding: 0 0 0 0;
+          background-color: transparent; /* pandoc automatically applies styling where the bg is white. So we need to override that. */
+      }
+
+      body {
+          background-color: transparent;
+          margin: 0 1.2rem 2.0rem 1.2rem;
+          padding: 0;
+          font-family: -apple-system;
+          font-size: 1.3rem;
+
+          line-height: 1.15em;
+      }
+
+      h1, h2, h3, h4, h5, h6 {
+          line-height: 1.15em;
+      }
+
+      h1:after, h2:after {
+          content:' ';
+          display: block;
+          border: 0.5px solid rgba(0, 0, 0, 0.12);
+      }
+      h1:after {
+          margin: 0.6rem 0 0 0;
+      }
+      h2:after {
+          margin: 0.4rem 0 0 0;
+      }
+
+      h1 {
+          font-size: 2.2rem;
+          margin: 2.2rem 0 1.3rem -0.0rem;
+      }
+
+      h2 {
+          font-size: 1.7rem;
+          margin: 2.0rem 0 1.7rem -0.0rem;
+      }
+
+      h3 {
+          font-size: 1.3rem;
+          margin: 1.5rem 0 0.0rem -0.0rem;
+      }
+      h4 {
+          font-size: 1.0rem;
+          margin: 1.5rem 0 0.0rem -0.0rem;
+      }
+      h5 {
+          font-size: 0.8rem;
+          margin: 1.5rem 0 0.0rem -0.0rem;
+          font-style: italic;
+      }
+
+      p {
+          margin: 1.1rem 0 1.1rem 0;
+          font-size: 1.1rem;
+      }
+
+      a, a:visited {
+          color: rgba(43, 102, 211, 1.0) /* Obtained by colorpicking `Hyperlink`s in MMF */
+      }
+
+      ul {
+          padding: 0 0 0 1.5rem;
+          margin: 1.0rem 0 1.0rem 0.5rem;
+      }
+      ul ul {
+          margin: 0.6rem 0 -0.6rem 0;
+          padding: 0 0 0 2.1rem;
+      }
+
+      li {
+          padding: 0 0 0.6rem 0;
+
+          font-size: 1.1rem;
+      }
+
+      code {
+          padding: 0.2rem 0.5rem;
+          border-radius: 0.5rem;
+          background-color: rgba(0, 0, 75, 0.09);
+      }
+      div.sourceCode {
+          
+          padding: 1.6rem 1.5rem;
+          border-radius: 1.1rem; /*0.3rem;*/
+          background-color: rgba(0, 0, 75, 0.055);
+      }
+
+      blockquote {
+          margin-inline-start: unset;
+          border-width: 0.25rem;
+      }
+
+      blockquote.markdown-alert {
+          color: unset;
+      }
+
+      blockquote.markdown-alert.note { /* These colors are copied from the source code at https://github.com/orgs/community/discussions/16925 */
+          border-left-color: #0969da;
+      }
+      blockquote.markdown-alert.tip {
+          border-left-color: #1a7f37;
+      }
+      blockquote.markdown-alert.important {
+          border-left-color: #8250df;
+      }
+      blockquote.markdown-alert.warning {
+          border-left-color: #bf8700;
+      }
+
+      blockquote.markdown-alert.caution {
+          border-left-color: #cf222e;
+      }
+
+      blockquote.markdown-alert > .markdown-alert-title {
+          font-size: 1.2rem;
+      }
+
+      blockquote.markdown-alert.note > .markdown-alert-title {
+          color: #0969da;
+      }
+      blockquote.markdown-alert.tip > .markdown-alert-title {
+          color: #1a7f37;
+      }
+      blockquote.markdown-alert.important > .markdown-alert-title {
+          color: #8250df;
+      }
+      blockquote.markdown-alert.warning > .markdown-alert-title {
+          color: #9a6700;
+      }
+      blockquote.markdown-alert.caution > .markdown-alert-title {
+          color: #d1242f;
+      }
+
+      .annotation {
+          font-size: 1.1rem;
+      }
+      img {
+          max-width: 100%;
+          height: auto;
+          
+          border-radius: 1.0rem;
+          box-shadow: 0 0.2rem 0.4rem 0.0rem rgba(0, 0, 0, 0.15), 0 0.2rem 1.7rem 0.0rem rgba(0, 0, 0, 0.15);
+
+          display: block;
+          margin: 1.4rem auto 1.8rem auto;
+      }
+
+      hr {
+          border: none;
+          height: 3px;
+          background-color: rgba(0, 0, 0, 0.12);
+
+          margin: 1.7rem 0 1.7rem 0;
+      }
+
+      @media (prefers-color-scheme: light) {
+
+          /* I don't think we need this. Light is just the default, right? */
+
+          h1 {
+              color: #272727;
+          }
+
+          a {
+              color: #0948be;
+          }
+      }
+
+      @media (prefers-color-scheme: dark) {
+
+          body {
+              /* background-color: #1e1e1e;  */
+              /* ^ Sparkle background is still bright when we have `background-color: transparent` even with darkmode active. 
+                  This is the color of the text field background in Apple Mail on macOS 11 BigSur 
+                  
+                  Edit: This was because pandoc made the background white, which we've overriden now. So now this is not necessary anymore. Might want to reenable for testing in Safari.
+                  */
+
+              color: rgba(255, 255, 255, 0.9); /* For headers */
+          }
+
+          li, p {
+              color:rgba(255, 255, 255, 0.8);
+          }
+          a, a:visited { /* Need to include a:visited otherwise it will be set by pandoc */
+              color: #3586FF;
+          }
+          hr {
+              background-color: rgba(255, 255, 255, 0.15);
+          }
+          code {
+              background-color: rgba(255, 255, 255, 0.16);
+          }
+          div.sourceCode {
+              background-color: rgba(255, 255, 255, 0.08);
+          }
+
+          h1:after, h2:after {
+              content:' ';
+              display: block;
+              border: 0.5px solid rgba(255, 255, 255, 0.15);
+          }
+      }
+
+  </style>
+  <script>
+
+  document.addEventListener("DOMContentLoaded", function() {
+    
+    // Implement special blockquote styles from GitHub Markdown. See https://github.com/orgs/community/discussions/16925
+
+    // Create map from `blockquote start` to `css classes that we attach to that blockquote`
+    // Notes: 
+    //  - Most symbols that we tried(︕⚠ⓘ❗︎ℹ️⚠️💡) look really weird. The only good-looking one is ⚠. Using SF Symbols or the GitHub svg symbols would be better.
+
+
+    const map = {
+      '[!NOTE]':      {
+        'class': 'markdown-alert note',
+        'title': "⚠ Note",             
+      },
+      '[!TIP]':       {
+        'class': 'markdown-alert tip',
+        'title': "⚠ Tip",
+      },
+      '[!IMPORTANT]': {
+        'class': 'markdown-alert important',
+        'title': "⚠ Important",
+      },
+      '[!WARNING]':   {
+        'class': 'markdown-alert warning',
+        'title': "⚠ Warning",
+      },
+      '[!CAUTION]':   {
+        'class': 'markdown-alert caution',
+        'title': "⚠ Caution",
+      },
+    };
+
+    // Edit blockquotes, according to the map
+
+    for (blockquote of document.querySelectorAll("blockquote")) {
+      for (key in map) {
+
+        if (blockquote.innerText.startsWith(key)) {
+
+          // Remove the [!NOTE] key from the content
+          blockquote.innerHTML = blockquote.innerHTML.replace(key, "").trim(); // This only replaces the first occurence. Src: https://stackoverflow.com/questions/3214886/javascript-replace-only-replaces-first-match
+
+          // Remove weird extra linebreaks
+          //  Explanation: If you put more than one space after [!CAUTION], then pandoc will insert weird extra linebreaks, which will mess up formatting. This fixes that.
+          if (blockquote.firstChild.innerHTML.startsWith("<br>")){
+            blockquote.firstChild.innerHTML = blockquote.firstChild.innerHTML.replace("<br>", "");
+          }
+          // Add classes
+          const newClasses = map[key]['class'].split(" ")
+          blockquote.classList.add(...newClasses);
+
+          // Insert element for holding the title (The title says sth like "ⓘ Note")
+          const titleP = document.createElement('p')
+          titleP.className = 'markdown-alert-title'
+          titleP.innerText = map[key]['title']
+
+          blockquote.prepend(titleP)
+        }
+      }
+    };
+  });
+
+  </script>
+</head>
+<body>
+<!-- **Full Changelog**: https://github.com/noah-nuebling/mac-mouse-fix/compare/3.0.3...3.0.4-Beta-1 -->
+<p>Mac Mouse Fix <strong>3.0.4 Beta 1</strong> improves privacy,
+efficiency, and reliability.<br />
+It introduces a new offline licensing system, and fixes several
+important bugs.</p>
+<h3 id="enhanced-privacy-efficiency">Enhanced Privacy &amp;
+Efficiency</h3>
+<ul>
+<li>Introduces a new offline license validation system that minimizes
+internet connections.</li>
+<li>The app now connects to the internet only when absolutely necessary,
+protecting your privacy and reducing resource usage.</li>
+<li>The app operates completely offline during normal use when
+licensed.</li>
+</ul>
+<details>
+<summary>
+<b>Detailed Privacy Information</b>
+</summary>
+<p><br> Previous versions validated licenses online at every launch,
+potentially allowing connection logs to be stored by third-party servers
+(GitHub and Gumroad). The new system eliminates unnecessary connections
+– after the initial license activation, it only connects to the internet
+if local license data is corrupted. <br><br> While no user behavior was
+ever recorded by me personally, the previous system theoretically
+allowed third-party servers to log IP addresses and connection times.
+Gumroad could also log your license key and potentially correlate it to
+any personal info they recorded about you when you bought Mac Mouse Fix.
+<br><br> Also see <a href=https://gumroad.com/privacy>Gumroad’s privacy
+policy</a> and this
+<a href=https://github.com/noah-nuebling/mac-mouse-fix/issues/976#issuecomment-2140955801>GitHub
+comment</a> of mine.</p>
+</details>
+<h3 id="bug-fixes">Bug Fixes</h3>
+<ul>
+<li>Fixed a bug where macOS would sometimes get stuck when using ‘Click
+and Drag’ for ‘Spaces &amp; Mission Control’.
+<!-- See this [git commit](https://github.com/noah-nuebling/mac-mouse-fix/commit/e8f90d2f32829e3e5f1621fa8e4b58634c9ea07b). I could credit the guy who asked for this in an Issue, but I don't remember where. --></li>
+<li>Fixed a bug where keyboard shortcuts in System Settings would
+sometimes get deleted when using a ‘Click’ action defined in Mac Mouse
+Fix such as ‘Mission Control’.
+<!-- This would commonly affect the keyboard shortcuts 'Mission Control' (⌃↑), 'Move left a space' (⌃←), and 'Move right a space' (⌃→). See this [git commit](https://github.com/noah-nuebling/mac-mouse-fix/commit/081b0ef2e78523aeefb2fe5578e9af69dbd00a1d).
+         - We thought we fixed this with 4a0b26ade34c07621c9ace6eca67f16dd321b2e9 by putting everything on the main thread, but failing to reset the SHK params still sometimes happens. The real thing that prevents user-facing issues is that we updated shkBindingIsUsable() to not flag arrow-keys as 'unusable' (in 081b0ef2e78523aeefb2fe5578e9af69dbd00a1d) so it won't try to override those shortcuts. --></li>
+<li>Fixed <a
+href="https://github.com/noah-nuebling/mac-mouse-fix/issues?q=state%3Aopen%20label%3A%22%27Free%20days%20are%20over%27%20bug%22">a
+bug</a> where the app would sometimes stop working and show a
+notification that the ‘Free days are over’ to users who had already
+bought the app.
+<ul>
+<li>If you experienced this bug, I sincerely apologize for the
+inconvenience. You can apply for a <a
+href="https://redirect.macmousefix.com/?message=&amp;target=mmf-apply-for-refund">refund
+here</a>. &lt;!–
+<details>
+<summary>
+<b>Note for affected users</b>
+</summary>
+<br> This problem would happen when the license-validation server had an
+“Internal Server Error”. The new licensing system handles this
+gracefully.</li>
+</ul></li>
+</ul>
+If you experienced the ‘Free days are over’ bug, I sincerely apologize
+for the inconvenience. You can apply for a <a
+href="https://redirect.macmousefix.com/?message=&amp;target=mmf-apply-for-refund">refund
+here</a>.
+</details>
+<p>–&gt;</p>
+<h3 id="technical-improvements">Technical Improvements</h3>
+<ul>
+<li>Implemented a new ‘MFDataClass’ system allowing for cleaner data
+modeling and human-readable configuration files.</li>
+<li>Built support for adding payment platforms other than Gumroad. So in
+the future, there might be localized checkouts, and the app might be
+sold to different countries!</li>
+</ul>
+<h3 id="dropped-unofficial-support-for-macos-10.14-mojave">Dropped
+(Unofficial) Support for macOS 10.14 Mojave</h3>
+<p>Mac Mouse Fix 3 officially supports macOS 11 Big Sur and later.
+However, for users willing to accept some glitches and graphical issues,
+Mac Mouse Fix 3.0.3 and earlier could still be used on macOS 10.14.4
+Mojave.</p>
+<p>Mac Mouse Fix 3.0.4 drops that support and <strong>now requires macOS
+10.15 Catalina</strong>.<br />
+I apologize for any inconvenience caused by this. This change allowed me
+to implement the improved licensing system using modern Swift features.
+Mojave users can continue using Mac Mouse Fix <a
+href="https://github.com/noah-nuebling/mac-mouse-fix/releases/tag/3.0.3">3.0.3</a>
+or the <a
+href="https://redirect.macmousefix.com/?target=mmf2-latest">latest
+version of Mac Mouse Fix 2</a>. I hope that’s a good solution for
+everyone. <!-- Specifically Swift Tasks IIRC --></p>
+<p><em>Edited with assistance from Claude.</em></p>
+<hr />
+<p>Also check out the previous release <a
+href="https://github.com/noah-nuebling/mac-mouse-fix/releases/tag/3.0.3"><strong>3.0.3</strong></a>.</p>
+<!--
+
+- Created a robust mechanism for running cleanup-code when Mac Mouse Fix is disabled. This is not currently in use, but it should be useful once Mac Mouse Fix can configure the mouse pointer acceleration, because this can only be done by configuring the state of Apple's mouse driver, and so Mac Mouse Fix will need to 'deconfigure' Apple's mouse driver before it is disabled.
+
+-->
+<!-- Hyperwork merge commit notes:
+
+commit 08601b5956cc494432000421e647371a62d38954
+Merge: b639b26d1 d2029c5c0
+Author: Noah Nuebling <noah.n.public@gmail.com>
+Date:   Thu Nov 7 17:59:51 2024 +0100
+
+    Merge branch 'hyperwork'
+
+    This branch originally meant for building integration with the HyperWork mouse company who asked me for a collaboration. They would ship MMF licenses with their mice and the app would show a little branding message on the About tab when one of those licenses was activated.
+
+    But they stopped answering at some point. So we repurposed the work on this branch. For a rewrite of the licensing system that adds support for offline validation.
+
+    This merge commit contains:
+
+    1. A rewritten licensing system, that:
+            - Is much cleaner and more extensible. Now it should be much easier to build integration with Paddle or new licenseTypes in the future.
+            - Supports fully offline license validation under normal operation, and avoids downloading licenseConfig unless it's actually needed - minimizing internet connections as much as possible and protecting privacy.
+            - Should fix a bug where the app would show the 'You've been using the app for 30 days' trial notification when there was an internal server error in the Gumroad license server.
+
+    2. Added lots of utility code to help implement the new licensing system:
+            - MFDataClass - provides a nice, easy way to to create data containers in Objective-C that have neat autogenerated functionality like an `-initWith...` method, NSSecureCoding support, debug printing of an instance's contents, equality-checking that compares each member, initialization from JSON with nullability and type checks, nice support for Swift, and more.
+                    -> It brings the convenience of using Swift structs with autogenerated protocol conformance for 'Codable' 'Equatable', etc to objc objects! - which are more flexible and usable in both our objc and Swift code.
+            - MFDefer macro - which lets us use Go/Swift-style defer in C/ObjC code
+            - threadlocal() macro which lets us easily put objects into thread local storage.
+            - MFEncode()/MFDecode() functions that are neat wrappers/documentation around the highly confusing NSKeyedArchiver()/NSKeyedUnarchiver() APIs
+            - More neat utility code that will hopefully be useful.
+
+-->
+<!--
+
+Meta reflection:
+Wow reviewing the commits for this was kinda terrible. I seem to use the commit notes for 2 things: 1. Guiding my self-code-review where I look at every single change I made in the commit to catch issues. This produces very verbose notes. 2. Documenting user-facing changes, which I want to mention in update notes. Maybe I could make a habit of summarizing "program-behavior changes" at the top, since only that is relevant for writing update notes, and reading through the code-review notes after-the-fact a hugeee slog.
+
+-->
+<!--
+    
+    EXTREMELY DETAILED PRIVACY INFORMATION
+
+    **How exactly does the app behave now regarding internet connections?**
+
+    Both the main "Mac Mouse Fix" app as well as the "Mac Mouse Fix Helper" app, (which runs in the background when Mac Mouse Fix is enabled) should now never connect to the internet under normal circumstances, as long as the app is licensed and the "Check for Updates" option is disabled.
+
+    By "normal circumstances" I mean: as long as the offline license information on your computer is not lost or corrupted, which normally does not happen.
+
+    If the app is not licensed, yet, it will connect to macmousefix.com during normal operation, to download some information that it needs to function properly. For example, it will download the current price of the app, so it can show that on the About tab.
+
+    Aside from that, the app should never connect your computer to the internet without you taking explicit action, such as clicking on a link or choosing to download a specific update.
+
+    **How did the app behave prior?**
+
+    Before this update, the "Mac Mouse Fix Helper" app would communicate with the internet every time it was launched to validate that the app's license is valid and to download other license-related information. This would happen whenever your computer was restarted while Mac Mouse Fix was enabled and when you disabled and re-enabled Mac Mouse Fix.
+
+    When opening the main "Mac Mouse Fix" app, it would also perform the same connections.
+
+    **Privacy implications of the prior behavior**
+
+    While I do not and have never recorded any information about these internet connections, the companies who run the servers that Mac Mouse Fix connects to could possibly record information about the connections. (Those companies are GitHub and Gumroad). While Mac Mouse Fix didn't directly send any personal information. These companies could have logged your IP address, and the time of the connection. Additionally, the app would send your license key to Gumroad on every launch, to have them validate it. Gumroad could have feasibly correlated the sent license key with any information you entered while buying Mac Mouse Fix on Gumroad.com. Because Gumroad processes your purchase of Mac Mouse Fix, then generates your license key, and then validates the license key whenever you run the app.
+
+    I asked Gumroad and they claim to store logs about these requests for 1 year and then delete them. As of Feburary 2025, they haven't so far answered when I asked them whether they store any info that could be correlated with your personal information or your behavior (That would be your license key and the time of request).
+
+    You can find Gumroad's privacy policy [here](https://gumroad.com/privacy).
+
+    COMMENT: After saying they store the logs of API-request's *IP Address* and *Product ID* for 1 year, Gumroad support hasn't answered about whether they also store the *Request Time* and the *License Key* and whether they  correlate the logged info with personal info to track users. I've now followed up with them [Feb 18 2025] to ask again. Should maybe update this if they reply. 
+
+    Realistically, I think there are probably much easier and more effective ways to track user behavior than this, but I just wanted to explain all possible privacy implications that I'm aware of, for those who are interested, so that you can form your own view and make your own decisions. Mac Mouse Fix 3.0.4 will only connect to Gumroad's servers when you initially activate your license, or – after that – in case the offline license information on your computer is lost.
+
+     **Why did Mac Mouse Fix make unnecessary internet connections before?**
+    
+    The code for doing it that way was much easier and less time-consuming to write. To make code work can be hard. To make it work and be very efficient is usually much harder. When I wrote the original code I was focused on shipping Mac Mouse Fix 3 which already took a long time, so I couldn't afford to optimize it more at that time.
+
+    Also see:
+    - This [GitHub Issue comment](https://github.com/noah-nuebling/mac-mouse-fix/issues/976#issuecomment-2140955801) about the "Free days are over" bug, where I also discussed the privacy implications.
+    - This [git commit](https://github.com/noah-nuebling/mac-mouse-fix/commit/02b46ddcd1823873768b8c89e89753b86476ac47) where I began implementing the offline validation system.
+    
+
+
+- These [commit notes](https://github.com/noah-nuebling/mac-mouse-fix/commit/0183adb9e2c4e6867844776bac3e4598083b86d2) mentioning possible tracking by GitHub.
+
+-->
+<!--
+    - Forced all the licensing code onto the mainThread and removed force-unwraps -> Should generally be more robust and stable.
+    - Added new user-facing message when the license server has an internal server error. b005d8bdde2203a304e643f0f7fcb37e6d8677ac
+    - We download the licenseConfig directly into memory instead of loading it into a file and then reading the file. bda12d64d88896b914b25723bf7ee979c8429f3b
+    - Other bugfixes in the licensing system 8e129e235fdbe5ae024edeadf684a11ae789ec75
+    - Added `@MainActor` to all the Task.detached calls. That makes it so all our licensing code runs on the main thread. This might help prevent race-conditions. 02f9752d010813d748c0939a98c1d27760eefece
+-->
+</body>
+</html>
+
+        ]]>
+        </description>
+        <enclosure
+            url="https://github.com/noah-nuebling/mac-mouse-fix/releases/download/3.0.4-Beta-1/MacMouseFixApp.zip"
+            sparkle:version="23655"
+            sparkle:shortVersionString="3.0.4 Beta 1"
+            sparkle:edSignature="fCnC40JPT92pDXe8tgNKYNgU1GIMoeOdkKCRebZIIMq0v+gymbi5kyvi6lgACgjrw1p1GeXEKhpgtQMChQ+3Cg==" length="7444644"
+            type="application/octet-stream"
+        />
+    </item>
+    <item>
         <title>3.0.3 available!</title>
         <pubDate>2024-09-19T08:44:29Z</pubDate>
         <sparkle:minimumSystemVersion>10.14.4</sparkle:minimumSystemVersion>
@@ -478,6 +1136,16 @@ Free for 30 days, costs a few dollars to own.<br />
 <p>You can learn more about the pricing and features of Mac Mouse Fix 3
 on the <a href="https://macmousefix.com/">new website</a>.</p>
 <p>Thanks for using Mac Mouse Fix! :)</p>
+<hr />
+<p><strong>Note to Mac Mouse Fix 3 Buyers</strong></p>
+<p>If you accidentally updated to Mac Mouse Fix 3 without knowing that
+it’s not free anymore, I’d like to offer you a <a
+href="https://redirect.macmousefix.com/?target=mmf-apply-for-refund">refund</a>.</p>
+<p>The latest version of Mac Mouse Fix 2 stays <strong>entirely
+free</strong>, and you can download it <a
+href="https://redirect.macmousefix.com/?target=mmf2-latest">here</a>.</p>
+<p>I’m sorry for the hassle, and I hope everyone is ok with this as a
+solution!</p>
 <hr />
 <p>Mac Mouse Fix <strong>3.0.3</strong> is ready for macOS 15 Sequoia.
 It also fixes some stability issues and provides several small
@@ -1104,10 +1772,10 @@ href="https://github.com/noah-nuebling/mac-mouse-fix/issues/962">#962</a>.</li>
 will now show you the update to the first release of the latest major
 version.
 <ul>
-<li>Example: If you’re using MMF 2, and MMF 3.4.5 is the latest version,
-the app will now show you the first version of MMF 3 (3.0.0), instead of
-the latest version (3.4.5). This way, all MMF 2 users see the MMF 3.0.0
-changelog before switching to MMF 3.</li>
+<li>Example: If you’re using MMF 2.2.5, and MMF 3.4.5 is the latest
+version, the app will now show you the first version of MMF 3 (3.0.0),
+instead of the latest version (3.4.5). This way, all MMF 2.2.5 users see
+the MMF 3.0.0 changelog before switching to MMF 3.</li>
 <li>Discussion:
 <ul>
 <li>The main motivation behind this is that, earlier this year, many MMF
@@ -15664,488 +16332,6 @@ thoughts.</p>
             sparkle:version="6023"
             sparkle:shortVersionString="2.0.0 Beta 7"
             sparkle:edSignature="KqublpOfW+CvyiGIRM9O3fPFUiXm8CFQb9SQdFHFGR/XdaNZsEwjvZ9Oxzb2N/b7FmcdaX/5TwnDwXk//y2UBg==" length="3121632"
-            type="application/octet-stream"
-        />
-    </item>
-    <item>
-        <title>1.0.4 available!</title>
-        <pubDate>2021-05-05T22:07:02Z</pubDate>
-        <sparkle:minimumSystemVersion>10.11</sparkle:minimumSystemVersion>
-        <description><![CDATA[
-            <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
-<head>
-  <meta charset="utf-8" />
-  <meta name="generator" content="pandoc" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
-  <title>-</title>
-  <style>
-    html {
-      color: #1a1a1a;
-      background-color: #fdfdfd;
-    }
-    body {
-      margin: 0 auto;
-      max-width: 36em;
-      padding-left: 50px;
-      padding-right: 50px;
-      padding-top: 50px;
-      padding-bottom: 50px;
-      hyphens: auto;
-      overflow-wrap: break-word;
-      text-rendering: optimizeLegibility;
-      font-kerning: normal;
-    }
-    @media (max-width: 600px) {
-      body {
-        font-size: 0.9em;
-        padding: 12px;
-      }
-      h1 {
-        font-size: 1.8em;
-      }
-    }
-    @media print {
-      html {
-        background-color: white;
-      }
-      body {
-        background-color: transparent;
-        color: black;
-        font-size: 12pt;
-      }
-      p, h2, h3 {
-        orphans: 3;
-        widows: 3;
-      }
-      h2, h3, h4 {
-        page-break-after: avoid;
-      }
-    }
-    p {
-      margin: 1em 0;
-    }
-    a {
-      color: #1a1a1a;
-    }
-    a:visited {
-      color: #1a1a1a;
-    }
-    img {
-      max-width: 100%;
-    }
-    svg {
-      height: auto;
-      max-width: 100%;
-    }
-    h1, h2, h3, h4, h5, h6 {
-      margin-top: 1.4em;
-    }
-    h5, h6 {
-      font-size: 1em;
-      font-style: italic;
-    }
-    h6 {
-      font-weight: normal;
-    }
-    ol, ul {
-      padding-left: 1.7em;
-      margin-top: 1em;
-    }
-    li > ol, li > ul {
-      margin-top: 0;
-    }
-    blockquote {
-      margin: 1em 0 1em 1.7em;
-      padding-left: 1em;
-      border-left: 2px solid #e6e6e6;
-      color: #606060;
-    }
-    code {
-      font-family: Menlo, Monaco, Consolas, 'Lucida Console', monospace;
-      font-size: 85%;
-      margin: 0;
-      hyphens: manual;
-    }
-    pre {
-      margin: 1em 0;
-      overflow: auto;
-    }
-    pre code {
-      padding: 0;
-      overflow: visible;
-      overflow-wrap: normal;
-    }
-    .sourceCode {
-     background-color: transparent;
-     overflow: visible;
-    }
-    hr {
-      background-color: #1a1a1a;
-      border: none;
-      height: 1px;
-      margin: 1em 0;
-    }
-    table {
-      margin: 1em 0;
-      border-collapse: collapse;
-      width: 100%;
-      overflow-x: auto;
-      display: block;
-      font-variant-numeric: lining-nums tabular-nums;
-    }
-    table caption {
-      margin-bottom: 0.75em;
-    }
-    tbody {
-      margin-top: 0.5em;
-      border-top: 1px solid #1a1a1a;
-      border-bottom: 1px solid #1a1a1a;
-    }
-    th {
-      border-top: 1px solid #1a1a1a;
-      padding: 0.25em 0.5em 0.25em 0.5em;
-    }
-    td {
-      padding: 0.125em 0.5em 0.25em 0.5em;
-    }
-    header {
-      margin-bottom: 4em;
-      text-align: center;
-    }
-    #TOC li {
-      list-style: none;
-    }
-    #TOC ul {
-      padding-left: 1.3em;
-    }
-    #TOC > ul {
-      padding-left: 0;
-    }
-    #TOC a:not(:hover) {
-      text-decoration: none;
-    }
-    code{white-space: pre-wrap;}
-    span.smallcaps{font-variant: small-caps;}
-    div.columns{display: flex; gap: min(4vw, 1.5em);}
-    div.column{flex: auto; overflow-x: auto;}
-    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
-    /* The extra [class] is a hack that increases specificity enough to
-       override a similar rule in reveal.js */
-    ul.task-list[class]{list-style: none;}
-    ul.task-list li input[type="checkbox"] {
-      font-size: inherit;
-      width: 0.8em;
-      margin: 0 0.8em 0.2em -1.6em;
-      vertical-align: middle;
-    }
-    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
-  </style>
-  
-
-  <style>
-
-      /* Following this tutorial: https://devilgate.org/blog/2012/07/02/tip-using-pandoc-to-create-truly-standalone-html-files/ */
-
-      :root {
-          font-size: 10px; /* 1 rem is this much */
-          padding: 0 0 0 0;
-          background-color: transparent; /* pandoc automatically applies styling where the bg is white. So we need to override that. */
-      }
-
-      body {
-          background-color: transparent;
-          margin: 0 1.2rem 2.0rem 1.2rem;
-          padding: 0;
-          font-family: -apple-system;
-          font-size: 1.3rem;
-
-          line-height: 1.15em;
-      }
-
-      h1, h2, h3, h4, h5, h6 {
-          line-height: 1.15em;
-      }
-
-      h1:after, h2:after {
-          content:' ';
-          display: block;
-          border: 0.5px solid rgba(0, 0, 0, 0.12);
-      }
-      h1:after {
-          margin: 0.6rem 0 0 0;
-      }
-      h2:after {
-          margin: 0.4rem 0 0 0;
-      }
-
-      h1 {
-          font-size: 2.2rem;
-          margin: 2.2rem 0 1.3rem -0.0rem;
-      }
-
-      h2 {
-          font-size: 1.7rem;
-          margin: 2.0rem 0 1.7rem -0.0rem;
-      }
-
-      h3 {
-          font-size: 1.3rem;
-          margin: 1.5rem 0 0.0rem -0.0rem;
-      }
-      h4 {
-          font-size: 1.0rem;
-          margin: 1.5rem 0 0.0rem -0.0rem;
-      }
-      h5 {
-          font-size: 0.8rem;
-          margin: 1.5rem 0 0.0rem -0.0rem;
-          font-style: italic;
-      }
-
-      p {
-          margin: 1.1rem 0 1.1rem 0;
-          font-size: 1.1rem;
-      }
-
-      a, a:visited {
-          color: rgba(43, 102, 211, 1.0) /* Obtained by colorpicking `Hyperlink`s in MMF */
-      }
-
-      ul {
-          padding: 0 0 0 1.5rem;
-          margin: 1.0rem 0 1.0rem 0.5rem;
-      }
-      ul ul {
-          margin: 0.6rem 0 -0.6rem 0;
-          padding: 0 0 0 2.1rem;
-      }
-
-      li {
-          padding: 0 0 0.6rem 0;
-
-          font-size: 1.1rem;
-      }
-
-      code {
-          padding: 0.2rem 0.5rem;
-          border-radius: 0.5rem;
-          background-color: rgba(0, 0, 75, 0.09);
-      }
-      div.sourceCode {
-          
-          padding: 1.6rem 1.5rem;
-          border-radius: 1.1rem; /*0.3rem;*/
-          background-color: rgba(0, 0, 75, 0.055);
-      }
-
-      blockquote {
-          margin-inline-start: unset;
-          border-width: 0.25rem;
-      }
-
-      blockquote.markdown-alert {
-          color: unset;
-      }
-
-      blockquote.markdown-alert.note { /* These colors are copied from the source code at https://github.com/orgs/community/discussions/16925 */
-          border-left-color: #0969da;
-      }
-      blockquote.markdown-alert.tip {
-          border-left-color: #1a7f37;
-      }
-      blockquote.markdown-alert.important {
-          border-left-color: #8250df;
-      }
-      blockquote.markdown-alert.warning {
-          border-left-color: #bf8700;
-      }
-
-      blockquote.markdown-alert.caution {
-          border-left-color: #cf222e;
-      }
-
-      blockquote.markdown-alert > .markdown-alert-title {
-          font-size: 1.2rem;
-      }
-
-      blockquote.markdown-alert.note > .markdown-alert-title {
-          color: #0969da;
-      }
-      blockquote.markdown-alert.tip > .markdown-alert-title {
-          color: #1a7f37;
-      }
-      blockquote.markdown-alert.important > .markdown-alert-title {
-          color: #8250df;
-      }
-      blockquote.markdown-alert.warning > .markdown-alert-title {
-          color: #9a6700;
-      }
-      blockquote.markdown-alert.caution > .markdown-alert-title {
-          color: #d1242f;
-      }
-
-      .annotation {
-          font-size: 1.1rem;
-      }
-      img {
-          max-width: 100%;
-          height: auto;
-          
-          border-radius: 1.0rem;
-          box-shadow: 0 0.2rem 0.4rem 0.0rem rgba(0, 0, 0, 0.15), 0 0.2rem 1.7rem 0.0rem rgba(0, 0, 0, 0.15);
-
-          display: block;
-          margin: 1.4rem auto 1.8rem auto;
-      }
-
-      hr {
-          border: none;
-          height: 3px;
-          background-color: rgba(0, 0, 0, 0.12);
-
-          margin: 1.7rem 0 1.7rem 0;
-      }
-
-      @media (prefers-color-scheme: light) {
-
-          /* I don't think we need this. Light is just the default, right? */
-
-          h1 {
-              color: #272727;
-          }
-
-          a {
-              color: #0948be;
-          }
-      }
-
-      @media (prefers-color-scheme: dark) {
-
-          body {
-              /* background-color: #1e1e1e;  */
-              /* ^ Sparkle background is still bright when we have `background-color: transparent` even with darkmode active. 
-                  This is the color of the text field background in Apple Mail on macOS 11 BigSur 
-                  
-                  Edit: This was because pandoc made the background white, which we've overriden now. So now this is not necessary anymore. Might want to reenable for testing in Safari.
-                  */
-
-              color: rgba(255, 255, 255, 0.9); /* For headers */
-          }
-
-          li, p {
-              color:rgba(255, 255, 255, 0.8);
-          }
-          a, a:visited { /* Need to include a:visited otherwise it will be set by pandoc */
-              color: #3586FF;
-          }
-          hr {
-              background-color: rgba(255, 255, 255, 0.15);
-          }
-          code {
-              background-color: rgba(255, 255, 255, 0.16);
-          }
-          div.sourceCode {
-              background-color: rgba(255, 255, 255, 0.08);
-          }
-
-          h1:after, h2:after {
-              content:' ';
-              display: block;
-              border: 0.5px solid rgba(255, 255, 255, 0.15);
-          }
-      }
-
-  </style>
-  <script>
-
-  document.addEventListener("DOMContentLoaded", function() {
-    
-    // Implement special blockquote styles from GitHub Markdown. See https://github.com/orgs/community/discussions/16925
-
-    // Create map from `blockquote start` to `css classes that we attach to that blockquote`
-    // Notes: 
-    //  - Most symbols that we tried(︕⚠ⓘ❗︎ℹ️⚠️💡) look really weird. The only good-looking one is ⚠. Using SF Symbols or the GitHub svg symbols would be better.
-
-
-    const map = {
-      '[!NOTE]':      {
-        'class': 'markdown-alert note',
-        'title': "⚠ Note",             
-      },
-      '[!TIP]':       {
-        'class': 'markdown-alert tip',
-        'title': "⚠ Tip",
-      },
-      '[!IMPORTANT]': {
-        'class': 'markdown-alert important',
-        'title': "⚠ Important",
-      },
-      '[!WARNING]':   {
-        'class': 'markdown-alert warning',
-        'title': "⚠ Warning",
-      },
-      '[!CAUTION]':   {
-        'class': 'markdown-alert caution',
-        'title': "⚠ Caution",
-      },
-    };
-
-    // Edit blockquotes, according to the map
-
-    for (blockquote of document.querySelectorAll("blockquote")) {
-      for (key in map) {
-
-        if (blockquote.innerText.startsWith(key)) {
-
-          // Remove the [!NOTE] key from the content
-          blockquote.innerHTML = blockquote.innerHTML.replace(key, "").trim(); // This only replaces the first occurence. Src: https://stackoverflow.com/questions/3214886/javascript-replace-only-replaces-first-match
-
-          // Remove weird extra linebreaks
-          //  Explanation: If you put more than one space after [!CAUTION], then pandoc will insert weird extra linebreaks, which will mess up formatting. This fixes that.
-          if (blockquote.firstChild.innerHTML.startsWith("<br>")){
-            blockquote.firstChild.innerHTML = blockquote.firstChild.innerHTML.replace("<br>", "");
-          }
-          // Add classes
-          const newClasses = map[key]['class'].split(" ")
-          blockquote.classList.add(...newClasses);
-
-          // Insert element for holding the title (The title says sth like "ⓘ Note")
-          const titleP = document.createElement('p')
-          titleP.className = 'markdown-alert-title'
-          titleP.innerText = map[key]['title']
-
-          blockquote.prepend(titleP)
-        }
-      }
-    };
-  });
-
-  </script>
-</head>
-<body>
-<h3 id="changes">Changes</h3>
-<ul>
-<li>Signed the app with a new certificate. The old certificate was
-revoked which renders old versions of Mac Mouse Fix unusable. See this
-<a
-href="https://github.com/noah-nuebling/mac-mouse-fix/issues/95">GitHub
-Issue</a> for more info.</li>
-<li>Fixed an issue where Mac Mouse Fix wouldn’t work properly when it
-was launched from the Downloads folder</li>
-<li>Added a help link to the ‘Grant Accessibility Access to Mac Mouse
-Fix Helper’ screen</li>
-</ul>
-</body>
-</html>
-
-        ]]>
-        </description>
-        <enclosure
-            url="https://github.com/noah-nuebling/mac-mouse-fix/releases/download/1.0.4/MacMouseFixApp.zip"
-            sparkle:version="2406"
-            sparkle:shortVersionString="1.0.4"
-            sparkle:edSignature="79PL/c4RRt5zF8RnY/I5ws2n2iwKQQXIFhQzsRAu8G6QzXpOnyJRwjPY4pI314Syh8bQktexHBaEEZyLpQJiAg==" length="1757317"
             type="application/octet-stream"
         />
     </item>
