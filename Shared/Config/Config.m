@@ -474,12 +474,12 @@ void Handle_FSEventStreamCallback(ConstFSEventStreamRef streamRef, void *clientC
             } else if (currentVersion == 23) {
             
                 /// 23 -> 24
-                ///     (24 might be used in the next release after 3.0.3)
+                ///     (24 will be used in MMF 3.0.4 and later) [Feb 2025]
                 
                 DDLogInfo(@"repairConfig: Upgrading configVersion from 23 to 24...");
                 
                 /// Delete legacy MFLicenseState cache values
-                ///     MFLicense state cache will probably move to a dict at `License.licenseStateCache`, (and I've just added that dict in `default_config.plist`) but cache values aren't important enough to copy over to the new location, so we just delete the old values.
+                ///     MFLicense state cache moved to a dict at `License.licenseStateCache`, (I've just added that dict in `default_config.plist`) but cache values aren't important enough to copy over to the new location, so we just delete the old values.
                 ///     (Writing this 18 Oct 2024, working on `hyperwork` branch. 3.0.3 is the latest release.)
                 removeFromConfig(@"License.isLicensedCache");
                 removeFromConfig(@"License.licenseReasonCache");

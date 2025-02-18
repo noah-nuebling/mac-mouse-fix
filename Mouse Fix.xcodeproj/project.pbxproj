@@ -30,7 +30,6 @@
 		4F1D7F4728A4639800253407 /* MenuBarItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F1D7F4628A4639800253407 /* MenuBarItem.swift */; };
 		4F28B7F62D49141F006928A6 /* SkyLight.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4F28B7F52D49141E006928A6 /* SkyLight.framework */; };
 		4F28B7F82D49144E006928A6 /* SkyLight.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4F28B7F52D49141E006928A6 /* SkyLight.framework */; };
-		4F28B7F92D49144E006928A6 /* SkyLight.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 4F28B7F52D49141E006928A6 /* SkyLight.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		4F2CC58727B8D2300084AACE /* HybridCurves.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F2CC58627B8D2300084AACE /* HybridCurves.swift */; };
 		4F2CC58927B8DA8B0084AACE /* Line.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F2CC58827B8DA8B0084AACE /* Line.swift */; };
 		4F2E8FD32D52229100689058 /* NSCoderErrors.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F2E8FD22D52229100689058 /* NSCoderErrors.m */; };
@@ -388,17 +387,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
-		4F28B7FA2D49144E006928A6 /* Embed Frameworks */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "";
-			dstSubfolderSpec = 10;
-			files = (
-				4F28B7F92D49144E006928A6 /* SkyLight.framework in Embed Frameworks */,
-			);
-			name = "Embed Frameworks";
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		4F9111F8289FF25D00D2DD8C /* Copy sm_launchd.plist */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
@@ -2060,6 +2048,7 @@
 		4F5F3EF02756EC0400C350C0 /* RemapSwizzler.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RemapSwizzler.m; sourceTree = "<group>"; };
 		4F5F3EF22756F1DB00C350C0 /* ScrollModifiers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrollModifiers.swift; sourceTree = "<group>"; };
 		4F5FC0612D6206E3009DCF10 /* SimpleUnboxing.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SimpleUnboxing.h; sourceTree = "<group>"; };
+		4F5FC1152D63B036009DCF10 /* MMF - Update Checklist - Template.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "MMF - Update Checklist - Template.md"; sourceTree = "<group>"; };
 		4F616D6027BDCD56004A6A72 /* ScrollConfigTesting.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = ScrollConfigTesting.md; sourceTree = "<group>"; };
 		4F626E97292A842D00E6FFD5 /* KeyCaptureMode.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KeyCaptureMode.h; sourceTree = "<group>"; };
 		4F626E98292A842D00E6FFD5 /* KeyCaptureMode.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = KeyCaptureMode.m; sourceTree = "<group>"; };
@@ -7125,6 +7114,7 @@
 				4FEB6618279376C200E6A111 /* notes.md */,
 				4FE8FC792929D8AC0002583B /* On Bundle Size & Deployment Target.md */,
 				4F1B41A72D4C06AC00026C94 /* CodeStyle.md */,
+				4F5FC1152D63B036009DCF10 /* MMF - Update Checklist - Template.md */,
 			);
 			path = Notes;
 			sourceTree = "<group>";
@@ -7776,7 +7766,6 @@
 				4FCECD7C21092354001F1078 /* Sources */,
 				4FCECD7D21092354001F1078 /* Frameworks */,
 				4FCECD7E21092354001F1078 /* Resources */,
-				4F28B7FA2D49144E006928A6 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -8461,7 +8450,7 @@
 				INFOPLIST_FILE = App/SupportFiles/Info.plist;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				MACOSX_DEPLOYMENT_TARGET = 10.15.0;
-				MARKETING_VERSION = 3.0.3;
+				MARKETING_VERSION = "3.0.4 Beta 1";
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.nuebling.mac-mouse-fix";
@@ -8500,7 +8489,7 @@
 				INFOPLIST_FILE = App/SupportFiles/Info.plist;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				MACOSX_DEPLOYMENT_TARGET = 10.15.0;
-				MARKETING_VERSION = 3.0.3;
+				MARKETING_VERSION = "3.0.4 Beta 1";
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.nuebling.mac-mouse-fix";
 				PRODUCT_NAME = "$(TARGET_NAME)";
