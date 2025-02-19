@@ -345,6 +345,13 @@
           margin: 1.7rem 0 1.7rem 0;
       }
 
+      details > summary {
+          font-size: 1.0rem;
+      }
+      details > p {
+          margin-top: 0; /* Looks weird but matches GitHub as of [Feb 2025] */
+      }
+
       @media (prefers-color-scheme: light) {
 
           /* I don't think we need this. Light is just the default, right? */
@@ -971,6 +978,13 @@ v-coba-cleanup-commit: 1625562b53743fd4f273393cb58dfe647a65bfc1
           margin: 1.7rem 0 1.7rem 0;
       }
 
+      details > summary {
+          font-size: 1.0rem;
+      }
+      details > p {
+          margin-top: 0; /* Looks weird but matches GitHub as of [Feb 2025] */
+      }
+
       @media (prefers-color-scheme: light) {
 
           /* I don't think we need this. Light is just the default, right? */
@@ -1497,6 +1511,13 @@ Mac Mouse Fix’ Guide</a>.</em></p>
           background-color: rgba(0, 0, 0, 0.12);
 
           margin: 1.7rem 0 1.7rem 0;
+      }
+
+      details > summary {
+          font-size: 1.0rem;
+      }
+      details > p {
+          margin-top: 0; /* Looks weird but matches GitHub as of [Feb 2025] */
       }
 
       @media (prefers-color-scheme: light) {
@@ -2032,6 +2053,13 @@ href="https://github.com/noah-nuebling/mac-mouse-fix/releases/tag/2.2.3"><strong
           background-color: rgba(0, 0, 0, 0.12);
 
           margin: 1.7rem 0 1.7rem 0;
+      }
+
+      details > summary {
+          font-size: 1.0rem;
+      }
+      details > p {
+          margin-top: 0; /* Looks weird but matches GitHub as of [Feb 2025] */
       }
 
       @media (prefers-color-scheme: light) {
@@ -2688,6 +2716,13 @@ href="https://github.com/noah-nuebling/mac-mouse-fix/releases/tag/3.0.1"><strong
           margin: 1.7rem 0 1.7rem 0;
       }
 
+      details > summary {
+          font-size: 1.0rem;
+      }
+      details > p {
+          margin-top: 0; /* Looks weird but matches GitHub as of [Feb 2025] */
+      }
+
       @media (prefers-color-scheme: light) {
 
           /* I don't think we need this. Light is just the default, right? */
@@ -3233,6 +3268,13 @@ href="https://github.com/noah-nuebling/mac-mouse-fix/releases/tag/3.0.0"><strong
           margin: 1.7rem 0 1.7rem 0;
       }
 
+      details > summary {
+          font-size: 1.0rem;
+      }
+      details > p {
+          margin-top: 0; /* Looks weird but matches GitHub as of [Feb 2025] */
+      }
+
       @media (prefers-color-scheme: light) {
 
           /* I don't think we need this. Light is just the default, right? */
@@ -3773,6 +3815,13 @@ no internet connection</li>
           margin: 1.7rem 0 1.7rem 0;
       }
 
+      details > summary {
+          font-size: 1.0rem;
+      }
+      details > p {
+          margin-top: 0; /* Looks weird but matches GitHub as of [Feb 2025] */
+      }
+
       @media (prefers-color-scheme: light) {
 
           /* I don't think we need this. Light is just the default, right? */
@@ -4285,6 +4334,13 @@ Guide</a></li>
           margin: 1.7rem 0 1.7rem 0;
       }
 
+      details > summary {
+          font-size: 1.0rem;
+      }
+      details > p {
+          margin-top: 0; /* Looks weird but matches GitHub as of [Feb 2025] */
+      }
+
       @media (prefers-color-scheme: light) {
 
           /* I don't think we need this. Light is just the default, right? */
@@ -4780,6 +4836,13 @@ screen</li>
           background-color: rgba(0, 0, 0, 0.12);
 
           margin: 1.7rem 0 1.7rem 0;
+      }
+
+      details > summary {
+          font-size: 1.0rem;
+      }
+      details > p {
+          margin-top: 0; /* Looks weird but matches GitHub as of [Feb 2025] */
       }
 
       @media (prefers-color-scheme: light) {
@@ -5296,6 +5359,13 @@ was very helpful in figuring out the problem!</li>
           background-color: rgba(0, 0, 0, 0.12);
 
           margin: 1.7rem 0 1.7rem 0;
+      }
+
+      details > summary {
+          font-size: 1.0rem;
+      }
+      details > p {
+          margin-top: 0; /* Looks weird but matches GitHub as of [Feb 2025] */
       }
 
       @media (prefers-color-scheme: light) {
@@ -5838,6 +5908,13 @@ future release.</li>
           margin: 1.7rem 0 1.7rem 0;
       }
 
+      details > summary {
+          font-size: 1.0rem;
+      }
+      details > p {
+          margin-top: 0; /* Looks weird but matches GitHub as of [Feb 2025] */
+      }
+
       @media (prefers-color-scheme: light) {
 
           /* I don't think we need this. Light is just the default, right? */
@@ -6324,6 +6401,13 @@ proprietary function keys like “Play-Pause” or “Mute Speaker”.</p>
           background-color: rgba(0, 0, 0, 0.12);
 
           margin: 1.7rem 0 1.7rem 0;
+      }
+
+      details > summary {
+          font-size: 1.0rem;
+      }
+      details > p {
+          margin-top: 0; /* Looks weird but matches GitHub as of [Feb 2025] */
       }
 
       @media (prefers-color-scheme: light) {
