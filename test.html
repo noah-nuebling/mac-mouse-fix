@@ -397,6 +397,13 @@
           margin: 1.7rem 0 1.7rem 0;
       }
 
+      details > summary {
+          font-size: 1.0rem;
+      }
+      details > p {
+          margin-top: 0; /* Looks weird but matches GitHub as of [Feb 2025] */
+      }
+
       @media (prefers-color-scheme: light) {
 
           /* I don't think we need this. Light is just the default, right? */
@@ -418,7 +425,7 @@
                   This is the color of the text field background in Apple Mail on macOS 11 BigSur 
                   
                   Edit: This was because pandoc made the background white, which we've overriden now. So now this is not necessary anymore. Might want to reenable for testing in Safari.
-                  Edit 2: Color-picked the bg of the Sparkle window when we set a transparent background: 1e1e1e aka rgba(30, 30, 30, 1.0) –– Will just leave this on so testing in Safari doesn't have a white bg.
+                  Edit 2: [Jan 2025] Color-picked the bg of the Sparkle window when we set a transparent background: 1e1e1e aka rgba(30, 30, 30, 1.0) –– Will just leave this on so testing in Safari doesn't have a white bg.
                   */
               
               color: rgba(255, 255, 255, 0.9); /* For headers */
@@ -632,6 +639,12 @@ href="https://github.com/noah-nuebling/mac-mouse-fix/releases/tag/3.0.0">here</a
 Thank you so much for all your support so far! :)</p>
 </blockquote>
 <hr />
+<h3 id="enhanced-privacy-efficiency">Enhanced Privacy &amp;
+Efficiency</h3>
+<ul>
+<li>Introduces a new offline license validation system that minimizes
+internet connections.</li>
+</ul>
 <details>
 <summary>
 <b>Detailed Privacy Information</b>
@@ -650,5 +663,11 @@ policy</a> and this
 <a href=https://github.com/noah-nuebling/mac-mouse-fix/issues/976#issuecomment-2140955801>GitHub
 comment</a> of mine.</p>
 </details>
+<h3 id="bug-fixes">Bug Fixes</h3>
+<ul>
+<li>Fixed a bug where macOS would sometimes get stuck when using ‘Click
+and Drag’ for ‘Spaces &amp; Mission Control’.
+<!-- See this [git commit](https://github.com/noah-nuebling/mac-mouse-fix/commit/e8f90d2f32829e3e5f1621fa8e4b58634c9ea07b). I could credit the guy who asked for this in an Issue, but I don't remember where. --></li>
+</ul>
 </body>
 </html>

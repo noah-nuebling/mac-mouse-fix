@@ -121,6 +121,10 @@ Oh yeahhhhh
 
 ---
 
+### Enhanced Privacy & Efficiency
+
+- Introduces a new offline license validation system that minimizes internet connections.
+
 <details>
 <summary><b>Detailed Privacy Information</b></summary>
     
@@ -132,3 +136,7 @@ While no user behavior was ever recorded by me personally, the previous system t
 Also see <a href=https://gumroad.com/privacy>Gumroad's privacy policy</a> and this <a href=https://github.com/noah-nuebling/mac-mouse-fix/issues/976#issuecomment-2140955801>GitHub comment</a> of mine.
 
 </details>
+
+### Bug Fixes
+
+- Fixed a bug where macOS would sometimes get stuck when using 'Click and Drag' for 'Spaces & Mission Control'. <!-- See this [git commit](https://github.com/noah-nuebling/mac-mouse-fix/commit/e8f90d2f32829e3e5f1621fa8e4b58634c9ea07b). I could credit the guy who asked for this in an Issue, but I don't remember where. -->
