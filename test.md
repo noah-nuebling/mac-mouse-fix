@@ -4,8 +4,6 @@ rm test.html; cat test.md | pandoc --from markdown --to html --include-in-header
 
 -->
 
----
-
 # Update available!
 
 Yay!
@@ -120,3 +118,17 @@ Oh yeahhhhh
 >
 > You can also download the latest version of MMF 2 [here](https://noah-nuebling.github.io/redirection-service?target=mmf2-latest).\
 > And you can learn more about the new pricing [here](https://github.com/noah-nuebling/mac-mouse-fix/releases/tag/3.0.0). Thank you so much for all your support so far! :)
+
+---
+
+<details>
+<summary><b>Detailed Privacy Information</b></summary>
+    
+<br>
+Previous versions validated licenses online at every launch, potentially allowing connection logs to be stored by third-party servers (GitHub and Gumroad). The new system eliminates unnecessary connections – after the initial license activation, it only connects to the internet if local license data is corrupted.
+<br><br>
+While no user behavior was ever recorded by me personally, the previous system theoretically allowed third-party servers to log IP addresses and connection times. Gumroad could also log your license key and potentially correlate it to any personal info they recorded about you when you bought Mac Mouse Fix. 
+<br><br>
+Also see <a href=https://gumroad.com/privacy>Gumroad's privacy policy</a> and this <a href=https://github.com/noah-nuebling/mac-mouse-fix/issues/976#issuecomment-2140955801>GitHub comment</a> of mine.
+
+</details>
