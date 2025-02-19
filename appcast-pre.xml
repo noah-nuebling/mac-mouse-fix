@@ -489,7 +489,7 @@ licensed.</li>
 <summary>
 <b>Detailed Privacy Information</b>
 </summary>
-<p><br> Previous versions validated licenses online at every launch,
+<p>Previous versions validated licenses online at every launch,
 potentially allowing connection logs to be stored by third-party servers
 (GitHub and Gumroad). The new system eliminates unnecessary connections
 – after the initial license activation, it only connects to the internet
@@ -498,8 +498,11 @@ ever recorded by me personally, the previous system theoretically
 allowed third-party servers to log IP addresses and connection times.
 Gumroad could also log your license key and potentially correlate it to
 any personal info they recorded about you when you bought Mac Mouse Fix.
-<br><br> Also see <a href=https://gumroad.com/privacy>Gumroad’s privacy
-policy</a> and this
+<br><br> I didn’t consider these subtle privacy issues when I built the
+original licensing system, but now, Mac Mouse Fix is as private and
+internet-free as possible! <br><br> Also see
+<a href=https://gumroad.com/privacy>Gumroad’s privacy policy</a> and
+this
 <a href=https://github.com/noah-nuebling/mac-mouse-fix/issues/976#issuecomment-2140955801>GitHub
 comment</a> of mine.</p>
 </details>
@@ -557,7 +560,7 @@ or the <a
 href="https://redirect.macmousefix.com/?target=mmf2-latest">latest
 version of Mac Mouse Fix 2</a>. I hope that’s a good solution for
 everyone. <!-- Specifically Swift Tasks IIRC --></p>
-<p><em>Edited with assistance from Claude.</em></p>
+<p><em>Edited with excellent assistance from Claude.</em></p>
 <hr />
 <p>Also check out the previous release <a
 href="https://github.com/noah-nuebling/mac-mouse-fix/releases/tag/3.0.3"><strong>3.0.3</strong></a>.</p>
@@ -648,10 +651,10 @@ Wow reviewing the commits for this was kinda terrible. I seem to use the commit 
 -->
 <!--
     - Forced all the licensing code onto the mainThread and removed force-unwraps -> Should generally be more robust and stable.
+    - Added `@MainActor` to all the Task.detached calls. That makes it so all our licensing code runs on the main thread. This might help prevent race-conditions. 02f9752d010813d748c0939a98c1d27760eefece
     - Added new user-facing message when the license server has an internal server error. b005d8bdde2203a304e643f0f7fcb37e6d8677ac
     - We download the licenseConfig directly into memory instead of loading it into a file and then reading the file. bda12d64d88896b914b25723bf7ee979c8429f3b
     - Other bugfixes in the licensing system 8e129e235fdbe5ae024edeadf684a11ae789ec75
-    - Added `@MainActor` to all the Task.detached calls. That makes it so all our licensing code runs on the main thread. This might help prevent race-conditions. 02f9752d010813d748c0939a98c1d27760eefece
 -->
 </body>
 </html>
