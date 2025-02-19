@@ -2219,6 +2219,7 @@
 		4FC56DAA2C6199EA00CCB98C /* createsfsymbols.py */ = {isa = PBXFileReference; lastKnownFileType = text.script.python; path = createsfsymbols.py; sourceTree = "<group>"; };
 		4FC56DB22C625B9300CCB98C /* CoolSFSymbolsFont.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CoolSFSymbolsFont.h; sourceTree = "<group>"; };
 		4FC56DB32C625B9300CCB98C /* CoolSFSymbolsFont.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CoolSFSymbolsFont.m; sourceTree = "<group>"; };
+		4FC778302D66693E00488468 /* Localization Notes.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "Localization Notes.md"; sourceTree = "<group>"; };
 		4FC7D5D82B455A60002AED77 /* update-state-of-localization.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = "update-state-of-localization.yml"; sourceTree = "<group>"; };
 		4FC8A7CC28AAF1BC007DB982 /* MarkdownParser_old.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarkdownParser_old.swift; sourceTree = "<group>"; };
 		4FC8A7D428ABDEFD007DB982 /* MFClipView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MFClipView.swift; sourceTree = "<group>"; };
@@ -7282,6 +7283,7 @@
 				4FEB6617279376C200E6A111 /* SymbolicHotKeys Reference.txt */,
 				4FEB6618279376C200E6A111 /* notes.md */,
 				4FE8FC792929D8AC0002583B /* On Bundle Size.md */,
+				4FC778302D66693E00488468 /* Localization Notes.md */,
 			);
 			path = "Various Notes";
 			sourceTree = "<group>";
