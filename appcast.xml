@@ -361,13 +361,14 @@
       @media (prefers-color-scheme: dark) {
 
           body {
-              /* background-color: #1e1e1e;  */
-              /* ^ Sparkle background is still bright when we have `background-color: transparent` even with darkmode active. 
+              background-color: #1e1e1e;
+              /* ^^^ Sparkle background is still bright when we have `background-color: transparent` even with darkmode active. 
                   This is the color of the text field background in Apple Mail on macOS 11 BigSur 
                   
                   Edit: This was because pandoc made the background white, which we've overriden now. So now this is not necessary anymore. Might want to reenable for testing in Safari.
+                  Edit 2: [Jan 2025] Color-picked the bg of the Sparkle window when we set a transparent background: 1e1e1e aka rgba(30, 30, 30, 1.0) –– Will just leave this on so testing in Safari doesn't have a white bg.
                   */
-
+              
               color: rgba(255, 255, 255, 0.9); /* For headers */
           }
 
@@ -986,13 +987,14 @@ v-coba-cleanup-commit: 1625562b53743fd4f273393cb58dfe647a65bfc1
       @media (prefers-color-scheme: dark) {
 
           body {
-              /* background-color: #1e1e1e;  */
-              /* ^ Sparkle background is still bright when we have `background-color: transparent` even with darkmode active. 
+              background-color: #1e1e1e;
+              /* ^^^ Sparkle background is still bright when we have `background-color: transparent` even with darkmode active. 
                   This is the color of the text field background in Apple Mail on macOS 11 BigSur 
                   
                   Edit: This was because pandoc made the background white, which we've overriden now. So now this is not necessary anymore. Might want to reenable for testing in Safari.
+                  Edit 2: [Jan 2025] Color-picked the bg of the Sparkle window when we set a transparent background: 1e1e1e aka rgba(30, 30, 30, 1.0) –– Will just leave this on so testing in Safari doesn't have a white bg.
                   */
-
+              
               color: rgba(255, 255, 255, 0.9); /* For headers */
           }
 
@@ -1513,13 +1515,14 @@ Mac Mouse Fix’ Guide</a>.</em></p>
       @media (prefers-color-scheme: dark) {
 
           body {
-              /* background-color: #1e1e1e;  */
-              /* ^ Sparkle background is still bright when we have `background-color: transparent` even with darkmode active. 
+              background-color: #1e1e1e;
+              /* ^^^ Sparkle background is still bright when we have `background-color: transparent` even with darkmode active. 
                   This is the color of the text field background in Apple Mail on macOS 11 BigSur 
                   
                   Edit: This was because pandoc made the background white, which we've overriden now. So now this is not necessary anymore. Might want to reenable for testing in Safari.
+                  Edit 2: [Jan 2025] Color-picked the bg of the Sparkle window when we set a transparent background: 1e1e1e aka rgba(30, 30, 30, 1.0) –– Will just leave this on so testing in Safari doesn't have a white bg.
                   */
-
+              
               color: rgba(255, 255, 255, 0.9); /* For headers */
           }
 
@@ -2047,13 +2050,14 @@ href="https://github.com/noah-nuebling/mac-mouse-fix/releases/tag/2.2.3"><strong
       @media (prefers-color-scheme: dark) {
 
           body {
-              /* background-color: #1e1e1e;  */
-              /* ^ Sparkle background is still bright when we have `background-color: transparent` even with darkmode active. 
+              background-color: #1e1e1e;
+              /* ^^^ Sparkle background is still bright when we have `background-color: transparent` even with darkmode active. 
                   This is the color of the text field background in Apple Mail on macOS 11 BigSur 
                   
                   Edit: This was because pandoc made the background white, which we've overriden now. So now this is not necessary anymore. Might want to reenable for testing in Safari.
+                  Edit 2: [Jan 2025] Color-picked the bg of the Sparkle window when we set a transparent background: 1e1e1e aka rgba(30, 30, 30, 1.0) –– Will just leave this on so testing in Safari doesn't have a white bg.
                   */
-
+              
               color: rgba(255, 255, 255, 0.9); /* For headers */
           }
 
@@ -2700,13 +2704,14 @@ href="https://github.com/noah-nuebling/mac-mouse-fix/releases/tag/3.0.1"><strong
       @media (prefers-color-scheme: dark) {
 
           body {
-              /* background-color: #1e1e1e;  */
-              /* ^ Sparkle background is still bright when we have `background-color: transparent` even with darkmode active. 
+              background-color: #1e1e1e;
+              /* ^^^ Sparkle background is still bright when we have `background-color: transparent` even with darkmode active. 
                   This is the color of the text field background in Apple Mail on macOS 11 BigSur 
                   
                   Edit: This was because pandoc made the background white, which we've overriden now. So now this is not necessary anymore. Might want to reenable for testing in Safari.
+                  Edit 2: [Jan 2025] Color-picked the bg of the Sparkle window when we set a transparent background: 1e1e1e aka rgba(30, 30, 30, 1.0) –– Will just leave this on so testing in Safari doesn't have a white bg.
                   */
-
+              
               color: rgba(255, 255, 255, 0.9); /* For headers */
           }
 
@@ -3244,13 +3249,14 @@ href="https://github.com/noah-nuebling/mac-mouse-fix/releases/tag/3.0.0"><strong
       @media (prefers-color-scheme: dark) {
 
           body {
-              /* background-color: #1e1e1e;  */
-              /* ^ Sparkle background is still bright when we have `background-color: transparent` even with darkmode active. 
+              background-color: #1e1e1e;
+              /* ^^^ Sparkle background is still bright when we have `background-color: transparent` even with darkmode active. 
                   This is the color of the text field background in Apple Mail on macOS 11 BigSur 
                   
                   Edit: This was because pandoc made the background white, which we've overriden now. So now this is not necessary anymore. Might want to reenable for testing in Safari.
+                  Edit 2: [Jan 2025] Color-picked the bg of the Sparkle window when we set a transparent background: 1e1e1e aka rgba(30, 30, 30, 1.0) –– Will just leave this on so testing in Safari doesn't have a white bg.
                   */
-
+              
               color: rgba(255, 255, 255, 0.9); /* For headers */
           }
 
@@ -3783,13 +3789,14 @@ no internet connection</li>
       @media (prefers-color-scheme: dark) {
 
           body {
-              /* background-color: #1e1e1e;  */
-              /* ^ Sparkle background is still bright when we have `background-color: transparent` even with darkmode active. 
+              background-color: #1e1e1e;
+              /* ^^^ Sparkle background is still bright when we have `background-color: transparent` even with darkmode active. 
                   This is the color of the text field background in Apple Mail on macOS 11 BigSur 
                   
                   Edit: This was because pandoc made the background white, which we've overriden now. So now this is not necessary anymore. Might want to reenable for testing in Safari.
+                  Edit 2: [Jan 2025] Color-picked the bg of the Sparkle window when we set a transparent background: 1e1e1e aka rgba(30, 30, 30, 1.0) –– Will just leave this on so testing in Safari doesn't have a white bg.
                   */
-
+              
               color: rgba(255, 255, 255, 0.9); /* For headers */
           }
 
@@ -4294,13 +4301,14 @@ Guide</a></li>
       @media (prefers-color-scheme: dark) {
 
           body {
-              /* background-color: #1e1e1e;  */
-              /* ^ Sparkle background is still bright when we have `background-color: transparent` even with darkmode active. 
+              background-color: #1e1e1e;
+              /* ^^^ Sparkle background is still bright when we have `background-color: transparent` even with darkmode active. 
                   This is the color of the text field background in Apple Mail on macOS 11 BigSur 
                   
                   Edit: This was because pandoc made the background white, which we've overriden now. So now this is not necessary anymore. Might want to reenable for testing in Safari.
+                  Edit 2: [Jan 2025] Color-picked the bg of the Sparkle window when we set a transparent background: 1e1e1e aka rgba(30, 30, 30, 1.0) –– Will just leave this on so testing in Safari doesn't have a white bg.
                   */
-
+              
               color: rgba(255, 255, 255, 0.9); /* For headers */
           }
 
@@ -4790,13 +4798,14 @@ screen</li>
       @media (prefers-color-scheme: dark) {
 
           body {
-              /* background-color: #1e1e1e;  */
-              /* ^ Sparkle background is still bright when we have `background-color: transparent` even with darkmode active. 
+              background-color: #1e1e1e;
+              /* ^^^ Sparkle background is still bright when we have `background-color: transparent` even with darkmode active. 
                   This is the color of the text field background in Apple Mail on macOS 11 BigSur 
                   
                   Edit: This was because pandoc made the background white, which we've overriden now. So now this is not necessary anymore. Might want to reenable for testing in Safari.
+                  Edit 2: [Jan 2025] Color-picked the bg of the Sparkle window when we set a transparent background: 1e1e1e aka rgba(30, 30, 30, 1.0) –– Will just leave this on so testing in Safari doesn't have a white bg.
                   */
-
+              
               color: rgba(255, 255, 255, 0.9); /* For headers */
           }
 
@@ -5305,13 +5314,14 @@ was very helpful in figuring out the problem!</li>
       @media (prefers-color-scheme: dark) {
 
           body {
-              /* background-color: #1e1e1e;  */
-              /* ^ Sparkle background is still bright when we have `background-color: transparent` even with darkmode active. 
+              background-color: #1e1e1e;
+              /* ^^^ Sparkle background is still bright when we have `background-color: transparent` even with darkmode active. 
                   This is the color of the text field background in Apple Mail on macOS 11 BigSur 
                   
                   Edit: This was because pandoc made the background white, which we've overriden now. So now this is not necessary anymore. Might want to reenable for testing in Safari.
+                  Edit 2: [Jan 2025] Color-picked the bg of the Sparkle window when we set a transparent background: 1e1e1e aka rgba(30, 30, 30, 1.0) –– Will just leave this on so testing in Safari doesn't have a white bg.
                   */
-
+              
               color: rgba(255, 255, 255, 0.9); /* For headers */
           }
 
@@ -5844,13 +5854,14 @@ future release.</li>
       @media (prefers-color-scheme: dark) {
 
           body {
-              /* background-color: #1e1e1e;  */
-              /* ^ Sparkle background is still bright when we have `background-color: transparent` even with darkmode active. 
+              background-color: #1e1e1e;
+              /* ^^^ Sparkle background is still bright when we have `background-color: transparent` even with darkmode active. 
                   This is the color of the text field background in Apple Mail on macOS 11 BigSur 
                   
                   Edit: This was because pandoc made the background white, which we've overriden now. So now this is not necessary anymore. Might want to reenable for testing in Safari.
+                  Edit 2: [Jan 2025] Color-picked the bg of the Sparkle window when we set a transparent background: 1e1e1e aka rgba(30, 30, 30, 1.0) –– Will just leave this on so testing in Safari doesn't have a white bg.
                   */
-
+              
               color: rgba(255, 255, 255, 0.9); /* For headers */
           }
 
@@ -6331,13 +6342,14 @@ proprietary function keys like “Play-Pause” or “Mute Speaker”.</p>
       @media (prefers-color-scheme: dark) {
 
           body {
-              /* background-color: #1e1e1e;  */
-              /* ^ Sparkle background is still bright when we have `background-color: transparent` even with darkmode active. 
+              background-color: #1e1e1e;
+              /* ^^^ Sparkle background is still bright when we have `background-color: transparent` even with darkmode active. 
                   This is the color of the text field background in Apple Mail on macOS 11 BigSur 
                   
                   Edit: This was because pandoc made the background white, which we've overriden now. So now this is not necessary anymore. Might want to reenable for testing in Safari.
+                  Edit 2: [Jan 2025] Color-picked the bg of the Sparkle window when we set a transparent background: 1e1e1e aka rgba(30, 30, 30, 1.0) –– Will just leave this on so testing in Safari doesn't have a white bg.
                   */
-
+              
               color: rgba(255, 255, 255, 0.9); /* For headers */
           }
 
