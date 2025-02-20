@@ -42,6 +42,7 @@ These people spent a lot more than the standard price and treated me to an **Inc
 
 **February 2025**
 
+- 🇹🇭&nbsp;Vichayanun&nbsp;Wachirapusitanand - "Thanks for making my 100 EUR gaming mouse not becoming a waste! :-D"
 - 🇳🇴&nbsp;Une&nbsp;Sofie&nbsp;Kinn&nbsp;Ekroll - "I've been using Mac Mouse Fix for years and can't imagine using external mice without it. Glad to contribute to ongoing development!"
 - 🇺🇸&nbsp;Jefferson&nbsp;Jackson
 - 🇺🇸&nbsp;Brendan&nbsp;Clodfelter
