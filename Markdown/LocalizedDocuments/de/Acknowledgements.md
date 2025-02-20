@@ -40,6 +40,7 @@ Diese Leute haben viel mehr als den Standardpreis ausgegeben und mir einen **ung
 
 **Februar 2025**
 
+- 🇺🇸&nbsp;Jefferson&nbsp;Jackson
 - 🇺🇸&nbsp;Brendan&nbsp;Clodfelter
 - 🇺🇸&nbsp;Tomohiro&nbsp;Soejima
 - 🇨🇿&nbsp;Jan&nbsp;Polášek - "Thank you for saving me from the Logi Options hell."
