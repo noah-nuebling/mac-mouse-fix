@@ -321,6 +321,32 @@ void Handle_FSEventStreamCallback(ConstFSEventStreamRef streamRef, void *clientC
      You probably want to use `commitConfig()` instead of this
      */
     
+    if (runningPreRelease()) {
+        /// Try to catch crash bug
+        ///     On [Feb 20 2025], running the new `3.0.4 Beta 1` I saw NSPropertyListSerialization crash (see stacktrace below)
+        ///     My first idea is that this might be caused by our new MFPlistEncoder failing to produce a valid plist, but not sure.
+        /// ```
+        /// Thread 1 Crashed:
+        /// 0   CoreFoundation                	       0x18975202c CF_IS_OBJC + 76
+        /// 1   CoreFoundation                	       0x18960a2a8 CFDictionaryGetValue + 56
+        /// 2   CoreFoundation                	       0x18967644c _CFAppendXML0 + 3032
+        /// 3   CoreFoundation                	       0x189676458 _CFAppendXML0 + 3044
+        /// 4   CoreFoundation                	       0x189676458 _CFAppendXML0 + 3044
+        /// 5   CoreFoundation                	       0x189713860 _CFPropertyListCreateXMLData + 228
+        /// 6   CoreFoundation                	       0x189675628 CFPropertyListCreateData + 240
+        /// 7   Foundation                    	       0x18a83471c +[NSPropertyListSerialization dataWithPropertyList:format:options:error:] + 52
+        /// 8   Mac Mouse Fix Helper          	       0x1048323c8 -[Config writeConfigToFile] + 76 (Config.m:325)
+        /// 9   Mac Mouse Fix Helper          	       0x104832074 commitConfig + 40 (Config.m:118)
+        /// 10  Mac Mouse Fix Helper          	       0x10489fff4 specialized static GetLicenseState.storeLicenseStateInCache(_:licenseKey:deviceUID:) + 556 (GetLicenseState.swift:273)
+        /// ```
+        ///
+        /// Sidenote: It would be super nice here to be able to dump custom info into the assertion crash-report!
+        ///     We should allow that when we overhaul the error reporting system.
+        ///
+        bool isValid = CFPropertyListIsValid((__bridge void *)self.config, kCFPropertyListXMLFormat_v1_0);
+        assert(isValid);
+    }
+    
     NSError *serializeErr;
     NSData *configData = [NSPropertyListSerialization dataWithPropertyList:self.config format:NSPropertyListXMLFormat_v1_0 options:0 error:&serializeErr];
     if (serializeErr) {

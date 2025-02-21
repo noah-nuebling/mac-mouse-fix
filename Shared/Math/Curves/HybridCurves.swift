@@ -129,7 +129,7 @@ import CocoaLumberjackSwift
         for k in k0...n {
             
             /// Get transition point to sample
-            let t = Math.scale(value: Double(k), from: Interval(0, Double(n)), to: .reversedUnitInterval) /// t goes from 1.0 to 0.0 in increments of 1/n
+            let t = Math.scale(value: Double(k), from: Interval(0, Double(n)), to: .reversedUnitInterval) /// t goes from 1.0 to 0.0 in increments of 1/n || Note [Feb 2025]: Shouldn't it be k0 instead of 0?
             
             /// Get combined distance at transition point
             let combinedDistance = combinedDistance(transitionPoint: t, baseCurve: baseCurve, baseDistance: targetDistance, baseDuration: minDuration, dragExponent: dragExponent, dragCoefficient: dragCoefficient, stopSpeed: stopSpeed)
