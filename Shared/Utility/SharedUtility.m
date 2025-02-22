@@ -742,7 +742,16 @@ int8_t sign(double x) {
     /// Need to enable Console.app > Action > Include Info Messages & Include Debug Messages to see these messages in Console. See https://stackoverflow.com/questions/65205310/ddoslogger-sharedinstance-logging-only-seems-to-log-error-level-logging-in-conso
     /// Will have to update instructions on Mac Mouse Fix Feedback Assistant when this releases.
     
-    [DDLog addLogger:DDOSLogger.sharedInstance]; /// Use os_log // This should log to console and terminal and be faster than the old methods
+    /// Use `os_log` backend for CocoaLumberjack.
+    ///     Notes:
+    ///     - This should log to console and terminal and be faster than the old methods.
+    ///     - Specifying a subsystem and category allows us to configure logging using `Info.plist > OSLogPreferences`
+    ///         > Also See: https://github.com/noah-nuebling/mac-mouse-fix-error-logging-improvement-ideas-october-2024?tab=readme-ov-file
+    
+    #define kMFOSLogSubsystem   @"com.nuebling.mac-mouse-fix"
+    #define kMFOSLogCategory    @"main-category"
+    DDOSLogger *logger = [[DDOSLogger alloc] initWithSubsystem: kMFOSLogSubsystem category: kMFOSLogCategory logLevelMapper: [[DDOSLogLevelMapperDefault alloc] init]];
+    [DDLog addLogger: logger];
     
     /// Set logging format
     //    DDOSLogger.sharedInstance.logFormatter = DDLogFormatter.
