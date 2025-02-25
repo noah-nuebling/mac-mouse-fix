@@ -444,6 +444,70 @@ comment:
   comment: 
   ```
 
+```
+>>> TODO: Translate and review the following Q&A Questions <<<
+
+(These are frequently asked questions I saw while going through 4 months of email in [Feb 2025])
+(The first few are License/payment-related questions – Maybe move these to/link these from Gumroad?)
+Meta todo: 
+  1. This is quite a lot of stuff – Do we really need to add these all? 
+    - If people can't pay they should probably just reach out to me and this Q&A entry won't help 
+    I think? 
+    - The Windows and iPad questions are not that frequent and generally don't prevent 
+    existing users from using the app – so maybe it shouldn't take up space here? 
+    - The Login Item question might be solved with better UX, but not sure how 
+      (IIRC, MMF 3 already made this question much rarer due to the label below the switch.)
+  2. Review all the links, the names of options in MMF and macOS, the grammar and phrasing, etc.
+```
+
+- **How many devices can I use my Mac Mouse Fix license on?** 
+  
+  Your license is meant to 'just work' on all your devices. If you log in with the same Apple ID, your license will even sync automatically!
+
+- **Will my license work with future versions of Mac Mouse Fix?**
+   
+  Licenses are valid for all Mac Mouse Fix 3.x versions. Major version upgrades (e.g., to version 4.0) might require a new purchase, but I haven't decided on this, yet.
+
+- **I can't pay for the app. What can I do?** 
+
+  I want Mac Mouse Fix to be accessible to everyone. If you can't pay for the app due to regional restrictions or any other reason, please [send me an email](https://redirect.macmousefix.com/?target=mailto-noah). Unfortunately, it may take me a while to answer, but I will get back eventually.
+
+- **Why aren't all buttons on my mouse recognized?** 
+
+  Please see the previous answer to "Is my mouse supported?" \
+  (TODO: Move this closer to "Is my mouse supported?")
+
+- **Will there be a 'Profiles' or 'App-Specific Settings' feature?**
+  
+  In Mac Mouse Fix 2 you can disable certain features for specific apps under `More... > App-specific settings`.
+
+  For Mac Mouse Fix 3, both app-specific settings and device-specific settings are planned, but there's no timeline for when they will release.
+
+  > [!TIP]
+  > **Until these features arrive, there's a workaround:** \
+  > In Mac Mouse Fix 3, activate 'Show in Menu Bar' on the 'General' tab; then you can quickly disable features like Smooth Scrolling straight from the Menu Bar.
+  <!-- > It's not an ideal solution, but I hope it helps until app-specific settings arrive. -->
+  
+  Although these features are already planned, you're still very welcome to reach out or open a [feature request](https://noah-nuebling.github.io/mac-mouse-fix-feedback-assistant/?type=feature-request) and describe your usecase – understanding how different people use and think about the app will help make these features the best they can be when they arrive. Thank you.
+
+- **Will there be an iPad or Windows version of the app?** 
+
+  That would be really cool, but it's not coming any time soon, as I'd have to rewrite most of the app, which would cost a lot of time. For now, I'm focused on improving the macOS version of the app as much as possible.
+
+- **What's the difference between Mac Mouse Fix 2 and Mac Mouse Fix 3** 
+  
+  Mac Mouse Fix 2 is 100% free (and I plan to keep supporting it) while Mac Mouse Fix 3 is free for 30 days and then costs a few bucks to own. 
+  
+  For a **feature comparison**, [click here](https://github.com/noah-nuebling/mac-mouse-fix/discussions/743#discussioncomment-7938922).
+
+- **Why does the Mac Mouse Fix window open when I start my Mac?** 
+
+  This is likely because you've set Mac Mouse Fix as a macOS Login Item. Please see [Apple's Guide](https://support.apple.com/en-me/guide/mac-help/mh15189/mac) on how to manage Login Items. 
+  
+  Mac Mouse Fix works differently from many other apps. Once the 'Enable Mac Mouse Fix' switch is turned on, the app remains active even after closing the app or restarting your computer. This means you don't need to add it as a Login Item to keep it working.
+
+
+```
 <a name="how-you-can-contribute"></a> 
 ```
 key: contributing
