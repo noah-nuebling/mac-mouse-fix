@@ -1,21 +1,8 @@
-<!-- 
+<!-- Render this using
 
-Render this using
+rm test.html; cat test.md | pandoc --from markdown --to html --include-in-header update-notes-style.html --include-in-header update-notes-script.html --standalone --output=test.html; open test.html
 
-rm test.html; cat test.md | pandoc --from markdown --to html --standalone --output=test.html; open test.html
-
-On the YAML at the start:
-
-  - Included css and js
-  - Keep in sync with generate_appcasts script. 
-  - More on pandoc YAML: https://pandoc.org/MANUAL.html#extension-yaml_metadata_block
 -->
-
----
-header-includes: 
-- <script src="update-notes/script.js"></script>
-- <link rel="stylesheet" href="update-notes/style.css"/>
----
 
 # Update available!
 
