@@ -196,6 +196,12 @@ def generate():
             shutil.rmtree(app_path)
 
             # Assemble collected data into appcast.xml-ready item-string
+            #   Sources for the appcast.xml format:
+            #   - SampleAppcast.xml https://github.com/sparkle-project/Sparkle/blob/2.x/Resources/SampleAppcast.xml
+            #       - Uses <sparkle:releaseNotesLink>
+            #   - SampleAppcast.xml linked from Sparkle docs https://sparkle-project.org/files/sparkletestcast.xml
+            #       - Uses <description> just like us (as of [Feb 2025]). I think this is might be outdated. All other examples I saw use <sparkle:releaseNotesLink> instead.
+            
             item_string = f"""\
     <item>
         <title>{title}</title>
