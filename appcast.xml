@@ -152,7 +152,7 @@
         <title>2.0.0 available!</title>
         <pubDate>2022-01-05T06:42:08Z</pubDate>
         <sparkle:minimumSystemVersion>10.11</sparkle:minimumSystemVersion>
-        <sparkle:releaseNotesLink sparkle:format="html"> https://raw.githubusercontent.com/noah-nuebling/mac-mouse-fix/update-feed/update-notes/html/en/2.0.0.html</sparkle:releaseNotesLink>
+        <sparkle:releaseNotesLink format="html"> https://raw.githubusercontent.com/noah-nuebling/mac-mouse-fix/update-feed/update-notes/html/en/2.0.0.html</sparkle:releaseNotesLink>
         <enclosure
             url="https://github.com/noah-nuebling/mac-mouse-fix/releases/download/2.0.0/MacMouseFixApp.zip"
             sparkle:version="6294"
