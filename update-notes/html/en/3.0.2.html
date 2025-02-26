@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>-</title>
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+  </style>
+  <link rel="stylesheet" href="https://raw.githubusercontent.com/noah-nuebling/mac-mouse-fix/update-feed/update-notes/style.css"/>
+  <script src="https://raw.githubusercontent.com/noah-nuebling/mac-mouse-fix/update-feed/update-notes/script.js"></script>
+</head>
+<body>
+<!-- Note 1: (Sep 2024) Commenting the **Note to Mac Mouse Fix 2 Users** out, since we moved that to the latest 3.0.3 update notes -->
+<!-- Note 2: (Sep 2024) Commenting out the  **Note to Mac Mouse Fix 3 Buyers**, since that's in the past now -->
+<!--
+
+**Note to Mac Mouse Fix 2 Users**
+
+ With the introduction of Mac Mouse Fix 3, the pricing model of the app has changed:
+ 
+ - **Mac Mouse Fix 2**\
+ Remains 100% free, and I plan to keep supporting it.\
+**Skip this update** to keep using Mac Mouse Fix 2. Download the latest version of Mac Mouse Fix 2 [here](https://redirect.macmousefix.com/?target=mmf2-latest).
+ - **Mac Mouse Fix 3**\
+ Free for 30 days, costs a few dollars to own.\
+ **Update now** to get Mac Mouse Fix 3!
+
+You can learn more about the pricing and features of Mac Mouse Fix 3 on the [new website](https://macmousefix.com/).
+
+Thanks for using Mac Mouse Fix! :)
+
+---
+
+**Note to Mac Mouse Fix 3 Buyers**
+
+In May 2024, I saw several people being surprised and upset because Mac Mouse Fix 3 suddenly stopped working and prompted them to buy the app. It seems that they updated from Mac Mouse Fix 2 to Mac Mouse Fix 3 without being aware of the pricing changes. 
+
+I'm really sorry about this! I admit it was very easy to miss the information about the pricing changes for people who updated from Mac Mouse Fix 2 directly to 3.0.1 or 3.0.2. As a result, I've improved the update notes for 3.0.2 to make it harder to miss that Mac Mouse Fix 3 isn't free anymore.
+
+I also want to offer a **refund** to anyone who felt negatively affected by this. Please [click here](https://redirect.macmousefix.com/?target=mmf-apply-for-refund) to apply for it.
+
+Again, I'm sorry about the trouble, and I hope everyone is ok with this as a solution!
+
+The latest version of Mac Mouse Fix 2 stays entirely free, and you can download it [here](https://redirect.macmousefix.com/?target=mmf2-latest).
+
+-->
+<!--
+
+To get the refund, please [send me an email](<https://noah-nuebling.github.io/redirection-service?message=&target=mailto-noah&subject=Mac Mouse Fix Refund>) with "Mac Mouse Fix Refund" in the subject. Inside the message, include the email address where you received your license key and the reason why you're requesting the refund.
+
+-->
+<!-- 
+If you bought Mac Mouse Fix 3 because you didn't know that you could keep using [Mac Mouse Fix 2](https://noah-nuebling.github.io/redirection-service?target=mmf2-latest) for free, then I would like to give you a refund.
+-->
+<!--
+You can download the latest version of Mac Mouse Fix 2 [here](https://noah-nuebling.github.io/redirection-service?target=mmf2-latest). It's 100% free forever.
+
+To anyone else who bought the app: Thank you very much for your support! :)
+-->
+<!-- Thank you for using Mac Mouse Fix! -->
+<!--
+Background: \
+I think there was confusion because the original update notes for version 3.0.1 and 3.0.2 didn't explicitly mention that Mac Mouse Fix 3 isn't 100% free, like Mac Mouse Fix 2 is. \
+Instead, the update notes for 3.0.1 and 3.0.2 linked to the update notes for 3.0.0 which made the pricing changes very clear, but I totally understand that this would lead to confusion for people who upgraded directly from Mac Mouse Fix 2, and should be made much clearer. So I'm sorry for that.
+
+-->
+<!--
+
+---
+
+ ### Update Notes 
+
+-->
+<p>Mac Mouse Fix <strong>3.0.2</strong> brings several improvements,
+including <strong>smoother scrolling</strong>, improved translations,
+and more!</p>
+<h3 id="scrolling">Scrolling</h3>
+<ul>
+<li>You can now stop scroll animations by scrolling one step in the
+opposite direction. This allows you to <strong>‘throw’</strong> and
+<strong>‘catch’ the page</strong> when using ‘Smoothness: High’, similar
+to a Trackpad.</li>
+<li>Mac Mouse Fix now sends scroll events earlier in the display refresh
+cycle, giving apps more time to process the scroll events and display
+scrolling smoothly. This <strong>improves framerates</strong>,
+especially on complex websites like YouTube.com.</li>
+<li>Improved the responsiveness of the ‘Smoothness: High’ setting,
+making scrolling easier to control.
+<!-- Turned speed smoothing off for the high smoothness animations curves. (Which we introduced in 3.0.0 Beta 7)--></li>
+<li>Improved on a mechanism introduced in 3.0.1 where the animation
+speed becomes faster as you move the scroll wheel faster when using
+‘Smoothness: Regular’. In 3.0.2 the speedup of the animation should
+appear more consistent and predictable, making it easier on the eyes
+while providing great control.
+<!-- and still providing a sense of directly pushing the content with your finger. --></li>
+<li>Fixed a problem where the scrolling speed was too slow, especially
+when using the ‘Precision’ option. This problem was introduced in 3.0.1.
+Thanks to <span class="citation" data-cites="V-Coba">@V-Coba</span> for
+drawing attention to it in <a
+href="https://github.com/noah-nuebling/mac-mouse-fix/issues/795">795</a>.
+<!-- - Turned off (except for one hacky case) additional tickTime smoothing inside scrollAnalyzer which we introduced for 3.0.1 to make baseMsPerStepMin work better. Unfortunately the additional smoothing made the scroll distance acceleration worse.--></li>
+<li>Improved behaviour inside the Arc browser when using ‘Click and
+Scroll’ to ‘Zoom In or Out’.</li>
+</ul>
+<h3 id="localization">Localization</h3>
+<ul>
+<li>Updated 🇻🇳 Vietnamese translations. Credits to <span
+class="citation" data-cites="nghlt">@nghlt</span>!
+<!-- [792](https://github.com/noah-nuebling/mac-mouse-fix/pull/792)--></li>
+<li>Improved some 🇩🇪 German translations.</li>
+<li>Text inside Mac Mouse Fix that doesn’t have a translation for the
+current language will now show a placeholder value instead of just being
+blank. This should make it less confusing to navigate the app when there
+are missing translations.</li>
+</ul>
+<h3 id="other">Other</h3>
+<ul>
+<li>Mac Mouse Fix will now show a notification with a link to <a
+href="https://github.com/noah-nuebling/mac-mouse-fix/discussions/861">this
+guide</a> to users who might be experiencing a bug in macOS 13 Ventura
+and later that can prevent Mac Mouse Fix from being enabled.
+<!-- takes too long to enable. Trying to suppress enable-timeout-toast during macOS startup. Based on CPU usage based heuristic. --></li>
+<li>Changed the default settings for mice with 3 buttons. The default
+settings no longer feature a ‘Click and Scroll’ action for the
+Scrollwheel Button, since that is pretty hard to perform. Instead, the
+default settings now feature a ‘Hold’ and a ‘Double Click’ action.
+<!-- The settings are now the same as MMF 2 --></li>
+<li>Added a tooltip to the Mac Mouse Fix icon on the About tab. It tells
+you how to reveal Mac Mouse Fix’s config file in the Finder.</li>
+<li>Lots of under-the-hood cleanup and improvements.</li>
+</ul>
+<!--
+
+GitHub improvements don't really belong to the release itself I think, since it's not part of the app. 
+
+### GitHub
+
+- Improvements to Acknowledgements and other md files. E.g. added caching mechanism to Gumroad sales retrieval
+- Updates to the Readme.
+    - Added refund policy section to FAQ section of readme.
+    - Rephrased intro section of readme
+    - Added section to Readme: 'Can I open App Exposé through a Click and Drag Gesture?'
+    - Added comments to readme
+
+-->
+<!--
+
+Don't need a section for this
+
+### Under the hood
+
+- Refactoring and lots of docs added to DisplayLink.
+- Attempt to address rare race condition in SubPixelator
+- Updated logic around fast user switching
+- Improved logging
+- Under the hood cleanup & refactoring
+- Comments docs added
+- Restored default app language in App Scheme by @Lambozhuang in https://github.com/noah-nuebling/mac-mouse-fix/pull/846
+
+-->
+<hr />
+<p>Also check out the previous release <a
+href="https://github.com/noah-nuebling/mac-mouse-fix/releases/tag/3.0.1"><strong>3.0.1</strong></a>.</p>
+<!-- **Full Changelog**: https://github.com/noah-nuebling/mac-mouse-fix/compare/3.0.1...3.0.2 -->
+<!-- I'm sorry for any confusion about the pricing model. The update notes for version 3.0.1 and 3.0.2 should have contained more information about the pricing model changes. -->
+<!-- **If you're upgrading from Mac Mouse Fix 2** please note that Mac Mouse Fix 3 is **not 100% free anymore**. Instead However it's very cheap, and you can also stay on Mac Mouse Fix 2 if you like - which will stay 100% free. Learn more in the release notes for [**3.0.0**](https://github.com/noah-nuebling/mac-mouse-fix/releases/tag/3.0.0) - the biggest update to Mac Mouse Fix so far! -->
+<!-- **If you're currently on Mac Mouse Fix version 2** -->
+<!--
+
+> [!NOTE]
+> **Read this if you're currently using Mac Mouse Fix 2**
+>
+> With the introduction of Mac Mouse Fix 3, I've made some changes to the pricing model:
+> 
+> - **Mac Mouse Fix 2**\
+> Remains 100% free, and I plan to keep supporting it.\
+> Just **skip this update** if you'd like to keep using Mac Mouse Fix 2.
+> - **Mac Mouse Fix 3**\
+> Free for 30 days, costs a few dollars to own. 
+> You can **update now**, if you'd like to try out Mac Mouse Fix 3. You can go back to MMF 2 any time.
+>
+> You can also download the latest version of MMF 2 [here](https://noah-nuebling.github.io/redirection-service?target=mmf2-latest).\
+> You can learn more about the new pricing [here](https://github.com/noah-nuebling/mac-mouse-fix/releases/tag/3.0.0). Thank you so much for all the support so far! :)
+
+-->
+<!--
+> [!NOTE]
+> **Read this if you've updated to Mac Mouse Fix 3 without knowing about the pricing changes.**
+> 
+> To anyone who has updated to Mac Mouse Fix 3, without being aware of the pricing changes, I'm sorry for any confusion or frustration this has caused. I didn't make these changes clear enough in the initial update notes for version 3.0.1 and 3.0.2, so the confusion is very understandable.
+> If you felt tricked or forced into buying Mac Mouse Fix 3, I'm sorry, and please write me an email with "Refund" in the subject so I can refund your purchase.
+> 
+> Thank you very much for using Mac Mouse Fix, and for your support!
+
+-->
+</body>
+</html>

@@ -3,6 +3,7 @@
 
 # Imports
 
+import sys
 import os
 import shutil
 # import requests # Only ships with python2 on mac it seems. Edit: So what? We could just install it right?
@@ -11,58 +12,102 @@ import urllib.parse
 
 import json
 
+import textwrap
 from pprint import pprint
 
 import subprocess
 
+# Test mode
+TEST_MODE = False
+if len(sys.argv) >= 2 and sys.argv[1] == '--test-mode':
+    print('Running in --test-mode')
+    TEST_MODE = True
+
 # Constants
 #   Paths are relative to project root or to each other.
 
-releases_api_url = "https://api.github.com/repos/noah-nuebling/mac-mouse-fix/releases"
-raw_github_url = "https://raw.githubusercontent.com/noah-nuebling/mac-mouse-fix/master"
+# URLs
+releases_api_url        = "https://api.github.com/repos/noah-nuebling/mac-mouse-fix/releases"
 
-appcast_file_name = "appcast.xml" # Path to the appcast for stable releases
-appcast_pre_file_name = "appcast-pre.xml" # Path to the appcast for prereleases
-css_file_path = "update-notes-style.html"
-js_file_path = "update-notes-script.html"
+if TEST_MODE:
+    base_url            = "http://127.0.0.1:8000"       # For testing. Use `python3 -m http.server 8000`. Background: `file://` and `localhost:` URLs are forbidden by Sparkle so we need to use this hack. (As of [Feb 2025])
+else:
+    base_url            = "https://raw.githubusercontent.com/noah-nuebling/mac-mouse-fix/update-feed"
 
-sparkle_project_path = "Frameworks/Sparkle-1.27.3" # Need this to use Sparkles code-signing tool # This is dangerously hardcoded # Might be smart to keep this in sync with the Sparkle version in the app.
-download_folder = "generate_appcasts_downloads" # This is were we download old app versions to, and then unzip them. We want to delete this on exit.
-app_bundle_name = "Mac Mouse Fix.app" # This is the name of the app bundle after unzipping it
+if 0:
+    raw_github_url      = "https://raw.githubusercontent.com/noah-nuebling/mac-mouse-fix/master"
 
-info_plist_app_subpath = "Contents/Info.plist" # Where to look fo the Info.plist file within the unzipped app bundle
+# Output paths/folders
+appcast_file_name               = "appcast.xml"                             # Path to the appcast for stable releases
+appcast_pre_file_name           = "appcast-pre.xml"                         # Path to the appcast for prereleases
 
-appcast_url = f"{raw_github_url}/{appcast_file_name}"
-appcast_pre_url = f"{raw_github_url}/{appcast_pre_file_name}"
+appcast_url                     = f"{base_url}/{appcast_file_name}"         # This gets included as a link in appcast.xml. Not sure what it does.
+appcast_pre_url                 = f"{base_url}/{appcast_pre_file_name}"
 
+update_notes_folder            = "update-notes/html"                        # This is where the html update notes go. They are generated from the .md update notes downloaded off GitHub. appcast.xml will reference these html update notes via <sparkle:releaseNotesLink>
+css_file_path                  = "update-notes/style.css"                   # The css file referenced by the html update notes.
+js_file_path                   = "update-notes/script.js"
+
+# Implementation detail paths/folders
+
+sparkle_project_path            = "Frameworks/Sparkle-1.27.3"                       # Need this to use Sparkles code-signing tool # This is dangerously hardcoded # Might be smart to keep this in sync with the Sparkle version in the app.
+download_folder                 = "generate_appcasts_downloads"                     # This is were we download old app versions to, and then unzip them. We want to delete this on exit.
+app_bundle_name                 = "Mac Mouse Fix.app"                               # This is the name of the app bundle after unzipping it
+html_header_includes_tmp_file   = f"{download_folder}/html_header_includes.html"    # Temp file for storing html headers for update notes. I guess we're using downloads_folder as a general 'tmp' folder here.
+
+info_plist_app_subpath          = "Contents/Info.plist"         # Where to look fo the Info.plist file within the unzipped app bundle
+
+prefpane_bundle_name = "Mouse Fix.prefpane"                     # App has been renamed, this is the old name
+
+# Dynamic paths/folders
 current_directory = os.getcwd()
 download_folder_absolute = os.path.join(current_directory, download_folder)
 
-prefpane_bundle_name = "Mouse Fix.prefpane" # App has been renamed, this is the old name
+# Stuff for reading directly from the project source files. 
+#   We went over to downloading and unzipping all old bundles instead.
+#   Note: 
+#       Accessing Xcode environment variables is night impossible it seems
+#       The only way to do it I found is described here:
+#         https://stackoverflow.com/questions/6523655/how-do-you-access-xcode-environment-and-build-variables-from-an-external-script
+#         And that's not feasible to do for old versions.
 
-# Stuff for reading directly from the project source files. We went over to downloading and unzipping all old bundles instead.
-# info_plist_path = "App/SupportFiles/Info.plist"
-# base_xcconfig_path = "xcconfig/Base.xcconfig"
-# files_to_checkout = [info_plist_path, base_xcconfig_path]
-
-# Note: Accessing Xcode environment variables is night impossible it seems
-# The only way to do it I found is described here:
-#   https://stackoverflow.com/questions/6523655/how-do-you-access-xcode-environment-and-build-variables-from-an-external-script
-#   And that's not feasible to do for old versions.
+if False:
+    info_plist_path = "App/SupportFiles/Info.plist"
+    base_xcconfig_path = "xcconfig/Base.xcconfig"
+    files_to_checkout = [info_plist_path, base_xcconfig_path]
 
 def generate():
     try:
 
+        
+
         # Check if there are uncommited changes
-        # This script uses git stash several times, so they'd be lost
-        uncommitted_changes = subprocess.check_output('git diff-index HEAD --', shell=True).decode('utf-8')
-        if (len(uncommitted_changes) != 0):
-            raise Exception('There are uncommited changes. Please commit or stash them before running this script.')
+        #   Note: This script uses git stash several times, so they'd be lost Update: [Feb 2025] We don't seem to be using git stash anymore. We can probably turn this off. (./update still checks for uncommited changes, so that should be safe.)
+        if TEST_MODE or True:
+            pass
+        else: 
+            uncommitted_changes = subprocess.check_output('git diff-index HEAD --', shell=True).decode('utf-8')
+            if (len(uncommitted_changes) != 0):
+                raise Exception('There are uncommited changes. Please commit or stash them before running this script.')
 
-        # Script
+        # Main logic
+        
+        # Call GH API
+        with urllib.request.urlopen(releases_api_url) as request:
+            releases = json.load(request)
 
-        request = urllib.request.urlopen(releases_api_url)
-        releases = json.load(request)
+        # Make downloads folder
+        os.makedirs(download_folder_absolute, exist_ok=True)
+
+        # Prepare text to include in the html header of all release notes.
+        #   (This simply links to our js and css file.)
+        #   (We have to write this to a file because I don't know how else to pass this to pandoc.)
+        html_header_includes = textwrap.dedent(f"""\
+        <link rel="stylesheet" href="{base_url}/{css_file_path}"/>
+        <script src="{base_url}/{js_file_path}"></script>
+        """)
+        with open(html_header_includes_tmp_file, 'w') as f:
+            f.write(html_header_includes)
 
         # We'll be iterating over all releases and collecting data to put into the appcast
         appcast_items = []
@@ -72,30 +117,43 @@ def generate():
 
             # Get short version
             short_version = r['name']
-
+        
+            # Log
             print(f'Processing release {short_version}...')
+
+            # Get tag name
+            tag_name = r['tag_name']
 
             # Get release notes
             release_notes = r['body'] # This is markdown
 
-            # Write release notes to file. As a plain string I had trouble passing it to pandoc, because I couldn't escape it properly
-            os.makedirs(download_folder_absolute, exist_ok=True)
-            text_file = open(f"{download_folder}/release_notes.md", "w")
-            n = text_file.write(release_notes)
-            text_file.close()
-            # text_file.flush() # Make sure stuff is written to file before we proceed. Doesn't work either
+            # Write release notes to file. 
+            #   Note: As a plain string I had trouble passing it to pandoc, because I couldn't escape it properly
+            with open(f"{download_folder}/release_notes.md", "w") as f:
+                f.write(release_notes)
             
-            # Convert to HTML
-            # release_notes = subprocess.check_output(f"cat {download_folder}/release_notes.md | pandoc -f markdown -t html", shell=True).decode('utf-8')
-            
-            # Convert to HTML (standalone, including style sheet - that's the only way to style the update notes in the app cast using embedded html)
-            release_notes = subprocess.check_output(f"""cat {download_folder}/release_notes.md | pandoc -f markdown -t html -H ./{css_file_path} -H ./{js_file_path} -s --metadata title=''""", shell=True).decode('utf-8')
+            # Convert release notes to HTML 
+            release_notes = subprocess.check_output(f"cat {download_folder}/release_notes.md | "
+                                                    "pandoc "
+                                                    "--from markdown --to html "
+                                                    "--standalone "                 # Not sure what this does / if it's necessary
+                                                    f"--include-in-header ./{html_header_includes_tmp_file} "
+                                                    "--metadata title='' "
+                                                    "--metadata document-css=false" # Stops pandoc from adding some of its default inline css, but can't manage to turn that off entirely.
+                                                    ,
+                                                    shell=True).decode('utf-8')
+
+            # Write release notes
+            release_notes_path = f"{update_notes_folder}/en/{tag_name}.html"
+            os.makedirs(f"{update_notes_folder}/en/", exist_ok=True)
+            with open(release_notes_path, 'w') as f:
+                f.write(release_notes)
 
             # Get title
             title = f"{short_version} available!"
 
             # Get publishing date
-            publising_date = r['published_at'];
+            publishing_date = r['published_at'];
 
             # Get isPrerelease
             is_prerelease = r['prerelease']
@@ -106,47 +164,45 @@ def generate():
             # Get localized release notes ?
             #   ...
 
+            if False:
 
-            # Get tag
-            tag_name = r['tag_name']
+                # Tried to checkout each commit and then read bundle version and minimum compatible macOS version from the local Xcode source files. 
+                # I had trouble making this approach work, though, so we went over to just unzipping each update and reading that data directly from the bundle
 
-            # Get commit number
-            # commit = os.system(f"git rev-list -n 1 {tag_name}") # Can't capture the output of this for some reason
-            commit_number = subprocess.check_output(f"git rev-list -n 1 {tag_name}", shell=True).decode('utf-8')
-            commit_number = commit_number[0:-1] # There's a linebreak at the end
+                # Get commit number
+                # commit = os_system_exc(f"git rev-list -n 1 {tag_name}") # Can't capture the output of this for some reason
+                commit_number = subprocess.check_output(f"git rev-list -n 1 {tag_name}", shell=True).decode('utf-8')
+                commit_number = commit_number[0:-1] # There's a linebreak at the end
 
-            # Tried to checkout each commit and then read bundle version and minimum compatible macOS version from the local Xcode source files. 
-            # I had trouble making this approach work, though, so we went over to just unzipping each update and reading that data directly from the bundle
+                # Check out commit
+                # This would probably be a lot faster if we only checked out the files we need
+                os_system_exc("git stash")
+                files_string = ' '.join(files_to_checkout)
+                bash_string = f"git checkout {commit_number} {files_string}"
+                try:
+                    subprocess.check_output(bash_string)
+                except Exception as e:
+                    print(f"Exception while checking out commit {commit_number} ({short_version}): {e}. Skipping this release.")
+                    continue
 
-            # # Check out commit
-            # # This would probably be a lot faster if we only checked out the files we need
-            # os.system("git stash")
-            # files_string = ' '.join(files_to_checkout)
-            # bash_string = f"git checkout {commit_number} {files_string}"
-            # try:
-            #     subprocess.check_output(bash_string)
-            # except Exception as e:
-            #     print(f"Exception while checking out commit {commit_number} ({short_version}): {e}. Skipping this release.")
-            #     continue
+                # Get version
+                #   Get from Info.plist file
+                bundle_version = subprocess.check_output(f"/usr/libexec/PlistBuddy {info_plist_path} -c 'Print CFBundleVersion'", shell=True).decode('utf-8')
 
-            # # Get version
-            # #   Get from Info.plist file
-            # bundle_version = subprocess.check_output(f"/usr/libexec/PlistBuddy {info_plist_path} -c 'Print CFBundleVersion'", shell=True).decode('utf-8')
-
-            # # Get minimum macOS version
-            # #   The environment variable buried deep within project.pbxproj. No practical way to get at this
-            # #   Instead, we're going to hardcode this for old versions and define a new env variable via xcconfig we can reference here for newer verisons
-            # #   See how alt-tab-macos did it here: https://github.com/lwouis/alt-tab-macos/blob/master/config/base.xcconfig
-            # minimum_macos_version = ""
-            # try:
-            #     minimum_macos_version = subprocess.check_output(f"awk -F ' = ' '/MACOSX_DEPLOYMENT_TARGET/ {{ print $2; }}' < {base_xcconfig_path}", shell=True).decode('utf-8')
-            #     minimum_macos_version = minimum_macos_version[0:-1] # Remove trailing \n character
-            # except:
-            #     minimum_macos_version = 10.11
+                # Get minimum macOS version
+                #   The environment variable buried deep within project.pbxproj. No practical way to get at this
+                #   Instead, we're going to hardcode this for old versions and define a new env variable via xcconfig we can reference here for newer verisons
+                #   See how alt-tab-macos did it here: https://github.com/lwouis/alt-tab-macos/blob/master/config/base.xcconfig
+                minimum_macos_version = ""
+                try:
+                    minimum_macos_version = subprocess.check_output(f"awk -F ' = ' '/MACOSX_DEPLOYMENT_TARGET/ {{ print $2; }}' < {base_xcconfig_path}", shell=True).decode('utf-8')
+                    minimum_macos_version = minimum_macos_version[0:-1] # Remove trailing \n character
+                except:
+                    minimum_macos_version = 10.11
 
             # Get app asset
             # NOTE: This has a copy in stats_internal.py. Keep them in sync.
-            app_assets = [asset for asset in r['assets'] if asset['name'] == 'MacMouseFixApp.zip' or asset['name'] == 'MacMouseFix.zip'] # I don't think we need `MacMouseFix.zip` here
+            app_assets = [asset for asset in r['assets'] if asset['name'] == 'MacMouseFixApp.zip' or asset['name'] == 'MacMouseFix.zip'] # I don't think we need `MacMouseFix.zip` here (That's the old prefpane name.)
             assert len(app_assets) <= 1, f"Found {len(app_assets)} app assets. Here are the asset names: { list(map(lambda a: a['name'], r['assets'])) }"
             if len(app_assets) == 0:
                 print(f"Couldn't find asset with standard name. Falling back to first asset, named {r['assets'][0]['name']}")
@@ -156,7 +212,6 @@ def generate():
             download_link = app_assets[0]['browser_download_url']
 
             # Download update
-            os.makedirs(download_folder_absolute, exist_ok=True)
             download_name = download_link.rsplit('/', 1)[-1]
             download_zip_path = f'{download_folder}/{download_name}'
             urllib.request.urlretrieve(download_link, download_zip_path)
@@ -166,7 +221,7 @@ def generate():
             signature_and_length = signature_and_length[0:-1]
 
             # Unzip update
-            os.system(f'ditto -x -k --sequesterRsrc --rsrc "{download_zip_path}" "{download_folder}"') # This works, while subprocess.check_output() doesn't for some reason
+            ret = os_system_exc(f'ditto -x -k --sequesterRsrc --rsrc "{download_zip_path}" "{download_folder}"') # This works, while subprocess.check_output() doesn't for some reason
 
             # Find app bundle
             # Maybe we could just name the unzipped folder instead of guessing here
@@ -196,24 +251,30 @@ def generate():
             shutil.rmtree(app_path)
 
             # Assemble collected data into appcast.xml-ready item-string
-            #   Sources for the appcast.xml format:
-            #   - About release notes:
-            #       - SampleAppcast.xml https://github.com/sparkle-project/Sparkle/blob/2.x/Resources/SampleAppcast.xml
-            #           - Uses <sparkle:releaseNotesLink>
-            #       - SampleAppcast.xml linked from Sparkle docs https://sparkle-project.org/files/sparkletestcast.xml
-            #           - Uses <description> (just like us as of [Feb 2025])
-            #       - [SUAppcastItem releaseNotesURL] docs: https://sparkle-project.org/documentation/api-reference/Classes/SUAppcastItem.html#/c:objc(cs)SUAppcastItem(py)releaseNotesURL
+            #  
+            #   About release notes & appcast.xml format:
+            #       Release notes can be embedded directly in the appcast.xml using <description> or via a link using <sparkle:releaseNotesLink>
+            #           Originally, we used <description> to keep things simple, but this caused the appcast.xml to contain countless copies of our custom css and js text.
+            #           I couldn't figure out how to fix that without switching to <sparkle:releaseNotesLink>, so we did switch in [Feb 2025]
+            #       
+            #   Also see: 
+            #       - [SUAppcastItem releaseNotesURL] docs (https://sparkle-project.org/documentation/api-reference/Classes/SUAppcastItem.html#/c:objc(cs)SUAppcastItem(py)releaseNotesURL)
             #           - Explains difference between <sparkle:releaseNotesLink> and <description>
-            
+            #       - SampleAppcast.xml 1 (https://github.com/sparkle-project/Sparkle/blob/2.x/Resources/SampleAppcast.xml)
+            #           - Contained in main Sparkle repo, uses <sparkle:releaseNotesLink>
+            #       - SampleAppcast.xml 2 (https://sparkle-project.org/files/sparkletestcast.xml)
+            #           - Linked from Sparkle docs, uses <description>
+            #
+            #   Notes:
+            #       - [Feb 2025] We're prepending base_url, because I don't think the <sparkle:releaseNotesLink> can be a relative URL. Not entirely sure tho.
+
+
             item_string = f"""\
     <item>
         <title>{title}</title>
-        <pubDate>{publising_date}</pubDate>
+        <pubDate>{publishing_date}</pubDate>
         <sparkle:minimumSystemVersion>{minimum_macos_version}</sparkle:minimumSystemVersion>
-        <description><![CDATA[
-            {release_notes}
-        ]]>
-        </description>
+        <sparkle:releaseNotesLink>{base_url}/{release_notes_path}</sparkle:releaseNotesLink>
         <enclosure
             url=\"{download_link}\"
             sparkle:version=\"{bundle_version}\"
@@ -228,9 +289,6 @@ def generate():
                 appcast_items.append(item_string)
 
             appcast_pre_items.append(item_string)
-
-        # Clean up downloaded files
-        clean_up(download_folder)
 
         # Assemble item strings into final appcast strings
 
@@ -263,14 +321,14 @@ def generate():
         appcast_pre_content_string = appcast_pre_format_string.format(appcast_pre_url, pre_items_joined)
 
         # Write to file
+        with open(appcast_file_name,"w") as f:
+            f.write(appcast_content_string)
+        with open(appcast_pre_file_name,"w") as f:
+            f.write(appcast_pre_content_string)
 
-        file1 = open(appcast_file_name,"w")
-        L = file1.write(appcast_content_string)
-        file1.close()
-
-        file2 = open(appcast_pre_file_name,"w")
-        L = file2.write(appcast_pre_content_string)
-        file2.close()
+        # Cleanup & exit
+        clean_up(download_folder)
+        exit(0)
 
     except Exception as e: # Exit immediately if anything goes wrong
         print(e)
@@ -278,10 +336,14 @@ def generate():
         exit(1)
 
 def clean_up(download_folder):
-    try:
-        os.system(f'rm -R {download_folder}')
-    except Exception as e:
-        print(f'Clean up failed: {e}')
+    ret = os.system(f'rm -R {download_folder}')
+    if ret != 0:
+        print(f'Clean up failed with error code: {ret}')
+
+def os_system_exc(s):
+    ret = os.system(s)
+    if ret != 0:
+        raise Exception(f"os.system failed with error code {ret}")
 
 
 generate()
