@@ -11,3 +11,6 @@ Pro separate update-feed branch
 - Cleaner and more separated
 - The update feed can contain updates from all branches, so it's a little arbitrary to put it into master. This is actually sort of a good argument I feel. I'mma leave it here
 - The script uses git stash currently, so we require the working tree being clean to run it, so we need to commit everytime we want to run it which is pretty annoying. I guess the risk to losing something by accidentally stashing it is lower here, so we could ease out clean working tree policies? ... Nah that's a stupid argument
+
+Update: [Feb 2025]
+- I should've probably created a separate repo for this. This is logically a separate project, not a 'branch' of the Mac Mouse Fix code. But it's hard to change now since MMF is hardcoded to look for updates here. Good thing we didn't put it in master at least.
