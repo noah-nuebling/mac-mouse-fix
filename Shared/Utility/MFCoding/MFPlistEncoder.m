@@ -125,9 +125,10 @@
     NSMutableArray *visitedObjects = threadobject([[NSMutableArray alloc] init]);
     bool didAddToVisitedObjects = false;
     if (obj) {
-        if ([visitedObjects containsObject: obj])
-            failWithError(NSCoderInvalidValueError, @"Found circular reference in object graph. This encoder cannot handle that (yet ? ... don't give me ideas.).");
-        [visitedObjects addObject: obj];
+        NSNumber *obj_key = @((intptr_t)obj); /// Converting obj reference to NSNumber for performance. Not sure if it helps.
+        if ([visitedObjects containsObject: obj_key])
+            failWithError(NSCoderInvalidValueError, @"Found circular reference in object graph. This encoder cannot handle that (yet ? ... don't give me ideas.)."); /// Update: Tried in MFDeepCopyCoder but it seems pretty much impossible to get decoding circular references right.
+        [visitedObjects addObject: obj_key];
         didAddToVisitedObjects = true;
     }
     MFDefer ^{ if (didAddToVisitedObjects) [visitedObjects removeLastObject]; };
