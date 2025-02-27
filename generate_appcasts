@@ -105,7 +105,14 @@ def generate():
         if True: 
             # Approach 1: Reference the css/js files
             #   This only works through githack, because raw.githubusercontent serves the css and js file with text/plain mime type.
-            #   Meta: Is there any benefit over including the css/js files directly? The client will have to download the css/js either way to correctly display the update notes.
+            #   
+            #   Meta: Is this better than embedding the css/js files directly? 
+            #       Contra: The client will have to download the css/js either way to correctly display the update notes. So that's not better.
+            #       Pro: The html files inside update-notes/html will be smaller, since they don't all contain a copy of our css/js.
+            #       Pro: The *content* in the html files can be updated and diff'd independently of the js/css. This might make it easier to programmatically check for content changes, which might be useful once we translate the update-notes with the help of an LLM but don't wanna regenerate translations if the content didn't change.
+            #       Contra: This might **slow down** loading of update notes because we need to download 3 different files through githack. 
+            #           But based on [Feb 2025] testing, the slow down is not noticable. Specifically, I saw that: 1. BetterDisplay, another Sparkle app also take a bit to load the notes 2. When you load a note in the browser, it's instant, despite css and js being served through githack. -> So I don't feel like githack makes a difference.
+            
             html_header_includes = textwrap.dedent("""\
             <link rel="stylesheet" href="{css_slot}"/>
             <script src="{js_slot}"></script>\
