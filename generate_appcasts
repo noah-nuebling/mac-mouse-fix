@@ -10,6 +10,8 @@ import shutil
 import urllib.request
 import urllib.parse
 
+from pathlib import Path
+
 import json
 
 import textwrap
@@ -105,10 +107,21 @@ def generate():
         # Prepare text to include in the html header of all release notes.
         #   (This simply links to our js and css file.)
         #   (We have to write this to a file because I don't know how else to pass this to pandoc.)
-        html_header_includes = textwrap.dedent(f"""\
-        <link rel="stylesheet" href="{base_url}/{css_file_path}"/>
-        <script src="{base_url}/{js_file_path}"></script>
-        """)
+        if False:
+            html_header_includes = textwrap.dedent(f"""\
+            <link rel="stylesheet" href="{base_url}/{css_file_path}"/>
+            <script src="{base_url}/{js_file_path}"></script>
+            """)
+        else:
+            html_header_includes = textwrap.dedent("""\
+            <style> 
+            {css_slot} 
+            </style>
+            <script> 
+            {js_slot} 
+            </script>\
+            """).format(css_slot = textwrap.indent(Path(css_file_path).read_text(), 4 * ' '), 
+                        js_slot = textwrap.indent(Path(js_file_path).read_text(), 4 * ' '))
         with open(html_header_includes_tmp_file, 'w') as f:
             f.write(html_header_includes)
 
@@ -271,14 +284,16 @@ def generate():
             #   Notes:
             #       - [Feb 2025] We're prepending base_url, because I don't think the <sparkle:releaseNotesLink> can be a relative URL. Not entirely sure tho.
             #       - [Feb 2025] We're prepending the proxy_url, because raw.githubusercontent doesn't serve the html files with the right mime type. Learn more in the Readme: https://github.com/noah-nuebling/mmf-update-notes-proxy
+            #           - Update: Were using githack now. Serves the same purpose as our proxy but works serverside so doesn't require js which wasn't activated in the update window of older MMF versions.
 
+            release_notes_url = apply_githack(f"{base_url}/{release_notes_path}")
 
             item_string = f"""\
     <item>
         <title>{title}</title>
         <pubDate>{publishing_date}</pubDate>
         <sparkle:minimumSystemVersion>{minimum_macos_version}</sparkle:minimumSystemVersion>
-        <sparkle:releaseNotesLink>{proxy_url}{base_url}/{release_notes_path}</sparkle:releaseNotesLink>
+        <sparkle:releaseNotesLink>{release_notes_url}</sparkle:releaseNotesLink>
         <enclosure
             url=\"{download_link}\"
             sparkle:version=\"{bundle_version}\"
@@ -338,6 +353,10 @@ def generate():
         print(e)
         clean_up(download_folder)
         exit(1)
+
+def apply_githack(url: str):
+    # Note: raw.githack.com says to use rawcdn.githack.com in production but that requires us to know the git commit, which would complicate the logic.
+    return url.replace('raw.githubusercontent.com', 'raw.githack.com')
 
 def clean_up(download_folder):
     ret = os.system(f'rm -R {download_folder}')
