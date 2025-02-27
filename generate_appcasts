@@ -34,6 +34,9 @@ if TEST_MODE:
 else:
     base_url            = "https://raw.githubusercontent.com/noah-nuebling/mac-mouse-fix/update-feed"
 
+
+proxy_url               = "https://noah-nuebling.github.io/mmf-update-notes-proxy/?url="
+
 if 0:
     raw_github_url      = "https://raw.githubusercontent.com/noah-nuebling/mac-mouse-fix/master"
 
@@ -267,6 +270,7 @@ def generate():
             #
             #   Notes:
             #       - [Feb 2025] We're prepending base_url, because I don't think the <sparkle:releaseNotesLink> can be a relative URL. Not entirely sure tho.
+            #       - [Feb 2025] We're prepending the proxy_url, because raw.githubusercontent doesn't serve the html files with the right mime type. Learn more in the Readme: https://github.com/noah-nuebling/mmf-update-notes-proxy
 
 
             item_string = f"""\
@@ -274,7 +278,7 @@ def generate():
         <title>{title}</title>
         <pubDate>{publishing_date}</pubDate>
         <sparkle:minimumSystemVersion>{minimum_macos_version}</sparkle:minimumSystemVersion>
-        <sparkle:releaseNotesLink>{base_url}/{release_notes_path}</sparkle:releaseNotesLink>
+        <sparkle:releaseNotesLink>{proxy_url}{base_url}/{release_notes_path}</sparkle:releaseNotesLink>
         <enclosure
             url=\"{download_link}\"
             sparkle:version=\"{bundle_version}\"
