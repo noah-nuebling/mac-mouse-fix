@@ -1,165 +1,165 @@
 <?xml version="1.0" encoding="utf-8"?>
 <rss version="2.0" xmlns:sparkle="http://www.andymatuschak.org/xml-namespaces/sparkle"  xmlns:dc="http://purl.org/dc/elements/1.1/">
-  <channel>
+<channel>
     <title>Mac Mouse Fix Update Feed</title>
     <link>https://raw.githubusercontent.com/noah-nuebling/mac-mouse-fix/update-feed/appcast.xml</link>
     <description>Stable releases of Mac Mouse Fix</description>
     <language>en</language>
-        <item>
-        <title>3.0.3 available!</title>
-        <pubDate>2024-09-19T08:44:29Z</pubDate>
-        <sparkle:minimumSystemVersion>10.14.4</sparkle:minimumSystemVersion>
-        <sparkle:releaseNotesLink>https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/update-notes/html/en/3.0.3.html</sparkle:releaseNotesLink>
-        <enclosure
-            url="https://github.com/noah-nuebling/mac-mouse-fix/releases/download/3.0.3/MacMouseFixApp.zip"
-            sparkle:version="22854"
-            sparkle:shortVersionString="3.0.3"
-            sparkle:edSignature="x0zHVTgpqijq7RkqlCibpiMQi5Ykb7Ikk8gEux/2dGfUY81Gz7ZEBknwDDIMYKkxuOsgjPVsZPuHEh56Pn8KBg==" length="7224915"
-            type="application/octet-stream"
-        />
-    </item>
     <item>
-        <title>2.2.5 available!</title>
-        <pubDate>2024-09-18T14:52:35Z</pubDate>
-        <sparkle:minimumSystemVersion>10.13</sparkle:minimumSystemVersion>
-        <sparkle:releaseNotesLink>https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/update-notes/html/en/2.2.5.html</sparkle:releaseNotesLink>
-        <enclosure
-            url="https://github.com/noah-nuebling/mac-mouse-fix/releases/download/2.2.5/MacMouseFixApp.zip"
-            sparkle:version="7631"
-            sparkle:shortVersionString="2.2.5"
-            sparkle:edSignature="G6csTrCTYt69rexM9bZydS8wwWR2nU+8r3agBJhIXdlyKzorPddPiTlmLsNnUx4iLzNNZFRT1ZWr+hVqUoITBA==" length="2489731"
-            type="application/octet-stream"
-        />
-    </item>
-    <item>
-        <title>2.2.4 available!</title>
-        <pubDate>2024-05-19T13:56:53Z</pubDate>
-        <sparkle:minimumSystemVersion>10.13</sparkle:minimumSystemVersion>
-        <sparkle:releaseNotesLink>https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/update-notes/html/en/2.2.4.html</sparkle:releaseNotesLink>
-        <enclosure
-            url="https://github.com/noah-nuebling/mac-mouse-fix/releases/download/2.2.4/MacMouseFixApp.zip"
-            sparkle:version="7614"
-            sparkle:shortVersionString="2.2.4"
-            sparkle:edSignature="0s69FxFjccIVE7JQxRYcd58CXi+QnZmr/voeKKCczNRL+WlI+wF9vzBWhfIBojSaR7P8HMYBttPfaIWAbNKSDw==" length="2440385"
-            type="application/octet-stream"
-        />
-    </item>
-    <item>
-        <title>3.0.2 available!</title>
-        <pubDate>2024-03-05T19:07:03Z</pubDate>
-        <sparkle:minimumSystemVersion>10.14.4</sparkle:minimumSystemVersion>
-        <sparkle:releaseNotesLink>https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/update-notes/html/en/3.0.2.html</sparkle:releaseNotesLink>
-        <enclosure
-            url="https://github.com/noah-nuebling/mac-mouse-fix/releases/download/3.0.2/MacMouseFixApp.zip"
-            sparkle:version="22635"
-            sparkle:shortVersionString="3.0.2"
-            sparkle:edSignature="TRXTAtBjFwxAQnH3PXPbz6ogGCc7BrTwBWulTj5j+b76tsv+jevoOVZNp0BvWwpKGHtz3p+m9HzDG0yLdpVBCA==" length="6340306"
-            type="application/octet-stream"
-        />
-    </item>
-    <item>
-        <title>3.0.1 available!</title>
-        <pubDate>2024-01-15T06:30:28Z</pubDate>
-        <sparkle:minimumSystemVersion>10.14.4</sparkle:minimumSystemVersion>
-        <sparkle:releaseNotesLink>https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/update-notes/html/en/3.0.1.html</sparkle:releaseNotesLink>
-        <enclosure
-            url="https://github.com/noah-nuebling/mac-mouse-fix/releases/download/3.0.1/MacMouseFixApp.zip"
-            sparkle:version="22148"
-            sparkle:shortVersionString="3.0.1"
-            sparkle:edSignature="6YYVBj1zzOoOyTXC7bWnEh8ZZd80V3AhTKLdRzoPUePZOMs07ROU3zCdqJvLhysPo1hmUqcs9oHkSFcQLzn2CQ==" length="6313884"
-            type="application/octet-stream"
-        />
-    </item>
-    <item>
-        <title>3.0.0 available!</title>
-        <pubDate>2023-12-23T11:28:16Z</pubDate>
-        <sparkle:minimumSystemVersion>10.14.4</sparkle:minimumSystemVersion>
-        <sparkle:releaseNotesLink>https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/update-notes/html/en/3.0.0.html</sparkle:releaseNotesLink>
-        <enclosure
-            url="https://github.com/noah-nuebling/mac-mouse-fix/releases/download/3.0.0/MacMouseFixApp.zip"
-            sparkle:version="22033"
-            sparkle:shortVersionString="3.0.0"
-            sparkle:edSignature="sMVWqVyYmjO/6V1ftErBnPVN8EpIew/6RL3AMGDgqQu+7n8rrVxBgHrjxgIx4GPoxGuw2XAMZ34+yGmnFco0AA==" length="6271342"
-            type="application/octet-stream"
-        />
-    </item>
-    <item>
-        <title>2.2.3 available!</title>
-        <pubDate>2022-10-30T16:41:07Z</pubDate>
-        <sparkle:minimumSystemVersion>10.13</sparkle:minimumSystemVersion>
-        <sparkle:releaseNotesLink>https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/update-notes/html/en/2.2.3.html</sparkle:releaseNotesLink>
-        <enclosure
-            url="https://github.com/noah-nuebling/mac-mouse-fix/releases/download/2.2.3/MacMouseFixApp.zip"
-            sparkle:version="7603"
-            sparkle:shortVersionString="2.2.3"
-            sparkle:edSignature="qMi5X0XgNWMWkDar3JdySr1B5fLnqE9AQot+qNkZlIEn/ASmT5ABMUhaDK3ndgnzh32IN7eGhsNImhCBICeAAA==" length="2442063"
-            type="application/octet-stream"
-        />
-    </item>
-    <item>
-        <title>2.2.2 available!</title>
-        <pubDate>2022-10-23T16:16:38Z</pubDate>
-        <sparkle:minimumSystemVersion>10.13</sparkle:minimumSystemVersion>
-        <sparkle:releaseNotesLink>https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/update-notes/html/en/2.2.2.html</sparkle:releaseNotesLink>
-        <enclosure
-            url="https://github.com/noah-nuebling/mac-mouse-fix/releases/download/2.2.2/MacMouseFixApp.zip"
-            sparkle:version="7391"
-            sparkle:shortVersionString="2.2.2"
-            sparkle:edSignature="J6J9+AA4ZKvXarD9o7hhf4mKFWBdCRwDU2TqbIuh7OIepCq7f618AkgbY/3Ng1rXpNIPlZZdxaxMFCJ5u6hTCg==" length="3145946"
-            type="application/octet-stream"
-        />
-    </item>
-    <item>
-        <title>2.2.1 available!</title>
-        <pubDate>2022-10-20T23:15:00Z</pubDate>
-        <sparkle:minimumSystemVersion>10.13</sparkle:minimumSystemVersion>
-        <sparkle:releaseNotesLink>https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/update-notes/html/en/2.2.1.html</sparkle:releaseNotesLink>
-        <enclosure
-            url="https://github.com/noah-nuebling/mac-mouse-fix/releases/download/2.2.1/MacMouseFixApp.zip"
-            sparkle:version="7310"
-            sparkle:shortVersionString="2.2.1"
-            sparkle:edSignature="s2V1WqgbfgDC26WfPBDt+ExMLe2UqyY/mjlTm4sSdGtRdvpBSSzke+1xwheZehzMsg8YTTqeh+/AKIlsFkc7Bg==" length="3139125"
-            type="application/octet-stream"
-        />
-    </item>
-    <item>
-        <title>2.2.0 available!</title>
-        <pubDate>2022-01-15T23:08:48Z</pubDate>
-        <sparkle:minimumSystemVersion>10.11</sparkle:minimumSystemVersion>
-        <sparkle:releaseNotesLink>https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/update-notes/html/en/2.2.0.html</sparkle:releaseNotesLink>
-        <enclosure
-            url="https://github.com/noah-nuebling/mac-mouse-fix/releases/download/2.2.0/MacMouseFixApp.zip"
-            sparkle:version="6943"
-            sparkle:shortVersionString="2.2.0"
-            sparkle:edSignature="dQYe43HyzVixCKZB23ALGQKe+IpT5QtQmn8O/7RwT6yFbMPTmmQU1zGkeOlvGFmzPYtwiosnCMfvBDVeTzH3AA==" length="3727162"
-            type="application/octet-stream"
-        />
-    </item>
-    <item>
-        <title>2.1.0 available!</title>
-        <pubDate>2022-01-09T02:07:06Z</pubDate>
-        <sparkle:minimumSystemVersion>10.11</sparkle:minimumSystemVersion>
-        <sparkle:releaseNotesLink>https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/update-notes/html/en/2.1.0.html</sparkle:releaseNotesLink>
-        <enclosure
-            url="https://github.com/noah-nuebling/mac-mouse-fix/releases/download/2.1.0/MacMouseFixApp.zip"
-            sparkle:version="6525"
-            sparkle:shortVersionString="2.1.0"
-            sparkle:edSignature="8d3wjlVwVmGjcnh3qXWf0xh0utL+e3hFqLmpWdCi5fi8fGzF4Xo0s6Xj2ugkqpb77M7VxLacFA3fXKsBtLrOCw==" length="3648590"
-            type="application/octet-stream"
-        />
-    </item>
-    <item>
-        <title>2.0.0 available!</title>
-        <pubDate>2022-01-05T06:42:08Z</pubDate>
-        <sparkle:minimumSystemVersion>10.11</sparkle:minimumSystemVersion>
-        <sparkle:releaseNotesLink>https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/update-notes/html/en/2.0.0.html</sparkle:releaseNotesLink>
-        <enclosure
-            url="https://github.com/noah-nuebling/mac-mouse-fix/releases/download/2.0.0/MacMouseFixApp.zip"
-            sparkle:version="6294"
-            sparkle:shortVersionString="2.0.0"
-            sparkle:edSignature="jpj6WXB1glH6XIEbv5FOcUGLPgpgY8fSpH4k9+sjGolTAlR/vDEGQErgpaG3L4c9TnD72a9ZcKh39ZQ4LbcvBA==" length="3083800"
-            type="application/octet-stream"
-        />
-    </item>
-  </channel>
-</rss>
+    <title>3.0.3 available!</title>
+    <pubDate>2024-09-19T08:44:29Z</pubDate>
+    <sparkle:minimumSystemVersion>10.14.4</sparkle:minimumSystemVersion>
+    <sparkle:releaseNotesLink>https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/update-notes/html/en/3.0.3.html</sparkle:releaseNotesLink>
+    <enclosure
+        url="https://github.com/noah-nuebling/mac-mouse-fix/releases/download/3.0.3/MacMouseFixApp.zip"
+        sparkle:version="22854"
+        sparkle:shortVersionString="3.0.3"
+        sparkle:edSignature="x0zHVTgpqijq7RkqlCibpiMQi5Ykb7Ikk8gEux/2dGfUY81Gz7ZEBknwDDIMYKkxuOsgjPVsZPuHEh56Pn8KBg==" length="7224915"
+        type="application/octet-stream"
+    />
+</item>            
+<item>
+    <title>2.2.5 available!</title>
+    <pubDate>2024-09-18T14:52:35Z</pubDate>
+    <sparkle:minimumSystemVersion>10.13</sparkle:minimumSystemVersion>
+    <sparkle:releaseNotesLink>https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/update-notes/html/en/2.2.5.html</sparkle:releaseNotesLink>
+    <enclosure
+        url="https://github.com/noah-nuebling/mac-mouse-fix/releases/download/2.2.5/MacMouseFixApp.zip"
+        sparkle:version="7631"
+        sparkle:shortVersionString="2.2.5"
+        sparkle:edSignature="G6csTrCTYt69rexM9bZydS8wwWR2nU+8r3agBJhIXdlyKzorPddPiTlmLsNnUx4iLzNNZFRT1ZWr+hVqUoITBA==" length="2489731"
+        type="application/octet-stream"
+    />
+</item>            
+<item>
+    <title>2.2.4 available!</title>
+    <pubDate>2024-05-19T13:56:53Z</pubDate>
+    <sparkle:minimumSystemVersion>10.13</sparkle:minimumSystemVersion>
+    <sparkle:releaseNotesLink>https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/update-notes/html/en/2.2.4.html</sparkle:releaseNotesLink>
+    <enclosure
+        url="https://github.com/noah-nuebling/mac-mouse-fix/releases/download/2.2.4/MacMouseFixApp.zip"
+        sparkle:version="7614"
+        sparkle:shortVersionString="2.2.4"
+        sparkle:edSignature="0s69FxFjccIVE7JQxRYcd58CXi+QnZmr/voeKKCczNRL+WlI+wF9vzBWhfIBojSaR7P8HMYBttPfaIWAbNKSDw==" length="2440385"
+        type="application/octet-stream"
+    />
+</item>            
+<item>
+    <title>3.0.2 available!</title>
+    <pubDate>2024-03-05T19:07:03Z</pubDate>
+    <sparkle:minimumSystemVersion>10.14.4</sparkle:minimumSystemVersion>
+    <sparkle:releaseNotesLink>https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/update-notes/html/en/3.0.2.html</sparkle:releaseNotesLink>
+    <enclosure
+        url="https://github.com/noah-nuebling/mac-mouse-fix/releases/download/3.0.2/MacMouseFixApp.zip"
+        sparkle:version="22635"
+        sparkle:shortVersionString="3.0.2"
+        sparkle:edSignature="TRXTAtBjFwxAQnH3PXPbz6ogGCc7BrTwBWulTj5j+b76tsv+jevoOVZNp0BvWwpKGHtz3p+m9HzDG0yLdpVBCA==" length="6340306"
+        type="application/octet-stream"
+    />
+</item>            
+<item>
+    <title>3.0.1 available!</title>
+    <pubDate>2024-01-15T06:30:28Z</pubDate>
+    <sparkle:minimumSystemVersion>10.14.4</sparkle:minimumSystemVersion>
+    <sparkle:releaseNotesLink>https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/update-notes/html/en/3.0.1.html</sparkle:releaseNotesLink>
+    <enclosure
+        url="https://github.com/noah-nuebling/mac-mouse-fix/releases/download/3.0.1/MacMouseFixApp.zip"
+        sparkle:version="22148"
+        sparkle:shortVersionString="3.0.1"
+        sparkle:edSignature="6YYVBj1zzOoOyTXC7bWnEh8ZZd80V3AhTKLdRzoPUePZOMs07ROU3zCdqJvLhysPo1hmUqcs9oHkSFcQLzn2CQ==" length="6313884"
+        type="application/octet-stream"
+    />
+</item>            
+<item>
+    <title>3.0.0 available!</title>
+    <pubDate>2023-12-23T11:28:16Z</pubDate>
+    <sparkle:minimumSystemVersion>10.14.4</sparkle:minimumSystemVersion>
+    <sparkle:releaseNotesLink>https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/update-notes/html/en/3.0.0.html</sparkle:releaseNotesLink>
+    <enclosure
+        url="https://github.com/noah-nuebling/mac-mouse-fix/releases/download/3.0.0/MacMouseFixApp.zip"
+        sparkle:version="22033"
+        sparkle:shortVersionString="3.0.0"
+        sparkle:edSignature="sMVWqVyYmjO/6V1ftErBnPVN8EpIew/6RL3AMGDgqQu+7n8rrVxBgHrjxgIx4GPoxGuw2XAMZ34+yGmnFco0AA==" length="6271342"
+        type="application/octet-stream"
+    />
+</item>            
+<item>
+    <title>2.2.3 available!</title>
+    <pubDate>2022-10-30T16:41:07Z</pubDate>
+    <sparkle:minimumSystemVersion>10.13</sparkle:minimumSystemVersion>
+    <sparkle:releaseNotesLink>https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/update-notes/html/en/2.2.3.html</sparkle:releaseNotesLink>
+    <enclosure
+        url="https://github.com/noah-nuebling/mac-mouse-fix/releases/download/2.2.3/MacMouseFixApp.zip"
+        sparkle:version="7603"
+        sparkle:shortVersionString="2.2.3"
+        sparkle:edSignature="qMi5X0XgNWMWkDar3JdySr1B5fLnqE9AQot+qNkZlIEn/ASmT5ABMUhaDK3ndgnzh32IN7eGhsNImhCBICeAAA==" length="2442063"
+        type="application/octet-stream"
+    />
+</item>            
+<item>
+    <title>2.2.2 available!</title>
+    <pubDate>2022-10-23T16:16:38Z</pubDate>
+    <sparkle:minimumSystemVersion>10.13</sparkle:minimumSystemVersion>
+    <sparkle:releaseNotesLink>https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/update-notes/html/en/2.2.2.html</sparkle:releaseNotesLink>
+    <enclosure
+        url="https://github.com/noah-nuebling/mac-mouse-fix/releases/download/2.2.2/MacMouseFixApp.zip"
+        sparkle:version="7391"
+        sparkle:shortVersionString="2.2.2"
+        sparkle:edSignature="J6J9+AA4ZKvXarD9o7hhf4mKFWBdCRwDU2TqbIuh7OIepCq7f618AkgbY/3Ng1rXpNIPlZZdxaxMFCJ5u6hTCg==" length="3145946"
+        type="application/octet-stream"
+    />
+</item>            
+<item>
+    <title>2.2.1 available!</title>
+    <pubDate>2022-10-20T23:15:00Z</pubDate>
+    <sparkle:minimumSystemVersion>10.13</sparkle:minimumSystemVersion>
+    <sparkle:releaseNotesLink>https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/update-notes/html/en/2.2.1.html</sparkle:releaseNotesLink>
+    <enclosure
+        url="https://github.com/noah-nuebling/mac-mouse-fix/releases/download/2.2.1/MacMouseFixApp.zip"
+        sparkle:version="7310"
+        sparkle:shortVersionString="2.2.1"
+        sparkle:edSignature="s2V1WqgbfgDC26WfPBDt+ExMLe2UqyY/mjlTm4sSdGtRdvpBSSzke+1xwheZehzMsg8YTTqeh+/AKIlsFkc7Bg==" length="3139125"
+        type="application/octet-stream"
+    />
+</item>            
+<item>
+    <title>2.2.0 available!</title>
+    <pubDate>2022-01-15T23:08:48Z</pubDate>
+    <sparkle:minimumSystemVersion>10.11</sparkle:minimumSystemVersion>
+    <sparkle:releaseNotesLink>https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/update-notes/html/en/2.2.0.html</sparkle:releaseNotesLink>
+    <enclosure
+        url="https://github.com/noah-nuebling/mac-mouse-fix/releases/download/2.2.0/MacMouseFixApp.zip"
+        sparkle:version="6943"
+        sparkle:shortVersionString="2.2.0"
+        sparkle:edSignature="dQYe43HyzVixCKZB23ALGQKe+IpT5QtQmn8O/7RwT6yFbMPTmmQU1zGkeOlvGFmzPYtwiosnCMfvBDVeTzH3AA==" length="3727162"
+        type="application/octet-stream"
+    />
+</item>            
+<item>
+    <title>2.1.0 available!</title>
+    <pubDate>2022-01-09T02:07:06Z</pubDate>
+    <sparkle:minimumSystemVersion>10.11</sparkle:minimumSystemVersion>
+    <sparkle:releaseNotesLink>https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/update-notes/html/en/2.1.0.html</sparkle:releaseNotesLink>
+    <enclosure
+        url="https://github.com/noah-nuebling/mac-mouse-fix/releases/download/2.1.0/MacMouseFixApp.zip"
+        sparkle:version="6525"
+        sparkle:shortVersionString="2.1.0"
+        sparkle:edSignature="8d3wjlVwVmGjcnh3qXWf0xh0utL+e3hFqLmpWdCi5fi8fGzF4Xo0s6Xj2ugkqpb77M7VxLacFA3fXKsBtLrOCw==" length="3648590"
+        type="application/octet-stream"
+    />
+</item>            
+<item>
+    <title>2.0.0 available!</title>
+    <pubDate>2022-01-05T06:42:08Z</pubDate>
+    <sparkle:minimumSystemVersion>10.11</sparkle:minimumSystemVersion>
+    <sparkle:releaseNotesLink>https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/update-notes/html/en/2.0.0.html</sparkle:releaseNotesLink>
+    <enclosure
+        url="https://github.com/noah-nuebling/mac-mouse-fix/releases/download/2.0.0/MacMouseFixApp.zip"
+        sparkle:version="6294"
+        sparkle:shortVersionString="2.0.0"
+        sparkle:edSignature="jpj6WXB1glH6XIEbv5FOcUGLPgpgY8fSpH4k9+sjGolTAlR/vDEGQErgpaG3L4c9TnD72a9ZcKh39ZQ4LbcvBA==" length="3083800"
+        type="application/octet-stream"
+    />
+</item>            
+</channel>
+</rss>        
