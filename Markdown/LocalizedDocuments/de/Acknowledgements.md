@@ -38,6 +38,10 @@ Danke für euren Beitrag! :)
 
 Diese Leute haben viel mehr als den Standardpreis ausgegeben und mir einen **unglaublichen Milchshake** spendiert. (Und manche haben sogar eine Nachricht hinterlassen) Danke für den _Zucker-Kick_!
 
+**März 2025**
+
+- 🇺🇸&nbsp;Jasprabh&nbsp;Karanjit&nbsp;Kaur
+
 **Februar 2025**
 
 - 🇺🇸&nbsp;Matthewhintz
