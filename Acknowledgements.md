@@ -42,6 +42,7 @@ These people spent a lot more than the standard price and treated me to an **Inc
 
 **March 2025**
 
+- 🇨🇦&nbsp;Shane - "Great and extremely helpful tool"
 - 🇺🇸&nbsp;Leroy&nbsp;Benson
 - 🇺🇸&nbsp;Jasprabh&nbsp;Karanjit&nbsp;Kaur
 
