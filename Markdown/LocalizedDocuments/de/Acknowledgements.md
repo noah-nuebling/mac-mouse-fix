@@ -40,6 +40,7 @@ Diese Leute haben viel mehr als den Standardpreis ausgegeben und mir einen **ung
 
 **März 2025**
 
+- 🇳🇴&nbsp;Sud0
 - 🇮🇹&nbsp;Agostino&nbsp;Fiscale - "Thank you for your work! Quest'applicazione mi fa bestemmiare di meno mentre utilizzo il mio macbook ❤️"
 - 🇨🇦&nbsp;Shane - "Great and extremely helpful tool"
 - 🇺🇸&nbsp;Leroy&nbsp;Benson
