@@ -7,6 +7,12 @@
 // --------------------------------------------------------------------------
 //
 
+///
+/// I observed a bug [Mar 2025]
+/// When app is not licensed, but the system region is set to a free country, then you start the app, and then hover over the trial section (which will show the 'activate license' text) *before* the free country message can load in –
+///     then the UI will get stuck and the free country message never loads in. I've also seen the 'activate license' button itself get stuck in some weird, broken state, but not every time.
+///
+
 import Foundation
 import CocoaLumberjackSwift
 

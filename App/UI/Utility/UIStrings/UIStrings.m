@@ -56,10 +56,16 @@
         U'🇦' + (chars[1] - 'A')
     };
     
+    /// Get string encoding
+    ///     Notes:
+    ///     - NSUTF32StringEncoding doesn't work here because it expects a byte-order mark (BOM) at the start, such as 0xFFFE0000
+    ///     - All ARM and Intel Apple machines except the old PPC ones are LittleEndian, so we could just hardcode to NSUTF32LittleEndianStringEncoding.
+    NSStringEncoding encoding = (CFByteOrderGetCurrent() == CFByteOrderLittleEndian) ? NSUTF32LittleEndianStringEncoding : NSUTF32BigEndianStringEncoding;
+    
     /// Make string
     NSString *result = [[NSString alloc] initWithBytes:bytes
                                                 length:sizeof(bytes)
-                                              encoding:NSUTF32StringEncoding];
+                                              encoding:encoding];
     
     /// Return
     return result;
